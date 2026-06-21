@@ -10,7 +10,6 @@
     "frequency": "94.3 FM",
     "website": "https://chyz.ca/",
     "stream": "https://ecoutez.chyz.ca/proxy/chyz943/stream",
-    "logo": "assets/logos/chyz-logo.jpg",
     "description": "La radio des étudiantes et étudiants de l'Université Laval depuis 1997. Musique d'ici et d'ailleurs, sports universitaires et vie de campus.",
     "instagram": "https://www.instagram.com/chyz943/",
     "facebook": "https://www.facebook.com/chyzfm/",
@@ -18,9 +17,7 @@
       "musique",
       "sport",
       "local"
-    ],
-    "_streamStatus": "working",
-    "_streamChecked": "2026-06-21T23:03:42.289Z"
+    ]
   },
   {
     "id": "cism",
@@ -33,7 +30,6 @@
     "frequency": "89.3 FM",
     "website": "https://cism893.ca/",
     "stream": null,
-    "logo": "assets/logos/cism-logo.jpg",
     "description": "La radio étudiante de l'Université de Montréal. Musique alternative, francophone et découvertes, émissions culturelles.",
     "instagram": "https://www.instagram.com/cism893/",
     "facebook": "",
@@ -41,9 +37,7 @@
       "musique",
       "francophone",
       "découvertes"
-    ],
-    "_streamStatus": "working",
-    "_streamChecked": "2026-06-21T23:03:42.890Z"
+    ]
   },
   {
     "id": "ckut",
@@ -56,7 +50,6 @@
     "frequency": "90.3 FM",
     "website": "https://ckut.ca/",
     "stream": "https://ckut.out.airtime.pro/ckut_a",
-    "logo": "assets/logos/ckut-logo.jpg",
     "description": "Campus-community radio de McGill. Programmation musicale audacieuse, nouvelles alternatives et voix communautaires.",
     "instagram": "https://www.instagram.com/radiockut/",
     "facebook": "https://www.facebook.com/ckutradio/",
@@ -64,9 +57,7 @@
       "musique",
       "communautaire",
       "indie"
-    ],
-    "_streamStatus": "working",
-    "_streamChecked": "2026-06-21T23:03:44.047Z"
+    ]
   },
   {
     "id": "cjlo",
@@ -79,6 +70,7 @@
     "frequency": "1690 AM",
     "website": "https://www.cjlo.com/",
     "stream": null,
+    "logo": "assets/logos/cjlo-logo.jpg",
     "description": "La seule radio de Concordia. Musique diversifiée, soutien aux artistes locaux de Montréal depuis plus de 25 ans.",
     "instagram": "https://www.instagram.com/cjlo1690am/",
     "facebook": "https://www.facebook.com/cjlo1690am/",
@@ -86,8 +78,7 @@
       "musique",
       "local",
       "indie"
-    ],
-    "_streamStatus": "none"
+    ]
   },
   {
     "id": "cfou",
@@ -100,15 +91,14 @@
     "frequency": "89.1 FM",
     "website": "https://cfou.ca/",
     "stream": null,
+    "logo": "assets/logos/cfou-logo.jpg",
     "description": "Radio universitaire francophone de l'UQTR. Diversité musicale, idées et développement de la connaissance.",
     "instagram": "",
     "facebook": "",
     "tags": [
       "musique",
       "francophone"
-    ],
-    "_streamStatus": "working",
-    "_streamChecked": "2026-06-21T23:03:44.836Z"
+    ]
   },
   {
     "id": "cfak",
@@ -127,8 +117,7 @@
     "tags": [
       "musique",
       "campus"
-    ],
-    "_streamStatus": "none"
+    ]
   },
   {
     "id": "choq",
@@ -148,8 +137,7 @@
       "numérique",
       "créatif",
       "balados"
-    ],
-    "_streamStatus": "none"
+    ]
   },
   {
     "id": "cjep",
@@ -169,8 +157,7 @@
       "étudiant",
       "cégep",
       "balados"
-    ],
-    "_streamStatus": "none"
+    ]
   },
   {
     "id": "crem",
@@ -189,7 +176,6 @@
     "tags": [
       "cégep",
       "étudiant"
-    ],
-    "_streamStatus": "none"
+    ]
   }
 ]
