@@ -129,29 +129,41 @@ Exemple de flux trouvé par le bot :
 
 ### 2. Proxy pour écouter 100% sur RÉQ (recommandé)
 
-Même avec un flux direct, on rencontre souvent :
-- HTTP au lieu de HTTPS
+Même quand le bot trouve un flux direct, on rencontre souvent :
+- HTTP (au lieu de HTTPS)
 - Problèmes CORS
 - Blocage mixed-content sur mobile
 
-**Solution** : un petit proxy gratuit.
+**Solution** : un tout petit proxy gratuit (Cloudflare Worker).
 
-1. Déploie le worker fourni dans `proxy/cloudflare-worker.js` (Cloudflare Workers — gratuit).
-2. Dans `app.js`, configure :
+#### Déploiement du proxy (étapes précises)
+
+1. Va sur https://dash.cloudflare.com
+2. Dans la barre latérale → **Workers & Pages** → **Create Worker**
+3. Clique **Deploy** (ne modifie rien pour l’instant)
+4. Une fois déployé, clique sur **Edit code**
+5. Supprime tout le code existant et colle le contenu du fichier `proxy/cloudflare-worker.js`
+6. Clique **Deploy** (en haut à droite)
+7. En haut de la page, copie l’URL du worker (exemple : `https://req-streams-abc123.workers.dev`)
+
+#### Activation dans RÉQ
+
+Dans `app.js`, tout en haut du fichier, modifie cette ligne :
 
 ```js
-const PROXY_BASE = 'https://ton-proxy.workers.dev';
+const PROXY_BASE = 'https://req-streams-abc123.workers.dev';
 ```
 
-Le lecteur utilisera alors automatiquement :
-```
-https://ton-proxy.workers.dev/?url=https://flux-original
-```
+C’est tout.
+
+Désormais, quand un flux est disponible, le lecteur l’utilisera via le proxy et tu resteras **sur le site RÉQ**.
 
 Avantages :
-- Tout passe en HTTPS
-- CORS réglé
-- Tu restes sur le site RÉQ même pour les stations qui n’ont que des flux compliqués
+- HTTPS + CORS corrects automatiquement
+- Compatible mobile et PWA
+- Tu n’es plus obligé d’aller sur le site officiel de la radio
+
+Tu peux déployer ce proxy une seule fois et l’utiliser pour tout le projet. Il est très léger (le free tier de Cloudflare suffit largement).
 
 ---
 
