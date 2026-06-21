@@ -177,14 +177,34 @@ L’objectif : que **le plus possible** de radios puissent s’écouter directem
 
 ---
 
-## 🎨 Identité visuelle & Logos
+## 🎨 Identité visuelle RÉQ
 
-RÉQ a une identité moderne, propre et jeune :
-- Couleurs : fond sombre (#0a0a0b), accent indigo (#6366f1) + touches cyan.
-- Typographie : Sora (titres) + Space Grotesk (corps).
-- Logos des stations : mélange de logos officiels (Wikimedia) et versions générées par IA dans un style cohérent (carrés, minimalistes, avec ondes radio).
+**Palette**
+- `--accent`: #6366f1 (Indigo principal)
+- `--accent-2`: #14b8a6 (Teal secondaire – fraîcheur québécoise)
+- Fond: #070707 / #0a0a0b
+- Texte: blanc / gris doux
 
-Les logos sont stockés dans `assets/logos/`. Tu peux remplacer par des versions officielles de meilleure qualité ou en demander de nouvelles.
+**Typographie**
+- Titres : Sora (bold, tracking serré)
+- Corps : Space Grotesk (moderne, lisible)
+
+**Logo principal**
+- Icône carrée + wordmark dans `assets/logos/req-icon.jpg`
+- Utilisé dans le header et PWA
+
+**Logos stations**
+- Style unifié généré par IA (carrés, minimalistes, ondes radio subtiles)
+- Quelques logos officiels Wikimedia intégrés (ex: CISM)
+- Fallback : badges lettrés colorés
+
+Les assets sont dans `assets/logos/`.
+
+### Guidelines courtes
+- Toujours utiliser les logos fournis pour cohérence.
+- Préférer les images réelles aux badges quand disponibles.
+- L'accent-2 peut être utilisé pour les éléments secondaires (boutons, highlights).
+- Garder le contraste élevé pour accessibilité mobile.
 
 ## 🛠️ Stack technique
 

@@ -36,10 +36,10 @@ const KNOWN_STREAMS = {
 
 // Per-station hints for faster/better discovery
 const STATION_HINTS = {
+  chyz: ['https://ecoutez.chyz.ca/proxy/chyz943/stream'],
   ckut: [
     'https://ckut.out.airtime.pro/ckut_a',
     'https://icecast.ckut.ca/903fm-192-stereo',
-    'http://stream.ckut.ca:8000/ckut',
   ],
   cism: [
     'http://stream03.ustream.ca:8000/cism128.mp3',
@@ -47,19 +47,10 @@ const STATION_HINTS = {
   ],
   cfou: [
     'http://streamer.xittel.net:8000/cfou',
-    'https://cfou.ca/stream',
   ],
-  cfak: [
-    'https://cfak.ca/stream',
-    'http://stream.cfak.ca:8000/cfak',
-  ],
-  cjlo: [
-    'http://www.cjlo.com/cjlo.m3u',
-    'https://cjlo.com/stream',
-  ],
-  choq: [
-    'https://choq.ca/stream',
-  ],
+  cfak: ['https://cfak.ca/stream'],
+  cjlo: ['http://www.cjlo.com/cjlo.m3u'],
+  choq: ['https://choq.ca/stream'],
 };
 
 // Common paths the bot will try on the main domain

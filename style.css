@@ -4,8 +4,10 @@
   --surface: #0a0a0b;
   --panel: rgba(255, 255, 255, 0.05);
   --border: rgba(255, 255, 255, 0.1);
-  --accent: #6366f1;
+  --accent: #6366f1;      /* Indigo - primary */
   --accent-soft: #818cf8;
+  --accent-2: #14b8a6;    /* Teal - secondary (Québec freshness) */
+  --accent-2-soft: #5eead4;
   --live: #22c55e;
   --text: #f8f8f8;
   --text-soft: rgba(255, 255, 255, 0.65);
@@ -48,21 +50,20 @@ body {
 .station-logo {
   width: 48px;
   height: 48px;
-  border-radius: 12px;
-  object-fit: contain;
-  background: #111;
-  padding: 4px;
-  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  object-fit: cover;
+  background: #0f0f11;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 .station-logo-modal {
   width: 64px;
   height: 64px;
-  border-radius: 16px;
-  object-fit: contain;
-  background: #111;
-  padding: 6px;
-  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  object-fit: cover;
+  background: #0f0f11;
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
 /* Fallback initial logo badges */
