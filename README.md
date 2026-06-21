@@ -88,27 +88,80 @@ Les anciens fichiers CHYZ+ (`schedule.js`, `news.js`, `data-utils.js`) sont cons
 
 ```json
 {
-  "id": "chyz",                          // identifiant unique (minuscules, sans espaces)
-  "name": "CHYZ 94.3",                   // nom court affiché sur la carte
-  "fullName": "CHYZ 94.3 FM",            // nom complet
+  "id": "chyz",
+  "name": "CHYZ 94.3",
+  "fullName": "CHYZ 94.3 FM",
   "institution": "Université Laval",
   "city": "Québec",
-  "region": "Capitale-Nationale",        // utilisé pour les filtres
-  "type": "universite",                  // "universite" ou "cegep"
-  "frequency": "94.3 FM",                // ou "Web"
+  "region": "Capitale-Nationale",
+  "type": "universite",
+  "frequency": "94.3 FM",
   "website": "https://chyz.ca/",
-  "stream": "https://...",               // URL directe du flux (HTTPS recommandé). null si aucun.
-  "description": "Description complète...",
-  "instagram": "https://www.instagram.com/xxx/",
-  "facebook": "https://www.facebook.com/xxx/",
-  "tags": ["musique", "sport", "local"]
+  "stream": "https://...",               // ← Flux direct (découvert par le bot)
+  "description": "...",
+  "instagram": "...",
+  "tags": ["musique", "local"]
 }
 ```
 
 **Conseils pour le flux audio :**
-- Utilise un flux HTTPS public (Icecast, Shoutcast, etc.)
-- Teste-le dans un `<audio>` HTML
-- Si la station n’a pas de flux public simple, mets `"stream": null` et le bouton mènera vers leur site officiel.
+- Le bot essaie automatiquement de trouver et valider les flux directs.
+- Priorité aux flux HTTPS + Icecast (avec en-têtes `icy-*`).
+
+---
+
+## 🤖 Stream Tracker Bot (écoute directement sur le site)
+
+Le plus gros défi des radios étudiantes : **la plupart n’exposent pas de flux direct public facile**.
+
+**Solution mise en place :**
+
+### 1. Bot de découverte automatique
+- `scripts/discover-streams.js` : un bot Node.js qui :
+  - Valide les flux existants
+  - Essaie de découvrir de nouveaux flux (patterns Icecast, Airtime, scraping basique)
+  - Vérifie que le flux est vraiment de l’audio (en-têtes `icy-metaint`, `Content-Type`)
+- Déclenché automatiquement tous les jours via GitHub Actions (`.github/workflows/update-streams.yml`)
+- Peut aussi être lancé manuellement : `node scripts/discover-streams.js --update`
+
+Exemple de flux trouvé par le bot :
+- CKUT → `https://ckut.out.airtime.pro/ckut_a` (validé)
+
+### 2. Proxy pour écouter 100% sur RÉQ (recommandé)
+
+Même avec un flux direct, on rencontre souvent :
+- HTTP au lieu de HTTPS
+- Problèmes CORS
+- Blocage mixed-content sur mobile
+
+**Solution** : un petit proxy gratuit.
+
+1. Déploie le worker fourni dans `proxy/cloudflare-worker.js` (Cloudflare Workers — gratuit).
+2. Dans `app.js`, configure :
+
+```js
+const PROXY_BASE = 'https://ton-proxy.workers.dev';
+```
+
+Le lecteur utilisera alors automatiquement :
+```
+https://ton-proxy.workers.dev/?url=https://flux-original
+```
+
+Avantages :
+- Tout passe en HTTPS
+- CORS réglé
+- Tu restes sur le site RÉQ même pour les stations qui n’ont que des flux compliqués
+
+---
+
+### Comment contribuer à l’amélioration des flux
+
+- Ajoute des flux directs que tu trouves dans `radios.json`
+- Améliore le script `discover-streams.js` (plus de scrapers, plus d’heuristiques par station)
+- Si tu trouves un bon proxy alternatif, ouvre une PR
+
+L’objectif : que **le plus possible** de radios puissent s’écouter directement dans RÉQ sans jamais quitter le site.
 
 ---
 
