@@ -177,6 +177,15 @@ L’objectif : que **le plus possible** de radios puissent s’écouter directem
 
 ---
 
+## 🎨 Identité visuelle & Logos
+
+RÉQ a une identité moderne, propre et jeune :
+- Couleurs : fond sombre (#0a0a0b), accent indigo (#6366f1) + touches cyan.
+- Typographie : Sora (titres) + Space Grotesk (corps).
+- Logos des stations : mélange de logos officiels (Wikimedia) et versions générées par IA dans un style cohérent (carrés, minimalistes, avec ondes radio).
+
+Les logos sont stockés dans `assets/logos/`. Tu peux remplacer par des versions officielles de meilleure qualité ou en demander de nouvelles.
+
 ## 🛠️ Stack technique
 
 - HTML5 + CSS + Vanilla JS (ES modules)
