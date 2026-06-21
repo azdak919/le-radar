@@ -1,6 +1,18 @@
 // RÉQ - Radios Étudiantes du Québec
 // Clean, beautiful, mobile-first directory + player
 
+// === STREAM PROXY CONFIG ===
+// Leave empty to use direct streams (works for many).
+// Set this to your Cloudflare Worker URL (see proxy/cloudflare-worker.js) 
+// for maximum compatibility (HTTPS + CORS for all stations).
+const PROXY_BASE = ''; // e.g. 'https://req-stream-proxy.your-subdomain.workers.dev'
+
+function getPlayableStream(radio) {
+  if (!radio?.stream) return null;
+  if (!PROXY_BASE) return radio.stream;
+  return `${PROXY_BASE}/?url=${encodeURIComponent(radio.stream)}`;
+}
+
 const GRID = document.getElementById("radios-grid");
 const SEARCH = document.getElementById("search-input");
 const TYPE_FILTERS = document.getElementById("type-filters");
@@ -334,6 +346,14 @@ function openModal(radio) {
         ${hasStream
           ? `
           <div id="modal-player">
+            <div class="flex items-center justify-between text-xs mb-2 px-1">
+              <span class="text-emerald-400 flex items-center gap-1">
+                <span class="inline-block w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
+                Flux direct
+              </span>
+              <span class="text-white/40 text-[10px]">Suivi automatiquement</span>
+            </div>
+
             <div class="flex items-center gap-2 mb-3">
               <button id="modal-play" class="player-button player-button--primary flex-1 text-base">▶ LIRE</button>
               <button id="modal-pause" class="player-button flex-1 hidden text-base">PAUSE</button>
@@ -352,10 +372,13 @@ function openModal(radio) {
             </div>
           </div>`
           : `
-          <button onclick="window.open('${radio.website}', '_blank')" 
-                  class="modal-btn mt-1 w-full border border-accent/50 bg-accent/10 hover:bg-accent/20 py-3.5 font-semibold text-accentSoft">
-            Ouvrir le lecteur officiel →
-          </button>`
+          <div class="text-center">
+            <button onclick="window.open('${radio.website}', '_blank')" 
+                    class="modal-btn w-full border border-accent/50 bg-accent/10 hover:bg-accent/20 py-3.5 font-semibold text-accentSoft">
+              Ouvrir le lecteur officiel →
+            </button>
+            <p class="text-[10px] text-white/50 mt-2">Aucun flux direct public fiable trouvé pour le moment.</p>
+          </div>`
         }
       </div>
 
@@ -431,10 +454,12 @@ function setupModalPlayer(radio) {
     if (status) status.textContent = playingThis ? "En direct" : "Prêt";
   };
 
+  const playableUrl = getPlayableStream(radio);
+
   playBtn.onclick = async () => {
     try {
-      if (audio.src !== radio.stream) {
-        audio.src = radio.stream;
+      if (audio.src !== playableUrl) {
+        audio.src = playableUrl;
       }
       await audio.play();
       updateUI();
@@ -520,7 +545,8 @@ function setupAudio() {
 }
 
 async function playRadio(radio) {
-  if (!radio.stream) {
+  const playable = getPlayableStream(radio);
+  if (!playable) {
     window.open(radio.website, "_blank");
     return;
   }
@@ -528,8 +554,8 @@ async function playRadio(radio) {
   if (!audio) setupAudio();
 
   try {
-    if (audio.src !== radio.stream) {
-      audio.src = radio.stream;
+    if (audio.src !== playable) {
+      audio.src = playable;
     }
     await audio.play();
 
