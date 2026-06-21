@@ -13,7 +13,13 @@
     "description": "La radio des étudiantes et étudiants de l'Université Laval depuis 1997. Musique d'ici et d'ailleurs, sports universitaires et vie de campus.",
     "instagram": "https://www.instagram.com/chyz943/",
     "facebook": "https://www.facebook.com/chyzfm/",
-    "tags": ["musique", "sport", "local"]
+    "tags": [
+      "musique",
+      "sport",
+      "local"
+    ],
+    "_streamStatus": "working",
+    "_streamChecked": "2026-06-21T23:03:42.289Z"
   },
   {
     "id": "cism",
@@ -25,11 +31,17 @@
     "type": "universite",
     "frequency": "89.3 FM",
     "website": "https://cism893.ca/",
-    "stream": null,
+    "stream": "https://cism893.ca/stream",
     "description": "La radio étudiante de l'Université de Montréal. Musique alternative, francophone et découvertes, émissions culturelles.",
     "instagram": "https://www.instagram.com/cism893/",
     "facebook": "",
-    "tags": ["musique", "francophone", "découvertes"]
+    "tags": [
+      "musique",
+      "francophone",
+      "découvertes"
+    ],
+    "_streamStatus": "working",
+    "_streamChecked": "2026-06-21T23:03:42.890Z"
   },
   {
     "id": "ckut",
@@ -45,7 +57,13 @@
     "description": "Campus-community radio de McGill. Programmation musicale audacieuse, nouvelles alternatives et voix communautaires.",
     "instagram": "https://www.instagram.com/radiockut/",
     "facebook": "https://www.facebook.com/ckutradio/",
-    "tags": ["musique", "communautaire", "indie"]
+    "tags": [
+      "musique",
+      "communautaire",
+      "indie"
+    ],
+    "_streamStatus": "working",
+    "_streamChecked": "2026-06-21T23:03:44.047Z"
   },
   {
     "id": "cjlo",
@@ -61,7 +79,12 @@
     "description": "La seule radio de Concordia. Musique diversifiée, soutien aux artistes locaux de Montréal depuis plus de 25 ans.",
     "instagram": "https://www.instagram.com/cjlo1690am/",
     "facebook": "https://www.facebook.com/cjlo1690am/",
-    "tags": ["musique", "local", "indie"]
+    "tags": [
+      "musique",
+      "local",
+      "indie"
+    ],
+    "_streamStatus": "none"
   },
   {
     "id": "cfou",
@@ -73,11 +96,16 @@
     "type": "universite",
     "frequency": "89.1 FM",
     "website": "https://cfou.ca/",
-    "stream": null,
+    "stream": "https://cfou.ca/stream",
     "description": "Radio universitaire francophone de l'UQTR. Diversité musicale, idées et développement de la connaissance.",
     "instagram": "",
     "facebook": "",
-    "tags": ["musique", "francophone"]
+    "tags": [
+      "musique",
+      "francophone"
+    ],
+    "_streamStatus": "working",
+    "_streamChecked": "2026-06-21T23:03:44.836Z"
   },
   {
     "id": "cfak",
@@ -93,7 +121,11 @@
     "description": "La radio officielle de l'Université de Sherbrooke depuis 2003. Musique et vie étudiante en Estrie.",
     "instagram": "https://www.instagram.com/cfak883/",
     "facebook": "https://www.facebook.com/CFAK883/",
-    "tags": ["musique", "campus"]
+    "tags": [
+      "musique",
+      "campus"
+    ],
+    "_streamStatus": "none"
   },
   {
     "id": "choq",
@@ -109,7 +141,12 @@
     "description": "La radio numérique des étudiants de l'UQAM. Créative, engagée et à l'avant-garde des tendances médiatiques.",
     "instagram": "https://www.instagram.com/choq.ca/",
     "facebook": "",
-    "tags": ["numérique", "créatif", "balados"]
+    "tags": [
+      "numérique",
+      "créatif",
+      "balados"
+    ],
+    "_streamStatus": "none"
   },
   {
     "id": "cjep",
@@ -125,7 +162,12 @@
     "description": "La radio étudiante du Cégep de Jonquière. Émissions étudiantes, balados et expression libre sur le campus.",
     "instagram": "",
     "facebook": "https://www.facebook.com/CJEPRADIO/",
-    "tags": ["étudiant", "cégep", "balados"]
+    "tags": [
+      "étudiant",
+      "cégep",
+      "balados"
+    ],
+    "_streamStatus": "none"
   },
   {
     "id": "crem",
@@ -141,6 +183,10 @@
     "description": "Donne vie au cégep avec des émissions musicales, de l'information et des projets étudiants passionnants.",
     "instagram": "",
     "facebook": "",
-    "tags": ["cégep", "étudiant"]
+    "tags": [
+      "cégep",
+      "étudiant"
+    ],
+    "_streamStatus": "none"
   }
 ]
