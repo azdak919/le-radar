@@ -9,6 +9,8 @@ const APP_SHELL = [
   "./assets/icon.svg",
   "./assets/icon-192.png",
   "./assets/icon-512.png",
+  "./assets/logos/req-icon.jpg",
+  "./assets/logos/req-logo.jpg",
 ];
 
 self.addEventListener("install", (event) => {
