@@ -2,10 +2,18 @@
 // Clean, beautiful, mobile-first directory + player
 
 // === STREAM PROXY CONFIG ===
-// Leave empty to use direct streams (works for many).
-// Set this to your Cloudflare Worker URL (see proxy/cloudflare-worker.js) 
-// for maximum compatibility (HTTPS + CORS for all stations).
-const PROXY_BASE = ''; // e.g. 'https://req-stream-proxy.your-subdomain.workers.dev'
+// Leave as '' to use direct streams (best performance when they are HTTPS).
+//
+// To listen to almost all stations directly on this site (instead of the
+// official radio websites), deploy the proxy once:
+//
+//   1. Copy proxy/cloudflare-worker.js
+//   2. Paste it into a new Cloudflare Worker (free)
+//   3. Deploy → you get https://something.workers.dev
+//   4. Put that URL here:
+//
+// const PROXY_BASE = 'https://req-streams.yourname.workers.dev';
+const PROXY_BASE = '';
 
 function getPlayableStream(radio) {
   if (!radio?.stream) return null;
@@ -351,7 +359,9 @@ function openModal(radio) {
                 <span class="inline-block w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
                 Flux direct
               </span>
-              <span class="text-white/40 text-[10px]">Suivi automatiquement</span>
+              <span class="text-white/40 text-[10px]">
+                ${PROXY_BASE ? 'via proxy' : 'Suivi automatiquement'}
+              </span>
             </div>
 
             <div class="flex items-center gap-2 mb-3">
