@@ -1,14 +1,14 @@
 {
-  "name": "CHYZ+",
-  "short_name": "CHYZ+",
-  "description": "Compagnon non officiel pour ecouter CHYZ 94,3 FM, consulter l'horaire et suivre les nouvelles ULaval.",
+  "name": "RÉQ — Radios Étudiantes du Québec",
+  "short_name": "RÉQ",
+  "description": "Découvrez toutes les radios étudiantes des cégeps et universités du Québec. Écoute simple et belle sur mobile.",
   "lang": "fr-CA",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#070707",
-  "theme_color": "#ad0f18",
+  "theme_color": "#0a0a0b",
   "icons": [
     {
       "src": "assets/icon.svg",

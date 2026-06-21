@@ -1,17 +1,14 @@
-const CACHE_NAME = "chyz-plus-shell-v2";
+const CACHE_NAME = "req-shell-v1";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./style.css",
   "./app.js",
-  "./data-utils.js",
-  "./schedule.js",
-  "./news.js",
+  "./radios.json",
   "./manifest.json",
   "./assets/icon.svg",
   "./assets/icon-192.png",
   "./assets/icon-512.png",
-  "./assets/logo-mark.svg",
 ];
 
 self.addEventListener("install", (event) => {

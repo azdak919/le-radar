@@ -1,464 +1,623 @@
-import { fetchJsonWithFallbacks, cleanText } from "./data-utils.js";
-import { getCachedScheduleSnapshot, initSchedulePanel } from "./schedule.js";
-import { initNewsFeed } from "./news.js";
+// RÉQ - Radios Étudiantes du Québec
+// Clean, beautiful, mobile-first directory + player
 
-const STREAM_URL = "https://ecoutez.chyz.ca/proxy/chyz943/stream";
-const STREAM_STATUS_URL = "http://ecoutez.chyz.ca:8000/status-json.xsl";
-const PLAYER_STORAGE_KEY = "chyz-plus-player";
-const LAST_META_KEY = "chyz-plus-last-meta";
-const SCHEDULE_EVENT_NAME = "chyz:schedule-update";
-const GENERIC_TRACK_TITLES = new Set([
-  "",
-  "no name",
-  "chyz 94.3 fm",
-  "chyz 94.3 fm en direct",
-  "stream",
-  "en direct",
-]);
+const GRID = document.getElementById("radios-grid");
+const SEARCH = document.getElementById("search-input");
+const TYPE_FILTERS = document.getElementById("type-filters");
+const REGION_CONTAINER = document.getElementById("region-filters");
+const RESULTS_COUNT = document.getElementById("results-count");
+const EMPTY = document.getElementById("empty-state");
+const CLEAR_BTN = document.getElementById("clear-filters");
+const RANDOM_BTN = document.getElementById("random-btn");
+const MODAL = document.getElementById("modal");
+const MODAL_PANEL = document.getElementById("modal-panel");
+const INSTALL_BTN = document.getElementById("install-button");
+const TOAST_EL = document.getElementById("toast");
 
-const defaultTrack = {
-  title: "CHYZ 94.3 FM en direct",
-  subtitle: "Compagnon non officiel de la radio etudiante de l'Universite Laval.",
-  source: "default",
-};
-
-const audio = document.querySelector("#radio-audio");
-const playButton = document.querySelector("#play-button");
-const playButtonIcon = document.querySelector("#play-button-icon");
-const playButtonLabel = document.querySelector("#play-button-label");
-const muteButton = document.querySelector("#mute-button");
-const muteButtonIcon = document.querySelector("#mute-button-icon");
-const backwardButton = document.querySelector("#backward-button");
-const forwardButton = document.querySelector("#forward-button");
-const volumeSlider = document.querySelector("#volume-slider");
-const volumeReadout = document.querySelector("#volume-readout");
-const nowPlayingTitle = document.querySelector("#now-playing-title");
-const nowPlayingSubtitle = document.querySelector("#now-playing-subtitle");
-const playerStatePill = document.querySelector("#player-state-pill");
-const visualizer = document.querySelector("#visualizer");
-const installButton = document.querySelector("#install-button");
-const installHint = document.querySelector("#install-hint");
-const toast = document.querySelector("#toast");
-
+let radios = [];
+let currentFilters = { type: "all", regions: new Set(), query: "", showFavorites: false };
+let currentRadio = null;
+let audio = null;
+let isPlaying = false;
 let deferredInstallPrompt = null;
-let toastTimer = null;
-let metaIntervalId = null;
-let currentTrack = defaultTrack;
-let latestScheduleSnapshot = null;
 
-boot();
+// Bootstrap
+init();
 
-function boot() {
-  restorePlayerState();
-  latestScheduleSnapshot = getCachedScheduleSnapshot();
-  audio.src = STREAM_URL;
-  audio.volume = clampVolume(audio.volume);
-  audio.preload = "none";
+async function init() {
+  try {
+    const res = await fetch("./radios.json");
+    radios = await res.json();
+  } catch (e) {
+    console.error("Failed to load radios.json", e);
+    radios = [];
+  }
 
-  bindPlayerEvents();
-  bindScheduleEvents();
+  renderRegions();
+  bindFilters();
+  bindSearch();
+  bindGlobalActions();
+
+  renderGrid();
+
   bindInstallFlow();
-  registerServiceWorker();
-  updateTrack(currentTrack ?? defaultTrack, { persist: false });
-  updatePlayerUI();
-  setVolumeLabel();
-  setStreamLabel();
+  setupAudio();
 
-  initSchedulePanel();
-  applyScheduleTrackIfNeeded();
-  initNewsFeed();
-}
-
-function bindPlayerEvents() {
-  playButton.addEventListener("click", togglePlayback);
-  muteButton.addEventListener("click", toggleMute);
-  backwardButton.addEventListener("click", () => seekBy(-15));
-  forwardButton.addEventListener("click", () => seekBy(15));
-  volumeSlider.addEventListener("input", handleVolumeInput);
-
-  audio.addEventListener("play", () => {
-    visualizer.classList.add("is-playing");
-    playerStatePill.textContent = "Lecture";
-    updatePlayerUI();
-    startMetadataRefresh();
-  });
-
-  audio.addEventListener("pause", () => {
-    visualizer.classList.remove("is-playing");
-    playerStatePill.textContent = "Pause";
-    updatePlayerUI();
-    stopMetadataRefresh();
-  });
-
-  audio.addEventListener("playing", () => {
-    playerStatePill.textContent = "En direct";
-    fetchNowPlaying();
-  });
-
-  audio.addEventListener("waiting", () => {
-    playerStatePill.textContent = "Mise en memoire tampon";
-  });
-
-  audio.addEventListener("stalled", () => {
-    playerStatePill.textContent = "Connexion instable";
-  });
-
-  audio.addEventListener("error", () => {
-    playerStatePill.textContent = "Flux indisponible";
-    showToast(
-      "Le flux CHYZ n'a pas repondu. Sur un site HTTPS, un relais securise peut etre necessaire."
-    );
-  });
-
-  audio.addEventListener("volumechange", () => {
-    setVolumeLabel();
-    updateMuteUI();
-    persistPlayerState();
-  });
-
-  document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "visible") {
-      fetchNowPlaying();
+  // Keyboard niceties
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "/" && document.activeElement !== SEARCH) {
+      e.preventDefault();
+      SEARCH.focus();
+    }
+    if (e.key === "Escape" && !MODAL.classList.contains("hidden")) {
+      closeModal();
     }
   });
+
+  // Close modal on outside click
+  MODAL.addEventListener("click", (e) => {
+    if (e.target === MODAL) closeModal();
+  });
+
+  // Seed a default region filter on mobile for discoverability (optional)
 }
 
-async function togglePlayback() {
-  try {
-    if (audio.paused) {
-      await audio.play();
+function renderRegions() {
+  const regions = [...new Set(radios.map(r => r.region))].sort();
+  REGION_CONTAINER.innerHTML = "";
+
+  const allPill = createRegionPill("Toutes les régions", true);
+  allPill.onclick = () => {
+    currentFilters.regions.clear();
+    updateRegionPills();
+    renderGrid();
+  };
+  REGION_CONTAINER.appendChild(allPill);
+
+  regions.forEach(region => {
+    const pill = createRegionPill(region);
+    pill.onclick = () => {
+      if (currentFilters.regions.has(region)) {
+        currentFilters.regions.delete(region);
+      } else {
+        currentFilters.regions.add(region);
+      }
+      updateRegionPills();
+      renderGrid();
+    };
+    REGION_CONTAINER.appendChild(pill);
+  });
+}
+
+function createRegionPill(label, isAll = false) {
+  const el = document.createElement("div");
+  el.className = `region-pill ${isAll ? "active" : ""}`;
+  el.textContent = label;
+  el.dataset.region = isAll ? "all" : label;
+  return el;
+}
+
+function updateRegionPills() {
+  [...REGION_CONTAINER.children].forEach(pill => {
+    const r = pill.dataset.region;
+    if (r === "all") {
+      pill.classList.toggle("active", currentFilters.regions.size === 0);
     } else {
-      audio.pause();
+      pill.classList.toggle("active", currentFilters.regions.has(r));
     }
-  } catch (error) {
-    console.error(error);
-    playerStatePill.textContent = "Lecture bloquee";
-    showToast("Appuie a nouveau pour autoriser la lecture audio sur ce navigateur.");
-  }
+  });
 }
 
-function toggleMute() {
-  audio.muted = !audio.muted;
-  updateMuteUI();
-}
+function bindFilters() {
+  TYPE_FILTERS.querySelectorAll("button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (btn.id === "fav-filter-btn") {
+        // Toggle favorites-only mode
+        currentFilters.showFavorites = !currentFilters.showFavorites;
+        btn.classList.toggle("active", currentFilters.showFavorites);
+        renderGrid();
+        return;
+      }
 
-function handleVolumeInput(event) {
-  const value = clampVolume(Number(event.target.value));
-  audio.muted = false;
-  audio.volume = value;
-  persistPlayerState();
-}
-
-function updatePlayerUI() {
-  const isPlaying = !audio.paused;
-  playButton.setAttribute("aria-pressed", String(isPlaying));
-  playButtonIcon.textContent = isPlaying ? "❚❚" : "▶";
-  playButtonLabel.textContent = isPlaying ? "Pause" : "Lire";
-}
-
-function updateMuteUI() {
-  const muted = audio.muted || audio.volume === 0;
-  muteButton.setAttribute("aria-pressed", String(muted));
-  muteButtonIcon.textContent = muted ? "🔇" : "🔊";
-}
-
-function setVolumeLabel() {
-  const currentVolume = audio.muted ? 0 : audio.volume;
-  volumeSlider.value = String(audio.muted ? audio.volume : currentVolume);
-  volumeReadout.textContent = `${Math.round(currentVolume * 100)}%`;
-}
-
-function seekBy(seconds) {
-  if (!audio.seekable || audio.seekable.length === 0 || !Number.isFinite(audio.currentTime)) {
-    showToast("Ce direct ne permet pas encore le saut dans le tampon.");
-    return;
-  }
-
-  const seekableIndex = audio.seekable.length - 1;
-  const min = audio.seekable.start(seekableIndex);
-  const max = audio.seekable.end(seekableIndex);
-  const target = Math.min(max, Math.max(min, audio.currentTime + seconds));
-
-  audio.currentTime = target;
-
-  if (seconds > 0 && target >= max - 0.25) {
-    playerStatePill.textContent = "Retour au direct";
-  }
-}
-
-function persistPlayerState() {
-  localStorage.setItem(
-    PLAYER_STORAGE_KEY,
-    JSON.stringify({
-      volume: audio.volume,
-      muted: audio.muted,
-    })
-  );
-}
-
-function restorePlayerState() {
-  const savedState = localStorage.getItem(PLAYER_STORAGE_KEY);
-
-  if (savedState) {
-    try {
-      const parsed = JSON.parse(savedState);
-      audio.volume = clampVolume(parsed.volume ?? 0.8);
-      audio.muted = Boolean(parsed.muted);
-    } catch (error) {
-      console.warn("Unable to restore saved player state.", error);
-    }
-  } else {
-    audio.volume = 0.8;
-  }
-
-  const lastTrack = localStorage.getItem(LAST_META_KEY);
-  if (lastTrack) {
-    try {
-      const parsedTrack = JSON.parse(lastTrack);
-      updateTrack(parsedTrack);
-    } catch (error) {
-      console.warn("Unable to restore last track.", error);
-    }
-  }
-}
-
-async function fetchNowPlaying() {
-  const scheduleTrack = buildScheduleFallbackTrack(latestScheduleSnapshot);
-
-  try {
-    const data = await fetchJsonWithFallbacks(STREAM_STATUS_URL);
-    const source = Array.isArray(data?.icestats?.source)
-      ? data.icestats.source[0]
-      : data?.icestats?.source;
-    const liveTitle = pickLiveTitle(source);
-
-    if (liveTitle) {
-      const subtitle = buildLiveSubtitle(source, scheduleTrack);
-
-      updateTrack({
-        title: liveTitle,
-        subtitle: subtitle || defaultTrack.subtitle,
-        source: "live",
+      TYPE_FILTERS.querySelectorAll("button").forEach(b => {
+        if (b.id !== "fav-filter-btn") b.classList.remove("active");
       });
-      return;
-    }
+      btn.classList.add("active");
+      currentFilters.type = btn.dataset.type;
+      currentFilters.showFavorites = false;
+      document.getElementById("fav-filter-btn")?.classList.remove("active");
+      renderGrid();
+    });
+  });
 
-    if (scheduleTrack) {
-      updateTrack(scheduleTrack, { persist: false });
-      return;
-    }
-
-    updateTrack(defaultTrack, { persist: false });
-  } catch (error) {
-    if (scheduleTrack) {
-      updateTrack(scheduleTrack, { persist: false });
-    } else {
-      updateTrack(defaultTrack, { persist: false });
-    }
-    console.warn("Now playing metadata unavailable.", error);
-  }
+  CLEAR_BTN?.addEventListener("click", () => {
+    resetFilters();
+  });
 }
 
-function updateTrack(track, options = { persist: true }) {
-  const safeTrack = {
-    title: cleanText(track?.title) || defaultTrack.title,
-    subtitle: cleanText(track?.subtitle) || defaultTrack.subtitle,
-    source: track?.source || defaultTrack.source,
+function bindSearch() {
+  let t;
+  SEARCH.addEventListener("input", () => {
+    clearTimeout(t);
+    t = setTimeout(() => {
+      currentFilters.query = SEARCH.value.trim().toLowerCase();
+      renderGrid();
+    }, 120);
+  });
+}
+
+function resetFilters() {
+  currentFilters = { type: "all", regions: new Set(), query: "", showFavorites: false };
+  SEARCH.value = "";
+
+  TYPE_FILTERS.querySelectorAll("button").forEach(b => b.classList.remove("active"));
+  TYPE_FILTERS.querySelector('[data-type="all"]').classList.add("active");
+  document.getElementById("fav-filter-btn")?.classList.remove("active");
+
+  updateRegionPills();
+  renderGrid();
+}
+
+function bindGlobalActions() {
+  RANDOM_BTN.addEventListener("click", () => {
+    if (!radios.length) return;
+    const filtered = getFilteredRadios();
+    const pool = filtered.length ? filtered : radios;
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+    openModal(pick);
+  });
+}
+
+function getFilteredRadios() {
+  const favs = getFavorites();
+  return radios.filter(r => {
+    const matchesType =
+      currentFilters.type === "all" ||
+      r.type === currentFilters.type;
+
+    const matchesRegion =
+      currentFilters.regions.size === 0 ||
+      currentFilters.regions.has(r.region);
+
+    const q = currentFilters.query;
+    const matchesQuery =
+      !q ||
+      r.name.toLowerCase().includes(q) ||
+      r.fullName.toLowerCase().includes(q) ||
+      r.institution.toLowerCase().includes(q) ||
+      r.city.toLowerCase().includes(q) ||
+      (r.description && r.description.toLowerCase().includes(q));
+
+    const matchesFav = !currentFilters.showFavorites || favs.includes(r.id);
+
+    return matchesType && matchesRegion && matchesQuery && matchesFav;
+  });
+}
+
+function renderGrid() {
+  const filtered = getFilteredRadios();
+  GRID.innerHTML = "";
+  EMPTY.classList.toggle("hidden", filtered.length > 0);
+
+  RESULTS_COUNT.textContent = `${filtered.length} radio${filtered.length > 1 ? "s" : ""}`;
+
+  filtered.forEach(radio => {
+    const card = createRadioCard(radio);
+    GRID.appendChild(card);
+  });
+}
+
+function createRadioCard(radio) {
+  const el = document.createElement("div");
+  el.className = "radio-card glass flex flex-col gap-3 rounded-3xl p-4 cursor-pointer border border-white/10";
+
+  const hasStream = !!radio.stream;
+  const initials = getInitials(radio.name);
+  const isFav = getFavorites().includes(radio.id);
+
+  el.innerHTML = `
+    <div class="flex items-start gap-3">
+      <div class="logo-badge ${radio.id} h-12 w-12 shrink-0 text-base ring-1 ring-white/15" aria-hidden="true">
+        ${initials}
+      </div>
+      <div class="min-w-0 flex-1">
+        <div class="flex items-start justify-between gap-2">
+          <div class="min-w-0">
+            <div class="font-semibold text-lg leading-none tracking-tight">${radio.name}</div>
+            <div class="mt-0.5 text-sm text-white/65">${radio.frequency} • ${radio.city}</div>
+          </div>
+          <div class="flex items-center gap-1.5">
+            ${hasStream ? `<div class="live-pill text-[10px] font-bold px-2 py-px self-start mt-0.5">LIVE</div>` : ""}
+            <span class="fav-star text-lg leading-none ${isFav ? "text-rose-400" : "text-white/30"}" title="${isFav ? "Favori" : ""}">♥</span>
+          </div>
+        </div>
+        <div class="mt-2 text-sm text-white/80 line-clamp-1">${radio.institution}</div>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between pt-1">
+      <div class="flex items-center gap-1.5 text-xs">
+        <span class="rounded-full bg-white/5 px-2.5 py-0.5 text-white/60">${radio.type === "universite" ? "Université" : "Cégep"}</span>
+      </div>
+
+      <div class="flex items-center gap-1.5">
+        <button class="listen-btn px-3 py-1.5 text-xs font-semibold rounded-2xl border border-white/15 bg-white/5 active:bg-white/10 transition"
+                data-action="listen">
+          ${hasStream ? "Écouter" : "Site"}
+        </button>
+        <button class="px-2.5 py-1.5 text-xs font-medium rounded-2xl border border-white/10 hover:bg-white/5 transition" data-action="details">
+          Détails
+        </button>
+      </div>
+    </div>
+  `;
+
+  // Card click opens modal
+  el.addEventListener("click", (e) => {
+    if (e.target.closest("[data-action]")) return;
+    openModal(radio);
+  });
+
+  // Buttons
+  const listenBtn = el.querySelector('[data-action="listen"]');
+  const detailsBtn = el.querySelector('[data-action="details"]');
+
+  listenBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (radio.stream) {
+      openModal(radio);
+      // Auto play shortly after open
+      setTimeout(() => playRadio(radio), 380);
+    } else {
+      window.open(radio.website, "_blank");
+    }
+  });
+
+  detailsBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    openModal(radio);
+  });
+
+  return el;
+}
+
+function getInitials(name) {
+  return name
+    .split(/[\s.-]+/)
+    .map(w => w[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+}
+
+function openModal(radio) {
+  currentRadio = radio;
+  const hasStream = !!radio.stream;
+
+  const socials = [];
+  if (radio.instagram) socials.push(`<a href="${radio.instagram}" target="_blank" class="modal-btn flex-1 text-center text-sm border border-white/10 rounded-2xl py-3 hover:bg-white/5">Instagram</a>`);
+  if (radio.facebook) socials.push(`<a href="${radio.facebook}" target="_blank" class="modal-btn flex-1 text-center text-sm border border-white/10 rounded-2xl py-3 hover:bg-white/5">Facebook</a>`);
+  if (radio.website) socials.push(`<a href="${radio.website}" target="_blank" class="modal-btn flex-1 text-center text-sm border border-white/10 rounded-2xl py-3 hover:bg-white/5">Site web</a>`);
+
+  MODAL_PANEL.innerHTML = `
+    <div class="p-5 sm:p-7">
+      <!-- Header -->
+      <div class="flex items-start justify-between">
+        <div class="flex items-center gap-4">
+          <div class="logo-badge ${radio.id} h-16 w-16 text-2xl ring-1 ring-white/20">${getInitials(radio.name)}</div>
+          <div>
+            <div class="font-display text-3xl font-semibold tracking-[-1.5px]">${radio.fullName}</div>
+            <div class="text-white/65 mt-0.5">${radio.institution} — ${radio.city}</div>
+            <div class="mt-1 flex items-center gap-2 text-xs">
+              <span class="rounded-full bg-white/5 px-2.5 py-[1px] text-white/75">${radio.frequency}</span>
+              <span class="rounded-full bg-white/5 px-2.5 py-[1px] text-white/75">${radio.type === "universite" ? "Université" : "Cégep"}</span>
+              ${hasStream ? `<span class="live-pill px-2 py-px text-[10px]">EN DIRECT</span>` : ""}
+            </div>
+          </div>
+        </div>
+        <button id="modal-close" class="text-3xl leading-none text-white/40 hover:text-white p-1 -mr-2">×</button>
+      </div>
+
+      <!-- Description -->
+      <p class="mt-5 text-[15px] leading-relaxed text-white/80">${radio.description || "Radio étudiante du Québec."}</p>
+
+      <!-- Player area -->
+      <div class="mt-6 rounded-3xl border border-white/10 bg-black/40 p-4">
+        <div class="mb-3 flex items-center justify-between px-1">
+          <div>
+            <div class="text-xs uppercase tracking-[1.5px] text-white/45">Écoute en direct</div>
+            <div class="font-medium">${hasStream ? "Lecteur intégré" : "Via le site officiel"}</div>
+          </div>
+          ${hasStream ? `<div id="modal-status" class="text-xs px-3 py-1 rounded-full bg-white/5 text-white/60">Prêt</div>` : ""}
+        </div>
+
+        ${hasStream
+          ? `
+          <div id="modal-player">
+            <div class="flex items-center gap-2 mb-3">
+              <button id="modal-play" class="player-button player-button--primary flex-1 text-base">▶ LIRE</button>
+              <button id="modal-pause" class="player-button flex-1 hidden text-base">PAUSE</button>
+              <button id="modal-seek-back" class="player-button w-14 text-sm">-15</button>
+              <button id="modal-seek-fwd" class="player-button w-14 text-sm">+15</button>
+            </div>
+
+            <div id="modal-visualizer" class="visualizer mb-3 mx-auto w-full max-w-[260px]">
+              ${Array.from({length: 9}).map(() => `<span class="bar"></span>`).join("")}
+            </div>
+
+            <div class="flex items-center gap-3 px-1">
+              <span class="text-xs text-white/50 w-8">Vol</span>
+              <input id="modal-volume" type="range" min="0" max="1" step="0.01" value="0.8" class="volume-slider flex-1">
+              <span id="modal-vol-value" class="w-9 text-right text-xs text-white/60">80%</span>
+            </div>
+          </div>`
+          : `
+          <button onclick="window.open('${radio.website}', '_blank')" 
+                  class="modal-btn mt-1 w-full border border-accent/50 bg-accent/10 hover:bg-accent/20 py-3.5 font-semibold text-accentSoft">
+            Ouvrir le lecteur officiel →
+          </button>`
+        }
+      </div>
+
+      <!-- Quick actions -->
+      <div class="mt-4 flex gap-2">
+        ${socials.join("")}
+      </div>
+
+      <!-- Schedule / Info -->
+      <div class="mt-6 rounded-2xl border border-white/8 bg-white/[0.015] p-4 text-sm">
+        <div class="font-medium mb-1 text-white/85">Horaire et émissions</div>
+        <p class="text-white/60 text-[13px] leading-relaxed">
+          Les grilles changent souvent. Consulte le site officiel de la radio pour la programmation complète et les balados.
+        </p>
+        <a href="${radio.website}" target="_blank" class="inline-block mt-2 text-xs text-accentSoft underline decoration-accent/30">Voir la programmation officielle →</a>
+      </div>
+
+      <div class="mt-4 flex justify-between items-center text-[10px] text-white/40 px-1">
+        <div>${radio.region}</div>
+        <button id="fav-btn" class="flex items-center gap-1 text-xs hover:text-white transition">
+          <span id="fav-icon">♡</span>
+          <span id="fav-text">Favori</span>
+        </button>
+      </div>
+    </div>
+  `;
+
+  MODAL.classList.remove("hidden");
+  MODAL.classList.add("flex");
+
+  // Close button
+  document.getElementById("modal-close").onclick = closeModal;
+
+  // If has stream → wire player inside modal
+  if (hasStream) {
+    setupModalPlayer(radio);
+  }
+
+  // Favorites
+  setupFavoritesButton(radio);
+
+  // Keyboard escape already handled globally
+}
+
+function setupModalPlayer(radio) {
+  const playBtn = document.getElementById("modal-play");
+  const pauseBtn = document.getElementById("modal-pause");
+  const backBtn = document.getElementById("modal-seek-back");
+  const fwdBtn = document.getElementById("modal-seek-fwd");
+  const volSlider = document.getElementById("modal-volume");
+  const volValue = document.getElementById("modal-vol-value");
+  const visual = document.getElementById("modal-visualizer");
+  const status = document.getElementById("modal-status");
+
+  if (!audio) setupAudio();
+
+  // Restore volume
+  const saved = localStorage.getItem("req-player-vol");
+  const vol = saved ? parseFloat(saved) : 0.8;
+  audio.volume = vol;
+  if (volSlider) {
+    volSlider.value = vol;
+    volValue.textContent = Math.round(vol * 100) + "%";
+  }
+
+  const updateUI = () => {
+    const playingThis = !audio.paused && currentRadio?.id === radio.id;
+    if (playBtn && pauseBtn) {
+      playBtn.classList.toggle("hidden", playingThis);
+      pauseBtn.classList.toggle("hidden", !playingThis);
+    }
+    visual?.classList.toggle("is-playing", playingThis);
+    if (status) status.textContent = playingThis ? "En direct" : "Prêt";
   };
 
-  currentTrack = safeTrack;
-  nowPlayingTitle.textContent = safeTrack.title;
-  nowPlayingSubtitle.textContent = safeTrack.subtitle;
-  applyMediaSession(safeTrack);
+  playBtn.onclick = async () => {
+    try {
+      if (audio.src !== radio.stream) {
+        audio.src = radio.stream;
+      }
+      await audio.play();
+      updateUI();
+    } catch (err) {
+      showToast("Appuie à nouveau pour autoriser la lecture.");
+    }
+  };
 
-  if (options.persist !== false) {
-    localStorage.setItem(LAST_META_KEY, JSON.stringify(safeTrack));
-  }
+  pauseBtn.onclick = () => {
+    audio.pause();
+    updateUI();
+  };
+
+  backBtn.onclick = () => seek(-15);
+  fwdBtn.onclick = () => seek(15);
+
+  volSlider.oninput = (e) => {
+    const v = parseFloat(e.target.value);
+    audio.volume = v;
+    localStorage.setItem("req-player-vol", v);
+    volValue.textContent = Math.round(v * 100) + "%";
+  };
+
+  // Keep UI in sync
+  const sync = () => updateUI();
+  audio.addEventListener("play", sync);
+  audio.addEventListener("pause", sync);
+  audio.addEventListener("ended", sync);
+
+  // Initial state
+  updateUI();
 }
 
-function applyMediaSession(track) {
-  if (!("mediaSession" in navigator)) {
-    return;
-  }
+function setupFavoritesButton(radio) {
+  const favBtn = document.getElementById("fav-btn");
+  const favIcon = document.getElementById("fav-icon");
+  const favText = document.getElementById("fav-text");
 
-  navigator.mediaSession.metadata = new MediaMetadata({
-    title: track.title,
-    artist: "CHYZ 94.3 FM",
-    album: "Universite Laval",
-    artwork: [
-      { src: "assets/icon-192.png", sizes: "192x192", type: "image/png" },
-      { src: "assets/icon-512.png", sizes: "512x512", type: "image/png" },
-    ],
+  const updateFavUI = () => {
+    const favs = getFavorites();
+    const isFav = favs.includes(radio.id);
+    favIcon.textContent = isFav ? "♥" : "♡";
+    favText.textContent = isFav ? "Retirer" : "Favori";
+    favIcon.style.color = isFav ? "#f43f5e" : "";
+  };
+
+  favBtn.onclick = () => {
+    toggleFavorite(radio.id);
+    updateFavUI();
+    // refresh grid so hearts appear if we ever show them on cards
+    renderGrid();
+  };
+
+  updateFavUI();
+}
+
+function seek(seconds) {
+  if (!audio || !audio.seekable || audio.seekable.length === 0) return;
+  const idx = audio.seekable.length - 1;
+  const target = Math.min(
+    audio.seekable.end(idx),
+    Math.max(audio.seekable.start(idx), audio.currentTime + seconds)
+  );
+  audio.currentTime = target;
+}
+
+function setupAudio() {
+  if (audio) return;
+
+  audio = new Audio();
+  audio.preload = "none";
+  audio.crossOrigin = "anonymous";
+
+  audio.addEventListener("error", () => {
+    showToast("Flux indisponible pour le moment.");
   });
 
-  navigator.mediaSession.setActionHandler("play", () => togglePlayback());
-  navigator.mediaSession.setActionHandler("pause", () => audio.pause());
-  navigator.mediaSession.setActionHandler("stop", () => audio.pause());
-  navigator.mediaSession.setActionHandler("seekbackward", () => seekBy(-15));
-  navigator.mediaSession.setActionHandler("seekforward", () => seekBy(15));
+  // Keep playing in background when possible (PWA)
+  if ("mediaSession" in navigator) {
+    navigator.mediaSession.setActionHandler("play", () => audio.play());
+    navigator.mediaSession.setActionHandler("pause", () => audio.pause());
+  }
 }
 
-function startMetadataRefresh() {
-  if (metaIntervalId) {
+async function playRadio(radio) {
+  if (!radio.stream) {
+    window.open(radio.website, "_blank");
     return;
   }
 
-  fetchNowPlaying();
-  metaIntervalId = window.setInterval(fetchNowPlaying, 45_000);
-}
+  if (!audio) setupAudio();
 
-function stopMetadataRefresh() {
-  if (!metaIntervalId) {
-    return;
-  }
+  try {
+    if (audio.src !== radio.stream) {
+      audio.src = radio.stream;
+    }
+    await audio.play();
 
-  window.clearInterval(metaIntervalId);
-  metaIntervalId = null;
-}
-
-function bindInstallFlow() {
-  window.addEventListener("beforeinstallprompt", (event) => {
-    event.preventDefault();
-    deferredInstallPrompt = event;
-    installButton.classList.remove("hidden");
-    installHint.textContent = "Installe CHYZ+ pour lancer le direct depuis l'ecran d'accueil.";
-  });
-
-  installButton.addEventListener("click", async () => {
-    if (!deferredInstallPrompt) {
-      showToast("Ajoute l'app a l'ecran d'accueil depuis le menu de ton navigateur.");
-      return;
+    // update media session
+    if ("mediaSession" in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: radio.fullName,
+        artist: radio.institution,
+        album: "RÉQ — Radios Étudiantes QC",
+      });
     }
 
-    deferredInstallPrompt.prompt();
-    await deferredInstallPrompt.userChoice;
-    deferredInstallPrompt = null;
-    installButton.classList.add("hidden");
+    // If a modal is open for this radio, update its UI
+    if (currentRadio?.id === radio.id) {
+      const vis = document.getElementById("modal-visualizer");
+      vis?.classList.add("is-playing");
+      const st = document.getElementById("modal-status");
+      if (st) st.textContent = "En direct";
+    }
+
+    showToast(`Lecture de ${radio.name}`);
+  } catch (err) {
+    showToast("Lecture bloquée. Appuie sur Play dans la carte ou le modal.");
+  }
+}
+
+function closeModal() {
+  MODAL.classList.remove("flex");
+  MODAL.classList.add("hidden");
+  currentRadio = null;
+
+  // Pause only if you want. We keep audio playing for background listening.
+  // Most users appreciate continuing playback.
+}
+
+function showToast(msg) {
+  if (!TOAST_EL) return;
+  TOAST_EL.textContent = msg;
+  TOAST_EL.style.display = "block";
+  TOAST_EL.classList.remove("hidden");
+
+  setTimeout(() => {
+    TOAST_EL.style.display = "none";
+    TOAST_EL.classList.add("hidden");
+  }, 2600);
+}
+
+function getFavorites() {
+  try {
+    return JSON.parse(localStorage.getItem("req-favorites") || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function toggleFavorite(id) {
+  const favs = getFavorites();
+  const idx = favs.indexOf(id);
+  if (idx === -1) favs.push(id);
+  else favs.splice(idx, 1);
+  localStorage.setItem("req-favorites", JSON.stringify(favs));
+}
+
+// Install prompt (PWA)
+function bindInstallFlow() {
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    if (INSTALL_BTN) {
+      INSTALL_BTN.classList.remove("hidden");
+      INSTALL_BTN.onclick = async () => {
+        if (!deferredInstallPrompt) return;
+        deferredInstallPrompt.prompt();
+        await deferredInstallPrompt.userChoice;
+        deferredInstallPrompt = null;
+        INSTALL_BTN.classList.add("hidden");
+      };
+    }
   });
 
   window.addEventListener("appinstalled", () => {
-    installButton.classList.add("hidden");
-    installHint.textContent = "CHYZ+ est installee sur cet appareil.";
-  });
-
-  if (isIosStandaloneCapable()) {
-    installHint.textContent =
-      "Sur iPhone ou iPad: partage puis Sur l'ecran d'accueil pour installer.";
-  }
-}
-
-async function registerServiceWorker() {
-  if (!("serviceWorker" in navigator)) {
-    return;
-  }
-
-  try {
-    await navigator.serviceWorker.register("./sw.js");
-  } catch (error) {
-    console.warn("Service worker registration failed.", error);
-  }
-}
-
-function setStreamLabel() {
-  const streamUrlLabel = document.querySelector("#stream-url-label");
-  if (streamUrlLabel) {
-    streamUrlLabel.textContent = STREAM_URL;
-  }
-}
-
-function showToast(message) {
-  if (!toast) {
-    return;
-  }
-
-  toast.textContent = message;
-  toast.classList.remove("translate-y-8", "opacity-0");
-  toast.classList.add("translate-y-0", "opacity-100");
-
-  window.clearTimeout(toastTimer);
-  toastTimer = window.setTimeout(() => {
-    toast.classList.add("translate-y-8", "opacity-0");
-    toast.classList.remove("translate-y-0", "opacity-100");
-  }, 3200);
-}
-
-function isIosStandaloneCapable() {
-  const ios = /iphone|ipad|ipod/i.test(window.navigator.userAgent);
-  return ios && !window.matchMedia("(display-mode: standalone)").matches;
-}
-
-function bindScheduleEvents() {
-  window.addEventListener(SCHEDULE_EVENT_NAME, (event) => {
-    latestScheduleSnapshot = event.detail ?? null;
-    applyScheduleTrackIfNeeded();
+    if (INSTALL_BTN) INSTALL_BTN.classList.add("hidden");
+    showToast("RÉQ installée. Merci !");
   });
 }
 
-function applyScheduleTrackIfNeeded() {
-  const scheduleTrack = buildScheduleFallbackTrack(latestScheduleSnapshot);
-
-  if (!scheduleTrack) {
-    return;
-  }
-
-  if (currentTrack.source !== "live") {
-    updateTrack(scheduleTrack, { persist: false });
-  }
-}
-
-function buildScheduleFallbackTrack(snapshot) {
-  const currentShow = snapshot?.current;
-
-  if (!currentShow?.title) {
-    return null;
-  }
-
-  return {
-    title: currentShow.title,
-    subtitle: [currentShow.timeLabel, currentShow.description].filter(Boolean).join(" • "),
-    source: "schedule",
-  };
-}
-
-function pickLiveTitle(source) {
-  const candidates = [source?.title, source?.server_name, source?.server_description]
-    .map(cleanText)
-    .filter(Boolean);
-
-  return candidates.find((candidate) => !isGenericTrackTitle(candidate)) || "";
-}
-
-function buildLiveSubtitle(source, scheduleTrack) {
-  const subtitleParts = [source?.server_description, source?.genre]
-    .map(cleanText)
-    .filter(Boolean)
-    .filter((value) => !isGenericTrackTitle(value));
-
-  if (subtitleParts.length > 0) {
-    return subtitleParts.slice(0, 2).join(" • ");
-  }
-
-  return scheduleTrack?.subtitle || "";
-}
-
-function isGenericTrackTitle(value) {
-  const normalized = cleanText(value).toLowerCase();
-
-  if (!normalized) {
-    return true;
-  }
-
-  if (GENERIC_TRACK_TITLES.has(normalized)) {
-    return true;
-  }
-
-  return normalized.includes("shoutcast") || normalized === "misc";
-}
-
-function clampVolume(value) {
-  if (!Number.isFinite(value)) {
-    return 0.8;
-  }
-
-  return Math.min(1, Math.max(0, value));
-}
+// Helper to allow external calls if needed
+window.REQ = { playRadio, openRadio: (id) => {
+  const r = radios.find(x => x.id === id);
+  if (r) openModal(r);
+}};
