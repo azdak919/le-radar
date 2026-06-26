@@ -15,10 +15,12 @@
 ## ✨ Fonctionnalités
 
 - **Interface magnifique et mobile-first** — Design glassmorphism moderne, typographie soignée et animations fluides
-- **Recherche instantanée** + filtres puissants :
-  - Par type (Universités / Cégeps / Tous)
-  - Par région (Montréal, Québec, Estrie, Saguenay, etc.)
-  - Favoris (♥)
+- **Deux sections** via une navigation segmentée :
+  - 📻 **Radios** — le répertoire avec filtres puissants :
+    - Par type (Universités / Cégeps / Tous)
+    - Par région (Montréal, Québec, Estrie, Saguenay, etc.)
+    - Favoris (♥)
+  - 📰 **Actualités étudiantes** — un fil de nouvelles agrégeant les flux RSS des journaux étudiants (Quartier Libre, Montréal Campus, Le Délit, The McGill Daily, The Link, Zone Campus…), filtrable par source
 - **Cartes claires et informatives** : nom, fréquence, institution, ville + indicateur "LIVE" quand un flux direct est disponible
 - **Lecteur audio intégré** dans le modal pour les stations qui fournissent un flux HTTPS public (ex: CHYZ, CKUT)
 - **Modal riche** avec description, liens sociaux, site officiel et informations pratiques
@@ -26,6 +28,7 @@
 - Favoris persistants (localStorage)
 - Support **PWA complet** : installation sur mobile, icônes, offline shell, Media Session API (contrôles sur l’écran de verrouillage)
 - **Très léger** : site statique, Tailwind via CDN, JavaScript vanilla pur
+- **100 % sans serveur** : le fil de nouvelles est reconstruit par un bot GitHub Actions (`scripts/fetch-news.js`) qui écrit `news.json` — aucune requête CORS côté navigateur
 
 ---
 
@@ -34,7 +37,8 @@
 Ouvre l’application sur ton téléphone ou dans un navigateur desktop :
 
 - Grille responsive (1 à 4 colonnes)
-- Recherche et filtres ultra-réactifs
+- Navigation segmentée Radios / Actualités
+- Filtres ultra-réactifs (type, région, source de nouvelles)
 - Modal qui s’ouvre parfaitement sur mobile
 - Lecteur avec visualiseur d’égaliseur quand tu écoutes en direct
 
