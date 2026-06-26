@@ -31,6 +31,8 @@ const TIMEOUT = 9000;
 const KNOWN_STREAMS = {
   chyz: 'https://ecoutez.chyz.ca/proxy/chyz943/stream',
   ckut: 'https://ckut.out.airtime.pro/ckut_a',
+  // HTTPS mount — playable directly on the HTTPS site (the :8000 HTTP one is blocked as mixed content)
+  cism: 'https://stream03.ustream.ca/cism128.mp3',
   // Add more here when we find reliable direct ones
 };
 
@@ -42,6 +44,7 @@ const STATION_HINTS = {
     'https://icecast.ckut.ca/903fm-192-stereo',
   ],
   cism: [
+    'https://stream03.ustream.ca/cism128.mp3',
     'http://stream03.ustream.ca:8000/cism128.mp3',
     'https://cism893.ca/stream',
   ],
