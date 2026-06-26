@@ -227,7 +227,7 @@ function createRadioCard(radio) {
             <div class="mt-0.5 text-xs text-white/55">${radio.frequency} · ${radio.city}</div>
           </div>
           <div class="flex items-center gap-1.5 shrink-0 mt-0.5">
-            ${hasStream ? `<div class="live-pill">LIVE</div>` : ''}
+            ${hasStream ? `<div class="live-pill">DIRECT</div>` : ''}
             <span class="fav-star text-base leading-none transition-colors ${isFav ? 'text-rose-400' : 'text-white/25 hover:text-white/50'}">♥</span>
           </div>
         </div>
@@ -376,7 +376,7 @@ function openModal(radio, autoPlay = false) {
             <div class="flex items-center gap-3 px-1">
               <span class="text-xs text-white/45 w-7">Vol</span>
               <input id="modal-volume" type="range" min="0" max="1" step="0.01" value="0.8" class="volume-slider flex-1">
-              <span id="modal-vol-value" class="w-8 text-right text-xs text-white/55">80%</span>
+              <span id="modal-vol-value" class="w-8 text-right text-xs text-white/55">80 %</span>
             </div>
           </div>
         ` : `
@@ -442,7 +442,7 @@ function setupModalPlayer(radio, autoPlay = false) {
   audio.volume = saved;
   if (volSlider) {
     volSlider.value = saved;
-    volValue.textContent = Math.round(saved * 100) + '%';
+    volValue.textContent = Math.round(saved * 100) + ' %';
   }
 
   const updateUI = () => {
@@ -480,7 +480,7 @@ function setupModalPlayer(radio, autoPlay = false) {
     audio.volume = v;
     if (PB_VOLUME) PB_VOLUME.value = v;
     localStorage.setItem('req-player-vol', v);
-    volValue.textContent = Math.round(v * 100) + '%';
+    volValue.textContent = Math.round(v * 100) + ' %';
   };
 
   // Sync audio events with this modal
@@ -591,7 +591,7 @@ function bindPlayerBar() {
     const modalVol = document.getElementById('modal-volume');
     const modalVolVal = document.getElementById('modal-vol-value');
     if (modalVol) modalVol.value = v;
-    if (modalVolVal) modalVolVal.textContent = Math.round(v * 100) + '%';
+    if (modalVolVal) modalVolVal.textContent = Math.round(v * 100) + ' %';
   });
 
   PB_CLOSE.addEventListener('click', () => {
@@ -689,7 +689,7 @@ function bindInstallFlow() {
 
   window.addEventListener('appinstalled', () => {
     INSTALL_BTN?.classList.add('hidden');
-    showToast('RÉQ installée. Merci !');
+    showToast('RÉQ installée. Merci !');
   });
 }
 
