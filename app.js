@@ -1377,6 +1377,11 @@ function creditLink(href, label, className = '') {
   a.rel = 'noopener license';
   a.textContent = label;
   if (className) a.className = className;
+  a.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    window.open(href, '_blank', 'noopener');
+  });
   return a;
 }
 
@@ -1414,7 +1419,7 @@ function buildSourcePhotoCreditElement(item = {}) {
   if (inline) {
     cap.appendChild(document.createTextNode(en ? 'Photo: ' : 'Photo : '));
     const label = cleanCreatorDisplay(inline[1].trim());
-    if (url && creator) cap.appendChild(creditLink(url, creator, 'article-media-credit__creator'));
+    if (url && label) cap.appendChild(creditLink(url, label, 'article-media-credit__creator'));
     else cap.appendChild(document.createTextNode(label));
     return cap;
   }
