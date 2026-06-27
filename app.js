@@ -689,7 +689,7 @@ function renderNews() {
   const articleOpts = { hideSourceMeta: isSourceView };
 
   heroItems.forEach((item, i) => {
-    const role = isSourceView ? 'lead' : (i === 0 ? 'lead' : 'feature');
+    const role = i === 0 ? 'lead' : 'feature';
     hero.appendChild(createArticle(item, role, articleOpts));
   });
 
@@ -709,8 +709,7 @@ function renderNews() {
   if (compacts.length) {
     const briefRail = document.createElement('div');
     briefRail.className = 'brief-rail';
-    const briefTitle = isSourceView ? 'À lire aussi' : 'En bref';
-    briefRail.innerHTML = `<h3 class="brief-rail-title">${briefTitle}</h3>`;
+    briefRail.innerHTML = '<h3 class="brief-rail-title">En bref</h3>';
     compacts.forEach((article) => briefRail.appendChild(article));
     if (hero.childElementCount) {
       const railSpacer = document.createElement('div');
@@ -743,7 +742,6 @@ function updateNewsLayout() {
 
 const HERO_SPOTLIGHT_MAX = 4; /* 1 à la une + 3 vedettes */
 const BRIEF_SIDEBAR_MAX = 4;
-const SOURCE_BRIEF_MAX = 4;
 const CONTINGENCY_MAX_SESSIONS_BACK = 3;
 const CONTINGENCY_ULTIMATE_BAND = 4;
 
@@ -1025,10 +1023,10 @@ function collectSourcePool(items, referenceDate = new Date()) {
 
   for (let band = 0; band <= CONTINGENCY_MAX_SESSIONS_BACK; band++) {
     absorb(sessionBandPool(items, referenceDate, band), band);
-    if (pool.length >= 1 + SOURCE_BRIEF_MAX) break;
+    if (pool.length >= HERO_SPOTLIGHT_MAX + BRIEF_SIDEBAR_MAX) break;
   }
 
-  if (pool.length < 1 + SOURCE_BRIEF_MAX) {
+  if (pool.length < HERO_SPOTLIGHT_MAX + BRIEF_SIDEBAR_MAX) {
     const before = pool.length;
     absorb(
       sortByDateDesc(items).filter((item) => isPublishedOnOrBefore(item, referenceDate)),
@@ -1046,19 +1044,25 @@ function pickSourceLead(pool) {
   return withImage || pool[0];
 }
 
-/** Vue média : 1 vedette + colonne « À lire aussi » + suite chronologique. */
+/**
+ * Vue média : même gabarit que le fil global (1 à la une + 3 vedettes,
+ * En bref, Suite du fil), mais sélection chronologique d'un seul journal.
+ */
 function partitionSourceFeed(items, referenceDate = new Date()) {
   const sorted = sortByDateDesc(items);
   const { items: pool, contingencyBand } = collectSourcePool(sorted, referenceDate);
   const lead = pickSourceLead(pool);
   const leadKey = lead ? articleKey(lead) : null;
-  const heroItems = lead ? [lead] : [];
+  const afterLead = pool.filter((item) => articleKey(item) !== leadKey);
+  const features = afterLead.slice(0, HERO_SPOTLIGHT_MAX - 1);
+  const heroItems = lead ? [lead, ...features] : afterLead.slice(0, HERO_SPOTLIGHT_MAX);
+  const heroKeys = new Set(heroItems.map(articleKey));
   const briefItems = pool
-    .filter((item) => articleKey(item) !== leadKey)
-    .slice(0, SOURCE_BRIEF_MAX);
+    .filter((item) => !heroKeys.has(articleKey(item)))
+    .slice(0, BRIEF_SIDEBAR_MAX);
   const briefKeys = new Set(briefItems.map(articleKey));
   const tailItems = sorted.filter(
-    (item) => articleKey(item) !== leadKey && !briefKeys.has(articleKey(item)),
+    (item) => !heroKeys.has(articleKey(item)) && !briefKeys.has(articleKey(item)),
   );
   return { heroItems, briefItems, tailItems, contingencyBand };
 }
