@@ -42,15 +42,9 @@ let currentStation = null; // radio object selected in tuner
 let audio = null;
 let suppressAudioError = false;
 let sourceColors = {};     // source name → accent colour
+let brandColors = { institutions: {}, fallback_palette: ['#003DA5', '#6C2163', '#047857'] };
 
-// Curated, tasteful palette mapped deterministically to each source.
-// Palette catégorielle pour distinguer les sources (indépendante des couleurs de
-// marque). Le rouge est réservé au sémantique « live », d'où le violet en tête.
-const SOURCE_PALETTE = [
-  '#6d28d9', '#1d4ed8', '#047857', '#b45309', '#7c3aed',
-  '#db2777', '#0891b2', '#ea580c', '#4338ca', '#15803d',
-  '#be123c', '#0d9488',
-];
+const GENERIC_AUTHORS = /^(admin|administrator|administrateur|editor|éditeur|editeur|rédaction|redaction|staff|wordpress|webmaster|collectif|tribune|link|daily|exemplaire|quartier libre|zone campus|la pige|le délit|le delit|the link|the tribune|the mcgill daily)$/i;
 
 // ─── Bootstrap ───────────────────────────────────────────────────────────────
 init();
@@ -61,10 +55,15 @@ async function init() {
   setupAudio();
   bindTuner();
 
-  const [radiosData, newsLoaded] = await Promise.allSettled([
+  const [radiosData, newsLoaded, brandLoaded] = await Promise.allSettled([
     fetch('./radios.json').then(r => r.json()),
     loadNews(),
+    fetch('./brand-colors.json').then(r => r.json()),
   ]);
+
+  if (brandLoaded.status === 'fulfilled' && brandLoaded.value?.institutions) {
+    brandColors = brandLoaded.value;
+  }
 
   radios = radiosData.status === 'fulfilled' ? sortRadios(radiosData.value) : [];
   buildTunerOptions();
@@ -322,9 +321,17 @@ async function loadNews() {
 }
 
 function assignSourceColors() {
+  const palette = brandColors.fallback_palette || ['#003DA5', '#6C2163', '#047857'];
+  const byInstitution = brandColors.institutions || {};
   const sources = [...new Set(news.map(n => n.source))].sort((a, b) => a.localeCompare(b, 'fr'));
   sourceColors = {};
-  sources.forEach((src, i) => { sourceColors[src] = SOURCE_PALETTE[i % SOURCE_PALETTE.length]; });
+
+  sources.forEach((src, i) => {
+    const item = news.find(n => n.source === src);
+    const inst = item?.institution || '';
+    const brand = byInstitution[inst];
+    sourceColors[src] = brand?.color || palette[i % palette.length];
+  });
 }
 
 function newsSkeleton(n) {
@@ -386,6 +393,7 @@ function createArticle(item, lead = false) {
   const fresh = d ? (Date.now() - d) < 120 * 60000 : false;
   const { author, body } = splitByline(item);
   const brief = cleanBrief(body);
+  const byLabel = item.lang === 'en' ? 'By' : 'Par';
 
   a.innerHTML = `
     ${lead ? '<span class="article-eyebrow">À la une</span>' : ''}
@@ -395,24 +403,31 @@ function createArticle(item, lead = false) {
       ${time ? `<time class="article-time${fresh ? ' is-fresh' : ''}" datetime="${escapeHtml(item.date)}">${time}</time>` : ''}
     </div>
     <h3 class="article-title">${escapeHtml(item.title)}</h3>
-    ${author ? `<p class="article-byline">Par <strong>${escapeHtml(author)}</strong></p>` : ''}
+    ${author ? `<p class="article-byline">${byLabel} <strong>${escapeHtml(author)}</strong></p>` : ''}
     ${brief ? `<p class="article-brief">${escapeHtml(brief)}</p>` : ''}
   `;
   return a;
 }
 
-// Pull the byline out of the data (preferred) or the "Par …" prefix of the excerpt,
+// Pull the byline out of the data (preferred) or the "Par/By …" prefix of the excerpt,
 // returning the author plus the remaining body text for the brief.
 function splitByline(item) {
   const ex = String(item.excerpt || '');
-  const m = ex.match(/^(\s*Par\s+([\p{Lu}][\p{L}'’.\-]+(?:\s+[\p{Lu}][\p{L}'’.\-]+)?))/u);
-  let author = item.author ? String(item.author).trim() : '';
+  const m = ex.match(/^(\s*(?:Par|By)\s+([\p{Lu}][\p{L}'’.\-]+(?:\s+[\p{Lu}][\p{L}'’.\-]+){0,3}))/u);
+  let author = normalizeAuthor(item.author);
   let body = ex;
   if (m) {
-    if (!author) author = m[2].replace(/\s+/g, ' ').trim();
-    body = ex.slice(m[1].length);
+    if (!author) author = normalizeAuthor(m[2]);
+    body = ex.slice(m[0].length).trim();
   }
   return { author, body };
+}
+
+function normalizeAuthor(name = '') {
+  let a = String(name).replace(/\s+/g, ' ').trim();
+  a = a.replace(/^(?:Par|By)\s+/i, '').trim();
+  if (!a || GENERIC_AUTHORS.test(a) || /@/.test(a)) return '';
+  return a;
 }
 
 // ─── Date / time formatting (Québec) ────────────────────────────────────────────
@@ -459,6 +474,7 @@ function cleanBrief(raw = '') {
   s = s.replace(/\[[^\]]*(?:read more|lire la suite|continue reading)[^\]]*\]/gi, ''); // "[Read More…]"
   s = s.replace(/\[\s*(?:…|\.{2,})\s*\]/g, '');        // bare "[…]" / "[...]"
   s = s.replace(/\b(?:read more|lire la suite|continue reading)\b\.?\s*$/i, '');
+  s = s.replace(/^(?:Dear Tribune|Dear Editor),?\s*/i, ''); // Tribune advice-column openers
   s = s.replace(/\[(?:…|\.\.\.)\]/g, '…');
   s = s.replace(/&(?:nbsp|#160);/gi, ' ');
   s = s.replace(/&amp;/gi, '&');

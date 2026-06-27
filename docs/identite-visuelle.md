@@ -60,14 +60,23 @@ Système **sémantique** : chaque couleur a un rôle, pas seulement une esthéti
 | `--rule-strong` | `#14161A` | `#F1F2F4` | Filets forts (titres de section) |
 | `--tuner-bg` | `#111317` | `#1A1C21` | Bandeau du syntoniseur (toujours sombre) |
 
-### Palette catégorielle (sources)
+### Couleurs des sources (établissements)
 
-Couleurs **fonctionnelles** assignées de façon déterministe à chaque source de nouvelles
-(pastille + accent au survol), pour les distinguer. Indépendantes des couleurs de marque.
-Définies dans `SOURCE_PALETTE` (`app.js`) :
+Les pastilles et accents au survol des articles utilisent la **couleur officielle de
+l'établissement** d'origine (université ou cégep), pas une palette arbitraire.
+Source de vérité : [`brand-colors.json`](../brand-colors.json).
 
-`#6D28D9` · `#1D4ED8` · `#047857` · `#B45309` · `#7C3AED` · `#DB2777` ·
-`#0891B2` · `#EA580C` · `#4338CA` · `#15803D` · `#BE123C` · `#0D9488`
+| Établissement | Couleur | Référence |
+|---|---|---|
+| Université de Montréal | `#0057AC` | Guide de marque UdeM |
+| UQAM | `#0079BE` | Site institutionnel |
+| McGill | `#ED1B2F` | Guide d'identité visuelle |
+| Concordia | `#912338` | Site institutionnel |
+| Université Laval | `#E30513` | Site institutionnel |
+| Université de Sherbrooke | `#006B3F` | Identité visuelle UdeS |
+| UQTR | `#00CB88` | Site institutionnel |
+| Cégep du Vieux Montréal | `#CF1F1F` | Site institutionnel |
+| Cégep de Jonquière | `#FF8B00` | Site institutionnel |
 
 ---
 
