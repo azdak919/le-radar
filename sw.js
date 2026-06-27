@@ -1,4 +1,4 @@
-const CACHE_NAME = "radar-shell-v5";
+const CACHE_NAME = "radar-shell-v6";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -9,8 +9,6 @@ const APP_SHELL = [
   "./assets/icon.svg",
   "./assets/icon-192.png",
   "./assets/icon-512.png",
-  "./assets/logos/req-icon.jpg",
-  "./assets/logos/req-logo.jpg",
 ];
 
 self.addEventListener("install", (event) => {

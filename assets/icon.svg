@@ -1,19 +1,39 @@
 <svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1024" height="1024" rx="240" fill="#070707"/>
-  <circle cx="512" cy="512" r="300" fill="url(#glow)"/>
-  <circle cx="512" cy="512" r="226" fill="#070707" stroke="#FF5A4F" stroke-width="18"/>
-  <rect x="352" y="432" width="44" height="160" rx="22" fill="white"/>
-  <rect x="422" y="372" width="44" height="280" rx="22" fill="white"/>
-  <rect x="492" y="326" width="44" height="372" rx="22" fill="#FF5A4F"/>
-  <rect x="562" y="372" width="44" height="280" rx="22" fill="white"/>
-  <rect x="632" y="432" width="44" height="160" rx="22" fill="white"/>
-  <circle cx="768" cy="268" r="96" fill="#AD0F18"/>
-  <path d="M768 216V320" stroke="white" stroke-width="28" stroke-linecap="round"/>
-  <path d="M716 268H820" stroke="white" stroke-width="28" stroke-linecap="round"/>
   <defs>
-    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(512 512) rotate(90) scale(300)">
-      <stop stop-color="#AD0F18" stop-opacity="0.9"/>
-      <stop offset="1" stop-color="#AD0F18" stop-opacity="0"/>
+    <radialGradient id="bg" cx="50%" cy="38%" r="78%">
+      <stop offset="0%" stop-color="#1c2027"/>
+      <stop offset="100%" stop-color="#0e0f12"/>
     </radialGradient>
+    <linearGradient id="sweep" x1="512" y1="512" x2="724" y2="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#c8102e" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#c8102e" stop-opacity="0.6"/>
+    </linearGradient>
   </defs>
+
+  <!-- Tile -->
+  <rect width="1024" height="1024" rx="232" fill="url(#bg)"/>
+
+  <!-- Radar rings -->
+  <g stroke="#ffffff" fill="none" stroke-opacity="0.16">
+    <circle cx="512" cy="512" r="300" stroke-width="6"/>
+    <circle cx="512" cy="512" r="210" stroke-width="6"/>
+    <circle cx="512" cy="512" r="120" stroke-width="6"/>
+  </g>
+
+  <!-- Crosshair -->
+  <g stroke="#ffffff" stroke-opacity="0.12" stroke-width="6">
+    <line x1="212" y1="512" x2="812" y2="512"/>
+    <line x1="512" y1="212" x2="512" y2="812"/>
+  </g>
+
+  <!-- Sweep wedge + leading edge -->
+  <path d="M512 512 L512 212 A300 300 0 0 1 724 300 Z" fill="url(#sweep)"/>
+  <line x1="512" y1="512" x2="724" y2="300" stroke="#c8102e" stroke-width="11" stroke-linecap="round"/>
+
+  <!-- Blips -->
+  <circle cx="636" cy="404" r="21" fill="#c8102e"/>
+  <circle cx="392" cy="606" r="13" fill="#ffffff" fill-opacity="0.65"/>
+
+  <!-- Center -->
+  <circle cx="512" cy="512" r="17" fill="#ffffff"/>
 </svg>
