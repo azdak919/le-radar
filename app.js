@@ -57,7 +57,6 @@ const TUNER_PLAY     = document.getElementById('tuner-play');
 const TUNER_NAME     = document.getElementById('tuner-now-name');
 const TUNER_SUB      = document.getElementById('tuner-now-sub');
 const TUNER_VOLUME   = document.getElementById('tuner-volume');
-const TUNER_SITE     = document.getElementById('tuner-site');
 const ICO_PLAY       = TUNER_PLAY.querySelector('.ico-play');
 const ICO_PAUSE      = TUNER_PLAY.querySelector('.ico-pause');
 const ICO_EXTERNAL   = TUNER_PLAY.querySelector('.ico-external');
@@ -192,12 +191,6 @@ function bindTuner() {
 
   TUNER_PLAY.addEventListener('click', togglePlay);
 
-  TUNER_SITE.addEventListener('click', (e) => {
-    if (!currentStation || !isExternalListen(currentStation)) return;
-    e.preventDefault();
-    openListenWindow(currentStation);
-  });
-
   TUNER_VOLUME.addEventListener('input', (e) => {
     const v = parseFloat(e.target.value);
     if (audio) audio.volume = v;
@@ -231,18 +224,6 @@ function selectStation(id, { autoplay = false, openExternal = false } = {}) {
   TUNER_SUB.textContent = external
     ? `Écoute sur site externe · ${radio.institution}`
     : `${radio.frequency} · ${radio.institution}`;
-
-  if (external) {
-    const listenUrl = getListenUrl(radio);
-    TUNER_SITE.href = listenUrl;
-    TUNER_SITE.classList.remove('hidden');
-    TUNER_SITE.title = 'Ouvrir le site du poste dans une fenêtre';
-  } else if (radio.website) {
-    TUNER_SITE.href = radio.website;
-    TUNER_SITE.classList.add('hidden');
-  } else {
-    TUNER_SITE.classList.add('hidden');
-  }
 
   TUNER_PLAY.disabled = !playable && !external;
   TUNER_PLAY.title = playable
