@@ -482,57 +482,6 @@ a { color: inherit; }
 }
 .news-updated::before { content: "·"; margin-right: 8px; color: var(--rule); }
 
-/* Vue média unique */
-.source-masthead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin: 10px 0 4px;
-  padding: 14px 16px;
-  border: 1px solid var(--rule);
-  border-radius: 14px;
-  background: var(--surface, var(--bg));
-}
-.source-masthead.hidden { display: none; }
-.source-masthead__brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-}
-.source-masthead__dot {
-  flex: 0 0 auto;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--c, var(--accent));
-}
-.source-masthead__name {
-  font-family: var(--serif);
-  font-size: 1.35rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin: 0;
-  line-height: 1.1;
-}
-.source-masthead__inst {
-  margin: 4px 0 0;
-  font-size: 12px;
-  color: var(--muted);
-}
-.source-masthead__link {
-  flex: 0 0 auto;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: var(--c, var(--accent));
-  text-decoration: none;
-  white-space: nowrap;
-}
-.source-masthead__link:hover { text-decoration: underline; }
-
 .article-meta--time-only {
   justify-content: flex-end;
 }
