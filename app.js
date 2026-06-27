@@ -948,7 +948,8 @@ function pickBriefSidebar(allItems, heroItems = [], referenceDate = new Date()) 
 
 function partitionNewsFeed(items, referenceDate = new Date()) {
   const sorted = sortByDateDesc(items);
-  const { items: heroItems, contingencyBand: heroBand } = pickHeroSpotlight(sorted, referenceDate);
+  const { items: rawHero, contingencyBand: heroBand } = pickHeroSpotlight(sorted, referenceDate);
+  const heroItems = ensureHeroLeadHasImage(rawHero, sorted);
   const heroKeys = new Set(heroItems.map(articleKey));
   const { items: briefItems, contingencyBand: briefBand } = pickBriefSidebar(
     sorted,
@@ -982,7 +983,7 @@ function collectSourcePool(items, referenceDate = new Date()) {
 
 function pickSourceLead(pool) {
   if (!pool.length) return null;
-  const withImage = pool.find((item) => !!getCandidateImage(item.image));
+  const withImage = pool.find((item) => hasDisplayImage(item));
   if (withImage) return withImage;
   return pool[0];
 }
@@ -997,7 +998,7 @@ function partitionSourceFeed(items, referenceDate = new Date()) {
   const { items: pool, contingencyBand } = collectSourcePool(sorted, referenceDate);
   const lead = pickSourceLead(pool);
   const leadKey = lead ? articleKey(lead) : null;
-  const leadHasImage = !!(lead && getCandidateImage(lead.image));
+  const leadHasImage = !!(lead && hasDisplayImage(lead));
   const heroMax = leadHasImage ? SOURCE_HERO_WITH_IMAGE_MAX : HERO_SPOTLIGHT_MAX;
   const afterLead = pool.filter((item) => articleKey(item) !== leadKey);
   const features = afterLead.slice(0, heroMax - (lead ? 1 : 0));
@@ -1031,7 +1032,7 @@ function createArticle(item, role = 'standard', { hideSourceMeta = false } = {})
   const readMore = item.lang === 'en' ? 'Read more →' : 'Lire la suite →';
   const byLabel = item.lang === 'en' ? 'By' : 'Par';
   const canUseImage = ['lead', 'feature'].includes(role);
-  const hasImageCandidate = canUseImage && !!getCandidateImage(item.image);
+  const hasImageCandidate = canUseImage && (role === 'lead' || hasDisplayImage(item));
   if (!hasImageCandidate && canUseImage) a.classList.add('article--text');
   const metaClass = hideSourceMeta ? 'article-meta article-meta--time-only' : 'article-meta';
 
@@ -1052,54 +1053,32 @@ function createArticle(item, role = 'standard', { hideSourceMeta = false } = {})
   return a;
 }
 
-function attachArticleImage(article, item, role) {
-  const src = getCandidateImage(item.image);
-  const media = article.querySelector('.article-media');
-  if (!src || !media) {
-    media?.remove();
-    article.classList.add('article--text');
-    updateNewsLayout();
-    return;
-  }
+const WEAK_IMAGE_PATH = /-\d{2,3}x\d{2,3}\.|article-tile|size-article-tile/;
 
-  const img = new Image();
-  img.decoding = 'async';
-  img.loading = role === 'lead' ? 'eager' : 'lazy';
-  img.alt = '';
+function isFallbackImageUrl(raw = '') {
+  const src = String(raw).trim();
+  if (!src) return false;
+  if (src.startsWith('data:image/svg')) return true;
+  return src.startsWith('./assets/lead-fallbacks/') && src.endsWith('.svg');
+}
 
-  img.onload = () => {
-    if (!isUsableArticleImage(img, role)) {
-      media.remove();
-      article.classList.add('article--text');
-      updateNewsLayout();
-      return;
-    }
-    media.appendChild(img);
-    article.classList.add('has-image');
-    article.classList.remove('article--text');
-    updateNewsLayout();
-  };
-
-  img.onerror = () => {
-    media.remove();
-    article.classList.add('article--text');
-    updateNewsLayout();
-  };
-
-  img.src = src;
-
-  window.setTimeout(() => {
-    if (!article.classList.contains('has-image') && media.isConnected) {
-      media.remove();
-      article.classList.add('article--text');
-      updateNewsLayout();
-    }
-  }, 2500);
+function isWeakImagePath(path = '') {
+  const p = String(path).toLowerCase();
+  if (/-\d{2,3}x\d{2,3}\./.test(p) && !/-\d{3,4}x\d{3,4}\./.test(p)) return true;
+  return WEAK_IMAGE_PATH.test(p);
 }
 
 function getCandidateImage(src = '') {
   const raw = String(src).trim();
   if (!raw) return '';
+
+  if (isFallbackImageUrl(raw)) {
+    try {
+      return new URL(raw, location.href).href;
+    } catch {
+      return '';
+    }
+  }
 
   let url;
   try {
@@ -1110,8 +1089,193 @@ function getCandidateImage(src = '') {
 
   if (!['http:', 'https:'].includes(url.protocol)) return '';
   const path = decodeURIComponent(url.pathname).toLowerCase();
-  if (/(logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon)/.test(path)) return '';
+  if (/(logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|article-tile|size-article-tile|thumbnail|thumb_|-150x\d+\.)/.test(path)) return '';
+  if (isWeakImagePath(path)) return '';
   return url.href;
+}
+
+function hasUsablePhoto(item) {
+  return !!getCandidateImage(item?.image);
+}
+
+function hasDisplayImage(item) {
+  return hasUsablePhoto(item) || isFallbackImageUrl(item?.fallbackImage);
+}
+
+function darkenHex(hex, amount = 0.32) {
+  const h = String(hex || '#003DA5').replace('#', '');
+  if (h.length !== 6) return '#003DA5';
+  const r = Math.max(0, Math.round(parseInt(h.slice(0, 2), 16) * (1 - amount)));
+  const g = Math.max(0, Math.round(parseInt(h.slice(2, 4), 16) * (1 - amount)));
+  const b = Math.max(0, Math.round(parseInt(h.slice(4, 6), 16) * (1 - amount)));
+  return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+}
+
+function wrapTitleLines(text = '', max = 36, lines = 4) {
+  const words = String(text).replace(/\s+/g, ' ').trim().split(' ');
+  const out = [];
+  let line = '';
+  for (const w of words) {
+    const next = line ? `${line} ${w}` : w;
+    if (next.length > max && line) {
+      out.push(line);
+      line = w;
+    } else {
+      line = next;
+    }
+    if (out.length >= lines) break;
+  }
+  if (line && out.length < lines) out.push(line);
+  return out.slice(0, lines);
+}
+
+function buildClientFallbackDataUrl(item) {
+  const color = institutionBrandColor(item.institution || '') || sourceColors[item.source] || '#003DA5';
+  const dark = darkenHex(color);
+  const title = cleanTitle(item.title || 'Article');
+  const source = item.source || 'RADAR';
+  const inst = item.institution || '';
+  const lines = wrapTitleLines(title, 36, 4);
+  const tspans = lines.map((ln, i) =>
+    `<tspan x="64" dy="${i === 0 ? 0 : 36}">${escapeHtml(ln)}</tspan>`,
+  ).join('');
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800" role="img" aria-label="${escapeHtml(title)}">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="${color}"/><stop offset="100%" stop-color="${dark}"/></linearGradient></defs>
+  <rect width="1280" height="800" fill="url(#bg)"/>
+  <text x="64" y="72" fill="rgba(255,255,255,0.92)" font-family="system-ui,sans-serif" font-size="28" font-weight="700">${escapeHtml(source.toUpperCase())}</text>
+  ${inst ? `<text x="64" y="108" fill="rgba(255,255,255,0.72)" font-family="system-ui,sans-serif" font-size="20">${escapeHtml(inst)}</text>` : ''}
+  <text x="64" y="${inst ? 220 : 200}" fill="#fff" font-family="Georgia,serif" font-size="44" font-weight="700">${tspans}</text>
+</svg>`;
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+}
+
+function resolveDisplayImage(item, { preferPhoto = true } = {}) {
+  if (preferPhoto && hasUsablePhoto(item)) {
+    return { src: getCandidateImage(item.image), kind: 'photo' };
+  }
+  if (isFallbackImageUrl(item?.fallbackImage)) {
+    return { src: getCandidateImage(item.fallbackImage), kind: 'fallback' };
+  }
+  if (!preferPhoto && hasUsablePhoto(item)) {
+    return { src: getCandidateImage(item.image), kind: 'photo' };
+  }
+  return { src: buildClientFallbackDataUrl(item), kind: 'client' };
+}
+
+/**
+ * Garantit un visuel pour l'article à la une (photo, repli SVG ou génération locale).
+ */
+function ensureHeroLeadHasImage(heroItems, allItems) {
+  if (!heroItems.length) return heroItems;
+  if (hasDisplayImage(heroItems[0])) return heroItems;
+
+  const swapIdx = heroItems.findIndex((item, i) => i > 0 && hasDisplayImage(item));
+  if (swapIdx > 0) {
+    const next = [...heroItems];
+    [next[0], next[swapIdx]] = [next[swapIdx], next[0]];
+    return sortByDateDesc(next);
+  }
+
+  const heroKeys = new Set(heroItems.map(articleKey));
+  const replacement = sortByDateDesc(allItems).find(
+    (item) => !heroKeys.has(articleKey(item)) && hasDisplayImage(item),
+  );
+  if (replacement) {
+    const next = [...heroItems];
+    next[0] = replacement;
+    return sortByDateDesc(next);
+  }
+
+  return heroItems;
+}
+
+function showArticleImage(article, media, img, kind) {
+  media.appendChild(img);
+  article.classList.add('has-image');
+  article.classList.remove('article--text');
+  if (kind !== 'photo') article.classList.add('article--fallback-image');
+  updateNewsLayout();
+}
+
+function dropArticleImage(article, media, role) {
+  if (role === 'lead') {
+    const fb = buildClientFallbackDataUrl(
+      article.__radarItem || { title: article.querySelector('.article-title')?.textContent || 'Article' },
+    );
+    const img = new Image();
+    img.decoding = 'async';
+    img.loading = 'eager';
+    img.alt = '';
+    img.onload = () => showArticleImage(article, media, img, 'client');
+    img.src = fb;
+    return;
+  }
+  media.remove();
+  article.classList.add('article--text');
+  updateNewsLayout();
+}
+
+function attachArticleImage(article, item, role) {
+  const media = article.querySelector('.article-media');
+  if (!media) return;
+  article.__radarItem = item;
+
+  const failToText = () => dropArticleImage(article, media, role);
+
+  const loadImage = (src, kind, allowRetry = true) => {
+    if (!src) {
+      failToText();
+      return;
+    }
+
+    const img = new Image();
+    img.decoding = 'async';
+    img.loading = role === 'lead' ? 'eager' : 'lazy';
+    img.alt = '';
+
+    img.onload = () => {
+      if (kind === 'photo' && !isUsableArticleImage(img, role)) {
+        if (allowRetry) {
+          const alt = resolveDisplayImage(item, { preferPhoto: false });
+          if (alt.kind !== 'photo') loadImage(alt.src, alt.kind, false);
+          else failToText();
+        } else {
+          failToText();
+        }
+        return;
+      }
+      showArticleImage(article, media, img, kind);
+    };
+
+    img.onerror = () => {
+      if (allowRetry && kind === 'photo') {
+        const alt = resolveDisplayImage(item, { preferPhoto: false });
+        if (alt.kind !== 'photo') loadImage(alt.src, alt.kind, false);
+        else failToText();
+      } else if (allowRetry && kind === 'fallback') {
+        loadImage(buildClientFallbackDataUrl(item), 'client', false);
+      } else {
+        failToText();
+      }
+    };
+
+    img.src = src;
+
+    window.setTimeout(() => {
+      if (!article.classList.contains('has-image') && media.isConnected) {
+        if (role === 'lead' && allowRetry) {
+          const alt = resolveDisplayImage(item, { preferPhoto: false });
+          if (alt.src !== src) loadImage(alt.src, alt.kind, false);
+          else loadImage(buildClientFallbackDataUrl(item), 'client', false);
+        } else if (role !== 'lead') {
+          failToText();
+        }
+      }
+    }, 2500);
+  };
+
+  const primary = resolveDisplayImage(item, { preferPhoto: true });
+  loadImage(primary.src, primary.kind);
 }
 
 function isUsableArticleImage(img, role) {
