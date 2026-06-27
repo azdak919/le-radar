@@ -66,6 +66,9 @@ a { color: inherit; }
 
 /* ─────────────── MASTHEAD ─────────────── */
 .masthead { border-bottom: 2px solid var(--rule-strong); }
+/* En thème sombre, --rule-strong est presque blanc : ce trait apparaissait
+   comme une ligne blanche juste au-dessus du module radio. On l'adoucit. */
+[data-theme="dark"] .masthead { border-bottom-color: var(--rule); }
 
 .masthead-inner {
   max-width: var(--maxw);
@@ -382,7 +385,9 @@ a { color: inherit; }
 }
 @media (min-width: 680px) { .tuner-vol { display: flex; } }
 .tuner-vol .ico-vol { width: 16px; height: 16px; }
-.tuner-volume { width: 72px; accent-color: var(--radio-bright); cursor: pointer; }
+.tuner-volume { width: 88px; accent-color: var(--radio-bright); cursor: pointer; }
+/* Au-delà de la mi-course, le curseur amplifie le son : on signale la zone. */
+.tuner.is-boosted .tuner-volume { accent-color: #ff7d6e; }
 
 .tuner-nowair {
   display: none;
@@ -692,6 +697,16 @@ a { color: inherit; }
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Apparition en fondu : l'image n'est insérée qu'une fois chargée, donc
+     l'animation joue exactement au moment où elle s'affiche. */
+  animation: articleImgIn 0.45s ease both;
+}
+@keyframes articleImgIn {
+  from { opacity: 0; transform: scale(1.015); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .article-media img { animation: none; }
 }
 .article--stock-image .article-media,
 .article--fallback-image .article-media {
