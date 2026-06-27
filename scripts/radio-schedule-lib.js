@@ -370,18 +370,28 @@ function pad2(n) {
 /** CHYZ (chyz.ca/horaire) : blocs <a.article-horaire data-jour-slug> avec heures + <h3>. */
 function parseChyzGrid(htmlText) {
   const grid = [];
-  const re = /<a[^>]*class="[^"]*article-horaire[^"]*"[^>]*data-jour-slug="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi;
+  const re = /<a[^>]*class="[^"]*article-horaire[^"]*"[^>]*>([\s\S]*?)<\/a>/gi;
   let m;
   while ((m = re.exec(htmlText))) {
-    const day = dayNameToIndex(m[1]);
+    const openTag = htmlText.slice(m.index, htmlText.indexOf('>', m.index) + 1);
+    const daySlug = /data-jour-slug="([^"]+)"/i.exec(openTag)?.[1];
+    const day = dayNameToIndex(daySlug);
     if (day == null) continue;
-    const body = m[2];
+    const body = m[1];
     const tm = TIME_RANGE_RE.exec(body);
     const h3 = /<h3[^>]*>([\s\S]*?)<\/h3>/i.exec(body);
     if (!tm || !h3) continue;
     const title = decodeHtmlEntities(stripTags(h3[1])).replace(/\s+/g, ' ').trim();
     if (!title) continue;
-    grid.push({ day, start: `${pad2(tm[1])}:${tm[2]}`, end: `${pad2(tm[3])}:${tm[4]}`, title });
+    const slot = {
+      day,
+      start: `${pad2(tm[1])}:${tm[2]}`,
+      end: `${pad2(tm[3])}:${tm[4]}`,
+      title,
+    };
+    const href = /href="([^"]+)"/i.exec(openTag)?.[1]?.trim();
+    if (href) slot.url = href;
+    grid.push(slot);
   }
   return grid;
 }

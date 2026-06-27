@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-27T22:30:24.115Z",
+  "updatedAt": "2026-06-27T22:32:44.448Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,193 +8,224 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-06-27T22:30:24.115Z",
+      "checkedAt": "2026-06-27T22:32:44.448Z",
       "grid": [
         {
           "day": 0,
           "start": "10:00",
           "end": "10:30",
-          "title": "Palmarès CHYZ"
+          "title": "Palmarès CHYZ",
+          "url": "https://chyz.ca/emission/palmares-chyz/"
         },
         {
           "day": 0,
           "start": "11:00",
           "end": "12:00",
-          "title": "Le Ré-Show : Deuxième Service"
+          "title": "Le Ré-Show : Deuxième Service",
+          "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
         },
         {
           "day": 0,
           "start": "13:00",
           "end": "16:00",
-          "title": "Radio Futura"
+          "title": "Radio Futura",
+          "url": "https://chyz.ca/emission/radio-futura/"
         },
         {
           "day": 0,
           "start": "16:50",
           "end": "20:30",
-          "title": "Capitales de Québec"
+          "title": "Capitales de Québec",
+          "url": "https://chyz.ca/emission/capitales-de-quebec/"
         },
         {
           "day": 1,
           "start": "08:00",
           "end": "10:00",
-          "title": "Lundi Indie"
+          "title": "Lundi Indie",
+          "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
         },
         {
           "day": 1,
           "start": "17:30",
           "end": "18:30",
-          "title": "Les Arshitechs du Son"
+          "title": "Les Arshitechs du Son",
+          "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
         },
         {
           "day": 1,
           "start": "19:30",
           "end": "20:30",
-          "title": "La Voie des Droits"
+          "title": "La Voie des Droits",
+          "url": "https://chyz.ca/emission/la-voie-des-droits/"
         },
         {
           "day": 1,
           "start": "21:00",
           "end": "22:00",
-          "title": "La Cassette"
+          "title": "La Cassette",
+          "url": "https://chyz.ca/emission/la-cassette/"
         },
         {
           "day": 2,
           "start": "08:00",
           "end": "10:00",
-          "title": "Mardi Champ Gauche"
+          "title": "Mardi Champ Gauche",
+          "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
         },
         {
           "day": 2,
           "start": "16:00",
           "end": "17:30",
-          "title": "Chéri.e, j’arrive!"
+          "title": "Chéri.e, j’arrive!",
+          "url": "https://chyz.ca/emission/cheri-e-jarrive/"
         },
         {
           "day": 2,
           "start": "17:30",
           "end": "18:30",
-          "title": "Les Arshitechs du Son"
+          "title": "Les Arshitechs du Son",
+          "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
         },
         {
           "day": 2,
           "start": "18:50",
           "end": "23:00",
-          "title": "Capitales de Québec"
+          "title": "Capitales de Québec",
+          "url": "https://chyz.ca/emission/capitales-de-quebec/"
         },
         {
           "day": 3,
           "start": "08:00",
           "end": "10:00",
-          "title": "Mercredi Bonbon"
+          "title": "Mercredi Bonbon",
+          "url": "https://chyz.ca/emission/mercredi-bonbon/"
         },
         {
           "day": 3,
           "start": "16:00",
           "end": "17:30",
-          "title": "Chéri.e, j’arrive!"
+          "title": "Chéri.e, j’arrive!",
+          "url": "https://chyz.ca/emission/cheri-e-jarrive/"
         },
         {
           "day": 3,
           "start": "17:30",
           "end": "18:30",
-          "title": "Les Arshitechs du Son"
+          "title": "Les Arshitechs du Son",
+          "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
         },
         {
           "day": 3,
           "start": "18:50",
           "end": "23:00",
-          "title": "Capitales de Québec"
+          "title": "Capitales de Québec",
+          "url": "https://chyz.ca/emission/capitales-de-quebec/"
         },
         {
           "day": 4,
           "start": "08:00",
           "end": "10:00",
-          "title": "Jeudi Révolte"
+          "title": "Jeudi Révolte",
+          "url": "https://chyz.ca/emission/jeudi-revolte/"
         },
         {
           "day": 4,
           "start": "15:00",
           "end": "16:00",
-          "title": "Conduite Antisportive"
+          "title": "Conduite Antisportive",
+          "url": "https://chyz.ca/emission/conduite-antisportive/"
         },
         {
           "day": 4,
           "start": "16:00",
           "end": "17:30",
-          "title": "Chéri.e, j’arrive!"
+          "title": "Chéri.e, j’arrive!",
+          "url": "https://chyz.ca/emission/cheri-e-jarrive/"
         },
         {
           "day": 4,
           "start": "17:30",
           "end": "18:30",
-          "title": "Les Arshitechs du Son"
+          "title": "Les Arshitechs du Son",
+          "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
         },
         {
           "day": 4,
           "start": "18:50",
           "end": "23:00",
-          "title": "Capitales de Québec"
+          "title": "Capitales de Québec",
+          "url": "https://chyz.ca/emission/capitales-de-quebec/"
         },
         {
           "day": 5,
           "start": "08:00",
           "end": "10:00",
-          "title": "Vendredi Nostalgie"
+          "title": "Vendredi Nostalgie",
+          "url": "https://chyz.ca/emission/vendredi-nostalgie/"
         },
         {
           "day": 5,
           "start": "10:00",
           "end": "10:30",
-          "title": "Palmarès CHYZ"
+          "title": "Palmarès CHYZ",
+          "url": "https://chyz.ca/emission/palmares-chyz/"
         },
         {
           "day": 5,
           "start": "11:00",
           "end": "12:00",
-          "title": "Punk-o-rama"
+          "title": "Punk-o-rama",
+          "url": "https://chyz.ca/emission/punk-o-rama/"
         },
         {
           "day": 5,
           "start": "13:00",
           "end": "14:00",
-          "title": "Détour"
+          "title": "Détour",
+          "url": "https://chyz.ca/emission/detour/"
         },
         {
           "day": 5,
           "start": "17:30",
           "end": "18:30",
-          "title": "Les Arshitechs du Son"
+          "title": "Les Arshitechs du Son",
+          "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
         },
         {
           "day": 5,
           "start": "18:50",
           "end": "23:00",
-          "title": "Capitales de Québec"
+          "title": "Capitales de Québec",
+          "url": "https://chyz.ca/emission/capitales-de-quebec/"
         },
         {
           "day": 6,
           "start": "10:00",
           "end": "10:30",
-          "title": "Palmarès CHYZ"
+          "title": "Palmarès CHYZ",
+          "url": "https://chyz.ca/emission/palmares-chyz/"
         },
         {
           "day": 6,
           "start": "11:00",
           "end": "12:00",
-          "title": "Le Ré-Show : Deuxième Service"
+          "title": "Le Ré-Show : Deuxième Service",
+          "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
         },
         {
           "day": 6,
           "start": "13:00",
           "end": "16:00",
-          "title": "Radio Futura"
+          "title": "Radio Futura",
+          "url": "https://chyz.ca/emission/radio-futura/"
         },
         {
           "day": 6,
           "start": "18:50",
           "end": "23:00",
-          "title": "Capitales de Québec"
+          "title": "Capitales de Québec",
+          "url": "https://chyz.ca/emission/capitales-de-quebec/"
         }
       ]
     },
@@ -204,7 +235,7 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-06-27T22:30:24.115Z",
+      "checkedAt": "2026-06-27T22:32:44.448Z",
       "grid": [
         {
           "day": 0,
@@ -984,7 +1015,7 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-06-27T22:30:24.115Z",
+      "checkedAt": "2026-06-27T22:32:44.448Z",
       "grid": [
         {
           "day": 0,
@@ -1606,7 +1637,7 @@
       "sources": [
         "cjlo:http://www.cjlo.com/schedule"
       ],
-      "checkedAt": "2026-06-27T22:30:24.115Z",
+      "checkedAt": "2026-06-27T22:32:44.448Z",
       "grid": [
         {
           "day": 0,
@@ -2491,7 +2522,7 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-06-27T22:30:24.115Z",
+      "checkedAt": "2026-06-27T22:32:44.448Z",
       "grid": [
         {
           "day": 0,
