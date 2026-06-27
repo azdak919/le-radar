@@ -1,100 +1,72 @@
 {
-  "updated": "2026-06-27T15:20:52.905Z",
-  "total": 171,
-  "withImage": 156,
-  "withCredit": 156,
-  "cited": 46,
-  "pending": 3,
+  "updated": "2026-06-27T16:17:32.853Z",
+  "total": 205,
+  "withImage": 154,
+  "withCredit": 154,
+  "cited": 54,
+  "pending": 0,
   "missingHero": 0,
-  "ok": false,
-  "checked": 27,
-  "updatedCount": 24,
+  "ok": true,
+  "checked": 8,
+  "updatedCount": 8,
   "citedNew": 8,
-  "fallbackNew": 19,
+  "fallbackNew": 0,
   "samples": [
     {
-      "title": "AI’s use in legal decisions poses major risks to the Canadian judicial system’s integrity and neutrality",
-      "source": "The Tribune",
-      "credit": "Photo credit: The Tribune",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Know Your Artist: Theodore A. Harris",
-      "source": "The Tribune",
-      "credit": "Photo credit: The Tribune",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Montreal protestors commemorate the 78th anniversary of the Nakba",
-      "source": "The Tribune",
-      "credit": "Photo credit: The Tribune",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "A final note from the Editor-in-Chief of Volume 45, for the record",
-      "source": "The Tribune",
-      "credit": "Photo credit: The Tribune",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "SPHR remembers Gaza Solidarity Encampment ahead of Nakba Anniversary Protest",
-      "source": "The Tribune",
-      "credit": "Photo credit: The Tribune",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Derrière les étiquettes électroniques, la tarification dynamique ?",
-      "source": "L'Exemplaire",
-      "credit": "Photo : Thomas Harton",
+      "title": "Les grands oubliés du handicap : les proches aidants",
+      "source": "La Pige",
+      "credit": "Photo : Mathilde Bellon",
       "cited": true,
-      "method": "json-ld"
+      "method": "wp-caption"
     },
     {
-      "title": "Rachat des armes à feu : le Québec est-il l’exception canadienne ?",
-      "source": "L'Exemplaire",
-      "credit": "Crédit photo : L'Exemplaire",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Les jeunes et les médias d’actualité : une confiance de plus en plus érodée",
-      "source": "L'Exemplaire",
-      "credit": "Crédit photo : L'Exemplaire",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Achat de seconde main : une mode dans la mode ?",
-      "source": "L'Exemplaire",
-      "credit": "Crédit photo : L'Exemplaire",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Le NPD : soigne-t-il sa gauche ou se radicalise-t-il ?",
-      "source": "L'Exemplaire",
-      "credit": "Photo : Horst Ehricht / Bibliothèque et Archives Canada",
+      "title": "Le retard et les bienfaits du temps long",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
       "cited": true,
-      "method": "figcaption"
+      "method": "media-credit-featured"
     },
     {
-      "title": "Le NPD : soigne-t-il sa gauche ou se radicalise -t-il ?",
-      "source": "L'Exemplaire",
-      "credit": "Photo : Horst Ehricht / Bibliothèque et Archives Canada",
+      "title": "Rassembler pour mieux diviser",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
       "cited": true,
-      "method": "figcaption"
+      "method": "media-credit-featured"
     },
     {
-      "title": "Skibidi Tentafruit ou quand l’ IA accentue les stéréotypes",
-      "source": "L'Exemplaire",
-      "credit": "Crédit photo : L'Exemplaire",
-      "cited": false,
-      "method": null
+      "title": "Au revoir !",
+      "source": "Le Délit",
+      "credit": "Photo : Matthieu Juge",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "La cassette commence à être usée",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "L’enseignement supérieur québécois profite d’une hausse budgétaire importante",
+      "source": "Le Délit",
+      "credit": "Photo : Toscane Ralaimongo",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "McGill face aux revendications de l’AÉÉDEM",
+      "source": "Le Délit",
+      "credit": "Photo : Héloïse Durning",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "On the Ground in the West Bank: A Testimony with Giancarlo Cininni",
+      "source": "The McGill Daily",
+      "credit": "Photo : Photo curtesy Giancarlo Cininni",
+      "cited": true,
+      "method": "media-credit-featured"
     }
   ]
 }

@@ -34,6 +34,8 @@ const {
   isCandidateImageUrl,
   isWeakImageUrl,
   needsImageEnrichment,
+  imageRejectPatternsFromHints,
+  imageOptionsFromHints,
 } = require('./article-image-lib');
 const { isHtmlListSource, parseHtmlListPage } = require('./html-list-fetcher');
 const { isFirebaseSource, fetchFirebaseFeed } = require('./firebase-list-fetcher');
@@ -473,17 +475,18 @@ async function enrichItem(item, sourceByName = new Map()) {
   const src = sourceByName.get(item.source);
   const imageHints = getBotHints(src, 'images');
   const authorHints = getBotHints(src, 'authors');
-  const rejectPatterns = imageHints.rejectPathPatterns || [];
+  const rejectPatterns = imageRejectPatternsFromHints(imageHints);
+  const imageOptions = imageOptionsFromHints(imageHints);
 
   const next = { ...item };
   const body = articleBodyHtml(html);
 
-  if (needsImageEnrichment(next)) {
-    const found = imageFromArticleHtml(html);
+  if (needsImageEnrichment(next, rejectPatterns, imageOptions)) {
+    const found = imageFromArticleHtml(html, rejectPatterns, imageOptions);
     if (found?.url && isCandidateImageUrl(found.url, rejectPatterns)) next.image = found.url;
     else if (next.image && !isCandidateImageUrl(next.image, rejectPatterns)) next.image = '';
   } else if (next.image) {
-    const found = imageFromArticleHtml(html);
+    const found = imageFromArticleHtml(html, rejectPatterns, imageOptions);
     if (!found?.url && next.image) next.image = '';
     else if (next.image && !isCandidateImageUrl(next.image, rejectPatterns)) next.image = '';
   }
@@ -535,12 +538,15 @@ async function enrichItems(items, feedDefaults = new Map(), sourceByName = new M
     if (!item.link || seen.has(item.link)) continue;
     seen.add(item.link);
 
-    const hadImage = item.image && isCandidateImageUrl(item.image) && !isWeakImageUrl(item.image);
+    const hints = getBotHints(sourceByName.get(item.source), 'images');
+    const reject = imageRejectPatternsFromHints(hints);
+    const opts = imageOptionsFromHints(hints);
+    const hadImage = item.image && isCandidateImageUrl(item.image, reject) && !isWeakImageUrl(item.image, opts);
     const updated = await enrichItem(item, sourceByName);
     Object.assign(item, updated);
     enriched += 1;
 
-    const hasImage = item.image && isCandidateImageUrl(item.image) && !isWeakImageUrl(item.image);
+    const hasImage = item.image && isCandidateImageUrl(item.image, reject) && !isWeakImageUrl(item.image, opts);
     if (!hadImage && hasImage) imagesAdded += 1;
 
     await sleep(250);
@@ -757,7 +763,12 @@ async function main() {
       feedDefaults,
       pageAuthor,
     }).item;
-    if (all[i].image && !isCandidateImageUrl(all[i].image)) all[i].image = '';
+    const imgHints = getBotHints(sourceByName.get(all[i].source), 'images');
+    const imgReject = imageRejectPatternsFromHints(imgHints);
+    const imgOpts = imageOptionsFromHints(imgHints);
+    if (all[i].image && (!isCandidateImageUrl(all[i].image, imgReject) || isWeakImageUrl(all[i].image, imgOpts))) {
+      all[i].image = '';
+    }
     const prior = priorByLink.get(normalizeArticleUrl(all[i].link));
     if (prior) all[i] = mergePriorEnrichment(all[i], prior);
   }

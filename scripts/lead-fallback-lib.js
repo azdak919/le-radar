@@ -1,32 +1,10 @@
 /**
  * Génération de visuels de repli pour la vedette (SVG, sans API payante).
- * Partagé par ensure-lead-images.js et la logique d'agrégation.
+ * Validation d'URL d'image : déléguée à article-image-lib (source unique).
  */
 
 const crypto = require('crypto');
-
-const JUNK_IMAGE = /(logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|article-tile|size-article-tile|thumbnail|thumb_|-150x\d+\.|(?:^|\/)article-2\.|campus-logo|campusgraphic)/i;
-
-function isCandidateImageUrl(raw = '') {
-  const src = String(raw).trim();
-  if (!src) return false;
-  try {
-    const url = new URL(src);
-    if (!['http:', 'https:'].includes(url.protocol)) return false;
-    const path = decodeURIComponent(url.pathname).toLowerCase();
-    if (JUNK_IMAGE.test(path)) return false;
-    if (/(?:^|\/)(?:1x1|pixel)\b/.test(path)) return false;
-    return true;
-  } catch {
-    return src.startsWith('data:image/') || src.startsWith('./assets/');
-  }
-}
-
-function isWeakImageUrl(raw = '') {
-  const path = String(raw).toLowerCase();
-  if (/-\d{2,3}x\d{2,3}\./.test(path) && !/-\d{3,4}x\d{3,4}\./.test(path)) return true;
-  return /article-tile|size-article-tile/.test(path);
-}
+const { isCandidateImageUrl, isWeakImageUrl } = require('./article-image-lib');
 
 function hasUsableImage(item) {
   return (
