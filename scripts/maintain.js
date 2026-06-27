@@ -113,12 +113,21 @@ function buildStatus(steps) {
   const withExcerpt = items.filter((i) => i.excerpt && String(i.excerpt).trim().length > 20).length;
   const authorQc = readJson('author-qc.json', {});
   const leadQc = readJson('lead-image-qc.json', {});
+  const photoCreditQc = readJson('photo-credit-qc.json', {});
 
   if (authorQc.ok === false && (authorQc.mismatches || 0) > 0) {
     alerts.push({
       level: 'warn',
       code: 'author_mismatch',
       message: `${authorQc.mismatches} article(s) avec auteur RSS ≠ extrait « Par … »`,
+    });
+  }
+
+  if (photoCreditQc.ok === false && (photoCreditQc.missingHero || 0) > 0) {
+    alerts.push({
+      level: 'warn',
+      code: 'photo_credit_gap',
+      message: `${photoCreditQc.missingHero} article(s) vedette sans crédit photo`,
     });
   }
 
@@ -166,6 +175,13 @@ function buildStatus(steps) {
           pageScraped: leadQc.pageScraped ?? null,
           mainPageLeadReady: leadQc.mainPageLeadReady ?? null,
         },
+        photoCreditQc: {
+          ok: photoCreditQc.ok ?? null,
+          withCredit: photoCreditQc.withCredit ?? null,
+          cited: photoCreditQc.cited ?? null,
+          pending: photoCreditQc.pending ?? null,
+          missingHero: photoCreditQc.missingHero ?? null,
+        },
       },
       radios: {
         listed: radios.length,
@@ -205,6 +221,7 @@ async function main() {
     ['Author QC', `node scripts/verify-authors.js ${flag}`.trim()],
     ['Lead excerpt enrichment', `node scripts/enrich-lead-excerpts.js ${flag}`.trim()],
     ['Lead image QC', `node scripts/ensure-lead-images.js ${flag}`.trim()],
+    ['Photo credit QC', `node scripts/verify-photo-credits.js ${flag}`.trim()],
     ['Social feed', `node scripts/fetch-social.js ${flag}`.trim()],
   ];
 

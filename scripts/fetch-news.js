@@ -23,6 +23,7 @@ const {
   needsPageAuthorVerification,
   normalizeArticleUrl,
 } = require('./author-lib');
+const { mergePriorEnrichment } = require('./article-photo-credit-lib');
 const { isHtmlListSource, parseHtmlListPage } = require('./html-list-fetcher');
 
 const NEWS_PATH = path.join(__dirname, '..', 'news.json');
@@ -621,6 +622,16 @@ async function main() {
   }
 
   const all = [];
+  let priorByLink = new Map();
+  try {
+    const prev = JSON.parse(fs.readFileSync(NEWS_PATH, 'utf8'));
+    for (const item of prev.items || []) {
+      const key = normalizeArticleUrl(item.link);
+      if (key) priorByLink.set(key, item);
+    }
+  } catch {
+    priorByLink = new Map();
+  }
 
   for (const src of SOURCES) {
     process.stdout.write(`→ ${src.name} (${src.institution}) … `);
@@ -716,6 +727,8 @@ async function main() {
       feedDefaults,
       pageAuthor,
     }).item;
+    const prior = priorByLink.get(normalizeArticleUrl(all[i].link));
+    if (prior) all[i] = mergePriorEnrichment(all[i], prior);
   }
 
   all.sort((a, b) => {
