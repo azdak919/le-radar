@@ -440,6 +440,13 @@ a { color: inherit; }
   text-overflow: ellipsis;
 }
 
+/* État « rien de syntonisé » : invitation discrète à choisir un poste. */
+.tuner-nowair.is-empty .tuner-nowair-title {
+  font-style: italic;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.55);
+}
+
 @media (min-width: 1100px) {
   .tuner-inner {
     max-width: 1180px;

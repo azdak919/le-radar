@@ -24,6 +24,9 @@ dans l'idéal, et ce qui reste volontairement manuel.
 | `news.json` | Fil d'articles agrégé (lu par le site) | `fetch-news.js` |
 | `radios.json` | Radios listées dans le syntoniseur | humain + `discover-streams.js` |
 | `radios-candidates.json` | Radios à tester avant promotion | `scan-media.js`, `discover-streams.js` |
+| `radio-schedules.seed.json` | Config et grilles horaires manuelles (source éditable) | humain |
+| `radio-schedules.json` | Grilles colligées « à l'antenne » (lu par le site) | `fetch-radio-schedules.js` |
+| `radio-nowplaying.json` | Titre en ondes via métadonnées ICY (lu par le site) | `fetch-radio-nowplaying.js` |
 | `bot-status.json` | Tableau de bord santé des bots | `maintain.js` |
 
 ---
@@ -42,6 +45,8 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 | Flux radio + promotion candidats | `discover-streams.js` | Quotidien + hebdo |
 | Agrégation articles | `fetch-news.js` | 7×/jour |
 | Extrait « à la une » | `enrich-lead-excerpts.js` | 7×/jour (après `fetch-news`) |
+| Titre en ondes (ICY) | `fetch-radio-nowplaying.js` | Aux 30 min |
+| Horaires « à l'antenne » | `fetch-radio-schedules.js` | **Aux 2 semaines** |
 | **Orchestrateur** | `maintain.js` | **Hebdo (lundi)** |
 
 ### Workflows GitHub Actions
@@ -49,6 +54,8 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 - `maintain.yml` — pipeline complet + `bot-status.json` + issue si besoin
 - `update-news.yml` — articles frais (haute fréquence)
 - `update-streams.yml` — validation des flux (quotidien)
+- `update-radio-nowplaying.yml` — titre en ondes via ICY (aux 30 min)
+- `update-radio-schedules.yml` — horaires colligés « à l'antenne » (aux 2 semaines)
 - `discover-news-sources.yml` — santé des flux RSS (hebdo)
 - `update-institutions.yml` — catalogue établissements (3×/an)
 
@@ -164,6 +171,38 @@ node scripts/discover-streams.js --update
 node scripts/fetch-news.js --update
 node scripts/enrich-lead-excerpts.js --update
 ```
+
+---
+
+## Horaires « à l'antenne »
+
+Le bandeau **À l'antenne** affiche l'émission en cours selon l'heure (fuseau
+`America/Toronto`), en complément du titre ICY live. La grille est colligée de
+deux façons, fusionnées par `fetch-radio-schedules.js` :
+
+1. **Sources dynamiques** déclarées dans `radio-schedules.seed.json`
+   (`sources`). Adaptateur disponible : `airtime` (Airtime/LibreTime, ex. CKUT
+   via `/api/week-info`). Ajouter d'autres types dans `radio-schedule-lib.js`.
+2. **Grilles manuelles** : remplir le tableau `grid` du poste dans le seed.
+
+```jsonc
+// radio-schedules.seed.json
+"chyz": {
+  "sources": [],
+  "grid": [
+    { "day": 1, "start": "07:00", "end": "09:00", "title": "Le Réveil", "host": "…" }
+  ]
+}
+```
+
+- `day` : 0 = dimanche … 6 = samedi.
+- `start`/`end` : `"HH:MM"` 24 h ; une fin ≤ au début traverse minuit.
+- Si toutes les sources sont injoignables un cycle, la dernière grille connue
+  de `radio-schedules.json` est conservée.
+
+Régénérer : `node scripts/fetch-radio-schedules.js --update`. En CI, le workflow
+`update-radio-schedules.yml` tourne **aux 2 semaines** (les horaires bougent
+rarement, inutile de solliciter les sources plus souvent).
 
 ---
 

@@ -1,0 +1,628 @@
+{
+  "updatedAt": "2026-06-27T19:36:12.210Z",
+  "timezone": "America/Toronto",
+  "stations": {
+    "ckut": {
+      "id": "ckut",
+      "name": "CKUT 90,3",
+      "sources": [
+        "airtime:https://ckut.airtime.pro"
+      ],
+      "checkedAt": "2026-06-27T19:36:12.210Z",
+      "grid": [
+        {
+          "day": 0,
+          "start": "00:00",
+          "end": "02:00",
+          "title": "stereOphobic"
+        },
+        {
+          "day": 0,
+          "start": "02:00",
+          "end": "06:00",
+          "title": "Utopia's Paradise"
+        },
+        {
+          "day": 0,
+          "start": "06:00",
+          "end": "09:00",
+          "title": "Mind, Soul, & Spirit"
+        },
+        {
+          "day": 0,
+          "start": "09:00",
+          "end": "10:30",
+          "title": "Latin Time"
+        },
+        {
+          "day": 0,
+          "start": "10:30",
+          "end": "11:00",
+          "title": "International Radio Report"
+        },
+        {
+          "day": 0,
+          "start": "11:00",
+          "end": "13:00",
+          "title": "Free Kick"
+        },
+        {
+          "day": 0,
+          "start": "13:00",
+          "end": "14:00",
+          "title": "Modular Systems/Future Classics"
+        },
+        {
+          "day": 0,
+          "start": "14:00",
+          "end": "16:00",
+          "title": "The Magic Roundabout"
+        },
+        {
+          "day": 0,
+          "start": "16:00",
+          "end": "18:00",
+          "title": "Bhum Bhum Time"
+        },
+        {
+          "day": 0,
+          "start": "18:00",
+          "end": "19:00",
+          "title": "Desi Beats (must be .mp3!!)"
+        },
+        {
+          "day": 0,
+          "start": "19:00",
+          "end": "20:00",
+          "title": "Bluegrass Rambling"
+        },
+        {
+          "day": 0,
+          "start": "20:00",
+          "end": "21:00",
+          "title": "Country Classics"
+        },
+        {
+          "day": 0,
+          "start": "21:00",
+          "end": "23:00",
+          "title": "Cha Cha In Blue"
+        },
+        {
+          "day": 0,
+          "start": "23:00",
+          "end": "00:00",
+          "title": "Ill Groove Garden"
+        },
+        {
+          "day": 1,
+          "start": "00:00",
+          "end": "01:00",
+          "title": "Sound Of Soul"
+        },
+        {
+          "day": 1,
+          "start": "01:00",
+          "end": "04:00",
+          "title": "Roots, Rock, Reggae"
+        },
+        {
+          "day": 1,
+          "start": "04:00",
+          "end": "07:00",
+          "title": "Adventures In Music"
+        },
+        {
+          "day": 1,
+          "start": "07:00",
+          "end": "08:00",
+          "title": "Unmuted with Svetlana and Miss Trish"
+        },
+        {
+          "day": 1,
+          "start": "08:00",
+          "end": "09:00",
+          "title": "Le Lendemain de la veille"
+        },
+        {
+          "day": 1,
+          "start": "09:00",
+          "end": "11:00",
+          "title": "Latin Music Mondays"
+        },
+        {
+          "day": 1,
+          "start": "11:00",
+          "end": "12:00",
+          "title": "All Things Campus"
+        },
+        {
+          "day": 1,
+          "start": "12:00",
+          "end": "14:00",
+          "title": "World Skip The Beat"
+        },
+        {
+          "day": 1,
+          "start": "14:00",
+          "end": "15:00",
+          "title": "Radio Is Dead"
+        },
+        {
+          "day": 1,
+          "start": "15:00",
+          "end": "17:00",
+          "title": "Whose Vibe Is It Anyway"
+        },
+        {
+          "day": 1,
+          "start": "17:00",
+          "end": "18:00",
+          "title": "En Profondeur"
+        },
+        {
+          "day": 1,
+          "start": "18:00",
+          "end": "19:00",
+          "title": "Queercorps"
+        },
+        {
+          "day": 1,
+          "start": "19:00",
+          "end": "20:00",
+          "title": "Dykes on Mykes"
+        },
+        {
+          "day": 1,
+          "start": "20:00",
+          "end": "22:00",
+          "title": "Underground Sounds"
+        },
+        {
+          "day": 1,
+          "start": "22:00",
+          "end": "23:00",
+          "title": "Drastic Plastic"
+        },
+        {
+          "day": 1,
+          "start": "23:00",
+          "end": "00:00",
+          "title": "27th Hr."
+        },
+        {
+          "day": 2,
+          "start": "00:00",
+          "end": "02:00",
+          "title": "Harmony Express"
+        },
+        {
+          "day": 2,
+          "start": "02:00",
+          "end": "03:00",
+          "title": "Pirate et Libres"
+        },
+        {
+          "day": 2,
+          "start": "03:00",
+          "end": "05:00",
+          "title": "Attik / Show For Children"
+        },
+        {
+          "day": 2,
+          "start": "05:00",
+          "end": "07:00",
+          "title": "The Beat Power Hour"
+        },
+        {
+          "day": 2,
+          "start": "07:00",
+          "end": "08:00",
+          "title": "Tuesday Morning After Pt1"
+        },
+        {
+          "day": 2,
+          "start": "08:00",
+          "end": "09:00",
+          "title": "Tuesday Morning After Pt2"
+        },
+        {
+          "day": 2,
+          "start": "09:00",
+          "end": "11:00",
+          "title": "Basa Basa"
+        },
+        {
+          "day": 2,
+          "start": "11:00",
+          "end": "12:00",
+          "title": "Ecolibrium/Environment in Canada"
+        },
+        {
+          "day": 2,
+          "start": "12:00",
+          "end": "14:00",
+          "title": "Kool Runnings"
+        },
+        {
+          "day": 2,
+          "start": "14:00",
+          "end": "15:00",
+          "title": "Voice of Korea"
+        },
+        {
+          "day": 2,
+          "start": "15:00",
+          "end": "17:00",
+          "title": "Montreal Sessions"
+        },
+        {
+          "day": 2,
+          "start": "17:00",
+          "end": "18:00",
+          "title": "Off The Hour: Local Journalism Stories"
+        },
+        {
+          "day": 2,
+          "start": "18:00",
+          "end": "19:00",
+          "title": "Rez Rock Radio"
+        },
+        {
+          "day": 2,
+          "start": "19:00",
+          "end": "20:30",
+          "title": "Soul Perspectives"
+        },
+        {
+          "day": 2,
+          "start": "20:30",
+          "end": "21:00",
+          "title": "Marca-RO"
+        },
+        {
+          "day": 2,
+          "start": "21:00",
+          "end": "23:00",
+          "title": "Montreal Sound Ark"
+        },
+        {
+          "day": 2,
+          "start": "23:00",
+          "end": "00:00",
+          "title": "Easy Sonic Living/Zoe's Hour/Dreams And Tales/Internet Lunch Forever"
+        },
+        {
+          "day": 3,
+          "start": "00:00",
+          "end": "02:00",
+          "title": "Space Plane"
+        },
+        {
+          "day": 3,
+          "start": "02:00",
+          "end": "04:00",
+          "title": "WarpCor / Out of the Void"
+        },
+        {
+          "day": 3,
+          "start": "04:00",
+          "end": "07:00",
+          "title": "Full Circle"
+        },
+        {
+          "day": 3,
+          "start": "07:00",
+          "end": "09:00",
+          "title": "The Wednesday Morning After"
+        },
+        {
+          "day": 3,
+          "start": "09:00",
+          "end": "11:00",
+          "title": "The Sleepy King/Terminal 5"
+        },
+        {
+          "day": 3,
+          "start": "11:00",
+          "end": "11:30",
+          "title": "Free City Radio"
+        },
+        {
+          "day": 3,
+          "start": "11:30",
+          "end": "12:00",
+          "title": "ffiles"
+        },
+        {
+          "day": 3,
+          "start": "12:00",
+          "end": "14:00",
+          "title": "If You Got Ears"
+        },
+        {
+          "day": 3,
+          "start": "14:00",
+          "end": "15:00",
+          "title": "Radyo Kapwa"
+        },
+        {
+          "day": 3,
+          "start": "15:00",
+          "end": "17:00",
+          "title": "All Da Way Live"
+        },
+        {
+          "day": 3,
+          "start": "17:00",
+          "end": "18:00",
+          "title": "Off the Hour/Sounds of Resistance"
+        },
+        {
+          "day": 3,
+          "start": "18:00",
+          "end": "19:00",
+          "title": "Hersay: Audio Smut/OWL/The Teachings/Metro Boulot Dodo"
+        },
+        {
+          "day": 3,
+          "start": "19:00",
+          "end": "20:00",
+          "title": "Harbinger Showcase"
+        },
+        {
+          "day": 3,
+          "start": "20:00",
+          "end": "22:00",
+          "title": "Jazz Euphorium"
+        },
+        {
+          "day": 3,
+          "start": "22:00",
+          "end": "00:00",
+          "title": "Lo Signal / Meanwhile/ Rhizomatic"
+        },
+        {
+          "day": 4,
+          "start": "00:00",
+          "end": "02:00",
+          "title": "Off The Hook"
+        },
+        {
+          "day": 4,
+          "start": "02:00",
+          "end": "04:00",
+          "title": "Freeform Air"
+        },
+        {
+          "day": 4,
+          "start": "04:00",
+          "end": "06:00",
+          "title": "William Shatner's Whiskey Tears"
+        },
+        {
+          "day": 4,
+          "start": "06:00",
+          "end": "07:00",
+          "title": "Total €clipse of The ☾harts"
+        },
+        {
+          "day": 4,
+          "start": "07:00",
+          "end": "09:00",
+          "title": "OFC Podcast Radio"
+        },
+        {
+          "day": 4,
+          "start": "09:00",
+          "end": "11:00",
+          "title": "Folk Directions"
+        },
+        {
+          "day": 4,
+          "start": "11:00",
+          "end": "12:00",
+          "title": "Under The Olive Tree"
+        },
+        {
+          "day": 4,
+          "start": "12:00",
+          "end": "14:00",
+          "title": "Venus Radio"
+        },
+        {
+          "day": 4,
+          "start": "14:00",
+          "end": "15:00",
+          "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea"
+        },
+        {
+          "day": 4,
+          "start": "15:00",
+          "end": "17:00",
+          "title": "Positive Vibes"
+        },
+        {
+          "day": 4,
+          "start": "17:00",
+          "end": "18:00",
+          "title": "Off the Hour: Radio Renoviction"
+        },
+        {
+          "day": 4,
+          "start": "18:00",
+          "end": "19:00",
+          "title": "Upstage"
+        },
+        {
+          "day": 4,
+          "start": "19:00",
+          "end": "20:00",
+          "title": "Grey Matters"
+        },
+        {
+          "day": 4,
+          "start": "20:00",
+          "end": "21:00",
+          "title": "Other Worlds on Earth/Dromostexte"
+        },
+        {
+          "day": 4,
+          "start": "21:00",
+          "end": "23:00",
+          "title": "Chaud Pour/Francis"
+        },
+        {
+          "day": 4,
+          "start": "23:00",
+          "end": "01:00",
+          "title": "You Need A Heart To Live 2"
+        },
+        {
+          "day": 5,
+          "start": "01:00",
+          "end": "04:00",
+          "title": "Listen! You Smell Something?"
+        },
+        {
+          "day": 5,
+          "start": "04:00",
+          "end": "07:00",
+          "title": "G-Flex Survivor's Corner"
+        },
+        {
+          "day": 5,
+          "start": "07:00",
+          "end": "09:00",
+          "title": "Morning Detour"
+        },
+        {
+          "day": 5,
+          "start": "09:00",
+          "end": "11:00",
+          "title": "Jazz Amuck"
+        },
+        {
+          "day": 5,
+          "start": "11:00",
+          "end": "12:00",
+          "title": "electronic intifada/LegalEase/Radio AlHara/Alright, Now What?"
+        },
+        {
+          "day": 5,
+          "start": "12:00",
+          "end": "14:00",
+          "title": "Butcher T's Noontime Cuts"
+        },
+        {
+          "day": 5,
+          "start": "14:00",
+          "end": "15:00",
+          "title": "NNB/Jewish Heretics/QPIRG/Mi Chante"
+        },
+        {
+          "day": 5,
+          "start": "15:00",
+          "end": "17:00",
+          "title": "New Shit"
+        },
+        {
+          "day": 5,
+          "start": "17:00",
+          "end": "18:00",
+          "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation"
+        },
+        {
+          "day": 5,
+          "start": "18:00",
+          "end": "19:00",
+          "title": "Café"
+        },
+        {
+          "day": 5,
+          "start": "19:00",
+          "end": "20:00",
+          "title": "Listening to Latin America: Blanca-Victoria"
+        },
+        {
+          "day": 5,
+          "start": "20:00",
+          "end": "22:00",
+          "title": "Macondo"
+        },
+        {
+          "day": 5,
+          "start": "22:00",
+          "end": "00:00",
+          "title": "Weekend Groove"
+        },
+        {
+          "day": 6,
+          "start": "00:00",
+          "end": "02:00",
+          "title": "WEFUNK"
+        },
+        {
+          "day": 6,
+          "start": "02:00",
+          "end": "04:00",
+          "title": "Soca Sessions"
+        },
+        {
+          "day": 6,
+          "start": "04:00",
+          "end": "06:00",
+          "title": "The Mash Time Show"
+        },
+        {
+          "day": 6,
+          "start": "06:00",
+          "end": "10:00",
+          "title": "Quebec Acadie"
+        },
+        {
+          "day": 6,
+          "start": "10:00",
+          "end": "10:30",
+          "title": "Making Contact / Anything Goes"
+        },
+        {
+          "day": 6,
+          "start": "10:30",
+          "end": "14:00",
+          "title": "Samedi Midi"
+        },
+        {
+          "day": 6,
+          "start": "14:00",
+          "end": "16:00",
+          "title": "Funky Revolutions"
+        },
+        {
+          "day": 6,
+          "start": "16:00",
+          "end": "19:00",
+          "title": "West Indian Rhythms"
+        },
+        {
+          "day": 6,
+          "start": "19:00",
+          "end": "21:00",
+          "title": "Masters At Work"
+        },
+        {
+          "day": 6,
+          "start": "21:00",
+          "end": "23:00",
+          "title": "Howls From Hell/Too Loud For The Crowd"
+        },
+        {
+          "day": 6,
+          "start": "23:00",
+          "end": "00:00",
+          "title": "SKEwInGTheWaBeS$$"
+        }
+      ]
+    }
+  }
+}
