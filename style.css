@@ -1012,28 +1012,38 @@ a { color: inherit; }
 }
 
 @media (max-width: 1099px) {
-  /* Titres de section mobile — À la une, En bref, Suite du fil */
+  /* Titres de section mobile — gradation À la une > En bref > Suite du fil */
   .article-eyebrow,
   .brief-rail-title,
   .news-tail-title {
     font-family: var(--sans);
-    font-size: 10px;
     font-weight: 800;
-    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--muted);
     line-height: 1.2;
   }
 
   .article--lead .article-eyebrow {
     display: block;
-    margin: 0 0 6px;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin: 0 0 8px;
     padding: 0;
   }
 
-  .brief-rail-title,
+  .brief-rail-title {
+    font-size: 11.5px;
+    letter-spacing: 0.15em;
+    color: var(--ink-soft);
+    padding: 20px 0 8px;
+    margin: 0;
+  }
+
   .news-tail-title {
-    padding: 18px 0 6px;
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+    padding: 16px 0 6px;
     margin: 0;
   }
 
@@ -1047,8 +1057,8 @@ a { color: inherit; }
   .news-hero .article--feature .article-meta,
   .brief-rail .article--compact .article-meta,
   .news-tail .article--standard .article-meta {
-    font-size: 11px;
-    margin-bottom: 4px;
+    font-size: 12px;
+    margin-bottom: 5px;
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: start;
     column-gap: 8px;
@@ -1066,7 +1076,7 @@ a { color: inherit; }
   .news-hero .article--feature .article-source,
   .brief-rail .article--compact .article-source,
   .news-tail .article--standard .article-source {
-    font-size: 11px;
+    font-size: 12px;
     gap: 5px;
     letter-spacing: 0.03em;
   }
@@ -1083,7 +1093,7 @@ a { color: inherit; }
   .news-hero .article--feature .article-inst,
   .brief-rail .article--compact .article-inst,
   .news-tail .article--standard .article-inst {
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .news-hero .article--lead .article-time,
@@ -1094,7 +1104,7 @@ a { color: inherit; }
     grid-column: 2;
     justify-self: end;
     text-align: right;
-    font-size: 10px;
+    font-size: 12px;
     line-height: 1.35;
     align-self: start;
     white-space: nowrap;
