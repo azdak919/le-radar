@@ -53,7 +53,11 @@ const STATION_HINTS = {
     'http://streamer.xittel.net:8000/cfou',
   ],
   cfak: ['https://cfak.ca/stream'],
-  cjlo: ['http://www.cjlo.com/cjlo.m3u'],
+  cjlo: [
+    'http://rosetta.shoutca.st:8883/stream',
+    'http://www.cjlo.com/player.html',
+    'http://www.cjlo.com/cjlo.m3u',
+  ],
   choq: ['https://choq.ca/stream'],
 };
 

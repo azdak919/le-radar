@@ -20,18 +20,85 @@ function isExternalListen(radio) {
   return !!radio && !getPlayableStream(radio) && !!getListenUrl(radio);
 }
 
-function openListenWindow(radio) {
-  const url = getListenUrl(radio);
-  if (!url) {
-    showToast('Aucun site d\'écoute disponible pour ce poste.');
+function isSecurePageUrl(url = '') {
+  try {
+    return new URL(url).protocol === 'https:';
+  } catch {
     return false;
   }
+}
+
+const EXTERNAL_LISTEN_LOAD_MS = 14000;
+const EXTERNAL_POPUP_SIZE = 400;
+
+let externalListenTimer = null;
+let externalListenPopupWatch = null;
+
+function setExternalListenStatus(mode, text) {
+  if (!EXTERNAL_STATUS || !EXTERNAL_STATUS_TEXT) return;
+  EXTERNAL_STATUS.classList.remove('is-ready', 'is-error');
+  if (mode) EXTERNAL_STATUS.classList.add(mode);
+  EXTERNAL_STATUS_TEXT.textContent = text;
+}
+
+function clearExternalListenTimers() {
+  if (externalListenTimer) {
+    clearTimeout(externalListenTimer);
+    externalListenTimer = null;
+  }
+  if (externalListenPopupWatch) {
+    clearInterval(externalListenPopupWatch);
+    externalListenPopupWatch = null;
+  }
+}
+
+function closeExternalListen() {
+  clearExternalListenTimers();
+  if (EXTERNAL_MODAL) {
+    EXTERNAL_MODAL.classList.add('hidden');
+    EXTERNAL_MODAL.hidden = true;
+    EXTERNAL_MODAL.setAttribute('aria-hidden', 'true');
+  }
+  if (EXTERNAL_FRAME) EXTERNAL_FRAME.removeAttribute('src');
+  if (EXTERNAL_FRAME_WRAP) EXTERNAL_FRAME_WRAP.classList.add('hidden');
+  document.body.classList.remove('external-listen-open');
+}
+
+function bindExternalListen() {
+  if (!EXTERNAL_MODAL) return;
+  EXTERNAL_MODAL.querySelectorAll('[data-external-close]').forEach((el) => {
+    el.addEventListener('click', closeExternalListen);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && EXTERNAL_MODAL && !EXTERNAL_MODAL.hidden) closeExternalListen();
+  });
+  EXTERNAL_REOPEN?.addEventListener('click', () => {
+    if (currentStation && isExternalListen(currentStation)) {
+      openExternalListenPopup(currentStation, { focus: true });
+    }
+  });
+}
+
+function openExternalListenPopup(radio, { focus = true } = {}) {
+  const url = getListenUrl(radio);
+  if (!url) return false;
 
   const name = `radar-listen-${radio.id}`;
-  const features = 'popup=yes,width=440,height=720,menubar=no,toolbar=no,location=yes,status=no,scrollbars=yes,resizable=yes';
+  const features = [
+    'popup=yes',
+    `width=${EXTERNAL_POPUP_SIZE}`,
+    `height=${EXTERNAL_POPUP_SIZE}`,
+    'menubar=no',
+    'toolbar=no',
+    'location=no',
+    'status=no',
+    'scrollbars=yes',
+    'resizable=yes',
+  ].join(',');
 
   if (listenWindow && !listenWindow.closed && listenWindowId === radio.id) {
-    listenWindow.focus();
+    if (focus) listenWindow.focus();
+    setExternalListenStatus('is-ready', 'Fenêtre du lecteur ouverte — appuyez sur ▶ si besoin.');
     return true;
   }
 
@@ -39,12 +106,113 @@ function openListenWindow(radio) {
   listenWindowId = radio.id;
 
   if (!listenWindow) {
-    window.open(url, '_blank', 'noopener');
-    showToast('Écoute ouverte dans un nouvel onglet.');
-    return true;
+    setExternalListenStatus('is-error', 'Fenêtre bloquée par le navigateur. Utilisez le bouton ci-dessous.');
+    EXTERNAL_REOPEN?.classList.remove('hidden');
+    return false;
   }
 
-  listenWindow.opener = null;
+  try { listenWindow.opener = null; } catch { /* cross-origin */ }
+
+  setExternalListenStatus('is-ready', 'Fenêtre du lecteur ouverte — appuyez sur ▶ si la lecture ne démarre pas.');
+  EXTERNAL_REOPEN?.classList.remove('hidden');
+
+  clearExternalListenTimers();
+  externalListenPopupWatch = setInterval(() => {
+    if (!listenWindow || listenWindow.closed) {
+      clearInterval(externalListenPopupWatch);
+      externalListenPopupWatch = null;
+      setExternalListenStatus('is-error', 'Fenêtre fermée. Rouvrez le lecteur avec le bouton ci-dessous.');
+    }
+  }, 800);
+
+  return true;
+}
+
+function openExternalListenIframe(radio) {
+  const url = getListenUrl(radio);
+  if (!url || !EXTERNAL_FRAME || !EXTERNAL_FRAME_WRAP) return;
+
+  EXTERNAL_FRAME_WRAP.classList.remove('hidden');
+  EXTERNAL_REOPEN?.classList.add('hidden');
+  setExternalListenStatus('', 'Chargement de la page du poste…');
+
+  let settled = false;
+  const onReady = () => {
+    if (settled) return;
+    settled = true;
+    clearExternalListenTimers();
+    setExternalListenStatus('is-ready', 'Page chargée — appuyez sur ▶ dans le cadre si la lecture ne démarre pas.');
+  };
+  const onFail = () => {
+    if (settled) return;
+    settled = true;
+    clearExternalListenTimers();
+    EXTERNAL_FRAME.removeAttribute('src');
+    EXTERNAL_FRAME_WRAP.classList.add('hidden');
+    setExternalListenStatus('is-error', 'La page n\'a pas pu se charger ici. Ouvrez le lecteur dans une fenêtre séparée.');
+    openExternalListenPopup(radio, { focus: true });
+  };
+
+  EXTERNAL_FRAME.onload = onReady;
+  EXTERNAL_FRAME.onerror = onFail;
+  EXTERNAL_FRAME.src = url;
+
+  externalListenTimer = setTimeout(() => {
+    if (!settled) onFail();
+  }, EXTERNAL_LISTEN_LOAD_MS);
+}
+
+function openListenWindow(radio) {
+  const url = getListenUrl(radio);
+  if (!url) {
+    showToast('Aucun site d\'écoute disponible pour ce poste.');
+    return false;
+  }
+
+  if (!EXTERNAL_MODAL) {
+    return openExternalListenPopup(radio);
+  }
+
+  clearExternalListenTimers();
+
+  const hint = radio.listenHint
+    || 'Si la lecture ne démarre pas automatiquement, appuyez sur le bouton de lecture (▶) dans le cadre ci-dessus.';
+  const inst = shortInstitution(radio.institution, radio.type);
+
+  EXTERNAL_TITLE.textContent = radio.fullName || radio.name;
+  EXTERNAL_SUB.textContent = `${radio.frequency || 'Web'} · ${inst}`;
+  if (EXTERNAL_HINT) EXTERNAL_HINT.textContent = hint;
+  if (EXTERNAL_TAB) EXTERNAL_TAB.href = url;
+
+  if (EXTERNAL_LOGO) {
+    if (radio.logo) {
+      EXTERNAL_LOGO.src = radio.logo;
+      EXTERNAL_LOGO.alt = radio.name;
+      EXTERNAL_LOGO.classList.remove('hidden');
+    } else {
+      EXTERNAL_LOGO.classList.add('hidden');
+      EXTERNAL_LOGO.removeAttribute('src');
+    }
+  }
+
+  EXTERNAL_MODAL.classList.remove('hidden');
+  EXTERNAL_MODAL.hidden = false;
+  EXTERNAL_MODAL.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('external-listen-open');
+
+  if (isSecurePageUrl(url)) {
+    openExternalListenIframe(radio);
+  } else {
+    EXTERNAL_FRAME_WRAP?.classList.add('hidden');
+    if (EXTERNAL_FRAME) EXTERNAL_FRAME.removeAttribute('src');
+    EXTERNAL_REOPEN?.classList.remove('hidden');
+    setExternalListenStatus('', 'Ouverture du lecteur dans une fenêtre séparée…');
+    const opened = openExternalListenPopup(radio, { focus: true });
+    if (!opened) {
+      setExternalListenStatus('is-error', 'Impossible d\'ouvrir la fenêtre. Utilisez « Ouvrir dans un onglet ».');
+    }
+  }
+
   return true;
 }
 
@@ -70,6 +238,17 @@ const NEWS_EMPTY     = document.getElementById('news-empty');
 const TODAY_DATE     = document.getElementById('today-date');
 const TOAST_EL       = document.getElementById('toast');
 const THEME_TOGGLE   = document.getElementById('theme-toggle');
+const EXTERNAL_MODAL = document.getElementById('external-listen');
+const EXTERNAL_TITLE = document.getElementById('external-listen-title');
+const EXTERNAL_SUB   = document.getElementById('external-listen-sub');
+const EXTERNAL_STATUS = document.getElementById('external-listen-status');
+const EXTERNAL_STATUS_TEXT = document.getElementById('external-listen-status-text');
+const EXTERNAL_FRAME_WRAP = document.getElementById('external-listen-frame-wrap');
+const EXTERNAL_FRAME = document.getElementById('external-listen-frame');
+const EXTERNAL_HINT  = document.getElementById('external-listen-hint');
+const EXTERNAL_REOPEN = document.getElementById('external-listen-reopen');
+const EXTERNAL_TAB   = document.getElementById('external-listen-tab');
+const EXTERNAL_LOGO  = document.getElementById('external-listen-logo');
 
 // ─── State ───────────────────────────────────────────────────────────────────
 let radios = [];          // ordered list backing the tuner
@@ -94,6 +273,7 @@ async function init() {
   renderTodayDate();
   setupAudio();
   bindTuner();
+  bindExternalListen();
 
   try {
     const brandData = await fetch('./brand-colors.json').then((r) => r.json());

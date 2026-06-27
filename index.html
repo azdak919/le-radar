@@ -129,6 +129,57 @@
     <!-- Toast -->
     <div id="toast" class="toast hidden"></div>
 
+    <!-- Lecteur radio externe (site du poste) -->
+    <div id="external-listen" class="external-listen hidden" hidden aria-hidden="true">
+      <div class="external-listen__backdrop" data-external-close></div>
+      <div
+        class="external-listen__panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="external-listen-title"
+      >
+        <header class="external-listen__head">
+          <div class="external-listen__brand">
+            <img id="external-listen-logo" class="external-listen__logo hidden" alt="" width="40" height="40" />
+            <div>
+              <h2 id="external-listen-title" class="external-listen__title">Radio externe</h2>
+              <p id="external-listen-sub" class="external-listen__sub"></p>
+            </div>
+          </div>
+          <button type="button" class="external-listen__close" data-external-close aria-label="Fermer">×</button>
+        </header>
+
+        <div id="external-listen-status" class="external-listen__status" role="status" aria-live="polite">
+          <span class="external-listen__spinner" aria-hidden="true"></span>
+          <span id="external-listen-status-text">Chargement de la page du poste…</span>
+        </div>
+
+        <div id="external-listen-frame-wrap" class="external-listen__frame-wrap hidden">
+          <iframe
+            id="external-listen-frame"
+            class="external-listen__frame"
+            title="Lecteur du poste de radio"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+          ></iframe>
+        </div>
+
+        <p id="external-listen-hint" class="external-listen__hint">
+          Si la lecture ne démarre pas automatiquement, appuyez sur le bouton de lecture (▶) dans le cadre ci-dessus.
+        </p>
+
+        <div class="external-listen__actions">
+          <button type="button" id="external-listen-reopen" class="external-listen__btn external-listen__btn--primary hidden">
+            Ouvrir le lecteur
+          </button>
+          <a id="external-listen-tab" class="external-listen__btn" href="#" target="_blank" rel="noopener noreferrer">
+            Ouvrir dans un onglet
+          </a>
+        </div>
+      </div>
+    </div>
+
     <script src="app.js" defer></script>
   </body>
 </html>
