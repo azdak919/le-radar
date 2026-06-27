@@ -418,6 +418,7 @@ a { color: inherit; }
   align-items: center;
   gap: 6px;
   color: rgba(255,255,255,0.5);
+  overflow: visible;
 }
 .tuner-vol-btn {
   display: flex;
@@ -443,15 +444,19 @@ a { color: inherit; }
   --vol-ratio: 0.4;
   --vol-base: 80%;
   --vol-boost: 0%;
-  width: 132px;
+  --vol-travel: calc(100% - var(--vol-thumb));
+  --vol-x: calc(var(--vol-thumb) / 2 + var(--vol-travel) * var(--vol-ratio));
+  width: 140px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: 5px;
+  overflow: visible;
 }
 .tuner-vol-slider {
   position: relative;
   height: var(--vol-thumb);
+  overflow: visible;
 }
 .tuner-vol-rail {
   position: absolute;
@@ -509,25 +514,27 @@ a { color: inherit; }
   background: rgba(255, 255, 255, 0.34);
   pointer-events: none;
 }
-.tuner-vol-tick--min { left: 0; }
+.tuner-vol-tick--min { left: calc(var(--vol-thumb) / 2); }
 .tuner-vol-tick--100 {
-  left: 50%;
+  left: calc(var(--vol-thumb) / 2 + var(--vol-travel) * 0.5);
   height: 11px;
   background: rgba(255, 255, 255, 0.58);
 }
 .tuner-vol-tick--max {
-  left: 100%;
+  left: calc(100% - var(--vol-thumb) / 2);
   height: 11px;
   background: rgba(255, 154, 144, 0.85);
 }
 .tuner-vol-thumb {
   position: absolute;
   top: 50%;
-  left: calc(var(--vol-ratio) * 100%);
+  left: var(--vol-x);
   z-index: 4;
   box-sizing: border-box;
   width: var(--vol-thumb);
   height: var(--vol-thumb);
+  margin: 0;
+  padding: 0;
   border-radius: 50%;
   border: 2px solid rgba(12, 14, 18, 0.22);
   background: #fff;
@@ -542,27 +549,29 @@ a { color: inherit; }
 }
 .tuner-vol-labels {
   position: relative;
-  height: 9px;
+  height: 10px;
+  overflow: visible;
   font-size: 9px;
   font-weight: 600;
   line-height: 1;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
   color: rgba(255, 255, 255, 0.34);
   user-select: none;
 }
 .tuner-vol-labels span {
   position: absolute;
   top: 0;
+  white-space: nowrap;
   transform: translateX(-50%);
 }
 .tuner-vol-labels span:nth-child(1) {
   left: calc(var(--vol-thumb) / 2);
-  transform: none;
 }
-.tuner-vol-labels span:nth-child(2) { left: 50%; }
+.tuner-vol-labels span:nth-child(2) {
+  left: calc(var(--vol-thumb) / 2 + var(--vol-travel) * 0.5);
+}
 .tuner-vol-labels span:nth-child(3) {
   left: calc(100% - var(--vol-thumb) / 2);
-  transform: translateX(-100%);
   color: rgba(255, 154, 144, 0.72);
 }
 .tuner-volume {
@@ -628,6 +637,7 @@ a { color: inherit; }
     display: flex;
     align-items: center;
     height: 42px;
+    overflow: visible;
   }
 
   .tuner-vol-track {
@@ -635,6 +645,7 @@ a { color: inherit; }
     justify-content: center;
     gap: 0;
     position: relative;
+    overflow: visible;
   }
 
   .tuner-vol-labels {
@@ -642,6 +653,7 @@ a { color: inherit; }
     left: 0;
     right: 0;
     bottom: 0;
+    overflow: visible;
   }
 
   .tuner-vol-btn {
@@ -765,7 +777,7 @@ a { color: inherit; }
     transform: none;
     pointer-events: auto;
   }
-  .tuner-vol-slot .tuner-vol-track { width: 156px; }
+  .tuner-vol-slot .tuner-vol-track { width: 164px; }
   .tuner-vol.is-open .tuner-vol-btn { color: rgba(255,255,255,0.95); }
 }
 @media (prefers-reduced-motion: reduce) {
