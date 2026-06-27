@@ -164,6 +164,7 @@ async function main() {
     ['News source maintainer', `node scripts/discover-news-sources.js ${flag}`.trim()],
     ['Stream tracker + radio promotion', `node scripts/discover-streams.js ${flag}`.trim()],
     ['News aggregator', `node scripts/fetch-news.js ${flag}`.trim()],
+    ['Social feed', `node scripts/fetch-social.js ${flag}`.trim()],
   ];
 
   for (const [label, cmd] of pipeline) {
