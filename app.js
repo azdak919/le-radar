@@ -621,7 +621,13 @@ function renderNews() {
   const compacts = [];
   const tail = [];
 
-  const { heroItems, briefItems, tailItems } = partitionNewsFeed(items);
+  const { heroItems, briefItems, tailItems, contingencyBand } = partitionNewsFeed(items);
+
+  if (contingencyBand > 0) {
+    NEWS_LIST.dataset.contingency = String(contingencyBand);
+  } else {
+    NEWS_LIST.removeAttribute('data-contingency');
+  }
 
   heroItems.forEach((item, i) => {
     const role = i === 0 ? 'lead' : 'feature';
@@ -677,6 +683,8 @@ function updateNewsLayout() {
 
 const HERO_SPOTLIGHT_MAX = 4; /* 1 à la une + 3 vedettes */
 const BRIEF_SIDEBAR_MAX = 4;
+const CONTINGENCY_MAX_SESSIONS_BACK = 3;
+const CONTINGENCY_ULTIMATE_BAND = 4;
 
 function articleKey(item) {
   return item.link || `${item.source}::${item.date}::${item.title}`;
@@ -718,17 +726,48 @@ function getCurrentUniversitySessionStart(referenceDate = new Date()) {
   return new Date(year, 0, 1);
 }
 
-function isWithinCurrentUniversitySession(item, referenceDate = new Date()) {
-  const published = new Date(item.date || 0);
-  if (!Number.isFinite(published.getTime())) return false;
-  const sessionStart = getCurrentUniversitySessionStart(referenceDate);
-  const now = referenceDate.getTime();
-  const t = published.getTime();
-  return t >= sessionStart.getTime() && t <= now;
+function getPriorUniversitySessionStart(sessionStart) {
+  const year = sessionStart.getFullYear();
+  const month = sessionStart.getMonth();
+  if (month === 8) return new Date(year, 4, 1);
+  if (month === 4) return new Date(year, 0, 1);
+  return new Date(year - 1, 8, 1);
 }
 
-function spotlightPool(items, referenceDate = new Date()) {
-  return sortByDateDesc(items.filter((i) => isWithinCurrentUniversitySession(i, referenceDate)));
+function getUniversitySessionStart(referenceDate = new Date(), sessionsBack = 0) {
+  let start = getCurrentUniversitySessionStart(referenceDate);
+  for (let i = 0; i < sessionsBack; i++) {
+    start = getPriorUniversitySessionStart(start);
+  }
+  return start;
+}
+
+/** sessionsBack 0 = session en cours ; 1+ = sessions précédentes (bandes disjointes). */
+function getUniversitySessionBand(referenceDate = new Date(), sessionsBack = 0) {
+  const start = getUniversitySessionStart(referenceDate, sessionsBack);
+  const end = sessionsBack === 0
+    ? referenceDate
+    : new Date(getUniversitySessionStart(referenceDate, sessionsBack - 1).getTime() - 1);
+  return { start, end };
+}
+
+function isWithinUniversitySessionBand(item, referenceDate = new Date(), sessionsBack = 0) {
+  const published = new Date(item.date || 0);
+  if (!Number.isFinite(published.getTime())) return false;
+  const { start, end } = getUniversitySessionBand(referenceDate, sessionsBack);
+  const t = published.getTime();
+  return t >= start.getTime() && t <= end.getTime();
+}
+
+function sessionBandPool(items, referenceDate = new Date(), sessionsBack = 0) {
+  return sortByDateDesc(
+    items.filter((i) => isWithinUniversitySessionBand(i, referenceDate, sessionsBack)),
+  );
+}
+
+function isPublishedOnOrBefore(item, referenceDate = new Date()) {
+  const published = new Date(item.date || 0);
+  return Number.isFinite(published.getTime()) && published.getTime() <= referenceDate.getTime();
 }
 
 function compareBriefCandidates(a, b) {
@@ -765,25 +804,48 @@ function pickSpotlightSlots(items, max, excludeInsts = new Set()) {
   return picks;
 }
 
-/** Vedette : session en cours, mix d'institutions puis repli sur sources déjà vues. */
-function pickHeroSpotlight(items) {
-  const fresh = spotlightPool(items);
-  if (!fresh.length) return [];
-  return sortByDateDesc(pickSpotlightSlots(fresh, HERO_SPOTLIGHT_MAX));
+function isArticlePicked(item, picks) {
+  const key = articleKey(item);
+  return picks.some((pick) => articleKey(pick) === key);
 }
 
 /**
- * En bref : session en cours, diversité par journal (pas par institution).
- * Priorité aux médias absents de la vedette, puis un autre article du même
- * journal, puis repli chronologique si les slots restent vides.
+ * Vedette : session en cours d'abord ; si slots vides, exception temporaire
+ * session par session jusqu'à résorbation du pool courant.
  */
-function pickBriefSidebar(allItems, heroItems = []) {
-  const heroKeys = new Set(heroItems.map(articleKey));
-  const heroSources = new Set(heroItems.map(sourceKey));
-
+function pickHeroSpotlight(items, referenceDate = new Date()) {
   const picks = [];
-  const usedKeys = new Set();
-  const usedSources = new Set();
+  const usedInsts = new Set();
+  let contingencyBand = 0;
+
+  const fill = (pool, band) => {
+    if (picks.length >= HERO_SPOTLIGHT_MAX) return;
+    const available = pool.filter((item) => !isArticlePicked(item, picks));
+    const batch = pickSpotlightSlots(available, HERO_SPOTLIGHT_MAX - picks.length, usedInsts);
+    if (!batch.length) return;
+    picks.push(...batch);
+    contingencyBand = Math.max(contingencyBand, band);
+  };
+
+  for (let band = 0; band <= CONTINGENCY_MAX_SESSIONS_BACK; band++) {
+    fill(sessionBandPool(items, referenceDate, band), band);
+    if (picks.length >= HERO_SPOTLIGHT_MAX) break;
+  }
+
+  if (picks.length < HERO_SPOTLIGHT_MAX) {
+    fill(
+      sortByDateDesc(items).filter(
+        (item) => isPublishedOnOrBefore(item, referenceDate) && !isArticlePicked(item, picks),
+      ),
+      CONTINGENCY_ULTIMATE_BAND,
+    );
+  }
+
+  return { items: sortByDateDesc(picks), contingencyBand };
+}
+
+function fillBriefFromSessionPool(eligible, heroSources, state) {
+  const { picks, usedKeys, usedSources } = state;
 
   const add = (item, { allowDuplicateSource = false } = {}) => {
     if (!item || picks.length >= BRIEF_SIDEBAR_MAX) return false;
@@ -797,48 +859,86 @@ function pickBriefSidebar(allItems, heroItems = []) {
     return true;
   };
 
-  const freshEligible = spotlightPool(allItems).filter((i) => !heroKeys.has(articleKey(i)));
-  const freshLatest = latestPerKey(freshEligible, sourceKey);
+  const pool = eligible.filter((item) => !usedKeys.has(articleKey(item)));
+  const latestBySource = latestPerKey(pool, sourceKey);
 
-  // Journaux de la session absents de la vedette
-  [...freshLatest.entries()]
+  [...latestBySource.entries()]
     .filter(([src]) => !heroSources.has(src))
     .map(([, item]) => item)
     .sort(compareBriefCandidates)
     .forEach((item) => add(item));
 
-  // Journaux déjà en vedette : un autre article de la session
-  [...freshLatest.entries()]
+  [...latestBySource.entries()]
     .filter(([src]) => heroSources.has(src))
     .map(([, item]) => item)
     .sort(compareBriefCandidates)
     .forEach((item) => add(item));
 
-  // Autres articles de la session, un par journal encore absent d'En bref
-  for (const item of freshEligible) {
+  for (const item of pool) {
     if (picks.length >= BRIEF_SIDEBAR_MAX) break;
     add(item);
   }
 
-  // Dernier repli : complète avec d'autres articles de la session
-  for (const item of freshEligible) {
+  for (const item of pool) {
     if (picks.length >= BRIEF_SIDEBAR_MAX) break;
     add(item, { allowDuplicateSource: true });
   }
-
-  return picks.sort(compareBriefCandidates);
 }
 
-function partitionNewsFeed(items) {
-  const sorted = sortByDateDesc(items);
-  const heroItems = pickHeroSpotlight(sorted);
+/**
+ * En bref : mêmes règles de diversité ; exception temporaire par bande
+ * de session si la session en cours ne remplit pas les slots.
+ */
+function pickBriefSidebar(allItems, heroItems = [], referenceDate = new Date()) {
   const heroKeys = new Set(heroItems.map(articleKey));
-  const briefItems = pickBriefSidebar(sorted, heroItems);
+  const heroSources = new Set(heroItems.map(sourceKey));
+  const state = {
+    picks: [],
+    usedKeys: new Set(),
+    usedSources: new Set(),
+  };
+  let contingencyBand = 0;
+
+  for (let band = 0; band <= CONTINGENCY_MAX_SESSIONS_BACK; band++) {
+    if (state.picks.length >= BRIEF_SIDEBAR_MAX) break;
+    const before = state.picks.length;
+    const eligible = sessionBandPool(allItems, referenceDate, band).filter(
+      (item) => !heroKeys.has(articleKey(item)),
+    );
+    fillBriefFromSessionPool(eligible, heroSources, state);
+    if (state.picks.length > before) contingencyBand = Math.max(contingencyBand, band);
+  }
+
+  if (state.picks.length < BRIEF_SIDEBAR_MAX) {
+    const before = state.picks.length;
+    const eligible = sortByDateDesc(allItems).filter(
+      (item) => isPublishedOnOrBefore(item, referenceDate) && !heroKeys.has(articleKey(item)),
+    );
+    fillBriefFromSessionPool(eligible, heroSources, state);
+    if (state.picks.length > before) contingencyBand = CONTINGENCY_ULTIMATE_BAND;
+  }
+
+  return {
+    items: state.picks.sort(compareBriefCandidates),
+    contingencyBand,
+  };
+}
+
+function partitionNewsFeed(items, referenceDate = new Date()) {
+  const sorted = sortByDateDesc(items);
+  const { items: heroItems, contingencyBand: heroBand } = pickHeroSpotlight(sorted, referenceDate);
+  const heroKeys = new Set(heroItems.map(articleKey));
+  const { items: briefItems, contingencyBand: briefBand } = pickBriefSidebar(
+    sorted,
+    heroItems,
+    referenceDate,
+  );
   const briefKeys = new Set(briefItems.map(articleKey));
   const tailItems = sorted.filter(
     (i) => !heroKeys.has(articleKey(i)) && !briefKeys.has(articleKey(i)),
   );
-  return { heroItems, briefItems, tailItems };
+  const contingencyBand = Math.max(heroBand, briefBand);
+  return { heroItems, briefItems, tailItems, contingencyBand };
 }
 
 function createArticle(item, role = 'standard') {
