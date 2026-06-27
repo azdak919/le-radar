@@ -1,4 +1,4 @@
-// RÉQ — Le fil étudiant du Québec
+// RADAR — Les médias étudiants du Québec
 // Page unique : un syntoniseur radio en haut, un fil d'articles (texte) en dessous.
 
 // Proxy CORS optionnel pour les flux HTTP→HTTPS (déployer proxy/cloudflare-worker.js).
@@ -286,7 +286,7 @@ function updateMediaSession(radio) {
   navigator.mediaSession.metadata = new MediaMetadata({
     title: radio.fullName || radio.name,
     artist: radio.institution,
-    album: 'RÉQ — Radios Étudiantes du Québec',
+    album: 'RADAR — Les médias étudiants du Québec',
   });
 }
 
