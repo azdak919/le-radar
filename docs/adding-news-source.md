@@ -1,8 +1,8 @@
 # Ajouter une source au fil RADAR
 
-Guide pour intégrer un journal étudiant, un média campus ou un portail
-institutionnel au fil **Le fil étudiant**. Destiné aux humains et aux bots
-(`discover-news-sources.js`, agents CI).
+Guide pour intégrer un **média étudiant** (journal de campus, média
+indépendant tenu par des étudiant·e·s) au fil **Le fil étudiant**. Destiné aux
+humains et aux bots (`discover-news-sources.js`, agents CI).
 
 Voir aussi `docs/maintenance.md` pour le pipeline global.
 
@@ -12,13 +12,16 @@ Voir aussi `docs/maintenance.md` pour le pipeline global.
 
 | Critère | Attendu |
 |---------|---------|
-| Périmètre | Québec — universités, cégeps, médias étudiants ou portails campus |
+| Périmètre | Québec — universités et cégeps |
+| Nature | **Média étudiant** : rédaction étudiante indépendante ou journal de campus |
 | Langue | `fr` ou `en` (filtre UI) |
 | Fraîcheur | Publications récentes (le fil global plafonne à ~3 sessions universitaires) |
 | Indépendance | Plusieurs journaux par établissement sont acceptés s'ils sont distincts (ex. The Link + The Concordian) |
 
-**Exemple ULaval** : `L'Exemplaire` (journal étudiant indépendant) et `ULaval nouvelles`
-(communications institutionnelles) coexistent — même institution, noms et URLs différents.
+**Exclus** : portails de communications institutionnelles (ex. `nouvelles.ulaval.ca`),
+sites d'actualités officielles des universités, communiqués de presse administratifs.
+
+**Exemple ULaval** : seul `L'Exemplaire` (journal étudiant indépendant) est éligible.
 
 ---
 
@@ -42,7 +45,8 @@ Le bot `discover-news-sources.js` essaie ces chemins automatiquement sur les
 
 ### 2.2 Pas de RSS (SvelteKit, headless CMS, etc.)
 
-Si aucun flux n'existe (ex. `nouvelles.ulaval.ca`), utiliser **`fetchMode: "html-list"`** :
+Si aucun flux n'existe sur un **média étudiant** (site SvelteKit, headless CMS, etc.),
+utiliser **`fetchMode: "html-list"`** :
 
 1. Trouver une **page de liste** avec articles récents en HTML SSR
    (souvent `/toutes-les-nouvelles`, `/nouvelles`, `/blog`, page d'accueil).
@@ -124,16 +128,16 @@ node scripts/add-news-source.js \
   --note "Journal indépendant, distinct de The Link" \
   --update
 
-# Cas sans RSS (page liste HTML)
+# Cas sans RSS (page liste HTML — média étudiant seulement)
 node scripts/add-news-source.js \
-  --name "ULaval nouvelles" \
-  --institution "Université Laval" \
-  --region "Capitale-Nationale" --type universite --lang fr \
-  --url "https://nouvelles.ulaval.ca/toutes-les-nouvelles" \
-  --site "https://nouvelles.ulaval.ca/" \
+  --name "Exemple Journal" \
+  --institution "Université X" \
+  --region "Montréal" --type universite --lang fr \
+  --url "https://journal-etudiant.example.ca/nouvelles" \
+  --site "https://journal-etudiant.example.ca/" \
   --fetchMode html-list \
-  --popularity 4 \
-  --note "Portail institutionnel ULaval, distinct de L'Exemplaire" \
+  --popularity 50 \
+  --note "Journal étudiant sans flux RSS" \
   --update
 ```
 
@@ -159,7 +163,7 @@ Raccourci : `node scripts/maintain.js --update`
 
 | Problème | Fichier / action |
 |----------|------------------|
-| Auteur générique (« The Concordian », « ULaval nouvelles ») | `GENERIC_AUTHORS` dans `scripts/fetch-news.js` |
+| Auteur générique (« The Concordian », nom du journal) | `GENERIC_AUTHORS` dans `scripts/fetch-news.js` |
 | Vedettes WordPress absentes du RSS | `wpFeaturedCategories` dans `news-sources.json` |
 | Auteurs incorrects en masse | `scripts/verify-authors.js`, `scripts/author-lib.js` |
 | Images vedette faibles | `scripts/stock-photo-lib.js`, `ensure-lead-images.js` |
@@ -171,13 +175,14 @@ Raccourci : `node scripts/maintain.js --update`
 
 Quand un bot trouve un candidat :
 
-1. Confirmer l'établissement dans `institutions.json`
-2. Vérifier qu'aucune source active ne porte déjà le même `name` ou `url`
-3. Sonder RSS sur `site` ; sinon chercher page liste HTML datée
-4. Si RSS frais → promouvoir via `discover-news-sources.js --update`
-5. Si HTML seulement → ajouter manuellement avec `fetchMode: html-list` (promotion auto RSS uniquement aujourd'hui)
-6. Lancer le pipeline §5
-7. Documenter le cas particulier dans `_note` si repli ou contenu partiel
+1. Confirmer que c'est un **média étudiant** (pas un portail institutionnel)
+2. Confirmer l'établissement dans `institutions.json`
+3. Vérifier qu'aucune source active ne porte déjà le même `name` ou `url`
+4. Sonder RSS sur `site` ; sinon chercher page liste HTML datée
+5. Si RSS frais → promouvoir via `discover-news-sources.js --update`
+6. Si HTML seulement → ajouter manuellement avec `fetchMode: html-list` (promotion auto RSS uniquement aujourd'hui)
+7. Lancer le pipeline §5
+8. Documenter le cas particulier dans `_note` si repli ou contenu partiel
 
 ---
 

@@ -1,16 +1,22 @@
 {
-  "updated": "2026-06-27T07:05:23.892Z",
-  "total": 183,
-  "withPhoto": 182,
-  "withStock": 25,
-  "fullyCovered": 182,
-  "leadReadyPhotos": 104,
-  "pageScraped": 32,
-  "photosRecovered": 22,
+  "updated": "2026-06-27T07:14:46.264Z",
+  "total": 161,
+  "withPhoto": 160,
+  "withStock": 24,
+  "fullyCovered": 160,
+  "leadReadyPhotos": 115,
+  "pageScraped": 36,
+  "photosRecovered": 26,
   "stockSearches": 28,
   "stockFound": 25,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Résumé du G7 à Évian",
+      "link": "https://lecollectif.ca/a-la-une/resume-du-g7-a-evian/",
+      "reason": "stock-too-small",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/06/SOCIETE_Resume-du-G7-a-Evian_Getty-Images.jpg"
+    },
     {
       "title": "Virage à droite en Colombie",
       "link": "https://lecollectif.ca/a-la-une/virage-a-droite-en-colombie/",
@@ -32,32 +38,8 @@
     {
       "title": "La surconsommation textile : un phénomène aux lourdes conséquences",
       "link": "https://lecollectif.ca/a-la-une/la-surconsommation-textile-un-phenomene-aux-lourdes-consequences/",
-      "reason": "no-stock-match",
+      "reason": "stock-too-small",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/06/SOCIETE_La-surproduction_-le-veritable-defi-de-l_industrie-de-la-mode-SourceFashionNetwork.png"
-    },
-    {
-      "title": "Antoine Desrosiers: le politologue musicien",
-      "link": "https://nouvelles.ulaval.ca/2026/06/26/antoine-desrosiers-le-politologue-musicien-6d584cde-e412-4fea-b561-124c3fdf04ae",
-      "reason": "stock-too-small",
-      "image": "https://assets.ulaval.omerloclients.com/assets/ee9b03a6-8b53-4c0d-86e8-d8a6bf236262.jpg?quality=md"
-    },
-    {
-      "title": "Camille Lavallée: guidée par la création et l'engagement",
-      "link": "https://nouvelles.ulaval.ca/2026/06/26/camille-lavallee-guidee-par-la-creation-et-lengagement-91515e9e-0479-4aa9-9bc7-089326438be9",
-      "reason": "stock-too-small",
-      "image": "https://assets.ulaval.omerloclients.com/assets/a69a4a38-ed2e-4821-987b-3c0866af743e.jpg?quality=md"
-    },
-    {
-      "title": "Faire de la science bas carbone sur la Côte-Nord",
-      "link": "https://nouvelles.ulaval.ca/2026/06/26/faire-de-la-science-bas-carbone-sur-la-cote-nord-75681c93-c9fe-40a5-b5dc-055f6372c32e",
-      "reason": "stock-too-small",
-      "image": "https://assets.ulaval.omerloclients.com/assets/f1b06cbb-30af-429f-8ea5-27c2a104a4cd.jpg?quality=md"
-    },
-    {
-      "title": "Maude Beauchamp: entre culture et communauté, maîtriser l'art du repreneuriat à 25 ans",
-      "link": "https://nouvelles.ulaval.ca/2026/06/25/maude-beauchamp-entre-culture-et-communaute-maitriser-lart-du-repreneuriat-a-25-ans-54ab667d-7db4-41af-87b1-6738f1af282c",
-      "reason": "stock-too-small",
-      "image": "https://assets.ulaval.omerloclients.com/assets/ba3b9059-2aab-4c39-942d-25b5da0726e1.jpg?quality=md"
     },
     {
       "title": "Des policiers du SPVM visés par une enquête",
@@ -66,22 +48,40 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/06/SOCIETE_16-policiers-du-SPVM-vises-par-une-enquete_Getty-Images.jpg"
     },
     {
-      "title": "Samuel Nepton: un parcours guidé par la passion et la transmission",
-      "link": "https://nouvelles.ulaval.ca/2026/06/23/samuel-nepton-un-parcours-guide-par-la-passion-et-la-transmission-65a11a2a-d751-4bfa-9b18-3b47c8c49c58",
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "link": "https://lapige.atmjonquiere.com/2026/06/22/se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille/?utm_source=rss&utm_medium=rss&utm_campaign=se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille",
       "reason": "stock-too-small",
-      "image": "https://assets.ulaval.omerloclients.com/assets/f67271d8-a117-4814-a0f0-efcc7bf07d98.jpg?quality=md"
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/06/Bruno-Cormier-retraite-benevole.png"
     },
     {
-      "title": "La population est généralement satisfaite de l’éducation au Québec",
-      "link": "https://nouvelles.ulaval.ca/2026/06/23/la-population-est-generalement-satisfaite-de-leducation-au-quebec-251c9dc3-8942-4c9d-81bb-d3dd202e5020",
-      "reason": "stock-too-small",
-      "image": "https://assets.ulaval.omerloclients.com/assets/b75be04e-a946-4e52-9c48-d62101fdd81b.jpg?quality=md"
+      "title": "Un hommage aux cyclistes décédés sur les routes",
+      "link": "https://lapige.atmjonquiere.com/2026/05/21/les-cyclistes-sont-honores-au-lac-saint-jean/?utm_source=rss&utm_medium=rss&utm_campaign=les-cyclistes-sont-honores-au-lac-saint-jean",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/shared-image-1-750x375.jpg"
     },
     {
-      "title": "Charles Brindamour: leader visionnaire et philanthrope engagé",
-      "link": "https://nouvelles.ulaval.ca/2026/06/23/charles-brindamour-leader-visionnaire-et-philanthrope-engage-2189da23-ef3a-4920-9a9a-5e6cbb96023e",
+      "title": "Un investissement pour les jeunes « bienvenu » au Centre Mamik",
+      "link": "https://lapige.atmjonquiere.com/2026/05/21/un-investissement-pour-les-jeunes-bienvenu-au-centre-mamik/?utm_source=rss&utm_medium=rss&utm_campaign=un-investissement-pour-les-jeunes-bienvenu-au-centre-mamik",
       "reason": "stock-too-small",
-      "image": "https://assets.ulaval.omerloclients.com/assets/b49d6915-ef51-4164-ab7d-2c66a42a9d9b.jpg?quality=md"
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/image-mamik-750x375.jpg"
+    },
+    {
+      "title": "L’ERD sauvée de la dissolution par quatre membres",
+      "link": "https://lapige.atmjonquiere.com/2026/05/21/lerd-sauvee-de-la-dissolution-par-quatre-membres/?utm_source=rss&utm_medium=rss&utm_campaign=lerd-sauvee-de-la-dissolution-par-quatre-membres",
+      "reason": "stock-too-small",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2020/10/Andre-e1779394167998-216x300.png"
+    },
+    {
+      "title": "Jeunes auteurs, à vos crayons : le « pouvoir des mots » pour rejoindre les étudiants",
+      "link": "https://lapige.atmjonquiere.com/2026/05/21/jeunes-auteurs-a-vos-crayons-le-pouvoir-des-mots-pour-rejoindre-les-etudiants/?utm_source=rss&utm_medium=rss&utm_campaign=jeunes-auteurs-a-vos-crayons-le-pouvoir-des-mots-pour-rejoindre-les-etudiants",
+      "reason": "stock-too-small",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/Credit-photo-Raphaelle-Guillois-200x300.jpg"
+    },
+    {
+      "title": "Un pont entre l’art et le travail de rue",
+      "link": "https://lapige.atmjonquiere.com/2026/05/20/un-pont-entre-lart-et-le-travail-de-rue/?utm_source=rss&utm_medium=rss&utm_campaign=un-pont-entre-lart-et-le-travail-de-rue",
+      "reason": "stock-too-small",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/Image-16-750x375.jpg"
     }
   ]
 }
