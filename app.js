@@ -64,7 +64,6 @@ const ICO_EXTERNAL   = TUNER_PLAY.querySelector('.ico-external');
 
 const NEWS_LIST      = document.getElementById('news-list');
 const NEWS_FILTERS   = document.getElementById('news-filters');
-const SOURCE_MASTHEAD = document.getElementById('source-masthead');
 const NEWS_COUNT     = document.getElementById('news-count');
 const NEWS_UPDATED   = document.getElementById('news-updated');
 const NEWS_EMPTY     = document.getElementById('news-empty');
@@ -578,50 +577,8 @@ function sourceInfo(src) {
   return {
     institution: item?.institution || registry?.institution || '',
     type: item?.type || registry?.type || '',
-    lang: item?.lang || registry?.lang || 'fr',
     color: sourceColors[src] || 'var(--accent)',
-    website: sourceWebsite(src),
   };
-}
-
-function sourceWebsite(src) {
-  const feedUrl = newsSourcesByName[src]?.url;
-  if (!feedUrl) return null;
-  try {
-    const u = new URL(feedUrl);
-    return `${u.protocol}//${u.host}/`;
-  } catch {
-    return null;
-  }
-}
-
-function renderSourceMasthead(src) {
-  if (!SOURCE_MASTHEAD) return;
-  if (!src || src === 'all') {
-    SOURCE_MASTHEAD.classList.add('hidden');
-    SOURCE_MASTHEAD.hidden = true;
-    SOURCE_MASTHEAD.innerHTML = '';
-    return;
-  }
-
-  const { institution, type, lang, color, website } = sourceInfo(src);
-  const instLabel = institution ? articleInstitutionLabel(institution, type) : '';
-  const typeLabel = type === 'cegep' ? 'Cégep' : type === 'universite' ? 'Université' : '';
-  const visitLabel = lang === 'en' ? 'Visit site ↗' : 'Visiter le site ↗';
-
-  SOURCE_MASTHEAD.style.setProperty('--c', color);
-  SOURCE_MASTHEAD.innerHTML = `
-    <div class="source-masthead__brand">
-      <span class="source-masthead__dot" aria-hidden="true"></span>
-      <div class="source-masthead__copy">
-        <h2 class="source-masthead__name">${escapeHtml(src)}</h2>
-        ${instLabel ? `<p class="source-masthead__inst">${escapeHtml(instLabel)}${typeLabel ? ` · ${typeLabel}` : ''}</p>` : ''}
-      </div>
-    </div>
-    ${website ? `<a class="source-masthead__link" href="${escapeHtml(website)}" target="_blank" rel="noopener">${visitLabel}</a>` : ''}
-  `;
-  SOURCE_MASTHEAD.classList.remove('hidden');
-  SOURCE_MASTHEAD.hidden = false;
 }
 
 function renderNewsFilters() {
@@ -664,11 +621,9 @@ function renderNews() {
     ? news.filter(n => n.source === newsSourceFilter)
     : news;
 
-  renderSourceMasthead(newsSourceFilter);
   NEWS_EMPTY.classList.toggle('hidden', items.length > 0);
   NEWS_COUNT.textContent = `${items.length} article${items.length !== 1 ? 's' : ''}`;
   NEWS_LIST.innerHTML = '';
-  NEWS_LIST.dataset.mode = isSourceView ? 'source' : 'all';
 
   const hero = document.createElement('div');
   hero.className = 'news-hero';
