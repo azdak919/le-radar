@@ -236,7 +236,11 @@ const ICO_PAUSE      = TUNER_PLAY.querySelector('.ico-pause');
 const ICO_EXTERNAL   = TUNER_PLAY.querySelector('.ico-external');
 
 const NEWS_LIST      = document.getElementById('news-list');
+const FILTERS_PANEL  = document.getElementById('news-filters-panel');
 const NEWS_FILTERS   = document.getElementById('news-filters');
+const FILTERS_TOGGLE = document.getElementById('filters-toggle');
+const FILTERS_COMPACT = document.getElementById('filters-compact');
+const FILTERS_MOBILE = window.matchMedia('(max-width: 819px)');
 const NEWS_COUNT     = document.getElementById('news-count');
 const NEWS_UPDATED   = document.getElementById('news-updated');
 const NEWS_EMPTY     = document.getElementById('news-empty');
@@ -291,6 +295,10 @@ let lastNowAir = { title: null, sub: null, empty: null };
 const PREFERS_REDUCED_MOTION = window.matchMedia?.('(prefers-reduced-motion: reduce)');
 let sourceColors = {};     // source name → accent colour
 let brandColors = { institutions: {}, fallback_palette: ['#003DA5', '#6C2163', '#047857'] };
+let filtersExpanded = false;
+
+const FILTERS_COLLAPSED_ROWS = 2;
+const FILTERS_ROW_CAPACITY = 3;
 
 const GENERIC_AUTHORS = /^(admin|administrator|administrateur|editor|éditeur|editeur|rédaction|redaction|staff|wordpress|webmaster|collectif|tribune|link|daily|exemplaire|quartier libre|zone campus|la pige|le délit|le delit|the link|the tribune|the mcgill daily)$/i;
 
@@ -303,6 +311,7 @@ async function init() {
   setupAudio();
   bindTuner();
   bindExternalListen();
+  bindFiltersPanel();
 
   try {
     const brandData = await fetch('./brand-colors.json').then((r) => r.json());
@@ -1149,6 +1158,96 @@ function sourceInfo(src) {
   };
 }
 
+function filtersOverflow() {
+  if (!NEWS_FILTERS) return false;
+  const count = NEWS_FILTERS.querySelectorAll('.filter-btn').length;
+  return count > FILTERS_COLLAPSED_ROWS * FILTERS_ROW_CAPACITY;
+}
+
+function updateFiltersCompactBar() {
+  if (!FILTERS_COMPACT) return;
+  const dot = FILTERS_COMPACT.querySelector('.filters-compact__dot');
+  const text = FILTERS_COMPACT.querySelector('.filters-compact__text');
+  if (newsSourceFilter === 'all') return;
+
+  const { institution, type, color } = sourceInfo(newsSourceFilter);
+  const instShort = institution ? shortInstitution(institution, type) : '';
+  const typeLabel = type === 'cegep' ? 'Cégep' : type === 'universite' ? 'Univ.' : '';
+  FILTERS_COMPACT.style.setProperty('--c', color);
+  if (dot) dot.style.setProperty('--c', color);
+  if (text) {
+    text.textContent = instShort
+      ? `${newsSourceFilter} · ${instShort}${typeLabel ? ` ${typeLabel}` : ''}`
+      : newsSourceFilter;
+  }
+}
+
+function syncFiltersPanel() {
+  if (!FILTERS_PANEL) return;
+
+  if (!FILTERS_MOBILE.matches) {
+    FILTERS_PANEL.classList.remove('is-expanded', 'is-compact');
+    FILTERS_TOGGLE?.setAttribute('hidden', '');
+    FILTERS_COMPACT?.setAttribute('hidden', '');
+    return;
+  }
+
+  const isSourceView = newsSourceFilter !== 'all';
+  const overflow = filtersOverflow();
+
+  if (isSourceView) {
+    filtersExpanded = false;
+    FILTERS_PANEL.classList.add('is-compact');
+    FILTERS_PANEL.classList.remove('is-expanded');
+    updateFiltersCompactBar();
+    FILTERS_COMPACT?.removeAttribute('hidden');
+    FILTERS_TOGGLE?.setAttribute('hidden', '');
+    FILTERS_COMPACT?.setAttribute('aria-expanded', 'false');
+    return;
+  }
+
+  FILTERS_PANEL.classList.remove('is-compact');
+  FILTERS_COMPACT?.setAttribute('hidden', '');
+
+  if (overflow) {
+    FILTERS_TOGGLE?.removeAttribute('hidden');
+    FILTERS_PANEL.classList.toggle('is-expanded', filtersExpanded);
+    const label = FILTERS_TOGGLE?.querySelector('.filters-toggle__label');
+    if (label) label.textContent = filtersExpanded ? 'Réduire' : 'Plus de sources';
+    FILTERS_TOGGLE?.setAttribute('aria-expanded', filtersExpanded ? 'true' : 'false');
+  } else {
+    filtersExpanded = false;
+    FILTERS_PANEL.classList.remove('is-expanded');
+    FILTERS_TOGGLE?.setAttribute('hidden', '');
+  }
+}
+
+function bindFiltersPanel() {
+  FILTERS_TOGGLE?.addEventListener('click', () => {
+    filtersExpanded = !filtersExpanded;
+    syncFiltersPanel();
+  });
+
+  FILTERS_COMPACT?.addEventListener('click', () => {
+    filtersExpanded = true;
+    FILTERS_PANEL?.classList.remove('is-compact');
+    FILTERS_COMPACT?.setAttribute('hidden', '');
+    syncFiltersPanel();
+    FILTERS_TOGGLE?.focus();
+  });
+
+  FILTERS_MOBILE.addEventListener('change', () => syncFiltersPanel());
+}
+
+function selectNewsSource(source) {
+  newsSourceFilter = source;
+  NEWS_FILTERS?.querySelectorAll('.filter-btn').forEach((b) =>
+    b.classList.toggle('active', b.dataset.source === source));
+  if (FILTERS_MOBILE.matches && source !== 'all') filtersExpanded = false;
+  syncFiltersPanel();
+  renderNews();
+}
+
 function renderNewsFilters() {
   const sources = sortSourcesByPopularity([...new Set(news.map(n => n.source))]);
   [...NEWS_FILTERS.querySelectorAll('[data-source]:not([data-source="all"])')].forEach(b => b.remove());
@@ -1174,13 +1273,13 @@ function renderNewsFilters() {
   });
 
   NEWS_FILTERS.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.onclick = () => {
-      newsSourceFilter = btn.dataset.source;
-      NEWS_FILTERS.querySelectorAll('.filter-btn').forEach(b =>
-        b.classList.toggle('active', b === btn));
-      renderNews();
-    };
+    btn.onclick = () => selectNewsSource(btn.dataset.source);
   });
+
+  NEWS_FILTERS.querySelectorAll('.filter-btn').forEach((b) =>
+    b.classList.toggle('active', b.dataset.source === newsSourceFilter));
+
+  syncFiltersPanel();
 }
 
 function renderNews() {

@@ -111,16 +111,27 @@
         </div>
       </div>
 
-      <nav id="news-filters" class="filters" aria-label="Filtrer par source">
-        <button data-source="all" class="filter-btn filter-btn--all active" title="Le Radar — toutes les sources">
-          <span class="filter-btn__row">
-            <span class="filter-btn__dot" aria-hidden="true"></span>
-            <span class="filter-btn__name">Le Radar</span>
-          </span>
-          <span class="filter-btn__inst">Toutes les sources</span>
+      <div id="news-filters-panel" class="filters-panel">
+        <button type="button" id="filters-compact" class="filters-compact" hidden aria-expanded="false" aria-controls="news-filters">
+          <span class="filters-compact__dot" aria-hidden="true"></span>
+          <span class="filters-compact__text"></span>
+          <svg class="filters-compact__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
         </button>
-        <!-- source chips injected by JS -->
-      </nav>
+        <nav id="news-filters" class="filters" aria-label="Filtrer par source">
+          <button data-source="all" class="filter-btn filter-btn--all active" title="Le Radar — toutes les sources">
+            <span class="filter-btn__row">
+              <span class="filter-btn__dot" aria-hidden="true"></span>
+              <span class="filter-btn__name">Le Radar</span>
+            </span>
+            <span class="filter-btn__inst">Toutes les sources</span>
+          </button>
+          <!-- source chips injected by JS -->
+        </nav>
+        <button type="button" id="filters-toggle" class="filters-toggle" hidden aria-expanded="false" aria-controls="news-filters">
+          <span class="filters-toggle__label">Plus de sources</span>
+          <svg class="filters-toggle__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
 
       <!-- ══════════ ARTICLE LIST ══════════ -->
       <div id="news-list" class="news-list" aria-live="polite">
