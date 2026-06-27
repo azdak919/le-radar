@@ -430,7 +430,59 @@ a { color: inherit; }
 /* L'icône reflète la zone d'amplification (curseur masqué sur mobile). */
 .tuner.is-boosted .tuner-vol-btn { color: #ff7d6e; }
 .tuner-vol.is-muted .tuner-vol-btn { color: rgba(255,255,255,0.38); }
-.tuner-volume { width: 88px; accent-color: var(--radio-bright); cursor: pointer; }
+.tuner-vol-track {
+  position: relative;
+  --vol-thumb: 14px;
+  width: 96px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+}
+.tuner-vol-marks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.tuner-vol-mark {
+  position: absolute;
+  top: 50%;
+  width: 2px;
+  border-radius: 1px;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.38);
+}
+.tuner-vol-mark--100 {
+  /* 0 → 2 : la valeur 1 (100 %) est au centre du curseur. */
+  left: 50%;
+  height: 9px;
+}
+.tuner-vol-mark--max {
+  left: 100%;
+  height: 11px;
+  background: rgba(255, 125, 110, 0.72);
+}
+.tuner-volume {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  margin: 0;
+  accent-color: var(--radio-bright);
+  cursor: pointer;
+  background: transparent;
+}
+/* Curseur natif : centrage mathématique de la valeur 1 sur [0, 2]. */
+.tuner-volume::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+}
+.tuner-volume::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+}
+.tuner-volume::-webkit-slider-thumb {
+  margin-top: -5px;
+}
 /* Au-delà de la mi-course, le curseur amplifie le son : on signale la zone. */
 .tuner.is-boosted .tuner-volume { accent-color: #ff7d6e; }
 .tuner-vol.is-muted .tuner-volume { opacity: 0.45; }
@@ -558,7 +610,7 @@ a { color: inherit; }
     transform: none;
     pointer-events: auto;
   }
-  .tuner-vol-slot .tuner-volume { width: 132px; }
+  .tuner-vol-slot .tuner-vol-track { width: 132px; }
   .tuner-vol.is-open .tuner-vol-btn { color: rgba(255,255,255,0.95); }
 }
 @media (prefers-reduced-motion: reduce) {
