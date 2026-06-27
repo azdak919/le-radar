@@ -15,8 +15,10 @@ const { pruneToFreshWindow } = require('./source-retention-lib');
 
 const ROOT = path.join(__dirname, '..');
 const NEWS_PATH = path.join(ROOT, 'news.json');
+const SOURCES_PATH = path.join(ROOT, 'news-sources.json');
 const SITE_BASE = (process.env.RADAR_SITE_URL || 'https://azdak919.github.io/radios-etudiantes-qc').replace(/\/$/, '');
 const MAX_ITEMS = 50;
+const BRIEF_MAX = 900;
 
 const INSTITUTION_LABELS = {
   'Université de Montréal': 'UdeM',
@@ -46,6 +48,15 @@ const FEEDS = [
 
 function readJson(p, fallback) {
   try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return fallback; }
+}
+
+function loadSourceSites() {
+  const registry = readJson(SOURCES_PATH, { active: [] });
+  return Object.fromEntries(
+    (registry.active || [])
+      .filter((src) => src.name && src.site)
+      .map((src) => [src.name, String(src.site).trim()]),
+  );
 }
 
 function escapeXml(text = '') {
@@ -88,7 +99,33 @@ function cleanBrief(text = '', max = 520) {
 }
 
 function itemBrief(item = {}) {
-  return cleanBrief(item.leadExcerpt || item.excerpt || '');
+  return cleanBrief(item.leadExcerpt || item.excerpt || '', BRIEF_MAX);
+}
+
+function itemDateline(item = {}) {
+  const d = new Date(item.date);
+  if (Number.isNaN(d.getTime())) return '';
+  const region = String(item.region || '').trim();
+  const en = item.lang === 'en';
+  const dateStr = d.toLocaleDateString(en ? 'en-CA' : 'fr-CA', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'America/Toronto',
+  });
+  if (region) return en ? `${region} — ${dateStr}` : `${region}, le ${dateStr}`;
+  return dateStr;
+}
+
+function sourceHomeUrl(item = {}, sourceSites = {}) {
+  const named = sourceSites[item.source];
+  if (named) return named;
+  try {
+    const url = new URL(String(item.link || '').trim());
+    return `${url.origin}/`;
+  } catch {
+    return '';
+  }
 }
 
 function itemAuthor(item = {}) {
@@ -132,12 +169,17 @@ function imageMimeType(url = '') {
   return 'image/jpeg';
 }
 
-/** Corps HTML complet (image + brève) pour content:encoded et description. */
+/** Corps HTML complet (dateline, image, brève, byline) pour content:encoded et description. */
 function buildItemBodyHtml(item = {}) {
   const parts = [];
   const imageUrl = itemImageUrl(item);
   const title = String(item.title || 'Article').trim();
   const credit = photoCreditLine(item);
+  const dateline = itemDateline(item);
+
+  if (dateline) {
+    parts.push(`<p style="margin:0 0 0.75em;font-size:0.9em;color:#555"><strong>${escapeXml(dateline)}</strong></p>`);
+  }
 
   if (imageUrl) {
     parts.push(
@@ -149,14 +191,10 @@ function buildItemBodyHtml(item = {}) {
   }
 
   const brief = itemBrief(item);
-  if (brief) parts.push(`<p>${escapeXml(brief)}</p>`);
+  if (brief) parts.push(`<p style="margin:0 0 0.75em;line-height:1.5">${escapeXml(brief)}</p>`);
   const attr = attributionLine(item);
-  if (attr) parts.push(`<p><em>${escapeXml(attr)}</em></p>`);
+  if (attr) parts.push(`<p style="margin:0;font-size:0.92em;color:#444"><em>${escapeXml(attr)}</em></p>`);
   if (credit && !imageUrl) parts.push(`<p><small>${escapeXml(credit)}</small></p>`);
-  const note = item.lang === 'en'
-    ? 'Aggregated by LE RADAR — link opens the original student publication.'
-    : 'Agrégé par Le Radar — le lien ouvre la publication étudiante originale.';
-  parts.push(`<p><small>${escapeXml(note)}</small></p>`);
   return parts.join('\n');
 }
 
@@ -164,7 +202,7 @@ function buildDescriptionHtml(item = {}) {
   return buildItemBodyHtml(item);
 }
 
-function buildItemXml(item = {}) {
+function buildItemXml(item = {}, sourceSites = {}) {
   const link = String(item.link || '').trim();
   if (!link) return '';
 
@@ -173,6 +211,9 @@ function buildItemXml(item = {}) {
   const description = buildDescriptionHtml(item);
   const imageUrl = itemImageUrl(item);
   const credit = photoCreditLine(item);
+  const author = itemAuthor(item);
+  const sourceName = String(item.source || '').trim();
+  const sourceUrl = sourceHomeUrl(item, sourceSites);
 
   const categories = [
     item.source,
@@ -190,12 +231,17 @@ function buildItemXml(item = {}) {
   const mediaXml = imageUrl
     ? `      <media:content url="${escapeXml(imageUrl)}" medium="image" type="${escapeXml(mime)}">\n`
       + (credit ? `        <media:credit>${escapeXml(credit)}</media:credit>\n` : '')
+      + (title ? `        <media:title>${escapeXml(title)}</media:title>\n` : '')
       + '      </media:content>\n'
       + `      <media:thumbnail url="${escapeXml(imageUrl)}" />\n`
       + `      <enclosure url="${escapeXml(imageUrl)}" type="${escapeXml(mime)}" length="1" />\n`
     : '';
 
   const bodyHtml = buildItemBodyHtml(item);
+  const creatorXml = author ? `      <dc:creator>${escapeXml(author)}</dc:creator>` : '';
+  const sourceXml = sourceName && sourceUrl
+    ? `      <source url="${escapeXml(sourceUrl)}">${escapeXml(sourceName)}</source>`
+    : '';
 
   return [
     '    <item>',
@@ -203,6 +249,8 @@ function buildItemXml(item = {}) {
     `      <link>${escapeXml(link)}</link>`,
     `      <guid isPermaLink="true">${escapeXml(link)}</guid>`,
     pubDate ? `      <pubDate>${escapeXml(pubDate)}</pubDate>` : '',
+    creatorXml,
+    sourceXml,
     `      <description>${cdata(description)}</description>`,
     `      <content:encoded>${cdata(bodyHtml)}</content:encoded>`,
     categoryXml,
@@ -211,18 +259,19 @@ function buildItemXml(item = {}) {
   ].filter(Boolean).join('\n');
 }
 
-function buildFeedXml(items = [], config = {}) {
+function buildFeedXml(items = [], config = {}, sourceSites = {}) {
   const feedUrl = `${SITE_BASE}/${config.file}`;
   const updated = items.length
     ? formatRfc822(items[0].date)
     : formatRfc822(new Date());
 
-  const itemXml = items.map(buildItemXml).filter(Boolean).join('\n');
+  const itemXml = items.map((item) => buildItemXml(item, sourceSites)).filter(Boolean).join('\n');
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0"
   xmlns:atom="http://www.w3.org/2005/Atom"
   xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>${escapeXml(config.title)}</title>
@@ -231,6 +280,9 @@ function buildFeedXml(items = [], config = {}) {
     <language>${escapeXml(config.lang)}</language>
     <lastBuildDate>${escapeXml(updated)}</lastBuildDate>
     <generator>LE RADAR Student Media Aggregator</generator>
+    <docs>${escapeXml(SITE_BASE)}/feeds.html</docs>
+    <copyright>© publications étudiantes sources — fil agrégé par LE RADAR</copyright>
+    <ttl>180</ttl>
     <atom:link href="${escapeXml(feedUrl)}" rel="self" type="application/rss+xml" />
     <image>
       <url>${escapeXml(SITE_BASE)}/assets/icon-192.png</url>
@@ -246,6 +298,7 @@ ${itemXml}
 function main() {
   const doUpdate = process.argv.includes('--update');
   const news = readJson(NEWS_PATH, { items: [] });
+  const sourceSites = loadSourceSites();
   const items = pruneToFreshWindow(news.items || [])
     .filter((item) => item.link && item.title && item.date)
     .sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -264,7 +317,7 @@ function main() {
 
   for (const config of FEEDS) {
     const subset = items.filter(config.filter).slice(0, MAX_ITEMS);
-    const xml = buildFeedXml(subset, config);
+    const xml = buildFeedXml(subset, config, sourceSites);
     const outPath = path.join(ROOT, config.file);
 
     if (doUpdate) {
