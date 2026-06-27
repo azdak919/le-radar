@@ -238,11 +238,9 @@ function pickExcerpt(block) {
   return truncateExcerpt(excerpt, 280);
 }
 
-function parseAuthor(block, contentHtml = '') {
-  let a = tag(block, 'dc:creator') || tag(block, 'creator') || tag(block, 'author');
-  if (a && /<name[\s>]/i.test(a)) a = tag(a, 'name');
-  a = normalizeAuthor(a);
-  if (a) return a;
+function parseAuthor(block, contentHtml = '', excerpt = '') {
+  const fromExcerpt = extractBylineFromText(excerpt);
+  if (fromExcerpt.author) return fromExcerpt.author;
 
   const fromContent = extractBylineFromText(firstParagraphFromHtml(contentHtml));
   if (fromContent.author) return fromContent.author;
@@ -250,7 +248,10 @@ function parseAuthor(block, contentHtml = '') {
   const fromDesc = extractBylineFromText(stripHtml(tag(block, 'description')));
   if (fromDesc.author) return fromDesc.author;
 
-  return '';
+  let a = tag(block, 'dc:creator') || tag(block, 'creator') || tag(block, 'author');
+  if (a && /<name[\s>]/i.test(a)) a = tag(a, 'name');
+  a = normalizeAuthor(a);
+  return a || '';
 }
 
 function firstImage(block) {
@@ -280,8 +281,8 @@ function parseFeed(xml) {
     const dateRaw = tag(block, 'pubDate') || tag(block, 'dc:date') || tag(block, 'published') || tag(block, 'updated');
     const date = dateRaw ? new Date(dateRaw) : null;
     const contentHtml = tag(block, 'content:encoded') || tag(block, 'content') || '';
-    const author = parseAuthor(block, contentHtml);
     const excerpt = pickExcerpt(block);
+    const author = parseAuthor(block, contentHtml, excerpt);
     const image = firstImage(contentHtml || tag(block, 'description') || block) || firstImage(block);
 
     if (title && link) {

@@ -1388,6 +1388,7 @@ function extractBylineFromExcerpt(excerpt = '') {
   for (; i < tokens.length; i += 1) {
     const token = tokens[i];
     if (nameParts.length >= 1 && BYLINE_ARTICLE_STARTERS.test(token)) break;
+    if (nameParts.length >= 2) break;
     if (/^[\p{Lu}][\p{L}'’.\-]+$/u.test(token)) nameParts.push(token);
     else break;
   }
@@ -1404,8 +1405,8 @@ function splitByline(item) {
   let author = normalizeAuthor(item.author);
   let body = ex;
 
-  if (fromExcerpt.author) {
-    if (!author || fromExcerpt.author.length > author.length) author = fromExcerpt.author;
+  if (fromExcerpt.author && /^(?:Par|By)\s+/i.test(ex)) {
+    author = fromExcerpt.author;
     body = fromExcerpt.body || body;
     return { author, body };
   }

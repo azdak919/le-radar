@@ -111,7 +111,16 @@ function buildStatus(steps) {
   const items = news.items || news;
   const withAuthor = items.filter((i) => i.author && String(i.author).trim()).length;
   const withExcerpt = items.filter((i) => i.excerpt && String(i.excerpt).trim().length > 20).length;
+  const authorQc = readJson('author-qc.json', {});
   const leadQc = readJson('lead-image-qc.json', {});
+
+  if (authorQc.ok === false && (authorQc.mismatches || 0) > 0) {
+    alerts.push({
+      level: 'warn',
+      code: 'author_mismatch',
+      message: `${authorQc.mismatches} article(s) avec auteur RSS ≠ extrait « Par … »`,
+    });
+  }
 
   if (leadQc.mainPageLeadReady === false) {
     alerts.push({
@@ -145,6 +154,10 @@ function buildStatus(steps) {
         articles: items.length,
         withAuthor,
         withExcerpt,
+        authorQc: {
+          ok: authorQc.ok ?? null,
+          mismatches: authorQc.mismatches ?? null,
+        },
         leadImageQc: {
           fullyCovered: leadQc.fullyCovered ?? null,
           withPhoto: leadQc.withPhoto ?? null,
@@ -189,6 +202,7 @@ async function main() {
     ['Stream tracker + radio promotion', `node scripts/discover-streams.js ${flag}`.trim()],
     ['News sources verify', 'node scripts/verify-news-sources.js'],
     ['News aggregator', `node scripts/fetch-news.js ${flag}`.trim()],
+    ['Author QC', `node scripts/verify-authors.js ${flag}`.trim()],
     ['Lead image QC', `node scripts/ensure-lead-images.js ${flag}`.trim()],
     ['Social feed', `node scripts/fetch-social.js ${flag}`.trim()],
   ];
