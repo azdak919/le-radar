@@ -1215,7 +1215,7 @@ function getCandidateImage(src = '') {
 
   if (!['http:', 'https:'].includes(url.protocol)) return '';
   const path = decodeURIComponent(url.pathname).toLowerCase();
-  if (/(logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|article-tile|size-article-tile|thumbnail|thumb_|-150x\d+\.)/.test(path)) return '';
+  if (/(logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|article-tile|size-article-tile|thumbnail|thumb_|-150x\d+\.|(?:^|\/)article-2\.|campus-logo|campusgraphic)/.test(path)) return '';
   if (isWeakImagePath(path)) return '';
   return url.href;
 }
@@ -1620,6 +1620,20 @@ function resolveDisplayAuthor(item, rawAuthor = '') {
     || editorialFallback(item.lang === 'en' ? 'en' : 'fr');
 }
 
+const CONTRIBUTOR_BYLINE_RE = /^([\p{Lu}][\p{L}'’.\-]+(?:\s+[\p{Lu}][\p{L}'’.\-]+){0,3})\s*[–—-]\s*(?:Contributor|Staff Writer)\b/iu;
+
+function isJunkAuthorName(name = '') {
+  const a = String(name).replace(/\s+/g, ' ').trim();
+  if (!a || a.length < 2 || a.length > 80) return true;
+  if (/^[,;:.]/.test(a) || /[,;]{2,}/.test(a)) return true;
+  if (/\bfunction\s*\(/.test(a) || /[{}\[\]]/.test(a)) return true;
+  if (/https?:\/\//i.test(a) || /\.(?:php|js|css)\b/i.test(a)) return true;
+  if (/\b(?:wp-content|wp-admin|wp-block|prefetch|selector_matches|splide)\b/i.test(a)) return true;
+  if (/\b(?:Recent Posts|Skip to content|Written by|Read more|Lire la suite)\b/i.test(a)) return true;
+  if (a.split(/\s+/).length > 6) return true;
+  return false;
+}
+
 function extractBylineFromExcerpt(excerpt = '') {
   const ex = String(excerpt).trim();
   if (/^(?:Par|By)\s+(?:(?:La|L')\s*)?[Rr]édaction\b/i.test(ex)) {
@@ -1634,6 +1648,14 @@ function extractBylineFromExcerpt(excerpt = '') {
       body: ex.replace(/^(?:Par|By)\s+Editorial\s+(?:team|staff|board)\.?\s*/i, '').trim(),
     };
   }
+
+  const contributor = ex.match(CONTRIBUTOR_BYLINE_RE);
+  if (contributor) {
+    const author = normalizeAuthor(contributor[1]);
+    const body = ex.slice(contributor[0].length).trim();
+    if (author && body.length >= 8) return { author, body };
+  }
+
   if (!/^(?:Par|By)\s+/i.test(ex)) return { author: '', body: ex };
 
   const tokens = ex.replace(/^\s*(?:Par|By)\s+/i, '').split(/\s+/);
@@ -1666,7 +1688,7 @@ function splitByline(item) {
   let author = normalizeAuthor(item.author);
   let body = ex;
 
-  if (fromExcerpt.author && /^(?:Par|By)\s+/i.test(ex)) {
+  if (fromExcerpt.author && (CONTRIBUTOR_BYLINE_RE.test(ex) || /^(?:Par|By)\s+/i.test(ex))) {
     author = fromExcerpt.author;
     body = fromExcerpt.body || body;
     return { author, body };
@@ -1696,7 +1718,7 @@ function normalizeAuthor(name = '') {
   a = a.replace(/^(?:Par|By)\s+/i, '').trim();
   const editorial = canonicalizeEditorialAuthor(a);
   if (editorial) return editorial;
-  if (!a || GENERIC_AUTHORS.test(a) || /@/.test(a)) return '';
+  if (!a || GENERIC_AUTHORS.test(a) || /@/.test(a) || isJunkAuthorName(a)) return '';
   return a;
 }
 

@@ -189,7 +189,7 @@ function isCandidateImageUrl(raw = '') {
     const url = new URL(src);
     if (!['http:', 'https:'].includes(url.protocol)) return false;
     const path = decodeURIComponent(url.pathname).toLowerCase();
-    if (/(logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley)/.test(path)) {
+    if (/(logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|(?:^|\/)article-2\.|campus-logo|campusgraphic)/.test(path)) {
       return false;
     }
     if (/(?:^|\/)(?:1x1|pixel)\b/.test(path)) return false;

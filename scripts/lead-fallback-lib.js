@@ -5,7 +5,7 @@
 
 const crypto = require('crypto');
 
-const JUNK_IMAGE = /(logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|article-tile|size-article-tile|thumbnail|thumb_|-150x\d+\.)/i;
+const JUNK_IMAGE = /(logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|article-tile|size-article-tile|thumbnail|thumb_|-150x\d+\.|(?:^|\/)article-2\.|campus-logo|campusgraphic)/i;
 
 function isCandidateImageUrl(raw = '') {
   const src = String(raw).trim();
