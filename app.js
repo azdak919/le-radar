@@ -64,6 +64,7 @@ const ICO_EXTERNAL   = TUNER_PLAY.querySelector('.ico-external');
 
 const NEWS_LIST      = document.getElementById('news-list');
 const NEWS_FILTERS   = document.getElementById('news-filters');
+const SOURCE_MASTHEAD = document.getElementById('source-masthead');
 const NEWS_COUNT     = document.getElementById('news-count');
 const NEWS_UPDATED   = document.getElementById('news-updated');
 const NEWS_EMPTY     = document.getElementById('news-empty');
@@ -74,6 +75,7 @@ const THEME_TOGGLE   = document.getElementById('theme-toggle');
 // ─── State ───────────────────────────────────────────────────────────────────
 let radios = [];          // ordered list backing the tuner
 let news = [];
+let newsSourcesByName = {};
 let newsSourceFilter = 'all';
 let currentStation = null; // radio object selected in tuner
 let audio = null;
@@ -101,12 +103,18 @@ async function init() {
     console.warn('Failed to load brand-colors.json', e);
   }
 
-  const [radiosData] = await Promise.allSettled([
+  const [radiosData, sourcesData] = await Promise.allSettled([
     fetch('./radios.json').then(r => r.json()),
+    fetch('./news-sources.json').then((r) => r.json()).catch(() => ({ active: [] })),
     loadNews(),
   ]);
 
   radios = radiosData.status === 'fulfilled' ? sortRadios(radiosData.value) : [];
+  if (sourcesData.status === 'fulfilled') {
+    newsSourcesByName = Object.fromEntries(
+      (sourcesData.value?.active || []).map((s) => [s.name, s]),
+    );
+  }
   buildTunerOptions();
   buildTunerStations();
   restoreVolume();
@@ -566,11 +574,54 @@ function shortInstitution(name = '', type = '') {
 
 function sourceInfo(src) {
   const item = news.find(n => n.source === src);
+  const registry = newsSourcesByName[src];
   return {
-    institution: item?.institution || '',
-    type: item?.type || '',
+    institution: item?.institution || registry?.institution || '',
+    type: item?.type || registry?.type || '',
+    lang: item?.lang || registry?.lang || 'fr',
     color: sourceColors[src] || 'var(--accent)',
+    website: sourceWebsite(src),
   };
+}
+
+function sourceWebsite(src) {
+  const feedUrl = newsSourcesByName[src]?.url;
+  if (!feedUrl) return null;
+  try {
+    const u = new URL(feedUrl);
+    return `${u.protocol}//${u.host}/`;
+  } catch {
+    return null;
+  }
+}
+
+function renderSourceMasthead(src) {
+  if (!SOURCE_MASTHEAD) return;
+  if (!src || src === 'all') {
+    SOURCE_MASTHEAD.classList.add('hidden');
+    SOURCE_MASTHEAD.hidden = true;
+    SOURCE_MASTHEAD.innerHTML = '';
+    return;
+  }
+
+  const { institution, type, lang, color, website } = sourceInfo(src);
+  const instLabel = institution ? articleInstitutionLabel(institution, type) : '';
+  const typeLabel = type === 'cegep' ? 'Cégep' : type === 'universite' ? 'Université' : '';
+  const visitLabel = lang === 'en' ? 'Visit site ↗' : 'Visiter le site ↗';
+
+  SOURCE_MASTHEAD.style.setProperty('--c', color);
+  SOURCE_MASTHEAD.innerHTML = `
+    <div class="source-masthead__brand">
+      <span class="source-masthead__dot" aria-hidden="true"></span>
+      <div class="source-masthead__copy">
+        <h2 class="source-masthead__name">${escapeHtml(src)}</h2>
+        ${instLabel ? `<p class="source-masthead__inst">${escapeHtml(instLabel)}${typeLabel ? ` · ${typeLabel}` : ''}</p>` : ''}
+      </div>
+    </div>
+    ${website ? `<a class="source-masthead__link" href="${escapeHtml(website)}" target="_blank" rel="noopener">${visitLabel}</a>` : ''}
+  `;
+  SOURCE_MASTHEAD.classList.remove('hidden');
+  SOURCE_MASTHEAD.hidden = false;
 }
 
 function renderNewsFilters() {
@@ -608,20 +659,26 @@ function renderNewsFilters() {
 }
 
 function renderNews() {
-  const items = newsSourceFilter === 'all'
-    ? news
-    : news.filter(n => n.source === newsSourceFilter);
+  const isSourceView = newsSourceFilter !== 'all';
+  const items = isSourceView
+    ? news.filter(n => n.source === newsSourceFilter)
+    : news;
 
+  renderSourceMasthead(newsSourceFilter);
   NEWS_EMPTY.classList.toggle('hidden', items.length > 0);
   NEWS_COUNT.textContent = `${items.length} article${items.length !== 1 ? 's' : ''}`;
   NEWS_LIST.innerHTML = '';
+  NEWS_LIST.dataset.mode = isSourceView ? 'source' : 'all';
 
   const hero = document.createElement('div');
   hero.className = 'news-hero';
   const compacts = [];
   const tail = [];
 
-  const { heroItems, briefItems, tailItems, contingencyBand } = partitionNewsFeed(items);
+  const partition = isSourceView
+    ? partitionSourceFeed(items)
+    : partitionNewsFeed(items);
+  const { heroItems, briefItems, tailItems, contingencyBand } = partition;
 
   if (contingencyBand > 0) {
     NEWS_LIST.dataset.contingency = String(contingencyBand);
@@ -629,14 +686,16 @@ function renderNews() {
     NEWS_LIST.removeAttribute('data-contingency');
   }
 
+  const articleOpts = { hideSourceMeta: isSourceView };
+
   heroItems.forEach((item, i) => {
-    const role = i === 0 ? 'lead' : 'feature';
-    hero.appendChild(createArticle(item, role));
+    const role = isSourceView ? 'lead' : (i === 0 ? 'lead' : 'feature');
+    hero.appendChild(createArticle(item, role, articleOpts));
   });
 
-  briefItems.forEach((item) => compacts.push(createArticle(item, 'compact')));
+  briefItems.forEach((item) => compacts.push(createArticle(item, 'compact', articleOpts)));
 
-  tailItems.forEach((item) => tail.push(createArticle(item, 'standard')));
+  tailItems.forEach((item) => tail.push(createArticle(item, 'standard', articleOpts)));
 
   if (hero.childElementCount) {
     if (compacts.length) {
@@ -650,7 +709,8 @@ function renderNews() {
   if (compacts.length) {
     const briefRail = document.createElement('div');
     briefRail.className = 'brief-rail';
-    briefRail.innerHTML = '<h3 class="brief-rail-title">En bref</h3>';
+    const briefTitle = isSourceView ? 'À lire aussi' : 'En bref';
+    briefRail.innerHTML = `<h3 class="brief-rail-title">${briefTitle}</h3>`;
     compacts.forEach((article) => briefRail.appendChild(article));
     if (hero.childElementCount) {
       const railSpacer = document.createElement('div');
@@ -683,6 +743,7 @@ function updateNewsLayout() {
 
 const HERO_SPOTLIGHT_MAX = 4; /* 1 à la une + 3 vedettes */
 const BRIEF_SIDEBAR_MAX = 4;
+const SOURCE_BRIEF_MAX = 4;
 const CONTINGENCY_MAX_SESSIONS_BACK = 3;
 const CONTINGENCY_ULTIMATE_BAND = 4;
 
@@ -941,7 +1002,68 @@ function partitionNewsFeed(items, referenceDate = new Date()) {
   return { heroItems, briefItems, tailItems, contingencyBand };
 }
 
-function createArticle(item, role = 'standard') {
+/**
+ * Pool chronologique d'un seul média : session en cours puis contingence
+ * session par session (même logique que le fil global).
+ */
+function collectSourcePool(items, referenceDate = new Date()) {
+  const seen = new Set();
+  const pool = [];
+  let contingencyBand = 0;
+
+  const absorb = (bandItems, band) => {
+    let added = false;
+    for (const item of bandItems) {
+      const key = articleKey(item);
+      if (seen.has(key)) continue;
+      seen.add(key);
+      pool.push(item);
+      added = true;
+    }
+    if (added) contingencyBand = Math.max(contingencyBand, band);
+  };
+
+  for (let band = 0; band <= CONTINGENCY_MAX_SESSIONS_BACK; band++) {
+    absorb(sessionBandPool(items, referenceDate, band), band);
+    if (pool.length >= 1 + SOURCE_BRIEF_MAX) break;
+  }
+
+  if (pool.length < 1 + SOURCE_BRIEF_MAX) {
+    const before = pool.length;
+    absorb(
+      sortByDateDesc(items).filter((item) => isPublishedOnOrBefore(item, referenceDate)),
+      CONTINGENCY_ULTIMATE_BAND,
+    );
+    if (pool.length > before) contingencyBand = CONTINGENCY_ULTIMATE_BAND;
+  }
+
+  return { items: sortByDateDesc(pool), contingencyBand };
+}
+
+function pickSourceLead(pool) {
+  if (!pool.length) return null;
+  const withImage = pool.find((item) => !!getCandidateImage(item.image));
+  return withImage || pool[0];
+}
+
+/** Vue média : 1 vedette + colonne « À lire aussi » + suite chronologique. */
+function partitionSourceFeed(items, referenceDate = new Date()) {
+  const sorted = sortByDateDesc(items);
+  const { items: pool, contingencyBand } = collectSourcePool(sorted, referenceDate);
+  const lead = pickSourceLead(pool);
+  const leadKey = lead ? articleKey(lead) : null;
+  const heroItems = lead ? [lead] : [];
+  const briefItems = pool
+    .filter((item) => articleKey(item) !== leadKey)
+    .slice(0, SOURCE_BRIEF_MAX);
+  const briefKeys = new Set(briefItems.map(articleKey));
+  const tailItems = sorted.filter(
+    (item) => articleKey(item) !== leadKey && !briefKeys.has(articleKey(item)),
+  );
+  return { heroItems, briefItems, tailItems, contingencyBand };
+}
+
+function createArticle(item, role = 'standard', { hideSourceMeta = false } = {}) {
   const a = document.createElement('a');
   a.className = `article article--${role}`;
   a.href = item.link;
@@ -961,12 +1083,13 @@ function createArticle(item, role = 'standard') {
   const canUseImage = ['lead', 'feature'].includes(role);
   const hasImageCandidate = canUseImage && !!getCandidateImage(item.image);
   if (!hasImageCandidate && canUseImage) a.classList.add('article--text');
+  const metaClass = hideSourceMeta ? 'article-meta article-meta--time-only' : 'article-meta';
 
   a.innerHTML = `
     ${role === 'lead' ? '<span class="article-eyebrow">À la une</span>' : ''}
-    <div class="article-meta">
-      <span class="article-source">${escapeHtml(item.source)}</span>
-      ${item.institution ? `<span class="article-inst">${escapeHtml(articleInstitutionLabel(item.institution, item.type))}</span>` : ''}
+    <div class="${metaClass}">
+      ${hideSourceMeta ? '' : `<span class="article-source">${escapeHtml(item.source)}</span>`}
+      ${!hideSourceMeta && item.institution ? `<span class="article-inst">${escapeHtml(articleInstitutionLabel(item.institution, item.type))}</span>` : ''}
       ${time ? `<time class="article-time${fresh ? ' is-fresh' : ''}" datetime="${escapeHtml(item.date)}">${time}</time>` : ''}
     </div>
     ${canUseImage ? '<figure class="article-media" aria-hidden="true"></figure>' : ''}
