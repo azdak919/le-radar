@@ -1214,12 +1214,16 @@ function stripEmbeddedCss(title = '') {
   return t;
 }
 
+function stripLeadingNonLetters(title = '') {
+  return String(title).replace(/^[^\p{L}]+/u, '').trim();
+}
+
 function cleanTitle(title = '') {
   let t = stripEmbeddedCss(title);
   t = t.replace(/\s+/g, ' ').trim();
   const prefix = t.match(MC_CATEGORY_PREFIX);
   if (prefix) t = t.slice(prefix[0].length).trim();
-  return t;
+  return stripLeadingNonLetters(t);
 }
 
 const BRIEF_LIMITS = { lead: 500, feature: 360, compact: 170, standard: 170 };
