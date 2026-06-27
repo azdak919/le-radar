@@ -678,6 +678,7 @@ function updateNewsLayout() {
 const HERO_SPOTLIGHT_MAX = 4; /* 1 à la une + 3 vedettes */
 const BRIEF_SIDEBAR_MAX = 4;
 const SPOTLIGHT_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
+const BRIEF_BACKFILL_MAX_AGE_MS = 90 * 24 * 60 * 60 * 1000;
 
 function articleKey(item) {
   return item.link || `${item.source}::${item.date}::${item.title}`;
@@ -685,6 +686,22 @@ function articleKey(item) {
 
 function institutionKey(item) {
   return item.institution || item.source;
+}
+
+function sourceKey(item) {
+  return item.source;
+}
+
+function latestPerKey(items, keyFn) {
+  const map = new Map();
+  for (const item of items) {
+    const k = keyFn(item);
+    const cur = map.get(k);
+    if (!cur || new Date(item.date || 0) > new Date(cur.date || 0)) {
+      map.set(k, item);
+    }
+  }
+  return map;
 }
 
 function sortByDateDesc(items) {
@@ -696,8 +713,22 @@ function isWithinSpotlightWindow(item) {
   return Number.isFinite(age) && age >= 0 && age <= SPOTLIGHT_MAX_AGE_MS;
 }
 
+function isWithinBriefBackfillWindow(item) {
+  const age = Date.now() - new Date(item.date || 0);
+  return Number.isFinite(age) && age >= 0 && age <= BRIEF_BACKFILL_MAX_AGE_MS;
+}
+
 function spotlightPool(items) {
   return sortByDateDesc(items.filter(isWithinSpotlightWindow));
+}
+
+function briefBackfillPool(items) {
+  return sortByDateDesc(items.filter(isWithinBriefBackfillWindow));
+}
+
+function compareBriefCandidates(a, b) {
+  const byPop = sourcePopularityRank(a.source) - sourcePopularityRank(b.source);
+  return byPop !== 0 ? byPop : new Date(b.date || 0) - new Date(a.date || 0);
 }
 
 /**
@@ -737,40 +768,86 @@ function pickHeroSpotlight(items) {
 }
 
 /**
- * En bref : articles ≤ 1 mois hors vedette, institutions nouvelles d'abord,
- * puis repli sur des sources déjà en vedette si nécessaire.
+ * En bref : diversité par journal (pas par institution).
+ * 1) Articles ≤ 1 mois hors vedette, max 1 par journal.
+ * 2) Repli sur médias encore absents (≤ 3 mois), par popularité.
+ * 3) Complète avec d'autres articles récents si les slots restent vides.
  */
-function pickBriefSidebar(pool, heroItems = []) {
-  const fresh = spotlightPool(pool);
-  if (!fresh.length) return [];
+function pickBriefSidebar(allItems, heroItems = []) {
+  const heroKeys = new Set(heroItems.map(articleKey));
+  const heroSources = new Set(heroItems.map(sourceKey));
 
-  const heroInsts = new Set(heroItems.map(institutionKey));
-  const distinctInsts = new Set([...heroInsts]);
-  for (const item of fresh) distinctInsts.add(institutionKey(item));
-  if (distinctInsts.size < 2) return [];
+  const picks = [];
+  const usedKeys = new Set();
+  const usedSources = new Set();
 
-  const withoutHeroInst = fresh.filter((item) => !heroInsts.has(institutionKey(item)));
-  const picks = pickSpotlightSlots(withoutHeroInst, BRIEF_SIDEBAR_MAX);
-  if (picks.length < BRIEF_SIDEBAR_MAX) {
-    const usedKeys = new Set(picks.map(articleKey));
-    for (const item of fresh) {
-      if (picks.length >= BRIEF_SIDEBAR_MAX) break;
-      const key = articleKey(item);
-      if (usedKeys.has(key)) continue;
-      picks.push(item);
-      usedKeys.add(key);
-    }
+  const add = (item, { allowDuplicateSource = false } = {}) => {
+    if (!item || picks.length >= BRIEF_SIDEBAR_MAX) return false;
+    const key = articleKey(item);
+    const src = sourceKey(item);
+    if (usedKeys.has(key)) return false;
+    if (!allowDuplicateSource && usedSources.has(src)) return false;
+    picks.push(item);
+    usedKeys.add(key);
+    usedSources.add(src);
+    return true;
+  };
+
+  const freshEligible = spotlightPool(allItems).filter((i) => !heroKeys.has(articleKey(i)));
+  const freshLatest = latestPerKey(freshEligible, sourceKey);
+
+  // Journaux frais absents de la vedette
+  [...freshLatest.entries()]
+    .filter(([src]) => !heroSources.has(src))
+    .map(([, item]) => item)
+    .sort(compareBriefCandidates)
+    .forEach((item) => add(item));
+
+  // Journaux déjà en vedette : un autre article récent du même média
+  [...freshLatest.entries()]
+    .filter(([src]) => heroSources.has(src))
+    .map(([, item]) => item)
+    .sort(compareBriefCandidates)
+    .forEach((item) => add(item));
+
+  // Autres articles frais, un par journal encore absent d'En bref
+  for (const item of freshEligible) {
+    if (picks.length >= BRIEF_SIDEBAR_MAX) break;
+    add(item);
   }
 
-  return picks.sort((a, b) => a.source.localeCompare(b.source, 'fr'));
+  // Médias sans article ≤ 1 mois : dernier article ≤ 3 mois si le journal
+  // n'apparaît ni en vedette ni déjà dans En bref
+  const backfillEligible = briefBackfillPool(allItems).filter(
+    (i) => !heroKeys.has(articleKey(i)) && !usedKeys.has(articleKey(i)),
+  );
+  const backfillLatest = latestPerKey(backfillEligible, sourceKey);
+  const representedSources = () => new Set([...heroSources, ...usedSources]);
+
+  [...backfillLatest.entries()]
+    .filter(([src]) => !representedSources().has(src))
+    .map(([, item]) => item)
+    .sort(compareBriefCandidates)
+    .forEach((item) => add(item));
+
+  // Dernier repli : articles frais, puis backfill, doublons de journal permis
+  for (const item of freshEligible) {
+    if (picks.length >= BRIEF_SIDEBAR_MAX) break;
+    add(item, { allowDuplicateSource: true });
+  }
+  for (const item of backfillEligible) {
+    if (picks.length >= BRIEF_SIDEBAR_MAX) break;
+    add(item, { allowDuplicateSource: true });
+  }
+
+  return picks.sort(compareBriefCandidates);
 }
 
 function partitionNewsFeed(items) {
   const sorted = sortByDateDesc(items);
   const heroItems = pickHeroSpotlight(sorted);
   const heroKeys = new Set(heroItems.map(articleKey));
-  const pool = sorted.filter((i) => !heroKeys.has(articleKey(i)));
-  const briefItems = pickBriefSidebar(pool, heroItems);
+  const briefItems = pickBriefSidebar(sorted, heroItems);
   const briefKeys = new Set(briefItems.map(articleKey));
   const tailItems = sorted.filter(
     (i) => !heroKeys.has(articleKey(i)) && !briefKeys.has(articleKey(i)),
