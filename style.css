@@ -894,17 +894,23 @@ a { color: inherit; }
   -webkit-line-clamp: 2;
 }
 
-/* En bref : source puis date sur 2 lignes (évite troncature et décalage) */
+/* En bref : date à droite sur la ligne source */
 .brief-rail .article--compact .article-meta {
-  grid-template-columns: 1fr;
-  row-gap: 1px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  column-gap: 8px;
+  row-gap: 0;
   margin-bottom: 4px;
 }
+.brief-rail .article--compact .article-meta__lead {
+  min-width: 0;
+}
 .brief-rail .article--compact .article-time {
-  grid-row: 2;
-  grid-column: 1;
-  justify-self: start;
-  text-align: left;
+  grid-row: 1;
+  grid-column: 2;
+  justify-self: end;
+  text-align: right;
+  align-self: start;
   white-space: nowrap;
 }
 .brief-rail .article--compact .article-time::before {
