@@ -96,7 +96,7 @@ Seuls les **médias étudiants** sont éligibles (pas les portails institutionne
 | 3. Vérification | `node scripts/verify-news-sources.js --name "<journal>"` | oui |
 | 4. Agrégation | `node scripts/fetch-news.js --update` | oui |
 | 5. Extrait vedette | `node scripts/enrich-lead-excerpts.js --update` | oui (articles `featured` + récents) |
-| 6. Images vedette | `node scripts/ensure-lead-images.js --update` | oui |
+| 6. Images vedette | `node scripts/ensure-lead-images.js --update` | oui (crédits source vérifiés sur la page) |
 | 7. Réseaux sociaux | `node scripts/fetch-social.js --update` | optionnel |
 | 8. Cache PWA | incrémenter `CACHE_NAME` dans `sw.js` | oui si `app.js` touché |
 | 9. Déploiement | `git commit` + `git push` | oui |

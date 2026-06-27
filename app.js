@@ -1375,6 +1375,50 @@ function creditLink(href, label, className = '') {
   return a;
 }
 
+function buildSourcePhotoCreditElement(item = {}) {
+  const credit = String(item.sourceImageCredit || '').trim();
+  if (!credit) return null;
+
+  const cap = document.createElement('figcaption');
+  cap.className = 'article-media-credit';
+  const url = String(item.sourceImageCreditUrl || item.link || '').trim();
+  const en = item.lang === 'en';
+  const fromMedia = item.sourceImageCreditFrom === 'media';
+
+  if (fromMedia) {
+    if (url) cap.appendChild(creditLink(url, credit));
+    else cap.textContent = credit;
+    return cap;
+  }
+
+  const creator = cleanCreatorDisplay(item.sourceImageCreator || '');
+  const parsed = parseImageCreditLine(credit);
+  if (parsed && creator) {
+    cap.appendChild(document.createTextNode(en ? 'Photo: ' : 'Photo : '));
+    if (url) cap.appendChild(creditLink(url, creator, 'article-media-credit__creator'));
+    else cap.appendChild(document.createTextNode(creator));
+    if (parsed.license) cap.appendChild(document.createTextNode(` / ${parsed.license}`));
+    if (parsed.via) {
+      cap.appendChild(document.createTextNode(' · '));
+      cap.appendChild(document.createTextNode(parsed.via));
+    }
+    return cap;
+  }
+
+  const inline = credit.match(/^Photo\s*:\s*(.+)$/i);
+  if (inline) {
+    cap.appendChild(document.createTextNode(en ? 'Photo: ' : 'Photo : '));
+    const label = inline[1].trim();
+    if (url && creator) cap.appendChild(creditLink(url, creator, 'article-media-credit__creator'));
+    else cap.appendChild(document.createTextNode(label));
+    return cap;
+  }
+
+  if (url) cap.appendChild(creditLink(url, credit));
+  else cap.textContent = credit;
+  return cap;
+}
+
 function buildMediaCreditElement(item = {}) {
   const sourceUrl = String(item.imageSourceUrl || '').trim();
   const credit = String(item.imageCredit || '').trim();
@@ -1418,12 +1462,15 @@ function buildMediaCreditElement(item = {}) {
 
 function showArticleImage(article, media, img, kind, item) {
   media.replaceChildren(img);
-  if ((kind === 'stock' || kind === 'fallback') && (item?.imageCredit || item?.imageSourceUrl)) {
-    const cap = buildMediaCreditElement(item);
-    if (cap) {
-      media.appendChild(cap);
-      media.removeAttribute('aria-hidden');
-    }
+  let cap = null;
+  if (kind === 'photo' && item?.sourceImageCredit) {
+    cap = buildSourcePhotoCreditElement(item);
+  } else if ((kind === 'stock' || kind === 'fallback') && (item?.imageCredit || item?.imageSourceUrl)) {
+    cap = buildMediaCreditElement(item);
+  }
+  if (cap) {
+    media.appendChild(cap);
+    media.removeAttribute('aria-hidden');
   }
   article.classList.add('has-image');
   article.classList.remove('article--text');
