@@ -260,6 +260,17 @@ let newsSourceFilter = 'all';
 let currentStation = null; // radio object selected in tuner
 let audio = null;
 let suppressAudioError = false;
+// Amplification optionnelle via Web Audio : permet de dépasser 100 % pour les
+// flux trop faibles (ex. CKUT). Les postes sans en-tête CORS ne peuvent pas être
+// amplifiés ; on retombe alors en lecture native plafonnée à 100 %.
+let audioCtx = null;
+let gainNode = null;
+let mediaSource = null;
+let boostWired = false;             // graphe Web Audio branché sur l'élément courant
+let webAudioSupported = !!(window.AudioContext || window.webkitAudioContext);
+let currentGain = 0.8;              // valeur du curseur (0 → MAX_GAIN)
+const MAX_GAIN = 2;                 // jusqu'à 200 %
+const boostUnavailable = new Set(); // ids des postes sans CORS
 let listenWindow = null;
 let listenWindowId = null;
 let radioNowPlaying = { stations: {}, updatedAt: null };
@@ -580,8 +591,9 @@ function bindTuner() {
 
   TUNER_VOLUME.addEventListener('input', (e) => {
     const v = parseFloat(e.target.value);
-    if (audio) audio.volume = v;
-    localStorage.setItem('req-player-vol', v);
+    currentGain = Number.isFinite(v) ? v : currentGain;
+    applyGain();
+    localStorage.setItem('req-player-vol', currentGain);
   });
 }
 
@@ -700,9 +712,14 @@ function togglePlay() {
 async function play(radio) {
   const url = getPlayableStream(radio);
   if (!url) return;
+  // Branche (ou non) le graphe d'amplification selon le support CORS du poste.
+  const wantBoost = webAudioSupported && !boostUnavailable.has(radio.id);
+  if (wantBoost !== boostWired) rebuildAudio(wantBoost);
   try {
+    if (audioCtx && audioCtx.state === 'suspended') { try { await audioCtx.resume(); } catch {} }
     if (audio.src !== url) audio.src = url;
     await audio.play();
+    applyGain();
     updatePlayUI();
   } catch {
     showToast('Appuie de nouveau sur ▶ pour autoriser la lecture.');
@@ -739,19 +756,82 @@ function updatePlayUI() {
 }
 
 // ─── Audio engine ──────────────────────────────────────────────────────────────
+function attachAudioListeners(el) {
+  el.addEventListener('play',  updatePlayUI);
+  el.addEventListener('pause', updatePlayUI);
+  el.addEventListener('ended', updatePlayUI);
+  el.addEventListener('error', onAudioError);
+}
+
+function onAudioError() {
+  if (suppressAudioError) { updatePlayUI(); return; }
+  // En mode amplifié, un flux sans en-tête CORS fait échouer l'élément <audio>
+  // « anonymous ». On le note et on retombe une fois en lecture native simple.
+  if (boostWired && currentStation && !boostUnavailable.has(currentStation.id)) {
+    boostUnavailable.add(currentStation.id);
+    rebuildAudio(false);
+    play(currentStation);
+    return;
+  }
+  if (audio && audio.currentSrc) showToast('Flux indisponible pour le moment.');
+  updatePlayUI();
+}
+
+/** Branche un graphe Web Audio (source → gain → sortie) pour l'amplification. */
+function wireBoost() {
+  const Ctx = window.AudioContext || window.webkitAudioContext;
+  if (!Ctx) { webAudioSupported = false; return false; }
+  try {
+    audio.crossOrigin = 'anonymous';
+    audioCtx = audioCtx || new Ctx();
+    mediaSource = audioCtx.createMediaElementSource(audio);
+    gainNode = audioCtx.createGain();
+    mediaSource.connect(gainNode).connect(audioCtx.destination);
+    boostWired = true;
+  } catch {
+    boostWired = false;
+  }
+  return boostWired;
+}
+
+/** Recrée l'élément <audio>, avec ou sans graphe d'amplification. */
+function rebuildAudio(withBoost) {
+  if (audio) {
+    suppressAudioError = true;
+    try { audio.pause(); } catch {}
+    audio.removeAttribute('src');
+    try { audio.load(); } catch {}
+    suppressAudioError = false;
+  }
+  audio = new Audio();
+  audio.preload = 'none';
+  attachAudioListeners(audio);
+  mediaSource = null;
+  gainNode = null;
+  boostWired = false;
+  if (withBoost) wireBoost();
+  applyGain();
+}
+
+/** Applique la valeur du curseur : gain Web Audio si amplifiable, sinon volume natif. */
+function applyGain() {
+  if (!audio) return;
+  if (boostWired && gainNode) {
+    audio.volume = 1;
+    try { gainNode.gain.value = currentGain; } catch {}
+  } else {
+    // Sans graphe Web Audio, le volume natif plafonne à 100 %.
+    audio.volume = Math.min(1, currentGain);
+  }
+  TUNER.classList.toggle('is-boosted', currentGain > 1.001);
+  if (TUNER_VOLUME) TUNER_VOLUME.setAttribute('aria-valuetext', `${Math.round(currentGain * 100)} %`);
+}
+
 function setupAudio() {
   if (audio) return;
   audio = new Audio();
   audio.preload = 'none';
-  if (PROXY_BASE) audio.crossOrigin = 'anonymous';
-
-  audio.addEventListener('play',  updatePlayUI);
-  audio.addEventListener('pause', updatePlayUI);
-  audio.addEventListener('ended', updatePlayUI);
-  audio.addEventListener('error', () => {
-    if (!suppressAudioError && audio.currentSrc) showToast('Flux indisponible pour le moment.');
-    updatePlayUI();
-  });
+  attachAudioListeners(audio);
 
   if ('mediaSession' in navigator) {
     navigator.mediaSession.setActionHandler('play',  () => currentStation && play(currentStation));
@@ -766,7 +846,7 @@ function updateMediaSession(radio) {
   navigator.mediaSession.metadata = new MediaMetadata({
     title: radio.fullName || radio.name,
     artist: radio.institution,
-    album: 'RADAR — Les médias étudiants du Québec',
+    album: 'LE RADAR — Les médias étudiants du Québec',
     artwork: [
       { src: './assets/icon-192.png', sizes: '192x192', type: 'image/png' },
       { src: './assets/icon-512.png', sizes: '512x512', type: 'image/png' },
@@ -776,8 +856,9 @@ function updateMediaSession(radio) {
 
 function restoreVolume() {
   const saved = parseFloat(localStorage.getItem('req-player-vol') ?? '0.8');
-  if (audio) audio.volume = saved;
-  TUNER_VOLUME.value = saved;
+  currentGain = Number.isFinite(saved) ? Math.min(MAX_GAIN, Math.max(0, saved)) : 0.8;
+  TUNER_VOLUME.value = currentGain;
+  applyGain();
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
