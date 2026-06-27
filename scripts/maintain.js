@@ -117,7 +117,14 @@ function buildStatus(steps) {
     alerts.push({
       level: 'error',
       code: 'lead_image_gap',
-      message: `Couverture vedette insuffisante : ${leadQc.fullyCovered ?? '?'}/${leadQc.total ?? '?'} articles`,
+      message: `Photos vedette insuffisantes : ${leadQc.leadReadyPhotos ?? '?'}/${leadQc.total ?? '?'} articles`,
+    });
+  }
+  if ((leadQc.gaps || []).length > 0) {
+    alerts.push({
+      level: 'info',
+      code: 'lead_svg_fallback',
+      message: `${leadQc.gaps.length}+ articles avec repli SVG (photo absente ou trop petite)`,
     });
   }
 
@@ -142,6 +149,8 @@ function buildStatus(steps) {
           fullyCovered: leadQc.fullyCovered ?? null,
           withPhoto: leadQc.withPhoto ?? null,
           withFallback: leadQc.withFallback ?? null,
+          leadReadyPhotos: leadQc.leadReadyPhotos ?? null,
+          pageScraped: leadQc.pageScraped ?? null,
           mainPageLeadReady: leadQc.mainPageLeadReady ?? null,
         },
       },

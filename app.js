@@ -1235,6 +1235,12 @@ function attachArticleImage(article, item, role) {
 
     img.onload = () => {
       if (kind === 'photo' && !isUsableArticleImage(img, role)) {
+        const w = img.naturalWidth || 0;
+        const h = img.naturalHeight || 0;
+        if (role === 'lead' && w >= 200 && h >= 150) {
+          showArticleImage(article, media, img, kind);
+          return;
+        }
         if (allowRetry) {
           const alt = resolveDisplayImage(item, { preferPhoto: false });
           if (alt.kind !== 'photo') loadImage(alt.src, alt.kind, false);
@@ -1282,9 +1288,10 @@ function isUsableArticleImage(img, role) {
   const width = img.naturalWidth || 0;
   const height = img.naturalHeight || 0;
   const ratio = width / Math.max(height, 1);
-  const minWidth = role === 'lead' ? 640 : 520;
-  const minHeight = role === 'lead' ? 320 : 260;
-  return width >= minWidth && height >= minHeight && ratio >= 1.05 && ratio <= 2.4;
+  if (role === 'lead') {
+    return width >= 480 && height >= 240 && ratio >= 0.95 && ratio <= 2.6;
+  }
+  return width >= 520 && height >= 260 && ratio >= 1.05 && ratio <= 2.4;
 }
 
 const BYLINE_ARTICLE_STARTERS = /^(Le|La|Les|L'|L'|Un|Une|The|An|À|A)$/iu;
