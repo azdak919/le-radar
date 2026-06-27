@@ -973,11 +973,24 @@ function collectSourcePool(items, referenceDate = new Date()) {
   return { items: pool, contingencyBand: 0 };
 }
 
+function leadBriefCharCount(item) {
+  const excerpt = sanitizeBriefBody(String(item.excerpt || ''));
+  if (excerpt.length >= LEAD_BRIEF_MIN_CHARS) return excerpt.length;
+  const { body } = splitByline(item);
+  return Math.max(excerpt.length, sanitizeBriefBody(body).length);
+}
+
+function hasSubstantialLeadBrief(item) {
+  return leadBriefCharCount(item) >= LEAD_BRIEF_MIN_CHARS;
+}
+
 function pickSourceLead(pool) {
   if (!pool.length) return null;
-  const withImage = pool.find((item) => hasDisplayImage(item));
-  if (withImage) return withImage;
-  return pool[0];
+  const withImage = pool.filter((item) => hasDisplayImage(item));
+  const richImageLead = withImage.find(hasSubstantialLeadBrief);
+  if (richImageLead) return richImageLead;
+  if (withImage.length) return withImage[0];
+  return pool.find(hasSubstantialLeadBrief) || pool[0];
 }
 
 /**
@@ -1020,7 +1033,13 @@ function createArticle(item, role = 'standard', { hideSourceMeta = false } = {})
   const time = d ? formatStamp(d) : '';
   const fresh = d ? (Date.now() - d) < 120 * 60000 : false;
   const { author, body } = splitByline(item);
-  const { text: brief, truncated: briefTruncated } = resolveBrief(item, body, role);
+  let { text: brief, truncated: briefTruncated } = resolveBrief(item, body, role);
+  if (role === 'lead' && !brief) {
+    ({ text: brief, truncated: briefTruncated } = resolveBrief(item, item.excerpt || body, role));
+  }
+  if (role === 'lead' && brief) {
+    ({ text: brief, truncated: briefTruncated } = ensureLeadBriefMinLines(brief, truncated, item));
+  }
   const readMore = item.lang === 'en' ? 'Read more →' : 'Lire la suite →';
   const byLabel = item.lang === 'en' ? 'By' : 'Par';
   const canUseImage = ['lead', 'feature'].includes(role);
@@ -1166,26 +1185,45 @@ function resolveDisplayImage(item, { preferPhoto = true } = {}) {
  */
 function ensureHeroLeadHasImage(heroItems, allItems) {
   if (!heroItems.length) return heroItems;
-  if (hasDisplayImage(heroItems[0])) return heroItems;
+  let next = [...heroItems];
 
-  const swapIdx = heroItems.findIndex((item, i) => i > 0 && hasDisplayImage(item));
-  if (swapIdx > 0) {
-    const next = [...heroItems];
-    [next[0], next[swapIdx]] = [next[swapIdx], next[0]];
-    return sortByDateDesc(next);
+  if (!hasDisplayImage(next[0])) {
+    const swapIdx = next.findIndex((item, i) => i > 0 && hasDisplayImage(item));
+    if (swapIdx > 0) {
+      [next[0], next[swapIdx]] = [next[swapIdx], next[0]];
+      next = sortByDateDesc(next);
+    } else {
+      const heroKeys = new Set(next.map(articleKey));
+      const replacement = sortByDateDesc(allItems).find(
+        (item) => !heroKeys.has(articleKey(item)) && hasDisplayImage(item),
+      );
+      if (replacement) {
+        next[0] = replacement;
+        next = sortByDateDesc(next);
+      }
+    }
   }
 
-  const heroKeys = new Set(heroItems.map(articleKey));
-  const replacement = sortByDateDesc(allItems).find(
-    (item) => !heroKeys.has(articleKey(item)) && hasDisplayImage(item),
-  );
-  if (replacement) {
-    const next = [...heroItems];
-    next[0] = replacement;
-    return sortByDateDesc(next);
+  if (!hasSubstantialLeadBrief(next[0])) {
+    const swapIdx = next.findIndex(
+      (item, i) => i > 0 && hasDisplayImage(item) && hasSubstantialLeadBrief(item),
+    );
+    if (swapIdx > 0) {
+      [next[0], next[swapIdx]] = [next[swapIdx], next[0]];
+      next = sortByDateDesc(next);
+    } else {
+      const heroKeys = new Set(next.map(articleKey));
+      const replacement = sortByDateDesc(allItems).find(
+        (item) => !heroKeys.has(articleKey(item)) && hasDisplayImage(item) && hasSubstantialLeadBrief(item),
+      );
+      if (replacement) {
+        next[0] = replacement;
+        next = sortByDateDesc(next);
+      }
+    }
   }
 
-  return heroItems;
+  return next;
 }
 
 function showArticleImage(article, media, img, kind, item) {
@@ -1437,6 +1475,43 @@ function cleanTitle(title = '') {
 }
 
 const BRIEF_LIMITS = { lead: 500, feature: 360, compact: 170, standard: 170 };
+const LEAD_BRIEF_MIN_CHARS = 140;
+
+function ensureLeadBriefMinLines(brief, truncated, item) {
+  if (brief.length >= LEAD_BRIEF_MIN_CHARS) {
+    return { text: brief, truncated };
+  }
+
+  const fallback = sanitizeBriefBody(String(item.excerpt || ''));
+  if (fallback.length > brief.length) {
+    const extended = prepareBrief(fallback, 'lead');
+    if (extended.text.length > brief.length) {
+      brief = extended.text;
+      truncated = extended.truncated;
+    }
+  }
+  if (brief.length >= LEAD_BRIEF_MIN_CHARS) {
+    return { text: brief, truncated };
+  }
+
+  const title = cleanTitle(item.title);
+  const pieces = [];
+  if (title.length > 8) pieces.push(title);
+  const excerpt = sanitizeBriefBody(String(item.excerpt || ''));
+  if (excerpt && !pieces.some((part) => part.includes(excerpt.slice(0, 24)))) pieces.push(excerpt);
+  const inst = articleInstitutionLabel(item.institution, item.type);
+  if (item.source) {
+    const ctx = item.lang === 'en'
+      ? `From ${item.source}${inst ? ` (${inst})` : ''}.`
+      : `Dans ${item.source}${inst ? ` (${inst})` : ''}.`;
+    pieces.push(ctx);
+  }
+  const combined = prepareBrief(pieces.join(' '), 'lead');
+  if (combined.text.length > brief.length) {
+    return combined;
+  }
+  return { text: brief, truncated };
+}
 
 function sanitizeBriefBody(raw = '') {
   let s = decodeHtmlEntities(String(raw));
