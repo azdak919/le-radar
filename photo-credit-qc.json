@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-27T17:10:56.844Z",
+  "updated": "2026-06-27T19:30:08.388Z",
   "total": 205,
   "withImage": 165,
   "withCredit": 165,
@@ -7,10 +7,10 @@
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 26,
-  "updatedCount": 26,
-  "citedNew": 10,
-  "fallbackNew": 16,
+  "checked": 52,
+  "updatedCount": 52,
+  "citedNew": 19,
+  "fallbackNew": 33,
   "samples": [
     {
       "title": "Ask the Trib: How do I survive summer in my hometown?",
@@ -34,9 +34,30 @@
       "method": "figcaption-attribution"
     },
     {
+      "title": "Road to the 2026 FIFA World Cup",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
       "title": "Know Your Artist: Theodore A. Harris",
       "source": "The Tribune",
       "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Artemis II takes over Place-des-Arts",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "CSU rejects motion for Israel and Jewish solidarity fund ad hoc committee",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
       "cited": false,
       "method": null
     },
@@ -72,27 +93,6 @@
       "title": "L’alcool est-il vraiment le nouveau tabac ?",
       "source": "L'Exemplaire",
       "credit": "Crédit photo : L'Exemplaire",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Quand la politique passe à table",
-      "source": "L'Exemplaire",
-      "credit": "Photo : Juliette Deshayes / L’Exemplaire",
-      "cited": true,
-      "method": "json-ld"
-    },
-    {
-      "title": "Journalism After Gaza’ panel discusses media bias and the future of reporting in Palestine",
-      "source": "The Tribune",
-      "credit": "Photo : Reya Khanna",
-      "cited": true,
-      "method": "figcaption-attribution"
-    },
-    {
-      "title": "How can I show you I’m doing better if there’s nothing good for me to do?",
-      "source": "The Tribune",
-      "credit": "Photo credit: The Tribune",
       "cited": false,
       "method": null
     }

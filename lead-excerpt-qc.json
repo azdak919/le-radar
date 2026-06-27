@@ -1,25 +1,16 @@
 {
-  "updated": "2026-06-27T15:17:56.360Z",
-  "total": 171,
-  "pool": 61,
-  "incomplete": 28,
-  "withLeadExcerpt": 57,
-  "candidates": 28,
-  "enriched": 17,
-  "failed": 1,
+  "updated": "2026-06-27T19:21:50.785Z",
+  "total": 205,
+  "pool": 53,
+  "incomplete": 32,
+  "withLeadExcerpt": 43,
+  "candidates": 32,
+  "enriched": 0,
+  "failed": 24,
   "ok": true,
   "samples": [
     {
-      "title": "Rachat des armes à feu : le Québec est-il l’ exception canadienne ?",
-      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/rachat-des-armes-a-feu-le-quebec-est-il-lexception-canadienne/",
-      "ok": true,
-      "score": 100,
-      "chars": 455,
-      "sample": "Le programme fédéral de rachat des armes à feu suit son cours au Canada. Alors que les propriétaires",
-      "changed": false
-    },
-    {
-      "title": "Au revoir !",
+      "title": "Au revoir! - Le Délit",
       "link": "https://www.delitfrancais.com/2026/03/25/au-revoir/",
       "ok": true,
       "score": 100,
@@ -55,15 +46,6 @@
       "changed": false
     },
     {
-      "title": "Le programme de bourses Montréal Campus reconduit",
-      "link": "https://montrealcampus.ca/2025/02/05/le-programme-de-bourse-montreal-campus-reconduit/",
-      "ok": true,
-      "score": 100,
-      "chars": 899,
-      "sample": "En avril, six bourses seront remises pour féliciter le contenu des journalistes du Montréal Campus .",
-      "changed": false
-    },
-    {
       "title": "Ask the Trib: How do I survive summer in my hometown?",
       "link": "https://www.thetribune.ca/student-life/ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026/?utm_source=rss&utm_medium=rss&utm_campaign=ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026",
       "ok": true,
@@ -79,6 +61,24 @@
       "score": 100,
       "chars": 426,
       "sample": "On April 22, the Superior Court of Quebec annulled the August 2025 arbitration Association des Resso",
+      "changed": false
+    },
+    {
+      "title": "Road to the 2026 FIFA World Cup",
+      "link": "https://thelinknewspaper.ca/article/16333",
+      "ok": true,
+      "score": 96,
+      "chars": 531,
+      "sample": "Canadian goalkeeper Maxime Crépeau, who hails from nearby Greenfield Park, appeared emotional during",
+      "changed": false
+    },
+    {
+      "title": "Rachat des armes à feu : le Québec est-il l’exception canadienne ?",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/rachat-des-armes-a-feu-le-quebec-est-il-lexception-canadienne/?utm_source=rss&utm_medium=rss&utm_campaign=rachat-des-armes-a-feu-le-quebec-est-il-lexception-canadienne",
+      "ok": true,
+      "score": 100,
+      "chars": 455,
+      "sample": "Le programme fédéral de rachat des armes à feu suit son cours au Canada. Alors que les propriétaires",
       "changed": false
     }
   ]
