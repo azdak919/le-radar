@@ -1791,7 +1791,10 @@ function cleanTitle(title = '') {
   if (prefix) t = t.slice(prefix[0].length).trim();
   t = stripLeadingNonLetters(t);
   // Titres doubles sans ponctuation (ex. « Magazines à potins En papier… »)
-  return t.replace(/([\p{Ll}àâäéèêëïîôùûüç'’])\s+(?=[\p{Lu}ÀÂÄÉÈÊËÏÎÔÙÛÜ])/gu, '$1 — ');
+  return t.replace(
+    /([\p{Ll}àâäéèêëïîôùûüç'’])\s+(En|Le|La|Les|L'|L'|Un|Une|The|A|An)\s+/gu,
+    '$1 — $2 ',
+  );
 }
 
 function stripLeadingByline(text = '', author = '') {
