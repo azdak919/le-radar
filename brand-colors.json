@@ -1,0 +1,61 @@
+{
+  "_comment": "Couleurs officielles (ou dominantes sur le site institutionnel) des établissements liés aux sources d'actualités. Utilisé par app.js pour les pastilles d'articles.",
+  "institutions": {
+    "Université de Montréal": {
+      "color": "#0057AC",
+      "source": "Guide de marque UdeM — Pantone 293 / bleu institutionnel"
+    },
+    "UQAM": {
+      "color": "#0079BE",
+      "source": "Site uqam.ca — bleu institutionnel"
+    },
+    "Université du Québec à Montréal (UQAM)": {
+      "color": "#0079BE",
+      "source": "Site uqam.ca — bleu institutionnel"
+    },
+    "Université McGill": {
+      "color": "#ED1B2F",
+      "source": "Guide d'identité visuelle McGill — rouge"
+    },
+    "McGill University": {
+      "color": "#ED1B2F",
+      "source": "Guide d'identité visuelle McGill — rouge"
+    },
+    "Concordia University": {
+      "color": "#912338",
+      "source": "Site concordia.ca — bordeaux institutionnel"
+    },
+    "Université du Québec à Trois-Rivières": {
+      "color": "#00CB88",
+      "source": "Site uqtr.ca — vert institutionnel"
+    },
+    "Université Laval": {
+      "color": "#E30513",
+      "source": "Site ulaval.ca — rouge institutionnel"
+    },
+    "Université de Sherbrooke": {
+      "color": "#006B3F",
+      "source": "Identité visuelle UdeS — vert"
+    },
+    "Cégep du Vieux Montréal": {
+      "color": "#CF1F1F",
+      "source": "Site cvm.qc.ca — rouge institutionnel"
+    },
+    "Cégep de Jonquière (ATM – journalisme)": {
+      "color": "#FF8B00",
+      "source": "Site cegepjonquiere.ca — orange institutionnel"
+    },
+    "Cégep de Jonquière": {
+      "color": "#FF8B00",
+      "source": "Site cegepjonquiere.ca — orange institutionnel"
+    }
+  },
+  "fallback_palette": [
+    "#003DA5",
+    "#6C2163",
+    "#047857",
+    "#B45309",
+    "#4338CA",
+    "#0D9488"
+  ]
+}
