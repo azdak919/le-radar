@@ -626,32 +626,53 @@ function articleKey(item) {
   return item.link || `${item.source}::${item.date}::${item.title}`;
 }
 
-/** En bref : le plus récent par institution, mix de sources (hors fil chronologique). */
-function pickBriefSidebar(items) {
-  const institutions = new Set(items.map((i) => i.institution || i.source));
-  if (institutions.size < 2 || items.length <= 3) return [];
+function institutionKey(item) {
+  return item.institution || item.source;
+}
 
+function sortByDateDesc(items) {
+  return [...items].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+}
+
+/**
+ * En bref : après la une, le plus récent par institution encore disponible.
+ * Institutions déjà en vedette sont ignorées pour favoriser le mix.
+ */
+function pickBriefSidebar(pool, heroItems = []) {
+  if (!pool.length) return [];
+
+  const heroInsts = new Set(heroItems.map(institutionKey));
   const latestByInst = new Map();
-  for (const item of items) {
-    const inst = item.institution || item.source;
+  for (const item of pool) {
+    const inst = institutionKey(item);
     const cur = latestByInst.get(inst);
     if (!cur || new Date(item.date || 0) > new Date(cur.date || 0)) {
       latestByInst.set(inst, item);
     }
   }
 
-  return [...latestByInst.values()]
+  const candidates = [...latestByInst.entries()]
+    .filter(([inst]) => !heroInsts.has(inst))
+    .map(([, item]) => item);
+
+  const distinctInFeed = new Set([...latestByInst.keys(), ...heroInsts]).size;
+  if (distinctInFeed < 2 || !candidates.length) return [];
+
+  const max = Math.min(BRIEF_SIDEBAR_MAX, candidates.length);
+  return candidates
     .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
-    .slice(0, BRIEF_SIDEBAR_MAX)
+    .slice(0, max)
     .sort((a, b) => a.source.localeCompare(b.source, 'fr'));
 }
 
 function partitionNewsFeed(items) {
-  const heroItems = items.slice(0, 3);
+  const sorted = sortByDateDesc(items);
+  const heroItems = sorted.slice(0, Math.min(3, sorted.length));
   const heroKeys = new Set(heroItems.map(articleKey));
-  const briefItems = pickBriefSidebar(items.filter((i) => !heroKeys.has(articleKey(i))));
+  const pool = sorted.filter((i) => !heroKeys.has(articleKey(i)));
+  const briefItems = pickBriefSidebar(pool, heroItems);
   const briefKeys = new Set(briefItems.map(articleKey));
-  const tailItems = items.filter(
+  const tailItems = sorted.filter(
     (i) => !heroKeys.has(articleKey(i)) && !briefKeys.has(articleKey(i)),
   );
   return { heroItems, briefItems, tailItems };
