@@ -60,26 +60,35 @@ async function main() {
 
   for (const item of candidates) {
     process.stdout.write(`→ ${item.source}: ${item.title.slice(0, 48)}… `);
-    const lead = await fetchLeadExcerpt(item);
+    const picked = await fetchLeadExcerpt(item);
     await sleep(250);
 
-    if (!lead) {
-      console.log('skip');
+    if (!picked?.text) {
+      const why = picked?.reason || 'no-suitable-paragraph';
+      const hadBad = !!item.leadExcerpt;
+      if (doUpdate && hadBad) delete item.leadExcerpt;
+      console.log(`skip (${why}${picked?.score ? `, score ${picked.score}` : ''}${hadBad ? ', leadExcerpt retiré' : ''})`);
       failed += 1;
-      results.push({ title: item.title, link: item.link, ok: false });
+      results.push({ title: item.title, link: item.link, ok: false, reason: why, cleared: hadBad });
       continue;
     }
 
+    const lead = picked.text;
     const prev = String(item.leadExcerpt || '');
     const changed = lead !== prev;
     if (doUpdate && changed) item.leadExcerpt = lead;
     if (changed) enriched += 1;
 
-    console.log(doUpdate && changed ? `✓ ${lead.length} car.` : `dry ${lead.length} car.`);
+    console.log(
+      doUpdate && changed
+        ? `✓ score ${picked.score} · ${lead.length} car.`
+        : `dry score ${picked.score} · ${lead.length} car.`,
+    );
     results.push({
       title: item.title,
       link: item.link,
       ok: true,
+      score: picked.score,
       chars: lead.length,
       sample: lead.slice(0, 100),
       changed,
