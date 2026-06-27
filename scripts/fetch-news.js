@@ -18,83 +18,24 @@ const path = require('path');
 const https = require('https');
 
 const NEWS_PATH = path.join(__dirname, '..', 'news.json');
+const SOURCES_PATH = path.join(__dirname, '..', 'news-sources.json');
 const TIMEOUT = 15000;
 const MAX_PER_SOURCE = 7;   // keep the freshest few from each paper
 const MAX_TOTAL = 60;       // overall cap
 
-// === Curated student-media RSS feeds (validated) =============================
-const SOURCES = [
-  {
-    name: 'Quartier Libre',
-    institution: 'Université de Montréal',
-    type: 'universite',
-    lang: 'fr',
-    url: 'https://quartierlibre.ca/feed/',
-  },
-  {
-    name: 'Montréal Campus',
-    institution: 'UQAM',
-    type: 'universite',
-    lang: 'fr',
-    url: 'https://montrealcampus.ca/feed/',
-  },
-  {
-    name: 'Le Délit',
-    institution: 'Université McGill',
-    type: 'universite',
-    lang: 'fr',
-    url: 'https://www.delitfrancais.com/feed/',
-  },
-  {
-    name: 'The McGill Daily',
-    institution: 'McGill University',
-    type: 'universite',
-    lang: 'en',
-    url: 'https://www.mcgilldaily.com/feed/',
-  },
-  {
-    name: 'The Link',
-    institution: 'Concordia University',
-    type: 'universite',
-    lang: 'en',
-    url: 'https://thelinknewspaper.ca/feed/',
-  },
-  {
-    name: 'Zone Campus',
-    institution: 'Université du Québec à Trois-Rivières',
-    type: 'universite',
-    lang: 'fr',
-    url: 'https://www.zonecampus.ca/feed/',
-  },
-  {
-    name: "L'Exemplaire",
-    institution: 'Université Laval',
-    type: 'universite',
-    lang: 'fr',
-    url: 'https://exemplaire.com.ulaval.ca/feed/',
-  },
-  {
-    name: 'Le Collectif',
-    institution: 'Université de Sherbrooke',
-    type: 'universite',
-    lang: 'fr',
-    url: 'https://lecollectif.ca/feed/',
-  },
-  {
-    name: 'Exil',
-    institution: 'Cégep du Vieux Montréal',
-    type: 'cegep',
-    lang: 'fr',
-    url: 'https://exilecvm.ca/feed/',
-  },
-  {
-    name: 'La Pige',
-    institution: 'Cégep de Jonquière (ATM – journalisme)',
-    type: 'cegep',
-    lang: 'fr',
-    url: 'https://lapige.atmjonquiere.com/feed/',
-  },
-];
+// Active feeds come from the registry (news-sources.json), maintained by
+// scripts/discover-news-sources.js. Feeds flagged "_status": "dead" are skipped.
+function loadSources() {
+  try {
+    const registry = JSON.parse(fs.readFileSync(SOURCES_PATH, 'utf8'));
+    return (registry.active || []).filter((s) => s.url && s._status !== 'dead');
+  } catch (e) {
+    console.error('Could not read news-sources.json:', e.message);
+    return [];
+  }
+}
+
+const SOURCES = loadSources();
 
 // === Tiny HTTP fetch =========================================================
 function fetchText(url, redirects = 3) {
@@ -198,6 +139,11 @@ async function main() {
   const doUpdate = process.argv.includes('--update');
   console.log('RÉQ News Aggregator\n===================\n');
 
+  if (!SOURCES.length) {
+    console.error('No active sources in news-sources.json — aborting.');
+    process.exit(1);
+  }
+
   const all = [];
 
   for (const src of SOURCES) {
@@ -213,6 +159,7 @@ async function main() {
       all.push({
         source: src.name,
         institution: src.institution,
+        region: src.region || '',
         type: src.type,
         lang: src.lang,
         ...it,
