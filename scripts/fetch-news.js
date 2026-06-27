@@ -179,7 +179,7 @@ function sanitizeTitle(title = '') {
 function tag(block, name) {
   const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const m = block.match(new RegExp(`<${escaped}[^>]*>([\\s\\S]*?)</${escaped}>`, 'i'));
-  return m ? m[1].trim() : '';
+  return m ? decodeEntities(m[1].trim()) : '';
 }
 
 function isGenericAuthor(name = '', lang = 'fr') {

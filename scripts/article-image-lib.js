@@ -179,6 +179,7 @@ function stripBoilerplateRegions(html = '') {
 
 function articleBodyHtml(html = '') {
   const patterns = [
+    /itemprop=["']articleBody["'][^>]*>([\s\S]*?)(?=<div[^>]*class=["'][^"']*s-post-nav|<aside|<footer)/i,
     /class=["'][^"']*wp-block-post-content[^"']*["'][^>]*>([\s\S]*?)(?=<div[^>]*(?:id=["']jp-post-flair|\bwp-block-query\b)|<\/div>\s*<\/div>\s*<div[^>]*wp-block-column)/i,
     /<article[^>]*>([\s\S]*?)<\/article>/i,
     /class=["'][^"']*entry-content[^"']*["'][^>]*>([\s\S]*?)<\/div>/i,
@@ -254,7 +255,7 @@ function isCandidateImageUrl(raw = '') {
     const url = new URL(src);
     if (!['http:', 'https:'].includes(url.protocol)) return false;
     const path = decodeURIComponent(url.pathname).toLowerCase();
-    if (/(logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|(?:^|\/)article-2\.|campus-logo|campusgraphic)/.test(path)) {
+    if (/(logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|lapige_web|(?:^|\/)article-2\.|campus-logo|campusgraphic)/.test(path)) {
       return false;
     }
     if (/(?:^|\/)(?:1x1|pixel)\b/.test(path)) return false;
@@ -325,10 +326,12 @@ function imageFromArticleHtml(html = '') {
 
   for (const img of contentImages) {
     const isFeatured = /\bwp-post-image\b/i.test(img.tag)
-      || /\bwp-block-post-featured-image\b/i.test(img.tag);
+      || /\bwp-block-post-featured-image\b/i.test(img.tag)
+      || /\bsize-full\b/i.test(img.tag);
+    const isThumb = /-\d{3}x\d{2,3}\./i.test(img.url);
     candidates.push({
       url: img.url,
-      score: (isFeatured ? 85 : 60) + img.w / 10,
+      score: (isFeatured ? 85 : 60) + img.w / 10 - (isThumb ? 25 : 0),
       w: img.w,
       h: 0,
     });
