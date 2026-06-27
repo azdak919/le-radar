@@ -10,6 +10,11 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+const {
+  isHtmlListSource,
+  countHtmlListItems,
+  latestHtmlListDate,
+} = require('./html-list-fetcher');
 
 const ROOT = path.join(__dirname, '..');
 const REQUIRED = ['name', 'institution', 'region', 'type', 'lang', 'url'];
@@ -112,30 +117,54 @@ async function verifySource(src, ctx) {
 
   const feedCandidates = [src.url, src.urlFallback, ...(src.feedAlternates || [])].filter(Boolean);
   if (feedCandidates.length) {
-    let feedHit = null;
-    let feedUsed = '';
-    for (const feedUrl of [...new Set(feedCandidates)]) {
-      const feed = await fetchFeed(feedUrl);
-      if (feed.ok && isFeed(feed.body)) {
-        feedHit = feed;
-        feedUsed = feedUrl;
-        break;
+    if (isHtmlListSource(src)) {
+      let listHit = null;
+      let listUsed = '';
+      for (const listUrl of [...new Set(feedCandidates)]) {
+        const page = await fetchFeed(listUrl);
+        if (page.ok && countHtmlListItems(page.body, listUrl) > 0) {
+          listHit = page;
+          listUsed = listUrl;
+          break;
+        }
       }
-    }
-    if (!feedHit) {
-      issues.push(`aucun flux RSS joignable (${feedCandidates.join(' → ')})`);
-      if (src.urlFallback && src.url !== src.urlFallback) {
-        warnings.push('site principal bloqué ? Vérifier urlFallback (contenu partiel possible)');
+      if (!listHit) {
+        issues.push(`page liste HTML inaccessible ou vide (${feedCandidates.join(' → ')})`);
+      } else {
+        const n = countHtmlListItems(listHit.body, listUsed);
+        const latest = latestHtmlListDate(listHit.body, listUsed);
+        ok.push(`mode html-list OK (${n} articles)`);
+        if (latest) ok.push(`dernier article : ${latest.slice(0, 10)}`);
+        if (listUsed !== src.url) {
+          warnings.push(`page principale inaccessible — repli actif : ${listUsed}`);
+        }
       }
     } else {
-      const n = countFeedItems(feedHit.body);
-      if (feedUsed !== src.url) {
-        warnings.push(`flux principal inaccessible — repli actif : ${feedUsed}`);
-      } else {
-        ok.push(`flux principal OK (${n} entrées)`);
+      let feedHit = null;
+      let feedUsed = '';
+      for (const feedUrl of [...new Set(feedCandidates)]) {
+        const feed = await fetchFeed(feedUrl);
+        if (feed.ok && isFeed(feed.body)) {
+          feedHit = feed;
+          feedUsed = feedUrl;
+          break;
+        }
       }
-      if (n === 0) warnings.push('flux RSS vide');
-      else if (feedUsed === src.url) ok.push(`${n} entrées`);
+      if (!feedHit) {
+        issues.push(`aucun flux RSS joignable (${feedCandidates.join(' → ')})`);
+        if (src.urlFallback && src.url !== src.urlFallback) {
+          warnings.push('site principal bloqué ? Vérifier urlFallback (contenu partiel possible)');
+        }
+      } else {
+        const n = countFeedItems(feedHit.body);
+        if (feedUsed !== src.url) {
+          warnings.push(`flux principal inaccessible — repli actif : ${feedUsed}`);
+        } else {
+          ok.push(`flux principal OK (${n} entrées)`);
+        }
+        if (n === 0) warnings.push('flux RSS vide');
+        else if (feedUsed === src.url) ok.push(`${n} entrées`);
+      }
     }
   }
 
