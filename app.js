@@ -967,9 +967,24 @@ function partitionNewsFeed(items, referenceDate = new Date()) {
  * Pool d'un seul média : tout l'archive disponible dans news.json
  * (la fraîcheur par session reste réservée au fil global).
  */
+function sortSourcePool(items) {
+  const featured = items.filter((item) => item.featured);
+  const rest = sortByDateDesc(items.filter((item) => !item.featured));
+  return [...featured, ...rest];
+}
+
 function collectSourcePool(items, referenceDate = new Date()) {
-  const pool = sortByDateDesc(items).filter((item) => isPublishedOnOrBefore(item, referenceDate));
+  const pool = sortSourcePool(
+    items.filter((item) => isPublishedOnOrBefore(item, referenceDate)),
+  );
   return { items: pool, contingencyBand: 0 };
+}
+
+function pickSourceLead(pool) {
+  if (!pool.length) return null;
+  const withImage = pool.find((item) => !!getCandidateImage(item.image));
+  if (withImage) return withImage;
+  return pool[0];
 }
 
 /**
@@ -980,7 +995,7 @@ function collectSourcePool(items, referenceDate = new Date()) {
 function partitionSourceFeed(items, referenceDate = new Date()) {
   const sorted = sortByDateDesc(items);
   const { items: pool, contingencyBand } = collectSourcePool(sorted, referenceDate);
-  const lead = pool[0] || null;
+  const lead = pickSourceLead(pool);
   const leadKey = lead ? articleKey(lead) : null;
   const leadHasImage = !!(lead && getCandidateImage(lead.image));
   const heroMax = leadHasImage ? SOURCE_HERO_WITH_IMAGE_MAX : HERO_SPOTLIGHT_MAX;
