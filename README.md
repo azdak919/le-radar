@@ -1,33 +1,33 @@
-# RÉQ — Radios Étudiantes du Québec
+# RADAR — Les médias étudiants du Québec
+
+> *Les médias étudiants du Québec, sur ton radar • Student media on your radar.*
 
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://azdak919.github.io/radios-etudiantes-qc/)
 ![PWA](https://img.shields.io/badge/PWA-ready-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-**RÉQ** est une application web progressive (PWA) **simple, belle et parfaitement optimisée mobile** qui rassemble **toutes les radios étudiantes** des cégeps et universités du Québec en un seul endroit.
+**RADAR** est une application web progressive (PWA) **éditoriale, texte d'abord** qui rassemble en un seul endroit **les radios et les journaux étudiants** des cégeps et universités du Québec. Une page unique : un **syntoniseur radio** en tête, et le **fil des actualités étudiantes** en dessous.
 
-**→ [Essayer RÉQ maintenant](https://azdak919.github.io/radios-etudiantes-qc/)**
+**→ [Essayer RADAR maintenant](https://azdak919.github.io/radios-etudiantes-qc/)**
 
-> Projet non officiel et collaboratif. RÉQ n’est affilié à aucune des stations listées.
+> Projet non officiel et collaboratif. RADAR n’est affilié à aucun des médias listés.
 
 ---
 
 ## ✨ Fonctionnalités
 
-- **Interface magnifique et mobile-first** — Design glassmorphism moderne, typographie soignée et animations fluides
-- **Deux sections** via une navigation segmentée :
-  - 📻 **Radios** — le répertoire avec filtres puissants :
-    - Par type (Universités / Cégeps / Tous)
-    - Par région (Montréal, Québec, Estrie, Saguenay, etc.)
-    - Favoris (♥)
-  - 📰 **Actualités étudiantes** — un fil de nouvelles agrégeant les flux RSS des journaux étudiants (Quartier Libre, Montréal Campus, Le Délit, The McGill Daily, The Link, Zone Campus…), filtrable par source
-- **Cartes claires et informatives** : nom, fréquence, institution, ville + indicateur "LIVE" quand un flux direct est disponible
-- **Lecteur audio intégré** dans le modal pour les stations qui fournissent un flux HTTPS public (ex: CHYZ, CKUT)
-- **Modal riche** avec description, liens sociaux, site officiel et informations pratiques
-- Bouton **« Radio aléatoire »**
-- Favoris persistants (localStorage)
-- Support **PWA complet** : installation sur mobile, icônes, offline shell, Media Session API (contrôles sur l’écran de verrouillage)
-- **Très léger** : site statique, Tailwind via CDN, JavaScript vanilla pur
+- **Design éditorial, texte d'abord** — inspiré des agences de presse (Radio-Canada, Reuters, AP) : pas de photos sur la page principale, place aux titres et aux brèves
+- **Page unique** — tout au même endroit :
+  - 🎙️ **Syntoniseur radio** collant en haut de page : choix du poste, postes précédent/suivant, lecture, volume, et Media Session API (contrôles sur l'écran de verrouillage)
+  - 📰 **Le fil étudiant** : un fil de nouvelles agrégeant les flux RSS des journaux étudiants (Quartier Libre, Montréal Campus, Le Délit, The McGill Daily, The Link, Zone Campus…), filtrable par source
+- **Manchette en vedette** (À la une) pour la hiérarchie visuelle
+- **Heure de publication** de chaque article (format québécois, ex. *16 h 18*) avec libellés relatifs (« il y a 20 min », « hier, 20 h 14 ») et un **indicateur « frais »** pulsant pour les articles récents
+- **Brève** sous chaque titre, extraite du corps de l'article et nettoyée du boilerplate RSS
+- **Identité couleur par source** — pastille et accent au survol, sobre et lisible
+- **Mode clair / sombre** persistant
+- **Lecture en direct** pour les stations qui fournissent un flux HTTPS public (ex : CHYZ, CKUT) ; sinon, lien direct vers le site officiel du poste
+- Support **PWA complet** : installation sur mobile, icônes, offline shell
+- **Très léger** : site statique, CSS maison, JavaScript vanilla pur (aucun framework)
 - **100 % sans serveur** : le fil de nouvelles est reconstruit par un bot GitHub Actions (`scripts/fetch-news.js`) qui écrit `news.json` — aucune requête CORS côté navigateur
 
 ---
@@ -36,11 +36,22 @@
 
 Ouvre l’application sur ton téléphone ou dans un navigateur desktop :
 
-- Grille responsive (1 à 4 colonnes)
-- Navigation segmentée Radios / Actualités
-- Filtres ultra-réactifs (type, région, source de nouvelles)
-- Modal qui s’ouvre parfaitement sur mobile
-- Lecteur avec visualiseur d’égaliseur quand tu écoutes en direct
+- Mise en page éditoriale centrée, lisible et responsive
+- Syntoniseur radio collant en haut de page (poste précédent / suivant, lecture, volume)
+- Fil d'articles texte avec heure de publication et brève
+- Filtre par source ultra-réactif
+- Mode clair / sombre
+
+---
+
+## 🎨 Identité visuelle
+
+La charte de marque (nom, slogan, palette sémantique, typographie, logo) est
+documentée dans **[`docs/identite-visuelle.md`](docs/identite-visuelle.md)**.
+
+En bref — **pourpre `#6C2163`** = marque, **rouge `#C8102E`** = en direct,
+**bleu Québec `#003DA5`** = volet radio. La source de vérité des couleurs est dans
+les variables CSS de `style.css`.
 
 ---
 
