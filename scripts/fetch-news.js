@@ -102,6 +102,49 @@ function stripHtml(html = '') {
     .trim();
 }
 
+const TRUNC_CHAR = '(?:…|\\.\\.\\.?)';
+const TRUNC_START_RE = new RegExp(`^\\s*(?:\\[\\s*${TRUNC_CHAR}\\s*\\]|\\(\\s*${TRUNC_CHAR}\\s*\\)|${TRUNC_CHAR})\\s*`, 'u');
+const TRUNC_END_RE = new RegExp(`\\s*(?:\\[\\s*${TRUNC_CHAR}\\s*\\]|\\(\\s*${TRUNC_CHAR}\\s*\\)|${TRUNC_CHAR})\\s*$`, 'u');
+
+function parseTruncationMarkers(text = '') {
+  let s = String(text).replace(/\s+/g, ' ').trim();
+  const truncatedStart = TRUNC_START_RE.test(s);
+  const truncatedEnd = TRUNC_END_RE.test(s);
+  if (truncatedStart) s = s.replace(TRUNC_START_RE, '').trim();
+  if (truncatedEnd) s = s.replace(TRUNC_END_RE, '').trim();
+  return { text: s, truncatedStart, truncatedEnd };
+}
+
+function formatTruncatedExcerpt(text = '', { truncatedStart = false, truncatedEnd = false } = {}) {
+  let s = String(text).replace(/\s+/g, ' ').trim();
+  if (!s) return '';
+  if (truncatedStart) s = `… ${s}`;
+  if (truncatedEnd) s = `${s}…`;
+  return s;
+}
+
+function looksAbruptlyCut(text = '') {
+  const s = String(text).trim();
+  if (s.length < 200) return false;
+  return !TRUNC_END_RE.test(s) && !/[.!?…»"’)\]]\s*$/u.test(s);
+}
+
+function truncateExcerpt(text = '', max = 280) {
+  const { text: body, truncatedStart, truncatedEnd } = parseTruncationMarkers(text);
+  if (!body) return '';
+
+  if (body.length <= max) {
+    return formatTruncatedExcerpt(body, { truncatedStart, truncatedEnd });
+  }
+
+  let cut = body.slice(0, max);
+  const lastSpace = cut.lastIndexOf(' ');
+  if (lastSpace > max * 0.55) cut = cut.slice(0, lastSpace);
+  cut = cut.replace(/[,;:\s]+$/u, '').trimEnd();
+
+  return formatTruncatedExcerpt(cut, { truncatedStart, truncatedEnd: true });
+}
+
 const MC_CATEGORY_PREFIX = /^(?:Photoreportage|Marché aux puces|Cobaye|Incursion|Reportage|Opinion|Entrevue|Critique|Chronique)/;
 
 function stripEmbeddedCss(title = '') {
@@ -200,7 +243,7 @@ function pickExcerpt(block) {
     .replace(/\s+/g, ' ')
     .trim();
 
-  return excerpt.slice(0, 280);
+  return truncateExcerpt(excerpt, 280);
 }
 
 function parseAuthor(block, contentHtml = '') {
@@ -347,7 +390,7 @@ async function enrichItem(item) {
       const byline = extractBylineFromText(excerpt);
       if (byline.author && (!next.author || isGenericAuthor(next.author))) next.author = byline.author;
       if (byline.body.length >= 24) excerpt = byline.body;
-      next.excerpt = excerpt.slice(0, 280);
+      next.excerpt = truncateExcerpt(excerpt, 280);
     }
   }
 
