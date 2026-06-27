@@ -111,6 +111,15 @@ function buildStatus(steps) {
   const items = news.items || news;
   const withAuthor = items.filter((i) => i.author && String(i.author).trim()).length;
   const withExcerpt = items.filter((i) => i.excerpt && String(i.excerpt).trim().length > 20).length;
+  const leadQc = readJson('lead-image-qc.json', {});
+
+  if (leadQc.mainPageLeadReady === false) {
+    alerts.push({
+      level: 'error',
+      code: 'lead_image_gap',
+      message: `Couverture vedette insuffisante : ${leadQc.fullyCovered ?? '?'}/${leadQc.total ?? '?'} articles`,
+    });
+  }
 
   const healthy = failedSteps.length === 0 && deadNews.length < (newsSources.active || []).length;
 
@@ -129,6 +138,12 @@ function buildStatus(steps) {
         articles: items.length,
         withAuthor,
         withExcerpt,
+        leadImageQc: {
+          fullyCovered: leadQc.fullyCovered ?? null,
+          withPhoto: leadQc.withPhoto ?? null,
+          withFallback: leadQc.withFallback ?? null,
+          mainPageLeadReady: leadQc.mainPageLeadReady ?? null,
+        },
       },
       radios: {
         listed: radios.length,
@@ -164,6 +179,7 @@ async function main() {
     ['News source maintainer', `node scripts/discover-news-sources.js ${flag}`.trim()],
     ['Stream tracker + radio promotion', `node scripts/discover-streams.js ${flag}`.trim()],
     ['News aggregator', `node scripts/fetch-news.js ${flag}`.trim()],
+    ['Lead image QC', `node scripts/ensure-lead-images.js ${flag}`.trim()],
     ['Social feed', `node scripts/fetch-social.js ${flag}`.trim()],
   ];
 
