@@ -814,7 +814,7 @@ a { color: inherit; }
 .article--lead .article-brief {
   font-size: 1.08rem;
   line-height: 1.6;
-  max-width: 64ch;
+  max-width: none;
 }
 
 .article--feature .article-brief {
@@ -1071,12 +1071,12 @@ a { color: inherit; }
   .news-list[data-hero="image"]:not([data-mode="source"]) .article--lead .article-title {
     font-size: clamp(2.1rem, 2.8vw, 3.1rem);
     line-height: 1.08;
-    max-width: 28ch;
+    max-width: none;
   }
 
   .news-list[data-hero="image"]:not([data-mode="source"]) .article--lead .article-brief {
     display: block;
-    max-width: 52ch;
+    max-width: none;
     min-height: 0;
     margin-top: 4px;
     line-height: 1.58;
