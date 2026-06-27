@@ -466,6 +466,16 @@ function newsSkeleton(n) {
     </div>`).join('');
 }
 
+function articleInstitutionLabel(name = '') {
+  const DISPLAY = {
+    UQAM: 'Université du Québec à Montréal',
+    'Université du Québec à Montréal (UQAM)': 'Université du Québec à Montréal',
+    'Cégep de Jonquière (ATM – journalisme)': 'Cégep de Jonquière',
+  };
+  if (DISPLAY[name]) return DISPLAY[name];
+  return name.replace(/\s*\([^)]*\)\s*$/, '').trim() || name;
+}
+
 function shortInstitution(name = '', type = '') {
   const SHORT = {
     'Université de Montréal': 'UdeM',
@@ -565,7 +575,13 @@ function renderNews() {
   });
 
   if (hero.childElementCount) NEWS_LIST.appendChild(hero);
-  compacts.forEach((article) => NEWS_LIST.appendChild(article));
+  if (compacts.length) {
+    const briefTitle = document.createElement('h3');
+    briefTitle.className = 'brief-rail-title';
+    briefTitle.textContent = 'En bref';
+    NEWS_LIST.appendChild(briefTitle);
+    compacts.forEach((article) => NEWS_LIST.appendChild(article));
+  }
 
   if (compacts.length) {
     NEWS_LIST.style.setProperty('--brief-rows', String(compacts.length));
@@ -627,7 +643,7 @@ function createArticle(item, role = 'standard') {
     ${role === 'lead' ? '<span class="article-eyebrow">À la une</span>' : ''}
     <div class="article-meta">
       <span class="article-source">${escapeHtml(item.source)}</span>
-      ${item.institution ? `<span class="article-inst">${escapeHtml(item.institution)}</span>` : ''}
+      ${item.institution ? `<span class="article-inst">${escapeHtml(articleInstitutionLabel(item.institution))}</span>` : ''}
       ${time ? `<time class="article-time${fresh ? ' is-fresh' : ''}" datetime="${escapeHtml(item.date)}">${time}</time>` : ''}
     </div>
     ${canUseImage ? '<figure class="article-media" aria-hidden="true"></figure>' : ''}
@@ -711,12 +727,39 @@ function isUsableArticleImage(img, role) {
   return width >= minWidth && height >= minHeight && ratio >= 1.05 && ratio <= 2.4;
 }
 
-// Pull the byline out of the data (preferred) or the "Par/By …" prefix of the excerpt,
-// returning the author plus the remaining body text for the brief.
+const BYLINE_ARTICLE_STARTERS = /^(Le|La|Les|L'|L'|Un|Une|The|An|À|A)$/iu;
+
+function extractBylineFromExcerpt(excerpt = '') {
+  const ex = String(excerpt).trim();
+  if (!/^(?:Par|By)\s+/i.test(ex)) return { author: '', body: ex };
+
+  const tokens = ex.replace(/^\s*(?:Par|By)\s+/i, '').split(/\s+/);
+  const nameParts = [];
+  let i = 0;
+  for (; i < tokens.length; i += 1) {
+    const token = tokens[i];
+    if (nameParts.length >= 1 && BYLINE_ARTICLE_STARTERS.test(token)) break;
+    if (/^[\p{Lu}][\p{L}'’.\-]+$/u.test(token)) nameParts.push(token);
+    else break;
+  }
+
+  return {
+    author: normalizeAuthor(nameParts.join(' ')),
+    body: tokens.slice(i).join(' ').trim(),
+  };
+}
+
 function splitByline(item) {
   const ex = String(item.excerpt || '');
+  const fromExcerpt = extractBylineFromExcerpt(ex);
   let author = normalizeAuthor(item.author);
   let body = ex;
+
+  if (fromExcerpt.author) {
+    if (!author || fromExcerpt.author.length > author.length) author = fromExcerpt.author;
+    body = fromExcerpt.body || body;
+    return { author, body };
+  }
 
   if (author) {
     const escaped = author.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -727,17 +770,6 @@ function splitByline(item) {
     const known = new RegExp(`^\\s*(?:Par|By)\\s+${escaped}\\s*`, 'iu');
     if (extended.test(ex)) body = ex.replace(extended, '').trim();
     else if (known.test(ex)) body = ex.replace(known, '').trim();
-  } else if (/^(?:Par|By)\s+/i.test(ex)) {
-    for (let maxExtra = 0; maxExtra <= 2; maxExtra += 1) {
-      const re = new RegExp(`^(\\s*(?:Par|By)\\s+([\\p{Lu}][\\p{L}'’.\\-]+(?:\\s+[\\p{Lu}][\\p{L}'’.\\-]+){0,${maxExtra}}))`, 'u');
-      const m = ex.match(re);
-      if (!m) continue;
-      const next = ex.slice(m[0].length).trim();
-      if (!next || !/^[\p{Lu}0-9«"']/u.test(next)) continue;
-      author = normalizeAuthor(m[2]);
-      body = next;
-      break;
-    }
   }
 
   return { author, body };
