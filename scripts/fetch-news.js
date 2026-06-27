@@ -244,12 +244,16 @@ function parseAuthor(block, contentHtml = '', excerpt = '') {
 }
 
 function firstImage(block) {
+  const candidates = [];
   let m = block.match(/<media:(?:content|thumbnail)[^>]*url=["']([^"']+)["']/i);
-  if (m) return m[1];
+  if (m) candidates.push(m[1]);
   m = block.match(/<enclosure[^>]*url=["']([^"']+\.(?:jpe?g|png|webp)[^"']*)["']/i);
-  if (m) return m[1];
+  if (m) candidates.push(m[1]);
   m = block.match(/<img[^>]*src=["']([^"']+)["']/i);
-  if (m) return decodeEntities(m[1]);
+  if (m) candidates.push(decodeEntities(m[1]));
+  for (const raw of candidates) {
+    if (raw && isCandidateImageUrl(raw)) return raw;
+  }
   return '';
 }
 
@@ -404,7 +408,7 @@ function isCandidateImageUrl(raw = '') {
     const url = new URL(src);
     if (!['http:', 'https:'].includes(url.protocol)) return false;
     const path = decodeURIComponent(url.pathname).toLowerCase();
-    if (/(logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley)/.test(path)) {
+    if (/(logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|(?:^|\/)article-2\.|campus-logo|campusgraphic)/.test(path)) {
       return false;
     }
     if (/(?:^|\/)(?:1x1|pixel)\b/.test(path)) return false;
@@ -499,6 +503,7 @@ async function enrichItem(item) {
   if (needsImageEnrichment(next)) {
     const img = imageFromArticleHtml(html);
     if (img) next.image = img;
+    else if (next.image && !isCandidateImageUrl(next.image)) next.image = '';
   }
 
   const pageAuthor = authorFromArticleHtml(html, item.lang === 'en' ? 'en' : 'fr');
@@ -719,6 +724,7 @@ async function main() {
       feedDefaults,
       pageAuthor,
     }).item;
+    if (all[i].image && !isCandidateImageUrl(all[i].image)) all[i].image = '';
     const prior = priorByLink.get(normalizeArticleUrl(all[i].link));
     if (prior) all[i] = mergePriorEnrichment(all[i], prior);
   }
