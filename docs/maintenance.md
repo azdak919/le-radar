@@ -24,7 +24,7 @@ dans l'idéal, et ce qui reste volontairement manuel.
 | `news.json` | Fil d'articles agrégé (lu par le site) | `fetch-news.js` |
 | `radios.json` | Radios listées dans le syntoniseur | humain + `discover-streams.js` |
 | `radios-candidates.json` | Radios à tester avant promotion | `scan-media.js`, `discover-streams.js` |
-| `radio-schedules.seed.json` | Config et grilles horaires manuelles (source éditable) | humain |
+| `radio-schedules.seed.json` | Config sources + grilles manuelles | humain + `discover-schedule-sources.js` |
 | `radio-schedules.json` | Grilles colligées « à l'antenne » (lu par le site) | `fetch-radio-schedules.js` |
 | `radio-nowplaying.json` | Titre en ondes via métadonnées ICY (lu par le site) | `fetch-radio-nowplaying.js` |
 | `bot-status.json` | Tableau de bord santé des bots | `maintain.js` |
@@ -46,6 +46,7 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 | Agrégation articles | `fetch-news.js` | 7×/jour |
 | Extrait « à la une » | `enrich-lead-excerpts.js` | 7×/jour (après `fetch-news`) |
 | Titre en ondes (ICY) | `fetch-radio-nowplaying.js` | Aux 30 min |
+| Découverte sources horaires | `discover-schedule-sources.js` | **Aux 2 semaines** (avant les horaires) |
 | Horaires « à l'antenne » | `fetch-radio-schedules.js` | **Aux 2 semaines** |
 | **Orchestrateur** | `maintain.js` | **Hebdo (lundi)** |
 
@@ -181,9 +182,34 @@ Le bandeau **À l'antenne** affiche l'émission en cours selon l'heure (fuseau
 deux façons, fusionnées par `fetch-radio-schedules.js` :
 
 1. **Sources dynamiques** déclarées dans `radio-schedules.seed.json`
-   (`sources`). Adaptateur disponible : `airtime` (Airtime/LibreTime, ex. CKUT
-   via `/api/week-info`). Ajouter d'autres types dans `radio-schedule-lib.js`.
+   (`sources`), via les adaptateurs de `radio-schedule-lib.js` :
+
+   | `type` | Source | Postes |
+   |---|---|---|
+   | `airtime` | API Airtime/LibreTime `/api/week-info` | CKUT |
+   | `chyz` | HTML `chyz.ca/horaire` (thème maison) | CHYZ |
+   | `cfak` | HTML `cfak.ca/programmation` (cartes par jour) | CFAK |
+   | `jsonld` | Données structurées schema.org (`BroadcastEvent`/`Event`) | générique |
+   | `spinitron` | API Spinitron `/api/shows` (jeton requis) | générique |
+
+   Pour brancher un nouveau poste : ajouter un adaptateur (ou réutiliser
+   `jsonld`/`spinitron`), puis le déclarer dans `ADAPTERS`.
 2. **Grilles manuelles** : remplir le tableau `grid` du poste dans le seed.
+
+### Découverte automatique des sources
+
+`discover-schedule-sources.js` automatise la recherche et l'entretien des
+sources. Pour chaque poste, il :
+
+- **revalide** les sources déjà déclarées (et retire celles qui ne répondent plus) ;
+- **sonde** des sources potentielles : Airtime déduit du flux, JSON-LD et
+  adaptateur dédié testés sur les chemins d'horaire usuels (`/horaire/`,
+  `/grille-horaire/`, `/programmation/`, `/schedule/`, …) ;
+- **détecte** les plateformes connues (Spinitron) à brancher manuellement ;
+- **rapporte** la santé : sources trouvées, perdues, postes sans horaire.
+
+Avec `--update`, il réécrit les `sources` du seed (grilles manuelles et notes
+préservées). Il tourne en CI juste **avant** `fetch-radio-schedules.js`.
 
 ```jsonc
 // radio-schedules.seed.json

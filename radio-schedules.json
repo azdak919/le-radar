@@ -1,14 +1,210 @@
 {
-  "updatedAt": "2026-06-27T19:36:12.210Z",
+  "updatedAt": "2026-06-27T20:00:38.375Z",
   "timezone": "America/Toronto",
   "stations": {
+    "chyz": {
+      "id": "chyz",
+      "name": "CHYZ 94,3",
+      "sources": [
+        "chyz:https://chyz.ca/horaire/"
+      ],
+      "checkedAt": "2026-06-27T20:00:38.375Z",
+      "grid": [
+        {
+          "day": 0,
+          "start": "10:00",
+          "end": "10:30",
+          "title": "Palmarès CHYZ"
+        },
+        {
+          "day": 0,
+          "start": "11:00",
+          "end": "12:00",
+          "title": "Le Ré-Show : Deuxième Service"
+        },
+        {
+          "day": 0,
+          "start": "13:00",
+          "end": "16:00",
+          "title": "Radio Futura"
+        },
+        {
+          "day": 0,
+          "start": "16:50",
+          "end": "20:30",
+          "title": "Capitales de Québec"
+        },
+        {
+          "day": 1,
+          "start": "08:00",
+          "end": "10:00",
+          "title": "Lundi Indie"
+        },
+        {
+          "day": 1,
+          "start": "17:30",
+          "end": "18:30",
+          "title": "Les Arshitechs du Son"
+        },
+        {
+          "day": 1,
+          "start": "19:30",
+          "end": "20:30",
+          "title": "La Voie des Droits"
+        },
+        {
+          "day": 1,
+          "start": "21:00",
+          "end": "22:00",
+          "title": "La Cassette"
+        },
+        {
+          "day": 2,
+          "start": "08:00",
+          "end": "10:00",
+          "title": "Mardi Champ Gauche"
+        },
+        {
+          "day": 2,
+          "start": "16:00",
+          "end": "17:30",
+          "title": "Chéri.e, j’arrive!"
+        },
+        {
+          "day": 2,
+          "start": "17:30",
+          "end": "18:30",
+          "title": "Les Arshitechs du Son"
+        },
+        {
+          "day": 2,
+          "start": "18:50",
+          "end": "23:00",
+          "title": "Capitales de Québec"
+        },
+        {
+          "day": 3,
+          "start": "08:00",
+          "end": "10:00",
+          "title": "Mercredi Bonbon"
+        },
+        {
+          "day": 3,
+          "start": "16:00",
+          "end": "17:30",
+          "title": "Chéri.e, j’arrive!"
+        },
+        {
+          "day": 3,
+          "start": "17:30",
+          "end": "18:30",
+          "title": "Les Arshitechs du Son"
+        },
+        {
+          "day": 3,
+          "start": "18:50",
+          "end": "23:00",
+          "title": "Capitales de Québec"
+        },
+        {
+          "day": 4,
+          "start": "08:00",
+          "end": "10:00",
+          "title": "Jeudi Révolte"
+        },
+        {
+          "day": 4,
+          "start": "15:00",
+          "end": "16:00",
+          "title": "Conduite Antisportive"
+        },
+        {
+          "day": 4,
+          "start": "16:00",
+          "end": "17:30",
+          "title": "Chéri.e, j’arrive!"
+        },
+        {
+          "day": 4,
+          "start": "17:30",
+          "end": "18:30",
+          "title": "Les Arshitechs du Son"
+        },
+        {
+          "day": 4,
+          "start": "18:50",
+          "end": "23:00",
+          "title": "Capitales de Québec"
+        },
+        {
+          "day": 5,
+          "start": "08:00",
+          "end": "10:00",
+          "title": "Vendredi Nostalgie"
+        },
+        {
+          "day": 5,
+          "start": "10:00",
+          "end": "10:30",
+          "title": "Palmarès CHYZ"
+        },
+        {
+          "day": 5,
+          "start": "11:00",
+          "end": "12:00",
+          "title": "Punk-o-rama"
+        },
+        {
+          "day": 5,
+          "start": "13:00",
+          "end": "14:00",
+          "title": "Détour"
+        },
+        {
+          "day": 5,
+          "start": "17:30",
+          "end": "18:30",
+          "title": "Les Arshitechs du Son"
+        },
+        {
+          "day": 5,
+          "start": "18:50",
+          "end": "23:00",
+          "title": "Capitales de Québec"
+        },
+        {
+          "day": 6,
+          "start": "10:00",
+          "end": "10:30",
+          "title": "Palmarès CHYZ"
+        },
+        {
+          "day": 6,
+          "start": "11:00",
+          "end": "12:00",
+          "title": "Le Ré-Show : Deuxième Service"
+        },
+        {
+          "day": 6,
+          "start": "13:00",
+          "end": "16:00",
+          "title": "Radio Futura"
+        },
+        {
+          "day": 6,
+          "start": "18:50",
+          "end": "23:00",
+          "title": "Capitales de Québec"
+        }
+      ]
+    },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-06-27T19:36:12.210Z",
+      "checkedAt": "2026-06-27T20:00:38.375Z",
       "grid": [
         {
           "day": 0,
@@ -621,6 +817,220 @@
           "start": "23:00",
           "end": "00:00",
           "title": "SKEwInGTheWaBeS$$"
+        }
+      ]
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "sources": [
+        "cfak:https://www.cfak.ca/programmation/"
+      ],
+      "checkedAt": "2026-06-27T20:00:38.375Z",
+      "grid": [
+        {
+          "day": 0,
+          "start": "00:00",
+          "end": "21:00",
+          "title": "Les nuits CFAK"
+        },
+        {
+          "day": 0,
+          "start": "21:00",
+          "end": "00:00",
+          "title": "Solénoïde"
+        },
+        {
+          "day": 1,
+          "start": "00:01",
+          "end": "07:00",
+          "title": "Les nuits CFAK"
+        },
+        {
+          "day": 1,
+          "start": "07:00",
+          "end": "08:00",
+          "title": "Folkswagen"
+        },
+        {
+          "day": 1,
+          "start": "08:00",
+          "end": "09:00",
+          "title": "Palmarès CFAK"
+        },
+        {
+          "day": 1,
+          "start": "09:00",
+          "end": "18:00",
+          "title": "Solénoïde"
+        },
+        {
+          "day": 1,
+          "start": "18:00",
+          "end": "20:00",
+          "title": "Ma radio Académia"
+        },
+        {
+          "day": 1,
+          "start": "20:00",
+          "end": "00:01",
+          "title": "Le terrain sportif"
+        },
+        {
+          "day": 2,
+          "start": "00:00",
+          "end": "07:00",
+          "title": "Les nuits CFAK"
+        },
+        {
+          "day": 2,
+          "start": "07:00",
+          "end": "08:00",
+          "title": "Folkswagen"
+        },
+        {
+          "day": 2,
+          "start": "08:00",
+          "end": "18:30",
+          "title": "Palmarès CFAK"
+        },
+        {
+          "day": 2,
+          "start": "18:30",
+          "end": "20:00",
+          "title": "L'Aut'Rock"
+        },
+        {
+          "day": 2,
+          "start": "20:00",
+          "end": "22:00",
+          "title": "Dichotomie 88.3"
+        },
+        {
+          "day": 2,
+          "start": "22:00",
+          "end": "00:00",
+          "title": "Mix Franco"
+        },
+        {
+          "day": 3,
+          "start": "00:00",
+          "end": "07:00",
+          "title": "Les nuits CFAK"
+        },
+        {
+          "day": 3,
+          "start": "07:00",
+          "end": "08:00",
+          "title": "Folkswagen"
+        },
+        {
+          "day": 3,
+          "start": "08:00",
+          "end": "14:00",
+          "title": "Palmarès CFAK"
+        },
+        {
+          "day": 3,
+          "start": "14:00",
+          "end": "00:00",
+          "title": "Le popcorn de l'infini"
+        },
+        {
+          "day": 4,
+          "start": "00:00",
+          "end": "07:00",
+          "title": "Les nuits CFAK"
+        },
+        {
+          "day": 4,
+          "start": "07:00",
+          "end": "08:00",
+          "title": "Folkswagen"
+        },
+        {
+          "day": 4,
+          "start": "08:00",
+          "end": "11:00",
+          "title": "Palmarès CFAK"
+        },
+        {
+          "day": 4,
+          "start": "11:00",
+          "end": "20:00",
+          "title": "À nous le futur"
+        },
+        {
+          "day": 4,
+          "start": "20:00",
+          "end": "00:00",
+          "title": "After 5@8"
+        },
+        {
+          "day": 5,
+          "start": "00:00",
+          "end": "07:00",
+          "title": "Les nuits CFAK"
+        },
+        {
+          "day": 5,
+          "start": "07:00",
+          "end": "08:00",
+          "title": "Folkswagen"
+        },
+        {
+          "day": 5,
+          "start": "08:00",
+          "end": "09:00",
+          "title": "Palmarès CFAK"
+        },
+        {
+          "day": 5,
+          "start": "09:00",
+          "end": "11:00",
+          "title": "La Souterraine"
+        },
+        {
+          "day": 5,
+          "start": "11:00",
+          "end": "12:00",
+          "title": "Le Ré-Show : Deuxième service"
+        },
+        {
+          "day": 5,
+          "start": "12:00",
+          "end": "15:00",
+          "title": "Ciné-Histoire"
+        },
+        {
+          "day": 5,
+          "start": "15:00",
+          "end": "19:00",
+          "title": "Nouveautés Franco"
+        },
+        {
+          "day": 5,
+          "start": "19:00",
+          "end": "21:00",
+          "title": "Enfin vendredi"
+        },
+        {
+          "day": 5,
+          "start": "21:00",
+          "end": "22:00",
+          "title": "Mangue, Goyave et Reggae"
+        },
+        {
+          "day": 5,
+          "start": "22:00",
+          "end": "00:00",
+          "title": "Mix Anglo"
+        },
+        {
+          "day": 6,
+          "start": "00:00",
+          "end": "00:00",
+          "title": "Les nuits CFAK"
         }
       ]
     }
