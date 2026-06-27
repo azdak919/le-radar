@@ -1429,33 +1429,12 @@ a { color: inherit; }
   color: var(--accent);
 }
 
-.feeds-note {
-  margin-top: 28px;
-  padding: 18px 0 0;
-  border-top: 1px solid var(--rule);
-}
-
-.feeds-note__title {
-  margin: 0 0 10px;
-  font-family: var(--sans);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+.feeds-aside {
+  margin: 20px 0 0;
+  max-width: 52rem;
+  font-size: 13px;
+  line-height: 1.5;
   color: var(--muted);
-}
-
-.feeds-note__list {
-  margin: 0;
-  padding-left: 1.15rem;
-  color: var(--ink-soft);
-  font-size: 0.92rem;
-  line-height: 1.55;
-}
-.feeds-note__list li + li { margin-top: 8px; }
-.feeds-note__list code {
-  font-size: 0.84em;
-  color: var(--ink);
 }
 
 /* ─────────────── EXTERNAL RADIO LISTEN ─────────────── */

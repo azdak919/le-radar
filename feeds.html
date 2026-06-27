@@ -48,8 +48,8 @@
         <p class="feeds-eyebrow">Abonnement</p>
         <h1 class="feeds-title">Flux RSS — LE RADAR</h1>
         <p class="feeds-lead">
-          Un seul fil pour suivre l'actualité des journaux étudiants du Québec — sources francophones
-          et anglophones. Chaque item renvoie vers l'article original, avec image, brève, auteur et crédit photo.
+          Un seul abonnement pour suivre l'actualité des journaux étudiants du Québec.
+          Chaque entrée renvoie vers l'article original.
         </p>
         <p id="feeds-updated" class="feeds-updated" hidden></p>
       </header>
@@ -73,16 +73,9 @@
         </article>
       </section>
 
-      <section class="feeds-note" aria-label="À propos du flux">
-        <h2 class="feeds-note__title">Comment ça fonctionne</h2>
-        <ul class="feeds-note__list">
-          <li><strong>Fil de presse</strong> — dateline régionale, brève, auteur (<code>dc:creator</code>), source étudiante et lien vers l'article original.</li>
-          <li><strong>Images</strong> — photo intégrée au corps (<code>content:encoded</code>, <code>description</code>, <code>media:content</code>) avec crédit photo.</li>
-          <li><strong>RSS 2.0</strong> — compatible Feedly, NetNewsWire, Inoreader, Thunderbird et lecteurs intégrés aux navigateurs.</li>
-          <li><strong>Autodiscovery</strong> — la balise <code>rel="alternate"</code> sur Le Radar permet aux lecteurs de détecter automatiquement ce flux.</li>
-          <li><strong>Mise à jour</strong> — régénéré automatiquement plusieurs fois par jour à partir de <code>news.json</code>.</li>
-        </ul>
-      </section>
+      <p class="feeds-aside">
+        Compatible Feedly, Inoreader et la plupart des lecteurs RSS. Mis à jour plusieurs fois par jour.
+      </p>
 
       <footer class="site-foot">
         <p>
