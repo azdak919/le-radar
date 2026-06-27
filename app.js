@@ -601,7 +601,7 @@ function bindTuner() {
   TUNER_SELECT.addEventListener('change', () => {
     const next = radios.find((r) => r.id === TUNER_SELECT.value);
     selectStation(TUNER_SELECT.value, {
-      autoplay: tunerShouldAutoplayNative(next),
+      autoplay: !!getPlayableStream(next),
       openExternal: true,
     });
   });
@@ -711,7 +711,7 @@ function selectStation(id, { autoplay = false, openExternal = false } = {}) {
   const playable = getPlayableStream(radio);
   const external = isExternalListen(radio);
 
-  const inst = radio.institution || shortInstitution(radio.institution, radio.type);
+  const inst = tunerInstitutionLabel(radio.institution);
   TUNER_NAME.textContent = radio.name;
   setTunerSubText(external
     ? `Site externe · ${inst}`
@@ -1083,6 +1083,25 @@ const INSTITUTION_ACRONYMS = {
   'Polytechnique Montréal': 'Poly Montréal',
   "Bishop's University": "Bishop's",
 };
+
+const INSTITUTION_FULL_BY_ACRONYM = {};
+for (const [full, acr] of Object.entries(INSTITUTION_ACRONYMS)) {
+  const clean = full.replace(/\s*\([^)]*\)\s*$/, '').trim();
+  const prev = INSTITUTION_FULL_BY_ACRONYM[acr];
+  if (!prev || (clean.includes(' ') && clean.length > prev.length)) {
+    INSTITUTION_FULL_BY_ACRONYM[acr] = clean;
+  }
+}
+
+/** Nom d'institution au complet pour le sous-titre du syntoniseur. */
+function tunerInstitutionLabel(name = '') {
+  if (!name) return '';
+  const stripped = name.replace(/\s*\([^)]*\)\s*$/, '').trim();
+  if (/^université|^university|^mcgill|^concordia|^cégep|^collège/i.test(stripped)) {
+    return stripped;
+  }
+  return INSTITUTION_FULL_BY_ACRONYM[name] || INSTITUTION_FULL_BY_ACRONYM[stripped] || stripped;
+}
 
 function resolveInstitutionAcronym(name = '') {
   if (!name) return '';
