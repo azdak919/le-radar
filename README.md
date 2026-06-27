@@ -181,6 +181,33 @@ L’objectif : que **le plus possible** de radios puissent s’écouter directem
 
 ---
 
+## 📰 Fil d’actualités étudiantes (RSS) + bots
+
+La section **Actualités** agrège les flux RSS de journaux étudiants québécois. Tout est
+**statique et sans CORS** : un bot reconstruit `news.json` côté GitHub Actions, le site ne fait que le lire.
+
+### Registre des sources — `news-sources.json`
+- `active` : les flux validés, lus par `scripts/fetch-news.js`. Champs `_status` (`ok`/`stale`/`dead`),
+  `_lastItemDate`, `_lastChecked`, `_failCount` **maintenus par le bot** (ne pas éditer à la main).
+- `candidates` : journaux à surveiller (URL du site). Le bot les sonde et **promeut** automatiquement
+  ceux qui exposent un flux RSS frais.
+
+### Deux bots
+1. **Agrégateur** — `scripts/fetch-news.js` (`.github/workflows/update-news.yml`, 3×/jour)
+   - Lit les sources `active`, télécharge chaque flux, normalise (titre, lien, extrait, image, date), écrit `news.json`.
+2. **Mainteneur & découvreur** — `scripts/discover-news-sources.js` (`.github/workflows/discover-news-sources.yml`, 1×/semaine)
+   - Santé des flux actifs (joignables ? publient-ils encore ?) → met à jour `_status`.
+   - Sonde les `candidates` (`/feed/`, `?feed=rss2`, etc.) et promeut les flux frais vers `active`.
+   - Les flux marqués `dead` sont conservés (ils peuvent revivre à la rentrée) mais ignorés par l’agrégateur.
+
+Lancer en local : `node scripts/discover-news-sources.js` (dry-run) puis `--update` pour écrire.
+
+### Ajouter une source
+Ajoute une entrée dans `candidates` de `news-sources.json` (`name`, `institution`, `region`, `type`,
+`lang`, `site`). Au prochain passage, le bot la testera et la promouvra si le flux est valide et récent.
+
+---
+
 ## 🎨 Identité visuelle RÉQ
 
 **Palette**
