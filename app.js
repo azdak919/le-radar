@@ -667,7 +667,7 @@ function pickBriefSidebar(pool, heroItems = []) {
 
 function partitionNewsFeed(items) {
   const sorted = sortByDateDesc(items);
-  const heroItems = sorted.slice(0, Math.min(3, sorted.length));
+  const heroItems = sorted.slice(0, Math.min(4, sorted.length)); /* 1 une + 3 vedettes */
   const heroKeys = new Set(heroItems.map(articleKey));
   const pool = sorted.filter((i) => !heroKeys.has(articleKey(i)));
   const briefItems = pickBriefSidebar(pool, heroItems);
