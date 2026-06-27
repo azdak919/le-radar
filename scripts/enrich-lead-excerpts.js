@@ -15,6 +15,7 @@ const {
   excerptLooksIncomplete,
   isLeadExcerptCandidate,
 } = require('./lead-excerpt-lib');
+const { pruneToFreshWindow } = require('./source-retention-lib');
 
 const ROOT = path.join(__dirname, '..');
 const NEWS_PATH = path.join(ROOT, 'news.json');
@@ -33,12 +34,13 @@ function sleep(ms) {
 
 async function main() {
   const news = readJson(NEWS_PATH, { items: [] });
-  const items = news.items || [];
-  if (!items.length) {
+  const allItems = news.items || [];
+  if (!allItems.length) {
     console.error('No items in news.json');
     process.exit(1);
   }
 
+  const items = pruneToFreshWindow(allItems);
   const candidates = selectEnrichmentCandidates(items, FETCH_LIMIT);
   const withLead = items.filter((i) => i.leadExcerpt && String(i.leadExcerpt).length >= 80).length;
   const pool = items.filter((item, index) => isLeadExcerptCandidate(item, index)).length;
@@ -109,7 +111,7 @@ async function main() {
   };
 
   if (doUpdate && enriched > 0) {
-    fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items }, null, 2) + '\n');
+    fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items: allItems, count: allItems.length }, null, 2) + '\n');
     console.log(`\n✅ ${enriched} leadExcerpt écrit(s) dans news.json`);
   } else if (doUpdate) {
     console.log('\nRien à écrire.');

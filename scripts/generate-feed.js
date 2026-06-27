@@ -11,6 +11,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { pruneToFreshWindow } = require('./source-retention-lib');
 
 const ROOT = path.join(__dirname, '..');
 const NEWS_PATH = path.join(ROOT, 'news.json');
@@ -227,7 +228,7 @@ ${itemXml}
 function main() {
   const doUpdate = process.argv.includes('--update');
   const news = readJson(NEWS_PATH, { items: [] });
-  const items = (news.items || [])
+  const items = pruneToFreshWindow(news.items || [])
     .filter((item) => item.link && item.title && item.date)
     .sort((a, b) => new Date(b.date) - new Date(a.date));
 

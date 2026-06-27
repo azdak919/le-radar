@@ -137,13 +137,27 @@ function markRetainedArticles(items) {
 
 // === Registry / news.json helpers ============================================
 
-function readNewsItems() {
+function readNewsJson() {
   try {
-    const data = JSON.parse(fs.readFileSync(NEWS_PATH, 'utf8'));
-    return data.items || [];
+    return JSON.parse(fs.readFileSync(NEWS_PATH, 'utf8'));
   } catch {
-    return [];
+    return { items: [] };
   }
+}
+
+function readNewsItems() {
+  return readNewsJson().items || [];
+}
+
+/** name → registry entry (active sources only). */
+function loadSourceRegistryMap() {
+  const registry = readRegistry();
+  return new Map((registry.active || []).filter((s) => s._status !== 'dead').map((s) => [s.name, s]));
+}
+
+/** Drop articles outside the 3-session UI window. */
+function pruneToFreshWindow(items, referenceDate = new Date()) {
+  return filterFreshItems(items, referenceDate);
 }
 
 function readRegistry() {
@@ -288,7 +302,10 @@ module.exports = {
   retainablePriorArticles,
   markRetainedArticles,
   articlePayloadFromPrior,
+  readNewsJson,
   readNewsItems,
+  loadSourceRegistryMap,
+  pruneToFreshWindow,
   readRegistry,
   writeRegistry,
   findRegistrySource,

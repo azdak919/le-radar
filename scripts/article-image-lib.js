@@ -248,13 +248,16 @@ function articleImageIsValidOnPage(html = '', imageUrl = '') {
   return contentImages.some((img) => imageUrlsMatch(img.url, imageUrl));
 }
 
-function isCandidateImageUrl(raw = '') {
+function isCandidateImageUrl(raw = '', extraRejectPatterns = []) {
   const src = String(raw).trim();
   if (!src) return false;
   try {
     const url = new URL(src);
     if (!['http:', 'https:'].includes(url.protocol)) return false;
     const path = decodeURIComponent(url.pathname).toLowerCase();
+    for (const pat of extraRejectPatterns) {
+      if (pat && new RegExp(pat, 'i').test(path)) return false;
+    }
     if (/(logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|lapige_web|(?:^|\/)article-2\.|campus-logo|campusgraphic)/.test(path)) {
       return false;
     }

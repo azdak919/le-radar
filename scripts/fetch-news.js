@@ -46,6 +46,8 @@ const {
   applyFetchRegistryUpdate,
   buildSourceRunMeta,
   shouldDropSource,
+  pruneToFreshWindow,
+  getBotHints,
 } = require('./source-retention-lib');
 
 const NEWS_PATH = path.join(__dirname, '..', 'news.json');
@@ -350,13 +352,11 @@ function wpPostToItem(post) {
   };
 }
 
-async function fetchWpFeaturedPosts(feedUrl, src) {
+async function fetchWpFeaturedPosts(feedUrl, src, referenceDate = new Date()) {
   const base = wpApiBase(feedUrl);
-  if (!base) return [];
+  if (!base || !src.wpFeaturedCategories?.length) return [];
 
-  const refs = src.wpFeaturedCategories?.length
-    ? src.wpFeaturedCategories
-    : WP_FEATURED_SLUGS;
+  const refs = src.wpFeaturedCategories;
 
   const posts = [];
   const seenIds = new Set();
@@ -376,7 +376,10 @@ async function fetchWpFeaturedPosts(feedUrl, src) {
     if (posts.length) break;
   }
 
-  return posts.map(wpPostToItem).filter(Boolean);
+  return pruneToFreshWindow(
+    posts.map(wpPostToItem).filter(Boolean),
+    referenceDate,
+  );
 }
 
 function sourceMaxItems(src = {}) {
@@ -463,23 +466,29 @@ function needsEnrichment(item, feedDefaults = new Map()) {
   return thinExcerpt || missingAuthor || needsImageEnrichment(item) || needsAuthorPage;
 }
 
-async function enrichItem(item) {
+async function enrichItem(item, sourceByName = new Map()) {
   const html = await fetchText(item.link, 3, ENRICH_TIMEOUT);
   if (!html || html.length < 200) return item;
+
+  const src = sourceByName.get(item.source);
+  const imageHints = getBotHints(src, 'images');
+  const authorHints = getBotHints(src, 'authors');
+  const rejectPatterns = imageHints.rejectPathPatterns || [];
 
   const next = { ...item };
   const body = articleBodyHtml(html);
 
   if (needsImageEnrichment(next)) {
     const found = imageFromArticleHtml(html);
-    if (found?.url) next.image = found.url;
-    else if (next.image && !isCandidateImageUrl(next.image)) next.image = '';
+    if (found?.url && isCandidateImageUrl(found.url, rejectPatterns)) next.image = found.url;
+    else if (next.image && !isCandidateImageUrl(next.image, rejectPatterns)) next.image = '';
   } else if (next.image) {
     const found = imageFromArticleHtml(html);
     if (!found?.url && next.image) next.image = '';
+    else if (next.image && !isCandidateImageUrl(next.image, rejectPatterns)) next.image = '';
   }
 
-  const pageAuthor = authorFromArticleHtml(html, item.lang === 'en' ? 'en' : 'fr');
+  const pageAuthor = authorFromArticleHtml(html, item.lang === 'en' ? 'en' : 'fr', authorHints);
   if (pageAuthor) {
     next._pageAuthor = pageAuthor;
   } else if (!next.author || isGenericAuthor(next.author)) {
@@ -512,7 +521,7 @@ async function enrichItem(item) {
   return next;
 }
 
-async function enrichItems(items, feedDefaults = new Map()) {
+async function enrichItems(items, feedDefaults = new Map(), sourceByName = new Map()) {
   const queue = [
     ...items.filter(needsImageEnrichment),
     ...items.filter((item) => needsEnrichment(item, feedDefaults) && !needsImageEnrichment(item)),
@@ -527,7 +536,7 @@ async function enrichItems(items, feedDefaults = new Map()) {
     seen.add(item.link);
 
     const hadImage = item.image && isCandidateImageUrl(item.image) && !isWeakImageUrl(item.image);
-    const updated = await enrichItem(item);
+    const updated = await enrichItem(item, sourceByName);
     Object.assign(item, updated);
     enriched += 1;
 
@@ -543,7 +552,7 @@ async function enrichItems(items, feedDefaults = new Map()) {
   return items;
 }
 
-async function fetchPageAuthors(items, feedDefaults, existing = new Map()) {
+async function fetchPageAuthors(items, feedDefaults, existing = new Map(), sourceByName = new Map()) {
   const pageAuthors = new Map(existing);
   const toFetch = items.filter(
     (item) => needsPageAuthorVerification(item, feedDefaults)
@@ -557,7 +566,8 @@ async function fetchPageAuthors(items, feedDefaults, existing = new Map()) {
     if (!key || pageAuthors.has(key)) continue;
 
     const html = await fetchText(item.link, 3, ENRICH_TIMEOUT);
-    const author = authorFromArticleHtml(html, item.lang === 'en' ? 'en' : 'fr');
+    const authorHints = getBotHints(sourceByName.get(item.source), 'authors');
+    const author = authorFromArticleHtml(html, item.lang === 'en' ? 'en' : 'fr', authorHints);
     if (author) pageAuthors.set(key, author);
     fetched += 1;
     await sleep(250);
@@ -597,6 +607,7 @@ async function main() {
   }
 
   const registry = readRegistry();
+  const sourceByName = new Map(SOURCES.map((s) => [s.name, s]));
 
   for (const src of SOURCES) {
     process.stdout.write(`→ ${src.name} (${src.institution}) … `);
@@ -613,8 +624,11 @@ async function main() {
         excerpt: truncateExcerpt(it.excerpt, 280),
       }));
       if (items.length) {
-        fetchOk = true;
-        console.log(`✓ ${items.length} articles (firebase)`);
+        items = pruneToFreshWindow(items, referenceDate);
+        if (items.length) {
+          fetchOk = true;
+          console.log(`✓ ${items.length} articles (firebase)`);
+        }
       }
     } else if (isHtmlListSource(src)) {
       const listUrls = [src.url, src.urlFallback, ...(src.feedAlternates || [])].filter(Boolean);
@@ -633,9 +647,12 @@ async function main() {
         }
       }
       if (items.length) {
-        fetchOk = true;
-        const altNote = listUsed && listUsed !== src.url ? ` [repli: ${listUsed}]` : '';
-        console.log(`✓ ${items.length} articles (html-list)${altNote}`);
+        items = pruneToFreshWindow(items, referenceDate);
+        if (items.length) {
+          fetchOk = true;
+          const altNote = listUsed && listUsed !== src.url ? ` [repli: ${listUsed}]` : '';
+          console.log(`✓ ${items.length} articles (html-list)${altNote}`);
+        }
       }
     } else {
       const { items: rssItems, feedUsed, maxItems } = await fetchRssItems(src);
@@ -645,10 +662,10 @@ async function main() {
         if (feedUsed && feedUsed !== src.url) {
           altNote = src.mergeFeedAlternates ? ` [${feedUsed}]` : ` [repli: ${feedUsed}]`;
         }
-        items = rssItems;
-        const featuredItems = await fetchWpFeaturedPosts(src.url, src);
+        items = pruneToFreshWindow(rssItems, referenceDate);
+        const featuredItems = await fetchWpFeaturedPosts(src.url, src, referenceDate);
         if (featuredItems.length) {
-          items = mergeSourceItems(rssItems, featuredItems, maxItems);
+          items = mergeSourceItems(items, featuredItems, maxItems);
         }
         const featNote = featuredItems.length ? ` (+${featuredItems.length} vedettes WP)` : '';
         console.log(`✓ ${items.length} articles${featNote}${altNote}`);
@@ -721,7 +738,7 @@ async function main() {
     }
   }
 
-  await enrichItems(all, feedDefaults);
+  await enrichItems(all, feedDefaults, sourceByName);
 
   const pageAuthors = new Map();
   for (const item of all) {
@@ -731,7 +748,7 @@ async function main() {
       delete item._pageAuthorKey;
     }
   }
-  await fetchPageAuthors(all, feedDefaults, pageAuthors);
+  await fetchPageAuthors(all, feedDefaults, pageAuthors, sourceByName);
 
   for (let i = 0; i < all.length; i += 1) {
     const pageAuthor = pageAuthors.get(normalizeArticleUrl(all[i].link)) || '';
@@ -751,16 +768,23 @@ async function main() {
     return db - da;
   });
 
+  const beforePrune = all.length;
+  const prunedAll = pruneToFreshWindow(all, referenceDate);
+  const prunedCount = beforePrune - prunedAll.length;
+  if (prunedCount > 0) {
+    console.log(`\nFraîcheur: ${prunedCount} article(s) hors fenêtre 3 sessions retiré(s)`);
+  }
+
   const staleSources = Object.entries(sourceRuns)
     .filter(([, meta]) => meta.stale)
     .map(([name]) => name);
 
   const news = {
     updated: new Date().toISOString(),
-    count: all.length,
+    count: prunedAll.length,
     freshnessSessions: 3,
     sources: sourceRuns,
-    items: all,
+    items: prunedAll,
   };
 
   const withAuthor = news.items.filter((i) => i.author && !isGenericAuthor(i.author)).length;

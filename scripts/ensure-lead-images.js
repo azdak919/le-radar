@@ -21,6 +21,7 @@ const {
   sleep,
 } = require('./article-image-lib');
 const { findStockPhoto, cleanCreatorName } = require('./stock-photo-lib');
+const { pruneToFreshWindow, loadSourceRegistryMap, getBotHints } = require('./source-retention-lib');
 
 
 const ROOT = path.join(__dirname, '..');
@@ -61,10 +62,11 @@ function imagePathKey(url = '') {
   }
 }
 
-/** Évite de re-fetcher toutes les pages : Campus + images dont le nom ne colle pas au slug. */
-function shouldValidateImageOnPage(item = {}) {
+/** Évite de re-fetcher toutes les pages : sources avec botHints.images.validateOnPage + heuristique slug. */
+function shouldValidateImageOnPage(item = {}, sourceMap = new Map()) {
   if (!item.image || !item.link) return false;
-  if (item.source === 'The Campus') return true;
+  const hints = getBotHints(sourceMap.get(item.source), 'images');
+  if (hints.validateOnPage) return true;
   const slug = String(item.link).split('/').filter(Boolean).pop() || '';
   const img = imagePathKey(item.image);
   if (!slug || !img || slug.length < 10) return false;
@@ -116,7 +118,9 @@ function backfillImageCreator(item) {
 
 async function main() {
   const news = readJson(NEWS_PATH, { items: [] });
-  const items = news.items || [];
+  const allItems = news.items || [];
+  const sourceMap = loadSourceRegistryMap();
+  const items = pruneToFreshWindow(allItems);
   items.forEach(backfillImageCreator);
   if (!items.length) {
     console.error('No items in news.json');
@@ -131,7 +135,7 @@ async function main() {
   const gaps = [];
 
   for (const item of items) {
-    if (!shouldValidateImageOnPage(item)) continue;
+    if (!shouldValidateImageOnPage(item, sourceMap)) continue;
     const html = await fetchText(item.link);
     if (!html || articleImageIsValidOnPage(html, item.image)) continue;
     if (doUpdate) {
@@ -248,7 +252,7 @@ async function main() {
   }
 
   if (doUpdate) {
-    fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items }, null, 2) + '\n');
+    fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items: allItems, count: allItems.length }, null, 2) + '\n');
     fs.writeFileSync(QC_PATH, JSON.stringify(qc, null, 2) + '\n');
     console.log(`\n✅ ${NEWS_PATH}`);
     console.log(`✅ ${QC_PATH}`);
