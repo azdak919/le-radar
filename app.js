@@ -1158,44 +1158,6 @@ function sourceInfo(src) {
   };
 }
 
-/** Clé canonique d'établissement (ex. McGill FR/EN regroupés). */
-function canonicalInstitutionKey(institution = '', type = '') {
-  if (!institution) return '';
-  const acronym = resolveInstitutionAcronym(institution);
-  if (acronym) return acronym.toLowerCase();
-  const norm = normInstitutionKey(institution);
-  if (norm) return norm;
-  return type ? `${type}:${institution}` : institution;
-}
-
-function sourceInstitutionKey(src) {
-  const item = news.find(n => n.source === src);
-  const registry = newsSourcesByName[src];
-  const institution = item?.institution || registry?.institution || '';
-  const type = item?.type || registry?.type || '';
-  return canonicalInstitutionKey(institution, type) || `source:${src}`;
-}
-
-/** Champions par établissement en tête, puis le reste par popularité. */
-function sortSourcesForFilters(sources) {
-  const sorted = sortSourcesByPopularity(sources);
-  const champions = [];
-  const rest = [];
-  const seen = new Set();
-
-  for (const src of sorted) {
-    const key = sourceInstitutionKey(src);
-    if (!seen.has(key)) {
-      seen.add(key);
-      champions.push(src);
-    } else {
-      rest.push(src);
-    }
-  }
-
-  return [...champions, ...rest];
-}
-
 function filtersOverflow() {
   if (!NEWS_FILTERS) return false;
   const count = NEWS_FILTERS.querySelectorAll('.filter-btn').length;
@@ -1298,7 +1260,7 @@ function selectNewsSource(source) {
 }
 
 function renderNewsFilters() {
-  const sources = sortSourcesForFilters([...new Set(news.map(n => n.source))]);
+  const sources = sortSourcesByPopularity([...new Set(news.map(n => n.source))]);
   [...NEWS_FILTERS.querySelectorAll('[data-source]:not([data-source="all"])')].forEach(b => b.remove());
 
   sources.forEach(src => {
