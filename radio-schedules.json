@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-27T22:26:12.661Z",
+  "updatedAt": "2026-06-27T22:30:24.115Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,7 +8,7 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-06-27T22:26:12.661Z",
+      "checkedAt": "2026-06-27T22:30:24.115Z",
       "grid": [
         {
           "day": 0,
@@ -204,7 +204,7 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-06-27T22:26:12.661Z",
+      "checkedAt": "2026-06-27T22:30:24.115Z",
       "grid": [
         {
           "day": 0,
@@ -984,7 +984,7 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-06-27T22:26:12.661Z",
+      "checkedAt": "2026-06-27T22:30:24.115Z",
       "grid": [
         {
           "day": 0,
@@ -1600,13 +1600,898 @@
         }
       ]
     },
+    "cjlo": {
+      "id": "cjlo",
+      "name": "CJLO 1690AM",
+      "sources": [
+        "cjlo:http://www.cjlo.com/schedule"
+      ],
+      "checkedAt": "2026-06-27T22:30:24.115Z",
+      "grid": [
+        {
+          "day": 0,
+          "start": "00:00",
+          "end": "06:00",
+          "title": "CJLO Late Night",
+          "url": "http://www.cjlo.com/shows/cjlo-late-night"
+        },
+        {
+          "day": 0,
+          "start": "06:00",
+          "end": "08:00",
+          "title": "Sun Ra, Sun Rise",
+          "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
+        },
+        {
+          "day": 0,
+          "start": "08:00",
+          "end": "09:00",
+          "title": "The Gigi Brown Experience",
+          "url": "http://www.cjlo.com/shows/the-gigi-brown-experience"
+        },
+        {
+          "day": 0,
+          "start": "09:00",
+          "end": "10:00",
+          "title": "REVC",
+          "url": "http://www.cjlo.com/shows/revc"
+        },
+        {
+          "day": 0,
+          "start": "10:00",
+          "end": "12:00",
+          "title": "Rigged Sessions",
+          "url": "http://www.cjlo.com/shows/rigged-sessions"
+        },
+        {
+          "day": 0,
+          "start": "12:00",
+          "end": "13:00",
+          "title": "Brave Little Emo Girl",
+          "url": "http://www.cjlo.com/shows/brave-little-emo-girl"
+        },
+        {
+          "day": 0,
+          "start": "13:00",
+          "end": "14:00",
+          "title": "Northern Stagelights",
+          "url": "http://www.cjlo.com/shows/northern-stagelights"
+        },
+        {
+          "day": 0,
+          "start": "13:00",
+          "end": "14:00",
+          "title": "Psychs In The Sixty",
+          "url": "http://www.cjlo.com/shows/psychs-in-the-sixty"
+        },
+        {
+          "day": 0,
+          "start": "14:00",
+          "end": "15:00",
+          "title": "Cinema Smackdown",
+          "url": "http://www.cjlo.com/shows/cinema-smackdown"
+        },
+        {
+          "day": 0,
+          "start": "15:00",
+          "end": "16:00",
+          "title": "The Tommy John Show",
+          "url": "http://www.cjlo.com/shows/the-tommy-john-show"
+        },
+        {
+          "day": 0,
+          "start": "16:00",
+          "end": "18:00",
+          "title": "Grade A Explosives",
+          "url": "http://www.cjlo.com/shows/grade-a-explosives"
+        },
+        {
+          "day": 0,
+          "start": "18:00",
+          "end": "19:00",
+          "title": "Bill's Country & Western Favou...",
+          "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
+        },
+        {
+          "day": 0,
+          "start": "19:00",
+          "end": "20:00",
+          "title": "No Boundaries",
+          "url": "http://www.cjlo.com/shows/no-boundaries"
+        },
+        {
+          "day": 0,
+          "start": "20:00",
+          "end": "20:30",
+          "title": "Eastern ...",
+          "url": "http://www.cjlo.com/shows/eastern-promises"
+        },
+        {
+          "day": 0,
+          "start": "20:00",
+          "end": "21:00",
+          "title": "Towards A Common Horizon",
+          "url": "http://www.cjlo.com/shows/towards-a-common-horizon"
+        },
+        {
+          "day": 0,
+          "start": "21:00",
+          "end": "22:00",
+          "title": "CJLO's Alternative Mega Mix",
+          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        },
+        {
+          "day": 0,
+          "start": "22:00",
+          "end": "23:00",
+          "title": "On The Right Track",
+          "url": "http://www.cjlo.com/shows/on-the-right-track"
+        },
+        {
+          "day": 0,
+          "start": "23:00",
+          "end": "00:00",
+          "title": "CJLO's Alternative Mega Mix",
+          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        },
+        {
+          "day": 1,
+          "start": "00:00",
+          "end": "06:00",
+          "title": "CJLO Late Night",
+          "url": "http://www.cjlo.com/shows/cjlo-late-night"
+        },
+        {
+          "day": 1,
+          "start": "06:00",
+          "end": "08:00",
+          "title": "Experiments",
+          "url": "http://www.cjlo.com/shows/experiments"
+        },
+        {
+          "day": 1,
+          "start": "08:00",
+          "end": "09:00",
+          "title": "The Starting Rotation",
+          "url": "http://www.cjlo.com/shows/the-starting-rotation"
+        },
+        {
+          "day": 1,
+          "start": "09:00",
+          "end": "10:00",
+          "title": "Death of the Midrange",
+          "url": "http://www.cjlo.com/shows/death-of-the-midrange"
+        },
+        {
+          "day": 1,
+          "start": "10:00",
+          "end": "11:00",
+          "title": "Democracy Now",
+          "url": "http://www.cjlo.com/shows/democracy-now"
+        },
+        {
+          "day": 1,
+          "start": "11:00",
+          "end": "12:00",
+          "title": "2 Days and a Night",
+          "url": "http://www.cjlo.com/shows/2-days-and-a-night"
+        },
+        {
+          "day": 1,
+          "start": "12:00",
+          "end": "13:00",
+          "title": "Twang City",
+          "url": "http://www.cjlo.com/shows/twang-city"
+        },
+        {
+          "day": 1,
+          "start": "13:00",
+          "end": "14:00",
+          "title": "Eldest Daughter",
+          "url": "http://www.cjlo.com/shows/eldest-daughter"
+        },
+        {
+          "day": 1,
+          "start": "14:00",
+          "end": "15:00",
+          "title": "CJLO's Alternative Mega Mix",
+          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        },
+        {
+          "day": 1,
+          "start": "15:00",
+          "end": "16:00",
+          "title": "Whip Appeal",
+          "url": "http://www.cjlo.com/shows/whip-appeal"
+        },
+        {
+          "day": 1,
+          "start": "16:00",
+          "end": "17:00",
+          "title": "Dreamscapes",
+          "url": "http://www.cjlo.com/shows/dreamscapes"
+        },
+        {
+          "day": 1,
+          "start": "17:00",
+          "end": "18:00",
+          "title": "The Pressure Drop",
+          "url": "http://www.cjlo.com/shows/the-pressure-drop"
+        },
+        {
+          "day": 1,
+          "start": "18:00",
+          "end": "19:00",
+          "title": "Voice of the Voiceless",
+          "url": "http://www.cjlo.com/shows/voice-of-the-voiceless"
+        },
+        {
+          "day": 1,
+          "start": "19:00",
+          "end": "20:00",
+          "title": "Queer Chaos",
+          "url": "http://www.cjlo.com/shows/queer-chaos"
+        },
+        {
+          "day": 1,
+          "start": "20:00",
+          "end": "21:00",
+          "title": "In The Garage",
+          "url": "http://www.cjlo.com/shows/in-the-garage"
+        },
+        {
+          "day": 1,
+          "start": "21:00",
+          "end": "22:00",
+          "title": "LEKTOR DECODER",
+          "url": "http://www.cjlo.com/shows/lektor-decoder"
+        },
+        {
+          "day": 1,
+          "start": "22:00",
+          "end": "23:00",
+          "title": "Past Tense",
+          "url": "http://www.cjlo.com/shows/past-tense"
+        },
+        {
+          "day": 1,
+          "start": "23:00",
+          "end": "00:00",
+          "title": "Amplitude",
+          "url": "http://www.cjlo.com/shows/amplitude"
+        },
+        {
+          "day": 2,
+          "start": "00:00",
+          "end": "01:00",
+          "title": "Floydian Slip",
+          "url": "http://www.cjlo.com/shows/floydian-slip"
+        },
+        {
+          "day": 2,
+          "start": "01:00",
+          "end": "06:00",
+          "title": "CJLO Late Night",
+          "url": "http://www.cjlo.com/shows/cjlo-late-night"
+        },
+        {
+          "day": 2,
+          "start": "06:00",
+          "end": "09:00",
+          "title": "Hip's Time to Wake Hop",
+          "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
+        },
+        {
+          "day": 2,
+          "start": "09:00",
+          "end": "10:00",
+          "title": "At The Movies",
+          "url": "http://www.cjlo.com/shows/at-the-movies"
+        },
+        {
+          "day": 2,
+          "start": "10:00",
+          "end": "11:00",
+          "title": "Democracy Now",
+          "url": "http://www.cjlo.com/shows/democracy-now"
+        },
+        {
+          "day": 2,
+          "start": "11:00",
+          "end": "12:00",
+          "title": "Mirror Journal",
+          "url": "http://www.cjlo.com/shows/mirror-journal"
+        },
+        {
+          "day": 2,
+          "start": "12:00",
+          "end": "13:00",
+          "title": "World Beat News",
+          "url": "http://www.cjlo.com/shows/world-beat-news"
+        },
+        {
+          "day": 2,
+          "start": "13:00",
+          "end": "14:00",
+          "title": "Shaking the Habitual",
+          "url": "http://www.cjlo.com/shows/shaking-the-habitual"
+        },
+        {
+          "day": 2,
+          "start": "14:00",
+          "end": "15:00",
+          "title": "Code Switch",
+          "url": "http://www.cjlo.com/shows/code-switch"
+        },
+        {
+          "day": 2,
+          "start": "15:00",
+          "end": "16:00",
+          "title": "Sonic Lit: A SpokenWeb Radio Show",
+          "url": "http://www.cjlo.com/shows/sonic-lit-a-spokenweb-radio-show"
+        },
+        {
+          "day": 2,
+          "start": "16:00",
+          "end": "17:00",
+          "title": "The Fluid Mosaic",
+          "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
+        },
+        {
+          "day": 2,
+          "start": "17:00",
+          "end": "18:00",
+          "title": "Cherry Vamp and the Sonic Coffin",
+          "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
+        },
+        {
+          "day": 2,
+          "start": "18:00",
+          "end": "19:00",
+          "title": "Bikini Brrroadcast",
+          "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
+        },
+        {
+          "day": 2,
+          "start": "19:00",
+          "end": "20:00",
+          "title": "Ashes to Ashes",
+          "url": "http://www.cjlo.com/shows/ashes-to-ashes"
+        },
+        {
+          "day": 2,
+          "start": "20:00",
+          "end": "21:00",
+          "title": "Hittin' All The Bases",
+          "url": "http://www.cjlo.com/shows/hittin-all-the-bases"
+        },
+        {
+          "day": 2,
+          "start": "21:00",
+          "end": "22:00",
+          "title": "Beatnik Boy: Mixtape",
+          "url": "http://www.cjlo.com/shows/beatnik-boy-mixtape"
+        },
+        {
+          "day": 2,
+          "start": "22:00",
+          "end": "23:00",
+          "title": "on an evening",
+          "url": "http://www.cjlo.com/shows/on-an-evening"
+        },
+        {
+          "day": 2,
+          "start": "23:00",
+          "end": "00:00",
+          "title": "Turn Off The Lights",
+          "url": "http://www.cjlo.com/shows/turn-off-the-lights"
+        },
+        {
+          "day": 3,
+          "start": "00:00",
+          "end": "06:00",
+          "title": "CJLO Late Night",
+          "url": "http://www.cjlo.com/shows/cjlo-late-night"
+        },
+        {
+          "day": 3,
+          "start": "06:00",
+          "end": "08:00",
+          "title": "Morning Electro-shock",
+          "url": "http://www.cjlo.com/shows/morning-electro-shock"
+        },
+        {
+          "day": 3,
+          "start": "07:30",
+          "end": "08:00",
+          "title": "Words an...",
+          "url": "http://www.cjlo.com/shows/words-and-culture"
+        },
+        {
+          "day": 3,
+          "start": "08:00",
+          "end": "09:00",
+          "title": "Trawling the Megahertz",
+          "url": "http://www.cjlo.com/shows/trawling-the-megahertz"
+        },
+        {
+          "day": 3,
+          "start": "08:30",
+          "end": "09:00",
+          "title": "Free Cit...",
+          "url": "http://www.cjlo.com/shows/free-city-radio"
+        },
+        {
+          "day": 3,
+          "start": "09:00",
+          "end": "10:00",
+          "title": "Are We There Yet?",
+          "url": "http://www.cjlo.com/shows/are-we-there-yet"
+        },
+        {
+          "day": 3,
+          "start": "10:00",
+          "end": "11:00",
+          "title": "Democracy Now",
+          "url": "http://www.cjlo.com/shows/democracy-now"
+        },
+        {
+          "day": 3,
+          "start": "11:00",
+          "end": "12:00",
+          "title": "Unheard Of",
+          "url": "http://www.cjlo.com/shows/unheard-of"
+        },
+        {
+          "day": 3,
+          "start": "12:00",
+          "end": "13:00",
+          "title": "North-South Hockey",
+          "url": "http://www.cjlo.com/shows/north-south-hockey"
+        },
+        {
+          "day": 3,
+          "start": "13:00",
+          "end": "14:00",
+          "title": "I Think You Might Like This",
+          "url": "http://www.cjlo.com/shows/i-think-you-might-like-this"
+        },
+        {
+          "day": 3,
+          "start": "14:00",
+          "end": "15:00",
+          "title": "Something for the Mood",
+          "url": "http://www.cjlo.com/shows/something-for-the-mood"
+        },
+        {
+          "day": 3,
+          "start": "15:00",
+          "end": "16:00",
+          "title": "Patch Notes",
+          "url": "http://www.cjlo.com/shows/patch-notes"
+        },
+        {
+          "day": 3,
+          "start": "16:00",
+          "end": "17:00",
+          "title": "My Rules",
+          "url": "http://www.cjlo.com/shows/my-rules"
+        },
+        {
+          "day": 3,
+          "start": "17:00",
+          "end": "18:00",
+          "title": "Advice By The Fireplace",
+          "url": "http://www.cjlo.com/shows/advice-by-the-fireplace"
+        },
+        {
+          "day": 3,
+          "start": "18:00",
+          "end": "19:00",
+          "title": "The New Consonance",
+          "url": "http://www.cjlo.com/shows/the-new-consonance"
+        },
+        {
+          "day": 3,
+          "start": "19:00",
+          "end": "21:00",
+          "title": "BVST",
+          "url": "http://www.cjlo.com/shows/bvst"
+        },
+        {
+          "day": 3,
+          "start": "21:00",
+          "end": "22:00",
+          "title": "Rap Radar",
+          "url": "http://www.cjlo.com/shows/rap-radar"
+        },
+        {
+          "day": 3,
+          "start": "22:00",
+          "end": "23:00",
+          "title": "There's a Synth in the House",
+          "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
+        },
+        {
+          "day": 3,
+          "start": "23:00",
+          "end": "00:00",
+          "title": "CJLO's Alternative Mega Mix",
+          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        },
+        {
+          "day": 4,
+          "start": "00:00",
+          "end": "06:00",
+          "title": "CJLO Late Night",
+          "url": "http://www.cjlo.com/shows/cjlo-late-night"
+        },
+        {
+          "day": 4,
+          "start": "06:00",
+          "end": "09:00",
+          "title": "Daydream Nation",
+          "url": "http://www.cjlo.com/shows/daydream-nation"
+        },
+        {
+          "day": 4,
+          "start": "08:00",
+          "end": "09:00",
+          "title": "Free City Radio",
+          "url": "http://www.cjlo.com/shows/free-city-radio"
+        },
+        {
+          "day": 4,
+          "start": "09:00",
+          "end": "10:00",
+          "title": "Everything Everywhere",
+          "url": "http://www.cjlo.com/shows/everything-everywhere"
+        },
+        {
+          "day": 4,
+          "start": "10:00",
+          "end": "11:00",
+          "title": "Democracy Now",
+          "url": "http://www.cjlo.com/shows/democracy-now"
+        },
+        {
+          "day": 4,
+          "start": "11:00",
+          "end": "12:00",
+          "title": "Weirdo Rippers",
+          "url": "http://www.cjlo.com/shows/weirdo-rippers"
+        },
+        {
+          "day": 4,
+          "start": "12:00",
+          "end": "13:00",
+          "title": "The Power Hour",
+          "url": "http://www.cjlo.com/shows/the-power-hour"
+        },
+        {
+          "day": 4,
+          "start": "13:00",
+          "end": "14:00",
+          "title": "What's Happening in NDG",
+          "url": "http://www.cjlo.com/shows/whats-happening-in-ndg"
+        },
+        {
+          "day": 4,
+          "start": "14:00",
+          "end": "15:00",
+          "title": "The 514",
+          "url": "http://www.cjlo.com/shows/the-514"
+        },
+        {
+          "day": 4,
+          "start": "15:00",
+          "end": "16:00",
+          "title": "Secondhand Sounds",
+          "url": "http://www.cjlo.com/shows/secondhand-sounds"
+        },
+        {
+          "day": 4,
+          "start": "16:00",
+          "end": "18:00",
+          "title": "Hooked On Sonics",
+          "url": "http://www.cjlo.com/shows/hooked-on-sonics"
+        },
+        {
+          "day": 4,
+          "start": "18:00",
+          "end": "19:00",
+          "title": "CJLO's Alternative Mega Mix",
+          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        },
+        {
+          "day": 4,
+          "start": "19:00",
+          "end": "20:00",
+          "title": "Teen Radio",
+          "url": "http://www.cjlo.com/shows/teen-radio"
+        },
+        {
+          "day": 4,
+          "start": "20:00",
+          "end": "21:00",
+          "title": "Maiden Voyage",
+          "url": "http://www.cjlo.com/shows/maiden-voyage"
+        },
+        {
+          "day": 4,
+          "start": "20:00",
+          "end": "21:00",
+          "title": "Chi and Ri",
+          "url": "http://www.cjlo.com/shows/chi-and-ri"
+        },
+        {
+          "day": 4,
+          "start": "21:00",
+          "end": "22:00",
+          "title": "Mo' Ritmo Radio",
+          "url": "http://www.cjlo.com/shows/mo-ritmo-radio"
+        },
+        {
+          "day": 4,
+          "start": "21:00",
+          "end": "22:00",
+          "title": "Electric Messiah",
+          "url": "http://www.cjlo.com/shows/electric-messiah"
+        },
+        {
+          "day": 4,
+          "start": "22:00",
+          "end": "23:00",
+          "title": "CJLO's Alternative Mega Mix",
+          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        },
+        {
+          "day": 4,
+          "start": "23:00",
+          "end": "00:00",
+          "title": "Raving Record Reviews",
+          "url": "http://www.cjlo.com/shows/raving-record-reviews"
+        },
+        {
+          "day": 5,
+          "start": "00:00",
+          "end": "02:00",
+          "title": "Finally Midnight",
+          "url": "http://www.cjlo.com/shows/finally-midnight"
+        },
+        {
+          "day": 5,
+          "start": "01:00",
+          "end": "06:00",
+          "title": "CJLO Late Night",
+          "url": "http://www.cjlo.com/shows/cjlo-late-night"
+        },
+        {
+          "day": 5,
+          "start": "06:00",
+          "end": "09:00",
+          "title": "Wake up Folks!",
+          "url": "http://www.cjlo.com/shows/wake-up-folks"
+        },
+        {
+          "day": 5,
+          "start": "09:00",
+          "end": "10:00",
+          "title": "CJLO News Hour",
+          "url": "http://www.cjlo.com/shows/cjlo-news-hour"
+        },
+        {
+          "day": 5,
+          "start": "10:00",
+          "end": "11:00",
+          "title": "Democracy Now",
+          "url": "http://www.cjlo.com/shows/democracy-now"
+        },
+        {
+          "day": 5,
+          "start": "11:00",
+          "end": "12:00",
+          "title": "The Alley",
+          "url": "http://www.cjlo.com/shows/the-alley"
+        },
+        {
+          "day": 5,
+          "start": "12:00",
+          "end": "13:00",
+          "title": "Charts & Crafts",
+          "url": "http://www.cjlo.com/shows/charts-and-crafts"
+        },
+        {
+          "day": 5,
+          "start": "13:00",
+          "end": "14:00",
+          "title": "the castle",
+          "url": "http://www.cjlo.com/shows/the-castle"
+        },
+        {
+          "day": 5,
+          "start": "14:00",
+          "end": "15:00",
+          "title": "Whatever She Wants",
+          "url": "http://www.cjlo.com/shows/whatever-she-wants"
+        },
+        {
+          "day": 5,
+          "start": "15:00",
+          "end": "16:00",
+          "title": "Dead Beats",
+          "url": "http://www.cjlo.com/shows/dead-beats"
+        },
+        {
+          "day": 5,
+          "start": "16:00",
+          "end": "17:00",
+          "title": "Tapeworms",
+          "url": "http://www.cjlo.com/shows/tapeworms"
+        },
+        {
+          "day": 5,
+          "start": "17:00",
+          "end": "18:00",
+          "title": "The Groove Master's Hour",
+          "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
+        },
+        {
+          "day": 5,
+          "start": "18:00",
+          "end": "20:00",
+          "title": "The Go-Go Radio Magic Show",
+          "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
+        },
+        {
+          "day": 5,
+          "start": "20:00",
+          "end": "21:00",
+          "title": "El Encuentro Latino",
+          "url": "http://www.cjlo.com/shows/el-encuentro-latino"
+        },
+        {
+          "day": 5,
+          "start": "21:00",
+          "end": "22:00",
+          "title": "Stereo Field Trip",
+          "url": "http://www.cjlo.com/shows/stereo-field-trip"
+        },
+        {
+          "day": 5,
+          "start": "22:00",
+          "end": "23:00",
+          "title": "The Come Up",
+          "url": "http://www.cjlo.com/shows/the-come-up"
+        },
+        {
+          "day": 5,
+          "start": "23:00",
+          "end": "00:00",
+          "title": "The Waxing Gibbous",
+          "url": "http://www.cjlo.com/shows/the-waxing-gibbous"
+        },
+        {
+          "day": 6,
+          "start": "00:00",
+          "end": "02:00",
+          "title": "Jazz Boulevard",
+          "url": "http://www.cjlo.com/shows/jazz-boulevard"
+        },
+        {
+          "day": 6,
+          "start": "00:00",
+          "end": "06:00",
+          "title": "CJLO Late Night",
+          "url": "http://www.cjlo.com/shows/cjlo-late-night"
+        },
+        {
+          "day": 6,
+          "start": "06:00",
+          "end": "09:00",
+          "title": "World-Up'",
+          "url": "http://www.cjlo.com/shows/world-up"
+        },
+        {
+          "day": 6,
+          "start": "09:00",
+          "end": "10:00",
+          "title": "The Live Wire Show",
+          "url": "http://www.cjlo.com/shows/the-live-wire-show"
+        },
+        {
+          "day": 6,
+          "start": "10:00",
+          "end": "12:00",
+          "title": "Gospel Unlimited",
+          "url": "http://www.cjlo.com/shows/gospel-unlimited"
+        },
+        {
+          "day": 6,
+          "start": "12:00",
+          "end": "14:00",
+          "title": "Anatomy of Caribbean Music",
+          "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
+        },
+        {
+          "day": 6,
+          "start": "14:00",
+          "end": "16:00",
+          "title": "Caribbean Callaloo",
+          "url": "http://www.cjlo.com/shows/caribbean-callaloo"
+        },
+        {
+          "day": 6,
+          "start": "16:00",
+          "end": "17:00",
+          "title": "Mi Dun Talk",
+          "url": "http://www.cjlo.com/shows/mi-dun-talk"
+        },
+        {
+          "day": 6,
+          "start": "17:00",
+          "end": "18:00",
+          "title": "Mo' Ritmo Radio",
+          "url": "http://www.cjlo.com/shows/mo-ritmo-radio"
+        },
+        {
+          "day": 6,
+          "start": "18:00",
+          "end": "19:00",
+          "title": "The Limelight",
+          "url": "http://www.cjlo.com/shows/the-limelight"
+        },
+        {
+          "day": 6,
+          "start": "19:00",
+          "end": "20:00",
+          "title": "Screamers",
+          "url": "http://www.cjlo.com/shows/screamers"
+        },
+        {
+          "day": 6,
+          "start": "20:00",
+          "end": "21:00",
+          "title": "CJLO's Alternative Mega Mix",
+          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        },
+        {
+          "day": 6,
+          "start": "20:00",
+          "end": "21:00",
+          "title": "feminemix",
+          "url": "http://www.cjlo.com/shows/feminemix"
+        },
+        {
+          "day": 6,
+          "start": "21:00",
+          "end": "22:00",
+          "title": "The Spacious Astrology Playlist",
+          "url": "http://www.cjlo.com/shows/the-spacious-astrology-playlist"
+        },
+        {
+          "day": 6,
+          "start": "21:30",
+          "end": "22:00",
+          "title": "The Go-G...",
+          "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
+        },
+        {
+          "day": 6,
+          "start": "22:00",
+          "end": "00:00",
+          "title": "Brave New Jams",
+          "url": "http://www.cjlo.com/shows/brave-new-jams"
+        }
+      ]
+    },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-06-27T22:26:12.661Z",
+      "checkedAt": "2026-06-27T22:30:24.115Z",
       "grid": [
         {
           "day": 0,
