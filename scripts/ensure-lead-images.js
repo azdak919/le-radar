@@ -21,6 +21,7 @@ const {
 const {
   resolveLeadReadyPhoto,
   meetsLeadDisplaySize,
+  normalizeWpContentImageUrl,
   probeRemoteImageSize,
   fetchText,
   articleImageIsValidOnPage,
@@ -34,8 +35,9 @@ const ROOT = path.join(__dirname, '..');
 const NEWS_PATH = path.join(ROOT, 'news.json');
 const QC_PATH = path.join(ROOT, 'lead-image-qc.json');
 const HERO_MIN_POOL = 4;
-const PAGE_SCRAPE_LIMIT = 30;
-const STOCK_SEARCH_LIMIT = 28;
+const HERO_PRIORITY_POOL = 45;
+const PAGE_SCRAPE_LIMIT = 40;
+const STOCK_SEARCH_LIMIT = 60;
 const doUpdate = process.argv.includes('--update');
 
 function readJson(p, fallback) {
@@ -114,8 +116,25 @@ async function photoIsLeadReady(item) {
   return markSourceLeadQuality(item);
 }
 
-async function applyStockPhoto(item) {
-  if (hasSourcePhoto(item)) return false;
+async function tryUpgradeExistingImage(item, sourceMap = new Map()) {
+  if (!item.image) return false;
+  const { reject, opts } = isCandidateForItem(item, sourceMap);
+  const upgraded = normalizeWpContentImageUrl(item.image);
+  if (!upgraded || upgraded === item.image) return false;
+  if (!isCandidateImageUrl(upgraded, reject) || isWeakImageUrl(upgraded, opts)) return false;
+  const dims = await probeRemoteImageSize(upgraded);
+  if (!dims || !meetsLeadDisplaySize(dims.width, dims.height)) return false;
+  if (doUpdate) {
+    item.image = upgraded;
+    item.leadImageReady = true;
+    clearLegacyFallback(item);
+    clearStockPhoto(item);
+  }
+  return true;
+}
+
+async function applyStockPhoto(item, sourceMap = new Map()) {
+  if (await photoIsLeadReady(item)) return false;
   const stock = await findStockPhoto(item);
   if (!stock?.stockImage) return false;
   if (doUpdate) {
@@ -189,45 +208,77 @@ async function main() {
     await sleep(200);
   }
 
-  const stockQueue = [];
+  let upgraded = 0;
   for (const item of items) {
+    if (await tryUpgradeExistingImage(item, sourceMap)) upgraded += 1;
+  }
+  if (upgraded) console.log(`↻ ${upgraded} image(s) WordPress passée(s) en pleine résolution`);
+
+  const stockQueue = [];
+  for (let index = 0; index < items.length; index += 1) {
+    const item = items[index];
     const { reject, opts, ok } = isCandidateForItem(item, sourceMap);
-    if (hasSourcePhoto(item, sourceMap) && doUpdate) clearStockPhoto(item);
+
     if (await photoIsLeadReady(item)) {
       if (doUpdate) {
+        if (hasSourcePhoto(item, sourceMap)) clearStockPhoto(item);
         await markSourceLeadQuality(item);
         clearLegacyFallback(item);
       }
       continue;
     }
+
     if (!item.image || !ok(item.image)) {
       const resolved = await resolveLeadReadyPhoto(item, reject, opts);
       if (resolved?.url && doUpdate) {
         item.image = resolved.url;
+        item.leadImageReady = resolved.leadReady !== false;
         clearLegacyFallback(item);
         pageScraped += 1;
         if (resolved.leadReady !== false) photosRecovered += 1;
       }
       if (await photoIsLeadReady(item)) continue;
     } else if (hasSourcePhoto(item, sourceMap)) {
-      if (doUpdate) {
-        clearStockPhoto(item);
-        await markSourceLeadQuality(item);
-        clearLegacyFallback(item);
+      const resolved = await resolveLeadReadyPhoto(item, reject, opts);
+      if (resolved?.url && doUpdate) {
+        if (resolved.leadReady !== false || !item.leadImageReady) {
+          item.image = resolved.url;
+          item.leadImageReady = resolved.leadReady !== false;
+          clearLegacyFallback(item);
+          pageScraped += 1;
+          if (resolved.leadReady !== false) photosRecovered += 1;
+        }
       }
-      continue;
+      if (await photoIsLeadReady(item)) {
+        if (doUpdate) {
+          clearStockPhoto(item);
+          clearLegacyFallback(item);
+        }
+        continue;
+      }
     }
-    stockQueue.push(item);
+
+    stockQueue.push({ item, index });
   }
 
-  for (const item of stockQueue.slice(0, STOCK_SEARCH_LIMIT)) {
+  stockQueue.sort((a, b) => {
+    const aHero = a.index < HERO_PRIORITY_POOL ? 0 : 1;
+    const bHero = b.index < HERO_PRIORITY_POOL ? 0 : 1;
+    if (aHero !== bHero) return aHero - bHero;
+    const aImg = a.item.image ? 1 : 0;
+    const bImg = b.item.image ? 1 : 0;
+    if (aImg !== bImg) return aImg - bImg;
+    return (Date.parse(b.item.date) || 0) - (Date.parse(a.item.date) || 0);
+  });
+
+  for (const { item } of stockQueue.slice(0, STOCK_SEARCH_LIMIT)) {
     if (await photoIsLeadReady(item)) {
       if (doUpdate) clearLegacyFallback(item);
       continue;
     }
 
     stockSearches += 1;
-    const found = await applyStockPhoto(item);
+    const found = await applyStockPhoto(item, sourceMap);
     if (found) stockFound += 1;
     if (await photoIsLeadReady(item)) continue;
 

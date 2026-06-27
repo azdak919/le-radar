@@ -1391,6 +1391,23 @@ function isFallbackImageUrl(raw = '') {
   return src.startsWith('./assets/lead-fallbacks/') && src.endsWith('.svg');
 }
 
+function resizeFromImageQuery(raw = '') {
+  try {
+    const u = new URL(raw);
+    const resize = u.searchParams.get('resize');
+    if (resize) {
+      const parts = resize.split(/[,%]/).map((n) => parseInt(n, 10));
+      return { width: parts[0] || 0, height: parts[1] || 0 };
+    }
+    const w = parseInt(u.searchParams.get('w'), 10) || 0;
+    const h = parseInt(u.searchParams.get('h'), 10) || 0;
+    if (w || h) return { width: w, height: h };
+  } catch {
+    /* ignore */
+  }
+  return null;
+}
+
 function isWeakImagePath(path = '') {
   const p = String(path).toLowerCase();
   if (/-\d{2,3}x\d{2,3}\./.test(p) && !/-\d{3,4}x\d{3,4}\./.test(p)) return true;
@@ -1420,6 +1437,12 @@ function getCandidateImage(src = '') {
   const path = decodeURIComponent(url.pathname).toLowerCase();
   if (GLOBAL_IMAGE_REJECT_RE.test(path)) return '';
   if (/(?:^|\/)(?:1x1|pixel)\b/.test(path)) return '';
+  const resize = resizeFromImageQuery(raw);
+  if (resize) {
+    const { width = 0, height = 0 } = resize;
+    if ((width > 0 && width < 640) || (height > 0 && height < 360)) return '';
+    if (width > 0 && height > 0 && width * height < 240000) return '';
+  }
   if (isWeakImagePath(path)) return '';
   return url.href;
 }
@@ -1484,7 +1507,7 @@ function buildClientFallbackDataUrl(item) {
 }
 
 function shouldPreferStockPhoto(item, role = 'lead') {
-  return role === 'lead' && item.leadImageReady === false && hasStockPhoto(item) && !hasUsablePhoto(item);
+  return role === 'lead' && item.leadImageReady === false && hasStockPhoto(item);
 }
 
 function resolveDisplayImage(item, { preferPhoto = true, role = 'lead' } = {}) {
