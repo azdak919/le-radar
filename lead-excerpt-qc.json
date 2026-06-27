@@ -1,12 +1,12 @@
 {
-  "updated": "2026-06-27T07:53:24.676Z",
-  "total": 161,
-  "pool": 70,
-  "incomplete": 52,
-  "withLeadExcerpt": 88,
+  "updated": "2026-06-27T12:14:21.945Z",
+  "total": 211,
+  "pool": 76,
+  "incomplete": 45,
+  "withLeadExcerpt": 56,
   "candidates": 35,
-  "enriched": 33,
-  "failed": 1,
+  "enriched": 14,
+  "failed": 10,
   "ok": true,
   "samples": [
     {
@@ -16,25 +16,7 @@
       "score": 100,
       "chars": 447,
       "sample": "Les personnes dirigeantes du G7 étaient réunies à Évian-les-Bains, en France, du 15 au 17 juin 2026.",
-      "changed": true
-    },
-    {
-      "title": "Virage à droite en Colombie",
-      "link": "https://lecollectif.ca/a-la-une/virage-a-droite-en-colombie/",
-      "ok": true,
-      "score": 100,
-      "chars": 386,
-      "sample": "Après quatre années passées sous l’égide de Gustavo Petro, la Colombie change de cap et élit à sa tê",
-      "changed": true
-    },
-    {
-      "title": "Démission de Keir Starmer au Royaume-Uni",
-      "link": "https://lecollectif.ca/a-la-une/demission-de-keir-starmer-au-royaume-uni/",
-      "ok": true,
-      "score": 100,
-      "chars": 277,
-      "sample": "Croulant sous les pressions provenant de l’opposition et de son propre parti, le premier ministre br",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Le PIF s’internationalise pour sa 49e édition",
@@ -43,42 +25,60 @@
       "score": 100,
       "chars": 591,
       "sample": "Le plus grand tournoi de balle donnée en Amérique du Nord accueille cette année une vague de joueurs",
+      "changed": false
+    },
+    {
+      "title": "Sans fin(s) : au cœur des troubles du comportement alimentaire",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/sans-fins-au-coeur-des-troubles-du-comportement-alimentaire/",
+      "ok": true,
+      "score": 100,
+      "chars": 226,
+      "sample": "À travers un balado intime et sans jugement, ces deux journalistes brisent le silence sur l’anorexie",
       "changed": true
     },
     {
-      "title": "Le mental, ça s’entraîne aussi",
-      "link": "https://lecollectif.ca/a-la-une/le-mental-ca-sentraine-aussi/",
+      "title": "L’ alcool est-il vraiment le nouveau tabac ?",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/lalcool-est-il-vraiment-le-nouveau-tabac/",
       "ok": true,
       "score": 100,
-      "chars": 343,
-      "sample": "À l’Université de Sherbrooke, une chaire de recherche unique au Québec redéfinit ce que signifie êtr",
+      "chars": 417,
+      "sample": "Il fut un temps où le tabac était partout, jusque dans les hôpitaux et les écoles. Aujourd’hui, son ",
       "changed": true
     },
     {
-      "title": "Interdiction des boissons énergisantes pour les moins de 16 ans",
-      "link": "https://lecollectif.ca/a-la-une/interdiction-des-boissons-energisantes-pour-les-moins-de-16-ans/",
+      "title": "Derrière les étiquettes électroniques , la tarification dynamique ?",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/derriere-les-etiquettes-electroniques-la-tarification-dynamique/",
       "ok": true,
       "score": 100,
-      "chars": 445,
-      "sample": "En janvier 2024, Zachary Miron, 15 ans, perd la vie après avoir consommé une boisson énergisante lor",
+      "chars": 390,
+      "sample": "Connue pour ses effets parfois délirants sur les prix des billets électroniques — évènements culture",
       "changed": true
     },
     {
-      "title": "Les animaux et les déménagements",
-      "link": "https://lecollectif.ca/a-la-une/les-animaux-et-les-demenagements/",
+      "title": "Rachat des armes à feu : le Québec est-il l’ exception canadienne ?",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/rachat-des-armes-a-feu-le-quebec-est-il-lexception-canadienne/",
       "ok": true,
       "score": 100,
-      "chars": 407,
-      "sample": "Chaque année, à l’approche du 1 er juillet, date traditionnellement associée aux déménagements au Qu",
+      "chars": 455,
+      "sample": "Le programme fédéral de rachat des armes à feu suit son cours au Canada. Alors que les propriétaires",
       "changed": true
     },
     {
-      "title": "La surconsommation textile : un phénomène aux lourdes conséquences",
-      "link": "https://lecollectif.ca/a-la-une/la-surconsommation-textile-un-phenomene-aux-lourdes-consequences/",
+      "title": "Les jeunes et les médias d’actualité : une confiance de plus en plus érodée",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/les-jeunes-et-les-medias-dactualite-une-confiance-de-plus-en-plus-erodee/",
       "ok": true,
       "score": 100,
-      "chars": 402,
-      "sample": "Acheter de nouveaux vêtements plusieurs fois par année, multiplier les commandes en ligne, donner ou",
+      "chars": 370,
+      "sample": "La confiance des 18 à 34 ans envers les médias traditionnels est en recul constant depuis une dizain",
+      "changed": true
+    },
+    {
+      "title": "Achat de seconde main : une mode dans la mode ?",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/achat-de-seconde-main-une-mode-dans-la-mode/",
+      "ok": true,
+      "score": 100,
+      "chars": 341,
+      "sample": "Les articles de seconde main ont le vent en poupe sur les réseaux sociaux. Les boutiques d'occasion ",
       "changed": true
     }
   ]
