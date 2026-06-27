@@ -1,5 +1,5 @@
 {
-  "_comment": "Registre des sources de nouvelles étudiantes. 'active' est lu par scripts/fetch-news.js. 'candidates' est sondé par scripts/discover-news-sources.js, qui promeut les flux valides vers 'active' et met à jour les statuts. Ne pas éditer les champs _status/_lastItemDate/_lastChecked/_failCount à la main : les bots s'en chargent.",
+  "_comment": "Registre des sources. Champs éditables : name, institution, region, type, lang, url, site, popularity, _note. Champs bots : _status, _lastItemDate, _lastChecked, _failCount. Plusieurs journaux par établissement sont supportés (ex. The Link + The Concordian à Concordia).",
   "active": [
     {
       "name": "Quartier Libre",
@@ -11,7 +11,8 @@
       "_lastChecked": "2026-06-27T00:14:36.713Z",
       "_failCount": 0,
       "_status": "ok",
-      "_lastItemDate": "2026-05-15T16:00:00.000Z"
+      "_lastItemDate": "2026-05-15T16:00:00.000Z",
+      "popularity": 1
     },
     {
       "name": "Montréal Campus",
@@ -23,7 +24,8 @@
       "_lastChecked": "2026-06-27T00:14:38.139Z",
       "_failCount": 0,
       "_status": "ok",
-      "_lastItemDate": "2026-05-09T03:14:30.000Z"
+      "_lastItemDate": "2026-05-09T03:14:30.000Z",
+      "popularity": 3
     },
     {
       "name": "Le Délit",
@@ -32,11 +34,14 @@
       "type": "universite",
       "lang": "fr",
       "url": "https://www.delitfrancais.com/feed/",
-      "wpFeaturedCategories": ["slider"],
+      "wpFeaturedCategories": [
+        "slider"
+      ],
       "_lastChecked": "2026-06-27T00:14:39.045Z",
       "_failCount": 0,
       "_status": "ok",
-      "_lastItemDate": "2026-03-25T11:00:00.000Z"
+      "_lastItemDate": "2026-03-25T11:00:00.000Z",
+      "popularity": 2
     },
     {
       "name": "The McGill Daily",
@@ -48,7 +53,8 @@
       "_lastChecked": "2026-06-27T00:14:39.829Z",
       "_failCount": 0,
       "_status": "ok",
-      "_lastItemDate": "2026-04-11T23:32:01.000Z"
+      "_lastItemDate": "2026-04-11T23:32:01.000Z",
+      "popularity": 4
     },
     {
       "name": "The Link",
@@ -60,7 +66,9 @@
       "_lastChecked": "2026-06-27T00:14:40.622Z",
       "_failCount": 0,
       "_status": "ok",
-      "_lastItemDate": "2026-06-10T17:09:00.000Z"
+      "_lastItemDate": "2026-06-10T17:09:00.000Z",
+      "popularity": 7,
+      "_note": "Journal indépendant de Concordia (fusion Georgian + Loyola News, 1980)."
     },
     {
       "name": "The Concordian",
@@ -73,7 +81,9 @@
       "_lastChecked": "2026-06-27T06:15:00.000Z",
       "_failCount": 0,
       "_status": "ok",
-      "_lastItemDate": "2026-05-02T20:21:24.000Z"
+      "_lastItemDate": "2026-05-02T20:21:24.000Z",
+      "popularity": 7,
+      "_note": "Journal indépendant de Concordia, distinct de The Link (relancé 1984). Flux Substack."
     },
     {
       "name": "Zone Campus",
@@ -85,7 +95,8 @@
       "_lastChecked": "2026-06-27T00:14:42.843Z",
       "_failCount": 0,
       "_status": "ok",
-      "_lastItemDate": "2026-05-08T14:20:26.000Z"
+      "_lastItemDate": "2026-05-08T14:20:26.000Z",
+      "popularity": 9
     },
     {
       "name": "L'Exemplaire",
@@ -97,7 +108,8 @@
       "_lastChecked": "2026-06-27T00:14:45.852Z",
       "_failCount": 0,
       "_status": "ok",
-      "_lastItemDate": "2026-05-15T16:31:24.000Z"
+      "_lastItemDate": "2026-05-15T16:31:24.000Z",
+      "popularity": 5
     },
     {
       "name": "Le Collectif",
@@ -109,7 +121,8 @@
       "_lastChecked": "2026-06-27T00:14:47.483Z",
       "_failCount": 0,
       "_status": "ok",
-      "_lastItemDate": "2026-06-26T20:18:05.000Z"
+      "_lastItemDate": "2026-06-26T20:18:05.000Z",
+      "popularity": 6
     },
     {
       "name": "Exil",
@@ -121,7 +134,8 @@
       "_lastChecked": "2026-06-27T00:14:48.525Z",
       "_failCount": 0,
       "_status": "ok",
-      "_lastItemDate": "2026-04-18T22:22:07.000Z"
+      "_lastItemDate": "2026-04-18T22:22:07.000Z",
+      "popularity": 10
     },
     {
       "name": "La Pige",
@@ -133,7 +147,8 @@
       "_lastChecked": "2026-06-27T00:14:49.829Z",
       "_failCount": 0,
       "_status": "ok",
-      "_lastItemDate": "2026-06-22T14:36:10.000Z"
+      "_lastItemDate": "2026-06-22T14:36:10.000Z",
+      "popularity": 11
     },
     {
       "name": "The Tribune",
@@ -145,7 +160,8 @@
       "_status": "ok",
       "_lastItemDate": "2026-06-26T15:24:28.000Z",
       "_lastChecked": "2026-06-27T00:14:50.670Z",
-      "_failCount": 0
+      "_failCount": 0,
+      "popularity": 8
     }
   ],
   "candidates": [
@@ -189,7 +205,6 @@
       "_lastChecked": "2026-06-27T00:15:11.360Z",
       "_failCount": 2
     },
-
     {
       "name": "Le Brise-Glace",
       "institution": "Cégep de Rimouski",

@@ -77,6 +77,53 @@ La promotion radio est conservative : pas de flux = le candidat reste en file d'
 
 ---
 
+## Protocole : ajouter un journal au fil RADAR
+
+Un établissement peut avoir **plusieurs journaux indépendants** (ex. Concordia :
+**The Link** et **The Concordian** — deux rédactions, deux flux, deux filtres).
+
+### Checklist d'intégration
+
+| Étape | Fichier / commande | Obligatoire |
+|-------|-------------------|-------------|
+| 1. Registre | `news-sources.json` → `active` : `name`, `institution`, `region`, `type`, `lang`, `url`, `popularity` | oui |
+| 2. Site public | champ `site` (réseaux sociaux, découverte) | recommandé |
+| 3. Vérification | `node scripts/verify-news-sources.js --name "<journal>"` | oui |
+| 4. Agrégation | `node scripts/fetch-news.js --update` | oui |
+| 5. Images vedette | `node scripts/ensure-lead-images.js --update` | oui |
+| 6. Réseaux sociaux | `node scripts/fetch-social.js --update` | optionnel |
+| 7. Cache PWA | incrémenter `CACHE_NAME` dans `sw.js` | oui si `app.js` touché |
+| 8. Déploiement | `git commit` + `git push` | oui |
+
+### Raccourci script
+
+```bash
+node scripts/add-news-source.js \
+  --name "The Concordian" \
+  --institution "Concordia University" \
+  --region "Montréal" --type universite --lang en \
+  --url "https://theconcordian.substack.com/feed" \
+  --site "https://theconcordian.com/" \
+  --popularity 7 \
+  --note "Journal indépendant, distinct de The Link" \
+  --promote --update
+```
+
+### Ce qui est automatique (rien à coder)
+
+- **Filtres UI** : générés depuis `news.json` + métadonnées `news-sources.json`
+- **Couleurs** : `brand-colors.json` par **institution** (deux journaux Concordia → même palette)
+- **Vue source** : filtre par `name` (chaque journal a sa propre vue magazine)
+- **Bots CI** : `discover-news-sources`, `fetch-news`, `ensure-lead-images` lisent le registre
+
+### Cas particuliers
+
+- **Site derrière Cloudflare** : chercher un flux alternatif (Substack, WordPress.com, etc.)
+- **Auteur générique** : ajouter le nom du journal dans `GENERIC_AUTHORS` (`fetch-news.js`) si le RSS signe « The Concordian » au lieu d'un humain
+- **WordPress vedettes** : champ optionnel `wpFeaturedCategories` (ex. Le Délit → `slider`)
+
+---
+
 ## Ce qui reste manuel (volontairement)
 
 - **Logos et identité** des nouvelles radios promues automatiquement
