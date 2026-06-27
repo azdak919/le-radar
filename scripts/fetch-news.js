@@ -24,7 +24,7 @@ const ENRICH_TIMEOUT = 12000;
 const MAX_PER_SOURCE = 20;  // archive par journal (certains flux RSS en ont 18+)
 const MAX_WP_FEATURED = 8;  // vedettes WordPress (catégorie slider, etc.)
 const WP_FEATURED_SLUGS = ['slider', 'a-la-une', 'featured'];
-const MAX_ENRICH = 20;      // cap article-page fetches per run
+const MAX_ENRICH = 45;      // cap article-page fetches per run
 
 const GENERIC_AUTHORS = /^(admin|administrator|administrateur|editor|éditeur|editeur|rédaction|redaction|staff|wordpress|webmaster|collectif|le collectif|tribune|link|daily|exemplaire|quartier libre|zone campus|la pige|le délit|le delit|the link|the tribune|the mcgill daily)$/i;
 
@@ -424,10 +424,95 @@ function authorFromArticleHtml(html = '') {
   return '';
 }
 
+function isCandidateImageUrl(raw = '') {
+  const src = String(raw).trim();
+  if (!src) return false;
+  try {
+    const url = new URL(src);
+    if (!['http:', 'https:'].includes(url.protocol)) return false;
+    const path = decodeURIComponent(url.pathname).toLowerCase();
+    if (/(logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley)/.test(path)) {
+      return false;
+    }
+    if (/(?:^|\/)(?:1x1|pixel)\b/.test(path)) return false;
+    if (/article-tile|size-article-tile|thumbnail|thumb_|-150x\d+\./.test(path)) return false;
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function isWeakImageUrl(raw = '') {
+  const path = String(raw).toLowerCase();
+  if (/-\d{2,3}x\d{2,3}\./.test(path) && !/-\d{3,4}x\d{3,4}\./.test(path)) return true;
+  return /article-tile|size-article-tile/.test(path);
+}
+
+function needsImageEnrichment(item) {
+  if (!item.link) return false;
+  if (!item.image || !isCandidateImageUrl(item.image)) return true;
+  return isWeakImageUrl(item.image);
+}
+
+function imageFromArticleHtml(html = '') {
+  const candidates = [];
+
+  const ogImage = metaContent(html, 'og:image');
+  const ogW = parseInt(metaContent(html, 'og:image:width'), 10) || 0;
+  if (ogImage && isCandidateImageUrl(ogImage)) {
+    candidates.push({ url: ogImage, score: 100 + Math.min(ogW, 2400) / 10 });
+  }
+
+  for (const key of ['twitter:image', 'twitter:image:src']) {
+    const tw = metaContent(html, key);
+    if (tw && isCandidateImageUrl(tw)) candidates.push({ url: tw, score: 90 });
+  }
+
+  const wpPost = html.match(
+    /<img[^>]+class=["'][^"']*wp-post-image[^"']*["'][^>]*>/i,
+  );
+  if (wpPost) {
+    const tag = wpPost[0];
+    const srcM = tag.match(/src=["']([^"']+)["']/i);
+    const w = parseInt((tag.match(/width=["'](\d+)["']/i) || [])[1], 10) || 0;
+    if (srcM && isCandidateImageUrl(srcM[1]) && !isWeakImageUrl(srcM[1])) {
+      candidates.push({ url: srcM[1], score: 85 + w / 10 });
+    }
+  }
+
+  const neve = html.match(/class=["'][^"']*attachment-neve-blog[^"']*["'][^>]*src=["']([^"']+)["']/i);
+  if (neve && isCandidateImageUrl(neve[1])) {
+    candidates.push({ url: neve[1], score: 88 });
+  }
+
+  const jsonLdBlocks = html.match(/<script[^>]+type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/gi) || [];
+  for (const block of jsonLdBlocks) {
+    const m = block.match(/"image"\s*:\s*"([^"]+)"/)
+      || block.match(/"image"\s*:\s*\[\s*"([^"]+)"/)
+      || block.match(/"url"\s*:\s*"(https?:[^"]+\.(?:jpe?g|png|webp)[^"]*)"/i);
+    if (m && isCandidateImageUrl(m[1])) candidates.push({ url: m[1], score: 75 });
+  }
+
+  const body = articleBodyHtml(html);
+  for (const m of body.matchAll(/<img[^>]+src=["']([^"']+)["'][^>]*>/gi)) {
+    const tag = m[0];
+    const src = decodeEntities(m[1]);
+    const w = parseInt((tag.match(/width=["'](\d+)["']/i) || [])[1], 10) || 0;
+    if (!isCandidateImageUrl(src) || isWeakImageUrl(src)) continue;
+    if (w > 0 && w < 400) continue;
+    candidates.push({ url: src, score: 60 + w / 10 });
+    break;
+  }
+
+  if (!candidates.length) return '';
+  candidates.sort((a, b) => b.score - a.score);
+  return candidates[0].url;
+}
+
 function needsEnrichment(item) {
   const thinExcerpt = !item.excerpt || isJunkExcerpt(item.excerpt);
   const missingAuthor = !item.author || isGenericAuthor(item.author);
-  return thinExcerpt || missingAuthor;
+  return thinExcerpt || missingAuthor || needsImageEnrichment(item);
 }
 
 async function enrichItem(item) {
@@ -436,6 +521,11 @@ async function enrichItem(item) {
 
   const next = { ...item };
   const body = articleBodyHtml(html);
+
+  if (needsImageEnrichment(next)) {
+    const img = imageFromArticleHtml(html);
+    if (img) next.image = img;
+  }
 
   if (!next.author || isGenericAuthor(next.author)) {
     const candidates = [
@@ -479,16 +569,33 @@ async function enrichItem(item) {
 }
 
 async function enrichItems(items) {
+  const queue = [
+    ...items.filter(needsImageEnrichment),
+    ...items.filter((item) => needsEnrichment(item) && !needsImageEnrichment(item)),
+  ];
+  const seen = new Set();
   let enriched = 0;
-  for (const item of items) {
+  let imagesAdded = 0;
+
+  for (const item of queue) {
     if (enriched >= MAX_ENRICH) break;
-    if (!needsEnrichment(item)) continue;
+    if (!item.link || seen.has(item.link)) continue;
+    seen.add(item.link);
+
+    const hadImage = item.image && isCandidateImageUrl(item.image) && !isWeakImageUrl(item.image);
     const updated = await enrichItem(item);
     Object.assign(item, updated);
     enriched += 1;
+
+    const hasImage = item.image && isCandidateImageUrl(item.image) && !isWeakImageUrl(item.image);
+    if (!hadImage && hasImage) imagesAdded += 1;
+
     await sleep(250);
   }
-  if (enriched) console.log(`↻ Enriched ${enriched} articles from source pages`);
+
+  if (enriched) {
+    console.log(`↻ Enriched ${enriched} articles from source pages (${imagesAdded} images)`);
+  }
   return items;
 }
 
@@ -547,8 +654,13 @@ async function main() {
 
   const withAuthor = news.items.filter((i) => i.author && !isGenericAuthor(i.author)).length;
   const withExcerpt = news.items.filter((i) => i.excerpt && !isJunkExcerpt(i.excerpt)).length;
+  const withImage = news.items.filter(
+    (i) => i.image && isCandidateImageUrl(i.image) && !isWeakImageUrl(i.image),
+  ).length;
   console.log(`\nTotal: ${news.items.length} articles from ${SOURCES.length} sources.`);
-  console.log(`Authors: ${withAuthor}/${news.items.length} · Excerpts: ${withExcerpt}/${news.items.length}`);
+  console.log(
+    `Authors: ${withAuthor}/${news.items.length} · Excerpts: ${withExcerpt}/${news.items.length} · Images: ${withImage}/${news.items.length}`,
+  );
 
   if (doUpdate) {
     fs.writeFileSync(NEWS_PATH, JSON.stringify(news, null, 2) + '\n');
