@@ -492,9 +492,11 @@ function nowAirLines(radio) {
 
   // La grille donne l'émission de l'heure ; le flux ICY précise la pièce en ondes.
   if (scheduled) {
+    const timeRange = slot.start && slot.end ? `${slot.start} – ${slot.end}` : '';
     let sub;
     if (live && normLoose(live) !== normLoose(scheduled)) sub = `♪ ${live}`;
     else if (slot.host) sub = `avec ${slot.host}`;
+    else if (timeRange) sub = timeRange;
     else sub = slogan || `Vous écoutez ${radio.name}`;
     return { title: scheduled, sub };
   }
