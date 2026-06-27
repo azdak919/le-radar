@@ -303,6 +303,23 @@ a { color: inherit; }
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.tuner-now-sub-text {
+  display: inline-block;
+  white-space: nowrap;
+}
+/* Défilement doux droite → gauche quand le nom d'institution dépasse */
+.tuner-now-sub.is-marquee { text-overflow: clip; }
+.tuner-now-sub.is-marquee .tuner-now-sub-text {
+  animation: tunerMarquee var(--marquee-duration, 12s) linear infinite alternate;
+}
+@keyframes tunerMarquee {
+  0%, 14%   { transform: translateX(0); }
+  86%, 100% { transform: translateX(var(--marquee-shift, 0)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tuner-now-sub.is-marquee { text-overflow: ellipsis; }
+  .tuner-now-sub.is-marquee .tuner-now-sub-text { animation: none; }
+}
 
 .tuner-play {
   flex-shrink: 0;
@@ -441,6 +458,12 @@ a { color: inherit; }
 
   .tuner-nowair {
     display: flex;
+    /* Largeur calée sur la colonne « En bref » (grid-column 2 : minmax(300px, 370px))
+       pour que le bandeau « À l'antenne » reste à la même position quand on change
+       de poste, au lieu de glisser selon la longueur du titre. */
+    flex: 0 0 370px;
+    width: 370px;
+    max-width: 370px;
     margin-left: auto;
   }
 
