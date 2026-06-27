@@ -1333,6 +1333,11 @@ function ensureHeroLeadHasImage(heroItems, allItems) {
 
 function cleanCreatorDisplay(raw = '') {
   let s = String(raw).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  const attrIdx = s.search(/\s*(?:["'])\s*(?:width|height|srcset|class|style)\s*=/i);
+  if (attrIdx > 0) s = s.slice(0, attrIdx);
+  const bareAttr = s.search(/\s+(?:width|height|srcset)\s*=\s*["']/i);
+  if (bareAttr > 0) s = s.slice(0, bareAttr);
+  s = s.replace(/\\+"/g, '"').replace(/\)\s*["']\s*$/g, ')').replace(/["']\s*$/g, '').trim();
   s = s.replace(/\.mw-parser-output[\s\S]*/i, '').trim();
   if (s.length > 72) {
     const cut = s.slice(0, 72);
@@ -1395,7 +1400,7 @@ function buildSourcePhotoCreditElement(item = {}) {
   const inline = credit.match(/^Photo\s*:\s*(.+)$/i);
   if (inline) {
     cap.appendChild(document.createTextNode(en ? 'Photo: ' : 'Photo : '));
-    const label = inline[1].trim();
+    const label = cleanCreatorDisplay(inline[1].trim());
     if (url && creator) cap.appendChild(creditLink(url, creator, 'article-media-credit__creator'));
     else cap.appendChild(document.createTextNode(label));
     return cap;

@@ -15,6 +15,17 @@ function stripHtml(text = '') {
     .trim();
 }
 
+/** Retire les fuites d'attributs HTML (ex. `)" width="1661" height="527"`). */
+function sanitizeCreditText(text = '') {
+  let s = stripHtml(text);
+  const attrIdx = s.search(/\s*(?:["'])\s*(?:width|height|srcset|class|style|loading|decoding|sizes|alt)\s*=/i);
+  if (attrIdx > 0) s = s.slice(0, attrIdx);
+  const bareAttr = s.search(/\s+(?:width|height|srcset)\s*=\s*["']/i);
+  if (bareAttr > 0) s = s.slice(0, bareAttr);
+  s = s.replace(/\\+"/g, '"').replace(/\)\s*["']\s*$/g, ')').replace(/["']\s*$/g, '').trim();
+  return s.replace(/\s+/g, ' ').trim();
+}
+
 function imageUrlKey(url = '') {
   try {
     const path = decodeURIComponent(new URL(url).pathname).toLowerCase();
@@ -63,27 +74,46 @@ function flattenJsonLd(nodes = [], acc = []) {
 }
 
 function extractCreditSnippet(text = '') {
-  const t = stripHtml(text);
+  const t = sanitizeCreditText(text);
+  const parenColon = t.match(/\((?:Photo|Crédit|Credit)\s*:\s*([^)]+)\)/i);
+  if (parenColon) return sanitizeCreditText(parenColon[1]);
   const paren = t.match(/\((?:Photo|Crédit|Credit)\s+(?:by|par)\s+([^)]+)\)/i);
-  if (paren) return paren[1].trim();
+  if (paren) return sanitizeCreditText(paren[1]);
   const inline = t.match(/(?:Photo|Crédit|Credit)\s+(?:by|par)\s+([^).]+(?:\s+via\s+[^).]+)?)/i);
-  if (inline) return inline[1].trim();
-  if (CREDIT_LINE_RE.test(t)) return t.replace(CREDIT_LINE_RE, '$1').trim();
+  if (inline) return sanitizeCreditText(inline[1]);
+  if (CREDIT_LINE_RE.test(t)) return sanitizeCreditText(t.replace(CREDIT_LINE_RE, '$1'));
   return t;
 }
 
+function extractEmbeddedPhotoCredit(text = '') {
+  const t = stripHtml(text);
+  const patterns = [
+    /\((?:Photo|Crédit|Credit)\s*:\s*([^)]+)\)/gi,
+    /\((?:Photo|Crédit|Credit)\s+(?:by|par)\s+([^)]+)\)/gi,
+    /\((?:Photo|Crédit|Credit)\s*:\s*([^)"']+)$/gi,
+  ];
+  let last = '';
+  for (const re of patterns) {
+    for (const m of t.matchAll(re)) last = m[1];
+  }
+  return sanitizeCreditText(last);
+}
+
 function normalizeCreditPhrase(text = '') {
-  let s = extractCreditSnippet(text);
+  const embedded = extractEmbeddedPhotoCredit(text);
+  let s = embedded || sanitizeCreditText(extractCreditSnippet(text));
   s = s.replace(/^["'«]|["'»]$/g, '').trim();
   s = s.replace(PHOTO_BY_RE, (_, who, via) => (via ? `${who.trim()} via ${via.trim()}` : who.trim()));
   s = s.replace(/^[(\[]+|[)\]]+$/g, '').trim();
-  return s;
+  return sanitizeCreditText(s);
 }
 
 function looksLikePhotoCredit(text = '') {
   const t = stripHtml(text);
   if (!t || t.length < 4) return false;
+  if (extractEmbeddedPhotoCredit(t)) return true;
   if (CREDIT_LINE_RE.test(t)) return true;
+  if (/\((?:Photo|Crédit|Credit)\s*:\s*[^)]+\)/i.test(t)) return true;
   if (/\((?:Photo|Crédit|Credit)\s+(?:by|par)\s+[^)]+\)/i.test(t)) return true;
   if (/(?:Photo|Crédit|Credit)\s+(?:by|par)\s+/i.test(t)) return true;
   if (PHOTO_BY_RE.test(t)) return true;
@@ -171,7 +201,9 @@ function extractBodyCredit(html = '', imageUrl = '') {
   if (imageUrl) {
     const key = imageUrlKey(imageUrl).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     if (key.length > 8) {
-      const near = html.match(new RegExp(`${key}[\\s\\S]{0,500}?((?:Photo|Crédit|Credit)[^<]{4,140})`, 'i'));
+      const near = html.match(
+        new RegExp(`${key}[\\s\\S]{0,500}?((?:Photo|Crédit|Credit)\\s*:\\s*[^"<)\\n]{2,80})`, 'i'),
+      );
       if (near && looksLikePhotoCredit(near[1])) {
         const parsed = creditFromPhrase(near[1]);
         if (parsed) return { ...parsed, source: 'near-image' };
@@ -263,17 +295,27 @@ function applySourcePhotoCredit(item, resolved, { doUpdate = false } = {}) {
   return { changed, cited: resolved.cited, method: resolved.method || null };
 }
 
+function creditLooksCorrupt(text = '') {
+  return /\b(?:width|height|srcset)\s*=/i.test(text) || /\\?"\s*width/i.test(text);
+}
+
 function needsSourceCreditCheck(item) {
   if (!item?.link || !item?.image) return false;
   const key = imageUrlKey(item.image);
   if (!key) return false;
-  if (item.sourceImageCredit && item.sourceImageCreditImageKey === key) return false;
+  if (item.sourceImageCredit && item.sourceImageCreditImageKey === key) {
+    if (!creditLooksCorrupt(item.sourceImageCredit) && !creditLooksCorrupt(item.sourceImageCreator)) {
+      return false;
+    }
+  }
   return true;
 }
 
 module.exports = {
   imageUrlKey,
   urlsMatch,
+  sanitizeCreditText,
+  creditLooksCorrupt,
   looksLikePhotoCredit,
   extractPhotoCreditFromHtml,
   resolveSourcePhotoCredit,
