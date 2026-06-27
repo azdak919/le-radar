@@ -41,13 +41,14 @@ jobs:
           node scripts/ensure-lead-images.js --update
           node scripts/verify-photo-credits.js --update
           node scripts/fetch-social.js --update
+          node scripts/generate-feed.js --update
         env:
           CI: true
 
       - name: Check for changes
         id: check
         run: |
-          if git diff --quiet news.json author-qc.json lead-excerpt-qc.json social-feed.json lead-image-qc.json photo-credit-qc.json; then
+          if git diff --quiet news.json author-qc.json lead-excerpt-qc.json social-feed.json lead-image-qc.json photo-credit-qc.json feed.xml feed-fr.xml feed-en.xml; then
             echo "changed=false" >> $GITHUB_OUTPUT
           else
             echo "changed=true" >> $GITHUB_OUTPUT
@@ -58,8 +59,8 @@ jobs:
         run: |
           git config user.name "RÉQ News Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add news.json author-qc.json lead-excerpt-qc.json social-feed.json lead-image-qc.json photo-credit-qc.json
-          git commit -m "bot: update student news feed, excerpts, images, photo credits and social (auto)"
+          git add news.json author-qc.json lead-excerpt-qc.json social-feed.json lead-image-qc.json photo-credit-qc.json feed.xml feed-fr.xml feed-en.xml
+          git commit -m "bot: update student news feed, excerpts, images, photo credits, RSS and social (auto)"
           # Rebase onto any work pushed since checkout so the bot never
           # clobbers manual commits and never fails on a fast-forward race.
           for i in 1 2 3; do

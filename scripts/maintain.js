@@ -223,6 +223,7 @@ async function main() {
     ['Lead image QC', `node scripts/ensure-lead-images.js ${flag}`.trim()],
     ['Photo credit QC', `node scripts/verify-photo-credits.js ${flag}`.trim()],
     ['Social feed', `node scripts/fetch-social.js ${flag}`.trim()],
+    ['RSS export', `node scripts/generate-feed.js ${flag}`.trim()],
   ];
 
   for (const [label, cmd] of pipeline) {
