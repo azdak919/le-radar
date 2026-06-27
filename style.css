@@ -530,9 +530,10 @@ a { color: inherit; }
 .filter-btn__name {
   font-size: 12px;
   font-weight: 700;
-  line-height: 1.15;
+  line-height: 1.2;
   color: var(--ink);
   text-align: left;
+  text-wrap: pretty;
 }
 .filter-btn__inst {
   font-size: 10px;
@@ -561,6 +562,32 @@ a { color: inherit; }
 .filter-btn.active .filter-btn__dot {
   background: #fff;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+
+/* Filtres sources — thème sombre : pastille teintée (pas de fond blanc) */
+[data-theme="dark"] .filter-btn {
+  background: var(--bg-soft);
+  border-color: var(--rule);
+}
+[data-theme="dark"] .filter-btn:hover {
+  border-color: var(--ink-soft);
+  background: #1c1e24;
+}
+[data-theme="dark"] .filter-btn.active {
+  background: color-mix(in srgb, var(--c, var(--accent)) 20%, var(--bg-soft));
+  border-color: color-mix(in srgb, var(--c, var(--accent)) 50%, var(--rule));
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c, var(--accent)) 12%, transparent);
+}
+[data-theme="dark"] .filter-btn.active .filter-btn__name {
+  color: var(--ink);
+}
+[data-theme="dark"] .filter-btn.active .filter-btn__inst {
+  color: var(--muted);
+}
+[data-theme="dark"] .filter-btn.active .filter-btn__dot {
+  background: var(--c, var(--accent));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--c, var(--accent)) 28%, transparent);
 }
 
 /* ── Articles (text only) ── */
@@ -640,8 +667,7 @@ a { color: inherit; }
   align-items: center;
   gap: 6px;
   font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
   color: var(--c, var(--accent));
 }
 .article-source::before {
