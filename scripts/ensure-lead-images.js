@@ -19,11 +19,7 @@ const {
   sleep,
 } = require('./article-image-lib');
 const { findStockPhoto, cleanCreatorName } = require('./stock-photo-lib');
-const {
-  fetchSourcePhotoCredit,
-  applySourcePhotoCredit,
-  needsSourceCreditCheck,
-} = require('./article-photo-credit-lib');
+
 
 const ROOT = path.join(__dirname, '..');
 const NEWS_PATH = path.join(ROOT, 'news.json');
@@ -31,8 +27,6 @@ const QC_PATH = path.join(ROOT, 'lead-image-qc.json');
 const HERO_MIN_POOL = 4;
 const PAGE_SCRAPE_LIMIT = 30;
 const STOCK_SEARCH_LIMIT = 28;
-const SOURCE_CREDIT_LIMIT = 200;
-
 const doUpdate = process.argv.includes('--update');
 
 function readJson(p, fallback) {
@@ -96,10 +90,6 @@ async function main() {
   let photosRecovered = 0;
   let stockFound = 0;
   let stockSearches = 0;
-  let sourceCreditsChecked = 0;
-  let sourceCreditsCited = 0;
-  let sourceCreditsFallback = 0;
-  let sourceCreditsUpdated = 0;
   const gaps = [];
 
   const scrapeQueue = items
@@ -160,20 +150,6 @@ async function main() {
     await sleep(300);
   }
 
-  const creditQueue = items
-    .filter((item) => item.image && isCandidateImageUrl(item.image) && needsSourceCreditCheck(item))
-    .slice(0, SOURCE_CREDIT_LIMIT);
-
-  for (const item of creditQueue) {
-    const resolved = await fetchSourcePhotoCredit(item);
-    sourceCreditsChecked += 1;
-    const result = applySourcePhotoCredit(item, resolved, { doUpdate });
-    if (result.cited) sourceCreditsCited += 1;
-    else if (resolved) sourceCreditsFallback += 1;
-    if (result.changed) sourceCreditsUpdated += 1;
-    await sleep(200);
-  }
-
   const withPhoto = items.filter((i) => i.image && isCandidateImageUrl(i.image)).length;
   const withStock = items.filter((i) => i.stockImage && isCandidateImageUrl(i.stockImage)).length;
   const fullyCovered = items.filter((i) => hasUsableImage(i)).length;
@@ -190,10 +166,6 @@ async function main() {
     photosRecovered,
     stockSearches,
     stockFound,
-    sourceCreditsChecked,
-    sourceCreditsCited,
-    sourceCreditsFallback,
-    sourceCreditsUpdated,
     mainPageLeadReady: leadReadyCount >= Math.min(HERO_MIN_POOL, items.length),
     gaps: gaps.slice(0, 12),
   };
@@ -207,8 +179,8 @@ async function main() {
   console.log(`Pages scrapées    : ${qc.pageScraped}`);
   console.log(`Banques consultées: ${qc.stockSearches}`);
   console.log(`Photos libres     : ${qc.stockFound}`);
-  console.log(`Crédits source    : ${qc.sourceCreditsChecked} vérifiés (${qc.sourceCreditsCited} cités, ${qc.sourceCreditsFallback} repli média)`);
   console.log(`Couverture totale : ${qc.fullyCovered}/${qc.total}`);
+  console.log('Crédits photo     : voir scripts/verify-photo-credits.js');
 
   if (gaps.length) {
     console.log('\nArticles sans visuel vedette :');

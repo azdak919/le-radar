@@ -4,6 +4,26 @@
  */
 
 const { fetchText, articleBodyHtml, decodeEntities } = require('./article-image-lib');
+const { normalizeArticleUrl } = require('./author-lib');
+
+const PHOTO_CREDIT_FIELDS = [
+  'sourceImageCredit',
+  'sourceImageCreator',
+  'sourceImageCreditUrl',
+  'sourceImageCreditFrom',
+  'sourceImageCreditCited',
+  'sourceImageCreditImageKey',
+];
+
+const LEAD_IMAGE_FIELDS = [
+  'leadImageReady',
+  'stockImage',
+  'imageCredit',
+  'imageCreator',
+  'imageLicense',
+  'imageProvider',
+  'imageSourceUrl',
+];
 
 const CREDIT_LINE_RE = /^(?:Photo|Crédit(?:\s+photo)?|Credit(?:\s+photo)?)\s*[:]\s*(.+)$/i;
 const PHOTO_BY_RE = /(?:\(|^)\s*Photo\s+by\s+([^).]+?)(?:\s+via\s+([^).]+))?\s*\)?\.?$/i;
@@ -366,12 +386,68 @@ function needsSourceCreditCheck(item) {
   if (!item?.link || !item?.image) return false;
   const key = imageUrlKey(item.image);
   if (!key) return false;
-  if (item.sourceImageCredit && item.sourceImageCreditImageKey === key) {
-    if (!creditLooksCorrupt(item.sourceImageCredit) && !creditLooksCorrupt(item.sourceImageCreator)) {
-      return false;
-    }
+  if (item.sourceImageCredit && !creditLooksCorrupt(item.sourceImageCredit)
+    && !creditLooksCorrupt(item.sourceImageCreator)) {
+    const storedKey = item.sourceImageCreditImageKey || key;
+    if (storedKey === key) return false;
   }
   return true;
+}
+
+/** Priorise vedette + articles récents sans crédit (rotation dynamique à la une). */
+function buildPhotoCreditQueue(items = [], { heroPool = 45 } = {}) {
+  return items
+    .map((item, index) => ({ item, index }))
+    .filter(({ item }) => item?.image && String(item.image).trim() && needsSourceCreditCheck(item))
+    .sort((a, b) => {
+      const aMiss = a.item.sourceImageCredit ? 1 : 0;
+      const bMiss = b.item.sourceImageCredit ? 1 : 0;
+      if (aMiss !== bMiss) return aMiss - bMiss;
+      const aHero = a.index < heroPool || a.item.featured ? 0 : 1;
+      const bHero = b.index < heroPool || b.item.featured ? 0 : 1;
+      if (aHero !== bHero) return aHero - bHero;
+      return (Date.parse(b.item.date) || 0) - (Date.parse(a.item.date) || 0);
+    })
+    .map(({ item }) => item);
+}
+
+function mergePriorEnrichment(item = {}, prior = null) {
+  if (!prior) return item;
+  if (normalizeArticleUrl(item.link) !== normalizeArticleUrl(prior.link)) return item;
+
+  const imageKey = imageUrlKey(item.image);
+  const priorImageKey = imageUrlKey(prior.image);
+  if (imageKey && priorImageKey && imageKey === priorImageKey) {
+    for (const field of [...PHOTO_CREDIT_FIELDS, ...LEAD_IMAGE_FIELDS]) {
+      if (prior[field] !== undefined && prior[field] !== '') {
+        item[field] = prior[field];
+      }
+    }
+  }
+
+  if (prior.leadExcerpt) item.leadExcerpt = prior.leadExcerpt;
+  return item;
+}
+
+function auditPhotoCredits(items = []) {
+  const withImage = items.filter((i) => i.image && String(i.image).trim());
+  const withCredit = withImage.filter((i) => i.sourceImageCredit && String(i.sourceImageCredit).trim());
+  const cited = withCredit.filter((i) => i.sourceImageCreditCited);
+  const pending = buildPhotoCreditQueue(items);
+  const missingHero = items
+    .slice(0, 45)
+    .filter((i) => i.image && !i.sourceImageCredit)
+    .length;
+
+  return {
+    total: items.length,
+    withImage: withImage.length,
+    withCredit: withCredit.length,
+    cited: cited.length,
+    pending: pending.length,
+    missingHero,
+    ok: missingHero === 0 && pending.length === 0,
+  };
 }
 
 module.exports = {
@@ -386,5 +462,10 @@ module.exports = {
   fetchSourcePhotoCredit,
   applySourcePhotoCredit,
   needsSourceCreditCheck,
+  buildPhotoCreditQueue,
+  mergePriorEnrichment,
+  auditPhotoCredits,
   formatMediaFallbackCredit,
+  PHOTO_CREDIT_FIELDS,
+  LEAD_IMAGE_FIELDS,
 };
