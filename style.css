@@ -1004,7 +1004,64 @@ a { color: inherit; }
     margin: 0;
   }
 
-  /* Cartes fil mobile — gabarit commun En bref + Suite du fil */
+  /* Méta mobile — date sous la source (à la une, vedettes, en bref, suite) */
+  .news-hero .article--lead .article-eyebrow + .article-meta {
+    margin-top: 0;
+    margin-bottom: 4px;
+  }
+
+  .news-hero .article--lead .article-meta,
+  .news-hero .article--feature .article-meta,
+  .brief-rail .article--compact .article-meta,
+  .news-tail .article--standard .article-meta {
+    font-size: 11px;
+    margin-bottom: 4px;
+    grid-template-columns: 1fr;
+    row-gap: 2px;
+  }
+
+  .news-hero .article--lead .article-source,
+  .news-hero .article--feature .article-source,
+  .brief-rail .article--compact .article-source,
+  .news-tail .article--standard .article-source {
+    font-size: 11px;
+    gap: 5px;
+    letter-spacing: 0.03em;
+  }
+
+  .news-hero .article--lead .article-source::before,
+  .news-hero .article--feature .article-source::before,
+  .brief-rail .article--compact .article-source::before,
+  .news-tail .article--standard .article-source::before {
+    width: 7px;
+    height: 7px;
+  }
+
+  .news-hero .article--lead .article-inst,
+  .news-hero .article--feature .article-inst,
+  .brief-rail .article--compact .article-inst,
+  .news-tail .article--standard .article-inst {
+    font-size: 11px;
+  }
+
+  .news-hero .article--lead .article-time,
+  .news-hero .article--feature .article-time,
+  .brief-rail .article--compact .article-time,
+  .news-tail .article--standard .article-time {
+    grid-row: 2;
+    grid-column: 1;
+    justify-self: start;
+    text-align: left;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .news-hero .article--lead .article-time::before,
+  .news-hero .article--feature .article-time::before,
+  .brief-rail .article--compact .article-time::before,
+  .news-tail .article--standard .article-time::before {
+    display: none;
+  }
 
   .news-tail {
     border-top: 1px solid var(--rule);
@@ -1012,58 +1069,18 @@ a { color: inherit; }
     margin-top: 0;
   }
 
+  /* Cartes fil mobile — En bref + Suite du fil */
   .brief-rail .article--compact,
   .news-tail .article--standard {
-    padding: 10px 0;
-  }
-
-  .brief-rail .article--compact .article-meta,
-  .news-tail .article--standard .article-meta {
-    font-size: 10px;
-    margin-bottom: 3px;
-    grid-template-columns: 1fr;
-    row-gap: 1px;
-  }
-
-  .brief-rail .article--compact .article-source,
-  .news-tail .article--standard .article-source {
-    font-size: 10px;
-    gap: 4px;
-    letter-spacing: 0.03em;
-  }
-
-  .brief-rail .article--compact .article-source::before,
-  .news-tail .article--standard .article-source::before {
-    width: 6px;
-    height: 6px;
-  }
-
-  .brief-rail .article--compact .article-inst,
-  .news-tail .article--standard .article-inst {
-    font-size: 10px;
-  }
-
-  .brief-rail .article--compact .article-time,
-  .news-tail .article--standard .article-time {
-    grid-row: 2;
-    grid-column: 1;
-    justify-self: start;
-    text-align: left;
-    font-size: 10px;
-    white-space: nowrap;
-  }
-
-  .brief-rail .article--compact .article-time::before,
-  .news-tail .article--standard .article-time::before {
-    display: none;
+    padding: 12px 0;
   }
 
   .brief-rail .article--compact .article-title,
   .news-tail .article--standard .article-title {
     font-family: var(--sans);
-    font-size: 1.02rem;
+    font-size: 1.14rem;
     font-weight: 700;
-    line-height: 1.28;
+    line-height: 1.3;
     letter-spacing: -0.01em;
     margin-top: 0;
     hyphens: manual;
@@ -1077,15 +1094,15 @@ a { color: inherit; }
 
   .brief-rail .article--compact .article-byline,
   .news-tail .article--standard .article-byline {
-    font-size: 0.72rem;
-    margin: 1px 0 3px;
+    font-size: 0.78rem;
+    margin: 2px 0 4px;
   }
 
   .brief-rail .article--compact .article-brief,
   .news-tail .article--standard .article-brief {
-    font-size: 0.8rem;
-    line-height: 1.4;
-    margin-top: 3px;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    margin-top: 4px;
     color: var(--ink-soft);
   }
 

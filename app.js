@@ -1096,13 +1096,10 @@ function createArticle(item, role = 'standard') {
   a.style.setProperty('--c', color);
 
   const d = item.date ? new Date(item.date) : null;
-  const instMetaLabel = (role === 'compact' || role === 'standard')
-    ? shortInstitution(item.institution, item.type)
-    : articleInstitutionLabel(item.institution, item.type);
+  const instMetaLabel = shortInstitution(item.institution, item.type)
+    || articleInstitutionLabel(item.institution, item.type);
   const time = d
-    ? (role === 'compact' || role === 'standard'
-      ? formatStampCompact(d, item.lang === 'en' ? 'en' : 'fr')
-      : formatStamp(d))
+    ? formatStampCompact(d, item.lang === 'en' ? 'en' : 'fr')
     : '';
   const fresh = d ? (Date.now() - d) < 120 * 60000 : false;
   const { author: rawAuthor, body } = splitByline(item);
