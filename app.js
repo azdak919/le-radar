@@ -270,10 +270,11 @@ function selectStation(id, { autoplay = false, openExternal = false } = {}) {
   const playable = getPlayableStream(radio);
   const external = isExternalListen(radio);
 
-  TUNER_NAME.textContent = radio.fullName || radio.name;
+  const inst = shortInstitution(radio.institution, radio.type);
+  TUNER_NAME.textContent = radio.name;
   TUNER_SUB.textContent = external
-    ? `Écoute sur site externe · ${radio.institution}`
-    : `${radio.frequency} · ${radio.institution}`;
+    ? `Site externe · ${inst}`
+    : `${radio.frequency} · ${inst}`;
 
   TUNER_PLAY.disabled = !playable && !external;
   TUNER_PLAY.title = playable
