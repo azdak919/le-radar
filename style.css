@@ -797,9 +797,24 @@ a { color: inherit; }
     display: block;
   }
 
-  .article--compact,
-  .article--standard {
+  .article--compact {
     grid-column: 1 / -1;
+  }
+
+  .news-tail {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 28px;
+  }
+}
+
+@media (max-width: 819px) {
+  .news-tail {
+    display: block;
+  }
+
+  .news-tail-title {
+    margin-top: 20px;
   }
 }
 
@@ -838,10 +853,9 @@ a { color: inherit; }
     transform: none;
   }
 
-  /* Colonne principale : vedette, approfondissements, suite du fil */
+  /* Colonne principale : vedette + approfondissements */
   .article--lead,
-  .article--feature,
-  .article--standard {
+  .article--feature {
     grid-column: 1;
     padding-right: 32px;
     border-bottom: 1px solid var(--rule);
@@ -902,18 +916,46 @@ a { color: inherit; }
     margin-bottom: 5px;
   }
 
-  .article--standard {
-    padding: 11px 32px 11px 0;
-    border-top: 0;
+  /* Suite du fil : pleine largeur sous le bloc magazine */
+  .news-tail {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 32px;
+    border-top: 2px solid var(--rule-strong);
+    padding-top: 6px;
   }
 
-  .article--standard .article-meta {
+  .news-tail-title {
+    grid-column: 1 / -1;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 14px 0 6px;
+    padding: 0;
+  }
+
+  .news-tail .article--standard {
+    grid-column: auto;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .news-tail .article--standard .article-meta {
     margin-bottom: 6px;
   }
 
-  .article--standard .article-title {
-    font-size: 1.32rem;
+  .news-tail .article--standard .article-title {
+    font-size: 1.22rem;
     line-height: 1.2;
+  }
+
+  .news-tail .article--standard .article-brief {
+    font-size: 0.9rem;
+    line-height: 1.5;
   }
 
   /* Colonne droite : fil court multi-sources */
