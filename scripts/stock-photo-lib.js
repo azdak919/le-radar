@@ -418,7 +418,13 @@ async function searchWikimedia(query, matchTokens, context = null) {
   return out.sort((a, b) => b.score - a.score);
 }
 
+function isRasterImageUrl(url = '') {
+  const path = String(url).split('?')[0].split('#')[0].toLowerCase();
+  return /\.(jpe?g|png|webp|gif|avif|bmp)$/i.test(path);
+}
+
 async function validateCandidate(hit) {
+  if (!isRasterImageUrl(hit.url)) return null;
   if (meetsLeadDisplaySize(hit.width, hit.height)) return hit;
   const dims = await probeRemoteImageSize(hit.url);
   if (!dims) {

@@ -276,8 +276,55 @@ function isCandidateImageUrl(raw = '', extraRejectPatterns = []) {
   }
 }
 
+function resizeFromImageUrl(raw = '') {
+  try {
+    const u = new URL(String(raw));
+    const resize = u.searchParams.get('resize');
+    if (resize) {
+      const parts = resize.split(/[,%]/).map((n) => parseInt(n, 10));
+      return { width: parts[0] || 0, height: parts[1] || 0 };
+    }
+    const w = parseInt(u.searchParams.get('w'), 10) || 0;
+    const h = parseInt(u.searchParams.get('h'), 10) || 0;
+    if (w || h) return { width: w, height: h };
+  } catch {
+    /* ignore */
+  }
+  return null;
+}
+
+/** i0.wp.com / photon : retirer resize et pointer vers l’original wp-content. */
+function normalizeWpContentImageUrl(raw = '') {
+  const src = String(raw).trim();
+  if (!src) return '';
+  try {
+    const u = new URL(src);
+    const host = u.hostname.toLowerCase();
+    if (/\.wp\.com$/i.test(host)) {
+      const m = u.pathname.match(/^\/([^/]+\/wp-content\/uploads\/.+)$/i);
+      if (m) return `https://${m[1]}`;
+    }
+    if (u.searchParams.has('resize') || u.searchParams.has('w') || u.searchParams.has('h')) {
+      const clean = new URL(src);
+      clean.searchParams.delete('resize');
+      clean.searchParams.delete('w');
+      clean.searchParams.delete('h');
+      return clean.toString();
+    }
+  } catch {
+    return src;
+  }
+  return src;
+}
+
 function isWeakImageUrl(raw = '', options = {}) {
   const path = String(raw).toLowerCase();
+  const resize = resizeFromImageUrl(raw);
+  if (resize) {
+    const { width = 0, height = 0 } = resize;
+    if ((width > 0 && width < 640) || (height > 0 && height < 360)) return true;
+    if (width > 0 && height > 0 && width * height < FEATURE_MIN_PIXELS) return true;
+  }
   if (options.preferSizeFull && /-\d{3}x\d{2,3}\./.test(path) && !/\bsize-full\b/.test(path)) return true;
   if (/-\d{2,3}x\d{2,3}\./.test(path) && !/-\d{3,4}x\d{3,4}\./.test(path)) return true;
   return /article-tile|size-article-tile/.test(path);
@@ -378,8 +425,23 @@ async function scrapeArticleImage(item, extraRejectPatterns = [], options = {}) 
   return found;
 }
 
+function leadImageUrlCandidates(raw = '') {
+  const urls = [String(raw || '').trim(), normalizeWpContentImageUrl(raw)].filter(Boolean);
+  return [...new Set(urls)];
+}
+
 async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {}) {
   const tryUrl = async (url, metaW = 0, metaH = 0) => {
+    const normalized = normalizeWpContentImageUrl(url);
+    const candidates = [...new Set([url, normalized].filter(Boolean))];
+    for (const candidate of candidates) {
+      const hit = await tryUrlOnce(candidate, metaW, metaH, extraRejectPatterns, options);
+      if (hit) return hit;
+    }
+    return null;
+  };
+
+  const tryUrlOnce = async (url, metaW = 0, metaH = 0) => {
     if (!url || !isCandidateImageUrl(url, extraRejectPatterns) || isWeakImageUrl(url, options)) return null;
     if (metaW && metaH && meetsLeadDisplaySize(metaW, metaH)) {
       return { url, width: metaW, height: metaH, source: 'meta' };
@@ -407,10 +469,12 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
     const hit = await tryUrl(scraped.url, scraped.w, scraped.h);
     if (hit) return hit;
     if (scraped.url && isCandidateImageUrl(scraped.url, extraRejectPatterns)) {
-      const dims = await probeRemoteImageSize(scraped.url);
+      const probeUrl = normalizeWpContentImageUrl(scraped.url) || scraped.url;
+      const dims = await probeRemoteImageSize(probeUrl);
       if (dims) {
+        const useUrl = meetsLeadDisplaySize(dims.width, dims.height) ? probeUrl : scraped.url;
         return {
-          url: scraped.url,
+          url: useUrl,
           width: dims.width,
           height: dims.height,
           source: 'page-scrape',
@@ -456,6 +520,9 @@ module.exports = {
   needsImageEnrichment,
   scrapeArticleImage,
   resolveLeadReadyPhoto,
+  normalizeWpContentImageUrl,
+  resizeFromImageUrl,
+  leadImageUrlCandidates,
   sleep,
   decodeEntities,
 };
