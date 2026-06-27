@@ -636,6 +636,11 @@ function renderNews() {
   } else {
     NEWS_LIST.removeAttribute('data-contingency');
   }
+  if (!isSourceView && isAutumnGracePeriod()) {
+    NEWS_LIST.dataset.autumnGrace = '1';
+  } else {
+    NEWS_LIST.removeAttribute('data-autumn-grace');
+  }
 
   const articleOpts = { hideSourceMeta: isSourceView };
 
@@ -707,8 +712,14 @@ function updateNewsLayout() {
 const HERO_SPOTLIGHT_MAX = 4; /* 1 à la une + 3 vedettes */
 const BRIEF_SIDEBAR_MAX = 7;
 const SOURCE_HERO_WITH_IMAGE_MAX = 2; /* à la une + 1 vedette si image */
-const CONTINGENCY_MAX_SESSIONS_BACK = 3;
-const CONTINGENCY_ULTIMATE_BAND = 4;
+/** Fenêtre de fraîcheur : 3 sessions max (= une année universitaire complète). */
+const FRESHNESS_SESSION_COUNT = 3;
+const CONTINGENCY_MAX_SESSIONS_BACK = FRESHNESS_SESSION_COUNT - 1;
+/**
+ * Sept–nov. : les journaux qui reprennent en automne n'ont souvent pas encore publié
+ * dans la session en cours — on accepte leur dernier article des 2 sessions précédentes.
+ */
+const AUTUMN_GRACE_END_MONTH = 10; /* novembre inclus */
 const BRIEF_LIMITS = { lead: 500, feature: 360, compact: 170, standard: 170 };
 const LEAD_BRIEF_MIN_CHARS = 140;
 
@@ -791,6 +802,25 @@ function sessionBandPool(items, referenceDate = new Date(), sessionsBack = 0) {
   );
 }
 
+function isAutumnGracePeriod(referenceDate = new Date()) {
+  const session = getCurrentUniversitySessionStart(referenceDate);
+  if (session.getMonth() !== 8) return false;
+  return referenceDate.getMonth() <= AUTUMN_GRACE_END_MONTH;
+}
+
+function isWithinFreshnessWindow(item, referenceDate = new Date()) {
+  for (let band = 0; band <= CONTINGENCY_MAX_SESSIONS_BACK; band++) {
+    if (isWithinUniversitySessionBand(item, referenceDate, band)) return true;
+  }
+  return false;
+}
+
+function filterFreshItems(items, referenceDate = new Date()) {
+  return items.filter(
+    (item) => isPublishedOnOrBefore(item, referenceDate) && isWithinFreshnessWindow(item, referenceDate),
+  );
+}
+
 function isPublishedOnOrBefore(item, referenceDate = new Date()) {
   const published = new Date(item.date || 0);
   return Number.isFinite(published.getTime()) && published.getTime() <= referenceDate.getTime();
@@ -836,13 +866,14 @@ function isArticlePicked(item, picks) {
 }
 
 /**
- * Vedette : session en cours d'abord ; si slots vides, exception temporaire
- * session par session jusqu'à résorbation du pool courant.
+ * Vedette : session en cours d'abord ; si slots vides, bandes précédentes
+ * (max 3 sessions). En automne, tolérance pour les sources pas encore reparties.
  */
 function pickHeroSpotlight(items, referenceDate = new Date()) {
   const picks = [];
   const usedInsts = new Set();
   let contingencyBand = 0;
+  const autumnGrace = isAutumnGracePeriod(referenceDate);
 
   const fill = (pool, band) => {
     if (picks.length >= HERO_SPOTLIGHT_MAX) return;
@@ -858,13 +889,23 @@ function pickHeroSpotlight(items, referenceDate = new Date()) {
     if (picks.length >= HERO_SPOTLIGHT_MAX) break;
   }
 
-  if (picks.length < HERO_SPOTLIGHT_MAX) {
-    fill(
-      sortByDateDesc(items).filter(
-        (item) => isPublishedOnOrBefore(item, referenceDate) && !isArticlePicked(item, picks),
-      ),
-      CONTINGENCY_ULTIMATE_BAND,
-    );
+  if (autumnGrace && picks.length < HERO_SPOTLIGHT_MAX) {
+    const representedSources = new Set(picks.map(sourceKey));
+    const representedInsts = new Set(picks.map(institutionKey));
+    const missingSourcePool = sortByDateDesc(items).filter((item) => {
+      if (isArticlePicked(item, picks)) return false;
+      if (representedSources.has(sourceKey(item))) return false;
+      if (sessionBandPool([item], referenceDate, 0).length) return false;
+      return isWithinFreshnessWindow(item, referenceDate);
+    });
+    for (const item of missingSourcePool) {
+      if (picks.length >= HERO_SPOTLIGHT_MAX) break;
+      if (representedInsts.has(institutionKey(item))) continue;
+      picks.push(item);
+      representedSources.add(sourceKey(item));
+      representedInsts.add(institutionKey(item));
+      contingencyBand = Math.max(contingencyBand, 1);
+    }
   }
 
   return { items: sortByDateDesc(picks), contingencyBand };
@@ -935,13 +976,17 @@ function pickBriefSidebar(allItems, heroItems = [], referenceDate = new Date()) 
     if (state.picks.length > before) contingencyBand = Math.max(contingencyBand, band);
   }
 
-  if (state.picks.length < BRIEF_SIDEBAR_MAX) {
+  if (isAutumnGracePeriod(referenceDate) && state.picks.length < BRIEF_SIDEBAR_MAX) {
     const before = state.picks.length;
-    const eligible = sortByDateDesc(allItems).filter(
-      (item) => isPublishedOnOrBefore(item, referenceDate) && !heroKeys.has(articleKey(item)),
-    );
-    fillBriefFromSessionPool(eligible, heroSources, state);
-    if (state.picks.length > before) contingencyBand = CONTINGENCY_ULTIMATE_BAND;
+    const representedSources = new Set(state.picks.map(sourceKey));
+    const gracePool = sortByDateDesc(allItems).filter((item) => {
+      if (heroKeys.has(articleKey(item))) return false;
+      if (representedSources.has(sourceKey(item))) return false;
+      if (sessionBandPool([item], referenceDate, 0).length) return false;
+      return isWithinFreshnessWindow(item, referenceDate);
+    });
+    fillBriefFromSessionPool(gracePool, heroSources, state);
+    if (state.picks.length > before) contingencyBand = Math.max(contingencyBand, 1);
   }
 
   return {
@@ -951,7 +996,7 @@ function pickBriefSidebar(allItems, heroItems = [], referenceDate = new Date()) 
 }
 
 function partitionNewsFeed(items, referenceDate = new Date()) {
-  const sorted = sortByDateDesc(items);
+  const sorted = sortByDateDesc(filterFreshItems(items, referenceDate));
   const { items: rawHero, contingencyBand: heroBand } = pickHeroSpotlight(sorted, referenceDate);
   const heroItems = ensureHeroLeadHasImage(rawHero, sorted);
   const heroKeys = new Set(heroItems.map(articleKey));
