@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="148" viewBox="0 0 512 148" fill="none">
-  <rect width="512" height="148" rx="32" fill="#0A0A0B"/>
-  <rect x="12" y="12" width="488" height="124" rx="24" fill="url(#panel)" stroke="white" stroke-opacity="0.08"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="148" viewBox="0 0 600 148" fill="none">
+  <rect width="600" height="148" rx="32" fill="#0A0A0B"/>
+  <rect x="12" y="12" width="576" height="124" rx="24" fill="url(#panel)" stroke="white" stroke-opacity="0.08"/>
   <rect x="26" y="18" width="112" height="112" rx="28" fill="#6C2163"/>
   <text
     x="82"
@@ -14,8 +14,16 @@
   <path d="M281.364 102V87.84L306.644 59.12H281.924V45.2H327.444V58.72L302.084 88.08H328.244V102H281.364Z" fill="white"/>
   <path d="M336.502 102V45.2H378.102V59.28H354.022V66.88H375.782V80.16H354.022V102H336.502Z" fill="white"/>
   <path d="M399.34 102V82.16H379.5V68.24H399.34V48.4H413.26V68.24H433.1V82.16H413.26V102H399.34Z" fill="#FF5A4F"/>
+  <rect x="462" y="18" width="112" height="112" rx="28" fill="#003DA5"/>
+  <text
+    x="518"
+    y="92"
+    font-size="72"
+    text-anchor="middle"
+    font-family="Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif"
+  >🎙️</text>
   <defs>
-    <linearGradient id="panel" x1="256" y1="12" x2="256" y2="136" gradientUnits="userSpaceOnUse">
+    <linearGradient id="panel" x1="300" y1="12" x2="300" y2="136" gradientUnits="userSpaceOnUse">
       <stop stop-color="#111113"/>
       <stop offset="1" stop-color="#09090A"/>
     </linearGradient>
