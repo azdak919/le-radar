@@ -140,12 +140,16 @@ function stripEmbeddedCss(title = '') {
   return t;
 }
 
+function stripLeadingNonLetters(title = '') {
+  return String(title).replace(/^[^\p{L}]+/u, '').trim();
+}
+
 function sanitizeTitle(title = '') {
   let t = stripHtml(stripEmbeddedCss(title));
   t = t.replace(/\s+/g, ' ').trim();
   const prefix = t.match(MC_CATEGORY_PREFIX);
   if (prefix) t = t.slice(prefix[0].length).trim();
-  return t;
+  return stripLeadingNonLetters(t);
 }
 
 function tag(block, name) {
