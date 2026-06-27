@@ -991,6 +991,40 @@ a { color: inherit; }
 .site-foot a:hover { text-decoration: underline; }
 .site-foot p { margin: 0 0 8px; }
 
+.site-foot__credit {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+}
+
+.site-foot__author {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.site-foot__legal {
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.site-foot__bot {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+.site-foot__bot-ico {
+  font-size: 14px;
+  line-height: 1;
+}
+
 /* ─────────────── FEEDS PAGE ─────────────── */
 .feeds-wire { padding-bottom: 56px; }
 
