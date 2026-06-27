@@ -454,6 +454,13 @@ function institutionBrandColor(institution = '') {
   return null;
 }
 
+/** Couleur d'accent d'un article : marque de l'établissement (pastilles, « Lire la suite »). */
+function sourceAccentColor(item = {}) {
+  return institutionBrandColor(item.institution || '')
+    || sourceColors[item.source || '']
+    || null;
+}
+
 /** Popularité des filtres UI : lue depuis news-sources.json (champ popularity). */
 function sourcePopularityRank(name = '') {
   const fromRegistry = newsSourcesByName[name]?.popularity;
@@ -1092,7 +1099,7 @@ function createArticle(item, role = 'standard', { hideSourceMeta = false } = {})
   a.target = '_blank';
   a.rel = 'noopener';
 
-  const color = sourceColors[item.source] || 'var(--accent)';
+  const color = sourceAccentColor(item) || 'var(--accent)';
   a.style.setProperty('--c', color);
 
   const d = item.date ? new Date(item.date) : null;
@@ -1123,7 +1130,7 @@ function createArticle(item, role = 'standard', { hideSourceMeta = false } = {})
     ${canUseImage ? '<figure class="article-media"></figure>' : ''}
     <h3 class="article-title">${escapeHtml(cleanTitle(item.title))}</h3>
     ${author ? `<p class="article-byline">${byLabel} <strong>${escapeHtml(author)}</strong></p>` : ''}
-    ${brief ? `<p class="article-brief${briefTruncated ? ' is-truncated' : ''}"><span class="article-brief-text">${escapeHtml(brief)}</span>${briefTruncated ? `<span class="article-more">${readMore}</span>` : ''}</p>` : ''}
+    ${brief ? `<p class="article-brief${briefTruncated ? ' is-truncated' : ''}"><span class="article-brief-text">${escapeHtml(brief)}</span>${briefTruncated ? `<span class="article-more" style="color: ${color}">${readMore}</span>` : ''}</p>` : ''}
   `;
 
   if (canUseImage) attachArticleImage(a, item, role);
