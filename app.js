@@ -225,6 +225,9 @@ const TUNER_PLAY     = document.getElementById('tuner-play');
 const TUNER_NAME     = document.getElementById('tuner-now-name');
 const TUNER_SUB      = document.getElementById('tuner-now-sub');
 const TUNER_VOLUME   = document.getElementById('tuner-volume');
+const TUNER_VOL      = document.getElementById('tuner-vol');
+const TUNER_VOL_TOGGLE = document.getElementById('tuner-vol-toggle');
+const VOL_COMPACT    = window.matchMedia('(max-width: 679.98px)');
 const TUNER_NOWAIR = document.getElementById('tuner-nowair');
 const TUNER_NOWAIR_TITLE = document.getElementById('tuner-nowair-title');
 const TUNER_NOWAIR_SUB = document.getElementById('tuner-nowair-sub');
@@ -271,6 +274,13 @@ let webAudioSupported = !!(window.AudioContext || window.webkitAudioContext);
 let currentGain = 0.8;              // valeur du curseur (0 → MAX_GAIN)
 const MAX_GAIN = 2;                 // jusqu'à 200 %
 const boostUnavailable = new Set(); // ids des postes sans CORS
+// Réglages de lecture par poste. CFAK (Sherbrooke) a de petites coupures : on
+// précharge davantage et on reconnecte automatiquement quand le flux décroche.
+const STATION_PLAYBACK = {
+  cfak: { resilient: true },
+};
+let stallWatchdog = null;
+let reconnectTries = 0;
 let listenWindow = null;
 let listenWindowId = null;
 let radioNowPlaying = { stations: {}, updatedAt: null };
@@ -595,6 +605,34 @@ function bindTuner() {
     applyGain();
     localStorage.setItem('req-player-vol', currentGain);
   });
+
+  bindVolumePopover();
+}
+
+// Sur mobile, le curseur de volume est masqué : l'icône ouvre une bulle.
+function bindVolumePopover() {
+  if (!TUNER_VOL_TOGGLE) return;
+  const close = () => {
+    if (!TUNER_VOL.classList.contains('is-open')) return;
+    TUNER_VOL.classList.remove('is-open');
+    TUNER_VOL_TOGGLE.setAttribute('aria-expanded', 'false');
+  };
+
+  TUNER_VOL_TOGGLE.addEventListener('click', (e) => {
+    if (!VOL_COMPACT.matches) return; // bureau : le curseur est déjà visible
+    e.stopPropagation();
+    const open = TUNER_VOL.classList.toggle('is-open');
+    TUNER_VOL_TOGGLE.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!TUNER_VOL.contains(e.target)) close();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') close();
+  });
+  // En repassant en mode large, on referme proprement la bulle.
+  VOL_COMPACT.addEventListener('change', (e) => { if (!e.matches) close(); });
 }
 
 function currentIndex() {
@@ -715,6 +753,9 @@ async function play(radio) {
   // Branche (ou non) le graphe d'amplification selon le support CORS du poste.
   const wantBoost = webAudioSupported && !boostUnavailable.has(radio.id);
   if (wantBoost !== boostWired) rebuildAudio(wantBoost);
+  reconnectTries = 0;
+  // Plus de tampon pour les flux sujets aux coupures (ex. CFAK).
+  audio.preload = STATION_PLAYBACK[radio.id]?.resilient ? 'auto' : 'none';
   try {
     if (audioCtx && audioCtx.state === 'suspended') { try { await audioCtx.resume(); } catch {} }
     if (audio.src !== url) audio.src = url;
@@ -727,6 +768,8 @@ async function play(radio) {
 }
 
 function stopPlayback({ keepStation = false } = {}) {
+  clearStallWatchdog();
+  reconnectTries = 0;
   if (audio) {
     suppressAudioError = true;
     audio.pause();
@@ -757,14 +800,68 @@ function updatePlayUI() {
 
 // ─── Audio engine ──────────────────────────────────────────────────────────────
 function attachAudioListeners(el) {
-  el.addEventListener('play',  updatePlayUI);
-  el.addEventListener('pause', updatePlayUI);
-  el.addEventListener('ended', updatePlayUI);
-  el.addEventListener('error', onAudioError);
+  el.addEventListener('play',    updatePlayUI);
+  el.addEventListener('pause',   updatePlayUI);
+  el.addEventListener('ended',   onAudioEnded);
+  el.addEventListener('playing', onAudioPlaying);
+  el.addEventListener('waiting', onAudioStall);
+  el.addEventListener('stalled', onAudioStall);
+  el.addEventListener('error',   onAudioError);
+}
+
+function currentTuning() {
+  return (currentStation && STATION_PLAYBACK[currentStation.id]) || {};
+}
+
+function clearStallWatchdog() {
+  if (stallWatchdog) { clearTimeout(stallWatchdog); stallWatchdog = null; }
+}
+
+function onAudioPlaying() {
+  reconnectTries = 0;
+  clearStallWatchdog();
+  updatePlayUI();
+}
+
+// Flux décroché : pour un poste « résilient », on laisse le tampon se remplir
+// puis on reconnecte en douceur plutôt que de laisser une coupure s'installer.
+function onAudioStall() {
+  if (!currentTuning().resilient || stallWatchdog) return;
+  stallWatchdog = setTimeout(() => {
+    stallWatchdog = null;
+    if (!audio || audio.paused) return;
+    if (audio.readyState >= 3) return; // reparti tout seul
+    reconnectResilient();
+  }, 4000);
+}
+
+function onAudioEnded() {
+  // Un flux en direct ne devrait pas « finir » : on tente de reprendre.
+  if (currentTuning().resilient && reconnectTries < 4) reconnectResilient();
+  else updatePlayUI();
+}
+
+function reconnectResilient() {
+  if (!currentStation || !currentTuning().resilient) return;
+  if (reconnectTries >= 4) { showToast('Flux instable — réessaie dans un instant.'); updatePlayUI(); return; }
+  reconnectTries++;
+  const url = getPlayableStream(currentStation);
+  if (!url || !audio) return;
+  suppressAudioError = true;
+  try { audio.load(); } catch {}
+  suppressAudioError = false;
+  audio.src = url;
+  audio.play().catch(() => {});
 }
 
 function onAudioError() {
   if (suppressAudioError) { updatePlayUI(); return; }
+  // Poste résilient qui jouait déjà : coupure réseau → reconnexion douce
+  // (currentTime > 0 distingue une vraie coupure d'un échec CORS au démarrage).
+  if (currentTuning().resilient && audio && audio.currentTime > 0 && reconnectTries < 4) {
+    reconnectResilient();
+    return;
+  }
   // En mode amplifié, un flux sans en-tête CORS fait échouer l'élément <audio>
   // « anonymous ». On le note et on retombe une fois en lecture native simple.
   if (boostWired && currentStation && !boostUnavailable.has(currentStation.id)) {
@@ -796,6 +893,7 @@ function wireBoost() {
 
 /** Recrée l'élément <audio>, avec ou sans graphe d'amplification. */
 function rebuildAudio(withBoost) {
+  clearStallWatchdog();
   if (audio) {
     suppressAudioError = true;
     try { audio.pause(); } catch {}
