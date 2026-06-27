@@ -678,6 +678,10 @@ function renderNews() {
     NEWS_LIST.appendChild(section);
   }
 
+  const briefCount = compacts.length;
+  if (briefCount) NEWS_LIST.dataset.briefCount = String(briefCount);
+  else NEWS_LIST.removeAttribute('data-brief-count');
+
   updateNewsLayout();
 }
 
@@ -691,7 +695,7 @@ function updateNewsLayout() {
 }
 
 const HERO_SPOTLIGHT_MAX = 4; /* 1 à la une + 3 vedettes */
-const BRIEF_SIDEBAR_MAX = 4;
+const BRIEF_SIDEBAR_MAX = 7;
 const SOURCE_HERO_WITH_IMAGE_MAX = 2; /* à la une + 1 vedette si image */
 const CONTINGENCY_MAX_SESSIONS_BACK = 3;
 const CONTINGENCY_ULTIMATE_BAND = 4;
@@ -1410,8 +1414,22 @@ function stripLeadingNonLetters(title = '') {
   return String(title).replace(/^[^\p{L}]+/u, '').trim();
 }
 
+function decodeHtmlEntities(str = '') {
+  return String(str)
+    .replace(/&hellip;/gi, '…')
+    .replace(/&mdash;/gi, '—')
+    .replace(/&ndash;/gi, '–')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&quot;/gi, '"')
+    .replace(/&apos;/gi, "'")
+    .replace(/&#0?39;/gi, "'")
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(parseInt(n, 10)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCharCode(parseInt(n, 16)));
+}
+
 function cleanTitle(title = '') {
-  let t = stripEmbeddedCss(title);
+  let t = decodeHtmlEntities(stripEmbeddedCss(title));
   t = t.replace(/\s+/g, ' ').trim();
   const prefix = t.match(MC_CATEGORY_PREFIX);
   if (prefix) t = t.slice(prefix[0].length).trim();
@@ -1421,7 +1439,7 @@ function cleanTitle(title = '') {
 const BRIEF_LIMITS = { lead: 500, feature: 360, compact: 170, standard: 170 };
 
 function sanitizeBriefBody(raw = '') {
-  let s = String(raw);
+  let s = decodeHtmlEntities(String(raw));
   s = s.replace(/<[^>]*>/g, ' ');
   s = s.replace(/\]\]>/g, '');
   s = s.replace(/\s*L['’]article\b[\s\S]*?est apparu en premier sur[\s\S]*$/i, '');
@@ -1430,9 +1448,7 @@ function sanitizeBriefBody(raw = '') {
   s = s.replace(/\[[^\]]*(?:read more|lire la suite|continue reading)[^\]]*\]/gi, '');
   s = s.replace(/\b(?:read more|lire la suite|continue reading)\b\.?\s*$/i, '');
   s = s.replace(/^(?:Dear Tribune|Dear Editor),?\s*/i, '');
-  s = s.replace(/(?:…|\.{3,}|\[…\]|\[\.\.\.\])/g, '');
-  s = s.replace(/&(?:nbsp|#160);/gi, ' ');
-  s = s.replace(/&amp;/gi, '&');
+  s = s.replace(/(?:…|\.{3,}|\[…\]|\[\.\.\.\]|\[&hellip;\])/gi, '');
   return s.replace(/\s+/g, ' ').trim();
 }
 

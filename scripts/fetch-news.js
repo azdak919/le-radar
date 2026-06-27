@@ -93,7 +93,8 @@ function decodeEntities(str = '') {
     .replace(/&quot;/g, '"')
     .replace(/&#0?39;|&apos;|&rsquo;/g, '’')
     .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>');
+    .replace(/&gt;/g, '>')
+    .replace(/&hellip;/gi, '…');
 }
 
 function stripHtml(html = '') {
@@ -103,7 +104,7 @@ function stripHtml(html = '') {
     .trim();
 }
 
-const TRUNC_MARKERS_RE = /(?:…|\.{3,}|\[…\]|\[\.\.\.\])/g;
+const TRUNC_MARKERS_RE = /(?:…|\.{3,}|\[…\]|\[\.\.\.\]|\[&hellip;\])/gi;
 
 function stripTruncationArtifacts(text = '') {
   return String(text)
