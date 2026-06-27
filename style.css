@@ -969,10 +969,6 @@ a { color: inherit; }
     margin-top: 8px;
   }
 
-  .brief-rail-title {
-    padding: 20px 0 8px;
-  }
-
   .brief-rail-spacer {
     display: none;
   }
@@ -983,17 +979,32 @@ a { color: inherit; }
 }
 
 @media (max-width: 1099px) {
-  /* Cartes fil mobile — gabarit commun En bref + Suite du fil */
+  /* Titres de section mobile — À la une, En bref, Suite du fil */
+  .article-eyebrow,
   .brief-rail-title,
   .news-tail-title {
-    padding: 18px 0 6px;
-    margin: 0;
+    font-family: var(--sans);
     font-size: 10px;
     font-weight: 800;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--muted);
+    line-height: 1.2;
   }
+
+  .article--lead .article-eyebrow {
+    display: block;
+    margin: 0 0 6px;
+    padding: 0;
+  }
+
+  .brief-rail-title,
+  .news-tail-title {
+    padding: 18px 0 6px;
+    margin: 0;
+  }
+
+  /* Cartes fil mobile — gabarit commun En bref + Suite du fil */
 
   .news-tail {
     border-top: 1px solid var(--rule);
