@@ -62,7 +62,7 @@
           </div>
           <p class="feed-card__desc">
             Quartier Libre, Le Délit, The McGill Daily, Le Collectif, Montréal Campus, The Link…
-            Toutes les sources dans un même flux, sans séparation par langue.
+            Toutes les sources dans un même flux.
           </p>
           <p class="feed-card__url"><code class="feed-card__code" data-feed-url></code></p>
           <div class="feed-card__actions">
@@ -76,8 +76,8 @@
       <section class="feeds-note" aria-label="À propos du flux">
         <h2 class="feeds-note__title">Comment ça fonctionne</h2>
         <ul class="feeds-note__list">
-          <li><strong>Méta-agrégateur</strong> — titres, brèves, auteurs, images et crédits photo ; le lien mène toujours à la publication étudiante source.</li>
-          <li><strong>Images</strong> — chaque article inclut sa photo dans le corps du flux (<code>content:encoded</code> et <code>description</code>), pas seulement en vignette de liste.</li>
+          <li><strong>Fil de presse</strong> — dateline régionale, brève, auteur (<code>dc:creator</code>), source étudiante et lien vers l'article original.</li>
+          <li><strong>Images</strong> — photo intégrée au corps (<code>content:encoded</code>, <code>description</code>, <code>media:content</code>) avec crédit photo.</li>
           <li><strong>RSS 2.0</strong> — compatible Feedly, NetNewsWire, Inoreader, Thunderbird et lecteurs intégrés aux navigateurs.</li>
           <li><strong>Autodiscovery</strong> — la balise <code>rel="alternate"</code> sur Le Radar permet aux lecteurs de détecter automatiquement ce flux.</li>
           <li><strong>Mise à jour</strong> — régénéré automatiquement plusieurs fois par jour à partir de <code>news.json</code>.</li>
