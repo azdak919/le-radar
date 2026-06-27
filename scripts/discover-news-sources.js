@@ -23,6 +23,11 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+const {
+  isHtmlListSource,
+  classifyHtmlList,
+  countHtmlListItems,
+} = require('./html-list-fetcher');
 
 const SOURCES_PATH = path.join(__dirname, '..', 'news-sources.json');
 const INSTITUTIONS_PATH = path.join(__dirname, '..', 'institutions.json');
@@ -126,10 +131,19 @@ async function checkActive(src) {
   }
 
   src._failCount = 0;
-  const { status, lastItemDate } = classify(body);
+  const { status, lastItemDate } = isHtmlListSource(src)
+    ? classifyHtmlList(body, src.url)
+    : classify(body);
   src._status = status;
   if (lastItemDate) src._lastItemDate = lastItemDate;
-  return { name: src.name, result: `${countItems(body)} items, latest ${lastItemDate ? lastItemDate.slice(0, 10) : '?'}`, before, after: status };
+  const count = isHtmlListSource(src) ? countHtmlListItems(body, src.url) : countItems(body);
+  const mode = isHtmlListSource(src) ? 'html-list' : 'rss';
+  return {
+    name: src.name,
+    result: `${count} items (${mode}), latest ${lastItemDate ? lastItemDate.slice(0, 10) : '?'}`,
+    before,
+    after: status,
+  };
 }
 
 async function probeCandidate(cand) {

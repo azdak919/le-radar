@@ -16,6 +16,7 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+const { isHtmlListSource, parseHtmlListPage } = require('./html-list-fetcher');
 
 const NEWS_PATH = path.join(__dirname, '..', 'news.json');
 const SOURCES_PATH = path.join(__dirname, '..', 'news-sources.json');
@@ -26,7 +27,7 @@ const MAX_WP_FEATURED = 8;  // vedettes WordPress (catégorie slider, etc.)
 const WP_FEATURED_SLUGS = ['slider', 'a-la-une', 'featured'];
 const MAX_ENRICH = 45;      // cap article-page fetches per run
 
-const GENERIC_AUTHORS = /^(admin|administrator|administrateur|editor|éditeur|editeur|rédaction|redaction|staff|wordpress|webmaster|collectif|le collectif|tribune|link|daily|exemplaire|quartier libre|zone campus|la pige|le délit|le delit|the link|the concordian|the tribune|the mcgill daily)$/i;
+const GENERIC_AUTHORS = /^(admin|administrator|administrateur|editor|éditeur|editeur|rédaction|redaction|staff|wordpress|webmaster|collectif|le collectif|tribune|link|daily|exemplaire|quartier libre|zone campus|la pige|le délit|le delit|the link|the concordian|the tribune|the mcgill daily|ulaval nouvelles|nouvelles ulaval)$/i;
 
 // Active feeds come from the registry (news-sources.json), maintained by
 // scripts/discover-news-sources.js. Feeds flagged "_status": "dead" are skipped.
@@ -619,30 +620,58 @@ async function main() {
 
   for (const src of SOURCES) {
     process.stdout.write(`→ ${src.name} (${src.institution}) … `);
-    const feedUrls = [src.url, src.urlFallback, ...(src.feedAlternates || [])].filter(Boolean);
-    let xml = '';
-    let feedUsed = '';
-    for (const feedUrl of [...new Set(feedUrls)]) {
-      xml = await fetchText(feedUrl);
-      if (xml && isFeedXml(xml)) {
-        feedUsed = feedUrl;
-        break;
+    let items = [];
+
+    if (isHtmlListSource(src)) {
+      const listUrls = [src.url, src.urlFallback, ...(src.feedAlternates || [])].filter(Boolean);
+      let html = '';
+      let listUsed = '';
+      for (const listUrl of [...new Set(listUrls)]) {
+        html = await fetchText(listUrl);
+        const parsed = parseHtmlListPage(html, listUrl, { maxItems: MAX_PER_SOURCE });
+        if (parsed.length) {
+          listUsed = listUrl;
+          items = parsed.slice(0, MAX_PER_SOURCE).map((it) => ({
+            ...it,
+            title: sanitizeTitle(it.title),
+            excerpt: truncateExcerpt(it.excerpt, 280),
+          }));
+          break;
+        }
+        html = '';
       }
-      xml = '';
+      if (!items.length) {
+        console.log('✗ no articles (html-list)');
+        continue;
+      }
+      const altNote = listUsed && listUsed !== src.url ? ` [repli: ${listUsed}]` : '';
+      console.log(`✓ ${items.length} articles (html-list)${altNote}`);
+    } else {
+      const feedUrls = [src.url, src.urlFallback, ...(src.feedAlternates || [])].filter(Boolean);
+      let xml = '';
+      let feedUsed = '';
+      for (const feedUrl of [...new Set(feedUrls)]) {
+        xml = await fetchText(feedUrl);
+        if (xml && isFeedXml(xml)) {
+          feedUsed = feedUrl;
+          break;
+        }
+        xml = '';
+      }
+      if (!xml) {
+        console.log('✗ no response');
+        continue;
+      }
+      const altNote = feedUsed && feedUsed !== src.url ? ` [repli: ${feedUsed}]` : '';
+      const rssItems = parseFeed(xml).slice(0, MAX_PER_SOURCE);
+      items = rssItems;
+      const featuredItems = await fetchWpFeaturedPosts(src.url, src);
+      if (featuredItems.length) {
+        items = mergeSourceItems(rssItems, featuredItems);
+      }
+      const featNote = featuredItems.length ? ` (+${featuredItems.length} vedettes WP)` : '';
+      console.log(`✓ ${items.length} articles${featNote}${altNote}`);
     }
-    if (!xml) {
-      console.log('✗ no response');
-      continue;
-    }
-    const altNote = feedUsed && feedUsed !== src.url ? ` [repli: ${feedUsed}]` : '';
-    const rssItems = parseFeed(xml).slice(0, MAX_PER_SOURCE);
-    let items = rssItems;
-    const featuredItems = await fetchWpFeaturedPosts(src.url, src);
-    if (featuredItems.length) {
-      items = mergeSourceItems(rssItems, featuredItems);
-    }
-    const featNote = featuredItems.length ? ` (+${featuredItems.length} vedettes WP)` : '';
-    console.log(`✓ ${items.length} articles${featNote}${altNote}`);
     for (const it of items) {
       all.push({
         source: src.name,

@@ -51,6 +51,8 @@ Options recommandées :
   --site          Site web public (découverte sociale, candidats)
   --popularity    Ordre des filtres UI (1 = plus visible, défaut 50)
   --note          Note interne (ex. "journal indépendant, distinct de The Link")
+  --fetchMode     rss (défaut) | html-list — page HTML sans flux RSS
+  --urlFallback   URL de repli (Substack, autre liste, etc.)
 
   --promote       Retirer des candidates si présent, ajouter à active
   --update        Écrire news-sources.json puis lancer verify-news-sources.js
@@ -90,6 +92,8 @@ function main() {
   };
   if (args.site) entry.site = args.site;
   if (args.note) entry._note = args.note;
+  if (args.fetchMode) entry.fetchMode = args.fetchMode;
+  if (args.urlFallback) entry.urlFallback = args.urlFallback;
 
   const inActive = registry.active.findIndex((s) => s.name === entry.name);
   const inCand = registry.candidates.findIndex((s) => s.name === entry.name);

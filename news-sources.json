@@ -1,5 +1,5 @@
 {
-  "_comment": "Registre des sources. Champs éditables : name, institution, region, type, lang, url, site, popularity, _note. Champs bots : _status, _lastItemDate, _lastChecked, _failCount. Plusieurs journaux par établissement sont supportés (ex. The Link + The Concordian à Concordia).",
+  "_comment": "Registre des sources. Champs éditables : name, institution, region, type, lang, url, site, popularity, fetchMode (rss|html-list), urlFallback, wpFeaturedCategories, _note. Champs bots : _status, _lastItemDate, _lastChecked, _failCount. Plusieurs journaux par établissement sont supportés (ex. The Link + The Concordian ; L'Exemplaire + ULaval nouvelles). Voir docs/adding-news-source.md.",
   "active": [
     {
       "name": "Quartier Libre",
@@ -163,6 +163,21 @@
       "_lastChecked": "2026-06-27T00:14:50.670Z",
       "_failCount": 0,
       "popularity": 8
+    },
+    {
+      "name": "ULaval nouvelles",
+      "institution": "Université Laval",
+      "region": "Capitale-Nationale",
+      "type": "universite",
+      "lang": "fr",
+      "url": "https://nouvelles.ulaval.ca/toutes-les-nouvelles",
+      "popularity": 4,
+      "_status": "ok",
+      "_failCount": 0,
+      "_lastChecked": "2026-06-27T06:58:59.039Z",
+      "site": "https://nouvelles.ulaval.ca/",
+      "_note": "Portail institutionnel ULaval (communications), distinct du journal étudiant L'Exemplaire. Pas de RSS — agrégation html-list.",
+      "fetchMode": "html-list"
     }
   ],
   "candidates": [
