@@ -1502,7 +1502,7 @@ function buildClientFallbackDataUrl(item) {
 }
 
 function shouldPreferStockPhoto(item, role = 'lead') {
-  return role === 'lead' && item.leadImageReady === false && hasStockPhoto(item);
+  return role === 'lead' && item.leadImageReady === false && hasStockPhoto(item) && !hasUsablePhoto(item);
 }
 
 function resolveDisplayImage(item, { preferPhoto = true, role = 'lead' } = {}) {

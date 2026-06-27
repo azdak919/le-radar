@@ -235,12 +235,52 @@ function imageUrlsMatch(a = '', b = '') {
   return pa === pb || pa.includes(pb) || pb.includes(pa);
 }
 
-function collectContentImages(content = '', extraRejectPatterns = [], options = {}) {
+function toAbsoluteImageUrl(raw = '', baseUrl = '') {
+  const src = decodeEntities(String(raw || '').trim());
+  if (!src) return '';
+  if (src.startsWith('http://') || src.startsWith('https://')) return src;
+  if (!baseUrl) return src;
+  try {
+    return new URL(src, baseUrl).href;
+  } catch {
+    return src;
+  }
+}
+
+/** The Link (ExpressionEngine) : RSS 690×460 → page 900×600 ou original. */
+function upgradeCmsImageUrl(raw = '') {
+  const src = String(raw || '').trim();
+  if (!src) return '';
+  const out = [];
+
+  const made = src.match(/\/images\/made\/images\/articles\/_resized\/([^/_]+)(?:_\d+_\d+_\d+)?(\.[a-z]{3,4})$/i);
+  if (made) {
+    try {
+      const u = new URL(src);
+      out.push(`${u.origin}/images/articles/_resized/${made[1]}${made[2]}`);
+    } catch {
+      out.push(src.replace(
+        /\/images\/made\/images\/articles\/_resized\/[^/]+$/i,
+        `/images/articles/_resized/${made[1]}${made[2]}`,
+      ));
+    }
+  }
+
+  const hiRes = src.replace(/_(\d{2,3})_(\d{2,3})_\d+(\.[a-z]{3,4})$/i, '_900_600_90$3');
+  if (hiRes !== src) out.push(hiRes);
+
+  const wp = normalizeWpContentImageUrl(src);
+  if (wp && wp !== src) out.push(wp);
+
+  return [...new Set(out)];
+}
+
+function collectContentImages(content = '', extraRejectPatterns = [], options = {}, baseUrl = '') {
   const urls = [];
   const preferSizeFull = !!options.preferSizeFull;
   for (const m of content.matchAll(/<img[^>]+src=["']([^"']+)["'][^>]*>/gi)) {
     const tag = m[0];
-    const src = decodeEntities(m[1]);
+    const src = toAbsoluteImageUrl(m[1], baseUrl);
     const w = parseInt((tag.match(/width=["'](\d+)["']/i) || [])[1], 10) || 0;
     if (!isCandidateImageUrl(src, extraRejectPatterns) || isWeakImageUrl(src, options)) continue;
     if (w > 0 && w < 400) continue;
@@ -255,11 +295,12 @@ function collectContentImages(content = '', extraRejectPatterns = [], options = 
   return urls;
 }
 
-function articleImageIsValidOnPage(html = '', imageUrl = '', extraRejectPatterns = [], options = {}) {
+function articleImageIsValidOnPage(html = '', imageUrl = '', extraRejectPatterns = [], options = {}, baseUrl = '') {
   if (!html || !imageUrl) return false;
-  const contentImages = collectContentImages(articleImageRegions(html), extraRejectPatterns, options);
+  const contentImages = collectContentImages(articleImageRegions(html), extraRejectPatterns, options, baseUrl);
   if (!contentImages.length) return false;
-  return contentImages.some((img) => imageUrlsMatch(img.url, imageUrl));
+  const keys = new Set(leadImageUrlCandidates(imageUrl).map(normalizeImagePath));
+  return contentImages.some((img) => keys.has(normalizeImagePath(img.url)) || imageUrlsMatch(img.url, imageUrl));
 }
 
 function isCandidateImageUrl(raw = '', extraRejectPatterns = []) {
@@ -362,8 +403,8 @@ function meetsFeatureDisplaySize(width = 0, height = 0) {
   );
 }
 
-function imageFromArticleHtml(html = '', extraRejectPatterns = [], options = {}) {
-  const contentImages = collectContentImages(articleImageRegions(html), extraRejectPatterns, options);
+function imageFromArticleHtml(html = '', extraRejectPatterns = [], options = {}, baseUrl = '') {
+  const contentImages = collectContentImages(articleImageRegions(html), extraRejectPatterns, options, baseUrl);
   if (!contentImages.length) return { url: '', w: 0, h: 0 };
 
   const candidates = [];
@@ -420,27 +461,28 @@ async function scrapeArticleImage(item, extraRejectPatterns = [], options = {}) 
   if (!item?.link) return null;
   const html = await fetchText(item.link);
   if (!html || html.length < 200) return null;
-  const found = imageFromArticleHtml(html, extraRejectPatterns, options);
+  const found = imageFromArticleHtml(html, extraRejectPatterns, options, item.link);
   if (!found.url) return null;
   return found;
 }
 
 function leadImageUrlCandidates(raw = '') {
-  const urls = [String(raw || '').trim(), normalizeWpContentImageUrl(raw)].filter(Boolean);
-  return [...new Set(urls)];
+  const seed = String(raw || '').trim();
+  const ordered = [];
+  const seen = new Set();
+  const add = (u) => {
+    if (u && !seen.has(u)) {
+      seen.add(u);
+      ordered.push(u);
+    }
+  };
+  for (const up of upgradeCmsImageUrl(seed)) add(up);
+  add(normalizeWpContentImageUrl(seed));
+  add(seed);
+  return ordered;
 }
 
 async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {}) {
-  const tryUrl = async (url, metaW = 0, metaH = 0) => {
-    const normalized = normalizeWpContentImageUrl(url);
-    const candidates = [...new Set([url, normalized].filter(Boolean))];
-    for (const candidate of candidates) {
-      const hit = await tryUrlOnce(candidate, metaW, metaH, extraRejectPatterns, options);
-      if (hit) return hit;
-    }
-    return null;
-  };
-
   const tryUrlOnce = async (url, metaW = 0, metaH = 0) => {
     if (!url || !isCandidateImageUrl(url, extraRejectPatterns) || isWeakImageUrl(url, options)) return null;
     if (metaW && metaH && meetsLeadDisplaySize(metaW, metaH)) {
@@ -456,9 +498,24 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
     return null;
   };
 
+  const tryUrl = async (url, metaW = 0, metaH = 0) => {
+    for (const candidate of leadImageUrlCandidates(url)) {
+      const hit = await tryUrlOnce(candidate, metaW, metaH);
+      if (hit) return hit;
+    }
+    return null;
+  };
+
+  if (item.image) {
+    for (const candidate of leadImageUrlCandidates(item.image)) {
+      const hit = await tryUrlOnce(candidate);
+      if (hit && hit.leadReady !== false) return hit;
+    }
+  }
+
   if (item.image && item.link) {
     const html = await fetchText(item.link);
-    if (html && articleImageIsValidOnPage(html, item.image, extraRejectPatterns, options)) {
+    if (html && articleImageIsValidOnPage(html, item.image, extraRejectPatterns, options, item.link)) {
       const hit = await tryUrl(item.image);
       if (hit) return hit;
     }
@@ -521,6 +578,8 @@ module.exports = {
   scrapeArticleImage,
   resolveLeadReadyPhoto,
   normalizeWpContentImageUrl,
+  upgradeCmsImageUrl,
+  toAbsoluteImageUrl,
   resizeFromImageUrl,
   leadImageUrlCandidates,
   sleep,

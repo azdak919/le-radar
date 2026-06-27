@@ -21,7 +21,8 @@ const {
 const {
   resolveLeadReadyPhoto,
   meetsLeadDisplaySize,
-  normalizeWpContentImageUrl,
+  meetsFeatureDisplaySize,
+  leadImageUrlCandidates,
   probeRemoteImageSize,
   fetchText,
   articleImageIsValidOnPage,
@@ -119,22 +120,30 @@ async function photoIsLeadReady(item) {
 async function tryUpgradeExistingImage(item, sourceMap = new Map()) {
   if (!item.image) return false;
   const { reject, opts } = isCandidateForItem(item, sourceMap);
-  const upgraded = normalizeWpContentImageUrl(item.image);
-  if (!upgraded || upgraded === item.image) return false;
-  if (!isCandidateImageUrl(upgraded, reject) || isWeakImageUrl(upgraded, opts)) return false;
-  const dims = await probeRemoteImageSize(upgraded);
-  if (!dims || !meetsLeadDisplaySize(dims.width, dims.height)) return false;
-  if (doUpdate) {
-    item.image = upgraded;
-    item.leadImageReady = true;
-    clearLegacyFallback(item);
-    clearStockPhoto(item);
+  for (const candidate of leadImageUrlCandidates(item.image)) {
+    if (!candidate || candidate === item.image) continue;
+    if (!isCandidateImageUrl(candidate, reject) || isWeakImageUrl(candidate, opts)) continue;
+    const dims = await probeRemoteImageSize(candidate);
+    if (!dims || !meetsLeadDisplaySize(dims.width, dims.height)) continue;
+    if (doUpdate) {
+      item.image = candidate;
+      item.leadImageReady = true;
+      clearLegacyFallback(item);
+      clearStockPhoto(item);
+    }
+    return true;
   }
-  return true;
+  return false;
 }
 
 async function applyStockPhoto(item, sourceMap = new Map()) {
   if (await photoIsLeadReady(item)) return false;
+  if (item.image && hasSourcePhoto(item, sourceMap)) {
+    for (const candidate of leadImageUrlCandidates(item.image)) {
+      const dims = await probeRemoteImageSize(candidate);
+      if (dims && meetsFeatureDisplaySize(dims.width, dims.height)) return false;
+    }
+  }
   const stock = await findStockPhoto(item);
   if (!stock?.stockImage) return false;
   if (doUpdate) {
@@ -179,7 +188,7 @@ async function main() {
     if (!shouldValidateImageOnPage(item, sourceMap)) continue;
     const { reject, opts } = isCandidateForItem(item, sourceMap);
     const html = await fetchText(item.link);
-    if (!html || articleImageIsValidOnPage(html, item.image, reject, opts)) continue;
+    if (!html || articleImageIsValidOnPage(html, item.image, reject, opts, item.link)) continue;
     if (doUpdate) {
       item.image = '';
       item.leadImageReady = false;

@@ -1,15 +1,15 @@
 {
-  "updated": "2026-06-27T17:18:56.355Z",
+  "updated": "2026-06-27T17:58:52.553Z",
   "total": 205,
   "withPhoto": 165,
-  "withStock": 48,
+  "withStock": 45,
   "fullyCovered": 197,
-  "leadReadyPhotos": 129,
-  "pageScraped": 25,
-  "photosRecovered": 0,
+  "leadReadyPhotos": 144,
+  "pageScraped": 39,
+  "photosRecovered": 9,
   "imagesCleared": 0,
   "stockSearches": 60,
-  "stockFound": 44,
+  "stockFound": 39,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -23,12 +23,6 @@
       "link": "https://lapige.atmjonquiere.com/2026/05/21/une-page-se-tourne-au-salon-limage-de-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=une-page-se-tourne-au-salon-limage-de-jonquiere",
       "reason": "no-stock-match",
       "image": null
-    },
-    {
-      "title": "Un investissement pour les jeunes « bienvenu » au Centre Mamik",
-      "link": "https://lapige.atmjonquiere.com/2026/05/21/un-investissement-pour-les-jeunes-bienvenu-au-centre-mamik/?utm_source=rss&utm_medium=rss&utm_campaign=un-investissement-pour-les-jeunes-bienvenu-au-centre-mamik",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/3095/3145515352_2c561381a0_b.jpg"
     },
     {
       "title": "L’ERD sauvée de la dissolution par quatre membres",
@@ -49,10 +43,10 @@
       "image": null
     },
     {
-      "title": "FAÉCUM : la démocratie universitaire critiquée",
-      "link": "https://quartierlibre.ca/faecum-la-democratie-universitaire-critiquee/",
+      "title": "Un projet de loi rendrait obligatoire le statut d’étudiant·e proche aidant·e",
+      "link": "https://quartierlibre.ca/projet-loi-etudiant-proche-aidante/",
       "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Universit%C3%A9_de_Montr%C3%A9al%2C_Pavillon_Roger-Gaudry.JPG"
+      "image": "https://live.staticflickr.com/2046/2138574759_7372bca412_b.jpg"
     },
     {
       "title": "Montréal Mystère : le polar à l’honneur dans un festival bilingue",
@@ -79,10 +73,16 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/06/Bruno-Cormier-retraite-benevole.png"
     },
     {
-      "title": "Road to the 2026 FIFA World Cup",
-      "link": "https://thelinknewspaper.ca/article/16333",
-      "reason": "stock-too-small",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/CAMNT06052026-40_690_460_90.jpg"
+      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
+      "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg"
+    },
+    {
+      "title": "Recettes musicales québécoises pour l’été",
+      "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
     }
   ]
 }
