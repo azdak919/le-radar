@@ -25,7 +25,7 @@ const MAX_PER_SOURCE = 7;   // keep the freshest few from each paper
 const MAX_TOTAL = 60;       // overall cap
 const MAX_ENRICH = 20;      // cap article-page fetches per run
 
-const GENERIC_AUTHORS = /^(admin|administrator|administrateur|editor|éditeur|editeur|rédaction|redaction|staff|wordpress|webmaster|collectif|tribune|link|daily|exemplaire|quartier libre|zone campus|la pige|le délit|le delit|the link|the tribune|the mcgill daily)$/i;
+const GENERIC_AUTHORS = /^(admin|administrator|administrateur|editor|éditeur|editeur|rédaction|redaction|staff|wordpress|webmaster|collectif|le collectif|tribune|link|daily|exemplaire|quartier libre|zone campus|la pige|le délit|le delit|the link|the tribune|the mcgill daily)$/i;
 
 // Active feeds come from the registry (news-sources.json), maintained by
 // scripts/discover-news-sources.js. Feeds flagged "_status": "dead" are skipped.

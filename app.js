@@ -106,6 +106,14 @@ async function init() {
   radios = radiosData.status === 'fulfilled' ? sortRadios(radiosData.value) : [];
   buildTunerOptions();
   restoreVolume();
+  registerServiceWorker();
+}
+
+function registerServiceWorker() {
+  if (!('serviceWorker' in navigator)) return;
+  navigator.serviceWorker.register('./sw.js').catch((e) => {
+    console.warn('Service worker registration failed', e);
+  });
 }
 
 // ─── Theme (clair / sombre) ────────────────────────────────────────────────────
@@ -422,12 +430,19 @@ function renderNews() {
   NEWS_EMPTY.classList.toggle('hidden', items.length > 0);
   NEWS_COUNT.textContent = `${items.length} article${items.length !== 1 ? 's' : ''}`;
   NEWS_LIST.innerHTML = '';
-  items.forEach((item, i) => NEWS_LIST.appendChild(createArticle(item, i === 0)));
+  items.forEach((item, i) => NEWS_LIST.appendChild(createArticle(item, getArticleRole(i))));
 }
 
-function createArticle(item, lead = false) {
+function getArticleRole(index) {
+  if (index === 0) return 'lead';
+  if (index <= 2) return 'feature';
+  if (index <= 7) return 'compact';
+  return 'standard';
+}
+
+function createArticle(item, role = 'standard') {
   const a = document.createElement('a');
-  a.className = lead ? 'article article--lead' : 'article';
+  a.className = `article article--${role}`;
   a.href = item.link;
   a.target = '_blank';
   a.rel = 'noopener';
@@ -441,19 +456,81 @@ function createArticle(item, lead = false) {
   const { author, body } = splitByline(item);
   const brief = cleanBrief(body);
   const byLabel = item.lang === 'en' ? 'By' : 'Par';
+  const canUseImage = ['lead', 'feature'].includes(role);
 
   a.innerHTML = `
-    ${lead ? '<span class="article-eyebrow">À la une</span>' : ''}
+    ${role === 'lead' ? '<span class="article-eyebrow">À la une</span>' : ''}
     <div class="article-meta">
       <span class="article-source">${escapeHtml(item.source)}</span>
       ${item.institution ? `<span class="article-inst">${escapeHtml(item.institution)}</span>` : ''}
       ${time ? `<time class="article-time${fresh ? ' is-fresh' : ''}" datetime="${escapeHtml(item.date)}">${time}</time>` : ''}
     </div>
+    ${canUseImage ? '<figure class="article-media" aria-hidden="true"></figure>' : ''}
     <h3 class="article-title">${escapeHtml(item.title)}</h3>
     ${author ? `<p class="article-byline">${byLabel} <strong>${escapeHtml(author)}</strong></p>` : ''}
     ${brief ? `<p class="article-brief">${escapeHtml(brief)}</p>` : ''}
   `;
+
+  if (canUseImage) attachArticleImage(a, item, role);
   return a;
+}
+
+function attachArticleImage(article, item, role) {
+  const src = getCandidateImage(item.image);
+  const media = article.querySelector('.article-media');
+  if (!src || !media) {
+    media?.remove();
+    article.classList.add('article--text');
+    return;
+  }
+
+  const img = new Image();
+  img.decoding = 'async';
+  img.loading = role === 'lead' ? 'eager' : 'lazy';
+  img.alt = '';
+
+  img.onload = () => {
+    if (!isUsableArticleImage(img, role)) {
+      media.remove();
+      article.classList.add('article--text');
+      return;
+    }
+    media.appendChild(img);
+    article.classList.add('has-image');
+  };
+
+  img.onerror = () => {
+    media.remove();
+    article.classList.add('article--text');
+  };
+
+  img.src = src;
+}
+
+function getCandidateImage(src = '') {
+  const raw = String(src).trim();
+  if (!raw) return '';
+
+  let url;
+  try {
+    url = new URL(raw, location.href);
+  } catch {
+    return '';
+  }
+
+  if (!['http:', 'https:'].includes(url.protocol)) return '';
+  const path = decodeURIComponent(url.pathname).toLowerCase();
+  if (/(logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon)/.test(path)) return '';
+  return url.href;
+}
+
+function isUsableArticleImage(img, role) {
+  const width = img.naturalWidth || 0;
+  const height = img.naturalHeight || 0;
+  const ratio = width / Math.max(height, 1);
+  const minWidth = role === 'lead' ? 640 : 520;
+  const minHeight = role === 'lead' ? 320 : 260;
+  return width >= minWidth && height >= minHeight && ratio >= 1.05 && ratio <= 2.4;
 }
 
 // Pull the byline out of the data (preferred) or the "Par/By …" prefix of the excerpt,
