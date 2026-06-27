@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * RÉQ News Aggregator
+ * RADAR News Aggregator
  *
  * Builds news.json from the RSS feeds of Québec student newspapers
  * (universités + cégeps). Runs at build time (GitHub Actions) so the
@@ -88,7 +88,10 @@ function decodeEntities(str = '') {
 }
 
 function stripHtml(html = '') {
-  return decodeEntities(html.replace(/<[^>]+>/g, ' '))
+  // Decode first (expands CDATA + entities) so tag-stripping sees real markup,
+  // then remove tags. Order matters: CDATA-wrapped values are otherwise lost.
+  return decodeEntities(html)
+    .replace(/<[^>]+>/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -96,6 +99,18 @@ function stripHtml(html = '') {
 function tag(block, name) {
   const m = block.match(new RegExp(`<${name}[^>]*>([\\s\\S]*?)</${name}>`, 'i'));
   return m ? m[1].trim() : '';
+}
+
+function parseAuthor(block) {
+  // RSS: <dc:creator>, <author>; Atom: <author><name>…</name></author>
+  let a = tag(block, 'dc:creator') || tag(block, 'creator') || tag(block, 'author');
+  if (a && /<name[\s>]/i.test(a)) a = tag(a, 'name');
+  a = stripHtml(a);
+  // Some feeds use "email@example.com (Author Name)"
+  const paren = a.match(/\(([^)]+)\)/);
+  if (paren) a = paren[1];
+  a = a.replace(/^Par\s+/i, '').replace(/\s+/g, ' ').trim();
+  return a.slice(0, 80);
 }
 
 function firstImage(block) {
@@ -123,12 +138,13 @@ function parseFeed(xml) {
     }
     const dateRaw = tag(block, 'pubDate') || tag(block, 'dc:date') || tag(block, 'published') || tag(block, 'updated');
     const date = dateRaw ? new Date(dateRaw) : null;
+    const author = parseAuthor(block);
     const rawSummary = tag(block, 'description') || tag(block, 'content:encoded') || tag(block, 'summary') || tag(block, 'content');
     const excerpt = stripHtml(rawSummary).slice(0, 220);
     const image = firstImage(tag(block, 'content:encoded') || rawSummary || block) || firstImage(block);
 
     if (title && link) {
-      items.push({ title, link, date: date && !isNaN(date) ? date.toISOString() : null, excerpt, image });
+      items.push({ title, link, author, date: date && !isNaN(date) ? date.toISOString() : null, excerpt, image });
     }
   }
   return items;

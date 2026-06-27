@@ -1,14 +1,14 @@
 {
-  "name": "RÉQ — Radios Étudiantes du Québec",
-  "short_name": "RÉQ",
-  "description": "Découvrez toutes les radios étudiantes des cégeps et universités du Québec. Écoute simple et belle sur mobile.",
+  "name": "RADAR — Les médias étudiants du Québec",
+  "short_name": "RADAR",
+  "description": "Les médias étudiants du Québec, sur ton radar : le fil de presse des journaux étudiants et le syntoniseur des radios des cégeps et universités. Student media on your radar.",
   "lang": "fr-CA",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#070707",
-  "theme_color": "#6366f1",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
   "icons": [
     {
       "src": "assets/icon.svg",
