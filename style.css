@@ -489,6 +489,11 @@ a { color: inherit; }
   transform: translate(-50%, -50%);
   pointer-events: none;
 }
+.tuner-vol-mark--min {
+  left: 0;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.42);
+}
 .tuner-vol-mark--100 {
   left: 50%;
   height: 10px;
