@@ -21,7 +21,8 @@
 - **Postes natifs** — écoute directe sur RADAR pour les stations avec flux validé (ex. CHYZ, CISM, CKUT, CJLO, CFAK)
 - **Fil étudiant** — agrégation RSS des journaux étudiants, filtrable par source
 - **Identité couleur par établissement** — pastilles sources, accents radio et marques institutionnelles (`brand-colors.json`)
-- **Bots automatisés** — agrégation des articles, images vedette, crédits photo, découverte de flux radio
+- **« À l'antenne »** — émission en cours selon la grille horaire colligée (bot) + titre live via métadonnées ICY du flux
+- **Bots automatisés** — agrégation des articles, images vedette, crédits photo, découverte de flux radio, horaires
 - **Mode clair / sombre** persistant
 - **PWA** — installation mobile, service worker, offline shell
 - **100 % statique** — `news.json` et `radios.json` reconstruits par GitHub Actions ; pas de backend
@@ -79,6 +80,20 @@ radios-etudiantes-qc/
 3. Lance `node scripts/discover-streams.js --update` pour valider ou découvrir un flux direct
 
 Voir aussi `radios-candidates.json` pour les postes en cours de validation.
+
+### 📅 Horaires « à l'antenne »
+
+Le bandeau **À l'antenne** affiche l'émission en cours selon l'heure. La grille
+hebdomadaire de chaque poste est colligée par `scripts/fetch-radio-schedules.js`
+depuis plusieurs sources via des adaptateurs (`airtime`, `chyz`, `cfak`,
+`jsonld`, `spinitron`) et des grilles manuelles dans `radio-schedules.seed.json`,
+puis écrite dans `radio-schedules.json` (lu par le site).
+
+`scripts/discover-schedule-sources.js` **automatise la recherche et l'entretien
+des sources** : il revalide les sources existantes, sonde les pages d'horaire
+pour en trouver de nouvelles, détecte les plateformes connues (Spinitron) et
+rapporte la santé. Les deux bots tournent **aux deux semaines**. Détails et
+format : [`docs/maintenance.md`](docs/maintenance.md#horaires--à-lantenne).
 
 ---
 

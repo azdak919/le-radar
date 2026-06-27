@@ -263,7 +263,11 @@ let suppressAudioError = false;
 let listenWindow = null;
 let listenWindowId = null;
 let radioNowPlaying = { stations: {}, updatedAt: null };
+let radioSchedules = { stations: {}, timezone: 'America/Toronto' };
 let nowPlayingPollTimer = null;
+let nowAirTick = null;
+let lastNowAir = { title: null, sub: null, empty: null };
+const PREFERS_REDUCED_MOTION = window.matchMedia?.('(prefers-reduced-motion: reduce)');
 let sourceColors = {};     // source name → accent colour
 let brandColors = { institutions: {}, fallback_palette: ['#003DA5', '#6C2163', '#047857'] };
 
@@ -297,16 +301,21 @@ async function init() {
     newsSourcesByName = {};
   }
 
-  const [radiosData, nowPlayingData] = await Promise.allSettled([
+  const [radiosData, nowPlayingData, schedulesData] = await Promise.allSettled([
     fetch('./radios.json').then((r) => r.json()),
     fetch('./radio-nowplaying.json').then((r) => r.json()),
+    fetch('./radio-schedules.json').then((r) => r.json()),
     loadNews(),
   ]);
 
   radios = radiosData.status === 'fulfilled' ? sortRadios(radiosData.value) : [];
   radioNowPlaying = nowPlayingData.status === 'fulfilled' ? nowPlayingData.value : { stations: {} };
+  radioSchedules = schedulesData.status === 'fulfilled' && schedulesData.value?.stations
+    ? schedulesData.value
+    : { stations: {}, timezone: 'America/Toronto' };
   buildTunerOptions();
   renderTunerNowAir();
+  startNowAirTick();
   restoreVolume();
   registerServiceWorker();
 }
@@ -393,34 +402,116 @@ function nowAirShowTitle(radio) {
   return title.length >= 3 ? title : '';
 }
 
-function nowAirLines(radio) {
-  const show = nowAirShowTitle(radio);
-  const slogan = radioSlogan(radio);
-  if (show) {
-    return {
-      title: show,
-      sub: slogan || `Vous écoutez ${radio.name}`,
-    };
+// ─── Émission en cours selon la grille horaire (radio-schedules.json) ─────────────
+function normLoose(s) {
+  return String(s || '').toLowerCase().replace(/\s+/g, ' ').trim();
+}
+
+/** Jour (0-6) + minutes depuis minuit dans le fuseau de la grille. */
+function scheduleZonedNow(date = new Date()) {
+  const tz = radioSchedules.timezone || 'America/Toronto';
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: tz, weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false,
+  }).formatToParts(date);
+  const map = {};
+  for (const p of parts) map[p.type] = p.value;
+  const wd = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+  let hour = parseInt(map.hour, 10);
+  if (hour === 24 || Number.isNaN(hour)) hour = 0;
+  const minute = parseInt(map.minute, 10) || 0;
+  return { day: wd[map.weekday] ?? 0, minutes: hour * 60 + minute };
+}
+
+function scheduleTimeToMin(value) {
+  const m = /^(\d{1,2}):(\d{2})$/.exec(String(value || '').trim());
+  if (!m) return null;
+  const h = Number(m[1]);
+  const min = Number(m[2]);
+  if (h > 24 || min > 59) return null;
+  return h * 60 + min;
+}
+
+/** Plage horaire couvrant l'instant présent (gère les émissions de nuit). */
+function scheduleCurrentSlot(radio) {
+  const grid = radio?.id ? radioSchedules.stations?.[radio.id]?.grid : null;
+  if (!Array.isArray(grid) || !grid.length) return null;
+  const WEEK = 7 * 1440;
+  const { day, minutes } = scheduleZonedNow();
+  const nowAbs = day * 1440 + minutes;
+  for (const slot of grid) {
+    const start = scheduleTimeToMin(slot.start);
+    const end = scheduleTimeToMin(slot.end);
+    if (start == null || end == null || !slot.title) continue;
+    const startAbs = slot.day * 1440 + start;
+    const endAbs = slot.day * 1440 + (end <= start ? end + 1440 : end);
+    if ((nowAbs >= startAbs && nowAbs < endAbs)
+      || (nowAbs + WEEK >= startAbs && nowAbs + WEEK < endAbs)) {
+      return slot;
+    }
   }
-  return {
-    title: `Vous écoutez ${radio.name}`,
-    sub: slogan,
-  };
+  return null;
+}
+
+function nowAirLines(radio) {
+  const slot = scheduleCurrentSlot(radio);
+  const scheduled = slot?.title?.trim() || '';
+  const live = nowAirShowTitle(radio); // métadonnées ICY du flux (souvent la pièce en cours)
+  const slogan = radioSlogan(radio);
+
+  // La grille donne l'émission de l'heure ; le flux ICY précise la pièce en ondes.
+  if (scheduled) {
+    let sub;
+    if (live && normLoose(live) !== normLoose(scheduled)) sub = `♪ ${live}`;
+    else if (slot.host) sub = `avec ${slot.host}`;
+    else sub = slogan || `Vous écoutez ${radio.name}`;
+    return { title: scheduled, sub };
+  }
+  if (live) {
+    return { title: live, sub: slogan || `Vous écoutez ${radio.name}` };
+  }
+  return { title: `Vous écoutez ${radio.name}`, sub: slogan };
 }
 
 function renderTunerNowAir() {
   if (!TUNER_NOWAIR) return;
-  if (!currentStation) {
-    TUNER_NOWAIR.classList.add('hidden');
+  let title;
+  let sub;
+  const empty = !currentStation;
+  if (empty) {
+    // Rien de syntonisé : on garde le bandeau visible sur ordinateur (masqué
+    // sur mobile par le CSS), sur deux lignes — invitation à syntoniser.
+    title = 'Syntoniser un poste';
+    sub = 'Les radios étudiantes jouent en direct, 24/7';
+  } else {
+    ({ title, sub } = nowAirLines(currentStation));
+  }
+
+  // Rien n'a changé : on n'écrase pas le DOM (sinon le défilement repart à zéro
+  // à chaque tic d'horloge).
+  if (lastNowAir.title === title && lastNowAir.sub === sub && lastNowAir.empty === empty) {
     return;
   }
-  const { title, sub } = nowAirLines(currentStation);
+  lastNowAir = { title, sub, empty };
+
   TUNER_NOWAIR.classList.remove('hidden');
-  if (TUNER_NOWAIR_TITLE) TUNER_NOWAIR_TITLE.textContent = title;
+  TUNER_NOWAIR.classList.toggle('is-empty', empty);
+  applyMarquee(TUNER_NOWAIR_TITLE, title);
   if (TUNER_NOWAIR_SUB) {
-    TUNER_NOWAIR_SUB.textContent = sub;
     TUNER_NOWAIR_SUB.classList.toggle('hidden', !sub);
+    if (sub) applyMarquee(TUNER_NOWAIR_SUB, sub);
+    else TUNER_NOWAIR_SUB.replaceChildren();
   }
+}
+
+/**
+ * Horloge interne : ré-évalue l'émission en cours chaque minute pour que
+ * l'affichage bascule tout seul au changement d'émission, sans recharger la
+ * page. Le garde-fou de renderTunerNowAir évite de relancer le défilement
+ * quand l'émission n'a pas changé.
+ */
+function startNowAirTick() {
+  if (nowAirTick) return;
+  nowAirTick = setInterval(renderTunerNowAir, 30000);
 }
 
 async function refreshNowPlayingCache() {
@@ -509,21 +600,29 @@ function stepStation(dir) {
 }
 
 /**
- * Affiche le sous-titre du syntoniseur (fréquence · institution au complet).
- * Si le texte dépasse, on l'anime en défilement doux droite → gauche.
+ * Affiche un texte sur une seule ligne et, s'il dépasse de son conteneur,
+ * l'anime en défilement doux droite → gauche (sinon ellipsis). Réutilisé par
+ * le sous-titre du syntoniseur et par le module « À l'antenne ».
  */
-function setTunerSubText(text) {
-  TUNER_SUB.classList.remove('is-marquee');
-  TUNER_SUB.style.removeProperty('--marquee-shift');
-  TUNER_SUB.style.removeProperty('--marquee-duration');
+function applyMarquee(el, text) {
+  if (!el) return;
+  el.classList.remove('is-marquee');
+  el.style.removeProperty('--marquee-shift');
+  el.style.removeProperty('--marquee-duration');
+
+  // Mouvement réduit : texte simple (ellipsis natif), pas d'animation.
+  if (PREFERS_REDUCED_MOTION?.matches) {
+    el.textContent = text;
+    return;
+  }
 
   const span = document.createElement('span');
   span.className = 'tuner-now-sub-text';
   span.textContent = text;
-  TUNER_SUB.replaceChildren(span);
+  el.replaceChildren(span);
 
   requestAnimationFrame(() => {
-    const available = TUNER_SUB.clientWidth;
+    const available = el.clientWidth;
     if (!available) return;
     const overflow = span.scrollWidth - available;
     if (overflow <= 4) return;
@@ -531,10 +630,15 @@ function setTunerSubText(text) {
     const distance = overflow + 12;
     // ~16 px/s : défilement lent et lisible
     const duration = Math.max(7, distance / 16);
-    TUNER_SUB.style.setProperty('--marquee-shift', `-${distance}px`);
-    TUNER_SUB.style.setProperty('--marquee-duration', `${duration.toFixed(1)}s`);
-    TUNER_SUB.classList.add('is-marquee');
+    el.style.setProperty('--marquee-shift', `-${distance}px`);
+    el.style.setProperty('--marquee-duration', `${duration.toFixed(1)}s`);
+    el.classList.add('is-marquee');
   });
+}
+
+/** Sous-titre du syntoniseur (fréquence · institution au complet). */
+function setTunerSubText(text) {
+  applyMarquee(TUNER_SUB, text);
 }
 
 function selectStation(id, { autoplay = false, openExternal = false } = {}) {
