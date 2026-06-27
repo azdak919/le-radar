@@ -514,6 +514,87 @@ async function parseCismGrid(htmlText) {
   return parseCismNuxtPayload(pickLargestJsonScript(htmlText));
 }
 
+/** Colonnes jour → index (Sun=0) sur la grille visuelle CJLO (left en px). */
+const CJLO_LEFT_TO_DAY = [
+  [31, 0],
+  [107.6, 1],
+  [184.2, 2],
+  [260.8, 3],
+  [337.4, 4],
+  [414, 5],
+  [490.6, 6],
+];
+
+function cjloLeftToDay(leftPx) {
+  const left = parseFloat(leftPx);
+  if (!Number.isFinite(left)) return null;
+  let bestDay = null;
+  let bestDist = Infinity;
+  for (const [lx, day] of CJLO_LEFT_TO_DAY) {
+    const dist = Math.abs(left - lx);
+    if (dist < bestDist) {
+      bestDist = dist;
+      bestDay = day;
+    }
+  }
+  return bestDist <= 6 ? bestDay : null;
+}
+
+function parseCjloClockToken(token = '') {
+  const raw = String(token).trim();
+  const low = raw.toLowerCase();
+  if (low === 'midnight') return '00:00';
+  if (low === 'noon') return '12:00';
+  const m = /^(\d{1,2})(?::(\d{2}))?\s*(am|pm)$/i.exec(raw);
+  if (!m) return null;
+  let hour = parseInt(m[1], 10);
+  const minute = m[2] ? parseInt(m[2], 10) : 0;
+  const ap = m[3].toLowerCase();
+  if (ap === 'pm' && hour !== 12) hour += 12;
+  if (ap === 'am' && hour === 12) hour = 0;
+  if (hour > 23 || minute > 59) return null;
+  return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+}
+
+function parseCjloTimeRange(text = '') {
+  const raw = decodeHtmlEntities(String(text)).replace(/\s+/g, ' ').trim();
+  const m = /^(.+?)\s*-\s*(.+)$/i.exec(raw);
+  if (!m) return null;
+  const start = parseCjloClockToken(m[1]);
+  const end = parseCjloClockToken(m[2]);
+  if (!start || !end) return null;
+  return { start, end };
+}
+
+function normalizeCjloShowUrl(href = '') {
+  let url = String(href).trim();
+  if (!url) return '';
+  if (url.startsWith('/?q=')) url = url.replace('/?q=', '/');
+  if (url.startsWith('/')) url = `http://www.cjlo.com${url}`;
+  return url;
+}
+
+/**
+ * CJLO (cjlo.com/schedule) : grille Drupal 7 en HTML (Daytime + Late Night).
+ * Chaque bloc .show-sched a une colonne (left) et une plage AM/PM dans <b>.
+ */
+function parseCjloGrid(htmlText) {
+  const grid = [];
+  const showRe = /<div class='show-sched[^']*'[^>]*style='[^']*left:([\d.]+)px[\s\S]*?<div class='show-title'><a[^>]*href='([^']*)'[^>]*>([\s\S]*?)<\/a><\/div>[\s\S]*?<b>([\s\S]*?)<\/b>/gi;
+  let m;
+  while ((m = showRe.exec(htmlText))) {
+    const day = cjloLeftToDay(m[1]);
+    const title = decodeHtmlEntities(stripTags(m[3])).replace(/\s+/g, ' ').trim();
+    const range = parseCjloTimeRange(stripTags(m[4]));
+    if (day == null || !title || !range) continue;
+    const slot = { day, start: range.start, end: range.end, title };
+    const url = normalizeCjloShowUrl(m[2]);
+    if (url) slot.url = url;
+    grid.push(slot);
+  }
+  return grid;
+}
+
 // ─── Registre d'adaptateurs ──────────────────────────────────────────────────────
 const ADAPTERS = {
   airtime: (src, deps) => fetchAirtimeGrid(src.base || src.url, deps),
@@ -522,6 +603,7 @@ const ADAPTERS = {
   chyz: async (src, deps) => parseChyzGrid(await fetchText(src.url, deps)),
   cfak: async (src, deps) => parseCfakGrid(await fetchText(src.url, deps)),
   cism: async (src, deps) => parseCismGrid(await fetchText(src.url || 'https://cism893.ca/grille-horaire/', deps)),
+  cjlo: async (src, deps) => parseCjloGrid(await fetchText(src.url || 'http://www.cjlo.com/schedule', deps)),
 };
 
 /** Étiquette lisible d'une source pour le journal/diagnostic. */
@@ -595,6 +677,8 @@ module.exports = {
   cismTimeTableToGrid,
   parseCismNuxtPayload,
   parseCismGrid,
+  parseCjloGrid,
+  parseCjloTimeRange,
   ADAPTERS,
   sourceLabel,
   runAdapter,

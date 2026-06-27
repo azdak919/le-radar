@@ -45,8 +45,13 @@
       "grid": []
     },
     "cjlo": {
-      "_note": "Spinitron possible : ajouter { \"type\": \"spinitron\", \"base\": \"https://spinitron.com\", \"token\": \"…\" } si un jeton API est disponible. Sinon, grille manuelle.",
-      "sources": [],
+      "_note": "Grille Drupal 7 sur http://www.cjlo.com/schedule (Daytime + Late Night, colonnes Sun–Sat).",
+      "sources": [
+        {
+          "type": "cjlo",
+          "url": "http://www.cjlo.com/schedule"
+        }
+      ],
       "grid": []
     },
     "cfak": {
