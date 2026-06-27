@@ -1,7 +1,9 @@
 /**
  * Extraction et réconciliation des auteurs — partagé par fetch-news et verify-authors.
- * Règle : si l'extrait commence par « Par … » / « By … », c'est l'auteur de l'article,
- * pas le dc:creator du flux (souvent rédacteur·rice ou compte générique).
+ *
+ * Priorité : byline visible sur la page > extrait « Par … » > RSS (si fiable).
+ * En cas de conflit ou de doute (auteur flux par défaut, doublons divergents) :
+ * « La rédaction » / « The editorial team ».
  */
 
 const GENERIC_AUTHORS = /^(admin|administrator|administrateur|editor|éditeur|editeur|rédaction|redaction|staff|wordpress|webmaster|collectif|tribune|link|daily|exemplaire|quartier libre|zone campus|la pige|le délit|le delit|the link|the tribune|the mcgill daily)$/i;
@@ -11,6 +13,9 @@ const EDITORIAL_BYLINE_EN_RE = /^(?:Par|By)\s+Editorial\s+(?:team|staff|board)\b
 
 const BYLINE_ARTICLE_STARTERS = /^(Le|La|Les|L'|L'|Un|Une|The|An|À|A)$/iu;
 const NAME_PARTICLES = new Set(['de', 'du', 'des', 'd', 'la', 'le', 'les', 'van', 'von', 'st', 'ste', 'saint', 'sainte']);
+
+const FEED_DEFAULT_MIN_SHARE = 0.5;
+const FEED_DEFAULT_MIN_COUNT = 3;
 
 function stripHtml(text = '') {
   return String(text).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
@@ -41,10 +46,19 @@ function normalizeAuthor(name = '') {
   return a.slice(0, 80);
 }
 
-function resolveAuthor(item = {}, allItems = []) {
-  const { item: reconciled } = reconcileAuthor(item, allItems, { applyFallback: true });
-  return normalizeAuthor(reconciled.author) || editorialFallback(reconciled.lang === 'en' ? 'en' : 'fr');
+function normAuthorKey(name = '') {
+  return normalizeAuthor(name)
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
+    .toLowerCase();
 }
+
+function authorsAgree(...names) {
+  const keys = names.map((n) => normalizeAuthor(n)).filter(Boolean).map(normAuthorKey);
+  return new Set(keys).size <= 1;
+}
+
+const MANGLED_TAIL_WORDS = /^(?:après|avant|dans|pour|avec|sans|sous|sur|entre|depuis|pendant|lors|comme|mais|donc|alors|vers|chez|when|after|before|from|into|about)$/i;
 
 /** Auteurs RSS mal fusionnés avec le début du texte (« Médéric Dens Après »). */
 function trimMangledAuthor(name = '') {
@@ -54,14 +68,10 @@ function trimMangledAuthor(name = '') {
   if (parts.length >= 3 && NAME_PARTICLES.has(parts[1].toLowerCase())) {
     return parts.slice(0, Math.min(parts.length, 4)).join(' ');
   }
-  return parts.slice(0, 2).join(' ');
-}
-
-function normAuthorKey(name = '') {
-  return normalizeAuthor(name)
-    .normalize('NFD')
-    .replace(/\p{M}/gu, '')
-    .toLowerCase();
+  if (parts.length >= 3 && MANGLED_TAIL_WORDS.test(parts[2].replace(/[,;:]$/, ''))) {
+    return parts.slice(0, 2).join(' ');
+  }
+  return a;
 }
 
 function extractBylineFromText(text = '') {
@@ -112,19 +122,111 @@ function normalizeArticleUrl(link = '') {
   }
 }
 
-function findSiblingAuthor(item, allItems = []) {
-  const key = normalizeArticleUrl(item.link);
-  if (!key) return '';
-  for (const other of allItems) {
-    if (other === item) continue;
-    if (normalizeArticleUrl(other.link) !== key) continue;
-    const author = normalizeAuthor(other.author);
-    if (author) return author;
+function metaContent(html = '', key = '') {
+  const esc = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const re = new RegExp(`<meta[^>]+(?:name|property)=["']${esc}["'][^>]+content=["']([^"']+)["']`, 'i');
+  const m = html.match(re);
+  if (m) return stripHtml(m[1]);
+  const re2 = new RegExp(`<meta[^>]+content=["']([^"']+)["'][^>]+(?:name|property)=["']${esc}["']`, 'i');
+  const m2 = html.match(re2);
+  return m2 ? stripHtml(m2[1]) : '';
+}
+
+/**
+ * Auteur depuis la page source — priorité à la byline visible « Par … » (rel=author),
+ * pas au JSON-LD / dc:creator WordPress (souvent rédacteur·rice technique).
+ */
+function authorFromArticleHtml(html = '') {
+  if (!html || html.length < 200) return '';
+
+  const candidates = [];
+
+  const parLink = html.match(
+    /(?:^|[\s>])(?:Par|By)\s*<a[^>]*\brel=["']author["'][^>]*>([\s\S]*?)<\/a>/i,
+  );
+  if (parLink) candidates.push({ author: stripHtml(parLink[1]), trust: 100 });
+
+  const parSpan = html.match(
+    /(?:^|[\s>])(?:Par|By)\s*<[^>]+>([\s\S]*?)<\/[^>]+>\s*<\/span>/i,
+  );
+  if (parSpan) candidates.push({ author: stripHtml(parSpan[1]), trust: 85 });
+
+  const tribune = html.match(/tribune_author=([^"'&]+)/i);
+  if (tribune) candidates.push({ author: decodeURIComponent(tribune[1].replace(/\+/g, ' ')), trust: 90 });
+
+  const entryAuthor = html.match(/class=["'][^"']*entry-author[^"']*["'][^>]*>[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/i);
+  if (entryAuthor) candidates.push({ author: stripHtml(entryAuthor[1]), trust: 75 });
+
+  const authorTitle = html.match(/class=["'][^"']*author-title[^"']*["'][^>]*>[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/i);
+  if (authorTitle) candidates.push({ author: stripHtml(authorTitle[1]), trust: 75 });
+
+  for (const key of ['parsely-author', 'article:author', 'author', 'dc.creator', 'dc:creator']) {
+    const meta = metaContent(html, key);
+    if (meta) candidates.push({ author: meta, trust: 40 });
+  }
+
+  for (const { author, trust } of candidates.sort((a, b) => b.trust - a.trust)) {
+    const name = normalizeAuthor(author);
+    if (name) return name;
   }
   return '';
 }
 
-/** Chroniques à la première personne (« Salut, moi c'est Elora »). */
+/** Auteur présent sur ≥50 % des articles d'une source = compte flux (ex. Carla Roche / QL). */
+function detectFeedDefaultAuthors(items = []) {
+  const bySource = new Map();
+  for (const item of items) {
+    const src = item.source || '';
+    if (!bySource.has(src)) bySource.set(src, []);
+    bySource.get(src).push(item);
+  }
+
+  const defaults = new Map();
+  for (const [source, list] of bySource) {
+    if (list.length < FEED_DEFAULT_MIN_COUNT) continue;
+    const counts = new Map();
+    for (const item of list) {
+      const a = normalizeAuthor(item.author);
+      if (!a) continue;
+      const key = normAuthorKey(a);
+      counts.set(key, { name: a, count: (counts.get(key)?.count || 0) + 1 });
+    }
+    for (const { name, count } of counts.values()) {
+      if (count >= FEED_DEFAULT_MIN_COUNT && count / list.length >= FEED_DEFAULT_MIN_SHARE) {
+        if (!defaults.has(source)) defaults.set(source, new Set());
+        defaults.get(source).add(normAuthorKey(name));
+      }
+    }
+  }
+  return defaults;
+}
+
+function isFeedDefaultAuthor(item, feedDefaults = new Map()) {
+  const src = item.source || '';
+  const key = normAuthorKey(normalizeAuthor(item.author));
+  if (!key || !feedDefaults.has(src)) return false;
+  return feedDefaults.get(src).has(key);
+}
+
+function findSiblingAuthor(item, allItems = []) {
+  const key = normalizeArticleUrl(item.link);
+  if (!key) return '';
+
+  const siblings = allItems.filter(
+    (other) => other !== item && normalizeArticleUrl(other.link) === key,
+  );
+  if (!siblings.length) return '';
+
+  const keys = new Set();
+  for (const entry of [item, ...siblings]) {
+    const a = normalizeAuthor(entry.author);
+    if (a) keys.add(normAuthorKey(a));
+  }
+  if (keys.size !== 1) return '';
+  return normalizeAuthor(item.author) || normalizeAuthor(siblings[0].author) || '';
+}
+
+/** Chroniques à la première personne — seulement si aucune autre source fiable. */
 function extractFirstPersonAuthor(text = '') {
   const plain = stripHtml(text);
   const m = plain.match(/^(?:Salut,?\s+)?moi,?\s+c['']est\s+([\p{Lu}][\p{L}'’.\-]+)/iu)
@@ -132,75 +234,143 @@ function extractFirstPersonAuthor(text = '') {
   return m ? normalizeAuthor(m[1]) : '';
 }
 
+function needsPageAuthorVerification(item, feedDefaults = new Map()) {
+  if (!item.link) return false;
+  const ex = String(item.excerpt || '').trim();
+  if (excerptOpensWithByline(ex) && extractBylineFromText(ex).author) return false;
+  if (isFeedDefaultAuthor(item, feedDefaults)) return true;
+  if (!normalizeAuthor(item.author)) return true;
+  return false;
+}
+
 function applyAuthorFallback(item = {}) {
-  const lang = item.lang === 'en' ? 'en' : 'fr';
-  const fallback = editorialFallback(lang);
+  const fallback = editorialFallback(item.lang === 'en' ? 'en' : 'fr');
   if (normalizeAuthor(item.author) === fallback) return item;
   return { ...item, author: fallback };
 }
 
-function reconcileAuthor(item, allItems = [], { applyFallback = false } = {}) {
+function resolveAuthorCandidate(item, allItems, feedDefaults, pageAuthor) {
+  const ex = String(item.excerpt || '').trim();
+  const fromExcerpt = extractBylineFromText(ex);
+  const excerptAuthor = excerptOpensWithByline(ex) && fromExcerpt.author
+    ? fromExcerpt.author
+    : '';
+  const page = normalizeAuthor(pageAuthor);
+  let rss = normalizeAuthor(trimMangledAuthor(item.author));
+  const rssIsDefault = rss && isFeedDefaultAuthor(item, feedDefaults);
+
+  if (rssIsDefault) rss = '';
+
+  const sibling = findSiblingAuthor(item, allItems);
+  const firstPerson = !excerptAuthor && !page && !rss ? extractFirstPersonAuthor(ex) : '';
+
+  const sources = [
+    excerptAuthor && { author: excerptAuthor, reason: 'excerpt-byline' },
+    page && { author: page, reason: 'page-byline' },
+    sibling && { author: sibling, reason: 'sibling-agreement' },
+    rss && { author: rss, reason: 'rss-field' },
+    firstPerson && { author: firstPerson, reason: 'first-person-intro' },
+  ].filter(Boolean);
+
+  if (!sources.length) {
+    return { author: '', reason: rssIsDefault ? 'rss-feed-default-rejected' : 'no-author-source', excerptBody: fromExcerpt.body };
+  }
+
+  const primary = sources[0];
+  const conflicting = sources.slice(1).filter((s) => !authorsAgree(primary.author, s.author));
+
+  if (conflicting.length) {
+    if (excerptAuthor && page && !authorsAgree(excerptAuthor, page)) {
+      return { author: '', reason: 'author-conflict-excerpt-page', excerptBody: fromExcerpt.body };
+    }
+    if (page && rss && !authorsAgree(page, rss)) {
+      return { author: page, reason: 'page-byline-overrides-rss', excerptBody: fromExcerpt.body };
+    }
+    if (excerptAuthor) {
+      return {
+        author: excerptAuthor,
+        reason: 'excerpt-byline-wins-conflict',
+        excerptBody: fromExcerpt.body.length >= 20 ? fromExcerpt.body : '',
+      };
+    }
+    if (page) {
+      return { author: page, reason: 'page-byline-wins-conflict', excerptBody: fromExcerpt.body };
+    }
+    return { author: '', reason: 'author-conflict', excerptBody: fromExcerpt.body };
+  }
+
+  return {
+    author: primary.author,
+    reason: primary.reason,
+    excerptBody: excerptAuthor && fromExcerpt.body.length >= 20 ? fromExcerpt.body : '',
+  };
+}
+
+function reconcileAuthor(item, allItems = [], {
+  applyFallback = false,
+  feedDefaults = null,
+  pageAuthor = '',
+} = {}) {
+  const defaults = feedDefaults || detectFeedDefaultAuthors(allItems);
+  const previousAuthor = normalizeAuthor(item.author) || null;
+  const resolved = resolveAuthorCandidate(item, allItems, defaults, pageAuthor);
+
   let next = { ...item };
   let changed = false;
-  let reason = null;
-  const previousAuthor = normalizeAuthor(item.author) || null;
 
-  const trimmed = trimMangledAuthor(next.author);
-  if (trimmed && trimmed !== normalizeAuthor(next.author)) {
-    next.author = trimmed;
+  if (resolved.author && normalizeAuthor(next.author) !== resolved.author) {
+    next.author = resolved.author;
+    changed = true;
+  } else if (!resolved.author && normalizeAuthor(next.author)) {
+    next.author = '';
     changed = true;
   }
 
-  const ex = String(next.excerpt || '').trim();
-  const fromExcerpt = extractBylineFromText(ex);
-  if (!fromExcerpt.author || !excerptOpensWithByline(ex)) {
-    if (!normalizeAuthor(next.author)) {
-      const sibling = findSiblingAuthor(next, allItems);
-      if (sibling) {
-        next.author = sibling;
-        changed = true;
-        reason = 'filled-from-duplicate';
-      }
-    }
-    if (!normalizeAuthor(next.author)) {
-      const firstPerson = extractFirstPersonAuthor(ex);
-      if (firstPerson) {
-        next.author = firstPerson;
-        changed = true;
-        reason = reason || 'filled-from-first-person';
-      }
-    }
-  } else {
-    const fieldAuthor = normalizeAuthor(next.author);
-    if (!fieldAuthor || normAuthorKey(fieldAuthor) !== normAuthorKey(fromExcerpt.author)) {
-      next.author = fromExcerpt.author;
-      changed = true;
-      reason = fieldAuthor ? 'excerpt-byline-overrides-rss' : 'filled-from-excerpt';
-      if (fromExcerpt.body.length >= 20) {
-        next.excerpt = fromExcerpt.body;
-      }
-    }
+  if (resolved.excerptBody && resolved.excerptBody !== exString(next)) {
+    next.excerpt = resolved.excerptBody;
+    changed = true;
   }
 
   if (applyFallback && !normalizeAuthor(next.author)) {
     next = applyAuthorFallback(next);
     changed = true;
-    reason = reason || 'fallback-editorial';
+    resolved.reason = resolved.reason || 'fallback-editorial';
   }
 
   const author = normalizeAuthor(next.author) || null;
   if (changed || (applyFallback && author !== previousAuthor)) {
-    return { changed: true, item: next, author, previousAuthor, reason };
+    return {
+      changed: true,
+      item: next,
+      author,
+      previousAuthor,
+      reason: resolved.reason,
+    };
   }
   return { changed: false, item: next, author, previousAuthor, reason: null };
 }
 
-function auditAuthors(items = []) {
+function exString(item) {
+  return String(item.excerpt || '').trim();
+}
+
+function resolveAuthor(item = {}, allItems = [], options = {}) {
+  const { item: reconciled } = reconcileAuthor(item, allItems, { ...options, applyFallback: true });
+  return normalizeAuthor(reconciled.author) || editorialFallback(reconciled.lang === 'en' ? 'en' : 'fr');
+}
+
+function auditAuthors(items = [], { feedDefaults = null, pageAuthors = new Map() } = {}) {
+  const defaults = feedDefaults || detectFeedDefaultAuthors(items);
   const mismatches = [];
   let fixable = 0;
 
   for (const item of items) {
-    const result = reconcileAuthor(item, items, { applyFallback: true });
+    const pageAuthor = pageAuthors.get(normalizeArticleUrl(item.link)) || '';
+    const result = reconcileAuthor(item, items, {
+      applyFallback: true,
+      feedDefaults: defaults,
+      pageAuthor,
+    });
     if (result.changed) {
       fixable += 1;
       mismatches.push({
@@ -214,7 +384,7 @@ function auditAuthors(items = []) {
     }
   }
 
-  return { mismatches, fixable, total: items.length };
+  return { mismatches, fixable, total: items.length, feedDefaults: defaults };
 }
 
 module.exports = {
@@ -226,8 +396,13 @@ module.exports = {
   extractBylineFromText,
   extractFirstPersonAuthor,
   excerptOpensWithByline,
+  authorFromArticleHtml,
+  detectFeedDefaultAuthors,
+  isFeedDefaultAuthor,
+  needsPageAuthorVerification,
   resolveAuthor,
   applyAuthorFallback,
   reconcileAuthor,
   auditAuthors,
+  normalizeArticleUrl,
 };
