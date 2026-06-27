@@ -1196,13 +1196,23 @@ function syncFiltersPanel() {
   const overflow = filtersOverflow();
 
   if (isSourceView) {
-    filtersExpanded = false;
-    FILTERS_PANEL.classList.add('is-compact');
-    FILTERS_PANEL.classList.remove('is-expanded');
-    updateFiltersCompactBar();
-    FILTERS_COMPACT?.removeAttribute('hidden');
-    FILTERS_TOGGLE?.setAttribute('hidden', '');
-    FILTERS_COMPACT?.setAttribute('aria-expanded', 'false');
+    if (filtersExpanded) {
+      FILTERS_PANEL.classList.remove('is-compact');
+      FILTERS_PANEL.classList.add('is-expanded');
+      FILTERS_COMPACT?.setAttribute('hidden', '');
+      FILTERS_TOGGLE?.removeAttribute('hidden');
+      const label = FILTERS_TOGGLE?.querySelector('.filters-toggle__label');
+      if (label) label.textContent = 'Réduire';
+      FILTERS_TOGGLE?.setAttribute('aria-expanded', 'true');
+      FILTERS_COMPACT?.setAttribute('aria-expanded', 'true');
+    } else {
+      FILTERS_PANEL.classList.add('is-compact');
+      FILTERS_PANEL.classList.remove('is-expanded');
+      updateFiltersCompactBar();
+      FILTERS_COMPACT?.removeAttribute('hidden');
+      FILTERS_TOGGLE?.setAttribute('hidden', '');
+      FILTERS_COMPACT?.setAttribute('aria-expanded', 'false');
+    }
     return;
   }
 
@@ -1224,16 +1234,17 @@ function syncFiltersPanel() {
 
 function bindFiltersPanel() {
   FILTERS_TOGGLE?.addEventListener('click', () => {
-    filtersExpanded = !filtersExpanded;
+    if (newsSourceFilter !== 'all' && filtersExpanded) {
+      filtersExpanded = false;
+    } else {
+      filtersExpanded = !filtersExpanded;
+    }
     syncFiltersPanel();
   });
 
   FILTERS_COMPACT?.addEventListener('click', () => {
     filtersExpanded = true;
-    FILTERS_PANEL?.classList.remove('is-compact');
-    FILTERS_COMPACT?.setAttribute('hidden', '');
     syncFiltersPanel();
-    FILTERS_TOGGLE?.focus();
   });
 
   FILTERS_MOBILE.addEventListener('change', () => syncFiltersPanel());

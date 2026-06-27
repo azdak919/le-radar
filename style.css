@@ -673,6 +673,11 @@ a { color: inherit; }
   margin: 0;
 }
 
+.filters-compact[hidden],
+.filters-toggle[hidden] {
+  display: none !important;
+}
+
 .filters-toggle,
 .filters-compact {
   font-family: var(--sans);
