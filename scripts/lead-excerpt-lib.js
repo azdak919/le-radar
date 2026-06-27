@@ -12,13 +12,9 @@ const { extractBylineFromText } = require('./author-lib');
 const FETCH_TIMEOUT = 12000;
 const LEAD_EXCERPT_MAX = 1200;
 const LEAD_EXCERPT_MIN = 80;
-/** Aligné sur BRIEF_LIMITS.lead dans app.js — remplir l'espace vedette. */
-const LEAD_EXCERPT_DISPLAY_TARGET = 720;
 const SUBSTANTIVE_MIN = 60;
 const LEAD_SUITABILITY_MIN = 52;
-const LEAD_CONTINUATION_MIN_SCORE = 44;
-const LEAD_MAX_PARAGRAPHS = 4;
-const SCAN_PARAGRAPH_LIMIT = 12;
+const SCAN_PARAGRAPH_LIMIT = 10;
 
 const TRUNC_MARKERS_RE = /(?:…|\.{3,}|\[…\]|\[\.\.\.\]|\[&hellip;\])/gi;
 
@@ -256,39 +252,6 @@ function scoreLeadParagraph(text = '', { index = 0, nextText = '' } = {}) {
   };
 }
 
-function isSectionHeading(text = '') {
-  const t = String(text).replace(/\s+/g, ' ').trim();
-  if (!t) return true;
-  if (t.length < 56 && countSentences(t) <= 1 && !endsCompleteSentence(t)) return true;
-  if (t.length < 40) return true;
-  return false;
-}
-
-function appendContinuationParagraphs(rawParas, startIndex, openingText, openingScore) {
-  let text = openingText;
-  let used = 1;
-
-  for (let i = startIndex + 1; i < rawParas.length && used < LEAD_MAX_PARAGRAPHS; i += 1) {
-    if (text.length >= LEAD_EXCERPT_DISPLAY_TARGET) break;
-    if (isJunkParagraph(rawParas[i])) continue;
-
-    const normalized = normalizeLeadParagraph(rawParas[i]);
-    if (!normalized || isSectionHeading(normalized)) continue;
-
-    const scored = scoreLeadParagraph(normalized, { index: i });
-    const ok = scored.score >= LEAD_CONTINUATION_MIN_SCORE
-      || (scored.score >= 36 && normalized.length >= 90);
-    if (!ok) continue;
-
-    const merged = `${text} ${normalized}`.trim();
-    if (merged.length > LEAD_EXCERPT_MAX) break;
-    text = merged;
-    used += 1;
-  }
-
-  return truncateLeadExcerpt(text, LEAD_EXCERPT_DISPLAY_TARGET);
-}
-
 function pickBestLeadParagraph(html = '') {
   const rawParas = paragraphsFromHtml(html);
   const candidates = [];
@@ -322,10 +285,17 @@ function pickBestLeadParagraph(html = '') {
     return { text: '', score: best.score, reason: best.reason, runnerUp: candidates[1]?.score ?? 0 };
   }
 
-  const text = appendContinuationParagraphs(rawParas, best.index, best.text, best.score);
+  let text = best.text;
+  if (text.length < 200 && best.index < rawParas.length - 1) {
+    const nextNorm = normalizeLeadParagraph(rawParas[best.index + 1]);
+    const nextScored = scoreLeadParagraph(nextNorm, { index: best.index + 1 });
+    if (nextScored.suitable && nextScored.score >= best.score - 12) {
+      text = `${text} ${nextNorm}`.trim();
+    }
+  }
 
   return {
-    text,
+    text: truncateLeadExcerpt(text),
     score: best.score,
     reason: best.reason,
     index: best.index,
@@ -346,8 +316,10 @@ function excerptLooksIncomplete(item = {}) {
   if (existing) {
     if (!leadExcerptLooksSuitable(existing)) return true;
     if (!endsCompleteSentence(existing)) return true;
-    if (existing.length < LEAD_EXCERPT_DISPLAY_TARGET - 60) return true;
-    return false;
+    if (existing.length >= 180 && existing.length <= 420) return false;
+    if (existing.length > 420 && countSentences(existing) >= 3) return true;
+    if (leadExcerptLooksSuitable(existing) && existing.length >= 180) return false;
+    return true;
   }
 
   const ex = stripTruncationArtifacts(stripHtml(String(item.excerpt || '')));
@@ -411,7 +383,6 @@ function selectEnrichmentCandidates(items = [], limit = 35) {
 module.exports = {
   LEAD_EXCERPT_MAX,
   LEAD_EXCERPT_MIN,
-  LEAD_EXCERPT_DISPLAY_TARGET,
   LEAD_SUITABILITY_MIN,
   fetchText,
   articleBodyHtml,

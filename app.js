@@ -636,7 +636,7 @@ function renderNews() {
   const partition = isSourceView
     ? partitionSourceFeed(items)
     : partitionNewsFeed(items);
-  const { heroItems, briefItems, tailItems, contingencyBand, leadHasImage = false } = partition;
+  const { heroItems, briefItems, tailItems, contingencyBand } = partition;
 
   if (contingencyBand > 0) {
     NEWS_LIST.dataset.contingency = String(contingencyBand);
@@ -667,15 +667,7 @@ function renderNews() {
     if (article) tail.push(article);
   });
 
-  const balanceColumns = !(isSourceView && leadHasImage);
-
   if (hero.childElementCount) {
-    if (compacts.length && balanceColumns) {
-      const spacer = document.createElement('div');
-      spacer.className = 'news-hero-spacer';
-      spacer.setAttribute('aria-hidden', 'true');
-      hero.appendChild(spacer);
-    }
     NEWS_LIST.appendChild(hero);
   }
   if (compacts.length) {
@@ -683,12 +675,6 @@ function renderNews() {
     briefRail.className = 'brief-rail';
     briefRail.innerHTML = '<h3 class="brief-rail-title">En bref</h3>';
     compacts.forEach((article) => briefRail.appendChild(article));
-    if (hero.childElementCount && balanceColumns) {
-      const railSpacer = document.createElement('div');
-      railSpacer.className = 'brief-rail-spacer';
-      railSpacer.setAttribute('aria-hidden', 'true');
-      briefRail.appendChild(railSpacer);
-    }
     NEWS_LIST.appendChild(briefRail);
   }
 
@@ -1117,6 +1103,10 @@ function createArticle(item, role = 'standard', { hideSourceMeta = false } = {})
   }
   if (role === 'lead' && brief) {
     ({ text: brief, truncated: briefTruncated } = ensureLeadBriefMinLines(brief, briefTruncated, item));
+    const fullSource = sanitizeBriefBody(leadBody);
+    if (fullSource.length > brief.length + 12 || (brief.length >= 100 && item.link)) {
+      briefTruncated = true;
+    }
   }
   if (author && brief) {
     brief = stripLeadingByline(brief, author);
@@ -1138,25 +1128,21 @@ function createArticle(item, role = 'standard', { hideSourceMeta = false } = {})
     : '';
   const titleHtml = `<h3 class="article-title">${escapeHtml(cleanTitle(item.title))}</h3>`;
   const mediaHtml = canUseImage ? '<figure class="article-media"></figure>' : '';
-  const sourceMetaHtml = hideSourceMeta
-    ? ''
-    : `<div class="article-meta article-meta--lead-source">
-        <span class="article-source">${escapeHtml(item.source)}</span>
-        ${item.institution ? `<span class="article-inst">${escapeHtml(articleInstitutionLabel(item.institution, item.type))}</span>` : ''}
-      </div>`;
-
   if (role === 'lead') {
-    const leadMeta = hideSourceMeta
+    const leadMetaHtml = hideSourceMeta
       ? (timeHtml ? `<div class="${metaClass}">${timeHtml}</div>` : '')
-      : (timeHtml ? `<div class="article-meta article-meta--time-only article-meta--lead">${timeHtml}</div>` : '');
+      : `<div class="${metaClass}">
+          <span class="article-source">${escapeHtml(item.source)}</span>
+          ${item.institution ? `<span class="article-inst">${escapeHtml(articleInstitutionLabel(item.institution, item.type))}</span>` : ''}
+          ${timeHtml}
+        </div>`;
     a.innerHTML = `
       <span class="article-eyebrow">À la une</span>
-      ${sourceMetaHtml}
+      ${leadMetaHtml}
       ${mediaHtml}
       ${titleHtml}
       ${bylineHtml}
       ${briefHtml}
-      ${leadMeta}
     `;
   } else {
     a.innerHTML = `
