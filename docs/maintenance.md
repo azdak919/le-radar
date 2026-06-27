@@ -113,7 +113,7 @@ Si personne ne touche au repo pendant des mois :
 
 1. Les **Actions planifiées** reprennent au prochain cron (gratuit sur GitHub public).
 2. Les flux `dead` sont **conservés** (rentrée scolaire) mais ignorés par l'agrégateur.
-3. `scan-media.js` rattrape les **établissements non couverts** par lots de 24/semaine.
+3. `scan-media.js` rattrape les **établissements non couverts** par lots de 8/semaine.
 4. `bot-status.json` indique les lacunes et alertes.
 
 Aucune dépendance externe payante. Node 20 + `https` natif seulement.
