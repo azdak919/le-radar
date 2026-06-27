@@ -1246,12 +1246,7 @@ function hasSubstantialLeadBrief(item) {
 }
 
 function pickSourceLead(pool) {
-  if (!pool.length) return null;
-  const withImage = pool.filter((item) => hasDisplayImage(item));
-  const richImageLead = withImage.find(hasSubstantialLeadBrief);
-  if (richImageLead) return richImageLead;
-  if (withImage.length) return withImage[0];
-  return pool.find(hasSubstantialLeadBrief) || pool[0];
+  return pool[0] || null;
 }
 
 /**
