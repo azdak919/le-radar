@@ -420,6 +420,100 @@ function parseCfakGrid(htmlText) {
   return grid;
 }
 
+const CISM_DAY_INDEX = {
+  Sunday: 0,
+  Monday: 1,
+  Tuesday: 2,
+  Wednesday: 3,
+  Thursday: 4,
+  Friday: 5,
+  Saturday: 6,
+};
+
+/** Extrait le plus gros bloc JSON (payload Nuxt SSR) d'une page HTML. */
+function pickLargestJsonScript(htmlText = '') {
+  const re = /<script[^>]+type=["']application\/json["'][^>]*>([\s\S]*?)<\/script>/gi;
+  const scripts = [];
+  let m;
+  while ((m = re.exec(htmlText))) scripts.push(m[1].trim());
+  return scripts.sort((a, b) => b.length - a.length)[0] || '';
+}
+
+/** Réhydrate un nœud du payload déshydraté Nuxt 3 (références par index). */
+function reviveNuxt(value, payload, seen = new Set()) {
+  if (typeof value === 'number' && Number.isInteger(value) && value >= 0 && value < payload.length) {
+    if (seen.has(value)) return payload[value];
+    seen.add(value);
+    return reviveNuxt(payload[value], payload, seen);
+  }
+  if (Array.isArray(value)) {
+    if (value.length === 2 && typeof value[0] === 'string' && typeof value[1] === 'number') {
+      return reviveNuxt(payload[value[1]], payload, new Set(seen));
+    }
+    return value.map((v) => reviveNuxt(v, payload, new Set(seen)));
+  }
+  if (value && typeof value === 'object') {
+    const out = {};
+    for (const [k, v] of Object.entries(value)) out[k] = reviveNuxt(v, payload, new Set(seen));
+    return out;
+  }
+  return value;
+}
+
+function unixTsToHHMM(ts, timeZone = DEFAULT_TZ) {
+  const n = Number(ts);
+  if (!Number.isFinite(n) || n <= 0) return null;
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone,
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  }).formatToParts(new Date(n * 1000));
+  const map = {};
+  for (const p of parts) map[p.type] = p.value;
+  let hour = parseInt(map.hour, 10);
+  if (hour === 24 || Number.isNaN(hour)) hour = 0;
+  const minute = parseInt(map.minute, 10) || 0;
+  return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+}
+
+/** Convertit timeTable.content (CISM) en grille { day, start, end, title }. */
+function cismTimeTableToGrid(content = {}) {
+  const grid = [];
+  for (const [dayName, shows] of Object.entries(content)) {
+    const day = CISM_DAY_INDEX[dayName];
+    if (day == null || !Array.isArray(shows)) continue;
+    for (const show of shows) {
+      const title = decodeHtmlEntities(stripTags(String(show?.title || ''))).replace(/\s+/g, ' ').trim();
+      const start = unixTsToHHMM(show?.start);
+      const end = unixTsToHHMM(show?.end);
+      const slug = String(show?.slug || '').trim();
+      if (!title || !start || !end) continue;
+      const slot = { day, start, end, title };
+      if (slug) slot.url = `https://cism893.ca/emissions/${slug}`;
+      grid.push(slot);
+    }
+  }
+  return grid;
+}
+
+/**
+ * CISM (cism893.ca/grille-horaire) : site Nuxt dont la grille est embarquée
+ * dans le payload SSR (timeTable.content → Monday…Sunday + timestamps Unix).
+ */
+function parseCismNuxtPayload(raw = '') {
+  if (!raw) return [];
+  const payload = JSON.parse(raw);
+  if (!Array.isArray(payload) || payload.length < 2) return [];
+  const root = reviveNuxt(payload[1], payload);
+  const content = root?.data?.['grille-horaire']?.data?.timeTable?.content;
+  return cismTimeTableToGrid(content);
+}
+
+async function parseCismGrid(htmlText) {
+  return parseCismNuxtPayload(pickLargestJsonScript(htmlText));
+}
+
 // ─── Registre d'adaptateurs ──────────────────────────────────────────────────────
 const ADAPTERS = {
   airtime: (src, deps) => fetchAirtimeGrid(src.base || src.url, deps),
@@ -427,6 +521,7 @@ const ADAPTERS = {
   jsonld: async (src, deps) => jsonldToGrid(await fetchText(src.url, deps)),
   chyz: async (src, deps) => parseChyzGrid(await fetchText(src.url, deps)),
   cfak: async (src, deps) => parseCfakGrid(await fetchText(src.url, deps)),
+  cism: async (src, deps) => parseCismGrid(await fetchText(src.url || 'https://cism893.ca/grille-horaire/', deps)),
 };
 
 /** Étiquette lisible d'une source pour le journal/diagnostic. */
@@ -494,6 +589,12 @@ module.exports = {
   fetchSpinitronGrid,
   parseChyzGrid,
   parseCfakGrid,
+  pickLargestJsonScript,
+  reviveNuxt,
+  unixTsToHHMM,
+  cismTimeTableToGrid,
+  parseCismNuxtPayload,
+  parseCismGrid,
   ADAPTERS,
   sourceLabel,
   runAdapter,

@@ -25,8 +25,13 @@
       "grid": []
     },
     "cism": {
-      "_note": "Site Nuxt (API privée admin.cism893.ca) — grille à compléter manuellement ou via JSON-LD si ajouté. https://cism893.ca/grille-horaire/",
-      "sources": [],
+      "_note": "Grille SSR Nuxt : payload JSON sur https://cism893.ca/grille-horaire/ (timeTable.content).",
+      "sources": [
+        {
+          "type": "cism",
+          "url": "https://cism893.ca/grille-horaire/"
+        }
+      ],
       "grid": []
     },
     "ckut": {
