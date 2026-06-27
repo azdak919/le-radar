@@ -137,6 +137,12 @@ function truncateExcerpt(text = '', max = 280) {
 
   if (s.length <= max) return s;
 
+  const ahead = s.slice(max, max + 140);
+  const sentenceEnd = ahead.search(/[.!?»"')\]](?:\s|$)/);
+  if (sentenceEnd >= 0 && sentenceEnd < 120) {
+    return s.slice(0, max + sentenceEnd + 1).replace(/\s+/g, ' ').trim();
+  }
+
   let cut = s.slice(0, max);
   const lastSpace = cut.lastIndexOf(' ');
   if (lastSpace > max * 0.55) cut = cut.slice(0, lastSpace);
