@@ -44,8 +44,10 @@ let suppressAudioError = false;
 let sourceColors = {};     // source name → accent colour
 
 // Curated, tasteful palette mapped deterministically to each source.
+// Palette catégorielle pour distinguer les sources (indépendante des couleurs de
+// marque). Le rouge est réservé au sémantique « live », d'où le violet en tête.
 const SOURCE_PALETTE = [
-  '#c8102e', '#1d4ed8', '#047857', '#b45309', '#7c3aed',
+  '#6d28d9', '#1d4ed8', '#047857', '#b45309', '#7c3aed',
   '#db2777', '#0891b2', '#ea580c', '#4338ca', '#15803d',
   '#be123c', '#0d9488',
 ];
