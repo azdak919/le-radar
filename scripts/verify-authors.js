@@ -64,7 +64,7 @@ function main() {
   };
 
   if (doUpdate && fixable > 0) {
-    const nextItems = items.map((item) => reconcileAuthor(item, items).item);
+    const nextItems = items.map((item) => reconcileAuthor(item, items, { applyFallback: true }).item);
     fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items: nextItems }, null, 2) + '\n');
     console.log(`\n✅ ${fixable} auteur(s) corrigé(s) dans news.json`);
     qc.fixed = fixable;

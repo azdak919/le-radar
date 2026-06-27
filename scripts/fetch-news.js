@@ -16,6 +16,7 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+const { reconcileAuthor } = require('./author-lib');
 const { isHtmlListSource, parseHtmlListPage } = require('./html-list-fetcher');
 
 const NEWS_PATH = path.join(__dirname, '..', 'news.json');
@@ -685,6 +686,10 @@ async function main() {
   }
 
   await enrichItems(all);
+
+  for (let i = 0; i < all.length; i += 1) {
+    all[i] = reconcileAuthor(all[i], all, { applyFallback: true }).item;
+  }
 
   all.sort((a, b) => {
     const da = a.date ? Date.parse(a.date) : 0;

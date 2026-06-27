@@ -6,6 +6,9 @@
 
 const GENERIC_AUTHORS = /^(admin|administrator|administrateur|editor|éditeur|editeur|rédaction|redaction|staff|wordpress|webmaster|collectif|tribune|link|daily|exemplaire|quartier libre|zone campus|la pige|le délit|le delit|the link|the tribune|the mcgill daily)$/i;
 
+const EDITORIAL_BYLINE_RE = /^(?:Par|By)\s+(?:(?:La|L')\s*)?[Rr]édaction\b\.?/i;
+const EDITORIAL_BYLINE_EN_RE = /^(?:Par|By)\s+Editorial\s+(?:team|staff|board)\b\.?/i;
+
 const BYLINE_ARTICLE_STARTERS = /^(Le|La|Les|L'|L'|Un|Une|The|An|À|A)$/iu;
 const NAME_PARTICLES = new Set(['de', 'du', 'des', 'd', 'la', 'le', 'les', 'van', 'von', 'st', 'ste', 'saint', 'sainte']);
 
@@ -13,13 +16,34 @@ function stripHtml(text = '') {
   return String(text).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
+function editorialFallback(lang = 'fr') {
+  return lang === 'en' ? 'The editorial team' : 'La rédaction';
+}
+
+function canonicalizeEditorialAuthor(name = '') {
+  const a = stripHtml(name).replace(/^(?:Par|By)\s+/i, '').replace(/\s+/g, ' ').trim();
+  if (/^(?:la\s+|l')\s*rédaction$/i.test(a) || /^redaction$/i.test(a)) return 'La rédaction';
+  if (/^editorial\s+(?:team|staff|board)$/i.test(a) || /^the\s+editorial\s+team$/i.test(a)) {
+    return 'The editorial team';
+  }
+  if (/^staff\s+writers?$/i.test(a)) return 'The editorial team';
+  return '';
+}
+
 function normalizeAuthor(name = '') {
   let a = stripHtml(name);
   const paren = a.match(/\(([^)]+)\)/);
   if (paren) a = paren[1];
   a = a.replace(/^(?:Par|By)\s+/i, '').replace(/\s+/g, ' ').trim();
+  const editorial = canonicalizeEditorialAuthor(a);
+  if (editorial) return editorial;
   if (!a || a.length < 2 || GENERIC_AUTHORS.test(a) || /@/.test(a)) return '';
   return a.slice(0, 80);
+}
+
+function resolveAuthor(item = {}, allItems = []) {
+  const { item: reconciled } = reconcileAuthor(item, allItems, { applyFallback: true });
+  return normalizeAuthor(reconciled.author) || editorialFallback(reconciled.lang === 'en' ? 'en' : 'fr');
 }
 
 /** Auteurs RSS mal fusionnés avec le début du texte (« Médéric Dens Après »). */
@@ -42,6 +66,18 @@ function normAuthorKey(name = '') {
 
 function extractBylineFromText(text = '') {
   const plain = stripHtml(text);
+  if (EDITORIAL_BYLINE_RE.test(plain)) {
+    return {
+      author: 'La rédaction',
+      body: plain.replace(EDITORIAL_BYLINE_RE, '').trim(),
+    };
+  }
+  if (EDITORIAL_BYLINE_EN_RE.test(plain)) {
+    return {
+      author: 'The editorial team',
+      body: plain.replace(EDITORIAL_BYLINE_EN_RE, '').trim(),
+    };
+  }
   if (!/^(?:Par|By)\s+/i.test(plain)) return { author: '', body: plain };
 
   const tokens = plain.replace(/^\s*(?:Par|By)\s+/i, '').split(/\s+/);
@@ -96,10 +132,18 @@ function extractFirstPersonAuthor(text = '') {
   return m ? normalizeAuthor(m[1]) : '';
 }
 
-function reconcileAuthor(item, allItems = []) {
+function applyAuthorFallback(item = {}) {
+  const lang = item.lang === 'en' ? 'en' : 'fr';
+  const fallback = editorialFallback(lang);
+  if (normalizeAuthor(item.author) === fallback) return item;
+  return { ...item, author: fallback };
+}
+
+function reconcileAuthor(item, allItems = [], { applyFallback = false } = {}) {
   let next = { ...item };
   let changed = false;
   let reason = null;
+  const previousAuthor = normalizeAuthor(item.author) || null;
 
   const trimmed = trimMangledAuthor(next.author);
   if (trimmed && trimmed !== normalizeAuthor(next.author)) {
@@ -123,30 +167,32 @@ function reconcileAuthor(item, allItems = []) {
       if (firstPerson) {
         next.author = firstPerson;
         changed = true;
-        reason = 'filled-from-first-person';
+        reason = reason || 'filled-from-first-person';
       }
     }
-    return { changed, item: next, author: normalizeAuthor(next.author) || null, reason };
+  } else {
+    const fieldAuthor = normalizeAuthor(next.author);
+    if (!fieldAuthor || normAuthorKey(fieldAuthor) !== normAuthorKey(fromExcerpt.author)) {
+      next.author = fromExcerpt.author;
+      changed = true;
+      reason = fieldAuthor ? 'excerpt-byline-overrides-rss' : 'filled-from-excerpt';
+      if (fromExcerpt.body.length >= 20) {
+        next.excerpt = fromExcerpt.body;
+      }
+    }
   }
 
-  const fieldAuthor = normalizeAuthor(next.author);
-  if (fieldAuthor && normAuthorKey(fieldAuthor) === normAuthorKey(fromExcerpt.author)) {
-    return { changed, item: next, author: fieldAuthor };
+  if (applyFallback && !normalizeAuthor(next.author)) {
+    next = applyAuthorFallback(next);
+    changed = true;
+    reason = reason || 'fallback-editorial';
   }
 
-  const previousAuthor = fieldAuthor || null;
-  next.author = fromExcerpt.author;
-  if (fromExcerpt.body.length >= 20) {
-    next.excerpt = fromExcerpt.body;
+  const author = normalizeAuthor(next.author) || null;
+  if (changed || (applyFallback && author !== previousAuthor)) {
+    return { changed: true, item: next, author, previousAuthor, reason };
   }
-
-  return {
-    changed: true,
-    item: next,
-    author: fromExcerpt.author,
-    previousAuthor,
-    reason: previousAuthor ? 'excerpt-byline-overrides-rss' : 'filled-from-excerpt',
-  };
+  return { changed: false, item: next, author, previousAuthor, reason: null };
 }
 
 function auditAuthors(items = []) {
@@ -154,7 +200,7 @@ function auditAuthors(items = []) {
   let fixable = 0;
 
   for (const item of items) {
-    const result = reconcileAuthor(item, items);
+    const result = reconcileAuthor(item, items, { applyFallback: true });
     if (result.changed) {
       fixable += 1;
       mismatches.push({
@@ -173,11 +219,15 @@ function auditAuthors(items = []) {
 
 module.exports = {
   GENERIC_AUTHORS,
+  editorialFallback,
+  canonicalizeEditorialAuthor,
   normalizeAuthor,
   trimMangledAuthor,
   extractBylineFromText,
   extractFirstPersonAuthor,
   excerptOpensWithByline,
+  resolveAuthor,
+  applyAuthorFallback,
   reconcileAuthor,
   auditAuthors,
 };
