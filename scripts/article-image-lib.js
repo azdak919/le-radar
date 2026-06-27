@@ -6,6 +6,24 @@ const https = require('https');
 
 const DEFAULT_TIMEOUT = 12000;
 
+/** Motifs globaux de rejet (logos, placeholders, widgets, carrousels). */
+const GLOBAL_IMAGE_REJECT_RE = /(?:logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|lapige_web|(?:^|\/)article-2\.|campus-logo|campusgraphic|article-tile|size-article-tile|thumbnail|thumb_|recent-posts|wp-block-query|widget|sponsor|banner|social-share|-150x\d+\.)/i;
+
+function imageRejectPatternsFromHints(hints = {}) {
+  const extra = hints.rejectPathPatterns;
+  return Array.isArray(extra) ? extra.filter(Boolean) : [];
+}
+
+function isPathRejected(path = '', extraRejectPatterns = []) {
+  const p = String(path).toLowerCase();
+  if (GLOBAL_IMAGE_REJECT_RE.test(p)) return true;
+  if (/(?:^|\/)(?:1x1|pixel)\b/.test(p)) return true;
+  for (const pat of extraRejectPatterns) {
+    if (pat && new RegExp(pat, 'i').test(p)) return true;
+  }
+  return false;
+}
+
 function decodeEntities(str = '') {
   return str
     .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
@@ -228,22 +246,29 @@ function imageUrlsMatch(a = '', b = '') {
   return pa === pb || pa.includes(pb) || pb.includes(pa);
 }
 
-function collectContentImages(content = '') {
+function collectContentImages(content = '', extraRejectPatterns = [], options = {}) {
   const urls = [];
+  const preferSizeFull = !!options.preferSizeFull;
   for (const m of content.matchAll(/<img[^>]+src=["']([^"']+)["'][^>]*>/gi)) {
     const tag = m[0];
     const src = decodeEntities(m[1]);
     const w = parseInt((tag.match(/width=["'](\d+)["']/i) || [])[1], 10) || 0;
-    if (!isCandidateImageUrl(src) || isWeakImageUrl(src)) continue;
+    if (!isCandidateImageUrl(src, extraRejectPatterns) || isWeakImageUrl(src, options)) continue;
     if (w > 0 && w < 400) continue;
-    urls.push({ url: src, tag, w });
+    const isFull = /\bsize-full\b/i.test(tag);
+    const isCropThumb = /-\d{3}x\d{2,3}\./i.test(src);
+    urls.push({ url: src, tag, w, isFull, isCropThumb });
+  }
+  if (preferSizeFull) {
+    const fullOnly = urls.filter((img) => img.isFull || !img.isCropThumb);
+    if (fullOnly.length) return fullOnly;
   }
   return urls;
 }
 
-function articleImageIsValidOnPage(html = '', imageUrl = '') {
+function articleImageIsValidOnPage(html = '', imageUrl = '', extraRejectPatterns = [], options = {}) {
   if (!html || !imageUrl) return false;
-  const contentImages = collectContentImages(articleImageRegions(html));
+  const contentImages = collectContentImages(articleImageRegions(html), extraRejectPatterns, options);
   if (!contentImages.length) return false;
   return contentImages.some((img) => imageUrlsMatch(img.url, imageUrl));
 }
@@ -251,26 +276,20 @@ function articleImageIsValidOnPage(html = '', imageUrl = '') {
 function isCandidateImageUrl(raw = '', extraRejectPatterns = []) {
   const src = String(raw).trim();
   if (!src) return false;
+  if (src.startsWith('data:image/') || src.startsWith('./assets/')) return true;
   try {
     const url = new URL(src);
     if (!['http:', 'https:'].includes(url.protocol)) return false;
     const path = decodeURIComponent(url.pathname).toLowerCase();
-    for (const pat of extraRejectPatterns) {
-      if (pat && new RegExp(pat, 'i').test(path)) return false;
-    }
-    if (/(logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|lapige_web|(?:^|\/)article-2\.|campus-logo|campusgraphic)/.test(path)) {
-      return false;
-    }
-    if (/(?:^|\/)(?:1x1|pixel)\b/.test(path)) return false;
-    if (/article-tile|size-article-tile|thumbnail|thumb_|-150x\d+\./.test(path)) return false;
-    return true;
+    return !isPathRejected(path, extraRejectPatterns);
   } catch {
     return false;
   }
 }
 
-function isWeakImageUrl(raw = '') {
+function isWeakImageUrl(raw = '', options = {}) {
   const path = String(raw).toLowerCase();
+  if (options.preferSizeFull && /-\d{3}x\d{2,3}\./.test(path) && !/\bsize-full\b/.test(path)) return true;
   if (/-\d{2,3}x\d{2,3}\./.test(path) && !/-\d{3,4}x\d{3,4}\./.test(path)) return true;
   return /article-tile|size-article-tile/.test(path);
 }
@@ -307,8 +326,8 @@ function meetsFeatureDisplaySize(width = 0, height = 0) {
   );
 }
 
-function imageFromArticleHtml(html = '') {
-  const contentImages = collectContentImages(articleImageRegions(html));
+function imageFromArticleHtml(html = '', extraRejectPatterns = [], options = {}) {
+  const contentImages = collectContentImages(articleImageRegions(html), extraRejectPatterns, options);
   if (!contentImages.length) return { url: '', w: 0, h: 0 };
 
   const candidates = [];
@@ -330,11 +349,14 @@ function imageFromArticleHtml(html = '') {
   for (const img of contentImages) {
     const isFeatured = /\bwp-post-image\b/i.test(img.tag)
       || /\bwp-block-post-featured-image\b/i.test(img.tag)
-      || /\bsize-full\b/i.test(img.tag);
-    const isThumb = /-\d{3}x\d{2,3}\./i.test(img.url);
+      || img.isFull;
+    const isThumb = img.isCropThumb;
+    let score = (isFeatured ? 85 : 60) + img.w / 10 - (isThumb ? 25 : 0);
+    if (options.preferSizeFull && img.isFull) score += 20;
+    if (options.preferSizeFull && isThumb) score -= 30;
     candidates.push({
       url: img.url,
-      score: (isFeatured ? 85 : 60) + img.w / 10 - (isThumb ? 25 : 0),
+      score,
       w: img.w,
       h: 0,
     });
@@ -346,24 +368,30 @@ function imageFromArticleHtml(html = '') {
   return { url: best.url, w: best.w || 0, h: best.h || 0 };
 }
 
-function needsImageEnrichment(item) {
-  if (!item.link) return false;
-  if (!item.image || !isCandidateImageUrl(item.image)) return true;
-  return isWeakImageUrl(item.image);
+function imageOptionsFromHints(hints = {}) {
+  return {
+    preferSizeFull: !!hints.preferSizeFull,
+  };
 }
 
-async function scrapeArticleImage(item) {
+function needsImageEnrichment(item, extraRejectPatterns = [], options = {}) {
+  if (!item.link) return false;
+  if (!item.image || !isCandidateImageUrl(item.image, extraRejectPatterns)) return true;
+  return isWeakImageUrl(item.image, options);
+}
+
+async function scrapeArticleImage(item, extraRejectPatterns = [], options = {}) {
   if (!item?.link) return null;
   const html = await fetchText(item.link);
   if (!html || html.length < 200) return null;
-  const found = imageFromArticleHtml(html);
+  const found = imageFromArticleHtml(html, extraRejectPatterns, options);
   if (!found.url) return null;
   return found;
 }
 
-async function resolveLeadReadyPhoto(item) {
+async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {}) {
   const tryUrl = async (url, metaW = 0, metaH = 0) => {
-    if (!url || !isCandidateImageUrl(url) || isWeakImageUrl(url)) return null;
+    if (!url || !isCandidateImageUrl(url, extraRejectPatterns) || isWeakImageUrl(url, options)) return null;
     if (metaW && metaH && meetsLeadDisplaySize(metaW, metaH)) {
       return { url, width: metaW, height: metaH, source: 'meta' };
     }
@@ -379,17 +407,17 @@ async function resolveLeadReadyPhoto(item) {
 
   if (item.image && item.link) {
     const html = await fetchText(item.link);
-    if (html && articleImageIsValidOnPage(html, item.image)) {
+    if (html && articleImageIsValidOnPage(html, item.image, extraRejectPatterns, options)) {
       const hit = await tryUrl(item.image);
       if (hit) return hit;
     }
   }
 
-  const scraped = await scrapeArticleImage(item);
+  const scraped = await scrapeArticleImage(item, extraRejectPatterns, options);
   if (scraped?.url) {
     const hit = await tryUrl(scraped.url, scraped.w, scraped.h);
     if (hit) return hit;
-    if (scraped.url && isCandidateImageUrl(scraped.url)) {
+    if (scraped.url && isCandidateImageUrl(scraped.url, extraRejectPatterns)) {
       const dims = await probeRemoteImageSize(scraped.url);
       if (dims) {
         return {
@@ -412,6 +440,10 @@ function sleep(ms) {
 }
 
 module.exports = {
+  GLOBAL_IMAGE_REJECT_RE,
+  imageRejectPatternsFromHints,
+  imageOptionsFromHints,
+  isPathRejected,
   LEAD_MIN_WIDTH,
   LEAD_MIN_HEIGHT,
   LEAD_MIN_PIXELS,

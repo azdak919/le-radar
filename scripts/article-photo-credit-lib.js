@@ -50,7 +50,11 @@ function sanitizeCreditText(text = '') {
 function imageUrlKey(url = '') {
   try {
     const path = decodeURIComponent(new URL(url).pathname).toLowerCase();
-    return path.split('/').pop().replace(/-\d+x\d+(?=\.[a-z]+$)/, '');
+    return path
+      .split('/')
+      .pop()
+      .replace(/-\d+x\d+(?=\.[a-z]+$)/, '')
+      .replace(/-scaled(?=\.[a-z]+$)/, '');
   } catch {
     return '';
   }
@@ -362,9 +366,13 @@ function applySourcePhotoCredit(item, resolved, { doUpdate = false } = {}) {
     creator: resolved.creator || '',
     from: resolved.from,
   };
+  const imageKey = imageUrlKey(item.image);
+  const storedKey = item.sourceImageCreditImageKey || '';
+  const keyChanged = imageKey && storedKey !== imageKey;
   const changed = prev.line !== next.line
     || prev.creator !== next.creator
-    || prev.from !== next.from;
+    || prev.from !== next.from
+    || keyChanged;
 
   if (doUpdate && changed) {
     item.sourceImageCredit = next.line;
@@ -372,7 +380,7 @@ function applySourcePhotoCredit(item, resolved, { doUpdate = false } = {}) {
     item.sourceImageCreditUrl = resolved.creditUrl || item.link || '';
     item.sourceImageCreditFrom = next.from;
     item.sourceImageCreditCited = !!resolved.cited;
-    item.sourceImageCreditImageKey = imageUrlKey(item.image);
+    item.sourceImageCreditImageKey = imageKey;
   }
 
   return { changed, cited: resolved.cited, method: resolved.method || null };

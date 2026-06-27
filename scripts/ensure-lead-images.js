@@ -11,7 +11,13 @@
 
 const fs = require('fs');
 const path = require('path');
-const { hasUsableImage, isCandidateImageUrl, isWeakImageUrl } = require('./lead-fallback-lib');
+const { hasUsableImage } = require('./lead-fallback-lib');
+const {
+  isCandidateImageUrl,
+  isWeakImageUrl,
+  imageRejectPatternsFromHints,
+  imageOptionsFromHints,
+} = require('./article-image-lib');
 const {
   resolveLeadReadyPhoto,
   meetsLeadDisplaySize,
@@ -49,8 +55,24 @@ function clearStockPhoto(item) {
   delete item.imageSourceUrl;
 }
 
-function hasSourcePhoto(item = {}) {
-  return !!(item.image && isCandidateImageUrl(item.image) && !isWeakImageUrl(item.image));
+function imageHintsFor(item = {}, sourceMap = new Map()) {
+  return getBotHints(sourceMap.get(item.source), 'images');
+}
+
+function isCandidateForItem(item = {}, sourceMap = new Map()) {
+  const hints = imageHintsFor(item, sourceMap);
+  const reject = imageRejectPatternsFromHints(hints);
+  const opts = imageOptionsFromHints(hints);
+  return {
+    reject,
+    opts,
+    ok: (url) => url && isCandidateImageUrl(url, reject) && !isWeakImageUrl(url, opts),
+  };
+}
+
+function hasSourcePhoto(item = {}, sourceMap = new Map()) {
+  const { ok } = isCandidateForItem(item, sourceMap);
+  return ok(item.image);
 }
 
 function imagePathKey(url = '') {
@@ -75,8 +97,8 @@ function shouldValidateImageOnPage(item = {}, sourceMap = new Map()) {
   return !tokens.some((t) => img.includes(t));
 }
 
-async function probeLeadReady(url) {
-  if (!url || !isCandidateImageUrl(url) || isWeakImageUrl(url)) return false;
+async function probeLeadReady(url, reject = [], opts = {}) {
+  if (!url || !isCandidateImageUrl(url, reject) || isWeakImageUrl(url, opts)) return false;
   const dims = await probeRemoteImageSize(url);
   return !!(dims && meetsLeadDisplaySize(dims.width, dims.height));
 }
@@ -136,8 +158,9 @@ async function main() {
 
   for (const item of items) {
     if (!shouldValidateImageOnPage(item, sourceMap)) continue;
+    const { reject, opts } = isCandidateForItem(item, sourceMap);
     const html = await fetchText(item.link);
-    if (!html || articleImageIsValidOnPage(html, item.image)) continue;
+    if (!html || articleImageIsValidOnPage(html, item.image, reject, opts)) continue;
     if (doUpdate) {
       item.image = '';
       item.leadImageReady = false;
@@ -147,11 +170,15 @@ async function main() {
   }
 
   const scrapeQueue = items
-    .filter((item) => item.link && (!item.image || !isCandidateImageUrl(item.image) || isWeakImageUrl(item.image)))
+    .filter((item) => {
+      const { ok } = isCandidateForItem(item, sourceMap);
+      return item.link && !ok(item.image);
+    })
     .slice(0, PAGE_SCRAPE_LIMIT);
 
   for (const item of scrapeQueue) {
-    const resolved = await resolveLeadReadyPhoto(item);
+    const { reject, opts } = isCandidateForItem(item, sourceMap);
+    const resolved = await resolveLeadReadyPhoto(item, reject, opts);
     if (!resolved?.url) continue;
     pageScraped += 1;
     if (doUpdate) {
@@ -164,7 +191,8 @@ async function main() {
 
   const stockQueue = [];
   for (const item of items) {
-    if (hasSourcePhoto(item) && doUpdate) clearStockPhoto(item);
+    const { reject, opts, ok } = isCandidateForItem(item, sourceMap);
+    if (hasSourcePhoto(item, sourceMap) && doUpdate) clearStockPhoto(item);
     if (await photoIsLeadReady(item)) {
       if (doUpdate) {
         await markSourceLeadQuality(item);
@@ -172,8 +200,8 @@ async function main() {
       }
       continue;
     }
-    if (!item.image || !isCandidateImageUrl(item.image)) {
-      const resolved = await resolveLeadReadyPhoto(item);
+    if (!item.image || !ok(item.image)) {
+      const resolved = await resolveLeadReadyPhoto(item, reject, opts);
       if (resolved?.url && doUpdate) {
         item.image = resolved.url;
         clearLegacyFallback(item);
@@ -181,7 +209,7 @@ async function main() {
         if (resolved.leadReady !== false) photosRecovered += 1;
       }
       if (await photoIsLeadReady(item)) continue;
-    } else if (hasSourcePhoto(item)) {
+    } else if (hasSourcePhoto(item, sourceMap)) {
       if (doUpdate) {
         clearStockPhoto(item);
         await markSourceLeadQuality(item);

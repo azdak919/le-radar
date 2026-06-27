@@ -1201,6 +1201,9 @@ function createArticle(item, role = 'standard') {
 
 const WEAK_IMAGE_PATH = /-\d{2,3}x\d{2,3}\.|article-tile|size-article-tile/;
 
+/** Aligné sur scripts/article-image-lib.js GLOBAL_IMAGE_REJECT_RE */
+const GLOBAL_IMAGE_REJECT_RE = /(?:logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|lapige_web|(?:^|\/)article-2\.|campus-logo|campusgraphic|article-tile|size-article-tile|thumbnail|thumb_|recent-posts|wp-block-query|widget|sponsor|banner|social-share|-150x\d+\.)/i;
+
 function isFallbackImageUrl(raw = '') {
   const src = String(raw).trim();
   if (!src) return false;
@@ -1235,7 +1238,8 @@ function getCandidateImage(src = '') {
 
   if (!['http:', 'https:'].includes(url.protocol)) return '';
   const path = decodeURIComponent(url.pathname).toLowerCase();
-  if (/(logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|article-tile|size-article-tile|thumbnail|thumb_|-150x\d+\.|(?:^|\/)article-2\.|campus-logo|campusgraphic)/.test(path)) return '';
+  if (GLOBAL_IMAGE_REJECT_RE.test(path)) return '';
+  if (/(?:^|\/)(?:1x1|pixel)\b/.test(path)) return '';
   if (isWeakImagePath(path)) return '';
   return url.href;
 }
