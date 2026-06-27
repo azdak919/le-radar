@@ -3,35 +3,55 @@
   "_format": {
     "day": "0 = dimanche, 1 = lundi, 2 = mardi, 3 = mercredi, 4 = jeudi, 5 = vendredi, 6 = samedi",
     "start_end": "Heures locales 24 h America/Toronto, format \"HH:MM\". Une plage dont la fin est <= au début traverse minuit (ex. 23:00 → 01:00).",
-    "slot": { "day": 1, "start": "09:00", "end": "10:00", "title": "Nom de l'émission", "host": "Animateur (optionnel)", "url": "https://… (optionnel)" }
+    "slot": {
+      "day": 1,
+      "start": "09:00",
+      "end": "10:00",
+      "title": "Nom de l'émission",
+      "host": "Animateur (optionnel)",
+      "url": "https://… (optionnel)"
+    }
   },
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
-      "_note": "Grille à compléter manuellement (https://chyz.ca/).",
-      "sources": [],
+      "_note": "Grille publiée sur chyz.ca/horaire (thème WordPress maison).",
+      "sources": [
+        {
+          "type": "chyz",
+          "url": "https://chyz.ca/horaire/"
+        }
+      ],
       "grid": []
     },
     "cism": {
-      "_note": "Grille à compléter manuellement (https://cism893.ca/grille-horaire/).",
+      "_note": "Site Nuxt (API privée admin.cism893.ca) — grille à compléter manuellement ou via JSON-LD si ajouté. https://cism893.ca/grille-horaire/",
       "sources": [],
       "grid": []
     },
     "ckut": {
       "_note": "CKUT diffuse via Airtime/LibreTime : la grille est récupérée automatiquement par le bot.",
       "sources": [
-        { "type": "airtime", "base": "https://ckut.airtime.pro" }
+        {
+          "type": "airtime",
+          "base": "https://ckut.airtime.pro"
+        }
       ],
       "grid": []
     },
     "cjlo": {
-      "_note": "Grille à compléter manuellement (https://www.cjlo.com/schedule).",
+      "_note": "Spinitron possible : ajouter { \"type\": \"spinitron\", \"base\": \"https://spinitron.com\", \"token\": \"…\" } si un jeton API est disponible. Sinon, grille manuelle.",
       "sources": [],
       "grid": []
     },
     "cfak": {
-      "_note": "Grille à compléter manuellement (https://www.cfak.ca/).",
-      "sources": [],
+      "_note": "Grille publiée sur cfak.ca/programmation (site Nuxt, cartes par jour).",
+      "sources": [
+        {
+          "type": "cfak",
+          "url": "https://www.cfak.ca/programmation/"
+        }
+      ],
       "grid": []
     }
   }

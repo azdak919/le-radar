@@ -85,10 +85,15 @@ Voir aussi `radios-candidates.json` pour les postes en cours de validation.
 
 Le bandeau **À l'antenne** affiche l'émission en cours selon l'heure. La grille
 hebdomadaire de chaque poste est colligée par `scripts/fetch-radio-schedules.js`
-depuis des sources dynamiques (Airtime/LibreTime) et des grilles manuelles dans
-`radio-schedules.seed.json`, puis écrite dans `radio-schedules.json` (lu par le
-site). Le bot tourne **aux deux semaines**. Détails et format :
-[`docs/maintenance.md`](docs/maintenance.md#horaires--à-lantenne).
+depuis plusieurs sources via des adaptateurs (`airtime`, `chyz`, `cfak`,
+`jsonld`, `spinitron`) et des grilles manuelles dans `radio-schedules.seed.json`,
+puis écrite dans `radio-schedules.json` (lu par le site).
+
+`scripts/discover-schedule-sources.js` **automatise la recherche et l'entretien
+des sources** : il revalide les sources existantes, sonde les pages d'horaire
+pour en trouver de nouvelles, détecte les plateformes connues (Spinitron) et
+rapporte la santé. Les deux bots tournent **aux deux semaines**. Détails et
+format : [`docs/maintenance.md`](docs/maintenance.md#horaires--à-lantenne).
 
 ---
 
