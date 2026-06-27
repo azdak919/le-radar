@@ -528,7 +528,23 @@ function renderNews() {
   NEWS_EMPTY.classList.toggle('hidden', items.length > 0);
   NEWS_COUNT.textContent = `${items.length} article${items.length !== 1 ? 's' : ''}`;
   NEWS_LIST.innerHTML = '';
-  items.forEach((item, i) => NEWS_LIST.appendChild(createArticle(item, getArticleRole(i))));
+
+  const tail = [];
+  items.forEach((item, i) => {
+    const role = getArticleRole(i);
+    const article = createArticle(item, role);
+    if (role === 'standard') tail.push(article);
+    else NEWS_LIST.appendChild(article);
+  });
+
+  if (tail.length) {
+    const section = document.createElement('div');
+    section.className = 'news-tail';
+    section.innerHTML = '<h3 class="news-tail-title">Suite du fil</h3>';
+    tail.forEach(article => section.appendChild(article));
+    NEWS_LIST.appendChild(section);
+  }
+
   updateNewsLayout();
 }
 
@@ -544,8 +560,8 @@ function updateNewsLayout() {
 function getArticleRole(index) {
   if (index === 0) return 'lead';
   if (index <= 2) return 'feature';
-  if (index <= 11) return 'compact';
-  return index <= 20 ? 'standard' : 'compact';
+  if (index <= 14) return 'compact';
+  return 'standard';
 }
 
 function createArticle(item, role = 'standard') {
