@@ -608,7 +608,38 @@ a { color: inherit; }
 
 /* Bureau : curseur en ligne + bouton circulaire (mute au clic). */
 @media (min-width: 680px) {
-  .tuner-vol-slot { display: flex; align-items: center; }
+  .tuner-now { min-height: 42px; }
+
+  .tuner-actions {
+    align-self: center;
+    min-height: 42px;
+  }
+
+  .tuner-vol {
+    align-self: center;
+    height: 42px;
+  }
+
+  .tuner-vol-slot {
+    display: flex;
+    align-items: center;
+    height: 42px;
+  }
+
+  .tuner-vol-track {
+    height: 42px;
+    justify-content: center;
+    gap: 0;
+    position: relative;
+  }
+
+  .tuner-vol-labels {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
   .tuner-vol-btn {
     flex-shrink: 0;
     width: 42px;
