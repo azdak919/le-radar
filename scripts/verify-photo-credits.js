@@ -18,6 +18,7 @@ const {
   fetchSourcePhotoCredit,
   applySourcePhotoCredit,
 } = require('./article-photo-credit-lib');
+const { pruneToFreshWindow } = require('./source-retention-lib');
 
 const ROOT = path.join(__dirname, '..');
 const NEWS_PATH = path.join(ROOT, 'news.json');
@@ -35,12 +36,13 @@ function readJson(p, fallback) {
 
 async function main() {
   const news = readJson(NEWS_PATH, { items: [] });
-  const items = news.items || [];
-  if (!items.length) {
+  const allItems = news.items || [];
+  if (!allItems.length) {
     console.error('No items in news.json');
     process.exit(1);
   }
 
+  const items = pruneToFreshWindow(allItems);
   const before = auditPhotoCredits(items);
   const queue = buildPhotoCreditQueue(items);
 
@@ -102,7 +104,7 @@ async function main() {
   };
 
   if (doUpdate && updated > 0) {
-    fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items }, null, 2) + '\n');
+    fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items: allItems, count: allItems.length }, null, 2) + '\n');
     console.log(`\n✅ ${updated} crédit(s) écrit(s) dans news.json`);
   } else if (doUpdate) {
     console.log('\nRien à écrire.');

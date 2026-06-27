@@ -223,7 +223,7 @@ Raccourci : `node scripts/maintain.js --update`
 | Problème | Fichier / action |
 |----------|------------------|
 | Auteur générique (« The Concordian », nom du journal) | `GENERIC_AUTHORS` dans `scripts/fetch-news.js` |
-| Vedettes WordPress absentes du RSS | `wpFeaturedCategories` dans `news-sources.json` |
+| Vedettes WordPress absentes du RSS | `wpFeaturedCategories` (ex. `["slider"]` pour Le Délit uniquement — pas de défaut global) |
 | Auteurs incorrects en masse | `botHints.authors` dans `news-sources.json`, puis `verify-authors.js` |
 | Flux qui disparaît après un run CI | Automatique : cache 3 sessions via `source-retention-lib.js` |
 | Images vedette faibles | `scripts/stock-photo-lib.js`, `ensure-lead-images.js` |

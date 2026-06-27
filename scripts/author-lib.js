@@ -262,7 +262,7 @@ function metaContent(html = '', key = '') {
  * Auteur depuis la page source — priorité à la byline visible « Par … » (rel=author),
  * pas au JSON-LD / dc:creator WordPress (souvent rédacteur·rice technique).
  */
-function authorFromArticleHtml(html = '', lang = 'fr') {
+function authorFromArticleHtml(html = '', lang = 'fr', hints = {}) {
   if (!html || html.length < 200) return '';
 
   const candidates = [];

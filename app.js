@@ -1035,18 +1035,19 @@ function partitionNewsFeed(items, referenceDate = new Date()) {
 }
 
 /**
- * Pool d'un seul média : tout l'archive disponible dans news.json
- * (la fraîcheur par session reste réservée au fil global).
+ * Pool d'un seul média : articles dans la fenêtre de fraîcheur (3 sessions),
+ * alignée sur le fil global et sur fetch-news.js.
  */
 function sortSourcePool(items) {
-  const featured = items.filter((item) => item.featured);
-  const rest = sortByDateDesc(items.filter((item) => !item.featured));
-  return [...featured, ...rest];
+  return sortByDateDesc(items);
 }
 
 function collectSourcePool(items, referenceDate = new Date()) {
   const pool = sortSourcePool(
-    items.filter((item) => isPublishedOnOrBefore(item, referenceDate)),
+    filterFreshItems(
+      items.filter((item) => isPublishedOnOrBefore(item, referenceDate)),
+      referenceDate,
+    ),
   );
   return { items: pool, contingencyBand: 0 };
 }

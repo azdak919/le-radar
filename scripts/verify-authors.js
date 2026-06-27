@@ -19,6 +19,7 @@ const {
   needsPageAuthorVerification,
   normalizeArticleUrl,
 } = require('./author-lib');
+const { pruneToFreshWindow, loadSourceRegistryMap, getBotHints } = require('./source-retention-lib');
 
 const ROOT = path.join(__dirname, '..');
 const NEWS_PATH = path.join(ROOT, 'news.json');
@@ -39,7 +40,7 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function fetchPageAuthors(items, feedDefaults) {
+async function fetchPageAuthors(items, feedDefaults, sourceMap = new Map()) {
   const pageAuthors = new Map();
   const toFetch = items.filter((item) => needsPageAuthorVerification(item, feedDefaults));
 
@@ -53,7 +54,8 @@ async function fetchPageAuthors(items, feedDefaults) {
     if (!key || pageAuthors.has(key)) continue;
 
     const html = await fetchText(item.link, 3, PAGE_FETCH_TIMEOUT);
-    const author = authorFromArticleHtml(html, item.lang === 'en' ? 'en' : 'fr');
+    const hints = getBotHints(sourceMap.get(item.source), 'authors');
+    const author = authorFromArticleHtml(html, item.lang === 'en' ? 'en' : 'fr', hints);
     if (author) pageAuthors.set(key, author);
     fetched += 1;
 
@@ -69,14 +71,16 @@ async function fetchPageAuthors(items, feedDefaults) {
 
 async function main() {
   const news = readJson(NEWS_PATH, { items: [] });
-  const items = news.items || [];
-  if (!items.length) {
+  const allItems = news.items || [];
+  if (!allItems.length) {
     console.error('No items in news.json');
     process.exit(1);
   }
 
+  const sourceMap = loadSourceRegistryMap();
+  const items = pruneToFreshWindow(allItems);
   const feedDefaults = detectFeedDefaultAuthors(items);
-  const pageAuthors = await fetchPageAuthors(items, feedDefaults);
+  const pageAuthors = await fetchPageAuthors(items, feedDefaults, sourceMap);
   const { mismatches, fixable, total } = auditAuthors(items, { feedDefaults, pageAuthors });
   const withAuthor = items.filter((i) => i.author && String(i.author).trim()).length;
 
@@ -110,7 +114,9 @@ async function main() {
   };
 
   if (doUpdate && fixable > 0) {
-    const nextItems = items.map((item) => {
+    const freshKeys = new Set(items.map((i) => normalizeArticleUrl(i.link)));
+    const nextItems = allItems.map((item) => {
+      if (!freshKeys.has(normalizeArticleUrl(item.link))) return item;
       const pageAuthor = pageAuthors.get(normalizeArticleUrl(item.link)) || '';
       return reconcileAuthor(item, items, {
         applyFallback: true,
@@ -118,7 +124,7 @@ async function main() {
         pageAuthor,
       }).item;
     });
-    fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items: nextItems }, null, 2) + '\n');
+    fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items: nextItems, count: nextItems.length }, null, 2) + '\n');
     console.log(`\n✅ ${fixable} auteur(s) corrigé(s) dans news.json`);
     qc.fixed = fixable;
     qc.ok = true;
