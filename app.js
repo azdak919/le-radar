@@ -568,9 +568,6 @@ function articleInstitutionLabel(name = '', type = '') {
   if (isQuebecUniversity(name, type)) {
     return resolveInstitutionAcronym(name) || name;
   }
-  if (isCegepInstitution(name, type)) {
-    return stripInstitutionTypePrefix(name) || name;
-  }
   return name.replace(/\s*\([^)]*\)\s*$/, '').trim() || name;
 }
 
@@ -1122,8 +1119,7 @@ function createArticle(item, role = 'standard') {
   a.style.setProperty('--c', color);
 
   const d = item.date ? new Date(item.date) : null;
-  const instMetaLabel = shortInstitution(item.institution, item.type)
-    || articleInstitutionLabel(item.institution, item.type);
+  const instMetaLabel = articleInstitutionLabel(item.institution, item.type);
   const time = d
     ? formatStampCompact(d, item.lang === 'en' ? 'en' : 'fr')
     : '';
