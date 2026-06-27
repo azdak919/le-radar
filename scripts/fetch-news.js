@@ -87,6 +87,13 @@ const SOURCES = [
     lang: 'fr',
     url: 'https://exilecvm.ca/feed/',
   },
+  {
+    name: 'La Pige',
+    institution: 'Cégep de Jonquière (ATM – journalisme)',
+    type: 'cegep',
+    lang: 'fr',
+    url: 'https://lapige.atmjonquiere.com/feed/',
+  },
 ];
 
 // === Tiny HTTP fetch =========================================================
