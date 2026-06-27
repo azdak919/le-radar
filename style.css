@@ -229,20 +229,36 @@ a { color: inherit; }
 }
 .tuner-step {
   flex-shrink: 0;
-  width: 30px; height: 36px;
+  width: 42px;
+  height: 42px;
+  padding: 0;
   border: 1px solid rgba(255,255,255,0.16);
   background: rgba(255,255,255,0.06);
-  color: #fff;
-  border-radius: 8px;
-  font-size: 21px; line-height: 1;
+  color: rgba(255,255,255,0.72);
+  border-radius: 10px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background 120ms ease, border-color 120ms ease, transform 120ms ease;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+  box-shadow: 0 4px 12px -4px rgba(0,0,0,0.45);
 }
-.tuner-step:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.3); }
-.tuner-step:active { transform: scale(0.92); }
+.tuner-step:hover {
+  color: rgba(255,255,255,0.95);
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.28);
+  transform: scale(1.04);
+}
+.tuner-step:active { transform: scale(0.93); }
+.tuner-step svg { width: 20px; height: 20px; display: block; }
+.tuner.is-playing .tuner-step {
+  color: rgba(255,255,255,0.9);
+  border-color: rgba(200,16,46,0.35);
+}
+.tuner.is-playing .tuner-step:hover {
+  border-color: rgba(200,16,46,0.5);
+  background: rgba(200,16,46,0.12);
+}
 
 .tuner-dial {
   position: relative;
@@ -654,8 +670,9 @@ a { color: inherit; }
     width: 36px;
     height: 36px;
     border-radius: 10px;
-    font-size: 22px;
+    box-shadow: 0 3px 10px -4px rgba(0,0,0,0.4);
   }
+  .tuner-step svg { width: 18px; height: 18px; }
 
   .tuner-now { min-height: 36px; }
 
