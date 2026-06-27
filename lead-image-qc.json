@@ -1,15 +1,15 @@
 {
-  "updated": "2026-06-27T16:59:41.744Z",
+  "updated": "2026-06-27T17:18:56.355Z",
   "total": 205,
   "withPhoto": 165,
-  "withStock": 64,
-  "fullyCovered": 202,
-  "leadReadyPhotos": 139,
-  "pageScraped": 21,
+  "withStock": 48,
+  "fullyCovered": 197,
+  "leadReadyPhotos": 129,
+  "pageScraped": 25,
   "photosRecovered": 0,
   "imagesCleared": 0,
   "stockSearches": 60,
-  "stockFound": 46,
+  "stockFound": 44,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -19,22 +19,28 @@
       "image": null
     },
     {
+      "title": "Une page se tourne au Salon L’image de Jonquière",
+      "link": "https://lapige.atmjonquiere.com/2026/05/21/une-page-se-tourne-au-salon-limage-de-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=une-page-se-tourne-au-salon-limage-de-jonquiere",
+      "reason": "no-stock-match",
+      "image": null
+    },
+    {
+      "title": "Un investissement pour les jeunes « bienvenu » au Centre Mamik",
+      "link": "https://lapige.atmjonquiere.com/2026/05/21/un-investissement-pour-les-jeunes-bienvenu-au-centre-mamik/?utm_source=rss&utm_medium=rss&utm_campaign=un-investissement-pour-les-jeunes-bienvenu-au-centre-mamik",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/3095/3145515352_2c561381a0_b.jpg"
+    },
+    {
       "title": "L’ERD sauvée de la dissolution par quatre membres",
       "link": "https://lapige.atmjonquiere.com/2026/05/21/lerd-sauvee-de-la-dissolution-par-quatre-membres/?utm_source=rss&utm_medium=rss&utm_campaign=lerd-sauvee-de-la-dissolution-par-quatre-membres",
       "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/5/58/Klimag%C3%BCrtel-der-erde.png"
-    },
-    {
-      "title": "Jeunes auteurs, à vos crayons : le « pouvoir des mots » pour rejoindre les étudiants",
-      "link": "https://lapige.atmjonquiere.com/2026/05/21/jeunes-auteurs-a-vos-crayons-le-pouvoir-des-mots-pour-rejoindre-les-etudiants/?utm_source=rss&utm_medium=rss&utm_campaign=jeunes-auteurs-a-vos-crayons-le-pouvoir-des-mots-pour-rejoindre-les-etudiants",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Buste_d%27enfant_%28portrait_pr%C3%A9sum%C3%A9_de_Marcel_Lerolle%29%2C_PPS3810%284%29.jpg"
+      "image": "https://live.staticflickr.com/7639/16904143862_9776b87f9f_b.jpg"
     },
     {
       "title": "Un pont entre l’art et le travail de rue",
       "link": "https://lapige.atmjonquiere.com/2026/05/20/un-pont-entre-lart-et-le-travail-de-rue/?utm_source=rss&utm_medium=rss&utm_campaign=un-pont-entre-lart-et-le-travail-de-rue",
       "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Tondeurs_de_chiens%2C_quai_de_l%27H%C3%B4tel-de-Ville%2C_pr%C3%A8s_du_pont_Louis-Philippe%2C_4%C3%A8me_arrondissement%2C_Paris._PH145.jpg"
+      "image": "https://live.staticflickr.com/4162/34368472056_546633d47c_b.jpg"
     },
     {
       "title": "El Niño s’approche du Québec",
@@ -55,10 +61,10 @@
       "image": "https://live.staticflickr.com/3498/3735171010_90582fc99c_b.jpg"
     },
     {
-      "title": "Virage à droite en Colombie",
-      "link": "https://lecollectif.ca/a-la-une/virage-a-droite-en-colombie/",
-      "reason": "stock-too-small",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/06/SOCIETE_Virage-a-droite-en-Colombie_Getty-Images.jpg"
+      "title": "Résumé du G7 à Évian",
+      "link": "https://lecollectif.ca/a-la-une/resume-du-g7-a-evian/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/06/SOCIETE_Resume-du-G7-a-Evian_Getty-Images.jpg"
     },
     {
       "title": "La surconsommation textile : un phénomène aux lourdes conséquences",
@@ -73,16 +79,10 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/06/Bruno-Cormier-retraite-benevole.png"
     },
     {
-      "title": "Artemis II takes over Place-des-Arts",
-      "link": "https://thelinknewspaper.ca/article/16330",
+      "title": "Road to the 2026 FIFA World Cup",
+      "link": "https://thelinknewspaper.ca/article/16333",
       "reason": "stock-too-small",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12.news.artemis.sam.online.daniel.1U5A7650_690_460_90.jpg"
-    },
-    {
-      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
-      "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
-      "reason": "stock-too-small",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg"
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/CAMNT06052026-40_690_460_90.jpg"
     }
   ]
 }

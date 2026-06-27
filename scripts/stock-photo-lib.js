@@ -28,6 +28,20 @@ const QUEBEC_INSTITUTION_RE = /uqam|uqtr|udem|ulaval|mcgill|concordia|hec montr�
 const QUEBEC_POLITICS_RE = /québécois|quebecois|élection provinciale|election provinciale|monde politique québécois|monde politique quebecois|\bcaq\b|parti québécois|parti quebecois|\bpq\b|\bqs\b|\bplq\b|\bpspp\b|françois legault|francois legault|hôtel du parlement|hotel du parlement|assemblée nationale du québec|assemblee nationale du quebec|député provincial|depute provincial|\bmna\b|\bmnas\b/i;
 const FEDERAL_CANADA_RE = /chambre des communes|parlement du canada|ottawa|trudeau|député fédéral|depute federal|\bmp\b|house of commons|parliament hill/i;
 const FRANCE_SUBJECT_RE = /g7|évian|evian|sommet|elysée|elysee|macron|paris 202|france 202|coupe du monde|jeux olympiques paris/i;
+const SPORTS_TOPIC_RE = /\b(hockey|rink|athlete|u-sports|usports|soccer|football|basketball|volleyball|championship|mvp|golf|links|tennis|swim|sportifs?|sports)\b/i;
+const STUDENT_MOBILIZATION_RE = /\b(mobilization|mobilisation|austerity|austérité|student federation|general meeting|grève|strike|manifestation)\b/i;
+
+/** Lieux étrangers à pénaliser quand l'article parle du Québec / Canada. */
+const FOREIGN_LOCATION_MARKERS = [
+  'brighton', 'england', 'united kingdom', 'london uk', 'manchester', 'birmingham',
+  'paris france', 'lyon', 'rhone', 'rhône', 'marseille', 'berlin', 'munich',
+  'rome', 'milan', 'athens', 'lyceum', 'chirico', 'florence', 'venice',
+  'spain', 'madrid', 'barcelona', 'portugal', 'lisbon', 'australia', 'sydney',
+  'japan', 'tokyo', 'india', 'china', 'beijing', 'africa', 'brazil',
+];
+
+/** Acronymes courts : seul « ASFA » ne doit pas matcher une école italienne, etc. */
+const SHORT_ACRONYM_RE = /^[a-z]{2,5}$/;
 
 /** Pays/régions à pénaliser quand l'article parle de l'Assemblée nationale du Québec. */
 const FOREIGN_ASSEMBLY_MARKERS = [
@@ -143,6 +157,28 @@ function extractContextualQueries(item, context = detectEditorialContext(item)) 
     if (inst.length > 4) queries.push(`${inst} Québec`);
   }
 
+  if (STUDENT_MOBILIZATION_RE.test(combined)) {
+    const inst = String(item.institution || '').replace(/\b(university|université|universite)\b/gi, '').trim();
+    if (inst.length > 4) queries.push(`${inst} student protest`);
+    queries.push('student demonstration university Canada');
+    queries.push('student mobilization campus Montreal');
+  }
+
+  if (SPORTS_TOPIC_RE.test(combined)) {
+    if (/\b(hockey|rink|ice)\b/i.test(combined)) {
+      queries.push('ice hockey player Canada');
+      queries.push('university hockey team Canada');
+    }
+    if (/\b(golf|links)\b/i.test(combined)) {
+      queries.push('university golf athlete');
+      queries.push('golf sport campus');
+    }
+    if (/\bathlete\b/i.test(combined)) {
+      queries.push('university athlete sport Canada');
+    }
+    queries.push('college sports Canada');
+  }
+
   return [...new Set(queries.filter((q) => q && q.length > 2))];
 }
 
@@ -173,6 +209,13 @@ function applyContextScoring(hit, context = {}) {
   if (context.quebec && /cour suprême|cour supreme|supreme court/i.test(context.norm)) {
     if (/washington|united states|u\.s\. supreme|usa supreme/i.test(hay)) delta -= 80;
     if (/supreme court of canada|cour suprême du canada|ottawa/i.test(hay)) delta += 55;
+  }
+
+  if (context.quebec || context.montreal) {
+    for (const marker of FOREIGN_LOCATION_MARKERS) {
+      if (hay.includes(normalizeText(marker))) delta -= 85;
+    }
+    if (/\b(canada|canadian|quebec|québec|montreal|montréal)\b/.test(hay)) delta += 25;
   }
 
   return delta;
@@ -309,6 +352,36 @@ function formatAttribution(hit) {
   return `Photo : ${creator} / ${license} · ${via}`;
 }
 
+function isShortAcronymToken(tok = '') {
+  const t = normalizeText(tok);
+  return SHORT_ACRONYM_RE.test(t) && t === t.toLowerCase() && /^[a-z]+$/.test(t) && t.length <= 5;
+}
+
+function countSubstantiveMatches(hay, matchTokens = {}) {
+  const { important = [], content = [], title = [] } = matchTokens;
+  let contentMatched = 0;
+  let titleMatched = 0;
+  let importantMatched = 0;
+  let acronymOnly = 0;
+
+  for (const tok of content) {
+    if (tok.length < 3 || FALSE_FRIENDS.has(tok) || isShortAcronymToken(tok)) continue;
+    if (hay.includes(tok)) contentMatched += 1;
+  }
+  for (const tok of title) {
+    if (tok.length < 4 || FALSE_FRIENDS.has(tok) || isShortAcronymToken(tok)) continue;
+    if (hay.includes(tok)) titleMatched += 1;
+  }
+  for (const tok of important) {
+    if (FALSE_FRIENDS.has(tok) || tok.length < 3) continue;
+    if (!hay.includes(tok)) continue;
+    if (isShortAcronymToken(tok)) acronymOnly += 1;
+    else importantMatched += 1;
+  }
+
+  return { contentMatched, titleMatched, importantMatched, acronymOnly };
+}
+
 function scoreCandidate(hit, matchTokens, context = null) {
   let score = 0;
   const w = hit.width || 0;
@@ -322,33 +395,41 @@ function scoreCandidate(hit, matchTokens, context = null) {
   if (ratio >= 1.1 && ratio <= 2.2) score += 22;
   score += Math.min(w, 2400) / 35;
 
-  const hay = normalizeText(`${hit.title || ''} ${hit.tags || ''}`);
+  const hay = normalizeText(`${hit.title || ''} ${hit.tags || ''} ${hit.url || ''}`);
   const { important = [], content = [], title = [] } = matchTokens || {};
-  let contentMatched = 0;
-  let titleMatched = 0;
+  const matches = countSubstantiveMatches(hay, matchTokens);
+  const { contentMatched, titleMatched, importantMatched, acronymOnly } = matches;
 
   for (const tok of content) {
-    if (tok.length < 3 || FALSE_FRIENDS.has(tok)) continue;
-    if (hay.includes(tok)) {
-      contentMatched += 1;
-      score += tok.length >= 5 ? 22 : 14;
-    }
+    if (tok.length < 3 || FALSE_FRIENDS.has(tok) || isShortAcronymToken(tok)) continue;
+    if (hay.includes(tok)) score += tok.length >= 5 ? 22 : 14;
   }
   for (const tok of important) {
-    if (FALSE_FRIENDS.has(tok) || tok.length < 3) continue;
+    if (FALSE_FRIENDS.has(tok) || tok.length < 3 || isShortAcronymToken(tok)) continue;
     if (hay.includes(tok)) score += 16;
   }
   for (const tok of title) {
-    if (tok.length < 4 || FALSE_FRIENDS.has(tok)) continue;
-    if (hay.includes(tok)) {
-      titleMatched += 1;
-      score += 8;
-    }
+    if (tok.length < 4 || FALSE_FRIENDS.has(tok) || isShortAcronymToken(tok)) continue;
+    if (hay.includes(tok)) score += 8;
   }
 
-  const needContentMatch = content.filter((t) => t.length >= 4 && !FALSE_FRIENDS.has(t));
-  if (needContentMatch.length >= 2 && contentMatched === 0 && titleMatched === 0) return -1;
-  if (important.length >= 2 && contentMatched + titleMatched === 0) return -1;
+  const substantiveTotal = contentMatched + titleMatched + importantMatched;
+  const needContentMatch = content.filter((t) => t.length >= 4 && !FALSE_FRIENDS.has(t) && !isShortAcronymToken(t));
+  if (needContentMatch.length >= 2 && substantiveTotal === 0) return -1;
+  if (important.length >= 2 && substantiveTotal === 0) return -1;
+  if (acronymOnly > 0 && substantiveTotal === 0) return -1;
+  if (substantiveTotal === 0 && acronymOnly === 0) return -1;
+
+  if (STUDENT_MOBILIZATION_RE.test(context?.norm || '')) {
+    if (!/\b(student|university|campus|college|protest|demonstration|mobilization|mobilisation|strike|gr[eè]ve|manifestation|rally|march)\b/.test(hay)) {
+      return -1;
+    }
+  }
+  if (SPORTS_TOPIC_RE.test(context?.norm || '')) {
+    if (!/\b(sport|sports|athlete|hockey|golf|rink|ice|team|championship|university|college|player|game)\b/.test(hay)) {
+      return -1;
+    }
+  }
 
   if (hit.provider === 'wikimedia') score += 8;
   if (hit.license === 'cc0' || hit.license === 'pdm') score += 4;
@@ -356,6 +437,40 @@ function scoreCandidate(hit, matchTokens, context = null) {
   score += applyContextScoring(hit, context);
 
   return score > 0 ? score : -1;
+}
+
+const STOCK_MIN_RETAIN_SCORE = 95;
+
+function stockHitFromItem(item, stockUrl = '', meta = {}) {
+  const filename = decodeURIComponent(String(stockUrl).split('/').pop() || '')
+    .replace(/\.[^.]+$/, '')
+    .replace(/[_-]+/g, ' ');
+  return {
+    url: stockUrl,
+    width: meta.width || 1280,
+    height: meta.height || 720,
+    title: meta.title || filename,
+    tags: meta.tags || '',
+    provider: stockUrl.includes('wikimedia') ? 'wikimedia' : 'openverse',
+    license: meta.license || '',
+  };
+}
+
+function scoreStockFit(item, stockUrl = '', meta = {}) {
+  if (!stockUrl) return -1;
+  const context = detectEditorialContext(item);
+  const matchTokens = buildMatchTokens(item);
+  const hit = stockHitFromItem(item, stockUrl, meta);
+  return scoreCandidate(hit, matchTokens, context);
+}
+
+function stockStillFits(item, meta = {}) {
+  if (!item?.stockImage) return true;
+  return scoreStockFit(item, item.stockImage, {
+    title: item.imageCredit || '',
+    license: item.imageLicense || '',
+    ...meta,
+  }) >= STOCK_MIN_RETAIN_SCORE;
 }
 
 async function searchOpenverse(query, matchTokens, context = null) {
@@ -481,6 +596,10 @@ module.exports = {
   formatAttribution,
   cleanCreatorName,
   findStockPhoto,
+  scoreStockFit,
+  stockStillFits,
+  scoreCandidate,
+  STOCK_MIN_RETAIN_SCORE,
   searchOpenverse,
   searchWikimedia,
 };

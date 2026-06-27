@@ -27,7 +27,7 @@ const {
   articleImageIsValidOnPage,
   sleep,
 } = require('./article-image-lib');
-const { findStockPhoto, cleanCreatorName } = require('./stock-photo-lib');
+const { findStockPhoto, cleanCreatorName, stockStillFits } = require('./stock-photo-lib');
 const { pruneToFreshWindow, loadSourceRegistryMap, getBotHints } = require('./source-retention-lib');
 
 
@@ -213,6 +213,17 @@ async function main() {
     if (await tryUpgradeExistingImage(item, sourceMap)) upgraded += 1;
   }
   if (upgraded) console.log(`↻ ${upgraded} image(s) WordPress passée(s) en pleine résolution`);
+
+  let stockCleared = 0;
+  for (const item of items) {
+    if (!item.stockImage || stockStillFits(item)) continue;
+    if (doUpdate) {
+      clearStockPhoto(item);
+      if (!item.image) item.leadImageReady = false;
+    }
+    stockCleared += 1;
+  }
+  if (stockCleared) console.log(`↻ ${stockCleared} photo(s) banque retirée(s) (hors-sujet)`);
 
   const stockQueue = [];
   for (let index = 0; index < items.length; index += 1) {
