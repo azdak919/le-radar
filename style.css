@@ -251,14 +251,6 @@ a { color: inherit; }
 }
 .tuner-step:active { transform: scale(0.93); }
 .tuner-step svg { width: 20px; height: 20px; display: block; }
-.tuner.is-playing .tuner-step {
-  color: rgba(255,255,255,0.9);
-  border-color: rgba(200,16,46,0.35);
-}
-.tuner.is-playing .tuner-step:hover {
-  border-color: rgba(200,16,46,0.5);
-  background: rgba(200,16,46,0.12);
-}
 
 .tuner-dial {
   position: relative;
