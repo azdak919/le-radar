@@ -218,6 +218,34 @@ function creditFromPhrase(text = '') {
   };
 }
 
+/** Légendes WordPress « Nom / Média » ou « Illustration by … » (The Tribune, etc.). */
+function parseFigcaptionAttribution(text = '', lang = 'fr') {
+  const t = sanitizeCreditText(text);
+  if (!t || t.length < 4 || t.length > 120) return null;
+
+  const slash = t.match(/^([\p{L}][\p{L}\s'.-]{1,48})\s*\/\s*([\p{L}][\p{L}\s'.&-]{1,48})$/u);
+  if (slash) {
+    const creator = slash[1].trim();
+    const parsed = creditFromPhrase(creator);
+    if (parsed) return { ...parsed, source: 'figcaption-attribution' };
+  }
+
+  const illustrated = t.match(/^(?:Illustration|Artwork|Art|Drawing|Cartoon|Graphic|Design)\s+by\s+(.+)$/i);
+  if (illustrated) {
+    const parsed = creditFromPhrase(illustrated[1]);
+    if (parsed) {
+      const en = lang === 'en';
+      return {
+        ...parsed,
+        creditLine: en ? `Illustration: ${parsed.creator}` : `Illustration : ${parsed.creator}`,
+        source: 'figcaption-illustration',
+      };
+    }
+  }
+
+  return null;
+}
+
 function extractJsonLdCredit(html = '', imageUrl = '') {
   const flat = flattenJsonLd(parseJsonLdBlocks(html));
   for (const node of flat) {
@@ -237,13 +265,15 @@ function extractJsonLdCredit(html = '', imageUrl = '') {
   return null;
 }
 
-function extractFigureCredit(html = '', imageUrl = '') {
+function extractFigureCredit(html = '', imageUrl = '', lang = 'fr') {
   const figures = html.match(/<figure[^>]*>[\s\S]*?<\/figure>/gi) || [];
   for (const fig of figures) {
     const srcM = fig.match(/<img[^>]+src=["']([^"']+)["']/i);
     if (!srcM || (imageUrl && !urlsMatch(srcM[1], imageUrl))) continue;
     const capM = fig.match(/<figcaption[^>]*>([\s\S]*?)<\/figcaption>/i);
     if (capM) {
+      const attr = parseFigcaptionAttribution(capM[1], lang);
+      if (attr) return attr;
       const embedded = extractEmbeddedPhotoCredit(capM[1]);
       if (embedded) {
         const parsed = creditFromPhrase(embedded);
@@ -300,13 +330,13 @@ function extractBodyCredit(html = '', imageUrl = '') {
   return null;
 }
 
-function extractPhotoCreditFromHtml(html = '', imageUrl = '') {
+function extractPhotoCreditFromHtml(html = '', imageUrl = '', lang = 'fr') {
   if (!html || html.length < 200) return null;
 
   const extractors = [
     () => extractMediaCreditPlugin(html, imageUrl),
     () => extractJsonLdCredit(html, imageUrl),
-    () => extractFigureCredit(html, imageUrl),
+    () => extractFigureCredit(html, imageUrl, lang),
     () => extractBodyCredit(html, imageUrl),
   ];
 
@@ -333,7 +363,7 @@ function resolveSourcePhotoCredit(item = {}, html = '') {
   const imageUrl = String(item.image || '').trim();
   if (!imageUrl) return null;
 
-  const cited = extractPhotoCreditFromHtml(html, imageUrl);
+  const cited = extractPhotoCreditFromHtml(html, imageUrl, item.lang === 'en' ? 'en' : 'fr');
   if (cited) {
     return {
       cited: true,
@@ -465,6 +495,7 @@ module.exports = {
   creditLooksCorrupt,
   looksLikePhotoCredit,
   extractMediaCreditPlugin,
+  parseFigcaptionAttribution,
   extractPhotoCreditFromHtml,
   resolveSourcePhotoCredit,
   fetchSourcePhotoCredit,
