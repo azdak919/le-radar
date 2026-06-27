@@ -717,7 +717,7 @@ function updateNewsLayout() {
 }
 
 const HERO_SPOTLIGHT_MAX = 4; /* 1 à la une + 3 vedettes */
-const BRIEF_SIDEBAR_MAX = 7;
+const BRIEF_SIDEBAR_MAX = 9;
 const SOURCE_HERO_WITH_IMAGE_MAX = 2; /* à la une + 1 vedette si image */
 /** Fenêtre de fraîcheur : 3 sessions max (= une année universitaire complète). */
 const FRESHNESS_SESSION_COUNT = 3;
@@ -727,8 +727,8 @@ const CONTINGENCY_MAX_SESSIONS_BACK = FRESHNESS_SESSION_COUNT - 1;
  * dans la session en cours — on accepte leur dernier article des 2 sessions précédentes.
  */
 const AUTUMN_GRACE_END_MONTH = 10; /* novembre inclus */
-const BRIEF_LIMITS = { lead: 500, feature: 360, compact: 170, standard: 170 };
-const LEAD_BRIEF_MIN_CHARS = 140;
+const BRIEF_LIMITS = { lead: 720, feature: 360, compact: 170, standard: 170 };
+const LEAD_BRIEF_MIN_CHARS = 160;
 
 function articleKey(item) {
   return item.link || `${item.source}::${item.date}::${item.title}`;
@@ -1113,25 +1113,52 @@ function createArticle(item, role = 'standard', { hideSourceMeta = false } = {})
   if (role === 'lead' && brief) {
     ({ text: brief, truncated: briefTruncated } = ensureLeadBriefMinLines(brief, briefTruncated, item));
   }
+  if (author && brief) {
+    brief = stripLeadingByline(brief, author);
+  }
   const readMore = item.lang === 'en' ? 'Read more →' : 'Lire la suite →';
   const byLabel = item.lang === 'en' ? 'By' : 'Par';
   const canUseImage = ['lead', 'feature'].includes(role);
   const hasImageCandidate = canUseImage && (role === 'lead' || hasDisplayImage(item));
   if (!hasImageCandidate && canUseImage) a.classList.add('article--text');
   const metaClass = hideSourceMeta ? 'article-meta article-meta--time-only' : 'article-meta';
+  const timeHtml = time
+    ? `<time class="article-time${fresh ? ' is-fresh' : ''}" datetime="${escapeHtml(item.date)}">${time}</time>`
+    : '';
+  const briefHtml = brief
+    ? `<p class="article-brief${briefTruncated ? ' is-truncated' : ''}"><span class="article-brief-text">${escapeHtml(brief)}</span>${briefTruncated ? `<span class="article-more" style="color: ${color}">${readMore}</span>` : ''}</p>`
+    : '';
+  const bylineHtml = author
+    ? `<p class="article-byline">${byLabel} <strong>${escapeHtml(author)}</strong></p>`
+    : '';
+  const titleHtml = `<h3 class="article-title">${escapeHtml(cleanTitle(item.title))}</h3>`;
+  const mediaHtml = canUseImage ? '<figure class="article-media"></figure>' : '';
 
-  a.innerHTML = `
-    ${role === 'lead' ? '<span class="article-eyebrow">À la une</span>' : ''}
-    <div class="${metaClass}">
-      ${hideSourceMeta ? '' : `<span class="article-source">${escapeHtml(item.source)}</span>`}
-      ${!hideSourceMeta && item.institution ? `<span class="article-inst">${escapeHtml(articleInstitutionLabel(item.institution, item.type))}</span>` : ''}
-      ${time ? `<time class="article-time${fresh ? ' is-fresh' : ''}" datetime="${escapeHtml(item.date)}">${time}</time>` : ''}
-    </div>
-    ${canUseImage ? '<figure class="article-media"></figure>' : ''}
-    <h3 class="article-title">${escapeHtml(cleanTitle(item.title))}</h3>
-    ${author ? `<p class="article-byline">${byLabel} <strong>${escapeHtml(author)}</strong></p>` : ''}
-    ${brief ? `<p class="article-brief${briefTruncated ? ' is-truncated' : ''}"><span class="article-brief-text">${escapeHtml(brief)}</span>${briefTruncated ? `<span class="article-more" style="color: ${color}">${readMore}</span>` : ''}</p>` : ''}
-  `;
+  if (role === 'lead') {
+    const leadMeta = hideSourceMeta
+      ? (timeHtml ? `<div class="${metaClass}">${timeHtml}</div>` : '')
+      : (timeHtml ? `<div class="article-meta article-meta--time-only article-meta--lead">${timeHtml}</div>` : '');
+    a.innerHTML = `
+      <span class="article-eyebrow">À la une</span>
+      ${mediaHtml}
+      ${titleHtml}
+      ${bylineHtml}
+      ${briefHtml}
+      ${leadMeta}
+    `;
+  } else {
+    a.innerHTML = `
+      <div class="${metaClass}">
+        ${hideSourceMeta ? '' : `<span class="article-source">${escapeHtml(item.source)}</span>`}
+        ${!hideSourceMeta && item.institution ? `<span class="article-inst">${escapeHtml(articleInstitutionLabel(item.institution, item.type))}</span>` : ''}
+        ${timeHtml}
+      </div>
+      ${mediaHtml}
+      ${titleHtml}
+      ${bylineHtml}
+      ${briefHtml}
+    `;
+  }
 
   if (canUseImage) attachArticleImage(a, item, role);
   return a;
@@ -1561,16 +1588,31 @@ function cleanTitle(title = '') {
   return stripLeadingNonLetters(t);
 }
 
+function stripLeadingByline(text = '', author = '') {
+  if (!text || !author) return text;
+  const escaped = author.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return String(text).replace(new RegExp(`^(?:Par|By)\\s+${escaped}\\s*`, 'iu'), '').trim();
+}
+
+function leadBriefSource(item) {
+  const { author, body } = splitByline(item);
+  const raw = body || String(item.excerpt || '');
+  return stripLeadingByline(sanitizeBriefBody(raw), author);
+}
+
 function ensureLeadBriefMinLines(brief, truncated, item) {
+  const { author } = splitByline(item);
+  brief = stripLeadingByline(brief, author);
+
   if (brief.length >= LEAD_BRIEF_MIN_CHARS) {
     return { text: brief, truncated };
   }
 
-  const fallback = sanitizeBriefBody(String(item.excerpt || ''));
+  const fallback = leadBriefSource(item);
   if (fallback.length > brief.length) {
     const extended = prepareBrief(fallback, 'lead');
     if (extended.text.length > brief.length) {
-      brief = extended.text;
+      brief = stripLeadingByline(extended.text, author);
       truncated = extended.truncated;
     }
   }
@@ -1581,8 +1623,7 @@ function ensureLeadBriefMinLines(brief, truncated, item) {
   const title = cleanTitle(item.title);
   const pieces = [];
   if (title.length > 8) pieces.push(title);
-  const excerpt = sanitizeBriefBody(String(item.excerpt || ''));
-  if (excerpt && !pieces.some((part) => part.includes(excerpt.slice(0, 24)))) pieces.push(excerpt);
+  if (fallback && !pieces.some((part) => part.includes(fallback.slice(0, 24)))) pieces.push(fallback);
   const inst = articleInstitutionLabel(item.institution, item.type);
   if (item.source) {
     const ctx = item.lang === 'en'
@@ -1592,7 +1633,10 @@ function ensureLeadBriefMinLines(brief, truncated, item) {
   }
   const combined = prepareBrief(pieces.join(' '), 'lead');
   if (combined.text.length > brief.length) {
-    return combined;
+    return {
+      text: stripLeadingByline(combined.text, author),
+      truncated: combined.truncated,
+    };
   }
   return { text: brief, truncated };
 }
