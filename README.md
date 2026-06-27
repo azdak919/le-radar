@@ -1,6 +1,6 @@
 # RADAR — Les médias étudiants du Québec
 
-> *Student media on your radar • Les médias étudiants à l'œil.*
+> *Les médias étudiants du Québec, sur ton radar • Student media on your radar.*
 
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://azdak919.github.io/radios-etudiantes-qc/)
 ![PWA](https://img.shields.io/badge/PWA-ready-blue)
