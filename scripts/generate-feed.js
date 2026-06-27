@@ -2,7 +2,7 @@
 /**
  * LE RADAR — Génération des flux RSS sortants (méta-agrégateur).
  *
- * Lit news.json et publie feed.xml, feed-fr.xml et feed-en.xml.
+ * Lit news.json et publie feed.xml (fil unique, toutes langues).
  * Chaque item pointe vers l'article original ; description enrichie Le Radar.
  *
  *   node scripts/generate-feed.js
@@ -40,21 +40,7 @@ const FEEDS = [
     lang: 'fr-CA',
     filter: () => true,
     title: 'LE RADAR — Les médias étudiants du Québec',
-    description: 'Fil agrégé des journaux étudiants des cégeps et universités du Québec. Titres, brèves et liens vers les articles originaux.',
-  },
-  {
-    file: 'feed-fr.xml',
-    lang: 'fr-CA',
-    filter: (item) => item.lang !== 'en',
-    title: 'LE RADAR — Fil étudiant (français)',
-    description: 'Actualités des médias étudiants francophones du Québec, agrégées par Le Radar.',
-  },
-  {
-    file: 'feed-en.xml',
-    lang: 'en-CA',
-    filter: (item) => item.lang === 'en',
-    title: 'LE RADAR — Student media feed (English)',
-    description: 'Quebec student newspaper headlines and briefs in English, aggregated by LE RADAR.',
+    description: 'Fil agrégé des journaux étudiants des cégeps et universités du Québec (français et anglais). Titres, brèves, images et liens vers les articles originaux.',
   },
 ];
 
@@ -137,19 +123,45 @@ function itemImageUrl(item = {}) {
   return String(item.image || item.stockImage || '').trim();
 }
 
-function buildDescriptionHtml(item = {}) {
+function imageMimeType(url = '') {
+  const ext = url.split('?')[0].split('.').pop()?.toLowerCase();
+  if (ext === 'png') return 'image/png';
+  if (ext === 'webp') return 'image/webp';
+  if (ext === 'gif') return 'image/gif';
+  if (ext === 'svg') return 'image/svg+xml';
+  return 'image/jpeg';
+}
+
+/** Corps HTML complet (image + brève) pour content:encoded et description. */
+function buildItemBodyHtml(item = {}) {
   const parts = [];
+  const imageUrl = itemImageUrl(item);
+  const title = String(item.title || 'Article').trim();
+  const credit = photoCreditLine(item);
+
+  if (imageUrl) {
+    parts.push(
+      '<figure style="margin:0 0 1em">',
+      `<img src="${escapeXml(imageUrl)}" alt="${escapeXml(title)}" style="max-width:100%;height:auto;display:block;border-radius:4px" />`,
+      credit ? `<figcaption style="font-size:0.85em;color:#666;margin-top:0.35em">${escapeXml(credit)}</figcaption>` : '',
+      '</figure>',
+    );
+  }
+
   const brief = itemBrief(item);
   if (brief) parts.push(`<p>${escapeXml(brief)}</p>`);
   const attr = attributionLine(item);
   if (attr) parts.push(`<p><em>${escapeXml(attr)}</em></p>`);
-  const credit = photoCreditLine(item);
-  if (credit) parts.push(`<p><small>${escapeXml(credit)}</small></p>`);
+  if (credit && !imageUrl) parts.push(`<p><small>${escapeXml(credit)}</small></p>`);
   const note = item.lang === 'en'
     ? 'Aggregated by LE RADAR — link opens the original student publication.'
     : 'Agrégé par Le Radar — le lien ouvre la publication étudiante originale.';
   parts.push(`<p><small>${escapeXml(note)}</small></p>`);
   return parts.join('\n');
+}
+
+function buildDescriptionHtml(item = {}) {
+  return buildItemBodyHtml(item);
 }
 
 function buildItemXml(item = {}) {
@@ -174,12 +186,16 @@ function buildItemXml(item = {}) {
     .map((c) => `      <category>${escapeXml(c)}</category>`)
     .join('\n');
 
+  const mime = imageUrl ? imageMimeType(imageUrl) : '';
   const mediaXml = imageUrl
-    ? `      <media:content url="${escapeXml(imageUrl)}" medium="image">\n`
+    ? `      <media:content url="${escapeXml(imageUrl)}" medium="image" type="${escapeXml(mime)}">\n`
       + (credit ? `        <media:credit>${escapeXml(credit)}</media:credit>\n` : '')
       + '      </media:content>\n'
-      + `      <enclosure url="${escapeXml(imageUrl)}" type="image/jpeg" length="0" />\n`
+      + `      <media:thumbnail url="${escapeXml(imageUrl)}" />\n`
+      + `      <enclosure url="${escapeXml(imageUrl)}" type="${escapeXml(mime)}" length="1" />\n`
     : '';
+
+  const bodyHtml = buildItemBodyHtml(item);
 
   return [
     '    <item>',
@@ -188,6 +204,7 @@ function buildItemXml(item = {}) {
     `      <guid isPermaLink="true">${escapeXml(link)}</guid>`,
     pubDate ? `      <pubDate>${escapeXml(pubDate)}</pubDate>` : '',
     `      <description>${cdata(description)}</description>`,
+    `      <content:encoded>${cdata(bodyHtml)}</content:encoded>`,
     categoryXml,
     mediaXml.trimEnd(),
     '    </item>',
@@ -205,6 +222,7 @@ function buildFeedXml(items = [], config = {}) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0"
   xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>${escapeXml(config.title)}</title>

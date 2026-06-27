@@ -115,14 +115,18 @@ a { color: inherit; }
   cursor: pointer;
 }
 .theme-toggle:hover,
+.masthead-home:hover,
 .masthead-rss:hover {
   border-color: var(--accent);
   color: var(--accent);
 }
 .theme-toggle:active,
+.masthead-home:active,
 .masthead-rss:active {
   transform: scale(0.9);
 }
+.masthead-home.is-active,
+.masthead-home[aria-current="page"],
 .masthead-rss.is-active,
 .masthead-rss[aria-current="page"] {
   border-color: color-mix(in srgb, var(--accent) 55%, var(--rule));
@@ -1180,6 +1184,15 @@ a { color: inherit; }
   display: grid;
   gap: 14px;
   margin-top: 22px;
+}
+
+.feeds-list--single {
+  max-width: 52rem;
+}
+
+.feed-card--primary {
+  border-top-width: 4px;
+  padding: 20px 22px 22px;
 }
 
 .feed-card {
