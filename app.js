@@ -403,6 +403,14 @@ function renderTodayDate() {
 // ═══════════════════════════════════════════════════════════════════════════
 //  TUNER
 // ═══════════════════════════════════════════════════════════════════════════
+/** Ordre d’affichage dans le menu du syntoniseur (universités en tête). */
+const TUNER_STATION_ORDER = ['chyz', 'choq', 'cism', 'ckut'];
+
+function tunerStationRank(radio = {}) {
+  const idx = TUNER_STATION_ORDER.indexOf(radio.id);
+  return idx >= 0 ? idx : 100 + radioPopularityRank(radio);
+}
+
 function sortRadios(list) {
   const order = { universite: 0, cegep: 1 };
   return [...list].sort((a, b) => {
@@ -411,8 +419,8 @@ function sortRadios(list) {
     const aNative = getPlayableStream(a) ? 0 : 1;
     const bNative = getPlayableStream(b) ? 0 : 1;
     if (aNative !== bNative) return aNative - bNative;
-    const popDiff = radioPopularityRank(a) - radioPopularityRank(b);
-    if (popDiff !== 0) return popDiff;
+    const rankDiff = tunerStationRank(a) - tunerStationRank(b);
+    if (rankDiff !== 0) return rankDiff;
     return a.name.localeCompare(b.name, 'fr');
   });
 }
