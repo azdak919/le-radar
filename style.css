@@ -110,14 +110,6 @@ a { color: inherit; }
 .theme-toggle:active { transform: scale(0.9); }
 .theme-toggle svg { width: 15px; height: 15px; }
 
-.masthead-contrib {
-  color: var(--muted);
-  text-decoration: none;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-}
-.masthead-contrib:hover { color: var(--accent); }
-
 .masthead-brand { padding-top: 16px; text-align: center; }
 
 .wordmark {
