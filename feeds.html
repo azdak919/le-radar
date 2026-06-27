@@ -45,53 +45,62 @@
 
     <main class="wire feeds-wire">
       <header class="feeds-head">
-        <p class="feeds-eyebrow">Abonnement</p>
-        <h1 class="feeds-title">Flux RSS — LE RADAR</h1>
-        <p class="feeds-lead">
-          Un seul abonnement pour suivre l'actualité des journaux étudiants du Québec.
-          Chaque entrée renvoie vers l'article original.
-        </p>
+        <p class="feeds-eyebrow">Abonnement RSS</p>
+        <h1 class="feeds-title">Le fil étudiant</h1>
+        <p class="feeds-lead">Toute l'actualité des journaux étudiants du Québec, dans un seul flux. Chaque entrée renvoie vers l'article original.</p>
         <p id="feeds-updated" class="feeds-updated" hidden></p>
       </header>
 
-      <section class="feeds-list feeds-list--single" aria-label="Flux disponible">
-        <article class="feed-card feed-card--primary" data-feed="feed.xml">
-          <div class="feed-card__head">
-            <h2 class="feed-card__title">Le fil étudiant</h2>
-            <span class="feed-card__tag">RSS 2.0</span>
+      <article class="feeds-card" data-feed="feed.xml" aria-label="Abonnement au fil étudiant">
+        <div class="feeds-subscribe">
+          <div class="feeds-subscribe__copy">
+            <p class="feeds-subscribe__label">URL du flux</p>
+            <div class="feeds-subscribe__url">
+              <svg class="feeds-subscribe__rss" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83C19.56 12.06 12.94 5.44 4 4.44z"/><path d="M4 10.11v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.46-4.42-9.9-9.9-9.9z"/></svg>
+              <code class="feeds-subscribe__code" data-feed-url></code>
+            </div>
           </div>
-          <p class="feed-card__desc">
-            Les principaux campus québécois, chacun avec son journal phare, dans un seul abonnement.
-          </p>
-          <p class="feed-card__sources">
-            <span class="feed-card__pair"><strong>UdeM</strong> Quartier Libre</span>
-            <span class="feed-card__pair"><strong>UQAM</strong> Montréal Campus</span>
-            <span class="feed-card__pair"><strong>McGill</strong> Le Délit, The McGill Daily</span>
-            <span class="feed-card__pair"><strong>Concordia</strong> The Link</span>
-            <span class="feed-card__pair"><strong>Laval</strong> L'Exemplaire</span>
-            <span class="feed-card__pair"><strong>Sherbrooke</strong> Le Collectif</span>
-            <span class="feed-card__pair"><strong>UQTR</strong> Zone Campus</span>
-            <span class="feed-card__pair"><strong>Polytechnique</strong> Le Polyscope</span>
-            <span class="feed-card__pair"><strong>Bishop's</strong> The Campus</span>
-            <span class="feed-card__more">et d'autres publications collégiales et universitaires.</span>
-          </p>
-          <p class="feed-card__url"><code class="feed-card__code" data-feed-url></code></p>
-          <div class="feed-card__actions">
+          <div class="feeds-subscribe__actions">
             <button type="button" class="feed-btn feed-btn--primary" data-copy>Copier l'URL</button>
-            <a class="feed-btn" data-open target="_blank" rel="noopener">Ouvrir le flux</a>
-            <a class="feed-btn feed-btn--quiet" data-feedly target="_blank" rel="noopener">Feedly</a>
+            <a class="feed-btn" data-open target="_blank" rel="noopener">Ouvrir</a>
+            <a class="feed-btn feed-btn--quiet" data-feedly target="_blank" rel="noopener">Ajouter à Feedly</a>
           </div>
-        </article>
-      </section>
+        </div>
 
-      <section class="feeds-aside" aria-label="À propos du flux">
-        <h2 class="feeds-aside__title">En bref</h2>
-        <ul class="feeds-aside__list">
-          <li>Copiez l'URL dans Feedly, Inoreader, NetNewsWire ou tout autre lecteur RSS.</li>
-          <li>Chaque article reprend le titre, une brève, la photo et le lien vers la publication étudiante source.</li>
-          <li>Le fil est rafraîchi <strong>8 fois par jour</strong> (5&nbsp;h&nbsp;30, 7&nbsp;h, 10&nbsp;h, 12&nbsp;h, 13&nbsp;h&nbsp;30, 16&nbsp;h, 19&nbsp;h et 21&nbsp;h, heure de Québec).</li>
-        </ul>
-      </section>
+        <div class="feeds-card__body">
+          <section class="feeds-panel feeds-panel--sources" aria-labelledby="feeds-sources-title">
+            <h2 id="feeds-sources-title" class="feeds-panel__title">Campus couverts</h2>
+            <ul class="feeds-grid">
+              <li class="feeds-grid__row" style="--c: #0057AC"><span class="feeds-grid__campus">UdeM</span><span class="feeds-grid__paper">Quartier Libre</span></li>
+              <li class="feeds-grid__row" style="--c: #0079BE"><span class="feeds-grid__campus">UQAM</span><span class="feeds-grid__paper">Montréal Campus</span></li>
+              <li class="feeds-grid__row" style="--c: #ED1B2F"><span class="feeds-grid__campus">McGill</span><span class="feeds-grid__paper">Le Délit · The McGill Daily</span></li>
+              <li class="feeds-grid__row" style="--c: #912338"><span class="feeds-grid__campus">Concordia</span><span class="feeds-grid__paper">The Link</span></li>
+              <li class="feeds-grid__row" style="--c: #E30513"><span class="feeds-grid__campus">Laval</span><span class="feeds-grid__paper">L'Exemplaire</span></li>
+              <li class="feeds-grid__row" style="--c: #00A759"><span class="feeds-grid__campus">Sherbrooke</span><span class="feeds-grid__paper">Le Collectif</span></li>
+              <li class="feeds-grid__row" style="--c: #00CB88"><span class="feeds-grid__campus">UQTR</span><span class="feeds-grid__paper">Zone Campus</span></li>
+              <li class="feeds-grid__row" style="--c: #C41E3A"><span class="feeds-grid__campus">Polytechnique</span><span class="feeds-grid__paper">Le Polyscope</span></li>
+              <li class="feeds-grid__row" style="--c: #582C83"><span class="feeds-grid__campus">Bishop's</span><span class="feeds-grid__paper">The Campus</span></li>
+            </ul>
+            <p class="feeds-grid__note">+ publications collégiales et autres médias du réseau.</p>
+          </section>
+
+          <section class="feeds-panel feeds-panel--info" aria-labelledby="feeds-info-title">
+            <h2 id="feeds-info-title" class="feeds-panel__title">En bref</h2>
+            <ul class="feeds-points">
+              <li class="feeds-points__item">Collez l'URL dans Feedly, Inoreader, NetNewsWire ou tout lecteur RSS.</li>
+              <li class="feeds-points__item">Titre, brève, photo et lien vers la publication étudiante source.</li>
+              <li class="feeds-points__item">Rafraîchi automatiquement tout au long de la journée.</li>
+            </ul>
+            <div class="feeds-schedule">
+              <p class="feeds-schedule__label">8 passages · heure de Québec</p>
+              <ul class="feeds-schedule__times" aria-label="Horaires de mise à jour">
+                <li>5:30</li><li>7:00</li><li>10:00</li><li>12:00</li>
+                <li>13:30</li><li>16:00</li><li>19:00</li><li>21:00</li>
+              </ul>
+            </div>
+          </section>
+        </div>
+      </article>
 
       <footer class="site-foot">
         <p>
