@@ -356,6 +356,46 @@ function sortRadios(list) {
   });
 }
 
+const TUNER_FEATURED_COUNT = 4;
+const TUNER_FEATURED_STORAGE_KEY = 'radar-featured-stations';
+
+function shuffleInPlace(list) {
+  for (let i = list.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [list[i], list[j]] = [list[j], list[i]];
+  }
+  return list;
+}
+
+function pickFeaturedStations(playable = [], count = TUNER_FEATURED_COUNT) {
+  if (!playable.length) return [];
+  const limit = Math.min(count, playable.length);
+  const poolKey = playable.map((r) => r.id).sort().join('|');
+
+  try {
+    const saved = JSON.parse(sessionStorage.getItem(TUNER_FEATURED_STORAGE_KEY) || 'null');
+    if (saved?.poolKey === poolKey && Array.isArray(saved.ids)) {
+      const kept = saved.ids.filter((id) => playable.some((r) => r.id === id)).slice(0, limit);
+      if (kept.length === limit) {
+        return kept.map((id) => playable.find((r) => r.id === id)).filter(Boolean);
+      }
+    }
+  } catch {
+    /* ignore */
+  }
+
+  const picked = shuffleInPlace([...playable]).slice(0, limit);
+  try {
+    sessionStorage.setItem(TUNER_FEATURED_STORAGE_KEY, JSON.stringify({
+      poolKey,
+      ids: picked.map((r) => r.id),
+    }));
+  } catch {
+    /* ignore */
+  }
+  return picked;
+}
+
 function buildTunerStations() {
   if (!TUNER_STATIONS) return;
   const playable = radios.filter(r => getPlayableStream(r));
@@ -364,10 +404,11 @@ function buildTunerStations() {
     return;
   }
 
+  const featured = pickFeaturedStations(playable);
   TUNER_STATIONS.innerHTML = `
     <span class="tuner-stations-label">Sur RADAR</span>
     <div class="tuner-stations-list" role="group" aria-label="Écoute directe">
-      ${playable.map(r => `
+      ${featured.map(r => `
         <button type="button" class="tuner-station-btn" data-id="${escapeHtml(r.id)}"
           title="${escapeHtml(r.fullName || r.name)} · ${escapeHtml(r.institution)}">
           <span class="tuner-station-call">${escapeHtml(r.name.replace(/\s+FM.*/i, '').trim())}</span>
@@ -420,7 +461,7 @@ function buildTunerOptions() {
       const opt = document.createElement('option');
       opt.value = r.id;
       const suffix = getPlayableStream(r) ? '' : ' — écoute sur site externe ↗';
-      opt.textContent = `${r.name} · ${r.city}${suffix}`;
+      opt.textContent = `${r.name} · ${r.institution}${suffix}`;
       og.appendChild(opt);
     });
     TUNER_SELECT.appendChild(og);
