@@ -34,7 +34,7 @@ const KNOWN_STREAMS = {
   ckut: 'https://ckut.out.airtime.pro/ckut_a',
   // HTTPS mount — playable directly on the HTTPS site (the :8000 HTTP one is blocked as mixed content)
   cism: 'https://stream03.ustream.ca/cism128.mp3',
-  // Add more here when we find reliable direct ones
+  cjlo: 'https://cjlo.radioca.st/stream',
 };
 
 // Per-station hints for faster/better discovery
@@ -54,9 +54,9 @@ const STATION_HINTS = {
   ],
   cfak: ['https://cfak.ca/stream'],
   cjlo: [
+    'https://cjlo.radioca.st/stream',
     'http://rosetta.shoutca.st:8883/stream',
     'http://www.cjlo.com/player.html',
-    'http://www.cjlo.com/cjlo.m3u',
   ],
   choq: ['https://choq.ca/stream'],
 };
