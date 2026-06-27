@@ -632,7 +632,7 @@ function createArticle(item, role = 'standard') {
   const time = d ? formatStamp(d) : '';
   const fresh = d ? (Date.now() - d) < 120 * 60000 : false;
   const { author, body } = splitByline(item);
-  const { text: brief, truncated: briefTruncated } = prepareBrief(body, role, item.lang);
+  const { text: brief, truncated: briefTruncated } = resolveBrief(item, body, role);
   const readMore = item.lang === 'en' ? 'Read more →' : 'Lire la suite →';
   const byLabel = item.lang === 'en' ? 'By' : 'Par';
   const canUseImage = ['lead', 'feature'].includes(role);
@@ -863,10 +863,18 @@ function endsCompleteSentence(text = '') {
   return /[.!?»"')\]]\s*$/.test(String(text).trim());
 }
 
+function resolveBrief(item, body, role) {
+  for (const raw of [body, String(item.excerpt || '')]) {
+    const result = prepareBrief(raw, role);
+    if (result.text) return result;
+  }
+  return prepareBrief(cleanTitle(item.title), role);
+}
+
 function prepareBrief(raw = '', role = 'standard') {
   const limit = BRIEF_LIMITS[role] ?? 170;
   let s = sanitizeBriefBody(raw);
-  if (!s || limit === 0 || s.length < 12) return { text: '', truncated: false };
+  if (!s || limit === 0 || s.length < 8) return { text: '', truncated: false };
 
   if (s.length <= limit) {
     const truncated = !endsCompleteSentence(s) && s.length >= 80;
