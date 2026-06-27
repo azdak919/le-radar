@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-27T22:32:44.448Z",
+  "updatedAt": "2026-06-27T22:40:32.075Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,7 +8,7 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-06-27T22:32:44.448Z",
+      "checkedAt": "2026-06-27T22:40:32.075Z",
       "grid": [
         {
           "day": 0,
@@ -235,7 +235,7 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-06-27T22:32:44.448Z",
+      "checkedAt": "2026-06-27T22:40:32.075Z",
       "grid": [
         {
           "day": 0,
@@ -1015,7 +1015,7 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-06-27T22:32:44.448Z",
+      "checkedAt": "2026-06-27T22:40:32.075Z",
       "grid": [
         {
           "day": 0,
@@ -1637,7 +1637,7 @@
       "sources": [
         "cjlo:http://www.cjlo.com/schedule"
       ],
-      "checkedAt": "2026-06-27T22:32:44.448Z",
+      "checkedAt": "2026-06-27T22:40:32.075Z",
       "grid": [
         {
           "day": 0,
@@ -2522,7 +2522,7 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-06-27T22:32:44.448Z",
+      "checkedAt": "2026-06-27T22:40:32.075Z",
       "grid": [
         {
           "day": 0,
@@ -2725,7 +2725,7 @@
         {
           "day": 6,
           "start": "00:00",
-          "end": "00:00",
+          "end": "07:00",
           "title": "Les nuits CFAK"
         }
       ]

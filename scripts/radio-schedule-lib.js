@@ -423,7 +423,12 @@ function parseCfakGrid(htmlText) {
     if (!cards.length) continue;
     cards.sort((a, b) => a.start.localeCompare(b.start));
     for (let j = 0; j < cards.length; j += 1) {
-      const end = j + 1 < cards.length ? cards[j + 1].start : cards[0].start;
+      let end = j + 1 < cards.length ? cards[j + 1].start : cards[0].start;
+      // Un seul créneau à minuit (ex. samedi « Les nuits CFAK ») : éviter 00:00→00:00
+      // qui couvrirait toute la journée ; la nuit CFAK se termine vers 07:00 comme les autres jours.
+      if (end === cards[j].start && /^00:0[01]$/.test(cards[j].start)) {
+        end = '07:00';
+      }
       grid.push({ day: heads[i].day, start: cards[j].start, end, title: cards[j].title });
     }
   }
