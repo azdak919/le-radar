@@ -444,9 +444,35 @@ function institutionBrandColor(institution = '') {
   return null;
 }
 
+/** Popularité reconnue des médias étudiants (1 = le plus visible). */
+const SOURCE_POPULARITY = {
+  'Quartier Libre': 1,
+  'Le Délit': 2,
+  'Montréal Campus': 3,
+  'The McGill Daily': 4,
+  "L'Exemplaire": 5,
+  'Le Collectif': 6,
+  'The Link': 7,
+  'The Tribune': 8,
+  'Zone Campus': 9,
+  'Exil': 10,
+  'La Pige': 11,
+};
+
+function sourcePopularityRank(name = '') {
+  return SOURCE_POPULARITY[name] ?? 100;
+}
+
+function sortSourcesByPopularity(sources) {
+  return [...sources].sort((a, b) => {
+    const diff = sourcePopularityRank(a) - sourcePopularityRank(b);
+    return diff !== 0 ? diff : a.localeCompare(b, 'fr');
+  });
+}
+
 function assignSourceColors() {
   const palette = brandColors.fallback_palette || ['#003DA5', '#6C2163', '#047857'];
-  const sources = [...new Set(news.map(n => n.source))].sort((a, b) => a.localeCompare(b, 'fr'));
+  const sources = sortSourcesByPopularity([...new Set(news.map(n => n.source))]);
   sourceColors = {};
 
   sources.forEach((src, i) => {
@@ -548,7 +574,7 @@ function sourceInfo(src) {
 }
 
 function renderNewsFilters() {
-  const sources = [...new Set(news.map(n => n.source))].sort((a, b) => a.localeCompare(b, 'fr'));
+  const sources = sortSourcesByPopularity([...new Set(news.map(n => n.source))]);
   [...NEWS_FILTERS.querySelectorAll('[data-source]:not([data-source="all"])')].forEach(b => b.remove());
 
   sources.forEach(src => {
