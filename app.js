@@ -1123,7 +1123,7 @@ function createArticle(item, role = 'standard', { hideSourceMeta = false } = {})
     ${canUseImage ? '<figure class="article-media"></figure>' : ''}
     <h3 class="article-title">${escapeHtml(cleanTitle(item.title))}</h3>
     ${author ? `<p class="article-byline">${byLabel} <strong>${escapeHtml(author)}</strong></p>` : ''}
-    ${brief ? `<p class="article-brief">${escapeHtml(brief)}${briefTruncated ? `<span class="article-more">${readMore}</span>` : ''}</p>` : ''}
+    ${brief ? `<p class="article-brief${briefTruncated ? ' is-truncated' : ''}"><span class="article-brief-text">${escapeHtml(brief)}</span>${briefTruncated ? `<span class="article-more">${readMore}</span>` : ''}</p>` : ''}
   `;
 
   if (canUseImage) attachArticleImage(a, item, role);
@@ -1611,7 +1611,15 @@ function endsCompleteSentence(text = '') {
 function resolveBrief(item, body, role) {
   for (const raw of [body, String(item.excerpt || '')]) {
     const result = prepareBrief(raw, role);
-    if (result.text) return result;
+    if (result.text) {
+      if (role === 'compact') {
+        const full = sanitizeBriefBody(raw);
+        if (full.length > 95 || full.length > result.text.length + 12) {
+          result.truncated = true;
+        }
+      }
+      return result;
+    }
   }
   return prepareBrief(cleanTitle(item.title), role);
 }
@@ -1621,9 +1629,11 @@ function prepareBrief(raw = '', role = 'standard') {
   let s = sanitizeBriefBody(raw);
   if (!s || limit === 0 || s.length < 8) return { text: '', truncated: false };
 
+  const minTruncMark = role === 'compact' ? 48 : 80;
+
   if (s.length <= limit) {
-    const truncated = !endsCompleteSentence(s) && s.length >= 80;
-    const text = truncated ? `${s.replace(/[,;:\s]+$/u, '')}...` : s;
+    const truncated = !endsCompleteSentence(s) && s.length >= minTruncMark;
+    const text = s.replace(/[,;:\s]+$/u, '').trimEnd() || s;
     return { text, truncated };
   }
 
@@ -1638,7 +1648,7 @@ function prepareBrief(raw = '', role = 'standard') {
   cut = cut.replace(/[,;:\s]+$/u, '').trimEnd();
   if (!cut) return { text: '', truncated: false };
 
-  return { text: `${cut}...`, truncated: true };
+  return { text: cut, truncated: true };
 }
 
 function escapeHtml(str = '') {
