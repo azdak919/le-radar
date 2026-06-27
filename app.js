@@ -1096,8 +1096,13 @@ function createArticle(item, role = 'standard') {
   a.style.setProperty('--c', color);
 
   const d = item.date ? new Date(item.date) : null;
+  const instMetaLabel = (role === 'compact' || role === 'standard')
+    ? shortInstitution(item.institution, item.type)
+    : articleInstitutionLabel(item.institution, item.type);
   const time = d
-    ? (role === 'compact' || role === 'standard' ? formatStampCompact(d) : formatStamp(d))
+    ? (role === 'compact' || role === 'standard'
+      ? formatStampCompact(d, item.lang === 'en' ? 'en' : 'fr')
+      : formatStamp(d))
     : '';
   const fresh = d ? (Date.now() - d) < 120 * 60000 : false;
   const { author: rawAuthor, body } = splitByline(item);
@@ -1139,7 +1144,7 @@ function createArticle(item, role = 'standard') {
   const metaLead = (item.source || item.institution)
     ? `<span class="article-meta__lead">
         ${item.source ? `<span class="article-source">${escapeHtml(item.source)}</span>` : ''}
-        ${item.institution ? `<span class="article-inst">${escapeHtml(articleInstitutionLabel(item.institution, item.type))}</span>` : ''}
+        ${item.institution ? `<span class="article-inst">${escapeHtml(instMetaLabel)}</span>` : ''}
       </span>`
     : '';
   const metaHtml = (metaLead || timeHtml)
@@ -1722,29 +1727,41 @@ function formatStamp(d) {
   return `${dateStr}, ${time}`;
 }
 
+const MONTH_SHORT = {
+  fr: ['jan.', 'fév.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'],
+  en: ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'],
+};
+
 /** Date courte pour cartes compactes (En bref, Suite du fil). */
-function formatStampCompact(d) {
+function formatStampCompact(d, lang = 'fr') {
   if (isNaN(d)) return '';
   const now = new Date();
   const diffMin = Math.round((now - d) / 60000);
+  const l = lang === 'en' ? 'en' : 'fr';
 
-  if (diffMin < 1) return "à l'instant";
-  if (diffMin < 60) return `il y a ${diffMin} min`;
+  if (diffMin < 1) return l === 'en' ? 'just now' : "à l'instant";
+  if (diffMin < 60) return l === 'en' ? `${diffMin} min ago` : `il y a ${diffMin} min`;
 
   const sameDay = d.toDateString() === now.toDateString();
   const yest = new Date(now); yest.setDate(now.getDate() - 1);
   const isYesterday = d.toDateString() === yest.toDateString();
   const clock = formatTime(d);
 
-  if (sameDay) return clock ? `aujourd'hui, ${clock}` : "aujourd'hui";
-  if (isYesterday) return clock ? `hier, ${clock}` : 'hier';
+  if (sameDay) {
+    if (l === 'en') return clock ? `today, ${clock}` : 'today';
+    return clock ? `aujourd'hui, ${clock}` : "aujourd'hui";
+  }
+  if (isYesterday) {
+    if (l === 'en') return clock ? `yesterday, ${clock}` : 'yesterday';
+    return clock ? `hier, ${clock}` : 'hier';
+  }
 
+  const months = MONTH_SHORT[l] || MONTH_SHORT.fr;
+  const day = d.getDate();
+  const month = months[d.getMonth()] || '';
   const sameYear = d.getFullYear() === now.getFullYear();
-  return d.toLocaleDateString('fr-CA', {
-    day: 'numeric',
-    month: 'short',
-    ...(sameYear ? {} : { year: 'numeric' }),
-  });
+  if (sameYear) return `${day} ${month}`.trim();
+  return `${day} ${month} ${d.getFullYear()}`.trim();
 }
 
 // ─── Title / brief cleanup ───────────────────────────────────────────────────────
