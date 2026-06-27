@@ -21,6 +21,19 @@ function stripHtml(text = '') {
   return String(text).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
+function decodeBasicEntities(str = '') {
+  return String(str)
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(parseInt(n, 10)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCharCode(parseInt(n, 16)))
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&rsquo;/g, '’')
+    .replace(/&ndash;/g, '–')
+    .replace(/&mdash;/g, '—');
+}
+
 function editorialFallback(lang = 'fr') {
   return lang === 'en' ? 'The editorial team' : 'La rédaction';
 }
@@ -53,12 +66,26 @@ function isJunkAuthorName(name = '') {
   if (/https?:\/\//i.test(a) || /\.(?:php|js|css)\b/i.test(a)) return true;
   if (/\b(?:wp-content|wp-admin|wp-block|prefetch|selector_matches|splide)\b/i.test(a)) return true;
   if (/\b(?:Recent Posts|Skip to content|Written by|Read more|Lire la suite)\b/i.test(a)) return true;
+  if (/\d+\s*,\s*\d+\s*,\s*[\d.]+\s*/.test(a)) return true;
+  if (/\b(?:rgba?|box-shadow|max-width|font-family|\.td-|\.wp-|\.molongui|Open Sans)\b/i.test(a)) return true;
+  if (/[`'"]\s*,\s*[`'"]/.test(a)) return true;
   if (a.split(/\s+/).length > 6) return true;
   return false;
 }
 
+/** « Nathan Brisbois et Elora Veyron-Churlet » → noms joints. */
+function expandAuthorName(name = '', lang = 'fr') {
+  const raw = decodeBasicEntities(stripHtml(name)).replace(/\s+/g, ' ').trim();
+  if (!raw) return '';
+  if (/\s+et\s+|\s+and\s+/i.test(raw)) {
+    const parts = raw.split(/\s+et\s+|\s+and\s+/i).map((p) => normalizeAuthor(p)).filter(Boolean);
+    if (parts.length > 1) return joinAuthorNames(parts, lang);
+  }
+  return normalizeAuthor(raw);
+}
+
 function normalizeAuthor(name = '') {
-  let a = stripHtml(name);
+  let a = decodeBasicEntities(stripHtml(name));
   const paren = a.match(/\(([^)]+)\)/);
   if (paren) a = paren[1];
   a = a.replace(/^(?:Par|By)\s+/i, '').replace(/\s+/g, ' ').trim();
@@ -95,19 +122,30 @@ function authorsFromAuthorNameBlock(html = '') {
   for (const m of html.matchAll(
     /class=["'][^"']*wp-block-post-author-name__link[^"']*["'][^>]*>([^<]+)<\/a>/gi,
   )) {
-    const n = normalizeAuthor(m[1]);
+    const n = expandAuthorName(m[1]);
     if (n) names.push(n);
   }
-  if (names.length) return [...new Set(names)];
+  return [...new Set(names)];
+}
 
-  const block = html.match(
-    /class=["'][^"']*author-name[^"']*["'][^>]*>([\s\S]{0,400}?)<\/(?:div|span|a|p)>/i,
-  );
-  if (!block) return [];
-  names.push(...authorsFromRelLinks(block[1]));
-  const link = block[1].match(/<a[^>]*>([^<]+)<\/a>/i);
-  if (link) {
-    const n = normalizeAuthor(link[1]);
+/** TagDiv (L'Exemplaire, etc.) — byline « Par » + lien auteur. */
+function authorsFromTdPostAuthor(html = '') {
+  const names = [];
+  for (const m of html.matchAll(
+    /class=["'][^"']*\btd-post-author-name\b[^"']*["'][^>]*>[\s\S]*?<a[^>]*>([^<]+)<\/a>/gi,
+  )) {
+    const n = expandAuthorName(m[1]);
+    if (n) names.push(n);
+  }
+  return [...new Set(names)];
+}
+
+function authorsFromSchemaPerson(html = '') {
+  const names = [];
+  for (const m of html.matchAll(
+    /itemprop=["']author["'][\s\S]*?itemprop=["']name["'][^>]*content=["']([^"']+)/gi,
+  )) {
+    const n = expandAuthorName(m[1]);
     if (n) names.push(n);
   }
   return [...new Set(names)];
@@ -232,6 +270,16 @@ function authorFromArticleHtml(html = '', lang = 'fr') {
     }
   }
 
+  const tdAuthors = authorsFromTdPostAuthor(html);
+  if (tdAuthors.length) {
+    candidates.push({ author: joinAuthorNames(tdAuthors, l), trust: 101 });
+  }
+
+  const schemaAuthors = authorsFromSchemaPerson(html);
+  if (schemaAuthors.length) {
+    candidates.push({ author: joinAuthorNames(schemaAuthors, l), trust: 100 });
+  }
+
   const bylineAuthors = authorsFromAuthorNameBlock(html);
   if (bylineAuthors.length) {
     candidates.push({ author: joinAuthorNames(bylineAuthors, l), trust: 100 });
@@ -255,7 +303,12 @@ function authorFromArticleHtml(html = '', lang = 'fr') {
   const parSpan = html.match(
     /(?:^|(?<=>))\s*(?:Par|By)\s+(?!<\/)[^<]*<[^>]+>([\s\S]*?)<\/[^>]+>\s*<\/span>/i,
   );
-  if (parSpan) candidates.push({ author: stripHtml(parSpan[1]), trust: 85 });
+  if (parSpan) {
+    const candidate = stripHtml(parSpan[1]);
+    if (candidate.length <= 80 && !isJunkAuthorName(candidate)) {
+      candidates.push({ author: candidate, trust: 85 });
+    }
+  }
 
   const tribune = html.match(/tribune_author=([^"'&]+)/i);
   if (tribune) candidates.push({ author: decodeURIComponent(tribune[1].replace(/\+/g, ' ')), trust: 90 });
@@ -274,7 +327,7 @@ function authorFromArticleHtml(html = '', lang = 'fr') {
   for (const { author } of candidates.sort((a, b) => b.trust - a.trust)) {
     const name = author.includes(',')
       ? joinAuthorNames(author.split(/,\s*/), l)
-      : normalizeAuthor(author);
+      : expandAuthorName(author, l);
     if (name && !isEditorialPlaceholder(name, l)) return name;
   }
   return '';
@@ -503,6 +556,7 @@ module.exports = {
   canonicalizeEditorialAuthor,
   isEditorialPlaceholder,
   joinAuthorNames,
+  expandAuthorName,
   normalizeAuthor,
   trimMangledAuthor,
   extractBylineFromText,

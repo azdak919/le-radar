@@ -24,6 +24,7 @@ const {
   needsPageAuthorVerification,
   normalizeArticleUrl,
   normalizeAuthor,
+  expandAuthorName,
   extractBylineFromText,
 } = require('./author-lib');
 const { mergePriorEnrichment } = require('./article-photo-credit-lib');
@@ -246,7 +247,7 @@ function parseAuthor(block, contentHtml = '', excerpt = '') {
 
   let a = tag(block, 'dc:creator') || tag(block, 'creator') || tag(block, 'author');
   if (a && /<name[\s>]/i.test(a)) a = tag(a, 'name');
-  a = normalizeAuthor(a);
+  a = expandAuthorName(a);
   return a || '';
 }
 
