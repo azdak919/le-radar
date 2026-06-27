@@ -37,11 +37,21 @@ function clearLegacyFallback(item) {
   delete item.fallbackImage;
 }
 
-async function photoIsLeadReady(item) {
-  const url = item.image || item.stockImage;
+async function probeLeadReady(url) {
   if (!url || !isCandidateImageUrl(url) || isWeakImageUrl(url)) return false;
   const dims = await probeRemoteImageSize(url);
   return !!(dims && meetsLeadDisplaySize(dims.width, dims.height));
+}
+
+async function markSourceLeadQuality(item) {
+  const sourceReady = await probeLeadReady(item.image);
+  item.leadImageReady = sourceReady;
+  return sourceReady;
+}
+
+async function photoIsLeadReady(item) {
+  if (await probeLeadReady(item.stockImage)) return true;
+  return markSourceLeadQuality(item);
 }
 
 async function applyStockPhoto(item) {
@@ -53,6 +63,8 @@ async function applyStockPhoto(item) {
     item.imageLicense = stock.imageLicense;
     item.imageProvider = stock.imageProvider;
     item.imageSourceUrl = stock.imageSourceUrl;
+    const sourceReady = await markSourceLeadQuality(item);
+    if (!sourceReady) item.leadImageReady = false;
     clearLegacyFallback(item);
   }
   return true;
@@ -91,7 +103,10 @@ async function main() {
   const stockQueue = [];
   for (const item of items) {
     if (await photoIsLeadReady(item)) {
-      if (doUpdate) clearLegacyFallback(item);
+      if (doUpdate) {
+        await markSourceLeadQuality(item);
+        clearLegacyFallback(item);
+      }
       continue;
     }
     if (!item.image || !isCandidateImageUrl(item.image)) {

@@ -1,16 +1,52 @@
 {
-  "updated": "2026-06-27T06:33:33.585Z",
+  "updated": "2026-06-27T06:50:36.994Z",
   "total": 143,
   "withPhoto": 142,
-  "withStock": 20,
+  "withStock": 38,
   "fullyCovered": 143,
-  "leadReadyPhotos": 118,
-  "pageScraped": 24,
-  "photosRecovered": 23,
-  "stockSearches": 26,
-  "stockFound": 20,
+  "leadReadyPhotos": 91,
+  "pageScraped": 0,
+  "photosRecovered": 0,
+  "stockSearches": 28,
+  "stockFound": 24,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Résumé du G7 à Évian",
+      "link": "https://lecollectif.ca/a-la-une/resume-du-g7-a-evian/",
+      "reason": "stock-too-small",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/06/SOCIETE_Resume-du-G7-a-Evian_Getty-Images.jpg"
+    },
+    {
+      "title": "Virage à droite en Colombie",
+      "link": "https://lecollectif.ca/a-la-une/virage-a-droite-en-colombie/",
+      "reason": "stock-too-small",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/06/SOCIETE_Virage-a-droite-en-Colombie_Getty-Images.jpg"
+    },
+    {
+      "title": "Démission de Keir Starmer au Royaume-Uni",
+      "link": "https://lecollectif.ca/a-la-une/demission-de-keir-starmer-au-royaume-uni/",
+      "reason": "stock-too-small",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/06/SOCIETE_Demission-de-Keir-Starmer-au-Royaume-Uni_Getty-Images.jpg"
+    },
+    {
+      "title": "Interdiction des boissons énergisantes pour les moins de 16 ans",
+      "link": "https://lecollectif.ca/a-la-une/interdiction-des-boissons-energisantes-pour-les-moins-de-16-ans/",
+      "reason": "stock-too-small",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/06/SOCIETE_BoissonsEnergisantes_SourceAssociationPourLaSantePubliqueDuQuebec.jpg"
+    },
+    {
+      "title": "La surconsommation textile : un phénomène aux lourdes conséquences",
+      "link": "https://lecollectif.ca/a-la-une/la-surconsommation-textile-un-phenomene-aux-lourdes-consequences/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/06/SOCIETE_La-surproduction_-le-veritable-defi-de-l_industrie-de-la-mode-SourceFashionNetwork.png"
+    },
+    {
+      "title": "Des policiers du SPVM visés par une enquête",
+      "link": "https://lecollectif.ca/a-la-une/des-policiers-du-spvm-vises-par-une-enquete/",
+      "reason": "stock-too-small",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/06/SOCIETE_16-policiers-du-SPVM-vises-par-une-enquete_Getty-Images.jpg"
+    },
     {
       "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
       "link": "https://lapige.atmjonquiere.com/2026/06/22/se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille/?utm_source=rss&utm_medium=rss&utm_campaign=se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille",
@@ -18,70 +54,34 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/06/Bruno-Cormier-retraite-benevole.png"
     },
     {
-      "title": "L’ERD sauvée de la dissolution par quatre membres",
-      "link": "https://lapige.atmjonquiere.com/2026/05/21/lerd-sauvee-de-la-dissolution-par-quatre-membres/?utm_source=rss&utm_medium=rss&utm_campaign=lerd-sauvee-de-la-dissolution-par-quatre-membres",
+      "title": "Road to the 2026 FIFA World Cup",
+      "link": "https://thelinknewspaper.ca/article/16333",
       "reason": "stock-too-small",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2020/10/Andre-e1779394167998-216x300.png"
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/CAMNT06052026-40_690_460_90.jpg"
     },
     {
-      "title": "Jeunes auteurs, à vos crayons : le « pouvoir des mots » pour rejoindre les étudiants",
-      "link": "https://lapige.atmjonquiere.com/2026/05/21/jeunes-auteurs-a-vos-crayons-le-pouvoir-des-mots-pour-rejoindre-les-etudiants/?utm_source=rss&utm_medium=rss&utm_campaign=jeunes-auteurs-a-vos-crayons-le-pouvoir-des-mots-pour-rejoindre-les-etudiants",
+      "title": "Artemis II takes over Place-des-Arts",
+      "link": "https://thelinknewspaper.ca/article/16330",
       "reason": "stock-too-small",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/Credit-photo-Raphaelle-Guillois-200x300.jpg"
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12.news.artemis.sam.online.daniel.1U5A7650_690_460_90.jpg"
     },
     {
-      "title": "Assistance technique en pharmacie : de premières portes ouvertes à Alma",
-      "link": "https://lapige.atmjonquiere.com/2026/05/20/assistance-technique-en-pharmacie-de-premieres-portes-ouvertes-a-alma/?utm_source=rss&utm_medium=rss&utm_campaign=assistance-technique-en-pharmacie-de-premieres-portes-ouvertes-a-alma",
+      "title": "CSU rejects motion for Israel and Jewish solidarity fund ad hoc committee",
+      "link": "https://thelinknewspaper.ca/article/16329",
       "reason": "stock-too-small",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/Image-2-1-300x225.jpg"
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/00.graphics.CSU.Naya_Hachwa_690_517_90.jpeg"
     },
     {
-      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
-      "link": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
-      "reason": "stock-too-small",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-2-768x1024.jpeg"
+      "title": "Un hommage aux cyclistes décédés sur les routes",
+      "link": "https://lapige.atmjonquiere.com/2026/05/21/les-cyclistes-sont-honores-au-lac-saint-jean/?utm_source=rss&utm_medium=rss&utm_campaign=les-cyclistes-sont-honores-au-lac-saint-jean",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/shared-image-1-750x375.jpg"
     },
     {
-      "title": "Beach party à l’UQTR : une fin de session sous les palmiers",
-      "link": "https://zonecampus.ca/beach-party-a-luqtr-une-fin-de-session-sous-les-palmiers/",
+      "title": "Un investissement pour les jeunes « bienvenu » au Centre Mamik",
+      "link": "https://lapige.atmjonquiere.com/2026/05/21/un-investissement-pour-les-jeunes-bienvenu-au-centre-mamik/?utm_source=rss&utm_medium=rss&utm_campaign=un-investissement-pour-les-jeunes-bienvenu-au-centre-mamik",
       "reason": "stock-too-small",
-      "image": "https://zonecampus.ca/wp-content/uploads/2026/04/7fcb657d-3a26-4582-b42d-8810b9b1dbbd.jpeg"
-    },
-    {
-      "title": "L’hypocrisie qui rampe à l’Assemblée nationale",
-      "link": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
-      "reason": "stock-too-small",
-      "image": "https://exilecvm.wordpress.com/wp-content/uploads/2020/10/121330814_121456603062023_8783413434532337259_n.png?w=200"
-    },
-    {
-      "title": "Dragon Jam: When music gives back",
-      "link": "https://thelinknewspaper.ca/article/16324",
-      "reason": "stock-too-small",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/IMG_0291-2_690_863_90.jpg"
-    },
-    {
-      "title": "The Sum of Sound",
-      "link": "https://thelinknewspaper.ca/article/16320",
-      "reason": "stock-too-small",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/ODIE_HARR-2_690_1034_90.jpg"
-    },
-    {
-      "title": "Inside Mile End Kicks",
-      "link": "https://thelinknewspaper.ca/article/16318",
-      "reason": "stock-too-small",
-      "image": "https://thelinknewspaper.ca/images/articles/_resized/Screenshot_2026-04-11_17.01.52.png"
-    },
-    {
-      "title": "In conversation with Aaron Maté",
-      "link": "https://thelinknewspaper.ca/article/16314",
-      "reason": "stock-too-small",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12.news.AaronMaté.Sean.online.CourtesyAaronMaté_690_1034_90.jpg"
-    },
-    {
-      "title": "Your health, your problem",
-      "link": "https://www.thetribune.ca/features/your-health-your-problem/?utm_source=rss&utm_medium=rss&utm_campaign=your-health-your-problem",
-      "reason": "stock-too-small",
-      "image": "https://www.thetribune.ca/wp-content/uploads/2026/04/bottle.png"
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/image-mamik-750x375.jpg"
     }
   ]
 }

@@ -206,9 +206,36 @@ function isWeakImageUrl(raw = '') {
   return /article-tile|size-article-tile/.test(path);
 }
 
+/** Seuils vedette : assez grands pour un hero ~800px sans pixelisation visible. */
+const LEAD_MIN_WIDTH = 720;
+const LEAD_MIN_HEIGHT = 405;
+const LEAD_MIN_PIXELS = 320000;
+const FEATURE_MIN_WIDTH = 640;
+const FEATURE_MIN_HEIGHT = 360;
+const FEATURE_MIN_PIXELS = 240000;
+
 function meetsLeadDisplaySize(width = 0, height = 0) {
   const ratio = width / Math.max(height, 1);
-  return width >= 480 && height >= 240 && ratio >= 0.95 && ratio <= 2.6;
+  const pixels = width * height;
+  return (
+    width >= LEAD_MIN_WIDTH
+    && height >= LEAD_MIN_HEIGHT
+    && pixels >= LEAD_MIN_PIXELS
+    && ratio >= 0.95
+    && ratio <= 2.6
+  );
+}
+
+function meetsFeatureDisplaySize(width = 0, height = 0) {
+  const ratio = width / Math.max(height, 1);
+  const pixels = width * height;
+  return (
+    width >= FEATURE_MIN_WIDTH
+    && height >= FEATURE_MIN_HEIGHT
+    && pixels >= FEATURE_MIN_PIXELS
+    && ratio >= 0.95
+    && ratio <= 2.6
+  );
 }
 
 function imageFromArticleHtml(html = '') {
@@ -342,6 +369,12 @@ function sleep(ms) {
 }
 
 module.exports = {
+  LEAD_MIN_WIDTH,
+  LEAD_MIN_HEIGHT,
+  LEAD_MIN_PIXELS,
+  FEATURE_MIN_WIDTH,
+  FEATURE_MIN_HEIGHT,
+  FEATURE_MIN_PIXELS,
   fetchText,
   fetchBinaryPrefix,
   probeRemoteImageSize,
@@ -351,6 +384,7 @@ module.exports = {
   isCandidateImageUrl,
   isWeakImageUrl,
   meetsLeadDisplaySize,
+  meetsFeatureDisplaySize,
   imageFromArticleHtml,
   needsImageEnrichment,
   scrapeArticleImage,

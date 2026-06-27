@@ -39,12 +39,12 @@ function normalizeText(text = '') {
 
 function tokenize(text = '') {
   return normalizeText(text)
-    .split(' ')
+    .split(/[\s-]+/)
     .filter((w) => w.length > 2 && !STOP_WORDS.has(w) && !FALSE_FRIENDS.has(w) && !/^\d+$/.test(w));
 }
 
-function extractProperNouns(title = '') {
-  const raw = String(title);
+function extractProperNouns(text = '') {
+  const raw = String(text);
   const acronyms = raw.match(/\b[A-Z0-9]{2,}\b|\bG\d+\b/g) || [];
   const words = raw.match(/\b[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+(?:['’-][A-ZÀ-ÖØ-Þa-zà-öø-ÿ]+)*/g) || [];
   return [...new Set([...acronyms, ...words]
@@ -52,26 +52,61 @@ function extractProperNouns(title = '') {
     .filter((w) => w.length > 1 && !STOP_WORDS.has(w) && !FALSE_FRIENDS.has(w)))];
 }
 
-function extractSearchQueries(item) {
-  const proper = extractProperNouns(item.title || '');
+/** Corps éditorial sans byline ni HTML — base pour les requêtes visuelles. */
+function extractArticleContent(item) {
+  let body = stripHtml(item.excerpt || '');
+  body = body.replace(
+    /^\s*(?:Par|By)\s+[\p{Lu}][\p{L}'’.\-]+(?:\s+[\p{Lu}][\p{L}'’.\-]+){0,3}\s+/iu,
+    '',
+  );
+  return body.replace(/\s+/g, ' ').trim();
+}
+
+function buildMatchTokens(item) {
+  const content = extractArticleContent(item);
   const titleTokens = tokenize(item.title || '');
-  const excerptTokens = tokenize(stripHtml(item.excerpt || '')).slice(0, 10);
-  const merged = [...new Set([...proper, ...titleTokens, ...excerptTokens])];
+  const contentTokens = tokenize(content);
+  const proper = extractProperNouns(`${item.title || ''} ${content}`);
+  const isUsefulToken = (t) => t.length >= 3 && !/^(?:19|20)\d{2}$/.test(t) && !/^\d+$/.test(t);
+  const important = [...new Set([
+    ...proper.filter(isUsefulToken),
+    ...contentTokens.filter((t) => t.length >= 4),
+    ...titleTokens.filter((t) => t.length >= 4),
+  ])].slice(0, 16);
+  return { important, title: titleTokens, content: contentTokens, proper, contentText: content };
+}
+
+function extractSearchQueries(item) {
+  const content = extractArticleContent(item);
+  const contentProper = extractProperNouns(content);
+  const titleProper = extractProperNouns(item.title || '');
+  const titleTokens = tokenize(item.title || '');
+  const contentTokens = tokenize(content).slice(0, 12);
+  const match = buildMatchTokens(item);
 
   const queries = [];
-  if (proper.length >= 2) queries.push(proper.join(' '));
-  if (proper.length >= 1 && titleTokens.length >= 1) {
-    queries.push(`${proper[0]} ${titleTokens[0]}`);
-  }
-  if (/g7/i.test(item.title || '') || proper.includes('g7')) {
-    queries.push('G7 summit leaders');
-    queries.push('G7 Evian');
-  }
-  if (merged.length >= 2) queries.push(merged.slice(0, 4).join(' '));
-  if (titleTokens.length >= 2) queries.push(titleTokens.slice(0, 3).join(' '));
-  if (proper.length >= 1) queries.push(proper[0]);
 
-  return [...new Set(queries.filter(Boolean))];
+  if (contentProper.length >= 2) queries.push(contentProper.slice(0, 5).join(' '));
+  if (contentTokens.length >= 3) queries.push(contentTokens.slice(0, 6).join(' '));
+  const firstSentence = content.split(/[.!?]/)[0]?.trim() || '';
+  if (firstSentence.length >= 24) {
+    queries.push(tokenize(firstSentence).slice(0, 7).join(' '));
+  }
+
+  if (/g7/i.test(content) || /g7/i.test(item.title || '') || match.proper.includes('g7')) {
+    queries.push('G7 summit 2026 Evian leaders');
+    queries.push('G7 family photo Evian France');
+  }
+
+  if (titleProper.length >= 2) queries.push(titleProper.join(' '));
+  if (titleProper.length >= 1 && contentTokens.length >= 1) {
+    queries.push(`${titleProper[0]} ${contentTokens.slice(0, 3).join(' ')}`);
+  }
+  if (match.important.length >= 2) queries.push(match.important.slice(0, 4).join(' '));
+  if (titleTokens.length >= 2) queries.push(titleTokens.slice(0, 3).join(' '));
+  if (titleProper.length >= 1) queries.push(titleProper[0]);
+
+  return [...new Set(queries.filter((q) => q && q.length > 2))];
 }
 
 function fetchJson(url, timeout = 12000) {
@@ -122,38 +157,54 @@ function formatAttribution(hit) {
   return `Photo : ${creator} / ${license} · ${via}`;
 }
 
-function scoreCandidate(hit, queryTokens) {
+function scoreCandidate(hit, matchTokens) {
   let score = 0;
   const w = hit.width || 0;
   const h = hit.height || 0;
-  if (meetsLeadDisplaySize(w, h)) score += 80;
-  else if (w >= 400 && h >= 250) score += 40;
-  else if (w >= 300 && h >= 200) score += 15;
+  if (meetsLeadDisplaySize(w, h)) score += 90;
+  else if (w >= 560 && h >= 315) score += 45;
+  else if (w >= 400 && h >= 250) score += 20;
   else return -1;
 
   const ratio = w / Math.max(h, 1);
-  if (ratio >= 1.1 && ratio <= 2.2) score += 20;
-  score += Math.min(w, 2000) / 40;
+  if (ratio >= 1.1 && ratio <= 2.2) score += 22;
+  score += Math.min(w, 2400) / 35;
 
   const hay = normalizeText(`${hit.title || ''} ${hit.tags || ''}`);
-  const important = queryTokens.filter((t) => !FALSE_FRIENDS.has(t) && t.length > 2);
-  let matched = 0;
-  for (const tok of important) {
+  const { important = [], content = [], title = [] } = matchTokens || {};
+  let contentMatched = 0;
+  let titleMatched = 0;
+
+  for (const tok of content) {
+    if (tok.length < 3 || FALSE_FRIENDS.has(tok)) continue;
     if (hay.includes(tok)) {
-      matched += 1;
-      score += 14;
+      contentMatched += 1;
+      score += tok.length >= 5 ? 22 : 14;
     }
   }
-  if (important.length >= 2 && matched === 0) return -1;
-  if (important.length >= 1 && matched === 0 && important.some((t) => t.length >= 4)) return -1;
+  for (const tok of important) {
+    if (FALSE_FRIENDS.has(tok) || tok.length < 3) continue;
+    if (hay.includes(tok)) score += 16;
+  }
+  for (const tok of title) {
+    if (tok.length < 4 || FALSE_FRIENDS.has(tok)) continue;
+    if (hay.includes(tok)) {
+      titleMatched += 1;
+      score += 8;
+    }
+  }
 
-  if (hit.provider === 'wikimedia') score += 5;
-  if (hit.license === 'cc0' || hit.license === 'pdm') score += 3;
+  const needContentMatch = content.filter((t) => t.length >= 4 && !FALSE_FRIENDS.has(t));
+  if (needContentMatch.length >= 2 && contentMatched === 0 && titleMatched === 0) return -1;
+  if (important.length >= 2 && contentMatched + titleMatched === 0) return -1;
+
+  if (hit.provider === 'wikimedia') score += 8;
+  if (hit.license === 'cc0' || hit.license === 'pdm') score += 4;
 
   return score;
 }
 
-async function searchOpenverse(query, queryTokens) {
+async function searchOpenverse(query, matchTokens) {
   const q = encodeURIComponent(query);
   const url = `https://api.openverse.org/v1/images/?q=${q}&page_size=12&license=cc0,by,by-sa,pdm&format=json`;
   const data = await fetchJson(url);
@@ -173,12 +224,12 @@ async function searchOpenverse(query, queryTokens) {
       foreignLandingUrl: r.foreign_landing_url || r.url,
       score: 0,
     }))
-    .map((r) => ({ ...r, score: scoreCandidate(r, queryTokens) }))
+    .map((r) => ({ ...r, score: scoreCandidate(r, matchTokens) }))
     .filter((r) => r.score > 0)
     .sort((a, b) => b.score - a.score);
 }
 
-async function searchWikimedia(query, queryTokens) {
+async function searchWikimedia(query, matchTokens) {
   const q = encodeURIComponent(query);
   const url = `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${q}&gsrnamespace=6&gsrlimit=10&prop=imageinfo&iiprop=url|size|extmetadata&iiurlwidth=1280&format=json`;
   const data = await fetchJson(url);
@@ -207,7 +258,7 @@ async function searchWikimedia(query, queryTokens) {
       foreignLandingUrl: info.descriptionurl || info.url,
       score: 0,
     };
-    hit.score = scoreCandidate(hit, queryTokens);
+    hit.score = scoreCandidate(hit, matchTokens);
     if (hit.score > 0) out.push(hit);
   }
   return out.sort((a, b) => b.score - a.score);
@@ -216,7 +267,10 @@ async function searchWikimedia(query, queryTokens) {
 async function validateCandidate(hit) {
   if (meetsLeadDisplaySize(hit.width, hit.height)) return hit;
   const dims = await probeRemoteImageSize(hit.url);
-  if (!dims) return null;
+  if (!dims) {
+    if (hit.width >= 720 && hit.height >= 405 && hit.width * hit.height >= 320000) return hit;
+    return null;
+  }
   const enriched = { ...hit, width: dims.width, height: dims.height };
   return meetsLeadDisplaySize(dims.width, dims.height) ? enriched : null;
 }
@@ -225,13 +279,13 @@ async function findStockPhoto(item) {
   const queries = extractSearchQueries(item);
   if (!queries.length) return null;
 
-  const queryTokens = tokenize(queries[0]);
+  const matchTokens = buildMatchTokens(item);
   const seen = new Set();
 
   for (const query of queries) {
     const batches = await Promise.all([
-      searchOpenverse(query, queryTokens),
-      searchWikimedia(query, queryTokens),
+      searchOpenverse(query, matchTokens),
+      searchWikimedia(query, matchTokens),
     ]);
     const candidates = batches.flat().sort((a, b) => b.score - a.score);
 
@@ -255,6 +309,8 @@ async function findStockPhoto(item) {
 }
 
 module.exports = {
+  extractArticleContent,
+  buildMatchTokens,
   extractSearchQueries,
   formatAttribution,
   findStockPhoto,
