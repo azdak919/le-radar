@@ -352,8 +352,20 @@ function sortRadios(list) {
   return [...list].sort((a, b) => {
     const t = (order[a.type] ?? 9) - (order[b.type] ?? 9);
     if (t !== 0) return t;
+    const aNative = getPlayableStream(a) ? 0 : 1;
+    const bNative = getPlayableStream(b) ? 0 : 1;
+    if (aNative !== bNative) return aNative - bNative;
+    const popDiff = radioPopularityRank(a) - radioPopularityRank(b);
+    if (popDiff !== 0) return popDiff;
     return a.name.localeCompare(b.name, 'fr');
   });
+}
+
+/** Mode radio : enchaîner les flux natifs après un poste externe (prev/next ou menu). */
+function tunerShouldAutoplayNative(next) {
+  if (!next || !getPlayableStream(next)) return false;
+  if (isPlaying()) return true;
+  return !!(currentStation && isExternalListen(currentStation));
 }
 
 const TUNER_CAROUSEL_VISIBLE = 4;
@@ -524,7 +536,7 @@ function buildTunerOptions() {
   ];
 
   groups.forEach(({ type, label }) => {
-    const inGroup = radios.filter(r => r.type === type);
+    const inGroup = radios.filter((r) => r.type === type);
     if (!inGroup.length) return;
     const og = document.createElement('optgroup');
     og.label = label;
@@ -541,8 +553,11 @@ function buildTunerOptions() {
 
 function bindTuner() {
   TUNER_SELECT.addEventListener('change', () => {
-    const wasPlaying = isPlaying();
-    selectStation(TUNER_SELECT.value, { autoplay: wasPlaying, openExternal: true });
+    const next = radios.find((r) => r.id === TUNER_SELECT.value);
+    selectStation(TUNER_SELECT.value, {
+      autoplay: tunerShouldAutoplayNative(next),
+      openExternal: true,
+    });
   });
 
   TUNER_PREV.addEventListener('click', () => stepStation(-1));
@@ -568,7 +583,7 @@ function stepStation(dir) {
   idx = idx === -1 ? (dir > 0 ? 0 : radios.length - 1) : (idx + dir + radios.length) % radios.length;
   const next = radios[idx];
   TUNER_SELECT.value = next.id;
-  selectStation(next.id, { autoplay: isPlaying() });
+  selectStation(next.id, { autoplay: tunerShouldAutoplayNative(next) });
 }
 
 function selectStation(id, { autoplay = false, openExternal = false } = {}) {
