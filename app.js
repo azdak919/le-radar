@@ -484,6 +484,29 @@ function scheduleCurrentSlot(radio) {
   return null;
 }
 
+/** Prochaine émission planifiée (utile entre deux créneaux, ex. CHYZ l'après-midi). */
+function scheduleNextSlot(radio) {
+  const grid = radio?.id ? radioSchedules.stations?.[radio.id]?.grid : null;
+  if (!Array.isArray(grid) || !grid.length) return null;
+  const WEEK = 7 * 1440;
+  const { day, minutes } = scheduleZonedNow();
+  const nowAbs = day * 1440 + minutes;
+  let best = null;
+  let bestDelta = WEEK;
+  for (const slot of grid) {
+    const start = scheduleTimeToMin(slot.start);
+    if (start == null || !slot.title) continue;
+    const startAbs = slot.day * 1440 + start;
+    let delta = startAbs - nowAbs;
+    if (delta <= 0) delta += WEEK;
+    if (delta < bestDelta) {
+      bestDelta = delta;
+      best = slot;
+    }
+  }
+  return best;
+}
+
 function nowAirLines(radio) {
   const slot = scheduleCurrentSlot(radio);
   const scheduled = slot?.title?.trim() || '';
@@ -504,6 +527,14 @@ function nowAirLines(radio) {
     const host = String(nowPlayingEntry(radio)?.host || '').trim();
     const sub = host || slogan || `Vous écoutez ${radio.name}`;
     return { title: live, sub };
+  }
+  const next = scheduleNextSlot(radio);
+  if (next?.title) {
+    const timeRange = next.start && next.end ? `${next.start} – ${next.end}` : (next.start || '');
+    return {
+      title: next.title,
+      sub: timeRange ? `À venir · ${timeRange}` : 'À venir',
+    };
   }
   return { title: `Vous écoutez ${radio.name}`, sub: slogan };
 }
