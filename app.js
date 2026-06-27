@@ -651,7 +651,7 @@ function updateNewsLayout() {
 
 const HERO_SPOTLIGHT_MAX = 4; /* 1 à la une + 3 vedettes */
 const BRIEF_SIDEBAR_MAX = 4;
-const SPOTLIGHT_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
+const SPOTLIGHT_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
 
 function articleKey(item) {
   return item.link || `${item.source}::${item.date}::${item.title}`;
@@ -703,7 +703,7 @@ function pickSpotlightSlots(items, max, excludeInsts = new Set()) {
   return picks;
 }
 
-/** Vedette : articles ≤ 7 jours, mix d'institutions puis repli sur sources déjà vues. */
+/** Vedette : articles ≤ 1 mois, mix d'institutions puis repli sur sources déjà vues. */
 function pickHeroSpotlight(items) {
   const fresh = spotlightPool(items);
   if (!fresh.length) return [];
@@ -711,7 +711,7 @@ function pickHeroSpotlight(items) {
 }
 
 /**
- * En bref : articles ≤ 7 jours hors vedette, institutions nouvelles d'abord,
+ * En bref : articles ≤ 1 mois hors vedette, institutions nouvelles d'abord,
  * puis repli sur des sources déjà en vedette si nécessaire.
  */
 function pickBriefSidebar(pool, heroItems = []) {
