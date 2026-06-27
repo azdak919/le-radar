@@ -12,8 +12,12 @@
   --muted: #80858c;
   --rule: #e7e7e3;
   --rule-strong: #14161a;
-  --accent: #c8102e;
-  --accent-dark: #9c0c24;
+  --accent: #6c2163;       /* pourpre de marque (bleu QC + rouge Canada) */
+  --accent-dark: #4f1749;
+  --live: #c8102e;         /* rouge « en direct » — sémantique diffusion live */
+  --live-dark: #9c0c24;
+  --radio: #003da5;        /* bleu officiel du Québec — volet radio / syntoniseur */
+  --radio-bright: #5d9be0; /* version éclaircie pour le bandeau sombre */
   --tuner-bg: #111317;
   --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
   --sans: "Inter", system-ui, -apple-system, sans-serif;
@@ -31,6 +35,8 @@
   --rule: #26282d;
   --rule-strong: #f1f2f4;
   --tuner-bg: #1a1c21;
+  --accent: #cf7ec1;       /* pourpre éclairci pour lisibilité sur fond sombre */
+  --accent-dark: #b85fa8;
   color-scheme: dark;
 }
 
@@ -176,7 +182,7 @@ a { color: inherit; }
 }
 .tuner.is-playing .tuner-onair { color: #ff7d6e; }
 .tuner.is-playing .tuner-onair::before {
-  background: var(--accent);
+  background: var(--live);
   animation: onairPulse 1.6s ease-out infinite;
 }
 @keyframes onairPulse {
@@ -225,6 +231,7 @@ a { color: inherit; }
   font-weight: 600;
   font-size: 14px;
   line-height: 1.15;
+  color: var(--radio-bright);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -249,7 +256,7 @@ a { color: inherit; }
   width: 42px; height: 42px;
   border-radius: 50%;
   border: none;
-  background: var(--accent);
+  background: var(--live);
   color: #fff;
   display: flex;
   align-items: center;
@@ -258,7 +265,7 @@ a { color: inherit; }
   transition: transform 120ms ease, background 120ms ease, box-shadow 120ms ease;
   box-shadow: 0 6px 18px -6px rgba(200,16,46,0.7);
 }
-.tuner-play:hover { background: var(--accent-dark); transform: scale(1.06); }
+.tuner-play:hover { background: var(--live-dark); transform: scale(1.06); }
 .tuner-play:active { transform: scale(0.93); }
 .tuner-play:disabled {
   background: rgba(255,255,255,0.12);
@@ -280,7 +287,7 @@ a { color: inherit; }
 @media (min-width: 600px) { .tuner-eq { display: flex; } }
 .tuner-eq span {
   width: 3px; height: 4px;
-  background: var(--accent);
+  background: var(--live);
   border-radius: 2px;
   opacity: 0.9;
 }
@@ -299,7 +306,7 @@ a { color: inherit; }
 }
 @media (min-width: 680px) { .tuner-vol { display: flex; } }
 .tuner-vol .ico-vol { width: 16px; height: 16px; }
-.tuner-volume { width: 72px; accent-color: var(--accent); cursor: pointer; }
+.tuner-volume { width: 72px; accent-color: var(--radio-bright); cursor: pointer; }
 
 .tuner-site {
   flex-shrink: 0;
@@ -438,10 +445,10 @@ a { color: inherit; }
   border-radius: 50%;
   background: var(--rule);
 }
-.article-time.is-fresh { color: var(--accent); font-weight: 600; }
+.article-time.is-fresh { color: var(--live); font-weight: 600; }
 .article-time.is-fresh::before {
   width: 6px; height: 6px;
-  background: var(--accent);
+  background: var(--live);
   animation: onairPulse 1.6s ease-out infinite;
 }
 

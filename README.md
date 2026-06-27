@@ -44,6 +44,17 @@ Ouvre l’application sur ton téléphone ou dans un navigateur desktop :
 
 ---
 
+## 🎨 Identité visuelle
+
+La charte de marque (nom, slogan, palette sémantique, typographie, logo) est
+documentée dans **[`docs/identite-visuelle.md`](docs/identite-visuelle.md)**.
+
+En bref — **pourpre `#6C2163`** = marque, **rouge `#C8102E`** = en direct,
+**bleu Québec `#003DA5`** = volet radio. La source de vérité des couleurs est dans
+les variables CSS de `style.css`.
+
+---
+
 ## 🚀 Démarrage rapide (local)
 
 ```bash
