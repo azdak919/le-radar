@@ -1093,7 +1093,8 @@ function createArticle(item, role = 'standard') {
   const d = item.date ? new Date(item.date) : null;
   const time = d ? formatStamp(d) : '';
   const fresh = d ? (Date.now() - d) < 120 * 60000 : false;
-  const { author, body } = splitByline(item);
+  const { author: rawAuthor, body } = splitByline(item);
+  const displayAuthor = resolveDisplayAuthor(item, rawAuthor);
   const leadBody = role === 'lead'
     ? (item.leadExcerpt || body || item.excerpt || '')
     : body;
@@ -1114,8 +1115,11 @@ function createArticle(item, role = 'standard') {
   if (role === 'compact' && brief) {
     ({ text: brief, truncated: briefTruncated } = ensureCompactBriefMinLines(brief, briefTruncated, item));
   }
-  if (author && brief) {
-    brief = stripLeadingByline(brief, author);
+  if (rawAuthor && brief) {
+    brief = stripLeadingByline(brief, rawAuthor);
+  }
+  if (item.link) {
+    briefTruncated = true;
   }
   const readMore = item.lang === 'en' ? 'Read more →' : 'Lire la suite →';
   const byLabel = item.lang === 'en' ? 'By' : 'Par';
@@ -1125,19 +1129,15 @@ function createArticle(item, role = 'standard') {
   const timeHtml = time
     ? `<time class="article-time${fresh ? ' is-fresh' : ''}" datetime="${escapeHtml(item.date)}">${time}</time>`
     : '';
-  const metaHtml = (item.source || item.institution || timeHtml)
-    ? `<div class="article-meta">
-        <span class="article-source">${escapeHtml(item.source)}</span>
-        ${item.institution ? `<span class="article-inst">${escapeHtml(articleInstitutionLabel(item.institution, item.type))}</span>` : ''}
-        ${timeHtml}
-      </div>`
+  const metaHtml = `<div class="article-meta">
+      <span class="article-source">${escapeHtml(item.source || '')}</span>
+      ${item.institution ? `<span class="article-inst">${escapeHtml(articleInstitutionLabel(item.institution, item.type))}</span>` : ''}
+      ${timeHtml}
+    </div>`;
+  const briefHtml = item.link || brief
+    ? `<p class="article-brief${briefTruncated ? ' is-truncated' : ''}"><span class="article-brief-text">${escapeHtml(brief || '')}</span>${briefTruncated ? `<span class="article-more" style="color: ${color}">${readMore}</span>` : ''}</p>`
     : '';
-  const briefHtml = brief
-    ? `<p class="article-brief${briefTruncated ? ' is-truncated' : ''}"><span class="article-brief-text">${escapeHtml(brief)}</span>${briefTruncated ? `<span class="article-more" style="color: ${color}">${readMore}</span>` : ''}</p>`
-    : '';
-  const bylineHtml = author
-    ? `<p class="article-byline">${byLabel} <strong>${escapeHtml(author)}</strong></p>`
-    : '';
+  const bylineHtml = `<p class="article-byline">${byLabel} <strong>${escapeHtml(displayAuthor)}</strong></p>`;
   const titleHtml = `<h3 class="article-title">${escapeHtml(cleanTitle(item.title))}</h3>`;
   const mediaHtml = canUseImage ? '<figure class="article-media"></figure>' : '';
   if (role === 'lead') {
@@ -1575,8 +1575,39 @@ function isUsableArticleImage(img, role) {
 
 const BYLINE_ARTICLE_STARTERS = /^(Le|La|Les|L'|L'|Un|Une|The|An|À|A)$/iu;
 
+function editorialFallback(lang = 'fr') {
+  return lang === 'en' ? 'The editorial team' : 'La rédaction';
+}
+
+function canonicalizeEditorialAuthor(name = '') {
+  const a = String(name).replace(/^(?:Par|By)\s+/i, '').replace(/\s+/g, ' ').trim();
+  if (/^(?:la\s+|l')\s*rédaction$/i.test(a) || /^redaction$/i.test(a)) return 'La rédaction';
+  if (/^editorial\s+(?:team|staff|board)$/i.test(a) || /^the\s+editorial\s+team$/i.test(a)) {
+    return 'The editorial team';
+  }
+  if (/^staff\s+writers?$/i.test(a)) return 'The editorial team';
+  return '';
+}
+
+function resolveDisplayAuthor(item, rawAuthor = '') {
+  return normalizeAuthor(rawAuthor || item.author || '')
+    || editorialFallback(item.lang === 'en' ? 'en' : 'fr');
+}
+
 function extractBylineFromExcerpt(excerpt = '') {
   const ex = String(excerpt).trim();
+  if (/^(?:Par|By)\s+(?:(?:La|L')\s*)?[Rr]édaction\b/i.test(ex)) {
+    return {
+      author: 'La rédaction',
+      body: ex.replace(/^(?:Par|By)\s+(?:(?:La|L')\s*)?[Rr]édaction\.?\s*/i, '').trim(),
+    };
+  }
+  if (/^(?:Par|By)\s+Editorial\s+(?:team|staff|board)\b/i.test(ex)) {
+    return {
+      author: 'The editorial team',
+      body: ex.replace(/^(?:Par|By)\s+Editorial\s+(?:team|staff|board)\.?\s*/i, '').trim(),
+    };
+  }
   if (!/^(?:Par|By)\s+/i.test(ex)) return { author: '', body: ex };
 
   const tokens = ex.replace(/^\s*(?:Par|By)\s+/i, '').split(/\s+/);
@@ -1637,6 +1668,8 @@ function splitByline(item) {
 function normalizeAuthor(name = '') {
   let a = String(name).replace(/\s+/g, ' ').trim();
   a = a.replace(/^(?:Par|By)\s+/i, '').trim();
+  const editorial = canonicalizeEditorialAuthor(a);
+  if (editorial) return editorial;
   if (!a || GENERIC_AUTHORS.test(a) || /@/.test(a)) return '';
   return a;
 }
