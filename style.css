@@ -358,19 +358,67 @@ a { color: inherit; }
 }
 .filter-btn {
   font-family: var(--sans);
-  font-size: 12.5px;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 999px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 6px 12px 5px;
+  border-radius: 12px;
   border: 1px solid var(--rule);
   background: var(--bg);
   color: var(--ink-soft);
   cursor: pointer;
-  white-space: nowrap;
-  transition: all 130ms ease;
+  transition: border-color 130ms ease, color 130ms ease, background 130ms ease;
+  max-width: 100%;
 }
-.filter-btn:hover { border-color: var(--ink); color: var(--ink); }
-.filter-btn.active { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.filter-btn__row {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+}
+.filter-btn__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c, var(--accent));
+  flex-shrink: 0;
+}
+.filter-btn__name {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--ink);
+  text-align: left;
+}
+.filter-btn__inst {
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--muted);
+  padding-left: 13px;
+  text-align: left;
+}
+.filter-btn__type {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+.filter-btn:hover { border-color: var(--ink); }
+.filter-btn:hover .filter-btn__name { color: var(--ink); }
+.filter-btn.active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg);
+}
+.filter-btn.active .filter-btn__name { color: var(--bg); }
+.filter-btn.active .filter-btn__inst { color: rgba(255, 255, 255, 0.72); }
+.filter-btn.active .filter-btn__dot {
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
 
 /* ── Articles (text only) ── */
 .news-list { margin-top: 4px; }
@@ -400,6 +448,22 @@ a { color: inherit; }
   .article:hover::before { opacity: 1; }
 }
 .article:hover .article-title { color: var(--c, var(--accent)); }
+
+.article-media {
+  display: none;
+  margin: 0 0 14px;
+  overflow: hidden;
+  background: var(--bg-soft);
+  border-radius: 8px;
+  aspect-ratio: 16 / 9;
+}
+.article.has-image .article-media { display: block; }
+.article-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
 .article-meta {
   display: flex;
@@ -512,6 +576,19 @@ a { color: inherit; }
   max-width: 64ch;
 }
 
+.article--feature .article-brief { -webkit-line-clamp: 3; }
+
+.article--compact {
+  padding: 18px 0;
+}
+.article--compact .article-title {
+  font-size: 1.28rem;
+  line-height: 1.18;
+}
+.article--compact .article-brief {
+  -webkit-line-clamp: 2;
+}
+
 /* Loading skeletons */
 .skeleton { pointer-events: none; }
 .skeleton .sk {
@@ -559,7 +636,186 @@ a { color: inherit; }
 
 @media (max-width: 600px) {
   :root { --pad: 18px; }
+  .article--feature.has-image .article-media { display: none; }
   .article::before { left: -10px; }
+}
+
+@media (min-width: 720px) {
+  .article--lead.has-image .article-title {
+    max-width: 18ch;
+  }
+}
+
+@media (min-width: 820px) and (max-width: 1099px) {
+  .news-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 28px;
+  }
+
+  .article--lead {
+    grid-column: 1 / -1;
+  }
+
+  .article--feature.has-image .article-media {
+    display: block;
+  }
+
+  .article--compact,
+  .article--standard {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1100px) {
+  :root {
+    --maxw: 1180px;
+    --pad: 32px;
+  }
+
+  .wire {
+    padding-bottom: 96px;
+  }
+
+  .wire-head {
+    margin-top: 34px;
+  }
+
+  .filters {
+    margin-bottom: 18px;
+  }
+
+  .news-list {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+    column-gap: 34px;
+    align-items: start;
+    border-top: 1px solid var(--rule);
+  }
+
+  .article {
+    min-width: 0;
+  }
+
+  .article:hover {
+    transform: none;
+  }
+
+  .article--lead {
+    grid-row: span 7;
+    padding-top: 24px;
+    padding-right: 34px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 0;
+  }
+
+  .article--lead::before {
+    top: 66px;
+  }
+
+  .article--lead.has-image .article-media {
+    margin-bottom: 18px;
+    aspect-ratio: 1.62 / 1;
+  }
+
+  .article--lead .article-title {
+    font-size: clamp(3rem, 4.6vw, 4.65rem);
+    line-height: 0.98;
+    max-width: 11.5ch;
+  }
+
+  .article--lead.article--text .article-title {
+    max-width: 13.5ch;
+  }
+
+  .article--lead .article-brief {
+    max-width: 58ch;
+    -webkit-line-clamp: 4;
+  }
+
+  .article--feature {
+    padding: 24px 0 26px;
+  }
+
+  .article--feature.has-image .article-media {
+    display: block;
+    aspect-ratio: 16 / 10;
+  }
+
+  .article--feature .article-title {
+    font-size: 1.62rem;
+    line-height: 1.12;
+  }
+
+  .article--feature .article-brief {
+    -webkit-line-clamp: 3;
+  }
+
+  .article--compact {
+    grid-column: 2;
+    padding: 16px 0;
+  }
+
+  .article--compact .article-inst,
+  .article--compact .article-byline,
+  .article--compact .article-brief {
+    display: none;
+  }
+
+  .article--compact .article-meta {
+    margin-bottom: 6px;
+  }
+
+  .article--compact .article-time {
+    margin-left: 0;
+  }
+
+  .article--compact .article-time::before {
+    display: none;
+  }
+
+  .article--compact .article-title {
+    font-family: var(--sans);
+    font-size: 0.98rem;
+    font-weight: 700;
+    line-height: 1.28;
+    letter-spacing: 0;
+    margin-bottom: 0;
+  }
+
+  .article--standard {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 0.34fr) minmax(0, 0.66fr);
+    column-gap: 28px;
+    padding: 24px 0;
+  }
+
+  .article--standard .article-meta {
+    align-content: start;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 7px;
+    margin: 0;
+  }
+
+  .article--standard .article-time {
+    margin-left: 0;
+  }
+
+  .article--standard .article-time::before {
+    display: none;
+  }
+
+  .article--standard .article-title,
+  .article--standard .article-byline,
+  .article--standard .article-brief {
+    grid-column: 2;
+  }
+
+  .article--standard .article-title {
+    font-size: 1.5rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

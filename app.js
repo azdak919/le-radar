@@ -400,15 +400,69 @@ function newsSkeleton(n) {
     </div>`).join('');
 }
 
+function shortInstitution(name = '', type = '') {
+  const SHORT = {
+    'Université de Montréal': 'UdeM',
+    'UQAM': 'UQAM',
+    'Université du Québec à Montréal (UQAM)': 'UQAM',
+    'Université McGill': 'McGill',
+    'McGill University': 'McGill',
+    'Concordia University': 'Concordia',
+    'Université Laval': 'ULaval',
+    'Université de Sherbrooke': 'UdeS',
+    'Université du Québec à Trois-Rivières': 'UQTR',
+    'Cégep du Vieux Montréal': 'CVM',
+    'Cégep de Jonquière (ATM – journalisme)': 'Cégep Jonquière',
+  };
+  if (SHORT[name]) return SHORT[name];
+
+  const paren = name.match(/\(([^)]+)\)/);
+  if (paren) {
+    const inner = paren[1].split(/[–-]/)[0].trim();
+    if (inner.length <= 14) return inner;
+  }
+  if (/^cégep/i.test(name)) return name.replace(/\s*\(.*$/, '').replace(/^Cégep (de |du )?/i, 'Cégep ');
+  if (/^université/i.test(name)) {
+    return name
+      .replace(/\s*\(.*$/, '')
+      .replace(/^Université du Québec à /i, 'UQ ')
+      .replace(/^Université de /i, '')
+      .replace(/^Université /i, '')
+      .trim();
+  }
+  return type === 'cegep' ? 'Cégep' : name.length > 24 ? name.slice(0, 22) + '…' : name;
+}
+
+function sourceInfo(src) {
+  const item = news.find(n => n.source === src);
+  return {
+    institution: item?.institution || '',
+    type: item?.type || '',
+    color: sourceColors[src] || 'var(--accent)',
+  };
+}
+
 function renderNewsFilters() {
   const sources = [...new Set(news.map(n => n.source))].sort((a, b) => a.localeCompare(b, 'fr'));
   [...NEWS_FILTERS.querySelectorAll('[data-source]:not([data-source="all"])')].forEach(b => b.remove());
 
   sources.forEach(src => {
     const btn = document.createElement('button');
+    const { institution, type, color } = sourceInfo(src);
+    const instShort = institution ? shortInstitution(institution, type) : '';
+    const typeLabel = type === 'cegep' ? 'Cégep' : type === 'universite' ? 'Univ.' : '';
+
     btn.className = 'filter-btn';
     btn.dataset.source = src;
-    btn.textContent = src;
+    btn.style.setProperty('--c', color);
+    btn.title = institution ? `${src} — ${institution}` : src;
+    btn.innerHTML = `
+      <span class="filter-btn__row">
+        <span class="filter-btn__dot" aria-hidden="true"></span>
+        <span class="filter-btn__name">${escapeHtml(src)}</span>
+      </span>
+      ${instShort ? `<span class="filter-btn__inst">${escapeHtml(instShort)}${typeLabel ? ` <span class="filter-btn__type">${typeLabel}</span>` : ''}</span>` : ''}
+    `;
     NEWS_FILTERS.appendChild(btn);
   });
 
