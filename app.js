@@ -1088,6 +1088,7 @@ function updateVolumeSliderVisual() {
   const gain = volumeMuted ? 0 : currentGain;
   const ratio = Math.min(Math.max(gain / MAX_GAIN, 0), 1);
   track.style.setProperty('--vol-ratio', String(ratio));
+  track.style.setProperty('--vol-x', `calc(var(--vol-thumb) / 2 + var(--vol-travel) * ${ratio})`);
   track.style.setProperty('--vol-base', `${Math.min(ratio / 0.5, 1) * 100}%`);
   track.style.setProperty('--vol-boost', `${Math.max((ratio - 0.5) / 0.5, 0) * 100}%`);
   track.classList.toggle('is-boost', gain > 1.001);
