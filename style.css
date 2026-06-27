@@ -1366,9 +1366,44 @@ a { color: inherit; }
 }
 
 .feed-card__desc {
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   font-size: 0.94rem;
   line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.feed-card__sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  margin: 0 0 14px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.feed-card__pair {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  padding: 4px 8px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--bg-soft);
+}
+
+.feed-card__pair strong {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.feed-card__more {
+  flex: 1 1 100%;
+  margin-top: 2px;
+  font-size: 12px;
   color: var(--ink-soft);
 }
 
@@ -1430,11 +1465,32 @@ a { color: inherit; }
 }
 
 .feeds-aside {
-  margin: 20px 0 0;
+  margin: 24px 0 0;
   max-width: 52rem;
-  font-size: 13px;
-  line-height: 1.5;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+}
+
+.feeds-aside__title {
+  margin: 0 0 10px;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
   color: var(--muted);
+}
+
+.feeds-aside__list {
+  margin: 0;
+  padding-left: 1.15rem;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.feeds-aside__list li + li {
+  margin-top: 6px;
 }
 
 /* ─────────────── EXTERNAL RADIO LISTEN ─────────────── */
