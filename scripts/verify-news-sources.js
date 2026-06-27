@@ -110,14 +110,32 @@ async function verifySource(src, ctx) {
   const social = ctx.socialNames.has(src.name);
   if (!social) warnings.push('absent de social-feed.json (optionnel — fetch-social.js --update)');
 
-  if (src.url) {
-    const feed = await fetchFeed(src.url);
-    if (!feed.ok) issues.push(`flux RSS injoignable (HTTP ${feed.status || 'erreur'})`);
-    else if (!isFeed(feed.body)) issues.push('URL ne renvoie pas un flux RSS/Atom valide');
-    else {
-      const n = countFeedItems(feed.body);
+  const feedCandidates = [src.url, src.urlFallback, ...(src.feedAlternates || [])].filter(Boolean);
+  if (feedCandidates.length) {
+    let feedHit = null;
+    let feedUsed = '';
+    for (const feedUrl of [...new Set(feedCandidates)]) {
+      const feed = await fetchFeed(feedUrl);
+      if (feed.ok && isFeed(feed.body)) {
+        feedHit = feed;
+        feedUsed = feedUrl;
+        break;
+      }
+    }
+    if (!feedHit) {
+      issues.push(`aucun flux RSS joignable (${feedCandidates.join(' → ')})`);
+      if (src.urlFallback && src.url !== src.urlFallback) {
+        warnings.push('site principal bloqué ? Vérifier urlFallback (contenu partiel possible)');
+      }
+    } else {
+      const n = countFeedItems(feedHit.body);
+      if (feedUsed !== src.url) {
+        warnings.push(`flux principal inaccessible — repli actif : ${feedUsed}`);
+      } else {
+        ok.push(`flux principal OK (${n} entrées)`);
+      }
       if (n === 0) warnings.push('flux RSS vide');
-      else ok.push(`flux RSS OK (${n} entrées)`);
+      else if (feedUsed === src.url) ok.push(`${n} entrées`);
     }
   }
 

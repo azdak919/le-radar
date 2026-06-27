@@ -118,7 +118,10 @@ node scripts/add-news-source.js \
 
 ### Cas particuliers
 
-- **Site derrière Cloudflare** : chercher un flux alternatif (Substack, WordPress.com, etc.)
+- **Site derrière Cloudflare** (ex. The Concordian) : mettre l’URL officielle dans `url`
+  (`https://theconcordian.com/feed/`) et un repli dans `urlFallback` si le bot reçoit HTTP 403.
+  Le repli Substack alimente le fil mais ce sont surtout newsletters/podcasts — pas l’équivalent
+  complet du site. Si Concordia whitelist le bot, le flux principal prendra le relais automatiquement.
 - **Auteur générique** : ajouter le nom du journal dans `GENERIC_AUTHORS` (`fetch-news.js`) si le RSS signe « The Concordian » au lieu d'un humain
 - **WordPress vedettes** : champ optionnel `wpFeaturedCategories` (ex. Le Délit → `slider`)
 

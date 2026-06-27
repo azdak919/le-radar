@@ -263,6 +263,10 @@ function firstImage(block) {
   return '';
 }
 
+function isFeedXml(xml = '') {
+  return /<rss[\s>]|<feed[\s>]/i.test(String(xml).slice(0, 600));
+}
+
 function parseFeed(xml) {
   const items = [];
   const blocks = xml.match(/<item[\s\S]*?<\/item>/gi) || xml.match(/<entry[\s\S]*?<\/entry>/gi) || [];
@@ -614,11 +618,22 @@ async function main() {
 
   for (const src of SOURCES) {
     process.stdout.write(`→ ${src.name} (${src.institution}) … `);
-    const xml = await fetchText(src.url);
+    const feedUrls = [src.url, src.urlFallback, ...(src.feedAlternates || [])].filter(Boolean);
+    let xml = '';
+    let feedUsed = '';
+    for (const feedUrl of [...new Set(feedUrls)]) {
+      xml = await fetchText(feedUrl);
+      if (xml && isFeedXml(xml)) {
+        feedUsed = feedUrl;
+        break;
+      }
+      xml = '';
+    }
     if (!xml) {
       console.log('✗ no response');
       continue;
     }
+    const altNote = feedUsed && feedUsed !== src.url ? ` [repli: ${feedUsed}]` : '';
     const rssItems = parseFeed(xml).slice(0, MAX_PER_SOURCE);
     let items = rssItems;
     const featuredItems = await fetchWpFeaturedPosts(src.url, src);
@@ -626,7 +641,7 @@ async function main() {
       items = mergeSourceItems(rssItems, featuredItems);
     }
     const featNote = featuredItems.length ? ` (+${featuredItems.length} vedettes WP)` : '';
-    console.log(`✓ ${items.length} articles${featNote}`);
+    console.log(`✓ ${items.length} articles${featNote}${altNote}`);
     for (const it of items) {
       all.push({
         source: src.name,
