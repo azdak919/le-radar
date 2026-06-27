@@ -1086,10 +1086,9 @@ function updateVolumeSliderVisual() {
   if (!track) return;
   const gain = volumeMuted ? 0 : currentGain;
   const ratio = Math.min(Math.max(gain / MAX_GAIN, 0), 1);
-  const basePct = Math.min(ratio / 0.5, 1) * 50;
-  const boostPct = Math.max((ratio - 0.5) / 0.5, 0) * 50;
-  track.style.setProperty('--vol-base', `${basePct}%`);
-  track.style.setProperty('--vol-boost', `${boostPct}%`);
+  track.style.setProperty('--vol-ratio', String(ratio));
+  track.style.setProperty('--vol-base', `${Math.min(ratio / 0.5, 1) * 100}%`);
+  track.style.setProperty('--vol-boost', `${Math.max((ratio - 0.5) / 0.5, 0) * 100}%`);
   track.classList.toggle('is-boost', gain > 1.001);
 }
 
