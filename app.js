@@ -649,21 +649,19 @@ function renderNews() {
     NEWS_LIST.removeAttribute('data-autumn-grace');
   }
 
-  const articleOpts = { hideSourceMeta: isSourceView };
-
   heroItems.forEach((item, i) => {
     const role = i === 0 ? 'lead' : 'feature';
-    const article = safeCreateArticle(item, role, articleOpts);
+    const article = safeCreateArticle(item, role);
     if (article) hero.appendChild(article);
   });
 
   briefItems.forEach((item) => {
-    const article = safeCreateArticle(item, 'compact', articleOpts);
+    const article = safeCreateArticle(item, 'compact');
     if (article) compacts.push(article);
   });
 
   tailItems.forEach((item) => {
-    const article = safeCreateArticle(item, 'standard', articleOpts);
+    const article = safeCreateArticle(item, 'standard');
     if (article) tail.push(article);
   });
 
@@ -1072,16 +1070,16 @@ function partitionSourceFeed(items, referenceDate = new Date()) {
   return { heroItems, briefItems, tailItems, contingencyBand, leadHasImage };
 }
 
-function safeCreateArticle(item, role = 'standard', opts = {}) {
+function safeCreateArticle(item, role = 'standard') {
   try {
-    return createArticle(item, role, opts);
+    return createArticle(item, role);
   } catch (err) {
     console.error('RADAR: échec rendu article', item?.source, item?.title, err);
     return null;
   }
 }
 
-function createArticle(item, role = 'standard', { hideSourceMeta = false } = {}) {
+function createArticle(item, role = 'standard') {
   const a = document.createElement('a');
   a.className = `article article--${role}`;
   a.href = item.link;
@@ -1120,9 +1118,15 @@ function createArticle(item, role = 'standard', { hideSourceMeta = false } = {})
   const canUseImage = ['lead', 'feature'].includes(role);
   const hasImageCandidate = canUseImage && (role === 'lead' || hasDisplayImage(item));
   if (!hasImageCandidate && canUseImage) a.classList.add('article--text');
-  const metaClass = hideSourceMeta ? 'article-meta article-meta--time-only' : 'article-meta';
   const timeHtml = time
     ? `<time class="article-time${fresh ? ' is-fresh' : ''}" datetime="${escapeHtml(item.date)}">${time}</time>`
+    : '';
+  const metaHtml = (item.source || item.institution || timeHtml)
+    ? `<div class="article-meta">
+        <span class="article-source">${escapeHtml(item.source)}</span>
+        ${item.institution ? `<span class="article-inst">${escapeHtml(articleInstitutionLabel(item.institution, item.type))}</span>` : ''}
+        ${timeHtml}
+      </div>`
     : '';
   const briefHtml = brief
     ? `<p class="article-brief${briefTruncated ? ' is-truncated' : ''}"><span class="article-brief-text">${escapeHtml(brief)}</span>${briefTruncated ? `<span class="article-more" style="color: ${color}">${readMore}</span>` : ''}</p>`
@@ -1133,16 +1137,9 @@ function createArticle(item, role = 'standard', { hideSourceMeta = false } = {})
   const titleHtml = `<h3 class="article-title">${escapeHtml(cleanTitle(item.title))}</h3>`;
   const mediaHtml = canUseImage ? '<figure class="article-media"></figure>' : '';
   if (role === 'lead') {
-    const leadMetaHtml = (item.source || item.institution || timeHtml)
-      ? `<div class="article-meta">
-          <span class="article-source">${escapeHtml(item.source)}</span>
-          ${item.institution ? `<span class="article-inst">${escapeHtml(articleInstitutionLabel(item.institution, item.type))}</span>` : ''}
-          ${timeHtml}
-        </div>`
-      : '';
     a.innerHTML = `
       <span class="article-eyebrow">À la une</span>
-      ${leadMetaHtml}
+      ${metaHtml}
       ${mediaHtml}
       ${titleHtml}
       ${bylineHtml}
@@ -1150,11 +1147,7 @@ function createArticle(item, role = 'standard', { hideSourceMeta = false } = {})
     `;
   } else {
     a.innerHTML = `
-      <div class="${metaClass}">
-        ${hideSourceMeta ? '' : `<span class="article-source">${escapeHtml(item.source)}</span>`}
-        ${!hideSourceMeta && item.institution ? `<span class="article-inst">${escapeHtml(articleInstitutionLabel(item.institution, item.type))}</span>` : ''}
-        ${timeHtml}
-      </div>
+      ${metaHtml}
       ${mediaHtml}
       ${titleHtml}
       ${bylineHtml}
