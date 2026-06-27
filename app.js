@@ -266,6 +266,8 @@ let radioNowPlaying = { stations: {}, updatedAt: null };
 let radioSchedules = { stations: {}, timezone: 'America/Toronto' };
 let nowPlayingPollTimer = null;
 let nowAirTick = null;
+let lastNowAir = { title: null, sub: null, empty: null };
+const PREFERS_REDUCED_MOTION = window.matchMedia?.('(prefers-reduced-motion: reduce)');
 let sourceColors = {};     // source name → accent colour
 let brandColors = { institutions: {}, fallback_palette: ['#003DA5', '#6C2163', '#047857'] };
 
@@ -477,25 +479,39 @@ function renderTunerNowAir() {
   const empty = !currentStation;
   if (empty) {
     // Rien de syntonisé : on garde le bandeau visible sur ordinateur (masqué
-    // sur mobile par le CSS) avec une courte invitation à syntoniser.
-    title = 'Syntonisez un poste';
+    // sur mobile par le CSS), sur deux lignes — invitation à syntoniser.
+    title = 'Syntoniser un poste';
     sub = 'Les radios étudiantes jouent en direct, 24/7';
   } else {
     ({ title, sub } = nowAirLines(currentStation));
   }
+
+  // Rien n'a changé : on n'écrase pas le DOM (sinon le défilement repart à zéro
+  // à chaque tic d'horloge).
+  if (lastNowAir.title === title && lastNowAir.sub === sub && lastNowAir.empty === empty) {
+    return;
+  }
+  lastNowAir = { title, sub, empty };
+
   TUNER_NOWAIR.classList.remove('hidden');
   TUNER_NOWAIR.classList.toggle('is-empty', empty);
-  if (TUNER_NOWAIR_TITLE) TUNER_NOWAIR_TITLE.textContent = title;
+  applyMarquee(TUNER_NOWAIR_TITLE, title);
   if (TUNER_NOWAIR_SUB) {
-    TUNER_NOWAIR_SUB.textContent = sub;
     TUNER_NOWAIR_SUB.classList.toggle('hidden', !sub);
+    if (sub) applyMarquee(TUNER_NOWAIR_SUB, sub);
+    else TUNER_NOWAIR_SUB.replaceChildren();
   }
 }
 
-/** Rafraîchit l'émission affichée au fil du temps (changement d'émission à l'heure). */
+/**
+ * Horloge interne : ré-évalue l'émission en cours chaque minute pour que
+ * l'affichage bascule tout seul au changement d'émission, sans recharger la
+ * page. Le garde-fou de renderTunerNowAir évite de relancer le défilement
+ * quand l'émission n'a pas changé.
+ */
 function startNowAirTick() {
   if (nowAirTick) return;
-  nowAirTick = setInterval(renderTunerNowAir, 60000);
+  nowAirTick = setInterval(renderTunerNowAir, 30000);
 }
 
 async function refreshNowPlayingCache() {
@@ -584,21 +600,29 @@ function stepStation(dir) {
 }
 
 /**
- * Affiche le sous-titre du syntoniseur (fréquence · institution au complet).
- * Si le texte dépasse, on l'anime en défilement doux droite → gauche.
+ * Affiche un texte sur une seule ligne et, s'il dépasse de son conteneur,
+ * l'anime en défilement doux droite → gauche (sinon ellipsis). Réutilisé par
+ * le sous-titre du syntoniseur et par le module « À l'antenne ».
  */
-function setTunerSubText(text) {
-  TUNER_SUB.classList.remove('is-marquee');
-  TUNER_SUB.style.removeProperty('--marquee-shift');
-  TUNER_SUB.style.removeProperty('--marquee-duration');
+function applyMarquee(el, text) {
+  if (!el) return;
+  el.classList.remove('is-marquee');
+  el.style.removeProperty('--marquee-shift');
+  el.style.removeProperty('--marquee-duration');
+
+  // Mouvement réduit : texte simple (ellipsis natif), pas d'animation.
+  if (PREFERS_REDUCED_MOTION?.matches) {
+    el.textContent = text;
+    return;
+  }
 
   const span = document.createElement('span');
   span.className = 'tuner-now-sub-text';
   span.textContent = text;
-  TUNER_SUB.replaceChildren(span);
+  el.replaceChildren(span);
 
   requestAnimationFrame(() => {
-    const available = TUNER_SUB.clientWidth;
+    const available = el.clientWidth;
     if (!available) return;
     const overflow = span.scrollWidth - available;
     if (overflow <= 4) return;
@@ -606,10 +630,15 @@ function setTunerSubText(text) {
     const distance = overflow + 12;
     // ~16 px/s : défilement lent et lisible
     const duration = Math.max(7, distance / 16);
-    TUNER_SUB.style.setProperty('--marquee-shift', `-${distance}px`);
-    TUNER_SUB.style.setProperty('--marquee-duration', `${duration.toFixed(1)}s`);
-    TUNER_SUB.classList.add('is-marquee');
+    el.style.setProperty('--marquee-shift', `-${distance}px`);
+    el.style.setProperty('--marquee-duration', `${duration.toFixed(1)}s`);
+    el.classList.add('is-marquee');
   });
+}
+
+/** Sous-titre du syntoniseur (fréquence · institution au complet). */
+function setTunerSubText(text) {
+  applyMarquee(TUNER_SUB, text);
 }
 
 function selectStation(id, { autoplay = false, openExternal = false } = {}) {
