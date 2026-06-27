@@ -740,8 +740,11 @@ a { color: inherit; }
   margin-left: 0.35em;
   font-weight: 600;
   font-size: 0.88em;
-  color: var(--c, var(--accent));
+  color: var(--c, var(--accent)); /* couleur du média (--c sur .article) */
   white-space: nowrap;
+}
+.article:hover .article-more {
+  color: var(--c, var(--accent));
 }
 @media (min-width: 600px) { .article-title { font-size: 1.6rem; } }
 
