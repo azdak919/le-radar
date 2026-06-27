@@ -121,7 +121,7 @@ node scripts/add-news-source.js \
 - **Couleurs** : `brand-colors.json` par **institution** (deux journaux Concordia → même palette)
 - **Vue source** : filtre par `name` (chaque journal a sa propre vue magazine)
 - **Bots CI** : `discover-news-sources`, `fetch-news`, `enrich-lead-excerpts`, `ensure-lead-images` lisent le registre
-- **Texte à la une** : `leadExcerpt` dans `news.json` = premier paragraphe substantiel scrapé depuis la page source (pas l'extrait RSS tronqué)
+- **Texte à la une** : `leadExcerpt` = paragraphe jugé adapté (score : longueur, phrases complètes, ton journalistique ; rejette chapôs, meta éditoriale, navigation). Pas l'extrait RSS tronqué.
 
 ### Cas particuliers
 
