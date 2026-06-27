@@ -564,14 +564,24 @@ a { color: inherit; }
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
 }
 
-/* Filtres sources — thème sombre : pastille teintée (pas de fond blanc) */
+/* Filtres sources — thème sombre : lisibilité des noms + pastille active teintée */
 [data-theme="dark"] .filter-btn {
   background: var(--bg-soft);
   border-color: var(--rule);
+  color: var(--ink-soft);
+}
+[data-theme="dark"] .filter-btn .filter-btn__name {
+  color: var(--ink);
+}
+[data-theme="dark"] .filter-btn .filter-btn__inst {
+  color: var(--ink-soft);
 }
 [data-theme="dark"] .filter-btn:hover {
   border-color: var(--ink-soft);
   background: #1c1e24;
+}
+[data-theme="dark"] .filter-btn:hover .filter-btn__name {
+  color: var(--ink);
 }
 [data-theme="dark"] .filter-btn.active {
   background: color-mix(in srgb, var(--c, var(--accent)) 20%, var(--bg-soft));
@@ -583,7 +593,7 @@ a { color: inherit; }
   color: var(--ink);
 }
 [data-theme="dark"] .filter-btn.active .filter-btn__inst {
-  color: var(--muted);
+  color: var(--ink-soft);
 }
 [data-theme="dark"] .filter-btn.active .filter-btn__dot {
   background: var(--c, var(--accent));
@@ -667,7 +677,8 @@ a { color: inherit; }
   align-items: center;
   gap: 6px;
   font-weight: 700;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--c, var(--accent));
 }
 .article-source::before {
