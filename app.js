@@ -1664,7 +1664,7 @@ function pickBriefSidebar(allItems, heroItems = [], referenceDate = new Date()) 
   }
 
   return {
-    items: state.picks.sort(compareBriefCandidates),
+    items: sortByDateDesc(state.picks),
     contingencyBand,
   };
 }
