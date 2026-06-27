@@ -102,18 +102,23 @@ async function init() {
     console.warn('Failed to load brand-colors.json', e);
   }
 
-  const [radiosData, sourcesData] = await Promise.allSettled([
-    fetch('./radios.json').then(r => r.json()),
-    fetch('./news-sources.json').then((r) => r.json()).catch(() => ({ active: [] })),
+  try {
+    const sourcesRegistry = await fetch('./news-sources.json')
+      .then((r) => r.json())
+      .catch(() => ({ active: [] }));
+    newsSourcesByName = Object.fromEntries(
+      (sourcesRegistry?.active || []).map((s) => [s.name, s]),
+    );
+  } catch {
+    newsSourcesByName = {};
+  }
+
+  const [radiosData] = await Promise.allSettled([
+    fetch('./radios.json').then((r) => r.json()),
     loadNews(),
   ]);
 
   radios = radiosData.status === 'fulfilled' ? sortRadios(radiosData.value) : [];
-  if (sourcesData.status === 'fulfilled') {
-    newsSourcesByName = Object.fromEntries(
-      (sourcesData.value?.active || []).map((s) => [s.name, s]),
-    );
-  }
   buildTunerOptions();
   buildTunerStations();
   restoreVolume();
