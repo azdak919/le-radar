@@ -451,24 +451,11 @@ function institutionBrandColor(institution = '') {
   return null;
 }
 
-/** Popularité reconnue des médias étudiants (1 = le plus visible). */
-const SOURCE_POPULARITY = {
-  'Quartier Libre': 1,
-  'Le Délit': 2,
-  'Montréal Campus': 3,
-  'The McGill Daily': 4,
-  "L'Exemplaire": 5,
-  'Le Collectif': 6,
-  'The Link': 7,
-  'The Concordian': 7,
-  'The Tribune': 8,
-  'Zone Campus': 9,
-  'Exil': 10,
-  'La Pige': 11,
-};
-
+/** Popularité des filtres UI : lue depuis news-sources.json (champ popularity). */
 function sourcePopularityRank(name = '') {
-  return SOURCE_POPULARITY[name] ?? 100;
+  const fromRegistry = newsSourcesByName[name]?.popularity;
+  if (typeof fromRegistry === 'number') return fromRegistry;
+  return 100;
 }
 
 function sortSourcesByPopularity(sources) {
