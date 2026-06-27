@@ -14,6 +14,7 @@ const {
   selectEnrichmentCandidates,
   excerptLooksIncomplete,
   isLeadExcerptCandidate,
+  RSS_ITEM_LIMIT,
 } = require('./lead-excerpt-lib');
 const { pruneToFreshWindow } = require('./source-retention-lib');
 
@@ -22,7 +23,7 @@ const NEWS_PATH = path.join(ROOT, 'news.json');
 const QC_PATH = path.join(ROOT, 'lead-excerpt-qc.json');
 
 const doUpdate = process.argv.includes('--update');
-const FETCH_LIMIT = 35;
+const FETCH_LIMIT = RSS_ITEM_LIMIT;
 
 function readJson(p, fallback) {
   try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return fallback; }

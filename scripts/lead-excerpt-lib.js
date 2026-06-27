@@ -16,6 +16,8 @@ const LEAD_EXCERPT_MIN = 80;
 const SUBSTANTIVE_MIN = 60;
 const LEAD_SUITABILITY_MIN = 52;
 const SCAN_PARAGRAPH_LIMIT = 10;
+/** Articles visibles dans feed.xml (scripts/generate-feed.js MAX_ITEMS). */
+const RSS_ITEM_LIMIT = 50;
 
 const TRUNC_MARKERS_RE = /(?:…|\.{3,}|\[…\]|\[\.\.\.\]|\[&hellip;\])/gi;
 
@@ -107,16 +109,37 @@ function fetchText(url, redirects = 3, timeout = FETCH_TIMEOUT) {
   });
 }
 
+function regionHasParagraphs(fragment = '') {
+  return (fragment.match(/<p[\s>]/gi) || []).length >= 1;
+}
+
 function articleBodyHtml(html = '') {
   const regions = [
     html.match(/<article[^>]*>([\s\S]*?)<\/article>/i),
-    html.match(/class=["'][^"']*entry-content[^"']*["'][^>]*>([\s\S]*?)<\/div>/i),
-    html.match(/class=["'][^"']*post-content[^"']*["'][^>]*>([\s\S]*?)<\/div>/i),
-    html.match(/class=["'][^"']*article-content[^"']*["'][^>]*>([\s\S]*?)<\/div>/i),
+    html.match(/<(div|section)[^>]*class=["'][^"']*entry-content[^"']*["'][^>]*>([\s\S]*?)<\/(?:div|section)>/i),
+    html.match(/<(div|section)[^>]*class=["'][^"']*bk-blog-content[^"']*["'][^>]*>([\s\S]*?)<\/(?:div|section|article)>/i),
+    html.match(/<(div|section)[^>]*class=["'][^"']*post-content[^"']*["'][^>]*>([\s\S]*?)<\/div>/i),
+    html.match(/<(div|section)[^>]*class=["'][^"']*article-content[^"']*["'][^>]*>([\s\S]*?)<\/div>/i),
+    html.match(/<(div|section)[^>]*class=["'][^"']*td-post-content[^"']*["'][^>]*>([\s\S]*?)<\/div>/i),
+    html.match(/<(div|section)[^>]*itemprop=["']articleBody["'][^>]*>([\s\S]*?)<\/(?:div|section)>/i),
   ];
+
   for (const m of regions) {
-    if (m && m[1] && m[1].length > 120) return m[1];
+    const fragment = m?.[2] ?? m?.[1];
+    if (fragment && fragment.length > 200 && regionHasParagraphs(fragment)) return fragment;
   }
+
+  const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+  if (bodyMatch) {
+    const body = bodyMatch[1]
+      .replace(/<script[\s\S]*?<\/script>/gi, '')
+      .replace(/<style[\s\S]*?<\/style>/gi, '')
+      .replace(/<nav[\s\S]*?<\/nav>/gi, '')
+      .replace(/<footer[\s\S]*?<\/footer>/gi, '')
+      .replace(/<header[\s\S]*?<\/header>/gi, '');
+    if (body.length > 400 && regionHasParagraphs(body)) return body;
+  }
+
   return html;
 }
 
@@ -295,21 +318,31 @@ function leadExcerptLooksSuitable(text = '') {
   return scored.suitable && scored.text.length >= LEAD_EXCERPT_MIN;
 }
 
+function excerptEndsAbruptly(text = '') {
+  const raw = String(text || '');
+  const ex = stripTruncationArtifacts(stripHtml(raw));
+  if (!ex || ex.length < 100) return false;
+  if (TRUNC_MARKERS_RE.test(raw)) return true;
+  if (endsCompleteSentence(ex)) return false;
+  if (ex.length >= 120) return true;
+  if (ex.length >= 240 && ex.length <= 295) return true;
+  return false;
+}
+
 function excerptLooksIncomplete(item = {}) {
   const existing = String(item.leadExcerpt || '').trim();
   if (existing) {
     if (!leadExcerptLooksSuitable(existing)) return true;
-    if (!endsCompleteSentence(existing)) return true;
-    if (existing.length >= 180 && existing.length <= 420) return false;
+    if (excerptEndsAbruptly(existing)) return true;
+    if (existing.length >= 180 && existing.length <= 420 && countSentences(existing) >= 2) return false;
     if (existing.length > 420 && countSentences(existing) >= 3) return true;
-    if (leadExcerptLooksSuitable(existing) && existing.length >= 180) return false;
+    if (leadExcerptLooksSuitable(existing) && existing.length >= 180 && endsCompleteSentence(existing)) return false;
     return true;
   }
 
   const ex = stripTruncationArtifacts(stripHtml(String(item.excerpt || '')));
   if (!ex) return true;
-  if (TRUNC_MARKERS_RE.test(String(item.excerpt || ''))) return true;
-  if (!endsCompleteSentence(ex) && ex.length >= 120) return true;
+  if (excerptEndsAbruptly(item.excerpt || ex)) return true;
 
   const { body } = extractBylineFromText(ex);
   const text = body || ex;
@@ -320,7 +353,7 @@ function excerptLooksIncomplete(item = {}) {
 function isLeadExcerptCandidate(item, index = 0) {
   if (!item?.link) return false;
   if (item.featured) return true;
-  return index < 45;
+  return index < RSS_ITEM_LIMIT;
 }
 
 function needsLeadExcerptEnrichment(item, index = 0) {
@@ -342,7 +375,7 @@ async function fetchLeadExcerpt(item) {
   };
 }
 
-function selectEnrichmentCandidates(items = [], limit = 35) {
+function selectEnrichmentCandidates(items = [], limit = RSS_ITEM_LIMIT) {
   const queue = [];
   const seen = new Set();
 
@@ -351,13 +384,15 @@ function selectEnrichmentCandidates(items = [], limit = 35) {
     const key = item.link;
     if (!key || seen.has(key)) return;
     seen.add(key);
-    queue.push({ item, index });
+    const abrupt = excerptEndsAbruptly(item.leadExcerpt || item.excerpt || '');
+    queue.push({ item, index, abrupt });
   });
 
   queue.sort((a, b) => {
     const fa = a.item.featured ? 1 : 0;
     const fb = b.item.featured ? 1 : 0;
     if (fb !== fa) return fb - fa;
+    if (b.abrupt !== a.abrupt) return (b.abrupt ? 1 : 0) - (a.abrupt ? 1 : 0);
     return a.index - b.index;
   });
 
@@ -365,9 +400,11 @@ function selectEnrichmentCandidates(items = [], limit = 35) {
 }
 
 module.exports = {
+  RSS_ITEM_LIMIT,
   LEAD_EXCERPT_MAX,
   LEAD_EXCERPT_MIN,
   LEAD_SUITABILITY_MIN,
+  excerptEndsAbruptly,
   fetchText,
   articleBodyHtml,
   paragraphsFromHtml,
