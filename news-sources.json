@@ -67,6 +67,11 @@
       "type": "universite",
       "lang": "en",
       "url": "https://thelinknewspaper.ca/feed/",
+      "botHints": {
+        "images": {
+          "preferSizeFull": true
+        }
+      },
       "_lastChecked": "2026-06-27T16:04:39.452Z",
       "_failCount": 0,
       "_status": "ok",
