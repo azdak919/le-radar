@@ -39,6 +39,19 @@ function clearLegacyFallback(item) {
   delete item.fallbackImage;
 }
 
+function clearStockPhoto(item) {
+  delete item.stockImage;
+  delete item.imageCredit;
+  delete item.imageCreator;
+  delete item.imageLicense;
+  delete item.imageProvider;
+  delete item.imageSourceUrl;
+}
+
+function hasSourcePhoto(item = {}) {
+  return !!(item.image && isCandidateImageUrl(item.image) && !isWeakImageUrl(item.image));
+}
+
 function imagePathKey(url = '') {
   try {
     const file = decodeURIComponent(new URL(url).pathname).split('/').pop() || '';
@@ -78,6 +91,7 @@ async function photoIsLeadReady(item) {
 }
 
 async function applyStockPhoto(item) {
+  if (hasSourcePhoto(item)) return false;
   const stock = await findStockPhoto(item);
   if (!stock?.stockImage) return false;
   if (doUpdate) {
@@ -146,6 +160,7 @@ async function main() {
 
   const stockQueue = [];
   for (const item of items) {
+    if (hasSourcePhoto(item) && doUpdate) clearStockPhoto(item);
     if (await photoIsLeadReady(item)) {
       if (doUpdate) {
         await markSourceLeadQuality(item);
@@ -162,6 +177,13 @@ async function main() {
         if (resolved.leadReady !== false) photosRecovered += 1;
       }
       if (await photoIsLeadReady(item)) continue;
+    } else if (hasSourcePhoto(item)) {
+      if (doUpdate) {
+        clearStockPhoto(item);
+        await markSourceLeadQuality(item);
+        clearLegacyFallback(item);
+      }
+      continue;
     }
     stockQueue.push(item);
   }

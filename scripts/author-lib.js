@@ -66,6 +66,7 @@ function isJunkAuthorName(name = '') {
   if (/https?:\/\//i.test(a) || /\.(?:php|js|css)\b/i.test(a)) return true;
   if (/\b(?:wp-content|wp-admin|wp-block|prefetch|selector_matches|splide)\b/i.test(a)) return true;
   if (/\b(?:Recent Posts|Skip to content|Written by|Read more|Lire la suite)\b/i.test(a)) return true;
+  if (/\b(?:photo|crédit|credit)\s*:/i.test(a)) return true;
   if (/\d+\s*,\s*\d+\s*,\s*[\d.]+\s*/.test(a)) return true;
   if (/\b(?:rgba?|box-shadow|max-width|font-family|\.td-|\.wp-|\.molongui|Open Sans)\b/i.test(a)) return true;
   if (/[`'"]\s*,\s*[`'"]/.test(a)) return true;
@@ -114,6 +115,18 @@ function authorsFromRelLinks(html = '') {
   const names = [...html.matchAll(/<a[^>]*\brel=["']author["'][^>]*>([\s\S]*?)<\/a>/gi)]
     .map((m) => normalizeAuthor(stripHtml(m[1])))
     .filter(Boolean);
+  return [...new Set(names)];
+}
+
+/** La Pige / thèmes « post-author » (itemprop author, lien sans rel=author). */
+function authorsFromPostAuthor(html = '') {
+  const names = [];
+  for (const m of html.matchAll(
+    /class=["'][^"']*\bpost-author\b[^"']*["'][^>]*>[\s\S]*?<a[^>]*>([^<]+)<\/a>/gi,
+  )) {
+    const n = expandAuthorName(m[1]);
+    if (n) names.push(n);
+  }
   return [...new Set(names)];
 }
 
@@ -268,6 +281,11 @@ function authorFromArticleHtml(html = '', lang = 'fr') {
       candidates.push({ author: fromDesc.author, trust: 94 });
       break;
     }
+  }
+
+  const postAuthors = authorsFromPostAuthor(html);
+  if (postAuthors.length) {
+    candidates.push({ author: joinAuthorNames(postAuthors, l), trust: 102 });
   }
 
   const tdAuthors = authorsFromTdPostAuthor(html);
