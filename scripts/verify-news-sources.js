@@ -15,6 +15,7 @@ const {
   countHtmlListItems,
   latestHtmlListDate,
 } = require('./html-list-fetcher');
+const { isFirebaseSource, classifyFirebaseSource } = require('./firebase-list-fetcher');
 
 const ROOT = path.join(__dirname, '..');
 const REQUIRED = ['name', 'institution', 'region', 'type', 'lang', 'url'];
@@ -116,7 +117,15 @@ async function verifySource(src, ctx) {
   if (!social) warnings.push('absent de social-feed.json (optionnel — fetch-social.js --update)');
 
   const feedCandidates = [src.url, src.urlFallback, ...(src.feedAlternates || [])].filter(Boolean);
-  if (feedCandidates.length) {
+  if (isFirebaseSource(src)) {
+    const { status, lastItemDate, count } = await classifyFirebaseSource(src);
+    if (!count) issues.push('Firestore inaccessible ou aucun article publié');
+    else {
+      ok.push(`mode firebase OK (${count} articles)`);
+      if (lastItemDate) ok.push(`dernier article : ${lastItemDate.slice(0, 10)}`);
+    }
+    if (status === 'dead') warnings.push('source marquée dead (articles trop anciens)');
+  } else if (feedCandidates.length) {
     if (isHtmlListSource(src)) {
       let listHit = null;
       let listUsed = '';

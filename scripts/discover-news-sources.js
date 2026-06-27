@@ -28,6 +28,7 @@ const {
   classifyHtmlList,
   countHtmlListItems,
 } = require('./html-list-fetcher');
+const { isFirebaseSource, classifyFirebaseSource } = require('./firebase-list-fetcher');
 
 const SOURCES_PATH = path.join(__dirname, '..', 'news-sources.json');
 const INSTITUTIONS_PATH = path.join(__dirname, '..', 'institutions.json');
@@ -120,8 +121,22 @@ function classify(xml) {
 // === Maintenance =============================================================
 async function checkActive(src) {
   const before = src._status;
-  const { ok, body } = await fetchText(src.url);
   src._lastChecked = new Date().toISOString();
+
+  if (isFirebaseSource(src)) {
+    const { status, lastItemDate, count } = await classifyFirebaseSource(src);
+    src._status = status;
+    src._failCount = 0;
+    if (lastItemDate) src._lastItemDate = lastItemDate;
+    return {
+      name: src.name,
+      result: `${count} items (firebase), latest ${lastItemDate ? lastItemDate.slice(0, 10) : '?'}`,
+      before,
+      after: status,
+    };
+  }
+
+  const { ok, body } = await fetchText(src.url);
 
   if (!ok) {
     src._failCount = (src._failCount || 0) + 1;
