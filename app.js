@@ -736,25 +736,55 @@ function cleanTitle(title = '') {
   return t;
 }
 
+const TRUNC_CHAR = '(?:…|\\.\\.\\.?)';
+const TRUNC_START_RE = new RegExp(`^\\s*(?:\\[\\s*${TRUNC_CHAR}\\s*\\]|\\(\\s*${TRUNC_CHAR}\\s*\\)|${TRUNC_CHAR})\\s*`, 'u');
+const TRUNC_END_RE = new RegExp(`\\s*(?:\\[\\s*${TRUNC_CHAR}\\s*\\]|\\(\\s*${TRUNC_CHAR}\\s*\\)|${TRUNC_CHAR})\\s*$`, 'u');
+
+function parseTruncationMarkers(text = '') {
+  let s = String(text).replace(/\s+/g, ' ').trim();
+  const truncatedStart = TRUNC_START_RE.test(s);
+  const truncatedEnd = TRUNC_END_RE.test(s);
+  if (truncatedStart) s = s.replace(TRUNC_START_RE, '').trim();
+  if (truncatedEnd) s = s.replace(TRUNC_END_RE, '').trim();
+  return { text: s, truncatedStart, truncatedEnd };
+}
+
+function formatTruncatedBrief(text = '', { truncatedStart = false, truncatedEnd = false } = {}) {
+  let s = String(text).replace(/\s+/g, ' ').trim();
+  if (!s) return '';
+  if (truncatedStart) s = `… ${s}`;
+  if (truncatedEnd) s = `${s}…`;
+  return s;
+}
+
+function looksAbruptlyCut(text = '') {
+  const s = String(text).trim();
+  if (s.length < 200) return false;
+  return !TRUNC_END_RE.test(s) && !/[.!?…»"’)\]]\s*$/u.test(s);
+}
+
 function cleanBrief(raw = '') {
   let s = String(raw);
-  s = s.replace(/<[^>]*>/g, ' ');                       // strip HTML tags
-  s = s.replace(/\]\]>/g, '');                          // CDATA leftovers
-  s = s.replace(/\s*L['’]article\b[\s\S]*?est apparu en premier sur[\s\S]*$/i, ''); // WordPress boilerplate
-  // Truncated variant: the excerpt is cut mid-boilerplate, before "est apparu…".
+  s = s.replace(/<[^>]*>/g, ' ');
+  s = s.replace(/\]\]>/g, '');
+  s = s.replace(/\s*L['’]article\b[\s\S]*?est apparu en premier sur[\s\S]*$/i, '');
   const li = s.search(/\sL['’]article\s/);
   if (li > 30) s = s.slice(0, li);
-  s = s.replace(/\[[^\]]*(?:read more|lire la suite|continue reading)[^\]]*\]/gi, ''); // "[Read More…]"
-  s = s.replace(/\[\s*(?:…|\.{2,})\s*\]/g, '');        // bare "[…]" / "[...]"
+  s = s.replace(/\[[^\]]*(?:read more|lire la suite|continue reading)[^\]]*\]/gi, '');
   s = s.replace(/\b(?:read more|lire la suite|continue reading)\b\.?\s*$/i, '');
-  s = s.replace(/^(?:Dear Tribune|Dear Editor),?\s*/i, ''); // Tribune advice-column openers
-  s = s.replace(/\[(?:…|\.\.\.)\]/g, '…');
+  s = s.replace(/^(?:Dear Tribune|Dear Editor),?\s*/i, '');
   s = s.replace(/&(?:nbsp|#160);/gi, ' ');
   s = s.replace(/&amp;/gi, '&');
   s = s.replace(/\s+/g, ' ').trim();
-  s = s.replace(/[\s…,–-]+$/u, '');                     // tidy trailing punctuation
-  if (s.length < 12) return '';                          // too thin to be a real brief
-  return s + '…';
+
+  const { text, truncatedStart, truncatedEnd } = parseTruncationMarkers(s);
+  s = text;
+  if (s.length < 12) return '';
+
+  return formatTruncatedBrief(s, {
+    truncatedStart,
+    truncatedEnd: truncatedEnd || looksAbruptlyCut(s),
+  });
 }
 
 function escapeHtml(str = '') {
