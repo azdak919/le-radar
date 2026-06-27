@@ -455,6 +455,17 @@ a { color: inherit; }
   color: var(--ink);
   transition: color 140ms ease;
 }
+.article-byline {
+  font-size: 0.84rem;
+  color: var(--muted);
+  margin: 0 0 6px;
+  font-weight: 500;
+}
+.article-byline strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
 .article-brief {
   font-family: var(--sans);
   font-size: 0.95rem;
@@ -487,6 +498,10 @@ a { color: inherit; }
   font-size: clamp(2rem, 6vw, 2.9rem);
   line-height: 1.08;
   margin-bottom: 12px;
+}
+.article--lead .article-byline {
+  font-size: 0.95rem;
+  margin-bottom: 10px;
 }
 .article--lead .article-brief {
   font-size: 1.08rem;

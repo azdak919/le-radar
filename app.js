@@ -382,7 +382,8 @@ function createArticle(item, lead = false) {
   const d = item.date ? new Date(item.date) : null;
   const time = d ? formatStamp(d) : '';
   const fresh = d ? (Date.now() - d) < 120 * 60000 : false;
-  const brief = cleanBrief(item.excerpt);
+  const { author, body } = splitByline(item);
+  const brief = cleanBrief(body);
 
   a.innerHTML = `
     ${lead ? '<span class="article-eyebrow">À la une</span>' : ''}
@@ -392,9 +393,24 @@ function createArticle(item, lead = false) {
       ${time ? `<time class="article-time${fresh ? ' is-fresh' : ''}" datetime="${escapeHtml(item.date)}">${time}</time>` : ''}
     </div>
     <h3 class="article-title">${escapeHtml(item.title)}</h3>
+    ${author ? `<p class="article-byline">Par <strong>${escapeHtml(author)}</strong></p>` : ''}
     ${brief ? `<p class="article-brief">${escapeHtml(brief)}</p>` : ''}
   `;
   return a;
+}
+
+// Pull the byline out of the data (preferred) or the "Par …" prefix of the excerpt,
+// returning the author plus the remaining body text for the brief.
+function splitByline(item) {
+  const ex = String(item.excerpt || '');
+  const m = ex.match(/^(\s*Par\s+([\p{Lu}][\p{L}'’.\-]+(?:\s+[\p{Lu}][\p{L}'’.\-]+)?))/u);
+  let author = item.author ? String(item.author).trim() : '';
+  let body = ex;
+  if (m) {
+    if (!author) author = m[2].replace(/\s+/g, ' ').trim();
+    body = ex.slice(m[1].length);
+  }
+  return { author, body };
 }
 
 // ─── Date / time formatting (Québec) ────────────────────────────────────────────
@@ -435,6 +451,9 @@ function cleanBrief(raw = '') {
   s = s.replace(/<[^>]*>/g, ' ');                       // strip HTML tags
   s = s.replace(/\]\]>/g, '');                          // CDATA leftovers
   s = s.replace(/\s*L['’]article\b[\s\S]*?est apparu en premier sur[\s\S]*$/i, ''); // WordPress boilerplate
+  // Truncated variant: the excerpt is cut mid-boilerplate, before "est apparu…".
+  const li = s.search(/\sL['’]article\s/);
+  if (li > 30) s = s.slice(0, li);
   s = s.replace(/\[[^\]]*(?:read more|lire la suite|continue reading)[^\]]*\]/gi, ''); // "[Read More…]"
   s = s.replace(/\[\s*(?:…|\.{2,})\s*\]/g, '');        // bare "[…]" / "[...]"
   s = s.replace(/\b(?:read more|lire la suite|continue reading)\b\.?\s*$/i, '');
