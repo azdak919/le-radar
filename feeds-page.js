@@ -47,7 +47,7 @@ function showToast(msg) {
 }
 
 function initFeedCards() {
-  document.querySelectorAll('.feed-card[data-feed]').forEach((card) => {
+  document.querySelectorAll('[data-feed]').forEach((card) => {
     const file = card.dataset.feed;
     const url = feedUrl(file);
     const code = card.querySelector('[data-feed-url]');
