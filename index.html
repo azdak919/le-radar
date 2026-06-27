@@ -86,8 +86,8 @@
           </div>
         </div>
 
-        <aside id="tuner-nowair" class="tuner-nowair hidden" aria-live="polite" aria-label="À l'antenne sur RADAR">
-          <span class="tuner-nowair-label">Sur RADAR</span>
+        <aside id="tuner-nowair" class="tuner-nowair hidden" aria-live="polite" aria-label="À l'antenne">
+          <span class="tuner-nowair-label">À l'antenne</span>
           <div class="tuner-nowair-body">
             <p id="tuner-nowair-title" class="tuner-nowair-title"></p>
             <p id="tuner-nowair-sub" class="tuner-nowair-sub"></p>
@@ -107,7 +107,13 @@
       </div>
 
       <nav id="news-filters" class="filters" aria-label="Filtrer par source">
-        <button data-source="all" class="filter-btn active">Toutes les sources</button>
+        <button data-source="all" class="filter-btn filter-btn--all active" title="Agrégateur — toutes les sources">
+          <span class="filter-btn__row">
+            <span class="filter-btn__dot" aria-hidden="true"></span>
+            <span class="filter-btn__name">Agrégateur</span>
+          </span>
+          <span class="filter-btn__inst">Toutes les sources</span>
+        </button>
         <!-- source chips injected by JS -->
       </nav>
 

@@ -508,6 +508,35 @@ function stepStation(dir) {
   selectStation(next.id, { autoplay: tunerShouldAutoplayNative(next) });
 }
 
+/**
+ * Affiche le sous-titre du syntoniseur (fréquence · institution au complet).
+ * Si le texte dépasse, on l'anime en défilement doux droite → gauche.
+ */
+function setTunerSubText(text) {
+  TUNER_SUB.classList.remove('is-marquee');
+  TUNER_SUB.style.removeProperty('--marquee-shift');
+  TUNER_SUB.style.removeProperty('--marquee-duration');
+
+  const span = document.createElement('span');
+  span.className = 'tuner-now-sub-text';
+  span.textContent = text;
+  TUNER_SUB.replaceChildren(span);
+
+  requestAnimationFrame(() => {
+    const available = TUNER_SUB.clientWidth;
+    if (!available) return;
+    const overflow = span.scrollWidth - available;
+    if (overflow <= 4) return;
+
+    const distance = overflow + 12;
+    // ~16 px/s : défilement lent et lisible
+    const duration = Math.max(7, distance / 16);
+    TUNER_SUB.style.setProperty('--marquee-shift', `-${distance}px`);
+    TUNER_SUB.style.setProperty('--marquee-duration', `${duration.toFixed(1)}s`);
+    TUNER_SUB.classList.add('is-marquee');
+  });
+}
+
 function selectStation(id, { autoplay = false, openExternal = false } = {}) {
   const radio = radios.find(r => r.id === id);
   if (!radio) return;
@@ -516,11 +545,11 @@ function selectStation(id, { autoplay = false, openExternal = false } = {}) {
   const playable = getPlayableStream(radio);
   const external = isExternalListen(radio);
 
-  const inst = shortInstitution(radio.institution, radio.type);
+  const inst = radio.institution || shortInstitution(radio.institution, radio.type);
   TUNER_NAME.textContent = radio.name;
-  TUNER_SUB.textContent = external
+  setTunerSubText(external
     ? `Site externe · ${inst}`
-    : `${radio.frequency} · ${inst}`;
+    : `${radio.frequency} · ${inst}`);
 
   TUNER_PLAY.disabled = !playable && !external;
   TUNER_PLAY.title = playable
