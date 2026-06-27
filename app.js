@@ -522,6 +522,7 @@ const INSTITUTION_ACRONYMS = {
   'Université du Québec en Outaouais (UQO)': 'UQO',
   'Université du Québec en Abitibi-Témiscamingue': 'UQAT',
   'Université du Québec en Abitibi-Témiscamingue (UQAT)': 'UQAT',
+  'Polytechnique Montréal': 'Poly Montréal',
 };
 
 function resolveInstitutionAcronym(name = '') {
@@ -558,7 +559,7 @@ function shortInstitution(name = '', type = '') {
   if (acronym) return acronym;
 
   const CEGEP_SHORT = {
-    'Cégep du Vieux Montréal': 'CVM',
+    'Cégep du Vieux Montréal': 'Cégep du Vieux-Montréal',
     'Cégep de Jonquière (ATM – journalisme)': 'Cégep Jonquière',
     'Cégep de Jonquière': 'Cégep Jonquière',
   };
