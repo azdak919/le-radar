@@ -529,13 +529,27 @@ function renderNews() {
   NEWS_COUNT.textContent = `${items.length} article${items.length !== 1 ? 's' : ''}`;
   NEWS_LIST.innerHTML = '';
 
+  const hero = document.createElement('div');
+  hero.className = 'news-hero';
+  const compacts = [];
   const tail = [];
+
   items.forEach((item, i) => {
     const role = getArticleRole(i);
     const article = createArticle(item, role);
     if (role === 'standard') tail.push(article);
-    else NEWS_LIST.appendChild(article);
+    else if (role === 'lead' || role === 'feature') hero.appendChild(article);
+    else compacts.push(article);
   });
+
+  if (hero.childElementCount) NEWS_LIST.appendChild(hero);
+  compacts.forEach((article) => NEWS_LIST.appendChild(article));
+
+  if (compacts.length) {
+    NEWS_LIST.style.setProperty('--brief-rows', String(compacts.length));
+  } else {
+    NEWS_LIST.style.removeProperty('--brief-rows');
+  }
 
   if (tail.length) {
     const section = document.createElement('div');
