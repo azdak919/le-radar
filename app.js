@@ -566,12 +566,15 @@ function renderNews() {
   const compacts = [];
   const tail = [];
 
-  items.forEach((item, i) => {
-    const role = getArticleRole(i);
+  const { briefItems, mainItems } = partitionNewsFeed(items);
+
+  briefItems.forEach((item) => compacts.push(createArticle(item, 'compact')));
+
+  mainItems.forEach((item, i) => {
+    const role = i === 0 ? 'lead' : i <= 2 ? 'feature' : 'standard';
     const article = createArticle(item, role);
     if (role === 'standard') tail.push(article);
-    else if (role === 'lead' || role === 'feature') hero.appendChild(article);
-    else compacts.push(article);
+    else hero.appendChild(article);
   });
 
   if (hero.childElementCount) {
@@ -619,11 +622,35 @@ function updateNewsLayout() {
 
 const BRIEF_SIDEBAR_MAX = 4;
 
-function getArticleRole(index) {
-  if (index === 0) return 'lead';
-  if (index <= 2) return 'feature';
-  if (index <= 2 + BRIEF_SIDEBAR_MAX) return 'compact';
-  return 'standard';
+function articleKey(item) {
+  return item.link || `${item.source}::${item.date}::${item.title}`;
+}
+
+/** En bref : le plus récent par institution, mix de sources (hors fil chronologique). */
+function pickBriefSidebar(items) {
+  const institutions = new Set(items.map((i) => i.institution || i.source));
+  if (institutions.size < 2 || items.length <= 3) return [];
+
+  const latestByInst = new Map();
+  for (const item of items) {
+    const inst = item.institution || item.source;
+    const cur = latestByInst.get(inst);
+    if (!cur || new Date(item.date || 0) > new Date(cur.date || 0)) {
+      latestByInst.set(inst, item);
+    }
+  }
+
+  return [...latestByInst.values()]
+    .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
+    .slice(0, BRIEF_SIDEBAR_MAX)
+    .sort((a, b) => a.source.localeCompare(b.source, 'fr'));
+}
+
+function partitionNewsFeed(items) {
+  const briefItems = pickBriefSidebar(items);
+  const briefKeys = new Set(briefItems.map(articleKey));
+  const mainItems = items.filter((i) => !briefKeys.has(articleKey(i)));
+  return { briefItems, mainItems };
 }
 
 function createArticle(item, role = 'standard') {
