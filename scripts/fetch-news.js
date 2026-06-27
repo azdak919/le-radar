@@ -16,7 +16,13 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
-const { reconcileAuthor } = require('./author-lib');
+const {
+  reconcileAuthor,
+  authorFromArticleHtml,
+  detectFeedDefaultAuthors,
+  needsPageAuthorVerification,
+  normalizeArticleUrl,
+} = require('./author-lib');
 const { isHtmlListSource, parseHtmlListPage } = require('./html-list-fetcher');
 
 const NEWS_PATH = path.join(__dirname, '..', 'news.json');
@@ -410,28 +416,6 @@ function articleBodyHtml(html = '') {
   return html;
 }
 
-function authorFromArticleHtml(html = '') {
-  const candidates = [];
-
-  const tribune = html.match(/tribune_author=([^"'&]+)/i);
-  if (tribune) candidates.push(decodeURIComponent(tribune[1].replace(/\+/g, ' ')));
-
-  const entryAuthor = html.match(/class=["'][^"']*entry-author[^"']*["'][^>]*>[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/i);
-  if (entryAuthor) candidates.push(stripHtml(entryAuthor[1]));
-
-  const authorTitle = html.match(/class=["'][^"']*author-title[^"']*["'][^>]*>[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/i);
-  if (authorTitle) candidates.push(stripHtml(authorTitle[1]));
-
-  const relAuthor = html.match(/rel=["']author["'][^>]*>([\s\S]*?)<\//i);
-  if (relAuthor) candidates.push(stripHtml(relAuthor[1]));
-
-  for (const raw of candidates) {
-    const name = normalizeAuthor(raw);
-    if (name) return name;
-  }
-  return '';
-}
-
 function isCandidateImageUrl(raw = '') {
   const src = String(raw).trim();
   if (!src) return false;
@@ -517,10 +501,11 @@ function imageFromArticleHtml(html = '') {
   return candidates[0].url;
 }
 
-function needsEnrichment(item) {
+function needsEnrichment(item, feedDefaults = new Map()) {
   const thinExcerpt = !item.excerpt || isJunkExcerpt(item.excerpt);
   const missingAuthor = !item.author || isGenericAuthor(item.author);
-  return thinExcerpt || missingAuthor || needsImageEnrichment(item);
+  const needsAuthorPage = needsPageAuthorVerification(item, feedDefaults);
+  return thinExcerpt || missingAuthor || needsImageEnrichment(item) || needsAuthorPage;
 }
 
 async function enrichItem(item) {
@@ -535,20 +520,12 @@ async function enrichItem(item) {
     if (img) next.image = img;
   }
 
-  if (!next.author || isGenericAuthor(next.author)) {
-    const candidates = [
-      authorFromArticleHtml(html),
-      metaContent(html, 'parsely-author'),
-      metaContent(html, 'article:author'),
-      metaContent(html, 'author'),
-      metaContent(html, 'dc.creator'),
-      metaContent(html, 'dc:creator'),
-    ].map(normalizeAuthor).filter(Boolean);
-
+  const pageAuthor = authorFromArticleHtml(html);
+  if (pageAuthor) {
+    next._pageAuthor = pageAuthor;
+  } else if (!next.author || isGenericAuthor(next.author)) {
     const fromBody = extractBylineFromText(firstParagraphFromHtml(body));
-    if (fromBody.author) candidates.unshift(fromBody.author);
-
-    if (candidates.length) next.author = candidates[0];
+    if (fromBody.author) next._pageAuthor = fromBody.author;
   }
 
   const pageTitle = sanitizeTitle(metaContent(html, 'og:title') || metaContent(html, 'twitter:title'));
@@ -576,10 +553,10 @@ async function enrichItem(item) {
   return next;
 }
 
-async function enrichItems(items) {
+async function enrichItems(items, feedDefaults = new Map()) {
   const queue = [
     ...items.filter(needsImageEnrichment),
-    ...items.filter((item) => needsEnrichment(item) && !needsImageEnrichment(item)),
+    ...items.filter((item) => needsEnrichment(item, feedDefaults) && !needsImageEnrichment(item)),
   ];
   const seen = new Set();
   let enriched = 0;
@@ -605,6 +582,32 @@ async function enrichItems(items) {
     console.log(`↻ Enriched ${enriched} articles from source pages (${imagesAdded} images)`);
   }
   return items;
+}
+
+async function fetchPageAuthors(items, feedDefaults, existing = new Map()) {
+  const pageAuthors = new Map(existing);
+  const toFetch = items.filter(
+    (item) => needsPageAuthorVerification(item, feedDefaults)
+      && !pageAuthors.has(normalizeArticleUrl(item.link)),
+  );
+
+  let fetched = 0;
+  for (const item of toFetch) {
+    if (fetched >= MAX_ENRICH) break;
+    const key = normalizeArticleUrl(item.link);
+    if (!key || pageAuthors.has(key)) continue;
+
+    const html = await fetchText(item.link, 3, ENRICH_TIMEOUT);
+    const author = authorFromArticleHtml(html);
+    if (author) pageAuthors.set(key, author);
+    fetched += 1;
+    await sleep(250);
+  }
+
+  if (fetched) {
+    console.log(`↻ Auteurs vérifiés sur ${fetched} page(s) source (${pageAuthors.size} extrait(s))`);
+  }
+  return pageAuthors;
 }
 
 // === Main ====================================================================
@@ -685,10 +688,34 @@ async function main() {
     }
   }
 
-  await enrichItems(all);
+  const feedDefaults = detectFeedDefaultAuthors(all);
+
+  for (const item of all) {
+    if (item._pageAuthor) {
+      const key = normalizeArticleUrl(item.link);
+      if (key) item._pageAuthorKey = key;
+    }
+  }
+
+  await enrichItems(all, feedDefaults);
+
+  const pageAuthors = new Map();
+  for (const item of all) {
+    if (item._pageAuthor && item._pageAuthorKey) {
+      pageAuthors.set(item._pageAuthorKey, item._pageAuthor);
+      delete item._pageAuthor;
+      delete item._pageAuthorKey;
+    }
+  }
+  await fetchPageAuthors(all, feedDefaults, pageAuthors);
 
   for (let i = 0; i < all.length; i += 1) {
-    all[i] = reconcileAuthor(all[i], all, { applyFallback: true }).item;
+    const pageAuthor = pageAuthors.get(normalizeArticleUrl(all[i].link)) || '';
+    all[i] = reconcileAuthor(all[i], all, {
+      applyFallback: true,
+      feedDefaults,
+      pageAuthor,
+    }).item;
   }
 
   all.sort((a, b) => {
