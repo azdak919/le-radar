@@ -1133,13 +1133,13 @@ function createArticle(item, role = 'standard', { hideSourceMeta = false } = {})
   const titleHtml = `<h3 class="article-title">${escapeHtml(cleanTitle(item.title))}</h3>`;
   const mediaHtml = canUseImage ? '<figure class="article-media"></figure>' : '';
   if (role === 'lead') {
-    const leadMetaHtml = hideSourceMeta
-      ? (timeHtml ? `<div class="${metaClass}">${timeHtml}</div>` : '')
-      : `<div class="${metaClass}">
+    const leadMetaHtml = (item.source || item.institution || timeHtml)
+      ? `<div class="article-meta">
           <span class="article-source">${escapeHtml(item.source)}</span>
           ${item.institution ? `<span class="article-inst">${escapeHtml(articleInstitutionLabel(item.institution, item.type))}</span>` : ''}
           ${timeHtml}
-        </div>`;
+        </div>`
+      : '';
     a.innerHTML = `
       <span class="article-eyebrow">À la une</span>
       ${leadMetaHtml}
