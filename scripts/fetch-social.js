@@ -169,6 +169,22 @@ function siteUrlFromSource(src) {
   return '';
 }
 
+function socialPresetFromSource(src = {}) {
+  const preset = {};
+  if (src.instagram) preset.instagram = src.instagram;
+  if (src.facebook) preset.facebook = src.facebook;
+  if (src.x) preset.x = src.x;
+  if (src.twitter) preset.x = src.twitter;
+  if (src.tiktok) preset.tiktok = src.tiktok;
+  if (src.youtube) preset.youtube = src.youtube;
+  if (src.social && typeof src.social === 'object') {
+    for (const [type, url] of Object.entries(src.social)) {
+      if (url) preset[type] = url;
+    }
+  }
+  return preset;
+}
+
 async function networksForSource(src, preset = {}) {
   const links = new Map();
 
@@ -218,7 +234,7 @@ async function main() {
 
   for (const src of newsRegistry.active || []) {
     process.stdout.write(`→ ${src.name} … `);
-    const networks = await networksForSource(src);
+    const networks = await networksForSource(src, socialPresetFromSource(src));
     console.log(networks.length ? networks.map((n) => n.type).join(', ') : '—');
     if (!networks.length) continue;
     items.push({
@@ -231,9 +247,7 @@ async function main() {
   }
 
   for (const radio of radios) {
-    const preset = {};
-    if (radio.instagram) preset.instagram = radio.instagram;
-    if (radio.facebook) preset.facebook = radio.facebook;
+    const preset = socialPresetFromSource(radio);
     if (!Object.keys(preset).length) continue;
 
     process.stdout.write(`→ ${radio.name} (radio) … `);

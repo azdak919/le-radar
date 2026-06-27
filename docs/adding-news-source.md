@@ -57,7 +57,36 @@ utiliser **`fetchMode: "html-list"`** :
 Parser partagé : `scripts/html-list-fetcher.js` (SvelteKit `HTML_TAG_START`, liens
 datés en repli).
 
-### 2.3 Cloudflare / site bloqué
+### 2.3 SPA + Firebase Firestore (pas de RSS)
+
+Si le site est une **SPA** (React, etc.) dont les articles sont servis depuis
+**Firestore** public (ex. **Le Polyscope**), utiliser **`fetchMode: "firebase"`** :
+
+1. Inspecter le bundle JS client pour `projectId`, `apiKey`, nom de collection.
+2. Vérifier les champs document : titre, date, auteur, image, flag `publish`.
+3. Renseigner le bloc `firebase` dans `news-sources.json` :
+
+```json
+{
+  "fetchMode": "firebase",
+  "firebase": {
+    "projectId": "polyscope-6feba",
+    "apiKey": "…",
+    "collection": "blogs",
+    "publishField": "publish",
+    "dateField": "publishedDate",
+    "linkTemplate": "/blog/post/{uid}"
+  }
+}
+```
+
+Parser partagé : `scripts/firebase-list-fetcher.js`.
+
+Pour les **réseaux sociaux** : les SPA ne servent souvent qu'un shell HTML vide.
+Ajouter des champs `instagram`, `facebook`, `x` dans `news-sources.json` (comme
+`radios.json`) — `fetch-social.js` les utilise en preset.
+
+### 2.4 Cloudflare / site bloqué
 
 Comme **The Concordian** : `url` = flux WordPress officiel, `urlFallback` = repli
 (Substack, autre). Documenter la limite du repli dans `_note`.
@@ -85,7 +114,9 @@ Comme **The Concordian** : `url` = flux WordPress officiel, `urlFallback` = repl
 | `site` | Site public (réseaux sociaux, découverte par bots) |
 | `_note` | Contexte interne (distinction d'autres journaux, limites du repli) |
 | `urlFallback` | URL de repli si le principal échoue |
-| `fetchMode` | `rss` (défaut) ou `html-list` |
+| `fetchMode` | `rss` (défaut), `html-list` ou `firebase` |
+| `firebase` | Config Firestore si `fetchMode: firebase` |
+| `instagram`, `facebook`, `x` | Réseaux sociaux (preset si SPA sans liens HTML) |
 | `wpFeaturedCategories` | Catégories WordPress pour vedettes hors flux (ex. Le Délit → `slider`) |
 
 ### Champs bots (automatiques)
@@ -197,8 +228,9 @@ social-feed.json       # réseaux (généré)
 scripts/
   add-news-source.js       # CLI d'ajout
   verify-news-sources.js   # QC intégration
-  fetch-news.js            # agrégation RSS + html-list
+  fetch-news.js            # agrégation RSS + html-list + firebase
   html-list-fetcher.js     # parseur pages liste
+  firebase-list-fetcher.js # parseur Firestore REST
   discover-news-sources.js # santé + promotion candidates
   maintain.js              # orchestrateur
 ```

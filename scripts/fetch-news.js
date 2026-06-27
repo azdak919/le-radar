@@ -25,6 +25,7 @@ const {
 } = require('./author-lib');
 const { mergePriorEnrichment } = require('./article-photo-credit-lib');
 const { isHtmlListSource, parseHtmlListPage } = require('./html-list-fetcher');
+const { isFirebaseSource, fetchFirebaseFeed } = require('./firebase-list-fetcher');
 
 const NEWS_PATH = path.join(__dirname, '..', 'news.json');
 const SOURCES_PATH = path.join(__dirname, '..', 'news-sources.json');
@@ -637,7 +638,19 @@ async function main() {
     process.stdout.write(`→ ${src.name} (${src.institution}) … `);
     let items = [];
 
-    if (isHtmlListSource(src)) {
+    if (isFirebaseSource(src)) {
+      items = await fetchFirebaseFeed(src, { maxItems: MAX_PER_SOURCE });
+      items = items.map((it) => ({
+        ...it,
+        title: sanitizeTitle(it.title),
+        excerpt: truncateExcerpt(it.excerpt, 280),
+      }));
+      if (!items.length) {
+        console.log('✗ no articles (firebase)');
+        continue;
+      }
+      console.log(`✓ ${items.length} articles (firebase)`);
+    } else if (isHtmlListSource(src)) {
       const listUrls = [src.url, src.urlFallback, ...(src.feedAlternates || [])].filter(Boolean);
       let html = '';
       let listUsed = '';

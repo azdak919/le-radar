@@ -51,7 +51,7 @@ Options recommandées :
   --site          Site web public (découverte sociale, candidats)
   --popularity    Ordre des filtres UI (1 = plus visible, défaut 50)
   --note          Note interne (ex. "journal indépendant, distinct de The Link")
-  --fetchMode     rss (défaut) | html-list — page HTML sans flux RSS
+  --fetchMode     rss (défaut) | html-list | firebase — sans flux RSS
   --urlFallback   URL de repli (Substack, autre liste, etc.)
 
   --promote       Retirer des candidates si présent, ajouter à active

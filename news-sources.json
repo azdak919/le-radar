@@ -1,5 +1,5 @@
 {
-  "_comment": "Registre des sources. Champs éditables : name, institution, region, type, lang, url, site, popularity, fetchMode (rss|html-list), urlFallback, wpFeaturedCategories, _note. Champs bots : _status, _lastItemDate, _lastChecked, _failCount. Médias étudiants uniquement — pas de portails institutionnels. Plusieurs journaux par établissement sont supportés (ex. The Link + The Concordian). Voir docs/adding-news-source.md.",
+  "_comment": "Registre des sources. Champs éditables : name, institution, region, type, lang, url, site, popularity, fetchMode (rss|html-list|firebase), firebase {}, urlFallback, wpFeaturedCategories, instagram/facebook/x (SPA sans liens HTML), _note. Champs bots : _status, _lastItemDate, _lastChecked, _failCount. Médias étudiants uniquement — pas de portails institutionnels. Plusieurs journaux par établissement sont supportés (ex. The Link + The Concordian). Voir docs/adding-news-source.md.",
   "active": [
     {
       "name": "Quartier Libre",
@@ -151,6 +151,33 @@
       "_status": "ok",
       "_lastItemDate": "2026-06-22T14:36:10.000Z",
       "popularity": 11
+    },
+    {
+      "name": "Le Polyscope",
+      "institution": "Polytechnique Montréal",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "url": "https://www.polyscope.qc.ca/",
+      "site": "https://www.polyscope.qc.ca/",
+      "fetchMode": "firebase",
+      "firebase": {
+        "projectId": "polyscope-6feba",
+        "apiKey": "AIzaSyAkP_4bZPCjo0QS-GZGkaOx5KZP4A8x2LU",
+        "collection": "blogs",
+        "publishField": "publish",
+        "dateField": "publishedDate",
+        "linkTemplate": "/blog/post/{uid}"
+      },
+      "popularity": 12,
+      "instagram": "https://www.instagram.com/polyscope_aep/",
+      "facebook": "https://www.facebook.com/p/Polyscope-61550693026725/",
+      "x": "https://twitter.com/Polyscope",
+      "_status": "ok",
+      "_failCount": 0,
+      "_lastChecked": "2026-06-27T09:10:00.000Z",
+      "_lastItemDate": "2026-05-16T23:37:03.000Z",
+      "_note": "SPA React + Firestore public — pas de flux RSS. Réseaux sociaux en preset (HTML shell vide)."
     },
     {
       "name": "The Tribune",
