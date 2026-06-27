@@ -307,9 +307,9 @@ a { color: inherit; }
   display: inline-block;
   white-space: nowrap;
 }
-/* Défilement doux droite → gauche quand le nom d'institution dépasse */
-.tuner-now-sub.is-marquee { text-overflow: clip; }
-.tuner-now-sub.is-marquee .tuner-now-sub-text {
+/* Défilement doux droite → gauche quand le texte dépasse (sous-titre + « À l'antenne ») */
+.is-marquee { text-overflow: clip; }
+.is-marquee > .tuner-now-sub-text {
   animation: tunerMarquee var(--marquee-duration, 12s) linear infinite alternate;
 }
 @keyframes tunerMarquee {
@@ -317,8 +317,8 @@ a { color: inherit; }
   86%, 100% { transform: translateX(var(--marquee-shift, 0)); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .tuner-now-sub.is-marquee { text-overflow: ellipsis; }
-  .tuner-now-sub.is-marquee .tuner-now-sub-text { animation: none; }
+  .is-marquee { text-overflow: ellipsis; }
+  .is-marquee > .tuner-now-sub-text { animation: none; }
 }
 
 .tuner-play {
@@ -438,6 +438,13 @@ a { color: inherit; }
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* État « rien de syntonisé » : invitation discrète à choisir un poste. */
+.tuner-nowair.is-empty .tuner-nowair-title {
+  font-style: italic;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.55);
 }
 
 @media (min-width: 1100px) {
