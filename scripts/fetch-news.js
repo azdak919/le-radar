@@ -21,7 +21,9 @@ const NEWS_PATH = path.join(__dirname, '..', 'news.json');
 const SOURCES_PATH = path.join(__dirname, '..', 'news-sources.json');
 const TIMEOUT = 15000;
 const ENRICH_TIMEOUT = 12000;
-const MAX_PER_SOURCE = 12;  // archive par journal (vue source)
+const MAX_PER_SOURCE = 20;  // archive par journal (certains flux RSS en ont 18+)
+const MAX_WP_FEATURED = 8;  // vedettes WordPress (catégorie slider, etc.)
+const WP_FEATURED_SLUGS = ['slider', 'a-la-une', 'featured'];
 const MAX_ENRICH = 20;      // cap article-page fetches per run
 
 const GENERIC_AUTHORS = /^(admin|administrator|administrateur|editor|éditeur|editeur|rédaction|redaction|staff|wordpress|webmaster|collectif|le collectif|tribune|link|daily|exemplaire|quartier libre|zone campus|la pige|le délit|le delit|the link|the tribune|the mcgill daily)$/i;
@@ -284,6 +286,96 @@ function parseFeed(xml) {
   return items;
 }
 
+// === WordPress REST API (vedettes absentes du haut du flux RSS) ================
+function wpApiBase(feedUrl = '') {
+  try {
+    const u = new URL(feedUrl);
+    return `${u.protocol}//${u.host}/wp-json/wp/v2`;
+  } catch {
+    return null;
+  }
+}
+
+function parseJson(text = '') {
+  try {
+    return JSON.parse(text);
+  } catch {
+    return null;
+  }
+}
+
+async function resolveWpCategoryId(base, ref) {
+  if (Number.isInteger(ref)) return ref;
+  const slug = String(ref || '').trim();
+  if (!slug) return null;
+  const cats = parseJson(await fetchText(`${base}/categories?slug=${encodeURIComponent(slug)}`));
+  return Array.isArray(cats) && cats[0]?.id ? cats[0].id : null;
+}
+
+function wpPostToItem(post) {
+  const title = sanitizeTitle(post.title?.rendered || '');
+  const link = post.link || '';
+  const date = post.date ? new Date(post.date) : null;
+  const excerpt = truncateExcerpt(stripHtml(post.excerpt?.rendered || ''), 280);
+  const embeddedAuthor = post._embedded?.author?.[0]?.name || '';
+  const image = post.yoast_head_json?.og_image?.[0]?.url
+    || post._embedded?.['wp:featuredmedia']?.[0]?.source_url
+    || '';
+  if (!title || !link) return null;
+  return {
+    title,
+    link,
+    author: normalizeAuthor(embeddedAuthor),
+    date: date && !isNaN(date) ? date.toISOString() : null,
+    excerpt,
+    image,
+    featured: true,
+  };
+}
+
+async function fetchWpFeaturedPosts(feedUrl, src) {
+  const base = wpApiBase(feedUrl);
+  if (!base) return [];
+
+  const refs = src.wpFeaturedCategories?.length
+    ? src.wpFeaturedCategories
+    : WP_FEATURED_SLUGS;
+
+  const posts = [];
+  const seenIds = new Set();
+
+  for (const ref of refs) {
+    const catId = await resolveWpCategoryId(base, ref);
+    if (!catId) continue;
+    const batch = parseJson(
+      await fetchText(`${base}/posts?categories=${catId}&per_page=${MAX_WP_FEATURED}&_embed`),
+    );
+    if (!Array.isArray(batch)) continue;
+    for (const post of batch) {
+      if (!post?.id || seenIds.has(post.id)) continue;
+      seenIds.add(post.id);
+      posts.push(post);
+    }
+    if (posts.length) break;
+  }
+
+  return posts.map(wpPostToItem).filter(Boolean);
+}
+
+function mergeSourceItems(rssItems, featuredItems) {
+  const seen = new Set();
+  const merged = [];
+  const add = (item) => {
+    const key = item.link;
+    if (!key || seen.has(key)) return;
+    seen.add(key);
+    merged.push(item);
+  };
+  for (const item of featuredItems) add(item);
+  for (const item of rssItems) add(item);
+  return merged.slice(0, MAX_PER_SOURCE);
+}
+
 // === Article-page enrichment (missing author / thin excerpt) ===================
 function metaContent(html, key) {
   const patterns = [
@@ -419,8 +511,14 @@ async function main() {
       console.log('✗ no response');
       continue;
     }
-    const items = parseFeed(xml).slice(0, MAX_PER_SOURCE);
-    console.log(`✓ ${items.length} articles`);
+    const rssItems = parseFeed(xml).slice(0, MAX_PER_SOURCE);
+    let items = rssItems;
+    const featuredItems = await fetchWpFeaturedPosts(src.url, src);
+    if (featuredItems.length) {
+      items = mergeSourceItems(rssItems, featuredItems);
+    }
+    const featNote = featuredItems.length ? ` (+${featuredItems.length} vedettes WP)` : '';
+    console.log(`✓ ${items.length} articles${featNote}`);
     for (const it of items) {
       all.push({
         source: src.name,
