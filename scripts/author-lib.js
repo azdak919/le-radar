@@ -65,9 +65,41 @@ function excerptOpensWithByline(excerpt = '') {
   return /^(?:Par|By)\s+/i.test(String(excerpt).trim());
 }
 
-function reconcileAuthor(item) {
+function normalizeArticleUrl(link = '') {
+  try {
+    const u = new URL(link);
+    u.search = '';
+    u.hash = '';
+    return u.toString();
+  } catch {
+    return String(link).split('?')[0].split('#')[0];
+  }
+}
+
+function findSiblingAuthor(item, allItems = []) {
+  const key = normalizeArticleUrl(item.link);
+  if (!key) return '';
+  for (const other of allItems) {
+    if (other === item) continue;
+    if (normalizeArticleUrl(other.link) !== key) continue;
+    const author = normalizeAuthor(other.author);
+    if (author) return author;
+  }
+  return '';
+}
+
+/** Chroniques à la première personne (« Salut, moi c'est Elora »). */
+function extractFirstPersonAuthor(text = '') {
+  const plain = stripHtml(text);
+  const m = plain.match(/^(?:Salut,?\s+)?moi,?\s+c['']est\s+([\p{Lu}][\p{L}'’.\-]+)/iu)
+    || plain.match(/^je\s+m['']appelle\s+([\p{Lu}][\p{L}'’.\-]+)/iu);
+  return m ? normalizeAuthor(m[1]) : '';
+}
+
+function reconcileAuthor(item, allItems = []) {
   let next = { ...item };
   let changed = false;
+  let reason = null;
 
   const trimmed = trimMangledAuthor(next.author);
   if (trimmed && trimmed !== normalizeAuthor(next.author)) {
@@ -78,7 +110,23 @@ function reconcileAuthor(item) {
   const ex = String(next.excerpt || '').trim();
   const fromExcerpt = extractBylineFromText(ex);
   if (!fromExcerpt.author || !excerptOpensWithByline(ex)) {
-    return { changed, item: next, author: normalizeAuthor(next.author) || null };
+    if (!normalizeAuthor(next.author)) {
+      const sibling = findSiblingAuthor(next, allItems);
+      if (sibling) {
+        next.author = sibling;
+        changed = true;
+        reason = 'filled-from-duplicate';
+      }
+    }
+    if (!normalizeAuthor(next.author)) {
+      const firstPerson = extractFirstPersonAuthor(ex);
+      if (firstPerson) {
+        next.author = firstPerson;
+        changed = true;
+        reason = 'filled-from-first-person';
+      }
+    }
+    return { changed, item: next, author: normalizeAuthor(next.author) || null, reason };
   }
 
   const fieldAuthor = normalizeAuthor(next.author);
@@ -106,7 +154,7 @@ function auditAuthors(items = []) {
   let fixable = 0;
 
   for (const item of items) {
-    const result = reconcileAuthor(item);
+    const result = reconcileAuthor(item, items);
     if (result.changed) {
       fixable += 1;
       mismatches.push({
@@ -128,6 +176,7 @@ module.exports = {
   normalizeAuthor,
   trimMangledAuthor,
   extractBylineFromText,
+  extractFirstPersonAuthor,
   excerptOpensWithByline,
   reconcileAuthor,
   auditAuthors,
