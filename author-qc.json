@@ -1,42 +1,10 @@
 {
-  "updated": "2026-06-27T10:57:56.689Z",
+  "updated": "2026-06-27T11:15:42.467Z",
   "total": 211,
   "withAuthor": 211,
-  "mismatches": 119,
+  "mismatches": 59,
   "ok": true,
   "samples": [
-    {
-      "title": "Ask the Trib: How do I survive summer in my hometown?",
-      "link": "https://www.thetribune.ca/student-life/ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026/?utm_source=rss&utm_medium=rss&utm_campaign=ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026",
-      "source": "The Tribune",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "Brooke Barak",
-      "reason": "page-byline"
-    },
-    {
-      "title": "Kanga I, II, III’ brings Projections: SANKOFA’s afrofuturist vision to Trottier",
-      "link": "https://www.thetribune.ca/a-e/kanga-i-ii-iii-brings-projections-sankofas-afrofuturist-vision-to-trottier-23062026/?utm_source=rss&utm_medium=rss&utm_campaign=kanga-i-ii-iii-brings-projections-sankofas-afrofuturist-vision-to-trottier-23062026",
-      "source": "The Tribune",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "Ellen Lurie",
-      "reason": "page-byline"
-    },
-    {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "link": "https://lapige.atmjonquiere.com/2026/06/22/se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille/?utm_source=rss&utm_medium=rss&utm_campaign=se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille",
-      "source": "La Pige",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Fadoq et Photo : Léa Morin-Letort",
-      "reason": "page-byline"
-    },
-    {
-      "title": "AI’s use in legal decisions poses major risks to the Canadian judicial system’s integrity and neutrality",
-      "link": "https://www.thetribune.ca/opinion/ais-use-in-legal-decisions-poses-major-risks-to-the-canadian-judicial-systems-integrity-and-neutrality-11062026/?utm_source=rss&utm_medium=rss&utm_campaign=ais-use-in-legal-decisions-poses-major-risks-to-the-canadian-judicial-systems-integrity-and-neutrality-11062026",
-      "source": "The Tribune",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "Nello Giuliani",
-      "reason": "page-byline"
-    },
     {
       "title": "Les grands oubliés du handicap : les proches aidants",
       "link": "https://lapige.atmjonquiere.com/2026/05/29/les-grands-oublies-du-handicap-les-proches-aidants/?utm_source=rss&utm_medium=rss&utm_campaign=les-grands-oublies-du-handicap-les-proches-aidants",
@@ -44,22 +12,6 @@
       "fieldAuthor": "La rédaction",
       "canonicalAuthor": "La rédaction",
       "reason": "rss-feed-default-rejected"
-    },
-    {
-      "title": "Know Your Artist: Theodore A. Harris",
-      "link": "https://www.thetribune.ca/a-e/know-your-artist-theodore-a-harris-27052026/?utm_source=rss&utm_medium=rss&utm_campaign=know-your-artist-theodore-a-harris-27052026",
-      "source": "The Tribune",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "Ellen Lurie",
-      "reason": "page-byline"
-    },
-    {
-      "title": "Montreal protestors commemorate the 78th anniversary of the Nakba",
-      "link": "https://www.thetribune.ca/news/montreal-protestors-commemorate-the-78th-anniversary-of-the-nakba-21052026/?utm_source=rss&utm_medium=rss&utm_campaign=montreal-protestors-commemorate-the-78th-anniversary-of-the-nakba-21052026",
-      "source": "The Tribune",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "Ellen Lurie",
-      "reason": "page-byline"
     },
     {
       "title": "Un hommage aux cyclistes décédés sur les routes",
@@ -126,45 +78,93 @@
       "reason": "rss-feed-default-rejected"
     },
     {
-      "title": "Présences invisibles : écrire la ville sans permission",
-      "link": "https://quartierlibre.ca/presences-invisibles-ecrire-la-ville/",
-      "source": "Quartier Libre",
+      "title": "Sans fin(s) : au cœur des troubles du comportement alimentaire",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/sans-fins-au-coeur-des-troubles-du-comportement-alimentaire/",
+      "source": "L'Exemplaire",
       "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Emilie Rizkallah",
+      "canonicalAuthor": "Nathan Brisbois et Elora Veyron-Churlet",
+      "reason": "page-byline-wins-conflict"
+    },
+    {
+      "title": "Sans fin(s): au cœur des troubles du comportement alimentaire",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/sans-fins-au-coeur-des-troubles-du-comportement-alimentaire/?utm_source=rss&utm_medium=rss&utm_campaign=sans-fins-au-coeur-des-troubles-du-comportement-alimentaire",
+      "source": "L'Exemplaire",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Nathan Brisbois et Elora Veyron-Churlet",
+      "reason": "page-byline-wins-conflict"
+    },
+    {
+      "title": "L’ alcool est-il vraiment le nouveau tabac ?",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/lalcool-est-il-vraiment-le-nouveau-tabac/",
+      "source": "L'Exemplaire",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Stella Davies",
+      "reason": "page-byline-wins-conflict"
+    },
+    {
+      "title": "Derrière les étiquettes électroniques , la tarification dynamique ?",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/derriere-les-etiquettes-electroniques-la-tarification-dynamique/",
+      "source": "L'Exemplaire",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Thomas Harton",
+      "reason": "page-byline-wins-conflict"
+    },
+    {
+      "title": "Rachat des armes à feu : le Québec est-il l’ exception canadienne ?",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/rachat-des-armes-a-feu-le-quebec-est-il-lexception-canadienne/",
+      "source": "L'Exemplaire",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Olivier Verreault",
+      "reason": "page-byline-wins-conflict"
+    },
+    {
+      "title": "Les jeunes et les médias d’actualité : une confiance de plus en plus érodée",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/les-jeunes-et-les-medias-dactualite-une-confiance-de-plus-en-plus-erodee/",
+      "source": "L'Exemplaire",
+      "fieldAuthor": null,
+      "canonicalAuthor": "Corinne Goulet",
       "reason": "page-byline"
     },
     {
-      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
-      "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
-      "source": "Quartier Libre",
+      "title": "L’alcool est-il vraiment le nouveau tabac ?",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/lalcool-est-il-vraiment-le-nouveau-tabac/?utm_source=rss&utm_medium=rss&utm_campaign=lalcool-est-il-vraiment-le-nouveau-tabac",
+      "source": "L'Exemplaire",
       "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Samuel Roy",
+      "canonicalAuthor": "Stella Davies",
+      "reason": "page-byline-wins-conflict"
+    },
+    {
+      "title": "Derrière les étiquettes électroniques, la tarification dynamique ?",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/derriere-les-etiquettes-electroniques-la-tarification-dynamique/?utm_source=rss&utm_medium=rss&utm_campaign=derriere-les-etiquettes-electroniques-la-tarification-dynamique",
+      "source": "L'Exemplaire",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Thomas Harton",
+      "reason": "page-byline-wins-conflict"
+    },
+    {
+      "title": "Rachat des armes à feu : le Québec est-il l’exception canadienne ?",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/rachat-des-armes-a-feu-le-quebec-est-il-lexception-canadienne/?utm_source=rss&utm_medium=rss&utm_campaign=rachat-des-armes-a-feu-le-quebec-est-il-lexception-canadienne",
+      "source": "L'Exemplaire",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Olivier Verreault",
+      "reason": "page-byline-wins-conflict"
+    },
+    {
+      "title": "Les jeunes et les médias d’actualité : une confiance de plus en plus érodée",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/les-jeunes-et-les-medias-dactualite-une-confiance-de-plus-en-plus-erodee/?utm_source=rss&utm_medium=rss&utm_campaign=les-jeunes-et-les-medias-dactualite-une-confiance-de-plus-en-plus-erodee",
+      "source": "L'Exemplaire",
+      "fieldAuthor": null,
+      "canonicalAuthor": "Corinne Goulet",
       "reason": "page-byline"
     },
     {
-      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
-      "link": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
-      "source": "Quartier Libre",
+      "title": "Achat de seconde main : une mode dans la mode ?",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/achat-de-seconde-main-une-mode-dans-la-mode/",
+      "source": "L'Exemplaire",
       "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Ulysse Taillard-Hodez",
-      "reason": "page-byline"
-    },
-    {
-      "title": "Un projet de loi rendrait obligatoire le statut d’étudiant·e proche aidant·e",
-      "link": "https://quartierlibre.ca/projet-loi-etudiant-proche-aidante/",
-      "source": "Quartier Libre",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Mohammed Aziz Mestiri",
-      "reason": "page-byline"
-    },
-    {
-      "title": "A final note from the Editor-in-Chief of Volume 45, for the record",
-      "link": "https://www.thetribune.ca/opinion/op-off-the-board/a-final-note-from-the-editor-in-chief-of-volume-45-for-the-record-14052026/?utm_source=rss&utm_medium=rss&utm_campaign=a-final-note-from-the-editor-in-chief-of-volume-45-for-the-record-14052026",
-      "source": "The Tribune",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "Yusur Al-Sharqi",
-      "reason": "page-byline"
+      "canonicalAuthor": "Flavie Durette",
+      "reason": "page-byline-wins-conflict"
     }
   ],
-  "fixed": 119
+  "fixed": 59
 }
