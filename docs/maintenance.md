@@ -83,8 +83,8 @@ La promotion radio est conservative : pas de flux = le candidat reste en file d'
 — éligibilité, découverte RSS vs `html-list`, champs du registre, checklist complète.
 
 Un établissement peut avoir **plusieurs journaux indépendants** (ex. Concordia :
-**The Link** et **The Concordian** — deux rédactions, deux flux, deux filtres ;
-ULaval : **L'Exemplaire** + **ULaval nouvelles**).
+**The Link** et **The Concordian** — deux rédactions, deux flux, deux filtres).
+Seuls les **médias étudiants** sont éligibles (pas les portails institutionnels).
 
 ### Checklist d'intégration
 
@@ -128,8 +128,8 @@ node scripts/add-news-source.js \
   complet du site. Si Concordia whitelist le bot, le flux principal prendra le relais automatiquement.
 - **Auteur générique** : ajouter le nom du journal dans `GENERIC_AUTHORS` (`fetch-news.js`) si le RSS signe « The Concordian » au lieu d'un humain
 - **WordPress vedettes** : champ optionnel `wpFeaturedCategories` (ex. Le Délit → `slider`)
-- **Sans flux RSS** : `fetchMode: "html-list"` + `url` = page de liste (ex. ULaval nouvelles →
-  `https://nouvelles.ulaval.ca/toutes-les-nouvelles`). Voir `scripts/html-list-fetcher.js`.
+- **Sans flux RSS** (média étudiant) : `fetchMode: "html-list"` + `url` = page de liste.
+  Voir `scripts/html-list-fetcher.js`.
 
 ---
 
