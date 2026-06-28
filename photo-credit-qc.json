@@ -1,24 +1,17 @@
 {
-  "updated": "2026-06-28T11:28:07.923Z",
+  "updated": "2026-06-28T12:23:28.515Z",
   "total": 205,
   "withImage": 165,
   "withCredit": 165,
-  "cited": 57,
+  "cited": 58,
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 57,
-  "updatedCount": 57,
+  "checked": 56,
+  "updatedCount": 56,
   "citedNew": 20,
-  "fallbackNew": 37,
+  "fallbackNew": 36,
   "samples": [
-    {
-      "title": "The McGill Community takes on the Montreal International Jazz Festival",
-      "source": "The McGill Daily",
-      "credit": "Photo : Emmanuel Novak-Bélanger",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
     {
       "title": "Ask the Trib: How do I survive summer in my hometown?",
       "source": "The Tribune",
@@ -95,6 +88,13 @@
       "credit": "Photo : Ellen Lurie",
       "cited": true,
       "method": "figcaption-attribution"
+    },
+    {
+      "title": "L’alcool est-il vraiment le nouveau tabac ?",
+      "source": "L'Exemplaire",
+      "credit": "Crédit photo : L'Exemplaire",
+      "cited": false,
+      "method": null
     }
   ]
 }

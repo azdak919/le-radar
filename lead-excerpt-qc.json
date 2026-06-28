@@ -1,11 +1,11 @@
 {
-  "updated": "2026-06-28T11:22:09.507Z",
+  "updated": "2026-06-28T12:14:07.924Z",
   "total": 205,
   "pool": 58,
-  "incomplete": 11,
+  "incomplete": 10,
   "withLeadExcerpt": 66,
-  "candidates": 11,
-  "enriched": 4,
+  "candidates": 10,
+  "enriched": 1,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -28,30 +28,12 @@
       "changed": false
     },
     {
-      "title": "Élections de l’exécutif de l’AÉUM",
-      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
+      "title": "Les femmes MAGA au service du patriarcat",
+      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
       "ok": true,
-      "score": 80,
-      "chars": 865,
-      "sample": "Contacté à plusieurs reprises, Hamza Abu-Alkhair n’a pas donné suite à nos demandes d’entrevue. Sa p",
-      "changed": true
-    },
-    {
-      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
-      "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
-      "ok": true,
-      "score": 100,
-      "chars": 445,
-      "sample": "Le 13 mars dernier, la rappeuse Calamine a dévoilé son nouvel album , Rétrograde . Avec cette quatri",
-      "changed": true
-    },
-    {
-      "title": "Le PIF s’internationalise pour sa 49e édition",
-      "link": "https://lecollectif.ca/a-la-une/le-pif-sinternationalise-pour-sa-49e-edition/",
-      "ok": true,
-      "score": 100,
-      "chars": 591,
-      "sample": "Le plus grand tournoi de balle donnée en Amérique du Nord accueille cette année une vague de joueurs",
+      "score": 96,
+      "chars": 572,
+      "sample": "L a montée en puissance de l’idéologie du mouvement politique Make America Great Again (MAGA) n’est ",
       "changed": true
     },
     {
@@ -61,7 +43,7 @@
       "score": 100,
       "chars": 459,
       "sample": "Le hockey a encore pris beaucoup de place au Québec cette saison. Autant chez les professionnels que",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Ask the Trib: How do I survive summer in my hometown?",
@@ -79,6 +61,24 @@
       "score": 100,
       "chars": 426,
       "sample": "On April 22, the Superior Court of Quebec annulled the August 2025 arbitration Association des Resso",
+      "changed": false
+    },
+    {
+      "title": "Road to the 2026 FIFA World Cup",
+      "link": "https://thelinknewspaper.ca/article/16333",
+      "ok": true,
+      "score": 96,
+      "chars": 531,
+      "sample": "Canadian goalkeeper Maxime Crépeau, who hails from nearby Greenfield Park, appeared emotional during",
+      "changed": false
+    },
+    {
+      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
+      "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
+      "ok": true,
+      "score": 100,
+      "chars": 445,
+      "sample": "Le 13 mars dernier, la rappeuse Calamine a dévoilé son nouvel album , Rétrograde . Avec cette quatri",
       "changed": false
     }
   ]
