@@ -285,6 +285,7 @@ let volumeMuted = false;
 let gainBeforeMute = DEFAULT_GAIN;
 const MAX_GAIN = 2;                 // jusqu'à 200 %
 const VOL_THUMB_PX = 16;
+let volumeSliderDragging = false;
 const boostUnavailable = new Set(); // ids des postes sans CORS
 // Réglages de lecture par poste. CFAK (Sherbrooke) a de petites coupures : on
 // précharge davantage et on reconnecte automatiquement quand le flux décroche.
@@ -1093,6 +1094,7 @@ function bindTuner() {
 
   bindVolumePopover();
   bindVolumeSliderLayout();
+  bindVolumeSliderDrag();
 }
 
 function bindVolumeSliderLayout() {
@@ -1129,6 +1131,7 @@ function bindVolumePopover() {
   });
 
   document.addEventListener('click', (e) => {
+    if (volumeSliderDragging) return;
     if (!TUNER_VOL.contains(e.target)) close();
   });
   document.addEventListener('keydown', (e) => {
@@ -1136,6 +1139,58 @@ function bindVolumePopover() {
   });
   // En repassant en mode large, on referme proprement la bulle.
   VOL_COMPACT.addEventListener('change', (e) => { if (!e.matches) close(); });
+}
+
+/** Téléphone : glissement au doigt fiable (le range natif opacity:0 glisse mal). */
+function bindVolumeSliderDrag() {
+  const slider = TUNER_VOLUME?.closest('.tuner-vol-slider');
+  const track = TUNER_VOLUME?.closest('.tuner-vol-track');
+  if (!slider || !track || !TUNER_VOLUME) return;
+
+  const setGainFromClientX = (clientX) => {
+    const rect = slider.getBoundingClientRect();
+    const thumbPx = getVolThumbPx(track);
+    const travel = Math.max(rect.width - thumbPx, 1);
+    const x = Math.min(Math.max(clientX - rect.left - thumbPx / 2, 0), travel);
+    const ratio = x / travel;
+    const stepped = Math.round(ratio * MAX_GAIN / 0.02) * 0.02;
+    const clamped = Math.min(MAX_GAIN, Math.max(0, stepped));
+    if (Math.abs(parseFloat(TUNER_VOLUME.value) - clamped) < 0.001) return;
+    TUNER_VOLUME.value = String(clamped);
+    TUNER_VOLUME.dispatchEvent(new Event('input', { bubbles: true }));
+  };
+
+  const endDrag = (e) => {
+    if (!volumeSliderDragging) return;
+    track.classList.remove('is-dragging');
+    try { slider.releasePointerCapture(e.pointerId); } catch (_) {}
+    // Retarde la fin pour éviter que le clic document referme la bulle.
+    setTimeout(() => { volumeSliderDragging = false; }, 80);
+  };
+
+  slider.addEventListener('pointerdown', (e) => {
+    if (!VOL_COMPACT.matches || e.button > 0) return;
+    e.preventDefault();
+    volumeSliderDragging = true;
+    track.classList.add('is-dragging');
+    slider.setPointerCapture(e.pointerId);
+    setGainFromClientX(e.clientX);
+  }, { passive: false });
+
+  slider.addEventListener('pointermove', (e) => {
+    if (!volumeSliderDragging) return;
+    setGainFromClientX(e.clientX);
+  });
+
+  slider.addEventListener('pointerup', endDrag);
+  slider.addEventListener('pointercancel', endDrag);
+}
+
+function getVolThumbPx(track) {
+  if (!track) return VOL_THUMB_PX;
+  const raw = getComputedStyle(track).getPropertyValue('--vol-thumb').trim();
+  const n = parseFloat(raw);
+  return Number.isFinite(n) && n > 0 ? n : VOL_THUMB_PX;
 }
 
 function currentIndex() {
@@ -1542,8 +1597,9 @@ function updateVolumeSliderVisual() {
   const width = Math.max(track.clientWidth, slider.clientWidth);
   if (width < 1) return;
 
-  const travel = width - VOL_THUMB_PX;
-  const xMin = VOL_THUMB_PX / 2;
+  const thumbPx = getVolThumbPx(track);
+  const travel = width - thumbPx;
+  const xMin = thumbPx / 2;
   const xMid = xMin + travel * 0.5;
   const xMax = xMin + travel;
   const gain = volumeMuted ? 0 : currentGain;
