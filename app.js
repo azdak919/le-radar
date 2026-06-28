@@ -1064,7 +1064,7 @@ function buildTunerOptions() {
     inGroup.forEach(r => {
       const opt = document.createElement('option');
       opt.value = r.id;
-      opt.textContent = `${r.name} · ${r.institution}`;
+      opt.textContent = `${r.name} · ${formatInstitutionDisplay(r.institution)}`;
       og.appendChild(opt);
     });
     TUNER_SELECT.appendChild(og);
@@ -1884,14 +1884,28 @@ for (const [full, acr] of Object.entries(INSTITUTION_ACRONYMS)) {
   }
 }
 
+/** Capitalisation affichage : Université et Cégep toujours en majuscule initiale. */
+function formatInstitutionDisplay(name = '') {
+  if (!name) return '';
+  return String(name)
+    .replace(/\buniversité\b/giu, 'Université')
+    .replace(/\buniversite\b/giu, 'Université')
+    .replace(/\buniversity\b/giu, 'University')
+    .replace(/\bcégep\b/giu, 'Cégep')
+    .replace(/\bcegep\b/giu, 'Cégep');
+}
+
 /** Nom d'institution au complet pour le sous-titre du syntoniseur. */
 function tunerInstitutionLabel(name = '') {
   if (!name) return '';
   const stripped = name.replace(/\s*\([^)]*\)\s*$/, '').trim();
+  let label;
   if (/^université|^university|^mcgill|^concordia|^cégep|^collège/i.test(stripped)) {
-    return stripped;
+    label = stripped;
+  } else {
+    label = INSTITUTION_FULL_BY_ACRONYM[name] || INSTITUTION_FULL_BY_ACRONYM[stripped] || stripped;
   }
-  return INSTITUTION_FULL_BY_ACRONYM[name] || INSTITUTION_FULL_BY_ACRONYM[stripped] || stripped;
+  return formatInstitutionDisplay(label);
 }
 
 function resolveInstitutionAcronym(name = '') {
@@ -1930,9 +1944,10 @@ function isCegepInstitution(name = '', type = '') {
 function articleInstitutionLabel(name = '', type = '') {
   if (!name) return '';
   if (isQuebecUniversity(name, type)) {
-    return resolveInstitutionAcronym(name) || name;
+    const acr = resolveInstitutionAcronym(name);
+    return acr || formatInstitutionDisplay(name);
   }
-  return name.replace(/\s*\([^)]*\)\s*$/, '').trim() || name;
+  return formatInstitutionDisplay(name.replace(/\s*\([^)]*\)\s*$/, '').trim() || name);
 }
 
 function shortInstitution(name = '', type = '') {
@@ -1956,8 +1971,9 @@ function shortInstitution(name = '', type = '') {
     const inner = paren[1].split(/[–-]/)[0].trim();
     if (inner.length <= 14) return inner;
   }
-  if (isQuebecUniversity(name, type)) return name;
-  return name.length > 24 ? `${name.slice(0, 22)}…` : name;
+  if (isQuebecUniversity(name, type)) return formatInstitutionDisplay(name);
+  const trimmed = name.length > 24 ? `${name.slice(0, 22)}…` : name;
+  return formatInstitutionDisplay(trimmed);
 }
 
 function sourceInfo(src) {
@@ -2105,7 +2121,7 @@ function renderNewsFilters() {
     btn.className = 'filter-btn';
     btn.dataset.source = src;
     btn.style.setProperty('--c', color);
-    btn.title = institution ? `${src} — ${institution}` : src;
+    btn.title = institution ? `${src} — ${formatInstitutionDisplay(institution)}` : src;
     btn.innerHTML = `
       <span class="filter-btn__row">
         <span class="filter-btn__dot" aria-hidden="true"></span>
@@ -2792,7 +2808,7 @@ function buildClientFallbackDataUrl(item) {
   const dark = darkenHex(color);
   const title = cleanTitle(item.title || 'Article');
   const source = item.source || 'Le Radar';
-  const inst = item.institution || '';
+  const inst = item.institution ? formatInstitutionDisplay(item.institution) : '';
   const lines = wrapTitleLines(title, 36, 4);
   const tspans = lines.map((ln, i) =>
     `<tspan x="64" dy="${i === 0 ? 0 : 36}">${escapeHtml(ln)}</tspan>`,
