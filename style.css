@@ -433,6 +433,46 @@ a { color: inherit; }
 .tuner-play .ico-play { margin-left: 2px; }
 .tuner-play .ico-external { width: 18px; height: 18px; }
 
+.tuner-cast {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.72);
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease;
+}
+.tuner-cast:hover {
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+.tuner-cast:active { transform: scale(0.93); }
+.tuner-cast:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+  transform: none;
+}
+.tuner-cast.is-casting {
+  color: #7eb8ff;
+  border-color: rgba(93, 155, 224, 0.62);
+  background: rgba(0, 61, 165, 0.18);
+  box-shadow: 0 0 0 1px rgba(93, 155, 224, 0.22);
+}
+.tuner-cast.is-casting:hover {
+  color: #9ecaff;
+  border-color: rgba(93, 155, 224, 0.78);
+  background: rgba(0, 61, 165, 0.26);
+}
+.tuner-cast svg { width: 20px; height: 20px; display: block; }
+
 .tuner-eq {
   flex-shrink: 0;
   display: none;
