@@ -103,26 +103,28 @@
                 <svg viewBox="0 0 24 24" fill="currentColor" class="ico-vol-mute hidden" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm7.59-3.41L9.17 7H3v6h4l5 5v-6.17l2.59 2.59 1.41-1.42L3.83 3 2.41 4.41 7 9v6h4l5 5v-6.17l1.59 1.59 1.41-1.41L12 12.83V4l-1.41 1.59z"/><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v1.99c3.01.89 5.25 3.71 5.25 7.02z"/></svg>
               </button>
               <div id="tuner-vol-slot" class="tuner-vol-slot">
-                <button id="tuner-vol-mute" class="tuner-vol-mute-btn" type="button" aria-label="Couper le son" aria-pressed="false" title="Couper le son">
-                  <svg viewBox="0 0 24 24" fill="currentColor" class="ico-vol-mute" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm7.59-3.41L9.17 7H3v6h4l5 5v-6.17l2.59 2.59 1.41-1.42L3.83 3 2.41 4.41 7 9v6h4l5 5v-6.17l1.59 1.59 1.41-1.41L12 12.83V4l-1.41 1.59z"/><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v1.99c3.01.89 5.25 3.71 5.25 7.02z"/></svg>
-                </button>
-                <div class="tuner-vol-track">
-                  <div class="tuner-vol-slider">
-                    <div class="tuner-vol-rail" aria-hidden="true">
-                      <div class="tuner-vol-zone tuner-vol-zone--boost"></div>
-                      <div class="tuner-vol-fill tuner-vol-fill--base"></div>
-                      <div class="tuner-vol-fill tuner-vol-fill--boost"></div>
+                <div class="tuner-vol-popover">
+                  <button id="tuner-vol-mute" class="tuner-vol-mute-btn" type="button" aria-label="Couper le son" aria-pressed="false" title="Couper le son">
+                    <svg viewBox="0 0 24 24" fill="currentColor" class="ico-vol-mute" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm7.59-3.41L9.17 7H3v6h4l5 5v-6.17l2.59 2.59 1.41-1.42L3.83 3 2.41 4.41 7 9v6h4l5 5v-6.17l1.59 1.59 1.41-1.41L12 12.83V4l-1.41 1.59z"/><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v1.99c3.01.89 5.25 3.71 5.25 7.02z"/></svg>
+                  </button>
+                  <div class="tuner-vol-track">
+                    <div class="tuner-vol-slider">
+                      <div class="tuner-vol-rail" aria-hidden="true">
+                        <div class="tuner-vol-zone tuner-vol-zone--boost"></div>
+                        <div class="tuner-vol-fill tuner-vol-fill--base"></div>
+                        <div class="tuner-vol-fill tuner-vol-fill--boost"></div>
+                      </div>
+                      <span class="tuner-vol-tick tuner-vol-tick--min" aria-hidden="true"></span>
+                      <span class="tuner-vol-tick tuner-vol-tick--100" aria-hidden="true"></span>
+                      <span class="tuner-vol-tick tuner-vol-tick--max" aria-hidden="true"></span>
+                      <div class="tuner-vol-thumb" aria-hidden="true"></div>
+                      <input id="tuner-volume" type="range" min="0" max="2" step="0.02" value="1" class="tuner-volume" aria-label="Volume — 0 % à gauche, 100 % au centre, 200 % à droite" aria-valuetext="100 %" />
                     </div>
-                    <span class="tuner-vol-tick tuner-vol-tick--min" aria-hidden="true"></span>
-                    <span class="tuner-vol-tick tuner-vol-tick--100" aria-hidden="true"></span>
-                    <span class="tuner-vol-tick tuner-vol-tick--max" aria-hidden="true"></span>
-                    <div class="tuner-vol-thumb" aria-hidden="true"></div>
-                    <input id="tuner-volume" type="range" min="0" max="2" step="0.02" value="1" class="tuner-volume" aria-label="Volume — 0 % à gauche, 100 % au centre, 200 % à droite" aria-valuetext="100 %" />
-                  </div>
-                  <div class="tuner-vol-labels">
-                    <span aria-hidden="true">0 %</span>
-                    <span aria-hidden="true">100 %</span>
-                    <span aria-hidden="true">200 %</span>
+                    <div class="tuner-vol-labels">
+                      <span aria-hidden="true">0 %</span>
+                      <span aria-hidden="true">100 %</span>
+                      <span aria-hidden="true">200 %</span>
+                    </div>
                   </div>
                 </div>
               </div>

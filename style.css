@@ -674,6 +674,8 @@ a { color: inherit; }
   transform: translateX(-100%);
   color: rgba(255, 154, 144, 0.72);
 }
+/* Bureau : le popover interne ne change pas la mise en page en ligne. */
+.tuner-vol-popover { display: contents; }
 .tuner-volume {
   position: absolute;
   inset: 0;
@@ -830,17 +832,16 @@ a { color: inherit; }
 
   .tuner-vol-slot {
     position: absolute;
-    top: calc(100% + 12px);
-    right: -6px;
+    top: calc(100% + 10px);
+    right: 0;
     z-index: 60;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 14px 10px 12px;
+    box-sizing: border-box;
+    width: min(300px, calc(100vw - 20px));
+    min-width: 0;
+    padding: 11px 14px 9px;
     background: #22252c;
     border: 1px solid rgba(255,255,255,0.14);
-    border-radius: 11px;
+    border-radius: 12px;
     box-shadow: 0 14px 34px -14px rgba(0,0,0,0.85);
     opacity: 0;
     transform: translateY(-6px) scale(0.96);
@@ -848,12 +849,12 @@ a { color: inherit; }
     pointer-events: none;
     transition: opacity 0.16s ease, transform 0.16s ease;
   }
-  /* Petite flèche pointant vers l'icône. */
+  /* Petite flèche pointant vers l'icône volume. */
   .tuner-vol-slot::before {
     content: "";
     position: absolute;
     top: -5px;
-    right: 12px;
+    right: 15px;
     width: 10px;
     height: 10px;
     background: #22252c;
@@ -866,14 +867,44 @@ a { color: inherit; }
     transform: none;
     pointer-events: auto;
   }
-  .tuner-vol-slot .tuner-vol-mute-btn { display: flex; }
-  .tuner-vol-slot .tuner-vol-track {
-    flex: 1;
-    min-width: 0;
-    width: 156px;
+  .tuner-vol-popover {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    column-gap: 12px;
+    align-items: start;
+    width: 100%;
   }
-  .tuner-vol-slot .tuner-vol-slider { min-height: 44px; }
-  .tuner-vol-slot .tuner-vol-labels { height: 18px; }
+  .tuner-vol-slot .tuner-vol-mute-btn {
+    display: flex;
+    grid-column: 1;
+    grid-row: 1;
+    width: 34px;
+    height: 34px;
+    margin-top: 6px;
+  }
+  .tuner-vol-slot .tuner-vol-mute-btn .ico-vol-mute {
+    width: 18px;
+    height: 18px;
+  }
+  .tuner-vol-slot .tuner-vol-track {
+    grid-column: 2;
+    grid-row: 1;
+    flex: unset;
+    width: 100%;
+    min-width: 0;
+    gap: 3px;
+  }
+  .tuner-vol-slot .tuner-vol-slider { min-height: 36px; }
+  .tuner-vol-slot .tuner-vol-labels {
+    height: 13px;
+    font-size: 8px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.01em;
+    color: rgba(255, 255, 255, 0.38);
+  }
+  .tuner-vol-slot .tuner-vol-labels > span:nth-child(3) {
+    color: rgba(255, 154, 144, 0.62);
+  }
 
   .tuner-vol.is-open .tuner-vol-btn { color: rgba(255,255,255,0.95); }
 }
@@ -885,11 +916,8 @@ a { color: inherit; }
 
   .tuner-label { display: none; }
 
-  /* Bulle volume : marge gauche pour éviter le clipping du mute. */
   .tuner-vol-slot {
-    right: 0;
-    padding-left: 14px;
-    max-width: min(248px, calc(100vw - 16px));
+    width: min(292px, calc(100vw - 16px));
   }
 
   .tuner.is-playing .tuner-now {
