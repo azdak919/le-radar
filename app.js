@@ -794,11 +794,11 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false) {
   if (isMobileIdleDialPreview()) {
     stopTunerSubRotate();
     wrapper?.classList.remove('is-rotating');
-    TUNER_SUB.classList.remove('is-active');
-    TUNER_SUB_AIR.classList.add('is-active');
-    TUNER_SUB.setAttribute('aria-hidden', 'true');
-    TUNER_SUB_AIR.setAttribute('aria-hidden', 'false');
-    updateNowAirSubAirText(tunerSubAirText, crossfade);
+    TUNER_SUB.classList.add('is-active');
+    TUNER_SUB_AIR.classList.remove('is-active');
+    TUNER_SUB.setAttribute('aria-hidden', 'false');
+    TUNER_SUB_AIR.setAttribute('aria-hidden', 'true');
+    applyDialTextCrossfade(TUNER_SUB, tunerSubAirText, crossfade);
     return;
   }
 
