@@ -231,6 +231,7 @@ const TUNER_SUB_ROTATE_VERY_NARROW_MQ = window.matchMedia?.('(max-width: 359.98p
 const TUNER_VOLUME   = document.getElementById('tuner-volume');
 const TUNER_VOL      = document.getElementById('tuner-vol');
 const TUNER_VOL_TOGGLE = document.getElementById('tuner-vol-toggle');
+const TUNER_VOL_MUTE   = document.getElementById('tuner-vol-mute');
 const VOL_COMPACT    = window.matchMedia('(max-width: 1099.98px)');
 const TUNER_NOWAIR = document.getElementById('tuner-nowair');
 const TUNER_NOWAIR_TITLE = document.getElementById('tuner-nowair-title');
@@ -1093,6 +1094,7 @@ function bindTuner() {
   });
 
   bindVolumePopover();
+  bindVolumePopoverMute();
   bindVolumeSliderLayout();
   bindVolumeSliderDrag();
 }
@@ -1138,7 +1140,18 @@ function bindVolumePopover() {
     if (e.key === 'Escape') close();
   });
   // En repassant en mode large, on referme proprement la bulle.
-  VOL_COMPACT.addEventListener('change', (e) => { if (!e.matches) close(); });
+  VOL_COMPACT.addEventListener('change', (e) => {
+    if (!e.matches) close();
+    updateVolumeUI();
+  });
+}
+
+function bindVolumePopoverMute() {
+  if (!TUNER_VOL_MUTE) return;
+  TUNER_VOL_MUTE.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleVolumeMute();
+  });
 }
 
 /** Glissement tactile fiable (le range natif opacity:0 glisse mal au doigt). */
@@ -1616,21 +1629,41 @@ function updateVolumeSliderVisual() {
   track.classList.toggle('is-boost', gain > 1.001);
 }
 
-function updateVolumeUI() {
-  const icoVol = TUNER_VOL_TOGGLE?.querySelector('.ico-vol');
-  const icoMute = TUNER_VOL_TOGGLE?.querySelector('.ico-vol-mute');
-  TUNER_VOL?.classList.toggle('is-muted', volumeMuted);
+function syncVolumeMuteButton(btn, { pressed = false } = {}) {
+  if (!btn) return;
+  const icoVol = btn.querySelector('.ico-vol');
+  const icoMute = btn.querySelector('.ico-vol-mute');
   icoVol?.classList.toggle('hidden', volumeMuted);
   icoMute?.classList.toggle('hidden', !volumeMuted);
-  if (TUNER_VOL_TOGGLE) {
-    TUNER_VOL_TOGGLE.setAttribute('aria-pressed', String(volumeMuted));
-    TUNER_VOL_TOGGLE.setAttribute(
+  if (pressed) {
+    btn.setAttribute('aria-pressed', String(volumeMuted));
+    btn.setAttribute(
       'aria-label',
       volumeMuted ? 'Réactiver le son' : 'Couper le son',
     );
-    TUNER_VOL_TOGGLE.title = volumeMuted
-      ? 'Réactiver le son'
-      : 'Couper le son — curseur à droite pour amplifier les flux faibles';
+    btn.title = volumeMuted ? 'Réactiver le son' : 'Couper le son';
+  }
+}
+
+function updateVolumeUI() {
+  TUNER_VOL?.classList.toggle('is-muted', volumeMuted);
+  const compact = VOL_COMPACT.matches;
+  syncVolumeMuteButton(TUNER_VOL_MUTE, { pressed: true });
+  syncVolumeMuteButton(TUNER_VOL_TOGGLE, { pressed: !compact });
+  if (TUNER_VOL_TOGGLE) {
+    if (compact) {
+      TUNER_VOL_TOGGLE.removeAttribute('aria-pressed');
+      TUNER_VOL_TOGGLE.setAttribute('aria-label', 'Réglages du volume');
+      TUNER_VOL_TOGGLE.title = 'Réglages du volume';
+    } else {
+      TUNER_VOL_TOGGLE.setAttribute(
+        'aria-label',
+        volumeMuted ? 'Réactiver le son' : 'Couper le son',
+      );
+      TUNER_VOL_TOGGLE.title = volumeMuted
+        ? 'Réactiver le son'
+        : 'Couper le son — curseur à droite pour amplifier les flux faibles';
+    }
   }
   if (TUNER_VOLUME) {
     const pct = volumeMuted ? 0 : Math.round(currentGain * 100);

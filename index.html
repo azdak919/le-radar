@@ -116,10 +116,16 @@
                     <div class="tuner-vol-thumb" aria-hidden="true"></div>
                     <input id="tuner-volume" type="range" min="0" max="2" step="0.02" value="1" class="tuner-volume" aria-label="Volume — 0 % à gauche, 100 % au centre, 200 % à droite" aria-valuetext="100 %" />
                   </div>
-                  <div class="tuner-vol-labels" aria-hidden="true">
-                    <span>0 %</span>
-                    <span>100 %</span>
-                    <span>200 %</span>
+                  <div class="tuner-vol-labels">
+                    <div class="tuner-vol-label-min">
+                      <button id="tuner-vol-mute" class="tuner-vol-mute-btn" type="button" aria-label="Couper le son" aria-pressed="false" title="Couper le son">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="ico-vol" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="ico-vol-mute hidden" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm7.59-3.41L9.17 7H3v6h4l5 5v-6.17l2.59 2.59 1.41-1.42L3.83 3 2.41 4.41 7 9v6h4l5 5v-6.17l1.59 1.59 1.41-1.41L12 12.83V4l-1.41 1.59z"/></svg>
+                      </button>
+                      <span aria-hidden="true">0 %</span>
+                    </div>
+                    <span aria-hidden="true">100 %</span>
+                    <span aria-hidden="true">200 %</span>
                   </div>
                 </div>
               </div>
