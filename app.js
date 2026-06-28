@@ -642,6 +642,11 @@ function isNowAirPanelPreviewMode() {
   return !currentStation && !PREFERS_REDUCED_MOTION?.matches && radios.length > 0;
 }
 
+/** Mobile sans poste : le sous-titre du dial affiche uniquement l'aperçu à l'antenne. */
+function isMobileIdleDialPreview() {
+  return isNowAirPanelPreviewMode() && !!TUNER_SUB_ROTATE_MQ?.matches;
+}
+
 function startNowAirPreview() {
   if (nowAirPreviewTimer || currentStation || !isNowAirPanelPreviewMode()) return;
   if (!nowAirPreviewRadio) pickNowAirPreviewRadio();
@@ -725,6 +730,17 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false) {
   if (!TUNER_SUB || !TUNER_SUB_AIR) return;
   tunerSubAirText = formatNowAirSubLine(title, sub, empty);
   const wrapper = TUNER_SUB.parentElement;
+
+  if (isMobileIdleDialPreview()) {
+    stopTunerSubRotate();
+    wrapper?.classList.remove('is-rotating');
+    TUNER_SUB.classList.remove('is-active');
+    TUNER_SUB_AIR.classList.add('is-active');
+    TUNER_SUB.setAttribute('aria-hidden', 'true');
+    TUNER_SUB_AIR.setAttribute('aria-hidden', 'false');
+    updateNowAirSubAirText(tunerSubAirText, crossfade);
+    return;
+  }
 
   if (!isTunerSubRotateMode()) {
     stopTunerSubRotate();
