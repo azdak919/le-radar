@@ -116,15 +116,20 @@ a { color: inherit; }
 }
 .theme-toggle:hover,
 .masthead-home:hover,
-.masthead-rss:hover {
+.masthead-rss:hover,
+.masthead-ataraxia:hover {
   border-color: var(--accent);
   color: var(--accent);
 }
 .theme-toggle:active,
 .masthead-home:active,
-.masthead-rss:active {
+.masthead-rss:active,
+.masthead-ataraxia:active {
   transform: scale(0.9);
 }
+.masthead-ataraxia { color: #c0392b; }
+.masthead-ataraxia:hover { color: #d44637; }
+.masthead-ataraxia .ico-tomato { width: 16px; height: 16px; }
 .masthead-home.is-active,
 .masthead-home[aria-current="page"] {
   border-color: color-mix(in srgb, var(--accent) 55%, var(--rule));
