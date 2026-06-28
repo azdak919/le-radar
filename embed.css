@@ -231,9 +231,11 @@ html[data-embed="tuner"] .toast {
     top: calc(100% + 10px);
     bottom: auto;
     right: 0;
+    left: auto;
     z-index: 60;
     box-sizing: border-box;
-    width: min(292px, calc(100vw - 16px));
+    width: min(280px, calc(100vw - 16px));
+    max-width: calc(100vw - 16px);
     min-width: 0;
     padding: 12px 14px 10px;
     background: #22252c;
