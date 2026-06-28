@@ -924,6 +924,7 @@ a { color: inherit; }
 .filters-panel {
   position: relative;
   margin: 16px 0 6px;
+  --filters-cols: 5;
 }
 
 .filters {
@@ -931,6 +932,7 @@ a { color: inherit; }
   flex-wrap: wrap;
   gap: 6px;
   margin: 0;
+  align-items: stretch;
 }
 
 .filters-compact[hidden],
@@ -1021,40 +1023,6 @@ a { color: inherit; }
     --filters-collapsed-h: calc(var(--filters-row-h) * 2 + 6px);
   }
 
-  .filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    align-items: stretch;
-  }
-
-  .filter-btn {
-    box-sizing: border-box;
-    flex: 1 1 calc((100% - (var(--filters-cols) - 1) * 6px) / var(--filters-cols));
-    min-width: calc((100% - (var(--filters-cols) - 1) * 6px) / var(--filters-cols));
-    max-width: 100%;
-    transition:
-      flex-basis 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-      min-width 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-      border-color 130ms ease,
-      color 130ms ease,
-      background 130ms ease;
-  }
-
-  .filter-btn__name {
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .filter-btn__inst {
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
   .filters-panel:not(.is-expanded):not(.is-compact) .filters {
     max-height: var(--filters-collapsed-h);
     overflow: hidden;
@@ -1106,17 +1074,25 @@ a { color: inherit; }
 }
 .filter-btn {
   font-family: var(--sans);
+  box-sizing: border-box;
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 2px;
+  flex: 1 1 calc((100% - (var(--filters-cols) - 1) * 6px) / var(--filters-cols));
+  min-width: calc((100% - (var(--filters-cols) - 1) * 6px) / var(--filters-cols));
   padding: 6px 12px 5px;
   border-radius: 12px;
   border: 1px solid var(--rule);
   background: var(--bg);
   color: var(--ink-soft);
   cursor: pointer;
-  transition: border-color 130ms ease, color 130ms ease, background 130ms ease;
+  transition:
+    flex-basis 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    min-width 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 130ms ease,
+    color 130ms ease,
+    background 130ms ease;
   max-width: 100%;
 }
 .filter-btn__row {
@@ -1138,7 +1114,10 @@ a { color: inherit; }
   line-height: 1.2;
   color: var(--ink);
   text-align: left;
-  text-wrap: pretty;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .filter-btn__inst {
   font-size: 10px;
@@ -1147,6 +1126,10 @@ a { color: inherit; }
   color: var(--muted);
   padding-left: 13px;
   text-align: left;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .filter-btn__type {
   font-size: 9px;
