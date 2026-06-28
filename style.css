@@ -707,7 +707,7 @@ a { color: inherit; }
 }
 .tuner-vol-label--min {
   left: calc(var(--vol-thumb) / 2);
-  transform: translateX(-50%);
+  transform: translateX(0);
 }
 .tuner-vol-label--mid {
   left: 50%;
@@ -715,7 +715,7 @@ a { color: inherit; }
 }
 .tuner-vol-label--max {
   left: calc(100% - var(--vol-thumb) / 2);
-  transform: translateX(-50%);
+  transform: translateX(-100%);
   color: rgba(255, 154, 144, 0.72);
 }
 .tuner-cast--bar { display: flex; }
@@ -1140,7 +1140,7 @@ html.is-firefox .tuner-cast--bar.hidden { display: flex !important; }
 
   .tuner-inner:has(.tuner-nowair:not(.hidden)) .tuner-vol-slot {
     min-width: 0;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .tuner-inner:has(.tuner-nowair:not(.hidden)) .tuner-vol-track {
