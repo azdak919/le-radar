@@ -2008,19 +2008,37 @@ function updateVolumeUI() {
   updateVolumeSliderVisual();
 }
 
+function isOutputSilent() {
+  return volumeMuted || currentGain <= 0.001;
+}
+
 /** Applique la valeur du curseur : gain Web Audio si amplifiable, sinon volume natif. */
 function applyGain() {
   const effective = volumeMuted ? 0 : currentGain;
+  const silent = isOutputSilent();
+
   if (audio) {
     if (boostWired && gainNode) {
       audio.volume = 1;
-      try { gainNode.gain.value = effective; } catch {}
+      try {
+        if (audioCtx) gainNode.gain.setValueAtTime(effective, audioCtx.currentTime);
+        else gainNode.gain.value = effective;
+      } catch {
+        try { gainNode.gain.value = effective; } catch {}
+      }
+      // L'élément peut encore fuiter hors du graphe Web Audio (embed iframe, etc.).
+      audio.muted = silent;
     } else {
-      // Sans graphe Web Audio, le volume natif plafonne à 100 %.
-      audio.volume = Math.min(1, effective);
+      audio.muted = silent;
+      audio.volume = silent ? 0 : Math.min(1, effective);
     }
   }
-  TUNER.classList.toggle('is-boosted', !volumeMuted && currentGain > 1.001);
+
+  // Keepalive mobile (WAV / oscillateur) : arrêt quand muet ou 0 %.
+  if (silent) mobilePlayback?.stopKeepalive();
+  else if (isPlaybackActive() && !userPaused) mobilePlayback?.startKeepalive();
+
+  TUNER.classList.toggle('is-boosted', !silent && currentGain > 1.001);
   updateVolumeUI();
 }
 
