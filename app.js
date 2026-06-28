@@ -619,24 +619,26 @@ function formatStationNowAirLabel(radio) {
   return inst ? `${radio.name} · ${inst}` : radio.name;
 }
 
-/** Téléphone uniquement (< 680 px) : acronyme / nom court dans le titre du dial. */
-function isDialPhoneLayout() {
+/* ── Synthoniseur uniquement (#tuner-now-name) — pas articles, filtres ni RSS ── */
+
+/** Téléphone (< 680 px) : acronyme dans le titre du syntoniseur seulement. */
+function isTunerDialPhoneLayout() {
   return !!TUNER_DIAL_PHONE_MQ?.matches;
 }
 
-/** Établissement pour la ligne 1 du dial : abrégé au téléphone, complet en tablette. */
-function dialInstitutionLabel(radio) {
+/** Institution affichée dans le syntoniseur : abrégée au téléphone, complète en tablette. */
+function tunerDialInstitutionLabel(radio) {
   if (!radio) return '';
-  if (isDialPhoneLayout()) {
+  if (isTunerDialPhoneLayout()) {
     return shortInstitution(radio.institution, radio.type);
   }
   return tunerInstitutionLabel(radio.institution);
 }
 
-/** Syntoniseur : nom du poste · établissement. */
-function formatDialStationLine(radio) {
+/** Ligne 1 du syntoniseur (vue compacte) : « poste · établissement ». */
+function tunerDialTitleLine(radio) {
   if (!radio) return tunerSubMeta || 'Radios étudiantes en direct';
-  const inst = dialInstitutionLabel(radio);
+  const inst = tunerDialInstitutionLabel(radio);
   return inst ? `${radio.name} · ${inst}` : radio.name;
 }
 
@@ -792,7 +794,7 @@ function syncDesktopDialPreview(_airTitle, crossfade = false) {
     return;
   }
 
-  const stationLine = formatDialStationLine(nowAirPreviewRadio);
+  const stationLine = tunerDialTitleLine(nowAirPreviewRadio);
   const subText = TUNER_SUB?.querySelector('.tuner-now-sub-text')?.textContent;
   if (!crossfade && stationLine === lastDialCarouselText && subText === stationLine) {
     setTunerNameText('Syntoniser un poste');
@@ -946,7 +948,7 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false) {
     TUNER_SUB.setAttribute('aria-hidden', 'false');
     TUNER_SUB_AIR.setAttribute('aria-hidden', 'true');
     applyDialCompactSub(currentStation, crossfade);
-    setTunerNameText(formatDialStationLine(currentStation), crossfade);
+    setTunerNameText(tunerDialTitleLine(currentStation), crossfade);
     return;
   }
 
@@ -1064,7 +1066,7 @@ function renderTunerNowAir() {
     lastDialCarouselText = '';
     setTunerNameText(
       isDialCompactLayout()
-        ? formatDialStationLine(currentStation)
+        ? tunerDialTitleLine(currentStation)
         : currentStation.name,
     );
   } else if (previewing) {
@@ -1451,7 +1453,7 @@ function selectStation(id, { autoplay = false, openExternal = false } = {}) {
 
   const inst = tunerInstitutionLabel(radio.institution);
   if (isDialCompactLayout()) {
-    setTunerNameText(formatDialStationLine(radio));
+    setTunerNameText(tunerDialTitleLine(radio));
     const subLine = dialCompactSubLineForRadio(radio);
     tunerSubMeta = subLine;
     TUNER_SUB?.parentElement?.classList.toggle('is-empty', !subLine);
