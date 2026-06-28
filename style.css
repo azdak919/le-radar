@@ -720,6 +720,7 @@ a { color: inherit; }
 }
 .tuner-cast--bar { display: flex; }
 html.is-firefox .tuner-cast--bar.hidden { display: flex !important; }
+.tuner-cast--mobile { display: none; }
 .tuner-cast--popover { display: none; }
 /* Bureau : le popover interne ne change pas la mise en page en ligne. */
 .tuner-vol-popover { display: contents; }
@@ -973,6 +974,10 @@ html.is-firefox .tuner-cast--bar.hidden { display: flex !important; }
   html.is-firefox .tuner-cast--popover.hidden { display: flex !important; }
 
   .tuner-vol.is-open .tuner-vol-btn { color: rgba(255,255,255,0.95); }
+
+  /* Tablette : cast dans la barre d'actions (comme bureau). */
+  .tuner-cast--mobile { display: flex; }
+  html.is-firefox .tuner-cast--mobile.hidden { display: flex !important; }
 }
 
 /* Téléphone : pastille EN ONDES masquée, synthétiseur signale l'état live. */
@@ -998,6 +1003,10 @@ html.is-firefox .tuner-cast--bar.hidden { display: flex !important; }
   .tuner-step {
     box-shadow: 0 3px 10px -4px rgba(0,0,0,0.4);
   }
+
+  /* Téléphone : pas assez de place — cast reste dans le popover volume. */
+  .tuner-cast--mobile { display: none !important; }
+  html.is-firefox .tuner-cast--mobile { display: none !important; }
 }
 @media (prefers-reduced-motion: reduce) {
   .tuner-vol-slot { transition: none; }

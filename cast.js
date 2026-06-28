@@ -229,7 +229,7 @@
 
   function init(options) {
     deps = options;
-    castBtns = ['tuner-cast', 'tuner-cast-pop']
+    castBtns = ['tuner-cast', 'tuner-cast-mob', 'tuner-cast-pop']
       .map((id) => document.getElementById(id))
       .filter(Boolean);
     const player = deps.getPlayer?.();
