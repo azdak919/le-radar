@@ -78,11 +78,21 @@ function formatRfc822(date) {
   return d.toUTCString().replace('GMT', '+0000');
 }
 
+function formatInstitutionDisplay(name = '') {
+  if (!name) return '';
+  return String(name)
+    .replace(/\buniversité\b/giu, 'Université')
+    .replace(/\buniversite\b/giu, 'Université')
+    .replace(/\buniversity\b/giu, 'University')
+    .replace(/\bcégep\b/giu, 'Cégep')
+    .replace(/\bcegep\b/giu, 'Cégep');
+}
+
 function institutionLabel(item = {}) {
   const name = String(item.institution || '').trim();
   if (!name) return '';
   if (INSTITUTION_LABELS[name]) return INSTITUTION_LABELS[name];
-  return name.replace(/\s*\([^)]*\)\s*$/, '').trim() || name;
+  return formatInstitutionDisplay(name.replace(/\s*\([^)]*\)\s*$/, '').trim() || name);
 }
 
 function cleanBrief(text = '', max = 520) {
