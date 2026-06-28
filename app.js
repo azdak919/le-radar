@@ -313,6 +313,9 @@ let sourceColors = {};     // source name → accent colour
 let brandColors = { institutions: {}, fallback_palette: ['#003DA5', '#6C2163', '#047857'] };
 let filtersExpanded = false;
 let volSliderResizeObs = null;
+const marqueeTextByEl = new WeakMap();
+let marqueeResizeObs = null;
+let marqueeResizeScheduled = false;
 
 const FILTERS_COLLAPSED_ROWS = 3;
 const FILTERS_ROW_CAPACITY = 3;
@@ -367,6 +370,7 @@ async function init() {
   buildTunerOptions();
   tunerSubMeta = TUNER_SUB?.textContent?.trim() || 'Radios étudiantes en direct';
   initTunerSubRotateListeners();
+  initMarqueeResizeListeners();
   renderTunerNowAir();
   startNowAirTick();
   restoreVolume();
@@ -679,8 +683,8 @@ function applyDialTextCrossfade(el, text, crossfade = false) {
 /** Bureau sans poste : dial synchronisé sur le même poste/émission que « À l'antenne ». */
 function syncDesktopDialPreview(airTitle, crossfade = false) {
   if (!isDesktopIdleDialCarousel() || !nowAirPreviewRadio) {
-    if (!currentStation && TUNER_NAME) {
-      TUNER_NAME.textContent = 'Syntoniser un poste';
+    if (!currentStation) {
+      setTunerNameText('Syntoniser un poste');
     }
     return;
   }
@@ -688,22 +692,12 @@ function syncDesktopDialPreview(airTitle, crossfade = false) {
   const stationLine = formatDialStationLine(nowAirPreviewRadio);
   if (!crossfade && airTitle === lastDialCarouselText
     && TUNER_SUB?.querySelector('.tuner-now-sub-text')?.textContent === stationLine) {
-    if (TUNER_NAME) TUNER_NAME.textContent = airTitle;
+    setTunerNameText(airTitle);
     return;
   }
   lastDialCarouselText = airTitle;
 
-  if (TUNER_NAME) {
-    if (crossfade && !PREFERS_REDUCED_MOTION?.matches) {
-      TUNER_NAME.classList.add('is-crossfading');
-      setTimeout(() => {
-        TUNER_NAME.textContent = airTitle;
-        requestAnimationFrame(() => TUNER_NAME.classList.remove('is-crossfading'));
-      }, NOW_AIR_CROSSFADE_MS);
-    } else {
-      TUNER_NAME.textContent = airTitle;
-    }
-  }
+  setTunerNameText(airTitle, crossfade);
   applyDialTextCrossfade(TUNER_SUB, stationLine, crossfade);
 }
 
@@ -842,6 +836,7 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false) {
 
 function onTunerSubRotateLayoutChange() {
   renderTunerNowAir();
+  scheduleMarqueeRefresh();
 }
 
 function initTunerSubRotateListeners() {
@@ -906,12 +901,12 @@ function renderTunerNowAir() {
     nowAirPreviewRadio = null;
     lastNowAirPreviewId = null;
     lastDialCarouselText = '';
-    if (TUNER_NAME) TUNER_NAME.textContent = currentStation.name;
+    setTunerNameText(currentStation.name);
   } else if (previewing) {
     startNowAirPreview();
   } else {
     stopNowAirPreview();
-    if (TUNER_NAME) TUNER_NAME.textContent = 'Syntoniser un poste';
+    setTunerNameText('Syntoniser un poste');
   }
 }
 
@@ -1058,6 +1053,85 @@ function stepStation(dir) {
   selectStation(next.id, { autoplay: tunerShouldAutoplayNative(next) });
 }
 
+function getMarqueeElements() {
+  return [
+    TUNER_NAME,
+    TUNER_SUB,
+    TUNER_SUB_AIR,
+    TUNER_NOWAIR_TITLE,
+    TUNER_NOWAIR_SUB,
+  ].filter(Boolean);
+}
+
+function measureMarquee(el) {
+  if (!el || PREFERS_REDUCED_MOTION?.matches) return;
+
+  const span = el.querySelector('.tuner-now-sub-text');
+  if (!span) return;
+
+  const available = el.clientWidth;
+  if (!available) return;
+
+  const overflow = span.scrollWidth - available;
+  if (overflow <= 4) {
+    el.classList.remove('is-marquee');
+    el.style.removeProperty('--marquee-shift');
+    el.style.removeProperty('--marquee-duration');
+    return;
+  }
+
+  const distance = overflow + 12;
+  const duration = Math.max(7, distance / 16);
+  el.style.setProperty('--marquee-shift', `-${distance}px`);
+  el.style.setProperty('--marquee-duration', `${duration.toFixed(1)}s`);
+  el.classList.add('is-marquee');
+}
+
+function refreshAllMarquees() {
+  marqueeResizeScheduled = false;
+  getMarqueeElements().forEach((el) => {
+    const text = marqueeTextByEl.get(el);
+    if (text == null) return;
+    if (PREFERS_REDUCED_MOTION?.matches) return;
+    if (!el.querySelector('.tuner-now-sub-text')) {
+      applyMarquee(el, text);
+      return;
+    }
+    measureMarquee(el);
+  });
+}
+
+function scheduleMarqueeRefresh() {
+  if (marqueeResizeScheduled) return;
+  marqueeResizeScheduled = true;
+  requestAnimationFrame(refreshAllMarquees);
+}
+
+function initMarqueeResizeListeners() {
+  if (marqueeResizeObs || typeof ResizeObserver === 'undefined') return;
+
+  const observeTargets = new Set(getMarqueeElements());
+  [
+    TUNER_SUB?.parentElement,
+    TUNER_SUB?.closest('.tuner-now'),
+    TUNER_SUB?.closest('.tuner-dial'),
+    TUNER?.querySelector('.tuner-inner'),
+    TUNER_NOWAIR,
+    TUNER_NOWAIR?.querySelector('.tuner-nowair-body'),
+  ].forEach((el) => { if (el) observeTargets.add(el); });
+
+  marqueeResizeObs = new ResizeObserver(scheduleMarqueeRefresh);
+  observeTargets.forEach((el) => marqueeResizeObs.observe(el));
+
+  window.addEventListener('resize', scheduleMarqueeRefresh, { passive: true });
+  PREFERS_REDUCED_MOTION?.addEventListener?.('change', () => {
+    getMarqueeElements().forEach((el) => {
+      const text = marqueeTextByEl.get(el);
+      if (text != null) applyMarquee(el, text);
+    });
+  });
+}
+
 /**
  * Affiche un texte sur une seule ligne et, s'il dépasse de son conteneur,
  * l'anime en défilement doux droite → gauche (sinon ellipsis). Réutilisé par
@@ -1065,11 +1139,11 @@ function stepStation(dir) {
  */
 function applyMarquee(el, text) {
   if (!el) return;
+  marqueeTextByEl.set(el, text);
   el.classList.remove('is-marquee');
   el.style.removeProperty('--marquee-shift');
   el.style.removeProperty('--marquee-duration');
 
-  // Mouvement réduit : texte simple (ellipsis natif), pas d'animation.
   if (PREFERS_REDUCED_MOTION?.matches) {
     el.textContent = text;
     return;
@@ -1080,19 +1154,20 @@ function applyMarquee(el, text) {
   span.textContent = text;
   el.replaceChildren(span);
 
-  requestAnimationFrame(() => {
-    const available = el.clientWidth;
-    if (!available) return;
-    const overflow = span.scrollWidth - available;
-    if (overflow <= 4) return;
+  requestAnimationFrame(() => measureMarquee(el));
+}
 
-    const distance = overflow + 12;
-    // ~16 px/s : défilement lent et lisible
-    const duration = Math.max(7, distance / 16);
-    el.style.setProperty('--marquee-shift', `-${distance}px`);
-    el.style.setProperty('--marquee-duration', `${duration.toFixed(1)}s`);
-    el.classList.add('is-marquee');
-  });
+function setTunerNameText(text, crossfade = false) {
+  if (!TUNER_NAME) return;
+  if (!crossfade || PREFERS_REDUCED_MOTION?.matches) {
+    applyMarquee(TUNER_NAME, text);
+    return;
+  }
+  TUNER_NAME.classList.add('is-crossfading');
+  setTimeout(() => {
+    applyMarquee(TUNER_NAME, text);
+    requestAnimationFrame(() => TUNER_NAME.classList.remove('is-crossfading'));
+  }, NOW_AIR_CROSSFADE_MS);
 }
 
 /** Sous-titre du syntoniseur (fréquence · institution au complet). */
@@ -1110,7 +1185,7 @@ function selectStation(id, { autoplay = false, openExternal = false } = {}) {
   const external = isExternalListen(radio);
 
   const inst = tunerInstitutionLabel(radio.institution);
-  TUNER_NAME.textContent = radio.name;
+  setTunerNameText(radio.name);
   setTunerSubText(external
     ? `Site externe · ${inst}`
     : `${radio.frequency} · ${inst}`);
