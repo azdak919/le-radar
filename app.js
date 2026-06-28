@@ -231,7 +231,7 @@ const TUNER_SUB_ROTATE_VERY_NARROW_MQ = window.matchMedia?.('(max-width: 359.98p
 const TUNER_VOLUME   = document.getElementById('tuner-volume');
 const TUNER_VOL      = document.getElementById('tuner-vol');
 const TUNER_VOL_TOGGLE = document.getElementById('tuner-vol-toggle');
-const VOL_COMPACT    = window.matchMedia('(max-width: 679.98px)');
+const VOL_COMPACT    = window.matchMedia('(max-width: 1099.98px)');
 const TUNER_NOWAIR = document.getElementById('tuner-nowair');
 const TUNER_NOWAIR_TITLE = document.getElementById('tuner-nowair-title');
 const TUNER_NOWAIR_SUB = document.getElementById('tuner-nowair-sub');
@@ -1110,7 +1110,7 @@ function bindVolumeSliderLayout() {
   schedule();
 }
 
-// Sur mobile, le curseur de volume est masqué : l'icône ouvre une bulle.
+// Sous 1100 px, le curseur est masqué : l'icône ouvre une bulle (libère le synthétiseur).
 function bindVolumePopover() {
   if (!TUNER_VOL_TOGGLE) return;
   const close = () => {
