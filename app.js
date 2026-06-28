@@ -277,9 +277,10 @@ let gainNode = null;
 let mediaSource = null;
 let boostWired = false;             // graphe Web Audio branché sur l'élément courant
 let webAudioSupported = !!(window.AudioContext || window.webkitAudioContext);
-let currentGain = 0.8;              // valeur du curseur (0 → MAX_GAIN)
+const DEFAULT_GAIN = 1;             // 100 % — centre du curseur 0–200 %
+let currentGain = DEFAULT_GAIN;
 let volumeMuted = false;
-let gainBeforeMute = 0.8;
+let gainBeforeMute = DEFAULT_GAIN;
 const MAX_GAIN = 2;                 // jusqu'à 200 %
 const VOL_THUMB_PX = 16;
 const boostUnavailable = new Set(); // ids des postes sans CORS
@@ -1084,7 +1085,7 @@ function rebuildAudio(withBoost) {
 function setVolumeMuted(muted) {
   volumeMuted = muted;
   if (muted) {
-    gainBeforeMute = currentGain > 0 ? currentGain : (gainBeforeMute || 0.8);
+    gainBeforeMute = currentGain > 0 ? currentGain : (gainBeforeMute || DEFAULT_GAIN);
   }
   updateVolumeUI();
   applyGain();
@@ -1197,8 +1198,8 @@ function updateMediaSession(radio, { title, sub } = {}) {
 }
 
 function restoreVolume() {
-  const saved = parseFloat(localStorage.getItem('req-player-vol') ?? '0.8');
-  currentGain = Number.isFinite(saved) ? Math.min(MAX_GAIN, Math.max(0, saved)) : 0.8;
+  const saved = parseFloat(localStorage.getItem('req-player-vol') ?? String(DEFAULT_GAIN));
+  currentGain = Number.isFinite(saved) ? Math.min(MAX_GAIN, Math.max(0, saved)) : DEFAULT_GAIN;
   gainBeforeMute = currentGain;
   TUNER_VOLUME.value = currentGain;
   volumeMuted = false;
