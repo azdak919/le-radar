@@ -1711,12 +1711,20 @@ function updateVolumeSliderVisual() {
   track.classList.toggle('is-boost', gain > 1.001);
 }
 
-function syncVolumeMuteButton(btn, { pressed = false } = {}) {
+function syncVolumeMuteButton(btn, { pressed = false, icon = 'toggle' } = {}) {
   if (!btn) return;
   const icoVol = btn.querySelector('.ico-vol');
   const icoMute = btn.querySelector('.ico-vol-mute');
-  icoVol?.classList.toggle('hidden', volumeMuted);
-  icoMute?.classList.toggle('hidden', !volumeMuted);
+  if (icon === 'mute') {
+    icoVol?.classList.add('hidden');
+    icoMute?.classList.remove('hidden');
+  } else if (icon === 'vol') {
+    icoVol?.classList.remove('hidden');
+    icoMute?.classList.add('hidden');
+  } else {
+    icoVol?.classList.toggle('hidden', volumeMuted);
+    icoMute?.classList.toggle('hidden', !volumeMuted);
+  }
   if (pressed) {
     btn.setAttribute('aria-pressed', String(volumeMuted));
     btn.setAttribute(
@@ -1730,8 +1738,11 @@ function syncVolumeMuteButton(btn, { pressed = false } = {}) {
 function updateVolumeUI() {
   TUNER_VOL?.classList.toggle('is-muted', volumeMuted);
   const compact = VOL_COMPACT.matches;
-  syncVolumeMuteButton(TUNER_VOL_MUTE, { pressed: true });
-  syncVolumeMuteButton(TUNER_VOL_TOGGLE, { pressed: !compact });
+  syncVolumeMuteButton(TUNER_VOL_MUTE, { pressed: true, icon: 'mute' });
+  syncVolumeMuteButton(TUNER_VOL_TOGGLE, {
+    pressed: !compact,
+    icon: compact ? 'vol' : 'mute',
+  });
   if (TUNER_VOL_TOGGLE) {
     if (compact) {
       TUNER_VOL_TOGGLE.removeAttribute('aria-pressed');
