@@ -822,6 +822,32 @@ a { color: inherit; }
     pointer-events: auto;
   }
   .tuner-vol-slot .tuner-vol-track { width: 156px; }
+
+  /* Zone tactile large : le range invisible ne glisse pas bien au doigt sinon. */
+  .tuner-vol-slot .tuner-vol-slider {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    touch-action: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .tuner-vol-slot .tuner-volume {
+    touch-action: none;
+    cursor: pointer;
+  }
+  .tuner-vol-slot .tuner-volume::-webkit-slider-thumb {
+    width: 44px;
+    height: 44px;
+  }
+  .tuner-vol-slot .tuner-volume::-moz-range-thumb {
+    width: 44px;
+    height: 44px;
+  }
+  .tuner-vol-track.is-dragging .tuner-vol-thumb {
+    transition: none;
+  }
+
   .tuner-vol.is-open .tuner-vol-btn { color: rgba(255,255,255,0.95); }
 }
 @media (prefers-reduced-motion: reduce) {
