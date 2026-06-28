@@ -494,8 +494,13 @@ a { color: inherit; }
 }
 .tuner-vol-slider {
   position: relative;
-  height: var(--vol-thumb);
+  min-height: var(--vol-thumb);
   overflow: visible;
+  display: flex;
+  align-items: center;
+  touch-action: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 .tuner-vol-rail {
   position: absolute;
@@ -624,6 +629,7 @@ a { color: inherit; }
   height: 100%;
   margin: 0;
   cursor: pointer;
+  touch-action: none;
   opacity: 0;
   -webkit-appearance: none;
   appearance: none;
