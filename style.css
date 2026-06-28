@@ -441,8 +441,8 @@ a { color: inherit; }
 .tuner-vol.is-muted .tuner-vol-btn { color: rgba(255,255,255,0.38); }
 .tuner-vol-track {
   --vol-thumb: 16px;
-  --vol-ratio: 0.4;
-  --vol-base: 80%;
+  --vol-ratio: 0.5;
+  --vol-base: 100%;
   --vol-boost: 0%;
   width: 132px;
   flex-shrink: 0;
