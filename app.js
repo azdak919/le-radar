@@ -312,6 +312,7 @@ let volSliderResizeObs = null;
 const FILTERS_COLLAPSED_ROWS = 2;
 const FILTERS_ROW_CAPACITY = 3;
 const FILTERS_COLS_NARROW = 420;
+const FILTERS_DESKTOP_DEFAULT_COLS = 5;
 
 const GENERIC_AUTHORS = /^(admin|administrator|administrateur|editor|éditeur|editeur|rédaction|redaction|staff|wordpress|webmaster|collectif|tribune|link|daily|exemplaire|quartier libre|zone campus|la pige|le délit|le delit|the link|the tribune|the mcgill daily)$/i;
 
@@ -1415,8 +1416,17 @@ function sourceInfo(src) {
 }
 
 function filtersColumnCount() {
-  if (!FILTERS_MOBILE.matches || !NEWS_FILTERS) return FILTERS_ROW_CAPACITY;
-  return NEWS_FILTERS.clientWidth < FILTERS_COLS_NARROW ? 2 : 3;
+  if (!NEWS_FILTERS) {
+    return FILTERS_MOBILE.matches ? FILTERS_ROW_CAPACITY : FILTERS_DESKTOP_DEFAULT_COLS;
+  }
+  const w = NEWS_FILTERS.clientWidth;
+  if (FILTERS_MOBILE.matches) {
+    return w < FILTERS_COLS_NARROW ? 2 : 3;
+  }
+  if (w < 680) return 3;
+  if (w < 900) return 4;
+  if (w < 1080) return 5;
+  return 6;
 }
 
 function syncFiltersColumns() {
