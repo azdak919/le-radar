@@ -379,6 +379,9 @@ a { color: inherit; }
 .tuner-now-sub-rotate:not(.is-rotating) > .tuner-now-sub--air {
   display: none;
 }
+.tuner-now-sub-rotate.is-empty {
+  display: none;
+}
 .tuner-now-sub-text {
   display: inline-block;
   white-space: nowrap;
