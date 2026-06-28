@@ -670,8 +670,8 @@ a { color: inherit; }
 }
 .tuner-vol.is-muted .tuner-vol-track { opacity: 0.42; }
 
-/* Bureau : curseur en ligne + bouton circulaire (mute au clic). */
-@media (min-width: 680px) {
+/* Grand bureau (≥1100 px) : curseur volume en ligne + mute au clic sur l'icône. */
+@media (min-width: 1100px) {
   .tuner-now { min-height: 42px; }
 
   .tuner-actions {
@@ -747,28 +747,8 @@ a { color: inherit; }
   }
 }
 
-/* Mobile : mêmes cibles tactiles qu'en bureau (42 px), volume en popover. */
-@media (max-width: 679.98px) {
-  .tuner-inner { padding: 8px var(--pad); gap: 8px; }
-  .tuner-controls { gap: 6px; }
-
-  /* Téléphone : pas de pastille EN ONDES — le synthoniseur signale l'état live. */
-  .tuner-label { display: none; }
-
-  .tuner.is-playing .tuner-now {
-    border-color: rgba(255, 125, 110, 0.7);
-    background: rgba(200, 16, 46, 0.1);
-    box-shadow: 0 0 0 1px rgba(200, 16, 46, 0.22);
-  }
-  .tuner.is-external .tuner-now {
-    border-color: rgba(93, 155, 224, 0.55);
-    background: rgba(0, 61, 165, 0.1);
-  }
-
-  .tuner-step {
-    box-shadow: 0 3px 10px -4px rgba(0,0,0,0.4);
-  }
-
+/* Tablette / mobile : volume en popover — libère l'espace du synthétiseur. */
+@media (max-width: 1099.98px) {
   .tuner-now { min-height: 42px; }
 
   .tuner-actions {
@@ -840,6 +820,28 @@ a { color: inherit; }
   .tuner-vol-slot .tuner-vol-slider { min-height: 44px; }
 
   .tuner-vol.is-open .tuner-vol-btn { color: rgba(255,255,255,0.95); }
+}
+
+/* Téléphone : pastille EN ONDES masquée, synthétiseur signale l'état live. */
+@media (max-width: 679.98px) {
+  .tuner-inner { padding: 8px var(--pad); gap: 8px; }
+  .tuner-controls { gap: 6px; }
+
+  .tuner-label { display: none; }
+
+  .tuner.is-playing .tuner-now {
+    border-color: rgba(255, 125, 110, 0.7);
+    background: rgba(200, 16, 46, 0.1);
+    box-shadow: 0 0 0 1px rgba(200, 16, 46, 0.22);
+  }
+  .tuner.is-external .tuner-now {
+    border-color: rgba(93, 155, 224, 0.55);
+    background: rgba(0, 61, 165, 0.1);
+  }
+
+  .tuner-step {
+    box-shadow: 0 3px 10px -4px rgba(0,0,0,0.4);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .tuner-vol-slot { transition: none; }
