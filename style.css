@@ -116,8 +116,7 @@ a { color: inherit; }
 }
 .theme-toggle:hover,
 .masthead-home:hover,
-.masthead-rss:hover,
-.masthead-ataraxia:hover {
+.masthead-rss:hover {
   border-color: var(--accent);
   color: var(--accent);
 }
@@ -127,9 +126,21 @@ a { color: inherit; }
 .masthead-ataraxia:active {
   transform: scale(0.9);
 }
-.masthead-ataraxia { color: #c0392b; }
-.masthead-ataraxia:hover { color: #d44637; }
-.masthead-ataraxia .ico-tomato { width: 16px; height: 16px; }
+/* Ataraxia : seul bouton rouge du header (tomate Pomodoro, hors thème accent). */
+.masthead-ataraxia {
+  border-color: color-mix(in srgb, #c8102e 35%, var(--rule));
+}
+.masthead-ataraxia:hover {
+  border-color: #c8102e;
+  background: color-mix(in srgb, #c8102e 10%, transparent);
+}
+.masthead-ataraxia .masthead-tomato {
+  font-size: 15px;
+  line-height: 1;
+  display: block;
+  /* Rendu couleur natif de l'emoji tomate 🍅 */
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+}
 .masthead-home.is-active,
 .masthead-home[aria-current="page"] {
   border-color: color-mix(in srgb, var(--accent) 55%, var(--rule));
