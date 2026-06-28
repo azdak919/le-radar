@@ -630,16 +630,15 @@ function isDialCompactLayout() {
   return !!TUNER_SUB_ROTATE_MQ?.matches;
 }
 
-/** Ligne 2 du dial compact : fréquence ou « À l'antenne » (institution sur la ligne 1). */
+/** Ligne 2 du dial compact : uniquement « À l'antenne » ou slogan (pas Web, pas institution). */
 function formatDialCompactSubLine(radio, title, sub, empty) {
-  if (!radio) return tunerSubMeta || 'Radios étudiantes en direct';
+  if (!radio) return 'Radios étudiantes en direct';
   const airLine = formatNowAirSubLine(title, sub, empty);
   const genericListen = `Vous écoutez ${radio.name}`;
-  const freqLine = isExternalListen(radio) ? 'Site externe' : (radio.frequency || 'Web');
-  if (!empty && airLine && airLine !== genericListen && airLine !== freqLine) {
+  if (!empty && airLine && airLine !== genericListen) {
     return airLine;
   }
-  return freqLine;
+  return radioSlogan(radio) || 'En direct';
 }
 
 function formatPreviewNowAir(radio, { omitStation = false } = {}) {
@@ -854,7 +853,7 @@ function setTunerSubRotateActive(showAir) {
 }
 
 /**
- * Compact (< 1100 px) + poste : ligne 1 = poste · institution, ligne 2 = fréquence ou antenne.
+ * Compact (< 1100 px) + poste : ligne 1 = poste · institution, ligne 2 = antenne ou slogan.
  * Bureau : ligne 1 = poste, ligne 2 = fréquence · institution ; panneau latéral pour l'antenne.
  */
 function updateNowAirSubAirText(text, crossfade = false) {
@@ -1414,7 +1413,7 @@ function selectStation(id, { autoplay = false, openExternal = false } = {}) {
   const inst = tunerInstitutionLabel(radio.institution);
   if (isDialCompactLayout()) {
     setTunerNameText(formatDialStationLine(radio));
-    setTunerSubText(external ? 'Site externe' : (radio.frequency || 'Web'));
+    setTunerSubText(radioSlogan(radio) || 'En direct');
   } else {
     setTunerNameText(radio.name);
     setTunerSubText(external
