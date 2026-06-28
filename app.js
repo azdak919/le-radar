@@ -226,6 +226,7 @@ const TUNER_NAME     = document.getElementById('tuner-now-name');
 const TUNER_SUB      = document.getElementById('tuner-now-sub');
 const TUNER_SUB_AIR  = document.getElementById('tuner-now-sub-air');
 const TUNER_SUB_ROTATE_MQ = window.matchMedia?.('(max-width: 1099.98px)');
+const TUNER_DIAL_PHONE_MQ = window.matchMedia?.('(max-width: 679.98px)');
 const TUNER_SUB_ROTATE_NARROW_MQ = window.matchMedia?.('(max-width: 479.98px)');
 const TUNER_SUB_ROTATE_VERY_NARROW_MQ = window.matchMedia?.('(max-width: 359.98px)');
 const TUNER_VOLUME   = document.getElementById('tuner-volume');
@@ -618,10 +619,24 @@ function formatStationNowAirLabel(radio) {
   return inst ? `${radio.name} · ${inst}` : radio.name;
 }
 
-/** Syntoniseur : nom du poste · établissement au complet (ou acronyme si déjà court). */
+/** Téléphone uniquement (< 680 px) : acronyme / nom court dans le titre du dial. */
+function isDialPhoneLayout() {
+  return !!TUNER_DIAL_PHONE_MQ?.matches;
+}
+
+/** Établissement pour la ligne 1 du dial : abrégé au téléphone, complet en tablette. */
+function dialInstitutionLabel(radio) {
+  if (!radio) return '';
+  if (isDialPhoneLayout()) {
+    return shortInstitution(radio.institution, radio.type);
+  }
+  return tunerInstitutionLabel(radio.institution);
+}
+
+/** Syntoniseur : nom du poste · établissement. */
 function formatDialStationLine(radio) {
   if (!radio) return tunerSubMeta || 'Radios étudiantes en direct';
-  const inst = tunerInstitutionLabel(radio.institution);
+  const inst = dialInstitutionLabel(radio);
   return inst ? `${radio.name} · ${inst}` : radio.name;
 }
 
@@ -869,7 +884,7 @@ function setTunerSubRotateActive(showAir) {
 }
 
 /**
- * Compact (< 1100 px) + poste : ligne 1 = poste · institution, ligne 2 = antenne ou slogan.
+ * Compact (< 1100 px) + poste : ligne 1 = poste · institution, ligne 2 = antenne / à venir / slogan.
  * Bureau : ligne 1 = poste, ligne 2 = fréquence · institution ; panneau latéral pour l'antenne.
  */
 function updateNowAirSubAirText(text, crossfade = false) {
@@ -982,6 +997,7 @@ function onTunerSubRotateLayoutChange() {
 
 function initTunerSubRotateListeners() {
   TUNER_SUB_ROTATE_MQ?.addEventListener?.('change', onTunerSubRotateLayoutChange);
+  TUNER_DIAL_PHONE_MQ?.addEventListener?.('change', onTunerSubRotateLayoutChange);
   TUNER_SUB_ROTATE_NARROW_MQ?.addEventListener?.('change', onTunerSubRotateLayoutChange);
   TUNER_SUB_ROTATE_VERY_NARROW_MQ?.addEventListener?.('change', onTunerSubRotateLayoutChange);
   PREFERS_REDUCED_MOTION?.addEventListener?.('change', onTunerSubRotateLayoutChange);
