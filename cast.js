@@ -37,6 +37,15 @@
     return airPlayAvailable || chromecastAvailable;
   }
 
+  function isCasting() {
+    const player = deps?.getPlayer?.();
+    return chromecastSessionActive || !!player?.webkitCurrentPlaybackTargetIsWireless;
+  }
+
+  function notifyCastStateChange() {
+    deps?.onCastStateChange?.();
+  }
+
   function updateButton() {
     if (!castBtns.length) return;
     const station = deps?.getStation?.();
@@ -46,7 +55,7 @@
     const show = available || showOnFirefox;
     const unavailable = showOnFirefox;
     const player = deps.getPlayer?.();
-    const casting = chromecastSessionActive || !!player?.webkitCurrentPlaybackTargetIsWireless;
+    const casting = isCasting();
     const activeTitle = casting
       ? 'Arrêter la diffusion externe'
       : 'Diffuser sur un appareil (AirPlay ou Chromecast)';
@@ -74,6 +83,7 @@
     });
     player.addEventListener('webkitcurrentplaybacktargetiswirelesschanged', () => {
       updateButton();
+      notifyCastStateChange();
     });
     if (typeof player.webkitSetPresentationMode === 'function') {
       player.addEventListener('webkitpresentationmodechanged', () => updateButton());
@@ -107,6 +117,7 @@
       () => {
         chromecastSessionActive = true;
         updateButton();
+        notifyCastStateChange();
       },
       (err) => {
         console.warn('Cast loadMedia failed', err);
@@ -134,9 +145,11 @@
           localWasPlaying = !!deps.isPlaying?.();
           deps.pauseLocal?.();
           loadCastMedia();
+          notifyCastStateChange();
         } else if (st === cast.framework.SessionState.SESSION_ENDED) {
           chromecastSessionActive = false;
           updateButton();
+          notifyCastStateChange();
           if (localWasPlaying && !deps.isUserPaused?.()) {
             const s = deps.getStation?.();
             if (s) deps.playStation?.(s);
@@ -172,6 +185,7 @@
     } catch {}
     chromecastSessionActive = false;
     updateButton();
+    notifyCastStateChange();
   }
 
   async function showPicker() {
@@ -240,7 +254,12 @@
     endSession: endChromecastSession,
     pauseRemote() {
       endChromecastSession();
+      const player = deps?.getPlayer?.();
+      if (player && !player.paused) {
+        try { player.pause(); } catch {}
+      }
     },
+    isCasting,
     isChromecasting: () => chromecastSessionActive,
   };
 })();

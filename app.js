@@ -1075,7 +1075,7 @@ function renderTunerNowAir() {
   updateNowAirPanel(title, sub, crossfadePreview);
   syncDesktopDialPreview(title, crossfadePreview);
   syncTunerSubRotate(title, sub, empty, crossfadePreview);
-  if (currentStation && isPlaying()) {
+  if (currentStation && isPlaybackActive()) {
     updateMediaSession(currentStation, empty ? {} : { title, sub });
   }
 
@@ -1122,7 +1122,7 @@ function syncNowPlayingPoll() {
     clearInterval(nowPlayingPollTimer);
     nowPlayingPollTimer = null;
   }
-  if (currentStation && getPlayableStream(currentStation) && isPlaying()) {
+  if (currentStation && getPlayableStream(currentStation) && isPlaybackActive()) {
     nowPlayingPollTimer = setInterval(refreshNowPlayingCache, 180000);
   }
 }
@@ -1523,7 +1523,7 @@ function togglePlay() {
     openListenWindow(currentStation);
     return;
   }
-  if (isPlaying()) {
+  if (isPlaybackActive()) {
     pauseByUser();
   } else {
     userPaused = false;
@@ -1577,15 +1577,23 @@ function isPlaying() {
   return audio && !audio.paused && !!audio.src;
 }
 
+function isCasting() {
+  return !!window.RadarCast?.isCasting?.();
+}
+
+function isPlaybackActive() {
+  return isPlaying() || isCasting();
+}
+
 function updatePlayUI() {
-  const playing = isPlaying();
+  const active = isPlaybackActive();
   const external = !!currentStation && isExternalListen(currentStation);
-  ICO_PLAY.classList.toggle('hidden', playing || external);
-  ICO_PAUSE.classList.toggle('hidden', !playing);
-  ICO_EXTERNAL?.classList.toggle('hidden', !external || playing);
-  TUNER_PLAY.classList.toggle('is-external', external && !playing);
-  TUNER.classList.toggle('is-playing', playing);
-  TUNER.classList.toggle('is-external', external && !playing);
+  ICO_PLAY.classList.toggle('hidden', active || external);
+  ICO_PAUSE.classList.toggle('hidden', !active);
+  ICO_EXTERNAL?.classList.toggle('hidden', !external || active);
+  TUNER_PLAY.classList.toggle('is-external', external && !active);
+  TUNER.classList.toggle('is-playing', active);
+  TUNER.classList.toggle('is-external', external && !active);
   renderTunerNowAir();
   syncNowPlayingPoll();
   syncMediaSessionPlaybackState();
@@ -1633,7 +1641,7 @@ function pauseByUser() {
 
 function syncMediaSessionPlaybackState() {
   if (!('mediaSession' in navigator)) return;
-  navigator.mediaSession.playbackState = isPlaying() ? 'playing' : 'paused';
+  navigator.mediaSession.playbackState = isPlaybackActive() ? 'playing' : 'paused';
 }
 
 function syncMediaSessionLivePosition() {
@@ -1916,6 +1924,7 @@ function setupAudio() {
     },
     buildMediaSessionMeta: buildStationMediaMeta,
     showToast,
+    onCastStateChange: updatePlayUI,
   });
 }
 
