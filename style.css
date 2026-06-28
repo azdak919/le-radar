@@ -477,8 +477,8 @@ a { color: inherit; }
   transition: color 0.15s ease, background 0.15s ease;
 }
 .tuner-vol-btn:hover { color: rgba(255,255,255,0.85); }
-.tuner-vol-btn .ico-vol-mute { width: 16px; height: 16px; display: block; overflow: visible; }
-.ico-vol-mute .ico-mute-slash { stroke: currentColor; stroke-width: 3; stroke-linecap: round; }
+.tuner-vol-btn .ico-vol,
+.tuner-vol-btn .ico-vol-mute { width: 16px; height: 16px; display: block; }
 /* L'icône reflète la zone d'amplification (curseur masqué sur mobile). */
 .tuner.is-boosted .tuner-vol-btn { color: #ff7d6e; }
 .tuner-vol.is-muted .tuner-vol-btn[aria-pressed="true"] {
@@ -787,6 +787,7 @@ a { color: inherit; }
     border-color: rgba(255,255,255,0.28);
   }
   .tuner-vol-btn:active { transform: scale(0.93); }
+  .tuner-vol-btn .ico-vol,
   .tuner-vol-btn .ico-vol-mute { width: 20px; height: 20px; }
   .tuner.is-boosted .tuner-vol-btn {
     color: #ff7d6e;
