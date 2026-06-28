@@ -921,57 +921,52 @@ html.is-firefox .tuner-cast--bar.hidden { display: flex !important; }
     pointer-events: auto;
   }
   .tuner-vol-popover {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 0;
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    grid-template-rows: 34px auto;
+    column-gap: 8px;
+    row-gap: 2px;
+    align-items: center;
     width: 100%;
+  }
+  .tuner-vol-popover:has(.tuner-cast--popover:not(.hidden)),
+  html.is-firefox .tuner-vol-popover {
+    grid-template-columns: 34px minmax(0, 1fr) 34px;
+  }
+  /* display:contents — curseur et libellés sur la grille ; boutons sur la même ligne. */
+  .tuner-vol-slot .tuner-vol-track {
+    display: contents;
   }
   .tuner-vol-slot .tuner-vol-mute-btn {
     display: flex;
-    flex: 0 0 34px;
+    grid-column: 1;
+    grid-row: 1;
     width: 34px;
     height: 34px;
     margin: 0;
+    align-self: center;
   }
   .tuner-vol-slot .tuner-vol-mute-btn .ico-vol-mute {
     width: 18px;
     height: 18px;
   }
-  .tuner-vol-slot .tuner-vol-track {
-    position: relative;
-    flex: 1 1 auto;
-    min-width: 0;
-    width: auto;
-    gap: 0;
-    padding-bottom: 14px;
-  }
-  /* La piste rejoint le centre de chaque bouton (34 px ÷ 2 = 17 px). */
   .tuner-vol-slot .tuner-vol-slider {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
     min-height: 34px;
     height: 34px;
-    margin-left: -17px;
-    width: calc(100% + 17px);
-  }
-  .tuner-vol-popover:has(.tuner-cast--popover:not(.hidden)) .tuner-vol-slider,
-  html.is-firefox .tuner-vol-popover .tuner-vol-slider {
-    margin-right: -17px;
-    width: calc(100% + 34px);
+    min-width: 0;
   }
   .tuner-vol-slot .tuner-vol-labels {
-    position: absolute;
-    left: -17px;
-    right: 0;
-    bottom: 0;
+    grid-column: 2;
+    grid-row: 2;
+    position: static;
     height: 12px;
     font-size: 8px;
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.01em;
     color: rgba(255, 255, 255, 0.38);
-  }
-  .tuner-vol-popover:has(.tuner-cast--popover:not(.hidden)) .tuner-vol-labels,
-  html.is-firefox .tuner-vol-popover .tuner-vol-labels {
-    right: -17px;
   }
   .tuner-vol-slot .tuner-vol-label--max {
     color: rgba(255, 154, 144, 0.62);
@@ -979,10 +974,12 @@ html.is-firefox .tuner-cast--bar.hidden { display: flex !important; }
   .tuner-cast--bar { display: none !important; }
   .tuner-cast--popover {
     display: none;
-    flex: 0 0 34px;
+    grid-column: 3;
+    grid-row: 1;
     width: 34px;
     height: 34px;
     margin: 0;
+    align-self: center;
   }
   html.is-firefox .tuner-cast--popover {
     display: flex;
