@@ -608,15 +608,46 @@ a { color: inherit; }
   top: 0;
   white-space: nowrap;
 }
-.tuner-vol-labels span:nth-child(1) {
+.tuner-vol-label-min {
+  position: absolute;
+  top: 0;
   left: var(--vol-x-min, 8px);
-  transform: translateX(0);
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
 }
-.tuner-vol-labels span:nth-child(2) {
+.tuner-vol-mute-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 120ms ease, background 120ms ease;
+}
+.tuner-vol-mute-btn .ico-vol,
+.tuner-vol-mute-btn .ico-vol-mute { width: 14px; height: 14px; display: block; }
+.tuner-vol-mute-btn:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.08);
+}
+.tuner-vol-mute-btn:active { transform: scale(0.92); }
+.tuner-vol.is-muted .tuner-vol-mute-btn { color: rgba(255, 255, 255, 0.38); }
+.tuner-vol.is-muted .tuner-vol-mute-btn[aria-pressed="true"] { color: #ff9a90; }
+.tuner-vol-labels > span:nth-child(2) {
   left: var(--vol-x-mid, 50%);
   transform: translateX(-50%);
 }
-.tuner-vol-labels span:nth-child(3) {
+.tuner-vol-labels > span:nth-child(3) {
   left: var(--vol-x-max, calc(100% - 8px));
   transform: translateX(-100%);
   color: rgba(255, 154, 144, 0.72);
@@ -818,6 +849,8 @@ a { color: inherit; }
   }
   .tuner-vol-slot .tuner-vol-track { width: 156px; }
   .tuner-vol-slot .tuner-vol-slider { min-height: 44px; }
+  .tuner-vol-labels { height: 18px; }
+  .tuner-vol-mute-btn { display: flex; }
 
   .tuner-vol.is-open .tuner-vol-btn { color: rgba(255,255,255,0.95); }
 }
