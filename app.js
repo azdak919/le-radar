@@ -284,16 +284,9 @@ let webAudioSupported = !!(window.AudioContext || window.webkitAudioContext);
 // Web Audio suspend l'AudioContext à l'écran verrouillé → lecture native seule sur mobile.
 const MOBILE_PLAYBACK = window.matchMedia('(hover: none) and (pointer: coarse)').matches
   || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
-  || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 let userPaused = false;
+let mobilePlayback = null;
 const playerListenersAttached = new WeakSet();
-// Keepalive silencieux (Ataraxia) : session audio active à l'écran verrouillé.
-let keepaliveCtx = null;
-let keepaliveOsc = null;
-let keepaliveGain = null;
-let keepaliveAudio = null;
-let keepaliveBlobUrl = null;
 const DEFAULT_GAIN = 1;             // 100 % — centre du curseur 0–200 %
 let currentGain = DEFAULT_GAIN;
 let volumeMuted = false;
@@ -307,7 +300,6 @@ const boostUnavailable = new Set(); // ids des postes sans CORS
 const STATION_PLAYBACK = {
   cfak: { resilient: true },
 };
-let stallWatchdog = null;
 let reconnectTries = 0;
 let listenWindow = null;
 let listenWindowId = null;
@@ -1547,15 +1539,16 @@ async function play(radio) {
   const wantBoost = wantsAudioBoost() && !boostUnavailable.has(radio.id);
   if (wantBoost !== boostWired) rebuildAudio(wantBoost);
   reconnectTries = 0;
-  // Plus de tampon pour les flux sujets aux coupures (ex. CFAK).
-  audio.preload = STATION_PLAYBACK[radio.id]?.resilient ? 'auto' : 'none';
+  mobilePlayback?.resetReconnectTries();
+  audio.preload = mobilePlayback?.getMobilePreload(!!STATION_PLAYBACK[radio.id]?.resilient)
+    ?? (STATION_PLAYBACK[radio.id]?.resilient ? 'auto' : 'none');
   try {
     if (audioCtx && audioCtx.state === 'suspended') { try { await audioCtx.resume(); } catch {} }
     if (audio.src !== url) audio.src = url;
     syncMediaSessionPlaybackState();
     syncMediaSessionLivePosition();
     await audio.play();
-    startPlaybackKeepalive();
+    mobilePlayback?.onPlayStart();
     syncMediaSessionPlaybackState();
     applyGain();
     updatePlayUI();
@@ -1565,10 +1558,9 @@ async function play(radio) {
 }
 
 function stopPlayback({ keepStation = false } = {}) {
-  clearStallWatchdog();
   reconnectTries = 0;
   userPaused = false;
-  stopPlaybackKeepalive();
+  mobilePlayback?.onPlayStop();
   window.RadarCast?.endSession?.();
   if (audio) {
     suppressAudioError = true;
@@ -1621,7 +1613,7 @@ function getPlayerElement() {
 
 function pauseForCast() {
   if (!audio) return;
-  stopPlaybackKeepalive();
+  mobilePlayback?.stopKeepalive();
   suppressAudioError = true;
   try { audio.pause(); } catch {}
   suppressAudioError = false;
@@ -1631,7 +1623,7 @@ function pauseForCast() {
 function pauseByUser() {
   userPaused = true;
   window.RadarCast?.pauseRemote?.();
-  stopPlaybackKeepalive();
+  mobilePlayback?.onUserPause();
   if (!audio) { updatePlayUI(); return; }
   suppressAudioError = true;
   try { audio.pause(); } catch {}
@@ -1655,146 +1647,31 @@ function syncMediaSessionLivePosition() {
   } catch {}
 }
 
-function setPlaybackAudioSession() {
-  try {
-    if (navigator.audioSession) navigator.audioSession.type = 'playback';
-  } catch {}
-}
-
-function releasePlaybackAudioSession() {
-  try {
-    if (navigator.audioSession) navigator.audioSession.type = 'auto';
-  } catch {}
-}
-
-function stopKeepaliveOsc() {
-  if (keepaliveOsc) {
-    try { keepaliveOsc.stop(); } catch {}
-    keepaliveOsc = null;
-  }
-  if (keepaliveGain) {
-    try { keepaliveGain.disconnect(); } catch {}
-    keepaliveGain = null;
-  }
-}
-
-function encodeSilentKeepaliveWav(seconds = 2) {
-  const sampleRate = 44100;
-  const n = sampleRate * seconds;
-  const samples = new Float32Array(n);
-  const freq = 19500;
-  for (let i = 0; i < n; i++) {
-    samples[i] = Math.sin(2 * Math.PI * freq * i / sampleRate) * 0.001;
-  }
-  const buf = new ArrayBuffer(44 + n * 2);
-  const v = new DataView(buf);
-  const w = (o, s) => { for (let i = 0; i < s.length; i++) v.setUint8(o + i, s.charCodeAt(i)); };
-  w(0, 'RIFF'); v.setUint32(4, 36 + n * 2, true); w(8, 'WAVE');
-  w(12, 'fmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true);
-  v.setUint16(22, 1, true); v.setUint32(24, sampleRate, true);
-  v.setUint32(28, sampleRate * 2, true); v.setUint16(32, 2, true);
-  v.setUint16(34, 16, true); w(36, 'data'); v.setUint32(40, n * 2, true);
-  for (let i = 0; i < n; i++) {
-    const s = Math.max(-1, Math.min(1, samples[i]));
-    v.setInt16(44 + i * 2, (s < 0 ? s * 0x8000 : s * 0x7FFF) | 0, true);
-  }
-  return new Blob([buf], { type: 'audio/wav' });
-}
-
-function stopPlaybackKeepalive() {
-  releasePlaybackAudioSession();
-  stopKeepaliveOsc();
-  if (keepaliveAudio) {
-    try { keepaliveAudio.pause(); } catch {}
-  }
-  if (keepaliveCtx) {
-    try { keepaliveCtx.close(); } catch {}
-    keepaliveCtx = null;
-  }
-}
-
-function startPlaybackKeepalive() {
-  if (!MOBILE_PLAYBACK || !isPlaying() || userPaused) return;
-  setPlaybackAudioSession();
-
-  if (IS_IOS) {
-    stopKeepaliveOsc();
-    if (keepaliveCtx) {
-      try { keepaliveCtx.close(); } catch {}
-      keepaliveCtx = null;
-    }
-    try {
-      if (!keepaliveBlobUrl) {
-        keepaliveBlobUrl = URL.createObjectURL(encodeSilentKeepaliveWav(2));
-      }
-      if (!keepaliveAudio) {
-        keepaliveAudio = new Audio(keepaliveBlobUrl);
-        keepaliveAudio.loop = true;
-        keepaliveAudio.volume = 1;
-        keepaliveAudio.setAttribute('playsinline', '');
-      }
-      if (keepaliveAudio.paused) keepaliveAudio.play().catch(() => {});
-    } catch {}
-    return;
-  }
-
-  // Android : oscillateur ultrasonique silencieux (stratégie Ataraxia).
-  if (keepaliveAudio) {
-    try { keepaliveAudio.pause(); } catch {}
-  }
-  try {
-    const Ctx = window.AudioContext || window.webkitAudioContext;
-    if (!Ctx) return;
-    if (!keepaliveOsc) {
-      keepaliveCtx = keepaliveCtx || new Ctx();
-      if (keepaliveCtx.state === 'suspended') keepaliveCtx.resume().catch(() => {});
-      keepaliveGain = keepaliveCtx.createGain();
-      keepaliveGain.gain.value = 0.001;
-      keepaliveGain.connect(keepaliveCtx.destination);
-      keepaliveOsc = keepaliveCtx.createOscillator();
-      keepaliveOsc.type = 'sine';
-      keepaliveOsc.frequency.value = 19500;
-      keepaliveOsc.connect(keepaliveGain);
-      keepaliveOsc.start();
-      keepaliveCtx.onstatechange = () => {
-        if (keepaliveCtx?.state === 'suspended' && isPlaying() && !userPaused) {
-          keepaliveCtx.resume().catch(() => {});
-        }
-      };
-    } else if (keepaliveCtx?.state === 'suspended') {
-      keepaliveCtx.resume().catch(() => {});
-    }
-  } catch {}
-}
-
-function resumeBackgroundPlayback() {
-  if (userPaused || !currentStation || isExternalListen(currentStation)) return;
-  if (MOBILE_PLAYBACK && boostWired) rebuildAudio(false);
-  if (keepaliveCtx?.state === 'suspended') keepaliveCtx.resume().catch(() => {});
-  if (audio && audio.paused && audio.src) {
-    syncMediaSessionPlaybackState();
-    syncMediaSessionLivePosition();
-    audio.play().catch(() => {});
-  }
-  if (isPlaying()) startPlaybackKeepalive();
-  else syncMediaSessionPlaybackState();
-}
-
-function setupBackgroundPlayback() {
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'hidden') {
-      if (isPlaying() && !userPaused) {
-        startPlaybackKeepalive();
-        syncMediaSessionPlaybackState();
-      }
-      return;
-    }
-    resumeBackgroundPlayback();
+function initMobilePlayback() {
+  if (mobilePlayback || !window.RadarMobilePlayback) return;
+  mobilePlayback = RadarMobilePlayback.create({
+    getPlayer: () => audio,
+    getStation: () => currentStation,
+    isUserPaused: () => userPaused,
+    isPlaying,
+    isExternalListen,
+    isStationResilient: () => !!currentTuning().resilient,
+    playStation: play,
+    getStreamUrl: getPlayableStream,
+    syncMediaSession: () => {
+      syncMediaSessionPlaybackState();
+      syncMediaSessionLivePosition();
+    },
+    ensureNativePlayback: () => {
+      if (MOBILE_PLAYBACK && boostWired) rebuildAudio(false);
+    },
+    resumeAudioCtx: () => {
+      if (audioCtx?.state === 'suspended') audioCtx.resume().catch(() => {});
+    },
+    performReconnect: () => mobilePlayback?.attemptReconnect(),
+    setSuppressErrors: (v) => { suppressAudioError = v; },
   });
-
-  window.addEventListener('pageshow', (e) => {
-    if (e.persisted) resumeBackgroundPlayback();
-  });
+  mobilePlayback.setupLifecycle();
 }
 
 // ─── Audio engine ──────────────────────────────────────────────────────────────
@@ -1802,71 +1679,40 @@ function attachAudioListeners(el) {
   if (playerListenersAttached.has(el)) return;
   playerListenersAttached.add(el);
   el.addEventListener('play',    updatePlayUI);
-  el.addEventListener('pause',   () => {
-    updatePlayUI();
-    if (!userPaused && currentStation && document.visibilityState === 'hidden') {
-      setTimeout(resumeBackgroundPlayback, 150);
-    }
-  });
+  el.addEventListener('pause',   updatePlayUI);
   el.addEventListener('ended',   onAudioEnded);
   el.addEventListener('playing', onAudioPlaying);
-  el.addEventListener('waiting', onAudioStall);
-  el.addEventListener('stalled', onAudioStall);
   el.addEventListener('error',   onAudioError);
+  mobilePlayback?.attachToPlayer(el);
 }
 
 function currentTuning() {
   return (currentStation && STATION_PLAYBACK[currentStation.id]) || {};
 }
 
-function clearStallWatchdog() {
-  if (stallWatchdog) { clearTimeout(stallWatchdog); stallWatchdog = null; }
-}
-
 function onAudioPlaying() {
   reconnectTries = 0;
-  clearStallWatchdog();
-  startPlaybackKeepalive();
-  syncMediaSessionPlaybackState();
+  mobilePlayback?.onPlaying();
   updatePlayUI();
 }
 
-// Flux décroché : pour un poste « résilient », on laisse le tampon se remplir
-// puis on reconnecte en douceur plutôt que de laisser une coupure s'installer.
-function onAudioStall() {
-  if (!currentTuning().resilient || stallWatchdog) return;
-  stallWatchdog = setTimeout(() => {
-    stallWatchdog = null;
-    if (!audio || audio.paused) return;
-    if (audio.readyState >= 3) return; // reparti tout seul
-    reconnectResilient();
-  }, 4000);
-}
-
 function onAudioEnded() {
-  // Un flux en direct ne devrait pas « finir » : on tente de reprendre.
-  if (currentTuning().resilient && reconnectTries < 4) reconnectResilient();
-  else updatePlayUI();
+  if (mobilePlayback?.shouldHandleEnded() && mobilePlayback.attemptReconnect()) return;
+  updatePlayUI();
 }
 
 function reconnectResilient() {
-  if (!currentStation || !currentTuning().resilient) return;
-  if (reconnectTries >= 4) { showToast('Flux instable — réessaie dans un instant.'); updatePlayUI(); return; }
-  reconnectTries++;
-  const url = getPlayableStream(currentStation);
-  if (!url || !audio) return;
-  suppressAudioError = true;
-  try { audio.load(); } catch {}
-  suppressAudioError = false;
-  audio.src = url;
-  audio.play().catch(() => {});
+  if (!mobilePlayback?.attemptReconnect() && mobilePlayback?.showReconnectFailed()) {
+    showToast('Flux instable — réessaie dans un instant.');
+  }
+  updatePlayUI();
 }
 
 function onAudioError() {
   if (suppressAudioError) { updatePlayUI(); return; }
   // Poste résilient qui jouait déjà : coupure réseau → reconnexion douce
   // (currentTime > 0 distingue une vraie coupure d'un échec CORS au démarrage).
-  if (currentTuning().resilient && audio && audio.currentTime > 0 && reconnectTries < 4) {
+  if (mobilePlayback?.shouldHandleError(audio?.currentTime ?? 0)) {
     reconnectResilient();
     return;
   }
@@ -1906,7 +1752,6 @@ function wireBoost() {
 
 /** Recrée l'élément <audio>, avec ou sans graphe d'amplification. */
 function rebuildAudio(withBoost) {
-  clearStallWatchdog();
   if (audio) {
     suppressAudioError = true;
     try { audio.pause(); } catch {}
@@ -2036,10 +1881,10 @@ function applyGain() {
 
 function setupAudio() {
   if (audio) return;
+  initMobilePlayback();
   audio = getPlayerElement();
   audio.preload = 'none';
   attachAudioListeners(audio);
-  setupBackgroundPlayback();
 
   if ('mediaSession' in navigator) {
     navigator.mediaSession.setActionHandler('play', () => {
