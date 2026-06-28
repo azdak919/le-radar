@@ -13,6 +13,8 @@
   let localWasPlaying = false;
 
   const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  const isFirefox = /Firefox/i.test(navigator.userAgent);
+  if (isFirefox) document.documentElement.classList.add('is-firefox');
 
   function guessContentType(url) {
     if (/\.m3u8(\?|$)/i.test(url)) return 'application/vnd.apple.mpegurl';
@@ -37,20 +39,26 @@
     if (!castBtns.length) return;
     const station = deps?.getStation?.();
     const canUse = !!(station && deps.getStreamUrl?.(station) && !deps.isExternal?.(station));
-    const show = isAvailable();
+    const available = isAvailable();
+    const showOnFirefox = isFirefox && !available;
+    const show = available || showOnFirefox;
+    const unavailable = showOnFirefox;
     const player = deps.getPlayer?.();
     const casting = chromecastSessionActive || !!player?.webkitCurrentPlaybackTargetIsWireless;
-    const title = casting
+    const activeTitle = casting
       ? 'Arrêter la diffusion externe'
       : 'Diffuser sur un appareil (AirPlay ou Chromecast)';
-    const ariaLabel = casting ? 'Arrêter la diffusion externe' : 'Diffuser sur un appareil';
+    const inactiveTitle = 'Diffusion non disponible dans Firefox';
     castBtns.forEach((btn) => {
       btn.classList.toggle('hidden', !show);
       btn.hidden = !show;
-      btn.disabled = !canUse;
-      btn.setAttribute('aria-disabled', String(!canUse));
-      btn.classList.toggle('is-casting', casting);
-      btn.setAttribute('aria-pressed', casting ? 'true' : 'false');
+      btn.classList.toggle('is-unavailable', unavailable);
+      btn.disabled = !canUse || unavailable;
+      btn.setAttribute('aria-disabled', String(!canUse || unavailable));
+      btn.classList.toggle('is-casting', casting && !unavailable);
+      btn.setAttribute('aria-pressed', casting && !unavailable ? 'true' : 'false');
+      const title = unavailable ? inactiveTitle : activeTitle;
+      const ariaLabel = unavailable ? inactiveTitle : (casting ? 'Arrêter la diffusion externe' : 'Diffuser sur un appareil');
       btn.title = title;
       btn.setAttribute('aria-label', ariaLabel);
     });
