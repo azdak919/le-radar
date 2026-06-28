@@ -740,7 +740,28 @@ a { color: inherit; }
 
   .tuner-now { min-height: 36px; }
 
-  .tuner-actions { gap: 6px; }
+  .tuner-actions {
+    gap: 6px;
+    align-self: center;
+    align-items: center;
+    min-height: 36px;
+  }
+
+  .tuner-play {
+    width: 36px;
+    height: 36px;
+    box-shadow: 0 4px 14px -4px rgba(200,16,46,0.65);
+  }
+  .tuner-play.is-external {
+    box-shadow: 0 4px 14px -4px rgba(0,61,165,0.55);
+  }
+  .tuner-play svg { width: 18px; height: 18px; }
+  .tuner-play .ico-external { width: 16px; height: 16px; }
+
+  .tuner-vol {
+    align-self: center;
+    height: 36px;
+  }
 
   .tuner-vol-btn {
     width: 36px;
