@@ -861,74 +861,78 @@ a { color: inherit; }
   }
 
   .tuner-controls {
-    flex: 1 1 0;
+    flex: 1;
     min-width: 0;
   }
 
   .tuner-dial {
-    flex: 1 1 180px;
-    width: auto;
-    min-width: 108px;
-    max-width: 240px;
-  }
-
-  .tuner-actions {
-    flex-shrink: 1;
-    min-width: 0;
+    flex: 0 0 280px;
+    width: 280px;
   }
 
   .tuner-nowair {
     display: flex;
-    flex: 0 1 320px;
-    width: auto;
-    min-width: 0;
-    max-width: 320px;
-    margin-left: 0;
+    flex: 0 0 370px;
+    width: 370px;
+    max-width: 370px;
+    margin-left: auto;
   }
 
-  /* Quand « À l'antenne » est visible, le volume cède la place au dial. */
-  .tuner-inner:has(.tuner-nowair:not(.hidden)) .tuner-vol {
-    flex: 1 1 auto;
+  /* Même grille que le fil : contrôles à gauche, « À l'antenne » sur En bref. */
+  .tuner-inner:has(.tuner-nowair:not(.hidden)) {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(300px, 370px);
+    gap: 0;
+    align-items: center;
+  }
+
+  .tuner-inner:has(.tuner-nowair:not(.hidden)) .tuner-controls {
+    grid-column: 1;
+    flex: unset;
     min-width: 0;
-    max-width: 168px;
+  }
+
+  .tuner-inner:has(.tuner-nowair:not(.hidden)) .tuner-dial {
+    flex: 1 1 0;
+    width: 0;
+    min-width: 120px;
+    max-width: none;
+  }
+
+  .tuner-inner:has(.tuner-nowair:not(.hidden)) .tuner-actions {
+    margin-left: 0;
+    flex-shrink: 0;
+  }
+
+  .tuner-inner:has(.tuner-nowair:not(.hidden)) .tuner-nowair {
+    grid-column: 2;
+    flex: unset;
+    width: auto;
+    max-width: none;
+    min-width: 0;
+    margin-left: 0;
+    padding-left: 28px;
+    align-self: center;
+  }
+
+  .tuner-inner:has(.tuner-nowair:not(.hidden)) .tuner-vol {
+    flex-shrink: 1;
+    min-width: 0;
+    max-width: 156px;
   }
 
   .tuner-inner:has(.tuner-nowair:not(.hidden)) .tuner-vol-slot {
-    flex: 1;
     min-width: 0;
     overflow: hidden;
   }
 
   .tuner-inner:has(.tuner-nowair:not(.hidden)) .tuner-vol-track {
-    width: 100%;
-    max-width: 124px;
-    flex-shrink: 1;
-  }
-
-  .tuner-inner:has(.tuner-nowair:not(.hidden)) .tuner-vol-labels {
-    font-size: 8px;
+    width: clamp(88px, 12cqw, 132px);
+    max-width: 132px;
   }
 
   .masthead-inner {
     max-width: 1180px;
-  }
-}
-
-@media (min-width: 1100px) and (max-width: 1240px) {
-  .tuner-dial {
-    max-width: 200px;
-  }
-
-  .tuner-nowair {
-    max-width: 260px;
-  }
-
-  .tuner-inner:has(.tuner-nowair:not(.hidden)) .tuner-vol {
-    max-width: 148px;
-  }
-
-  .tuner-inner:has(.tuner-nowair:not(.hidden)) .tuner-vol-track {
-    max-width: 104px;
   }
 }
 
