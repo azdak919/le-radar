@@ -8,7 +8,8 @@
     const tuner = document.getElementById('tuner');
     if (!tuner) return;
 
-    let height = Math.ceil(tuner.getBoundingClientRect().height);
+    const baseH = Math.ceil(tuner.getBoundingClientRect().height);
+    let height = baseH;
     const vol = document.getElementById('tuner-vol');
     const slot = document.getElementById('tuner-vol-slot');
 
@@ -20,7 +21,12 @@
       height = Math.max(height, Math.ceil(slot.getBoundingClientRect().bottom + 8));
     }
 
-    parent.postMessage({ type: 'ataraxia-radar-embed', height }, '*');
+    parent.postMessage({
+      type: 'ataraxia-radar-embed',
+      height,
+      baseHeight: baseH,
+      popoverOpen: !!(vol?.classList.contains('is-open') && EMBED_VOL_COMPACT_MQ?.matches),
+    }, '*');
   }
 
   function schedule() {
