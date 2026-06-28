@@ -739,6 +739,7 @@ function setTunerSubRotateActive(showAir) {
     TUNER_SUB_AIR.classList.remove('is-marquee');
     applyMarquee(TUNER_SUB, tunerSubMeta);
   }
+  scheduleMarqueeRefresh();
 }
 
 /**
@@ -832,6 +833,7 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false) {
   } else {
     applyMarquee(TUNER_SUB, tunerSubMeta);
   }
+  scheduleMarqueeRefresh();
 }
 
 function onTunerSubRotateLayoutChange() {
@@ -1087,6 +1089,32 @@ function measureMarquee(el) {
   el.classList.add('is-marquee');
 }
 
+/** Mesure après layout (double rAF) ; réessaie si la largeur n'est pas encore stable. */
+function scheduleMarqueeMeasure(el, attempt = 0) {
+  if (!el || attempt > 4) return;
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      const span = el.querySelector('.tuner-now-sub-text');
+      if (!span || PREFERS_REDUCED_MOTION?.matches) return;
+
+      const available = el.clientWidth;
+      if (!available) {
+        scheduleMarqueeMeasure(el, attempt + 1);
+        return;
+      }
+
+      measureMarquee(el);
+
+      const overflow = span.scrollWidth - available;
+      const shouldMarquee = overflow > 4;
+      const hasMarquee = el.classList.contains('is-marquee');
+      if (attempt < 4 && shouldMarquee !== hasMarquee) {
+        scheduleMarqueeMeasure(el, attempt + 1);
+      }
+    });
+  });
+}
+
 function refreshAllMarquees() {
   marqueeResizeScheduled = false;
   getMarqueeElements().forEach((el) => {
@@ -1154,7 +1182,7 @@ function applyMarquee(el, text) {
   span.textContent = text;
   el.replaceChildren(span);
 
-  requestAnimationFrame(() => measureMarquee(el));
+  scheduleMarqueeMeasure(el);
 }
 
 function setTunerNameText(text, crossfade = false) {
