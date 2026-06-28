@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="fr-CA" data-embed="tuner">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#111317" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' https: blob:; connect-src 'self' https:; frame-src https:; object-src 'none'; base-uri 'self'; form-action 'none'" />
+    <title>Le Radar — Synthétiseur</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="embed.css" />
+  </head>
+  <body>
+    <div id="tuner" class="tuner">
+      <div class="tuner-inner">
+        <div class="tuner-controls">
+          <div class="tuner-label">
+            <span id="tuner-onair" class="tuner-onair">EN ONDES</span>
+          </div>
+
+          <button id="tuner-prev" class="tuner-step" title="Poste précédent" aria-label="Poste précédent">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+          </button>
+
+          <div class="tuner-dial">
+            <label for="tuner-select" class="sr-only">Choisir un poste</label>
+            <select id="tuner-select" class="tuner-select" aria-label="Choisir un poste"></select>
+            <div class="tuner-now">
+              <span id="tuner-now-name" class="tuner-now-name">Syntoniser un poste</span>
+              <div class="tuner-now-sub-rotate" aria-live="polite">
+                <span id="tuner-now-sub" class="tuner-now-sub is-active">Radios étudiantes en direct</span>
+                <span id="tuner-now-sub-air" class="tuner-now-sub tuner-now-sub--air" aria-hidden="true"></span>
+              </div>
+            </div>
+          </div>
+
+          <button id="tuner-next" class="tuner-step" title="Poste suivant" aria-label="Poste suivant">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+          </button>
+
+          <div class="tuner-actions">
+            <button id="tuner-play" class="tuner-play" title="Écouter" aria-label="Écouter">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="ico-play"><path d="M8 5v14l11-7z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" class="ico-pause hidden"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" class="ico-external hidden" aria-hidden="true"><path d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+            </button>
+
+            <button id="tuner-cast" class="tuner-cast tuner-cast--bar hidden" type="button" aria-label="Diffuser sur un appareil" title="Diffuser sur un appareil" aria-pressed="false" hidden>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M1 18v3h3c0-1.66-1.34-3-3-3zm0-4v2c2.76 0 5 2.24 5 5h2c0-3.87-3.13-7-7-7zm0-4v2c4.97 0 9 3.03 9 9h2c0-6.08-4.93-11-11-11zm20-7H3c-1.1 0-2 .9-2 2v3h2V5h18v14h-7v2h7c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+            </button>
+
+            <button id="tuner-cast-mob" class="tuner-cast tuner-cast--mobile hidden" type="button" aria-label="Diffuser sur un appareil" title="Diffuser sur un appareil" aria-pressed="false" hidden>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M1 18v3h3c0-1.66-1.34-3-3-3zm0-4v2c2.76 0 5 2.24 5 5h2c0-3.87-3.13-7-7-7zm0-4v2c4.97 0 9 3.03 9 9h2c0-6.08-4.93-11-11-11zm20-7H3c-1.1 0-2 .9-2 2v3h2V5h18v14h-7v2h7c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+            </button>
+
+            <div class="tuner-eq" id="tuner-eq" aria-hidden="true">
+              <span></span><span></span><span></span><span></span>
+            </div>
+
+            <div id="tuner-vol" class="tuner-vol">
+              <button id="tuner-vol-toggle" class="tuner-vol-btn" type="button" aria-label="Réglages du volume" aria-pressed="false" aria-expanded="false" aria-controls="tuner-vol-slot" title="Réglages du volume">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="ico-vol" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" class="ico-vol-mute hidden" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm7.59-3.41L9.17 7H3v6h4l5 5v-6.17l2.59 2.59 1.41-1.42L3.83 3 2.41 4.41 7 9v6h4l5 5v-6.17l1.59 1.59 1.41-1.41L12 12.83V4l-1.41 1.59z"/><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v1.99c3.01.89 5.25 3.71 5.25 7.02z"/></svg>
+              </button>
+              <div id="tuner-vol-slot" class="tuner-vol-slot">
+                <div class="tuner-vol-popover">
+                  <button id="tuner-vol-mute" class="tuner-vol-mute-btn" type="button" aria-label="Couper le son" aria-pressed="false" title="Couper le son">
+                    <svg viewBox="0 0 24 24" fill="currentColor" class="ico-vol-mute" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm7.59-3.41L9.17 7H3v6h4l5 5v-6.17l2.59 2.59 1.41-1.42L3.83 3 2.41 4.41 7 9v6h4l5 5v-6.17l1.59 1.59 1.41-1.41L12 12.83V4l-1.41 1.59z"/><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v1.99c3.01.89 5.25 3.71 5.25 7.02z"/></svg>
+                  </button>
+                  <div class="tuner-vol-track">
+                    <div class="tuner-vol-slider">
+                      <div class="tuner-vol-rail" aria-hidden="true">
+                        <div class="tuner-vol-zone tuner-vol-zone--boost"></div>
+                        <div class="tuner-vol-fill tuner-vol-fill--base"></div>
+                        <div class="tuner-vol-fill tuner-vol-fill--boost"></div>
+                      </div>
+                      <span class="tuner-vol-tick tuner-vol-tick--100" aria-hidden="true"></span>
+                      <div class="tuner-vol-thumb" aria-hidden="true"></div>
+                      <input id="tuner-volume" type="range" min="0" max="2" step="0.02" value="1" class="tuner-volume" aria-label="Volume — 0 % à gauche, 100 % au centre, 200 % à droite" aria-valuetext="100 %" />
+                    </div>
+                    <div class="tuner-vol-labels">
+                      <span class="tuner-vol-label--min" aria-hidden="true">0 %</span>
+                      <span class="tuner-vol-label--mid" aria-hidden="true">100 %</span>
+                      <span class="tuner-vol-label--max" aria-hidden="true">200 %</span>
+                    </div>
+                  </div>
+                  <button id="tuner-cast-pop" class="tuner-cast tuner-cast--popover hidden" type="button" aria-label="Diffuser sur un appareil" title="Diffuser sur un appareil" aria-pressed="false" hidden>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M1 18v3h3c0-1.66-1.34-3-3-3zm0-4v2c2.76 0 5 2.24 5 5h2c0-3.87-3.13-7-7-7zm0-4v2c4.97 0 9 3.03 9 9h2c0-6.08-4.93-11-11-11zm20-7H3c-1.1 0-2 .9-2 2v3h2V5h18v14h-7v2h7c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside id="tuner-nowair" class="tuner-nowair hidden" aria-live="polite" aria-label="À l'antenne">
+          <span class="tuner-nowair-label">À l'antenne</span>
+          <div class="tuner-nowair-body">
+            <p id="tuner-nowair-title" class="tuner-nowair-title"></p>
+            <p id="tuner-nowair-sub" class="tuner-nowair-sub"></p>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <div id="external-listen" class="external-listen hidden" hidden aria-hidden="true">
+      <div class="external-listen__backdrop" data-external-close></div>
+      <div class="external-listen__panel" role="dialog" aria-modal="true" aria-labelledby="external-listen-title">
+        <header class="external-listen__head">
+          <div class="external-listen__brand">
+            <img id="external-listen-logo" class="external-listen__logo hidden" alt="" width="40" height="40" />
+            <div>
+              <h2 id="external-listen-title" class="external-listen__title">Radio externe</h2>
+              <p id="external-listen-sub" class="external-listen__sub"></p>
+            </div>
+          </div>
+          <button type="button" class="external-listen__close" data-external-close aria-label="Fermer">×</button>
+        </header>
+        <div id="external-listen-status" class="external-listen__status" role="status" aria-live="polite">
+          <span class="external-listen__spinner" aria-hidden="true"></span>
+          <span id="external-listen-status-text">Chargement de la page du poste…</span>
+        </div>
+        <div id="external-listen-frame-wrap" class="external-listen__frame-wrap hidden">
+          <iframe id="external-listen-frame" class="external-listen__frame" title="Lecteur du poste de radio" loading="lazy" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+        </div>
+        <p id="external-listen-hint" class="external-listen__hint">Si la lecture ne démarre pas automatiquement, appuyez sur le bouton de lecture (▶) dans le cadre ci-dessus.</p>
+        <div class="external-listen__actions">
+          <button type="button" id="external-listen-reopen" class="external-listen__btn external-listen__btn--primary hidden">Ouvrir le lecteur</button>
+          <a id="external-listen-tab" class="external-listen__btn" href="#" target="_blank" rel="noopener noreferrer">Ouvrir dans un onglet</a>
+        </div>
+      </div>
+    </div>
+
+    <audio id="radar-player" class="sr-only" preload="none" playsinline webkit-playsinline x-webkit-airplay="allow" aria-hidden="true"></audio>
+
+    <script src="cast.js" defer></script>
+    <script src="mobile-playback.js" defer></script>
+    <script src="app.js" defer></script>
+    <script src="embed.js" defer></script>
+  </body>
+</html>

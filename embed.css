@@ -1,0 +1,225 @@
+/* LE RADAR — Synthétiseur embed (Ataraxia Solitaire, etc.)
+   Force le layout compact téléphone/tablette, taille stable au resize. */
+
+html[data-embed="tuner"] {
+  --pad: 10px;
+  background: transparent;
+  overflow: visible;
+}
+
+html[data-embed="tuner"] body {
+  margin: 0;
+  background: transparent;
+  overflow: visible;
+}
+
+html[data-embed="tuner"] .tuner {
+  position: static;
+  box-shadow: none;
+  border-radius: 12px;
+  overflow: visible;
+}
+
+html[data-embed="tuner"] .tuner-inner {
+  max-width: none;
+  margin: 0;
+  padding: 8px 10px;
+  gap: 8px;
+}
+
+html[data-embed="tuner"] .tuner-controls {
+  gap: 6px;
+}
+
+html[data-embed="tuner"] .tuner-label {
+  display: none;
+}
+
+html[data-embed="tuner"] .tuner-now {
+  min-height: 42px;
+}
+
+html[data-embed="tuner"] .tuner-actions {
+  gap: 6px;
+  align-self: center;
+  align-items: center;
+  min-height: 42px;
+}
+
+html[data-embed="tuner"] .tuner-vol {
+  align-self: center;
+  height: 42px;
+  position: relative;
+}
+
+html[data-embed="tuner"] .tuner-vol-btn {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  margin: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.72);
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease;
+}
+
+html[data-embed="tuner"] .tuner-vol-btn:hover {
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+html[data-embed="tuner"] .tuner-vol-btn:active {
+  transform: scale(0.93);
+}
+
+html[data-embed="tuner"] .tuner-vol-btn .ico-vol,
+html[data-embed="tuner"] .tuner-vol-btn .ico-vol-mute {
+  width: 20px;
+  height: 20px;
+}
+
+html[data-embed="tuner"] .tuner.is-boosted .tuner-vol-btn {
+  color: #ff7d6e;
+  border-color: rgba(255, 125, 110, 0.35);
+}
+
+html[data-embed="tuner"] .tuner-vol-popover {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+}
+
+html[data-embed="tuner"] .tuner-vol-slot {
+  position: absolute;
+  top: auto;
+  bottom: calc(100% + 10px);
+  right: 0;
+  z-index: 60;
+  box-sizing: border-box;
+  width: min(292px, calc(100vw - 16px));
+  min-width: 0;
+  padding: 12px 14px 10px;
+  background: #22252c;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  box-shadow: 0 14px 34px -14px rgba(0, 0, 0, 0.85);
+  opacity: 0;
+  transform: translateY(6px) scale(0.96);
+  transform-origin: bottom right;
+  pointer-events: none;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+
+html[data-embed="tuner"] .tuner-vol-slot::before {
+  content: "";
+  position: absolute;
+  top: auto;
+  bottom: -5px;
+  right: 15px;
+  width: 10px;
+  height: 10px;
+  background: #22252c;
+  border-right: 1px solid rgba(255, 255, 255, 0.14);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  transform: rotate(45deg);
+}
+
+html[data-embed="tuner"] .tuner-vol.is-open .tuner-vol-slot {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+html[data-embed="tuner"] .tuner-vol-slot .tuner-vol-mute-btn {
+  display: flex;
+  flex: 0 0 34px;
+  width: 34px;
+  height: 34px;
+  margin: 0;
+}
+
+html[data-embed="tuner"] .tuner-vol-slot .tuner-vol-track {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+  gap: 4px;
+}
+
+html[data-embed="tuner"] .tuner-vol-slot .tuner-vol-slider {
+  min-height: 34px;
+  height: 34px;
+  width: 100%;
+}
+
+html[data-embed="tuner"] .tuner-vol-slot .tuner-vol-labels {
+  position: relative;
+  width: 100%;
+  height: 11px;
+  margin-top: 1px;
+  font-size: 8px;
+}
+
+html[data-embed="tuner"] .tuner-cast--bar {
+  display: none !important;
+}
+
+html[data-embed="tuner"] .tuner-cast--mobile {
+  display: none !important;
+}
+
+html[data-embed="tuner"] .tuner-cast--popover {
+  display: none;
+  flex: 0 0 34px;
+  width: 34px;
+  height: 34px;
+  margin: 0;
+}
+
+html[data-embed="tuner"] .tuner-cast--popover:not(.hidden) {
+  display: flex;
+}
+
+html[data-embed="tuner"] .tuner-eq {
+  display: none !important;
+}
+
+html[data-embed="tuner"] .tuner-nowair {
+  display: none !important;
+}
+
+html[data-embed="tuner"] .tuner.is-playing .tuner-now {
+  border-color: rgba(255, 125, 110, 0.7);
+  background: rgba(200, 16, 46, 0.1);
+  box-shadow: 0 0 0 1px rgba(200, 16, 46, 0.22);
+}
+
+html[data-embed="tuner"] .tuner.is-external .tuner-now {
+  border-color: rgba(93, 155, 224, 0.55);
+  background: rgba(0, 61, 165, 0.1);
+}
+
+html[data-embed="tuner"] .tuner-step {
+  box-shadow: 0 3px 10px -4px rgba(0, 0, 0, 0.4);
+}
+
+html[data-embed="tuner"] .tuner-vol.is-open .tuner-vol-btn {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+html[data-embed="tuner"] .toast {
+  position: fixed;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 80;
+  max-width: calc(100% - 16px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-embed="tuner"] .tuner-vol-slot {
+    transition: none;
+  }
+}
