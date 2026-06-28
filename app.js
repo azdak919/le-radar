@@ -1228,7 +1228,12 @@ function bindVolumePopover() {
     if (VOL_COMPACT.matches) {
       const open = TUNER_VOL.classList.toggle('is-open');
       TUNER_VOL_TOGGLE.setAttribute('aria-expanded', open ? 'true' : 'false');
-      if (open) requestAnimationFrame(() => updateVolumeSliderVisual());
+      if (open) {
+        requestAnimationFrame(() => {
+          updateVolumeSliderVisual();
+          requestAnimationFrame(() => updateVolumeSliderVisual());
+        });
+      }
       return;
     }
     toggleVolumeMute();
