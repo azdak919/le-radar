@@ -1910,10 +1910,11 @@ function setupAudio() {
     getNowAirMeta: (radio) => {
       if (!radio || radio.id !== currentStation?.id) return {};
       if (lastNowAir.title) {
-        return { title: lastNowAir.title, sub: lastNowAir.sub || tunerInstitutionLabel(radio.institution) };
+        return { title: lastNowAir.title, sub: lastNowAir.sub || '' };
       }
       return {};
     },
+    buildMediaSessionMeta: buildStationMediaMeta,
     showToast,
   });
 }
@@ -1926,14 +1927,36 @@ function assetUrl(path) {
   }
 }
 
+/** Métadonnées lock screen / notification : émission en titre, poste en artiste. */
+function buildStationMediaMeta(radio, { title, sub } = {}) {
+  const stationLine = formatStationNowAirLabel(radio);
+  const airTitle = String(title || '').trim();
+  const airSub = String(sub || '').trim();
+  const genericListen = `Vous écoutez ${radio.name}`;
+  const hasShow = airTitle && airTitle !== genericListen;
+
+  if (hasShow) {
+    return {
+      title: airTitle,
+      artist: stationLine,
+      album: airSub || tunerInstitutionLabel(radio.institution) || 'Le Radar',
+    };
+  }
+
+  return {
+    title: radio.fullName || radio.name,
+    artist: tunerInstitutionLabel(radio.institution),
+    album: airSub || radioSlogan(radio) || 'Le Radar',
+  };
+}
+
 function updateMediaSession(radio, { title, sub } = {}) {
   if (!('mediaSession' in navigator)) return;
-  const showTitle = title || radio.fullName || radio.name;
-  const showSub = sub || tunerInstitutionLabel(radio.institution);
+  const meta = buildStationMediaMeta(radio, { title, sub });
   navigator.mediaSession.metadata = new MediaMetadata({
-    title: showTitle,
-    artist: showSub,
-    album: 'Le Radar',
+    title: meta.title,
+    artist: meta.artist,
+    album: meta.album,
     artwork: [
       { src: assetUrl('assets/icon-192.png'), sizes: '192x192', type: 'image/png' },
       { src: assetUrl('assets/icon-512.png'), sizes: '512x512', type: 'image/png' },
