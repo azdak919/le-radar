@@ -13,10 +13,6 @@ html[data-embed="tuner"] body {
   margin: 0;
   background: transparent;
   overflow: visible;
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
 }
 
 html[data-embed="tuner"] .tuner {
@@ -233,8 +229,8 @@ html[data-embed="tuner"] .toast {
 
   html[data-embed="tuner"] .tuner-vol-slot {
     position: absolute;
-    top: auto;
-    bottom: calc(100% + 10px);
+    top: calc(100% + 10px);
+    bottom: auto;
     right: 0;
     left: auto;
     z-index: 60;
@@ -248,8 +244,8 @@ html[data-embed="tuner"] .toast {
     border-radius: 12px;
     box-shadow: 0 14px 34px -14px rgba(0, 0, 0, 0.85);
     opacity: 0;
-    transform: translateY(6px) scale(0.96);
-    transform-origin: bottom right;
+    transform: translateY(-6px) scale(0.96);
+    transform-origin: top right;
     pointer-events: none;
     transition: opacity 0.16s ease, transform 0.16s ease;
   }
@@ -257,16 +253,16 @@ html[data-embed="tuner"] .toast {
   html[data-embed="tuner"] .tuner-vol-slot::before {
     content: "";
     position: absolute;
-    top: auto;
-    bottom: -5px;
+    top: -5px;
+    bottom: auto;
     right: 15px;
     width: 10px;
     height: 10px;
     background: #22252c;
-    border-right: 1px solid rgba(255, 255, 255, 0.14);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-    border-left: none;
-    border-top: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.14);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    border-right: none;
+    border-bottom: none;
     transform: rotate(45deg);
   }
 

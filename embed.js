@@ -1,4 +1,4 @@
-// Iframe embed : hauteur dynamique vers le haut quand le popover volume est ouvert.
+// Iframe embed : barre synthé fixe ; popover volume vers le bas en overlay.
 (function () {
   if (document.documentElement.dataset.embed !== 'tuner') return;
 
@@ -19,9 +19,7 @@
     );
 
     if (popoverOpen) {
-      const tunerRect = tuner.getBoundingClientRect();
-      const slotRect = slot.getBoundingClientRect();
-      height = Math.ceil(tunerRect.bottom - Math.min(tunerRect.top, slotRect.top) + 8);
+      height = Math.max(height, Math.ceil(slot.getBoundingClientRect().bottom + 8));
     }
 
     parent.postMessage({
