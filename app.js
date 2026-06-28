@@ -321,8 +321,10 @@ let volumeSliderDragging = false;
 const boostUnavailable = new Set(); // ids des postes sans CORS
 // Réglages de lecture par poste. CFAK (Sherbrooke) a de petites coupures : on
 // précharge davantage et on reconnecte automatiquement quand le flux décroche.
+// CHYZ (Centova/Shoutcast) : lecture native seule — Web Audio + crossOrigin casse le flux.
 const STATION_PLAYBACK = {
   cfak: { resilient: true },
+  chyz: { resilient: true, noBoost: true },
 };
 let reconnectTries = 0;
 let listenWindow = null;
@@ -1660,12 +1662,15 @@ async function play(radio) {
   if (!url) return;
   userPaused = false;
   // Branche (ou non) le graphe d'amplification selon le support CORS du poste.
-  const wantBoost = wantsAudioBoost() && !boostUnavailable.has(radio.id);
+  const tuning = STATION_PLAYBACK[radio.id] || {};
+  const wantBoost = wantsAudioBoost()
+    && !boostUnavailable.has(radio.id)
+    && !tuning.noBoost;
   if (wantBoost !== boostWired) rebuildAudio(wantBoost);
   reconnectTries = 0;
   mobilePlayback?.resetReconnectTries();
-  audio.preload = mobilePlayback?.getMobilePreload(!!STATION_PLAYBACK[radio.id]?.resilient)
-    ?? (STATION_PLAYBACK[radio.id]?.resilient ? 'auto' : 'none');
+  audio.preload = mobilePlayback?.getMobilePreload(!!tuning.resilient)
+    ?? (tuning.resilient ? 'auto' : 'none');
   try {
     if (audioCtx && audioCtx.state === 'suspended') { try { await audioCtx.resume(); } catch {} }
     if (audio.src !== url) audio.src = url;
@@ -1887,12 +1892,20 @@ function rebuildAudio(withBoost) {
   if (audio) {
     suppressAudioError = true;
     try { audio.pause(); } catch {}
-    audio.removeAttribute('src');
-    try { audio.load(); } catch {}
     suppressAudioError = false;
+    // createMediaElementSource est à usage unique — on remplace l'élément au changement de mode.
+    if (boostWired || withBoost || mediaSource) {
+      audio.remove();
+      audio = null;
+    } else {
+      audio.removeAttribute('src');
+      audio.removeAttribute('crossorigin');
+      try { audio.load(); } catch {}
+    }
   }
   audio = getPlayerElement();
   audio.preload = 'none';
+  if (!withBoost) audio.removeAttribute('crossorigin');
   attachAudioListeners(audio);
   mediaSource = null;
   gainNode = null;
