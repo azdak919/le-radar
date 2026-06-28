@@ -625,16 +625,10 @@ a { color: inherit; }
   background: rgba(255, 255, 255, 0.34);
   pointer-events: none;
 }
-.tuner-vol-tick--min { left: var(--vol-x-min, 8px); }
 .tuner-vol-tick--100 {
   left: var(--vol-x-mid, 50%);
   height: 11px;
   background: rgba(255, 255, 255, 0.58);
-}
-.tuner-vol-tick--max {
-  left: var(--vol-x-max, calc(100% - 8px));
-  height: 11px;
-  background: rgba(255, 154, 144, 0.85);
 }
 .tuner-vol-thumb {
   position: absolute;
