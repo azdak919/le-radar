@@ -322,9 +322,14 @@ a { color: inherit; }
 .tuner-now-sub-rotate {
   display: grid;
   min-width: 0;
+  width: 100%;
+  overflow: hidden;
+  grid-template-columns: minmax(0, 1fr);
 }
 .tuner-now-sub-rotate > .tuner-now-sub {
   grid-area: 1 / 1;
+  width: 100%;
+  max-width: 100%;
 }
 .tuner-now-sub {
   display: block;
