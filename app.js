@@ -630,15 +630,31 @@ function isDialCompactLayout() {
   return !!TUNER_SUB_ROTATE_MQ?.matches;
 }
 
-/** Ligne 2 du dial compact : uniquement « À l'antenne » ou slogan (pas Web, pas institution). */
-function formatDialCompactSubLine(radio, title, sub, empty) {
-  if (!radio) return 'Radios étudiantes en direct';
-  const airLine = formatNowAirSubLine(title, sub, empty);
+/**
+ * Ligne 2 du dial compact : émission en cours, à venir, ou slogan.
+ * Réutilise nowAirLines() pour couvrir toutes les stations (grille, ICY, slogan).
+ */
+function dialCompactSubLineForRadio(radio) {
+  if (!radio) return '';
+  const { title, sub } = nowAirLines(radio);
   const genericListen = `Vous écoutez ${radio.name}`;
-  if (!empty && airLine && airLine !== genericListen) {
-    return airLine;
+
+  if (title && title !== genericListen) {
+    return formatNowAirSubLine(title, sub, false);
   }
-  return radioSlogan(radio) || 'En direct';
+
+  return radioSlogan(radio) || '';
+}
+
+function applyDialCompactSub(radio, crossfade = false) {
+  const line = dialCompactSubLineForRadio(radio);
+  TUNER_SUB?.parentElement?.classList.toggle('is-empty', !line);
+  tunerSubMeta = line;
+  if (crossfade) {
+    applyDialTextCrossfade(TUNER_SUB, line, true);
+  } else {
+    applyMarquee(TUNER_SUB, line);
+  }
 }
 
 function formatPreviewNowAir(radio, { omitStation = false } = {}) {
@@ -914,8 +930,7 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false) {
     TUNER_SUB_AIR.classList.remove('is-active');
     TUNER_SUB.setAttribute('aria-hidden', 'false');
     TUNER_SUB_AIR.setAttribute('aria-hidden', 'true');
-    const subLine = formatDialCompactSubLine(currentStation, title, sub, empty);
-    applyDialTextCrossfade(TUNER_SUB, subLine, crossfade);
+    applyDialCompactSub(currentStation, crossfade);
     setTunerNameText(formatDialStationLine(currentStation), crossfade);
     return;
   }
@@ -1365,19 +1380,27 @@ function initMarqueeResizeListeners() {
  */
 function applyMarquee(el, text) {
   if (!el) return;
-  marqueeTextByEl.set(el, text);
+  const value = String(text ?? '').trim();
   el.classList.remove('is-marquee');
   el.style.removeProperty('--marquee-shift');
   el.style.removeProperty('--marquee-duration');
 
+  if (!value) {
+    marqueeTextByEl.delete(el);
+    el.replaceChildren();
+    return;
+  }
+
+  marqueeTextByEl.set(el, value);
+
   if (PREFERS_REDUCED_MOTION?.matches) {
-    el.textContent = text;
+    el.textContent = value;
     return;
   }
 
   const span = document.createElement('span');
   span.className = 'tuner-now-sub-text';
-  span.textContent = text;
+  span.textContent = value;
   el.replaceChildren(span);
 
   scheduleMarqueeMeasure(el);
@@ -1413,7 +1436,10 @@ function selectStation(id, { autoplay = false, openExternal = false } = {}) {
   const inst = tunerInstitutionLabel(radio.institution);
   if (isDialCompactLayout()) {
     setTunerNameText(formatDialStationLine(radio));
-    setTunerSubText(radioSlogan(radio) || 'En direct');
+    const subLine = dialCompactSubLineForRadio(radio);
+    tunerSubMeta = subLine;
+    TUNER_SUB?.parentElement?.classList.toggle('is-empty', !subLine);
+    applyMarquee(TUNER_SUB, subLine);
   } else {
     setTunerNameText(radio.name);
     setTunerSubText(external
