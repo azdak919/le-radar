@@ -1787,7 +1787,7 @@ function updateVolumeSliderVisual() {
   const slider = track?.querySelector('.tuner-vol-slider');
   if (!track || !slider) return;
 
-  const width = Math.max(slider.clientWidth, track.clientWidth);
+  const width = slider.getBoundingClientRect().width || slider.clientWidth || track.clientWidth;
   if (width < 1) return;
 
   const thumbPx = getVolThumbPx(track);
