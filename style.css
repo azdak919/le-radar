@@ -930,7 +930,7 @@ html.is-firefox .tuner-cast--bar.hidden { display: flex !important; }
   }
   .tuner-vol-popover:has(.tuner-cast--popover:not(.hidden)),
   html.is-firefox .tuner-vol-popover {
-    grid-template-columns: 34px minmax(0, 1fr) 28px;
+    grid-template-columns: 34px minmax(0, 1fr) 34px;
     column-gap: 8px;
   }
   .tuner-vol-slot .tuner-vol-mute-btn {
@@ -971,8 +971,8 @@ html.is-firefox .tuner-cast--bar.hidden { display: flex !important; }
     display: none;
     grid-column: 3;
     grid-row: 1;
-    width: 28px;
-    height: 28px;
+    width: 34px;
+    height: 34px;
     flex-shrink: 0;
     align-self: center;
     justify-self: end;
@@ -980,7 +980,7 @@ html.is-firefox .tuner-cast--bar.hidden { display: flex !important; }
   html.is-firefox .tuner-cast--popover {
     display: flex;
   }
-  .tuner-cast--popover svg { width: 15px; height: 15px; }
+  .tuner-cast--popover svg { width: 18px; height: 18px; }
   .tuner-cast--popover:not(.hidden) { display: flex; }
   .tuner-cast--popover.hidden { display: none !important; }
   html.is-firefox .tuner-cast--popover.hidden { display: flex !important; }
@@ -994,13 +994,8 @@ html.is-firefox .tuner-cast--bar.hidden { display: flex !important; }
   .tuner-controls { gap: 6px; }
   .tuner-vol-popover:has(.tuner-cast--popover:not(.hidden)),
   html.is-firefox .tuner-vol-popover {
-    grid-template-columns: 34px minmax(0, 1fr) 26px;
+    grid-template-columns: 34px minmax(0, 1fr) 34px;
   }
-  .tuner-cast--popover {
-    width: 26px;
-    height: 26px;
-  }
-  .tuner-cast--popover svg { width: 14px; height: 14px; }
 
   .tuner-label { display: none; }
 
