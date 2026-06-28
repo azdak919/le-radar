@@ -363,6 +363,7 @@ init().catch((e) => console.error('init failed', e));
 
 async function init() {
   initTheme();
+  initMastheadActions();
   renderTodayDate();
   setupAudio();
   bindTuner();
@@ -433,6 +434,19 @@ function registerServiceWorker() {
   }).catch(() => {});
   navigator.serviceWorker.addEventListener('controllerchange', () => {
     window.location.reload();
+  });
+}
+
+/** Évite que hover/focus laissent un bouton masthead « engagé » après un tap ou clic. */
+function initMastheadActions() {
+  document.querySelectorAll('.masthead-actions .masthead-icon').forEach((el) => {
+    const release = () => {
+      requestAnimationFrame(() => {
+        if (document.activeElement === el) el.blur();
+      });
+    };
+    el.addEventListener('pointerup', release);
+    el.addEventListener('click', release);
   });
 }
 
