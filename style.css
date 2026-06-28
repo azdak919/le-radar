@@ -196,6 +196,8 @@ a { color: inherit; }
   gap: 9px;
   flex: 1;
   min-width: 0;
+  container-type: inline-size;
+  container-name: tuner-controls;
 }
 
 .tuner-label { flex-shrink: 0; }
@@ -444,8 +446,9 @@ a { color: inherit; }
   --vol-ratio: 0.5;
   --vol-base: 100%;
   --vol-boost: 0%;
-  width: 132px;
-  flex-shrink: 0;
+  width: 100%;
+  min-width: 108px;
+  flex-shrink: 1;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -546,8 +549,8 @@ a { color: inherit; }
   box-shadow: 0 1px 8px rgba(255, 90, 70, 0.35);
 }
 .tuner-vol-labels {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  position: relative;
+  display: block;
   height: 10px;
   overflow: visible;
   font-size: 9px;
@@ -558,12 +561,21 @@ a { color: inherit; }
   user-select: none;
 }
 .tuner-vol-labels span {
+  position: absolute;
+  top: 0;
   white-space: nowrap;
 }
-.tuner-vol-labels span:nth-child(1) { text-align: left; }
-.tuner-vol-labels span:nth-child(2) { text-align: center; }
+.tuner-vol-labels span:nth-child(1) {
+  left: var(--vol-x-min, 8px);
+  transform: translateX(0);
+}
+.tuner-vol-labels span:nth-child(2) {
+  left: var(--vol-x-mid, 50%);
+  transform: translateX(-50%);
+}
 .tuner-vol-labels span:nth-child(3) {
-  text-align: right;
+  left: var(--vol-x-max, calc(100% - 8px));
+  transform: translateX(-100%);
   color: rgba(255, 154, 144, 0.72);
 }
 .tuner-volume {
@@ -633,6 +645,8 @@ a { color: inherit; }
   }
 
   .tuner-vol-track {
+    width: clamp(108px, 26cqw, 248px);
+    flex-shrink: 0;
     height: 42px;
     justify-content: center;
     gap: 0;
