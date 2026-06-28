@@ -233,6 +233,7 @@ function openListenWindow(radio) {
 }
 
 // ─── DOM refs ────────────────────────────────────────────────────────────────
+const IS_TUNER_EMBED = document.documentElement.dataset.embed === 'tuner';
 const TUNER          = document.getElementById('tuner');
 const TUNER_SELECT   = document.getElementById('tuner-select');
 const TUNER_PREV     = document.getElementById('tuner-prev');
@@ -392,7 +393,7 @@ async function init() {
     fetch('./radios.json').then((r) => r.json()),
     fetch('./radio-nowplaying.json').then((r) => r.json()),
     fetch('./radio-schedules.json').then((r) => r.json()),
-    loadNews(),
+    ...(IS_TUNER_EMBED ? [] : [loadNews()]),
   ]);
 
   radios = radiosData.status === 'fulfilled'
@@ -413,7 +414,7 @@ async function init() {
 }
 
 function registerServiceWorker() {
-  if (!('serviceWorker' in navigator)) return;
+  if (IS_TUNER_EMBED || !('serviceWorker' in navigator)) return;
   navigator.serviceWorker.register('./sw.js').then((reg) => {
     reg.addEventListener('updatefound', () => {
       const worker = reg.installing;
@@ -473,6 +474,7 @@ function applyTheme(theme) {
 
 // ─── Today date (masthead) ─────────────────────────────────────────────────────
 function renderTodayDate() {
+  if (!TODAY_DATE) return;
   const now = new Date();
   TODAY_DATE.textContent = now.toLocaleDateString('fr-CA', {
     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
@@ -679,7 +681,7 @@ function formatStationNowAirLabel(radio) {
 
 /** Téléphone (< 680 px) : acronyme dans le titre du syntoniseur seulement. */
 function isTunerDialPhoneLayout() {
-  return !!TUNER_DIAL_PHONE_MQ?.matches;
+  return IS_TUNER_EMBED || !!TUNER_DIAL_PHONE_MQ?.matches;
 }
 
 /** Institution affichée dans le syntoniseur : abrégée au téléphone, complète en tablette. */
@@ -700,7 +702,7 @@ function tunerDialTitleLine(radio) {
 
 /** Mobile / tablette (< 1100 px) : titre du dial = poste · établissement. */
 function isDialCompactLayout() {
-  return !!TUNER_SUB_ROTATE_MQ?.matches;
+  return IS_TUNER_EMBED || !!TUNER_SUB_ROTATE_MQ?.matches;
 }
 
 /**
@@ -2098,6 +2100,7 @@ function restoreVolume() {
 //  NEWS WIRE
 // ═══════════════════════════════════════════════════════════════════════════
 async function loadNews() {
+  if (!NEWS_LIST) return;
   NEWS_LIST.innerHTML = newsSkeleton(6);
   try {
     const res = await fetch('./news.json', { cache: 'no-cache' });
@@ -2486,6 +2489,7 @@ function selectNewsSource(source) {
 }
 
 function renderNewsFilters() {
+  if (!NEWS_FILTERS) return;
   const sources = sortSourcesForFilters([...new Set(news.map(n => n.source))]);
   [...NEWS_FILTERS.querySelectorAll('[data-source]:not([data-source="all"])')].forEach(b => b.remove());
 
@@ -2522,6 +2526,7 @@ function renderNewsFilters() {
 }
 
 function renderNews() {
+  if (!NEWS_LIST) return;
   const isSourceView = newsSourceFilter !== 'all';
   const items = isSourceView
     ? news.filter(n => n.source === newsSourceFilter)
