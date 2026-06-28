@@ -139,10 +139,12 @@ a { color: inherit; }
   background: color-mix(in srgb, #c8102e 10%, transparent);
 }
 .masthead-ataraxia .masthead-tomato,
-.masthead-solitaire .masthead-card {
+.masthead-solitaire .masthead-card,
+.masthead-coffee .masthead-coffee-emoji {
   font-size: 15px;
   line-height: 1;
   display: block;
+  color: unset;
   font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
 }
 .masthead-home.is-active,
