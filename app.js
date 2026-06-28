@@ -251,6 +251,13 @@ const TUNER_VOL      = document.getElementById('tuner-vol');
 const TUNER_VOL_TOGGLE = document.getElementById('tuner-vol-toggle');
 const TUNER_VOL_MUTE   = document.getElementById('tuner-vol-mute');
 const VOL_COMPACT    = window.matchMedia('(max-width: 1099.98px)');
+const EMBED_VOL_COMPACT_MQ = window.matchMedia?.('(max-width: 559.98px)');
+
+/** Embed iframe : popover volume seulement sous 560 px ; sinon curseur en ligne. */
+function isVolCompactMode() {
+  if (IS_TUNER_EMBED) return !!EMBED_VOL_COMPACT_MQ?.matches;
+  return VOL_COMPACT.matches;
+}
 const TUNER_NOWAIR = document.getElementById('tuner-nowair');
 const TUNER_NOWAIR_TITLE = document.getElementById('tuner-nowair-title');
 const TUNER_NOWAIR_SUB = document.getElementById('tuner-nowair-sub');
@@ -1233,6 +1240,7 @@ function bindVolumeSliderLayout() {
   if (inner) volSliderResizeObs.observe(inner);
   window.addEventListener('resize', schedule, { passive: true });
   VOL_COMPACT.addEventListener('change', schedule);
+  if (IS_TUNER_EMBED) EMBED_VOL_COMPACT_MQ?.addEventListener?.('change', schedule);
   schedule();
 }
 
@@ -1247,7 +1255,7 @@ function bindVolumePopover() {
 
   TUNER_VOL_TOGGLE.addEventListener('click', (e) => {
     e.stopPropagation();
-    if (VOL_COMPACT.matches) {
+    if (isVolCompactMode()) {
       const open = TUNER_VOL.classList.toggle('is-open');
       TUNER_VOL_TOGGLE.setAttribute('aria-expanded', open ? 'true' : 'false');
       if (open) {
@@ -1269,10 +1277,12 @@ function bindVolumePopover() {
     if (e.key === 'Escape') close();
   });
   // En repassant en mode large, on referme proprement la bulle.
-  VOL_COMPACT.addEventListener('change', (e) => {
+  const onVolLayoutChange = (e) => {
     if (!e.matches) close();
     updateVolumeUI();
-  });
+  };
+  VOL_COMPACT.addEventListener('change', onVolLayoutChange);
+  if (IS_TUNER_EMBED) EMBED_VOL_COMPACT_MQ?.addEventListener?.('change', onVolLayoutChange);
 }
 
 function bindVolumePopoverMute() {
@@ -1957,7 +1967,7 @@ function syncVolumeMuteButton(btn, { pressed = false, icon = 'toggle' } = {}) {
 
 function updateVolumeUI() {
   TUNER_VOL?.classList.toggle('is-muted', volumeMuted);
-  const compact = VOL_COMPACT.matches;
+  const compact = isVolCompactMode();
   syncVolumeMuteButton(TUNER_VOL_MUTE, { pressed: true, icon: 'mute' });
   syncVolumeMuteButton(TUNER_VOL_TOGGLE, {
     pressed: !compact,
