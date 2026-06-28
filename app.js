@@ -1496,11 +1496,14 @@ function selectStation(id, { autoplay = false, openExternal = false } = {}) {
   updateMediaSession(radio);
 
   if (!playable) {
+    window.RadarCast?.endSession?.();
     stopPlayback({ keepStation: true });
     updatePlayUI();
     if (external && openExternal) openListenWindow(radio);
     return;
   }
+
+  window.RadarCast?.onStationChange?.();
 
   if (autoplay) {
     play(radio);
@@ -1554,6 +1557,7 @@ function stopPlayback({ keepStation = false } = {}) {
   clearStallWatchdog();
   reconnectTries = 0;
   userPaused = false;
+  window.RadarCast?.endSession?.();
   if (audio) {
     suppressAudioError = true;
     audio.pause();
@@ -1581,6 +1585,7 @@ function updatePlayUI() {
   renderTunerNowAir();
   syncNowPlayingPoll();
   syncMediaSessionPlaybackState();
+  window.RadarCast?.updateButton?.();
 }
 
 function wantsAudioBoost() {
@@ -1601,8 +1606,17 @@ function getPlayerElement() {
   return el;
 }
 
+function pauseForCast() {
+  if (!audio) return;
+  suppressAudioError = true;
+  try { audio.pause(); } catch {}
+  suppressAudioError = false;
+  updatePlayUI();
+}
+
 function pauseByUser() {
   userPaused = true;
+  window.RadarCast?.pauseRemote?.();
   if (!audio) { updatePlayUI(); return; }
   suppressAudioError = true;
   try { audio.pause(); } catch {}
@@ -1780,13 +1794,6 @@ function rebuildAudio(withBoost) {
   gainNode = null;
   boostWired = false;
   if (withBoost) wireBoost();
-  if (audioCtx) {
-    audioCtx.onstatechange = () => {
-      if (audioCtx.state === 'suspended' && isPlaying() && !userPaused) {
-        audioCtx.resume().catch(() => {});
-      }
-    };
-  }
   applyGain();
 }
 
@@ -1916,6 +1923,27 @@ function setupAudio() {
     navigator.mediaSession.setActionHandler('previoustrack', () => stepStation(-1));
     navigator.mediaSession.setActionHandler('nexttrack', () => stepStation(1));
   }
+
+  window.RadarCast?.init?.({
+    getPlayer: () => audio,
+    getStation: () => currentStation,
+    getStreamUrl: getPlayableStream,
+    isExternal: isExternalListen,
+    isPlaying,
+    isUserPaused: () => userPaused,
+    playStation: play,
+    pauseLocal: pauseForCast,
+    assetUrl,
+    formatInstitution: formatInstitutionDisplay,
+    getNowAirMeta: (radio) => {
+      if (!radio || radio.id !== currentStation?.id) return {};
+      if (lastNowAir.title) {
+        return { title: lastNowAir.title, sub: lastNowAir.sub || tunerInstitutionLabel(radio.institution) };
+      }
+      return {};
+    },
+    showToast,
+  });
 }
 
 function assetUrl(path) {

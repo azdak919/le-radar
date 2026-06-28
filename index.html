@@ -93,6 +93,10 @@
               <svg viewBox="0 0 24 24" fill="currentColor" class="ico-external hidden" aria-hidden="true"><path d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
             </button>
 
+            <button id="tuner-cast" class="tuner-cast hidden" type="button" aria-label="Diffuser sur un appareil" title="Diffuser sur un appareil" aria-pressed="false" hidden>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 16.1A5.9 5.9 0 0 1 7.9 10.2H8v2.03A3.9 3.9 0 0 0 4.1 16.1H2v0zm2-6.18V12h2.03A3.9 3.9 0 0 1 10.03 8H8V9.92zm13.8 6.18A5.9 5.9 0 0 1 16.1 22H14v-2.03a3.9 3.9 0 0 0 3.89-3.89H20v0zM16.1 2A5.9 5.9 0 0 1 22 7.9V10h-2.03A3.9 3.9 0 0 0 16.1 6.1V4h0zM12 9a3 3 0 1 0 .001 6.001A3 3 0 0 0 12 9z"/></svg>
+            </button>
+
             <div class="tuner-eq" id="tuner-eq" aria-hidden="true">
               <span></span><span></span><span></span><span></span>
             </div>
@@ -257,8 +261,9 @@
     </div>
 
     <!-- Lecteur natif : requis pour la lecture en arrière-plan (écran verrouillé). -->
-    <audio id="radar-player" preload="none" playsinline webkit-playsinline hidden></audio>
+    <audio id="radar-player" preload="none" playsinline webkit-playsinline x-webkit-airplay="allow" hidden></audio>
 
+    <script src="cast.js" defer></script>
     <script src="app.js" defer></script>
   </body>
 </html>
