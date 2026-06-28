@@ -25,9 +25,11 @@
 
   function stationMetadata(radio) {
     const extra = deps.getNowAirMeta?.(radio) || {};
+    const built = deps.buildMediaSessionMeta?.(radio, extra);
+    if (built) return { title: built.title, artist: built.artist };
     return {
-      title: extra.title || radio.fullName || radio.name,
-      artist: extra.sub || deps.formatInstitution?.(radio.institution) || radio.institution || 'Le Radar',
+      title: radio.fullName || radio.name,
+      artist: deps.formatInstitution?.(radio.institution) || radio.institution || 'Le Radar',
     };
   }
 
