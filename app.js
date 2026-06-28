@@ -722,24 +722,28 @@ function applyDialTextCrossfade(el, text, crossfade = false) {
   }, NOW_AIR_CROSSFADE_MS);
 }
 
-/** Bureau sans poste : dial synchronisé sur le même poste/émission que « À l'antenne ». */
-function syncDesktopDialPreview(airTitle, crossfade = false) {
-  if (!isDesktopIdleDialCarousel() || !nowAirPreviewRadio) {
-    if (!currentStation) {
-      setTunerNameText('Syntoniser un poste');
-    }
+/** Bureau sans poste : titre fixe + postes qui défilent en bas ; « À l'antenne » reste à part. */
+function syncDesktopDialPreview(_airTitle, crossfade = false) {
+  if (!isDesktopIdleDialCarousel()) {
+    if (!currentStation) setTunerNameText('Syntoniser un poste');
+    return;
+  }
+
+  if (!nowAirPreviewRadio) {
+    setTunerNameText('Syntoniser un poste');
+    if (tunerSubMeta) applyMarquee(TUNER_SUB, tunerSubMeta);
     return;
   }
 
   const stationLine = formatDialStationLine(nowAirPreviewRadio);
-  if (!crossfade && airTitle === lastDialCarouselText
-    && TUNER_SUB?.querySelector('.tuner-now-sub-text')?.textContent === stationLine) {
-    setTunerNameText(airTitle);
+  const subText = TUNER_SUB?.querySelector('.tuner-now-sub-text')?.textContent;
+  if (!crossfade && stationLine === lastDialCarouselText && subText === stationLine) {
+    setTunerNameText('Syntoniser un poste');
     return;
   }
-  lastDialCarouselText = airTitle;
+  lastDialCarouselText = stationLine;
 
-  setTunerNameText(airTitle, crossfade);
+  setTunerNameText('Syntoniser un poste');
   applyDialTextCrossfade(TUNER_SUB, stationLine, crossfade);
 }
 
