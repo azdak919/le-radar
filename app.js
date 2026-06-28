@@ -297,7 +297,10 @@ let radioNowPlaying = { stations: {}, updatedAt: null };
 let radioSchedules = { stations: {}, timezone: 'America/Toronto' };
 let nowPlayingPollTimer = null;
 let nowAirTick = null;
-let lastNowAir = { title: null, sub: null, empty: null };
+let nowAirPreviewTimer = null;
+let nowAirPreviewRadio = null;
+let lastNowAirPreviewId = null;
+let lastNowAir = { title: null, sub: null, empty: null, previewId: null };
 let tunerSubMeta = '';
 let tunerSubAirText = '';
 let tunerSubRotateTimer = null;
@@ -570,6 +573,63 @@ function formatNowAirSubLine(title, sub, empty) {
   return title;
 }
 
+function nowAirInterestScore(radio) {
+  if (scheduleCurrentSlot(radio)?.title) return 3;
+  if (nowAirShowTitle(radio)) return 2;
+  if (scheduleNextSlot(radio)?.title) return 1;
+  return 0;
+}
+
+function nowAirPreviewPool() {
+  const interesting = radios.filter((r) => nowAirInterestScore(r) > 0);
+  return interesting.length ? interesting : radios;
+}
+
+function pickNowAirPreviewRadio() {
+  const pool = nowAirPreviewPool();
+  if (!pool.length) {
+    nowAirPreviewRadio = null;
+    return null;
+  }
+  let pick = pool[Math.floor(Math.random() * pool.length)];
+  if (pool.length > 1 && pick.id === lastNowAirPreviewId) {
+    const others = pool.filter((r) => r.id !== lastNowAirPreviewId);
+    pick = others[Math.floor(Math.random() * others.length)];
+  }
+  nowAirPreviewRadio = pick;
+  lastNowAirPreviewId = pick.id;
+  return pick;
+}
+
+function formatPreviewNowAir(radio) {
+  const { title, sub } = nowAirLines(radio);
+  const station = radio.name;
+  return {
+    title,
+    sub: sub ? `${station} · ${sub}` : station,
+  };
+}
+
+function stopNowAirPreview() {
+  if (nowAirPreviewTimer) {
+    clearInterval(nowAirPreviewTimer);
+    nowAirPreviewTimer = null;
+  }
+}
+
+function startNowAirPreview() {
+  if (nowAirPreviewTimer || currentStation || !isTunerSubRotateMode() || !radios.length) return;
+  if (!nowAirPreviewRadio) pickNowAirPreviewRadio();
+  nowAirPreviewTimer = setInterval(() => {
+    if (currentStation) {
+      stopNowAirPreview();
+      return;
+    }
+    pickNowAirPreviewRadio();
+    renderTunerNowAir();
+  }, TUNER_SUB_ROTATE_MS);
+}
+
 function isTunerSubRotateMode() {
   return !PREFERS_REDUCED_MOTION?.matches;
 }
@@ -651,22 +711,41 @@ function initTunerSubRotateListeners() {
 
 function renderTunerNowAir() {
   if (!TUNER_NOWAIR) return;
+
+  const previewing = !currentStation && isTunerSubRotateMode() && radios.length > 0;
   let title;
   let sub;
-  const empty = !currentStation;
-  if (empty) {
+
+  if (currentStation) {
+    ({ title, sub } = nowAirLines(currentStation));
+  } else if (previewing) {
+    if (!nowAirPreviewRadio) pickNowAirPreviewRadio();
+    if (nowAirPreviewRadio) {
+      ({ title, sub } = formatPreviewNowAir(nowAirPreviewRadio));
+    } else {
+      title = 'Syntoniser un poste';
+      sub = 'Les radios étudiantes jouent en direct, 24/7';
+    }
+  } else {
     title = 'Syntoniser un poste';
     sub = 'Les radios étudiantes jouent en direct, 24/7';
-  } else {
-    ({ title, sub } = nowAirLines(currentStation));
   }
+
+  const empty = !currentStation && !previewing;
+  const previewId = previewing ? (nowAirPreviewRadio?.id ?? null) : null;
 
   // Rien n'a changé : on n'écrase pas le DOM (sinon le défilement repart à zéro
   // à chaque tic d'horloge).
-  if (lastNowAir.title === title && lastNowAir.sub === sub && lastNowAir.empty === empty) {
+  if (lastNowAir.title === title
+    && lastNowAir.sub === sub
+    && lastNowAir.empty === empty
+    && lastNowAir.previewId === previewId) {
+    if (currentStation) stopNowAirPreview();
+    else if (previewing) startNowAirPreview();
+    else stopNowAirPreview();
     return;
   }
-  lastNowAir = { title, sub, empty };
+  lastNowAir = { title, sub, empty, previewId };
 
   TUNER_NOWAIR.classList.remove('hidden');
   TUNER_NOWAIR.classList.toggle('is-empty', empty);
@@ -679,6 +758,16 @@ function renderTunerNowAir() {
   syncTunerSubRotate(title, sub, empty);
   if (currentStation && isPlaying()) {
     updateMediaSession(currentStation, empty ? {} : { title, sub });
+  }
+
+  if (currentStation) {
+    stopNowAirPreview();
+    nowAirPreviewRadio = null;
+    lastNowAirPreviewId = null;
+  } else if (previewing) {
+    startNowAirPreview();
+  } else {
+    stopNowAirPreview();
   }
 }
 
