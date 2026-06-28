@@ -638,8 +638,12 @@ function stopNowAirPreview() {
   }
 }
 
+function isNowAirPanelPreviewMode() {
+  return !currentStation && !PREFERS_REDUCED_MOTION?.matches && radios.length > 0;
+}
+
 function startNowAirPreview() {
-  if (nowAirPreviewTimer || currentStation || !isTunerSubRotateMode() || !radios.length) return;
+  if (nowAirPreviewTimer || currentStation || !isNowAirPanelPreviewMode()) return;
   if (!nowAirPreviewRadio) pickNowAirPreviewRadio();
   nowAirPreviewTimer = setInterval(() => {
     if (currentStation) {
@@ -652,7 +656,7 @@ function startNowAirPreview() {
 }
 
 function isTunerSubRotateMode() {
-  return !PREFERS_REDUCED_MOTION?.matches;
+  return !PREFERS_REDUCED_MOTION?.matches && !!TUNER_SUB_ROTATE_MQ?.matches;
 }
 
 function stopTunerSubRotate() {
@@ -706,7 +710,7 @@ function updateNowAirPanel(title, sub, crossfade = false) {
     }
   };
 
-  if (crossfade && isTunerSubRotateMode() && body) {
+  if (crossfade && !PREFERS_REDUCED_MOTION?.matches && body) {
     body.classList.add('is-swapping');
     setTimeout(() => {
       write();
@@ -729,7 +733,8 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false) {
     TUNER_SUB.setAttribute('aria-hidden', 'false');
     TUNER_SUB_AIR.setAttribute('aria-hidden', 'true');
 
-    if (currentStation) {
+    const showAirInDialSub = currentStation && TUNER_SUB_ROTATE_MQ?.matches;
+    if (showAirInDialSub) {
       applyMarquee(TUNER_SUB, tunerSubAirText);
     } else if (tunerSubMeta) {
       applyMarquee(TUNER_SUB, tunerSubMeta);
@@ -756,8 +761,7 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false) {
 }
 
 function onTunerSubRotateLayoutChange() {
-  if (!lastNowAir.title && lastNowAir.empty == null) return;
-  syncTunerSubRotate(lastNowAir.title, lastNowAir.sub, lastNowAir.empty);
+  renderTunerNowAir();
 }
 
 function initTunerSubRotateListeners() {
@@ -768,7 +772,7 @@ function initTunerSubRotateListeners() {
 function renderTunerNowAir() {
   if (!TUNER_NOWAIR) return;
 
-  const previewing = !currentStation && isTunerSubRotateMode() && radios.length > 0;
+  const previewing = isNowAirPanelPreviewMode();
   let title;
   let sub;
 
@@ -802,7 +806,7 @@ function renderTunerNowAir() {
     return;
   }
   const crossfadePreview = previewing
-    && isTunerSubRotateMode()
+    && !PREFERS_REDUCED_MOTION?.matches
     && lastNowAir.previewId != null
     && previewId !== lastNowAir.previewId;
 
