@@ -623,7 +623,7 @@ function formatDialStationLine(radio) {
   return inst ? `${radio.name} · ${inst}` : radio.name;
 }
 
-function formatPreviewNowAir(radio) {
+function formatPreviewNowAir(radio, { omitStation = false } = {}) {
   const stationLine = formatStationNowAirLabel(radio);
   const { title, sub } = nowAirLines(radio);
   const genericListen = `Vous écoutez ${radio.name}`;
@@ -632,6 +632,14 @@ function formatPreviewNowAir(radio) {
   let airDetail = sub || '';
   if (!airDetail || airDetail === genericListen || airDetail === slogan) {
     airDetail = '';
+  }
+
+  if (omitStation) {
+    if (title === genericListen) {
+      const fallback = airDetail || slogan || '';
+      return { title: fallback || 'En direct', sub: '' };
+    }
+    return { title, sub: airDetail || '' };
   }
 
   if (title === genericListen) {
@@ -945,7 +953,9 @@ function renderTunerNowAir() {
   } else if (previewing) {
     if (!nowAirPreviewRadio) pickNowAirPreviewRadio();
     if (nowAirPreviewRadio) {
-      ({ title, sub } = formatPreviewNowAir(nowAirPreviewRadio));
+      ({ title, sub } = formatPreviewNowAir(nowAirPreviewRadio, {
+        omitStation: isDesktopIdleDialCarousel(),
+      }));
     } else {
       title = 'Syntoniser un poste';
       sub = 'Les radios étudiantes jouent en direct, 24/7';
