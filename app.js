@@ -608,6 +608,13 @@ function formatStationNowAirLabel(radio) {
   return inst ? `${radio.name} · ${inst}` : radio.name;
 }
 
+/** Syntoniseur : nom du poste · établissement au complet (ou acronyme si déjà court). */
+function formatDialStationLine(radio) {
+  if (!radio) return tunerSubMeta || 'Radios étudiantes en direct';
+  const inst = tunerInstitutionLabel(radio.institution);
+  return inst ? `${radio.name} · ${inst}` : radio.name;
+}
+
 function formatPreviewNowAir(radio) {
   const stationLine = formatStationNowAirLabel(radio);
   const { title, sub } = nowAirLines(radio);
@@ -678,7 +685,7 @@ function syncDesktopDialPreview(airTitle, crossfade = false) {
     return;
   }
 
-  const stationLine = formatStationNowAirLabel(nowAirPreviewRadio);
+  const stationLine = formatDialStationLine(nowAirPreviewRadio);
   if (!crossfade && airTitle === lastDialCarouselText
     && TUNER_SUB?.querySelector('.tuner-now-sub-text')?.textContent === stationLine) {
     if (TUNER_NAME) TUNER_NAME.textContent = airTitle;
