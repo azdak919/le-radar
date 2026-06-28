@@ -737,24 +737,17 @@ a { color: inherit; }
   .tuner-inner { padding: 8px var(--pad); gap: 8px; }
   .tuner-controls { gap: 6px; }
 
-  /* Espace fixe pour l'indicateur EN ONDES (pastille seule, pas un bouton). */
-  .tuner-label {
-    flex-shrink: 0;
-    width: 42px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  /* Téléphone : pas de pastille EN ONDES — le synthoniseur signale l'état live. */
+  .tuner-label { display: none; }
+
+  .tuner.is-playing .tuner-now {
+    border-color: rgba(255, 125, 110, 0.7);
+    background: rgba(200, 16, 46, 0.1);
+    box-shadow: 0 0 0 1px rgba(200, 16, 46, 0.22);
   }
-  .tuner-onair {
-    font-size: 0;
-    gap: 0;
-    width: 42px;
-    height: 42px;
-    justify-content: center;
-  }
-  .tuner-onair::before {
-    width: 9px;
-    height: 9px;
+  .tuner.is-external .tuner-now {
+    border-color: rgba(93, 155, 224, 0.55);
+    background: rgba(0, 61, 165, 0.1);
   }
 
   .tuner-step {
