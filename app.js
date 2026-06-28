@@ -769,11 +769,16 @@ function bindTuner() {
 }
 
 function bindVolumeSliderLayout() {
-  const slider = TUNER_VOLUME?.closest('.tuner-vol-slider');
-  if (!slider || volSliderResizeObs) return;
-  volSliderResizeObs = new ResizeObserver(() => updateVolumeSliderVisual());
-  volSliderResizeObs.observe(slider);
-  updateVolumeSliderVisual();
+  const track = TUNER_VOLUME?.closest('.tuner-vol-track');
+  if (!track || volSliderResizeObs) return;
+  const schedule = () => requestAnimationFrame(() => updateVolumeSliderVisual());
+  volSliderResizeObs = new ResizeObserver(schedule);
+  volSliderResizeObs.observe(track);
+  const inner = track.closest('.tuner-inner');
+  if (inner) volSliderResizeObs.observe(inner);
+  window.addEventListener('resize', schedule, { passive: true });
+  VOL_COMPACT.addEventListener('change', schedule);
+  schedule();
 }
 
 // Sur mobile, le curseur de volume est masqué : l'icône ouvre une bulle.
@@ -1101,7 +1106,7 @@ function updateVolumeSliderVisual() {
   const slider = track?.querySelector('.tuner-vol-slider');
   if (!track || !slider) return;
 
-  const width = slider.clientWidth;
+  const width = Math.max(track.clientWidth, slider.clientWidth);
   if (width < 1) return;
 
   const travel = width - VOL_THUMB_PX;
