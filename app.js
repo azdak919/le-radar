@@ -1739,15 +1739,14 @@ function updateVolumeUI() {
   TUNER_VOL?.classList.toggle('is-muted', volumeMuted);
   const compact = VOL_COMPACT.matches;
   syncVolumeMuteButton(TUNER_VOL_MUTE, { pressed: true, icon: 'mute' });
-  syncVolumeMuteButton(TUNER_VOL_TOGGLE, {
-    pressed: !compact,
-    icon: compact ? 'vol' : 'mute',
-  });
+  syncVolumeMuteButton(TUNER_VOL_TOGGLE, { pressed: true, icon: 'mute' });
   if (TUNER_VOL_TOGGLE) {
     if (compact) {
-      TUNER_VOL_TOGGLE.removeAttribute('aria-pressed');
+      TUNER_VOL_TOGGLE.setAttribute('aria-pressed', String(volumeMuted));
       TUNER_VOL_TOGGLE.setAttribute('aria-label', 'Réglages du volume');
-      TUNER_VOL_TOGGLE.title = 'Réglages du volume';
+      TUNER_VOL_TOGGLE.title = volumeMuted
+        ? 'Son coupé — ouvrir les réglages du volume'
+        : 'Réglages du volume';
     } else {
       TUNER_VOL_TOGGLE.setAttribute(
         'aria-label',
