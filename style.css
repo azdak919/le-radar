@@ -697,19 +697,38 @@ a { color: inherit; }
   border-color: rgba(255, 125, 110, 0.88);
   background: rgba(255, 125, 110, 0.22);
 }
-.tuner-vol-labels > span:nth-child(1) {
+.tuner-vol-label--min {
   left: var(--vol-x-min, 8px);
   transform: translateX(0);
 }
-.tuner-vol-labels > span:nth-child(2) {
+.tuner-vol-label--mid {
   left: var(--vol-x-mid, 50%);
   transform: translateX(-50%);
 }
-.tuner-vol-labels > span:nth-child(3) {
-  left: var(--vol-x-max, calc(100% - 8px));
-  transform: translateX(-100%);
+.tuner-vol-label--max {
   color: rgba(255, 154, 144, 0.72);
 }
+.tuner-vol-labels-end {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.tuner-vol-labels-end .tuner-vol-label--max {
+  position: static;
+  transform: none;
+  white-space: nowrap;
+}
+/* Bureau : 200 % aligné sur la butée du curseur. */
+.tuner-vol-labels-end {
+  left: var(--vol-x-max, calc(100% - 8px));
+  right: auto;
+  transform: translateX(-100%);
+}
+.tuner-cast--bar { display: flex; }
+.tuner-cast--popover { display: none; }
 /* Bureau : le popover interne ne change pas la mise en page en ligne. */
 .tuner-vol-popover { display: contents; }
 .tuner-volume {
@@ -932,15 +951,32 @@ a { color: inherit; }
   }
   .tuner-vol-slot .tuner-vol-slider { min-height: 36px; }
   .tuner-vol-slot .tuner-vol-labels {
-    height: 13px;
+    height: 34px;
     font-size: 8px;
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.01em;
     color: rgba(255, 255, 255, 0.38);
   }
-  .tuner-vol-slot .tuner-vol-labels > span:nth-child(3) {
+  .tuner-vol-slot .tuner-vol-label--max {
     color: rgba(255, 154, 144, 0.62);
   }
+  .tuner-vol-slot .tuner-vol-labels-end {
+    left: auto;
+    right: 0;
+    transform: none;
+    top: 50%;
+    margin-top: -17px;
+    height: 34px;
+  }
+  .tuner-cast--bar { display: none !important; }
+  .tuner-cast--popover {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+  .tuner-cast--popover svg { width: 17px; height: 17px; }
+  .tuner-cast--popover.hidden { display: none !important; }
 
   .tuner-vol.is-open .tuner-vol-btn { color: rgba(255,255,255,0.95); }
 }
@@ -949,6 +985,12 @@ a { color: inherit; }
 @media (max-width: 679.98px) {
   .tuner-inner { padding: 8px var(--pad); gap: 8px; }
   .tuner-controls { gap: 6px; }
+  .tuner-vol-slot .tuner-vol-labels-end { gap: 5px; }
+  .tuner-cast--popover {
+    width: 30px;
+    height: 30px;
+  }
+  .tuner-cast--popover svg { width: 16px; height: 16px; }
 
   .tuner-label { display: none; }
 

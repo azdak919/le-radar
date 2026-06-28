@@ -5,7 +5,7 @@
   'use strict';
 
   let deps = null;
-  let castBtn = null;
+  let castBtns = [];
   let airPlayAvailable = false;
   let chromecastAvailable = false;
   let chromecastSessionActive = false;
@@ -34,25 +34,26 @@
   }
 
   function updateButton() {
-    if (!castBtn) return;
+    if (!castBtns.length) return;
     const station = deps?.getStation?.();
     const canUse = !!(station && deps.getStreamUrl?.(station) && !deps.isExternal?.(station));
     const show = isAvailable();
-    castBtn.classList.toggle('hidden', !show);
-    castBtn.hidden = !show;
-    castBtn.disabled = !canUse;
-    castBtn.setAttribute('aria-disabled', String(!canUse));
     const player = deps.getPlayer?.();
     const casting = chromecastSessionActive || !!player?.webkitCurrentPlaybackTargetIsWireless;
-    castBtn.classList.toggle('is-casting', casting);
-    castBtn.setAttribute('aria-pressed', casting ? 'true' : 'false');
-    castBtn.title = casting
+    const title = casting
       ? 'Arrêter la diffusion externe'
       : 'Diffuser sur un appareil (AirPlay ou Chromecast)';
-    castBtn.setAttribute(
-      'aria-label',
-      casting ? 'Arrêter la diffusion externe' : 'Diffuser sur un appareil',
-    );
+    const ariaLabel = casting ? 'Arrêter la diffusion externe' : 'Diffuser sur un appareil';
+    castBtns.forEach((btn) => {
+      btn.classList.toggle('hidden', !show);
+      btn.hidden = !show;
+      btn.disabled = !canUse;
+      btn.setAttribute('aria-disabled', String(!canUse));
+      btn.classList.toggle('is-casting', casting);
+      btn.setAttribute('aria-pressed', casting ? 'true' : 'false');
+      btn.title = title;
+      btn.setAttribute('aria-label', ariaLabel);
+    });
   }
 
   function setupAirPlay(player) {
@@ -204,13 +205,17 @@
 
   function init(options) {
     deps = options;
-    castBtn = document.getElementById('tuner-cast');
+    castBtns = ['tuner-cast', 'tuner-cast-pop']
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
     const player = deps.getPlayer?.();
-    if (!castBtn || !player) return;
+    if (!castBtns.length || !player) return;
 
     setupAirPlay(player);
     loadCastSdk();
-    castBtn.addEventListener('click', () => { showPicker(); });
+    castBtns.forEach((btn) => {
+      btn.addEventListener('click', () => { showPicker(); });
+    });
     updateButton();
   }
 
