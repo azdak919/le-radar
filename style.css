@@ -1406,9 +1406,9 @@ html.is-firefox .tuner-cast--bar.hidden { display: flex !important; }
   white-space: nowrap;
 }
 .filter-btn__inst {
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 500;
-  line-height: 1.25;
+  line-height: 1.2;
   color: var(--muted);
   padding-left: 13px;
   text-align: left;

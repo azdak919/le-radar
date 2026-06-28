@@ -1327,6 +1327,12 @@ function stepStation(dir) {
   selectStation(next.id, { autoplay: tunerShouldAutoplayNative(next) });
 }
 
+function getFilterInstMarqueeElements() {
+  return NEWS_FILTERS
+    ? [...NEWS_FILTERS.querySelectorAll('.filter-btn__inst')]
+    : [];
+}
+
 function getMarqueeElements() {
   return [
     TUNER_NAME,
@@ -1334,7 +1340,25 @@ function getMarqueeElements() {
     TUNER_SUB_AIR,
     TUNER_NOWAIR_TITLE,
     TUNER_NOWAIR_SUB,
+    ...getFilterInstMarqueeElements(),
   ].filter(Boolean);
+}
+
+/** Défilement doux sur le libellé d'institution des pastilles sources. */
+function applyFilterInstMarquees() {
+  if (!NEWS_FILTERS) return;
+  NEWS_FILTERS.querySelectorAll('.filter-btn').forEach((btn) => {
+    const instEl = btn.querySelector('.filter-btn__inst');
+    if (!instEl) return;
+    const src = btn.dataset.source;
+    if (src === 'all') {
+      applyMarquee(instEl, 'Toutes les sources');
+      return;
+    }
+    const { institution, type } = sourceInfo(src);
+    const instLabel = filterSourceInstitutionLabel(institution, type, src);
+    applyMarquee(instEl, instLabel || '');
+  });
 }
 
 function measureMarquee(el) {
@@ -1418,6 +1442,8 @@ function initMarqueeResizeListeners() {
     TUNER?.querySelector('.tuner-inner'),
     TUNER_NOWAIR,
     TUNER_NOWAIR?.querySelector('.tuner-nowair-body'),
+    NEWS_FILTERS,
+    FILTERS_PANEL,
   ].forEach((el) => { if (el) observeTargets.add(el); });
 
   marqueeResizeObs = new ResizeObserver(scheduleMarqueeRefresh);
@@ -2352,6 +2378,8 @@ function syncFiltersPanel() {
     FILTERS_PANEL.classList.remove('is-expanded');
     FILTERS_TOGGLE?.setAttribute('hidden', '');
   }
+
+  scheduleMarqueeRefresh();
 }
 
 function bindFiltersPanel() {
@@ -2404,7 +2432,7 @@ function renderNewsFilters() {
         <span class="filter-btn__dot" aria-hidden="true"></span>
         <span class="filter-btn__name">${escapeHtml(src)}</span>
       </span>
-      ${instLabel ? `<span class="filter-btn__inst">${escapeHtml(instLabel)}</span>` : ''}
+      ${instLabel ? '<span class="filter-btn__inst"></span>' : ''}
     `;
     NEWS_FILTERS.appendChild(btn);
   });
@@ -2416,6 +2444,7 @@ function renderNewsFilters() {
   NEWS_FILTERS.querySelectorAll('.filter-btn').forEach((b) =>
     b.classList.toggle('active', b.dataset.source === newsSourceFilter));
 
+  applyFilterInstMarquees();
   syncFiltersPanel();
 }
 
