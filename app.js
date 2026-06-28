@@ -1141,7 +1141,7 @@ function bindVolumePopover() {
   VOL_COMPACT.addEventListener('change', (e) => { if (!e.matches) close(); });
 }
 
-/** Téléphone : glissement au doigt fiable (le range natif opacity:0 glisse mal). */
+/** Glissement tactile fiable (le range natif opacity:0 glisse mal au doigt). */
 function bindVolumeSliderDrag() {
   const slider = TUNER_VOLUME?.closest('.tuner-vol-slider');
   const track = TUNER_VOLUME?.closest('.tuner-vol-track');
@@ -1169,7 +1169,7 @@ function bindVolumeSliderDrag() {
   };
 
   slider.addEventListener('pointerdown', (e) => {
-    if (!VOL_COMPACT.matches || e.button > 0) return;
+    if (e.button > 0) return;
     e.preventDefault();
     volumeSliderDragging = true;
     track.classList.add('is-dragging');
