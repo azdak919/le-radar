@@ -76,6 +76,18 @@ function releaseFocus(el) {
   if (el && typeof el.blur === 'function') el.blur();
 }
 
+function initMastheadActions() {
+  document.querySelectorAll('.masthead-actions .masthead-icon').forEach((el) => {
+    const release = () => {
+      requestAnimationFrame(() => {
+        if (document.activeElement === el) el.blur();
+      });
+    };
+    el.addEventListener('pointerup', release);
+    el.addEventListener('click', release);
+  });
+}
+
 async function copyFeedUrl(url, { toast = true } = {}) {
   try {
     await navigator.clipboard.writeText(url);
@@ -277,6 +289,7 @@ async function renderFeedsUpdated() {
 }
 
 initTheme();
+initMastheadActions();
 renderTodayDate();
 initFeedCards();
 renderFeedsCampuses();
