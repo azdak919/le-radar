@@ -906,7 +906,7 @@ function renderTunerNowAir() {
     nowAirPreviewRadio = null;
     lastNowAirPreviewId = null;
     lastDialCarouselText = '';
-    if (TUNER_NAME) TUNER_NAME.textContent = 'Syntoniser un poste';
+    if (TUNER_NAME) TUNER_NAME.textContent = currentStation.name;
   } else if (previewing) {
     startNowAirPreview();
   } else {
