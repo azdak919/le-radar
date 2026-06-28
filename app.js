@@ -300,8 +300,6 @@ let nowAirTick = null;
 let nowAirPreviewTimer = null;
 let nowAirPreviewRadio = null;
 let lastNowAirPreviewId = null;
-let dialCarouselTimer = null;
-let dialCarouselIndex = 0;
 let lastDialCarouselText = '';
 let lastNowAir = { title: null, sub: null, empty: null, previewId: null };
 let tunerSubMeta = '';
@@ -658,48 +656,48 @@ function isDesktopIdleDialCarousel() {
     && radios.length > 0;
 }
 
-function formatDialCarouselLine(radio) {
-  if (!radio) return tunerSubMeta || 'Radios étudiantes en direct';
-  const inst = tunerInstitutionLabel(radio.institution);
-  return inst ? `${radio.name} · ${inst}` : radio.name;
-}
-
-function updateDialCarouselDisplay(crossfade = false) {
-  if (!TUNER_SUB || !radios.length) return;
-  const text = formatDialCarouselLine(radios[dialCarouselIndex % radios.length]);
-  if (!crossfade && text === lastDialCarouselText) return;
-  lastDialCarouselText = text;
-
-  if (crossfade) {
-    TUNER_SUB.classList.add('is-crossfading');
-    setTimeout(() => {
-      applyMarquee(TUNER_SUB, text);
-      requestAnimationFrame(() => TUNER_SUB.classList.remove('is-crossfading'));
-    }, NOW_AIR_CROSSFADE_MS);
-  } else {
-    applyMarquee(TUNER_SUB, text);
+function applyDialTextCrossfade(el, text, crossfade = false) {
+  if (!el) return;
+  if (!crossfade || PREFERS_REDUCED_MOTION?.matches) {
+    applyMarquee(el, text);
+    return;
   }
+  el.classList.add('is-crossfading');
+  setTimeout(() => {
+    applyMarquee(el, text);
+    requestAnimationFrame(() => el.classList.remove('is-crossfading'));
+  }, NOW_AIR_CROSSFADE_MS);
 }
 
-function stopDesktopDialCarousel() {
-  if (dialCarouselTimer) {
-    clearInterval(dialCarouselTimer);
-    dialCarouselTimer = null;
-  }
-}
-
-function startDesktopDialCarousel() {
-  if (dialCarouselTimer || !isDesktopIdleDialCarousel()) return;
-  if (dialCarouselIndex >= radios.length) dialCarouselIndex = 0;
-  updateDialCarouselDisplay(false);
-  dialCarouselTimer = setInterval(() => {
-    if (!isDesktopIdleDialCarousel()) {
-      stopDesktopDialCarousel();
-      return;
+/** Bureau sans poste : dial synchronisé sur le même poste/émission que « À l'antenne ». */
+function syncDesktopDialPreview(airTitle, crossfade = false) {
+  if (!isDesktopIdleDialCarousel() || !nowAirPreviewRadio) {
+    if (!currentStation && TUNER_NAME) {
+      TUNER_NAME.textContent = 'Syntoniser un poste';
     }
-    dialCarouselIndex = (dialCarouselIndex + 1) % radios.length;
-    updateDialCarouselDisplay(true);
-  }, TUNER_SUB_ROTATE_MS);
+    return;
+  }
+
+  const stationLine = formatStationNowAirLabel(nowAirPreviewRadio);
+  if (!crossfade && airTitle === lastDialCarouselText
+    && TUNER_SUB?.querySelector('.tuner-now-sub-text')?.textContent === stationLine) {
+    if (TUNER_NAME) TUNER_NAME.textContent = airTitle;
+    return;
+  }
+  lastDialCarouselText = airTitle;
+
+  if (TUNER_NAME) {
+    if (crossfade && !PREFERS_REDUCED_MOTION?.matches) {
+      TUNER_NAME.classList.add('is-crossfading');
+      setTimeout(() => {
+        TUNER_NAME.textContent = airTitle;
+        requestAnimationFrame(() => TUNER_NAME.classList.remove('is-crossfading'));
+      }, NOW_AIR_CROSSFADE_MS);
+    } else {
+      TUNER_NAME.textContent = airTitle;
+    }
+  }
+  applyDialTextCrossfade(TUNER_SUB, stationLine, crossfade);
 }
 
 function startNowAirPreview() {
@@ -805,7 +803,6 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false) {
     TUNER_SUB_AIR.setAttribute('aria-hidden', 'true');
 
     if (isDesktopIdleDialCarousel()) {
-      updateDialCarouselDisplay(false);
       return;
     }
 
@@ -876,17 +873,9 @@ function renderTunerNowAir() {
     && lastNowAir.sub === sub
     && lastNowAir.empty === empty
     && lastNowAir.previewId === previewId) {
-    if (currentStation) {
-      stopNowAirPreview();
-      stopDesktopDialCarousel();
-    } else if (previewing) {
-      startNowAirPreview();
-      if (isDesktopIdleDialCarousel()) startDesktopDialCarousel();
-      else stopDesktopDialCarousel();
-    } else {
-      stopNowAirPreview();
-      stopDesktopDialCarousel();
-    }
+    if (currentStation) stopNowAirPreview();
+    else if (previewing) startNowAirPreview();
+    else stopNowAirPreview();
     return;
   }
   const crossfadePreview = previewing
@@ -899,6 +888,7 @@ function renderTunerNowAir() {
   TUNER_NOWAIR.classList.remove('hidden');
   TUNER_NOWAIR.classList.toggle('is-empty', empty);
   updateNowAirPanel(title, sub, crossfadePreview);
+  syncDesktopDialPreview(title, crossfadePreview);
   syncTunerSubRotate(title, sub, empty, crossfadePreview);
   if (currentStation && isPlaying()) {
     updateMediaSession(currentStation, empty ? {} : { title, sub });
@@ -906,17 +896,15 @@ function renderTunerNowAir() {
 
   if (currentStation) {
     stopNowAirPreview();
-    stopDesktopDialCarousel();
     nowAirPreviewRadio = null;
     lastNowAirPreviewId = null;
     lastDialCarouselText = '';
+    if (TUNER_NAME) TUNER_NAME.textContent = 'Syntoniser un poste';
   } else if (previewing) {
     startNowAirPreview();
-    if (isDesktopIdleDialCarousel()) startDesktopDialCarousel();
-    else stopDesktopDialCarousel();
   } else {
     stopNowAirPreview();
-    stopDesktopDialCarousel();
+    if (TUNER_NAME) TUNER_NAME.textContent = 'Syntoniser un poste';
   }
 }
 
