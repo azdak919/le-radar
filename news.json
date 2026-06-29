@@ -1,15 +1,15 @@
 {
-  "updated": "2026-06-29T14:42:23.745Z",
+  "updated": "2026-06-29T18:03:31.449Z",
   "count": 192,
   "freshnessSessions": 3,
   "sources": {
     "Quartier Libre": {
-      "fetchOk": false,
-      "stale": true,
+      "fetchOk": true,
+      "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:00:00.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-06-29T18:01:27.273Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -17,7 +17,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-06-29T14:40:50.890Z"
+      "lastFetchOk": "2026-06-29T18:01:28.670Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -25,7 +25,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-03-25T11:00:00.000Z",
-      "lastFetchOk": "2026-06-29T14:40:56.799Z"
+      "lastFetchOk": "2026-06-29T18:01:33.064Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -33,7 +33,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-06-28T11:00:00.000Z",
-      "lastFetchOk": "2026-06-29T14:40:57.187Z"
+      "lastFetchOk": "2026-06-29T18:01:33.883Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -41,7 +41,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-06-28T23:23:00.000Z",
-      "lastFetchOk": "2026-06-29T14:40:58.058Z"
+      "lastFetchOk": "2026-06-29T18:01:34.556Z"
     },
     "The Concordian": {
       "fetchOk": false,
@@ -57,7 +57,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-06-29T14:40:59.005Z"
+      "lastFetchOk": "2026-06-29T18:01:36.209Z"
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -65,7 +65,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-06-29T14:40:59.937Z"
+      "lastFetchOk": "2026-06-29T18:01:37.594Z"
     },
     "Le Collectif": {
       "fetchOk": true,
@@ -73,7 +73,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-06-29T13:56:28.000Z",
-      "lastFetchOk": "2026-06-29T14:41:01.132Z"
+      "lastFetchOk": "2026-06-29T18:01:38.359Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -81,7 +81,7 @@
       "articleCount": 7,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-06-29T14:41:01.201Z"
+      "lastFetchOk": "2026-06-29T18:01:38.510Z"
     },
     "La Pige": {
       "fetchOk": true,
@@ -89,7 +89,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-06-22T14:36:10.000Z",
-      "lastFetchOk": "2026-06-29T14:41:01.758Z"
+      "lastFetchOk": "2026-06-29T18:01:39.356Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -97,7 +97,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-06-26T15:24:28.000Z",
-      "lastFetchOk": "2026-06-29T14:41:01.863Z"
+      "lastFetchOk": "2026-06-29T18:01:39.657Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -105,7 +105,7 @@
       "articleCount": 30,
       "freshArticleCount": 30,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-06-29T14:41:01.951Z"
+      "lastFetchOk": "2026-06-29T18:01:39.812Z"
     }
   },
   "items": [
@@ -121,20 +121,13 @@
       "date": "2026-06-29T13:56:28.000Z",
       "excerpt": "Le 23 juin dernier avait lieu la première du film québécois François.e à la Maison du Cinéma de Sherbrooke. Pour l’occasion, des",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/06/CULTURE_Francoise_RebeccaGagne-1-709x1024.jpg",
-      "leadExcerpt": "Le 23 juin dernier avait lieu la première du film québécois François.e à la Maison du Cinéma de Sherbrooke. Pour l’occasion, des membres de la distribution de même que les deux scénaristes de l’œuvre ont partagé l’expérience avec l’audience.",
-      "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Espace-Francois-Hemmer-02.jpg",
-      "imageCredit": "Photo : Xavier Hemmer / CC0 · Wikimedia Commons",
-      "imageCreator": "Xavier Hemmer",
-      "imageLicense": "CC0",
-      "imageProvider": "wikimedia",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Espace-Francois-Hemmer-02.jpg",
       "sourceImageCredit": "Crédit photo : Le Collectif",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://lecollectif.ca/culture/francois-e/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "culture_francoise_rebeccagagne-1.jpg"
+      "sourceImageCreditImageKey": "culture_francoise_rebeccagagne-1.jpg",
+      "leadImageReady": false,
+      "leadExcerpt": "Le 23 juin dernier avait lieu la première du film québécois François.e à la Maison du Cinéma de Sherbrooke. Pour l’occasion, des membres de la distribution de même que les deux scénaristes de l’œuvre ont partagé l’expérience avec l’audience."
     },
     {
       "source": "Le Collectif",
@@ -148,13 +141,12 @@
       "date": "2026-06-29T13:52:27.000Z",
       "excerpt": "Cet article aurait dû être écrit il y a deux semaines. Entre-temps, d’autres textes ont pris le dessus, les délais se sont étirés ce qui est plutôt ironique pour un article sur la procrastination. Pourtant, remettre une tâche à plus tard fait partie du quotidien de beaucoup d’étudiantes et d’étudiants.",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/06/SOCIETE_Procrastination_SourcePixabay-1024x731.png",
-      "leadImageReady": true,
       "sourceImageCredit": "Crédit photo : Le Collectif",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://lecollectif.ca/a-la-une/la-procrastination-quand-remettre-a-plus-tard-devient-un-probleme/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "societe_procrastination_sourcepixabay.png"
+      "sourceImageCreditImageKey": "societe_procrastination_sourcepixabay.png",
+      "leadImageReady": true
     },
     {
       "source": "Le Collectif",
@@ -257,13 +249,7 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "societe_virage-a-droite-en-colombie_getty-images.jpg",
       "leadImageReady": false,
-      "leadExcerpt": "Après quatre années passées sous l’égide de Gustavo Petro, la Colombie change de cap et élit à sa tête Abelardo de la Espriella. Ce dernier promet une rupture avec les administrations précédentes, notamment en ce qui concerne le crime organisé. Personnalité similaire à celle du président Trump, il aura su naviguer à travers les promesses-phares tout au long de sa campagne électorale.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/1/18/Patrouille-de-france-virage-tricolore-a-8.jpg",
-      "imageCredit": "Photo : Tristan Nitot / CC BY-SA · Openverse",
-      "imageCreator": "Tristan Nitot",
-      "imageLicense": "by-sa",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=241996"
+      "leadExcerpt": "Après quatre années passées sous l’égide de Gustavo Petro, la Colombie change de cap et élit à sa tête Abelardo de la Espriella. Ce dernier promet une rupture avec les administrations précédentes, notamment en ce qui concerne le crime organisé. Personnalité similaire à celle du président Trump, il aura su naviguer à travers les promesses-phares tout au long de sa campagne électorale."
     },
     {
       "source": "Le Collectif",
@@ -284,7 +270,13 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "societe_demission-de-keir-starmer-au-royaume-uni_getty-images.jpg",
       "leadImageReady": false,
-      "leadExcerpt": "Croulant sous les pressions provenant de l’opposition et de son propre parti, le premier ministre britannique, Keir Starmer, démissionne finalement. Après des mois à se tenir de justesse au pouvoir, il cède ainsi sa place à Andy Burnham, alors que son parti chute aux sondages."
+      "leadExcerpt": "Croulant sous les pressions provenant de l’opposition et de son propre parti, le premier ministre britannique, Keir Starmer, démissionne finalement. Après des mois à se tenir de justesse au pouvoir, il cède ainsi sa place à Andy Burnham, alors que son parti chute aux sondages.",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Beediging_%28nieuw%29_gekozen_leden_Tweede_Kamer_demission_premier_Lubbers_legt_ee%2C_Bestanddeelnr_933-6751.jpg",
+      "imageCredit": "Photo : Rob Croes for Anefo / CC0 · Openverse",
+      "imageCreator": "Rob Croes for Anefo",
+      "imageLicense": "cc0",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=66556428"
     },
     {
       "source": "Le Collectif",
@@ -764,13 +756,13 @@
       "date": "2026-05-15T16:00:00.000Z",
       "excerpt": "À Montréal, les murs parlent, sans jamais révéler celles et ceux qui les écrivent. Sous les couches de peinture et les signatures superposées, une présence discrète s’impose : celle d’une génération, souvent étudiante, qui investit l’espace urbain en marge des cadres établis.",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/Photo-5_IMG_3586-1024x768.jpg",
+      "_pageAuthor": "Emilie Rizkallah",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/presences-invisibles-ecrire-la-ville/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "photo-5_img_3586.jpg",
-      "leadImageReady": true,
-      "_retainedFromCache": true
+      "leadImageReady": true
     },
     {
       "source": "Quartier Libre",
@@ -784,13 +776,14 @@
       "date": "2026-05-14T21:00:00.000Z",
       "excerpt": "Le 13 mars dernier, la rappeuse Calamine a dévoilé son nouvel album , Rétrograde . Avec cette quatrième sortie depuis 2020, l’artiste gravit les échelons et devient une voix importante du hip-hop québécois. Composé de 18 titres d’ambiance estivale tels que « CHOP CHOP », « POLY",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg",
+      "_pageAuthor": "Samuel Roy",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/calamine-rapper-autrement/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "20_calamine-1.jpg",
       "leadImageReady": false,
-      "_retainedFromCache": true
+      "leadExcerpt": "Le 13 mars dernier, la rappeuse Calamine a dévoilé son nouvel album , Rétrograde . Avec cette quatrième sortie depuis 2020, l’artiste gravit les échelons et devient une voix importante du hip-hop québécois. Composé de 18 titres d’ambiance estivale tels que « CHOP CHOP », « POLY » et « LESBIVILLE », ce nouvel opus aurait sans surprise pu laisser entendre la voix d’Aminé sur certaines de ses productions plutôt rétro et stylistiquement variées."
     },
     {
       "source": "Quartier Libre",
@@ -804,13 +797,13 @@
       "date": "2026-05-14T19:09:17.000Z",
       "excerpt": "Le 5 mai dernier, le pavillon Roger-Gaudry a accueilli le premier forum du Réseau des écoles associées ( RÉA ). Ce projet ambitieux de la Faculté des sciences de l’éducation (FSÉ) transforme des écoles primaires et secondaires en véritables « hôpitaux universitaires » de la pédagogie.",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-2-768x1024.jpeg",
+      "_pageAuthor": "Ulysse Taillard-Hodez",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "image-2.jpeg",
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/7347/10026206755_fba38d0a5c_b.jpg",
       "imageCredit": "Photo : MDGovpics / CC BY · Openverse",
       "imageCreator": "MDGovpics",
@@ -830,9 +823,9 @@
       "date": "2026-05-14T16:00:00.000Z",
       "excerpt": "Depuis mars 2024, l’Université de Montréal (UdeM) dispose d’une politique de soutien aux parents aux études. Le projet de loi 394 (PL394) de Québec solidaire lui imposerait, en cas d’adoption, d’en créer une destinée également aux proches aidant·e·s. Le député",
       "image": "",
+      "_pageAuthor": "Mohammed Aziz Mestiri",
       "leadExcerpt": "Depuis mars 2024, l’Université de Montréal (UdeM) dispose d’une politique de soutien aux parents aux études. Le projet de loi 394 ( PL394 ) de Québec solidaire lui imposerait, en cas d’adoption, d’en créer une destinée également aux proches aidant·e·s.",
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/2046/2138574759_7372bca412_b.jpg",
       "imageCredit": "Photo : abdallahh / CC BY · Openverse",
       "imageCreator": "abdallahh",
@@ -851,15 +844,9 @@
       "author": "Yusur Al-Sharqi",
       "date": "2026-05-14T08:23:13.000Z",
       "excerpt": "One week before The Tribune’s first production night, I found myself in Toronto in a black dress, black shoes, and sparkles on my eyelids. I was at the funeral of Fabienne de Cartier, a former News Editor. We dedicated Volume 45 to Fabienne, an unforgettable force of nature who shaped [Read More]",
-      "image": "https://www.thetribune.ca/wp-content/uploads/2026/05/RenderedImage-1-1000x600.jpeg",
+      "image": "",
       "leadExcerpt": "One week before The Tribune ’s first production night, I found myself in Toronto in a black dress, black shoes, and sparkles on my eyelids. I was at the funeral of Fabienne de Cartier, a former News Editor.",
-      "leadImageReady": true,
-      "sourceImageCredit": "Photo : Yusur Al-Sharqi",
-      "sourceImageCreator": "Yusur Al-Sharqi",
-      "sourceImageCreditUrl": "https://www.thetribune.ca/opinion/op-off-the-board/a-final-note-from-the-editor-in-chief-of-volume-45-for-the-record-14052026/?utm_source=rss&utm_medium=rss&utm_campaign=a-final-note-from-the-editor-in-chief-of-volume-45-for-the-record-14052026",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "renderedimage-1.jpeg"
+      "leadImageReady": false
     },
     {
       "source": "The Tribune",
@@ -894,14 +881,14 @@
       "date": "2026-05-13T16:00:00.000Z",
       "excerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations d’albums 100 % québécois récemment sortis.",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg",
+      "_pageAuthor": "Bérénice Lemarié",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "20_florelaurentienne.jpg",
       "leadImageReady": false,
-      "leadExcerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations d’albums 100 % québécois récemment sortis .",
-      "_retainedFromCache": true
+      "leadExcerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations d’albums 100 % québécois récemment sortis ."
     },
     {
       "source": "Quartier Libre",
@@ -915,9 +902,9 @@
       "date": "2026-05-12T20:00:00.000Z",
       "excerpt": "Entre absence de quorum, élections houleuses et accusations de « campagnes de salissage », la Fédération des associations du campus de l’Université de Montréal (FAÉCUM) traverse une zone de turbulences. Du fonctionnement des associations étudiantes aux congrès mouvementés, récit d’une démocratie en difficulté.",
       "image": "",
+      "_pageAuthor": "Ulysse Taillard-Hodez",
       "leadExcerpt": "Entre absence de quorum, élections houleuses et accusations de « campagnes de salissage », la Fédération des associations du campus de l’Université de Montréal (FAÉCUM) traverse une zone de turbulences. Du fonctionnement des associations étudiantes aux congrès mouvementés, récit d’une démocratie en difficulté.",
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Universit%C3%A9_de_Montr%C3%A9al%2C_Pavillon_Roger-Gaudry.JPG",
       "imageCredit": "Photo : Laurent Bélanger / CC BY-SA · Openverse",
       "imageCreator": "Laurent Bélanger",
@@ -1088,9 +1075,9 @@
       "date": "2026-05-12T18:39:17.000Z",
       "excerpt": "Les 29 et 30 mai prochains, les adeptes d’ouvrages de suspense, à mystère et d’enquêtes auront rendez-vous au Centre culturel Georges-Vanier pour la troisième édition du festival du livre policier Montréal Mystère, un événement encore jeune, mais déjà bien installé dans le paysage littéraire montréalais.",
       "image": "",
+      "_pageAuthor": "Carla Roche",
       "leadExcerpt": "Les 29 et 30 mai prochains, les adeptes d’ouvrages de suspense, à mystère et d’enquêtes auront rendez-vous au Centre culturel Georges-Vanier pour la troisième édition du festival du livre policier Montréal Mystère , un événement encore jeune, mais déjà bien installé dans le paysage littéraire montréalais.",
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/3498/3735171010_90582fc99c_b.jpg",
       "imageCredit": "Photo : Anirudh Koul / CC BY · Openverse",
       "imageCreator": "Anirudh Koul",
@@ -1110,8 +1097,8 @@
       "date": "2026-05-11T19:00:00.000Z",
       "excerpt": "La Coupe du monde 2026 (CM26), qui aura lieu du 11 juin au 19 juillet prochains, s’annonce comme le plus grand événement de soccer jamais organisé. La compétition se déroulera simultanément dans trois pays, les États-Unis, le Canada et le Mexique, et comptera un nombre record d’équipes participantes (48)",
       "image": "",
+      "_pageAuthor": "Gabriel Lapointe",
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/1218/5106750628_9bf714abe9_b.jpg",
       "imageCredit": "Photo : Benson Kua / CC BY-SA · Openverse",
       "imageCreator": "Benson Kua",
@@ -1131,9 +1118,9 @@
       "date": "2026-05-11T15:57:40.000Z",
       "excerpt": "Lors d’une assemblée universitaire tenue le 16 mars dernier, le professeur agrégé à l’École de psychoéducation de la Faculté des arts et des sciences de l’UdeM Jean-Sébastien Fallu a soulevé des préoccupations concernant le soutien informatique à l’Université. Il a partagé",
       "image": "",
+      "_pageAuthor": "Solène Gerber",
       "leadExcerpt": "Lors d’une assemblée universitaire tenue le 16 mars dernier, le professeur agrégé à l’École de psychoéducation de la Faculté des arts et des sciences de l’UdeM Jean-Sébastien Fallu a soulevé des préoccupations concernant le soutien informatique à l’Université. Il a partagé plusieurs difficultés que lui et ses collègues ont vécues, notamment liées aux délais, aux procédures et à la complexité de certains outils numériques.",
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Universit%C3%A9_de_Montr%C3%A9al%2C_Pavillon_Roger-Gaudry.JPG",
       "imageCredit": "Photo : Laurent Bélanger / CC BY-SA · Openverse",
       "imageCreator": "Laurent Bélanger",
@@ -1196,13 +1183,13 @@
       "date": "2026-05-08T19:30:03.000Z",
       "excerpt": "Du 1 er au 9 mai, le festival Jamais Lu s’installe au théâtre Aux Écuries de Montréal, avec pour thème « Réparer nos Transmissions ». Le nouveau directeur artistique et cogénéral du festival, Éric Noël, partage son envie de mettre au cœur de cette édition la place des auteur·rice·s dans la production artistique, aux côtés du directeur administratif et cogénéral de Jamais Lu, Mikaël Vitali.",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-1-1024x677.jpeg",
+      "_pageAuthor": "Bérénice Lemarié",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/festival-jamais-lu-2026/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "image-1.jpeg",
-      "leadImageReady": true,
-      "_retainedFromCache": true
+      "leadImageReady": true
     },
     {
       "source": "Zone Campus",
@@ -2038,14 +2025,14 @@
       "author": "Anaïssa Dauphin",
       "date": "2026-04-09T21:04:00.000Z",
       "excerpt": "Canada has an impartiality problem Canada’s human rights image is sustained by a lack of accountability for its history of systemic harm. Graphic Naya Hachwa",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_OPS_SlaveTrade_NayaHachwa_900_494_90.jpg",
-      "leadImageReady": true,
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_OPS_SlaveTrade_NayaHachwa_690_379_90.jpg",
+      "leadImageReady": false,
       "sourceImageCredit": "Photo credit: The Link",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16316",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "12_ops_slavetrade_nayahachwa_900_494_90.jpg"
+      "sourceImageCreditImageKey": "12_ops_slavetrade_nayahachwa_690_379_90.jpg"
     },
     {
       "source": "The Link",
@@ -2058,14 +2045,14 @@
       "author": "Yoan Safar",
       "date": "2026-04-09T21:00:00.000Z",
       "excerpt": "A plan to preserve the façade while removing the interior is drawing mixed reactions The Empress has been left destitute since the fire that shut it down in 1992. Photo Yoan Safar",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/Empress_theater_900_675_90.JPG",
-      "leadImageReady": true,
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/Empress_theater_690_518_90.JPG",
+      "leadImageReady": false,
       "sourceImageCredit": "Photo credit: The Link",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16317",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "empress_theater_900_675_90.jpg"
+      "sourceImageCreditImageKey": "empress_theater_690_518_90.jpg"
     },
     {
       "source": "The Link",
@@ -2078,14 +2065,14 @@
       "author": "Mani Asadieraghi",
       "date": "2026-04-09T20:52:00.000Z",
       "excerpt": "Why student newspapers remain one of the last places people learn to speak publicly Public discourse does not survive automatically. It depends on people’s willingness to question institutions and place their ideas into shared space. Graphic Halle Keays",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_OPS_900_675.png",
-      "leadImageReady": true,
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_OPS_690_518.png",
+      "leadImageReady": false,
       "sourceImageCredit": "Photo credit: The Link",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16315",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "12_ops_900_675.png"
+      "sourceImageCreditImageKey": "12_ops_690_518.png"
     },
     {
       "source": "The Concordian",
@@ -2119,14 +2106,14 @@
       "author": "Sean Richard",
       "date": "2026-04-09T18:16:00.000Z",
       "excerpt": "The Concordia alumnus sits down with The Link to speak about his experiences as an activist for the Palestinian cause Courtesy Aaron Maté",
-      "image": "https://thelinknewspaper.ca/images/articles/_resized/12.news.AaronMate%CC%81.Sean.online.CourtesyAaronMate%CC%81.jpg",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12.news.AaronMaté.Sean.online.CourtesyAaronMaté_690_1034_90.jpg",
       "leadImageReady": false,
       "sourceImageCredit": "Photo credit: The Link",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16314",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "12.news.aaronmaté.sean.online.courtesyaaronmaté.jpg"
+      "sourceImageCreditImageKey": "12.news.aaronmaté.sean.online.courtesyaaronmaté_690_1034_90.jpg"
     },
     {
       "source": "The Link",
@@ -2139,14 +2126,14 @@
       "author": "Bryanna O’Brien",
       "date": "2026-04-08T22:05:00.000Z",
       "excerpt": "FIFA has the authority to relocate or cancel its Guadalajara games, but it is choosing not to The 2026 FIFA World Cup has the potential for incredible action, but also extensive controversy. Graphic Evelyn Ho Lee",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_SPORTS_WCHostCountries_EvelynHoLee_900_686_90.jpg",
-      "leadImageReady": true,
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_SPORTS_WCHostCountries_EvelynHoLee_690_526_90.jpg",
+      "leadImageReady": false,
       "sourceImageCredit": "Photo credit: The Link",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16313",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "12_sports_wchostcountries_evelynholee_900_686_90.jpg"
+      "sourceImageCreditImageKey": "12_sports_wchostcountries_evelynholee_690_526_90.jpg"
     },
     {
       "source": "The Link",
@@ -2159,14 +2146,14 @@
       "author": "Zoya Ramadan",
       "date": "2026-04-08T21:28:00.000Z",
       "excerpt": "A multi-million-dollar industry built on never being enough Self-improvement, a genre once intended for the passing down of generational wisdom, has turned into a toxic, capitalist machine. Graphic Naya Hachwa",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_OPS_SelfHelp_NayaHachwa_900_674_90.jpg",
-      "leadImageReady": true,
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_OPS_SelfHelp_NayaHachwa_690_517_90.jpg",
+      "leadImageReady": false,
       "sourceImageCredit": "Photo credit: The Link",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16312",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "12_ops_selfhelp_nayahachwa_900_674_90.jpg"
+      "sourceImageCreditImageKey": "12_ops_selfhelp_nayahachwa_690_517_90.jpg"
     },
     {
       "source": "The Link",
@@ -2445,13 +2432,7 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "sports_3_testimony-of-a-graduating-athlete_credits_bu-club-hockey-team.jpeg",
-      "leadImageReady": false,
-      "stockImage": "https://live.staticflickr.com/2502/3886993263_bb94359eb2_b.jpg",
-      "imageCredit": "Photo : scazon / CC BY · Openverse",
-      "imageCreator": "scazon",
-      "imageLicense": "by",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/26416016@N02/3886993263"
+      "leadImageReady": false
     },
     {
       "source": "The Campus",
@@ -3060,6 +3041,51 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
+      "title": "L’épidémie de la nonchalance",
+      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
+      "author": "Elie Nguyen",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Pour en finir avec l’insouciance de façade et embrasser pleinement l’authenticité.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Creation-sans-titre-2-768x1024.png",
+      "featured": true,
+      "_pageAuthor": "Elie Nguyen",
+      "sourceImageCredit": "Crédit photo : Le Délit",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
+      "sourceImageCreditFrom": "media",
+      "sourceImageCreditCited": false,
+      "sourceImageCreditImageKey": "creation-sans-titre-2.png",
+      "leadImageReady": false,
+      "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance."
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "Le retard et les bienfaits du temps long",
+      "link": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
+      "author": "Dalia Djazouli",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Imposer sa propre subjectivité temporelle.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/retard-1-scaled.jpeg",
+      "featured": true,
+      "_pageAuthor": "Dalia Djazouli",
+      "sourceImageCredit": "Photo : Félix Fournier",
+      "sourceImageCreator": "Félix Fournier",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "retard-1.jpeg",
+      "leadImageReady": true,
+      "leadExcerpt": "L’imposition de la ponctualité comme norme suprême ne se cantonne pas à notre journal étudiant : elle est propre à nos sociétés industrialisées, dont la conception du temps est particulièrement rigoureuse et utilitariste. La temporalité est perçue comme un objet tangible, que l’on peut et doit rentabiliser autant que possible. Les journées sont compartimentées, et chaque heure doit être mise à profit."
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
       "title": "Rassembler pour mieux diviser",
       "link": "https://www.delitfrancais.com/2026/03/25/rassembler-pour-mieux-diviser/",
       "author": "Catherine Brunet Rodriguez",
@@ -3144,51 +3170,6 @@
       "sourceImageCreditImageKey": "coinqueer-1.jpeg",
       "leadImageReady": false,
       "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie."
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "L’épidémie de la nonchalance",
-      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
-      "author": "Elie Nguyen",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Pour en finir avec l’insouciance de façade et embrasser pleinement l’authenticité.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Creation-sans-titre-2-768x1024.png",
-      "featured": true,
-      "_pageAuthor": "Elie Nguyen",
-      "sourceImageCredit": "Crédit photo : Le Délit",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
-      "sourceImageCreditFrom": "media",
-      "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "creation-sans-titre-2.png",
-      "leadImageReady": false,
-      "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance."
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "Le retard et les bienfaits du temps long",
-      "link": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
-      "author": "Dalia Djazouli",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Imposer sa propre subjectivité temporelle.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/retard-1-scaled.jpeg",
-      "featured": true,
-      "_pageAuthor": "Dalia Djazouli",
-      "sourceImageCredit": "Photo : Félix Fournier",
-      "sourceImageCreator": "Félix Fournier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "retard-1.jpeg",
-      "leadImageReady": true,
-      "leadExcerpt": "L’imposition de la ponctualité comme norme suprême ne se cantonne pas à notre journal étudiant : elle est propre à nos sociétés industrialisées, dont la conception du temps est particulièrement rigoureuse et utilitariste. La temporalité est perçue comme un objet tangible, que l’on peut et doit rentabiliser autant que possible. Les journées sont compartimentées, et chaque heure doit être mise à profit."
     },
     {
       "source": "The McGill Daily",
@@ -3991,12 +3972,12 @@
       "excerpt": "Compte rendu de l’assemblée générale étudiante H26 L’assemblée générale (AG) de l’association étudiante du Cégep du Vieux-Montréal s’est déroulée dans l’après-midi du 4 février dernier à l’Exode. Le refus d’une grève cet hiver, l’intronisation du programme FIL, les nouveautés du",
       "image": "",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/e/e5/Formation_condens%C3%A9e_%C3%A0_Wikip%C3%A9dia_lors_du_cours_IPMSH_du_C%C3%A9gep_du_Vieux_Montr%C3%A9al.jpg",
-      "imageCredit": "Photo : JBouchez / CC BY-SA 4.0 · Wikimedia Commons",
-      "imageCreator": "JBouchez",
-      "imageLicense": "CC BY-SA 4.0",
-      "imageProvider": "wikimedia",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Formation_condens%C3%A9e_%C3%A0_Wikip%C3%A9dia_lors_du_cours_IPMSH_du_C%C3%A9gep_du_Vieux_Montr%C3%A9al.jpg"
+      "stockImage": "https://live.staticflickr.com/65535/49697937611_3cb1379f22_b.jpg",
+      "imageCredit": "Photo : art_inthecity / CC BY · Openverse",
+      "imageCreator": "art_inthecity",
+      "imageLicense": "by",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/57286185@N04/49697937611"
     },
     {
       "source": "Exil",
