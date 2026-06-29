@@ -1,11 +1,11 @@
 {
-  "updated": "2026-06-29T13:54:00.199Z",
+  "updated": "2026-06-29T14:43:16.278Z",
   "total": 192,
   "pool": 58,
   "incomplete": 11,
-  "withLeadExcerpt": 67,
+  "withLeadExcerpt": 65,
   "candidates": 11,
-  "enriched": 2,
+  "enriched": 1,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -34,6 +34,15 @@
       "score": 96,
       "chars": 572,
       "sample": "L a montée en puissance de l’idéologie du mouvement politique Make America Great Again (MAGA) n’est ",
+      "changed": false
+    },
+    {
+      "title": "François.e",
+      "link": "https://lecollectif.ca/culture/francois-e/",
+      "ok": true,
+      "score": 100,
+      "chars": 241,
+      "sample": "Le 23 juin dernier avait lieu la première du film québécois François.e à la Maison du Cinéma de Sher",
       "changed": true
     },
     {
@@ -43,7 +52,7 @@
       "score": 100,
       "chars": 450,
       "sample": "La Coalition Avenir Québec (CAQ) a présenté une première nouvelle candidature en vue des élections p",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Le PIF s’internationalise pour sa 49e édition",
@@ -52,15 +61,6 @@
       "score": 100,
       "chars": 591,
       "sample": "Le plus grand tournoi de balle donnée en Amérique du Nord accueille cette année une vague de joueurs",
-      "changed": false
-    },
-    {
-      "title": "Une année de hockey remplie de succès au Québec",
-      "link": "https://lecollectif.ca/a-la-une/une-annee-de-hockey-remplie-de-succes-au-quebec/",
-      "ok": true,
-      "score": 100,
-      "chars": 459,
-      "sample": "Le hockey a encore pris beaucoup de place au Québec cette saison. Autant chez les professionnels que",
       "changed": false
     },
     {
