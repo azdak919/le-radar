@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-01T12:32:27.483Z",
+  "updated": "2026-07-01T13:37:07.799Z",
   "total": 192,
   "withImage": 151,
   "withCredit": 151,
@@ -12,6 +12,13 @@
   "citedNew": 17,
   "fallbackNew": 36,
   "samples": [
+    {
+      "title": "CSU terminates council’s chief election officer",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "Ask the Trib: How do I survive summer in my hometown?",
       "source": "The Tribune",
@@ -55,6 +62,13 @@
       "method": null
     },
     {
+      "title": "CSU rejects motion for Israel and Jewish solidarity fund ad hoc committee",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
       "title": "Montreal protestors commemorate the 78th anniversary of the Nakba",
       "source": "The Tribune",
       "credit": "Photo : Ellen Lurie",
@@ -81,20 +95,6 @@
       "credit": "Photo : Ellen Lurie",
       "cited": true,
       "method": "figcaption-attribution"
-    },
-    {
-      "title": "L’alcool est-il vraiment le nouveau tabac ?",
-      "source": "L'Exemplaire",
-      "credit": "Crédit photo : L'Exemplaire",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Derrière les étiquettes électroniques, la tarification dynamique ?",
-      "source": "L'Exemplaire",
-      "credit": "Photo : Thomas Harton",
-      "cited": true,
-      "method": "json-ld"
     }
   ]
 }
