@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-27T22:40:32.075Z",
+  "updatedAt": "2026-07-01T11:58:52.696Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,7 +8,7 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-06-27T22:40:32.075Z",
+      "checkedAt": "2026-07-01T11:58:52.696Z",
       "grid": [
         {
           "day": 0,
@@ -32,13 +32,6 @@
           "url": "https://chyz.ca/emission/radio-futura/"
         },
         {
-          "day": 0,
-          "start": "16:50",
-          "end": "20:30",
-          "title": "Capitales de Québec",
-          "url": "https://chyz.ca/emission/capitales-de-quebec/"
-        },
-        {
           "day": 1,
           "start": "08:00",
           "end": "10:00",
@@ -47,17 +40,17 @@
         },
         {
           "day": 1,
+          "start": "16:00",
+          "end": "16:30",
+          "title": "Chéri.e, Jme Mobilise!",
+          "url": "https://chyz.ca/emission/cheri-e-jmorganise/"
+        },
+        {
+          "day": 1,
           "start": "17:30",
           "end": "18:30",
           "title": "Les Arshitechs du Son",
           "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-        },
-        {
-          "day": 1,
-          "start": "19:30",
-          "end": "20:30",
-          "title": "La Voie des Droits",
-          "url": "https://chyz.ca/emission/la-voie-des-droits/"
         },
         {
           "day": 1,
@@ -88,13 +81,6 @@
           "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
         },
         {
-          "day": 2,
-          "start": "18:50",
-          "end": "23:00",
-          "title": "Capitales de Québec",
-          "url": "https://chyz.ca/emission/capitales-de-quebec/"
-        },
-        {
           "day": 3,
           "start": "08:00",
           "end": "10:00",
@@ -117,10 +103,10 @@
         },
         {
           "day": 3,
-          "start": "18:50",
-          "end": "23:00",
-          "title": "Capitales de Québec",
-          "url": "https://chyz.ca/emission/capitales-de-quebec/"
+          "start": "21:30",
+          "end": "22:30",
+          "title": "Blasphème",
+          "url": "https://chyz.ca/emission/blaspheme/"
         },
         {
           "day": 4,
@@ -128,13 +114,6 @@
           "end": "10:00",
           "title": "Jeudi Révolte",
           "url": "https://chyz.ca/emission/jeudi-revolte/"
-        },
-        {
-          "day": 4,
-          "start": "15:00",
-          "end": "16:00",
-          "title": "Conduite Antisportive",
-          "url": "https://chyz.ca/emission/conduite-antisportive/"
         },
         {
           "day": 4,
@@ -149,13 +128,6 @@
           "end": "18:30",
           "title": "Les Arshitechs du Son",
           "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-        },
-        {
-          "day": 4,
-          "start": "18:50",
-          "end": "23:00",
-          "title": "Capitales de Québec",
-          "url": "https://chyz.ca/emission/capitales-de-quebec/"
         },
         {
           "day": 5,
@@ -173,13 +145,6 @@
         },
         {
           "day": 5,
-          "start": "11:00",
-          "end": "12:00",
-          "title": "Punk-o-rama",
-          "url": "https://chyz.ca/emission/punk-o-rama/"
-        },
-        {
-          "day": 5,
           "start": "13:00",
           "end": "14:00",
           "title": "Détour",
@@ -191,13 +156,6 @@
           "end": "18:30",
           "title": "Les Arshitechs du Son",
           "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-        },
-        {
-          "day": 5,
-          "start": "18:50",
-          "end": "23:00",
-          "title": "Capitales de Québec",
-          "url": "https://chyz.ca/emission/capitales-de-quebec/"
         },
         {
           "day": 6,
@@ -219,13 +177,6 @@
           "end": "16:00",
           "title": "Radio Futura",
           "url": "https://chyz.ca/emission/radio-futura/"
-        },
-        {
-          "day": 6,
-          "start": "18:50",
-          "end": "23:00",
-          "title": "Capitales de Québec",
-          "url": "https://chyz.ca/emission/capitales-de-quebec/"
         }
       ]
     },
@@ -235,7 +186,7 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-06-27T22:40:32.075Z",
+      "checkedAt": "2026-07-01T11:58:52.696Z",
       "grid": [
         {
           "day": 0,
@@ -1015,7 +966,7 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-06-27T22:40:32.075Z",
+      "checkedAt": "2026-07-01T11:58:52.696Z",
       "grid": [
         {
           "day": 0,
@@ -1273,7 +1224,7 @@
           "day": 2,
           "start": "18:00",
           "end": "19:00",
-          "title": "Rez Rock Radio"
+          "title": "Prison Radio"
         },
         {
           "day": 2,
@@ -1453,7 +1404,7 @@
           "day": 4,
           "start": "17:00",
           "end": "18:00",
-          "title": "Off the Hour: Radio Renoviction"
+          "title": "Off the Hour: Trib Talks"
         },
         {
           "day": 4,
@@ -1483,7 +1434,7 @@
           "day": 4,
           "start": "23:00",
           "end": "01:00",
-          "title": "You Need A Heart To Live 2"
+          "title": "L'aire du Diable"
         },
         {
           "day": 5,
@@ -1548,14 +1499,8 @@
         {
           "day": 5,
           "start": "19:00",
-          "end": "20:00",
-          "title": "Listening to Latin America: Blanca-Victoria"
-        },
-        {
-          "day": 5,
-          "start": "20:00",
           "end": "22:00",
-          "title": "Macondo"
+          "title": "LLA/Macondo"
         },
         {
           "day": 5,
@@ -1637,7 +1582,7 @@
       "sources": [
         "cjlo:http://www.cjlo.com/schedule"
       ],
-      "checkedAt": "2026-06-27T22:40:32.075Z",
+      "checkedAt": "2026-07-01T11:58:52.696Z",
       "grid": [
         {
           "day": 0,
@@ -2522,7 +2467,7 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-06-27T22:40:32.075Z",
+      "checkedAt": "2026-07-01T11:58:52.696Z",
       "grid": [
         {
           "day": 0,
