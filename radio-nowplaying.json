@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-02T22:09:35.582Z",
+  "updatedAt": "2026-07-02T23:38:38.972Z",
   "stations": {
     "chyz": {
       "id": "chyz",
@@ -7,7 +7,7 @@
       "showTitle": "",
       "host": "",
       "source": "stream",
-      "checkedAt": "2026-07-02T22:09:15.886Z"
+      "checkedAt": "2026-07-02T23:38:21.215Z"
     },
     "cism": {
       "id": "cism",
@@ -15,15 +15,15 @@
       "showTitle": "",
       "host": "",
       "source": "stream",
-      "checkedAt": "2026-07-02T22:09:17.036Z"
+      "checkedAt": "2026-07-02T23:38:22.078Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
-      "showTitle": "",
+      "showTitle": "Grey Matters",
       "host": "",
       "source": "stream",
-      "checkedAt": "2026-07-02T22:09:19.019Z"
+      "checkedAt": "2026-07-02T23:38:23.705Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -31,7 +31,7 @@
       "showTitle": "",
       "host": "",
       "source": "stream",
-      "checkedAt": "2026-07-02T22:09:32.838Z"
+      "checkedAt": "2026-07-02T23:38:37.081Z"
     },
     "cfak": {
       "id": "cfak",
@@ -39,15 +39,15 @@
       "showTitle": "",
       "host": "",
       "source": "stream",
-      "checkedAt": "2026-07-02T22:09:33.311Z"
+      "checkedAt": "2026-07-02T23:38:37.777Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "showTitle": "Noé Lira - compas",
-      "host": "",
-      "source": "stream",
-      "checkedAt": "2026-07-02T22:09:35.181Z"
+      "showTitle": "In My Town",
+      "host": "By Storm",
+      "source": "api-live",
+      "checkedAt": "2026-07-02T23:38:38.571Z"
     }
   }
 }
