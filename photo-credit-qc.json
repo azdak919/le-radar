@@ -1,16 +1,16 @@
 {
-  "updated": "2026-07-03T12:26:22.665Z",
+  "updated": "2026-07-03T13:04:40.085Z",
   "total": 192,
   "withImage": 151,
   "withCredit": 151,
-  "cited": 55,
+  "cited": 56,
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 45,
-  "updatedCount": 45,
-  "citedNew": 14,
-  "fallbackNew": 31,
+  "checked": 47,
+  "updatedCount": 47,
+  "citedNew": 15,
+  "fallbackNew": 32,
   "samples": [
     {
       "title": "CSU terminates council’s chief election officer",
@@ -90,11 +90,11 @@
       "method": "figcaption-attribution"
     },
     {
-      "title": "Des initiatives qui rassemblent",
+      "title": "Ce que nous devons aux femmes",
       "source": "Le Délit",
-      "credit": "Crédit photo : Le Délit",
-      "cited": false,
-      "method": null
+      "credit": "Photo : Alexandre Gontier",
+      "cited": true,
+      "method": "media-credit-near"
     }
   ]
 }
