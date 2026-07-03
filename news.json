@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-03T12:51:44.703Z",
+  "updated": "2026-07-03T15:46:44.971Z",
   "count": 192,
   "freshnessSessions": 3,
   "sources": {
@@ -9,7 +9,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:00:00.000Z",
-      "lastFetchOk": "2026-07-03T12:50:03.329Z"
+      "lastFetchOk": "2026-07-03T15:45:32.033Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -17,7 +17,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-07-03T12:50:05.122Z"
+      "lastFetchOk": "2026-07-03T15:45:32.829Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -25,7 +25,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-03-25T11:00:00.000Z",
-      "lastFetchOk": "2026-07-03T12:50:09.181Z"
+      "lastFetchOk": "2026-07-03T15:45:36.513Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -33,7 +33,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-06-28T11:00:00.000Z",
-      "lastFetchOk": "2026-07-03T12:50:10.261Z"
+      "lastFetchOk": "2026-07-03T15:45:36.936Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -41,7 +41,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-06-28T23:23:00.000Z",
-      "lastFetchOk": "2026-07-03T12:50:10.737Z"
+      "lastFetchOk": "2026-07-03T15:45:38.067Z"
     },
     "The Concordian": {
       "fetchOk": false,
@@ -57,15 +57,15 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-07-03T12:50:11.820Z"
+      "lastFetchOk": "2026-07-03T15:45:38.967Z"
     },
     "L'Exemplaire": {
-      "fetchOk": false,
-      "stale": true,
+      "fetchOk": true,
+      "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-07-03T15:45:39.880Z"
     },
     "Le Collectif": {
       "fetchOk": true,
@@ -73,7 +73,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-07-01T23:29:45.000Z",
-      "lastFetchOk": "2026-07-03T12:50:27.882Z"
+      "lastFetchOk": "2026-07-03T15:45:40.953Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -81,7 +81,7 @@
       "articleCount": 7,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-07-03T12:50:28.131Z"
+      "lastFetchOk": "2026-07-03T15:45:41.073Z"
     },
     "La Pige": {
       "fetchOk": true,
@@ -89,7 +89,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-06-22T14:36:10.000Z",
-      "lastFetchOk": "2026-07-03T12:50:28.859Z"
+      "lastFetchOk": "2026-07-03T15:45:41.649Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -97,7 +97,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-06-26T15:24:28.000Z",
-      "lastFetchOk": "2026-07-03T12:50:29.163Z"
+      "lastFetchOk": "2026-07-03T15:45:41.802Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -105,7 +105,7 @@
       "articleCount": 30,
       "freshArticleCount": 30,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-07-03T12:50:29.414Z"
+      "lastFetchOk": "2026-07-03T15:45:41.947Z"
     }
   },
   "items": [
@@ -146,7 +146,13 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "culture_francoise_rebeccagagne-1.jpg",
       "leadImageReady": false,
-      "leadExcerpt": "Le 23 juin dernier avait lieu la première du film québécois François.e à la Maison du Cinéma de Sherbrooke. Pour l’occasion, des membres de la distribution de même que les deux scénaristes de l’œuvre ont partagé l’expérience avec l’audience."
+      "leadExcerpt": "Le 23 juin dernier avait lieu la première du film québécois François.e à la Maison du Cinéma de Sherbrooke. Pour l’occasion, des membres de la distribution de même que les deux scénaristes de l’œuvre ont partagé l’expérience avec l’audience.",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/d/d4/Francois_Cevert_1973.jpg",
+      "imageCredit": "Photo : Raimund Kommer / CC BY-SA · Openverse",
+      "imageCreator": "Raimund Kommer",
+      "imageLicense": "by-sa",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=9775871"
     },
     {
       "source": "Le Collectif",
@@ -268,7 +274,13 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "societe_virage-a-droite-en-colombie_getty-images.jpg",
       "leadImageReady": false,
-      "leadExcerpt": "Après quatre années passées sous l’égide de Gustavo Petro, la Colombie change de cap et élit à sa tête Abelardo de la Espriella. Ce dernier promet une rupture avec les administrations précédentes, notamment en ce qui concerne le crime organisé. Personnalité similaire à celle du président Trump, il aura su naviguer à travers les promesses-phares tout au long de sa campagne électorale."
+      "leadExcerpt": "Après quatre années passées sous l’égide de Gustavo Petro, la Colombie change de cap et élit à sa tête Abelardo de la Espriella. Ce dernier promet une rupture avec les administrations précédentes, notamment en ce qui concerne le crime organisé. Personnalité similaire à celle du président Trump, il aura su naviguer à travers les promesses-phares tout au long de sa campagne électorale.",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/6/67/2012_Aston_Martin_Virage_coup%C3%A9.jpg",
+      "imageCredit": "Photo : Mr.choppers / CC BY-SA · Openverse",
+      "imageCreator": "Mr.choppers",
+      "imageLicense": "by-sa",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=20404485"
     },
     {
       "source": "Le Collectif",
@@ -289,13 +301,7 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "societe_demission-de-keir-starmer-au-royaume-uni_getty-images.jpg",
       "leadImageReady": false,
-      "leadExcerpt": "Croulant sous les pressions provenant de l’opposition et de son propre parti, le premier ministre britannique, Keir Starmer, démissionne finalement. Après des mois à se tenir de justesse au pouvoir, il cède ainsi sa place à Andy Burnham, alors que son parti chute aux sondages.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Beediging_%28nieuw%29_gekozen_leden_Tweede_Kamer_demission_premier_Lubbers_legt_ee%2C_Bestanddeelnr_933-6751.jpg",
-      "imageCredit": "Photo : Rob Croes for Anefo / CC0 · Openverse",
-      "imageCreator": "Rob Croes for Anefo",
-      "imageLicense": "cc0",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=66556428"
+      "leadExcerpt": "Croulant sous les pressions provenant de l’opposition et de son propre parti, le premier ministre britannique, Keir Starmer, démissionne finalement. Après des mois à se tenir de justesse au pouvoir, il cède ainsi sa place à Andy Burnham, alors que son parti chute aux sondages."
     },
     {
       "source": "Le Collectif",
@@ -355,13 +361,13 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "societe_boissonsenergisantes_sourceassociationpourlasantepubliqueduquebec.jpg",
       "leadImageReady": false,
+      "leadExcerpt": "En janvier 2024, Zachary Miron, 15 ans, perd la vie après avoir consommé une boisson énergisante lors d’une sortie scolaire de ski. Le rapport du coroner tiré de l’Institut universitaire de cardiologie et de pneumologie de Québec de l’Université Laval, stipule que « le décès est probablement attribuable à une arythmie cardiaque maligne, chez un adolescent au cœur morphologiquement normal, mais sous l’effet de caféine et du méthylphénidate ».",
       "stockImage": "https://live.staticflickr.com/6054/7003858477_8e56b67645_b.jpg",
       "imageCredit": "Photo : DVIDSHUB / CC BY · Openverse",
       "imageCreator": "DVIDSHUB",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/28650594@N03/7003858477",
-      "leadExcerpt": "En janvier 2024, Zachary Miron, 15 ans, perd la vie après avoir consommé une boisson énergisante lors d’une sortie scolaire de ski. Le rapport du coroner tiré de l’Institut universitaire de cardiologie et de pneumologie de Québec de l’Université Laval, stipule que « le décès est probablement attribuable à une arythmie cardiaque maligne, chez un adolescent au cœur morphologiquement normal, mais sous l’effet de caféine et du méthylphénidate »."
+      "imageSourceUrl": "https://www.flickr.com/photos/28650594@N03/7003858477"
     },
     {
       "source": "The Tribune",
@@ -741,8 +747,7 @@
       "sourceImageCreditUrl": "https://www.exemplaire.com.ulaval.ca/a-la-une/sans-fins-au-coeur-des-troubles-du-comportement-alimentaire/?utm_source=rss&utm_medium=rss&utm_campaign=sans-fins-au-coeur-des-troubles-du-comportement-alimentaire",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "illustration-recadree-16.9-scaled-e1778861785132.png",
-      "_retainedFromCache": true
+      "sourceImageCreditImageKey": "illustration-recadree-16.9-scaled-e1778861785132.png"
     },
     {
       "source": "Quartier Libre",
@@ -937,8 +942,7 @@
       "sourceImageCreditUrl": "https://www.exemplaire.com.ulaval.ca/a-la-une/lalcool-est-il-vraiment-le-nouveau-tabac/?utm_source=rss&utm_medium=rss&utm_campaign=lalcool-est-il-vraiment-le-nouveau-tabac",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "generated-image-2-e1777575466728.png",
-      "_retainedFromCache": true
+      "sourceImageCreditImageKey": "generated-image-2-e1777575466728.png"
     },
     {
       "source": "L'Exemplaire",
@@ -959,8 +963,7 @@
       "sourceImageCreditUrl": "https://www.exemplaire.com.ulaval.ca/a-la-une/derriere-les-etiquettes-electroniques-la-tarification-dynamique/?utm_source=rss&utm_medium=rss&utm_campaign=derriere-les-etiquettes-electroniques-la-tarification-dynamique",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "photo-couverture-super-c.jpg",
-      "_retainedFromCache": true
+      "sourceImageCreditImageKey": "photo-couverture-super-c.jpg"
     },
     {
       "source": "L'Exemplaire",
@@ -981,8 +984,7 @@
       "sourceImageCreditUrl": "https://www.exemplaire.com.ulaval.ca/a-la-une/rachat-des-armes-a-feu-le-quebec-est-il-lexception-canadienne/?utm_source=rss&utm_medium=rss&utm_campaign=rachat-des-armes-a-feu-le-quebec-est-il-lexception-canadienne",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "chatgpt-image-7-mai-2026-11-h-02-min-08-s.png",
-      "_retainedFromCache": true
+      "sourceImageCreditImageKey": "chatgpt-image-7-mai-2026-11-h-02-min-08-s.png"
     },
     {
       "source": "L'Exemplaire",
@@ -1003,8 +1005,7 @@
       "sourceImageCreditUrl": "https://www.exemplaire.com.ulaval.ca/a-la-une/les-jeunes-et-les-medias-dactualite-une-confiance-de-plus-en-plus-erodee/?utm_source=rss&utm_medium=rss&utm_campaign=les-jeunes-et-les-medias-dactualite-une-confiance-de-plus-en-plus-erodee",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "image-de-une.jpg",
-      "_retainedFromCache": true
+      "sourceImageCreditImageKey": "image-de-une.jpg"
     },
     {
       "source": "L'Exemplaire",
@@ -1024,8 +1025,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "achat-seconde-main-pistes-1.jpg",
       "leadImageReady": true,
-      "leadExcerpt": "Les articles de seconde main ont le vent en poupe sur les réseaux sociaux. Les boutiques d'occasion bourgeonnent de plus en plus dans les secteurs commerçants. Certains adeptes de ces achats pensent même lutter contre la fast fashion . Mais cet intérêt pour les articles usagés reflète-t-il vraiment de meilleures habitudes de consommation ?",
-      "_retainedFromCache": true
+      "leadExcerpt": "Les articles de seconde main ont le vent en poupe sur les réseaux sociaux. Les boutiques d'occasion bourgeonnent de plus en plus dans les secteurs commerçants. Certains adeptes de ces achats pensent même lutter contre la fast fashion . Mais cet intérêt pour les articles usagés reflète-t-il vraiment de meilleures habitudes de consommation ?"
     },
     {
       "source": "L'Exemplaire",
@@ -1052,8 +1052,7 @@
       "sourceImageCreditUrl": "https://www.exemplaire.com.ulaval.ca/a-la-une/le-npd-soigne-t-il-sa-gauche-ou-se-radicalise-t-il/?utm_source=rss&utm_medium=rss&utm_campaign=le-npd-soigne-t-il-sa-gauche-ou-se-radicalise-t-il",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "tommy-douglas-and-david-lewis.jpg",
-      "_retainedFromCache": true
+      "sourceImageCreditImageKey": "tommy-douglas-and-david-lewis.jpg"
     },
     {
       "source": "L'Exemplaire",
@@ -1073,8 +1072,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "skibidi-minia-2.png",
       "leadImageReady": true,
-      "leadExcerpt": "Des fruits qui parlent, nouent des relations et suivent les codes de la téléréalité : c’est le concept derrière ces vidéos d’un nouveau genre. Entre humour, viralité et controverse, ces contenus explosent sur les réseaux sociaux. Mais, derrière ces visuels enfantins générés par intelligence artificielle, se dessinent des discours moins légers qui dépassent le simple divertissement.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Des fruits qui parlent, nouent des relations et suivent les codes de la téléréalité : c’est le concept derrière ces vidéos d’un nouveau genre. Entre humour, viralité et controverse, ces contenus explosent sur les réseaux sociaux. Mais, derrière ces visuels enfantins générés par intelligence artificielle, se dessinent des discours moins légers qui dépassent le simple divertissement."
     },
     {
       "source": "Quartier Libre",
@@ -1237,7 +1235,6 @@
       "image": "",
       "leadExcerpt": "Si tous vos amis s’entrainent comme des athlètes à temps plein et vous parlent constamment de leur « split » sur Strava, c’est que vous êtes dans la course. Les sports d’endurance extrême sont plus populaires que jamais, particulièrement chez les jeunes adultes. Pour le meilleur et — parfois — pour le pire.",
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/8573/16591688686_1ec8d98ba4_b.jpg",
       "imageCredit": "Photo : Play it Smart Centennial / CC BY · Openverse",
       "imageCreator": "Play it Smart Centennial",
@@ -1264,8 +1261,7 @@
       "sourceImageCreditUrl": "https://www.exemplaire.com.ulaval.ca/a-la-une/quand-la-politique-passe-a-table/?utm_source=rss&utm_medium=rss&utm_campaign=quand-la-politique-passe-a-table",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "politiquetable.png",
-      "_retainedFromCache": true
+      "sourceImageCreditImageKey": "politiquetable.png"
     },
     {
       "source": "Montréal Campus",
@@ -2250,12 +2246,12 @@
       "image": "",
       "leadImageReady": false,
       "_retainedFromCache": true,
-      "stockImage": "https://live.staticflickr.com/65535/48138695012_127f39ea0f_b.jpg",
-      "imageCredit": "Photo : jurvetson / CC BY · Openverse",
-      "imageCreator": "jurvetson",
-      "imageLicense": "by",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/44124348109@N01/48138695012"
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/d/d8/Don%27t_Fuck_up_our_future_-_Melbourne_climate_march_for_our_future_-_-stopAdani_-_IMG_3834_%2845316168585%29.jpg",
+      "imageCredit": "Photo : John Englart from Fawkner, Australia / CC BY-SA 2.0 · Wikimedia Commons",
+      "imageCreator": "John Englart from Fawkner, Australia",
+      "imageLicense": "CC BY-SA 2.0",
+      "imageProvider": "wikimedia",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Don%27t_Fuck_up_our_future_-_Melbourne_climate_march_for_our_future_-_-stopAdani_-_IMG_3834_(45316168585).jpg"
     },
     {
       "source": "The Tribune",
@@ -2269,13 +2265,7 @@
       "date": "2026-04-07T15:29:55.000Z",
       "excerpt": "The Tribune ‘s special issue for the Winter 2026 semester was centred around the theme of ‘ memory ,’ with our writers, staff, editors, and creative team discussing the role of institutional, collective, and personal memory in society, politics, educational institutions, and more.",
       "image": "",
-      "leadImageReady": false,
-      "stockImage": "https://live.staticflickr.com/2305/2143724448_5d95e7ac2b_b.jpg",
-      "imageCredit": "Photo : thompsoe / CC BY · Openverse",
-      "imageCreator": "thompsoe",
-      "imageLicense": "by",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/8158623@N05/2143724448"
+      "leadImageReady": false
     },
     {
       "source": "The Tribune",
@@ -2453,7 +2443,13 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "sports_3_testimony-of-a-graduating-athlete_credits_bu-club-hockey-team.jpeg",
-      "leadImageReady": false
+      "leadImageReady": false,
+      "stockImage": "https://live.staticflickr.com/2502/3886993263_bb94359eb2_b.jpg",
+      "imageCredit": "Photo : scazon / CC BY · Openverse",
+      "imageCreator": "scazon",
+      "imageLicense": "by",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/26416016@N02/3886993263"
     },
     {
       "source": "The Campus",
@@ -3062,51 +3058,6 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "L’épidémie de la nonchalance",
-      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
-      "author": "Elie Nguyen",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Pour en finir avec l’insouciance de façade et embrasser pleinement l’authenticité.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Creation-sans-titre-2-768x1024.png",
-      "featured": true,
-      "_pageAuthor": "Elie Nguyen",
-      "sourceImageCredit": "Crédit photo : Le Délit",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
-      "sourceImageCreditFrom": "media",
-      "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "creation-sans-titre-2.png",
-      "leadImageReady": false,
-      "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance."
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "Le retard et les bienfaits du temps long",
-      "link": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
-      "author": "Dalia Djazouli",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Imposer sa propre subjectivité temporelle.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/retard-1-scaled.jpeg",
-      "featured": true,
-      "_pageAuthor": "Dalia Djazouli",
-      "sourceImageCredit": "Photo : Félix Fournier",
-      "sourceImageCreator": "Félix Fournier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "retard-1.jpeg",
-      "leadImageReady": true,
-      "leadExcerpt": "L’imposition de la ponctualité comme norme suprême ne se cantonne pas à notre journal étudiant : elle est propre à nos sociétés industrialisées, dont la conception du temps est particulièrement rigoureuse et utilitariste. La temporalité est perçue comme un objet tangible, que l’on peut et doit rentabiliser autant que possible. Les journées sont compartimentées, et chaque heure doit être mise à profit."
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
       "title": "Rassembler pour mieux diviser",
       "link": "https://www.delitfrancais.com/2026/03/25/rassembler-pour-mieux-diviser/",
       "author": "Catherine Brunet Rodriguez",
@@ -3191,6 +3142,51 @@
       "sourceImageCreditImageKey": "coinqueer-1.jpeg",
       "leadImageReady": false,
       "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie."
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "L’épidémie de la nonchalance",
+      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
+      "author": "Elie Nguyen",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Pour en finir avec l’insouciance de façade et embrasser pleinement l’authenticité.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Creation-sans-titre-2-768x1024.png",
+      "featured": true,
+      "_pageAuthor": "Elie Nguyen",
+      "sourceImageCredit": "Crédit photo : Le Délit",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
+      "sourceImageCreditFrom": "media",
+      "sourceImageCreditCited": false,
+      "sourceImageCreditImageKey": "creation-sans-titre-2.png",
+      "leadImageReady": false,
+      "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance."
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "Le retard et les bienfaits du temps long",
+      "link": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
+      "author": "Dalia Djazouli",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Imposer sa propre subjectivité temporelle.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/retard-1-scaled.jpeg",
+      "featured": true,
+      "_pageAuthor": "Dalia Djazouli",
+      "sourceImageCredit": "Photo : Félix Fournier",
+      "sourceImageCreator": "Félix Fournier",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "retard-1.jpeg",
+      "leadImageReady": true,
+      "leadExcerpt": "L’imposition de la ponctualité comme norme suprême ne se cantonne pas à notre journal étudiant : elle est propre à nos sociétés industrialisées, dont la conception du temps est particulièrement rigoureuse et utilitariste. La temporalité est perçue comme un objet tangible, que l’on peut et doit rentabiliser autant que possible. Les journées sont compartimentées, et chaque heure doit être mise à profit."
     },
     {
       "source": "The McGill Daily",
@@ -3750,13 +3746,13 @@
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Capture-decran-le-2026-03-22-a-17.22.07.png",
       "featured": true,
       "_pageAuthor": "Eugénie St-Pierre",
-      "leadImageReady": true,
       "sourceImageCredit": "Photo : Alexandre Gontier",
       "sourceImageCreator": "Alexandre Gontier",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/ce-que-nous-devons-aux-femmes/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "capture-decran-le-2026-03-22-a-17.22.07.png"
+      "sourceImageCreditImageKey": "capture-decran-le-2026-03-22-a-17.22.07.png",
+      "leadImageReady": true
     },
     {
       "source": "Le Délit",
@@ -3916,13 +3912,13 @@
       "excerpt": "Quebec has an ambitious plan to electrify its public transit buses, but new delays are raising questions about whether the province can meet its targets. In this episode, Podcast Editor Meghri Ghazarian looks at why Quebec may struggle to reach its goal of having 55 per cent of",
       "image": "",
       "leadImageReady": false,
+      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/2178/2125620107_544c5bfa37_b.jpg",
       "imageCredit": "Photo : bovinity / CC BY-SA · Openverse",
       "imageCreator": "bovinity",
       "imageLicense": "by-sa",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/48889076156@N01/2125620107",
-      "_retainedFromCache": true
+      "imageSourceUrl": "https://www.flickr.com/photos/48889076156@N01/2125620107"
     },
     {
       "source": "The Concordian",
@@ -3978,13 +3974,7 @@
       "date": "2026-02-28T23:42:43.000Z",
       "excerpt": "On fera pas un pays avec un CD de Leloup et une couple de bières de micro ! Je me suis surprise à dire ça à un ami, fervent défenseur du FLQ (Front de libération du Québec) et grand nostalgique des années Lévesque. C’est sorti tout seul, ça m’a étonnée. Je m’étais toujours considérée comme une Continuer à lire \"Le pays avant tout – esquisse\"",
       "image": "",
-      "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/f/f6/%28Lavaur%29_Comment_entra_dans_Paris_Monseigneur_le_Dauphin%2C_1ere_esquisse_-_Henri_Rachou_1887_94x154.jpg",
-      "imageCredit": "Photo : Didier Descouens / PUBLIC DOMAIN · Wikimedia Commons",
-      "imageCreator": "Didier Descouens",
-      "imageLicense": "Public domain",
-      "imageProvider": "wikimedia",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:(Lavaur)_Comment_entra_dans_Paris_Monseigneur_le_Dauphin,_1ere_esquisse_-_Henri_Rachou_1887_94x154.jpg"
+      "leadImageReady": false
     },
     {
       "source": "Exil",
@@ -3999,12 +3989,12 @@
       "excerpt": "Compte rendu de l’assemblée générale étudiante H26 L’assemblée générale (AG) de l’association étudiante du Cégep du Vieux-Montréal s’est déroulée dans l’après-midi du 4 février dernier à l’Exode. Le refus d’une grève cet hiver, l’intronisation du programme FIL, les nouveautés du",
       "image": "",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/e/e5/Formation_condens%C3%A9e_%C3%A0_Wikip%C3%A9dia_lors_du_cours_IPMSH_du_C%C3%A9gep_du_Vieux_Montr%C3%A9al.jpg",
-      "imageCredit": "Photo : JBouchez / CC BY-SA 4.0 · Wikimedia Commons",
-      "imageCreator": "JBouchez",
-      "imageLicense": "CC BY-SA 4.0",
-      "imageProvider": "wikimedia",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Formation_condens%C3%A9e_%C3%A0_Wikip%C3%A9dia_lors_du_cours_IPMSH_du_C%C3%A9gep_du_Vieux_Montr%C3%A9al.jpg"
+      "stockImage": "https://live.staticflickr.com/65535/49697937611_3cb1379f22_b.jpg",
+      "imageCredit": "Photo : art_inthecity / CC BY · Openverse",
+      "imageCreator": "art_inthecity",
+      "imageLicense": "by",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/57286185@N04/49697937611"
     },
     {
       "source": "Exil",
