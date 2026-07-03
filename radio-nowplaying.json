@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-03T03:28:48.829Z",
+  "updatedAt": "2026-07-03T06:49:15.341Z",
   "stations": {
     "chyz": {
       "id": "chyz",
@@ -7,7 +7,7 @@
       "showTitle": "",
       "host": "",
       "source": "stream",
-      "checkedAt": "2026-07-03T03:28:30.098Z"
+      "checkedAt": "2026-07-03T06:48:57.322Z"
     },
     "cism": {
       "id": "cism",
@@ -15,15 +15,15 @@
       "showTitle": "",
       "host": "",
       "source": "stream",
-      "checkedAt": "2026-07-03T03:28:30.906Z"
+      "checkedAt": "2026-07-03T06:48:58.211Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
-      "showTitle": "",
+      "showTitle": "Listen! You Smell Something?",
       "host": "",
       "source": "stream",
-      "checkedAt": "2026-07-03T03:28:32.667Z"
+      "checkedAt": "2026-07-03T06:48:59.743Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -31,7 +31,7 @@
       "showTitle": "",
       "host": "",
       "source": "stream",
-      "checkedAt": "2026-07-03T03:28:46.165Z"
+      "checkedAt": "2026-07-03T06:49:13.098Z"
     },
     "cfak": {
       "id": "cfak",
@@ -39,15 +39,15 @@
       "showTitle": "",
       "host": "",
       "source": "stream",
-      "checkedAt": "2026-07-03T03:28:47.126Z"
+      "checkedAt": "2026-07-03T06:49:13.794Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "showTitle": "Mantisse - Drop",
-      "host": "",
-      "source": "stream",
-      "checkedAt": "2026-07-03T03:28:48.429Z"
+      "showTitle": "LDAW: High and Low",
+      "host": "LDAW (Last Dance Among Wolves)",
+      "source": "api-live",
+      "checkedAt": "2026-07-03T06:49:14.939Z"
     }
   }
 }
