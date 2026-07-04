@@ -1,14 +1,14 @@
 {
-  "updated": "2026-07-03T23:59:32.548Z",
+  "updated": "2026-07-04T04:34:29.373Z",
   "total": 192,
   "withPhoto": 151,
   "withStock": 43,
   "fullyCovered": 184,
-  "leadReadyPhotos": 156,
-  "pageScraped": 71,
-  "photosRecovered": 42,
+  "leadReadyPhotos": 152,
+  "pageScraped": 62,
+  "photosRecovered": 36,
   "imagesCleared": 3,
-  "stockSearches": 60,
+  "stockSearches": 59,
   "stockFound": 39,
   "mainPageLeadReady": true,
   "gaps": [
@@ -21,6 +21,12 @@
     {
       "title": "Une page se tourne au Salon L’image de Jonquière",
       "link": "https://lapige.atmjonquiere.com/2026/05/21/une-page-se-tourne-au-salon-limage-de-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=une-page-se-tourne-au-salon-limage-de-jonquiere",
+      "reason": "no-stock-match",
+      "image": null
+    },
+    {
+      "title": "L’ERD sauvée de la dissolution par quatre membres",
+      "link": "https://lapige.atmjonquiere.com/2026/05/21/lerd-sauvee-de-la-dissolution-par-quatre-membres/?utm_source=rss&utm_medium=rss&utm_campaign=lerd-sauvee-de-la-dissolution-par-quatre-membres",
       "reason": "no-stock-match",
       "image": null
     },
@@ -63,7 +69,7 @@
     {
       "title": "Apply to The Concordian Awards!",
       "link": "https://theconcordian.substack.com/p/apply-to-the-concordian-awards",
-      "reason": "no-stock-match",
+      "reason": "stock-too-small",
       "image": "https://upload.wikimedia.org/wikipedia/commons/7/78/Even_at_This_Price_You_Can_Maintain_Your_Pyrethrum_Insecticide_Volume_with_D.H.S._Activator_-_DPLA_-_ac96e4722d9866feb5171238b2353c23.jpg"
     },
     {
@@ -75,14 +81,8 @@
     {
       "title": "Open Letter: How can I show you I’m doing better if there’s nothing good for me to do?",
       "link": "https://www.thetribune.ca/opinion/letters-to-the-editor/open-letter-how-can-i-show-you-im-doing-better-if-theres-nothing-good-for-me-to-do-07042026/?utm_source=rss&utm_medium=rss&utm_campaign=open-letter-how-can-i-show-you-im-doing-better-if-theres-nothing-good-for-me-to-do-07042026",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "THE NUMBERED? I HOPE THEY COUNTED CORRECTLY!",
-      "link": "https://thebucampus.ca/2026/04/06/the-numbered-i-hope-they-counted-correctly/",
-      "reason": "no-stock-match",
-      "image": null
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a2/2026-01-19_Infotafel_zur_Trib%C3%BCne_HOF5494_RAW-Export.png"
     }
   ]
 }
