@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-04T15:07:23.678Z",
+  "updatedAt": "2026-07-04T16:32:27.012Z",
   "stations": {
     "chyz": {
       "id": "chyz",
@@ -7,7 +7,7 @@
       "showTitle": "",
       "host": "",
       "source": "stream",
-      "checkedAt": "2026-07-04T15:07:03.207Z"
+      "checkedAt": "2026-07-04T16:32:08.260Z"
     },
     "cism": {
       "id": "cism",
@@ -15,7 +15,7 @@
       "showTitle": "",
       "host": "",
       "source": "stream",
-      "checkedAt": "2026-07-04T15:07:04.150Z"
+      "checkedAt": "2026-07-04T16:32:09.393Z"
     },
     "ckut": {
       "id": "ckut",
@@ -23,7 +23,7 @@
       "showTitle": "Samedi Midi",
       "host": "",
       "source": "stream",
-      "checkedAt": "2026-07-04T15:07:06.117Z"
+      "checkedAt": "2026-07-04T16:32:11.281Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -31,7 +31,7 @@
       "showTitle": "",
       "host": "",
       "source": "stream",
-      "checkedAt": "2026-07-04T15:07:19.952Z"
+      "checkedAt": "2026-07-04T16:32:25.165Z"
     },
     "cfak": {
       "id": "cfak",
@@ -39,15 +39,15 @@
       "showTitle": "",
       "host": "",
       "source": "stream",
-      "checkedAt": "2026-07-04T15:07:20.657Z"
+      "checkedAt": "2026-07-04T16:32:25.834Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "showTitle": "Clément - CMD-Z",
-      "host": "",
-      "source": "stream",
-      "checkedAt": "2026-07-04T15:07:23.278Z"
+      "showTitle": "A Head Full of Ghosts",
+      "host": "Victorella",
+      "source": "api-live",
+      "checkedAt": "2026-07-04T16:32:26.612Z"
     }
   }
 }
