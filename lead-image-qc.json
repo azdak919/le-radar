@@ -1,15 +1,15 @@
 {
-  "updated": "2026-07-06T14:29:33.199Z",
+  "updated": "2026-07-06T18:12:23.020Z",
   "total": 192,
   "withPhoto": 150,
-  "withStock": 43,
-  "fullyCovered": 185,
-  "leadReadyPhotos": 124,
+  "withStock": 41,
+  "fullyCovered": 183,
+  "leadReadyPhotos": 127,
   "pageScraped": 70,
   "photosRecovered": 42,
   "imagesCleared": 3,
   "stockSearches": 60,
-  "stockFound": 40,
+  "stockFound": 38,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -29,6 +29,12 @@
       "link": "https://lapige.atmjonquiere.com/2026/05/21/une-page-se-tourne-au-salon-limage-de-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=une-page-se-tourne-au-salon-limage-de-jonquiere",
       "reason": "no-stock-match",
       "image": null
+    },
+    {
+      "title": "Un investissement pour les jeunes « bienvenu » au Centre Mamik",
+      "link": "https://lapige.atmjonquiere.com/2026/05/21/un-investissement-pour-les-jeunes-bienvenu-au-centre-mamik/?utm_source=rss&utm_medium=rss&utm_campaign=un-investissement-pour-les-jeunes-bienvenu-au-centre-mamik",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/3095/3145515352_2c561381a0_b.jpg"
     },
     {
       "title": "L’ERD sauvée de la dissolution par quatre membres",
@@ -71,12 +77,6 @@
       "link": "https://lecollectif.ca/a-la-une/resume-du-g7-a-evian/",
       "reason": "no-stock-match",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/06/SOCIETE_Resume-du-G7-a-Evian_Getty-Images.jpg"
-    },
-    {
-      "title": "Interdiction des boissons énergisantes pour les moins de 16 ans",
-      "link": "https://lecollectif.ca/a-la-une/interdiction-des-boissons-energisantes-pour-les-moins-de-16-ans/",
-      "reason": "stock-too-small",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/06/SOCIETE_BoissonsEnergisantes_SourceAssociationPourLaSantePubliqueDuQuebec.jpg"
     },
     {
       "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",

@@ -1,12 +1,12 @@
 {
-  "updated": "2026-07-06T14:20:43.512Z",
+  "updated": "2026-07-06T18:05:00.989Z",
   "total": 192,
   "pool": 58,
   "incomplete": 9,
-  "withLeadExcerpt": 64,
+  "withLeadExcerpt": 63,
   "candidates": 9,
   "enriched": 0,
-  "failed": 0,
+  "failed": 2,
   "ok": true,
   "samples": [
     {
@@ -55,30 +55,21 @@
       "changed": false
     },
     {
-      "title": "Ask the Trib: How do I survive summer in my hometown?",
-      "link": "https://www.thetribune.ca/student-life/ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026/?utm_source=rss&utm_medium=rss&utm_campaign=ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026",
-      "ok": true,
-      "score": 96,
-      "chars": 474,
-      "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
-      "changed": false
-    },
-    {
-      "title": "AI’s use in legal decisions poses major risks to the Canadian judicial system’s integrity and neutrality",
-      "link": "https://www.thetribune.ca/opinion/ais-use-in-legal-decisions-poses-major-risks-to-the-canadian-judicial-systems-integrity-and-neutrality-11062026/?utm_source=rss&utm_medium=rss&utm_campaign=ais-use-in-legal-decisions-poses-major-risks-to-the-canadian-judicial-systems-integrity-and-neutrality-11062026",
-      "ok": true,
-      "score": 100,
-      "chars": 426,
-      "sample": "On April 22, the Superior Court of Quebec annulled the August 2025 arbitration Association des Resso",
-      "changed": false
-    },
-    {
       "title": "Road to the 2026 FIFA World Cup",
       "link": "https://thelinknewspaper.ca/article/16333",
       "ok": true,
       "score": 96,
       "chars": 531,
       "sample": "Canadian goalkeeper Maxime Crépeau, who hails from nearby Greenfield Park, appeared emotional during",
+      "changed": false
+    },
+    {
+      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
+      "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
+      "ok": true,
+      "score": 100,
+      "chars": 445,
+      "sample": "Le 13 mars dernier, la rappeuse Calamine a dévoilé son nouvel album , Rétrograde . Avec cette quatri",
       "changed": false
     }
   ]
