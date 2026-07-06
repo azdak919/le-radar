@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-06T18:13:33.599Z",
+  "updated": "2026-07-06T19:25:43.115Z",
   "total": 192,
   "withImage": 150,
   "withCredit": 150,
@@ -7,18 +7,11 @@
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 54,
-  "updatedCount": 54,
-  "citedNew": 17,
-  "fallbackNew": 37,
+  "checked": 52,
+  "updatedCount": 52,
+  "citedNew": 18,
+  "fallbackNew": 34,
   "samples": [
-    {
-      "title": "L’authenticité, l’ingrédient secret des influenceurs qui durent",
-      "source": "Le Collectif",
-      "credit": "Crédit photo : Le Collectif",
-      "cited": false,
-      "method": null
-    },
     {
       "title": "CSU terminates council’s chief election officer",
       "source": "The Link",
@@ -93,6 +86,13 @@
       "title": "A final note from the Editor-in-Chief of Volume 45, for the record",
       "source": "The Tribune",
       "credit": "Photo : Yusur Al-Sharqi",
+      "cited": true,
+      "method": "figcaption-attribution"
+    },
+    {
+      "title": "SPHR remembers Gaza Solidarity Encampment ahead of Nakba Anniversary Protest",
+      "source": "The Tribune",
+      "credit": "Photo : Ellen Lurie",
       "cited": true,
       "method": "figcaption-attribution"
     }
