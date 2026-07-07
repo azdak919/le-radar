@@ -1,12 +1,12 @@
 {
-  "updated": "2026-07-07T12:17:42.746Z",
+  "updated": "2026-07-07T13:11:48.729Z",
   "total": 192,
   "pool": 58,
-  "incomplete": 10,
+  "incomplete": 11,
   "withLeadExcerpt": 63,
-  "candidates": 10,
-  "enriched": 0,
-  "failed": 0,
+  "candidates": 11,
+  "enriched": 1,
+  "failed": 3,
   "ok": true,
   "samples": [
     {
@@ -28,13 +28,13 @@
       "changed": false
     },
     {
-      "title": "Les femmes MAGA au service du patriarcat",
-      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
       "ok": true,
-      "score": 96,
-      "chars": 572,
-      "sample": "L a montée en puissance de l’idéologie du mouvement politique Make America Great Again (MAGA) n’est ",
-      "changed": false
+      "score": 80,
+      "chars": 865,
+      "sample": "Contacté à plusieurs reprises, Hamza Abu-Alkhair n’a pas donné suite à nos demandes d’entrevue. Sa p",
+      "changed": true
     },
     {
       "title": "Le culte de la beauté",
@@ -64,21 +64,21 @@
       "changed": false
     },
     {
-      "title": "Ask the Trib: How do I survive summer in my hometown?",
-      "link": "https://www.thetribune.ca/student-life/ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026/?utm_source=rss&utm_medium=rss&utm_campaign=ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026",
+      "title": "Road to the 2026 FIFA World Cup",
+      "link": "https://thelinknewspaper.ca/article/16333",
       "ok": true,
       "score": 96,
-      "chars": 474,
-      "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
+      "chars": 531,
+      "sample": "Canadian goalkeeper Maxime Crépeau, who hails from nearby Greenfield Park, appeared emotional during",
       "changed": false
     },
     {
-      "title": "AI’s use in legal decisions poses major risks to the Canadian judicial system’s integrity and neutrality",
-      "link": "https://www.thetribune.ca/opinion/ais-use-in-legal-decisions-poses-major-risks-to-the-canadian-judicial-systems-integrity-and-neutrality-11062026/?utm_source=rss&utm_medium=rss&utm_campaign=ais-use-in-legal-decisions-poses-major-risks-to-the-canadian-judicial-systems-integrity-and-neutrality-11062026",
+      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
+      "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
       "ok": true,
       "score": 100,
-      "chars": 426,
-      "sample": "On April 22, the Superior Court of Quebec annulled the August 2025 arbitration Association des Resso",
+      "chars": 445,
+      "sample": "Le 13 mars dernier, la rappeuse Calamine a dévoilé son nouvel album , Rétrograde . Avec cette quatri",
       "changed": false
     }
   ]
