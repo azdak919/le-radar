@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-07T07:41:40.364Z",
+  "updatedAt": "2026-07-07T10:05:06.989Z",
   "stations": {
     "chyz": {
       "id": "chyz",
@@ -7,7 +7,7 @@
       "showTitle": "",
       "host": "",
       "source": "stream",
-      "checkedAt": "2026-07-07T07:41:20.624Z"
+      "checkedAt": "2026-07-07T10:04:48.960Z"
     },
     "cism": {
       "id": "cism",
@@ -15,15 +15,15 @@
       "showTitle": "",
       "host": "",
       "source": "stream",
-      "checkedAt": "2026-07-07T07:41:21.493Z"
+      "checkedAt": "2026-07-07T10:04:49.737Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
-      "showTitle": "Attik / Show For Children",
+      "showTitle": "The Beat Power Hour",
       "host": "",
       "source": "stream",
-      "checkedAt": "2026-07-07T07:41:23.025Z"
+      "checkedAt": "2026-07-07T10:04:51.365Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -31,7 +31,7 @@
       "showTitle": "",
       "host": "",
       "source": "stream",
-      "checkedAt": "2026-07-07T07:41:36.374Z"
+      "checkedAt": "2026-07-07T10:05:04.736Z"
     },
     "cfak": {
       "id": "cfak",
@@ -39,15 +39,15 @@
       "showTitle": "",
       "host": "",
       "source": "stream",
-      "checkedAt": "2026-07-07T07:41:37.994Z"
+      "checkedAt": "2026-07-07T10:05:05.418Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "showTitle": "Velvetine - Ecstasy",
-      "host": "",
-      "source": "stream",
-      "checkedAt": "2026-07-07T07:41:39.964Z"
+      "showTitle": "On Call",
+      "host": "MUNA",
+      "source": "api-live",
+      "checkedAt": "2026-07-07T10:05:06.588Z"
     }
   }
 }
