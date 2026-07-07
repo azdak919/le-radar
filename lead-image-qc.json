@@ -1,22 +1,22 @@
 {
-  "updated": "2026-07-07T16:24:56.490Z",
+  "updated": "2026-07-07T19:30:42.134Z",
   "total": 192,
   "withPhoto": 150,
-  "withStock": 45,
+  "withStock": 43,
   "fullyCovered": 183,
-  "leadReadyPhotos": 110,
-  "pageScraped": 57,
-  "photosRecovered": 40,
+  "leadReadyPhotos": 126,
+  "pageScraped": 68,
+  "photosRecovered": 42,
   "imagesCleared": 3,
   "stockSearches": 60,
-  "stockFound": 40,
+  "stockFound": 39,
   "mainPageLeadReady": true,
   "gaps": [
     {
       "title": "The Cruel Optimism of Summer",
       "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
-      "reason": "no-stock-match",
-      "image": null
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/917/28627096297_a3e0756d47_b.jpg"
     },
     {
       "title": "Un hommage aux cyclistes décédés sur les routes",
@@ -43,6 +43,12 @@
       "image": null
     },
     {
+      "title": "Un pont entre l’art et le travail de rue",
+      "link": "https://lapige.atmjonquiere.com/2026/05/20/un-pont-entre-lart-et-le-travail-de-rue/?utm_source=rss&utm_medium=rss&utm_campaign=un-pont-entre-lart-et-le-travail-de-rue",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/4162/34368472056_546633d47c_b.jpg"
+    },
+    {
       "title": "El Niño s’approche du Québec",
       "link": "https://lapige.atmjonquiere.com/2026/05/20/el-nino-sapproche-du-quebec/?utm_source=rss&utm_medium=rss&utm_campaign=el-nino-sapproche-du-quebec",
       "reason": "no-stock-match",
@@ -61,28 +67,22 @@
       "image": "https://live.staticflickr.com/2046/2138574759_7372bca412_b.jpg"
     },
     {
-      "title": "Le culte de la beauté",
-      "link": "https://lecollectif.ca/societe/le-culte-de-la-beaute/",
+      "title": "Une première nouvelle candidature pour la CAQ dans Brome‑Missisquoi",
+      "link": "https://lecollectif.ca/a-la-une/une-premiere-nouvelle-candidature-pour-la-caq-dans-brome%e2%80%91missisquoi/",
       "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_BEAUTE_TendanceGlassSkin_SourceSmytten.com_-1024x576.png"
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/06/SOCIETE_UnePremiereNouvelleCandidaturePourLaCAQ_Source-Compte-X-de-Christine-Frechette-819x1024.jpeg"
     },
     {
-      "title": "L’authenticité, l’ingrédient secret des influenceurs qui durent",
-      "link": "https://lecollectif.ca/edition-papier/lauthenticite-lingredient-secret-des-influenceurs-qui-durent/",
+      "title": "Résumé du G7 à Évian",
+      "link": "https://lecollectif.ca/a-la-une/resume-du-g7-a-evian/",
       "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_INFLUENCE_InfluenceurSourceHECMontreal-1-1024x683.png"
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/06/SOCIETE_Resume-du-G7-a-Evian_Getty-Images.jpg"
     },
     {
-      "title": "Alexandre Raymond repêché par l’Avalanche du Colorado",
-      "link": "https://lecollectif.ca/a-la-une/alexandre-raymond-repeche-par-lavalanche-du-colorado/",
-      "reason": "stock-too-small",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SGSSPORTS_Raymon_Houle_Source_Huskies-Rouyn-Noranda-1024x496.jpeg"
-    },
-    {
-      "title": "La procrastination : quand remettre à plus tard devient un problème",
-      "link": "https://lecollectif.ca/a-la-une/la-procrastination-quand-remettre-a-plus-tard-devient-un-probleme/",
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "link": "https://lapige.atmjonquiere.com/2026/06/22/se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille/?utm_source=rss&utm_medium=rss&utm_campaign=se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille",
       "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/06/SOCIETE_Procrastination_SourcePixabay-1024x731.png"
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/06/Bruno-Cormier-retraite-benevole.png"
     }
   ]
 }
