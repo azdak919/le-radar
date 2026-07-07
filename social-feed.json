@@ -1,6 +1,6 @@
 {
-  "updated": "2026-07-07T00:05:35.174Z",
-  "count": 18,
+  "updated": "2026-07-07T04:54:08.096Z",
+  "count": 19,
   "items": [
     {
       "name": "Quartier Libre",
@@ -193,7 +193,7 @@
           "type": "facebook",
           "url": "https://www.facebook.com/lexemplaire",
           "handle": "lexemplaire",
-          "stats": "851 mentions J'aime",
+          "stats": "",
           "label": "Facebook"
         },
         {
@@ -202,6 +202,28 @@
           "handle": "@lexemplaire",
           "stats": "Le média-école des étudiant.e.s en journalisme de l'Université Laval, Québec.",
           "label": "X"
+        }
+      ]
+    },
+    {
+      "name": "Le Collectif",
+      "institution": "Université de Sherbrooke",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/jlecollectif/",
+          "handle": "@jlecollectif",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/journallecollectif",
+          "handle": "journallecollectif",
+          "stats": "",
+          "label": "Facebook"
         }
       ]
     },

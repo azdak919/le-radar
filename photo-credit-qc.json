@@ -1,16 +1,16 @@
 {
-  "updated": "2026-07-07T00:04:25.608Z",
+  "updated": "2026-07-07T04:53:04.108Z",
   "total": 192,
   "withImage": 150,
   "withCredit": 150,
-  "cited": 55,
+  "cited": 50,
   "pending": 0,
   "missingHero": 0,
   "ok": true,
   "checked": 53,
   "updatedCount": 53,
-  "citedNew": 17,
-  "fallbackNew": 36,
+  "citedNew": 12,
+  "fallbackNew": 41,
   "samples": [
     {
       "title": "CSU terminates council’s chief election officer",
@@ -71,9 +71,9 @@
     {
       "title": "Montreal protestors commemorate the 78th anniversary of the Nakba",
       "source": "The Tribune",
-      "credit": "Photo : Ellen Lurie",
-      "cited": true,
-      "method": "figcaption-attribution"
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Sans fin(s): au cœur des troubles du comportement alimentaire",
@@ -85,16 +85,16 @@
     {
       "title": "A final note from the Editor-in-Chief of Volume 45, for the record",
       "source": "The Tribune",
-      "credit": "Photo : Yusur Al-Sharqi",
-      "cited": true,
-      "method": "figcaption-attribution"
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
     },
     {
       "title": "SPHR remembers Gaza Solidarity Encampment ahead of Nakba Anniversary Protest",
       "source": "The Tribune",
-      "credit": "Photo : Ellen Lurie",
-      "cited": true,
-      "method": "figcaption-attribution"
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
     }
   ]
 }
