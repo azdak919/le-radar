@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-08T21:02:02.414Z",
+  "updated": "2026-07-09T00:07:17.262Z",
   "total": 192,
   "withImage": 150,
   "withCredit": 150,
@@ -7,13 +7,20 @@
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 42,
-  "updatedCount": 42,
+  "checked": 40,
+  "updatedCount": 40,
   "citedNew": 17,
-  "fallbackNew": 25,
+  "fallbackNew": 23,
   "samples": [
     {
       "title": "CSU fails to reach quorum at first special council meeting of new mandate",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "CSU terminates council’s chief election officer",
       "source": "The Link",
       "credit": "Photo credit: The Link",
       "cited": false,
@@ -88,13 +95,6 @@
       "credit": "Photo : Ellen Lurie",
       "cited": true,
       "method": "figcaption-attribution"
-    },
-    {
-      "title": "L’alcool est-il vraiment le nouveau tabac ?",
-      "source": "L'Exemplaire",
-      "credit": "Crédit photo : L'Exemplaire",
-      "cited": false,
-      "method": null
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-08T20:53:30.653Z",
+  "updated": "2026-07-08T23:57:32.662Z",
   "count": 192,
   "freshnessSessions": 3,
   "sources": {
@@ -9,7 +9,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:00:00.000Z",
-      "lastFetchOk": "2026-07-08T20:51:45.430Z"
+      "lastFetchOk": "2026-07-08T23:56:01.227Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -17,7 +17,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-07-08T20:51:46.747Z"
+      "lastFetchOk": "2026-07-08T23:56:02.430Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -25,7 +25,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-03-25T11:00:00.000Z",
-      "lastFetchOk": "2026-07-08T20:51:51.080Z"
+      "lastFetchOk": "2026-07-08T23:56:07.030Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -33,7 +33,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-07-06T12:00:00.000Z",
-      "lastFetchOk": "2026-07-08T20:51:52.633Z"
+      "lastFetchOk": "2026-07-08T23:56:08.123Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -41,7 +41,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-07-08T14:41:00.000Z",
-      "lastFetchOk": "2026-07-08T20:51:53.819Z"
+      "lastFetchOk": "2026-07-08T23:56:09.343Z"
     },
     "The Concordian": {
       "fetchOk": false,
@@ -52,12 +52,12 @@
       "lastFetchOk": null
     },
     "Zone Campus": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-07-08T20:51:55.686Z"
+      "lastFetchOk": null
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -65,15 +65,15 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-07-08T20:51:57.966Z"
+      "lastFetchOk": "2026-07-08T23:56:12.259Z"
     },
     "Le Collectif": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-07-08T00:45:45.000Z",
-      "lastFetchOk": "2026-07-08T20:51:58.882Z"
+      "lastFetchOk": null
     },
     "Exil": {
       "fetchOk": true,
@@ -81,15 +81,15 @@
       "articleCount": 7,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-07-08T20:51:59.011Z"
+      "lastFetchOk": "2026-07-08T23:56:13.428Z"
     },
     "La Pige": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-06-22T14:36:10.000Z",
-      "lastFetchOk": "2026-07-08T20:51:59.757Z"
+      "lastFetchOk": null
     },
     "The Tribune": {
       "fetchOk": true,
@@ -97,7 +97,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-06-26T15:24:28.000Z",
-      "lastFetchOk": "2026-07-08T20:51:59.926Z"
+      "lastFetchOk": "2026-07-08T23:56:13.853Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -105,7 +105,7 @@
       "articleCount": 30,
       "freshArticleCount": 30,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-07-08T20:52:00.073Z"
+      "lastFetchOk": "2026-07-08T23:56:13.996Z"
     }
   },
   "items": [
@@ -138,7 +138,7 @@
       "lang": "fr",
       "title": "Un grand soir au Festival de jazz pour Angine de Poitrine",
       "link": "https://lecollectif.ca/a-la-une/un-grand-soir-au-festival-de-jazz-pour-angine-de-poitrine/",
-      "author": "Le Collectif",
+      "author": "La rédaction",
       "date": "2026-07-08T00:45:45.000Z",
       "excerpt": "Le 27 juin dernier, le duo québécois Angine de Poitrine a présenté un concert extérieur sur la Place des Festivals dans le cadre du Festival international de jazz de Montréal. Le site était rempli bien avant le début du spectacle, avec une foule dense et des spectateurs installés jusque sur les terrasses et les plateformes en hauteur.",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/CULTURE_angine_de_poitrine_SourceFestivalinternationaldejazzdeMontreal-1024x711.jpg",
@@ -147,7 +147,14 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "culture_angine_de_poitrine_sourcefestivalinternationaldejazzdemontreal.jpg",
-      "leadImageReady": true
+      "leadImageReady": false,
+      "_retainedFromCache": true,
+      "stockImage": "https://live.staticflickr.com/65535/52154521096_6a7187a33e_b.jpg",
+      "imageCredit": "Photo : abdallahh / CC BY · Openverse",
+      "imageCreator": "abdallahh",
+      "imageLicense": "by",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/22168167@N00/52154521096"
     },
     {
       "source": "Le Collectif",
@@ -157,7 +164,7 @@
       "lang": "fr",
       "title": "Christine Labrie tourne la page sur huit ans comme députée de Sherbrooke",
       "link": "https://lecollectif.ca/a-la-une/christine-labrie-tourne-la-page-sur-huit-ans-comme-deputee-de-sherbrooke/",
-      "author": "Le Collectif",
+      "author": "La rédaction",
       "date": "2026-07-07T23:48:22.000Z",
       "excerpt": "Après deux mandats à l’Assemblée nationale, Christine Labrie ne sera pas candidate aux prochaines élections provinciales. Députée de Sherbrooke pour Québec solidaire depuis 2018, elle occupait notamment les responsabilités de porte-parole en matière d’affaires municipales, pour les aînés et pour la région de l’Estrie.",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_ChristineLabrie_SourcePageFacebookDeRubaGhazal-819x1024.jpg",
@@ -167,12 +174,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "societe_christinelabrie_sourcepagefacebookderubaghazal.jpg",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/4/47/Assembl%C3%A9e_nationale_du_Qu%C3%A9bec%2C_l%27H%C3%B4tel_du_Parlement%2C_fa%C3%A7ade_avec_ancien_entr%C3%A9_principal.jpg",
-      "imageCredit": "Photo : Marc-Lautenbacher / CC BY-SA · Openverse",
-      "imageCreator": "Marc-Lautenbacher",
-      "imageLicense": "by-sa",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=73170675"
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -191,7 +193,8 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "obsessions_surinformation_doomscrolling_sourceadobestock-1.png",
-      "leadImageReady": true
+      "leadImageReady": false,
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -210,7 +213,8 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "obsessions_bonheur_donnerunsensasavie_sourceistock-1.png",
-      "leadImageReady": true
+      "leadImageReady": false,
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -229,8 +233,9 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "obsessions_beaute_tendanceglassskin_sourcesmytten.com_.png",
-      "leadImageReady": true,
-      "leadExcerpt": "Pourquoi sommes-nous obsédés par la beauté? Qu’elle soit physique ou matérielle, nous accordons de plus en plus d’importance aux apparences et à l’image qu’elles projettent autour de nous. Les tendances médiatiques populaires comme le « Glass Skin », une tendance coréenne qui consiste à prendre soin de sa peau à l’aide de différents produits et de plusieurs étapes afin d’obtenir un effet lisse et lumineux, ou encore la tendance « That Girl », qui met en scène une femme hyperproductive prenant également soin d’elle-même dans un cadre esthétique soigné, en sont des exemples."
+      "leadImageReady": false,
+      "leadExcerpt": "Pourquoi sommes-nous obsédés par la beauté? Qu’elle soit physique ou matérielle, nous accordons de plus en plus d’importance aux apparences et à l’image qu’elles projettent autour de nous. Les tendances médiatiques populaires comme le « Glass Skin », une tendance coréenne qui consiste à prendre soin de sa peau à l’aide de différents produits et de plusieurs étapes afin d’obtenir un effet lisse et lumineux, ou encore la tendance « That Girl », qui met en scène une femme hyperproductive prenant également soin d’elle-même dans un cadre esthétique soigné, en sont des exemples.",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -240,7 +245,7 @@
       "lang": "fr",
       "title": "L’authenticité, l’ingrédient secret des influenceurs qui durent",
       "link": "https://lecollectif.ca/edition-papier/lauthenticite-lingredient-secret-des-influenceurs-qui-durent/",
-      "author": "Le Collectif",
+      "author": "La rédaction",
       "date": "2026-07-06T17:46:32.000Z",
       "excerpt": "Sur les réseaux sociaux, comme TikTok, Instagram et Twitch, une tendance se confirme. Les créateurs de contenu qui restent fidèles à eux-mêmes sont ceux qui obtiennent les communautés les plus engagées. L’authenticité est devenue un moteur de carrière pour de nombreux influenceurs québécois qui choisissent de se montrer tels qu’ils sont.",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_INFLUENCE_InfluenceurSourceHECMontreal-1-1024x683.png",
@@ -249,7 +254,8 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "obsessions_influence_influenceursourcehecmontreal-1.png",
-      "leadImageReady": true
+      "leadImageReady": false,
+      "_retainedFromCache": true
     },
     {
       "source": "The McGill Daily",
@@ -289,7 +295,14 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "sgssports_raymon_houle_source_huskies-rouyn-noranda.jpeg",
-      "leadImageReady": true
+      "leadImageReady": false,
+      "_retainedFromCache": true,
+      "stockImage": "https://live.staticflickr.com/2821/12679123553_bfb536e305_b.jpg",
+      "imageCredit": "Photo : DVIDSHUB / CC BY · Openverse",
+      "imageCreator": "DVIDSHUB",
+      "imageLicense": "by",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/28650594@N03/12679123553"
     },
     {
       "source": "Le Collectif",
@@ -309,7 +322,14 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "culture_francoise_rebeccagagne-1.jpg",
       "leadImageReady": false,
-      "leadExcerpt": "Le 23 juin dernier avait lieu la première du film québécois François.e à la Maison du Cinéma de Sherbrooke. Pour l’occasion, des membres de la distribution de même que les deux scénaristes de l’œuvre ont partagé l’expérience avec l’audience."
+      "leadExcerpt": "Le 23 juin dernier avait lieu la première du film québécois François.e à la Maison du Cinéma de Sherbrooke. Pour l’occasion, des membres de la distribution de même que les deux scénaristes de l’œuvre ont partagé l’expérience avec l’audience.",
+      "_retainedFromCache": true,
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Espace-Francois-Hemmer-02.jpg",
+      "imageCredit": "Photo : Xavier Hemmer / CC0 · Wikimedia Commons",
+      "imageCreator": "Xavier Hemmer",
+      "imageLicense": "CC0",
+      "imageProvider": "wikimedia",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Espace-Francois-Hemmer-02.jpg"
     },
     {
       "source": "Le Collectif",
@@ -319,7 +339,7 @@
       "lang": "fr",
       "title": "La procrastination : quand remettre à plus tard devient un problème",
       "link": "https://lecollectif.ca/a-la-une/la-procrastination-quand-remettre-a-plus-tard-devient-un-probleme/",
-      "author": "Le Collectif",
+      "author": "La rédaction",
       "date": "2026-06-29T13:52:27.000Z",
       "excerpt": "Cet article aurait dû être écrit il y a deux semaines. Entre-temps, d’autres textes ont pris le dessus, les délais se sont étirés ce qui est plutôt ironique pour un article sur la procrastination. Pourtant, remettre une tâche à plus tard fait partie du quotidien de beaucoup d’étudiantes et d’étudiants.",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/06/SOCIETE_Procrastination_SourcePixabay-1024x731.png",
@@ -328,7 +348,8 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "societe_procrastination_sourcepixabay.png",
-      "leadImageReady": true
+      "leadImageReady": false,
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -338,7 +359,7 @@
       "lang": "fr",
       "title": "Une première nouvelle candidature pour la CAQ dans Brome‑Missisquoi",
       "link": "https://lecollectif.ca/a-la-une/une-premiere-nouvelle-candidature-pour-la-caq-dans-brome%e2%80%91missisquoi/",
-      "author": "Le Collectif",
+      "author": "La rédaction",
       "date": "2026-06-29T13:49:02.000Z",
       "excerpt": "La Coalition Avenir Québec (CAQ) a présenté une première nouvelle candidature en vue des élections provinciales d’octobre. La première ministre et cheffe de la CAQ, Christine Fréchette, mise sur Manuela Goya pour représenter la circonscription de Brome‑Missisquoi. Cette annonce",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/06/SOCIETE_UnePremiereNouvelleCandidaturePourLaCAQ_Source-Compte-X-de-Christine-Frechette-819x1024.jpeg",
@@ -348,7 +369,8 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "societe_unepremierenouvellecandidaturepourlacaq_source-compte-x-de-christine-frechette.jpeg",
       "leadImageReady": false,
-      "leadExcerpt": "La Coalition Avenir Québec (CAQ) a présenté une première nouvelle candidature en vue des élections provinciales d’octobre. La première ministre et cheffe de la CAQ, Christine Fréchette, mise sur Manuela Goya pour représenter la circonscription de Brome‑Missisquoi. Cette annonce s’inscrit dans un contexte où la formation gouvernementale doit composer avec de nombreux départs au sein de son caucus et cherche à mettre de l’avant de nouveaux visages."
+      "leadExcerpt": "La Coalition Avenir Québec (CAQ) a présenté une première nouvelle candidature en vue des élections provinciales d’octobre. La première ministre et cheffe de la CAQ, Christine Fréchette, mise sur Manuela Goya pour représenter la circonscription de Brome‑Missisquoi. Cette annonce s’inscrit dans un contexte où la formation gouvernementale doit composer avec de nombreux départs au sein de son caucus et cherche à mettre de l’avant de nouveaux visages.",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -361,15 +383,15 @@
       "author": "Sean Richard",
       "date": "2026-06-28T23:23:00.000Z",
       "excerpt": "The union also elected various councillors to different committees and student body positions The CSU overhauled its staff at the recent council meeting. Graphic Naya Hachwa",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/00.graphics.CSU.Naya_Hachwa_900_674_90.jpeg",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/00.graphics.CSU.Naya_Hachwa_690_517_90.jpeg",
+      "leadExcerpt": "Elbakaye added that she has been attempting to contact Ellis for over three months, but he has not responded. She also explained that she is working on a training guide for the next CEO alongside the council's administrative coordinator.",
+      "leadImageReady": false,
       "sourceImageCredit": "Photo credit: The Link",
+      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16334",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "00.graphics.csu.naya_hachwa_900_674_90.jpeg",
-      "leadImageReady": true,
-      "leadExcerpt": "Elbakaye added that she has been attempting to contact Ellis for over three months, but he has not responded. She also explained that she is working on a training guide for the next CEO alongside the council's administrative coordinator.",
-      "sourceImageCreator": ""
+      "sourceImageCreditImageKey": "00.graphics.csu.naya_hachwa_690_517_90.jpeg"
     },
     {
       "source": "The McGill Daily",
@@ -452,7 +474,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "bruno-cormier-retraite-benevole.png",
       "leadImageReady": false,
-      "leadExcerpt": "« Les gens ont tendance à frapper un mur au moment de la retraite par manque de préparation », estime Le directeur général de la Fédération de l’âge d’or du Québec (Fadoq) pour la région Saguenay-Lac-Saint-Jean – Ungava, Patrice Saint-Pierre. (Photo : Léa Morin-Letort)"
+      "leadExcerpt": "« Les gens ont tendance à frapper un mur au moment de la retraite par manque de préparation », estime Le directeur général de la Fédération de l’âge d’or du Québec (Fadoq) pour la région Saguenay-Lac-Saint-Jean – Ungava, Patrice Saint-Pierre. (Photo : Léa Morin-Letort)",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -513,8 +536,9 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "shared-image-5.jpg",
-      "leadImageReady": true,
-      "leadExcerpt": "Mylène Sasseville est la proche aidante de ses deux fils, Maïk et Travis, tous les deux atteints du syndrome rare Allan Herndon Dudley causant une déficience physique et intellectuelle. Son conjoint, l’accompagne également dans son parcours de proche aidante. (Photo : Mathilde Bellon)"
+      "leadImageReady": false,
+      "leadExcerpt": "Mylène Sasseville est la proche aidante de ses deux fils, Maïk et Travis, tous les deux atteints du syndrome rare Allan Herndon Dudley causant une déficience physique et intellectuelle. Son conjoint, l’accompagne également dans son parcours de proche aidante. (Photo : Mathilde Bellon)",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -612,7 +636,8 @@
       "excerpt": "La présidente du groupe Accro-Vélo Alma, Anne Lafrance, et Sylvie Beaumont, la mairesse d’Alma, étaient sur place pour le départ des cyclistes. (Crédit : Colin Perron) Quatre commémorations pour les cyclistes décédés ont eu lieu mercredi soir au Saguenay-Lac-Saint-Jean, dont une à Alma.",
       "image": "",
       "leadExcerpt": "La présidente du groupe Accro-Vélo Alma, Anne Lafrance, et Sylvie Beaumont, la mairesse d’Alma, étaient sur place pour le départ des cyclistes. (Crédit : Colin Perron) Quatre commémorations pour les cyclistes décédés ont eu lieu mercredi soir au Saguenay-Lac-Saint-Jean, dont une à Alma. C’était la 3e édition du Tour du Silence, qui débutait à l’hôtel de ville.",
-      "leadImageReady": false
+      "leadImageReady": false,
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -627,7 +652,8 @@
       "excerpt": "Les coiffeuses Kathy Blackburn et Manon Tremblay en sont à une semaine et un jour de la fermeture de leur commerce. (Crédit : Julianne Pilon) Après 40 ans, les coiffeuses Kathy Blackburn et Manon Tremblay accrochent leur paire de ciseaux. Le Salon L’image, situé à Place Centre-Ville Jonquière, fermera définitivement ses portes le 29 mai prochain.",
       "image": "",
       "leadExcerpt": "Après 40 ans, les coiffeuses Kathy Blackburn et Manon Tremblay accrochent leur paire de ciseaux. Le Salon L’image, situé à Place Centre-Ville Jonquière, fermera définitivement ses portes le 29 mai prochain.",
-      "leadImageReady": false
+      "leadImageReady": false,
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -643,6 +669,7 @@
       "image": "",
       "leadExcerpt": "Le Centre Mamik a déposé une demande de projet pilote pour donner accès à des services de halte garderie, spécifiquement pour les parents qui sont étudiants. (Crédit : Tirée de Facebook / Centre Mamik)",
       "leadImageReady": false,
+      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/3095/3145515352_2c561381a0_b.jpg",
       "imageCredit": "Photo : fsse8info / CC BY-SA · Openverse",
       "imageCreator": "fsse8info",
@@ -663,7 +690,8 @@
       "excerpt": "Depuis 2011, l’Équipe du renouveau démocratique de Saguenay tente d’être plus à l’écoute des citoyens. Le départ de huit des onze membres du conseil d’administration a failli mener la dissolution de l’Équipe du renouveau démocratique de Saguenay (ERD), mercredi soir. In extrémis, quatre membres pourraient secourir le parti.",
       "image": "",
       "leadExcerpt": "Le départ de huit des onze membres du conseil d’administration a failli mener la dissolution de l’Équipe du renouveau démocratique de Saguenay (ERD), mercredi soir. In extrémis, quatre membres pourraient secourir le parti.",
-      "leadImageReady": false
+      "leadImageReady": false,
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -684,7 +712,8 @@
       "imageCreator": "Guérard, Nicolas (vers 1648 - Paris, 1719), dessinateur",
       "imageLicense": "cc0",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=132253024"
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=132253024",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -700,6 +729,7 @@
       "image": "",
       "leadExcerpt": "Le pont de Sainte-Anne ne se contente plus de relier deux rives ; il relie désormais les citoyens à une réalité souvent invisible. Jusqu’au 4 octobre prochain, l’exposition de photographie et de témoignages Ici on se rencontre met en lumière une vocation de l’ombre : celle des travailleurs de rue.",
       "leadImageReady": false,
+      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/4162/34368472056_546633d47c_b.jpg",
       "imageCredit": "Photo : dalbera / CC BY · Openverse",
       "imageCreator": "dalbera",
@@ -719,7 +749,8 @@
       "date": "2026-05-20T21:15:57.000Z",
       "excerpt": "Le phénomène climatique influence surtout les températures de la côte Ouest de l’Amérique. (Crédit photo : Fatih Turan, Pexels). Le phénomène météorologique El Niño devrait s’amorcer dans le mois de juin. Un été plus frais et un hiver plus doux sont prévus cette année au Québec. Le météorologue d’Environnement Canada, Julien Pellerin, estime qu’El Niño a 82 % de chance de se concrétiser.",
       "image": "",
-      "leadImageReady": false
+      "leadImageReady": false,
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -735,6 +766,7 @@
       "image": "",
       "leadExcerpt": "Mélissa Girard, Cindy Duchesne, Mireille Fortin, Claudia Boily et Julie Guay, du programme d’Assistance technique en pharmacie, étaient présentes pour la Journée portes ouvertes, mercredi. (Crédit : Étienne Harvey-Soucy)",
       "leadImageReady": false,
+      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/7040/6933759219_87c820c047_b.jpg",
       "imageCredit": "Photo : USDAgov / CC BY · Openverse",
       "imageCreator": "USDAgov",
@@ -771,17 +803,16 @@
       "lang": "fr",
       "title": "Présences invisibles : écrire la ville sans permission",
       "link": "https://quartierlibre.ca/presences-invisibles-ecrire-la-ville/",
-      "author": "Emilie Rizkallah",
+      "author": "La rédaction",
       "date": "2026-05-15T16:00:00.000Z",
       "excerpt": "À Montréal, les murs parlent, sans jamais révéler celles et ceux qui les écrivent. Sous les couches de peinture et les signatures superposées, une présence discrète s’impose : celle d’une génération, souvent étudiante, qui investit l’espace urbain en marge des cadres établis.",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/Photo-5_IMG_3586-1024x768.jpg",
-      "_pageAuthor": "Emilie Rizkallah",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/presences-invisibles-ecrire-la-ville/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "photo-5_img_3586.jpg",
-      "leadImageReady": true
+      "leadImageReady": false
     },
     {
       "source": "Quartier Libre",
@@ -791,18 +822,23 @@
       "lang": "fr",
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
       "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
-      "author": "Samuel Roy",
+      "author": "La rédaction",
       "date": "2026-05-14T21:00:00.000Z",
       "excerpt": "Le 13 mars dernier, la rappeuse Calamine a dévoilé son nouvel album , Rétrograde . Avec cette quatrième sortie depuis 2020, l’artiste gravit les échelons et devient une voix importante du hip-hop québécois. Composé de 18 titres d’ambiance estivale tels que « CHOP CHOP », « POLY",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg",
-      "_pageAuthor": "Samuel Roy",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/calamine-rapper-autrement/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "20_calamine-1.jpg",
       "leadImageReady": false,
-      "leadExcerpt": "Le 13 mars dernier, la rappeuse Calamine a dévoilé son nouvel album , Rétrograde . Avec cette quatrième sortie depuis 2020, l’artiste gravit les échelons et devient une voix importante du hip-hop québécois. Composé de 18 titres d’ambiance estivale tels que « CHOP CHOP », « POLY » et « LESBIVILLE », ce nouvel opus aurait sans surprise pu laisser entendre la voix d’Aminé sur certaines de ses productions plutôt rétro et stylistiquement variées."
+      "leadExcerpt": "Le 13 mars dernier, la rappeuse Calamine a dévoilé son nouvel album , Rétrograde . Avec cette quatrième sortie depuis 2020, l’artiste gravit les échelons et devient une voix importante du hip-hop québécois. Composé de 18 titres d’ambiance estivale tels que « CHOP CHOP », « POLY » et « LESBIVILLE », ce nouvel opus aurait sans surprise pu laisser entendre la voix d’Aminé sur certaines de ses productions plutôt rétro et stylistiquement variées.",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/8/8e/Calamine_en_concert.jpg",
+      "imageCredit": "Photo : Lisa-Marie Duchesne / CC BY-SA · Openverse",
+      "imageCreator": "Lisa-Marie Duchesne",
+      "imageLicense": "by-sa",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=137030939"
     },
     {
       "source": "Quartier Libre",
@@ -812,11 +848,10 @@
       "lang": "fr",
       "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
       "link": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
-      "author": "Ulysse Taillard-Hodez",
+      "author": "La rédaction",
       "date": "2026-05-14T19:09:17.000Z",
       "excerpt": "Le 5 mai dernier, le pavillon Roger-Gaudry a accueilli le premier forum du Réseau des écoles associées ( RÉA ). Ce projet ambitieux de la Faculté des sciences de l’éducation (FSÉ) transforme des écoles primaires et secondaires en véritables « hôpitaux universitaires » de la pédagogie.",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-2-768x1024.jpeg",
-      "_pageAuthor": "Ulysse Taillard-Hodez",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
       "sourceImageCreditFrom": "media",
@@ -838,11 +873,10 @@
       "lang": "fr",
       "title": "Un projet de loi rendrait obligatoire le statut d’étudiant·e proche aidant·e",
       "link": "https://quartierlibre.ca/projet-loi-etudiant-proche-aidante/",
-      "author": "Mohammed Aziz Mestiri",
+      "author": "La rédaction",
       "date": "2026-05-14T16:00:00.000Z",
       "excerpt": "Depuis mars 2024, l’Université de Montréal (UdeM) dispose d’une politique de soutien aux parents aux études. Le projet de loi 394 (PL394) de Québec solidaire lui imposerait, en cas d’adoption, d’en créer une destinée également aux proches aidant·e·s. Le député",
       "image": "",
-      "_pageAuthor": "Mohammed Aziz Mestiri",
       "leadExcerpt": "Depuis mars 2024, l’Université de Montréal (UdeM) dispose d’une politique de soutien aux parents aux études. Le projet de loi 394 ( PL394 ) de Québec solidaire lui imposerait, en cas d’adoption, d’en créer une destinée également aux proches aidant·e·s.",
       "leadImageReady": false,
       "stockImage": "https://live.staticflickr.com/2046/2138574759_7372bca412_b.jpg",
@@ -902,18 +936,23 @@
       "lang": "fr",
       "title": "Recettes musicales québécoises pour l’été",
       "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
-      "author": "Bérénice Lemarié",
+      "author": "La rédaction",
       "date": "2026-05-13T16:00:00.000Z",
       "excerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations d’albums 100 % québécois récemment sortis.",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg",
-      "_pageAuthor": "Bérénice Lemarié",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "20_florelaurentienne.jpg",
       "leadImageReady": false,
-      "leadExcerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations d’albums 100 % québécois récemment sortis ."
+      "leadExcerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations d’albums 100 % québécois récemment sortis .",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/5/57/D%C3%A9partement_du_Var_-_Divis%C3%A9_par_les_contributions_indirectes_en_directions_d%27arrondissements%2C_recettes_s%C3%A9dentaires%2C_recettes_ambulantes_%C3%A0_cheval%2C_recettes_ambulantes_%C3%A0_pied_%26_recettes_buralistes_-_btv1b53087592m_%281_of_2%29.jpg",
+      "imageCredit": "Photo : Bibliothèque nationale de France / PUBLIC DOMAIN · Wikimedia Commons",
+      "imageCreator": "Bibliothèque nationale de France",
+      "imageLicense": "Public domain",
+      "imageProvider": "wikimedia",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:D%C3%A9partement_du_Var_-_Divis%C3%A9_par_les_contributions_indirectes_en_directions_d%27arrondissements,_recettes_s%C3%A9dentaires,_recettes_ambulantes_%C3%A0_cheval,_recettes_ambulantes_%C3%A0_pied_%26_recettes_buralistes_-_btv1b53087592m_(1_of_2).jpg"
     },
     {
       "source": "Quartier Libre",
@@ -923,11 +962,10 @@
       "lang": "fr",
       "title": "FAÉCUM : la démocratie universitaire critiquée",
       "link": "https://quartierlibre.ca/faecum-la-democratie-universitaire-critiquee/",
-      "author": "Ulysse Taillard-Hodez",
+      "author": "La rédaction",
       "date": "2026-05-12T20:00:00.000Z",
       "excerpt": "Entre absence de quorum, élections houleuses et accusations de « campagnes de salissage », la Fédération des associations du campus de l’Université de Montréal (FAÉCUM) traverse une zone de turbulences. Du fonctionnement des associations étudiantes aux congrès mouvementés, récit d’une démocratie en difficulté.",
       "image": "",
-      "_pageAuthor": "Ulysse Taillard-Hodez",
       "leadExcerpt": "Entre absence de quorum, élections houleuses et accusations de « campagnes de salissage », la Fédération des associations du campus de l’Université de Montréal (FAÉCUM) traverse une zone de turbulences. Du fonctionnement des associations étudiantes aux congrès mouvementés, récit d’une démocratie en difficulté.",
       "leadImageReady": false,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Universit%C3%A9_de_Montr%C3%A9al%2C_Pavillon_Roger-Gaudry.JPG",
@@ -1095,11 +1133,10 @@
       "lang": "fr",
       "title": "Montréal Mystère : le polar à l’honneur dans un festival bilingue",
       "link": "https://quartierlibre.ca/montreal-mystere-festival-bilingue/",
-      "author": "Carla Roche",
+      "author": "La rédaction",
       "date": "2026-05-12T18:39:17.000Z",
       "excerpt": "Les 29 et 30 mai prochains, les adeptes d’ouvrages de suspense, à mystère et d’enquêtes auront rendez-vous au Centre culturel Georges-Vanier pour la troisième édition du festival du livre policier Montréal Mystère, un événement encore jeune, mais déjà bien installé dans le paysage littéraire montréalais.",
       "image": "",
-      "_pageAuthor": "Carla Roche",
       "leadExcerpt": "Les 29 et 30 mai prochains, les adeptes d’ouvrages de suspense, à mystère et d’enquêtes auront rendez-vous au Centre culturel Georges-Vanier pour la troisième édition du festival du livre policier Montréal Mystère , un événement encore jeune, mais déjà bien installé dans le paysage littéraire montréalais.",
       "leadImageReady": false,
       "stockImage": "https://live.staticflickr.com/3498/3735171010_90582fc99c_b.jpg",
@@ -1117,11 +1154,10 @@
       "lang": "fr",
       "title": "Coupe du monde 2026 : l’empreinte de l’expansion",
       "link": "https://quartierlibre.ca/coupe-du-monde-2026/",
-      "author": "Gabriel Lapointe",
+      "author": "La rédaction",
       "date": "2026-05-11T19:00:00.000Z",
       "excerpt": "La Coupe du monde 2026 (CM26), qui aura lieu du 11 juin au 19 juillet prochains, s’annonce comme le plus grand événement de soccer jamais organisé. La compétition se déroulera simultanément dans trois pays, les États-Unis, le Canada et le Mexique, et comptera un nombre record d’équipes participantes (48)",
       "image": "",
-      "_pageAuthor": "Gabriel Lapointe",
       "leadImageReady": false,
       "stockImage": "https://live.staticflickr.com/1218/5106750628_9bf714abe9_b.jpg",
       "imageCredit": "Photo : Benson Kua / CC BY-SA · Openverse",
@@ -1138,11 +1174,10 @@
       "lang": "fr",
       "title": "Soutien technique à l’UdeM : entre attentes et frustrations",
       "link": "https://quartierlibre.ca/soutien-technique-a-ludem/",
-      "author": "Solène Gerber",
+      "author": "La rédaction",
       "date": "2026-05-11T15:57:40.000Z",
       "excerpt": "Lors d’une assemblée universitaire tenue le 16 mars dernier, le professeur agrégé à l’École de psychoéducation de la Faculté des arts et des sciences de l’UdeM Jean-Sébastien Fallu a soulevé des préoccupations concernant le soutien informatique à l’Université. Il a partagé",
       "image": "",
-      "_pageAuthor": "Solène Gerber",
       "leadExcerpt": "Lors d’une assemblée universitaire tenue le 16 mars dernier, le professeur agrégé à l’École de psychoéducation de la Faculté des arts et des sciences de l’UdeM Jean-Sébastien Fallu a soulevé des préoccupations concernant le soutien informatique à l’Université. Il a partagé plusieurs difficultés que lui et ses collègues ont vécues, notamment liées aux délais, aux procédures et à la complexité de certains outils numériques.",
       "leadImageReady": false,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Universit%C3%A9_de_Montr%C3%A9al%2C_Pavillon_Roger-Gaudry.JPG",
@@ -1203,17 +1238,16 @@
       "lang": "fr",
       "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
       "link": "https://quartierlibre.ca/festival-jamais-lu-2026/",
-      "author": "Bérénice Lemarié",
+      "author": "La rédaction",
       "date": "2026-05-08T19:30:03.000Z",
       "excerpt": "Du 1 er au 9 mai, le festival Jamais Lu s’installe au théâtre Aux Écuries de Montréal, avec pour thème « Réparer nos Transmissions ». Le nouveau directeur artistique et cogénéral du festival, Éric Noël, partage son envie de mettre au cœur de cette édition la place des auteur·rice·s dans la production artistique, aux côtés du directeur administratif et cogénéral de Jamais Lu, Mikaël Vitali.",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-1-1024x677.jpeg",
-      "_pageAuthor": "Bérénice Lemarié",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/festival-jamais-lu-2026/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "image-1.jpeg",
-      "leadImageReady": true
+      "leadImageReady": false
     },
     {
       "source": "Zone Campus",
@@ -1232,7 +1266,8 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "1.jpg",
-      "leadImageReady": true
+      "leadImageReady": false,
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -1331,13 +1366,20 @@
       "date": "2026-05-04T13:12:21.000Z",
       "excerpt": "On écoute de la musique tous les jours, souvent sans vraiment se demander la raison pour laquelle on tombe sur tel ou tel son. Entre les playlists, TikTok et les recommandations automatiques, une question se pose : est-ce que nos goûts musicaux sont encore vraiment les nôtres",
       "image": "https://zonecampus.ca/wp-content/uploads/2026/04/IMG_3417.jpeg",
-      "leadImageReady": true,
+      "leadImageReady": false,
       "sourceImageCredit": "Crédit photo : Zone Campus",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://zonecampus.ca/le-beat-critique-est-ce-que-lalgorithme-controle-vraiment-nos-gouts-musicaux/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "img_3417.jpeg"
+      "sourceImageCreditImageKey": "img_3417.jpeg",
+      "_retainedFromCache": true,
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/2/20/TikTok_app.jpg",
+      "imageCredit": "Photo : Solen Feyissa / CC BY-SA 2.0 · Wikimedia Commons",
+      "imageCreator": "Solen Feyissa",
+      "imageLicense": "CC BY-SA 2.0",
+      "imageProvider": "wikimedia",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:TikTok_app.jpg"
     },
     {
       "source": "The Concordian",
@@ -1443,7 +1485,14 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "17c4541a-839d-48b8-b5aa-2cc81e91e3c8.jpeg",
-      "leadImageReady": true
+      "leadImageReady": false,
+      "_retainedFromCache": true,
+      "stockImage": "https://live.staticflickr.com/65535/53597191835_aefb051f37_b.jpg",
+      "imageCredit": "Photo : chester902 / Domaine public · Openverse",
+      "imageCreator": "chester902",
+      "imageLicense": "pdm",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/74039487@N02/53597191835"
     },
     {
       "source": "Montréal Campus",
@@ -1566,7 +1615,8 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "img_3939.jpg",
-      "leadImageReady": true
+      "leadImageReady": false,
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -1585,7 +1635,8 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "img_9786.jpeg",
-      "leadImageReady": true
+      "leadImageReady": false,
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -1635,13 +1686,14 @@
       "date": "2026-04-24T20:00:50.000Z",
       "excerpt": "Le grand retour : Orelsan revient sur le devant de la scène après le succès majeur de Civilisation, confirmant son statut de figure incontournable du rap français contemporain. Après s’être illustré dans le cinéma et enchaîné plusieurs projets marquants, l’artiste crée la surprise en dévoilant du jour au lendemain un nouvel album totalement inattendu.",
       "image": "https://zonecampus.ca/wp-content/uploads/2026/04/IMG_3397-1-1024x575.jpeg",
-      "leadImageReady": true,
+      "leadImageReady": false,
       "sourceImageCredit": "Crédit photo : Zone Campus",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://zonecampus.ca/le-beat-critique-la-fuite-en-avant-le-grand-retour-d-orelsan/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "img_3397-1.jpeg"
+      "sourceImageCreditImageKey": "img_3397-1.jpeg",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -1660,7 +1712,8 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "img_3405.jpeg",
-      "leadImageReady": true
+      "leadImageReady": false,
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -1680,7 +1733,8 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "dany_portrait_vignette_zc-copie-1068x641-3-2.jpg",
-      "leadImageReady": true
+      "leadImageReady": false,
+      "_retainedFromCache": true
     },
     {
       "source": "The Concordian",
@@ -1727,7 +1781,8 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "604823445_853711280773514_928679255052921821_n.jpg",
-      "leadImageReady": true
+      "leadImageReady": false,
+      "_retainedFromCache": true
     },
     {
       "source": "The Concordian",
@@ -1774,7 +1829,8 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "672687004_1331193022389249_583407324812045529_n.jpg",
-      "leadImageReady": true
+      "leadImageReady": false,
+      "_retainedFromCache": true
     },
     {
       "source": "The Concordian",
@@ -1876,13 +1932,7 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "img_0291-2_690_863_90.jpg",
-      "leadImageReady": false,
-      "stockImage": "https://live.staticflickr.com/6223/6218984449_a457d6bf46_b.jpg",
-      "imageCredit": "Photo : minicooper93402 / CC BY · Openverse",
-      "imageCreator": "minicooper93402",
-      "imageLicense": "by",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/21703936@N08/6218984449"
+      "leadImageReady": false
     },
     {
       "source": "The Link",
@@ -2020,13 +2070,7 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "screenshot_2026-04-11_17.01.52.png",
-      "leadImageReady": false,
-      "stockImage": "https://live.staticflickr.com/65/187427874_ed13130a85_b.jpg",
-      "imageCredit": "Photo : dave_mcmt / CC BY · Openverse",
-      "imageCreator": "dave_mcmt",
-      "imageLicense": "by",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/30512529@N00/187427874"
+      "leadImageReady": false
     },
     {
       "source": "The Link",
@@ -3023,6 +3067,28 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
+      "title": "L’épidémie de la nonchalance",
+      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
+      "author": "Elie Nguyen",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Pour en finir avec l’insouciance de façade et embrasser pleinement l’authenticité.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Creation-sans-titre-2-768x1024.png",
+      "featured": true,
+      "_pageAuthor": "Elie Nguyen",
+      "sourceImageCredit": "Crédit photo : Le Délit",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
+      "sourceImageCreditFrom": "media",
+      "sourceImageCreditCited": false,
+      "sourceImageCreditImageKey": "creation-sans-titre-2.png",
+      "leadImageReady": false,
+      "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance."
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
       "title": "Le retard et les bienfaits du temps long",
       "link": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
       "author": "Dalia Djazouli",
@@ -3130,28 +3196,6 @@
       "sourceImageCreditImageKey": "coinqueer-1.jpeg",
       "leadImageReady": false,
       "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie."
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "L’épidémie de la nonchalance",
-      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
-      "author": "Elie Nguyen",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Pour en finir avec l’insouciance de façade et embrasser pleinement l’authenticité.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Creation-sans-titre-2-768x1024.png",
-      "featured": true,
-      "_pageAuthor": "Elie Nguyen",
-      "sourceImageCredit": "Crédit photo : Le Délit",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
-      "sourceImageCreditFrom": "media",
-      "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "creation-sans-titre-2.png",
-      "leadImageReady": false,
-      "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance."
     },
     {
       "source": "The McGill Daily",
