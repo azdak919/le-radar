@@ -1346,6 +1346,9 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   gap: 12px;
   flex-wrap: wrap;
   min-width: 0;
+  max-width: 100%;
+  /* Titres longs (inuktitut, etc.) : le menu fixed ne doit pas être clipé ici */
+  overflow: visible;
 }
 .wire-title {
   font-family: var(--serif);
@@ -1372,6 +1375,9 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
 .translate-control {
   position: relative;
   flex-shrink: 0;
+  /* Le menu est en position:fixed (JS) : ne pas le clipper ici. */
+  overflow: visible;
+  z-index: 50;
 }
 .translate-toggle {
   font-family: var(--sans);
@@ -1388,6 +1394,7 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   font-weight: 600;
   letter-spacing: 0.01em;
   cursor: pointer;
+  max-width: min(100%, 42vw);
   transition: border-color 140ms ease, color 140ms ease, background 140ms ease;
 }
 .translate-toggle:hover,
@@ -1398,10 +1405,15 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
 }
 .translate-toggle__icon {
   display: inline-flex;
+  flex-shrink: 0;
   opacity: 0.85;
 }
 .translate-toggle__label {
   line-height: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .translate-toggle__chev {
   flex-shrink: 0;
@@ -1411,15 +1423,22 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
 .translate-toggle[aria-expanded="true"] .translate-toggle__chev {
   transform: rotate(180deg);
 }
+/*
+ * Menu en position:fixed (coordonnées posées par translate.js) pour rester
+ * dans le viewport malgré overflow-x:clip sur html/body et les titres longs
+ * (inuktitut, arabe, etc.) qui poussent le bouton vers la droite.
+ */
 .translate-menu {
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 0;
-  z-index: 40;
+  position: fixed;
+  z-index: 80;
+  box-sizing: border-box;
   min-width: 240px;
+  width: max-content;
   max-width: min(320px, calc(100vw - 24px));
   max-height: min(75vh, 560px);
+  overflow-x: hidden;
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 6px;
   border: 1px solid var(--rule);
   border-radius: 12px;
@@ -1428,6 +1447,9 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   display: flex;
   flex-direction: column;
   gap: 2px;
+  /* top/left appliqués par JS ; repli CSS si JS n’a pas encore tourné */
+  top: 0;
+  left: 0;
 }
 .translate-menu[hidden] {
   display: none !important;
@@ -1483,11 +1505,16 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   font-size: 13px;
   font-weight: 700;
   line-height: 1.2;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 .translate-menu__hint {
   font-size: 11px;
   color: var(--muted);
   font-weight: 500;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 [data-theme="dark"] .translate-menu {
   box-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.55);
