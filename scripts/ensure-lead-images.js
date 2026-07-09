@@ -150,13 +150,25 @@ function applyPhotoFields(item, stock) {
   clearLegacyFallback(item);
 }
 
+function isSubstackItem(item = {}) {
+  return /substack\.com/i.test(String(item.link || ''));
+}
+
 /**
  * Photo libre thématique (Openverse / Commons) si le score est solide.
  * Sinon banque campus curatée — uniquement s'il n'y a PAS de photo source
  * affichable (sinon on écrase une photo de l'article, même imparfaite).
+ *
+ * Substack : la couverture og:image est la source de vérité ; on n'injecte
+ * ni Openverse ni campus (c'est ce qui donnait des photos « toutes fausses »
+ * pour The Concordian).
  */
 async function applyStockPhoto(item, sourceMap = new Map()) {
   if (await photoIsLeadReady(item)) return false;
+
+  const hints = imageHintsFor(item, sourceMap);
+  const allowFreeStock = hints.disableFreeStock !== true && !isSubstackItem(item);
+  const allowCampus = hints.disableCampusBank !== true && !isSubstackItem(item);
 
   // Photo source déjà correcte pour vedette/feature : ne pas injecter de stock.
   if (item.image && hasSourcePhoto(item, sourceMap)) {
@@ -165,7 +177,7 @@ async function applyStockPhoto(item, sourceMap = new Map()) {
       if (dims && meetsFeatureDisplaySize(dims.width, dims.height)) return false;
       // Vignette / panorama source : garder la photo de l'article, pas le campus.
       if (dims && dims.width >= 320 && dims.height >= 200) {
-        // Banque libre OK pour la une seulement si vraiment meilleure — pas campus.
+        if (!allowFreeStock) return false;
         const stock = await findStockPhoto(item);
         if (stock?.stockImage) {
           if (doUpdate) {
@@ -179,18 +191,21 @@ async function applyStockPhoto(item, sourceMap = new Map()) {
     }
   }
 
-  const stock = await findStockPhoto(item);
-  if (stock?.stockImage) {
-    if (doUpdate) {
-      applyPhotoFields(item, stock);
-      const sourceReady = await markSourceLeadQuality(item);
-      if (!sourceReady) item.leadImageReady = false;
+  if (allowFreeStock) {
+    const stock = await findStockPhoto(item);
+    if (stock?.stockImage) {
+      if (doUpdate) {
+        applyPhotoFields(item, stock);
+        const sourceReady = await markSourceLeadQuality(item);
+        if (!sourceReady) item.leadImageReady = false;
+      }
+      return true;
     }
-    return true;
   }
 
-  // Campus : seulement si aucune photo source utilisable.
+  // Campus : seulement si aucune photo source utilisable et source non-Substack.
   if (item.image && hasSourcePhoto(item, sourceMap)) return false;
+  if (!allowCampus) return false;
 
   const campus = pickCampusPhoto(item);
   if (!campus?.stockImage) return false;

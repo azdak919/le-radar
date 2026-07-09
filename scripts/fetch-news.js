@@ -37,6 +37,7 @@ const {
   needsImageEnrichment,
   imageRejectPatternsFromHints,
   imageOptionsFromHints,
+  unwrapCdnImageUrl,
 } = require('./article-image-lib');
 const { isHtmlListSource, parseHtmlListPage } = require('./html-list-fetcher');
 const { isFirebaseSource, fetchFirebaseFeed } = require('./firebase-list-fetcher');
@@ -310,7 +311,11 @@ function firstImage(block) {
   m = block.match(/<img[^>]*src=["']([^"']+)["']/i);
   if (m) candidates.push(decodeEntities(m[1]));
   for (const raw of candidates) {
-    if (raw && isCandidateImageUrl(raw)) return raw;
+    if (!raw) continue;
+    const unwrapped = unwrapCdnImageUrl(raw) || raw;
+    // Préférer l'original S3 Substack au CDN redimensionné.
+    if (unwrapped && isCandidateImageUrl(unwrapped) && !isWeakImageUrl(unwrapped)) return unwrapped;
+    if (isCandidateImageUrl(raw) && !isWeakImageUrl(raw)) return raw;
   }
   return '';
 }
@@ -456,6 +461,18 @@ function mergeSourceItems(rssItems, featuredItems, maxItems = MAX_PER_SOURCE) {
   return merged.slice(0, maxItems);
 }
 
+/** Billets newsletter / promo (ex. Substack The Concordian) à ignorer. */
+function shouldDropFeedItem(item = {}, src = {}) {
+  const patterns = getBotHints(src, 'fetch').dropTitlePatterns;
+  if (!Array.isArray(patterns) || !patterns.length) return false;
+  const title = String(item.title || '').toLowerCase();
+  return patterns.some((p) => p && title.includes(String(p).toLowerCase()));
+}
+
+function filterFeedItems(items = [], src = {}) {
+  return items.filter((it) => !shouldDropFeedItem(it, src));
+}
+
 /** RSS principal, ou fusion de plusieurs flux (ex. catégories WordPress disjointes). */
 async function fetchRssItems(src = {}) {
   const feedUrls = [src.url, src.urlFallback, ...(src.feedAlternates || [])].filter(Boolean);
@@ -474,7 +491,11 @@ async function fetchRssItems(src = {}) {
       xml = '';
     }
     if (!xml) return { items: [], feedUsed: '', maxItems };
-    return { items: parseFeed(xml).slice(0, maxItems), feedUsed, maxItems };
+    return {
+      items: filterFeedItems(parseFeed(xml), src).slice(0, maxItems),
+      feedUsed,
+      maxItems,
+    };
   }
 
   const merged = [];
@@ -484,7 +505,7 @@ async function fetchRssItems(src = {}) {
     const xml = await fetchText(feedUrl);
     if (!xml || !isFeedXml(xml)) continue;
     feedsOk += 1;
-    for (const item of parseFeed(xml)) {
+    for (const item of filterFeedItems(parseFeed(xml), src)) {
       if (!item.link || seen.has(item.link)) continue;
       seen.add(item.link);
       merged.push(item);
