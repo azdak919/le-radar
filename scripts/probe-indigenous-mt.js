@@ -92,11 +92,18 @@ function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
+/** Syllabaires autochtones canadiens (U+1400–167F). */
+function hasCanadianSyllabics(text = '') {
+  return /[\u1400-\u167F]/.test(String(text));
+}
+
 /**
  * gtx : succès si JSON valide, texte non vide, différent de la source,
  * et pas une simple copie (modèles qui « supportent » un code sans traduire).
+ * @param {string} code
+ * @param {{ requireScript?: 'latin'|'syllabics' }} [opts]
  */
-async function probeGtx(code) {
+async function probeGtx(code, opts = {}) {
   const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${encodeURIComponent(code)}&dt=t&q=${encodeURIComponent(SAMPLE)}`;
   const res = await fetchText(url, { timeoutMs: 12000 });
   if (res.status !== 200 || !res.body || res.body.startsWith('<')) {
@@ -119,6 +126,13 @@ async function probeGtx(code) {
     const ratio = outWords.length ? overlap / outWords.length : 1;
     if (ratio > 0.85 && !/[^\u0000-\u007f]/.test(translated)) {
       return { ok: false, reason: 'too_similar', translated: translated.slice(0, 80) };
+    }
+    // Inuktut latin vs syllabiques : gtx distingue iu vs iu-Latn (casse)
+    if (opts.requireScript === 'latin' && hasCanadianSyllabics(translated)) {
+      return { ok: false, reason: 'wrong_script_syllabics', translated: translated.slice(0, 80) };
+    }
+    if (opts.requireScript === 'syllabics' && !hasCanadianSyllabics(translated)) {
+      return { ok: false, reason: 'wrong_script_latin', translated: translated.slice(0, 80) };
     }
     return { ok: true, reason: 'ok', translated: translated.slice(0, 120), code };
   } catch {
@@ -197,11 +211,14 @@ async function main() {
     const gtxCandidates = lang.probeCodes?.gtx || [];
     probe.libretranslate = gtxCandidates.some((c) => lt.codes.has(c));
 
-    // gtx — premier code qui traduit vraiment
+    // gtx — premier code qui traduit vraiment (et dans le bon alphabet si requis)
     let gtxHit = null;
+    const scriptOpt = lang.requireScript
+      ? { requireScript: lang.requireScript }
+      : {};
     for (const code of gtxCandidates) {
       await sleep(350);
-      const result = await probeGtx(code);
+      const result = await probeGtx(code, scriptOpt);
       console.log(`  ${lang.id} gtx/${code}: ${result.ok ? 'OK' : result.reason}`);
       if (result.ok) {
         gtxHit = { code, ...result };
@@ -237,8 +254,9 @@ async function main() {
         lang.enabled = true;
         lang.unavailable = false;
         lang.engine = lang.engine || 'gtx';
-        lang.goog = lang.goog || (lang.id === 'iu' ? 'iu' : 'iu');
-        console.log(`  · ${lang.id} kept enabled (baseline Inuktut)`);
+        // Baseline si le probe réseau échoue : codes gtx exacts (casse importante)
+        lang.goog = lang.goog || (lang.id === 'iu' ? 'iu' : 'iu-Latn');
+        console.log(`  · ${lang.id} kept enabled (baseline Inuktut → ${lang.goog})`);
       } else {
         lang.enabled = false;
         lang.unavailable = true;
