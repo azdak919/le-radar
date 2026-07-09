@@ -2662,6 +2662,8 @@ function updateFiltersCompactBar() {
   FILTERS_COMPACT.style.setProperty('--c', color);
   if (dot) dot.style.setProperty('--c', color);
   if (text) {
+    text.classList.add('notranslate');
+    text.setAttribute('translate', 'no');
     text.textContent = instLabel
       ? `${newsSourceFilter} · ${instLabel}`
       : newsSourceFilter;
