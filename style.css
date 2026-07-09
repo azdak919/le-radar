@@ -1239,7 +1239,19 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   margin: 16px 0 6px;
   --filters-row-h: 48px;
   --filters-cols: 5;
-  --filters-collapsed-h: calc(var(--filters-row-h) * 3 + 12px);
+  --filters-collapsed-rows: 3;
+  /* hauteur = N lignes + (N−1) gaps de 6px */
+  --filters-collapsed-h: calc(
+    var(--filters-row-h) * var(--filters-collapsed-rows)
+    + 6px * (var(--filters-collapsed-rows) - 1)
+  );
+}
+
+/* Tablette + mobile : seulement 2 rangées de sources (le reste via « Plus de sources »). */
+@media (max-width: 1099px) {
+  .filters-panel {
+    --filters-collapsed-rows: 2;
+  }
 }
 
 .filters-panel:not(.is-expanded):not(.is-compact) .filters {
