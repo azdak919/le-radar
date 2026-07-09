@@ -3426,6 +3426,39 @@ function getCandidateImage(src = '') {
   return url.href;
 }
 
+/**
+ * Redimensionne les énormes originaux Wikimedia (8K…) pour l'affichage —
+ * surtout les vignettes En bref, qui chargeaient l'original et tombaient
+ * dans le timeout 2,5 s → plus de photo.
+ */
+function displaySizedImageUrl(raw = '', role = 'lead') {
+  const src = getCandidateImage(raw) || String(raw || '').trim();
+  if (!src || isFallbackImageUrl(src)) return src;
+  try {
+    const u = new URL(src, location.href);
+    const host = u.hostname.toLowerCase();
+    const isThumb = role === 'feature' || role === 'compact';
+    const maxW = role === 'lead' ? 1400 : (isThumb ? 480 : 960);
+
+    // Déjà un dérivé dimensionné (thumb Wikimedia ou ?width=).
+    if (/\/commons\/thumb\//i.test(u.pathname) || u.searchParams.has('width')) {
+      return src;
+    }
+
+    if (host === 'upload.wikimedia.org' || host.endsWith('.wikimedia.org')) {
+      const fileMatch = u.pathname.match(/\/([^/]+\.(?:jpe?g|png|webp|gif))$/i);
+      if (fileMatch) {
+        const file = decodeURIComponent(fileMatch[1]);
+        // Special:FilePath redirige vers un JPEG redimensionné (fiable avec accents).
+        return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(file)}?width=${maxW}`;
+      }
+    }
+  } catch {
+    /* keep original */
+  }
+  return src;
+}
+
 function hasUsablePhoto(item) {
   return !!getCandidateImage(item?.image);
 }
@@ -3744,7 +3777,7 @@ function dropArticleImage(article, media, role, item) {
         article.classList.add('article--text');
         updateNewsLayout();
       };
-      img.src = alt.src;
+      img.src = displaySizedImageUrl(alt.src, role);
       return;
     }
   }
@@ -3760,63 +3793,96 @@ function attachArticleImage(article, item, role) {
 
   const failToText = () => dropArticleImage(article, media, role, item);
   const allowFallback = role === 'lead';
+  const isThumb = role === 'feature' || role === 'compact';
 
-  const loadImage = (src, kind, allowRetry = true) => {
+  const loadImage = (src, kind, allowRetry = true, { forceRaw = false } = {}) => {
     if (!src || (kind === 'fallback' && !allowFallback)) {
       failToText();
       return;
     }
 
+    const displaySrc = forceRaw ? src : displaySizedImageUrl(src, role);
     const img = new Image();
     img.decoding = 'async';
     /* Pas de loading="lazy" ici : une Image() hors du DOM en lazy ne se
-       charge jamais — le délai de 2,5 s la faisait basculer en mode texte. */
+       charge jamais — le délai trop court la faisait basculer en mode texte. */
     if (role === 'lead') img.fetchPriority = 'high';
     img.alt = '';
+    let settled = false;
+
+    const settleShow = () => {
+      if (settled) return;
+      settled = true;
+      showArticleImage(article, media, img, kind, item);
+    };
 
     img.onload = () => {
       if (kind === 'photo' && !isUsableArticleImage(img, role)) {
         const w = img.naturalWidth || 0;
         const h = img.naturalHeight || 0;
+        // Vedette : on accepte une photo imparfaite plutôt que le vide.
         if (role === 'lead' && w >= 200 && h >= 150) {
-          showArticleImage(article, media, img, kind, item);
+          settleShow();
+          return;
+        }
+        // En bref / vedettes : object-fit recadre — garder toute photo réelle.
+        if (isThumb && w >= 120 && h >= 100) {
+          settleShow();
           return;
         }
         if (allowRetry) {
           const alt = resolveDisplayImage(item, { preferPhoto: false, role });
-          if (alt.src && alt.kind !== 'photo') loadImage(alt.src, alt.kind, false);
-          else failToText();
+          if (alt.src && alt.kind !== 'photo') {
+            settled = true;
+            loadImage(alt.src, alt.kind, false);
+          } else {
+            failToText();
+          }
         } else {
           failToText();
         }
         return;
       }
-      showArticleImage(article, media, img, kind, item);
+      // Stock / campus / photo OK
+      settleShow();
     };
 
     img.onerror = () => {
+      if (settled) return;
+      // Si l'URL redimensionnée échoue, retenter l'original une fois.
+      if (!forceRaw && displaySrc !== src) {
+        settled = true;
+        loadImage(src, kind, allowRetry, { forceRaw: true });
+        return;
+      }
       if (allowRetry && (kind === 'photo' || kind === 'stock')) {
         const alt = resolveDisplayImage(item, { preferPhoto: kind !== 'photo', role });
-        if (alt.src && alt.kind !== kind) loadImage(alt.src, alt.kind, false);
-        else failToText();
+        if (alt.src && alt.kind !== kind && alt.src !== src) {
+          settled = true;
+          loadImage(alt.src, alt.kind, false);
+        } else {
+          failToText();
+        }
       } else {
         failToText();
       }
     };
 
-    img.src = src;
+    img.src = displaySrc;
 
+    // Timeout : tenter une alternative, mais ne PAS jeter une image stock
+    // encore en cours de chargement (Wikimedia 8K / réseau lent).
+    const timeoutMs = isThumb ? 10000 : 6000;
     window.setTimeout(() => {
-      if (!article.classList.contains('has-image') && media.isConnected) {
-        if (allowRetry) {
-          const alt = resolveDisplayImage(item, { preferPhoto: kind === 'photo', role });
-          if (alt.src && alt.src !== src) loadImage(alt.src, alt.kind, false);
-          else failToText();
-        } else {
-          failToText();
-        }
+      if (settled || article.classList.contains('has-image') || !media.isConnected) return;
+      if (!allowRetry) return;
+      const alt = resolveDisplayImage(item, { preferPhoto: kind === 'photo', role });
+      if (alt.src && alt.src !== src && alt.kind !== kind) {
+        settled = true;
+        loadImage(alt.src, alt.kind, false);
       }
-    }, 2500);
+      // Sinon on laisse onload/onerror finir — mieux qu'un vignette vide.
+    }, timeoutMs);
   };
 
   const primary = resolveDisplayImage(item, { preferPhoto: true, role });
@@ -3827,7 +3893,7 @@ const LEAD_IMAGE_MIN = { width: 720, height: 405, pixels: 320000 };
 const FEATURE_IMAGE_MIN = { width: 640, height: 360, pixels: 240000 };
 /* Vignettes (vedettes + En bref) : affichées en ~100 px, on accepte des photos
    plus petites et des cadrages portrait — object-fit recadre de toute façon. */
-const THUMB_IMAGE_MIN = { width: 320, height: 220, pixels: 90000 };
+const THUMB_IMAGE_MIN = { width: 200, height: 150, pixels: 40000 };
 
 function isUsableArticleImage(img, role) {
   const width = img.naturalWidth || 0;
@@ -3835,9 +3901,8 @@ function isUsableArticleImage(img, role) {
   const ratio = width / Math.max(height, 1);
   const isThumb = role === 'feature' || role === 'compact';
   const min = role === 'lead' ? LEAD_IMAGE_MIN : (isThumb ? THUMB_IMAGE_MIN : FEATURE_IMAGE_MIN);
-  // Vignettes : un peu plus tolérant sur les panoramas d'article (object-fit
-  // recadre). Évite de jeter une vraie photo pour un pavillon Wikimedia.
-  const [ratioMin, ratioMax] = isThumb ? [0.55, 3.4] : [0.95, 2.6];
+  // Vignettes : très tolérant (object-fit). Stock/campus passent sans ce filtre.
+  const [ratioMin, ratioMax] = isThumb ? [0.4, 4.0] : [0.95, 2.6];
   return (
     width >= min.width
     && height >= min.height

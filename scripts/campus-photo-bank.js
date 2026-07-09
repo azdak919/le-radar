@@ -39,7 +39,7 @@ const BANK = {
       creator: 'Thomas1313',
       license: 'CC BY-SA 4.0',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:McGill_University_Montr%C3%A9al.jpeg',
-      tags: 'exterior arts building campus montreal green',
+      tags: 'exterior arts building campus montreal green lawn',
     },
     {
       url: 'https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg',
@@ -48,6 +48,54 @@ const BANK = {
       license: 'CC BY-SA 4.0',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:Roddick_Gates_closed,_McGill_University,_July_17,_2024.jpg',
       tags: 'exterior summer july gates campus montreal',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG',
+      title: 'McGill University downtown campus 31',
+      creator: 'Jeangagnon',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:McGill_University_downtown_campus_31.JPG',
+      tags: 'exterior downtown campus montreal buildings green',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/b/b9/View_from_McGill_University_downtown_campus_01.JPG',
+      title: 'View from McGill University downtown campus 01',
+      creator: 'Jeangagnon',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:View_from_McGill_University_downtown_campus_01.JPG',
+      tags: 'exterior downtown campus montreal skyline view',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg',
+      title: 'Wilson Hall, McGill University',
+      creator: 'Jeangagnon',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Wilson_Hall,_McGill_University.jpg',
+      tags: 'exterior wilson hall building campus montreal',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg',
+      title: 'McGill University, Montreal, Quebec 2009',
+      creator: 'Taxiarchos228',
+      license: 'CC BY-SA 4.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:4_McGill_University,_Montreal,Quebec_2009.jpg',
+      tags: 'exterior campus montreal autumn green paths',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/a/a2/Arts_Building%2C_McGill_University.jpg',
+      title: 'Arts Building, McGill University',
+      creator: 'Abdallahh',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Arts_Building,_McGill_University.jpg',
+      tags: 'exterior arts building columns campus montreal',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg',
+      title: 'McGill University, Winter',
+      creator: 'Abdallahh',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:McGill_University,_Winter.jpg',
+      tags: 'exterior winter snow campus montreal',
     },
   ],
   'universite mcgill': [
@@ -222,10 +270,23 @@ function bankEntriesFor(institution = '') {
 const WINTER_RE = /\b(snow|neige|winter|hiver|glacial|blizzard|ice rink|patinoire)\b/i;
 const SUMMER_RE = /\b(summer|ete|été|july|juillet|june|juin|august|aout|août|terrasse|warm|chaud)\b/i;
 
+function entryToStockFields(pick) {
+  return {
+    stockImage: pick.url,
+    imageTitle: pick.title || '',
+    imageCredit: `Photo : ${pick.creator || 'Auteur·e inconnu·e'} / ${pick.license || 'CC'} · Wikimedia Commons`,
+    imageCreator: pick.creator || '',
+    imageLicense: pick.license || '',
+    imageProvider: 'campus-bank',
+    imageSourceUrl: pick.sourceUrl || pick.url,
+    _campusBank: true,
+  };
+}
+
 /**
  * Choisit une photo campus pour l'article.
  * @param {{ institution?: string, link?: string, title?: string, excerpt?: string }} item
- * @param {{ preferSeason?: 'summer'|'winter'|'any' }} [opts]
+ * @param {{ preferSeason?: 'summer'|'winter'|'any', avoidUrls?: string[]|Set<string> }} [opts]
  */
 function pickCampusPhoto(item = {}, opts = {}) {
   const entries = bankEntriesFor(item.institution || '');
@@ -238,32 +299,95 @@ function pickCampusPhoto(item = {}, opts = {}) {
     || (SUMMER_RE.test(hayArticle) ? 'summer'
       : (WINTER_RE.test(hayArticle) ? 'winter' : 'any'));
 
+  // Filtre saisonnier souple : on ne réduit le pool que s'il reste ≥2 options,
+  // sinon toutes les vues campus restent disponibles (évite 3 articles = même portail).
   if (prefer === 'summer') {
     const noWinter = pool.filter((e) => !WINTER_RE.test(`${e.title} ${e.tags || ''}`));
-    if (noWinter.length) pool = noWinter;
-    const summerish = pool.filter((e) => SUMMER_RE.test(`${e.title} ${e.tags || ''}`));
-    if (summerish.length) pool = summerish;
+    if (noWinter.length >= 2) pool = noWinter;
   } else if (prefer === 'winter') {
     const winterish = pool.filter((e) => WINTER_RE.test(`${e.title} ${e.tags || ''}`));
-    if (winterish.length) pool = winterish;
+    if (winterish.length >= 1) pool = winterish;
   }
 
-  // Variété stable par article (pas toujours la même photo pour un même campus).
+  const avoid = new Set(
+    [...(opts.avoidUrls || [])]
+      .map((u) => String(u || '').trim())
+      .filter(Boolean),
+  );
+  const unused = pool.filter((e) => !avoid.has(e.url));
+  if (unused.length) pool = unused;
+
+  // Variété stable par article (hash) sur le pool restant.
   const seed = String(item.link || item.title || item.institution || 'x');
   const hash = crypto.createHash('sha1').update(seed).digest();
   const idx = hash[0] % pool.length;
   const pick = pool[idx];
 
-  return {
-    stockImage: pick.url,
-    imageTitle: pick.title || '',
-    imageCredit: `Photo : ${pick.creator || 'Auteur·e inconnu·e'} / ${pick.license || 'CC'} · Wikimedia Commons`,
-    imageCreator: pick.creator || '',
-    imageLicense: pick.license || '',
-    imageProvider: 'campus-bank',
-    imageSourceUrl: pick.sourceUrl || pick.url,
-    _campusBank: true,
-  };
+  return entryToStockFields(pick);
+}
+
+/**
+ * Réattribue les photos campus-bank d'un lot pour maximiser la variété
+ * (évite la même photo Roddick Gates sur À la une + En bref McGill).
+ */
+function diversifyCampusBankItems(items = []) {
+  if (!Array.isArray(items) || items.length < 2) return 0;
+  let changed = 0;
+
+  // Par établissement : articles qui utilisent déjà (ou n'ont que) la banque campus.
+  const byInst = new Map();
+  for (const item of items) {
+    if (!item || item.imageProvider !== 'campus-bank' || !item.stockImage) continue;
+    // Ne pas toucher s'il y a une vraie photo source.
+    if (item.image && String(item.image).trim()) continue;
+    const key = resolveBankKey(item.institution || '') || normalizeKey(item.institution || '');
+    if (!key) continue;
+    if (!byInst.has(key)) byInst.set(key, []);
+    byInst.get(key).push(item);
+  }
+
+  for (const [, group] of byInst) {
+    if (group.length < 2) continue;
+    const entries = bankEntriesFor(group[0].institution || '');
+    if (entries.length < 2) continue;
+
+    // Trier par date (récent d'abord) pour que la une prenne la 1re variante.
+    group.sort((a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0));
+
+    const used = new Set();
+    for (let i = 0; i < group.length; i += 1) {
+      const item = group[i];
+      const hay = `${item.title || ''} ${item.excerpt || ''}`;
+      let pool = entries.slice();
+      if (SUMMER_RE.test(hay)) {
+        const noWinter = pool.filter((e) => !WINTER_RE.test(`${e.title} ${e.tags || ''}`));
+        if (noWinter.length >= 2) pool = noWinter;
+      } else if (WINTER_RE.test(hay)) {
+        const winterish = pool.filter((e) => WINTER_RE.test(`${e.title} ${e.tags || ''}`));
+        if (winterish.length) pool = winterish;
+      }
+
+      // Préférer une URL pas encore utilisée dans ce lot.
+      let candidates = pool.filter((e) => !used.has(e.url));
+      if (!candidates.length) candidates = pool.slice();
+
+      // Rotation déterministe : décalage par rang dans le groupe.
+      const seed = String(item.link || item.title || i);
+      const hash = crypto.createHash('sha1').update(`${seed}|${i}`).digest();
+      const pick = candidates[hash[0] % candidates.length];
+      used.add(pick.url);
+
+      if (item.stockImage !== pick.url) {
+        Object.assign(item, entryToStockFields(pick));
+        item.leadImageReady = false;
+        changed += 1;
+      } else {
+        used.add(item.stockImage);
+      }
+    }
+  }
+
+  return changed;
 }
 
 function hasCampusBank(institution = '') {
@@ -277,5 +401,6 @@ module.exports = {
   resolveBankKey,
   bankEntriesFor,
   pickCampusPhoto,
+  diversifyCampusBankItems,
   hasCampusBank,
 };
