@@ -1,27 +1,29 @@
 /**
- * LE RADAR — traduction de page (optionnelle).
+ * LE RADAR — traduction de page.
  *
- * Par défaut : ORIGINAL bilingue (FR + EN tels quels). Aucune détection
- * automatique de la langue du navigateur — l'utilisateur doit choisir
- * explicitement Français, English ou une autre langue.
+ * Règles :
+ *  1. Préférence utilisateur (localStorage) si elle existe — y compris « Original ».
+ *  2. Sinon, langue du navigateur :
+ *     - fr* ou en*  → Original bilingue (pas de traduction auto)
+ *     - toute autre → traduction auto vers cette langue
+ *  3. L'utilisateur peut toujours forcer Original / FR / EN / etc. dans le menu.
  *
  * Moteur : Google Website Translator (widget masqué) + UI maison.
- * Préférence : localStorage `radar-translate-mode`
  */
 (function () {
   'use strict';
 
   const STORAGE_KEY = 'radar-translate-mode';
-  /** Valeur par défaut : ne jamais déduire depuis navigator.language. */
   const DEFAULT_MODE = 'original';
 
+  /** Modes avec entrée de menu. Autres codes ISO → traduction Google dynamique. */
   const MODES = {
     original: {
       id: 'original',
       label: 'Original',
       short: 'Original',
-      title: 'Par défaut — ne pas traduire, garder le fil bilingue (FR + EN)',
-      hint: 'Bilingue FR + EN · défaut',
+      title: 'Ne pas traduire — fil bilingue FR + EN (défaut pour navigateurs français ou anglais)',
+      hint: 'Bilingue FR + EN',
     },
     fr: {
       id: 'fr',
@@ -71,33 +73,140 @@
       hint: '整页',
       goog: 'zh-CN',
     },
+    de: {
+      id: 'de',
+      label: 'Deutsch',
+      short: 'DE',
+      title: 'Ganze Seite auf Deutsch übersetzen',
+      hint: 'Ganze Seite',
+      goog: 'de',
+    },
+    it: {
+      id: 'it',
+      label: 'Italiano',
+      short: 'IT',
+      title: 'Traduci l’intera pagina in italiano',
+      hint: 'Tutta la pagina',
+      goog: 'it',
+    },
+    ht: {
+      id: 'ht',
+      label: 'Kreyòl',
+      short: 'HT',
+      title: 'Tradui tout paj la an kreyòl ayisyen',
+      hint: 'Tout paj la',
+      goog: 'ht',
+    },
   };
 
-  /** Langues passées à Google (codes goog). */
-  const GOOG_INCLUDED = Object.values(MODES)
-    .map((m) => m.goog)
-    .filter(Boolean)
-    .join(',');
+  /** Codes Google pour les langues du menu + auto-détection courante. */
+  const GOOG_INCLUDED = [
+    ...new Set(
+      Object.values(MODES)
+        .map((m) => m.goog)
+        .filter(Boolean)
+        .concat(['hi', 'vi', 'ru', 'uk', 'pl', 'ro', 'tr', 'ko', 'ja', 'bn', 'pa', 'ur', 'fa']),
+    ),
+  ].join(',');
 
   let gtReady = false;
   let gtLoading = false;
   const pendingCallbacks = [];
 
-  function getMode() {
+  function hasUserPreference() {
     try {
-      const raw = (localStorage.getItem(STORAGE_KEY) || DEFAULT_MODE).toLowerCase().trim();
-      // Valeurs inconnues / corrompues → toujours l'original bilingue
-      if (!raw || raw === 'auto' || raw === 'default' || !MODES[raw]) {
-        return DEFAULT_MODE;
-      }
-      return raw;
+      return localStorage.getItem(STORAGE_KEY) !== null;
     } catch {
-      return DEFAULT_MODE;
+      return false;
     }
   }
 
+  function isValidLangCode(code) {
+    return typeof code === 'string' && /^[a-z]{2}(?:-[A-Za-z]{2,4})?$/.test(code);
+  }
+
+  /** BCP-47 → code Google / mode connu. */
+  function normalizeBrowserLang(tag) {
+    const raw = String(tag || '').trim().toLowerCase();
+    if (!raw) return '';
+    if (raw.startsWith('zh')) return 'zh';
+    const primary = raw.split('-')[0];
+    return primary || '';
+  }
+
+  function googCodeForMode(mode) {
+    if (!mode || mode === DEFAULT_MODE) return null;
+    if (MODES[mode]?.goog) return MODES[mode].goog;
+    if (mode === 'zh') return 'zh-CN';
+    if (isValidLangCode(mode)) return mode;
+    return null;
+  }
+
+  function labelForMode(mode) {
+    if (MODES[mode]) return MODES[mode];
+    if (mode && mode !== DEFAULT_MODE) {
+      return {
+        id: mode,
+        label: mode.toUpperCase(),
+        short: mode.toUpperCase(),
+        title: `Translate page to ${mode}`,
+        hint: 'Auto',
+        goog: googCodeForMode(mode),
+      };
+    }
+    return MODES.original;
+  }
+
+  /**
+   * Première langue navigateur ni fr ni en → mode de traduction auto.
+   * fr / en (toute variante) → original.
+   */
+  function detectBrowserAutoMode() {
+    let tags = [];
+    try {
+      if (Array.isArray(navigator.languages) && navigator.languages.length) {
+        tags = navigator.languages.slice();
+      } else if (navigator.language) {
+        tags = [navigator.language];
+      }
+    } catch {
+      tags = [];
+    }
+
+    for (const tag of tags) {
+      const primary = normalizeBrowserLang(tag);
+      if (!primary) continue;
+      // Français ou anglais → garder le bilingue, ne pas traduire.
+      if (primary === 'fr' || primary === 'en') {
+        return DEFAULT_MODE;
+      }
+      // Autre langue → traduire vers celle-ci (première de la liste).
+      if (MODES[primary]) return primary;
+      if (isValidLangCode(primary)) return primary;
+    }
+    return DEFAULT_MODE;
+  }
+
+  /**
+   * Mode effectif : préférence utilisateur si définie, sinon détection navigateur.
+   */
+  function getMode() {
+    if (hasUserPreference()) {
+      try {
+        const raw = (localStorage.getItem(STORAGE_KEY) || '').toLowerCase().trim();
+        if (raw === DEFAULT_MODE) return DEFAULT_MODE;
+        if (MODES[raw]) return raw;
+        if (isValidLangCode(raw) && raw !== 'fr' && raw !== 'en') return raw;
+        // Préférence invalide → se comporter comme absence de préférence
+      } catch { /* fall through */ }
+    }
+    return detectBrowserAutoMode();
+  }
+
   function setMode(mode) {
-    if (!MODES[mode]) mode = DEFAULT_MODE;
+    if (mode !== DEFAULT_MODE && !MODES[mode] && !isValidLangCode(mode)) {
+      mode = DEFAULT_MODE;
+    }
     try {
       localStorage.setItem(STORAGE_KEY, mode);
     } catch { /* private mode */ }
@@ -111,17 +220,13 @@
     const domains = ['', host];
     if (host && host.includes('.')) {
       domains.push(`.${host}`);
-      // github.io pages
       const parts = host.split('.');
-      if (parts.length >= 2) {
-        domains.push(`.${parts.slice(-2).join('.')}`);
-      }
+      if (parts.length >= 2) domains.push(`.${parts.slice(-2).join('.')}`);
     }
     for (const d of domains) {
       for (const p of paths) {
         const domainPart = d ? `; domain=${d}` : '';
         document.cookie = `googtrans=; expires=${expire}; path=${p}${domainPart}`;
-        document.cookie = `googtrans=; expires=${expire}; path=${p}${domainPart}; Secure`;
       }
     }
   }
@@ -129,7 +234,6 @@
   function setGoogTransCookie(targetLang) {
     clearGoogTransCookies();
     if (!targetLang) return;
-    // /auto/xx : Google détecte la langue de chaque bloc (fil bilingue).
     const value = `/auto/${targetLang}`;
     document.cookie = `googtrans=${value}; path=/`;
     const host = location.hostname;
@@ -139,12 +243,12 @@
   }
 
   function readGoogTransTarget() {
-    const m = document.cookie.match(/(?:^|;\s*)googtrans=\/[^/]*\/([a-z]{2}(?:-[A-Z]{2})?)/i);
+    const m = document.cookie.match(/(?:^|;\s*)googtrans=\/[^/]*\/([a-z]{2}(?:-[A-Za-z]{2,4})?)/i);
     return m ? m[1] : '';
   }
 
   function updateUi(mode) {
-    const m = MODES[mode] || MODES.original;
+    const m = labelForMode(mode);
     const label = document.getElementById('translate-label');
     const btn = document.getElementById('translate-toggle');
     const menu = document.getElementById('translate-menu');
@@ -156,7 +260,7 @@
       btn.setAttribute(
         'aria-label',
         mode === DEFAULT_MODE
-          ? 'Langue : original bilingue (défaut). Ouvrir pour traduire la page.'
+          ? 'Langue : original bilingue. Ouvrir pour traduire la page.'
           : `Langue d'affichage : ${m.label}. Changer la langue.`,
       );
       btn.dataset.mode = mode;
@@ -167,11 +271,13 @@
         opt.setAttribute('aria-selected', active ? 'true' : 'false');
         opt.classList.toggle('is-active', active);
       });
+      // Si mode auto hors menu (ex. hi), pas d'option active — OK
     }
     document.documentElement.dataset.translate = mode;
-    // html lang : fr par défaut pour l'UI du site ; en seulement si traduction EN choisie
     if (mode === 'en') document.documentElement.lang = 'en-CA';
     else if (mode === 'fr') document.documentElement.lang = 'fr-CA';
+    else if (mode === 'ar') document.documentElement.lang = 'ar';
+    else if (mode === 'zh') document.documentElement.lang = 'zh-Hans';
     else document.documentElement.lang = 'fr-CA';
   }
 
@@ -200,10 +306,13 @@
     const select = document.querySelector('.goog-te-combo');
     if (!select) return false;
     const want = lang || '';
-    // Google utilise parfois zh-CN
     let matched = false;
     for (const opt of select.options) {
-      if (opt.value === want || (want && opt.value.toLowerCase() === want.toLowerCase())) {
+      if (
+        opt.value === want
+        || (want && opt.value.toLowerCase() === want.toLowerCase())
+        || (want === 'zh-CN' && /^zh/i.test(opt.value))
+      ) {
         if (select.value !== opt.value) {
           select.value = opt.value;
           select.dispatchEvent(new Event('change'));
@@ -245,8 +354,7 @@
       }
       gtReady = true;
       gtLoading = false;
-      const queue = pendingCallbacks.splice(0);
-      queue.forEach((fn) => {
+      pendingCallbacks.splice(0).forEach((fn) => {
         try { fn(); } catch { /* ignore */ }
       });
     };
@@ -261,8 +369,10 @@
     document.head.appendChild(s);
   }
 
-  function applyMode(mode, { reloadIfNeeded = true } = {}) {
-    mode = setMode(mode);
+  function applyMode(mode, { reloadIfNeeded = true, persist = true } = {}) {
+    if (persist) mode = setMode(mode);
+    else if (!mode) mode = DEFAULT_MODE;
+
     updateUi(mode);
 
     if (mode === DEFAULT_MODE) {
@@ -277,9 +387,13 @@
       return;
     }
 
-    const target = MODES[mode].goog;
-    const current = readGoogTransTarget();
+    const target = googCodeForMode(mode);
+    if (!target) {
+      applyMode(DEFAULT_MODE, { reloadIfNeeded, persist });
+      return;
+    }
 
+    const current = readGoogTransTarget();
     if (
       current.toLowerCase() === String(target).toLowerCase()
       && document.body
@@ -289,8 +403,6 @@
     }
 
     setGoogTransCookie(target);
-
-    // Charger Google uniquement après un choix explicite de l'utilisateur.
     loadGoogleTranslate(() => {
       let tries = 0;
       const tick = () => {
@@ -302,7 +414,7 @@
         }
         if (
           reloadIfNeeded
-          && readGoogTransTarget().toLowerCase().startsWith(String(target).toLowerCase().slice(0, 2))
+          && readGoogTransTarget()
           && !document.querySelector('.goog-te-combo')
         ) {
           location.reload();
@@ -327,7 +439,8 @@
         e.stopPropagation();
         const mode = opt.dataset.mode;
         closeMenu();
-        if (mode) applyMode(mode);
+        // Choix utilisateur → toujours persisté
+        if (mode) applyMode(mode, { persist: true });
       });
     });
 
@@ -343,18 +456,14 @@
   }
 
   function init() {
-    // Toujours partir de l'original sauf choix explicite déjà enregistré.
-    // Nettoyer tout cookie Google orphelin si on est en mode original.
-    const mode = getMode();
-
-    // Sécurité : ne jamais « deviner » fr/en via le navigateur.
-    // (pas de navigator.language ici)
-
     bindUi();
+
+    const mode = getMode();
+    const fromUser = hasUserPreference();
     updateUi(mode);
 
     if (mode === DEFAULT_MODE) {
-      // Mode défaut : pas de script Google, cookies de traduction effacés.
+      // Bilingue : pas de script Google ; purger cookies orphelins
       if (readGoogTransTarget()) {
         clearGoogTransCookies();
         if (document.body && /translated/.test(document.body.className || '')) {
@@ -364,10 +473,12 @@
       return;
     }
 
-    // Préférence non-défaut enregistrée par l'utilisateur → appliquer.
-    setGoogTransCookie(MODES[mode].goog);
-    loadGoogleTranslate(() => {
-      window.setTimeout(() => applyComboValue(MODES[mode].goog), 80);
+    // Traduction demandée (auto navigateur non-FR/EN, ou préférence utilisateur)
+    // Auto : ne pas écrire localStorage (persist:false) pour que FR/EN restent prioritaires
+    // si l'utilisateur n'a rien choisi — en pratique getMode() a déjà tranché.
+    applyMode(mode, {
+      persist: fromUser,
+      reloadIfNeeded: true,
     });
   }
 
@@ -380,6 +491,8 @@
   window.RadarTranslate = {
     getMode,
     applyMode,
+    detectBrowserAutoMode,
+    hasUserPreference,
     DEFAULT_MODE,
     MODES,
   };
