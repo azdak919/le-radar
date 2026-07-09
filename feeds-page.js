@@ -276,7 +276,13 @@ async function renderFeedsUpdated() {
     const res = await fetch('./news.json', { cache: 'no-cache' });
     const data = await res.json();
     if (!data.updated) return;
-    const d = new Date(data.updatedSlot || data.updated);
+    const actual = new Date(data.updated);
+    const slot = data.updatedSlot ? new Date(data.updatedSlot) : null;
+    const slotOk = slot
+      && !Number.isNaN(slot.getTime())
+      && actual - slot >= 0
+      && actual - slot <= 45 * 60 * 1000;
+    const d = slotOk ? slot : actual;
     const stamp = d.toLocaleString('fr-CA', {
       day: 'numeric', month: 'long', year: 'numeric',
       hour: 'numeric', minute: '2-digit',
