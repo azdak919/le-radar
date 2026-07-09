@@ -3814,8 +3814,21 @@ function buildMediaCreditElement(item = {}) {
 function showArticleImage(article, media, img, kind, item) {
   media.replaceChildren(img);
   let cap = null;
-  if (kind === 'photo' && item?.sourceImageCredit) {
-    cap = buildSourcePhotoCreditElement(item);
+  if (kind === 'photo') {
+    if (item?.sourceImageCredit) {
+      cap = buildSourcePhotoCreditElement(item);
+    } else if (item?.source) {
+      // Photo source sans crédit scrapé (ex. La Pige en En bref) :
+      // afficher au moins « Crédit photo : [média] » en attendant le bot.
+      const en = item.lang === 'en';
+      const mediaName = String(item.source).trim();
+      cap = buildSourcePhotoCreditElement({
+        ...item,
+        sourceImageCredit: en ? `Photo credit: ${mediaName}` : `Crédit photo : ${mediaName}`,
+        sourceImageCreditFrom: 'media',
+        sourceImageCreditUrl: item.link || item.sourceImageCreditUrl || '',
+      });
+    }
   } else if ((kind === 'stock' || kind === 'fallback') && (item?.imageCredit || item?.imageSourceUrl)) {
     cap = buildMediaCreditElement(item);
   }
