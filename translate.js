@@ -533,8 +533,9 @@
   ]);
 
   /** Classes / zones où les noms propres restent intacts (médias, auteurs…).
-   *  filter-btn__inst : établissements traduisibles dans la liste de sources. */
-  const SKIP_CLASS_RE = /\b(?:notranslate|article-source|article-inst|article-author|filter-btn__name|article-media-credit__creator)\b/;
+   *  article-inst / filter-btn__inst : gérés par isProtectedProperName
+   *  (traduits seulement hors FR/EN/Original). */
+  const SKIP_CLASS_RE = /\b(?:notranslate|article-source|article-author|filter-btn__name|article-media-credit__creator)\b/;
 
   function hasUserPreference() {
     try {
@@ -871,22 +872,48 @@
     return nameInSet(protectedInstitutionNames, text);
   }
 
-  /** Pastilles sources / barre compacte : établissements peuvent être traduits. */
-  function isTranslatableInstitutionZone(node) {
+  /** Langue cible du passage de traduction en cours (null hors translateDom). */
+  let translateTargetLang = null;
+
+  /**
+   * Localiser les noms d’établissements seulement hors Original / FR / EN.
+   * (Original = pas de traduction ; FR/EN = libellés d’origine tels quels.)
+   */
+  function shouldLocalizeInstitutions(targetLang = translateTargetLang) {
+    if (!targetLang) return false;
+    const lang = institutionLangKey(targetLang);
+    if (!lang || lang === 'fr' || lang === 'en') return false;
+    return true;
+  }
+
+  /** Pastilles sources, barre compacte, meta article (institution). */
+  function isInstitutionLabelZone(node) {
     const el = node && node.nodeType === 3 ? node.parentElement : node;
     if (!el || el.nodeType !== 1) return false;
-    return !!(el.closest?.('.filter-btn__inst, .filters-compact__inst'));
+    return !!(el.closest?.('.filter-btn__inst, .filters-compact__inst, .article-inst'));
+  }
+
+  /** Zone institution ET langue où la localisation est autorisée. */
+  function isTranslatableInstitutionZone(node) {
+    if (!shouldLocalizeInstitutions()) return false;
+    return isInstitutionLabelZone(node);
   }
 
   /**
-   * Noms propres à ne pas traduire (média, établissement hors pastilles sources,
+   * Noms propres à ne pas traduire (média, établissement hors localisation,
    * ou libellé composé « poste · institution » dans le tuner).
    */
   function isProtectedProperName(text = '', node = null) {
     const t = String(text || '').replace(/\s+/g, ' ').trim();
     if (!t) return false;
     if (isProtectedMediaName(t)) return true;
-    // Liste de sources en haut : traduire les noms d'université / cégep
+
+    // FR / EN / Original : jamais toucher aux libellés d’établissement
+    if (isInstitutionLabelZone(node) && !shouldLocalizeInstitutions()) {
+      return true;
+    }
+
+    // Autres langues : autoriser la trad dans les zones institution
     if (isProtectedInstitutionName(t)) {
       if (isTranslatableInstitutionZone(node)) return false;
       return true;
@@ -895,7 +922,6 @@
     const parts = t.split(/\s*[·|•]\s*/).map((p) => p.trim()).filter(Boolean);
     if (parts.length >= 2) {
       if (isTranslatableInstitutionZone(node)) {
-        // Dans une pastille, ne bloquer que si un segment est un nom de média
         if (parts.some((p) => isProtectedMediaName(p))) return true;
         return false;
       }
@@ -1073,6 +1099,9 @@
   }
 
   function preferredInstitutionLabel(original = '', targetLang = '') {
+    // Pas de glossaire / mapping en FR, EN ou Original
+    if (!shouldLocalizeInstitutions(targetLang)) return null;
+
     const key = String(original || '').replace(/\s+/g, ' ').trim();
     if (!key) return null;
     const lang = institutionLangKey(targetLang);
@@ -1183,7 +1212,7 @@
     if (el.classList?.contains('notranslate')) return true;
     if (el.getAttribute?.('translate') === 'no') return true;
     if (SKIP_CLASS_RE.test(el.className || '')) return true;
-    if (el.closest?.('.notranslate, [translate="no"], .translate-control, .sr-only, .article-source, .article-author, .filter-btn__name, .article-inst')) {
+    if (el.closest?.('.notranslate, [translate="no"], .translate-control, .sr-only, .article-source, .article-author, .filter-btn__name')) {
       return true;
     }
     return false;
@@ -1232,6 +1261,7 @@
   async function translateDom(targetLang, { quiet = false } = {}) {
     if (!targetLang || translating) return;
     translating = true;
+    translateTargetLang = targetLang;
     document.documentElement.dataset.translateBusy = '1';
     if (!quiet) {
       notify(`Traduction en cours… (${labelForMode(activeMode).short || targetLang})`);
@@ -1302,6 +1332,7 @@
       }
     } finally {
       translating = false;
+      translateTargetLang = null;
       document.documentElement.removeAttribute('data-translate-busy');
     }
   }
