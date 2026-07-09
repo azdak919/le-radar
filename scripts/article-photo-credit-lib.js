@@ -18,7 +18,7 @@ const PHOTO_CREDIT_FIELDS = [
 
 // Version des extracteurs de crédit : l'incrémenter force une re-vérification
 // (repli média + crédits cités issus d'anciens extracteurs buggés).
-const CREDIT_EXTRACTOR_REV = 5;
+const CREDIT_EXTRACTOR_REV = 6;
 
 /** Placeholders WP / comptes génériques (Zone Campus : « Crédit : Journaliste »). */
 const PLACEHOLDER_CREDIT_RE = /^(?:journaliste|journalist|photographe|photographer|staff|rédaction|redaction|la\s+rédaction|the\s+editorial\s+team|unknown|inconnu|n\/?a|none|anonyme|anonymous|auteur|author|admin)$/i;
@@ -409,6 +409,59 @@ function extractFigureCredit(html = '', imageUrl = '', lang = 'fr') {
   return null;
 }
 
+/**
+ * The Plant (et proches WP) : crédit d'image en tête de corps
+ *   <p><em>… caption …<br>Via Business and Human Rights Centre</em></p>
+ *   <p>Via Dawson College</p>
+ *   <p>Via Maria Alejandra Acosta Ardila</p>
+ * « Via the X » → crédit « X » (on retire l'article).
+ */
+function extractViaCredit(html = '', lang = 'fr') {
+  if (!html) return null;
+  const regions = [];
+  const body = articleBodyHtml(html);
+  if (body) regions.push(body);
+  const wp = html.match(
+    /class=["'][^"']*(?:entry-content|wp-block-post-content|post-content)[^"']*["'][^>]*>([\s\S]{0,8000})/i,
+  );
+  if (wp) regions.push(wp[1]);
+  if (!regions.length) regions.push(html.slice(0, 12000));
+
+  for (const region of regions) {
+    const paragraphs = region.match(/<p\b[^>]*>[\s\S]*?<\/p>/gi) || [];
+    for (const p of paragraphs.slice(0, 6)) {
+      // <br> → séparateur stable (stripHtml aplatit \n en espaces)
+      const raw = p
+        .replace(/<br\s*\/?>/gi, ' ¦ ')
+        .replace(/<\/(?:em|i|strong|b|span)>/gi, ' ')
+        .replace(/<(?:em|i|strong|b|span)\b[^>]*>/gi, ' ');
+      const text = sanitizeCreditText(raw);
+      if (!text || text.length > 280) continue;
+      // « Via Source » seule, en fin de légende (après ¦ / point), ou unique contenu
+      const m = text.match(/(?:^|¦|\.)\s*Via\s+(.+?)\s*$/i)
+        || text.match(/^Via\s+(.+)$/i);
+      if (!m) continue;
+      let source = sanitizeCreditText(m[1])
+        .replace(/^the\s+/i, '')
+        .replace(/[.,;:¦]+$/g, '')
+        .trim();
+      if (!source || source.length < 2 || source.length > 100) continue;
+      // Écarter les fausses pistes (phrases, bylines d'auteur)
+      if (/^(?:by|par)\s+/i.test(source)) continue;
+      if (/\b(?:editor|correspondent|staff writer|managing)\b/i.test(source)) continue;
+      if (isPlaceholderPhotoCredit(source)) continue;
+      const en = lang === 'en';
+      return {
+        creditLine: en ? `Photo: ${source}` : `Photo : ${source}`,
+        creator: source,
+        agency: '',
+        source: 'via-attribution',
+      };
+    }
+  }
+  return null;
+}
+
 function extractBodyCredit(html = '', imageUrl = '') {
   const body = articleBodyHtml(html);
   const paragraphs = body.match(/<p[^>]*>([\s\S]*?)<\/p>/gi) || [];
@@ -627,6 +680,7 @@ function extractPhotoCreditFromHtml(html = '', imageUrl = '', lang = 'fr') {
 
   const extractors = imageUrl
     ? [
+      () => extractViaCredit(html, lang),
       () => extractFigureCredit(html, imageUrl, lang),
       () => extractMediaCreditPlugin(html, imageUrl),
       () => extractJsonLdCredit(html, imageUrl),
@@ -634,6 +688,7 @@ function extractPhotoCreditFromHtml(html = '', imageUrl = '', lang = 'fr') {
       () => extractFilenameCredit(html, imageUrl, lang),
     ]
     : [
+      () => extractViaCredit(html, lang),
       () => extractMediaCreditPlugin(html, imageUrl),
       () => extractJsonLdCredit(html, imageUrl),
       () => extractFigureCredit(html, imageUrl, lang),
@@ -818,6 +873,7 @@ module.exports = {
   hasFilenameCreditHint,
   nameFromCreditSlug,
   parseTrailingCaptionCredit,
+  extractViaCredit,
   imageUrlKey,
   urlsMatch,
   sanitizeCreditText,
