@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content="LE RADAR – Les journaux et les radios étudiantes du Québec, réunis au même endroit. Le fil de presse des journaux étudiants et le syntoniseur des radios des cégeps et universités. Actualités en continu et écoute en direct. Student media on your radar." />
     <meta name="theme-color" content="#ffffff" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com https://translate.google.com https://translate.googleapis.com https://www.youtube.com blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.gstatic.com https://translate.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' https: blob:; connect-src 'self' https: wss: blob:; frame-src https:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.youtube.com blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' https: blob:; connect-src 'self' https: wss: blob:; frame-src https:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Le Radar" />
@@ -157,7 +157,7 @@
       <div class="wire-head">
         <div class="wire-title-group">
           <h2 class="wire-title">Le fil étudiant</h2>
-          <div class="translate-control" id="translate-control">
+          <div class="translate-control notranslate" id="translate-control" translate="no">
             <button
               type="button"
               id="translate-toggle"
@@ -168,8 +168,11 @@
               data-mode="original"
               title="Ne pas traduire — garder le fil bilingue (FR + EN)"
             >
+              <!-- Icône universelle de traduction (A + あ) -->
               <span class="translate-toggle__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+                  <path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7 1.62-4.33L19.12 17h-3.24z"/>
+                </svg>
               </span>
               <span id="translate-label" class="translate-toggle__label">Original</span>
               <svg class="translate-toggle__chev" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
@@ -183,8 +186,6 @@
           <span id="news-updated" class="news-updated"></span>
         </div>
       </div>
-      <!-- Moteur Google Translate (masqué) — piloté par translate.js -->
-      <div id="google_translate_element" class="sr-only" aria-hidden="true"></div>
 
       <div id="news-filters-panel" class="filters-panel">
         <button type="button" id="filters-compact" class="filters-compact" hidden aria-expanded="false" aria-controls="news-filters">

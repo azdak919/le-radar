@@ -1344,22 +1344,10 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   box-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.55);
 }
 
-/* Masquer la barre / combo Google Translate (on garde le moteur, pas le chrome). */
-#google_translate_element,
-.goog-te-banner-frame,
-.goog-te-balloon-frame,
-.goog-tooltip,
-.goog-te-spinner-pos,
-body > .skiptranslate {
-  display: none !important;
-}
-body {
-  top: 0 !important;
-}
-/* Contre le style injecté par Google sur body.translated-ltr */
-.goog-text-highlight {
-  background: transparent !important;
-  box-shadow: none !important;
+/* Traduction en cours (API gtx, pas le widget Google) */
+html[data-translate-busy="1"] .translate-toggle {
+  opacity: 0.75;
+  pointer-events: none;
 }
 
 .article-meta--time-only {
