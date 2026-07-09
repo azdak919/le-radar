@@ -43,6 +43,17 @@ const FOREIGN_LOCATION_MARKERS = [
 /** Acronymes courts : seul « ASFA » ne doit pas matcher une école italienne, etc. */
 const SHORT_ACRONYM_RE = /^[a-z]{2,5}$/;
 
+/* Documents d'archives numérisés (gravures, plaques de verre, cartes postales,
+   photos 18xx-19xx…) : granuleux, noir et blanc, souvent « Unknown author ».
+   Qualité visuelle trop faible pour illustrer un article — mieux vaut aucune
+   photo — sauf si le sujet de l'article est justement historique. */
+const ARCHIVAL_MEDIA_RE = /\b(?:archives?|archival|vintage|circa|daguerr[eé]otype|tintype|lithograph\w*|engraving|gravure|etching|postcard|carte postale|glass plate|plaque de verre|s[eé]pia|monochrome|black[\s-]?and[\s-]?white|microfilm|n[eé]gatifs?|negatives?)\b/i;
+/* Année 18xx-19xx dans le titre/nom de fichier (« 1873-75 Ravenscrag… ») —
+   les lookarounds évitent les dimensions du type « 1920x1080 ». */
+const ARCHIVAL_YEAR_RE = /(?<!x)\b1[89]\d{2}\b(?!x)/;
+const HISTORICAL_TOPIC_RE = /\b(?:histoire|historiques?|historical|history|heritage|patrimoine|archives?|anniversaires?|centenaires?|centennial|comm[eé]moration\w*|commemorat\w*|fondation|founding|r[eé]trospectives?|retrospectives?)\b/i;
+const UNKNOWN_CREATOR_RE = /^(?:unknown|inconnu|anonym)/i;
+
 /** Pays/régions à pénaliser quand l'article parle de l'Assemblée nationale du Québec. */
 const FOREIGN_ASSEMBLY_MARKERS = [
   'burkina', 'faso', 'afrique', 'africa', 'senegal', 'sénégal', 'mali', 'niger', 'benin', 'bénin',
@@ -125,6 +136,8 @@ function detectEditorialContext(item = {}) {
   const assemblyTopic = /assemblée nationale|assemblee nationale|national assembly/i.test(full);
   const provincialParliament = assemblyTopic && quebec && !federalCanada;
 
+  const titleNorm = normalizeText(title);
+
   return {
     quebec,
     quebecPolitics: quebecPolitics || (quebec && assemblyTopic),
@@ -133,9 +146,11 @@ function detectEditorialContext(item = {}) {
     provincialParliament,
     assemblyTopic,
     montreal: /montréal|montreal/i.test(norm) || /montréal|montreal/i.test(item.region || ''),
+    /* Sujet historique : seul cas où une photo d'archive est appropriée. */
+    historicalTopic: HISTORICAL_TOPIC_RE.test(norm) || ARCHIVAL_YEAR_RE.test(titleNorm),
     institutionPhrases: institutionPhrases(item),
     norm,
-    titleNorm: normalizeText(title),
+    titleNorm,
   };
 }
 
@@ -354,6 +369,9 @@ function cleanCreatorName(raw = '') {
   let s = stripHtml(raw).trim();
   s = s.replace(/\.mw-parser-output[\s\S]*/i, '').trim();
   s = s.replace(/\s+/g, ' ');
+  // Champ dédoublé à la source (« Unknown authorUnknown author ») :
+  // ne garder qu'une occurrence.
+  s = s.replace(/^(.{3,}?)\s*\1$/u, '$1').trim();
   if (s.length > 72) {
     const cut = s.slice(0, 72);
     const lastSpace = cut.lastIndexOf(' ');
@@ -423,6 +441,13 @@ function scoreCandidate(hit, matchTokens, context = null) {
   score += Math.min(w, 2400) / 35;
 
   const hay = normalizeText(`${hit.title || ''} ${hit.tags || ''} ${hit.url || ''}`);
+
+  // Document d'archive (année 18xx-19xx, gravure, N&B…) : qualité trop
+  // faible pour illustrer un article — rejet, sauf sujet historique.
+  if (!context?.historicalTopic && (ARCHIVAL_MEDIA_RE.test(hay) || ARCHIVAL_YEAR_RE.test(hay))) {
+    return -1;
+  }
+
   const { important = [], content = [], title = [] } = matchTokens || {};
   const matches = countSubstantiveMatches(hay, matchTokens);
   const { contentMatched, titleMatched, importantMatched, acronymOnly } = matches;
@@ -471,7 +496,12 @@ function scoreCandidate(hit, matchTokens, context = null) {
   }
 
   if (hit.provider === 'wikimedia') score += 8;
-  if (hit.license === 'cc0' || hit.license === 'pdm') score += 4;
+
+  // Auteur inconnu ou simple « Domaine public » : presque toujours un vieux
+  // document numérisé — pénalité au lieu de l'ancien bonus cc0/pdm.
+  const creatorName = normalizeText(hit.creator || hit.artist || '');
+  if (!creatorName || UNKNOWN_CREATOR_RE.test(creatorName)) score -= 30;
+  if (String(hit.license || '').toLowerCase() === 'pdm' && !context?.historicalTopic) score -= 40;
 
   score += applyContextScoring(hit, context);
 
@@ -492,6 +522,7 @@ function stockHitFromItem(item, stockUrl = '', meta = {}) {
     tags: meta.tags || '',
     provider: stockUrl.includes('wikimedia') ? 'wikimedia' : 'openverse',
     license: meta.license || '',
+    creator: meta.creator || '',
   };
 }
 
@@ -510,6 +541,7 @@ function stockStillFits(item, meta = {}) {
     // ligne de crédit pour juger si elle colle toujours au sujet.
     title: [item.imageTitle || '', item.imageCredit || ''].filter(Boolean).join(' '),
     license: item.imageLicense || '',
+    creator: item.imageCreator || '',
     ...meta,
   }) >= STOCK_MIN_RETAIN_SCORE;
 }
@@ -576,7 +608,8 @@ async function searchWikimedia(query, matchTokens, context = null) {
 
 function isRasterImageUrl(url = '') {
   const path = String(url).split('?')[0].split('#')[0].toLowerCase();
-  return /\.(jpe?g|png|webp|gif|avif|bmp)$/i.test(path);
+  // gif/bmp exclus : qualité photo insuffisante pour la une.
+  return /\.(jpe?g|png|webp|avif)$/i.test(path);
 }
 
 async function validateCandidate(hit) {
