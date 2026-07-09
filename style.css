@@ -388,9 +388,29 @@ html[data-translate="ar"] .wordmark-full {
   border-radius: 9px;
   background: rgba(255,255,255,0.05);
   overflow: hidden;
-  transition: border-color 140ms ease, background 140ms ease;
+  transition: border-color 140ms ease, background 140ms ease, box-shadow 140ms ease;
 }
 .tuner-dial:hover .tuner-now { border-color: rgba(255,255,255,0.32); background: rgba(255,255,255,0.08); }
+/* Lecture live : synthétiseur rouge sur tous les formats (mobile, tablette, bureau).
+   Avant : seulement ≤600px ; EN ONDES restait le seul signal sur grand écran. */
+.tuner.is-playing .tuner-now {
+  border-color: rgba(255, 125, 110, 0.7);
+  background: rgba(200, 16, 46, 0.1);
+  box-shadow: 0 0 0 1px rgba(200, 16, 46, 0.22);
+}
+.tuner.is-playing .tuner-dial:hover .tuner-now {
+  border-color: rgba(255, 125, 110, 0.85);
+  background: rgba(200, 16, 46, 0.14);
+}
+.tuner.is-external .tuner-now {
+  border-color: rgba(93, 155, 224, 0.55);
+  background: rgba(0, 61, 165, 0.1);
+  box-shadow: none;
+}
+.tuner.is-external .tuner-dial:hover .tuner-now {
+  border-color: rgba(93, 155, 224, 0.7);
+  background: rgba(0, 61, 165, 0.14);
+}
 .tuner-now::after {
   content: "▾";
   position: absolute;
