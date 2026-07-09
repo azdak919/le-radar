@@ -8,6 +8,21 @@
       "type": "universite",
       "lang": "fr",
       "url": "https://quartierlibre.ca/feed/",
+      "site": "https://quartierlibre.ca/",
+      "botHints": {
+        "images": {
+          "preferSizeFull": true,
+          "validateOnPage": true,
+          "rejectPathPatterns": [
+            "Logo-1\\.svg",
+            "logo_white",
+            "ql_favicon",
+            "Ellipse-\\d+",
+            "faecum\\.png"
+          ]
+        }
+      },
+      "_note": "WordPress + Elementor — photos dans theme-post-featured-image / widgets image, pas toujours en RSS. Ne pas laisser Openverse écraser les vraies photos d'article (ex. Coupe du monde 16-17_CDM).",
       "_lastChecked": "2026-07-06T11:27:58.245Z",
       "_failCount": 1,
       "_status": "stale",
