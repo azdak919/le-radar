@@ -235,18 +235,34 @@
         "collection": "blogs",
         "publishField": "publish",
         "dateField": "publishedDate",
-        "linkTemplate": "/blog/post/{uid}"
+        "linkTemplate": "/blog/post/{uid}",
+        "excerptFields": [
+          "description",
+          "body"
+        ],
+        "bodyField": "body"
       },
       "popularity": 12,
       "instagram": "https://www.instagram.com/polyscope_aep/",
       "facebook": "https://www.facebook.com/p/Polyscope-61550693026725/",
       "x": "https://twitter.com/Polyscope",
+      "botHints": {
+        "authors": {
+          "preferFirebaseAuthor": true
+        },
+        "excerpts": {
+          "preferBodyFallback": true
+        },
+        "credits": {
+          "preferFirebaseCredits": true
+        }
+      },
       "_status": "ok",
       "_failCount": 0,
-      "_lastChecked": "2026-07-09T21:22:13.041Z",
+      "_lastChecked": "2026-07-09T21:40:53.966Z",
       "_lastItemDate": "2026-02-25T14:38:32.764Z",
-      "_note": "SPA React + Firestore public — pas de flux RSS. Lecture REST publique ou clé FIREBASE_POLYSCOPE_API_KEY.",
-      "_lastFetchOk": "2026-07-09T21:22:13.041Z"
+      "_note": "SPA React + Firestore public. Extrait = description ou début de body HTML. Lecture REST publique ou clé FIREBASE_POLYSCOPE_API_KEY.",
+      "_lastFetchOk": "2026-07-09T21:40:53.966Z"
     },
     {
       "name": "The Tribune",

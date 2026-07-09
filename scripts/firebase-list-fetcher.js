@@ -85,6 +85,34 @@ function extractAuthor(fields = {}) {
   return '';
 }
 
+function truncatePlain(text = '', max = 280) {
+  let s = String(text || '').replace(/\s+/g, ' ').trim();
+  if (s.length <= max) return s;
+  let cut = s.slice(0, max);
+  const lastSpace = cut.lastIndexOf(' ');
+  if (lastSpace > max * 0.55) cut = cut.slice(0, lastSpace);
+  return cut.trim();
+}
+
+/**
+ * Extrait : description Firestore, sinon début du corps HTML (Polyscope
+ * laisse souvent description vide / un espace — le texte est dans body).
+ */
+function extractExcerpt(fields = {}, max = 280) {
+  const desc = stripHtml(firestoreValue(fields.description) || '');
+  if (desc.length >= 40) return truncatePlain(desc, max);
+
+  const body = stripHtml(firestoreValue(fields.body) || '');
+  if (body.length >= 24) return truncatePlain(body, max);
+
+  return desc || '';
+}
+
+function extractCredits(fields = {}) {
+  const raw = stripHtml(firestoreValue(fields.credits) || '');
+  return raw.length >= 2 ? raw : '';
+}
+
 function parseFirestoreDocument(doc = {}, src = {}) {
   const fields = doc.fields || {};
   const uid = firestoreValue(fields.UID) || (doc.name || '').split('/').pop() || '';
@@ -105,11 +133,12 @@ function parseFirestoreDocument(doc = {}, src = {}) {
     if (!isNaN(d)) date = new Date(d).toISOString();
   }
 
-  const excerpt = stripHtml(firestoreValue(fields.description) || '');
+  const excerpt = extractExcerpt(fields, 280);
   const image = String(firestoreValue(fields.cover) || firestoreValue(fields.image) || '').trim();
   const author = extractAuthor(fields);
+  const credits = extractCredits(fields);
 
-  return {
+  const item = {
     title,
     link: articleLink(src, { uid, title }),
     author,
@@ -117,6 +146,20 @@ function parseFirestoreDocument(doc = {}, src = {}) {
     excerpt,
     image,
   };
+
+  // Crédit photo / illustration saisi dans l’admin Polyscope
+  if (credits && image) {
+    const line = /^(?:Photo|Crédit|Illustration)\b/i.test(credits)
+      ? credits
+      : `Photo : ${credits}`;
+    item.sourceImageCredit = line;
+    item.sourceImageCreator = credits.replace(/^(?:Photo|Crédit(?:\s+photo)?|Illustration)\s*:\s*/i, '').trim();
+    item.sourceImageCreditFrom = 'article';
+    item.sourceImageCreditCited = true;
+    item.sourceImageCreditUrl = item.link;
+  }
+
+  return item;
 }
 
 function getJson(url, timeout = DEFAULT_TIMEOUT) {
