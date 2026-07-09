@@ -91,11 +91,13 @@ const ENRICH_TIMEOUT = IS_CI ? 8_000 : 12_000;
 const MAX_PER_SOURCE = 20;  // archive par journal (certains flux RSS en ont 18+)
 const MAX_WP_FEATURED = 8;  // vedettes WordPress (catégorie slider, etc.)
 const WP_FEATURED_SLUGS = ['slider', 'a-la-une', 'featured'];
-const MAX_ENRICH = IS_CI ? 12 : 45;      // cap article-page fetches per run
+/* CI : assez d'enrich pour peupler une + features + En bref (photos),
+   sans revenir aux hangs 12 min (regex bornées + budget wall-clock). */
+const MAX_ENRICH = IS_CI ? 28 : 45;
 /** 0 en CI : scripts/verify-authors.js s'en charge (évite double scrape + hang). */
 const MAX_AUTHOR_PAGES = IS_CI ? 0 : 40;
-/** Budget wall-clock phase enrich (async) — un item lent ne doit pas manger les 12 min. */
-const ENRICH_PHASE_BUDGET_MS = IS_CI ? 90_000 : 240_000;
+/** Budget wall-clock phase enrich (async) — un item lent ne doit pas manger le job. */
+const ENRICH_PHASE_BUDGET_MS = IS_CI ? 150_000 : 240_000;
 const ENRICH_HTML_CAP = IS_CI ? 80_000 : 200_000;
 
 const GENERIC_AUTHORS = /^(admin|administrator|administrateur|editor|éditeur|editeur|rédaction|redaction|staff|wordpress|webmaster|collectif|le collectif|tribune|link|daily|coordinating|exemplaire|quartier libre|zone campus|la pige|le délit|le delit|the link|the concordian|the tribune|the mcgill daily|the campus|the plant|theplantnews)$/i;
