@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-09T16:29:12.683Z",
+  "updatedAt": "2026-07-09T18:20:24.453Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-09T16:29:02.087Z"
+      "checkedAt": "2026-07-09T18:20:16.205Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Jimmy et Neutron",
-        "source": "api-live",
-        "start": "08:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "jimmy-et-neutron"
-      },
-      "next": {
         "title": "La collation",
         "source": "api-live",
         "start": "09:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/363992.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "mix-collation"
       },
+      "next": {
+        "title": "Une fenêtre sur le monde",
+        "source": "api-live",
+        "start": "11:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/363614.mp3",
+        "slug": "une-fenetre-sur-le-monde"
+      },
       "track": "",
-      "showTitle": "Jimmy et Neutron",
+      "showTitle": "La collation",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-09T16:29:04.041Z"
+      "checkedAt": "2026-07-09T18:20:17.833Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Venus Radio",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
         "source": "api-live",
         "start": "14:00",
         "end": "15:00"
       },
+      "next": {
+        "title": "Positive Vibes",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "17:00"
+      },
       "track": "",
-      "showTitle": "Venus Radio",
+      "showTitle": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-09T16:29:07.140Z"
+      "checkedAt": "2026-07-09T18:20:20.183Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Power Hour",
+        "title": "The 514",
         "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/the-power-hour"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/the-514"
       },
       "next": {
-        "title": "What's Happening in NDG",
+        "title": "Secondhand Sounds",
         "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/whats-happening-in-ndg"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/secondhand-sounds"
       },
       "track": "",
-      "showTitle": "The Power Hour",
+      "showTitle": "The 514",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-09T16:29:09.672Z"
+      "checkedAt": "2026-07-09T18:20:21.491Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,28 +129,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-09T16:29:10.057Z"
+      "checkedAt": "2026-07-09T18:20:22.222Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "The City Begins",
+        "title": "Take My Life",
         "source": "api-live",
-        "host": "Downtown Boys",
-        "url": "https://www.choq.ca/assets/playlist/palmares-site-web.jpg"
+        "host": "Spell",
+        "url": "https://www.choq.ca/assets/playlist/internationale.jpg"
       },
       "next": null,
-      "track": "Downtown Boys - The City Begins",
-      "showTitle": "The City Begins",
-      "host": "Downtown Boys",
+      "track": "Spell - Take My Life",
+      "showTitle": "Take My Life",
+      "host": "Spell",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-09T16:29:12.332Z"
+      "checkedAt": "2026-07-09T18:20:24.102Z"
     }
   }
 }
