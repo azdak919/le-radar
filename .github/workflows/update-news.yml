@@ -2,19 +2,17 @@ name: Update Student News
 
 on:
   schedule:
-    # Huit passes/jour alignées sur la consommation d'actualité (Québec).
-    # Cron en UTC ; heures locales ci-dessous en été (EDT, UTC−4).
-    # En hiver (EST, UTC−5), chaque passage arrive ~1 h plus tôt localement.
-    #   05:30 → lève-tôt, avant le pic du matin         (09:30 UTC)
-    #   07:00 → réveil, transport, premier check       (11:00 UTC)
-    #   10:00 → entre les cours du matin                 (14:00 UTC)
-    #   12:00 → pause dîner                              (16:00 UTC)
-    #   13:30 → fin de dîner, retour en classe           (17:30 UTC)
-    #   16:00 → fin de classes / retour                  (20:00 UTC)
-    #   19:00 → soirée, retour à la maison               (23:00 UTC)
-    #   21:00 → dernière passe avant la nuit             (01:00 UTC, lendemain)
+    # Passes cibles (Québec). Cron en UTC — heures locales en été (EDT, UTC−4) :
+    #   05:30 → 09:30 UTC   |  07:00 → 11:00 UTC  |  10:00 → 14:00 UTC
+    #   12:00 → 16:00 UTC   |  13:30 → 17:30 UTC  |  16:00 → 20:00 UTC
+    #   19:00 → 23:00 UTC   |  21:00 → 01:00 UTC (lendemain)
+    #
+    # GitHub Actions peut retarder ou SAUTER des crons épars (charge, file d'attente).
+    # Filet : toutes les heures à :20 — ne s'exécute que si la dernière passe
+    # date de plus de 75 min (compense un 13h30 jamais parti, etc.).
     - cron: '0 1,11,14,16,20,23 * * *'
     - cron: '30 9,17 * * *'
+    - cron: '20 * * * *'
   workflow_dispatch:   # Allow manual trigger
 
 # Never run two news-update jobs against the same ref at once.
@@ -25,6 +23,7 @@ concurrency:
 jobs:
   aggregate:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     permissions:
       contents: write
 
@@ -36,7 +35,38 @@ jobs:
         with:
           node-version: '20'
 
+      # github.event.schedule = expression cron exacte qui a déclenché le run.
+      # Filet :20 — skip si un refresh a déjà eu lieu récemment.
+      - name: Safety-net gate
+        id: gate
+        run: |
+          SCHEDULE='${{ github.event.schedule }}'
+          echo "schedule=$SCHEDULE"
+          if [ "$SCHEDULE" != "20 * * * *" ]; then
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+            echo "Primary or manual schedule — always run."
+            exit 0
+          fi
+          AGE_MIN=$(node -e "
+            const fs = require('fs');
+            let updated = 0;
+            try {
+              const n = JSON.parse(fs.readFileSync('news.json', 'utf8'));
+              updated = Date.parse(n.updated || n.updatedSlot || 0) || 0;
+            } catch { /* missing */ }
+            console.log(Math.floor((Date.now() - updated) / 60000));
+          ")
+          echo "minutes_since_update=$AGE_MIN"
+          if [ "$AGE_MIN" -lt 75 ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "Safety net: last update ${AGE_MIN}m ago (< 75m) — skip."
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+            echo "Safety net: last update ${AGE_MIN}m ago — run catch-up."
+          fi
+
       - name: Fetch and aggregate student-media RSS feeds
+        if: steps.gate.outputs.skip != 'true'
         run: |
           node scripts/fetch-news.js --update
           node scripts/verify-authors.js --update
@@ -49,17 +79,20 @@ jobs:
           CI: true
           FIREBASE_POLYSCOPE_API_KEY: ${{ secrets.FIREBASE_POLYSCOPE_API_KEY }}
 
+      # Toujours écrire un heartbeat si le pipeline a tourné : le libellé « mis à jour »
+      # avance même sans nouvel article, et le filet de :20 peut mesurer l'âge réel.
       - name: Check for changes
         id: check
+        if: steps.gate.outputs.skip != 'true'
         run: |
           if git diff --quiet news.json author-qc.json lead-excerpt-qc.json social-feed.json lead-image-qc.json photo-credit-qc.json feed.xml; then
-            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "changed=false" >> "$GITHUB_OUTPUT"
           else
-            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Commit and push updates
-        if: steps.check.outputs.changed == 'true'
+        if: steps.gate.outputs.skip != 'true' && steps.check.outputs.changed == 'true'
         run: |
           git config user.name "RÉQ News Bot"
           git config user.email "actions@users.noreply.github.com"
@@ -67,10 +100,6 @@ jobs:
           git commit -m "bot: update student news feed, excerpts, images, photo credits, RSS and social (auto)"
           # Rebase onto any work pushed since checkout so the bot never
           # clobbers manual commits and never fails on a fast-forward race.
-          # Fichiers générés : en cas de conflit avec un commit concurrent,
-          # -X theirs garde la version fraîchement produite par ce bot, et un
-          # rebase interrompu est abandonné avant la tentative suivante —
-          # sinon les retries échouent tous sur « unmerged files ».
           for i in 1 2 3; do
             git pull --rebase -X theirs --autostash origin "${GITHUB_REF_NAME}" && git push && exit 0
             git rebase --abort 2>/dev/null || true

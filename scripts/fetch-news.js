@@ -59,12 +59,14 @@ const NEWS_PATH = path.join(__dirname, '..', 'news.json');
 const SOURCES_PATH = path.join(__dirname, '..', 'news-sources.json');
 
 // Passes quotidiennes planifiées du bot d'actualités, en UTC — doit refléter
-// les crons de .github/workflows/update-news.yml.
+// les crons primaires de .github/workflows/update-news.yml
+// (le filet horaire :20 n'est pas listé ici : hors créneau, updatedSlot = null
+//  → l'UI affiche l'heure réelle de la passe de rattrapage).
 const SCHEDULED_PASSES_UTC = [
   [1, 0], [9, 30], [11, 0], [14, 0], [16, 0], [17, 30], [20, 0], [23, 0],
 ];
 // Le cron GitHub part souvent en retard (jamais en avance) ; au-delà de cette
-// marge, la passe est considérée hors horaire (déclenchement manuel, etc.).
+// marge, la passe est considérée hors horaire (filet :20, manuel, etc.).
 const SCHEDULE_TOLERANCE_MS = 75 * 60 * 1000;
 
 /** ISO de la passe planifiée correspondant à cette exécution, ou null si hors horaire. */
