@@ -108,10 +108,22 @@
       "_status": "stale",
       "_lastItemDate": "2026-05-02T20:21:24.000Z",
       "popularity": 7,
-      "_note": "Journal indépendant de Concordia, distinct de The Link. Site principal WordPress (theconcordian.com) ; repli Substack si Cloudflare bloque le bot (newsletter/podcasts, pas tous les articles du site).",
+      "_note": "Journal indépendant de Concordia, distinct de The Link. Site principal WordPress (theconcordian.com) ; repli Substack si Cloudflare bloque le bot (newsletter/podcasts, pas tous les articles du site). Photos : couvertures og:image Substack — pas de banque libre/campus (trop d'erreurs).",
       "botHints": {
         "fetch": {
-          "preferFallbackOn403": true
+          "preferFallbackOn403": true,
+          "dropTitlePatterns": [
+            "this week's top stories",
+            "the pitch list",
+            "is hiring",
+            "last day to apply",
+            "apply to the concordian awards",
+            "apply to be part of"
+          ]
+        },
+        "images": {
+          "disableFreeStock": true,
+          "disableCampusBank": true
         }
       },
       "_lastFetchOk": "2026-06-27T16:04:40.441Z"

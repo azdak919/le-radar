@@ -411,6 +411,28 @@ function normalizeWpContentImageUrl(raw = '') {
   return src;
 }
 
+/**
+ * Substack CDN : …/image/fetch/…/https%3A%2F%2Fsubstack-post-media.s3…
+ * → URL S3 originale (meilleure qualité, dimensions fiables).
+ */
+function unwrapCdnImageUrl(raw = '') {
+  const src = String(raw || '').trim();
+  if (!src) return '';
+  try {
+    if (/substackcdn\.com\/image\/fetch/i.test(src)) {
+      const m = src.match(/\/(https?%3A%2F%2F[^?\s#]+)/i)
+        || src.match(/\/(https?:\/\/[^?\s#]+)/i);
+      if (m) {
+        const inner = m[1].includes('%') ? decodeURIComponent(m[1]) : m[1];
+        if (/^https?:\/\//i.test(inner)) return inner;
+      }
+    }
+  } catch {
+    /* ignore */
+  }
+  return src;
+}
+
 function isWeakImageUrl(raw = '', options = {}) {
   const path = String(raw).toLowerCase();
   const resize = resizeFromImageUrl(raw);
@@ -462,23 +484,37 @@ function imageFromArticleHtml(html = '', extraRejectPatterns = [], options = {},
     ? (articleBodyHtml(html) || articleImageRegions(html))
     : articleImageRegions(html);
   const contentImages = collectContentImages(imageRegion, extraRejectPatterns, options, baseUrl);
-  if (!contentImages.length) return { url: '', w: 0, h: 0 };
 
   const candidates = [];
+  const pushMeta = (raw, scoreBase, w = 0, h = 0) => {
+    if (!raw) return;
+    const unwrapped = unwrapCdnImageUrl(raw);
+    for (const url of [unwrapped, raw]) {
+      if (!url || !isCandidateImageUrl(url, extraRejectPatterns) || isWeakImageUrl(url, options)) continue;
+      candidates.push({
+        url,
+        score: scoreBase + (url === unwrapped && unwrapped !== raw ? 15 : 0) + Math.min(w, 2400) / 10,
+        w,
+        h,
+      });
+      break;
+    }
+  };
 
+  // og:image / Twitter : toujours candidats (Substack n'embarque souvent que
+  // des miniatures dans le HTML — la couverture est uniquement en meta).
   if (!preferFirstContentImage) {
     const ogImage = metaContent(html, 'og:image');
     const ogW = parseInt(metaContent(html, 'og:image:width'), 10) || 0;
     const ogH = parseInt(metaContent(html, 'og:image:height'), 10) || 0;
-    if (ogImage && contentImages.some((img) => imageUrlsMatch(img.url, ogImage))) {
-      candidates.push({ url: ogImage, score: 100 + Math.min(ogW, 2400) / 10, w: ogW, h: ogH });
-    }
+    const ogInContent = ogImage && contentImages.some((img) => imageUrlsMatch(img.url, ogImage));
+    // Bonus fort si aussi dans le corps ; sinon on accepte quand même (Substack).
+    pushMeta(ogImage, ogInContent ? 110 : 95, ogW, ogH);
 
     for (const key of ['twitter:image', 'twitter:image:src']) {
       const tw = metaContent(html, key);
-      if (tw && contentImages.some((img) => imageUrlsMatch(img.url, tw))) {
-        candidates.push({ url: tw, score: 90, w: 0, h: 0 });
-      }
+      const twIn = tw && contentImages.some((img) => imageUrlsMatch(img.url, tw));
+      pushMeta(tw, twIn ? 95 : 85, 0, 0);
     }
   }
 
@@ -495,8 +531,9 @@ function imageFromArticleHtml(html = '', extraRejectPatterns = [], options = {},
     if (preferFirstContentImage && index === 0) score += 40;
     if (options.preferSizeFull && img.isFull) score += 20;
     if (options.preferSizeFull && isThumb) score -= 30;
+    const unwrapped = unwrapCdnImageUrl(img.url);
     candidates.push({
-      url: img.url,
+      url: unwrapped || img.url,
       score,
       w: img.w,
       h: 0,
@@ -541,8 +578,10 @@ function leadImageUrlCandidates(raw = '') {
       ordered.push(u);
     }
   };
-  for (const up of upgradeCmsImageUrl(seed)) add(up);
-  add(normalizeWpContentImageUrl(seed));
+  const unwrapped = unwrapCdnImageUrl(seed);
+  add(unwrapped);
+  for (const up of upgradeCmsImageUrl(unwrapped || seed)) add(up);
+  add(normalizeWpContentImageUrl(unwrapped || seed));
   add(seed);
   return ordered;
 }
@@ -645,6 +684,7 @@ function sleep(ms) {
 
 module.exports = {
   GLOBAL_IMAGE_REJECT_RE,
+  unwrapCdnImageUrl,
   imageRejectPatternsFromHints,
   imageOptionsFromHints,
   isPathRejected,
