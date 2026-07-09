@@ -11,7 +11,12 @@
 const fs = require('fs');
 const path = require('path');
 
-/** Same window as app.js FRESHNESS_SESSION_COUNT / CONTINGENCY_MAX_SESSIONS_BACK */
+/**
+ * Fenêtre de fraîcheur (alignée app.js) :
+ *  - session en cours + 2 précédentes (= automne + hiver + été sur un cycle)
+ *  - septembre : mois de grâce — on garde aussi l’automne d’avant
+ *    (les journaux n’ont souvent pas encore republié).
+ */
 const FRESHNESS_SESSION_COUNT = 3;
 const CONTINGENCY_MAX_SESSIONS_BACK = FRESHNESS_SESSION_COUNT - 1;
 
@@ -23,6 +28,7 @@ const SOURCES_PATH = path.join(__dirname, '..', 'news-sources.json');
 function getCurrentUniversitySessionStart(referenceDate = new Date()) {
   const year = referenceDate.getFullYear();
   const month = referenceDate.getMonth();
+  // Automne : 1er sept. | Hiver : 1er janv. | Été : 1er mai
   if (month >= 8) return new Date(year, 8, 1);
   if (month >= 4) return new Date(year, 4, 1);
   return new Date(year, 0, 1);
@@ -52,6 +58,21 @@ function getUniversitySessionBand(referenceDate = new Date(), sessionsBack = 0) 
   return { start, end };
 }
 
+/**
+ * Septembre = mois de grâce en début d’automne : on ne retire pas encore
+ * l’automne précédent tant que la nouvelle session n’a pas vraiment démarré.
+ */
+function isSeptemberAutumnGrace(referenceDate = new Date()) {
+  return referenceDate.getMonth() === 8;
+}
+
+/** Nombre de sessions « en arrière » incluses dans la fenêtre. */
+function freshnessMaxSessionsBack(referenceDate = new Date()) {
+  let max = CONTINGENCY_MAX_SESSIONS_BACK; // 2 → 3 sessions au total
+  if (isSeptemberAutumnGrace(referenceDate)) max += 1; // + automne d’avant
+  return max;
+}
+
 function isPublishedOnOrBefore(item, referenceDate = new Date()) {
   const published = new Date(item.date || 0);
   return Number.isFinite(published.getTime()) && published.getTime() <= referenceDate.getTime();
@@ -67,7 +88,8 @@ function isWithinUniversitySessionBand(item, referenceDate = new Date(), session
 
 function isWithinFreshnessWindow(item, referenceDate = new Date()) {
   if (!isPublishedOnOrBefore(item, referenceDate)) return false;
-  for (let band = 0; band <= CONTINGENCY_MAX_SESSIONS_BACK; band++) {
+  const maxBack = freshnessMaxSessionsBack(referenceDate);
+  for (let band = 0; band <= maxBack; band++) {
     if (isWithinUniversitySessionBand(item, referenceDate, band)) return true;
   }
   return false;
@@ -79,7 +101,7 @@ function filterFreshItems(items, referenceDate = new Date()) {
 
 /** Oldest session start still inside the freshness window (for expiry checks). */
 function freshnessWindowStart(referenceDate = new Date()) {
-  return getUniversitySessionStart(referenceDate, CONTINGENCY_MAX_SESSIONS_BACK);
+  return getUniversitySessionStart(referenceDate, freshnessMaxSessionsBack(referenceDate));
 }
 
 // === Article / source grouping ===============================================
@@ -290,6 +312,8 @@ module.exports = {
   FRESHNESS_SESSION_COUNT,
   CONTINGENCY_MAX_SESSIONS_BACK,
   freshnessWindowStart,
+  freshnessMaxSessionsBack,
+  isSeptemberAutumnGrace,
   getCurrentUniversitySessionStart,
   getUniversitySessionStart,
   getUniversitySessionBand,

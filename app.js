@@ -2974,14 +2974,15 @@ function updateNewsLayout() {
 const HERO_SPOTLIGHT_MAX = 3; /* 1 à la une + 2 vedettes (fil global) */
 const BRIEF_SIDEBAR_MAX = 7;
 /* Vue source : plus de vedettes intermédiaires (voir partitionSourceFeed). */
-/** Fenêtre de fraîcheur : 3 sessions max (= une année universitaire complète). */
+/**
+ * Fenêtre de fraîcheur :
+ *  - 3 sessions (en cours + 2) = automne + hiver + été sur un cycle
+ *  - septembre : grâce — on garde aussi l’automne d’avant
+ */
 const FRESHNESS_SESSION_COUNT = 3;
 const CONTINGENCY_MAX_SESSIONS_BACK = FRESHNESS_SESSION_COUNT - 1;
-/**
- * Sept–nov. : les journaux qui reprennent en automne n'ont souvent pas encore publié
- * dans la session en cours — on accepte leur dernier article des 2 sessions précédentes.
- */
-const AUTUMN_GRACE_END_MONTH = 10; /* novembre inclus */
+/** Septembre uniquement : mois de grâce avant de retirer l’automne précédent. */
+const AUTUMN_GRACE_END_MONTH = 8; /* septembre (0-index : 8) */
 /* Vedettes (feature) = même budget / sources d'extrait que « À la une ». */
 const BRIEF_LIMITS = { lead: 720, feature: 720, compact: 400, standard: 260 };
 const LEAD_BRIEF_MIN_CHARS = 160;
@@ -3068,13 +3069,19 @@ function sessionBandPool(items, referenceDate = new Date(), sessionsBack = 0) {
 }
 
 function isAutumnGracePeriod(referenceDate = new Date()) {
-  const session = getCurrentUniversitySessionStart(referenceDate);
-  if (session.getMonth() !== 8) return false;
-  return referenceDate.getMonth() <= AUTUMN_GRACE_END_MONTH;
+  // Mois de grâce = septembre (début d’automne, peu de publications encore)
+  return referenceDate.getMonth() === AUTUMN_GRACE_END_MONTH;
+}
+
+function freshnessMaxSessionsBack(referenceDate = new Date()) {
+  let max = CONTINGENCY_MAX_SESSIONS_BACK;
+  if (isAutumnGracePeriod(referenceDate)) max += 1;
+  return max;
 }
 
 function isWithinFreshnessWindow(item, referenceDate = new Date()) {
-  for (let band = 0; band <= CONTINGENCY_MAX_SESSIONS_BACK; band++) {
+  const maxBack = freshnessMaxSessionsBack(referenceDate);
+  for (let band = 0; band <= maxBack; band++) {
     if (isWithinUniversitySessionBand(item, referenceDate, band)) return true;
   }
   return false;
