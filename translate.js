@@ -726,6 +726,8 @@
     out = out.replace(/:(?!\/\/)(?=[\p{L}])/gu, ': ');
     // Mot collé en camel accidentel : licencjiPowszechna
     out = out.replace(/(\p{Ll}{2,})(\p{Lu}\p{L})/gu, '$1 $2');
+    // Dawson n’est pas une université (corrige aussi le corps de page)
+    out = fixInstitutionMistranslations('Dawson College', out);
     // Espaces doubles éventuels
     out = out.replace(/ {2,}/g, ' ');
     return out;
@@ -904,6 +906,74 @@
     return false;
   }
 
+  /**
+   * Libellés d’établissements fiables par langue (gtx invente souvent
+   * « Universidad Dawson » alors que c’est un cégep / collège).
+   * Clés = forme canonique FR/EN telle qu’en news-sources.
+   */
+  const INSTITUTION_LABELS = {
+    'Dawson College': {
+      fr: 'Collège Dawson',
+      en: 'Dawson College',
+      es: 'Colegio Dawson',
+      pt: 'Colégio Dawson',
+      de: 'Dawson College',
+      it: 'Dawson College',
+      pl: 'Dawson College',
+      default: 'Dawson College',
+    },
+    "Bishop's University": {
+      fr: "Université Bishop's",
+      en: "Bishop's University",
+      es: "Universidad Bishop's",
+      pt: "Universidade Bishop's",
+      de: "Bishop's University",
+      default: "Bishop's University",
+    },
+    'Polytechnique Montréal': {
+      fr: 'Polytechnique Montréal',
+      en: 'Polytechnique Montréal',
+      es: 'Polytechnique Montréal',
+      default: 'Polytechnique Montréal',
+    },
+    'Cégep du Vieux Montréal': {
+      fr: 'Cégep du Vieux Montréal',
+      en: 'Cégep du Vieux Montréal',
+      es: 'Cégep du Vieux Montréal',
+      default: 'Cégep du Vieux Montréal',
+    },
+    'Cégep de Jonquière': {
+      fr: 'Cégep de Jonquière',
+      en: 'Cégep de Jonquière',
+      default: 'Cégep de Jonquière',
+    },
+    'Cégep de Jonquière (ATM – journalisme)': {
+      fr: 'Cégep de Jonquière (ATM – journalisme)',
+      en: 'Cégep de Jonquière (ATM – journalism)',
+      default: 'Cégep de Jonquière (ATM – journalisme)',
+    },
+  };
+
+  function institutionLangKey(targetLang = '') {
+    const raw = String(targetLang || '').toLowerCase();
+    if (raw.startsWith('zh')) return raw.includes('tw') || raw.includes('hant') ? 'zh-tw' : 'zh';
+    if (raw === 'iw') return 'he';
+    if (raw === 'fil') return 'tl';
+    return raw.split(/[-_]/)[0] || raw;
+  }
+
+  function preferredInstitutionLabel(original = '', targetLang = '') {
+    const key = String(original || '').replace(/\s+/g, ' ').trim();
+    if (!key) return null;
+    const entry = INSTITUTION_LABELS[key]
+      || Object.entries(INSTITUTION_LABELS).find(
+        ([k]) => k.toLowerCase() === key.toLowerCase(),
+      )?.[1];
+    if (!entry) return null;
+    const lang = institutionLangKey(targetLang);
+    return entry[lang] || entry.default || null;
+  }
+
   /** Filet de casse après gtx (ex. ES : « universidad laval »). */
   function fixInstitutionTranslationCasing(str = '') {
     return String(str)
@@ -925,6 +995,49 @@
       .replace(/\bconcordia\b/giu, 'Concordia')
       .replace(/\bdawson\b/giu, 'Dawson')
       .replace(/\bqu[eé]bec\b/giu, (m) => (m.includes('é') ? 'Québec' : 'Quebec'));
+  }
+
+  /**
+   * Corrige les contresens gtx sur les établissements connus
+   * (Dawson = collège/cégep, pas une universidad ; Bishop’s ≠ Obispo).
+   */
+  function fixInstitutionMistranslations(original = '', translated = '') {
+    let t = String(translated || '');
+    const o = String(original || '').toLowerCase();
+
+    // Dawson College — jamais une université
+    if (/\bdawson\b/.test(o) || /\bdawson\b/i.test(t)) {
+      t = t
+        .replace(/\bUniversidad(?:\s+de)?\s+Dawson\b/giu, 'Colegio Dawson')
+        .replace(/\bUniversidade(?:\s+de)?\s+Dawson\b/giu, 'Colégio Dawson')
+        .replace(/\bUniversità(?:\s+di)?\s+Dawson\b/giu, 'Dawson College')
+        .replace(/\bUniwersytet\s+Dawsona?\b/giu, 'Dawson College')
+        .replace(/\b(?:The\s+)?University\s+of\s+Dawson\b/giu, 'Dawson College')
+        .replace(/\bDawson\s+University\b/giu, 'Dawson College')
+        .replace(/\bUniversité\s+Dawson\b/giu, 'Collège Dawson')
+        .replace(/\bDawson-Universität\b/giu, 'Dawson College')
+        .replace(/\bUniversität\s+Dawson\b/giu, 'Dawson College');
+    }
+
+    // Bishop's University — ne pas traduire Bishop → Obispo / Bispo
+    if (/bishop/.test(o) || /obispo|bispo|biskup/i.test(t)) {
+      t = t
+        .replace(/\bUniversidad del Obispo\b/giu, "Universidad Bishop's")
+        .replace(/\bUniversidade do Bispo\b/giu, "Universidade Bishop's")
+        .replace(/\bUniwersytet Biskupi\b/giu, "Bishop's University")
+        .replace(/\bUniversité de l['’]Évêque\b/giu, "Université Bishop's")
+        .replace(/\bUniversity of the Bishop\b/giu, "Bishop's University");
+    }
+
+    return t;
+  }
+
+  function polishInstitutionTranslation(original, translated, targetLang) {
+    const preferred = preferredInstitutionLabel(original, targetLang);
+    if (preferred) return preferred;
+    let out = fixInstitutionTranslationCasing(translated);
+    out = fixInstitutionMistranslations(original, out);
+    return out;
   }
 
   function shouldSkipElement(el) {
@@ -1011,13 +1124,29 @@
             if (translated && translated !== orig) {
               for (const node of list) {
                 if (!node.parentNode) continue;
-                // Pastilles sources : corriger la casse gtx sur les établissements
+                // Pastilles sources : glossaire + filets (Dawson ≠ universidad, etc.)
                 const out = isTranslatableInstitutionZone(node)
-                  ? fixInstitutionTranslationCasing(translated)
-                  : translated;
+                  ? polishInstitutionTranslation(orig, translated, targetLang)
+                  : fixInstitutionMistranslations(orig, translated);
                 node.nodeValue = out;
               }
               ok += 1;
+            } else if (
+              translated === orig
+              && list.some((n) => isTranslatableInstitutionZone(n))
+            ) {
+              // Même si gtx renvoie l’identique, appliquer le glossaire (ex. FR → Collège Dawson)
+              const preferred = preferredInstitutionLabel(orig, targetLang);
+              if (preferred && preferred !== orig.trim()) {
+                for (const node of list) {
+                  if (node.parentNode && isTranslatableInstitutionZone(node)) {
+                    node.nodeValue = reapplyEdgeWhitespace(orig, preferred);
+                  }
+                }
+                ok += 1;
+              } else {
+                fail += 1;
+              }
             } else {
               fail += 1;
             }
