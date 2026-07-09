@@ -2418,11 +2418,27 @@ function isConcordiaSource(name = '') {
   return /concordia/i.test(institution || '') || /^(the\s+)?link$/i.test(String(name).trim());
 }
 
+/** FR d'abord, puis EN, puis le reste (lang depuis news-sources.json). */
+function sourceLangRank(name = '') {
+  const lang = String(newsSourcesByName[name]?.lang || '').toLowerCase();
+  if (lang === 'fr') return 0;
+  if (lang === 'en') return 1;
+  return 2;
+}
+
+/**
+ * Tri pastilles sources :
+ *  1. Concordia (The Link) en tout dernier
+ *  2. Français, puis anglais, puis autres
+ *  3. Popularité croissante (1 = plus haut)
+ */
 function sortSourcesByPopularity(sources) {
   return [...sources].sort((a, b) => {
     const aCon = isConcordiaSource(a) ? 1 : 0;
     const bCon = isConcordiaSource(b) ? 1 : 0;
     if (aCon !== bCon) return aCon - bCon;
+    const langDiff = sourceLangRank(a) - sourceLangRank(b);
+    if (langDiff !== 0) return langDiff;
     const diff = sourcePopularityRank(a) - sourcePopularityRank(b);
     return diff !== 0 ? diff : a.localeCompare(b, 'fr');
   });
@@ -2436,24 +2452,13 @@ function filterInstitutionKey(sourceName = '') {
   return normInstitutionKey(institution);
 }
 
-/** Tri filtres : meilleur média par établissement d'abord, puis seconds médias. */
+/**
+ * Tri filtres sources : FR par popularité, puis EN par popularité,
+ * The Link (Concordia) en dernier. Plus de regroupement « secondaire »
+ * qui plaçait des anglophones au milieu des francophones.
+ */
 function sortSourcesForFilters(sources) {
-  const byInst = new Map();
-  for (const src of sources) {
-    const key = filterInstitutionKey(src);
-    if (!byInst.has(key)) byInst.set(key, []);
-    byInst.get(key).push(src);
-  }
-
-  const primary = [];
-  const secondary = [];
-  for (const list of byInst.values()) {
-    const sorted = sortSourcesByPopularity(list);
-    primary.push(sorted[0]);
-    if (sorted.length > 1) secondary.push(...sorted.slice(1));
-  }
-
-  return [...sortSourcesByPopularity(primary), ...sortSourcesByPopularity(secondary)];
+  return sortSourcesByPopularity(sources);
 }
 
 function assignSourceColors() {
