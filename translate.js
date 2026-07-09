@@ -531,8 +531,9 @@
     'CODE', 'PRE', 'KBD', 'SAMP', 'SVG', 'PATH', 'MATH', 'IFRAME',
   ]);
 
-  /** Classes / zones où les noms propres restent intacts (médias, auteurs, institutions…). */
-  const SKIP_CLASS_RE = /\b(?:notranslate|article-source|article-inst|article-author|filter-btn__name|filter-btn__inst|article-media-credit__creator)\b/;
+  /** Classes / zones où les noms propres restent intacts (médias, auteurs…).
+   *  filter-btn__inst : établissements traduisibles dans la liste de sources. */
+  const SKIP_CLASS_RE = /\b(?:notranslate|article-source|article-inst|article-author|filter-btn__name|article-media-credit__creator)\b/;
 
   function hasUserPreference() {
     try {
@@ -829,24 +830,62 @@
     return nameInSet(protectedInstitutionNames, text);
   }
 
+  /** Pastilles sources / barre compacte : établissements peuvent être traduits. */
+  function isTranslatableInstitutionZone(node) {
+    const el = node && node.nodeType === 3 ? node.parentElement : node;
+    if (!el || el.nodeType !== 1) return false;
+    return !!(el.closest?.('.filter-btn__inst, .filters-compact__inst'));
+  }
+
   /**
-   * Noms propres à ne pas traduire (média, établissement, ou libellé
-   * composé « poste · institution » / « 89,1 · Université Laval »).
+   * Noms propres à ne pas traduire (média, établissement hors pastilles sources,
+   * ou libellé composé « poste · institution » dans le tuner).
    */
-  function isProtectedProperName(text = '') {
+  function isProtectedProperName(text = '', node = null) {
     const t = String(text || '').replace(/\s+/g, ' ').trim();
     if (!t) return false;
-    if (isProtectedMediaName(t) || isProtectedInstitutionName(t)) return true;
-    // Segments séparés par point médian / barre
+    if (isProtectedMediaName(t)) return true;
+    // Liste de sources en haut : traduire les noms d'université / cégep
+    if (isProtectedInstitutionName(t)) {
+      if (isTranslatableInstitutionZone(node)) return false;
+      return true;
+    }
+    // Segments séparés par point médian / barre (tuner, etc.)
     const parts = t.split(/\s*[·|•]\s*/).map((p) => p.trim()).filter(Boolean);
     if (parts.length >= 2) {
-      // Si un segment est un établissement ou un média connu, garder le libellé entier
-      // (évite « universidad laval » et « Universidad del Obispo » dans le tuner / filtres).
+      if (isTranslatableInstitutionZone(node)) {
+        // Dans une pastille, ne bloquer que si un segment est un nom de média
+        if (parts.some((p) => isProtectedMediaName(p))) return true;
+        return false;
+      }
       if (parts.some((p) => isProtectedInstitutionName(p) || isProtectedMediaName(p))) {
         return true;
       }
     }
     return false;
+  }
+
+  /** Filet de casse après gtx (ex. ES : « universidad laval »). */
+  function fixInstitutionTranslationCasing(str = '') {
+    return String(str)
+      .replace(/\buniversité\b/giu, 'Université')
+      .replace(/\buniversite\b/giu, 'Université')
+      .replace(/\buniversity\b/giu, 'University')
+      .replace(/\buniversidad\b/giu, 'Universidad')
+      .replace(/\buniversidade\b/giu, 'Universidade')
+      .replace(/\buniversität\b/giu, 'Universität')
+      .replace(/\buniversità\b/giu, 'Università')
+      .replace(/\bcégep\b/giu, 'Cégep')
+      .replace(/\bcegep\b/giu, 'Cégep')
+      .replace(/\bcollege\b/giu, 'College')
+      .replace(/\bcollège\b/giu, 'Collège')
+      .replace(/\blaval\b/giu, 'Laval')
+      .replace(/\bmontr[eé]al\b/giu, (m) => (m.includes('é') ? 'Montréal' : 'Montreal'))
+      .replace(/\bsherbrooke\b/giu, 'Sherbrooke')
+      .replace(/\bmcgill\b/giu, 'McGill')
+      .replace(/\bconcordia\b/giu, 'Concordia')
+      .replace(/\bdawson\b/giu, 'Dawson')
+      .replace(/\bqu[eé]bec\b/giu, (m) => (m.includes('é') ? 'Québec' : 'Quebec'));
   }
 
   function shouldSkipElement(el) {
@@ -856,7 +895,7 @@
     if (el.classList?.contains('notranslate')) return true;
     if (el.getAttribute?.('translate') === 'no') return true;
     if (SKIP_CLASS_RE.test(el.className || '')) return true;
-    if (el.closest?.('.notranslate, [translate="no"], .translate-control, .sr-only, .article-source, .article-author, .filter-btn__name, .filter-btn__inst, .article-inst')) {
+    if (el.closest?.('.notranslate, [translate="no"], .translate-control, .sr-only, .article-source, .article-author, .filter-btn__name, .article-inst')) {
       return true;
     }
     return false;
@@ -871,8 +910,8 @@
         if (!val || !val.trim()) return NodeFilter.FILTER_REJECT;
         // Ignorer purement numérique / ponctuation
         if (!/[\p{L}]/u.test(val)) return NodeFilter.FILTER_REJECT;
-        // Noms de médias / établissements (The Plant, Université Laval…) = noms propres
-        if (isProtectedProperName(val)) return NodeFilter.FILTER_REJECT;
+        // Noms de médias (toujours) / établissements hors pastilles sources
+        if (isProtectedProperName(val, node)) return NodeFilter.FILTER_REJECT;
         let p = node.parentElement;
         while (p) {
           if (shouldSkipElement(p)) return NodeFilter.FILTER_REJECT;
@@ -929,11 +968,15 @@
         // eslint-disable-next-line no-await-in-loop
         await Promise.all(batch.map(async ([orig, list]) => {
           try {
-            const translated = await translateText(orig, targetLang);
+            let translated = await translateText(orig, targetLang);
             if (translated && translated !== orig) {
               for (const node of list) {
-                // Nœud peut avoir été détaché
-                if (node.parentNode) node.nodeValue = translated;
+                if (!node.parentNode) continue;
+                // Pastilles sources : corriger la casse gtx sur les établissements
+                const out = isTranslatableInstitutionZone(node)
+                  ? fixInstitutionTranslationCasing(translated)
+                  : translated;
+                node.nodeValue = out;
               }
               ok += 1;
             } else {

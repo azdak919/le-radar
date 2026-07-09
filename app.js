@@ -2690,11 +2690,22 @@ function updateFiltersCompactBar() {
   FILTERS_COMPACT.style.setProperty('--c', color);
   if (dot) dot.style.setProperty('--c', color);
   if (text) {
-    text.classList.add('notranslate');
-    text.setAttribute('translate', 'no');
-    text.textContent = instLabel
-      ? `${newsSourceFilter} · ${instLabel}`
-      : newsSourceFilter;
+    // Média protégé ; établissement traduisible (comme les pastilles sources).
+    text.classList.remove('notranslate');
+    text.removeAttribute('translate');
+    text.replaceChildren();
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'notranslate';
+    nameSpan.setAttribute('translate', 'no');
+    nameSpan.textContent = newsSourceFilter;
+    text.appendChild(nameSpan);
+    if (instLabel) {
+      text.appendChild(document.createTextNode(' · '));
+      const instSpan = document.createElement('span');
+      instSpan.className = 'filters-compact__inst';
+      instSpan.textContent = instLabel;
+      text.appendChild(instSpan);
+    }
   }
 }
 
@@ -2808,7 +2819,7 @@ function renderNewsFilters() {
         <span class="filter-btn__dot" aria-hidden="true"></span>
         <span class="filter-btn__name notranslate" translate="no">${escapeHtml(src)}</span>
       </span>
-      ${instLabel ? '<span class="filter-btn__inst notranslate" translate="no"></span>' : ''}
+      ${instLabel ? '<span class="filter-btn__inst"></span>' : ''}
     `;
     NEWS_FILTERS.appendChild(btn);
   });
