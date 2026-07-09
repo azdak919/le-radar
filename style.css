@@ -1189,13 +1189,20 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
 
 .wire-head {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
   margin-top: 28px;
   padding-bottom: 8px;
   border-bottom: 2px solid var(--rule-strong);
+}
+.wire-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  min-width: 0;
 }
 .wire-title {
   font-family: var(--serif);
@@ -1212,6 +1219,122 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   align-items: baseline;
 }
 .news-updated::before { content: "·"; margin-right: 8px; color: var(--rule); }
+
+/* ── Traduction page (Original / FR / EN) ── */
+.translate-control {
+  position: relative;
+  flex-shrink: 0;
+}
+.translate-toggle {
+  font-family: var(--sans);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 5px 10px 5px 8px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--bg-soft);
+  color: var(--ink-soft);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: border-color 140ms ease, color 140ms ease, background 140ms ease;
+}
+.translate-toggle:hover,
+.translate-toggle[aria-expanded="true"] {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 7%, var(--bg));
+}
+.translate-toggle__icon {
+  display: inline-flex;
+  opacity: 0.85;
+}
+.translate-toggle__label {
+  line-height: 1;
+}
+.translate-toggle__chev {
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: transform 0.2s ease;
+}
+.translate-toggle[aria-expanded="true"] .translate-toggle__chev {
+  transform: rotate(180deg);
+}
+.translate-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 40;
+  min-width: 200px;
+  padding: 6px;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  background: var(--bg);
+  box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.28);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.translate-menu[hidden] {
+  display: none !important;
+}
+.translate-menu__opt {
+  font-family: var(--sans);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  width: 100%;
+  margin: 0;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+.translate-menu__opt:hover {
+  background: var(--bg-soft);
+}
+.translate-menu__opt.is-active {
+  background: color-mix(in srgb, var(--accent) 12%, var(--bg));
+}
+.translate-menu__name {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.translate-menu__hint {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+}
+[data-theme="dark"] .translate-menu {
+  box-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.55);
+}
+
+/* Masquer la barre / combo Google Translate (on garde le moteur, pas le chrome). */
+#google_translate_element,
+.goog-te-banner-frame,
+.goog-te-balloon-frame,
+.goog-tooltip,
+.goog-te-spinner-pos,
+body > .skiptranslate {
+  display: none !important;
+}
+body {
+  top: 0 !important;
+}
+/* Contre le style injecté par Google sur body.translated-ltr */
+.goog-text-highlight {
+  background: transparent !important;
+  box-shadow: none !important;
+}
 
 .article-meta--time-only {
   justify-content: flex-end;
