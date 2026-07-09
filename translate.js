@@ -65,60 +65,9 @@
       goog: 'iu',
       group: 'indigenous',
     },
-    cr: {
-      id: 'cr',
-      label: 'Cree',
-      short: 'CR',
-      title: 'Eeyou / Cree — pas encore disponible en traduction automatique',
-      hint: 'Eeyou Istchee · bientôt',
-      group: 'indigenous',
-      unavailable: true,
-    },
-    moe: {
-      id: 'moe',
-      label: 'Innu-aimun',
-      short: 'INN',
-      title: 'Innu-aimun — pas encore disponible en traduction automatique',
-      hint: 'Innu · bientôt',
-      group: 'indigenous',
-      unavailable: true,
-    },
-    atj: {
-      id: 'atj',
-      label: 'Atikamekw',
-      short: 'ATJ',
-      title: 'Atikamekw Nehiromowin — pas encore disponible en traduction automatique',
-      hint: 'Atikamekw · bientôt',
-      group: 'indigenous',
-      unavailable: true,
-    },
-    alq: {
-      id: 'alq',
-      label: 'Anishinaabemowin',
-      short: 'ALG',
-      title: 'Anishinaabemowin (Algonquin) — pas encore disponible en traduction automatique',
-      hint: 'Algonquin · bientôt',
-      group: 'indigenous',
-      unavailable: true,
-    },
-    moh: {
-      id: 'moh',
-      label: 'Kanienʼkéha',
-      short: 'MOH',
-      title: 'Kanienʼkéha (Mohawk) — pas encore disponible en traduction automatique',
-      hint: 'Mohawk · bientôt',
-      group: 'indigenous',
-      unavailable: true,
-    },
-    mic: {
-      id: 'mic',
-      label: "Mi'kmaq",
-      short: 'MIC',
-      title: "Mi'kmaq — pas encore disponible en traduction automatique",
-      hint: "Mi'kmaq · bientôt",
-      group: 'indigenous',
-      unavailable: true,
-    },
+    /* Cree, Innu, Atikamekw, Anishinaabemowin, Mohawk, Mi'kmaq : absents des
+       API de traduction utilisées (gtx / MyMemory) — non listés tant qu'aucun
+       moteur fiable n'est disponible. Seul l'inuktitut est offert. */
     /* —— Population étudiante internationale au Québec / Canada ——
        Priorité : Inde, Chine, Nigeria, Philippines, Iran, Vietnam, Corée,
        Maghreb, Amérique latine, Europe de l’Est, etc. (IRCC / campus QC). */
@@ -487,7 +436,7 @@
   /** Ordre d’affichage : Original/FR/EN → autochtones QC → régions d’origine étudiantes. */
   const MENU_ORDER = [
     'original', 'fr', 'en',
-    'iu', 'iu-latn', 'cr', 'moe', 'atj', 'alq', 'moh', 'mic',
+    'iu', 'iu-latn',
     // Amériques
     'es', 'pt', 'ht',
     // Asie (Inde en tête des permis d’études au Canada)
@@ -502,7 +451,7 @@
   ];
 
   const GROUP_LABELS = {
-    indigenous: 'Langues autochtones du Québec',
+    indigenous: 'Inuktut · Nunavik',
     americas: 'Amériques',
     asia: 'Asie',
     mena: 'Maghreb & Moyen-Orient',
