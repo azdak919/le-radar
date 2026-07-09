@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-09T12:20:48.870Z",
+  "updated": "2026-07-09T13:40:40.783Z",
   "updatedSlot": null,
   "count": 192,
   "freshnessSessions": 3,
@@ -10,15 +10,15 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:00:00.000Z",
-      "lastFetchOk": "2026-07-09T12:19:36.105Z"
+      "lastFetchOk": "2026-07-09T13:39:30.465Z"
     },
     "Montréal Campus": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-07-09T12:19:36.992Z"
+      "lastFetchOk": null
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-03-25T11:00:00.000Z",
-      "lastFetchOk": "2026-07-09T12:19:40.487Z"
+      "lastFetchOk": "2026-07-09T13:39:33.697Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-07-06T12:00:00.000Z",
-      "lastFetchOk": "2026-07-09T12:19:40.938Z"
+      "lastFetchOk": "2026-07-09T13:39:34.052Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,7 +42,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-07-08T14:41:00.000Z",
-      "lastFetchOk": "2026-07-09T12:19:41.944Z"
+      "lastFetchOk": "2026-07-09T13:39:35.075Z"
     },
     "The Concordian": {
       "fetchOk": false,
@@ -58,7 +58,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-07-09T12:19:43.284Z"
+      "lastFetchOk": "2026-07-09T13:39:35.914Z"
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -66,7 +66,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-07-09T12:19:44.261Z"
+      "lastFetchOk": "2026-07-09T13:39:36.936Z"
     },
     "Le Collectif": {
       "fetchOk": true,
@@ -74,7 +74,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-07-08T22:24:23.000Z",
-      "lastFetchOk": "2026-07-09T12:19:45.764Z"
+      "lastFetchOk": "2026-07-09T13:39:38.081Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -82,7 +82,7 @@
       "articleCount": 7,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-07-09T12:19:46.063Z"
+      "lastFetchOk": "2026-07-09T13:39:38.173Z"
     },
     "La Pige": {
       "fetchOk": true,
@@ -90,7 +90,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-06-22T14:36:10.000Z",
-      "lastFetchOk": "2026-07-09T12:19:46.579Z"
+      "lastFetchOk": "2026-07-09T13:39:38.743Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-06-26T15:24:28.000Z",
-      "lastFetchOk": "2026-07-09T12:19:46.689Z"
+      "lastFetchOk": "2026-07-09T13:39:38.896Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 30,
       "freshArticleCount": 30,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-07-09T12:19:46.817Z"
+      "lastFetchOk": "2026-07-09T13:39:38.993Z"
     }
   },
   "items": [
@@ -264,7 +264,14 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "societe_christinelabrie_sourcepagefacebookderubaghazal.jpg",
       "sourceImageCreditRev": 2,
-      "leadImageReady": false
+      "leadImageReady": false,
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/4/47/Assembl%C3%A9e_nationale_du_Qu%C3%A9bec%2C_l%27H%C3%B4tel_du_Parlement%2C_fa%C3%A7ade_avec_ancien_entr%C3%A9_principal.jpg",
+      "imageTitle": "Assemblée nationale du Québec, l'Hôtel du Parlement, façade avec ancien entré principal",
+      "imageCredit": "Photo : Marc-Lautenbacher / CC BY-SA · Openverse",
+      "imageCreator": "Marc-Lautenbacher",
+      "imageLicense": "by-sa",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=73170675"
     },
     {
       "source": "Le Collectif",
@@ -478,7 +485,14 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "bruno-cormier-retraite-benevole.png",
       "leadImageReady": false,
-      "leadExcerpt": "« Les gens ont tendance à frapper un mur au moment de la retraite par manque de préparation », estime Le directeur général de la Fédération de l’âge d’or du Québec (Fadoq) pour la région Saguenay-Lac-Saint-Jean – Ungava, Patrice Saint-Pierre. (Photo : Léa Morin-Letort)"
+      "leadExcerpt": "« Les gens ont tendance à frapper un mur au moment de la retraite par manque de préparation », estime Le directeur général de la Fédération de l’âge d’or du Québec (Fadoq) pour la région Saguenay-Lac-Saint-Jean – Ungava, Patrice Saint-Pierre. (Photo : Léa Morin-Letort)",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Ville_saguenay_montage.jpg",
+      "imageTitle": "Ville saguenay montage",
+      "imageCredit": "Photo : Chicoutimi_-_Centre-ville_Est.jpg: Chicoutimi CampusUQAC07_282.JPG:… / CC BY-SA · Openverse",
+      "imageCreator": "Chicoutimi_-_Centre-ville_Est.jpg: Chicoutimi CampusUQAC07_282.JPG:…",
+      "imageLicense": "by-sa",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=11827158"
     },
     {
       "source": "The Tribune",
@@ -695,14 +709,7 @@
       "excerpt": "Depuis 2011, l’Équipe du renouveau démocratique de Saguenay tente d’être plus à l’écoute des citoyens. Le départ de huit des onze membres du conseil d’administration a failli mener la dissolution de l’Équipe du renouveau démocratique de Saguenay (ERD), mercredi soir. In extrémis, quatre membres pourraient secourir le parti.",
       "image": "",
       "leadExcerpt": "Le départ de huit des onze membres du conseil d’administration a failli mener la dissolution de l’Équipe du renouveau démocratique de Saguenay (ERD), mercredi soir. In extrémis, quatre membres pourraient secourir le parti.",
-      "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Ville_saguenay_montage.jpg",
-      "imageTitle": "Ville saguenay montage",
-      "imageCredit": "Photo : Chicoutimi_-_Centre-ville_Est.jpg: Chicoutimi CampusUQAC07_282.JPG:… / CC BY-SA · Openverse",
-      "imageCreator": "Chicoutimi_-_Centre-ville_Est.jpg: Chicoutimi CampusUQAC07_282.JPG:…",
-      "imageLicense": "by-sa",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=11827158"
+      "leadImageReady": false
     },
     {
       "source": "La Pige",
@@ -868,7 +875,14 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "image-2.jpeg",
       "sourceImageCreditRev": 2,
-      "leadImageReady": false
+      "leadImageReady": false,
+      "stockImage": "https://live.staticflickr.com/7347/10026206755_fba38d0a5c_b.jpg",
+      "imageTitle": "Better Choices Better Results Forum on Education",
+      "imageCredit": "Photo : MDGovpics / CC BY · Openverse",
+      "imageCreator": "MDGovpics",
+      "imageLicense": "by",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/64018555@N03/10026206755"
     },
     {
       "source": "Quartier Libre",
@@ -1241,7 +1255,6 @@
       "date": "2026-05-09T03:14:30.000Z",
       "excerpt": "D’origine moldave, Iulian Ciobanu arrive au Canada en 2010 sans même connaître le boccia. Cinq ans plus tard, il quitte son emploi pour devenir joueur BC4 breveté avec l’équipe nationale. « Je n’avais jamais fait de sport de ma vie, mais j’ai toujours été curieux et capable de",
       "image": "https://montrealcampus.ca/wp-content/uploads/2026/05/1-Photo-couverture.png",
-      "_pageAuthor": "Allyson Caron-Pelletier",
       "sourceImageCredit": "Photo : Allyson Caron-Pelletier",
       "sourceImageCreator": "Allyson Caron-Pelletier",
       "sourceImageCreditUrl": "https://montrealcampus.ca/2026/05/08/iulian-ciobanu-decouvrir-un-autre-monde-grace-au-boccia/",
@@ -1249,7 +1262,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "1-photo-couverture.png",
       "leadImageReady": true,
-      "leadExcerpt": "D’origine moldave, Iulian Ciobanu arrive au Canada en 2010 sans même connaître le boccia. Cinq ans plus tard, il quitte son emploi pour devenir joueur BC4 breveté avec l’équipe nationale. « Je n’avais jamais fait de sport de ma vie, mais j’ai toujours été curieux et capable de saisir les opportunités », lance-t-il en entrevue avec le Montréal Campus ."
+      "leadExcerpt": "D’origine moldave, Iulian Ciobanu arrive au Canada en 2010 sans même connaître le boccia. Cinq ans plus tard, il quitte son emploi pour devenir joueur BC4 breveté avec l’équipe nationale. « Je n’avais jamais fait de sport de ma vie, mais j’ai toujours été curieux et capable de saisir les opportunités », lance-t-il en entrevue avec le Montréal Campus .",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -1348,7 +1362,6 @@
       "date": "2026-05-05T02:55:43.000Z",
       "excerpt": "Une odeur de vieux livres, des allées étroites, des kiosques débordant d’objets oubliés, le Marché aux puces Saint-Michel n’a pas changé. Alors que les friperies vintage et les reventes en ligne gagnent en popularité, ce précurseur tient bon. Il continue de séduire par ses trouvailles insolites et par ses trésors millésimés.",
       "image": "https://montrealcampus.ca/wp-content/uploads/2026/04/TEMPLATE-DA-RADIO-3.jpg",
-      "_pageAuthor": "Julianne Mondoloni",
       "sourceImageCredit": "Photo : Julianne Mondoloni",
       "sourceImageCreator": "Julianne Mondoloni",
       "sourceImageCreditUrl": "https://montrealcampus.ca/2026/05/04/incursion-chez-un-bastion-montrealais-du-vintage/",
@@ -1356,7 +1369,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "template-da-radio-3.jpg",
       "leadImageReady": true,
-      "leadExcerpt": "Une odeur de vieux livres, des allées étroites, des kiosques débordant d’objets oubliés, le Marché aux puces Saint-Michel n’a pas changé. Alors que les friperies vintage et les reventes en ligne gagnent en popularité, ce précurseur tient bon. Il continue de séduire par ses trouvailles insolites et par ses trésors millésimés. Le Montréal Campus a poussé la porte du marché et est allé à la rencontre de ceux et de celles qui y tiennent boutique ou qui continuent de s’y aventurer."
+      "leadExcerpt": "Une odeur de vieux livres, des allées étroites, des kiosques débordant d’objets oubliés, le Marché aux puces Saint-Michel n’a pas changé. Alors que les friperies vintage et les reventes en ligne gagnent en popularité, ce précurseur tient bon. Il continue de séduire par ses trouvailles insolites et par ses trésors millésimés. Le Montréal Campus a poussé la porte du marché et est allé à la rencontre de ceux et de celles qui y tiennent boutique ou qui continuent de s’y aventurer.",
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -1370,7 +1384,6 @@
       "date": "2026-05-05T02:32:46.000Z",
       "excerpt": "Entre le texto et l’appel téléphonique, il y a le message vocal. S’il est bien ancré chez les plus jeunes, comment se fait-il que certains adorent cette méthode de communication et que d’autres la boudent complètement? Le Montréal Campus a rencontré une experte et des étudiant(e)s de l’UQAM pour mieux comprendre le phénomène.",
       "image": "https://montrealcampus.ca/wp-content/uploads/2026/04/TEMPLATE-DA-RADIO-2.jpg",
-      "_pageAuthor": "Magalie Lagacé",
       "sourceImageCredit": "Illustration : Allyson Caron-Pelletier",
       "sourceImageCreator": "Allyson Caron-Pelletier",
       "sourceImageCreditUrl": "https://montrealcampus.ca/2026/05/04/cellulaire-messages-vocaux-textos-reseaux-sociaux/",
@@ -1379,7 +1392,8 @@
       "sourceImageCreditImageKey": "template-da-radio-2.jpg",
       "sourceImageCreditRev": 2,
       "leadImageReady": true,
-      "leadExcerpt": "Entre le texto et l’appel téléphonique, il y a le message vocal. S’il est bien ancré chez les plus jeunes, comment se fait-il que certains adorent cette méthode de communication et que d’autres la boudent complètement? Le Montréal Campus a rencontré une experte et des étudiant(e)s de l’UQAM pour mieux comprendre le phénomène."
+      "leadExcerpt": "Entre le texto et l’appel téléphonique, il y a le message vocal. S’il est bien ancré chez les plus jeunes, comment se fait-il que certains adorent cette méthode de communication et que d’autres la boudent complètement? Le Montréal Campus a rencontré une experte et des étudiant(e)s de l’UQAM pour mieux comprendre le phénomène.",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -1443,7 +1457,6 @@
       "date": "2026-05-02T17:53:13.000Z",
       "excerpt": "Le club de tricot de la Faculté des sciences de l’UQAM se réunit chaque semaine autour d’activités créatives pour contrer le stress engendré par des études en sciences. Le Montréal Campus a participé à une de leurs activités d’initiation au tricot. « Oui, l’excuse c’est de faire",
       "image": "https://montrealcampus.ca/wp-content/uploads/2026/04/TEMPLATE-DA-RADIO-1-1.jpg",
-      "_pageAuthor": "Juliette Benoît",
       "sourceImageCredit": "Photo : Allyson Caron-Pelletier",
       "sourceImageCreator": "Allyson Caron-Pelletier",
       "sourceImageCreditUrl": "https://montrealcampus.ca/2026/05/02/tricot-club-uqam-artisanat/",
@@ -1451,7 +1464,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "template-da-radio-1-1.jpg",
       "leadImageReady": true,
-      "leadExcerpt": "Le club de tricot de la Faculté des sciences de l’UQAM se réunit chaque semaine autour d’activités créatives pour contrer le stress engendré par des études en sciences. Le Montréal Campus a participé à une de leurs activités d’initiation au tricot."
+      "leadExcerpt": "Le club de tricot de la Faculté des sciences de l’UQAM se réunit chaque semaine autour d’activités créatives pour contrer le stress engendré par des études en sciences. Le Montréal Campus a participé à une de leurs activités d’initiation au tricot.",
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -1465,7 +1479,6 @@
       "date": "2026-05-01T22:08:52.000Z",
       "excerpt": "La chaîne de gyms montréalaise Le Vestiaire propose des cours de groupe aux futurs ou très jeunes parents. Poids adaptés, temps alloué à l’allaitement et ambiance décontractée : le fonctionnement des cours « Moms and Dads » est pensé spécialement pour les parents accompagnés de leurs bébés.",
       "image": "https://montrealcampus.ca/wp-content/uploads/2026/04/TEMPLATE-DA-RADIO-4.jpg",
-      "_pageAuthor": "Jade Trudelle",
       "sourceImageCredit": "Photo : Allyson Caron-Pelletier",
       "sourceImageCreator": "Allyson Caron-Pelletier",
       "sourceImageCreditUrl": "https://montrealcampus.ca/2026/05/01/gym-parents-bebes-sport-cobaye/",
@@ -1473,7 +1486,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "template-da-radio-4.jpg",
       "leadImageReady": true,
-      "leadExcerpt": "La chaîne de gyms montréalaise Le Vestiaire propose des cours de groupe aux futurs ou très jeunes parents. Poids adaptés, temps alloué à l’allaitement et ambiance décontractée : le fonctionnement des cours « Moms and Dads » est pensé spécialement pour les parents accompagnés de leurs bébés."
+      "leadExcerpt": "La chaîne de gyms montréalaise Le Vestiaire propose des cours de groupe aux futurs ou très jeunes parents. Poids adaptés, temps alloué à l’allaitement et ambiance décontractée : le fonctionnement des cours « Moms and Dads » est pensé spécialement pour les parents accompagnés de leurs bébés.",
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -1487,7 +1501,6 @@
       "date": "2026-05-01T18:02:05.000Z",
       "excerpt": "« Êtes-vous prêt à réveiller l’homme que vous voulez être? », c’est ce qu’affiche le site Web de ManKind Project. Actif dans une vingtaine de pays, cet organisme a pour objectif de « développer un sentiment de masculinité sain et mature ». Retraites, groupes de discussion et ateliers relationnels sont au menu, entre hommes seulement.",
       "image": "https://montrealcampus.ca/wp-content/uploads/2026/04/Mankind-template-1.png",
-      "_pageAuthor": "Camélie Bourret et Félicitée Audet",
       "sourceImageCredit": "Illustration : Kilian Beauchesne et Allyson Caron-Pelletier",
       "sourceImageCreator": "Kilian Beauchesne et Allyson Caron-Pelletier",
       "sourceImageCreditUrl": "https://montrealcampus.ca/2026/05/01/masculinite-mankind-project-therapie/",
@@ -1496,7 +1509,8 @@
       "sourceImageCreditImageKey": "mankind-template-1.png",
       "sourceImageCreditRev": 2,
       "leadImageReady": true,
-      "leadExcerpt": "« Êtes-vous prêt à réveiller l’homme que vous voulez être? », c’est ce qu’affiche le site Web de ManKind Project. Actif dans une vingtaine de pays, cet organisme a pour objectif de « développer un sentiment de masculinité sain et mature »."
+      "leadExcerpt": "« Êtes-vous prêt à réveiller l’homme que vous voulez être? », c’est ce qu’affiche le site Web de ManKind Project. Actif dans une vingtaine de pays, cet organisme a pour objectif de « développer un sentiment de masculinité sain et mature ».",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -1530,7 +1544,6 @@
       "date": "2026-04-30T17:42:59.000Z",
       "excerpt": "Au début de 2026, la compagnie pharmaceutique Novo Nordisk a placardé de nombreuses publicités de Wegovy les murs et les tourniquets de la station de métro Berri-UQAM. Wegovy est un médicament destiné au traitement du diabète de type 2 et pour les personnes atteintes d’obésité.",
       "image": "https://montrealcampus.ca/wp-content/uploads/2026/04/Wegovy-template-1.png",
-      "_pageAuthor": "Juliette Benoît et Flora Paquet",
       "sourceImageCredit": "Illustration : Charles Dessureault",
       "sourceImageCreator": "Charles Dessureault",
       "sourceImageCreditUrl": "https://montrealcampus.ca/2026/04/30/publicites-wegovy-berri-uqam-minceur/",
@@ -1538,7 +1551,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "wegovy-template-1.png",
       "sourceImageCreditRev": 2,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -1552,7 +1566,6 @@
       "date": "2026-04-30T17:28:25.000Z",
       "excerpt": "Avec le dérèglement climatique, certain(e)s sont tenté(e)s de modifier leurs habitudes alimentaires pour donner un répit à la planète. Est-il possible de réaliser un basculement de régime alimentaire vers le végétalisme en un mois? À titre de cobaye, notre chroniqueur Pierre-Alexandre Larouche s’est prêté au jeu en devenant végétalien pendant trente jours.",
       "image": "https://montrealcampus.ca/wp-content/uploads/2026/04/TEMPLATE-DA-RADIO-Vegan.jpg",
-      "_pageAuthor": "Pierre-Alexandre Larouche",
       "sourceImageCredit": "Photo : Kilian Beauchesne",
       "sourceImageCreator": "Kilian Beauchesne",
       "sourceImageCreditUrl": "https://montrealcampus.ca/2026/04/30/cobaye-alimentation-vegetalisme/",
@@ -1560,7 +1573,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "template-da-radio-vegan.jpg",
       "leadImageReady": true,
-      "leadExcerpt": "Avec le dérèglement climatique, certain(e)s sont tenté(e)s de modifier leurs habitudes alimentaires pour donner un répit à la planète. Est-il possible de réaliser un basculement de régime alimentaire vers le végétalisme en un mois? À titre de cobaye, notre chroniqueur Pierre-Alexandre Larouche s’est prêté au jeu en devenant végétalien pendant trente jours."
+      "leadExcerpt": "Avec le dérèglement climatique, certain(e)s sont tenté(e)s de modifier leurs habitudes alimentaires pour donner un répit à la planète. Est-il possible de réaliser un basculement de régime alimentaire vers le végétalisme en un mois? À titre de cobaye, notre chroniqueur Pierre-Alexandre Larouche s’est prêté au jeu en devenant végétalien pendant trente jours.",
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -1574,7 +1588,6 @@
       "date": "2026-04-30T16:18:56.000Z",
       "excerpt": "L’artiste québécois Alphonse Bisaillon remplit les salles de spectacle sans l’appui des algorithmes. Il construit son public lentement, une conversation à la fois. Une stratégie portée par le bouche-à-oreille presque à contre-courant dans une époque où la visibilité culturelle dépend largement des plateformes numériques.",
       "image": "https://montrealcampus.ca/wp-content/uploads/2026/04/COACH-DE-VIE-1.jpg",
-      "_pageAuthor": "Julianne Mondoloni",
       "sourceImageCredit": "Illustration : Allyson Caron-Pelletier",
       "sourceImageCreator": "Allyson Caron-Pelletier",
       "sourceImageCreditUrl": "https://montrealcampus.ca/2026/04/30/il-reussit-a-etre-visible-hors-ligne/",
@@ -1583,7 +1596,8 @@
       "sourceImageCreditImageKey": "coach-de-vie-1.jpg",
       "sourceImageCreditRev": 2,
       "leadImageReady": true,
-      "leadExcerpt": "L’artiste québécois Alphonse Bisaillon remplit les salles de spectacle sans l’appui des algorithmes. Il construit son public lentement, une conversation à la fois. Une stratégie portée par le bouche-à-oreille presque à contre-courant dans une époque où la visibilité culturelle dépend largement des plateformes numériques."
+      "leadExcerpt": "L’artiste québécois Alphonse Bisaillon remplit les salles de spectacle sans l’appui des algorithmes. Il construit son public lentement, une conversation à la fois. Une stratégie portée par le bouche-à-oreille presque à contre-courant dans une époque où la visibilité culturelle dépend largement des plateformes numériques.",
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -1597,7 +1611,6 @@
       "date": "2026-04-30T11:39:00.000Z",
       "excerpt": "Sous-estimées et sous-représentées dans le milieu du plein air, les femmes ne composent que 14 % des guides au Québec. Si ce métier est encore considéré comme « non traditionnel pour les femmes », des initiatives féminines apparaissent depuis quelques années pour faire progresser la parité dans le milieu.",
       "image": "https://montrealcampus.ca/wp-content/uploads/2026/04/d7615146-e533-4343-9a9f-6df80c10ff28.jpg",
-      "_pageAuthor": "Valentin Nucci",
       "sourceImageCredit": "Crédit photo : Montréal Campus",
       "sourceImageCreditUrl": "https://montrealcampus.ca/2026/04/30/guider-au-feminin/",
       "sourceImageCreditFrom": "media",
@@ -1605,7 +1618,8 @@
       "sourceImageCreditImageKey": "d7615146-e533-4343-9a9f-6df80c10ff28.jpg",
       "sourceImageCreditRev": 2,
       "leadImageReady": true,
-      "leadExcerpt": "Sous-estimées et sous-représentées dans le milieu du plein air, les femmes ne composent que 14 % des guides au Québec. Si ce métier est encore considéré comme « non traditionnel pour les femmes » , des initiatives féminines apparaissent depuis quelques années pour faire progresser la parité dans le milieu."
+      "leadExcerpt": "Sous-estimées et sous-représentées dans le milieu du plein air, les femmes ne composent que 14 % des guides au Québec. Si ce métier est encore considéré comme « non traditionnel pour les femmes » , des initiatives féminines apparaissent depuis quelques années pour faire progresser la parité dans le milieu.",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -1967,7 +1981,14 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "img_0291-2.jpg",
       "sourceImageCreditRev": 2,
-      "leadImageReady": false
+      "leadImageReady": false,
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Komodo_dragon_%28Varanus_komodoensis%29.jpg",
+      "imageTitle": "File:Komodo dragon (Varanus komodoensis).jpg",
+      "imageCredit": "Photo : Charles J. Sharp / CC BY-SA 4.0 · Wikimedia Commons",
+      "imageCreator": "Charles J. Sharp",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageProvider": "wikimedia",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Komodo_dragon_(Varanus_komodoensis).jpg"
     },
     {
       "source": "The Link",
@@ -2055,7 +2076,14 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "odie_harr-2.jpg",
       "sourceImageCreditRev": 2,
-      "leadImageReady": false
+      "leadImageReady": false,
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/4/44/Huron_River_from_Concordia_University_campus%2C_4090_Geddes_Road%2C_Ann_Arbor%2C_Michigan_-_panoramio.jpg",
+      "imageTitle": "Huron River from Concordia University campus, 4090 Geddes Road, Ann Arbor, Michigan - panoramio",
+      "imageCredit": "Photo : Dwight Burdette / CC BY · Openverse",
+      "imageCreator": "Dwight Burdette",
+      "imageLicense": "by",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=54730039"
     },
     {
       "source": "The Link",
@@ -2110,7 +2138,14 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "screenshot_2026-04-11_17.01.52.png",
       "sourceImageCreditRev": 2,
-      "leadImageReady": false
+      "leadImageReady": false,
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/4/44/Huron_River_from_Concordia_University_campus%2C_4090_Geddes_Road%2C_Ann_Arbor%2C_Michigan_-_panoramio.jpg",
+      "imageTitle": "Huron River from Concordia University campus, 4090 Geddes Road, Ann Arbor, Michigan - panoramio",
+      "imageCredit": "Photo : Dwight Burdette / CC BY · Openverse",
+      "imageCreator": "Dwight Burdette",
+      "imageLicense": "by",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=54730039"
     },
     {
       "source": "The Link",
@@ -2212,7 +2247,14 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "12.news.aaronmaté.sean.online.courtesyaaronmaté.jpg",
       "sourceImageCreditRev": 2,
-      "leadImageReady": false
+      "leadImageReady": false,
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/4/44/Huron_River_from_Concordia_University_campus%2C_4090_Geddes_Road%2C_Ann_Arbor%2C_Michigan_-_panoramio.jpg",
+      "imageTitle": "Huron River from Concordia University campus, 4090 Geddes Road, Ann Arbor, Michigan - panoramio",
+      "imageCredit": "Photo : Dwight Burdette / CC BY · Openverse",
+      "imageCreator": "Dwight Burdette",
+      "imageLicense": "by",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=54730039"
     },
     {
       "source": "The Link",
@@ -2353,7 +2395,7 @@
       "lang": "en",
       "title": "Black Sisterhood at McGill targeted with online racist harassment",
       "link": "https://www.thetribune.ca/news/mcgill-news/black-sisterhood-at-mcgill-targeted-with-online-racist-harassment-07042026/?utm_source=rss&utm_medium=rss&utm_campaign=black-sisterhood-at-mcgill-targeted-with-online-racist-harassment-07042026",
-      "author": "The editorial team",
+      "author": "Moyọ Alabi and Ellen Lurie",
       "date": "2026-04-07T10:05:00.000Z",
       "excerpt": "Content warning: Mentions of racial violence After Black Sisterhood at McGill (BSISSY) began recruiting members to start an Alpha Kappa Alpha (AKA) sorority chapter at McGill, co-founders Lena Karis Moussio, U1 Arts, and Astou Badiane, U1 Arts, received racist comments and threats of violence through the organization’s Instagram account.",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/04/Untitled_Artwork-149-1000x600.png",
@@ -2636,7 +2678,7 @@
       "author": "Piper Howell",
       "date": "2026-04-06T12:41:04.000Z",
       "excerpt": "If you had the chance to finish high school 6,500 kilometres from home in a small Swiss town, would you do it? Spending my last year of high school living in Switzerland changed my life and I believe that living abroad, even for a short amount of time, is one of the best ways to become independent.",
-      "image": "https://thebucampus.ca/wp-content/uploads/2026/04/opinions_1_step-outside_cred-piper-howell.jpg",
+      "image": "https://thebucampus.ca/wp-content/uploads/2026/04/opinions_1_step-outside_cred-piper-howell.jpg?w=768",
       "sourceImageCredit": "Photo: Browyn Chenard",
       "sourceImageCreator": "Browyn Chenard",
       "sourceImageCreditUrl": "https://thebucampus.ca/2026/04/06/step-outside-and-change-your-life/",
@@ -2644,14 +2686,7 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "opinions_1_step-outside_cred-piper-howell.jpg",
       "sourceImageCreditRev": 2,
-      "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg",
-      "imageTitle": "Bishop's University campus 2011 03",
-      "imageCredit": "Photo : JasonParis / CC BY · Openverse",
-      "imageCreator": "JasonParis",
-      "imageLicense": "by",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=28810621"
+      "leadImageReady": false
     },
     {
       "source": "The Campus",
@@ -2685,7 +2720,7 @@
       "author": "Jonny Roach",
       "date": "2026-04-06T12:38:12.000Z",
       "excerpt": "Jonny Roach- Staff Writer The page looks the same as it always does: blank, waiting, familiar. I’ve sat here before, more times than I can count, chasing a first sentence that never feels right until it suddenly does. It’s routine now, almost muscle memory. But this time, something’s off.",
-      "image": "https://thebucampus.ca/wp-content/uploads/2026/04/opinions_3_graduationcatchingup_credlatoyasimms.png",
+      "image": "https://thebucampus.ca/wp-content/uploads/2026/04/opinions_3_graduationcatchingup_credlatoyasimms.png?w=819",
       "sourceImageCredit": "Photo: Browyn Chenard",
       "sourceImageCreator": "Browyn Chenard",
       "sourceImageCreditUrl": "https://thebucampus.ca/2026/04/06/no-one-tells-you-when-its-over/",
@@ -2693,14 +2728,7 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "opinions_3_graduationcatchingup_credlatoyasimms.png",
       "sourceImageCreditRev": 2,
-      "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg",
-      "imageTitle": "Bishop's University campus 2011 03",
-      "imageCredit": "Photo : JasonParis / CC BY · Openverse",
-      "imageCreator": "JasonParis",
-      "imageLicense": "by",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=28810621"
+      "leadImageReady": false
     },
     {
       "source": "The Campus",
@@ -2841,13 +2869,14 @@
       "excerpt": "Listen now | In this last episode of Read It Up, Assistant Arts and Culture Editor Kasi Peri talks about the novel The Castle of Otranto by Horace Walpole.",
       "image": "",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/8/80/Assistant_SecDef_visits_1ID_in_Poland_%284592025%29.jpg",
-      "imageCredit": "Photo : U.S. Army CAB-1ID by Master Sgt. Nathan Hoskins / PUBLIC DOMAIN · Wikimedia Commons",
-      "imageCreator": "U.S. Army CAB-1ID by Master Sgt. Nathan Hoskins",
-      "imageLicense": "Public domain",
-      "imageProvider": "wikimedia",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Assistant_SecDef_visits_1ID_in_Poland_(4592025).jpg",
-      "_retainedFromCache": true
+      "stockImage": "https://live.staticflickr.com/3676/13430312945_c3166853ff_b.jpg",
+      "imageCredit": "Photo : Roger Blackwell / CC BY · Openverse",
+      "imageCreator": "Roger Blackwell",
+      "imageLicense": "by",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/10630857@N04/13430312945",
+      "_retainedFromCache": true,
+      "imageTitle": "Teachers listening carefully to a speaker at their strike rally in front of the Forum, Norwich this lunchtime"
     },
     {
       "source": "The Concordian",
@@ -3195,6 +3224,91 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
+      "title": "La performance de l’homosexualité : un privilège ?",
+      "link": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
+      "author": "Joséphine Miton",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Blague innocente, signe d’ouverture ou nouveau costume ?",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/coinqueer-1.jpeg",
+      "featured": true,
+      "_pageAuthor": "Joséphine Miton",
+      "sourceImageCredit": "Photo : Félix Fournier",
+      "sourceImageCreator": "Félix Fournier",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "coinqueer-1.jpeg",
+      "sourceImageCreditRev": 2,
+      "leadImageReady": false,
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/be/Universit%C3%A9_McGill%2C_Biology_Building%2C_845%2C_rue_Sherbrooke_Ouest%2C_Montr%C3%A9al_face_lat%C3%A9rale_gauche_11-d.na.civile-91-889.jpg",
+      "imageTitle": "Université McGill, Biology Building, 845, rue Sherbrooke Ouest, Montréal face latérale gauche 11-d.na.civile-91-889",
+      "imageCredit": "Photo : Groupe de recherche en art du Québec / CC BY-SA · Openverse",
+      "imageCreator": "Groupe de recherche en art du Québec",
+      "imageLicense": "by-sa",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=104663467",
+      "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie."
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "L’épidémie de la nonchalance",
+      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
+      "author": "Elie Nguyen",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Pour en finir avec l’insouciance de façade et embrasser pleinement l’authenticité.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Creation-sans-titre-2-768x1024.png",
+      "featured": true,
+      "_pageAuthor": "Elie Nguyen",
+      "sourceImageCredit": "Photo : Elie Nguyen",
+      "sourceImageCreator": "Elie Nguyen",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "creation-sans-titre-2.png",
+      "sourceImageCreditRev": 2,
+      "leadImageReady": false,
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/e/e9/Universit%C3%A9_McGill%2C_Pathology_Building%2C_3775%2C_rue_University%2C_Montr%C3%A9al_fa%C3%A7ade%2C_pignon_de_la_section_de_l%27entr%C3%A9e%2C_pierre_11-d.na.civile-91-899.jpg",
+      "imageTitle": "File:Université McGill, Pathology Building, 3775, rue University, Montréal façade, pignon de la section de l'entrée, pierre 11-d.na.civile-91-899.jpg",
+      "imageCredit": "Photo : Groupe de recherche en art du Québec / CC BY-SA 4.0 · Wikimedia Commons",
+      "imageCreator": "Groupe de recherche en art du Québec",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageProvider": "wikimedia",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Universit%C3%A9_McGill,_Pathology_Building,_3775,_rue_University,_Montr%C3%A9al_fa%C3%A7ade,_pignon_de_la_section_de_l%27entr%C3%A9e,_pierre_11-d.na.civile-91-899.jpg",
+      "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance."
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "Le retard et les bienfaits du temps long",
+      "link": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
+      "author": "Dalia Djazouli",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Imposer sa propre subjectivité temporelle.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/retard-1-scaled.jpeg",
+      "featured": true,
+      "_pageAuthor": "Dalia Djazouli",
+      "sourceImageCredit": "Photo : Félix Fournier",
+      "sourceImageCreator": "Félix Fournier",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "retard-1.jpeg",
+      "leadImageReady": true,
+      "leadExcerpt": "L’imposition de la ponctualité comme norme suprême ne se cantonne pas à notre journal étudiant : elle est propre à nos sociétés industrialisées, dont la conception du temps est particulièrement rigoureuse et utilitariste. La temporalité est perçue comme un objet tangible, que l’on peut et doit rentabiliser autant que possible. Les journées sont compartimentées, et chaque heure doit être mise à profit."
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
       "title": "Rassembler pour mieux diviser",
       "link": "https://www.delitfrancais.com/2026/03/25/rassembler-pour-mieux-diviser/",
       "author": "Catherine Brunet Rodriguez",
@@ -3257,91 +3371,6 @@
       "sourceImageCreditImageKey": "concordiareponsev2.jpeg",
       "leadImageReady": true,
       "leadExcerpt": "Dans son entrevue, M. Lander, un habitué de la télévision de langue anglaise (et économiste à ses heures), recopie plus ou moins habilement le modus operandi d’une infinité de « dépendantistes » avant lui. L’épouvantail de la peur d’un effondrement économique d’un Québec souverain qu’il dresse sera toujours le plus imposant dans l’imaginaire collectif des électeurs. Il inspire un niveau d’incertitude tellement étouffant que nous nous en remettons à de supposés experts pour nous prédire le futur de notre nation, sans penser à remettre leurs sordides mensonges en question."
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "La performance de l’homosexualité : un privilège ?",
-      "link": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
-      "author": "Joséphine Miton",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Blague innocente, signe d’ouverture ou nouveau costume ?",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/coinqueer-1.jpeg",
-      "featured": true,
-      "_pageAuthor": "Joséphine Miton",
-      "sourceImageCredit": "Photo : Félix Fournier",
-      "sourceImageCreator": "Félix Fournier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "coinqueer-1.jpeg",
-      "sourceImageCreditRev": 2,
-      "leadImageReady": false,
-      "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/be/Universit%C3%A9_McGill%2C_Biology_Building%2C_845%2C_rue_Sherbrooke_Ouest%2C_Montr%C3%A9al_face_lat%C3%A9rale_gauche_11-d.na.civile-91-889.jpg",
-      "imageTitle": "Université McGill, Biology Building, 845, rue Sherbrooke Ouest, Montréal face latérale gauche 11-d.na.civile-91-889",
-      "imageCredit": "Photo : Groupe de recherche en art du Québec / CC BY-SA · Openverse",
-      "imageCreator": "Groupe de recherche en art du Québec",
-      "imageLicense": "by-sa",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=104663467"
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "L’épidémie de la nonchalance",
-      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
-      "author": "Elie Nguyen",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Pour en finir avec l’insouciance de façade et embrasser pleinement l’authenticité.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Creation-sans-titre-2-768x1024.png",
-      "featured": true,
-      "_pageAuthor": "Elie Nguyen",
-      "sourceImageCredit": "Photo : Elie Nguyen",
-      "sourceImageCreator": "Elie Nguyen",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "creation-sans-titre-2.png",
-      "sourceImageCreditRev": 2,
-      "leadImageReady": false,
-      "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/2/23/Universit%C3%A9_McGill%2C_Biology_Building%2C_845%2C_rue_Sherbrooke_Ouest%2C_Montr%C3%A9al_fa%C3%A7ade_11-d.na.civile-91-888.jpg",
-      "imageTitle": "Université McGill, Biology Building, 845, rue Sherbrooke Ouest, Montréal façade 11-d.na.civile-91-888",
-      "imageCredit": "Photo : Groupe de recherche en art du Québec / CC BY-SA · Openverse",
-      "imageCreator": "Groupe de recherche en art du Québec",
-      "imageLicense": "by-sa",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=104663450"
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "Le retard et les bienfaits du temps long",
-      "link": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
-      "author": "Dalia Djazouli",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Imposer sa propre subjectivité temporelle.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/retard-1-scaled.jpeg",
-      "featured": true,
-      "_pageAuthor": "Dalia Djazouli",
-      "sourceImageCredit": "Photo : Félix Fournier",
-      "sourceImageCreator": "Félix Fournier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "retard-1.jpeg",
-      "leadImageReady": true,
-      "leadExcerpt": "L’imposition de la ponctualité comme norme suprême ne se cantonne pas à notre journal étudiant : elle est propre à nos sociétés industrialisées, dont la conception du temps est particulièrement rigoureuse et utilitariste. La temporalité est perçue comme un objet tangible, que l’on peut et doit rentabiliser autant que possible. Les journées sont compartimentées, et chaque heure doit être mise à profit."
     },
     {
       "source": "The McGill Daily",
@@ -3487,14 +3516,7 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "sports_1_bu-club-hockey_credits_courteousy-of-bu-club-hockey-team.jpg",
       "sourceImageCreditRev": 2,
-      "leadImageReady": false,
-      "stockImage": "https://live.staticflickr.com/2690/4397427381_ca3a0e7c13_b.jpg",
-      "imageTitle": "Men's Gold Medal: Canada vs. USA",
-      "imageCredit": "Photo : s.yume / CC BY · Openverse",
-      "imageCreator": "s.yume",
-      "imageLicense": "by",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/24503701@N02/4397427381"
+      "leadImageReady": false
     },
     {
       "source": "The Campus",
@@ -3578,14 +3600,7 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "opinions_2_histories-rhyming_cred-bu-snow-instagram.jpeg",
       "sourceImageCreditRev": 2,
-      "leadImageReady": false,
-      "stockImage": "https://live.staticflickr.com/6008/5982053193_8dbf0e07b0_b.jpg",
-      "imageTitle": "Territorial Enterprise & Grants General Store",
-      "imageCredit": "Photo : Renodesertfoxstill / CC BY · Openverse",
-      "imageCreator": "Renodesertfoxstill",
-      "imageLicense": "by",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/65392060@N02/5982053193"
+      "leadImageReady": false
     },
     {
       "source": "The Campus",
@@ -3938,13 +3953,14 @@
       "excerpt": "In this episode of Read It Up, Assistant Arts and Culture Editor Kasi Peri delves into the vampiric world of Joseph Sheridan Le Fanu 1872 novel Carmilla. She covers the sapphic aspects of the novel and the author’s family life. It is considered to be one of the first vampire",
       "image": "",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/8/80/Carmilla.jpg",
-      "imageCredit": "Photo : David Henry Friston / PUBLIC DOMAIN · Wikimedia Commons",
-      "imageCreator": "David Henry Friston",
-      "imageLicense": "Public domain",
-      "imageProvider": "wikimedia",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Carmilla.jpg",
-      "_retainedFromCache": true
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/4/44/Huron_River_from_Concordia_University_campus%2C_4090_Geddes_Road%2C_Ann_Arbor%2C_Michigan_-_panoramio.jpg",
+      "imageCredit": "Photo : Dwight Burdette / CC BY · Openverse",
+      "imageCreator": "Dwight Burdette",
+      "imageLicense": "by",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=54730039",
+      "_retainedFromCache": true,
+      "imageTitle": "Huron River from Concordia University campus, 4090 Geddes Road, Ann Arbor, Michigan - panoramio"
     },
     {
       "source": "Le Délit",
@@ -3989,14 +4005,14 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "maga_marius.png",
       "leadImageReady": false,
-      "leadExcerpt": "L a montée en puissance de l’idéologie du mouvement politique Make America Great Again (MAGA) n’est pas qu’un accident ou qu’une simple parenthèse dans l’histoire américaine. Au contraire, ce fléau populiste est l’aboutissement rationnel d’un mariage longuement mijoté entre le conservatisme social, le néolibéralisme économique, et le sensationnalisme médiatique. Quoi qu’elle se vêtisse d’un nouvel habillage moderne et d’une esthétique grossière, cette fusion macabre porte en elle les caractéristiques héréditaires du fascisme, tel que le monde l’a vécu au 20e siècle.",
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/be/Universit%C3%A9_McGill%2C_Biology_Building%2C_845%2C_rue_Sherbrooke_Ouest%2C_Montr%C3%A9al_face_lat%C3%A9rale_gauche_11-d.na.civile-91-889.jpg",
       "imageTitle": "Université McGill, Biology Building, 845, rue Sherbrooke Ouest, Montréal face latérale gauche 11-d.na.civile-91-889",
       "imageCredit": "Photo : Groupe de recherche en art du Québec / CC BY-SA · Openverse",
       "imageCreator": "Groupe de recherche en art du Québec",
       "imageLicense": "by-sa",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=104663467"
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=104663467",
+      "leadExcerpt": "L a montée en puissance de l’idéologie du mouvement politique Make America Great Again (MAGA) n’est pas qu’un accident ou qu’une simple parenthèse dans l’histoire américaine. Au contraire, ce fléau populiste est l’aboutissement rationnel d’un mariage longuement mijoté entre le conservatisme social, le néolibéralisme économique, et le sensationnalisme médiatique. Quoi qu’elle se vêtisse d’un nouvel habillage moderne et d’une esthétique grossière, cette fusion macabre porte en elle les caractéristiques héréditaires du fascisme, tel que le monde l’a vécu au 20e siècle."
     },
     {
       "source": "The McGill Daily",
@@ -4103,14 +4119,14 @@
       "sourceImageCreditImageKey": "7277bbff-865b-4f02-9806-7460993c06d7_2556x502.png",
       "leadImageReady": false,
       "sourceImageCreditRev": 2,
-      "_retainedFromCache": true,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/4/44/Huron_River_from_Concordia_University_campus%2C_4090_Geddes_Road%2C_Ann_Arbor%2C_Michigan_-_panoramio.jpg",
       "imageTitle": "Huron River from Concordia University campus, 4090 Geddes Road, Ann Arbor, Michigan - panoramio",
       "imageCredit": "Photo : Dwight Burdette / CC BY · Openverse",
       "imageCreator": "Dwight Burdette",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=54730039"
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=54730039",
+      "_retainedFromCache": true
     },
     {
       "source": "The Concordian",
