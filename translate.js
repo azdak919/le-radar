@@ -3,12 +3,13 @@
  *
  * Règles :
  *  1. Préférence utilisateur (localStorage) si elle existe — y compris « Original ».
+ *     Un choix manuel s'applique TOUJOURS, quelle que soit la langue du navigateur.
  *  2. Sinon, langue du navigateur :
  *     - fr* ou en*  → Original bilingue (pas de traduction auto)
  *     - toute autre → traduction auto vers cette langue
- *  3. L'utilisateur peut toujours forcer Original / FR / EN / etc. dans le menu.
  *
- * Moteur : Google Website Translator (widget masqué) + UI maison.
+ * Moteur : cookie googtrans + Google Website Translator + rechargement
+ * (méthode la plus fiable ; le combo JS seul échoue souvent).
  */
 (function () {
   'use strict';
@@ -16,12 +17,6 @@
   const STORAGE_KEY = 'radar-translate-mode';
   const DEFAULT_MODE = 'original';
 
-  /**
-   * Modes avec entrée de menu.
-   * Ordre d'affichage : original → fr → en → langues autochtones du Québec → autres.
-   * group: 'core' | 'indigenous' | 'other'
-   * unavailable: true → affiché mais pas encore supporté par Google Translate.
-   */
   const MODES = {
     original: {
       id: 'original',
@@ -49,9 +44,6 @@
       goog: 'en',
       group: 'core',
     },
-    // ── Langues autochtones du Québec (Inuit + Premières Nations) ──
-    // Google Translate (2024+) : Inuktut seulement. Les autres sont listées
-    // pour visibilité ; clic → message tant que le moteur ne les offre pas.
     iu: {
       id: 'iu',
       label: 'ᐃᓄᒃᑎᑐᑦ',
@@ -117,14 +109,13 @@
     },
     mic: {
       id: 'mic',
-      label: 'Mi\'kmaq',
+      label: "Mi'kmaq",
       short: 'MIC',
-      title: 'Mi\'kmaq — pas encore disponible en traduction automatique',
-      hint: 'Mi\'kmaq · bientôt',
+      title: "Mi'kmaq — pas encore disponible en traduction automatique",
+      hint: "Mi'kmaq · bientôt",
       group: 'indigenous',
       unavailable: true,
     },
-    // ── Autres langues ──
     es: {
       id: 'es',
       label: 'Español',
@@ -190,14 +181,13 @@
     },
   };
 
-  /** Ordre stable du menu (indépendant de l'ordre des clés d'objet). */
   const MENU_ORDER = [
     'original', 'fr', 'en',
     'iu', 'iu-latn', 'cr', 'moe', 'atj', 'alq', 'moh', 'mic',
     'es', 'pt', 'ht', 'ar', 'zh', 'de', 'it',
   ];
 
-  /** Codes Google pour le widget + auto-détection. */
+  // Codes exacts attendus par le widget Google (Inuktut = iu / iu-Latn).
   const GOOG_INCLUDED = [
     ...new Set(
       Object.values(MODES)
@@ -220,16 +210,14 @@
   }
 
   function isValidLangCode(code) {
-    return typeof code === 'string' && /^[a-z]{2}(?:-[A-Za-z]{2,4})?$/.test(code);
+    return typeof code === 'string' && /^[a-z]{2}(?:-[A-Za-z]{2,8})?$/.test(code);
   }
 
-  /** BCP-47 → code Google / mode connu. */
   function normalizeBrowserLang(tag) {
     const raw = String(tag || '').trim().toLowerCase();
     if (!raw) return '';
     if (raw.startsWith('zh')) return 'zh';
-    const primary = raw.split('-')[0];
-    return primary || '';
+    return raw.split('-')[0] || '';
   }
 
   function googCodeForMode(mode) {
@@ -269,11 +257,6 @@
     return MODES.original;
   }
 
-  /**
-   * Première langue navigateur ni fr ni en → mode de traduction auto.
-   * fr / en (toute variante) → original.
-   * iu / ike → Inuktut si présent.
-   */
   function detectBrowserAutoMode() {
     let tags = [];
     try {
@@ -290,28 +273,17 @@
       const lower = String(tag || '').toLowerCase();
       const primary = normalizeBrowserLang(tag);
       if (!primary) continue;
-      // Français ou anglais → garder le bilingue, ne pas traduire.
-      if (primary === 'fr' || primary === 'en') {
-        return DEFAULT_MODE;
-      }
-      // Inuktut / Inuktitut
-      if (primary === 'iu' || primary === 'ike' || lower.startsWith('iu-')) {
+      if (primary === 'fr' || primary === 'en') return DEFAULT_MODE;
+      if (primary === 'iu' || primary === 'ike' || lower.startsWith('iu')) {
         return lower.includes('latn') ? 'iu-latn' : 'iu';
       }
-      // Langue au menu mais pas encore supportée par le moteur → ne pas auto-traduire
-      if (MODES[primary]?.unavailable) {
-        continue;
-      }
-      // Autre langue → traduire vers celle-ci (première de la liste).
-      if (MODES[primary] && MODES[primary].goog) return primary;
+      if (MODES[primary]?.unavailable) continue;
+      if (MODES[primary]?.goog) return primary;
       if (isValidLangCode(primary)) return primary;
     }
     return DEFAULT_MODE;
   }
 
-  /**
-   * Mode effectif : préférence utilisateur si définie, sinon détection navigateur.
-   */
   function getMode() {
     if (hasUserPreference()) {
       try {
@@ -320,7 +292,6 @@
         if (raw === 'iu-latn') return 'iu-latn';
         if (MODES[raw] && !MODES[raw].unavailable) return raw;
         if (isValidLangCode(raw) && raw !== 'fr' && raw !== 'en') return raw;
-        // Préférence invalide ou langue pas encore supportée → détection
       } catch { /* fall through */ }
     }
     return detectBrowserAutoMode();
@@ -337,18 +308,34 @@
     return mode;
   }
 
-  function clearGoogTransCookies() {
+  /** Chemins cookie : / et préfixe projet GitHub Pages (/radios-etudiantes-qc/). */
+  function cookiePaths() {
+    const paths = new Set(['/']);
+    const segs = location.pathname.split('/').filter(Boolean);
+    // /radios-etudiantes-qc/… → cookie aussi sur le sous-chemin du projet
+    if (segs.length >= 1) {
+      paths.add(`/${segs[0]}/`);
+    }
+    return [...paths];
+  }
+
+  function cookieDomains() {
     const host = location.hostname;
-    const expire = 'Thu, 01 Jan 1970 00:00:00 GMT';
-    const paths = ['/', location.pathname || '/'];
-    const domains = ['', host];
-    if (host && host.includes('.')) {
+    const domains = ['']; // host-only
+    if (!host || host === 'localhost' || host === '127.0.0.1') return domains;
+    domains.push(host);
+    if (host.includes('.')) {
       domains.push(`.${host}`);
       const parts = host.split('.');
       if (parts.length >= 2) domains.push(`.${parts.slice(-2).join('.')}`);
     }
-    for (const d of domains) {
-      for (const p of paths) {
+    return domains;
+  }
+
+  function clearGoogTransCookies() {
+    const expire = 'Thu, 01 Jan 1970 00:00:00 GMT';
+    for (const d of cookieDomains()) {
+      for (const p of cookiePaths()) {
         const domainPart = d ? `; domain=${d}` : '';
         document.cookie = `googtrans=; expires=${expire}; path=${p}${domainPart}`;
       }
@@ -358,17 +345,32 @@
   function setGoogTransCookie(targetLang) {
     clearGoogTransCookies();
     if (!targetLang) return;
+    // /auto/LANG : source détectée par bloc (fil bilingue FR+EN).
     const value = `/auto/${targetLang}`;
-    document.cookie = `googtrans=${value}; path=/`;
+    for (const p of cookiePaths()) {
+      document.cookie = `googtrans=${value}; path=${p}; max-age=31536000; SameSite=Lax`;
+    }
+    // Domaine host explicite (github.io)
     const host = location.hostname;
     if (host && host !== 'localhost' && host !== '127.0.0.1') {
-      document.cookie = `googtrans=${value}; path=/; domain=${host}`;
+      for (const p of cookiePaths()) {
+        document.cookie = `googtrans=${value}; path=${p}; domain=${host}; max-age=31536000; SameSite=Lax`;
+      }
     }
   }
 
   function readGoogTransTarget() {
-    const m = document.cookie.match(/(?:^|;\s*)googtrans=\/[^/]*\/([a-z]{2}(?:-[A-Za-z]{2,4})?)/i);
-    return m ? m[1] : '';
+    const m = document.cookie.match(/(?:^|;\s*)googtrans=\/[^/;]*\/([^;]+)/i);
+    return m ? decodeURIComponent(m[1]).trim() : '';
+  }
+
+  function isPageTranslated() {
+    const b = document.body;
+    if (!b) return false;
+    return /translated/.test(b.className || '')
+      || !!b.classList?.contains('translated-ltr')
+      || !!b.classList?.contains('translated-rtl')
+      || !!document.documentElement.classList?.contains('translated-ltr');
   }
 
   function updateUi(mode) {
@@ -395,13 +397,13 @@
         opt.setAttribute('aria-selected', active ? 'true' : 'false');
         opt.classList.toggle('is-active', active);
       });
-      // Si mode auto hors menu (ex. hi), pas d'option active — OK
     }
     document.documentElement.dataset.translate = mode;
     if (mode === 'en') document.documentElement.lang = 'en-CA';
     else if (mode === 'fr') document.documentElement.lang = 'fr-CA';
     else if (mode === 'ar') document.documentElement.lang = 'ar';
     else if (mode === 'zh') document.documentElement.lang = 'zh-Hans';
+    else if (mode === 'iu' || mode === 'iu-latn') document.documentElement.lang = 'iu';
     else document.documentElement.lang = 'fr-CA';
   }
 
@@ -427,26 +429,26 @@
   }
 
   function applyComboValue(lang) {
-    const select = document.querySelector('.goog-te-combo');
-    if (!select) return false;
-    const want = lang || '';
-    let matched = false;
+    const select = document.querySelector('select.goog-te-combo');
+    if (!select || !select.options || !select.options.length) return false;
+    const want = String(lang || '');
+    let found = null;
     for (const opt of select.options) {
+      const v = opt.value || '';
       if (
-        opt.value === want
-        || (want && opt.value.toLowerCase() === want.toLowerCase())
-        || (want === 'zh-CN' && /^zh/i.test(opt.value))
+        v === want
+        || v.toLowerCase() === want.toLowerCase()
+        || (want === 'zh-CN' && /^zh/i.test(v))
+        || (want === 'iu-Latn' && /^iu-?latn$/i.test(v))
+        || (want === 'iu' && (v === 'iu' || v.toLowerCase() === 'iu'))
       ) {
-        if (select.value !== opt.value) {
-          select.value = opt.value;
-          select.dispatchEvent(new Event('change'));
-        }
-        matched = true;
+        found = opt.value;
         break;
       }
     }
-    if (!matched && want) {
-      select.value = want;
+    if (found == null) return false;
+    if (select.value !== found) {
+      select.value = found;
       select.dispatchEvent(new Event('change'));
     }
     return true;
@@ -463,13 +465,15 @@
 
     window.googleTranslateElementInit = function googleTranslateElementInit() {
       try {
+        // pageLanguage 'fr' = UI site en français ; multilanguagePage pour le fil bilingue.
         // eslint-disable-next-line no-new
         new window.google.translate.TranslateElement(
           {
-            pageLanguage: '',
+            pageLanguage: 'fr',
             includedLanguages: GOOG_INCLUDED,
             autoDisplay: false,
             multilanguagePage: true,
+            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
           },
           'google_translate_element',
         );
@@ -483,23 +487,34 @@
       });
     };
 
+    if (document.querySelector('script[data-radar-gt]')) {
+      // Script déjà demandé ; attendre le callback
+      return;
+    }
+
     const s = document.createElement('script');
     s.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
     s.async = true;
+    s.dataset.radarGt = '1';
     s.onerror = () => {
       gtLoading = false;
+      notify('Traduction indisponible (réseau ou bloqueur). Réessayez sans bloqueur de pubs.');
       console.warn('Could not load Google Translate');
     };
     document.head.appendChild(s);
   }
 
-  function applyMode(mode, { reloadIfNeeded = true, persist = true } = {}) {
+  /**
+   * Applique une langue.
+   * Choix manuel (persist=true) : cookie + reload systématique (fiable).
+   * Init au chargement : charge le widget si cookie déjà posé.
+   */
+  function applyMode(mode, { persist = true, fromUserClick = false } = {}) {
     if (MODES[mode]?.unavailable) {
       notify(
         `${MODES[mode].label} : la traduction automatique n’est pas encore offerte `
         + 'pour cette langue autochtone. La page reste en original bilingue.',
       );
-      // Ne pas changer le mode actif
       return;
     }
 
@@ -508,52 +523,73 @@
 
     updateUi(mode);
 
+    // ── Original : purger + recharger si besoin ──
     if (mode === DEFAULT_MODE) {
       const hadCookie = !!readGoogTransTarget();
-      const wasTranslated = !!(document.body && /translated/.test(document.body.className || ''));
+      const wasTranslated = isPageTranslated();
       clearGoogTransCookies();
-      if ((hadCookie || wasTranslated) && reloadIfNeeded) {
+      if ((hadCookie || wasTranslated) && fromUserClick) {
         location.reload();
         return;
       }
-      applyComboValue('');
+      if ((hadCookie || wasTranslated) && !fromUserClick) {
+        // Cookie orphelin au load : recharger une fois pour DOM propre
+        if (!sessionStorage.getItem('radar-translate-cleared')) {
+          sessionStorage.setItem('radar-translate-cleared', '1');
+          location.reload();
+        }
+      }
       return;
     }
 
     const target = googCodeForMode(mode);
     if (!target) {
-      applyMode(DEFAULT_MODE, { reloadIfNeeded, persist });
+      notify('Code de langue inconnu.');
       return;
     }
 
-    const current = readGoogTransTarget();
-    if (
-      current.toLowerCase() === String(target).toLowerCase()
-      && document.body
-      && /translated/.test(document.body.className || '')
-    ) {
+    const cookieTarget = readGoogTransTarget();
+    const cookieOk = cookieTarget.toLowerCase() === String(target).toLowerCase()
+      || cookieTarget.replace(/_/g, '-').toLowerCase() === String(target).replace(/_/g, '-').toLowerCase();
+
+    // ── Choix manuel : toujours cookie + reload (ignore la langue du navigateur) ──
+    if (fromUserClick) {
+      setGoogTransCookie(target);
+      sessionStorage.removeItem('radar-translate-cleared');
+      // Rechargement pour que Google applique googtrans avant le paint.
+      location.reload();
       return;
     }
 
-    setGoogTransCookie(target);
+    // ── Chargement initial avec préférence non-originale ──
+    if (!cookieOk) {
+      setGoogTransCookie(target);
+      // Cookie venait d'être posé sans reload (ex. auto navigateur) → recharger
+      location.reload();
+      return;
+    }
+
+    // Cookie déjà correct : charger le widget pour activer la traduction
     loadGoogleTranslate(() => {
       let tries = 0;
       const tick = () => {
         tries += 1;
-        if (applyComboValue(target)) return;
-        if (tries < 20) {
-          window.setTimeout(tick, 100);
+        if (applyComboValue(target) || isPageTranslated()) return;
+        if (tries < 30) {
+          window.setTimeout(tick, 150);
           return;
         }
-        if (
-          reloadIfNeeded
-          && readGoogTransTarget()
-          && !document.querySelector('.goog-te-combo')
-        ) {
+        // Dernier recours : re-forcer le cookie et recharger une seule fois
+        if (!sessionStorage.getItem('radar-translate-retry')) {
+          sessionStorage.setItem('radar-translate-retry', '1');
+          setGoogTransCookie(target);
           location.reload();
+        } else {
+          sessionStorage.removeItem('radar-translate-retry');
+          notify('Traduction non appliquée. Vérifiez les cookies du site ou un bloqueur.');
         }
       };
-      window.setTimeout(tick, 50);
+      window.setTimeout(tick, 100);
     });
   }
 
@@ -588,7 +624,7 @@
 
       const opt = document.createElement('button');
       opt.type = 'button';
-      opt.role = 'option';
+      opt.setAttribute('role', 'option');
       opt.className = 'translate-menu__opt'
         + (id === DEFAULT_MODE ? ' is-active' : '')
         + (m.unavailable ? ' is-unavailable' : '');
@@ -632,7 +668,8 @@
       e.stopPropagation();
       const mode = opt.dataset.mode;
       closeMenu();
-      if (mode) applyMode(mode, { persist: true });
+      // Clic utilisateur : toujours forcer (persist + reload), même si navigateur en FR
+      if (mode) applyMode(mode, { persist: true, fromUserClick: true });
     });
 
     document.addEventListener('click', (e) => {
@@ -653,23 +690,23 @@
     const fromUser = hasUserPreference();
     updateUi(mode);
 
+    // Préférence déjà posée + cookie → le rechargement après clic appliquera GT
     if (mode === DEFAULT_MODE) {
-      // Bilingue : pas de script Google ; purger cookies orphelins
-      if (readGoogTransTarget()) {
+      if (readGoogTransTarget() || isPageTranslated()) {
         clearGoogTransCookies();
-        if (document.body && /translated/.test(document.body.className || '')) {
+        if (isPageTranslated() && !sessionStorage.getItem('radar-translate-cleared')) {
+          sessionStorage.setItem('radar-translate-cleared', '1');
           location.reload();
         }
       }
       return;
     }
 
-    // Traduction demandée (auto navigateur non-FR/EN, ou préférence utilisateur)
-    // Auto : ne pas écrire localStorage (persist:false) pour que FR/EN restent prioritaires
-    // si l'utilisateur n'a rien choisi — en pratique getMode() a déjà tranché.
+    // Mode traduit (choix user ou auto non-FR/EN)
+    sessionStorage.removeItem('radar-translate-cleared');
     applyMode(mode, {
       persist: fromUser,
-      reloadIfNeeded: true,
+      fromUserClick: false,
     });
   }
 
