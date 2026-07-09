@@ -54,7 +54,7 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 ### Workflows GitHub Actions
 
 - `maintain.yml` — pipeline complet + `bot-status.json` + issue si besoin
-- `update-news.yml` — articles frais (haute fréquence)
+- `update-news.yml` — articles frais (8 passes/jour + **filet horaire :20** si la dernière mise à jour a > 75 min — les crons GitHub peuvent sauter un créneau)
 - `update-streams.yml` — validation des flux (quotidien)
 - `update-radio-nowplaying.yml` — titre en ondes via API station / ICY (aux 30 min)
 - `update-radio-schedules.yml` — horaires colligés « à l'antenne » (aux 2 semaines)
