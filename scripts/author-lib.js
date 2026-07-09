@@ -62,11 +62,14 @@ const CONTRIBUTOR_HTML_RE = new RegExp(
 function looksLikeMultiAuthorList(name = '') {
   const a = String(name).replace(/\s+/g, ' ').trim();
   if (!/,/.test(a) && !/\s+and\s+/i.test(a) && !/\s+et\s+/i.test(a)) return false;
-  const chunks = a.split(/\s*,\s*|\s+and\s+|\s+et\s+/i).map((c) => c.trim()).filter(Boolean);
+  const chunks = a
+    .split(/\s*,\s*|\s+and\s+|\s+et\s+/i)
+    .map((c) => c.replace(/^(?:and|et)\s+/i, '').trim())
+    .filter(Boolean);
   if (chunks.length < 2 || chunks.length > 4) return false;
   return chunks.every((chunk) => {
     const words = chunk.split(/\s+/).filter(Boolean);
-    return words.length >= 1 && words.length <= 4
+    return words.length >= 1 && words.length <= 5
       && words.every((w) => /^[\p{Lu}][\p{L}'’.\-]+$/u.test(w));
   });
 }
@@ -193,40 +196,99 @@ function authorsFromTdPostAuthor(html = '') {
 }
 
 /**
- * The Plant (et thèmes WP block) : byline seule dans un paragraphe
- *   <p class="wp-block-paragraph">By Atika Ume Fazal</p>
- *   <p>… News Editor …</p>
- * ou nom + rôle sur deux lignes :
+ * The Plant (et thèmes WP block) — bylines en tête de corps, sans rel=author :
+ *   <p>By Atika Ume Fazal</p><p>News Editor</p>
  *   <p>Jacqueline Graif<br>Editor-in-Chief</p>
- * sans lien rel=author ni tiret de rôle. On limite aux 1ers paragraphes du corps.
+ *   <p>Chloe Bercovitz</p><p>Managing Editor</p>
+ *   <p>Minola Grent | Editor-in-Chief</p>
+ *   <p>Bethany …, Pohanna …, and Ana …</p><p>Contributors</p>
+ * On lit les premiers <p> (texte plat) — pas de regex lourde sur tout le HTML.
  */
+const PLANT_ROLE_LINE_RE = /^(?:Editor(?:-in-Chief)?|News Editor|Sports Editor|Arts(?:\s*&\s*Culture)?\s+(?:Editor|Correspondent)|Managing Editor|Staff Writer|Copy Editor|Contributors?|Reporter|Correspondent|Photo Editor|Opinions Editor)s?\.?$/i;
+
+function looksLikePersonNameLine(text = '') {
+  const t = String(text).replace(/\s+/g, ' ').trim();
+  if (!t || t.length < 3 || t.length > 120) return false;
+  if (/^(?:Via|Photo|Source|Image|Cover)\b/i.test(t)) return false;
+  if (PLANT_ROLE_LINE_RE.test(t)) return false;
+  // Un ou plusieurs noms propres (virgules / and)
+  if (looksLikeMultiAuthorList(t)) return true;
+  // Phrases (autoriser l'initiale « H. » dans un nom : Tessa H. Chabot)
+  if (/[!?:;]/.test(t)) return false;
+  if (/\.\s+\p{Lu}/u.test(t) && !/(?:^|\s)\p{Lu}\.\s+\p{Lu}/u.test(t)) return false;
+  const words = t.split(/\s+/).filter(Boolean);
+  if (words.length < 2 || words.length > 5) return false;
+  return words.every(
+    (w) => /^[\p{Lu}][\p{L}'’.\-]*\.?$/u.test(w) || NAME_PARTICLES.has(w.toLowerCase()),
+  );
+}
+
 function authorsFromStandaloneByParagraph(html = '') {
   if (!html) return [];
   const bodyMatch = html.match(
-    /class=["'][^"']*(?:entry-content|wp-block-post-content|post-content|article-content)[^"']*["'][^>]*>([\s\S]{0,6000})/i,
+    /class=["'][^"']*(?:entry-content|wp-block-post-content|post-content|article-content)[^"']*["'][^>]*>([\s\S]{0,5000})/i,
   );
-  const region = bodyMatch ? bodyMatch[1] : html.slice(0, 12000);
-  const names = [];
-  let count = 0;
-  for (const m of region.matchAll(
-    /<p\b[^>]*>\s*(?:By|Par)\s+([\p{Lu}][\p{L}'’.\-]+(?:\s+[\p{Lu}][\p{L}'’.\-]+){0,4})\s*<\/p>/giu,
-  )) {
-    count += 1;
-    if (count > 4) break;
-    const n = expandAuthorName(m[1]);
-    if (n && !isJunkAuthorName(n) && !isEditorialPlaceholder(n, 'en')) names.push(n);
+  const region = bodyMatch ? bodyMatch[1] : '';
+  if (!region) return [];
+
+  const paras = [];
+  for (const m of region.matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/gi)) {
+    const plain = decodeBasicEntities(
+      stripHtml(m[1].replace(/<br\s*\/?>/gi, ' | ')),
+    )
+      .replace(/\s+/g, ' ')
+      .trim();
+    if (plain) paras.push(plain);
+    if (paras.length >= 8) break;
   }
-  // « Prénom Nom<br>Editor-in-Chief » (The Plant) — rôles courts seulement,
-  // sans le CONTRIBUTOR_ROLE imbriqué (backtracking pathologique sur gros HTML).
-  if (!names.length) {
-    const roleRe =
-      /<p\b[^>]*>\s*([\p{Lu}][\p{L}'’.\-]+(?:\s+[\p{Lu}][\p{L}'’.\-]+){0,3})\s*(?:<br\s*\/?>|\n)\s*(?:Editor(?:-in-Chief)?|News Editor|Sports Editor|Arts Editor|Managing Editor|Staff Writer|Contributor|Reporter)\b[^<]{0,40}<\/p>/giu;
-    for (const m of region.matchAll(roleRe)) {
-      const n = expandAuthorName(m[1]);
-      if (n && !isJunkAuthorName(n) && !isEditorialPlaceholder(n, 'en')) names.push(n);
-      if (names.length) break;
+
+  const names = [];
+
+  for (let i = 0; i < paras.length; i += 1) {
+    const p = paras[i];
+    // Légende photo « Via … » — sauter
+    if (/^Via\b/i.test(p)) continue;
+
+    // « By Name » / « Par Name »
+    const by = p.match(/^(?:By|Par)\s+(.+)$/i);
+    if (by) {
+      const n = expandAuthorName(by[1], 'en');
+      if (n && !isJunkAuthorName(n) && !isEditorialPlaceholder(n, 'en')) {
+        names.push(n);
+        break;
+      }
+    }
+
+    // « Name | Role » ou « Name – Role » sur une ligne
+    const pipe = p.match(
+      /^([\p{Lu}][\p{L}'’.\-]+(?:\s+[\p{Lu}][\p{L}'’.\-]+){0,4})\s*[|–—\-]\s*(.+)$/u,
+    );
+    if (pipe && PLANT_ROLE_LINE_RE.test(pipe[2].trim())) {
+      const n = expandAuthorName(pipe[1], 'en');
+      if (n && !isJunkAuthorName(n)) {
+        names.push(n);
+        break;
+      }
+    }
+
+    // « Name » puis paragraphe suivant = rôle
+    const next = paras[i + 1] || '';
+    if (looksLikePersonNameLine(p) && PLANT_ROLE_LINE_RE.test(next)) {
+      if (looksLikeMultiAuthorList(p)) {
+        const joined = joinAuthorNames(splitMultiAuthorLabel(p), 'en');
+        if (joined) {
+          names.push(joined);
+          break;
+        }
+      }
+      const n = expandAuthorName(p, 'en');
+      if (n && !isJunkAuthorName(n) && !isEditorialPlaceholder(n, 'en')) {
+        names.push(n);
+        break;
+      }
     }
   }
+
   return [...new Set(names)];
 }
 
@@ -506,9 +568,19 @@ function authorFromArticleHtml(html = '', lang = 'fr', hints = {}, sourceName = 
     candidates.push({ author: joinAuthorNames(linkByline, l), trust: 107 });
   }
 
-  // The Plant — paragraphe « By Name » isolé dans le corps WP.
+  // The Plant — paragraphe « By Name » / « Name + rôle » en tête de corps WP.
+  // Retour anticipé : évite les extracteurs lourds (openingRole / regex imbriquées)
+  // qui pathologuent sur certaines pages WP complètes.
   const standaloneBy = authorsFromStandaloneByParagraph(html);
   if (standaloneBy.length) {
+    const joined = joinAuthorNames(standaloneBy, l);
+    const early = expandAuthorName(joined, l) || joined;
+    if (early && !isEditorialPlaceholder(early, l)) {
+      const sourceKeyEarly = normAuthorKey(String(sourceName || ''));
+      if (!sourceKeyEarly || normAuthorKey(early) !== sourceKeyEarly) {
+        return early;
+      }
+    }
     candidates.push({ author: joinAuthorNames(standaloneBy, l), trust: 105 });
   }
 
