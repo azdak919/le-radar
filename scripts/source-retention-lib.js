@@ -1,8 +1,8 @@
 /**
  * Source retention — shared rules for all LE RADAR news bots.
  *
- * Aligns server-side aggregation with the UI freshness window (3 university
- * sessions). Prevents transient RSS failures from wiping a source entirely.
+ * Fraîcheur des articles : règle universelle dans session-freshness-lib.js
+ * (bots + UI). Ce module ajoute registre, cache, drop de sources, etc.
  *
  * Registry field `botHints` (optional, per source in news-sources.json):
  *   { "fetch": {}, "authors": {}, "images": {}, "excerpts": {}, "credits": {} }
@@ -10,99 +10,26 @@
 
 const fs = require('fs');
 const path = require('path');
+const sessionFreshness = require('./session-freshness-lib');
 
-/**
- * Fenêtre de fraîcheur (alignée app.js) :
- *  - session en cours + 2 précédentes (= automne + hiver + été sur un cycle)
- *  - septembre : mois de grâce — on garde aussi l’automne d’avant
- *    (les journaux n’ont souvent pas encore republié).
- */
-const FRESHNESS_SESSION_COUNT = 3;
-const CONTINGENCY_MAX_SESSIONS_BACK = FRESHNESS_SESSION_COUNT - 1;
+const {
+  FRESHNESS_SESSION_COUNT,
+  CONTINGENCY_MAX_SESSIONS_BACK,
+  getCurrentUniversitySessionStart,
+  getUniversitySessionStart,
+  getUniversitySessionBand,
+  isSeptemberAutumnGrace,
+  freshnessMaxSessionsBack,
+  isPublishedOnOrBefore,
+  isWithinUniversitySessionBand,
+  isWithinFreshnessWindow,
+  filterFreshItems,
+  pruneToFreshWindow,
+  freshnessWindowStart,
+} = sessionFreshness;
 
 const NEWS_PATH = path.join(__dirname, '..', 'news.json');
 const SOURCES_PATH = path.join(__dirname, '..', 'news-sources.json');
-
-// === University session calendar (Québec) ====================================
-
-function getCurrentUniversitySessionStart(referenceDate = new Date()) {
-  const year = referenceDate.getFullYear();
-  const month = referenceDate.getMonth();
-  // Automne : 1er sept. | Hiver : 1er janv. | Été : 1er mai
-  if (month >= 8) return new Date(year, 8, 1);
-  if (month >= 4) return new Date(year, 4, 1);
-  return new Date(year, 0, 1);
-}
-
-function getPriorUniversitySessionStart(sessionStart) {
-  const year = sessionStart.getFullYear();
-  const month = sessionStart.getMonth();
-  if (month === 8) return new Date(year, 4, 1);
-  if (month === 4) return new Date(year, 0, 1);
-  return new Date(year - 1, 8, 1);
-}
-
-function getUniversitySessionStart(referenceDate = new Date(), sessionsBack = 0) {
-  let start = getCurrentUniversitySessionStart(referenceDate);
-  for (let i = 0; i < sessionsBack; i++) {
-    start = getPriorUniversitySessionStart(start);
-  }
-  return start;
-}
-
-function getUniversitySessionBand(referenceDate = new Date(), sessionsBack = 0) {
-  const start = getUniversitySessionStart(referenceDate, sessionsBack);
-  const end = sessionsBack === 0
-    ? referenceDate
-    : new Date(getUniversitySessionStart(referenceDate, sessionsBack - 1).getTime() - 1);
-  return { start, end };
-}
-
-/**
- * Septembre = mois de grâce en début d’automne : on ne retire pas encore
- * l’automne précédent tant que la nouvelle session n’a pas vraiment démarré.
- */
-function isSeptemberAutumnGrace(referenceDate = new Date()) {
-  return referenceDate.getMonth() === 8;
-}
-
-/** Nombre de sessions « en arrière » incluses dans la fenêtre. */
-function freshnessMaxSessionsBack(referenceDate = new Date()) {
-  let max = CONTINGENCY_MAX_SESSIONS_BACK; // 2 → 3 sessions au total
-  if (isSeptemberAutumnGrace(referenceDate)) max += 1; // + automne d’avant
-  return max;
-}
-
-function isPublishedOnOrBefore(item, referenceDate = new Date()) {
-  const published = new Date(item.date || 0);
-  return Number.isFinite(published.getTime()) && published.getTime() <= referenceDate.getTime();
-}
-
-function isWithinUniversitySessionBand(item, referenceDate = new Date(), sessionsBack = 0) {
-  const published = new Date(item.date || 0);
-  if (!Number.isFinite(published.getTime())) return false;
-  const { start, end } = getUniversitySessionBand(referenceDate, sessionsBack);
-  const t = published.getTime();
-  return t >= start.getTime() && t <= end.getTime();
-}
-
-function isWithinFreshnessWindow(item, referenceDate = new Date()) {
-  if (!isPublishedOnOrBefore(item, referenceDate)) return false;
-  const maxBack = freshnessMaxSessionsBack(referenceDate);
-  for (let band = 0; band <= maxBack; band++) {
-    if (isWithinUniversitySessionBand(item, referenceDate, band)) return true;
-  }
-  return false;
-}
-
-function filterFreshItems(items, referenceDate = new Date()) {
-  return items.filter((item) => isWithinFreshnessWindow(item, referenceDate));
-}
-
-/** Oldest session start still inside the freshness window (for expiry checks). */
-function freshnessWindowStart(referenceDate = new Date()) {
-  return getUniversitySessionStart(referenceDate, freshnessMaxSessionsBack(referenceDate));
-}
 
 // === Article / source grouping ===============================================
 
@@ -175,11 +102,6 @@ function readNewsItems() {
 function loadSourceRegistryMap() {
   const registry = readRegistry();
   return new Map((registry.active || []).filter((s) => s._status !== 'dead').map((s) => [s.name, s]));
-}
-
-/** Drop articles outside the 3-session UI window. */
-function pruneToFreshWindow(items, referenceDate = new Date()) {
-  return filterFreshItems(items, referenceDate);
 }
 
 function readRegistry() {
@@ -309,6 +231,7 @@ function buildSourceRunMeta({
 }
 
 module.exports = {
+  // Règle universelle (session-freshness-lib)
   FRESHNESS_SESSION_COUNT,
   CONTINGENCY_MAX_SESSIONS_BACK,
   freshnessWindowStart,
@@ -319,7 +242,10 @@ module.exports = {
   getUniversitySessionBand,
   isWithinFreshnessWindow,
   isWithinUniversitySessionBand,
+  isPublishedOnOrBefore,
   filterFreshItems,
+  pruneToFreshWindow,
+  // Registre / news.json
   groupItemsBySource,
   latestItemDate,
   sourceHasFreshContent,
@@ -329,7 +255,6 @@ module.exports = {
   readNewsJson,
   readNewsItems,
   loadSourceRegistryMap,
-  pruneToFreshWindow,
   readRegistry,
   writeRegistry,
   findRegistrySource,

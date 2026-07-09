@@ -1036,7 +1036,7 @@ async function main() {
   const prunedAll = pruneToFreshWindow(all, referenceDate);
   const prunedCount = beforePrune - prunedAll.length;
   if (prunedCount > 0) {
-    console.log(`\nFraîcheur: ${prunedCount} article(s) hors fenêtre 3 sessions retiré(s)`);
+    console.log(`\nFraîcheur: ${prunedCount} article(s) hors fenêtre de sessions (A/H/É + grâce sept.) retiré(s)`);
   }
 
   const staleSources = Object.entries(sourceRuns)
