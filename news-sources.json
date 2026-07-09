@@ -87,8 +87,17 @@
       "lang": "en",
       "url": "https://thelinknewspaper.ca/feed/",
       "botHints": {
+        "authors": {
+          "forcePageAuthor": true,
+          "ignoreRssAuthor": true
+        },
         "images": {
-          "preferSizeFull": true
+          "preferSizeFull": true,
+          "preferFirstContentImage": true,
+          "rejectPathPatterns": [
+            "00\\.graphics\\.CSU\\.Naya_Hachwa",
+            "00\\.graphics\\.csu\\.naya_hachwa"
+          ]
         }
       },
       "_lastChecked": "2026-07-06T11:28:04.841Z",
@@ -96,7 +105,7 @@
       "_status": "ok",
       "_lastItemDate": "2026-06-28T23:23:00.000Z",
       "popularity": 7,
-      "_note": "Journal indépendant de Concordia (fusion Georgian + Loyola News, 1980).",
+      "_note": "Journal indépendant de Concordia (EE). Byline : .byline a[href*=/author/]. Graphique générique CSU (abeille/nid d'abeilles Naya Hachwa) réutilisé sur plusieurs articles — à rejeter. Légendes « Photo Prénom Nom » / « Graphic … » en fin de figcaption.",
       "_lastFetchOk": "2026-07-06T11:28:04.841Z"
     },
     {
