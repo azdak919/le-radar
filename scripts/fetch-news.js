@@ -16,6 +16,7 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+const { fork } = require('child_process');
 const {
   reconcileAuthor,
   authorFromArticleHtml,
@@ -109,8 +110,61 @@ const SOURCES = loadSources();
 
 // === Tiny HTTP fetch =========================================================
 const MAX_FETCH_BYTES = 2_500_000;
-/** Plafond wall-clock par source (RSS + vedettes) — une source ne bloque plus tout le bot. */
-const SOURCE_BUDGET_MS = 90_000;
+/** Plafond wall-clock par source (RSS) — kill process enfant si bloqué (CPU/réseau). */
+const SOURCE_BUDGET_MS = 45_000;
+const SOURCE_WORKER = path.join(__dirname, 'fetch-source-worker.js');
+
+/**
+ * Fetch d'une source dans un process isolé (SIGKILL au budget).
+ * Garantit qu'un parse regex qui fige l'event loop ne bloque pas le bot CI.
+ */
+function fetchSourceIsolated(src, referenceDate) {
+  return new Promise((resolve) => {
+    let settled = false;
+    const finish = (v) => {
+      if (settled) return;
+      settled = true;
+      try { child.kill('SIGKILL'); } catch { /* ignore */ }
+      resolve(v);
+    };
+    let child;
+    try {
+      child = fork(SOURCE_WORKER, [], {
+        stdio: ['ignore', 'ignore', 'ignore', 'ipc'],
+        env: process.env,
+      });
+    } catch (e) {
+      return finish({ ok: false, items: [], note: '', timedOut: false, error: String(e.message || e) });
+    }
+    const timer = setTimeout(() => {
+      finish({ ok: false, items: [], note: '', timedOut: true, error: 'source_timeout' });
+    }, SOURCE_BUDGET_MS);
+    child.on('message', (msg) => {
+      clearTimeout(timer);
+      finish({
+        ok: !!(msg && msg.ok),
+        items: (msg && msg.items) || [],
+        note: (msg && msg.note) || '',
+        timedOut: false,
+        error: (msg && msg.error) || null,
+      });
+    });
+    child.on('error', () => {
+      clearTimeout(timer);
+      finish({ ok: false, items: [], note: '', timedOut: false, error: 'worker_error' });
+    });
+    child.on('exit', () => {
+      clearTimeout(timer);
+      if (!settled) {
+        finish({ ok: false, items: [], note: '', timedOut: false, error: 'worker_exit' });
+      }
+    });
+    child.send({
+      source: src,
+      referenceDateISO: referenceDate.toISOString(),
+    });
+  });
+}
 
 function fetchText(url, redirects = 3, timeout = TIMEOUT) {
   if (!isAllowedFetchUrl(url)) {
@@ -350,10 +404,14 @@ function authorKeyLoose(name = '') {
 }
 
 function parseAuthor(block, contentHtml = '', excerpt = '', feedTitle = '') {
+  // Tête de contenu seulement — le HTML complet de content:encoded fait
+  // pathologuer certaines regex d'auteur (hang CI sur McGill Daily, etc.).
+  const contentHead = String(contentHtml || '').slice(0, 12_000);
+
   const fromExcerpt = extractBylineFromText(excerpt);
   if (fromExcerpt.author) return fromExcerpt.author;
 
-  const fromContent = extractBylineFromText(firstParagraphFromHtml(contentHtml));
+  const fromContent = extractBylineFromText(firstParagraphFromHtml(contentHead));
   if (fromContent.author) return fromContent.author;
 
   const fromDesc = extractBylineFromText(stripHtml(tag(block, 'description')));
@@ -367,19 +425,22 @@ function parseAuthor(block, contentHtml = '', excerpt = '', feedTitle = '') {
   // du nom du journal) : chercher un crédit de production dans le corps
   // (« Produced by X », « Hosted by X »…).
   if (!a || (feedTitle && authorKeyLoose(a) === authorKeyLoose(feedTitle))) {
-    const credit = authorFromBodyCredits(contentHtml);
+    const credit = authorFromBodyCredits(contentHead);
     if (credit) return credit;
   }
   return a || '';
 }
 
 function firstImage(block) {
+  // Chercher l'image dans un préfixe : le match /img/ sur un item entier
+  // avec content:encoded massif est inutilement coûteux.
+  const head = String(block || '').slice(0, 40_000);
   const candidates = [];
-  let m = block.match(/<media:(?:content|thumbnail)[^>]*url=["']([^"']+)["']/i);
+  let m = head.match(/<media:(?:content|thumbnail)[^>]*url=["']([^"']+)["']/i);
   if (m) candidates.push(m[1]);
-  m = block.match(/<enclosure[^>]*url=["']([^"']+\.(?:jpe?g|png|webp)[^"']*)["']/i);
+  m = head.match(/<enclosure[^>]*url=["']([^"']+\.(?:jpe?g|png|webp)[^"']*)["']/i);
   if (m) candidates.push(m[1]);
-  m = block.match(/<img[^>]*src=["']([^"']+)["']/i);
+  m = head.match(/<img[^>]*src=["']([^"']+)["']/i);
   if (m) candidates.push(decodeEntities(m[1]));
   for (const raw of candidates) {
     if (!raw) continue;
@@ -397,13 +458,19 @@ function isFeedXml(xml = '') {
 
 function parseFeed(xml) {
   const items = [];
-  const blocks = xml.match(/<item[\s\S]*?<\/item>/gi) || xml.match(/<entry[\s\S]*?<\/entry>/gi) || [];
+  // Match non-greedy item blocks ; éviter un scan catastrophique sur XML monstrueux
+  const blocks = String(xml || '').match(/<item\b[\s\S]*?<\/item>/gi)
+    || String(xml || '').match(/<entry\b[\s\S]*?<\/entry>/gi)
+    || [];
   // Le premier <title> du document est celui du canal ; l'image de canal est
   // le logo de la publication (Substack la répète en <enclosure> des billets
   // sans couverture propre).
-  const channelTitle = sanitizeTitle(tag(xml, 'title'));
-  const channelImage = (xml.match(/<image>[\s\S]{0,600}?<url>\s*([^<\s]+)\s*<\/url>/i) || [])[1] || '';
-  for (const block of blocks) {
+  const channelHead = String(xml || '').slice(0, 8_000);
+  const channelTitle = sanitizeTitle(tag(channelHead, 'title'));
+  const channelImage = (channelHead.match(/<image>[\s\S]{0,600}?<url>\s*([^<\s]+)\s*<\/url>/i) || [])[1] || '';
+  for (const rawBlock of blocks) {
+    // Tronquer chaque item : content:encoded WP peut dépasser 100 ko
+    const block = rawBlock.length > 80_000 ? rawBlock.slice(0, 80_000) : rawBlock;
     const title = sanitizeTitle(tag(block, 'title'));
     let link = stripHtml(tag(block, 'link'));
     if (!link) {
@@ -412,7 +479,9 @@ function parseFeed(xml) {
     }
     const dateRaw = tag(block, 'pubDate') || tag(block, 'dc:date') || tag(block, 'published') || tag(block, 'updated');
     const date = dateRaw ? new Date(dateRaw) : null;
-    const contentHtml = tag(block, 'content:encoded') || tag(block, 'content') || '';
+    // content:encoded : tête seulement pour byline/image
+    const contentFull = tag(block, 'content:encoded') || tag(block, 'content') || '';
+    const contentHtml = contentFull.slice(0, 16_000);
     const excerpt = pickExcerpt(block);
     const author = parseAuthor(block, contentHtml, excerpt, channelTitle);
     let image = firstImage(contentHtml || tag(block, 'description') || block) || firstImage(block);
@@ -823,77 +892,34 @@ async function main() {
     const priorForSource = priorBySource.get(src.name) || [];
 
     try {
-      const sourceWork = (async () => {
-        let localItems = [];
-        let localOk = false;
-        if (isFirebaseSource(src)) {
-          localItems = await fetchFirebaseFeed(src, { maxItems: MAX_PER_SOURCE });
-          localItems = localItems.map((it) => ({
-            ...it,
-            title: sanitizeTitle(it.title),
-            excerpt: truncateExcerpt(it.excerpt, 280),
-          }));
-          if (localItems.length) {
-            localItems = pruneToFreshWindow(localItems, referenceDate);
-            if (localItems.length) localOk = true;
-          }
-          return { items: localItems, fetchOk: localOk, note: localOk ? ' (firebase)' : '' };
-        }
-        if (isHtmlListSource(src)) {
-          const listUrls = [src.url, src.urlFallback, ...(src.feedAlternates || [])].filter(Boolean);
-          let listUsed = '';
-          for (const listUrl of [...new Set(listUrls)]) {
-            const html = await fetchText(listUrl);
-            const parsed = parseHtmlListPage(html, listUrl, { maxItems: MAX_PER_SOURCE });
-            if (parsed.length) {
-              listUsed = listUrl;
-              localItems = parsed.slice(0, MAX_PER_SOURCE).map((it) => ({
-                ...it,
-                title: sanitizeTitle(it.title),
-                excerpt: truncateExcerpt(it.excerpt, 280),
-              }));
-              break;
-            }
-          }
-          if (localItems.length) {
-            localItems = pruneToFreshWindow(localItems, referenceDate);
-            if (localItems.length) {
-              localOk = true;
-              const altNote = listUsed && listUsed !== src.url ? ` [repli: ${listUsed}]` : '';
-              return { items: localItems, fetchOk: localOk, note: ` (html-list)${altNote}` };
-            }
-          }
-          return { items: localItems, fetchOk: localOk, note: '' };
-        }
-
-        const { items: rssItems, feedUsed, maxItems } = await fetchRssItems(src);
-        if (rssItems.length) {
-          localOk = true;
-          let altNote = '';
-          if (feedUsed && feedUsed !== src.url) {
-            altNote = src.mergeFeedAlternates ? ` [${feedUsed}]` : ` [repli: ${feedUsed}]`;
-          }
-          localItems = pruneToFreshWindow(rssItems, referenceDate);
-          const featuredItems = await fetchWpFeaturedPosts(src.url, src, referenceDate);
-          if (featuredItems.length) {
-            localItems = mergeSourceItems(localItems, featuredItems, maxItems);
-          }
-          const featNote = featuredItems.length ? ` (+${featuredItems.length} vedettes WP)` : '';
-          return { items: localItems, fetchOk: localOk, note: `${featNote}${altNote}` };
-        }
-        return { items: localItems, fetchOk: localOk, note: '' };
-      })();
-
-      const result = await withTimeout(
-        sourceWork,
-        SOURCE_BUDGET_MS,
-        { items: [], fetchOk: false, note: '', timedOut: true },
-      );
+      // Process isolé + SIGKILL : une source qui fige le CPU (regex) ou le
+      // réseau ne peut plus bloquer le job Actions 40 minutes.
+      const result = await fetchSourceIsolated(src, referenceDate);
 
       if (result.timedOut) {
         console.log(`⚠ timeout ${SOURCE_BUDGET_MS / 1000}s — source sautée (cache si dispo)`);
-      } else if (result.fetchOk && result.items.length) {
-        items = result.items;
+      } else if (result.error && !result.items.length) {
+        console.log(`⚠ ${result.error}`);
+      } else if (result.ok && result.items.length) {
+        items = result.items.map((it) => ({
+          ...it,
+          title: sanitizeTitle(it.title),
+          excerpt: truncateExcerpt(it.excerpt, 280),
+        }));
+        // Vedettes WP (Délit, etc.) — budget court séparé, non bloquant
+        if (src.wpFeaturedCategories?.length) {
+          try {
+            const featuredItems = await withTimeout(
+              fetchWpFeaturedPosts(src.url, src, referenceDate),
+              20_000,
+              [],
+            );
+            if (featuredItems.length) {
+              items = mergeSourceItems(items, featuredItems, MAX_PER_SOURCE);
+              result.note = `${result.note || ''} (+${featuredItems.length} vedettes WP)`;
+            }
+          } catch { /* ignore featured failures */ }
+        }
         fetchOk = true;
         console.log(`✓ ${items.length} articles${result.note || ''}`);
       }

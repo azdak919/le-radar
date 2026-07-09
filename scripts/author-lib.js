@@ -458,12 +458,18 @@ const BODY_CREDIT_AUTHOR_RE = new RegExp(
 );
 
 function authorFromBodyCredits(text = '') {
-  const plain = stripHtml(text);
+  // Plafonner : sur un content:encoded long, le regex global peut pathologuer
+  // et figer l'event loop (bot CI bloqué 40 min sur The McGill Daily).
+  const plain = stripHtml(String(text || '').slice(0, 24_000)).slice(0, 12_000);
+  if (!plain || plain.length < 12) return '';
   // Plusieurs crédits possibles : prendre le premier « Written/Produced/… by »
   // qui n'est pas un crédit artistique (Cover art by …).
   const re = new RegExp(BODY_CREDIT_AUTHOR_RE.source, 'gu');
+  re.lastIndex = 0;
   let m;
-  while ((m = re.exec(plain))) {
+  let guards = 0;
+  while ((m = re.exec(plain)) && guards < 20) {
+    guards += 1;
     const name = normalizeAuthor(m[1]);
     if (!name || isJunkAuthorName(name)) continue;
     if (/^(?:Substack|WordPress|Wix|Squarespace|ASFA)$/i.test(name)) continue;

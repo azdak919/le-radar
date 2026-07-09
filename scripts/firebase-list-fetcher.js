@@ -119,6 +119,34 @@ function parseFirestoreDocument(doc = {}, src = {}) {
   };
 }
 
+function getJson(url, timeout = DEFAULT_TIMEOUT) {
+  return new Promise((resolve) => {
+    let settled = false;
+    const done = (v) => { if (!settled) { settled = true; resolve(v); } };
+    let req;
+    try {
+      req = https.get(url, {
+        headers: { 'User-Agent': 'Mozilla/5.0 (compatible; LE-RADAR-NewsBot/1.0)' },
+        timeout,
+      }, (res) => {
+        let data = '';
+        res.setEncoding('utf8');
+        res.on('data', (c) => { data += c; });
+        res.on('end', () => {
+          if (res.statusCode >= 400) return done(null);
+          try { done(JSON.parse(data)); } catch { done(null); }
+        });
+        res.on('error', () => done(null));
+      });
+    } catch {
+      return done(null);
+    }
+    req.on('error', () => done(null));
+    req.on('timeout', () => { try { req.destroy(); } catch { /* ignore */ } done(null); });
+    setTimeout(() => { try { req.destroy(); } catch { /* ignore */ } done(null); }, timeout + 1500);
+  });
+}
+
 function postJson(url, body, timeout = DEFAULT_TIMEOUT) {
   return new Promise((resolve) => {
     const payload = JSON.stringify(body);
@@ -152,18 +180,14 @@ function postJson(url, body, timeout = DEFAULT_TIMEOUT) {
   });
 }
 
+/** runQuery (tri serveur) — nécessite une clé API si les règles l’exigent. */
 async function runFirestoreQuery(src = {}, { limit = 25 } = {}) {
   const fb = src.firebase || {};
   const projectId = fb.projectId;
   const apiKey = resolveFirebaseApiKey(fb);
   const collection = fb.collection || 'blogs';
   const dateField = fb.dateField || 'publishedDate';
-  if (!projectId || !apiKey) {
-    if (projectId && !apiKey) {
-      console.warn(`Firebase ${projectId}: clé API absente (secret FIREBASE_POLYSCOPE_API_KEY requis en CI)`);
-    }
-    return [];
-  }
+  if (!projectId || !apiKey) return [];
 
   const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents:runQuery?key=${encodeURIComponent(apiKey)}`;
   const body = {
@@ -186,9 +210,44 @@ async function runFirestoreQuery(src = {}, { limit = 25 } = {}) {
   return items;
 }
 
+/**
+ * Liste publique REST (sans clé) — Polyscope expose la collection en lecture.
+ * Pas de orderBy serveur : on trie côté client après parse.
+ */
+async function listFirestoreDocuments(src = {}, { pageSize = 40 } = {}) {
+  const fb = src.firebase || {};
+  const projectId = fb.projectId;
+  const collection = fb.collection || 'blogs';
+  if (!projectId) return [];
+
+  const base = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/${encodeURIComponent(collection)}`;
+  const apiKey = resolveFirebaseApiKey(fb);
+  const qs = new URLSearchParams({ pageSize: String(pageSize) });
+  if (apiKey) qs.set('key', apiKey);
+
+  const data = await getJson(`${base}?${qs}`);
+  const docs = data?.documents;
+  if (!Array.isArray(docs)) return [];
+
+  const items = [];
+  for (const doc of docs) {
+    const item = parseFirestoreDocument(doc, src);
+    if (item) items.push(item);
+  }
+  items.sort((a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0));
+  return items;
+}
+
 async function fetchFirebaseFeed(src = {}, options = {}) {
   const maxItems = options.maxItems || 20;
-  const items = await runFirestoreQuery(src, { limit: Math.max(maxItems * 2, 30) });
+  const limit = Math.max(maxItems * 2, 30);
+
+  // 1) runQuery trié si clé dispo
+  let items = await runFirestoreQuery(src, { limit });
+  // 2) Repli liste publique (Polyscope sans secret CI)
+  if (!items.length) {
+    items = await listFirestoreDocuments(src, { pageSize: Math.min(limit, 50) });
+  }
   return items.slice(0, maxItems);
 }
 
