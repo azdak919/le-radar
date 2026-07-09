@@ -108,47 +108,97 @@ function loadSources() {
 const SOURCES = loadSources();
 
 // === Tiny HTTP fetch =========================================================
+const MAX_FETCH_BYTES = 2_500_000;
+/** Plafond wall-clock par source (RSS + vedettes) — une source ne bloque plus tout le bot. */
+const SOURCE_BUDGET_MS = 90_000;
+
 function fetchText(url, redirects = 3, timeout = TIMEOUT) {
   if (!isAllowedFetchUrl(url)) {
     console.warn('fetch-news: URL bloquée (sécurité):', url);
     return Promise.resolve('');
   }
   return new Promise((resolve) => {
-    const req = https.get(
-      url,
-      {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (compatible; REQ-NewsBot/1.0)',
-          Accept: 'application/rss+xml, application/xml, text/xml, text/html, */*',
-        },
-        timeout,
-      },
-      (res) => {
-        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location && redirects > 0) {
-          res.resume();
-          const next = new URL(res.headers.location, url).toString();
-          return resolve(fetchText(next, redirects - 1, timeout));
-        }
-        if (res.statusCode >= 400) {
-          res.resume();
-          return resolve('');
-        }
-        let data = '';
-        res.setEncoding('utf8');
-        res.on('data', (c) => (data += c));
-        res.on('end', () => resolve(data));
+    let settled = false;
+    const done = (v) => {
+      if (!settled) {
+        settled = true;
+        resolve(v);
       }
-    );
-    req.on('error', () => resolve(''));
+    };
+    let req;
+    try {
+      req = https.get(
+        url,
+        {
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (compatible; REQ-NewsBot/1.0)',
+            Accept: 'application/rss+xml, application/xml, text/xml, text/html, */*',
+          },
+          timeout,
+        },
+        (res) => {
+          if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location && redirects > 0) {
+            res.resume();
+            const next = new URL(res.headers.location, url).toString();
+            return done(fetchText(next, redirects - 1, timeout));
+          }
+          if (res.statusCode >= 400) {
+            res.resume();
+            return done('');
+          }
+          let data = '';
+          res.setEncoding('utf8');
+          res.on('data', (c) => {
+            data += c;
+            if (data.length > MAX_FETCH_BYTES) {
+              try { req.destroy(); } catch { /* ignore */ }
+              done(data);
+            }
+          });
+          res.on('end', () => done(data));
+          res.on('error', () => done(''));
+        },
+      );
+    } catch {
+      return done('');
+    }
+    req.on('error', () => done(''));
     req.on('timeout', () => {
-      req.destroy();
-      resolve('');
+      try { req.destroy(); } catch { /* ignore */ }
+      done('');
     });
+    // Deadline absolue : le timeout Node ne coupe pas une réponse qui « goutte ».
+    setTimeout(() => {
+      try { req.destroy(); } catch { /* ignore */ }
+      done('');
+    }, timeout + 1500);
   });
 }
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
+}
+
+function withTimeout(promise, ms, fallback) {
+  return new Promise((resolve) => {
+    let settled = false;
+    const finish = (v) => {
+      if (!settled) {
+        settled = true;
+        resolve(v);
+      }
+    };
+    const t = setTimeout(() => finish(fallback), ms);
+    Promise.resolve(promise)
+      .then((v) => {
+        clearTimeout(t);
+        finish(v);
+      })
+      .catch(() => {
+        clearTimeout(t);
+        finish(fallback);
+      });
+  });
 }
 
 const { decodeEntities, stripHtml } = require('./html-entities-lib');
@@ -567,6 +617,8 @@ function needsEnrichment(item, feedDefaults = new Map(), sourceByName = new Map(
 async function enrichItem(item, sourceByName = new Map()) {
   const html = await fetchText(item.link, 3, ENRICH_TIMEOUT);
   if (!html || html.length < 200) return item;
+  // HTML tronqué pour parsers regex (évite hangs pathologiques WP)
+  const slim = html.length > 450_000 ? html.slice(0, 450_000) : html;
 
   const src = sourceByName.get(item.source);
   const imageHints = getBotHints(src, 'images');
@@ -575,19 +627,36 @@ async function enrichItem(item, sourceByName = new Map()) {
   const imageOptions = imageOptionsFromHints(imageHints);
 
   const next = { ...item };
-  const body = articleBodyHtml(html);
+  const body = articleBodyHtml(slim);
 
   if (needsImageEnrichment(next, rejectPatterns, imageOptions)) {
-    const found = imageFromArticleHtml(html, rejectPatterns, imageOptions);
+    const found = await withTimeout(
+      Promise.resolve().then(() => imageFromArticleHtml(slim, rejectPatterns, imageOptions)),
+      2000,
+      null,
+    );
     if (found?.url && isCandidateImageUrl(found.url, rejectPatterns)) next.image = found.url;
     else if (next.image && !isCandidateImageUrl(next.image, rejectPatterns)) next.image = '';
   } else if (next.image) {
-    const found = imageFromArticleHtml(html, rejectPatterns, imageOptions);
+    const found = await withTimeout(
+      Promise.resolve().then(() => imageFromArticleHtml(slim, rejectPatterns, imageOptions)),
+      2000,
+      null,
+    );
     if (!found?.url && next.image) next.image = '';
     else if (next.image && !isCandidateImageUrl(next.image, rejectPatterns)) next.image = '';
   }
 
-  const pageAuthor = authorFromArticleHtml(html, item.lang === 'en' ? 'en' : 'fr', authorHints, item.source);
+  const pageAuthor = await withTimeout(
+    Promise.resolve().then(() => authorFromArticleHtml(
+      slim,
+      item.lang === 'en' ? 'en' : 'fr',
+      authorHints,
+      item.source,
+    )),
+    2500,
+    '',
+  );
   if (pageAuthor) {
     next._pageAuthor = pageAuthor;
   } else if (!next.author || isGenericAuthor(next.author)) {
@@ -597,11 +666,11 @@ async function enrichItem(item, sourceByName = new Map()) {
 
   // Titre page : préférer h1 nettoyé (séries MC + fuite CSS) puis og:title.
   const h1Raw = (() => {
-    const m = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
+    const m = slim.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
     return m ? stripHtml(m[1]) : '';
   })();
   const pageTitle = sanitizeTitle(h1Raw)
-    || sanitizeTitle(metaContent(html, 'og:title') || metaContent(html, 'twitter:title'));
+    || sanitizeTitle(metaContent(slim, 'og:title') || metaContent(slim, 'twitter:title'));
   if (pageTitle) {
     const current = String(next.title || '').trim();
     const needsUpgrade = !current
@@ -614,9 +683,9 @@ async function enrichItem(item, sourceByName = new Map()) {
 
   if (!next.excerpt || isJunkExcerpt(next.excerpt)) {
     const candidates = [
-      metaContent(html, 'og:description'),
-      metaContent(html, 'description'),
-      metaContent(html, 'twitter:description'),
+      metaContent(slim, 'og:description'),
+      metaContent(slim, 'description'),
+      metaContent(slim, 'twitter:description'),
       firstParagraphFromHtml(body),
     ].map((s) => stripHtml(s)).filter((s) => !isJunkExcerpt(s));
 
@@ -693,7 +762,18 @@ async function fetchPageAuthors(items, feedDefaults, existing = new Map(), sourc
 
     const html = await fetchText(item.link, 3, ENRICH_TIMEOUT);
     const authorHints = getBotHints(sourceByName.get(item.source), 'authors');
-    const author = authorFromArticleHtml(html, item.lang === 'en' ? 'en' : 'fr', authorHints, item.source);
+    // authorFromArticleHtml peut pathologuer (regex) sur certains HTML WP —
+    // plafonner pour ne pas bloquer le job CI 40 min.
+    const author = await withTimeout(
+      Promise.resolve().then(() => authorFromArticleHtml(
+        html.length > 400_000 ? html.slice(0, 400_000) : html,
+        item.lang === 'en' ? 'en' : 'fr',
+        authorHints,
+        item.source,
+      )),
+      2500,
+      '',
+    );
     if (author) pageAuthors.set(key, author);
     fetched += 1;
     await sleep(250);
@@ -742,60 +822,85 @@ async function main() {
     let usedStaleCache = false;
     const priorForSource = priorBySource.get(src.name) || [];
 
-    if (isFirebaseSource(src)) {
-      items = await fetchFirebaseFeed(src, { maxItems: MAX_PER_SOURCE });
-      items = items.map((it) => ({
-        ...it,
-        title: sanitizeTitle(it.title),
-        excerpt: truncateExcerpt(it.excerpt, 280),
-      }));
-      if (items.length) {
-        items = pruneToFreshWindow(items, referenceDate);
-        if (items.length) {
-          fetchOk = true;
-          console.log(`✓ ${items.length} articles (firebase)`);
-        }
-      }
-    } else if (isHtmlListSource(src)) {
-      const listUrls = [src.url, src.urlFallback, ...(src.feedAlternates || [])].filter(Boolean);
-      let listUsed = '';
-      for (const listUrl of [...new Set(listUrls)]) {
-        const html = await fetchText(listUrl);
-        const parsed = parseHtmlListPage(html, listUrl, { maxItems: MAX_PER_SOURCE });
-        if (parsed.length) {
-          listUsed = listUrl;
-          items = parsed.slice(0, MAX_PER_SOURCE).map((it) => ({
+    try {
+      const sourceWork = (async () => {
+        let localItems = [];
+        let localOk = false;
+        if (isFirebaseSource(src)) {
+          localItems = await fetchFirebaseFeed(src, { maxItems: MAX_PER_SOURCE });
+          localItems = localItems.map((it) => ({
             ...it,
             title: sanitizeTitle(it.title),
             excerpt: truncateExcerpt(it.excerpt, 280),
           }));
-          break;
+          if (localItems.length) {
+            localItems = pruneToFreshWindow(localItems, referenceDate);
+            if (localItems.length) localOk = true;
+          }
+          return { items: localItems, fetchOk: localOk, note: localOk ? ' (firebase)' : '' };
         }
-      }
-      if (items.length) {
-        items = pruneToFreshWindow(items, referenceDate);
-        if (items.length) {
-          fetchOk = true;
-          const altNote = listUsed && listUsed !== src.url ? ` [repli: ${listUsed}]` : '';
-          console.log(`✓ ${items.length} articles (html-list)${altNote}`);
+        if (isHtmlListSource(src)) {
+          const listUrls = [src.url, src.urlFallback, ...(src.feedAlternates || [])].filter(Boolean);
+          let listUsed = '';
+          for (const listUrl of [...new Set(listUrls)]) {
+            const html = await fetchText(listUrl);
+            const parsed = parseHtmlListPage(html, listUrl, { maxItems: MAX_PER_SOURCE });
+            if (parsed.length) {
+              listUsed = listUrl;
+              localItems = parsed.slice(0, MAX_PER_SOURCE).map((it) => ({
+                ...it,
+                title: sanitizeTitle(it.title),
+                excerpt: truncateExcerpt(it.excerpt, 280),
+              }));
+              break;
+            }
+          }
+          if (localItems.length) {
+            localItems = pruneToFreshWindow(localItems, referenceDate);
+            if (localItems.length) {
+              localOk = true;
+              const altNote = listUsed && listUsed !== src.url ? ` [repli: ${listUsed}]` : '';
+              return { items: localItems, fetchOk: localOk, note: ` (html-list)${altNote}` };
+            }
+          }
+          return { items: localItems, fetchOk: localOk, note: '' };
         }
-      }
-    } else {
-      const { items: rssItems, feedUsed, maxItems } = await fetchRssItems(src);
-      if (rssItems.length) {
+
+        const { items: rssItems, feedUsed, maxItems } = await fetchRssItems(src);
+        if (rssItems.length) {
+          localOk = true;
+          let altNote = '';
+          if (feedUsed && feedUsed !== src.url) {
+            altNote = src.mergeFeedAlternates ? ` [${feedUsed}]` : ` [repli: ${feedUsed}]`;
+          }
+          localItems = pruneToFreshWindow(rssItems, referenceDate);
+          const featuredItems = await fetchWpFeaturedPosts(src.url, src, referenceDate);
+          if (featuredItems.length) {
+            localItems = mergeSourceItems(localItems, featuredItems, maxItems);
+          }
+          const featNote = featuredItems.length ? ` (+${featuredItems.length} vedettes WP)` : '';
+          return { items: localItems, fetchOk: localOk, note: `${featNote}${altNote}` };
+        }
+        return { items: localItems, fetchOk: localOk, note: '' };
+      })();
+
+      const result = await withTimeout(
+        sourceWork,
+        SOURCE_BUDGET_MS,
+        { items: [], fetchOk: false, note: '', timedOut: true },
+      );
+
+      if (result.timedOut) {
+        console.log(`⚠ timeout ${SOURCE_BUDGET_MS / 1000}s — source sautée (cache si dispo)`);
+      } else if (result.fetchOk && result.items.length) {
+        items = result.items;
         fetchOk = true;
-        let altNote = '';
-        if (feedUsed && feedUsed !== src.url) {
-          altNote = src.mergeFeedAlternates ? ` [${feedUsed}]` : ` [repli: ${feedUsed}]`;
-        }
-        items = pruneToFreshWindow(rssItems, referenceDate);
-        const featuredItems = await fetchWpFeaturedPosts(src.url, src, referenceDate);
-        if (featuredItems.length) {
-          items = mergeSourceItems(items, featuredItems, maxItems);
-        }
-        const featNote = featuredItems.length ? ` (+${featuredItems.length} vedettes WP)` : '';
-        console.log(`✓ ${items.length} articles${featNote}${altNote}`);
+        console.log(`✓ ${items.length} articles${result.note || ''}`);
       }
+    } catch (err) {
+      console.log(`⚠ erreur: ${(err && err.message) || err}`);
+      items = [];
+      fetchOk = false;
     }
 
     if (!items.length) {
