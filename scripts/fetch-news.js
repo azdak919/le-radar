@@ -26,6 +26,7 @@ const {
   normalizeAuthor,
   expandAuthorName,
   extractBylineFromText,
+  authorFromBodyCredits,
 } = require('./author-lib');
 const { mergePriorEnrichment } = require('./article-photo-credit-lib');
 const {
@@ -267,7 +268,16 @@ function pickExcerpt(block) {
   return truncateExcerpt(excerpt, 280);
 }
 
-function parseAuthor(block, contentHtml = '', excerpt = '') {
+function authorKeyLoose(name = '') {
+  return String(name)
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+function parseAuthor(block, contentHtml = '', excerpt = '', feedTitle = '') {
   const fromExcerpt = extractBylineFromText(excerpt);
   if (fromExcerpt.author) return fromExcerpt.author;
 
@@ -280,6 +290,14 @@ function parseAuthor(block, contentHtml = '', excerpt = '') {
   let a = tag(block, 'dc:creator') || tag(block, 'creator') || tag(block, 'author');
   if (a && /<name[\s>]/i.test(a)) a = tag(a, 'name');
   a = expandAuthorName(a);
+
+  // dc:creator = compte de la publication (Substack signe tous les billets
+  // du nom du journal) : chercher un crédit de production dans le corps
+  // (« Produced by X », « Hosted by X »…).
+  if (!a || (feedTitle && authorKeyLoose(a) === authorKeyLoose(feedTitle))) {
+    const credit = authorFromBodyCredits(contentHtml);
+    if (credit) return credit;
+  }
   return a || '';
 }
 
@@ -304,6 +322,11 @@ function isFeedXml(xml = '') {
 function parseFeed(xml) {
   const items = [];
   const blocks = xml.match(/<item[\s\S]*?<\/item>/gi) || xml.match(/<entry[\s\S]*?<\/entry>/gi) || [];
+  // Le premier <title> du document est celui du canal ; l'image de canal est
+  // le logo de la publication (Substack la répète en <enclosure> des billets
+  // sans couverture propre).
+  const channelTitle = sanitizeTitle(tag(xml, 'title'));
+  const channelImage = (xml.match(/<image>[\s\S]{0,600}?<url>\s*([^<\s]+)\s*<\/url>/i) || [])[1] || '';
   for (const block of blocks) {
     const title = sanitizeTitle(tag(block, 'title'));
     let link = stripHtml(tag(block, 'link'));
@@ -315,13 +338,25 @@ function parseFeed(xml) {
     const date = dateRaw ? new Date(dateRaw) : null;
     const contentHtml = tag(block, 'content:encoded') || tag(block, 'content') || '';
     const excerpt = pickExcerpt(block);
-    const author = parseAuthor(block, contentHtml, excerpt);
-    const image = firstImage(contentHtml || tag(block, 'description') || block) || firstImage(block);
+    const author = parseAuthor(block, contentHtml, excerpt, channelTitle);
+    let image = firstImage(contentHtml || tag(block, 'description') || block) || firstImage(block);
+    if (image && channelImage && image === channelImage) image = '';
 
     if (title && link) {
       items.push({ title, link, author, date: date && !isNaN(date) ? date.toISOString() : null, excerpt, image });
     }
   }
+
+  // La même image sur plusieurs billets du flux = visuel générique (logo,
+  // bannière de rubrique, avatar) — pas une photo d'article.
+  const imageUses = new Map();
+  for (const it of items) {
+    if (it.image) imageUses.set(it.image, (imageUses.get(it.image) || 0) + 1);
+  }
+  for (const it of items) {
+    if (it.image && imageUses.get(it.image) >= 2) it.image = '';
+  }
+
   return items;
 }
 

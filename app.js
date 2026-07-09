@@ -3079,9 +3079,14 @@ function createArticle(item, role = 'standard') {
   }
   const readMore = item.lang === 'en' ? 'Read more →' : 'Lire la suite →';
   const byLabel = item.lang === 'en' ? 'By' : 'Par';
-  const canUseImage = ['lead', 'feature'].includes(role);
-  const hasImageCandidate = canUseImage && (role === 'lead' || hasDisplayImage(item));
+  /* Vignette à droite pour les vedettes et En bref : photo réelle ou banque
+     d'images seulement (le repli SVG serait illisible en petit format). */
+  const isThumbRole = ['feature', 'compact'].includes(role);
+  const canUseImage = role === 'lead' || isThumbRole;
+  const hasImageCandidate = role === 'lead'
+    || (isThumbRole && (hasUsablePhoto(item) || hasStockPhoto(item)));
   if (!hasImageCandidate && canUseImage) a.classList.add('article--text');
+  if (isThumbRole && hasImageCandidate) a.classList.add('article--thumb');
   const timeHtml = time
     ? `<time class="article-time${fresh ? ' is-fresh' : ''}" datetime="${escapeHtml(item.date)}">${time}</time>`
     : '';
@@ -3099,7 +3104,7 @@ function createArticle(item, role = 'standard') {
     : '';
   const bylineHtml = `<p class="article-byline">${byLabel} <strong>${escapeHtml(displayAuthor)}</strong></p>`;
   const titleHtml = `<h3 class="article-title">${escapeHtml(cleanTitle(item.title))}</h3>`;
-  const mediaHtml = canUseImage ? '<figure class="article-media"></figure>' : '';
+  const mediaHtml = hasImageCandidate ? '<figure class="article-media"></figure>' : '';
   if (role === 'lead') {
     a.innerHTML = `
       <span class="article-eyebrow">À la une</span>
@@ -3119,7 +3124,24 @@ function createArticle(item, role = 'standard') {
     `;
   }
 
-  if (canUseImage) attachArticleImage(a, item, role);
+  if (hasImageCandidate) {
+    if (!isThumbRole) {
+      attachArticleImage(a, item, role);
+    } else {
+      /* Pas de vignettes sur téléphone : on ne télécharge la photo qu'à
+         partir de 601px (rattrapage si la fenêtre s'élargit ensuite). */
+      const mq = window.matchMedia('(min-width: 601px)');
+      if (mq.matches) {
+        attachArticleImage(a, item, role);
+      } else {
+        mq.addEventListener('change', (e) => {
+          if (e.matches && a.isConnected && !a.classList.contains('has-image')) {
+            attachArticleImage(a, item, role);
+          }
+        }, { once: true });
+      }
+    }
+  }
   return a;
 }
 
@@ -3146,6 +3168,12 @@ function resizeFromImageQuery(raw = '') {
     const w = parseInt(u.searchParams.get('w'), 10) || 0;
     const h = parseInt(u.searchParams.get('h'), 10) || 0;
     if (w || h) return { width: w, height: h };
+    // Transformations dans le chemin (substackcdn/Cloudinary : « ,w_256,c_limit,… »)
+    const pw = u.pathname.match(/[,/]w_(\d+)\b/);
+    const ph = u.pathname.match(/[,/]h_(\d+)\b/);
+    if (pw || ph) {
+      return { width: pw ? parseInt(pw[1], 10) : 0, height: ph ? parseInt(ph[1], 10) : 0 };
+    }
   } catch {
     /* ignore */
   }
@@ -3328,6 +3356,9 @@ function cleanCreatorDisplay(raw = '') {
   if (bareAttr > 0) s = s.slice(0, bareAttr);
   s = s.replace(/\\+"/g, '"').replace(/\)\s*["']\s*$/g, ')').replace(/["']\s*$/g, '').trim();
   s = s.replace(/\.mw-parser-output[\s\S]*/i, '').trim();
+  // Champ dédoublé à la source (« Unknown authorUnknown author ») :
+  // ne garder qu'une occurrence.
+  s = s.replace(/^(.{3,}?)\s*\1$/u, '$1').trim();
   if (s.length > 72) {
     const cut = s.slice(0, 72);
     const lastSpace = cut.lastIndexOf(' ');
@@ -3501,16 +3532,19 @@ function attachArticleImage(article, item, role) {
   article.__radarItem = item;
 
   const failToText = () => dropArticleImage(article, media, role, item);
+  const allowFallback = role === 'lead';
 
   const loadImage = (src, kind, allowRetry = true) => {
-    if (!src) {
+    if (!src || (kind === 'fallback' && !allowFallback)) {
       failToText();
       return;
     }
 
     const img = new Image();
     img.decoding = 'async';
-    img.loading = role === 'lead' ? 'eager' : 'lazy';
+    /* Pas de loading="lazy" ici : une Image() hors du DOM en lazy ne se
+       charge jamais — le délai de 2,5 s la faisait basculer en mode texte. */
+    if (role === 'lead') img.fetchPriority = 'high';
     img.alt = '';
 
     img.onload = () => {
@@ -3564,18 +3598,23 @@ function attachArticleImage(article, item, role) {
 
 const LEAD_IMAGE_MIN = { width: 720, height: 405, pixels: 320000 };
 const FEATURE_IMAGE_MIN = { width: 640, height: 360, pixels: 240000 };
+/* Vignettes (vedettes + En bref) : affichées en ~100 px, on accepte des photos
+   plus petites et des cadrages portrait — object-fit recadre de toute façon. */
+const THUMB_IMAGE_MIN = { width: 320, height: 220, pixels: 90000 };
 
 function isUsableArticleImage(img, role) {
   const width = img.naturalWidth || 0;
   const height = img.naturalHeight || 0;
   const ratio = width / Math.max(height, 1);
-  const min = role === 'lead' ? LEAD_IMAGE_MIN : FEATURE_IMAGE_MIN;
+  const isThumb = role === 'feature' || role === 'compact';
+  const min = role === 'lead' ? LEAD_IMAGE_MIN : (isThumb ? THUMB_IMAGE_MIN : FEATURE_IMAGE_MIN);
+  const [ratioMin, ratioMax] = isThumb ? [0.6, 2.8] : [0.95, 2.6];
   return (
     width >= min.width
     && height >= min.height
     && width * height >= min.pixels
-    && ratio >= 0.95
-    && ratio <= 2.6
+    && ratio >= ratioMin
+    && ratio <= ratioMax
   );
 }
 
