@@ -2975,14 +2975,13 @@ const HERO_SPOTLIGHT_MAX = 3; /* 1 à la une + 2 vedettes (fil global) */
 const BRIEF_SIDEBAR_MAX = 7;
 /* Vue source : plus de vedettes intermédiaires (voir partitionSourceFeed). */
 /**
- * Fenêtre de fraîcheur :
- *  - 3 sessions (en cours + 2) = automne + hiver + été sur un cycle
- *  - septembre : grâce — on garde aussi l’automne d’avant
+ * Fraîcheur universelle : scripts/session-freshness-lib.js
+ * (même règle bots + UI — automne/hiver/été + grâce septembre).
  */
-const FRESHNESS_SESSION_COUNT = 3;
-const CONTINGENCY_MAX_SESSIONS_BACK = FRESHNESS_SESSION_COUNT - 1;
-/** Septembre uniquement : mois de grâce avant de retirer l’automne précédent. */
-const AUTUMN_GRACE_END_MONTH = 8; /* septembre (0-index : 8) */
+const _SF = (typeof RadarSessionFreshness !== 'undefined') ? RadarSessionFreshness : null;
+const FRESHNESS_SESSION_COUNT = _SF?.FRESHNESS_SESSION_COUNT ?? 3;
+const CONTINGENCY_MAX_SESSIONS_BACK = _SF?.CONTINGENCY_MAX_SESSIONS_BACK
+  ?? (FRESHNESS_SESSION_COUNT - 1);
 /* Vedettes (feature) = même budget / sources d'extrait que « À la une ». */
 const BRIEF_LIMITS = { lead: 720, feature: 720, compact: 400, standard: 260 };
 const LEAD_BRIEF_MIN_CHARS = 160;
@@ -3017,49 +3016,35 @@ function sortByDateDesc(items) {
   return [...items].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
 }
 
-/**
- * Début de la session universitaire québécoise en cours.
- * Automne : 1er sept. | Hiver : 1er janv. | Été : 1er mai
- */
+/* --- Calendrier / fraîcheur : délégué à session-freshness-lib (universel) --- */
 function getCurrentUniversitySessionStart(referenceDate = new Date()) {
-  const year = referenceDate.getFullYear();
-  const month = referenceDate.getMonth();
-  if (month >= 8) return new Date(year, 8, 1);
-  if (month >= 4) return new Date(year, 4, 1);
-  return new Date(year, 0, 1);
-}
-
-function getPriorUniversitySessionStart(sessionStart) {
-  const year = sessionStart.getFullYear();
-  const month = sessionStart.getMonth();
-  if (month === 8) return new Date(year, 4, 1);
-  if (month === 4) return new Date(year, 0, 1);
-  return new Date(year - 1, 8, 1);
+  return _SF
+    ? _SF.getCurrentUniversitySessionStart(referenceDate)
+    : (() => {
+      const y = referenceDate.getFullYear();
+      const m = referenceDate.getMonth();
+      if (m >= 8) return new Date(y, 8, 1);
+      if (m >= 4) return new Date(y, 4, 1);
+      return new Date(y, 0, 1);
+    })();
 }
 
 function getUniversitySessionStart(referenceDate = new Date(), sessionsBack = 0) {
-  let start = getCurrentUniversitySessionStart(referenceDate);
-  for (let i = 0; i < sessionsBack; i++) {
-    start = getPriorUniversitySessionStart(start);
-  }
-  return start;
+  return _SF
+    ? _SF.getUniversitySessionStart(referenceDate, sessionsBack)
+    : getCurrentUniversitySessionStart(referenceDate);
 }
 
-/** sessionsBack 0 = session en cours ; 1+ = sessions précédentes (bandes disjointes). */
 function getUniversitySessionBand(referenceDate = new Date(), sessionsBack = 0) {
-  const start = getUniversitySessionStart(referenceDate, sessionsBack);
-  const end = sessionsBack === 0
-    ? referenceDate
-    : new Date(getUniversitySessionStart(referenceDate, sessionsBack - 1).getTime() - 1);
-  return { start, end };
+  return _SF
+    ? _SF.getUniversitySessionBand(referenceDate, sessionsBack)
+    : { start: getCurrentUniversitySessionStart(referenceDate), end: referenceDate };
 }
 
 function isWithinUniversitySessionBand(item, referenceDate = new Date(), sessionsBack = 0) {
-  const published = new Date(item.date || 0);
-  if (!Number.isFinite(published.getTime())) return false;
-  const { start, end } = getUniversitySessionBand(referenceDate, sessionsBack);
-  const t = published.getTime();
-  return t >= start.getTime() && t <= end.getTime();
+  return _SF
+    ? _SF.isWithinUniversitySessionBand(item, referenceDate, sessionsBack)
+    : false;
 }
 
 function sessionBandPool(items, referenceDate = new Date(), sessionsBack = 0) {
@@ -3069,33 +3054,38 @@ function sessionBandPool(items, referenceDate = new Date(), sessionsBack = 0) {
 }
 
 function isAutumnGracePeriod(referenceDate = new Date()) {
-  // Mois de grâce = septembre (début d’automne, peu de publications encore)
-  return referenceDate.getMonth() === AUTUMN_GRACE_END_MONTH;
+  return _SF
+    ? _SF.isAutumnGracePeriod(referenceDate)
+    : referenceDate.getMonth() === 8;
 }
 
 function freshnessMaxSessionsBack(referenceDate = new Date()) {
-  let max = CONTINGENCY_MAX_SESSIONS_BACK;
-  if (isAutumnGracePeriod(referenceDate)) max += 1;
-  return max;
+  return _SF
+    ? _SF.freshnessMaxSessionsBack(referenceDate)
+    : CONTINGENCY_MAX_SESSIONS_BACK + (isAutumnGracePeriod(referenceDate) ? 1 : 0);
 }
 
 function isWithinFreshnessWindow(item, referenceDate = new Date()) {
-  const maxBack = freshnessMaxSessionsBack(referenceDate);
-  for (let band = 0; band <= maxBack; band++) {
-    if (isWithinUniversitySessionBand(item, referenceDate, band)) return true;
-  }
-  return false;
-}
-
-function filterFreshItems(items, referenceDate = new Date()) {
-  return items.filter(
-    (item) => isPublishedOnOrBefore(item, referenceDate) && isWithinFreshnessWindow(item, referenceDate),
-  );
+  return _SF
+    ? _SF.isWithinFreshnessWindow(item, referenceDate)
+    : false;
 }
 
 function isPublishedOnOrBefore(item, referenceDate = new Date()) {
-  const published = new Date(item.date || 0);
-  return Number.isFinite(published.getTime()) && published.getTime() <= referenceDate.getTime();
+  return _SF
+    ? _SF.isPublishedOnOrBefore(item, referenceDate)
+    : (() => {
+      const published = new Date(item.date || 0);
+      return Number.isFinite(published.getTime()) && published.getTime() <= referenceDate.getTime();
+    })();
+}
+
+function filterFreshItems(items, referenceDate = new Date()) {
+  return _SF
+    ? _SF.filterFreshItems(items, referenceDate)
+    : items.filter(
+      (item) => isPublishedOnOrBefore(item, referenceDate) && isWithinFreshnessWindow(item, referenceDate),
+    );
 }
 
 function compareBriefCandidates(a, b) {
@@ -3156,7 +3146,7 @@ function pickHeroSpotlight(items, referenceDate = new Date()) {
     contingencyBand = Math.max(contingencyBand, band);
   };
 
-  for (let band = 0; band <= CONTINGENCY_MAX_SESSIONS_BACK; band++) {
+  for (let band = 0; band <= freshnessMaxSessionsBack(referenceDate); band++) {
     fill(sessionBandPool(items, referenceDate, band), band);
     if (picks.length >= HERO_SPOTLIGHT_MAX) break;
   }
@@ -3238,7 +3228,7 @@ function pickBriefSidebar(allItems, heroItems = [], referenceDate = new Date()) 
   };
   let contingencyBand = 0;
 
-  for (let band = 0; band <= CONTINGENCY_MAX_SESSIONS_BACK; band++) {
+  for (let band = 0; band <= freshnessMaxSessionsBack(referenceDate); band++) {
     if (state.picks.length >= BRIEF_SIDEBAR_MAX) break;
     const before = state.picks.length;
     const eligible = sessionBandPool(allItems, referenceDate, band).filter(
