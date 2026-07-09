@@ -243,7 +243,8 @@ const TUNER_NAME     = document.getElementById('tuner-now-name');
 const TUNER_SUB      = document.getElementById('tuner-now-sub');
 const TUNER_SUB_AIR  = document.getElementById('tuner-now-sub-air');
 const TUNER_SUB_ROTATE_MQ = window.matchMedia?.('(max-width: 1099.98px)');
-const TUNER_DIAL_PHONE_MQ = window.matchMedia?.('(max-width: 679.98px)');
+// < 600 px = vrai téléphone. Demi-écran laptop (≈680–960) reste tablette.
+const TUNER_DIAL_PHONE_MQ = window.matchMedia?.('(max-width: 599.98px)');
 const TUNER_SUB_ROTATE_NARROW_MQ = window.matchMedia?.('(max-width: 479.98px)');
 const TUNER_SUB_ROTATE_VERY_NARROW_MQ = window.matchMedia?.('(max-width: 359.98px)');
 const TUNER_VOLUME   = document.getElementById('tuner-volume');
@@ -268,7 +269,8 @@ const FILTERS_PANEL  = document.getElementById('news-filters-panel');
 const NEWS_FILTERS   = document.getElementById('news-filters');
 const FILTERS_TOGGLE = document.getElementById('filters-toggle');
 const FILTERS_COMPACT = document.getElementById('filters-compact');
-const FILTERS_MOBILE = window.matchMedia('(max-width: 819px)');
+// Aligné sur le CSS : mode filtres « téléphone » seulement < 600 px.
+const FILTERS_MOBILE = window.matchMedia('(max-width: 599.98px)');
 const NEWS_COUNT     = document.getElementById('news-count');
 const NEWS_UPDATED   = document.getElementById('news-updated');
 const NEWS_EMPTY     = document.getElementById('news-empty');
@@ -414,7 +416,10 @@ async function init() {
   tunerSubMeta = TUNER_SUB?.textContent?.trim() || 'Radios étudiantes en direct';
   initTunerSubRotateListeners();
   initMarqueeResizeListeners();
-  renderTunerNowAir();
+  // API live navigateur (CISM…) avant le premier rendu d'antenne.
+  refreshStationLiveApis().finally(() => {
+    renderTunerNowAir();
+  });
   startNowAirTick();
   restoreVolume();
   registerServiceWorker();
@@ -534,19 +539,41 @@ function nowPlayingEntry(radio) {
   return radio?.id ? radioNowPlaying.stations?.[radio.id] : null;
 }
 
-function nowAirShowTitle(radio) {
-  const title = String(nowPlayingEntry(radio)?.showTitle || '').trim();
-  return title.length >= 3 ? title : '';
-}
-
-// ─── Émission en cours selon la grille horaire (radio-schedules.json) ─────────────
 function normLoose(s) {
   return String(s || '').toLowerCase().replace(/\s+/g, ' ').trim();
 }
 
+/** Émission en cours / à venir : d'abord le bot (radio-nowplaying.json), puis grille locale. */
+function botCurrentShow(radio) {
+  const entry = nowPlayingEntry(radio);
+  const cur = entry?.current;
+  if (cur?.title && String(cur.title).trim().length >= 3) return cur;
+  const legacy = String(entry?.showTitle || '').trim();
+  if (legacy.length >= 3) {
+    return {
+      title: legacy,
+      host: entry?.host || '',
+      source: entry?.source || '',
+    };
+  }
+  return null;
+}
+
+function botNextShow(radio) {
+  const next = nowPlayingEntry(radio)?.next;
+  if (next?.title && String(next.title).trim().length >= 3) return next;
+  return null;
+}
+
+function nowAirShowTitle(radio) {
+  return String(botCurrentShow(radio)?.title || '').trim();
+}
+
+// ─── Repli grille locale (si bot absent ou incomplet) ───────────────────────────
+
 /** Jour (0-6) + minutes depuis minuit dans le fuseau de la grille. */
 function scheduleZonedNow(date = new Date()) {
-  const tz = radioSchedules.timezone || 'America/Toronto';
+  const tz = radioNowPlaying.timezone || radioSchedules.timezone || 'America/Toronto';
   const parts = new Intl.DateTimeFormat('en-US', {
     timeZone: tz, weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false,
   }).formatToParts(date);
@@ -612,35 +639,67 @@ function scheduleNextSlot(radio) {
   return best;
 }
 
-function nowAirLines(radio) {
-  const slot = scheduleCurrentSlot(radio);
-  const scheduled = slot?.title?.trim() || '';
-  const live = nowAirShowTitle(radio); // métadonnées ICY du flux (souvent la pièce en cours)
-  const slogan = radioSlogan(radio);
+/** true si le bot a une source « live » fiable (API station). */
+function isAuthoritativeLiveShow(radio) {
+  const cur = botCurrentShow(radio);
+  const src = String(cur?.source || nowPlayingEntry(radio)?.source || '');
+  return src === 'api-live';
+}
 
-  // La grille donne l'émission de l'heure ; le flux ICY précise la pièce en ondes.
-  if (scheduled) {
-    const timeRange = slot.start && slot.end ? `${slot.start} – ${slot.end}` : '';
+/**
+ * Lignes d'antenne pour le syntoniseur.
+ * Priorité : bot.current (API/grille/ICY fusionnés) → bot.next → grille locale → slogan.
+ */
+function nowAirLines(radio) {
+  const slogan = radioSlogan(radio);
+  const entry = nowPlayingEntry(radio);
+  const botCur = botCurrentShow(radio);
+  const botNext = botNextShow(radio);
+  const schedCur = scheduleCurrentSlot(radio);
+  const schedNext = scheduleNextSlot(radio);
+  const track = String(entry?.track || '').trim();
+
+  // 1) Émission en cours (bot, déjà fusionné api > schedule > icy)
+  if (botCur?.title) {
+    const host = String(botCur.host || entry?.host || '').trim();
+    const start = botCur.start || schedCur?.start || '';
+    const end = botCur.end || schedCur?.end || '';
+    const timeRange = start && end ? `${start} – ${end}` : (start || '');
     let sub;
-    if (live && normLoose(live) !== normLoose(scheduled)) sub = `♪ ${live}`;
-    else if (slot.host) sub = `avec ${slot.host}`;
+    if (host) sub = `avec ${host}`;
+    else if (track && normLoose(track) !== normLoose(botCur.title)) sub = `♪ ${track}`;
     else if (timeRange) sub = timeRange;
     else sub = slogan || `Vous écoutez ${radio.name}`;
-    return { title: scheduled, sub };
+    return { title: botCur.title, sub };
   }
-  if (live) {
-    const host = String(nowPlayingEntry(radio)?.host || '').trim();
-    const sub = host || slogan || `Vous écoutez ${radio.name}`;
-    return { title: live, sub };
+
+  // 2) Repli grille locale (bot pas encore à jour)
+  if (schedCur?.title) {
+    const timeRange = schedCur.start && schedCur.end
+      ? `${schedCur.start} – ${schedCur.end}`
+      : '';
+    let sub;
+    if (track) sub = `♪ ${track}`;
+    else if (schedCur.host) sub = `avec ${schedCur.host}`;
+    else if (timeRange) sub = timeRange;
+    else sub = slogan || `Vous écoutez ${radio.name}`;
+    return { title: schedCur.title, sub };
   }
-  const next = scheduleNextSlot(radio);
-  if (next?.title) {
-    const timeRange = next.start && next.end ? `${next.start} – ${next.end}` : (next.start || '');
+
+  // 3) À venir (bot puis grille)
+  const upcoming = botNext || (schedNext
+    ? { title: schedNext.title, start: schedNext.start, end: schedNext.end }
+    : null);
+  if (upcoming?.title) {
+    const timeRange = upcoming.start && upcoming.end
+      ? `${upcoming.start} – ${upcoming.end}`
+      : (upcoming.start || '');
     return {
-      title: next.title,
+      title: upcoming.title,
       sub: timeRange ? `À venir · ${timeRange}` : 'À venir',
     };
   }
+
   return { title: `Vous écoutez ${radio.name}`, sub: slogan };
 }
 
@@ -652,9 +711,10 @@ function formatNowAirSubLine(title, sub, empty) {
 }
 
 function nowAirInterestScore(radio) {
-  if (scheduleCurrentSlot(radio)?.title) return 3;
-  if (nowAirShowTitle(radio)) return 2;
-  if (scheduleNextSlot(radio)?.title) return 1;
+  if (botCurrentShow(radio) && isAuthoritativeLiveShow(radio)) return 4;
+  if (botCurrentShow(radio) || scheduleCurrentSlot(radio)?.title) return 3;
+  if (botNextShow(radio) || scheduleNextSlot(radio)?.title) return 2;
+  if (nowPlayingEntry(radio)?.track) return 1;
   return 0;
 }
 
@@ -686,7 +746,7 @@ function formatStationNowAirLabel(radio) {
 
 /* ── Synthoniseur uniquement (#tuner-now-name) — pas articles, filtres ni RSS ── */
 
-/** Téléphone (< 680 px) : acronyme dans le titre du syntoniseur seulement. */
+/** Téléphone (< 600 px) : acronyme dans le titre du syntoniseur seulement. */
 function isTunerDialPhoneLayout() {
   return IS_TUNER_EMBED || !!TUNER_DIAL_PHONE_MQ?.matches;
 }
@@ -1155,10 +1215,96 @@ function startNowAirTick() {
 
 async function refreshNowPlayingCache() {
   try {
-    radioNowPlaying = await fetch('./radio-nowplaying.json').then((r) => r.json());
-    renderTunerNowAir();
+    radioNowPlaying = await fetch('./radio-nowplaying.json', { cache: 'no-store' }).then((r) => r.json());
   } catch {
     /* ignore */
+  }
+  // Re-poll navigateur des APIs CORS signalées par le bot (clientPoll).
+  await refreshStationLiveApis();
+  renderTunerNowAir();
+}
+
+/**
+ * Parse une réponse live côté navigateur selon le type d'adaptateur du bot.
+ * Types CORS connus : cism-v1 (et synonymes). Extensible pour de futurs postes.
+ */
+function parseClientLivePayload(type, payload) {
+  if (!payload) return null;
+  if (type === 'cism-v1' || type === 'cism') {
+    const cur = payload?.data?.current || payload?.current;
+    const up = payload?.data?.upcoming || payload?.data?.next || payload?.upcoming;
+    if (!cur?.title) return null;
+    return {
+      current: {
+        title: String(cur.title).trim(),
+        host: String(cur.host || cur.artist || '').trim(),
+        source: 'api-live',
+        slug: String(cur.slug || '').trim(),
+      },
+      next: up?.title
+        ? {
+          title: String(up.title).trim(),
+          host: String(up.host || up.artist || '').trim(),
+          source: 'api-live',
+          slug: String(up.slug || '').trim(),
+        }
+        : null,
+    };
+  }
+  if (type === 'craft-live' || type === 'craft' || type === 'choq') {
+    const live = payload.live || payload;
+    const title = String(live?.title || live?.name || '').trim();
+    if (!title) return null;
+    return {
+      current: {
+        title,
+        host: String(live.artist || live.host || '').trim(),
+        source: 'api-live',
+      },
+      next: null,
+    };
+  }
+  return null;
+}
+
+async function fetchClientLivePoll(id, poll) {
+  if (!poll?.url) return null;
+  try {
+    const res = await fetch(poll.url, {
+      cache: 'no-store',
+      headers: { Accept: 'application/json' },
+    });
+    if (!res.ok) return null;
+    const payload = await res.json();
+    const parsed = parseClientLivePayload(poll.type, payload);
+    if (!parsed?.current?.title) return null;
+    return { id, ...parsed, checkedAt: new Date().toISOString() };
+  } catch {
+    return null;
+  }
+}
+
+async function refreshStationLiveApis() {
+  const stations = radioNowPlaying.stations || {};
+  const jobs = Object.entries(stations)
+    .filter(([, st]) => st?.clientPoll?.url)
+    .map(([id, st]) => fetchClientLivePoll(id, st.clientPoll));
+  if (!jobs.length) return;
+  const results = await Promise.all(jobs);
+  for (const hit of results) {
+    if (!hit?.current?.title) continue;
+    const prev = radioNowPlaying.stations[hit.id] || {};
+    radioNowPlaying.stations[hit.id] = {
+      ...prev,
+      id: hit.id,
+      name: prev.name || radios.find((r) => r.id === hit.id)?.name || hit.id,
+      current: hit.current,
+      next: hit.next || prev.next || null,
+      showTitle: hit.current.title,
+      host: hit.current.host || '',
+      source: 'api-live',
+      checkedAt: hit.checkedAt,
+    };
   }
 }
 
@@ -1168,7 +1314,9 @@ function syncNowPlayingPoll() {
     nowPlayingPollTimer = null;
   }
   if (currentStation && getPlayableStream(currentStation) && isPlaybackActive()) {
-    nowPlayingPollTimer = setInterval(refreshNowPlayingCache, 180000);
+    // 60 s : APIs live CORS + fichier bot, sans attendre le cron 30 min.
+    nowPlayingPollTimer = setInterval(refreshNowPlayingCache, 60000);
+    refreshNowPlayingCache();
   }
 }
 
@@ -1645,6 +1793,18 @@ function togglePlay() {
     openListenWindow(currentStation);
     return;
   }
+  // Cast actif : pause/reprise distante (ne pas relancer le flux local en double).
+  if (window.RadarCast?.isChromecasting?.()) {
+    if (window.RadarCast.isRemotePlaying?.()) {
+      pauseByUser();
+    } else {
+      userPaused = false;
+      window.RadarCast.resumeRemote?.();
+      mobilePlayback?.onPlayStart();
+      updatePlayUI();
+    }
+    return;
+  }
   if (isPlaybackActive()) {
     pauseByUser();
   } else {
@@ -1657,6 +1817,15 @@ async function play(radio) {
   const url = getPlayableStream(radio);
   if (!url) return;
   userPaused = false;
+
+  // Reprise Cast plutôt que double lecture locale + distante.
+  if (window.RadarCast?.isChromecasting?.()) {
+    window.RadarCast.resumeRemote?.();
+    mobilePlayback?.onPlayStart();
+    updatePlayUI();
+    return;
+  }
+
   // Branche (ou non) le graphe d'amplification selon le support CORS du poste.
   const tuning = STATION_PLAYBACK[radio.id] || {};
   const wantBoost = wantsAudioBoost()
@@ -1707,6 +1876,10 @@ function isCasting() {
 }
 
 function isPlaybackActive() {
+  // Cast en pause distante : session active mais pas « en lecture ».
+  if (window.RadarCast?.isChromecasting?.()) {
+    return !!window.RadarCast.isRemotePlaying?.();
+  }
   return isPlaying() || isCasting();
 }
 
@@ -1737,6 +1910,10 @@ function getPlayerElement() {
     el.preload = 'none';
     el.setAttribute('playsinline', '');
     el.setAttribute('webkit-playsinline', '');
+    // Android / Chrome : session longue durée (radio live), pas de téléchargement.
+    el.setAttribute('x-webkit-airplay', 'allow');
+    try { el.disableRemotePlayback = false; } catch {}
+    el.controls = false;
     el.classList.add('sr-only');
     el.setAttribute('aria-hidden', 'true');
     document.body.appendChild(el);
@@ -1755,7 +1932,11 @@ function pauseForCast() {
 
 function pauseByUser() {
   userPaused = true;
-  window.RadarCast?.pauseRemote?.();
+  // Cast : pause distante (ou fin de session si le LIVE ne gère pas pause).
+  // Ne pas appeler endSession ici — le bouton Cast sert à arrêter la diffusion.
+  if (window.RadarCast?.isChromecasting?.()) {
+    window.RadarCast.pauseRemote?.();
+  }
   mobilePlayback?.onUserPause();
   if (!audio) { updatePlayUI(); return; }
   suppressAudioError = true;
@@ -2047,13 +2228,43 @@ function setupAudio() {
   attachAudioListeners(audio);
 
   if ('mediaSession' in navigator) {
+    // Les handlers Media Session sont privilégiés par Android pour relancer
+    // l'audio depuis l'écran de verrouillage / la notification média.
     navigator.mediaSession.setActionHandler('play', () => {
       userPaused = false;
-      if (currentStation) play(currentStation);
+      mobilePlayback?.onPlayStart();
+      if (window.RadarCast?.isChromecasting?.()) {
+        window.RadarCast.resumeRemote?.();
+        updatePlayUI();
+        return;
+      }
+      if (currentStation) {
+        if (audio?.src && audio.paused) {
+          audio.play().catch(() => play(currentStation));
+        } else {
+          play(currentStation);
+        }
+      }
+      syncMediaSessionPlaybackState();
+      syncMediaSessionLivePosition();
     });
     navigator.mediaSession.setActionHandler('pause', () => pauseByUser());
+    navigator.mediaSession.setActionHandler('stop', () => {
+      userPaused = true;
+      window.RadarCast?.endSession?.();
+      mobilePlayback?.onUserPause();
+      if (audio) {
+        suppressAudioError = true;
+        try { audio.pause(); } catch {}
+        suppressAudioError = false;
+      }
+      updatePlayUI();
+    });
     navigator.mediaSession.setActionHandler('previoustrack', () => stepStation(-1));
     navigator.mediaSession.setActionHandler('nexttrack', () => stepStation(1));
+    try {
+      navigator.mediaSession.setActionHandler('seekto', null);
+    } catch {}
   }
 
   window.RadarCast?.init?.({
@@ -2407,7 +2618,8 @@ function filtersColumnCount() {
   if (FILTERS_MOBILE.matches) {
     return w < FILTERS_COLS_NARROW ? 2 : 3;
   }
-  if (w < 680) return 3;
+  // Demi-laptop / tablette étroite : 3 colonnes de pastilles (pas le mode compact téléphone).
+  if (w < 720) return 3;
   if (w < FILTERS_DESKTOP_WIDE_MIN) return 3;
   return FILTERS_DESKTOP_MAX_COLS;
 }

@@ -26,7 +26,7 @@ dans l'idéal, et ce qui reste volontairement manuel.
 | `radios-candidates.json` | Radios à tester avant promotion | `scan-media.js`, `discover-streams.js` |
 | `radio-schedules.seed.json` | Config sources + grilles manuelles | humain + `discover-schedule-sources.js` |
 | `radio-schedules.json` | Grilles colligées « à l'antenne » (lu par le site) | `fetch-radio-schedules.js` |
-| `radio-nowplaying.json` | Titre en ondes via métadonnées ICY (lu par le site) | `fetch-radio-nowplaying.js` |
+| `radio-nowplaying.json` | En cours + à venir (API live / grille / ICY) | `fetch-radio-nowplaying.js` (+ re-poll navigateur si `clientPoll`) |
 | `bot-status.json` | Tableau de bord santé des bots | `maintain.js` |
 
 ---
@@ -45,7 +45,7 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 | Flux radio + promotion candidats | `discover-streams.js` | Quotidien + hebdo |
 | Agrégation articles | `fetch-news.js` | 7×/jour |
 | Extrait « à la une » | `enrich-lead-excerpts.js` | 7×/jour (après `fetch-news`) |
-| Titre en ondes (ICY) | `fetch-radio-nowplaying.js` | Aux 30 min |
+| En cours + à venir (API / grille / ICY) | `fetch-radio-nowplaying.js` | Aux 30 min |
 | Découverte sources horaires | `discover-schedule-sources.js` | **Aux 2 semaines** (avant les horaires) |
 | Horaires « à l'antenne » | `fetch-radio-schedules.js` | **Aux 2 semaines** |
 | **Orchestrateur** | `maintain.js` | **Hebdo (lundi)** |
@@ -55,7 +55,7 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 - `maintain.yml` — pipeline complet + `bot-status.json` + issue si besoin
 - `update-news.yml` — articles frais (haute fréquence)
 - `update-streams.yml` — validation des flux (quotidien)
-- `update-radio-nowplaying.yml` — titre en ondes via ICY (aux 30 min)
+- `update-radio-nowplaying.yml` — titre en ondes via API station / ICY (aux 30 min)
 - `update-radio-schedules.yml` — horaires colligés « à l'antenne » (aux 2 semaines)
 - `discover-news-sources.yml` — santé des flux RSS (hebdo)
 - `update-institutions.yml` — catalogue établissements (3×/an)

@@ -179,6 +179,33 @@ function resolveCurrentSlot(grid, date = new Date(), timeZone = DEFAULT_TZ) {
   return null;
 }
 
+/**
+ * Prochaine plage dont le début est strictement après `date`
+ * (utile pour « À venir » entre deux créneaux ou en fin d'émission).
+ */
+function resolveNextSlot(grid, date = new Date(), timeZone = DEFAULT_TZ) {
+  if (!Array.isArray(grid) || !grid.length) return null;
+  const { day, minutes } = zonedNow(date, timeZone);
+  const nowAbs = day * 1440 + minutes;
+  let best = null;
+  let bestDelta = WEEK_MIN;
+
+  for (const raw of grid) {
+    const slot = normalizeSlot(raw);
+    if (!slot) continue;
+    const start = timeToMinutes(slot.start);
+    if (start == null) continue;
+    const startAbs = slot.day * 1440 + start;
+    let delta = startAbs - nowAbs;
+    if (delta <= 0) delta += WEEK_MIN;
+    if (delta < bestDelta) {
+      bestDelta = delta;
+      best = slot;
+    }
+  }
+  return best;
+}
+
 // ─── Adaptateurs de sources ─────────────────────────────────────────────────────
 async function fetchJson(url, { fetchImpl = globalThis.fetch, timeoutMs = 15000 } = {}) {
   if (typeof fetchImpl !== 'function') throw new Error('fetch indisponible');
@@ -475,6 +502,105 @@ function reviveNuxt(value, payload, seen = new Set()) {
   return value;
 }
 
+/**
+ * Résout une référence Nuxt (index) en valeur scalaire sans redescendre
+ * dans les arbres d'images (sinon OOM sur le payload grille CISM ~200 ko).
+ */
+function reviveNuxtScalar(value, payload, depth = 0) {
+  if (depth > 8) return null;
+  if (typeof value === 'number' && Number.isInteger(value) && value >= 0 && value < payload.length) {
+    return reviveNuxtScalar(payload[value], payload, depth + 1);
+  }
+  if (Array.isArray(value)
+    && value.length === 2
+    && typeof value[0] === 'string'
+    && typeof value[1] === 'number') {
+    return reviveNuxtScalar(payload[value[1]], payload, depth + 1);
+  }
+  if (value == null || typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+    return value;
+  }
+  return null;
+}
+
+/** Liste d'émissions CISM : ne tire que slug/title/start/end. */
+function reviveCismShowList(ref, payload) {
+  let list = ref;
+  if (typeof list === 'number') list = payload[list];
+  if (!Array.isArray(list)) return [];
+  const shows = [];
+  for (const item of list) {
+    let show = item;
+    if (typeof show === 'number') show = payload[show];
+    if (!show || typeof show !== 'object' || Array.isArray(show)) continue;
+    shows.push({
+      slug: reviveNuxtScalar(show.slug, payload),
+      title: reviveNuxtScalar(show.title, payload),
+      start: reviveNuxtScalar(show.start, payload),
+      end: reviveNuxtScalar(show.end, payload),
+    });
+  }
+  return shows;
+}
+
+/**
+ * Extrait timeTable.content sans réhydrater tout le payload Nuxt
+ * (images, podcasts, catégories → explosion mémoire).
+ */
+function extractCismTimeTableContent(payload) {
+  if (!Array.isArray(payload)) return null;
+
+  // 1) Objet jour → listes (Monday…Sunday) directement dans le tableau.
+  for (let i = 0; i < payload.length; i++) {
+    const item = payload[i];
+    if (!item || typeof item !== 'object' || Array.isArray(item)) continue;
+    if (!Object.prototype.hasOwnProperty.call(item, 'Monday')) continue;
+    if (!Object.prototype.hasOwnProperty.call(item, 'Thursday')) continue;
+    const content = {};
+    let hits = 0;
+    for (const dayName of Object.keys(CISM_DAY_INDEX)) {
+      if (!Object.prototype.hasOwnProperty.call(item, dayName)) continue;
+      content[dayName] = reviveCismShowList(item[dayName], payload);
+      if (content[dayName].length) hits += 1;
+    }
+    if (hits >= 3) return content;
+  }
+
+  // 2) Ancien chemin (payload[1].data['grille-horaire']…) — shallow.
+  try {
+    const root = payload[1];
+    const rootObj = typeof root === 'number' ? payload[root] : root;
+    if (rootObj && typeof rootObj === 'object') {
+      const candidates = [
+        rootObj?.['grille-horaire'],
+        rootObj?.data?.['grille-horaire'],
+      ];
+      for (const ghRef of candidates) {
+        if (ghRef == null) continue;
+        let gh = ghRef;
+        if (typeof gh === 'number') gh = payload[gh];
+        let data = gh?.data ?? gh;
+        if (typeof data === 'number') data = payload[data];
+        let timeTable = data?.timeTable;
+        if (typeof timeTable === 'number') timeTable = payload[timeTable];
+        let content = timeTable?.content;
+        if (typeof content === 'number') content = payload[content];
+        if (content && typeof content === 'object' && content.Monday != null) {
+          const out = {};
+          for (const dayName of Object.keys(CISM_DAY_INDEX)) {
+            if (!Object.prototype.hasOwnProperty.call(content, dayName)) continue;
+            out[dayName] = reviveCismShowList(content[dayName], payload);
+          }
+          if (Object.values(out).some((arr) => arr.length)) return out;
+        }
+      }
+    }
+  } catch {
+    /* ignore */
+  }
+  return null;
+}
+
 function unixTsToHHMM(ts, timeZone = DEFAULT_TZ) {
   const n = Number(ts);
   if (!Number.isFinite(n) || n <= 0) return null;
@@ -515,18 +641,32 @@ function cismTimeTableToGrid(content = {}) {
 /**
  * CISM (cism893.ca/grille-horaire) : site Nuxt dont la grille est embarquée
  * dans le payload SSR (timeTable.content → Monday…Sunday + timestamps Unix).
+ * Extraction ciblée : pas de reviveNuxt complet (OOM sur images/podcasts).
  */
 function parseCismNuxtPayload(raw = '') {
   if (!raw) return [];
   const payload = JSON.parse(raw);
   if (!Array.isArray(payload) || payload.length < 2) return [];
-  const root = reviveNuxt(payload[1], payload);
-  const content = root?.data?.['grille-horaire']?.data?.timeTable?.content;
-  return cismTimeTableToGrid(content);
+  const content = extractCismTimeTableContent(payload);
+  return cismTimeTableToGrid(content || {});
 }
 
 async function parseCismGrid(htmlText) {
   return parseCismNuxtPayload(pickLargestJsonScript(htmlText));
+}
+
+/** Préfère /_payload.json (plus stable) puis HTML SSR. */
+async function fetchCismGrid(src = {}, deps = {}) {
+  const pageUrl = src.url || 'https://cism893.ca/grille-horaire/';
+  try {
+    const payloadUrl = new URL('_payload.json', pageUrl.endsWith('/') ? pageUrl : `${pageUrl}/`).toString();
+    const raw = await fetchText(payloadUrl, deps);
+    const grid = parseCismNuxtPayload(raw);
+    if (grid.length) return grid;
+  } catch (err) {
+    if (typeof deps.onError === 'function') deps.onError({ type: 'cism-payload', url: pageUrl }, err);
+  }
+  return parseCismGrid(await fetchText(pageUrl, deps));
 }
 
 /** Colonnes jour → index (Sun=0) sur la grille visuelle CJLO (left en px). */
@@ -617,7 +757,7 @@ const ADAPTERS = {
   jsonld: async (src, deps) => jsonldToGrid(await fetchText(src.url, deps)),
   chyz: async (src, deps) => parseChyzGrid(await fetchText(src.url, deps)),
   cfak: async (src, deps) => parseCfakGrid(await fetchText(src.url, deps)),
-  cism: async (src, deps) => parseCismGrid(await fetchText(src.url || 'https://cism893.ca/grille-horaire/', deps)),
+  cism: (src, deps) => fetchCismGrid(src, deps),
   cjlo: async (src, deps) => parseCjloGrid(await fetchText(src.url || 'http://www.cjlo.com/schedule', deps)),
 };
 
@@ -676,6 +816,7 @@ module.exports = {
   mergeGrids,
   zonedNow,
   resolveCurrentSlot,
+  resolveNextSlot,
   fetchJson,
   fetchText,
   airtimeWeekToGrid,
@@ -690,8 +831,10 @@ module.exports = {
   reviveNuxt,
   unixTsToHHMM,
   cismTimeTableToGrid,
+  extractCismTimeTableContent,
   parseCismNuxtPayload,
   parseCismGrid,
+  fetchCismGrid,
   parseCjloGrid,
   parseCjloTimeRange,
   ADAPTERS,

@@ -721,8 +721,13 @@ a { color: inherit; }
   transform: translateX(-100%);
   color: rgba(255, 154, 144, 0.72);
 }
+/* Variantes Cast : une seule visible selon la largeur (voir media queries).
+   .hidden / [hidden] masquent toutes les variantes quand Cast n'est pas prêt. */
 .tuner-cast--bar { display: flex; }
-html.is-firefox .tuner-cast--bar.hidden { display: flex !important; }
+.tuner-cast--bar.hidden,
+.tuner-cast--bar[hidden] { display: none !important; }
+html.is-firefox .tuner-cast--bar.hidden,
+html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
 .tuner-cast--mobile { display: none; }
 .tuner-cast--popover { display: none; }
 /* Bureau : le popover interne ne change pas la mise en page en ligne. */
@@ -960,7 +965,9 @@ html.is-firefox .tuner-cast--bar.hidden { display: flex !important; }
   .tuner-vol-slot .tuner-vol-label--max {
     color: rgba(255, 154, 144, 0.62);
   }
+  /* Sous 1100 px : pas de cast « barre bureau ». */
   .tuner-cast--bar { display: none !important; }
+
   .tuner-cast--popover {
     display: none;
     flex: 0 0 34px;
@@ -968,23 +975,29 @@ html.is-firefox .tuner-cast--bar.hidden { display: flex !important; }
     height: 34px;
     margin: 0;
   }
-  html.is-firefox .tuner-cast--popover {
-    display: flex;
-  }
   .tuner-cast--popover svg { width: 18px; height: 18px; }
-  .tuner-cast--popover:not(.hidden) { display: flex; }
-  .tuner-cast--popover.hidden { display: none !important; }
-  html.is-firefox .tuner-cast--popover.hidden { display: flex !important; }
+  /* Téléphone : cast dans le popover volume (voir max-width 599.98). */
+  .tuner-cast--popover:not(.hidden):not([hidden]) { display: flex; }
+  .tuner-cast--popover.hidden,
+  .tuner-cast--popover[hidden] { display: none !important; }
+  html.is-firefox .tuner-cast--popover,
+  html.is-firefox .tuner-cast--popover.hidden,
+  html.is-firefox .tuner-cast--popover[hidden] { display: flex !important; }
 
   .tuner-vol.is-open .tuner-vol-btn { color: rgba(255,255,255,0.95); }
 
-  /* Tablette : cast dans la barre d'actions (comme bureau). */
-  .tuner-cast--mobile { display: flex; }
-  html.is-firefox .tuner-cast--mobile.hidden { display: flex !important; }
+  /* Tablette / demi-laptop (600–1099) : cast dans la barre d'actions. */
+  .tuner-cast--mobile:not(.hidden):not([hidden]) { display: flex; }
+  .tuner-cast--mobile.hidden,
+  .tuner-cast--mobile[hidden] { display: none !important; }
+  html.is-firefox .tuner-cast--mobile,
+  html.is-firefox .tuner-cast--mobile.hidden,
+  html.is-firefox .tuner-cast--mobile[hidden] { display: flex !important; }
 }
 
-/* Téléphone : pastille EN ONDES masquée, synthétiseur signale l'état live. */
-@media (max-width: 679.98px) {
+/* Téléphone étroit : pastille EN ONDES masquée, synthétiseur signale l'état live.
+   Seuil bas pour ne pas traiter une demi-fenêtre laptop comme un téléphone. */
+@media (max-width: 599.98px) {
   .tuner-inner { padding: 8px var(--pad); gap: 8px; }
   .tuner-controls { gap: 6px; }
   .tuner-label { display: none; }
@@ -1007,9 +1020,11 @@ html.is-firefox .tuner-cast--bar.hidden { display: flex !important; }
     box-shadow: 0 3px 10px -4px rgba(0,0,0,0.4);
   }
 
-  /* Téléphone : pas assez de place — cast reste dans le popover volume. */
+  /* Téléphone : cast uniquement dans le popover volume (pas dans la barre). */
   .tuner-cast--mobile { display: none !important; }
   html.is-firefox .tuner-cast--mobile { display: none !important; }
+  /* Popover cast : visible quand le SDK l'active (retirant .hidden). */
+  .tuner-cast--popover:not(.hidden):not([hidden]) { display: flex; }
 }
 @media (prefers-reduced-motion: reduce) {
   .tuner-vol-slot { transition: none; }
@@ -1344,7 +1359,8 @@ html.is-firefox .tuner-cast--bar.hidden { display: flex !important; }
   margin-left: auto;
 }
 
-@media (max-width: 819px) {
+/* Téléphone uniquement — une demi-fenêtre laptop (~680–960 px) reste tablette. */
+@media (max-width: 599.98px) {
   .filters-panel {
     --filters-cols: 3;
   }
@@ -2417,11 +2433,16 @@ html.is-firefox .tuner-cast--bar.hidden { display: flex !important; }
   .article--thumb.has-image .article-media { display: none; }
 }
 
-@media (min-width: 820px) and (max-width: 1099px) {
+/*
+ * Tablette + demi-écran laptop (snap Windows / tuile) : 2 colonnes « Suite du fil ».
+ * Ancien seuil 820 px trop haut — une moitié d'Ideapad 15 (≈680–960 px CSS)
+ * retombait en mode téléphone une colonne.
+ */
+@media (min-width: 600px) and (max-width: 1099px) {
   .news-tail {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 28px;
+    column-gap: clamp(14px, 2.4vw, 28px);
   }
 
   /* Le titre doit occuper toute la largeur de la grille, sinon il remplit la
@@ -2640,7 +2661,8 @@ html.is-firefox .tuner-cast--bar.hidden { display: flex !important; }
   }
 }
 
-@media (max-width: 819px) {
+/* Une colonne seulement sur vrai téléphone (< 600 px). */
+@media (max-width: 599.98px) {
   .news-tail {
     display: block;
   }

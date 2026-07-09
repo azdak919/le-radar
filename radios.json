@@ -23,7 +23,10 @@
     "popularity": 3,
     "_streamStatus": "working",
     "_streamChecked": "2026-07-08T08:38:27.265Z",
-    "_streamIcyName": "No Name"
+    "_streamIcyName": "No Name",
+    "_nowPlayingSources": [
+      { "type": "icy" }
+    ]
   },
   {
     "id": "cism",
@@ -49,7 +52,11 @@
     "popularity": 1,
     "_streamStatus": "working",
     "_streamChecked": "2026-07-08T08:40:44.879Z",
-    "_streamIcyName": "CISM high quality"
+    "_streamIcyName": "CISM high quality",
+    "_nowPlayingSources": [
+      { "type": "cism-v1", "url": "https://admin.cism893.ca/api/v1/live" },
+      { "type": "icy" }
+    ]
   },
   {
     "id": "ckut",
@@ -75,7 +82,11 @@
     "popularity": 2,
     "_streamStatus": "working",
     "_streamChecked": "2026-07-08T08:41:00.978Z",
-    "_streamIcyName": "Airtime!"
+    "_streamIcyName": "Airtime!",
+    "_nowPlayingSources": [
+      { "type": "airtime-live", "base": "https://ckut.airtime.pro" },
+      { "type": "icy" }
+    ]
   },
   {
     "id": "cjlo",
@@ -101,7 +112,10 @@
     "popularity": 4,
     "_streamStatus": "working",
     "_streamChecked": "2026-07-08T08:41:09.548Z",
-    "_streamIcyName": "CJLO 1690AM - Montreal"
+    "_streamIcyName": "CJLO 1690AM - Montreal",
+    "_nowPlayingSources": [
+      { "type": "icy" }
+    ]
   },
   {
     "id": "cfak",
@@ -126,7 +140,10 @@
     "popularity": 5,
     "_streamStatus": "working",
     "_streamChecked": "2026-07-08T08:43:12.021Z",
-    "_streamIcyName": "CFAK - ÇA PART ICI"
+    "_streamIcyName": "CFAK - ÇA PART ICI",
+    "_nowPlayingSources": [
+      { "type": "icy" }
+    ]
   },
   {
     "id": "choq",
@@ -153,6 +170,9 @@
     "_streamStatus": "working",
     "_streamChecked": "2026-07-08T08:43:23.269Z",
     "_streamIcyName": "CHOQ.CA",
-    "_nowPlayingApi": "https://www.choq.ca/"
+    "_nowPlayingSources": [
+      { "type": "craft-live", "url": "https://www.choq.ca/api/live" },
+      { "type": "icy" }
+    ]
   }
 ]

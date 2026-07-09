@@ -1,14 +1,41 @@
 /**
- * Métadonnées « à l'antenne » — partagé par fetch-radio-nowplaying.js
+ * Métadonnées « à l'antenne » / « à venir » — bot fetch-radio-nowplaying.js
+ *
+ * Architecture multi-sources (ordre de priorité pour l'émission en cours) :
+ *   1. API live station (adaptateurs déclaratifs, extensibles)
+ *   2. Grille hebdo (radio-schedules.json) — current + next
+ *   3. Métadonnées ICY du flux (souvent le morceau, parfois l'émission)
+ *
+ * Config par poste (radios.json), du plus précis au plus auto :
+ *   "_nowPlayingSources": [ { "type": "airtime-live", "base": "…" }, … ]
+ *   "_nowPlayingApi": "https://…"   // rétrocompat — type inféré depuis l'URL
+ *
+ * Types d'adaptateurs (LIVE_ADAPTERS) :
+ *   - cism-v1      admin.cism893.ca/api/v1/live  → current + upcoming
+ *   - craft-live   /api/live (Craft CMS, CHOQ)   → current (+ host)
+ *   - airtime-live LibreTime/Airtime live-info   → currentShow + nextShow
+ *   - icy          StreamTitle ICY               → piste / repli titre
+ *   - schedule     résolu hors adaptateur (grille colligée)
+ *
+ * Nouveau poste : soit déclarer _nowPlayingSources, soit laisser
+ * inferNowPlayingSources() déduire Airtime / Craft / ICY depuis stream + site.
  */
 
 const https = require('https');
 const http = require('http');
+const {
+  DEFAULT_TZ,
+  resolveCurrentSlot,
+  resolveNextSlot,
+  hhmm,
+} = require('./radio-schedule-lib');
 
 const DEFAULT_TIMEOUT = 12000;
 const GENERIC_SHOW_RE = /^(?:airtime!?|liquidsoap(?:\s+radio!?)?|no name|unknown|unspecified|\.+|-+|n\/a)$/i;
 const GENERIC_FEED_RE = /(?:high quality|low band|backup only|stream\s*#|feed for)/i;
 const GENERIC_GEO_RE = /^(?:montréal|montreal|québec|quebec|sherbrooke|laval|canada)$/i;
+
+// ─── Normalisation ─────────────────────────────────────────────────────────────
 
 function normKey(text = '') {
   return normalizeShowTitle(text)
@@ -50,25 +77,83 @@ function extractShowFromIcyTitle(title = '', radio = {}) {
   return t;
 }
 
-function isUsableShowTitle(title = '', radio = {}) {
+/**
+ * @param {string} title
+ * @param {object} radio
+ * @param {{ fromApi?: boolean }} [opts]  fromApi: titres courts OK (ex. piste CHOQ « Rotten »)
+ */
+function isUsableShowTitle(title = '', radio = {}, opts = {}) {
   const t = extractShowFromIcyTitle(title, radio);
-  if (!t || t.length < 3) return false;
+  if (!t || t.length < 2) return false;
   if (GENERIC_SHOW_RE.test(t)) return false;
   if (GENERIC_FEED_RE.test(t)) return false;
   if (GENERIC_GEO_RE.test(t)) return false;
-  if (t.split(/\s+/).length === 1 && t.length < 8) return false;
+  // ICY/stream : rejeter les monosyllabes trop courts (bruit). API live : accepter.
+  if (!opts.fromApi && t.split(/\s+/).length === 1 && t.length < 8) return false;
+  if (opts.fromApi && t.length < 2) return false;
   const low = normKey(t);
   const tokens = stationTokens(radio);
-  if (tokens.some((tok) => tok && (low === normKey(tok) || low.startsWith(`${normKey(tok)} -`)))) return false;
-  if (radio.slogan && (low === normKey(radio.slogan) || normKey(radio.slogan).includes(low))) return false;
+  if (tokens.some((tok) => tok && (low === normKey(tok) || low.startsWith(`${normKey(tok)} -`)))) {
+    return false;
+  }
+  if (radio.slogan && (low === normKey(radio.slogan) || normKey(radio.slogan).includes(low))) {
+    return false;
+  }
   if (radio.id && low === String(radio.id).toLowerCase()) return false;
   return true;
+}
+
+/** Plage d'antenne normalisée (current / next). */
+function makeShow({
+  title = '',
+  host = '',
+  start = '',
+  end = '',
+  source = '',
+  url = '',
+  slug = '',
+} = {}) {
+  const t = normalizeShowTitle(title);
+  if (!t) return null;
+  const out = { title: t, source: source || '' };
+  const h = normalizeShowTitle(host);
+  if (h) out.host = h;
+  if (start) out.start = String(start);
+  if (end) out.end = String(end);
+  if (url) out.url = String(url);
+  if (slug) out.slug = String(slug);
+  return out;
 }
 
 function parseStreamTitle(meta = '') {
   const m = String(meta).match(/StreamTitle='([^']*)'/i);
   return normalizeShowTitle(m ? m[1] : meta);
 }
+
+/** HH:MM depuis timestamp Airtime ("2026-07-09 12:00:00") ou Unix. */
+function timeFromStamp(value, timeZone = DEFAULT_TZ) {
+  if (value == null || value === '') return '';
+  if (typeof value === 'number' || /^\d{9,}$/.test(String(value))) {
+    const n = Number(value);
+    if (!Number.isFinite(n) || n <= 0) return '';
+    const ms = n > 1e12 ? n : n * 1000;
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone,
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    }).formatToParts(new Date(ms));
+    const map = {};
+    for (const p of parts) map[p.type] = p.value;
+    let hour = parseInt(map.hour, 10);
+    if (hour === 24 || Number.isNaN(hour)) hour = 0;
+    const minute = parseInt(map.minute, 10) || 0;
+    return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+  }
+  return hhmm(value) || '';
+}
+
+// ─── HTTP ──────────────────────────────────────────────────────────────────────
 
 function fetchIcyNowPlaying(url, redirects = 0, timeout = DEFAULT_TIMEOUT) {
   if (!url || redirects > 4) return Promise.resolve(null);
@@ -164,79 +249,539 @@ function fetchIcyNowPlaying(url, redirects = 0, timeout = DEFAULT_TIMEOUT) {
   });
 }
 
-async function fetchCraftLiveShow(apiBase = '') {
-  if (!apiBase) return null;
-  try {
-    const url = new URL('/api/live', apiBase).toString();
-    const text = await new Promise((resolve) => {
-      https.get(
-        url,
-        { headers: { 'User-Agent': 'LE-RADAR-NowPlayingBot/1.0', Accept: 'application/json' }, timeout: DEFAULT_TIMEOUT },
-        (res) => {
-          if (res.statusCode >= 400) {
-            res.resume();
-            return resolve('');
-          }
-          let data = '';
-          res.on('data', (c) => (data += c));
-          res.on('end', () => resolve(data));
+function fetchJsonText(url, timeout = DEFAULT_TIMEOUT) {
+  if (!url) return Promise.resolve('');
+  return new Promise((resolve) => {
+    const lib = url.startsWith('https') ? https : http;
+    const req = lib.get(
+      url,
+      {
+        headers: {
+          'User-Agent': 'LE-RADAR-NowPlayingBot/1.0',
+          Accept: 'application/json',
         },
-      ).on('error', () => resolve(''));
+        timeout,
+      },
+      (res) => {
+        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+          res.resume();
+          const next = new URL(res.headers.location, url).toString();
+          resolve(fetchJsonText(next, timeout));
+          return;
+        }
+        if (res.statusCode >= 400) {
+          res.resume();
+          return resolve('');
+        }
+        let data = '';
+        res.on('data', (c) => (data += c));
+        res.on('end', () => resolve(data));
+      },
+    );
+    req.on('error', () => resolve(''));
+    req.on('timeout', () => {
+      req.destroy();
+      resolve('');
     });
-    if (!text) return null;
-    const payload = JSON.parse(text);
-    const title = normalizeShowTitle(payload?.live?.title || '');
-    const artist = normalizeShowTitle(payload?.live?.artist || '');
-    if (!title) return null;
-    return {
-      showTitle: title,
-      host: artist,
-      source: 'api-live',
-    };
+  });
+}
+
+async function fetchJson(url, timeout = DEFAULT_TIMEOUT) {
+  const text = await fetchJsonText(url, timeout);
+  if (!text) return null;
+  try {
+    return JSON.parse(text);
   } catch {
     return null;
   }
 }
 
-async function probeNowPlaying(radio = {}) {
-  const stream = radio.stream;
-  if (!stream) return { showTitle: '', source: 'none' };
+// ─── Adaptateurs live ──────────────────────────────────────────────────────────
+// Chaque adaptateur renvoie { current?, next?, track?, cors? } ou null.
+// cors: true si le navigateur peut re-poller (Access-Control-Allow-Origin).
 
-  const apiLive = radio._nowPlayingApi || (radio.id === 'choq' ? radio.website : '');
-  const fromApi = await fetchCraftLiveShow(apiLive);
-  if (fromApi?.showTitle && isUsableShowTitle(fromApi.showTitle, radio)) {
-    return fromApi;
-  }
+/** CISM admin API v1 — current + upcoming (+ following). */
+async function adaptCismV1(src = {}, radio = {}, ctx = {}) {
+  const url = src.url || 'https://admin.cism893.ca/api/v1/live';
+  const payload = await fetchJson(url);
+  if (!payload) return null;
+  const data = payload.data || payload;
+  const cur = data.current;
+  const up = data.upcoming || data.next;
+  const tz = ctx.timeZone || DEFAULT_TZ;
+  const current = cur?.title
+    ? makeShow({
+      title: cur.title,
+      host: cur.host || cur.artist || '',
+      start: timeFromStamp(cur.datetime ?? cur.starts ?? cur.start, tz),
+      end: timeFromStamp(cur.end ?? cur.ends, tz),
+      source: 'api-live',
+      url: cur.url || '',
+      slug: cur.slug || '',
+    })
+    : null;
+  const next = up?.title
+    ? makeShow({
+      title: up.title,
+      host: up.host || up.artist || '',
+      start: timeFromStamp(up.datetime ?? up.starts ?? up.start, tz),
+      end: timeFromStamp(up.end ?? up.ends, tz),
+      source: 'api-live',
+      url: up.url || '',
+      slug: up.slug || '',
+    })
+    : null;
+  if (!current && !next) return null;
+  return { current, next, cors: true, endpoint: url };
+}
 
-  const icy = await fetchIcyNowPlaying(stream);
-  if (!icy) return { showTitle: '', source: 'stream', icyName: '', icyDesc: '' };
-
-  const candidates = [icy.streamTitle, icy.icyName, icy.icyDesc];
-  for (const c of candidates) {
-    const parsed = extractShowFromIcyTitle(c, radio);
-    if (isUsableShowTitle(parsed, radio)) {
-      return {
-        showTitle: parsed,
-        source: 'stream',
-        icyName: icy.icyName || '',
-        icyDesc: icy.icyDesc || '',
-      };
+/** Craft CMS /api/live (CHOQ) — piste + artiste souvent, pas de « next ». */
+async function adaptCraftLive(src = {}, radio = {}) {
+  let url = src.url || src.base || '';
+  if (!url) return null;
+  if (!/\/api\/live\/?$/i.test(url)) {
+    try {
+      url = new URL('/api/live', url).toString();
+    } catch {
+      return null;
     }
   }
+  const payload = await fetchJson(url);
+  if (!payload) return null;
+  const live = payload.live || payload;
+  const title = live.title || live.name || live.show || '';
+  const host = live.artist || live.host || live.dj || '';
+  const current = makeShow({
+    title,
+    host,
+    source: 'api-live',
+    url: live.picture || live.image || '',
+  });
+  if (!current) return null;
+  return { current, next: null, cors: false, endpoint: url };
+}
 
+/** LibreTime / Airtime — shows.current + shows.next (v2) ou currentShow (v1). */
+async function adaptAirtimeLive(src = {}, radio = {}, ctx = {}) {
+  const base = String(src.base || src.url || '').replace(/\/+$/, '');
+  if (!base) return null;
+  const tz = ctx.timeZone || DEFAULT_TZ;
+
+  // Préférer v2 (structure shows.*)
+  let payload = await fetchJson(`${base}/api/live-info-v2/format/json`);
+  let currentRaw = null;
+  let nextRaw = null;
+
+  if (payload?.shows) {
+    currentRaw = payload.shows.current || null;
+    const n = payload.shows.next;
+    nextRaw = Array.isArray(n) ? n[0] : n;
+  } else {
+    payload = await fetchJson(`${base}/api/live-info`);
+    if (!payload) return null;
+    const cs = payload.currentShow;
+    const ns = payload.nextShow;
+    currentRaw = Array.isArray(cs) ? cs[0] : cs;
+    nextRaw = Array.isArray(ns) ? ns[0] : ns;
+  }
+
+  const showFrom = (raw, source = 'api-live') => {
+    if (!raw) return null;
+    const title = raw.name || raw.title || '';
+    return makeShow({
+      title,
+      host: raw.host || raw.genre || '',
+      start: timeFromStamp(raw.starts || raw.start_timestamp || raw.start, tz),
+      end: timeFromStamp(raw.ends || raw.end_timestamp || raw.end, tz),
+      source,
+      url: raw.url || '',
+    });
+  };
+
+  const current = showFrom(currentRaw);
+  const next = showFrom(nextRaw);
+  if (!current && !next) return null;
   return {
-    showTitle: '',
-    source: 'stream',
-    icyName: icy.icyName || '',
-    icyDesc: icy.icyDesc || '',
+    current,
+    next,
+    cors: false,
+    endpoint: `${base}/api/live-info-v2/format/json`,
   };
 }
 
+/** ICY StreamTitle — souvent le morceau ; parfois le nom d'émission. */
+async function adaptIcy(src = {}, radio = {}) {
+  const stream = src.url || radio.stream;
+  if (!stream) return null;
+  const icy = await fetchIcyNowPlaying(stream);
+  if (!icy) return null;
+
+  const candidates = [icy.streamTitle, icy.icyName, icy.icyDesc];
+  let title = '';
+  for (const c of candidates) {
+    const parsed = extractShowFromIcyTitle(c, radio);
+    if (isUsableShowTitle(parsed, radio)) {
+      title = parsed;
+      break;
+    }
+  }
+
+  // track = StreamTitle brut (même non « show ») pour sous-titre ♪
+  const trackRaw = extractShowFromIcyTitle(icy.streamTitle, radio);
+  const track = trackRaw && trackRaw.length >= 2 ? trackRaw : '';
+
+  const current = title
+    ? makeShow({ title, source: 'stream' })
+    : null;
+
+  return {
+    current,
+    next: null,
+    track: track && (!current || normKey(track) !== normKey(current.title)) ? track : (track || ''),
+    icyName: icy.icyName || '',
+    icyDesc: icy.icyDesc || '',
+    cors: false,
+    endpoint: stream,
+  };
+}
+
+const LIVE_ADAPTERS = {
+  'cism-v1': adaptCismV1,
+  cism: adaptCismV1,
+  'craft-live': adaptCraftLive,
+  craft: adaptCraftLive,
+  choq: adaptCraftLive,
+  'airtime-live': adaptAirtimeLive,
+  airtime: adaptAirtimeLive,
+  icy: adaptIcy,
+  stream: adaptIcy,
+};
+
+/** Infère le type d'adaptateur depuis une URL d'API. */
+function detectAdapterTypeFromUrl(url = '') {
+  const u = String(url || '').toLowerCase();
+  if (!u) return null;
+  if (u.includes('admin.cism893.ca') || /\/api\/v1\/live/.test(u)) return 'cism-v1';
+  if (u.includes('airtime.pro') || u.includes('live-info')) return 'airtime-live';
+  if (u.includes('/api/live') || u.includes('choq.ca')) return 'craft-live';
+  return null;
+}
+
+function airtimeBaseFromStream(stream) {
+  try {
+    const host = new URL(stream).host;
+    const m = /^([a-z0-9-]+)\.out\.airtime\.pro$/i.exec(host);
+    if (m) return `https://${m[1]}.airtime.pro`;
+  } catch {
+    /* ignore */
+  }
+  return null;
+}
+
+/**
+ * Construit la liste ordonnée des sources live pour un poste.
+ * Déclaratif (_nowPlayingSources) > rétrocompat (_nowPlayingApi) > auto.
+ */
+function inferNowPlayingSources(radio = {}) {
+  const out = [];
+  const push = (src) => {
+    if (!src || !src.type) return;
+    const key = `${src.type}|${(src.base || src.url || '').replace(/\/+$/, '')}`;
+    if (out.some((s) => `${s.type}|${(s.base || s.url || '').replace(/\/+$/, '')}` === key)) {
+      return;
+    }
+    out.push(src);
+  };
+
+  // 1. Sources explicites
+  if (Array.isArray(radio._nowPlayingSources)) {
+    for (const s of radio._nowPlayingSources) {
+      if (s && s.type) push({ ...s });
+    }
+  }
+
+  // 2. Rétrocompat _nowPlayingApi
+  if (radio._nowPlayingApi) {
+    const type = detectAdapterTypeFromUrl(radio._nowPlayingApi)
+      || (radio.id === 'cism' ? 'cism-v1' : null)
+      || (radio.id === 'choq' ? 'craft-live' : null)
+      || 'craft-live';
+    push({ type, url: radio._nowPlayingApi, base: radio._nowPlayingApi });
+  }
+
+  // 3. Auto-détection Airtime depuis le flux
+  const airBase = radio.stream ? airtimeBaseFromStream(radio.stream) : null;
+  if (airBase) push({ type: 'airtime-live', base: airBase });
+
+  // 4. Heuristiques site (Craft /api/live) — seulement si rien d'API encore
+  const hasApi = out.some((s) => s.type !== 'icy' && s.type !== 'stream');
+  if (!hasApi && radio.website) {
+    // CHOQ-like Craft is rare ; on ne sonde pas en live ici (trop lent).
+    // Les stations ajoutent _nowPlayingSources ou _nowPlayingApi.
+  }
+
+  // 5. ICY toujours en dernier (piste / repli) — sauf si déjà déclaré
+  if (radio.stream && !out.some((s) => s.type === 'icy' || s.type === 'stream')) {
+    push({ type: 'icy', url: radio.stream });
+  }
+
+  // Compléter url manquante sur icy déclaratif
+  for (const s of out) {
+    if ((s.type === 'icy' || s.type === 'stream') && !s.url && radio.stream) {
+      s.url = radio.stream;
+    }
+  }
+
+  return out;
+}
+
+async function runLiveAdapter(src, radio, ctx = {}) {
+  const fn = LIVE_ADAPTERS[src.type];
+  if (typeof fn !== 'function') return null;
+  try {
+    return await fn(src, radio, ctx);
+  } catch {
+    return null;
+  }
+}
+
+function sourceRank(show) {
+  const src = show?.source || '';
+  if (src === 'api-live') return 3;
+  if (src === 'schedule') return 2;
+  if (src === 'stream') return 1;
+  return 0;
+}
+
+/** Garde le show de rang le plus élevé (premier arrivé en cas d'égalité). */
+function pickBetterShow(current, candidate, radio) {
+  if (!candidate?.title) return current;
+  const fromApi = candidate.source === 'api-live';
+  if (!isUsableShowTitle(candidate.title, radio, { fromApi })) return current;
+  if (!current) return candidate;
+  return sourceRank(candidate) > sourceRank(current) ? candidate : current;
+}
+
+/**
+ * Fusionne les hits d'adaptateurs + grille horaire.
+ * Priorité current : api-live > schedule > icy/stream.
+ * Priorité next    : api-live > schedule.
+ */
+function mergeOnAirResults(hits, scheduleHit, radio) {
+  let current = null;
+  let next = null;
+  let track = '';
+  const sourcesUsed = [];
+
+  for (const hit of hits) {
+    if (!hit) continue;
+    if (hit.current?.source) sourcesUsed.push(hit.current.source);
+    if (hit.next?.source) sourcesUsed.push(hit.next.source);
+    current = pickBetterShow(current, hit.current, radio);
+    next = pickBetterShow(next, hit.next, radio);
+    if (hit.track) track = hit.track;
+  }
+
+  // Grille : comble les trous ; enrichit les horaires si titres alignés.
+  if (scheduleHit?.current) {
+    if (!current) {
+      current = scheduleHit.current;
+      sourcesUsed.push('schedule');
+    } else if (current.source === 'api-live'
+      && !current.start
+      && scheduleHit.current.start
+      && normKey(current.title) === normKey(scheduleHit.current.title)) {
+      current = {
+        ...current,
+        start: scheduleHit.current.start,
+        end: scheduleHit.current.end || current.end || '',
+      };
+    } else if (sourceRank(scheduleHit.current) > sourceRank(current)) {
+      // schedule > stream : le nom d'émission de la grille bat l'ICY morceau
+      if (current.source === 'stream' && !track) track = current.title;
+      current = scheduleHit.current;
+      sourcesUsed.push('schedule');
+    }
+  }
+
+  if (scheduleHit?.next) {
+    if (!next) {
+      next = scheduleHit.next;
+      sourcesUsed.push('schedule');
+    } else if (sourceRank(scheduleHit.next) > sourceRank(next)) {
+      next = scheduleHit.next;
+    }
+  }
+
+  // Éviter next === current
+  if (current && next && normKey(current.title) === normKey(next.title)) {
+    next = (scheduleHit?.next && normKey(scheduleHit.next.title) !== normKey(current.title))
+      ? scheduleHit.next
+      : null;
+  }
+
+  if (track && current && normKey(track) === normKey(current.title)) track = '';
+
+  return { current, next, track, sourcesUsed: [...new Set(sourcesUsed)] };
+}
+
+function scheduleToHit(schedules, radioId, timeZone = DEFAULT_TZ) {
+  const grid = schedules?.stations?.[radioId]?.grid;
+  if (!Array.isArray(grid) || !grid.length) return null;
+  const cur = resolveCurrentSlot(grid, new Date(), timeZone);
+  const nxt = resolveNextSlot(grid, new Date(), timeZone);
+  return {
+    current: cur
+      ? makeShow({
+        title: cur.title,
+        host: cur.host || '',
+        start: cur.start,
+        end: cur.end,
+        source: 'schedule',
+        url: cur.url || '',
+      })
+      : null,
+    next: nxt
+      ? makeShow({
+        title: nxt.title,
+        host: nxt.host || '',
+        start: nxt.start,
+        end: nxt.end,
+        source: 'schedule',
+        url: nxt.url || '',
+      })
+      : null,
+  };
+}
+
+/**
+ * Sonde complète d'un poste : APIs live + grille + ICY.
+ * @returns {{ current, next, track, source, showTitle, host, sources, checkedAt, clientPoll? }}
+ */
+async function probeStationOnAir(radio = {}, {
+  schedules = null,
+  timeZone = DEFAULT_TZ,
+} = {}) {
+  const sources = inferNowPlayingSources(radio);
+  const ctx = { timeZone };
+  const hits = [];
+  let clientPoll = null;
+
+  for (const src of sources) {
+    // ICY en dernier : on le fait après les APIs
+    if (src.type === 'icy' || src.type === 'stream') continue;
+    const hit = await runLiveAdapter(src, radio, ctx);
+    if (hit) {
+      hits.push(hit);
+      if (hit.cors && hit.endpoint && !clientPoll) {
+        clientPoll = { type: src.type, url: hit.endpoint };
+      }
+    }
+  }
+
+  // ICY
+  const icySrc = sources.find((s) => s.type === 'icy' || s.type === 'stream');
+  if (icySrc) {
+    const hit = await runLiveAdapter(icySrc, radio, ctx);
+    if (hit) hits.push(hit);
+  }
+
+  const scheduleHit = scheduleToHit(schedules, radio.id, timeZone);
+  const merged = mergeOnAirResults(hits, scheduleHit, radio);
+
+  const current = merged.current;
+  const next = merged.next;
+  const primarySource = current?.source
+    || next?.source
+    || (radio.stream ? 'stream' : 'none');
+
+  return {
+    id: radio.id,
+    name: radio.name,
+    // Schéma riche
+    current: current || null,
+    next: next || null,
+    track: merged.track || '',
+    // Rétrocompat app / anciens lecteurs
+    showTitle: current?.title || '',
+    host: current?.host || '',
+    source: primarySource,
+    sources: merged.sourcesUsed,
+    clientPoll: clientPoll || null,
+    checkedAt: new Date().toISOString(),
+  };
+}
+
+/** @deprecated — préférer probeStationOnAir */
+async function probeNowPlaying(radio = {}, opts = {}) {
+  const full = await probeStationOnAir(radio, opts);
+  return {
+    showTitle: full.showTitle,
+    host: full.host,
+    source: full.source,
+    current: full.current,
+    next: full.next,
+    track: full.track,
+  };
+}
+
+/** @deprecated wrappers conservés pour tests / scripts ad hoc */
+async function fetchCraftLiveShow(apiBase = '') {
+  const hit = await adaptCraftLive({ url: apiBase }, {});
+  if (!hit?.current) return null;
+  return {
+    showTitle: hit.current.title,
+    host: hit.current.host || '',
+    source: 'api-live',
+  };
+}
+
+async function fetchCismLiveShow(apiUrl = 'https://admin.cism893.ca/api/v1/live') {
+  const hit = await adaptCismV1({ url: apiUrl }, {});
+  if (!hit?.current) return null;
+  return {
+    showTitle: hit.current.title,
+    host: hit.current.host || '',
+    source: 'api-live',
+    slug: hit.current.slug || '',
+  };
+}
+
+async function fetchStationLiveApi(radio = {}) {
+  const sources = inferNowPlayingSources(radio).filter((s) => s.type !== 'icy' && s.type !== 'stream');
+  for (const src of sources) {
+    const hit = await runLiveAdapter(src, radio, {});
+    if (hit?.current?.title && isUsableShowTitle(hit.current.title, radio)) {
+      return {
+        showTitle: hit.current.title,
+        host: hit.current.host || '',
+        source: 'api-live',
+        slug: hit.current.slug || '',
+      };
+    }
+  }
+  return null;
+}
+
 module.exports = {
-  fetchIcyNowPlaying,
-  fetchCraftLiveShow,
-  probeNowPlaying,
+  DEFAULT_TZ,
+  LIVE_ADAPTERS,
+  normalizeShowTitle,
   isUsableShowTitle,
   extractShowFromIcyTitle,
-  normalizeShowTitle,
+  makeShow,
+  fetchIcyNowPlaying,
+  fetchJsonText,
+  fetchJson,
+  fetchCraftLiveShow,
+  fetchCismLiveShow,
+  fetchStationLiveApi,
+  detectAdapterTypeFromUrl,
+  airtimeBaseFromStream,
+  inferNowPlayingSources,
+  runLiveAdapter,
+  mergeOnAirResults,
+  scheduleToHit,
+  probeStationOnAir,
+  probeNowPlaying,
 };
