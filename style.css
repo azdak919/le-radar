@@ -162,38 +162,113 @@ a { color: inherit; }
   outline-offset: 2px;
 }
 
-.masthead-brand { padding-top: 16px; text-align: center; }
+.masthead-brand {
+  padding-top: 16px;
+  text-align: center;
+  max-width: 100%;
+  min-width: 0;
+}
 
 .wordmark {
   text-decoration: none;
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0 2px;
 }
+/* block (pas flex) : le texte traduit (ex. inuktitut) peut se couper
+   sur plusieurs lignes sans déborder du viewport mobile/tablette. */
 .wordmark-mark {
   font-family: var(--serif);
   font-weight: 700;
-  font-size: clamp(2.7rem, 9vw, 3.8rem);
+  font-size: clamp(1.55rem, 6.2vw + 0.35rem, 3.8rem);
   letter-spacing: -0.02em;
-  line-height: 0.92;
+  line-height: 1.05;
   color: var(--ink);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.14em;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: none;
+  box-sizing: border-box;
 }
 .wordmark-emoji {
   font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
   font-weight: 400;
   font-size: 0.92em;
   line-height: 1;
+  display: inline;
+  white-space: nowrap;
 }
 .wordmark-full {
-  font-size: 11.5px;
-  letter-spacing: 0.2em;
+  font-size: clamp(10px, 2.6vw, 11.5px);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
   font-weight: 600;
+  line-height: 1.45;
+  text-align: center;
+  max-width: min(40rem, 100%);
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 4px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: none;
+}
+
+/* Scripts longs (inuktitut syllabique, arabe, etc.) : resserrer le wordmark */
+html[lang="iu"] .wordmark-mark,
+html[data-translate="iu"] .wordmark-mark,
+html[data-translate="iu-latn"] .wordmark-mark,
+html[lang="ar"] .wordmark-mark,
+html[data-translate="ar"] .wordmark-mark {
+  font-size: clamp(1.35rem, 5.2vw + 0.25rem, 2.85rem);
+  letter-spacing: 0;
+  line-height: 1.12;
+}
+html[lang="iu"] .wordmark-full,
+html[data-translate="iu"] .wordmark-full,
+html[data-translate="iu-latn"] .wordmark-full,
+html[lang="ar"] .wordmark-full,
+html[data-translate="ar"] .wordmark-full {
+  letter-spacing: 0.04em;
+  font-size: clamp(10px, 2.4vw, 11px);
+  line-height: 1.5;
+}
+
+@media (max-width: 720px) {
+  .wordmark-mark {
+    font-size: clamp(1.4rem, 7.5vw, 2.6rem);
+    line-height: 1.08;
+  }
+  .wordmark-full {
+    letter-spacing: 0.06em;
+    font-size: clamp(9.5px, 2.8vw, 11px);
+  }
+  html[lang="iu"] .wordmark-mark,
+  html[data-translate="iu"] .wordmark-mark,
+  html[data-translate="iu-latn"] .wordmark-mark {
+    font-size: clamp(1.2rem, 5.8vw, 2.1rem);
+  }
+}
+
+@media (min-width: 721px) and (max-width: 1024px) {
+  .wordmark-mark {
+    font-size: clamp(1.85rem, 4.2vw, 3.2rem);
+  }
+  html[lang="iu"] .wordmark-mark,
+  html[data-translate="iu"] .wordmark-mark,
+  html[data-translate="iu-latn"] .wordmark-mark {
+    font-size: clamp(1.5rem, 3.6vw, 2.5rem);
+  }
 }
 
 /* ─────────────── TUNER (sticky) ─────────────── */
@@ -1210,6 +1285,11 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   font-size: 1.4rem;
   letter-spacing: -0.01em;
   margin: 0;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.2;
 }
 .wire-status {
   font-size: 12px;
