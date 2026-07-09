@@ -32,38 +32,64 @@ const BOT_USER_AGENT = 'Mozilla/5.0 (compatible; REQ-NewsBot/1.0)';
 // sans byline ni crédit lisibles, ces articles retombaient au repli générique.
 const BROWSER_USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36';
 
+const MAX_FETCH_BODY = 2_500_000;
+
 function fetchTextWithAgent(url, redirects, timeout, userAgent) {
   return new Promise((resolve) => {
-    const req = https.get(
-      url,
-      {
-        headers: {
-          'User-Agent': userAgent,
-          Accept: 'application/rss+xml, application/xml, text/xml, text/html, image/*, */*',
+    let settled = false;
+    const done = (v) => {
+      if (!settled) {
+        settled = true;
+        resolve(v);
+      }
+    };
+    let req;
+    try {
+      req = https.get(
+        url,
+        {
+          headers: {
+            'User-Agent': userAgent,
+            Accept: 'application/rss+xml, application/xml, text/xml, text/html, image/*, */*',
+          },
+          timeout,
         },
-        timeout,
-      },
-      (res) => {
-        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location && redirects > 0) {
-          res.resume();
-          const next = new URL(res.headers.location, url).toString();
-          return resolve(fetchTextWithAgent(next, redirects - 1, timeout, userAgent));
-        }
-        if (res.statusCode >= 400) {
-          res.resume();
-          return resolve('');
-        }
-        let data = '';
-        res.setEncoding('utf8');
-        res.on('data', (c) => (data += c));
-        res.on('end', () => resolve(data));
-      },
-    );
-    req.on('error', () => resolve(''));
+        (res) => {
+          if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location && redirects > 0) {
+            res.resume();
+            const next = new URL(res.headers.location, url).toString();
+            return done(fetchTextWithAgent(next, redirects - 1, timeout, userAgent));
+          }
+          if (res.statusCode >= 400) {
+            res.resume();
+            return done('');
+          }
+          let data = '';
+          res.setEncoding('utf8');
+          res.on('data', (c) => {
+            data += c;
+            if (data.length > MAX_FETCH_BODY) {
+              try { req.destroy(); } catch { /* ignore */ }
+              done(data);
+            }
+          });
+          res.on('end', () => done(data));
+          res.on('error', () => done(''));
+        },
+      );
+    } catch {
+      return done('');
+    }
+    req.on('error', () => done(''));
     req.on('timeout', () => {
-      req.destroy();
-      resolve('');
+      try { req.destroy(); } catch { /* ignore */ }
+      done('');
     });
+    // Deadline wall-clock : une réponse qui goutte ne bloque plus le bot CI.
+    setTimeout(() => {
+      try { req.destroy(); } catch { /* ignore */ }
+      done('');
+    }, timeout + 1500);
   });
 }
 

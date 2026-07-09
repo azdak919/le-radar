@@ -64,7 +64,21 @@ async function fetchPageAuthors(items, feedDefaults, sourceMap = new Map()) {
 
     const html = await fetchText(item.link, 3, PAGE_FETCH_TIMEOUT);
     const hints = getBotHints(sourceMap.get(item.source), 'authors');
-    const author = authorFromArticleHtml(html, item.lang === 'en' ? 'en' : 'fr', hints, item.source);
+    const slim = html && html.length > 400_000 ? html.slice(0, 400_000) : html;
+    let author = '';
+    try {
+      // Plafond : certains HTML WP font pathologuer les regex d'auteur.
+      author = await Promise.race([
+        Promise.resolve().then(() => (
+          slim
+            ? authorFromArticleHtml(slim, item.lang === 'en' ? 'en' : 'fr', hints, item.source)
+            : ''
+        )),
+        new Promise((resolve) => setTimeout(() => resolve(''), 2500)),
+      ]);
+    } catch {
+      author = '';
+    }
     if (author) pageAuthors.set(key, author);
     fetched += 1;
 

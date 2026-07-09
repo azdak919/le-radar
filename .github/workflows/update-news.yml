@@ -15,15 +15,18 @@ on:
     - cron: '20 * * * *'
   workflow_dispatch:   # Allow manual trigger
 
-# Never run two news-update jobs against the same ref at once.
+# Un seul job à la fois ; annuler le précédent s'il est encore en train de
+# tourner (évite les files de 40 min bloquées sur un fetch qui ne finit pas).
 concurrency:
   group: update-news-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   aggregate:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    # 25 min suffit avec plafonds par source ; 45 min laissait un hang McGill
+    # Daily bloquer toute l'après-midi.
+    timeout-minutes: 25
     permissions:
       contents: write
 
@@ -52,7 +55,7 @@ jobs:
             let updated = 0;
             try {
               const n = JSON.parse(fs.readFileSync('news.json', 'utf8'));
-              updated = Date.parse(n.updated || n.updatedSlot || 0) || 0;
+              updated = Date.parse(n.updated || 0) || 0;
             } catch { /* missing */ }
             console.log(Math.floor((Date.now() - updated) / 60000));
           ")
@@ -65,41 +68,95 @@ jobs:
             echo "Safety net: last update ${AGE_MIN}m ago — run catch-up."
           fi
 
-      - name: Fetch and aggregate student-media RSS feeds
+      # Chaque étape a un plafond : un script qui se fige n'empêche pas
+      # d'écrire au moins news.json si fetch-news a réussi.
+      - name: Fetch news feeds
+        id: fetch
         if: steps.gate.outputs.skip != 'true'
+        timeout-minutes: 12
+        run: node scripts/fetch-news.js --update
+        env:
+          CI: true
+          FIREBASE_POLYSCOPE_API_KEY: ${{ secrets.FIREBASE_POLYSCOPE_API_KEY }}
+        continue-on-error: false
+
+      - name: Verify authors
+        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
+        timeout-minutes: 5
+        run: node scripts/verify-authors.js --update
+        env:
+          CI: true
+        continue-on-error: true
+
+      - name: Enrich lead excerpts
+        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
+        timeout-minutes: 4
+        run: node scripts/enrich-lead-excerpts.js --update
+        env:
+          CI: true
+        continue-on-error: true
+
+      - name: Ensure lead images
+        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
+        timeout-minutes: 6
+        run: node scripts/ensure-lead-images.js --update
+        env:
+          CI: true
+        continue-on-error: true
+
+      - name: Verify photo credits
+        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
+        timeout-minutes: 5
+        run: node scripts/verify-photo-credits.js --update
+        env:
+          CI: true
+        continue-on-error: true
+
+      - name: Fetch social + generate RSS
+        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
+        timeout-minutes: 4
         run: |
-          node scripts/fetch-news.js --update
-          node scripts/verify-authors.js --update
-          node scripts/enrich-lead-excerpts.js --update
-          node scripts/ensure-lead-images.js --update
-          node scripts/verify-photo-credits.js --update
           node scripts/fetch-social.js --update
           node scripts/generate-feed.js --update
         env:
           CI: true
-          FIREBASE_POLYSCOPE_API_KEY: ${{ secrets.FIREBASE_POLYSCOPE_API_KEY }}
+        continue-on-error: true
 
-      # Toujours écrire un heartbeat si le pipeline a tourné : le libellé « mis à jour »
-      # avance même sans nouvel article, et le filet de :20 peut mesurer l'âge réel.
+      # Toujours committer si news.json a bougé (même sans nouveaux articles) :
+      # le timestamp « mis à jour » doit avancer après une passe réussie.
       - name: Check for changes
         id: check
-        if: steps.gate.outputs.skip != 'true'
+        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
         run: |
-          if git diff --quiet news.json author-qc.json lead-excerpt-qc.json social-feed.json lead-image-qc.json photo-credit-qc.json feed.xml; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
+          if git diff --quiet news.json author-qc.json lead-excerpt-qc.json social-feed.json lead-image-qc.json photo-credit-qc.json feed.xml news-sources.json 2>/dev/null; then
+            # Forcer un heartbeat : réécrire updated si rien n'a changé
+            # mais la passe a réussi (évite un libellé figé toute la journée).
+            node -e "
+              const fs = require('fs');
+              const p = 'news.json';
+              const n = JSON.parse(fs.readFileSync(p, 'utf8'));
+              n.updated = new Date().toISOString();
+              // Hors créneau planifié : pas de faux updatedSlot
+              if (n.updatedSlot) {
+                const slot = Date.parse(n.updatedSlot);
+                const act = Date.parse(n.updated);
+                if (!Number.isFinite(slot) || act - slot > 45 * 60 * 1000) delete n.updatedSlot;
+              }
+              fs.writeFileSync(p, JSON.stringify(n, null, 2) + '\n');
+              console.log('heartbeat updated', n.updated);
+            "
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Commit and push updates
-        if: steps.gate.outputs.skip != 'true' && steps.check.outputs.changed == 'true'
+        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.check.outputs.changed == 'true'
         run: |
           git config user.name "RÉQ News Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add news.json author-qc.json lead-excerpt-qc.json social-feed.json lead-image-qc.json photo-credit-qc.json feed.xml
-          git commit -m "bot: update student news feed, excerpts, images, photo credits, RSS and social (auto)"
-          # Rebase onto any work pushed since checkout so the bot never
-          # clobbers manual commits and never fails on a fast-forward race.
+          git add news.json author-qc.json lead-excerpt-qc.json social-feed.json lead-image-qc.json photo-credit-qc.json feed.xml news-sources.json 2>/dev/null || true
+          git commit -m "bot: update student news feed, excerpts, images, photo credits, RSS and social (auto)" || exit 0
           for i in 1 2 3; do
             git pull --rebase -X theirs --autostash origin "${GITHUB_REF_NAME}" && git push && exit 0
             git rebase --abort 2>/dev/null || true
