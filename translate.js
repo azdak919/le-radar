@@ -907,9 +907,9 @@
   }
 
   /**
-   * Libellés d’établissements fiables par langue (gtx invente souvent
-   * « Universidad Dawson » alors que c’est un cégep / collège).
-   * Clés = forme canonique FR/EN telle qu’en news-sources.
+   * Libellés d’établissements fiables par langue.
+   * Règle générale cégeps/collèges : nom officiel (pas de MT libre qui invente
+   * « Universidad … »). Cas spéciaux ci-dessous ; le reste est dérivé par motif.
    */
   const INSTITUTION_LABELS = {
     'Dawson College': {
@@ -936,22 +936,6 @@
       es: 'Polytechnique Montréal',
       default: 'Polytechnique Montréal',
     },
-    'Cégep du Vieux Montréal': {
-      fr: 'Cégep du Vieux Montréal',
-      en: 'Cégep du Vieux Montréal',
-      es: 'Cégep du Vieux Montréal',
-      default: 'Cégep du Vieux Montréal',
-    },
-    'Cégep de Jonquière': {
-      fr: 'Cégep de Jonquière',
-      en: 'Cégep de Jonquière',
-      default: 'Cégep de Jonquière',
-    },
-    'Cégep de Jonquière (ATM – journalisme)': {
-      fr: 'Cégep de Jonquière (ATM – journalisme)',
-      en: 'Cégep de Jonquière (ATM – journalism)',
-      default: 'Cégep de Jonquière (ATM – journalisme)',
-    },
   };
 
   function institutionLangKey(targetLang = '') {
@@ -962,16 +946,79 @@
     return raw.split(/[-_]/)[0] || raw;
   }
 
+  /** Cégep = institution québécoise : le mot « Cégep » reste inchangé. */
+  function isCegepInstitutionName(name = '') {
+    return /^c[eé]gep\b/i.test(String(name).trim());
+  }
+
+  /** Collège / College (cégep anglais ou collège privé QC). */
+  function isCollegeInstitutionName(name = '') {
+    return /^(?:coll[eè]ge|college)\b/i.test(String(name).trim());
+  }
+
+  /**
+   * Cégep du Vieux Montréal, Cégep de Jonquière (ATM – journalisme)…
+   * On conserve le nom officiel ; seule une note entre parenthèses peut
+   * être légèrement adaptée en anglais.
+   */
+  function formatCegepLabel(name = '', lang = 'fr') {
+    let label = String(name).replace(/\s+/g, ' ').trim()
+      .replace(/^c[eé]gep\b/i, 'Cégep');
+    if (lang === 'en') {
+      label = label
+        .replace(/\bjournalisme\b/gi, 'journalism')
+        .replace(/\barts?\s+et\s+lettres\b/gi, 'arts and letters');
+    }
+    return label;
+  }
+
+  /**
+   * Collège Lionel-Groulx, Collège de Maisonneuve, Dawson College…
+   * Type d’établissement adapté à la langue ; toponyme / nom propre intact.
+   */
+  function formatCollegeLabel(name = '', lang = 'fr') {
+    const raw = String(name).replace(/\s+/g, ' ').trim();
+    // Dawson : cas anglais explicite (pas un cégep francophone)
+    if (/^dawson\s+college$/i.test(raw)) {
+      const entry = INSTITUTION_LABELS['Dawson College'];
+      return (entry && (entry[lang] || entry.default)) || 'Dawson College';
+    }
+    const rest = raw
+      .replace(/^(?:coll[eè]ge|college)\b\s*/i, '')
+      .trim();
+    if (!rest) return raw;
+    if (lang === 'en') return `College ${rest}`;
+    if (lang === 'es') return `Colegio ${rest}`;
+    if (lang === 'pt') return `Colégio ${rest}`;
+    if (lang === 'de') return `College ${rest}`;
+    if (lang === 'it') return `College ${rest}`;
+    // fr et autres : orthographe québécoise
+    return `Collège ${rest}`;
+  }
+
   function preferredInstitutionLabel(original = '', targetLang = '') {
     const key = String(original || '').replace(/\s+/g, ' ').trim();
     if (!key) return null;
+    const lang = institutionLangKey(targetLang);
+
+    // 1) Glossaire exact (Bishop's, Polytechnique, Dawson…)
     const entry = INSTITUTION_LABELS[key]
       || Object.entries(INSTITUTION_LABELS).find(
         ([k]) => k.toLowerCase() === key.toLowerCase(),
       )?.[1];
-    if (!entry) return null;
-    const lang = institutionLangKey(targetLang);
-    return entry[lang] || entry.default || null;
+    if (entry) return entry[lang] || entry.default || null;
+
+    // 2) Tous les cégeps : nom officiel, jamais de MT libre
+    if (isCegepInstitutionName(key)) {
+      return formatCegepLabel(key, lang);
+    }
+
+    // 3) Collèges / colleges (Maisonneuve, Lionel-Groulx, Dawson…)
+    if (isCollegeInstitutionName(key)) {
+      return formatCollegeLabel(key, lang);
+    }
+
+    return null;
   }
 
   /** Filet de casse après gtx (ex. ES : « universidad laval »). */
@@ -999,7 +1046,7 @@
 
   /**
    * Corrige les contresens gtx sur les établissements connus
-   * (Dawson = collège/cégep, pas une universidad ; Bishop’s ≠ Obispo).
+   * (Dawson / cégeps ≠ universidad ; Bishop’s ≠ Obispo).
    */
   function fixInstitutionMistranslations(original = '', translated = '') {
     let t = String(translated || '');
@@ -1017,6 +1064,19 @@
         .replace(/\bUniversité\s+Dawson\b/giu, 'Collège Dawson')
         .replace(/\bDawson-Universität\b/giu, 'Dawson College')
         .replace(/\bUniversität\s+Dawson\b/giu, 'Dawson College');
+    }
+
+    // Cégep / collège QC : gtx transforme parfois en « Universidad de … »
+    if (
+      isCegepInstitutionName(original)
+      || isCollegeInstitutionName(original)
+      || /\bc[eé]gep\b/i.test(t)
+    ) {
+      t = t
+        .replace(/\bUniversidad(?:\s+(?:de|del|du))?\s+(?=Vieux|Jonqui|Chicoutimi|Rimouski|Maisonneuve|Lionel|Dawson)/giu, 'Cégep ')
+        .replace(/\bUniversidade(?:\s+(?:de|do))?\s+(?=Vieux|Jonqui|Chicoutimi|Rimouski|Maisonneuve|Lionel|Dawson)/giu, 'Cégep ')
+        .replace(/\bUniversity\s+of\s+(?=Vieux|Jonqui|Chicoutimi|Rimouski|Maisonneuve|Lionel|Dawson)/giu, 'Cégep ')
+        .replace(/\bcegep\b/giu, 'Cégep');
     }
 
     // Bishop's University — ne pas traduire Bishop → Obispo / Bispo
@@ -1120,33 +1180,31 @@
         // eslint-disable-next-line no-await-in-loop
         await Promise.all(batch.map(async ([orig, list]) => {
           try {
+            const instNodes = list.filter((n) => isTranslatableInstitutionZone(n));
+            // Cégeps / collèges / glossaire : pas d’appel MT (nom officiel fiable)
+            if (instNodes.length && instNodes.length === list.length) {
+              const preferred = preferredInstitutionLabel(orig, targetLang);
+              if (preferred) {
+                for (const node of list) {
+                  if (node.parentNode) {
+                    node.nodeValue = reapplyEdgeWhitespace(orig, preferred);
+                  }
+                }
+                ok += 1;
+                return;
+              }
+            }
+
             let translated = await translateText(orig, targetLang);
             if (translated && translated !== orig) {
               for (const node of list) {
                 if (!node.parentNode) continue;
-                // Pastilles sources : glossaire + filets (Dawson ≠ universidad, etc.)
                 const out = isTranslatableInstitutionZone(node)
                   ? polishInstitutionTranslation(orig, translated, targetLang)
                   : fixInstitutionMistranslations(orig, translated);
                 node.nodeValue = out;
               }
               ok += 1;
-            } else if (
-              translated === orig
-              && list.some((n) => isTranslatableInstitutionZone(n))
-            ) {
-              // Même si gtx renvoie l’identique, appliquer le glossaire (ex. FR → Collège Dawson)
-              const preferred = preferredInstitutionLabel(orig, targetLang);
-              if (preferred && preferred !== orig.trim()) {
-                for (const node of list) {
-                  if (node.parentNode && isTranslatableInstitutionZone(node)) {
-                    node.nodeValue = reapplyEdgeWhitespace(orig, preferred);
-                  }
-                }
-                ok += 1;
-              } else {
-                fail += 1;
-              }
             } else {
               fail += 1;
             }
