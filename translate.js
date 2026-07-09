@@ -8,7 +8,7 @@
  *
  * Règles d'activation :
  *  1. Préférence utilisateur (localStorage) si elle existe — y compris « Original ».
- *  2. Sinon navigateur fr ou en → Original bilingue ; autre langue → auto.
+ *  2. Sinon navigateur fr ou en → Original (aucune traduction) ; autre langue → auto.
  */
 (function () {
   'use strict';
@@ -25,8 +25,8 @@
       id: 'original',
       label: 'Original',
       short: 'Original',
-      title: 'Ne pas traduire — fil bilingue FR + EN (défaut pour navigateurs français ou anglais)',
-      hint: 'Bilingue FR + EN',
+      title: 'Ne pas traduire — chaque article reste dans sa langue d’origine',
+      hint: 'Sans traduction',
       group: 'core',
     },
     fr: {
@@ -1017,7 +1017,7 @@
       btn.setAttribute(
         'aria-label',
         mode === DEFAULT_MODE
-          ? 'Langue : original bilingue. Ouvrir pour traduire la page.'
+          ? 'Langue : original — aucune traduction. Ouvrir pour traduire la page.'
           : `Langue d'affichage : ${m.label}. Changer la langue.`,
       );
       btn.dataset.mode = mode;
@@ -1171,7 +1171,7 @@
     if (MODES[mode]?.unavailable) {
       notify(
         `${MODES[mode].label} : la traduction automatique n’est pas encore offerte `
-        + 'pour cette langue autochtone. La page reste en original bilingue.',
+        + 'pour cette langue autochtone. La page reste en original (sans traduction).',
       );
       return;
     }
@@ -1184,7 +1184,7 @@
 
     if (mode === DEFAULT_MODE) {
       restoreOriginals();
-      if (fromUserClick) notify('Affichage original bilingue (FR + EN)');
+      if (fromUserClick) notify('Original — articles dans leur langue, sans traduction');
       return;
     }
 
