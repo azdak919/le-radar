@@ -14,7 +14,8 @@
   'use strict';
 
   const STORAGE_KEY = 'radar-translate-mode';
-  const CACHE_KEY = 'radar-translate-cache-v1';
+  // v2 : espaces de bord / après « : » mieux préservés (crédits, pied de page licence)
+  const CACHE_KEY = 'radar-translate-cache-v2';
   const CACHE_MAX = 800;
   const DEFAULT_MODE = 'original';
   const CONCURRENCY = 5;
@@ -707,29 +708,67 @@
       .replace(/&gt;/gi, '>')
       .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)))
       .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCharCode(parseInt(h, 16)));
+    return fixInternalTranslationSpacing(out);
+  }
+
+  /**
+   * gtx mange souvent les espaces de bord (« sous licence » + lien →
+   * « na licencjiPowszechna ») et après « Photo: ».
+   */
+  function fixInternalTranslationSpacing(str = '') {
+    let out = String(str);
+    // Crédits / libellés « Mot:Texte » → « Mot: Texte »
+    out = out.replace(
+      /(^|[\s(])((?:Photo|Crédit(?:\s+photo)?|Credit(?:\s+photo)?|Zdjęcie|Foto|Fotografía|Fotoğraf))\s*:(?=\S)/giu,
+      '$1$2: ',
+    );
+    // Deux-points collés avant une lettre (pas les URL https:// ni 12:30) :
+    out = out.replace(/:(?!\/\/)(?=[\p{L}])/gu, ': ');
+    // Mot collé en camel accidentel : licencjiPowszechna
+    out = out.replace(/(\p{Ll}{2,})(\p{Lu}\p{L})/gu, '$1 $2');
+    // Espaces doubles éventuels
+    out = out.replace(/ {2,}/g, ' ');
+    return out;
+  }
+
+  /** Réapplique les espaces de début/fin de l’original (gtx les retire). */
+  function reapplyEdgeWhitespace(original, translated) {
+    const orig = String(original ?? '');
+    let out = String(translated ?? '');
+    if (!orig.trim()) return orig;
+    const hadLead = /^\s/.test(orig);
+    const hadTrail = /\s$/.test(orig);
+    out = fixInternalTranslationSpacing(out.replace(/^\s+|\s+$/g, ''));
+    if (hadLead) out = ` ${out}`;
+    if (hadTrail) out = `${out} `;
     return out;
   }
 
   async function translateText(text, targetLang) {
-    const trimmed = String(text || '');
-    if (!trimmed.trim()) return trimmed;
+    const original = String(text || '');
+    if (!original.trim()) return original;
+    // Traduire le cœur sans espaces de bord (clé de cache stable)
+    const core = original.replace(/^\s+|\s+$/g, '');
     const tl = gtxLang(targetLang);
-    const key = cacheKey(trimmed, tl);
-    if (translationCache[key]) return translationCache[key];
+    const key = cacheKey(core, tl);
+
+    const finish = (translatedCore) => reapplyEdgeWhitespace(original, translatedCore);
+
+    if (translationCache[key]) return finish(translationCache[key]);
 
     // Très longs : découper par phrases approximatives
-    if (trimmed.length > MAX_CHUNK) {
-      const parts = splitLong(trimmed, MAX_CHUNK);
+    if (core.length > MAX_CHUNK) {
+      const parts = splitLong(core, MAX_CHUNK);
       const out = [];
       for (const part of parts) {
         out.push(await translateText(part, targetLang));
       }
-      const joined = out.join('');
-      translationCache[key] = joined;
-      return joined;
+      const joined = fixInternalTranslationSpacing(out.join(''));
+      translationCache[key] = joined.replace(/^\s+|\s+$/g, '');
+      return finish(translationCache[key]);
     }
 
-    const encoded = encodeURIComponent(trimmed);
+    const encoded = encodeURIComponent(core);
 
     // 1) Google gtx (même endpoint qu'Ataraxia)
     try {
@@ -740,8 +779,8 @@
         const raw = data?.[0]?.map((s) => s?.[0]).filter(Boolean).join('');
         const translated = cleanTranslation(raw);
         if (translated) {
-          translationCache[key] = translated;
-          return translated;
+          translationCache[key] = translated.replace(/^\s+|\s+$/g, '');
+          return finish(translationCache[key]);
         }
       }
     } catch { /* next */ }
@@ -754,15 +793,15 @@
         const data = await resp.json();
         if (data.responseStatus === 200 && data.responseData?.translatedText) {
           const translated = cleanTranslation(data.responseData.translatedText);
-          if (translated && translated !== trimmed.toUpperCase()) {
-            translationCache[key] = translated;
-            return translated;
+          if (translated && translated !== core.toUpperCase()) {
+            translationCache[key] = translated.replace(/^\s+|\s+$/g, '');
+            return finish(translationCache[key]);
           }
         }
       }
     } catch { /* keep original */ }
 
-    return trimmed;
+    return original;
   }
 
   function splitLong(text, max) {
