@@ -545,6 +545,23 @@ function extractFilenameCredit(html = '', imageUrl = '', lang = 'fr') {
   }
 
   if (/\/images\/made\/|_resized\//i.test(String(imageUrl))) {
+    // Graphiques maison The Link : « 00.graphics.CSU.Naya_Hachwa_… » —
+    // c'est une illustration, pas une photo d'article.
+    const graphicM = String(imageUrl).match(
+      /(?:^|\/|\.)graphics?\.[^/]*?([A-Z][a-zà-öø-ÿ'’-]+_[A-Z][a-zà-öø-ÿ'’-]+)/,
+    );
+    if (graphicM) {
+      const name = graphicM[1].replace(/_/g, ' ');
+      const parsed = creditFromPhrase(name);
+      if (parsed) {
+        const en = lang === 'en';
+        return {
+          ...parsed,
+          creditLine: en ? `Illustration: ${parsed.creator}` : `Illustration : ${parsed.creator}`,
+          source: 'filename-graphic',
+        };
+      }
+    }
     const linkM = String(imageUrl).match(
       /([A-Z][a-zà-öø-ÿ'’-]+_[A-Z][a-zà-öø-ÿ'’-]+)(?:_\d{2,4}_\d{2,4}_\d{1,3}(?:_s_c\d+)?)?\.(?:jpe?g|png|webp)(?:$|\?)/,
     );

@@ -131,6 +131,32 @@ function authorsFromRelLinks(html = '') {
   return [...new Set(names)];
 }
 
+/**
+ * The Link (ExpressionEngine) :
+ *   <div class="byline"><span class="topic-badge">News</span>
+ *   <a href="/author/racha-rais">Racha Rais</a> &mdash; Published …</div>
+ * Le lien n'a pas rel=author — sans ce sélecteur, la page ne rendait aucun auteur.
+ */
+function authorsFromLinkByline(html = '') {
+  const names = [];
+  for (const m of html.matchAll(
+    /class=["'][^"']*\bbyline\b[^"']*["'][^>]*>[\s\S]{0,500}?<a[^>]+href=["'][^"']*\/author\/[^"']+["'][^>]*>([\s\S]*?)<\/a>/gi,
+  )) {
+    const n = expandAuthorName(m[1]);
+    if (n && !isJunkAuthorName(n)) names.push(n);
+  }
+  // Repli : liens /author/slug près du badge de rubrique
+  if (!names.length) {
+    for (const m of html.matchAll(
+      /topic-badge[\s\S]{0,200}?<a[^>]+href=["'][^"']*\/author\/[^"']+["'][^>]*>([\s\S]*?)<\/a>/gi,
+    )) {
+      const n = expandAuthorName(m[1]);
+      if (n && !isJunkAuthorName(n)) names.push(n);
+    }
+  }
+  return [...new Set(names)];
+}
+
 /** La Pige / thèmes « post-author » (itemprop author, lien sans rel=author). */
 function authorsFromPostAuthor(html = '') {
   const names = [];
@@ -435,6 +461,13 @@ function authorFromArticleHtml(html = '', lang = 'fr', hints = {}, sourceName = 
     candidates.push({ author: joinAuthorNames(hintAuthors, l), trust: 106 });
   }
 
+  // The Link — byline EE avant tout (évite de confondre « Photo Racha Rais »
+  // en légende avec l'absence d'auteur page).
+  const linkByline = authorsFromLinkByline(html);
+  if (linkByline.length) {
+    candidates.push({ author: joinAuthorNames(linkByline, l), trust: 107 });
+  }
+
   const tribuneAuthors = authorsFromTribuneAuthor(html);
   if (tribuneAuthors.length) {
     candidates.push({ author: joinAuthorNames(tribuneAuthors, l), trust: 104 });
@@ -528,6 +561,8 @@ function authorFromArticleHtml(html = '', lang = 'fr', hints = {}, sourceName = 
 
   // Crédit de production dans le corps (« Produced by X », « Hosted by X »…) —
   // signal nominal des billets Substack signés au nom de la publication.
+  // Ne pas prendre « Photo Racha Rais » / « Graphic Naya Hachwa » pour l'auteur
+  // (crédits photo The Link, souvent collés en fin de légende).
   const bodyCredit = authorFromBodyCredits(html);
   if (bodyCredit) candidates.push({ author: bodyCredit, trust: 88 });
 
