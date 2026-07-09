@@ -3379,14 +3379,15 @@ html[data-translate-busy="1"] .translate-toggle {
     min-height: 0;
   }
 
-  /* Vedettes bureau : extrait complet comme la une (pas de clamp) */
+  /* Vedettes bureau : extrait complet (pas de clamp), typo intermédiaire */
   .news-hero .article--feature .article-brief {
     display: block;
     overflow: visible;
-    font-size: 1.08rem;
-    line-height: 1.58;
+    font-size: 0.98rem;
+    line-height: 1.52;
     max-width: none;
     min-height: 0;
+    color: var(--ink-soft);
   }
 
   .news-hero .article--feature .article-brief-text,
