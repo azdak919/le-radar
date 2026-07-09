@@ -2639,17 +2639,19 @@ function articleInstitutionMetaHtml(name = '', type = '', role = 'standard') {
   const short = articleInstitutionLabel(name, type, 'short');
   const full = articleInstitutionLabel(name, type, 'full');
   const spacious = role === 'lead' || role === 'feature' || role === 'compact';
+  // Pas de notranslate : hors FR/EN/Original, translate.js localise les établissements.
+  // En Original / FR / EN, ils restent protégés (libellés d’origine).
   if (spacious && full && full !== short) {
-    return `<span class="article-inst notranslate" translate="no">`
+    return `<span class="article-inst">`
       + `<span class="article-inst__full">${escapeHtml(full)}</span>`
       + `<span class="article-inst__short">${escapeHtml(short)}</span>`
       + `</span>`;
   }
   // Spacious mais full === short (ex. cégep sans acronyme) : afficher full
   if (spacious && full) {
-    return `<span class="article-inst notranslate" translate="no">${escapeHtml(full)}</span>`;
+    return `<span class="article-inst">${escapeHtml(full)}</span>`;
   }
-  return `<span class="article-inst notranslate" translate="no">${escapeHtml(short || full)}</span>`;
+  return `<span class="article-inst">${escapeHtml(short || full)}</span>`;
 }
 
 function shortInstitution(name = '', type = '') {
