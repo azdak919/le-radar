@@ -1,30 +1,44 @@
 {
-  "updated": "2026-07-09T00:07:17.262Z",
+  "updated": "2026-07-09T04:58:11.733Z",
   "total": 192,
-  "withImage": 150,
-  "withCredit": 150,
-  "cited": 52,
+  "withImage": 152,
+  "withCredit": 152,
+  "cited": 97,
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 40,
-  "updatedCount": 40,
-  "citedNew": 17,
-  "fallbackNew": 23,
+  "checked": 115,
+  "updatedCount": 115,
+  "citedNew": 60,
+  "fallbackNew": 55,
   "samples": [
     {
-      "title": "CSU fails to reach quorum at first special council meeting of new mandate",
-      "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "title": "Pourquoi notre génération passe d’une obsession à l’autre?",
+      "source": "Le Collectif",
+      "credit": "Photo : Blog Zencare",
+      "cited": true,
+      "method": "body-tail"
     },
     {
-      "title": "CSU terminates council’s chief election officer",
-      "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "title": "Quitte ton 9 à 5 » : rêve de liberté ou illusion générationnelle?",
+      "source": "Le Collectif",
+      "credit": "Photo : Getty Images",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Strava, entre progrès, comparaison et performance",
+      "source": "Le Collectif",
+      "credit": "Photo : Runna",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "La popularité des clubs et événements sportifs",
+      "source": "Le Collectif",
+      "credit": "Photo : Club Plein Air Altitude",
+      "cited": true,
+      "method": "body-tail"
     },
     {
       "title": "Ask the Trib: How do I survive summer in my hometown?",
@@ -36,9 +50,9 @@
     {
       "title": "Kanga I, II, III’ brings Projections: SANKOFA’s afrofuturist vision to Trottier",
       "source": "The Tribune",
-      "credit": "Photo credit: The Tribune",
-      "cited": false,
-      "method": null
+      "credit": "Photo : McGill Visual Arts Collection",
+      "cited": true,
+      "method": "figcaption-bare"
     },
     {
       "title": "AI’s use in legal decisions poses major risks to the Canadian judicial system’s integrity and neutrality",
@@ -48,25 +62,11 @@
       "method": "figcaption-attribution"
     },
     {
-      "title": "Road to the 2026 FIFA World Cup",
-      "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
-    },
-    {
       "title": "Know Your Artist: Theodore A. Harris",
       "source": "The Tribune",
-      "credit": "Photo credit: The Tribune",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Artemis II takes over Place-des-Arts",
-      "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Photo : Theodore A. Harris",
+      "cited": true,
+      "method": "figcaption-bare"
     },
     {
       "title": "Montreal protestors commemorate the 78th anniversary of the Nakba",
@@ -74,13 +74,6 @@
       "credit": "Photo : Ellen Lurie",
       "cited": true,
       "method": "figcaption-attribution"
-    },
-    {
-      "title": "Sans fin(s): au cœur des troubles du comportement alimentaire",
-      "source": "L'Exemplaire",
-      "credit": "Crédit photo : L'Exemplaire",
-      "cited": false,
-      "method": null
     },
     {
       "title": "A final note from the Editor-in-Chief of Volume 45, for the record",
@@ -95,6 +88,13 @@
       "credit": "Photo : Ellen Lurie",
       "cited": true,
       "method": "figcaption-attribution"
+    },
+    {
+      "title": "Le beat critique : Est-ce que l’algorithme contrôle vraiment nos goûts musicaux ?",
+      "source": "Zone Campus",
+      "credit": "Crédit photo : Zone Campus",
+      "cited": false,
+      "method": null
     }
   ]
 }
