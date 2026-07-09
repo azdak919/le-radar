@@ -18,7 +18,7 @@ const PHOTO_CREDIT_FIELDS = [
 
 // Version des extracteurs de crédit : l'incrémenter force une re-vérification
 // (repli média + crédits cités issus d'anciens extracteurs buggés).
-const CREDIT_EXTRACTOR_REV = 3;
+const CREDIT_EXTRACTOR_REV = 4;
 
 const LEAD_IMAGE_FIELDS = [
   'leadImageReady',
@@ -290,15 +290,26 @@ function parseFigcaptionAttribution(text = '', lang = 'fr') {
 /**
  * Crédit en fin de légende sans deux-points ni « by » (The Link) :
  * « The CSU did not reach quorum. Graphic Naya Hachwa » / « … Photo Zachary Fortier »
- * / « … Courtesy Naya Hachwa ».
+ * / « … Courtesy Naya Hachwa » / « … Photo Marisa Filice » (photo essay : auteur = photographe).
  */
 function parseTrailingCaptionCredit(t = '', lang = 'fr') {
+  // Point final optionnel (« Courtesy Sayplus. »).
   const trailing = t.match(
-    /(?:^|[.!?…»]\s+)(Photos?|Graphics?|Illustrations?|File photo|Courtesy(?:\s+of)?)\s+([\p{Lu}][\p{L}'’.-]*(?:\s+[\p{Lu}&][\p{L}'’.&-]*){1,4})\s*$/u,
-  );
+    /(?:^|[.!?…»"”]\s+)(Photos?|Graphics?|Illustrations?|File photo|Courtesy(?:\s+of)?)\s+([\p{Lu}][\p{L}'’.-]*(?:\s+[\p{Lu}&][\p{L}'’.&-]*){0,4})\s*\.?$/u,
+  )
+  // Repli : légende qui se termine juste par « Photo Prénom Nom » (The Link photo essays).
+    || t.match(
+      /\b(Photos?|Graphics?|Illustrations?|File photo|Courtesy(?:\s+of)?)\s+([\p{Lu}][\p{L}'’.-]*(?:\s+[\p{Lu}&][\p{L}'’.&-]*){0,4})\s*\.?$/u,
+    );
   if (!trailing) return null;
   const kind = trailing[1].toLowerCase();
-  const parsed = creditFromPhrase(trailing[2]);
+  // « Courtesy of Dragon Jam » → creator déjà sans of si le groupe 1 inclut of
+  let nameRaw = trailing[2].trim().replace(/[.,;:]+$/g, '').trim();
+  if (/^of\s+/i.test(nameRaw)) nameRaw = nameRaw.replace(/^of\s+/i, '');
+  // Rejeter les faux positifs trop génériques
+  if (/^(?:the\s+link|staff|file|archive|unknown)$/i.test(nameRaw)) return null;
+  if (nameRaw.length < 2) return null;
+  const parsed = creditFromPhrase(nameRaw);
   if (!parsed) return null;
   const en = lang === 'en';
   let creditLine = en ? `Photo: ${parsed.creator}` : `Photo : ${parsed.creator}`;
@@ -334,7 +345,8 @@ function extractJsonLdCredit(html = '', imageUrl = '') {
 function extractFigureCredit(html = '', imageUrl = '', lang = 'fr') {
   const figures = html.match(/<figure[^>]*>[\s\S]*?<\/figure>/gi) || [];
   for (const fig of figures) {
-    const srcM = fig.match(/<img[^>]+src=["']([^"']+)["']/i);
+    const srcM = fig.match(/<img[^>]+(?:src|data-src|data-lazy-src)=["']([^"']+)["']/i)
+      || fig.match(/(?:src|data-src)=["']([^"']+)["']/i);
     if (!srcM || (imageUrl && !urlsMatch(srcM[1], imageUrl))) continue;
     const capM = fig.match(/<figcaption[^>]*>([\s\S]*?)<\/figcaption>/i);
     if (capM) {
@@ -345,10 +357,21 @@ function extractFigureCredit(html = '', imageUrl = '', lang = 'fr') {
         const parsed = creditFromPhrase(embedded);
         if (parsed) return { ...parsed, source: 'figcaption' };
       }
+      // The Link : « … Stadium on June 5, 2026. Photo Marisa Filice »
+      const trailing = parseTrailingCaptionCredit(stripHtml(capM[1]), lang);
+      if (trailing) return trailing;
       if (looksLikePhotoCredit(capM[1])) {
         const parsed = creditFromPhrase(capM[1]);
         if (parsed) return { ...parsed, source: 'figcaption' };
       }
+    }
+    // Alt / title de l'image lead (« … Photo Marisa Filice »)
+    const imgTag = fig.match(/<img\b[^>]*>/i)?.[0] || '';
+    for (const attr of ['alt', 'title']) {
+      const am = imgTag.match(new RegExp(`\\b${attr}=["']([^"']+)["']`, 'i'));
+      if (!am) continue;
+      const trailing = parseTrailingCaptionCredit(am[1], lang);
+      if (trailing) return { ...trailing, source: 'img-alt-credit' };
     }
   }
 
