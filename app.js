@@ -2599,13 +2599,38 @@ function isCegepInstitution(name = '', type = '') {
   return type === 'cegep' || /^cégep|^collège/i.test(name);
 }
 
-function articleInstitutionLabel(name = '', type = '') {
+/**
+ * Libellé institution sur les cartes article.
+ * @param {'short'|'full'} form
+ *   short — acronyme (ULaval, UdeM…) pour Suite du fil / mobile
+ *   full  — nom complet (tablette+ en À la une / En bref / vedettes)
+ */
+function articleInstitutionLabel(name = '', type = '', form = 'short') {
   if (!name) return '';
+  const full = formatInstitutionDisplay(
+    name.replace(/\s*\([^)]*\)\s*$/, '').trim() || name,
+  );
+  if (form === 'full') return full;
   if (isQuebecUniversity(name, type)) {
     const acr = resolveInstitutionAcronym(name);
-    return acr || formatInstitutionDisplay(name);
+    return acr || full;
   }
-  return formatInstitutionDisplay(name.replace(/\s*\([^)]*\)\s*$/, '').trim() || name);
+  return full;
+}
+
+/** HTML meta institution : complet + acronyme pour bascule responsive CSS. */
+function articleInstitutionMetaHtml(name = '', type = '', role = 'standard') {
+  if (!name) return '';
+  const short = articleInstitutionLabel(name, type, 'short');
+  const full = articleInstitutionLabel(name, type, 'full');
+  const spacious = role === 'lead' || role === 'feature' || role === 'compact';
+  if (spacious && full && full !== short) {
+    return `<span class="article-inst notranslate" translate="no">`
+      + `<span class="article-inst__full">${escapeHtml(full)}</span>`
+      + `<span class="article-inst__short">${escapeHtml(short)}</span>`
+      + `</span>`;
+  }
+  return `<span class="article-inst notranslate" translate="no">${escapeHtml(short)}</span>`;
 }
 
 function shortInstitution(name = '', type = '') {
@@ -3312,7 +3337,6 @@ function createArticle(item, role = 'standard') {
   a.style.setProperty('--c', color);
 
   const d = item.date ? new Date(item.date) : null;
-  const instMetaLabel = articleInstitutionLabel(item.institution, item.type);
   const time = d
     ? formatStampCompact(d, item.lang === 'en' ? 'en' : 'fr')
     : '';
@@ -3357,10 +3381,13 @@ function createArticle(item, role = 'standard') {
   const timeHtml = time
     ? `<time class="article-time${fresh ? ' is-fresh' : ''}" datetime="${escapeHtml(item.date)}">${time}</time>`
     : '';
+  const instHtml = item.institution
+    ? articleInstitutionMetaHtml(item.institution, item.type, role)
+    : '';
   const metaLead = (item.source || item.institution)
     ? `<span class="article-meta__lead">
         ${item.source ? `<span class="article-source notranslate" translate="no">${escapeHtml(item.source)}</span>` : ''}
-        ${item.institution ? `<span class="article-inst notranslate" translate="no">${escapeHtml(instMetaLabel)}</span>` : ''}
+        ${instHtml}
       </span>`
     : '';
   const metaHtml = (metaLead || timeHtml)
