@@ -3089,13 +3089,34 @@ function filterFreshItems(items, referenceDate = new Date()) {
 }
 
 function compareBriefCandidates(a, b) {
+  /* À popularité égale : photo d'abord, puis date. */
   const byPop = sourcePopularityRank(a.source) - sourcePopularityRank(b.source);
-  return byPop !== 0 ? byPop : new Date(b.date || 0) - new Date(a.date || 0);
+  if (byPop !== 0) return byPop;
+  const imgA = itemHasThumbPhoto(a) ? 0 : 1;
+  const imgB = itemHasThumbPhoto(b) ? 0 : 1;
+  if (imgA !== imgB) return imgA - imgB;
+  return new Date(b.date || 0) - new Date(a.date || 0);
+}
+
+function itemHasThumbPhoto(item) {
+  return hasUsablePhoto(item, 'feature') || hasStockPhoto(item, 'feature');
+}
+
+/** D'abord les plus récents avec photo, puis les plus récents sans. */
+function preferPhotoFirst(items) {
+  const withPhoto = [];
+  const without = [];
+  for (const item of items) {
+    if (itemHasThumbPhoto(item)) withPhoto.push(item);
+    else without.push(item);
+  }
+  return [...sortByDateDesc(withPhoto), ...sortByDateDesc(without)];
 }
 
 /**
  * Remplit jusqu'à max : d'abord 1 article récent par institution (hors excludeInsts),
  * puis complète avec des sources déjà représentées si le pool frais est trop maigre.
+ * Les listes passées ici devraient déjà préférer les articles avec photo.
  */
 function pickSpotlightSlots(items, max, excludeInsts = new Set()) {
   const picks = [];
@@ -3128,49 +3149,66 @@ function isArticlePicked(item, picks) {
 }
 
 /**
- * Vedette : session en cours d'abord ; si slots vides, bandes précédentes
- * (max 3 sessions). En automne, tolérance pour les sources pas encore reparties.
+ * Hero : 1 « À la une » = article le plus récent (toujours), puis 2 features
+ * d'autres institutions (préférence photos). Session en cours d'abord ;
+ * bandes précédentes si slots vides. Ne jamais rétrograder la une pour
+ * une photo / un extrait (le rendu gère le repli SVG).
  */
 function pickHeroSpotlight(items, referenceDate = new Date()) {
-  const picks = [];
-  const usedInsts = new Set();
+  const sorted = sortByDateDesc(items);
+  if (!sorted.length) return { items: [], contingencyBand: 0 };
+
+  const lead = sorted[0];
+  const picks = [lead];
+  const usedInsts = new Set([institutionKey(lead)]);
   let contingencyBand = 0;
   const autumnGrace = isAutumnGracePeriod(referenceDate);
 
-  const fill = (pool, band) => {
+  const fillFeatures = (pool, band) => {
     if (picks.length >= HERO_SPOTLIGHT_MAX) return;
-    const available = pool.filter((item) => !isArticlePicked(item, picks));
-    const batch = pickSpotlightSlots(available, HERO_SPOTLIGHT_MAX - picks.length, usedInsts);
+    /* preferPhotoFirst = récents avec photo d’abord, puis récents sans. */
+    const available = preferPhotoFirst(
+      pool.filter((item) => !isArticlePicked(item, picks)),
+    );
+    const batch = pickSpotlightSlots(
+      available,
+      HERO_SPOTLIGHT_MAX - picks.length,
+      usedInsts,
+    );
     if (!batch.length) return;
-    picks.push(...batch);
+    for (const item of batch) {
+      picks.push(item);
+      usedInsts.add(institutionKey(item));
+    }
     contingencyBand = Math.max(contingencyBand, band);
   };
 
   for (let band = 0; band <= freshnessMaxSessionsBack(referenceDate); band++) {
-    fill(sessionBandPool(items, referenceDate, band), band);
+    fillFeatures(sessionBandPool(items, referenceDate, band), band);
     if (picks.length >= HERO_SPOTLIGHT_MAX) break;
   }
 
   if (autumnGrace && picks.length < HERO_SPOTLIGHT_MAX) {
     const representedSources = new Set(picks.map(sourceKey));
-    const representedInsts = new Set(picks.map(institutionKey));
-    const missingSourcePool = sortByDateDesc(items).filter((item) => {
+    const missingSourcePool = preferPhotoFirst(sorted.filter((item) => {
       if (isArticlePicked(item, picks)) return false;
       if (representedSources.has(sourceKey(item))) return false;
       if (sessionBandPool([item], referenceDate, 0).length) return false;
       return isWithinFreshnessWindow(item, referenceDate);
-    });
+    }));
     for (const item of missingSourcePool) {
       if (picks.length >= HERO_SPOTLIGHT_MAX) break;
-      if (representedInsts.has(institutionKey(item))) continue;
+      if (usedInsts.has(institutionKey(item))) continue;
       picks.push(item);
+      usedInsts.add(institutionKey(item));
       representedSources.add(sourceKey(item));
-      representedInsts.add(institutionKey(item));
       contingencyBand = Math.max(contingencyBand, 1);
     }
   }
 
-  return { items: sortByDateDesc(picks), contingencyBand };
+  /* Lead figé en [0] ; features triées par date (sans renvoyer la une en bas). */
+  const features = sortByDateDesc(picks.slice(1));
+  return { items: [picks[0], ...features], contingencyBand };
 }
 
 function fillBriefFromSessionPool(eligible, heroSources, state) {
@@ -3392,8 +3430,10 @@ function createArticle(item, role = 'standard') {
      d'images seulement (le repli SVG serait illisible en petit format). */
   const isThumbRole = ['feature', 'compact'].includes(role);
   const canUseImage = role === 'lead' || isThumbRole;
+  /* Vignettes : seuils assouplis (forThumb) — beaucoup d’URL WP ~300–500 px
+     étaient rejetées alors qu’elles passent bien en object-fit. */
   const hasImageCandidate = role === 'lead'
-    || (isThumbRole && (hasUsablePhoto(item) || hasStockPhoto(item)));
+    || (isThumbRole && (hasUsablePhoto(item, role) || hasStockPhoto(item, role)));
   if (!hasImageCandidate && canUseImage) a.classList.add('article--text');
   if (isThumbRole && hasImageCandidate) a.classList.add('article--thumb');
   const timeHtml = time
@@ -3483,23 +3523,32 @@ function resizeFromImageQuery(raw = '') {
   return null;
 }
 
-function isWeakImagePath(path = '') {
+function isWeakImagePath(path = '', { forThumb = false } = {}) {
   const p = String(path).toLowerCase();
   // Suffixe WP « -{w}x{h}. » : rejeter les vraies miniatures, garder les
   // formats vedette (ex. Campus2-930x620.jpg sur Le Délit).
+  // Vignettes feature / En bref : seuils bas (object-fit ~100–180 px).
   const sized = p.match(/-(\d{2,4})x(\d{2,4})(?=\.[a-z]+$)/);
   if (sized) {
     const w = parseInt(sized[1], 10);
     const h = parseInt(sized[2], 10);
     if (w > 0 && h > 0) {
-      if (Math.max(w, h) < 400) return true;
-      if (w < 640 || h < 360 || w * h < 200000) return true;
+      if (forThumb) {
+        if (Math.max(w, h) < 80 || w * h < 8000) return true;
+      } else {
+        if (Math.max(w, h) < 400) return true;
+        if (w < 640 || h < 360 || w * h < 200000) return true;
+      }
     }
   }
   return WEAK_IMAGE_PATH.test(p);
 }
 
-function getCandidateImage(src = '') {
+/**
+ * @param {string} src
+ * @param {{ forThumb?: boolean }} [opts] — seuils assouplis pour feature / En bref
+ */
+function getCandidateImage(src = '', { forThumb = false } = {}) {
   const raw = String(src).trim();
   if (!raw) return '';
 
@@ -3522,13 +3571,16 @@ function getCandidateImage(src = '') {
   const path = decodeURIComponent(url.pathname).toLowerCase();
   if (GLOBAL_IMAGE_REJECT_RE.test(path)) return '';
   if (/(?:^|\/)(?:1x1|pixel)\b/.test(path)) return '';
+  const minW = forThumb ? 120 : 640;
+  const minH = forThumb ? 100 : 360;
+  const minPx = forThumb ? 12_000 : 240_000;
   const resize = resizeFromImageQuery(raw);
   if (resize) {
     const { width = 0, height = 0 } = resize;
-    if ((width > 0 && width < 640) || (height > 0 && height < 360)) return '';
-    if (width > 0 && height > 0 && width * height < 240000) return '';
+    if ((width > 0 && width < minW) || (height > 0 && height < minH)) return '';
+    if (width > 0 && height > 0 && width * height < minPx) return '';
   }
-  if (isWeakImagePath(path)) return '';
+  if (isWeakImagePath(path, { forThumb })) return '';
   return url.href;
 }
 
@@ -3565,16 +3617,18 @@ function displaySizedImageUrl(raw = '', role = 'lead') {
   return src;
 }
 
-function hasUsablePhoto(item) {
-  return !!getCandidateImage(item?.image);
+function hasUsablePhoto(item, role = 'lead') {
+  const forThumb = role === 'feature' || role === 'compact';
+  return !!getCandidateImage(item?.image, { forThumb });
 }
 
-function hasStockPhoto(item) {
-  return !!getCandidateImage(item?.stockImage);
+function hasStockPhoto(item, role = 'lead') {
+  const forThumb = role === 'feature' || role === 'compact';
+  return !!getCandidateImage(item?.stockImage, { forThumb });
 }
 
-function hasDisplayImage(item) {
-  return hasUsablePhoto(item) || hasStockPhoto(item) || isFallbackImageUrl(item?.fallbackImage);
+function hasDisplayImage(item, role = 'lead') {
+  return hasUsablePhoto(item, role) || hasStockPhoto(item, role) || isFallbackImageUrl(item?.fallbackImage);
 }
 
 function darkenHex(hex, amount = 0.32) {
@@ -3646,72 +3700,40 @@ function shouldPreferStockPhoto(item, role = 'lead') {
 }
 
 function resolveDisplayImage(item, { preferPhoto = true, role = 'lead' } = {}) {
+  const forThumb = role === 'feature' || role === 'compact';
   if (shouldPreferStockPhoto(item, role)) preferPhoto = false;
 
   // Photo source d'abord, sauf si on a explicitement préféré le stock thématique.
-  if (preferPhoto && hasUsablePhoto(item)) {
-    return { src: getCandidateImage(item.image), kind: 'photo' };
+  if (preferPhoto && hasUsablePhoto(item, role)) {
+    return { src: getCandidateImage(item.image, { forThumb }), kind: 'photo' };
   }
   // Banque libre thématique OK ; campus bank seulement sans photo source.
-  if (hasStockPhoto(item)) {
-    if (item.imageProvider === 'campus-bank' && hasUsablePhoto(item)) {
-      return { src: getCandidateImage(item.image), kind: 'photo' };
+  if (hasStockPhoto(item, role)) {
+    if (item.imageProvider === 'campus-bank' && hasUsablePhoto(item, role)) {
+      return { src: getCandidateImage(item.image, { forThumb }), kind: 'photo' };
     }
-    return { src: getCandidateImage(item.stockImage), kind: 'stock' };
+    return { src: getCandidateImage(item.stockImage, { forThumb }), kind: 'stock' };
   }
   if (isFallbackImageUrl(item?.fallbackImage)) {
     return { src: getCandidateImage(item.fallbackImage), kind: 'fallback' };
   }
-  if (!preferPhoto && hasUsablePhoto(item)) {
-    return { src: getCandidateImage(item.image), kind: 'photo' };
+  if (!preferPhoto && hasUsablePhoto(item, role)) {
+    return { src: getCandidateImage(item.image, { forThumb }), kind: 'photo' };
   }
   return { src: '', kind: 'none' };
 }
 
 /**
- * Garantit un visuel pour l'article à la une (photo, repli SVG ou génération locale).
+ * La une reste l'article le plus récent. Ne jamais l'échanger contre un plus
+ * ancien pour une photo ou un extrait — attachArticleImage génère un repli SVG
+ * côté client si besoin. On s'assure seulement que les features ne dupliquent pas la une.
  */
 function ensureHeroLeadHasImage(heroItems, allItems) {
   if (!heroItems.length) return heroItems;
-  let next = [...heroItems];
-
-  if (!hasDisplayImage(next[0])) {
-    const swapIdx = next.findIndex((item, i) => i > 0 && hasDisplayImage(item));
-    if (swapIdx > 0) {
-      [next[0], next[swapIdx]] = [next[swapIdx], next[0]];
-      next = sortByDateDesc(next);
-    } else {
-      const heroKeys = new Set(next.map(articleKey));
-      const replacement = sortByDateDesc(allItems).find(
-        (item) => !heroKeys.has(articleKey(item)) && hasDisplayImage(item),
-      );
-      if (replacement) {
-        next[0] = replacement;
-        next = sortByDateDesc(next);
-      }
-    }
-  }
-
-  if (!hasSubstantialLeadBrief(next[0])) {
-    const swapIdx = next.findIndex(
-      (item, i) => i > 0 && hasDisplayImage(item) && hasSubstantialLeadBrief(item),
-    );
-    if (swapIdx > 0) {
-      [next[0], next[swapIdx]] = [next[swapIdx], next[0]];
-      next = sortByDateDesc(next);
-    } else {
-      const heroKeys = new Set(next.map(articleKey));
-      const replacement = sortByDateDesc(allItems).find(
-        (item) => !heroKeys.has(articleKey(item)) && hasDisplayImage(item) && hasSubstantialLeadBrief(item),
-      );
-      if (replacement) {
-        next[0] = replacement;
-        next = sortByDateDesc(next);
-      }
-    }
-  }
-
-  return next;
+  const lead = heroItems[0];
+  const leadKey = articleKey(lead);
+  const features = heroItems.slice(1).filter((item) => articleKey(item) !== leadKey);
+  return [lead, ...features];
 }
 
 function cleanCreatorDisplay(raw = '') {

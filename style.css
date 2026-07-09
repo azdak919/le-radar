@@ -43,9 +43,12 @@
 * { box-sizing: border-box; }
 html {
   -webkit-text-size-adjust: 100%;
-  /* Empêche le « scroll vers la gauche » (arabe/farsi/hébreu/ourdou, textes longs). */
+  /* Empêche le pan horizontal (iPad portrait, textes longs, RTL).
+     overflow-x:clip seul est mal géré sur certains Safari → hidden d’abord. */
+  overflow-x: hidden;
   overflow-x: clip;
   max-width: 100%;
+  width: 100%;
 }
 
 body {
@@ -58,9 +61,14 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   transition: background 240ms ease, color 240ms ease;
+  overflow-x: hidden;
   overflow-x: clip;
   max-width: 100%;
+  width: 100%;
   position: relative;
+  /* iPad : pas de glissement latéral du document */
+  overscroll-behavior-x: none;
+  touch-action: pan-y;
 }
 
 /* Conteneurs principaux : jamais plus larges que le viewport */
@@ -70,9 +78,17 @@ body {
 .tuner-inner,
 .wire,
 .filters-panel,
-.news-list {
+.news-list,
+.news-hero,
+.brief-rail,
+.news-tail {
   max-width: 100%;
   min-width: 0;
+}
+.masthead,
+.tuner,
+.wire {
+  overflow-x: clip;
 }
 
 /*
@@ -1047,7 +1063,8 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
     /* Au sein du tuner (z-index 100) : au-dessus des autres contrôles du synthé */
     z-index: 20;
     box-sizing: border-box;
-    width: min(300px, calc(100vw - 20px));
+    /* 100dvw / 100% : 100vw sur iOS déborde (barre / safe area). */
+    width: min(300px, calc(100% - 20px), calc(100dvw - 20px));
     min-width: 0;
     padding: 12px 14px 10px;
     background: #22252c;
@@ -1159,7 +1176,7 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   .tuner-label { display: none; }
 
   .tuner-vol-slot {
-    width: min(292px, calc(100vw - 16px));
+    width: min(292px, calc(100% - 16px), calc(100dvw - 16px));
   }
 
   .tuner-step {
@@ -1439,7 +1456,7 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   box-sizing: border-box;
   min-width: 240px;
   width: max-content;
-  max-width: min(320px, calc(100vw - 24px));
+  max-width: min(320px, calc(100% - 24px), calc(100dvw - 24px));
   max-height: min(75vh, 560px);
   overflow-x: hidden;
   overflow-y: auto;
@@ -1844,11 +1861,16 @@ html[data-translate-busy="1"] .translate-toggle {
   padding: 22px 0;
   border-bottom: 1px solid var(--rule);
   transition: transform 160ms cubic-bezier(0.22,1,0.36,1);
+  /* Contient le filet ::before (left négatif) — évite overflow-x iPad */
+  overflow-x: clip;
+  max-width: 100%;
+  min-width: 0;
 }
 .article::before {
   content: "";
   position: absolute;
-  left: -14px;
+  /* Dans le padding, pas hors flux (left:-14px élargissait le scroll iPad) */
+  left: 0;
   top: 22px; bottom: 22px;
   width: 3px;
   border-radius: 3px;
@@ -1856,11 +1878,19 @@ html[data-translate-busy="1"] .translate-toggle {
   opacity: 0;
   transition: opacity 160ms ease;
 }
-@media (hover: hover) {
-  .article:hover { transform: translateX(4px); }
+/* Hover translate seulement souris fine — pas iPad (hover+coarse) qui
+   « colle » le décalage et contribue au pan horizontal. */
+@media (hover: hover) and (pointer: fine) {
+  .article:hover { transform: translateX(3px); }
   .article:hover::before { opacity: 1; }
 }
-.article:hover .article-title { color: var(--c, var(--accent)); }
+@media (hover: hover) and (pointer: fine) {
+  .article:hover .article-title { color: var(--c, var(--accent)); }
+}
+/* Tactile / iPad : surbrillance titre sans translate */
+@media (hover: none), (pointer: coarse) {
+  .article:active .article-title { color: var(--c, var(--accent)); }
+}
 
 .article-media {
   display: none;
@@ -2217,10 +2247,14 @@ html[data-translate-busy="1"] .translate-toggle {
   overflow-wrap: anywhere;
   word-break: break-word;
 }
-/* Vedettes (2 extras à la une) : un cran plus large que En bref sur mobile */
+/* Vedettes (2 features) : clairement plus grandes que En bref, mais toujours
+   en vignette à gauche — jamais pleine largeur comme À la une (~16:9). */
 .news-hero .article--feature.article--thumb.has-image {
-  grid-template-columns: clamp(72px, 24vw, 100px) minmax(0, 1fr);
-  column-gap: 12px;
+  grid-template-columns: clamp(96px, 30vw, 128px) minmax(0, 1fr);
+  column-gap: 14px;
+}
+.news-hero .article--feature.article--thumb.has-image .article-media img {
+  border-radius: 7px;
 }
 .news-hero .article--feature.article--thumb.has-image .article-media-credit {
   -webkit-line-clamp: 3;
@@ -2228,8 +2262,9 @@ html[data-translate-busy="1"] .translate-toggle {
 }
 
 @media (min-width: 601px) {
+  /* En bref : petite vignette */
   .article--thumb.has-image {
-    grid-template-columns: clamp(72px, 26%, 116px) minmax(0, 1fr);
+    grid-template-columns: clamp(72px, 22%, 110px) minmax(0, 1fr);
     column-gap: 14px;
   }
   .article--thumb.has-image > .article-media {
@@ -2240,12 +2275,21 @@ html[data-translate-busy="1"] .translate-toggle {
     line-height: 1.3;
     -webkit-line-clamp: 3;
   }
+  /* Features : ~1,4–1,5× En bref ; plafond loin de la une */
   .news-hero .article--feature.article--thumb.has-image {
-    grid-template-columns: clamp(72px, 26%, 116px) minmax(0, 1fr);
-    column-gap: 14px;
+    grid-template-columns: clamp(128px, 34%, 168px) minmax(0, 1fr);
+    column-gap: 16px;
   }
   .news-hero .article--feature.article--thumb.has-image .article-media-credit {
-    font-size: 0.6rem;
+    font-size: 0.62rem;
+  }
+}
+
+/* Desktop magazine : features un cran plus présentes, toujours sous la une */
+@media (min-width: 1100px) {
+  .news-hero .article--feature.article--thumb.has-image {
+    grid-template-columns: clamp(140px, 36%, 184px) minmax(0, 1fr);
+    column-gap: 18px;
   }
 }
 
@@ -2647,7 +2691,7 @@ html[data-translate-busy="1"] .translate-toggle {
 
 .external-listen__panel {
   position: relative;
-  width: min(420px, calc(100vw - 32px));
+  width: min(420px, calc(100% - 32px), calc(100dvw - 32px));
   max-height: min(92vh, 520px);
   display: flex;
   flex-direction: column;
@@ -2817,13 +2861,13 @@ html[data-translate-busy="1"] .translate-toggle {
   border-radius: 9px;
   box-shadow: 0 8px 28px -8px rgba(0,0,0,0.45);
   z-index: 200;
-  max-width: calc(100vw - 32px);
+  max-width: min(calc(100% - 32px), calc(100dvw - 32px));
   text-align: center;
 }
 
 @media (max-width: 600px) {
   :root { --pad: 18px; }
-  .article::before { left: -10px; }
+  /* Filet reste dans le flux (left:0) — plus de left négatif iPad/téléphone */
 
   /* Cartes avec vignette : un peu moins de padding vertical pour compenser
      la hauteur crédit photo, sans écraser le bloc texte. */
