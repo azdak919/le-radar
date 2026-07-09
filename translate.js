@@ -965,18 +965,100 @@
     }
   }
 
+  let menuPositionBound = false;
+
+  /**
+   * Place le menu en fixed sous le bouton, entièrement dans le viewport.
+   * Évite le clipping à droite (overflow-x:clip + titres longs après traduction).
+   */
+  function positionMenu() {
+    const menu = document.getElementById('translate-menu');
+    const btn = document.getElementById('translate-toggle');
+    if (!menu || !btn || menu.hidden) return;
+
+    const pad = 12;
+    const gap = 6;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const btnRect = btn.getBoundingClientRect();
+
+    // Largeur cible : au moins 240, au plus 320, jamais hors écran
+    const maxW = Math.min(320, Math.max(160, vw - pad * 2));
+    menu.style.width = '';
+    menu.style.maxWidth = `${maxW}px`;
+    menu.style.maxHeight = '';
+
+    // Mesure après affichage (menu non hidden)
+    let menuW = Math.min(Math.max(menu.offsetWidth || 240, 240), maxW);
+    let menuH = menu.offsetHeight || 200;
+    const maxH = Math.min(vh * 0.75, 560, Math.max(120, vh - pad * 2));
+    if (menuH > maxH) {
+      menu.style.maxHeight = `${maxH}px`;
+      menuH = maxH;
+    }
+
+    // Préférer l’alignement droit du bouton (ouvre vers la gauche) ;
+    // si ça sort à gauche, basculer ; toujours clamper dans le viewport.
+    let left = btnRect.right - menuW;
+    if (left < pad) left = btnRect.left;
+    if (left + menuW > vw - pad) left = Math.max(pad, vw - pad - menuW);
+    if (left < pad) left = pad;
+
+    let top = btnRect.bottom + gap;
+    if (top + menuH > vh - pad) {
+      // Ouvrir au-dessus du bouton si pas assez de place en bas
+      const above = btnRect.top - gap - menuH;
+      if (above >= pad) top = above;
+      else {
+        top = Math.max(pad, vh - pad - menuH);
+        menu.style.maxHeight = `${Math.max(120, vh - top - pad)}px`;
+      }
+    }
+
+    menu.style.top = `${Math.round(top)}px`;
+    menu.style.left = `${Math.round(left)}px`;
+    menu.style.right = 'auto';
+    menu.style.bottom = 'auto';
+  }
+
+  function onMenuViewportChange() {
+    positionMenu();
+  }
+
+  function bindMenuPositioning() {
+    if (menuPositionBound) return;
+    menuPositionBound = true;
+    window.addEventListener('resize', onMenuViewportChange, { passive: true });
+    window.addEventListener('scroll', onMenuViewportChange, { passive: true, capture: true });
+  }
+
+  function unbindMenuPositioning() {
+    if (!menuPositionBound) return;
+    menuPositionBound = false;
+    window.removeEventListener('resize', onMenuViewportChange);
+    window.removeEventListener('scroll', onMenuViewportChange, true);
+  }
+
   function closeMenu() {
     const menu = document.getElementById('translate-menu');
     const btn = document.getElementById('translate-toggle');
     if (menu) menu.hidden = true;
     if (btn) btn.setAttribute('aria-expanded', 'false');
+    unbindMenuPositioning();
   }
 
   function openMenu() {
     const menu = document.getElementById('translate-menu');
     const btn = document.getElementById('translate-toggle');
-    if (menu) menu.hidden = false;
-    if (btn) btn.setAttribute('aria-expanded', 'true');
+    if (!menu || !btn) return;
+    menu.hidden = false;
+    btn.setAttribute('aria-expanded', 'true');
+    // Double rAF : laisser le layout peindre le menu avant mesure
+    requestAnimationFrame(() => {
+      positionMenu();
+      requestAnimationFrame(positionMenu);
+    });
+    bindMenuPositioning();
   }
 
   function toggleMenu() {
