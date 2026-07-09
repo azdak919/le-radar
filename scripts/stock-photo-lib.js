@@ -243,6 +243,34 @@ function extractContextualQueries(item, context = detectEditorialContext(item)) 
     queries.push('winter city snow Canada');
   }
 
+  // Dossiers femmes / alumnae (The McGill Daily et similaires) : photos de
+  // campus « generic editorial banner » souvent absentes — chercher un sujet.
+  if (/\b(?:alumnae|alumni|women(?:'s)?\s+history|international\s+women|women(?:'s)?\s+(?:rights|day)|féminis|feminis|gender\s+equity|second-?class\s+citizens)\b/i.test(combined)) {
+    if (item.institution && /mcgill/i.test(item.institution)) {
+      queries.push('McGill University women graduates ceremony');
+      queries.push('McGill University convocation graduates');
+    }
+    queries.push('university women graduates Canada');
+    queries.push('women students university campus');
+    if (/\b(?:rights|citizens|legislative|indignation)\b/i.test(combined)) {
+      queries.push('women rights demonstration Canada');
+      queries.push('International Women Day march');
+    }
+  }
+
+  // Articles sans photo (McGill Daily text-only) : ancrage institutionnel
+  // pour la recherche libre avant le repli campus.
+  if (item.institution && /mcgill/i.test(String(item.institution))) {
+    const hasStrongVisual = SPORTS_TOPIC_RE.test(combined)
+      || STUDENT_MOBILIZATION_RE.test(combined)
+      || context.summerTopic
+      || context.winterTopic;
+    if (!hasStrongVisual && title.length > 8) {
+      queries.push('McGill University campus Montreal');
+      queries.push('McGill University students campus');
+    }
+  }
+
   return [...new Set(queries.filter((q) => q && q.length > 2))];
 }
 
