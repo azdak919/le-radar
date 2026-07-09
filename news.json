@@ -1,7 +1,6 @@
 {
-  "updated": "2026-07-09T19:40:34.108Z",
-  "updatedSlot": "2026-07-09T16:00:00.000Z",
-  "count": 182,
+  "updated": "2026-07-09T21:27:52.281Z",
+  "count": 183,
   "freshnessSessions": 3,
   "sources": {
     "Quartier Libre": {
@@ -107,6 +106,12 @@
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
       "lastFetchOk": "2026-07-09T19:08:05.617Z"
+    },
+    "Le Polyscope": {
+      "fetchOk": true,
+      "stale": false,
+      "count": 1,
+      "lastItemDate": "2026-02-25T14:38:32.764Z"
     }
   },
   "items": [
@@ -4022,6 +4027,19 @@
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:C%C3%A9gep_du_Vieux_Montr%C3%A9al,_Nov_03_2022.jpg"
+    },
+    {
+      "source": "Le Polyscope",
+      "institution": "Polytechnique Montréal",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "L'informatique quantique: Un terrain de jeu multidisciplinaire pour les ingénieur·e·s",
+      "link": "https://www.polyscope.qc.ca/blog/post/2DJ12PrwK7u4Dq9D8fKu",
+      "author": "Stefanie Lee Milczarek",
+      "date": "2026-02-25T14:38:32.764Z",
+      "excerpt": "Dans les couloirs de Polytechnique Montréal, le futur ne s’encode plus seulement en binaire. L'Association Étudiante des Cycles Supérieurs de Polytechnique (AECSP) a récemment orchestré un panel d'expert·e·s pour démystifier un domaine aussi fascinant qu'intimidant: l'informatique quantique. Loin des processeurs classiques qui traitent l'information sous forme de 0 ou de 1, l'ordinateur quantique exploite les lois de la physique subatomique pour atteindre des puissances de calcul jusqu'alors jugées impossibles.",
+      "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Fquantique.jpg?alt=media&token=2cf44e31-4aae-43af-a2db-ce9925579651"
     },
     {
       "source": "Exil",
