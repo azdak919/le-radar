@@ -509,6 +509,21 @@
   let mutateObserver = null;
   /** Noms de médias étudiants (propres) — ne jamais traduire. */
   const protectedMediaNames = new Set(['Le Radar', 'LE RADAR', 'Le radar']);
+  /**
+   * Noms d'établissements (propres) — ne jamais traduire.
+   * gtx casse souvent la casse (ex. ES : « Université Laval » → « universidad laval »)
+   * ou déforme le sens (EN « Bishop's University » → « Universidad del Obispo »).
+   */
+  const protectedInstitutionNames = new Set([
+    'ULaval', 'UdeM', 'UQAM', 'UQTR', 'UQAC', 'UQAR', 'UQO', 'UQAT',
+    'UdeS', 'McGill', 'Concordia', "Bishop's", 'Poly Montréal', 'Polytechnique Montréal',
+    'Université Laval', 'Université de Montréal', 'Université de Sherbrooke',
+    'Université McGill', 'McGill University', 'Concordia University',
+    "Bishop's University", 'Dawson College',
+    'Université du Québec à Montréal', 'Université du Québec à Trois-Rivières',
+    'Université du Québec à Chicoutimi', 'Cégep du Vieux Montréal',
+    'Cégep de Jonquière', 'Cégep de Jonquière (ATM – journalisme)',
+  ]);
   let mediaNamesReady = false;
 
   const SKIP_TAGS = new Set([
@@ -516,8 +531,8 @@
     'CODE', 'PRE', 'KBD', 'SAMP', 'SVG', 'PATH', 'MATH', 'IFRAME',
   ]);
 
-  /** Classes / zones où les noms propres restent intacts (médias, auteurs…). */
-  const SKIP_CLASS_RE = /\b(?:notranslate|article-source|article-inst|article-author|filter-btn__name|article-media-credit__creator)\b/;
+  /** Classes / zones où les noms propres restent intacts (médias, auteurs, institutions…). */
+  const SKIP_CLASS_RE = /\b(?:notranslate|article-source|article-inst|article-author|filter-btn__name|filter-btn__inst|article-media-credit__creator)\b/;
 
   function hasUserPreference() {
     try {
@@ -762,17 +777,31 @@
     return parts;
   }
 
+  function addProtectedName(set, raw) {
+    const t = String(raw || '').replace(/\s+/g, ' ').trim();
+    if (!t || t.length < 2) return;
+    set.add(t);
+    set.add(t.toLowerCase());
+    // Sans parenthèse finale « (ATM – journalisme) »
+    const stripped = t.replace(/\s*\([^)]*\)\s*$/, '').trim();
+    if (stripped && stripped !== t) {
+      set.add(stripped);
+      set.add(stripped.toLowerCase());
+    }
+  }
+
   function loadProtectedMediaNames() {
     if (mediaNamesReady) return Promise.resolve();
     return fetch('./news-sources.json', { cache: 'no-store' })
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         for (const s of data?.active || []) {
-          if (s?.name) {
-            protectedMediaNames.add(String(s.name).trim());
-            // Variantes fréquentes de casse
-            protectedMediaNames.add(String(s.name).trim().toLowerCase());
-          }
+          if (s?.name) addProtectedName(protectedMediaNames, s.name);
+          if (s?.institution) addProtectedName(protectedInstitutionNames, s.institution);
+        }
+        for (const s of data?.candidates || []) {
+          if (s?.name) addProtectedName(protectedMediaNames, s.name);
+          if (s?.institution) addProtectedName(protectedInstitutionNames, s.institution);
         }
         mediaNamesReady = true;
       })
@@ -781,14 +810,41 @@
       });
   }
 
-  function isProtectedMediaName(text = '') {
+  function nameInSet(set, text) {
     const t = String(text || '').replace(/\s+/g, ' ').trim();
     if (!t) return false;
-    if (protectedMediaNames.has(t) || protectedMediaNames.has(t.toLowerCase())) return true;
-    // « The Plant · Dawson » / pastilles compactes
-    for (const name of protectedMediaNames) {
-      if (!name || name.length < 3) continue;
+    if (set.has(t) || set.has(t.toLowerCase())) return true;
+    for (const name of set) {
+      if (!name || name.length < 2) continue;
       if (t === name || t.toLowerCase() === String(name).toLowerCase()) return true;
+    }
+    return false;
+  }
+
+  function isProtectedMediaName(text = '') {
+    return nameInSet(protectedMediaNames, text);
+  }
+
+  function isProtectedInstitutionName(text = '') {
+    return nameInSet(protectedInstitutionNames, text);
+  }
+
+  /**
+   * Noms propres à ne pas traduire (média, établissement, ou libellé
+   * composé « poste · institution » / « 89,1 · Université Laval »).
+   */
+  function isProtectedProperName(text = '') {
+    const t = String(text || '').replace(/\s+/g, ' ').trim();
+    if (!t) return false;
+    if (isProtectedMediaName(t) || isProtectedInstitutionName(t)) return true;
+    // Segments séparés par point médian / barre
+    const parts = t.split(/\s*[·|•]\s*/).map((p) => p.trim()).filter(Boolean);
+    if (parts.length >= 2) {
+      // Si un segment est un établissement ou un média connu, garder le libellé entier
+      // (évite « universidad laval » et « Universidad del Obispo » dans le tuner / filtres).
+      if (parts.some((p) => isProtectedInstitutionName(p) || isProtectedMediaName(p))) {
+        return true;
+      }
     }
     return false;
   }
@@ -800,7 +856,7 @@
     if (el.classList?.contains('notranslate')) return true;
     if (el.getAttribute?.('translate') === 'no') return true;
     if (SKIP_CLASS_RE.test(el.className || '')) return true;
-    if (el.closest?.('.notranslate, [translate="no"], .translate-control, .sr-only, .article-source, .article-author, .filter-btn__name, .article-inst')) {
+    if (el.closest?.('.notranslate, [translate="no"], .translate-control, .sr-only, .article-source, .article-author, .filter-btn__name, .filter-btn__inst, .article-inst')) {
       return true;
     }
     return false;
@@ -815,8 +871,8 @@
         if (!val || !val.trim()) return NodeFilter.FILTER_REJECT;
         // Ignorer purement numérique / ponctuation
         if (!/[\p{L}]/u.test(val)) return NodeFilter.FILTER_REJECT;
-        // Noms de médias (The Plant, Le Délit…) = noms propres
-        if (isProtectedMediaName(val)) return NodeFilter.FILTER_REJECT;
+        // Noms de médias / établissements (The Plant, Université Laval…) = noms propres
+        if (isProtectedProperName(val)) return NodeFilter.FILTER_REJECT;
         let p = node.parentElement;
         while (p) {
           if (shouldSkipElement(p)) return NodeFilter.FILTER_REJECT;

@@ -2515,15 +2515,35 @@ for (const [full, acr] of Object.entries(INSTITUTION_ACRONYMS)) {
   }
 }
 
-/** Capitalisation affichage : Université et Cégep toujours en majuscule initiale. */
+/**
+ * Capitalisation affichage des types d'établissement.
+ * Les libellés d'institution ne sont pas traduits (voir translate.js) ;
+ * ce filet corrige aussi une casse abîmée si un moteur externe intervient
+ * (ex. gtx ES : « universidad laval » → Université Laval d'origine, ou
+ * « Universidad … » si le nom était déjà hispanisé).
+ */
 function formatInstitutionDisplay(name = '') {
   if (!name) return '';
   return String(name)
     .replace(/\buniversité\b/giu, 'Université')
     .replace(/\buniversite\b/giu, 'Université')
     .replace(/\buniversity\b/giu, 'University')
+    .replace(/\buniversidad\b/giu, 'Universidad')
+    .replace(/\buniversidade\b/giu, 'Universidade')
+    .replace(/\buniversität\b/giu, 'Universität')
+    .replace(/\buniversità\b/giu, 'Università')
     .replace(/\bcégep\b/giu, 'Cégep')
-    .replace(/\bcegep\b/giu, 'Cégep');
+    .replace(/\bcegep\b/giu, 'Cégep')
+    .replace(/\bcollege\b/giu, 'College')
+    .replace(/\bcollège\b/giu, 'Collège')
+    // Noms propres fréquents laissés en minuscules par gtx (Laval, Montréal…)
+    .replace(/\blaval\b/giu, 'Laval')
+    .replace(/\bmontr[eé]al\b/giu, (m) => (m.includes('é') ? 'Montréal' : 'Montreal'))
+    .replace(/\bsherbrooke\b/giu, 'Sherbrooke')
+    .replace(/\bmcgill\b/giu, 'McGill')
+    .replace(/\bconcordia\b/giu, 'Concordia')
+    .replace(/\bdawson\b/giu, 'Dawson')
+    .replace(/\bqu[eé]bec\b/giu, (m) => (m.includes('é') ? 'Québec' : 'Quebec'));
 }
 
 /** Libellé institution sur les pastilles sources (nom complet, sans suffixe Univ./Cégep). */
@@ -2788,7 +2808,7 @@ function renderNewsFilters() {
         <span class="filter-btn__dot" aria-hidden="true"></span>
         <span class="filter-btn__name notranslate" translate="no">${escapeHtml(src)}</span>
       </span>
-      ${instLabel ? '<span class="filter-btn__inst"></span>' : ''}
+      ${instLabel ? '<span class="filter-btn__inst notranslate" translate="no"></span>' : ''}
     `;
     NEWS_FILTERS.appendChild(btn);
   });
