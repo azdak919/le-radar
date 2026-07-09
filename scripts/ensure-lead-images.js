@@ -191,6 +191,25 @@ async function applyStockPhoto(item, sourceMap = new Map(), { avoidCampusUrls = 
     }
   }
 
+  // Avant toute banque libre : une dernière chance de récupérer la photo
+  // d'article (RSS vide + Elementor / og:image) — évite Openverse générique
+  // sur « Coupe du monde 2026 » alors que 16-17_CDM est sur la page.
+  if ((!item.image || !hasSourcePhoto(item, sourceMap)) && item.link) {
+    const { reject, opts } = isCandidateForItem(item, sourceMap);
+    const resolved = await resolveLeadReadyPhoto(
+      { ...item, image: hasSourcePhoto(item, sourceMap) ? item.image : '' },
+      reject,
+      opts,
+    );
+    if (resolved?.url && doUpdate) {
+      item.image = resolved.url;
+      item.leadImageReady = resolved.leadReady !== false;
+      clearLegacyFallback(item);
+      if (resolved.leadReady !== false) clearStockPhoto(item);
+      return false;
+    }
+  }
+
   if (allowFreeStock) {
     const stock = await findStockPhoto(item);
     if (stock?.stockImage) {

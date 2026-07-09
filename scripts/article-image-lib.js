@@ -202,6 +202,9 @@ function articleBodyHtml(html = '') {
   const patterns = [
     /itemprop=["']articleBody["'][^>]*>([\s\S]*?)(?=<div[^>]*class=["'][^"']*s-post-nav|<aside|<footer)/i,
     /class=["'][^"']*wp-block-post-content[^"']*["'][^>]*>([\s\S]*?)(?=<div[^>]*(?:id=["']jp-post-flair|\bwp-block-query\b)|<\/div>\s*<\/div>\s*<div[^>]*wp-block-column)/i,
+    // Elementor (Quartier Libre) : widget thème « Post Content »
+    /class=["'][^"']*elementor-widget-theme-post-content[^"']*["'][\s\S]{0,400}?class=["'][^"']*elementor-widget-container[^"']*["'][^>]*>([\s\S]{80,60000}?)(?=<div[^>]*class=["'][^"']*elementor-element[^"']*elementor-widget(?!-theme-post-content)|<div[^>]*elementor-location-footer|<\/main)/i,
+    /class=["'][^"']*elementor-widget-theme-post-content[^"']*["'][\s\S]{0,200}?>([\s\S]{80,60000}?)(?=<div[^>]*class=["'][^"']*elementor-element[^"']*elementor-widget(?!-theme-post-content)|<\/main)/i,
     /<article[^>]*>([\s\S]*?)<\/article>/i,
     /class=["'][^"']*entry-content[^"']*["'][^>]*>([\s\S]*?)<\/div>/i,
     /class=["'][^"']*post-content[^"']*["'][^>]*>([\s\S]*?)<\/div>/i,
@@ -228,6 +231,18 @@ function articleImageRegions(html = '') {
     );
     if (featured) chunks.push(featured[0]);
   }
+
+  // Elementor — image à la une (souvent hors entry-content)
+  const elFeatured = html.match(
+    /class=["'][^"']*elementor-widget-theme-post-featured-image[^"']*["'][\s\S]{0,4000}?(?:<\/div>\s*){2,4}/i,
+  );
+  if (elFeatured) chunks.push(elFeatured[0]);
+
+  // Widgets image Elementor dans la zone principale (avant footer / sidebar)
+  const elMain = html.match(
+    /class=["'][^"']*elementor-location-single[^"']*["'][\s\S]{0,120000}?(?=<div[^>]*elementor-location-footer|class=["'][^"']*elementor-location-footer)/i,
+  );
+  if (elMain && elMain[0].length > 200) chunks.push(elMain[0]);
 
   return chunks.join('\n');
 }
@@ -261,7 +276,7 @@ function toAbsoluteImageUrl(raw = '', baseUrl = '') {
   }
 }
 
-/** The Link (ExpressionEngine) : RSS 690×460 → page 900×600 ou original. */
+/** The Link (ExpressionEngine) / WordPress : vignette → pleine résolution. */
 function upgradeCmsImageUrl(raw = '') {
   const src = String(raw || '').trim();
   if (!src) return '';
@@ -283,6 +298,10 @@ function upgradeCmsImageUrl(raw = '') {
   const hiRes = src.replace(/_(\d{2,3})_(\d{2,3})_\d+(\.[a-z]{3,4})$/i, '_900_600_90$3');
   if (hiRes !== src) out.push(hiRes);
 
+  // WordPress intermediate size : name-1024x574.jpg → name.jpg
+  const wpSized = src.replace(/-\d{3,4}x\d{3,4}(\.[a-z]{3,4})(?:$|\?)/i, '$1');
+  if (wpSized !== src) out.push(wpSized.split('?')[0]);
+
   const wp = normalizeWpContentImageUrl(src);
   if (wp && wp !== src) out.push(wp);
 
@@ -291,13 +310,29 @@ function upgradeCmsImageUrl(raw = '') {
 
 /** src réel d'une balise <img>, y compris chargement paresseux (Elementor, etc.). */
 function imgTagSrc(tag = '') {
-  for (const attr of ['data-lazy-src', 'data-src', 'data-orig-file', 'src']) {
+  for (const attr of ['data-lazy-src', 'data-src', 'data-orig-file', 'data-large_image', 'src']) {
     const m = tag.match(new RegExp(`${attr}=["']([^"']+)["']`, 'i'));
     if (!m) continue;
     const val = m[1].trim();
     // Placeholder inline des thèmes lazy-load : passer à l'attribut suivant.
-    if (attr === 'src' && /^data:image\//i.test(val)) continue;
+    if (/^data:image\//i.test(val)) continue;
     if (val) return val;
+  }
+  // Repli srcset : prendre la plus large candidate
+  const srcset = tag.match(/\bsrcset=["']([^"']+)["']/i);
+  if (srcset) {
+    let best = '';
+    let bestW = 0;
+    for (const part of srcset[1].split(',')) {
+      const bits = part.trim().split(/\s+/);
+      if (!bits[0] || /^data:image\//i.test(bits[0])) continue;
+      const w = parseInt((bits[1] || '').replace(/w$/i, ''), 10) || 0;
+      if (w >= bestW) {
+        bestW = w;
+        best = bits[0];
+      }
+    }
+    if (best) return best;
   }
   return '';
 }
