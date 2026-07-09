@@ -332,7 +332,9 @@ html[data-script-dir="rtl"] .wordmark-full {
 .tuner {
   position: sticky;
   top: 0;
-  z-index: 50;
+  /* Au-dessus du fil / bouton traduction : le popover volume sort sous la barre
+     et ne doit pas passer sous .translate-control (même z-index + DOM plus bas). */
+  z-index: 100;
   background: var(--tuner-bg);
   color: #fff;
   box-shadow: 0 1px 0 rgba(0,0,0,0.3), 0 6px 22px -16px rgba(0,0,0,0.7);
@@ -1042,7 +1044,8 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
     position: absolute;
     top: calc(100% + 10px);
     right: 0;
-    z-index: 60;
+    /* Au sein du tuner (z-index 100) : au-dessus des autres contrôles du synthé */
+    z-index: 20;
     box-sizing: border-box;
     width: min(300px, calc(100vw - 20px));
     min-width: 0;
@@ -1375,9 +1378,10 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
 .translate-control {
   position: relative;
   flex-shrink: 0;
-  /* Le menu est en position:fixed (JS) : ne pas le clipper ici. */
+  /* Le menu est en position:fixed (JS) : ne pas le clipper ici.
+     Pas de z-index élevé ici : ça passait par-dessus le popover volume mobile. */
   overflow: visible;
-  z-index: 50;
+  z-index: auto;
 }
 .translate-toggle {
   font-family: var(--sans);
@@ -1430,7 +1434,8 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
  */
 .translate-menu {
   position: fixed;
-  z-index: 80;
+  /* Au-dessus du tuner sticky (100) quand le menu langue est ouvert */
+  z-index: 120;
   box-sizing: border-box;
   min-width: 240px;
   width: max-content;
