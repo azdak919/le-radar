@@ -2361,9 +2361,17 @@ async function loadNews() {
     news.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
     assignSourceColors();
     if (data.updated) {
-      // updatedSlot = heure de passe planifiée du bot (horaire publié) ;
-      // repli sur l'heure réelle pour les exécutions hors horaire.
-      const d = new Date(data.updatedSlot || data.updated);
+      // Heure réelle de la dernière écriture de news.json.
+      // updatedSlot (passe planifiée) n'est utilisé que s'il est proche de l'heure
+      // réelle — sinon on affichait encore « 12 h 00 » à 15 h 48 après un filet
+      // ou une passe manuelle plus récente.
+      const actual = new Date(data.updated);
+      const slot = data.updatedSlot ? new Date(data.updatedSlot) : null;
+      const slotOk = slot
+        && !Number.isNaN(slot.getTime())
+        && actual - slot >= 0
+        && actual - slot <= 45 * 60 * 1000;
+      const d = slotOk ? slot : actual;
       NEWS_UPDATED.textContent = `mis à jour ${formatStamp(d)}`;
     }
   } catch (e) {
