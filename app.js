@@ -2925,12 +2925,11 @@ const CONTINGENCY_MAX_SESSIONS_BACK = FRESHNESS_SESSION_COUNT - 1;
  * dans la session en cours — on accepte leur dernier article des 2 sessions précédentes.
  */
 const AUTUMN_GRACE_END_MONTH = 10; /* novembre inclus */
-/* feature / compact un peu plus longs : la vignette laisse de la hauteur
-   à côté de la photo — le CSS line-clamp complète le gabarit. */
-const BRIEF_LIMITS = { lead: 720, feature: 560, compact: 400, standard: 170 };
+/* Vedettes (feature) = même budget / sources d'extrait que « À la une ». */
+const BRIEF_LIMITS = { lead: 720, feature: 720, compact: 400, standard: 170 };
 const LEAD_BRIEF_MIN_CHARS = 160;
 const BRIEF_COMPACT_MIN_CHARS = 150;
-const FEATURE_BRIEF_MIN_CHARS = 220;
+const FEATURE_BRIEF_MIN_CHARS = LEAD_BRIEF_MIN_CHARS;
 
 function articleKey(item) {
   return item.link || `${item.source}::${item.date}::${item.title}`;
@@ -3309,22 +3308,21 @@ function createArticle(item, role = 'standard') {
   const fresh = d ? (Date.now() - d) < 120 * 60000 : false;
   const { author: rawAuthor, body } = splitByline(item);
   const displayAuthor = resolveDisplayAuthor(item, rawAuthor);
-  const leadBody = role === 'lead'
+  /* Vedettes : même règles de contenu que la une (leadExcerpt, longueur, minimum). */
+  const isLeadLikeBrief = role === 'lead' || role === 'feature';
+  const leadBody = isLeadLikeBrief
     ? (item.leadExcerpt || body || item.excerpt || '')
     : body;
   let { text: brief, truncated: briefTruncated } = resolveBrief(item, leadBody, role);
-  if (role === 'lead' && !brief) {
+  if (isLeadLikeBrief && !brief) {
     ({ text: brief, truncated: briefTruncated } = resolveBrief(item, item.excerpt || body, role));
   }
-  if (role === 'lead' && brief) {
+  if (isLeadLikeBrief && brief) {
     ({ text: brief, truncated: briefTruncated } = ensureLeadBriefMinLines(brief, briefTruncated, item));
     const fullSource = sanitizeBriefBody(leadBody);
     if (fullSource.length > brief.length + 12 || (brief.length >= 100 && item.link)) {
       briefTruncated = true;
     }
-  }
-  if (role === 'feature' && brief) {
-    ({ text: brief, truncated: briefTruncated } = ensureFeatureBriefMinLines(brief, briefTruncated, item));
   }
   if (role === 'compact' && brief) {
     ({ text: brief, truncated: briefTruncated } = ensureCompactBriefMinLines(brief, briefTruncated, item));
@@ -4300,30 +4298,12 @@ function compactBriefSource(item) {
 }
 
 function featureBriefSource(item) {
-  const { author, body } = splitByline(item);
-  return stripLeadingByline(sanitizeBriefBody(body || item.excerpt || ''), author);
+  /* Aligné sur la une : leadExcerpt en priorité. */
+  return leadBriefSource(item);
 }
 
 function ensureFeatureBriefMinLines(brief, truncated, item) {
-  const { author } = splitByline(item);
-  brief = stripLeadingByline(brief, author);
-
-  if (brief.length >= FEATURE_BRIEF_MIN_CHARS) {
-    const full = featureBriefSource(item);
-    if (full.length > brief.length + 12) truncated = true;
-    return { text: brief, truncated };
-  }
-
-  const fallback = featureBriefSource(item);
-  if (fallback.length > brief.length) {
-    const extended = prepareBrief(fallback, 'feature');
-    if (extended.text.length > brief.length) {
-      brief = stripLeadingByline(extended.text, author);
-      truncated = extended.truncated;
-    }
-  }
-  if (fallback.length > brief.length + 12) truncated = true;
-  return { text: brief, truncated };
+  return ensureLeadBriefMinLines(brief, truncated, item);
 }
 
 function ensureCompactBriefMinLines(brief, truncated, item) {
@@ -4411,7 +4391,7 @@ function resolveBrief(item, body, role) {
   for (const raw of [body, String(item.excerpt || '')]) {
     const result = prepareBrief(raw, role);
     if (result.text) {
-      if (role === 'compact' || role === 'feature') {
+      if (role === 'compact') {
         const full = sanitizeBriefBody(raw);
         if (full.length > 95 || full.length > result.text.length + 12) {
           result.truncated = true;
