@@ -1,53 +1,156 @@
 {
-  "updatedAt": "2026-07-09T13:51:21.212Z",
+  "updatedAt": "2026-07-09T16:22:14.863Z",
+  "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
+      "current": null,
+      "next": {
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+      },
+      "track": "",
       "showTitle": "",
       "host": "",
-      "source": "stream",
-      "checkedAt": "2026-07-09T13:51:14.239Z"
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-07-09T16:22:05.469Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
-      "showTitle": "",
+      "current": {
+        "title": "Jimmy et Neutron",
+        "source": "api-live",
+        "start": "08:00",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
+        "slug": "jimmy-et-neutron"
+      },
+      "next": {
+        "title": "La collation",
+        "source": "api-live",
+        "start": "09:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/363992.mp3",
+        "slug": "mix-collation"
+      },
+      "track": "",
+      "showTitle": "Jimmy et Neutron",
       "host": "",
-      "source": "stream",
-      "checkedAt": "2026-07-09T13:51:15.352Z"
+      "source": "api-live",
+      "sources": [
+        "api-live"
+      ],
+      "clientPoll": {
+        "type": "cism-v1",
+        "url": "https://admin.cism893.ca/api/v1/live"
+      },
+      "checkedAt": "2026-07-09T16:22:07.046Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
-      "showTitle": "Folk Directions",
+      "current": {
+        "title": "Venus Radio",
+        "source": "api-live",
+        "start": "12:00",
+        "end": "14:00"
+      },
+      "next": {
+        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
+      "track": "",
+      "showTitle": "Venus Radio",
       "host": "",
-      "source": "stream",
-      "checkedAt": "2026-07-09T13:51:17.295Z"
+      "source": "api-live",
+      "sources": [
+        "api-live",
+        "stream"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-07-09T16:22:10.114Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
-      "showTitle": "",
+      "current": {
+        "title": "The Power Hour",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/the-power-hour"
+      },
+      "next": {
+        "title": "What's Happening in NDG",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/whats-happening-in-ndg"
+      },
+      "track": "",
+      "showTitle": "The Power Hour",
       "host": "",
-      "source": "stream",
-      "checkedAt": "2026-07-09T13:51:19.232Z"
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-07-09T16:22:11.750Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "showTitle": "",
+      "current": {
+        "title": "À nous le futur",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "20:00"
+      },
+      "next": {
+        "title": "After 5@8",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "00:00"
+      },
+      "track": "",
+      "showTitle": "À nous le futur",
       "host": "",
-      "source": "stream",
-      "checkedAt": "2026-07-09T13:51:19.856Z"
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-07-09T16:22:12.664Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "showTitle": "Ikualajut",
-      "host": "Tanya Tagaq",
+      "current": {
+        "title": "Rotten",
+        "source": "api-live",
+        "host": "Gia Margaret",
+        "url": "https://www.choq.ca/assets/playlist/palmares-site-web.jpg"
+      },
+      "next": null,
+      "track": "Gia Margaret - Rotten",
+      "showTitle": "Rotten",
+      "host": "Gia Margaret",
       "source": "api-live",
-      "checkedAt": "2026-07-09T13:51:20.811Z"
+      "sources": [
+        "api-live",
+        "stream"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-07-09T16:22:14.513Z"
     }
   }
 }
