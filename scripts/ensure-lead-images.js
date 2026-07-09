@@ -29,7 +29,7 @@ const {
   sleep,
 } = require('./article-image-lib');
 const { findStockPhoto, cleanCreatorName, stockStillFits } = require('./stock-photo-lib');
-const { pickCampusPhoto, hasCampusBank } = require('./campus-photo-bank');
+const { pickCampusPhoto, hasCampusBank, diversifyCampusBankItems } = require('./campus-photo-bank');
 const { pruneToFreshWindow, loadSourceRegistryMap, getBotHints } = require('./source-retention-lib');
 
 
@@ -163,7 +163,7 @@ function isSubstackItem(item = {}) {
  * ni Openverse ni campus (c'est ce qui donnait des photos « toutes fausses »
  * pour The Concordian).
  */
-async function applyStockPhoto(item, sourceMap = new Map()) {
+async function applyStockPhoto(item, sourceMap = new Map(), { avoidCampusUrls = null } = {}) {
   if (await photoIsLeadReady(item)) return false;
 
   const hints = imageHintsFor(item, sourceMap);
@@ -207,11 +207,14 @@ async function applyStockPhoto(item, sourceMap = new Map()) {
   if (item.image && hasSourcePhoto(item, sourceMap)) return false;
   if (!allowCampus) return false;
 
-  const campus = pickCampusPhoto(item);
+  const campus = pickCampusPhoto(item, {
+    avoidUrls: avoidCampusUrls || [],
+  });
   if (!campus?.stockImage) return false;
   if (doUpdate) {
     applyPhotoFields(item, campus);
     item.leadImageReady = false;
+    if (avoidCampusUrls && campus.stockImage) avoidCampusUrls.add(campus.stockImage);
   }
   return true;
 }
@@ -355,6 +358,13 @@ async function main() {
     return (Date.parse(b.item.date) || 0) - (Date.parse(a.item.date) || 0);
   });
 
+  // URLs campus déjà utilisées (y compris hors file d'attente) pour varier.
+  const usedCampusUrls = new Set(
+    items
+      .filter((i) => i.imageProvider === 'campus-bank' && i.stockImage)
+      .map((i) => i.stockImage),
+  );
+
   for (const { item } of stockQueue.slice(0, STOCK_SEARCH_LIMIT)) {
     if (await photoIsLeadReady(item)) {
       if (doUpdate) clearLegacyFallback(item);
@@ -363,7 +373,7 @@ async function main() {
 
     stockSearches += 1;
     const beforeProvider = item.imageProvider;
-    const found = await applyStockPhoto(item, sourceMap);
+    const found = await applyStockPhoto(item, sourceMap, { avoidCampusUrls: usedCampusUrls });
     if (found) {
       stockFound += 1;
       if (doUpdate && item.imageProvider === 'campus-bank') campusBankFound += 1;
@@ -382,6 +392,13 @@ async function main() {
       image: item.image || item.stockImage || null,
     });
     await sleep(300);
+  }
+
+  // Répartir les photos campus déjà en place (lot entier) pour éviter
+  // la même entrée sur À la une et En bref d'un même établissement.
+  if (doUpdate) {
+    const diversified = diversifyCampusBankItems(items);
+    if (diversified) console.log(`↻ ${diversified} photo(s) campus répartie(s) (variété)`);
   }
 
   const withPhoto = items.filter((i) => i.image && isCandidateImageUrl(i.image)).length;
