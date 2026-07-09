@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content="LE RADAR – Les journaux et les radios étudiantes du Québec, réunis au même endroit. Le fil de presse des journaux étudiants et le syntoniseur des radios des cégeps et universités. Actualités en continu et écoute en direct. Student media on your radar." />
     <meta name="theme-color" content="#ffffff" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com https://www.youtube.com blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' https: blob:; connect-src 'self' https: wss: blob:; frame-src https:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com https://translate.google.com https://translate.googleapis.com https://www.youtube.com blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.gstatic.com https://translate.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' https: blob:; connect-src 'self' https: wss: blob:; frame-src https:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Le Radar" />
@@ -155,12 +155,48 @@
     <main class="wire">
       <!-- ══════════ SOURCE FILTERS ══════════ -->
       <div class="wire-head">
-        <h2 class="wire-title">Le fil étudiant</h2>
+        <div class="wire-title-group">
+          <h2 class="wire-title">Le fil étudiant</h2>
+          <div class="translate-control" id="translate-control">
+            <button
+              type="button"
+              id="translate-toggle"
+              class="translate-toggle"
+              aria-haspopup="listbox"
+              aria-expanded="false"
+              aria-controls="translate-menu"
+              data-mode="original"
+              title="Ne pas traduire — garder le fil bilingue (FR + EN)"
+            >
+              <span class="translate-toggle__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </span>
+              <span id="translate-label" class="translate-toggle__label">Original</span>
+              <svg class="translate-toggle__chev" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div id="translate-menu" class="translate-menu" role="listbox" aria-label="Langue d'affichage" hidden>
+              <button type="button" role="option" class="translate-menu__opt is-active" data-mode="original" aria-selected="true">
+                <span class="translate-menu__name">Original</span>
+                <span class="translate-menu__hint">Bilingue FR + EN</span>
+              </button>
+              <button type="button" role="option" class="translate-menu__opt" data-mode="fr" aria-selected="false">
+                <span class="translate-menu__name">Français</span>
+                <span class="translate-menu__hint">Toute la page</span>
+              </button>
+              <button type="button" role="option" class="translate-menu__opt" data-mode="en" aria-selected="false">
+                <span class="translate-menu__name">English</span>
+                <span class="translate-menu__hint">Whole page</span>
+              </button>
+            </div>
+          </div>
+        </div>
         <div class="wire-status">
           <span id="news-count">— articles</span>
           <span id="news-updated" class="news-updated"></span>
         </div>
       </div>
+      <!-- Moteur Google Translate (masqué) — piloté par translate.js -->
+      <div id="google_translate_element" class="sr-only" aria-hidden="true"></div>
 
       <div id="news-filters-panel" class="filters-panel">
         <button type="button" id="filters-compact" class="filters-compact" hidden aria-expanded="false" aria-controls="news-filters">
@@ -271,6 +307,7 @@
 
     <script src="cast.js" defer></script>
     <script src="mobile-playback.js" defer></script>
+    <script src="translate.js" defer></script>
     <script src="app.js" defer></script>
   </body>
 </html>
