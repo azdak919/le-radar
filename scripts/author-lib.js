@@ -41,13 +41,20 @@ function canonicalizeEditorialAuthor(name = '') {
   return '';
 }
 
-const CONTRIBUTOR_DASH = '(?:[–—\\-]|&#8211;|&ndash;)';
+const CONTRIBUTOR_DASH = '(?:[–—\\-]|&#8211;|&ndash;|&mdash;)';
+/** Rôles de byline : Staff Writer, Sports Editor, Director of …, etc. */
+const CONTRIBUTOR_ROLE = '(?:'
+  + 'Contributor|Staff Writer|Staff|Reporter|Columnist|Correspondent'
+  + '|(?:[A-Za-z]+\\s+)*(?:Editor(?:-in-Chief)?|Writer)'
+  + '|Director of [A-Za-z\\s&\'’.-]{2,40}'
+  + '|Photographer|Illustrator'
+  + ')';
 const CONTRIBUTOR_BYLINE_RE = new RegExp(
-  `^([\\p{Lu}][\\p{L}'’.\\-]+(?:\\s+[\\p{Lu}][\\p{L}'’.\\-]+){0,3})\\s*${CONTRIBUTOR_DASH}\\s*(?:Contributor|Staff Writer)\\b`,
+  `^([\\p{Lu}][\\p{L}'’.\\-]+(?:\\s+[\\p{Lu}][\\p{L}'’.\\-]+){0,3})\\s*${CONTRIBUTOR_DASH}\\s*${CONTRIBUTOR_ROLE}\\b`,
   'iu',
 );
 const CONTRIBUTOR_HTML_RE = new RegExp(
-  `<strong>\\s*([\\p{Lu}][\\p{L}'’.\\-]+(?:\\s+[\\p{Lu}][\\p{L}'’.\\-]+){0,3})\\s*${CONTRIBUTOR_DASH}\\s*(?:Contributor|Staff Writer)\\s*<\\/strong>`,
+  `<strong>\\s*([\\p{Lu}][\\p{L}'’.\\-]+(?:\\s+[\\p{Lu}][\\p{L}'’.\\-]+){0,3})\\s*${CONTRIBUTOR_DASH}\\s*${CONTRIBUTOR_ROLE}\\s*<\\/strong>`,
   'iu',
 );
 
@@ -325,12 +332,50 @@ const BODY_CREDIT_AUTHOR_RE = new RegExp(
 
 function authorFromBodyCredits(text = '') {
   const plain = stripHtml(text);
-  const m = plain.match(BODY_CREDIT_AUTHOR_RE);
-  if (!m) return '';
-  const name = normalizeAuthor(m[1]);
-  if (!name || isJunkAuthorName(name)) return '';
-  if (/^(?:Substack|WordPress|Wix|Squarespace)$/i.test(name)) return '';
-  return name;
+  // Plusieurs crédits possibles : prendre le premier « Written/Produced/… by »
+  // qui n'est pas un crédit artistique (Cover art by …).
+  const re = new RegExp(BODY_CREDIT_AUTHOR_RE.source, 'gu');
+  let m;
+  while ((m = re.exec(plain))) {
+    const name = normalizeAuthor(m[1]);
+    if (!name || isJunkAuthorName(name)) continue;
+    if (/^(?:Substack|WordPress|Wix|Squarespace|ASFA)$/i.test(name)) continue;
+    // Rejeter si le match est précédé de Cover/Art (faux positif)
+    const before = plain.slice(Math.max(0, m.index - 12), m.index);
+    if (/\b(?:cover|art|photo|graphics?)\s*$/i.test(before)) continue;
+    return name;
+  }
+  return '';
+}
+
+/**
+ * The Campus / thèmes block : « Owen Kitzan – Sports Editor » en tête d'article.
+ * Le compte WP est souvent le nom du journal ; la vraie byline est dans le corps.
+ */
+function authorFromOpeningRoleLine(html = '', lang = 'fr') {
+  if (!html) return '';
+  // Zone contenu (corps), pas le header WP
+  let region = '';
+  const bodyMatch = html.match(
+    /class=["'][^"']*(?:entry-content|wp-block-post-content|post-content|article-content)[^"']*["'][^>]*>([\s\S]{0,2500})/i,
+  );
+  if (bodyMatch) region = bodyMatch[1];
+  else {
+    const art = html.match(/<article[^>]*>([\s\S]{0,3000})/i);
+    region = art ? art[1] : html.slice(0, 8000);
+  }
+  const plain = stripHtml(region)
+    .replace(/\u00a0/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (!plain) return '';
+
+  const m = plain.match(CONTRIBUTOR_BYLINE_RE);
+  if (m) {
+    const name = normalizeAuthor(m[1]);
+    if (name && !isEditorialPlaceholder(name, lang)) return name;
+  }
+  return '';
 }
 
 function normalizeArticleUrl(link = '') {
@@ -466,9 +511,13 @@ function authorFromArticleHtml(html = '', lang = 'fr', hints = {}, sourceName = 
   }
 
   // Crédit de production dans le corps (« Produced by X », « Hosted by X »…) —
-  // seul signal nominal des billets Substack signés au nom de la publication.
+  // signal nominal des billets Substack signés au nom de la publication.
   const bodyCredit = authorFromBodyCredits(html);
-  if (bodyCredit) candidates.push({ author: bodyCredit, trust: 70 });
+  if (bodyCredit) candidates.push({ author: bodyCredit, trust: 88 });
+
+  // « Prénom Nom – Sports Editor » en tête d'article (The Campus, etc.)
+  const openingRole = authorFromOpeningRoleLine(html, l);
+  if (openingRole) candidates.push({ author: openingRole, trust: 103 });
 
   const sourceKey = normAuthorKey(String(sourceName || ''));
   for (const { author } of candidates.sort((a, b) => b.trust - a.trust)) {
@@ -478,6 +527,10 @@ function authorFromArticleHtml(html = '', lang = 'fr', hints = {}, sourceName = 
       : expandAuthorName(author, l);
     if (!name || isEditorialPlaceholder(name, l)) continue;
     if (sourceKey && normAuthorKey(name) === sourceKey) continue;
+    // Compte technique WP = nom du média (ex. « The Campus », « The Concordian »)
+    if (sourceKey && (normAuthorKey(name).includes(sourceKey) || sourceKey.includes(normAuthorKey(name)))) {
+      if (name.split(/\s+/).length <= 3) continue;
+    }
     return name;
   }
   return '';
