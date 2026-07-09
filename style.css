@@ -2069,22 +2069,20 @@ html[data-translate-busy="1"] .translate-toggle {
   max-width: none;
 }
 
+/* Vedettes : même règles de contenu (extrait) que la une — pas de line-clamp. */
 .article--feature .article-brief {
-  line-height: 1.5;
+  font-size: 1.08rem;
+  line-height: 1.6;
+  max-width: none;
 }
-.news-hero .article--feature .article-brief-text {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
-}
-.news-hero .article--feature .article-brief.is-truncated .article-brief-text {
-  -webkit-line-clamp: 3;
-}
-/* Vedettes avec photo : combler la hauteur vignette + crédit */
+.news-hero .article--feature .article-brief-text,
+.news-hero .article--feature .article-brief.is-truncated .article-brief-text,
 .news-hero .article--feature.article--thumb.has-image .article-brief-text,
 .news-hero .article--feature.article--thumb.has-image .article-brief.is-truncated .article-brief-text {
-  -webkit-line-clamp: 5;
+  display: inline;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+  -webkit-box-orient: initial;
 }
 
 .article--compact {
@@ -2817,11 +2815,9 @@ html[data-translate-busy="1"] .translate-toggle {
   .article--thumb.has-image .article-title {
     padding-right: 0;
   }
-  /* Mobile : 4 lignes (vignette un peu plus petite) ; 5 dès 601px via règles de base */
+  /* Mobile En bref + photo : 4 lignes (vignette un peu plus petite) */
   .brief-rail .article--compact.article--thumb.has-image .article-brief-text,
-  .brief-rail .article--compact.article--thumb.has-image .article-brief.is-truncated .article-brief-text,
-  .news-hero .article--feature.article--thumb.has-image .article-brief-text,
-  .news-hero .article--feature.article--thumb.has-image .article-brief.is-truncated .article-brief-text {
+  .brief-rail .article--compact.article--thumb.has-image .article-brief.is-truncated .article-brief-text {
     -webkit-line-clamp: 4;
   }
 }
@@ -3381,20 +3377,22 @@ html[data-translate-busy="1"] .translate-toggle {
     min-height: 0;
   }
 
+  /* Vedettes bureau : extrait complet comme la une (pas de clamp) */
   .news-hero .article--feature .article-brief {
     display: block;
     overflow: visible;
+    font-size: 1.08rem;
+    line-height: 1.58;
+    max-width: none;
+    min-height: 0;
   }
 
-  .news-hero .article--feature .article-brief-text {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
-  }
-
+  .news-hero .article--feature .article-brief-text,
   .news-hero .article--feature .article-brief.is-truncated .article-brief-text {
-    -webkit-line-clamp: 3;
+    display: inline;
+    -webkit-line-clamp: unset;
+    overflow: visible;
+    -webkit-box-orient: initial;
   }
 
   .site-foot {
