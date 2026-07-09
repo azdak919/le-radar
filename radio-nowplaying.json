@@ -1,33 +1,33 @@
 {
-  "updatedAt": "2026-07-09T20:20:41.417Z",
+  "updatedAt": "2026-07-09T21:59:24.078Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
-      },
-      "next": {
         "title": "Les Arshitechs du Son",
         "source": "schedule",
         "start": "17:30",
         "end": "18:30",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "Vendredi Nostalgie",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/vendredi-nostalgie/"
+      },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-09T20:20:31.420Z"
+      "checkedAt": "2026-07-09T21:59:15.914Z"
     },
     "cism": {
       "id": "cism",
@@ -57,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-09T20:20:33.271Z"
+      "checkedAt": "2026-07-09T21:59:17.403Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Positive Vibes",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "Off The Hour: La Voix des Immigrants",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Upstage",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Positive Vibes",
+      "showTitle": "Off The Hour: La Voix des Immigrants",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,7 +83,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-09T20:20:36.420Z"
+      "checkedAt": "2026-07-09T21:59:19.493Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -110,7 +110,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-09T20:20:38.217Z"
+      "checkedAt": "2026-07-09T21:59:20.950Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,27 +135,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-09T20:20:38.736Z"
+      "checkedAt": "2026-07-09T21:59:21.671Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Atlas",
+        "title": "Take Time",
         "source": "api-live",
-        "host": "Battles"
+        "host": "The Books"
       },
       "next": null,
-      "track": "Battles - Atlas",
-      "showTitle": "Atlas",
-      "host": "Battles",
+      "track": "The Books - Take Time",
+      "showTitle": "Take Time",
+      "host": "The Books",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-09T20:20:41.067Z"
+      "checkedAt": "2026-07-09T21:59:23.727Z"
     }
   }
 }
