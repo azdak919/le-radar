@@ -3,6 +3,7 @@
  */
 
 const https = require('https');
+const http = require('http');
 
 const DEFAULT_TIMEOUT = 12000;
 
@@ -103,39 +104,57 @@ async function fetchText(url, redirects = 3, timeout = DEFAULT_TIMEOUT) {
 
 function fetchBinaryPrefix(url, maxBytes = 65536, redirects = 3, timeout = DEFAULT_TIMEOUT) {
   return new Promise((resolve) => {
-    const req = https.get(
-      url,
-      {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (compatible; REQ-NewsBot/1.0)',
-          Accept: 'image/*,*/*',
+    // Choix du module par protocole ; une redirection (Location) http:// ou une
+    // URL malformée ne doit jamais faire planter tout l'enrichissement (le
+    // https.get brut lançait « Protocol http: not supported » → run avorté).
+    let mod;
+    try {
+      const { protocol } = new URL(url);
+      if (protocol === 'https:') mod = https;
+      else if (protocol === 'http:') mod = http;
+      else return resolve(null);
+    } catch {
+      return resolve(null);
+    }
+
+    let req;
+    try {
+      req = mod.get(
+        url,
+        {
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (compatible; REQ-NewsBot/1.0)',
+            Accept: 'image/*,*/*',
+          },
+          timeout,
         },
-        timeout,
-      },
-      (res) => {
-        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location && redirects > 0) {
-          res.resume();
-          const next = new URL(res.headers.location, url).toString();
-          return resolve(fetchBinaryPrefix(next, maxBytes, redirects - 1, timeout));
-        }
-        if (res.statusCode >= 400) {
-          res.resume();
-          return resolve(null);
-        }
-        const chunks = [];
-        let size = 0;
-        res.on('data', (chunk) => {
-          if (size >= maxBytes) return;
-          chunks.push(chunk);
-          size += chunk.length;
-          if (size >= maxBytes) res.destroy();
-        });
-        res.on('end', () => resolve(Buffer.concat(chunks)));
-        res.on('close', () => {
-          if (chunks.length) resolve(Buffer.concat(chunks));
-        });
-      },
-    );
+        (res) => {
+          if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location && redirects > 0) {
+            res.resume();
+            const next = new URL(res.headers.location, url).toString();
+            return resolve(fetchBinaryPrefix(next, maxBytes, redirects - 1, timeout));
+          }
+          if (res.statusCode >= 400) {
+            res.resume();
+            return resolve(null);
+          }
+          const chunks = [];
+          let size = 0;
+          res.on('data', (chunk) => {
+            if (size >= maxBytes) return;
+            chunks.push(chunk);
+            size += chunk.length;
+            if (size >= maxBytes) res.destroy();
+          });
+          res.on('end', () => resolve(Buffer.concat(chunks)));
+          res.on('close', () => {
+            if (chunks.length) resolve(Buffer.concat(chunks));
+          });
+        },
+      );
+    } catch {
+      return resolve(null);
+    }
     req.on('error', () => resolve(null));
     req.on('timeout', () => {
       req.destroy();
