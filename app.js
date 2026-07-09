@@ -3149,21 +3149,16 @@ function isArticlePicked(item, picks) {
 }
 
 /**
- * Hero : 1 « À la une » = article le plus récent AYANT une photo créditée,
- * puis 2 features d'autres institutions, également avec photo créditée.
- * Session en cours d'abord ; bandes précédentes si slots vides. La une, les
- * vedettes et l'En bref ne montrent jamais un article sans photo ni crédit.
+ * Hero : 1 « À la une » = article le plus récent (toujours), puis 2 features
+ * d'autres institutions (préférence photos). Session en cours d'abord ;
+ * bandes précédentes si slots vides. Ne jamais rétrograder la une pour
+ * une photo / un extrait (le rendu gère le repli SVG).
  */
 function pickHeroSpotlight(items, referenceDate = new Date()) {
   const sorted = sortByDateDesc(items);
   if (!sorted.length) return { items: [], contingencyBand: 0 };
 
-  /* La une : le plus récent avec une photo créditée (seuils « lead » stricts,
-     sinon repli sur les seuils vignette). Jamais de repli SVG en une. */
-  const lead = sorted.find((item) => hasCreditedPhoto(item, 'lead'))
-    || sorted.find((item) => hasCreditedPhoto(item, 'feature'));
-  if (!lead) return { items: [], contingencyBand: 0 };
-
+  const lead = sorted[0];
   const picks = [lead];
   const usedInsts = new Set([institutionKey(lead)]);
   let contingencyBand = 0;
@@ -3171,11 +3166,9 @@ function pickHeroSpotlight(items, referenceDate = new Date()) {
 
   const fillFeatures = (pool, band) => {
     if (picks.length >= HERO_SPOTLIGHT_MAX) return;
-    /* Vedettes : uniquement des articles avec photo créditée, plus récents d'abord. */
+    /* preferPhotoFirst = récents avec photo d’abord, puis récents sans. */
     const available = preferPhotoFirst(
-      pool.filter(
-        (item) => !isArticlePicked(item, picks) && hasCreditedPhoto(item, 'feature'),
-      ),
+      pool.filter((item) => !isArticlePicked(item, picks)),
     );
     const batch = pickSpotlightSlots(
       available,
@@ -3200,7 +3193,6 @@ function pickHeroSpotlight(items, referenceDate = new Date()) {
     const missingSourcePool = preferPhotoFirst(sorted.filter((item) => {
       if (isArticlePicked(item, picks)) return false;
       if (representedSources.has(sourceKey(item))) return false;
-      if (!hasCreditedPhoto(item, 'feature')) return false;
       if (sessionBandPool([item], referenceDate, 0).length) return false;
       return isWithinFreshnessWindow(item, referenceDate);
     }));
@@ -3234,10 +3226,7 @@ function fillBriefFromSessionPool(eligible, heroSources, state) {
     return true;
   };
 
-  /* En bref : uniquement des articles avec photo créditée (jamais de repli SVG). */
-  const pool = eligible.filter(
-    (item) => !usedKeys.has(articleKey(item)) && hasCreditedPhoto(item, 'compact'),
-  );
+  const pool = eligible.filter((item) => !usedKeys.has(articleKey(item)));
   const latestBySource = latestPerKey(pool, sourceKey);
 
   [...latestBySource.entries()]
@@ -3640,24 +3629,6 @@ function hasStockPhoto(item, role = 'lead') {
 
 function hasDisplayImage(item, role = 'lead') {
   return hasUsablePhoto(item, role) || hasStockPhoto(item, role) || isFallbackImageUrl(item?.fallbackImage);
-}
-
-/**
- * Vrai seulement si l'article s'affichera avec une VRAIE photo ET son crédit
- * pour ce rôle — photo source (crédit média toujours écrit) ou banque
- * thématique créditée. Filtre dur pour la une / vedettes / En bref : ces
- * sections ne doivent jamais montrer un repli SVG généré (sans photo ni crédit).
- * Le raisonnement suit resolveDisplayImage() + showArticleImage().
- */
-function hasCreditedPhoto(item, role = 'lead') {
-  const { kind } = resolveDisplayImage(item, { role });
-  // kind 'photo' : showArticleImage écrit toujours un crédit dès qu'on a
-  // sourceImageCredit ou, à défaut, le nom du média (item.source).
-  if (kind === 'photo') return !!(item?.sourceImageCredit || item?.source);
-  // kind 'stock' : crédit seulement si on connaît l'auteur / la source du visuel.
-  if (kind === 'stock') return !!(item?.imageCredit || item?.imageSourceUrl);
-  // 'fallback' / 'none' → repli SVG, pas de photo créditée.
-  return false;
 }
 
 function darkenHex(hex, amount = 0.32) {
