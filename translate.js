@@ -64,7 +64,8 @@
       short: 'IU',
       title: 'Inuktut (alphabet latin) — Inuit du Canada',
       hint: 'Inuktitut · latin',
-      goog: 'iu',
+      // Code gtx sensible à la casse : iu-Latn = alphabet latin ; iu = syllabiques.
+      goog: 'iu-Latn',
       group: 'indigenous',
     },
     /* —— Population étudiante internationale au Québec / Canada ——
@@ -548,7 +549,9 @@
     if (mode === 'zh') return 'zh-CN';
     if (mode === 'zh-tw') return 'zh-TW';
     if (mode === 'he') return 'iw';
-    if (mode === 'iu-latn') return 'iu';
+    // iu-Latn (L majuscule) = orthographe latine ; iu = syllabaires canadiens
+    if (mode === 'iu-latn') return 'iu-Latn';
+    if (mode === 'iu') return 'iu';
     if (mode === 'fil') return 'tl';
     if (isValidLangCode(mode)) return mode;
     return null;
@@ -559,7 +562,10 @@
       zh: 'zh-CN',
       'zh-tw': 'zh-TW',
       he: 'iw',
-      'iu-latn': 'iu',
+      // Conserver la casse exacte exigée par gtx
+      'iu-latn': 'iu-Latn',
+      'iu-Latn': 'iu-Latn',
+      iu: 'iu',
       tl: 'tl', // Tagalog / Filipino
       fil: 'tl',
     };
@@ -794,7 +800,7 @@
     if (el.classList?.contains('notranslate')) return true;
     if (el.getAttribute?.('translate') === 'no') return true;
     if (SKIP_CLASS_RE.test(el.className || '')) return true;
-    if (el.closest?.('.notranslate, [translate="no"], .translate-control, .sr-only, .article-source, .filter-btn__name, .article-inst')) {
+    if (el.closest?.('.notranslate, [translate="no"], .translate-control, .sr-only, .article-source, .article-author, .filter-btn__name, .article-inst')) {
       return true;
     }
     return false;

@@ -32,6 +32,7 @@
       "short": "IU",
       "title": "Inuktitut (syllabiques) — Inuktut, Nunavik et Inuit du Canada",
       "hint": "Inuktitut · syllabiques",
+      "requireScript": "syllabics",
       "probeCodes": {
         "gtx": [
           "iu",
@@ -45,14 +46,7 @@
       "unavailable": false,
       "engine": "gtx",
       "goog": "iu",
-      "lastProbe": {
-        "at": "2026-07-09T19:36:19.775Z",
-        "gtx": true,
-        "gtxCode": "iu",
-        "microsoft": true,
-        "libretranslate": false,
-        "sample": "ᕼᐊᓘ ᐃᓕᓐᓂᐊᖅᑏᑦ. ᑐᙵᓱᒋᑦ ᐃᓕᓐᓂᐊᖅᑏᑦ ᑐᓴᒐᒃᓴᖁᑎᖏᓐᓄᑦ ᑯᐸᐃᒃ ᓯᓚᑦᑐᖅᓴᕐᕕᒡᔪᐊᖏᓐᓂᑦ ᐊᒻᒪ ᓯᓚᑦᑐᖅᓴᕐᕕᖕᓂᑦ."
-      }
+      "lastProbe": null
     },
     {
       "id": "iu-latn",
@@ -60,10 +54,9 @@
       "short": "IU",
       "title": "Inuktut (alphabet latin) — Inuit du Canada",
       "hint": "Inuktitut · latin",
+      "requireScript": "latin",
       "probeCodes": {
         "gtx": [
-          "iu",
-          "ike",
           "iu-Latn",
           "ike-Latn"
         ],
@@ -75,15 +68,8 @@
       "enabled": true,
       "unavailable": false,
       "engine": "gtx",
-      "goog": "iu",
-      "lastProbe": {
-        "at": "2026-07-09T19:36:21.535Z",
-        "gtx": true,
-        "gtxCode": "iu",
-        "microsoft": true,
-        "libretranslate": false,
-        "sample": "ᕼᐊᓘ ᐃᓕᓐᓂᐊᖅᑏᑦ. ᑐᙵᓱᒋᑦ ᐃᓕᓐᓂᐊᖅᑏᑦ ᑐᓴᒐᒃᓴᖁᑎᖏᓐᓄᑦ ᑯᐸᐃᒃ ᓯᓚᑦᑐᖅᓴᕐᕕᒡᔪᐊᖏᓐᓂᑦ ᐊᒻᒪ ᓯᓚᑦᑐᖅᓴᕐᕕᖕᓂᑦ."
-      }
+      "goog": "iu-Latn",
+      "lastProbe": null
     },
     {
       "id": "cr",
