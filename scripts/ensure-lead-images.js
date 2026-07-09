@@ -316,55 +316,63 @@ async function main() {
   const stockQueue = [];
   for (let index = 0; index < items.length; index += 1) {
     const item = items[index];
-    const { reject, opts, ok } = isCandidateForItem(item, sourceMap);
+    // Isolation par item : un échec (scrape, probe, parse) ne doit pas avorter
+    // la boucle et empêcher la phase banque/campus des items suivants. L'item
+    // fautif reste éligible au repli campus (poussé dans la file).
+    try {
+      const { reject, opts, ok } = isCandidateForItem(item, sourceMap);
 
-    if (await photoIsLeadReady(item)) {
-      if (doUpdate) {
-        if (hasSourcePhoto(item, sourceMap)) clearStockPhoto(item);
-        await markSourceLeadQuality(item);
-        clearLegacyFallback(item);
-      }
-      continue;
-    }
-
-    if (!item.image || !ok(item.image)) {
-      const resolved = await resolveLeadReadyPhoto(item, reject, opts);
-      if (resolved?.url && doUpdate) {
-        item.image = resolved.url;
-        item.leadImageReady = resolved.leadReady !== false;
-        clearLegacyFallback(item);
-        pageScraped += 1;
-        if (resolved.leadReady !== false) photosRecovered += 1;
-      }
-      if (await photoIsLeadReady(item)) continue;
-    } else if (hasSourcePhoto(item, sourceMap)) {
-      const resolved = await resolveLeadReadyPhoto(item, reject, opts);
-      if (resolved?.url && doUpdate) {
-        const better = resolved.leadReady !== false
-          || resolved.url !== item.image
-          || !item.leadImageReady;
-        if (better) {
-          item.image = resolved.url;
-          item.leadImageReady = resolved.leadReady !== false;
-          clearLegacyFallback(item);
-          // Une vraie photo d'article remplace toujours la banque campus.
-          if (resolved.leadReady !== false || item.imageProvider === 'campus-bank') {
-            clearStockPhoto(item);
-          }
-          pageScraped += 1;
-          if (resolved.leadReady !== false) photosRecovered += 1;
-        }
-      }
       if (await photoIsLeadReady(item)) {
         if (doUpdate) {
-          clearStockPhoto(item);
+          if (hasSourcePhoto(item, sourceMap)) clearStockPhoto(item);
+          await markSourceLeadQuality(item);
           clearLegacyFallback(item);
         }
         continue;
       }
-    }
 
-    stockQueue.push({ item, index });
+      if (!item.image || !ok(item.image)) {
+        const resolved = await resolveLeadReadyPhoto(item, reject, opts);
+        if (resolved?.url && doUpdate) {
+          item.image = resolved.url;
+          item.leadImageReady = resolved.leadReady !== false;
+          clearLegacyFallback(item);
+          pageScraped += 1;
+          if (resolved.leadReady !== false) photosRecovered += 1;
+        }
+        if (await photoIsLeadReady(item)) continue;
+      } else if (hasSourcePhoto(item, sourceMap)) {
+        const resolved = await resolveLeadReadyPhoto(item, reject, opts);
+        if (resolved?.url && doUpdate) {
+          const better = resolved.leadReady !== false
+            || resolved.url !== item.image
+            || !item.leadImageReady;
+          if (better) {
+            item.image = resolved.url;
+            item.leadImageReady = resolved.leadReady !== false;
+            clearLegacyFallback(item);
+            // Une vraie photo d'article remplace toujours la banque campus.
+            if (resolved.leadReady !== false || item.imageProvider === 'campus-bank') {
+              clearStockPhoto(item);
+            }
+            pageScraped += 1;
+            if (resolved.leadReady !== false) photosRecovered += 1;
+          }
+        }
+        if (await photoIsLeadReady(item)) {
+          if (doUpdate) {
+            clearStockPhoto(item);
+            clearLegacyFallback(item);
+          }
+          continue;
+        }
+      }
+
+      stockQueue.push({ item, index });
+    } catch (err) {
+      console.error(`⚠ enrich ignoré (${item.source || '?'}): ${err.message}`);
+      stockQueue.push({ item, index });
+    }
   }
 
   stockQueue.sort((a, b) => {
@@ -385,32 +393,38 @@ async function main() {
   );
 
   for (const { item } of stockQueue.slice(0, STOCK_SEARCH_LIMIT)) {
-    if (await photoIsLeadReady(item)) {
-      if (doUpdate) clearLegacyFallback(item);
-      continue;
-    }
-
-    stockSearches += 1;
-    const beforeProvider = item.imageProvider;
-    const found = await applyStockPhoto(item, sourceMap, { avoidCampusUrls: usedCampusUrls });
-    if (found) {
-      stockFound += 1;
-      if (doUpdate && item.imageProvider === 'campus-bank') campusBankFound += 1;
-      else if (!doUpdate && hasCampusBank(item.institution) && !beforeProvider) {
-        // dry-run : comptage approximatif via pick
+    // Un item défaillant (URL, parse, réseau) ne doit jamais interrompre la
+    // phase banque/campus et priver tous les suivants de leur photo.
+    try {
+      if (await photoIsLeadReady(item)) {
+        if (doUpdate) clearLegacyFallback(item);
+        continue;
       }
-    }
-    if (await photoIsLeadReady(item)) continue;
 
-    gaps.push({
-      title: item.title,
-      link: item.link,
-      reason: found
-        ? (item.imageProvider === 'campus-bank' ? 'campus-bank' : 'stock-too-small')
-        : 'no-stock-match',
-      image: item.image || item.stockImage || null,
-    });
-    await sleep(300);
+      stockSearches += 1;
+      const beforeProvider = item.imageProvider;
+      const found = await applyStockPhoto(item, sourceMap, { avoidCampusUrls: usedCampusUrls });
+      if (found) {
+        stockFound += 1;
+        if (doUpdate && item.imageProvider === 'campus-bank') campusBankFound += 1;
+        else if (!doUpdate && hasCampusBank(item.institution) && !beforeProvider) {
+          // dry-run : comptage approximatif via pick
+        }
+      }
+      if (await photoIsLeadReady(item)) continue;
+
+      gaps.push({
+        title: item.title,
+        link: item.link,
+        reason: found
+          ? (item.imageProvider === 'campus-bank' ? 'campus-bank' : 'stock-too-small')
+          : 'no-stock-match',
+        image: item.image || item.stockImage || null,
+      });
+      await sleep(300);
+    } catch (err) {
+      console.error(`⚠ stock/campus ignoré (${item.source || '?'}): ${err.message}`);
+    }
   }
 
   // Répartir les photos campus déjà en place (lot entier) pour éviter

@@ -4,6 +4,7 @@
  */
 
 const https = require('https');
+const http = require('http');
 const { meetsLeadDisplaySize, probeRemoteImageSize, sleep } = require('./article-image-lib');
 
 const USER_AGENT = 'LE-RADAR-NewsBot/1.0 (student media aggregator; contact: radios-etudiantes-qc)';
@@ -380,26 +381,43 @@ function extractSearchQueries(item, context = detectEditorialContext(item)) {
 
 function fetchJson(url, timeout = 12000) {
   return new Promise((resolve) => {
-    const req = https.get(
-      url,
-      { headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' }, timeout },
-      (res) => {
-        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-          res.resume();
-          return resolve(fetchJson(new URL(res.headers.location, url).toString(), timeout));
-        }
-        if (res.statusCode >= 400) {
-          res.resume();
-          return resolve(null);
-        }
-        let data = '';
-        res.setEncoding('utf8');
-        res.on('data', (c) => { data += c; });
-        res.on('end', () => {
-          try { resolve(JSON.parse(data)); } catch { resolve(null); }
-        });
-      },
-    );
+    // Module par protocole + garde : une redirection http:// ou une URL invalide
+    // ne doit pas rejeter la promesse (planterait la phase banque/campus).
+    let mod;
+    try {
+      const { protocol } = new URL(url);
+      if (protocol === 'https:') mod = https;
+      else if (protocol === 'http:') mod = http;
+      else return resolve(null);
+    } catch {
+      return resolve(null);
+    }
+
+    let req;
+    try {
+      req = mod.get(
+        url,
+        { headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' }, timeout },
+        (res) => {
+          if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+            res.resume();
+            return resolve(fetchJson(new URL(res.headers.location, url).toString(), timeout));
+          }
+          if (res.statusCode >= 400) {
+            res.resume();
+            return resolve(null);
+          }
+          let data = '';
+          res.setEncoding('utf8');
+          res.on('data', (c) => { data += c; });
+          res.on('end', () => {
+            try { resolve(JSON.parse(data)); } catch { resolve(null); }
+          });
+        },
+      );
+    } catch {
+      return resolve(null);
+    }
     req.on('error', () => resolve(null));
     req.on('timeout', () => { req.destroy(); resolve(null); });
   });
