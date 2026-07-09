@@ -358,7 +358,10 @@ let marqueeResizeScheduled = false;
 let filterMarqueeResyncTimer = null;
 const FILTER_MARQUEE_RESYNC_MS = 480;
 
-const FILTERS_COLLAPSED_ROWS = 3;
+/** Rangées visibles avant « Plus de sources » — desktop 3 ; tablette/mobile 2. */
+const FILTERS_COLLAPSED_ROWS_DESKTOP = 3;
+const FILTERS_COLLAPSED_ROWS_COMPACT = 2;
+const FILTERS_COMPACT_MQ = window.matchMedia('(max-width: 1099px)');
 const FILTERS_ROW_CAPACITY = 3;
 const FILTERS_COLS_NARROW = 420;
 /** Max colonnes bureau (grand écran). */
@@ -2624,16 +2627,25 @@ function filtersColumnCount() {
   return FILTERS_DESKTOP_MAX_COLS;
 }
 
+/** Aligné sur style.css --filters-collapsed-rows (2 sous 1100 px, 3 au-delà). */
+function filtersCollapsedRows() {
+  return FILTERS_COMPACT_MQ.matches
+    ? FILTERS_COLLAPSED_ROWS_COMPACT
+    : FILTERS_COLLAPSED_ROWS_DESKTOP;
+}
+
 function syncFiltersColumns() {
   if (!FILTERS_PANEL) return;
   const cols = filtersColumnCount();
+  const rows = filtersCollapsedRows();
   FILTERS_PANEL.style.setProperty('--filters-cols', String(cols));
+  FILTERS_PANEL.style.setProperty('--filters-collapsed-rows', String(rows));
 }
 
 function filtersOverflow() {
   if (!NEWS_FILTERS) return false;
   const count = NEWS_FILTERS.querySelectorAll('.filter-btn').length;
-  return count > FILTERS_COLLAPSED_ROWS * filtersColumnCount();
+  return count > filtersCollapsedRows() * filtersColumnCount();
 }
 
 function updateFiltersCompactBar() {
@@ -2718,6 +2730,10 @@ function bindFiltersPanel() {
   });
 
   FILTERS_MOBILE.addEventListener('change', () => {
+    syncFiltersPanel();
+    scheduleFilterMarqueeRefresh();
+  });
+  FILTERS_COMPACT_MQ.addEventListener('change', () => {
     syncFiltersPanel();
     scheduleFilterMarqueeRefresh();
   });
