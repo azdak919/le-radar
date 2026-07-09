@@ -3352,7 +3352,9 @@ function createArticle(item, role = 'standard') {
   return a;
 }
 
-const WEAK_IMAGE_PATH = /-\d{2,3}x\d{2,3}\.|article-tile|size-article-tile/;
+/** Aligné sur scripts/article-image-lib.js isWeakImageUrl :
+ *  ne rejette que les petites vignettes WP (-150x150), pas -930x620. */
+const WEAK_IMAGE_PATH = /article-tile|size-article-tile/;
 
 /** Aligné sur scripts/article-image-lib.js GLOBAL_IMAGE_REJECT_RE */
 const GLOBAL_IMAGE_REJECT_RE = /(?:logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|lapige_web|(?:^|\/)article-2\.|campus-logo|campusgraphic|article-tile|size-article-tile|thumbnail|thumb_|recent-posts|wp-block-query|widget|sponsor|banner|social-share|-150x\d+\.|cropped-logo|(?:^|\/)daily\.png$|editorial[_-]|(?:^|\/)editorial(?:s)?(?:[_./-]|$)|画板|%e7%94%bb%e6%9d%bf|_optimized_optimized_optimized|00\.graphics\.csu\.naya_hachwa)/i;
@@ -3389,7 +3391,17 @@ function resizeFromImageQuery(raw = '') {
 
 function isWeakImagePath(path = '') {
   const p = String(path).toLowerCase();
-  if (/-\d{2,3}x\d{2,3}\./.test(p) && !/-\d{3,4}x\d{3,4}\./.test(p)) return true;
+  // Suffixe WP « -{w}x{h}. » : rejeter les vraies miniatures, garder les
+  // formats vedette (ex. Campus2-930x620.jpg sur Le Délit).
+  const sized = p.match(/-(\d{2,4})x(\d{2,4})(?=\.[a-z]+$)/);
+  if (sized) {
+    const w = parseInt(sized[1], 10);
+    const h = parseInt(sized[2], 10);
+    if (w > 0 && h > 0) {
+      if (Math.max(w, h) < 400) return true;
+      if (w < 640 || h < 360 || w * h < 200000) return true;
+    }
+  }
   return WEAK_IMAGE_PATH.test(p);
 }
 
