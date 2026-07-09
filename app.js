@@ -3355,7 +3355,7 @@ function createArticle(item, role = 'standard') {
 const WEAK_IMAGE_PATH = /-\d{2,3}x\d{2,3}\.|article-tile|size-article-tile/;
 
 /** Aligné sur scripts/article-image-lib.js GLOBAL_IMAGE_REJECT_RE */
-const GLOBAL_IMAGE_REJECT_RE = /(?:logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|lapige_web|(?:^|\/)article-2\.|campus-logo|campusgraphic|article-tile|size-article-tile|thumbnail|thumb_|recent-posts|wp-block-query|widget|sponsor|banner|social-share|-150x\d+\.)/i;
+const GLOBAL_IMAGE_REJECT_RE = /(?:logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|lapige_web|(?:^|\/)article-2\.|campus-logo|campusgraphic|article-tile|size-article-tile|thumbnail|thumb_|recent-posts|wp-block-query|widget|sponsor|banner|social-share|-150x\d+\.|cropped-logo|(?:^|\/)daily\.png$|editorial[_-]|(?:^|\/)editorial(?:s)?(?:[_./-]|$)|画板|%e7%94%bb%e6%9d%bf|_optimized_optimized_optimized)/i;
 
 function isFallbackImageUrl(raw = '') {
   const src = String(raw).trim();
@@ -3488,9 +3488,22 @@ function buildClientFallbackDataUrl(item) {
 }
 
 function shouldPreferStockPhoto(item, role = 'lead') {
-  // Jamais remplacer une photo d'article par la banque campus (pavillon).
+  // Jamais remplacer une vraie photo d'article par la banque campus (pavillon).
   if (item.imageProvider === 'campus-bank' && hasUsablePhoto(item)) return false;
-  return role === 'lead' && item.leadImageReady === false && hasStockPhoto(item) && !hasUsablePhoto(item);
+  // Source absente / rejetée (logo Daily.png, bannière editorial_…) → stock.
+  if (hasStockPhoto(item) && !hasUsablePhoto(item)) return true;
+  // Photo source trop faible pour la une, mais stock thématique Openverse déjà trouvé
+  // (ex. McGill Daily : Daily.png laissé en image + openverse gentrification).
+  if (
+    role === 'lead'
+    && item.leadImageReady === false
+    && hasStockPhoto(item)
+    && item.imageProvider
+    && item.imageProvider !== 'campus-bank'
+  ) {
+    return true;
+  }
+  return false;
 }
 
 function resolveDisplayImage(item, { preferPhoto = true, role = 'lead' } = {}) {

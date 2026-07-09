@@ -45,9 +45,10 @@ const CONTRIBUTOR_DASH = '(?:[–—\\-]|&#8211;|&ndash;|&mdash;)';
 /** Rôles de byline : Staff Writer, Sports Editor, Director of …, etc. */
 const CONTRIBUTOR_ROLE = '(?:'
   + 'Contributor|Staff Writer|Staff|Reporter|Columnist|Correspondent'
-  + '|(?:[A-Za-z]+\\s+)*(?:Editor(?:-in-Chief)?|Writer)'
+  // « Sports Editor », « Arts & Culture Editor », « Managing Editor », …
+  + '|(?:[A-Za-z]+(?:\\s+|&amp;|&|\\s+and\\s+|\\s+&\\s+)?)*(?:Editor(?:-in-Chief)?|Writer)'
   + '|Director of [A-Za-z\\s&\'’.-]{2,40}'
-  + '|Photographer|Illustrator'
+  + '|Photographer|Illustrator|Photo Editor'
   + ')';
 const CONTRIBUTOR_BYLINE_RE = new RegExp(
   `^([\\p{Lu}][\\p{L}'’.\\-]+(?:\\s+[\\p{Lu}][\\p{L}'’.\\-]+){0,3})\\s*${CONTRIBUTOR_DASH}\\s*${CONTRIBUTOR_ROLE}\\b`,
@@ -351,29 +352,44 @@ function authorFromBodyCredits(text = '') {
 /**
  * The Campus / thèmes block : « Owen Kitzan – Sports Editor » en tête d'article.
  * Le compte WP est souvent le nom du journal ; la vraie byline est dans le corps.
+ * The Campus place parfois la byline juste avant entry-content (pas dedans).
  */
 function authorFromOpeningRoleLine(html = '', lang = 'fr') {
   if (!html) return '';
-  // Zone contenu (corps), pas le header WP
-  let region = '';
+  // Zones prioritaires : corps WP, puis article, puis en-tête proche du titre.
+  const regions = [];
   const bodyMatch = html.match(
     /class=["'][^"']*(?:entry-content|wp-block-post-content|post-content|article-content)[^"']*["'][^>]*>([\s\S]{0,2500})/i,
   );
-  if (bodyMatch) region = bodyMatch[1];
-  else {
-    const art = html.match(/<article[^>]*>([\s\S]{0,3000})/i);
-    region = art ? art[1] : html.slice(0, 8000);
-  }
-  const plain = stripHtml(region)
-    .replace(/\u00a0/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-  if (!plain) return '';
+  if (bodyMatch) regions.push(bodyMatch[1]);
 
-  const m = plain.match(CONTRIBUTOR_BYLINE_RE);
-  if (m) {
-    const name = normalizeAuthor(m[1]);
-    if (name && !isEditorialPlaceholder(name, lang)) return name;
+  // Fenêtre juste avant le corps (byline The Campus souvent hors entry-content).
+  const beforeBody = html.match(
+    /([\s\S]{0,1200})class=["'][^"']*(?:entry-content|wp-block-post-content|post-content)[^"']*["']/i,
+  );
+  if (beforeBody) regions.push(beforeBody[1]);
+
+  const art = html.match(/<article[^>]*>([\s\S]{0,3500})/i);
+  if (art) regions.push(art[1]);
+  if (!regions.length) regions.push(html.slice(0, 8000));
+
+  for (const region of regions) {
+    const plain = stripHtml(region)
+      .replace(/\u00a0/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    if (!plain) continue;
+
+    // Première byline rôle en tête de zone (ancre ^) ou après un saut de ligne implicite.
+    const m = plain.match(CONTRIBUTOR_BYLINE_RE)
+      || plain.match(new RegExp(
+        `(?:^|\\.\\s+|\\s{2,})([\\p{Lu}][\\p{L}'’.\\-]+(?:\\s+[\\p{Lu}][\\p{L}'’.\\-]+){0,3})\\s*${CONTRIBUTOR_DASH}\\s*${CONTRIBUTOR_ROLE}\\b`,
+        'iu',
+      ));
+    if (m) {
+      const name = normalizeAuthor(m[1]);
+      if (name && !isEditorialPlaceholder(name, lang)) return name;
+    }
   }
   return '';
 }

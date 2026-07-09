@@ -17,9 +17,8 @@ const PHOTO_CREDIT_FIELDS = [
 ];
 
 // Version des extracteurs de crédit : l'incrémenter force une re-vérification
-// unique des articles restés au repli « Crédit photo : [média] », pour que les
-// nouveaux extracteurs puissent retrouver le photographe rétroactivement.
-const CREDIT_EXTRACTOR_REV = 2;
+// (repli média + crédits cités issus d'anciens extracteurs buggés).
+const CREDIT_EXTRACTOR_REV = 3;
 
 const LEAD_IMAGE_FIELDS = [
   'leadImageReady',
@@ -417,9 +416,81 @@ function titleCaseName(raw = '') {
 }
 
 /**
+ * The Campus et proches : photographe collé dans le nom de fichier
+ *   opinions_1_step-outside_cred-piper-howell.jpg
+ *   sports_1_athletic-awards_credits_browyn-chenard.webp
+ *   news_wsbgala_creds_pranav.jpg
+ *   opinions_3_graduationcatchingup_credlatoyasimms.png
+ *   numbered-crd-journey-bardati.jpg
+ */
+function hasFilenameCreditHint(imageUrl = '') {
+  return /[_-](?:cr[eé]d(?:its?|s)?|crd)(?:[_-]|[a-z])/i.test(String(imageUrl));
+}
+
+/** Nettoie un slug « piper-howell » / « olivia-woods-edited » → nom lisible. */
+function nameFromCreditSlug(slug = '') {
+  let s = String(slug || '')
+    .replace(/[-_]?(?:edited|edit|scaled|final|copy|v\d+)(?=[-_.]|$)/gi, '')
+    .replace(/[-_]\d+(?=\.|$)/, '')
+    .replace(/[-_]+/g, ' ')
+    .trim();
+  if (!s) return '';
+  s = s.replace(/^courteousy\s+of\s+/i, 'Courtesy of ');
+  // « Courtesy of … » : ne title-case que le nom après la particule.
+  const courtesy = s.match(/^(courtesy of)\s+(.+)$/i);
+  if (courtesy) {
+    return `Courtesy of ${titleCaseName(courtesy[2])}`;
+  }
+  return titleCaseName(s);
+}
+
+function isPlausibleCreditName(name = '') {
+  const n = String(name || '').replace(/\s+/g, ' ').trim();
+  if (!n || n.length < 3 || n.length > 80) return false;
+  if (/^(?:photo|credit|credits|image|edited|unknown|n ?a|none)$/i.test(n)) return false;
+  const words = n.replace(/^Courtesy of\s+/i, '').split(/\s+/).filter(Boolean);
+  if (!words.length || words.length > 6) return false;
+  // Un seul mot (ex. « Pranav ») : OK si assez long ; sinon exiger un prénom+nom.
+  if (words.length === 1) return words[0].length >= 4 && /^[\p{L}'’.-]+$/u.test(words[0]);
+  return words.every((w) => /^(?:of|the|and|de|du|des|la|le|les|et|d'|l'|&)$/i.test(w)
+    || /^[\p{L}&'’.-]+$/u.test(w));
+}
+
+/**
+ * data-image-title / title sur l'IMG de la photo lead uniquement —
+ * un match global attrapait le crédit d'une autre image de la page
+ * (ex. Browyn Chenard d'un article sports collé sur une opinion Piper Howell).
+ */
+function extractImageTitleCreditNearUrl(html = '', imageUrl = '', makeCredit) {
+  if (!html || !imageUrl) return null;
+  const imgTags = html.match(/<img\b[^>]*>/gi) || [];
+  for (const tag of imgTags) {
+    const srcM = tag.match(/\b(?:src|data-src|data-lazy-src|data-large_image)=["']([^"']+)["']/i);
+    if (!srcM || !urlsMatch(srcM[1], imageUrl)) continue;
+    for (const attr of ['data-image-title', 'title', 'alt', 'data-caption']) {
+      const re = new RegExp(`\\b${attr}=["']([^"']+)["']`, 'i');
+      const am = tag.match(re);
+      if (!am) continue;
+      const raw = am[1];
+      // « …_Credits_Browyn Chenard » ou « Credits: Browyn Chenard »
+      const creditM = raw.match(
+        /(?:^|[_\s-])cr[eé]dits?[_\s:-]+([^"'_|]{3,60})$/i,
+      ) || raw.match(
+        /(?:^|[_\s-])cr[eé]d(?:s)?[_\s:-]+([^"'_|]{3,60})$/i,
+      );
+      if (!creditM) continue;
+      const name = nameFromCreditSlug(creditM[1].replace(/[_]+/g, ' '));
+      if (!isPlausibleCreditName(name)) continue;
+      const credit = makeCredit(name, 'image-title-credit');
+      if (credit) return credit;
+    }
+  }
+  return null;
+}
+
+/**
  * Photographe encodé dans le nom de fichier ou les attributs WordPress :
- *   - The Campus : sports_1_athletic-awards_credits_browyn-chenard.webp
- *     et data-image-title="…_Credits_Browyn Chenard"
+ *   - The Campus : _cred-piper-howell, _credits_browyn-chenard, _creds_pranav
  *   - The Link : 00.graphics.CSU.Naya_Hachwa_900_674_90.jpeg (segment
  *     Prénom_Nom en fin de fichier, limité aux URLs CE Image /images/made/).
  */
@@ -428,6 +499,18 @@ function extractFilenameCredit(html = '', imageUrl = '', lang = 'fr') {
   const makeCredit = (name, source) => {
     const parsed = creditFromPhrase(name);
     if (!parsed) return null;
+    // « Courtesy of X » : garder la formulation complète dans la ligne de crédit.
+    const courtesy = /^Courtesy of\s+(.+)$/i.exec(String(name).trim());
+    if (courtesy) {
+      return {
+        ...parsed,
+        creator: courtesy[1].trim(),
+        creditLine: en
+          ? `Photo: Courtesy of ${courtesy[1].trim()}`
+          : `Photo : avec l'aimable autorisation de ${courtesy[1].trim()}`,
+        source,
+      };
+    }
     return {
       ...parsed,
       creditLine: en ? `Photo: ${parsed.creator}` : `Photo : ${parsed.creator}`,
@@ -435,24 +518,30 @@ function extractFilenameCredit(html = '', imageUrl = '', lang = 'fr') {
     };
   };
 
-  const fileM = String(imageUrl).match(/_cr[ée]dits?[_-]([a-z0-9-]{5,60})\.(?:jpe?g|png|webp|gif|avif)(?:$|\?)/i);
-  if (fileM) {
-    const name = titleCaseName(fileM[1].replace(/[-_]+/g, ' '));
-    if (/\s/.test(name)) {
-      const credit = makeCredit(name, 'filename-credit');
-      if (credit) return credit;
-    }
+  // Ordre du plus explicite au plus court (credits > creds > cred > crd).
+  // Groupe capturant : slug photographe avant l'extension.
+  // The Campus utilise parfois « -cred- » (trait) plutôt que « _cred- ».
+  const filePatterns = [
+    /[_-](?:cr[eé]dits|credits)[_-]([a-z0-9-]{3,80})\.(?:jpe?g|png|webp|gif|avif)(?:$|\?)/i,
+    /[_-](?:cr[eé]ds|creds)[_-]([a-z0-9-]{3,80})\.(?:jpe?g|png|webp|gif|avif)(?:$|\?)/i,
+    // _cred-piper-howell  OU  _credlatoyasimms / _credgabriellelalonde
+    /[_-]cr[eé]d(?:[_-]([a-z0-9-]{3,80})|([a-z][a-z0-9-]{3,80}))\.(?:jpe?g|png|webp|gif|avif)(?:$|\?)/i,
+    /[_-]crd[_-]([a-z0-9-]{3,80})\.(?:jpe?g|png|webp|gif|avif)(?:$|\?)/i,
+  ];
+  for (const re of filePatterns) {
+    const fileM = String(imageUrl).match(re);
+    if (!fileM) continue;
+    const slug = fileM[1] || fileM[2] || '';
+    const name = nameFromCreditSlug(slug);
+    if (!isPlausibleCreditName(name)) continue;
+    const credit = makeCredit(name, 'filename-credit');
+    if (credit) return credit;
   }
 
-  if (html) {
-    const attrM = html.match(/data-image-title=["'][^"']*cr[ée]dits?[_\s:-]+([^"'_]{4,60})["']/i);
-    if (attrM) {
-      const name = attrM[1].replace(/[-_]+/g, ' ').trim();
-      if (/^\p{Lu}[\p{L}'’.-]+(?:\s+\p{Lu}[\p{L}'’.-]+){1,3}$/u.test(name)) {
-        const credit = makeCredit(name, 'image-title-credit');
-        if (credit) return credit;
-      }
-    }
+  // Attribut WordPress collé à l'image lead uniquement (pas un match global).
+  if (html && imageUrl) {
+    const near = extractImageTitleCreditNearUrl(html, imageUrl, makeCredit);
+    if (near) return near;
   }
 
   if (/\/images\/made\/|_resized\//i.test(String(imageUrl))) {
@@ -471,6 +560,13 @@ function extractFilenameCredit(html = '', imageUrl = '', lang = 'fr') {
 function extractPhotoCreditFromHtml(html = '', imageUrl = '', lang = 'fr') {
   if (!html && imageUrl) return extractFilenameCredit(html, imageUrl, lang);
   if (!html || html.length < 200) return null;
+
+  // Nom de fichier « _cred-… » : signal le plus fiable pour la photo lead
+  // (évite qu'une légende d'une autre image de la page prenne le dessus).
+  if (imageUrl && hasFilenameCreditHint(imageUrl)) {
+    const fromFile = extractFilenameCredit(html, imageUrl, lang);
+    if (fromFile?.creditLine) return fromFile;
+  }
 
   const extractors = imageUrl
     ? [
@@ -576,10 +672,14 @@ function needsSourceCreditCheck(item) {
   if (!item?.link || !item?.image) return false;
   const key = imageUrlKey(item.image);
   if (!key) return false;
-  // Repli média jamais re-passé dans les extracteurs actuels : re-vérifier une
-  // fois — les crédits cités, eux, restent acquis.
-  if (!item.sourceImageCreditCited
-    && (item.sourceImageCreditRev || 0) < CREDIT_EXTRACTOR_REV) {
+  const rev = item.sourceImageCreditRev || 0;
+  // Repli média : re-passer les extracteurs une fois par version.
+  if (!item.sourceImageCreditCited && rev < CREDIT_EXTRACTOR_REV) {
+    return true;
+  }
+  // Crédit encodé dans le nom de fichier : re-vérifier si l'extracteur
+  // a évolué (corrige les faux positifs data-image-title The Campus).
+  if (rev < CREDIT_EXTRACTOR_REV && hasFilenameCreditHint(item.image)) {
     return true;
   }
   if (item.sourceImageCredit && !creditLooksCorrupt(item.sourceImageCredit)
@@ -649,6 +749,8 @@ function auditPhotoCredits(items = []) {
 module.exports = {
   CREDIT_EXTRACTOR_REV,
   extractFilenameCredit,
+  hasFilenameCreditHint,
+  nameFromCreditSlug,
   parseTrailingCaptionCredit,
   imageUrlKey,
   urlsMatch,

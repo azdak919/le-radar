@@ -62,11 +62,16 @@
           "preferFirstContentImage": true,
           "rejectPathPatterns": [
             "Daily\\.png",
-            "Screenshot-\\d{4}-\\d{2}-\\d{2}"
+            "Screenshot-\\d{4}-\\d{2}-\\d{2}",
+            "editorial[_-]",
+            "cropped-logo",
+            "画板",
+            "_optimized_optimized_optimized",
+            "logo-rect"
           ]
         }
       },
-      "_note": "Flux RSS : dc:creator « Coordinating » (compte WordPress) — auteur réel sur la page (rel=author). og:image = bannière Yoast, pas la 1re photo du corps.",
+      "_note": "Flux RSS : dc:creator « Coordinating » (compte WP) — auteur réel sur la page. og:image / featured souvent logo Daily.png ou bannière editorial_* (numéro spécial) sans photo dans le corps — rejeter et basculer banque/campus. preferFirstContentImage : vraie photo du corps, pas la meta Yoast.",
       "_lastChecked": "2026-07-06T11:28:03.735Z",
       "_failCount": 0,
       "_status": "ok",
@@ -310,13 +315,17 @@
             "campusgraphic",
             "article-2"
           ]
+        },
+        "photoCredits": {
+          "preferFilenameCred": true,
+          "_note": "Fichiers WP du type _cred-piper-howell / _credits_name — ne pas utiliser data-image-title global de la page"
         }
       },
       "_status": "ok",
       "_failCount": 0,
       "_lastChecked": "2026-07-06T11:28:14.390Z",
       "site": "https://thebucampus.ca/",
-      "_note": "WordPress — byline réelle en tête d'article (« Nom – Sports Editor »), pas le compte WP « The Campus ». Flux : fusion news/sports/opinions/arts-culture",
+      "_note": "WordPress — byline réelle en tête d'article (« Nom – Sports Editor »), pas le compte WP « The Campus ». Crédit photo souvent dans le nom de fichier (_cred-prenom-nom), pas dans data-image-title d'une autre image. Flux : fusion news/sports/opinions/arts-culture",
       "_lastItemDate": "2026-04-06T16:03:16.000Z",
       "_lastFetchOk": "2026-07-06T11:28:14.390Z"
     }
