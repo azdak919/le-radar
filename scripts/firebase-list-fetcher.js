@@ -212,9 +212,9 @@ async function runFirestoreQuery(src = {}, { limit = 25 } = {}) {
 
 /**
  * Liste publique REST (sans clé) — Polyscope expose la collection en lecture.
- * Pas de orderBy serveur : on trie côté client après parse.
+ * Pas de orderBy serveur : pagination complète puis tri côté client.
  */
-async function listFirestoreDocuments(src = {}, { pageSize = 40 } = {}) {
+async function listFirestoreDocuments(src = {}, { pageSize = 40, maxPages = 15 } = {}) {
   const fb = src.firebase || {};
   const projectId = fb.projectId;
   const collection = fb.collection || 'blogs';
@@ -222,31 +222,40 @@ async function listFirestoreDocuments(src = {}, { pageSize = 40 } = {}) {
 
   const base = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/${encodeURIComponent(collection)}`;
   const apiKey = resolveFirebaseApiKey(fb);
-  const qs = new URLSearchParams({ pageSize: String(pageSize) });
-  if (apiKey) qs.set('key', apiKey);
-
-  const data = await getJson(`${base}?${qs}`);
-  const docs = data?.documents;
-  if (!Array.isArray(docs)) return [];
 
   const items = [];
-  for (const doc of docs) {
-    const item = parseFirestoreDocument(doc, src);
-    if (item) items.push(item);
+  let pageToken = '';
+  for (let page = 0; page < maxPages; page += 1) {
+    const qs = new URLSearchParams({ pageSize: String(pageSize) });
+    if (apiKey) qs.set('key', apiKey);
+    if (pageToken) qs.set('pageToken', pageToken);
+
+    const data = await getJson(`${base}?${qs}`);
+    const docs = data?.documents;
+    if (!Array.isArray(docs) || !docs.length) break;
+
+    for (const doc of docs) {
+      const item = parseFirestoreDocument(doc, src);
+      if (item) items.push(item);
+    }
+
+    pageToken = data.nextPageToken || '';
+    if (!pageToken) break;
   }
+
   items.sort((a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0));
   return items;
 }
 
 async function fetchFirebaseFeed(src = {}, options = {}) {
   const maxItems = options.maxItems || 20;
-  const limit = Math.max(maxItems * 2, 30);
+  const limit = Math.max(maxItems * 2, 40);
 
   // 1) runQuery trié si clé dispo
   let items = await runFirestoreQuery(src, { limit });
-  // 2) Repli liste publique (Polyscope sans secret CI)
+  // 2) Repli liste publique paginée (Polyscope sans secret CI)
   if (!items.length) {
-    items = await listFirestoreDocuments(src, { pageSize: Math.min(limit, 50) });
+    items = await listFirestoreDocuments(src, { pageSize: 50, maxPages: 20 });
   }
   return items.slice(0, maxItems);
 }
