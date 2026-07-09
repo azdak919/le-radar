@@ -551,11 +551,15 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
   const tryUrlOnce = async (url, metaW = 0, metaH = 0) => {
     if (!url || !isCandidateImageUrl(url, extraRejectPatterns) || isWeakImageUrl(url, options)) return null;
     if (metaW && metaH && meetsLeadDisplaySize(metaW, metaH)) {
-      return { url, width: metaW, height: metaH, source: 'meta' };
+      return { url, width: metaW, height: metaH, source: 'meta', leadReady: true };
     }
     const dims = await probeRemoteImageSize(url);
     if (dims && meetsLeadDisplaySize(dims.width, dims.height)) {
-      return { url, width: dims.width, height: dims.height, source: 'probe' };
+      return { url, width: dims.width, height: dims.height, source: 'probe', leadReady: true };
+    }
+    // Feature / vignette OK mais pas hero (panorama trop large, etc.)
+    if (dims && meetsFeatureDisplaySize(dims.width, dims.height)) {
+      return { url, width: dims.width, height: dims.height, source: 'probe-feature', leadReady: false };
     }
     if (dims && dims.width >= 200 && dims.height >= 150) {
       return { url, width: dims.width, height: dims.height, source: 'probe-small', leadReady: false };
@@ -563,7 +567,16 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
     return null;
   };
 
-  const tryUrl = async (url, metaW = 0, metaH = 0) => {
+  /** Ne retourne un hit « prêt vedette » que si leadReady !== false. */
+  const tryUrlLeadReady = async (url, metaW = 0, metaH = 0) => {
+    for (const candidate of leadImageUrlCandidates(url)) {
+      const hit = await tryUrlOnce(candidate, metaW, metaH);
+      if (hit && hit.leadReady !== false) return hit;
+    }
+    return null;
+  };
+
+  const tryUrlAny = async (url, metaW = 0, metaH = 0) => {
     for (const candidate of leadImageUrlCandidates(url)) {
       const hit = await tryUrlOnce(candidate, metaW, metaH);
       if (hit) return hit;
@@ -571,40 +584,56 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
     return null;
   };
 
+  // 1) Image RSS déjà en format vedette
   if (item.image) {
-    for (const candidate of leadImageUrlCandidates(item.image)) {
-      const hit = await tryUrlOnce(candidate);
-      if (hit && hit.leadReady !== false) return hit;
-    }
+    const hit = await tryUrlLeadReady(item.image);
+    if (hit) return hit;
   }
 
-  if (item.image && item.link) {
-    const html = await fetchText(item.link);
-    if (html && articleImageIsValidOnPage(html, item.image, extraRejectPatterns, options, item.link)) {
-      const hit = await tryUrl(item.image);
-      if (hit) return hit;
-    }
-  }
-
+  // 2) Scraper la page : l'image RSS peut être un panorama trop large ou une
+  //    vignette, alors qu'une autre photo du corps est parfaitement utilisable
+  //    (ex. La Pige : Bruno 1661×527 rejeté, Joanne 2560×1707 OK).
+  //    Ne PAS renvoyer l'image RSS « petite » avant d'avoir cherché mieux.
   const scraped = await scrapeArticleImage(item, extraRejectPatterns, options);
   if (scraped?.url) {
-    const hit = await tryUrl(scraped.url, scraped.w, scraped.h);
+    const hit = await tryUrlLeadReady(scraped.url, scraped.w, scraped.h);
     if (hit) return hit;
-    if (scraped.url && isCandidateImageUrl(scraped.url, extraRejectPatterns)) {
-      const probeUrl = normalizeWpContentImageUrl(scraped.url) || scraped.url;
-      const dims = await probeRemoteImageSize(probeUrl);
-      if (dims) {
-        const useUrl = meetsLeadDisplaySize(dims.width, dims.height) ? probeUrl : scraped.url;
-        return {
-          url: useUrl,
-          width: dims.width,
-          height: dims.height,
-          source: 'page-scrape',
-          leadReady: meetsLeadDisplaySize(dims.width, dims.height),
-        };
+  }
+
+  // 3) Plusieurs images du corps : tenter les meilleures candidates collectées
+  //    via un second passage HTML (og + content), pas seulement le top score.
+  if (item.link) {
+    const html = await fetchText(item.link);
+    if (html && html.length > 200) {
+      const region = options.preferFirstContentImage
+        ? (articleBodyHtml(html) || articleImageRegions(html))
+        : articleImageRegions(html);
+      const contentImages = collectContentImages(region, extraRejectPatterns, options, item.link);
+      // Prioriser les plus larges / non-cropped
+      const ranked = [...contentImages].sort((a, b) => {
+        const aFull = a.isFull ? 1 : 0;
+        const bFull = b.isFull ? 1 : 0;
+        if (aFull !== bFull) return bFull - aFull;
+        return (b.w || 0) - (a.w || 0);
+      });
+      for (const img of ranked.slice(0, 8)) {
+        if (item.image && imageUrlsMatch(img.url, item.image)) continue;
+        if (scraped?.url && imageUrlsMatch(img.url, scraped.url)) continue;
+        const hit = await tryUrlLeadReady(img.url, img.w || 0, 0);
+        if (hit) return hit;
       }
-      return { url: scraped.url, width: scraped.w, height: scraped.h, source: 'page-scrape', leadReady: false };
     }
+  }
+
+  // 4) Repli : image RSS ou scrape même si pas « lead ready » (mieux que rien
+  //    pour les vignettes ; la banque campus ne doit pas les écraser).
+  if (item.image) {
+    const hit = await tryUrlAny(item.image);
+    if (hit) return hit;
+  }
+  if (scraped?.url) {
+    const hit = await tryUrlAny(scraped.url, scraped.w, scraped.h);
+    if (hit) return hit;
   }
 
   return null;

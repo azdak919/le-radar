@@ -3493,16 +3493,23 @@ function buildClientFallbackDataUrl(item) {
 }
 
 function shouldPreferStockPhoto(item, role = 'lead') {
+  // Jamais remplacer une photo d'article par la banque campus (pavillon).
+  if (item.imageProvider === 'campus-bank' && hasUsablePhoto(item)) return false;
   return role === 'lead' && item.leadImageReady === false && hasStockPhoto(item) && !hasUsablePhoto(item);
 }
 
 function resolveDisplayImage(item, { preferPhoto = true, role = 'lead' } = {}) {
   if (shouldPreferStockPhoto(item, role)) preferPhoto = false;
 
+  // Photo source d'abord, sauf si on a explicitement préféré le stock thématique.
   if (preferPhoto && hasUsablePhoto(item)) {
     return { src: getCandidateImage(item.image), kind: 'photo' };
   }
+  // Banque libre thématique OK ; campus bank seulement sans photo source.
   if (hasStockPhoto(item)) {
+    if (item.imageProvider === 'campus-bank' && hasUsablePhoto(item)) {
+      return { src: getCandidateImage(item.image), kind: 'photo' };
+    }
     return { src: getCandidateImage(item.stockImage), kind: 'stock' };
   }
   if (isFallbackImageUrl(item?.fallbackImage)) {
@@ -3820,7 +3827,9 @@ function isUsableArticleImage(img, role) {
   const ratio = width / Math.max(height, 1);
   const isThumb = role === 'feature' || role === 'compact';
   const min = role === 'lead' ? LEAD_IMAGE_MIN : (isThumb ? THUMB_IMAGE_MIN : FEATURE_IMAGE_MIN);
-  const [ratioMin, ratioMax] = isThumb ? [0.6, 2.8] : [0.95, 2.6];
+  // Vignettes : un peu plus tolérant sur les panoramas d'article (object-fit
+  // recadre). Évite de jeter une vraie photo pour un pavillon Wikimedia.
+  const [ratioMin, ratioMax] = isThumb ? [0.55, 3.4] : [0.95, 2.6];
   return (
     width >= min.width
     && height >= min.height
