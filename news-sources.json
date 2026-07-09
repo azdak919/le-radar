@@ -124,44 +124,6 @@
       "_lastFetchOk": "2026-07-06T11:28:04.841Z"
     },
     {
-      "name": "The Concordian",
-      "institution": "Concordia University",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "en",
-      "url": "https://theconcordian.com/feed/",
-      "urlFallback": "https://theconcordian.substack.com/feed",
-      "site": "https://theconcordian.com/",
-      "_lastChecked": "2026-07-06T11:28:05.004Z",
-      "_failCount": 4,
-      "_status": "stale",
-      "_lastItemDate": "2026-05-02T20:21:24.000Z",
-      "popularity": 7,
-      "_note": "Journal indépendant de Concordia, distinct de The Link. Site principal WordPress (theconcordian.com) ; repli Substack si Cloudflare bloque le bot (newsletter/podcasts, pas tous les articles du site). Photos : couvertures og:image Substack — pas de banque libre/campus (trop d'erreurs).",
-      "botHints": {
-        "fetch": {
-          "preferFallbackOn403": true,
-          "dropTitlePatterns": [
-            "this week's top stories",
-            "the pitch list",
-            "is hiring",
-            "last day to apply",
-            "apply to the concordian awards",
-            "apply to be part of"
-          ]
-        },
-        "authors": {
-          "forcePageAuthor": true,
-          "ignoreRssAuthor": true
-        },
-        "images": {
-          "disableFreeStock": true,
-          "disableCampusBank": true
-        }
-      },
-      "_lastFetchOk": "2026-06-27T16:04:40.441Z"
-    },
-    {
       "name": "Zone Campus",
       "institution": "Université du Québec à Trois-Rivières",
       "region": "Mauricie",
@@ -404,6 +366,17 @@
       "site": "https://lebrise-glace.com/",
       "_lastChecked": "2026-07-06T11:26:12.278Z",
       "_failCount": 4
+    },
+    {
+      "name": "The Concordian",
+      "institution": "Concordia University",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "en",
+      "url": "https://theconcordian.com/feed/",
+      "site": "https://theconcordian.com/",
+      "_note": "Retiré du fil actif (2026-07) — Cloudflare / Substack peu fiable. The Link reste pour Concordia.",
+      "_status": "retired"
     }
   ],
   "_lastRun": "2026-07-06T11:27:58.004Z",
