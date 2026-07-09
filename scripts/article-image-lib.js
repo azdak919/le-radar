@@ -375,6 +375,12 @@ function resizeFromImageUrl(raw = '') {
     const w = parseInt(u.searchParams.get('w'), 10) || 0;
     const h = parseInt(u.searchParams.get('h'), 10) || 0;
     if (w || h) return { width: w, height: h };
+    // Transformations dans le chemin (substackcdn/Cloudinary : « ,w_256,c_limit,… »)
+    const pw = u.pathname.match(/[,/]w_(\d+)\b/);
+    const ph = u.pathname.match(/[,/]h_(\d+)\b/);
+    if (pw || ph) {
+      return { width: pw ? parseInt(pw[1], 10) : 0, height: ph ? parseInt(ph[1], 10) : 0 };
+    }
   } catch {
     /* ignore */
   }
