@@ -18,7 +18,7 @@ const PHOTO_CREDIT_FIELDS = [
 
 // Version des extracteurs de crédit : l'incrémenter force une re-vérification
 // (repli média + crédits cités issus d'anciens extracteurs buggés).
-const CREDIT_EXTRACTOR_REV = 6;
+const CREDIT_EXTRACTOR_REV = 7;
 
 /** Placeholders WP / comptes génériques (Zone Campus : « Crédit : Journaliste »). */
 const PLACEHOLDER_CREDIT_RE = /^(?:journaliste|journalist|photographe|photographer|staff|rédaction|redaction|la\s+rédaction|the\s+editorial\s+team|unknown|inconnu|n\/?a|none|anonyme|anonymous|auteur|author|admin)$/i;
@@ -517,7 +517,10 @@ function titleCaseName(raw = '') {
  *   numbered-crd-journey-bardati.jpg
  */
 function hasFilenameCreditHint(imageUrl = '') {
-  return /[_-](?:cr[eé]d(?:its?|s)?|crd)(?:[_-]|[a-z])/i.test(String(imageUrl));
+  const u = String(imageUrl);
+  // The Campus / Link : _cred-… ; La Pige : …-Credit-photo-Marc-Andre….jpg
+  return /[_-](?:cr[eé]d(?:its?|s)?|crd)(?:[_-]|[a-z])/i.test(u)
+    || /credit[_-]?photo[_-]/i.test(u);
 }
 
 /** Nettoie un slug « piper-howell » / « olivia-woods-edited » → nom lisible. */
@@ -614,17 +617,24 @@ function extractFilenameCredit(html = '', imageUrl = '', lang = 'fr') {
   // Ordre du plus explicite au plus court (credits > creds > cred > crd).
   // Groupe capturant : slug photographe avant l'extension.
   // The Campus utilise parfois « -cred- » (trait) plutôt que « _cred- ».
+  // La Pige : « 3-Credit-photo-Marc-Andre-Houde-750x375.jpeg » (suffixe WP -WxH
+  // hors du nom — non-greedy + strip pour ne pas capturer « 750x375 »).
+  const sizedExt = String.raw`(?:-\d{2,4}x\d{2,4})?\.(?:jpe?g|png|webp|gif|avif)(?:$|\?)`;
   const filePatterns = [
-    /[_-](?:cr[eé]dits|credits)[_-]([a-z0-9-]{3,80})\.(?:jpe?g|png|webp|gif|avif)(?:$|\?)/i,
-    /[_-](?:cr[eé]ds|creds)[_-]([a-z0-9-]{3,80})\.(?:jpe?g|png|webp|gif|avif)(?:$|\?)/i,
+    // Non-greedy : s'arrête avant -750x375.jpeg
+    new RegExp(String.raw`(?:^|\/|[_-])credit[_-]?photo[_-]([a-z0-9-]+?)${sizedExt}`, 'i'),
+    new RegExp(String.raw`[_-](?:cr[eé]dits|credits)[_-]([a-z0-9-]+?)${sizedExt}`, 'i'),
+    new RegExp(String.raw`[_-](?:cr[eé]ds|creds)[_-]([a-z0-9-]+?)${sizedExt}`, 'i'),
     // _cred-piper-howell  OU  _credlatoyasimms / _credgabriellelalonde
-    /[_-]cr[eé]d(?:[_-]([a-z0-9-]{3,80})|([a-z][a-z0-9-]{3,80}))\.(?:jpe?g|png|webp|gif|avif)(?:$|\?)/i,
-    /[_-]crd[_-]([a-z0-9-]{3,80})\.(?:jpe?g|png|webp|gif|avif)(?:$|\?)/i,
+    new RegExp(String.raw`[_-]cr[eé]d(?:[_-]([a-z0-9-]+?)|([a-z][a-z0-9-]+?))${sizedExt}`, 'i'),
+    new RegExp(String.raw`[_-]crd[_-]([a-z0-9-]+?)${sizedExt}`, 'i'),
   ];
   for (const re of filePatterns) {
     const fileM = String(imageUrl).match(re);
     if (!fileM) continue;
-    const slug = fileM[1] || fileM[2] || '';
+    let slug = fileM[1] || fileM[2] || '';
+    // Filet si le greedy a mangé un suffixe WP
+    slug = slug.replace(/-\d{2,4}x\d{2,4}$/i, '');
     const name = nameFromCreditSlug(slug);
     if (!isPlausibleCreditName(name)) continue;
     const credit = makeCredit(name, 'filename-credit');
