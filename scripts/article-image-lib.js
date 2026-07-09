@@ -477,7 +477,16 @@ function isWeakImageUrl(raw = '', options = {}) {
     if (width > 0 && height > 0 && width * height < FEATURE_MIN_PIXELS) return true;
   }
   if (options.preferSizeFull && /-\d{3}x\d{2,3}\./.test(path) && !/\bsize-full\b/.test(path)) return true;
-  if (/-\d{2,3}x\d{2,3}\./.test(path) && !/-\d{3,4}x\d{3,4}\./.test(path)) return true;
+  // Suffixe WP « name-930x620.jpg » : garder les formats ≥ feature, rejeter -150x150.
+  const sized = path.match(/-(\d{2,4})x(\d{2,4})(?=\.[a-z]+(?:$|\?))/);
+  if (sized) {
+    const w = parseInt(sized[1], 10);
+    const h = parseInt(sized[2], 10);
+    if (w > 0 && h > 0) {
+      if (Math.max(w, h) < 400) return true;
+      if (w < 640 || h < 360 || w * h < FEATURE_MIN_PIXELS) return true;
+    }
+  }
   return /article-tile|size-article-tile/.test(path);
 }
 
