@@ -41,7 +41,12 @@
 }
 
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html {
+  -webkit-text-size-adjust: 100%;
+  /* Empêche le « scroll vers la gauche » (arabe/farsi/hébreu/ourdou, textes longs). */
+  overflow-x: clip;
+  max-width: 100%;
+}
 
 body {
   margin: 0;
@@ -53,6 +58,56 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   transition: background 240ms ease, color 240ms ease;
+  overflow-x: clip;
+  max-width: 100%;
+  position: relative;
+}
+
+/* Conteneurs principaux : jamais plus larges que le viewport */
+.masthead,
+.masthead-inner,
+.tuner,
+.tuner-inner,
+.wire,
+.filters-panel,
+.news-list {
+  max-width: 100%;
+  min-width: 0;
+}
+
+/*
+ * Scripts RTL (arabe, farsi, hébreu, ourdou) :
+ * le shell UI reste LTR (pas de dir=rtl sur <html>), seul le contenu
+ * éditorial lit de droite à gauche — évite le basculement du tuner/filtres.
+ */
+html[data-script-dir="rtl"] .wordmark-full,
+html[data-script-dir="rtl"] .wire-title,
+html[data-script-dir="rtl"] .wire-status,
+html[data-script-dir="rtl"] .news-updated,
+html[data-script-dir="rtl"] .article-title,
+html[data-script-dir="rtl"] .article-brief,
+html[data-script-dir="rtl"] .article-byline,
+html[data-script-dir="rtl"] .article-eyebrow,
+html[data-script-dir="rtl"] .article-time,
+html[data-script-dir="rtl"] .article-meta,
+html[data-script-dir="rtl"] .filters-toggle__label,
+html[data-script-dir="rtl"] .filters-compact__text {
+  direction: rtl;
+  unicode-bidi: plaintext;
+  text-align: start;
+}
+
+html[data-script-dir="rtl"] .wordmark-mark {
+  /* Titre de marque centré ; bidi naturel pour le texte traduit */
+  unicode-bidi: plaintext;
+}
+
+/* Filet si un ancien cache a encore dir=rtl sur <html> */
+html[dir="rtl"] {
+  direction: ltr; /* force le chrome en LTR */
+}
+html[dir="rtl"] body {
+  overflow-x: clip;
 }
 
 a { color: inherit; }
@@ -224,12 +279,13 @@ a { color: inherit; }
   hyphens: none;
 }
 
-/* Scripts longs (inuktitut syllabique, arabe, etc.) : resserrer le wordmark */
+/* Scripts longs (inuktitut, arabe, farsi, ourdou, hébreu…) : resserrer le wordmark */
 html[lang="iu"] .wordmark-mark,
 html[data-translate="iu"] .wordmark-mark,
 html[data-translate="iu-latn"] .wordmark-mark,
 html[lang="ar"] .wordmark-mark,
-html[data-translate="ar"] .wordmark-mark {
+html[data-translate="ar"] .wordmark-mark,
+html[data-script-dir="rtl"] .wordmark-mark {
   font-size: clamp(1.35rem, 5.2vw + 0.25rem, 2.85rem);
   letter-spacing: 0;
   line-height: 1.12;
@@ -238,7 +294,8 @@ html[lang="iu"] .wordmark-full,
 html[data-translate="iu"] .wordmark-full,
 html[data-translate="iu-latn"] .wordmark-full,
 html[lang="ar"] .wordmark-full,
-html[data-translate="ar"] .wordmark-full {
+html[data-translate="ar"] .wordmark-full,
+html[data-script-dir="rtl"] .wordmark-full {
   letter-spacing: 0.04em;
   font-size: clamp(10px, 2.4vw, 11px);
   line-height: 1.5;
