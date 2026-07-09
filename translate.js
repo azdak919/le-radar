@@ -16,7 +16,12 @@
   const STORAGE_KEY = 'radar-translate-mode';
   const DEFAULT_MODE = 'original';
 
-  /** Modes avec entrée de menu. Autres codes ISO → traduction Google dynamique. */
+  /**
+   * Modes avec entrée de menu.
+   * Ordre d'affichage : original → fr → en → langues autochtones du Québec → autres.
+   * group: 'core' | 'indigenous' | 'other'
+   * unavailable: true → affiché mais pas encore supporté par Google Translate.
+   */
   const MODES = {
     original: {
       id: 'original',
@@ -24,6 +29,7 @@
       short: 'Original',
       title: 'Ne pas traduire — fil bilingue FR + EN (défaut pour navigateurs français ou anglais)',
       hint: 'Bilingue FR + EN',
+      group: 'core',
     },
     fr: {
       id: 'fr',
@@ -32,6 +38,7 @@
       title: 'Traduire toute la page en français',
       hint: 'Toute la page',
       goog: 'fr',
+      group: 'core',
     },
     en: {
       id: 'en',
@@ -40,7 +47,84 @@
       title: 'Translate the whole page into English',
       hint: 'Whole page',
       goog: 'en',
+      group: 'core',
     },
+    // ── Langues autochtones du Québec (Inuit + Premières Nations) ──
+    // Google Translate (2024+) : Inuktut seulement. Les autres sont listées
+    // pour visibilité ; clic → message tant que le moteur ne les offre pas.
+    iu: {
+      id: 'iu',
+      label: 'ᐃᓄᒃᑎᑐᑦ',
+      short: 'IU',
+      title: 'Inuktitut (syllabiques) — Inuktut, Nunavik et Inuit du Canada',
+      hint: 'Inuktitut · syllabiques',
+      goog: 'iu',
+      group: 'indigenous',
+    },
+    'iu-latn': {
+      id: 'iu-latn',
+      label: 'Inuktut',
+      short: 'IU',
+      title: 'Inuktut (alphabet latin) — Inuit du Canada',
+      hint: 'Inuktitut · latin',
+      goog: 'iu-Latn',
+      group: 'indigenous',
+    },
+    cr: {
+      id: 'cr',
+      label: 'Cree',
+      short: 'CR',
+      title: 'Eeyou / Cree — pas encore disponible en traduction automatique',
+      hint: 'Eeyou Istchee · bientôt',
+      group: 'indigenous',
+      unavailable: true,
+    },
+    moe: {
+      id: 'moe',
+      label: 'Innu-aimun',
+      short: 'INN',
+      title: 'Innu-aimun — pas encore disponible en traduction automatique',
+      hint: 'Innu · bientôt',
+      group: 'indigenous',
+      unavailable: true,
+    },
+    atj: {
+      id: 'atj',
+      label: 'Atikamekw',
+      short: 'ATJ',
+      title: 'Atikamekw Nehiromowin — pas encore disponible en traduction automatique',
+      hint: 'Atikamekw · bientôt',
+      group: 'indigenous',
+      unavailable: true,
+    },
+    alq: {
+      id: 'alq',
+      label: 'Anishinaabemowin',
+      short: 'ALG',
+      title: 'Anishinaabemowin (Algonquin) — pas encore disponible en traduction automatique',
+      hint: 'Algonquin · bientôt',
+      group: 'indigenous',
+      unavailable: true,
+    },
+    moh: {
+      id: 'moh',
+      label: 'Kanienʼkéha',
+      short: 'MOH',
+      title: 'Kanienʼkéha (Mohawk) — pas encore disponible en traduction automatique',
+      hint: 'Mohawk · bientôt',
+      group: 'indigenous',
+      unavailable: true,
+    },
+    mic: {
+      id: 'mic',
+      label: 'Mi\'kmaq',
+      short: 'MIC',
+      title: 'Mi\'kmaq — pas encore disponible en traduction automatique',
+      hint: 'Mi\'kmaq · bientôt',
+      group: 'indigenous',
+      unavailable: true,
+    },
+    // ── Autres langues ──
     es: {
       id: 'es',
       label: 'Español',
@@ -48,6 +132,7 @@
       title: 'Traducir toda la página al español',
       hint: 'Página completa',
       goog: 'es',
+      group: 'other',
     },
     pt: {
       id: 'pt',
@@ -56,6 +141,7 @@
       title: 'Traduzir a página inteira para português',
       hint: 'Página inteira',
       goog: 'pt',
+      group: 'other',
     },
     ar: {
       id: 'ar',
@@ -64,6 +150,7 @@
       title: 'ترجمة الصفحة كاملة إلى العربية',
       hint: 'الصفحة كاملة',
       goog: 'ar',
+      group: 'other',
     },
     zh: {
       id: 'zh',
@@ -72,6 +159,7 @@
       title: '将整页翻译成中文',
       hint: '整页',
       goog: 'zh-CN',
+      group: 'other',
     },
     de: {
       id: 'de',
@@ -80,6 +168,7 @@
       title: 'Ganze Seite auf Deutsch übersetzen',
       hint: 'Ganze Seite',
       goog: 'de',
+      group: 'other',
     },
     it: {
       id: 'it',
@@ -88,6 +177,7 @@
       title: 'Traduci l’intera pagina in italiano',
       hint: 'Tutta la pagina',
       goog: 'it',
+      group: 'other',
     },
     ht: {
       id: 'ht',
@@ -96,16 +186,24 @@
       title: 'Tradui tout paj la an kreyòl ayisyen',
       hint: 'Tout paj la',
       goog: 'ht',
+      group: 'other',
     },
   };
 
-  /** Codes Google pour les langues du menu + auto-détection courante. */
+  /** Ordre stable du menu (indépendant de l'ordre des clés d'objet). */
+  const MENU_ORDER = [
+    'original', 'fr', 'en',
+    'iu', 'iu-latn', 'cr', 'moe', 'atj', 'alq', 'moh', 'mic',
+    'es', 'pt', 'ht', 'ar', 'zh', 'de', 'it',
+  ];
+
+  /** Codes Google pour le widget + auto-détection. */
   const GOOG_INCLUDED = [
     ...new Set(
       Object.values(MODES)
         .map((m) => m.goog)
         .filter(Boolean)
-        .concat(['hi', 'vi', 'ru', 'uk', 'pl', 'ro', 'tr', 'ko', 'ja', 'bn', 'pa', 'ur', 'fa']),
+        .concat(['hi', 'vi', 'ru', 'uk', 'pl', 'ro', 'tr', 'ko', 'ja', 'bn', 'pa', 'ur', 'fa', 'kl']),
     ),
   ].join(',');
 
@@ -136,10 +234,24 @@
 
   function googCodeForMode(mode) {
     if (!mode || mode === DEFAULT_MODE) return null;
+    if (MODES[mode]?.unavailable) return null;
     if (MODES[mode]?.goog) return MODES[mode].goog;
     if (mode === 'zh') return 'zh-CN';
+    if (mode === 'iu-latn') return 'iu-Latn';
     if (isValidLangCode(mode)) return mode;
     return null;
+  }
+
+  function notify(msg) {
+    const el = document.getElementById('toast');
+    if (el) {
+      el.textContent = msg;
+      el.classList.remove('hidden');
+      clearTimeout(el._radarTranslateT);
+      el._radarTranslateT = setTimeout(() => el.classList.add('hidden'), 4200);
+      return;
+    }
+    console.info(msg);
   }
 
   function labelForMode(mode) {
@@ -160,6 +272,7 @@
   /**
    * Première langue navigateur ni fr ni en → mode de traduction auto.
    * fr / en (toute variante) → original.
+   * iu / ike → Inuktut si présent.
    */
   function detectBrowserAutoMode() {
     let tags = [];
@@ -174,14 +287,23 @@
     }
 
     for (const tag of tags) {
+      const lower = String(tag || '').toLowerCase();
       const primary = normalizeBrowserLang(tag);
       if (!primary) continue;
       // Français ou anglais → garder le bilingue, ne pas traduire.
       if (primary === 'fr' || primary === 'en') {
         return DEFAULT_MODE;
       }
+      // Inuktut / Inuktitut
+      if (primary === 'iu' || primary === 'ike' || lower.startsWith('iu-')) {
+        return lower.includes('latn') ? 'iu-latn' : 'iu';
+      }
+      // Langue au menu mais pas encore supportée par le moteur → ne pas auto-traduire
+      if (MODES[primary]?.unavailable) {
+        continue;
+      }
       // Autre langue → traduire vers celle-ci (première de la liste).
-      if (MODES[primary]) return primary;
+      if (MODES[primary] && MODES[primary].goog) return primary;
       if (isValidLangCode(primary)) return primary;
     }
     return DEFAULT_MODE;
@@ -195,16 +317,18 @@
       try {
         const raw = (localStorage.getItem(STORAGE_KEY) || '').toLowerCase().trim();
         if (raw === DEFAULT_MODE) return DEFAULT_MODE;
-        if (MODES[raw]) return raw;
+        if (raw === 'iu-latn') return 'iu-latn';
+        if (MODES[raw] && !MODES[raw].unavailable) return raw;
         if (isValidLangCode(raw) && raw !== 'fr' && raw !== 'en') return raw;
-        // Préférence invalide → se comporter comme absence de préférence
+        // Préférence invalide ou langue pas encore supportée → détection
       } catch { /* fall through */ }
     }
     return detectBrowserAutoMode();
   }
 
   function setMode(mode) {
-    if (mode !== DEFAULT_MODE && !MODES[mode] && !isValidLangCode(mode)) {
+    if (MODES[mode]?.unavailable) return getMode();
+    if (mode !== DEFAULT_MODE && !MODES[mode] && !isValidLangCode(mode) && mode !== 'iu-latn') {
       mode = DEFAULT_MODE;
     }
     try {
@@ -370,6 +494,15 @@
   }
 
   function applyMode(mode, { reloadIfNeeded = true, persist = true } = {}) {
+    if (MODES[mode]?.unavailable) {
+      notify(
+        `${MODES[mode].label} : la traduction automatique n’est pas encore offerte `
+        + 'pour cette langue autochtone. La page reste en original bilingue.',
+      );
+      // Ne pas changer le mode actif
+      return;
+    }
+
     if (persist) mode = setMode(mode);
     else if (!mode) mode = DEFAULT_MODE;
 
@@ -424,24 +557,82 @@
     });
   }
 
+  function buildMenu() {
+    const menu = document.getElementById('translate-menu');
+    if (!menu) return;
+
+    const frag = document.createDocumentFragment();
+    let lastGroup = '';
+
+    for (const id of MENU_ORDER) {
+      const m = MODES[id];
+      if (!m) continue;
+      const group = m.group || 'other';
+
+      if (group !== lastGroup) {
+        if (group === 'indigenous') {
+          const sep = document.createElement('div');
+          sep.className = 'translate-menu__sep';
+          sep.setAttribute('role', 'presentation');
+          sep.innerHTML = '<span class="translate-menu__sep-label">Langues autochtones du Québec</span>';
+          frag.appendChild(sep);
+        } else if (group === 'other' && lastGroup === 'indigenous') {
+          const sep = document.createElement('div');
+          sep.className = 'translate-menu__sep';
+          sep.setAttribute('role', 'presentation');
+          sep.innerHTML = '<span class="translate-menu__sep-label">Autres langues</span>';
+          frag.appendChild(sep);
+        }
+        lastGroup = group;
+      }
+
+      const opt = document.createElement('button');
+      opt.type = 'button';
+      opt.role = 'option';
+      opt.className = 'translate-menu__opt'
+        + (id === DEFAULT_MODE ? ' is-active' : '')
+        + (m.unavailable ? ' is-unavailable' : '');
+      opt.dataset.mode = id;
+      opt.setAttribute('aria-selected', id === DEFAULT_MODE ? 'true' : 'false');
+      if (m.unavailable) {
+        opt.setAttribute('aria-disabled', 'true');
+        opt.title = m.title;
+      }
+      opt.innerHTML = `<span class="translate-menu__name">${escapeHtml(m.label)}</span>`
+        + `<span class="translate-menu__hint">${escapeHtml(m.hint || '')}</span>`;
+      frag.appendChild(opt);
+    }
+
+    menu.replaceChildren(frag);
+  }
+
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
   function bindUi() {
     const btn = document.getElementById('translate-toggle');
     const menu = document.getElementById('translate-menu');
     if (!btn || !menu) return;
+
+    buildMenu();
 
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
       toggleMenu();
     });
 
-    menu.querySelectorAll('[data-mode]').forEach((opt) => {
-      opt.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const mode = opt.dataset.mode;
-        closeMenu();
-        // Choix utilisateur → toujours persisté
-        if (mode) applyMode(mode, { persist: true });
-      });
+    menu.addEventListener('click', (e) => {
+      const opt = e.target.closest('[data-mode]');
+      if (!opt || !menu.contains(opt)) return;
+      e.stopPropagation();
+      const mode = opt.dataset.mode;
+      closeMenu();
+      if (mode) applyMode(mode, { persist: true });
     });
 
     document.addEventListener('click', (e) => {
