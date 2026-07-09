@@ -515,8 +515,8 @@
     'CODE', 'PRE', 'KBD', 'SAMP', 'SVG', 'PATH', 'MATH', 'IFRAME',
   ]);
 
-  /** Classes / zones où les noms de médias (et établissements) restent intacts. */
-  const SKIP_CLASS_RE = /\b(?:notranslate|article-source|article-inst|filter-btn__name|article-media-credit__creator)\b/;
+  /** Classes / zones où les noms propres restent intacts (médias, auteurs…). */
+  const SKIP_CLASS_RE = /\b(?:notranslate|article-source|article-inst|article-author|filter-btn__name|article-media-credit__creator)\b/;
 
   function hasUserPreference() {
     try {
