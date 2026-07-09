@@ -925,33 +925,37 @@
       });
     }
     document.documentElement.dataset.translate = mode;
+    // Ne jamais poser dir=rtl sur <html> : le chrome (tuner, filtres, masthead)
+    // est conçu en LTR et bascule en overflow horizontal (scroll vers la gauche).
+    // On marque seulement le contenu éditorial via data-script-dir.
     const rtl = new Set(['ar', 'fa', 'he', 'ur']);
+    document.documentElement.removeAttribute('dir');
     if (mode === DEFAULT_MODE) {
       document.documentElement.lang = 'fr-CA';
-      document.documentElement.removeAttribute('dir');
+      document.documentElement.removeAttribute('data-script-dir');
     } else if (mode === 'en') {
       document.documentElement.lang = 'en-CA';
-      document.documentElement.removeAttribute('dir');
+      document.documentElement.removeAttribute('data-script-dir');
     } else if (mode === 'fr') {
       document.documentElement.lang = 'fr-CA';
-      document.documentElement.removeAttribute('dir');
+      document.documentElement.removeAttribute('data-script-dir');
     } else if (mode === 'zh') {
       document.documentElement.lang = 'zh-Hans';
-      document.documentElement.removeAttribute('dir');
+      document.documentElement.removeAttribute('data-script-dir');
     } else if (mode === 'zh-tw') {
       document.documentElement.lang = 'zh-Hant';
-      document.documentElement.removeAttribute('dir');
+      document.documentElement.removeAttribute('data-script-dir');
     } else if (mode === 'iu' || mode === 'iu-latn') {
       document.documentElement.lang = 'iu';
-      document.documentElement.removeAttribute('dir');
+      document.documentElement.removeAttribute('data-script-dir');
     } else if (mode === 'he') {
       document.documentElement.lang = 'he';
-      document.documentElement.dir = 'rtl';
+      document.documentElement.dataset.scriptDir = 'rtl';
     } else {
       const code = googCodeForMode(mode) || mode;
       document.documentElement.lang = code === 'iw' ? 'he' : code;
-      if (rtl.has(mode)) document.documentElement.dir = 'rtl';
-      else document.documentElement.removeAttribute('dir');
+      if (rtl.has(mode)) document.documentElement.dataset.scriptDir = 'rtl';
+      else document.documentElement.removeAttribute('data-script-dir');
     }
   }
 
