@@ -2610,7 +2610,7 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
     margin-top: 0;
   }
 
-  /* Cartes fil mobile — En bref + Suite du fil */
+  /* Cartes fil mobile — En bref + Suite du fil (plus compactes que les vedettes) */
   .brief-rail .article--compact,
   .news-tail .article--standard {
     padding: 12px 0;
@@ -2619,8 +2619,8 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   .brief-rail .article--compact .article-title,
   .news-tail .article--standard .article-title {
     font-family: var(--sans);
-    font-size: 1.14rem;
-    font-weight: 700;
+    font-size: 1.02rem;
+    font-weight: 650;
     line-height: 1.3;
     letter-spacing: -0.01em;
     margin-top: 0;
@@ -2631,6 +2631,15 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
+  }
+
+  /* Vedettes (fil global) : un cran au-dessus d'En bref pour éviter le « double look » */
+  .news-hero .article--feature .article-title {
+    font-family: var(--serif);
+    font-size: 1.28rem;
+    font-weight: 700;
+    line-height: 1.22;
+    -webkit-line-clamp: 3;
   }
 
   .brief-rail .article--compact .article-byline,

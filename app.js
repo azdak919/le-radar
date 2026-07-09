@@ -2865,10 +2865,9 @@ function updateNewsLayout() {
   NEWS_LIST.dataset.hero = lead.classList.contains('has-image') ? 'image' : 'text';
 }
 
-const HERO_SPOTLIGHT_MAX = 3; /* 1 à la une + 2 vedettes */
+const HERO_SPOTLIGHT_MAX = 3; /* 1 à la une + 2 vedettes (fil global) */
 const BRIEF_SIDEBAR_MAX = 7;
-const SOURCE_HERO_WITH_IMAGE_MAX = 3; /* à la une + 2 vedettes si image */
-const SOURCE_HERO_TEXT_MAX = 4; /* à la une + 3 vedettes sans image */
+/* Vue source : plus de vedettes intermédiaires (voir partitionSourceFeed). */
 /** Fenêtre de fraîcheur : 3 sessions max (= une année universitaire complète). */
 const FRESHNESS_SESSION_COUNT = 3;
 const CONTINGENCY_MAX_SESSIONS_BACK = FRESHNESS_SESSION_COUNT - 1;
@@ -3208,28 +3207,24 @@ function pickSourceLead(pool) {
 }
 
 /**
- * Vue média : gabarit magazine, sélection chronologique.
- * À la une = article le plus récent ; s'il a une image, 2 vedettes,
- * sinon 1 à la une + 3 vedettes, puis En bref et la suite.
+ * Vue d'un seul média (filtre source).
+ *
+ * Une seule pièce « À la une » (lead), puis le reste en En bref / Suite —
+ * pas de vedettes (feature) intermédiaires : sur < 1100 px elles ont
+ * quasi le même rendu que les cartes En bref, ce qui donnait l'impression
+ * d'un double (ex. The Concordian : 2 « grosses » cartes + EN BREF).
  */
 function partitionSourceFeed(items, referenceDate = new Date()) {
   const sorted = sortByDateDesc(items);
   const { items: pool, contingencyBand } = collectSourcePool(sorted, referenceDate);
   const lead = pickSourceLead(pool);
-  const leadKey = lead ? articleKey(lead) : null;
-  const leadHasImage = !!(lead && hasDisplayImage(lead));
-  const heroMax = leadHasImage ? SOURCE_HERO_WITH_IMAGE_MAX : SOURCE_HERO_TEXT_MAX;
-  const afterLead = pool.filter((item) => articleKey(item) !== leadKey);
-  const features = afterLead.slice(0, heroMax - (lead ? 1 : 0));
-  const heroItems = lead ? [lead, ...features] : afterLead.slice(0, heroMax);
+  const heroItems = lead ? [lead] : [];
   const heroKeys = new Set(heroItems.map(articleKey));
-  const briefItems = pool
-    .filter((item) => !heroKeys.has(articleKey(item)))
-    .slice(0, BRIEF_SIDEBAR_MAX);
+  const rest = pool.filter((item) => !heroKeys.has(articleKey(item)));
+  const briefItems = rest.slice(0, BRIEF_SIDEBAR_MAX);
   const briefKeys = new Set(briefItems.map(articleKey));
-  const tailItems = sorted.filter(
-    (item) => !heroKeys.has(articleKey(item)) && !briefKeys.has(articleKey(item)),
-  );
+  const tailItems = rest.filter((item) => !briefKeys.has(articleKey(item)));
+  const leadHasImage = !!(lead && hasDisplayImage(lead));
   return { heroItems, briefItems, tailItems, contingencyBand, leadHasImage };
 }
 
