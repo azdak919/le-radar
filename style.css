@@ -2069,11 +2069,13 @@ html[data-translate-busy="1"] .translate-toggle {
   max-width: none;
 }
 
-/* Vedettes : même règles de contenu (extrait) que la une — pas de line-clamp. */
+/* Vedettes : même longueur d'extrait que la une, typo intermédiaire
+   (plus compacte que la une, plus aérée que Suite du fil ~0.88–0.9rem). */
 .article--feature .article-brief {
-  font-size: 1.08rem;
-  line-height: 1.6;
+  font-size: 0.98rem;
+  line-height: 1.52;
   max-width: none;
+  color: var(--ink-soft);
 }
 .news-hero .article--feature .article-brief-text,
 .news-hero .article--feature .article-brief.is-truncated .article-brief-text,
