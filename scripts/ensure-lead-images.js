@@ -152,14 +152,30 @@ function applyPhotoFields(item, stock) {
 
 /**
  * Photo libre thématique (Openverse / Commons) si le score est solide.
- * Sinon banque campus curatée de l'établissement (dernier recours honnête).
+ * Sinon banque campus curatée — uniquement s'il n'y a PAS de photo source
+ * affichable (sinon on écrase une photo de l'article, même imparfaite).
  */
 async function applyStockPhoto(item, sourceMap = new Map()) {
   if (await photoIsLeadReady(item)) return false;
+
+  // Photo source déjà correcte pour vedette/feature : ne pas injecter de stock.
   if (item.image && hasSourcePhoto(item, sourceMap)) {
     for (const candidate of leadImageUrlCandidates(item.image)) {
       const dims = await probeRemoteImageSize(candidate);
       if (dims && meetsFeatureDisplaySize(dims.width, dims.height)) return false;
+      // Vignette / panorama source : garder la photo de l'article, pas le campus.
+      if (dims && dims.width >= 320 && dims.height >= 200) {
+        // Banque libre OK pour la une seulement si vraiment meilleure — pas campus.
+        const stock = await findStockPhoto(item);
+        if (stock?.stockImage) {
+          if (doUpdate) {
+            applyPhotoFields(item, stock);
+            item.leadImageReady = false;
+          }
+          return true;
+        }
+        return false;
+      }
     }
   }
 
@@ -173,8 +189,9 @@ async function applyStockPhoto(item, sourceMap = new Map()) {
     return true;
   }
 
-  // Repli campus : pavillon / campus distinctif, pas une image « inventée »
-  // pour le sujet. Mieux qu'une photo hors-sujet ou un vide total.
+  // Campus : seulement si aucune photo source utilisable.
+  if (item.image && hasSourcePhoto(item, sourceMap)) return false;
+
   const campus = pickCampusPhoto(item);
   if (!campus?.stockImage) return false;
   if (doUpdate) {
@@ -286,10 +303,17 @@ async function main() {
     } else if (hasSourcePhoto(item, sourceMap)) {
       const resolved = await resolveLeadReadyPhoto(item, reject, opts);
       if (resolved?.url && doUpdate) {
-        if (resolved.leadReady !== false || !item.leadImageReady) {
+        const better = resolved.leadReady !== false
+          || resolved.url !== item.image
+          || !item.leadImageReady;
+        if (better) {
           item.image = resolved.url;
           item.leadImageReady = resolved.leadReady !== false;
           clearLegacyFallback(item);
+          // Une vraie photo d'article remplace toujours la banque campus.
+          if (resolved.leadReady !== false || item.imageProvider === 'campus-bank') {
+            clearStockPhoto(item);
+          }
           pageScraped += 1;
           if (resolved.leadReady !== false) photosRecovered += 1;
         }
