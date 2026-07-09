@@ -1,12 +1,12 @@
 {
-  "updated": "2026-07-08T23:58:27.902Z",
+  "updated": "2026-07-09T04:42:21.690Z",
   "total": 192,
   "pool": 58,
   "incomplete": 7,
-  "withLeadExcerpt": 59,
+  "withLeadExcerpt": 58,
   "candidates": 7,
-  "enriched": 0,
-  "failed": 3,
+  "enriched": 1,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
@@ -37,12 +37,39 @@
       "changed": false
     },
     {
+      "title": "Quitte ton 9 à 5 » : rêve de liberté ou illusion générationnelle?",
+      "link": "https://lecollectif.ca/societe/quitte-ton-9-a-5-reve-de-liberte-ou-illusion-generationnelle/",
+      "ok": true,
+      "score": 96,
+      "chars": 281,
+      "sample": "Sur les réseaux sociaux, le message revient sans cesse : quitte ton emploi, deviens travailleur auto",
+      "changed": true
+    },
+    {
+      "title": "Le culte de la beauté",
+      "link": "https://lecollectif.ca/societe/le-culte-de-la-beaute/",
+      "ok": true,
+      "score": 96,
+      "chars": 579,
+      "sample": "Pourquoi sommes-nous obsédés par la beauté? Qu’elle soit physique ou matérielle, nous accordons de p",
+      "changed": false
+    },
+    {
       "title": "Road to the 2026 FIFA World Cup",
       "link": "https://thelinknewspaper.ca/article/16333",
       "ok": true,
       "score": 96,
       "chars": 531,
       "sample": "Canadian goalkeeper Maxime Crépeau, who hails from nearby Greenfield Park, appeared emotional during",
+      "changed": false
+    },
+    {
+      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
+      "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
+      "ok": true,
+      "score": 100,
+      "chars": 445,
+      "sample": "Le 13 mars dernier, la rappeuse Calamine a dévoilé son nouvel album , Rétrograde . Avec cette quatri",
       "changed": false
     }
   ]

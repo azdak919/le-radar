@@ -1,34 +1,10 @@
 {
-  "updated": "2026-07-08T23:58:22.072Z",
+  "updated": "2026-07-09T04:42:15.066Z",
   "total": 192,
   "withAuthor": 192,
-  "mismatches": 87,
+  "mismatches": 82,
   "ok": true,
   "samples": [
-    {
-      "title": "Un grand soir au Festival de jazz pour Angine de Poitrine",
-      "link": "https://lecollectif.ca/a-la-une/un-grand-soir-au-festival-de-jazz-pour-angine-de-poitrine/",
-      "source": "Le Collectif",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "La rédaction",
-      "reason": "no-author-source"
-    },
-    {
-      "title": "Christine Labrie tourne la page sur huit ans comme députée de Sherbrooke",
-      "link": "https://lecollectif.ca/a-la-une/christine-labrie-tourne-la-page-sur-huit-ans-comme-deputee-de-sherbrooke/",
-      "source": "Le Collectif",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "La rédaction",
-      "reason": "no-author-source"
-    },
-    {
-      "title": "L’authenticité, l’ingrédient secret des influenceurs qui durent",
-      "link": "https://lecollectif.ca/edition-papier/lauthenticite-lingredient-secret-des-influenceurs-qui-durent/",
-      "source": "Le Collectif",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "La rédaction",
-      "reason": "no-author-source"
-    },
     {
       "title": "The Cruel Optimism of Summer",
       "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
@@ -36,22 +12,6 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "Erandy Rogel",
       "reason": "page-byline"
-    },
-    {
-      "title": "La procrastination : quand remettre à plus tard devient un problème",
-      "link": "https://lecollectif.ca/a-la-une/la-procrastination-quand-remettre-a-plus-tard-devient-un-probleme/",
-      "source": "Le Collectif",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "La rédaction",
-      "reason": "no-author-source"
-    },
-    {
-      "title": "Une première nouvelle candidature pour la CAQ dans Brome‑Missisquoi",
-      "link": "https://lecollectif.ca/a-la-une/une-premiere-nouvelle-candidature-pour-la-caq-dans-brome%e2%80%91missisquoi/",
-      "source": "Le Collectif",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "La rédaction",
-      "reason": "no-author-source"
     },
     {
       "title": "The McGill Community takes on the Montreal International Jazz Festival",
@@ -106,32 +66,32 @@
       "link": "https://quartierlibre.ca/presences-invisibles-ecrire-la-ville/",
       "source": "Quartier Libre",
       "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "La rédaction",
-      "reason": "no-author-source"
+      "canonicalAuthor": "Emilie Rizkallah",
+      "reason": "page-byline"
     },
     {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
       "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
       "source": "Quartier Libre",
       "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "La rédaction",
-      "reason": "no-author-source"
+      "canonicalAuthor": "Samuel Roy",
+      "reason": "page-byline"
     },
     {
       "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
       "link": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
       "source": "Quartier Libre",
       "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "La rédaction",
-      "reason": "no-author-source"
+      "canonicalAuthor": "Ulysse Taillard-Hodez",
+      "reason": "page-byline"
     },
     {
       "title": "Un projet de loi rendrait obligatoire le statut d’étudiant·e proche aidant·e",
       "link": "https://quartierlibre.ca/projet-loi-etudiant-proche-aidante/",
       "source": "Quartier Libre",
       "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "La rédaction",
-      "reason": "no-author-source"
+      "canonicalAuthor": "Mohammed Aziz Mestiri",
+      "reason": "page-byline"
     },
     {
       "title": "A final note from the Editor-in-Chief of Volume 45, for the record",
@@ -154,17 +114,57 @@
       "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
       "source": "Quartier Libre",
       "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "La rédaction",
-      "reason": "no-author-source"
+      "canonicalAuthor": "Bérénice Lemarié",
+      "reason": "page-byline"
     },
     {
       "title": "FAÉCUM : la démocratie universitaire critiquée",
       "link": "https://quartierlibre.ca/faecum-la-democratie-universitaire-critiquee/",
       "source": "Quartier Libre",
       "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "La rédaction",
+      "canonicalAuthor": "Ulysse Taillard-Hodez",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Montréal Mystère : le polar à l’honneur dans un festival bilingue",
+      "link": "https://quartierlibre.ca/montreal-mystere-festival-bilingue/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Carla Roche",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Coupe du monde 2026 : l’empreinte de l’expansion",
+      "link": "https://quartierlibre.ca/coupe-du-monde-2026/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Gabriel Lapointe",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Soutien technique à l’UdeM : entre attentes et frustrations",
+      "link": "https://quartierlibre.ca/soutien-technique-a-ludem/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Solène Gerber",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "link": "https://quartierlibre.ca/festival-jamais-lu-2026/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Bérénice Lemarié",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Last day to apply to be part of The Concordian's masthead!",
+      "link": "https://theconcordian.substack.com/p/last-day-to-apply-to-be-part-of-the",
+      "source": "The Concordian",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
     }
   ],
-  "fixed": 87
+  "fixed": 82
 }
