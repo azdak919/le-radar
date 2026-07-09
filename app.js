@@ -2600,22 +2600,37 @@ function isCegepInstitution(name = '', type = '') {
 }
 
 /**
+ * Développe un acronyme stocké en base (ex. « UQAM ») vers le nom complet
+ * (« Université du Québec à Montréal »). Si le nom est déjà long, le garde.
+ */
+function expandInstitutionFullName(name = '') {
+  if (!name) return '';
+  // Réutilise la même logique que le syntoniseur (filtre + cartes).
+  return tunerInstitutionLabel(name);
+}
+
+/**
  * Libellé institution sur les cartes article.
  * @param {'short'|'full'} form
- *   short — acronyme (ULaval, UdeM…) pour Suite du fil / mobile
+ *   short — acronyme (ULaval, UdeM, UQAM…) pour Suite du fil / mobile
  *   full  — nom complet (tablette+ en À la une / En bref / vedettes)
  */
 function articleInstitutionLabel(name = '', type = '', form = 'short') {
   if (!name) return '';
-  const full = formatInstitutionDisplay(
-    name.replace(/\s*\([^)]*\)\s*$/, '').trim() || name,
-  );
-  if (form === 'full') return full;
+  if (form === 'full') {
+    return expandInstitutionFullName(name);
+  }
+  // Court : acronyme pour les universités ; sinon libellé formaté
   if (isQuebecUniversity(name, type)) {
     const acr = resolveInstitutionAcronym(name);
-    return acr || full;
+    if (acr) return acr;
   }
-  return full;
+  // Donnée déjà en acronyme seul (institution: "UQAM")
+  const stripped = name.replace(/\s*\([^)]*\)\s*$/, '').trim();
+  if (INSTITUTION_FULL_BY_ACRONYM[stripped] || INSTITUTION_FULL_BY_ACRONYM[name]) {
+    return resolveInstitutionAcronym(name) || stripped;
+  }
+  return formatInstitutionDisplay(stripped || name);
 }
 
 /** HTML meta institution : complet + acronyme pour bascule responsive CSS. */
@@ -2630,7 +2645,11 @@ function articleInstitutionMetaHtml(name = '', type = '', role = 'standard') {
       + `<span class="article-inst__short">${escapeHtml(short)}</span>`
       + `</span>`;
   }
-  return `<span class="article-inst notranslate" translate="no">${escapeHtml(short)}</span>`;
+  // Spacious mais full === short (ex. cégep sans acronyme) : afficher full
+  if (spacious && full) {
+    return `<span class="article-inst notranslate" translate="no">${escapeHtml(full)}</span>`;
+  }
+  return `<span class="article-inst notranslate" translate="no">${escapeHtml(short || full)}</span>`;
 }
 
 function shortInstitution(name = '', type = '') {
