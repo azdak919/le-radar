@@ -313,6 +313,26 @@ function excerptOpensWithByline(excerpt = '') {
   return /^(?:Par|By)\s+/i.test(String(excerpt).trim());
 }
 
+/* Crédits de production en fin de billet (balados / newsletters Substack :
+   « Produced by X », « Hosted by X », « Written by X »…). Verbes capitalisés
+   uniquement : une critique de film écrit « produced by » en minuscules au
+   fil de la phrase, alors qu'un crédit ouvre sa ligne avec la majuscule. */
+const BODY_CREDIT_STOP = '(?:Cover|Photo|Art|Artwork|Graphics?|Music|Sound|Editing|Edited|Illustration|Design|Mixing|Mixed|Produced|Hosted|Written)';
+const BODY_CREDIT_AUTHOR_RE = new RegExp(
+  `(?:Written|Produced|Hosted|Reported|Rédigé|Réalisé|Animé|Écrit)\\s+(?:by|par)\\s*:?\\s+([\\p{Lu}][\\p{L}'’.\\-]+(?:\\s+(?!${BODY_CREDIT_STOP}\\b)[\\p{Lu}][\\p{L}'’.\\-]+){0,3})`,
+  'u',
+);
+
+function authorFromBodyCredits(text = '') {
+  const plain = stripHtml(text);
+  const m = plain.match(BODY_CREDIT_AUTHOR_RE);
+  if (!m) return '';
+  const name = normalizeAuthor(m[1]);
+  if (!name || isJunkAuthorName(name)) return '';
+  if (/^(?:Substack|WordPress|Wix|Squarespace)$/i.test(name)) return '';
+  return name;
+}
+
 function normalizeArticleUrl(link = '') {
   try {
     const u = new URL(link);
@@ -444,6 +464,11 @@ function authorFromArticleHtml(html = '', lang = 'fr', hints = {}, sourceName = 
     const meta = metaContent(html, key);
     if (meta) candidates.push({ author: meta, trust: 40 });
   }
+
+  // Crédit de production dans le corps (« Produced by X », « Hosted by X »…) —
+  // seul signal nominal des billets Substack signés au nom de la publication.
+  const bodyCredit = authorFromBodyCredits(html);
+  if (bodyCredit) candidates.push({ author: bodyCredit, trust: 70 });
 
   const sourceKey = normAuthorKey(String(sourceName || ''));
   for (const { author } of candidates.sort((a, b) => b.trust - a.trust)) {
@@ -694,6 +719,7 @@ module.exports = {
   extractBylineFromText,
   extractFirstPersonAuthor,
   excerptOpensWithByline,
+  authorFromBodyCredits,
   authorFromArticleHtml,
   authorsFromTribuneAuthor,
   authorsFromHintSelectors,
