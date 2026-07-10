@@ -1,47 +1,53 @@
 {
-  "updatedAt": "2026-07-10T20:50:33.434Z",
+  "updatedAt": "2026-07-10T22:06:00.089Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les Arshitechs du Son",
         "source": "schedule",
         "start": "17:30",
         "end": "18:30",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "Palmarès CHYZ",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "10:30",
+        "url": "https://chyz.ca/emission/palmares-chyz/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-10T20:50:12.952Z"
+      "checkedAt": "2026-07-10T22:05:39.906Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rebelles soniques",
-        "source": "api-live",
-        "start": "12:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "rebelles-soniques"
-      },
-      "next": {
         "title": "Le palmarès",
         "source": "api-live",
         "start": "14:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364079.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "palmares-de-cism"
       },
+      "next": {
+        "title": "Salsa & Bembê",
+        "source": "api-live",
+        "start": "15:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/363701.mp3",
+        "slug": "salsa-et-bembe"
+      },
       "track": "",
-      "showTitle": "Rebelles soniques",
+      "showTitle": "Le palmarès",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,60 +57,59 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-10T20:50:14.636Z"
+      "checkedAt": "2026-07-10T22:05:41.393Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "New Shit",
+        "title": "Café",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "18:00",
+        "end": "19:00"
       },
       "next": {
-        "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
+        "title": "Listening to Latin America: Blanca-Victoria",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "19:00",
+        "end": "20:00"
       },
       "track": "",
-      "showTitle": "New Shit",
+      "showTitle": "Café",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-10T20:50:17.147Z"
+      "checkedAt": "2026-07-10T22:05:43.715Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Tapeworms",
+        "title": "The Go-Go Radio Magic Show",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/tapeworms"
+        "start": "18:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
       },
       "next": {
-        "title": "The Groove Master's Hour",
+        "title": "El Encuentro Latino",
         "source": "schedule",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/el-encuentro-latino"
       },
       "track": "",
-      "showTitle": "Tapeworms",
+      "showTitle": "The Go-Go Radio Magic Show",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-10T20:50:30.579Z"
+      "checkedAt": "2026-07-10T22:05:56.936Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,27 +134,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-10T20:50:31.210Z"
+      "checkedAt": "2026-07-10T22:05:57.657Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Fold ft. CFCF & Helena Deland",
+        "title": "Vivant•e",
         "source": "api-live",
-        "host": "Jump Source"
+        "host": "Lydia Képinski"
       },
       "next": null,
-      "track": "Jump Source - Fold ft. CFCF & Helena Deland",
-      "showTitle": "Fold ft. CFCF & Helena Deland",
-      "host": "Jump Source",
+      "track": "Lydia Képinski - Vivant•e",
+      "showTitle": "Vivant•e",
+      "host": "Lydia Képinski",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-10T20:50:33.084Z"
+      "checkedAt": "2026-07-10T22:05:59.739Z"
     }
   }
 }
