@@ -1,76 +1,31 @@
 {
-  "updated": "2026-07-09T21:59:54.529Z",
+  "updated": "2026-07-09T23:57:59.814Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 15,
-  "withLeadExcerpt": 71,
-  "candidates": 15,
-  "enriched": 14,
+  "incomplete": 4,
+  "withLeadExcerpt": 65,
+  "candidates": 4,
+  "enriched": 1,
   "failed": 1,
   "ok": true,
   "samples": [
     {
-      "title": "Au revoir !",
-      "link": "https://www.delitfrancais.com/2026/03/25/au-revoir/",
+      "title": "Les femmes MAGA au service du patriarcat - Le Délit",
+      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
       "ok": true,
       "score": 100,
-      "chars": 394,
-      "sample": "Le Délit est fier de la place qu’il occupe dans la communauté francophone de l’Université McGill. Et",
+      "chars": 393,
+      "sample": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer ",
       "changed": true
     },
     {
-      "title": "La cassette commence à être usée",
-      "link": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
-      "ok": true,
-      "score": 95,
-      "chars": 325,
-      "sample": "Première gaffe intellectuelle (in)volontaire du Concordian . En trente secondes de recherches plus o",
-      "changed": true
-    },
-    {
-      "title": "Élections de l’exécutif de l’AÉUM",
-      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
+      "title": "The Cruel Optimism of Summer",
+      "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
       "ok": true,
       "score": 66,
       "chars": 400,
-      "sample": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « p",
-      "changed": true
-    },
-    {
-      "title": "Pourquoi le L est en premier dans LGBTQ+",
-      "link": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
-      "ok": true,
-      "score": 81,
-      "chars": 400,
-      "sample": "Cependant, l’épidémie du sida a modifié le rapport entre les deux groupes. Au cours de cette crise, ",
-      "changed": true
-    },
-    {
-      "title": "AI’s use in legal decisions poses major risks to the Canadian judicial system’s integrity and neutrality",
-      "link": "https://www.thetribune.ca/opinion/ais-use-in-legal-decisions-poses-major-risks-to-the-canadian-judicial-systems-integrity-and-neutrality-11062026/?utm_source=rss&utm_medium=rss&utm_campaign=ais-use-in-legal-decisions-poses-major-risks-to-the-canadian-judicial-systems-integrity-and-neutrality-11062026",
-      "ok": true,
-      "score": 96,
-      "chars": 377,
-      "sample": "Growing adoption of AI systems, which frequently hallucinate and possess ingrained biases against ra",
-      "changed": true
-    },
-    {
-      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé - Quartier Libre",
-      "link": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
-      "ok": true,
-      "score": 96,
-      "chars": 238,
-      "sample": "Mme Fournier Dubé a insisté sur le fait que les enseignant·e·s sont les véritables « agents de chang",
-      "changed": true
-    },
-    {
-      "title": "Rachat des armes à feu : le Québec est-il l’exception canadienne ?",
-      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/rachat-des-armes-a-feu-le-quebec-est-il-lexception-canadienne/?utm_source=rss&utm_medium=rss&utm_campaign=rachat-des-armes-a-feu-le-quebec-est-il-lexception-canadienne",
-      "ok": true,
-      "score": 96,
-      "chars": 232,
-      "sample": "Illustration générée par ChatGPT à partir du prompt d’Olivier Verreault pour L’Exemplaire. Ce prompt",
-      "changed": true
+      "sample": "“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt t",
+      "changed": false
     },
     {
       "title": "Letters from the Editors May 2026",
@@ -79,7 +34,7 @@
       "score": 76,
       "chars": 400,
       "sample": "Dear readers, Class of 2026 We did it! As May’s doting weather and perfumed flowers lull us into the",
-      "changed": true
+      "changed": false
     }
   ]
 }
