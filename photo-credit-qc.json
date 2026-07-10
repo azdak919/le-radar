@@ -1,23 +1,23 @@
 {
-  "updated": "2026-07-10T12:22:38.375Z",
+  "updated": "2026-07-10T13:11:16.576Z",
   "total": 185,
-  "withImage": 107,
-  "withCredit": 107,
+  "withImage": 109,
+  "withCredit": 109,
   "cited": 76,
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 5,
-  "updatedCount": 5,
-  "citedNew": 2,
-  "fallbackNew": 3,
+  "checked": 8,
+  "updatedCount": 8,
+  "citedNew": 3,
+  "fallbackNew": 5,
   "samples": [
     {
       "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
       "source": "La Pige",
-      "credit": "Photo : Léa Morin-Letort",
-      "cited": true,
-      "method": "wp-caption"
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
     },
     {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB » - Quartier Libre",
@@ -34,11 +34,18 @@
       "method": null
     },
     {
-      "title": "Des initiatives qui rassemblent - Le Délit",
+      "title": "Élections de l’exécutif de l’AÉUM - Le Délit",
       "source": "Le Délit",
-      "credit": "Crédit photo : Le Délit",
-      "cited": false,
-      "method": null
+      "credit": "Photo : Toscane Ralaimongo",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Pourquoi le L est en premier dans LGBTQ+ - Le Délit",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
       "title": "Leave the Children Out of This",
@@ -46,6 +53,20 @@
       "credit": "Photo: My Little Princess (2011)",
       "cited": true,
       "method": "via-attribution"
+    },
+    {
+      "title": "Le beat critique : Est-ce que l’algorithme contrôle vraiment nos goûts musicaux ?",
+      "source": "Zone Campus",
+      "credit": "Crédit photo : Zone Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Le beat critique : « La fuite en avant » le grand retour d’Orelsan ?",
+      "source": "Zone Campus",
+      "credit": "Crédit photo : Zone Campus",
+      "cited": false,
+      "method": null
     }
   ]
 }
