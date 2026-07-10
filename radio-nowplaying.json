@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-07-10T22:06:00.089Z",
+  "updatedAt": "2026-07-10T23:30:15.266Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "schedule",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHYZ",
         "source": "schedule",
@@ -20,34 +14,34 @@
         "url": "https://chyz.ca/emission/palmares-chyz/"
       },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-10T22:05:39.906Z"
+      "checkedAt": "2026-07-10T23:30:06.921Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
-        "source": "api-live",
-        "start": "14:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "palmares-de-cism"
-      },
-      "next": {
         "title": "Salsa & Bembê",
         "source": "api-live",
         "start": "15:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/363701.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "salsa-et-bembe"
       },
+      "next": {
+        "title": "Turbo tannant",
+        "source": "api-live",
+        "start": "16:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/363706.mp3",
+        "slug": "turbo-tannant"
+      },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Salsa & Bembê",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,32 +51,33 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-10T22:05:41.393Z"
+      "checkedAt": "2026-07-10T23:30:08.756Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Café",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Listening to Latin America: Blanca-Victoria",
         "source": "api-live",
         "start": "19:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Macondo",
+        "source": "api-live",
+        "start": "20:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "Café",
+      "showTitle": "Listening to Latin America: Blanca-Victoria",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-10T22:05:43.715Z"
+      "checkedAt": "2026-07-10T23:30:11.563Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -109,52 +104,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-10T22:05:56.936Z"
+      "checkedAt": "2026-07-10T23:30:13.123Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Nouveautés Franco",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Enfin vendredi",
         "source": "schedule",
         "start": "19:00",
         "end": "21:00"
       },
+      "next": {
+        "title": "Mangue, Goyave et Reggae",
+        "source": "schedule",
+        "start": "21:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "Nouveautés Franco",
+      "showTitle": "Enfin vendredi",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-10T22:05:57.657Z"
+      "checkedAt": "2026-07-10T23:30:13.703Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Vivant•e",
+        "title": "Septembre",
         "source": "api-live",
-        "host": "Lydia Képinski"
+        "host": "Mantisse"
       },
       "next": null,
-      "track": "Lydia Képinski - Vivant•e",
-      "showTitle": "Vivant•e",
-      "host": "Lydia Képinski",
+      "track": "Mantisse - Septembre",
+      "showTitle": "Septembre",
+      "host": "Mantisse",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-10T22:05:59.739Z"
+      "checkedAt": "2026-07-10T23:30:14.916Z"
     }
   }
 }
