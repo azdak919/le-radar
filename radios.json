@@ -22,10 +22,12 @@
     ],
     "popularity": 3,
     "_streamStatus": "working",
-    "_streamChecked": "2026-07-08T08:38:27.265Z",
+    "_streamChecked": "2026-07-10T09:46:01.370Z",
     "_streamIcyName": "No Name",
     "_nowPlayingSources": [
-      { "type": "icy" }
+      {
+        "type": "icy"
+      }
     ]
   },
   {
@@ -51,11 +53,16 @@
     ],
     "popularity": 1,
     "_streamStatus": "working",
-    "_streamChecked": "2026-07-08T08:40:44.879Z",
+    "_streamChecked": "2026-07-10T09:46:40.761Z",
     "_streamIcyName": "CISM high quality",
     "_nowPlayingSources": [
-      { "type": "cism-v1", "url": "https://admin.cism893.ca/api/v1/live" },
-      { "type": "icy" }
+      {
+        "type": "cism-v1",
+        "url": "https://admin.cism893.ca/api/v1/live"
+      },
+      {
+        "type": "icy"
+      }
     ]
   },
   {
@@ -81,11 +88,16 @@
     ],
     "popularity": 2,
     "_streamStatus": "working",
-    "_streamChecked": "2026-07-08T08:41:00.978Z",
+    "_streamChecked": "2026-07-10T09:46:57.689Z",
     "_streamIcyName": "Airtime!",
     "_nowPlayingSources": [
-      { "type": "airtime-live", "base": "https://ckut.airtime.pro" },
-      { "type": "icy" }
+      {
+        "type": "airtime-live",
+        "base": "https://ckut.airtime.pro"
+      },
+      {
+        "type": "icy"
+      }
     ]
   },
   {
@@ -111,10 +123,12 @@
     ],
     "popularity": 4,
     "_streamStatus": "working",
-    "_streamChecked": "2026-07-08T08:41:09.548Z",
+    "_streamChecked": "2026-07-10T09:47:06.018Z",
     "_streamIcyName": "CJLO 1690AM - Montreal",
     "_nowPlayingSources": [
-      { "type": "icy" }
+      {
+        "type": "icy"
+      }
     ]
   },
   {
@@ -139,10 +153,12 @@
     ],
     "popularity": 5,
     "_streamStatus": "working",
-    "_streamChecked": "2026-07-08T08:43:12.021Z",
+    "_streamChecked": "2026-07-10T09:49:10.638Z",
     "_streamIcyName": "CFAK - ÇA PART ICI",
     "_nowPlayingSources": [
-      { "type": "icy" }
+      {
+        "type": "icy"
+      }
     ]
   },
   {
@@ -168,11 +184,16 @@
     ],
     "popularity": 6,
     "_streamStatus": "working",
-    "_streamChecked": "2026-07-08T08:43:23.269Z",
+    "_streamChecked": "2026-07-10T09:49:23.057Z",
     "_streamIcyName": "CHOQ.CA",
     "_nowPlayingSources": [
-      { "type": "craft-live", "url": "https://www.choq.ca/api/live" },
-      { "type": "icy" }
+      {
+        "type": "craft-live",
+        "url": "https://www.choq.ca/api/live"
+      },
+      {
+        "type": "icy"
+      }
     ]
   }
 ]
