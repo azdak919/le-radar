@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-10T05:37:31.365Z",
+  "updatedAt": "2026-07-10T09:39:10.086Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-10T05:37:22.962Z"
+      "checkedAt": "2026-07-10T09:39:00.564Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La courbe 2.0",
+        "title": "La grande ludothèque (reprise)",
         "source": "api-live",
-        "start": "20:00",
+        "start": "00:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "la-courbe-2-0"
+        "slug": "la-grande-ludotheque"
       },
       "next": {
-        "title": "Mix anglo",
+        "title": "Mix Franco",
         "source": "api-live",
-        "start": "22:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364024.mp3",
-        "slug": "mix-anglo"
+        "start": "02:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364030.mp3",
+        "slug": "mix-franco"
       },
       "track": "",
-      "showTitle": "La courbe 2.0",
+      "showTitle": "La grande ludothèque (reprise)",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-10T05:37:24.349Z"
+      "checkedAt": "2026-07-10T09:39:02.488Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Listen! You Smell Something?",
-        "source": "api-live",
-        "start": "01:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "G-Flex Survivor&#039;s Corner",
         "source": "api-live",
         "start": "04:00",
         "end": "07:00"
       },
-      "track": "",
-      "showTitle": "Listen! You Smell Something?",
+      "next": {
+        "title": "Morning Detour",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "09:00"
+      },
+      "track": "G-Flex Survivor",
+      "showTitle": "G-Flex Survivor&#039;s Corner",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,17 +77,17 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-10T05:37:27.215Z"
+      "checkedAt": "2026-07-10T09:39:05.315Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Finally Midnight",
+        "title": "CJLO Late Night",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "http://www.cjlo.com/shows/finally-midnight"
+        "start": "01:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "Wake up Folks!",
@@ -97,14 +97,14 @@
         "url": "http://www.cjlo.com/shows/wake-up-folks"
       },
       "track": "",
-      "showTitle": "Finally Midnight",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-10T05:37:28.449Z"
+      "checkedAt": "2026-07-10T09:39:06.962Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-10T05:37:29.119Z"
+      "checkedAt": "2026-07-10T09:39:07.641Z"
     },
     "choq": {
       "id": "choq",
@@ -138,7 +138,7 @@
         "title": "YO Y YA (feat. Gabriella Olivo)",
         "source": "api-live",
         "host": "Maze",
-        "url": "https://www.choq.ca/assets/playlist/les-nuits-brutales.png"
+        "url": "https://www.choq.ca/assets/playlist/internationale.jpg"
       },
       "next": null,
       "track": "",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-10T05:37:31.015Z"
+      "checkedAt": "2026-07-10T09:39:09.736Z"
     }
   }
 }
