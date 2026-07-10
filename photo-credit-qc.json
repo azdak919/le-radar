@@ -1,23 +1,23 @@
 {
-  "updated": "2026-07-10T13:11:16.576Z",
+  "updated": "2026-07-10T15:16:03.402Z",
   "total": 185,
-  "withImage": 109,
-  "withCredit": 109,
-  "cited": 76,
+  "withImage": 107,
+  "withCredit": 107,
+  "cited": 77,
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 8,
-  "updatedCount": 8,
+  "checked": 5,
+  "updatedCount": 5,
   "citedNew": 3,
-  "fallbackNew": 5,
+  "fallbackNew": 2,
   "samples": [
     {
       "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
       "source": "La Pige",
-      "credit": "Crédit photo : La Pige",
-      "cited": false,
-      "method": null
+      "credit": "Photo : Léa Morin-Letort",
+      "cited": true,
+      "method": "wp-caption"
     },
     {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB » - Quartier Libre",
@@ -34,39 +34,18 @@
       "method": null
     },
     {
-      "title": "Élections de l’exécutif de l’AÉUM - Le Délit",
+      "title": "Ce que nous devons aux femmes - Le Délit",
       "source": "Le Délit",
-      "credit": "Photo : Toscane Ralaimongo",
+      "credit": "Photo : Alexandre Gontier",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "media-credit-near"
     },
     {
-      "title": "Pourquoi le L est en premier dans LGBTQ+ - Le Délit",
+      "title": "Les femmes MAGA au service du patriarcat - Le Délit",
       "source": "Le Délit",
       "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Le beat critique : Est-ce que l’algorithme contrôle vraiment nos goûts musicaux ?",
-      "source": "Zone Campus",
-      "credit": "Crédit photo : Zone Campus",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Le beat critique : « La fuite en avant » le grand retour d’Orelsan ?",
-      "source": "Zone Campus",
-      "credit": "Crédit photo : Zone Campus",
-      "cited": false,
-      "method": null
     }
   ]
 }
