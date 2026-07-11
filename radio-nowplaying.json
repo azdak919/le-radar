@@ -1,53 +1,53 @@
 {
-  "updatedAt": "2026-07-11T15:58:25.769Z",
+  "updatedAt": "2026-07-11T17:07:55.506Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Le Ré-Show : Deuxième Service",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
-      },
-      "next": {
         "title": "Radio Futura",
         "source": "schedule",
         "start": "13:00",
         "end": "16:00",
         "url": "https://chyz.ca/emission/radio-futura/"
       },
+      "next": {
+        "title": "Palmarès CHYZ",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "10:30",
+        "url": "https://chyz.ca/emission/palmares-chyz/"
+      },
       "track": "",
-      "showTitle": "Le Ré-Show : Deuxième Service",
+      "showTitle": "Radio Futura",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T15:58:18.257Z"
+      "checkedAt": "2026-07-11T17:07:41.789Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Voix tropicale",
-        "source": "api-live",
-        "start": "05:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "voix-tropicale"
-      },
-      "next": {
         "title": "Elkin Polo El Show",
         "source": "api-live",
         "start": "09:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/363738.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "elkin-polo-el-show"
       },
+      "next": {
+        "title": "Change le beat",
+        "source": "api-live",
+        "start": "13:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/363744.mp3",
+        "slug": "change-le-beat"
+      },
       "track": "",
-      "showTitle": "Voix tropicale",
+      "showTitle": "Elkin Polo El Show",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,7 +57,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-11T15:58:19.701Z"
+      "checkedAt": "2026-07-11T17:07:43.357Z"
     },
     "ckut": {
       "id": "ckut",
@@ -83,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T15:58:22.166Z"
+      "checkedAt": "2026-07-11T17:07:46.105Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Gospel Unlimited",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/gospel-unlimited"
-      },
-      "next": {
         "title": "Anatomy of Caribbean Music",
         "source": "schedule",
         "start": "12:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
       },
+      "next": {
+        "title": "Caribbean Callaloo",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/caribbean-callaloo"
+      },
       "track": "",
-      "showTitle": "Gospel Unlimited",
+      "showTitle": "Anatomy of Caribbean Music",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T15:58:23.369Z"
+      "checkedAt": "2026-07-11T17:07:47.406Z"
     },
     "cfak": {
       "id": "cfak",
@@ -130,27 +130,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T15:58:23.912Z"
+      "checkedAt": "2026-07-11T17:07:47.863Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Full Moon Live",
+        "title": "Cold Hard Morning Light",
         "source": "api-live",
-        "host": "Coco GB"
+        "host": "Heat"
       },
       "next": null,
-      "track": "Coco GB - Full Moon Live",
-      "showTitle": "Full Moon Live",
-      "host": "Coco GB",
+      "track": "Heat - Cold Hard Morning Light",
+      "showTitle": "Cold Hard Morning Light",
+      "host": "Heat",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T15:58:25.418Z"
+      "checkedAt": "2026-07-11T17:07:55.155Z"
     }
   }
 }
