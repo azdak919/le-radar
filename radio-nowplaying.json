@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-11T09:08:05.077Z",
+  "updatedAt": "2026-07-11T10:42:25.248Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T09:07:56.335Z"
+      "checkedAt": "2026-07-11T10:42:17.179Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rebelles soniques (reprise)",
-        "source": "api-live",
-        "start": "00:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "rebelles-soniques"
-      },
-      "next": {
         "title": "Mix Franco",
         "source": "api-live",
         "start": "02:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364104.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "mix-franco"
       },
+      "next": {
+        "title": "Voix tropicale",
+        "source": "api-live",
+        "start": "05:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/363727.mp3",
+        "slug": "voix-tropicale"
+      },
       "track": "",
-      "showTitle": "Rebelles soniques (reprise)",
+      "showTitle": "Mix Franco",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-11T09:07:57.790Z"
+      "checkedAt": "2026-07-11T10:42:18.737Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Mash Time Show",
-        "source": "api-live",
-        "start": "04:00",
-        "end": "06:00"
-      },
-      "next": {
         "title": "Quebec Acadie",
         "source": "api-live",
         "start": "06:00",
         "end": "10:00"
       },
+      "next": {
+        "title": "Making Contact / Anything Goes",
+        "source": "api-live",
+        "start": "10:00",
+        "end": "10:30"
+      },
       "track": "",
-      "showTitle": "The Mash Time Show",
+      "showTitle": "Quebec Acadie",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T09:08:00.369Z"
+      "checkedAt": "2026-07-11T10:42:21.774Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "World-Up'",
         "source": "schedule",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/world-up"
       },
+      "next": {
+        "title": "The Live Wire Show",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/the-live-wire-show"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "World-Up'",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T09:08:02.066Z"
+      "checkedAt": "2026-07-11T10:42:22.983Z"
     },
     "cfak": {
       "id": "cfak",
@@ -124,25 +124,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T09:08:02.632Z"
+      "checkedAt": "2026-07-11T10:42:23.528Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Duu - L",
-        "source": "stream"
+        "title": "Reverse Uno",
+        "source": "api-live",
+        "host": "Miro Belzil"
       },
       "next": null,
-      "track": "",
-      "showTitle": "Duu - L",
-      "host": "",
-      "source": "stream",
+      "track": "Miro Belzil - Reverse Uno",
+      "showTitle": "Reverse Uno",
+      "host": "Miro Belzil",
+      "source": "api-live",
       "sources": [
+        "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T09:08:04.726Z"
+      "checkedAt": "2026-07-11T10:42:24.897Z"
     }
   }
 }
