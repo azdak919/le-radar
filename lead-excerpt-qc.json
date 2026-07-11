@@ -1,14 +1,23 @@
 {
-  "updated": "2026-07-11T09:03:27.356Z",
+  "updated": "2026-07-11T10:44:52.071Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 3,
+  "incomplete": 4,
   "withLeadExcerpt": 64,
-  "candidates": 3,
-  "enriched": 0,
+  "candidates": 4,
+  "enriched": 1,
   "failed": 1,
   "ok": true,
   "samples": [
+    {
+      "title": "Qui sont les agents qui patrouillent notre campus? - Le Délit",
+      "link": "https://www.delitfrancais.com/2026/03/18/qui-sont-les-agents-qui-patrouillent-notre-campus/",
+      "ok": true,
+      "score": 100,
+      "chars": 396,
+      "sample": "« L’Université McGill est à la recherche de patrouilleurs dynamiques et engagés pour assurer la sécu",
+      "changed": true
+    },
     {
       "title": "The Cruel Optimism of Summer",
       "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",

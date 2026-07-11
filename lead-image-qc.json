@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-11T09:09:15.378Z",
+  "updated": "2026-07-11T10:51:16.065Z",
   "total": 185,
   "withPhoto": 157,
   "withStock": 39,
-  "withCampusBank": 13,
+  "withCampusBank": 14,
   "fullyCovered": 185,
-  "leadReadyPhotos": 124,
+  "leadReadyPhotos": 140,
   "pageScraped": 86,
   "photosRecovered": 54,
   "imagesCleared": 2,
   "stockSearches": 60,
   "stockFound": 39,
-  "campusBankFound": 13,
+  "campusBankFound": 14,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -47,8 +47,8 @@
     {
       "title": "El Niño s’approche du Québec",
       "link": "https://lapige.atmjonquiere.com/2026/05/20/el-nino-sapproche-du-quebec/?utm_source=rss&utm_medium=rss&utm_campaign=el-nino-sapproche-du-quebec",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Qu%C3%A9bec_city%2C_Qu%C3%A9bec_State%2C_Canad%C3%A1_04.jpg"
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f4/Pavillon_principal_du_C%C3%A9gep_de_Jonqui%C3%A8re.jpg"
     },
     {
       "title": "Assistance technique en pharmacie : de premières portes ouvertes à Alma",
@@ -75,16 +75,16 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_CLUBSDESPORTS_ClubPleinAirAltitude_SourceFacebookClubPleinAirAltitude-1-768x1024.jpg"
     },
     {
+      "title": "Christine Labrie tourne la page sur huit ans comme députée de Sherbrooke",
+      "link": "https://lecollectif.ca/a-la-une/christine-labrie-tourne-la-page-sur-huit-ans-comme-deputee-de-sherbrooke/",
+      "reason": "stock-too-small",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_ChristineLabrie_SourcePageFacebookDeRubaGhazal-819x1024.jpg"
+    },
+    {
       "title": "Recettes musicales québécoises pour l’été - Quartier Libre",
       "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
       "reason": "no-stock-match",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
-    },
-    {
-      "title": "Letters from the Editors May 2026",
-      "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/2295/2462847853_5a214f2dab_b.jpg"
     }
   ]
 }
