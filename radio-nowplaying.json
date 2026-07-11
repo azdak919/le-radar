@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-11T11:54:50.885Z",
+  "updatedAt": "2026-07-11T13:23:39.988Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T11:54:42.207Z"
+      "checkedAt": "2026-07-11T13:23:31.079Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Franco",
-        "source": "api-live",
-        "start": "02:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-franco"
-      },
-      "next": {
         "title": "Voix tropicale",
         "source": "api-live",
         "start": "05:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/363727.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "voix-tropicale"
       },
+      "next": {
+        "title": "Elkin Polo El Show",
+        "source": "api-live",
+        "start": "09:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/363738.mp3",
+        "slug": "elkin-polo-el-show"
+      },
       "track": "",
-      "showTitle": "Mix Franco",
+      "showTitle": "Voix tropicale",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,7 +51,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-11T11:54:43.734Z"
+      "checkedAt": "2026-07-11T13:23:32.640Z"
     },
     "ckut": {
       "id": "ckut",
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T11:54:46.238Z"
+      "checkedAt": "2026-07-11T13:23:35.413Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "World-Up'",
-        "source": "schedule",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/world-up"
-      },
-      "next": {
         "title": "The Live Wire Show",
         "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/the-live-wire-show"
       },
+      "next": {
+        "title": "Gospel Unlimited",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/gospel-unlimited"
+      },
       "track": "",
-      "showTitle": "World-Up'",
+      "showTitle": "The Live Wire Show",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T11:54:47.850Z"
+      "checkedAt": "2026-07-11T13:23:37.119Z"
     },
     "cfak": {
       "id": "cfak",
@@ -124,27 +124,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T11:54:48.369Z"
+      "checkedAt": "2026-07-11T13:23:37.565Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Naive",
+        "title": "The Storm",
         "source": "api-live",
-        "host": "Softcult"
+        "host": "Graeme Jonez"
       },
       "next": null,
-      "track": "Softcult - Naive",
-      "showTitle": "Naive",
-      "host": "Softcult",
+      "track": "Graeme Jonez - The Storm",
+      "showTitle": "The Storm",
+      "host": "Graeme Jonez",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T11:54:50.535Z"
+      "checkedAt": "2026-07-11T13:23:39.637Z"
     }
   }
 }
