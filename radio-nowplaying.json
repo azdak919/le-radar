@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-11T13:23:39.988Z",
+  "updatedAt": "2026-07-11T14:35:33.307Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Palmarès CHYZ",
+        "title": "Le Ré-Show : Deuxième Service",
         "source": "schedule",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
       },
       "track": "",
       "showTitle": "",
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T13:23:31.079Z"
+      "checkedAt": "2026-07-11T14:35:22.916Z"
     },
     "cism": {
       "id": "cism",
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-11T13:23:32.640Z"
+      "checkedAt": "2026-07-11T14:35:24.775Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Quebec Acadie",
+        "title": "Samedi Midi",
         "source": "api-live",
-        "start": "06:00",
-        "end": "10:00"
+        "start": "10:30",
+        "end": "14:00"
       },
       "next": {
-        "title": "Making Contact / Anything Goes",
+        "title": "Funky Revolutions",
         "source": "api-live",
-        "start": "10:00",
-        "end": "10:30"
+        "start": "14:00",
+        "end": "16:00"
       },
       "track": "",
-      "showTitle": "Quebec Acadie",
+      "showTitle": "Samedi Midi",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T13:23:35.413Z"
+      "checkedAt": "2026-07-11T14:35:27.917Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Live Wire Show",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/the-live-wire-show"
-      },
-      "next": {
         "title": "Gospel Unlimited",
         "source": "schedule",
         "start": "10:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/gospel-unlimited"
       },
+      "next": {
+        "title": "Anatomy of Caribbean Music",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
+      },
       "track": "",
-      "showTitle": "The Live Wire Show",
+      "showTitle": "Gospel Unlimited",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T13:23:37.119Z"
+      "checkedAt": "2026-07-11T14:35:29.799Z"
     },
     "cfak": {
       "id": "cfak",
@@ -124,27 +124,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T13:23:37.565Z"
+      "checkedAt": "2026-07-11T14:35:30.558Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "The Storm",
+        "title": "DOOMSDAY CIGARETTES (feat. La Monarque)",
         "source": "api-live",
-        "host": "Graeme Jonez"
+        "host": "Maze"
       },
       "next": null,
-      "track": "Graeme Jonez - The Storm",
-      "showTitle": "The Storm",
-      "host": "Graeme Jonez",
+      "track": "Maze - DOOMSDAY CIGARETTES (feat. La Monarque)",
+      "showTitle": "DOOMSDAY CIGARETTES (feat. La Monarque)",
+      "host": "Maze",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T13:23:39.637Z"
+      "checkedAt": "2026-07-11T14:35:32.956Z"
     }
   }
 }
