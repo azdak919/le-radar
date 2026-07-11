@@ -1,72 +1,23 @@
 {
-  "updated": "2026-07-11T16:48:16.760Z",
+  "updated": "2026-07-11T18:20:24.184Z",
   "total": 185,
-  "withImage": 157,
-  "withCredit": 157,
-  "cited": 108,
+  "withImage": 107,
+  "withCredit": 107,
+  "cited": 74,
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 57,
-  "updatedCount": 57,
-  "citedNew": 39,
-  "fallbackNew": 18,
+  "checked": 6,
+  "updatedCount": 6,
+  "citedNew": 4,
+  "fallbackNew": 2,
   "samples": [
-    {
-      "title": "Voyager sans arrêt : passion ou obsession ?",
-      "source": "Le Collectif",
-      "credit": "Photo : Pixabay",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "Ask the Trib: How do I survive summer in my hometown?",
-      "source": "The Tribune",
-      "credit": "Photo : Zoe Lee",
-      "cited": true,
-      "method": "figcaption-attribution"
-    },
-    {
-      "title": "Kanga I, II, III’ brings Projections: SANKOFA’s afrofuturist vision to Trottier",
-      "source": "The Tribune",
-      "credit": "Photo : McGill Visual Arts Collection",
-      "cited": true,
-      "method": "figcaption-bare"
-    },
     {
       "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
       "source": "La Pige",
       "credit": "Photo : Léa Morin-Letort",
       "cited": true,
       "method": "wp-caption"
-    },
-    {
-      "title": "AI’s use in legal decisions poses major risks to the Canadian judicial system’s integrity and neutrality",
-      "source": "The Tribune",
-      "credit": "Photo : Zoe Lee",
-      "cited": true,
-      "method": "figcaption-attribution"
-    },
-    {
-      "title": "Know Your Artist: Theodore A. Harris",
-      "source": "The Tribune",
-      "credit": "Photo : Theodore A. Harris",
-      "cited": true,
-      "method": "figcaption-bare"
-    },
-    {
-      "title": "Montreal protestors commemorate the 78th anniversary of the Nakba",
-      "source": "The Tribune",
-      "credit": "Photo : Ellen Lurie",
-      "cited": true,
-      "method": "figcaption-attribution"
-    },
-    {
-      "title": "Sans fin(s): au cœur des troubles du comportement alimentaire",
-      "source": "L'Exemplaire",
-      "credit": "Crédit photo : L'Exemplaire",
-      "cited": false,
-      "method": null
     },
     {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB » - Quartier Libre",
@@ -83,18 +34,25 @@
       "method": null
     },
     {
-      "title": "A final note from the Editor-in-Chief of Volume 45, for the record",
-      "source": "The Tribune",
-      "credit": "Photo : Yusur Al-Sharqi",
+      "title": "Ce que nous devons aux femmes - Le Délit",
+      "source": "Le Délit",
+      "credit": "Photo : Alexandre Gontier",
       "cited": true,
-      "method": "figcaption-attribution"
+      "method": "media-credit-near"
     },
     {
-      "title": "SPHR remembers Gaza Solidarity Encampment ahead of Nakba Anniversary Protest",
-      "source": "The Tribune",
-      "credit": "Photo : Ellen Lurie",
+      "title": "Les femmes MAGA au service du patriarcat - Le Délit",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré",
       "cited": true,
-      "method": "figcaption-attribution"
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }
