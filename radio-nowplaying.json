@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-07-11T19:44:06.042Z",
+  "updatedAt": "2026-07-11T20:51:33.273Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Radio Futura",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "16:00",
-        "url": "https://chyz.ca/emission/radio-futura/"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHYZ",
         "source": "schedule",
@@ -20,14 +14,14 @@
         "url": "https://chyz.ca/emission/palmares-chyz/"
       },
       "track": "",
-      "showTitle": "Radio Futura",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T19:43:56.496Z"
+      "checkedAt": "2026-07-11T20:51:24.888Z"
     },
     "cism": {
       "id": "cism",
@@ -57,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-11T19:43:58.387Z"
+      "checkedAt": "2026-07-11T20:51:26.518Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Funky Revolutions",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "16:00"
-      },
-      "next": {
         "title": "West Indian Rhythms",
         "source": "api-live",
         "start": "16:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Masters At Work",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "21:00"
+      },
       "track": "",
-      "showTitle": "Funky Revolutions",
+      "showTitle": "West Indian Rhythms",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T19:44:01.597Z"
+      "checkedAt": "2026-07-11T20:51:29.120Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Caribbean Callaloo",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/caribbean-callaloo"
-      },
-      "next": {
         "title": "Mi Dun Talk",
         "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/mi-dun-talk"
       },
+      "next": {
+        "title": "Mo' Ritmo Radio",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/mo-ritmo-radio"
+      },
       "track": "",
-      "showTitle": "Caribbean Callaloo",
+      "showTitle": "Mi Dun Talk",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T19:44:03.135Z"
+      "checkedAt": "2026-07-11T20:51:30.424Z"
     },
     "cfak": {
       "id": "cfak",
@@ -130,27 +124,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T19:44:03.717Z"
+      "checkedAt": "2026-07-11T20:51:30.888Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Aftertaste",
+        "title": "Territoire Hostile",
         "source": "api-live",
-        "host": "Gabrielle Shonk"
+        "host": "Sans Pression"
       },
       "next": null,
-      "track": "Gabrielle Shonk - Aftertaste",
-      "showTitle": "Aftertaste",
-      "host": "Gabrielle Shonk",
+      "track": "Sans Pression - Territoire Hostile",
+      "showTitle": "Territoire Hostile",
+      "host": "Sans Pression",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T19:44:05.692Z"
+      "checkedAt": "2026-07-11T20:51:32.923Z"
     }
   }
 }
