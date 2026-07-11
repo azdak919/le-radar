@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-11T21:52:19.264Z",
+  "updatedAt": "2026-07-11T22:52:04.929Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T21:52:11.854Z"
+      "checkedAt": "2026-07-11T22:51:54.861Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Change le beat",
-        "source": "api-live",
-        "start": "13:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "change-le-beat"
-      },
-      "next": {
         "title": "Faites entrer un DJ",
         "source": "api-live",
         "start": "14:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/363749.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "faites-entrer-un-dj"
       },
+      "next": {
+        "title": "Contenu explicite",
+        "source": "api-live",
+        "start": "16:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/363754.mp3",
+        "slug": "contenu-explicite"
+      },
       "track": "",
-      "showTitle": "Change le beat",
+      "showTitle": "Faites entrer un DJ",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,7 +51,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-11T21:52:13.435Z"
+      "checkedAt": "2026-07-11T22:51:56.696Z"
     },
     "ckut": {
       "id": "ckut",
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T21:52:15.887Z"
+      "checkedAt": "2026-07-11T22:51:59.701Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Mo' Ritmo Radio",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/mo-ritmo-radio"
-      },
-      "next": {
         "title": "The Limelight",
         "source": "schedule",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/the-limelight"
       },
+      "next": {
+        "title": "Screamers",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/screamers"
+      },
       "track": "",
-      "showTitle": "Mo' Ritmo Radio",
+      "showTitle": "The Limelight",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T21:52:17.187Z"
+      "checkedAt": "2026-07-11T22:52:01.422Z"
     },
     "cfak": {
       "id": "cfak",
@@ -124,27 +124,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T21:52:17.672Z"
+      "checkedAt": "2026-07-11T22:52:02.116Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Afrique Victime",
+        "title": "Cavalier Seul",
         "source": "api-live",
-        "host": "Mdou Moctar"
+        "host": "Bleu Reine"
       },
       "next": null,
-      "track": "Mdou Moctar - Afrique Victime",
-      "showTitle": "Afrique Victime",
-      "host": "Mdou Moctar",
+      "track": "Bleu Reine - Cavalier Seul",
+      "showTitle": "Cavalier Seul",
+      "host": "Bleu Reine",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T21:52:18.914Z"
+      "checkedAt": "2026-07-11T22:52:04.579Z"
     }
   }
 }
