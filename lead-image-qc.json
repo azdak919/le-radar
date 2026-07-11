@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-11T10:51:16.065Z",
+  "updated": "2026-07-11T11:48:42.991Z",
   "total": 185,
   "withPhoto": 157,
   "withStock": 39,
-  "withCampusBank": 14,
+  "withCampusBank": 15,
   "fullyCovered": 185,
-  "leadReadyPhotos": 140,
+  "leadReadyPhotos": 139,
   "pageScraped": 86,
   "photosRecovered": 54,
   "imagesCleared": 2,
   "stockSearches": 60,
   "stockFound": 39,
-  "campusBankFound": 14,
+  "campusBankFound": 15,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -51,12 +51,6 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/f/f4/Pavillon_principal_du_C%C3%A9gep_de_Jonqui%C3%A8re.jpg"
     },
     {
-      "title": "Assistance technique en pharmacie : de premières portes ouvertes à Alma",
-      "link": "https://lapige.atmjonquiere.com/2026/05/20/assistance-technique-en-pharmacie-de-premieres-portes-ouvertes-a-alma/?utm_source=rss&utm_medium=rss&utm_campaign=assistance-technique-en-pharmacie-de-premieres-portes-ouvertes-a-alma",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/7040/6933759219_87c820c047_b.jpg"
-    },
-    {
       "title": "Dévoilement du Livre bleu",
       "link": "https://lecollectif.ca/a-la-une/devoilement-du-livre-bleu/",
       "reason": "no-stock-match",
@@ -75,16 +69,22 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_CLUBSDESPORTS_ClubPleinAirAltitude_SourceFacebookClubPleinAirAltitude-1-768x1024.jpg"
     },
     {
-      "title": "Christine Labrie tourne la page sur huit ans comme députée de Sherbrooke",
-      "link": "https://lecollectif.ca/a-la-une/christine-labrie-tourne-la-page-sur-huit-ans-comme-deputee-de-sherbrooke/",
-      "reason": "stock-too-small",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_ChristineLabrie_SourcePageFacebookDeRubaGhazal-819x1024.jpg"
-    },
-    {
       "title": "Recettes musicales québécoises pour l’été - Quartier Libre",
       "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
       "reason": "no-stock-match",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
+    },
+    {
+      "title": "Mc Gill community members express concerns about Mc Gill Athletics’ former partnership with Inter Rent REIT",
+      "link": "https://www.thetribune.ca/news/mcgill-community-members-express-concerns-about-mcgill-athletics-former-partnership-with-interrent-reit-26042026/?utm_source=rss&utm_medium=rss&utm_campaign=mcgill-community-members-express-concerns-about-mcgill-athletics-former-partnership-with-interrent-reit-26042026",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
+    },
+    {
+      "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
+      "link": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Assembl%C3%A9e_nationale_du_Qu%C3%A9bec%2C_l%27H%C3%B4tel_du_Parlement%2C_fa%C3%A7ade_avec_ancien_entr%C3%A9_principal.jpg"
     }
   ]
 }
