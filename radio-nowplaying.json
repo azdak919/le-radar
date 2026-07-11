@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-11T18:27:10.926Z",
+  "updatedAt": "2026-07-11T19:44:06.042Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -27,7 +27,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T18:27:03.045Z"
+      "checkedAt": "2026-07-11T19:43:56.496Z"
     },
     "cism": {
       "id": "cism",
@@ -57,7 +57,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-11T18:27:04.602Z"
+      "checkedAt": "2026-07-11T19:43:58.387Z"
     },
     "ckut": {
       "id": "ckut",
@@ -83,7 +83,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T18:27:06.872Z"
+      "checkedAt": "2026-07-11T19:44:01.597Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -110,7 +110,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T18:27:08.576Z"
+      "checkedAt": "2026-07-11T19:44:03.135Z"
     },
     "cfak": {
       "id": "cfak",
@@ -130,27 +130,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T18:27:09.115Z"
+      "checkedAt": "2026-07-11T19:44:03.717Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Genius of Evil",
+        "title": "Aftertaste",
         "source": "api-live",
-        "host": "Empath"
+        "host": "Gabrielle Shonk"
       },
       "next": null,
-      "track": "Empath - Genius of Evil",
-      "showTitle": "Genius of Evil",
-      "host": "Empath",
+      "track": "Gabrielle Shonk - Aftertaste",
+      "showTitle": "Aftertaste",
+      "host": "Gabrielle Shonk",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-11T18:27:10.576Z"
+      "checkedAt": "2026-07-11T19:44:05.692Z"
     }
   }
 }
