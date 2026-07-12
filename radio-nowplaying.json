@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-12T21:53:41.995Z",
+  "updatedAt": "2026-07-12T22:52:27.434Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T21:53:29.908Z"
+      "checkedAt": "2026-07-12T22:52:17.211Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Basses fréquences",
-        "source": "api-live",
-        "start": "12:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "basses-frequences"
-      },
-      "next": {
         "title": "Le char de marge",
         "source": "api-live",
         "start": "14:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/363803.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "le-char-de-marge"
       },
+      "next": {
+        "title": "Vibrance",
+        "source": "api-live",
+        "start": "16:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/363807.mp3",
+        "slug": "vibrance"
+      },
       "track": "",
-      "showTitle": "Basses fréquences",
+      "showTitle": "Le char de marge",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-12T21:53:31.976Z"
+      "checkedAt": "2026-07-12T22:52:19.086Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Bhum Bhum Time",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Desi Beats (must be .mp3!!)",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Bluegrass Rambling",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "Bhum Bhum Time",
+      "showTitle": "Desi Beats (must be .mp3!!)",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T21:53:36.602Z"
+      "checkedAt": "2026-07-12T22:52:22.489Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Grade A Explosives",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/grade-a-explosives"
-      },
-      "next": {
         "title": "Bill's Country & Western Favou...",
         "source": "schedule",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
       },
+      "next": {
+        "title": "No Boundaries",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/no-boundaries"
+      },
       "track": "",
-      "showTitle": "Grade A Explosives",
+      "showTitle": "Bill's Country & Western Favou...",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T21:53:38.443Z"
+      "checkedAt": "2026-07-12T22:52:24.498Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,27 +129,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T21:53:39.191Z"
+      "checkedAt": "2026-07-12T22:52:25.193Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Lesbienne woke sur l'autotune",
+        "title": "DILLA",
         "source": "api-live",
-        "host": "Calamine"
+        "host": "Mike Shabb"
       },
       "next": null,
-      "track": "Calamine - Lesbienne woke sur l",
-      "showTitle": "Lesbienne woke sur l'autotune",
-      "host": "Calamine",
+      "track": "Mike Shabb - DILLA",
+      "showTitle": "DILLA",
+      "host": "Mike Shabb",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T21:53:41.644Z"
+      "checkedAt": "2026-07-12T22:52:27.083Z"
     }
   }
 }
