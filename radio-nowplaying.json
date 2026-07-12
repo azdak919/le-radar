@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-12T20:52:36.248Z",
+  "updatedAt": "2026-07-12T21:53:41.995Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T20:52:26.291Z"
+      "checkedAt": "2026-07-12T21:53:29.908Z"
     },
     "cism": {
       "id": "cism",
@@ -51,7 +51,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-12T20:52:28.087Z"
+      "checkedAt": "2026-07-12T21:53:31.976Z"
     },
     "ckut": {
       "id": "ckut",
@@ -77,7 +77,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T20:52:30.972Z"
+      "checkedAt": "2026-07-12T21:53:36.602Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -104,7 +104,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T20:52:32.845Z"
+      "checkedAt": "2026-07-12T21:53:38.443Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,27 +129,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T20:52:33.603Z"
+      "checkedAt": "2026-07-12T21:53:39.191Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Vendredi",
+        "title": "Lesbienne woke sur l'autotune",
         "source": "api-live",
-        "host": "Rouge Pompier"
+        "host": "Calamine"
       },
       "next": null,
-      "track": "Rouge Pompier - Vendredi",
-      "showTitle": "Vendredi",
-      "host": "Rouge Pompier",
+      "track": "Calamine - Lesbienne woke sur l",
+      "showTitle": "Lesbienne woke sur l'autotune",
+      "host": "Calamine",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T20:52:35.898Z"
+      "checkedAt": "2026-07-12T21:53:41.644Z"
     }
   }
 }
