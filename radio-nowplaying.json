@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-12T08:34:33.360Z",
+  "updatedAt": "2026-07-12T09:03:45.994Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T08:34:25.401Z"
+      "checkedAt": "2026-07-12T09:03:31.739Z"
     },
     "cism": {
       "id": "cism",
@@ -51,7 +51,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-12T08:34:26.890Z"
+      "checkedAt": "2026-07-12T09:03:33.742Z"
     },
     "ckut": {
       "id": "ckut",
@@ -76,7 +76,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T08:34:29.053Z"
+      "checkedAt": "2026-07-12T09:03:40.839Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -103,7 +103,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T08:34:30.384Z"
+      "checkedAt": "2026-07-12T09:03:42.800Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,27 +128,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T08:34:30.929Z"
+      "checkedAt": "2026-07-12T09:03:43.561Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Ma joie m'etrangle",
+        "title": "On se perd",
         "source": "api-live",
-        "host": "FUUDGE"
+        "host": "Mélanie Venditti"
       },
       "next": null,
-      "track": "FUUDGE - Ma joie m",
-      "showTitle": "Ma joie m'etrangle",
-      "host": "FUUDGE",
+      "track": "Mélanie Venditti - On se perd",
+      "showTitle": "On se perd",
+      "host": "Mélanie Venditti",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T08:34:33.010Z"
+      "checkedAt": "2026-07-12T09:03:45.643Z"
     }
   }
 }
