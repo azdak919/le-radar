@@ -1,53 +1,53 @@
 {
-  "updatedAt": "2026-07-12T15:33:56.208Z",
+  "updatedAt": "2026-07-12T17:00:39.793Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Le Ré-Show : Deuxième Service",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
-      },
-      "next": {
         "title": "Radio Futura",
         "source": "schedule",
         "start": "13:00",
         "end": "16:00",
         "url": "https://chyz.ca/emission/radio-futura/"
       },
+      "next": {
+        "title": "Lundi Indie",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
+      },
       "track": "",
-      "showTitle": "Le Ré-Show : Deuxième Service",
+      "showTitle": "Radio Futura",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T15:33:48.694Z"
+      "checkedAt": "2026-07-12T17:00:30.058Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Genre de bleu",
+        "title": "Le 120e parallèle",
         "source": "api-live",
-        "start": "07:00",
+        "start": "09:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "genre-de-bleu"
+        "slug": "le-120e-parallele"
       },
       "next": {
-        "title": "Par mots et par vaux",
+        "title": "Ya Raï",
         "source": "api-live",
-        "start": "08:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/363789.mp3",
-        "slug": "par-mots-et-par-vaux"
+        "start": "10:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/363793.mp3",
+        "slug": "ya-rai"
       },
       "track": "",
-      "showTitle": "Genre de bleu",
+      "showTitle": "Le 120e parallèle",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-12T15:33:50.164Z"
+      "checkedAt": "2026-07-12T17:00:32.021Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Free Kick",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "13:00"
-      },
-      "next": {
         "title": "Modular Systems/Future Classics",
         "source": "api-live",
         "start": "13:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "The Magic Roundabout",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "16:00"
+      },
       "track": "",
-      "showTitle": "Free Kick",
+      "showTitle": "Modular Systems/Future Classics",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T15:33:52.459Z"
+      "checkedAt": "2026-07-12T17:00:35.026Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Rigged Sessions",
+        "title": "Northern Stagelights",
         "source": "schedule",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/rigged-sessions"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/northern-stagelights"
       },
       "next": {
-        "title": "Brave Little Emo Girl",
+        "title": "Cinema Smackdown",
         "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/brave-little-emo-girl"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/cinema-smackdown"
       },
       "track": "",
-      "showTitle": "Rigged Sessions",
+      "showTitle": "Northern Stagelights",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T15:33:53.763Z"
+      "checkedAt": "2026-07-12T17:00:36.812Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,27 +135,26 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T15:33:54.316Z"
+      "checkedAt": "2026-07-12T17:00:37.441Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Project 10",
-        "source": "api-live",
-        "host": "Satya"
+        "title": "Bloc Pub 21 juillet.mp3",
+        "source": "api-live"
       },
       "next": null,
-      "track": "Satya - Project 10",
-      "showTitle": "Project 10",
-      "host": "Satya",
+      "track": "",
+      "showTitle": "Bloc Pub 21 juillet.mp3",
+      "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T15:33:55.858Z"
+      "checkedAt": "2026-07-12T17:00:39.442Z"
     }
   }
 }
