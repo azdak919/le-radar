@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-12T09:03:45.994Z",
+  "updatedAt": "2026-07-12T10:54:11.594Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T09:03:31.739Z"
+      "checkedAt": "2026-07-12T10:54:03.348Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rythmologie (reprise)",
-        "source": "api-live",
-        "start": "00:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "rythmologie"
-      },
-      "next": {
         "title": "Mix Franco",
         "source": "api-live",
         "start": "02:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364169.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "mix-franco"
       },
+      "next": {
+        "title": "Les mignardises littéraires",
+        "source": "api-live",
+        "start": "06:30",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/363783.mp3",
+        "slug": "les-mignardises-litteraires"
+      },
       "track": "",
-      "showTitle": "Rythmologie (reprise)",
+      "showTitle": "Mix Franco",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,59 +51,60 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-12T09:03:33.742Z"
+      "checkedAt": "2026-07-12T10:54:04.859Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Utopia&#039;s Paradise",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "06:00"
-      },
-      "next": {
         "title": "Mind, Soul, &amp; Spirit",
         "source": "api-live",
         "start": "06:00",
         "end": "09:00"
       },
-      "track": "Utopia",
-      "showTitle": "Utopia&#039;s Paradise",
+      "next": {
+        "title": "Latin Time",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "10:30"
+      },
+      "track": "Mind, Soul, & Spirit",
+      "showTitle": "Mind, Soul, &amp; Spirit",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T09:03:40.839Z"
+      "checkedAt": "2026-07-12T10:54:07.123Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Sun Ra, Sun Rise",
         "source": "schedule",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
       },
+      "next": {
+        "title": "The Gigi Brown Experience",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/the-gigi-brown-experience"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Sun Ra, Sun Rise",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T09:03:42.800Z"
+      "checkedAt": "2026-07-12T10:54:08.640Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,27 +129,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T09:03:43.561Z"
+      "checkedAt": "2026-07-12T10:54:09.125Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "On se perd",
+        "title": "skinfolk",
         "source": "api-live",
-        "host": "Mélanie Venditti"
+        "host": "aja monet"
       },
       "next": null,
-      "track": "Mélanie Venditti - On se perd",
-      "showTitle": "On se perd",
-      "host": "Mélanie Venditti",
+      "track": "aja monet - skinfolk",
+      "showTitle": "skinfolk",
+      "host": "aja monet",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T09:03:45.643Z"
+      "checkedAt": "2026-07-12T10:54:11.244Z"
     }
   }
 }
