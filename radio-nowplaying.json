@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-12T18:28:10.266Z",
+  "updatedAt": "2026-07-12T19:42:02.737Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -27,27 +27,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T18:28:00.482Z"
+      "checkedAt": "2026-07-12T19:41:55.536Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Ya Raï",
-        "source": "api-live",
-        "start": "10:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "ya-rai"
-      },
-      "next": {
         "title": "Yallah lâcher prise",
         "source": "api-live",
         "start": "11:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/363795.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "yallah-lacher-prise-avec-rhabibiii"
       },
+      "next": {
+        "title": "Basses fréquences",
+        "source": "api-live",
+        "start": "12:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/363796.mp3",
+        "slug": "basses-frequences"
+      },
       "track": "",
-      "showTitle": "Ya Raï",
+      "showTitle": "Yallah lâcher prise",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,7 +57,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-12T18:28:02.457Z"
+      "checkedAt": "2026-07-12T19:41:57.053Z"
     },
     "ckut": {
       "id": "ckut",
@@ -83,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T18:28:05.555Z"
+      "checkedAt": "2026-07-12T19:41:59.174Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Cinema Smackdown",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/cinema-smackdown"
-      },
-      "next": {
         "title": "The Tommy John Show",
         "source": "schedule",
         "start": "15:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/the-tommy-john-show"
       },
+      "next": {
+        "title": "Grade A Explosives",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/grade-a-explosives"
+      },
       "track": "",
-      "showTitle": "Cinema Smackdown",
+      "showTitle": "The Tommy John Show",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T18:28:07.470Z"
+      "checkedAt": "2026-07-12T19:42:00.393Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,27 +135,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T18:28:08.223Z"
+      "checkedAt": "2026-07-12T19:42:00.951Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Big Life, Big Leaf",
+        "title": "Fade Into You",
         "source": "api-live",
-        "host": "No Joy"
+        "host": "Mazzy Star"
       },
       "next": null,
-      "track": "No Joy - Big Life, Big Leaf",
-      "showTitle": "Big Life, Big Leaf",
-      "host": "No Joy",
+      "track": "Mazzy Star - Fade Into You",
+      "showTitle": "Fade Into You",
+      "host": "Mazzy Star",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T18:28:09.915Z"
+      "checkedAt": "2026-07-12T19:42:02.385Z"
     }
   }
 }
