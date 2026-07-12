@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-12T22:52:27.434Z",
+  "updatedAt": "2026-07-12T23:56:48.793Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T22:52:17.211Z"
+      "checkedAt": "2026-07-12T23:56:41.054Z"
     },
     "cism": {
       "id": "cism",
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-12T22:52:19.086Z"
+      "checkedAt": "2026-07-12T23:56:42.529Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Desi Beats (must be .mp3!!)",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Bluegrass Rambling",
         "source": "api-live",
         "start": "19:00",
         "end": "20:00"
       },
-      "track": "",
-      "showTitle": "Desi Beats (must be .mp3!!)",
+      "next": {
+        "title": "Country Classics",
+        "source": "api-live",
+        "start": "20:00",
+        "end": "21:00"
+      },
+      "track": "Airtime - offline",
+      "showTitle": "Bluegrass Rambling",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T22:52:22.489Z"
+      "checkedAt": "2026-07-12T23:56:44.805Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Bill's Country & Western Favou...",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
-      },
-      "next": {
         "title": "No Boundaries",
         "source": "schedule",
         "start": "19:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/no-boundaries"
       },
+      "next": {
+        "title": "Eastern ...",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "20:30",
+        "url": "http://www.cjlo.com/shows/eastern-promises"
+      },
       "track": "",
-      "showTitle": "Bill's Country & Western Favou...",
+      "showTitle": "No Boundaries",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T22:52:24.498Z"
+      "checkedAt": "2026-07-12T23:56:46.109Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,27 +129,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T22:52:25.193Z"
+      "checkedAt": "2026-07-12T23:56:46.653Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "DILLA",
+        "title": "Sur le dos de ta moto",
         "source": "api-live",
-        "host": "Mike Shabb"
+        "host": "Laura Schembri"
       },
       "next": null,
-      "track": "Mike Shabb - DILLA",
-      "showTitle": "DILLA",
-      "host": "Mike Shabb",
+      "track": "DRUG CHURCH - Pynch",
+      "showTitle": "Sur le dos de ta moto",
+      "host": "Laura Schembri",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T22:52:27.083Z"
+      "checkedAt": "2026-07-12T23:56:48.443Z"
     }
   }
 }
