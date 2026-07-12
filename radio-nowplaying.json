@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-12T17:00:39.793Z",
+  "updatedAt": "2026-07-12T18:28:10.266Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -27,27 +27,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T17:00:30.058Z"
+      "checkedAt": "2026-07-12T18:28:00.482Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le 120e parallèle",
-        "source": "api-live",
-        "start": "09:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "le-120e-parallele"
-      },
-      "next": {
         "title": "Ya Raï",
         "source": "api-live",
         "start": "10:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/363793.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "ya-rai"
       },
+      "next": {
+        "title": "Yallah lâcher prise",
+        "source": "api-live",
+        "start": "11:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/363795.mp3",
+        "slug": "yallah-lacher-prise-avec-rhabibiii"
+      },
       "track": "",
-      "showTitle": "Le 120e parallèle",
+      "showTitle": "Ya Raï",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-12T17:00:32.021Z"
+      "checkedAt": "2026-07-12T18:28:02.457Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Modular Systems/Future Classics",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "The Magic Roundabout",
         "source": "api-live",
         "start": "14:00",
         "end": "16:00"
       },
+      "next": {
+        "title": "Bhum Bhum Time",
+        "source": "api-live",
+        "start": "16:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Modular Systems/Future Classics",
+      "showTitle": "The Magic Roundabout",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T17:00:35.026Z"
+      "checkedAt": "2026-07-12T18:28:05.555Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Northern Stagelights",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/northern-stagelights"
-      },
-      "next": {
         "title": "Cinema Smackdown",
         "source": "schedule",
         "start": "14:00",
         "end": "15:00",
         "url": "http://www.cjlo.com/shows/cinema-smackdown"
       },
+      "next": {
+        "title": "The Tommy John Show",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/the-tommy-john-show"
+      },
       "track": "",
-      "showTitle": "Northern Stagelights",
+      "showTitle": "Cinema Smackdown",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T17:00:36.812Z"
+      "checkedAt": "2026-07-12T18:28:07.470Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,26 +135,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T17:00:37.441Z"
+      "checkedAt": "2026-07-12T18:28:08.223Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Bloc Pub 21 juillet.mp3",
-        "source": "api-live"
+        "title": "Big Life, Big Leaf",
+        "source": "api-live",
+        "host": "No Joy"
       },
       "next": null,
-      "track": "",
-      "showTitle": "Bloc Pub 21 juillet.mp3",
-      "host": "",
+      "track": "No Joy - Big Life, Big Leaf",
+      "showTitle": "Big Life, Big Leaf",
+      "host": "No Joy",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T17:00:39.442Z"
+      "checkedAt": "2026-07-12T18:28:09.915Z"
     }
   }
 }
