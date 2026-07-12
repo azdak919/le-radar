@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-12T14:54:01.558Z",
+  "updated": "2026-07-12T16:25:35.322Z",
   "total": 185,
   "withImage": 107,
   "withCredit": 107,
@@ -7,9 +7,9 @@
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 3,
-  "updatedCount": 3,
-  "citedNew": 1,
+  "checked": 4,
+  "updatedCount": 4,
+  "citedNew": 2,
   "fallbackNew": 2,
   "samples": [
     {
@@ -32,6 +32,13 @@
       "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }
