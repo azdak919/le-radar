@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-12T06:34:52.685Z",
+  "updatedAt": "2026-07-12T08:34:33.360Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T06:34:44.375Z"
+      "checkedAt": "2026-07-12T08:34:25.401Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix anglo",
-        "source": "api-live",
-        "start": "22:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-anglo"
-      },
-      "next": {
         "title": "Rythmologie (reprise)",
         "source": "api-live",
         "start": "00:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364083.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "rythmologie"
       },
+      "next": {
+        "title": "Mix Franco",
+        "source": "api-live",
+        "start": "02:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364169.mp3",
+        "slug": "mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix anglo",
+      "showTitle": "Rythmologie (reprise)",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,7 +51,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-12T06:34:45.788Z"
+      "checkedAt": "2026-07-12T08:34:26.890Z"
     },
     "ckut": {
       "id": "ckut",
@@ -76,7 +76,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T06:34:48.187Z"
+      "checkedAt": "2026-07-12T08:34:29.053Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -103,7 +103,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T06:34:49.646Z"
+      "checkedAt": "2026-07-12T08:34:30.384Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,27 +128,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T06:34:50.171Z"
+      "checkedAt": "2026-07-12T08:34:30.929Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "OVERDOSE",
+        "title": "Ma joie m'etrangle",
         "source": "api-live",
-        "host": "Gab Bouchard"
+        "host": "FUUDGE"
       },
       "next": null,
-      "track": "Gab Bouchard - OVERDOSE",
-      "showTitle": "OVERDOSE",
-      "host": "Gab Bouchard",
+      "track": "FUUDGE - Ma joie m",
+      "showTitle": "Ma joie m'etrangle",
+      "host": "FUUDGE",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-12T06:34:52.334Z"
+      "checkedAt": "2026-07-12T08:34:33.010Z"
     }
   }
 }
