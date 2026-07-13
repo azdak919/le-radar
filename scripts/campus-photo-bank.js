@@ -254,7 +254,39 @@ const BANK = {
       creator: 'Jeangagnon',
       license: 'CC BY-SA 4.0',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:Pavillon_principal_du_C%C3%A9gep_de_Jonqui%C3%A8re.jpg',
-      tags: 'exterior cegep jonquiere saguenay',
+      tags: 'exterior cegep jonquiere saguenay pavillon',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/0/01/B%C3%A2timent_du_C%C3%A9gep_de_Jonqui%C3%A8re.JPG',
+      title: 'Bâtiment du Cégep de Jonquière',
+      creator: 'Khayman',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:B%C3%A2timent_du_C%C3%A9gep_de_Jonqui%C3%A8re.JPG',
+      tags: 'exterior cegep jonquiere saguenay building',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/a/a5/Pavillon_Joseph_Angers_du_C%C3%A9gep_de_Jonqui%C3%A8re.JPG',
+      title: 'Pavillon Joseph Angers du Cégep de Jonquière',
+      creator: 'Khayman',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Pavillon_Joseph_Angers_du_C%C3%A9gep_de_Jonqui%C3%A8re.JPG',
+      tags: 'exterior cegep jonquiere joseph angers',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/4/4b/Entr%C3%A9e_du_pavillon_G%C3%A9rard-Arguin_du_C%C3%A9gep_de_Jonqui%C3%A8re02.JPG',
+      title: 'Entrée du pavillon Gérard-Arguin du Cégep de Jonquière',
+      creator: 'Khayman',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Entr%C3%A9e_du_pavillon_G%C3%A9rard-Arguin_du_C%C3%A9gep_de_Jonqui%C3%A8re02.JPG',
+      tags: 'exterior cegep jonquiere gerard arguin entree',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/3/31/Campus_du_C%C3%A9gep_de_Jonqui%C3%A8re.jpg',
+      title: 'Campus du Cégep de Jonquière',
+      creator: 'Khayman',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Campus_du_C%C3%A9gep_de_Jonqui%C3%A8re.jpg',
+      tags: 'aerial campus cegep jonquiere saguenay',
     },
   ],
   'dawson college': [
@@ -417,8 +449,25 @@ function entryToStockFields(pick) {
   };
 }
 
+/** Retire les champs banque campus d’un item (pas de photo plutôt qu’un doublon). */
+function clearCampusBankFields(item) {
+  if (!item) return;
+  delete item.stockImage;
+  delete item.imageTitle;
+  delete item.imageCredit;
+  delete item.imageCreator;
+  delete item.imageLicense;
+  delete item.imageProvider;
+  delete item.imageSourceUrl;
+  delete item._campusBank;
+  item.leadImageReady = false;
+}
+
 /**
  * Choisit une photo campus pour l'article.
+ * Ne réutilise **jamais** une URL déjà dans avoidUrls : si la banque est
+ * épuisée pour cet établissement, retourne null (l’article reste sans
+ * repli campus plutôt que d’afficher la même photo 6 fois).
  * @param {{ institution?: string, link?: string, title?: string, excerpt?: string }} item
  * @param {{ preferSeason?: 'summer'|'winter'|'any', avoidUrls?: string[]|Set<string> }} [opts]
  */
@@ -433,8 +482,7 @@ function pickCampusPhoto(item = {}, opts = {}) {
     || (SUMMER_RE.test(hayArticle) ? 'summer'
       : (WINTER_RE.test(hayArticle) ? 'winter' : 'any'));
 
-  // Filtre saisonnier souple : on ne réduit le pool que s'il reste ≥2 options,
-  // sinon toutes les vues campus restent disponibles (évite 3 articles = même portail).
+  // Filtre saisonnier souple : on ne réduit le pool que s'il reste ≥2 options.
   if (prefer === 'summer') {
     const noWinter = pool.filter((e) => !WINTER_RE.test(`${e.title} ${e.tags || ''}`));
     if (noWinter.length >= 2) pool = noWinter;
@@ -448,27 +496,32 @@ function pickCampusPhoto(item = {}, opts = {}) {
       .map((u) => String(u || '').trim())
       .filter(Boolean),
   );
-  const unused = pool.filter((e) => !avoid.has(e.url));
-  if (unused.length) pool = unused;
+  // Unicité stricte : jamais une URL déjà prise (même si le pool saisonnier
+  // est vide — on retombe sur le pool complet, puis on filtre avoid).
+  let candidates = pool.filter((e) => !avoid.has(e.url));
+  if (!candidates.length) {
+    candidates = entries.filter((e) => !avoid.has(e.url));
+  }
+  if (!candidates.length) return null;
 
   // Variété stable par article (hash) sur le pool restant.
   const seed = String(item.link || item.title || item.institution || 'x');
   const hash = crypto.createHash('sha1').update(seed).digest();
-  const idx = hash[0] % pool.length;
-  const pick = pool[idx];
+  const pick = candidates[hash[0] % candidates.length];
 
   return entryToStockFields(pick);
 }
 
 /**
- * Réattribue les photos campus-bank d'un lot pour maximiser la variété
- * (évite la même photo Roddick Gates sur À la une + En bref McGill).
+ * Réattribue les photos campus-bank d'un lot pour maximiser la variété.
+ * Unicité stricte par établissement : 1 URL = 1 article max.
+ * S’il y a plus d’articles que de photos en banque, les plus récents gardent
+ * une photo unique ; les suivants perdent le repli campus (évite le copier-coller).
  */
 function diversifyCampusBankItems(items = []) {
-  if (!Array.isArray(items) || items.length < 2) return 0;
+  if (!Array.isArray(items) || !items.length) return 0;
   let changed = 0;
 
-  // Par établissement : articles qui utilisent déjà (ou n'ont que) la banque campus.
   const byInst = new Map();
   for (const item of items) {
     if (!item || item.imageProvider !== 'campus-bank' || !item.stockImage) continue;
@@ -481,11 +534,17 @@ function diversifyCampusBankItems(items = []) {
   }
 
   for (const [, group] of byInst) {
-    if (group.length < 2) continue;
+    if (!group.length) continue;
     const entries = bankEntriesFor(group[0].institution || '');
-    if (entries.length < 2) continue;
+    if (!entries.length) {
+      for (const item of group) {
+        clearCampusBankFields(item);
+        changed += 1;
+      }
+      continue;
+    }
 
-    // Trier par date (récent d'abord) pour que la une prenne la 1re variante.
+    // Récent d'abord → priorité une / vedettes / en bref frais.
     group.sort((a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0));
 
     const used = new Set();
@@ -501,11 +560,20 @@ function diversifyCampusBankItems(items = []) {
         if (winterish.length) pool = winterish;
       }
 
-      // Préférer une URL pas encore utilisée dans ce lot.
       let candidates = pool.filter((e) => !used.has(e.url));
-      if (!candidates.length) candidates = pool.slice();
+      if (!candidates.length) {
+        candidates = entries.filter((e) => !used.has(e.url));
+      }
 
-      // Rotation déterministe : décalage par rang dans le groupe.
+      // Banque épuisée : retirer le doublon plutôt que réafficher la même image.
+      if (!candidates.length) {
+        if (item.stockImage) {
+          clearCampusBankFields(item);
+          changed += 1;
+        }
+        continue;
+      }
+
       const seed = String(item.link || item.title || i);
       const hash = crypto.createHash('sha1').update(`${seed}|${i}`).digest();
       const pick = candidates[hash[0] % candidates.length];
@@ -515,8 +583,6 @@ function diversifyCampusBankItems(items = []) {
         Object.assign(item, entryToStockFields(pick));
         item.leadImageReady = false;
         changed += 1;
-      } else {
-        used.add(item.stockImage);
       }
     }
   }
@@ -536,5 +602,7 @@ module.exports = {
   bankEntriesFor,
   pickCampusPhoto,
   diversifyCampusBankItems,
+  clearCampusBankFields,
   hasCampusBank,
+  entryToStockFields,
 };
