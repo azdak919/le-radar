@@ -1,16 +1,16 @@
 {
-  "updated": "2026-07-13T11:32:16.110Z",
-  "updatedSlot": "2026-07-13T11:00:00.000Z",
+  "updated": "2026-07-13T12:21:18.075Z",
+  "updatedSlot": null,
   "count": 205,
   "freshnessSessions": 3,
   "sources": {
     "Quartier Libre": {
-      "fetchOk": false,
-      "stale": true,
+      "fetchOk": true,
+      "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:00:00.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-07-13T12:20:13.975Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-07-13T11:31:47.531Z"
+      "lastFetchOk": "2026-07-13T12:20:15.259Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-03-25T11:00:00.000Z",
-      "lastFetchOk": "2026-07-13T11:31:52.521Z"
+      "lastFetchOk": "2026-07-13T12:20:21.610Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-07-06T12:00:00.000Z",
-      "lastFetchOk": "2026-07-13T11:31:52.831Z"
+      "lastFetchOk": "2026-07-13T12:20:22.508Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,15 +42,15 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-07-08T14:41:00.000Z",
-      "lastFetchOk": "2026-07-13T11:31:53.357Z"
+      "lastFetchOk": "2026-07-13T12:20:23.876Z"
     },
     "Zone Campus": {
-      "fetchOk": false,
-      "stale": true,
+      "fetchOk": true,
+      "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-07-13T12:20:25.429Z"
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,7 +58,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-07-13T11:31:55.255Z"
+      "lastFetchOk": "2026-07-13T12:20:27.385Z"
     },
     "Le Collectif": {
       "fetchOk": false,
@@ -74,15 +74,15 @@
       "articleCount": 7,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-07-13T11:31:57.342Z"
+      "lastFetchOk": "2026-07-13T12:20:39.673Z"
     },
     "La Pige": {
-      "fetchOk": false,
-      "stale": true,
+      "fetchOk": true,
+      "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-06-22T14:36:10.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-07-13T12:20:40.568Z"
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,7 +90,7 @@
       "articleCount": 13,
       "freshArticleCount": 13,
       "lastArticle": "2026-02-25T14:38:32.764Z",
-      "lastFetchOk": "2026-07-13T11:31:58.576Z"
+      "lastFetchOk": "2026-07-13T12:20:43.900Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-06-26T15:24:28.000Z",
-      "lastFetchOk": "2026-07-13T11:31:58.712Z"
+      "lastFetchOk": "2026-07-13T12:20:44.204Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-07-13T11:31:58.895Z"
+      "lastFetchOk": "2026-07-13T12:20:44.408Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-07-13T11:31:59.002Z"
+      "lastFetchOk": "2026-07-13T12:20:44.568Z"
     },
     "Média — Institut national de la recherche scientifique": {
       "fetchOk": true,
@@ -122,15 +122,15 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-07-07T12:30:00.000Z",
-      "lastFetchOk": "2026-07-13T11:31:59.973Z"
+      "lastFetchOk": "2026-07-13T12:20:46.121Z"
     },
     "Média — Université du Québec à Rimouski": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-07-09T12:05:00.000Z",
-      "lastFetchOk": "2026-07-13T11:32:00.148Z"
+      "lastFetchOk": null
     }
   },
   "items": [
@@ -154,14 +154,14 @@
       "sourceImageCreditImageKey": "obsessions_voyages_voyagersansarretpassionouobsession_sourcepixabay-1.jpg",
       "sourceImageCreditRev": 7,
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/e/e1/Georgia_Aquarium_-_Ocean_Voyager_Tunnel_Jan_2006.jpg",
       "imageTitle": "File:Georgia Aquarium - Ocean Voyager Tunnel Jan 2006.jpg",
       "imageCredit": "Photo : Diliff / CC BY · Openverse",
       "imageCreator": "Diliff",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=533725"
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=533725",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -183,14 +183,14 @@
       "sourceImageCreditImageKey": "obsessions_boissonsenergisantes_matcha_sourcecamelliasinensis-1.png",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/65535/52511912533_d0ae37f758_b.jpg",
       "imageTitle": "The Grand Opening of Southside, Nov. 19, 2022",
       "imageCredit": "Photo : Rod Raglin / CC BY-SA · Openverse",
       "imageCreator": "Rod Raglin",
       "imageLicense": "by-sa",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/78791029@N04/52511912533"
+      "imageSourceUrl": "https://www.flickr.com/photos/78791029@N04/52511912533",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -213,14 +213,14 @@
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
       "leadExcerpt": "Le Parti québécois (PQ) a lancé, le 23 juin dernier, son fameux Livre bleu, visant à exposer sa vision d’un Québec indépendant, mais aussi à critiquer le palier fédéral en élaborant les principales priorités à prendre en compte lors du prochain référendum pour le camp du Oui. Lumière sur les différents chapitres, ainsi que sur certaines solutions avancées par le parti.",
-      "_retainedFromCache": true,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/c/cb/2014-07-14_12-04-12_devoilement-statue-quand-meme.jpg",
       "imageTitle": "2014-07-14 12-04-12 devoilement-statue-quand-meme",
       "imageCredit": "Photo : Thomas Bresson / CC BY · Openverse",
       "imageCreator": "Thomas Bresson",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=34020479"
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=34020479",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -242,14 +242,14 @@
       "sourceImageCreditImageKey": "culture_marcmessier_sourcefacebook.jpeg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Broue_ciel.jpg",
       "imageTitle": "Broue ciel",
       "imageCredit": "Photo : Buntaimpreza / CC BY-SA · Openverse",
       "imageCreator": "Buntaimpreza",
       "imageLicense": "by-sa",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=130583156"
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=130583156",
+      "_retainedFromCache": true
     },
     {
       "source": "Média — Université du Québec à Rimouski",
@@ -271,7 +271,8 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "sebastien-cardinal-1920.jpg",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -316,14 +317,14 @@
       "sourceImageCreditRev": 2,
       "leadImageReady": false,
       "leadExcerpt": "Sur les réseaux sociaux, le message revient sans cesse : quitte ton emploi, deviens travailleur autonome, vis de tes passions. Une vie sans patron, sans horaires fixes, sans routine imposée. Pour une génération qui a grandi avec TikTok et Instagram, le rêve est clair : être libre.",
-      "_retainedFromCache": true,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/2/23/Bethune_A_SGH_GT-19000_quitte_gaillefontaine.jpg",
       "imageTitle": "Bethune A SGH GT-19000 quitte gaillefontaine",
       "imageCredit": "Photo : Thierry Deras / CC BY-SA · Openverse",
       "imageCreator": "Thierry Deras",
       "imageLicense": "by-sa",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=23487845"
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=23487845",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -345,14 +346,14 @@
       "sourceImageCreditImageKey": "obsession_strava_lesadeptesdestravanecessentdaugmenter_sourcerunna-1.png",
       "sourceImageCreditRev": 2,
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/5580/14620650820_4aecf7dd45_b.jpg",
       "imageTitle": "The Strava app shown on an iPhone with a bike behind",
       "imageCredit": "Photo : londoncyclist / CC BY · Openverse",
       "imageCreator": "londoncyclist",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/10978010@N07/14620650820"
+      "imageSourceUrl": "https://www.flickr.com/photos/10978010@N07/14620650820",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -419,7 +420,8 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "transition-1920.jpg",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -441,14 +443,14 @@
       "sourceImageCreditImageKey": "culture_angine_de_poitrine_sourcefestivalinternationaldejazzdemontreal.jpg",
       "sourceImageCreditRev": 2,
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/7029/6477034889_cb50832309_b.jpg",
       "imageTitle": "Festival CulturaDigital.Br",
       "imageCredit": "Photo : festivalculturadigitalbr / CC BY · Openverse",
       "imageCreator": "festivalculturadigitalbr",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/69310588@N03/6477034889"
+      "imageSourceUrl": "https://www.flickr.com/photos/69310588@N03/6477034889",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -470,14 +472,14 @@
       "sourceImageCreditImageKey": "societe_christinelabrie_sourcepagefacebookderubaghazal.jpg",
       "sourceImageCreditRev": 2,
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/4/47/Assembl%C3%A9e_nationale_du_Qu%C3%A9bec%2C_l%27H%C3%B4tel_du_Parlement%2C_fa%C3%A7ade_avec_ancien_entr%C3%A9_principal.jpg",
       "imageTitle": "Assemblée nationale du Québec, l'Hôtel du Parlement, façade avec ancien entré principal",
       "imageCredit": "Photo : Marc-Lautenbacher / CC BY-SA · Openverse",
       "imageCreator": "Marc-Lautenbacher",
       "imageLicense": "by-sa",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=73170675"
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=73170675",
+      "_retainedFromCache": true
     },
     {
       "source": "Média — Institut national de la recherche scientifique",
@@ -491,15 +493,14 @@
       "date": "2026-07-07T12:30:00.000Z",
       "excerpt": "Deux nouvelles chaires de recherche à l’INRS pour comprendre l’impact des polluants sur la santé et développer des solutions thérapeutiques innovantes. The post Santé environnementale et chimie biomédicale : deux chaires de recherche pour mieux protéger la population québécoise",
       "image": "https://inrs.ca/wp-content/uploads/labo-983825915.jpg",
-      "leadExcerpt": "Le cancer du sein demeure le cancer le plus fréquent chez les femmes au Canada, et entre 70 % et 90 % des cas seraient liés à des facteurs environnementaux et au mode de vie. Parmi les substances préoccupantes, les perturbateurs endocriniens – présents dans les cosmétiques, les plastiques, les produits ménagers ou les emballages alimentaires – suscitent une attention croissante.",
-      "leadImageReady": true,
       "sourceImageCredit": "Crédit photo : Média — Institut national de la recherche scientifique",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://inrs.ca/actualites/sante-environnementale-et-chimie-biomedicale-deux-chaires-de-recherche-pour-mieux-proteger-la-population-quebecoise/#utm_source=rss&utm_medium=rss&utm_campaign=sante-environnementale-et-chimie-biomedicale-deux-chaires-de-recherche-pour-mieux-proteger-la-population-quebecoise",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "labo-983825915.jpg",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "leadImageReady": true,
+      "leadExcerpt": "Le cancer du sein demeure le cancer le plus fréquent chez les femmes au Canada, et entre 70 % et 90 % des cas seraient liés à des facteurs environnementaux et au mode de vie. Parmi les substances préoccupantes, les perturbateurs endocriniens – présents dans les cosmétiques, les plastiques, les produits ménagers ou les emballages alimentaires – suscitent une attention croissante."
     },
     {
       "source": "Média — Université du Québec à Rimouski",
@@ -521,7 +522,8 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "ophionotus-victoriae-1920.jpg",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "_retainedFromCache": true
     },
     {
       "source": "Média — Institut national de la recherche scientifique",
@@ -534,14 +536,13 @@
       "author": "La rédaction",
       "date": "2026-07-06T19:38:00.000Z",
       "excerpt": "Découvrez la revue de presse de la semaine pour explorer les publications qui mettent en lumière les activités, réalisations et sujets d’actualité qui concernent l'INRS. The post Revue de presse – semaine du 6 juillet 2026 appeared first on INRS .",
-      "image": "https://inrs.ca/wp-content/uploads/revue-presse-miniature.jpg",
-      "leadImageReady": true,
+      "image": "https://inrs.ca/wp-content/uploads/chaleur-ville_803059146.png",
       "sourceImageCredit": "Crédit photo : Média — Institut national de la recherche scientifique",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://inrs.ca/actualites/linrs-dans-les-medias-revue-de-presse/#utm_source=rss&utm_medium=rss&utm_campaign=linrs-dans-les-medias-revue-de-presse-du-16-janvier",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "revue-presse-miniature.jpg",
+      "sourceImageCreditImageKey": "chaleur-ville_803059146.png",
       "sourceImageCreditRev": 8
     },
     {
@@ -564,8 +565,7 @@
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Roddick_Gates_closed,_McGill_University,_July_17,_2024.jpg",
-      "leadExcerpt": "“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt to forgo my jacket, and, if I’m feeling bold, no sweater either. It’s the first truly warm evening in Montreal, and as the city defrosts, everyone is spilling onto sidewalks and terrasses. Women are wearing tiny dresses, and men have started to write poetry. The whole city radiates optimism, as if Ch",
-      "_campusBank": true
+      "leadExcerpt": "“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt to forgo my jacket, and, if I’m feeling bold, no sweater either. It’s the first truly warm evening in Montreal, and as the city defrosts, everyone is spilling onto sidewalks and terrasses. Women are wearing tiny dresses, and men have started to write poetry. The whole city radiates optimism, as if Ch"
     },
     {
       "source": "Média — Université du Québec à Rimouski",
@@ -587,7 +587,8 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "hippies-banq-1920.jpg",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "_retainedFromCache": true
     },
     {
       "source": "Média — Université du Québec à Rimouski",
@@ -609,7 +610,8 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "post-separation-shutters-1920.jpg",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "_retainedFromCache": true
     },
     {
       "source": "Média — Université du Québec à Rimouski",
@@ -631,7 +633,8 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "photo-carolina-janie-ui.jpg",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "_retainedFromCache": true
     },
     {
       "source": "Média — Université du Québec à Rimouski",
@@ -653,7 +656,8 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "livre-charles-taylor-uqar-info.jpg",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -739,7 +743,8 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "dsc-9887-1920.jpg",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "_retainedFromCache": true
     },
     {
       "source": "Média — Université du Québec à Rimouski",
@@ -761,7 +766,8 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "mathildeuqarinfo.jpg",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -805,7 +811,8 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "la-pelletee-1.jpg",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "_retainedFromCache": true
     },
     {
       "source": "Média — Institut national de la recherche scientifique",
@@ -819,15 +826,14 @@
       "date": "2026-06-23T11:51:09.000Z",
       "excerpt": "aire un retour aux études au Québec, après avoir passé une quinzaine d’années sur le marché du travail en France, ce n’est pas banal. Mais quand ça mène à des expéditions dans l’Arctique au Nunavut, c’est simplement extraordinaire! The post Ma recherche en série : la maîtrise de",
       "image": "https://inrs.ca/wp-content/uploads/web-Portrait.jpg",
-      "leadExcerpt": "Faire un retour aux études au Québec, après avoir passé une quinzaine d’années sur le marché du travail en France, ce n’est pas banal. Mais quand ça mène à des expéditions dans l’Arctique au Nunavut, c’est simplement extraordinaire!",
-      "leadImageReady": true,
       "sourceImageCredit": "Crédit photo : Média — Institut national de la recherche scientifique",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://inrs.ca/actualites/ma-recherche-en-serie-la-maitrise-de-karima-hadria-sur-les-effets-du-nickel-sur-le-phytoplancton-de-locean-arctique/#utm_source=rss&utm_medium=rss&utm_campaign=ma-recherche-en-serie-la-maitrise-de-karima-hadria-sur-les-effets-du-nickel-sur-le-phytoplancton-de-locean-arctique",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "web-portrait.jpg",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "leadImageReady": true,
+      "leadExcerpt": "Faire un retour aux études au Québec, après avoir passé une quinzaine d’années sur le marché du travail en France, ce n’est pas banal. Mais quand ça mène à des expéditions dans l’Arctique au Nunavut, c’est simplement extraordinaire!"
     },
     {
       "source": "La Pige",
@@ -841,8 +847,12 @@
       "date": "2026-06-22T14:36:10.000Z",
       "excerpt": "« Les gens ont tendance à frapper un mur au moment de la retraite par manque de préparation », estime Le directeur général de la Fédération de l’âge d’or du Québec (Fadoq) pour la région Saguenay-Lac-Saint-Jean – Ungava, Patrice Saint-Pierre. (Photo : Léa Morin-Letort) L’heure",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/06/Bruno-Cormier-retraite-benevole.png",
-      "leadExcerpt": "« Les gens ont tendance à frapper un mur au moment de la retraite par manque de préparation », estime Le directeur général de la Fédération de l’âge d’or du Québec (Fadoq) pour la région Saguenay-Lac-Saint-Jean – Ungava, Patrice Saint-Pierre. (Photo : Léa Morin-Letort)",
-      "_retainedFromCache": true,
+      "sourceImageCredit": "Crédit photo : La Pige",
+      "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/06/22/se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille/?utm_source=rss&utm_medium=rss&utm_campaign=se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille",
+      "sourceImageCreditFrom": "media",
+      "sourceImageCreditCited": false,
+      "sourceImageCreditImageKey": "bruno-cormier-retraite-benevole.png",
+      "sourceImageCreditRev": 8,
       "leadImageReady": false,
       "stockImage": "https://cdn.stocksnap.io/img-thumbs/960w/V1UPRPKBSO.jpg",
       "imageTitle": "Senior Running",
@@ -851,13 +861,7 @@
       "imageLicense": "cc0",
       "imageProvider": "openverse",
       "imageSourceUrl": "https://stocksnap.io/photo/senior-running-V1UPRPKBSO",
-      "sourceImageCredit": "Crédit photo : La Pige",
-      "sourceImageCreator": "",
-      "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/06/22/se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille/?utm_source=rss&utm_medium=rss&utm_campaign=se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille",
-      "sourceImageCreditFrom": "media",
-      "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "bruno-cormier-retraite-benevole.png",
-      "sourceImageCreditRev": 8
+      "leadExcerpt": "« Les gens ont tendance à frapper un mur au moment de la retraite par manque de préparation », estime Le directeur général de la Fédération de l’âge d’or du Québec (Fadoq) pour la région Saguenay-Lac-Saint-Jean – Ungava, Patrice Saint-Pierre. (Photo : Léa Morin-Letort)"
     },
     {
       "source": "Média — Institut national de la recherche scientifique",
@@ -870,15 +874,14 @@
       "author": "La rédaction",
       "date": "2026-06-22T13:27:21.000Z",
       "excerpt": "Une doctorante de l’INRS se démarque par son talent en vulgarisation scientifique. The post Diana Peña Ruiz parmi les gagnantes du concours national du CRSH « J’ai une histoire à raconter » appeared first on INRS .",
-      "image": "https://inrs.ca/wp-content/uploads/prixCRSH.png",
-      "leadImageReady": true,
+      "image": "https://inrs.ca/wp-content/uploads/prixCRSH-scaled.png",
       "sourceImageCredit": "Crédit photo : Média — Institut national de la recherche scientifique",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://inrs.ca/actualites/diana-pena-ruiz-parmi-les-gagnantes-du-concours-national-du-crsh-jai-une-histoire-a-raconter/#utm_source=rss&utm_medium=rss&utm_campaign=diana-pena-ruiz-parmi-les-gagnantes-du-concours-national-du-crsh-jai-une-histoire-a-raconter",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "prixcrsh.png",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "leadImageReady": true
     },
     {
       "source": "Média — Institut national de la recherche scientifique",
@@ -892,14 +895,14 @@
       "date": "2026-06-19T18:38:00.000Z",
       "excerpt": "L’INRS et l’UQTR renforcent la capacité de leur unité mixte de recherche pour développer des batteries plus performantes, sécuritaires et durables. The post Près de 3 millions de dollars pour accélérer la transition énergétique au Québec appeared first on INRS .",
       "image": "https://inrs.ca/wp-content/uploads/UMR-19-juin-2026-actu.png",
-      "leadImageReady": true,
       "sourceImageCredit": "Photo : Elise Bachant-Lagacé, UQTR",
       "sourceImageCreator": "Elise Bachant-Lagacé, UQTR",
       "sourceImageCreditUrl": "https://inrs.ca/actualites/pres-de-3-millions-de-dollars-pour-accelerer-la-transition-energetique-au-quebec/#utm_source=rss&utm_medium=rss&utm_campaign=pres-de-3-millions-de-dollars-pour-accelerer-la-transition-energetique-au-quebec",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "umr-19-juin-2026-actu.png",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "leadImageReady": true
     },
     {
       "source": "Média — Institut national de la recherche scientifique",
@@ -913,15 +916,14 @@
       "date": "2026-06-18T13:15:00.000Z",
       "excerpt": "Le Centre Ruralités durables de l’INRS met son expertise et son réseau au service de la relève scientifique. Le Fonds de recherche du Québec (FRQ) et l’Institut national de la recherche scientifique (INRS) concluent une entente de partenariat pour renforcer l’accompagnement des",
       "image": "https://inrs.ca/wp-content/uploads/INRSxFRQ1.jpg",
-      "leadExcerpt": "Cette collaboration étroite permet au Centre Ruralités durables de concrétiser sa mission de soutien à la science par des actions tangibles, tout en renforçant l’initiative portée par le FRQ. Elle s’inscrit aussi dans la volonté de l’INRS de consolider son engagement envers la recherche au service des collectivités et la formation d’une relève hautement qualifiée.",
-      "leadImageReady": true,
       "sourceImageCredit": "Crédit photo : Média — Institut national de la recherche scientifique",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://inrs.ca/actualites/le-frq-et-linrs-sallient-pour-soutenir-les-scientifiques-en-residence-en-contexte-municipal/#utm_source=rss&utm_medium=rss&utm_campaign=le-frq-et-linrs-sallient-pour-soutenir-les-scientifiques-en-residence-en-contexte-municipal",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "inrsxfrq1.jpg",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "leadImageReady": true,
+      "leadExcerpt": "Cette collaboration étroite permet au Centre Ruralités durables de concrétiser sa mission de soutien à la science par des actions tangibles, tout en renforçant l’initiative portée par le FRQ. Elle s’inscrit aussi dans la volonté de l’INRS de consolider son engagement envers la recherche au service des collectivités et la formation d’une relève hautement qualifiée."
     },
     {
       "source": "Média — Institut national de la recherche scientifique",
@@ -935,15 +937,14 @@
       "date": "2026-06-17T12:00:00.000Z",
       "excerpt": "Une pionnière dont les travaux redéfinissent la prévention du cancer. The post Marie‑Élise Parent lauréate du prix O. Harold Warwick 2025 de la Société canadienne du cancer appeared first on INRS .",
       "image": "https://inrs.ca/wp-content/uploads/MElise-Parent-INRS.jpg",
-      "leadExcerpt": "La Société canadienne du cancer décerne cette année le prix O. Harold Warwick 2025 à Marie‑Élise Parent , professeure à l’Institut national de la recherche scientifique (INRS), pour l’ensemble de ses contributions majeures au contrôle du cancer et son leadership scientifique au Canada et à l’international.",
-      "leadImageReady": true,
       "sourceImageCredit": "Crédit photo : Média — Institut national de la recherche scientifique",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://inrs.ca/actualites/marie-elise-parent-laureate-du-prix-o-harold-warwick-2025-de-la-societe-canadienne-du-cancer/#utm_source=rss&utm_medium=rss&utm_campaign=marie-elise-parent-laureate-du-prix-o-harold-warwick-2025-de-la-societe-canadienne-du-cancer",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "melise-parent-inrs.jpg",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "leadImageReady": true,
+      "leadExcerpt": "La Société canadienne du cancer décerne cette année le prix O. Harold Warwick 2025 à Marie‑Élise Parent , professeure à l’Institut national de la recherche scientifique (INRS), pour l’ensemble de ses contributions majeures au contrôle du cancer et son leadership scientifique au Canada et à l’international."
     },
     {
       "source": "Média — Institut national de la recherche scientifique",
@@ -957,15 +958,14 @@
       "date": "2026-06-16T17:30:00.000Z",
       "excerpt": "En 2026, le prix Planète INRS pour réalisation d’excellence en recherche est décerné au professeur Shuhui Sun pour sa réalisation intitulée Des connaissances acquises operando aux électrolytes intelligents pour des batteries plus sûres et plus durables. The post Shuhui Sun",
       "image": "https://inrs.ca/wp-content/uploads/prix-planete-sun-2026.jpg",
-      "leadExcerpt": "En 2026, le prix Planète INRS pour réalisation d’excellence en recherche est décerné au professeur Shuhui Sun pour sa réalisation intitulée Des connaissances acquises operando aux électrolytes intelligents pour des batteries plus sûres et plus durables .",
-      "leadImageReady": true,
       "sourceImageCredit": "Crédit photo : Média — Institut national de la recherche scientifique",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://inrs.ca/actualites/shuhui-sun-recoit-le-prix-planete-inrs-2026-pour-une-realisation-dexcellence-en-recherche/#utm_source=rss&utm_medium=rss&utm_campaign=shuhui-sun-recoit-le-prix-planete-inrs-2026-pour-une-realisation-dexcellence-en-recherche",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "prix-planete-sun-2026.jpg",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "leadImageReady": true,
+      "leadExcerpt": "En 2026, le prix Planète INRS pour réalisation d’excellence en recherche est décerné au professeur Shuhui Sun pour sa réalisation intitulée Des connaissances acquises operando aux électrolytes intelligents pour des batteries plus sûres et plus durables ."
     },
     {
       "source": "Média — Institut national de la recherche scientifique",
@@ -979,15 +979,14 @@
       "date": "2026-06-16T12:00:00.000Z",
       "excerpt": "n 2026, le prix Planète Carrière pour l’excellence en formation et encadrement est décerné au professeur Andreas Peter Ruediger, du Centre Énergie Matériaux Télécommunications. The post Andreas Peter Ruediger remporte le Prix Planète INRS 2026 pour l’excellence en formation et",
       "image": "https://inrs.ca/wp-content/uploads/prix-planete-Ruediger-2026.jpg",
-      "leadExcerpt": "Au-delà de son expertise scientifique reconnue, il se distingue par sa capacité à faire évoluer les pratiques pédagogiques. Même en contexte de pandémie, il a su transformer ses cours afin de maintenir un haut niveau d’engagement et d’excellence, démontrant une grande agilité et un souci constant de la réussite étudiante.",
-      "leadImageReady": true,
       "sourceImageCredit": "Crédit photo : Média — Institut national de la recherche scientifique",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://inrs.ca/actualites/andreas-peter-ruediger-remporte-le-prix-planete-inrs-2026-pour-lexcellence-en-formation-et-encadrement/#utm_source=rss&utm_medium=rss&utm_campaign=andreas-peter-ruediger-remporte-le-prix-planete-inrs-2026-pour-lexcellence-en-formation-et-encadrement",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "prix-planete-ruediger-2026.jpg",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "leadImageReady": true,
+      "leadExcerpt": "Au-delà de son expertise scientifique reconnue, il se distingue par sa capacité à faire évoluer les pratiques pédagogiques. Même en contexte de pandémie, il a su transformer ses cours afin de maintenir un haut niveau d’engagement et d’excellence, démontrant une grande agilité et un souci constant de la réussite étudiante."
     },
     {
       "source": "Média — Institut national de la recherche scientifique",
@@ -1001,14 +1000,13 @@
       "date": "2026-06-15T14:03:22.000Z",
       "excerpt": "Des expertises complémentaires pour répondre aux grands enjeux des territoires ruraux du Québec. The post L’INRS accueille ses trois premiers professeures et professeurs au Centre Ruralités durables appeared first on INRS .",
       "image": "https://inrs.ca/wp-content/uploads/centre-ruralite-durables-inrs-06-2026.png",
-      "leadImageReady": true,
       "sourceImageCredit": "Crédit photo : Média — Institut national de la recherche scientifique",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://inrs.ca/actualites/linrs-accueille-ses-trois-premiers-professeures-et-professeurs-au-centre-ruralites-durables/#utm_source=rss&utm_medium=rss&utm_campaign=linrs-accueille-ses-trois-premiers-professeures-et-professeurs-au-centre-ruralites-durables",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "centre-ruralite-durables-inrs-06-2026.png",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "leadImageReady": true
     },
     {
       "source": "The Tribune",
@@ -1043,7 +1041,7 @@
       "author": "Marisa Filice",
       "date": "2026-06-10T17:09:00.000Z",
       "excerpt": "The Canadian national men’s soccer team drew 1-1 with the Republic of Ireland in its final match before the tournament Canada players celebrate after the opening goal in the 23rd minute of the international friendly match against Ireland at Saputo Stadium in Montreal on June 5,",
-      "image": "https://thelinknewspaper.ca/images/articles/_resized/CAMNT06052026-40.jpg",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/CAMNT06052026-40_690_460_90.jpg",
       "sourceImageCredit": "Photo: Marisa Filice",
       "sourceImageCreator": "Marisa Filice",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16333",
@@ -1073,15 +1071,14 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "shared-image-5.jpg",
       "leadImageReady": false,
-      "leadExcerpt": "Mylène Sasseville est la proche aidante de ses deux fils, Maïk et Travis, tous les deux atteints du syndrome rare Allan Herndon Dudley causant une déficience physique et intellectuelle. Son conjoint, l’accompagne également dans son parcours de proche aidante. (Photo : Mathilde Bellon)",
-      "_retainedFromCache": true,
       "stockImage": "https://cdn.stocksnap.io/img-thumbs/960w/PMZZ7WLOAJ.jpg",
       "imageTitle": "Caregiver Nurse",
       "imageCredit": "Photo : Direct Media / CC0 · Openverse",
       "imageCreator": "Direct Media",
       "imageLicense": "cc0",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://stocksnap.io/photo/caregiver-nurse-PMZZ7WLOAJ"
+      "imageSourceUrl": "https://stocksnap.io/photo/caregiver-nurse-PMZZ7WLOAJ",
+      "leadExcerpt": "Mylène Sasseville est la proche aidante de ses deux fils, Maïk et Travis, tous les deux atteints du syndrome rare Allan Herndon Dudley causant une déficience physique et intellectuelle. Son conjoint, l’accompagne également dans son parcours de proche aidante. (Photo : Mathilde Bellon)"
     },
     {
       "source": "The Tribune",
@@ -1116,7 +1113,7 @@
       "author": "Samuel Kayll",
       "date": "2026-05-22T16:55:00.000Z",
       "excerpt": "The crew of astronauts sat down in Montreal to discuss their mission and the future of space exploration The crew of the Artemis II mission was greeted by a packed house at Place-des-Arts on the final stop of their Canada tour. Photo Daniel Gonzalez",
-      "image": "https://thelinknewspaper.ca/images/articles/_resized/12.news.artemis.sam.online.daniel.1U5A7650.jpg",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12.news.artemis.sam.online.daniel.1U5A7650_690_460_90.jpg",
       "sourceImageCredit": "Photo: Daniel Gonzalez",
       "sourceImageCreator": "Daniel Gonzalez",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16330",
@@ -1190,15 +1187,14 @@
       "sourceImageCreditImageKey": "shared-image-1.jpg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "leadExcerpt": "La présidente du groupe Accro-Vélo Alma, Anne Lafrance, et Sylvie Beaumont, la mairesse d’Alma, étaient sur place pour le départ des cyclistes. (Crédit : Colin Perron) Quatre commémorations pour les cyclistes décédés ont eu lieu mercredi soir au Saguenay-Lac-Saint-Jean, dont une à Alma. C’était la 3e édition du Tour du Silence, qui débutait à l’hôtel de ville.",
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/3116/2750714149_36a7b7bfe0_b.jpg",
       "imageTitle": "Ghost Bicycle @ 20th/R & Ct. Ave. NW in Memory of Alice Swanson",
       "imageCredit": "Photo : dbking / CC BY · Openverse",
       "imageCreator": "dbking",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/65193799@N00/2750714149"
+      "imageSourceUrl": "https://www.flickr.com/photos/65193799@N00/2750714149",
+      "leadExcerpt": "La présidente du groupe Accro-Vélo Alma, Anne Lafrance, et Sylvie Beaumont, la mairesse d’Alma, étaient sur place pour le départ des cyclistes. (Crédit : Colin Perron) Quatre commémorations pour les cyclistes décédés ont eu lieu mercredi soir au Saguenay-Lac-Saint-Jean, dont une à Alma. C’était la 3e édition du Tour du Silence, qui débutait à l’hôtel de ville."
     },
     {
       "source": "La Pige",
@@ -1220,15 +1216,14 @@
       "sourceImageCreditImageKey": "image-17.jpg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "leadExcerpt": "Après 40 ans, les coiffeuses Kathy Blackburn et Manon Tremblay accrochent leur paire de ciseaux. Le Salon L’image, situé à Place Centre-Ville Jonquière, fermera définitivement ses portes le 29 mai prochain.",
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/2265/2185433641_df20824bcc_b.jpg",
       "imageTitle": "Annie Liebovitz at the Corcoran",
       "imageCredit": "Photo : Kathleen Tyler Conklin / CC BY · Openverse",
       "imageCreator": "Kathleen Tyler Conklin",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/79865753@N00/2185433641"
+      "imageSourceUrl": "https://www.flickr.com/photos/79865753@N00/2185433641",
+      "leadExcerpt": "Après 40 ans, les coiffeuses Kathy Blackburn et Manon Tremblay accrochent leur paire de ciseaux. Le Salon L’image, situé à Place Centre-Ville Jonquière, fermera définitivement ses portes le 29 mai prochain."
     },
     {
       "source": "La Pige",
@@ -1249,15 +1244,14 @@
       "sourceImageCreditImageKey": "image-mamik.jpg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "leadExcerpt": "Le Centre Mamik a déposé une demande de projet pilote pour donner accès à des services de halte garderie, spécifiquement pour les parents qui sont étudiants. (Crédit : Tirée de Facebook / Centre Mamik)",
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/65535/52511912533_d0ae37f758_b.jpg",
       "imageTitle": "The Grand Opening of Southside, Nov. 19, 2022",
       "imageCredit": "Photo : Rod Raglin / CC BY-SA · Openverse",
       "imageCreator": "Rod Raglin",
       "imageLicense": "by-sa",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/78791029@N04/52511912533"
+      "imageSourceUrl": "https://www.flickr.com/photos/78791029@N04/52511912533",
+      "leadExcerpt": "Le Centre Mamik a déposé une demande de projet pilote pour donner accès à des services de halte garderie, spécifiquement pour les parents qui sont étudiants. (Crédit : Tirée de Facebook / Centre Mamik)"
     },
     {
       "source": "La Pige",
@@ -1278,8 +1272,7 @@
       "sourceImageCreditImageKey": "erd.jpeg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "leadExcerpt": "Le départ de huit des onze membres du conseil d’administration a failli mener la dissolution de l’Équipe du renouveau démocratique de Saguenay (ERD), mercredi soir. In extrémis, quatre membres pourraient secourir le parti.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Le départ de huit des onze membres du conseil d’administration a failli mener la dissolution de l’Équipe du renouveau démocratique de Saguenay (ERD), mercredi soir. In extrémis, quatre membres pourraient secourir le parti."
     },
     {
       "source": "La Pige",
@@ -1301,15 +1294,14 @@
       "sourceImageCreditImageKey": "3-credit-photo-marc-andre-houde.jpeg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "leadExcerpt": "Le concours « Jeunes auteurs à vos crayons! » était dans la région mardi, en compagnie de sa marraine Frédérique Dufort, écrivaine et comédienne, pour distribuer des prix destinés aux élèves. La thématique cette année, « Le pouvoir des mots », orientera le travail de 2346 participants provenant de 160 écoles à travers le Québec et le Canada francophone.",
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/749/31981589415_82676de532_b.jpg",
       "imageTitle": "A girl in a library",
       "imageCredit": "Photo : freestocks.org / CC0 · Openverse",
       "imageCreator": "freestocks.org",
       "imageLicense": "cc0",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/135396164@N05/31981589415"
+      "imageSourceUrl": "https://www.flickr.com/photos/135396164@N05/31981589415",
+      "leadExcerpt": "Le concours « Jeunes auteurs à vos crayons! » était dans la région mardi, en compagnie de sa marraine Frédérique Dufort, écrivaine et comédienne, pour distribuer des prix destinés aux élèves. La thématique cette année, « Le pouvoir des mots », orientera le travail de 2346 participants provenant de 160 écoles à travers le Québec et le Canada francophone."
     },
     {
       "source": "La Pige",
@@ -1331,15 +1323,14 @@
       "sourceImageCreditImageKey": "image-16.jpg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "leadExcerpt": "Le pont de Sainte-Anne ne se contente plus de relier deux rives ; il relie désormais les citoyens à une réalité souvent invisible. Jusqu’au 4 octobre prochain, l’exposition de photographie et de témoignages Ici on se rencontre met en lumière une vocation de l’ombre : celle des travailleurs de rue.",
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/3769/11182256635_a623e72b96_b.jpg",
       "imageTitle": "'Big Brother Trading Company PTE LTD' (detail of Clarke Quay Elgin Bridge Underpass Fresco by RSCLS urban art collective) Singapore, 2013",
       "imageCredit": "Photo : Itmostt / CC BY · Openverse",
       "imageCreator": "Itmostt",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/66944824@N05/11182256635"
+      "imageSourceUrl": "https://www.flickr.com/photos/66944824@N05/11182256635",
+      "leadExcerpt": "Le pont de Sainte-Anne ne se contente plus de relier deux rives ; il relie désormais les citoyens à une réalité souvent invisible. Jusqu’au 4 octobre prochain, l’exposition de photographie et de témoignages Ici on se rencontre met en lumière une vocation de l’ombre : celle des travailleurs de rue."
     },
     {
       "source": "La Pige",
@@ -1361,7 +1352,6 @@
       "sourceImageCreditImageKey": "pexels-fatih-turan-63325184-12413177.jpg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/2495/3883505751_0f8f879ceb_b.jpg",
       "imageTitle": "El Nino",
       "imageCredit": "Photo : Ian Sane / CC BY · Openverse",
@@ -1390,15 +1380,14 @@
       "sourceImageCreditImageKey": "image-1-6.jpg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "leadExcerpt": "Mélissa Girard, Cindy Duchesne, Mireille Fortin, Claudia Boily et Julie Guay, du programme d’Assistance technique en pharmacie, étaient présentes pour la Journée portes ouvertes, mercredi. (Crédit : Étienne Harvey-Soucy)",
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/2194/2188818713_06760f1830_b.jpg",
       "imageTitle": "Drug store - Pharmacie",
       "imageCredit": "Photo : My name's axel / CC BY-SA · Openverse",
       "imageCreator": "My name's axel",
       "imageLicense": "by-sa",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/37611179@N00/2188818713"
+      "imageSourceUrl": "https://www.flickr.com/photos/37611179@N00/2188818713",
+      "leadExcerpt": "Mélissa Girard, Cindy Duchesne, Mireille Fortin, Claudia Boily et Julie Guay, du programme d’Assistance technique en pharmacie, étaient présentes pour la Journée portes ouvertes, mercredi. (Crédit : Étienne Harvey-Soucy)"
     },
     {
       "source": "L'Exemplaire",
@@ -1439,8 +1428,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "photo-5_img_3586.jpg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": false,
-      "_retainedFromCache": true
+      "leadImageReady": false
     },
     {
       "source": "Quartier Libre",
@@ -1454,8 +1442,12 @@
       "date": "2026-05-14T21:00:00.000Z",
       "excerpt": "Le 13 mars dernier, la rappeuse Calamine a dévoilé son nouvel album, Rétrograde. Avec cette quatrième sortie depuis 2020, l’artiste gravit les échelons et devient une voix importante du hip-hop québécois. Composé de 18 titres d’ambiance estivale tels que « CHOP CHOP », « POLY »",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg",
-      "leadExcerpt": "Le concept même de Rétrograde , c’est cette sensation d’un recul sociétal, le fait qu’on est en train de retourner en arrière, politiquement parlant. Même après des avancées dans le féminisme, on est quand même en train de reculer avec la montée du masculinisme. En nommant l’album Rétrograde , ça me permettait donc de relier à la fois le queer dating et le recul général de la société.",
-      "_retainedFromCache": true,
+      "sourceImageCredit": "Crédit photo : Quartier Libre",
+      "sourceImageCreditUrl": "https://quartierlibre.ca/calamine-rapper-autrement/",
+      "sourceImageCreditFrom": "media",
+      "sourceImageCreditCited": false,
+      "sourceImageCreditImageKey": "20_calamine-1.jpg",
+      "sourceImageCreditRev": 8,
       "leadImageReady": false,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/8/8e/Calamine_en_concert.jpg",
       "imageTitle": "Calamine en concert",
@@ -1464,13 +1456,7 @@
       "imageLicense": "by-sa",
       "imageProvider": "openverse",
       "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=137030939",
-      "sourceImageCredit": "Crédit photo : Quartier Libre",
-      "sourceImageCreator": "",
-      "sourceImageCreditUrl": "https://quartierlibre.ca/calamine-rapper-autrement/",
-      "sourceImageCreditFrom": "media",
-      "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "20_calamine-1.jpg",
-      "sourceImageCreditRev": 8
+      "leadExcerpt": "Le concept même de Rétrograde , c’est cette sensation d’un recul sociétal, le fait qu’on est en train de retourner en arrière, politiquement parlant. Même après des avancées dans le féminisme, on est quand même en train de reculer avec la montée du masculinisme. En nommant l’album Rétrograde , ça me permettait donc de relier à la fois le queer dating et le recul général de la société."
     },
     {
       "source": "Quartier Libre",
@@ -1484,8 +1470,12 @@
       "date": "2026-05-14T19:09:17.000Z",
       "excerpt": "Le 5 mai dernier, le pavillon Roger-Gaudry a accueilli le premier forum du Réseau des écoles associées (RÉA). Ce projet ambitieux de la Faculté des sciences de l’éducation (FSÉ) transforme des écoles primaires et secondaires en véritables « hôpitaux universitaires » de la",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-2-768x1024.jpeg",
-      "leadExcerpt": "Mme Fournier Dubé a insisté sur le fait que les enseignant·e·s sont les véritables « agents de changement ». Son rôle n’est pas d’imposer un cadre scientifique rigide, mais de vulgariser la recherche pour l’adapter aux besoins du terrain.",
-      "_retainedFromCache": true,
+      "sourceImageCredit": "Crédit photo : Quartier Libre",
+      "sourceImageCreditUrl": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
+      "sourceImageCreditFrom": "media",
+      "sourceImageCreditCited": false,
+      "sourceImageCreditImageKey": "image-2.jpeg",
+      "sourceImageCreditRev": 8,
       "leadImageReady": false,
       "stockImage": "https://live.staticflickr.com/7347/10026206755_fba38d0a5c_b.jpg",
       "imageTitle": "Better Choices Better Results Forum on Education",
@@ -1494,13 +1484,7 @@
       "imageLicense": "by",
       "imageProvider": "openverse",
       "imageSourceUrl": "https://www.flickr.com/photos/64018555@N03/10026206755",
-      "sourceImageCredit": "Crédit photo : Quartier Libre",
-      "sourceImageCreator": "",
-      "sourceImageCreditUrl": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
-      "sourceImageCreditFrom": "media",
-      "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "image-2.jpeg",
-      "sourceImageCreditRev": 8
+      "leadExcerpt": "Mme Fournier Dubé a insisté sur le fait que les enseignant·e·s sont les véritables « agents de changement ». Son rôle n’est pas d’imposer un cadre scientifique rigide, mais de vulgariser la recherche pour l’adapter aux besoins du terrain."
     },
     {
       "source": "Quartier Libre",
@@ -1521,15 +1505,14 @@
       "sourceImageCreditImageKey": "12-13_statuts-politique-parents-proche-aidants.jpg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "leadExcerpt": "Depuis mars 2024, l’Université de Montréal (UdeM) dispose d’une politique de soutien aux parents aux études. Le projet de loi 394 ( PL394 ) de Québec solidaire lui imposerait, en cas d’adoption, d’en créer une destinée également aux proches aidant·e·s.",
-      "_retainedFromCache": true,
       "stockImage": "https://cdn.stocksnap.io/img-thumbs/960w/PMZZ7WLOAJ.jpg",
       "imageTitle": "Caregiver Nurse",
       "imageCredit": "Photo : Direct Media / CC0 · Openverse",
       "imageCreator": "Direct Media",
       "imageLicense": "cc0",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://stocksnap.io/photo/caregiver-nurse-PMZZ7WLOAJ"
+      "imageSourceUrl": "https://stocksnap.io/photo/caregiver-nurse-PMZZ7WLOAJ",
+      "leadExcerpt": "Depuis mars 2024, l’Université de Montréal (UdeM) dispose d’une politique de soutien aux parents aux études. Le projet de loi 394 ( PL394 ) de Québec solidaire lui imposerait, en cas d’adoption, d’en créer une destinée également aux proches aidant·e·s."
     },
     {
       "source": "The Tribune",
@@ -1594,15 +1577,14 @@
       "sourceImageCreditImageKey": "20_florelaurentienne.jpg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "leadExcerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations d’albums 100 % québécois récemment sortis .",
-      "_retainedFromCache": true,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Recettes%2Cd%C3%A9penses_et_d%C3%A9ficits_de_la_monarchie_fran%C3%A7aise_entre_1600-1715.png",
       "imageTitle": "Recettes,dépenses et déficits de la monarchie française entre 1600-1715",
       "imageCredit": "Photo : PNLL / CC BY-SA · Openverse",
       "imageCreator": "PNLL",
       "imageLicense": "by-sa",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=175223118"
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=175223118",
+      "leadExcerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations d’albums 100 % québécois récemment sortis ."
     },
     {
       "source": "Quartier Libre",
@@ -1623,8 +1605,7 @@
       "sourceImageCreditImageKey": "10-11_faecum_photo-assemblee.jpg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "leadExcerpt": "Entre absence de quorum, élections houleuses et accusations de « campagnes de salissage », la Fédération des associations du campus de l’Université de Montréal (FAÉCUM) traverse une zone de turbulences. Du fonctionnement des associations étudiantes aux congrès mouvementés, récit d’une démocratie en difficulté.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Entre absence de quorum, élections houleuses et accusations de « campagnes de salissage », la Fédération des associations du campus de l’Université de Montréal (FAÉCUM) traverse une zone de turbulences. Du fonctionnement des associations étudiantes aux congrès mouvementés, récit d’une démocratie en difficulté."
     },
     {
       "source": "L'Exemplaire",
@@ -1766,7 +1747,7 @@
       "author": "Mano Le Bris",
       "date": "2026-05-12T18:48:26.000Z",
       "excerpt": "Des fruits qui parlent, nouent des relations et suivent les codes de la téléréalité : c’est le concept derrière ces vidéos d’un nouveau genre. Entre humour, viralité et controverse, ces contenus ont explosé, début 2026, sur les réseaux sociaux. Mais derrière ces visuels",
-      "image": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/05/SKIBIDI-MINIA-2.png",
+      "image": "https://i0.wp.com/www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/05/SKIBIDI-MINIA-2.png?resize=696%2C392&ssl=1",
       "sourceImageCredit": "Crédit photo : L'Exemplaire",
       "sourceImageCreditUrl": "https://www.exemplaire.com.ulaval.ca/a-la-une/skibidi-tentafruit-ou-quand-lia-accentue-les-stereotypes/?utm_source=rss&utm_medium=rss&utm_campaign=skibidi-tentafruit-ou-quand-lia-accentue-les-stereotypes",
       "sourceImageCreditFrom": "media",
@@ -1795,15 +1776,14 @@
       "sourceImageCreditImageKey": "21_montreal-mystere.jpg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "leadExcerpt": "Les 29 et 30 mai prochains, les adeptes d’ouvrages de suspense, à mystère et d’enquêtes auront rendez-vous au Centre culturel Georges-Vanier pour la troisième édition du festival du livre policier Montréal Mystère , un événement encore jeune, mais déjà bien installé dans le paysage littéraire montréalais.",
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/3498/3735171010_90582fc99c_b.jpg",
       "imageTitle": "Green Day Concert Stage (Montreal) - Green Day is Ever Green",
       "imageCredit": "Photo : Anirudh Koul / CC BY · Openverse",
       "imageCreator": "Anirudh Koul",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/84856173@N00/3735171010"
+      "imageSourceUrl": "https://www.flickr.com/photos/84856173@N00/3735171010",
+      "leadExcerpt": "Les 29 et 30 mai prochains, les adeptes d’ouvrages de suspense, à mystère et d’enquêtes auront rendez-vous au Centre culturel Georges-Vanier pour la troisième édition du festival du livre policier Montréal Mystère , un événement encore jeune, mais déjà bien installé dans le paysage littéraire montréalais."
     },
     {
       "source": "The Plant",
@@ -1818,14 +1798,14 @@
       "excerpt": "Dear readers, Class of 2026 We did it! As May’s doting weather and perfumed flowers lull us into the promise of summer, I try to turn my tears to crystals that will decorate my legacy at The Plant. I knew I’d cry when I’d have to greet “Goodbye.” In my heart, I will forever",
       "image": "",
       "leadImageReady": false,
-      "leadExcerpt": "Dear readers, Class of 2026 We did it! As May’s doting weather and perfumed flowers lull us into the promise of summer, I try to turn my tears to crystals that will decorate my legacy at The Plant. I knew I’d cry when I’d have to greet “Goodbye.” In my heart, I will forever hold 35 crystals for each member of the team that became my anchor. When hard nights of work kept me up until the moon came d",
       "stockImage": "https://live.staticflickr.com/2295/2462847853_5a214f2dab_b.jpg",
       "imageTitle": "Silent Shanghai.",
       "imageCredit": "Photo : @yakobusan Jakob Montrasio / CC BY · Openverse",
       "imageCreator": "@yakobusan Jakob Montrasio",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/37803129@N00/2462847853"
+      "imageSourceUrl": "https://www.flickr.com/photos/37803129@N00/2462847853",
+      "leadExcerpt": "Dear readers, Class of 2026 We did it! As May’s doting weather and perfumed flowers lull us into the promise of summer, I try to turn my tears to crystals that will decorate my legacy at The Plant. I knew I’d cry when I’d have to greet “Goodbye.” In my heart, I will forever hold 35 crystals for each member of the team that became my anchor. When hard nights of work kept me up until the moon came d"
     },
     {
       "source": "The Plant",
@@ -1997,15 +1977,14 @@
       "author": "Minola Grent",
       "date": "2026-05-11T20:43:48.000Z",
       "excerpt": "Via My Little Princess (2011) Minola GrentEditor-in-Chief Every story has the right to be told. Even difficult stories of abuse and manipulation do. So, with an asterisk: leave the children out of this. In the midst of the 1970s cultural confusion, Franco-Romanian photographer",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-5.png",
+      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-4.jpeg?w=731",
       "sourceImageCredit": "Photo: My Little Princess (2011)",
       "sourceImageCreator": "My Little Princess (2011)",
       "sourceImageCreditUrl": "https://theplantnews.com/2026/05/11/leave-the-children-out-of-this/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "image-5.png",
-      "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "sourceImageCreditImageKey": "image-4.jpeg",
+      "sourceImageCreditRev": 8
     },
     {
       "source": "The Plant",
@@ -2053,8 +2032,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "16-17_cdm-1.jpg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": false,
-      "_retainedFromCache": true
+      "leadImageReady": false
     },
     {
       "source": "Quartier Libre",
@@ -2075,15 +2053,14 @@
       "sourceImageCreditImageKey": "6-7_soutien-technique.jpg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "leadExcerpt": "Lors d’une assemblée universitaire tenue le 16 mars dernier, le professeur agrégé à l’École de psychoéducation de la Faculté des arts et des sciences de l’UdeM Jean-Sébastien Fallu a soulevé des préoccupations concernant le soutien informatique à l’Université. Il a partagé plusieurs difficultés que lui et ses collègues ont vécues, notamment liées aux délais, aux procédures et à la complexité de certains outils numériques.",
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/8615/16083018748_496327d4a4_b.jpg",
       "imageTitle": "Jean Cabut dit Cabu painted portrait - Hommage et soutien de la Demeure du Chaos à Charlie Hebdo #jesuischarlie P1050129",
       "imageCredit": "Photo : Abode of Chaos / CC BY · Openverse",
       "imageCreator": "Abode of Chaos",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/40936370@N00/16083018748"
+      "imageSourceUrl": "https://www.flickr.com/photos/40936370@N00/16083018748",
+      "leadExcerpt": "Lors d’une assemblée universitaire tenue le 16 mars dernier, le professeur agrégé à l’École de psychoéducation de la Faculté des arts et des sciences de l’UdeM Jean-Sébastien Fallu a soulevé des préoccupations concernant le soutien informatique à l’Université. Il a partagé plusieurs difficultés que lui et ses collègues ont vécues, notamment liées aux délais, aux procédures et à la complexité de certains outils numériques."
     },
     {
       "source": "The Link",
@@ -2096,7 +2073,7 @@
       "author": "Alma Perreault",
       "date": "2026-05-09T21:18:00.000Z",
       "excerpt": "May 5 marks a day of awareness for MMIWG2S+ Around 300 demonstrators attended the May 5, 2026 march, a stark contrast to the thousands of Montrealers who took to the streets for May Day demonstrations five days earlier. Photo Alma Perreault",
-      "image": "https://thelinknewspaper.ca/images/articles/_resized/almaperreault-6683.jpg",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/almaperreault-6683_690_460_90.jpg",
       "sourceImageCredit": "Photo: Alma Perreault",
       "sourceImageCreator": "Alma Perreault",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16328",
@@ -2118,7 +2095,7 @@
       "author": "Allyson Caron-Pelletier",
       "date": "2026-05-09T03:14:30.000Z",
       "excerpt": "D’origine moldave, Iulian Ciobanu arrive au Canada en 2010 sans même connaître le boccia. Cinq ans plus tard, il quitte son emploi pour devenir joueur BC4 breveté avec l’équipe nationale. « Je n’avais jamais fait de sport de ma vie, mais j’ai toujours été curieux et capable de",
-      "image": "https://montrealcampus.ca/wp-content/uploads/2026/05/1-Photo-couverture.png",
+      "image": "https://montrealcampus.ca/wp-content/uploads/2026/05/1-Photo-couverture-1280x855.png",
       "sourceImageCredit": "Photo : Allyson Caron-Pelletier",
       "sourceImageCreator": "Allyson Caron-Pelletier",
       "sourceImageCreditUrl": "https://montrealcampus.ca/2026/05/08/iulian-ciobanu-decouvrir-un-autre-monde-grace-au-boccia/",
@@ -2147,7 +2124,6 @@
       "sourceImageCreditImageKey": "image-1.jpeg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/5260/5521112363_896ef761ef_b.jpg",
       "imageTitle": "Future Music Festival 2011",
       "imageCredit": "Photo : Eva Rinaldi Celebrity Photographer / CC BY-SA · Openverse",
@@ -2175,7 +2151,6 @@
       "sourceImageCreditImageKey": "1.jpg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/2649/4133148330_cbf64fac42_b.jpg",
       "imageTitle": "Zone WST TFL MCI LosAngeles Graffiti Art",
       "imageCredit": "Photo : anarchosyn / CC BY-SA · Openverse",
@@ -2290,8 +2265,7 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3417.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": false,
-      "_retainedFromCache": true
+      "leadImageReady": false
     },
     {
       "source": "Montréal Campus",
@@ -2348,7 +2322,7 @@
       "author": "Camélie Bourret et Félicitée Audet",
       "date": "2026-05-01T18:02:05.000Z",
       "excerpt": "« Êtes-vous prêt à réveiller l’homme que vous voulez être? », c’est ce qu’affiche le site Web de ManKind Project. Actif dans une vingtaine de pays, cet organisme a pour objectif de « développer un sentiment de masculinité sain et mature ». Retraites, groupes de discussion et",
-      "image": "https://montrealcampus.ca/wp-content/uploads/2026/04/Mankind-template-1.png",
+      "image": "https://montrealcampus.ca/wp-content/uploads/2026/04/Mankind-template-1-1280x720.png",
       "sourceImageCredit": "Illustration : Kilian Beauchesne et Allyson Caron-Pelletier",
       "sourceImageCreator": "Kilian Beauchesne et Allyson Caron-Pelletier",
       "sourceImageCreditUrl": "https://montrealcampus.ca/2026/05/01/masculinite-mankind-project-therapie/",
@@ -2379,7 +2353,6 @@
       "sourceImageCreditImageKey": "17c4541a-839d-48b8-b5aa-2cc81e91e3c8.jpeg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/65535/53597191835_aefb051f37_b.jpg",
       "imageTitle": "University of New Brunswick Reds wtn the 2024 University Cup with a 4-0 victory over the Université du Québec à Trois-Rivières Patriotes",
       "imageCredit": "Photo : chester902 / Domaine public · Openverse",
@@ -2399,7 +2372,7 @@
       "author": "Juliette Benoît et Flora Paquet",
       "date": "2026-04-30T17:42:59.000Z",
       "excerpt": "Au début de 2026, la compagnie pharmaceutique Novo Nordisk a placardé de nombreuses publicités de Wegovy les murs et les tourniquets de la station de métro Berri-UQAM. Wegovy est un médicament destiné au traitement du diabète de type 2 et pour les personnes atteintes d’obésité.",
-      "image": "https://montrealcampus.ca/wp-content/uploads/2026/04/Wegovy-template-1.png",
+      "image": "https://montrealcampus.ca/wp-content/uploads/2026/04/Wegovy-template-1-1280x720.png",
       "sourceImageCredit": "Illustration : Charles Dessureault",
       "sourceImageCreator": "Charles Dessureault",
       "sourceImageCreditUrl": "https://montrealcampus.ca/2026/04/30/publicites-wegovy-berri-uqam-minceur/",
@@ -2487,14 +2460,14 @@
       "excerpt": "Council also reinstated four representatives, amended appointment rules The Concordia Student Union passed several motions in their final session before the annual general meeting. Graphic Naya Hachwa",
       "image": "",
       "leadImageReady": false,
-      "leadExcerpt": "Chairperson Asa Kohn called the SCM to order at 3:07 p.m. and called on the policy committee to present its report, which consisted of the meeting’s recommended motions.",
       "stockImage": "https://live.staticflickr.com/7089/7290404684_2750bb385f_b.jpg",
       "imageTitle": "Guy Fawkes on Guy Street",
       "imageCredit": "Photo : Indrid__Cold / CC BY-SA · Openverse",
       "imageCreator": "Indrid__Cold",
       "imageLicense": "by-sa",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/29442760@N00/7290404684"
+      "imageSourceUrl": "https://www.flickr.com/photos/29442760@N00/7290404684",
+      "leadExcerpt": "Chairperson Asa Kohn called the SCM to order at 3:07 p.m. and called on the policy committee to present its report, which consisted of the meeting’s recommended motions."
     },
     {
       "source": "Zone Campus",
@@ -2516,7 +2489,6 @@
       "sourceImageCreditImageKey": "img_3939.jpg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Carnet_de_la_Patria.png",
       "imageTitle": "Carnet de la Patria",
       "imageCredit": "Photo : Prensa Presidencial - Government of Venezuela / CC BY · Openverse",
@@ -2545,7 +2517,6 @@
       "sourceImageCreditImageKey": "img_9786.jpeg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/2825/11053498355_c889681da9_b.jpg",
       "imageTitle": "Ben Heine Solo Exhibition at Hyehwa Art Center in Seoul, South Korea",
       "imageCredit": "Photo : Ben Heine / CC BY-SA · Openverse",
@@ -2617,7 +2588,6 @@
       "sourceImageCreditImageKey": "img_3397-1.jpeg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/8/80/Orelsan-LFEA-logoremake.png",
       "imageTitle": "Orelsan-LFEA-logoremake",
       "imageCredit": "Photo : RayTihange / CC0 · Openverse",
@@ -2646,7 +2616,6 @@
       "sourceImageCreditImageKey": "img_3405.jpeg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/65535/52511912533_d0ae37f758_b.jpg",
       "imageTitle": "The Grand Opening of Southside, Nov. 19, 2022",
       "imageCredit": "Photo : Rod Raglin / CC BY-SA · Openverse",
@@ -2673,8 +2642,7 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "dany_portrait_vignette_zc-copie-1068x641-3-2.jpg",
-      "leadImageReady": false,
-      "_retainedFromCache": true
+      "leadImageReady": false
     },
     {
       "source": "Zone Campus",
@@ -2695,7 +2663,6 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "604823445_853711280773514_928679255052921821_n.jpg",
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/9/99/G%C3%AEte_universitaire_UQTR.JPG",
       "imageTitle": "Gîte universitaire UQTR",
       "imageCredit": "Photo : Khayman / CC BY-SA · Openverse",
@@ -2722,8 +2689,7 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "672687004_1331193022389249_583407324812045529_n.jpg",
-      "leadImageReady": false,
-      "_retainedFromCache": true
+      "leadImageReady": false
     },
     {
       "source": "Exil",
@@ -2737,15 +2703,14 @@
       "date": "2026-04-18T22:22:07.000Z",
       "excerpt": "Ma réponse à PSPP À quelques mois d’une élection provinciale qui promet (si on se fie aux sondages d’intentions de vote) un changement de parti au pouvoir, le monde politique québécois se remet en haute vitesse. Plus les intentions des candidats sont définies, plus les langues",
       "image": "https://exilecvm.wordpress.com/wp-content/uploads/2020/10/121330814_121456603062023_8783413434532337259_n.png",
-      "leadImageReady": false,
-      "leadExcerpt": "À quelques mois d’une élection provinciale qui promet (si on se fie aux sondages d’intentions de vote) un changement de parti au pouvoir, le monde politique québécois se remet en haute vitesse. Plus les intentions des candidats sont définies, plus les langues se décorent de fleurs populistes et réactionnaires; telle est la nature de la politique, on cherche les votes.",
       "sourceImageCredit": "Crédit photo : Exil",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "121330814_121456603062023_8783413434532337259_n.png",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "leadImageReady": false,
+      "leadExcerpt": "À quelques mois d’une élection provinciale qui promet (si on se fie aux sondages d’intentions de vote) un changement de parti au pouvoir, le monde politique québécois se remet en haute vitesse. Plus les intentions des candidats sont définies, plus les langues se décorent de fleurs populistes et réactionnaires; telle est la nature de la politique, on cherche les votes."
     },
     {
       "source": "The Tribune",
@@ -2778,7 +2743,7 @@
       "author": "Racha Rais",
       "date": "2026-04-14T03:37:00.000Z",
       "excerpt": "Youth involvement in politics and the place of AI in Canada dominated discussion Members of the winning Young Liberals of Canada slate, Team Renaissance, with member of Parliament Sameer Zuberi at the Liberal National Convention in Montreal on April 11, 2026. Photo Racha Rais",
-      "image": "https://thelinknewspaper.ca/images/articles/_resized/P1144275.jpg",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/P1144275_690_358_90.jpg",
       "sourceImageCredit": "Photo: Racha Rais",
       "sourceImageCreator": "Racha Rais",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16325",
@@ -2828,7 +2793,7 @@
       "author": "Sydney Nethersole",
       "date": "2026-04-14T03:00:00.000Z",
       "excerpt": "The two-venue festival invites people to move between spaces LaVendertown is set to perform at Sala Rossa during the music festival Jaywalk. Courtesy Sayplus.",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/Full_band_B-W_(1)_900_600_90.jpeg",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/Full_band_B-W_(1)_690_460_90.jpeg",
       "sourceImageCredit": "Photo: Courtesy of Sayplus",
       "sourceImageCreator": "Sayplus",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16323",
@@ -2849,7 +2814,7 @@
       "author": "Rojiar Ghezelbash",
       "date": "2026-04-14T02:36:00.000Z",
       "excerpt": "The university issued a general message without naming the conflict and no email was sent to students Iranian students at Concordia University are expressing concern over a lack of recognition and support resources from the university regarding the conflict in Iran. Photo",
-      "image": "https://thelinknewspaper.ca/images/articles/_resized/Concordia.Stock.CarolineMarsh-3.jpg",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/Concordia.Stock.CarolineMarsh-3_690_460_90.jpg",
       "sourceImageCredit": "Photo: Caroline Marsh",
       "sourceImageCreator": "Caroline Marsh",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16322",
@@ -2967,15 +2932,14 @@
       "author": "Safa Hachi",
       "date": "2026-04-11T20:45:00.000Z",
       "excerpt": "Chandler Levack on Montreal’s music scene, early-2010s nostalgia and the charm of being awkward Chandler Levack on the set of her latest film Mile End Kicks. Courtesy Joe Fuda",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/_MG_2324_900_600_90.jpeg",
+      "image": "https://thelinknewspaper.ca/images/articles/_resized/Screenshot_2026-04-11_17.01.52.png",
       "sourceImageCredit": "Photo credit: The Link",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16318",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "_mg_2324.jpeg",
-      "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "sourceImageCreditImageKey": "screenshot_2026-04-11_17.01.52.png",
+      "sourceImageCreditRev": 8
     },
     {
       "source": "The Link",
@@ -2988,7 +2952,7 @@
       "author": "Anaïssa Dauphin",
       "date": "2026-04-09T21:04:00.000Z",
       "excerpt": "Canada has an impartiality problem Canada’s human rights image is sustained by a lack of accountability for its history of systemic harm. Graphic Naya Hachwa",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_OPS_SlaveTrade_NayaHachwa_900_494_90.jpg",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_OPS_SlaveTrade_NayaHachwa_690_379_90.jpg",
       "sourceImageCredit": "Illustration: Naya Hachwa",
       "sourceImageCreator": "Naya Hachwa",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16316",
@@ -3009,7 +2973,7 @@
       "author": "Yoan Safar",
       "date": "2026-04-09T21:00:00.000Z",
       "excerpt": "A plan to preserve the façade while removing the interior is drawing mixed reactions The Empress has been left destitute since the fire that shut it down in 1992. Photo Yoan Safar",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/Empress_theater_900_675_90.JPG",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/Empress_theater_690_518_90.JPG",
       "sourceImageCredit": "Photo: Yoan Safar",
       "sourceImageCreator": "Yoan Safar",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16317",
@@ -3030,15 +2994,14 @@
       "author": "Mani Asadieraghi",
       "date": "2026-04-09T20:52:00.000Z",
       "excerpt": "Why student newspapers remain one of the last places people learn to speak publicly Public discourse does not survive automatically. It depends on people’s willingness to question institutions and place their ideas into shared space. Graphic Halle Keays",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_OPS_900_675.png",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_OPS_690_518.png",
       "sourceImageCredit": "Photo credit: The Link",
+      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16315",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "12_ops_900_675.png",
-      "sourceImageCreditRev": 8,
-      "leadImageReady": true,
-      "sourceImageCreator": ""
+      "sourceImageCreditImageKey": "12_ops_690_518.png",
+      "sourceImageCreditRev": 8
     },
     {
       "source": "The Link",
@@ -3908,45 +3871,21 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "La performance de l’homosexualité : un privilège? - Le Délit",
-      "link": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
-      "author": "La rédaction",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Blague innocente, signe d’ouverture ou nouveau costume ?",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/ecriture-inclusive.png",
-      "featured": true,
-      "sourceImageCredit": "Photo : Félix Fournier",
-      "sourceImageCreator": "Félix Fournier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "ecriture-inclusive.png",
-      "sourceImageCreditRev": 8,
-      "leadImageReady": true,
-      "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie."
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
       "title": "L’épidémie de la nonchalance - Le Délit",
       "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
       "author": "La rédaction",
       "date": "2026-03-25T07:00:00.000Z",
       "excerpt": "Pour en finir avec l’insouciance de façade et embrasser pleinement l’authenticité.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/QC.jpeg",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Creation-sans-titre-2-768x1024.png",
       "featured": true,
+      "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance.",
       "sourceImageCredit": "Photo : Elie Nguyen",
       "sourceImageCreator": "Elie Nguyen",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "qc.jpeg",
-      "sourceImageCreditRev": 8,
-      "leadImageReady": true,
-      "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance."
+      "sourceImageCreditImageKey": "creation-sans-titre-2.png",
+      "sourceImageCreditRev": 8
     },
     {
       "source": "Le Délit",
@@ -4039,6 +3978,28 @@
       "leadExcerpt": "Première gaffe intellectuelle (in)volontaire du Concordian . En trente secondes de recherches plus ou moins rigoureuses, il aurait pu comprendre les réelles causes de la décote du Québec par la Standard and Poor’s (S&P) – qui n’a absolument rien à voir avec la recrudescence de l’intérêt des Québécois envers la souveraineté."
     },
     {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "La performance de l’homosexualité : un privilège? - Le Délit",
+      "link": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
+      "author": "La rédaction",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Blague innocente, signe d’ouverture ou nouveau costume ?",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/coinqueer-1.jpeg",
+      "featured": true,
+      "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie.",
+      "sourceImageCredit": "Photo : Félix Fournier",
+      "sourceImageCreator": "Félix Fournier",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "coinqueer-1.jpeg",
+      "sourceImageCreditRev": 8
+    },
+    {
       "source": "The McGill Daily",
       "institution": "McGill University",
       "region": "Montréal",
@@ -4057,8 +4018,7 @@
       "imageCreator": "Abdallahh",
       "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:McGill_University,_Winter.jpg",
-      "_campusBank": true
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:McGill_University,_Winter.jpg"
     },
     {
       "source": "The McGill Daily",
@@ -4253,8 +4213,7 @@
       "imageCreator": "Jeangagnon",
       "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:View_from_McGill_University_downtown_campus_01.JPG",
-      "_campusBank": true
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:View_from_McGill_University_downtown_campus_01.JPG"
     },
     {
       "source": "The McGill Daily",
@@ -4374,14 +4333,14 @@
       "excerpt": "Votre entourage, en tant qu’étudiantes et étudiants de l’Université McGill, est peut-être composé en majorité de personnes qui se revendiquent comme féministes. Certaines le sont, d’autres le prétendent, mais relativement rares sont les McGillois qui refusent ouvertement le féminisme.",
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Capture-decran-le-2026-03-22-a-17.22.07.png",
       "featured": true,
-      "leadImageReady": true,
       "sourceImageCredit": "Photo : Alexandre Gontier",
       "sourceImageCreator": "Alexandre Gontier",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/ce-que-nous-devons-aux-femmes/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "capture-decran-le-2026-03-22-a-17.22.07.png",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "leadImageReady": true
     },
     {
       "source": "Le Délit",
@@ -4394,16 +4353,15 @@
       "author": "La rédaction",
       "date": "2026-03-18T07:00:00.000Z",
       "excerpt": "Kristi Noem et Erika Kirk comme figures de proue du néo-fascisme américain.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Capture-decran-le-2026-03-22-a-17.22.07.png",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/MAGA_marius.png",
       "featured": true,
       "leadExcerpt": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer en instrumentalisant certaines femmes pour reproduire les structures qui les subordonnent. C’est à travers ce mécanisme d’opacité que sa présence se resserre sur la société, et que ses contradictions se dissimulent sous le couvert de liberté individuelle, de traditions ou de choix personnels.",
-      "leadImageReady": true,
       "sourceImageCredit": "Photo : Stu Doré",
       "sourceImageCreator": "Stu Doré",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "capture-decran-le-2026-03-22-a-17.22.07.png",
+      "sourceImageCreditImageKey": "maga_marius.png",
       "sourceImageCreditRev": 8
     },
     {
@@ -4438,7 +4396,7 @@
       "author": "La rédaction",
       "date": "2026-03-13T19:42:16.000Z",
       "excerpt": "GardaWorld, la compagnie québécoise qui fournit les gardes de sécurité du Cégep du Vieux-Montréal, est au centre de la controverse. L’entreprise entretient des relations avec la police immigratoire américaine ICE – qui est reconnue par plusieurs organisations humanitaires comme",
-      "image": "https://exilecvm.wordpress.com/wp-content/uploads/2026/03/img_3527.jpg",
+      "image": "https://exilecvm.wordpress.com/wp-content/uploads/2026/03/img_3527.jpg?w=1024",
       "sourceImageCredit": "Crédit photo : Exil",
       "sourceImageCreditUrl": "https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/",
       "sourceImageCreditFrom": "media",
@@ -4459,14 +4417,13 @@
       "date": "2026-02-28T23:42:43.000Z",
       "excerpt": "On fera pas un pays avec un CD de Leloup et une couple de bières de micro ! Je me suis surprise à dire ça à un ami, fervent défenseur du FLQ (Front de libération du Québec) et grand nostalgique des années Lévesque. C’est sorti tout seul, ça m’a étonnée. Je m’étais toujours",
       "image": "https://exilecvm.wordpress.com/wp-content/uploads/2020/10/121330814_121456603062023_8783413434532337259_n.png",
-      "leadImageReady": false,
       "sourceImageCredit": "Crédit photo : Exil",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "121330814_121456603062023_8783413434532337259_n.png",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "leadImageReady": false
     },
     {
       "source": "Le Polyscope",
@@ -4538,6 +4495,12 @@
       "date": "2026-02-07T22:21:15.000Z",
       "excerpt": "Compte rendu de l’assemblée générale étudiante H26 L’assemblée générale (AG) de l’association étudiante du Cégep du Vieux-Montréal s’est déroulée dans l’après-midi du 4 février dernier à l’Exode. Le refus d’une grève cet hiver, l’intronisation du programme FIL, les nouveautés du",
       "image": "https://exilecvm.wordpress.com/wp-content/uploads/2020/10/121330814_121456603062023_8783413434532337259_n.png",
+      "sourceImageCredit": "Crédit photo : Exil",
+      "sourceImageCreditUrl": "https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/",
+      "sourceImageCreditFrom": "media",
+      "sourceImageCreditCited": false,
+      "sourceImageCreditImageKey": "121330814_121456603062023_8783413434532337259_n.png",
+      "sourceImageCreditRev": 8,
       "leadImageReady": false,
       "stockImage": "https://live.staticflickr.com/5087/5336969301_208ee86e33_b.jpg",
       "imageTitle": "Toronto Winter Maintenance Budget",
@@ -4545,14 +4508,7 @@
       "imageCreator": "MSVG",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/13907834@N00/5336969301",
-      "sourceImageCredit": "Crédit photo : Exil",
-      "sourceImageCreator": "",
-      "sourceImageCreditUrl": "https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/",
-      "sourceImageCreditFrom": "media",
-      "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "121330814_121456603062023_8783413434532337259_n.png",
-      "sourceImageCreditRev": 8
+      "imageSourceUrl": "https://www.flickr.com/photos/13907834@N00/5336969301"
     },
     {
       "source": "Le Polyscope",
