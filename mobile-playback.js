@@ -1,21 +1,38 @@
 /**
  * LE RADAR — contrôleur de lecture mobile en arrière-plan.
  *
- * Stratégie (stream distant via <audio>) :
- *   iOS
- *     1. Boucle WAV quasi-silencieuse (2e MediaElement) — garde la session audio
+ * Android (Chrome) — refonte 2026, philosophie « ne pas se battre contre
+ * la plateforme » : Chrome garde un <audio> vivant à l'écran verrouillé
+ * tant que (1) l'élément joue réellement et (2) la Media Session est
+ * active (c'est elle qui porte la notification média et le focus audio).
+ * L'ancienne stratégie (salves de reprises différées, battement play()
+ * périodique, reconnexions avec démontage src/load() + cache-bust en
+ * arrière-plan) détruisait précisément ces deux conditions : chaque
+ * démontage faisait perdre la notification et l'autorisation de lecture,
+ * et le play() suivant restait bloqué → silence quelques secondes après
+ * le verrouillage.
+ *
+ *   Android — nouvelle stratégie :
+ *     1. UN SEUL MediaElement, jamais recréé, jamais de 2e son
+ *        (un second flux — même ultrasonique — vole le focus audio)
+ *     2. Pause inattendue (OEM au lock, perte de focus passagère) →
+ *        play() simple sur le MÊME élément : immédiat dans le handler,
+ *        puis backoff doux. Aucun démontage du pipeline sur une pause.
+ *     3. Pipeline mort PROUVÉ (error / ended / « playing » mais
+ *        currentTime figé / waiting sans fin) → rechargement src+load()
+ *        sans retirer l'attribut src ni cache-bust, budget régénérant.
+ *     4. Watchdog léger (setTimeout chaîné ~5 s) en filet de sécurité ;
+ *        les événements média restent la source primaire de signal.
+ *     5. Media Session maintenue (metadata + playbackState) — c'est la
+ *        voie privilégiée d'Android pour relancer depuis le lockscreen.
+ *
+ *   iOS — inchangé (fonctionne) :
+ *     1. Boucle WAV quasi-silencieuse (2e MediaElement) — garde la session
  *     2. Watchdog + battement timeupdate sur la boucle
- *   Android (Chrome)
- *     1. UN SEUL MediaElement = le flux live (pas de 2e audio ni d'oscillateur)
- *        — un second son (même ultrasonique) vole le focus audio et coupe le
- *        flux quelques secondes après le verrouillage de l'écran
- *     2. Battement timeupdate sur le lecteur principal (événements média non
- *        étranglés, contrairement aux timers JS en page cachée)
- *     3. Reprise immédiate sur pause/stall/waiting + reconnexion pipeline
- *     4. Media Session maintenue (playbackState + position live)
- *   Commun
+ *     3. Reprise différée avec backoff + reconnexion pipeline
+ *
+ *   Commun :
  *     - Budget de reconnexions qui se régénère (écoute longue écran éteint)
- *     - Rechargement complet du flux après play() sans effet
  */
 (function (global) {
   'use strict';
@@ -27,26 +44,42 @@
     || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
   const DEFAULT_CONFIG = Object.freeze({
+    // ── Commun : budget de reconnexions (rechargement du pipeline) ──
+    reconnectMaxFg: 4,
+    reconnectMaxBg: 12,
+    reconnectMinGapMs: 2500,
+    // Fenêtre après laquelle le compteur de reconnexions repart à zéro.
+    reconnectDecayMs: 45000,
+
+    // ── Android ──
+    // Filet de sécurité : vérification chaînée de l'état du lecteur.
+    androidWatchdogMs: 5000,
+    // « playing » mais currentTime figé au-delà de ce délai = pipeline mort.
+    androidFrozenAfterMs: 9000,
+    // Backoff des reprises play() après pause inattendue (dernier répété).
+    androidResumeStepsMs: [250, 1000, 3000, 8000, 15000, 30000],
+    // Deux pauses en moins d'une seconde = focus refusé → backoff, pas de
+    // reprise immédiate en boucle (guerre pause/play qui tue la session).
+    androidResumeImmediateGapMs: 1000,
+    // Après N play() sans reprise effective, tenter un rechargement du flux.
+    androidResumeReloadAfter: 4,
+    // waiting/stalled prolongé avant intervention (laisser Chrome tamponner).
+    androidStallMs: 6000,
+
+    // ── iOS ──
     watchIntervalMs: 2500,
-    // Android : heartbeat plus serré via timeupdate du flux (≈250 ms natif)
-    streamHeartbeatMs: 2000,
     stallDelayBgMs: 800,
     stallDelayFgMs: 4000,
     resumeInitialMs: 80,
     resumeBackoffBaseMs: 150,
     resumeBackoffFactor: 1.45,
     resumeBackoffMaxMs: 3500,
-    reconnectMaxFg: 4,
-    reconnectMaxBg: 12,
-    reconnectMinGapMs: 1500,
-    // Fenêtre après laquelle le compteur de reconnexions repart à zéro.
-    reconnectDecayMs: 45000,
-    // iOS only — > 5 s évite la classification « contenu court » Chromium.
+    // > 5 s évite la classification « contenu court » Chromium.
     keepaliveWavSec: 6,
     keepaliveFreqHz: 19500,
     keepaliveGain: 0.001,
-    // Après N play() sans reprise, recharger le pipeline média Android.
-    pausedRecoveryBeforeReload: 2,
+    // Après N play() sans reprise, recharger le pipeline média.
+    pausedRecoveryBeforeReload: 3,
   });
 
   function encodeSilentWav(seconds, freq, gain, sampleRate = 44100) {
@@ -73,27 +106,30 @@
   function createMobilePlayback(deps, config = {}) {
     const cfg = { ...DEFAULT_CONFIG, ...config };
 
-    let keepaliveAudio = null;
-    let keepaliveBlobUrl = null;
-
-    let watchTimer = null;
-    let resumeTimer = null;
-    /** Timers de reprise différée (Android lock : 0,4 s / 1,2 s / 2,8 s). */
-    const deferredResumeTimers = new Set();
-    let stallTimer = null;
-    let resumeAttempt = 0;
-    let reconnectTries = 0;
-    let lastReconnectAt = 0;
+    // ── État commun ──
     // Lecture voulue par l'utilisateur (démarrée et jamais arrêtée/pausée par lui).
     let playbackIntended = false;
-    // Échecs consécutifs de relance d'un lecteur en pause.
-    let pausedRecoveryTries = 0;
-    let lastHeartbeatAt = 0;
+    let reconnectTries = 0;
+    let lastReconnectAt = 0;
+    let stallTimer = null;
     let lastStreamProgressAt = 0;
     let lastStreamCurrentTime = 0;
-    // iOS only : autorise la boucle WAV à se relancer seule.
+
+    // ── État Android ──
+    let androidWatchdogTimer = null;
+    let androidResumeTimer = null;
+    let androidResumeAttempt = 0;
+    let lastAndroidImmediateResumeAt = 0;
+
+    // ── État iOS ──
+    let keepaliveAudio = null;
+    let keepaliveBlobUrl = null;
     let keepaliveWanted = false;
-    let streamHeartbeatAttached = false;
+    let watchTimer = null;
+    let resumeTimer = null;
+    let resumeAttempt = 0;
+    let pausedRecoveryTries = 0;
+    let lastHeartbeatAt = 0;
 
     function isBackground() {
       return IS_MOBILE && document.visibilityState === 'hidden';
@@ -122,6 +158,151 @@
         if (navigator.audioSession) navigator.audioSession.type = 'auto';
       } catch {}
     }
+
+    function wantsPlayback() {
+      return playbackIntended
+        && !deps.isUserPaused()
+        && !deps.isCasting?.()
+        && !deps.isExternalListen?.();
+    }
+
+    // ═════════════════════════════════════════════════════════════════════
+    //  ANDROID — reprise douce + watchdog, jamais de démontage sur pause
+    // ═════════════════════════════════════════════════════════════════════
+
+    function clearAndroidResume() {
+      if (androidResumeTimer) {
+        clearTimeout(androidResumeTimer);
+        androidResumeTimer = null;
+      }
+    }
+
+    function stopAndroidWatchdog() {
+      if (androidWatchdogTimer) {
+        clearTimeout(androidWatchdogTimer);
+        androidWatchdogTimer = null;
+      }
+    }
+
+    function startAndroidWatchdog() {
+      if (!IS_ANDROID || androidWatchdogTimer || !playbackIntended) return;
+      androidWatchdogTimer = setTimeout(androidWatchdogTick, cfg.androidWatchdogMs);
+    }
+
+    function androidWatchdogTick() {
+      androidWatchdogTimer = null;
+      if (!wantsPlayback()) return;
+      const player = deps.getPlayer();
+      if (player && player.src) {
+        if (player.paused) {
+          if (!androidResumeTimer) androidAttemptResume();
+        } else if (lastStreamProgressAt
+          && Date.now() - lastStreamProgressAt > cfg.androidFrozenAfterMs) {
+          // « playing » mais figé = pipeline mort (fréquent après un long lock).
+          attemptReconnect();
+        }
+        if (isBackground()) deps.syncMediaSession?.();
+      }
+      startAndroidWatchdog();
+    }
+
+    /** Reprise play() planifiée avec backoff — un seul timer à la fois. */
+    function androidScheduleResume() {
+      if (androidResumeTimer || !wantsPlayback()) return;
+      const steps = cfg.androidResumeStepsMs;
+      const delay = steps[Math.min(androidResumeAttempt, steps.length - 1)];
+      androidResumeTimer = setTimeout(() => {
+        androidResumeTimer = null;
+        androidAttemptResume();
+      }, delay);
+    }
+
+    /**
+     * Reprise Android : play() simple sur le même élément. Pas de teardown —
+     * garder l'identité de l'élément préserve la Media Session et le droit
+     * de lecture accordé par le geste utilisateur initial.
+     */
+    function androidAttemptResume() {
+      if (!wantsPlayback() || !deps.getStation()) return;
+      const player = deps.getPlayer();
+      if (!player) return;
+
+      deps.ensureNativePlayback?.();
+      deps.resumeAudioCtx?.();
+      setPlaybackSession();
+      deps.syncMediaSession?.();
+
+      if (!player.src) {
+        deps.playStation?.(deps.getStation());
+        return;
+      }
+      if (!player.paused) {
+        androidResumeAttempt = 0;
+        return;
+      }
+
+      androidResumeAttempt += 1;
+      // Reprises simples sans effet répétées → le flux est probablement mort.
+      if (androidResumeAttempt > cfg.androidResumeReloadAfter && attemptReconnect()) return;
+
+      const playAttempt = player.play();
+      if (playAttempt && typeof playAttempt.catch === 'function') {
+        playAttempt.catch(() => androidScheduleResume());
+      }
+    }
+
+    /**
+     * Pause non initiée par l'utilisateur. Cas typiques : pause OEM à
+     * l'instant du lock (→ reprise immédiate dans le handler), perte de
+     * focus audio (appel, autre app → backoff doux, pas de guerre play/pause).
+     */
+    function androidOnUnexpectedPause() {
+      if (!wantsPlayback()) return;
+      const now = Date.now();
+      if (now - lastAndroidImmediateResumeAt >= cfg.androidResumeImmediateGapMs) {
+        lastAndroidImmediateResumeAt = now;
+        androidAttemptResume();
+      } else {
+        androidScheduleResume();
+      }
+    }
+
+    function androidOnBackgroundEnter() {
+      if (!wantsPlayback()) return;
+      setPlaybackSession();
+      deps.syncMediaSession?.();
+      startAndroidWatchdog();
+      const player = deps.getPlayer();
+      if (player?.paused && player.src) androidAttemptResume();
+    }
+
+    function androidOnBackgroundExit() {
+      androidResumeAttempt = 0;
+      if (!wantsPlayback()) return;
+      deps.syncMediaSession?.();
+      const player = deps.getPlayer();
+      if (player?.paused && player.src) androidAttemptResume();
+    }
+
+    /** Progression du flux (timeupdate) : l'horloge de santé du pipeline. */
+    function androidOnTimeUpdate() {
+      const player = deps.getPlayer();
+      if (!player || player.paused) return;
+      const t = player.currentTime || 0;
+      if (t < lastStreamCurrentTime) {
+        // Rechargement : currentTime repart de zéro.
+        lastStreamCurrentTime = t;
+        lastStreamProgressAt = Date.now();
+      } else if (t > lastStreamCurrentTime + 0.05) {
+        lastStreamCurrentTime = t;
+        lastStreamProgressAt = Date.now();
+        androidResumeAttempt = 0;
+      }
+    }
+
+    // ═════════════════════════════════════════════════════════════════════
+    //  iOS — boucle WAV + watchdog (inchangé : fonctionne)
+    // ═════════════════════════════════════════════════════════════════════
 
     // Battement iOS : timeupdate de la boucle WAV (les timers JS sont étranglés).
     function onKeepaliveHeartbeat() {
@@ -159,98 +340,10 @@
       if (keepaliveAudio.paused) keepaliveAudio.play().catch(() => {});
     }
 
-    /**
-     * Android : le flux principal est l'horloge. Tant qu'il avance, la session
-     * média reste vivante ; s'il stagne ou pause, on reprend immédiatement.
-     */
-    function onStreamHeartbeat() {
-      if (!playbackIntended || deps.isUserPaused()) return;
-      const player = deps.getPlayer();
-      if (!player || !player.src) return;
-
-      const now = Date.now();
-      const t = player.currentTime || 0;
-
-      if (!player.paused && t > lastStreamCurrentTime + 0.05) {
-        lastStreamCurrentTime = t;
-        lastStreamProgressAt = now;
-        pausedRecoveryTries = 0;
-      }
-
-      if (!isBackground()) return;
-      if (now - lastHeartbeatAt < cfg.streamHeartbeatMs) return;
-      lastHeartbeatAt = now;
-
-      deps.syncMediaSession?.();
-
-      if (player.paused) {
-        tryResumePlayback();
-        return;
-      }
-
-      // Flux « playing » mais currentTime figé = pipeline mort (fréquent au lock).
-      if (lastStreamProgressAt && now - lastStreamProgressAt > cfg.stallDelayBgMs + 500) {
-        if (canReconnectNow()) deps.performReconnect?.();
-        else tryResumePlayback();
-      }
-    }
-
-    function attachStreamHeartbeat(el) {
-      if (!el || streamHeartbeatAttached) return;
-      streamHeartbeatAttached = true;
-      el.addEventListener('timeupdate', onStreamHeartbeat);
-      // progress/durationchange aident quand timeupdate se raréfie.
-      el.addEventListener('progress', onStreamHeartbeat);
-    }
-
-    function startKeepalive() {
-      if (!IS_MOBILE || !deps.isPlaying() || deps.isUserPaused()) return;
-      setPlaybackSession();
-      deps.syncMediaSession?.();
-      attachStreamHeartbeat(deps.getPlayer());
-
-      // Android : pas de 2e piste audio — le flux live tient la session.
-      if (IS_ANDROID) {
-        keepaliveWanted = false;
-        return;
-      }
-
-      // iOS : boucle WAV de secours.
-      keepaliveWanted = true;
-      try { startWavKeepalive(); } catch {}
-    }
-
-    function stopKeepalive() {
-      keepaliveWanted = false;
-      releasePlaybackSession();
-      if (keepaliveAudio) {
-        try { keepaliveAudio.pause(); } catch {}
-      }
-    }
-
     function clearResumeTimer() {
       if (resumeTimer) {
         clearTimeout(resumeTimer);
         resumeTimer = null;
-      }
-      for (const t of deferredResumeTimers) clearTimeout(t);
-      deferredResumeTimers.clear();
-    }
-
-    /** Planifie une reprise sans annuler les autres (filet multi-délais Android). */
-    function scheduleDeferredResume(delay) {
-      if (deps.isUserPaused() || !playbackIntended) return;
-      const id = setTimeout(() => {
-        deferredResumeTimers.delete(id);
-        tryResumePlayback();
-      }, delay);
-      deferredResumeTimers.add(id);
-    }
-
-    function clearStallTimer() {
-      if (stallTimer) {
-        clearTimeout(stallTimer);
-        stallTimer = null;
       }
     }
 
@@ -268,13 +361,10 @@
       );
     }
 
-    function canReconnectNow() {
-      return Date.now() - lastReconnectAt >= cfg.reconnectMinGapMs;
-    }
-
+    /** Reprise iOS (et filets génériques hors Android). */
     function tryResumePlayback() {
-      if (deps.isUserPaused() || !deps.getStation() || deps.isExternalListen?.()) return;
-      if (!playbackIntended || deps.isCasting?.()) return;
+      if (IS_ANDROID) { androidAttemptResume(); return; }
+      if (!wantsPlayback() || !deps.getStation()) return;
 
       deps.ensureNativePlayback?.();
       deps.resumeAudioCtx?.();
@@ -285,25 +375,22 @@
 
       // Buffering en arrière-plan sans données → reconnexion.
       if (!player.paused && player.src && player.readyState < 2 && isBackground()) {
-        if (shouldRecover() && canReconnectNow()) deps.performReconnect?.();
+        if (shouldRecover() && canReconnectNow()) attemptReconnect();
         return;
       }
 
       if (player.paused && player.src) {
         deps.syncMediaSession?.();
         pausedRecoveryTries += 1;
-        // Android détruit souvent le pipeline au verrouillage : recharger tôt.
-        const reloadAfter = IS_ANDROID
-          ? cfg.pausedRecoveryBeforeReload
-          : 3;
-        if (pausedRecoveryTries >= reloadAfter && shouldRecover() && canReconnectNow()) {
-          deps.performReconnect?.();
+        if (pausedRecoveryTries >= cfg.pausedRecoveryBeforeReload
+          && shouldRecover() && canReconnectNow()) {
+          attemptReconnect();
         } else {
           const playAttempt = player.play();
           if (playAttempt && typeof playAttempt.catch === 'function') {
             playAttempt.catch(() => {
               if (shouldRecover() && canReconnectNow()) {
-                deps.performReconnect?.();
+                attemptReconnect();
               } else {
                 deps.playStation?.(deps.getStation());
               }
@@ -337,30 +424,16 @@
     function startWatch() {
       if (deps.isUserPaused() || !deps.getStation() || deps.isExternalListen?.()) return;
       clearWatch();
-      // Filet de secours : timers très ralentis en bg, d'où le heartbeat média.
+      // Filet de secours : timers très ralentis en bg, d'où le battement WAV.
       watchTimer = setInterval(tryResumePlayback, cfg.watchIntervalMs);
     }
 
     function onBackgroundEnter() {
-      if (deps.isUserPaused() || !playbackIntended || deps.isCasting?.()) return;
+      if (!wantsPlayback()) return;
       setPlaybackSession();
       deps.syncMediaSession?.();
-      attachStreamHeartbeat(deps.getPlayer());
-
       if (deps.isPlaying()) {
         startKeepalive();
-        // Android : re-assert play() immédiatement au passage en arrière-plan
-        // (certains firmwares mettent le média en pause à l'instant du lock).
-        if (IS_ANDROID) {
-          const player = deps.getPlayer();
-          if (player?.paused && player.src) {
-            player.play().catch(() => scheduleResume(cfg.resumeInitialMs));
-          }
-          // Filet multi-délais : le cut arrive souvent 1–3 s après le lock.
-          scheduleDeferredResume(400);
-          scheduleDeferredResume(1200);
-          scheduleDeferredResume(2800);
-        }
       } else {
         scheduleResume(cfg.resumeInitialMs);
       }
@@ -374,79 +447,50 @@
       tryResumePlayback();
     }
 
-    function setupLifecycle() {
-      if (!IS_MOBILE) return;
+    // ═════════════════════════════════════════════════════════════════════
+    //  Keepalive (point d'entrée commun app.js)
+    // ═════════════════════════════════════════════════════════════════════
 
-      document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'hidden') onBackgroundEnter();
-        else onBackgroundExit();
-      });
+    function startKeepalive() {
+      if (!IS_MOBILE || !deps.isPlaying() || deps.isUserPaused()) return;
+      setPlaybackSession();
+      deps.syncMediaSession?.();
 
-      // Android : blur/pagehide arrivent parfois avant visibilitychange au lock.
-      window.addEventListener('pagehide', () => {
-        if (!deps.isUserPaused() && playbackIntended) {
-          onBackgroundEnter();
-        }
-      });
+      // Android : pas de 2e piste audio — le flux live tient la session,
+      // le watchdog sert de filet.
+      if (IS_ANDROID) {
+        startAndroidWatchdog();
+        return;
+      }
 
-      window.addEventListener('pageshow', (e) => {
-        if (e.persisted) tryResumePlayback();
-      });
-
-      window.addEventListener('blur', () => {
-        if (IS_ANDROID && document.visibilityState === 'hidden') onBackgroundEnter();
-      });
-
-      document.addEventListener('freeze', () => {
-        if (!deps.isUserPaused() && playbackIntended) {
-          deps.syncMediaSession?.();
-          // Tenter une dernière reprise avant gel (Page Lifecycle).
-          tryResumePlayback();
-        }
-      });
-
-      document.addEventListener('resume', () => {
-        clearWatch();
-        tryResumePlayback();
-      });
-
-      // Certains WebView Android envoient focus/pageshow sans unfreeze propre.
-      window.addEventListener('focus', () => {
-        if (playbackIntended && !deps.isUserPaused()) tryResumePlayback();
-      });
+      // iOS : boucle WAV de secours.
+      keepaliveWanted = true;
+      try { startWavKeepalive(); } catch {}
     }
 
-    function attachToPlayer(el) {
-      if (!IS_MOBILE || !el || el.__radarMobilePlayback) return;
-      el.__radarMobilePlayback = true;
+    function stopKeepalive() {
+      keepaliveWanted = false;
+      releasePlaybackSession();
+      stopAndroidWatchdog();
+      clearAndroidResume();
+      if (keepaliveAudio) {
+        try { keepaliveAudio.pause(); } catch {}
+      }
+    }
 
-      attachStreamHeartbeat(el);
+    // ═════════════════════════════════════════════════════════════════════
+    //  Stalls et reconnexion (commun, budget régénérant)
+    // ═════════════════════════════════════════════════════════════════════
 
-      const onBgSignal = () => {
-        if (!deps.isUserPaused() && deps.getStation() && playbackIntended) {
-          // Même en avant-plan : certains OEM mettent en pause au lock sans
-          // visibilitychange immédiat — on reprend si la lecture est voulue.
-          if (isBackground() || IS_ANDROID) {
-            scheduleResume(cfg.resumeInitialMs);
-          }
-        }
-      };
+    function clearStallTimer() {
+      if (stallTimer) {
+        clearTimeout(stallTimer);
+        stallTimer = null;
+      }
+    }
 
-      el.addEventListener('pause', () => {
-        if (playbackIntended && !deps.isUserPaused() && !deps.isCasting?.()) {
-          // Reprise immédiate (sans attendre le timer) — critique Android lock.
-          tryResumePlayback();
-          onBgSignal();
-        }
-      });
-      el.addEventListener('suspend', () => onBgSignal());
-      el.addEventListener('emptied', () => onBgSignal());
-      el.addEventListener('stalled', () => onStall());
-      el.addEventListener('waiting', () => onStall());
-      el.addEventListener('playing', () => {
-        lastStreamProgressAt = Date.now();
-        lastStreamCurrentTime = el.currentTime || 0;
-      });
+    function canReconnectNow() {
+      return Date.now() - lastReconnectAt >= cfg.reconnectMinGapMs;
     }
 
     function onStall() {
@@ -454,54 +498,19 @@
       // En premier plan hors résilience, laisser le navigateur tamponner.
       if (!isBackground() && !isStationResilient()) return;
       if (stallTimer) return;
-      const delay = isBackground() ? cfg.stallDelayBgMs : cfg.stallDelayFgMs;
+      const delay = IS_ANDROID
+        ? cfg.androidStallMs
+        : (isBackground() ? cfg.stallDelayBgMs : cfg.stallDelayFgMs);
       stallTimer = setTimeout(() => {
         stallTimer = null;
         const player = deps.getPlayer();
         if (!player || !playbackIntended || deps.isUserPaused()) return;
         if (!player.paused && player.readyState >= 3) return;
-        if (canReconnectNow()) deps.performReconnect?.();
-        else tryResumePlayback();
+        if (!attemptReconnect()) {
+          if (IS_ANDROID) androidScheduleResume();
+          else tryResumePlayback();
+        }
       }, delay);
-    }
-
-    function onPlaying() {
-      playbackIntended = true;
-      reconnectTries = 0;
-      resumeAttempt = 0;
-      pausedRecoveryTries = 0;
-      lastStreamProgressAt = Date.now();
-      const player = deps.getPlayer();
-      lastStreamCurrentTime = player?.currentTime || 0;
-      clearStallTimer();
-      startKeepalive();
-      deps.syncMediaSession?.();
-    }
-
-    function onPlayStart() {
-      playbackIntended = true;
-      reconnectTries = 0;
-      resumeAttempt = 0;
-      pausedRecoveryTries = 0;
-      lastStreamProgressAt = Date.now();
-      startKeepalive();
-    }
-
-    function onPlayStop() {
-      playbackIntended = false;
-      clearWatch();
-      clearResumeTimer();
-      clearStallTimer();
-      reconnectTries = 0;
-      resumeAttempt = 0;
-      pausedRecoveryTries = 0;
-      lastStreamProgressAt = 0;
-      lastStreamCurrentTime = 0;
-      stopKeepalive();
-    }
-
-    function onUserPause() {
-      onPlayStop();
     }
 
     function decayReconnectTries() {
@@ -520,6 +529,12 @@
       return shouldRecover() && currentTime > 0 && reconnectTries < maxReconnectTries();
     }
 
+    /**
+     * Rechargement du flux SANS démonter l'élément : pas de
+     * removeAttribute('src'), pas de cache-bust, pas de pause() préalable.
+     * Conserver l'identité de l'élément garde la Media Session, la
+     * notification et l'autorisation de lecture (critique en arrière-plan).
+     */
     function attemptReconnect() {
       if (!deps.getStation() || !shouldRecover()) return false;
       decayReconnectTries();
@@ -533,26 +548,22 @@
       reconnectTries += 1;
       lastReconnectAt = Date.now();
       pausedRecoveryTries = 0;
+      androidResumeAttempt = 0;
+      lastStreamCurrentTime = 0;
+      lastStreamProgressAt = Date.now();
 
       deps.setSuppressErrors?.(true);
       try {
-        player.pause();
+        player.src = url;
+        player.load();
       } catch {}
-      try { player.removeAttribute('src'); } catch {}
-      try { player.load(); } catch {}
       deps.setSuppressErrors?.(false);
 
-      // Cache-bust léger : certains reverse-proxy Android gardent un socket mort.
-      const sep = url.includes('?') ? '&' : '?';
-      const bustUrl = IS_ANDROID ? `${url}${sep}_radar=${Date.now()}` : url;
-      player.src = bustUrl;
-      player.load();
       const playAttempt = player.play();
       if (playAttempt && typeof playAttempt.catch === 'function') {
         playAttempt.catch(() => {
-          // Second essai sans cache-bust.
-          player.src = url;
-          player.play().catch(() => {});
+          if (IS_ANDROID) androidScheduleResume();
+          else player.play().catch(() => {});
         });
       }
       startKeepalive();
@@ -562,6 +573,135 @@
 
     function resetReconnectTries() {
       reconnectTries = 0;
+    }
+
+    // ═════════════════════════════════════════════════════════════════════
+    //  Cycle de vie page + branchement sur le lecteur
+    // ═════════════════════════════════════════════════════════════════════
+
+    function setupLifecycle() {
+      if (!IS_MOBILE) return;
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') {
+          if (IS_ANDROID) androidOnBackgroundEnter();
+          else onBackgroundEnter();
+        } else {
+          if (IS_ANDROID) androidOnBackgroundExit();
+          else onBackgroundExit();
+        }
+      });
+
+      window.addEventListener('pageshow', (e) => {
+        if (e.persisted) tryResumePlayback();
+      });
+
+      document.addEventListener('resume', () => {
+        if (!IS_ANDROID) clearWatch();
+        tryResumePlayback();
+      });
+
+      if (!IS_ANDROID) {
+        // iOS : pagehide/blur arrivent parfois avant visibilitychange au lock.
+        window.addEventListener('pagehide', () => {
+          if (!deps.isUserPaused() && playbackIntended) onBackgroundEnter();
+        });
+        document.addEventListener('freeze', () => {
+          if (!deps.isUserPaused() && playbackIntended) {
+            deps.syncMediaSession?.();
+            // Tenter une dernière reprise avant gel (Page Lifecycle).
+            tryResumePlayback();
+          }
+        });
+        window.addEventListener('focus', () => {
+          if (playbackIntended && !deps.isUserPaused()) tryResumePlayback();
+        });
+      }
+    }
+
+    function attachToPlayer(el) {
+      if (!IS_MOBILE || !el || el.__radarMobilePlayback) return;
+      el.__radarMobilePlayback = true;
+
+      el.addEventListener('stalled', () => onStall());
+      el.addEventListener('waiting', () => onStall());
+      el.addEventListener('playing', () => {
+        lastStreamProgressAt = Date.now();
+        lastStreamCurrentTime = el.currentTime || 0;
+      });
+
+      if (IS_ANDROID) {
+        el.addEventListener('timeupdate', androidOnTimeUpdate);
+        el.addEventListener('pause', () => androidOnUnexpectedPause());
+        // suspend/emptied sont des événements normaux du cycle de buffering
+        // Android : ne PAS y réagir (les anciennes salves de reprise sur
+        // suspend contribuaient à la guerre play/pause).
+        return;
+      }
+
+      // iOS : reprise immédiate sur pause + filets sur suspend/emptied.
+      const onBgSignal = () => {
+        if (!deps.isUserPaused() && deps.getStation() && playbackIntended && isBackground()) {
+          scheduleResume(cfg.resumeInitialMs);
+        }
+      };
+      el.addEventListener('pause', () => {
+        if (playbackIntended && !deps.isUserPaused() && !deps.isCasting?.()) {
+          tryResumePlayback();
+          onBgSignal();
+        }
+      });
+      el.addEventListener('suspend', () => onBgSignal());
+      el.addEventListener('emptied', () => onBgSignal());
+    }
+
+    // ═════════════════════════════════════════════════════════════════════
+    //  Hooks appelés par app.js
+    // ═════════════════════════════════════════════════════════════════════
+
+    function onPlaying() {
+      playbackIntended = true;
+      reconnectTries = 0;
+      resumeAttempt = 0;
+      pausedRecoveryTries = 0;
+      androidResumeAttempt = 0;
+      clearAndroidResume();
+      lastStreamProgressAt = Date.now();
+      const player = deps.getPlayer();
+      lastStreamCurrentTime = player?.currentTime || 0;
+      clearStallTimer();
+      startKeepalive();
+      deps.syncMediaSession?.();
+    }
+
+    function onPlayStart() {
+      playbackIntended = true;
+      reconnectTries = 0;
+      resumeAttempt = 0;
+      pausedRecoveryTries = 0;
+      androidResumeAttempt = 0;
+      lastStreamProgressAt = Date.now();
+      startKeepalive();
+    }
+
+    function onPlayStop() {
+      playbackIntended = false;
+      clearWatch();
+      clearResumeTimer();
+      clearStallTimer();
+      clearAndroidResume();
+      stopAndroidWatchdog();
+      reconnectTries = 0;
+      resumeAttempt = 0;
+      pausedRecoveryTries = 0;
+      androidResumeAttempt = 0;
+      lastStreamProgressAt = 0;
+      lastStreamCurrentTime = 0;
+      stopKeepalive();
+    }
+
+    function onUserPause() {
+      onPlayStop();
     }
 
     function getMobilePreload(stationResilient) {
