@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 /**
- * Bot QC vedette — séquence :
+ * Bot QC vedette — toutes sources (pas seulement un média) :
  *   1. Vérifier la photo existante (dimensions réelles)
  *   2. Scraper la page source si photo absente ou trop faible
- *   3. Chercher une photo libre (Openverse / Wikimedia) par mots-clés
+ *   3. Photo libre Openverse/Commons par mots-clés titre + contenu
+ *      (stock-photo-lib : requêtes FR→EN, scoring thématique)
+ *   4. Repli campus curaté, unicité par établissement
+ *   5. 2e chance banque libre si l’unicité campus a vidé un article
  *
  *   node scripts/ensure-lead-images.js
  *   node scripts/ensure-lead-images.js --update
@@ -39,7 +42,8 @@ const QC_PATH = path.join(ROOT, 'lead-image-qc.json');
 const HERO_MIN_POOL = 4;
 const HERO_PRIORITY_POOL = 45;
 const PAGE_SCRAPE_LIMIT = 40;
-const STOCK_SEARCH_LIMIT = 60;
+/* Assez large pour couvrir le pool frais de toutes les sources. */
+const STOCK_SEARCH_LIMIT = 120;
 const doUpdate = process.argv.includes('--update');
 
 function readJson(p, fallback) {
@@ -472,6 +476,50 @@ async function main() {
   if (doUpdate) {
     const diversified = diversifyCampusBankItems(items);
     if (diversified) console.log(`↻ ${diversified} photo(s) campus répartie(s) (variété)`);
+  }
+
+  // 2e chance banque libre (toutes sources) : articles encore sans visuel
+  // après unicité campus — mots-clés titre/contenu via stock-photo-lib.
+  if (doUpdate) {
+    let freeRetry = 0;
+    for (const item of items) {
+      if (hasSourcePhoto(item, sourceMap)) continue;
+      if (item.stockImage && isCandidateImageUrl(item.stockImage)) continue;
+      if (isSubstackItem(item)) continue;
+      const hints = imageHintsFor(item, sourceMap);
+      if (hints.disableFreeStock === true) continue;
+      try {
+        const stock = await findStockPhoto(item);
+        if (!stock?.stockImage) continue;
+        applyPhotoFields(item, stock);
+        item.leadImageReady = false;
+        freeRetry += 1;
+        stockFound += 1;
+        await sleep(200);
+      } catch (err) {
+        console.warn(`⚠ free-retry skip ${item.source}: ${(err && err.message) || err}`);
+      }
+    }
+    if (freeRetry) console.log(`↻ ${freeRetry} photo(s) libre(s) (2e chance, toutes sources)`);
+
+    // Filet campus final pour ce qui reste vide (unicité).
+    let campusFinal = 0;
+    for (const item of items) {
+      if (hasSourcePhoto(item, sourceMap)) continue;
+      if (item.stockImage && isCandidateImageUrl(item.stockImage)) continue;
+      const hints = imageHintsFor(item, sourceMap);
+      if (hints.disableCampusBank === true || isSubstackItem(item)) continue;
+      if (!hasCampusBank(item.institution)) continue;
+      const campus = pickCampusPhoto(item, { avoidUrls: usedCampusUrls });
+      if (!campus?.stockImage) continue;
+      applyPhotoFields(item, campus);
+      item.leadImageReady = false;
+      usedCampusUrls.add(campus.stockImage);
+      campusBankFound += 1;
+      stockFound += 1;
+      campusFinal += 1;
+    }
+    if (campusFinal) console.log(`↻ ${campusFinal} photo(s) campus (filet final)`);
   }
 
   const withPhoto = items.filter((i) => i.image && isCandidateImageUrl(i.image)).length;
