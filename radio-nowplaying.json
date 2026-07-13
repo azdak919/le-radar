@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-13T03:33:07.585Z",
+  "updatedAt": "2026-07-13T05:32:38.038Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-13T03:32:56.861Z"
+      "checkedAt": "2026-07-13T05:32:29.219Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Symbiose",
+        "title": "Mix Anglo",
         "source": "api-live",
-        "start": "18:00",
+        "start": "21:30",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "symbiose"
+        "slug": "mix-anglo"
       },
       "next": {
-        "title": "London café (reprise)",
+        "title": "Basses fréquences (reprise)",
         "source": "api-live",
-        "start": "20:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/363949.mp3",
-        "slug": "london-cafe"
+        "start": "00:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364245.mp3",
+        "slug": "basses-frequences"
       },
       "track": "",
-      "showTitle": "Symbiose",
+      "showTitle": "Mix Anglo",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-13T03:32:58.694Z"
+      "checkedAt": "2026-07-13T05:32:30.622Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Ill Groove Garden",
+        "title": "Roots, Rock, Reggae",
         "source": "api-live",
-        "start": "23:00",
-        "end": "00:00"
+        "start": "01:00",
+        "end": "04:00"
       },
       "next": {
-        "title": "Sound Of Soul",
+        "title": "Adventures In Music",
         "source": "api-live",
-        "start": "00:00",
-        "end": "01:00"
+        "start": "04:00",
+        "end": "07:00"
       },
       "track": "",
-      "showTitle": "Ill Groove Garden",
+      "showTitle": "Roots, Rock, Reggae",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,79 +77,80 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-13T03:33:02.250Z"
+      "checkedAt": "2026-07-13T05:32:33.600Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "next": {
         "title": "CJLO Late Night",
         "source": "schedule",
         "start": "00:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
+      "next": {
+        "title": "Experiments",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/experiments"
+      },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-13T03:33:03.911Z"
+      "checkedAt": "2026-07-13T05:32:35.026Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Solénoïde",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule",
         "start": "00:01",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Solénoïde",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-13T03:33:04.541Z"
+      "checkedAt": "2026-07-13T05:32:35.666Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Optical Judas",
+        "title": "covet",
         "source": "api-live",
-        "host": "Mario2"
+        "host": "coffret de bijoux",
+        "url": "https://www.choq.ca/assets/playlist/les-nuits-brutales.png"
       },
       "next": null,
-      "track": "Mario2 - Optical Judas",
-      "showTitle": "Optical Judas",
-      "host": "Mario2",
+      "track": "coffret de bijoux - covet",
+      "showTitle": "covet",
+      "host": "coffret de bijoux",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-13T03:33:07.234Z"
+      "checkedAt": "2026-07-13T05:32:37.688Z"
     }
   }
 }

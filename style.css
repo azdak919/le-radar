@@ -1373,14 +1373,36 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
     opacity: 1;
   }
 
-  /* Bureau : émission « À l'antenne » = même coral que « EN ONDES ». */
-  .tuner.is-playing .tuner-nowair-label,
-  .tuner.is-playing .tuner-nowair-title {
+  /*
+   * Bureau — couleur de l'émission selon le statut :
+   *  - live (en cours) = même coral que « EN ONDES »
+   *  - upcoming (à venir / entre créneaux) = ambre distinct (pas le live)
+   *  - idle / empty = neutre
+   */
+  .tuner.is-playing .tuner-nowair.is-live .tuner-nowair-label,
+  .tuner.is-playing .tuner-nowair.is-live .tuner-nowair-title {
     color: var(--tuner-onair-live);
+  }
+  .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-label,
+  .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-title {
+    color: #e8c07a;
+  }
+  .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-sub {
+    color: rgba(232, 192, 122, 0.72);
+  }
+  .tuner.is-playing .tuner-nowair.is-idle .tuner-nowair-label,
+  .tuner.is-playing .tuner-nowair.is-idle .tuner-nowair-title,
+  .tuner.is-playing .tuner-nowair.is-empty .tuner-nowair-label,
+  .tuner.is-playing .tuner-nowair.is-empty .tuner-nowair-title {
+    color: rgba(255, 255, 255, 0.55);
   }
   .tuner.is-external .tuner-nowair-label,
   .tuner.is-external .tuner-nowair-title {
     color: var(--radio-bright);
+  }
+  .tuner.is-external .tuner-nowair.is-upcoming .tuner-nowair-label,
+  .tuner.is-external .tuner-nowair.is-upcoming .tuner-nowair-title {
+    color: #c9a86a;
   }
 
   /* Ne jamais masquer le panneau en display:none sur bureau (collapse de colonne). */
