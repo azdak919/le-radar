@@ -178,13 +178,86 @@ function authorsFromPostAuthor(html = '') {
 
 function authorsFromAuthorNameBlock(html = '') {
   const names = [];
-  for (const m of html.matchAll(
+  // Gutenberg « post-author-name » (lien) et « post-author__name » (The Campus, etc.)
+  const patterns = [
     /class=["'][^"']*wp-block-post-author-name__link[^"']*["'][^>]*>([^<]+)<\/a>/gi,
-  )) {
-    const n = expandAuthorName(m[1]);
-    if (n) names.push(n);
+    /class=["'][^"']*\bwp-block-post-author__name\b[^"']*["'][^>]*>\s*<a[^>]*>([^<]+)<\/a>/gi,
+    /class=["'][^"']*\bwp-block-post-author__name\b[^"']*["'][^>]*>\s*([^<]{2,80})</gi,
+  ];
+  for (const re of patterns) {
+    for (const m of html.matchAll(re)) {
+      const n = expandAuthorName(m[1]);
+      if (n) names.push(n);
+    }
   }
   return [...new Set(names)];
+}
+
+/**
+ * The Campus / bylines WP en gras en tête de corps :
+ *   <strong>Henri Dessureaux – Contributor</strong>
+ *   <strong>Name – Sports Editor</strong>
+ * (le compte WP « The Campus » est dans le bloc post-author — générique.)
+ */
+function authorsFromStrongRoleByline(html = '') {
+  if (!html) return [];
+  const names = [];
+  for (const m of html.matchAll(/<strong\b[^>]*>([\s\S]{3,100}?)<\/strong>/gi)) {
+    const plain = decodeBasicEntities(stripHtml(m[1])).replace(/\s+/g, ' ').trim();
+    if (!plain || plain.length > 90) continue;
+    const pipe = plain.match(
+      /^([\p{Lu}][\p{L}'’.\-]+(?:\s+[\p{Lu}][\p{L}'’.\-]+){0,4})\s*[|–—\-]\s*(.+)$/u,
+    );
+    if (!pipe) continue;
+    const role = pipe[2].trim();
+    if (!PLANT_ROLE_LINE_RE.test(role) && !/^contributor/i.test(role)) continue;
+    const n = expandAuthorName(pipe[1], 'en');
+    if (n && !isJunkAuthorName(n) && !isEditorialPlaceholder(n, 'en')) {
+      names.push(n);
+    }
+  }
+  return [...new Set(names)];
+}
+
+/**
+ * Concentre le HTML sur les zones utiles (corps d'article + blocs auteur).
+ * Évite de couper la byline réelle qui est souvent après 80k de CSS/thème WP
+ * (ex. The Campus : « Henri Dessureaux – Contributor » vers offset 82k+).
+ */
+function focusHtmlForAuthorExtraction(html = '', maxLen = 100_000) {
+  if (!html) return '';
+  const chunks = [];
+
+  // Blocs auteur Gutenberg (haut de page, souvent avant le corps)
+  for (const m of html.matchAll(
+    /class=["'][^"']*\bwp-block-post-author\b[^"']*["'][^>]*>[\s\S]{0,2500}/gi,
+  )) {
+    chunks.push(m[0]);
+    if (chunks.length >= 4) break;
+  }
+
+  // Corps d'article (byline « Name – Role » en tête)
+  const bodyRes = [
+    /class=["'][^"']*(?:entry-content|wp-block-post-content|post-content|article-content|td-post-content)[^"']*["'][^>]*>([\s\S]{0,45000})/i,
+    /itemprop=["']articleBody["'][^>]*>([\s\S]{0,45000})/i,
+    /<(?:article|main)\b[^>]*>([\s\S]{0,45000})/i,
+  ];
+  for (const re of bodyRes) {
+    const m = html.match(re);
+    if (m) {
+      chunks.push(m[0]);
+      break;
+    }
+  }
+
+  // Méta head (og:description « Par … », dc.creator)
+  chunks.push(html.slice(0, 28_000));
+
+  const focused = chunks.filter(Boolean).join('\n\n');
+  if (focused.length >= 400) {
+    return focused.length > maxLen ? focused.slice(0, maxLen) : focused;
+  }
+  return html.length > maxLen ? html.slice(0, maxLen) : html;
 }
 
 /** TagDiv (L'Exemplaire, etc.) — byline « Par » + lien auteur. */
@@ -208,7 +281,7 @@ function authorsFromTdPostAuthor(html = '') {
  *   <p>Bethany …, Pohanna …, and Ana …</p><p>Contributors</p>
  * On lit les premiers <p> (texte plat) — pas de regex lourde sur tout le HTML.
  */
-const PLANT_ROLE_LINE_RE = /^(?:Editor(?:-in-Chief)?|News Editor|Sports Editor|Arts(?:\s*&\s*Culture)?\s+(?:Editor|Correspondent)|Managing Editor|Staff Writer|Copy Editor|Contributors?|Reporter|Correspondent|Photo Editor|Opinions Editor)s?\.?$/i;
+const PLANT_ROLE_LINE_RE = /^(?:Editor(?:-in-Chief)?|News Editor|Sports Editor|Arts(?:\s*&\s*Culture)?\s+(?:Editor|Correspondent)|Managing Editor|Staff Writer|Copy Editor|Contributors?|Contributor|Reporter|Correspondent|Photo Editor|Opinions Editor|Features? Editor|Online Editor|Assistant Editor)s?\.?$/i;
 
 function looksLikePersonNameLine(text = '') {
   const t = String(text).replace(/\s+/g, ' ').trim();
@@ -566,17 +639,31 @@ function metaContent(html = '', key = '') {
  */
 function authorFromArticleHtml(html = '', lang = 'fr', hints = {}, sourceName = '') {
   if (!html || html.length < 200) return '';
-  // Plafond strict : sur un shell WP complet, les matchAll /[\s\S]*?/ figent
-  // l'event loop (job CI bloqué 12+ min après le fetch des sources).
-  const MAX_HTML = 80_000;
-  if (html.length > MAX_HTML) html = html.slice(0, MAX_HTML);
+  // Garder corps + blocs auteur (souvent après 80k de CSS WP) sans scanner
+  // tout le document (évite les matchAll pathologiques sur le shell).
+  html = focusHtmlForAuthorExtraction(html, 100_000);
 
   const candidates = [];
   const l = lang === 'en' ? 'en' : 'fr';
+  const sourceKey = normAuthorKey(String(sourceName || ''));
 
   const hintAuthors = authorsFromHintSelectors(html, hints);
   if (hintAuthors.length) {
     candidates.push({ author: joinAuthorNames(hintAuthors, l), trust: 106 });
+  }
+
+  // The Campus — « <strong>Name – Contributor</strong> » en tête de corps
+  // (prioritaire sur le compte WP générique « The Campus »).
+  const strongRole = authorsFromStrongRoleByline(html);
+  if (strongRole.length) {
+    const joined = joinAuthorNames(strongRole, l);
+    const early = expandAuthorName(joined, l) || joined;
+    if (early && !isEditorialPlaceholder(early, l)) {
+      if (!sourceKey || normAuthorKey(early) !== sourceKey) {
+        return early;
+      }
+    }
+    candidates.push({ author: joined, trust: 108 });
   }
 
   // The Link — byline EE avant tout (évite de confondre « Photo Racha Rais »
@@ -594,8 +681,7 @@ function authorFromArticleHtml(html = '', lang = 'fr', hints = {}, sourceName = 
     const joined = joinAuthorNames(standaloneBy, l);
     const early = expandAuthorName(joined, l) || joined;
     if (early && !isEditorialPlaceholder(early, l)) {
-      const sourceKeyEarly = normAuthorKey(String(sourceName || ''));
-      if (!sourceKeyEarly || normAuthorKey(early) !== sourceKeyEarly) {
+      if (!sourceKey || normAuthorKey(early) !== sourceKey) {
         return early;
       }
     }
@@ -704,7 +790,6 @@ function authorFromArticleHtml(html = '', lang = 'fr', hints = {}, sourceName = 
   const openingRole = authorFromOpeningRoleLine(html, l);
   if (openingRole) candidates.push({ author: openingRole, trust: 103 });
 
-  const sourceKey = normAuthorKey(String(sourceName || ''));
   for (const { author } of candidates.sort((a, b) => b.trust - a.trust)) {
     const parts = splitMultiAuthorLabel(author);
     const name = parts.length > 1
@@ -959,8 +1044,10 @@ module.exports = {
   excerptOpensWithByline,
   authorFromBodyCredits,
   authorFromArticleHtml,
+  authorsFromStrongRoleByline,
   authorsFromTribuneAuthor,
   authorsFromHintSelectors,
+  focusHtmlForAuthorExtraction,
   detectFeedDefaultAuthors,
   isFeedDefaultAuthor,
   needsPageAuthorVerification,
