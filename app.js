@@ -3576,11 +3576,30 @@ function syncNewsTailCollapse({ preserveExpanded = true } = {}) {
       toggle.innerHTML = '<span class="news-tail-toggle__label">Plus d\'articles</span>';
       toggle.setAttribute('aria-expanded', 'false');
       toggle.addEventListener('click', () => {
-        newsTailExpanded = !newsTailExpanded;
+        const willExpand = !newsTailExpanded;
+        // Mémoriser la position du bouton : à l’ouverture le body s’allonge
+        // *au-dessus* du bouton et le navigateur scrolle pour le garder focusé
+        // → bas de page. On fige le scroll viewport.
+        const yBefore = window.scrollY || window.pageYOffset || 0;
+        const toggleTopBefore = toggle.getBoundingClientRect().top;
+
+        newsTailExpanded = willExpand;
         syncNewsTailCollapse({ preserveExpanded: true });
-        if (!newsTailExpanded) {
-          toggle.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-        }
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            if (willExpand) {
+              // Contenu s’ouvre vers le bas : rester où on était (ne pas suivre le bouton)
+              window.scrollTo({ top: yBefore, left: 0, behavior: 'auto' });
+            } else {
+              // Repli : garder le bouton à la même place à l’écran
+              const delta = toggle.getBoundingClientRect().top - toggleTopBefore;
+              if (Math.abs(delta) > 1) {
+                window.scrollBy({ top: delta, left: 0, behavior: 'auto' });
+              }
+            }
+          });
+        });
       });
       tail.appendChild(toggle);
     }
