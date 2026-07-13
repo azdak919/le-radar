@@ -14,8 +14,8 @@
   'use strict';
 
   const STORAGE_KEY = 'radar-translate-mode';
-  // v2 : espaces de bord / après « : » mieux préservés (crédits, pied de page licence)
-  const CACHE_KEY = 'radar-translate-cache-v2';
+  // v4 : cégeps/collèges QC ne sont plus jamais libellés « University »
+  const CACHE_KEY = 'radar-translate-cache-v4';
   const CACHE_MAX = 800;
   const DEFAULT_MODE = 'original';
   const CONCURRENCY = 5;
@@ -747,6 +747,62 @@
     return out;
   }
 
+  /**
+   * Phrases UI courtes — gtx invente souvent des contresens (ex. IU sur
+   * « Toutes les sources »). On force des libellés fiables quand on les a.
+   */
+  const UI_PHRASES = {
+    'Toutes les sources': {
+      en: 'All sources',
+      es: 'Todas las fuentes',
+      pt: 'Todas as fontes',
+      de: 'Alle Quellen',
+      it: 'Tutte le fonti',
+      ht: 'Tout sous',
+      zh: '全部来源',
+      'zh-tw': '全部來源',
+      ar: 'كل المصادر',
+      hi: 'सभी स्रोत',
+      // Inuktitut : garder le français plutôt qu’un calque gtx douteux
+      iu: 'Toutes les sources',
+      'iu-latn': 'Toutes les sources',
+      default: null,
+    },
+    'Plus de sources': {
+      en: 'More sources',
+      es: 'Más fuentes',
+      pt: 'Mais fontes',
+      de: 'Weitere Quellen',
+      it: 'Altre fonti',
+      zh: '更多来源',
+      'zh-tw': '更多來源',
+      iu: 'Plus de sources',
+      'iu-latn': 'Plus de sources',
+      default: null,
+    },
+    'Moins de sources': {
+      en: 'Fewer sources',
+      es: 'Menos fuentes',
+      pt: 'Menos fontes',
+      de: 'Weniger Quellen',
+      it: 'Meno fonti',
+      iu: 'Moins de sources',
+      'iu-latn': 'Moins de sources',
+      default: null,
+    },
+  };
+
+  function preferredUiPhrase(text = '', targetLang = '') {
+    const core = String(text || '').replace(/\s+/g, ' ').trim();
+    if (!core) return null;
+    const entry = UI_PHRASES[core];
+    if (!entry) return null;
+    const lang = institutionLangKey(targetLang);
+    if (entry[lang] != null) return entry[lang];
+    if (entry.default != null) return entry.default;
+    return null;
+  }
+
   async function translateText(text, targetLang) {
     const original = String(text || '');
     if (!original.trim()) return original;
@@ -758,6 +814,13 @@
     const finish = (translatedCore) => reapplyEdgeWhitespace(original, translatedCore);
 
     if (translationCache[key]) return finish(translationCache[key]);
+
+    // Phrases UI connues : pas de MT (évite les contresens)
+    const uiHit = preferredUiPhrase(core, targetLang);
+    if (uiHit != null) {
+      translationCache[key] = uiHit;
+      return finish(uiHit);
+    }
 
     // Très longs : découper par phrases approximatives
     if (core.length > MAX_CHUNK) {
@@ -890,6 +953,8 @@
   function isInstitutionLabelZone(node) {
     const el = node && node.nodeType === 3 ? node.parentElement : node;
     if (!el || el.nodeType !== 1) return false;
+    // Sous-titre « Toutes les sources » : copie UI, pas un nom d’établissement.
+    if (el.closest?.('.filter-btn--all')) return false;
     return !!(el.closest?.('.filter-btn__inst, .filters-compact__inst, .article-inst'));
   }
 
@@ -964,7 +1029,75 @@
       es: 'Polytechnique Montréal',
       default: 'Polytechnique Montréal',
     },
+    'Université de Montréal': {
+      fr: 'Université de Montréal',
+      en: 'Université de Montréal',
+      es: 'Universidad de Montréal',
+      pt: 'Universidade de Montréal',
+      default: 'Université de Montréal',
+    },
+    'Université Laval': {
+      fr: 'Université Laval',
+      en: 'Université Laval',
+      es: 'Universidad Laval',
+      pt: 'Universidade Laval',
+      default: 'Université Laval',
+    },
+    'Université de Sherbrooke': {
+      fr: 'Université de Sherbrooke',
+      en: 'Université de Sherbrooke',
+      es: 'Universidad de Sherbrooke',
+      pt: 'Universidade de Sherbrooke',
+      default: 'Université de Sherbrooke',
+    },
+    'Université McGill': {
+      fr: 'Université McGill',
+      en: 'McGill University',
+      es: 'Universidad McGill',
+      pt: 'Universidade McGill',
+      default: 'Université McGill',
+    },
+    'McGill University': {
+      fr: 'Université McGill',
+      en: 'McGill University',
+      es: 'Universidad McGill',
+      pt: 'Universidade McGill',
+      default: 'McGill University',
+    },
+    'Concordia University': {
+      fr: 'Université Concordia',
+      en: 'Concordia University',
+      es: 'Universidad Concordia',
+      pt: 'Universidade Concordia',
+      default: 'Concordia University',
+    },
+    'Université du Québec à Montréal': {
+      fr: 'Université du Québec à Montréal',
+      en: 'Université du Québec à Montréal',
+      es: 'Universidad de Quebec en Montréal',
+      pt: 'Universidade de Quebec em Montréal',
+      default: 'Université du Québec à Montréal',
+    },
+    UQAM: {
+      fr: 'Université du Québec à Montréal',
+      en: 'Université du Québec à Montréal',
+      es: 'Universidad de Quebec en Montréal',
+      pt: 'Universidade de Quebec em Montréal',
+      default: 'Université du Québec à Montréal',
+    },
+    'Université du Québec à Trois-Rivières': {
+      fr: 'Université du Québec à Trois-Rivières',
+      en: 'Université du Québec à Trois-Rivières',
+      es: 'Universidad de Quebec en Trois-Rivières',
+      pt: 'Universidade de Quebec em Trois-Rivières',
+      default: 'Université du Québec à Trois-Rivières',
+    },
   };
+
+  /** Langues où l’on adapte le *type* (Universidad / Universidade…). */
+  const INSTITUTION_TYPE_LOCALIZE = new Set([
+    'es', 'pt', 'de', 'it', 'pl', 'nl', 'ro', 'ca',
+  ]);
 
   function institutionLangKey(targetLang = '') {
     const raw = String(targetLang || '').toLowerCase();
@@ -974,13 +1107,227 @@
     return raw.split(/[-_]/)[0] || raw;
   }
 
+  /**
+   * Cégeps et collèges du Québec ≠ universités.
+   * Un cégep / college préuniversitaire ne doit jamais être libellé
+   * « University / Universidad / Universidade / … ».
+   */
+  const QC_COLLEGE_PLACE_RE = new RegExp(
+    [
+      'Dawson',
+      'Vieux[\\s-]?Montr[eé]al',
+      'Jonqui[eè]re',
+      'Maisonneuve',
+      'Lionel[\\s-]?Groulx',
+      'Ahuntsic',
+      'Bois[\\s-]?de[\\s-]?Boulogne',
+      'Édouard[\\s-]?Montpetit',
+      'Edouard[\\s-]?Montpetit',
+      'Garneau',
+      'Limoilou',
+      'Ste?[\\s-]?Foy',
+      'Marie[\\s-]?Victorin',
+      'Montmorency',
+      'André[\\s-]?Laurendeau',
+      'Andre[\\s-]?Laurendeau',
+      'Saint[\\s-]?Laurent',
+      'Rosemont',
+      'Gérald[\\s-]?Godin',
+      'Gerald[\\s-]?Godin',
+      'John\\s+Abbott',
+      'Vanier',
+      'Champlain',
+    ].join('|'),
+    'i',
+  );
+
   function isCegepInstitutionName(name = '') {
-    return /^c[eé]gep\b/i.test(String(name).trim());
+    return /^c[eé]gep\b/i.test(String(name || '').replace(/\s+/g, ' ').trim());
   }
 
   function isCollegeInstitutionName(name = '') {
-    return /^(?:coll[eè]ge|college)\b/i.test(String(name).trim())
-      || /^dawson\s+college$/i.test(String(name).trim());
+    const t = String(name || '').replace(/\s+/g, ' ').trim();
+    if (!t) return false;
+    // Préfixe Collège / College / Colegio…
+    if (/^(?:coll[eè]ge|college|colegio|col[eé]gio|col·legi)\b/i.test(t)) return true;
+    // Dawson College et collèges anglo du réseau collégial québécois
+    if (/^dawson\s+college$/i.test(t)) return true;
+    // Formes localisées « Jonquière College », « Vieux Montréal College » (cégep → College)
+    // ou collèges CEGEP-network : jamais des universités.
+    if (/\bcollege$/i.test(t) && QC_COLLEGE_PLACE_RE.test(t)) return true;
+    return false;
+  }
+
+  /** Cégep ou collège québécois (préuniversitaire / technique) — pas une université. */
+  function isCegepOrCollegeInstitution(name = '') {
+    return isCegepInstitutionName(name) || isCollegeInstitutionName(name);
+  }
+
+  /**
+   * Frontière de mot compatible accents : en JS, `\b` après `é` échoue
+   * (é n’est pas un « word char » ASCII) — d’où « Université » non détectée.
+   */
+  function uniTypePrefixRe() {
+    // Université | University | Universidad | Universidade | Universität | …
+    return /^(?:universit(?:é|e|y|ad|ade|ät|à|eit|atea|at)|university)(?=\s|$|[^A-Za-z])/i;
+  }
+
+  function isUniversityInstitutionName(name = '') {
+    const t = String(name || '').replace(/\s+/g, ' ').trim();
+    if (!t) return false;
+    // Garde-fou : un cégep / collège n’est jamais une université
+    if (isCegepOrCollegeInstitution(t)) return false;
+    if (/^(?:UQAM|UdeM|ULaval|UdeS|UQTR|UQAC|UQAR|UQO|UQAT)$/i.test(t)) return true;
+    if (uniTypePrefixRe().test(t)) return true;
+    if (/\buniversity$/i.test(t)) return true;
+    if (/^(?:mcgill|concordia)\b/i.test(t) && !/\bcollege\b/i.test(t)) return true;
+    return false;
+  }
+
+  /**
+   * Si l’original est un cégep/collège, retire tout libellé de type université
+   * introduit par MT ou une mauvaise localisation.
+   */
+  function demoteUniversityLabelIfCollege(original = '', translated = '', lang = '') {
+    if (!isCegepOrCollegeInstitution(original)) return translated;
+    let t = String(translated || '');
+    if (!t) return t;
+
+    const L = institutionLangKey(lang || translateTargetLang || '');
+
+    // Remplacer les mots-type « université » par l’équivalent collège selon la langue
+    const collegeType = ({
+      fr: 'Collège',
+      es: 'Colegio',
+      pt: 'Colégio',
+      it: 'College',
+      de: 'College',
+      pl: 'College',
+      nl: 'College',
+      ro: 'Colegiul',
+      ca: 'Col·legi',
+      en: 'College',
+    })[L] || 'College';
+
+    // Remplace tout type « université / university / universidad… » (accents inclus).
+    // Pas de `\b` après `é` : en JS ça ne matche pas « Université ».
+    t = t
+      .replace(/(?<![A-Za-z])Universidades?(?![A-Za-z])/giu, collegeType)
+      .replace(/(?<![A-Za-z])Universidad(?![A-Za-z])/giu, collegeType)
+      .replace(/(?<![A-Za-z])Universidade(?![A-Za-z])/giu, collegeType)
+      .replace(/(?<![A-Za-z])Universität(?![A-Za-z])/giu, collegeType)
+      .replace(/(?<![A-Za-z])Università(?![A-Za-z])/giu, collegeType)
+      .replace(/(?<![A-Za-z])Uniwersytet(?![A-Za-z])/giu, collegeType)
+      .replace(/(?<![A-Za-z])Universiteit(?![A-Za-z])/giu, collegeType)
+      .replace(/(?<![A-Za-z])Universitatea(?![A-Za-z])/giu, collegeType)
+      .replace(/(?<![A-Za-z])Universitat(?![A-Za-z])/giu, collegeType)
+      .replace(/(?<![A-Za-z])Universit[eé](?![A-Za-z])/giu, collegeType)
+      .replace(/(?<![A-Za-z])University(?![A-Za-z])/giu, collegeType)
+      .replace(/(?<![A-Za-z])univ\.(?![A-Za-z])/giu, collegeType);
+
+    // « College of Dawson » / calques inutiles → nom propre + College
+    if (/\bdawson\b/i.test(original) || /\bdawson\b/i.test(t)) {
+      if (L === 'es') t = t.replace(/\b(?:Colegio|College|Collège)\s+(?:de\s+|del\s+)?Dawson\b/giu, 'Colegio Dawson')
+        .replace(/\bDawson\s+(?:Colegio|College|Collège|University|Universidad)\b/giu, 'Colegio Dawson');
+      else if (L === 'pt') t = t.replace(/\b(?:Colégio|College|Collège)\s+(?:de\s+|do\s+)?Dawson\b/giu, 'Colégio Dawson')
+        .replace(/\bDawson\s+(?:Colégio|College|Collège|University|Universidade)\b/giu, 'Colégio Dawson');
+      else if (L === 'fr') t = t.replace(/\b(?:Collège|College)\s+(?:de\s+)?Dawson\b/giu, 'Collège Dawson')
+        .replace(/\bDawson\s+(?:Collège|College|Université|University)\b/giu, 'Collège Dawson');
+      else t = t.replace(/\b(?:College|Collège|Colegio|Colégio)\s+(?:de\s+|of\s+)?Dawson\b/giu, 'Dawson College')
+        .replace(/\bDawson\s+(?:College|Collège|University|Universidad|Université)\b/giu, 'Dawson College');
+    }
+
+    // Cégep : si le type a été perdu, préférer un libellé collège stable
+    if (isCegepInstitutionName(original) && /\buniversit/i.test(t)) {
+      const preferred = preferredInstitutionLabel(original, L || lang);
+      if (preferred) return preferred;
+    }
+
+    return t;
+  }
+
+  /**
+   * Universités : pas de MT libre (gtx invente des syllabiques / casse les
+   * noms propres). Glossaire d’abord ; sinon adaptation du type pour es/pt/…
+   * ou conservation du nom officiel.
+   */
+  function formatUniversityLabel(name = '', lang = 'fr') {
+    const key = String(name || '').replace(/\s+/g, ' ').trim();
+    if (!key) return null;
+
+    // Acronymes → forme longue officielle (FR) avant localisation du type
+    const expanded = INSTITUTION_LABELS[key]?.fr
+      || INSTITUTION_LABELS[key]?.default
+      || key;
+
+    // Glossaire exact (y compris entrée acronyme)
+    const entry = INSTITUTION_LABELS[key]
+      || INSTITUTION_LABELS[expanded]
+      || Object.entries(INSTITUTION_LABELS).find(
+        ([k]) => k.toLowerCase() === key.toLowerCase()
+          || k.toLowerCase() === expanded.toLowerCase(),
+      )?.[1];
+    if (entry) return entry[lang] || entry.default || expanded;
+
+    // Hors langues à type localisable : conserver le nom officiel
+    if (!INSTITUTION_TYPE_LOCALIZE.has(lang)) {
+      return expanded;
+    }
+
+    const typeWord = {
+      es: 'Universidad',
+      pt: 'Universidade',
+      de: 'Universität',
+      it: 'Università',
+      pl: 'Uniwersytet',
+      nl: 'Universiteit',
+      ro: 'Universitatea',
+      ca: 'Universitat',
+    }[lang] || 'University';
+
+    // « McGill University », « Concordia University »
+    let m = expanded.match(/^(.+?)\s+University$/i);
+    if (m) {
+      const place = m[1].trim();
+      if (lang === 'de') return `${place}-${typeWord}`;
+      return `${typeWord} ${place}`;
+    }
+
+    // « Université de Montréal », « Université du Québec à … », « Université Laval »
+    m = expanded.match(/^Universit[eé]\s+(de\s+|du\s+|des\s+|d['’]\s*)?(.+)$/i);
+    if (m) {
+      const particle = (m[1] || '').toLowerCase().trim();
+      const rest = m[2].trim();
+      if (lang === 'es') {
+        if (!particle) return `${typeWord} ${rest}`;
+        if (particle.startsWith('du')) return `${typeWord} del ${rest}`;
+        return `${typeWord} de ${rest}`;
+      }
+      if (lang === 'pt') {
+        if (!particle) return `${typeWord} ${rest}`;
+        if (particle.startsWith('du')) return `${typeWord} do ${rest}`;
+        return `${typeWord} de ${rest}`;
+      }
+      if (lang === 'de') {
+        const place = rest.replace(/^(de|du|des|d['’])\s+/i, '').trim();
+        return `${typeWord} ${place}`;
+      }
+      if (lang === 'it') {
+        if (!particle) return `${typeWord} ${rest}`;
+        return `${typeWord} di ${rest.replace(/^(de|du|des)\s+/i, '')}`;
+      }
+      if (lang === 'pl') {
+        const place = rest.replace(/^(de|du|des|d['’])\s+/i, '').trim();
+        return `${typeWord} ${place}`;
+      }
+      if (lang === 'nl' || lang === 'ca' || lang === 'ro') {
+        if (!particle) return `${typeWord} ${rest}`;
+        return `${typeWord} de ${rest.replace(/^(de|du|des)\s+/i, '')}`;
+      }
+      return expanded;
+    }
+
+    return expanded;
   }
 
   /**
@@ -1106,58 +1453,109 @@
     if (!key) return null;
     const lang = institutionLangKey(targetLang);
 
-    // 1) Glossaire exact (Bishop's, Polytechnique, Dawson…)
-    const entry = INSTITUTION_LABELS[key]
-      || Object.entries(INSTITUTION_LABELS).find(
-        ([k]) => k.toLowerCase() === key.toLowerCase(),
-      )?.[1];
-    if (entry) return entry[lang] || entry.default || null;
+    // Ordre critique : cégep/collège AVANT université, pour ne jamais
+    // promouvoir un collège québécois en « University / Universidad ».
 
-    // 2) Cégeps → College / Colegio… (équivalent élégant hors Québec)
+    // 1) Cégeps → College / Colegio… (jamais Universidad)
     if (isCegepInstitutionName(key)) {
       return formatCegepLabel(key, lang);
     }
 
-    // 3) Collèges / colleges
+    // 2) Collèges / colleges (Dawson, formes « X College », etc.)
     if (isCollegeInstitutionName(key)) {
       return formatCollegeLabel(key, lang);
     }
 
-    return null;
+    // 3) Glossaire exact (Bishop's = univ, Polytechnique, UdeM…)
+    //    Dawson est aussi dans le glossaire, mais déjà traité en (2).
+    const entry = INSTITUTION_LABELS[key]
+      || Object.entries(INSTITUTION_LABELS).find(
+        ([k]) => k.toLowerCase() === key.toLowerCase(),
+      )?.[1];
+    if (entry) {
+      const label = entry[lang] || entry.default || null;
+      // Cegep/college glissés dans le glossaire : filet anti-université
+      if (label && isCegepOrCollegeInstitution(key)) {
+        return demoteUniversityLabelIfCollege(key, label, lang);
+      }
+      return label;
+    }
+
+    // 4) Universités — jamais de MT libre (voir formatUniversityLabel)
+    if (isUniversityInstitutionName(key)) {
+      return formatUniversityLabel(key, lang);
+    }
+
+    // 5) Libellé d’établissement non reconnu : conserver l’original
+    //    (mieux qu’un calque gtx en syllabiques ou autre script).
+    return key;
   }
 
   /** Filet de casse après gtx (ex. ES : « universidad laval »). */
   function fixInstitutionTranslationCasing(str = '') {
-    return String(str)
-      .replace(/\buniversité\b/giu, 'Université')
-      .replace(/\buniversite\b/giu, 'Université')
-      .replace(/\buniversity\b/giu, 'University')
-      .replace(/\buniversidad\b/giu, 'Universidad')
-      .replace(/\buniversidade\b/giu, 'Universidade')
-      .replace(/\buniversität\b/giu, 'Universität')
-      .replace(/\buniversità\b/giu, 'Università')
-      .replace(/\bcégep\b/giu, 'Cégep')
-      .replace(/\bcegep\b/giu, 'Cégep')
-      .replace(/\bcollege\b/giu, 'College')
-      .replace(/\bcollège\b/giu, 'Collège')
-      .replace(/\blaval\b/giu, 'Laval')
-      .replace(/\bmontr[eé]al\b/giu, (m) => (m.includes('é') ? 'Montréal' : 'Montreal'))
-      .replace(/\bsherbrooke\b/giu, 'Sherbrooke')
-      .replace(/\bmcgill\b/giu, 'McGill')
-      .replace(/\bconcordia\b/giu, 'Concordia')
-      .replace(/\bdawson\b/giu, 'Dawson')
-      .replace(/\bqu[eé]bec\b/giu, (m) => (m.includes('é') ? 'Québec' : 'Quebec'));
+    // Lookarounds ASCII : `\b` casse sur les accents (é, è, ç…).
+    let s = String(str);
+    s = s.replace(/(?<![A-Za-z])université(?![A-Za-z])/giu, 'Université');
+    s = s.replace(/(?<![A-Za-z])universite(?![A-Za-z])/giu, 'Université');
+    s = s.replace(/(?<![A-Za-z])university(?![A-Za-z])/giu, 'University');
+    s = s.replace(/(?<![A-Za-z])universidad(?![A-Za-z])/giu, 'Universidad');
+    s = s.replace(/(?<![A-Za-z])universidade(?![A-Za-z])/giu, 'Universidade');
+    s = s.replace(/(?<![A-Za-z])universität(?![A-Za-z])/giu, 'Universität');
+    s = s.replace(/(?<![A-Za-z])università(?![A-Za-z])/giu, 'Università');
+    s = s.replace(/(?<![A-Za-z])cégep(?![A-Za-z])/giu, 'Cégep');
+    s = s.replace(/(?<![A-Za-z])cegep(?![A-Za-z])/giu, 'Cégep');
+    s = s.replace(/(?<![A-Za-z])college(?![A-Za-z])/giu, 'College');
+    s = s.replace(/(?<![A-Za-z])collège(?![A-Za-z])/giu, 'Collège');
+    s = s.replace(/(?<![A-Za-z])colegio(?![A-Za-z])/giu, 'Colegio');
+    s = s.replace(/(?<![A-Za-z])colégio(?![A-Za-z])/giu, 'Colégio');
+    s = s.replace(/(?<![A-Za-z])laval(?![A-Za-z])/giu, 'Laval');
+    s = s.replace(/(?<![A-Za-z])montr[eé]al(?![A-Za-z])/giu, (m) => (m.includes('é') ? 'Montréal' : 'Montreal'));
+    s = s.replace(/(?<![A-Za-z])sherbrooke(?![A-Za-z])/giu, 'Sherbrooke');
+    s = s.replace(/(?<![A-Za-z])mcgill(?![A-Za-z])/giu, 'McGill');
+    s = s.replace(/(?<![A-Za-z])concordia(?![A-Za-z])/giu, 'Concordia');
+    s = s.replace(/(?<![A-Za-z])dawson(?![A-Za-z])/giu, 'Dawson');
+    s = s.replace(/(?<![A-Za-z])qu[eé]bec(?![A-Za-z])/giu, (m) => (m.includes('é') ? 'Québec' : 'Quebec'));
+    return s;
   }
 
   /**
    * Corrige les contresens gtx sur les établissements connus
    * (Dawson / cégeps ≠ universidad ; Bishop’s ≠ Obispo).
    */
-  function fixInstitutionMistranslations(original = '', translated = '') {
+  function fixInstitutionMistranslations(original = '', translated = '', targetLang = '') {
     let t = String(translated || '');
     const o = String(original || '').toLowerCase();
+    const lang = institutionLangKey(targetLang || translateTargetLang || '');
 
-    // Dawson College — jamais une université
+    // ── Cégeps & collèges QC : JAMAIS une université ──────────────────────
+    if (isCegepOrCollegeInstitution(original) || /\bc[eé]gep\b/i.test(original)) {
+      // Réappliquer le libellé collégial fiable si dispo
+      const preferred = preferredInstitutionLabel(original, lang || targetLang);
+      if (preferred && !/\buniversit/i.test(preferred)) {
+        t = preferred;
+      } else {
+        t = demoteUniversityLabelIfCollege(original, t, lang);
+        // Calques gtx fréquents : Universidad de Vieux / University of Jonquière…
+        t = t
+          .replace(
+            /\b(?:Universidad|Universidade|University|Université|Universität|Università|Uniwersytet)\s+(?:de\s+|del\s+|do\s+|di\s+|of\s+|du\s+)?(?=Vieux|Jonqui|Maisonneuve|Lionel|Dawson|Ahuntsic|Garneau|Vanier|Champlain|Abbott|Montpetit|Laurendeau|Montmorency|Rosemont|Godin)/giu,
+            lang === 'es' ? 'Colegio de ' : lang === 'pt' ? 'Colégio de ' : lang === 'fr' ? 'Collège ' : '',
+          );
+        // Si on a vidé le type, reconstruire « Place College »
+        if (lang !== 'es' && lang !== 'pt' && lang !== 'fr') {
+          t = t
+            .replace(/\bDawson\b(?:\s+(?:College|University))?/giu, 'Dawson College')
+            .replace(/\b(Vieux\s*Montr[eé]al)\b(?:\s+(?:College|University))?/giu, 'Vieux Montréal College')
+            .replace(/\b(Jonqui[eè]re)\b(?:\s+(?:College|University))?/giu, 'Jonquière College');
+        }
+        t = t.replace(/\bcegep\b/giu, 'Cégep');
+      }
+      // Filet final : plus aucun mot « universit* » sur un collège
+      t = demoteUniversityLabelIfCollege(original, t, lang);
+      return t;
+    }
+
+    // Dawson mentionné hors détection stricte
     if (/\bdawson\b/.test(o) || /\bdawson\b/i.test(t)) {
       t = t
         .replace(/\bUniversidad(?:\s+de)?\s+Dawson\b/giu, 'Colegio Dawson')
@@ -1171,27 +1569,19 @@
         .replace(/\bUniversität\s+Dawson\b/giu, 'Dawson College');
     }
 
-    // Cégep / collège QC : gtx transforme parfois en « Universidad de … »
-    if (
-      isCegepInstitutionName(original)
-      || isCollegeInstitutionName(original)
-      || /\bc[eé]gep\b/i.test(t)
-    ) {
-      t = t
-        .replace(/\bUniversidad(?:\s+(?:de|del|du))?\s+(?=Vieux|Jonqui|Chicoutimi|Rimouski|Maisonneuve|Lionel|Dawson)/giu, 'Cégep ')
-        .replace(/\bUniversidade(?:\s+(?:de|do))?\s+(?=Vieux|Jonqui|Chicoutimi|Rimouski|Maisonneuve|Lionel|Dawson)/giu, 'Cégep ')
-        .replace(/\bUniversity\s+of\s+(?=Vieux|Jonqui|Chicoutimi|Rimouski|Maisonneuve|Lionel|Dawson)/giu, 'Cégep ')
-        .replace(/\bcegep\b/giu, 'Cégep');
-    }
-
     // Bishop's University — ne pas traduire Bishop → Obispo / Bispo
+    // (c’est bien une université ; on garde le type University / Universidad)
     if (/bishop/.test(o) || /obispo|bispo|biskup/i.test(t)) {
       t = t
         .replace(/\bUniversidad del Obispo\b/giu, "Universidad Bishop's")
         .replace(/\bUniversidade do Bispo\b/giu, "Universidade Bishop's")
         .replace(/\bUniwersytet Biskupi\b/giu, "Bishop's University")
         .replace(/\bUniversité de l['’]Évêque\b/giu, "Université Bishop's")
-        .replace(/\bUniversity of the Bishop\b/giu, "Bishop's University");
+        .replace(/\bUniversity of the Bishop\b/giu, "Bishop's University")
+        // Ne jamais rétrograder Bishop's en college
+        .replace(/\bColegio(?:\s+de)?\s+Bishop'?s?\b/giu, "Universidad Bishop's")
+        .replace(/\bColégio(?:\s+de)?\s+Bishop'?s?\b/giu, "Universidade Bishop's")
+        .replace(/\bBishop'?s?\s+College\b/giu, "Bishop's University");
     }
 
     return t;
@@ -1199,9 +1589,13 @@
 
   function polishInstitutionTranslation(original, translated, targetLang) {
     const preferred = preferredInstitutionLabel(original, targetLang);
-    if (preferred) return preferred;
+    if (preferred) {
+      // Même un glossaire ne doit pas coller « University » sur un cégep
+      return demoteUniversityLabelIfCollege(original, preferred, targetLang);
+    }
     let out = fixInstitutionTranslationCasing(translated);
-    out = fixInstitutionMistranslations(original, out);
+    out = fixInstitutionMistranslations(original, out, targetLang);
+    out = demoteUniversityLabelIfCollege(original, out, targetLang);
     return out;
   }
 
@@ -1287,24 +1681,26 @@
         await Promise.all(batch.map(async ([orig, list]) => {
           try {
             const instNodes = list.filter((n) => isTranslatableInstitutionZone(n));
-            // Cégeps / collèges / glossaire : pas d’appel MT (nom officiel fiable)
+            // Noms d’établissements : glossaire / règles locales uniquement —
+            // jamais d’appel MT libre (gtx casse les noms propres, surtout en IU).
+            // Cégeps/collèges QC → College/Colegio ; jamais University/Universidad.
             if (instNodes.length && instNodes.length === list.length) {
-              const preferred = preferredInstitutionLabel(orig, targetLang);
-              if (preferred) {
-                for (const node of list) {
-                  if (node.parentNode) {
-                    node.nodeValue = reapplyEdgeWhitespace(orig, preferred);
-                  }
+              let preferred = preferredInstitutionLabel(orig, targetLang) || orig;
+              preferred = demoteUniversityLabelIfCollege(orig, preferred, targetLang);
+              for (const node of list) {
+                if (node.parentNode) {
+                  node.nodeValue = reapplyEdgeWhitespace(orig, preferred);
                 }
-                ok += 1;
-                return;
               }
+              ok += 1;
+              return;
             }
 
             let translated = await translateText(orig, targetLang);
             if (translated && translated !== orig) {
               for (const node of list) {
                 if (!node.parentNode) continue;
+                // Filet si un nœud institution se retrouve dans un lot mixte
                 const out = isTranslatableInstitutionZone(node)
                   ? polishInstitutionTranslation(orig, translated, targetLang)
                   : fixInstitutionMistranslations(orig, translated);

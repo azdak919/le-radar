@@ -19,6 +19,50 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
+    <!--
+      CSS critique du synthé bureau : réserve « À l'antenne » + volume compact
+      dès le premier paint (avant le CSS mis en cache / le JS async).
+    -->
+    <style>
+      @media (min-width: 1100px) {
+        .tuner-inner {
+          display: grid !important;
+          grid-template-columns: minmax(0, 1.15fr) minmax(300px, 370px) !important;
+          gap: 0 !important;
+          align-items: center !important;
+          max-width: 1180px;
+        }
+        .tuner-controls { grid-column: 1; min-width: 0; }
+        .tuner-actions { margin-left: 0 !important; flex-shrink: 0; }
+        .tuner-nowair {
+          grid-column: 2;
+          display: flex !important;
+          align-items: flex-start;
+          gap: 10px;
+          min-width: 0;
+          padding-left: 28px;
+          border-left: 1px solid rgba(255, 255, 255, 0.12);
+          opacity: 1 !important;
+          pointer-events: auto !important;
+        }
+        .tuner-vol {
+          flex: 0 0 auto !important;
+          max-width: 168px !important;
+          min-width: 0 !important;
+        }
+        .tuner-vol-slot {
+          display: flex !important;
+          align-items: center;
+          max-width: 120px !important;
+        }
+        .tuner-vol-track {
+          width: 112px !important;
+          max-width: 112px !important;
+          min-width: 96px !important;
+          flex: 0 0 112px !important;
+        }
+      }
+    </style>
     <link rel="alternate" type="application/rss+xml" title="LE RADAR — Fil étudiant" href="feed.xml" />
   </head>
   <body>
@@ -142,11 +186,13 @@
           </div>
         </div>
 
-        <aside id="tuner-nowair" class="tuner-nowair hidden" aria-live="polite" aria-label="À l'antenne">
+        <!-- Visible dès le premier paint (pas de .hidden) : évite le volume géant
+             pendant le chargement JS. app.js met à jour le contenu ensuite. -->
+        <aside id="tuner-nowair" class="tuner-nowair" aria-live="polite" aria-label="À l'antenne">
           <span class="tuner-nowair-label">À l'antenne</span>
           <div class="tuner-nowair-body">
-            <p id="tuner-nowair-title" class="tuner-nowair-title"></p>
-            <p id="tuner-nowair-sub" class="tuner-nowair-sub"></p>
+            <p id="tuner-nowair-title" class="tuner-nowair-title">Syntoniser un poste</p>
+            <p id="tuner-nowair-sub" class="tuner-nowair-sub">Les radios étudiantes jouent en direct, 24/7</p>
           </div>
         </aside>
       </div>
