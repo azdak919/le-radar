@@ -3485,6 +3485,8 @@ body.external-listen-open {
   display: flex;
   flex-direction: column;
   --news-tail-peek: 34px;
+  /* Évite le scroll-anchoring qui envoie en bas à l’ouverture */
+  overflow-anchor: none;
 }
 /* Corps grille : 1 col téléphone, 2 col dès 600 px (tablette / demi-écran / bureau) */
 .news-tail-body {
@@ -3493,6 +3495,10 @@ body.external-listen-open {
   grid-template-columns: minmax(0, 1fr);
   min-width: 0;
   column-gap: 0;
+  overflow-anchor: none;
+}
+.news-tail-toggle {
+  overflow-anchor: none;
 }
 /*
  * IMPORTANT : ces media queries doivent venir *après* la règle 1-col de base,
