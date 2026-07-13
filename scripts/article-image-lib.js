@@ -344,13 +344,32 @@ function upgradeCmsImageUrl(raw = '') {
   if (hiRes !== src) out.push(hiRes);
 
   // WordPress intermediate size : name-1024x574.jpg → name.jpg
-  const wpSized = src.replace(/-\d{3,4}x\d{3,4}(\.[a-z]{3,4})(?:$|\?)/i, '$1');
+  // Aussi 600x315 (og:image La Pige) : 2–4 chiffres par côté.
+  const wpSized = src.replace(/-\d{2,4}x\d{2,4}(\.[a-z]{3,4})(?:$|\?)/i, '$1');
   if (wpSized !== src) out.push(wpSized.split('?')[0]);
 
   const wp = normalizeWpContentImageUrl(src);
   if (wp && wp !== src) out.push(wp);
 
   return [...new Set(out)];
+}
+
+/**
+ * Si l'URL est une taille WP « faible » (ex. Image-16-600x315.jpg), préférer
+ * la version pleine (Image-16.jpg) plutôt que de jeter le candidat — sinon
+ * og:image + body ne gardent que des crops et le bot bascule sur Openverse.
+ */
+function promoteImageUrl(raw = '', options = {}) {
+  const src = String(raw || '').trim();
+  if (!src) return '';
+  if (!isWeakImageUrl(src, options)) return src;
+  for (const up of upgradeCmsImageUrl(src)) {
+    if (up && up !== src && !isWeakImageUrl(up, options)) return up;
+  }
+  // Garder le seed upgradé même si on ne peut pas juger sans probe
+  // (probe se fait plus tard dans resolveLeadReadyPhoto).
+  const upgraded = upgradeCmsImageUrl(src)[0];
+  return upgraded || '';
 }
 
 /** src réel d'une balise <img>, y compris chargement paresseux (Elementor, etc.). */
@@ -406,13 +425,20 @@ function collectContentImages(content = '', extraRejectPatterns = [], options = 
     const tag = m[0];
     const rawSrc = imgTagSrc(tag);
     if (!rawSrc) continue;
-    const src = toAbsoluteImageUrl(rawSrc, baseUrl);
+    let src = toAbsoluteImageUrl(rawSrc, baseUrl);
+    if (!src || !isCandidateImageUrl(src, extraRejectPatterns)) continue;
+    // WP -600x315 / -750x375 → version pleine avant rejet « weak »
+    const promoted = promoteImageUrl(src, options);
+    if (promoted) src = promoted;
+    else if (isWeakImageUrl(src, options)) continue;
     const w = parseInt((tag.match(/width=["'](\d+)["']/i) || [])[1], 10) || 0;
-    if (!isCandidateImageUrl(src, extraRejectPatterns) || isWeakImageUrl(src, options)) continue;
-    if (w > 0 && w < 400) continue;
-    const isFull = /\bsize-full\b/i.test(tag);
-    const isCropThumb = /-\d{3}x\d{2,3}\./i.test(src);
-    const hasCaption = captionedKeys.has(normalizeImagePath(src));
+    // Ne pas jeter une image dont on a promu l'URL (w HTML peut rester 150)
+    if (w > 0 && w < 400 && promoted === rawSrc) continue;
+    if (w > 0 && w < 400 && !promoted) continue;
+    const isFull = /\bsize-full\b/i.test(tag) || !/-\d{2,4}x\d{2,4}\./i.test(src);
+    const isCropThumb = /-\d{2,4}x\d{2,4}\./i.test(src);
+    const hasCaption = captionedKeys.has(normalizeImagePath(src))
+      || captionedKeys.has(normalizeImagePath(toAbsoluteImageUrl(rawSrc, baseUrl)));
     urls.push({ url: src, tag, w, isFull, isCropThumb, hasCaption });
   }
   if (preferSizeFull) {
@@ -580,13 +606,20 @@ function imageFromArticleHtml(html = '', extraRejectPatterns = [], options = {},
   const pushMeta = (raw, scoreBase, w = 0, h = 0) => {
     if (!raw) return;
     const unwrapped = unwrapCdnImageUrl(raw);
-    for (const url of [unwrapped, raw]) {
-      if (!url || !isCandidateImageUrl(url, extraRejectPatterns) || isWeakImageUrl(url, options)) continue;
+    for (const seed of [unwrapped, raw]) {
+      if (!seed || !isCandidateImageUrl(seed, extraRejectPatterns)) continue;
+      // og:image souvent en -600x315 (La Pige) : promouvoir en pleine taille
+      // avant de rejeter comme weak, sinon → Openverse hors sujet.
+      const url = promoteImageUrl(seed, options) || (!isWeakImageUrl(seed, options) ? seed : '');
+      if (!url) continue;
       candidates.push({
         url,
-        score: scoreBase + (url === unwrapped && unwrapped !== raw ? 15 : 0) + Math.min(w, 2400) / 10,
-        w,
-        h,
+        score: scoreBase
+          + (url !== seed ? 25 : 0)
+          + (url === unwrapped && unwrapped !== raw ? 15 : 0)
+          + Math.min(w, 2400) / 10,
+        w: url !== seed ? 0 : w,
+        h: url !== seed ? 0 : h,
       });
       break;
     }
@@ -679,7 +712,11 @@ function leadImageUrlCandidates(raw = '') {
 
 async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {}) {
   const tryUrlOnce = async (url, metaW = 0, metaH = 0) => {
-    if (!url || !isCandidateImageUrl(url, extraRejectPatterns) || isWeakImageUrl(url, options)) return null;
+    if (!url || !isCandidateImageUrl(url, extraRejectPatterns)) return null;
+    // Ne pas abandonner une URL « weak » : leadImageUrlCandidates la promeut
+    // (Image-16-600x315.jpg → Image-16.jpg). On ne skip que si *aucune*
+    // variante n'est viable (géré par l'appelant via leadImageUrlCandidates).
+    if (isWeakImageUrl(url, options)) return null;
     if (metaW && metaH && meetsLeadDisplaySize(metaW, metaH)) {
       return { url, width: metaW, height: metaH, source: 'meta', leadReady: true };
     }
@@ -776,6 +813,8 @@ function sleep(ms) {
 module.exports = {
   GLOBAL_IMAGE_REJECT_RE,
   unwrapCdnImageUrl,
+  upgradeCmsImageUrl,
+  promoteImageUrl,
   imageRejectPatternsFromHints,
   imageOptionsFromHints,
   isPathRejected,
