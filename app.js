@@ -3423,44 +3423,44 @@ function updateNewsLayout() {
 }
 
 /*
- * Partition du fil — deux phases :
+ * Partition magazine — anti « chaise musicale » :
  *
- *  A) SNAPSHOT :
- *     - Une + vedettes : les 5 plus frais (1+4), même source OK
- *     - En bref : d’abord 1 plus frais / institution (hors hero), en nombre
- *       calé sur la hauteur *estimée* de la colonne gauche (pas un quota fixe)
- *     - Suite du fil = le reste
+ *  A) SNAPSHOT figé :
+ *     - Une + vedettes = toujours les 5 plus frais (1+4) — *jamais* touché au fill
+ *     - En bref = graine ~ hauteur estimée du hero (1 / institution)
+ *     - Suite = le reste
  *
- *  B) FILL magazine (≥1100px) — équilibre hauteurs de *contenu* :
- *     - gauche courte → + vedettes (suite, même source OK, max 5 total)
- *     - droite courte → + En bref : (1) nouvelles institutions, puis
- *       (2) filet anti-vide : plus frais restants même institution déjà vue
- *     - spacers seulement à la fin (bordures flush)
+ *  B) ÉQUILIBRE (≥1100px) — *seulement* la colonne En bref :
+ *     1) TRIM si trop haute (→ suite)
+ *     2) FILL si trop basse (depuis réserve, sans dépasser)
+ *     Le spacer absorbe le reste (tolérance large). Pas de promote vedette,
+ *     pas d’allers-retours entre colonnes.
  */
 const HERO_FEATURE_MIN = 4; /* 4 vedettes + 1 une = 5 */
-const HERO_FEATURE_MAX = 4; /* pas plus de 4 vedettes */
+const HERO_FEATURE_MAX = 4;
 const HERO_SPOTLIGHT_MAX = 1 + HERO_FEATURE_MIN; /* 5 au total */
 const BRIEF_SIDEBAR_SEED_MIN = 4;
-const BRIEF_SIDEBAR_SEED_MAX = 14; /* snapshot : assez pour coller à une colonne une×5 */
-const BRIEF_SIDEBAR_MAX = 24; /* fill : plafond */
+const BRIEF_SIDEBAR_SEED_MAX = 12;
+const BRIEF_SIDEBAR_MAX = 18;
+const BRIEF_SIDEBAR_HARD_MIN = 2; /* plancher trim — au-dessous on accepte le vide */
 const BRIEF_SIDEBAR_MIN = BRIEF_SIDEBAR_SEED_MIN;
-const AVG_LEAD_CARD_H = 420;
-const AVG_FEATURE_CARD_H = 150;
-const AVG_BRIEF_CARD_H = 95;
+const AVG_LEAD_CARD_H = 400;
+const AVG_FEATURE_CARD_H = 148;
+const AVG_BRIEF_CARD_H = 108;
 const AVG_BRIEF_TITLE_H = 42;
-const COLUMN_HEIGHT_TOL = 40;
+/* Marge volontaire : mieux un petit spacer qu’une chaise musicale. */
+const COLUMN_HEIGHT_TOL = 96;
 /* Vue source : pas de vedettes intermédiaires (voir partitionSourceFeed). */
 
-/** Hauteur estimée du bloc une+vedettes. */
 function estimateHeroSeedHeight(heroCount) {
   if (heroCount <= 0) return 0;
   return AVG_LEAD_CARD_H + Math.max(0, heroCount - 1) * AVG_FEATURE_CARD_H;
 }
 
-/** Nombre de cartes En bref au snapshot ≈ hauteur estimée du hero. */
+/** Graine En bref ≈ hauteur hero estimée (arrondi au plus proche). */
 function briefSeedCountForHero(heroCount) {
   const target = Math.max(0, estimateHeroSeedHeight(heroCount) - AVG_BRIEF_TITLE_H);
-  const n = Math.ceil(target / AVG_BRIEF_CARD_H);
+  const n = Math.round(target / AVG_BRIEF_CARD_H);
   return Math.min(BRIEF_SIDEBAR_SEED_MAX, Math.max(BRIEF_SIDEBAR_SEED_MIN, n));
 }
 
@@ -3685,7 +3685,7 @@ function partitionNewsFeed(items, referenceDate = new Date()) {
     ensureHeroLeadHasImage(rawHero, sorted),
     sorted,
   );
-  // Graine En bref ≈ hauteur estimée du hero (plus de quota fixe « 7 »).
+  // Graine En bref ≈ hauteur estimée du hero ; le fill ne touche qu'à En bref.
   const briefSeed = briefSeedCountForHero(heroItems.length);
   const { items: briefItems, contingencyBand: briefBand } = pickBriefSidebar(
     sorted,
@@ -3788,11 +3788,23 @@ function markPromotedToBrief(item) {
   magazineMeta.briefInsts.add(institutionKey(item));
 }
 
+function rebuildBriefMetaFromDom(brief) {
+  magazineMeta.briefKeys = new Set();
+  magazineMeta.briefSources = new Set();
+  magazineMeta.briefInsts = new Set();
+  brief?.querySelectorAll('.article--compact').forEach((el) => {
+    const item = el.__radarItem;
+    if (!item) return;
+    magazineMeta.briefKeys.add(articleKey(item));
+    magazineMeta.briefSources.add(sourceKey(item));
+    magazineMeta.briefInsts.add(institutionKey(item));
+  });
+}
+
 function clearMagazineSpacers(root) {
   root?.querySelectorAll('.news-hero-spacer, .brief-rail-spacer').forEach((n) => n.remove());
 }
 
-/** Spacers flex pour que les bas de colonnes (bordures) soient flush. */
 function ensureMagazineColumnSpacers(hero, brief) {
   clearMagazineSpacers(hero);
   clearMagazineSpacers(brief);
@@ -3806,7 +3818,6 @@ function ensureMagazineColumnSpacers(hero, brief) {
   brief.appendChild(bs);
 }
 
-/** Insère une carte avant le spacer (s'il existe), sinon en fin de colonne. */
 function appendBeforeMagazineSpacer(column, el) {
   if (!column || !el) return;
   const spacer = column.querySelector('.news-hero-spacer, .brief-rail-spacer');
@@ -3815,9 +3826,7 @@ function appendBeforeMagazineSpacer(column, el) {
 }
 
 /**
- * Hauteur du *contenu* d'une colonne magazine, hors spacer flex.
- * Important : avec align-items:stretch, offsetHeight des deux colonnes est
- * toujours égal (grille) — d'où l'ancien fill qui ne voyait jamais de vide.
+ * Hauteur du *contenu* (hors spacer). Pas offsetHeight de la cellule stretchée.
  */
 function magazineColumnContentHeight(col) {
   if (!col) return 0;
@@ -3839,10 +3848,60 @@ function magazineColumnContentHeight(col) {
   return h;
 }
 
+/** Retrouve un item news depuis une carte DOM (href / titre). */
+function resolveItemFromCard(cardEl) {
+  if (!cardEl) return null;
+  if (cardEl.__radarItem) return cardEl.__radarItem;
+  const href = cardEl.getAttribute?.('href') || cardEl.href || '';
+  const title = cardEl.querySelector?.('.article-title')?.textContent?.trim() || '';
+  const match = (it) => {
+    const link = safeHttpUrl(it.link) || it.link || '';
+    return (href && link && href === link)
+      || (title && cleanTitle(it.title || '') === title);
+  };
+  const fromReserve = magazineReserve.find(match);
+  if (fromReserve) return fromReserve;
+  if (Array.isArray(news)) {
+    const fromNews = news.find(match);
+    if (fromNews) return fromNews;
+  }
+  return null;
+}
+
 /**
- * Phase B — fill auto bureau.
- * Croît toujours la colonne au *contenu* le plus court (jamais la cellule CSS).
- * File d'attente si un fill est déjà en cours (évite courses / gen annulées).
+ * Remet un article En bref dans la suite du fil + réserve.
+ */
+function demoteBriefCardToTail(brief, cardEl) {
+  if (!cardEl || !brief) return false;
+  const item = resolveItemFromCard(cardEl);
+  if (!item) return false;
+
+  cardEl.remove();
+  magazineMeta.briefKeys.delete(articleKey(item));
+  rebuildBriefMetaFromDom(brief);
+  magazineReserve.push(item);
+  magazineReserve = sortByDateDesc(magazineReserve);
+
+  let tail = NEWS_LIST.querySelector('.news-tail');
+  if (!tail) {
+    tail = document.createElement('div');
+    tail.className = 'news-tail';
+    tail.innerHTML = '<h3 class="news-tail-title">Suite du fil</h3>';
+    NEWS_LIST.appendChild(tail);
+  }
+  removeTailArticleForItem(item);
+  const el = safeCreateArticle(item, 'standard');
+  if (el) {
+    const titleEl = tail.querySelector('.news-tail-title');
+    if (titleEl && titleEl.nextSibling) tail.insertBefore(el, titleEl.nextSibling);
+    else tail.appendChild(el);
+  }
+  return true;
+}
+
+/**
+ * Équilibre magazine — uniquement En bref (hero figé à 5).
+ * Ordre strict : TRIM d’abord, puis FILL. Jamais les deux en boucle croisée.
  */
 function balanceMagazineColumns() {
   if (!canBalanceMagazineColumns()) return;
@@ -3862,71 +3921,49 @@ function balanceMagazineColumns() {
     clearMagazineSpacers(hero);
     clearMagazineSpacers(brief);
 
-    let safety = 0;
-    const MAX_ROUNDS = 48;
-
-    while (safety < MAX_ROUNDS && magazineReserve.length) {
-      safety += 1;
+    // --- 1) TRIM : En bref trop haute → retirer la dernière carte ---
+    let trimGuard = 0;
+    while (trimGuard < 24) {
+      trimGuard += 1;
       const hH = magazineColumnContentHeight(hero);
       const bH = magazineColumnContentHeight(brief);
-      const diff = bH - hH; // >0 hero court ; <0 brief court
-
-      if (Math.abs(diff) <= COLUMN_HEIGHT_TOL) break;
-
-      if (diff > COLUMN_HEIGHT_TOL) {
-        // Vedettes trop courtes → tirer de la suite (même source OK)
-        const featureCount = hero.querySelectorAll('.article--feature').length;
-        if (featureCount >= HERO_FEATURE_MAX) break;
-
-        const slots = HERO_FEATURE_MAX - featureCount;
-        // Grand trou : au moins 2 cartes d'un coup pour combler vite le vide.
-        const minBatch = diff > 120 ? 2 : 1;
-        const need = Math.min(
-          slots,
-          Math.max(minBatch, Math.ceil(diff / AVG_FEATURE_CARD_H)),
-        );
-        let added = 0;
-        for (let i = 0; i < need; i += 1) {
-          const item = takeNextFeatureFromReserve();
-          if (!item) break;
-          const el = safeCreateArticle(item, 'feature');
-          if (!el) continue;
-          appendBeforeMagazineSpacer(hero, el);
-          markPromotedToHero(item);
-          removeTailArticleForItem(item);
-          added += 1;
-        }
-        if (!added) break;
-        continue;
-      }
-
-      // En bref trop court → nouvelles institutions, puis filet anti-vide
-      const briefCount = brief.querySelectorAll('.article--compact').length;
-      if (briefCount >= BRIEF_SIDEBAR_MAX) break;
-
-      const slots = BRIEF_SIDEBAR_MAX - briefCount;
-      const minBatch = (-diff) > 80 ? 2 : 1;
-      const need = Math.min(
-        slots,
-        Math.max(minBatch, Math.ceil((-diff) / AVG_BRIEF_CARD_H)),
-      );
-      let added = 0;
-      for (let i = 0; i < need; i += 1) {
-        // D’abord strict (nouvelle institution) ; si plus rien, filet (allowExtra).
-        let item = takeNextBriefFromReserve({ allowExtra: false });
-        if (!item) item = takeNextBriefFromReserve({ allowExtra: true });
-        if (!item) break;
-        const el = safeCreateArticle(item, 'compact');
-        if (!el) continue;
-        appendBeforeMagazineSpacer(brief, el);
-        markPromotedToBrief(item);
-        removeTailArticleForItem(item);
-        added += 1;
-      }
-      if (!added) break;
+      if (bH <= hH + COLUMN_HEIGHT_TOL) break;
+      const cards = brief.querySelectorAll('.article--compact');
+      if (cards.length <= BRIEF_SIDEBAR_HARD_MIN) break;
+      if (!demoteBriefCardToTail(brief, cards[cards.length - 1])) break;
     }
 
-    // Spacer seulement pour aligner les bordures — après le fill contenu.
+    // --- 2) FILL : En bref trop basse → ajouter (sans dépasser) ---
+    let fillGuard = 0;
+    while (fillGuard < 24) {
+      fillGuard += 1;
+      const hH = magazineColumnContentHeight(hero);
+      const bH = magazineColumnContentHeight(brief);
+      const gap = hH - bH;
+      if (gap <= COLUMN_HEIGHT_TOL) break;
+
+      const briefCount = brief.querySelectorAll('.article--compact').length;
+      if (briefCount >= BRIEF_SIDEBAR_MAX || !magazineReserve.length) break;
+
+      let item = takeNextBriefFromReserve({ allowExtra: false });
+      if (!item && gap > AVG_BRIEF_CARD_H) {
+        item = takeNextBriefFromReserve({ allowExtra: true });
+      }
+      if (!item) break;
+
+      const el = safeCreateArticle(item, 'compact');
+      if (!el) break;
+      appendBeforeMagazineSpacer(brief, el);
+
+      // Overshoot → annuler et arrêter (le spacer gère le reste)
+      if (magazineColumnContentHeight(brief) > magazineColumnContentHeight(hero) + COLUMN_HEIGHT_TOL) {
+        demoteBriefCardToTail(brief, el);
+        break;
+      }
+      markPromotedToBrief(item);
+      removeTailArticleForItem(item);
+    }
+
     ensureMagazineColumnSpacers(hero, brief);
   } finally {
     window.setTimeout(() => {
@@ -3935,7 +3972,7 @@ function balanceMagazineColumns() {
         magazineBalanceQueued = false;
         balanceMagazineColumns();
       }
-    }, 80);
+    }, 120);
   }
 
   const briefCount = brief.querySelectorAll('.article--compact').length;
@@ -3945,20 +3982,24 @@ function balanceMagazineColumns() {
   bindMagazineImageBalanceOnce();
 }
 
-/**
- * Planifie le fill après paint. Pas de « generation » qui annule les passes :
- * une file simple + re-run si busy.
- */
+/** Compteur de passes post-rendu (évite rebalance à chaque image). */
+let magazineBalancePasses = 0;
+
 function scheduleMagazineColumnBalance() {
   clearTimeout(magazineBalanceTimer);
+  magazineBalancePasses = 0;
   magazineBalanceTimer = window.setTimeout(() => {
+    magazineBalancePasses = 1;
     balanceMagazineColumns();
-    // 2e passe une fois les images / layout stabilisés
-    window.setTimeout(() => balanceMagazineColumns(), 450);
-  }, 60);
+    // Une seule 2e passe après layout/images — pas de 3e
+    window.setTimeout(() => {
+      if (magazineBalancePasses >= 2) return;
+      magazineBalancePasses = 2;
+      balanceMagazineColumns();
+    }, 600);
+  }, 100);
 }
 
-/** Images : demande un re-fill au load (file, pas d'annulation). */
 function bindMagazineImageBalanceOnce() {
   if (!NEWS_LIST) return;
   NEWS_LIST.querySelectorAll('.news-hero img, .brief-rail img').forEach((img) => {
@@ -3968,7 +4009,13 @@ function bindMagazineImageBalanceOnce() {
     const once = () => {
       img.removeEventListener('load', once);
       img.removeEventListener('error', once);
-      scheduleMagazineColumnBalance();
+      // Debounce doux : ne relance pas le cycle complet (qui yoyo)
+      if (magazineBalancePasses >= 2) return;
+      clearTimeout(magazineBalanceTimer);
+      magazineBalanceTimer = window.setTimeout(() => {
+        magazineBalancePasses = Math.max(magazineBalancePasses, 2);
+        balanceMagazineColumns();
+      }, 200);
     };
     img.addEventListener('load', once);
     img.addEventListener('error', once);
@@ -4045,6 +4092,8 @@ function createArticle(item, role = 'standard') {
   const link = safeHttpUrl(item.link);
   const a = document.createElement(link ? 'a' : 'div');
   a.className = `article article--${role}`;
+  // Référence pour promote/demote magazine (fill / trim En bref)
+  a.__radarItem = item;
   if (link) {
     a.href = link;
     a.target = '_blank';
