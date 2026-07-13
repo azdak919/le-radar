@@ -360,7 +360,7 @@ let nowAirPreviewTimer = null;
 let nowAirPreviewRadio = null;
 let lastNowAirPreviewId = null;
 let lastDialCarouselText = '';
-let lastNowAir = { title: null, sub: null, empty: null, previewId: null };
+let lastNowAir = { title: null, sub: null, empty: null, previewId: null, kind: null };
 let tunerSubMeta = '';
 let tunerSubAirText = '';
 let tunerSubRotateTimer = null;
@@ -686,6 +686,8 @@ function isAuthoritativeLiveShow(radio) {
 /**
  * Lignes d'antenne pour le syntoniseur.
  * Priorité : bot.current (API/grille/ICY fusionnés) → bot.next → grille locale → slogan.
+ * @returns {{ title: string, sub: string, kind: 'live'|'upcoming'|'idle' }}
+ *   kind = live (émission en cours) | upcoming (à venir / entre créneaux) | idle
  */
 function nowAirLines(radio) {
   const slogan = radioSlogan(radio);
@@ -707,7 +709,7 @@ function nowAirLines(radio) {
     else if (track && normLoose(track) !== normLoose(botCur.title)) sub = `♪ ${track}`;
     else if (timeRange) sub = timeRange;
     else sub = slogan || `Vous écoutez ${radio.name}`;
-    return { title: botCur.title, sub };
+    return { title: botCur.title, sub, kind: 'live' };
   }
 
   // 2) Repli grille locale (bot pas encore à jour)
@@ -720,10 +722,10 @@ function nowAirLines(radio) {
     else if (schedCur.host) sub = `avec ${schedCur.host}`;
     else if (timeRange) sub = timeRange;
     else sub = slogan || `Vous écoutez ${radio.name}`;
-    return { title: schedCur.title, sub };
+    return { title: schedCur.title, sub, kind: 'live' };
   }
 
-  // 3) À venir (bot puis grille)
+  // 3) À venir (bot puis grille) — entre deux créneaux / pas d'émission en cours
   const upcoming = botNext || (schedNext
     ? { title: schedNext.title, start: schedNext.start, end: schedNext.end }
     : null);
@@ -734,10 +736,11 @@ function nowAirLines(radio) {
     return {
       title: upcoming.title,
       sub: timeRange ? `À venir · ${timeRange}` : 'À venir',
+      kind: 'upcoming',
     };
   }
 
-  return { title: `Vous écoutez ${radio.name}`, sub: slogan };
+  return { title: `Vous écoutez ${radio.name}`, sub: slogan, kind: 'idle' };
 }
 
 /** Une seule ligne « À l'antenne » pour la rotation du sous-titre. */
@@ -838,7 +841,7 @@ function applyDialCompactSub(radio, crossfade = false) {
 
 function formatPreviewNowAir(radio, { omitStation = false } = {}) {
   const stationLine = formatStationNowAirLabel(radio);
-  const { title, sub } = nowAirLines(radio);
+  const { title, sub, kind } = nowAirLines(radio);
   const genericListen = `Vous écoutez ${radio.name}`;
   const slogan = radioSlogan(radio);
 
@@ -850,21 +853,23 @@ function formatPreviewNowAir(radio, { omitStation = false } = {}) {
   if (omitStation) {
     if (title === genericListen) {
       const fallback = airDetail || slogan || '';
-      return { title: fallback || 'En direct', sub: '' };
+      return { title: fallback || 'En direct', sub: '', kind: kind || 'idle' };
     }
-    return { title, sub: airDetail || '' };
+    return { title, sub: airDetail || '', kind };
   }
 
   if (title === genericListen) {
     return {
       title: stationLine,
       sub: airDetail || slogan || '',
+      kind: kind || 'idle',
     };
   }
 
   return {
     title,
     sub: airDetail ? `${stationLine} · ${airDetail}` : stationLine,
+    kind,
   };
 }
 
@@ -1173,33 +1178,39 @@ function renderTunerNowAir() {
   const previewing = isNowAirPanelPreviewMode();
   let title;
   let sub;
+  /** @type {'live'|'upcoming'|'idle'} */
+  let kind = 'idle';
 
   if (currentStation) {
-    ({ title, sub } = nowAirLines(currentStation));
+    ({ title, sub, kind } = nowAirLines(currentStation));
   } else if (previewing) {
     if (!nowAirPreviewRadio) pickNowAirPreviewRadio();
     if (nowAirPreviewRadio) {
-      ({ title, sub } = formatPreviewNowAir(nowAirPreviewRadio, {
+      ({ title, sub, kind } = formatPreviewNowAir(nowAirPreviewRadio, {
         omitStation: isDesktopIdleDialCarousel(),
       }));
     } else {
       title = 'Syntoniser un poste';
       sub = 'Les radios étudiantes jouent en direct, 24/7';
+      kind = 'idle';
     }
   } else {
     title = 'Syntoniser un poste';
     sub = 'Les radios étudiantes jouent en direct, 24/7';
+    kind = 'idle';
   }
 
   const empty = !currentStation && !previewing;
   const previewId = previewing ? (nowAirPreviewRadio?.id ?? null) : null;
+  if (empty) kind = 'idle';
 
   // Rien n'a changé : on n'écrase pas le DOM (sinon le défilement repart à zéro
   // à chaque tic d'horloge).
   if (lastNowAir.title === title
     && lastNowAir.sub === sub
     && lastNowAir.empty === empty
-    && lastNowAir.previewId === previewId) {
+    && lastNowAir.previewId === previewId
+    && lastNowAir.kind === kind) {
     if (currentStation) stopNowAirPreview();
     else if (previewing) startNowAirPreview();
     else stopNowAirPreview();
@@ -1210,13 +1221,17 @@ function renderTunerNowAir() {
     && lastNowAir.previewId != null
     && previewId !== lastNowAir.previewId;
 
-  lastNowAir = { title, sub, empty, previewId };
+  lastNowAir = { title, sub, empty, previewId, kind };
 
   // Toujours visible sur bureau (placeholder HTML dès le paint) — ne pas
   // repasser en .hidden (ça laissait un trou + volume étiré au load).
   TUNER_NOWAIR.classList.remove('hidden');
   TUNER_NOWAIR.removeAttribute('aria-hidden');
   TUNER_NOWAIR.classList.toggle('is-empty', empty);
+  // live = coral EN ONDES ; upcoming = teinte distincte (bureau) ; idle = neutre
+  TUNER_NOWAIR.classList.toggle('is-live', kind === 'live');
+  TUNER_NOWAIR.classList.toggle('is-upcoming', kind === 'upcoming');
+  TUNER_NOWAIR.dataset.airKind = kind;
   updateNowAirPanel(title, sub, crossfadePreview);
   syncDesktopDialPreview(title, crossfadePreview);
   syncTunerSubRotate(title, sub, empty, crossfadePreview);
