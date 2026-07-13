@@ -16,12 +16,22 @@ const STOP_WORDS = new Set([
   'comment', 'pourquoi', 'quand', 'vers', 'chez', 'entre', 'après', 'avant', 'depuis', 'the', 'and',
   'for', 'with', 'from', 'that', 'this', 'are', 'was', 'were', 'has', 'have', 'into', 'about',
   'read', 'more', 'lire', 'suite', 'hellip', 'utm', 'source', 'medium', 'campaign', 'rss',
+  /* Bruit fréquent dans les extraits RSS (crédits, UI) */
+  'credit', 'crédit', 'photo', 'photos', 'pexels', 'unsplash', 'commons', 'wikimedia',
+  'medias', 'médias', 'sociaux', 'sera', 'etre', 'être', 'comme', 'aussi', 'tres', 'très',
 ]);
 
 /** Faux-amis à exclure des requêtes (résumé ≠ resume anglais, etc.) */
 const FALSE_FRIENDS = new Set([
   'resume', 'résumé', 'opinion', 'chronique', 'entrevue', 'critique', 'reportage', 'editorial',
   'feature', 'features', 'news', 'article', 'journal', 'campus', 'etudiant', 'étudiant',
+  'lancement', 'officiel', 'annoncee', 'annoncée', 'approche',
+]);
+
+/** Toponymes trop génériques : ne comptent pas seuls comme ancrage thématique. */
+const GENERIC_GEO_TOKENS = new Set([
+  'quebec', 'québec', 'montreal', 'montréal', 'canada', 'canadien', 'canadienne', 'canadian',
+  'amerique', 'amérique', 'america', 'ontario', 'ottawa', 'ville', 'city', 'ouest', 'est', 'nord', 'sud',
 ]);
 
 const QUEBEC_REGION_RE = /montréal|montreal|québec|quebec|laval|gatineau|sherbrooke|saguenay|rimouski|trois.?rivières|trois.?rivieres|abitibi|outaouais/i;
@@ -41,8 +51,14 @@ const FOREIGN_LOCATION_MARKERS = [
   'japan', 'tokyo', 'india', 'china', 'beijing', 'africa', 'brazil',
 ];
 
-/** Acronymes courts : seul « ASFA » ne doit pas matcher une école italienne, etc. */
-const SHORT_ACRONYM_RE = /^[a-z]{2,5}$/;
+/**
+ * Acronymes campus / associations à ne pas matcher hors contexte
+ * (ex. ASFA → école italienne). Ne pas y mettre des mots courants
+ * (pont, art, nino, rue…) — ce ne sont pas des acronymes.
+ */
+const SHORT_ACRONYM_BLOCKLIST = new Set([
+  'asfa', 'csu', 'ssmu', 'pgss', 'agsem', 'pgss', 'aelum', 'faecum', 'fecq', 'udec',
+]);
 
 /* Documents d'archives numérisés (gravures, plaques de verre, cartes postales,
    photos 18xx-19xx…) : granuleux, noir et blanc, souvent « Unknown author ».
@@ -326,9 +342,25 @@ function applyContextScoring(hit, context = {}) {
   return delta;
 }
 
-/** Corps éditorial sans byline ni HTML — base pour les requêtes visuelles. */
+/** Retire les mentions de crédit photo / sources stock qui polluent les tokens. */
+function stripPhotoCreditNoise(text = '') {
+  return String(text)
+    .replace(/\(\s*cr[ée]dit(?:s)?\s*(?:photo)?\s*[:：][^)]*\)/gi, ' ')
+    .replace(/\bcr[ée]dit(?:s)?\s*(?:photo)?\s*[:：][^\n.|;]*/gi, ' ')
+    .replace(/\bphoto\s*[:：]\s*[^\n.|;]{0,80}/gi, ' ')
+    .replace(/\bvia\s+(?:pexels|unsplash|wikimedia|commons)\b/gi, ' ')
+    .replace(/\b(?:pexels|unsplash)\b/gi, ' ');
+}
+
+/**
+ * Corps éditorial sans byline ni HTML — base pour les requêtes visuelles.
+ * Priorité : leadExcerpt (plus riche) → excerpt RSS.
+ */
 function extractArticleContent(item) {
-  let body = stripHtml(item.excerpt || '');
+  const lead = stripHtml(item.leadExcerpt || '');
+  const excerpt = stripHtml(item.excerpt || '');
+  let body = lead.length >= 40 ? `${lead} ${excerpt}` : (excerpt || lead);
+  body = stripPhotoCreditNoise(body);
   body = body.replace(
     /^\s*(?:Par|By)\s+[\p{Lu}][\p{L}'’.\-]+(?:\s+[\p{Lu}][\p{L}'’.\-]+){0,3}\s+/iu,
     '',
@@ -336,39 +368,147 @@ function extractArticleContent(item) {
   return body.replace(/\s+/g, ' ').trim();
 }
 
+/**
+ * Requêtes visuelles thématiques (FR→EN) tirées du titre / contenu.
+ * Openverse/Commons répondent mieux aux libellés anglais concrets.
+ */
+function extractVisualTopicQueries(item = {}) {
+  const title = item.title || '';
+  const content = extractArticleContent(item);
+  const full = `${title} ${content}`;
+  const queries = [];
+
+  // Climat / El Niño
+  if (/el\s*ni[nñ]o|la\s*ni[nñ]a|ph[eé]nom[eè]ne\s+climatique|\bclimatique\b|\bm[eé]t[eé]o\b/i.test(full)) {
+    queries.push('El Nino');
+    queries.push('El Niño intensifying');
+    queries.push('El Niño Pacific Ocean satellite weather');
+    queries.push('El Nino climate phenomenon Pacific');
+    queries.push('phénomène El Niño océan Pacifique');
+    queries.push('tropical Pacific Ocean climate weather');
+  }
+  // Pont + art / exposition de rue
+  if (/\bpont\b/i.test(full) && /\b(art|exposition|murale?|rue|street|travail de rue)\b/i.test(full)) {
+    queries.push('street art mural urban bridge');
+    queries.push('urban art exhibition outdoor mural');
+    queries.push('street art graffiti mural Canada');
+  } else if (/\b(exposition|vernissage|galerie)\b/i.test(full)) {
+    queries.push('art exhibition gallery opening');
+    queries.push('contemporary art exhibition');
+  } else if (/\b(art de rue|travail de rue|street art|murale?)\b/i.test(full)) {
+    queries.push('street art mural urban');
+    queries.push('street artists painting mural');
+  }
+  // Cyclisme / routes
+  if (/\bcyclist|v[eé]lo|bicyclette|cyclisme|cyclistes?\b/i.test(full)) {
+    queries.push('cyclist bicycle road');
+    queries.push('cyclists riding bicycles street');
+    queries.push('bicycle riders memorial road safety');
+    queries.push('vélo cycliste route');
+  }
+  // Salon photo / image
+  if (/salon\s+l['’]?\s*image|salon\b.*\b(photo|image|photographie)\b/i.test(full)
+    || (/\bsalon\b/i.test(title) && /\b(image|photo)\b/i.test(full))) {
+    queries.push('photography exhibition gallery');
+    queries.push('photo exhibition salon');
+    queries.push('art photography exhibition opening');
+  }
+  // Handicap / aidants
+  if (/\b(handicap|aidants?|proche.?aidant|disability|caregiver)\b/i.test(full)) {
+    queries.push('caregiver helping disabled person');
+    queries.push('disability support community care');
+  }
+  // Retraite
+  if (/\bretraite|retirement|retired\b/i.test(full)) {
+    queries.push('retirement seniors active lifestyle');
+    queries.push('retired people community activity');
+  }
+  // Jeunesse / écriture
+  if (/\b(jeunes?\s+auteurs?|pouvoir des mots|[eé]criture|[eé]crivains?)\b/i.test(full)) {
+    queries.push('young writers books reading students');
+    queries.push('students writing creative workshop');
+  }
+  // Pharmacie
+  if (/\b(pharmacie|pharmacy|pharmaceut)\b/i.test(full)) {
+    queries.push('pharmacy technician laboratory');
+    queries.push('pharmacy drugstore interior');
+  }
+  // Investissement jeunesse / centre communautaire
+  if (/\b(investissement|centre|jeunes|community center)\b/i.test(full)
+    && /\b(jeunes|youth|communautaire|mamik)\b/i.test(full)) {
+    queries.push('youth community center students Canada');
+    queries.push('community youth program Canada');
+  }
+
+  // Titre seul : 2–4 tokens forts en tête de file de recherche
+  const titleToks = tokenize(title).filter((t) => t.length >= 4 && !GENERIC_GEO_TOKENS.has(t));
+  if (titleToks.length >= 2) {
+    queries.unshift(titleToks.slice(0, 4).join(' '));
+  }
+
+  return queries;
+}
+
 function buildMatchTokens(item) {
   const content = extractArticleContent(item);
   const titleTokens = tokenize(item.title || '');
-  const contentTokens = tokenize(content);
-  const proper = extractProperNouns(`${item.title || ''} ${content}`);
-  const isUsefulToken = (t) => t.length >= 3 && !/^(?:19|20)\d{2}$/.test(t) && !/^\d+$/.test(t);
+  const contentTokens = tokenize(content)
+    .filter((t) => !GENERIC_GEO_TOKENS.has(t) || t.length >= 6);
+  const proper = extractProperNouns(`${item.title || ''} ${content}`)
+    .filter((t) => !GENERIC_GEO_TOKENS.has(t) && t !== 'credit' && t !== 'photo');
+  const isUsefulToken = (t) => t.length >= 3
+    && !/^(?:19|20)\d{2}$/.test(t)
+    && !/^\d+$/.test(t)
+    && !GENERIC_GEO_TOKENS.has(t);
+  // Titre d’abord : ce sont les meilleurs ancres visuelles.
   const important = [...new Set([
+    ...titleTokens.filter((t) => t.length >= 4 && isUsefulToken(t)),
     ...proper.filter(isUsefulToken),
-    ...contentTokens.filter((t) => t.length >= 4),
-    ...titleTokens.filter((t) => t.length >= 4),
-  ])].slice(0, 16);
+    ...contentTokens.filter((t) => t.length >= 5),
+  ])].slice(0, 18);
   return { important, title: titleTokens, content: contentTokens, proper, contentText: content };
 }
 
 function extractSearchQueries(item, context = detectEditorialContext(item)) {
   const content = extractArticleContent(item);
-  const contentProper = extractProperNouns(content);
+  const contentProper = extractProperNouns(content)
+    .filter((t) => !GENERIC_GEO_TOKENS.has(t) && t !== 'credit' && t !== 'photo');
   const titleProper = extractProperNouns(item.title || '');
   const titleTokens = tokenize(item.title || '');
-  const contentTokens = tokenize(content).slice(0, 12);
+  const contentTokens = tokenize(content)
+    .filter((t) => !GENERIC_GEO_TOKENS.has(t) && t.length >= 4)
+    .slice(0, 12);
   const match = buildMatchTokens(item);
 
-  const queries = [...extractContextualQueries(item, context)];
+  // 1) Requêtes visuelles thématiques (titre / sujet) — priorité.
+  const queries = [
+    ...extractVisualTopicQueries(item),
+    ...extractContextualQueries(item, context),
+  ];
 
   if (context.provincialParliament) {
     queries.push('Assemblée nationale Québec politique');
   }
 
-  if (contentProper.length >= 2) queries.push(contentProper.slice(0, 5).join(' '));
-  if (contentTokens.length >= 3) queries.push(contentTokens.slice(0, 6).join(' '));
+  // 2) Titre d’abord (mots-clés forts)
+  if (titleTokens.length >= 2) {
+    queries.push(titleTokens.slice(0, 4).join(' '));
+  }
+  if (titleProper.length >= 2) queries.push(titleProper.join(' '));
+  if (titleProper.length >= 1) queries.push(titleProper[0]);
+  if (titleTokens.length >= 2 && contentTokens.length >= 1) {
+    queries.push(`${titleTokens.slice(0, 2).join(' ')} ${contentTokens.slice(0, 2).join(' ')}`);
+  }
+
+  // 3) Contenu (sans bruit crédit / toponymes seuls)
+  if (contentProper.length >= 2) queries.push(contentProper.slice(0, 4).join(' '));
+  if (contentTokens.length >= 3) queries.push(contentTokens.slice(0, 5).join(' '));
   const firstSentence = content.split(/[.!?]/)[0]?.trim() || '';
   if (firstSentence.length >= 24) {
-    queries.push(tokenize(firstSentence).slice(0, 7).join(' '));
+    const sentToks = tokenize(firstSentence)
+      .filter((t) => !GENERIC_GEO_TOKENS.has(t) && t.length >= 4)
+      .slice(0, 6);
+    if (sentToks.length >= 2) queries.push(sentToks.join(' '));
   }
 
   if (/g7/i.test(content) || /g7/i.test(item.title || '') || match.proper.includes('g7')) {
@@ -376,13 +516,7 @@ function extractSearchQueries(item, context = detectEditorialContext(item)) {
     queries.push('G7 family photo Evian France');
   }
 
-  if (titleProper.length >= 2) queries.push(titleProper.join(' '));
-  if (titleProper.length >= 1 && contentTokens.length >= 1) {
-    queries.push(`${titleProper[0]} ${contentTokens.slice(0, 3).join(' ')}`);
-  }
   if (match.important.length >= 2) queries.push(match.important.slice(0, 4).join(' '));
-  if (titleTokens.length >= 2) queries.push(titleTokens.slice(0, 3).join(' '));
-  if (titleProper.length >= 1) queries.push(titleProper[0]);
 
   // Le campus de l'établissement n'est plus une requête de recherche libre :
   // un match « McGill » seul ramenait des photos d'hiver hors-sujet.
@@ -483,7 +617,85 @@ function formatAttribution(hit) {
 
 function isShortAcronymToken(tok = '') {
   const t = normalizeText(tok);
-  return SHORT_ACRONYM_RE.test(t) && t === t.toLowerCase() && /^[a-z]+$/.test(t) && t.length <= 5;
+  if (!t || t.length < 2 || t.length > 6) return false;
+  return SHORT_ACRONYM_BLOCKLIST.has(t);
+}
+
+function isTopicToken(tok = '') {
+  const t = normalizeText(tok);
+  if (!t || t.length < 3) return false;
+  if (FALSE_FRIENDS.has(t) || STOP_WORDS.has(t) || GENERIC_GEO_TOKENS.has(t)) return false;
+  if (isShortAcronymToken(t)) return false;
+  return true;
+}
+
+/**
+ * Alias FR → EN pour le scoring (Openverse/Commons sont surtout en anglais).
+ */
+const TOKEN_ALIASES = {
+  cyclistes: ['cyclist', 'cyclists', 'bicycle', 'bike', 'cycling'],
+  cycliste: ['cyclist', 'cyclists', 'bicycle', 'bike', 'cycling'],
+  cyclisme: ['cycling', 'bicycle', 'bike'],
+  velo: ['bicycle', 'bike', 'cycling'],
+  bicyclette: ['bicycle', 'bike'],
+  pont: ['bridge'],
+  rue: ['street'],
+  art: ['art', 'artistic'],
+  exposition: ['exhibition', 'exhibit', 'gallery'],
+  vernissage: ['exhibition', 'opening', 'gallery'],
+  murale: ['mural'],
+  murales: ['mural', 'murals'],
+  climat: ['climate'],
+  climatique: ['climate', 'climatic', 'weather'],
+  meteorologique: ['weather', 'meteorology', 'meteorological'],
+  phenomene: ['phenomenon'],
+  temperatures: ['temperature', 'temperatures'],
+  temperature: ['temperature'],
+  nino: ['nino', 'enso'],
+  pharmacie: ['pharmacy', 'drugstore', 'drug store'],
+  pharmaceutique: ['pharmacy', 'pharmaceutical'],
+  jeunes: ['youth', 'young', 'students', 'children'],
+  auteurs: ['writers', 'authors'],
+  ecrivains: ['writers', 'authors'],
+  mots: ['words', 'books', 'writing', 'literacy'],
+  crayons: ['pencils', 'writing', 'drawing'],
+  investissement: ['investment', 'funding', 'community'],
+  centre: ['center', 'centre'],
+  handicap: ['disability', 'disabled'],
+  aidants: ['caregiver', 'caregivers', 'carer'],
+  aidant: ['caregiver', 'carer'],
+  retraite: ['retirement', 'retired', 'seniors'],
+  routes: ['road', 'roads', 'street'],
+  hommage: ['memorial', 'tribute', 'commemoration'],
+  decedes: ['memorial', 'death', 'killed'],
+  salon: ['salon', 'exhibition', 'gallery'],
+  image: ['photo', 'photography', 'image', 'picture'],
+  photo: ['photo', 'photography', 'photograph'],
+  dissolution: ['dissolution', 'board', 'members'],
+  membres: ['members', 'board'],
+};
+
+/**
+ * Présence d’un token (ou alias EN) dans le haystack.
+ * Tokens courts (≤4) : frontières de mot — évite « erd » ⊂ « erde ».
+ */
+function hayHasToken(hay, tok) {
+  const t = normalizeText(tok);
+  if (!t || !hay) return false;
+  const variants = [t, ...(TOKEN_ALIASES[t] || []).map((a) => normalizeText(a))];
+  for (const v of variants) {
+    if (!v) continue;
+    if (v.length <= 4) {
+      try {
+        if (new RegExp(`(?:^|[^a-z0-9])${v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:[^a-z0-9]|$)`, 'i').test(hay)) {
+          return true;
+        }
+      } catch { /* ignore bad pattern */ }
+    } else if (hay.includes(v)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function countSubstantiveMatches(hay, matchTokens = {}) {
@@ -494,18 +706,21 @@ function countSubstantiveMatches(hay, matchTokens = {}) {
   let acronymOnly = 0;
 
   for (const tok of content) {
-    if (tok.length < 3 || FALSE_FRIENDS.has(tok) || isShortAcronymToken(tok)) continue;
-    if (hay.includes(tok)) contentMatched += 1;
+    if (!isTopicToken(tok)) continue;
+    if (hayHasToken(hay, tok)) contentMatched += 1;
   }
   for (const tok of title) {
-    if (tok.length < 4 || FALSE_FRIENDS.has(tok) || isShortAcronymToken(tok)) continue;
-    if (hay.includes(tok)) titleMatched += 1;
+    if (!isTopicToken(tok) || tok.length < 3) continue;
+    if (hayHasToken(hay, tok)) titleMatched += 1;
   }
   for (const tok of important) {
     if (FALSE_FRIENDS.has(tok) || tok.length < 3) continue;
-    if (!hay.includes(tok)) continue;
-    if (isShortAcronymToken(tok)) acronymOnly += 1;
-    else importantMatched += 1;
+    if (!hayHasToken(hay, tok)) continue;
+    if (isShortAcronymToken(tok) || GENERIC_GEO_TOKENS.has(tok)) {
+      acronymOnly += 1;
+      continue;
+    }
+    importantMatched += 1;
   }
 
   return { contentMatched, titleMatched, importantMatched, acronymOnly };
@@ -515,20 +730,24 @@ function scoreCandidate(hit, matchTokens, context = null) {
   let score = 0;
   const w = hit.width || 0;
   const h = hit.height || 0;
-  if (meetsLeadDisplaySize(w, h)) score += 90;
-  else if (w >= 560 && h >= 315) score += 45;
-  else if (w >= 400 && h >= 250) score += 20;
+  if (meetsLeadDisplaySize(w, h)) score += 70;
+  else if (w >= 560 && h >= 315) score += 40;
+  else if (w >= 400 && h >= 250) score += 18;
   else return -1;
 
   const ratio = w / Math.max(h, 1);
-  if (ratio >= 1.1 && ratio <= 2.2) score += 22;
-  score += Math.min(w, 2400) / 35;
+  if (ratio >= 1.1 && ratio <= 2.2) score += 18;
+  score += Math.min(w, 2400) / 45;
 
   const hay = normalizeText(`${hit.title || ''} ${hit.tags || ''} ${hit.url || ''}`);
 
-  // Document d'archive (année 18xx-19xx, gravure, N&B…) : qualité trop
+  // Document d'archive (année 18xx-19xx, gravure, N&B, BnF…) : qualité trop
   // faible pour illustrer un article — rejet, sauf sujet historique.
-  if (!context?.historicalTopic && (ARCHIVAL_MEDIA_RE.test(hay) || ARCHIVAL_YEAR_RE.test(hay))) {
+  if (!context?.historicalTopic && (
+    ARCHIVAL_MEDIA_RE.test(hay)
+    || ARCHIVAL_YEAR_RE.test(hay)
+    || /\bbtv1b\d|\bgallica\b|\bscan\b|\bnum[eé]ris/i.test(hay)
+  )) {
     return -1;
   }
 
@@ -537,8 +756,6 @@ function scoreCandidate(hit, matchTokens, context = null) {
   const { contentMatched, titleMatched, importantMatched, acronymOnly } = matches;
 
   // Établissement : bonus seulement s'il y a déjà un ancrage thématique.
-  // Un match « McGill » seul ne suffit plus (photo campus hiver pour un
-  // billet d'été) — le repli campus curaté est une autre étape.
   let institutionMatched = 0;
   for (const phrase of context?.institutionPhrases || []) {
     if (hay.includes(phrase)) {
@@ -546,34 +763,45 @@ function scoreCandidate(hit, matchTokens, context = null) {
     }
   }
 
-  for (const tok of content) {
-    if (tok.length < 3 || FALSE_FRIENDS.has(tok) || isShortAcronymToken(tok)) continue;
-    if (hay.includes(tok)) score += tok.length >= 5 ? 22 : 14;
+  // Titre = ancre principale (mots-clés de l'article).
+  for (const tok of title) {
+    if (!isTopicToken(tok) || tok.length < 3) continue;
+    if (hayHasToken(hay, tok)) score += tok.length >= 5 ? 36 : 26;
   }
   for (const tok of important) {
-    if (FALSE_FRIENDS.has(tok) || tok.length < 3 || isShortAcronymToken(tok)) continue;
-    if (hay.includes(tok)) score += 16;
+    if (!isTopicToken(tok)) continue;
+    if (hayHasToken(hay, tok)) score += 18;
   }
-  for (const tok of title) {
-    if (tok.length < 4 || FALSE_FRIENDS.has(tok) || isShortAcronymToken(tok)) continue;
-    if (hay.includes(tok)) score += 8;
+  for (const tok of content) {
+    if (!isTopicToken(tok)) continue;
+    if (hayHasToken(hay, tok)) score += tok.length >= 5 ? 14 : 8;
   }
 
   // Saison / météo : refus net d'une photo d'hiver pour un sujet d'été, etc.
   const photoWinter = WINTER_PHOTO_RE.test(hay);
   const photoSummer = SUMMER_PHOTO_RE.test(hay);
-  if (context?.summerTopic && photoWinter) return -1;
-  if (context?.winterTopic && photoSummer && !photoWinter) return -1;
-  if (context?.summerTopic && photoSummer) score += 35;
-  if (context?.winterTopic && photoWinter) score += 35;
+  // Article qui mentionne été ET hiver (ex. prévisions El Niño) : ne pas
+  // forcer un conflit saisonnier — le sujet n'est pas « un été » ou « un hiver ».
+  const mixedSeasonTopic = !!(context?.summerTopic && context?.winterTopic);
+  if (!mixedSeasonTopic) {
+    if (context?.summerTopic && photoWinter) return -1;
+    if (context?.winterTopic && photoSummer && !photoWinter) return -1;
+    if (context?.summerTopic && photoSummer) score += 35;
+    if (context?.winterTopic && photoWinter) score += 35;
+  }
 
   const topicMatched = contentMatched + titleMatched + importantMatched;
-  // Exiger un ancrage dans le titre ou le résumé — pas seulement le campus.
+  // Ancrage thématique réel (pas seulement Québec / Montréal / campus).
   if (topicMatched === 0) return -1;
-  if (important.length >= 2 && topicMatched === 0) return -1;
   if (acronymOnly > 0 && topicMatched === 0) return -1;
 
-  if (institutionMatched > 0 && topicMatched > 0) score += 40;
+  // Titre avec ≥2 tokens : exiger au moins 1 match titre OU 2 importants.
+  const titleTopicCount = title.filter((t) => isTopicToken(t) && t.length >= 3).length;
+  if (titleTopicCount >= 2 && titleMatched === 0 && importantMatched < 2) {
+    return -1;
+  }
+
+  if (institutionMatched > 0 && topicMatched > 0) score += 28;
 
   if (STUDENT_MOBILIZATION_RE.test(context?.norm || '')) {
     if (!/\b(student|university|campus|college|protest|demonstration|mobilization|mobilisation|strike|gr[eè]ve|manifestation|rally|march)\b/.test(hay)) {
@@ -586,10 +814,58 @@ function scoreCandidate(hit, matchTokens, context = null) {
     }
   }
 
+  // El Niño / climat : exiger un marqueur météo/océan — rejeter les homonymes
+  // (surnoms, tombes « El Niño del … », etc.).
+  const elNinoClimate = /\bel\s*ni[nñ]o\b/.test(context?.norm || '')
+    && /\b(climat|climatique|m[eé]t[eé]o|temp[eé]rature|pacifique|pacif|ph[eé]nom[eè]ne|oc[eé]an)\b/.test(context?.norm || '');
+  if (elNinoClimate) {
+    if (/\b(tumba|tomb|grave|cemetery|cimeti[eè]re|ara[hl]|pernales|bandit|outlaw)\b/i.test(hay)) {
+      return -1;
+    }
+    const climatePhoto = /\b(el nino|el ni[nñ]o|enso|pacific|climate|weather|ocean|oc[eé]an|satellite|hurricane|ouragan|climatique|m[eé]t[eé]o)\b/i.test(hay);
+    if (!climatePhoto) return -1;
+    score += 55;
+  }
+
+  // Pont + art / rue : privilégier street art / murale, pas un pont isolé.
+  const bridgeArtTopic = /\bpont\b/.test(context?.titleNorm || '')
+    && /\b(art|rue|exposition|murale?|street)\b/.test(context?.norm || '');
+  if (bridgeArtTopic) {
+    const artPhoto = /\b(street art|mural|graffiti|urban art|art de rue|fresque|exposition)\b/i.test(hay);
+    const bridgeOnly = /\b(pont|bridge)\b/i.test(hay) && !artPhoto;
+    if (artPhoto) score += 55;
+    else if (bridgeOnly) score -= 50;
+  }
+
+  // Cyclistes : exiger un marqueur vélo (pas une caravane / route générique).
+  if (/\bcyclist|v[eé]lo|bicyclette|cyclisme|cyclistes?\b/.test(context?.norm || '')) {
+    if (!/\b(cyclist|bicycle|bike|v[eé]lo|cycling|bike lane|piste cyclable|bicycl)\b/i.test(hay)) {
+      return -1;
+    }
+    score += 50;
+  }
+
+  // ERD (asso étudiante Saguenay) ≠ Redmine / diagramme / wagon « ERd ».
+  if (/\berd\b/.test(context?.norm || '') && /\b(dissolution|membres|conseil|saguenay)\b/.test(context?.norm || '')) {
+    if (/\b(redmine|diagram|entity.?relationship|database|uml|schema|mod[eè]le relationnel|dining car|double-decker|train|wagon|railroad|railway)\b/i.test(hay)) {
+      return -1;
+    }
+    // Trop d’homonymes « ERD » en banque libre → laisser le campus prendre le relais.
+    return -1;
+  }
+
+  // Salon photo : rejeter salon de musique / piano / interior design.
+  if (/salon/.test(context?.titleNorm || '') && /\b(image|photo)\b/.test(context?.norm || '')) {
+    if (/\b(piano|musique|music room|house for an art lover|furniture|interior design)\b/i.test(hay)) {
+      return -1;
+    }
+    if (/\b(photo|photograph|exhibition|gallery|exposition)\b/i.test(hay)) score += 45;
+  }
+
   if (hit.provider === 'wikimedia') score += 8;
 
   // Auteur inconnu ou simple « Domaine public » : presque toujours un vieux
-  // document numérisé — pénalité au lieu de l'ancien bonus cc0/pdm.
+  // document numérisé — pénalité.
   const creatorName = normalizeText(hit.creator || hit.artist || '');
   if (!creatorName || UNKNOWN_CREATOR_RE.test(creatorName)) score -= 30;
   if (String(hit.license || '').toLowerCase() === 'pdm' && !context?.historicalTopic) score -= 40;
@@ -599,9 +875,9 @@ function scoreCandidate(hit, matchTokens, context = null) {
   return score > 0 ? score : -1;
 }
 
-// Seuil un peu plus haut : on préfère aucune banque libre qu'un match fragile
-// (le repli campus curaté prend le relais ensuite).
-const STOCK_MIN_RETAIN_SCORE = 110;
+// Seuil : dimensions seules ne suffisent plus (score taille plafonné ~90) ;
+// il faut un vrai ancrage titre/sujet pour dépasser 100.
+const STOCK_MIN_RETAIN_SCORE = 100;
 
 function stockHitFromItem(item, stockUrl = '', meta = {}) {
   const filename = decodeURIComponent(String(stockUrl).split('/').pop() || '')
@@ -793,6 +1069,7 @@ module.exports = {
   buildMatchTokens,
   detectEditorialContext,
   extractContextualQueries,
+  extractVisualTopicQueries,
   applyContextScoring,
   extractSearchQueries,
   formatAttribution,
