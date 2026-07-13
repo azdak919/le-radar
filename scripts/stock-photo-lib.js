@@ -1,6 +1,9 @@
 /**
  * Recherche de photos libres de droit (Openverse + Wikimedia Commons).
- * Dernier recours quand la page source n'a pas de visuel vedette utilisable.
+ * Toutes sources du Radar — dernier recours quand la page n'a pas de photo
+ * vedette utilisable. Requêtes = titre + contenu (lead/extrait), alias FR→EN,
+ * scoring thématique strict ; le repli campus est géré à part
+ * (campus-photo-bank.js).
  */
 
 const https = require('https');
