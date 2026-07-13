@@ -14,8 +14,8 @@
   'use strict';
 
   const STORAGE_KEY = 'radar-translate-mode';
-  // v4 : cégeps/collèges QC ne sont plus jamais libellés « University »
-  const CACHE_KEY = 'radar-translate-cache-v4';
+  // v5 : purge des traductions écrasées par « Dawson College » (bug v4)
+  const CACHE_KEY = 'radar-translate-cache-v5';
   const CACHE_MAX = 800;
   const DEFAULT_MODE = 'original';
   const CONCURRENCY = 5;
@@ -727,8 +727,10 @@
     out = out.replace(/:(?!\/\/)(?=[\p{L}])/gu, ': ');
     // Mot collé en camel accidentel : licencjiPowszechna
     out = out.replace(/(\p{Ll}{2,})(\p{Lu}\p{L})/gu, '$1 $2');
-    // Dawson n’est pas une université (corrige aussi le corps de page)
-    out = fixInstitutionMistranslations('Dawson College', out);
+    // Dawson n’est pas une université (corrige aussi le corps de page).
+    // Original vide obligatoire : avec un nom d’établissement, la branche
+    // collège remplacerait le texte entier par le libellé du glossaire.
+    out = fixInstitutionMistranslations('', out);
     // Espaces doubles éventuels
     out = out.replace(/ {2,}/g, ' ');
     return out;
