@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-07-13T22:28:40.098Z",
+  "updatedAt": "2026-07-13T23:29:02.475Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "schedule",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
+      "current": null,
       "next": {
         "title": "La Cassette",
         "source": "schedule",
@@ -20,34 +14,34 @@
         "url": "https://chyz.ca/emission/la-cassette/"
       },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-13T22:28:19.648Z"
+      "checkedAt": "2026-07-13T23:28:39.688Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
-        "source": "api-live",
-        "start": "14:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "palmares-de-cism"
-      },
-      "next": {
         "title": "Les garçons pleurent aussi",
         "source": "api-live",
         "start": "15:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/363877.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "les-garcons-pleurent-aussi"
       },
+      "next": {
+        "title": "Les criquets crinqués",
+        "source": "api-live",
+        "start": "17:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/363883.mp3",
+        "slug": "les-criquets-crinques"
+      },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Les garçons pleurent aussi",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-13T22:28:21.174Z"
+      "checkedAt": "2026-07-13T23:28:41.675Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Queercorps",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Dykes on Mykes",
         "source": "api-live",
         "start": "19:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Underground Sounds",
+        "source": "api-live",
+        "start": "20:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "Queercorps",
+      "showTitle": "Dykes on Mykes",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-13T22:28:24.172Z"
+      "checkedAt": "2026-07-13T23:28:44.687Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Voice of the Voiceless",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/voice-of-the-voiceless"
-      },
-      "next": {
         "title": "Queer Chaos",
         "source": "schedule",
         "start": "19:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/queer-chaos"
       },
+      "next": {
+        "title": "In The Garage",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/in-the-garage"
+      },
       "track": "",
-      "showTitle": "Voice of the Voiceless",
+      "showTitle": "Queer Chaos",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-13T22:28:37.422Z"
+      "checkedAt": "2026-07-13T23:28:58.545Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,27 +129,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-13T22:28:38.312Z"
+      "checkedAt": "2026-07-13T23:28:59.486Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Prince & Apollonia",
+        "title": "Cimetiere",
         "source": "api-live",
-        "host": "Roc Marciano"
+        "host": "Grand Eugene"
       },
       "next": null,
-      "track": "Roc Marciano - Prince & Apollonia",
-      "showTitle": "Prince & Apollonia",
-      "host": "Roc Marciano",
+      "track": "Grand Eugene - Cimetiere",
+      "showTitle": "Cimetiere",
+      "host": "Grand Eugene",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-13T22:28:39.747Z"
+      "checkedAt": "2026-07-13T23:29:02.124Z"
     }
   }
 }
