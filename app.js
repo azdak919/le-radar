@@ -3386,20 +3386,20 @@ function updateNewsLayout() {
 }
 
 /*
- * Partition du fil (3 sections) — règles unifiées :
- *  1. Fraîcheur globale : toujours les articles les plus récents d'abord.
- *  2. Diversité douce : préférer une autre institution / source si un
- *     candidat plus récent équivalent existe, sans passer devant un plus frais.
- *  3. À la une = le plus récent ; vedettes = suivants ; En bref = suite ;
- *     Suite du fil = le reste.
- *  4. Bureau : équilibrer les hauteurs des colonnes —
- *     hero trop court → + vedettes ; En bref trop court → + cartes (autres institutions).
+ * Partition du fil (3 sections) :
+ *  1. Fraîcheur globale : les plus récents d'abord partout.
+ *  2. À la une = le plus récent du pool.
+ *  3. Vedettes = suivants les plus frais — plusieurs de la MÊME source OK.
+ *  4. En bref = au plus 1 article par institution, le plus frais restant
+ *     (après tout ce qui est déjà en une + vedettes).
+ *  5. Suite du fil = le reste (date desc).
+ *  6. Bureau : colonnes à bas alignés (fill contenu + spacer flex).
  */
 const HERO_FEATURE_MIN = 2; /* vedettes initiales (hors à la une) */
-const HERO_FEATURE_MAX = 6; /* plafond après remplissage de colonne */
+const HERO_FEATURE_MAX = 8; /* plafond après remplissage de colonne */
 const HERO_SPOTLIGHT_MAX = 1 + HERO_FEATURE_MIN; /* une + 2 vedettes au 1er passage */
 const BRIEF_SIDEBAR_MIN = 7; /* En bref au premier passage */
-const BRIEF_SIDEBAR_MAX = 14; /* plafond si la colonne a encore de la place */
+const BRIEF_SIDEBAR_MAX = 16; /* plafond si la colonne a encore de la place */
 /* Vue source : pas de vedettes intermédiaires (voir partitionSourceFeed). */
 
 /**
@@ -3544,148 +3544,67 @@ function isArticlePicked(item, picks) {
 }
 
 /**
- * Prochain article le plus frais dans `pool` (déjà trié date desc).
- * Diversité douce : d'abord une institution pas encore prise, sinon le plus récent.
+ * À la une + vedettes — **strictement par date** sur le pool déjà filtré frais.
+ * (filterFreshItems a déjà appliqué la fenêtre 3 sessions ; pas de bande
+ * intermédiaire qui re-trierait autrement.)
+ * - Une = sorted[0] (le plus récent de tout le fil)
+ * - Vedettes = sorted[1..n] (même source OK)
+ * Ainsi on n'aura jamais un 12 mai en une/vedette tant qu'un 10 juil. reste
+ * dans la suite du fil.
  */
-function pickNextFreshestDiverse(pool, usedKeys, usedInsts) {
-  for (const item of pool) {
-    const key = articleKey(item);
-    if (usedKeys.has(key)) continue;
-    if (!usedInsts.has(institutionKey(item))) return item;
-  }
-  for (const item of pool) {
-    const key = articleKey(item);
-    if (usedKeys.has(key)) continue;
-    return item;
-  }
-  return null;
-}
-
-/**
- * À la une + vedettes.
- * - Une = article le plus récent du pool frais (jamais rétrogradée pour une photo).
- * - Vedettes = suivants les plus frais, diversité d'institution en second critère.
- * - Bandes de session plus anciennes seulement si la session courante ne remplit pas.
- */
-function pickHeroSpotlight(items, referenceDate = new Date()) {
+function pickHeroSpotlight(items, _referenceDate = new Date()) {
   const sorted = sortByDateDesc(items);
   if (!sorted.length) {
     return { items: [], contingencyBand: 0 };
   }
-
-  const lead = sorted[0];
-  const picks = [lead];
-  const usedKeys = new Set([articleKey(lead)]);
-  const usedInsts = new Set([institutionKey(lead)]);
-  let contingencyBand = 0;
-
-  const takeFromPool = (pool, need, band) => {
-    if (need <= 0) return;
-    let added = 0;
-    while (added < need) {
-      const next = pickNextFreshestDiverse(pool, usedKeys, usedInsts);
-      if (!next) break;
-      picks.push(next);
-      usedKeys.add(articleKey(next));
-      usedInsts.add(institutionKey(next));
-      added += 1;
-      contingencyBand = Math.max(contingencyBand, band);
-    }
-  };
-
-  for (let band = 0; band <= freshnessMaxSessionsBack(referenceDate); band++) {
-    if (picks.length >= HERO_SPOTLIGHT_MAX) break;
-    const pool = sessionBandPool(items, referenceDate, band);
-    takeFromPool(pool, HERO_SPOTLIGHT_MAX - picks.length, band);
-  }
-
-  if (isAutumnGracePeriod(referenceDate) && picks.length < HERO_SPOTLIGHT_MAX) {
-    const pool = sorted.filter((item) => isWithinFreshnessWindow(item, referenceDate));
-    takeFromPool(pool, HERO_SPOTLIGHT_MAX - picks.length, 1);
-  }
-
-  /* Vedettes affichées du plus récent au plus ancien (la une reste en tête). */
-  const features = sortByDateDesc(picks.slice(1));
-
+  const n = Math.min(HERO_SPOTLIGHT_MAX, sorted.length);
+  // Tranche contiguë des n plus frais — pas de saut d'institution.
   return {
-    items: [picks[0], ...features],
-    contingencyBand,
+    items: sorted.slice(0, n),
+    contingencyBand: 0,
   };
 }
 
 /**
- * En bref : les plus frais hors hero.
- * Passes : (1) 1 par source absente du hero, (2) 1 par source du hero,
- * (3) compléter en autorisant les doublons de source — toujours en marchant
- * du plus récent au plus ancien.
- * @param {number} [maxSlots] — plafond (MIN au partition, MAX au fill colonne)
+ * En bref : 1 article le plus frais par *institution*, parmi ce qui reste
+ * après une + vedettes. Le Collectif peut donc réapparaître ici avec l'article
+ * le plus frais *non déjà pris* par le hero.
+ * @param {number} [maxSlots]
  */
-function pickBriefSidebar(allItems, heroItems = [], referenceDate = new Date(), maxSlots = BRIEF_SIDEBAR_MIN) {
+function pickBriefSidebar(allItems, heroItems = [], _referenceDate = new Date(), maxSlots = BRIEF_SIDEBAR_MIN) {
   const heroKeys = new Set(heroItems.map(articleKey));
-  const heroSources = new Set(heroItems.map(sourceKey));
+  const sorted = sortByDateDesc(allItems);
   const picks = [];
-  const usedKeys = new Set();
-  const usedSources = new Set();
-  let contingencyBand = 0;
+  const usedInsts = new Set();
   const limit = Math.max(1, maxSlots);
 
-  const add = (item, { allowDuplicateSource = false } = {}) => {
-    if (!item || picks.length >= limit) return false;
-    const key = articleKey(item);
-    const src = sourceKey(item);
-    if (usedKeys.has(key)) return false;
-    if (!allowDuplicateSource && usedSources.has(src)) return false;
-    picks.push(item);
-    usedKeys.add(key);
-    usedSources.add(src);
-    return true;
-  };
-
-  const fillFromPool = (pool, band) => {
-    const eligible = sortByDateDesc(pool).filter((item) => !heroKeys.has(articleKey(item)));
-    if (!eligible.length) return;
-    const before = picks.length;
-
-    // 1) Plus frais par source hors hero (diversité d'institutions / médias)
-    const latest = latestPerKey(eligible, sourceKey);
-    sortByDateDesc(
-      [...latest.entries()]
-        .filter(([src]) => !heroSources.has(src))
-        .map(([, item]) => item),
-    ).forEach((item) => add(item));
-
-    // 2) Plus frais par source déjà dans le hero
-    sortByDateDesc(
-      [...latest.entries()]
-        .filter(([src]) => heroSources.has(src))
-        .map(([, item]) => item),
-    ).forEach((item) => add(item));
-
-    // 3) Compléter strictement par date (doublons de source OK)
-    for (const item of eligible) {
-      if (picks.length >= limit) break;
-      add(item, { allowDuplicateSource: true });
-    }
-
-    if (picks.length > before) contingencyBand = Math.max(contingencyBand, band);
-  };
-
-  for (let band = 0; band <= freshnessMaxSessionsBack(referenceDate); band++) {
+  for (const item of sorted) {
     if (picks.length >= limit) break;
-    fillFromPool(sessionBandPool(allItems, referenceDate, band), band);
-  }
-
-  if (isAutumnGracePeriod(referenceDate) && picks.length < limit) {
-    fillFromPool(
-      sortByDateDesc(allItems).filter((item) => isWithinFreshnessWindow(item, referenceDate)),
-      1,
-    );
+    if (heroKeys.has(articleKey(item))) continue;
+    const inst = institutionKey(item);
+    if (usedInsts.has(inst)) continue;
+    picks.push(item);
+    usedInsts.add(inst);
   }
 
   return {
     items: sortByDateDesc(picks),
-    contingencyBand,
+    contingencyBand: 0,
   };
+}
+
+/**
+ * Filet d'invariants après partition / fill :
+ * - la une = article le plus frais du pool global
+ * - aucune vedette plus ancienne qu'un article encore en suite du fil
+ *   qui pourrait la remplacer dans le top-N hero
+ * (réordonne hero en tranche contiguë des |hero| plus frais du pool).
+ */
+function enforceHeroDateOrder(heroItems, allSorted) {
+  if (!heroItems?.length || !allSorted?.length) return heroItems || [];
+  const n = Math.min(Math.max(heroItems.length, HERO_SPOTLIGHT_MAX), allSorted.length);
+  // Toujours les n plus frais du fil pour le bloc une+vedettes.
+  return allSorted.slice(0, n);
 }
 
 function resetMagazineMeta(heroItems = [], briefItems = []) {
@@ -3698,28 +3617,35 @@ function resetMagazineMeta(heroItems = [], briefItems = []) {
 }
 
 function partitionNewsFeed(items, referenceDate = new Date()) {
+  // Pool unique, date desc — seule source de vérité pour l'ordre de fraîcheur.
   const sorted = sortByDateDesc(filterFreshItems(items, referenceDate));
-  const {
-    items: rawHero,
-    contingencyBand: heroBand,
-  } = pickHeroSpotlight(sorted, referenceDate);
-  const heroItems = ensureHeroLeadHasImage(rawHero, sorted);
-  const heroKeys = new Set(heroItems.map(articleKey));
+  const { items: rawHero, contingencyBand: heroBand } = pickHeroSpotlight(sorted, referenceDate);
+  // Filet : une + vedettes = toujours les |n| plus frais du pool (jamais un mai
+  // au-dessus d'un juillet encore relégué en suite).
+  let heroItems = enforceHeroDateOrder(
+    ensureHeroLeadHasImage(rawHero, sorted),
+    sorted,
+  );
   const { items: briefItems, contingencyBand: briefBand } = pickBriefSidebar(
     sorted,
     heroItems,
     referenceDate,
     BRIEF_SIDEBAR_MIN,
   );
+  // Si le fill précédent avait gonflé le hero, on re-synchronise les clés.
+  const heroKeys = new Set(heroItems.map(articleKey));
   const briefKeys = new Set(briefItems.map(articleKey));
+  // Brief ne doit pas contenir un article déjà en hero (filet).
+  const briefClean = briefItems.filter((i) => !heroKeys.has(articleKey(i)));
+  const briefKeysClean = new Set(briefClean.map(articleKey));
   const tailItems = sorted.filter(
-    (i) => !heroKeys.has(articleKey(i)) && !briefKeys.has(articleKey(i)),
+    (i) => !heroKeys.has(articleKey(i)) && !briefKeysClean.has(articleKey(i)),
   );
-  // Réserve partagée pour combler hero et/ou En bref (plus frais d'abord)
+  // Réserve = suite (plus frais d'abord) pour combler colonnes
   magazineReserve = tailItems.slice();
-  resetMagazineMeta(heroItems, briefItems);
+  resetMagazineMeta(heroItems, briefClean);
   const contingencyBand = Math.max(heroBand, briefBand);
-  return { heroItems, briefItems, tailItems, contingencyBand };
+  return { heroItems, briefItems: briefClean, tailItems, contingencyBand };
 }
 
 /** Bureau magazine (pas source / recherche). */
@@ -3747,57 +3673,35 @@ function removeTailArticleForItem(item) {
 }
 
 /**
- * Prochain candidat En bref dans la réserve :
- * 1) autre institution + autre source (priorité diversité)
- * 2) autre source
- * 3) autre institution
- * 4) le plus frais restant
- * (la réserve est déjà triée date desc)
+ * Prochain En bref : institution pas encore dans En bref, article pas déjà
+ * en une/vedettes (la source peut déjà être en hero — on prend le suivant).
  */
 function takeNextBriefFromReserve() {
   if (!magazineReserve.length) return null;
-  const tryPick = (pred) => {
-    const idx = magazineReserve.findIndex((item) => {
-      const key = articleKey(item);
-      if (magazineMeta.heroKeys.has(key) || magazineMeta.briefKeys.has(key)) return false;
-      return pred(item);
-    });
-    if (idx < 0) return null;
-    return magazineReserve.splice(idx, 1)[0];
-  };
-
-  return (
-    tryPick((item) => (
-      !magazineMeta.briefInsts.has(institutionKey(item))
-      && !magazineMeta.briefSources.has(sourceKey(item))
-      && !magazineMeta.heroSources.has(sourceKey(item))
-    ))
-    || tryPick((item) => (
-      !magazineMeta.briefSources.has(sourceKey(item))
-      && !magazineMeta.heroSources.has(sourceKey(item))
-    ))
-    || tryPick((item) => !magazineMeta.briefInsts.has(institutionKey(item)))
-    || tryPick((item) => !magazineMeta.briefSources.has(sourceKey(item)))
-    || tryPick(() => true)
-  );
+  const idx = magazineReserve.findIndex((item) => {
+    const key = articleKey(item);
+    if (magazineMeta.heroKeys.has(key) || magazineMeta.briefKeys.has(key)) return false;
+    if (magazineMeta.briefInsts.has(institutionKey(item))) return false;
+    return true;
+  });
+  if (idx < 0) return null;
+  return magazineReserve.splice(idx, 1)[0];
 }
 
-/** Prochain candidat vedette : fraîcheur + institution pas encore dans le hero. */
+/**
+ * Prochain vedette : le plus frais de la réserve (même source OK).
+ * La réserve est triée date desc → index 0 = plus frais restant.
+ */
 function takeNextFeatureFromReserve() {
   if (!magazineReserve.length) return null;
-  const tryPick = (pred) => {
-    const idx = magazineReserve.findIndex((item) => {
-      const key = articleKey(item);
-      if (magazineMeta.heroKeys.has(key) || magazineMeta.briefKeys.has(key)) return false;
-      return pred(item);
-    });
-    if (idx < 0) return null;
-    return magazineReserve.splice(idx, 1)[0];
-  };
-  return (
-    tryPick((item) => !magazineMeta.heroInsts.has(institutionKey(item)))
-    || tryPick(() => true)
-  );
+  // Toujours le plus frais restant (tête de file).
+  while (magazineReserve.length) {
+    const item = magazineReserve.shift();
+    const key = articleKey(item);
+    if (magazineMeta.heroKeys.has(key) || magazineMeta.briefKeys.has(key)) continue;
+    return item;
+  }
+  return null;
 }
 
 function markPromotedToHero(item) {
@@ -3812,35 +3716,58 @@ function markPromotedToBrief(item) {
   magazineMeta.briefInsts.add(institutionKey(item));
 }
 
+function clearMagazineSpacers(root) {
+  root?.querySelectorAll('.news-hero-spacer, .brief-rail-spacer').forEach((n) => n.remove());
+}
+
+/** Spacers flex pour que les bas de colonnes (bordures) soient flush. */
+function ensureMagazineColumnSpacers(hero, brief) {
+  clearMagazineSpacers(hero);
+  clearMagazineSpacers(brief);
+  const hs = document.createElement('div');
+  hs.className = 'news-hero-spacer';
+  hs.setAttribute('aria-hidden', 'true');
+  hero.appendChild(hs);
+  const bs = document.createElement('div');
+  bs.className = 'brief-rail-spacer';
+  bs.setAttribute('aria-hidden', 'true');
+  brief.appendChild(bs);
+}
+
 /**
  * Équilibre magazine — une seule direction par passe (anti oscillation) :
- *  - Si En bref est plus court → uniquement + cartes brief (autres institutions)
- *  - Sinon si hero est plus court → uniquement + vedettes
- * Pas de ResizeObserver sur les colonnes (évite boucle append → resize → append).
- * Re-passages limités via images load / schedule après render uniquement.
+ *  - En bref plus court → + institutions (1 carte / institution)
+ *  - Hero plus court → + vedettes (même source OK)
+ * Puis spacers pour bas de colonnes flush.
  */
 function balanceMagazineColumns() {
   if (!canBalanceMagazineColumns() || magazineBalanceBusy) return;
   const hero = NEWS_LIST.querySelector('.news-hero');
   const brief = NEWS_LIST.querySelector('.brief-rail');
   if (!hero || !brief) return;
-  if (!magazineReserve.length) return;
 
   magazineBalanceBusy = true;
-  const GAP = 16;
-  const h0 = hero.offsetHeight;
-  const b0 = brief.offsetHeight;
+  const GAP = 8;
 
   try {
-    // Snapshot de direction : on ne change pas de colonne en cours de passe.
-    if (b0 + GAP < h0) {
-      fillBriefColumnToMatch(hero, brief, GAP);
-    } else if (h0 + GAP < b0) {
-      fillHeroColumnToMatch(hero, brief, GAP);
+    clearMagazineSpacers(hero);
+    clearMagazineSpacers(brief);
+
+    if (magazineReserve.length) {
+      const h0 = hero.offsetHeight;
+      const b0 = brief.offsetHeight;
+      // Snapshot de direction unique — pas d'alternance vedette ↔ brief.
+      if (b0 + GAP < h0) {
+        fillBriefColumnToMatch(hero, brief, GAP);
+      } else if (h0 + GAP < b0) {
+        fillHeroColumnToMatch(hero, brief, GAP);
+      }
     }
+
+    // Toujours : bas de colonnes flush (même sans nouvel article).
+    ensureMagazineColumnSpacers(hero, brief);
   } finally {
-    // Laisse le layout se stabiliser avant une éventuelle re-entrée.
-    window.setTimeout(() => { magazineBalanceBusy = false; }, 80);
+    window.setTimeout(() => { magazineBalanceBusy = false; }, 120);
   }
 
   const briefCount = brief.querySelectorAll('.article--compact').length;
@@ -3860,7 +3787,7 @@ function fillBriefColumnToMatch(hero, brief, gap) {
     if (brief.offsetHeight + gap >= hero.offsetHeight) break;
 
     const item = takeNextBriefFromReserve();
-    if (!item) break;
+    if (!item) break; // plus d'institution nouvelle
 
     const before = brief.offsetHeight;
     const el = safeCreateArticle(item, 'compact');
@@ -3869,10 +3796,9 @@ function fillBriefColumnToMatch(hero, brief, gap) {
     markPromotedToBrief(item);
     removeTailArticleForItem(item);
 
-    // Hauteur n'a pas bougé (image pas encore là) : on compte, max 3 stalls.
     if (brief.offsetHeight <= before + 1) {
       stagnant += 1;
-      if (stagnant >= 3) break;
+      if (stagnant >= 4) break;
     } else {
       stagnant = 0;
     }
@@ -3888,6 +3814,8 @@ function fillHeroColumnToMatch(hero, brief, gap) {
     if (featureCount >= HERO_FEATURE_MAX) break;
     if (hero.offsetHeight + gap >= brief.offsetHeight) break;
 
+    // Ne promouvoir en vedette que si plus frais ou égal au plus ancien hero actuel
+    // (en pratique la réserve est déjà plus ancienne que le top-N — on prend le plus frais restant).
     const item = takeNextFeatureFromReserve();
     if (!item) break;
 
@@ -3900,7 +3828,7 @@ function fillHeroColumnToMatch(hero, brief, gap) {
 
     if (hero.offsetHeight <= before + 1) {
       stagnant += 1;
-      if (stagnant >= 3) break;
+      if (stagnant >= 4) break;
     } else {
       stagnant = 0;
     }
@@ -3913,15 +3841,15 @@ function scheduleMagazineColumnBalance() {
   magazineBalanceTimer = window.setTimeout(() => {
     if (gen !== magazineBalanceGen) return;
     balanceMagazineColumns();
-    // Un second passage après paint (images décodées partiellement), pas une boucle.
+    // Second passage après décodage images (pas une boucle continue).
     window.setTimeout(() => {
       if (gen !== magazineBalanceGen) return;
       balanceMagazineColumns();
-    }, 200);
-  }, 50);
+    }, 280);
+  }, 60);
 }
 
-/** Images : un seul rebalance au load — pas de RO sur .news-hero / .brief-rail. */
+/** Images : rebalance une fois au load — pas de RO sur les colonnes. */
 function bindMagazineImageBalanceOnce() {
   if (!NEWS_LIST) return;
   NEWS_LIST.querySelectorAll('.news-hero img, .brief-rail img').forEach((img) => {
