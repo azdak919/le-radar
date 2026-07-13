@@ -3213,8 +3213,18 @@ body.external-listen-open {
 }
 
 @media (max-width: 600px) {
-  :root { --pad: 18px; }
+  :root { --pad: 16px; }
   /* Filet reste dans le flux (left:0) — plus de left négatif iPad/téléphone */
+
+  /* Vignette un cran plus étroite → plus de place pour le texte (zone noire). */
+  .article--thumb.has-image {
+    grid-template-columns: clamp(56px, 20vw, 76px) minmax(0, 1fr);
+    column-gap: 12px;
+  }
+  .news-hero .article--feature.article--thumb.has-image {
+    grid-template-columns: clamp(72px, 24vw, 100px) minmax(0, 1fr);
+    column-gap: 12px;
+  }
 
   /* Cartes avec vignette : un peu moins de padding vertical pour compenser
      la hauteur crédit photo, sans écraser le bloc texte. */
@@ -3224,14 +3234,30 @@ body.external-listen-open {
     padding-bottom: 11px;
   }
 
-  /* Titre / extrait : laisser de l'air à côté de la vignette */
+  /* Titre / extrait : utiliser toute la largeur restante à côté de la vignette */
   .article--thumb.has-image .article-title {
     padding-right: 0;
   }
-  /* Mobile En bref + photo : 4 lignes (vignette un peu plus petite) */
+  .article--thumb.has-image .article-brief,
+  .article--thumb.has-image .article-brief-text {
+    max-width: none;
+  }
+
+  /* Plus de lignes d'extrait pour combler la hauteur de la vignette */
   .brief-rail .article--compact.article--thumb.has-image .article-brief-text,
   .brief-rail .article--compact.article--thumb.has-image .article-brief.is-truncated .article-brief-text {
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 6;
+  }
+  .news-tail .article--standard.article--thumb.has-image .article-brief-text,
+  .news-tail .article--standard.article--thumb.has-image .article-brief.is-truncated .article-brief-text {
+    -webkit-line-clamp: 5;
+  }
+  .news-hero .article--feature.article--thumb.has-image .article-brief-text,
+  .news-hero .article--feature.article--thumb.has-image .article-brief.is-truncated .article-brief-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+    overflow: hidden;
   }
 }
 
@@ -3462,17 +3488,24 @@ body.external-listen-open {
   .news-tail .article--standard .article-brief-text {
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 4;
     overflow: hidden;
   }
 
   .brief-rail .article--compact .article-brief.is-truncated .article-brief-text {
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
   }
 
-  /* Suite du fil : 3 lignes d'extrait (y compris avec « Lire la suite ») */
+  /* Suite du fil : plus d'extrait pour remplir à côté de la vignette */
   .news-tail .article--standard .article-brief.is-truncated .article-brief-text {
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 4;
+  }
+
+  .brief-rail .article--compact.article--thumb.has-image .article-brief-text,
+  .brief-rail .article--compact.article--thumb.has-image .article-brief.is-truncated .article-brief-text,
+  .news-tail .article--standard.article--thumb.has-image .article-brief-text,
+  .news-tail .article--standard.article--thumb.has-image .article-brief.is-truncated .article-brief-text {
+    -webkit-line-clamp: 5;
   }
 }
 
