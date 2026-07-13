@@ -1,0 +1,173 @@
+{
+  "updated": "2026-07-13T11:43:31.113Z",
+  "healthy": true,
+  "needsHuman": false,
+  "pipeline": [
+    {
+      "step": "Institutions catalogue",
+      "ok": true,
+      "ms": 782
+    },
+    {
+      "step": "Media scanner (gaps)",
+      "ok": true,
+      "ms": 55091
+    },
+    {
+      "step": "News source maintainer",
+      "ok": true,
+      "ms": 125879
+    },
+    {
+      "step": "Stream tracker + radio promotion",
+      "ok": true,
+      "ms": 596151
+    },
+    {
+      "step": "Radio now-playing metadata",
+      "ok": true,
+      "ms": 43374
+    },
+    {
+      "step": "News sources verify",
+      "ok": true,
+      "ms": 30061
+    },
+    {
+      "step": "News aggregator",
+      "ok": true,
+      "ms": 38849
+    },
+    {
+      "step": "Author QC",
+      "ok": true,
+      "ms": 104950
+    },
+    {
+      "step": "Lead excerpt enrichment",
+      "ok": true,
+      "ms": 10390
+    },
+    {
+      "step": "Lead image QC",
+      "ok": true,
+      "ms": 485912
+    },
+    {
+      "step": "Photo credit QC",
+      "ok": true,
+      "ms": 25678
+    },
+    {
+      "step": "Social feed",
+      "ok": true,
+      "ms": 38852
+    },
+    {
+      "step": "RSS export",
+      "ok": true,
+      "ms": 68
+    }
+  ],
+  "summary": {
+    "institutions": 79,
+    "news": {
+      "active": 16,
+      "dead": 0,
+      "stale": 4,
+      "candidates": 6,
+      "articles": 205,
+      "withAuthor": 205,
+      "withExcerpt": 204,
+      "authorQc": {
+        "ok": true,
+        "mismatches": 121
+      },
+      "leadImageQc": {
+        "fullyCovered": 205,
+        "withPhoto": 191,
+        "withStock": 62,
+        "leadReadyPhotos": 154,
+        "pageScraped": 57,
+        "mainPageLeadReady": true
+      },
+      "photoCreditQc": {
+        "ok": true,
+        "withCredit": 191,
+        "cited": 124,
+        "pending": 0,
+        "missingHero": 0
+      }
+    },
+    "radios": {
+      "listed": 6,
+      "withStream": 6,
+      "candidates": 4
+    },
+    "coverage": {
+      "universitiesWithNews": 12,
+      "universitiesTotal": 19,
+      "institutionsWithRadio": 7
+    }
+  },
+  "gaps": {
+    "newsUniversities": [
+      "École de technologie supérieure (ÉTS)",
+      "École nationale d'administration publique (ENAP)",
+      "HEC Montréal",
+      "Université du Québec à Chicoutimi (UQAC)",
+      "Université du Québec en Abitibi-Témiscamingue (UQAT)",
+      "Université du Québec en Outaouais (UQO)",
+      "Université TÉLUQ"
+    ],
+    "newsUniversitiesRemaining": 0,
+    "radios": 72
+  },
+  "alerts": [
+    {
+      "level": "info",
+      "code": "stale_news_feed",
+      "message": "Flux inactif : Quartier Libre — dernier article 2026-05-15"
+    },
+    {
+      "level": "info",
+      "code": "stale_news_feed",
+      "message": "Flux inactif : Zone Campus — dernier article 2026-05-08"
+    },
+    {
+      "level": "info",
+      "code": "stale_news_feed",
+      "message": "Flux inactif : Le Collectif — dernier article 2026-07-11"
+    },
+    {
+      "level": "info",
+      "code": "stale_news_feed",
+      "message": "Flux inactif : La Pige — dernier article 2026-06-22"
+    },
+    {
+      "level": "warn",
+      "code": "stale_news_cache",
+      "message": "Cache conservé : Quartier Libre — flux indisponible, articles frais du run précédent"
+    },
+    {
+      "level": "warn",
+      "code": "stale_news_cache",
+      "message": "Cache conservé : Zone Campus — flux indisponible, articles frais du run précédent"
+    },
+    {
+      "level": "warn",
+      "code": "stale_news_cache",
+      "message": "Cache conservé : Le Collectif — flux indisponible, articles frais du run précédent"
+    },
+    {
+      "level": "warn",
+      "code": "stale_news_cache",
+      "message": "Cache conservé : La Pige — flux indisponible, articles frais du run précédent"
+    },
+    {
+      "level": "info",
+      "code": "lead_stock_gap",
+      "message": "12+ articles sans photo vedette (banques libres consultées)"
+    }
+  ]
+}
