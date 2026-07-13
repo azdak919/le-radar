@@ -3450,7 +3450,9 @@ const AVG_BRIEF_CARD_H = 108;
 const AVG_BRIEF_TITLE_H = 42;
 /* Marge volontaire : mieux un petit spacer qu’une chaise musicale. */
 const COLUMN_HEIGHT_TOL = 96;
-/* Vue source : pas de vedettes intermédiaires (voir partitionSourceFeed). */
+/* Vue source : 1 une + jusqu’à 2 vedettes (fraîcheur), puis En bref / suite. */
+const SOURCE_FEATURE_MAX = 2;
+const SOURCE_HERO_SPOTLIGHT_MAX = 1 + SOURCE_FEATURE_MAX;
 
 function estimateHeroSeedHeight(heroCount) {
   if (heroCount <= 0) return 0;
@@ -4065,18 +4067,22 @@ function pickSourceLead(pool) {
 /**
  * Vue d'un seul média (filtre source).
  *
- * Une seule pièce « À la une » (lead) — pas de vedettes (évite le double
- * look sur mobile). En bref : graine calée sur la hauteur estimée de la une,
- * puis même fill/trim magazine que le fil global (≥1100px).
+ * Ordre de fraîcheur strict dans chaque section (pool déjà date desc) :
+ *  - Une + vedettes = tranche contiguë des plus frais (1 une + ≤2 vedettes)
+ *  - En bref = suite chronologique (graine ≈ hauteur hero)
+ *  - Suite du fil = le reste
+ * Pas de 4 vedettes comme le fil global (évite le « double look » vs En bref
+ * sur mobile) ; 1–2 features suffisent sous la une d’un seul média.
  */
 function partitionSourceFeed(items, referenceDate = new Date()) {
   const sorted = sortByDateDesc(items);
   const { items: pool, contingencyBand } = collectSourcePool(sorted, referenceDate);
-  const lead = pickSourceLead(pool);
-  const heroItems = lead ? [lead] : [];
+  // Tranche contiguë des plus frais → une = pool[0], vedettes = pool[1..n]
+  const heroN = Math.min(SOURCE_HERO_SPOTLIGHT_MAX, pool.length);
+  const heroItems = pool.slice(0, heroN);
   const heroKeys = new Set(heroItems.map(articleKey));
   const rest = pool.filter((item) => !heroKeys.has(articleKey(item)));
-  // Même logique de graine que le fil global (hauteur estimée du hero).
+  // Graine En bref calée sur la hauteur réelle du hero (1+features).
   const briefSeed = briefSeedCountForHero(Math.max(1, heroItems.length));
   const briefItems = rest.slice(0, briefSeed);
   const briefKeys = new Set(briefItems.map(articleKey));
@@ -4084,6 +4090,7 @@ function partitionSourceFeed(items, referenceDate = new Date()) {
   // Réserve + meta pour le fill/trim En bref (balanceMagazineColumns).
   magazineReserve = tailItems.slice();
   resetMagazineMeta(heroItems, briefItems);
+  const lead = heroItems[0] || null;
   const leadHasImage = !!(lead && hasDisplayImage(lead));
   return { heroItems, briefItems, tailItems, contingencyBand, leadHasImage };
 }
