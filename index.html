@@ -308,7 +308,7 @@
         hidden
         aria-hidden="true"
       >
-        <label class="sr-only" for="news-search-input">Rechercher un article ou un auteur</label>
+        <label class="sr-only" for="news-search-input">Rechercher dans le fil (titre, auteur, extrait…)</label>
         <div class="news-search__field">
           <svg class="news-search__field-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>
@@ -322,7 +322,7 @@
             autocorrect="off"
             autocapitalize="off"
             spellcheck="false"
-            placeholder="Auteur ou titre d’article…"
+            placeholder="Titre, auteur, mot de l’extrait…"
             aria-controls="news-list"
           />
           <button
@@ -334,14 +334,14 @@
           >×</button>
         </div>
         <p id="news-search-hint" class="news-search__hint">
-          Recherche dans le fil de Le Radar (titres et auteurs déjà chargés).
+          Recherche locale : titres, auteurs, sources, établissements, extraits et crédits photo.
         </p>
       </div>
       <button
         type="button"
         id="news-search-toggle"
         class="news-search__fab"
-        aria-label="Rechercher un article ou un auteur"
+        aria-label="Rechercher dans le fil (titre, auteur, extrait…)"
         aria-expanded="false"
         aria-controls="news-search-panel"
         title="Rechercher"
