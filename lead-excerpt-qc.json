@@ -1,12 +1,12 @@
 {
-  "updated": "2026-07-13T04:25:14.547Z",
+  "updated": "2026-07-13T07:45:18.372Z",
   "total": 185,
   "pool": 58,
   "incomplete": 3,
-  "withLeadExcerpt": 64,
+  "withLeadExcerpt": 65,
   "candidates": 3,
-  "enriched": 0,
-  "failed": 1,
+  "enriched": 1,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
@@ -17,6 +17,15 @@
       "chars": 400,
       "sample": "“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt t",
       "changed": false
+    },
+    {
+      "title": "Road to the 2026 FIFA World Cup",
+      "link": "https://thelinknewspaper.ca/article/16333",
+      "ok": true,
+      "score": 90,
+      "chars": 226,
+      "sample": "The Canadian men's national soccer team hosted the Republic of Ireland at Saputo Stadium for a frien",
+      "changed": true
     },
     {
       "title": "Letters from the Editors May 2026",
