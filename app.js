@@ -813,22 +813,36 @@ function isDialCompactLayout() {
 }
 
 /**
- * Ligne 2 du dial compact : émission en cours, à venir, ou slogan.
- * Réutilise nowAirLines() pour couvrir toutes les stations (grille, ICY, slogan).
+ * Ligne « méta » du dial compact (sous le titre poste · établissement) :
+ * fréquence ou site externe — alterne avec l'antenne (TUNER_SUB_AIR).
  */
-function dialCompactSubLineForRadio(radio) {
+function dialCompactMetaLineForRadio(radio) {
+  if (!radio) return '';
+  if (isExternalListen(radio)) return 'Site externe';
+  return String(radio.frequency || '').trim() || 'Web';
+}
+
+/**
+ * Ligne « à l'antenne » pour le bas du dial compact.
+ * Réutilise nowAirLines() (grille, ICY, slogan).
+ */
+function dialCompactAirLineForRadio(radio) {
   if (!radio) return '';
   const { title, sub } = nowAirLines(radio);
   const genericListen = `Vous écoutez ${radio.name}`;
-
   if (title && title !== genericListen) {
     return formatNowAirSubLine(title, sub, false);
   }
-
   return radioSlogan(radio) || '';
 }
 
+/** @deprecated — préférer dialCompactMetaLineForRadio + rotation */
+function dialCompactSubLineForRadio(radio) {
+  return dialCompactAirLineForRadio(radio) || dialCompactMetaLineForRadio(radio);
+}
+
 function applyDialCompactSub(radio, crossfade = false) {
+  // Utilisé hors rotation uniquement (repli).
   const line = dialCompactSubLineForRadio(radio);
   TUNER_SUB?.parentElement?.classList.toggle('is-empty', !line);
   tunerSubMeta = line;
@@ -1093,7 +1107,6 @@ function updateNowAirPanel(title, sub, crossfade = false) {
 
 function syncTunerSubRotate(title, sub, empty, crossfade = false) {
   if (!TUNER_SUB || !TUNER_SUB_AIR) return;
-  tunerSubAirText = formatNowAirSubLine(title, sub, empty);
   const wrapper = TUNER_SUB.parentElement;
 
   if (isMobileIdleDialPreview()) {
@@ -1103,21 +1116,59 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false) {
     TUNER_SUB_AIR.classList.remove('is-active');
     TUNER_SUB.setAttribute('aria-hidden', 'false');
     TUNER_SUB_AIR.setAttribute('aria-hidden', 'true');
+    tunerSubAirText = formatNowAirSubLine(title, sub, empty);
     applyDialTextCrossfade(TUNER_SUB, tunerSubAirText, crossfade);
     return;
   }
 
+  /*
+   * Compact mobile/tablette + poste sélectionné :
+   *  ligne 1 = poste · établissement
+   *  ligne 2 = alternance fréquence  ↔  à l'antenne (+ marquee si overflow)
+   * (Avant : antenne figée sans rotation — cassait l'alternance et le défilement.)
+   */
   if (currentStation && isDialCompactLayout()) {
-    stopTunerSubRotate();
-    wrapper?.classList.remove('is-rotating');
-    TUNER_SUB.classList.add('is-active');
-    TUNER_SUB_AIR.classList.remove('is-active');
-    TUNER_SUB.setAttribute('aria-hidden', 'false');
-    TUNER_SUB_AIR.setAttribute('aria-hidden', 'true');
-    applyDialCompactSub(currentStation, crossfade);
     setTunerNameText(tunerDialTitleLine(currentStation), crossfade);
+    tunerSubMeta = dialCompactMetaLineForRadio(currentStation);
+    tunerSubAirText = dialCompactAirLineForRadio(currentStation)
+      || formatNowAirSubLine(title, sub, empty);
+    const hasAir = !!(tunerSubAirText && tunerSubAirText !== tunerSubMeta);
+
+    if (!isTunerSubRotateMode() || !hasAir) {
+      // Reduced motion ou pas d'émission distincte : une seule ligne bas
+      stopTunerSubRotate();
+      wrapper?.classList.remove('is-rotating');
+      TUNER_SUB.classList.add('is-active');
+      TUNER_SUB_AIR.classList.remove('is-active');
+      TUNER_SUB.setAttribute('aria-hidden', 'false');
+      TUNER_SUB_AIR.setAttribute('aria-hidden', 'true');
+      const line = hasAir ? tunerSubAirText : tunerSubMeta;
+      TUNER_SUB?.parentElement?.classList.toggle('is-empty', !line);
+      if (crossfade) applyDialTextCrossfade(TUNER_SUB, line, true);
+      else applyMarquee(TUNER_SUB, line);
+      scheduleMarqueeRefresh();
+      return;
+    }
+
+    wrapper?.classList.add('is-rotating');
+    TUNER_SUB?.parentElement?.classList.remove('is-empty');
+    applyMarquee(TUNER_SUB, tunerSubMeta);
+    updateNowAirSubAirText(tunerSubAirText, crossfade);
+
+    if (!tunerSubRotateTimer) {
+      tunerSubRotateShowAir = false;
+      setTunerSubRotateActive(false);
+      scheduleTunerSubRotateTick();
+    } else if (tunerSubRotateShowAir) {
+      updateNowAirSubAirText(tunerSubAirText, crossfade);
+    } else {
+      applyMarquee(TUNER_SUB, tunerSubMeta);
+    }
+    scheduleMarqueeRefresh();
     return;
   }
+
+  tunerSubAirText = formatNowAirSubLine(title, sub, empty);
 
   if (!isTunerSubRotateMode()) {
     stopTunerSubRotate();
@@ -1812,11 +1863,13 @@ function selectStation(id, { autoplay = false, openExternal = false } = {}) {
 
   const inst = tunerInstitutionLabel(radio.institution);
   if (isDialCompactLayout()) {
+    // Ligne 1 = poste · établissement ; ligne 2 initialisée en méta (fréquence).
+    // syncTunerSubRotate / renderTunerNowAir branche la rotation méta ↔ antenne.
     setTunerNameText(tunerDialTitleLine(radio));
-    const subLine = dialCompactSubLineForRadio(radio);
-    tunerSubMeta = subLine;
-    TUNER_SUB?.parentElement?.classList.toggle('is-empty', !subLine);
-    applyMarquee(TUNER_SUB, subLine);
+    const metaLine = dialCompactMetaLineForRadio(radio);
+    tunerSubMeta = metaLine;
+    TUNER_SUB?.parentElement?.classList.toggle('is-empty', !metaLine);
+    applyMarquee(TUNER_SUB, metaLine);
   } else {
     setTunerNameText(radio.name);
     setTunerSubText(external
