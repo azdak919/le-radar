@@ -3134,11 +3134,27 @@ function setNewsSearchQuery(raw, { render = true } = {}) {
   if (render) renderNews();
 }
 
+/**
+ * Efface la requête et restaure le fil complet (sans recharger la page).
+ * — Bouton × du champ
+ * — Icône X de la loupe quand une recherche est active
+ * — Escape
+ */
 function clearNewsSearch({ keepOpen = true } = {}) {
+  // Annuler un debounce encore en vol (sinon l'ancienne requête reviendrait).
+  clearTimeout(newsSearchDebounce);
+  newsSearchDebounce = null;
   if (NEWS_SEARCH_INPUT) NEWS_SEARCH_INPUT.value = '';
-  setNewsSearchQuery('', { render: true });
-  if (keepOpen) NEWS_SEARCH_INPUT?.focus({ preventScroll: true });
-  else setNewsSearchOpen(false);
+  const hadQuery = !!newsSearchQuery;
+  newsSearchQuery = '';
+  syncNewsSearchChrome();
+  // Toujours re-rendre si on sort d'une recherche (layout une / en bref / suite).
+  if (hadQuery) renderNews();
+  if (keepOpen) {
+    NEWS_SEARCH_INPUT?.focus({ preventScroll: true });
+  } else {
+    setNewsSearchOpen(false);
+  }
 }
 
 function bindNewsSearch() {
@@ -3147,8 +3163,10 @@ function bindNewsSearch() {
   NEWS_SEARCH_TOGGLE.addEventListener('click', (e) => {
     e.stopPropagation();
     if (newsSearchOpen) {
-      // Fermer le panneau sans effacer une recherche encore active.
-      setNewsSearchOpen(false);
+      // X de la loupe : effacer la requête (= fin de recherche) + fermer le panneau.
+      const hasQuery = !!(newsSearchQuery || String(NEWS_SEARCH_INPUT.value || '').trim());
+      if (hasQuery) clearNewsSearch({ keepOpen: false });
+      else setNewsSearchOpen(false);
     } else {
       setNewsSearchOpen(true);
     }
@@ -3162,6 +3180,16 @@ function bindNewsSearch() {
     NEWS_SEARCH?.classList.toggle('has-query', !!trimmed);
     NEWS_SEARCH_TOGGLE?.classList.toggle('is-active', !!trimmed);
     clearTimeout(newsSearchDebounce);
+    // Champ vidé à la main (ou via × natif type=search) → clear immédiat.
+    if (!trimmed) {
+      newsSearchDebounce = null;
+      if (newsSearchQuery) {
+        newsSearchQuery = '';
+        syncNewsSearchChrome();
+        renderNews();
+      }
+      return;
+    }
     newsSearchDebounce = setTimeout(() => {
       setNewsSearchQuery(value, { render: true });
     }, 120);
@@ -3170,8 +3198,11 @@ function bindNewsSearch() {
   NEWS_SEARCH_INPUT.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       e.preventDefault();
-      if (newsSearchQuery) clearNewsSearch({ keepOpen: true });
-      else setNewsSearchOpen(false);
+      if (newsSearchQuery || String(NEWS_SEARCH_INPUT.value || '').trim()) {
+        clearNewsSearch({ keepOpen: true });
+      } else {
+        setNewsSearchOpen(false);
+      }
     } else if (e.key === 'Enter') {
       e.preventDefault();
       // Appliquer tout de suite (sans attendre le debounce).
@@ -3181,23 +3212,29 @@ function bindNewsSearch() {
     }
   });
 
+  // × dans le champ : effacer la requête, fil complet, panneau reste ouvert.
   NEWS_SEARCH_CLEAR?.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
     clearNewsSearch({ keepOpen: true });
   });
 
-  // Clic extérieur : ferme le panneau, garde le filtre s'il y en a un.
+  // Clic extérieur : ferme le panneau ; si recherche active, on l'efface aussi
+  // (équivalent « quitter la recherche » sans recharger).
   document.addEventListener('pointerdown', (e) => {
     if (!newsSearchOpen) return;
     if (NEWS_SEARCH?.contains(e.target)) return;
-    setNewsSearchOpen(false);
+    const hasQuery = !!(newsSearchQuery || String(NEWS_SEARCH_INPUT?.value || '').trim());
+    if (hasQuery) clearNewsSearch({ keepOpen: false });
+    else setNewsSearchOpen(false);
   });
 
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape' || !newsSearchOpen) return;
     if (e.target === NEWS_SEARCH_INPUT) return; // géré sur l'input
-    setNewsSearchOpen(false);
+    const hasQuery = !!(newsSearchQuery || String(NEWS_SEARCH_INPUT?.value || '').trim());
+    if (hasQuery) clearNewsSearch({ keepOpen: false });
+    else setNewsSearchOpen(false);
   });
 
   // Raccourci « / » (comme beaucoup de docs) — hors champs de saisie.
@@ -3396,10 +3433,14 @@ function updateNewsLayout() {
  *  6. Bureau : colonnes à bas alignés (fill contenu + spacer flex).
  */
 const HERO_FEATURE_MIN = 2; /* vedettes initiales (hors à la une) */
-const HERO_FEATURE_MAX = 8; /* plafond après remplissage de colonne */
+const HERO_FEATURE_MAX = 12; /* plafond après fill (colonne gauche) */
 const HERO_SPOTLIGHT_MAX = 1 + HERO_FEATURE_MIN; /* une + 2 vedettes au 1er passage */
 const BRIEF_SIDEBAR_MIN = 7; /* En bref au premier passage */
-const BRIEF_SIDEBAR_MAX = 16; /* plafond si la colonne a encore de la place */
+const BRIEF_SIDEBAR_MAX = 20; /* plafond après fill (colonne droite) */
+/* Hauteurs moyennes estimées pour calculer combien de cartes ajouter d'un coup. */
+const AVG_FEATURE_CARD_H = 150;
+const AVG_BRIEF_CARD_H = 105;
+const COLUMN_HEIGHT_TOL = 28; /* px — colonnes « à peu près égales » */
 /* Vue source : pas de vedettes intermédiaires (voir partitionSourceFeed). */
 
 /**
@@ -3734,11 +3775,20 @@ function ensureMagazineColumnSpacers(hero, brief) {
   brief.appendChild(bs);
 }
 
+/** Insère une carte avant le spacer (s'il existe), sinon en fin de colonne. */
+function appendBeforeMagazineSpacer(column, el) {
+  if (!column || !el) return;
+  const spacer = column.querySelector('.news-hero-spacer, .brief-rail-spacer');
+  if (spacer) column.insertBefore(el, spacer);
+  else column.appendChild(el);
+}
+
 /**
- * Équilibre magazine — une seule direction par passe (anti oscillation) :
- *  - En bref plus court → + institutions (1 carte / institution)
- *  - Hero plus court → + vedettes (même source OK)
- * Puis spacers pour bas de colonnes flush.
+ * Équilibre les deux colonnes jusqu'à hauteurs de *contenu* proches :
+ *  - colonne gauche trop courte → + vedettes (plus frais restants, même source OK)
+ *  - colonne droite trop courte → + En bref (1 / institution non encore vue)
+ * Toujours croître la colonne la plus courte ; arrêt si plus de candidats.
+ * Spacers en dernier pour bas de bordures flush (pas de vide « mort » sans fill).
  */
 function balanceMagazineColumns() {
   if (!canBalanceMagazineColumns() || magazineBalanceBusy) return;
@@ -3747,27 +3797,73 @@ function balanceMagazineColumns() {
   if (!hero || !brief) return;
 
   magazineBalanceBusy = true;
-  const GAP = 8;
 
   try {
     clearMagazineSpacers(hero);
     clearMagazineSpacers(brief);
 
-    if (magazineReserve.length) {
-      const h0 = hero.offsetHeight;
-      const b0 = brief.offsetHeight;
-      // Snapshot de direction unique — pas d'alternance vedette ↔ brief.
-      if (b0 + GAP < h0) {
-        fillBriefColumnToMatch(hero, brief, GAP);
-      } else if (h0 + GAP < b0) {
-        fillHeroColumnToMatch(hero, brief, GAP);
+    let safety = 0;
+    const MAX_ROUNDS = 32;
+
+    while (safety < MAX_ROUNDS && magazineReserve.length) {
+      safety += 1;
+      const hH = hero.offsetHeight;
+      const bH = brief.offsetHeight;
+      const diff = bH - hH; // >0 → hero trop court ; <0 → brief trop court
+
+      if (Math.abs(diff) <= COLUMN_HEIGHT_TOL) break;
+
+      if (diff > COLUMN_HEIGHT_TOL) {
+        // ── Hero (vedettes) trop court ────────────────────────────────
+        const featureCount = hero.querySelectorAll('.article--feature').length;
+        if (featureCount >= HERO_FEATURE_MAX) break;
+
+        const slots = HERO_FEATURE_MAX - featureCount;
+        const need = Math.min(
+          slots,
+          Math.max(1, Math.ceil(diff / AVG_FEATURE_CARD_H)),
+        );
+        let added = 0;
+        for (let i = 0; i < need; i += 1) {
+          const item = takeNextFeatureFromReserve();
+          if (!item) break;
+          const el = safeCreateArticle(item, 'feature');
+          if (!el) continue;
+          appendBeforeMagazineSpacer(hero, el);
+          markPromotedToHero(item);
+          removeTailArticleForItem(item);
+          added += 1;
+        }
+        if (!added) break; // plus de candidats vedette
+        continue;
       }
+
+      // ── En bref trop court ──────────────────────────────────────────
+      const briefCount = brief.querySelectorAll('.article--compact').length;
+      if (briefCount >= BRIEF_SIDEBAR_MAX) break;
+
+      const slots = BRIEF_SIDEBAR_MAX - briefCount;
+      const need = Math.min(
+        slots,
+        Math.max(1, Math.ceil((-diff) / AVG_BRIEF_CARD_H)),
+      );
+      let added = 0;
+      for (let i = 0; i < need; i += 1) {
+        const item = takeNextBriefFromReserve();
+        if (!item) break; // plus d'institution disponible
+        const el = safeCreateArticle(item, 'compact');
+        if (!el) continue;
+        appendBeforeMagazineSpacer(brief, el);
+        markPromotedToBrief(item);
+        removeTailArticleForItem(item);
+        added += 1;
+      }
+      if (!added) break;
     }
 
-    // Toujours : bas de colonnes flush (même sans nouvel article).
     ensureMagazineColumnSpacers(hero, brief);
   } finally {
-    window.setTimeout(() => { magazineBalanceBusy = false; }, 120);
+    window.setTimeout(() => { magazineBalanceBusy = false; }, 150);
   }
 
   const briefCount = brief.querySelectorAll('.article--compact').length;
@@ -3777,79 +3873,25 @@ function balanceMagazineColumns() {
   bindMagazineImageBalanceOnce();
 }
 
-function fillBriefColumnToMatch(hero, brief, gap) {
-  let guard = 0;
-  let stagnant = 0;
-  while (guard < BRIEF_SIDEBAR_MAX && magazineReserve.length) {
-    guard += 1;
-    const briefCount = brief.querySelectorAll('.article--compact').length;
-    if (briefCount >= BRIEF_SIDEBAR_MAX) break;
-    if (brief.offsetHeight + gap >= hero.offsetHeight) break;
-
-    const item = takeNextBriefFromReserve();
-    if (!item) break; // plus d'institution nouvelle
-
-    const before = brief.offsetHeight;
-    const el = safeCreateArticle(item, 'compact');
-    if (!el) continue;
-    brief.appendChild(el);
-    markPromotedToBrief(item);
-    removeTailArticleForItem(item);
-
-    if (brief.offsetHeight <= before + 1) {
-      stagnant += 1;
-      if (stagnant >= 4) break;
-    } else {
-      stagnant = 0;
-    }
-  }
-}
-
-function fillHeroColumnToMatch(hero, brief, gap) {
-  let guard = 0;
-  let stagnant = 0;
-  while (guard < HERO_FEATURE_MAX && magazineReserve.length) {
-    guard += 1;
-    const featureCount = hero.querySelectorAll('.article--feature').length;
-    if (featureCount >= HERO_FEATURE_MAX) break;
-    if (hero.offsetHeight + gap >= brief.offsetHeight) break;
-
-    // Ne promouvoir en vedette que si plus frais ou égal au plus ancien hero actuel
-    // (en pratique la réserve est déjà plus ancienne que le top-N — on prend le plus frais restant).
-    const item = takeNextFeatureFromReserve();
-    if (!item) break;
-
-    const before = hero.offsetHeight;
-    const el = safeCreateArticle(item, 'feature');
-    if (!el) continue;
-    hero.appendChild(el);
-    markPromotedToHero(item);
-    removeTailArticleForItem(item);
-
-    if (hero.offsetHeight <= before + 1) {
-      stagnant += 1;
-      if (stagnant >= 4) break;
-    } else {
-      stagnant = 0;
-    }
-  }
-}
-
 function scheduleMagazineColumnBalance() {
   clearTimeout(magazineBalanceTimer);
   const gen = ++magazineBalanceGen;
+  // Passages : paint → images partielles → images stables
   magazineBalanceTimer = window.setTimeout(() => {
     if (gen !== magazineBalanceGen) return;
     balanceMagazineColumns();
-    // Second passage après décodage images (pas une boucle continue).
     window.setTimeout(() => {
       if (gen !== magazineBalanceGen) return;
       balanceMagazineColumns();
-    }, 280);
-  }, 60);
+    }, 320);
+    window.setTimeout(() => {
+      if (gen !== magazineBalanceGen) return;
+      balanceMagazineColumns();
+    }, 900);
+  }, 40);
 }
 
-/** Images : rebalance une fois au load — pas de RO sur les colonnes. */
+/** Images : rebalance au load (pas de ResizeObserver sur les colonnes). */
 function bindMagazineImageBalanceOnce() {
   if (!NEWS_LIST) return;
   NEWS_LIST.querySelectorAll('.news-hero img, .brief-rail img').forEach((img) => {
