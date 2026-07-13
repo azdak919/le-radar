@@ -3468,13 +3468,17 @@ function estimateHeroSeedHeight(heroCount) {
 function briefSeedCountForHero(heroCount, opts = {}) {
   const sourceMode = !!opts.sourceMode;
   const target = Math.max(0, estimateHeroSeedHeight(heroCount) - AVG_BRIEF_TITLE_H);
-  // Source : lead souvent grande image → multiplier pour réduire le vide initial.
-  const mult = sourceMode ? 1.35 : 1;
+  // Source : une+vedettes souvent plus hautes que l’estimation (images) →
+  // graine généreuse pour peupler En bref avant le fill mesuré.
+  const mult = sourceMode ? 1.85 : 1;
   const n = Math.round((target * mult) / AVG_BRIEF_CARD_H);
   const min = sourceMode
-    ? Math.max(BRIEF_SIDEBAR_SEED_MIN, 5)
+    ? Math.max(BRIEF_SIDEBAR_SEED_MIN, 6)
     : BRIEF_SIDEBAR_SEED_MIN;
-  return Math.min(BRIEF_SIDEBAR_SEED_MAX, Math.max(min, n));
+  const max = sourceMode
+    ? Math.min(BRIEF_SIDEBAR_MAX, BRIEF_SIDEBAR_SEED_MAX + 4)
+    : BRIEF_SIDEBAR_SEED_MAX;
+  return Math.min(max, Math.max(min, n));
 }
 
 /** Réserve = suite du fil (date desc) pour le fill B uniquement. */
@@ -3934,8 +3938,10 @@ function balanceMagazineColumns() {
   magazineBalanceBusy = true;
   magazineBalanceQueued = false;
   const isSourceMode = NEWS_LIST.dataset.mode === 'source';
-  // Source : tolérance plus serrée — on veut coller la hauteur de la une.
-  const tol = isSourceMode ? Math.min(COLUMN_HEIGHT_TOL, 56) : COLUMN_HEIGHT_TOL;
+  // Source : coller la une (tolérance un peu plus large pour accepter
+  // une dernière carte compacte plutôt qu’un gros vide).
+  const tol = isSourceMode ? 72 : COLUMN_HEIGHT_TOL;
+  const hardMin = isSourceMode ? 3 : BRIEF_SIDEBAR_HARD_MIN;
 
   try {
     clearMagazineSpacers(hero);
@@ -3949,14 +3955,14 @@ function balanceMagazineColumns() {
       const bH = magazineColumnContentHeight(brief);
       if (bH <= hH + tol) break;
       const cards = brief.querySelectorAll('.article--compact');
-      if (cards.length <= BRIEF_SIDEBAR_HARD_MIN) break;
+      if (cards.length <= hardMin) break;
       if (!demoteBriefCardToTail(brief, cards[cards.length - 1])) break;
     }
 
     // --- 2) FILL : En bref trop basse → ajouter ---
-    // Vue source : always allowExtra (une seule institution).
+    // Vue source : always allowExtra (une seule institution / source).
     let fillGuard = 0;
-    const maxFill = isSourceMode ? 32 : 24;
+    const maxFill = isSourceMode ? 40 : 24;
     while (fillGuard < maxFill) {
       fillGuard += 1;
       const hH = magazineColumnContentHeight(hero);
@@ -3980,11 +3986,15 @@ function balanceMagazineColumns() {
       const overshoot = afterBrief - afterHero;
 
       if (overshoot > tol) {
-        // Garder la carte si elle réduit le vide (mieux qu’un gros spacer).
-        // Sinon retirer (trop dépasser la une).
-        if (gap > overshoot) {
+        // Garder si on réduit le vide ; en vue source, accepter un léger
+        // dépassement plutôt qu’un grand spacer blanc.
+        if (gap > overshoot || (isSourceMode && overshoot < gap + AVG_BRIEF_CARD_H)) {
           markPromotedToBrief(item);
           removeTailArticleForItem(item);
+          // Source : continuer si un trou notable reste encore
+          if (isSourceMode && magazineColumnContentHeight(hero) - magazineColumnContentHeight(brief) > tol) {
+            continue;
+          }
         } else {
           demoteBriefCardToTail(brief, el);
         }
@@ -4022,15 +4032,20 @@ function scheduleMagazineColumnBalance() {
   magazineBalanceTimer = window.setTimeout(() => {
     magazineBalancePasses = 1;
     balanceMagazineColumns();
-    // 2e passe après layout ; 3e plus tard pour images une/vedettes (surtout vue source).
+    // Passes retardées : layout puis images (vue source = colonnes à coller).
     window.setTimeout(() => {
       magazineBalancePasses = Math.max(magazineBalancePasses, 2);
       balanceMagazineColumns();
-    }, 500);
+    }, 450);
     window.setTimeout(() => {
       magazineBalancePasses = Math.max(magazineBalancePasses, 3);
       balanceMagazineColumns();
-    }, 1200);
+    }, 1100);
+    // 4e passe tardive : images une/vedettes souvent lentes en vue source.
+    window.setTimeout(() => {
+      magazineBalancePasses = Math.max(magazineBalancePasses, 4);
+      balanceMagazineColumns();
+    }, 2200);
   }, 80);
 }
 

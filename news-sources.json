@@ -308,7 +308,8 @@
       "botHints": {
         "authors": {
           "forcePageAuthor": true,
-          "ignoreRssAuthor": true
+          "ignoreRssAuthor": true,
+          "_note": "Byline réelle en <strong>Name – Role</strong> en tête de corps (pas le compte WP « The Campus »). author-lib: authorsFromStrongRoleByline + focusHtmlForAuthorExtraction."
         },
         "images": {
           "validateOnPage": true,
