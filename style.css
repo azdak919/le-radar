@@ -251,12 +251,21 @@ a { color: inherit; }
   box-sizing: border-box;
   padding: 0 2px;
 }
+/*
+ * Hiérarchie typo masthead > À la une (tous viewports) :
+ * --radar-wordmark-size max et min restent strictement au-dessus de
+ * --radar-lead-title-size (évite le cas mobile où la une dépassait LE RADAR).
+ */
+:root {
+  --radar-wordmark-size: clamp(1.85rem, 6.4vw + 0.25rem, 3.9rem);
+  --radar-lead-title-size: clamp(1.4rem, 4.1vw + 0.15rem, 2.55rem);
+}
 /* block (pas flex) : le texte traduit (ex. inuktitut) peut se couper
    sur plusieurs lignes sans déborder du viewport mobile/tablette. */
 .wordmark-mark {
   font-family: var(--serif);
   font-weight: 700;
-  font-size: clamp(1.55rem, 6.2vw + 0.35rem, 3.8rem);
+  font-size: var(--radar-wordmark-size);
   letter-spacing: -0.02em;
   line-height: 1.05;
   color: var(--ink);
@@ -302,9 +311,18 @@ html[data-translate="iu-latn"] .wordmark-mark,
 html[lang="ar"] .wordmark-mark,
 html[data-translate="ar"] .wordmark-mark,
 html[data-script-dir="rtl"] .wordmark-mark {
-  font-size: clamp(1.35rem, 5.2vw + 0.25rem, 2.85rem);
+  /* Toujours ≥ lead-title (max 2.1) */
+  font-size: clamp(1.55rem, 5.2vw + 0.25rem, 2.95rem);
   letter-spacing: 0;
   line-height: 1.12;
+}
+html[lang="iu"],
+html[data-translate="iu"],
+html[data-translate="iu-latn"],
+html[lang="ar"],
+html[data-translate="ar"],
+html[data-script-dir="rtl"] {
+  --radar-lead-title-size: clamp(1.2rem, 3.6vw + 0.1rem, 2.1rem);
 }
 html[lang="iu"] .wordmark-full,
 html[data-translate="iu"] .wordmark-full,
@@ -318,8 +336,11 @@ html[data-script-dir="rtl"] .wordmark-full {
 }
 
 @media (max-width: 720px) {
+  :root {
+    --radar-wordmark-size: clamp(1.7rem, 7.2vw, 2.7rem);
+    --radar-lead-title-size: clamp(1.3rem, 4.8vw, 1.85rem);
+  }
   .wordmark-mark {
-    font-size: clamp(1.4rem, 7.5vw, 2.6rem);
     line-height: 1.08;
   }
   .wordmark-full {
@@ -329,18 +350,29 @@ html[data-script-dir="rtl"] .wordmark-full {
   html[lang="iu"] .wordmark-mark,
   html[data-translate="iu"] .wordmark-mark,
   html[data-translate="iu-latn"] .wordmark-mark {
-    font-size: clamp(1.2rem, 5.8vw, 2.1rem);
+    font-size: clamp(1.45rem, 5.8vw, 2.2rem);
+  }
+  html[lang="iu"],
+  html[data-translate="iu"],
+  html[data-translate="iu-latn"] {
+    --radar-lead-title-size: clamp(1.15rem, 4vw, 1.65rem);
   }
 }
 
 @media (min-width: 721px) and (max-width: 1024px) {
-  .wordmark-mark {
-    font-size: clamp(1.85rem, 4.2vw, 3.2rem);
+  :root {
+    --radar-wordmark-size: clamp(1.95rem, 4.4vw, 3.35rem);
+    --radar-lead-title-size: clamp(1.45rem, 2.8vw, 2.35rem);
   }
   html[lang="iu"] .wordmark-mark,
   html[data-translate="iu"] .wordmark-mark,
   html[data-translate="iu-latn"] .wordmark-mark {
-    font-size: clamp(1.5rem, 3.6vw, 2.5rem);
+    font-size: clamp(1.6rem, 3.6vw, 2.6rem);
+  }
+  html[lang="iu"],
+  html[data-translate="iu"],
+  html[data-translate="iu-latn"] {
+    --radar-lead-title-size: clamp(1.25rem, 2.4vw, 1.95rem);
   }
 }
 
@@ -1432,7 +1464,8 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   align-items: center;
   gap: 6px;
   margin: 0;
-  padding: 5px 10px 5px 8px;
+  /* Un peu plus d’air vertical pour les jambages (g, y, p de « Original »…). */
+  padding: 6px 10px 7px 8px;
   border: 1px solid var(--rule);
   border-radius: 999px;
   background: var(--bg-soft);
@@ -1440,8 +1473,10 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.01em;
+  line-height: 1.25;
   cursor: pointer;
   max-width: min(100%, 42vw);
+  overflow: visible;
   transition: border-color 140ms ease, color 140ms ease, background 140ms ease;
 }
 .translate-toggle:hover,
@@ -1456,7 +1491,9 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   opacity: 0.85;
 }
 .translate-toggle__label {
-  line-height: 1;
+  /* line-height: 1 + overflow:hidden coupait le « g » de Original.
+     (overflow-x/y mixtes sont ramenés à auto en CSS — on élargit la ligne.) */
+  line-height: 1.35;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2120,7 +2157,17 @@ html[data-translate-busy="1"] .translate-toggle {
 .article--lead {
   padding: 14px 0 22px;
   border-bottom: 2px solid var(--rule-strong);
+  /* Colonne flex + order : titre toujours au-dessus de la photo, même si le DOM diverge. */
+  display: flex;
+  flex-direction: column;
 }
+.article--lead > .article-eyebrow { order: 1; }
+.article--lead > .article-meta { order: 2; }
+.article--lead > .article-title { order: 3; }
+.article--lead > .article-media { order: 4; }
+.article--lead > .article-byline { order: 5; }
+.article--lead > .article-brief { order: 6; }
+
 .article--lead::before { top: 56px; }
 .article-eyebrow {
   display: inline-block;
@@ -2132,8 +2179,16 @@ html[data-translate-busy="1"] .translate-toggle {
   margin-bottom: 14px;
 }
 .article--lead .article-title {
-  font-size: clamp(2rem, 6vw, 2.9rem);
-  line-height: 1.08;
+  /* Toujours < --radar-wordmark-size (voir :root). */
+  font-size: var(--radar-lead-title-size);
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+/* Titre au-dessus de l'image : un peu d'air avant la photo. */
+.article--lead.has-image .article-title {
+  margin-bottom: 14px;
+}
+.article--lead.has-image .article-media {
   margin-bottom: 12px;
 }
 .article--lead .article-byline {
@@ -3448,7 +3503,7 @@ body.external-listen-open {
   }
 
   .news-list[data-hero="text"] .article--lead .article-title {
-    font-size: clamp(2rem, 2.6vw, 2.85rem);
+    font-size: var(--radar-lead-title-size);
     line-height: 1.1;
     max-width: none;
   }
@@ -3461,7 +3516,7 @@ body.external-listen-open {
   }
 
   .news-list[data-hero="image"] .article--lead.has-image .article-media {
-    margin-bottom: 0;
+    margin-bottom: 12px;
     aspect-ratio: auto;
     overflow: visible;
   }
@@ -3476,13 +3531,15 @@ body.external-listen-open {
     margin: 3px 0 4px;
   }
 
+  /* Titre au-dessus de l'image — pas de marge « sous photo ». */
   .news-list[data-hero="image"] .article--lead.has-image .article-title {
     margin-top: 0;
+    margin-bottom: 14px;
   }
 
   .news-list[data-hero="image"]:not([data-mode="source"]) .article--lead .article-title {
-    font-size: clamp(2.1rem, 2.8vw, 3.1rem);
-    line-height: 1.08;
+    font-size: var(--radar-lead-title-size);
+    line-height: 1.1;
     max-width: none;
   }
 
@@ -3492,6 +3549,13 @@ body.external-listen-open {
     min-height: 0;
     margin-top: 4px;
     line-height: 1.58;
+  }
+
+  @media (min-width: 1100px) {
+    :root {
+      --radar-wordmark-size: clamp(2.35rem, 3.2vw + 0.6rem, 3.9rem);
+      --radar-lead-title-size: clamp(1.65rem, 1.6vw + 0.7rem, 2.55rem);
+    }
   }
 
   .news-list[data-mode="source"] .article--lead .article-title,
