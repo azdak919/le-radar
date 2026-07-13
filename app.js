@@ -3398,12 +3398,14 @@ function renderNews() {
     NEWS_LIST.removeAttribute('data-mode');
   }
 
-  // Mode recherche : liste plate classée par pertinence (titre > extrait…), puis date.
+  // Mode recherche (loupe) : liste plate, tous les résultats visibles.
+  // Pas de suite du fil ni de « Plus d'articles » — le repli ne s'applique pas.
   if (isSearchView) {
     NEWS_LIST.removeAttribute('data-contingency');
     NEWS_LIST.removeAttribute('data-autumn-grace');
     NEWS_LIST.removeAttribute('data-brief-count');
     NEWS_LIST.removeAttribute('data-hero');
+    newsTailExpanded = false;
 
     if (items.length) {
       const section = document.createElement('div');
@@ -3491,8 +3493,12 @@ function renderNews() {
 /**
  * Replie la Suite du fil après NEWS_TAIL_VISIBLE articles (comme « Plus de sources »).
  * Appelé au rendu et après promote/demote magazine.
+ * Ne s'applique jamais à la recherche (liste plate, pas de .news-tail).
  */
 function syncNewsTailCollapse({ preserveExpanded = true } = {}) {
+  // Recherche loupe : résultats plats, aucun repli.
+  if (NEWS_LIST?.dataset.mode === 'search') return;
+
   const tail = NEWS_LIST?.querySelector('.news-tail');
   if (!tail) return;
 
