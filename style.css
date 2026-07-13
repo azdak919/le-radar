@@ -3504,31 +3504,34 @@ body.external-listen-open {
 .news-tail:not(.is-expanded) .news-tail-article--overflow {
   display: none !important;
 }
+/* Même langage visuel que « Plus de sources » (bordure pleine, pas de tirets) */
 .news-tail-toggle {
   display: none;
   grid-column: 1 / -1;
+  font-family: var(--sans);
+  align-items: center;
+  justify-content: center;
   width: 100%;
   margin: 10px 0 4px;
-  padding: 12px 14px;
-  border: 1px dashed color-mix(in srgb, var(--rule-strong) 70%, transparent);
-  border-radius: 10px;
-  background: color-mix(in srgb, var(--bg-soft) 80%, transparent);
+  padding: 10px 14px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--bg-soft);
   color: var(--ink-soft);
-  font-family: var(--sans);
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   cursor: pointer;
   text-align: center;
-  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  transition: border-color 140ms ease, color 140ms ease, background 140ms ease;
 }
 .news-tail.has-overflow .news-tail-toggle {
-  display: block;
+  display: inline-flex;
 }
 .news-tail-toggle:hover {
-  border-color: var(--rule-strong);
-  color: var(--ink);
-  background: var(--bg-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 6%, var(--bg));
 }
 .news-tail-toggle:focus-visible {
   outline: 2px solid var(--accent);
