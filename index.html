@@ -251,6 +251,64 @@
       </footer>
     </main>
 
+    <!-- ══════════ RECHERCHE LOCALE (loupe) ══════════
+         Filtre le fil déjà chargé (title / author / source / institution).
+         Aucune requête vers les sites sources. -->
+    <div id="news-search" class="news-search">
+      <div
+        id="news-search-panel"
+        class="news-search__panel"
+        role="search"
+        hidden
+        aria-hidden="true"
+      >
+        <label class="sr-only" for="news-search-input">Rechercher un article ou un auteur</label>
+        <div class="news-search__field">
+          <svg class="news-search__field-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>
+          </svg>
+          <input
+            id="news-search-input"
+            class="news-search__input"
+            type="search"
+            enterkeyhint="search"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            placeholder="Auteur ou titre d’article…"
+            aria-controls="news-list"
+          />
+          <button
+            type="button"
+            id="news-search-clear"
+            class="news-search__clear hidden"
+            aria-label="Effacer la recherche"
+            title="Effacer"
+          >×</button>
+        </div>
+        <p id="news-search-hint" class="news-search__hint">
+          Recherche dans le fil de Le Radar (titres et auteurs déjà chargés).
+        </p>
+      </div>
+      <button
+        type="button"
+        id="news-search-toggle"
+        class="news-search__fab"
+        aria-label="Rechercher un article ou un auteur"
+        aria-expanded="false"
+        aria-controls="news-search-panel"
+        title="Rechercher"
+      >
+        <svg class="news-search__fab-loupe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>
+        </svg>
+        <svg class="news-search__fab-close hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+    </div>
+
     <!-- Toast -->
     <div id="toast" class="toast hidden"></div>
 

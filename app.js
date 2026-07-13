@@ -281,6 +281,12 @@ const FILTERS_MOBILE = window.matchMedia('(max-width: 599.98px)');
 const NEWS_COUNT     = document.getElementById('news-count');
 const NEWS_UPDATED   = document.getElementById('news-updated');
 const NEWS_EMPTY     = document.getElementById('news-empty');
+const NEWS_SEARCH       = document.getElementById('news-search');
+const NEWS_SEARCH_TOGGLE = document.getElementById('news-search-toggle');
+const NEWS_SEARCH_PANEL  = document.getElementById('news-search-panel');
+const NEWS_SEARCH_INPUT  = document.getElementById('news-search-input');
+const NEWS_SEARCH_CLEAR  = document.getElementById('news-search-clear');
+const NEWS_SEARCH_HINT   = document.getElementById('news-search-hint');
 const TODAY_DATE     = document.getElementById('today-date');
 const TOAST_EL       = document.getElementById('toast');
 const THEME_TOGGLE   = document.getElementById('theme-toggle');
@@ -301,6 +307,10 @@ let radios = [];          // ordered list backing the tuner
 let news = [];
 let newsSourcesByName = {};
 let newsSourceFilter = 'all';
+/** Recherche locale (title / author / source / institution) — jamais de fetch distant. */
+let newsSearchQuery = '';
+let newsSearchOpen = false;
+let newsSearchDebounce = null;
 let currentStation = null; // radio object selected in tuner
 let audio = null;
 let suppressAudioError = false;
@@ -392,6 +402,7 @@ async function init() {
   bindTuner();
   bindExternalListen();
   bindFiltersPanel();
+  bindNewsSearch();
 
   try {
     const brandData = await fetch('./brand-colors.json').then((r) => r.json());
@@ -2873,6 +2884,176 @@ function selectNewsSource(source) {
   renderNews();
 }
 
+// ─── Recherche locale (loupe) ─────────────────────────────────────────────────
+/** Normalise pour comparaison insensible aux accents / casse. */
+function normalizeSearchText(str = '') {
+  return String(str)
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}\s'-]+/gu, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/** Jetons de requête (ET) — chaîne vide → aucun filtre. */
+function searchTokens(query = '') {
+  const q = normalizeSearchText(query);
+  if (!q) return [];
+  return q.split(' ').filter(Boolean);
+}
+
+/**
+ * Haystack local uniquement : titre, auteur, source, établissement.
+ * Pas d'extrait long ni de contenu distant — léger et hors-ligne.
+ */
+function articleSearchHaystack(item = {}) {
+  const { author: bylineAuthor } = splitByline(item);
+  const author = resolveDisplayAuthor(item, bylineAuthor) || item.author || bylineAuthor || '';
+  return normalizeSearchText([
+    cleanTitle(item.title || ''),
+    author,
+    item.source || '',
+    item.institution || '',
+  ].join(' '));
+}
+
+function articleMatchesSearch(item, tokens) {
+  if (!tokens.length) return true;
+  const hay = articleSearchHaystack(item);
+  return tokens.every((t) => hay.includes(t));
+}
+
+function getNewsSearchQuery() {
+  return newsSearchQuery;
+}
+
+function setNewsSearchOpen(open) {
+  newsSearchOpen = !!open;
+  if (!NEWS_SEARCH || !NEWS_SEARCH_TOGGLE || !NEWS_SEARCH_PANEL) return;
+
+  NEWS_SEARCH.classList.toggle('is-open', newsSearchOpen);
+  NEWS_SEARCH_TOGGLE.setAttribute('aria-expanded', newsSearchOpen ? 'true' : 'false');
+  NEWS_SEARCH_PANEL.hidden = !newsSearchOpen;
+  NEWS_SEARCH_PANEL.setAttribute('aria-hidden', newsSearchOpen ? 'false' : 'true');
+
+  const loupe = NEWS_SEARCH_TOGGLE.querySelector('.news-search__fab-loupe');
+  const close = NEWS_SEARCH_TOGGLE.querySelector('.news-search__fab-close');
+  loupe?.classList.toggle('hidden', newsSearchOpen);
+  close?.classList.toggle('hidden', !newsSearchOpen);
+
+  if (newsSearchOpen) {
+    // Focus après paint pour clavier mobile / lecteurs d'écran.
+    requestAnimationFrame(() => {
+      NEWS_SEARCH_INPUT?.focus({ preventScroll: true });
+      NEWS_SEARCH_INPUT?.select?.();
+    });
+  }
+}
+
+function syncNewsSearchChrome() {
+  const hasQuery = !!newsSearchQuery;
+  NEWS_SEARCH?.classList.toggle('has-query', hasQuery);
+  NEWS_SEARCH_CLEAR?.classList.toggle('hidden', !hasQuery);
+  NEWS_SEARCH_TOGGLE?.classList.toggle('is-active', hasQuery);
+  if (NEWS_SEARCH_HINT) {
+    NEWS_SEARCH_HINT.textContent = hasQuery
+      ? 'Filtre actif sur le fil local (titres et auteurs).'
+      : 'Recherche dans le fil de Le Radar (titres et auteurs déjà chargés).';
+  }
+}
+
+function setNewsSearchQuery(raw, { render = true } = {}) {
+  const next = String(raw || '').trim();
+  if (next === newsSearchQuery) {
+    syncNewsSearchChrome();
+    return;
+  }
+  newsSearchQuery = next;
+  syncNewsSearchChrome();
+  if (render) renderNews();
+}
+
+function clearNewsSearch({ keepOpen = true } = {}) {
+  if (NEWS_SEARCH_INPUT) NEWS_SEARCH_INPUT.value = '';
+  setNewsSearchQuery('', { render: true });
+  if (keepOpen) NEWS_SEARCH_INPUT?.focus({ preventScroll: true });
+  else setNewsSearchOpen(false);
+}
+
+function bindNewsSearch() {
+  if (!NEWS_SEARCH_TOGGLE || !NEWS_SEARCH_INPUT) return;
+
+  NEWS_SEARCH_TOGGLE.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (newsSearchOpen) {
+      // Fermer le panneau sans effacer une recherche encore active.
+      setNewsSearchOpen(false);
+    } else {
+      setNewsSearchOpen(true);
+    }
+  });
+
+  NEWS_SEARCH_INPUT.addEventListener('input', () => {
+    const value = NEWS_SEARCH_INPUT.value;
+    // Chrome immédiat (bouton ×) ; re-rendu filtré avec léger debounce.
+    const trimmed = String(value || '').trim();
+    NEWS_SEARCH_CLEAR?.classList.toggle('hidden', !trimmed);
+    NEWS_SEARCH?.classList.toggle('has-query', !!trimmed);
+    NEWS_SEARCH_TOGGLE?.classList.toggle('is-active', !!trimmed);
+    clearTimeout(newsSearchDebounce);
+    newsSearchDebounce = setTimeout(() => {
+      setNewsSearchQuery(value, { render: true });
+    }, 120);
+  });
+
+  NEWS_SEARCH_INPUT.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      if (newsSearchQuery) clearNewsSearch({ keepOpen: true });
+      else setNewsSearchOpen(false);
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      // Appliquer tout de suite (sans attendre le debounce).
+      clearTimeout(newsSearchDebounce);
+      setNewsSearchQuery(NEWS_SEARCH_INPUT.value, { render: true });
+      NEWS_SEARCH_INPUT.blur();
+    }
+  });
+
+  NEWS_SEARCH_CLEAR?.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    clearNewsSearch({ keepOpen: true });
+  });
+
+  // Clic extérieur : ferme le panneau, garde le filtre s'il y en a un.
+  document.addEventListener('pointerdown', (e) => {
+    if (!newsSearchOpen) return;
+    if (NEWS_SEARCH?.contains(e.target)) return;
+    setNewsSearchOpen(false);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape' || !newsSearchOpen) return;
+    if (e.target === NEWS_SEARCH_INPUT) return; // géré sur l'input
+    setNewsSearchOpen(false);
+  });
+
+  // Raccourci « / » (comme beaucoup de docs) — hors champs de saisie.
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== '/' || e.metaKey || e.ctrlKey || e.altKey) return;
+    const t = e.target;
+    const tag = t?.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || t?.isContentEditable) return;
+    if (!NEWS_LIST) return; // page sans fil
+    e.preventDefault();
+    setNewsSearchOpen(true);
+  });
+
+  syncNewsSearchChrome();
+}
+
 function renderNewsFilters() {
   if (!NEWS_FILTERS) return;
   const sources = sortSourcesForFilters([...new Set(news.map(n => n.source))]);
@@ -2913,17 +3094,61 @@ function renderNewsFilters() {
 function renderNews() {
   if (!NEWS_LIST) return;
   const isSourceView = newsSourceFilter !== 'all';
-  const items = isSourceView
+  const tokens = searchTokens(newsSearchQuery);
+  const isSearchView = tokens.length > 0;
+
+  let items = isSourceView
     ? news.filter(n => n.source === newsSourceFilter)
     : news;
+  if (isSearchView) {
+    items = items.filter((n) => articleMatchesSearch(n, tokens));
+  }
 
   NEWS_EMPTY.classList.toggle('hidden', items.length > 0);
-  NEWS_COUNT.textContent = `${items.length} article${items.length !== 1 ? 's' : ''}`;
+  if (NEWS_EMPTY) {
+    const emptyP = NEWS_EMPTY.querySelector('p');
+    if (emptyP) {
+      if (isSearchView && !items.length) {
+        emptyP.textContent = `Aucun résultat pour « ${newsSearchQuery} ».`;
+      } else {
+        emptyP.textContent = 'Aucun article pour le moment.';
+      }
+    }
+  }
+
+  const countLabel = isSearchView
+    ? `${items.length} résultat${items.length !== 1 ? 's' : ''}`
+    : `${items.length} article${items.length !== 1 ? 's' : ''}`;
+  NEWS_COUNT.textContent = countLabel;
+
   NEWS_LIST.innerHTML = '';
-  if (isSourceView) {
+  if (isSearchView) {
+    NEWS_LIST.dataset.mode = 'search';
+  } else if (isSourceView) {
     NEWS_LIST.dataset.mode = 'source';
   } else {
     NEWS_LIST.removeAttribute('data-mode');
+  }
+
+  // Mode recherche : liste plate chrono (pas de partition une / en bref).
+  if (isSearchView) {
+    NEWS_LIST.removeAttribute('data-contingency');
+    NEWS_LIST.removeAttribute('data-autumn-grace');
+    NEWS_LIST.removeAttribute('data-brief-count');
+    NEWS_LIST.removeAttribute('data-hero');
+
+    if (items.length) {
+      const section = document.createElement('div');
+      section.className = 'news-search-results';
+      const qEsc = escapeHtml(newsSearchQuery);
+      section.innerHTML = `<h3 class="news-search-results__title">Résultats pour « ${qEsc} »</h3>`;
+      sortByDateDesc(items).forEach((item) => {
+        const article = safeCreateArticle(item, 'standard');
+        if (article) section.appendChild(article);
+      });
+      NEWS_LIST.appendChild(section);
+    }
+    return;
   }
 
   const hero = document.createElement('div');
