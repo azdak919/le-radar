@@ -307,7 +307,7 @@ let radios = [];          // ordered list backing the tuner
 let news = [];
 let newsSourcesByName = {};
 let newsSourceFilter = 'all';
-/** Recherche locale (title / author / source / institution) — jamais de fetch distant. */
+/** Recherche locale (titre / auteur / source / extrait / crédits) — jamais de fetch distant. */
 let newsSearchQuery = '';
 let newsSearchOpen = false;
 let newsSearchDebounce = null;
@@ -2971,7 +2971,9 @@ function normalizeSearchText(str = '') {
     .normalize('NFD')
     .replace(/\p{M}/gu, '')
     .toLowerCase()
-    .replace(/[^\p{L}\p{N}\s'-]+/gu, ' ')
+    // Apostrophes typographiques (Bishop’s) → espace / lettre adjacente
+    .replace(/['’`]/g, '')
+    .replace(/[^\p{L}\p{N}\s-]+/gu, ' ')
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -2980,28 +2982,106 @@ function normalizeSearchText(str = '') {
 function searchTokens(query = '') {
   const q = normalizeSearchText(query);
   if (!q) return [];
-  return q.split(' ').filter(Boolean);
+  return q.split(' ').filter((t) => t.length >= 1);
 }
 
 /**
- * Haystack local uniquement : titre, auteur, source, établissement.
- * Pas d'extrait long ni de contenu distant — léger et hors-ligne.
+ * Variantes légères d'un jeton (pluriel EN/FR simple) pour coller
+ * « dancer » ↔ « dancers », « danseur » ↔ « danseurs ».
  */
-function articleSearchHaystack(item = {}) {
-  const { author: bylineAuthor } = splitByline(item);
+function searchTokenVariants(token = '') {
+  const t = String(token || '');
+  if (t.length < 3) return [t];
+  const out = new Set([t]);
+  if (t.endsWith('ies') && t.length > 4) out.add(`${t.slice(0, -3)}y`);
+  if (t.endsWith('y') && t.length > 3) out.add(`${t.slice(0, -1)}ies`);
+  if (t.endsWith('s') && !t.endsWith('ss') && t.length > 3) out.add(t.slice(0, -1));
+  else if (!t.endsWith('s')) out.add(`${t}s`);
+  // FR : -eur / -eurs, -euse / -euses (approximation)
+  if (t.endsWith('eurs') && t.length > 5) out.add(t.slice(0, -1));
+  if (t.endsWith('eur') && t.length > 4) out.add(`${t}s`);
+  if (t.endsWith('euses') && t.length > 6) out.add(t.slice(0, -1));
+  if (t.endsWith('euse') && t.length > 5) out.add(`${t}s`);
+  return [...out];
+}
+
+function haystackIncludesToken(hay = '', token = '') {
+  if (!token) return true;
+  if (hay.includes(token)) return true;
+  return searchTokenVariants(token).some((v) => v !== token && hay.includes(v));
+}
+
+/**
+ * Champs locaux indexés pour la recherche (aucun fetch distant) :
+ * titre, auteur, source, établissement, région, extraits, crédits photo.
+ */
+function articleSearchFields(item = {}) {
+  const { author: bylineAuthor, body } = splitByline(item);
   const author = resolveDisplayAuthor(item, bylineAuthor) || item.author || bylineAuthor || '';
-  return normalizeSearchText([
-    cleanTitle(item.title || ''),
-    author,
-    item.source || '',
-    item.institution || '',
-  ].join(' '));
+  return {
+    title: normalizeSearchText(cleanTitle(item.title || '')),
+    author: normalizeSearchText(author),
+    meta: normalizeSearchText([
+      item.source || '',
+      item.institution || '',
+      item.region || '',
+      item.type || '',
+    ].join(' ')),
+    body: normalizeSearchText([
+      item.excerpt || '',
+      item.leadExcerpt || '',
+      body || '',
+    ].join(' ')),
+    credits: normalizeSearchText([
+      item.imageCreator || '',
+      item.sourceImageCreator || '',
+      item.imageCredit || '',
+      item.sourceImageCredit || '',
+      item.imageTitle || '',
+    ].join(' ')),
+  };
+}
+
+function articleSearchHaystack(item = {}) {
+  const f = articleSearchFields(item);
+  return [f.title, f.author, f.meta, f.body, f.credits].filter(Boolean).join(' ');
 }
 
 function articleMatchesSearch(item, tokens) {
   if (!tokens.length) return true;
   const hay = articleSearchHaystack(item);
-  return tokens.every((t) => hay.includes(t));
+  return tokens.every((t) => haystackIncludesToken(hay, t));
+}
+
+/**
+ * Score de pertinence : titre > auteur > source/inst. > extrait > crédits.
+ * Utilisé pour classer les résultats (puis date décroissante en filet).
+ */
+function articleSearchScore(item, tokens) {
+  if (!tokens.length) return 0;
+  const f = articleSearchFields(item);
+  let score = 0;
+  for (const t of tokens) {
+    if (haystackIncludesToken(f.title, t)) score += 100;
+    else if (haystackIncludesToken(f.author, t)) score += 60;
+    else if (haystackIncludesToken(f.meta, t)) score += 40;
+    else if (haystackIncludesToken(f.body, t)) score += 20;
+    else if (haystackIncludesToken(f.credits, t)) score += 10;
+    else return 0;
+  }
+  const ts = Date.parse(item.date || '') || 0;
+  // Bonus de fraîcheur très faible pour départager à score égal.
+  score += Math.min(ts / 1e15, 0.99);
+  return score;
+}
+
+function sortSearchResults(items, tokens) {
+  return [...items].sort((a, b) => {
+    const sb = articleSearchScore(b, tokens);
+    const sa = articleSearchScore(a, tokens);
+    if (sb !== sa) return sb - sa;
+    return (Date.parse(b.date || '') || 0) - (Date.parse(a.date || '') || 0);
+  });
 }
 
 function getNewsSearchQuery() {
@@ -3038,8 +3118,8 @@ function syncNewsSearchChrome() {
   NEWS_SEARCH_TOGGLE?.classList.toggle('is-active', hasQuery);
   if (NEWS_SEARCH_HINT) {
     NEWS_SEARCH_HINT.textContent = hasQuery
-      ? 'Filtre actif sur le fil local (titres et auteurs).'
-      : 'Recherche dans le fil de Le Radar (titres et auteurs déjà chargés).';
+      ? 'Filtre actif : titres, auteurs, sources, extraits et crédits (données déjà chargées).'
+      : 'Recherche locale : titres, auteurs, sources, établissements, extraits et crédits photo.';
   }
 }
 
@@ -3210,7 +3290,7 @@ function renderNews() {
     NEWS_LIST.removeAttribute('data-mode');
   }
 
-  // Mode recherche : liste plate chrono (pas de partition une / en bref).
+  // Mode recherche : liste plate classée par pertinence (titre > extrait…), puis date.
   if (isSearchView) {
     NEWS_LIST.removeAttribute('data-contingency');
     NEWS_LIST.removeAttribute('data-autumn-grace');
@@ -3222,7 +3302,7 @@ function renderNews() {
       section.className = 'news-search-results';
       const qEsc = escapeHtml(newsSearchQuery);
       section.innerHTML = `<h3 class="news-search-results__title">Résultats pour « ${qEsc} »</h3>`;
-      sortByDateDesc(items).forEach((item) => {
+      sortSearchResults(items, tokens).forEach((item) => {
         const article = safeCreateArticle(item, 'standard');
         if (article) section.appendChild(article);
       });
@@ -3292,6 +3372,8 @@ function renderNews() {
   else NEWS_LIST.removeAttribute('data-brief-count');
 
   updateNewsLayout();
+  // Colonne vedettes plus courte que « En bref » → promouvoir d'autres features.
+  scheduleHeroColumnBalance();
 }
 
 function updateNewsLayout() {
@@ -3303,9 +3385,26 @@ function updateNewsLayout() {
   NEWS_LIST.dataset.hero = lead.classList.contains('has-image') ? 'image' : 'text';
 }
 
-const HERO_SPOTLIGHT_MAX = 3; /* 1 à la une + 2 vedettes (fil global) */
+/*
+ * Partition du fil (3 sections) — règles unifiées :
+ *  1. Fraîcheur globale : toujours les articles les plus récents d'abord.
+ *  2. Diversité douce : préférer une autre institution / source si un
+ *     candidat plus récent équivalent existe, sans passer devant un plus frais.
+ *  3. À la une = le plus récent ; vedettes = suivants ; En bref = suite ;
+ *     Suite du fil = le reste.
+ *  4. Sur bureau, si la colonne hero est plus courte que En bref, on ajoute
+ *     des vedettes depuis la réserve (encore par date).
+ */
+const HERO_FEATURE_MIN = 2; /* vedettes initiales (hors à la une) */
+const HERO_FEATURE_MAX = 6; /* plafond après remplissage de colonne */
+const HERO_SPOTLIGHT_MAX = 1 + HERO_FEATURE_MIN; /* une + 2 vedettes au 1er passage */
 const BRIEF_SIDEBAR_MAX = 7;
-/* Vue source : plus de vedettes intermédiaires (voir partitionSourceFeed). */
+/* Vue source : pas de vedettes intermédiaires (voir partitionSourceFeed). */
+
+/** File d'attente des candidats feature (date desc) pour combler le vide sous les vedettes. */
+let heroFeatureReserve = [];
+let heroBalanceTimer = 0;
+let heroBalanceObs = null;
 /**
  * Fraîcheur universelle : scripts/session-freshness-lib.js
  * (même règle bots + UI — automne/hiver/été + grâce septembre).
@@ -3420,59 +3519,8 @@ function filterFreshItems(items, referenceDate = new Date()) {
     );
 }
 
-function compareBriefCandidates(a, b) {
-  /* À popularité égale : photo d'abord, puis date. */
-  const byPop = sourcePopularityRank(a.source) - sourcePopularityRank(b.source);
-  if (byPop !== 0) return byPop;
-  const imgA = itemHasThumbPhoto(a) ? 0 : 1;
-  const imgB = itemHasThumbPhoto(b) ? 0 : 1;
-  if (imgA !== imgB) return imgA - imgB;
-  return new Date(b.date || 0) - new Date(a.date || 0);
-}
-
 function itemHasThumbPhoto(item) {
   return hasUsablePhoto(item, 'feature') || hasStockPhoto(item, 'feature');
-}
-
-/** D'abord les plus récents avec photo, puis les plus récents sans. */
-function preferPhotoFirst(items) {
-  const withPhoto = [];
-  const without = [];
-  for (const item of items) {
-    if (itemHasThumbPhoto(item)) withPhoto.push(item);
-    else without.push(item);
-  }
-  return [...sortByDateDesc(withPhoto), ...sortByDateDesc(without)];
-}
-
-/**
- * Remplit jusqu'à max : d'abord 1 article récent par institution (hors excludeInsts),
- * puis complète avec des sources déjà représentées si le pool frais est trop maigre.
- * Les listes passées ici devraient déjà préférer les articles avec photo.
- */
-function pickSpotlightSlots(items, max, excludeInsts = new Set()) {
-  const picks = [];
-  const usedKeys = new Set();
-  const usedInsts = new Set(excludeInsts);
-
-  for (const item of items) {
-    if (picks.length >= max) break;
-    const inst = institutionKey(item);
-    if (usedInsts.has(inst)) continue;
-    picks.push(item);
-    usedKeys.add(articleKey(item));
-    usedInsts.add(inst);
-  }
-
-  for (const item of items) {
-    if (picks.length >= max) break;
-    const key = articleKey(item);
-    if (usedKeys.has(key)) continue;
-    picks.push(item);
-    usedKeys.add(key);
-  }
-
-  return picks;
 }
 
 function isArticlePicked(item, picks) {
@@ -3481,70 +3529,88 @@ function isArticlePicked(item, picks) {
 }
 
 /**
- * Hero : 1 « À la une » = article le plus récent (toujours), puis 2 features
- * d'autres institutions (préférence photos). Session en cours d'abord ;
- * bandes précédentes si slots vides. Ne jamais rétrograder la une pour
- * une photo / un extrait (le rendu gère le repli SVG).
+ * Prochain article le plus frais dans `pool` (déjà trié date desc).
+ * Diversité douce : d'abord une institution pas encore prise, sinon le plus récent.
+ */
+function pickNextFreshestDiverse(pool, usedKeys, usedInsts) {
+  for (const item of pool) {
+    const key = articleKey(item);
+    if (usedKeys.has(key)) continue;
+    if (!usedInsts.has(institutionKey(item))) return item;
+  }
+  for (const item of pool) {
+    const key = articleKey(item);
+    if (usedKeys.has(key)) continue;
+    return item;
+  }
+  return null;
+}
+
+/**
+ * À la une + vedettes.
+ * - Une = article le plus récent du pool frais (jamais rétrogradée pour une photo).
+ * - Vedettes = suivants les plus frais, diversité d'institution en second critère.
+ * - Bandes de session plus anciennes seulement si la session courante ne remplit pas.
  */
 function pickHeroSpotlight(items, referenceDate = new Date()) {
   const sorted = sortByDateDesc(items);
-  if (!sorted.length) return { items: [], contingencyBand: 0 };
+  if (!sorted.length) {
+    return { items: [], contingencyBand: 0 };
+  }
 
   const lead = sorted[0];
   const picks = [lead];
+  const usedKeys = new Set([articleKey(lead)]);
   const usedInsts = new Set([institutionKey(lead)]);
   let contingencyBand = 0;
-  const autumnGrace = isAutumnGracePeriod(referenceDate);
 
-  const fillFeatures = (pool, band) => {
-    if (picks.length >= HERO_SPOTLIGHT_MAX) return;
-    /* preferPhotoFirst = récents avec photo d’abord, puis récents sans. */
-    const available = preferPhotoFirst(
-      pool.filter((item) => !isArticlePicked(item, picks)),
-    );
-    const batch = pickSpotlightSlots(
-      available,
-      HERO_SPOTLIGHT_MAX - picks.length,
-      usedInsts,
-    );
-    if (!batch.length) return;
-    for (const item of batch) {
-      picks.push(item);
-      usedInsts.add(institutionKey(item));
+  const takeFromPool = (pool, need, band) => {
+    if (need <= 0) return;
+    let added = 0;
+    while (added < need) {
+      const next = pickNextFreshestDiverse(pool, usedKeys, usedInsts);
+      if (!next) break;
+      picks.push(next);
+      usedKeys.add(articleKey(next));
+      usedInsts.add(institutionKey(next));
+      added += 1;
+      contingencyBand = Math.max(contingencyBand, band);
     }
-    contingencyBand = Math.max(contingencyBand, band);
   };
 
   for (let band = 0; band <= freshnessMaxSessionsBack(referenceDate); band++) {
-    fillFeatures(sessionBandPool(items, referenceDate, band), band);
     if (picks.length >= HERO_SPOTLIGHT_MAX) break;
+    const pool = sessionBandPool(items, referenceDate, band);
+    takeFromPool(pool, HERO_SPOTLIGHT_MAX - picks.length, band);
   }
 
-  if (autumnGrace && picks.length < HERO_SPOTLIGHT_MAX) {
-    const representedSources = new Set(picks.map(sourceKey));
-    const missingSourcePool = preferPhotoFirst(sorted.filter((item) => {
-      if (isArticlePicked(item, picks)) return false;
-      if (representedSources.has(sourceKey(item))) return false;
-      if (sessionBandPool([item], referenceDate, 0).length) return false;
-      return isWithinFreshnessWindow(item, referenceDate);
-    }));
-    for (const item of missingSourcePool) {
-      if (picks.length >= HERO_SPOTLIGHT_MAX) break;
-      if (usedInsts.has(institutionKey(item))) continue;
-      picks.push(item);
-      usedInsts.add(institutionKey(item));
-      representedSources.add(sourceKey(item));
-      contingencyBand = Math.max(contingencyBand, 1);
-    }
+  if (isAutumnGracePeriod(referenceDate) && picks.length < HERO_SPOTLIGHT_MAX) {
+    const pool = sorted.filter((item) => isWithinFreshnessWindow(item, referenceDate));
+    takeFromPool(pool, HERO_SPOTLIGHT_MAX - picks.length, 1);
   }
 
-  /* Lead figé en [0] ; features triées par date (sans renvoyer la une en bas). */
+  /* Vedettes affichées du plus récent au plus ancien (la une reste en tête). */
   const features = sortByDateDesc(picks.slice(1));
-  return { items: [picks[0], ...features], contingencyBand };
+
+  return {
+    items: [picks[0], ...features],
+    contingencyBand,
+  };
 }
 
-function fillBriefFromSessionPool(eligible, heroSources, state) {
-  const { picks, usedKeys, usedSources } = state;
+/**
+ * En bref : les plus frais hors hero.
+ * Passes : (1) 1 par source absente du hero, (2) 1 par source du hero,
+ * (3) compléter en autorisant les doublons de source — toujours en marchant
+ * du plus récent au plus ancien.
+ */
+function pickBriefSidebar(allItems, heroItems = [], referenceDate = new Date()) {
+  const heroKeys = new Set(heroItems.map(articleKey));
+  const heroSources = new Set(heroItems.map(sourceKey));
+  const picks = [];
+  const usedKeys = new Set();
+  const usedSources = new Set();
+  let contingencyBand = 0;
 
   const add = (item, { allowDuplicateSource = false } = {}) => {
     if (!item || picks.length >= BRIEF_SIDEBAR_MAX) return false;
@@ -3558,78 +3624,59 @@ function fillBriefFromSessionPool(eligible, heroSources, state) {
     return true;
   };
 
-  const pool = eligible.filter((item) => !usedKeys.has(articleKey(item)));
-  const latestBySource = latestPerKey(pool, sourceKey);
+  const fillFromPool = (pool, band) => {
+    const eligible = sortByDateDesc(pool).filter((item) => !heroKeys.has(articleKey(item)));
+    if (!eligible.length) return;
+    const before = picks.length;
 
-  [...latestBySource.entries()]
-    .filter(([src]) => !heroSources.has(src))
-    .map(([, item]) => item)
-    .sort(compareBriefCandidates)
-    .forEach((item) => add(item));
+    // 1) Plus frais par source hors hero
+    const latest = latestPerKey(eligible, sourceKey);
+    sortByDateDesc(
+      [...latest.entries()]
+        .filter(([src]) => !heroSources.has(src))
+        .map(([, item]) => item),
+    ).forEach((item) => add(item));
 
-  [...latestBySource.entries()]
-    .filter(([src]) => heroSources.has(src))
-    .map(([, item]) => item)
-    .sort(compareBriefCandidates)
-    .forEach((item) => add(item));
+    // 2) Plus frais par source déjà dans le hero
+    sortByDateDesc(
+      [...latest.entries()]
+        .filter(([src]) => heroSources.has(src))
+        .map(([, item]) => item),
+    ).forEach((item) => add(item));
 
-  for (const item of pool) {
-    if (picks.length >= BRIEF_SIDEBAR_MAX) break;
-    add(item);
-  }
+    // 3) Compléter strictement par date (doublons de source OK)
+    for (const item of eligible) {
+      if (picks.length >= BRIEF_SIDEBAR_MAX) break;
+      add(item, { allowDuplicateSource: true });
+    }
 
-  for (const item of pool) {
-    if (picks.length >= BRIEF_SIDEBAR_MAX) break;
-    add(item, { allowDuplicateSource: true });
-  }
-}
-
-/**
- * En bref : mêmes règles de diversité ; exception temporaire par bande
- * de session si la session en cours ne remplit pas les slots.
- */
-function pickBriefSidebar(allItems, heroItems = [], referenceDate = new Date()) {
-  const heroKeys = new Set(heroItems.map(articleKey));
-  const heroSources = new Set(heroItems.map(sourceKey));
-  const state = {
-    picks: [],
-    usedKeys: new Set(),
-    usedSources: new Set(),
+    if (picks.length > before) contingencyBand = Math.max(contingencyBand, band);
   };
-  let contingencyBand = 0;
 
   for (let band = 0; band <= freshnessMaxSessionsBack(referenceDate); band++) {
-    if (state.picks.length >= BRIEF_SIDEBAR_MAX) break;
-    const before = state.picks.length;
-    const eligible = sessionBandPool(allItems, referenceDate, band).filter(
-      (item) => !heroKeys.has(articleKey(item)),
-    );
-    fillBriefFromSessionPool(eligible, heroSources, state);
-    if (state.picks.length > before) contingencyBand = Math.max(contingencyBand, band);
+    if (picks.length >= BRIEF_SIDEBAR_MAX) break;
+    fillFromPool(sessionBandPool(allItems, referenceDate, band), band);
   }
 
-  if (isAutumnGracePeriod(referenceDate) && state.picks.length < BRIEF_SIDEBAR_MAX) {
-    const before = state.picks.length;
-    const representedSources = new Set(state.picks.map(sourceKey));
-    const gracePool = sortByDateDesc(allItems).filter((item) => {
-      if (heroKeys.has(articleKey(item))) return false;
-      if (representedSources.has(sourceKey(item))) return false;
-      if (sessionBandPool([item], referenceDate, 0).length) return false;
-      return isWithinFreshnessWindow(item, referenceDate);
-    });
-    fillBriefFromSessionPool(gracePool, heroSources, state);
-    if (state.picks.length > before) contingencyBand = Math.max(contingencyBand, 1);
+  if (isAutumnGracePeriod(referenceDate) && picks.length < BRIEF_SIDEBAR_MAX) {
+    fillFromPool(
+      sortByDateDesc(allItems).filter((item) => isWithinFreshnessWindow(item, referenceDate)),
+      1,
+    );
   }
 
   return {
-    items: sortByDateDesc(state.picks),
+    items: sortByDateDesc(picks),
     contingencyBand,
   };
 }
 
 function partitionNewsFeed(items, referenceDate = new Date()) {
   const sorted = sortByDateDesc(filterFreshItems(items, referenceDate));
-  const { items: rawHero, contingencyBand: heroBand } = pickHeroSpotlight(sorted, referenceDate);
+  const {
+    items: rawHero,
+    contingencyBand: heroBand,
+  } = pickHeroSpotlight(sorted, referenceDate);
   const heroItems = ensureHeroLeadHasImage(rawHero, sorted);
   const heroKeys = new Set(heroItems.map(articleKey));
   const { items: briefItems, contingencyBand: briefBand } = pickBriefSidebar(
@@ -3641,8 +3688,96 @@ function partitionNewsFeed(items, referenceDate = new Date()) {
   const tailItems = sorted.filter(
     (i) => !heroKeys.has(articleKey(i)) && !briefKeys.has(articleKey(i)),
   );
+  // Réserve = suite du fil (plus frais d'abord) pour promouvoir en vedettes si colonne courte
+  heroFeatureReserve = tailItems.slice();
   const contingencyBand = Math.max(heroBand, briefBand);
   return { heroItems, briefItems, tailItems, contingencyBand };
+}
+
+/** Bureau : tant que le hero est plus court que En bref, ajouter des vedettes. */
+function canBalanceHeroColumn() {
+  if (!NEWS_LIST) return false;
+  if (NEWS_LIST.dataset.mode === 'source' || NEWS_LIST.dataset.mode === 'search') return false;
+  return window.matchMedia('(min-width: 1100px)').matches;
+}
+
+function removeTailArticleForItem(item) {
+  const tail = NEWS_LIST?.querySelector('.news-tail');
+  if (!tail || !item) return;
+  const link = safeHttpUrl(item.link);
+  const title = cleanTitle(item.title || '');
+  const nodes = [...tail.querySelectorAll('.article')];
+  for (const node of nodes) {
+    const href = node.getAttribute?.('href') || node.href || '';
+    const nodeTitle = node.querySelector('.article-title')?.textContent?.trim() || '';
+    if ((link && href === link) || (title && nodeTitle === title)) {
+      node.remove();
+      break;
+    }
+  }
+  if (!tail.querySelector('.article')) tail.remove();
+}
+
+function balanceHeroColumnHeight() {
+  if (!canBalanceHeroColumn()) return;
+  const hero = NEWS_LIST.querySelector('.news-hero');
+  const brief = NEWS_LIST.querySelector('.brief-rail');
+  if (!hero || !brief) return;
+
+  let guard = 0;
+  while (guard < HERO_FEATURE_MAX) {
+    guard += 1;
+    const featureCount = hero.querySelectorAll('.article--feature').length;
+    if (featureCount >= HERO_FEATURE_MAX) break;
+    // Marge de 12 px : évite une bascule infinie pour 1–2 px.
+    if (hero.offsetHeight + 12 >= brief.offsetHeight) break;
+    if (!heroFeatureReserve.length) break;
+
+    const item = heroFeatureReserve.shift();
+    if (!item) break;
+    const beforeH = hero.offsetHeight;
+    const el = safeCreateArticle(item, 'feature');
+    if (!el) continue;
+    hero.appendChild(el);
+    removeTailArticleForItem(item);
+    // Image pas encore chargée : on continue ; un 2e passage via ResizeObserver/load.
+    if (hero.offsetHeight <= beforeH && !itemHasThumbPhoto(item)) {
+      // Hauteur inchangée sans photo : quand même garder la carte (extrait).
+    }
+  }
+  updateNewsLayout();
+  observeHeroBalanceTargets();
+}
+
+function scheduleHeroColumnBalance() {
+  clearTimeout(heroBalanceTimer);
+  heroBalanceTimer = window.setTimeout(() => {
+    balanceHeroColumnHeight();
+    // Second passage après décodage images / polices.
+    requestAnimationFrame(() => balanceHeroColumnHeight());
+  }, 40);
+}
+
+function observeHeroBalanceTargets() {
+  if (typeof ResizeObserver === 'undefined' || !NEWS_LIST) return;
+  if (!heroBalanceObs) {
+    heroBalanceObs = new ResizeObserver(() => scheduleHeroColumnBalance());
+  } else {
+    heroBalanceObs.disconnect();
+  }
+  const hero = NEWS_LIST.querySelector('.news-hero');
+  const brief = NEWS_LIST.querySelector('.brief-rail');
+  if (hero) heroBalanceObs.observe(hero);
+  if (brief) heroBalanceObs.observe(brief);
+  // Images du hero / brief : rebalancer au load (hauteur change après paint)
+  NEWS_LIST.querySelectorAll('.news-hero img, .brief-rail img').forEach((img) => {
+    if (img.dataset.heroBalanceBound) return;
+    img.dataset.heroBalanceBound = '1';
+    if (!img.complete) {
+      img.addEventListener('load', scheduleHeroColumnBalance, { once: true });
+      img.addEventListener('error', scheduleHeroColumnBalance, { once: true });
+    }
+  });
 }
 
 /**
