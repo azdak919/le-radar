@@ -195,9 +195,11 @@ async function applyStockPhoto(item, sourceMap = new Map(), { avoidCampusUrls = 
     }
   }
 
-  // Avant toute banque libre : une dernière chance de récupérer la photo
-  // d'article (RSS vide + Elementor / og:image) — évite Openverse générique
-  // sur « Coupe du monde 2026 » alors que 16-17_CDM est sur la page.
+  // Avant toute banque libre : récupérer la photo d'article (RSS / og:image /
+  // corps). Si la page n'offre qu'un défaut de site trop faible (logo Exil,
+  // og:image partagée), on ne l'impose PAS — le stock thématique (ex. Hôtel
+  // du Parlement pour un billet Assemblée) est préférable.
+  let weakSiteImage = null;
   if ((!item.image || !hasSourcePhoto(item, sourceMap)) && item.link) {
     const { reject, opts } = isCandidateForItem(item, sourceMap);
     const resolved = await resolveLeadReadyPhoto(
@@ -206,11 +208,15 @@ async function applyStockPhoto(item, sourceMap = new Map(), { avoidCampusUrls = 
       opts,
     );
     if (resolved?.url && doUpdate) {
-      item.image = resolved.url;
-      item.leadImageReady = resolved.leadReady !== false;
-      clearLegacyFallback(item);
-      if (resolved.leadReady !== false) clearStockPhoto(item);
-      return false;
+      if (resolved.leadReady !== false) {
+        item.image = resolved.url;
+        item.leadImageReady = true;
+        clearLegacyFallback(item);
+        clearStockPhoto(item);
+        return false;
+      }
+      // leadReady false : retenir comme filet, mais essayer d'abord le stock
+      weakSiteImage = resolved;
     }
   }
 
@@ -218,12 +224,24 @@ async function applyStockPhoto(item, sourceMap = new Map(), { avoidCampusUrls = 
     const stock = await findStockPhoto(item);
     if (stock?.stockImage) {
       if (doUpdate) {
+        // Stock thématique gagne sur un défaut de site trop faible
+        if (weakSiteImage) {
+          item.image = '';
+          item.leadImageReady = false;
+        }
         applyPhotoFields(item, stock);
         const sourceReady = await markSourceLeadQuality(item);
         if (!sourceReady) item.leadImageReady = false;
       }
       return true;
     }
+  }
+
+  // Pas de stock : accepter l'image site faible (mieux que rien / campus)
+  if (weakSiteImage?.url && doUpdate) {
+    item.image = weakSiteImage.url;
+    item.leadImageReady = false;
+    clearLegacyFallback(item);
   }
 
   // Campus : seulement si aucune photo source utilisable et source non-Substack.
