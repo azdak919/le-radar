@@ -1,16 +1,16 @@
 {
-  "updated": "2026-07-13T04:12:58.259Z",
+  "updated": "2026-07-13T04:30:41.407Z",
   "total": 185,
   "withPhoto": 157,
-  "withStock": 53,
-  "withCampusBank": 14,
+  "withStock": 41,
+  "withCampusBank": 15,
   "fullyCovered": 185,
-  "leadReadyPhotos": 120,
-  "pageScraped": 39,
-  "photosRecovered": 11,
+  "leadReadyPhotos": 137,
+  "pageScraped": 46,
+  "photosRecovered": 14,
   "imagesCleared": 10,
-  "stockSearches": 60,
-  "stockFound": 49,
+  "stockSearches": 57,
+  "stockFound": 36,
   "campusBankFound": 12,
   "mainPageLeadReady": true,
   "gaps": [
@@ -19,12 +19,6 @@
       "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
-    },
-    {
-      "title": "CSU terminates council’s chief election officer",
-      "link": "https://thelinknewspaper.ca/article/16334",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
     },
     {
       "title": "Un hommage aux cyclistes décédés sur les routes",
@@ -81,10 +75,16 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/CULTURE_MarcMessier_SourceFacebook-819x1024.jpeg"
     },
     {
-      "title": "Pourquoi notre génération passe d’une obsession à l’autre?",
-      "link": "https://lecollectif.ca/edition-papier/pourquoi-notre-generation-passe-dune-obsession-a-lautre/",
+      "title": "La popularité des clubs et événements sportifs",
+      "link": "https://lecollectif.ca/societe/la-popularite-des-clubs-et-evenements-sportifs/",
       "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_HYPERFIXATIONS_Les-hyperfixations_SourceBlogZencare-1.png"
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_CLUBSDESPORTS_ClubPleinAirAltitude_SourceFacebookClubPleinAirAltitude-1-768x1024.jpg"
+    },
+    {
+      "title": "Christine Labrie tourne la page sur huit ans comme députée de Sherbrooke",
+      "link": "https://lecollectif.ca/a-la-une/christine-labrie-tourne-la-page-sur-huit-ans-comme-deputee-de-sherbrooke/",
+      "reason": "stock-too-small",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_ChristineLabrie_SourcePageFacebookDeRubaGhazal-819x1024.jpg"
     }
   ]
 }
