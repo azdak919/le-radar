@@ -3262,17 +3262,9 @@ body.external-listen-open {
  * retombait en mode téléphone une colonne.
  */
 @media (min-width: 600px) and (max-width: 1099.98px) {
-  .news-tail {
-    display: grid;
+  .news-tail-body {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: clamp(14px, 2.4vw, 28px);
-  }
-
-  /* Le titre doit occuper toute la largeur de la grille, sinon il remplit la
-     première cellule et le premier article part en colonne de droite en
-     laissant un grand vide à gauche. */
-  .news-tail-title {
-    grid-column: 1 / -1;
   }
 }
 
@@ -3497,17 +3489,34 @@ body.external-listen-open {
   }
 }
 
-/* ── Suite du fil : repli après 10 articles (toutes plateformes) ── */
+/* ── Suite du fil : repli après 10 articles (toutes plateformes) ──
+   Comme « Plus de sources » : 10 pleins + peek des titres de la rangée
+   suivante + fondu, puis bouton. */
 .news-tail {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  --news-tail-peek: 34px;
 }
-.news-tail:not(.is-expanded) .news-tail-article--overflow {
-  display: none !important;
+.news-tail-body {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
 }
-/* Même langage visuel que « Plus de sources » (bordure pleine, pas de tirets) */
+.news-tail.has-overflow:not(.is-expanded) .news-tail-body {
+  overflow: hidden;
+  max-height: var(--news-tail-collapsed-h, none);
+  transition: max-height 0.4s ease;
+}
+.news-tail.is-expanded .news-tail-body {
+  max-height: none !important;
+  overflow: visible;
+  transition: max-height 0.45s ease;
+}
+/* Même langage visuel que « Plus de sources » */
 .news-tail-toggle {
   display: none;
-  grid-column: 1 / -1;
   font-family: var(--sans);
   align-items: center;
   justify-content: center;
@@ -3523,6 +3532,7 @@ body.external-listen-open {
   letter-spacing: 0.02em;
   cursor: pointer;
   text-align: center;
+  flex-shrink: 0;
   transition: border-color 140ms ease, color 140ms ease, background 140ms ease;
 }
 .news-tail.has-overflow .news-tail-toggle {
@@ -3537,32 +3547,33 @@ body.external-listen-open {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
-/* Aperçu fondu sous le 10e article (comme « Plus de sources ») */
-.news-tail.has-overflow:not(.is-expanded)::after {
+/*
+ * Dégradé sur la zone peek : haut des titres de la rangée d’après lisible,
+ * bas s’estompe vers le bouton (comme filters-panel peek).
+ */
+.news-tail.has-overflow:not(.is-expanded) .news-tail-body::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 48px; /* au-dessus du bouton */
-  height: 56px;
+  bottom: 0;
+  height: var(--news-tail-peek);
+  z-index: 2;
   pointer-events: none;
-  z-index: 1;
   background: linear-gradient(
     to bottom,
     color-mix(in srgb, var(--bg) 0%, transparent) 0%,
-    color-mix(in srgb, var(--bg) 55%, transparent) 50%,
+    color-mix(in srgb, var(--bg) 35%, transparent) 40%,
+    color-mix(in srgb, var(--bg) 80%, transparent) 75%,
     var(--bg) 100%
   );
+  -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(1px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 45%, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 45%, #000 100%);
 }
-.news-tail.is-expanded::after {
+.news-tail.is-expanded .news-tail-body::after {
   display: none;
-}
-
-/* Une colonne seulement sur vrai téléphone (< 600 px). */
-@media (max-width: 599.98px) {
-  .news-tail {
-    display: block;
-  }
 }
 
 @media (min-width: 1100px) {
@@ -3758,15 +3769,11 @@ body.external-listen-open {
   /* Suite du fil : pleine largeur sous le bloc magazine */
   .news-tail {
     grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 32px;
     border-top: 2px solid var(--rule-strong);
     padding-top: 6px;
   }
 
   .news-tail-title {
-    grid-column: 1 / -1;
     font-family: var(--sans);
     font-size: 10px;
     font-weight: 800;
@@ -3777,6 +3784,11 @@ body.external-listen-open {
     padding: 0;
   }
 
+  .news-tail-body {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 32px;
+  }
+
   /* Cartes fil — Suite du fil + En bref (même gabarit) */
   .news-tail .article--standard,
   .article--compact {
@@ -3784,7 +3796,7 @@ body.external-listen-open {
     border-bottom: 1px solid var(--rule);
   }
 
-  .news-tail .article--standard {
+  .news-tail-body > .article--standard {
     grid-column: auto;
   }
 
