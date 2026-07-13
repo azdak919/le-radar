@@ -1,23 +1,51 @@
 {
-  "updated": "2026-07-13T04:30:42.834Z",
+  "updated": "2026-07-13T05:42:19.678Z",
   "total": 185,
   "withImage": 157,
   "withCredit": 157,
-  "cited": 108,
+  "cited": 117,
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 4,
-  "updatedCount": 4,
-  "citedNew": 2,
-  "fallbackNew": 2,
+  "checked": 61,
+  "updatedCount": 61,
+  "citedNew": 21,
+  "fallbackNew": 40,
   "samples": [
     {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "source": "La Pige",
-      "credit": "Photo : Léa Morin-Letort",
+      "title": "La vie sans alcool : les habitudes des jeunes redéfinies",
+      "source": "Le Collectif",
+      "credit": "Photo : Camellia Sinensis",
       "cited": true,
-      "method": "wp-caption"
+      "method": "body-tail"
+    },
+    {
+      "title": "Dévoilement du Livre bleu",
+      "source": "Le Collectif",
+      "credit": "Photo : Site internet du Parti Québécois",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "De Broue à l’Ordre du Canada, Marc Messier, l’artisan d’un théâtre et d’une télé populaires",
+      "source": "Le Collectif",
+      "credit": "Photo : Facebook",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Sans fin(s): au cœur des troubles du comportement alimentaire",
+      "source": "L'Exemplaire",
+      "credit": "Crédit photo : L'Exemplaire",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Présences invisibles : écrire la ville sans permission - Quartier Libre",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
     },
     {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB » - Quartier Libre",
@@ -34,11 +62,39 @@
       "method": null
     },
     {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
+      "title": "Un projet de loi rendrait obligatoire le statut d’étudiant·e proche aidant·e - Quartier Libre",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Recettes musicales québécoises pour l’été - Quartier Libre",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "FAÉCUM : la démocratie universitaire critiquée - Quartier Libre",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "L’alcool est-il vraiment le nouveau tabac ?",
+      "source": "L'Exemplaire",
+      "credit": "Crédit photo : L'Exemplaire",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Rachat des armes à feu : le Québec est-il l’exception canadienne ?",
+      "source": "L'Exemplaire",
+      "credit": "Crédit photo : L'Exemplaire",
+      "cited": false,
+      "method": null
     }
   ]
 }

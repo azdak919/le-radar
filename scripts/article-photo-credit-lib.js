@@ -18,20 +18,34 @@ const PHOTO_CREDIT_FIELDS = [
 
 // Version des extracteurs de crédit : l'incrémenter force une re-vérification
 // (repli média + crédits cités issus d'anciens extracteurs buggés).
-const CREDIT_EXTRACTOR_REV = 7;
+const CREDIT_EXTRACTOR_REV = 8;
 
 /** Placeholders WP / comptes génériques (Zone Campus : « Crédit : Journaliste »). */
 const PLACEHOLDER_CREDIT_RE = /^(?:journaliste|journalist|photographe|photographer|staff|rédaction|redaction|la\s+rédaction|the\s+editorial\s+team|unknown|inconnu|n\/?a|none|anonyme|anonymous|auteur|author|admin)$/i;
 
+/**
+ * « Journaliste » / « Journalist » = la photo est de l'auteur·e de l'article
+ * (convention Zone Campus et d'autres médias étudiants FR).
+ */
+const JOURNALIST_ROLE_CREDIT_RE = /^(?:journaliste|journalist|l['']auteur(?:e)?|the\s+author|staff\s+writer)$/i;
+
 function isPlaceholderPhotoCredit(name = '') {
   const n = String(name || '')
-    .replace(/^(?:Photo|Crédit(?:\s+photo)?|Credit(?:\s+photo)?|Illustration)\s*[:]\s*/i, '')
+    .replace(/^(?:Photo|Crédits?(?:\s+photo)?|Credits?(?:\s+photo)?|Illustration)\s*[:]\s*/i, '')
     .replace(/\s+/g, ' ')
     .trim();
   // Chaîne vide = pas de crédit cité (pas un placeholder « Journaliste »).
   if (!n) return false;
   if (n.length < 2) return true;
   return PLACEHOLDER_CREDIT_RE.test(n);
+}
+
+function isJournalistRoleCredit(name = '') {
+  const n = String(name || '')
+    .replace(/^(?:Photo|Crédits?(?:\s+photo)?|Credits?(?:\s+photo)?|Illustration)\s*[:]\s*/i, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return JOURNALIST_ROLE_CREDIT_RE.test(n);
 }
 
 const LEAD_IMAGE_FIELDS = [
@@ -45,9 +59,12 @@ const LEAD_IMAGE_FIELDS = [
   'imageSourceUrl',
 ];
 
-const CREDIT_LINE_RE = /^(?:Photo|Crédit(?:\s+photo)?|Credit(?:\s+photo)?)\s*[:]\s*(.+)$/i;
+// Zone Campus / médias FR : « Crédit : », « Crédits : », « Crédit photo : »
+const CREDIT_LINE_RE = /^(?:Photo|Crédits?(?:\s+photo)?|Credits?(?:\s+photo)?)\s*[:]\s*(.+)$/i;
 const PHOTO_BY_RE = /(?:\(|^)\s*Photo\s+by\s+([^).]+?)(?:\s+via\s+([^).]+))?\s*\)?\.?$/i;
-const MENTION_PHOTO_RE = /(?:Mention\s+)?(?:Photo|Crédit|Credit)\s*:\s*([^\n<.]+)/i;
+const MENTION_PHOTO_RE = /(?:Mention\s+)?(?:Photo|Crédits?|Credits?)\s*:\s*([^\n<.]+)/i;
+/** Fin de légende Zone Campus : « … Beach Party. Crédit : Journaliste » */
+const TRAILING_FR_CREDIT_RE = /(?:^|[.!?…»"”]\s+)(Crédits?(?:\s+photo)?|Credits?(?:\s+photo)?|Photo)\s*:\s*([^\n.]+?)\s*\.?$/iu;
 
 function stripHtml(text = '') {
   return decodeEntities(String(text))
@@ -124,12 +141,15 @@ function flattenJsonLd(nodes = [], acc = []) {
 
 function extractCreditSnippet(text = '') {
   const t = sanitizeCreditText(text);
-  const parenColon = t.match(/\((?:Photo|Crédit|Credit)\s*:\s*([^)]+)\)/i);
+  const parenColon = t.match(/\((?:Photo|Crédits?|Credits?)\s*:\s*([^)]+)\)/i);
   if (parenColon) return sanitizeCreditText(parenColon[1]);
-  const paren = t.match(/\((?:Photo|Crédit|Credit)\s+(?:by|par)\s+([^)]+)\)/i);
+  const paren = t.match(/\((?:Photo|Crédits?|Credits?)\s+(?:by|par)\s+([^)]+)\)/i);
   if (paren) return sanitizeCreditText(paren[1]);
-  const inline = t.match(/(?:Photo|Crédit|Credit)\s+(?:by|par)\s+([^).]+(?:\s+via\s+[^).]+)?)/i);
+  const inline = t.match(/(?:Photo|Crédits?|Credits?)\s+(?:by|par)\s+([^).]+(?:\s+via\s+[^).]+)?)/i);
   if (inline) return sanitizeCreditText(inline[1]);
+  // « … sommets. Crédits : Journaliste. » → extraire la partie crédit
+  const trailingFr = t.match(TRAILING_FR_CREDIT_RE);
+  if (trailingFr) return sanitizeCreditText(trailingFr[2]);
   if (CREDIT_LINE_RE.test(t)) return sanitizeCreditText(t.replace(CREDIT_LINE_RE, '$1'));
   return t;
 }
@@ -137,14 +157,18 @@ function extractCreditSnippet(text = '') {
 function extractEmbeddedPhotoCredit(text = '') {
   const t = stripHtml(text);
   const patterns = [
-    /\((?:Photo|Crédit|Credit)\s*:\s*([^)]+)\)/gi,
-    /\((?:Photo|Crédit|Credit)\s+(?:by|par)\s+([^)]+)\)/gi,
-    /\((?:Photo|Crédit|Credit)\s*:\s*([^)"']+)$/gi,
-    /(?:Mention\s+)?(?:Photo|Crédit|Credit)\s*:\s*([^\n<.]+)/gi,
+    /\((?:Photo|Crédits?|Credits?)\s*:\s*([^)]+)\)/gi,
+    /\((?:Photo|Crédits?|Credits?)\s+(?:by|par)\s+([^)]+)\)/gi,
+    /\((?:Photo|Crédits?|Credits?)\s*:\s*([^)"']+)$/gi,
+    /(?:Mention\s+)?(?:Photo|Crédits?|Credits?)\s*:\s*([^\n<.]+)/gi,
   ];
   let last = '';
   for (const re of patterns) {
     for (const m of t.matchAll(re)) last = m[1];
+  }
+  if (!last) {
+    const trailingFr = t.match(TRAILING_FR_CREDIT_RE);
+    if (trailingFr) last = trailingFr[2];
   }
   return sanitizeCreditText(last);
 }
@@ -230,11 +254,20 @@ function looksLikePhotoCredit(text = '') {
 
 function creditFromPhrase(text = '') {
   const phrase = normalizeCreditPhrase(text);
-  if (!phrase || phrase.length < 3) return null;
+  if (!phrase || phrase.length < 2) return null;
   const via = phrase.match(/^(.+?)\s+via\s+(.+)$/i);
   const creator = via ? via[1].trim() : phrase;
   const agency = via ? via[2].trim() : '';
-  // « Journaliste » / « Staff » : pas un·e photographe identifiable.
+  // « Journaliste » : signal pour résoudre vers l'auteur de l'article (pas null).
+  if (isJournalistRoleCredit(creator)) {
+    return {
+      creditLine: '',
+      creator: 'Journaliste',
+      agency: '',
+      isJournalistPlaceholder: true,
+    };
+  }
+  // Autres placeholders génériques (staff, rédaction…) : pas un crédit cité.
   if (isPlaceholderPhotoCredit(creator)) return null;
   if (agency && isPlaceholderPhotoCredit(agency) && isPlaceholderPhotoCredit(creator)) return null;
   const label = agency ? `${creator} via ${agency}` : creator;
@@ -310,6 +343,25 @@ function parseFigcaptionAttribution(text = '', lang = 'fr') {
  * / « … Courtesy Naya Hachwa » / « … Photo Marisa Filice » (photo essay : auteur = photographe).
  */
 function parseTrailingCaptionCredit(t = '', lang = 'fr') {
+  // Zone Campus / FR : « … Beach Party. Crédit : Journaliste » / « Crédits : Pinterest. »
+  const frTrail = t.match(TRAILING_FR_CREDIT_RE)
+    || t.match(/^(Crédits?(?:\s+photo)?|Credits?(?:\s+photo)?|Photo)\s*:\s*(.+?)\s*\.?$/iu);
+  if (frTrail) {
+    let nameRaw = frTrail[2].trim().replace(/[.,;:]+$/g, '').trim();
+    if (nameRaw.length < 2) return null;
+    const parsed = creditFromPhrase(nameRaw);
+    if (!parsed) return null;
+    if (parsed.isJournalistPlaceholder) {
+      return { ...parsed, source: 'figcaption-trailing-fr-journalist' };
+    }
+    const en = lang === 'en';
+    return {
+      ...parsed,
+      creditLine: en ? `Photo: ${parsed.creator}` : `Photo : ${parsed.creator}`,
+      source: 'figcaption-trailing-fr',
+    };
+  }
+
   // Point final optionnel (« Courtesy Sayplus. »).
   const trailing = t.match(
     /(?:^|[.!?…»"”]\s+)(Photos?|Graphics?|Illustrations?|File photo|Courtesy(?:\s+of)?)\s+([\p{Lu}][\p{L}'’.-]*(?:\s+[\p{Lu}&][\p{L}'’.&-]*){0,4})\s*\.?$/u,
@@ -328,6 +380,9 @@ function parseTrailingCaptionCredit(t = '', lang = 'fr') {
   if (nameRaw.length < 2) return null;
   const parsed = creditFromPhrase(nameRaw);
   if (!parsed) return null;
+  if (parsed.isJournalistPlaceholder) {
+    return { ...parsed, source: 'figcaption-trailing-journalist' };
+  }
   const en = lang === 'en';
   let creditLine = en ? `Photo: ${parsed.creator}` : `Photo : ${parsed.creator}`;
   if (kind.startsWith('graphic') || kind.startsWith('illustration')) {
@@ -707,7 +762,9 @@ function extractPhotoCreditFromHtml(html = '', imageUrl = '', lang = 'fr') {
 
   for (const fn of extractors) {
     const hit = fn();
-    if (hit?.creditLine) return hit;
+    // creditLine vide + isJournalistPlaceholder = « Crédit : Journaliste »
+    // (résolu ensuite vers l'auteur de l'article).
+    if (hit?.creditLine || hit?.isJournalistPlaceholder) return hit;
   }
   return null;
 }
@@ -724,16 +781,45 @@ function formatMediaFallbackCredit(item = {}) {
   };
 }
 
+/**
+ * « Crédit : Journaliste » → l'auteur·e de l'article est le·la photographe
+ * (Zone Campus, et d'autres médias qui n'écrivent pas le nom en légende).
+ */
+function formatAuthorPhotographerCredit(item = {}) {
+  const author = String(item.author || item.sourceImageCreator || '').trim();
+  if (!author || author.length < 2) return null;
+  // Pas de fallback générique « The editorial team » / « La rédaction »
+  if (/^(?:the\s+editorial\s+team|la\s+r[eé]daction|r[eé]daction|staff)$/i.test(author)) {
+    return null;
+  }
+  if (isPlaceholderPhotoCredit(author)) return null;
+  const en = item.lang === 'en';
+  return {
+    cited: true,
+    creditLine: en ? `Photo: ${author}` : `Photo : ${author}`,
+    creator: author,
+    creditUrl: String(item.link || '').trim(),
+    from: 'article',
+    method: 'author-as-photographer',
+  };
+}
+
 function resolveSourcePhotoCredit(item = {}, html = '') {
   const imageUrl = String(item.image || '').trim();
   if (!imageUrl) return null;
 
   const cited = extractPhotoCreditFromHtml(html, imageUrl, item.lang === 'en' ? 'en' : 'fr');
-  // Si l'extracteur a quand même collé un placeholder, traiter comme absent.
+
+  // Zone Campus : « Crédit : Journaliste » → nom de l'auteur·e.
+  if (cited?.isJournalistPlaceholder || isJournalistRoleCredit(cited?.creator || '')) {
+    return formatAuthorPhotographerCredit(item) || formatMediaFallbackCredit(item);
+  }
+
+  // Si l'extracteur a quand même collé un autre placeholder, traiter comme absent.
   if (cited && isPlaceholderPhotoCredit(cited.creator || cited.creditLine)) {
     return formatMediaFallbackCredit(item);
   }
-  if (cited) {
+  if (cited?.creditLine) {
     return {
       cited: true,
       creditLine: cited.creditLine,
@@ -799,13 +885,19 @@ function needsSourceCreditCheck(item) {
   const key = imageUrlKey(item.image);
   if (!key) return false;
   const rev = item.sourceImageCreditRev || 0;
-  // Placeholders (« Journaliste », « Staff »…) → repli média (ex. Zone Campus).
+  // Placeholders (« Journaliste », « Staff »…) → re-résoudre (auteur ou média).
   if (isPlaceholderPhotoCredit(item.sourceImageCreator)
-    || isPlaceholderPhotoCredit(item.sourceImageCredit)) {
+    || isPlaceholderPhotoCredit(item.sourceImageCredit)
+    || isJournalistRoleCredit(item.sourceImageCreator)
+    || isJournalistRoleCredit(item.sourceImageCredit)) {
     return true;
   }
-  // Repli média : re-passer les extracteurs une fois par version.
+  // Repli média générique « Crédit photo : Zone Campus » : re-tenter extracteurs
+  // améliorés (Crédits FR, Journaliste → auteur).
   if (!item.sourceImageCreditCited && rev < CREDIT_EXTRACTOR_REV) {
+    return true;
+  }
+  if (item.sourceImageCreditFrom === 'media' && rev < CREDIT_EXTRACTOR_REV) {
     return true;
   }
   // Crédit encodé dans le nom de fichier : re-vérifier si l'extracteur
@@ -910,6 +1002,7 @@ module.exports = {
   creditLooksCorrupt,
   looksLikePhotoCredit,
   isPlaceholderPhotoCredit,
+  isJournalistRoleCredit,
   extractMediaCreditPlugin,
   parseFigcaptionAttribution,
   extractPhotoCreditFromHtml,
@@ -921,6 +1014,7 @@ module.exports = {
   mergePriorEnrichment,
   auditPhotoCredits,
   formatMediaFallbackCredit,
+  formatAuthorPhotographerCredit,
   PHOTO_CREDIT_FIELDS,
   LEAD_IMAGE_FIELDS,
 };
