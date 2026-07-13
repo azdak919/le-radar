@@ -3372,8 +3372,8 @@ function renderNews() {
   else NEWS_LIST.removeAttribute('data-brief-count');
 
   updateNewsLayout();
-  // Colonne vedettes plus courte que « En bref » → promouvoir d'autres features.
-  scheduleHeroColumnBalance();
+  // Équilibre magazine : combler le vide sous vedettes et/ou sous En bref.
+  scheduleMagazineColumnBalance();
 }
 
 function updateNewsLayout() {
@@ -3392,19 +3392,34 @@ function updateNewsLayout() {
  *     candidat plus récent équivalent existe, sans passer devant un plus frais.
  *  3. À la une = le plus récent ; vedettes = suivants ; En bref = suite ;
  *     Suite du fil = le reste.
- *  4. Sur bureau, si la colonne hero est plus courte que En bref, on ajoute
- *     des vedettes depuis la réserve (encore par date).
+ *  4. Bureau : équilibrer les hauteurs des colonnes —
+ *     hero trop court → + vedettes ; En bref trop court → + cartes (autres institutions).
  */
 const HERO_FEATURE_MIN = 2; /* vedettes initiales (hors à la une) */
 const HERO_FEATURE_MAX = 6; /* plafond après remplissage de colonne */
 const HERO_SPOTLIGHT_MAX = 1 + HERO_FEATURE_MIN; /* une + 2 vedettes au 1er passage */
-const BRIEF_SIDEBAR_MAX = 7;
+const BRIEF_SIDEBAR_MIN = 7; /* En bref au premier passage */
+const BRIEF_SIDEBAR_MAX = 14; /* plafond si la colonne a encore de la place */
 /* Vue source : pas de vedettes intermédiaires (voir partitionSourceFeed). */
 
-/** File d'attente des candidats feature (date desc) pour combler le vide sous les vedettes. */
-let heroFeatureReserve = [];
-let heroBalanceTimer = 0;
-let heroBalanceObs = null;
+/**
+ * Réserve partagée (suite du fil, date desc) + états de diversité pour le
+ * remplissage dynamique hero ↔ En bref.
+ * magazineBalanceBusy / generation : anti boucle infinie (pas de RO sur les
+ * colonnes mutées ; une seule direction par passe).
+ */
+let magazineReserve = [];
+let magazineBalanceTimer = 0;
+let magazineBalanceBusy = false;
+let magazineBalanceGen = 0;
+const magazineMeta = {
+  heroKeys: new Set(),
+  heroSources: new Set(),
+  heroInsts: new Set(),
+  briefKeys: new Set(),
+  briefSources: new Set(),
+  briefInsts: new Set(),
+};
 /**
  * Fraîcheur universelle : scripts/session-freshness-lib.js
  * (même règle bots + UI — automne/hiver/été + grâce septembre).
@@ -3603,17 +3618,19 @@ function pickHeroSpotlight(items, referenceDate = new Date()) {
  * Passes : (1) 1 par source absente du hero, (2) 1 par source du hero,
  * (3) compléter en autorisant les doublons de source — toujours en marchant
  * du plus récent au plus ancien.
+ * @param {number} [maxSlots] — plafond (MIN au partition, MAX au fill colonne)
  */
-function pickBriefSidebar(allItems, heroItems = [], referenceDate = new Date()) {
+function pickBriefSidebar(allItems, heroItems = [], referenceDate = new Date(), maxSlots = BRIEF_SIDEBAR_MIN) {
   const heroKeys = new Set(heroItems.map(articleKey));
   const heroSources = new Set(heroItems.map(sourceKey));
   const picks = [];
   const usedKeys = new Set();
   const usedSources = new Set();
   let contingencyBand = 0;
+  const limit = Math.max(1, maxSlots);
 
   const add = (item, { allowDuplicateSource = false } = {}) => {
-    if (!item || picks.length >= BRIEF_SIDEBAR_MAX) return false;
+    if (!item || picks.length >= limit) return false;
     const key = articleKey(item);
     const src = sourceKey(item);
     if (usedKeys.has(key)) return false;
@@ -3629,7 +3646,7 @@ function pickBriefSidebar(allItems, heroItems = [], referenceDate = new Date()) 
     if (!eligible.length) return;
     const before = picks.length;
 
-    // 1) Plus frais par source hors hero
+    // 1) Plus frais par source hors hero (diversité d'institutions / médias)
     const latest = latestPerKey(eligible, sourceKey);
     sortByDateDesc(
       [...latest.entries()]
@@ -3646,7 +3663,7 @@ function pickBriefSidebar(allItems, heroItems = [], referenceDate = new Date()) 
 
     // 3) Compléter strictement par date (doublons de source OK)
     for (const item of eligible) {
-      if (picks.length >= BRIEF_SIDEBAR_MAX) break;
+      if (picks.length >= limit) break;
       add(item, { allowDuplicateSource: true });
     }
 
@@ -3654,11 +3671,11 @@ function pickBriefSidebar(allItems, heroItems = [], referenceDate = new Date()) 
   };
 
   for (let band = 0; band <= freshnessMaxSessionsBack(referenceDate); band++) {
-    if (picks.length >= BRIEF_SIDEBAR_MAX) break;
+    if (picks.length >= limit) break;
     fillFromPool(sessionBandPool(allItems, referenceDate, band), band);
   }
 
-  if (isAutumnGracePeriod(referenceDate) && picks.length < BRIEF_SIDEBAR_MAX) {
+  if (isAutumnGracePeriod(referenceDate) && picks.length < limit) {
     fillFromPool(
       sortByDateDesc(allItems).filter((item) => isWithinFreshnessWindow(item, referenceDate)),
       1,
@@ -3669,6 +3686,15 @@ function pickBriefSidebar(allItems, heroItems = [], referenceDate = new Date()) 
     items: sortByDateDesc(picks),
     contingencyBand,
   };
+}
+
+function resetMagazineMeta(heroItems = [], briefItems = []) {
+  magazineMeta.heroKeys = new Set(heroItems.map(articleKey));
+  magazineMeta.heroSources = new Set(heroItems.map(sourceKey));
+  magazineMeta.heroInsts = new Set(heroItems.map(institutionKey));
+  magazineMeta.briefKeys = new Set(briefItems.map(articleKey));
+  magazineMeta.briefSources = new Set(briefItems.map(sourceKey));
+  magazineMeta.briefInsts = new Set(briefItems.map(institutionKey));
 }
 
 function partitionNewsFeed(items, referenceDate = new Date()) {
@@ -3683,19 +3709,21 @@ function partitionNewsFeed(items, referenceDate = new Date()) {
     sorted,
     heroItems,
     referenceDate,
+    BRIEF_SIDEBAR_MIN,
   );
   const briefKeys = new Set(briefItems.map(articleKey));
   const tailItems = sorted.filter(
     (i) => !heroKeys.has(articleKey(i)) && !briefKeys.has(articleKey(i)),
   );
-  // Réserve = suite du fil (plus frais d'abord) pour promouvoir en vedettes si colonne courte
-  heroFeatureReserve = tailItems.slice();
+  // Réserve partagée pour combler hero et/ou En bref (plus frais d'abord)
+  magazineReserve = tailItems.slice();
+  resetMagazineMeta(heroItems, briefItems);
   const contingencyBand = Math.max(heroBand, briefBand);
   return { heroItems, briefItems, tailItems, contingencyBand };
 }
 
-/** Bureau : tant que le hero est plus court que En bref, ajouter des vedettes. */
-function canBalanceHeroColumn() {
+/** Bureau magazine (pas source / recherche). */
+function canBalanceMagazineColumns() {
   if (!NEWS_LIST) return false;
   if (NEWS_LIST.dataset.mode === 'source' || NEWS_LIST.dataset.mode === 'search') return false;
   return window.matchMedia('(min-width: 1100px)').matches;
@@ -3718,65 +3746,195 @@ function removeTailArticleForItem(item) {
   if (!tail.querySelector('.article')) tail.remove();
 }
 
-function balanceHeroColumnHeight() {
-  if (!canBalanceHeroColumn()) return;
+/**
+ * Prochain candidat En bref dans la réserve :
+ * 1) autre institution + autre source (priorité diversité)
+ * 2) autre source
+ * 3) autre institution
+ * 4) le plus frais restant
+ * (la réserve est déjà triée date desc)
+ */
+function takeNextBriefFromReserve() {
+  if (!magazineReserve.length) return null;
+  const tryPick = (pred) => {
+    const idx = magazineReserve.findIndex((item) => {
+      const key = articleKey(item);
+      if (magazineMeta.heroKeys.has(key) || magazineMeta.briefKeys.has(key)) return false;
+      return pred(item);
+    });
+    if (idx < 0) return null;
+    return magazineReserve.splice(idx, 1)[0];
+  };
+
+  return (
+    tryPick((item) => (
+      !magazineMeta.briefInsts.has(institutionKey(item))
+      && !magazineMeta.briefSources.has(sourceKey(item))
+      && !magazineMeta.heroSources.has(sourceKey(item))
+    ))
+    || tryPick((item) => (
+      !magazineMeta.briefSources.has(sourceKey(item))
+      && !magazineMeta.heroSources.has(sourceKey(item))
+    ))
+    || tryPick((item) => !magazineMeta.briefInsts.has(institutionKey(item)))
+    || tryPick((item) => !magazineMeta.briefSources.has(sourceKey(item)))
+    || tryPick(() => true)
+  );
+}
+
+/** Prochain candidat vedette : fraîcheur + institution pas encore dans le hero. */
+function takeNextFeatureFromReserve() {
+  if (!magazineReserve.length) return null;
+  const tryPick = (pred) => {
+    const idx = magazineReserve.findIndex((item) => {
+      const key = articleKey(item);
+      if (magazineMeta.heroKeys.has(key) || magazineMeta.briefKeys.has(key)) return false;
+      return pred(item);
+    });
+    if (idx < 0) return null;
+    return magazineReserve.splice(idx, 1)[0];
+  };
+  return (
+    tryPick((item) => !magazineMeta.heroInsts.has(institutionKey(item)))
+    || tryPick(() => true)
+  );
+}
+
+function markPromotedToHero(item) {
+  magazineMeta.heroKeys.add(articleKey(item));
+  magazineMeta.heroSources.add(sourceKey(item));
+  magazineMeta.heroInsts.add(institutionKey(item));
+}
+
+function markPromotedToBrief(item) {
+  magazineMeta.briefKeys.add(articleKey(item));
+  magazineMeta.briefSources.add(sourceKey(item));
+  magazineMeta.briefInsts.add(institutionKey(item));
+}
+
+/**
+ * Équilibre magazine — une seule direction par passe (anti oscillation) :
+ *  - Si En bref est plus court → uniquement + cartes brief (autres institutions)
+ *  - Sinon si hero est plus court → uniquement + vedettes
+ * Pas de ResizeObserver sur les colonnes (évite boucle append → resize → append).
+ * Re-passages limités via images load / schedule après render uniquement.
+ */
+function balanceMagazineColumns() {
+  if (!canBalanceMagazineColumns() || magazineBalanceBusy) return;
   const hero = NEWS_LIST.querySelector('.news-hero');
   const brief = NEWS_LIST.querySelector('.brief-rail');
   if (!hero || !brief) return;
+  if (!magazineReserve.length) return;
 
+  magazineBalanceBusy = true;
+  const GAP = 16;
+  const h0 = hero.offsetHeight;
+  const b0 = brief.offsetHeight;
+
+  try {
+    // Snapshot de direction : on ne change pas de colonne en cours de passe.
+    if (b0 + GAP < h0) {
+      fillBriefColumnToMatch(hero, brief, GAP);
+    } else if (h0 + GAP < b0) {
+      fillHeroColumnToMatch(hero, brief, GAP);
+    }
+  } finally {
+    // Laisse le layout se stabiliser avant une éventuelle re-entrée.
+    window.setTimeout(() => { magazineBalanceBusy = false; }, 80);
+  }
+
+  const briefCount = brief.querySelectorAll('.article--compact').length;
+  if (briefCount) NEWS_LIST.dataset.briefCount = String(briefCount);
+  else NEWS_LIST.removeAttribute('data-brief-count');
+  updateNewsLayout();
+  bindMagazineImageBalanceOnce();
+}
+
+function fillBriefColumnToMatch(hero, brief, gap) {
   let guard = 0;
-  while (guard < HERO_FEATURE_MAX) {
+  let stagnant = 0;
+  while (guard < BRIEF_SIDEBAR_MAX && magazineReserve.length) {
+    guard += 1;
+    const briefCount = brief.querySelectorAll('.article--compact').length;
+    if (briefCount >= BRIEF_SIDEBAR_MAX) break;
+    if (brief.offsetHeight + gap >= hero.offsetHeight) break;
+
+    const item = takeNextBriefFromReserve();
+    if (!item) break;
+
+    const before = brief.offsetHeight;
+    const el = safeCreateArticle(item, 'compact');
+    if (!el) continue;
+    brief.appendChild(el);
+    markPromotedToBrief(item);
+    removeTailArticleForItem(item);
+
+    // Hauteur n'a pas bougé (image pas encore là) : on compte, max 3 stalls.
+    if (brief.offsetHeight <= before + 1) {
+      stagnant += 1;
+      if (stagnant >= 3) break;
+    } else {
+      stagnant = 0;
+    }
+  }
+}
+
+function fillHeroColumnToMatch(hero, brief, gap) {
+  let guard = 0;
+  let stagnant = 0;
+  while (guard < HERO_FEATURE_MAX && magazineReserve.length) {
     guard += 1;
     const featureCount = hero.querySelectorAll('.article--feature').length;
     if (featureCount >= HERO_FEATURE_MAX) break;
-    // Marge de 12 px : évite une bascule infinie pour 1–2 px.
-    if (hero.offsetHeight + 12 >= brief.offsetHeight) break;
-    if (!heroFeatureReserve.length) break;
+    if (hero.offsetHeight + gap >= brief.offsetHeight) break;
 
-    const item = heroFeatureReserve.shift();
+    const item = takeNextFeatureFromReserve();
     if (!item) break;
-    const beforeH = hero.offsetHeight;
+
+    const before = hero.offsetHeight;
     const el = safeCreateArticle(item, 'feature');
     if (!el) continue;
     hero.appendChild(el);
+    markPromotedToHero(item);
     removeTailArticleForItem(item);
-    // Image pas encore chargée : on continue ; un 2e passage via ResizeObserver/load.
-    if (hero.offsetHeight <= beforeH && !itemHasThumbPhoto(item)) {
-      // Hauteur inchangée sans photo : quand même garder la carte (extrait).
+
+    if (hero.offsetHeight <= before + 1) {
+      stagnant += 1;
+      if (stagnant >= 3) break;
+    } else {
+      stagnant = 0;
     }
   }
-  updateNewsLayout();
-  observeHeroBalanceTargets();
 }
 
-function scheduleHeroColumnBalance() {
-  clearTimeout(heroBalanceTimer);
-  heroBalanceTimer = window.setTimeout(() => {
-    balanceHeroColumnHeight();
-    // Second passage après décodage images / polices.
-    requestAnimationFrame(() => balanceHeroColumnHeight());
-  }, 40);
+function scheduleMagazineColumnBalance() {
+  clearTimeout(magazineBalanceTimer);
+  const gen = ++magazineBalanceGen;
+  magazineBalanceTimer = window.setTimeout(() => {
+    if (gen !== magazineBalanceGen) return;
+    balanceMagazineColumns();
+    // Un second passage après paint (images décodées partiellement), pas une boucle.
+    window.setTimeout(() => {
+      if (gen !== magazineBalanceGen) return;
+      balanceMagazineColumns();
+    }, 200);
+  }, 50);
 }
 
-function observeHeroBalanceTargets() {
-  if (typeof ResizeObserver === 'undefined' || !NEWS_LIST) return;
-  if (!heroBalanceObs) {
-    heroBalanceObs = new ResizeObserver(() => scheduleHeroColumnBalance());
-  } else {
-    heroBalanceObs.disconnect();
-  }
-  const hero = NEWS_LIST.querySelector('.news-hero');
-  const brief = NEWS_LIST.querySelector('.brief-rail');
-  if (hero) heroBalanceObs.observe(hero);
-  if (brief) heroBalanceObs.observe(brief);
-  // Images du hero / brief : rebalancer au load (hauteur change après paint)
+/** Images : un seul rebalance au load — pas de RO sur .news-hero / .brief-rail. */
+function bindMagazineImageBalanceOnce() {
+  if (!NEWS_LIST) return;
   NEWS_LIST.querySelectorAll('.news-hero img, .brief-rail img').forEach((img) => {
-    if (img.dataset.heroBalanceBound) return;
-    img.dataset.heroBalanceBound = '1';
-    if (!img.complete) {
-      img.addEventListener('load', scheduleHeroColumnBalance, { once: true });
-      img.addEventListener('error', scheduleHeroColumnBalance, { once: true });
-    }
+    if (img.dataset.magazineBalanceBound) return;
+    img.dataset.magazineBalanceBound = '1';
+    if (img.complete) return;
+    const once = () => {
+      img.removeEventListener('load', once);
+      img.removeEventListener('error', once);
+      scheduleMagazineColumnBalance();
+    };
+    img.addEventListener('load', once);
+    img.addEventListener('error', once);
   });
 }
 
@@ -3830,7 +3988,7 @@ function partitionSourceFeed(items, referenceDate = new Date()) {
   const heroItems = lead ? [lead] : [];
   const heroKeys = new Set(heroItems.map(articleKey));
   const rest = pool.filter((item) => !heroKeys.has(articleKey(item)));
-  const briefItems = rest.slice(0, BRIEF_SIDEBAR_MAX);
+  const briefItems = rest.slice(0, BRIEF_SIDEBAR_MIN);
   const briefKeys = new Set(briefItems.map(articleKey));
   const tailItems = rest.filter((item) => !briefKeys.has(articleKey(item)));
   const leadHasImage = !!(lead && hasDisplayImage(lead));
@@ -3927,11 +4085,12 @@ function createArticle(item, role = 'standard') {
   const titleHtml = `<h3 class="article-title">${escapeHtml(cleanTitle(item.title))}</h3>`;
   const mediaHtml = hasImageCandidate ? '<figure class="article-media"></figure>' : '';
   if (role === 'lead') {
+    // Titre au-dessus de l'image : eyebrow → meta → titre → photo → byline → extrait
     a.innerHTML = `
       <span class="article-eyebrow">À la une</span>
       ${metaHtml}
-      ${mediaHtml}
       ${titleHtml}
+      ${mediaHtml}
       ${bylineHtml}
       ${briefHtml}
     `;
@@ -3950,7 +4109,25 @@ function createArticle(item, role = 'standard') {
        le CSS adapte la largeur pour éviter l'écrasement du texte. */
     attachArticleImage(a, item, role);
   }
+
+  // Filet : garantir titre avant photo même si un attach restructure le DOM.
+  if (role === 'lead') ensureLeadTitleAboveMedia(a);
+
   return a;
+}
+
+/** Place .article-title juste avant .article-media (une uniquement). */
+function ensureLeadTitleAboveMedia(article) {
+  if (!article) return;
+  const title = article.querySelector(':scope > .article-title');
+  const media = article.querySelector(':scope > .article-media');
+  if (!title || !media) return;
+  // Si le media précède le titre dans le DOM, on remonte le titre.
+  if (
+    title.compareDocumentPosition(media) & Node.DOCUMENT_POSITION_PRECEDING
+  ) {
+    media.parentNode.insertBefore(title, media);
+  }
 }
 
 /** Aligné sur scripts/article-image-lib.js isWeakImageUrl :
@@ -4439,6 +4616,7 @@ function attachArticleImage(article, item, role) {
       if (settled) return;
       settled = true;
       showArticleImage(article, media, img, kind, item);
+      if (role === 'lead') ensureLeadTitleAboveMedia(article);
     };
 
     img.onload = () => {
