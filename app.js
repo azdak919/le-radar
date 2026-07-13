@@ -3472,8 +3472,9 @@ function renderNews() {
   if (tail.length) {
     const section = document.createElement('div');
     section.className = 'news-tail';
-    section.innerHTML = '<h3 class="news-tail-title">Suite du fil</h3>';
-    tail.forEach((article) => section.appendChild(article));
+    section.innerHTML = '<h3 class="news-tail-title">Suite du fil</h3><div class="news-tail-body"></div>';
+    const body = section.querySelector('.news-tail-body');
+    tail.forEach((article) => body.appendChild(article));
     NEWS_LIST.appendChild(section);
   }
 
@@ -3490,9 +3491,64 @@ function renderNews() {
   scheduleMagazineColumnBalance();
 }
 
+/** Aperçu de la rangée suivante (titres lisibles), comme --filters-peek. */
+const NEWS_TAIL_PEEK_PX = 34;
+
+function ensureNewsTailBody(tail) {
+  if (!tail) return null;
+  let body = tail.querySelector('.news-tail-body');
+  if (body) return body;
+  body = document.createElement('div');
+  body.className = 'news-tail-body';
+  const title = tail.querySelector('.news-tail-title');
+  const toggle = tail.querySelector('.news-tail-toggle');
+  const loose = [...tail.querySelectorAll(':scope > .article, :scope > a.article')];
+  loose.forEach((el) => body.appendChild(el));
+  if (toggle) tail.insertBefore(body, toggle);
+  else if (title) title.insertAdjacentElement('afterend', body);
+  else tail.appendChild(body);
+  return body;
+}
+
+function getNewsTailCards(tail) {
+  const body = ensureNewsTailBody(tail);
+  if (!body) return [];
+  return [...body.querySelectorAll(':scope > .article, :scope > a.article')];
+}
+
+/**
+ * Hauteur repliée = bas du 10e article + peek (titres de la rangée d’après).
+ */
+function measureNewsTailCollapsedHeight(body, cards, visibleCount, peekPx) {
+  if (!body || !cards.length) return 0;
+  const lastIdx = Math.min(visibleCount, cards.length) - 1;
+  const last = cards[lastIdx];
+  if (!last) return 0;
+  const bodyTop = body.getBoundingClientRect().top;
+  const lastBottom = last.getBoundingClientRect().bottom;
+  const h = lastBottom - bodyTop + peekPx;
+  return Math.max(0, Math.ceil(h));
+}
+
+function applyNewsTailCollapsedHeight(tail) {
+  const body = tail?.querySelector('.news-tail-body');
+  if (!body || !tail.classList.contains('has-overflow') || tail.classList.contains('is-expanded')) {
+    body?.style.removeProperty('--news-tail-collapsed-h');
+    body?.style.removeProperty('max-height');
+    return;
+  }
+  const cards = getNewsTailCards(tail);
+  // Mesure avec tous les articles en layout (pas display:none)
+  const h = measureNewsTailCollapsedHeight(body, cards, NEWS_TAIL_VISIBLE, NEWS_TAIL_PEEK_PX);
+  if (h > 0) {
+    body.style.setProperty('--news-tail-collapsed-h', `${h}px`);
+    body.style.maxHeight = `${h}px`;
+  }
+}
+
 /**
  * Replie la Suite du fil après NEWS_TAIL_VISIBLE articles (comme « Plus de sources »).
- * Appelé au rendu et après promote/demote magazine.
+ * Aperçu des titres de la rangée suivante + fondu, puis bouton.
  * Ne s'applique jamais à la recherche (liste plate, pas de .news-tail).
  */
 function syncNewsTailCollapse({ preserveExpanded = true } = {}) {
@@ -3502,15 +3558,13 @@ function syncNewsTailCollapse({ preserveExpanded = true } = {}) {
   const tail = NEWS_LIST?.querySelector('.news-tail');
   if (!tail) return;
 
-  const articles = [...tail.querySelectorAll(':scope > .article, :scope > a.article')];
-  // Aussi les .article sans être direct child? createArticle uses <a class="article">
-  const cards = articles.length
-    ? articles
-    : [...tail.querySelectorAll('.article')].filter((el) => el.parentElement === tail);
-
+  const body = ensureNewsTailBody(tail);
+  const cards = getNewsTailCards(tail);
   const overflow = cards.length > NEWS_TAIL_VISIBLE;
-  cards.forEach((el, i) => {
-    el.classList.toggle('news-tail-article--overflow', i >= NEWS_TAIL_VISIBLE);
+
+  // Plus de display:none : le peek montre les titres de la rangée d’après
+  cards.forEach((el) => {
+    el.classList.remove('news-tail-article--overflow');
   });
 
   let toggle = tail.querySelector('.news-tail-toggle');
@@ -3524,7 +3578,6 @@ function syncNewsTailCollapse({ preserveExpanded = true } = {}) {
       toggle.addEventListener('click', () => {
         newsTailExpanded = !newsTailExpanded;
         syncNewsTailCollapse({ preserveExpanded: true });
-        // Amener le bouton en vue après réduire
         if (!newsTailExpanded) {
           toggle.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
         }
@@ -3535,18 +3588,29 @@ function syncNewsTailCollapse({ preserveExpanded = true } = {}) {
     if (!preserveExpanded) newsTailExpanded = false;
     tail.classList.toggle('is-expanded', newsTailExpanded);
     const label = toggle.querySelector('.news-tail-toggle__label');
+    const hidden = cards.length - NEWS_TAIL_VISIBLE;
     if (label) {
-      label.textContent = newsTailExpanded ? 'Réduire' : 'Plus d\'articles';
+      label.textContent = newsTailExpanded
+        ? 'Réduire'
+        : `Plus d'articles (${hidden})`;
     }
     toggle.setAttribute('aria-expanded', newsTailExpanded ? 'true' : 'false');
-    // Compter les articles masqués
-    const hidden = cards.length - NEWS_TAIL_VISIBLE;
-    if (!newsTailExpanded && hidden > 0) {
-      const lab = toggle.querySelector('.news-tail-toggle__label');
-      if (lab) lab.textContent = `Plus d'articles (${hidden})`;
-    }
+
+    // max-height après paint (grille 1 ou 2 colonnes)
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (newsTailExpanded) {
+          body.style.maxHeight = 'none';
+          body.style.removeProperty('--news-tail-collapsed-h');
+        } else {
+          applyNewsTailCollapsedHeight(tail);
+        }
+      });
+    });
   } else {
     tail.classList.remove('has-overflow', 'is-expanded');
+    body.style.maxHeight = 'none';
+    body.style.removeProperty('--news-tail-collapsed-h');
     toggle?.remove();
     if (!preserveExpanded) newsTailExpanded = false;
   }
@@ -3877,7 +3941,10 @@ function removeTailArticleForItem(item) {
   if (!tail || !item) return;
   const link = safeHttpUrl(item.link);
   const title = cleanTitle(item.title || '');
-  const nodes = [...tail.querySelectorAll('.article')];
+  const body = ensureNewsTailBody(tail);
+  const nodes = body
+    ? [...body.querySelectorAll('.article')]
+    : [...tail.querySelectorAll('.article')];
   for (const node of nodes) {
     const href = node.getAttribute?.('href') || node.href || '';
     const nodeTitle = node.querySelector('.article-title')?.textContent?.trim() || '';
@@ -3886,7 +3953,8 @@ function removeTailArticleForItem(item) {
       break;
     }
   }
-  if (!tail.querySelector('.article')) {
+  const remaining = (body || tail).querySelectorAll('.article');
+  if (!remaining.length) {
     tail.remove();
   } else {
     syncNewsTailCollapse({ preserveExpanded: true });
@@ -4055,17 +4123,10 @@ function demoteBriefCardToTail(brief, cardEl) {
   removeTailArticleForItem(item);
   const el = safeCreateArticle(item, 'standard');
   if (el) {
-    const titleEl = tail.querySelector('.news-tail-title');
-    const toggle = tail.querySelector('.news-tail-toggle');
-    if (titleEl && titleEl.nextSibling && titleEl.nextSibling !== toggle) {
-      tail.insertBefore(el, titleEl.nextSibling);
-    } else if (toggle) {
-      tail.insertBefore(el, toggle);
-    } else if (titleEl) {
-      titleEl.insertAdjacentElement('afterend', el);
-    } else {
-      tail.appendChild(el);
-    }
+    const body = ensureNewsTailBody(tail);
+    const first = body.querySelector(':scope > .article, :scope > a.article');
+    if (first) body.insertBefore(el, first);
+    else body.appendChild(el);
   }
   syncNewsTailCollapse({ preserveExpanded: true });
   return true;
