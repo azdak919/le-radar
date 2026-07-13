@@ -317,12 +317,16 @@ let suppressAudioError = false;
 // Amplification optionnelle via Web Audio : permet de dépasser 100 % pour les
 // flux trop faibles (ex. CKUT). Les postes sans en-tête CORS ne peuvent pas être
 // amplifiés ; on retombe alors en lecture native plafonnée à 100 %.
+// UI 0–200 % sur tous les appareils qui supportent Web Audio. Sur mobile, le
+// graphe n'est branché qu'au-dessus de 100 % afin de garder la lecture native
+// (plus fiable à l'écran verrouillé) pour le cas courant ≤ 100 %.
 let audioCtx = null;
 let gainNode = null;
 let mediaSource = null;
 let boostWired = false;             // graphe Web Audio branché sur l'élément courant
+let boostCtxLifecycleBound = false;  // listeners visibility/focus pour reprendre l'AudioContext
 let webAudioSupported = !!(window.AudioContext || window.webkitAudioContext);
-// Web Audio suspend l'AudioContext à l'écran verrouillé → lecture native seule sur mobile.
+// Stratégie de persistance d'écoute (Media Session, reconnexion, keepalive iOS).
 const MOBILE_PLAYBACK = window.matchMedia('(hover: none) and (pointer: coarse)').matches
   || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 let userPaused = false;
@@ -333,9 +337,8 @@ let currentGain = DEFAULT_GAIN;
 let volumeMuted = false;
 let gainBeforeMute = DEFAULT_GAIN;
 const MAX_GAIN = 2;                 // jusqu'à 200 %
-// Mobile : pas d'amplification (Web Audio suspendu à l'écran verrouillé) —
-// le curseur s'arrête à 100 % au lieu d'afficher une zone 100–200 % inerte.
-const GAIN_UI_MAX = (webAudioSupported && !MOBILE_PLAYBACK) ? MAX_GAIN : 1;
+// Curseur 0–200 % dès que Web Audio existe — y compris mobile / tablette.
+const GAIN_UI_MAX = webAudioSupported ? MAX_GAIN : 1;
 const VOL_THUMB_PX = 16;
 let volumeSliderDragging = false;
 const boostUnavailable = new Set(); // ids des postes sans CORS
@@ -379,9 +382,13 @@ let filterMarqueeResyncTimer = null;
 const FILTER_MARQUEE_RESYNC_MS = 480;
 
 /** Rangées visibles avant « Plus de sources » — desktop 3 ; tablette/mobile 2. */
-const FILTERS_COLLAPSED_ROWS_DESKTOP = 3;
+// Ordinateur + tablette paysage : 1 rangée (le reste via « Plus de sources »).
+// Tablette / téléphone en portrait : 2 rangées pour ne pas trop cacher.
+const FILTERS_COLLAPSED_ROWS_DESKTOP = 1;
 const FILTERS_COLLAPSED_ROWS_COMPACT = 2;
-const FILTERS_COMPACT_MQ = window.matchMedia('(max-width: 1099.98px)');
+const FILTERS_COMPACT_MQ = window.matchMedia(
+  '(max-width: 1099.98px) and (orientation: portrait)',
+);
 const FILTERS_ROW_CAPACITY = 3;
 const FILTERS_COLS_NARROW = 420;
 /** Max colonnes bureau (grand écran). */
@@ -440,7 +447,10 @@ async function init() {
   tunerSubMeta = TUNER_SUB?.textContent?.trim() || 'Radios étudiantes en direct';
   initTunerSubRotateListeners();
   initMarqueeResizeListeners();
-  // API live navigateur (CISM…) avant le premier rendu d'antenne.
+  // Antenne tout de suite (grilles + nowplaying déjà là) pour stabiliser le
+  // layout du synthé — pas d'attente des APIs live, qui ne font qu'affiner.
+  renderTunerNowAir();
+  // API live navigateur (CISM…) : second passage quand dispo.
   refreshStationLiveApis().finally(() => {
     renderTunerNowAir();
   });
@@ -1202,7 +1212,10 @@ function renderTunerNowAir() {
 
   lastNowAir = { title, sub, empty, previewId };
 
+  // Toujours visible sur bureau (placeholder HTML dès le paint) — ne pas
+  // repasser en .hidden (ça laissait un trou + volume étiré au load).
   TUNER_NOWAIR.classList.remove('hidden');
+  TUNER_NOWAIR.removeAttribute('aria-hidden');
   TUNER_NOWAIR.classList.toggle('is-empty', empty);
   updateNowAirPanel(title, sub, crossfadePreview);
   syncDesktopDialPreview(title, crossfadePreview);
@@ -1395,6 +1408,8 @@ function bindTuner() {
     const v = parseFloat(e.target.value);
     currentGain = Number.isFinite(v) ? v : currentGain;
     if (volumeMuted && currentGain > 0) setVolumeMuted(false);
+    // Au passage au-dessus de 100 %, brancher le graphe d'amplification.
+    syncBoostWiring();
     applyGain();
     localStorage.setItem('req-player-vol', currentGain);
   });
@@ -1406,7 +1421,10 @@ function bindTuner() {
   bindVolumeSliderDrag();
 }
 
-/** Sans amplification (mobile) : range 0–100 %, zone boost et repère 200 % masqués. */
+/**
+ * Sans Web Audio : range 0–100 %, zone boost et repère 200 % masqués.
+ * Avec Web Audio (y compris mobile) : curseur 0–200 % toujours visible.
+ */
 function initVolumeRangeBounds() {
   if (!TUNER_VOLUME || GAIN_UI_MAX >= MAX_GAIN) return;
   TUNER_VOLUME.max = String(GAIN_UI_MAX);
@@ -1862,12 +1880,9 @@ async function play(radio) {
     return;
   }
 
-  // Branche (ou non) le graphe d'amplification selon le support CORS du poste.
+  // Branche (ou non) le graphe d'amplification selon le gain demandé et le poste.
   const tuning = STATION_PLAYBACK[radio.id] || {};
-  const wantBoost = wantsAudioBoost()
-    && !boostUnavailable.has(radio.id)
-    && !tuning.noBoost;
-  if (wantBoost !== boostWired) rebuildAudio(wantBoost);
+  syncBoostWiring({ station: radio, allowUnwire: true });
   reconnectTries = 0;
   mobilePlayback?.resetReconnectTries();
   audio.preload = mobilePlayback?.getMobilePreload(!!tuning.resilient)
@@ -1934,8 +1949,51 @@ function updatePlayUI() {
   window.RadarCast?.updateButton?.();
 }
 
+/**
+ * Faut-il brancher le graphe Web Audio (gain > 1 possible) ?
+ * - Bureau : oui dès que Web Audio existe (CORS testé au premier play).
+ * - Mobile : seulement si le curseur dépasse 100 % — évite de forcer
+ *   crossOrigin + AudioContext pour une écoute « normale », tout en
+ *   permettant le 200 % sur téléphone / tablette quand l'utilisateur le demande.
+ */
 function wantsAudioBoost() {
-  return webAudioSupported && !MOBILE_PLAYBACK;
+  if (!webAudioSupported) return false;
+  if (MOBILE_PLAYBACK) return currentGain > 1.001;
+  return true;
+}
+
+/**
+ * Aligne le graphe d'amplification sur le gain / poste courants.
+ * Sur mobile, une fois branché on évite de démonter juste parce que le gain
+ * redescend ≤ 100 % (rebuild de l'<audio> = perte de session Android).
+ */
+function syncBoostWiring({ station = currentStation, allowUnwire = false } = {}) {
+  if (!station) return;
+  const tuning = STATION_PLAYBACK[station.id] || {};
+  const wantBoost = wantsAudioBoost()
+    && !boostUnavailable.has(station.id)
+    && !tuning.noBoost;
+
+  if (wantBoost === boostWired) return;
+  // Garder le graphe si on est déjà amplifié et que le démontage n'est pas
+  // explicitement autorisé (changement de poste / play()).
+  if (boostWired && !wantBoost && !allowUnwire) return;
+
+  const wasPlaying = !!(audio && !audio.paused && audio.src);
+  const url = (audio && audio.src)
+    || getPlayableStream(station)
+    || '';
+
+  rebuildAudio(wantBoost);
+
+  if (!url || !audio) return;
+  try {
+    if (audio.src !== url) audio.src = url;
+    if (wasPlaying) {
+      const p = audio.play();
+      if (p && typeof p.catch === 'function') p.catch(() => {});
+    }
+  } catch {}
 }
 
 function getPlayerElement() {
@@ -2014,7 +2072,10 @@ function initMobilePlayback() {
       syncMediaSessionLivePosition();
     },
     ensureNativePlayback: () => {
-      if (MOBILE_PLAYBACK && boostWired) rebuildAudio(false);
+      // Ne plus démonter le graphe d'amplification ici : rebuildAudio() recréait
+      // l'<audio>, tuait la Media Session Android et coupait le 200 %.
+      // On se contente de relancer l'AudioContext si besoin.
+      if (audioCtx?.state === 'suspended') audioCtx.resume().catch(() => {});
     },
     resumeAudioCtx: () => {
       if (audioCtx?.state === 'suspended') audioCtx.resume().catch(() => {});
@@ -2071,6 +2132,9 @@ function onAudioError() {
   // « anonymous ». On le note et on retombe une fois en lecture native simple.
   if (boostWired && currentStation && !boostUnavailable.has(currentStation.id)) {
     boostUnavailable.add(currentStation.id);
+    if (currentGain > 1.001) {
+      showToast('Amplification indisponible pour ce poste — volume plafonné à 100 %.');
+    }
     rebuildAudio(false);
     play(currentStation);
     return;
@@ -2084,16 +2148,29 @@ function wireBoost() {
   const Ctx = window.AudioContext || window.webkitAudioContext;
   if (!Ctx) { webAudioSupported = false; return false; }
   try {
+    if (!audio) return false;
     audio.crossOrigin = 'anonymous';
     audioCtx = audioCtx || new Ctx();
     mediaSource = audioCtx.createMediaElementSource(audio);
     gainNode = audioCtx.createGain();
     mediaSource.connect(gainNode).connect(audioCtx.destination);
-    audioCtx.onstatechange = () => {
-      if (audioCtx.state === 'suspended' && isPlaying() && !userPaused) {
+    const resumeIfNeeded = () => {
+      if (audioCtx && audioCtx.state === 'suspended' && isPlaying() && !userPaused) {
         audioCtx.resume().catch(() => {});
       }
     };
+    audioCtx.onstatechange = resumeIfNeeded;
+    // Mobile : l'AudioContext est souvent suspendu en arrière-plan — on reprend
+    // dès que la page redevient visible pour que le 200 % continue de sonner.
+    if (!boostCtxLifecycleBound) {
+      boostCtxLifecycleBound = true;
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') resumeIfNeeded();
+      });
+      window.addEventListener('pageshow', resumeIfNeeded);
+      window.addEventListener('focus', resumeIfNeeded);
+    }
+    if (audioCtx.state === 'suspended') audioCtx.resume().catch(() => {});
     boostWired = true;
   } catch {
     boostWired = false;
@@ -2564,26 +2641,29 @@ for (const [full, acr] of Object.entries(INSTITUTION_ACRONYMS)) {
  */
 function formatInstitutionDisplay(name = '') {
   if (!name) return '';
+  // Lookarounds ASCII : `\b` après `é` échoue en JS (é ≠ word char).
   return String(name)
-    .replace(/\buniversité\b/giu, 'Université')
-    .replace(/\buniversite\b/giu, 'Université')
-    .replace(/\buniversity\b/giu, 'University')
-    .replace(/\buniversidad\b/giu, 'Universidad')
-    .replace(/\buniversidade\b/giu, 'Universidade')
-    .replace(/\buniversität\b/giu, 'Universität')
-    .replace(/\buniversità\b/giu, 'Università')
-    .replace(/\bcégep\b/giu, 'Cégep')
-    .replace(/\bcegep\b/giu, 'Cégep')
-    .replace(/\bcollege\b/giu, 'College')
-    .replace(/\bcollège\b/giu, 'Collège')
+    .replace(/(?<![A-Za-z])université(?![A-Za-z])/giu, 'Université')
+    .replace(/(?<![A-Za-z])universite(?![A-Za-z])/giu, 'Université')
+    .replace(/(?<![A-Za-z])university(?![A-Za-z])/giu, 'University')
+    .replace(/(?<![A-Za-z])universidad(?![A-Za-z])/giu, 'Universidad')
+    .replace(/(?<![A-Za-z])universidade(?![A-Za-z])/giu, 'Universidade')
+    .replace(/(?<![A-Za-z])universität(?![A-Za-z])/giu, 'Universität')
+    .replace(/(?<![A-Za-z])università(?![A-Za-z])/giu, 'Università')
+    .replace(/(?<![A-Za-z])cégep(?![A-Za-z])/giu, 'Cégep')
+    .replace(/(?<![A-Za-z])cegep(?![A-Za-z])/giu, 'Cégep')
+    .replace(/(?<![A-Za-z])college(?![A-Za-z])/giu, 'College')
+    .replace(/(?<![A-Za-z])collège(?![A-Za-z])/giu, 'Collège')
+    .replace(/(?<![A-Za-z])colegio(?![A-Za-z])/giu, 'Colegio')
+    .replace(/(?<![A-Za-z])colégio(?![A-Za-z])/giu, 'Colégio')
     // Noms propres fréquents laissés en minuscules par gtx (Laval, Montréal…)
-    .replace(/\blaval\b/giu, 'Laval')
-    .replace(/\bmontr[eé]al\b/giu, (m) => (m.includes('é') ? 'Montréal' : 'Montreal'))
-    .replace(/\bsherbrooke\b/giu, 'Sherbrooke')
-    .replace(/\bmcgill\b/giu, 'McGill')
-    .replace(/\bconcordia\b/giu, 'Concordia')
-    .replace(/\bdawson\b/giu, 'Dawson')
-    .replace(/\bqu[eé]bec\b/giu, (m) => (m.includes('é') ? 'Québec' : 'Quebec'));
+    .replace(/(?<![A-Za-z])laval(?![A-Za-z])/giu, 'Laval')
+    .replace(/(?<![A-Za-z])montr[eé]al(?![A-Za-z])/giu, (m) => (m.includes('é') ? 'Montréal' : 'Montreal'))
+    .replace(/(?<![A-Za-z])sherbrooke(?![A-Za-z])/giu, 'Sherbrooke')
+    .replace(/(?<![A-Za-z])mcgill(?![A-Za-z])/giu, 'McGill')
+    .replace(/(?<![A-Za-z])concordia(?![A-Za-z])/giu, 'Concordia')
+    .replace(/(?<![A-Za-z])dawson(?![A-Za-z])/giu, 'Dawson')
+    .replace(/(?<![A-Za-z])qu[eé]bec(?![A-Za-z])/giu, (m) => (m.includes('é') ? 'Québec' : 'Quebec'));
 }
 
 /** Libellé institution sur les pastilles sources (nom complet, sans suffixe Univ./Cégep). */
@@ -2744,7 +2824,7 @@ function filtersColumnCount() {
   return FILTERS_DESKTOP_MAX_COLS;
 }
 
-/** Aligné sur style.css --filters-collapsed-rows (2 sous 1100 px, 3 au-delà). */
+/** Aligné sur style.css --filters-collapsed-rows (1 bureau/paysage, 2 portrait). */
 function filtersCollapsedRows() {
   return FILTERS_COMPACT_MQ.matches
     ? FILTERS_COLLAPSED_ROWS_COMPACT

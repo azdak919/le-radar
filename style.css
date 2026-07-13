@@ -951,7 +951,8 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
 }
 .tuner-vol.is-muted .tuner-vol-track { opacity: 0.42; }
 
-/* Sans amplification (mobile) : curseur 0–100 %, pas de zone boost ni de 200 %. */
+/* Sans Web Audio : curseur 0–100 %, pas de zone boost ni de 200 %.
+   (Sur mobile moderne le 200 % reste affiché — voir GAIN_UI_MAX dans app.js.) */
 .tuner-vol--no-boost .tuner-vol-zone--boost,
 .tuner-vol--no-boost .tuner-vol-tick--100,
 .tuner-vol--no-boost .tuner-vol-label--max {
@@ -973,11 +974,18 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   .tuner-actions {
     align-self: center;
     min-height: 42px;
+    /* Dès le premier paint : ne pas pousser play+volume tout à droite. */
+    margin-left: 0;
   }
 
   .tuner-vol {
     align-self: center;
     height: 42px;
+    /* Largeur fixe — pas de croissance pendant le load (ni via cqw ni flex). */
+    flex: 0 0 auto;
+    flex-shrink: 0;
+    max-width: 168px;
+    min-width: 0;
   }
 
   .tuner-vol-slot {
@@ -985,11 +993,17 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
     align-items: center;
     height: 42px;
     overflow: visible;
+    flex: 0 0 auto;
+    max-width: 120px;
+    min-width: 0;
   }
 
+  /* Largeur fixe compacte (pas clamp/cqw : trop large tant que le conteneur est full-width). */
   .tuner-vol-track {
-    width: clamp(108px, 26cqw, 248px);
-    flex-shrink: 0;
+    width: 112px;
+    max-width: 112px;
+    min-width: 96px;
+    flex: 0 0 112px;
     height: 42px;
     justify-content: center;
     gap: 0;
@@ -1276,59 +1290,41 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
 }
 
 @media (min-width: 1100px) {
+  /*
+   * Grille finale dès le premier paint (voir aussi <style> critique dans index.html).
+   * Colonne « À l'antenne » toujours présente — le volume reste compact.
+   */
   .tuner-inner {
     max-width: 1180px;
     padding-top: 11px;
     padding-bottom: 11px;
-    gap: 16px;
-  }
-
-  .tuner-controls {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .tuner-dial {
-    flex: 0 0 280px;
-    width: 280px;
-  }
-
-  .tuner-nowair {
-    display: flex;
-    flex: 0 0 370px;
-    width: 370px;
-    max-width: 370px;
-    margin-left: auto;
-  }
-
-  /* Même grille que le fil : contrôles à gauche, « À l'antenne » sur En bref. */
-  .tuner-inner:has(.tuner-nowair:not(.hidden)) {
     display: grid;
     grid-template-columns: minmax(0, 1.15fr) minmax(300px, 370px);
     gap: 0;
     align-items: center;
   }
 
-  .tuner-inner:has(.tuner-nowair:not(.hidden)) .tuner-controls {
+  .tuner-controls {
     grid-column: 1;
     flex: unset;
     min-width: 0;
   }
 
-  .tuner-inner:has(.tuner-nowair:not(.hidden)) .tuner-dial {
+  .tuner-dial {
     flex: 1 1 0;
     width: 0;
     min-width: 120px;
     max-width: none;
   }
 
-  .tuner-inner:has(.tuner-nowair:not(.hidden)) .tuner-actions {
+  .tuner-actions {
     margin-left: 0;
     flex-shrink: 0;
   }
 
-  .tuner-inner:has(.tuner-nowair:not(.hidden)) .tuner-nowair {
+  .tuner-nowair {
     grid-column: 2;
+    display: flex;
     flex: unset;
     width: auto;
     max-width: none;
@@ -1336,22 +1332,36 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
     margin-left: 0;
     padding-left: 28px;
     align-self: center;
+    opacity: 1;
   }
 
-  .tuner-inner:has(.tuner-nowair:not(.hidden)) .tuner-vol {
-    flex-shrink: 1;
-    min-width: 0;
-    max-width: 156px;
+  /* Ne jamais masquer le panneau en display:none sur bureau (collapse de colonne). */
+  .tuner-nowair.hidden {
+    display: flex !important;
+    /* Contenu placeholder du HTML reste lisible — pas d'opacity:0 (trou visuel). */
+    opacity: 1;
+    pointer-events: auto;
   }
 
-  .tuner-inner:has(.tuner-nowair:not(.hidden)) .tuner-vol-slot {
+  .tuner-vol {
+    flex: 0 0 auto;
+    flex-shrink: 0;
     min-width: 0;
+    max-width: 168px;
+  }
+
+  .tuner-vol-slot {
+    flex: 0 0 auto;
+    min-width: 0;
+    max-width: 120px;
     overflow: visible;
   }
 
-  .tuner-inner:has(.tuner-nowair:not(.hidden)) .tuner-vol-track {
-    width: clamp(88px, 12cqw, 132px);
-    max-width: 132px;
+  .tuner-vol-track {
+    width: 112px;
+    max-width: 112px;
+    min-width: 96px;
+    flex: 0 0 112px;
   }
 
   .masthead-inner {
@@ -1590,7 +1600,8 @@ html[data-translate-busy="1"] .translate-toggle {
   margin: 16px 0 6px;
   --filters-row-h: 48px;
   --filters-cols: 5;
-  --filters-collapsed-rows: 3;
+  /* Ordinateur + tablette paysage : une seule rangée ; le reste via « Plus de sources ». */
+  --filters-collapsed-rows: 1;
   /* hauteur = N lignes + (N−1) gaps de 6px */
   --filters-collapsed-h: calc(
     var(--filters-row-h) * var(--filters-collapsed-rows)
@@ -1598,8 +1609,8 @@ html[data-translate-busy="1"] .translate-toggle {
   );
 }
 
-/* Tablette + mobile : seulement 2 rangées de sources (le reste via « Plus de sources »). */
-@media (max-width: 1099.98px) {
+/* Tablette / téléphone en portrait : 2 rangées (moins de largeur pour les pastilles). */
+@media (max-width: 1099.98px) and (orientation: portrait) {
   .filters-panel {
     --filters-collapsed-rows: 2;
   }
@@ -2870,15 +2881,16 @@ body.external-listen-open {
   color: #fff;
 }
 
-/* ─────────────── RECHERCHE LOCALE (loupe bas-gauche) ─────────────── */
+/* ─────────────── RECHERCHE LOCALE (loupe bas-droite) ─────────────── */
 .news-search {
   position: fixed;
-  left: max(14px, env(safe-area-inset-left, 0px));
+  right: max(14px, env(safe-area-inset-right, 0px));
+  left: auto;
   bottom: max(16px, env(safe-area-inset-bottom, 0px));
   z-index: 180;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
   gap: 10px;
   pointer-events: none;
   max-width: min(360px, calc(100vw - 28px));
