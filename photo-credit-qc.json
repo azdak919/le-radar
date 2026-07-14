@@ -1,17 +1,59 @@
 {
-  "updated": "2026-07-14T20:55:01.945Z",
+  "updated": "2026-07-14T22:23:09.512Z",
   "total": 185,
   "withImage": 171,
   "withCredit": 171,
-  "cited": 120,
+  "cited": 121,
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 5,
-  "updatedCount": 5,
-  "citedNew": 4,
-  "fallbackNew": 1,
+  "checked": 12,
+  "updatedCount": 12,
+  "citedNew": 10,
+  "fallbackNew": 2,
   "samples": [
+    {
+      "title": "L’augmentation des fraudes en ligne et comment s’en protéger",
+      "source": "Le Collectif",
+      "credit": "Photo : Pieuvre",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "L’impact du tourisme sur les villes populaires",
+      "source": "Le Collectif",
+      "credit": "Photo : Ordre des architectes du Québec",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Le vélo prend de plus en plus de place",
+      "source": "Le Collectif",
+      "credit": "Photo : Vélo Québec",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Un Sherbrookois aux portes du baseball professionnel",
+      "source": "Le Collectif",
+      "credit": "Photo : Baseball Québec",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "source": "La Pige",
+      "credit": "Photo : Léa Morin-Letort",
+      "cited": true,
+      "method": "wp-caption"
+    },
+    {
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé - Quartier Libre",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "L’épidémie de la nonchalance - Le Délit",
       "source": "Le Délit",
@@ -27,16 +69,16 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Des initiatives qui rassemblent - Le Délit",
+      "title": "Ce que nous devons aux femmes - Le Délit",
       "source": "Le Délit",
-      "credit": "Crédit photo : Le Délit",
-      "cited": false,
-      "method": null
+      "credit": "Photo : Alexandre Gontier",
+      "cited": true,
+      "method": "media-credit-near"
     },
     {
-      "title": "Élections de l’exécutif de l’AÉUM - Le Délit",
+      "title": "Les femmes MAGA au service du patriarcat - Le Délit",
       "source": "Le Délit",
-      "credit": "Photo : Toscane Ralaimongo",
+      "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -46,6 +88,13 @@
       "credit": "Photo: My Little Princess (2011)",
       "cited": true,
       "method": "via-attribution"
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires » - Quartier Libre",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
     }
   ]
 }
