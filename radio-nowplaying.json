@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-07-14T12:48:37.218Z",
+  "updatedAt": "2026-07-14T14:54:12.656Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Mardi Champ Gauche",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
-      },
+      "current": null,
       "next": {
         "title": "Chéri.e, j’arrive!",
         "source": "schedule",
@@ -20,34 +14,34 @@
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Mardi Champ Gauche",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T12:48:16.304Z"
+      "checkedAt": "2026-07-14T14:53:51.006Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "À l'horizon",
-        "source": "api-live",
-        "start": "03:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "a-lhorizon"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "api-live",
         "start": "05:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364290.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "le-seismix"
       },
+      "next": {
+        "title": "Câlin collectif",
+        "source": "api-live",
+        "start": "07:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/363918.mp3",
+        "slug": "calins-collectifs"
+      },
       "track": "",
-      "showTitle": "À l'horizon",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-14T12:48:17.825Z"
+      "checkedAt": "2026-07-14T14:53:52.649Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Tuesday Morning After Pt2",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Basa Basa",
         "source": "api-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "Ecolibrium/Environment in Canada",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00"
+      },
       "track": "",
-      "showTitle": "Tuesday Morning After Pt2",
+      "showTitle": "Basa Basa",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T12:48:20.528Z"
+      "checkedAt": "2026-07-14T14:53:55.520Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Hip's Time to Wake Hop",
+        "title": "Democracy Now",
         "source": "schedule",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
       },
       "next": {
-        "title": "At The Movies",
+        "title": "Mirror Journal",
         "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/at-the-movies"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/mirror-journal"
       },
       "track": "",
-      "showTitle": "Hip's Time to Wake Hop",
+      "showTitle": "Democracy Now",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T12:48:33.842Z"
+      "checkedAt": "2026-07-14T14:54:09.086Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,27 +129,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T12:48:34.698Z"
+      "checkedAt": "2026-07-14T14:54:10.097Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Snack City",
+        "title": "Fermer les yeux",
         "source": "api-live",
-        "host": "La Sécurité"
+        "host": "MCM"
       },
       "next": null,
-      "track": "La Sécurité - Snack City",
-      "showTitle": "Snack City",
-      "host": "La Sécurité",
+      "track": "MCM - Fermer les yeux",
+      "showTitle": "Fermer les yeux",
+      "host": "MCM",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T12:48:36.868Z"
+      "checkedAt": "2026-07-14T14:54:12.306Z"
     }
   }
 }
