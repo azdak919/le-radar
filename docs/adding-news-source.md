@@ -18,10 +18,19 @@ Voir aussi `docs/maintenance.md` pour le pipeline global.
 | Fraîcheur | Publications récentes (le fil global plafonne à ~3 sessions universitaires) |
 | Indépendance | Plusieurs journaux par établissement sont acceptés s'ils sont distincts (ex. The Link + The Concordian) |
 
-**Exclus** : portails de communications institutionnelles (ex. `nouvelles.ulaval.ca`),
-sites d'actualités officielles des universités, communiqués de presse administratifs.
+**Exclus** : portails de communications institutionnelles (ex. `nouvelles.ulaval.ca`,
+`inrs.ca/feed`, `uqar.ca/feed`), sites d'actualités officielles des universités,
+communiqués de presse administratifs.
+
+**Nom affiché (`name`)** : **toujours le nom du journal étudiant**
+(ex. `The Plant`, `Zone Campus`, `L'Exemplaire`) — jamais « Média — {établissement} »
+ni le nom nu de l'université/cégep. L'établissement va dans `institution`.
 
 **Exemple ULaval** : seul `L'Exemplaire` (journal étudiant indépendant) est éligible.
+
+**Bots** : `scan-media.js` ne doit **pas** proposer le `/feed` du site institutionnel
+comme candidat ; `discover-news-sources.js` refuse la promotion des placeholders
+`Média — …` et des candidats `_status: retired`.
 
 ---
 

@@ -104,10 +104,20 @@ const GENERIC_AUTHORS = /^(admin|administrator|administrateur|editor|éditeur|ed
 
 // Active feeds come from the registry (news-sources.json), maintained by
 // scripts/discover-news-sources.js. Feeds flagged "_status": "dead" are skipped.
+// Institutional placeholders (« Média — UQAR ») are never student newspapers.
+const INSTITUTIONAL_PLACEHOLDER = /^m[eé]dia\s*[—–\-:]/i;
+
 function loadSources() {
   try {
     const registry = JSON.parse(fs.readFileSync(SOURCES_PATH, 'utf8'));
-    return (registry.active || []).filter((s) => s.url && s._status !== 'dead');
+    return (registry.active || []).filter((s) => {
+      if (!s.url || s._status === 'dead') return false;
+      if (INSTITUTIONAL_PLACEHOLDER.test(String(s.name || ''))) {
+        console.warn(`fetch-news: skip non-student source « ${s.name} »`);
+        return false;
+      }
+      return true;
+    });
   } catch (e) {
     console.error('Could not read news-sources.json:', e.message);
     return [];

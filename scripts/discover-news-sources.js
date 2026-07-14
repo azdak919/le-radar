@@ -50,6 +50,28 @@ const PROMOTE_DAYS = 365;  // a candidate must have posted within a year
 // Feed paths tried on a candidate site (most common first).
 const FEED_PATHS = ['feed/', 'feed', '?feed=rss2', 'rss/', 'rss', 'index.xml', 'atom.xml'];
 
+// Placeholders inventés par scan-media (portails institutionnels, pas journaux étudiants).
+const INSTITUTIONAL_PLACEHOLDER = /^m[eé]dia\s*[—–\-:]/i;
+const WEAK_NEWS_LABEL = /^(actualit[eé]s?|nouvelles?|news|communiqu[eé]s?|presse|media|média|publications?)$/i;
+
+/**
+ * Un candidat n'est promouvable que s'il a un vrai nom de journal étudiant.
+ * Voir docs/adding-news-source.md — exclus : portails de communications institutionnelles.
+ */
+function isEligibleStudentPaperCandidate(cand = {}) {
+  if (!cand || cand._status === 'retired' || cand._status === 'rejected') return false;
+  const name = String(cand.name || '').trim();
+  if (!name || name.length < 2) return false;
+  if (INSTITUTIONAL_PLACEHOLDER.test(name)) return false;
+  if (WEAK_NEWS_LABEL.test(name)) return false;
+  // « Média — Institut… » déjà couvert ; aussi rejeter un name = institution seule.
+  if (/^(institut|universit[eé]|c[eé]gep|college|coll[eè]ge)\b/i.test(name)
+      && !/journal|campus|étudiant|etudiant|student|newspaper/i.test(name)) {
+    return false;
+  }
+  return true;
+}
+
 // === HTTP ====================================================================
 function fetchText(url, redirects = 4) {
   if (!isAllowedFetchUrl(url)) {
@@ -199,10 +221,32 @@ async function checkActive(src, cachedBySource) {
 
 async function probeCandidate(cand) {
   cand._lastChecked = new Date().toISOString();
-  const base = cand.site.endsWith('/') ? cand.site : cand.site + '/';
-  const tries = cand.site.match(/feed\/?$|\.xml$|feed=rss/i) ? [cand.site] : FEED_PATHS.map((p) => base + p);
 
-  for (const url of tries) {
+  // Retired / non-student placeholders stay staged (or drop off later) — never auto-promote.
+  if (!isEligibleStudentPaperCandidate(cand)) {
+    return { promoted: false, skipped: true, reason: 'ineligible' };
+  }
+
+  if (!cand.site && !cand.url) {
+    cand._failCount = (cand._failCount || 0) + 1;
+    return { promoted: false, reason: 'no-site' };
+  }
+
+  const site = cand.site || cand.url;
+  const base = site.endsWith('/') ? site : site + '/';
+  const tries = [];
+  if (cand.url) tries.push(cand.url);
+  if (site.match(/feed\/?$|\.xml$|feed=rss/i)) tries.push(site);
+  else FEED_PATHS.forEach((p) => tries.push(base + p));
+  // de-dupe
+  const seen = new Set();
+  const uniqueTries = tries.filter((u) => {
+    if (seen.has(u)) return false;
+    seen.add(u);
+    return true;
+  });
+
+  for (const url of uniqueTries) {
     const { ok, body } = await fetchText(url);
     if (!ok || !isFeed(body) || countItems(body) === 0) continue;
     const last = latestItemDate(body);
@@ -217,6 +261,7 @@ async function probeCandidate(cand) {
           type: cand.type,
           lang: cand.lang || 'fr',
           url,
+          site: cand.site || undefined,
           _status: 'ok',
           _lastItemDate: new Date(last).toISOString(),
           _lastChecked: cand._lastChecked,
@@ -284,7 +329,23 @@ async function main() {
 
   const cachedBySource = loadCachedBySource();
 
-  // 1. Health-check active feeds
+  // 1. Purge active institutional placeholders (scan-media bug legacy)
+  const purged = [];
+  registry.active = registry.active.filter((src) => {
+    const name = String(src.name || '').trim();
+    if (INSTITUTIONAL_PLACEHOLDER.test(name) || WEAK_NEWS_LABEL.test(name)) {
+      purged.push(name);
+      return false;
+    }
+    return true;
+  });
+  if (purged.length) {
+    console.log('▸ Purged non-student active sources');
+    purged.forEach((n) => console.log(`  ✗ ${n}`));
+    console.log('');
+  }
+
+  // 2. Health-check active feeds
   console.log('▸ Active feeds');
   for (const src of registry.active) {
     const r = await checkActive(src, cachedBySource);
@@ -292,7 +353,7 @@ async function main() {
     console.log(`  ${flag} ${r.name.padEnd(20)} ${r.result}${r.before && r.before !== r.after ? `  [${r.before}→${r.after}]` : ''}`);
   }
 
-  // 2. Probe candidates → promote fresh ones
+  // 3. Probe candidates → promote fresh ones (student papers only)
   console.log('\n▸ Candidates');
   const stillCandidates = [];
   let promotedCount = 0;
@@ -304,7 +365,11 @@ async function main() {
       console.log(`  ⬆ ${cand.name.padEnd(20)} PROMOTED → ${r.feedUrl}`);
     } else {
       stillCandidates.push(cand);
-      console.log(`  ·  ${cand.name.padEnd(20)} no fresh feed (${cand._failCount || 1} tries)`);
+      if (r.skipped) {
+        console.log(`  ⊗  ${cand.name.padEnd(20)} skip (${r.reason || 'ineligible'})`);
+      } else {
+        console.log(`  ·  ${cand.name.padEnd(20)} no fresh feed (${cand._failCount || 1} tries)`);
+      }
     }
   }
   registry.candidates = stillCandidates;

@@ -361,32 +361,6 @@
       "_lastChecked": "2026-07-13T23:39:17.713Z",
       "_lastItemDate": "2026-05-11T20:44:08.000Z",
       "_lastFetchOk": "2026-07-13T23:39:17.713Z"
-    },
-    {
-      "name": "Média — Institut national de la recherche scientifique",
-      "institution": "Institut national de la recherche scientifique (INRS)",
-      "region": "Capitale-Nationale",
-      "type": "universite",
-      "lang": "fr",
-      "url": "https://inrs.ca/feed/",
-      "_status": "ok",
-      "_lastItemDate": "2026-07-07T12:30:00.000Z",
-      "_lastChecked": "2026-07-13T23:39:19.931Z",
-      "_failCount": 0,
-      "_lastFetchOk": "2026-07-13T23:39:19.931Z"
-    },
-    {
-      "name": "Média — Université du Québec à Rimouski",
-      "institution": "Université du Québec à Rimouski (UQAR)",
-      "region": "Bas-Saint-Laurent",
-      "type": "universite",
-      "lang": "fr",
-      "url": "https://www.uqar.ca/feed/",
-      "_status": "stale",
-      "_lastItemDate": "2026-07-09T12:05:00.000Z",
-      "_lastChecked": "2026-07-13T23:39:20.384Z",
-      "_failCount": 0,
-      "_lastFetchOk": "2026-07-13T23:39:20.384Z"
     }
   ],
   "candidates": [
@@ -398,7 +372,8 @@
       "lang": "fr",
       "site": "https://ceuc.ca/",
       "_lastChecked": "2026-07-13T11:18:38.066Z",
-      "_failCount": 6
+      "_failCount": 6,
+      "_note": "Staged — ceuc.ca annonce un /feed/ mais renvoie 404 ; pas de flux RSS exploitable (2026-07)."
     },
     {
       "name": "L'Oisif",
@@ -408,7 +383,8 @@
       "lang": "fr",
       "site": "https://cchic.ca/categorie/journal-etudiant-loisif/",
       "_lastChecked": "2026-07-13T11:18:38.411Z",
-      "_failCount": 6
+      "_failCount": 6,
+      "_note": "Staged — flux catégorie WP existe mais articles de 2019 seulement (hors fenêtre 365 j). Journal apparemment inactif."
     },
     {
       "name": "Le Trait d'Union",
@@ -418,7 +394,8 @@
       "lang": "fr",
       "site": "https://letraitdunion.org/",
       "_lastChecked": "2026-07-13T11:18:48.542Z",
-      "_failCount": 6
+      "_failCount": 6,
+      "_note": "Staged — flux RSS présent mais dernier item 2021-04 (hors fenêtre 365 j). Site quasi-vide."
     },
     {
       "name": "La Gifle",
@@ -428,7 +405,8 @@
       "lang": "fr",
       "site": "https://lagifleblog.wordpress.com/",
       "_lastChecked": "2026-07-13T11:18:48.828Z",
-      "_failCount": 6
+      "_failCount": 6,
+      "_note": "Staged — flux WordPress présent mais articles de 2018 seulement (hors fenêtre 365 j)."
     },
     {
       "name": "Le Brise-Glace",
@@ -438,7 +416,8 @@
       "lang": "fr",
       "site": "https://lebrise-glace.com/",
       "_lastChecked": "2026-07-13T11:18:49.881Z",
-      "_failCount": 6
+      "_failCount": 6,
+      "_note": "Staged — site lebrise-glace.com injoignable (timeout/DNS) au dernier sondage."
     },
     {
       "name": "The Concordian",
