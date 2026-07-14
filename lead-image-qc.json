@@ -1,24 +1,24 @@
 {
-  "updated": "2026-07-14T03:55:29.159Z",
+  "updated": "2026-07-14T06:34:56.826Z",
   "total": 185,
   "withPhoto": 171,
   "withStock": 33,
   "withCampusBank": 7,
   "fullyCovered": 185,
-  "leadReadyPhotos": 146,
-  "pageScraped": 48,
-  "photosRecovered": 16,
-  "imagesCleared": 14,
-  "stockSearches": 40,
-  "stockFound": 28,
+  "leadReadyPhotos": 157,
+  "pageScraped": 50,
+  "photosRecovered": 23,
+  "imagesCleared": 15,
+  "stockSearches": 35,
+  "stockFound": 27,
   "campusBankFound": 4,
   "mainPageLeadReady": true,
   "gaps": [
     {
-      "title": "The Cruel Optimism of Summer",
-      "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
+      "title": "CSU fails to reach quorum at first special council meeting of new mandate",
+      "link": "https://thelinknewspaper.ca/article/16335",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
     },
     {
       "title": "CSU terminates council’s chief election officer",
@@ -27,22 +27,16 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
     },
     {
-      "title": "Dévoilement du Livre bleu",
-      "link": "https://lecollectif.ca/a-la-une/devoilement-du-livre-bleu/",
-      "reason": "stock-too-small",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_Devoilement-du-Livre-bleu_SourceSite-internet-du-Parti-quebecois.png"
-    },
-    {
-      "title": "De Broue à l’Ordre du Canada, Marc Messier, l’artisan d’un théâtre et d’une télé populaires",
-      "link": "https://lecollectif.ca/a-la-une/de-broue-a-lordre-du-canada-marc-messier-lartisan-dun-theatre-et-dune-tele-populaires/",
-      "reason": "stock-too-small",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/CULTURE_MarcMessier_SourceFacebook-819x1024.jpeg"
-    },
-    {
       "title": "La popularité des clubs et événements sportifs",
       "link": "https://lecollectif.ca/societe/la-popularite-des-clubs-et-evenements-sportifs/",
       "reason": "no-stock-match",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_CLUBSDESPORTS_ClubPleinAirAltitude_SourceFacebookClubPleinAirAltitude-1-768x1024.jpg"
+    },
+    {
+      "title": "Christine Labrie tourne la page sur huit ans comme députée de Sherbrooke",
+      "link": "https://lecollectif.ca/a-la-une/christine-labrie-tourne-la-page-sur-huit-ans-comme-deputee-de-sherbrooke/",
+      "reason": "stock-too-small",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_ChristineLabrie_SourcePageFacebookDeRubaGhazal-819x1024.jpg"
     },
     {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB » - Quartier Libre",
@@ -66,13 +60,13 @@
       "title": "Spotlighting Powerful Mc Gill Alumnae",
       "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
     },
     {
       "title": "Second-Class Citizens",
       "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Arts_Building%2C_McGill_University.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg"
     },
     {
       "title": "The Gentrification of Online Fandom Spaces",
@@ -85,6 +79,12 @@
       "link": "https://theplantnews.com/2026/05/11/its-festival-summer/",
       "reason": "stock-too-small",
       "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-1-1.jpeg?w=1024"
+    },
+    {
+      "title": "Gothic Cinema Rises from the Grave",
+      "link": "https://theplantnews.com/2026/05/11/gothic-cinema-rises-from-the-grave/",
+      "reason": "stock-too-small",
+      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-4.png"
     }
   ]
 }
