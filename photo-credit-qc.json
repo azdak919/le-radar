@@ -1,31 +1,17 @@
 {
-  "updated": "2026-07-14T03:55:31.534Z",
+  "updated": "2026-07-14T06:35:01.804Z",
   "total": 185,
   "withImage": 171,
   "withCredit": 171,
-  "cited": 121,
+  "cited": 122,
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 8,
-  "updatedCount": 8,
-  "citedNew": 6,
-  "fallbackNew": 2,
+  "checked": 10,
+  "updatedCount": 10,
+  "citedNew": 7,
+  "fallbackNew": 3,
   "samples": [
-    {
-      "title": "Sois belle et tais-toi - Le Délit",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Qui sont les agents qui patrouillent notre campus? - Le Délit",
-      "source": "Le Délit",
-      "credit": "Photo : Stu Doré/Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
     {
       "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
       "source": "La Pige",
@@ -55,6 +41,20 @@
       "method": "media-credit-featured"
     },
     {
+      "title": "Des initiatives qui rassemblent - Le Délit",
+      "source": "Le Délit",
+      "credit": "Crédit photo : Le Délit",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Élections de l’exécutif de l’AÉUM - Le Délit",
+      "source": "Le Délit",
+      "credit": "Photo : Toscane Ralaimongo",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
       "title": "Leave the Children Out of This",
       "source": "The Plant",
       "credit": "Photo: My Little Princess (2011)",
@@ -67,6 +67,20 @@
       "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Inside Mile End Kicks",
+      "source": "The Link",
+      "credit": "Photo: Courtesy of Joe Fuda",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "The apprenticeship of public voice",
+      "source": "The Link",
+      "credit": "Illustration: Halle Keays",
+      "cited": true,
+      "method": "figcaption-trailing"
     }
   ]
 }
