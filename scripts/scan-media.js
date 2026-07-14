@@ -30,8 +30,14 @@ const SCAN_CONCURRENCY = 3;
 
 const FEED_PATHS = ['feed/', 'feed', '?feed=rss2', 'rss/', 'rss', 'index.xml', 'atom.xml'];
 
-const NEWS_HINTS = /journal|étudiant|etudiant|student|newspaper|média|media|quartier|exemplaire|collectif|délit|delit|tribune|daily|link|pige|exil|campus|gazette|review|revue|trait.?union|griffonnier|oisif|gifle|brise.?glace|concordian/i;
+// Signaux « journal étudiant » (pas portail institutionnel / communiqués).
+const NEWS_HINTS = /journal|étudiant|etudiant|student|newspaper|quartier|exemplaire|collectif|délit|delit|tribune|daily|link|pige|exil|campus|gazette|review|revue|trait.?union|griffonnier|oisif|gifle|brise.?glace|concordian|polyscope|plant\b|the.?campus|le.?d[eé]lit/i;
 const RADIO_HINTS = /\bradio\b|\bfm\b|\bam\b|écoute|ecoute|listen|stream|webradio|campus.?radio|choq|chyz|cism|ckut|cjlo|cfou|cfak|cjep|crem/i;
+
+// Noms inventés du type « Média — UQAR » = portail d'établissement, pas un journal.
+const INSTITUTIONAL_PLACEHOLDER = /^m[eé]dia\s*[—–\-:]/i;
+// Mots trop vagues pour valider un média étudiant (souvent des pages /actualites institutionnelles).
+const WEAK_NEWS_LABEL = /^(actualit[eé]s?|nouvelles?|news|communiqu[eé]s?|presse|media|média|publications?)$/i;
 
 // === HTTP ====================================================================
 function fetchText(url, redirects = 4) {
@@ -93,6 +99,30 @@ function hostKey(url = '') {
   } catch {
     return norm(url);
   }
+}
+
+/** True if the feed/site host is the institution's own website (portail admin). */
+function isInstitutionHost(linkOrFeed, instWebsite) {
+  const h = hostKey(linkOrFeed);
+  const instH = hostKey(instWebsite);
+  if (!h || !instH) return false;
+  return h === instH || h.endsWith(`.${instH}`) || instH.endsWith(`.${h}`);
+}
+
+/**
+ * True if this looks like a real student-newspaper name (not « Média — UQAR »).
+ * Human-curated names in candidates are trusted; bot-invented placeholders are not.
+ */
+function isPlausibleStudentPaperName(name = '') {
+  const n = String(name || '').trim();
+  if (!n || n.length < 2) return false;
+  if (INSTITUTIONAL_PLACEHOLDER.test(n)) return false;
+  if (WEAK_NEWS_LABEL.test(n)) return false;
+  // Reject bare institution names used as source titles.
+  if (/^(institut|universit[eé]|c[eé]gep|college|coll[eè]ge)\b/i.test(n) && !NEWS_HINTS.test(n)) {
+    return false;
+  }
+  return true;
 }
 
 function isFeed(xml) {
@@ -240,15 +270,30 @@ async function scanInstitution(inst, ctx) {
     const h = hostKey(link);
     if (ctx.hosts.has(h)) continue;
 
+    // Journal étudiant : lien + libellé qui ressemblent à un journal de campus,
+    // et jamais le flux /feed du site institutionnel (INRS, UQAR, etc.).
     if (NEWS_HINTS.test(text) && !ctx.hasNews(inst)) {
+      if (isInstitutionHost(link, inst.website) && !/journal|student|newspaper|exemplaire|collectif|campus/i.test(label || '')) {
+        // Portail d'établissement (ex. inrs.ca/actualites) — hors périmètre LE RADAR.
+        continue;
+      }
       const feed = await findFeedOnSite(link);
       if (feed) {
+        // Même hôte que le site de l'établissement = presque toujours communiqués admin.
+        if (isInstitutionHost(feed.url, inst.website)) {
+          continue;
+        }
+        const paperName = (label || '').trim()
+          || link.replace(/^https?:\/\/(www\.)?/, '').split('/')[0];
+        if (!isPlausibleStudentPaperName(paperName)) {
+          continue;
+        }
         newsFound.push({
-          name: label || link.replace(/^https?:\/\/(www\.)?/, '').split('/')[0],
+          name: paperName,
           institution: inst.name,
           region: inst.region || '',
           type: inst.type,
-          lang: /student|daily|link|tribune|mcgill|concordia/i.test(text) ? 'en' : 'fr',
+          lang: /student|daily|link|tribune|mcgill|concordia|plant|campus/i.test(text) ? 'en' : 'fr',
           site: link.split(/\/feed|\/rss|\?feed/)[0].replace(/\/$/, '') || link,
           url: feed.url,
           _discovered: new Date().toISOString(),
@@ -274,23 +319,10 @@ async function scanInstitution(inst, ctx) {
     }
   }
 
-  // Fallback: try /feed on the institution site itself (some papers live on subdomains linked only in footer)
-  if (!newsFound.length && !ctx.hasNews(inst)) {
-    const feed = await findFeedOnSite(inst.website);
-    if (feed && !ctx.hosts.has(hostKey(feed.url))) {
-      newsFound.push({
-        name: `Média — ${inst.name.split('(')[0].trim()}`,
-        institution: inst.name,
-        region: inst.region || '',
-        type: inst.type,
-        lang: 'fr',
-        site: inst.website,
-        url: feed.url,
-        _discovered: new Date().toISOString(),
-        _status: 'candidate',
-      });
-    }
-  }
+  // Pas de repli « /feed sur le site de l'établissement » : ça produit des
+  // portails institutionnels nommés « Média — UQAR / INRS » (non éligibles).
+  // Les vrais journaux ont un site ou un sous-domaine distinct, ou sont ajoutés
+  // à la main / via un lien journal sur le site de l'établissement.
 
   return { news: newsFound, radios: radioFound };
 }
@@ -336,8 +368,12 @@ async function main() {
     console.log(`→ ${inst.name.slice(0, 50).padEnd(50)} + ${parts.join(', ')}`);
 
     for (const n of news) {
+      if (!isPlausibleStudentPaperName(n.name)) {
+        console.log(`  skip (pas un nom de journal étudiant): ${n.name}`);
+        continue;
+      }
       const dup = newsRegistry.candidates.some((c) => hostKey(c.site) === hostKey(n.site))
-        || newsRegistry.active.some((a) => hostKey(a.url) === hostKey(n.url));
+        || newsRegistry.active.some((a) => hostKey(a.url) === hostKey(n.url) || hostKey(a.site || '') === hostKey(n.site));
       if (!dup) {
         newsRegistry.candidates.push({
           name: n.name,
@@ -348,6 +384,7 @@ async function main() {
           site: n.site,
           _discovered: n._discovered,
           _failCount: 0,
+          _note: 'Découvert automatiquement — vérifier que c’est bien un journal étudiant avant promotion.',
         });
         newNews++;
       }
