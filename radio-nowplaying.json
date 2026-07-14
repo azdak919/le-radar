@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-14T04:05:52.055Z",
+  "updatedAt": "2026-07-14T06:35:22.354Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T04:05:31.069Z"
+      "checkedAt": "2026-07-14T06:35:01.680Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rock à la casbah",
+        "title": "Mix anglo",
         "source": "api-live",
-        "start": "20:00",
+        "start": "22:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "rock-a-la-casbah"
+        "slug": "mix-anglo"
       },
       "next": {
-        "title": "Toute est dans toute (reprise)",
+        "title": "L'Alter Ego (reprise)",
         "source": "api-live",
-        "start": "21:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364123.mp3",
-        "slug": "tout-est-dans-toute"
+        "start": "00:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364312.mp3",
+        "slug": "lalter-ego"
       },
       "track": "",
-      "showTitle": "Rock à la casbah",
+      "showTitle": "Mix anglo",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-14T04:05:32.559Z"
+      "checkedAt": "2026-07-14T06:35:03.459Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Harmony Express",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "Pirate et Libres",
         "source": "api-live",
         "start": "02:00",
         "end": "03:00"
       },
+      "next": {
+        "title": "Attik / Show For Children",
+        "source": "api-live",
+        "start": "03:00",
+        "end": "05:00"
+      },
       "track": "",
-      "showTitle": "Harmony Express",
+      "showTitle": "Pirate et Libres",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T04:05:35.256Z"
+      "checkedAt": "2026-07-14T06:35:05.953Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Floydian Slip",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "01:00",
-        "url": "http://www.cjlo.com/shows/floydian-slip"
-      },
-      "next": {
         "title": "CJLO Late Night",
         "source": "schedule",
         "start": "01:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
+      "next": {
+        "title": "Hip's Time to Wake Hop",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
+      },
       "track": "",
-      "showTitle": "Floydian Slip",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T04:05:48.578Z"
+      "checkedAt": "2026-07-14T06:35:19.497Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,20 +129,20 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T04:05:49.727Z"
+      "checkedAt": "2026-07-14T06:35:20.403Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "The Enthralling Grave",
+        "title": "Amor Vincit Omnia",
         "source": "api-live",
         "host": "GOREWORM",
         "url": "https://www.choq.ca/assets/playlist/les-nuits-brutales.png"
       },
       "next": null,
-      "track": "GOREWORM - The Enthralling Grave",
-      "showTitle": "The Enthralling Grave",
+      "track": "GOREWORM - Amor Vincit Omnia",
+      "showTitle": "Amor Vincit Omnia",
       "host": "GOREWORM",
       "source": "api-live",
       "sources": [
@@ -150,7 +150,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T04:05:51.704Z"
+      "checkedAt": "2026-07-14T06:35:22.004Z"
     }
   }
 }
