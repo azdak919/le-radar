@@ -1,46 +1,53 @@
 {
-  "updatedAt": "2026-07-14T19:23:12.484Z",
+  "updatedAt": "2026-07-14T20:39:06.400Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Chéri.e, j’arrive!",
         "source": "schedule",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Chéri.e, j’arrive!",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T19:22:50.119Z"
+      "checkedAt": "2026-07-14T20:38:44.656Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Roche aux platines",
-        "source": "api-live",
-        "start": "11:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "roche-aux-platines"
-      },
-      "next": {
         "title": "CISM au Festival international Nuits d'Afrique",
         "source": "api-live",
         "start": "12:00",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "cism-au-festival-international-nuits-dafrique"
       },
+      "next": {
+        "title": "Le palmarès",
+        "source": "api-live",
+        "start": "14:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364323.mp3",
+        "slug": "palmares-de-cism"
+      },
       "track": "",
-      "showTitle": "Roche aux platines",
+      "showTitle": "CISM au Festival international Nuits d'Afrique",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -50,7 +57,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-14T19:22:52.056Z"
+      "checkedAt": "2026-07-14T20:38:46.203Z"
     },
     "ckut": {
       "id": "ckut",
@@ -76,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T19:22:55.121Z"
+      "checkedAt": "2026-07-14T20:38:48.924Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Sonic Lit: A SpokenWeb Radio Show",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/sonic-lit-a-spokenweb-radio-show"
-      },
-      "next": {
         "title": "The Fluid Mosaic",
         "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
       },
+      "next": {
+        "title": "Cherry Vamp and the Sonic Coffin",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
+      },
       "track": "",
-      "showTitle": "Sonic Lit: A SpokenWeb Radio Show",
+      "showTitle": "The Fluid Mosaic",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T19:23:09.262Z"
+      "checkedAt": "2026-07-14T20:39:03.485Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,27 +135,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T19:23:10.244Z"
+      "checkedAt": "2026-07-14T20:39:04.439Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "B*TCH",
+        "title": "Holy Water",
         "source": "api-live",
-        "host": "Le Belladone, Zéa calla, Sloan Lucas, Fyore"
+        "host": "Iceage",
+        "url": "https://www.choq.ca/assets/playlist/palmares-site-web.jpg"
       },
       "next": null,
-      "track": "Le Belladone, Zéa calla, Sloan Lucas, Fyore - B*TCH",
-      "showTitle": "B*TCH",
-      "host": "Le Belladone, Zéa calla, Sloan Lucas, Fyore",
+      "track": "Iceage - Holy Water",
+      "showTitle": "Holy Water",
+      "host": "Iceage",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T19:23:12.133Z"
+      "checkedAt": "2026-07-14T20:39:06.049Z"
     }
   }
 }
