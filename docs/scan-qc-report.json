@@ -1,0 +1,4442 @@
+{
+  "generatedAt": "2026-07-14T03:40:50.583Z",
+  "summary": {
+    "institutions": 79,
+    "active": 14,
+    "candidates": 6,
+    "promoteReady": 0,
+    "dormant": 37,
+    "institutionalRejected": 258,
+    "institutionGaps": 37
+  },
+  "findings": {
+    "promoteReady": [],
+    "revive": [
+      {
+        "name": "L'Oisif",
+        "institution": "Cégep de Chicoutimi",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "lang": "fr",
+        "site": "https://cchic.ca/categorie/journal-etudiant-loisif/",
+        "note": "",
+        "registry": "candidate",
+        "siteReachable": true,
+        "feedUrl": "https://cchic.ca/categorie/journal-etudiant-loisif/feed/",
+        "lastItemDate": "2019-08-23T18:43:43.000Z",
+        "ageDays": 2516,
+        "items": 3,
+        "feedStatus": "stale",
+        "why": "candidate, feed stale"
+      },
+      {
+        "name": "Le Trait d'Union",
+        "institution": "Collège de Maisonneuve",
+        "region": "Montréal",
+        "lang": "fr",
+        "site": "https://letraitdunion.org/",
+        "note": "",
+        "registry": "candidate",
+        "siteReachable": true,
+        "feedUrl": "https://letraitdunion.org/feed/",
+        "lastItemDate": "2021-04-18T19:15:05.000Z",
+        "ageDays": 1912,
+        "items": 1,
+        "feedStatus": "stale",
+        "why": "candidate, feed stale"
+      },
+      {
+        "name": "La Gifle",
+        "institution": "Collège Lionel-Groulx",
+        "region": "Laurentides",
+        "lang": "fr",
+        "site": "https://lagifleblog.wordpress.com/",
+        "note": "",
+        "registry": "candidate",
+        "siteReachable": true,
+        "feedUrl": "https://lagifleblog.wordpress.com/feed/",
+        "lastItemDate": "2018-05-19T20:19:20.000Z",
+        "ageDays": 2977,
+        "items": 10,
+        "feedStatus": "stale",
+        "why": "candidate, feed stale"
+      },
+      {
+        "name": "Le Scribe",
+        "institution": "Cégep de l'Outaouais",
+        "region": "Outaouais",
+        "lang": "fr",
+        "site": "https://lescribe.ca/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": true,
+        "feedUrl": "https://lescribe.ca/?feed=rss2",
+        "lastItemDate": "2018-06-29T22:29:01.000Z",
+        "ageDays": 2936,
+        "items": 10,
+        "feedStatus": "stale",
+        "why": "new seed, feed stale"
+      },
+      {
+        "name": "concordia.ca",
+        "institution": "Concordia University",
+        "region": "Montréal",
+        "site": "https://www.concordia.ca/students.html",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "enap.ca",
+        "institution": "École nationale d'administration publique (ENAP)",
+        "region": "Capitale-Nationale",
+        "site": "https://enap.ca/a-propos/campus",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Personnel",
+        "institution": "HEC Montréal",
+        "region": "Montréal",
+        "site": "https://hecmtl.sharepoint.com/sites/intranet",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "linkedin.com",
+        "institution": "HEC Montréal",
+        "region": "Montréal",
+        "site": "https://www.linkedin.com/school/hecmontreal/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Campus",
+        "institution": "HEC Montréal",
+        "region": "Montréal",
+        "site": "https://www.hec.ca/campus/index.html",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Revue Gestion",
+        "institution": "HEC Montréal",
+        "region": "Montréal",
+        "site": "https://www.revuegestion.ca/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Tuition fees",
+        "institution": "McGill University",
+        "region": "Montréal",
+        "site": "https://www.mcgill.ca/student-accounts/tuition-fees/tuition-and-fees-tables-and-rates",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Email (Outlook)",
+        "institution": "McGill University",
+        "region": "Montréal",
+        "site": "https://outlook.office365.com/owa/mcgill.ca?students",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Plan campus",
+        "institution": "Université de Montréal",
+        "region": "Montréal",
+        "site": "http://plancampus.umontreal.ca/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "&nbsp;",
+        "institution": "Université de Montréal",
+        "region": "Montréal",
+        "site": "https://ca.linkedin.com/school/universite-de-montreal/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Campus",
+        "institution": "Université du Québec à Chicoutimi (UQAC)",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "site": "https://www.uqac.ca/campus/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Montréal (campus principal)",
+        "institution": "Université du Québec à Montréal (UQAM)",
+        "region": "Montréal",
+        "site": "http://www.etudier.uqam.ca/montreal",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Plan du campus",
+        "institution": "Université du Québec à Montréal (UQAM)",
+        "region": "Montréal",
+        "site": "https://carte.uqam.ca/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "uqtr.ca",
+        "institution": "Université du Québec à Trois-Rivières (UQTR)",
+        "region": "Mauricie",
+        "site": "https://www.uqtr.ca/inclusions/inc-campus/u20-theme-inc-campus.css",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "La Forge&nbsp;- laboratoire de création numérique",
+        "institution": "Université du Québec à Trois-Rivières (UQTR)",
+        "region": "Mauricie",
+        "site": "https://oraprdnt.uqtr.uquebec.ca/portail/gscw031?owa_no_site=874&owa_no_fiche=206",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "ulaval.ca",
+        "institution": "Université Laval",
+        "region": "Capitale-Nationale",
+        "site": "https://www.ulaval.ca/services-sur-le-campus",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Courrier électronique",
+        "institution": "Université Laval",
+        "region": "Capitale-Nationale",
+        "site": "https://outlook.com/owa/ulaval.ca",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Campus – Étudiant·e inscrit·e",
+        "institution": "Cégep à distance",
+        "region": "(sans région)",
+        "site": "https://cegepadistance.ca/accueil-etudiant/etudiant-inscrit-acces/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "claurendeau.sharepoint.com",
+        "institution": "Cégep André-Laurendeau",
+        "region": "Montréal",
+        "site": "https://claurendeau.sharepoint.com/sites/intranet-accueil",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Campus",
+        "institution": "Cégep Beauce-Appalaches",
+        "region": "Chaudière-Appalaches",
+        "site": "https://cegepba.qc.ca/campus/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Student Fees",
+        "institution": "cégep Champlain campus Saint-Lambert",
+        "region": "(sans région)",
+        "site": "https://champlainsaintlambert.ca/useful-links/student-fees/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Student Resources",
+        "institution": "cégep Champlain campus Saint-Lawrence",
+        "region": "(sans région)",
+        "site": "https://slc.qc.ca/student-resources/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Stationnement journalier",
+        "institution": "Cégep d'Alma",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "site": "https://horodateur.collegealma.ca/web",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Futurs étudiants",
+        "institution": "Cégep d'Alma",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "site": "https://www.collegealma.ca/sample-page/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "cegepbc.ca",
+        "institution": "Cégep de Baie-Comeau",
+        "region": "Côte-Nord",
+        "site": "https://cegepbc.ca/wp-content/plugins/pojo-accessibility/assets/build/skip-link.css?ver=4.1.3",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Notre campus",
+        "institution": "Cégep de Drummondville",
+        "region": "Centre-du-Québec",
+        "site": "https://www.cegepdrummond.ca/notre-campus/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Alliance Sport-Études",
+        "institution": "Cégep de Granby",
+        "region": "Montérégie",
+        "site": "https://cegepgranby.ca/vie-etudiante/alliance-sport-etudes/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "cegepjonquiere.ca",
+        "institution": "Cégep de Jonquière",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "site": "https://www.cegepjonquiere.ca/journalisme.html",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Intranet",
+        "institution": "Cégep de Jonquière",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "site": "https://cegepjonquiere.sharepoint.com/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Microsoft 365",
+        "institution": "Cégep de Jonquière",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "site": "https://cegepjonquiere-my.sharepoint.com/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Intranet",
+        "institution": "Cégep de La Pocatière",
+        "region": "Bas-Saint-Laurent",
+        "site": "https://etudiantcegeplapocatiereqc.sharepoint.com/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Cégep et ses campus",
+        "institution": "Cégep de La Pocatière",
+        "region": "Bas-Saint-Laurent",
+        "site": "https://www.cegeplapocatiere.qc.ca/futurs-etudiants/cegep-et-ses-campus/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Intranet",
+        "institution": "Cégep de Saint-Jérôme",
+        "region": "Laurentides",
+        "site": "https://cstj365.sharepoint.com/sites/intranet",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Radio étudiante",
+        "institution": "Cégep de Saint-Laurent",
+        "region": "Montréal",
+        "site": "https://www.cegepsl.qc.ca/le-campus/radio-etudiante/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "cegepst.qc.ca",
+        "institution": "Cégep de Sorel-Tracy",
+        "region": "Montérégie",
+        "site": "https://www.cegepst.qc.ca/vie-etudiante/activites-socioculturelles/journal-etudiant/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Intranet étudiant",
+        "institution": "Cégep de Sorel-Tracy",
+        "region": "Montérégie",
+        "site": "https://cegepst.sharepoint.com/sites/Intranet-etu",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Nos campus",
+        "institution": "Cégep de Thetford",
+        "region": "Chaudière-Appalaches",
+        "site": "https://www.cegepthetford.ca/nos-campus/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Campus de Lotbinière",
+        "institution": "Cégep de Thetford",
+        "region": "Chaudière-Appalaches",
+        "site": "https://www.campuslotbiniere.ca/",
+        "feedUrl": "https://www.campuslotbiniere.ca/feed/",
+        "lastItemDate": "2024-12-11T17:08:33.000Z",
+        "ageDays": 579,
+        "why": "paper-stale"
+      },
+      {
+        "name": "Association étudiante (AGE)",
+        "institution": "Cégep de Trois-Rivières",
+        "region": "Mauricie",
+        "site": "https://agectr.ca/",
+        "feedUrl": "https://agectr.ca/feed/",
+        "lastItemDate": "2024-12-03T23:52:09.000Z",
+        "ageDays": 587,
+        "why": "paper-stale"
+      },
+      {
+        "name": "Transport collectif et actif",
+        "institution": "Cégep de Trois-Rivières",
+        "region": "Mauricie",
+        "site": "https://www.cegeptr.qc.ca/ecopasse/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "LinkedIn",
+        "institution": "Cégep de Victoriaville",
+        "region": "Centre-du-Québec",
+        "site": "https://www.linkedin.com/company/cegep-de-victoriaville",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Association générale étudiante du CVM",
+        "institution": "Cégep du Vieux Montréal",
+        "region": "Montréal",
+        "site": "http://www.agecvm.org/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Portail CVM",
+        "institution": "Cégep du Vieux Montréal",
+        "region": "Montréal",
+        "site": "https://cvmqc.sharepoint.com/sites/portail",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Médias et journalisme",
+        "institution": "Cégep Édouard-Montpetit",
+        "region": "Montérégie",
+        "site": "https://www.cegepmontpetit.ca/programmes/arts-lettres-communication/option-medias-journalisme",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Parcours étudiant",
+        "institution": "Cégep Marie-Victorin",
+        "region": "Montréal",
+        "site": "https://cegepmv.ca/parcours-etudiant",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Linkedin",
+        "institution": "Cégep régional de Lanaudière",
+        "region": "Lanaudière",
+        "site": "http://ca.linkedin.com/company/cegeplanaudiere?trk=top_nav_home",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Indigenous Students",
+        "institution": "collège Champlain campus de Lennoxville",
+        "region": "(sans région)",
+        "site": "https://www.crc-lennox.qc.ca/indigenous-students/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Parking",
+        "institution": "collège Champlain campus de Lennoxville",
+        "region": "(sans région)",
+        "site": "https://www.ubishops.ca/student-services/security-department/parking-rates-permit/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Articulation Agreements",
+        "institution": "Collège Heritage",
+        "region": "Outaouais",
+        "site": "https://www.cegep-heritage.qc.ca/current-students/academics/articulation-agreements",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Zone Momo",
+        "institution": "Collège Montmorency",
+        "region": "Laval",
+        "site": "https://cmontmorency365.sharepoint.com/sites/ZoneMomo",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Dawson Student Union (DSU)",
+        "institution": "Dawson College",
+        "region": "Montréal",
+        "site": "https://www.dawsonstudentunion.com/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "Post a Job for Students",
+        "institution": "Dawson College",
+        "region": "Montréal",
+        "site": "https://www.dawsoncollege.qc.ca/student-employment/",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      },
+      {
+        "name": "vaniercollege.qc.ca",
+        "institution": "Vanier College",
+        "region": "Montréal",
+        "site": "https://www.vaniercollege.qc.ca/news/vanier-college-offers-a-new-program-to-support-first-nations-students-college-admission",
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "why": "paper-no-feed"
+      }
+    ],
+    "dormant": [
+      {
+        "name": "Le Griffonnier",
+        "institution": "Université du Québec à Chicoutimi",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "lang": "fr",
+        "site": "https://ceuc.ca/",
+        "note": "",
+        "registry": "candidate",
+        "siteReachable": true,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "no-feed",
+        "why": "candidate, no usable feed"
+      },
+      {
+        "name": "Le Brise-Glace",
+        "institution": "Cégep de Rimouski",
+        "region": "Bas-Saint-Laurent",
+        "lang": "fr",
+        "site": "https://lebrise-glace.com/",
+        "note": "",
+        "registry": "candidate",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "candidate, no usable feed"
+      },
+      {
+        "name": "Impact Campus",
+        "institution": "Université Laval",
+        "region": "Capitale-Nationale",
+        "lang": "fr",
+        "site": "https://impactcampus.ca/",
+        "note": "Journal étudiant généraliste ULaval (Wiki)",
+        "registry": "new",
+        "siteReachable": true,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "no-feed",
+        "why": "site up, no RSS/Atom found"
+      },
+      {
+        "name": "L'Heuristique",
+        "institution": "École de technologie supérieure (ÉTS)",
+        "region": "Montréal",
+        "lang": "fr",
+        "site": "https://lheuris.ca/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "L'Unité",
+        "institution": "UQAM",
+        "region": "Montréal",
+        "lang": "fr",
+        "site": "https://lunite.org/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": true,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "no-feed",
+        "why": "site up, no RSS/Atom found"
+      },
+      {
+        "name": "Le MotDit",
+        "institution": "Cégep Édouard-Montpetit",
+        "region": "Montérégie",
+        "lang": "fr",
+        "site": "https://lemotdit.com/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "L'Attribut",
+        "institution": "Collège Ahuntsic",
+        "region": "Montréal",
+        "lang": "fr",
+        "site": "https://lattribut.com/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "L'IntégrAL",
+        "institution": "Cégep André-Laurendeau",
+        "region": "Montréal",
+        "lang": "fr",
+        "site": "https://lintegral.ca/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "L'Infomane",
+        "institution": "Collège de Bois-de-Boulogne",
+        "region": "Montréal",
+        "lang": "fr",
+        "site": "https://linfomane.com/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "Pastiche",
+        "institution": "Cégep de Saint-Laurent",
+        "region": "Montréal",
+        "lang": "fr",
+        "site": "https://pastichesl.com/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "Le Phoque",
+        "institution": "Cégep Limoilou",
+        "region": "Capitale-Nationale",
+        "lang": "fr",
+        "site": "https://lephoque.ca/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "L'Éclosion",
+        "institution": "Cégep de Sainte-Foy",
+        "region": "Capitale-Nationale",
+        "lang": "fr",
+        "site": "https://leclosion.ca/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "Le Typographe",
+        "institution": "Collège Montmorency",
+        "region": "Laval",
+        "lang": "fr",
+        "site": "https://letypographe.ca/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "Le Lunatique",
+        "institution": "Collège Montmorency",
+        "region": "Laval",
+        "lang": "fr",
+        "site": "https://lelunatique.ca/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "Le Matricule Zéro",
+        "institution": "Cégep de Sherbrooke",
+        "region": "Estrie",
+        "lang": "fr",
+        "site": "https://matriculezero.ca/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "Le Dogme",
+        "institution": "Cégep de Saint-Hyacinthe",
+        "region": "Montérégie",
+        "lang": "fr",
+        "site": "https://ledogme.ca/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "Météorites",
+        "institution": "Cégep de La Pocatière",
+        "region": "Bas-Saint-Laurent",
+        "lang": "fr",
+        "site": "https://meteorites.ca/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "Le Visionnaire",
+        "institution": "Cégep de Baie-Comeau",
+        "region": "Côte-Nord",
+        "lang": "fr",
+        "site": "https://levisionnaire.ca/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "Le Graffitti",
+        "institution": "Collège Jean-de-Brébeuf",
+        "region": "Montréal",
+        "lang": "fr",
+        "site": "https://legraffitti.com/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "Le Point G",
+        "institution": "Collège André-Grasset",
+        "region": "Montréal",
+        "lang": "fr",
+        "site": "https://lepointg.ca/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "The Papercut",
+        "institution": "Marianopolis College",
+        "region": "Montréal",
+        "lang": "en",
+        "site": "https://thepapercut.com/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": true,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "no-feed",
+        "why": "site up, no RSS/Atom found"
+      },
+      {
+        "name": "The Free Press",
+        "institution": "John Abbott College",
+        "region": "Montréal",
+        "lang": "en",
+        "site": "https://jacfreepress.com/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "The Bull & Bear",
+        "institution": "McGill University",
+        "region": "Montréal",
+        "lang": "en",
+        "site": "https://bullandbearmcgill.com/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": true,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "no-feed",
+        "why": "site up, no RSS/Atom found"
+      },
+      {
+        "name": "L'Obiter",
+        "institution": "Université de Sherbrooke",
+        "region": "Estrie",
+        "lang": "fr",
+        "site": "https://lobiter.com/",
+        "note": "Journal de droit — niche",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "Le Soufflet",
+        "institution": "Université du Québec à Rimouski (UQAR)",
+        "region": "Bas-Saint-Laurent",
+        "lang": "fr",
+        "site": "https://lesoufflet.ca/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "L’Organe",
+        "institution": "Concordia University",
+        "region": "Montréal",
+        "lang": "fr",
+        "site": "https://lorgane.ca/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "L'Artichaut",
+        "institution": "UQAM",
+        "region": "Montréal",
+        "lang": "fr",
+        "site": "https://lartichaut.ca/",
+        "note": "Journal des arts UQAM (Wiki)",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "The Chronos",
+        "institution": "Champlain College Saint-Lambert",
+        "region": "Montérégie",
+        "lang": "en",
+        "site": "https://thechronos.com/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": true,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "no-feed",
+        "why": "site up, no RSS/Atom found"
+      },
+      {
+        "name": "L'Agora",
+        "institution": "Université du Québec en Outaouais (UQO)",
+        "region": "Outaouais",
+        "lang": "fr",
+        "site": "https://lagora.ca/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "Perspectives",
+        "institution": "Université du Québec en Abitibi-Témiscamingue (UQAT)",
+        "region": "Abitibi-Témiscamingue",
+        "lang": "fr",
+        "site": "https://perspectivesuqat.ca/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "Le Carcajou",
+        "institution": "Cégep de l'Abitibi-Témiscamingue",
+        "region": "Abitibi-Témiscamingue",
+        "lang": "fr",
+        "site": "https://lecarcajou.ca/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "Le Réservoir",
+        "institution": "Cégep de Trois-Rivières",
+        "region": "Mauricie",
+        "lang": "fr",
+        "site": "https://lereservoir.ca/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "La Forge",
+        "institution": "Cégep de Trois-Rivières",
+        "region": "Mauricie",
+        "lang": "fr",
+        "site": "https://laforge.cegeptr.qc.ca/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "Le Phare",
+        "institution": "Cégep de la Gaspésie et des Îles",
+        "region": "Gaspésie–Îles-de-la-Madeleine",
+        "lang": "fr",
+        "site": "https://lepharegim.com/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down",
+        "why": "site unreachable / wrong URL"
+      },
+      {
+        "name": "Entre-Guillemets",
+        "institution": "Cégep Garneau",
+        "region": "Capitale-Nationale",
+        "lang": "fr",
+        "site": "https://entreguillemets.com/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": true,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "no-feed",
+        "why": "site up, no RSS/Atom found"
+      },
+      {
+        "name": "Mosaïk",
+        "institution": "Collège Stanislas",
+        "region": "Montréal",
+        "lang": "fr",
+        "site": "https://stanislas96.wixsite.com/mosaik",
+        "note": "Wiki: Stanislas; collège privé",
+        "registry": "new",
+        "siteReachable": true,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "no-feed",
+        "why": "site up, no RSS/Atom found"
+      },
+      {
+        "name": "L'Inter",
+        "institution": "Collège de Maisonneuve",
+        "region": "Montréal",
+        "lang": "fr",
+        "site": "https://linter.ca/",
+        "note": "",
+        "registry": "new",
+        "siteReachable": true,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "no-feed",
+        "why": "site up, no RSS/Atom found"
+      }
+    ],
+    "alreadyActive": [
+      {
+        "name": "Quartier Libre",
+        "institution": "Université de Montréal",
+        "region": "Montréal",
+        "lang": "fr",
+        "site": "https://quartierlibre.ca/",
+        "note": "",
+        "registry": "active",
+        "siteReachable": true,
+        "feedUrl": "https://quartierlibre.ca/feed/",
+        "lastItemDate": "2026-05-15T16:00:00.000Z",
+        "ageDays": 59,
+        "items": 10,
+        "feedStatus": "fresh"
+      },
+      {
+        "name": "Montréal Campus",
+        "institution": "UQAM",
+        "region": "Montréal",
+        "lang": "fr",
+        "site": "https://montrealcampus.ca/",
+        "note": "",
+        "registry": "active",
+        "siteReachable": true,
+        "feedUrl": "https://montrealcampus.ca/feed/",
+        "lastItemDate": "2026-05-09T03:14:30.000Z",
+        "ageDays": 66,
+        "items": 10,
+        "feedStatus": "fresh"
+      },
+      {
+        "name": "Le Délit",
+        "institution": "Université McGill",
+        "region": "Montréal",
+        "lang": "fr",
+        "site": "https://www.delitfrancais.com/",
+        "note": "",
+        "registry": "active",
+        "siteReachable": true,
+        "feedUrl": "https://www.delitfrancais.com/feed/",
+        "lastItemDate": "2026-03-25T11:00:00.000Z",
+        "ageDays": 111,
+        "items": 20,
+        "feedStatus": "fresh"
+      },
+      {
+        "name": "The McGill Daily",
+        "institution": "McGill University",
+        "region": "Montréal",
+        "lang": "en",
+        "site": "https://www.mcgilldaily.com/",
+        "note": "",
+        "registry": "active",
+        "siteReachable": true,
+        "feedUrl": "https://www.mcgilldaily.com/feed/",
+        "lastItemDate": "2026-07-06T12:00:00.000Z",
+        "ageDays": 8,
+        "items": 15,
+        "feedStatus": "fresh"
+      },
+      {
+        "name": "The Link",
+        "institution": "Concordia University",
+        "region": "Montréal",
+        "lang": "en",
+        "site": "https://thelinknewspaper.ca/",
+        "note": "",
+        "registry": "active",
+        "siteReachable": true,
+        "feedUrl": "https://thelinknewspaper.ca/feed/",
+        "lastItemDate": "2026-07-08T14:41:00.000Z",
+        "ageDays": 6,
+        "items": 20,
+        "feedStatus": "fresh"
+      },
+      {
+        "name": "Zone Campus",
+        "institution": "Université du Québec à Trois-Rivières",
+        "region": "Mauricie",
+        "lang": "fr",
+        "site": "https://www.zonecampus.ca/",
+        "note": "",
+        "registry": "active",
+        "siteReachable": true,
+        "feedUrl": "https://www.zonecampus.ca/feed/",
+        "lastItemDate": "2026-05-08T14:20:26.000Z",
+        "ageDays": 67,
+        "items": 10,
+        "feedStatus": "fresh"
+      },
+      {
+        "name": "L'Exemplaire",
+        "institution": "Université Laval",
+        "region": "Capitale-Nationale",
+        "lang": "fr",
+        "site": "https://www.exemplaire.com.ulaval.ca/",
+        "note": "",
+        "registry": "active",
+        "siteReachable": true,
+        "feedUrl": "https://www.exemplaire.com.ulaval.ca/feed/",
+        "lastItemDate": "2026-05-15T16:31:24.000Z",
+        "ageDays": 59,
+        "items": 8,
+        "feedStatus": "fresh"
+      },
+      {
+        "name": "Le Collectif",
+        "institution": "Université de Sherbrooke",
+        "region": "Estrie",
+        "lang": "fr",
+        "site": "https://lecollectif.ca/",
+        "note": "",
+        "registry": "active",
+        "siteReachable": true,
+        "feedUrl": "https://lecollectif.ca/feed/",
+        "lastItemDate": "2026-07-11T16:34:55.000Z",
+        "ageDays": 2,
+        "items": 10,
+        "feedStatus": "fresh"
+      },
+      {
+        "name": "Exil",
+        "institution": "Cégep du Vieux Montréal",
+        "region": "Montréal",
+        "lang": "fr",
+        "site": "https://exilecvm.ca/",
+        "note": "",
+        "registry": "active",
+        "siteReachable": true,
+        "feedUrl": "https://exilecvm.ca/feed/",
+        "lastItemDate": "2026-04-18T22:22:07.000Z",
+        "ageDays": 86,
+        "items": 10,
+        "feedStatus": "fresh"
+      },
+      {
+        "name": "La Pige",
+        "institution": "Cégep de Jonquière",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "lang": "fr",
+        "site": "https://lapige.atmjonquiere.com/",
+        "note": "",
+        "registry": "active",
+        "siteReachable": true,
+        "feedUrl": "https://lapige.atmjonquiere.com/feed/",
+        "lastItemDate": "2026-06-22T14:36:10.000Z",
+        "ageDays": 22,
+        "items": 10,
+        "feedStatus": "fresh"
+      },
+      {
+        "name": "Le Polyscope",
+        "institution": "Polytechnique Montréal",
+        "region": "Montréal",
+        "lang": "fr",
+        "site": "https://www.polyscope.qc.ca/",
+        "note": "",
+        "registry": "active",
+        "siteReachable": true,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "no-feed"
+      },
+      {
+        "name": "The Tribune",
+        "institution": "McGill University",
+        "region": "Montréal",
+        "lang": "en",
+        "site": "https://www.thetribune.ca/",
+        "note": "",
+        "registry": "active",
+        "siteReachable": true,
+        "feedUrl": "https://www.thetribune.ca/feed/",
+        "lastItemDate": "2026-06-26T15:24:28.000Z",
+        "ageDays": 18,
+        "items": 14,
+        "feedStatus": "fresh"
+      },
+      {
+        "name": "The Campus",
+        "institution": "Bishop's University",
+        "region": "Estrie",
+        "lang": "en",
+        "site": "https://thebucampus.ca/",
+        "note": "",
+        "registry": "active",
+        "siteReachable": true,
+        "feedUrl": "https://thebucampus.ca/feed/",
+        "lastItemDate": "2026-04-06T16:03:16.000Z",
+        "ageDays": 98,
+        "items": 10,
+        "feedStatus": "fresh"
+      },
+      {
+        "name": "The Plant",
+        "institution": "Dawson College",
+        "region": "Montréal",
+        "lang": "en",
+        "site": "https://theplantnews.com/",
+        "note": "",
+        "registry": "active",
+        "siteReachable": true,
+        "feedUrl": "https://theplantnews.com/feed/",
+        "lastItemDate": "2026-05-11T20:44:08.000Z",
+        "ageDays": 63,
+        "items": 10,
+        "feedStatus": "fresh"
+      }
+    ],
+    "alreadyCandidate": [
+      {
+        "name": "Le Griffonnier",
+        "institution": "Université du Québec à Chicoutimi",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "lang": "fr",
+        "site": "https://ceuc.ca/",
+        "note": "",
+        "registry": "candidate",
+        "siteReachable": true,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "no-feed"
+      },
+      {
+        "name": "L'Oisif",
+        "institution": "Cégep de Chicoutimi",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "lang": "fr",
+        "site": "https://cchic.ca/categorie/journal-etudiant-loisif/",
+        "note": "",
+        "registry": "candidate",
+        "siteReachable": true,
+        "feedUrl": "https://cchic.ca/categorie/journal-etudiant-loisif/feed/",
+        "lastItemDate": "2019-08-23T18:43:43.000Z",
+        "ageDays": 2516,
+        "items": 3,
+        "feedStatus": "stale"
+      },
+      {
+        "name": "Le Trait d'Union",
+        "institution": "Collège de Maisonneuve",
+        "region": "Montréal",
+        "lang": "fr",
+        "site": "https://letraitdunion.org/",
+        "note": "",
+        "registry": "candidate",
+        "siteReachable": true,
+        "feedUrl": "https://letraitdunion.org/feed/",
+        "lastItemDate": "2021-04-18T19:15:05.000Z",
+        "ageDays": 1912,
+        "items": 1,
+        "feedStatus": "stale"
+      },
+      {
+        "name": "La Gifle",
+        "institution": "Collège Lionel-Groulx",
+        "region": "Laurentides",
+        "lang": "fr",
+        "site": "https://lagifleblog.wordpress.com/",
+        "note": "",
+        "registry": "candidate",
+        "siteReachable": true,
+        "feedUrl": "https://lagifleblog.wordpress.com/feed/",
+        "lastItemDate": "2018-05-19T20:19:20.000Z",
+        "ageDays": 2977,
+        "items": 10,
+        "feedStatus": "stale"
+      },
+      {
+        "name": "Le Brise-Glace",
+        "institution": "Cégep de Rimouski",
+        "region": "Bas-Saint-Laurent",
+        "lang": "fr",
+        "site": "https://lebrise-glace.com/",
+        "note": "",
+        "registry": "candidate",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down"
+      }
+    ],
+    "retired": [
+      {
+        "name": "The Concordian",
+        "institution": "Concordia University",
+        "region": "Montréal",
+        "lang": "en",
+        "site": "https://theconcordian.com/",
+        "note": "retired active (Cloudflare)",
+        "registry": "retired",
+        "siteReachable": false,
+        "feedUrl": null,
+        "lastItemDate": null,
+        "ageDays": null,
+        "items": null,
+        "feedStatus": "site-down"
+      }
+    ],
+    "outOfScope": [
+      {
+        "name": "Le Hublot",
+        "institution": "Cégep de Sainte-Foy",
+        "region": "Capitale-Nationale",
+        "lang": "fr",
+        "site": "https://lehublot.net/",
+        "note": "OUT OF SCOPE — not a student newspaper (digital fab / territoire)",
+        "registry": "new",
+        "siteReachable": true,
+        "feedUrl": "https://lehublot.net/feed/",
+        "lastItemDate": "2026-06-22T14:23:07.000Z",
+        "ageDays": 22,
+        "items": 10,
+        "feedStatus": "fresh"
+      }
+    ],
+    "institutionalRejected": [
+      {
+        "institution": "École nationale d'administration publique (ENAP)",
+        "region": "Capitale-Nationale",
+        "label": "https://enap.ca/modules/contrib/extlink/extlink.css?ti4qtz",
+        "link": "https://enap.ca/modules/contrib/extlink/extlink.css?ti4qtz",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "École nationale d'administration publique (ENAP)",
+        "region": "Capitale-Nationale",
+        "label": "NEO Dossier étudiant",
+        "link": "https://neo.enap.ca/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "HEC Montréal",
+        "region": "Montréal",
+        "label": "Communauté étudiante",
+        "link": "https://www.hec.ca/etudiants/index.html",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "HEC Montréal",
+        "region": "Montréal",
+        "label": "International",
+        "link": "https://www.hec.ca/international/index.html",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Institut national de la recherche scientifique (INRS)",
+        "region": "Capitale-Nationale",
+        "label": "Futurs étudiants",
+        "link": "https://inrs.ca/les-etudes/futurs-etudiants/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Institut national de la recherche scientifique (INRS)",
+        "region": "Capitale-Nationale",
+        "label": "Services et ressources aux étudiants (GARE)",
+        "link": "https://inrs.ca/les-etudes/services-ressources-etudiants/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Institut national de la recherche scientifique (INRS)",
+        "region": "Capitale-Nationale",
+        "label": "Intégrité intellectuelle",
+        "link": "https://inrs.ca/les-etudes/services-ressources-etudiants/integrite-intellectuelle/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Institut national de la recherche scientifique (INRS)",
+        "region": "Capitale-Nationale",
+        "label": "Associations étudiantes",
+        "link": "https://inrs.ca/les-etudes/services-ressources-etudiants/engagement-etudiant/associations-etudiantes/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Institut national de la recherche scientifique (INRS)",
+        "region": "Capitale-Nationale",
+        "label": "Étudier à l'INRS",
+        "link": "https://inrs.ca/les-etudes/futurs-etudiants/etudier-inrs-la-recherche-au-coeur-de-votre-formation/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université de Montréal",
+        "region": "Montréal",
+        "label": "SERVICES À LA VIE ÉTUDIANTE",
+        "link": "http://vieetudiante.umontreal.ca/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université de Montréal",
+        "region": "Montréal",
+        "label": "MON CENTRE ÉTUDIANT",
+        "link": "https://academique-dmz.synchro.umontreal.ca/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université de Montréal",
+        "region": "Montréal",
+        "label": "TikTok comme exutoire: trois étudiantes établissent un lien avec le stress",
+        "link": "https://nouvelles.umontreal.ca/article/2026/07/07/tiktok-comme-exutoire-trois-etudiantes-etablissent-un-lien-avec-le-stress",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université de Montréal",
+        "region": "Montréal",
+        "label": "https://www.umontreal.ca/vous-etes/futurs-etudiants/",
+        "link": "https://www.umontreal.ca/vous-etes/futurs-etudiants/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université de Montréal",
+        "region": "Montréal",
+        "label": "https://www.umontreal.ca/vous-etes/etudiants/",
+        "link": "https://www.umontreal.ca/vous-etes/etudiants/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université de Montréal",
+        "region": "Montréal",
+        "label": "Mon Centre étudiant",
+        "link": "http://academique-dmz.synchro.umontreal.ca/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université de Sherbrooke",
+        "region": "Estrie",
+        "label": "Communauté étudiante",
+        "link": "https://www.usherbrooke.ca/communaute-etudiante",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université de Sherbrooke",
+        "region": "Estrie",
+        "label": "Mon dossier étudiant",
+        "link": "https://www.usherbrooke.ca/communaute-etudiante/services-administratifs/dossier-etudiant/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université de Sherbrooke",
+        "region": "Estrie",
+        "label": "Communauté étudiante",
+        "link": "https://www.usherbrooke.ca/communaute-etudiante/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université du Québec (réseau)",
+        "region": "Capitale-Nationale",
+        "label": "Colloque Services à la communauté étudiante",
+        "link": "https://www.uquebec.ca/fr/nos-initiatives/colloque-des-services-a-la-communaute-etudiante",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université du Québec (réseau)",
+        "region": "Capitale-Nationale",
+        "label": "Initiative sur la santé mentale étudiante en enseignement supérieur",
+        "link": "https://www.uquebec.ca/fr/nos-initiatives/initiative-sur-la-sante-mentale-etudiante-en-enseignement-superieur",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université du Québec à Chicoutimi (UQAC)",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "label": "UQAC en bref",
+        "link": "https://www.uqac.ca/uqac-en-bref/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université du Québec à Montréal (UQAM)",
+        "region": "Montréal",
+        "label": "https://vie-etudiante.uqam.ca/",
+        "link": "https://vie-etudiante.uqam.ca/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université du Québec à Rimouski (UQAR)",
+        "region": "Bas-Saint-Laurent",
+        "label": "https://www.uqar.ca/futurs-etudiants-et-futures-etudiantes/",
+        "link": "https://www.uqar.ca/futurs-etudiants-et-futures-etudiantes/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université du Québec à Rimouski (UQAR)",
+        "region": "Bas-Saint-Laurent",
+        "label": "https://www.uqar.ca/futurs-etudiants-et-futures-etudiantes/etudiantes-et-etudiants-canadiens/",
+        "link": "https://www.uqar.ca/futurs-etudiants-et-futures-etudiantes/etudiantes-et-etudiants-canadiens/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université du Québec à Rimouski (UQAR)",
+        "region": "Bas-Saint-Laurent",
+        "label": "https://www.uqar.ca/futurs-etudiants-et-futures-etudiantes/portes-ouvertes/",
+        "link": "https://www.uqar.ca/futurs-etudiants-et-futures-etudiantes/portes-ouvertes/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université du Québec à Rimouski (UQAR)",
+        "region": "Bas-Saint-Laurent",
+        "label": "https://www.uqar.ca/futurs-etudiants-et-futures-etudiantes/logements/",
+        "link": "https://www.uqar.ca/futurs-etudiants-et-futures-etudiantes/logements/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université du Québec à Rimouski (UQAR)",
+        "region": "Bas-Saint-Laurent",
+        "label": "https://www.uqar.ca/futurs-etudiants-et-futures-etudiantes/universites-d-ete/",
+        "link": "https://www.uqar.ca/futurs-etudiants-et-futures-etudiantes/universites-d-ete/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université du Québec à Rimouski (UQAR)",
+        "region": "Bas-Saint-Laurent",
+        "label": "https://www.uqar.ca/services/vie-etudiante/",
+        "link": "https://www.uqar.ca/services/vie-etudiante/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université du Québec à Rimouski (UQAR)",
+        "region": "Bas-Saint-Laurent",
+        "label": "https://www.uqar.ca/futurs-etudiants-et-futures-etudiantes/etudiantes-et-etudiants-internationaux/",
+        "link": "https://www.uqar.ca/futurs-etudiants-et-futures-etudiantes/etudiantes-et-etudiants-internationaux/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université du Québec en Outaouais (UQO)",
+        "region": "Outaouais",
+        "label": "https://uqo.ca/etudiants/admission/etapes",
+        "link": "https://uqo.ca/etudiants/admission/etapes",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université du Québec en Outaouais (UQO)",
+        "region": "Outaouais",
+        "label": "https://uqo.ca/etudiants/admission/dates-limites-admission",
+        "link": "https://uqo.ca/etudiants/admission/dates-limites-admission",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université du Québec en Outaouais (UQO)",
+        "region": "Outaouais",
+        "label": "https://uqo.ca/etudiants/admission-etudiants-internationaux",
+        "link": "https://uqo.ca/etudiants/admission-etudiants-internationaux",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université du Québec en Outaouais (UQO)",
+        "region": "Outaouais",
+        "label": "https://uqo.ca/etudiants/admission/pieces",
+        "link": "https://uqo.ca/etudiants/admission/pieces",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université du Québec en Outaouais (UQO)",
+        "region": "Outaouais",
+        "label": "Admission conditionnelle au D.E.C",
+        "link": "https://uqo.ca/etudiants/admission/admission-conditionnelle-sur-la-base-d-un-dec",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université du Québec en Outaouais (UQO)",
+        "region": "Outaouais",
+        "label": "https://uqo.ca/etudiants/attestation-residence-quebec",
+        "link": "https://uqo.ca/etudiants/attestation-residence-quebec",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université du Québec en Outaouais (UQO)",
+        "region": "Outaouais",
+        "label": "https://uqo.ca/etudiants/procuration",
+        "link": "https://uqo.ca/etudiants/procuration",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université du Québec en Outaouais (UQO)",
+        "region": "Outaouais",
+        "label": "https://uqo.ca/etudiants/reconnaissance-acquis",
+        "link": "https://uqo.ca/etudiants/reconnaissance-acquis",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université Laval",
+        "region": "Capitale-Nationale",
+        "label": "https://www.ulaval.ca/espace-etudiant",
+        "link": "https://www.ulaval.ca/espace-etudiant",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université TÉLUQ",
+        "region": "Capitale-Nationale",
+        "label": "Aller à la page Soutien en situation de handicap",
+        "link": "https://www.teluq.ca/site/services/soutien_etudiants_handicap.php",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université TÉLUQ",
+        "region": "Capitale-Nationale",
+        "label": "Futur étudiant",
+        "link": "https://www.teluq.ca/site/etudes/futurs_etudiants.php",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université TÉLUQ",
+        "region": "Capitale-Nationale",
+        "label": "Étudiant",
+        "link": "https://www.teluq.ca/site/etudes/etudiant.php",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université TÉLUQ",
+        "region": "Capitale-Nationale",
+        "label": "Étudiant&nbsp;international",
+        "link": "https://www.teluq.ca/site/etudes/etudiant_international.php",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université TÉLUQ",
+        "region": "Capitale-Nationale",
+        "label": "Athlète",
+        "link": "https://www.teluq.ca/site/etudes/etudiant-athlete.php",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université TÉLUQ",
+        "region": "Capitale-Nationale",
+        "label": "Service à la communauté étudiante",
+        "link": "https://www.teluq.ca/site/services/services_etudiants.php",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université TÉLUQ",
+        "region": "Capitale-Nationale",
+        "label": "Accueil de stagiaires postdoctoraux",
+        "link": "https://www.teluq.ca/siteweb/univ/etudiants-et-postdoctorants.html",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Université TÉLUQ",
+        "region": "Capitale-Nationale",
+        "label": "L'Université TÉLUQ en&nbsp;bref",
+        "link": "https://www.teluq.ca/site/universite/a_propos.php",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep à distance",
+        "region": "(sans région)",
+        "label": "https://cegepadistance.ca/accueil-etudiant/feed/",
+        "link": "https://cegepadistance.ca/accueil-etudiant/feed/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep à distance",
+        "region": "(sans région)",
+        "label": "M'INSCRIRE",
+        "link": "https://cegepadistance.ca/accueil-etudiant/demande-dadmission-et-dinscription-2/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep André-Laurendeau",
+        "region": "Montréal",
+        "label": "Guide étudiant",
+        "link": "https://etudiantcollegial.claurendeau.qc.ca/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep André-Laurendeau",
+        "region": "Montréal",
+        "label": "https://etudiantcollegial.claurendeau.qc.ca/les-specificites-de-la-formation-continue/",
+        "link": "https://etudiantcollegial.claurendeau.qc.ca/les-specificites-de-la-formation-continue/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep André-Laurendeau",
+        "region": "Montréal",
+        "label": "https://etudiantcollegial.claurendeau.qc.ca/service-des-technologies-de-linformation/",
+        "link": "https://etudiantcollegial.claurendeau.qc.ca/service-des-technologies-de-linformation/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep André-Laurendeau",
+        "region": "Montréal",
+        "label": "Étudiant d’un jour",
+        "link": "https://claurendeau.qc.ca/programmes/etudiant-dun-jour",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep André-Laurendeau",
+        "region": "Montréal",
+        "label": "Futurs étudiants de l’international",
+        "link": "https://claurendeau.qc.ca/programmes/etudiants-internationaux",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep André-Laurendeau",
+        "region": "Montréal",
+        "label": "Services aux étudiants",
+        "link": "https://claurendeau.qc.ca/programmes/services-aux-etudiants",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep André-Laurendeau",
+        "region": "Montréal",
+        "label": "Recrutez nos étudiants et finissants",
+        "link": "https://claurendeau.qc.ca/entreprises/recrutez",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Beauce-Appalaches",
+        "region": "Chaudière-Appalaches",
+        "label": "Coop étudiante",
+        "link": "https://cegepba.qc.ca/coop-etudiante/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Beauce-Appalaches",
+        "region": "Chaudière-Appalaches",
+        "label": "Hébergement hors campus",
+        "link": "https://cegepba.qc.ca/hebergement/",
+        "reason": "feed on institution domain"
+      },
+      {
+        "institution": "Cégep Beauce-Appalaches",
+        "region": "Chaudière-Appalaches",
+        "label": "Placement étudiant",
+        "link": "https://cegepba.qc.ca/placement-etudiant/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Beauce-Appalaches",
+        "region": "Chaudière-Appalaches",
+        "label": "Mercredi-Étudiant",
+        "link": "https://cegepba.qc.ca/activites-socioculturelles/mercredi-etudiant/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Beauce-Appalaches",
+        "region": "Chaudière-Appalaches",
+        "label": "Association générale étudiante (AGE)",
+        "link": "https://cegepba.qc.ca/comites/association-generale-etudiante-age/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Beauce-Appalaches",
+        "region": "Chaudière-Appalaches",
+        "label": "Club de développement entrepreneurial étudiant (CDEE)",
+        "link": "https://cegepba.qc.ca/comites/club-de-developpement-entrepreneurial-etudiant-cdee/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Beauce-Appalaches",
+        "region": "Chaudière-Appalaches",
+        "label": "Engagement étudiant",
+        "link": "https://cegepba.qc.ca/engagement-etudiant/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Chicoutimi",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "label": "Demande d’admission",
+        "link": "https://cchic.ca/futurs-etudiants/faire-une-demande-dadmission/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Chicoutimi",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "label": "Futur.es étudiant.es",
+        "link": "https://cchic.ca/futurs-etudiants/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Chicoutimi",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "label": "VISIONNE LES CAPSULES",
+        "link": "https://cchic.ca/futurs-etudiants/prepare-ta-rentree/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Chicoutimi",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "label": "Étudiant d'un jour",
+        "link": "http://cchic.ca/etudiant-dun-jour/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Chicoutimi",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "label": "Mention au bulletin",
+        "link": "http://cchic.ca/engagement-etudiant/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Chicoutimi",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "label": "Vie étudiantes",
+        "link": "https://cchic.ca/?s=vie+etudiantes",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Drummondville",
+        "region": "Centre-du-Québec",
+        "label": "Vie étudiante",
+        "link": "https://www.cegepdrummond.ca/vie-etudiante/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Drummondville",
+        "region": "Centre-du-Québec",
+        "label": "Engagement étudiant",
+        "link": "https://www.cegepdrummond.ca/engagement-etudiant/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Jonquière",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "label": "Sports-arts-études",
+        "link": "https://vie-etudiante.cegepjonquiere.ca/sports-arts-etudes.html",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Jonquière",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "label": "https://vie-etudiante.cegepjonquiere.ca/",
+        "link": "https://vie-etudiante.cegepjonquiere.ca/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de l'Abitibi-Témiscamingue",
+        "region": "Abitibi-Témiscamingue",
+        "label": "ÉTUDIANTS",
+        "link": "https://www.cegepat.qc.ca/etudiants/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de l'Abitibi-Témiscamingue",
+        "region": "Abitibi-Témiscamingue",
+        "label": "Programmes disponibles automne 2026",
+        "link": "https://www.cegepat.qc.ca/etudiants/programmes-disponibles-automne-2026/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de l'Abitibi-Témiscamingue",
+        "region": "Abitibi-Témiscamingue",
+        "label": "Admission",
+        "link": "https://www.cegepat.qc.ca/etudiants/admission/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de l'Abitibi-Témiscamingue",
+        "region": "Abitibi-Témiscamingue",
+        "label": "La rentrée",
+        "link": "https://www.cegepat.qc.ca/etudiants/rentree/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de l'Abitibi-Témiscamingue",
+        "region": "Abitibi-Témiscamingue",
+        "label": "Découvre le Cégep",
+        "link": "https://www.cegepat.qc.ca/etudiants/decouvre-le-cegep/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de l'Abitibi-Témiscamingue",
+        "region": "Abitibi-Témiscamingue",
+        "label": "Résidences Rouyn-Noranda",
+        "link": "https://www.cegepat.qc.ca/etudiants/residences-rouyn-noranda/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de l'Outaouais",
+        "region": "Outaouais",
+        "label": "Tremplin DEC",
+        "link": "https://cegepoutaouais.qc.ca/futurs-etudiants/nouveaux-admis/cheminement-tremplin-dec/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de l'Outaouais",
+        "region": "Outaouais",
+        "label": "Les 7 étapes de la rentrée",
+        "link": "https://cegepoutaouais.qc.ca/futurs-etudiants/nouveaux-admis/les-etapes-rentree/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de l'Outaouais",
+        "region": "Outaouais",
+        "label": "La rentrée : renseignements pratiques",
+        "link": "https://cegepoutaouais.qc.ca/futurs-etudiants/nouveaux-admis/la-rentree-renseignements-pratiques/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de l'Outaouais",
+        "region": "Outaouais",
+        "label": "Conditions particulières d’inscription",
+        "link": "https://cegepoutaouais.qc.ca/futurs-etudiants/nouveaux-admis/conditions-particulieres-inscription/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de l'Outaouais",
+        "region": "Outaouais",
+        "label": "Aide pédagogique individuelle (API)",
+        "link": "https://cegepoutaouais.qc.ca/futurs-etudiants/nouveaux-admis/aide-pedagogique-individuelle/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de la Gaspésie et des Îles",
+        "region": "Gaspésie–Îles-de-la-Madeleine",
+        "label": "Zone étudiante",
+        "link": "https://cegepgim.ca/zoneetudiante/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de la Gaspésie et des Îles",
+        "region": "Gaspésie–Îles-de-la-Madeleine",
+        "label": "Rentrée scolaire",
+        "link": "https://cegepgim.ca/zoneetudiante/les-essentiels/la-rentree/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de la Gaspésie et des Îles",
+        "region": "Gaspésie–Îles-de-la-Madeleine",
+        "label": "Options d’études uniques",
+        "link": "https://cegepgim.ca/futurs-etudiants/options-detudes-uniques/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de la Gaspésie et des Îles",
+        "region": "Gaspésie–Îles-de-la-Madeleine",
+        "label": "Mobilité entre cégeps",
+        "link": "https://cegepgim.ca/futurs-etudiants/mobilite-entre-cegeps/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de la Gaspésie et des Îles",
+        "region": "Gaspésie–Îles-de-la-Madeleine",
+        "label": "Étudiante ou étudiant d’un jour",
+        "link": "https://cegepgim.ca/futurs-etudiants/etudiant-dun-jour/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de la Gaspésie et des Îles",
+        "region": "Gaspésie–Îles-de-la-Madeleine",
+        "label": "Admission",
+        "link": "https://cegepgim.ca/futurs-etudiants/admission/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Lévis",
+        "region": "Chaudière-Appalaches",
+        "label": "Étudiants internationaux",
+        "link": "https://www.cegeplevis.ca/etudier-ici/etudiants-internationaux/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Lévis",
+        "region": "Chaudière-Appalaches",
+        "label": "Étudiant d’un jour",
+        "link": "https://www.cegeplevis.ca/etudier-ici/le-cegep/etudiant-dun-jour/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Lévis",
+        "region": "Chaudière-Appalaches",
+        "label": "Résidences étudiantes",
+        "link": "https://www.cegeplevis.ca/services/infrastructures-et-commodites/residences-etudiantes-du-cegep-de-levis/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Lévis",
+        "region": "Chaudière-Appalaches",
+        "label": "Socioculturel",
+        "link": "https://www.cegeplevis.ca/etudier-ici/vie-etudiante/socioculturel/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Lévis",
+        "region": "Chaudière-Appalaches",
+        "label": "Sports",
+        "link": "https://www.cegeplevis.ca/etudier-ici/vie-etudiante/sports/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Matane",
+        "region": "Bas-Saint-Laurent",
+        "label": "Services à la communauté étudiante",
+        "link": "https://www.cegep-matane.qc.ca/services-aux-etudiants/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Matane",
+        "region": "Bas-Saint-Laurent",
+        "label": "Résidences et logements",
+        "link": "https://www.cegep-matane.qc.ca/services-aux-etudiants/residences-logements/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Matane",
+        "region": "Bas-Saint-Laurent",
+        "label": "Vie étudiante",
+        "link": "https://www.cegep-matane.qc.ca/vie-etudiante/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Matane",
+        "region": "Bas-Saint-Laurent",
+        "label": "Lieux de la vie étudiante",
+        "link": "https://www.cegep-matane.qc.ca/vie-etudiante/lieux-vie-etudiante/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Matane",
+        "region": "Bas-Saint-Laurent",
+        "label": "Activités de la vie étudiante",
+        "link": "https://www.cegep-matane.qc.ca/vie-etudiante/activites-vie-etudiante/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Matane",
+        "region": "Bas-Saint-Laurent",
+        "label": "Clubs et comités de la vie étudiante",
+        "link": "https://www.cegep-matane.qc.ca/vie-etudiante/clubs-et-comites/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Matane",
+        "region": "Bas-Saint-Laurent",
+        "label": "Les Capitaines",
+        "link": "https://www.cegep-matane.qc.ca/vie-etudiante/capitaines/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Matane",
+        "region": "Bas-Saint-Laurent",
+        "label": "Harcèlement et violences à caractère sexuel – Guichet unique",
+        "link": "https://www.cegep-matane.qc.ca/services-aux-etudiants/harcelement-violences/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Rimouski",
+        "region": "Bas-Saint-Laurent",
+        "label": "https://www.cegep-rimouski.qc.ca/futurs-etudiants",
+        "link": "https://www.cegep-rimouski.qc.ca/futurs-etudiants",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Rimouski",
+        "region": "Bas-Saint-Laurent",
+        "label": "https://www.cegep-rimouski.qc.ca/futurs-etudiants/je-choisis-je-minscris",
+        "link": "https://www.cegep-rimouski.qc.ca/futurs-etudiants/je-choisis-je-minscris",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Rimouski",
+        "region": "Bas-Saint-Laurent",
+        "label": "https://www.cegep-rimouski.qc.ca/futurs-etudiants/bourses",
+        "link": "https://www.cegep-rimouski.qc.ca/futurs-etudiants/bourses",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Rimouski",
+        "region": "Bas-Saint-Laurent",
+        "label": "https://www.cegep-rimouski.qc.ca/futurs-etudiants/ton-entree-au-cegep",
+        "link": "https://www.cegep-rimouski.qc.ca/futurs-etudiants/ton-entree-au-cegep",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Rimouski",
+        "region": "Bas-Saint-Laurent",
+        "label": "https://www.cegep-rimouski.qc.ca/futurs-etudiants/visite-virtuelle",
+        "link": "https://www.cegep-rimouski.qc.ca/futurs-etudiants/visite-virtuelle",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Rimouski",
+        "region": "Bas-Saint-Laurent",
+        "label": "https://www.cegep-rimouski.qc.ca/mon-cegep/etudiants/services",
+        "link": "https://www.cegep-rimouski.qc.ca/mon-cegep/etudiants/services",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Rimouski",
+        "region": "Bas-Saint-Laurent",
+        "label": "https://www.cegep-rimouski.qc.ca/futurs-etudiants/etudiant-dun-jour",
+        "link": "https://www.cegep-rimouski.qc.ca/futurs-etudiants/etudiant-dun-jour",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Rimouski",
+        "region": "Bas-Saint-Laurent",
+        "label": "https://www.cegep-rimouski.qc.ca/futurs-etudiants/explo-cegep",
+        "link": "https://www.cegep-rimouski.qc.ca/futurs-etudiants/explo-cegep",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Rivière-du-Loup",
+        "region": "Bas-Saint-Laurent",
+        "label": "https://www.cegeprdl.ca/etudiants-actuels/calendrier-scolaire",
+        "link": "https://www.cegeprdl.ca/etudiants-actuels/calendrier-scolaire",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Rivière-du-Loup",
+        "region": "Bas-Saint-Laurent",
+        "label": "https://www.cegeprdl.ca/futurs-etudiants/programmes/programmes-preuniversitaires/arts-lettres-et-communication",
+        "link": "https://www.cegeprdl.ca/futurs-etudiants/programmes/programmes-preuniversitaires/arts-lettres-et-communication",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Rivière-du-Loup",
+        "region": "Bas-Saint-Laurent",
+        "label": "https://www.cegeprdl.ca/futurs-etudiants/programmes/programmes-preuniversitaires/arts-visuels",
+        "link": "https://www.cegeprdl.ca/futurs-etudiants/programmes/programmes-preuniversitaires/arts-visuels",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Rivière-du-Loup",
+        "region": "Bas-Saint-Laurent",
+        "label": "https://www.cegeprdl.ca/futurs-etudiants/programmes/programmes-preuniversitaires/sciences-de-la-nature",
+        "link": "https://www.cegeprdl.ca/futurs-etudiants/programmes/programmes-preuniversitaires/sciences-de-la-nature",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Rivière-du-Loup",
+        "region": "Bas-Saint-Laurent",
+        "label": "https://www.cegeprdl.ca/futurs-etudiants/programmes/programmes-preuniversitaires/sciences-humaines",
+        "link": "https://www.cegeprdl.ca/futurs-etudiants/programmes/programmes-preuniversitaires/sciences-humaines",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Rivière-du-Loup",
+        "region": "Bas-Saint-Laurent",
+        "label": "https://www.cegeprdl.ca/futurs-etudiants/programmes/autres/tremplin-dec",
+        "link": "https://www.cegeprdl.ca/futurs-etudiants/programmes/autres/tremplin-dec",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Rivière-du-Loup",
+        "region": "Bas-Saint-Laurent",
+        "label": "https://www.cegeprdl.ca/futurs-etudiants/programmes/programmes-preuniversitaires",
+        "link": "https://www.cegeprdl.ca/futurs-etudiants/programmes/programmes-preuniversitaires",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Saint-Félicien",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "label": "Étudiant.e d’un jour",
+        "link": "https://cegepstfe.ca/etudiant-dun-jour/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Saint-Félicien",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "label": "Étudiants internationaux",
+        "link": "https://cegepstfe.ca/temoignages/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Saint-Félicien",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "label": "Vie étudiante",
+        "link": "https://cegepstfe.ca/vie-etudiante/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Saint-Félicien",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "label": "Coopérative étudiante",
+        "link": "https://cegepstfe.ca/cooperative-etudiante-2/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Saint-Félicien",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "label": "Placement étudiant et stages - ATE",
+        "link": "https://cegepstfe.ca/placement-etudiant-et-alternance-travail-etudes-ate-futurs-etudiants/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Saint-Félicien",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "label": "Bureau de l’international",
+        "link": "https://cegepstfe.ca/bureauinternational/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Saint-Félicien",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "label": "Los étudiantes internacionales",
+        "link": "https://cegepstfe.ca/los-etudiantes-internacionales/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Saint-Félicien",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "label": "Services aux étudiant.e.s autochtones",
+        "link": "https://cegepstfe.ca/service-aux-etudiants-autochtones/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Saint-Hyacinthe",
+        "region": "Montérégie",
+        "label": "https://www.cegepsth.qc.ca/wp-content/themes/Cegep20192/_fp_components/quicklinks/quicklinks.min.css?ver=07-13--01",
+        "link": "https://www.cegepsth.qc.ca/wp-content/themes/Cegep20192/_fp_components/quicklinks/quicklinks.min.css?ver=07-13--01",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Saint-Hyacinthe",
+        "region": "Montérégie",
+        "label": "https://www.cegepsth.qc.ca/wp-content/themes/Cegep20192/_fp_components/slider_home_hardcode/slide/etudiant_un_jour/etudiant_un_jour.min.css?ver=07-13--01",
+        "link": "https://www.cegepsth.qc.ca/wp-content/themes/Cegep20192/_fp_components/slider_home_hardcode/slide/etudiant_un_jour/etudiant_un_jour.min.css?ver=07-13--01",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Saint-Hyacinthe",
+        "region": "Montérégie",
+        "label": "https://www.cegepsth.qc.ca/wp-content/themes/Cegep20192/_fp_components/template-etudiant-dun-jour/template-etudiant-dun-jour.min.css?ver=07-13--01",
+        "link": "https://www.cegepsth.qc.ca/wp-content/themes/Cegep20192/_fp_components/template-etudiant-dun-jour/template-etudiant-dun-jour.min.css?ver=07-13--01",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Saint-Hyacinthe",
+        "region": "Montérégie",
+        "label": "Admission",
+        "link": "https://www.cegepsth.qc.ca/futurs-etudiants/admission/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Saint-Hyacinthe",
+        "region": "Montérégie",
+        "label": "Activité d’intégration",
+        "link": "https://www.cegepsth.qc.ca/futurs-etudiants/activites-culturelles/activite-dintegration-initiation/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Saint-Hyacinthe",
+        "region": "Montérégie",
+        "label": "Étudiants athlètes",
+        "link": "https://www.cegepsth.qc.ca/futurs-etudiants/sports/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Saint-Hyacinthe",
+        "region": "Montérégie",
+        "label": "Étudiant d'un jour",
+        "link": "https://www.cegepsth.qc.ca/programmes/etudiant-dun-jour/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Saint-Jérôme",
+        "region": "Laurentides",
+        "label": "Services étudiants",
+        "link": "https://www.cstj.qc.ca/services-aux-etudiants/aide-a-la-reussite/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Saint-Jérôme",
+        "region": "Laurentides",
+        "label": "Aide financière",
+        "link": "https://www.cstj.qc.ca/services-aux-etudiants/aide-financiere/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Saint-Jérôme",
+        "region": "Laurentides",
+        "label": "Bibliothèque",
+        "link": "https://www.cstj.qc.ca/services-aux-etudiants/bibliotheque/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Saint-Jérôme",
+        "region": "Laurentides",
+        "label": "Quartier général de l’audace",
+        "link": "https://www.cstj.qc.ca/quartier-general-de-laudace/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Saint-Jérôme",
+        "region": "Laurentides",
+        "label": "Placement étudiant",
+        "link": "https://www.cstj.qc.ca/services-aux-etudiants/espace-emplois-etudiants/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Sainte-Foy",
+        "region": "Capitale-Nationale",
+        "label": "https://www.cegep-ste-foy.qc.ca/guide-etudiant",
+        "link": "https://www.cegep-ste-foy.qc.ca/guide-etudiant",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Sainte-Foy",
+        "region": "Capitale-Nationale",
+        "label": "https://www.cegep-ste-foy.qc.ca/services-aux-etudiants/stationnement",
+        "link": "https://www.cegep-ste-foy.qc.ca/services-aux-etudiants/stationnement",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Sainte-Foy",
+        "region": "Capitale-Nationale",
+        "label": "https://www.cegep-ste-foy.qc.ca/etudiants/employes",
+        "link": "https://www.cegep-ste-foy.qc.ca/etudiants/employes",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Sainte-Foy",
+        "region": "Capitale-Nationale",
+        "label": "https://www.cegep-ste-foy.qc.ca/vie-etudiante-et-sports/vie-etudiante",
+        "link": "https://www.cegep-ste-foy.qc.ca/vie-etudiante-et-sports/vie-etudiante",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Sainte-Foy",
+        "region": "Capitale-Nationale",
+        "label": "https://www.cegep-ste-foy.qc.ca/vie-etudiante-et-sports/sports",
+        "link": "https://www.cegep-ste-foy.qc.ca/vie-etudiante-et-sports/sports",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Sainte-Foy",
+        "region": "Capitale-Nationale",
+        "label": "https://www.cegep-ste-foy.qc.ca/services-aux-etudiants/aide-aux-etudes",
+        "link": "https://www.cegep-ste-foy.qc.ca/services-aux-etudiants/aide-aux-etudes",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Sainte-Foy",
+        "region": "Capitale-Nationale",
+        "label": "https://www.cegep-ste-foy.qc.ca/services-aux-etudiants/aide-financiere-et-bourses",
+        "link": "https://www.cegep-ste-foy.qc.ca/services-aux-etudiants/aide-financiere-et-bourses",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Sainte-Foy",
+        "region": "Capitale-Nationale",
+        "label": "https://www.cegep-ste-foy.qc.ca/services-aux-etudiants/aide-psychosociale",
+        "link": "https://www.cegep-ste-foy.qc.ca/services-aux-etudiants/aide-psychosociale",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Shawinigan",
+        "region": "Mauricie",
+        "label": "Les Électriks",
+        "link": "https://www.cegepshawinigan.ca/futurs-etudiants/vie-sportive/les-electriks/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Shawinigan",
+        "region": "Mauricie",
+        "label": "Bibliothèque",
+        "link": "https://www.cegepshawinigan.ca/futurs-etudiants/services-aux-etudiants/bibliotheque/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Shawinigan",
+        "region": "Mauricie",
+        "label": "Futurs étudiants",
+        "link": "https://www.cegepshawinigan.ca/futurs-etudiants/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Shawinigan",
+        "region": "Mauricie",
+        "label": "Découvre le Cégep",
+        "link": "https://www.cegepshawinigan.ca/futurs-etudiants/decouvre-le-cegep/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Shawinigan",
+        "region": "Mauricie",
+        "label": "Portes ouvertes",
+        "link": "https://www.cegepshawinigan.ca/futurs-etudiants/decouvre-le-cegep/portes-ouvertes/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Shawinigan",
+        "region": "Mauricie",
+        "label": "Étudiant d’un jour",
+        "link": "https://www.cegepshawinigan.ca/futurs-etudiants/decouvre-le-cegep/etudiant-dun-jour/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Shawinigan",
+        "region": "Mauricie",
+        "label": "Visite virtuelle",
+        "link": "https://www.cegepshawinigan.ca/futurs-etudiants/decouvre-le-cegep/visite-virtuelle/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Sherbrooke",
+        "region": "Estrie",
+        "label": "Offertes aux élèves de l’international",
+        "link": "https://cegepsherbrooke.qc.ca/formations/?_program_profiles=je-suis-eleve-de-linternational",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Sherbrooke",
+        "region": "Estrie",
+        "label": "Centre des médias – bibliothèque",
+        "link": "https://cegepsherbrooke.qc.ca/vie-etudiante/centre-des-medias-bibliotheque/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Sherbrooke",
+        "region": "Estrie",
+        "label": "Parents étudiants",
+        "link": "https://cegepsherbrooke.qc.ca/aide-et-services/parents-etudiants/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Sherbrooke",
+        "region": "Estrie",
+        "label": "Séjours internationaux",
+        "link": "https://cegepsherbrooke.qc.ca/le-cegep/international/sejours-pedagogiques-a-linternational/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Sherbrooke",
+        "region": "Estrie",
+        "label": "Vie étudiante",
+        "link": "https://cegepsherbrooke.qc.ca/vie-etudiante/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Sherbrooke",
+        "region": "Estrie",
+        "label": "Activités socioculturelles",
+        "link": "https://cegepsherbrooke.qc.ca/vie-etudiante/activites-socioculturelles/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Trois-Rivières",
+        "region": "Mauricie",
+        "label": "Zone étudiante",
+        "link": "https://www.cegeptr.qc.ca/etudiants/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Trois-Rivières",
+        "region": "Mauricie",
+        "label": "Changer de programme",
+        "link": "https://www.cegeptr.qc.ca/futurs-etudiants/inscription/changer-de-programme-detudes/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Trois-Rivières",
+        "region": "Mauricie",
+        "label": "Carte étudiante",
+        "link": "https://www.cegeptr.qc.ca/carte-etudiante/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Victoriaville",
+        "region": "Centre-du-Québec",
+        "label": "Guide étudiant",
+        "link": "https://www.cegepvicto.ca/eleves-actuels/guide-etudiant/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Victoriaville",
+        "region": "Centre-du-Québec",
+        "label": "Carte étudiante",
+        "link": "https://www.cegepvicto.ca/eleves-actuels/services-eleve/carte-etudiante/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep de Victoriaville",
+        "region": "Centre-du-Québec",
+        "label": "La Fondation en bref",
+        "link": "https://www.cegepvicto.ca/fondation/la-fondation-en-bref/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep du Vieux Montréal",
+        "region": "Montréal",
+        "label": "Étudiante et étudiant d’un jour",
+        "link": "https://www.cvm.qc.ca/etudiante-etudiant-un-jour/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep du Vieux Montréal",
+        "region": "Montréal",
+        "label": "Étudiantes et étudiants internationaux",
+        "link": "https://www.cvm.qc.ca/etudiants-internationaux/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep du Vieux Montréal",
+        "region": "Montréal",
+        "label": "Emploi et placement étudiant",
+        "link": "https://www.cvm.qc.ca/emploi-placement-etudiant/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep du Vieux Montréal",
+        "region": "Montréal",
+        "label": "Café étudiant l’Exode",
+        "link": "https://www.cvm.qc.ca/cafe-etudiant-exode/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep du Vieux Montréal",
+        "region": "Montréal",
+        "label": "https://www.cvm.qc.ca/reconnaissance-engagement-etudiant/",
+        "link": "https://www.cvm.qc.ca/reconnaissance-engagement-etudiant/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep du Vieux Montréal",
+        "region": "Montréal",
+        "label": "Plan du quartier",
+        "link": "https://www.cvm.qc.ca/plan-du-quartier/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Garneau",
+        "region": "Capitale-Nationale",
+        "label": "https://cegepgarneau.ca/wp-content/themes/act-wp-base-designsystem/activis/blocks/act-social-links/act-social-links--without-title.min.css?ver=1.0",
+        "link": "https://cegepgarneau.ca/wp-content/themes/act-wp-base-designsystem/activis/blocks/act-social-links/act-social-links--without-title.min.css?ver=1.0",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Garneau",
+        "region": "Capitale-Nationale",
+        "label": "https://cegepgarneau.ca/wp-content/themes/act-wp-base-designsystem/activis/blocks/act-social-links/act-social-links.min.css?ver=1.0.2",
+        "link": "https://cegepgarneau.ca/wp-content/themes/act-wp-base-designsystem/activis/blocks/act-social-links/act-social-links.min.css?ver=1.0.2",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Garneau",
+        "region": "Capitale-Nationale",
+        "label": "https://cegepgarneau.ca/wp-content/themes/act-wp-base-designsystem/activis/blocks/core-post-navigation-link/core-post-navigation-link.min.css?ver=1.0.2",
+        "link": "https://cegepgarneau.ca/wp-content/themes/act-wp-base-designsystem/activis/blocks/core-post-navigation-link/core-post-navigation-link.min.css?ver=1.0.2",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Garneau",
+        "region": "Capitale-Nationale",
+        "label": "https://cegepgarneau.ca/wp-content/themes/act-wp-base-designsystem/activis/blocks/act-quick-links/act-quick-links.min.css?ver=1.0.2",
+        "link": "https://cegepgarneau.ca/wp-content/themes/act-wp-base-designsystem/activis/blocks/act-quick-links/act-quick-links.min.css?ver=1.0.2",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Garneau",
+        "region": "Capitale-Nationale",
+        "label": "https://cegepgarneau.ca/wp-content/themes/cgu12657-cegepgarneau.ca-main/blocks/act-quick-links/act-quick-links--classic-text.min.css?ver=1.0.5",
+        "link": "https://cegepgarneau.ca/wp-content/themes/cgu12657-cegepgarneau.ca-main/blocks/act-quick-links/act-quick-links--classic-text.min.css?ver=1.0.5",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Garneau",
+        "region": "Capitale-Nationale",
+        "label": "https://cegepgarneau.ca/wp-content/themes/act-wp-base-designsystem/activis/blocks/act-quick-links/act-quick-links--cover.min.css?ver=1.0.2",
+        "link": "https://cegepgarneau.ca/wp-content/themes/act-wp-base-designsystem/activis/blocks/act-quick-links/act-quick-links--cover.min.css?ver=1.0.2",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Garneau",
+        "region": "Capitale-Nationale",
+        "label": "https://cegepgarneau.ca/wp-content/themes/act-wp-base-designsystem/activis/blocks/act-quick-links/act-quick-links--on-hero.min.css?ver=1.0.2",
+        "link": "https://cegepgarneau.ca/wp-content/themes/act-wp-base-designsystem/activis/blocks/act-quick-links/act-quick-links--on-hero.min.css?ver=1.0.2",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Gérald-Godin",
+        "region": "Montréal",
+        "label": "Une vie étudiante stimulante",
+        "link": "https://www.cgodin.qc.ca/la-vie-etudiante/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Gérald-Godin",
+        "region": "Montréal",
+        "label": "Des services aux étudiantes et étudiants personnalisés",
+        "link": "https://www.cgodin.qc.ca/ressources/services-aux-etudiants/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Gérald-Godin",
+        "region": "Montréal",
+        "label": "Des parcours étudiants uniques",
+        "link": "https://www.cgodin.qc.ca/pourquoi-gg/des-parcours-etudiants-uniques/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Gérald-Godin",
+        "region": "Montréal",
+        "label": "Étudiantes et étudiants internationaux",
+        "link": "https://www.cgodin.qc.ca/pourquoi-gg/la-difference-gerald-godin/etudiants-internationaux/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Gérald-Godin",
+        "region": "Montréal",
+        "label": "Étudiant(e) d&#8217;un jour",
+        "link": "https://www.cgodin.qc.ca/nos-programmes/etudiant-e-dun-jour/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Limoilou",
+        "region": "Capitale-Nationale",
+        "label": "Zone étudiante",
+        "link": "https://www.cegeplimoilou.ca/zone-etudiante/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Limoilou",
+        "region": "Capitale-Nationale",
+        "label": "Vie étudiante",
+        "link": "https://www.cegeplimoilou.ca/vie-etudiante/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Limoilou",
+        "region": "Capitale-Nationale",
+        "label": "Services étudiants",
+        "link": "https://www.cegeplimoilou.ca/services/services-etudiants/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Limoilou",
+        "region": "Capitale-Nationale",
+        "label": "Soutien éducatif",
+        "link": "https://www.cegeplimoilou.ca/services/services-etudiants/soutien-educatif/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Limoilou",
+        "region": "Capitale-Nationale",
+        "label": "Aide pédagogique individuelle (API)",
+        "link": "https://www.cegeplimoilou.ca/services/services-etudiants/soutien-educatif/aide-pedagogique/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Limoilou",
+        "region": "Capitale-Nationale",
+        "label": "Centre d’aide à la réussite (CAR)",
+        "link": "https://www.cegeplimoilou.ca/services/services-etudiants/soutien-educatif/aide-a-la-reussite/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Limoilou",
+        "region": "Capitale-Nationale",
+        "label": "Services adaptés",
+        "link": "https://www.cegeplimoilou.ca/services/services-etudiants/soutien-educatif/services-adaptes/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep régional de Lanaudière",
+        "region": "Lanaudière",
+        "label": "Futurs étudiants",
+        "link": "https://cegep-lanaudiere.qc.ca/informations-utiles/futurs-etudiants/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep régional de Lanaudière",
+        "region": "Lanaudière",
+        "label": "Étudiants internationaux",
+        "link": "https://cegep-lanaudiere.qc.ca/informations-utiles/etudiants-internationaux/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep régional de Lanaudière",
+        "region": "Lanaudière",
+        "label": "Étudiants internationaux",
+        "link": "https://cegep-lanaudiere.qc.ca/joliette/choisir-joliette/etudiants-internationaux/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep régional de Lanaudière",
+        "region": "Lanaudière",
+        "label": "https://cegep-lanaudiere.qc.ca/actualite/plus-de-11-000-en-bourses-offerts-aux-personnes-etudiantes-en-optique-et-lunetterie-au-cegep-a-lassomption/",
+        "link": "https://cegep-lanaudiere.qc.ca/actualite/plus-de-11-000-en-bourses-offerts-aux-personnes-etudiantes-en-optique-et-lunetterie-au-cegep-a-lassomption/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep régional de Lanaudière",
+        "region": "Lanaudière",
+        "label": "https://cegep-lanaudiere.qc.ca/actualite/le-tournoi-de-golf-annuel-du-cegep-de-lanaudiere-permet-damasser-plus-de-82-000-pour-les-etudiants-athletes/",
+        "link": "https://cegep-lanaudiere.qc.ca/actualite/le-tournoi-de-golf-annuel-du-cegep-de-lanaudiere-permet-damasser-plus-de-82-000-pour-les-etudiants-athletes/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep régional de Lanaudière",
+        "region": "Lanaudière",
+        "label": "https://cegep-lanaudiere.qc.ca/actualite/le-cegep-de-lanaudiere-a-terrebonne-et-la-mrc-les-moulins-soulignent-lexcellence-entrepreneuriale-etudiante/",
+        "link": "https://cegep-lanaudiere.qc.ca/actualite/le-cegep-de-lanaudiere-a-terrebonne-et-la-mrc-les-moulins-soulignent-lexcellence-entrepreneuriale-etudiante/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep régional de Lanaudière",
+        "region": "Lanaudière",
+        "label": "https://cegep-lanaudiere.qc.ca/actualite/le-cegep-de-lanaudiere-a-terrebonne-celebre-lengagement-etudiant-lors-de-son-gala-socioculturel-annuel/",
+        "link": "https://cegep-lanaudiere.qc.ca/actualite/le-cegep-de-lanaudiere-a-terrebonne-celebre-lengagement-etudiant-lors-de-son-gala-socioculturel-annuel/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "cégep régional de Lanaudière à Joliette",
+        "region": "(sans région)",
+        "label": "Étudiant d’un jour",
+        "link": "https://cegep-lanaudiere.qc.ca/joliette/choisir-joliette/etudiant-dun-jour/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "cégep régional de Lanaudière à Joliette",
+        "region": "(sans région)",
+        "label": "Étudiants internationaux",
+        "link": "https://cegep-lanaudiere.qc.ca/informations-utiles/etudiants-internationaux/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "cégep régional de Lanaudière à Joliette",
+        "region": "(sans région)",
+        "label": "Vie socioculturelle",
+        "link": "https://cegep-lanaudiere.qc.ca/joliette/vie-etudiante/vie-socioculturelle/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "cégep régional de Lanaudière à Joliette",
+        "region": "(sans région)",
+        "label": "Services adaptés (SAIDE)",
+        "link": "https://cegep-lanaudiere.qc.ca/joliette/services-aux-etudiants/services-adaptes-saide/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "cégep régional de Lanaudière à Joliette",
+        "region": "(sans région)",
+        "label": "Cheminement et orientation",
+        "link": "https://cegep-lanaudiere.qc.ca/joliette/services-aux-etudiants/cheminement-et-orientation/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "cégep régional de Lanaudière à Joliette",
+        "region": "(sans région)",
+        "label": "Services psychosociaux",
+        "link": "https://cegep-lanaudiere.qc.ca/joliette/services-aux-etudiants/services-psychosociaux/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "cégep régional de Lanaudière à Joliette",
+        "region": "(sans région)",
+        "label": "Centres d’aide à l’apprentissage",
+        "link": "https://cegep-lanaudiere.qc.ca/joliette/services-aux-etudiants/centres-daide/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "cégep régional de Lanaudière à Joliette",
+        "region": "(sans région)",
+        "label": "Aide financière",
+        "link": "https://cegep-lanaudiere.qc.ca/joliette/services-aux-etudiants/aide-financiere/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Saint-Jean-sur-Richelieu",
+        "region": "Montérégie",
+        "label": "Préparer sa rentrée",
+        "link": "https://www.cstjean.qc.ca/futurs-etudiants/preparer-sa-rentree",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Saint-Jean-sur-Richelieu",
+        "region": "Montérégie",
+        "label": "Visite du Cégep en 360 degrés",
+        "link": "https://www.cstjean.qc.ca/futurs-etudiants/voir-le-cegep/visite-en-360-degres",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Saint-Jean-sur-Richelieu",
+        "region": "Montérégie",
+        "label": "Pourquoi Saint-Jean ?",
+        "link": "https://www.cstjean.qc.ca/futurs-etudiants/pourquoi-saint-jean/saint-jean-se-demarque",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Saint-Jean-sur-Richelieu",
+        "region": "Montérégie",
+        "label": "Activités parascolaires au Cégep",
+        "link": "https://www.cstjean.qc.ca/futurs-etudiants/pourquoi-saint-jean/activites-parascolaires-au-cegep",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Saint-Jean-sur-Richelieu",
+        "region": "Montérégie",
+        "label": "Alliance Sport-Études",
+        "link": "https://www.cstjean.qc.ca/futurs-etudiants/pourquoi-saint-jean/alliance-sport-etudes",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Saint-Jean-sur-Richelieu",
+        "region": "Montérégie",
+        "label": "Formation aux adultes à Saint-Jean et à Brossard",
+        "link": "https://www.cstjean.qc.ca/futurs-etudiants/pourquoi-saint-jean/formation-aux-adultes-saint-jean-et-brossard",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Saint-Jean-sur-Richelieu",
+        "region": "Montérégie",
+        "label": "Aide financière et bourses d&#039;études",
+        "link": "https://www.cstjean.qc.ca/futurs-etudiants/aide-financiere-et-bourses-detudes",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Cégep Saint-Jean-sur-Richelieu",
+        "region": "Montérégie",
+        "label": "https://www.cstjean.qc.ca/futurs-etudiants/residence-et-logements",
+        "link": "https://www.cstjean.qc.ca/futurs-etudiants/residence-et-logements",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Ahuntsic",
+        "region": "Montréal",
+        "label": "Centre d&#39;entrainement pour l&#39;amélioration du français",
+        "link": "https://www.collegeahuntsic.qc.ca/services-aux-etudiants/francisation-fracas/exercices",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Ahuntsic",
+        "region": "Montréal",
+        "label": "Étudiante et étudiant d&#39;un jour",
+        "link": "https://www.collegeahuntsic.qc.ca/choisir-ahuntsic/visitez-le-college-ahuntsic/etudiant-dun-jour",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Ahuntsic",
+        "region": "Montréal",
+        "label": "https://www.collegeahuntsic.qc.ca/services-aux-etudiants/nos-services",
+        "link": "https://www.collegeahuntsic.qc.ca/services-aux-etudiants/nos-services",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Ahuntsic",
+        "region": "Montréal",
+        "label": "https://www.collegeahuntsic.qc.ca/services-aux-etudiants/vie-etudiante",
+        "link": "https://www.collegeahuntsic.qc.ca/services-aux-etudiants/vie-etudiante",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Ahuntsic",
+        "region": "Montréal",
+        "label": "Arts des mots",
+        "link": "https://www.collegeahuntsic.qc.ca/services-aux-etudiants/vie-etudiante/art-des-mots",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Ahuntsic",
+        "region": "Montréal",
+        "label": "Arts de la scène",
+        "link": "https://www.collegeahuntsic.qc.ca/services-aux-etudiants/vie-etudiante/arts-de-la-scene",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Ahuntsic",
+        "region": "Montréal",
+        "label": "Arts visuels",
+        "link": "https://www.collegeahuntsic.qc.ca/services-aux-etudiants/vie-etudiante/arts-visuels",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Ahuntsic",
+        "region": "Montréal",
+        "label": "Équité, diversité et inclusion (EDI)",
+        "link": "https://www.collegeahuntsic.qc.ca/services-aux-etudiants/vie-etudiante/equite-diversite-et-inclusion-edi",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "collège André-Grasset",
+        "region": "(sans région)",
+        "label": "Admission et frais de scolarité",
+        "link": "https://www.grasset.qc.ca/futurs-etudiants/admission/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "collège André-Grasset",
+        "region": "(sans région)",
+        "label": "Portes ouvertes",
+        "link": "https://www.grasset.qc.ca/futurs-etudiants/portes-ouvertes/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "collège André-Grasset",
+        "region": "(sans région)",
+        "label": "Pourquoi choisir Grasset",
+        "link": "https://www.grasset.qc.ca/futurs-etudiants/pourquoi-choisir-grasset/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "collège André-Grasset",
+        "region": "(sans région)",
+        "label": "Étudiant d’un jour",
+        "link": "https://www.grasset.qc.ca/futurs-etudiants/etudiant-dun-jour/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "collège André-Grasset",
+        "region": "(sans région)",
+        "label": "Bourses et aide financière",
+        "link": "https://www.grasset.qc.ca/futurs-etudiants/bourses-et-aide-financiere/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège de Bois-de-Boulogne",
+        "region": "Montréal",
+        "label": "Étudiants réguliers",
+        "link": "https://www.bdeb.qc.ca/admission-etudiants-reguliers/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège de Bois-de-Boulogne",
+        "region": "Montréal",
+        "label": "Étudiants adultes",
+        "link": "https://www.bdeb.qc.ca/admission-etudiants-adultes/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège de Bois-de-Boulogne",
+        "region": "Montréal",
+        "label": "Étudiants internationaux",
+        "link": "https://www.bdeb.qc.ca/etudiantes-ou-etudiants-internationaux/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège de Bois-de-Boulogne",
+        "region": "Montréal",
+        "label": "Vie étudiante",
+        "link": "https://www.bdeb.qc.ca/vie-etudiante/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège de Bois-de-Boulogne",
+        "region": "Montréal",
+        "label": "Milieu de vie",
+        "link": "https://www.bdeb.qc.ca/vie-etudiante/milieu-de-vie/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège de Bois-de-Boulogne",
+        "region": "Montréal",
+        "label": "Librairie Coop",
+        "link": "https://www.bdeb.qc.ca/vie-etudiante/milieu-de-vie/librairie-coop/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège de Bois-de-Boulogne",
+        "region": "Montréal",
+        "label": "Résidence étudiante",
+        "link": "https://www.bdeb.qc.ca/vie-etudiante/milieu-de-vie/residence-etudiante/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège de Bois-de-Boulogne",
+        "region": "Montréal",
+        "label": "Cafétéria et bistro",
+        "link": "https://www.bdeb.qc.ca/vie-etudiante/milieu-de-vie/cafeteria-et-bistro/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège de Maisonneuve",
+        "region": "Montréal",
+        "label": "Étudiants internationaux",
+        "link": "https://www.cmaisonneuve.qc.ca/etudiants-internationaux/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège de Maisonneuve",
+        "region": "Montréal",
+        "label": "Étudiant(e) d’un jour",
+        "link": "https://www.cmaisonneuve.qc.ca/accueil/etudiant-dun-jour/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège de Maisonneuve",
+        "region": "Montréal",
+        "label": "Aide pédagogique individuelle (API)",
+        "link": "https://www.cmaisonneuve.qc.ca/vie-etudiante/dossier-etudiant/aide-pedagogique-individuelle/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège de Rosemont",
+        "region": "Montréal",
+        "label": "Futurs étudiants",
+        "link": "https://www.crosemont.qc.ca/decouverte_rosemont/admission/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Jean-de-Brébeuf",
+        "region": "(sans région)",
+        "label": "http://www.brebeuf.qc.ca/secondaire/vie-etudiante/",
+        "link": "http://www.brebeuf.qc.ca/secondaire/vie-etudiante/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Jean-de-Brébeuf",
+        "region": "(sans région)",
+        "label": "Engagement communautaire",
+        "link": "https://www.brebeuf.qc.ca/secondaire/vie-etudiante/engagement-communautaire/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Jean-de-Brébeuf",
+        "region": "(sans région)",
+        "label": "http://www.brebeuf.qc.ca/secondaire/vie-etudiante/activites-culturelles/",
+        "link": "http://www.brebeuf.qc.ca/secondaire/vie-etudiante/activites-culturelles/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Jean-de-Brébeuf",
+        "region": "(sans région)",
+        "label": "Activités parascolaires",
+        "link": "https://www.brebeuf.qc.ca/secondaire/vie-etudiante/activites-parascolaires/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Jean-de-Brébeuf",
+        "region": "(sans région)",
+        "label": "http://www.brebeuf.qc.ca/secondaire/vie-etudiante/services-aux-eleves/",
+        "link": "http://www.brebeuf.qc.ca/secondaire/vie-etudiante/services-aux-eleves/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Jean-de-Brébeuf",
+        "region": "(sans région)",
+        "label": "http://www.brebeuf.qc.ca/collegial/etudiants-dun-jour/",
+        "link": "http://www.brebeuf.qc.ca/collegial/etudiants-dun-jour/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Jean-de-Brébeuf",
+        "region": "(sans région)",
+        "label": "http://www.brebeuf.qc.ca/collegial/vie-etudiante/residence/",
+        "link": "http://www.brebeuf.qc.ca/collegial/vie-etudiante/residence/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Jean-de-Brébeuf",
+        "region": "(sans région)",
+        "label": "Étudiant né au Québec",
+        "link": "https://www.brebeuf.qc.ca/collegial/admission-etudiant-naissance-quebec/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Lionel-Groulx",
+        "region": "Laurentides",
+        "label": "Étudiants internationaux",
+        "link": "https://clg.qc.ca/choisir-lionel/etudiants-internationaux/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Lionel-Groulx",
+        "region": "Laurentides",
+        "label": "Vie étudiante",
+        "link": "https://clg.qc.ca/etudiants/vie-etudiante/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Lionel-Groulx",
+        "region": "Laurentides",
+        "label": "Étudiants",
+        "link": "https://clg.qc.ca/etudiants/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Lionel-Groulx",
+        "region": "Laurentides",
+        "label": "Cheminement étudiant",
+        "link": "https://clg.qc.ca/etudiants/cheminement-etudiant/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Lionel-Groulx",
+        "region": "Laurentides",
+        "label": "Aide à la réussite",
+        "link": "https://clg.qc.ca/etudiants/aide-a-la-reussite/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Lionel-Groulx",
+        "region": "Laurentides",
+        "label": "Santé et bien-être",
+        "link": "https://clg.qc.ca/etudiants/sante-et-bien-etre/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Lionel-Groulx",
+        "region": "Laurentides",
+        "label": "Soutien financier",
+        "link": "https://clg.qc.ca/etudiants/soutien-financier/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Montmorency",
+        "region": "Laval",
+        "label": "Les Écouteurs",
+        "link": "https://www.cmontmorency.qc.ca/etudiants/services-aux-etudiants/les-ecouteurs/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Montmorency",
+        "region": "Laval",
+        "label": "Calendriers",
+        "link": "https://www.cmontmorency.qc.ca/etudiants/cheminement-scolaire-et-registrariat/informations-nos-etudiants/calendriers/calendriers-scolaires/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Collège Montmorency",
+        "region": "Laval",
+        "label": "Bibliothèque",
+        "link": "https://www.cmontmorency.qc.ca/etudiants/services-aux-etudiants/bibliotheque/bibliotheque/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "collège régional Champlain de Saint-Lambert",
+        "region": "(sans région)",
+        "label": "Useful Links",
+        "link": "https://www.crc-sher.qc.ca/college-champlain/partners/",
+        "reason": "same host as institution (likely admin news)"
+      },
+      {
+        "institution": "Dawson College",
+        "region": "Montréal",
+        "label": "dawsoncollege.qc.ca",
+        "link": "https://www.dawsoncollege.qc.ca/who-you-are/future-students",
+        "reason": "feed on institution domain"
+      },
+      {
+        "institution": "Dawson College",
+        "region": "Montréal",
+        "label": "dawsoncollege.qc.ca",
+        "link": "https://www.dawsoncollege.qc.ca/who-you-are/current-students",
+        "reason": "feed on institution domain"
+      }
+    ],
+    "institutionGaps": [
+      {
+        "name": "École nationale d'administration publique (ENAP)",
+        "type": "universite",
+        "region": "Capitale-Nationale",
+        "website": "https://enap.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "HEC Montréal",
+        "type": "universite",
+        "region": "Montréal",
+        "website": "https://www.hec.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "Institut national de la recherche scientifique (INRS)",
+        "type": "universite",
+        "region": "Capitale-Nationale",
+        "website": "https://inrs.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "Université TÉLUQ",
+        "type": "universite",
+        "region": "Capitale-Nationale",
+        "website": "https://www.teluq.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "Cégep à distance",
+        "type": "cegep",
+        "region": "(sans région)",
+        "website": "https://cegepadistance.ca",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "Cégep Beauce-Appalaches",
+        "type": "cegep",
+        "region": "Chaudière-Appalaches",
+        "website": "https://www.cegepba.qc.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "cégep Champlain campus Saint-Lambert",
+        "type": "cegep",
+        "region": "(sans région)",
+        "website": "http://champlainonline.com",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "cégep Champlain campus Saint-Lawrence",
+        "type": "cegep",
+        "region": "(sans région)",
+        "website": "http://www.slc.qc.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "Cégep d'Alma",
+        "type": "cegep",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "website": "https://www.cegepalma.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "Cégep de Drummondville",
+        "type": "cegep",
+        "region": "Centre-du-Québec",
+        "website": "https://www.cegepdrummond.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "Cégep de Granby",
+        "type": "cegep",
+        "region": "Montérégie",
+        "website": "https://cegepgranby.qc.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "Cégep de Lévis",
+        "type": "cegep",
+        "region": "Chaudière-Appalaches",
+        "website": "https://www.cegeplevis.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "Cégep de Matane",
+        "type": "cegep",
+        "region": "Bas-Saint-Laurent",
+        "website": "https://www.cegep-matane.qc.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "Cégep de Rivière-du-Loup",
+        "type": "cegep",
+        "region": "Bas-Saint-Laurent",
+        "website": "https://www.cegeprdl.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "Cégep de Saint-Félicien",
+        "type": "cegep",
+        "region": "Saguenay–Lac-Saint-Jean",
+        "website": "https://cegepstfe.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "Cégep de Saint-Jérôme",
+        "type": "cegep",
+        "region": "Laurentides",
+        "website": "https://www.cstj.qc.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "Cégep de Sept-Îles",
+        "type": "cegep",
+        "region": "Côte-Nord",
+        "website": "https://www.cegepsept-iles.ca/",
+        "siteOk": false,
+        "reason": "site-unreachable",
+        "radioHints": []
+      },
+      {
+        "name": "Cégep de Shawinigan",
+        "type": "cegep",
+        "region": "Mauricie",
+        "website": "https://www.cegepshawinigan.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "Cégep de Sorel-Tracy",
+        "type": "cegep",
+        "region": "Montérégie",
+        "website": "https://www.cegepst.qc.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "Cégep de Thetford",
+        "type": "cegep",
+        "region": "Chaudière-Appalaches",
+        "website": "https://www.cegepthetford.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "Cégep de Valleyfield",
+        "type": "cegep",
+        "region": "Montérégie",
+        "website": "https://www.colval.qc.ca/",
+        "siteOk": false,
+        "reason": "site-unreachable",
+        "radioHints": []
+      },
+      {
+        "name": "Cégep de Victoriaville",
+        "type": "cegep",
+        "region": "Centre-du-Québec",
+        "website": "https://www.cegepvicto.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "Cégep Gérald-Godin",
+        "type": "cegep",
+        "region": "Montréal",
+        "website": "https://www.cgodin.qc.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "Cégep Marie-Victorin",
+        "type": "cegep",
+        "region": "Montréal",
+        "website": "https://www.collegemv.qc.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "Cégep régional de Lanaudière",
+        "type": "cegep",
+        "region": "Lanaudière",
+        "website": "https://www.cegep-lanaudiere.qc.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "cégep régional de Lanaudière à Joliette",
+        "type": "cegep",
+        "region": "(sans région)",
+        "website": "https://cegep-lanaudiere.qc.ca/joliette/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "cégep régional de Lanaudière à L'Assomption",
+        "type": "cegep",
+        "region": "(sans région)",
+        "website": "",
+        "siteOk": false,
+        "reason": "no-website",
+        "radioHints": []
+      },
+      {
+        "name": "Cégep régional de Lanaudière à Terrebonne",
+        "type": "cegep",
+        "region": "(sans région)",
+        "website": "http://www.cegep-lanaudiere.qc.ca/college-terrebonne",
+        "siteOk": false,
+        "reason": "site-unreachable",
+        "radioHints": []
+      },
+      {
+        "name": "Cégep Saint-Jean-sur-Richelieu",
+        "type": "cegep",
+        "region": "Montérégie",
+        "website": "https://www.cstjean.qc.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "Champlain Regional College",
+        "type": "cegep",
+        "region": "Estrie",
+        "website": "https://www.champlaincollege.qc.ca/",
+        "siteOk": false,
+        "reason": "site-unreachable",
+        "radioHints": []
+      },
+      {
+        "name": "collège Champlain campus de Lennoxville",
+        "type": "cegep",
+        "region": "(sans région)",
+        "website": "http://www.crc-lennox.qc.ca",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "Collège de Rosemont",
+        "type": "cegep",
+        "region": "Montréal",
+        "website": "https://www.crosemont.qc.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": [
+          "https://www.crosemont.qc.ca/programme/techniques-damenagement-et-durbanisme/"
+        ]
+      },
+      {
+        "name": "Collège Heritage",
+        "type": "cegep",
+        "region": "Outaouais",
+        "website": "https://www.cegep-heritage.qc.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "collège régional Champlain de Saint-Lambert",
+        "type": "cegep",
+        "region": "(sans région)",
+        "website": "http://admin.crc-sher.qc.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      },
+      {
+        "name": "Institut maritime du Québec",
+        "type": "cegep",
+        "region": "(sans région)",
+        "website": "",
+        "siteOk": false,
+        "reason": "no-website",
+        "radioHints": []
+      },
+      {
+        "name": "Institution Kiuna",
+        "type": "cegep",
+        "region": "(sans région)",
+        "website": "https://kiuna-college.com",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": [
+          "https://kiuna-college.com/fra/wp-content/plugins/wpstream/public//css/wpstream_style.css?ver=4.6.2"
+        ]
+      },
+      {
+        "name": "Vanier College",
+        "type": "cegep",
+        "region": "Montréal",
+        "website": "https://www.vaniercollege.qc.ca/",
+        "siteOk": true,
+        "reason": "ok",
+        "radioHints": []
+      }
+    ]
+  },
+  "byRegion": {
+    "Montréal": {
+      "active": [
+        "Quartier Libre",
+        "Montréal Campus",
+        "Le Délit",
+        "The McGill Daily",
+        "The Link",
+        "Exil",
+        "Le Polyscope",
+        "The Tribune",
+        "The Plant"
+      ],
+      "promoteReady": [],
+      "candidates": [
+        "Le Trait d'Union",
+        "The Concordian"
+      ],
+      "institutionGaps": [
+        "HEC Montréal",
+        "Cégep Gérald-Godin",
+        "Cégep Marie-Victorin",
+        "Collège de Rosemont",
+        "Vanier College"
+      ],
+      "institutionCount": 19
+    },
+    "Mauricie": {
+      "active": [
+        "Zone Campus"
+      ],
+      "promoteReady": [],
+      "candidates": [],
+      "institutionGaps": [
+        "Cégep de Shawinigan"
+      ],
+      "institutionCount": 3
+    },
+    "Capitale-Nationale": {
+      "active": [
+        "L'Exemplaire"
+      ],
+      "promoteReady": [],
+      "candidates": [],
+      "institutionGaps": [
+        "École nationale d'administration publique (ENAP)",
+        "Institut national de la recherche scientifique (INRS)",
+        "Université TÉLUQ"
+      ],
+      "institutionCount": 8
+    },
+    "Estrie": {
+      "active": [
+        "Le Collectif",
+        "The Campus"
+      ],
+      "promoteReady": [],
+      "candidates": [],
+      "institutionGaps": [
+        "Champlain Regional College"
+      ],
+      "institutionCount": 4
+    },
+    "Saguenay–Lac-Saint-Jean": {
+      "active": [
+        "La Pige"
+      ],
+      "promoteReady": [],
+      "candidates": [
+        "Le Griffonnier",
+        "L'Oisif"
+      ],
+      "institutionGaps": [
+        "Cégep d'Alma",
+        "Cégep de Saint-Félicien"
+      ],
+      "institutionCount": 5
+    },
+    "Laurentides": {
+      "active": [],
+      "promoteReady": [],
+      "candidates": [
+        "La Gifle"
+      ],
+      "institutionGaps": [
+        "Cégep de Saint-Jérôme"
+      ],
+      "institutionCount": 2
+    },
+    "Bas-Saint-Laurent": {
+      "active": [],
+      "promoteReady": [],
+      "candidates": [
+        "Le Brise-Glace"
+      ],
+      "institutionGaps": [
+        "Cégep de Matane",
+        "Cégep de Rivière-du-Loup"
+      ],
+      "institutionCount": 5
+    },
+    "Montérégie": {
+      "active": [],
+      "promoteReady": [],
+      "candidates": [],
+      "institutionGaps": [
+        "Cégep de Granby",
+        "Cégep de Sorel-Tracy",
+        "Cégep de Valleyfield",
+        "Cégep Saint-Jean-sur-Richelieu"
+      ],
+      "institutionCount": 6
+    },
+    "Laval": {
+      "active": [],
+      "promoteReady": [],
+      "candidates": [],
+      "institutionGaps": [],
+      "institutionCount": 1
+    },
+    "Côte-Nord": {
+      "active": [],
+      "promoteReady": [],
+      "candidates": [],
+      "institutionGaps": [
+        "Cégep de Sept-Îles"
+      ],
+      "institutionCount": 2
+    },
+    "Outaouais": {
+      "active": [],
+      "promoteReady": [],
+      "candidates": [],
+      "institutionGaps": [
+        "Collège Heritage"
+      ],
+      "institutionCount": 3
+    },
+    "Abitibi-Témiscamingue": {
+      "active": [],
+      "promoteReady": [],
+      "candidates": [],
+      "institutionGaps": [],
+      "institutionCount": 2
+    },
+    "Gaspésie–Îles-de-la-Madeleine": {
+      "active": [],
+      "promoteReady": [],
+      "candidates": [],
+      "institutionGaps": [],
+      "institutionCount": 1
+    },
+    "(sans région)": {
+      "active": [],
+      "promoteReady": [],
+      "candidates": [],
+      "institutionGaps": [
+        "Cégep à distance",
+        "cégep Champlain campus Saint-Lambert",
+        "cégep Champlain campus Saint-Lawrence",
+        "cégep régional de Lanaudière à Joliette",
+        "cégep régional de Lanaudière à L'Assomption",
+        "Cégep régional de Lanaudière à Terrebonne",
+        "collège Champlain campus de Lennoxville",
+        "collège régional Champlain de Saint-Lambert",
+        "Institut maritime du Québec",
+        "Institution Kiuna"
+      ],
+      "institutionCount": 12
+    },
+    "Chaudière-Appalaches": {
+      "active": [],
+      "promoteReady": [],
+      "candidates": [],
+      "institutionGaps": [
+        "Cégep Beauce-Appalaches",
+        "Cégep de Lévis",
+        "Cégep de Thetford"
+      ],
+      "institutionCount": 3
+    },
+    "Centre-du-Québec": {
+      "active": [],
+      "promoteReady": [],
+      "candidates": [],
+      "institutionGaps": [
+        "Cégep de Drummondville",
+        "Cégep de Victoriaville"
+      ],
+      "institutionCount": 2
+    },
+    "Lanaudière": {
+      "active": [],
+      "promoteReady": [],
+      "candidates": [],
+      "institutionGaps": [
+        "Cégep régional de Lanaudière"
+      ],
+      "institutionCount": 1
+    }
+  },
+  "seedResults": [
+    {
+      "name": "Quartier Libre",
+      "institution": "Université de Montréal",
+      "region": "Montréal",
+      "registry": "active",
+      "siteReachable": true,
+      "feed": {
+        "url": "https://quartierlibre.ca/feed/",
+        "lastItemDate": "2026-05-15T16:00:00.000Z",
+        "ageDays": 59,
+        "items": 10,
+        "reason": "fresh"
+      }
+    },
+    {
+      "name": "Montréal Campus",
+      "institution": "UQAM",
+      "region": "Montréal",
+      "registry": "active",
+      "siteReachable": true,
+      "feed": {
+        "url": "https://montrealcampus.ca/feed/",
+        "lastItemDate": "2026-05-09T03:14:30.000Z",
+        "ageDays": 66,
+        "items": 10,
+        "reason": "fresh"
+      }
+    },
+    {
+      "name": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "registry": "active",
+      "siteReachable": true,
+      "feed": {
+        "url": "https://www.delitfrancais.com/feed/",
+        "lastItemDate": "2026-03-25T11:00:00.000Z",
+        "ageDays": 111,
+        "items": 20,
+        "reason": "fresh"
+      }
+    },
+    {
+      "name": "The McGill Daily",
+      "institution": "McGill University",
+      "region": "Montréal",
+      "registry": "active",
+      "siteReachable": true,
+      "feed": {
+        "url": "https://www.mcgilldaily.com/feed/",
+        "lastItemDate": "2026-07-06T12:00:00.000Z",
+        "ageDays": 8,
+        "items": 15,
+        "reason": "fresh"
+      }
+    },
+    {
+      "name": "The Link",
+      "institution": "Concordia University",
+      "region": "Montréal",
+      "registry": "active",
+      "siteReachable": true,
+      "feed": {
+        "url": "https://thelinknewspaper.ca/feed/",
+        "lastItemDate": "2026-07-08T14:41:00.000Z",
+        "ageDays": 6,
+        "items": 20,
+        "reason": "fresh"
+      }
+    },
+    {
+      "name": "The Concordian",
+      "institution": "Concordia University",
+      "region": "Montréal",
+      "registry": "retired",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "Zone Campus",
+      "institution": "Université du Québec à Trois-Rivières",
+      "region": "Mauricie",
+      "registry": "active",
+      "siteReachable": true,
+      "feed": {
+        "url": "https://www.zonecampus.ca/feed/",
+        "lastItemDate": "2026-05-08T14:20:26.000Z",
+        "ageDays": 67,
+        "items": 10,
+        "reason": "fresh"
+      }
+    },
+    {
+      "name": "L'Exemplaire",
+      "institution": "Université Laval",
+      "region": "Capitale-Nationale",
+      "registry": "active",
+      "siteReachable": true,
+      "feed": {
+        "url": "https://www.exemplaire.com.ulaval.ca/feed/",
+        "lastItemDate": "2026-05-15T16:31:24.000Z",
+        "ageDays": 59,
+        "items": 8,
+        "reason": "fresh"
+      }
+    },
+    {
+      "name": "Le Collectif",
+      "institution": "Université de Sherbrooke",
+      "region": "Estrie",
+      "registry": "active",
+      "siteReachable": true,
+      "feed": {
+        "url": "https://lecollectif.ca/feed/",
+        "lastItemDate": "2026-07-11T16:34:55.000Z",
+        "ageDays": 2,
+        "items": 10,
+        "reason": "fresh"
+      }
+    },
+    {
+      "name": "Exil",
+      "institution": "Cégep du Vieux Montréal",
+      "region": "Montréal",
+      "registry": "active",
+      "siteReachable": true,
+      "feed": {
+        "url": "https://exilecvm.ca/feed/",
+        "lastItemDate": "2026-04-18T22:22:07.000Z",
+        "ageDays": 86,
+        "items": 10,
+        "reason": "fresh"
+      }
+    },
+    {
+      "name": "La Pige",
+      "institution": "Cégep de Jonquière",
+      "region": "Saguenay–Lac-Saint-Jean",
+      "registry": "active",
+      "siteReachable": true,
+      "feed": {
+        "url": "https://lapige.atmjonquiere.com/feed/",
+        "lastItemDate": "2026-06-22T14:36:10.000Z",
+        "ageDays": 22,
+        "items": 10,
+        "reason": "fresh"
+      }
+    },
+    {
+      "name": "Le Polyscope",
+      "institution": "Polytechnique Montréal",
+      "region": "Montréal",
+      "registry": "active",
+      "siteReachable": true,
+      "feed": null
+    },
+    {
+      "name": "The Tribune",
+      "institution": "McGill University",
+      "region": "Montréal",
+      "registry": "active",
+      "siteReachable": true,
+      "feed": {
+        "url": "https://www.thetribune.ca/feed/",
+        "lastItemDate": "2026-06-26T15:24:28.000Z",
+        "ageDays": 18,
+        "items": 14,
+        "reason": "fresh"
+      }
+    },
+    {
+      "name": "The Campus",
+      "institution": "Bishop's University",
+      "region": "Estrie",
+      "registry": "active",
+      "siteReachable": true,
+      "feed": {
+        "url": "https://thebucampus.ca/feed/",
+        "lastItemDate": "2026-04-06T16:03:16.000Z",
+        "ageDays": 98,
+        "items": 10,
+        "reason": "fresh"
+      }
+    },
+    {
+      "name": "The Plant",
+      "institution": "Dawson College",
+      "region": "Montréal",
+      "registry": "active",
+      "siteReachable": true,
+      "feed": {
+        "url": "https://theplantnews.com/feed/",
+        "lastItemDate": "2026-05-11T20:44:08.000Z",
+        "ageDays": 63,
+        "items": 10,
+        "reason": "fresh"
+      }
+    },
+    {
+      "name": "Le Griffonnier",
+      "institution": "Université du Québec à Chicoutimi",
+      "region": "Saguenay–Lac-Saint-Jean",
+      "registry": "candidate",
+      "siteReachable": true,
+      "feed": null
+    },
+    {
+      "name": "L'Oisif",
+      "institution": "Cégep de Chicoutimi",
+      "region": "Saguenay–Lac-Saint-Jean",
+      "registry": "candidate",
+      "siteReachable": true,
+      "feed": {
+        "url": "https://cchic.ca/categorie/journal-etudiant-loisif/feed/",
+        "lastItemDate": "2019-08-23T18:43:43.000Z",
+        "ageDays": 2516,
+        "items": 3,
+        "reason": "stale"
+      }
+    },
+    {
+      "name": "Le Trait d'Union",
+      "institution": "Collège de Maisonneuve",
+      "region": "Montréal",
+      "registry": "candidate",
+      "siteReachable": true,
+      "feed": {
+        "url": "https://letraitdunion.org/feed/",
+        "lastItemDate": "2021-04-18T19:15:05.000Z",
+        "ageDays": 1912,
+        "items": 1,
+        "reason": "stale"
+      }
+    },
+    {
+      "name": "La Gifle",
+      "institution": "Collège Lionel-Groulx",
+      "region": "Laurentides",
+      "registry": "candidate",
+      "siteReachable": true,
+      "feed": {
+        "url": "https://lagifleblog.wordpress.com/feed/",
+        "lastItemDate": "2018-05-19T20:19:20.000Z",
+        "ageDays": 2977,
+        "items": 10,
+        "reason": "stale"
+      }
+    },
+    {
+      "name": "Le Brise-Glace",
+      "institution": "Cégep de Rimouski",
+      "region": "Bas-Saint-Laurent",
+      "registry": "candidate",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "Impact Campus",
+      "institution": "Université Laval",
+      "region": "Capitale-Nationale",
+      "registry": "new",
+      "siteReachable": true,
+      "feed": null
+    },
+    {
+      "name": "L'Heuristique",
+      "institution": "École de technologie supérieure (ÉTS)",
+      "region": "Montréal",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "L'Unité",
+      "institution": "UQAM",
+      "region": "Montréal",
+      "registry": "new",
+      "siteReachable": true,
+      "feed": null
+    },
+    {
+      "name": "Le MotDit",
+      "institution": "Cégep Édouard-Montpetit",
+      "region": "Montérégie",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "L'Attribut",
+      "institution": "Collège Ahuntsic",
+      "region": "Montréal",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "L'IntégrAL",
+      "institution": "Cégep André-Laurendeau",
+      "region": "Montréal",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "L'Infomane",
+      "institution": "Collège de Bois-de-Boulogne",
+      "region": "Montréal",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "Pastiche",
+      "institution": "Cégep de Saint-Laurent",
+      "region": "Montréal",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "Le Phoque",
+      "institution": "Cégep Limoilou",
+      "region": "Capitale-Nationale",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "L'Éclosion",
+      "institution": "Cégep de Sainte-Foy",
+      "region": "Capitale-Nationale",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "Le Typographe",
+      "institution": "Collège Montmorency",
+      "region": "Laval",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "Le Lunatique",
+      "institution": "Collège Montmorency",
+      "region": "Laval",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "Le Matricule Zéro",
+      "institution": "Cégep de Sherbrooke",
+      "region": "Estrie",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "Le Dogme",
+      "institution": "Cégep de Saint-Hyacinthe",
+      "region": "Montérégie",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "Météorites",
+      "institution": "Cégep de La Pocatière",
+      "region": "Bas-Saint-Laurent",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "Le Visionnaire",
+      "institution": "Cégep de Baie-Comeau",
+      "region": "Côte-Nord",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "Le Graffitti",
+      "institution": "Collège Jean-de-Brébeuf",
+      "region": "Montréal",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "Le Point G",
+      "institution": "Collège André-Grasset",
+      "region": "Montréal",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "The Papercut",
+      "institution": "Marianopolis College",
+      "region": "Montréal",
+      "registry": "new",
+      "siteReachable": true,
+      "feed": null
+    },
+    {
+      "name": "The Free Press",
+      "institution": "John Abbott College",
+      "region": "Montréal",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "The Bull & Bear",
+      "institution": "McGill University",
+      "region": "Montréal",
+      "registry": "new",
+      "siteReachable": true,
+      "feed": null
+    },
+    {
+      "name": "L'Obiter",
+      "institution": "Université de Sherbrooke",
+      "region": "Estrie",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "Le Soufflet",
+      "institution": "Université du Québec à Rimouski (UQAR)",
+      "region": "Bas-Saint-Laurent",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "L’Organe",
+      "institution": "Concordia University",
+      "region": "Montréal",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "L'Artichaut",
+      "institution": "UQAM",
+      "region": "Montréal",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "The Chronos",
+      "institution": "Champlain College Saint-Lambert",
+      "region": "Montérégie",
+      "registry": "new",
+      "siteReachable": true,
+      "feed": null
+    },
+    {
+      "name": "Le Scribe",
+      "institution": "Cégep de l'Outaouais",
+      "region": "Outaouais",
+      "registry": "new",
+      "siteReachable": true,
+      "feed": {
+        "url": "https://lescribe.ca/?feed=rss2",
+        "lastItemDate": "2018-06-29T22:29:01.000Z",
+        "ageDays": 2936,
+        "items": 10,
+        "reason": "stale"
+      }
+    },
+    {
+      "name": "L'Agora",
+      "institution": "Université du Québec en Outaouais (UQO)",
+      "region": "Outaouais",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "Perspectives",
+      "institution": "Université du Québec en Abitibi-Témiscamingue (UQAT)",
+      "region": "Abitibi-Témiscamingue",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "Le Carcajou",
+      "institution": "Cégep de l'Abitibi-Témiscamingue",
+      "region": "Abitibi-Témiscamingue",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "Le Réservoir",
+      "institution": "Cégep de Trois-Rivières",
+      "region": "Mauricie",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "La Forge",
+      "institution": "Cégep de Trois-Rivières",
+      "region": "Mauricie",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "Le Phare",
+      "institution": "Cégep de la Gaspésie et des Îles",
+      "region": "Gaspésie–Îles-de-la-Madeleine",
+      "registry": "new",
+      "siteReachable": false,
+      "feed": null
+    },
+    {
+      "name": "Entre-Guillemets",
+      "institution": "Cégep Garneau",
+      "region": "Capitale-Nationale",
+      "registry": "new",
+      "siteReachable": true,
+      "feed": null
+    },
+    {
+      "name": "Le Hublot",
+      "institution": "Cégep de Sainte-Foy",
+      "region": "Capitale-Nationale",
+      "registry": "new",
+      "siteReachable": true,
+      "feed": {
+        "url": "https://lehublot.net/feed/",
+        "lastItemDate": "2026-06-22T14:23:07.000Z",
+        "ageDays": 22,
+        "items": 10,
+        "reason": "fresh"
+      }
+    },
+    {
+      "name": "Mosaïk",
+      "institution": "Collège Stanislas",
+      "region": "Montréal",
+      "registry": "new",
+      "siteReachable": true,
+      "feed": null
+    },
+    {
+      "name": "L'Inter",
+      "institution": "Collège de Maisonneuve",
+      "region": "Montréal",
+      "registry": "new",
+      "siteReachable": true,
+      "feed": null
+    }
+  ]
+}
