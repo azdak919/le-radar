@@ -1,16 +1,16 @@
 {
-  "updated": "2026-07-14T09:27:45.661Z",
+  "updated": "2026-07-14T11:13:56.855Z",
   "total": 185,
   "withImage": 171,
   "withCredit": 171,
-  "cited": 122,
+  "cited": 123,
   "pending": 0,
   "missingHero": 0,
   "ok": true,
   "checked": 10,
   "updatedCount": 10,
-  "citedNew": 7,
-  "fallbackNew": 3,
+  "citedNew": 8,
+  "fallbackNew": 2,
   "samples": [
     {
       "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
@@ -41,16 +41,16 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Ce que nous devons aux femmes - Le Délit",
+      "title": "Sois belle et tais-toi - Le Délit",
       "source": "Le Délit",
-      "credit": "Photo : Alexandre Gontier",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
-      "method": "media-credit-near"
+      "method": "media-credit-featured"
     },
     {
-      "title": "Les femmes MAGA au service du patriarcat - Le Délit",
+      "title": "Qui sont les agents qui patrouillent notre campus? - Le Délit",
       "source": "Le Délit",
-      "credit": "Photo : Stu Doré",
+      "credit": "Photo : Stu Doré/Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -78,9 +78,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Halle Keays",
+      "cited": true,
+      "method": "figcaption-trailing"
     }
   ]
 }
