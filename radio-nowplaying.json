@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-14T06:35:22.354Z",
+  "updatedAt": "2026-07-14T08:27:29.796Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T06:35:01.680Z"
+      "checkedAt": "2026-07-14T08:27:09.859Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix anglo",
-        "source": "api-live",
-        "start": "22:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-anglo"
-      },
-      "next": {
         "title": "L'Alter Ego (reprise)",
         "source": "api-live",
         "start": "00:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364312.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "lalter-ego"
       },
+      "next": {
+        "title": "Mix Franco",
+        "source": "api-live",
+        "start": "02:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364275.mp3",
+        "slug": "mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix anglo",
+      "showTitle": "L'Alter Ego (reprise)",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-14T06:35:03.459Z"
+      "checkedAt": "2026-07-14T08:27:11.260Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Pirate et Libres",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "03:00"
-      },
-      "next": {
         "title": "Attik / Show For Children",
         "source": "api-live",
         "start": "03:00",
         "end": "05:00"
       },
+      "next": {
+        "title": "The Beat Power Hour",
+        "source": "api-live",
+        "start": "05:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Pirate et Libres",
+      "showTitle": "Attik / Show For Children",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,7 +77,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T06:35:05.953Z"
+      "checkedAt": "2026-07-14T08:27:13.563Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -104,7 +104,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T06:35:19.497Z"
+      "checkedAt": "2026-07-14T08:27:26.777Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,28 +129,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T06:35:20.403Z"
+      "checkedAt": "2026-07-14T08:27:27.537Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Amor Vincit Omnia",
+        "title": "Step Out",
         "source": "api-live",
-        "host": "GOREWORM",
-        "url": "https://www.choq.ca/assets/playlist/les-nuits-brutales.png"
+        "host": "Cadence Weapon",
+        "url": "https://www.choq.ca/assets/playlist/palmares-site-web.jpg"
       },
       "next": null,
-      "track": "GOREWORM - Amor Vincit Omnia",
-      "showTitle": "Amor Vincit Omnia",
-      "host": "GOREWORM",
+      "track": "Cadence Weapon - Step Out",
+      "showTitle": "Step Out",
+      "host": "Cadence Weapon",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T06:35:22.004Z"
+      "checkedAt": "2026-07-14T08:27:29.445Z"
     }
   }
 }
