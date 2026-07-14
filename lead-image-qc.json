@@ -1,54 +1,48 @@
 {
-  "updated": "2026-07-13T23:47:37.558Z",
-  "total": 205,
-  "withPhoto": 191,
+  "updated": "2026-07-14T03:55:29.159Z",
+  "total": 185,
+  "withPhoto": 171,
   "withStock": 33,
   "withCampusBank": 7,
-  "fullyCovered": 205,
-  "leadReadyPhotos": 156,
-  "pageScraped": 62,
-  "photosRecovered": 30,
-  "imagesCleared": 26,
-  "stockSearches": 37,
-  "stockFound": 25,
-  "campusBankFound": 2,
+  "fullyCovered": 185,
+  "leadReadyPhotos": 146,
+  "pageScraped": 48,
+  "photosRecovered": 16,
+  "imagesCleared": 14,
+  "stockSearches": 40,
+  "stockFound": 28,
+  "campusBankFound": 4,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "The Cruel Optimism of Summer",
+      "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
+    },
+    {
+      "title": "CSU terminates council’s chief election officer",
+      "link": "https://thelinknewspaper.ca/article/16334",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
+    },
+    {
+      "title": "Dévoilement du Livre bleu",
+      "link": "https://lecollectif.ca/a-la-une/devoilement-du-livre-bleu/",
+      "reason": "stock-too-small",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_Devoilement-du-Livre-bleu_SourceSite-internet-du-Parti-quebecois.png"
+    },
+    {
+      "title": "De Broue à l’Ordre du Canada, Marc Messier, l’artisan d’un théâtre et d’une télé populaires",
+      "link": "https://lecollectif.ca/a-la-une/de-broue-a-lordre-du-canada-marc-messier-lartisan-dun-theatre-et-dune-tele-populaires/",
+      "reason": "stock-too-small",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/CULTURE_MarcMessier_SourceFacebook-819x1024.jpeg"
+    },
     {
       "title": "La popularité des clubs et événements sportifs",
       "link": "https://lecollectif.ca/societe/la-popularite-des-clubs-et-evenements-sportifs/",
       "reason": "no-stock-match",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_CLUBSDESPORTS_ClubPleinAirAltitude_SourceFacebookClubPleinAirAltitude-1-768x1024.jpg"
-    },
-    {
-      "title": "Christine Labrie tourne la page sur huit ans comme députée de Sherbrooke",
-      "link": "https://lecollectif.ca/a-la-une/christine-labrie-tourne-la-page-sur-huit-ans-comme-deputee-de-sherbrooke/",
-      "reason": "stock-too-small",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_ChristineLabrie_SourcePageFacebookDeRubaGhazal-819x1024.jpg"
-    },
-    {
-      "title": "Mars enters Aries",
-      "link": "https://thebucampus.ca/2026/04/06/mars-enters-aries/",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Mars%2C_Aries_and_Scorpio_from_Persian_Manusc_Wellcome_L0030660.jpg"
-    },
-    {
-      "title": "Spotlighting Powerful Mc Gill Alumnae",
-      "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
-    },
-    {
-      "title": "Second-Class Citizens",
-      "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg"
-    },
-    {
-      "title": "The Gentrification of Online Fandom Spaces",
-      "link": "https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/c/cb/Mexico_City%27s_Roma_neighborhood_gentrification_2016.jpg"
     },
     {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB » - Quartier Libre",
@@ -63,28 +57,34 @@
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
     },
     {
+      "title": "Mars enters Aries",
+      "link": "https://thebucampus.ca/2026/04/06/mars-enters-aries/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Mars%2C_Aries_and_Scorpio_from_Persian_Manusc_Wellcome_L0030660.jpg"
+    },
+    {
+      "title": "Spotlighting Powerful Mc Gill Alumnae",
+      "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg"
+    },
+    {
+      "title": "Second-Class Citizens",
+      "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Arts_Building%2C_McGill_University.jpg"
+    },
+    {
+      "title": "The Gentrification of Online Fandom Spaces",
+      "link": "https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/cb/Mexico_City%27s_Roma_neighborhood_gentrification_2016.jpg"
+    },
+    {
       "title": "It’s Festival Summer!",
       "link": "https://theplantnews.com/2026/05/11/its-festival-summer/",
       "reason": "stock-too-small",
       "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-1-1.jpeg?w=1024"
-    },
-    {
-      "title": "Gothic Cinema Rises from the Grave",
-      "link": "https://theplantnews.com/2026/05/11/gothic-cinema-rises-from-the-grave/",
-      "reason": "stock-too-small",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-4.png"
-    },
-    {
-      "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
-      "link": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
-      "reason": "stock-too-small",
-      "image": "https://exilecvm.wordpress.com/wp-content/uploads/2020/10/121330814_121456603062023_8783413434532337259_n.png"
-    },
-    {
-      "title": "Inside Mile End Kicks",
-      "link": "https://thelinknewspaper.ca/article/16318",
-      "reason": "stock-too-small",
-      "image": "https://thelinknewspaper.ca/images/articles/_resized/Screenshot_2026-04-11_17.01.52.png"
     }
   ]
 }
