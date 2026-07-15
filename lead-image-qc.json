@@ -1,19 +1,25 @@
 {
-  "updated": "2026-07-14T23:48:22.173Z",
+  "updated": "2026-07-15T02:25:21.549Z",
   "total": 185,
-  "withPhoto": 171,
-  "withStock": 35,
+  "withPhoto": 168,
+  "withStock": 39,
   "withCampusBank": 7,
   "fullyCovered": 185,
-  "leadReadyPhotos": 136,
-  "pageScraped": 50,
-  "photosRecovered": 17,
-  "imagesCleared": 14,
-  "stockSearches": 41,
-  "stockFound": 32,
+  "leadReadyPhotos": 146,
+  "pageScraped": 11,
+  "photosRecovered": 11,
+  "imagesCleared": 11,
+  "stockSearches": 37,
+  "stockFound": 26,
   "campusBankFound": 4,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "The Cruel Optimism of Summer",
+      "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/917/28627096297_a3e0756d47_b.jpg"
+    },
     {
       "title": "CSU terminates council’s chief election officer",
       "link": "https://thelinknewspaper.ca/article/16334",
@@ -27,22 +33,16 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SPORTS_DeitenLachance_MLB_SourceBaseballQuebec-684x1024.png"
     },
     {
-      "title": "Dévoilement du Livre bleu",
-      "link": "https://lecollectif.ca/a-la-une/devoilement-du-livre-bleu/",
-      "reason": "stock-too-small",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_Devoilement-du-Livre-bleu_SourceSite-internet-du-Parti-quebecois.png"
+      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB » - Quartier Libre",
+      "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg"
     },
     {
-      "title": "De Broue à l’Ordre du Canada, Marc Messier, l’artisan d’un théâtre et d’une télé populaires",
-      "link": "https://lecollectif.ca/a-la-une/de-broue-a-lordre-du-canada-marc-messier-lartisan-dun-theatre-et-dune-tele-populaires/",
-      "reason": "stock-too-small",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/CULTURE_MarcMessier_SourceFacebook-819x1024.jpeg"
-    },
-    {
-      "title": "Letters from the Editors May 2026",
-      "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/2295/2462847853_5a214f2dab_b.jpg"
+      "title": "Recettes musicales québécoises pour l’été - Quartier Libre",
+      "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
     },
     {
       "title": "CSU approves affinity group policy, club rules update and councillor pay increase at special meeting",
@@ -51,10 +51,10 @@
       "image": "https://live.staticflickr.com/7089/7290404684_2750bb385f_b.jpg"
     },
     {
-      "title": "CSU approves $36,000 in funding for student-led initiatives",
-      "link": "https://thelinknewspaper.ca/article/16319",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
+      "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
+      "link": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Assembl%C3%A9e_nationale_du_Qu%C3%A9bec%2C_l%27H%C3%B4tel_du_Parlement%2C_fa%C3%A7ade_avec_ancien_entr%C3%A9_principal.jpg"
     },
     {
       "title": "From the rink to the links",
@@ -72,19 +72,19 @@
       "title": "Spotlighting Powerful Mc Gill Alumnae",
       "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
-    },
-    {
-      "title": "National Golf tournament",
-      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/4063/4291742000_0d51415df8_b.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
     },
     {
       "title": "Gaiters wrap up hard-fought season with eyes on next year",
       "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/2502/3886993263_bb94359eb2_b.jpg"
+    },
+    {
+      "title": "Second-Class Citizens",
+      "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg"
     }
   ]
 }
