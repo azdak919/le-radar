@@ -51,8 +51,17 @@ const FOREIGN_LOCATION_MARKERS = [
   'paris france', 'lyon', 'rhone', 'rhône', 'marseille', 'berlin', 'munich',
   'rome', 'milan', 'athens', 'lyceum', 'chirico', 'florence', 'venice',
   'spain', 'madrid', 'barcelona', 'portugal', 'lisbon', 'australia', 'sydney',
-  'japan', 'tokyo', 'india', 'china', 'beijing', 'africa', 'brazil',
+  'japan', 'tokyo', 'india', 'china', 'beijing', 'shanghai', 'hong kong', 'shenzhen',
+  'seoul', 'busan', 'taipei', 'bangkok', 'singapore', 'jakarta', 'manila',
+  'africa', 'brazil', 'mexico city', 'buenos aires', 'moscow', 'istanbul',
 ];
+
+/**
+ * Éditos / billets de la rédaction sans sujet visuel propre :
+ * les requêtes « summer city street » (extrait lyrique) ramenaient Shanghai
+ * pour « Letters from the Editors ». Mieux vaut la banque campus.
+ */
+const GENERIC_EDITORIAL_TITLE_RE = /\bletters?\s+from\s+the\s+editors?\b|\bfrom\s+the\s+editor(?:s)?\b|\beditor(?:'s|s')\s+(?:letter|note|message)\b|\b(?:mot|note|message|billet)\s+de\s+la\s+r[eé]daction\b|\bletter\s+from\s+the\s+(?:editor|masthead|newsroom)\b/i;
 
 /**
  * Acronymes campus / associations à ne pas matcher hors contexte
@@ -680,23 +689,20 @@ const TOKEN_ALIASES = {
 
 /**
  * Présence d’un token (ou alias EN) dans le haystack.
- * Tokens courts (≤4) : frontières de mot — évite « erd » ⊂ « erde ».
+ * Toujours avec frontières de mot — évite « class » ⊂ « diamondclassphotographer »
+ * (Silent Shanghai) et « erd » ⊂ « erde ».
  */
 function hayHasToken(hay, tok) {
   const t = normalizeText(tok);
   if (!t || !hay) return false;
   const variants = [t, ...(TOKEN_ALIASES[t] || []).map((a) => normalizeText(a))];
   for (const v of variants) {
-    if (!v) continue;
-    if (v.length <= 4) {
-      try {
-        if (new RegExp(`(?:^|[^a-z0-9])${v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:[^a-z0-9]|$)`, 'i').test(hay)) {
-          return true;
-        }
-      } catch { /* ignore bad pattern */ }
-    } else if (hay.includes(v)) {
-      return true;
-    }
+    if (!v || v.length < 2) continue;
+    try {
+      if (new RegExp(`(?:^|[^a-z0-9])${v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:[^a-z0-9]|$)`, 'i').test(hay)) {
+        return true;
+      }
+    } catch { /* ignore bad pattern */ }
   }
   return false;
 }
@@ -1018,8 +1024,19 @@ async function validateCandidate(hit) {
 const STOCK_QUERY_LIMIT = 8;
 const STOCK_STRONG_SCORE = 170;
 
+function isGenericEditorialItem(item = {}) {
+  const title = String(item.title || '');
+  if (GENERIC_EDITORIAL_TITLE_RE.test(title)) return true;
+  // Titre quasi-vide de sujet (« Editorial », « From the masthead », …)
+  if (/^(?:editorial|éditorial|editorials?|staff\s+editorial)\b/i.test(title.trim())) return true;
+  return false;
+}
+
 async function findStockPhoto(item) {
   const context = detectEditorialContext(item);
+  // Lettres des éditeurs / éditos sans sujet photo : ne pas pêcher Openverse
+  // sur « summer / flowers » du corps — le campus (Dawson, McGill…) est le bon repli.
+  if (isGenericEditorialItem(item)) return null;
   const queries = extractSearchQueries(item, context);
   if (!queries.length) return null;
 
@@ -1075,6 +1092,7 @@ module.exports = {
   extractVisualTopicQueries,
   applyContextScoring,
   extractSearchQueries,
+  isGenericEditorialItem,
   formatAttribution,
   cleanCreatorName,
   findStockPhoto,
