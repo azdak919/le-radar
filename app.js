@@ -5542,6 +5542,11 @@ function decodeHtmlEntities(str = '') {
 function cleanTitle(title = '') {
   let t = decodeHtmlEntities(stripEmbeddedCss(title));
   t = t.replace(/\s+/g, ' ').trim();
+  // Suffixes SEO collés aux og:title (Rank Math) — déjà stripés côté bot, mais
+  // on nettoie aussi les news.json déjà en cache.
+  t = t.replace(/\s*[–—|-]\s*Montréal\s+Campus\s*$/i, '').trim();
+  t = t.replace(/\s*[–—|-]\s*Quartier\s+Libre\s*$/i, '').trim();
+  t = t.replace(/\bUde\s+M\b/g, 'UdeM').replace(/\bUde\s+S\b/g, 'UdeS');
   const prefix = t.match(MC_CATEGORY_PREFIX);
   if (prefix) t = t.slice(prefix[0].length).trim();
   t = stripLeadingNonLetters(t);

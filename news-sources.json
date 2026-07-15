@@ -10,6 +10,10 @@
       "url": "https://quartierlibre.ca/feed/",
       "site": "https://quartierlibre.ca/",
       "botHints": {
+        "authors": {
+          "forcePageAuthor": true,
+          "ignoreRssAuthor": true
+        },
         "images": {
           "preferSizeFull": true,
           "validateOnPage": true,
@@ -22,7 +26,7 @@
           ]
         }
       },
-      "_note": "WordPress + Elementor — photos dans theme-post-featured-image / widgets image, pas toujours en RSS. Ne pas laisser Openverse écraser les vraies photos d'article (ex. Coupe du monde 16-17_CDM).",
+      "_note": "WordPress + Elementor — byline dans elementor-post-info « Par … » (pas le JSON-LD Rank Math / compte WP Carla Roche). og:title se termine par « - Quartier Libre » (strip). Photos dans theme-post-featured-image ; légendes souvent descriptives sans photographe → crédit média.",
       "_lastChecked": "2026-07-14T23:38:47.416Z",
       "_failCount": 0,
       "_status": "stale",

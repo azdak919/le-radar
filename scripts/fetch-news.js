@@ -343,8 +343,11 @@ function fixCamelGlue(title = '') {
 function sanitizeTitle(title = '') {
   let t = stripHtml(stripEmbeddedCss(title));
   t = fixCamelGlue(t).replace(/\s+/g, ' ').trim();
-  // Retirer le suffixe « - Montréal Campus » des og:title
+  // fixCamelGlue coupe « UdeM » → « Ude M » (e minuscule + M majuscule).
+  t = t.replace(/\bUde\s+M\b/g, 'UdeM').replace(/\bUde\s+S\b/g, 'UdeS');
+  // Retirer les suffixes SEO Rank Math / Yoast des og:title
   t = t.replace(/\s*[–—|-]\s*Montréal\s+Campus\s*$/i, '').trim();
+  t = t.replace(/\s*[–—|-]\s*Quartier\s+Libre\s*$/i, '').trim();
   const series = t.match(MC_SERIES_LABEL);
   if (series) {
     const label = series[1].trim();
