@@ -3901,22 +3901,29 @@ function pickHeroSpotlight(items, _referenceDate = new Date()) {
 
 /**
  * En bref : 1 article le plus frais par *institution*, hors hero.
+ * Limité au haut du fil restant (pool cap) pour éviter de hisser un billet
+ * de mai (seule pub d’une institution) au-dessus de juillet via un trim
+ * En bref → tête de suite.
  * @param {number} [maxSlots] — graine estimée ou plafond fill
  */
 function pickBriefSidebar(allItems, heroItems = [], _referenceDate = new Date(), maxSlots = null) {
   const heroKeys = new Set(heroItems.map(articleKey));
   const sorted = sortByDateDesc(allItems);
-  const picks = [];
-  const usedInsts = new Set();
+  const remaining = sorted.filter((item) => !heroKeys.has(articleKey(item)));
   // Si non précisé : caler le nombre sur la hauteur estimée du hero.
   const limit = Math.max(
     1,
     maxSlots == null ? briefSeedCountForHero(heroItems.length) : maxSlots,
   );
+  // Candidats = haut du reste du fil seulement (pas tout l’historique frais).
+  const poolCap = Math.max(limit * 8, 36);
+  const pool = remaining.slice(0, poolCap);
 
-  for (const item of sorted) {
+  const picks = [];
+  const usedInsts = new Set();
+
+  for (const item of pool) {
     if (picks.length >= limit) break;
-    if (heroKeys.has(articleKey(item))) continue;
     const inst = institutionKey(item);
     if (usedInsts.has(inst)) continue;
     picks.push(item);
@@ -4156,6 +4163,44 @@ function resolveItemFromCard(cardEl) {
 }
 
 /**
+ * Insère une carte dans la suite du fil en respectant l’ordre date desc.
+ * (Ne jamais prepend : un trim En bref d’un vieux billet UQTR/mai se
+ * retrouvait sinon en tête de suite, au-dessus de juillet.)
+ */
+function insertTailArticleByDate(body, el, item) {
+  if (!body || !el) return;
+  const itemTs = Date.parse(item?.date || '') || 0;
+  const cards = [...body.querySelectorAll(':scope > .article, :scope > a.article')];
+  for (const card of cards) {
+    const other = card.__radarItem;
+    const otherTs = Date.parse(other?.date || '') || 0;
+    if (itemTs > otherTs) {
+      body.insertBefore(el, card);
+      return;
+    }
+  }
+  body.appendChild(el);
+}
+
+/** Réordonne le corps de la suite du fil (date desc) — filet anti-dérive. */
+function sortNewsTailBodyByDate(tail) {
+  const body = ensureNewsTailBody(tail);
+  if (!body) return;
+  const cards = [...body.querySelectorAll(':scope > .article, :scope > a.article')];
+  if (cards.length < 2) return;
+  cards.sort((a, b) => {
+    const da = Date.parse(a.__radarItem?.date || '') || 0;
+    const db = Date.parse(b.__radarItem?.date || '') || 0;
+    if (db !== da) return db - da;
+    // Stable-ish : titre en filet
+    const ta = a.querySelector?.('.article-title')?.textContent || '';
+    const tb = b.querySelector?.('.article-title')?.textContent || '';
+    return ta.localeCompare(tb, 'fr');
+  });
+  cards.forEach((c) => body.appendChild(c));
+}
+
+/**
  * Remet un article En bref dans la suite du fil + réserve.
  */
 function demoteBriefCardToTail(brief, cardEl) {
@@ -4180,10 +4225,9 @@ function demoteBriefCardToTail(brief, cardEl) {
   const el = safeCreateArticle(item, 'standard');
   if (el) {
     const body = ensureNewsTailBody(tail);
-    const first = body.querySelector(':scope > .article, :scope > a.article');
-    if (first) body.insertBefore(el, first);
-    else body.appendChild(el);
+    insertTailArticleByDate(body, el, item);
   }
+  sortNewsTailBodyByDate(tail);
   syncNewsTailCollapse({ preserveExpanded: true });
   return true;
 }
@@ -4289,6 +4333,9 @@ function balanceMagazineColumns() {
   const briefCount = brief.querySelectorAll('.article--compact').length;
   if (briefCount) NEWS_LIST.dataset.briefCount = String(briefCount);
   else NEWS_LIST.removeAttribute('data-brief-count');
+  // Filet : après trim/fill, la suite doit rester en date décroissante.
+  const tail = NEWS_LIST.querySelector('.news-tail');
+  if (tail) sortNewsTailBodyByDate(tail);
   syncNewsTailCollapse({ preserveExpanded: true });
   updateNewsLayout();
   bindMagazineImageBalanceOnce();
