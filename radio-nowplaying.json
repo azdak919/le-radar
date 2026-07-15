@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-14T23:05:50.674Z",
+  "updatedAt": "2026-07-15T00:51:38.461Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T23:05:29.611Z"
+      "checkedAt": "2026-07-15T00:51:15.831Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "À la bonne heure",
-        "source": "api-live",
-        "start": "15:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "a-la-bonne-heure"
-      },
-      "next": {
         "title": "London café",
         "source": "api-live",
         "start": "16:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/363949.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "london-cafe"
       },
+      "next": {
+        "title": "Les Pénibles",
+        "source": "api-live",
+        "start": "17:30",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/363953.mp3",
+        "slug": "les-penibles"
+      },
       "track": "",
-      "showTitle": "À la bonne heure",
+      "showTitle": "London café",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-14T23:05:31.281Z"
+      "checkedAt": "2026-07-15T00:51:17.763Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Soul Perspectives",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:30"
-      },
-      "next": {
         "title": "Marca-RO",
         "source": "api-live",
         "start": "20:30",
         "end": "21:00"
       },
+      "next": {
+        "title": "Montreal Sound Ark",
+        "source": "api-live",
+        "start": "21:00",
+        "end": "23:00"
+      },
       "track": "",
-      "showTitle": "Soul Perspectives",
+      "showTitle": "Marca-RO",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,80 +77,80 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T23:05:33.847Z"
+      "checkedAt": "2026-07-15T00:51:20.688Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Ashes to Ashes",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/ashes-to-ashes"
-      },
-      "next": {
         "title": "Hittin' All The Bases",
         "source": "schedule",
         "start": "20:00",
         "end": "21:00",
         "url": "http://www.cjlo.com/shows/hittin-all-the-bases"
       },
+      "next": {
+        "title": "Beatnik Boy: Mixtape",
+        "source": "schedule",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/beatnik-boy-mixtape"
+      },
       "track": "",
-      "showTitle": "Ashes to Ashes",
+      "showTitle": "Hittin' All The Bases",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T23:05:47.550Z"
+      "checkedAt": "2026-07-15T00:51:34.581Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "L'Aut'Rock",
-        "source": "schedule",
-        "start": "18:30",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Dichotomie 88.3",
         "source": "schedule",
         "start": "20:00",
         "end": "22:00"
       },
+      "next": {
+        "title": "Mix Franco",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "L'Aut'Rock",
+      "showTitle": "Dichotomie 88.3",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T23:05:48.375Z"
+      "checkedAt": "2026-07-15T00:51:35.682Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "LIT EFFECT",
+        "title": "Vitriol",
         "source": "api-live",
-        "host": "Denzel Curry",
+        "host": "FRANKLIN",
         "url": "https://www.choq.ca/assets/playlist/internationale.jpg"
       },
       "next": null,
-      "track": "Denzel Curry - LIT EFFECT",
-      "showTitle": "LIT EFFECT",
-      "host": "Denzel Curry",
+      "track": "FRANKLIN - Vitriol",
+      "showTitle": "Vitriol",
+      "host": "FRANKLIN",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-14T23:05:50.323Z"
+      "checkedAt": "2026-07-15T00:51:38.111Z"
     }
   }
 }
