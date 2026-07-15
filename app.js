@@ -1677,6 +1677,21 @@ function getMarqueeElements() {
   ].filter(Boolean);
 }
 
+/** Adapte un libellé UI à la langue Radar active (glossaire / MT déjà posé). */
+function adaptRadarUiText(text = '') {
+  if (window.RadarTranslate?.displayUiText) {
+    return RadarTranslate.displayUiText(text);
+  }
+  return text;
+}
+
+function adaptRadarInstitutionLabel(text = '') {
+  if (window.RadarTranslate?.displayInstitutionLabel) {
+    return RadarTranslate.displayInstitutionLabel(text);
+  }
+  return text;
+}
+
 /** Défilement doux sur le libellé d'institution des pastilles sources. */
 function applyFilterInstMarquees() {
   if (!NEWS_FILTERS) return;
@@ -1685,12 +1700,14 @@ function applyFilterInstMarquees() {
     if (!instEl) return;
     const src = btn.dataset.source;
     if (src === 'all') {
-      applyMarquee(instEl, 'Toutes les sources');
+      // UI — se traduit avec la langue active (ne pas figer le FR)
+      applyMarquee(instEl, adaptRadarUiText('Toutes les sources'));
       return;
     }
     const { institution, type } = sourceInfo(src);
     const instLabel = filterSourceInstitutionLabel(institution, type, src);
-    applyMarquee(instEl, instLabel || '');
+    // Établissement : localisé hors FR/EN ; les noms de médias restent notranslate.
+    applyMarquee(instEl, adaptRadarInstitutionLabel(instLabel || ''));
   });
 }
 
@@ -2959,7 +2976,7 @@ function syncFiltersPanel() {
       FILTERS_COMPACT?.setAttribute('hidden', '');
       FILTERS_TOGGLE?.removeAttribute('hidden');
       const label = FILTERS_TOGGLE?.querySelector('.filters-toggle__label');
-      if (label) label.textContent = 'Réduire';
+      if (label) label.textContent = adaptRadarUiText('Réduire');
       FILTERS_TOGGLE?.setAttribute('aria-expanded', 'true');
       FILTERS_COMPACT?.setAttribute('aria-expanded', 'true');
     } else {
@@ -2982,7 +2999,9 @@ function syncFiltersPanel() {
     FILTERS_TOGGLE?.removeAttribute('hidden');
     FILTERS_PANEL.classList.toggle('is-expanded', filtersExpanded);
     const label = FILTERS_TOGGLE?.querySelector('.filters-toggle__label');
-    if (label) label.textContent = filtersExpanded ? 'Réduire' : 'Plus de sources';
+    if (label) {
+      label.textContent = adaptRadarUiText(filtersExpanded ? 'Réduire' : 'Plus de sources');
+    }
     FILTERS_TOGGLE?.setAttribute('aria-expanded', filtersExpanded ? 'true' : 'false');
   } else {
     filtersExpanded = false;
@@ -2991,6 +3010,17 @@ function syncFiltersPanel() {
   }
 
   scheduleFilterMarqueeRefresh();
+}
+
+/** Après changement de langue : reposer les libellés sources / boutons. */
+function onRadarTranslateModeChange() {
+  applyFilterInstMarquees();
+  syncFiltersPanel();
+  scheduleFilterMarqueeRefresh();
+}
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('radar:translate-mode', onRadarTranslateModeChange);
 }
 
 function bindFiltersPanel() {
