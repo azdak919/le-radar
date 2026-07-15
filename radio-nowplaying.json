@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-15T16:24:42.944Z",
+  "updatedAt": "2026-07-15T17:48:19.559Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T16:24:19.716Z"
+      "checkedAt": "2026-07-15T17:47:58.912Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Club classique",
-        "source": "api-live",
-        "start": "07:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "club-classique"
-      },
-      "next": {
         "title": "La collation",
         "source": "api-live",
         "start": "09:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364379.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "mix-collation"
       },
+      "next": {
+        "title": "Genre de bleu (reprise)",
+        "source": "api-live",
+        "start": "11:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364235.mp3",
+        "slug": "genre-de-bleu"
+      },
       "track": "",
-      "showTitle": "Club classique",
+      "showTitle": "La collation",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,7 +51,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-15T16:24:22.142Z"
+      "checkedAt": "2026-07-15T17:48:00.468Z"
     },
     "ckut": {
       "id": "ckut",
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T16:24:25.101Z"
+      "checkedAt": "2026-07-15T17:48:02.830Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "North-South Hockey",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/north-south-hockey"
-      },
-      "next": {
         "title": "I Think You Might Like This",
         "source": "schedule",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/i-think-you-might-like-this"
       },
+      "next": {
+        "title": "Something for the Mood",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/something-for-the-mood"
+      },
       "track": "",
-      "showTitle": "North-South Hockey",
+      "showTitle": "I Think You Might Like This",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T16:24:38.942Z"
+      "checkedAt": "2026-07-15T17:48:16.144Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,28 +129,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T16:24:39.962Z"
+      "checkedAt": "2026-07-15T17:48:16.998Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Cicadas",
+        "title": "Ol’ Time African Gods",
         "source": "api-live",
-        "host": "Satya",
+        "host": "Shabaka",
         "url": "https://www.choq.ca/assets/playlist/internationale.jpg"
       },
       "next": null,
-      "track": "Satya - Cicadas",
-      "showTitle": "Cicadas",
-      "host": "Satya",
+      "track": "Shabaka - Ol’ Time African Gods",
+      "showTitle": "Ol’ Time African Gods",
+      "host": "Shabaka",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T16:24:42.593Z"
+      "checkedAt": "2026-07-15T17:48:19.208Z"
     }
   }
 }
