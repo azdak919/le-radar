@@ -1,6 +1,6 @@
 {
-  "updated": "2026-07-15T09:24:29.655Z",
-  "updatedSlot": null,
+  "updated": "2026-07-15T11:09:34.838Z",
+  "updatedSlot": "2026-07-15T11:00:00.000Z",
   "count": 185,
   "freshnessSessions": 3,
   "sources": {
@@ -10,7 +10,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:00:00.000Z",
-      "lastFetchOk": "2026-07-15T09:23:47.887Z"
+      "lastFetchOk": "2026-07-15T11:08:55.719Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-07-15T09:23:48.808Z"
+      "lastFetchOk": "2026-07-15T11:08:56.967Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-03-25T11:00:00.000Z",
-      "lastFetchOk": "2026-07-15T09:23:53.080Z"
+      "lastFetchOk": "2026-07-15T11:09:03.393Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-07-06T12:00:00.000Z",
-      "lastFetchOk": "2026-07-15T09:23:53.502Z"
+      "lastFetchOk": "2026-07-15T11:09:04.429Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,7 +42,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-07-08T14:41:00.000Z",
-      "lastFetchOk": "2026-07-15T09:23:54.623Z"
+      "lastFetchOk": "2026-07-15T11:09:05.642Z"
     },
     "Zone Campus": {
       "fetchOk": true,
@@ -50,15 +50,15 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-07-15T09:23:55.462Z"
+      "lastFetchOk": "2026-07-15T11:09:07.642Z"
     },
     "L'Exemplaire": {
-      "fetchOk": false,
-      "stale": true,
+      "fetchOk": true,
+      "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-07-15T11:09:09.886Z"
     },
     "Le Collectif": {
       "fetchOk": true,
@@ -66,7 +66,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-07-14T21:29:28.000Z",
-      "lastFetchOk": "2026-07-15T09:24:08.488Z"
+      "lastFetchOk": "2026-07-15T11:09:10.829Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -74,7 +74,7 @@
       "articleCount": 7,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-07-15T09:24:08.633Z"
+      "lastFetchOk": "2026-07-15T11:09:11.061Z"
     },
     "La Pige": {
       "fetchOk": true,
@@ -82,7 +82,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-06-22T14:36:10.000Z",
-      "lastFetchOk": "2026-07-15T09:24:09.210Z"
+      "lastFetchOk": "2026-07-15T11:09:11.845Z"
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,7 +90,7 @@
       "articleCount": 13,
       "freshArticleCount": 13,
       "lastArticle": "2026-02-25T14:38:32.764Z",
-      "lastFetchOk": "2026-07-15T09:24:10.520Z"
+      "lastFetchOk": "2026-07-15T11:09:15.120Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-06-26T15:24:28.000Z",
-      "lastFetchOk": "2026-07-15T09:24:10.650Z"
+      "lastFetchOk": "2026-07-15T11:09:15.371Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-07-15T09:24:10.835Z"
+      "lastFetchOk": "2026-07-15T11:09:15.601Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-07-15T09:24:10.999Z"
+      "lastFetchOk": "2026-07-15T11:09:15.739Z"
     }
   },
   "items": [
@@ -494,14 +494,14 @@
       "date": "2026-06-22T14:36:10.000Z",
       "excerpt": "« Les gens ont tendance à frapper un mur au moment de la retraite par manque de préparation », estime Le directeur général de la Fédération de l’âge d’or du Québec (Fadoq) pour la région Saguenay-Lac-Saint-Jean – Ungava, Patrice Saint-Pierre. (Photo : Léa Morin-Letort) L’heure",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/06/Bruno-Cormier-retraite-benevole.png",
-      "leadExcerpt": "« Les gens ont tendance à frapper un mur au moment de la retraite par manque de préparation », estime Le directeur général de la Fédération de l’âge d’or du Québec (Fadoq) pour la région Saguenay-Lac-Saint-Jean – Ungava, Patrice Saint-Pierre. (Photo : Léa Morin-Letort)",
       "sourceImageCredit": "Photo : Léa Morin-Letort",
       "sourceImageCreator": "Léa Morin-Letort",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/06/22/se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille/?utm_source=rss&utm_medium=rss&utm_campaign=se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "bruno-cormier-retraite-benevole.png",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "leadExcerpt": "« Les gens ont tendance à frapper un mur au moment de la retraite par manque de préparation », estime Le directeur général de la Fédération de l’âge d’or du Québec (Fadoq) pour la région Saguenay-Lac-Saint-Jean – Ungava, Patrice Saint-Pierre. (Photo : Léa Morin-Letort)"
     },
     {
       "source": "The Tribune",
@@ -847,8 +847,7 @@
       "sourceImageCreditImageKey": "illustration-recadree-16.9-scaled-e1778861785132.png",
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
-      "leadExcerpt": "À travers un balado intime et sans jugement, ces deux journalistes brisent le silence sur l’anorexie mentale et ouvrent la discussion sur les troubles du comportement alimentaire. Au fil de témoignages sensibles et éclairants.",
-      "_retainedFromCache": true
+      "leadExcerpt": "À travers un balado intime et sans jugement, ces deux journalistes brisent le silence sur l’anorexie mentale et ouvrent la discussion sur les troubles du comportement alimentaire. Au fil de témoignages sensibles et éclairants."
     },
     {
       "source": "Quartier Libre",
@@ -1043,8 +1042,7 @@
       "sourceImageCreditImageKey": "generated-image-2-e1777575466728.png",
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
-      "leadExcerpt": "Il fut un temps où le tabac était partout, jusque dans les hôpitaux et les écoles. Aujourd’hui, son image a complètement changé. L’alcool, lui aussi, semble perdre du terrain chez les jeunes de 15 à 24 ans. Sa consommation baisse. Ne pas boire devient de plus en plus normal. Mais ce changement soulève une autre question : n’y a-t-il pas autre chose qui remplace l’alcool aujourd’hui dans la vie sociale des jeunes ?",
-      "_retainedFromCache": true
+      "leadExcerpt": "Il fut un temps où le tabac était partout, jusque dans les hôpitaux et les écoles. Aujourd’hui, son image a complètement changé. L’alcool, lui aussi, semble perdre du terrain chez les jeunes de 15 à 24 ans. Sa consommation baisse. Ne pas boire devient de plus en plus normal. Mais ce changement soulève une autre question : n’y a-t-il pas autre chose qui remplace l’alcool aujourd’hui dans la vie sociale des jeunes ?"
     },
     {
       "source": "L'Exemplaire",
@@ -1066,8 +1064,7 @@
       "sourceImageCreditImageKey": "photo-couverture-super-c.jpg",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "Connue pour ses effets parfois délirants sur les prix des billets électroniques — évènements culturels, sportifs, transports, vente en ligne — la tarification dynamique s'attaque petit à petit aux produits alimentaires. Au Canada, ces nouvelles pratiques commerciales sont sources de nombreuses inquiétudes. Car si elles redéfinissent la concurrence, elles touchent surtout le consommateur.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Connue pour ses effets parfois délirants sur les prix des billets électroniques — évènements culturels, sportifs, transports, vente en ligne — la tarification dynamique s'attaque petit à petit aux produits alimentaires. Au Canada, ces nouvelles pratiques commerciales sont sources de nombreuses inquiétudes. Car si elles redéfinissent la concurrence, elles touchent surtout le consommateur."
     },
     {
       "source": "L'Exemplaire",
@@ -1088,8 +1085,7 @@
       "sourceImageCreditImageKey": "chatgpt-image-7-mai-2026-11-h-02-min-08-s.png",
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
-      "leadExcerpt": "Illustration générée par ChatGPT à partir du prompt d’Olivier Verreault pour L’Exemplaire. Ce prompt vise à illustrer avec humour les différences entre les protestations québécoises et albertaines au sujet du rachat des armes à feu.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Illustration générée par ChatGPT à partir du prompt d’Olivier Verreault pour L’Exemplaire. Ce prompt vise à illustrer avec humour les différences entre les protestations québécoises et albertaines au sujet du rachat des armes à feu."
     },
     {
       "source": "L'Exemplaire",
@@ -1110,8 +1106,7 @@
       "sourceImageCreditImageKey": "image-de-une.jpg",
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
-      "leadExcerpt": "La confiance des 18 à 34 ans envers les médias traditionnels est en recul constant depuis une dizaine d’années, d'après l'édition 2025 du Digital News Report (DNR). Cette évolution s'expliquerait notamment par l'évolution des formats numériques et l’influence de certains genres journalistiques. Dans ce brouhaha, les médias ajoutent-ils de la confusion à la confusion ?",
-      "_retainedFromCache": true
+      "leadExcerpt": "La confiance des 18 à 34 ans envers les médias traditionnels est en recul constant depuis une dizaine d’années, d'après l'édition 2025 du Digital News Report (DNR). Cette évolution s'expliquerait notamment par l'évolution des formats numériques et l’influence de certains genres journalistiques. Dans ce brouhaha, les médias ajoutent-ils de la confusion à la confusion ?"
     },
     {
       "source": "L'Exemplaire",
@@ -1133,8 +1128,7 @@
       "sourceImageCreditImageKey": "marcelle-friperie-nomade.jpg",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "Les articles de seconde main ont le vent en poupe sur les réseaux sociaux. Les boutiques d'occasion bourgeonnent de plus en plus dans les secteurs commerçants. Certains adeptes de ces achats pensent même lutter contre la fast fashion . Mais cet intérêt pour les articles usagés reflète-t-il vraiment de meilleures habitudes de consommation ?",
-      "_retainedFromCache": true
+      "leadExcerpt": "Les articles de seconde main ont le vent en poupe sur les réseaux sociaux. Les boutiques d'occasion bourgeonnent de plus en plus dans les secteurs commerçants. Certains adeptes de ces achats pensent même lutter contre la fast fashion . Mais cet intérêt pour les articles usagés reflète-t-il vraiment de meilleures habitudes de consommation ?"
     },
     {
       "source": "L'Exemplaire",
@@ -1156,8 +1150,7 @@
       "sourceImageCreditImageKey": "avi-lewis-3-e1778471976855.jpg",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "Le 29 mars dernier, Avi Lewis a été élu chef du Nouveau Parti démocratique (NPD) avec l'appui de 56 % des 71 000 membres qui ont voté. Il succède ainsi à Jagmeet Singh, qui a mené le parti fédéral à une défaite historique l’an dernier. Ouvertement anticapitaliste et populiste, Avi Lewis mise sur un retour assumé à gauche pour relancer le NPD. Pour d’autres militants, le parti est en train de se radicaliser.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Le 29 mars dernier, Avi Lewis a été élu chef du Nouveau Parti démocratique (NPD) avec l'appui de 56 % des 71 000 membres qui ont voté. Il succède ainsi à Jagmeet Singh, qui a mené le parti fédéral à une défaite historique l’an dernier. Ouvertement anticapitaliste et populiste, Avi Lewis mise sur un retour assumé à gauche pour relancer le NPD. Pour d’autres militants, le parti est en train de se radicaliser."
     },
     {
       "source": "L'Exemplaire",
@@ -1170,7 +1163,7 @@
       "author": "Mano Le Bris",
       "date": "2026-05-12T18:48:26.000Z",
       "excerpt": "Des fruits qui parlent, nouent des relations et suivent les codes de la téléréalité : c’est le concept derrière ces vidéos d’un nouveau genre. Entre humour, viralité et controverse, ces contenus ont explosé, début 2026, sur les réseaux sociaux. Mais derrière ces visuels",
-      "image": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/05/SKIBIDI-MINIA-2.png",
+      "image": "https://i0.wp.com/www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/05/SKIBIDI-MINIA-2.png?resize=696%2C392&ssl=1",
       "sourceImageCredit": "Crédit photo : L'Exemplaire",
       "sourceImageCreditUrl": "https://www.exemplaire.com.ulaval.ca/a-la-une/skibidi-tentafruit-ou-quand-lia-accentue-les-stereotypes/?utm_source=rss&utm_medium=rss&utm_campaign=skibidi-tentafruit-ou-quand-lia-accentue-les-stereotypes",
       "sourceImageCreditFrom": "media",
@@ -1178,8 +1171,7 @@
       "sourceImageCreditImageKey": "skibidi-minia-2.png",
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
-      "leadExcerpt": "Des fruits qui parlent, nouent des relations et suivent les codes de la téléréalité : c’est le concept derrière ces vidéos d’un nouveau genre. Entre humour, viralité et controverse, ces contenus explosent sur les réseaux sociaux. Mais, derrière ces visuels enfantins générés par intelligence artificielle, se dessinent des discours moins légers qui dépassent le simple divertissement.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Des fruits qui parlent, nouent des relations et suivent les codes de la téléréalité : c’est le concept derrière ces vidéos d’un nouveau genre. Entre humour, viralité et controverse, ces contenus explosent sur les réseaux sociaux. Mais, derrière ces visuels enfantins générés par intelligence artificielle, se dessinent des discours moins légers qui dépassent le simple divertissement."
     },
     {
       "source": "Quartier Libre",
@@ -1579,8 +1571,7 @@
       "sourceImageCreditImageKey": "img_2365.jpeg",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "Si tous vos amis s’entrainent comme des athlètes à temps plein et vous parlent constamment de leur « split » sur Strava, c’est que vous êtes dans la course. Les sports d’endurance extrême sont plus populaires que jamais, particulièrement chez les jeunes adultes. Pour le meilleur et — parfois — pour le pire.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Si tous vos amis s’entrainent comme des athlètes à temps plein et vous parlent constamment de leur « split » sur Strava, c’est que vous êtes dans la course. Les sports d’endurance extrême sont plus populaires que jamais, particulièrement chez les jeunes adultes. Pour le meilleur et — parfois — pour le pire."
     },
     {
       "source": "L'Exemplaire",
@@ -1602,8 +1593,7 @@
       "sourceImageCreditImageKey": "politiquetable.png",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "Discuter de contrats politiques, c’est bien. Mais, en se régalant autour d’un bon repas, on a vite compris que c’était mieux. Cette stratégie de négociation s’appelle la diplomatie culinaire . À l’aide de Sébastien Laframboise, chef exécutif du restaurant Le Parlementaire, à l’Assemblée Nationale de Québec, L’Exemplaire cherche à éclaircir ce concept, tout en faisant sourire ces auditeurs.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Discuter de contrats politiques, c’est bien. Mais, en se régalant autour d’un bon repas, on a vite compris que c’était mieux. Cette stratégie de négociation s’appelle la diplomatie culinaire . À l’aide de Sébastien Laframboise, chef exécutif du restaurant Le Parlementaire, à l’Assemblée Nationale de Québec, L’Exemplaire cherche à éclaircir ce concept, tout en faisant sourire ces auditeurs."
     },
     {
       "source": "Montréal Campus",
@@ -3729,14 +3719,14 @@
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/lesbians-against-sida-_-sixtine.png",
       "featured": true,
       "_pageAuthor": "Sixtine Nicolaÿ",
-      "leadExcerpt": "Cependant, l’épidémie du sida a modifié le rapport entre les deux groupes. Au cours de cette crise, les hommes homosexuels, qui en étaient les principales victimes, ont souvent été abandonnés, que ce soit par le gouvernement ou plus largement par la société. La stigmatisation et la marginalisation des homosexuels ont conduit certains professionnels de la santé à refuser de traiter les personnes at",
       "sourceImageCredit": "Photo : Stu Doré",
       "sourceImageCreator": "Stu Doré",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "lesbians-against-sida-_-sixtine.png",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "leadExcerpt": "Cependant, l’épidémie du sida a modifié le rapport entre les deux groupes. Au cours de cette crise, les hommes homosexuels, qui en étaient les principales victimes, ont souvent été abandonnés, que ce soit par le gouvernement ou plus largement par la société. La stigmatisation et la marginalisation des homosexuels ont conduit certains professionnels de la santé à refuser de traiter les personnes at"
     },
     {
       "source": "Le Délit",
@@ -3752,14 +3742,14 @@
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/canon-litteraire.jpg",
       "featured": true,
       "_pageAuthor": "Rose Langlois",
-      "leadExcerpt": "C’est la sécheresse totale dans le cerveau de bien des gens. Le vôtre, peut-être. Mais ne craignez rien, ce n’est pas de votre faute. Cette absence de figures féminines dans le canon littéraire tient à une multitude de facteurs qui se résument à l’oubli. Un oubli collectif. Un oubli volontaire.",
       "sourceImageCredit": "Photo : Catvy Tran",
       "sourceImageCreator": "Catvy Tran",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "canon-litteraire.jpg",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "leadExcerpt": "C’est la sécheresse totale dans le cerveau de bien des gens. Le vôtre, peut-être. Mais ne craignez rien, ce n’est pas de votre faute. Cette absence de figures féminines dans le canon littéraire tient à une multitude de facteurs qui se résument à l’oubli. Un oubli collectif. Un oubli volontaire."
     },
     {
       "source": "The McGill Daily",
