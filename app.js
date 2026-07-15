@@ -2803,25 +2803,17 @@ function expandInstitutionFullName(name = '') {
 /**
  * Libellé institution sur les cartes article.
  * @param {'short'|'full'} form
- *   short — acronyme (ULaval, UdeM, UQAM…) pour Suite du fil / mobile
- *   full  — nom complet (tablette+ en À la une / En bref / vedettes)
+ *   short — acronyme (ULaval, UdeM, McGill…) pour En bref + Suite du fil
+ *   full  — nom complet (À la une + vedettes, tablette+)
  */
 function articleInstitutionLabel(name = '', type = '', form = 'short') {
   if (!name) return '';
   if (form === 'full') {
     return expandInstitutionFullName(name);
   }
-  // Court : acronyme pour les universités ; sinon libellé formaté
-  if (isQuebecUniversity(name, type)) {
-    const acr = resolveInstitutionAcronym(name);
-    if (acr) return acr;
-  }
-  // Donnée déjà en acronyme seul (institution: "UQAM")
-  const stripped = name.replace(/\s*\([^)]*\)\s*$/, '').trim();
-  if (INSTITUTION_FULL_BY_ACRONYM[stripped] || INSTITUTION_FULL_BY_ACRONYM[name]) {
-    return resolveInstitutionAcronym(name) || stripped;
-  }
-  return formatInstitutionDisplay(stripped || name);
+  // Court : acronyme institutionnel, sinon libellé compact (cégeps, collèges).
+  return shortInstitution(name, type)
+    || formatInstitutionDisplay(String(name).replace(/\s*\([^)]*\)\s*$/, '').trim());
 }
 
 /** HTML meta institution : complet + acronyme pour bascule responsive CSS. */
@@ -2829,7 +2821,9 @@ function articleInstitutionMetaHtml(name = '', type = '', role = 'standard') {
   if (!name) return '';
   const short = articleInstitutionLabel(name, type, 'short');
   const full = articleInstitutionLabel(name, type, 'full');
-  const spacious = role === 'lead' || role === 'feature' || role === 'compact';
+  // Nom complet seulement pour la une et les vedettes (plus d’espace).
+  // En bref + Suite du fil : toujours acronyme / forme courte.
+  const spacious = role === 'lead' || role === 'feature';
   // Pas de notranslate : hors FR/EN/Original, translate.js localise les établissements.
   // En Original / FR / EN, ils restent protégés (libellés d’origine).
   if (spacious && full && full !== short) {
@@ -2850,11 +2844,15 @@ function shortInstitution(name = '', type = '') {
   if (acronym) return acronym;
 
   const CEGEP_SHORT = {
-    'Cégep du Vieux Montréal': 'Vieux-Montréal',
+    'Cégep du Vieux Montréal': 'CVM',
     'Cégep de Jonquière (ATM – journalisme)': 'Jonquière',
     'Cégep de Jonquière': 'Jonquière',
+    'Dawson College': 'Dawson',
+    'Collège Dawson': 'Dawson',
   };
   if (CEGEP_SHORT[name]) return CEGEP_SHORT[name];
+  const strippedName = String(name).replace(/\s*\([^)]*\)\s*$/, '').trim();
+  if (CEGEP_SHORT[strippedName]) return CEGEP_SHORT[strippedName];
 
   if (isCegepInstitution(name, type)) {
     const stripped = stripInstitutionTypePrefix(name);

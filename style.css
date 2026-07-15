@@ -2133,18 +2133,17 @@ html[data-translate-busy="1"] .translate-toggle {
   background: var(--c, var(--accent));
 }
 .article-inst { color: var(--muted); }
-/* Par défaut acronyme ; nom complet tablette+ en une / en bref / vedettes */
+/* Par défaut acronyme. Nom complet tablette+ : À la une + vedettes seulement.
+   En bref + Suite du fil restent en acronyme (UdeM, McGill, UQAM…). */
 .article-inst__full { display: none; }
 .article-inst__short { display: inline; }
 @media (min-width: 600px) {
   .article--lead .article-inst__full,
-  .news-hero .article--feature .article-inst__full,
-  .brief-rail .article--compact .article-inst__full {
+  .news-hero .article--feature .article-inst__full {
     display: inline;
   }
   .article--lead .article-inst__short,
-  .news-hero .article--feature .article-inst__short,
-  .brief-rail .article--compact .article-inst__short {
+  .news-hero .article--feature .article-inst__short {
     display: none;
   }
 }
