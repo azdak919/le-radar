@@ -1,47 +1,53 @@
 {
-  "updatedAt": "2026-07-15T19:14:59.172Z",
+  "updatedAt": "2026-07-15T20:34:41.405Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Chéri.e, j’arrive!",
         "source": "schedule",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Chéri.e, j’arrive!",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T19:14:38.197Z"
+      "checkedAt": "2026-07-15T20:34:19.100Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Genre de bleu (reprise)",
-        "source": "api-live",
-        "start": "11:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "genre-de-bleu"
-      },
-      "next": {
         "title": "La carte cadeau",
         "source": "api-live",
         "start": "12:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364001.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "la-carte-cadeau"
       },
+      "next": {
+        "title": "Le palmarès",
+        "source": "api-live",
+        "start": "14:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364390.mp3",
+        "slug": "palmares-de-cism"
+      },
       "track": "",
-      "showTitle": "Genre de bleu (reprise)",
+      "showTitle": "La carte cadeau",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,7 +57,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-15T19:14:39.847Z"
+      "checkedAt": "2026-07-15T20:34:20.973Z"
     },
     "ckut": {
       "id": "ckut",
@@ -77,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T19:14:42.679Z"
+      "checkedAt": "2026-07-15T20:34:23.972Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Patch Notes",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/patch-notes"
-      },
-      "next": {
         "title": "Borderline",
         "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/borderline"
       },
+      "next": {
+        "title": "Advice By The Fireplace",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/advice-by-the-fireplace"
+      },
       "track": "",
-      "showTitle": "Patch Notes",
+      "showTitle": "Borderline",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T19:14:56.218Z"
+      "checkedAt": "2026-07-15T20:34:38.091Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,27 +135,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T19:14:57.202Z"
+      "checkedAt": "2026-07-15T20:34:39.164Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "15-juillet",
+        "title": "Milk Bone (tell anyone)",
         "source": "api-live",
-        "host": "Palmares"
+        "host": "Birds of Prrrey"
       },
       "next": null,
-      "track": "Palmares - 15-juillet",
-      "showTitle": "15-juillet",
-      "host": "Palmares",
+      "track": "Monk.E x DJ Manifest - Ponts à corde (avec OG Brax)",
+      "showTitle": "Milk Bone (tell anyone)",
+      "host": "Birds of Prrrey",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T19:14:58.821Z"
+      "checkedAt": "2026-07-15T20:34:41.055Z"
     }
   }
 }
