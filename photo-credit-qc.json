@@ -1,15 +1,65 @@
 {
-  "updated": "2026-07-15T20:54:14.517Z",
+  "updated": "2026-07-15T22:25:41.639Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 121,
+  "cited": 122,
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 0,
-  "updatedCount": 0,
-  "citedNew": 0,
-  "fallbackNew": 0,
-  "samples": []
+  "checked": 7,
+  "updatedCount": 7,
+  "citedNew": 5,
+  "fallbackNew": 2,
+  "samples": [
+    {
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "L’épidémie de la nonchalance",
+      "source": "Le Délit",
+      "credit": "Photo : Elie Nguyen",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "La performance de l’homosexualité : un privilège ?",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré/Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Inside Mile End Kicks",
+      "source": "The Link",
+      "credit": "Photo: Courtesy of Joe Fuda",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "The apprenticeship of public voice",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    }
+  ]
 }
