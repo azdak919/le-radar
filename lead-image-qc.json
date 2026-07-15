@@ -1,28 +1,34 @@
 {
-  "updated": "2026-07-15T20:54:52.132Z",
+  "updated": "2026-07-15T23:53:51.556Z",
   "total": 185,
   "withPhoto": 168,
-  "withStock": 58,
-  "withCampusBank": 8,
+  "withStock": 63,
+  "withCampusBank": 9,
   "fullyCovered": 185,
-  "leadReadyPhotos": 138,
-  "pageScraped": 21,
-  "photosRecovered": 21,
+  "leadReadyPhotos": 143,
+  "pageScraped": 20,
+  "photosRecovered": 20,
   "imagesCleared": 10,
-  "stockSearches": 57,
-  "stockFound": 44,
-  "campusBankFound": 5,
+  "stockSearches": 54,
+  "stockFound": 37,
+  "campusBankFound": 7,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "CSU fails to reach quorum at first special council meeting of new mandate",
+      "link": "https://thelinknewspaper.ca/article/16335",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
+    },
     {
       "title": "The Cruel Optimism of Summer",
       "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
     },
     {
-      "title": "CSU terminates council’s chief election officer",
-      "link": "https://thelinknewspaper.ca/article/16334",
+      "title": "CSU rejects motion for Israel and Jewish solidarity fund ad hoc committee",
+      "link": "https://thelinknewspaper.ca/article/16329",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
     },
@@ -45,12 +51,6 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SPORTS_DeitenLachance_MLB_SourceBaseballQuebec-684x1024.png"
     },
     {
-      "title": "Voyager sans arrêt : passion ou obsession ?",
-      "link": "https://lecollectif.ca/culture/voyager-sans-arret-passion-ou-obsession/",
-      "reason": "stock-too-small",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_VOYAGES_VoyagerSansArretPassionOuObsession_SourcePixabay-1-1024x683.jpg"
-    },
-    {
       "title": "La vie sans alcool : les habitudes des jeunes redéfinies",
       "link": "https://lecollectif.ca/societe/la-vie-sans-alcool-les-habitudes-des-jeunes-redefinies/",
       "reason": "no-stock-match",
@@ -63,12 +63,6 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_HYPERFIXATIONS_Les-hyperfixations_SourceBlogZencare-1.png"
     },
     {
-      "title": "Quitte ton 9 à 5 » : rêve de liberté ou illusion générationnelle?",
-      "link": "https://lecollectif.ca/societe/quitte-ton-9-a-5-reve-de-liberte-ou-illusion-generationnelle/",
-      "reason": "stock-too-small",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_QuitYourJob-photo2_SourceGettyImages-1-1024x683.png"
-    },
-    {
       "title": "L’ERD sauvée de la dissolution par quatre membres",
       "link": "https://lapige.atmjonquiere.com/2026/05/21/lerd-sauvee-de-la-dissolution-par-quatre-membres/?utm_source=rss&utm_medium=rss&utm_campaign=lerd-sauvee-de-la-dissolution-par-quatre-membres",
       "reason": "no-stock-match",
@@ -79,6 +73,12 @@
       "link": "https://lapige.atmjonquiere.com/2026/05/20/un-pont-entre-lart-et-le-travail-de-rue/?utm_source=rss&utm_medium=rss&utm_campaign=un-pont-entre-lart-et-le-travail-de-rue",
       "reason": "stock-too-small",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/Image-16.jpg"
+    },
+    {
+      "title": "Présences invisibles : écrire la ville sans permission",
+      "link": "https://quartierlibre.ca/presences-invisibles-ecrire-la-ville/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/Photo-5_IMG_3586-1024x768.jpg"
     },
     {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
