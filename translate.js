@@ -14,11 +14,11 @@
   'use strict';
 
   const STORAGE_KEY = 'radar-translate-mode';
-  // v5 : purge des traductions écrasées par « Dawson College » (bug v4)
-  const CACHE_KEY = 'radar-translate-cache-v5';
-  const CACHE_MAX = 800;
+  // v6 : glossaire UI élargi + lazy suite du fil (ne pas MT l’overflow replié)
+  const CACHE_KEY = 'radar-translate-cache-v6';
+  const CACHE_MAX = 900;
   const DEFAULT_MODE = 'original';
-  const CONCURRENCY = 5;
+  const CONCURRENCY = 6;
   const MAX_CHUNK = 450;
 
   const MODES = {
@@ -518,9 +518,10 @@
   const protectedInstitutionNames = new Set([
     'ULaval', 'UdeM', 'UQAM', 'UQTR', 'UQAC', 'UQAR', 'UQO', 'UQAT',
     'UdeS', 'McGill', 'Concordia', "Bishop's", 'Poly Montréal', 'Polytechnique Montréal',
+    'CVM', 'Dawson', 'Jonquière', 'Vieux-Montréal',
     'Université Laval', 'Université de Montréal', 'Université de Sherbrooke',
     'Université McGill', 'McGill University', 'Concordia University',
-    "Bishop's University", 'Dawson College',
+    "Bishop's University", 'Dawson College', 'Collège Dawson',
     'Université du Québec à Montréal', 'Université du Québec à Trois-Rivières',
     'Université du Québec à Chicoutimi', 'Cégep du Vieux Montréal',
     'Cégep de Jonquière', 'Cégep de Jonquière (ATM – journalisme)',
@@ -727,10 +728,10 @@
     out = out.replace(/:(?!\/\/)(?=[\p{L}])/gu, ': ');
     // Mot collé en camel accidentel : licencjiPowszechna
     out = out.replace(/(\p{Ll}{2,})(\p{Lu}\p{L})/gu, '$1 $2');
-    // Dawson n’est pas une université (corrige aussi le corps de page).
-    // Original vide obligatoire : avec un nom d’établissement, la branche
-    // collège remplacerait le texte entier par le libellé du glossaire.
-    out = fixInstitutionMistranslations('', out);
+    // Ne PAS appeler fixInstitutionMistranslations ici avec original vide :
+    // ça réécrivait des phrases hors établissement (régressions de traduction).
+    // Les corrections collège/université passent par polishInstitutionTranslation
+    // uniquement dans les zones .article-inst / pastilles.
     // Espaces doubles éventuels
     out = out.replace(/ {2,}/g, ' ');
     return out;
@@ -751,77 +752,159 @@
 
   /**
    * Phrases UI courtes — gtx invente souvent des contresens (ex. IU sur
-   * « Toutes les sources »). On force des libellés fiables quand on les a.
+   * « Toutes les sources »). On force des libellés fiables (endonymes).
+   * Clés = texte source affiché en FR dans le shell.
    */
   const UI_PHRASES = {
     'Toutes les sources': {
-      en: 'All sources',
-      es: 'Todas las fuentes',
-      pt: 'Todas as fontes',
-      de: 'Alle Quellen',
-      it: 'Tutte le fonti',
-      ht: 'Tout sous',
-      zh: '全部来源',
-      'zh-tw': '全部來源',
-      ar: 'كل المصادر',
-      hi: 'सभी स्रोत',
-      // Inuktitut : garder le français plutôt qu’un calque gtx douteux
-      iu: 'Toutes les sources',
-      'iu-latn': 'Toutes les sources',
-      default: null,
+      en: 'All sources', es: 'Todas las fuentes', pt: 'Todas as fontes',
+      de: 'Alle Quellen', it: 'Tutte le fonti', ht: 'Tout sous',
+      zh: '全部来源', 'zh-tw': '全部來源', ar: 'كل المصادر', hi: 'सभी स्रोत',
+      ru: 'Все источники', uk: 'Усі джерела', ko: '모든 출처', ja: 'すべての情報源',
+      vi: 'Tất cả nguồn', tl: 'Lahat ng pinagmulan', tr: 'Tüm kaynaklar',
+      pl: 'Wszystkie źródła', nl: 'Alle bronnen', ro: 'Toate sursele',
+      iu: 'Toutes les sources', 'iu-latn': 'Toutes les sources',
     },
     'Plus de sources': {
-      en: 'More sources',
-      es: 'Más fuentes',
-      pt: 'Mais fontes',
-      de: 'Weitere Quellen',
-      it: 'Altre fonti',
-      zh: '更多来源',
-      'zh-tw': '更多來源',
-      iu: 'Plus de sources',
-      'iu-latn': 'Plus de sources',
-      default: null,
+      en: 'More sources', es: 'Más fuentes', pt: 'Mais fontes',
+      de: 'Weitere Quellen', it: 'Altre fonti', zh: '更多来源', 'zh-tw': '更多來源',
+      ar: 'المزيد من المصادر', ru: 'Ещё источники', ko: '출처 더보기',
+      iu: 'Plus de sources', 'iu-latn': 'Plus de sources',
     },
     'Moins de sources': {
-      en: 'Fewer sources',
-      es: 'Menos fuentes',
-      pt: 'Menos fontes',
-      de: 'Weniger Quellen',
-      it: 'Meno fonti',
-      iu: 'Moins de sources',
-      'iu-latn': 'Moins de sources',
-      default: null,
+      en: 'Fewer sources', es: 'Menos fuentes', pt: 'Menos fontes',
+      de: 'Weniger Quellen', it: 'Meno fonti',
+      iu: 'Moins de sources', 'iu-latn': 'Moins de sources',
     },
-    'Plus d\'articles': {
-      en: 'More articles',
-      es: 'Más artículos',
-      pt: 'Mais artigos',
-      de: 'Weitere Artikel',
-      it: 'Altri articoli',
-      iu: 'Plus d\'articles',
-      'iu-latn': 'Plus d\'articles',
-      default: null,
+    "Plus d'articles": {
+      en: 'More articles', es: 'Más artículos', pt: 'Mais artigos',
+      de: 'Weitere Artikel', it: 'Altri articoli', zh: '更多文章', 'zh-tw': '更多文章',
+      ar: 'المزيد من المقالات', ru: 'Ещё статьи', ko: '기사 더보기', ja: '記事をもっと見る',
+      vi: 'Thêm bài viết', tl: 'Higit pang mga artikulo', hi: 'और लेख',
+      pl: 'Więcej artykułów', nl: 'Meer artikelen', tr: 'Daha fazla makale',
+      iu: "Plus d'articles", 'iu-latn': "Plus d'articles",
     },
     'Réduire': {
-      en: 'Show less',
-      es: 'Reducir',
-      pt: 'Reduzir',
-      de: 'Einklappen',
-      it: 'Riduci',
-      iu: 'Réduire',
-      'iu-latn': 'Réduire',
-      default: null,
+      en: 'Show less', es: 'Mostrar menos', pt: 'Mostrar menos',
+      de: 'Weniger anzeigen', it: 'Mostra meno', zh: '收起', 'zh-tw': '收起',
+      ar: 'عرض أقل', ru: 'Свернуть', ko: '접기', ja: '閉じる',
+      iu: 'Réduire', 'iu-latn': 'Réduire',
+    },
+    'À la une': {
+      en: 'Top story', es: 'Portada', pt: 'Destaque', de: 'Titelgeschichte',
+      it: 'In evidenza', zh: '头条', 'zh-tw': '頭條', ar: 'أبرز الأخبار',
+      ru: 'Главное', ko: '헤드라인', ja: 'トップ', hi: 'मुख्य समाचार',
+      vi: 'Tin nổi bật', tl: 'Pangunahing balita', tr: 'Manşet',
+      pl: 'Na okładce', nl: 'Voorpagina', ht: 'Alain',
+      iu: 'À la une', 'iu-latn': 'À la une',
+    },
+    'En bref': {
+      en: 'In brief', es: 'En breve', pt: 'Em breve', de: 'Kurz gemeldet',
+      it: 'In breve', zh: '简讯', 'zh-tw': '簡訊', ar: 'باختصار',
+      ru: 'Коротко', ko: '한눈에', ja: '手短に', hi: 'संक्षेप में',
+      vi: 'Tóm tắt', tl: 'Sa madaling salita', tr: 'Kısaca',
+      pl: 'W skrócie', nl: 'In het kort', ht: 'An rezime',
+      iu: 'En bref', 'iu-latn': 'En bref',
+    },
+    'Suite du fil': {
+      en: 'More stories', es: 'Más noticias', pt: 'Mais notícias', de: 'Weitere Meldungen',
+      it: 'Altre notizie', zh: '更多报道', 'zh-tw': '更多報導', ar: 'المزيد من الأخبار',
+      ru: 'Ещё новости', ko: '더 많은 소식', ja: 'その他の記事', hi: 'और समाचार',
+      vi: 'Tin khác', tl: 'Iba pang balita', tr: 'Diğer haberler',
+      pl: 'Więcej wiadomości', nl: 'Meer berichten', ht: 'Plis nouvèl',
+      iu: 'Suite du fil', 'iu-latn': 'Suite du fil',
+    },
+    'Le fil étudiant': {
+      en: 'Student wire', es: 'Hilo estudiantil', pt: 'Fio estudantil',
+      de: 'Studierenden-Ticker', it: 'Filo studentesco', zh: '学生资讯',
+      ar: 'الخيط الطلابي', ru: 'Студенческая лента',
+      iu: 'Le fil étudiant', 'iu-latn': 'Le fil étudiant',
+    },
+    Par: {
+      en: 'By', es: 'Por', pt: 'Por', de: 'Von', it: 'Di', zh: '作者',
+      ar: 'بقلم', ru: 'Автор', ko: '글', ja: '執筆', hi: 'लेखक',
+      vi: 'Bởi', tl: 'Ni', tr: 'Yazan', pl: 'Autor', nl: 'Door', ht: 'Pa',
+      fr: 'Par',
+    },
+    By: {
+      fr: 'Par', es: 'Por', pt: 'Por', de: 'Von', it: 'Di', zh: '作者',
+      en: 'By',
+    },
+    'Lire la suite →': {
+      en: 'Read more →', es: 'Leer más →', pt: 'Ler mais →', de: 'Weiterlesen →',
+      it: 'Continua →', zh: '阅读全文 →', 'zh-tw': '閱讀全文 →', ar: 'اقرأ المزيد →',
+      ru: 'Читать далее →', ko: '더 읽기 →', ja: '続きを読む →', hi: 'और पढ़ें →',
+      vi: 'Đọc tiếp →', tl: 'Magbasa pa →', tr: 'Devamını oku →',
+      pl: 'Czytaj dalej →', nl: 'Lees verder →', ht: 'Li plis →',
+    },
+    'Read more →': {
+      fr: 'Lire la suite →', es: 'Leer más →', pt: 'Ler mais →', de: 'Weiterlesen →',
+      en: 'Read more →',
+    },
+    'Lire la suite': {
+      en: 'Read more', es: 'Leer más', pt: 'Ler mais', de: 'Weiterlesen',
+      it: 'Continua', zh: '阅读全文', ar: 'اقرأ المزيد',
+    },
+    'Read more': {
+      fr: 'Lire la suite', es: 'Leer más', pt: 'Ler mais', en: 'Read more',
+    },
+    Rechercher: {
+      en: 'Search', es: 'Buscar', pt: 'Pesquisar', de: 'Suchen', it: 'Cerca',
+      zh: '搜索', ar: 'بحث', ru: 'Поиск',
+    },
+    Search: {
+      fr: 'Rechercher', es: 'Buscar', en: 'Search',
     },
   };
 
-  function preferredUiPhrase(text = '', targetLang = '') {
-    const core = String(text || '').replace(/\s+/g, ' ').trim();
-    if (!core) return null;
+  function uiPhraseLookup(core = '', targetLang = '') {
     const entry = UI_PHRASES[core];
     if (!entry) return null;
     const lang = institutionLangKey(targetLang);
     if (entry[lang] != null) return entry[lang];
     if (entry.default != null) return entry.default;
+    return null;
+  }
+
+  function preferredUiPhrase(text = '', targetLang = '') {
+    const core = String(text || '').replace(/\s+/g, ' ').trim();
+    if (!core) return null;
+
+    const direct = uiPhraseLookup(core, targetLang);
+    if (direct != null) return direct;
+
+    // « Plus d'articles (12) » / « More articles (12) »
+    const moreFr = core.match(/^Plus d['’]articles\s*\((\d+)\)\s*$/i);
+    if (moreFr) {
+      const stem = uiPhraseLookup("Plus d'articles", targetLang) || 'More articles';
+      return `${stem} (${moreFr[1]})`;
+    }
+    const moreEn = core.match(/^More articles\s*\((\d+)\)\s*$/i);
+    if (moreEn) {
+      const stem = uiPhraseLookup('More articles', targetLang)
+        || uiPhraseLookup("Plus d'articles", targetLang)
+        || 'More articles';
+      return `${stem} (${moreEn[1]})`;
+    }
+
+    // Compteurs dynamiques « 185 articles » / « 12 sources »
+    const countArticles = core.match(/^(\d+)\s+articles?\s*$/i);
+    if (countArticles) {
+      const n = countArticles[1];
+      const lang = institutionLangKey(targetLang);
+      if (lang === 'en') return `${n} article${n === '1' ? '' : 's'}`;
+      if (lang === 'es') return `${n} artículo${n === '1' ? '' : 's'}`;
+      if (lang === 'pt') return `${n} artigo${n === '1' ? '' : 's'}`;
+      if (lang === 'de') return `${n} Artikel`;
+      if (lang === 'it') return `${n} articol${n === '1' ? 'o' : 'i'}`;
+      if (lang === 'zh' || lang === 'zh-tw') return `${n} 篇文章`;
+      if (lang === 'ar') return `${n} مقالة`;
+      if (lang === 'ru') return `${n} статей`;
+      if (lang === 'ko') return `기사 ${n}개`;
+      if (lang === 'ja') return `${n}本の記事`;
+      if (lang === 'fr') return `${n} article${n === '1' ? '' : 's'}`;
+    }
+
     return null;
   }
 
@@ -1634,7 +1717,31 @@
     return false;
   }
 
-  function collectTextNodes(root = document.body) {
+  /**
+   * Articles de la suite du fil encore repliés (sous le pli « Plus d'articles »).
+   * On ne les envoie pas au MT tant que l’utilisateur n’a pas déplié —
+   * gain net de latence (souvent 50–150 chaînes en moins).
+   */
+  function isInCollapsedTailOverflow(node) {
+    const el = node && node.nodeType === 3 ? node.parentElement : node;
+    if (!el || el.nodeType !== 1) return false;
+    if (el.closest?.('.is-tail-overflow, [data-translate-skip="1"]')) return true;
+    const tail = el.closest?.('.news-tail');
+    if (!tail || !tail.classList.contains('has-overflow') || tail.classList.contains('is-expanded')) {
+      return false;
+    }
+    const article = el.closest?.('.article, a.article');
+    if (!article || !tail.contains(article)) return false;
+    const body = tail.querySelector('.news-tail-body');
+    if (!body) return false;
+    const cards = [...body.querySelectorAll(':scope > .article, :scope > a.article')];
+    const idx = cards.indexOf(article);
+    if (idx < 0) return false;
+    const visible = parseInt(tail.dataset.tailVisible || '10', 10) || 10;
+    return idx >= visible;
+  }
+
+  function collectTextNodes(root = document.body, { includeCollapsedTail = false } = {}) {
     if (!root) return [];
     const nodes = [];
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
@@ -1643,11 +1750,17 @@
         if (!val || !val.trim()) return NodeFilter.FILTER_REJECT;
         // Ignorer purement numérique / ponctuation
         if (!/[\p{L}]/u.test(val)) return NodeFilter.FILTER_REJECT;
+        // Suite du fil repliée : ignorer les cartes hors écran
+        if (!includeCollapsedTail && isInCollapsedTailOverflow(node)) {
+          return NodeFilter.FILTER_REJECT;
+        }
         // Noms de médias (toujours) / établissements hors pastilles sources
         if (isProtectedProperName(val, node)) return NodeFilter.FILTER_REJECT;
         let p = node.parentElement;
         while (p) {
           if (shouldSkipElement(p)) return NodeFilter.FILTER_REJECT;
+          // Ne pas remonter hors de root
+          if (p === root) break;
           p = p.parentElement;
         }
         return NodeFilter.FILTER_ACCEPT;
@@ -1674,7 +1787,13 @@
     }
   }
 
-  async function translateDom(targetLang, { quiet = false } = {}) {
+  async function translateDom(targetLang, {
+    quiet = false,
+    root = document.body,
+    /** Si true : ne réécrit que les nœuds encore à l’original (dépliage suite du fil). */
+    onlyUntranslated = false,
+    includeCollapsedTail = false,
+  } = {}) {
     if (!targetLang || translating) return;
     translating = true;
     translateTargetLang = targetLang;
@@ -1684,11 +1803,12 @@
     }
 
     try {
-      const nodes = collectTextNodes(document.body);
-      // Grouper par texte original (dédup)
+      const nodes = collectTextNodes(root, { includeCollapsedTail });
+      // Grouper par texte original (dédup) — une requête MT par chaîne unique
       const byText = new Map(); // original → [nodes]
       for (const node of nodes) {
         const orig = rememberOriginal(node);
+        if (onlyUntranslated && node.nodeValue !== orig) continue;
         if (!byText.has(orig)) byText.set(orig, []);
         byText.get(orig).push(node);
       }
@@ -1705,7 +1825,6 @@
             const instNodes = list.filter((n) => isTranslatableInstitutionZone(n));
             // Noms d’établissements : glossaire / règles locales uniquement —
             // jamais d’appel MT libre (gtx casse les noms propres, surtout en IU).
-            // Cégeps/collèges QC → College/Colegio ; jamais University/Universidad.
             if (instNodes.length && instNodes.length === list.length) {
               let preferred = preferredInstitutionLabel(orig, targetLang) || orig;
               preferred = demoteUniversityLabelIfCollege(orig, preferred, targetLang);
@@ -1718,14 +1837,24 @@
               return;
             }
 
-            let translated = await translateText(orig, targetLang);
+            // Glossaire UI avant MT (À la une, En bref, Par, Plus d'articles…)
+            const uiHit = preferredUiPhrase(String(orig).replace(/^\s+|\s+$/g, ''), targetLang);
+            let translated = uiHit != null
+              ? reapplyEdgeWhitespace(orig, uiHit)
+              : await translateText(orig, targetLang);
+
             if (translated && translated !== orig) {
               for (const node of list) {
                 if (!node.parentNode) continue;
-                // Filet si un nœud institution se retrouve dans un lot mixte
+                if (onlyUntranslated && node.nodeValue !== orig) continue;
+                // Filet institution seulement dans les zones dédiées — pas sur le corps
                 const out = isTranslatableInstitutionZone(node)
                   ? polishInstitutionTranslation(orig, translated, targetLang)
-                  : fixInstitutionMistranslations(orig, translated);
+                  : (
+                    isInstitutionLabelZone(node)
+                      ? fixInstitutionMistranslations(orig, translated, targetLang)
+                      : translated
+                  );
                 node.nodeValue = out;
               }
               ok += 1;
@@ -1753,6 +1882,23 @@
       translateTargetLang = null;
       document.documentElement.removeAttribute('data-translate-busy');
     }
+  }
+
+  /** Dépliage Suite du fil : MT uniquement les cartes nouvellement visibles. */
+  function onNewsTailExpand() {
+    if (activeMode === DEFAULT_MODE || translating) return;
+    const target = googCodeForMode(activeMode);
+    if (!target) return;
+    const tail = document.querySelector('.news-tail');
+    if (!tail) return;
+    // Traduire le corps entier du tail en onlyUntranslated (cartes déjà faites = skip)
+    const body = tail.querySelector('.news-tail-body') || tail;
+    translateDom(target, {
+      quiet: true,
+      root: body,
+      onlyUntranslated: true,
+      includeCollapsedTail: true,
+    });
   }
 
   function updateUi(mode) {
@@ -1903,10 +2049,26 @@
     if (!menu || !btn) return;
     menu.hidden = false;
     btn.setAttribute('aria-expanded', 'true');
+    // Réinitialiser le filtre à l’ouverture
+    const filter = menu.querySelector('#translate-menu-filter');
+    if (filter) {
+      filter.value = '';
+      filterMenuOptions(menu, '');
+    }
     // Double rAF : laisser le layout peindre le menu avant mesure
     requestAnimationFrame(() => {
       positionMenu();
-      requestAnimationFrame(positionMenu);
+      requestAnimationFrame(() => {
+        positionMenu();
+        // Focus filtre (liste longue) ou option active — pratique accessibilité
+        const active = menu.querySelector('.translate-menu__opt.is-active');
+        if (filter && window.innerWidth >= 480) {
+          filter.focus({ preventScroll: true });
+        } else {
+          active?.scrollIntoView({ block: 'nearest' });
+        }
+        active?.scrollIntoView({ block: 'nearest' });
+      });
     });
     bindMenuPositioning();
   }
@@ -1956,8 +2118,16 @@
     clearTimeout(mutateTimer);
     mutateTimer = window.setTimeout(() => {
       const target = googCodeForMode(activeMode);
-      if (target) translateDom(target, { quiet: true });
-    }, 450);
+      // Re-render news : ne retraduire que ce qui est encore à l’original
+      // (et hors overflow replié) — cache + glossaire UI font le reste.
+      if (target) {
+        translateDom(target, {
+          quiet: true,
+          onlyUntranslated: true,
+          includeCollapsedTail: false,
+        });
+      }
+    }, 400);
   }
 
   function startObserver() {
@@ -1997,7 +2167,22 @@
     if (!menu) return;
 
     const frag = document.createDocumentFragment();
+
+    // Filtre (liste longue) — pratique type combobox / listbox filtrable
+    const searchWrap = document.createElement('div');
+    searchWrap.className = 'translate-menu__search-wrap';
+    searchWrap.setAttribute('role', 'presentation');
+    searchWrap.innerHTML = ''
+      + '<label class="translate-menu__search-label" for="translate-menu-filter">'
+      + '<span class="sr-only">Filtrer les langues</span>'
+      + '</label>'
+      + '<input type="search" id="translate-menu-filter" class="translate-menu__search" '
+      + 'placeholder="Filtrer…" autocomplete="off" spellcheck="false" '
+      + 'aria-label="Filtrer les langues" enterkeyhint="search" />';
+    frag.appendChild(searchWrap);
+
     let lastGroup = '';
+    let groupEl = null;
 
     for (const id of MENU_ORDER) {
       const m = MODES[id];
@@ -2007,11 +2192,19 @@
       if (group !== lastGroup) {
         const groupLabel = GROUP_LABELS[group];
         if (groupLabel) {
+          groupEl = document.createElement('div');
+          groupEl.className = 'translate-menu__group';
+          groupEl.setAttribute('role', 'group');
+          groupEl.setAttribute('aria-label', groupLabel);
+          groupEl.dataset.group = group;
           const sep = document.createElement('div');
           sep.className = 'translate-menu__sep';
           sep.setAttribute('role', 'presentation');
           sep.innerHTML = `<span class="translate-menu__sep-label">${escapeHtml(groupLabel)}</span>`;
-          frag.appendChild(sep);
+          groupEl.appendChild(sep);
+          frag.appendChild(groupEl);
+        } else {
+          groupEl = null;
         }
         lastGroup = group;
       }
@@ -2019,21 +2212,78 @@
       const opt = document.createElement('button');
       opt.type = 'button';
       opt.setAttribute('role', 'option');
+      opt.id = `translate-opt-${id}`;
       opt.className = 'translate-menu__opt'
         + (id === DEFAULT_MODE ? ' is-active' : '')
         + (m.unavailable ? ' is-unavailable' : '');
       opt.dataset.mode = id;
+      opt.dataset.search = `${m.label} ${m.short || ''} ${m.hint || ''} ${id}`.toLowerCase();
       opt.setAttribute('aria-selected', id === DEFAULT_MODE ? 'true' : 'false');
       if (m.unavailable) {
         opt.setAttribute('aria-disabled', 'true');
         opt.title = m.title;
+      } else {
+        opt.title = m.title;
       }
-      opt.innerHTML = `<span class="translate-menu__name">${escapeHtml(m.label)}</span>`
+      // Endonyme (label) + code court en pastille + hint régional
+      const code = escapeHtml(m.short || id.toUpperCase());
+      opt.innerHTML = `<span class="translate-menu__row">`
+        + `<span class="translate-menu__name">${escapeHtml(m.label)}</span>`
+        + `<span class="translate-menu__code" aria-hidden="true">${code}</span>`
+        + `</span>`
         + `<span class="translate-menu__hint">${escapeHtml(m.hint || '')}</span>`;
-      frag.appendChild(opt);
+      (groupEl || frag).appendChild(opt);
     }
 
     menu.replaceChildren(frag);
+
+    const filter = menu.querySelector('#translate-menu-filter');
+    if (filter) {
+      filter.addEventListener('input', () => filterMenuOptions(menu, filter.value));
+      filter.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          focusMenuOption(menu, 1);
+        } else if (e.key === 'Escape') {
+          e.stopPropagation();
+          closeMenu();
+          document.getElementById('translate-toggle')?.focus();
+        }
+      });
+    }
+  }
+
+  function filterMenuOptions(menu, query = '') {
+    const q = String(query || '').trim().toLowerCase().normalize('NFD').replace(/\p{M}/gu, '');
+    const opts = menu.querySelectorAll('.translate-menu__opt');
+    let visibleCount = 0;
+    opts.forEach((opt) => {
+      const hay = (opt.dataset.search || '').normalize('NFD').replace(/\p{M}/gu, '');
+      const show = !q || hay.includes(q);
+      opt.hidden = !show;
+      if (show) visibleCount += 1;
+    });
+    // Masquer les groupes vides
+    menu.querySelectorAll('.translate-menu__group').forEach((g) => {
+      const any = g.querySelector('.translate-menu__opt:not([hidden])');
+      g.hidden = !any;
+    });
+    menu.dataset.filterEmpty = visibleCount === 0 ? '1' : '0';
+  }
+
+  function visibleMenuOptions(menu) {
+    return [...menu.querySelectorAll('.translate-menu__opt:not([hidden]):not([aria-disabled="true"])')];
+  }
+
+  function focusMenuOption(menu, delta = 1) {
+    const opts = visibleMenuOptions(menu);
+    if (!opts.length) return;
+    const active = document.activeElement;
+    let idx = opts.indexOf(active);
+    if (idx < 0) idx = opts.findIndex((o) => o.classList.contains('is-active'));
+    if (idx < 0) idx = 0;
+    else idx = (idx + delta + opts.length) % opts.length;
+    opts[idx].focus();
   }
 
   function bindUi() {
@@ -2055,11 +2305,38 @@
 
     menu.addEventListener('click', (e) => {
       const opt = e.target.closest('[data-mode]');
-      if (!opt || !menu.contains(opt)) return;
+      if (!opt || !menu.contains(opt) || opt.getAttribute('aria-disabled') === 'true') return;
       e.stopPropagation();
       const mode = opt.dataset.mode;
       closeMenu();
       if (mode) applyMode(mode, { persist: true, fromUserClick: true });
+    });
+
+    // Navigation clavier listbox (WAI-ARIA)
+    menu.addEventListener('keydown', (e) => {
+      if (menu.hidden) return;
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        focusMenuOption(menu, 1);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        focusMenuOption(menu, -1);
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        visibleMenuOptions(menu)[0]?.focus();
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        const opts = visibleMenuOptions(menu);
+        opts[opts.length - 1]?.focus();
+      } else if (e.key === 'Enter' || e.key === ' ') {
+        const opt = e.target.closest?.('[data-mode]');
+        if (opt && menu.contains(opt) && opt.getAttribute('aria-disabled') !== 'true') {
+          e.preventDefault();
+          const mode = opt.dataset.mode;
+          closeMenu();
+          if (mode) applyMode(mode, { persist: true, fromUserClick: true });
+        }
+      }
     });
 
     document.addEventListener('click', (e) => {
@@ -2110,6 +2387,8 @@
     detectBrowserAutoMode,
     hasUserPreference,
     translateText,
+    onNewsTailExpand,
+    scheduleRetranslate,
     DEFAULT_MODE,
     MODES,
   };
