@@ -75,7 +75,13 @@ function tagFast(block, name) {
 }
 
 function sanitizeTitle(title = '') {
-  return stripHtml(String(title)).replace(/\s+/g, ' ').trim();
+  let t = stripHtml(String(title)).replace(/\s+/g, ' ').trim();
+  t = t.replace(/\s*[–—|-]\s*Le\s+D[eé]lit\s*$/i, '').trim();
+  t = t.replace(/\s*[–—|-]\s*Quartier\s+Libre\s*$/i, '').trim();
+  t = t.replace(/\s*[–—|-]\s*Montréal\s+Campus\s*$/i, '').trim();
+  // Éviter « Mc Gill » (séparation erronée de McGill)
+  t = t.replace(/\bMc\s+Gill\b/g, 'McGill');
+  return t;
 }
 
 function truncateExcerpt(text = '', max = 280) {
@@ -85,6 +91,58 @@ function truncateExcerpt(text = '', max = 280) {
   const lastSpace = cut.lastIndexOf(' ');
   if (lastSpace > max * 0.55) cut = cut.slice(0, lastSpace);
   return cut.trim();
+}
+
+/** Footer Yoast / Rank Math collé aux descriptions RSS (Le Délit, etc.). */
+function stripExcerptBoilerplate(text = '') {
+  let s = stripHtml(String(text)).replace(/\s+/g, ' ').trim();
+  s = s.replace(/\s*L['’]article\b[\s\S]*?est apparu en premier sur[\s\S]*$/i, '');
+  s = s.replace(/\s*The\s+post\b[\s\S]*?appeared first on[\s\S]*$/i, '');
+  const li = s.search(/\sL['’]article\s/);
+  if (li > 30) s = s.slice(0, li);
+  return s.replace(/\s+/g, ' ').trim();
+}
+
+/** WP has-drop-cap : « L e 18… » / « L 'identité » dans content:encoded. */
+function fixDropCapSpacing(text = '') {
+  return String(text)
+    .replace(/^([\p{Lu}])\s+([''’])/u, '$1$2')
+    .replace(/^([\p{Lu}])\s+([\p{Ll}])/u, '$1$2');
+}
+
+function firstParagraphFromHtml(html = '') {
+  if (!html) return '';
+  const decoded = decodeEntities(html);
+  const paragraphs = decoded.match(/<p[^>]*>([\s\S]*?)<\/p>/gi) || [];
+  for (const p of paragraphs) {
+    let text = fixDropCapSpacing(stripExcerptBoilerplate(stripHtml(p)));
+    if (text.length < 40) continue;
+    if (/^(?:Par|By)\s+[\p{Lu}]/u.test(text) && text.length < 80) continue;
+    if (/^(?:Photo|Crédit|Credit)\s*:/i.test(text)) continue;
+    return text;
+  }
+  return '';
+}
+
+/**
+ * Préférer content:encoded (vrai 1er paragraphe) à la description RSS
+ * souvent limitée à un teaser + « L'article … est apparu en premier sur … ».
+ */
+function pickExcerpt(block) {
+  const descText = stripExcerptBoilerplate(tagFast(block, 'description') || '');
+  const content = tagFast(block, 'content:encoded') || tagFast(block, 'content') || '';
+  const contentLead = firstParagraphFromHtml(content)
+    || fixDropCapSpacing(stripExcerptBoilerplate(content));
+
+  let excerpt = '';
+  if (contentLead && contentLead.length >= Math.max(descText.length + 20, 100)) {
+    excerpt = contentLead;
+  } else if (descText.length >= 40) {
+    excerpt = descText;
+  } else {
+    excerpt = contentLead || descText;
+  }
+  return truncateExcerpt(fixDropCapSpacing(stripExcerptBoilerplate(excerpt)), 280);
 }
 
 function firstImage(block) {
@@ -108,7 +166,8 @@ function parseFeed(xml) {
   for (const part of parts) {
     const itemStart = part.toLowerCase().lastIndexOf('<item');
     if (itemStart === -1) continue;
-    const block = part.slice(itemStart, itemStart + 20_000);
+    // 40k : laisser entrer le début de content:encoded (teaser description insuffisant)
+    const block = part.slice(itemStart, itemStart + 40_000);
     if (!/<item[\s>]/i.test(block.slice(0, 80))) continue;
 
     const title = sanitizeTitle(tagFast(block, 'title'));
@@ -120,9 +179,7 @@ function parseFeed(xml) {
     const dateRaw = tagFast(block, 'pubDate') || tagFast(block, 'dc:date')
       || tagFast(block, 'published') || tagFast(block, 'updated');
     const date = dateRaw ? new Date(dateRaw) : null;
-    // description courte seulement — pas de content:encoded
-    const desc = tagFast(block, 'description') || '';
-    const excerpt = truncateExcerpt(desc, 280);
+    const excerpt = pickExcerpt(block);
     let author = expandAuthorName(tagFast(block, 'dc:creator') || tagFast(block, 'author'));
     // Ne pas appeler extractBylineFromText sur du HTML long (regex fragile)
     if (channelTitle && author && author.toLowerCase() === channelTitle.toLowerCase()) {

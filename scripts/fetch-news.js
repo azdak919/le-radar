@@ -345,9 +345,11 @@ function sanitizeTitle(title = '') {
   t = fixCamelGlue(t).replace(/\s+/g, ' ').trim();
   // fixCamelGlue coupe « UdeM » → « Ude M » (e minuscule + M majuscule).
   t = t.replace(/\bUde\s+M\b/g, 'UdeM').replace(/\bUde\s+S\b/g, 'UdeS');
+  t = t.replace(/\bMc\s+Gill\b/g, 'McGill');
   // Retirer les suffixes SEO Rank Math / Yoast des og:title
   t = t.replace(/\s*[–—|-]\s*Montréal\s+Campus\s*$/i, '').trim();
   t = t.replace(/\s*[–—|-]\s*Quartier\s+Libre\s*$/i, '').trim();
+  t = t.replace(/\s*[–—|-]\s*Le\s+D[eé]lit\s*$/i, '').trim();
   const series = t.match(MC_SERIES_LABEL);
   if (series) {
     const label = series[1].trim();
@@ -372,25 +374,52 @@ function isGenericAuthor(name = '', lang = 'fr') {
   return false;
 }
 
+/** Footer Yoast collé aux descriptions RSS (« L'article … est apparu en premier sur … »). */
+function stripExcerptBoilerplate(text = '') {
+  let s = String(text).replace(/\s+/g, ' ').trim();
+  s = s.replace(/\s*L['’]article\b[\s\S]*?est apparu en premier sur[\s\S]*$/i, '');
+  s = s.replace(/\s*The\s+post\b[\s\S]*?appeared first on[\s\S]*$/i, '');
+  const li = s.search(/\sL['’]article\s/);
+  if (li > 30) s = s.slice(0, li);
+  return s.replace(/\s+/g, ' ').trim();
+}
+
+/** WP has-drop-cap : première lettre détachée dans le flux (« L e 18… »). */
+function fixDropCapSpacing(text = '') {
+  return String(text)
+    .replace(/^([\p{Lu}])\s+([''’])/u, '$1$2')
+    .replace(/^([\p{Lu}])\s+([\p{Ll}])/u, '$1$2');
+}
+
+function normalizeExcerptText(text = '') {
+  return fixDropCapSpacing(stripExcerptBoilerplate(stripHtml(text)));
+}
+
 function isJunkExcerpt(text = '') {
-  const t = String(text).replace(/\s+/g, ' ').trim();
+  const t = normalizeExcerptText(text);
   if (!t || t.length < 24) return true;
   if (/^\[?\s*(?:read more|lire la suite|continue reading)/i.test(t)) return true;
-  if (/^L['’]article\b/i.test(t) && t.length < 80) return true;
+  if (/^L['’]article\b/i.test(t) && t.length < 100) return true;
   return false;
+}
+
+/** Teaser RSS trop court pour servir de brève (Le Délit : ~40–90 car. hors footer). */
+function isThinExcerpt(text = '') {
+  if (isJunkExcerpt(text)) return true;
+  return normalizeExcerptText(text).length < 120;
 }
 
 function firstParagraphFromHtml(html = '') {
   const decoded = decodeEntities(html);
   const paragraphs = decoded.match(/<p[^>]*>([\s\S]*?)<\/p>/gi) || [];
   for (const p of paragraphs) {
-    const text = stripHtml(p);
+    const text = normalizeExcerptText(p);
     if (text.length < 40) continue;
     if (/^(?:Par|By)\s+[\p{Lu}]/u.test(text) && text.length < 80) continue;
     if (/^(?:Photo|Crédit|Credit)\s*:/i.test(text)) continue;
     return text;
   }
-  const fallback = stripHtml(decoded);
+  const fallback = normalizeExcerptText(decoded);
   return fallback.length >= 40 ? fallback : '';
 }
 
@@ -398,22 +427,22 @@ function pickExcerpt(block) {
   const description = tag(block, 'description');
   const content = tag(block, 'content:encoded') || tag(block, 'content') || tag(block, 'summary');
 
-  const descText = stripHtml(description);
-  const contentLead = firstParagraphFromHtml(content) || stripHtml(content);
+  const descText = normalizeExcerptText(description);
+  const contentLead = firstParagraphFromHtml(content) || normalizeExcerptText(content);
 
   let excerpt = '';
-  if (!isJunkExcerpt(descText)) excerpt = descText;
-  if (isJunkExcerpt(excerpt) || (contentLead.length > excerpt.length + 30)) {
-    if (!isJunkExcerpt(contentLead)) excerpt = contentLead;
+  // Préférer le vrai lead content:encoded au teaser description (souvent < 100 car.).
+  if (contentLead && contentLead.length >= Math.max(descText.length + 20, 100)) {
+    excerpt = contentLead;
+  } else if (!isJunkExcerpt(descText)) {
+    excerpt = descText;
+  } else if (!isJunkExcerpt(contentLead)) {
+    excerpt = contentLead;
+  } else {
+    excerpt = contentLead || descText;
   }
-  if (!excerpt && descText) excerpt = descText;
 
-  excerpt = excerpt
-    .replace(/\s*L['’]article\b[\s\S]*?est apparu en premier sur[\s\S]*$/i, '')
-    .replace(/\s+/g, ' ')
-    .trim();
-
-  return truncateExcerpt(excerpt, 280);
+  return truncateExcerpt(normalizeExcerptText(excerpt), 280);
 }
 
 function authorKeyLoose(name = '') {
@@ -698,7 +727,8 @@ function metaContent(html, key) {
 }
 
 function needsEnrichment(item, feedDefaults = new Map(), sourceByName = new Map()) {
-  const thinExcerpt = !item.excerpt || isJunkExcerpt(item.excerpt);
+  // isThinExcerpt : teaser RSS (ex. Le Délit) trop court → recharger le 1er § page.
+  const thinExcerpt = !item.excerpt || isJunkExcerpt(item.excerpt) || isThinExcerpt(item.excerpt);
   const authorHints = getBotHints(sourceByName.get(item.source), 'authors');
   const missingAuthor = !item.author || isGenericAuthor(item.author);
   const needsAuthorPage = needsPageAuthorVerification(item, feedDefaults, authorHints);
@@ -764,20 +794,29 @@ async function enrichItem(item, sourceByName = new Map()) {
     if (needsUpgrade) next.title = pageTitle;
   }
 
-  if (!next.excerpt || isJunkExcerpt(next.excerpt)) {
+  // Teaser RSS trop court (Le Délit, etc.) : recharger un vrai paragraphe.
+  if (!next.excerpt || isJunkExcerpt(next.excerpt) || isThinExcerpt(next.excerpt)) {
     const candidates = [
+      firstParagraphFromHtml(body),
       metaContent(slim, 'og:description'),
       metaContent(slim, 'description'),
       metaContent(slim, 'twitter:description'),
-      firstParagraphFromHtml(body),
-    ].map((s) => stripHtml(s)).filter((s) => !isJunkExcerpt(s));
+    ].map((s) => normalizeExcerptText(s)).filter((s) => !isJunkExcerpt(s));
+
+    // Garder le plus substantiel (corps d'article > meta teaser).
+    candidates.sort((a, b) => b.length - a.length);
 
     if (candidates.length) {
       let excerpt = candidates[0];
       const byline = extractBylineFromText(excerpt);
       if (byline.author && (!next.author || isGenericAuthor(next.author))) next.author = byline.author;
       if (byline.body.length >= 24) excerpt = byline.body;
-      next.excerpt = truncateExcerpt(excerpt, 280);
+      const upgraded = truncateExcerpt(normalizeExcerptText(excerpt), 280);
+      if (upgraded && upgraded.length > normalizeExcerptText(next.excerpt || '').length) {
+        next.excerpt = upgraded;
+      } else if (!next.excerpt || isJunkExcerpt(next.excerpt)) {
+        next.excerpt = upgraded;
+      }
     }
   }
 
