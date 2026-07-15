@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-15T14:53:07.947Z",
+  "updatedAt": "2026-07-15T16:24:42.944Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T14:52:44.778Z"
+      "checkedAt": "2026-07-15T16:24:19.716Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
-        "source": "api-live",
-        "start": "05:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "le-seismix"
-      },
-      "next": {
         "title": "Club classique",
         "source": "api-live",
         "start": "07:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/363986.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "club-classique"
       },
+      "next": {
+        "title": "La collation",
+        "source": "api-live",
+        "start": "09:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364379.mp3",
+        "slug": "mix-collation"
+      },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Club classique",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-15T14:52:47.098Z"
+      "checkedAt": "2026-07-15T16:24:22.142Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Sleepy King/Terminal 5",
+        "title": "If You Got Ears",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "12:00",
+        "end": "14:00"
       },
       "next": {
-        "title": "Free City Radio",
+        "title": "Radyo Kapwa",
         "source": "api-live",
-        "start": "11:00",
-        "end": "11:30"
+        "start": "14:00",
+        "end": "15:00"
       },
       "track": "",
-      "showTitle": "The Sleepy King/Terminal 5",
+      "showTitle": "If You Got Ears",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T14:52:50.065Z"
+      "checkedAt": "2026-07-15T16:24:25.101Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
+        "title": "North-South Hockey",
         "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/north-south-hockey"
       },
       "next": {
-        "title": "Unheard Of",
+        "title": "I Think You Might Like This",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/unheard-of"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/i-think-you-might-like-this"
       },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "North-South Hockey",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T14:53:03.833Z"
+      "checkedAt": "2026-07-15T16:24:38.942Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,28 +129,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T14:53:04.944Z"
+      "checkedAt": "2026-07-15T16:24:39.962Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Beautiful Snow (Feat. Dave Hill & Chip$)",
+        "title": "Cicadas",
         "source": "api-live",
-        "host": "Nicholas Craven & Boldy James",
-        "url": "https://www.choq.ca/assets/playlist/palmares-site-web.jpg"
+        "host": "Satya",
+        "url": "https://www.choq.ca/assets/playlist/internationale.jpg"
       },
       "next": null,
-      "track": "Nicholas Craven & Boldy James - Beautiful Snow (Feat. Dave Hill & Chip$)",
-      "showTitle": "Beautiful Snow (Feat. Dave Hill & Chip$)",
-      "host": "Nicholas Craven & Boldy James",
+      "track": "Satya - Cicadas",
+      "showTitle": "Cicadas",
+      "host": "Satya",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T14:53:07.596Z"
+      "checkedAt": "2026-07-15T16:24:42.593Z"
     }
   }
 }
