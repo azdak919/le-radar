@@ -857,11 +857,22 @@
     },
   };
 
+  /** Langues où un calque FR figé n’aide pas — laisser gtx tenter. */
+  function prefersMachineUi(lang = '') {
+    const l = institutionLangKey(lang);
+    return /^(iu|ar|fa|he|ur|zh|hi|pa|bn|ta|te|mr|gu|kn|ml|ko|ja|th|am|hy|ka|my|km|lo|si|ne|bo)$/.test(l);
+  }
+
   function uiPhraseLookup(core = '', targetLang = '') {
     const entry = UI_PHRASES[core];
     if (!entry) return null;
     const lang = institutionLangKey(targetLang);
-    if (entry[lang] != null) return entry[lang];
+    if (entry[lang] != null) {
+      // Ancien filet « garder le FR en IU » : équivaut à ne pas traduire.
+      // Pour les scripts lointains, on laisse plutôt le MT travailler.
+      if (prefersMachineUi(lang) && entry[lang] === core) return null;
+      return entry[lang];
+    }
     if (entry.default != null) return entry.default;
     return null;
   }
@@ -1586,14 +1597,18 @@
       return label;
     }
 
-    // 4) Universités — jamais de MT libre (voir formatUniversityLabel)
+    // 4) Universités — mapping type (Universidad / University…) sans MT
     if (isUniversityInstitutionName(key)) {
-      return formatUniversityLabel(key, lang);
+      const mapped = formatUniversityLabel(key, lang);
+      // Si le mapping n’a rien changé (ex. IU, hi, ar) → null pour laisser gtx
+      // dans les zones pastilles / meta (sinon les Sources restent en français).
+      if (mapped && mapped !== key) return mapped;
+      if (prefersMachineUi(lang) || !INSTITUTION_TYPE_LOCALIZE.has(lang)) return null;
+      return mapped || key;
     }
 
-    // 5) Libellé d’établissement non reconnu : conserver l’original
-    //    (mieux qu’un calque gtx en syllabiques ou autre script).
-    return key;
+    // 5) Non reconnu : MT autorisé hors FR/EN (null = appel gtx côté translateDom)
+    return null;
   }
 
   /** Filet de casse après gtx (ex. ES : « universidad laval »). */
@@ -1823,18 +1838,21 @@
         await Promise.all(batch.map(async ([orig, list]) => {
           try {
             const instNodes = list.filter((n) => isTranslatableInstitutionZone(n));
-            // Noms d’établissements : glossaire / règles locales uniquement —
-            // jamais d’appel MT libre (gtx casse les noms propres, surtout en IU).
+            // Noms d’établissements : glossaire / mapping type d’abord ;
+            // si pas de mapping (IU, ar, …) → MT + filet collège/université.
             if (instNodes.length && instNodes.length === list.length) {
-              let preferred = preferredInstitutionLabel(orig, targetLang) || orig;
-              preferred = demoteUniversityLabelIfCollege(orig, preferred, targetLang);
-              for (const node of list) {
-                if (node.parentNode) {
-                  node.nodeValue = reapplyEdgeWhitespace(orig, preferred);
+              let preferred = preferredInstitutionLabel(orig, targetLang);
+              if (preferred) {
+                preferred = demoteUniversityLabelIfCollege(orig, preferred, targetLang);
+                for (const node of list) {
+                  if (node.parentNode) {
+                    node.nodeValue = reapplyEdgeWhitespace(orig, preferred);
+                  }
                 }
+                ok += 1;
+                return;
               }
-              ok += 1;
-              return;
+              // Fall through to MT for script languages / unmapped labels
             }
 
             // Glossaire UI avant MT (À la une, En bref, Par, Plus d'articles…)
@@ -2097,6 +2115,7 @@
 
     if (mode === DEFAULT_MODE) {
       restoreOriginals();
+      notifyDisplayRefresh();
       if (fromUserClick) notify('Original — articles dans leur langue, sans traduction');
       return;
     }
@@ -2110,7 +2129,17 @@
     await loadProtectedMediaNames();
     // Toujours repartir des originaux avant de re-traduire
     restoreOriginals();
+    // Réaligner pastilles sources (marquees) sur les originaux avant MT
+    notifyDisplayRefresh();
     await translateDom(target, { quiet: !fromUserClick && !hasUserPreference() });
+    // Marquees / libellés « Plus de sources » : reposer les originaux localisés
+    // puis laisser un second passage MT pour ce qui n’a pas de glossaire.
+    notifyDisplayRefresh();
+    await translateDom(target, {
+      quiet: true,
+      onlyUntranslated: true,
+      includeCollapsedTail: false,
+    });
   }
 
   function scheduleRetranslate() {
@@ -2381,6 +2410,35 @@
     init();
   }
 
+  /**
+   * Libellés à poser depuis app.js (marquees pastilles, « Plus de sources »…)
+   * pour rester alignés avec la langue active sans écraser le MT ensuite.
+   */
+  function displayUiText(original = '') {
+    const raw = String(original ?? '');
+    const tl = activeMode === DEFAULT_MODE ? null : googCodeForMode(activeMode);
+    if (!tl) return raw;
+    const hit = preferredUiPhrase(raw.replace(/\s+/g, ' ').trim(), tl);
+    return hit != null ? hit : raw;
+  }
+
+  function displayInstitutionLabel(original = '') {
+    const raw = String(original ?? '').replace(/\s+/g, ' ').trim();
+    if (!raw) return raw;
+    const tl = activeMode === DEFAULT_MODE ? null : googCodeForMode(activeMode);
+    if (!tl || !shouldLocalizeInstitutions(tl)) return raw;
+    const hit = preferredInstitutionLabel(raw, tl);
+    return hit != null ? hit : raw;
+  }
+
+  function notifyDisplayRefresh() {
+    try {
+      window.dispatchEvent(new CustomEvent('radar:translate-mode', {
+        detail: { mode: activeMode, lang: googCodeForMode(activeMode) },
+      }));
+    } catch { /* ignore */ }
+  }
+
   window.RadarTranslate = {
     getMode,
     applyMode,
@@ -2389,6 +2447,9 @@
     translateText,
     onNewsTailExpand,
     scheduleRetranslate,
+    displayUiText,
+    displayInstitutionLabel,
+    notifyDisplayRefresh,
     DEFAULT_MODE,
     MODES,
   };
