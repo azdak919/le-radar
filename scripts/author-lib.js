@@ -245,12 +245,20 @@ function focusHtmlForAuthorExtraction(html = '', maxLen = 100_000) {
     if (chunks.length >= 8) break;
   }
 
+  // Elementor post-info (Quartier Libre) — byline « Par … » hors du corps article.
+  for (const m of html.matchAll(
+    /class=["'][^"']*\belementor-post-info\b[^"']*["'][\s\S]{0,2500}/gi,
+  )) {
+    chunks.push(m[0]);
+    if (chunks.length >= 12) break;
+  }
+
   // Liens rel=author isolés (thèmes WP classiques)
   for (const m of html.matchAll(
     /<a[^>]*\brel=["'][^"']*\bauthor\b[^"']*["'][^>]*>[\s\S]{0,200}?<\/a>/gi,
   )) {
     chunks.push(m[0]);
-    if (chunks.length >= 12) break;
+    if (chunks.length >= 16) break;
   }
 
   // Corps d'article (byline « Name – Role » en tête)
@@ -296,6 +304,41 @@ function authorsFromTdPostAuthor(html = '') {
     const n = expandAuthorName(m[1]);
     if (n) names.push(n);
   }
+  return [...new Set(names)];
+}
+
+/**
+ * Elementor post-info (Quartier Libre et thèmes Elementor) :
+ *   <span class="… elementor-post-info__item--type-custom">
+ *   Par <a rel="author" href="…/author/samuel-roy/">Samuel Roy</a></span>
+ *   ou texte nu : Par Emilie Rizkallah / Par Bérénice Lemarié
+ *
+ * Prioritaire sur le JSON-LD Rank Math (souvent le compte WP technique,
+ * ex. Carla Roche sur tous les billets QL).
+ */
+function authorsFromElementorPar(html = '') {
+  if (!html) return [];
+  const names = [];
+
+  // Item custom Elementor « Par … » / « By … » (lien ou texte).
+  for (const m of html.matchAll(
+    /elementor-post-info__item--type-custom[^>]*>[\s\S]{0,500}?(?:Par|By)\s+(?:<a\b[^>]*>([\s\S]*?)<\/a>|([^<]{2,90}))/gi,
+  )) {
+    const raw = stripHtml(m[1] || m[2] || '');
+    const n = expandAuthorName(raw);
+    if (n && !isJunkAuthorName(n) && !isEditorialPlaceholder(n)) names.push(n);
+  }
+
+  // Repli : bloc post-info entier avec « Par » + lien (rel=author ou /author/).
+  if (!names.length) {
+    for (const m of html.matchAll(
+      /class=["'][^"']*\belementor-post-info\b[^"']*["'][\s\S]{0,1200}?(?:Par|By)\s+<a\b[^>]*>([\s\S]*?)<\/a>/gi,
+    )) {
+      const n = expandAuthorName(stripHtml(m[1]));
+      if (n && !isJunkAuthorName(n) && !isEditorialPlaceholder(n)) names.push(n);
+    }
+  }
+
   return [...new Set(names)];
 }
 
@@ -759,6 +802,20 @@ function authorFromArticleHtml(html = '', lang = 'fr', hints = {}, sourceName = 
     candidates.push({ author: joined, trust: 108 });
   }
 
+  // Elementor « Par Samuel Roy » (Quartier Libre) — bat le schema Rank Math
+  // (compte WP technique Carla Roche sur tous les billets).
+  const elementorAuthors = authorsFromElementorPar(html);
+  if (elementorAuthors.length) {
+    const joined = joinAuthorNames(elementorAuthors, l);
+    const early = expandAuthorName(joined, l) || joined;
+    if (early && !isEditorialPlaceholder(early, l)) {
+      if (!sourceKey || normAuthorKey(early) !== sourceKey) {
+        return early;
+      }
+    }
+    candidates.push({ author: joined, trust: 109 });
+  }
+
   // The Link — byline EE avant tout (évite de confondre « Photo Racha Rais »
   // en légende avec l'absence d'auteur page).
   const linkByline = authorsFromLinkByline(html);
@@ -1156,6 +1213,7 @@ module.exports = {
   authorFromBodyCredits,
   authorFromArticleHtml,
   authorsFromStrongRoleByline,
+  authorsFromElementorPar,
   authorsFromTribuneAuthor,
   authorsFromHintSelectors,
   focusHtmlForAuthorExtraction,
