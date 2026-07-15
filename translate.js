@@ -538,7 +538,8 @@
    *  - Noms de **sources** (médias) → jamais (filter-btn__name, article-source)
    *  - **Auteurs** d’articles → jamais (article-author)
    *  - **Crédits photo** (photographes, « Crédit photo : … ») → jamais
-   *  - **Institutions** (article-inst, filter-btn__inst) → localisées hors FR/EN/Original
+   *  - **Institutions** (article-inst, filter-btn__inst, …) → localisées
+   *    (hors mode Original / FR source) : Universidad…, McGill University, College…
    *  - Libellés UI (« Par », « À la une », « Toutes les sources ») → traduits
    */
   const SKIP_CLASS_RE = /\b(?:notranslate|article-source|article-author|filter-btn__name|article-media-credit(?:__creator)?)\b/;
@@ -1060,13 +1061,14 @@
   let translateTargetLang = null;
 
   /**
-   * Localiser les noms d’établissements seulement hors Original / FR / EN.
-   * (Original = pas de traduction ; FR/EN = libellés d’origine tels quels.)
+   * Localiser les noms d’établissements hors Original / FR.
+   * EN inclus (ex. Université McGill → McGill University, Cégep → College).
+   * FR = langue source de l’UI ; Original = aucune localisation.
    */
   function shouldLocalizeInstitutions(targetLang = translateTargetLang) {
     if (!targetLang) return false;
     const lang = institutionLangKey(targetLang);
-    if (!lang || lang === 'fr' || lang === 'en') return false;
+    if (!lang || lang === 'fr') return false;
     return true;
   }
 
@@ -1094,12 +1096,12 @@
     if (!t) return false;
     if (isProtectedMediaName(t)) return true;
 
-    // FR / EN / Original : jamais toucher aux libellés d’établissement
+    // Original / FR : ne pas localiser les établissements
     if (isInstitutionLabelZone(node) && !shouldLocalizeInstitutions()) {
       return true;
     }
 
-    // Autres langues : autoriser la trad dans les zones institution
+    // Hors FR : autoriser la localisation dans les zones institution
     if (isProtectedInstitutionName(t)) {
       if (isTranslatableInstitutionZone(node)) return false;
       return true;
@@ -1567,12 +1569,20 @@
   }
 
   function preferredInstitutionLabel(original = '', targetLang = '') {
-    // Pas de glossaire / mapping en FR, EN ou Original
+    // Pas de glossaire / mapping en FR ou Original
     if (!shouldLocalizeInstitutions(targetLang)) return null;
 
     const key = String(original || '').replace(/\s+/g, ' ').trim();
     if (!key) return null;
     const lang = institutionLangKey(targetLang);
+
+    // Acronymes courts (UdeM, McGill, Dawson…) : neutres — ne pas MT / étendre.
+    // La localisation porte sur les formes longues « Université … », « Cégep … ».
+    if (/^(?:UQAM|UdeM|ULaval|UdeS|UQTR|UQAC|UQAR|UQO|UQAT|CVM|McGill|Concordia|Dawson|Poly)$/i.test(key)
+      || /^Poly\s+Montr[eé]al$/i.test(key)
+      || /^Bishop'?s$/i.test(key)) {
+      return key;
+    }
 
     // Ordre critique : cégep/collège AVANT université, pour ne jamais
     // promouvoir un collège québécois en « University / Universidad ».

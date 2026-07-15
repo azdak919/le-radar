@@ -797,16 +797,18 @@ function isTunerDialPhoneLayout() {
 /** Institution affichée dans le syntoniseur : abrégée au téléphone, complète en tablette. */
 function tunerDialInstitutionLabel(radio) {
   if (!radio) return '';
-  if (isTunerDialPhoneLayout()) {
-    return shortInstitution(radio.institution, radio.type);
-  }
-  return tunerInstitutionLabel(radio.institution);
+  const raw = isTunerDialPhoneLayout()
+    ? shortInstitution(radio.institution, radio.type)
+    : tunerInstitutionLabel(radio.institution);
+  // Forme longue localisable (EN/ES…) ; acronymes restent neutres.
+  return adaptRadarInstitutionLabel(raw);
 }
 
 /** Ligne 1 du syntoniseur (vue compacte) : « poste · établissement ». */
 function tunerDialTitleLine(radio) {
   if (!radio) return tunerSubMeta || 'Radios étudiantes en direct';
   const inst = tunerDialInstitutionLabel(radio);
+  // Nom du poste (média) intact · institution localisable
   return inst ? `${radio.name} · ${inst}` : radio.name;
 }
 
@@ -821,7 +823,7 @@ function isDialCompactLayout() {
  */
 function dialCompactMetaLineForRadio(radio) {
   if (!radio) return '';
-  if (isExternalListen(radio)) return 'Site externe';
+  if (isExternalListen(radio)) return adaptRadarUiText('Site externe');
   return String(radio.frequency || '').trim() || 'Web';
 }
 
@@ -1706,7 +1708,7 @@ function applyFilterInstMarquees() {
     }
     const { institution, type } = sourceInfo(src);
     const instLabel = filterSourceInstitutionLabel(institution, type, src);
-    // Établissement : localisé hors FR/EN ; les noms de médias restent notranslate.
+    // Établissement : localisable (hors FR/Original) ; médias restent notranslate.
     applyMarquee(instEl, adaptRadarInstitutionLabel(instLabel || ''));
   });
 }
@@ -1881,7 +1883,7 @@ function selectStation(id, { autoplay = false, openExternal = false } = {}) {
   const playable = getPlayableStream(radio);
   const external = isExternalListen(radio);
 
-  const inst = tunerInstitutionLabel(radio.institution);
+  const inst = adaptRadarInstitutionLabel(tunerInstitutionLabel(radio.institution));
   if (isDialCompactLayout()) {
     // Ligne 1 = poste · établissement ; ligne 2 initialisée en méta (fréquence).
     // syncTunerSubRotate / renderTunerNowAir branche la rotation méta ↔ antenne.
@@ -1892,8 +1894,9 @@ function selectStation(id, { autoplay = false, openExternal = false } = {}) {
     applyMarquee(TUNER_SUB, metaLine);
   } else {
     setTunerNameText(radio.name);
+    const siteExt = adaptRadarUiText('Site externe');
     setTunerSubText(external
-      ? `Site externe · ${inst}`
+      ? `${siteExt} · ${inst}`
       : `${radio.frequency} · ${inst}`);
   }
 
@@ -2722,10 +2725,9 @@ for (const [full, acr] of Object.entries(INSTITUTION_ACRONYMS)) {
 
 /**
  * Capitalisation affichage des types d'établissement.
- * Les libellés d'institution ne sont pas traduits (voir translate.js) ;
+ * Les libellés d'institution sont localisables hors FR/Original (translate.js) ;
  * ce filet corrige aussi une casse abîmée si un moteur externe intervient
- * (ex. gtx ES : « universidad laval » → Université Laval d'origine, ou
- * « Universidad … » si le nom était déjà hispanisé).
+ * (ex. gtx ES : « universidad laval » → « Universidad Laval »).
  */
 function formatInstitutionDisplay(name = '') {
   if (!name) return '';
@@ -2841,8 +2843,8 @@ function articleInstitutionMetaHtml(name = '', type = '', role = 'standard') {
   // Nom complet seulement pour la une et les vedettes (plus d’espace).
   // En bref + Suite du fil : toujours acronyme / forme courte.
   const spacious = role === 'lead' || role === 'feature';
-  // Pas de notranslate : hors FR/EN/Original, translate.js localise les établissements.
-  // En Original / FR / EN, ils restent protégés (libellés d’origine).
+  // Pas de notranslate : hors FR/Original, translate.js localise les établissements
+  // (ES/PT/EN… : Universidad…, McGill University, College…).
   if (spacious && full && full !== short) {
     return `<span class="article-inst">`
       + `<span class="article-inst__full">${escapeHtml(full)}</span>`
@@ -2955,7 +2957,7 @@ function updateFiltersCompactBar() {
       text.appendChild(document.createTextNode(' · '));
       const instSpan = document.createElement('span');
       instSpan.className = 'filters-compact__inst';
-      instSpan.textContent = instLabel;
+      instSpan.textContent = adaptRadarInstitutionLabel(instLabel);
       text.appendChild(instSpan);
     }
   }
@@ -3017,6 +3019,25 @@ function onRadarTranslateModeChange() {
   applyFilterInstMarquees();
   syncFiltersPanel();
   scheduleFilterMarqueeRefresh();
+  // Reposer l’institution du syntoniseur dans la langue active
+  if (currentStation) {
+    const radio = currentStation;
+    const external = isExternalListen(radio);
+    const inst = adaptRadarInstitutionLabel(tunerInstitutionLabel(radio.institution));
+    if (isDialCompactLayout()) {
+      setTunerNameText(tunerDialTitleLine(radio));
+      const metaLine = dialCompactMetaLineForRadio(radio);
+      tunerSubMeta = metaLine;
+      TUNER_SUB?.parentElement?.classList.toggle('is-empty', !metaLine);
+      if (!tunerSubRotateShowAir) applyMarquee(TUNER_SUB, metaLine);
+    } else {
+      setTunerNameText(radio.name);
+      const siteExt = adaptRadarUiText('Site externe');
+      setTunerSubText(external
+        ? `${siteExt} · ${inst}`
+        : `${radio.frequency} · ${inst}`);
+    }
+  }
 }
 
 if (typeof window !== 'undefined') {
