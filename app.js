@@ -3587,9 +3587,14 @@ function syncNewsTailCollapse({ preserveExpanded = true } = {}) {
   const cards = getNewsTailCards(tail);
   const overflow = cards.length > NEWS_TAIL_VISIBLE;
 
-  // Plus de display:none : le peek montre les titres de la rangée d’après
-  cards.forEach((el) => {
+  // Overflow : pas de display:none (peek des titres) — marque pour le module
+  // de traduction (ne pas MT les cartes encore repliées).
+  cards.forEach((el, i) => {
     el.classList.remove('news-tail-article--overflow');
+    const hidden = overflow && !newsTailExpanded && i >= NEWS_TAIL_VISIBLE;
+    el.classList.toggle('is-tail-overflow', hidden);
+    if (hidden) el.setAttribute('data-translate-skip', '1');
+    else el.removeAttribute('data-translate-skip');
   });
 
   let toggle = tail.querySelector('.news-tail-toggle');
@@ -3611,6 +3616,12 @@ function syncNewsTailCollapse({ preserveExpanded = true } = {}) {
         newsTailExpanded = willExpand;
         syncNewsTailCollapse({ preserveExpanded: true });
 
+        // Traduire les cartes nouvellement visibles seulement au dépliage
+        // (évite de MT toute la suite du fil au choix de langue).
+        if (willExpand && typeof window.RadarTranslate?.onNewsTailExpand === 'function') {
+          window.setTimeout(() => window.RadarTranslate.onNewsTailExpand(), 0);
+        }
+
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
             if (willExpand) {
@@ -3631,6 +3642,7 @@ function syncNewsTailCollapse({ preserveExpanded = true } = {}) {
     tail.classList.add('has-overflow');
     if (!preserveExpanded) newsTailExpanded = false;
     tail.classList.toggle('is-expanded', newsTailExpanded);
+    tail.dataset.tailVisible = String(NEWS_TAIL_VISIBLE);
     const label = toggle.querySelector('.news-tail-toggle__label');
     const hidden = cards.length - NEWS_TAIL_VISIBLE;
     if (label) {
