@@ -5546,7 +5546,9 @@ function cleanTitle(title = '') {
   // on nettoie aussi les news.json déjà en cache.
   t = t.replace(/\s*[–—|-]\s*Montréal\s+Campus\s*$/i, '').trim();
   t = t.replace(/\s*[–—|-]\s*Quartier\s+Libre\s*$/i, '').trim();
+  t = t.replace(/\s*[–—|-]\s*Le\s+D[eé]lit\s*$/i, '').trim();
   t = t.replace(/\bUde\s+M\b/g, 'UdeM').replace(/\bUde\s+S\b/g, 'UdeS');
+  t = t.replace(/\bMc\s+Gill\b/g, 'McGill');
   const prefix = t.match(MC_CATEGORY_PREFIX);
   if (prefix) t = t.slice(prefix[0].length).trim();
   t = stripLeadingNonLetters(t);
@@ -5653,13 +5655,17 @@ function sanitizeBriefBody(raw = '') {
   s = s.replace(/<[^>]*>/g, ' ');
   s = s.replace(/\]\]>/g, '');
   s = s.replace(/\s*L['’]article\b[\s\S]*?est apparu en premier sur[\s\S]*$/i, '');
+  s = s.replace(/\s*The\s+post\b[\s\S]*?appeared first on[\s\S]*$/i, '');
   const li = s.search(/\sL['’]article\s/);
   if (li > 30) s = s.slice(0, li);
   s = s.replace(/\[[^\]]*(?:read more|lire la suite|continue reading)[^\]]*\]/gi, '');
   s = s.replace(/\b(?:read more|lire la suite|continue reading)\b\.?\s*$/i, '');
   s = s.replace(/^(?:Dear Tribune|Dear Editor),?\s*/i, '');
   s = s.replace(/(?:…|\.{3,}|\[…\]|\[\.\.\.\]|\[&hellip;\])/gi, '');
-  return s.replace(/\s+/g, ' ').trim();
+  s = s.replace(/\s+/g, ' ').trim();
+  // WP has-drop-cap dans le flux : « L e 18… » / « L 'identité »
+  s = s.replace(/^([\p{Lu}])\s+([''’])/u, '$1$2').replace(/^([\p{Lu}])\s+([\p{Ll}])/u, '$1$2');
+  return s;
 }
 
 function endsCompleteSentence(text = '') {

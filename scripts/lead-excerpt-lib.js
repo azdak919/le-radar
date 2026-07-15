@@ -169,8 +169,11 @@ function paragraphsFromHtml(html = '') {
 function normalizeLeadParagraph(text = '') {
   let s = stripTruncationArtifacts(stripHtml(text));
   s = s.replace(/\s*L['’]article\b[\s\S]*?est apparu en premier sur[\s\S]*$/i, '');
+  s = s.replace(/\s*The\s+post\b[\s\S]*?appeared first on[\s\S]*$/i, '');
   s = s.replace(/\[[^\]]*(?:read more|lire la suite|continue reading)[^\]]*\]/gi, '');
   s = s.replace(/\b(?:read more|lire la suite|continue reading)\b\.?\s*$/i, '');
+  // WP has-drop-cap : première lettre détachée (« L e 18… »)
+  s = s.replace(/^([\p{Lu}])\s+([''’])/u, '$1$2').replace(/^([\p{Lu}])\s+([\p{Ll}])/u, '$1$2');
   const byline = extractBylineFromText(s);
   if (byline.body.length >= SUBSTANTIVE_MIN) s = byline.body;
   return s.replace(/\s+/g, ' ').trim();
