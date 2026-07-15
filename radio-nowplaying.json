@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-07-15T22:03:43.267Z",
+  "updatedAt": "2026-07-15T23:29:57.338Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "schedule",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
+      "current": null,
       "next": {
         "title": "Blasphème",
         "source": "schedule",
@@ -20,34 +14,34 @@
         "url": "https://chyz.ca/emission/blaspheme/"
       },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T22:03:20.820Z"
+      "checkedAt": "2026-07-15T23:29:35.945Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
-        "source": "api-live",
-        "start": "14:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "palmares-de-cism"
-      },
-      "next": {
         "title": "Parler pour jaser",
         "source": "api-live",
         "start": "15:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364013.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "parler-pour-jaser"
       },
+      "next": {
+        "title": "Le cours de math",
+        "source": "api-live",
+        "start": "16:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364015.mp3",
+        "slug": "le-cours-de-math"
+      },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Parler pour jaser",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-15T22:03:22.673Z"
+      "checkedAt": "2026-07-15T23:29:37.389Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Hersay: Audio Smut/OWL/The Teachings/Metro Boulot Dodo",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Harbinger Showcase",
         "source": "api-live",
         "start": "19:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Jazz Euphorium",
+        "source": "api-live",
+        "start": "20:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "Hersay: Audio Smut/OWL/The Teachings/Metro Boulot Dodo",
+      "showTitle": "Harbinger Showcase",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T22:03:25.625Z"
+      "checkedAt": "2026-07-15T23:29:40.851Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The New Consonance",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/the-new-consonance"
-      },
-      "next": {
         "title": "BVST",
         "source": "schedule",
         "start": "19:00",
         "end": "21:00",
         "url": "http://www.cjlo.com/shows/bvst"
       },
+      "next": {
+        "title": "Rap Radar",
+        "source": "schedule",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/rap-radar"
+      },
       "track": "",
-      "showTitle": "The New Consonance",
+      "showTitle": "BVST",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T22:03:39.375Z"
+      "checkedAt": "2026-07-15T23:29:54.163Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,27 +129,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T22:03:40.485Z"
+      "checkedAt": "2026-07-15T23:29:55.006Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Tu Dis Des Choses",
+        "title": "Princesse",
         "source": "api-live",
-        "host": "Coup dur"
+        "host": "La Sécurité"
       },
       "next": null,
-      "track": "Coup dur - Tu Dis Des Choses",
-      "showTitle": "Tu Dis Des Choses",
-      "host": "Coup dur",
+      "track": "La Sécurité - Princesse",
+      "showTitle": "Princesse",
+      "host": "La Sécurité",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T22:03:42.916Z"
+      "checkedAt": "2026-07-15T23:29:56.987Z"
     }
   }
 }
