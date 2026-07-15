@@ -533,10 +533,15 @@
     'CODE', 'PRE', 'KBD', 'SAMP', 'SVG', 'PATH', 'MATH', 'IFRAME',
   ]);
 
-  /** Classes / zones où les noms propres restent intacts (médias, auteurs…).
-   *  article-inst / filter-btn__inst : gérés par isProtectedProperName
-   *  (traduits seulement hors FR/EN/Original). */
-  const SKIP_CLASS_RE = /\b(?:notranslate|article-source|article-author|filter-btn__name|article-media-credit__creator)\b/;
+  /**
+   * Politique de traduction des noms propres (Le Radar) :
+   *  - Noms de **sources** (médias) → jamais (filter-btn__name, article-source)
+   *  - **Auteurs** d’articles → jamais (article-author)
+   *  - **Crédits photo** (photographes, « Crédit photo : … ») → jamais
+   *  - **Institutions** (article-inst, filter-btn__inst) → localisées hors FR/EN/Original
+   *  - Libellés UI (« Par », « À la une », « Toutes les sources ») → traduits
+   */
+  const SKIP_CLASS_RE = /\b(?:notranslate|article-source|article-author|filter-btn__name|article-media-credit(?:__creator)?)\b/;
 
   function hasUserPreference() {
     try {
@@ -1726,7 +1731,7 @@
     if (el.classList?.contains('notranslate')) return true;
     if (el.getAttribute?.('translate') === 'no') return true;
     if (SKIP_CLASS_RE.test(el.className || '')) return true;
-    if (el.closest?.('.notranslate, [translate="no"], .translate-control, .sr-only, .article-source, .article-author, .filter-btn__name')) {
+    if (el.closest?.('.notranslate, [translate="no"], .translate-control, .sr-only, .article-source, .article-author, .filter-btn__name, .article-media-credit')) {
       return true;
     }
     return false;

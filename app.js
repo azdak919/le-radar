@@ -4577,8 +4577,8 @@ function createArticle(item, role = 'standard') {
   const briefHtml = item.link || brief
     ? `<p class="article-brief${briefTruncated ? ' is-truncated' : ''}"><span class="article-brief-text">${escapeHtml(brief || '')}</span>${briefTruncated ? `<span class="article-more" style="color: ${color}">${readMore}</span>` : ''}</p>`
     : '';
-  // Espace garanti en CSS (.article-author) : la traduction du libellé « Par »/« By »
-  // mange souvent l'espace final du nœud texte.
+  // « Par »/« By » se traduit (UI) ; le nom d’auteur reste en original (notranslate).
+  // Espace garanti en CSS (.article-author) : la trad du libellé mange l’espace final.
   const bylineHtml = `<p class="article-byline"><span class="article-byline__label">${escapeHtml(byLabel)}</span><strong class="article-author notranslate" translate="no">${escapeHtml(displayAuthor)}</strong></p>`;
   const titleHtml = `<h3 class="article-title">${escapeHtml(cleanTitle(item.title))}</h3>`;
   const mediaHtml = hasImageCandidate ? '<figure class="article-media"></figure>' : '';
@@ -4937,13 +4937,15 @@ function buildSourcePhotoCreditElement(item = {}) {
   if (!credit) return null;
 
   const cap = document.createElement('figcaption');
-  cap.className = 'article-media-credit';
+  // Crédit photo entier en original (photographe + libellé) — pas de MT.
+  cap.className = 'article-media-credit notranslate';
+  cap.setAttribute('translate', 'no');
   const url = String(item.sourceImageCreditUrl || item.link || '').trim();
   const en = item.lang === 'en';
   const fromMedia = item.sourceImageCreditFrom === 'media';
 
   if (fromMedia) {
-    // « Crédit photo : The Plant » — le nom du média ne se traduit pas.
+    // « Crédit photo : The Plant » — média + crédit restent en langue d’origine.
     const mediaName = String(item.source || '').trim();
     const prefixMatch = credit.match(/^(Photo credit|Crédit photo|Photo)\s*:\s*(.+)$/i);
     const name = (prefixMatch ? prefixMatch[2] : credit).trim() || mediaName || credit;
@@ -4969,8 +4971,17 @@ function buildSourcePhotoCreditElement(item = {}) {
   const parsed = parseImageCreditLine(credit);
   if (parsed && creator) {
     cap.appendChild(document.createTextNode(en ? 'Photo: ' : 'Photo : '));
-    if (url) cap.appendChild(creditLink(url, creator, 'article-media-credit__creator'));
-    else cap.appendChild(document.createTextNode(creator));
+    if (url) {
+      const a = creditLink(url, creator, 'article-media-credit__creator notranslate');
+      a.setAttribute('translate', 'no');
+      cap.appendChild(a);
+    } else {
+      const span = document.createElement('span');
+      span.className = 'article-media-credit__creator notranslate';
+      span.setAttribute('translate', 'no');
+      span.textContent = creator;
+      cap.appendChild(span);
+    }
     if (parsed.license) cap.appendChild(document.createTextNode(` / ${parsed.license}`));
     if (parsed.via) {
       cap.appendChild(document.createTextNode(' · '));
@@ -4983,13 +4994,27 @@ function buildSourcePhotoCreditElement(item = {}) {
   if (inline) {
     cap.appendChild(document.createTextNode(en ? 'Photo: ' : 'Photo : '));
     const label = cleanCreatorDisplay(inline[1].trim());
-    if (url && label) cap.appendChild(creditLink(url, label, 'article-media-credit__creator'));
-    else cap.appendChild(document.createTextNode(label));
+    if (url && label) {
+      const a = creditLink(url, label, 'article-media-credit__creator notranslate');
+      a.setAttribute('translate', 'no');
+      cap.appendChild(a);
+    } else {
+      const span = document.createElement('span');
+      span.className = 'article-media-credit__creator notranslate';
+      span.setAttribute('translate', 'no');
+      span.textContent = label;
+      cap.appendChild(span);
+    }
     return cap;
   }
 
-  if (url) cap.appendChild(creditLink(url, credit));
-  else cap.textContent = credit;
+  if (url) {
+    const a = creditLink(url, credit, 'article-media-credit__creator notranslate');
+    a.setAttribute('translate', 'no');
+    cap.appendChild(a);
+  } else {
+    cap.textContent = credit;
+  }
   return cap;
 }
 
@@ -4999,7 +5024,9 @@ function buildMediaCreditElement(item = {}) {
   if (!credit && !sourceUrl) return null;
 
   const cap = document.createElement('figcaption');
-  cap.className = 'article-media-credit';
+  // Crédit banque libre / Openverse : photographe + licence en original.
+  cap.className = 'article-media-credit notranslate';
+  cap.setAttribute('translate', 'no');
   const en = item.lang === 'en';
   const parsed = credit ? parseImageCreditLine(credit) : null;
   const creator = cleanCreatorDisplay(item.imageCreator || parsed?.creator || '')
@@ -5007,7 +5034,13 @@ function buildMediaCreditElement(item = {}) {
 
   if (!parsed) {
     if (sourceUrl) {
-      cap.appendChild(creditLink(sourceUrl, credit || (en ? 'Photo source' : 'Source de la photo')));
+      const a = creditLink(
+        sourceUrl,
+        credit || (en ? 'Photo source' : 'Source de la photo'),
+        'article-media-credit__creator notranslate',
+      );
+      a.setAttribute('translate', 'no');
+      cap.appendChild(a);
     } else {
       cap.textContent = credit;
     }
@@ -5016,9 +5049,15 @@ function buildMediaCreditElement(item = {}) {
 
   cap.appendChild(document.createTextNode(en ? 'Photo: ' : 'Photo : '));
   if (sourceUrl) {
-    cap.appendChild(creditLink(sourceUrl, creator, 'article-media-credit__creator'));
+    const a = creditLink(sourceUrl, creator, 'article-media-credit__creator notranslate');
+    a.setAttribute('translate', 'no');
+    cap.appendChild(a);
   } else {
-    cap.appendChild(document.createTextNode(creator));
+    const span = document.createElement('span');
+    span.className = 'article-media-credit__creator notranslate';
+    span.setAttribute('translate', 'no');
+    span.textContent = creator;
+    cap.appendChild(span);
   }
   if (parsed.license) {
     cap.appendChild(document.createTextNode(` / ${parsed.license}`));
