@@ -1,32 +1,14 @@
 {
-  "updated": "2026-07-15T03:41:44.326Z",
+  "updated": "2026-07-15T03:52:56.253Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 9,
+  "incomplete": 4,
   "withLeadExcerpt": 72,
-  "candidates": 9,
-  "enriched": 7,
+  "candidates": 4,
+  "enriched": 0,
   "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "L’impact du tourisme sur les villes populaires",
-      "link": "https://lecollectif.ca/a-la-une/limpact-du-tourisme-sur-les-villes-populaires/",
-      "ok": true,
-      "score": 100,
-      "chars": 320,
-      "sample": "Dans de nombreuses villes du monde, le tourisme constitue un moteur économique essentiel. Chaque ann",
-      "changed": true
-    },
-    {
-      "title": "Un Sherbrookois aux portes du baseball professionnel",
-      "link": "https://lecollectif.ca/a-la-une/un-sherbrookois-aux-portes-du-baseball-professionnel/",
-      "ok": true,
-      "score": 100,
-      "chars": 396,
-      "sample": "Le baseball sherbrookois franchit une nouvelle étape sur la scène américaine. Deiten Lachance, un re",
-      "changed": true
-    },
     {
       "title": "Voyager sans arrêt : passion ou obsession ?",
       "link": "https://lecollectif.ca/culture/voyager-sans-arret-passion-ou-obsession/",
@@ -34,34 +16,7 @@
       "score": 76,
       "chars": 400,
       "sample": "Les occasions de penser au voyage sont nombreuses. Les médias et les réseaux sociaux montrent sans c",
-      "changed": true
-    },
-    {
-      "title": "La vie sans alcool : les habitudes des jeunes redéfinies",
-      "link": "https://lecollectif.ca/societe/la-vie-sans-alcool-les-habitudes-des-jeunes-redefinies/",
-      "ok": true,
-      "score": 96,
-      "chars": 359,
-      "sample": "Bien que différentes dans leur composition, ces boissons partagent un point commun : elles prometten",
-      "changed": true
-    },
-    {
-      "title": "De Broue à l’Ordre du Canada, Marc Messier, l’artisan d’un théâtre et d’une télé populaires",
-      "link": "https://lecollectif.ca/a-la-une/de-broue-a-lordre-du-canada-marc-messier-lartisan-dun-theatre-et-dune-tele-populaires/",
-      "ok": true,
-      "score": 100,
-      "chars": 368,
-      "sample": "Après des études en interprétation au Cégep de Saint‑Hyacinthe, Marc Messier fait ses premiers pas a",
-      "changed": true
-    },
-    {
-      "title": "Pourquoi notre génération passe d’une obsession à l’autre?",
-      "link": "https://lecollectif.ca/edition-papier/pourquoi-notre-generation-passe-dune-obsession-a-lautre/",
-      "ok": true,
-      "score": 100,
-      "chars": 360,
-      "sample": "L’hyperfixation est une caractéristique parfois associée au trouble du déficit de l’attention avec o",
-      "changed": true
+      "changed": false
     },
     {
       "title": "The Cruel Optimism of Summer",
@@ -79,7 +34,16 @@
       "score": 66,
       "chars": 400,
       "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
-      "changed": true
+      "changed": false
+    },
+    {
+      "title": "Letters from the Editors May 2026",
+      "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
+      "ok": true,
+      "score": 76,
+      "chars": 400,
+      "sample": "Dear readers, Class of 2026 We did it! As May’s doting weather and perfumed flowers lull us into the",
+      "changed": false
     }
   ]
 }
