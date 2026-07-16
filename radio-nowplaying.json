@@ -1,47 +1,53 @@
 {
-  "updatedAt": "2026-07-16T18:41:42.845Z",
+  "updatedAt": "2026-07-16T20:04:12.537Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Chéri.e, j’arrive!",
         "source": "schedule",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule",
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Chéri.e, j’arrive!",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T18:41:22.035Z"
+      "checkedAt": "2026-07-16T20:03:52.272Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
+        "title": "La grande ludothèque",
         "source": "api-live",
-        "start": "09:00",
+        "start": "12:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-collation"
+        "slug": "la-grande-ludotheque"
       },
       "next": {
-        "title": "Une fenêtre sur le monde",
+        "title": "Le palmarès",
         "source": "api-live",
-        "start": "11:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364068.mp3",
-        "slug": "une-fenetre-sur-le-monde"
+        "start": "14:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364460.mp3",
+        "slug": "palmares-de-cism"
       },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "La grande ludothèque",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-16T18:41:23.601Z"
+      "checkedAt": "2026-07-16T20:03:53.936Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "Positive Vibes",
         "source": "api-live",
         "start": "15:00",
         "end": "17:00"
       },
+      "next": {
+        "title": "Off the Hour: Labour Radio",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
+      "showTitle": "Positive Vibes",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T18:41:26.543Z"
+      "checkedAt": "2026-07-16T20:03:56.225Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The 514",
+        "title": "Hooked On Sonics",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/the-514"
+        "start": "16:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/hooked-on-sonics"
       },
       "next": {
-        "title": "Secondhand Sounds",
+        "title": "Electric Messiah",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/secondhand-sounds"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/electric-messiah"
       },
       "track": "",
-      "showTitle": "The 514",
+      "showTitle": "Hooked On Sonics",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T18:41:39.800Z"
+      "checkedAt": "2026-07-16T20:04:09.553Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,28 +135,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T18:41:40.491Z"
+      "checkedAt": "2026-07-16T20:04:10.274Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Anytime",
+        "title": "Rotten",
         "source": "api-live",
-        "host": "Makthaverskan",
-        "url": "https://www.choq.ca/assets/playlist/internationale.jpg"
+        "host": "Gia Margaret"
       },
       "next": null,
-      "track": "Makthaverskan - Anytime",
-      "showTitle": "Anytime",
-      "host": "Makthaverskan",
+      "track": "Gia Margaret - Rotten",
+      "showTitle": "Rotten",
+      "host": "Gia Margaret",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T18:41:42.494Z"
+      "checkedAt": "2026-07-16T20:04:12.186Z"
     }
   }
 }
