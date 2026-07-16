@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-16T15:42:01.652Z",
+  "updatedAt": "2026-07-16T17:19:38.007Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T15:41:40.431Z"
+      "checkedAt": "2026-07-16T17:19:03.685Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Second poteau",
+        "title": "La collation",
         "source": "api-live",
-        "start": "07:00",
+        "start": "09:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "second-poteau"
+        "slug": "mix-collation"
       },
       "next": {
-        "title": "Jimmy et Neutron",
+        "title": "Une fenêtre sur le monde",
         "source": "api-live",
-        "start": "08:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364058.mp3",
-        "slug": "jimmy-et-neutron"
+        "start": "11:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364068.mp3",
+        "slug": "une-fenetre-sur-le-monde"
       },
       "track": "",
-      "showTitle": "Second poteau",
+      "showTitle": "La collation",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-16T15:41:42.365Z"
+      "checkedAt": "2026-07-16T17:19:05.269Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Under The Olive Tree",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "Venus Radio",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
       "track": "",
-      "showTitle": "Under The Olive Tree",
+      "showTitle": "Venus Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T15:41:45.299Z"
+      "checkedAt": "2026-07-16T17:19:09.534Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Weirdo Rippers",
+        "title": "What's Happening in NDG",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/weirdo-rippers"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/whats-happening-in-ndg"
       },
       "next": {
-        "title": "The Power Hour",
+        "title": "The 514",
         "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/the-power-hour"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/the-514"
       },
       "track": "",
-      "showTitle": "Weirdo Rippers",
+      "showTitle": "What's Happening in NDG",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T15:41:59.136Z"
+      "checkedAt": "2026-07-16T17:19:22.834Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,27 +129,26 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T15:41:59.589Z"
+      "checkedAt": "2026-07-16T17:19:23.560Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Chambre noire",
+        "title": "Jingle_DLA_2024l",
         "source": "api-live",
-        "host": "Chaude Chaleur"
+        "url": "https://www.choq.ca/assets/playlist/palmares-site-web.jpg"
       },
       "next": null,
-      "track": "Chaude Chaleur - Chambre noire",
-      "showTitle": "Chambre noire",
-      "host": "Chaude Chaleur",
+      "track": "",
+      "showTitle": "Jingle_DLA_2024l",
+      "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T15:42:01.301Z"
+      "checkedAt": "2026-07-16T17:19:37.656Z"
     }
   }
 }
