@@ -1,23 +1,58 @@
 {
-  "updated": "2026-07-15T23:53:22.956Z",
+  "updated": "2026-07-16T04:01:52.515Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 122,
+  "cited": 121,
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 1,
-  "updatedCount": 1,
-  "citedNew": 1,
-  "fallbackNew": 0,
+  "checked": 6,
+  "updatedCount": 6,
+  "citedNew": 4,
+  "fallbackNew": 2,
   "samples": [
     {
-      "title": "Les femmes MAGA au service du patriarcat",
+      "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
-      "credit": "Photo : Stu Doré",
+      "credit": "Photo : Elie Nguyen",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "La performance de l’homosexualité : un privilège ?",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré/Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Inside Mile End Kicks",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "The apprenticeship of public voice",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }
