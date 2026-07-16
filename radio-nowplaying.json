@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-16T08:32:27.038Z",
+  "updatedAt": "2026-07-16T09:35:51.298Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T08:31:43.060Z"
+      "checkedAt": "2026-07-16T09:35:28.836Z"
     },
     "cism": {
       "id": "cism",
@@ -51,33 +51,33 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-16T08:31:45.016Z"
+      "checkedAt": "2026-07-16T09:35:30.777Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "William Shatner's Whiskey Tears",
-        "source": "schedule",
+        "title": "William Shatner&#039;s Whiskey Tears",
+        "source": "api-live",
         "start": "04:00",
         "end": "06:00"
       },
       "next": {
         "title": "Total €clipse of The ☾harts",
-        "source": "schedule",
+        "source": "api-live",
         "start": "06:00",
         "end": "07:00"
       },
       "track": "William Shatner",
-      "showTitle": "William Shatner's Whiskey Tears",
+      "showTitle": "William Shatner&#039;s Whiskey Tears",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "stream",
-        "schedule"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T08:32:09.997Z"
+      "checkedAt": "2026-07-16T09:35:33.874Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -104,7 +104,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T08:32:23.807Z"
+      "checkedAt": "2026-07-16T09:35:47.801Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,28 +129,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T08:32:24.188Z"
+      "checkedAt": "2026-07-16T09:35:48.383Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "questions compliquees",
+        "title": "Outta Sight",
         "source": "api-live",
-        "host": "Mélodie-Jade",
+        "host": "Täbï Yösha",
         "url": "https://www.choq.ca/assets/playlist/palmares-site-web.jpg"
       },
       "next": null,
-      "track": "Mélodie-Jade - questions compliquees",
-      "showTitle": "questions compliquees",
-      "host": "Mélodie-Jade",
+      "track": "Täbï Yösha - Outta Sight",
+      "showTitle": "Outta Sight",
+      "host": "Täbï Yösha",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T08:32:26.687Z"
+      "checkedAt": "2026-07-16T09:35:50.947Z"
     }
   }
 }
