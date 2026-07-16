@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-16T01:02:05.092Z",
+  "updatedAt": "2026-07-16T04:40:01.861Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Blasphème",
+        "title": "Jeudi Révolte",
         "source": "schedule",
-        "start": "21:30",
-        "end": "22:30",
-        "url": "https://chyz.ca/emission/blaspheme/"
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/jeudi-revolte/"
       },
       "track": "",
       "showTitle": "",
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T01:01:44.437Z"
+      "checkedAt": "2026-07-16T04:39:38.761Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Feu | Metal | Chaos",
+        "title": "Jeunesse cosmique",
         "source": "api-live",
-        "start": "17:00",
+        "start": "20:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "feu-metal-chaos"
+        "slug": "jeunesse-cosmique"
       },
       "next": {
-        "title": "O'Keb (reprise)",
+        "title": "Mix anglo",
         "source": "api-live",
-        "start": "19:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364311.mp3",
-        "slug": "okeb"
+        "start": "22:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364409.mp3",
+        "slug": "mix-anglo"
       },
       "track": "",
-      "showTitle": "Feu | Metal | Chaos",
+      "showTitle": "Jeunesse cosmique",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-16T01:01:45.945Z"
+      "checkedAt": "2026-07-16T04:39:40.773Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Jazz Euphorium",
+        "title": "Off The Hook",
         "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
+        "start": "00:00",
+        "end": "02:00"
       },
       "next": {
-        "title": "Lo Signal / Meanwhile/ Rhizomatic",
+        "title": "Freeform Air",
         "source": "api-live",
-        "start": "22:00",
-        "end": "00:00"
+        "start": "02:00",
+        "end": "04:00"
       },
       "track": "",
-      "showTitle": "Jazz Euphorium",
+      "showTitle": "Off The Hook",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,80 +77,80 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T01:01:48.500Z"
+      "checkedAt": "2026-07-16T04:39:44.129Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Rap Radar",
+        "title": "CJLO Late Night",
         "source": "schedule",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/rap-radar"
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
-        "title": "There's a Synth in the House",
+        "title": "Daydream Nation",
         "source": "schedule",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/daydream-nation"
       },
       "track": "",
-      "showTitle": "Rap Radar",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T01:02:01.850Z"
+      "checkedAt": "2026-07-16T04:39:58.083Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Le popcorn de l'infini",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule",
         "start": "00:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Le popcorn de l'infini",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T01:02:02.685Z"
+      "checkedAt": "2026-07-16T04:39:59.204Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Nothin' But You",
+        "title": "Indomitable",
         "source": "api-live",
-        "host": "The Lemon Twigs",
-        "url": "https://www.choq.ca/assets/playlist/palmares-site-web.jpg"
+        "host": "The Blind Philosopher",
+        "url": "https://www.choq.ca/assets/playlist/les-nuits-brutales.png"
       },
       "next": null,
-      "track": "The Lemon Twigs - Nothin",
-      "showTitle": "Nothin' But You",
-      "host": "The Lemon Twigs",
+      "track": "The Blind Philosopher - Indomitable",
+      "showTitle": "Indomitable",
+      "host": "The Blind Philosopher",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T01:02:04.741Z"
+      "checkedAt": "2026-07-16T04:40:01.510Z"
     }
   }
 }
