@@ -1,47 +1,53 @@
 {
-  "updatedAt": "2026-07-16T11:42:12.746Z",
+  "updatedAt": "2026-07-16T13:57:11.340Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Jeudi Révolte",
         "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/jeudi-revolte/"
       },
+      "next": {
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Jeudi Révolte",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T11:41:51.917Z"
+      "checkedAt": "2026-07-16T13:56:50.918Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Par mots et par vaux (reprise)",
+        "title": "Le Séismix",
         "source": "api-live",
-        "start": "03:00",
+        "start": "05:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "par-mots-et-par-vaux"
+        "slug": "le-seismix"
       },
       "next": {
-        "title": "Best of des sessions live",
+        "title": "Second poteau",
         "source": "api-live",
-        "start": "04:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/360264.mp3",
-        "slug": "session-live-a-cism"
+        "start": "07:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364376.mp3",
+        "slug": "second-poteau"
       },
       "track": "",
-      "showTitle": "Par mots et par vaux (reprise)",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-16T11:41:53.550Z"
+      "checkedAt": "2026-07-16T13:56:52.613Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "OFC Podcast Radio",
-        "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Folk Directions",
         "source": "api-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "Under The Olive Tree",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00"
+      },
       "track": "",
-      "showTitle": "OFC Podcast Radio",
+      "showTitle": "Folk Directions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,79 +83,79 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T11:41:56.181Z"
+      "checkedAt": "2026-07-16T13:56:55.611Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Daydream Nation",
+        "title": "Everything Everywhere",
         "source": "schedule",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/daydream-nation"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/everything-everywhere"
       },
       "next": {
-        "title": "Free City Radio",
+        "title": "Democracy Now",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/free-city-radio"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
       },
       "track": "",
-      "showTitle": "Daydream Nation",
+      "showTitle": "Everything Everywhere",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T11:42:09.488Z"
+      "checkedAt": "2026-07-16T13:57:08.935Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Folkswagen",
-        "source": "schedule",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
         "title": "Palmarès CFAK",
         "source": "schedule",
         "start": "08:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "À nous le futur",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T11:42:10.146Z"
+      "checkedAt": "2026-07-16T13:57:09.576Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "The River",
+        "title": "Sibylle",
         "source": "api-live",
-        "host": "Dominique Fils-Aimé"
+        "host": "Celina Silva"
       },
       "next": null,
-      "track": "Dominique Fils-Aimé - The River",
-      "showTitle": "The River",
-      "host": "Dominique Fils-Aimé",
+      "track": "Celina Silva - Sibylle",
+      "showTitle": "Sibylle",
+      "host": "Celina Silva",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T11:42:12.395Z"
+      "checkedAt": "2026-07-16T13:57:10.989Z"
     }
   }
 }
