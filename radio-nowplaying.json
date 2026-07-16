@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-16T07:23:24.530Z",
+  "updatedAt": "2026-07-16T08:32:27.038Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T07:23:03.093Z"
+      "checkedAt": "2026-07-16T08:31:43.060Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix anglo",
-        "source": "api-live",
-        "start": "22:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-anglo"
-      },
-      "next": {
         "title": "Club classique (reprise)",
         "source": "api-live",
         "start": "00:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364436.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "club-classique"
       },
+      "next": {
+        "title": "Mix Franco",
+        "source": "api-live",
+        "start": "02:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364415.mp3",
+        "slug": "mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix anglo",
+      "showTitle": "Club classique (reprise)",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,33 +51,33 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-16T07:23:04.897Z"
+      "checkedAt": "2026-07-16T08:31:45.016Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Freeform Air",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
-      },
-      "next": {
-        "title": "William Shatner&#039;s Whiskey Tears",
-        "source": "api-live",
+        "title": "William Shatner's Whiskey Tears",
+        "source": "schedule",
         "start": "04:00",
         "end": "06:00"
       },
-      "track": "",
-      "showTitle": "Freeform Air",
+      "next": {
+        "title": "Total €clipse of The ☾harts",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "07:00"
+      },
+      "track": "William Shatner",
+      "showTitle": "William Shatner's Whiskey Tears",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "stream"
+        "stream",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T07:23:07.601Z"
+      "checkedAt": "2026-07-16T08:32:09.997Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -104,7 +104,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T07:23:21.063Z"
+      "checkedAt": "2026-07-16T08:32:23.807Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,28 +129,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T07:23:22.033Z"
+      "checkedAt": "2026-07-16T08:32:24.188Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Dreaming of Love",
+        "title": "questions compliquees",
         "source": "api-live",
-        "host": "Chris Coco",
-        "url": "https://www.choq.ca/assets/playlist/les-nuits-brutales.png"
+        "host": "Mélodie-Jade",
+        "url": "https://www.choq.ca/assets/playlist/palmares-site-web.jpg"
       },
       "next": null,
-      "track": "Chris Coco - Dreaming of Love",
-      "showTitle": "Dreaming of Love",
-      "host": "Chris Coco",
+      "track": "Mélodie-Jade - questions compliquees",
+      "showTitle": "questions compliquees",
+      "host": "Mélodie-Jade",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T07:23:24.179Z"
+      "checkedAt": "2026-07-16T08:32:26.687Z"
     }
   }
 }
