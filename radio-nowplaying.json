@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-16T21:33:37.643Z",
+  "updatedAt": "2026-07-16T22:58:32.651Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -27,27 +27,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T21:33:17.386Z"
+      "checkedAt": "2026-07-16T22:58:11.065Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La grande ludothèque",
-        "source": "api-live",
-        "start": "12:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "la-grande-ludotheque"
-      },
-      "next": {
         "title": "Le palmarès",
         "source": "api-live",
         "start": "14:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364460.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "palmares-de-cism"
       },
+      "next": {
+        "title": "La boussole culturelle",
+        "source": "api-live",
+        "start": "15:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364082.mp3",
+        "slug": "la-boussole-culturelle"
+      },
       "track": "",
-      "showTitle": "La grande ludothèque",
+      "showTitle": "Le palmarès",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,60 +57,59 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-16T21:33:19.236Z"
+      "checkedAt": "2026-07-16T22:58:12.964Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Off the Hour: Labour Radio",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Upstage",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Grey Matters",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "Off the Hour: Labour Radio",
+      "showTitle": "Upstage",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T21:33:21.527Z"
+      "checkedAt": "2026-07-16T22:58:15.681Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Hooked On Sonics",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/hooked-on-sonics"
-      },
-      "next": {
         "title": "Electric Messiah",
         "source": "schedule",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/electric-messiah"
       },
+      "next": {
+        "title": "Teen Radio",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/teen-radio"
+      },
       "track": "",
-      "showTitle": "Hooked On Sonics",
+      "showTitle": "Electric Messiah",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T21:33:34.705Z"
+      "checkedAt": "2026-07-16T22:58:29.429Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,27 +134,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T21:33:35.418Z"
+      "checkedAt": "2026-07-16T22:58:30.296Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Rotten",
+        "title": "Correct",
         "source": "api-live",
-        "host": "Gia Margaret"
+        "host": "Les Louanges"
       },
       "next": null,
-      "track": "ID - laraw",
-      "showTitle": "Rotten",
-      "host": "Gia Margaret",
+      "track": "Noée - mon corps en echange",
+      "showTitle": "Correct",
+      "host": "Les Louanges",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T21:33:37.293Z"
+      "checkedAt": "2026-07-16T22:58:32.300Z"
     }
   }
 }
