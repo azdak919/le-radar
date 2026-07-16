@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-16T04:40:01.861Z",
+  "updatedAt": "2026-07-16T07:23:24.530Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T04:39:38.761Z"
+      "checkedAt": "2026-07-16T07:23:03.093Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Jeunesse cosmique",
-        "source": "api-live",
-        "start": "20:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "jeunesse-cosmique"
-      },
-      "next": {
         "title": "Mix anglo",
         "source": "api-live",
         "start": "22:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364409.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "mix-anglo"
       },
+      "next": {
+        "title": "Club classique (reprise)",
+        "source": "api-live",
+        "start": "00:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364436.mp3",
+        "slug": "club-classique"
+      },
       "track": "",
-      "showTitle": "Jeunesse cosmique",
+      "showTitle": "Mix anglo",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-16T04:39:40.773Z"
+      "checkedAt": "2026-07-16T07:23:04.897Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Off The Hook",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "Freeform Air",
         "source": "api-live",
         "start": "02:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "William Shatner&#039;s Whiskey Tears",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "06:00"
+      },
       "track": "",
-      "showTitle": "Off The Hook",
+      "showTitle": "Freeform Air",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,7 +77,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T04:39:44.129Z"
+      "checkedAt": "2026-07-16T07:23:07.601Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -104,7 +104,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T04:39:58.083Z"
+      "checkedAt": "2026-07-16T07:23:21.063Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,28 +129,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T04:39:59.204Z"
+      "checkedAt": "2026-07-16T07:23:22.033Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Indomitable",
+        "title": "Dreaming of Love",
         "source": "api-live",
-        "host": "The Blind Philosopher",
+        "host": "Chris Coco",
         "url": "https://www.choq.ca/assets/playlist/les-nuits-brutales.png"
       },
       "next": null,
-      "track": "The Blind Philosopher - Indomitable",
-      "showTitle": "Indomitable",
-      "host": "The Blind Philosopher",
+      "track": "Chris Coco - Dreaming of Love",
+      "showTitle": "Dreaming of Love",
+      "host": "Chris Coco",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T04:40:01.510Z"
+      "checkedAt": "2026-07-16T07:23:24.179Z"
     }
   }
 }
