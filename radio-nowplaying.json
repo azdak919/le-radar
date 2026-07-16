@@ -1,33 +1,33 @@
 {
-  "updatedAt": "2026-07-16T20:04:12.537Z",
+  "updatedAt": "2026-07-16T21:33:37.643Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
-      },
-      "next": {
         "title": "Les Arshitechs du Son",
         "source": "schedule",
         "start": "17:30",
         "end": "19:00",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "Vendredi Nostalgie",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/vendredi-nostalgie/"
+      },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T20:03:52.272Z"
+      "checkedAt": "2026-07-16T21:33:17.386Z"
     },
     "cism": {
       "id": "cism",
@@ -57,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-16T20:03:53.936Z"
+      "checkedAt": "2026-07-16T21:33:19.236Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Positive Vibes",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "Off the Hour: Labour Radio",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Upstage",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Positive Vibes",
+      "showTitle": "Off the Hour: Labour Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,7 +83,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T20:03:56.225Z"
+      "checkedAt": "2026-07-16T21:33:21.527Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -110,7 +110,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T20:04:09.553Z"
+      "checkedAt": "2026-07-16T21:33:34.705Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,7 +135,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T20:04:10.274Z"
+      "checkedAt": "2026-07-16T21:33:35.418Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "host": "Gia Margaret"
       },
       "next": null,
-      "track": "Gia Margaret - Rotten",
+      "track": "ID - laraw",
       "showTitle": "Rotten",
       "host": "Gia Margaret",
       "source": "api-live",
@@ -155,7 +155,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T20:04:12.186Z"
+      "checkedAt": "2026-07-16T21:33:37.293Z"
     }
   }
 }
