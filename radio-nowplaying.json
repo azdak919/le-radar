@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-16T17:19:38.007Z",
+  "updatedAt": "2026-07-16T18:41:42.845Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T17:19:03.685Z"
+      "checkedAt": "2026-07-16T18:41:22.035Z"
     },
     "cism": {
       "id": "cism",
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-16T17:19:05.269Z"
+      "checkedAt": "2026-07-16T18:41:23.601Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Venus Radio",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
         "source": "api-live",
         "start": "14:00",
         "end": "15:00"
       },
+      "next": {
+        "title": "Positive Vibes",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "17:00"
+      },
       "track": "",
-      "showTitle": "Venus Radio",
+      "showTitle": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T17:19:09.534Z"
+      "checkedAt": "2026-07-16T18:41:26.543Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "What's Happening in NDG",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/whats-happening-in-ndg"
-      },
-      "next": {
         "title": "The 514",
         "source": "schedule",
         "start": "14:00",
         "end": "15:00",
         "url": "http://www.cjlo.com/shows/the-514"
       },
+      "next": {
+        "title": "Secondhand Sounds",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/secondhand-sounds"
+      },
       "track": "",
-      "showTitle": "What's Happening in NDG",
+      "showTitle": "The 514",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T17:19:22.834Z"
+      "checkedAt": "2026-07-16T18:41:39.800Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,26 +129,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T17:19:23.560Z"
+      "checkedAt": "2026-07-16T18:41:40.491Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Jingle_DLA_2024l",
+        "title": "Anytime",
         "source": "api-live",
-        "url": "https://www.choq.ca/assets/playlist/palmares-site-web.jpg"
+        "host": "Makthaverskan",
+        "url": "https://www.choq.ca/assets/playlist/internationale.jpg"
       },
       "next": null,
-      "track": "",
-      "showTitle": "Jingle_DLA_2024l",
-      "host": "",
+      "track": "Makthaverskan - Anytime",
+      "showTitle": "Anytime",
+      "host": "Makthaverskan",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T17:19:37.656Z"
+      "checkedAt": "2026-07-16T18:41:42.494Z"
     }
   }
 }
