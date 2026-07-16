@@ -148,7 +148,9 @@ Signale aussi les liens cassés, flux morts ou sources manquantes.
 
 ## Crédits et contenus
 
-**Conçu avec ♡ par [Azdak](https://www.buymeacoffee.com/azdak) en 2026**
+**Auteur du code** — [Charles Tison](https://github.com/azdak919) (2026)
+
+Sur le site public, le crédit affiché est **[Azdak](https://www.buymeacoffee.com/azdak)**.
 
 Code libre utilisé conformément aux licences applicables; contenus et médias crédités à leurs auteurs respectifs.
 
