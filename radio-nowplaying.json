@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-15T23:29:57.338Z",
+  "updatedAt": "2026-07-16T01:02:05.092Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T23:29:35.945Z"
+      "checkedAt": "2026-07-16T01:01:44.437Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Parler pour jaser",
+        "title": "Feu | Metal | Chaos",
         "source": "api-live",
-        "start": "15:00",
+        "start": "17:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "parler-pour-jaser"
+        "slug": "feu-metal-chaos"
       },
       "next": {
-        "title": "Le cours de math",
+        "title": "O'Keb (reprise)",
         "source": "api-live",
-        "start": "16:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364015.mp3",
-        "slug": "le-cours-de-math"
+        "start": "19:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364311.mp3",
+        "slug": "okeb"
       },
       "track": "",
-      "showTitle": "Parler pour jaser",
+      "showTitle": "Feu | Metal | Chaos",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-15T23:29:37.389Z"
+      "checkedAt": "2026-07-16T01:01:45.945Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Harbinger Showcase",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Jazz Euphorium",
         "source": "api-live",
         "start": "20:00",
         "end": "22:00"
       },
+      "next": {
+        "title": "Lo Signal / Meanwhile/ Rhizomatic",
+        "source": "api-live",
+        "start": "22:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Harbinger Showcase",
+      "showTitle": "Jazz Euphorium",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T23:29:40.851Z"
+      "checkedAt": "2026-07-16T01:01:48.500Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "BVST",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/bvst"
-      },
-      "next": {
         "title": "Rap Radar",
         "source": "schedule",
         "start": "21:00",
         "end": "22:00",
         "url": "http://www.cjlo.com/shows/rap-radar"
       },
+      "next": {
+        "title": "There's a Synth in the House",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
+      },
       "track": "",
-      "showTitle": "BVST",
+      "showTitle": "Rap Radar",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T23:29:54.163Z"
+      "checkedAt": "2026-07-16T01:02:01.850Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,27 +129,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T23:29:55.006Z"
+      "checkedAt": "2026-07-16T01:02:02.685Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Princesse",
+        "title": "Nothin' But You",
         "source": "api-live",
-        "host": "La Sécurité"
+        "host": "The Lemon Twigs",
+        "url": "https://www.choq.ca/assets/playlist/palmares-site-web.jpg"
       },
       "next": null,
-      "track": "La Sécurité - Princesse",
-      "showTitle": "Princesse",
-      "host": "La Sécurité",
+      "track": "The Lemon Twigs - Nothin",
+      "showTitle": "Nothin' But You",
+      "host": "The Lemon Twigs",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-15T23:29:56.987Z"
+      "checkedAt": "2026-07-16T01:02:04.741Z"
     }
   }
 }
