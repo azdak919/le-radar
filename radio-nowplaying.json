@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-07-17T17:16:23.898Z",
+  "updatedAt": "2026-07-17T18:34:51.109Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Détour",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://chyz.ca/emission/detour/"
-      },
+      "current": null,
       "next": {
         "title": "Capitales de Québec",
         "source": "schedule",
@@ -20,14 +14,14 @@
         "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
       "track": "",
-      "showTitle": "Détour",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T17:16:13.329Z"
+      "checkedAt": "2026-07-17T18:34:28.427Z"
     },
     "cism": {
       "id": "cism",
@@ -57,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-17T17:16:15.175Z"
+      "checkedAt": "2026-07-17T18:34:30.188Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Butcher T&#039;s Noontime Cuts",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "NNB/Jewish Heretics/QPIRG/Mi Chante",
         "source": "api-live",
         "start": "14:00",
         "end": "15:00"
       },
-      "track": "Butcher T",
-      "showTitle": "Butcher T&#039;s Noontime Cuts",
+      "next": {
+        "title": "New Shit",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "17:00"
+      },
+      "track": "",
+      "showTitle": "NNB/Jewish Heretics/QPIRG/Mi Chante",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T17:16:18.196Z"
+      "checkedAt": "2026-07-17T18:34:33.520Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "the castle",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/the-castle"
-      },
-      "next": {
         "title": "Whatever She Wants",
         "source": "schedule",
         "start": "14:00",
         "end": "15:00",
         "url": "http://www.cjlo.com/shows/whatever-she-wants"
       },
+      "next": {
+        "title": "Dead Beats",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/dead-beats"
+      },
       "track": "",
-      "showTitle": "the castle",
+      "showTitle": "Whatever She Wants",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T17:16:20.027Z"
+      "checkedAt": "2026-07-17T18:34:47.275Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T17:16:21.185Z"
+      "checkedAt": "2026-07-17T18:34:48.267Z"
     },
     "choq": {
       "id": "choq",
@@ -143,11 +137,10 @@
       "current": {
         "title": "Liars Tale",
         "source": "api-live",
-        "host": "KNEECAP",
-        "url": "https://www.choq.ca/assets/playlist/internationale.jpg"
+        "host": "KNEECAP"
       },
       "next": null,
-      "track": "By Storm - GGG",
+      "track": "Saints Martyrs - Kyrie eleison",
       "showTitle": "Liars Tale",
       "host": "KNEECAP",
       "source": "api-live",
@@ -156,7 +149,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T17:16:23.548Z"
+      "checkedAt": "2026-07-17T18:34:50.758Z"
     }
   }
 }
