@@ -1,27 +1,33 @@
 {
-  "updatedAt": "2026-07-17T20:07:25.575Z",
+  "updatedAt": "2026-07-17T21:22:08.430Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Capitales de Québec",
         "source": "schedule",
         "start": "16:50",
         "end": "23:00",
         "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
+      "next": {
+        "title": "Palmarès CHYZ",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "10:30",
+        "url": "https://chyz.ca/emission/palmares-chyz/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Capitales de Québec",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T20:07:04.395Z"
+      "checkedAt": "2026-07-17T21:21:47.804Z"
     },
     "cism": {
       "id": "cism",
@@ -51,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-17T20:07:06.141Z"
+      "checkedAt": "2026-07-17T21:21:49.295Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "New Shit",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Café",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "New Shit",
+      "showTitle": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T20:07:09.083Z"
+      "checkedAt": "2026-07-17T21:21:52.032Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Tapeworms",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/tapeworms"
-      },
-      "next": {
         "title": "The Groove Master's Hour",
         "source": "schedule",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
       },
+      "next": {
+        "title": "The Go-Go Radio Magic Show",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
+      },
       "track": "",
-      "showTitle": "Tapeworms",
+      "showTitle": "The Groove Master's Hour",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T20:07:22.516Z"
+      "checkedAt": "2026-07-17T21:22:05.243Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +135,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T20:07:23.571Z"
+      "checkedAt": "2026-07-17T21:22:06.082Z"
     },
     "choq": {
       "id": "choq",
@@ -140,7 +146,7 @@
         "host": "KNEECAP"
       },
       "next": null,
-      "track": "Étienne Coppée - Salut",
+      "track": "Sophia Bel - Rat Race",
       "showTitle": "Liars Tale",
       "host": "KNEECAP",
       "source": "api-live",
@@ -149,7 +155,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T20:07:25.225Z"
+      "checkedAt": "2026-07-17T21:22:08.079Z"
     }
   }
 }
