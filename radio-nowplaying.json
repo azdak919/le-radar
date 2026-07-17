@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-07-17T14:12:55.550Z",
+  "updatedAt": "2026-07-17T15:56:10.614Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Palmarès CHYZ",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
-      },
+      "current": null,
       "next": {
         "title": "Détour",
         "source": "schedule",
@@ -20,34 +14,34 @@
         "url": "https://chyz.ca/emission/detour/"
       },
       "track": "",
-      "showTitle": "Palmarès CHYZ",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T14:12:47.050Z"
+      "checkedAt": "2026-07-17T15:56:02.908Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
-        "source": "api-live",
-        "start": "05:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "le-seismix"
-      },
-      "next": {
         "title": "Toute est dans toute",
         "source": "api-live",
         "start": "07:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364123.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "tout-est-dans-toute"
       },
+      "next": {
+        "title": "As-tu vu?",
+        "source": "api-live",
+        "start": "08:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364127.mp3",
+        "slug": "lart-en-ondes"
+      },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Toute est dans toute",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-17T14:12:48.529Z"
+      "checkedAt": "2026-07-17T15:56:04.370Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Jazz Amuck",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "electronic intifada/LegalEase/Radio AlHara/Alright, Now What?",
         "source": "api-live",
         "start": "11:00",
         "end": "12:00"
       },
+      "next": {
+        "title": "Butcher T&#039;s Noontime Cuts",
+        "source": "api-live",
+        "start": "12:00",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "Jazz Amuck",
+      "showTitle": "electronic intifada/LegalEase/Radio AlHara/Alright, Now What?",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,59 +77,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T14:12:51.329Z"
+      "checkedAt": "2026-07-17T15:56:06.846Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
-      },
-      "next": {
         "title": "The Alley",
         "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/the-alley"
       },
+      "next": {
+        "title": "Charts & Crafts",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/charts-and-crafts"
+      },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "The Alley",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T14:12:52.774Z"
+      "checkedAt": "2026-07-17T15:56:08.161Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "La Souterraine",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "Le Ré-Show : Deuxième service",
         "source": "schedule",
         "start": "11:00",
         "end": "12:00"
       },
+      "next": {
+        "title": "Ciné-Histoire",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "15:00"
+      },
       "track": "",
-      "showTitle": "La Souterraine",
+      "showTitle": "Le Ré-Show : Deuxième service",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T14:12:53.768Z"
+      "checkedAt": "2026-07-17T15:56:08.930Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +140,7 @@
         "host": "KNEECAP"
       },
       "next": null,
-      "track": "Poupie - Filage",
+      "track": "ID - laraw",
       "showTitle": "Liars Tale",
       "host": "KNEECAP",
       "source": "api-live",
@@ -155,7 +149,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T14:12:55.199Z"
+      "checkedAt": "2026-07-17T15:56:10.263Z"
     }
   }
 }
