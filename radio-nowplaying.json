@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-17T21:22:08.430Z",
+  "updatedAt": "2026-07-17T22:22:43.139Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -27,27 +27,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T21:21:47.804Z"
+      "checkedAt": "2026-07-17T22:22:22.293Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rebelles soniques",
-        "source": "api-live",
-        "start": "12:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "rebelles-soniques"
-      },
-      "next": {
         "title": "Le palmarès",
         "source": "api-live",
         "start": "14:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364530.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "palmares-de-cism"
       },
+      "next": {
+        "title": "Salsa & Bembê",
+        "source": "api-live",
+        "start": "15:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364153.mp3",
+        "slug": "salsa-et-bembe"
+      },
       "track": "",
-      "showTitle": "Rebelles soniques",
+      "showTitle": "Le palmarès",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,85 +57,84 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-17T21:21:49.295Z"
+      "checkedAt": "2026-07-17T22:22:23.882Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Café",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "LLA/Macondo",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
+      "showTitle": "Café",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T21:21:52.032Z"
+      "checkedAt": "2026-07-17T22:22:26.539Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Groove Master's Hour",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
-      },
-      "next": {
         "title": "The Go-Go Radio Magic Show",
         "source": "schedule",
         "start": "18:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
       },
+      "next": {
+        "title": "El Encuentro Latino",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/el-encuentro-latino"
+      },
       "track": "",
-      "showTitle": "The Groove Master's Hour",
+      "showTitle": "The Go-Go Radio Magic Show",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T21:22:05.243Z"
+      "checkedAt": "2026-07-17T22:22:40.101Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Nouveautés Franco",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "La récréation",
         "source": "schedule",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Enfin vendredi",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "21:00"
+      },
       "track": "",
-      "showTitle": "Nouveautés Franco",
+      "showTitle": "La récréation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T21:22:06.082Z"
+      "checkedAt": "2026-07-17T22:22:41.099Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +145,7 @@
         "host": "KNEECAP"
       },
       "next": null,
-      "track": "Sophia Bel - Rat Race",
+      "track": "Alemeda - Broken Record",
       "showTitle": "Liars Tale",
       "host": "KNEECAP",
       "source": "api-live",
@@ -155,7 +154,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T21:22:08.079Z"
+      "checkedAt": "2026-07-17T22:22:42.788Z"
     }
   }
 }
