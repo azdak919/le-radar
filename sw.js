@@ -1,4 +1,4 @@
-const CACHE_NAME = "radar-shell-v364";
+const CACHE_NAME = "radar-shell-v365";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -9,6 +9,7 @@ const APP_SHELL = [
   "./app.js",
   "./cast.js",
   "./translate.js",
+  "./engage-prompt.js",
   "./scripts/session-freshness-lib.js",
   "./brand-colors.json",
   "./radios.json",

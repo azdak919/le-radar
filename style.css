@@ -4106,6 +4106,151 @@ body.external-listen-open {
   bottom: calc(22px + env(safe-area-inset-bottom, 0px));
 }
 
+/* ── Soft prompts : installer l’app (mobile) / page d’accueil (bureau) ── */
+.engage-prompt {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 80;
+  display: flex;
+  justify-content: center;
+  padding: 0 max(12px, env(safe-area-inset-left, 0px))
+    calc(12px + env(safe-area-inset-bottom, 0px))
+    max(12px, env(safe-area-inset-right, 0px));
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+.engage-prompt.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.engage-prompt.is-leaving {
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+}
+.engage-prompt__inner {
+  position: relative;
+  width: min(420px, 100%);
+  padding: 16px 16px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--rule);
+  background: var(--bg);
+  box-shadow:
+    0 12px 40px -12px rgba(0, 0, 0, 0.28),
+    0 0 0 1px color-mix(in srgb, var(--rule) 60%, transparent);
+  color: var(--ink);
+  font-family: var(--sans);
+}
+[data-theme="dark"] .engage-prompt__inner {
+  box-shadow:
+    0 16px 48px -10px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+.engage-prompt__close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+.engage-prompt__close:hover {
+  color: var(--ink);
+  background: var(--bg-soft);
+}
+.engage-prompt__icon {
+  font-size: 1.35rem;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.engage-prompt__title {
+  margin: 0 28px 6px 0;
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+.engage-prompt__body {
+  margin: 0 0 8px;
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+.engage-prompt__steps {
+  margin: 0 0 12px;
+  padding: 0 0 0 1.15rem;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+.engage-prompt__steps li {
+  margin: 0.28em 0;
+}
+.engage-prompt__steps code {
+  font-size: 0.78em;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--bg-soft);
+  border: 1px solid var(--rule);
+  word-break: break-all;
+}
+.engage-prompt__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.engage-prompt__btn {
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  background: var(--bg-soft);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: border-color 120ms ease, color 120ms ease, background 120ms ease;
+}
+.engage-prompt__btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.engage-prompt__btn--primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.engage-prompt__btn--primary:hover {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+  color: #fff;
+}
+.engage-prompt__btn--quiet {
+  border-color: transparent;
+  background: transparent;
+  font-weight: 500;
+  color: var(--muted);
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.engage-prompt__btn--quiet:hover {
+  color: var(--ink-soft);
+  background: transparent;
+  border-color: transparent;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
