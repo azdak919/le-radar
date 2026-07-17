@@ -14,8 +14,8 @@
   'use strict';
 
   const STORAGE_KEY = 'radar-translate-mode';
-  // v7 : glossaire UI + lazy suite du fil (MT aussi la rangée peek partielle)
-  const CACHE_KEY = 'radar-translate-cache-v6';
+  // v8 : glossaire radio LIVE/NOW PLAYING + secondaires EN du menu
+  const CACHE_KEY = 'radar-translate-cache-v8';
   const CACHE_MAX = 900;
   const DEFAULT_MODE = 'original';
   const CONCURRENCY = 6;
@@ -489,35 +489,153 @@
    * Alternatives plus longues : « Langues des Premières Nations et des Inuit ».
    * Pas de subdivision par continent pour les autres langues.
    */
+  /**
+   * En-têtes de groupe (FR = langue du site ; EN quand l’utilisateur choisit English).
+   */
   const GROUP_LABELS = {
-    indigenous: 'Langues autochtones du Québec',
-    other: 'Autres langues',
+    indigenous: {
+      fr: 'Langues autochtones du Québec',
+      en: 'Indigenous languages of Quebec',
+    },
+    other: {
+      fr: 'Autres langues',
+      en: 'Other languages',
+    },
+  };
+
+  /** Noms anglais (CLDR-style) pour la ligne secondaire du menu en mode EN. */
+  const LANG_NAME_EN = {
+    original: 'Original',
+    fr: 'French',
+    en: 'English',
+    iu: 'Inuktitut',
+    'iu-latn': 'Inuktitut',
+    am: 'Amharic',
+    ar: 'Arabic',
+    bn: 'Bengali',
+    de: 'German',
+    el: 'Greek',
+    es: 'Spanish',
+    fa: 'Persian',
+    gu: 'Gujarati',
+    ha: 'Hausa',
+    he: 'Hebrew',
+    hi: 'Hindi',
+    ht: 'Haitian Creole',
+    id: 'Indonesian',
+    ig: 'Igbo',
+    it: 'Italian',
+    ja: 'Japanese',
+    kn: 'Kannada',
+    ko: 'Korean',
+    ml: 'Malayalam',
+    mr: 'Marathi',
+    ms: 'Malay',
+    nl: 'Dutch',
+    pa: 'Punjabi',
+    pl: 'Polish',
+    pt: 'Portuguese',
+    ro: 'Romanian',
+    ru: 'Russian',
+    sv: 'Swedish',
+    sw: 'Swahili',
+    ta: 'Tamil',
+    te: 'Telugu',
+    th: 'Thai',
+    tl: 'Tagalog',
+    tr: 'Turkish',
+    uk: 'Ukrainian',
+    ur: 'Urdu',
+    vi: 'Vietnamese',
+    yo: 'Yoruba',
+    zh: 'Chinese',
+    'zh-tw': 'Chinese',
+    cr: 'Cree',
+    moe: 'Innu',
+    atj: 'Atikamekw',
+    alq: 'Algonquin',
+    moh: 'Mohawk',
+    mic: "Mi'kmaq",
+  };
+
+  const SCRIPT_LABEL_EN = {
+    Simplifié: 'Simplified',
+    Traditionnel: 'Traditional',
+    Syllabiques: 'Syllabics',
+    Latin: 'Latin',
   };
 
   let indigenousRegistryReady = false;
 
+  /** Langue des libellés du menu (secondaire, en-têtes) — FR par défaut, EN si mode English. */
+  function menuChromeLang() {
+    return activeMode === 'en' ? 'en' : 'fr';
+  }
+
+  function groupLabelText(groupKey) {
+    const entry = GROUP_LABELS[groupKey];
+    if (!entry) return '';
+    if (typeof entry === 'string') return entry;
+    return entry[menuChromeLang()] || entry.fr || entry.en || '';
+  }
+
   /**
-   * Ligne secondaire sous l’endonyme : nom FR (si distinct) + écriture + bientôt.
-   * Pas de pays — une langue n’est pas un drapeau.
+   * Ligne secondaire sous l’endonyme : nom dans la langue UI (FR ou EN) + écriture.
+   * Pas de pays — une langue n’est pas un drapeau. Pas de MT gtx sur le menu.
    */
   function languageSecondaryLine(m = {}) {
     const parts = [];
     const label = String(m.label || '').trim();
-    const nameFr = String(m.nameFr || '').trim();
-    if (nameFr && nameFr.localeCompare(label, 'fr', { sensitivity: 'base' }) !== 0) {
-      parts.push(nameFr);
+    const ui = menuChromeLang();
+    const name = ui === 'en'
+      ? String(m.nameEn || LANG_NAME_EN[m.id] || m.nameFr || '').trim()
+      : String(m.nameFr || '').trim();
+    if (name && name.localeCompare(label, ui === 'en' ? 'en' : 'fr', { sensitivity: 'base' }) !== 0) {
+      parts.push(name);
     }
-    if (m.script) parts.push(m.script);
-    if (m.unavailable) parts.push('Bientôt');
+    if (m.script) {
+      parts.push(ui === 'en' ? (SCRIPT_LABEL_EN[m.script] || m.script) : m.script);
+    }
+    if (m.unavailable) parts.push(ui === 'en' ? 'Coming soon' : 'Bientôt');
     return parts.join(' · ');
   }
 
-  /** Chaîne de recherche (endonyme + FR + code + script + aliases). */
+  /** Chaîne de recherche (endonyme + FR + EN + code + script + aliases). */
   function languageSearchBlob(m = {}) {
     return [
-      m.label, m.nameFr, m.short, m.id, m.script, m.hint,
+      m.label, m.nameFr, m.nameEn, LANG_NAME_EN[m.id],
+      m.short, m.id, m.script, m.hint,
       ...(Array.isArray(m.aliases) ? m.aliases : []),
     ].filter(Boolean).join(' ').toLowerCase();
+  }
+
+  /** Met à jour secondaires + en-têtes de groupe sans reconstruire tout le menu. */
+  function refreshMenuChromeLabels() {
+    const menu = document.getElementById('translate-menu');
+    if (!menu) return;
+    menu.querySelectorAll('.translate-menu__opt[data-mode]').forEach((opt) => {
+      const m = MODES[opt.dataset.mode];
+      if (!m) return;
+      const secondary = languageSecondaryLine(m);
+      let hint = opt.querySelector('.translate-menu__hint');
+      if (secondary) {
+        if (!hint) {
+          hint = document.createElement('span');
+          hint.className = 'translate-menu__hint';
+          opt.appendChild(hint);
+        }
+        hint.textContent = secondary;
+      } else if (hint) {
+        hint.remove();
+      }
+      opt.dataset.search = languageSearchBlob(m);
+    });
+    menu.querySelectorAll('.translate-menu__group[data-group]').forEach((g) => {
+      const sep = g.querySelector('.translate-menu__sep-label');
+      const text = groupLabelText(g.dataset.group);
+      if (sep && text) sep.textContent = text;
+      if (text) g.setAttribute('aria-label', text);
+    });
   }
 
   /** Fusionne indigenous-mt.json → MODES + MENU_ORDER (active + bientôt). */
@@ -540,6 +658,7 @@
         id: lang.id,
         label: lang.label || lang.id,
         nameFr,
+        nameEn: lang.nameEn || LANG_NAME_EN[lang.id] || nameFr,
         short: lang.short || String(lang.id).toUpperCase(),
         title: lang.title || lang.label || lang.id,
         script,
@@ -934,6 +1053,50 @@
     Search: {
       fr: 'Rechercher', es: 'Buscar', en: 'Search',
     },
+    /*
+     * Radio — ne pas laisser gtx inventer « ON WAVES » pour EN ONDES.
+     * Deux libellés distincts (sinon double « ON AIR » confus) :
+     *  - EN ONDES = pastille statut flux (LIVE)
+     *  - À l'antenne = panneau grille / émission (NOW PLAYING)
+     */
+    'EN ONDES': {
+      en: 'LIVE', es: 'EN DIRECTO', pt: 'NO AR', de: 'LIVE', it: 'IN ONDA',
+      zh: '直播', 'zh-tw': '直播', ar: 'مباشر', ru: 'В ЭФИРЕ', ko: '생방송',
+      ja: 'ライブ', hi: 'लाइव', vi: 'TRỰC TIẾP', tr: 'CANLI', pl: 'NA ŻYWO',
+      nl: 'LIVE', ht: 'AN DIRÈK',
+    },
+    "À l'antenne": {
+      en: 'NOW PLAYING', es: 'AHORA', pt: 'NO AR AGORA', de: 'JETZT',
+      it: 'IN ONDA ORA', zh: '正在播出', 'zh-tw': '正在播出', ar: 'يبث الآن',
+      ru: 'СЕЙЧАС В ЭФИРЕ', ko: '지금 방송', ja: '放送中', hi: 'अभी प्रसारित',
+      vi: 'ĐANG PHÁT', tr: 'ŞU AN', pl: 'TERAZ', nl: 'NU TE BELUISTEREN',
+      ht: 'Kounye a',
+    },
+    "A l'antenne": {
+      en: 'NOW PLAYING', es: 'AHORA', fr: "À l'antenne",
+    },
+    'À venir': {
+      en: 'Up next', es: 'Próximamente', pt: 'A seguir', de: 'Als Nächstes',
+      it: 'A seguire', zh: '即将播出', ar: 'التالي', ru: 'Далее',
+      ko: '다음', ja: '次の番組', nl: 'Hierna', pl: 'Następnie',
+      ht: 'A pwochen',
+    },
+    'Syntoniser un poste': {
+      en: 'Tune a station', es: 'Sintonizar una emisora', pt: 'Sintonizar uma estação',
+      de: 'Sender wählen', it: 'Sintonizza una stazione',
+    },
+    'Les radios étudiantes jouent en direct, 24/7': {
+      en: 'Student radio plays live, 24/7',
+      es: 'Las radios estudiantiles emiten en directo, 24/7',
+    },
+    'Radios étudiantes en direct': {
+      en: 'Student radio live',
+      es: 'Radios estudiantiles en directo',
+    },
+    'Site externe': {
+      en: 'External site', es: 'Sitio externo', pt: 'Site externo',
+      de: 'Externe Website', it: 'Sito esterno',
+    },
   };
 
   /** Langues où un calque FR figé n’aide pas — laisser gtx tenter. */
@@ -962,6 +1125,24 @@
 
     const direct = uiPhraseLookup(core, targetLang);
     if (direct != null) return direct;
+
+    // « À venir · 16:00 – 17:00 » (grille radio)
+    const upcoming = core.match(/^À venir(?:\s*·\s*(.+))?$/i)
+      || core.match(/^Up next(?:\s*·\s*(.+))?$/i);
+    if (upcoming) {
+      const stem = uiPhraseLookup('À venir', targetLang) || 'Up next';
+      return upcoming[1] ? `${stem} · ${upcoming[1]}` : stem;
+    }
+    // « avec Prénom Nom » (animateur)
+    const withHost = core.match(/^avec\s+(.+)$/i) || core.match(/^with\s+(.+)$/i);
+    if (withHost) {
+      const lang = institutionLangKey(targetLang);
+      const prep = ({
+        en: 'with', es: 'con', pt: 'com', de: 'mit', it: 'con',
+        fr: 'avec', nl: 'met', pl: 'z',
+      })[lang] || 'with';
+      return `${prep} ${withHost[1]}`;
+    }
 
     // « Plus d'articles (12) » / « More articles (12) »
     const moreFr = core.match(/^Plus d['’]articles\s*\((\d+)\)\s*$/i);
@@ -2078,6 +2259,8 @@
       );
       btn.dataset.mode = mode;
     }
+    // Secondaires du menu (nom FR ↔ EN) + en-têtes de groupe
+    refreshMenuChromeLabels();
     if (menu) {
       menu.querySelectorAll('[data-mode]').forEach((opt) => {
         const active = opt.dataset.mode === mode;
@@ -2368,7 +2551,7 @@
       const group = m.group || 'other';
 
       if (group !== lastGroup) {
-        const groupLabel = GROUP_LABELS[group];
+        const groupLabel = groupLabelText(group);
         if (groupLabel) {
           groupEl = document.createElement('div');
           groupEl.className = 'translate-menu__group';
