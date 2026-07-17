@@ -509,7 +509,7 @@
   let mutateTimer = 0;
   let mutateObserver = null;
   /** Noms de médias étudiants (propres) — ne jamais traduire. */
-  const protectedMediaNames = new Set(['Le Radar', 'LE RADAR', 'Le radar']);
+  const protectedMediaNames = new Set(['Le Radar', 'LE RADAR', 'Le radar', 'Le-Radar.ca', 'le-radar.ca']);
   /**
    * Noms d'établissements (propres) — ne jamais traduire.
    * gtx casse souvent la casse (ex. ES : « Université Laval » → « universidad laval »)
@@ -1391,10 +1391,22 @@
         ([k]) => k.toLowerCase() === key.toLowerCase()
           || k.toLowerCase() === expanded.toLowerCase(),
       )?.[1];
-    if (entry) return entry[lang] || entry.default || expanded;
+    if (entry) {
+      // Forme dédiée pour la langue cible
+      if (entry[lang] != null) return entry[lang];
+      // Scripts lointains (IU, ar, …) : pas de default FR — laisser gtx
+      if (prefersMachineUi(lang)) return null;
+      // Langues à type localisable sans entrée : dériver plus bas depuis FR
+      if (!INSTITUTION_TYPE_LOCALIZE.has(lang)) {
+        return entry.default || expanded;
+      }
+      // continue avec expanded (FR) pour Universidad / Universidade…
+    }
 
     // Hors langues à type localisable : conserver le nom officiel
+    // (sauf prefersMachineUi : null → MT côté preferredInstitutionLabel)
     if (!INSTITUTION_TYPE_LOCALIZE.has(lang)) {
+      if (prefersMachineUi(lang)) return null;
       return expanded;
     }
 
@@ -1589,12 +1601,20 @@
     // promouvoir un collège québécois en « University / Universidad ».
 
     // 1) Cégeps → College / Colegio… (jamais Universidad)
+    //    Scripts lointains : null → gtx (évite de figer « Jonquière College » en IU/ar).
     if (isCegepInstitutionName(key)) {
+      if (prefersMachineUi(lang)) return null;
       return formatCegepLabel(key, lang);
     }
 
     // 2) Collèges / colleges (Dawson, formes « X College », etc.)
     if (isCollegeInstitutionName(key)) {
+      if (prefersMachineUi(lang)) {
+        // Glossaire (Dawson) s’il a une entrée pour la langue ; sinon MT
+        const dawson = INSTITUTION_LABELS['Dawson College'];
+        if (/^dawson\s+college$/i.test(key) && dawson?.[lang] != null) return dawson[lang];
+        return null;
+      }
       return formatCollegeLabel(key, lang);
     }
 
@@ -1605,8 +1625,29 @@
         ([k]) => k.toLowerCase() === key.toLowerCase(),
       )?.[1];
     if (entry) {
-      const label = entry[lang] || entry.default || null;
-      // Cegep/college glissés dans le glossaire : filet anti-université
+      // Entrée dédiée pour la langue → l’utiliser
+      if (entry[lang] != null) {
+        const label = entry[lang];
+        if (isCegepOrCollegeInstitution(key)) {
+          return demoteUniversityLabelIfCollege(key, label, lang);
+        }
+        return label;
+      }
+      // Scripts lointains (IU, ar, hi…) : ne PAS renvoyer le default FR/EN
+      // (sinon les pastilles sources restent en français et gtx ne tourne jamais).
+      if (prefersMachineUi(lang)) return null;
+      // Langues à type localisable sans entrée : dériver Universidad… depuis FR
+      if (INSTITUTION_TYPE_LOCALIZE.has(lang)) {
+        const base = entry.fr || entry.default || key;
+        if (isUniversityInstitutionName(base) || isUniversityInstitutionName(key)) {
+          const mapped = formatUniversityLabel(base, lang);
+          if (mapped && mapped !== base && mapped !== key) return mapped;
+        }
+        if (isCegepOrCollegeInstitution(key)) {
+          return formatCegepLabel(key, lang) || formatCollegeLabel(key, lang);
+        }
+      }
+      const label = entry.default || entry.fr || null;
       if (label && isCegepOrCollegeInstitution(key)) {
         return demoteUniversityLabelIfCollege(key, label, lang);
       }
@@ -2452,7 +2493,12 @@
     const tl = activeMode === DEFAULT_MODE ? null : googCodeForMode(activeMode);
     if (!tl || !shouldLocalizeInstitutions(tl)) return raw;
     const hit = preferredInstitutionLabel(raw, tl);
-    return hit != null ? hit : raw;
+    if (hit != null) return hit;
+    // IU / ar / … : réutiliser le cache MT pour ne pas réécraser les pastilles
+    // en français après notifyDisplayRefresh (marquees).
+    const cached = translationCache[cacheKey(raw, tl)];
+    if (cached) return cached;
+    return raw;
   }
 
   function notifyDisplayRefresh() {

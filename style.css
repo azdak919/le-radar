@@ -96,7 +96,6 @@ body {
  * le shell UI reste LTR (pas de dir=rtl sur <html>), seul le contenu
  * éditorial lit de droite à gauche — évite le basculement du tuner/filtres.
  */
-html[data-script-dir="rtl"] .wordmark-full,
 html[data-script-dir="rtl"] .wire-title,
 html[data-script-dir="rtl"] .wire-status,
 html[data-script-dir="rtl"] .news-updated,
@@ -113,9 +112,18 @@ html[data-script-dir="rtl"] .filters-compact__text {
   text-align: start;
 }
 
+/* Slogan sous le wordmark : RTL pour la lecture, mais toujours centré
+   (text-align:start le collait à droite en arabe / farsi / hébreu). */
+html[data-script-dir="rtl"] .wordmark-full {
+  direction: rtl;
+  unicode-bidi: plaintext;
+  text-align: center;
+}
+
 html[data-script-dir="rtl"] .wordmark-mark {
   /* Titre de marque centré ; bidi naturel pour le texte traduit */
   unicode-bidi: plaintext;
+  text-align: center;
 }
 
 /* Filet si un ancien cache a encore dir=rtl sur <html> */
@@ -258,7 +266,8 @@ a { color: inherit; }
  * .wire-title « Le fil étudiant » (1.4rem).
  */
 :root {
-  --radar-wordmark-size: clamp(1.85rem, 6.4vw + 0.25rem, 3.9rem);
+  /* Le-Radar.ca : un cran au-dessus de l’ancien « LE RADAR » */
+  --radar-wordmark-size: clamp(2.05rem, 6.8vw + 0.3rem, 4.25rem);
   --radar-lead-title-size: clamp(1.55rem, 4.1vw + 0.15rem, 2.55rem);
 }
 /* block (pas flex) : le texte traduit (ex. inuktitut) peut se couper
@@ -338,8 +347,8 @@ html[data-script-dir="rtl"] .wordmark-full {
 
 @media (max-width: 720px) {
   :root {
-    --radar-wordmark-size: clamp(1.7rem, 7.2vw, 2.7rem);
-    /* Plancher > .wire-title (1.4rem) et < --radar-wordmark-size (1.7rem). */
+    --radar-wordmark-size: clamp(1.85rem, 7.6vw, 2.95rem);
+    /* Plancher > .wire-title (1.4rem) et < --radar-wordmark-size. */
     --radar-lead-title-size: clamp(1.55rem, 4.8vw, 1.85rem);
   }
   .wordmark-mark {
@@ -363,7 +372,7 @@ html[data-script-dir="rtl"] .wordmark-full {
 
 @media (min-width: 721px) and (max-width: 1024px) {
   :root {
-    --radar-wordmark-size: clamp(1.95rem, 4.4vw, 3.35rem);
+    --radar-wordmark-size: clamp(2.15rem, 4.8vw, 3.6rem);
     --radar-lead-title-size: clamp(1.45rem, 2.8vw, 2.35rem);
   }
   html[lang="iu"] .wordmark-mark,
@@ -3858,7 +3867,7 @@ body.external-listen-open {
 
   @media (min-width: 1100px) {
     :root {
-      --radar-wordmark-size: clamp(2.35rem, 3.2vw + 0.6rem, 3.9rem);
+      --radar-wordmark-size: clamp(2.55rem, 3.4vw + 0.7rem, 4.25rem);
       --radar-lead-title-size: clamp(1.65rem, 1.6vw + 0.7rem, 2.55rem);
     }
   }

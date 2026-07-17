@@ -583,26 +583,66 @@ function normLoose(s) {
   return String(s || '').toLowerCase().replace(/\s+/g, ' ').trim();
 }
 
+/**
+ * true / false si la plage start–end (fuseau grille) couvre l'instant présent ;
+ * null si aucune horloge exploitable (on fait confiance au bot).
+ * end exclusive — à 15:00 pile, l'émission 14:00–15:00 est terminée.
+ */
+function airSlotIsLive(slot) {
+  if (!slot) return null;
+  const start = scheduleTimeToMin(slot.start);
+  const end = scheduleTimeToMin(slot.end);
+  if (start == null && end == null) return null;
+  const { minutes: now } = scheduleZonedNow();
+  if (start != null && end != null) {
+    // Nuit : end <= start (ex. 22:00 → 02:00)
+    if (end <= start) return now >= start || now < end;
+    return now >= start && now < end;
+  }
+  if (end != null) return now < end;
+  // start seul : en cours dès le début (le bot next / la grille corrigeront la fin)
+  return now >= start;
+}
+
 /** Émission en cours / à venir : d'abord le bot (radio-nowplaying.json), puis grille locale. */
 function botCurrentShow(radio) {
   const entry = nowPlayingEntry(radio);
   const cur = entry?.current;
-  if (cur?.title && String(cur.title).trim().length >= 3) return cur;
-  const legacy = String(entry?.showTitle || '').trim();
-  if (legacy.length >= 3) {
-    return {
-      title: legacy,
-      host: entry?.host || '',
-      source: entry?.source || '',
-    };
+  if (cur?.title && String(cur.title).trim().length >= 3) {
+    const live = airSlotIsLive(cur);
+    if (live === true) return cur;
+    if (live === null) {
+      // Pas d'horaire sur current : expirer si « next » est clairement en ondes
+      const next = entry?.next;
+      if (!(next?.title && airSlotIsLive(next) === true)) return cur;
+      // sinon next a pris le relais → ne pas renvoyer current périmé
+    }
+    // live === false : créneau terminé — ne pas figer l'ancien titre
+  } else {
+    // Repli legacy showTitle seulement s'il n'y a pas de current horodaté expiré
+    const legacy = String(entry?.showTitle || '').trim();
+    if (legacy.length >= 3) {
+      return {
+        title: legacy,
+        host: entry?.host || '',
+        source: entry?.source || '',
+      };
+    }
+  }
+  // Promouvoir next quand son créneau a commencé (bot pas encore rafraîchi)
+  const next = entry?.next;
+  if (next?.title && String(next.title).trim().length >= 3 && airSlotIsLive(next) === true) {
+    return next;
   }
   return null;
 }
 
 function botNextShow(radio) {
   const next = nowPlayingEntry(radio)?.next;
-  if (next?.title && String(next.title).trim().length >= 3) return next;
-  return null;
+  if (!next?.title || String(next.title).trim().length < 3) return null;
+  // Déjà en ondes (promu current) → ce n'est plus « à venir »
+  if (airSlotIsLive(next) === true) return null;
+  return next;
 }
 
 function nowAirShowTitle(radio) {
