@@ -21,30 +21,40 @@
   const CONCURRENCY = 6;
   const MAX_CHUNK = 450;
 
+  /**
+   * Catalogue de langues.
+   *
+   * Bonnes pratiques (W3C / Unicode CLDR / sélecteurs Apple·Google·Wikipedia) :
+   *  - `label` = endonyme (nom de la langue *dans* cette langue)
+   *  - `nameFr` = nom en français (UI du site) pour repère + tri + recherche
+   *  - pas de liste de pays (une langue ≠ un pays ; l’arabe n’est pas « l’Arabie »)
+   *  - `script` seulement pour les variantes d’écriture (syllabiques, simplifié…)
+   *  - groupes : core | indigenous | other — pas de continents
+   */
   const MODES = {
     original: {
       id: 'original',
       label: 'Original',
-      short: 'Original',
+      nameFr: 'Original',
+      short: '—',
       title: 'Ne pas traduire — chaque article reste dans sa langue d’origine',
-      hint: 'Sans traduction',
       group: 'core',
     },
     fr: {
       id: 'fr',
       label: 'Français',
+      nameFr: 'Français',
       short: 'FR',
       title: 'Traduire toute la page en français',
-      hint: 'Toute la page',
       goog: 'fr',
       group: 'core',
     },
     en: {
       id: 'en',
       label: 'English',
+      nameFr: 'Anglais',
       short: 'EN',
       title: 'Translate the whole page into English',
-      hint: 'Whole page',
       goog: 'en',
       group: 'core',
     },
@@ -53,415 +63,462 @@
     iu: {
       id: 'iu',
       label: 'ᐃᓄᒃᑎᑐᑦ',
+      nameFr: 'Inuktitut',
       short: 'IU',
-      title: 'Inuktitut (syllabiques) — Inuktut, Nunavik et Inuit du Canada',
-      hint: 'Inuktitut · syllabiques',
+      title: 'Inuktitut (syllabiques) — Inuktut, Nunavik et Inuit du Québec',
+      script: 'Syllabiques',
       goog: 'iu',
       group: 'indigenous',
     },
     'iu-latn': {
       id: 'iu-latn',
       label: 'Inuktut',
+      nameFr: 'Inuktitut',
       short: 'IU',
-      title: 'Inuktut (alphabet latin) — Inuit du Canada',
-      hint: 'Inuktitut · latin',
+      title: 'Inuktut (alphabet latin) — Inuit du Québec',
+      script: 'Latin',
       // Code gtx sensible à la casse : iu-Latn = alphabet latin ; iu = syllabiques.
       goog: 'iu-Latn',
       group: 'indigenous',
     },
-    /* —— Population étudiante internationale au Québec / Canada ——
-       Priorité : Inde, Chine, Nigeria, Philippines, Iran, Vietnam, Corée,
-       Maghreb, Amérique latine, Europe de l’Est, etc. (IRCC / campus QC). */
-    es: {
-      id: 'es',
-      label: 'Español',
-      short: 'ES',
-      title: 'Traducir toda la página al español',
-      hint: 'América latina · España',
-      goog: 'es',
-      group: 'americas',
-    },
-    pt: {
-      id: 'pt',
-      label: 'Português',
-      short: 'PT',
-      title: 'Traduzir a página inteira para português',
-      hint: 'Brasil · Portugal',
-      goog: 'pt',
-      group: 'americas',
-    },
-    ht: {
-      id: 'ht',
-      label: 'Kreyòl',
-      short: 'HT',
-      title: 'Tradui tout paj la an kreyòl ayisyen',
-      hint: 'Haïti · diaspora',
-      goog: 'ht',
-      group: 'americas',
-    },
-    zh: {
-      id: 'zh',
-      label: '中文',
-      short: '中文',
-      title: '将整页翻译成中文（简体）',
-      hint: 'Chine · simplifié',
-      goog: 'zh-CN',
-      group: 'asia',
-    },
-    'zh-tw': {
-      id: 'zh-tw',
-      label: '繁體中文',
-      short: '繁中',
-      title: '將整頁翻譯成繁體中文',
-      hint: 'Taïwan · Hong Kong',
-      goog: 'zh-TW',
-      group: 'asia',
-    },
-    hi: {
-      id: 'hi',
-      label: 'हिन्दी',
-      short: 'HI',
-      title: 'पूरे पृष्ठ का हिंदी में अनुवाद करें',
-      hint: 'Inde · Hindi',
-      goog: 'hi',
-      group: 'asia',
-    },
-    pa: {
-      id: 'pa',
-      label: 'ਪੰਜਾਬੀ',
-      short: 'PA',
-      title: 'ਸਾਰੇ ਸਫ਼ੇ ਦਾ ਪੰਜਾਬੀ ਵਿੱਚ ਅਨੁਵਾਦ',
-      hint: 'Inde · Pendjab',
-      goog: 'pa',
-      group: 'asia',
-    },
-    ur: {
-      id: 'ur',
-      label: 'اردو',
-      short: 'UR',
-      title: 'پورے صفحے کا اردو ترجمہ',
-      hint: 'Pakistan · Inde',
-      goog: 'ur',
-      group: 'asia',
-    },
-    bn: {
-      id: 'bn',
-      label: 'বাংলা',
-      short: 'BN',
-      title: 'সম্পূর্ণ পৃষ্ঠা বাংলায় অনুবাদ করুন',
-      hint: 'Bangladesh · Inde',
-      goog: 'bn',
-      group: 'asia',
-    },
-    ta: {
-      id: 'ta',
-      label: 'தமிழ்',
-      short: 'TA',
-      title: 'முழு பக்கத்தையும் தமிழில் மொழிபெயர்க்கவும்',
-      hint: 'Inde · Sri Lanka',
-      goog: 'ta',
-      group: 'asia',
-    },
-    te: {
-      id: 'te',
-      label: 'తెలుగు',
-      short: 'TE',
-      title: 'మొత్తం పేజీని తెలుగులోకి అనువదించండి',
-      hint: 'Inde · Telugu',
-      goog: 'te',
-      group: 'asia',
-    },
-    mr: {
-      id: 'mr',
-      label: 'मराठी',
-      short: 'MR',
-      title: 'संपूर्ण पृष्ठ मराठीत भाषांतरित करा',
-      hint: 'Inde · Marathi',
-      goog: 'mr',
-      group: 'asia',
-    },
-    gu: {
-      id: 'gu',
-      label: 'ગુજરાતી',
-      short: 'GU',
-      title: 'સમગ્ર પૃષ્ઠનું ગુજરાતીમાં ભાષાંતર',
-      hint: 'Inde · Gujarati',
-      goog: 'gu',
-      group: 'asia',
-    },
-    kn: {
-      id: 'kn',
-      label: 'ಕನ್ನಡ',
-      short: 'KN',
-      title: 'ಸಂಪೂರ್ಣ ಪುಟವನ್ನು ಕನ್ನಡಕ್ಕೆ ಅನುವಾದಿಸಿ',
-      hint: 'Inde · Kannada',
-      goog: 'kn',
-      group: 'asia',
-    },
-    ml: {
-      id: 'ml',
-      label: 'മലയാളം',
-      short: 'ML',
-      title: 'മുഴുവൻ പേജും മലയാളത്തിലേക്ക് വിവർത്തനം ചെയ്യുക',
-      hint: 'Inde · Malayalam',
-      goog: 'ml',
-      group: 'asia',
-    },
-    vi: {
-      id: 'vi',
-      label: 'Tiếng Việt',
-      short: 'VI',
-      title: 'Dịch toàn bộ trang sang tiếng Việt',
-      hint: 'Vietnam',
-      goog: 'vi',
-      group: 'asia',
-    },
-    tl: {
-      id: 'tl',
-      label: 'Tagalog',
-      short: 'TL',
-      title: 'Isalin ang buong pahina sa Tagalog',
-      hint: 'Philippines',
-      goog: 'tl',
-      group: 'asia',
-    },
-    ko: {
-      id: 'ko',
-      label: '한국어',
-      short: 'KO',
-      title: '전체 페이지를 한국어로 번역',
-      hint: 'Corée',
-      goog: 'ko',
-      group: 'asia',
-    },
-    ja: {
-      id: 'ja',
-      label: '日本語',
-      short: 'JA',
-      title: 'ページ全体を日本語に翻訳',
-      hint: 'Japon',
-      goog: 'ja',
-      group: 'asia',
-    },
-    th: {
-      id: 'th',
-      label: 'ไทย',
-      short: 'TH',
-      title: 'แปลทั้งหน้าเป็นภาษาไทย',
-      hint: 'Thaïlande',
-      goog: 'th',
-      group: 'asia',
-    },
-    id: {
-      id: 'id',
-      label: 'Bahasa Indonesia',
-      short: 'ID',
-      title: 'Terjemahkan seluruh halaman ke bahasa Indonesia',
-      hint: 'Indonésie',
-      goog: 'id',
-      group: 'asia',
-    },
-    ms: {
-      id: 'ms',
-      label: 'Bahasa Melayu',
-      short: 'MS',
-      title: 'Terjemah seluruh halaman ke Bahasa Melayu',
-      hint: 'Malaisie',
-      goog: 'ms',
-      group: 'asia',
+    /* —— Autres langues (liste plate, tri A→Z par nameFr) ——
+       Population étudiante internationale au Québec / Canada. */
+    am: {
+      id: 'am',
+      label: 'አማርኛ',
+      nameFr: 'Amharique',
+      short: 'AM',
+      title: 'ሙሉ ገጹን ወደ አማርኛ ተርጉም',
+      goog: 'am',
+      group: 'other',
     },
     ar: {
       id: 'ar',
       label: 'العربية',
+      nameFr: 'Arabe',
       short: 'AR',
       title: 'ترجمة الصفحة كاملة إلى العربية',
-      hint: 'Maghreb · Moyen-Orient',
       goog: 'ar',
-      group: 'mena',
+      group: 'other',
     },
-    fa: {
-      id: 'fa',
-      label: 'فارسی',
-      short: 'FA',
-      title: 'ترجمهٔ کل صفحه به فارسی',
-      hint: 'Iran · Afghanistan',
-      goog: 'fa',
-      group: 'mena',
-    },
-    tr: {
-      id: 'tr',
-      label: 'Türkçe',
-      short: 'TR',
-      title: 'Tüm sayfayı Türkçeye çevir',
-      hint: 'Turquie',
-      goog: 'tr',
-      group: 'mena',
-    },
-    he: {
-      id: 'he',
-      label: 'עברית',
-      short: 'HE',
-      title: 'תרגם את כל העמוד לעברית',
-      hint: 'Israël',
-      goog: 'iw',
-      group: 'mena',
-    },
-    sw: {
-      id: 'sw',
-      label: 'Kiswahili',
-      short: 'SW',
-      title: 'Tafsiri ukurasa mzima kwa Kiswahili',
-      hint: 'Afrique de l’Est',
-      goog: 'sw',
-      group: 'africa',
-    },
-    yo: {
-      id: 'yo',
-      label: 'Yorùbá',
-      short: 'YO',
-      title: 'Túmọ̀ gbogbo ojú-ìwé sí èdè Yorùbá',
-      hint: 'Nigeria · Bénin',
-      goog: 'yo',
-      group: 'africa',
-    },
-    ig: {
-      id: 'ig',
-      label: 'Igbo',
-      short: 'IG',
-      title: 'Tụgharịa ibe dum gaa n’Igbo',
-      hint: 'Nigeria',
-      goog: 'ig',
-      group: 'africa',
-    },
-    ha: {
-      id: 'ha',
-      label: 'Hausa',
-      short: 'HA',
-      title: 'Fassara dukkan shafin zuwa Hausa',
-      hint: 'Nigeria · Sahel',
-      goog: 'ha',
-      group: 'africa',
-    },
-    am: {
-      id: 'am',
-      label: 'አማርኛ',
-      short: 'AM',
-      title: 'ሙሉ ገጹን ወደ አማርኛ ተርጉም',
-      hint: 'Éthiopie',
-      goog: 'am',
-      group: 'africa',
+    bn: {
+      id: 'bn',
+      label: 'বাংলা',
+      nameFr: 'Bengali',
+      short: 'BN',
+      title: 'সম্পূর্ণ পৃষ্ঠা বাংলায় অনুবাদ করুন',
+      goog: 'bn',
+      group: 'other',
     },
     de: {
       id: 'de',
       label: 'Deutsch',
+      nameFr: 'Allemand',
       short: 'DE',
       title: 'Ganze Seite auf Deutsch übersetzen',
-      hint: 'Allemagne · Suisse · Autriche',
       goog: 'de',
-      group: 'europe',
-    },
-    it: {
-      id: 'it',
-      label: 'Italiano',
-      short: 'IT',
-      title: 'Traduci l’intera pagina in italiano',
-      hint: 'Italie',
-      goog: 'it',
-      group: 'europe',
-    },
-    ru: {
-      id: 'ru',
-      label: 'Русский',
-      short: 'RU',
-      title: 'Перевести всю страницу на русский',
-      hint: 'Russie · CEI',
-      goog: 'ru',
-      group: 'europe',
-    },
-    uk: {
-      id: 'uk',
-      label: 'Українська',
-      short: 'UK',
-      title: 'Перекласти всю сторінку українською',
-      hint: 'Ukraine · diaspora',
-      goog: 'uk',
-      group: 'europe',
-    },
-    pl: {
-      id: 'pl',
-      label: 'Polski',
-      short: 'PL',
-      title: 'Przetłumacz całą stronę na polski',
-      hint: 'Pologne',
-      goog: 'pl',
-      group: 'europe',
-    },
-    ro: {
-      id: 'ro',
-      label: 'Română',
-      short: 'RO',
-      title: 'Traduce întreaga pagină în română',
-      hint: 'Roumanie · Moldova',
-      goog: 'ro',
-      group: 'europe',
-    },
-    nl: {
-      id: 'nl',
-      label: 'Nederlands',
-      short: 'NL',
-      title: 'Vertaal de hele pagina naar het Nederlands',
-      hint: 'Pays-Bas · Belgique',
-      goog: 'nl',
-      group: 'europe',
+      group: 'other',
     },
     el: {
       id: 'el',
       label: 'Ελληνικά',
+      nameFr: 'Grec',
       short: 'EL',
       title: 'Μετάφραση ολόκληρης της σελίδας στα ελληνικά',
-      hint: 'Grèce · Chypre',
       goog: 'el',
-      group: 'europe',
+      group: 'other',
+    },
+    es: {
+      id: 'es',
+      label: 'Español',
+      nameFr: 'Espagnol',
+      short: 'ES',
+      title: 'Traducir toda la página al español',
+      goog: 'es',
+      group: 'other',
+    },
+    fa: {
+      id: 'fa',
+      label: 'فارسی',
+      nameFr: 'Persan',
+      short: 'FA',
+      title: 'ترجمهٔ کل صفحه به فارسی',
+      goog: 'fa',
+      group: 'other',
+    },
+    gu: {
+      id: 'gu',
+      label: 'ગુજરાતી',
+      nameFr: 'Gujarati',
+      short: 'GU',
+      title: 'સમગ્ર પૃષ્ઠનું ગુજરાતીમાં ભાષાંતર',
+      goog: 'gu',
+      group: 'other',
+    },
+    ha: {
+      id: 'ha',
+      label: 'Hausa',
+      nameFr: 'Haoussa',
+      short: 'HA',
+      title: 'Fassara dukkan shafin zuwa Hausa',
+      goog: 'ha',
+      group: 'other',
+    },
+    he: {
+      id: 'he',
+      label: 'עברית',
+      nameFr: 'Hébreu',
+      short: 'HE',
+      title: 'תרגם את כל העמוד לעברית',
+      goog: 'iw',
+      group: 'other',
+    },
+    hi: {
+      id: 'hi',
+      label: 'हिन्दी',
+      nameFr: 'Hindi',
+      short: 'HI',
+      title: 'पूरे पृष्ठ का हिंदी में अनुवाद करें',
+      goog: 'hi',
+      group: 'other',
+    },
+    ht: {
+      id: 'ht',
+      label: 'Kreyòl ayisyen',
+      nameFr: 'Créole haïtien',
+      short: 'HT',
+      title: 'Tradui tout paj la an kreyòl ayisyen',
+      goog: 'ht',
+      group: 'other',
+    },
+    id: {
+      id: 'id',
+      label: 'Bahasa Indonesia',
+      nameFr: 'Indonésien',
+      short: 'ID',
+      title: 'Terjemahkan seluruh halaman ke bahasa Indonesia',
+      goog: 'id',
+      group: 'other',
+    },
+    ig: {
+      id: 'ig',
+      label: 'Igbo',
+      nameFr: 'Igbo',
+      short: 'IG',
+      title: 'Tụgharịa ibe dum gaa n’Igbo',
+      goog: 'ig',
+      group: 'other',
+    },
+    it: {
+      id: 'it',
+      label: 'Italiano',
+      nameFr: 'Italien',
+      short: 'IT',
+      title: 'Traduci l’intera pagina in italiano',
+      goog: 'it',
+      group: 'other',
+    },
+    ja: {
+      id: 'ja',
+      label: '日本語',
+      nameFr: 'Japonais',
+      short: 'JA',
+      title: 'ページ全体を日本語に翻訳',
+      goog: 'ja',
+      group: 'other',
+    },
+    kn: {
+      id: 'kn',
+      label: 'ಕನ್ನಡ',
+      nameFr: 'Kannada',
+      short: 'KN',
+      title: 'ಸಂಪೂರ್ಣ ಪುಟವನ್ನು ಕನ್ನಡಕ್ಕೆ ಅನುವಾದಿಸಿ',
+      goog: 'kn',
+      group: 'other',
+    },
+    ko: {
+      id: 'ko',
+      label: '한국어',
+      nameFr: 'Coréen',
+      short: 'KO',
+      title: '전체 페이지를 한국어로 번역',
+      goog: 'ko',
+      group: 'other',
+    },
+    ml: {
+      id: 'ml',
+      label: 'മലയാളം',
+      nameFr: 'Malayalam',
+      short: 'ML',
+      title: 'മുഴുവൻ പേജും മലയാളത്തിലേക്ക് വിവർത്തനം ചെയ്യുക',
+      goog: 'ml',
+      group: 'other',
+    },
+    mr: {
+      id: 'mr',
+      label: 'मराठी',
+      nameFr: 'Marathi',
+      short: 'MR',
+      title: 'संपूर्ण पृष्ठ मराठीत भाषांतरित करा',
+      goog: 'mr',
+      group: 'other',
+    },
+    ms: {
+      id: 'ms',
+      label: 'Bahasa Melayu',
+      nameFr: 'Malais',
+      short: 'MS',
+      title: 'Terjemah seluruh halaman ke Bahasa Melayu',
+      goog: 'ms',
+      group: 'other',
+    },
+    nl: {
+      id: 'nl',
+      label: 'Nederlands',
+      nameFr: 'Néerlandais',
+      short: 'NL',
+      title: 'Vertaal de hele pagina naar het Nederlands',
+      goog: 'nl',
+      group: 'other',
+    },
+    pa: {
+      id: 'pa',
+      label: 'ਪੰਜਾਬੀ',
+      nameFr: 'Pendjabi',
+      short: 'PA',
+      title: 'ਸਾਰੇ ਸਫ਼ੇ ਦਾ ਪੰਜਾਬੀ ਵਿੱਚ ਅਨੁਵਾਦ',
+      goog: 'pa',
+      group: 'other',
+    },
+    pl: {
+      id: 'pl',
+      label: 'Polski',
+      nameFr: 'Polonais',
+      short: 'PL',
+      title: 'Przetłumacz całą stronę na polski',
+      goog: 'pl',
+      group: 'other',
+    },
+    pt: {
+      id: 'pt',
+      label: 'Português',
+      nameFr: 'Portugais',
+      short: 'PT',
+      title: 'Traduzir a página inteira para português',
+      goog: 'pt',
+      group: 'other',
+    },
+    ro: {
+      id: 'ro',
+      label: 'Română',
+      nameFr: 'Roumain',
+      short: 'RO',
+      title: 'Traduce întreaga pagină în română',
+      goog: 'ro',
+      group: 'other',
+    },
+    ru: {
+      id: 'ru',
+      label: 'Русский',
+      nameFr: 'Russe',
+      short: 'RU',
+      title: 'Перевести всю страницу на русский',
+      goog: 'ru',
+      group: 'other',
     },
     sv: {
       id: 'sv',
       label: 'Svenska',
+      nameFr: 'Suédois',
       short: 'SV',
       title: 'Översätt hela sidan till svenska',
-      hint: 'Suède',
       goog: 'sv',
-      group: 'europe',
+      group: 'other',
+    },
+    sw: {
+      id: 'sw',
+      label: 'Kiswahili',
+      nameFr: 'Swahili',
+      short: 'SW',
+      title: 'Tafsiri ukurasa mzima kwa Kiswahili',
+      goog: 'sw',
+      group: 'other',
+    },
+    ta: {
+      id: 'ta',
+      label: 'தமிழ்',
+      nameFr: 'Tamoul',
+      short: 'TA',
+      title: 'முழு பக்கத்தையும் தமிழில் மொழிபெயர்க்கவும்',
+      goog: 'ta',
+      group: 'other',
+    },
+    te: {
+      id: 'te',
+      label: 'తెలుగు',
+      nameFr: 'Télougou',
+      short: 'TE',
+      title: 'మొత్తం పేజీని తెలుగులోకి అనువదించండి',
+      goog: 'te',
+      group: 'other',
+    },
+    th: {
+      id: 'th',
+      label: 'ไทย',
+      nameFr: 'Thaï',
+      short: 'TH',
+      title: 'แปลทั้งหน้าเป็นภาษาไทย',
+      goog: 'th',
+      group: 'other',
+    },
+    tl: {
+      id: 'tl',
+      label: 'Tagalog',
+      nameFr: 'Tagalog',
+      short: 'TL',
+      title: 'Isalin ang buong pahina sa Tagalog',
+      goog: 'tl',
+      group: 'other',
+    },
+    tr: {
+      id: 'tr',
+      label: 'Türkçe',
+      nameFr: 'Turc',
+      short: 'TR',
+      title: 'Tüm sayfayı Türkçeye çevir',
+      goog: 'tr',
+      group: 'other',
+    },
+    uk: {
+      id: 'uk',
+      label: 'Українська',
+      nameFr: 'Ukrainien',
+      short: 'UK',
+      title: 'Перекласти всю сторінку українською',
+      goog: 'uk',
+      group: 'other',
+    },
+    ur: {
+      id: 'ur',
+      label: 'اردو',
+      nameFr: 'Ourdou',
+      short: 'UR',
+      title: 'پورے صفحے کا اردو ترجمہ',
+      goog: 'ur',
+      group: 'other',
+    },
+    vi: {
+      id: 'vi',
+      label: 'Tiếng Việt',
+      nameFr: 'Vietnamien',
+      short: 'VI',
+      title: 'Dịch toàn bộ trang sang tiếng Việt',
+      goog: 'vi',
+      group: 'other',
+    },
+    yo: {
+      id: 'yo',
+      label: 'Yorùbá',
+      nameFr: 'Yoruba',
+      short: 'YO',
+      title: 'Túmọ̀ gbogbo ojú-ìwé sí èdè Yorùbá',
+      goog: 'yo',
+      group: 'other',
+    },
+    zh: {
+      id: 'zh',
+      label: '中文',
+      nameFr: 'Chinois',
+      short: '中文',
+      title: '将整页翻译成中文（简体）',
+      script: 'Simplifié',
+      goog: 'zh-CN',
+      group: 'other',
+    },
+    'zh-tw': {
+      id: 'zh-tw',
+      label: '繁體中文',
+      nameFr: 'Chinois',
+      short: '繁中',
+      title: '將整頁翻譯成繁體中文',
+      script: 'Traditionnel',
+      goog: 'zh-TW',
+      group: 'other',
     },
   };
 
-  /** Ordre d’affichage : Original/FR/EN → autochtones QC → régions d’origine étudiantes.
-   *  Les IDs autochtones sont injectés depuis indigenous-mt.json (voir applyIndigenousRegistry). */
+  /**
+   * Ordre d’affichage :
+   *  1. core — Original, FR, EN (pas d’en-tête de groupe)
+   *  2. indigenous — Langues autochtones du Québec (Premiers Peuples + Inuit)
+   *  3. other — liste plate A→Z (nameFr), sans continents
+   * Les IDs autochtones sont injectés depuis indigenous-mt.json.
+   */
   const MENU_ORDER_CORE = ['original', 'fr', 'en'];
-  const MENU_ORDER_TAIL = [
-    // Amériques
-    'es', 'pt', 'ht',
-    // Asie (Inde en tête des permis d’études au Canada)
-    'zh', 'zh-tw', 'hi', 'pa', 'ur', 'bn', 'ta', 'te', 'mr', 'gu', 'kn', 'ml',
-    'vi', 'tl', 'ko', 'ja', 'th', 'id', 'ms',
-    // Maghreb / Moyen-Orient
-    'ar', 'fa', 'tr', 'he',
-    // Afrique subsaharienne (Nigeria, etc.)
-    'yo', 'ig', 'ha', 'sw', 'am',
-    // Europe
-    'de', 'it', 'ru', 'uk', 'pl', 'ro', 'nl', 'el', 'sv',
+  const MENU_ORDER_OTHER_IDS = [
+    'am', 'ar', 'bn', 'de', 'el', 'es', 'fa', 'gu', 'ha', 'he', 'hi', 'ht',
+    'id', 'ig', 'it', 'ja', 'kn', 'ko', 'ml', 'mr', 'ms', 'nl', 'pa', 'pl',
+    'pt', 'ro', 'ru', 'sv', 'sw', 'ta', 'te', 'th', 'tl', 'tr', 'uk', 'ur',
+    'vi', 'yo', 'zh', 'zh-tw',
   ];
+
+  function sortLangIdsByNameFr(ids) {
+    return [...ids].sort((a, b) => {
+      const na = MODES[a]?.nameFr || MODES[a]?.label || a;
+      const nb = MODES[b]?.nameFr || MODES[b]?.label || b;
+      const cmp = na.localeCompare(nb, 'fr', { sensitivity: 'base' });
+      if (cmp !== 0) return cmp;
+      // Même nameFr (ex. Chinois simplifié / traditionnel) : script puis id
+      const sa = MODES[a]?.script || '';
+      const sb = MODES[b]?.script || '';
+      return sa.localeCompare(sb, 'fr', { sensitivity: 'base' })
+        || a.localeCompare(b, 'fr');
+    });
+  }
+
+  let MENU_ORDER_TAIL = sortLangIdsByNameFr(MENU_ORDER_OTHER_IDS);
   let MENU_ORDER = [...MENU_ORDER_CORE, 'iu', 'iu-latn', ...MENU_ORDER_TAIL];
 
+  /**
+   * Groupes du menu.
+   *
+   * « Langues autochtones du Québec » — formulation officielle du gouvernement
+   * du Québec (ex. plan d’action culture/langues autochtones ; volet « langues
+   * autochtones » du MCC). « Autochtone » au Québec = les 10 Premières Nations
+   * + les Inuit (11 nations) ; « Premières Nations » seul exclurait l’inuktitut.
+   * Alternatives plus longues : « Langues des Premières Nations et des Inuit ».
+   * Pas de subdivision par continent pour les autres langues.
+   */
   const GROUP_LABELS = {
     indigenous: 'Langues autochtones du Québec',
-    americas: 'Amériques',
-    asia: 'Asie',
-    mena: 'Maghreb & Moyen-Orient',
-    africa: 'Afrique',
-    europe: 'Europe',
+    other: 'Autres langues',
   };
 
   let indigenousRegistryReady = false;
+
+  /**
+   * Ligne secondaire sous l’endonyme : nom FR (si distinct) + écriture + bientôt.
+   * Pas de pays — une langue n’est pas un drapeau.
+   */
+  function languageSecondaryLine(m = {}) {
+    const parts = [];
+    const label = String(m.label || '').trim();
+    const nameFr = String(m.nameFr || '').trim();
+    if (nameFr && nameFr.localeCompare(label, 'fr', { sensitivity: 'base' }) !== 0) {
+      parts.push(nameFr);
+    }
+    if (m.script) parts.push(m.script);
+    if (m.unavailable) parts.push('Bientôt');
+    return parts.join(' · ');
+  }
+
+  /** Chaîne de recherche (endonyme + FR + code + script + aliases). */
+  function languageSearchBlob(m = {}) {
+    return [
+      m.label, m.nameFr, m.short, m.id, m.script, m.hint,
+      ...(Array.isArray(m.aliases) ? m.aliases : []),
+    ].filter(Boolean).join(' ').toLowerCase();
+  }
 
   /** Fusionne indigenous-mt.json → MODES + MENU_ORDER (active + bientôt). */
   function applyIndigenousRegistry(reg) {
@@ -470,12 +527,23 @@
     for (const lang of reg.languages) {
       if (!lang?.id) continue;
       const enabled = !!lang.enabled && !lang.unavailable && lang.goog;
+      // nameFr : champ dédié, sinon dériver du hint historique (« Inuktitut · … »)
+      const nameFr = lang.nameFr
+        || String(lang.hint || '').split(/\s*[·•|]\s*/)[0].trim()
+        || lang.label
+        || lang.id;
+      const script = lang.script
+        || (/syllab/i.test(lang.hint || '') ? 'Syllabiques'
+          : /latin/i.test(lang.hint || '') ? 'Latin'
+            : undefined);
       MODES[lang.id] = {
         id: lang.id,
         label: lang.label || lang.id,
+        nameFr,
         short: lang.short || String(lang.id).toUpperCase(),
         title: lang.title || lang.label || lang.id,
-        hint: lang.hint || (enabled ? 'Auto' : 'bientôt'),
+        script,
+        aliases: lang.aliases || [],
         group: 'indigenous',
         goog: enabled ? lang.goog : undefined,
         unavailable: !enabled,
@@ -483,6 +551,7 @@
       indigenousIds.push(lang.id);
     }
     if (indigenousIds.length) {
+      MENU_ORDER_TAIL = sortLangIdsByNameFr(MENU_ORDER_OTHER_IDS);
       MENU_ORDER = [...MENU_ORDER_CORE, ...indigenousIds, ...MENU_ORDER_TAIL];
     }
   }
@@ -2326,7 +2395,10 @@
         + (id === DEFAULT_MODE ? ' is-active' : '')
         + (m.unavailable ? ' is-unavailable' : '');
       opt.dataset.mode = id;
-      opt.dataset.search = `${m.label} ${m.short || ''} ${m.hint || ''} ${id}`.toLowerCase();
+      // Endonyme + code + nom FR / écriture (pas de pays)
+      const code = escapeHtml(m.short || id.toUpperCase());
+      const secondary = languageSecondaryLine(m);
+      opt.dataset.search = languageSearchBlob(m);
       opt.setAttribute('aria-selected', id === DEFAULT_MODE ? 'true' : 'false');
       if (m.unavailable) {
         opt.setAttribute('aria-disabled', 'true');
@@ -2334,13 +2406,18 @@
       } else {
         opt.title = m.title;
       }
-      // Endonyme (label) + code court en pastille + hint régional
-      const code = escapeHtml(m.short || id.toUpperCase());
+      const langAttr = m.goog
+        ? ` lang="${escapeHtml(m.goog)}"`
+        : (id !== 'original' ? ` lang="${escapeHtml(id)}"` : '');
       opt.innerHTML = `<span class="translate-menu__row">`
-        + `<span class="translate-menu__name">${escapeHtml(m.label)}</span>`
-        + `<span class="translate-menu__code" aria-hidden="true">${code}</span>`
+        + `<span class="translate-menu__name"${langAttr}>${escapeHtml(m.label)}</span>`
+        + (m.short && m.short !== '—'
+          ? `<span class="translate-menu__code" aria-hidden="true">${code}</span>`
+          : '')
         + `</span>`
-        + `<span class="translate-menu__hint">${escapeHtml(m.hint || '')}</span>`;
+        + (secondary
+          ? `<span class="translate-menu__hint">${escapeHtml(secondary)}</span>`
+          : '');
       (groupEl || frag).appendChild(opt);
     }
 
