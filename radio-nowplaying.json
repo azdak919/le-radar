@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-17T18:34:51.109Z",
+  "updatedAt": "2026-07-17T20:07:25.575Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T18:34:28.427Z"
+      "checkedAt": "2026-07-17T20:07:04.395Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
+        "title": "Rebelles soniques",
         "source": "api-live",
-        "start": "09:00",
+        "start": "12:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-collation"
+        "slug": "rebelles-soniques"
       },
       "next": {
-        "title": "Accents ouverts",
+        "title": "Le palmarès",
         "source": "api-live",
-        "start": "11:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364136.mp3",
-        "slug": "accents-ouverts"
+        "start": "14:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364530.mp3",
+        "slug": "palmares-de-cism"
       },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "Rebelles soniques",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-17T18:34:30.188Z"
+      "checkedAt": "2026-07-17T20:07:06.141Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "NNB/Jewish Heretics/QPIRG/Mi Chante",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "New Shit",
         "source": "api-live",
         "start": "15:00",
         "end": "17:00"
       },
+      "next": {
+        "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "NNB/Jewish Heretics/QPIRG/Mi Chante",
+      "showTitle": "New Shit",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,59 +77,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T18:34:33.520Z"
+      "checkedAt": "2026-07-17T20:07:09.083Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Whatever She Wants",
+        "title": "Tapeworms",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/whatever-she-wants"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/tapeworms"
       },
       "next": {
-        "title": "Dead Beats",
+        "title": "The Groove Master's Hour",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/dead-beats"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
       },
       "track": "",
-      "showTitle": "Whatever She Wants",
+      "showTitle": "Tapeworms",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T18:34:47.275Z"
+      "checkedAt": "2026-07-17T20:07:22.516Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Ciné-Histoire",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "Nouveautés Franco",
         "source": "schedule",
         "start": "15:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "La récréation",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Ciné-Histoire",
+      "showTitle": "Nouveautés Franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T18:34:48.267Z"
+      "checkedAt": "2026-07-17T20:07:23.571Z"
     },
     "choq": {
       "id": "choq",
@@ -140,7 +140,7 @@
         "host": "KNEECAP"
       },
       "next": null,
-      "track": "Saints Martyrs - Kyrie eleison",
+      "track": "Étienne Coppée - Salut",
       "showTitle": "Liars Tale",
       "host": "KNEECAP",
       "source": "api-live",
@@ -149,7 +149,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T18:34:50.758Z"
+      "checkedAt": "2026-07-17T20:07:25.225Z"
     }
   }
 }
