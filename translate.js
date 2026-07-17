@@ -14,7 +14,7 @@
   'use strict';
 
   const STORAGE_KEY = 'radar-translate-mode';
-  // v6 : glossaire UI élargi + lazy suite du fil (ne pas MT l’overflow replié)
+  // v7 : glossaire UI + lazy suite du fil (MT aussi la rangée peek partielle)
   const CACHE_KEY = 'radar-translate-cache-v6';
   const CACHE_MAX = 900;
   const DEFAULT_MODE = 'original';
@@ -509,7 +509,11 @@
   let mutateTimer = 0;
   let mutateObserver = null;
   /** Noms de médias étudiants (propres) — ne jamais traduire. */
-  const protectedMediaNames = new Set(['Le Radar', 'LE RADAR', 'Le radar', 'Le-Radar.ca', 'le-radar.ca']);
+  const protectedMediaNames = new Set([
+    'Le Radar', 'LE RADAR', 'Le radar',
+    'Le-Radar.ca', 'le-radar.ca',
+    'LE·RADAR.ca', 'LE.RADAR.ca', 'LE RADAR.ca',
+  ]);
   /**
    * Noms d'établissements (propres) — ne jamais traduire.
    * gtx casse souvent la casse (ex. ES : « Université Laval » → « universidad laval »)
@@ -1790,27 +1794,38 @@
   }
 
   /**
-   * Articles de la suite du fil encore repliés (sous le pli « Plus d'articles »).
-   * On ne les envoie pas au MT tant que l’utilisateur n’a pas déplié —
-   * gain net de latence (souvent 50–150 chaînes en moins).
+   * Articles de la suite du fil *entièrement* hors écran (sous le pli
+   * « Plus d'articles », au-delà de la rangée peek).
+   *
+   * On MT : les N cartes pleines + la rangée peek (titres partiels sous le
+   * fondu). On saute le reste jusqu’au dépliage — gain de latence.
+   *
+   * Source de vérité : `data-translate-skip="1"` posé par app.js.
+   * `.is-tail-overflow` seul ne suffit plus (la peek l’a aussi).
    */
   function isInCollapsedTailOverflow(node) {
     const el = node && node.nodeType === 3 ? node.parentElement : node;
     if (!el || el.nodeType !== 1) return false;
-    if (el.closest?.('.is-tail-overflow, [data-translate-skip="1"]')) return true;
+    // Explicit skip (app.js) — cartes au-delà de visible + peek
+    if (el.closest?.('[data-translate-skip="1"]')) return true;
     const tail = el.closest?.('.news-tail');
     if (!tail || !tail.classList.contains('has-overflow') || tail.classList.contains('is-expanded')) {
       return false;
     }
     const article = el.closest?.('.article, a.article');
     if (!article || !tail.contains(article)) return false;
+    // Carte peek (is-tail-overflow sans data-translate-skip) → traduire
+    if (article.hasAttribute?.('data-translate-skip')) {
+      return article.getAttribute('data-translate-skip') === '1';
+    }
     const body = tail.querySelector('.news-tail-body');
     if (!body) return false;
     const cards = [...body.querySelectorAll(':scope > .article, :scope > a.article')];
     const idx = cards.indexOf(article);
     if (idx < 0) return false;
     const visible = parseInt(tail.dataset.tailVisible || '10', 10) || 10;
-    return idx >= visible;
+    const peek = parseInt(tail.dataset.tailPeekTranslate || '2', 10) || 2;
+    return idx >= visible + peek;
   }
 
   function collectTextNodes(root = document.body, { includeCollapsedTail = false } = {}) {

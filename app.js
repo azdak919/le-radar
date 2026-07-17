@@ -376,6 +376,12 @@ let filtersExpanded = false;
 /** Suite du fil : repli après NEWS_TAIL_VISIBLE articles (toutes plateformes). */
 let newsTailExpanded = false;
 const NEWS_TAIL_VISIBLE = 10;
+/**
+ * Rangée « peek » sous le fondu (titres partiels avant « Plus d'articles »).
+ * 2 = max colonnes de la grille (.news-tail-body ≥ 600 px) — ces cartes
+ * restent en is-tail-overflow (hors max-height) mais doivent être traduites.
+ */
+const NEWS_TAIL_PEEK_TRANSLATE = 2;
 let volSliderResizeObs = null;
 const marqueeTextByEl = new WeakMap();
 const marqueeObservedEls = new WeakSet();
@@ -3677,13 +3683,17 @@ function syncNewsTailCollapse({ preserveExpanded = true } = {}) {
   const cards = getNewsTailCards(tail);
   const overflow = cards.length > NEWS_TAIL_VISIBLE;
 
-  // Overflow : pas de display:none (peek des titres) — marque pour le module
-  // de traduction (ne pas MT les cartes encore repliées).
+  // Overflow : pas de display:none (peek des titres). Marque pour le module
+  // de traduction : ne pas MT les cartes *entièrement* hors écran, mais
+  // traduire la rangée peek (titres partiels visibles sous le fondu).
   cards.forEach((el, i) => {
     el.classList.remove('news-tail-article--overflow');
-    const hidden = overflow && !newsTailExpanded && i >= NEWS_TAIL_VISIBLE;
-    el.classList.toggle('is-tail-overflow', hidden);
-    if (hidden) el.setAttribute('data-translate-skip', '1');
+    const pastFull = overflow && !newsTailExpanded && i >= NEWS_TAIL_VISIBLE;
+    const pastPeek = overflow && !newsTailExpanded
+      && i >= NEWS_TAIL_VISIBLE + NEWS_TAIL_PEEK_TRANSLATE;
+    el.classList.toggle('is-tail-overflow', pastFull);
+    // data-translate-skip = hors zone visible + peek uniquement
+    if (pastPeek) el.setAttribute('data-translate-skip', '1');
     else el.removeAttribute('data-translate-skip');
   });
 
@@ -3733,6 +3743,7 @@ function syncNewsTailCollapse({ preserveExpanded = true } = {}) {
     if (!preserveExpanded) newsTailExpanded = false;
     tail.classList.toggle('is-expanded', newsTailExpanded);
     tail.dataset.tailVisible = String(NEWS_TAIL_VISIBLE);
+    tail.dataset.tailPeekTranslate = String(NEWS_TAIL_PEEK_TRANSLATE);
     const label = toggle.querySelector('.news-tail-toggle__label');
     const hidden = cards.length - NEWS_TAIL_VISIBLE;
     if (label) {
