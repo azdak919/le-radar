@@ -1,17 +1,24 @@
 {
-  "updated": "2026-07-17T12:09:57.376Z",
+  "updated": "2026-07-17T14:13:14.029Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 122,
+  "cited": 121,
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 7,
-  "updatedCount": 7,
+  "checked": 8,
+  "updatedCount": 8,
   "citedNew": 5,
-  "fallbackNew": 2,
+  "fallbackNew": 3,
   "samples": [
+    {
+      "title": "Des initiatives qui rassemblent",
+      "source": "Le Délit",
+      "credit": "Crédit photo : Le Délit",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
       "source": "La Pige",
@@ -27,16 +34,16 @@
       "method": null
     },
     {
-      "title": "La performance de l’homosexualité : un privilège ?",
+      "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
+      "credit": "Photo : Elie Nguyen",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "L’épidémie de la nonchalance",
+      "title": "La performance de l’homosexualité : un privilège ?",
       "source": "Le Délit",
-      "credit": "Photo : Elie Nguyen",
+      "credit": "Photo : Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
     },
