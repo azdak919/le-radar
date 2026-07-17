@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-17T22:22:43.139Z",
+  "updatedAt": "2026-07-17T23:25:16.345Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -27,27 +27,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T22:22:22.293Z"
+      "checkedAt": "2026-07-17T23:24:55.886Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
-        "source": "api-live",
-        "start": "14:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "palmares-de-cism"
-      },
-      "next": {
         "title": "Salsa & Bembê",
         "source": "api-live",
         "start": "15:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364153.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "salsa-et-bembe"
       },
+      "next": {
+        "title": "Turbo tannant",
+        "source": "api-live",
+        "start": "16:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364155.mp3",
+        "slug": "turbo-tannant"
+      },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Salsa & Bembê",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,32 +57,33 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-17T22:22:23.882Z"
+      "checkedAt": "2026-07-17T23:24:57.425Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Café",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "LLA/Macondo",
         "source": "api-live",
         "start": "19:00",
         "end": "22:00"
       },
+      "next": {
+        "title": "Weekend Groove",
+        "source": "api-live",
+        "start": "22:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Café",
+      "showTitle": "LLA/Macondo",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T22:22:26.539Z"
+      "checkedAt": "2026-07-17T23:25:00.054Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -109,32 +110,32 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T22:22:40.101Z"
+      "checkedAt": "2026-07-17T23:25:13.366Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "La récréation",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Enfin vendredi",
         "source": "schedule",
         "start": "19:00",
         "end": "21:00"
       },
+      "next": {
+        "title": "Mangue, Goyave et Reggae",
+        "source": "schedule",
+        "start": "21:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "La récréation",
+      "showTitle": "Enfin vendredi",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T22:22:41.099Z"
+      "checkedAt": "2026-07-17T23:25:14.250Z"
     },
     "choq": {
       "id": "choq",
@@ -145,7 +146,7 @@
         "host": "KNEECAP"
       },
       "next": null,
-      "track": "Alemeda - Broken Record",
+      "track": "Jonquille - Tu prendras des detours",
       "showTitle": "Liars Tale",
       "host": "KNEECAP",
       "source": "api-live",
@@ -154,7 +155,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T22:22:42.788Z"
+      "checkedAt": "2026-07-17T23:25:15.994Z"
     }
   }
 }
