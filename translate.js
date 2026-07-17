@@ -511,7 +511,7 @@
   /** Noms de médias étudiants (propres) — ne jamais traduire. */
   const protectedMediaNames = new Set([
     'Le Radar', 'LE RADAR', 'Le radar',
-    'Le-Radar.ca', 'le-radar.ca',
+    'LE-RADAR.ca', 'Le-Radar.ca', 'le-radar.ca',
     'LE·RADAR.ca', 'LE.RADAR.ca', 'LE RADAR.ca',
   ]);
   /**
