@@ -266,7 +266,7 @@ a { color: inherit; }
  * .wire-title « Le fil étudiant » (1.4rem).
  */
 :root {
-  /* Le-Radar.ca : un cran au-dessus de l’ancien « LE RADAR » */
+  /* LE·RADAR.ca : un cran au-dessus de l’ancien « LE RADAR » */
   --radar-wordmark-size: clamp(2.05rem, 6.8vw + 0.3rem, 4.25rem);
   --radar-lead-title-size: clamp(1.55rem, 4.1vw + 0.15rem, 2.55rem);
 }
@@ -287,6 +287,18 @@ a { color: inherit; }
   word-break: break-word;
   hyphens: none;
   box-sizing: border-box;
+}
+.wordmark-brand {
+  white-space: nowrap;
+}
+/* Point médian entre LE et RADAR — discret, un peu plus petit */
+.wordmark-dot {
+  font-weight: 600;
+  font-size: 0.62em;
+  letter-spacing: 0;
+  margin: 0 0.06em;
+  vertical-align: 0.12em;
+  opacity: 0.88;
 }
 .wordmark-emoji {
   font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
