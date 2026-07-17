@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-07-16T22:58:32.651Z",
+  "updatedAt": "2026-07-17T00:06:24.771Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "schedule",
-        "start": "17:30",
-        "end": "19:00",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
+      "current": null,
       "next": {
         "title": "Vendredi Nostalgie",
         "source": "schedule",
@@ -20,34 +14,34 @@
         "url": "https://chyz.ca/emission/vendredi-nostalgie/"
       },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T22:58:11.065Z"
+      "checkedAt": "2026-07-17T00:05:59.237Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
+        "title": "Rythmologie",
         "source": "api-live",
-        "start": "14:00",
+        "start": "16:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "palmares-de-cism"
+        "slug": "rythmologie"
       },
       "next": {
-        "title": "La boussole culturelle",
+        "title": "Entropie",
         "source": "api-live",
-        "start": "15:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364082.mp3",
-        "slug": "la-boussole-culturelle"
+        "start": "18:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364091.mp3",
+        "slug": "entropie"
       },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Rythmologie",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,84 +51,85 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-16T22:58:12.964Z"
+      "checkedAt": "2026-07-17T00:06:00.892Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Upstage",
+        "title": "Other Worlds on Earth/Dromostexte",
         "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
+        "start": "20:00",
+        "end": "21:00"
       },
       "next": {
-        "title": "Grey Matters",
+        "title": "Chaud Pour/Francis",
         "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
+        "start": "21:00",
+        "end": "23:00"
       },
       "track": "",
-      "showTitle": "Upstage",
+      "showTitle": "Other Worlds on Earth/Dromostexte",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T22:58:15.681Z"
+      "checkedAt": "2026-07-17T00:06:08.450Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Electric Messiah",
+        "title": "Maiden Voyage",
         "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/electric-messiah"
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/maiden-voyage"
       },
       "next": {
-        "title": "Teen Radio",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/teen-radio"
+        "start": "21:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "track": "",
-      "showTitle": "Electric Messiah",
+      "showTitle": "Maiden Voyage",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T22:58:29.429Z"
+      "checkedAt": "2026-07-17T00:06:21.769Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "À nous le futur",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "After 5@8",
         "source": "schedule",
         "start": "20:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "À nous le futur",
+      "showTitle": "After 5@8",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T22:58:30.296Z"
+      "checkedAt": "2026-07-17T00:06:22.410Z"
     },
     "choq": {
       "id": "choq",
@@ -142,10 +137,11 @@
       "current": {
         "title": "Correct",
         "source": "api-live",
-        "host": "Les Louanges"
+        "host": "Les Louanges",
+        "url": "https://www.choq.ca/assets/playlist/internationale.jpg"
       },
       "next": null,
-      "track": "Noée - mon corps en echange",
+      "track": "Blackwater Holylight - Mourning After",
       "showTitle": "Correct",
       "host": "Les Louanges",
       "source": "api-live",
@@ -154,7 +150,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-16T22:58:32.300Z"
+      "checkedAt": "2026-07-17T00:06:24.421Z"
     }
   }
 }
