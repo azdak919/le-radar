@@ -1,47 +1,53 @@
 {
-  "updatedAt": "2026-07-17T10:49:07.068Z",
+  "updatedAt": "2026-07-17T12:11:00.767Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Vendredi Nostalgie",
         "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/vendredi-nostalgie/"
       },
+      "next": {
+        "title": "Palmarès CHYZ",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "10:30",
+        "url": "https://chyz.ca/emission/palmares-chyz/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Vendredi Nostalgie",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T10:48:58.543Z"
+      "checkedAt": "2026-07-17T12:10:52.050Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Franco",
-        "source": "api-live",
-        "start": "02:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-franco"
-      },
-      "next": {
         "title": "La carte cadeau (reprise)",
         "source": "api-live",
         "start": "03:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364452.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "la-carte-cadeau"
       },
+      "next": {
+        "title": "Le Séismix",
+        "source": "api-live",
+        "start": "05:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364497.mp3",
+        "slug": "le-seismix"
+      },
       "track": "",
-      "showTitle": "Mix Franco",
+      "showTitle": "La carte cadeau (reprise)",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-17T10:48:59.986Z"
+      "checkedAt": "2026-07-17T12:10:53.720Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "G-Flex Survivor&#039;s Corner",
-        "source": "api-live",
-        "start": "04:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Morning Detour",
         "source": "api-live",
         "start": "07:00",
         "end": "09:00"
       },
-      "track": "G-Flex Survivor",
-      "showTitle": "G-Flex Survivor&#039;s Corner",
+      "next": {
+        "title": "Jazz Amuck",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "11:00"
+      },
+      "track": "",
+      "showTitle": "Morning Detour",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,7 +83,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T10:49:02.653Z"
+      "checkedAt": "2026-07-17T12:10:56.499Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -104,32 +110,32 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T10:49:03.958Z"
+      "checkedAt": "2026-07-17T12:10:57.930Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
+        "title": "Palmarès CFAK",
         "source": "schedule",
-        "start": "00:00",
-        "end": "07:00"
+        "start": "08:00",
+        "end": "09:00"
       },
       "next": {
-        "title": "Folkswagen",
+        "title": "La Souterraine",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "09:00",
+        "end": "11:00"
       },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T10:49:04.808Z"
+      "checkedAt": "2026-07-17T12:10:58.860Z"
     },
     "choq": {
       "id": "choq",
@@ -137,11 +143,10 @@
       "current": {
         "title": "Liars Tale",
         "source": "api-live",
-        "host": "KNEECAP",
-        "url": "https://www.choq.ca/assets/playlist/internationale.jpg"
+        "host": "KNEECAP"
       },
       "next": null,
-      "track": "Status/Non-Status - Blown Again",
+      "track": "Heat - The Unknown",
       "showTitle": "Liars Tale",
       "host": "KNEECAP",
       "source": "api-live",
@@ -150,7 +155,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-17T10:49:06.717Z"
+      "checkedAt": "2026-07-17T12:11:00.417Z"
     }
   }
 }
