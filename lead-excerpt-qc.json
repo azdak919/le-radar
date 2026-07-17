@@ -1,22 +1,31 @@
 {
-  "updated": "2026-07-17T03:56:00.246Z",
+  "updated": "2026-07-17T06:32:37.778Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 4,
-  "withLeadExcerpt": 72,
-  "candidates": 4,
-  "enriched": 0,
-  "failed": 0,
+  "incomplete": 6,
+  "withLeadExcerpt": 73,
+  "candidates": 6,
+  "enriched": 2,
+  "failed": 1,
   "ok": true,
   "samples": [
     {
-      "title": "Voyager sans arrêt : passion ou obsession ?",
-      "link": "https://lecollectif.ca/culture/voyager-sans-arret-passion-ou-obsession/",
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
       "ok": true,
-      "score": 76,
+      "score": 66,
       "chars": 400,
-      "sample": "Les occasions de penser au voyage sont nombreuses. Les médias et les réseaux sociaux montrent sans c",
-      "changed": false
+      "sample": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « p",
+      "changed": true
+    },
+    {
+      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "link": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
+      "ok": true,
+      "score": 81,
+      "chars": 400,
+      "sample": "Cependant, l’épidémie du sida a modifié le rapport entre les deux groupes. Au cours de cette crise, ",
+      "changed": true
     },
     {
       "title": "The Cruel Optimism of Summer",
