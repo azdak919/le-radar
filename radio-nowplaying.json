@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-18T20:13:06.328Z",
+  "updatedAt": "2026-07-18T21:24:42.845Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T20:12:43.461Z"
+      "checkedAt": "2026-07-18T21:24:21.550Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Elkin Polo El Show",
-        "source": "api-live",
-        "start": "09:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "elkin-polo-el-show"
-      },
-      "next": {
         "title": "Change le beat",
         "source": "api-live",
         "start": "13:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364193.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "change-le-beat"
       },
+      "next": {
+        "title": "Faites entrer un DJ",
+        "source": "api-live",
+        "start": "14:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364198.mp3",
+        "slug": "faites-entrer-un-dj"
+      },
       "track": "",
-      "showTitle": "Elkin Polo El Show",
+      "showTitle": "Change le beat",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,7 +51,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-18T20:12:45.496Z"
+      "checkedAt": "2026-07-18T21:24:22.797Z"
     },
     "ckut": {
       "id": "ckut",
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T20:12:48.884Z"
+      "checkedAt": "2026-07-18T21:24:25.653Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Mi Dun Talk",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/mi-dun-talk"
-      },
-      "next": {
         "title": "Mo' Ritmo Radio",
         "source": "schedule",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/mo-ritmo-radio"
       },
+      "next": {
+        "title": "The Limelight",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/the-limelight"
+      },
       "track": "",
-      "showTitle": "Mi Dun Talk",
+      "showTitle": "Mo' Ritmo Radio",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T20:13:02.658Z"
+      "checkedAt": "2026-07-18T21:24:39.444Z"
     },
     "cfak": {
       "id": "cfak",
@@ -124,27 +124,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T20:13:03.607Z"
+      "checkedAt": "2026-07-18T21:24:40.287Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Rebound",
+        "title": "Vacances Everest",
         "source": "api-live",
-        "host": "Rosie Valland"
+        "host": "Les Deuxluxes"
       },
       "next": null,
-      "track": "Rosie Valland - Rebound",
-      "showTitle": "Rebound",
-      "host": "Rosie Valland",
+      "track": "Les Deuxluxes - Vacances Everest",
+      "showTitle": "Vacances Everest",
+      "host": "Les Deuxluxes",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T20:13:05.978Z"
+      "checkedAt": "2026-07-18T21:24:42.495Z"
     }
   }
 }
