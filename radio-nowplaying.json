@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-07-18T19:08:18.124Z",
+  "updatedAt": "2026-07-18T20:13:06.328Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Radio Futura",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "16:00",
-        "url": "https://chyz.ca/emission/radio-futura/"
-      },
+      "current": null,
       "next": {
         "title": "Capitales de Québec",
         "source": "schedule",
@@ -20,14 +14,14 @@
         "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
       "track": "",
-      "showTitle": "Radio Futura",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T19:07:57.348Z"
+      "checkedAt": "2026-07-18T20:12:43.461Z"
     },
     "cism": {
       "id": "cism",
@@ -57,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-18T19:07:59.067Z"
+      "checkedAt": "2026-07-18T20:12:45.496Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Funky Revolutions",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "16:00"
-      },
-      "next": {
         "title": "West Indian Rhythms",
         "source": "api-live",
         "start": "16:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Masters At Work",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "21:00"
+      },
       "track": "",
-      "showTitle": "Funky Revolutions",
+      "showTitle": "West Indian Rhythms",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T19:08:01.847Z"
+      "checkedAt": "2026-07-18T20:12:48.884Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Caribbean Callaloo",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/caribbean-callaloo"
-      },
-      "next": {
         "title": "Mi Dun Talk",
         "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/mi-dun-talk"
       },
+      "next": {
+        "title": "Mo' Ritmo Radio",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/mo-ritmo-radio"
+      },
       "track": "",
-      "showTitle": "Caribbean Callaloo",
+      "showTitle": "Mi Dun Talk",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T19:08:15.171Z"
+      "checkedAt": "2026-07-18T20:13:02.658Z"
     },
     "cfak": {
       "id": "cfak",
@@ -130,27 +124,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T19:08:15.887Z"
+      "checkedAt": "2026-07-18T20:13:03.607Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "In the Grace of Your Love",
+        "title": "Rebound",
         "source": "api-live",
-        "host": "The Rapture"
+        "host": "Rosie Valland"
       },
       "next": null,
-      "track": "The Rapture - In the Grace of Your Love",
-      "showTitle": "In the Grace of Your Love",
-      "host": "The Rapture",
+      "track": "Rosie Valland - Rebound",
+      "showTitle": "Rebound",
+      "host": "Rosie Valland",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T19:08:17.773Z"
+      "checkedAt": "2026-07-18T20:13:05.978Z"
     }
   }
 }
