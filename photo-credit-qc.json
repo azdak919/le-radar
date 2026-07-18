@@ -1,23 +1,30 @@
 {
-  "updated": "2026-07-18T14:50:56.381Z",
+  "updated": "2026-07-18T16:22:26.461Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 122,
+  "cited": 121,
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 1,
-  "updatedCount": 1,
+  "checked": 2,
+  "updatedCount": 2,
   "citedNew": 1,
-  "fallbackNew": 0,
+  "fallbackNew": 1,
   "samples": [
     {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "source": "La Pige",
-      "credit": "Photo : Léa Morin-Letort",
+      "title": "Des initiatives qui rassemblent",
+      "source": "Le Délit",
+      "credit": "Crédit photo : Le Délit",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "source": "Le Délit",
+      "credit": "Photo : Toscane Ralaimongo",
       "cited": true,
-      "method": "wp-caption"
+      "method": "media-credit-featured"
     }
   ]
 }
