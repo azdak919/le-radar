@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-18T09:57:57.062Z",
+  "updatedAt": "2026-07-18T11:11:47.935Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T09:57:34.456Z"
+      "checkedAt": "2026-07-18T11:11:26.101Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rebelles soniques (reprise)",
-        "source": "api-live",
-        "start": "00:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "rebelles-soniques"
-      },
-      "next": {
         "title": "Mix Franco",
         "source": "api-live",
         "start": "02:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364555.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "mix-franco"
       },
+      "next": {
+        "title": "Voix tropicale",
+        "source": "api-live",
+        "start": "05:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364176.mp3",
+        "slug": "voix-tropicale"
+      },
       "track": "",
-      "showTitle": "Rebelles soniques (reprise)",
+      "showTitle": "Mix Franco",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-18T09:57:36.380Z"
+      "checkedAt": "2026-07-18T11:11:27.485Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Mash Time Show",
-        "source": "api-live",
-        "start": "04:00",
-        "end": "06:00"
-      },
-      "next": {
         "title": "Quebec Acadie",
         "source": "api-live",
         "start": "06:00",
         "end": "10:00"
       },
+      "next": {
+        "title": "Making Contact / Anything Goes",
+        "source": "api-live",
+        "start": "10:00",
+        "end": "10:30"
+      },
       "track": "",
-      "showTitle": "The Mash Time Show",
+      "showTitle": "Quebec Acadie",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,74 +77,74 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T09:57:39.573Z"
+      "checkedAt": "2026-07-18T11:11:30.896Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "World-Up'",
         "source": "schedule",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/world-up"
       },
+      "next": {
+        "title": "The Live Wire Show",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/the-live-wire-show"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "World-Up'",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T09:57:53.190Z"
+      "checkedAt": "2026-07-18T11:11:44.606Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
+      "current": null,
+      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule",
         "start": "00:00",
-        "end": "07:00"
+        "end": "21:00"
       },
-      "next": null,
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T09:57:54.166Z"
+      "checkedAt": "2026-07-18T11:11:45.563Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "les morts ne s'excusent pas",
+        "title": "Memories of the Deep Blue Sea feat. Justin Brown",
         "source": "api-live",
-        "host": "Mélodie-Jade"
+        "host": "Dolphin Hyperspace"
       },
       "next": null,
-      "track": "Mélodie-Jade - les morts ne s",
-      "showTitle": "les morts ne s'excusent pas",
-      "host": "Mélodie-Jade",
+      "track": "Dolphin Hyperspace - Memories of the Deep Blue Sea feat. Justin Brown",
+      "showTitle": "Memories of the Deep Blue Sea feat. Justin Brown",
+      "host": "Dolphin Hyperspace",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T09:57:56.712Z"
+      "checkedAt": "2026-07-18T11:11:47.585Z"
     }
   }
 }
