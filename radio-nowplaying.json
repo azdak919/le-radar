@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-18T11:11:47.935Z",
+  "updatedAt": "2026-07-18T12:27:52.103Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T11:11:26.101Z"
+      "checkedAt": "2026-07-18T12:27:31.965Z"
     },
     "cism": {
       "id": "cism",
@@ -51,7 +51,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-18T11:11:27.485Z"
+      "checkedAt": "2026-07-18T12:27:33.572Z"
     },
     "ckut": {
       "id": "ckut",
@@ -77,7 +77,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T11:11:30.896Z"
+      "checkedAt": "2026-07-18T12:27:35.804Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -104,7 +104,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T11:11:44.606Z"
+      "checkedAt": "2026-07-18T12:27:49.012Z"
     },
     "cfak": {
       "id": "cfak",
@@ -124,27 +124,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T11:11:45.563Z"
+      "checkedAt": "2026-07-18T12:27:49.740Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Memories of the Deep Blue Sea feat. Justin Brown",
+        "title": "Le cowboy aux mains d'argent",
         "source": "api-live",
-        "host": "Dolphin Hyperspace"
+        "host": "Lysandre"
       },
       "next": null,
-      "track": "Dolphin Hyperspace - Memories of the Deep Blue Sea feat. Justin Brown",
-      "showTitle": "Memories of the Deep Blue Sea feat. Justin Brown",
-      "host": "Dolphin Hyperspace",
+      "track": "Lysandre - Le cowboy aux mains d",
+      "showTitle": "Le cowboy aux mains d'argent",
+      "host": "Lysandre",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T11:11:47.585Z"
+      "checkedAt": "2026-07-18T12:27:51.752Z"
     }
   }
 }
