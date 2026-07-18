@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-18T03:57:45.094Z",
+  "updatedAt": "2026-07-18T06:12:02.103Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T03:57:25.015Z"
+      "checkedAt": "2026-07-18T06:11:42.783Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix électro",
+        "title": "Mix anglo",
         "source": "api-live",
-        "start": "19:00",
+        "start": "22:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-electro"
+        "slug": "mix-anglo"
       },
       "next": {
-        "title": "Rave de nuit",
+        "title": "Rebelles soniques (reprise)",
         "source": "api-live",
-        "start": "20:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364163.mp3",
-        "slug": "rave-de-nuit"
+        "start": "00:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364590.mp3",
+        "slug": "rebelles-soniques"
       },
       "track": "",
-      "showTitle": "Mix électro",
+      "showTitle": "Mix anglo",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-18T03:57:26.693Z"
+      "checkedAt": "2026-07-18T06:11:44.189Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Weekend Groove",
+        "title": "Soca Sessions",
         "source": "api-live",
-        "start": "22:00",
-        "end": "00:00"
+        "start": "02:00",
+        "end": "04:00"
       },
       "next": {
-        "title": "WEFUNK",
+        "title": "The Mash Time Show",
         "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
+        "start": "04:00",
+        "end": "06:00"
       },
       "track": "",
-      "showTitle": "Weekend Groove",
+      "showTitle": "Soca Sessions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,59 +77,54 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T03:57:29.097Z"
+      "checkedAt": "2026-07-18T06:11:46.457Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Waxing Gibbous",
-        "source": "schedule",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/the-waxing-gibbous"
-      },
-      "next": {
-        "title": "Jazz Boulevard",
+        "title": "CJLO Late Night",
         "source": "schedule",
         "start": "00:00",
-        "end": "02:00",
-        "url": "http://www.cjlo.com/shows/jazz-boulevard"
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+      },
+      "next": {
+        "title": "World-Up'",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/world-up"
       },
       "track": "",
-      "showTitle": "The Waxing Gibbous",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T03:57:42.564Z"
+      "checkedAt": "2026-07-18T06:11:59.559Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "22:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule",
         "start": "00:00",
         "end": "07:00"
       },
+      "next": null,
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T03:57:43.322Z"
+      "checkedAt": "2026-07-18T06:12:00.326Z"
     },
     "choq": {
       "id": "choq",
@@ -138,10 +133,10 @@
         "title": "Liars Tale",
         "source": "api-live",
         "host": "KNEECAP",
-        "url": "https://www.choq.ca/assets/playlist/palmares-site-web.jpg"
+        "url": "https://www.choq.ca/assets/playlist/les-nuits-brutales.png"
       },
       "next": null,
-      "track": "Kelela - goin down",
+      "track": "Destiny Bond - Mind to the Mirror",
       "showTitle": "Liars Tale",
       "host": "KNEECAP",
       "source": "api-live",
@@ -150,7 +145,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T03:57:44.743Z"
+      "checkedAt": "2026-07-18T06:12:01.752Z"
     }
   }
 }
