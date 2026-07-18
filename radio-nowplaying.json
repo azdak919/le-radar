@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-07-18T00:56:36.723Z",
+  "updatedAt": "2026-07-18T03:57:45.094Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Capitales de Québec",
-        "source": "schedule",
-        "start": "16:50",
-        "end": "23:00",
-        "url": "https://chyz.ca/emission/capitales-de-quebec/"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHYZ",
         "source": "schedule",
@@ -20,34 +14,34 @@
         "url": "https://chyz.ca/emission/palmares-chyz/"
       },
       "track": "",
-      "showTitle": "Capitales de Québec",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T00:56:14.217Z"
+      "checkedAt": "2026-07-18T03:57:25.015Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Turbo tannant",
+        "title": "Mix électro",
         "source": "api-live",
-        "start": "16:00",
+        "start": "19:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "turbo-tannant"
+        "slug": "mix-electro"
       },
       "next": {
-        "title": "Ok Doomer",
+        "title": "Rave de nuit",
         "source": "api-live",
-        "start": "17:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364157.mp3",
-        "slug": "ok-doomer"
+        "start": "20:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364163.mp3",
+        "slug": "rave-de-nuit"
       },
       "track": "",
-      "showTitle": "Turbo tannant",
+      "showTitle": "Mix électro",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-18T00:56:16.063Z"
+      "checkedAt": "2026-07-18T03:57:26.693Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "LLA/Macondo",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "22:00"
-      },
-      "next": {
         "title": "Weekend Groove",
         "source": "api-live",
         "start": "22:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "WEFUNK",
+        "source": "api-live",
+        "start": "00:00",
+        "end": "02:00"
+      },
       "track": "",
-      "showTitle": "LLA/Macondo",
+      "showTitle": "Weekend Groove",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,59 +77,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T00:56:18.994Z"
+      "checkedAt": "2026-07-18T03:57:29.097Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "El Encuentro Latino",
+        "title": "The Waxing Gibbous",
         "source": "schedule",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/el-encuentro-latino"
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/the-waxing-gibbous"
       },
       "next": {
-        "title": "Stereo Field Trip",
+        "title": "Jazz Boulevard",
         "source": "schedule",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/stereo-field-trip"
+        "start": "00:00",
+        "end": "02:00",
+        "url": "http://www.cjlo.com/shows/jazz-boulevard"
       },
       "track": "",
-      "showTitle": "El Encuentro Latino",
+      "showTitle": "The Waxing Gibbous",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T00:56:32.856Z"
+      "checkedAt": "2026-07-18T03:57:42.564Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Enfin vendredi",
+        "title": "Mix Anglo",
         "source": "schedule",
-        "start": "19:00",
-        "end": "21:00"
+        "start": "22:00",
+        "end": "00:00"
       },
       "next": {
-        "title": "Mangue, Goyave et Reggae",
+        "title": "Les nuits CFAK",
         "source": "schedule",
-        "start": "21:00",
-        "end": "22:00"
+        "start": "00:00",
+        "end": "07:00"
       },
       "track": "",
-      "showTitle": "Enfin vendredi",
+      "showTitle": "Mix Anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T00:56:33.860Z"
+      "checkedAt": "2026-07-18T03:57:43.322Z"
     },
     "choq": {
       "id": "choq",
@@ -143,10 +137,11 @@
       "current": {
         "title": "Liars Tale",
         "source": "api-live",
-        "host": "KNEECAP"
+        "host": "KNEECAP",
+        "url": "https://www.choq.ca/assets/playlist/palmares-site-web.jpg"
       },
       "next": null,
-      "track": "Nicolet - Doppelganger",
+      "track": "Kelela - goin down",
       "showTitle": "Liars Tale",
       "host": "KNEECAP",
       "source": "api-live",
@@ -155,7 +150,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-18T00:56:36.372Z"
+      "checkedAt": "2026-07-18T03:57:44.743Z"
     }
   }
 }
