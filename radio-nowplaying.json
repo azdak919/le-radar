@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-19T20:53:07.865Z",
+  "updatedAt": "2026-07-19T21:55:30.543Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -27,7 +27,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T20:52:46.126Z"
+      "checkedAt": "2026-07-19T21:55:10.250Z"
     },
     "cism": {
       "id": "cism",
@@ -57,7 +57,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-19T20:52:48.149Z"
+      "checkedAt": "2026-07-19T21:55:11.874Z"
     },
     "ckut": {
       "id": "ckut",
@@ -83,7 +83,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T20:52:51.056Z"
+      "checkedAt": "2026-07-19T21:55:14.199Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -110,7 +110,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T20:53:04.916Z"
+      "checkedAt": "2026-07-19T21:55:27.300Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,27 +135,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T20:53:05.331Z"
+      "checkedAt": "2026-07-19T21:55:28.261Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Depuis Marseille",
+        "title": "Tu vas finir par te tuer",
         "source": "api-live",
-        "host": "Valence"
+        "host": "Douance"
       },
       "next": null,
-      "track": "Valence - Depuis Marseille",
-      "showTitle": "Depuis Marseille",
-      "host": "Valence",
+      "track": "Douance - Tu vas finir par te tuer",
+      "showTitle": "Tu vas finir par te tuer",
+      "host": "Douance",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T20:53:07.514Z"
+      "checkedAt": "2026-07-19T21:55:30.192Z"
     }
   }
 }
