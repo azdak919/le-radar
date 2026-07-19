@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-07-19T15:32:13.179Z",
+  "updatedAt": "2026-07-19T17:00:10.363Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Le Ré-Show : Deuxième Service",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
-      },
+      "current": null,
       "next": {
         "title": "Radio Futura",
         "source": "schedule",
@@ -20,34 +14,34 @@
         "url": "https://chyz.ca/emission/radio-futura/"
       },
       "track": "",
-      "showTitle": "Le Ré-Show : Deuxième Service",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T15:31:51.324Z"
+      "checkedAt": "2026-07-19T16:59:50.513Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Genre de bleu",
-        "source": "api-live",
-        "start": "07:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "genre-de-bleu"
-      },
-      "next": {
         "title": "Par mots et par vaux",
         "source": "api-live",
         "start": "08:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364237.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "par-mots-et-par-vaux"
       },
+      "next": {
+        "title": "Le 120e parallèle",
+        "source": "api-live",
+        "start": "09:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364239.mp3",
+        "slug": "le-120e-parallele"
+      },
       "track": "",
-      "showTitle": "Genre de bleu",
+      "showTitle": "Par mots et par vaux",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,7 +51,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-19T15:31:53.147Z"
+      "checkedAt": "2026-07-19T16:59:51.962Z"
     },
     "ckut": {
       "id": "ckut",
@@ -83,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T15:31:56.142Z"
+      "checkedAt": "2026-07-19T16:59:54.675Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Rigged Sessions",
+        "title": "Northern Stagelights",
         "source": "schedule",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/rigged-sessions"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/northern-stagelights"
       },
       "next": {
-        "title": "Brave Little Emo Girl",
+        "title": "Cinema Smackdown",
         "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/brave-little-emo-girl"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/cinema-smackdown"
       },
       "track": "",
-      "showTitle": "Rigged Sessions",
+      "showTitle": "Northern Stagelights",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T15:32:10.015Z"
+      "checkedAt": "2026-07-19T17:00:07.900Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,27 +129,26 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T15:32:10.455Z"
+      "checkedAt": "2026-07-19T17:00:08.543Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Pace and Loiter",
-        "source": "api-live",
-        "host": "Koyo"
+        "title": "PromoRadioFlIM2026",
+        "source": "api-live"
       },
       "next": null,
-      "track": "Daniel Isaiah - Too Far to Run",
-      "showTitle": "Pace and Loiter",
-      "host": "Koyo",
+      "track": "Slayyyter - DANCE...",
+      "showTitle": "PromoRadioFlIM2026",
+      "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T15:32:12.829Z"
+      "checkedAt": "2026-07-19T17:00:10.012Z"
     }
   }
 }
