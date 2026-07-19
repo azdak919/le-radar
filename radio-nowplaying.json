@@ -1,27 +1,33 @@
 {
-  "updatedAt": "2026-07-19T12:01:58.022Z",
+  "updatedAt": "2026-07-19T14:01:55.295Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Palmarès CHYZ",
         "source": "schedule",
         "start": "10:00",
         "end": "10:30",
         "url": "https://chyz.ca/emission/palmares-chyz/"
       },
+      "next": {
+        "title": "Le Ré-Show : Deuxième Service",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Palmarès CHYZ",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T12:01:35.566Z"
+      "checkedAt": "2026-07-19T14:01:35.387Z"
     },
     "cism": {
       "id": "cism",
@@ -51,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-19T12:01:37.367Z"
+      "checkedAt": "2026-07-19T14:01:36.919Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Mind, Soul, &amp; Spirit",
-        "source": "api-live",
-        "start": "06:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Latin Time",
         "source": "api-live",
         "start": "09:00",
         "end": "10:30"
       },
-      "track": "Mind, Soul, & Spirit",
-      "showTitle": "Mind, Soul, &amp; Spirit",
+      "next": {
+        "title": "International Radio Report",
+        "source": "api-live",
+        "start": "10:30",
+        "end": "11:00"
+      },
+      "track": "",
+      "showTitle": "Latin Time",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T12:01:40.534Z"
+      "checkedAt": "2026-07-19T14:01:39.540Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Gigi Brown Experience",
+        "title": "Rigged Sessions",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/the-gigi-brown-experience"
+        "start": "10:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/rigged-sessions"
       },
       "next": {
-        "title": "REVC",
+        "title": "Brave Little Emo Girl",
         "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/revc"
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/brave-little-emo-girl"
       },
       "track": "",
-      "showTitle": "The Gigi Brown Experience",
+      "showTitle": "Rigged Sessions",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T12:01:54.459Z"
+      "checkedAt": "2026-07-19T14:01:52.951Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,27 +135,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T12:01:55.487Z"
+      "checkedAt": "2026-07-19T14:01:53.579Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Naive",
+        "title": "I Hurt You",
         "source": "api-live",
-        "host": "Softcult"
+        "host": "The Lemon Twigs"
       },
       "next": null,
-      "track": "Softcult - Naive",
-      "showTitle": "Naive",
-      "host": "Softcult",
+      "track": "The Lemon Twigs - I Hurt You",
+      "showTitle": "I Hurt You",
+      "host": "The Lemon Twigs",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T12:01:57.671Z"
+      "checkedAt": "2026-07-19T14:01:54.944Z"
     }
   }
 }
