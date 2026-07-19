@@ -1,14 +1,59 @@
 {
-  "updated": "2026-07-19T16:42:25.382Z",
+  "updated": "2026-07-19T18:14:56.258Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 4,
-  "withLeadExcerpt": 72,
-  "candidates": 4,
-  "enriched": 0,
+  "incomplete": 9,
+  "withLeadExcerpt": 73,
+  "candidates": 9,
+  "enriched": 5,
   "failed": 0,
   "ok": true,
   "samples": [
+    {
+      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "link": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
+      "ok": true,
+      "score": 81,
+      "chars": 400,
+      "sample": "Cependant, l’épidémie du sida a modifié le rapport entre les deux groupes. Au cours de cette crise, ",
+      "changed": true
+    },
+    {
+      "title": "Sois belle et tais-toi",
+      "link": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
+      "ok": true,
+      "score": 96,
+      "chars": 295,
+      "sample": "C’est la sécheresse totale dans le cerveau de bien des gens. Le vôtre, peut-être. Mais ne craignez r",
+      "changed": true
+    },
+    {
+      "title": "Les relations artificielles",
+      "link": "https://lecollectif.ca/societe/les-relations-artificielles/",
+      "ok": true,
+      "score": 96,
+      "chars": 385,
+      "sample": "Audrey Brassard rappelle que ce genre d’émission ne montre que des relations amoureuses idéalisées, ",
+      "changed": true
+    },
+    {
+      "title": "Le phénomène de la nostalgie",
+      "link": "https://lecollectif.ca/societe/le-phenomene-de-la-nostalgie/",
+      "ok": true,
+      "score": 100,
+      "chars": 277,
+      "sample": "Selon Usito , la nostalgie peut être comprise comme la tristesse causée par l’éloignement du pays na",
+      "changed": true
+    },
+    {
+      "title": "Une [sur]consommation… plus consciente?",
+      "link": "https://lecollectif.ca/societe/une-surconsommation-plus-consciente/",
+      "ok": true,
+      "score": 96,
+      "chars": 263,
+      "sample": "Entre temps, Caroline Boivin a commencé à donner le cours de marketing vert à la maîtrise en marketi",
+      "changed": true
+    },
     {
       "title": "Voyager sans arrêt : passion ou obsession ?",
       "link": "https://lecollectif.ca/culture/voyager-sans-arret-passion-ou-obsession/",
@@ -34,15 +79,6 @@
       "score": 66,
       "chars": 400,
       "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
-      "changed": false
-    },
-    {
-      "title": "Letters from the Editors May 2026",
-      "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
-      "ok": true,
-      "score": 76,
-      "chars": 400,
-      "sample": "Dear readers, Class of 2026 We did it! As May’s doting weather and perfumed flowers lull us into the",
       "changed": false
     }
   ]
