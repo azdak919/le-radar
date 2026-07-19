@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-19T04:49:35.766Z",
+  "updatedAt": "2026-07-19T07:28:23.001Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T04:49:14.651Z"
+      "checkedAt": "2026-07-19T07:28:02.592Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les criquets crinqués (reprise)",
-        "source": "api-live",
-        "start": "20:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "les-criquets-crinques"
-      },
-      "next": {
         "title": "Mix anglo",
         "source": "api-live",
         "start": "22:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364620.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "mix-anglo"
       },
+      "next": {
+        "title": "Rythmologie (reprise)",
+        "source": "api-live",
+        "start": "00:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364535.mp3",
+        "slug": "rythmologie"
+      },
       "track": "",
-      "showTitle": "Les criquets crinqués (reprise)",
+      "showTitle": "Mix anglo",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,33 +51,32 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-19T04:49:16.003Z"
+      "checkedAt": "2026-07-19T07:28:04.138Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "stereOphobic",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "Utopia&#039;s Paradise",
         "source": "api-live",
         "start": "02:00",
         "end": "06:00"
       },
-      "track": "",
-      "showTitle": "stereOphobic",
+      "next": {
+        "title": "Mind, Soul, &amp; Spirit",
+        "source": "api-live",
+        "start": "06:00",
+        "end": "09:00"
+      },
+      "track": "Utopia",
+      "showTitle": "Utopia&#039;s Paradise",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T04:49:18.745Z"
+      "checkedAt": "2026-07-19T07:28:06.591Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -104,7 +103,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T04:49:32.180Z"
+      "checkedAt": "2026-07-19T07:28:19.840Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,27 +128,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T04:49:33.142Z"
+      "checkedAt": "2026-07-19T07:28:20.622Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "666 Problems (Feat. Vince Houde)",
+        "title": "Nous, le venin",
         "source": "api-live",
-        "host": "Seum"
+        "host": "Mourir"
       },
       "next": null,
-      "track": "Seum - 666 Problems (Feat. Vince Houde)",
-      "showTitle": "666 Problems (Feat. Vince Houde)",
-      "host": "Seum",
+      "track": "Mourir - Nous, le venin",
+      "showTitle": "Nous, le venin",
+      "host": "Mourir",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T04:49:35.415Z"
+      "checkedAt": "2026-07-19T07:28:22.650Z"
     }
   }
 }
