@@ -1,126 +1,17 @@
 {
-  "updatedAt": "2026-07-19T01:04:32.815Z",
+  "updatedAt": "2026-07-19T04:49:35.766Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Capitales de Québec",
-        "source": "schedule",
-        "start": "18:50",
-        "end": "23:00",
-        "url": "https://chyz.ca/emission/capitales-de-quebec/"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHYZ",
         "source": "schedule",
         "start": "10:00",
         "end": "10:30",
         "url": "https://chyz.ca/emission/palmares-chyz/"
-      },
-      "track": "",
-      "showTitle": "Capitales de Québec",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-07-19T01:04:09.907Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Le radar",
-        "source": "api-live",
-        "start": "17:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "le-radar-2"
-      },
-      "next": {
-        "title": "Disconomique",
-        "source": "api-live",
-        "start": "17:30",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364207.mp3",
-        "slug": "disconomique"
-      },
-      "track": "",
-      "showTitle": "Le radar",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live"
-      ],
-      "clientPoll": {
-        "type": "cism-v1",
-        "url": "https://admin.cism893.ca/api/v1/live"
-      },
-      "checkedAt": "2026-07-19T01:04:11.883Z"
-    },
-    "ckut": {
-      "id": "ckut",
-      "name": "CKUT 90,3",
-      "current": {
-        "title": "Howls From Hell/Too Loud For The Crowd",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
-      },
-      "next": {
-        "title": "SKEwInGTheWaBeS$$",
-        "source": "api-live",
-        "start": "23:00",
-        "end": "00:00"
-      },
-      "track": "",
-      "showTitle": "Howls From Hell/Too Loud For The Crowd",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "stream"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-07-19T01:04:15.141Z"
-    },
-    "cjlo": {
-      "id": "cjlo",
-      "name": "CJLO 1690AM",
-      "current": {
-        "title": "The Spacious Astrology Playlist",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/the-spacious-astrology-playlist"
-      },
-      "next": {
-        "title": "The Go-G...",
-        "source": "schedule",
-        "start": "21:30",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
-      },
-      "track": "",
-      "showTitle": "The Spacious Astrology Playlist",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-07-19T01:04:29.383Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": null,
-      "next": {
-        "title": "Les nuits CFAK",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "21:00"
       },
       "track": "",
       "showTitle": "",
@@ -130,28 +21,135 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T01:04:30.330Z"
+      "checkedAt": "2026-07-19T04:49:14.651Z"
     },
-    "choq": {
-      "id": "choq",
-      "name": "CHOQ.ca",
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
       "current": {
-        "title": "Saturnday",
+        "title": "Les criquets crinqués (reprise)",
         "source": "api-live",
-        "host": "Hush",
-        "url": "https://www.choq.ca/assets/playlist/palmares-site-web.jpg"
+        "start": "20:00",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
+        "slug": "les-criquets-crinques"
       },
-      "next": null,
-      "track": "Hush - Saturnday",
-      "showTitle": "Saturnday",
-      "host": "Hush",
+      "next": {
+        "title": "Mix anglo",
+        "source": "api-live",
+        "start": "22:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364620.mp3",
+        "slug": "mix-anglo"
+      },
+      "track": "",
+      "showTitle": "Les criquets crinqués (reprise)",
+      "host": "",
+      "source": "api-live",
+      "sources": [
+        "api-live"
+      ],
+      "clientPoll": {
+        "type": "cism-v1",
+        "url": "https://admin.cism893.ca/api/v1/live"
+      },
+      "checkedAt": "2026-07-19T04:49:16.003Z"
+    },
+    "ckut": {
+      "id": "ckut",
+      "name": "CKUT 90,3",
+      "current": {
+        "title": "stereOphobic",
+        "source": "api-live",
+        "start": "00:00",
+        "end": "02:00"
+      },
+      "next": {
+        "title": "Utopia&#039;s Paradise",
+        "source": "api-live",
+        "start": "02:00",
+        "end": "06:00"
+      },
+      "track": "",
+      "showTitle": "stereOphobic",
+      "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T01:04:32.464Z"
+      "checkedAt": "2026-07-19T04:49:18.745Z"
+    },
+    "cjlo": {
+      "id": "cjlo",
+      "name": "CJLO 1690AM",
+      "current": {
+        "title": "CJLO Late Night",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+      },
+      "next": {
+        "title": "Sun Ra, Sun Rise",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
+      },
+      "track": "",
+      "showTitle": "CJLO Late Night",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-07-19T04:49:32.180Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Les nuits CFAK",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "21:00"
+      },
+      "next": {
+        "title": "Solénoïde",
+        "source": "schedule",
+        "start": "21:00",
+        "end": "00:00"
+      },
+      "track": "",
+      "showTitle": "Les nuits CFAK",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-07-19T04:49:33.142Z"
+    },
+    "choq": {
+      "id": "choq",
+      "name": "CHOQ.ca",
+      "current": {
+        "title": "666 Problems (Feat. Vince Houde)",
+        "source": "api-live",
+        "host": "Seum"
+      },
+      "next": null,
+      "track": "Seum - 666 Problems (Feat. Vince Houde)",
+      "showTitle": "666 Problems (Feat. Vince Houde)",
+      "host": "Seum",
+      "source": "api-live",
+      "sources": [
+        "api-live",
+        "stream"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-07-19T04:49:35.415Z"
     }
   }
 }
