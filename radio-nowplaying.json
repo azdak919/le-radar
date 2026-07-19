@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-19T21:55:30.543Z",
+  "updatedAt": "2026-07-19T22:55:15.866Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -27,27 +27,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T21:55:10.250Z"
+      "checkedAt": "2026-07-19T22:54:56.887Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Basses fréquences",
-        "source": "api-live",
-        "start": "12:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "basses-frequences"
-      },
-      "next": {
         "title": "Le char de marge",
         "source": "api-live",
         "start": "14:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364252.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "le-char-de-marge"
       },
+      "next": {
+        "title": "Vibrance",
+        "source": "api-live",
+        "start": "16:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364257.mp3",
+        "slug": "vibrance"
+      },
       "track": "",
-      "showTitle": "Basses fréquences",
+      "showTitle": "Le char de marge",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-19T21:55:11.874Z"
+      "checkedAt": "2026-07-19T22:54:58.302Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Bhum Bhum Time",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Desi Beats (must be .mp3!!)",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Bluegrass Rambling",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "Bhum Bhum Time",
+      "showTitle": "Desi Beats (must be .mp3!!)",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T21:55:14.199Z"
+      "checkedAt": "2026-07-19T22:55:00.493Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Grade A Explosives",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/grade-a-explosives"
-      },
-      "next": {
         "title": "Bill's Country & Western Favou...",
         "source": "schedule",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
       },
+      "next": {
+        "title": "No Boundaries",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/no-boundaries"
+      },
       "track": "",
-      "showTitle": "Grade A Explosives",
+      "showTitle": "Bill's Country & Western Favou...",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T21:55:27.300Z"
+      "checkedAt": "2026-07-19T22:55:13.707Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,27 +135,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T21:55:28.261Z"
+      "checkedAt": "2026-07-19T22:55:14.335Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Tu vas finir par te tuer",
+        "title": "Maldita Falta (Acoustic Version)",
         "source": "api-live",
-        "host": "Douance"
+        "host": "Lapelúda, José Lobo"
       },
       "next": null,
-      "track": "Douance - Tu vas finir par te tuer",
-      "showTitle": "Tu vas finir par te tuer",
-      "host": "Douance",
+      "track": "Lapelúda, José Lobo - Maldita Falta (Acoustic Version)",
+      "showTitle": "Maldita Falta (Acoustic Version)",
+      "host": "Lapelúda, José Lobo",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T21:55:30.192Z"
+      "checkedAt": "2026-07-19T22:55:15.516Z"
     }
   }
 }
