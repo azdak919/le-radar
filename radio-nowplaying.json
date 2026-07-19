@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-19T10:56:39.771Z",
+  "updatedAt": "2026-07-19T12:01:58.022Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T10:56:17.008Z"
+      "checkedAt": "2026-07-19T12:01:35.566Z"
     },
     "cism": {
       "id": "cism",
@@ -51,7 +51,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-19T10:56:19.087Z"
+      "checkedAt": "2026-07-19T12:01:37.367Z"
     },
     "ckut": {
       "id": "ckut",
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T10:56:22.603Z"
+      "checkedAt": "2026-07-19T12:01:40.534Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Sun Ra, Sun Rise",
-        "source": "schedule",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
-      },
-      "next": {
         "title": "The Gigi Brown Experience",
         "source": "schedule",
         "start": "08:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/the-gigi-brown-experience"
       },
+      "next": {
+        "title": "REVC",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/revc"
+      },
       "track": "",
-      "showTitle": "Sun Ra, Sun Rise",
+      "showTitle": "The Gigi Brown Experience",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T10:56:36.557Z"
+      "checkedAt": "2026-07-19T12:01:54.459Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,27 +129,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T10:56:37.014Z"
+      "checkedAt": "2026-07-19T12:01:55.487Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Aeroport",
+        "title": "Naive",
         "source": "api-live",
-        "host": "blesse"
+        "host": "Softcult"
       },
       "next": null,
-      "track": "blesse - Aeroport",
-      "showTitle": "Aeroport",
-      "host": "blesse",
+      "track": "Softcult - Naive",
+      "showTitle": "Naive",
+      "host": "Softcult",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T10:56:39.420Z"
+      "checkedAt": "2026-07-19T12:01:57.671Z"
     }
   }
 }
