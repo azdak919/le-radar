@@ -1,53 +1,53 @@
 {
-  "updatedAt": "2026-07-19T14:01:55.295Z",
+  "updatedAt": "2026-07-19T15:32:13.179Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Palmarès CHYZ",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
-      },
-      "next": {
         "title": "Le Ré-Show : Deuxième Service",
         "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
       },
+      "next": {
+        "title": "Radio Futura",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "16:00",
+        "url": "https://chyz.ca/emission/radio-futura/"
+      },
       "track": "",
-      "showTitle": "Palmarès CHYZ",
+      "showTitle": "Le Ré-Show : Deuxième Service",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T14:01:35.387Z"
+      "checkedAt": "2026-07-19T15:31:51.324Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Franco",
+        "title": "Genre de bleu",
         "source": "api-live",
-        "start": "02:00",
+        "start": "07:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-franco"
+        "slug": "genre-de-bleu"
       },
       "next": {
-        "title": "Les mignardises littéraires",
+        "title": "Par mots et par vaux",
         "source": "api-live",
-        "start": "06:30",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364232.mp3",
-        "slug": "les-mignardises-litteraires"
+        "start": "08:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364237.mp3",
+        "slug": "par-mots-et-par-vaux"
       },
       "track": "",
-      "showTitle": "Mix Franco",
+      "showTitle": "Genre de bleu",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-19T14:01:36.919Z"
+      "checkedAt": "2026-07-19T15:31:53.147Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Latin Time",
+        "title": "Free Kick",
         "source": "api-live",
-        "start": "09:00",
-        "end": "10:30"
+        "start": "11:00",
+        "end": "13:00"
       },
       "next": {
-        "title": "International Radio Report",
+        "title": "Modular Systems/Future Classics",
         "source": "api-live",
-        "start": "10:30",
-        "end": "11:00"
+        "start": "13:00",
+        "end": "14:00"
       },
       "track": "",
-      "showTitle": "Latin Time",
+      "showTitle": "Free Kick",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,7 +83,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T14:01:39.540Z"
+      "checkedAt": "2026-07-19T15:31:56.142Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -110,7 +110,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T14:01:52.951Z"
+      "checkedAt": "2026-07-19T15:32:10.015Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,27 +135,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T14:01:53.579Z"
+      "checkedAt": "2026-07-19T15:32:10.455Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "I Hurt You",
+        "title": "Pace and Loiter",
         "source": "api-live",
-        "host": "The Lemon Twigs"
+        "host": "Koyo"
       },
       "next": null,
-      "track": "The Lemon Twigs - I Hurt You",
-      "showTitle": "I Hurt You",
-      "host": "The Lemon Twigs",
+      "track": "Daniel Isaiah - Too Far to Run",
+      "showTitle": "Pace and Loiter",
+      "host": "Koyo",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T14:01:54.944Z"
+      "checkedAt": "2026-07-19T15:32:12.829Z"
     }
   }
 }
