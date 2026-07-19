@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-19T08:36:18.932Z",
+  "updatedAt": "2026-07-19T09:29:42.364Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T08:35:57.091Z"
+      "checkedAt": "2026-07-19T09:29:20.555Z"
     },
     "cism": {
       "id": "cism",
@@ -51,7 +51,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-19T08:35:58.922Z"
+      "checkedAt": "2026-07-19T09:29:22.506Z"
     },
     "ckut": {
       "id": "ckut",
@@ -76,7 +76,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T08:36:01.777Z"
+      "checkedAt": "2026-07-19T09:29:25.609Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -103,7 +103,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T08:36:15.743Z"
+      "checkedAt": "2026-07-19T09:29:39.390Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,27 +128,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T08:36:16.164Z"
+      "checkedAt": "2026-07-19T09:29:39.823Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Lingo",
+        "title": "J attendrai",
         "source": "api-live",
-        "host": "Alewya"
+        "host": "Coup dur"
       },
       "next": null,
-      "track": "Alewya - Lingo",
-      "showTitle": "Lingo",
-      "host": "Alewya",
+      "track": "Coup dur - J attendrai",
+      "showTitle": "J attendrai",
+      "host": "Coup dur",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T08:36:18.580Z"
+      "checkedAt": "2026-07-19T09:29:42.013Z"
     }
   }
 }
