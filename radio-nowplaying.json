@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-20T15:13:17.799Z",
+  "updatedAt": "2026-07-20T16:57:31.584Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T15:12:58.241Z"
+      "checkedAt": "2026-07-20T16:57:11.312Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le terrain sportif",
-        "source": "api-live",
-        "start": "06:30",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "le-terrain-sportif"
-      },
-      "next": {
         "title": "Ya Raï (reprise)",
         "source": "api-live",
         "start": "08:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364703.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "ya-rai"
       },
+      "next": {
+        "title": "La collation",
+        "source": "api-live",
+        "start": "09:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364584.mp3",
+        "slug": "mix-collation"
+      },
       "track": "",
-      "showTitle": "Le terrain sportif",
+      "showTitle": "Ya Raï (reprise)",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-20T15:12:59.966Z"
+      "checkedAt": "2026-07-20T16:57:12.928Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "All Things Campus",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "World Skip The Beat",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "Radio Is Dead",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
       "track": "",
-      "showTitle": "All Things Campus",
+      "showTitle": "World Skip The Beat",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T15:13:02.145Z"
+      "checkedAt": "2026-07-20T16:57:15.313Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "2 Days and a Night",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/2-days-and-a-night"
-      },
-      "next": {
         "title": "Twang City",
         "source": "schedule",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/twang-city"
       },
+      "next": {
+        "title": "Eldest Daughter",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/eldest-daughter"
+      },
       "track": "",
-      "showTitle": "2 Days and a Night",
+      "showTitle": "Twang City",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T15:13:15.509Z"
+      "checkedAt": "2026-07-20T16:57:28.646Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,27 +129,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T15:13:16.289Z"
+      "checkedAt": "2026-07-20T16:57:29.269Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Aliens in the Sky",
+        "title": "Let Me Fade Away",
         "source": "api-live",
-        "host": "Sara Sue Vallee"
+        "host": "zohryu"
       },
       "next": null,
-      "track": "Sara Sue Vallee - Aliens in the Sky",
-      "showTitle": "Aliens in the Sky",
-      "host": "Sara Sue Vallee",
+      "track": "zohryu - Let Me Fade Away",
+      "showTitle": "Let Me Fade Away",
+      "host": "zohryu",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T15:13:17.448Z"
+      "checkedAt": "2026-07-20T16:57:31.233Z"
     }
   }
 }
