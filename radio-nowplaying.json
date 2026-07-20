@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-19T22:55:15.866Z",
+  "updatedAt": "2026-07-20T00:00:15.758Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -27,7 +27,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T22:54:56.887Z"
+      "checkedAt": "2026-07-19T23:59:53.665Z"
     },
     "cism": {
       "id": "cism",
@@ -57,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-19T22:54:58.302Z"
+      "checkedAt": "2026-07-19T23:59:55.383Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Desi Beats (must be .mp3!!)",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Bluegrass Rambling",
         "source": "api-live",
         "start": "19:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Country Classics",
+        "source": "api-live",
+        "start": "20:00",
+        "end": "21:00"
+      },
       "track": "",
-      "showTitle": "Desi Beats (must be .mp3!!)",
+      "showTitle": "Bluegrass Rambling",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T22:55:00.493Z"
+      "checkedAt": "2026-07-19T23:59:58.601Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Bill's Country & Western Favou...",
+        "title": "Eastern ...",
         "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
+        "start": "20:00",
+        "end": "20:30",
+        "url": "http://www.cjlo.com/shows/eastern-promises"
       },
       "next": {
-        "title": "No Boundaries",
+        "title": "Afro Archives",
         "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/no-boundaries"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/afro-archives"
       },
       "track": "",
-      "showTitle": "Bill's Country & Western Favou...",
+      "showTitle": "Eastern ...",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T22:55:13.707Z"
+      "checkedAt": "2026-07-20T00:00:12.426Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,27 +135,26 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T22:55:14.335Z"
+      "checkedAt": "2026-07-20T00:00:13.033Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Maldita Falta (Acoustic Version)",
-        "source": "api-live",
-        "host": "Lapelúda, José Lobo"
+        "title": "PromoRadioFlIM2026",
+        "source": "api-live"
       },
       "next": null,
-      "track": "Lapelúda, José Lobo - Maldita Falta (Acoustic Version)",
-      "showTitle": "Maldita Falta (Acoustic Version)",
-      "host": "Lapelúda, José Lobo",
+      "track": "Laura Schembri - Sur le dos de ta moto",
+      "showTitle": "PromoRadioFlIM2026",
+      "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T22:55:15.516Z"
+      "checkedAt": "2026-07-20T00:00:15.407Z"
     }
   }
 }
