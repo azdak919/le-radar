@@ -1,14 +1,23 @@
 {
-  "updated": "2026-07-20T17:17:23.386Z",
+  "updated": "2026-07-20T19:15:44.030Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 4,
-  "withLeadExcerpt": 72,
-  "candidates": 4,
-  "enriched": 0,
-  "failed": 1,
+  "incomplete": 5,
+  "withLeadExcerpt": 73,
+  "candidates": 5,
+  "enriched": 1,
+  "failed": 2,
   "ok": true,
   "samples": [
+    {
+      "title": "Lumumba’s legacy on football’s biggest stage: How one fan utilized FIFA’s fandom to remember a martyr of colonial violence",
+      "link": "https://www.thetribune.ca/sports/lumumbas-legacy-on-footballs-biggest-stage-how-one-fan-utilized-fifas-fandom-to-remember-a-martyr-of-colonial-violence-20072026/?utm_source=rss&utm_medium=rss&utm_campaign=lumumbas-legacy-on-footballs-biggest-stage-how-one-fan-utilized-fifas-fandom-to-remember-a-martyr-of-colonial-violence-20072026",
+      "ok": true,
+      "score": 96,
+      "chars": 316,
+      "sample": "Known by many as Lumumba Vea , translating to “Lumumba Lives,” Mboladinga’s statue pose impersonates",
+      "changed": true
+    },
     {
       "title": "The Cruel Optimism of Summer",
       "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
@@ -25,15 +34,6 @@
       "score": 66,
       "chars": 400,
       "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
-      "changed": false
-    },
-    {
-      "title": "Letters from the Editors May 2026",
-      "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
-      "ok": true,
-      "score": 76,
-      "chars": 400,
-      "sample": "Dear readers, Class of 2026 We did it! As May’s doting weather and perfumed flowers lull us into the",
       "changed": false
     }
   ]
