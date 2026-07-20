@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-20T18:58:54.433Z",
+  "updatedAt": "2026-07-20T20:27:03.984Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T18:58:31.511Z"
+      "checkedAt": "2026-07-20T20:26:43.462Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
+        "title": "L'Alter Ego",
         "source": "api-live",
-        "start": "09:00",
+        "start": "12:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-collation"
+        "slug": "lalter-ego"
       },
       "next": {
-        "title": "O'Keb",
+        "title": "Le palmarès",
         "source": "api-live",
-        "start": "11:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364311.mp3",
-        "slug": "okeb"
+        "start": "14:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364602.mp3",
+        "slug": "palmares-de-cism"
       },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "L'Alter Ego",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-20T18:58:33.559Z"
+      "checkedAt": "2026-07-20T20:26:45.261Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Radio Is Dead",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "Whose Vibe Is It Anyway",
         "source": "api-live",
         "start": "15:00",
         "end": "17:00"
       },
-      "track": "Airtime - offline",
-      "showTitle": "Radio Is Dead",
+      "next": {
+        "title": "En Profondeur",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
+      "track": "",
+      "showTitle": "Whose Vibe Is It Anyway",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T18:58:37.855Z"
+      "checkedAt": "2026-07-20T20:26:47.859Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Tommy John Show",
+        "title": "Dreamscapes",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/the-tommy-john-show"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/dreamscapes"
       },
       "next": {
-        "title": "Whip Appeal",
+        "title": "The Pressure Drop",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/whip-appeal"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/the-pressure-drop"
       },
       "track": "",
-      "showTitle": "The Tommy John Show",
+      "showTitle": "Dreamscapes",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T18:58:51.690Z"
+      "checkedAt": "2026-07-20T20:27:01.591Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,28 +129,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T18:58:52.166Z"
+      "checkedAt": "2026-07-20T20:27:02.169Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Reve de glace",
+        "title": "Zig Zag",
         "source": "api-live",
-        "host": "blesse",
-        "url": "https://www.choq.ca/assets/playlist/palmares-site-web.jpg"
+        "host": "By Storm",
+        "url": "https://www.choq.ca/assets/playlist/internationale.jpg"
       },
       "next": null,
-      "track": "blesse - Reve de glace",
-      "showTitle": "Reve de glace",
-      "host": "blesse",
+      "track": "Witch Prophet - Secret Garden",
+      "showTitle": "Zig Zag",
+      "host": "By Storm",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T18:58:54.082Z"
+      "checkedAt": "2026-07-20T20:27:03.633Z"
     }
   }
 }
