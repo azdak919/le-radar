@@ -23,13 +23,19 @@ const {
   detectFeedDefaultAuthors,
   isEditorialPlaceholder,
   needsPageAuthorVerification,
+  mergePriorAuthor,
   normalizeArticleUrl,
   normalizeAuthor,
   expandAuthorName,
   extractBylineFromText,
   authorFromBodyCredits,
 } = require('./author-lib');
-const { mergePriorEnrichment } = require('./article-photo-credit-lib');
+const {
+  mergePriorEnrichment,
+  imageUrlKey,
+  isPlaceholderPhotoCredit,
+  CREDIT_EXTRACTOR_REV,
+} = require('./article-photo-credit-lib');
 const {
   articleBodyHtml,
   imageFromArticleHtml,
@@ -1047,7 +1053,7 @@ async function main() {
 
     const authorHints = getBotHints(src, 'authors');
     for (const it of items) {
-      all.push({
+      const next = {
         source: src.name,
         institution: src.institution,
         region: src.region || '',
@@ -1055,7 +1061,14 @@ async function main() {
         lang: src.lang,
         ...it,
         author: authorHints.ignoreRssAuthor ? '' : it.author,
-      });
+      };
+      // Auteur résolu + marque de vérification du run précédent : disponibles
+      // dès la phase d'enrichissement. Sans ce report, les sources
+      // ignoreRssAuthor (auteur RSS toujours vide) engorgent la file
+      // d'enrichissement et re-scrapent leurs pages à chaque passe.
+      const prior = priorByLink.get(normalizeArticleUrl(next.link));
+      if (prior) mergePriorAuthor(next, prior);
+      all.push(next);
     }
   }
 
@@ -1096,7 +1109,27 @@ async function main() {
       all[i].image = '';
     }
     const prior = priorByLink.get(normalizeArticleUrl(all[i].link));
-    if (prior) all[i] = mergePriorEnrichment(all[i], prior);
+    if (prior) {
+      all[i] = mergePriorEnrichment(all[i], prior);
+      // L'auteur résolu par verify-authors au run précédent survit au
+      // re-fetch RSS (sinon retour à « La rédaction » entre deux passes).
+      all[i] = mergePriorAuthor(all[i], prior);
+    }
+
+    // Crédit photo capté dans le content:encoded du flux (worker) : appliqué
+    // seulement si aucun crédit cité n'existe déjà (page ou run précédent).
+    const rssCredit = all[i]._rssCredit;
+    if (rssCredit) delete all[i]._rssCredit;
+    if (rssCredit && all[i].image && !all[i].sourceImageCreditCited
+      && !isPlaceholderPhotoCredit(rssCredit.creator || rssCredit.creditLine)) {
+      all[i].sourceImageCredit = rssCredit.creditLine;
+      all[i].sourceImageCreator = rssCredit.creator;
+      all[i].sourceImageCreditUrl = all[i].link || '';
+      all[i].sourceImageCreditFrom = 'rss-content';
+      all[i].sourceImageCreditCited = true;
+      all[i].sourceImageCreditImageKey = imageUrlKey(all[i].image);
+      all[i].sourceImageCreditRev = CREDIT_EXTRACTOR_REV;
+    }
   }
 
   all.sort((a, b) => {
