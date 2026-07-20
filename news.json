@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-20T15:42:15.160Z",
+  "updated": "2026-07-20T17:15:28.252Z",
   "updatedSlot": null,
   "count": 185,
   "freshnessSessions": 3,
@@ -10,7 +10,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:00:00.000Z",
-      "lastFetchOk": "2026-07-20T15:41:24.900Z"
+      "lastFetchOk": "2026-07-20T17:14:40.143Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-07-20T15:41:26.310Z"
+      "lastFetchOk": "2026-07-20T17:14:41.478Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-03-25T11:00:00.000Z",
-      "lastFetchOk": "2026-07-20T15:41:30.993Z"
+      "lastFetchOk": "2026-07-20T17:14:45.706Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-07-06T12:00:00.000Z",
-      "lastFetchOk": "2026-07-20T15:41:31.952Z"
+      "lastFetchOk": "2026-07-20T17:14:46.655Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,15 +42,15 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-07-08T14:41:00.000Z",
-      "lastFetchOk": "2026-07-20T15:41:33.493Z"
+      "lastFetchOk": "2026-07-20T17:14:48.153Z"
     },
     "Zone Campus": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-07-20T15:41:36.271Z"
+      "lastFetchOk": null
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,15 +58,15 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-07-20T15:41:38.496Z"
+      "lastFetchOk": "2026-07-20T17:14:50.221Z"
     },
     "Le Collectif": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-07-19T17:05:22.000Z",
-      "lastFetchOk": "2026-07-20T15:41:39.620Z"
+      "lastFetchOk": null
     },
     "Exil": {
       "fetchOk": true,
@@ -74,7 +74,7 @@
       "articleCount": 7,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-07-20T15:41:39.830Z"
+      "lastFetchOk": "2026-07-20T17:15:02.500Z"
     },
     "La Pige": {
       "fetchOk": false,
@@ -90,7 +90,7 @@
       "articleCount": 13,
       "freshArticleCount": 13,
       "lastArticle": "2026-02-25T14:38:32.764Z",
-      "lastFetchOk": "2026-07-20T15:41:55.250Z"
+      "lastFetchOk": "2026-07-20T17:15:06.143Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-06-26T15:24:28.000Z",
-      "lastFetchOk": "2026-07-20T15:41:55.569Z"
+      "lastFetchOk": "2026-07-20T17:15:06.357Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-07-20T15:41:55.796Z"
+      "lastFetchOk": "2026-07-20T17:15:06.554Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-07-20T15:41:56.057Z"
+      "lastFetchOk": "2026-07-20T17:15:06.694Z"
     }
   },
   "items": [
@@ -145,7 +145,8 @@
       "imageLicense": "cc0",
       "imageProvider": "openverse",
       "imageSourceUrl": "https://www.flickr.com/photos/135396164@N05/28619046534",
-      "leadExcerpt": "Audrey Brassard rappelle que ce genre d’émission ne montre que des relations amoureuses idéalisées, artificialisées et narrativisées. Elle déplore notamment que seul le physique soit considéré comme un atout, alors qu’il ne s’agit que d’un aspect parmi tant d’autres qui forgent une relation. Le conflit, quant à lui, qui fait augmenter les cotes d’écoute, est également problématique."
+      "leadExcerpt": "Audrey Brassard rappelle que ce genre d’émission ne montre que des relations amoureuses idéalisées, artificialisées et narrativisées. Elle déplore notamment que seul le physique soit considéré comme un atout, alors qu’il ne s’agit que d’un aspect parmi tant d’autres qui forgent une relation. Le conflit, quant à lui, qui fait augmenter les cotes d’écoute, est également problématique.",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -167,7 +168,8 @@
       "sourceImageCreditImageKey": "obsessions_nostalgie_vinyles_sourcedrummondvinyl-1.jpg",
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
-      "leadExcerpt": "Selon Usito , la nostalgie peut être comprise comme la tristesse causée par l’éloignement du pays natal. Le terme peut également désigner un regret empreint de mélancolie lié à une chose passée ou à une époque que l’on n’a pas connue, ainsi qu’un désir teinté d’insatisfaction."
+      "leadExcerpt": "Selon Usito , la nostalgie peut être comprise comme la tristesse causée par l’éloignement du pays natal. Le terme peut également désigner un regret empreint de mélancolie lié à une chose passée ou à une époque que l’on n’a pas connue, ainsi qu’un désir teinté d’insatisfaction.",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -189,7 +191,8 @@
       "sourceImageCreditImageKey": "creation-sans-titre-33.png",
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
-      "leadExcerpt": "Entre temps, Caroline Boivin a commencé à donner le cours de marketing vert à la maîtrise en marketing il y a environ 15 ans. « J’essaie de voir un peu comment le marketing peut contribuer à l’adoption de ces produits [verts] et aux habitudes des consommateurs. »"
+      "leadExcerpt": "Entre temps, Caroline Boivin a commencé à donner le cours de marketing vert à la maîtrise en marketing il y a environ 15 ans. « J’essaie de voir un peu comment le marketing peut contribuer à l’adoption de ces produits [verts] et aux habitudes des consommateurs. »",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -210,7 +213,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "societe_fraudeinternet_sourcepieuvre.jpg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -232,7 +236,8 @@
       "sourceImageCreditImageKey": "societe_tourisme_source-ordre-des-architectes-du-quebec.jpg",
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
-      "leadExcerpt": "Dans de nombreuses villes du monde, le tourisme constitue un moteur économique essentiel. Chaque année, des millions de voyageurs affluent vers des destinations renommées pour leur patrimoine, leur culture, leur cuisine ou leurs paysages. Durant la haute saison, cette industrie permet de générer des revenus importants."
+      "leadExcerpt": "Dans de nombreuses villes du monde, le tourisme constitue un moteur économique essentiel. Chaque année, des millions de voyageurs affluent vers des destinations renommées pour leur patrimoine, leur culture, leur cuisine ou leurs paysages. Durant la haute saison, cette industrie permet de générer des revenus importants.",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -254,7 +259,8 @@
       "sourceImageCreditImageKey": "sports_velo_source-velo-quebec.jpg",
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
-      "leadExcerpt": "Les plus récentes données de Vélo Québec démontrent que le vélo occupe une place de plus en plus importante dans les habitudes de déplacement au Québec. En 2025, environ 2,7 millions de Québécois ont utilisé leur vélo comme moyen de transport. Cette progression est particulièrement visible dans les grands centres urbains, où les déplacements à vélo continuent d’augmenter."
+      "leadExcerpt": "Les plus récentes données de Vélo Québec démontrent que le vélo occupe une place de plus en plus importante dans les habitudes de déplacement au Québec. En 2025, environ 2,7 millions de Québécois ont utilisé leur vélo comme moyen de transport. Cette progression est particulièrement visible dans les grands centres urbains, où les déplacements à vélo continuent d’augmenter.",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -276,7 +282,8 @@
       "sourceImageCreditImageKey": "sports_deitenlachance_mlb_sourcebaseballquebec.png",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "leadExcerpt": "Le baseball sherbrookois franchit une nouvelle étape sur la scène américaine. Deiten Lachance, un receveur originaire de Sherbrooke, a été sélectionné par les Guardians de Cleveland lors du repêchage de la Ligue majeure de baseball (MLB), le 12 juillet. Cette sélection marque un moment important dans le parcours de l’athlète qui a passé les dernières années à développer son jeu aux États-Unis."
+      "leadExcerpt": "Le baseball sherbrookois franchit une nouvelle étape sur la scène américaine. Deiten Lachance, un receveur originaire de Sherbrooke, a été sélectionné par les Guardians de Cleveland lors du repêchage de la Ligue majeure de baseball (MLB), le 12 juillet. Cette sélection marque un moment important dans le parcours de l’athlète qui a passé les dernières années à développer son jeu aux États-Unis.",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -298,7 +305,8 @@
       "sourceImageCreditImageKey": "obsessions_voyages_voyagersansarretpassionouobsession_sourcepixabay-1.jpg",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "Les occasions de penser au voyage sont nombreuses. Les médias et les réseaux sociaux montrent sans cesse des images de destinations dans le monde. Les promotions de dernière minute et les offres limitées donnent l’impression que l’on peut partir souvent, parfois sur un simple coup de tête. Le voyage, qui était autrefois un luxe rare pour plusieurs familles, est devenu une possibilité plus fréquent"
+      "leadExcerpt": "Les occasions de penser au voyage sont nombreuses. Les médias et les réseaux sociaux montrent sans cesse des images de destinations dans le monde. Les promotions de dernière minute et les offres limitées donnent l’impression que l’on peut partir souvent, parfois sur un simple coup de tête. Le voyage, qui était autrefois un luxe rare pour plusieurs familles, est devenu une possibilité plus fréquent",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -320,7 +328,8 @@
       "sourceImageCreditImageKey": "obsessions_boissonsenergisantes_matcha_sourcecamelliasinensis-1.png",
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
-      "leadExcerpt": "Bien que différentes dans leur composition, ces boissons partagent un point commun : elles promettent un regain d’énergie et une meilleure concentration. Les boissons énergisantes contiennent généralement de la caféine et d’autres stimulants, tandis que le yerba maté et le matcha sont issus de plantes reconnues pour leurs propriétés énergisantes naturelles."
+      "leadExcerpt": "Bien que différentes dans leur composition, ces boissons partagent un point commun : elles promettent un regain d’énergie et une meilleure concentration. Les boissons énergisantes contiennent généralement de la caféine et d’autres stimulants, tandis que le yerba maté et le matcha sont issus de plantes reconnues pour leurs propriétés énergisantes naturelles.",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -349,7 +358,8 @@
       "imageLicense": "by",
       "imageProvider": "openverse",
       "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=34020479",
-      "leadExcerpt": "Le Parti québécois (PQ) a lancé, le 23 juin dernier, son fameux Livre bleu, visant à exposer sa vision d’un Québec indépendant, mais aussi à critiquer le palier fédéral en élaborant les principales priorités à prendre en compte lors du prochain référendum pour le camp du Oui. Lumière sur les différents chapitres, ainsi que sur certaines solutions avancées par le parti."
+      "leadExcerpt": "Le Parti québécois (PQ) a lancé, le 23 juin dernier, son fameux Livre bleu, visant à exposer sa vision d’un Québec indépendant, mais aussi à critiquer le palier fédéral en élaborant les principales priorités à prendre en compte lors du prochain référendum pour le camp du Oui. Lumière sur les différents chapitres, ainsi que sur certaines solutions avancées par le parti.",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -1566,7 +1576,8 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "1.jpg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -1676,7 +1687,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3417.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -1766,7 +1778,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "17c4541a-839d-48b8-b5aa-2cc81e91e3c8.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -1899,7 +1912,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3939.jpg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -1920,7 +1934,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_9786.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -1984,7 +1999,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3397-1.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -2005,7 +2021,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3405.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -2025,7 +2042,8 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "dany_portrait_vignette_zc-copie-1068x641-3-2.jpg",
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -2045,7 +2063,8 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "604823445_853711280773514_928679255052921821_n.jpg",
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -2065,7 +2084,8 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "672687004_1331193022389249_583407324812045529_n.jpg",
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Exil",
@@ -2376,7 +2396,7 @@
       "lang": "en",
       "title": "The apprenticeship of public voice",
       "link": "https://thelinknewspaper.ca/article/16315",
-      "author": "The editorial team",
+      "author": "Mani Asadieraghi",
       "date": "2026-04-09T20:52:00.000Z",
       "excerpt": "Why student newspapers remain one of the last places people learn to speak publicly Public discourse does not survive automatically. It depends on people’s willingness to question institutions and place their ideas into shared space. Graphic Halle Keays",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_OPS_690_518.png",
@@ -2396,7 +2416,7 @@
       "lang": "en",
       "title": "In conversation with Aaron Maté",
       "link": "https://thelinknewspaper.ca/article/16314",
-      "author": "The editorial team",
+      "author": "Sean Richard",
       "date": "2026-04-09T18:16:00.000Z",
       "excerpt": "The Concordia alumnus sits down with The Link to speak about his experiences as an activist for the Palestinian cause Courtesy Aaron Maté",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12.news.AaronMaté.Sean.online.CourtesyAaronMaté_690_1034_90.jpg",
@@ -2424,7 +2444,7 @@
       "lang": "en",
       "title": "The World Cup is a disaster waiting to happen",
       "link": "https://thelinknewspaper.ca/article/16313",
-      "author": "The editorial team",
+      "author": "Bryanna O’Brien",
       "date": "2026-04-08T22:05:00.000Z",
       "excerpt": "FIFA has the authority to relocate or cancel its Guadalajara games, but it is choosing not to The 2026 FIFA World Cup has the potential for incredible action, but also extensive controversy. Graphic Evelyn Ho Lee",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_SPORTS_WCHostCountries_EvelynHoLee_690_526_90.jpg",
@@ -2445,7 +2465,7 @@
       "lang": "en",
       "title": "Social (Cult)ure: The myth of self-improvement",
       "link": "https://thelinknewspaper.ca/article/16312",
-      "author": "The editorial team",
+      "author": "Zoya Ramadan",
       "date": "2026-04-08T21:28:00.000Z",
       "excerpt": "Amulti-million-dollar industry built on never being enough Self-improvement, a genre once intended for the passing down of generational wisdom, has turned into a toxic, capitalist machine. Graphic Naya Hachwa",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_OPS_SelfHelp_NayaHachwa_690_517_90.jpg",
@@ -3270,75 +3290,6 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "Au revoir!",
-      "link": "https://www.delitfrancais.com/2026/03/25/au-revoir/",
-      "author": "Eugénie St-Pierre et Juliette Elie",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Cette semaine marque la dernière édition du semestre – déjà. Ça passe vite, huit éditions ! Cette année, comme toutes les années depuis 1977, Le Délit a travaillé fort pour vous offrir une couverture au plus près de vous ; de vos enjeux, de ce qui vous intéresse, de ce qui vous touche et de ce qui Lire la suite »",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/photoequipe-scaled.jpeg",
-      "featured": true,
-      "_pageAuthor": "Eugénie St-Pierre et Juliette Elie",
-      "sourceImageCredit": "Photo : Matthieu Juge",
-      "sourceImageCreator": "Matthieu Juge",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/au-revoir/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "photoequipe.jpeg",
-      "leadImageReady": true,
-      "leadExcerpt": "Le Délit est fier de la place qu’il occupe dans la communauté francophone de l’Université McGill. Et pas seulement pour les 20 % d’étudiants francophones, mais aussi pour tous ceux qui nous lisent pour pratiquer leur français, ou même ceux qui utilisent nos éditions pour décorer les murs de leur appartement. C’est un privilège d’occuper une place, aussi petite soit-elle, dans vos quotidiens."
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "La cassette commence à être usée",
-      "link": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
-      "author": "Antoine Proulx et Louis-Justin Sauvé",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Réponse au journal The Concordian et à l’économiste Moshe Lander.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/concordiareponseV2-scaled.jpeg",
-      "featured": true,
-      "_pageAuthor": "Antoine Proulx et Louis-Justin Sauvé",
-      "sourceImageCredit": "Photo : Félix Fournier",
-      "sourceImageCreator": "Félix Fournier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "concordiareponsev2.jpeg",
-      "leadImageReady": true,
-      "leadExcerpt": "Première gaffe intellectuelle (in)volontaire du Concordian . En trente secondes de recherches plus ou moins rigoureuses, il aurait pu comprendre les réelles causes de la décote du Québec par la Standard and Poor’s (S&P) – qui n’a absolument rien à voir avec la recrudescence de l’intérêt des Québécois envers la souveraineté."
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "La performance de l’homosexualité : un privilège ?",
-      "link": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
-      "author": "Joséphine Miton",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Blague innocente, signe d’ouverture ou nouveau costume ?",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/coinqueer-1.jpeg",
-      "featured": true,
-      "_pageAuthor": "Joséphine Miton",
-      "sourceImageCredit": "Photo : Félix Fournier",
-      "sourceImageCreator": "Félix Fournier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "coinqueer-1.jpeg",
-      "sourceImageCreditRev": 8,
-      "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie."
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
       "title": "L’épidémie de la nonchalance",
       "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
       "author": "Elie Nguyen",
@@ -3401,6 +3352,75 @@
       "sourceImageCreditImageKey": "qc.jpeg",
       "leadImageReady": true,
       "leadExcerpt": "Cela fait maintenant presque six mois que notre cher ministre de la Justice, Simon Jolin-Barrette, a présenté aux Québécois·e·s son fameux projet de loi 1, la Constitution québécoise. Six mois à discuter d’une constitution illégitime, issue d’un processus de non-consultation flagrant et d’un manque d’écoute évident de la part du gouvernement."
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "Au revoir!",
+      "link": "https://www.delitfrancais.com/2026/03/25/au-revoir/",
+      "author": "Eugénie St-Pierre et Juliette Elie",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Cette semaine marque la dernière édition du semestre – déjà. Ça passe vite, huit éditions ! Cette année, comme toutes les années depuis 1977, Le Délit a travaillé fort pour vous offrir une couverture au plus près de vous ; de vos enjeux, de ce qui vous intéresse, de ce qui vous touche et de ce qui Lire la suite »",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/photoequipe-scaled.jpeg",
+      "featured": true,
+      "_pageAuthor": "Eugénie St-Pierre et Juliette Elie",
+      "sourceImageCredit": "Photo : Matthieu Juge",
+      "sourceImageCreator": "Matthieu Juge",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/au-revoir/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "photoequipe.jpeg",
+      "leadImageReady": true,
+      "leadExcerpt": "Le Délit est fier de la place qu’il occupe dans la communauté francophone de l’Université McGill. Et pas seulement pour les 20 % d’étudiants francophones, mais aussi pour tous ceux qui nous lisent pour pratiquer leur français, ou même ceux qui utilisent nos éditions pour décorer les murs de leur appartement. C’est un privilège d’occuper une place, aussi petite soit-elle, dans vos quotidiens."
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "La cassette commence à être usée",
+      "link": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
+      "author": "Antoine Proulx et Louis-Justin Sauvé",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Réponse au journal The Concordian et à l’économiste Moshe Lander.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/concordiareponseV2-scaled.jpeg",
+      "featured": true,
+      "_pageAuthor": "Antoine Proulx et Louis-Justin Sauvé",
+      "sourceImageCredit": "Photo : Félix Fournier",
+      "sourceImageCreator": "Félix Fournier",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "concordiareponsev2.jpeg",
+      "leadImageReady": true,
+      "leadExcerpt": "Première gaffe intellectuelle (in)volontaire du Concordian . En trente secondes de recherches plus ou moins rigoureuses, il aurait pu comprendre les réelles causes de la décote du Québec par la Standard and Poor’s (S&P) – qui n’a absolument rien à voir avec la recrudescence de l’intérêt des Québécois envers la souveraineté."
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "La performance de l’homosexualité : un privilège ?",
+      "link": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
+      "author": "Joséphine Miton",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Blague innocente, signe d’ouverture ou nouveau costume ?",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/coinqueer-1.jpeg",
+      "featured": true,
+      "_pageAuthor": "Joséphine Miton",
+      "sourceImageCredit": "Photo : Félix Fournier",
+      "sourceImageCreator": "Félix Fournier",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "coinqueer-1.jpeg",
+      "sourceImageCreditRev": 8,
+      "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie."
     },
     {
       "source": "The McGill Daily",
@@ -3759,14 +3779,14 @@
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/MAGA_marius.png",
       "featured": true,
       "_pageAuthor": "Anonyme",
-      "leadExcerpt": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer en instrumentalisant certaines femmes pour reproduire les structures qui les subordonnent. C’est à travers ce mécanisme d’opacité que sa présence se resserre sur la société, et que ses contradictions se dissimulent sous le couvert de liberté individuelle, de traditions ou de choix personnels.",
       "sourceImageCredit": "Photo : Stu Doré",
       "sourceImageCreator": "Stu Doré",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "maga_marius.png",
-      "sourceImageCreditRev": 8
+      "sourceImageCreditRev": 8,
+      "leadExcerpt": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer en instrumentalisant certaines femmes pour reproduire les structures qui les subordonnent. C’est à travers ce mécanisme d’opacité que sa présence se resserre sur la société, et que ses contradictions se dissimulent sous le couvert de liberté individuelle, de traditions ou de choix personnels."
     },
     {
       "source": "The McGill Daily",
