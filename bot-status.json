@@ -1,100 +1,100 @@
 {
-  "updated": "2026-07-13T11:43:31.113Z",
+  "updated": "2026-07-20T11:21:47.548Z",
   "healthy": true,
   "needsHuman": false,
   "pipeline": [
     {
       "step": "Institutions catalogue",
       "ok": true,
-      "ms": 782
+      "ms": 879
     },
     {
       "step": "Media scanner (gaps)",
       "ok": true,
-      "ms": 55091
+      "ms": 3695
     },
     {
       "step": "News source maintainer",
       "ok": true,
-      "ms": 125879
+      "ms": 138578
     },
     {
       "step": "Stream tracker + radio promotion",
       "ok": true,
-      "ms": 596151
+      "ms": 597958
     },
     {
       "step": "Radio now-playing metadata",
       "ok": true,
-      "ms": 43374
+      "ms": 45785
     },
     {
       "step": "News sources verify",
       "ok": true,
-      "ms": 30061
+      "ms": 30218
     },
     {
       "step": "News aggregator",
       "ok": true,
-      "ms": 38849
+      "ms": 48753
     },
     {
       "step": "Author QC",
       "ok": true,
-      "ms": 104950
+      "ms": 97381
     },
     {
       "step": "Lead excerpt enrichment",
       "ok": true,
-      "ms": 10390
+      "ms": 3955
     },
     {
       "step": "Lead image QC",
       "ok": true,
-      "ms": 485912
+      "ms": 437275
     },
     {
       "step": "Photo credit QC",
       "ok": true,
-      "ms": 25678
+      "ms": 16735
     },
     {
       "step": "Social feed",
       "ok": true,
-      "ms": 38852
+      "ms": 55838
     },
     {
       "step": "RSS export",
       "ok": true,
-      "ms": 68
+      "ms": 67
     }
   ],
   "summary": {
     "institutions": 79,
     "news": {
-      "active": 16,
+      "active": 14,
       "dead": 0,
-      "stale": 4,
+      "stale": 0,
       "candidates": 6,
-      "articles": 205,
-      "withAuthor": 205,
-      "withExcerpt": 204,
+      "articles": 185,
+      "withAuthor": 185,
+      "withExcerpt": 184,
       "authorQc": {
         "ok": true,
-        "mismatches": 121
+        "mismatches": 106
       },
       "leadImageQc": {
-        "fullyCovered": 205,
-        "withPhoto": 191,
-        "withStock": 62,
-        "leadReadyPhotos": 154,
-        "pageScraped": 57,
+        "fullyCovered": 185,
+        "withPhoto": 168,
+        "withStock": 40,
+        "leadReadyPhotos": 139,
+        "pageScraped": 17,
         "mainPageLeadReady": true
       },
       "photoCreditQc": {
         "ok": true,
-        "withCredit": 191,
-        "cited": 124,
+        "withCredit": 168,
+        "cited": 122,
         "pending": 0,
         "missingHero": 0
       }
@@ -105,7 +105,7 @@
       "candidates": 4
     },
     "coverage": {
-      "universitiesWithNews": 12,
+      "universitiesWithNews": 10,
       "universitiesTotal": 19,
       "institutionsWithRadio": 7
     }
@@ -115,7 +115,9 @@
       "École de technologie supérieure (ÉTS)",
       "École nationale d'administration publique (ENAP)",
       "HEC Montréal",
+      "Institut national de la recherche scientifique (INRS)",
       "Université du Québec à Chicoutimi (UQAC)",
+      "Université du Québec à Rimouski (UQAR)",
       "Université du Québec en Abitibi-Témiscamingue (UQAT)",
       "Université du Québec en Outaouais (UQO)",
       "Université TÉLUQ"
@@ -126,43 +128,8 @@
   "alerts": [
     {
       "level": "info",
-      "code": "stale_news_feed",
-      "message": "Flux inactif : Quartier Libre — dernier article 2026-05-15"
-    },
-    {
-      "level": "info",
-      "code": "stale_news_feed",
-      "message": "Flux inactif : Zone Campus — dernier article 2026-05-08"
-    },
-    {
-      "level": "info",
-      "code": "stale_news_feed",
-      "message": "Flux inactif : Le Collectif — dernier article 2026-07-11"
-    },
-    {
-      "level": "info",
-      "code": "stale_news_feed",
-      "message": "Flux inactif : La Pige — dernier article 2026-06-22"
-    },
-    {
-      "level": "warn",
-      "code": "stale_news_cache",
-      "message": "Cache conservé : Quartier Libre — flux indisponible, articles frais du run précédent"
-    },
-    {
-      "level": "warn",
-      "code": "stale_news_cache",
-      "message": "Cache conservé : Zone Campus — flux indisponible, articles frais du run précédent"
-    },
-    {
-      "level": "warn",
-      "code": "stale_news_cache",
-      "message": "Cache conservé : Le Collectif — flux indisponible, articles frais du run précédent"
-    },
-    {
-      "level": "warn",
-      "code": "stale_news_cache",
-      "message": "Cache conservé : La Pige — flux indisponible, articles frais du run précédent"
+      "code": "news_coverage_gap",
+      "message": "9 universités sans journal étudiant répertorié"
     },
     {
       "level": "info",
