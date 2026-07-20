@@ -1,8 +1,8 @@
 {
-  "updated": "2026-07-20T19:15:25.502Z",
+  "updated": "2026-07-20T20:45:39.793Z",
   "total": 185,
   "withAuthor": 185,
-  "mismatches": 104,
+  "mismatches": 106,
   "ok": true,
   "samples": [
     {
@@ -11,6 +11,22 @@
       "source": "The Tribune",
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "Merce Kellner",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Un Sherbrookois aux portes du baseball professionnel",
+      "link": "https://lecollectif.ca/a-la-une/un-sherbrookois-aux-portes-du-baseball-professionnel/",
+      "source": "Le Collectif",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Camille Guindon",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Voyager sans arrêt : passion ou obsession ?",
+      "link": "https://lecollectif.ca/culture/voyager-sans-arret-passion-ou-obsession/",
+      "source": "Le Collectif",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Nicolas Mathieu",
       "reason": "page-byline"
     },
     {
@@ -148,23 +164,7 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "Yusur Al-Sharqi",
       "reason": "page-byline"
-    },
-    {
-      "title": "SPHR remembers Gaza Solidarity Encampment ahead of Nakba Anniversary Protest",
-      "link": "https://www.thetribune.ca/news/sphr-remembers-gaza-solidarity-encampment-ahead-of-nakba-anniversary-protest-13052026/?utm_source=rss&utm_medium=rss&utm_campaign=sphr-remembers-gaza-solidarity-encampment-ahead-of-nakba-anniversary-protest-13052026",
-      "source": "The Tribune",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "Ellen Lurie",
-      "reason": "page-byline"
-    },
-    {
-      "title": "Recettes musicales québécoises pour l’été",
-      "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
-      "source": "Quartier Libre",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Bérénice Lemarié",
-      "reason": "page-byline"
     }
   ],
-  "fixed": 104
+  "fixed": 106
 }
