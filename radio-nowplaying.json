@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-20T10:14:04.330Z",
+  "updatedAt": "2026-07-20T11:10:05.686Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T10:13:44.008Z"
+      "checkedAt": "2026-07-20T11:09:44.021Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Franco",
-        "source": "api-live",
-        "start": "02:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-franco"
-      },
-      "next": {
         "title": "Le char de marge (reprise)",
         "source": "api-live",
         "start": "03:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364713.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "le-char-de-marge"
       },
+      "next": {
+        "title": "Le Séismix",
+        "source": "api-live",
+        "start": "05:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364568.mp3",
+        "slug": "le-seismix"
+      },
       "track": "",
-      "showTitle": "Mix Franco",
+      "showTitle": "Le char de marge (reprise)",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-20T10:13:45.674Z"
+      "checkedAt": "2026-07-20T11:09:45.945Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Adventures In Music",
-        "source": "api-live",
-        "start": "04:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Unmuted with Svetlana and Miss Trish",
         "source": "api-live",
         "start": "07:00",
         "end": "08:00"
       },
+      "next": {
+        "title": "Le Lendemain de la veille",
+        "source": "api-live",
+        "start": "08:00",
+        "end": "09:00"
+      },
       "track": "",
-      "showTitle": "Adventures In Music",
+      "showTitle": "Unmuted with Svetlana and Miss Trish",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,7 +77,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T10:13:48.222Z"
+      "checkedAt": "2026-07-20T11:09:48.994Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -104,53 +104,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T10:14:01.556Z"
+      "checkedAt": "2026-07-20T11:10:02.805Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule",
-        "start": "00:01",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Folkswagen",
         "source": "schedule",
         "start": "07:00",
         "end": "08:00"
       },
+      "next": {
+        "title": "Palmarès CFAK",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00"
+      },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Folkswagen",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T10:14:01.992Z"
+      "checkedAt": "2026-07-20T11:10:03.191Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Pigs Fly",
+        "title": "Vivant•e",
         "source": "api-live",
-        "host": "Bartees Strange",
-        "url": "https://www.choq.ca/assets/playlist/internationale.jpg"
+        "host": "Lydia Képinski"
       },
       "next": null,
-      "track": "Bartees Strange - Pigs Fly",
-      "showTitle": "Pigs Fly",
-      "host": "Bartees Strange",
+      "track": "Lydia Képinski - Vivant•e",
+      "showTitle": "Vivant•e",
+      "host": "Lydia Képinski",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T10:14:03.979Z"
+      "checkedAt": "2026-07-20T11:10:05.335Z"
     }
   }
 }
