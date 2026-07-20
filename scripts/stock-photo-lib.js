@@ -31,6 +31,24 @@ const FALSE_FRIENDS = new Set([
   'lancement', 'officiel', 'annoncee', 'annoncée', 'approche',
 ]);
 
+/**
+ * Mots abstraits / polysémiques sans ancrage visuel : ils peuvent contribuer
+ * au score mais ne suffisent JAMAIS seuls comme ancrage thématique.
+ * Ex. « Les relations artificielles » (téléréalité) matchait une carte de
+ * Moscovie « …suivant les dernières relations… » (relations = récits, 1705).
+ * Formes normalisées (sans accents).
+ */
+const ABSTRACT_TOKENS = new Set([
+  'relation', 'relations', 'relationship', 'relationships',
+  'artificiel', 'artificielle', 'artificiels', 'artificielles', 'artificial',
+  'societe', 'societes', 'society', 'monde', 'world', 'avenir', 'futur', 'future',
+  'question', 'questions', 'enjeu', 'enjeux', 'debat', 'debats', 'debate',
+  'impact', 'impacts', 'realite', 'realites', 'reality', 'verite', 'verites', 'truth',
+  'idee', 'idees', 'idea', 'ideas', 'choix', 'sujet', 'sujets', 'propos',
+  'regard', 'regards', 'sens', 'esprit', 'valeur', 'valeurs', 'maniere', 'manieres',
+  'chose', 'choses', 'thing', 'things', 'gens', 'people',
+]);
+
 /** Toponymes trop génériques : ne comptent pas seuls comme ancrage thématique. */
 const GENERIC_GEO_TOKENS = new Set([
   'quebec', 'québec', 'montreal', 'montréal', 'canada', 'canadien', 'canadienne', 'canadian',
@@ -73,13 +91,18 @@ const SHORT_ACRONYM_BLOCKLIST = new Set([
 ]);
 
 /* Documents d'archives numérisés (gravures, plaques de verre, cartes postales,
-   photos 18xx-19xx…) : granuleux, noir et blanc, souvent « Unknown author ».
-   Qualité visuelle trop faible pour illustrer un article — mieux vaut aucune
-   photo — sauf si le sujet de l'article est justement historique. */
-const ARCHIVAL_MEDIA_RE = /\b(?:archives?|archival|vintage|circa|daguerr[eé]otype|tintype|lithograph\w*|engraving|gravure|etching|postcard|carte postale|glass plate|plaque de verre|s[eé]pia|monochrome|black[\s-]?and[\s-]?white|microfilm|n[eé]gatifs?|negatives?)\b/i;
-/* Année 18xx-19xx dans le titre/nom de fichier (« 1873-75 Ravenscrag… ») —
-   les lookarounds évitent les dimensions du type « 1920x1080 ». */
-const ARCHIVAL_YEAR_RE = /(?<!x)\b1[89]\d{2}\b(?!x)/;
+   cartes/atlas anciens, photos 15xx-19xx…) : granuleux, noir et blanc, souvent
+   « Unknown author ». Qualité visuelle trop faible pour illustrer un article —
+   mieux vaut aucune photo — sauf si le sujet de l'article est justement
+   historique. « ia dr » = scans Internet Archive / David Rumsey sur Commons
+   (« (IA dr_…) » dans le nom de fichier). */
+const ARCHIVAL_MEDIA_RE = /\b(?:archives?|archival|vintage|circa|daguerr[eé]otype|tintype|lithograph\w*|engraving|gravure|etching|postcard|carte postale|glass plate|plaque de verre|s[eé]pia|monochrome|black[\s-]?and[\s-]?white|microfilm|n[eé]gatifs?|negatives?|atlas|cartograph\w*|internet archive|ia dr)\b/i;
+/* Année 15xx-19xx dans le titre/nom de fichier (« 1873-75 Ravenscrag… »,
+   atlas de 1705…) — les lookarounds évitent les dimensions « 1920x1080 ». */
+const ARCHIVAL_YEAR_RE = /(?<!x)\b1[5-9]\d{2}\b(?!x)/;
+/* Dates de vie dans le champ créateur (« Fer, Nicolas de, 1646-1720 ») :
+   signature typique d'un document ancien numérisé, pas d'un photographe. */
+const CREATOR_LIFESPAN_RE = /\b1[5-9]\d{2}\b/;
 const HISTORICAL_TOPIC_RE = /\b(?:histoire|historiques?|historical|history|heritage|patrimoine|archives?|anniversaires?|centenaires?|centennial|comm[eé]moration\w*|commemorat\w*|fondation|founding|r[eé]trospectives?|retrospectives?)\b/i;
 const UNKNOWN_CREATOR_RE = /^(?:unknown|inconnu|anonym)/i;
 
@@ -425,6 +448,13 @@ function extractVisualTopicQueries(item = {}) {
     queries.push('photo exhibition salon');
     queries.push('art photography exhibition opening');
   }
+  // Relations amoureuses / téléréalité (Occupation Double, Love Is Blind…)
+  if (/\b(?:t[eé]l[eé]r[eé]alit[eé]s?|reality\s+(?:tv|show|television)|occupation\s+double|love\s+is\s+blind|dating\s+(?:show|app)|relations?\s+amoureuses?|c[eé]libataires?|s[eé]duction|couple)\b/i.test(full)) {
+    queries.push('couple holding hands');
+    queries.push('romantic couple love');
+    queries.push('couple watching television');
+    queries.push('reality television show');
+  }
   // Handicap / aidants
   if (/\b(handicap|aidants?|proche.?aidant|disability|caregiver)\b/i.test(full)) {
     queries.push('caregiver helping disabled person');
@@ -685,6 +715,15 @@ const TOKEN_ALIASES = {
   photo: ['photo', 'photography', 'photograph'],
   dissolution: ['dissolution', 'board', 'members'],
   membres: ['members', 'board'],
+  amoureuses: ['romantic', 'love', 'couple'],
+  amoureuse: ['romantic', 'love', 'couple'],
+  amoureux: ['romantic', 'love', 'couple'],
+  amour: ['love', 'romance', 'romantic'],
+  couple: ['couple'],
+  telerealite: ['reality tv', 'reality show', 'television'],
+  telerealites: ['reality tv', 'reality show', 'television'],
+  emission: ['television', 'tv show', 'broadcast'],
+  emissions: ['television', 'tv show', 'broadcast'],
 };
 
 /**
@@ -713,14 +752,23 @@ function countSubstantiveMatches(hay, matchTokens = {}) {
   let titleMatched = 0;
   let importantMatched = 0;
   let acronymOnly = 0;
+  let concreteMatched = 0;
+
+  const isConcrete = (tok) => !ABSTRACT_TOKENS.has(normalizeText(tok));
 
   for (const tok of content) {
     if (!isTopicToken(tok)) continue;
-    if (hayHasToken(hay, tok)) contentMatched += 1;
+    if (hayHasToken(hay, tok)) {
+      contentMatched += 1;
+      if (isConcrete(tok)) concreteMatched += 1;
+    }
   }
   for (const tok of title) {
     if (!isTopicToken(tok) || tok.length < 3) continue;
-    if (hayHasToken(hay, tok)) titleMatched += 1;
+    if (hayHasToken(hay, tok)) {
+      titleMatched += 1;
+      if (isConcrete(tok)) concreteMatched += 1;
+    }
   }
   for (const tok of important) {
     if (FALSE_FRIENDS.has(tok) || tok.length < 3) continue;
@@ -730,9 +778,10 @@ function countSubstantiveMatches(hay, matchTokens = {}) {
       continue;
     }
     importantMatched += 1;
+    if (isConcrete(tok)) concreteMatched += 1;
   }
 
-  return { contentMatched, titleMatched, importantMatched, acronymOnly };
+  return { contentMatched, titleMatched, importantMatched, acronymOnly, concreteMatched };
 }
 
 function scoreCandidate(hit, matchTokens, context = null) {
@@ -750,19 +799,23 @@ function scoreCandidate(hit, matchTokens, context = null) {
 
   const hay = normalizeText(`${hit.title || ''} ${hit.tags || ''} ${hit.url || ''}`);
 
-  // Document d'archive (année 18xx-19xx, gravure, N&B, BnF…) : qualité trop
-  // faible pour illustrer un article — rejet, sauf sujet historique.
+  // Document d'archive (année 15xx-19xx, gravure, atlas, N&B, BnF…) : qualité
+  // trop faible pour illustrer un article — rejet, sauf sujet historique.
+  // Le champ créateur compte aussi : des dates de vie (« Fer, Nicolas de,
+  // 1646-1720 ») trahissent un document ancien même si le titre est propre.
+  const creatorNorm = normalizeText(hit.creator || hit.artist || '');
   if (!context?.historicalTopic && (
     ARCHIVAL_MEDIA_RE.test(hay)
     || ARCHIVAL_YEAR_RE.test(hay)
     || /\bbtv1b\d|\bgallica\b|\bscan\b|\bnum[eé]ris/i.test(hay)
+    || CREATOR_LIFESPAN_RE.test(creatorNorm)
   )) {
     return -1;
   }
 
   const { important = [], content = [], title = [] } = matchTokens || {};
   const matches = countSubstantiveMatches(hay, matchTokens);
-  const { contentMatched, titleMatched, importantMatched, acronymOnly } = matches;
+  const { contentMatched, titleMatched, importantMatched, acronymOnly, concreteMatched } = matches;
 
   // Établissement : bonus seulement s'il y a déjà un ancrage thématique.
   let institutionMatched = 0;
@@ -803,6 +856,9 @@ function scoreCandidate(hit, matchTokens, context = null) {
   // Ancrage thématique réel (pas seulement Québec / Montréal / campus).
   if (topicMatched === 0) return -1;
   if (acronymOnly > 0 && topicMatched === 0) return -1;
+  // Un match uniquement sur des mots abstraits (« relations », « société »…)
+  // n'est pas un ancrage visuel : il faut au moins un token concret.
+  if (concreteMatched === 0) return -1;
 
   // Titre avec ≥2 tokens : exiger au moins 1 match titre OU 2 importants.
   const titleTopicCount = title.filter((t) => isTopicToken(t) && t.length >= 3).length;
@@ -874,10 +930,11 @@ function scoreCandidate(hit, matchTokens, context = null) {
   if (hit.provider === 'wikimedia') score += 8;
 
   // Auteur inconnu ou simple « Domaine public » : presque toujours un vieux
-  // document numérisé — pénalité.
-  const creatorName = normalizeText(hit.creator || hit.artist || '');
-  if (!creatorName || UNKNOWN_CREATOR_RE.test(creatorName)) score -= 30;
-  if (String(hit.license || '').toLowerCase() === 'pdm' && !context?.historicalTopic) score -= 40;
+  // document numérisé — pénalité. Wikimedia renvoie « Public domain » (pas
+  // le code « pdm » d'Openverse) : normaliser les deux formes.
+  if (!creatorNorm || UNKNOWN_CREATOR_RE.test(creatorNorm)) score -= 30;
+  const licenseNorm = String(hit.license || '').toLowerCase();
+  if ((licenseNorm === 'pdm' || /public\s*domain/.test(licenseNorm)) && !context?.historicalTopic) score -= 40;
 
   score += applyContextScoring(hit, context);
 
