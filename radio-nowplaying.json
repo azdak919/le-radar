@@ -1,27 +1,33 @@
 {
-  "updatedAt": "2026-07-20T20:27:03.984Z",
+  "updatedAt": "2026-07-20T21:45:30.983Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les Arshitechs du Son",
         "source": "schedule",
         "start": "17:30",
         "end": "18:30",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "La Voie des Droits",
+        "source": "schedule",
+        "start": "20:30",
+        "end": "21:30",
+        "url": "https://chyz.ca/emission/la-voie-des-droits/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T20:26:43.462Z"
+      "checkedAt": "2026-07-20T21:45:09.144Z"
     },
     "cism": {
       "id": "cism",
@@ -51,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-20T20:26:45.261Z"
+      "checkedAt": "2026-07-20T21:45:11.129Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Whose Vibe Is It Anyway",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "En Profondeur",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Queercorps",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Whose Vibe Is It Anyway",
+      "showTitle": "En Profondeur",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T20:26:47.859Z"
+      "checkedAt": "2026-07-20T21:45:14.405Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Dreamscapes",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/dreamscapes"
-      },
-      "next": {
         "title": "The Pressure Drop",
         "source": "schedule",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/the-pressure-drop"
       },
+      "next": {
+        "title": "Voice of the Voiceless",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/voice-of-the-voiceless"
+      },
       "track": "",
-      "showTitle": "Dreamscapes",
+      "showTitle": "The Pressure Drop",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T20:27:01.591Z"
+      "checkedAt": "2026-07-20T21:45:28.203Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,28 +135,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T20:27:02.169Z"
+      "checkedAt": "2026-07-20T21:45:28.678Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Zig Zag",
+        "title": "The Process",
         "source": "api-live",
-        "host": "By Storm",
+        "host": "Boards of Canada",
         "url": "https://www.choq.ca/assets/playlist/internationale.jpg"
       },
       "next": null,
-      "track": "Witch Prophet - Secret Garden",
-      "showTitle": "Zig Zag",
-      "host": "By Storm",
+      "track": "Boards of Canada - The Process",
+      "showTitle": "The Process",
+      "host": "Boards of Canada",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T20:27:03.633Z"
+      "checkedAt": "2026-07-20T21:45:30.633Z"
     }
   }
 }
