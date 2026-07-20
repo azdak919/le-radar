@@ -20,6 +20,7 @@ const { pruneToFreshWindow } = require('./source-retention-lib');
 const { decodeEntities, stripHtml } = require('./html-entities-lib');
 const { expandAuthorName, extractBylineFromText, authorFromBodyCredits, normalizeAuthor, isEditorialPlaceholder } = require('./author-lib');
 const { isCandidateImageUrl, isWeakImageUrl, unwrapCdnImageUrl } = require('./article-image-lib');
+const { extractPhotoCreditFromHtml } = require('./article-photo-credit-lib');
 
 const TIMEOUT = 12000;
 const MAX_BYTES = 2_000_000;
@@ -61,7 +62,7 @@ function fetchText(url, redirects = 3, timeout = TIMEOUT) {
 }
 
 /** Extraction tag sans regex catastroophique (indexOf, pas [\s\S]*?). */
-function tagFast(block, name) {
+function tagFast(block, name, maxLen = 8_000) {
   const openRe = new RegExp(`<${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:\\s[^>]*)?>`, 'i');
   const open = openRe.exec(block);
   if (!open) return '';
@@ -70,7 +71,7 @@ function tagFast(block, name) {
   const closeIdx = block.toLowerCase().indexOf(closeTag.toLowerCase(), start);
   if (closeIdx === -1) return '';
   // Plafonner le contenu extrait
-  const raw = block.slice(start, Math.min(closeIdx, start + 8_000));
+  const raw = block.slice(start, Math.min(closeIdx, start + maxLen));
   return decodeEntities(raw.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/gi, '$1').trim());
 }
 
@@ -157,7 +158,7 @@ function firstImage(block) {
   return '';
 }
 
-function parseFeed(xml) {
+function parseFeed(xml, lang = 'fr') {
   const items = [];
   // Split simple sur </item> — évite un match global [\s\S]*? monstrueux
   const parts = String(xml || '').split(/<\/item>/i);
@@ -187,14 +188,34 @@ function parseFeed(xml) {
     }
     const image = firstImage(block);
     if (title && link) {
-      items.push({
+      const item = {
         title,
         link,
         author: author || '',
         date: date && !isNaN(date) ? date.toISOString() : null,
         excerpt,
         image,
-      });
+      };
+      // Crédit photo dans le content:encoded (légendes « © Nom » Quartier
+      // Libre, « (photo : X) » L'Exemplaire…) — souvent absent de la page
+      // rendue (lazy-load Elementor). Capté ici, il évite un scrape de page.
+      if (image) {
+        const contentHtml = tagFast(block, 'content:encoded', 30_000)
+          || tagFast(block, 'content', 30_000);
+        if (contentHtml && contentHtml.length >= 200) {
+          try {
+            const credit = extractPhotoCreditFromHtml(contentHtml, image, lang);
+            if (credit?.creditLine && !credit.isJournalistPlaceholder) {
+              item._rssCredit = {
+                creditLine: credit.creditLine,
+                creator: credit.creator || '',
+                method: credit.source || 'rss-content',
+              };
+            }
+          } catch { /* extraction crédit non bloquante */ }
+        }
+      }
+      items.push(item);
     }
     if (items.length >= MAX_PER_SOURCE) break;
   }
@@ -243,7 +264,7 @@ process.on('message', async (msg) => {
         for (const u of unique) {
           const xml = await fetchText(u);
           if (!xml || !isFeedXml(xml)) continue;
-          for (const it of parseFeed(xml)) {
+          for (const it of parseFeed(xml, src.lang === 'en' ? 'en' : 'fr')) {
             if (!it.link || seen.has(it.link)) continue;
             seen.add(it.link);
             items.push(it);
@@ -256,7 +277,7 @@ process.on('message', async (msg) => {
         for (const u of unique) {
           const xml = await fetchText(u);
           if (xml && isFeedXml(xml)) {
-            items = parseFeed(xml).slice(0, MAX_PER_SOURCE);
+            items = parseFeed(xml, src.lang === 'en' ? 'en' : 'fr').slice(0, MAX_PER_SOURCE);
             if (u !== src.url) note = ` [repli: ${u}]`;
             break;
           }

@@ -131,6 +131,16 @@ node scripts/add-news-source.js \
 - **Vue source** : filtre par `name` (chaque journal a sa propre vue magazine)
 - **Bots CI** : `discover-news-sources`, `fetch-news`, `enrich-lead-excerpts`, `ensure-lead-images` lisent le registre
 - **Texte à la une** : `leadExcerpt` = paragraphe jugé adapté (score : longueur, phrases complètes, ton journalistique ; rejette chapôs, meta éditoriale, navigation). Pas l'extrait RSS tronqué.
+- **Auteurs persistants** : l'auteur résolu par `verify-authors` (byline page) est
+  reporté d'un run à l'autre (`mergePriorAuthor`) — un re-fetch RSS ne fait plus
+  retomber l'article sur « La rédaction ». Chaque page consultée est marquée
+  (`authorCheckedAt`) et n'est re-scrapée qu'après 24 h, ce qui laisse le budget
+  CI aux nouveaux articles (y compris pour les sources `forcePageAuthor`).
+- **Crédits photo** : extraits de la page source ET du `content:encoded` RSS
+  (légendes « © Nom » Quartier Libre, « (photo/illustration : X) » L'Exemplaire
+  et La Pige, photographe dans le nom de fichier `…photo_Prénom_Nom.jpg` pour
+  Le Polyscope). Un crédit trouvé au fetch évite un scrape de page. En dernier
+  recours : « Crédit photo : [média] ».
 
 ### Cas particuliers
 
