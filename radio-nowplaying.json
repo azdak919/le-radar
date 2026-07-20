@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-20T06:49:53.233Z",
+  "updatedAt": "2026-07-20T09:36:44.139Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T06:49:33.404Z"
+      "checkedAt": "2026-07-20T09:36:23.143Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Anglo",
-        "source": "api-live",
-        "start": "21:30",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-anglo"
-      },
-      "next": {
         "title": "Basses fréquences (reprise)",
         "source": "api-live",
         "start": "00:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364705.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "basses-frequences"
       },
+      "next": {
+        "title": "Mix Franco",
+        "source": "api-live",
+        "start": "02:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364677.mp3",
+        "slug": "mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "Basses fréquences (reprise)",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-20T06:49:35.113Z"
+      "checkedAt": "2026-07-20T09:36:24.951Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Roots, Rock, Reggae",
-        "source": "api-live",
-        "start": "01:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "Adventures In Music",
         "source": "api-live",
         "start": "04:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Unmuted with Svetlana and Miss Trish",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Roots, Rock, Reggae",
+      "showTitle": "Adventures In Music",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,7 +77,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T06:49:37.690Z"
+      "checkedAt": "2026-07-20T09:36:27.542Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -104,7 +104,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T06:49:50.991Z"
+      "checkedAt": "2026-07-20T09:36:41.023Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,28 +129,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T06:49:51.615Z"
+      "checkedAt": "2026-07-20T09:36:41.577Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Caminhos de Agua",
+        "title": "Chauffeur (Radio Edit)",
         "source": "api-live",
-        "host": "Kaatayra",
-        "url": "https://www.choq.ca/assets/playlist/les-nuits-brutales.png"
+        "host": "The Womack Sisters",
+        "url": "https://www.choq.ca/assets/playlist/internationale.jpg"
       },
       "next": null,
-      "track": "Kaatayra - Caminhos de Agua",
-      "showTitle": "Caminhos de Agua",
-      "host": "Kaatayra",
+      "track": "The Womack Sisters - Chauffeur (Radio Edit)",
+      "showTitle": "Chauffeur (Radio Edit)",
+      "host": "The Womack Sisters",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T06:49:52.882Z"
+      "checkedAt": "2026-07-20T09:36:43.789Z"
     }
   }
 }
