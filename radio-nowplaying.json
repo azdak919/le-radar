@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-20T16:57:31.584Z",
+  "updatedAt": "2026-07-20T18:58:54.433Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T16:57:11.312Z"
+      "checkedAt": "2026-07-20T18:58:31.511Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Ya Raï (reprise)",
-        "source": "api-live",
-        "start": "08:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "ya-rai"
-      },
-      "next": {
         "title": "La collation",
         "source": "api-live",
         "start": "09:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364584.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "mix-collation"
       },
+      "next": {
+        "title": "O'Keb",
+        "source": "api-live",
+        "start": "11:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364311.mp3",
+        "slug": "okeb"
+      },
       "track": "",
-      "showTitle": "Ya Raï (reprise)",
+      "showTitle": "La collation",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-20T16:57:12.928Z"
+      "checkedAt": "2026-07-20T18:58:33.559Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "World Skip The Beat",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Radio Is Dead",
         "source": "api-live",
         "start": "14:00",
         "end": "15:00"
       },
-      "track": "",
-      "showTitle": "World Skip The Beat",
+      "next": {
+        "title": "Whose Vibe Is It Anyway",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "17:00"
+      },
+      "track": "Airtime - offline",
+      "showTitle": "Radio Is Dead",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T16:57:15.313Z"
+      "checkedAt": "2026-07-20T18:58:37.855Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Twang City",
+        "title": "The Tommy John Show",
         "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/twang-city"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/the-tommy-john-show"
       },
       "next": {
-        "title": "Eldest Daughter",
+        "title": "Whip Appeal",
         "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/eldest-daughter"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/whip-appeal"
       },
       "track": "",
-      "showTitle": "Twang City",
+      "showTitle": "The Tommy John Show",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T16:57:28.646Z"
+      "checkedAt": "2026-07-20T18:58:51.690Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,27 +129,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T16:57:29.269Z"
+      "checkedAt": "2026-07-20T18:58:52.166Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Let Me Fade Away",
+        "title": "Reve de glace",
         "source": "api-live",
-        "host": "zohryu"
+        "host": "blesse",
+        "url": "https://www.choq.ca/assets/playlist/palmares-site-web.jpg"
       },
       "next": null,
-      "track": "zohryu - Let Me Fade Away",
-      "showTitle": "Let Me Fade Away",
-      "host": "zohryu",
+      "track": "blesse - Reve de glace",
+      "showTitle": "Reve de glace",
+      "host": "blesse",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T16:57:31.233Z"
+      "checkedAt": "2026-07-20T18:58:54.082Z"
     }
   }
 }
