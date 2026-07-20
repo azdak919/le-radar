@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-07-20T00:00:15.758Z",
+  "updatedAt": "2026-07-20T03:55:49.728Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Capitales de Québec",
-        "source": "schedule",
-        "start": "16:50",
-        "end": "20:30",
-        "url": "https://chyz.ca/emission/capitales-de-quebec/"
-      },
+      "current": null,
       "next": {
         "title": "Lundi Indie",
         "source": "schedule",
@@ -20,34 +14,34 @@
         "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
       },
       "track": "",
-      "showTitle": "Capitales de Québec",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T23:59:53.665Z"
+      "checkedAt": "2026-07-20T03:55:29.287Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le char de marge",
+        "title": "Symbiose",
         "source": "api-live",
-        "start": "14:00",
+        "start": "18:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "le-char-de-marge"
+        "slug": "symbiose"
       },
       "next": {
-        "title": "Vibrance",
+        "title": "London café (reprise)",
         "source": "api-live",
-        "start": "16:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364257.mp3",
-        "slug": "vibrance"
+        "start": "20:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364396.mp3",
+        "slug": "london-cafe"
       },
       "track": "",
-      "showTitle": "Le char de marge",
+      "showTitle": "Symbiose",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-19T23:59:55.383Z"
+      "checkedAt": "2026-07-20T03:55:31.015Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Bluegrass Rambling",
+        "title": "Ill Groove Garden",
         "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
+        "start": "23:00",
+        "end": "00:00"
       },
       "next": {
-        "title": "Country Classics",
+        "title": "Sound Of Soul",
         "source": "api-live",
-        "start": "20:00",
-        "end": "21:00"
+        "start": "00:00",
+        "end": "01:00"
       },
       "track": "",
-      "showTitle": "Bluegrass Rambling",
+      "showTitle": "Ill Groove Garden",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,78 +77,79 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-19T23:59:58.601Z"
+      "checkedAt": "2026-07-20T03:55:33.672Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Eastern ...",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule",
-        "start": "20:00",
-        "end": "20:30",
-        "url": "http://www.cjlo.com/shows/eastern-promises"
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
-        "title": "Afro Archives",
+        "title": "CJLO Late Night",
         "source": "schedule",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/afro-archives"
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "track": "",
-      "showTitle": "Eastern ...",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T00:00:12.426Z"
+      "checkedAt": "2026-07-20T03:55:47.073Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "21:00"
-      },
-      "next": {
         "title": "Solénoïde",
         "source": "schedule",
         "start": "21:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule",
+        "start": "00:01",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Solénoïde",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T00:00:13.033Z"
+      "checkedAt": "2026-07-20T03:55:47.835Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "PromoRadioFlIM2026",
-        "source": "api-live"
+        "title": "I'M ACTUALLY KINDA FAMOUS",
+        "source": "api-live",
+        "host": "Slayyyter"
       },
       "next": null,
-      "track": "Laura Schembri - Sur le dos de ta moto",
-      "showTitle": "PromoRadioFlIM2026",
-      "host": "",
+      "track": "Slayyyter - I",
+      "showTitle": "I'M ACTUALLY KINDA FAMOUS",
+      "host": "Slayyyter",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T00:00:15.407Z"
+      "checkedAt": "2026-07-20T03:55:49.378Z"
     }
   }
 }
