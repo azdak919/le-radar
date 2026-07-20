@@ -1,16 +1,16 @@
 {
-  "updated": "2026-07-20T04:37:41.221Z",
+  "updated": "2026-07-20T07:43:49.642Z",
   "total": 185,
   "withPhoto": 168,
-  "withStock": 41,
-  "withCampusBank": 8,
+  "withStock": 40,
+  "withCampusBank": 9,
   "fullyCovered": 185,
-  "leadReadyPhotos": 140,
+  "leadReadyPhotos": 142,
   "pageScraped": 17,
   "photosRecovered": 17,
   "imagesCleared": 11,
-  "stockSearches": 39,
-  "stockFound": 30,
+  "stockSearches": 37,
+  "stockFound": 28,
   "campusBankFound": 5,
   "mainPageLeadReady": true,
   "gaps": [
@@ -27,22 +27,28 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
     },
     {
+      "title": "Les relations artificielles",
+      "link": "https://lecollectif.ca/societe/les-relations-artificielles/",
+      "reason": "stock-too-small",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_RELATIONS_ODTelerealiteAmour_SourcePageFacebookDOD-1-819x1024.jpg"
+    },
+    {
       "title": "Un Sherbrookois aux portes du baseball professionnel",
       "link": "https://lecollectif.ca/a-la-une/un-sherbrookois-aux-portes-du-baseball-professionnel/",
       "reason": "no-stock-match",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SPORTS_DeitenLachance_MLB_SourceBaseballQuebec-684x1024.png"
     },
     {
+      "title": "Recettes musicales québécoises pour l’été",
+      "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
+    },
+    {
       "title": "CSU approves affinity group policy, club rules update and councillor pay increase at special meeting",
       "link": "https://thelinknewspaper.ca/article/16326",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/7089/7290404684_2750bb385f_b.jpg"
-    },
-    {
-      "title": "CSU approves $36,000 in funding for student-led initiatives",
-      "link": "https://thelinknewspaper.ca/article/16319",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
     },
     {
       "title": "From the rink to the links",
@@ -59,8 +65,8 @@
     {
       "title": "Spotlighting Powerful McGill Alumnae",
       "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e2/McGill_University_downtown_campus_12.JPG"
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
     },
     {
       "title": "National Golf tournament",
@@ -78,13 +84,7 @@
       "title": "Second-Class Citizens",
       "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
-    },
-    {
-      "title": "The Gentrification of Online Fandom Spaces",
-      "link": "https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/5262/5621160117_4f124aa86d_b.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg"
     }
   ]
 }
