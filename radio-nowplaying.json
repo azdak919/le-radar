@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-21T16:24:45.725Z",
+  "updatedAt": "2026-07-21T17:54:34.225Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T16:24:24.941Z"
+      "checkedAt": "2026-07-21T17:54:12.392Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Raconte ton quartier",
-        "source": "api-live",
-        "start": "08:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "raconte-ton-quartier"
-      },
-      "next": {
         "title": "Second poteau",
         "source": "api-live",
         "start": "09:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364505.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "second-poteau"
       },
+      "next": {
+        "title": "La collation",
+        "source": "api-live",
+        "start": "10:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364765.mp3",
+        "slug": "mix-collation"
+      },
       "track": "",
-      "showTitle": "Raconte ton quartier",
+      "showTitle": "Second poteau",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,7 +51,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-21T16:24:26.771Z"
+      "checkedAt": "2026-07-21T17:54:14.191Z"
     },
     "ckut": {
       "id": "ckut",
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T16:24:29.670Z"
+      "checkedAt": "2026-07-21T17:54:17.255Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "World Beat News",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/world-beat-news"
-      },
-      "next": {
         "title": "Shaking the Habitual",
         "source": "schedule",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/shaking-the-habitual"
       },
+      "next": {
+        "title": "Code Switch",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/code-switch"
+      },
       "track": "",
-      "showTitle": "World Beat News",
+      "showTitle": "Shaking the Habitual",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T16:24:43.031Z"
+      "checkedAt": "2026-07-21T17:54:30.905Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,27 +129,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T16:24:43.799Z"
+      "checkedAt": "2026-07-21T17:54:31.442Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Resenha do Rock",
+        "title": "Soleil",
         "source": "api-live",
-        "host": "Jenario MC"
+        "host": "Mitaine"
       },
       "next": null,
-      "track": "Jenario MC - Resenha do Rock",
-      "showTitle": "Resenha do Rock",
-      "host": "Jenario MC",
+      "track": "Mitaine - Soleil",
+      "showTitle": "Soleil",
+      "host": "Mitaine",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T16:24:45.375Z"
+      "checkedAt": "2026-07-21T17:54:33.874Z"
     }
   }
 }
