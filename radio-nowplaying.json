@@ -1,47 +1,53 @@
 {
-  "updatedAt": "2026-07-21T10:03:32.109Z",
+  "updatedAt": "2026-07-21T12:09:26.195Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Mardi Champ Gauche",
         "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
       },
+      "next": {
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Mardi Champ Gauche",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T10:03:11.131Z"
+      "checkedAt": "2026-07-21T12:09:06.170Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Franco",
-        "source": "api-live",
-        "start": "02:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-franco"
-      },
-      "next": {
         "title": "À l'horizon",
         "source": "api-live",
         "start": "03:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364352.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "a-lhorizon"
       },
+      "next": {
+        "title": "Le Séismix",
+        "source": "api-live",
+        "start": "05:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364750.mp3",
+        "slug": "le-seismix"
+      },
       "track": "",
-      "showTitle": "Mix Franco",
+      "showTitle": "À l'horizon",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-21T10:03:12.774Z"
+      "checkedAt": "2026-07-21T12:09:07.912Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Beat Power Hour",
+        "title": "Tuesday Morning After Pt2",
         "source": "api-live",
-        "start": "05:00",
-        "end": "07:00"
+        "start": "08:00",
+        "end": "09:00"
       },
       "next": {
-        "title": "Tuesday Morning After Pt1",
+        "title": "Basa Basa",
         "source": "api-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "09:00",
+        "end": "11:00"
       },
       "track": "",
-      "showTitle": "The Beat Power Hour",
+      "showTitle": "Tuesday Morning After Pt2",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,80 +83,79 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T10:03:16.081Z"
+      "checkedAt": "2026-07-21T12:09:10.148Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Hip's Time to Wake Hop",
-        "source": "schedule",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
-      },
-      "next": {
         "title": "Trawling the Megahertz",
         "source": "schedule",
         "start": "08:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/trawling-the-megahertz"
       },
+      "next": {
+        "title": "At The Movies",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/at-the-movies"
+      },
       "track": "",
-      "showTitle": "Hip's Time to Wake Hop",
+      "showTitle": "Trawling the Megahertz",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T10:03:29.302Z"
+      "checkedAt": "2026-07-21T12:09:23.524Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
+        "title": "Palmarès CFAK",
         "source": "schedule",
-        "start": "00:00",
-        "end": "07:00"
+        "start": "08:00",
+        "end": "18:30"
       },
       "next": {
-        "title": "Folkswagen",
+        "title": "L'Aut'Rock",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "18:30",
+        "end": "20:00"
       },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T10:03:29.793Z"
+      "checkedAt": "2026-07-21T12:09:24.425Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Vagues",
+        "title": "DOIT4ME",
         "source": "api-live",
-        "host": "Sara Sue Vallee",
-        "url": "https://www.choq.ca/assets/playlist/palmares-site-web.jpg"
+        "host": "Tiffany Day"
       },
       "next": null,
-      "track": "Sara Sue Vallee - Vagues",
-      "showTitle": "Vagues",
-      "host": "Sara Sue Vallee",
+      "track": "Tiffany Day - DOIT4ME",
+      "showTitle": "DOIT4ME",
+      "host": "Tiffany Day",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T10:03:31.758Z"
+      "checkedAt": "2026-07-21T12:09:25.845Z"
     }
   }
 }
