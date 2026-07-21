@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-07-21T22:05:16.888Z",
+  "updatedAt": "2026-07-21T23:29:41.260Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "schedule",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
+      "current": null,
       "next": {
         "title": "Mercredi Bonbon",
         "source": "schedule",
@@ -20,34 +14,34 @@
         "url": "https://chyz.ca/emission/mercredi-bonbon/"
       },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T22:04:56.776Z"
+      "checkedAt": "2026-07-21T23:29:20.321Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
-        "source": "api-live",
-        "start": "14:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "palmares-de-cism"
-      },
-      "next": {
         "title": "À la bonne heure",
         "source": "api-live",
         "start": "15:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364394.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "a-la-bonne-heure"
       },
+      "next": {
+        "title": "London café",
+        "source": "api-live",
+        "start": "16:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364396.mp3",
+        "slug": "london-cafe"
+      },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "À la bonne heure",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-21T22:04:58.676Z"
+      "checkedAt": "2026-07-21T23:29:22.440Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Rez Rock Radio",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Soul Perspectives",
         "source": "api-live",
         "start": "19:00",
         "end": "20:30"
       },
+      "next": {
+        "title": "Marca-RO",
+        "source": "api-live",
+        "start": "20:30",
+        "end": "21:00"
+      },
       "track": "",
-      "showTitle": "Rez Rock Radio",
+      "showTitle": "Soul Perspectives",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,79 +77,80 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T22:05:01.108Z"
+      "checkedAt": "2026-07-21T23:29:25.039Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Bikini Brrroadcast",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
-      },
-      "next": {
         "title": "Ashes to Ashes",
         "source": "schedule",
         "start": "19:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/ashes-to-ashes"
       },
+      "next": {
+        "title": "Hittin' All The Bases",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/hittin-all-the-bases"
+      },
       "track": "",
-      "showTitle": "Bikini Brrroadcast",
+      "showTitle": "Ashes to Ashes",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T22:05:14.443Z"
+      "checkedAt": "2026-07-21T23:29:38.277Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "18:30"
-      },
-      "next": {
         "title": "L'Aut'Rock",
         "source": "schedule",
         "start": "18:30",
         "end": "20:00"
       },
+      "next": {
+        "title": "Dichotomie 88.3",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "L'Aut'Rock",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T22:05:14.998Z"
+      "checkedAt": "2026-07-21T23:29:38.866Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "L'amour en sang",
+        "title": "Pieces",
         "source": "api-live",
-        "host": "Malaimé Soleil"
+        "host": "Robber Robber",
+        "url": "https://www.choq.ca/assets/playlist/internationale.jpg"
       },
       "next": null,
-      "track": "Malaimé Soleil - L",
-      "showTitle": "L'amour en sang",
-      "host": "Malaimé Soleil",
+      "track": "Robber Robber - Pieces",
+      "showTitle": "Pieces",
+      "host": "Robber Robber",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T22:05:16.537Z"
+      "checkedAt": "2026-07-21T23:29:40.910Z"
     }
   }
 }
