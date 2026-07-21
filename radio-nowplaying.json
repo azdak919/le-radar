@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-21T04:22:47.309Z",
+  "updatedAt": "2026-07-21T07:09:33.306Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T04:22:26.713Z"
+      "checkedAt": "2026-07-21T07:09:10.419Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rock à la casbah",
+        "title": "Mix anglo",
         "source": "api-live",
-        "start": "20:00",
+        "start": "22:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "rock-a-la-casbah"
+        "slug": "mix-anglo"
       },
       "next": {
-        "title": "Toute est dans toute (reprise)",
+        "title": "L'Alter Ego (reprise)",
         "source": "api-live",
-        "start": "21:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364574.mp3",
-        "slug": "tout-est-dans-toute"
+        "start": "00:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364772.mp3",
+        "slug": "lalter-ego"
       },
       "track": "",
-      "showTitle": "Rock à la casbah",
+      "showTitle": "Mix anglo",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-21T04:22:28.387Z"
+      "checkedAt": "2026-07-21T07:09:12.580Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Harmony Express",
+        "title": "Attik / Show For Children",
         "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
+        "start": "03:00",
+        "end": "05:00"
       },
       "next": {
-        "title": "Pirate et Libres",
+        "title": "The Beat Power Hour",
         "source": "api-live",
-        "start": "02:00",
-        "end": "03:00"
+        "start": "05:00",
+        "end": "07:00"
       },
       "track": "",
-      "showTitle": "Harmony Express",
+      "showTitle": "Attik / Show For Children",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T04:22:30.780Z"
+      "checkedAt": "2026-07-21T07:09:15.678Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Floydian Slip",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "01:00",
-        "url": "http://www.cjlo.com/shows/floydian-slip"
-      },
-      "next": {
         "title": "CJLO Late Night",
         "source": "schedule",
         "start": "01:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
+      "next": {
+        "title": "Hip's Time to Wake Hop",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
+      },
       "track": "",
-      "showTitle": "Floydian Slip",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T04:22:44.192Z"
+      "checkedAt": "2026-07-21T07:09:29.605Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,28 +129,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T04:22:44.833Z"
+      "checkedAt": "2026-07-21T07:09:30.403Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Spectral Insomnia",
+        "title": "her haven",
         "source": "api-live",
-        "host": "Pure Wrath",
+        "host": "coffret de bijoux",
         "url": "https://www.choq.ca/assets/playlist/les-nuits-brutales.png"
       },
       "next": null,
-      "track": "Pure Wrath - Spectral Insomnia",
-      "showTitle": "Spectral Insomnia",
-      "host": "Pure Wrath",
+      "track": "coffret de bijoux - her haven",
+      "showTitle": "her haven",
+      "host": "coffret de bijoux",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T04:22:46.958Z"
+      "checkedAt": "2026-07-21T07:09:32.955Z"
     }
   }
 }
