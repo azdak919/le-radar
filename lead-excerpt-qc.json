@@ -1,22 +1,67 @@
 {
-  "updated": "2026-07-20T23:45:58.613Z",
+  "updated": "2026-07-21T03:52:10.723Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 4,
-  "withLeadExcerpt": 73,
-  "candidates": 4,
-  "enriched": 0,
-  "failed": 1,
+  "incomplete": 8,
+  "withLeadExcerpt": 74,
+  "candidates": 8,
+  "enriched": 6,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
-      "title": "Voyager sans arrêt : passion ou obsession ?",
-      "link": "https://lecollectif.ca/culture/voyager-sans-arret-passion-ou-obsession/",
+      "title": "Sois belle et tais-toi",
+      "link": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
       "ok": true,
-      "score": 76,
-      "chars": 400,
-      "sample": "Les occasions de penser au voyage sont nombreuses. Les médias et les réseaux sociaux montrent sans c",
-      "changed": false
+      "score": 96,
+      "chars": 295,
+      "sample": "C’est la sécheresse totale dans le cerveau de bien des gens. Le vôtre, peut-être. Mais ne craignez r",
+      "changed": true
+    },
+    {
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "link": "https://www.delitfrancais.com/2026/03/18/qui-sont-les-agents-qui-patrouillent-notre-campus/",
+      "ok": true,
+      "score": 100,
+      "chars": 396,
+      "sample": "« L’Université McGill est à la recherche de patrouilleurs dynamiques et engagés pour assurer la sécu",
+      "changed": true
+    },
+    {
+      "title": "Le scepticisme",
+      "link": "https://lecollectif.ca/edition-papier/le-scepticisme/",
+      "ok": true,
+      "score": 100,
+      "chars": 380,
+      "sample": "Les théories complotistes, la polarisation politique et la multiplication des technologies, comme le",
+      "changed": true
+    },
+    {
+      "title": "L’écoanxiété",
+      "link": "https://lecollectif.ca/societe/lecoanxiete/",
+      "ok": true,
+      "score": 100,
+      "chars": 270,
+      "sample": "En effet, grandir avec la peur de subir des changements climatiques majeurs affecte plus de 66 % des",
+      "changed": true
+    },
+    {
+      "title": "Le militantisme",
+      "link": "https://lecollectif.ca/societe/le-militantisme/",
+      "ok": true,
+      "score": 100,
+      "chars": 365,
+      "sample": "Au Québec, comme ailleurs dans le monde, les enjeux sociaux ont évolué depuis l’avènement du 21 e si",
+      "changed": true
+    },
+    {
+      "title": "L’abondance d’un mode de vie plus lent",
+      "link": "https://lecollectif.ca/societe/labondance-dun-mode-de-vie-plus-lent/",
+      "ok": true,
+      "score": 96,
+      "chars": 302,
+      "sample": "« Je répète toujours aux gens que, pour pouvoir faire de la cueillette sauvage, ce n’est pas juste d",
+      "changed": true
     },
     {
       "title": "The Cruel Optimism of Summer",

@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-20T23:53:32.396Z",
+  "updated": "2026-07-21T03:59:51.017Z",
   "total": 185,
   "withPhoto": 168,
-  "withStock": 40,
+  "withStock": 39,
   "withCampusBank": 8,
   "fullyCovered": 185,
-  "leadReadyPhotos": 141,
-  "pageScraped": 17,
-  "photosRecovered": 17,
+  "leadReadyPhotos": 139,
+  "pageScraped": 16,
+  "photosRecovered": 16,
   "imagesCleared": 11,
   "stockSearches": 39,
   "stockFound": 29,
-  "campusBankFound": 5,
+  "campusBankFound": 4,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -21,22 +21,16 @@
       "image": "https://live.staticflickr.com/917/28627096297_a3e0756d47_b.jpg"
     },
     {
-      "title": "CSU terminates council’s chief election officer",
-      "link": "https://thelinknewspaper.ca/article/16334",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
+      "title": "Le militantisme",
+      "link": "https://lecollectif.ca/societe/le-militantisme/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_Le-militantisme_SourceGettyImages-1.jpg"
     },
     {
       "title": "Les relations artificielles",
       "link": "https://lecollectif.ca/societe/les-relations-artificielles/",
       "reason": "stock-too-small",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_RELATIONS_ODTelerealiteAmour_SourcePageFacebookDOD-1-819x1024.jpg"
-    },
-    {
-      "title": "Un Sherbrookois aux portes du baseball professionnel",
-      "link": "https://lecollectif.ca/a-la-une/un-sherbrookois-aux-portes-du-baseball-professionnel/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SPORTS_DeitenLachance_MLB_SourceBaseballQuebec-684x1024.png"
     },
     {
       "title": "Recettes musicales québécoises pour l’été",
@@ -54,7 +48,7 @@
       "title": "CSU approves $36,000 in funding for student-led initiatives",
       "link": "https://thelinknewspaper.ca/article/16319",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
     },
     {
       "title": "From the rink to the links",
@@ -85,6 +79,12 @@
       "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
+    },
+    {
+      "title": "Second-Class Citizens",
+      "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b9/View_from_McGill_University_downtown_campus_01.JPG"
     }
   ]
 }
