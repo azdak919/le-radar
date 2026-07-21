@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-21T07:09:33.306Z",
+  "updatedAt": "2026-07-21T08:47:26.908Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T07:09:10.419Z"
+      "checkedAt": "2026-07-21T08:47:07.176Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix anglo",
-        "source": "api-live",
-        "start": "22:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-anglo"
-      },
-      "next": {
         "title": "L'Alter Ego (reprise)",
         "source": "api-live",
         "start": "00:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364772.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "lalter-ego"
       },
+      "next": {
+        "title": "Mix Franco",
+        "source": "api-live",
+        "start": "02:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364736.mp3",
+        "slug": "mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix anglo",
+      "showTitle": "L'Alter Ego (reprise)",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,7 +51,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-21T07:09:12.580Z"
+      "checkedAt": "2026-07-21T08:47:08.811Z"
     },
     "ckut": {
       "id": "ckut",
@@ -77,7 +77,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T07:09:15.678Z"
+      "checkedAt": "2026-07-21T08:47:11.087Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -104,7 +104,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T07:09:29.605Z"
+      "checkedAt": "2026-07-21T08:47:24.187Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,28 +129,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T07:09:30.403Z"
+      "checkedAt": "2026-07-21T08:47:24.650Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "her haven",
+        "title": "crystalize",
         "source": "api-live",
-        "host": "coffret de bijoux",
-        "url": "https://www.choq.ca/assets/playlist/les-nuits-brutales.png"
+        "host": "Kelela",
+        "url": "https://www.choq.ca/assets/playlist/palmares-site-web.jpg"
       },
       "next": null,
-      "track": "coffret de bijoux - her haven",
-      "showTitle": "her haven",
-      "host": "coffret de bijoux",
+      "track": "Kelela - crystalize",
+      "showTitle": "crystalize",
+      "host": "Kelela",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T07:09:32.955Z"
+      "checkedAt": "2026-07-21T08:47:26.558Z"
     }
   }
 }
