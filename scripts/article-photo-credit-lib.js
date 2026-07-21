@@ -18,7 +18,7 @@ const PHOTO_CREDIT_FIELDS = [
 
 // Version des extracteurs de crédit : l'incrémenter force une re-vérification
 // (repli média + crédits cités issus d'anciens extracteurs buggés).
-const CREDIT_EXTRACTOR_REV = 8;
+const CREDIT_EXTRACTOR_REV = 9;
 
 /** Placeholders WP / comptes génériques (Zone Campus : « Crédit : Journaliste »). */
 const PLACEHOLDER_CREDIT_RE = /^(?:journaliste|journalist|photographe|photographer|staff|rédaction|redaction|la\s+rédaction|the\s+editorial\s+team|unknown|inconnu|n\/?a|none|anonyme|anonymous|auteur|author|admin)$/i;
@@ -278,10 +278,71 @@ function creditFromPhrase(text = '') {
   };
 }
 
+/**
+ * Crédit parenthésé avec type en fin de légende (L'Exemplaire, thèmes FR) :
+ *   « … invisibles (illustration : Elora Veyron-Churlet / L'Exemplaire) »
+ *   « … du Québec (photo : Getty Images North America / AFP) »
+ * Mots-clés au-delà de photo/crédit : illustration, graphique, montage, etc.
+ */
+const PAREN_KIND_CREDIT_RE = /\((photos?|cr[eé]dits?(?:\s+photo)?|illustrations?|graphiques?|infographies?|photomontages?|montages?|dessins?|croquis|visuels?|captures?(?:\s+d['’][eé]cran)?)\s*:\s*([^)]{2,90})\)/giu;
+
+const ILLUSTRATION_KIND_RE = /^(?:illustration|graphique|infographie|photomontage|montage|dessin|croquis|visuel)/i;
+
+function parseParenKindCredit(t = '', lang = 'fr') {
+  let last = null;
+  for (const m of String(t).matchAll(PAREN_KIND_CREDIT_RE)) last = m;
+  if (!last) return null;
+  const kind = last[1].trim();
+  const inner = sanitizeCreditText(last[2]).replace(/[.,;:]+$/g, '').trim();
+  if (!inner || inner.length < 2) return null;
+  const creator = inner.split('/')[0].trim();
+  const parsed = creditFromPhrase(creator);
+  if (!parsed) return null;
+  if (parsed.isJournalistPlaceholder) {
+    return { ...parsed, source: 'paren-kind-journalist' };
+  }
+  const en = lang === 'en';
+  const label = ILLUSTRATION_KIND_RE.test(kind)
+    ? (en ? 'Illustration: ' : 'Illustration : ')
+    : (en ? 'Photo: ' : 'Photo : ');
+  return {
+    ...parsed,
+    creditLine: `${label}${inner}`,
+    source: 'figcaption-paren-kind',
+  };
+}
+
+/**
+ * Légende « © Nom » (Quartier Libre : <figcaption>© Maryse Boyce</figcaption>).
+ * Le nom doit commencer par une lettre — « © 2026 … » (pied de page) est écarté.
+ */
+function parseCopyrightCaptionCredit(t = '', lang = 'fr') {
+  const m = String(t).match(/(?:^|[\s(])©\s*([\p{L}][\p{L}\s'’.&-]{1,60}?)\s*\)?\s*$/u);
+  if (!m) return null;
+  const name = sanitizeCreditText(m[1]).replace(/[.,;:]+$/g, '').trim();
+  if (!name || name.length < 2) return null;
+  const parsed = creditFromPhrase(name);
+  if (!parsed || parsed.isJournalistPlaceholder) return null;
+  const en = lang === 'en';
+  return {
+    ...parsed,
+    creditLine: en ? `Photo: ${parsed.creator}` : `Photo : ${parsed.creator}`,
+    source: 'figcaption-copyright',
+  };
+}
+
 /** Légendes WordPress « Nom / Média » ou « Illustration by … » (The Tribune, etc.). */
 function parseFigcaptionAttribution(text = '', lang = 'fr') {
   const t = sanitizeCreditText(text);
   if (!t || t.length < 4) return null;
+
+  // Crédit parenthésé typé et « © Nom » : fiables quelle que soit la longueur
+  // de la légende (souvent > 120 caractères chez L'Exemplaire).
+  const parenKind = parseParenKindCredit(t, lang);
+  if (parenKind) return parenKind;
+  const copyright = parseCopyrightCaptionCredit(t, lang);
+  if (copyright) return copyright;
+
   if (t.length > 120) {
     // Légende descriptive longue : seule la signature en fin de texte compte.
     return t.length <= 300 ? parseTrailingCaptionCredit(t, lang) : null;
@@ -455,6 +516,9 @@ function extractFigureCredit(html = '', imageUrl = '', lang = 'fr') {
       : html.slice(Math.max(0, html.indexOf(cap) - 400), html.indexOf(cap) + cap.length);
     const srcM = block.match(/<img[^>]+src=["']([^"']+)["']/i);
     if (srcM && imageUrl && !urlsMatch(srcM[1], imageUrl)) continue;
+    // « (illustration : X) » / « © Nom » dans une légende wp-caption-text
+    const attr = parseFigcaptionAttribution(inner, lang);
+    if (attr) return { ...attr, source: attr.source || 'wp-caption' };
     if (looksLikePhotoCredit(inner)) {
       const parsed = creditFromPhrase(inner);
       if (parsed) return { ...parsed, source: 'wp-caption' };
@@ -694,6 +758,22 @@ function extractFilenameCredit(html = '', imageUrl = '', lang = 'fr') {
     if (!isPlausibleCreditName(name)) continue;
     const credit = makeCredit(name, 'filename-credit');
     if (credit) return credit;
+  }
+
+  // Le Polyscope (Firebase, page SPA sans HTML utile) et proches :
+  // « ORB_2025_…_photo_Annie_Diotte.jpg » — segments capitalisés exigés
+  // (Prénom_Nom), sinon « Photo-5_IMG_3586.jpg » donnerait un faux crédit.
+  let decodedUrl = String(imageUrl);
+  try { decodedUrl = decodeURIComponent(decodedUrl); } catch { /* garder brut */ }
+  const photoNameM = decodedUrl.match(
+    /[_-](?:photo|cr[eé]dit)[_-]((?:[\p{Lu}][\p{Ll}'’-]+[_-]){1,3}[\p{Lu}][\p{Ll}'’-]+)(?:-\d{2,4}x\d{2,4})?\.(?:jpe?g|png|webp|gif|avif)(?:$|\?)/u,
+  );
+  if (photoNameM) {
+    const name = nameFromCreditSlug(photoNameM[1].replace(/_/g, '-'));
+    if (isPlausibleCreditName(name)) {
+      const credit = makeCredit(name, 'filename-photo-name');
+      if (credit) return credit;
+    }
   }
 
   // Attribut WordPress collé à l'image lead uniquement (pas un match global).

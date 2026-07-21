@@ -42,6 +42,7 @@ function sleep(ms) {
 
 async function fetchPageAuthors(items, feedDefaults, sourceMap = new Map()) {
   const pageAuthors = new Map();
+  const checkedAtByKey = new Map();
   const toFetch = items
     .filter((item) => {
       const hints = getBotHints(sourceMap.get(item.source), 'authors');
@@ -53,7 +54,7 @@ async function fetchPageAuthors(items, feedDefaults, sourceMap = new Map()) {
       return ah - bh;
     });
 
-  if (!toFetch.length) return pageAuthors;
+  if (!toFetch.length) return { pageAuthors, stamped: 0 };
 
   console.log(`\nVérification page source : ${toFetch.length} article(s)`);
 
@@ -63,6 +64,9 @@ async function fetchPageAuthors(items, feedDefaults, sourceMap = new Map()) {
     if (!key || pageAuthors.has(key)) continue;
 
     const html = await fetchText(item.link, 3, PAGE_FETCH_TIMEOUT);
+    // Marque la consultation : sans byline trouvée, on ne re-scrapera pas
+    // cette page à chaque passe (needsPageAuthorVerification saute 24 h).
+    if (html) checkedAtByKey.set(key, new Date().toISOString());
     const hints = getBotHints(sourceMap.get(item.source), 'authors');
     const slim = html && html.length > 400_000 ? html.slice(0, 400_000) : html;
     let author = '';
@@ -89,7 +93,19 @@ async function fetchPageAuthors(items, feedDefaults, sourceMap = new Map()) {
   }
 
   console.log(`  ✓ ${fetched} page(s) consultée(s), ${pageAuthors.size} auteur(s) extrait(s)`);
-  return pageAuthors;
+
+  // Propager la marque de consultation à tous les items du même lien
+  // (doublons multi-flux) pour qu'elle soit écrite dans news.json.
+  let stamped = 0;
+  for (const item of items) {
+    const key = normalizeArticleUrl(item.link);
+    const checkedAt = key && checkedAtByKey.get(key);
+    if (checkedAt && item.authorCheckedAt !== checkedAt) {
+      item.authorCheckedAt = checkedAt;
+      stamped += 1;
+    }
+  }
+  return { pageAuthors, stamped };
 }
 
 async function main() {
@@ -103,7 +119,7 @@ async function main() {
   const sourceMap = loadSourceRegistryMap();
   const items = pruneToFreshWindow(allItems);
   const feedDefaults = detectFeedDefaultAuthors(items);
-  const pageAuthors = await fetchPageAuthors(items, feedDefaults, sourceMap);
+  const { pageAuthors, stamped } = await fetchPageAuthors(items, feedDefaults, sourceMap);
   const { mismatches, fixable, total } = auditAuthors(items, { feedDefaults, pageAuthors });
   const withAuthor = items.filter((i) => i.author && String(i.author).trim()).length;
 
@@ -136,7 +152,7 @@ async function main() {
     samples: mismatches.slice(0, 20),
   };
 
-  if (doUpdate && fixable > 0) {
+  if (doUpdate && (fixable > 0 || stamped > 0)) {
     const freshKeys = new Set(items.map((i) => normalizeArticleUrl(i.link)));
     const nextItems = allItems.map((item) => {
       if (!freshKeys.has(normalizeArticleUrl(item.link))) return item;
@@ -148,9 +164,13 @@ async function main() {
       }).item;
     });
     fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items: nextItems, count: nextItems.length }, null, 2) + '\n');
-    console.log(`\n✅ ${fixable} auteur(s) corrigé(s) dans news.json`);
-    qc.fixed = fixable;
-    qc.ok = true;
+    if (fixable > 0) {
+      console.log(`\n✅ ${fixable} auteur(s) corrigé(s) dans news.json`);
+      qc.fixed = fixable;
+      qc.ok = true;
+    } else {
+      console.log(`\n✅ ${stamped} marque(s) de vérification page écrite(s) dans news.json`);
+    }
   } else if (doUpdate) {
     console.log('\nRien à écrire.');
   } else if (fixable > 0) {

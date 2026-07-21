@@ -989,6 +989,11 @@ function detectFeedDefaultAuthors(items = []) {
     const counts = new Map();
     for (const item of list) {
       const lang = item.lang === 'en' ? 'en' : 'fr';
+      // Auteur passé par la vérification page (stamp) : byline endossée par
+      // la page, pas un compte injecté par le flux — un·e journaliste
+      // prolifique (≥50 % des articles d'une petite source) ne doit pas
+      // être pris pour un compte technique et remplacé par « La rédaction ».
+      if (item.authorCheckedAt) continue;
       const a = normalizeAuthor(item.author);
       if (!a || isEditorialPlaceholder(a, lang)) continue;
       const key = normAuthorKey(a);
@@ -1037,8 +1042,22 @@ function extractFirstPersonAuthor(text = '') {
   return m ? normalizeAuthor(m[1]) : '';
 }
 
+/** Re-vérifier une page déjà consultée au plus une fois par 24 h. */
+const AUTHOR_PAGE_RECHECK_MS = 24 * 60 * 60 * 1000;
+
+function pageAuthorRecentlyChecked(item = {}) {
+  const checked = Date.parse(item.authorCheckedAt || '');
+  if (!Number.isFinite(checked)) return false;
+  return Date.now() - checked < AUTHOR_PAGE_RECHECK_MS;
+}
+
 function needsPageAuthorVerification(item, feedDefaults = new Map(), hints = {}) {
   if (!item.link) return false;
+  // Page déjà consultée il y a moins de 24 h : ne pas re-scraper à chaque
+  // passe (budget CI limité). Vaut aussi pour forcePageAuthor — l'auteur
+  // page du dernier passage est reporté par mergePriorAuthor, et une page
+  // sans byline ne va pas en gagner une dans l'heure.
+  if (pageAuthorRecentlyChecked(item)) return false;
   if (hints.forcePageAuthor) return true;
   const lang = item.lang === 'en' ? 'en' : 'fr';
   const ex = String(item.excerpt || '').trim();
@@ -1047,6 +1066,28 @@ function needsPageAuthorVerification(item, feedDefaults = new Map(), hints = {})
   if (isFeedDefaultAuthor(item, feedDefaults)) return true;
   if (!normalizeAuthor(item.author)) return true;
   return false;
+}
+
+/**
+ * Reporte l'auteur résolu au run précédent quand la nouvelle passe retombe
+ * sur le repli éditorial (le RSS ne signe pas, la page a déjà été consultée).
+ * Sans ce report, chaque fetch-news réinitialise l'auteur depuis le flux et
+ * le site affiche « La rédaction » jusqu'à la prochaine passe verify-authors.
+ */
+function mergePriorAuthor(item = {}, prior = null) {
+  if (!prior) return item;
+  const lang = item.lang === 'en' ? 'en' : 'fr';
+  // Timestamp de vérification page : suit l'article d'un run à l'autre.
+  if (!item.authorCheckedAt && prior.authorCheckedAt) {
+    item.authorCheckedAt = prior.authorCheckedAt;
+  }
+  const current = normalizeAuthor(item.author);
+  if (current && !isEditorialPlaceholder(current, lang)) return item;
+  const prev = normalizeAuthor(prior.author);
+  if (!prev || isEditorialPlaceholder(prev, lang)) return item;
+  if (normAuthorKey(prev) === normAuthorKey(item.source || '')) return item;
+  item.author = prev;
+  return item;
 }
 
 function applyAuthorFallback(item = {}) {
@@ -1220,6 +1261,7 @@ module.exports = {
   detectFeedDefaultAuthors,
   isFeedDefaultAuthor,
   needsPageAuthorVerification,
+  mergePriorAuthor,
   resolveAuthor,
   applyAuthorFallback,
   reconcileAuthor,
