@@ -1,14 +1,32 @@
 {
-  "updated": "2026-07-21T18:43:13.322Z",
+  "updated": "2026-07-21T18:51:06.778Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 2,
-  "withLeadExcerpt": 74,
-  "candidates": 2,
-  "enriched": 0,
+  "incomplete": 4,
+  "withLeadExcerpt": 75,
+  "candidates": 4,
+  "enriched": 2,
   "failed": 0,
   "ok": true,
   "samples": [
+    {
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
+      "ok": true,
+      "score": 66,
+      "chars": 400,
+      "sample": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « p",
+      "changed": true
+    },
+    {
+      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "link": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
+      "ok": true,
+      "score": 81,
+      "chars": 400,
+      "sample": "Cependant, l’épidémie du sida a modifié le rapport entre les deux groupes. Au cours de cette crise, ",
+      "changed": true
+    },
     {
       "title": "The Cruel Optimism of Summer",
       "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
