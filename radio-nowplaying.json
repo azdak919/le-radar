@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-21T14:35:49.347Z",
+  "updatedAt": "2026-07-21T16:24:45.725Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T14:35:27.466Z"
+      "checkedAt": "2026-07-21T16:24:24.941Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
+        "title": "Raconte ton quartier",
         "source": "api-live",
-        "start": "05:00",
+        "start": "08:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "le-seismix"
+        "slug": "raconte-ton-quartier"
       },
       "next": {
-        "title": "Câlin collectif",
+        "title": "Second poteau",
         "source": "api-live",
-        "start": "07:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364367.mp3",
-        "slug": "calins-collectifs"
+        "start": "09:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364505.mp3",
+        "slug": "second-poteau"
       },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Raconte ton quartier",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-21T14:35:29.500Z"
+      "checkedAt": "2026-07-21T16:24:26.771Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Basa Basa",
+        "title": "Kool Runnings",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "12:00",
+        "end": "14:00"
       },
       "next": {
-        "title": "Ecolibrium/Environment in Canada",
+        "title": "Voice of Korea",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
+        "start": "14:00",
+        "end": "15:00"
       },
       "track": "",
-      "showTitle": "Basa Basa",
+      "showTitle": "Kool Runnings",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T14:35:32.467Z"
+      "checkedAt": "2026-07-21T16:24:29.670Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
+        "title": "World Beat News",
         "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/world-beat-news"
       },
       "next": {
-        "title": "Mirror Journal",
+        "title": "Shaking the Habitual",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/mirror-journal"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/shaking-the-habitual"
       },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "World Beat News",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T14:35:46.245Z"
+      "checkedAt": "2026-07-21T16:24:43.031Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,27 +129,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T14:35:47.305Z"
+      "checkedAt": "2026-07-21T16:24:43.799Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Hochelagurl",
+        "title": "Resenha do Rock",
         "source": "api-live",
-        "host": "Calamine"
+        "host": "Jenario MC"
       },
       "next": null,
-      "track": "Calamine - Hochelagurl",
-      "showTitle": "Hochelagurl",
-      "host": "Calamine",
+      "track": "Jenario MC - Resenha do Rock",
+      "showTitle": "Resenha do Rock",
+      "host": "Jenario MC",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T14:35:48.997Z"
+      "checkedAt": "2026-07-21T16:24:45.375Z"
     }
   }
 }
