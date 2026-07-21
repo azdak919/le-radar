@@ -1,27 +1,33 @@
 {
-  "updatedAt": "2026-07-20T23:02:50.247Z",
+  "updatedAt": "2026-07-21T00:59:30.707Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "La Voie des Droits",
         "source": "schedule",
         "start": "20:30",
         "end": "21:30",
         "url": "https://chyz.ca/emission/la-voie-des-droits/"
       },
+      "next": {
+        "title": "Mardi Champ Gauche",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "La Voie des Droits",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T23:02:28.375Z"
+      "checkedAt": "2026-07-21T00:59:08.013Z"
     },
     "cism": {
       "id": "cism",
@@ -51,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-20T23:02:30.497Z"
+      "checkedAt": "2026-07-21T00:59:10.129Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Lesbo-sons",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Underground Sounds",
         "source": "api-live",
         "start": "20:00",
         "end": "22:00"
       },
+      "next": {
+        "title": "Drastic Plastic",
+        "source": "api-live",
+        "start": "22:00",
+        "end": "23:00"
+      },
       "track": "",
-      "showTitle": "Lesbo-sons",
+      "showTitle": "Underground Sounds",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,79 +83,79 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T23:02:33.634Z"
+      "checkedAt": "2026-07-21T00:59:12.960Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Queer Chaos",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/queer-chaos"
-      },
-      "next": {
         "title": "In The Garage",
         "source": "schedule",
         "start": "20:00",
         "end": "21:00",
         "url": "http://www.cjlo.com/shows/in-the-garage"
       },
+      "next": {
+        "title": "LEKTOR DECODER",
+        "source": "schedule",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/lektor-decoder"
+      },
       "track": "",
-      "showTitle": "Queer Chaos",
+      "showTitle": "In The Garage",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T23:02:47.391Z"
+      "checkedAt": "2026-07-21T00:59:27.272Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Ma radio Académia",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Le terrain sportif",
         "source": "schedule",
         "start": "20:00",
         "end": "00:01"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Ma radio Académia",
+      "showTitle": "Le terrain sportif",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T23:02:47.848Z"
+      "checkedAt": "2026-07-21T00:59:27.738Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Maison en campagne",
+        "title": "Undreaming",
         "source": "api-live",
-        "host": "Marco Ema"
+        "host": "la luna"
       },
       "next": null,
-      "track": "Marco Ema - Maison en campagne",
-      "showTitle": "Maison en campagne",
-      "host": "Marco Ema",
+      "track": "la luna - Undreaming",
+      "showTitle": "Undreaming",
+      "host": "la luna",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-20T23:02:49.896Z"
+      "checkedAt": "2026-07-21T00:59:30.356Z"
     }
   }
 }
