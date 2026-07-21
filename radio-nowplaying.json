@@ -1,53 +1,53 @@
 {
-  "updatedAt": "2026-07-21T20:46:23.715Z",
+  "updatedAt": "2026-07-21T22:05:16.888Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
-      },
-      "next": {
         "title": "Les Arshitechs du Son",
         "source": "schedule",
         "start": "17:30",
         "end": "18:30",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "Mercredi Bonbon",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/mercredi-bonbon/"
+      },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T20:46:01.998Z"
+      "checkedAt": "2026-07-21T22:04:56.776Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les sentinelles de l'art",
-        "source": "api-live",
-        "start": "12:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "les-sentinelles-de-lart"
-      },
-      "next": {
         "title": "Le palmarès",
         "source": "api-live",
         "start": "14:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364783.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "palmares-de-cism"
       },
+      "next": {
+        "title": "À la bonne heure",
+        "source": "api-live",
+        "start": "15:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364394.mp3",
+        "slug": "a-la-bonne-heure"
+      },
       "track": "",
-      "showTitle": "Les sentinelles de l'art",
+      "showTitle": "Le palmarès",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-21T20:46:03.855Z"
+      "checkedAt": "2026-07-21T22:04:58.676Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Montreal Sessions",
+        "title": "Rez Rock Radio",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "18:00",
+        "end": "19:00"
       },
       "next": {
-        "title": "Off The Hour: Local Journalism Stories",
+        "title": "Soul Perspectives",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "19:00",
+        "end": "20:30"
       },
       "track": "",
-      "showTitle": "Montreal Sessions",
+      "showTitle": "Rez Rock Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T20:46:06.712Z"
+      "checkedAt": "2026-07-21T22:05:01.108Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Fluid Mosaic",
+        "title": "Bikini Brrroadcast",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
       },
       "next": {
-        "title": "Cherry Vamp and the Sonic Coffin",
+        "title": "Ashes to Ashes",
         "source": "schedule",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/ashes-to-ashes"
       },
       "track": "",
-      "showTitle": "The Fluid Mosaic",
+      "showTitle": "Bikini Brrroadcast",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T20:46:20.495Z"
+      "checkedAt": "2026-07-21T22:05:14.443Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,28 +135,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T20:46:21.205Z"
+      "checkedAt": "2026-07-21T22:05:14.998Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Shopping",
+        "title": "L'amour en sang",
         "source": "api-live",
-        "host": "feeble little horse",
-        "url": "https://www.choq.ca/assets/playlist/palmares-site-web.jpg"
+        "host": "Malaimé Soleil"
       },
       "next": null,
-      "track": "feeble little horse - Shopping",
-      "showTitle": "Shopping",
-      "host": "feeble little horse",
+      "track": "Malaimé Soleil - L",
+      "showTitle": "L'amour en sang",
+      "host": "Malaimé Soleil",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-21T20:46:23.364Z"
+      "checkedAt": "2026-07-21T22:05:16.537Z"
     }
   }
 }
