@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-22T04:47:54.520Z",
+  "updatedAt": "2026-07-22T07:35:37.967Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T04:47:32.606Z"
+      "checkedAt": "2026-07-22T07:34:53.705Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les garçons pleurent aussi (reprise)",
-        "source": "api-live",
-        "start": "20:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "les-garcons-pleurent-aussi"
-      },
-      "next": {
         "title": "Mix anglo",
         "source": "api-live",
         "start": "22:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364802.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "mix-anglo"
       },
+      "next": {
+        "title": "Les sentinelles de l'art (reprise)",
+        "source": "api-live",
+        "start": "00:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364844.mp3",
+        "slug": "les-sentinelles-de-lart"
+      },
       "track": "",
-      "showTitle": "Les garçons pleurent aussi (reprise)",
+      "showTitle": "Mix anglo",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,33 +51,33 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-22T04:47:34.800Z"
+      "checkedAt": "2026-07-22T07:34:55.868Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Space Plane",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "WarpCor / Out of the Void",
-        "source": "api-live",
+        "source": "schedule",
         "start": "02:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "Full Circle",
+        "source": "schedule",
+        "start": "04:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Space Plane",
+      "showTitle": "WarpCor / Out of the Void",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "stream"
+        "stream",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T04:47:37.900Z"
+      "checkedAt": "2026-07-22T07:35:22.200Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -104,7 +104,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T04:47:51.717Z"
+      "checkedAt": "2026-07-22T07:35:35.710Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,28 +129,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T04:47:52.506Z"
+      "checkedAt": "2026-07-22T07:35:36.133Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Rio Jovem",
+        "title": "Les fleurs de l’exil",
         "source": "api-live",
-        "host": "Kaatayra",
+        "host": "Miserere Luminis",
         "url": "https://www.choq.ca/assets/playlist/les-nuits-brutales.png"
       },
       "next": null,
-      "track": "Kaatayra - Rio Jovem",
-      "showTitle": "Rio Jovem",
-      "host": "Kaatayra",
+      "track": "Miserere Luminis - Les fleurs de l’exil",
+      "showTitle": "Les fleurs de l’exil",
+      "host": "Miserere Luminis",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T04:47:54.170Z"
+      "checkedAt": "2026-07-22T07:35:37.617Z"
     }
   }
 }
