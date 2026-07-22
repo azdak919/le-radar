@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-22T08:47:09.369Z",
+  "updatedAt": "2026-07-22T10:27:09.971Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T08:46:49.099Z"
+      "checkedAt": "2026-07-22T10:26:49.619Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les sentinelles de l'art (reprise)",
-        "source": "api-live",
-        "start": "00:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "les-sentinelles-de-lart"
-      },
-      "next": {
         "title": "Mix Franco",
         "source": "api-live",
         "start": "02:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364808.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "mix-franco"
       },
+      "next": {
+        "title": "Fréquence 440",
+        "source": "api-live",
+        "start": "03:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364421.mp3",
+        "slug": "frequence-440"
+      },
       "track": "",
-      "showTitle": "Les sentinelles de l'art (reprise)",
+      "showTitle": "Mix Franco",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,7 +51,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-22T08:46:51.348Z"
+      "checkedAt": "2026-07-22T10:26:51.566Z"
     },
     "ckut": {
       "id": "ckut",
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T08:46:53.836Z"
+      "checkedAt": "2026-07-22T10:26:53.818Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Morning Electro-shock",
         "source": "schedule",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/morning-electro-shock"
       },
+      "next": {
+        "title": "Words an...",
+        "source": "schedule",
+        "start": "07:30",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/words-and-culture"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Morning Electro-shock",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T08:47:07.259Z"
+      "checkedAt": "2026-07-22T10:27:07.148Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,27 +129,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T08:47:07.706Z"
+      "checkedAt": "2026-07-22T10:27:07.631Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Je t'en veux",
+        "title": "Main dans la main (Cover)",
         "source": "api-live",
-        "host": "Malaime Soleil"
+        "host": "Wizaard"
       },
       "next": null,
-      "track": "Malaime Soleil - Je t",
-      "showTitle": "Je t'en veux",
-      "host": "Malaime Soleil",
+      "track": "Wizaard - Main dans la main (Cover)",
+      "showTitle": "Main dans la main (Cover)",
+      "host": "Wizaard",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T08:47:09.017Z"
+      "checkedAt": "2026-07-22T10:27:09.620Z"
     }
   }
 }
