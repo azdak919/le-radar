@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-22T14:35:15.248Z",
+  "updatedAt": "2026-07-22T16:21:35.481Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T14:34:52.702Z"
+      "checkedAt": "2026-07-22T16:21:13.119Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
-        "source": "api-live",
-        "start": "05:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "le-seismix"
-      },
-      "next": {
         "title": "Club classique",
         "source": "api-live",
         "start": "07:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364436.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "club-classique"
       },
+      "next": {
+        "title": "La collation",
+        "source": "api-live",
+        "start": "09:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364841.mp3",
+        "slug": "mix-collation"
+      },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Club classique",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-22T14:34:55.185Z"
+      "checkedAt": "2026-07-22T16:21:15.616Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Sleepy King/Terminal 5",
+        "title": "If You Got Ears",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "12:00",
+        "end": "14:00"
       },
       "next": {
-        "title": "Free City Radio",
+        "title": "Radyo Kapwa",
         "source": "api-live",
-        "start": "11:00",
-        "end": "11:30"
+        "start": "14:00",
+        "end": "15:00"
       },
       "track": "",
-      "showTitle": "The Sleepy King/Terminal 5",
+      "showTitle": "If You Got Ears",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T14:34:58.336Z"
+      "checkedAt": "2026-07-22T16:21:18.765Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
+        "title": "North-South Hockey",
         "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/north-south-hockey"
       },
       "next": {
-        "title": "Unheard Of",
+        "title": "I Think You Might Like This",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/unheard-of"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/i-think-you-might-like-this"
       },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "North-South Hockey",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T14:35:12.166Z"
+      "checkedAt": "2026-07-22T16:21:32.548Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,28 +129,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T14:35:12.934Z"
+      "checkedAt": "2026-07-22T16:21:33.318Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Beau bordel",
+        "title": "dislocated bodies [feat. Anushka Chkheidze]",
         "source": "api-live",
-        "host": "blesse",
-        "url": "https://www.choq.ca/assets/playlist/palmares-site-web.jpg"
+        "host": "Noemi Buchi",
+        "url": "https://www.choq.ca/assets/playlist/internationale.jpg"
       },
       "next": null,
-      "track": "blesse - Beau bordel",
-      "showTitle": "Beau bordel",
-      "host": "blesse",
+      "track": "Noemi Buchi - dislocated bodies [feat. Anushka Chkheidze]",
+      "showTitle": "dislocated bodies [feat. Anushka Chkheidze]",
+      "host": "Noemi Buchi",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T14:35:14.898Z"
+      "checkedAt": "2026-07-22T16:21:35.130Z"
     }
   }
 }
