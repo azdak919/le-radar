@@ -1,47 +1,53 @@
 {
-  "updatedAt": "2026-07-22T10:27:09.971Z",
+  "updatedAt": "2026-07-22T12:13:10.594Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Mercredi Bonbon",
         "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mercredi-bonbon/"
       },
+      "next": {
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Mercredi Bonbon",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T10:26:49.619Z"
+      "checkedAt": "2026-07-22T12:12:49.929Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Franco",
+        "title": "Hors cadre",
         "source": "api-live",
-        "start": "02:00",
+        "start": "04:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-franco"
+        "slug": "hors-cadre"
       },
       "next": {
-        "title": "Fréquence 440",
+        "title": "Le Séismix",
         "source": "api-live",
-        "start": "03:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364421.mp3",
-        "slug": "frequence-440"
+        "start": "05:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364823.mp3",
+        "slug": "le-seismix"
       },
       "track": "",
-      "showTitle": "Mix Franco",
+      "showTitle": "Hors cadre",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-22T10:26:51.566Z"
+      "checkedAt": "2026-07-22T12:12:51.902Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Full Circle",
-        "source": "api-live",
-        "start": "04:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "The Wednesday Morning After",
         "source": "api-live",
         "start": "07:00",
         "end": "09:00"
       },
+      "next": {
+        "title": "The Sleepy King/Terminal 5",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Full Circle",
+      "showTitle": "The Wednesday Morning After",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,79 +83,79 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T10:26:53.818Z"
+      "checkedAt": "2026-07-22T12:12:54.357Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Morning Electro-shock",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/morning-electro-shock"
+        "start": "08:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
-        "title": "Words an...",
+        "title": "Are We There Yet?",
         "source": "schedule",
-        "start": "07:30",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/words-and-culture"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/are-we-there-yet"
       },
       "track": "",
-      "showTitle": "Morning Electro-shock",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T10:27:07.148Z"
+      "checkedAt": "2026-07-22T12:13:07.710Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
+        "title": "Palmarès CFAK",
         "source": "schedule",
-        "start": "00:00",
-        "end": "07:00"
+        "start": "08:00",
+        "end": "14:00"
       },
       "next": {
-        "title": "Folkswagen",
+        "title": "Le popcorn de l'infini",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "14:00",
+        "end": "00:00"
       },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T10:27:07.631Z"
+      "checkedAt": "2026-07-22T12:13:08.301Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Main dans la main (Cover)",
+        "title": "J'pense que",
         "source": "api-live",
-        "host": "Wizaard"
+        "host": "Arielle Soucy"
       },
       "next": null,
-      "track": "Wizaard - Main dans la main (Cover)",
-      "showTitle": "Main dans la main (Cover)",
-      "host": "Wizaard",
+      "track": "Arielle Soucy - J",
+      "showTitle": "J'pense que",
+      "host": "Arielle Soucy",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T10:27:09.620Z"
+      "checkedAt": "2026-07-22T12:13:10.244Z"
     }
   }
 }
