@@ -1,53 +1,53 @@
 {
-  "updatedAt": "2026-07-22T20:39:17.507Z",
+  "updatedAt": "2026-07-22T22:05:33.661Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
-      },
-      "next": {
         "title": "Les Arshitechs du Son",
         "source": "schedule",
         "start": "17:30",
         "end": "18:30",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "Blasphème",
+        "source": "schedule",
+        "start": "21:30",
+        "end": "22:30",
+        "url": "https://chyz.ca/emission/blaspheme/"
+      },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T20:38:57.021Z"
+      "checkedAt": "2026-07-22T22:05:07.393Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La carte cadeau",
-        "source": "api-live",
-        "start": "12:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "la-carte-cadeau"
-      },
-      "next": {
         "title": "Le palmarès",
         "source": "api-live",
         "start": "14:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364852.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "palmares-de-cism"
       },
+      "next": {
+        "title": "Parler pour jaser",
+        "source": "api-live",
+        "start": "15:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364465.mp3",
+        "slug": "parler-pour-jaser"
+      },
       "track": "",
-      "showTitle": "La carte cadeau",
+      "showTitle": "Le palmarès",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-22T20:38:58.974Z"
+      "checkedAt": "2026-07-22T22:05:10.091Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "All Da Way Live",
+        "title": "Hersay: Audio Smut/OWL/The Teachings/Metro Boulot Dodo",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "18:00",
+        "end": "19:00"
       },
       "next": {
-        "title": "Off the Hour/Sounds of Resistance",
+        "title": "Harbinger Showcase",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "19:00",
+        "end": "20:00"
       },
       "track": "",
-      "showTitle": "All Da Way Live",
+      "showTitle": "Hersay: Audio Smut/OWL/The Teachings/Metro Boulot Dodo",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T20:39:01.969Z"
+      "checkedAt": "2026-07-22T22:05:16.397Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Borderline",
+        "title": "The New Consonance",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/borderline"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/the-new-consonance"
       },
       "next": {
-        "title": "Advice By The Fireplace",
+        "title": "BVST",
         "source": "schedule",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/advice-by-the-fireplace"
+        "start": "19:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/bvst"
       },
       "track": "",
-      "showTitle": "Borderline",
+      "showTitle": "The New Consonance",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T20:39:15.333Z"
+      "checkedAt": "2026-07-22T22:05:30.216Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,27 +135,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T20:39:15.787Z"
+      "checkedAt": "2026-07-22T22:05:30.990Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Automne",
+        "title": "The River",
         "source": "api-live",
-        "host": "Frais Dispo"
+        "host": "Dominique Fils-Aimé"
       },
       "next": null,
-      "track": "Kee Avil - beg",
-      "showTitle": "Automne",
-      "host": "Frais Dispo",
+      "track": "Dominique Fils-Aimé - The River",
+      "showTitle": "The River",
+      "host": "Dominique Fils-Aimé",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T20:39:17.156Z"
+      "checkedAt": "2026-07-22T22:05:33.311Z"
     }
   }
 }
