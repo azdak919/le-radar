@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-22T07:35:37.967Z",
+  "updatedAt": "2026-07-22T08:47:09.369Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T07:34:53.705Z"
+      "checkedAt": "2026-07-22T08:46:49.099Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix anglo",
-        "source": "api-live",
-        "start": "22:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-anglo"
-      },
-      "next": {
         "title": "Les sentinelles de l'art (reprise)",
         "source": "api-live",
         "start": "00:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364844.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "les-sentinelles-de-lart"
       },
+      "next": {
+        "title": "Mix Franco",
+        "source": "api-live",
+        "start": "02:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364808.mp3",
+        "slug": "mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix anglo",
+      "showTitle": "Les sentinelles de l'art (reprise)",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,33 +51,33 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-22T07:34:55.868Z"
+      "checkedAt": "2026-07-22T08:46:51.348Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "WarpCor / Out of the Void",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "Full Circle",
-        "source": "schedule",
+        "source": "api-live",
         "start": "04:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "The Wednesday Morning After",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "09:00"
+      },
       "track": "",
-      "showTitle": "WarpCor / Out of the Void",
+      "showTitle": "Full Circle",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "stream",
-        "schedule"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T07:35:22.200Z"
+      "checkedAt": "2026-07-22T08:46:53.836Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -104,7 +104,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T07:35:35.710Z"
+      "checkedAt": "2026-07-22T08:47:07.259Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,28 +129,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T07:35:36.133Z"
+      "checkedAt": "2026-07-22T08:47:07.706Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Les fleurs de l’exil",
+        "title": "Je t'en veux",
         "source": "api-live",
-        "host": "Miserere Luminis",
-        "url": "https://www.choq.ca/assets/playlist/les-nuits-brutales.png"
+        "host": "Malaime Soleil"
       },
       "next": null,
-      "track": "Miserere Luminis - Les fleurs de l’exil",
-      "showTitle": "Les fleurs de l’exil",
-      "host": "Miserere Luminis",
+      "track": "Malaime Soleil - Je t",
+      "showTitle": "Je t'en veux",
+      "host": "Malaime Soleil",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T07:35:37.617Z"
+      "checkedAt": "2026-07-22T08:47:09.017Z"
     }
   }
 }
