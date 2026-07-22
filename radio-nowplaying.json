@@ -1,47 +1,53 @@
 {
-  "updatedAt": "2026-07-22T19:24:04.484Z",
+  "updatedAt": "2026-07-22T20:39:17.507Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Chéri.e, j’arrive!",
         "source": "schedule",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Chéri.e, j’arrive!",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T19:23:41.279Z"
+      "checkedAt": "2026-07-22T20:38:57.021Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Genre de bleu (reprise)",
-        "source": "api-live",
-        "start": "11:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "genre-de-bleu"
-      },
-      "next": {
         "title": "La carte cadeau",
         "source": "api-live",
         "start": "12:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364452.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "la-carte-cadeau"
       },
+      "next": {
+        "title": "Le palmarès",
+        "source": "api-live",
+        "start": "14:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364852.mp3",
+        "slug": "palmares-de-cism"
+      },
       "track": "",
-      "showTitle": "Genre de bleu (reprise)",
+      "showTitle": "La carte cadeau",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,7 +57,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-22T19:23:43.612Z"
+      "checkedAt": "2026-07-22T20:38:58.974Z"
     },
     "ckut": {
       "id": "ckut",
@@ -77,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T19:23:47.783Z"
+      "checkedAt": "2026-07-22T20:39:01.969Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Patch Notes",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/patch-notes"
-      },
-      "next": {
         "title": "Borderline",
         "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/borderline"
       },
+      "next": {
+        "title": "Advice By The Fireplace",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/advice-by-the-fireplace"
+      },
       "track": "",
-      "showTitle": "Patch Notes",
+      "showTitle": "Borderline",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T19:24:01.578Z"
+      "checkedAt": "2026-07-22T20:39:15.333Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,27 +135,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T19:24:02.385Z"
+      "checkedAt": "2026-07-22T20:39:15.787Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Moshpit",
+        "title": "Automne",
         "source": "api-live",
-        "host": "Ibeyi"
+        "host": "Frais Dispo"
       },
       "next": null,
-      "track": "Ibeyi - Moshpit",
-      "showTitle": "Moshpit",
-      "host": "Ibeyi",
+      "track": "Kee Avil - beg",
+      "showTitle": "Automne",
+      "host": "Frais Dispo",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-22T19:24:04.134Z"
+      "checkedAt": "2026-07-22T20:39:17.156Z"
     }
   }
 }
