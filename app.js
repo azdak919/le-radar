@@ -908,6 +908,8 @@ const MASTHEAD_WEATHER_REGIONAL_RANK = new Map(
 );
 let mastheadWeatherPrimaryIndex = 0;
 let mastheadWeatherCompactSecondaryIndex = 0;
+let mastheadWeatherNationSlot = 1;
+let mastheadWeatherLastBoardCount = 0;
 let mastheadWeatherResizeFrame = 0;
 
 function weatherLocationSlug(city) {
@@ -965,10 +967,10 @@ function buildMastheadWeatherBoard() {
 function weatherBoardCount() {
   const width = MASTHEAD_WEATHER?.querySelector('.masthead-weather__board')?.clientWidth || 0;
   if (width >= 600) return 4;
-  if (width >= 430) return 3;
+  if (width >= 500) return 3;
   // Sur téléphone, la première carte reste exclusivement Montréal/Québec.
-  // La seconde ne s'ajoute que si le bandeau a assez d'air pour deux vrais libellés.
-  if (width >= 250) return 2;
+  // La seconde disparaît avant que cette carte principale doive défiler.
+  if (width >= 280) return 2;
   return 1;
 }
 
@@ -982,18 +984,35 @@ function nextWeatherCity(group, usedIds) {
   let deck = mastheadWeatherDecks[group];
   deck = deck.filter((city) => eligible.some((candidate) => candidate.id === city.id));
   if (!deck.length) {
-    deck = [...eligible].sort((a, b) =>
-      (MASTHEAD_WEATHER_REGIONAL_RANK.get(a.id) ?? Number.MAX_SAFE_INTEGER)
-      - (MASTHEAD_WEATHER_REGIONAL_RANK.get(b.id) ?? Number.MAX_SAFE_INTEGER),
-    );
+    if (group === 'nation') {
+      deck = shuffleWeatherCities(eligible);
+    } else {
+      const priority = eligible
+        .filter((city) => MASTHEAD_WEATHER_REGIONAL_RANK.has(city.id))
+        .sort((a, b) => MASTHEAD_WEATHER_REGIONAL_RANK.get(a.id) - MASTHEAD_WEATHER_REGIONAL_RANK.get(b.id));
+      const remaining = eligible.filter((city) => !MASTHEAD_WEATHER_REGIONAL_RANK.has(city.id));
+      // Les deux premiers pôles universitaires restent prioritaires; ensuite,
+      // les villes régionales sont brassées pour éviter une séquence figée.
+      deck = [...priority.slice(0, 2), ...shuffleWeatherCities([...priority.slice(2), ...remaining])];
+    }
   }
   const city = deck.shift();
   mastheadWeatherDecks[group] = deck;
   return city;
 }
 
+function shuffleWeatherCities(cities) {
+  const shuffled = [...cities];
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const other = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[other]] = [shuffled[other], shuffled[index]];
+  }
+  return shuffled;
+}
+
 function weatherSecondaryGroup(slot, count) {
-  if (slot !== 1 || count > 2) return slot === 1 ? 'nation' : 'campus';
+  if (count > 2) return slot === mastheadWeatherNationSlot ? 'nation' : 'campus';
+  if (slot !== 1) return 'campus';
   return mastheadWeatherCompactSecondaryIndex % 3 === 2 ? 'nation' : 'campus';
 }
 
@@ -1002,6 +1021,13 @@ function showMastheadWeatherBoard() {
   const cities = [...MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city')];
   if (!cities.length) return;
   const count = Math.min(weatherBoardCount(), cities.length);
+  if (count !== mastheadWeatherLastBoardCount) {
+    mastheadWeatherNationSlot = count > 2 ? 1 + Math.floor(Math.random() * (count - 1)) : 1;
+    // Les groupes de cartes changent avec la largeur : on conserve l'ancre
+    // Montréal/Québec, puis on remplit les autres positions selon la nouvelle règle.
+    mastheadWeatherSlots = mastheadWeatherSlots.slice(0, 1);
+    mastheadWeatherLastBoardCount = count;
+  }
   MASTHEAD_WEATHER.querySelector('.masthead-weather__board')?.setAttribute('data-weather-count', String(count));
   mastheadWeatherSlots = mastheadWeatherSlots.slice(0, count);
   const anchor = WEATHER_CITIES.find(
@@ -1036,7 +1062,10 @@ function refreshWeatherNameScroll() {
     const viewport = el.querySelector('.masthead-weather__name');
     const name = el.querySelector('.masthead-weather__name-text');
     const overflow = Math.max(0, name.scrollWidth - viewport.clientWidth);
-    el.classList.toggle('is-overflowing', overflow > 2);
+    const isPrimary = MASTHEAD_WEATHER_PRIMARY_IDS.has(el.dataset.weatherCity);
+    // Montréal et Québec ne défilent jamais : la grille réduit plutôt le nombre
+    // de cartes quand l'espace devient insuffisant.
+    el.classList.toggle('is-overflowing', !isPrimary && overflow > 2);
     el.style.setProperty('--weather-scroll', `${overflow}px`);
   });
 }
