@@ -121,7 +121,7 @@ html[data-embed="tuner"] .tuner.is-playing .tuner-onair::before {
   animation: onairPulse 1.6s ease-out infinite;
 }
 
-/* Attribution discrète — indique la provenance sans concurrencer EN ONDES */
+/* Attribution — bleu radio pour contraster avec le coral EN ONDES */
 html[data-embed="tuner"] .tuner-embed-credit {
   display: block;
   margin: 0;
@@ -132,7 +132,7 @@ html[data-embed="tuner"] .tuner-embed-credit {
   letter-spacing: 0.06em;
   text-transform: lowercase;
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.32);
+  color: rgba(120, 168, 255, 0.78);
   white-space: nowrap;
   line-height: 1.1;
   transition: color 140ms ease;
@@ -140,18 +140,19 @@ html[data-embed="tuner"] .tuner-embed-credit {
 
 html[data-embed="tuner"] .tuner-embed-credit:hover,
 html[data-embed="tuner"] .tuner-embed-credit:focus-visible {
-  color: rgba(255, 255, 255, 0.62);
+  color: rgba(160, 198, 255, 0.95);
   text-decoration: none;
   outline: none;
 }
 
+/* Reste bleu en lecture (ne pas virer coral comme EN ONDES) */
 html[data-embed="tuner"] .tuner.is-playing .tuner-embed-credit {
-  color: rgba(255, 125, 110, 0.45);
+  color: rgba(120, 168, 255, 0.82);
 }
 
 html[data-embed="tuner"] .tuner.is-playing .tuner-embed-credit:hover,
 html[data-embed="tuner"] .tuner.is-playing .tuner-embed-credit:focus-visible {
-  color: rgba(255, 125, 110, 0.85);
+  color: rgba(180, 210, 255, 1);
 }
 
 /* ── Prev / next — 42 px comme le bureau ──────────────────── */
@@ -411,10 +412,11 @@ html[data-embed="tuner"] .tuner-nowair.is-swapping {
 html[data-embed="tuner"] .tuner-nowair-label {
   flex-shrink: 0;
   margin-top: 0;
-  font-size: 9px;
+  font-size: 10px; /* même échelle que EN ONDES */
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  /* Même poids visuel que EN ONDES (pas plus pâle) */
   color: var(--tuner-onair-idle);
   white-space: nowrap;
   writing-mode: horizontal-tb;
@@ -455,19 +457,20 @@ html[data-embed="tuner"] .tuner-nowair-sub {
   max-width: 100%;
 }
 
-/* Teintes live / à venir (miroir bureau) — sans cadre séparateur */
-html[data-embed="tuner"] .tuner.is-playing .tuner-nowair.is-live .tuner-nowair-label,
-html[data-embed="tuner"] .tuner.is-playing .tuner-nowair.is-live .tuner-nowair-title {
+/* Statuts — même saturation que EN ONDES (pas de labels « lavés ») */
+html[data-embed="tuner"] .tuner-nowair.is-live .tuner-nowair-label,
+html[data-embed="tuner"] .tuner-nowair.is-live .tuner-nowair-title {
   color: var(--tuner-onair-live);
 }
 
-html[data-embed="tuner"] .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-label,
-html[data-embed="tuner"] .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-title {
-  color: #c9a86a;
+/* À VENIR : ambre plein (poids équivalent au coral EN ONDES) */
+html[data-embed="tuner"] .tuner-nowair.is-upcoming .tuner-nowair-label,
+html[data-embed="tuner"] .tuner-nowair.is-upcoming .tuner-nowair-title {
+  color: #f0c14e;
 }
 
-html[data-embed="tuner"] .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-sub {
-  color: rgba(201, 168, 106, 0.7);
+html[data-embed="tuner"] .tuner-nowair.is-upcoming .tuner-nowair-sub {
+  color: rgba(240, 193, 78, 0.78);
 }
 
 html[data-embed="tuner"] .tuner-nowair.is-empty .tuner-nowair-title {
