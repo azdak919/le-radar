@@ -1384,6 +1384,7 @@ const SOL_UI_EN = {
   played: 'Played', won: 'Won', streak: 'Streak', best: 'Best',
   shuffleBg: 'Background', restartDeal: 'Restart deal', noMoves: 'No useful move right now — try Undo, draw from the stock, or a new playable deal', playableDeal: 'Playable deal', dealing: 'Dealing a playable hand…',
   radarBtn: 'Le Radar', coffeeBtn: 'Buy me a coffee',
+  hiScores: 'HI-SCORES', hiScoreBtn: 'HI', newRecord: 'NEW RECORD · 3 LETTERS', hiOk: 'OK', hiClose: 'Close',
 };
 
 // Hardcoded translations for languages where the generic API produces wrong results
@@ -1398,6 +1399,7 @@ const SOL_UI_HARDCODED = {
     played: 'Joués', won: 'Gagnés', streak: 'Série', best: 'Meilleur',
     shuffleBg: 'Arrière-plan', restartDeal: 'Rejouer la donne', noMoves: 'Aucun coup utile pour l’instant — Annuler, piocher, ou nouvelle donne jouable', playableDeal: 'Donne jouable', dealing: 'Préparation d’une donne jouable…',
     radarBtn: 'Le Radar', coffeeBtn: 'Offrir un café',
+    hiScores: 'HI-SCORES', hiScoreBtn: 'HI', newRecord: 'RECORD · 3 LETTRES', hiOk: 'OK', hiClose: 'Fermer',
   },
   es: {
     pomodoro: 'Pomodoro', pomodoroBack: 'Volver al Pomodoro',
@@ -1714,6 +1716,7 @@ function newGame() {
   updateUndoBtn();
   updateRestartDealBtn();
   document.getElementById('win-overlay').classList.add('hidden');
+  if (typeof hideHiScorePanel === 'function') hideHiScorePanel();
   const winSubEl = document.getElementById('win-sub');
   if (winSubEl) {
     delete winSubEl.dataset.hasScore;
@@ -4291,6 +4294,17 @@ function applyUIStrings(strings) {
   if (bestLabel) bestLabel.textContent = strings.best;
   if (shuffleBgLabel) shuffleBgLabel.textContent = strings.shuffleBg || SOL_UI_EN.shuffleBg;
 
+  const hiTitle = document.getElementById('hi-score-title');
+  const hiBtnLabel = document.getElementById('hi-score-btn-label');
+  const hiEntryLabel = document.getElementById('hi-score-entry-label');
+  const hiOk = document.getElementById('hi-score-ok');
+  const hiClose = document.getElementById('hi-score-close');
+  if (hiTitle) hiTitle.textContent = strings.hiScores || SOL_UI_EN.hiScores;
+  if (hiBtnLabel) hiBtnLabel.textContent = strings.hiScoreBtn || SOL_UI_EN.hiScoreBtn;
+  if (hiEntryLabel) hiEntryLabel.textContent = strings.newRecord || SOL_UI_EN.newRecord;
+  if (hiOk) hiOk.textContent = strings.hiOk || SOL_UI_EN.hiOk;
+  if (hiClose) hiClose.textContent = strings.hiClose || SOL_UI_EN.hiClose;
+
   const backLabel = document.getElementById('back-pomodoro-label');
   const backLink = document.getElementById('back-pomodoro-link');
   if (backLabel) backLabel.textContent = strings.pomodoro || SOL_UI_EN.pomodoro;
@@ -4834,7 +4848,227 @@ function updateWinStats() {
   if (bestEl)   bestEl.textContent   = bestTime < Infinity ? formatTime(bestTime) : '—';
 }
 
+/* ══════════════════════════════════════════════════════════
+   HI-SCORES — arcade / NES style (3 initials), local only
+   Rank: faster time first, then fewer moves.
+   ══════════════════════════════════════════════════════════ */
+const HI_SCORE_KEY = 'le_radar_sol_hiscores_v1';
+const HI_SCORE_MAX = 5;
+const HI_INITIALS_LEN = 3; // classic arcade / NES high-score initials
+const HI_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const HI_DEFAULT_NAME = 'AAA';
+
+let hiScores = [];
+let hiEntryPending = null; // { timeMs, moves } while entering name
+let hiLetters = [0, 0, 0]; // alphabet indices
+let hiHighlightName = null;
+
+function loadHiScores() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(HI_SCORE_KEY) || '[]');
+    if (!Array.isArray(raw)) { hiScores = []; return; }
+    hiScores = raw
+      .filter((e) => e && typeof e.name === 'string' && Number.isFinite(e.timeMs))
+      .map((e) => ({
+        name: String(e.name).toUpperCase().replace(/[^A-Z]/g, '').slice(0, HI_INITIALS_LEN).padEnd(HI_INITIALS_LEN, 'A'),
+        timeMs: Math.max(0, Math.round(e.timeMs)),
+        moves: Number.isFinite(e.moves) ? Math.max(0, Math.round(e.moves)) : 0,
+        at: e.at || 0,
+      }));
+    sortHiScores();
+  } catch {
+    hiScores = [];
+  }
+}
+
+function sortHiScores() {
+  hiScores.sort((a, b) => {
+    if (a.timeMs !== b.timeMs) return a.timeMs - b.timeMs;
+    if (a.moves !== b.moves) return a.moves - b.moves;
+    return (a.at || 0) - (b.at || 0);
+  });
+  if (hiScores.length > HI_SCORE_MAX) hiScores.length = HI_SCORE_MAX;
+}
+
+function saveHiScores() {
+  try {
+    localStorage.setItem(HI_SCORE_KEY, JSON.stringify(hiScores));
+  } catch { /* quota */ }
+}
+
+function qualifiesHiScore(timeMs, moves) {
+  if (!Number.isFinite(timeMs) || timeMs <= 0) return false;
+  if (hiScores.length < HI_SCORE_MAX) return true;
+  const last = hiScores[hiScores.length - 1];
+  if (timeMs < last.timeMs) return true;
+  if (timeMs === last.timeMs && moves < last.moves) return true;
+  return false;
+}
+
+function insertHiScore(entry) {
+  hiScores.push(entry);
+  sortHiScores();
+  saveHiScores();
+}
+
+function renderHiScoreList(highlightName) {
+  const list = document.getElementById('hi-score-list');
+  const empty = document.getElementById('hi-score-empty');
+  if (!list) return;
+  list.innerHTML = '';
+  if (!hiScores.length) {
+    empty?.classList.remove('hidden');
+    return;
+  }
+  empty?.classList.add('hidden');
+  hiScores.forEach((e, i) => {
+    const li = document.createElement('li');
+    if (highlightName && e.name === highlightName && i === hiScores.findIndex((x) => x.name === highlightName && x.timeMs === e.timeMs && x.moves === e.moves)) {
+      li.classList.add('is-new');
+    }
+    li.innerHTML =
+      `<span class="hi-rank">${i + 1}.</span>` +
+      `<span class="hi-name">${e.name}</span>` +
+      `<span class="hi-time">${formatTime(e.timeMs)}</span>` +
+      `<span class="hi-moves">${e.moves}mv</span>`;
+    list.appendChild(li);
+  });
+}
+
+function syncHiLetterButtons() {
+  document.querySelectorAll('#hi-score-letters .hi-letter').forEach((btn) => {
+    const i = Number(btn.dataset.i);
+    btn.textContent = HI_ALPHABET[hiLetters[i]] || 'A';
+  });
+}
+
+function bumpHiLetter(index, dir) {
+  const n = HI_ALPHABET.length;
+  hiLetters[index] = (hiLetters[index] + dir + n) % n;
+  syncHiLetterButtons();
+}
+
+function currentHiName() {
+  return hiLetters.map((i) => HI_ALPHABET[i] || 'A').join('').slice(0, HI_INITIALS_LEN);
+}
+
+function showHiScorePanel({ entryMode = false, pending = null } = {}) {
+  const panel = document.getElementById('hi-score-panel');
+  const entry = document.getElementById('hi-score-entry');
+  if (!panel) return;
+  renderHiScoreList(hiHighlightName);
+  if (entryMode && pending) {
+    hiEntryPending = pending;
+    // Prefer last used initials if any
+    const last = hiScores[0]?.name || HI_DEFAULT_NAME;
+    hiLetters = last.split('').slice(0, HI_INITIALS_LEN).map((ch) => {
+      const idx = HI_ALPHABET.indexOf(ch);
+      return idx >= 0 ? idx : 0;
+    });
+    while (hiLetters.length < HI_INITIALS_LEN) hiLetters.push(0);
+    syncHiLetterButtons();
+    entry?.classList.remove('hidden');
+  } else {
+    hiEntryPending = null;
+    entry?.classList.add('hidden');
+  }
+  panel.classList.remove('hidden');
+}
+
+function hideHiScorePanel() {
+  document.getElementById('hi-score-panel')?.classList.add('hidden');
+  document.getElementById('hi-score-entry')?.classList.add('hidden');
+  hiEntryPending = null;
+}
+
+function offerHiScore({ timeMs, moves }) {
+  loadHiScores();
+  if (qualifiesHiScore(timeMs, moves)) {
+    showHiScorePanel({ entryMode: true, pending: { timeMs, moves } });
+  } else {
+    showHiScorePanel({ entryMode: false });
+  }
+}
+
+function confirmHiScoreEntry() {
+  if (!hiEntryPending) {
+    hideHiScorePanel();
+    return;
+  }
+  const name = currentHiName() || HI_DEFAULT_NAME;
+  insertHiScore({
+    name,
+    timeMs: hiEntryPending.timeMs,
+    moves: hiEntryPending.moves,
+    at: Date.now(),
+  });
+  hiHighlightName = name;
+  hiEntryPending = null;
+  document.getElementById('hi-score-entry')?.classList.add('hidden');
+  renderHiScoreList(hiHighlightName);
+}
+
+function initHiScoreUI() {
+  loadHiScores();
+  const panel = document.getElementById('hi-score-panel');
+  panel?.addEventListener('click', (e) => e.stopPropagation());
+  panel?.addEventListener('pointerdown', (e) => e.stopPropagation());
+
+  document.getElementById('hi-score-btn')?.addEventListener('click', () => {
+    loadHiScores();
+    showHiScorePanel({ entryMode: false });
+  });
+  document.getElementById('hi-score-close')?.addEventListener('click', hideHiScorePanel);
+  document.getElementById('hi-score-ok')?.addEventListener('click', confirmHiScoreEntry);
+
+  document.getElementById('hi-score-letters')?.addEventListener('click', (e) => {
+    const spin = e.target.closest('.hi-letter-spin');
+    if (spin) {
+      bumpHiLetter(Number(spin.dataset.i), Number(spin.dataset.dir) || 1);
+      return;
+    }
+    const letter = e.target.closest('.hi-letter');
+    if (letter) bumpHiLetter(Number(letter.dataset.i), 1);
+  });
+
+  // Keyboard: ← → select col (focus), ↑ ↓ change, Enter confirm
+  document.addEventListener('keydown', (e) => {
+    const entry = document.getElementById('hi-score-entry');
+    if (!entry || entry.classList.contains('hidden')) return;
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      confirmHiScoreEntry();
+      return;
+    }
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      hideHiScorePanel();
+      return;
+    }
+    const active = document.activeElement;
+    const idx = active?.classList?.contains('hi-letter')
+      ? Number(active.dataset.i)
+      : 0;
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      bumpHiLetter(idx, 1);
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      bumpHiLetter(idx, -1);
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      const next = Math.max(0, idx - 1);
+      document.querySelector(`.hi-letter[data-i="${next}"]`)?.focus();
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      const next = Math.min(HI_INITIALS_LEN - 1, idx + 1);
+      document.querySelector(`.hi-letter[data-i="${next}"]`)?.focus();
+    }
+  });
+}
+
 loadGameStats();
+initHiScoreUI();
 </script>
 
 <script>
