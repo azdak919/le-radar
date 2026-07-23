@@ -339,6 +339,8 @@ let suppressAudioError = false;
 // (plus fiable à l'écran verrouillé) pour le cas courant ≤ 100 %.
 let audioCtx = null;
 let gainNode = null;
+let compressorNode = null;
+let analyserNode = null;
 let mediaSource = null;
 let boostWired = false;             // graphe Web Audio branché sur l'élément courant
 let boostCtxLifecycleBound = false;  // listeners visibility/focus pour reprendre l'AudioContext
@@ -349,11 +351,20 @@ const MOBILE_PLAYBACK = window.matchMedia('(hover: none) and (pointer: coarse)')
 let userPaused = false;
 let mobilePlayback = null;
 const playerListenersAttached = new WeakSet();
-const DEFAULT_GAIN = 1;             // 100 % — centre du curseur 0–200 %
+// 72 % est un point de départ confortable sur les flux modernes, souvent
+// déjà masterisés très fort. Le curseur conserve 100 % comme référence et
+// 200 % pour les rares postes faibles.
+const DEFAULT_GAIN = 0.72;
 let currentGain = DEFAULT_GAIN;
 let volumeMuted = false;
 let gainBeforeMute = DEFAULT_GAIN;
 const MAX_GAIN = 2;                 // jusqu'à 200 %
+const VOLUME_PREF_VERSION_KEY = 'req-player-vol-version';
+const VOLUME_PREF_VERSION = '2';
+const STATION_TRIMS_KEY = 'req-player-station-trims-v1';
+const stationTrims = new Map();
+let loudnessProbeTimer = null;
+let loudnessProbeStationId = null;
 // Curseur 0–200 % dès que Web Audio existe — y compris mobile / tablette.
 const GAIN_UI_MAX = webAudioSupported ? MAX_GAIN : 1;
 const VOL_THUMB_PX = 16;
@@ -841,8 +852,8 @@ const WEATHER_CITIES = [
   { id: 'la-sarre', name: 'La Sarre', region: 'Abitibi–Témiscamingue', lat: 48.8000, lon: -79.2000 },
   { id: 'ville-marie', name: 'Ville-Marie', region: 'Abitibi–Témiscamingue', lat: 47.3300, lon: -79.4300 },
   { id: 'levis', name: 'Lévis', lat: 46.8033, lon: -71.1779 },
-  // Vaudreuil–Soulanges : coordonnées de Vaudreuil-Dorion, pôle le plus peuplé de la MRC.
-  { id: 'vaudreuil-soulanges', name: 'Vaudreuil–Soulanges', region: 'Vaudreuil–Soulanges', lat: 45.4000, lon: -74.0300 },
+  // Vaudreuil–Soulanges : le lien Environnement Canada vise Vaudreuil-sur-le-Lac.
+  { id: 'vaudreuil-soulanges', name: 'Vaudreuil–Soulanges', region: 'Vaudreuil–Soulanges', lat: 45.4000, lon: -74.0300, weatherLat: 45.3980, weatherLon: -74.0325 },
   { id: 'saint-ignace-de-loyola', name: 'Saint-Ignace-de-Loyola', region: 'Lanaudière', lat: 46.0800, lon: -73.0200 },
   // Une collectivité représentative par nation : il n'existe pas de capitale
   // unique pour les nations composées de plusieurs communautés.
@@ -894,7 +905,9 @@ function weatherForecastUrl(city) {
   const mode = window.RadarTranslate?.getMode?.();
   const english = mode === 'en';
   const host = english ? 'weather.gc.ca/en' : 'meteo.gc.ca/fr';
-  return `https://${host}/location/index.html?coords=${city.lat.toFixed(3)}%2C${city.lon.toFixed(3)}`;
+  const lat = Number.isFinite(city.weatherLat) ? city.weatherLat : city.lat;
+  const lon = Number.isFinite(city.weatherLon) ? city.weatherLon : city.lon;
+  return `https://${host}/location/index.html?coords=${lat.toFixed(3)}%2C${lon.toFixed(3)}`;
 }
 
 function refreshMastheadWeatherLinks() {
@@ -2922,6 +2935,7 @@ function selectStation(id, { autoplay = false, openExternal = false, fromSync = 
   stopChoqAirRotate();
   choqAirRotateShowUpcoming = false;
   if (prevId !== radio.id) {
+    cancelLoudnessProbe();
     nowAirCrossfadePending = true;
   }
 
@@ -3084,6 +3098,7 @@ async function play(radio) {
 
 function stopPlayback({ keepStation = false } = {}) {
   reconnectTries = 0;
+  cancelLoudnessProbe();
   userPaused = false;
   setBuffering(false);
   mobilePlayback?.onPlayStop();
@@ -3328,6 +3343,7 @@ function currentTuning() {
 function onAudioPlaying() {
   reconnectTries = 0;
   setBuffering(false);
+  scheduleLoudnessProbe();
   mobilePlayback?.onPlaying();
   updatePlayUI();
 }
@@ -3368,7 +3384,84 @@ function onAudioError() {
   updatePlayUI();
 }
 
-/** Branche un graphe Web Audio (source → gain → sortie) pour l'amplification. */
+/** Niveau correctif propre à un poste (1 = aucun changement). */
+function stationTrim(station = currentStation) {
+  if (!station?.id) return 1;
+  const value = stationTrims.get(station.id);
+  return Number.isFinite(value) ? Math.min(1, Math.max(0.55, value)) : 1;
+}
+
+function saveStationTrims() {
+  try {
+    localStorage.setItem(STATION_TRIMS_KEY, JSON.stringify(Object.fromEntries(stationTrims)));
+  } catch { /* stockage indisponible : le réglage reste valable pour la session */ }
+}
+
+function loadStationTrims() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STATION_TRIMS_KEY) || '{}');
+    if (!saved || typeof saved !== 'object') return;
+    Object.entries(saved).forEach(([id, value]) => {
+      if (Number.isFinite(value) && value >= 0.55 && value <= 1) stationTrims.set(id, value);
+    });
+  } catch { /* valeur ancienne/corrompue : ignorer */ }
+}
+
+function cancelLoudnessProbe() {
+  if (loudnessProbeTimer) clearInterval(loudnessProbeTimer);
+  loudnessProbeTimer = null;
+  loudnessProbeStationId = null;
+}
+
+function averageRmsDb(samples) {
+  if (!samples.length) return null;
+  const meanSquare = samples.reduce((sum, value) => sum + value * value, 0) / samples.length;
+  return meanSquare > 0 ? 10 * Math.log10(meanSquare) : null;
+}
+
+/**
+ * Mesure courte, une seule fois par poste et par session de lecture.
+ * On ne fait jamais d'AGC qui pompe : un flux vraiment fort reçoit seulement
+ * une réduction durable. Les flux CORS incompatibles restent en lecture native.
+ */
+function scheduleLoudnessProbe() {
+  cancelLoudnessProbe();
+  if (!boostWired || !analyserNode || !currentStation?.id || !audio || audio.paused) return;
+
+  const stationId = currentStation.id;
+  const values = [];
+  const buffer = new Float32Array(analyserNode.fftSize);
+  let ticks = 0;
+  loudnessProbeStationId = stationId;
+  loudnessProbeTimer = setInterval(() => {
+    if (!audio || audio.paused || currentStation?.id !== stationId || !analyserNode) {
+      cancelLoudnessProbe();
+      return;
+    }
+    analyserNode.getFloatTimeDomainData(buffer);
+    let squareSum = 0;
+    for (let i = 0; i < buffer.length; i += 1) squareSum += buffer[i] * buffer[i];
+    values.push(squareSum / buffer.length);
+    ticks += 1;
+    // Ne garder qu'une courte fenêtre, après que le flux se soit stabilisé.
+    if (ticks < 18) return;
+    cancelLoudnessProbe();
+
+    const db = averageRmsDb(values);
+    if (!Number.isFinite(db)) return;
+    // -16 dBFS et plus fort est déjà très dense. La réduction est graduelle,
+    // plafonnée à 45 %, et seulement vers le bas pour respecter l'intention.
+    const target = db > -11 ? 0.68 : db > -16 ? 0.80 : db > -20 ? 0.90 : 1;
+    const existing = stationTrim(currentStation);
+    if (target < existing - 0.015) {
+      stationTrims.set(stationId, target);
+      saveStationTrims();
+      applyGain({ smooth: true });
+    }
+  }, 350);
+}
+
+/** Branche un graphe Web Audio (analyse → limiteur → gain → sortie). */
 function wireBoost() {
   const Ctx = window.AudioContext || window.webkitAudioContext;
   if (!Ctx) { webAudioSupported = false; return false; }
@@ -3377,8 +3470,17 @@ function wireBoost() {
     audio.crossOrigin = 'anonymous';
     audioCtx = audioCtx || new Ctx();
     mediaSource = audioCtx.createMediaElementSource(audio);
+    analyserNode = audioCtx.createAnalyser();
+    analyserNode.fftSize = 1024;
+    compressorNode = audioCtx.createDynamicsCompressor();
+    // Limiteur léger des crêtes : aucune "remontée" automatique des passages calmes.
+    compressorNode.threshold.setValueAtTime(-10, audioCtx.currentTime);
+    compressorNode.knee.setValueAtTime(2, audioCtx.currentTime);
+    compressorNode.ratio.setValueAtTime(12, audioCtx.currentTime);
+    compressorNode.attack.setValueAtTime(0.003, audioCtx.currentTime);
+    compressorNode.release.setValueAtTime(0.2, audioCtx.currentTime);
     gainNode = audioCtx.createGain();
-    mediaSource.connect(gainNode).connect(audioCtx.destination);
+    mediaSource.connect(analyserNode).connect(compressorNode).connect(gainNode).connect(audioCtx.destination);
     const resumeIfNeeded = () => {
       if (audioCtx && audioCtx.state === 'suspended' && isPlaying() && !userPaused) {
         audioCtx.resume().catch(() => {});
@@ -3405,6 +3507,7 @@ function wireBoost() {
 
 /** Recrée l'élément <audio>, avec ou sans graphe d'amplification. */
 function rebuildAudio(withBoost) {
+  cancelLoudnessProbe();
   if (audio) {
     suppressAudioError = true;
     try { audio.pause(); } catch {}
@@ -3425,6 +3528,8 @@ function rebuildAudio(withBoost) {
   attachAudioListeners(audio);
   mediaSource = null;
   gainNode = null;
+  compressorNode = null;
+  analyserNode = null;
   boostWired = false;
   if (withBoost) wireBoost();
   applyGain();
@@ -3535,16 +3640,21 @@ function isOutputSilent() {
   return volumeMuted || currentGain <= 0.001;
 }
 
-/** Applique la valeur du curseur : gain Web Audio si amplifiable, sinon volume natif. */
-function applyGain() {
-  const effective = volumeMuted ? 0 : currentGain;
+/** Applique le curseur maître et l'éventuelle correction prudente du poste. */
+function applyGain({ smooth = false } = {}) {
+  const effective = volumeMuted ? 0 : currentGain * stationTrim();
   const silent = isOutputSilent();
 
   if (audio) {
     if (boostWired && gainNode) {
       audio.volume = 1;
       try {
-        if (audioCtx) gainNode.gain.setValueAtTime(effective, audioCtx.currentTime);
+        if (audioCtx && smooth) {
+          gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
+          gainNode.gain.setTargetAtTime(effective, audioCtx.currentTime, 0.35);
+        } else if (audioCtx) {
+          gainNode.gain.setValueAtTime(effective, audioCtx.currentTime);
+        }
         else gainNode.gain.value = effective;
       } catch {
         try { gainNode.gain.value = effective; } catch {}
@@ -3682,8 +3792,18 @@ function updateMediaSession(radio, { title, sub } = {}) {
 }
 
 function restoreVolume() {
-  const saved = parseFloat(localStorage.getItem('req-player-vol') ?? String(DEFAULT_GAIN));
-  currentGain = Number.isFinite(saved) ? Math.min(GAIN_UI_MAX, Math.max(0, saved)) : DEFAULT_GAIN;
+  loadStationTrims();
+  const raw = localStorage.getItem('req-player-vol');
+  const saved = parseFloat(raw ?? String(DEFAULT_GAIN));
+  // Migration douce : l'ancien réglage par défaut était 100 %. On ne touche
+  // jamais aux personnes qui avaient déjà choisi une autre valeur.
+  const oldDefault = localStorage.getItem(VOLUME_PREF_VERSION_KEY) !== VOLUME_PREF_VERSION
+    && (raw === null || Math.abs(saved - 1) < 0.005);
+  if (oldDefault) localStorage.setItem('req-player-vol', String(DEFAULT_GAIN));
+  try { localStorage.setItem(VOLUME_PREF_VERSION_KEY, VOLUME_PREF_VERSION); } catch {}
+  currentGain = oldDefault
+    ? DEFAULT_GAIN
+    : (Number.isFinite(saved) ? Math.min(GAIN_UI_MAX, Math.max(0, saved)) : DEFAULT_GAIN);
   gainBeforeMute = currentGain;
   TUNER_VOLUME.value = currentGain;
   volumeMuted = false;
