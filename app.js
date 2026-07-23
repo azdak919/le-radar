@@ -254,6 +254,8 @@ const TUNER_SUB_ROTATE_MQ = window.matchMedia?.('(max-width: 1099.98px)');
 const TUNER_DIAL_PHONE_MQ = window.matchMedia?.('(max-width: 599.98px)');
 const TUNER_SUB_ROTATE_NARROW_MQ = window.matchMedia?.('(max-width: 479.98px)');
 const TUNER_SUB_ROTATE_VERY_NARROW_MQ = window.matchMedia?.('(max-width: 359.98px)');
+/** Embed : panneau latéral « À l'antenne » masqué (voir embed.css @media max-width 639.98px). */
+const TUNER_EMBED_NOWAIR_HIDDEN_MQ = window.matchMedia?.('(max-width: 639.98px)');
 const TUNER_VOLUME   = document.getElementById('tuner-volume');
 const TUNER_VOL      = document.getElementById('tuner-vol');
 const TUNER_VOL_TOGGLE = document.getElementById('tuner-vol-toggle');
@@ -263,6 +265,14 @@ const VOL_COMPACT    = window.matchMedia('(max-width: 1099.98px)');
 function isVolCompactMode() {
   if (IS_TUNER_EMBED) return false;
   return VOL_COMPACT.matches;
+}
+
+/**
+ * Embed étroit (pomo/solitaire mobile) : le panneau latéral est display:none,
+ * donc l’antenne doit remonter dans la 2ᵉ ligne du dial + marquee.
+ */
+function isEmbedNowAirInDial() {
+  return IS_TUNER_EMBED && !!TUNER_EMBED_NOWAIR_HIDDEN_MQ?.matches;
 }
 const TUNER_NOWAIR = document.getElementById('tuner-nowair');
 const TUNER_NOWAIR_LABEL = TUNER_NOWAIR?.querySelector?.('.tuner-nowair-label') || null;
@@ -1335,11 +1345,12 @@ function tunerDesktopSubLine(radio, { external = false } = {}) {
 
 /**
  * Mobile / tablette (< 1100 px) sur le site principal.
- * Embed Solitaire : toujours logique bureau (slogan + EN ONDES + volume inline),
- * car la largeur de l’iframe (~700 px) ferait croire à tort qu’on est en tablette.
+ * Embed large : logique « bureau » (panneau latéral À l'antenne).
+ * Embed étroit (≤640 px) : même logique compacte que le site mobile
+ * (ligne 2 = antenne / à venir + marquee) car le panneau est masqué en CSS.
  */
 function isDialCompactLayout() {
-  if (IS_TUNER_EMBED) return false;
+  if (IS_TUNER_EMBED) return isEmbedNowAirInDial();
   return !!TUNER_SUB_ROTATE_MQ?.matches;
 }
 
@@ -1553,9 +1564,10 @@ function startNowAirPreview() {
 }
 
 function isTunerSubRotateMode() {
-  // Embed : pas de rotation « À venir » dans le sous-titre — slogan bureau fixe.
-  if (IS_TUNER_EMBED) return false;
-  return !PREFERS_REDUCED_MOTION?.matches && !!TUNER_SUB_ROTATE_MQ?.matches;
+  if (PREFERS_REDUCED_MOTION?.matches) return false;
+  // Embed étroit : alternance slogan/fréquence ↔ à l'antenne / à venir dans le dial.
+  if (IS_TUNER_EMBED) return isEmbedNowAirInDial();
+  return !!TUNER_SUB_ROTATE_MQ?.matches;
 }
 
 function stopTunerSubRotate() {
@@ -1773,9 +1785,9 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false, kind = 'idle')
       return;
     }
 
-    // Site compact seulement : l’iframe embed reste sur le slogan (tunerSubMeta).
-    const showAirInDialSub = currentStation && !IS_TUNER_EMBED && TUNER_SUB_ROTATE_MQ?.matches;
-    if (showAirInDialSub) {
+    // Compact (site ou embed étroit) : préférer la ligne antenne si dispo.
+    const showAirInDialSub = currentStation && (isEmbedNowAirInDial() || (!IS_TUNER_EMBED && TUNER_SUB_ROTATE_MQ?.matches));
+    if (showAirInDialSub && tunerSubAirText) {
       applyMarquee(TUNER_SUB, tunerSubAirText);
     } else if (tunerSubMeta) {
       applyMarquee(TUNER_SUB, tunerSubMeta);
@@ -1813,6 +1825,7 @@ function initTunerSubRotateListeners() {
   onMediaQueryChange(TUNER_DIAL_PHONE_MQ, onTunerSubRotateLayoutChange);
   onMediaQueryChange(TUNER_SUB_ROTATE_NARROW_MQ, onTunerSubRotateLayoutChange);
   onMediaQueryChange(TUNER_SUB_ROTATE_VERY_NARROW_MQ, onTunerSubRotateLayoutChange);
+  onMediaQueryChange(TUNER_EMBED_NOWAIR_HIDDEN_MQ, onTunerSubRotateLayoutChange);
   onMediaQueryChange(PREFERS_REDUCED_MOTION, onTunerSubRotateLayoutChange);
 }
 
