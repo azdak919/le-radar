@@ -855,6 +855,23 @@ const mastheadWeatherDecks = { campus: [], nation: [] };
 let mastheadWeatherSlots = [];
 let mastheadWeatherNextSlot = 0;
 
+function weatherForecastUrl(city) {
+  // Le site d'origine est francophone : ECCC reste en français pour Original,
+  // FR et toute langue traduite, sauf si l'interface est explicitement anglaise.
+  const mode = window.RadarTranslate?.getMode?.();
+  const english = mode === 'en';
+  const host = english ? 'weather.gc.ca/en' : 'meteo.gc.ca/fr';
+  return `https://${host}/location/index.html?coords=${city.lat.toFixed(3)}%2C${city.lon.toFixed(3)}`;
+}
+
+function refreshMastheadWeatherLinks() {
+  if (!MASTHEAD_WEATHER) return;
+  WEATHER_CITIES.forEach((city) => {
+    const el = MASTHEAD_WEATHER.querySelector(`[data-weather-city="${city.id}"]`);
+    if (el) el.href = weatherForecastUrl(city);
+  });
+}
+
 function buildMastheadWeatherBoard() {
   const board = MASTHEAD_WEATHER?.querySelector('.masthead-weather__board');
   if (!board || board.children.length) return;
@@ -866,7 +883,7 @@ function buildMastheadWeatherBoard() {
     el.dataset.weatherGroup = city.nation ? 'nation' : 'campus';
     el.setAttribute('aria-hidden', 'true');
     const context = city.nation ? `${city.name} — ${city.nation}` : city.name;
-    el.href = `https://weather.gc.ca/en/location/index.html?coords=${city.lat.toFixed(3)}%2C${city.lon.toFixed(3)}`;
+    el.href = weatherForecastUrl(city);
     el.target = '_blank';
     el.rel = 'noopener noreferrer';
     el.title = `Prévisions d’Environnement Canada — ${context}`;
@@ -973,6 +990,8 @@ function renderMastheadWeather(entries) {
   MASTHEAD_WEATHER.classList.remove('hidden');
   startMastheadWeatherBoard();
 }
+
+window.addEventListener('radar:translate-mode', refreshMastheadWeatherLinks);
 
 function readWeatherCache() {
   try {
