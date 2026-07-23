@@ -221,9 +221,14 @@ a { color: inherit; }
 .masthead-weather__city[data-weather-tone="snow"] { --weather-tone: #5498bb; }
 .masthead-weather__city[data-weather-tone="storm"] { --weather-tone: #a86dce; }
 @media (min-width: 1024px) {
-  .masthead-top { display: grid; grid-template-columns: minmax(155px, 1fr) minmax(330px, 640px) minmax(210px, 1fr); }
-  .masthead-weather { display: inline-flex; }
-  .masthead-actions { justify-self: end; }
+  .masthead-top {
+    display: grid;
+    grid-template-areas: 'date weather actions';
+    grid-template-columns: minmax(155px, 1fr) minmax(330px, 640px) minmax(210px, 1fr);
+  }
+  .masthead-date { grid-area: date; justify-self: start; }
+  .masthead-weather { display: inline-flex; grid-area: weather; justify-self: center; }
+  .masthead-actions { grid-area: actions; justify-self: end; }
   .masthead-weather__board { --weather-columns: 2; }
 }
 @media (min-width: 1100px) { .masthead-weather__board { --weather-columns: 3; } }

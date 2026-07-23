@@ -856,12 +856,17 @@ function buildMastheadWeatherBoard() {
   if (!board || board.children.length) return;
   const fragment = document.createDocumentFragment();
   WEATHER_CITIES.forEach((city) => {
-    const el = document.createElement('span');
+    const el = document.createElement('a');
     el.className = 'masthead-weather__city';
     el.dataset.weatherCity = city.id;
     el.dataset.weatherGroup = city.nation ? 'nation' : 'campus';
     el.setAttribute('aria-hidden', 'true');
-    el.title = city.nation ? `${city.name} — ${city.nation}` : city.name;
+    const context = city.nation ? `${city.name} — ${city.nation}` : city.name;
+    el.href = `https://weather.gc.ca/en/location/index.html?coords=${city.lat.toFixed(3)}%2C${city.lon.toFixed(3)}`;
+    el.target = '_blank';
+    el.rel = 'noopener noreferrer';
+    el.title = `Prévisions d’Environnement Canada — ${context}`;
+    el.setAttribute('aria-label', `Prévisions d’Environnement Canada pour ${context}`);
     el.innerHTML = '<span class="masthead-weather__icon" aria-hidden="true">·</span><span class="masthead-weather__name"></span><span class="masthead-weather__temp">—</span>';
     el.querySelector('.masthead-weather__name').textContent = city.name;
     fragment.append(el);
