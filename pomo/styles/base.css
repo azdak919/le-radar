@@ -369,6 +369,10 @@
     font-size: 16px;
     scroll-behavior: smooth;
     color-scheme: light dark;
+    background: var(--bg-primary);
+    /* Évite une bande système (souvent bleue) sous le safe-area */
+    min-height: 100%;
+    min-height: 100dvh;
   }
 
   body {
@@ -377,6 +381,7 @@
     background: var(--bg-primary);
     min-height: 100vh;
     min-height: 100dvh;
+    min-height: 100svh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -797,27 +802,44 @@
     justify-content: flex-start;
   }
 
-  /* Citation réduite : le pomo occupe l'espace restant, chip en bas */
-  .content:has(.quote-card.is-minimized) .pomo-container {
+  /* Citation seule réduite : pomo prend l’espace, chip collé en bas */
+  .content:has(.quote-card.is-minimized):not(:has(.pomo-container.is-minimized)) .pomo-container {
     order: 0;
     flex: 1 1 auto;
     min-height: 0;
   }
 
-  .content:has(.quote-card.is-minimized) .quote-card {
+  .content:has(.quote-card.is-minimized):not(:has(.pomo-container.is-minimized)) .quote-card {
     order: 1;
     flex: 0 0 auto;
     margin-top: auto;
   }
 
-  /* Pomo réduit : la citation occupe l'espace restant */
-  .content:has(.pomo-container.is-minimized) .pomo-container {
+  /* Pomo seul réduit : citation en bas (ou centrée), sans forcer une dalle géante */
+  .content:has(.pomo-container.is-minimized):not(:has(.quote-card.is-minimized)) .pomo-container {
     flex: 0 0 auto;
   }
 
-  .content:has(.pomo-container.is-minimized) .quote-card {
-    flex: 1 1 auto;
+  .content:has(.pomo-container.is-minimized):not(:has(.quote-card.is-minimized)) .quote-card {
+    flex: 0 1 auto;
     min-height: 0;
+    max-height: min(58dvh, 420px);
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  /* Les deux réduits : chips empilés en haut, sans grand vide entre les deux */
+  .content:has(.pomo-container.is-minimized):has(.quote-card.is-minimized) {
+    justify-content: flex-start;
+    gap: 0.35rem;
+  }
+
+  .content:has(.pomo-container.is-minimized):has(.quote-card.is-minimized) .pomo-container,
+  .content:has(.pomo-container.is-minimized):has(.quote-card.is-minimized) .quote-card {
+    order: unset;
+    flex: 0 0 auto !important;
+    margin-top: 0 !important;
+    margin-bottom: 0;
   }
 
   /* Widget timer — isolé du plein écran (.pomo-fullpage-overlay) */
