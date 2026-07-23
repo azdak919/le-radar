@@ -1007,7 +1007,7 @@ function getTranslatedPomoStrings() {
     const translatedStage = pomo.isBreak ? breakLabel : s.focus;
     const pausedMark = !pomo.isRunning && (pomo.pausedRemaining != null || pomo.startedAt != null) ? '⏸ ' : '';
     const minStr = formatMinutes(getRemaining());
-    document.title = `${pausedMark}${stageEmoji} ${translatedStage} · ${minStr}m · Ataraxia`;
+    document.title = `${pausedMark}${stageEmoji} ${translatedStage} · ${minStr}m · Pomodoro`;
   };
   // Reassign for the tick loop
   PomoUI = window.PomoUI;

@@ -1,4 +1,4 @@
-// Iframe embed (Ataraxia Solitaire, etc.) :
+// Iframe embed (Solitaire, etc.) :
 // hauteur fixe 58 px, volume en ligne, signale le parent via postMessage.
 (function () {
   if (document.documentElement.dataset.embed !== 'tuner') return;
@@ -7,15 +7,15 @@
 
   function postHeight(extra) {
     try {
-      parent.postMessage(
-        {
-          type: 'ataraxia-radar-embed',
-          height: EMBED_H,
-          ready: true,
-          ...(extra || {}),
-        },
-        '*'
-      );
+      const payload = {
+        type: 'radar-embed',
+        height: EMBED_H,
+        ready: true,
+        ...(extra || {}),
+      };
+      parent.postMessage(payload, '*');
+      // Legacy alias (pre-migration Ataraxia Solitaire listeners)
+      parent.postMessage({ ...payload, type: 'ataraxia-radar-embed' }, '*');
     } catch (_) {}
   }
 

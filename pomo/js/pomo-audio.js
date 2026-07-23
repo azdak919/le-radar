@@ -373,7 +373,7 @@
       const remaining = _formatMinutes(_remaining());
       navigator.mediaSession.metadata = new MediaMetadata({
         title: `${phase} · ${remaining}m remaining`,
-        artist: 'Ataraxia Pomodoro',
+        artist: 'Pomodoro — Le Radar',
         artwork: [
           { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
           { src: 'icon-512.png', sizes: '512x512', type: 'image/png' },

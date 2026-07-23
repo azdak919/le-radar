@@ -203,7 +203,7 @@ a { color: inherit; }
     border-color: var(--accent);
     color: var(--accent);
   }
-  .masthead-ataraxia:hover {
+  .masthead-pomo:hover {
     border-color: #c8102e;
     background: color-mix(in srgb, #c8102e 10%, transparent);
   }
@@ -211,16 +211,16 @@ a { color: inherit; }
 .theme-toggle:active,
 .masthead-home:active,
 .masthead-rss:active,
-.masthead-ataraxia:active,
+.masthead-pomo:active,
 .masthead-solitaire:active,
 .masthead-coffee:active {
   transform: scale(0.9);
 }
-/* Ataraxia : seul bouton rouge du header (tomate Pomodoro, hors thème accent). */
-.masthead-ataraxia {
+/* Pomodoro : seul bouton rouge du header (tomate, hors thème accent). */
+.masthead-pomo {
   border-color: var(--rule);
 }
-.masthead-ataraxia .masthead-tomato,
+.masthead-pomo .masthead-tomato,
 .masthead-solitaire .masthead-card,
 .masthead-coffee .masthead-coffee-emoji {
   font-size: 15px;

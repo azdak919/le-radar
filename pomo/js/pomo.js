@@ -183,7 +183,7 @@ function PomoUI() {
   const stageLabel = pomo.isBreak ? (pomo.isLongBreak ? 'Long Break' : 'Break') : 'Focus';
   const stageEmoji = pomo.isBreak ? (pomo.isLongBreak ? '🌿' : '☕') : '🎯';
   const pausedMark = !pomo.isRunning && (pomo.pausedRemaining != null || pomo.startedAt != null) ? '⏸ ' : '';
-  document.title = `${pausedMark}${stageEmoji} ${stageLabel} · ${minStr}m · Ataraxia`;
+  document.title = `${pausedMark}${stageEmoji} ${stageLabel} · ${minStr}m · Pomodoro`;
 
   if (pomo.isBreak) {
     progress?.classList.add('on-break');
@@ -287,7 +287,7 @@ function onSegmentComplete() {
     new Notification(wasBreak ? 'Break over — time to focus!' : 'Session complete — take a break!', {
       icon: 'icon-192.png',
       badge: 'favicon-96x96.png',
-      tag: 'ataraxia-pomo',
+      tag: 'le-radar-pomo',
       requireInteraction: true,
       silent: false
     });
@@ -638,7 +638,7 @@ function openPomoFullscreen() {
 function initPomoHandlers() {
   const audioApi = PomoAudio();
   if (!audioApi) {
-    console.warn('[Ataraxia] pomo-audio.js missing — timer chime disabled');
+    console.warn('[Pomodoro] pomo-audio.js missing — timer chime disabled');
   }
   audioApi?.init({
     getPomoState: () => pomo,

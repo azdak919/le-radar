@@ -1004,8 +1004,8 @@
       <span id="shuffle-bg-label">Background</span>
     </button>
     <a class="toolbar-btn" id="radar-btn"
-       href="https://le-radar.ca/"
-       target="_blank" rel="noopener noreferrer" aria-label="Le Radar">
+       href="../"
+       aria-label="Le Radar — radios étudiantes du Québec">
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.2 14.47 16 12 16s-4.52-1.8-4.93-4.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20H9v2h6v-2h-2v-3.08c3.02-.43 5.42-2.78 5.91-5.78.09-.6-.39-1.14-1-1.14z"/>
       </svg>
@@ -2863,15 +2863,16 @@ window.addEventListener('resize', () => {
   const iframe = document.getElementById('radar-embed');
   if (!iframe) return;
 
-  const isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-  if (isLocal) {
-    iframe.src = `${location.protocol}//${location.hostname}:8888/tuner-embed.html`;
+  // Same-origin embed (Le Radar root). Keep relative path — works on le-radar.ca and local :port.
+  if (!iframe.getAttribute('src') || iframe.getAttribute('src') === 'about:blank') {
+    iframe.src = '../tuner-embed.html';
   }
 
   // Hauteur / ready signalés par le-radar/embed.js
   window.addEventListener('message', (event) => {
     const data = event && event.data;
-    if (!data || data.type !== 'ataraxia-radar-embed') return;
+    // Accept legacy Ataraxia message type + new radar-embed
+    if (!data || (data.type !== 'radar-embed' && data.type !== 'ataraxia-radar-embed')) return;
     if (typeof data.height === 'number' && data.height > 0) {
       const h = Math.round(data.height);
       document.documentElement.style.setProperty('--radar-embed-slot-h', h + 'px');

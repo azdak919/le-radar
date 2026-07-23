@@ -204,7 +204,7 @@ function _applyBackground(url, creditText, linkUrl, source, title = '') {
     layerNext.classList.add('is-fading');
     requestAnimationFrame(() => { layerNext.classList.add('loaded'); });
 
-    // Persist current background URL so solitaire.html can share it
+    // Persist current background URL so /solitaire/ can share it
     try { localStorage.setItem('ataraxia_bg_url', url); } catch(e) {}
 
     // Safer DOM construction (was innerHTML). Prevents any future XSS risk and is more explicit.

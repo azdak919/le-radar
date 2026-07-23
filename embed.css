@@ -1,4 +1,4 @@
-/* LE RADAR — Embed Ataraxia Solitaire
+/* LE RADAR — Embed Solitaire
    ═══════════════════════════════════════════════════════════
    Barre bureau du site :
    · gauche : EN ONDES · dial · prev/next · play · volume inline
@@ -41,7 +41,7 @@ html[data-embed="tuner"] .tuner {
   position: static;
   top: auto;
   z-index: 1;
-  /* Même fond que --tuner-bg du site, intégré dans la pastille Ataraxia */
+  /* Même fond que --tuner-bg du site, intégré dans la pastille Solitaire */
   background: transparent;
   color: #fff;
   box-shadow: none;
