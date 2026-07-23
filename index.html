@@ -37,13 +37,21 @@
         .tuner-nowair {
           grid-column: 2;
           display: flex !important;
-          align-items: flex-start;
+          flex-direction: row !important;
+          align-items: flex-start !important;
           gap: 10px;
+          width: 100% !important;
           min-width: 0;
           padding-left: 20px;
           border-left: none !important;
           opacity: 1 !important;
           pointer-events: auto !important;
+          box-sizing: border-box;
+        }
+        .tuner-nowair-body {
+          flex: 1 1 auto !important;
+          min-width: 0 !important;
+          opacity: 1 !important;
         }
         .tuner-vol {
           flex: 0 0 auto !important;

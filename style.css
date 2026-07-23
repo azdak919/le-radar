@@ -1320,14 +1320,15 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
 }
 
 .tuner-nowair-body {
+  flex: 1 1 auto;
   min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 2px;
-  transition: opacity 0.75s cubic-bezier(0.33, 1, 0.68, 1);
 }
+/* Ancien crossfade — ne plus masquer le contenu (preview = panneau vide) */
 .tuner-nowair-body.is-swapping {
-  opacity: 0;
+  opacity: 1;
 }
 
 .tuner-nowair-title {
@@ -1400,16 +1401,30 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   .tuner-nowair {
     grid-column: 2;
     display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
     flex: unset;
-    width: auto;
+    /* Occupe toute la colonne grille (sinon le bloc « rapetisse » au libellé seul) */
+    width: 100%;
     max-width: none;
     min-width: 0;
     margin-left: 0;
     padding-left: 20px;
-    /* Pas de barre verticale entre volume et antenne */
     border-left: none;
     align-self: center;
     opacity: 1;
+    box-sizing: border-box;
+  }
+
+  .tuner-nowair-body {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .tuner-nowair-title,
+  .tuner-nowair-sub {
+    max-width: 100%;
   }
 
   /*
