@@ -190,8 +190,8 @@ a { color: inherit; }
   height: 29px;
 }
 .masthead-weather__board[data-weather-count="1"] { --weather-grid: minmax(0, 1fr); }
-.masthead-weather__board[data-weather-count="2"] { --weather-grid: minmax(90px, .7fr) minmax(0, 1fr); }
-.masthead-weather__board[data-weather-count="3"] { --weather-grid: minmax(100px, .68fr) repeat(2, minmax(0, 1fr)); }
+.masthead-weather__board[data-weather-count="2"] { --weather-grid: minmax(110px, .7fr) minmax(0, 1fr); }
+.masthead-weather__board[data-weather-count="3"] { --weather-grid: minmax(110px, .68fr) repeat(2, minmax(0, 1fr)); }
 .masthead-weather__board[data-weather-count="4"] { --weather-grid: minmax(100px, .64fr) repeat(3, minmax(0, 1fr)); }
 .masthead-weather__city {
   display: none;
