@@ -91,9 +91,21 @@
       const saved = normalizeMode(localStorage.getItem(GLOBAL_PREFERENCE_KEY));
       if (saved) return saved;
     } catch { /* stockage privé */ }
-    const browser = normalizeMode(navigator.languages?.[0] || navigator.language);
-    if (!browser || browser === 'fr' || browser === 'en') return fallback;
-    return browser;
+    // navigator.languages : ordre de préférence du navigateur
+    const langs = (navigator.languages && navigator.languages.length)
+      ? navigator.languages
+      : [navigator.language || navigator.userLanguage || ''];
+    for (const raw of langs) {
+      const browser = normalizeMode(raw);
+      if (!browser) continue;
+      // Anglais → Original (contenu source EN pour pomo/solitaire)
+      if (browser === 'en') return fallback === 'original' ? 'original' : 'en';
+      // Francophone → Français automatiquement (pas « Original »)
+      if (browser === 'fr') return 'fr';
+      // Autres langues : auto-sélection comme avant
+      return browser;
+    }
+    return fallback;
   }
 
   function persistMode(mode) {

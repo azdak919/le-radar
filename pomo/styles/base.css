@@ -66,9 +66,30 @@
     --pomo-control-icon: 15px;
   }
 
-  /* Dark theme — adapts to OS preference */
+  /* Dark theme — data-theme (bouton) ou préférence OS si non forcé clair */
+  html[data-theme="dark"] {
+    --bg-primary: #1a1816;
+    --bg-glass: rgba(40, 36, 32, 0.6);
+    --bg-glass-hover: rgba(50, 45, 40, 0.75);
+    --border-glass: rgba(100, 90, 78, 0.25);
+    --text-primary: #e8e0d8;
+    --text-secondary: #a89e94;
+    --text-muted: #6b6259;
+    --accent: #c9a87c;
+    --accent-glow: rgba(201, 168, 124, 0.12);
+    --shadow-soft: rgba(0, 0, 0, 0.15);
+    --shadow-medium: rgba(0, 0, 0, 0.3);
+    --overlay: rgba(26, 24, 22, 0.45);
+    --pomo-work: #c9a87c;
+    --pomo-break: #7aab8e;
+    --pomo-ring-bg: rgba(201, 168, 124, 0.1);
+    --toast-bg: rgba(40,36,32,0.9);
+    --settings-bg: rgba(30, 27, 24, 0.97);
+    --settings-bg-solid: #1e1b18;
+    --settings-border: rgba(100, 88, 72, 0.55);
+  }
   @media (prefers-color-scheme: dark) {
-    :root {
+    html:not([data-theme="light"]) {
       --bg-primary: #1a1816;
       --bg-glass: rgba(40, 36, 32, 0.6);
       --bg-glass-hover: rgba(50, 45, 40, 0.75);
@@ -250,6 +271,16 @@
     fill: currentColor;
     opacity: 0.88;
     flex-shrink: 0;
+  }
+  .top-right-actions .theme-toggle .ico-sun {
+    fill: none;
+    stroke: currentColor;
+  }
+  .top-right-actions .theme-toggle .ico-moon {
+    fill: currentColor;
+  }
+  .top-right-actions .theme-toggle .hidden {
+    display: none;
   }
 
   /* Twemoji — même set que masthead Le Radar / toolbar Solitaire */
@@ -1198,8 +1229,14 @@
     outline: none;
     transition: border-color 0.25s;
   }
-  @media (prefers-color-scheme: dark) {
-    .setting-row input[type="number"] { background: rgba(255,255,255,0.06); }
+  html[data-theme="dark"] .setting-row input[type="number"],
+  html:not([data-theme="light"]) .setting-row input[type="number"] {
+    background: rgba(255,255,255,0.06);
+  }
+  @media (prefers-color-scheme: light) {
+    html:not([data-theme="dark"]) .setting-row input[type="number"] {
+      background: rgba(0,0,0,0.04);
+    }
   }
 
   .setting-row input[type="number"]:focus {
