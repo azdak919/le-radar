@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
       || localStorage.getItem(LANG_PREF_KEY_LEGACY);
     const initAuthor = _initQuote.authorEn || _initQuote.author;
     document.getElementById('quote-author').textContent = cleanTranslation(initAuthor);
+    syncQuoteSource(_initQuote);
   } catch (e) {
     console.warn('Quote init failed:', e);
   }

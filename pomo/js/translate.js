@@ -1062,6 +1062,7 @@ async function switchLanguage(langCode, { radarMode = langCode, persist = true }
   const langBtn = document.getElementById('lang-btn');
   if (langBtn) langBtn.setAttribute('aria-label', `Language: ${langLabel}`);
   document.documentElement.lang = langCode === 'zh-tw' ? 'zh-Hant' : (langCode === 'zh' ? 'zh-Hans' : langCode);
+  if (typeof syncQuoteSource === 'function') syncQuoteSource(QUOTES[currentQuoteIdx]);
 
   // Update active state in dropdown
   document.querySelectorAll('.lang-option').forEach(btn => {
