@@ -1269,6 +1269,8 @@ function isNowAirPanelPreviewMode() {
 
 /** Mobile sans poste : le sous-titre du dial affiche uniquement l'aperçu à l'antenne. */
 function isMobileIdleDialPreview() {
+  // Embed : l’aperçu va dans le module « À l'antenne » (colonne droite), pas dans le dial.
+  if (IS_TUNER_EMBED) return false;
   return isNowAirPanelPreviewMode() && !!TUNER_SUB_ROTATE_MQ?.matches;
 }
 
