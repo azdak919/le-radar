@@ -140,10 +140,12 @@ html[data-embed="tuner"] .tuner-embed-credit {
   transition: color 140ms ease, opacity 140ms ease;
 }
 
-html[data-embed="tuner"] .tuner-embed-credit-emoji {
-  font-size: 10px;
-  line-height: 1;
-  letter-spacing: 0;
+html[data-embed="tuner"] .tuner-embed-credit-emoji,
+html[data-embed="tuner"] .tuner-embed-credit .app-emoji {
+  width: 11px;
+  height: 11px;
+  display: block;
+  object-fit: contain;
   /* Légèrement plus visible que le texte, reste discret */
   opacity: 0.92;
   flex-shrink: 0;

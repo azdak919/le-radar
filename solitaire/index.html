@@ -378,10 +378,16 @@
       opacity: 0.88;
       flex-shrink: 0;
     }
-    .toolbar-emoji {
-      font-size: 1.12em;
-      line-height: 1;
+    /* Twemoji — même set que masthead Le Radar / toolbar Pomodoro */
+    .app-emoji {
+      display: block;
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
       flex-shrink: 0;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
     }
     .toolbar-btn--back {
       font-weight: 500;
@@ -994,7 +1000,7 @@
   <!-- Haut : Pomodoro, arrière-plan, liens Radar / café, langue -->
   <div class="game-toolbar-chrome" aria-label="Navigation and extras">
     <a class="toolbar-btn toolbar-btn--back" href="../pomo/" id="back-pomodoro-link" aria-label="Back to Pomodoro">
-      <span class="toolbar-emoji" aria-hidden="true">🍅</span>
+      <img class="app-emoji" src="../assets/emoji/tomato.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
       <span id="back-pomodoro-label">Pomodoro</span>
     </a>
     <button class="toolbar-btn" id="shuffle-bg-btn" aria-label="Shuffle background" title="Shuffle Background">
@@ -1006,17 +1012,13 @@
     <a class="toolbar-btn" id="radar-btn"
        href="../"
        aria-label="Le Radar — radios étudiantes du Québec">
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.2 14.47 16 12 16s-4.52-1.8-4.93-4.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20H9v2h6v-2h-2v-3.08c3.02-.43 5.42-2.78 5.91-5.78.09-.6-.39-1.14-1-1.14z"/>
-      </svg>
+      <img class="app-emoji" src="../assets/emoji/satellite.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
       <span id="radar-btn-label">Le Radar</span>
     </a>
     <a class="toolbar-btn" id="coffee-btn"
        href="https://www.buymeacoffee.com/azdak"
        target="_blank" rel="noopener noreferrer" aria-label="Buy me a coffee">
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M20 3H4v10c0 3.31 2.69 6 6 6h4c3.31 0 6-2.69 6-6V8h1a1 1 0 000-2h-1V3zm-2 10c0 2.21-1.79 4-4 4h-4c-2.21 0-4-1.79-4-4V5h12v8zm2-7h-1V4h1v2z"/>
-      </svg>
+      <img class="app-emoji" src="../assets/emoji/coffee.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
       <span id="coffee-btn-label">Buy me a coffee</span>
     </a>
     <div class="lang-selector">
