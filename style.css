@@ -184,7 +184,7 @@ a { color: inherit; }
 .masthead-weather__board {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(var(--weather-columns, 1), minmax(0, 1fr));
+  grid-template-columns: var(--weather-grid, minmax(0, 1fr));
   gap: 4px;
   width: 100%;
   height: 29px;
@@ -235,11 +235,11 @@ a { color: inherit; }
   .masthead-date { grid-area: date; justify-self: start; }
   .masthead-weather { display: inline-flex; grid-area: weather; width: 100%; justify-self: stretch; }
   .masthead-actions { grid-area: actions; justify-self: end; }
-  .masthead-weather__board { --weather-columns: 1; }
+  .masthead-weather__board { --weather-grid: minmax(0, 1fr); }
 }
-@media (min-width: 1024px) { .masthead-weather__board { --weather-columns: 2; } }
-@media (min-width: 1120px) { .masthead-weather__board { --weather-columns: 3; } }
-@media (min-width: 1320px) { .masthead-weather__board { --weather-columns: 4; } }
+@media (min-width: 1024px) { .masthead-weather__board { --weather-grid: minmax(100px, .7fr) minmax(0, 1fr); } }
+@media (min-width: 1120px) { .masthead-weather__board { --weather-grid: minmax(100px, .68fr) repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1320px) { .masthead-weather__board { --weather-grid: minmax(100px, .64fr) repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 899.98px) { .masthead-weather { display: none !important; } }
 @keyframes weather-name-scroll {
   0%, 28% { transform: translateX(calc(var(--weather-scroll, 0) * -1)); }
