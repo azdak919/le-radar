@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-23T06:49:41.589Z",
+  "updated": "2026-07-23T09:45:36.585Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
@@ -7,17 +7,59 @@
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 1,
-  "updatedCount": 1,
-  "citedNew": 1,
-  "fallbackNew": 0,
+  "checked": 7,
+  "updatedCount": 7,
+  "citedNew": 6,
+  "fallbackNew": 1,
   "samples": [
     {
-      "title": "Élections de l’exécutif de l’AÉUM",
+      "title": "Les femmes MAGA au service du patriarcat",
       "source": "Le Délit",
-      "credit": "Photo : Toscane Ralaimongo",
+      "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "source": "La Pige",
+      "credit": "Photo : Léa Morin-Letort",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "L’épidémie de la nonchalance",
+      "source": "Le Délit",
+      "credit": "Photo : Elie Nguyen",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "La performance de l’homosexualité : un privilège ?",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "source": "Quartier Libre",
+      "credit": "Photo : Maryse Boyce",
+      "cited": true,
+      "method": "figcaption-copyright"
     }
   ]
 }
