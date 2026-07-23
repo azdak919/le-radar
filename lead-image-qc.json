@@ -1,16 +1,16 @@
 {
-  "updated": "2026-07-23T03:55:37.859Z",
+  "updated": "2026-07-23T09:45:34.222Z",
   "total": 185,
   "withPhoto": 168,
-  "withStock": 62,
+  "withStock": 40,
   "withCampusBank": 9,
   "fullyCovered": 185,
-  "leadReadyPhotos": 139,
-  "pageScraped": 14,
-  "photosRecovered": 14,
-  "imagesCleared": 10,
-  "stockSearches": 67,
-  "stockFound": 47,
+  "leadReadyPhotos": 153,
+  "pageScraped": 17,
+  "photosRecovered": 17,
+  "imagesCleared": 11,
+  "stockSearches": 33,
+  "stockFound": 22,
   "campusBankFound": 5,
   "mainPageLeadReady": true,
   "gaps": [
@@ -21,16 +21,10 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
     },
     {
-      "title": "Des artistes de chez nous ont brillé à la Fête du Lac des Nations",
-      "link": "https://lecollectif.ca/culture/des-artistes-de-chez-nous-ont-brille-a-la-fete-du-lac-des-nations/",
-      "reason": "stock-too-small",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/CULTURE_FLNPhoto1_CreditAntoineMeunier.jpg"
-    },
-    {
-      "title": "Le scepticisme",
-      "link": "https://lecollectif.ca/edition-papier/le-scepticisme/",
-      "reason": "stock-too-small",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_Scepticisme_JeunesDesinformationReseauxSociaux_SourceFondationJeanJaures-1.png"
+      "title": "Épisode de feux de forêts en France",
+      "link": "https://lecollectif.ca/a-la-une/episode-de-feux-de-forets-en-france/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_Episode-de-feux-de-forets-en-France_Getty-Images.jpg"
     },
     {
       "title": "Le militantisme",
@@ -39,52 +33,58 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_Le-militantisme_SourceGettyImages-1.jpg"
     },
     {
-      "title": "L’abondance d’un mode de vie plus lent",
-      "link": "https://lecollectif.ca/societe/labondance-dun-mode-de-vie-plus-lent/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_SLOWLIVING_ModeDeVieLentCueillette_SourceLatelierDeCueillette-1.jpg"
-    },
-    {
       "title": "Les relations artificielles",
       "link": "https://lecollectif.ca/societe/les-relations-artificielles/",
       "reason": "stock-too-small",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_RELATIONS_ODTelerealiteAmour_SourcePageFacebookDOD-1-819x1024.jpg"
     },
     {
-      "title": "Le phénomène de la nostalgie",
-      "link": "https://lecollectif.ca/societe/le-phenomene-de-la-nostalgie/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_NOSTALGIE_Vinyles_SourceDrummondVinyl-1.jpg"
-    },
-    {
-      "title": "Une [sur]consommation… plus consciente?",
-      "link": "https://lecollectif.ca/societe/une-surconsommation-plus-consciente/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/Creation-sans-titre-33.png"
-    },
-    {
-      "title": "L’augmentation des fraudes en ligne et comment s’en protéger",
-      "link": "https://lecollectif.ca/a-la-une/laugmentation-des-fraudes-en-ligne-et-comment-sen-proteger/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_FraudeInternet_SourcePieuvre.jpg"
-    },
-    {
-      "title": "L’ERD sauvée de la dissolution par quatre membres",
-      "link": "https://lapige.atmjonquiere.com/2026/05/21/lerd-sauvee-de-la-dissolution-par-quatre-membres/?utm_source=rss&utm_medium=rss&utm_campaign=lerd-sauvee-de-la-dissolution-par-quatre-membres",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/ERD.jpeg"
-    },
-    {
-      "title": "Présences invisibles : écrire la ville sans permission",
-      "link": "https://quartierlibre.ca/presences-invisibles-ecrire-la-ville/",
-      "reason": "no-stock-match",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/Photo-5_IMG_3586.jpg"
-    },
-    {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
       "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
-      "reason": "stock-too-small",
+      "reason": "no-stock-match",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg"
+    },
+    {
+      "title": "Recettes musicales québécoises pour l’été",
+      "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
+    },
+    {
+      "title": "CSU approves $36,000 in funding for student-led initiatives",
+      "link": "https://thelinknewspaper.ca/article/16319",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
+    },
+    {
+      "title": "Mars enters Aries",
+      "link": "https://thebucampus.ca/2026/04/06/mars-enters-aries/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Mars%2C_Aries_and_Scorpio_from_Persian_Manusc_Wellcome_L0030660.jpg"
+    },
+    {
+      "title": "Spotlighting Powerful McGill Alumnae",
+      "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e2/McGill_University_downtown_campus_12.JPG"
+    },
+    {
+      "title": "Gaiters wrap up hard-fought season with eyes on next year",
+      "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
+    },
+    {
+      "title": "Second-Class Citizens",
+      "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg"
+    },
+    {
+      "title": "Le pays avant tout – esquisse",
+      "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6c/C%C3%A9gep_du_Vieux_Montr%C3%A9al%2C_Nov_03_2022.jpg"
     }
   ]
 }
