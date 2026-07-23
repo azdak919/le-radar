@@ -1068,12 +1068,10 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
     width: 100%;
   }
 
+  /* Masqués en barre bureau : débordent sous le tuner (espace perdu + bruit).
+     Le curseur + aria-valuetext suffisent ; labels gardés dans le popover mobile. */
   .tuner-vol-labels {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow: visible;
+    display: none !important;
   }
 
   .tuner-vol-btn {
@@ -1466,7 +1464,8 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
-  margin-top: 28px;
+  /* Serré sous le tuner sticky — moins d’espace perdu */
+  margin-top: 12px;
   padding-bottom: 8px;
   border-bottom: 2px solid var(--rule-strong);
 }
