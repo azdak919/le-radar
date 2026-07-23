@@ -629,7 +629,7 @@ html[data-script-dir="rtl"] .wordmark-full {
   0%, 14%   { transform: translate3d(0, 0, 0); }
   86%, 100% { transform: translate3d(var(--marquee-shift, 0), 0, 0); }
 }
-/* Panneau antenne : jamais de marquee (ellipsis + title au survol). */
+/* Panneau antenne : même défilement doux que le dial lorsqu'un titre déborde. */
 .tuner-nowair-title,
 .tuner-nowair-sub {
   overflow: hidden;
@@ -638,16 +638,7 @@ html[data-script-dir="rtl"] .wordmark-full {
 }
 .tuner-nowair-title.is-marquee,
 .tuner-nowair-sub.is-marquee {
-  text-overflow: ellipsis;
-}
-.tuner-nowair-title.is-marquee > .tuner-now-sub-text,
-.tuner-nowair-sub.is-marquee > .tuner-now-sub-text {
-  animation: none !important;
-  transform: none !important;
-  display: inline;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: clip;
 }
 @media (prefers-reduced-motion: reduce) {
   .is-marquee { text-overflow: ellipsis; }

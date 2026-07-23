@@ -19,9 +19,13 @@ test('Pomodoro garde son document hôte pendant une navigation avec lecture acti
   await expect(shell).toBeVisible();
   await expect(shell.contentFrame().locator('.page-layout')).toBeVisible();
 
-  await page.goBack();
-  await expect(page.locator('#radar-nav-frame')).toHaveCount(0);
-  await expect(page.locator('#pomo-container')).toBeVisible();
+  // Les liens de la page enfant repassent par l'hôte : une seule iframe,
+  // l'URL correspond à la page visible et le lecteur hôte n'est pas recréé.
+  await shell.contentFrame().locator('#radar-btn').evaluate((link) => link.click());
+  await expect(page).toHaveURL(/\/$/);
+  await expect(shell).toHaveCount(1);
+  await expect(shell.contentFrame().locator('#tuner')).toBeVisible();
+
 });
 
 test('un seul leader radio est partagé entre deux pages', async ({ page, context }) => {
