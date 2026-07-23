@@ -25,11 +25,13 @@ const BACKGROUNDS = [
     { url: "https://images.unsplash.com/photo-1536431311719-398b6704d4cc?w=1920&q=90&auto=format&fit=max", credit: "Vincentiu Solomon", link: "https://unsplash.com/@vincentiu", source: "Unsplash", title: "Milky Way" },
   { url: "https://images.unsplash.com/photo-1462275646964-a0e3c11f18a6?w=1920&q=90&auto=format&fit=max", credit: "Luca Baggio", link: "https://unsplash.com/@luca42", source: "Unsplash", title: "Pine Forest" },
   { url: "https://images.unsplash.com/photo-1491002052546-bf38f186af56?w=1920&q=90&auto=format&fit=max", credit: "Austin Neill", link: "https://unsplash.com/@arstyy", source: "Unsplash", title: "Autumn Forest" },
+  { url: "https://images.unsplash.com/photo-1504700610630-ac6edd918f09?w=1920&q=90&auto=format&fit=max", credit: "Jeremy Bishop", link: "https://unsplash.com/@jeremybishop", source: "Unsplash", title: "Ocean Cliff" },
   { url: "https://images.unsplash.com/photo-1444080748397-f442aa95c3e5?w=1920&q=90&auto=format&fit=max", credit: "Josh Gordon", link: "https://unsplash.com/@joshgordon", source: "Unsplash", title: "Desert Stars" },
   { url: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=1920&q=90&auto=format&fit=max", credit: "Jonatan Pie", link: "https://unsplash.com/@r3dmax", source: "Unsplash", title: "Aurora Borealis" },
   // ── Oceans, coasts, dawn — Unsplash ────────────────────────────
-    { url: "https://images.unsplash.com/photo-1520942702018-0862200e6873?w=1920&q=90&auto=format&fit=max", credit: "Silas Baisch", link: "https://unsplash.com/@silasbaisch", source: "Unsplash", title: "Ocean Shore" },
+  { url: "https://images.unsplash.com/photo-1520942702018-0862200e6873?w=1920&q=90&auto=format&fit=max", credit: "Silas Baisch", link: "https://unsplash.com/@silasbaisch", source: "Unsplash", title: "Ocean Shore" },
   { url: "https://images.unsplash.com/photo-1414609245224-afa02bfb3fda?w=1920&q=90&auto=format&fit=max", credit: "Jordan McQueen", link: "https://unsplash.com/@jordanmcqueen", source: "Unsplash", title: "Sunrise Coast" },
+  { url: "https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=1920&q=90&auto=format&fit=max", credit: "Levi Bare", link: "https://unsplash.com/@levibare", source: "Unsplash", title: "Golden Cliffs" },
   // ── Pexels — free open license ─────────────────────────────────
       { url: "https://images.pexels.com/photos/1671325/pexels-photo-1671325.jpeg?auto=compress&cs=tinysrgb&w=1920", credit: "Rafael Cerqueira", link: "https://www.pexels.com/photo/1671325/", source: "Pexels", title: "Mountain Path" },
     { url: "https://images.pexels.com/photos/1496373/pexels-photo-1496373.jpeg?auto=compress&cs=tinysrgb&w=1920", credit: "Trace Hudson", link: "https://www.pexels.com/photo/1496373/", source: "Pexels", title: "Ocean Waves" },
@@ -310,6 +312,7 @@ const BACKGROUNDS = [
   { url: "https://images.unsplash.com/photo-1516912481808-3406841bd33c?w=1920&q=90&auto=format&fit=max", credit: "Chandler Cruttenden", link: "https://unsplash.com/@chancruttenden", source: "Unsplash", title: "Snowy Road" },
 
   /* ── Dawn, Dusk & Golden Hour ── */
+  { url: "https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=1920&q=90&auto=format&fit=max", credit: "Aron Visuals", link: "https://unsplash.com/@aronvisuals", source: "Unsplash", title: "Dramatic Sunset" },
   { url: "https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=1920&q=90&auto=format&fit=max", credit: "Kym MacKinnon", link: "https://unsplash.com/@vixenly", source: "Unsplash", title: "Pink Dawn" },
   { url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1920&q=90&auto=format&fit=max", credit: "Bailey Zindel", link: "https://unsplash.com/@baileyzindel", source: "Unsplash", title: "Valley Dawn" },
   { url: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=1920&q=90&auto=format&fit=max", credit: "Joshua Earle", link: "https://unsplash.com/@joshuaearle", source: "Unsplash", title: "Sunrise Silhouette" },
