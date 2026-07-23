@@ -389,9 +389,6 @@ a { color: inherit; }
   object-fit: contain;
 }
 .wordmark-logo--mirror { transform: scaleX(-1); }
-.wordmark-logo--light { display: none; }
-html:not([data-theme="dark"]) .wordmark-logo--dark { display: none; }
-html:not([data-theme="dark"]) .wordmark-logo--light { display: inline-block; }
 .wordmark-emoji {
   font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
   font-weight: 400;
