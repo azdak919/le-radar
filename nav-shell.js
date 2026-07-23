@@ -11,11 +11,10 @@
 (function () {
   'use strict';
 
-  if (window !== window.top) return;
-
   const FRAME_ID = 'radar-nav-frame';
   const SHELL_CLASS = 'radar-shell-active';
   const STYLE_ID = 'radar-nav-shell-style';
+  const NAVIGATE_MESSAGE = 'radar-nav-shell-navigate';
 
   function pathNorm(pathname) {
     let p = pathname || '/';
@@ -35,6 +34,33 @@
     if (r === '/pomo' || r.startsWith('/pomo/')) return true;
     if (r === '/solitaire' || r.startsWith('/solitaire/')) return true;
     return false;
+  }
+
+  // A page already displayed inside the shell must delegate its own internal
+  // links to the host. Otherwise the iframe changes page by itself: listening
+  // continues, but the address/history fall out of sync with what is shown.
+  if (window !== window.top) {
+    document.addEventListener('click', (event) => {
+      if (event.defaultPrevented || event.button !== 0) return;
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+      const link = event.target?.closest?.('a[href]');
+      if (!link || link.hasAttribute('download')) return;
+      if (link.target && link.target !== '' && link.target !== '_self') return;
+
+      let url;
+      try {
+        url = new URL(link.href, location.href);
+      } catch {
+        return;
+      }
+      if (url.origin !== location.origin || !isShellPath(url.pathname)) return;
+      if (url.hash && pathNorm(url.pathname) === pathNorm(location.pathname) && url.search === location.search) return;
+
+      event.preventDefault();
+      window.top.postMessage({ type: NAVIGATE_MESSAGE, href: url.href }, location.origin);
+    }, true);
+    return;
   }
 
   function audioElPlaying(el) {
@@ -205,10 +231,29 @@
     exitShell();
   }
 
+  function onMessage(event) {
+    if (event.origin !== location.origin) return;
+    const payload = event.data;
+    if (payload?.type !== NAVIGATE_MESSAGE || typeof payload.href !== 'string') return;
+
+    const frame = getFrame();
+    if (!frame || event.source !== frame.contentWindow) return;
+
+    let url;
+    try {
+      url = new URL(payload.href, location.href);
+    } catch {
+      return;
+    }
+    if (url.origin !== location.origin || !isShellPath(url.pathname)) return;
+    navigateInShell(url.href);
+  }
+
   // If a child (iframe) wants to break out while host is still playing, it can
   // set location on top — we leave that to target=_top links.
   document.addEventListener('click', onClick, true);
   window.addEventListener('popstate', onPopState);
+  window.addEventListener('message', onMessage);
 
   // Expose tiny API for debugging / future controls
   window.RadarNavShell = {

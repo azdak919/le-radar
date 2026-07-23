@@ -1652,22 +1652,17 @@ function updateNowAirSubAirText(text, crossfade = false) {
   }, NOW_AIR_CROSSFADE_MS);
 }
 
-/**
- * Texte du panneau antenne : ellipsis + title (tooltip), sans marquee.
- */
+/** Texte du panneau antenne : marquee doux seulement en cas de débordement. */
 function applyNowAirPanelText(el, text) {
   if (!el) return;
   const value = String(text ?? '').trim();
-  el.classList.remove('is-marquee', 'hidden');
-  el.style.removeProperty('--marquee-shift');
-  el.style.removeProperty('--marquee-duration');
-  marqueeTextByEl.delete(el);
+  el.classList.remove('hidden');
   if (!value) {
-    el.textContent = '';
+    applyMarquee(el, '');
     el.removeAttribute('title');
     return;
   }
-  el.textContent = value;
+  applyMarquee(el, value);
   el.setAttribute('title', value);
 }
 

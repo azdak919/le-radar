@@ -35,7 +35,13 @@
   border: 0;
   background: transparent;
   color: rgba(255, 255, 255, 0.72);
-  font: inherit;
+  /* Les mini-apps ont leur propre chrome : reprendre exactement sa métrique
+     plutôt que la taille héritée du document (souvent 16 px). */
+  font-family: var(--font-body, var(--sans, system-ui, sans-serif));
+  font-size: var(--tb-font, 0.8rem);
+  font-weight: 400;
+  letter-spacing: var(--tb-ls, 0.03em);
+  line-height: 1.2;
   padding: 0.42rem 0.72rem;
 }
 

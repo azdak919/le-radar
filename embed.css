@@ -244,7 +244,7 @@ html[data-embed="tuner"] .tuner-now-sub-rotate {
 
 /*
  * Défilement doux (marquee) autorisé sur le dial embed.
- * Le panneau latéral « À l'antenne » garde ellipsis (style.css).
+ * Le panneau latéral « À l'antenne » adopte aussi le marquee si nécessaire.
  */
 html[data-embed="tuner"] .tuner-now .is-marquee {
   text-overflow: clip;
@@ -500,6 +500,11 @@ html[data-embed="tuner"] .tuner-nowair-title {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
+}
+
+html[data-embed="tuner"] .tuner-nowair-title.is-marquee,
+html[data-embed="tuner"] .tuner-nowair-sub.is-marquee {
+  text-overflow: clip;
 }
 
 html[data-embed="tuner"] .tuner-nowair-sub {
