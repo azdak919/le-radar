@@ -802,18 +802,31 @@ function renderTodayDate() {
 }
 
 // ─── Météo des principaux campus (desktop / tablette) ────────────────────────
-const WEATHER_CACHE_KEY = 'le_radar_masthead_weather_v1';
+const WEATHER_CACHE_KEY = 'le_radar_masthead_weather_v2';
 const WEATHER_CACHE_MS = 15 * 60 * 1000;
 const WEATHER_CITIES = [
-  { id: 'montreal', lat: 45.5017, lon: -73.5673 },
-  { id: 'quebec', lat: 46.8139, lon: -71.2080 },
-  { id: 'sherbrooke', lat: 45.4000, lon: -71.9000 },
-  { id: 'trois-rivieres', lat: 46.3432, lon: -72.5430 },
-  { id: 'saguenay', lat: 48.4284, lon: -71.0680 },
-  { id: 'rimouski', lat: 48.4488, lon: -68.5230 },
-  { id: 'gatineau', lat: 45.4765, lon: -75.7013 },
-  { id: 'rouyn-noranda', lat: 48.2366, lon: -79.0231 },
-  { id: 'levis', lat: 46.8033, lon: -71.1779 },
+  { id: 'montreal', name: 'Montréal', lat: 45.5017, lon: -73.5673 },
+  { id: 'quebec', name: 'Québec', lat: 46.8139, lon: -71.2080 },
+  { id: 'sherbrooke', name: 'Sherbrooke', lat: 45.4000, lon: -71.9000 },
+  { id: 'trois-rivieres', name: 'Trois-Rivières', lat: 46.3432, lon: -72.5430 },
+  { id: 'saguenay', name: 'Saguenay', lat: 48.4284, lon: -71.0680 },
+  { id: 'rimouski', name: 'Rimouski', lat: 48.4488, lon: -68.5230 },
+  { id: 'gatineau', name: 'Gatineau', lat: 45.4765, lon: -75.7013 },
+  { id: 'rouyn-noranda', name: 'Rouyn-Noranda', lat: 48.2366, lon: -79.0231 },
+  { id: 'levis', name: 'Lévis', lat: 46.8033, lon: -71.1779 },
+  // Une collectivité représentative par nation : il n'existe pas de capitale
+  // unique pour les nations composées de plusieurs communautés.
+  { id: 'odanak', name: 'Odanak', nation: 'Abénakis', lat: 46.0723, lon: -72.8181 },
+  { id: 'kitigan-zibi', name: 'Kitigan Zibi', nation: 'Anicinabeg', lat: 46.3825, lon: -75.9879 },
+  { id: 'manawan', name: 'Manawan', nation: 'Atikamekw', lat: 47.2203, lon: -74.3822 },
+  { id: 'nemaska', name: 'Nemaska', nation: 'Eeyou', lat: 51.2022, lon: -76.1906 },
+  { id: 'wendake', name: 'Wendake', nation: 'Wendat', lat: 46.8550, lon: -71.3567 },
+  { id: 'uashat', name: 'Uashat mak Mani-Utenam', nation: 'Innu', lat: 50.2300, lon: -66.3800 },
+  { id: 'kuujjuaq', name: 'Kuujjuaq', nation: 'Inuit · Nunavik', lat: 58.1000, lon: -68.4200 },
+  { id: 'cacouna', name: 'Cacouna', nation: 'Wolastoqiyik', lat: 47.9204, lon: -69.5147 },
+  { id: 'gesgapegiag', name: 'Gesgapegiag', nation: 'Mi’gmaq', lat: 48.2125, lon: -65.9961 },
+  { id: 'kahnawake', name: 'Kahnawà:ke', nation: 'Kanien’kehà:ka', lat: 45.4000, lon: -73.7500 },
+  { id: 'kawawachikamach', name: 'Kawawachikamach', nation: 'Naskapi', lat: 55.3400, lon: -66.8500 },
 ];
 
 function weatherIcon(code, isDay = 1) {
@@ -837,21 +850,42 @@ function weatherTone(code) {
 
 let mastheadWeatherTimer = null;
 
+function buildMastheadWeatherBoard() {
+  const board = MASTHEAD_WEATHER?.querySelector('.masthead-weather__board');
+  if (!board || board.children.length) return;
+  const fragment = document.createDocumentFragment();
+  WEATHER_CITIES.forEach((city) => {
+    const el = document.createElement('span');
+    el.className = 'masthead-weather__city';
+    el.dataset.weatherCity = city.id;
+    el.setAttribute('aria-hidden', 'true');
+    el.title = city.nation ? `${city.name} — ${city.nation}` : city.name;
+    el.innerHTML = '<span class="masthead-weather__icon" aria-hidden="true">·</span><span class="masthead-weather__name"></span><span class="masthead-weather__temp">—</span>';
+    el.querySelector('.masthead-weather__name').textContent = city.name;
+    fragment.append(el);
+  });
+  board.append(fragment);
+}
+
 function startMastheadWeatherBoard() {
   if (!MASTHEAD_WEATHER || mastheadWeatherTimer) return;
   const cities = [...MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city')];
   if (!cities.length) return;
   let active = 0;
   cities[active].classList.add('is-active');
+  cities[active].setAttribute('aria-hidden', 'false');
   mastheadWeatherTimer = window.setInterval(() => {
     cities[active].classList.remove('is-active');
+    cities[active].setAttribute('aria-hidden', 'true');
     active = (active + 1) % cities.length;
     cities[active].classList.add('is-active');
+    cities[active].setAttribute('aria-hidden', 'false');
   }, 5200);
 }
 
 function renderMastheadWeather(entries) {
   if (!MASTHEAD_WEATHER || !Array.isArray(entries)) return;
+  buildMastheadWeatherBoard();
   WEATHER_CITIES.forEach((city, index) => {
     const current = entries[index]?.current;
     const el = MASTHEAD_WEATHER.querySelector(`[data-weather-city="${city.id}"]`);
@@ -859,6 +893,10 @@ function renderMastheadWeather(entries) {
     el.querySelector('.masthead-weather__icon').textContent = weatherIcon(current.weather_code, current.is_day);
     el.querySelector('.masthead-weather__temp').textContent = `${Math.round(current.temperature_2m)}°`;
     el.dataset.weatherTone = weatherTone(current.weather_code);
+    const name = el.querySelector('.masthead-weather__name');
+    const overflow = Math.max(0, name.scrollWidth - name.clientWidth);
+    el.classList.toggle('is-overflowing', overflow > 2);
+    el.style.setProperty('--weather-scroll', `${overflow}px`);
   });
   MASTHEAD_WEATHER.classList.remove('hidden');
   startMastheadWeatherBoard();
