@@ -810,10 +810,23 @@ const WEATHER_CITIES = [
   { id: 'sherbrooke', name: 'Sherbrooke', lat: 45.4000, lon: -71.9000 },
   { id: 'trois-rivieres', name: 'Trois-Rivières', lat: 46.3432, lon: -72.5430 },
   { id: 'saguenay', name: 'Saguenay', lat: 48.4284, lon: -71.0680 },
+  // Saguenay–Lac-Saint-Jean : la météo de Chicoutimi ne résume pas le Lac.
+  { id: 'alma', name: 'Alma', region: 'Saguenay–Lac-Saint-Jean', lat: 48.5500, lon: -71.6500 },
+  { id: 'roberval', name: 'Roberval', region: 'Saguenay–Lac-Saint-Jean', lat: 48.5200, lon: -72.2300 },
+  { id: 'dolbeau-mistassini', name: 'Dolbeau-Mistassini', region: 'Saguenay–Lac-Saint-Jean', lat: 48.8800, lon: -72.2300 },
+  { id: 'saint-felicien', name: 'Saint-Félicien', region: 'Saguenay–Lac-Saint-Jean', lat: 48.6500, lon: -72.4500 },
   { id: 'rimouski', name: 'Rimouski', lat: 48.4488, lon: -68.5230 },
   { id: 'gatineau', name: 'Gatineau', lat: 45.4765, lon: -75.7013 },
   { id: 'rouyn-noranda', name: 'Rouyn-Noranda', lat: 48.2366, lon: -79.0231 },
+  // Abitibi–Témiscamingue : plusieurs pôles distincts plutôt qu'une seule ville.
+  { id: 'val-dor', name: 'Val-d’Or', region: 'Abitibi–Témiscamingue', lat: 48.1000, lon: -77.7800 },
+  { id: 'amos', name: 'Amos', region: 'Abitibi–Témiscamingue', lat: 48.5700, lon: -78.1200 },
+  { id: 'la-sarre', name: 'La Sarre', region: 'Abitibi–Témiscamingue', lat: 48.8000, lon: -79.2000 },
+  { id: 'ville-marie', name: 'Ville-Marie', region: 'Abitibi–Témiscamingue', lat: 47.3300, lon: -79.4300 },
   { id: 'levis', name: 'Lévis', lat: 46.8033, lon: -71.1779 },
+  // Vaudreuil–Soulanges : coordonnées de Vaudreuil-Dorion, pôle le plus peuplé de la MRC.
+  { id: 'vaudreuil-soulanges', name: 'Vaudreuil–Soulanges', region: 'Vaudreuil–Soulanges', lat: 45.4000, lon: -74.0300 },
+  { id: 'saint-ignace-de-loyola', name: 'Saint-Ignace-de-Loyola', region: 'Lanaudière', lat: 46.0800, lon: -73.0200 },
   // Une collectivité représentative par nation : il n'existe pas de capitale
   // unique pour les nations composées de plusieurs communautés.
   { id: 'odanak', name: 'Odanak', nation: 'Abénakis', lat: 46.0723, lon: -72.8181 },
@@ -856,6 +869,7 @@ let mastheadWeatherSlots = [];
 let mastheadWeatherNextSlot = 0;
 const MASTHEAD_WEATHER_ANCHORS = ['montreal', 'quebec'];
 let mastheadWeatherAnchorIndex = 0;
+let mastheadWeatherResizeFrame = 0;
 
 function weatherForecastUrl(city) {
   // Le site d'origine est francophone : ECCC reste en français pour Original,
@@ -898,9 +912,10 @@ function buildMastheadWeatherBoard() {
 }
 
 function weatherBoardCount() {
-  if (window.innerWidth >= 1320) return 4;
-  if (window.innerWidth >= 1120) return 3;
-  if (window.innerWidth >= 1024) return 2;
+  const width = MASTHEAD_WEATHER?.querySelector('.masthead-weather__board')?.clientWidth || 0;
+  if (width >= 600) return 4;
+  if (width >= 430) return 3;
+  if (width >= 260) return 2;
   return 1;
 }
 
@@ -922,6 +937,7 @@ function showMastheadWeatherBoard() {
   const cities = [...MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city')];
   if (!cities.length) return;
   const count = Math.min(weatherBoardCount(), cities.length);
+  MASTHEAD_WEATHER.querySelector('.masthead-weather__board')?.setAttribute('data-weather-count', String(count));
   mastheadWeatherSlots = mastheadWeatherSlots.slice(0, count);
   const anchor = WEATHER_CITIES.find((city) => city.id === MASTHEAD_WEATHER_ANCHORS[mastheadWeatherAnchorIndex]);
   if (anchor && mastheadWeatherSlots[0]?.id !== anchor.id) mastheadWeatherSlots[0] = anchor;
@@ -979,13 +995,20 @@ function rotateOneMastheadWeatherCard() {
   window.setTimeout(() => arriving?.classList.remove('is-arriving'), 500);
 }
 
+function scheduleMastheadWeatherLayout() {
+  window.cancelAnimationFrame(mastheadWeatherResizeFrame);
+  mastheadWeatherResizeFrame = window.requestAnimationFrame(() => {
+    mastheadWeatherResizeFrame = window.requestAnimationFrame(showMastheadWeatherBoard);
+  });
+}
+
 function startMastheadWeatherBoard() {
   if (!MASTHEAD_WEATHER || mastheadWeatherTimer) return;
   showMastheadWeatherBoard();
   mastheadWeatherTimer = window.setInterval(() => {
     rotateOneMastheadWeatherCard();
   }, 5200);
-  window.addEventListener('resize', showMastheadWeatherBoard, { passive: true });
+  window.addEventListener('resize', scheduleMastheadWeatherLayout, { passive: true });
 }
 
 function renderMastheadWeather(entries) {
