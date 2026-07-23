@@ -645,6 +645,7 @@ html[data-script-dir="rtl"] .wordmark-full {
   .is-marquee > .tuner-now-sub-text { animation: none; }
   .tuner-now-sub-rotate.is-rotating > .tuner-now-sub { transition: none; }
   .tuner-nowair-body { transition: none; }
+  .tuner-play.is-buffering::after { animation: none; }
 }
 
 .tuner-play {
@@ -674,6 +675,21 @@ html[data-script-dir="rtl"] .wordmark-full {
   box-shadow: 0 6px 18px -6px rgba(0,61,165,0.65);
 }
 .tuner-play.is-external:hover { background: #0049c2; }
+.tuner-play.is-buffering {
+  background: rgba(200, 16, 46, 0.78);
+  box-shadow: 0 6px 18px -6px rgba(200,16,46,0.55);
+}
+.tuner-play.is-buffering::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 2px solid rgba(255,255,255,0.34);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: tuner-buffer-spin 720ms linear infinite;
+}
+@keyframes tuner-buffer-spin { to { transform: rotate(360deg); } }
 .tuner-play svg { width: 20px; height: 20px; }
 .tuner-play .ico-play { margin-left: 2px; }
 /* Stop carré : pas de décalage optique du triangle play */
