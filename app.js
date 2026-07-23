@@ -1600,17 +1600,13 @@ function renderTunerNowAir() {
   const stationChanged = lastNowAir.stationId != null
     && stationId != null
     && lastNowAir.stationId !== stationId;
-  const contentChanged = lastNowAir.title != null
-    && (lastNowAir.title !== title || lastNowAir.sub !== sub || lastNowAir.kind !== kind);
   const crossfadePreview = previewing
     && !PREFERS_REDUCED_MOTION?.matches
     && lastNowAir.previewId != null
     && previewId !== lastNowAir.previewId;
 
-  // Fondu : changement de poste, bascule CHOQ, ou contenu antenne différent
-  const shouldFade = nowAirCrossfadePending
-    || stationChanged
-    || (contentChanged && !empty && lastNowAir.empty === false);
+  // Fondu uniquement : changement de poste ou bascule CHOQ (pas chaque MAJ de piste)
+  const shouldFade = nowAirCrossfadePending || stationChanged;
   nowAirCrossfadePending = false;
 
   lastNowAir = { title, sub, empty, previewId, kind, stationId };
