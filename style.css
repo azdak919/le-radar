@@ -229,7 +229,7 @@ a { color: inherit; }
 .masthead-weather__city[data-weather-tone="rain"] { --weather-tone: #287bb9; }
 .masthead-weather__city[data-weather-tone="snow"] { --weather-tone: #5498bb; }
 .masthead-weather__city[data-weather-tone="storm"] { --weather-tone: #a86dce; }
-@media (min-width: 620px) {
+@media (min-width: 360px) {
   .masthead-top {
     display: grid;
     grid-template-areas: 'date weather actions';
@@ -240,7 +240,7 @@ a { color: inherit; }
   .masthead-weather { display: inline-flex; grid-area: weather; width: 100%; justify-self: stretch; }
   .masthead-actions { grid-area: actions; justify-self: end; }
 }
-@media (max-width: 619.98px) { .masthead-weather { display: none !important; } }
+@media (max-width: 359.98px) { .masthead-weather { display: none !important; } }
 @keyframes weather-name-scroll {
   0%, 28% { transform: translateX(calc(var(--weather-scroll, 0) * -1)); }
   72%, 100% { transform: translateX(0); }
@@ -380,10 +380,22 @@ a { color: inherit; }
 .wordmark-brand {
   white-space: nowrap;
 }
+.wordmark-logo {
+  display: inline-block;
+  width: .82em;
+  height: .82em;
+  margin: 0 .14em;
+  vertical-align: -.08em;
+  object-fit: contain;
+}
+.wordmark-logo--mirror { transform: scaleX(-1); }
+.wordmark-logo--light { display: none; }
+html:not([data-theme="dark"]) .wordmark-logo--dark { display: none; }
+html:not([data-theme="dark"]) .wordmark-logo--light { display: inline-block; }
 .wordmark-emoji {
   font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
   font-weight: 400;
-  font-size: 0.92em;
+  font-size: .92em;
   line-height: 1;
   display: inline;
   white-space: nowrap;
@@ -404,6 +416,10 @@ a { color: inherit; }
   overflow-wrap: anywhere;
   word-break: break-word;
   hyphens: none;
+}
+@media (max-width: 480px) {
+  .wordmark-logo--mirror { display: none !important; }
+  .wordmark-logo { width: .72em; height: .72em; margin-right: .1em; }
 }
 
 /* Scripts longs (inuktitut, arabe, farsi, ourdou, hébreu…) : resserrer le wordmark */

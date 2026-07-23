@@ -966,7 +966,9 @@ function weatherBoardCount() {
   const width = MASTHEAD_WEATHER?.querySelector('.masthead-weather__board')?.clientWidth || 0;
   if (width >= 600) return 4;
   if (width >= 430) return 3;
-  if (width >= 190) return 2;
+  // Sur téléphone, la première carte reste exclusivement Montréal/Québec.
+  // La seconde ne s'ajoute que si le bandeau a assez d'air pour deux vrais libellés.
+  if (width >= 250) return 2;
   return 1;
 }
 

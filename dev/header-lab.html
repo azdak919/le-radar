@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LE RADAR.ca — Laboratoire du header</title>
+  <style>
+    :root { color-scheme: dark; --panel:#1a1c22; --line:#393c45; --paper:#f7f5ef; --muted:#a9acb5; --red:#e51b3e; --gold:#e1b95e; }
+    * { box-sizing:border-box; } body { margin:0; background:#0c0d10; color:var(--paper); font:15px/1.45 Inter,ui-sans-serif,system-ui,sans-serif; }
+    main { max-width:1440px; margin:auto; padding:32px 24px 52px; } h1 { margin:0; font:700 clamp(28px,4vw,48px)/1.05 Georgia,serif; } .intro { max-width:780px; color:var(--muted); margin:12px 0 28px; }
+    .lab { display:grid; grid-template-columns:repeat(5,minmax(245px,1fr)); gap:16px; overflow-x:auto; padding-bottom:12px; scroll-snap-type:x proximity; }
+    .variant { min-width:245px; border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--panel); scroll-snap-align:start; box-shadow:0 12px 28px #0004; }
+    .label { padding:12px 14px; border-bottom:1px solid var(--line); color:var(--gold); font-weight:750; font-size:12px; letter-spacing:.08em; text-transform:uppercase; } .label small { display:block; color:var(--muted); letter-spacing:0; text-transform:none; font-weight:500; margin-top:2px; }
+    .weather { min-height:39px; display:flex; align-items:center; justify-content:center; gap:13px; background:#121317; border-bottom:1px solid #272a31; color:#d5d7dc; font-size:11px; white-space:nowrap; } .weather b { color:#fff; }
+    .masthead { min-height:170px; padding:23px 15px; display:flex; align-items:center; justify-content:center; text-align:center; background:linear-gradient(180deg,#20232a,#17191f); }
+    .wordmark { display:flex; align-items:center; justify-content:center; gap:11px; color:#fff; font:700 clamp(26px,2.1vw,35px)/.9 Georgia,serif; letter-spacing:-.055em; white-space:nowrap; }
+    .wordmark .dot { color:#e8e8e6; font-size:.78em; letter-spacing:-.06em; } .ornament { width:35px; height:35px; flex:0 0 auto; color:#f5f4ee; } .emoji { font:28px/1 sans-serif; } .lab-logo { width:42px; height:42px; border-radius:10px; flex:0 0 auto; } .lab-logo--mirror { transform:scaleX(-1); }
+    .dual .wordmark { gap:15px; } .mix .wordmark { justify-content:flex-start; text-align:left; gap:12px; } .mix .ornament:first-child { color:var(--red); width:42px; height:42px; } .alternate .wordmark { gap:13px; } .alternate .ornament { color:var(--gold); } .clean .wordmark { display:block; font-size:clamp(31px,2.7vw,44px); letter-spacing:-.075em; text-shadow:0 1px #fff8; } .clean .wordmark::after { content:"Les journaux et radios étudiantes du Québec"; display:block; margin-top:12px; font:700 9px/1.2 Inter,ui-sans-serif,sans-serif; letter-spacing:.11em; text-transform:uppercase; color:var(--gold); }
+    .note { margin:0; padding:13px 14px 15px; min-height:114px; color:#c3c6ce; font-size:12px; } .note strong { color:#fff; }
+    .decision { margin-top:30px; padding:18px 20px; border-left:3px solid var(--red); background:#181a20; max-width:820px; } .decision p { margin:7px 0 0; color:#d5d6db; }
+    svg { fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; } .fill { fill:currentColor; stroke:none; }
+    @media (max-width:480px) { main { padding:22px 14px 38px; } .lab { grid-template-columns:86vw; gap:12px; margin-right:-14px; } .variant { min-width:86vw; } .masthead { min-height:130px; } .wordmark { font-size:31px; } .dual .lab-logo--mirror, .baseline .emoji { display:none; } .mix .emoji { display:none; } .alternate .ornament { width:29px; height:29px; } .clean .wordmark { font-size:34px; } .weather { min-height:36px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Laboratoire du header</h1>
+    <p class="intro">Cinq pistes rendues côte à côte. Chaque carte conserve un bandeau météo distinct : les essais ne modifient ni ses données ni son comportement dans le site.</p>
+    <svg width="0" height="0" aria-hidden="true" focusable="false"><defs>
+      <symbol id="radar-mark" viewBox="0 0 48 48"><circle cx="24" cy="24" r="17"/><path d="M24 7v34M7 24h34M24 24l12-12M24 24l14 5"/><path d="M24 14a10 10 0 0 1 10 10"/><circle class="fill" cx="24" cy="24" r="2.5"/></symbol>
+      <symbol id="news-mark" viewBox="0 0 48 48"><rect x="8" y="10" width="32" height="28" rx="2"/><path d="M14 17h8v13h-8zM27 17h8M27 22h8M27 27h8M14 34h21"/></symbol>
+      <symbol id="mic-mark" viewBox="0 0 48 48"><rect x="18" y="7" width="12" height="22" rx="6"/><path d="M13 23a11 11 0 0 0 22 0M24 34v7M18 41h12"/></symbol>
+    </defs></svg>
+    <section class="lab" aria-label="Cinq variantes du header">
+      <article class="variant baseline"><div class="label">1 · Baseline<small>Emojis actuels</small></div><div class="weather" aria-label="Bandeau météo témoin"><span>☀ <b>22°</b></span><span>Montréal</span><span>Québec</span></div><header class="masthead"><div class="wordmark"><span class="emoji" aria-hidden="true">📰</span><span>LE RADAR<span class="dot">.ca</span></span><span class="emoji" aria-hidden="true">🎙️</span></div></header><p class="note"><strong>Repère existant.</strong> Les emojis natifs sont expressifs, mais changent selon Apple, Google et Microsoft.</p></article>
+      <article class="variant dual"><div class="label">2 · Logo dual<small>Deux paraboles en miroir</small></div><div class="weather" aria-label="Bandeau météo témoin"><span>☀ <b>22°</b></span><span>Montréal</span><span>Québec</span></div><header class="masthead"><div class="wordmark"><img class="lab-logo" src="../assets/icon.svg" width="48" height="48" alt="" aria-hidden="true"><span>LE RADAR<span class="dot">.ca</span></span><img class="lab-logo lab-logo--mirror" src="../assets/icon.svg" width="48" height="48" alt="" aria-hidden="true"></div></header><p class="note"><strong>Version retenue.</strong> Le logo PWA encadre le titre, avec une parabole retournée horizontalement à droite.</p></article>
+      <article class="variant mix"><div class="label">3 · Logo + emoji<small>Asymétrie proposée</small></div><div class="weather" aria-label="Bandeau météo témoin"><span>☀ <b>22°</b></span><span>Montréal</span><span>Québec</span></div><header class="masthead"><div class="wordmark"><img class="lab-logo" src="../assets/icon.svg" width="48" height="48" alt="" aria-hidden="true"><span>LE RADAR<span class="dot">.ca</span></span><span class="emoji" aria-hidden="true">📰</span></div></header><p class="note"><strong>La piste recommandée.</strong> Le logo PWA ancre la marque; l’emoji journal existant équilibre les volets radio et presse.</p></article>
+      <article class="variant alternate"><div class="label">4 · Alternance<small>Un seul repère par contexte</small></div><div class="weather" aria-label="Bandeau météo témoin"><span>☀ <b>22°</b></span><span>Montréal</span><span>Québec</span></div><header class="masthead"><div class="wordmark"><svg class="ornament" aria-hidden="true"><use href="#news-mark"/></svg><span>LE RADAR<span class="dot">.ca</span></span></div></header><p class="note"><strong>Très souple.</strong> Une icône SVG peut changer selon la section Actualités/Radio; le hasard pur est à éviter pour préserver les repères.</p></article>
+      <article class="variant clean"><div class="label">5 · Épuré<small>Mot-symbole typographique</small></div><div class="weather" aria-label="Bandeau météo témoin"><span>☀ <b>22°</b></span><span>Montréal</span><span>Québec</span></div><header class="masthead"><div class="wordmark">LE RADAR<span class="dot">.ca</span></div></header><p class="note"><strong>Le plus direct.</strong> La marque dépend entièrement de la typographie : excellente en mobile, moins distinctive à très petite taille.</p></article>
+    </section>
+    <aside class="decision"><strong>Lecture rapide</strong><p>La variante 3 offre le meilleur équilibre : un radar exclusif à gauche, une respiration asymétrique à droite et une réduction nette sous 480 px. Toutes les décorations SVG sont <code>aria-hidden</code>.</p></aside>
+  </main>
+</body>
+</html>
