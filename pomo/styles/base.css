@@ -828,17 +828,23 @@
     margin-bottom: auto;
   }
 
-  /* Les deux réduits : chips empilés en haut, sans grand vide entre les deux */
+  /* Les deux réduits : POMODORO en haut, CITATION en bas (fond visible entre les deux) */
   .content:has(.pomo-container.is-minimized):has(.quote-card.is-minimized) {
     justify-content: flex-start;
     gap: 0.35rem;
   }
 
-  .content:has(.pomo-container.is-minimized):has(.quote-card.is-minimized) .pomo-container,
-  .content:has(.pomo-container.is-minimized):has(.quote-card.is-minimized) .quote-card {
-    order: unset;
+  .content:has(.pomo-container.is-minimized):has(.quote-card.is-minimized) .pomo-container {
+    order: 0;
     flex: 0 0 auto !important;
     margin-top: 0 !important;
+    margin-bottom: 0;
+  }
+
+  .content:has(.pomo-container.is-minimized):has(.quote-card.is-minimized) .quote-card {
+    order: 1;
+    flex: 0 0 auto !important;
+    margin-top: auto !important;
     margin-bottom: 0;
   }
 
