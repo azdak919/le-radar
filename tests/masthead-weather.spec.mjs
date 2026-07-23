@@ -97,5 +97,14 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   await expect(ribbon.locator('.masthead-weather__board')).toHaveAttribute('data-weather-count', String(countAt920));
 
   await page.setViewportSize({ width: 610, height: 900 });
+  await page.waitForTimeout(100);
+  await expect(ribbon).toBeVisible();
+  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(1);
+  expect(await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities.every((city) => {
+    const name = city.querySelector('.masthead-weather__name');
+    return !city.classList.contains('is-overflowing') && name.scrollWidth <= name.clientWidth + 2;
+  }))).toBe(true);
+
+  await page.setViewportSize({ width: 320, height: 900 });
   await expect(ribbon).toBeHidden();
 });
