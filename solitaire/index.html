@@ -190,8 +190,9 @@
       --tb-ls: 0.03em;
       position: fixed;
       top: max(0.45rem, env(safe-area-inset-top, 0px));
-      left: 50%;
-      transform: translateX(-50%);
+      left: 0;
+      right: 0;
+      margin-inline: auto;
       z-index: 100;
       display: flex;
       flex-direction: column;
@@ -200,6 +201,7 @@
       padding: 0.42rem 0.62rem 0.34rem;
       width: var(--chrome-width);
       max-width: var(--chrome-width);
+      box-sizing: border-box;
       border-radius: 20px;
       background: var(--chrome-surface-bg);
       border: 1px solid var(--chrome-surface-border);
@@ -208,15 +210,32 @@
       overflow: visible;
     }
 
-    /* Haut : navigation / ambiance / liens (hors jeu) */
+    /* Haut : même structure que Pomodoro — Home | liens | langue */
     .game-toolbar-chrome {
       display: flex;
+      align-items: center;
+      width: 100%;
+      gap: 0.15rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .game-toolbar-divider {
+      width: 1px;
+      height: 1.25rem;
+      background: rgba(255, 255, 255, 0.14);
+      flex-shrink: 0;
+      margin: 0 0.08rem;
+    }
+
+    .game-toolbar-main {
+      display: flex;
+      flex: 1;
+      min-width: 0;
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
       gap: 0.18rem;
-      position: relative;
-      z-index: 1;
     }
 
     /* Zone synthétiseur — barre bureau Le Radar (sans double cadre) */
@@ -278,7 +297,6 @@
     }
 
     /* rétrocompat sélecteurs éventuels */
-    .game-toolbar-main { display: contents; }
     .game-toolbar-sub { display: contents; }
 
     .toolbar-stats {
@@ -393,10 +411,6 @@
       padding: 0.42rem;
       gap: 0;
       flex-shrink: 0;
-    }
-    .toolbar-btn--back {
-      font-weight: 500;
-      color: rgba(255, 255, 255, 0.9);
     }
     .toolbar-btn--sub {
       font-size: var(--tb-sub-font);
@@ -716,13 +730,14 @@
     }
 
     /* ════════════════════════════════════════
-       HI-SCORE — arcade / NES style (3 letters)
+       HI-SCORE — dropdown sous le bouton (browse)
+       ou panneau centré en mode entrée (victoire)
        ════════════════════════════════════════ */
     #hi-score-panel {
       position: fixed;
-      left: 50%;
-      bottom: max(1.1rem, env(safe-area-inset-bottom, 0px));
-      transform: translateX(-50%);
+      /* top/left posés en JS pour coller au bouton ★ */
+      top: 0;
+      left: 0;
       z-index: 320;
       width: min(17.5rem, calc(100vw - 1.5rem));
       padding: 0.65rem 0.75rem 0.7rem;
@@ -737,6 +752,13 @@
       letter-spacing: 0.04em;
       box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
       pointer-events: auto;
+      animation: fadeSlideIn 0.22s ease both;
+    }
+    /* Saisie d’initiales à la victoire : centré au-dessus de l’overlay */
+    #hi-score-panel.is-entry {
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%);
       animation: winSlideUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
     #hi-score-panel.hidden { display: none; }
@@ -1157,29 +1179,33 @@
 <div class="page-layout">
 <!-- ══════════════════════ TOP TOOLBAR ══════════════════════ -->
 <nav class="game-toolbar" aria-label="Game controls">
-  <!-- Haut : home, Pomodoro, Radar, café, langue -->
+  <!-- Haut : même pattern que Pomodoro — Home | Le Radar · Pomodoro · café | langue -->
   <div class="game-toolbar-chrome" aria-label="Navigation and extras">
     <button class="toolbar-btn toolbar-btn--home" id="home-reload-btn" type="button" aria-label="Reload page">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5z"/></svg>
     </button>
-    <a class="toolbar-btn toolbar-btn--back" href="../pomo/" id="back-pomodoro-link" aria-label="Back to Pomodoro">
-      <img class="app-emoji" src="../assets/emoji/tomato.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
-      <span id="back-pomodoro-label">Pomodoro</span>
-    </a>
-    <a class="toolbar-btn" id="radar-btn"
-       href="../"
-       aria-label="Le Radar — radios étudiantes du Québec">
-      <img class="app-emoji" src="../assets/emoji/satellite.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
-      <span id="radar-btn-label">Le Radar</span>
-    </a>
-    <a class="toolbar-btn" id="coffee-btn"
-       href="https://www.buymeacoffee.com/azdak"
-       target="_blank" rel="noopener noreferrer" aria-label="Buy me a coffee">
-      <img class="app-emoji" src="../assets/emoji/coffee.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
-      <span id="coffee-btn-label">Buy me a coffee</span>
-    </a>
+    <div class="game-toolbar-divider" aria-hidden="true"></div>
+    <div class="game-toolbar-main">
+      <a class="toolbar-btn" id="radar-btn"
+         href="../"
+         aria-label="Le Radar — radios étudiantes du Québec">
+        <img class="app-emoji" src="../assets/emoji/satellite.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+        <span id="radar-btn-label">Le Radar</span>
+      </a>
+      <a class="toolbar-btn" href="../pomo/" id="back-pomodoro-link" aria-label="Back to Pomodoro">
+        <img class="app-emoji" src="../assets/emoji/tomato.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+        <span id="back-pomodoro-label">Pomodoro</span>
+      </a>
+      <a class="toolbar-btn" id="coffee-btn"
+         href="https://www.buymeacoffee.com/azdak"
+         target="_blank" rel="noopener noreferrer" aria-label="Buy me a coffee">
+        <img class="app-emoji" src="../assets/emoji/coffee.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+        <span id="coffee-btn-label">Buy me a coffee</span>
+      </a>
+    </div>
+    <div class="game-toolbar-divider" aria-hidden="true"></div>
     <div class="lang-selector">
-      <button class="lang-btn" id="lang-btn" aria-label="Change language">
+      <button class="lang-btn toolbar-btn" id="lang-btn" aria-label="Change language" type="button">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
         <span id="lang-label">EN</span>
       </button>
@@ -1234,9 +1260,9 @@
         </svg>
         <span id="shuffle-bg-label">Background</span>
       </button>
-      <button class="toolbar-btn" id="hi-score-btn" type="button" aria-label="High scores" title="HI-SCORES">
+      <button class="toolbar-btn" id="hi-score-btn" type="button" aria-label="High scores" title="High scores" aria-haspopup="dialog" aria-expanded="false">
         <span aria-hidden="true">★</span>
-        <span id="hi-score-btn-label">HI</span>
+        <span id="hi-score-btn-label">Scores</span>
       </button>
     </div>
     <div class="toolbar-stats" id="toolbar-stats">
@@ -1285,9 +1311,9 @@
   <button class="win-btn" id="play-again-btn">Play Again</button>
 </div>
 
-<!-- Arcade HI-SCORE (3 initials) — localStorage only -->
-<div id="hi-score-panel" class="hidden" role="dialog" aria-label="High scores">
-  <div class="hi-score-title" id="hi-score-title">HI-SCORES</div>
+<!-- Arcade HI-SCORE (3 initials) — localStorage only; dropdown or victory entry -->
+<div id="hi-score-panel" class="hidden" role="dialog" aria-label="High scores" aria-modal="true">
+  <div class="hi-score-title" id="hi-score-title">High scores</div>
   <ol class="hi-score-list" id="hi-score-list"></ol>
   <div class="hi-score-empty hidden" id="hi-score-empty">— — —</div>
   <div class="hi-score-entry hidden" id="hi-score-entry">
@@ -1395,7 +1421,7 @@ const SOL_UI_EN = {
   played: 'Played', won: 'Won', streak: 'Streak', best: 'Best',
   shuffleBg: 'Background', restartDeal: 'Restart deal', noMoves: 'No useful move right now — try Undo, draw from the stock, or a new playable deal', playableDeal: 'Playable deal', dealing: 'Dealing a playable hand…',
   radarBtn: 'Le Radar', coffeeBtn: 'Buy me a coffee',
-  hiScores: 'HI-SCORES', hiScoreBtn: 'HI', newRecord: 'NEW RECORD · 3 LETTERS', hiOk: 'OK', hiClose: 'Close',
+  hiScores: 'High scores', hiScoreBtn: 'Scores', newRecord: 'NEW RECORD · 3 LETTERS', hiOk: 'OK', hiClose: 'Close',
 };
 
 // Hardcoded translations for languages where the generic API produces wrong results
@@ -1410,7 +1436,7 @@ const SOL_UI_HARDCODED = {
     played: 'Joués', won: 'Gagnés', streak: 'Série', best: 'Meilleur',
     shuffleBg: 'Arrière-plan', restartDeal: 'Rejouer la donne', noMoves: 'Aucun coup utile pour l’instant — Annuler, piocher, ou nouvelle donne jouable', playableDeal: 'Donne jouable', dealing: 'Préparation d’une donne jouable…',
     radarBtn: 'Le Radar', coffeeBtn: 'Offrir un café',
-    hiScores: 'HI-SCORES', hiScoreBtn: 'HI', newRecord: 'RECORD · 3 LETTRES', hiOk: 'OK', hiClose: 'Fermer',
+    hiScores: 'Meilleurs scores', hiScoreBtn: 'Scores', newRecord: 'NOUVEAU RECORD · 3 LETTRES', hiOk: 'OK', hiClose: 'Fermer',
   },
   es: {
     pomodoro: 'Pomodoro', pomodoroBack: 'Volver al Pomodoro',
@@ -4307,12 +4333,20 @@ function applyUIStrings(strings) {
   if (shuffleBgLabel) shuffleBgLabel.textContent = strings.shuffleBg || SOL_UI_EN.shuffleBg;
 
   const hiTitle = document.getElementById('hi-score-title');
+  const hiBtn = document.getElementById('hi-score-btn');
   const hiBtnLabel = document.getElementById('hi-score-btn-label');
   const hiEntryLabel = document.getElementById('hi-score-entry-label');
   const hiOk = document.getElementById('hi-score-ok');
   const hiClose = document.getElementById('hi-score-close');
-  if (hiTitle) hiTitle.textContent = strings.hiScores || SOL_UI_EN.hiScores;
+  const hiPanel = document.getElementById('hi-score-panel');
+  const hiScoresLabel = strings.hiScores || SOL_UI_EN.hiScores;
+  if (hiTitle) hiTitle.textContent = hiScoresLabel;
   if (hiBtnLabel) hiBtnLabel.textContent = strings.hiScoreBtn || SOL_UI_EN.hiScoreBtn;
+  if (hiBtn) {
+    hiBtn.title = hiScoresLabel;
+    hiBtn.setAttribute('aria-label', hiScoresLabel);
+  }
+  if (hiPanel) hiPanel.setAttribute('aria-label', hiScoresLabel);
   if (hiEntryLabel) hiEntryLabel.textContent = strings.newRecord || SOL_UI_EN.newRecord;
   if (hiOk) hiOk.textContent = strings.hiOk || SOL_UI_EN.hiOk;
   if (hiClose) hiClose.textContent = strings.hiClose || SOL_UI_EN.hiClose;
@@ -4963,6 +4997,31 @@ function currentHiName() {
   return hiLetters.map((i) => HI_ALPHABET[i] || 'A').join('').slice(0, HI_INITIALS_LEN);
 }
 
+function setHiScoreBtnExpanded(open) {
+  document.getElementById('hi-score-btn')?.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+/** Anchor dropdown under ★ Scores; entry mode is centered via .is-entry CSS. */
+function positionHiScorePanel(entryMode) {
+  const panel = document.getElementById('hi-score-panel');
+  const btn = document.getElementById('hi-score-btn');
+  if (!panel) return;
+  if (entryMode) {
+    panel.style.top = '';
+    panel.style.left = '';
+    return;
+  }
+  if (!btn) return;
+  // Measure after visible so width is accurate
+  const r = btn.getBoundingClientRect();
+  const panelW = panel.offsetWidth || Math.min(280, window.innerWidth - 16);
+  let left = r.left + r.width / 2 - panelW / 2;
+  left = Math.max(8, Math.min(left, window.innerWidth - panelW - 8));
+  const top = r.bottom + 6;
+  panel.style.top = `${Math.round(top)}px`;
+  panel.style.left = `${Math.round(left)}px`;
+}
+
 function showHiScorePanel({ entryMode = false, pending = null } = {}) {
   const panel = document.getElementById('hi-score-panel');
   const entry = document.getElementById('hi-score-entry');
@@ -4970,6 +5029,7 @@ function showHiScorePanel({ entryMode = false, pending = null } = {}) {
   renderHiScoreList(hiHighlightName);
   if (entryMode && pending) {
     hiEntryPending = pending;
+    panel.classList.add('is-entry');
     // Prefer last used initials if any
     const last = hiScores[0]?.name || HI_DEFAULT_NAME;
     hiLetters = last.split('').slice(0, HI_INITIALS_LEN).map((ch) => {
@@ -4981,23 +5041,44 @@ function showHiScorePanel({ entryMode = false, pending = null } = {}) {
     entry?.classList.remove('hidden');
   } else {
     hiEntryPending = null;
+    panel.classList.remove('is-entry');
     entry?.classList.add('hidden');
   }
-  panel.classList.remove('hidden');
+  const isEntry = panel.classList.contains('is-entry');
+  setHiScoreBtnExpanded(true);
+  if (isEntry) {
+    panel.classList.remove('hidden');
+    positionHiScorePanel(true);
+  } else {
+    // Avoid a 1-frame flash at top-left before anchoring under the button
+    panel.style.visibility = 'hidden';
+    panel.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      positionHiScorePanel(false);
+      panel.style.visibility = '';
+    });
+  }
 }
 
 function hideHiScorePanel() {
-  document.getElementById('hi-score-panel')?.classList.add('hidden');
+  const panel = document.getElementById('hi-score-panel');
+  panel?.classList.add('hidden');
+  panel?.classList.remove('is-entry');
+  if (panel) {
+    panel.style.visibility = '';
+    panel.style.top = '';
+    panel.style.left = '';
+  }
   document.getElementById('hi-score-entry')?.classList.add('hidden');
   hiEntryPending = null;
+  setHiScoreBtnExpanded(false);
 }
 
 function offerHiScore({ timeMs, moves }) {
   loadHiScores();
+  // Saisie des initiales uniquement si record ; pas d’auto-ouverture du classement
   if (qualifiesHiScore(timeMs, moves)) {
     showHiScorePanel({ entryMode: true, pending: { timeMs, moves } });
-  } else {
-    showHiScorePanel({ entryMode: false });
   }
 }
 
@@ -5016,16 +5097,25 @@ function confirmHiScoreEntry() {
   hiHighlightName = name;
   hiEntryPending = null;
   document.getElementById('hi-score-entry')?.classList.add('hidden');
+  // Keep centered list after save so the new rank is visible
+  document.getElementById('hi-score-panel')?.classList.add('is-entry');
   renderHiScoreList(hiHighlightName);
 }
 
 function initHiScoreUI() {
   loadHiScores();
   const panel = document.getElementById('hi-score-panel');
+  const btn = document.getElementById('hi-score-btn');
   panel?.addEventListener('click', (e) => e.stopPropagation());
   panel?.addEventListener('pointerdown', (e) => e.stopPropagation());
 
-  document.getElementById('hi-score-btn')?.addEventListener('click', () => {
+  btn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    // Toggle dropdown when browsing (not during initial entry)
+    if (panel && !panel.classList.contains('hidden') && !hiEntryPending) {
+      hideHiScorePanel();
+      return;
+    }
     loadHiScores();
     showHiScorePanel({ entryMode: false });
   });
@@ -5042,18 +5132,32 @@ function initHiScoreUI() {
     if (letter) bumpHiLetter(Number(letter.dataset.i), 1);
   });
 
-  // Keyboard: ← → select col (focus), ↑ ↓ change, Enter confirm
+  // Click outside closes browse dropdown (keep open while entering initials)
+  document.addEventListener('click', (e) => {
+    if (!panel || panel.classList.contains('hidden')) return;
+    if (hiEntryPending) return;
+    if (panel.contains(e.target) || btn?.contains(e.target)) return;
+    hideHiScorePanel();
+  });
+
+  window.addEventListener('resize', () => {
+    if (!panel || panel.classList.contains('hidden')) return;
+    positionHiScorePanel(panel.classList.contains('is-entry'));
+  });
+
+  // Keyboard: Escape always closes; ← → / ↑ ↓ / Enter only in entry mode
   document.addEventListener('keydown', (e) => {
+    if (!panel || panel.classList.contains('hidden')) return;
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      hideHiScorePanel();
+      return;
+    }
     const entry = document.getElementById('hi-score-entry');
     if (!entry || entry.classList.contains('hidden')) return;
     if (e.key === 'Enter') {
       e.preventDefault();
       confirmHiScoreEntry();
-      return;
-    }
-    if (e.key === 'Escape') {
-      e.preventDefault();
-      hideHiScorePanel();
       return;
     }
     const active = document.activeElement;
