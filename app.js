@@ -1198,17 +1198,18 @@ function updateNowAirSubAirText(text, crossfade = false) {
 
 /**
  * Texte du panneau antenne : ellipsis + title (tooltip), sans marquee.
- * Le défilement horizontal provoquait un flou désagréable à l’écran.
+ * Pas de crossfade opacity (is-swapping) : en preview ça laissait le corps
+ * invisible (seul le libellé « À l'antenne » restait visible).
  */
 function applyNowAirPanelText(el, text) {
   if (!el) return;
   const value = String(text ?? '').trim();
-  el.classList.remove('is-marquee');
+  el.classList.remove('is-marquee', 'hidden');
   el.style.removeProperty('--marquee-shift');
   el.style.removeProperty('--marquee-duration');
   marqueeTextByEl.delete(el);
   if (!value) {
-    el.replaceChildren();
+    el.textContent = '';
     el.removeAttribute('title');
     return;
   }
@@ -1216,28 +1217,21 @@ function applyNowAirPanelText(el, text) {
   el.setAttribute('title', value);
 }
 
-function updateNowAirPanel(title, sub, crossfade = false) {
+function updateNowAirPanel(title, sub, _crossfade = false) {
   const body = TUNER_NOWAIR?.querySelector('.tuner-nowair-body');
-  const write = () => {
-    applyNowAirPanelText(TUNER_NOWAIR_TITLE, title);
-    if (TUNER_NOWAIR_SUB) {
-      TUNER_NOWAIR_SUB.classList.toggle('hidden', !sub);
-      if (sub) applyNowAirPanelText(TUNER_NOWAIR_SUB, sub);
-      else {
-        TUNER_NOWAIR_SUB.replaceChildren();
-        TUNER_NOWAIR_SUB.removeAttribute('title');
-      }
-    }
-  };
+  // Toujours sortir d’un éventuel is-swapping résiduel
+  body?.classList.remove('is-swapping');
 
-  if (crossfade && !PREFERS_REDUCED_MOTION?.matches && body) {
-    body.classList.add('is-swapping');
-    setTimeout(() => {
-      write();
-      requestAnimationFrame(() => body.classList.remove('is-swapping'));
-    }, NOW_AIR_CROSSFADE_MS);
-  } else {
-    write();
+  applyNowAirPanelText(TUNER_NOWAIR_TITLE, title);
+  if (TUNER_NOWAIR_SUB) {
+    if (sub) {
+      TUNER_NOWAIR_SUB.classList.remove('hidden');
+      applyNowAirPanelText(TUNER_NOWAIR_SUB, sub);
+    } else {
+      TUNER_NOWAIR_SUB.textContent = '';
+      TUNER_NOWAIR_SUB.classList.add('hidden');
+      TUNER_NOWAIR_SUB.removeAttribute('title');
+    }
   }
 }
 
