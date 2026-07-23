@@ -1272,14 +1272,16 @@ function formatStationNowAirLabel(radio) {
 
 /* ── Synthoniseur uniquement (#tuner-now-name) — pas articles, filtres ni RSS ── */
 
-/** Téléphone (< 600 px) : acronyme dans le titre du syntoniseur seulement. */
+/**
+ * Téléphone (< 600 px) ou embed étroit (pomo/solitaire mobile) :
+ * acronyme d’institution dans le titre du syntoniseur.
+ */
 function isTunerDialPhoneLayout() {
-  // Embed Solitaire : logique bureau (pas le mode téléphone) même si l’iframe est étroite.
-  if (IS_TUNER_EMBED) return false;
+  if (IS_TUNER_EMBED) return isEmbedNowAirInDial();
   return !!TUNER_DIAL_PHONE_MQ?.matches;
 }
 
-/** Institution affichée dans le syntoniseur : abrégée au téléphone, complète en tablette. */
+/** Institution affichée dans le syntoniseur : abrégée au téléphone / embed étroit. */
 function tunerDialInstitutionLabel(radio) {
   if (!radio) return '';
   const raw = isTunerDialPhoneLayout()
@@ -1355,19 +1357,32 @@ function isDialCompactLayout() {
 }
 
 /**
- * Titre ligne 1 en layout compact (site mobile/tablette uniquement).
+ * Titre ligne 1 en layout compact.
+ * Mobile / embed étroit : toujours acronyme (ULaval, UdeM…), jamais le nom long.
  */
 function compactDialTitleLine(radio) {
-  return tunerDialTitleLine(radio);
+  if (!radio) return tunerSubMeta || 'Radios étudiantes en direct';
+  const name = stationDisplayName(radio) || radio.name || '';
+  // Acronyme sur téléphone + embed étroit ; tablette site peut garder le long.
+  const inst = isTunerDialPhoneLayout() || isEmbedNowAirInDial()
+    ? (shortInstitution(radio.institution, radio.type)
+      || adaptRadarInstitutionLabel(tunerInstitutionLabel(radio.institution)))
+    : tunerDialInstitutionLabel(radio);
+  if (!name) return inst || '';
+  return inst ? `${name} · ${inst}` : name;
 }
 
 /**
  * Ligne « méta » du dial compact (sous le titre poste · établissement) :
- * fréquence ou site externe — alterne avec l'antenne (TUNER_SUB_AIR).
+ * slogan (langue principale de l’institution, sans MT) — alterne avec l’antenne.
+ * Fréquence seulement en dernier recours.
  */
 function dialCompactMetaLineForRadio(radio) {
   if (!radio) return '';
   if (isExternalListen(radio)) return adaptRadarUiText('Site externe');
+  // Slogan original (pas de traduction) = langue principale de l’institution
+  const slogan = radioSlogan(radio);
+  if (slogan) return slogan;
   return String(radio.frequency || '').trim() || 'Web';
 }
 
@@ -1726,20 +1741,21 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false, kind = 'idle')
   }
 
   /*
-   * Compact mobile/tablette + poste sélectionné :
-   *  ligne 1 = poste · établissement
-   *  ligne 2 = alternance fréquence  ↔  à l'antenne (+ marquee si overflow)
-   * (Avant : antenne figée sans rotation — cassait l'alternance et le défilement.)
+   * Compact mobile / embed étroit + poste sélectionné :
+   *  ligne 1 = poste · acronyme (ULaval, UdeM…)
+   *  ligne 2 = alternance slogan (langue principale) ↔ à l'antenne / à venir
+   *            (+ marquee si overflow)
    */
   if (currentStation && isDialCompactLayout()) {
     setTunerNameText(compactDialTitleLine(currentStation), crossfade);
     tunerSubMeta = dialCompactMetaLineForRadio(currentStation);
     tunerSubAirText = dialCompactAirLineForRadio(currentStation)
       || formatNowAirSubLine(title, sub, empty, kind);
+    // Ne pas « tourner » si la ligne air n’est que le slogan (déjà en bas)
     const hasAir = !!(tunerSubAirText && tunerSubAirText !== tunerSubMeta);
 
     if (!isTunerSubRotateMode() || !hasAir) {
-      // Reduced motion ou pas d'émission distincte : une seule ligne bas
+      // Pas d’émission distincte : bas = slogan (méta) en priorité
       stopTunerSubRotate();
       wrapper?.classList.remove('is-rotating');
       TUNER_SUB.classList.add('is-active');
@@ -2592,14 +2608,14 @@ function selectStation(id, { autoplay = false, openExternal = false, fromSync = 
   const external = isExternalListen(radio);
 
   if (isDialCompactLayout()) {
-    // Mobile/tablette (site) : ligne 1 = poste · établissement ; ligne 2 = fréquence.
+    // Mobile / embed étroit : L1 = poste · acronyme ; L2 = slogan (ou antenne en rotation)
     setTunerNameText(compactDialTitleLine(radio));
     const metaLine = dialCompactMetaLineForRadio(radio);
     tunerSubMeta = metaLine;
     TUNER_SUB?.parentElement?.classList.toggle('is-empty', !metaLine);
     applyMarquee(TUNER_SUB, metaLine);
   } else {
-    // Bureau (+ embed Solitaire) : ligne 1 = poste FM · acronyme ; ligne 2 = slogan
+    // Bureau (+ embed large) : L1 = poste FM · acronyme ; L2 = slogan
     setTunerNameText(tunerDesktopTitleLine(radio));
     setTunerSubText(tunerDesktopSubLine(radio, { external }));
   }
