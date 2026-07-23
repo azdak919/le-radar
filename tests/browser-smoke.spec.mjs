@@ -18,7 +18,7 @@ for (const viewport of [
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
       await page.goto(route.path, { waitUntil: 'domcontentloaded' });
       await expect(page.locator(route.marker).first()).toBeVisible();
-      await expect(page).toHaveTitle(/Radar|Solitaire|Pomodoro|Flux/i);
+      await expect(page).toHaveTitle(/Radar|Solitaire|Pomo|Flux/i);
 
       if (route.path === '/') {
         await expect(page.locator('.article').first()).toBeVisible();
