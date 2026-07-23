@@ -1130,6 +1130,7 @@ function initTranslation() {
       label: '#lang-label',
       initialMode,
       nativeLocale: 'en',
+      anchor: '.top-right-actions',
       onSelect: (mode) => switchLanguage(mode === 'original' ? 'en' : mode, { radarMode: mode }),
     });
     const initialLang = initialMode === 'original' ? 'en' : initialMode;

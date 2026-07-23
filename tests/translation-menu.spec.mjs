@@ -2,8 +2,8 @@ import { expect, test } from '@playwright/test';
 
 const pages = [
   { path: '/', button: '#translate-toggle' },
-  { path: '/pomo/', button: '#lang-btn' },
-  { path: '/solitaire/', button: '#lang-btn' },
+  { path: '/pomo/', button: '#lang-btn', anchor: '.top-right-actions' },
+  { path: '/solitaire/', button: '#lang-btn', anchor: '.game-toolbar' },
 ];
 
 for (const viewport of [
@@ -22,6 +22,7 @@ for (const viewport of [
       expect(await menu.locator('.translate-menu__opt').count()).toBeGreaterThan(40);
       await expect(menu.locator('[data-mode="fr"]')).toBeVisible();
       await expect(menu.locator('.translate-menu__group[data-group="indigenous"]')).toBeVisible();
+      await expect(menu.locator('[data-mode="original"] .translate-menu__hint')).toContainText(/traduction|translation/i);
 
       const bounds = await menu.boundingBox();
       expect(bounds).not.toBeNull();
@@ -29,6 +30,14 @@ for (const viewport of [
       expect(bounds.y).toBeGreaterThanOrEqual(0);
       expect(bounds.x + bounds.width).toBeLessThanOrEqual(viewport.width + 1);
       expect(bounds.y + bounds.height).toBeLessThanOrEqual(viewport.height + 1);
+      if (app.anchor) {
+        const anchorBounds = await page.locator(app.anchor).boundingBox();
+        expect(anchorBounds).not.toBeNull();
+        expect(bounds.y).toBeGreaterThanOrEqual(anchorBounds.y + anchorBounds.height - 1);
+        const weight = await menu.locator('[data-mode="original"] .translate-menu__name')
+          .evaluate((element) => Number.parseInt(getComputedStyle(element).fontWeight, 10));
+        expect(weight).toBeLessThanOrEqual(500);
+      }
 
       await menu.locator('.translate-menu__search').fill('japonais');
       await expect(menu.locator('[data-mode="ja"]')).toBeVisible();
