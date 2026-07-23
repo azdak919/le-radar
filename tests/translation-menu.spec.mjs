@@ -39,13 +39,16 @@ for (const viewport of [
         expect(weight).toBeLessThanOrEqual(500);
         const fontSize = await page.evaluate(({ button, anchor }) => {
           const control = document.querySelector(button);
-          const reference = document.querySelector(`${anchor} .toolbar-btn:not(#lang-btn)`);
+          const label = control.querySelector('.translate-toggle__label');
+          const reference = document.querySelector(`${anchor} #radar-btn`);
           return {
             control: getComputedStyle(control).fontSize,
+            label: getComputedStyle(label).fontSize,
             reference: getComputedStyle(reference).fontSize,
           };
         }, { button: app.button, anchor: app.anchor });
         expect(fontSize.control).toBe(fontSize.reference);
+        expect(fontSize.label).toBe(fontSize.reference);
         if (viewport.width <= 600) {
           await expect(page.locator(`${app.button} .translate-toggle__label`)).toBeHidden();
           await expect(page.locator(`${app.button} .translate-toggle__chev`)).toBeHidden();
