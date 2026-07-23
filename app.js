@@ -2719,7 +2719,7 @@ async function play(radio) {
       window.RadarPlayerSync?.claimPlay?.(radio.id, currentGain);
     } catch { /* */ }
   } catch {
-    showToast('Appuie de nouveau sur ▶ pour autoriser la lecture.');
+    // Autoplay / gesture refusée : l’UI play reste inactive ; pas de toast (bruit inutile).
   }
 }
 
@@ -2950,9 +2950,8 @@ function onAudioEnded() {
 }
 
 function reconnectResilient() {
-  if (!mobilePlayback?.attemptReconnect() && mobilePlayback?.showReconnectFailed()) {
-    showToast('Flux instable — réessaie dans un instant.');
-  }
+  // Reconnexion silencieuse — les toasts « flux instable » étaient des faux positifs.
+  mobilePlayback?.attemptReconnect();
   updatePlayUI();
 }
 
@@ -2975,7 +2974,7 @@ function onAudioError() {
     play(currentStation);
     return;
   }
-  if (audio && audio.currentSrc) showToast('Flux indisponible pour le moment.');
+  // Erreur audio : UI mise à jour sans toast — le flux reprend souvent tout seul.
   updatePlayUI();
 }
 
