@@ -685,6 +685,8 @@ html[data-script-dir="rtl"] .wordmark-full {
 .tuner-play.is-external:hover { background: #0049c2; }
 .tuner-play svg { width: 20px; height: 20px; }
 .tuner-play .ico-play { margin-left: 2px; }
+/* Stop carré : pas de décalage optique du triangle play */
+.tuner-play .ico-pause { margin-left: 0; }
 .tuner-play .ico-external { width: 18px; height: 18px; }
 
 .tuner-cast {
