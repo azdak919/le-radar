@@ -1,17 +1,21 @@
-/* LE RADAR — Synthétiseur embed (Ataraxia Solitaire, etc.)
-   Aligné sur la barre actuelle du site :
-   · dial 2 lignes (poste · institution / Web|antenne)
-   · volume en ligne (icône = mute, pas de popover)
-   · contour coral en lecture
-   Hauteur fixe 58 px — le parent (Ataraxia) réserve le même slot. */
+/* LE RADAR — Embed Ataraxia Solitaire
+   ═══════════════════════════════════════════════════════════
+   Sur ordinateur : même barre que le site principal en ≥1100 px
+   (EN ONDES · dial 2 lignes slogan · prev/next 42 · play · vol inline).
+   L’iframe est souvent < 1100 px de large : on force le look bureau
+   en CSS ici (app.js force aussi la logique bureau).
+   Hauteur 62 px = padding 10 + contrôles 42 (comme .tuner-inner bureau).
+*/
 
 html[data-embed="tuner"] {
-  --pad: 8px;
-  --embed-bar-h: 58px;
-  --embed-ctrl: 40px;
-  --embed-play: 40px;
-  --embed-gap: 7px;
+  --pad: 12px;
+  --embed-bar-h: 62px;
+  --embed-ctrl: 42px;
+  --embed-play: 42px;
+  --embed-gap: 9px;
   --embed-vol-track: 112px;
+  --tuner-onair-live: #ff7d6e;
+  --tuner-onair-idle: rgba(255, 255, 255, 0.42);
   color-scheme: dark;
   background: transparent;
   overflow: hidden;
@@ -29,30 +33,30 @@ html[data-embed="tuner"] body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Barre autonome (verre sombre) — même silhouette que le site principal */
+/* Barre pleine largeur — silhouette sticky du site (sans double chrome) */
 html[data-embed="tuner"] .tuner {
   position: static;
   top: auto;
   z-index: 1;
-  background: rgba(18, 20, 24, 0.92);
+  /* Même fond que --tuner-bg du site, intégré dans la pastille Ataraxia */
+  background: transparent;
   color: #fff;
   box-shadow: none;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 14px;
+  border: 0;
+  border-radius: 0;
   overflow: hidden;
   height: var(--embed-bar-h);
   max-height: var(--embed-bar-h);
   min-height: var(--embed-bar-h);
   box-sizing: border-box;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
 html[data-embed="tuner"] .tuner-inner {
   max-width: none;
   margin: 0;
-  padding: 8px 10px;
-  gap: var(--embed-gap);
+  /* Identique au bureau : padding 10px, gap 12px */
+  padding: 10px 4px;
+  gap: 12px;
   height: 100%;
   box-sizing: border-box;
   overflow: hidden;
@@ -69,59 +73,90 @@ html[data-embed="tuner"] .tuner-controls {
   container-name: tuner-controls;
 }
 
-/* Badge EN ONDES : masqué en embed (le contour coral du dial suffit) */
+/* ── EN ONDES (badge bureau) ──────────────────────────────── */
 html[data-embed="tuner"] .tuner-label {
-  display: none !important;
+  display: block;
+  flex-shrink: 0;
 }
 
-/* ── Prev / next ─────────────────────────────────────────── */
+html[data-embed="tuner"] .tuner-onair {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--tuner-onair-idle);
+  white-space: nowrap;
+}
+
+html[data-embed="tuner"] .tuner-onair::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  transition: background 200ms ease;
+}
+
+html[data-embed="tuner"] .tuner.is-playing .tuner-onair {
+  color: var(--tuner-onair-live);
+}
+
+html[data-embed="tuner"] .tuner.is-playing .tuner-onair::before {
+  background: #c8102e;
+  animation: onairPulse 1.6s ease-out infinite;
+}
+
+/* ── Prev / next — 42 px comme le bureau ──────────────────── */
 html[data-embed="tuner"] .tuner-step {
   width: var(--embed-ctrl);
   height: var(--embed-ctrl);
   min-width: var(--embed-ctrl);
-  border-radius: 11px;
-  box-shadow: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.45);
   flex-shrink: 0;
 }
 
 html[data-embed="tuner"] .tuner-step svg {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
 }
 
-/* ── Dial (2 lignes : titre + sous-titre) ─────────────────── */
+/* ── Dial (2 lignes : poste · acronyme / slogan) ───────────── */
 html[data-embed="tuner"] .tuner-dial {
   flex: 1 1 0;
   min-width: 0;
+  width: 0;
 }
 
 html[data-embed="tuner"] .tuner-now {
   min-height: var(--embed-ctrl);
   height: var(--embed-ctrl);
-  padding: 4px 22px 4px 12px;
-  border-radius: 11px;
+  padding: 3px 24px 3px 11px;
+  border-radius: 9px;
   box-sizing: border-box;
   justify-content: center;
-  gap: 1px;
+  gap: 0;
 }
 
 html[data-embed="tuner"] .tuner-now-name {
-  font-size: 13px;
-  line-height: 1.2;
+  font-size: 14px;
+  line-height: 1.15;
   font-weight: 600;
 }
 
 html[data-embed="tuner"] .tuner-now-sub {
-  font-size: 10.5px;
+  font-size: 11px;
   line-height: 1.2;
-  color: rgba(255, 255, 255, 0.52);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 html[data-embed="tuner"] .tuner-now-sub-rotate {
   min-height: 1.2em;
 }
 
-/* Lecture : contour coral (comme le site) */
+/* Lecture : contour coral (site tous formats) */
 html[data-embed="tuner"] .tuner.is-playing .tuner-now {
   border-color: rgba(255, 125, 110, 0.7);
   background: rgba(200, 16, 46, 0.1);
@@ -139,9 +174,9 @@ html[data-embed="tuner"] .tuner.is-external .tuner-now {
   box-shadow: none;
 }
 
-/* ── Actions (play + volume) ─────────────────────────────── */
+/* ── Actions (play + volume inline bureau) ────────────────── */
 html[data-embed="tuner"] .tuner-actions {
-  gap: 6px;
+  gap: 9px;
   align-self: center;
   align-items: center;
   min-height: var(--embed-ctrl);
@@ -154,24 +189,25 @@ html[data-embed="tuner"] .tuner-play {
   height: var(--embed-play);
   min-width: var(--embed-play);
   flex-shrink: 0;
+  box-shadow: 0 6px 18px -6px rgba(200, 16, 46, 0.7);
 }
 
 html[data-embed="tuner"] .tuner-play svg {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
 }
 
-/* Volume toujours en ligne — jamais de popover (logique app.js isVolCompactMode) */
+/* Volume toujours en ligne (comme ≥1100 px du site) */
 html[data-embed="tuner"] .tuner-vol {
   display: flex;
   align-items: center;
   align-self: center;
-  gap: 2px;
+  gap: 0;
   height: var(--embed-ctrl);
   position: relative;
   overflow: visible;
   flex: 0 0 auto;
-  max-width: calc(var(--embed-ctrl) + 4px + var(--embed-vol-track));
+  max-width: calc(var(--embed-ctrl) + var(--embed-vol-track));
   min-width: 0;
 }
 
@@ -201,8 +237,8 @@ html[data-embed="tuner"] .tuner-vol-btn:active {
 
 html[data-embed="tuner"] .tuner-vol-btn .ico-vol,
 html[data-embed="tuner"] .tuner-vol-btn .ico-vol-mute {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
 }
 
 html[data-embed="tuner"] .tuner.is-boosted .tuner-vol-btn {
@@ -248,11 +284,10 @@ html[data-embed="tuner"] .tuner-vol.is-open .tuner-vol-slot {
   pointer-events: auto;
 }
 
-/* Largeur fixe comme le bureau ≥1100 px du site (pas de cqw instable dans l’iframe) */
 html[data-embed="tuner"] .tuner-vol-track {
   width: var(--embed-vol-track);
   max-width: var(--embed-vol-track);
-  min-width: 72px;
+  min-width: 96px;
   flex: 0 0 var(--embed-vol-track);
   height: var(--embed-ctrl);
   justify-content: center;
@@ -267,12 +302,11 @@ html[data-embed="tuner"] .tuner-vol-slider {
   width: 100%;
 }
 
-/* Étiquettes 0/100/200 % : pas de place en 58 px */
 html[data-embed="tuner"] .tuner-vol-labels {
   display: none !important;
 }
 
-/* Cast / EQ / module antenne : hors barre embed */
+/* Cast / EQ / module antenne latéral : hors barre embed */
 html[data-embed="tuner"] .tuner-cast--bar,
 html[data-embed="tuner"] .tuner-cast--mobile,
 html[data-embed="tuner"] .tuner-cast--popover,
@@ -297,94 +331,46 @@ html[data-embed="tuner"] .toast {
   max-width: calc(100% - 16px);
 }
 
-/* ── Largeurs étroites (toolbar Solitaire ~360–560 px utiles) ──
-   Les règles @container ciblent des descendants de .tuner-controls. */
+/* ── Toolbar Solitaire étroite : garder le look bureau, compresser le volume ── */
+@container tuner-controls (max-width: 520px) {
+  .tuner-vol-track {
+    width: 88px;
+    max-width: 88px;
+    flex-basis: 88px;
+    min-width: 72px;
+  }
+}
+
 @container tuner-controls (max-width: 420px) {
+  /* Sous très étroit seulement : masquer EN ONDES (comme téléphone site) */
+  .tuner-label {
+    display: none !important;
+  }
+
   .tuner-vol-track {
     width: 72px;
     max-width: 72px;
     flex-basis: 72px;
-  }
-
-  .tuner-controls {
-    gap: 5px;
+    min-width: 56px;
   }
 }
 
-@container tuner-controls (max-width: 340px) {
-  .tuner-vol-track {
-    width: 56px;
-    max-width: 56px;
-    flex-basis: 56px;
+/* Fallback sans container queries */
+@media (max-width: 479.98px) {
+  html[data-embed="tuner"] .tuner-label {
+    display: none !important;
   }
 
-  .tuner-step,
-  .tuner-vol-btn {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-  }
-
-  .tuner-play {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-  }
-
-  .tuner-now {
-    min-height: 36px;
-    height: 36px;
-  }
-
-  .tuner-now-name {
-    font-size: 12px;
-  }
-
-  .tuner-now-sub {
-    font-size: 10px;
-  }
-
-  .tuner-controls {
-    gap: 4px;
-  }
-}
-
-/* Fallback sans container queries (vieilles WebViews) */
-@media (max-width: 559.98px) {
   html[data-embed="tuner"] {
     --embed-vol-track: 72px;
-    --embed-ctrl: 36px;
-    --embed-play: 38px;
-    --embed-gap: 5px;
   }
 
-  html[data-embed="tuner"] .tuner-step svg {
-    width: 16px;
-    height: 16px;
+  html[data-embed="tuner"] .tuner-inner {
+    padding: 10px 2px;
+    gap: 8px;
   }
 
-  html[data-embed="tuner"] .tuner-play svg {
-    width: 16px;
-    height: 16px;
-  }
-
-  html[data-embed="tuner"] .tuner-vol-btn .ico-vol,
-  html[data-embed="tuner"] .tuner-vol-btn .ico-vol-mute {
-    width: 16px;
-    height: 16px;
-  }
-
-  html[data-embed="tuner"] .tuner-now {
-    padding: 3px 20px 3px 10px;
-  }
-
-  html[data-embed="tuner"] .tuner-now-name {
-    font-size: 12px;
-  }
-}
-
-@media (max-width: 399.98px) {
-  html[data-embed="tuner"] {
-    --embed-vol-track: 48px;
+  html[data-embed="tuner"] .tuner-controls {
+    gap: 6px;
   }
 }
