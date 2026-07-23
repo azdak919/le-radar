@@ -879,7 +879,10 @@ function buildMastheadWeatherBoard() {
 }
 
 function weatherBoardCount() {
-  return 4;
+  if (window.innerWidth >= 1320) return 4;
+  if (window.innerWidth >= 1120) return 3;
+  if (window.innerWidth >= 1024) return 2;
+  return 1;
 }
 
 function nextWeatherCity(group, usedIds) {
@@ -980,7 +983,7 @@ function readWeatherCache() {
 }
 
 async function initMastheadWeather() {
-  if (!MASTHEAD_WEATHER || window.innerWidth < 1024) return;
+  if (!MASTHEAD_WEATHER || window.innerWidth < 900) return;
   const cached = readWeatherCache();
   if (cached) renderMastheadWeather(cached);
   try {
