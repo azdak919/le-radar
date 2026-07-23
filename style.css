@@ -1343,34 +1343,33 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
 
 @media (min-width: 1100px) {
   /*
-   * Module antenne : libellé ancré + zone titre qui UTILISE l’espace dispo.
-   * Avant : colonne 268px → titres tronqués / marquee alors que la barre
-   * restait vide à droite. Maintenant ~moitié de la barre pour l’antenne.
+   * Flex en flux : antenne collée après le volume (pas une demi-barre vide).
+   * Libellé en rail fixe étroit · titre juste à côté (gap serré).
    */
   .tuner-inner {
     max-width: 1180px;
     padding-top: 8px;
     padding-bottom: 8px;
-    display: grid;
-    /* Gauche = contrôles (plafonnés) · droite = antenne (prend le reste) */
-    grid-template-columns: minmax(0, 1fr) minmax(340px, 1.15fr);
-    gap: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     align-items: center;
+    gap: 12px;
   }
 
   .tuner-controls {
-    grid-column: 1;
-    flex: unset;
+    flex: 0 1 auto;
     min-width: 0;
-    /* Ne pas laisser le dial absorber toute la largeur */
-    max-width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 9px;
   }
 
   .tuner-dial {
-    flex: 1 1 0;
-    width: 0;
-    min-width: 120px;
-    max-width: 260px;
+    flex: 1 1 160px;
+    width: auto;
+    min-width: 140px;
+    max-width: 240px;
   }
 
   .tuner-actions {
@@ -1379,17 +1378,17 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   }
 
   .tuner-nowair {
-    grid-column: 2;
-    display: grid;
-    /* Rail libellé fixe (ne bouge pas) + zone titre fluide (tout l’espace restant) */
-    grid-template-columns: 5.75rem minmax(0, 1fr);
-    align-items: center;
-    column-gap: 10px;
-    width: 100%;
-    max-width: none;
+    /* Prend le reste APRÈS les contrôles — commence juste après le volume */
+    flex: 1 1 0;
     min-width: 0;
+    max-width: none;
+    display: grid;
+    /* Rail libellé compact (≈ « À L'ANTENNE ») + titre collé */
+    grid-template-columns: 4.75rem minmax(0, 1fr);
+    align-items: center;
+    column-gap: 8px;
     margin: 0;
-    padding: 0 8px 0 18px;
+    padding: 0 4px 0 14px;
     border-left: 1px solid rgba(255, 255, 255, 0.12);
     box-sizing: border-box;
     align-self: center;
@@ -1401,7 +1400,8 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
     width: 100%;
     max-width: 100%;
     line-height: 1.15;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
+    text-align: left;
     overflow: hidden;
     text-overflow: ellipsis;
   }
@@ -1410,11 +1410,10 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: flex-start;
     gap: 1px;
     min-width: 0;
-    /* Occupe toute la largeur de la colonne — plus de mini-rectangle */
     width: 100%;
-    max-width: none;
     overflow: hidden;
   }
 
@@ -1422,6 +1421,7 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   .tuner-nowair-sub {
     width: 100%;
     max-width: 100%;
+    text-align: left;
   }
 
   /*
