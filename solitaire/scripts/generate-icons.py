@@ -6,8 +6,10 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parent.parent
-ASSETS = ROOT / "assets"
-EMOJI_PNG = ASSETS / "twemoji-joker.png"
+# Same Twemoji joker as Le Radar masthead (assets/emoji/joker.png)
+EMOJI_PNG = ROOT.parent / "assets" / "emoji" / "joker.png"
+if not EMOJI_PNG.exists():
+    EMOJI_PNG = ROOT / "assets" / "twemoji-joker.png"
 BG = (26, 24, 22, 255)
 
 OUTPUTS = {
