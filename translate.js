@@ -732,6 +732,9 @@
    * (Intl.DisplayNames / CLDR) + écriture si besoin. Pas de pays, pas de gtx.
    */
   function languageSecondaryLine(m = {}) {
+    if (m.id === 'original') {
+      return menuChromeLocale().startsWith('en') ? 'No translation' : 'Aucune traduction';
+    }
     const parts = [];
     const label = String(m.label || '').trim();
     const locale = menuChromeLocale();

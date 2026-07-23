@@ -178,6 +178,13 @@
     menu.hidden = true;
     menu.setAttribute('role', 'listbox');
     menu.classList.add('translate-menu');
+    // backdrop-filter/transform sur les barres Pomo et Solitaire crée un bloc
+    // contenant pour position:fixed. Porter le panneau dans <body> garantit
+    // des coordonnées réellement liées au viewport après redimensionnement.
+    if (options.anchor && menu.parentElement !== document.body) {
+      menu.classList.add('translate-menu--app');
+      document.body.appendChild(menu);
+    }
     button.classList.add('translate-toggle');
     button.setAttribute('aria-haspopup', 'listbox');
     button.setAttribute('aria-expanded', 'false');
@@ -188,6 +195,9 @@
     };
 
     function secondary(mode) {
+      if (mode.id === 'original') {
+        return locale().startsWith('en') ? 'No translation' : 'Aucune traduction';
+      }
       const localized = localName(mode.id, locale(), modes);
       const parts = roughlySame(localized, mode.label) ? [] : [localized];
       if (mode.script && !String(localized).toLowerCase().includes(String(mode.script).toLowerCase())) parts.push(mode.script);
@@ -283,6 +293,7 @@
       menu.replaceChildren(fragment);
       search.querySelector('input').addEventListener('input', (event) => filter(event.target.value));
       setActive(activeMode);
+      if (!menu.hidden) requestAnimationFrame(position);
     }
 
     function position() {
@@ -290,13 +301,23 @@
       const pad = 12;
       const gap = 6;
       const rect = button.getBoundingClientRect();
+      const anchor = typeof options.anchor === 'string'
+        ? document.querySelector(options.anchor)
+        : options.anchor;
+      const anchorRect = anchor?.getBoundingClientRect();
       const width = Math.min(320, Math.max(240, window.innerWidth - pad * 2));
       menu.style.width = `${width}px`;
-      menu.style.maxHeight = `${Math.min(560, Math.max(180, window.innerHeight - pad * 2))}px`;
+      const preferredTop = Math.max(rect.bottom, anchorRect?.bottom || rect.bottom) + gap;
+      const availableBelow = window.innerHeight - preferredTop - pad;
+      const maxHeight = Math.min(560, Math.max(120, availableBelow));
+      menu.style.maxHeight = `${maxHeight}px`;
       const height = Math.min(menu.offsetHeight || 300, window.innerHeight - pad * 2);
       let left = Math.max(pad, Math.min(rect.right - width, window.innerWidth - width - pad));
-      let top = rect.bottom + gap;
-      if (top + height > window.innerHeight - pad) top = Math.max(pad, rect.top - gap - height);
+      let top = preferredTop;
+      if (availableBelow < 120) {
+        const aboveAnchor = (anchorRect?.top || rect.top) - gap - height;
+        top = aboveAnchor >= pad ? aboveAnchor : Math.max(pad, window.innerHeight - pad - height);
+      }
       menu.style.left = `${Math.round(left)}px`;
       menu.style.top = `${Math.round(top)}px`;
       menu.style.right = 'auto';
