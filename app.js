@@ -1057,7 +1057,7 @@ function formatStationNowAirLabel(radio) {
 
 /** Téléphone (< 600 px) : acronyme dans le titre du syntoniseur seulement. */
 function isTunerDialPhoneLayout() {
-  // Embed Ataraxia : logique bureau (pas le mode téléphone) même si l’iframe est étroite.
+  // Embed Solitaire : logique bureau (pas le mode téléphone) même si l’iframe est étroite.
   if (IS_TUNER_EMBED) return false;
   return !!TUNER_DIAL_PHONE_MQ?.matches;
 }
@@ -1128,7 +1128,7 @@ function tunerDesktopSubLine(radio, { external = false } = {}) {
 
 /**
  * Mobile / tablette (< 1100 px) sur le site principal.
- * Embed Ataraxia : toujours logique bureau (slogan + EN ONDES + volume inline),
+ * Embed Solitaire : toujours logique bureau (slogan + EN ONDES + volume inline),
  * car la largeur de l’iframe (~700 px) ferait croire à tort qu’on est en tablette.
  */
 function isDialCompactLayout() {
@@ -2376,7 +2376,7 @@ function selectStation(id, { autoplay = false, openExternal = false } = {}) {
     TUNER_SUB?.parentElement?.classList.toggle('is-empty', !metaLine);
     applyMarquee(TUNER_SUB, metaLine);
   } else {
-    // Bureau (+ embed Ataraxia) : ligne 1 = poste FM · acronyme ; ligne 2 = slogan
+    // Bureau (+ embed Solitaire) : ligne 1 = poste FM · acronyme ; ligne 2 = slogan
     setTunerNameText(tunerDesktopTitleLine(radio));
     setTunerSubText(tunerDesktopSubLine(radio, { external }));
   }
