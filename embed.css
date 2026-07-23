@@ -242,19 +242,31 @@ html[data-embed="tuner"] .tuner-now-sub-rotate {
   overflow: hidden;
 }
 
-/* Embed étroit : pas de marquee (montre un fragment illisible mid-scroll) */
-html[data-embed="tuner"] .is-marquee {
-  text-overflow: ellipsis !important;
+/*
+ * Défilement doux (marquee) autorisé sur le dial embed.
+ * Le panneau latéral « À l'antenne » garde ellipsis (style.css).
+ */
+html[data-embed="tuner"] .tuner-now .is-marquee {
+  text-overflow: clip;
 }
 
-html[data-embed="tuner"] .is-marquee > .tuner-now-sub-text {
-  animation: none !important;
-  transform: none !important;
-  will-change: auto;
-  display: inline;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
+html[data-embed="tuner"] .tuner-now .is-marquee > .tuner-now-sub-text {
+  display: inline-block;
+  white-space: nowrap;
+  animation: tunerMarquee var(--marquee-duration, 12s) linear infinite alternate;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-embed="tuner"] .tuner-now .is-marquee {
+    text-overflow: ellipsis;
+  }
+  html[data-embed="tuner"] .tuner-now .is-marquee > .tuner-now-sub-text {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 
 /* Lecture : contour coral (site tous formats) */
