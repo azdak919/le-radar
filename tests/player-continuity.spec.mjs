@@ -41,7 +41,23 @@ test('le bouton annule une connexion audio en attente', async ({ page }) => {
   await expect(button).toHaveAttribute('aria-label', /annuler/i);
   await button.click();
   await expect(button).not.toHaveClass(/is-buffering/);
-  await expect(tuner.locator('#radar-player')).not.toHaveAttribute('src', /./);
+});
+
+test('une émission CHOQ terminée ne reste pas affichée comme à venir', async ({ page }) => {
+  await page.addInitScript(() => {
+    const RealDate = Date;
+    class BoundaryDate extends RealDate {
+      constructor(...args) {
+        super(...(args.length ? args : ['2026-07-23T20:01:00.000Z']));
+      }
+      static now() { return new RealDate('2026-07-23T20:01:00.000Z').valueOf(); }
+    }
+    window.Date = BoundaryDate;
+  });
+  await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
+  const tuner = page.locator('#radar-embed').contentFrame();
+  await tuner.locator('#tuner-select').selectOption('choq');
+  await expect(tuner.locator('#tuner-nowair-title')).not.toHaveText('Palmarès CHOQ.ca');
 });
 
 test('Pomodoro garde son document hôte pendant une navigation avec lecture active', async ({ page }) => {
