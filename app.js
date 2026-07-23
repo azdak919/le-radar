@@ -5725,19 +5725,10 @@ function shouldPreferStockPhoto(item, role = 'lead') {
   // Source absente / rejetée (logo Daily.png, logo Exil, bannière editorial_…) → stock.
   // Le rejet path (GLOBAL_IMAGE_REJECT_RE) fait basculer hasUsablePhoto à false.
   if (hasStockPhoto(item, role) && !hasUsablePhoto(item, role)) return true;
-  // Photo source trop faible pour la une, mais stock thématique Openverse déjà trouvé
-  // (ex. McGill Daily : Daily.png laissé en image + openverse). Uniquement la une :
-  // En bref garde l'affiche / photo d'article même si leadImageReady est false
-  // (ex. poster portrait Note nocturne > stock hors-sujet).
-  if (
-    role === 'lead'
-    && item.leadImageReady === false
-    && hasStockPhoto(item, role)
-    && item.imageProvider
-    && item.imageProvider !== 'campus-bank'
-  ) {
-    return true;
-  }
+  // Une image source réelle garde priorité, même si le bot l'a jugée un peu
+  // sous le seuil de grande vedette. Le navigateur accepte cette photo pour la
+  // une dès 200 × 150; cela évite qu'un ancien lien Openverse la remplace par
+  // une image cassée ou hors sujet.
   return false;
 }
 
@@ -5761,6 +5752,20 @@ function resolveDisplayImage(item, { preferPhoto = true, role = 'lead' } = {}) {
   }
   if (!preferPhoto && hasUsablePhoto(item, role)) {
     return { src: getCandidateImage(item.image, { forThumb }), kind: 'photo' };
+  }
+  return { src: '', kind: 'none' };
+}
+
+/** Return the other usable source after an image request failed.
+ * A stale Openverse URL must never cause us to retry itself and then discard
+ * an otherwise valid image supplied by the publication. */
+function alternateDisplayImage(item, failedKind, role = 'lead') {
+  const forThumb = role === 'feature' || role === 'compact';
+  if (failedKind === 'stock' && hasUsablePhoto(item, role)) {
+    return { src: getCandidateImage(item.image, { forThumb }), kind: 'photo' };
+  }
+  if (failedKind === 'photo' && hasStockPhoto(item, role)) {
+    return { src: getCandidateImage(item.stockImage, { forThumb }), kind: 'stock' };
   }
   return { src: '', kind: 'none' };
 }
@@ -6071,7 +6076,7 @@ function attachArticleImage(article, item, role) {
           return;
         }
         if (allowRetry) {
-          const alt = resolveDisplayImage(item, { preferPhoto: false, role });
+          const alt = alternateDisplayImage(item, kind, role);
           if (alt.src && alt.kind !== 'photo') {
             settled = true;
             loadImage(alt.src, alt.kind, false);
@@ -6096,7 +6101,7 @@ function attachArticleImage(article, item, role) {
         return;
       }
       if (allowRetry && (kind === 'photo' || kind === 'stock')) {
-        const alt = resolveDisplayImage(item, { preferPhoto: kind !== 'photo', role });
+        const alt = alternateDisplayImage(item, kind, role);
         if (alt.src && alt.kind !== kind && alt.src !== src) {
           settled = true;
           loadImage(alt.src, alt.kind, false);
@@ -6111,12 +6116,14 @@ function attachArticleImage(article, item, role) {
     img.src = displaySrc;
 
     // Timeout : tenter une alternative, mais ne PAS jeter une image stock
-    // encore en cours de chargement (Wikimedia 8K / réseau lent).
+    // encore en cours de chargement (Wikimedia 8K / réseau lent). Même règle
+    // pour une photo source : une réponse lente reste préférable à un stock
+    // incertain; seul son vrai onerror déclenche le repli.
     const timeoutMs = isThumb ? 10000 : 6000;
     window.setTimeout(() => {
       if (settled || article.classList.contains('has-image') || !media.isConnected) return;
-      if (!allowRetry) return;
-      const alt = resolveDisplayImage(item, { preferPhoto: kind === 'photo', role });
+      if (!allowRetry || kind === 'photo') return;
+      const alt = alternateDisplayImage(item, kind, role);
       if (alt.src && alt.src !== src && alt.kind !== kind) {
         settled = true;
         loadImage(alt.src, alt.kind, false);

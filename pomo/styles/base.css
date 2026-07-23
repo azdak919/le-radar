@@ -7,8 +7,10 @@
 
     /* Light theme (default) */
     --bg-primary: #f5f0eb;
-    --bg-glass: rgba(255, 255, 255, 0.55);
+    --bg-glass: rgba(255, 255, 255, 0.70);
     --bg-glass-hover: rgba(255, 255, 255, 0.72);
+    --panel-bg: rgba(250, 247, 242, 0.88);
+    --panel-border: rgba(92, 76, 58, 0.34);
     --border-glass: rgba(180, 170, 155, 0.3);
     --text-primary: #2c2824;
     --text-secondary: #6b6259;
@@ -37,8 +39,12 @@
     --chrome-gutter: 0.75rem;
     --chrome-cap: 960px;
     --chrome-width: min(calc(100vw - var(--chrome-gutter)), var(--chrome-cap));
-    --chrome-surface-bg: rgba(0, 0, 0, 0.22);
-    --chrome-surface-border: rgba(255, 255, 255, 0.1);
+    --chrome-surface-bg: rgba(250, 247, 242, 0.82);
+    --chrome-surface-border: rgba(92, 76, 58, 0.28);
+    --chrome-text: #3a3028;
+    --chrome-text-strong: #1f1a16;
+    --chrome-rule: rgba(92, 76, 58, 0.2);
+    --chrome-hover: rgba(92, 76, 58, 0.12);
     --chrome-surface-blur: blur(12px);
     --credits-max-width: var(--chrome-width);
     --credits-pad-y: 0.38rem;
@@ -70,8 +76,10 @@
   /* Dark theme — data-theme (bouton) ou préférence OS si non forcé clair */
   html[data-theme="dark"] {
     --bg-primary: #1a1816;
-    --bg-glass: rgba(40, 36, 32, 0.6);
+    --bg-glass: rgba(40, 36, 32, 0.74);
     --bg-glass-hover: rgba(50, 45, 40, 0.75);
+    --panel-bg: rgba(24, 22, 20, 0.88);
+    --panel-border: rgba(222, 206, 186, 0.24);
     --border-glass: rgba(100, 90, 78, 0.25);
     --text-primary: #e8e0d8;
     --text-secondary: #a89e94;
@@ -88,12 +96,20 @@
     --settings-bg: rgba(30, 27, 24, 0.97);
     --settings-bg-solid: #1e1b18;
     --settings-border: rgba(100, 88, 72, 0.55);
+    --chrome-surface-bg: rgba(20, 18, 16, 0.80);
+    --chrome-surface-border: rgba(233, 220, 204, 0.18);
+    --chrome-text: #eee5db;
+    --chrome-text-strong: #fffaf3;
+    --chrome-rule: rgba(233, 220, 204, 0.16);
+    --chrome-hover: rgba(255, 255, 255, 0.12);
   }
   @media (prefers-color-scheme: dark) {
     html:not([data-theme="light"]) {
       --bg-primary: #1a1816;
-      --bg-glass: rgba(40, 36, 32, 0.6);
+      --bg-glass: rgba(40, 36, 32, 0.74);
       --bg-glass-hover: rgba(50, 45, 40, 0.75);
+      --panel-bg: rgba(24, 22, 20, 0.88);
+      --panel-border: rgba(222, 206, 186, 0.24);
       --border-glass: rgba(100, 90, 78, 0.25);
       --text-primary: #e8e0d8;
       --text-secondary: #a89e94;
@@ -110,6 +126,12 @@
       --settings-bg: rgba(30, 27, 24, 0.97);
       --settings-bg-solid: #1e1b18;
       --settings-border: rgba(100, 88, 72, 0.55);
+      --chrome-surface-bg: rgba(20, 18, 16, 0.80);
+      --chrome-surface-border: rgba(233, 220, 204, 0.18);
+      --chrome-text: #eee5db;
+      --chrome-text-strong: #fffaf3;
+      --chrome-rule: rgba(233, 220, 204, 0.16);
+      --chrome-hover: rgba(255, 255, 255, 0.12);
     }
   }
 
@@ -178,7 +200,7 @@
     margin-top: 0.28rem;
     margin-bottom: 0;
     padding: 0.2rem 0.1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--chrome-rule);
     min-height: calc(var(--radar-embed-slot-h) + 0.4rem);
     overflow: visible;
     position: relative;
@@ -209,7 +231,7 @@
   .app-toolbar-divider {
     width: 1px;
     height: 1.25rem;
-    background: rgba(255, 255, 255, 0.14);
+    background: var(--chrome-rule);
     flex-shrink: 0;
     margin: 0 0.08rem;
   }
@@ -245,7 +267,7 @@
     border-radius: 999px;
     border: none;
     background: transparent;
-    color: rgba(255, 255, 255, 0.72);
+    color: var(--chrome-text);
     cursor: pointer;
     text-decoration: none;
     white-space: nowrap;
@@ -257,8 +279,8 @@
 
   .top-right-actions .toolbar-btn:hover,
   .top-right-actions .lang-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.95);
+    background: var(--chrome-hover);
+    color: var(--chrome-text-strong);
   }
 
   .top-right-actions .toolbar-btn:active {
@@ -505,10 +527,10 @@
     flex-direction: column;
     container-type: inline-size;
     container-name: quote-card;
-    background: var(--bg-glass);
+    background: var(--panel-bg);
     backdrop-filter: blur(24px) saturate(1.4);
     -webkit-backdrop-filter: blur(24px) saturate(1.4);
-    border: 1px solid var(--border-glass);
+    border: 1px solid var(--panel-border);
     border-radius: 20px;
     padding: clamp(1.25rem, 3.5dvh, 2.5rem) clamp(1.25rem, 3.5vw, 2.75rem);
     text-align: center;
@@ -644,7 +666,7 @@
     padding: 0.6rem 1.5rem;
     border-radius: 100px;
     border: 1px solid var(--border-glass);
-    background: var(--bg-glass);
+    background: var(--panel-bg);
     color: var(--text-secondary);
     cursor: pointer;
     transition: all 0.3s ease;
@@ -688,10 +710,10 @@
   .pomo-widget {
     position: relative;
     overflow: visible;
-    background: var(--bg-glass);
+    background: var(--panel-bg);
     backdrop-filter: blur(28px) saturate(1.5);
     -webkit-backdrop-filter: blur(28px) saturate(1.5);
-    border: 1px solid var(--border-glass);
+    border: 1px solid var(--panel-border);
     border-radius: 28px;
     padding: 1.5rem 1.25rem 1.25rem;
     display: flex;
@@ -1704,9 +1726,9 @@
     /* Re-apply base backgrounds that unset would remove */
     .pomo-btn--primary:hover { background: var(--pomo-work); color: #fff; box-shadow: 0 4px 14px var(--accent-glow); }
     .pomo-btn--primary.on-break:hover { background: var(--pomo-break); box-shadow: 0 4px 14px rgba(90, 127, 106, 0.25); }
-    .btn:hover { background: var(--bg-glass); color: var(--text-secondary); border-color: var(--border-glass); }
+    .btn:hover { background: var(--panel-bg); color: var(--text-secondary); border-color: var(--panel-border); }
     .top-right-actions .toolbar-btn:hover:not(:active) {
       background: transparent;
-      color: rgba(255, 255, 255, 0.72);
+      color: var(--chrome-text);
     }
   }

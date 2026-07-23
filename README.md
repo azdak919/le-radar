@@ -26,7 +26,7 @@
 - **Mode clair / sombre** persistant
 - **PWA** — installation mobile, service worker, offline shell
 - **Pomodoro & Solitaire** — mini-apps isolées (`/pomo/`, `/solitaire/`), chacune installable en PWA avec son propre logo
-- **100 % statique** — `news.json` et `radios.json` reconstruits par GitHub Actions ; pas de backend
+- **Statique, avec classement optionnel** — le site et les données éditoriales restent sur GitHub Pages; le classement Solitaire peut utiliser le Worker D1 gratuit fourni
 
 ---
 
@@ -137,6 +137,15 @@ Pour les flux HTTP ou CORS difficiles, un Cloudflare Worker léger est fourni da
 ```js
 const PROXY_BASE = 'https://ton-worker.workers.dev';
 ```
+
+## 🃏 Classement Solitaire partagé (optionnel)
+
+Le jeu fonctionne hors ligne avec ses scores locaux. Pour afficher les mêmes dix
+meilleurs scores à tous les visiteurs, le backend gratuit Cloudflare Workers +
+D1 est prêt dans [`workers/solitaire-scores/`](workers/solitaire-scores/).
+Les instructions de premier déploiement sont dans son
+[`README`](workers/solitaire-scores/README.md). Une fois l'URL du Worker connue,
+il suffit de la renseigner dans `solitaire/scores-api.js`.
 
 ---
 

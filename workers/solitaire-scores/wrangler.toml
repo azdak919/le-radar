@@ -1,0 +1,11 @@
+name = "le-radar-scores"
+main = "src/index.js"
+compatibility_date = "2026-07-23"
+workers_dev = false
+# The production URL is public; version preview URLs are unnecessary exposure.
+preview_urls = false
+
+[[d1_databases]]
+binding = "DB"
+database_name = "le-radar-scores"
+database_id = "634fe815-cc4c-4ad4-be3d-a093eb3af765"

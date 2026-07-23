@@ -56,6 +56,12 @@
       --settings-bg:     rgba(252, 249, 246, 0.96);
       --settings-bg-solid: #fcf9f6;
       --settings-border: rgba(160, 148, 132, 0.45);
+      --chrome-surface-bg: rgba(250, 247, 242, 0.82);
+      --chrome-surface-border: rgba(92, 76, 58, 0.28);
+      --chrome-text: #3a3028;
+      --chrome-text-strong: #1f1a16;
+      --chrome-rule: rgba(92, 76, 58, 0.2);
+      --chrome-hover: rgba(92, 76, 58, 0.12);
 
       /* Card colours */
       --card-face:           #ffffff;
@@ -87,8 +93,6 @@
       /* Largeur pour barre bureau + module « À l'antenne » (~280px) */
       --chrome-cap: 960px;
       --chrome-width: min(calc(100vw - var(--chrome-gutter)), var(--chrome-cap));
-      --chrome-surface-bg: rgba(0, 0, 0, 0.22);
-      --chrome-surface-border: rgba(255, 255, 255, 0.1);
       --chrome-surface-blur: blur(12px);
       --credits-max-width: var(--chrome-width);
       --credits-pad-y: 0.38rem;
@@ -131,6 +135,12 @@
       --settings-bg:       rgba(30, 27, 24, 0.97);
       --settings-bg-solid: #1e1b18;
       --settings-border:   rgba(100, 88, 72, 0.55);
+      --chrome-surface-bg: rgba(20, 18, 16, 0.80);
+      --chrome-surface-border: rgba(233, 220, 204, 0.18);
+      --chrome-text: #eee5db;
+      --chrome-text-strong: #fffaf3;
+      --chrome-rule: rgba(233, 220, 204, 0.16);
+      --chrome-hover: rgba(255, 255, 255, 0.12);
     }
     @media (prefers-color-scheme: dark) {
       html:not([data-theme="light"]) {
@@ -160,6 +170,12 @@
         --settings-bg:       rgba(30, 27, 24, 0.97);
         --settings-bg-solid: #1e1b18;
         --settings-border:   rgba(100, 88, 72, 0.55);
+        --chrome-surface-bg: rgba(20, 18, 16, 0.80);
+        --chrome-surface-border: rgba(233, 220, 204, 0.18);
+        --chrome-text: #eee5db;
+        --chrome-text-strong: #fffaf3;
+        --chrome-rule: rgba(233, 220, 204, 0.16);
+        --chrome-hover: rgba(255, 255, 255, 0.12);
       }
     }
 
@@ -262,7 +278,7 @@
     .game-toolbar-divider {
       width: 1px;
       height: 1.25rem;
-      background: rgba(255, 255, 255, 0.14);
+      background: var(--chrome-rule);
       flex-shrink: 0;
       margin: 0 0.08rem;
     }
@@ -285,8 +301,8 @@
       margin-top: 0.28rem;
       margin-bottom: 0;
       padding: 0.2rem 0.1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid var(--chrome-rule);
+      border-bottom: 1px solid var(--chrome-rule);
       min-height: calc(var(--radar-embed-slot-h) + 0.4rem);
       overflow: visible;
       position: relative;
@@ -352,14 +368,14 @@
       font-weight: 400;
       letter-spacing: var(--tb-ls);
       line-height: 1.2;
-      color: rgba(255, 255, 255, 0.62);
+      color: var(--chrome-text);
       white-space: nowrap;
     }
 
     .toolbar-stat-sep {
       font-size: var(--tb-sub-font);
       line-height: 1;
-      color: rgba(255, 255, 255, 0.35);
+      color: var(--chrome-rule);
       flex-shrink: 0;
     }
 
@@ -387,7 +403,7 @@
     .toolbar-sub-sep {
       width: 1px;
       height: 0.85rem;
-      background: rgba(255, 255, 255, 0.14);
+      background: var(--chrome-rule);
       flex-shrink: 0;
     }
 
@@ -414,7 +430,7 @@
       border-radius: 999px;
       border: none;
       background: transparent;
-      color: rgba(255, 255, 255, 0.72);
+      color: var(--chrome-text);
       cursor: pointer;
       text-decoration: none;
       white-space: nowrap;
@@ -423,14 +439,14 @@
     }
     .toolbar-btn:hover,
     .lang-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: rgba(255, 255, 255, 0.95);
+      background: var(--chrome-hover);
+      color: var(--chrome-text-strong);
     }
     @media (hover: none) {
       .toolbar-btn:hover,
       .lang-btn:hover:not([aria-expanded="true"]) {
         background: transparent;
-        color: rgba(255, 255, 255, 0.72);
+        color: var(--chrome-text);
       }
     }
     .toolbar-btn:active { transform: scale(0.96); }
@@ -471,9 +487,9 @@
     .toolbar-btn--sub {
       font-size: var(--tb-sub-font);
       padding: 0.24rem 0.52rem;
-      color: rgba(255, 255, 255, 0.58);
+      color: var(--chrome-text);
     }
-    .toolbar-btn--sub:hover { color: rgba(255, 255, 255, 0.88); }
+    .toolbar-btn--sub:hover { color: var(--chrome-text-strong); }
     .toolbar-btn--sub svg {
       width: 13px;
       height: 13px;
@@ -1501,6 +1517,7 @@
 </div>
 
 <script src="../translate-menu.js"></script>
+<script src="./scores-api.js"></script>
 <script src="js/solitaire-rules.js"></script>
 <script nonce="ataraxia-sol">
 /* ══════════════════════════════════════════════════════════
@@ -5111,7 +5128,7 @@ function updateWinStats() {
    HI-SCORES — low-tech, shared when possible
    - Always localStorage (any 3 initials, no login)
    - Merge with ./hiscores.json (shared seed / community board)
-   - Optional POST to worker if window.LE_RADAR_HISCORES_API set
+   - Merge with / POST to Cloudflare Worker when configured
    Rank: faster time first, then fewer moves.
    ══════════════════════════════════════════════════════════ */
 const HI_SCORE_KEY = 'le_radar_sol_hiscores_v1';
@@ -5125,6 +5142,14 @@ let hiScores = [];
 let hiLetters = [0, 0, 0]; // alphabet indices
 let hiHighlightName = null;
 let hiScoresRemoteLoaded = false;
+
+function hiScoresApi() {
+  return (typeof window !== 'undefined' && window.LE_RADAR_HISCORES_API) || '';
+}
+
+function readHiScorePayload(payload) {
+  return Array.isArray(payload) ? payload : (Array.isArray(payload?.scores) ? payload.scores : []);
+}
 
 function normalizeHiEntry(e) {
   if (!e || typeof e.name !== 'string' || !Number.isFinite(e.timeMs)) return null;
@@ -5175,14 +5200,15 @@ function loadLocalHiScores() {
 
 function loadHiScores() {
   hiScores = mergeHiScores([loadLocalHiScores()]);
-  // Shared board (low-tech static JSON) — merge without blocking UI
+  // Shared board — static seed plus optional Cloudflare D1 board, without blocking UI.
   if (!hiScoresRemoteLoaded) {
     hiScoresRemoteLoaded = true;
-    fetch(HI_SCORE_REMOTE, { cache: 'no-store' })
-      .then((r) => (r.ok ? r.json() : []))
-      .then((remote) => {
-        if (!Array.isArray(remote)) return;
-        hiScores = mergeHiScores([hiScores, remote, loadLocalHiScores()]);
+    const sources = [fetch(HI_SCORE_REMOTE, { cache: 'no-store' }).then((r) => (r.ok ? r.json() : []))];
+    const api = hiScoresApi();
+    if (api) sources.push(fetch(api, { cache: 'no-store' }).then((r) => (r.ok ? r.json() : [])));
+    Promise.all(sources)
+      .then((remoteLists) => {
+        hiScores = mergeHiScores([hiScores, ...remoteLists.map(readHiScorePayload), loadLocalHiScores()]);
         try { localStorage.setItem(HI_SCORE_KEY, JSON.stringify(hiScores)); } catch { /* */ }
         renderHiScoreList(hiHighlightName);
       })
@@ -5215,8 +5241,8 @@ function insertHiScore(entry) {
   hiScores.push(e);
   sortHiScores();
   saveHiScores();
-  // Optional shared write (Cloudflare Worker / free API) — low-tech, best-effort
-  const api = (typeof window !== 'undefined' && window.LE_RADAR_HISCORES_API) || '';
+  // Optional Cloudflare Worker write — best effort; local score is already safe.
+  const api = hiScoresApi();
   if (api) {
     try {
       fetch(api, {
@@ -5224,7 +5250,14 @@ function insertHiScore(entry) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(e),
         keepalive: true,
-      }).catch(() => { /* local already saved */ });
+      }).then((response) => (response.ok ? response.json() : null))
+        .then((remote) => {
+          const remoteScores = readHiScorePayload(remote);
+          if (!remoteScores.length) return;
+          hiScores = mergeHiScores([hiScores, remoteScores, loadLocalHiScores()]);
+          saveHiScores();
+          renderHiScoreList(hiHighlightName);
+        }).catch(() => { /* local already saved */ });
     } catch { /* */ }
   }
 }
