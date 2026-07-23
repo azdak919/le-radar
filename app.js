@@ -361,7 +361,7 @@ let nowAirPreviewTimer = null;
 let nowAirPreviewRadio = null;
 let lastNowAirPreviewId = null;
 let lastDialCarouselText = '';
-let lastNowAir = { title: null, sub: null, empty: null, previewId: null, kind: null };
+let lastNowAir = { title: null, sub: null, empty: null, previewId: null, kind: null, stationId: null };
 let tunerSubMeta = '';
 let tunerSubAirText = '';
 let tunerSubRotateTimer = null;
@@ -369,8 +369,10 @@ let tunerSubRotateShowAir = false;
 /** CHOQ : alterne piste en cours ↔ émission à venir (musique libre + grille). */
 let choqAirRotateTimer = null;
 let choqAirRotateShowUpcoming = false;
-/** Une seule bascule CHOQ : demander un fondu sur le prochain render. */
-let choqAirCrossfadePending = false;
+/** Demander un fondu sur le prochain render (CHOQ ou changement de poste). */
+let nowAirCrossfadePending = false;
+/** Incrémenté à chaque fondu pour annuler les timeouts obsolètes. */
+let nowAirFadeGen = 0;
 const TUNER_SUB_ROTATE_MS = 8000;
 const TUNER_SUB_ROTATE_NARROW_MS = 14000;
 const TUNER_SUB_ROTATE_VERY_NARROW_MS = 18000;
@@ -897,8 +899,8 @@ function syncChoqAirRotate(radio) {
       return;
     }
     choqAirRotateShowUpcoming = !choqAirRotateShowUpcoming;
-    choqAirCrossfadePending = true;
-    lastNowAir = { title: null, sub: null, empty: null, previewId: null, kind: null };
+    nowAirCrossfadePending = true;
+    lastNowAir = { title: null, sub: null, empty: null, previewId: null, kind: null, stationId: null };
     renderTunerNowAir();
   }, CHOQ_AIR_ROTATE_MS);
 }
@@ -1379,6 +1381,7 @@ function applyNowAirPanelText(el, text) {
 function updateNowAirPanel(title, sub, opts = {}) {
   const crossfade = !!opts.crossfade;
   const panelLabel = opts.panelLabel;
+  const onWritten = typeof opts.onWritten === 'function' ? opts.onWritten : null;
   const panel = TUNER_NOWAIR;
   if (!panel) return;
 
@@ -1399,23 +1402,28 @@ function updateNowAirPanel(title, sub, opts = {}) {
         TUNER_NOWAIR_SUB.removeAttribute('title');
       }
     }
+    onWritten?.();
   };
 
   const useFade = crossfade && !PREFERS_REDUCED_MOTION?.matches;
   if (!useFade) {
+    nowAirFadeGen += 1;
     panel.classList.remove('is-swapping');
     write();
     return;
   }
 
-  // Fondu court : fade out → écrire → fade in (ne pas rester bloqué à opacity 0)
+  // Fondu : fade out → swap contenu → fade in. gen annule les bascules concurrentes.
+  const gen = ++nowAirFadeGen;
   panel.classList.add('is-swapping');
   window.setTimeout(() => {
+    if (gen !== nowAirFadeGen) return;
     write();
     requestAnimationFrame(() => {
+      if (gen !== nowAirFadeGen) return;
       panel.classList.remove('is-swapping');
     });
-  }, 200);
+  }, 280);
 }
 
 function syncTunerSubRotate(title, sub, empty, crossfade = false, kind = 'idle') {
@@ -1568,51 +1576,65 @@ function renderTunerNowAir() {
   const previewId = previewing ? (nowAirPreviewRadio?.id ?? null) : null;
   if (empty) kind = 'idle';
 
-  // Rien n'a changé : on n'écrase pas le DOM (sinon le défilement repart à zéro
-  // à chaque tic d'horloge).
+  const stationId = currentStation?.id
+    || (previewing ? nowAirPreviewRadio?.id : null)
+    || null;
+
+  // Rien n'a changé : on n'écrase pas le DOM.
   if (lastNowAir.title === title
     && lastNowAir.sub === sub
     && lastNowAir.empty === empty
     && lastNowAir.previewId === previewId
-    && lastNowAir.kind === kind) {
+    && lastNowAir.kind === kind
+    && lastNowAir.stationId === stationId
+    && !nowAirCrossfadePending) {
     if (currentStation) stopNowAirPreview();
     else if (previewing) startNowAirPreview();
     else stopNowAirPreview();
+    // Timer CHOQ peut encore être démarré
+    if (currentStation) syncChoqAirRotate(currentStation);
+    else if (previewing) syncChoqAirRotate(nowAirPreviewRadio);
     return;
   }
+
+  const stationChanged = lastNowAir.stationId != null
+    && stationId != null
+    && lastNowAir.stationId !== stationId;
+  const contentChanged = lastNowAir.title != null
+    && (lastNowAir.title !== title || lastNowAir.sub !== sub || lastNowAir.kind !== kind);
   const crossfadePreview = previewing
     && !PREFERS_REDUCED_MOTION?.matches
     && lastNowAir.previewId != null
     && previewId !== lastNowAir.previewId;
 
-  lastNowAir = { title, sub, empty, previewId, kind };
+  // Fondu : changement de poste, bascule CHOQ, ou contenu antenne différent
+  const shouldFade = nowAirCrossfadePending
+    || stationChanged
+    || (contentChanged && !empty && lastNowAir.empty === false);
+  nowAirCrossfadePending = false;
 
-  // Toujours visible sur bureau (placeholder HTML dès le paint) — ne pas
-  // repasser en .hidden (ça laissait un trou + volume étiré au load).
+  lastNowAir = { title, sub, empty, previewId, kind, stationId };
+
+  // Toujours visible sur bureau (placeholder HTML dès le paint).
   TUNER_NOWAIR.classList.remove('hidden');
   TUNER_NOWAIR.removeAttribute('aria-hidden');
   TUNER_NOWAIR.classList.toggle('is-empty', empty);
-  // live = coral EN ONDES ; upcoming = teinte distincte (bureau) ; idle = neutre
-  TUNER_NOWAIR.classList.toggle('is-live', kind === 'live');
-  TUNER_NOWAIR.classList.toggle('is-upcoming', kind === 'upcoming');
-  TUNER_NOWAIR.dataset.airKind = kind;
+  // Couleurs live/upcoming appliquées après le swap (pendant le fade out
+  // on garde l’ancienne teinte un instant — OK).
+  const applyKindClasses = () => {
+    TUNER_NOWAIR.classList.toggle('is-live', kind === 'live');
+    TUNER_NOWAIR.classList.toggle('is-upcoming', kind === 'upcoming');
+    TUNER_NOWAIR.dataset.airKind = kind;
+  };
+  if (!shouldFade || PREFERS_REDUCED_MOTION?.matches) applyKindClasses();
 
-  // Libellé dynamique : « À venir » remplace « À l'antenne » hors créneau.
   const panelLabel = empty ? "À l'antenne" : nowAirPanelLabel(kind);
-  const choqFade = choqAirCrossfadePending;
-  choqAirCrossfadePending = false;
 
   updateNowAirPanel(title, sub, {
-    crossfade: choqFade,
+    crossfade: shouldFade && !empty,
     panelLabel,
+    onWritten: applyKindClasses,
   });
-  // Si pas de fondu CHOQ, le libellé est déjà écrit dans updateNowAirPanel.
-  // Preview radio : pas de fondu (évite panneau vide).
-  if (!choqFade) {
-    const labelEl = TUNER_NOWAIR.querySelector('.tuner-nowair-label') || TUNER_NOWAIR_LABEL;
-    if (labelEl) labelEl.textContent = panelLabel;
-    TUNER_NOWAIR.setAttribute('aria-label', panelLabel);
-  }
 
   syncDesktopDialPreview(title, crossfadePreview);
   syncTunerSubRotate(title, sub, empty, crossfadePreview, kind);
@@ -1625,6 +1647,10 @@ function renderTunerNowAir() {
     nowAirPreviewRadio = null;
     lastNowAirPreviewId = null;
     lastDialCarouselText = '';
+    // Ne pas réécrire le nom ici si selectStation l’a déjà posé (évite double flash)
+    if (!isDialCompactLayout()) {
+      /* nom déjà posé par selectStation ; re-sync si besoin */
+    }
     setTunerNameText(
       isDialCompactLayout()
         ? tunerDialTitleLine(currentStation)
@@ -2267,7 +2293,16 @@ function setTunerSubText(text) {
 function selectStation(id, { autoplay = false, openExternal = false } = {}) {
   const radio = radios.find(r => r.id === id);
   if (!radio) return;
+
+  const prevId = currentStation?.id || null;
   currentStation = radio;
+
+  // Changement de poste : reset CHOQ + fondu antenne (évite l’hésitation visuelle)
+  stopChoqAirRotate();
+  choqAirRotateShowUpcoming = false;
+  if (prevId !== radio.id) {
+    nowAirCrossfadePending = true;
+  }
 
   const playable = getPlayableStream(radio);
   const external = isExternalListen(radio);
@@ -2275,7 +2310,6 @@ function selectStation(id, { autoplay = false, openExternal = false } = {}) {
   const inst = adaptRadarInstitutionLabel(tunerInstitutionLabel(radio.institution));
   if (isDialCompactLayout()) {
     // Ligne 1 = poste · établissement ; ligne 2 initialisée en méta (fréquence).
-    // syncTunerSubRotate / renderTunerNowAir branche la rotation méta ↔ antenne.
     setTunerNameText(tunerDialTitleLine(radio));
     const metaLine = dialCompactMetaLineForRadio(radio);
     tunerSubMeta = metaLine;
@@ -2288,6 +2322,9 @@ function selectStation(id, { autoplay = false, openExternal = false } = {}) {
       ? `${siteExt} · ${inst}`
       : `${radio.frequency} · ${inst}`);
   }
+
+  // Mettre à jour l’antenne tout de suite (avant play async / métadonnées)
+  renderTunerNowAir();
 
   TUNER_PLAY.disabled = !playable && !external;
   TUNER_PLAY.title = playable
