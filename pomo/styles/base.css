@@ -580,6 +580,18 @@
     opacity: 0.5;
   }
 
+  .quote-author[href] {
+    text-decoration: none;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  .quote-author[href]:hover,
+  .quote-author[href]:focus-visible {
+    color: var(--text-primary);
+    text-decoration: underline;
+  }
+
   .quote-action-row {
     display: flex;
     flex-shrink: 0;
@@ -1663,4 +1675,3 @@
     .pomo-btn--primary.on-break:hover { background: var(--pomo-break); box-shadow: 0 4px 14px rgba(90, 127, 106, 0.25); }
     .btn:hover { background: var(--bg-glass); color: var(--text-secondary); border-color: var(--border-glass); }
   }
-

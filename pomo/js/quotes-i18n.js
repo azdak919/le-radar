@@ -153,4 +153,79 @@ const QUOTE_I18N = {
   "zen-01-man-conquers-the-world-by-conquering-him": {
     fr: { text: "L'homme conquiert le monde en se conquérant lui-même.", author: "Zénon de Citium" },
   },
+  "src-murray-reconciliation-actions": {
+    fr: { text: "Pour que la réconciliation fonctionne, il faut de la conscience, de l'acceptation, des excuses, une réparation et de l'action.", author: "Murray Sinclair · Première Nation de Peguis" },
+  },
+  "src-poundmaker-beside-the-trail": {
+    fr: { text: "Nous ne pouvons jamais oublier ce qui s'est passé, mais nous ne pouvons pas revenir en arrière. Nous ne pouvons pas non plus rester assis au bord du sentier.", author: "Chef Poundmaker · Cri" },
+  },
+  "src-wilson-raybould-actions-not-words": {
+    fr: { text: "La réconciliation est un parcours, pas une destination. Le changement vient des gestes, pas des mots.", author: "Jody Wilson-Raybould · Nation We Wai Kai" },
+  },
+  "src-hemlock-language-earth": {
+    fr: { text: "La santé de nos langues est liée à la santé de la Terre.", author: "Kanen'tó:kon Hemlock · Kahnawà:ke" },
+  },
+  "src-peltier-water-question": {
+    fr: { text: "Et si nous manquions d'eau ? Qu'arriverait-il ?", author: "Autumn Peltier · Première Nation de Wiikwemkoong" },
+  },
+  "src-ibrahim-one-species-of-nature": {
+    fr: { text: "Nous ne sommes pas différents des autres espèces ; nous ne sommes qu'une espèce de la nature.", author: "Hindou Oumarou Ibrahim · Mbororo" },
+  },
+  "src-soreng-we-are-nature": {
+    fr: { text: "Nous ne faisons pas simplement partie de la nature : nous sommes la nature.", author: "Archana Soreng · Kharia" },
+  },
+  "src-jerez-education-future": {
+    fr: { text: "L'éducation a donné aux femmes autochtones la possibilité de repenser leur avenir.", author: "Mirian Masaquiza Jerez · Kichwa/Salasaka" },
+  },
+  "src-fast-horse-language-river": {
+    fr: { text: "La langue est comme une rivière ; elle coule continuellement.", author: "Reuben Fast Horse · Lakota" },
+  },
+  "src-skye-land-culture-language": {
+    fr: { text: "Le territoire, la culture et la langue ne font qu'un.", author: "Emily Skye · Anishinaabe" },
+  },
+  "src-kassie-known-in-my-language": {
+    fr: { text: "Je veux que l'on sache, dans ma langue, que c'était notre terre.", author: "Anna Kassie · ǂKhomani" },
+  },
+  "src-simon-reconciliation-piece-by-piece": {
+    fr: { text: "La réconciliation n'est pas un geste unique et n'a pas de date de fin. C'est un processus que nous bâtissons morceau par morceau.", author: "Mary Simon · Inuk" },
+  },
+  "src-simon-canadian-issue": {
+    fr: { text: "La réconciliation n'est pas un enjeu autochtone ; c'est un enjeu canadien.", author: "Mary Simon · Inuk" },
+  },
+  "src-nctr-one-connected": {
+    fr: { text: "Nous ne formons qu'un, nous sommes liés, et il est vital de travailler ensemble pour parvenir à la réconciliation.", author: "CNVR · Bezhig Miigwan" },
+  },
+  "src-angeconeb-equal-partners": {
+    fr: { text: "La réconciliation, c'est faire les choses autrement, d'une bonne manière, en partenaires égaux.", author: "Aîné Garnet Angeconeb · Première Nation de Lac Seul" },
+  },
+  "src-simon-language-carries-wisdom": {
+    fr: { text: "La langue est bien plus qu'un simple moyen de communication.", author: "Mary Simon · Inuk" },
+  },
+  "src-simon-never-silent": {
+    fr: { text: "Plus jamais nous ne garderons le silence.", author: "Mary Simon · Inuk" },
+  },
+  "src-degawan-language-ethical-values": {
+    fr: { text: "Pour les peuples autochtones, les langues ne désignent pas seulement leur origine ou leur communauté ; elles portent aussi les valeurs éthiques de leurs ancêtres.", author: "Minnie Degawan · Kankanaey Igorot" },
+  },
+  "src-simon-ajuinnata": {
+    fr: { text: "Ajuinnata signifie ne jamais abandonner et s'engager à agir, aussi difficile que soit la cause.", author: "Mary Simon · Inuk" },
+  },
+  "src-simon-language-culture-alive": {
+    fr: { text: "La langue et la culture demeurent fortes et vivantes.", author: "Mary Simon · Inuk" },
+  },
+  "src-simon-future-hope": {
+    fr: { text: "L'avenir est entre vos mains. Notre espoir aussi.", author: "Mary Simon · Inuk" },
+  },
+  "src-haoa-language-way-of-being": {
+    fr: { text: "La langue est indissociable de notre façon d'être, de nos pensées, de nos sentiments, de nos joies et de bien plus encore.", author: "Maria Virginia Haoa · Rapa Nui" },
+  },
+  "src-tauli-corpuz-exploitation": {
+    fr: { text: "L'exploitation insensée des territoires et des ressources des peuples autochtones se poursuit sans relâche.", author: "Victoria Tauli-Corpuz · Kankanaey Igorot" },
+  },
+  "src-tauli-corpuz-consultation": {
+    fr: { text: "Le but de la consultation des nations n'est pas simplement de cocher une case.", author: "Victoria Tauli-Corpuz · Kankanaey Igorot" },
+  },
+  "src-simon-for-our-children": {
+    fr: { text: "Tout ce que nous faisons, nous le faisons pour nos enfants.", author: "Mary Simon · Inuk" },
+  },
 };
