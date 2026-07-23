@@ -1,4 +1,4 @@
-const CACHE_NAME = "radar-shell-v403";
+const CACHE_NAME = "radar-shell-v404";
 const CACHE_PREFIX = "radar-";
 // Isolated mini-apps under /pomo/ and /solitaire/ own their own SWs + caches.
 const ISOLATED_PATH_RE = /\/(pomo|solitaire)(\/|$)/;
@@ -27,6 +27,10 @@ const APP_SHELL = [
   "./assets/icon-32.png",
   "./assets/icon-192.png",
   "./assets/icon-512.png",
+  "./assets/emoji/tomato.png",
+  "./assets/emoji/joker.png",
+  "./assets/emoji/satellite.png",
+  "./assets/emoji/coffee.png",
 ];
 
 self.addEventListener("install", (event) => {

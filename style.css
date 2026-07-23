@@ -191,6 +191,22 @@ a { color: inherit; }
 }
 .masthead-icon svg { width: 15px; height: 15px; }
 
+/* Twemoji brand marks — same set as Pomo / Solitaire toolbars */
+.app-emoji {
+  display: block;
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  flex-shrink: 0;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.masthead-icon .app-emoji {
+  width: 15px;
+  height: 15px;
+}
+
 .theme-toggle {
   cursor: pointer;
 }
@@ -219,15 +235,6 @@ a { color: inherit; }
 /* Pomodoro : seul bouton rouge du header (tomate, hors thème accent). */
 .masthead-pomo {
   border-color: var(--rule);
-}
-.masthead-pomo .masthead-tomato,
-.masthead-solitaire .masthead-card,
-.masthead-coffee .masthead-coffee-emoji {
-  font-size: 15px;
-  line-height: 1;
-  display: block;
-  color: unset;
-  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
 }
 .masthead-home.is-active,
 .masthead-home[aria-current="page"] {
