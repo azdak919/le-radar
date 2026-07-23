@@ -1,47 +1,53 @@
 {
-  "updatedAt": "2026-07-23T18:46:51.173Z",
+  "updatedAt": "2026-07-23T20:14:43.726Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Chéri.e, j’arrive!",
         "source": "schedule",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule",
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Chéri.e, j’arrive!",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-23T18:46:19.857Z"
+      "checkedAt": "2026-07-23T20:14:19.672Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
+        "title": "La grande ludothèque",
         "source": "api-live",
-        "start": "09:00",
+        "start": "12:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-collation"
+        "slug": "la-grande-ludotheque"
       },
       "next": {
-        "title": "Une fenêtre sur le monde",
+        "title": "Le palmarès",
         "source": "api-live",
-        "start": "11:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364519.mp3",
-        "slug": "une-fenetre-sur-le-monde"
+        "start": "14:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364917.mp3",
+        "slug": "palmares-de-cism"
       },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "La grande ludothèque",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-23T18:46:22.395Z"
+      "checkedAt": "2026-07-23T20:14:21.702Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "Positive Vibes",
         "source": "api-live",
         "start": "15:00",
         "end": "17:00"
       },
+      "next": {
+        "title": "Off the Hour",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
+      "showTitle": "Positive Vibes",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-23T18:46:25.526Z"
+      "checkedAt": "2026-07-23T20:14:23.678Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The 514",
+        "title": "Hooked On Sonics",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/the-514"
+        "start": "16:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/hooked-on-sonics"
       },
       "next": {
-        "title": "Secondhand Sounds",
+        "title": "Electric Messiah",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/secondhand-sounds"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/electric-messiah"
       },
       "track": "",
-      "showTitle": "The 514",
+      "showTitle": "Hooked On Sonics",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-23T18:46:39.381Z"
+      "checkedAt": "2026-07-23T20:14:36.703Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,20 +135,20 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-23T18:46:40.007Z"
+      "checkedAt": "2026-07-23T20:14:37.459Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Palmarès CHOQ.ca",
+        "title": "La 3ème demie",
         "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
+        "start": "17:15",
+        "end": "18:00",
+        "slug": "le-12-mtlsup"
       },
-      "track": "drug bug - Requiem",
+      "track": "Chvrches - Recover",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -153,7 +159,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-23T18:46:50.822Z"
+      "checkedAt": "2026-07-23T20:14:43.375Z"
     }
   }
 }
