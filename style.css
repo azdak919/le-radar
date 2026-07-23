@@ -1091,10 +1091,12 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
     width: 100%;
   }
 
-  /* Masqués en barre bureau : débordent sous le tuner (espace perdu + bruit).
-     Le curseur + aria-valuetext suffisent ; labels gardés dans le popover mobile. */
   .tuner-vol-labels {
-    display: none !important;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: visible;
   }
 
   .tuner-vol-btn {
@@ -1403,7 +1405,9 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
     max-width: none;
     min-width: 0;
     margin-left: 0;
-    padding-left: 28px;
+    padding-left: 20px;
+    /* Pas de barre verticale entre volume et antenne */
+    border-left: none;
     align-self: center;
     opacity: 1;
   }
