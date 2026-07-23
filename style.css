@@ -1343,33 +1343,30 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
 
 @media (min-width: 1100px) {
   /*
-   * Flex en flux : antenne collée après le volume (pas une demi-barre vide).
-   * Libellé en rail fixe étroit · titre juste à côté (gap serré).
+   * Grille finale dès le premier paint (voir aussi <style> critique dans index.html).
+   * Colonne « À l'antenne » toujours présente — le volume reste compact.
    */
   .tuner-inner {
     max-width: 1180px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(300px, 370px);
+    gap: 0;
     align-items: center;
-    gap: 12px;
   }
 
   .tuner-controls {
-    flex: 0 1 auto;
+    grid-column: 1;
+    flex: unset;
     min-width: 0;
-    display: flex;
-    align-items: center;
-    gap: 9px;
   }
 
   .tuner-dial {
-    flex: 1 1 160px;
-    width: auto;
-    min-width: 140px;
-    max-width: 240px;
+    flex: 1 1 0;
+    width: 0;
+    min-width: 120px;
+    max-width: none;
   }
 
   .tuner-actions {
@@ -1378,65 +1375,16 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   }
 
   .tuner-nowair {
-    /* Prend le reste APRÈS les contrôles — commence juste après le volume */
-    flex: 1 1 0;
-    min-width: 0;
+    grid-column: 2;
+    display: flex;
+    flex: unset;
+    width: auto;
     max-width: none;
-    display: grid;
-    /* Rail libellé compact (≈ « À L'ANTENNE ») + titre collé */
-    grid-template-columns: 4.75rem minmax(0, 1fr);
-    /* Libellé aligné sur la 1ʳᵉ ligne du titre (pas centré sur titre+horaire) */
-    align-items: start;
-    column-gap: 8px;
-    margin: 0;
-    padding: 0 4px 0 14px;
-    border-left: 1px solid rgba(255, 255, 255, 0.12);
-    box-sizing: border-box;
+    min-width: 0;
+    margin-left: 0;
+    padding-left: 28px;
     align-self: center;
     opacity: 1;
-  }
-
-  .tuner-nowair-label {
-    margin: 0;
-    width: 100%;
-    max-width: 100%;
-    /* Même hauteur de ligne que .tuner-nowair-title → même baseline visuelle */
-    font-size: 9px;
-    font-weight: 800;
-    line-height: 1.25;
-    letter-spacing: 0.08em;
-    text-align: left;
-    /* Centre le petit caps dans la ligne du titre (13px × 1.25) */
-    height: calc(13px * 1.25);
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .tuner-nowair-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 1px;
-    min-width: 0;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .tuner-nowair-title {
-    width: 100%;
-    max-width: 100%;
-    text-align: left;
-    font-size: 13px;
-    line-height: 1.25;
-  }
-
-  .tuner-nowair-sub {
-    width: 100%;
-    max-width: 100%;
-    text-align: left;
   }
 
   /*

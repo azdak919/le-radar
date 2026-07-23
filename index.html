@@ -25,70 +25,25 @@
     -->
     <style>
       @media (min-width: 1100px) {
-        /* Flux : contrôles puis antenne collée (pas de demi-barre vide) */
         .tuner-inner {
-          display: flex !important;
-          flex-direction: row !important;
-          flex-wrap: nowrap !important;
+          display: grid !important;
+          grid-template-columns: minmax(0, 1.15fr) minmax(300px, 370px) !important;
+          gap: 0 !important;
           align-items: center !important;
-          gap: 12px !important;
           max-width: 1180px;
-          padding-top: 8px !important;
-          padding-bottom: 8px !important;
         }
-        .tuner-controls {
-          flex: 0 1 auto !important;
-          min-width: 0 !important;
-          display: flex !important;
-          align-items: center !important;
-        }
-        .tuner-dial { max-width: 240px !important; }
+        .tuner-controls { grid-column: 1; min-width: 0; }
         .tuner-actions { margin-left: 0 !important; flex-shrink: 0; }
         .tuner-nowair {
-          flex: 1 1 0 !important;
-          min-width: 0 !important;
-          display: grid !important;
-          grid-template-columns: 4.75rem minmax(0, 1fr) !important;
-          align-items: start !important;
-          column-gap: 8px !important;
-          padding: 0 4px 0 14px !important;
+          grid-column: 2;
+          display: flex !important;
+          align-items: flex-start;
+          gap: 10px;
+          min-width: 0;
+          padding-left: 28px;
           border-left: 1px solid rgba(255, 255, 255, 0.12);
-          box-sizing: border-box;
           opacity: 1 !important;
           pointer-events: auto !important;
-        }
-        .tuner-nowair-label {
-          margin: 0 !important;
-          width: 100% !important;
-          letter-spacing: 0.08em !important;
-          line-height: 1.25 !important;
-          height: calc(13px * 1.25) !important;
-          display: flex !important;
-          align-items: center !important;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-        .tuner-nowair-body {
-          display: flex !important;
-          flex-direction: column !important;
-          justify-content: flex-start !important;
-          align-items: flex-start !important;
-          gap: 1px !important;
-          min-width: 0 !important;
-          width: 100% !important;
-          overflow: hidden !important;
-        }
-        .tuner-nowair-title {
-          width: 100% !important;
-          max-width: 100% !important;
-          text-align: left !important;
-          font-size: 13px !important;
-          line-height: 1.25 !important;
-        }
-        .tuner-nowair-sub {
-          width: 100% !important;
-          max-width: 100% !important;
-          text-align: left !important;
         }
         .tuner-vol {
           flex: 0 0 auto !important;
