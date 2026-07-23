@@ -1326,9 +1326,17 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   flex-direction: column;
   gap: 2px;
 }
-/* Ancien crossfade — ne plus masquer le contenu (preview = panneau vide) */
-.tuner-nowair-body.is-swapping {
-  opacity: 1;
+
+/* Fondu CHOQ (alternance piste ↔ émission) — panneau entier, court */
+.tuner-nowair {
+  transition: opacity 0.22s ease;
+}
+.tuner-nowair.is-swapping {
+  opacity: 0.22;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tuner-nowair { transition: none; }
+  .tuner-nowair.is-swapping { opacity: 1; }
 }
 
 .tuner-nowair-title {
