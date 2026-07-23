@@ -1,10 +1,18 @@
 {
-  "updated": "2026-07-23T11:25:05.459Z",
+  "updated": "2026-07-23T12:16:49.355Z",
   "total": 185,
   "withAuthor": 185,
-  "mismatches": 4,
+  "mismatches": 6,
   "ok": true,
   "samples": [
+    {
+      "title": "Marine Le Pen condamnée",
+      "link": "https://lecollectif.ca/a-la-une/marine-le-pen-condamnee/",
+      "source": "Le Collectif",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Médéric Dens",
+      "reason": "page-byline"
+    },
     {
       "title": "Letters from the Editors May 2026",
       "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
@@ -30,6 +38,14 @@
       "reason": "no-author-source"
     },
     {
+      "title": "Ce que nous devons aux femmes",
+      "link": "https://www.delitfrancais.com/2026/03/18/ce-que-nous-devons-aux-femmes/",
+      "source": "Le Délit",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Eugénie St-Pierre",
+      "reason": "page-byline"
+    },
+    {
       "title": "Garda World au CVM (Éditorial)",
       "link": "https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/",
       "source": "Exil",
@@ -38,5 +54,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 4
+  "fixed": 6
 }
