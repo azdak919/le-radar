@@ -265,6 +265,7 @@ function isVolCompactMode() {
   return VOL_COMPACT.matches;
 }
 const TUNER_NOWAIR = document.getElementById('tuner-nowair');
+const TUNER_NOWAIR_LABEL = TUNER_NOWAIR?.querySelector?.('.tuner-nowair-label') || null;
 const TUNER_NOWAIR_TITLE = document.getElementById('tuner-nowair-title');
 const TUNER_NOWAIR_SUB = document.getElementById('tuner-nowair-sub');
 const ICO_PLAY       = TUNER_PLAY.querySelector('.ico-play');
@@ -525,8 +526,15 @@ function initTheme() {
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   const isDark = theme === 'dark';
-  THEME_TOGGLE?.querySelector('.ico-sun')?.classList.toggle('hidden', isDark);
-  THEME_TOGGLE?.querySelector('.ico-moon')?.classList.toggle('hidden', !isDark);
+  // Icône = action (ce qu’on active au clic), pas l’état courant :
+  // sombre → soleil (passer en clair) ; clair → lune (passer en sombre).
+  THEME_TOGGLE?.querySelector('.ico-sun')?.classList.toggle('hidden', !isDark);
+  THEME_TOGGLE?.querySelector('.ico-moon')?.classList.toggle('hidden', isDark);
+  if (THEME_TOGGLE) {
+    const label = isDark ? 'Passer en mode clair' : 'Passer en mode sombre';
+    THEME_TOGGLE.setAttribute('aria-label', label);
+    THEME_TOGGLE.setAttribute('title', label);
+  }
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content', isDark ? '#0e0f12' : '#ffffff');
 }
 
@@ -610,6 +618,18 @@ function airSlotIsLive(slot) {
   return now >= start;
 }
 
+/** true si le créneau a un start dans le futur (pas encore commencé aujourd'hui). */
+function airSlotIsFuture(slot) {
+  if (!slot) return false;
+  const start = scheduleTimeToMin(slot.start);
+  if (start == null) return false;
+  const { minutes: now } = scheduleZonedNow();
+  const end = scheduleTimeToMin(slot.end);
+  // Nuit 22:00→02:00 : « futur » seulement avant le début le soir
+  if (end != null && end <= start) return now < start && now >= end;
+  return now < start;
+}
+
 /** Émission en cours / à venir : d'abord le bot (radio-nowplaying.json), puis grille locale. */
 function botCurrentShow(radio) {
   const entry = nowPlayingEntry(radio);
@@ -617,13 +637,14 @@ function botCurrentShow(radio) {
   if (cur?.title && String(cur.title).trim().length >= 3) {
     const live = airSlotIsLive(cur);
     if (live === true) return cur;
-    if (live === null) {
-      // Pas d'horaire sur current : expirer si « next » est clairement en ondes
+    if (live === false) {
+      // Créneau pas commencé ou déjà fini — ne jamais l'afficher comme « en ondes »
+    } else {
+      // live === null : pas d'horaire exploitable
+      // Ne pas traiter comme live si un next est clairement en cours
       const next = entry?.next;
       if (!(next?.title && airSlotIsLive(next) === true)) return cur;
-      // sinon next a pris le relais → ne pas renvoyer current périmé
     }
-    // live === false : créneau terminé — ne pas figer l'ancien titre
   } else {
     // Repli legacy showTitle seulement s'il n'y a pas de current horodaté expiré
     const legacy = String(entry?.showTitle || '').trim();
@@ -644,7 +665,13 @@ function botCurrentShow(radio) {
 }
 
 function botNextShow(radio) {
-  const next = nowPlayingEntry(radio)?.next;
+  const entry = nowPlayingEntry(radio);
+  // current futur (bot a mis l'émission dans current trop tôt) → à venir
+  const cur = entry?.current;
+  if (cur?.title && String(cur.title).trim().length >= 3) {
+    if (airSlotIsLive(cur) === false && airSlotIsFuture(cur)) return cur;
+  }
+  const next = entry?.next;
   if (!next?.title || String(next.title).trim().length < 3) return null;
   // Déjà en ondes (promu current) → ce n'est plus « à venir »
   if (airSlotIsLive(next) === true) return null;
@@ -748,15 +775,11 @@ function nowAirLines(radio) {
   const schedNext = scheduleNextSlot(radio);
   const track = String(entry?.track || '').trim();
 
-  const formatUpcomingSub = (upcoming, { withTrack = false } = {}) => {
-    const timeRange = upcoming.start && upcoming.end
-      ? `${upcoming.start} – ${upcoming.end}`
-      : (upcoming.start || '');
-    const when = timeRange ? `À venir · ${timeRange}` : 'À venir';
-    if (withTrack && track && normLoose(track) !== normLoose(upcoming.title)) {
-      return `♪ ${track} · ${when}`;
-    }
-    return when;
+  /** Créneau horaire seul — le libellé panneau porte déjà « À venir ». */
+  const upcomingTimeRange = (upcoming) => {
+    if (!upcoming) return '';
+    if (upcoming.start && upcoming.end) return `${upcoming.start} – ${upcoming.end}`;
+    return upcoming.start || '';
   };
 
   // 1) Émission en cours (bot, déjà fusionné api > schedule)
@@ -792,12 +815,14 @@ function nowAirLines(radio) {
   const upcoming = botNext || (schedNext
     ? { title: schedNext.title, start: schedNext.start, end: schedNext.end }
     : null);
+  const upTime = upcomingTimeRange(upcoming);
 
   if (track) {
     if (upcoming?.title) {
       return {
         title: `♪ ${track}`,
-        sub: `${upcoming.title} · ${formatUpcomingSub(upcoming)}`,
+        // Libellé panneau = « À venir » → sous-titre = émission · horaire (sans redoubler)
+        sub: upTime ? `${upcoming.title} · ${upTime}` : upcoming.title,
         kind: 'upcoming',
       };
     }
@@ -811,7 +836,7 @@ function nowAirLines(radio) {
   if (upcoming?.title) {
     return {
       title: upcoming.title,
-      sub: formatUpcomingSub(upcoming),
+      sub: upTime,
       kind: 'upcoming',
     };
   }
@@ -819,11 +844,22 @@ function nowAirLines(radio) {
   return { title: `Vous écoutez ${radio.name}`, sub: slogan, kind: 'idle' };
 }
 
-/** Une seule ligne « À l'antenne » pour la rotation du sous-titre. */
-function formatNowAirSubLine(title, sub, empty) {
+/** Libellé du panneau bureau : « À l'antenne » (live/idle) ou « À venir ». */
+function nowAirPanelLabel(kind = 'idle') {
+  return kind === 'upcoming' ? 'À venir' : "À l'antenne";
+}
+
+/**
+ * Une seule ligne pour la rotation du sous-titre du dial (mobile / compact).
+ * Sur bureau le libellé panneau porte déjà « À venir » ; ici on le préfixe
+ * quand kind === upcoming (le panneau est masqué sous 1100px).
+ */
+function formatNowAirSubLine(title, sub, empty, kind = 'idle') {
   if (empty) return 'Les radios étudiantes jouent en direct, 24/7';
-  if (sub) return `${title} · ${sub}`;
-  return title;
+  const core = sub ? `${title} · ${sub}` : (title || '');
+  if (!core) return '';
+  if (kind === 'upcoming') return `À venir · ${core}`;
+  return core;
 }
 
 function nowAirInterestScore(radio) {
@@ -901,15 +937,15 @@ function dialCompactMetaLineForRadio(radio) {
 }
 
 /**
- * Ligne « à l'antenne » pour le bas du dial compact.
- * Réutilise nowAirLines() (grille, ICY, slogan).
+ * Ligne antenne pour le bas du dial compact (mobile / tablette).
+ * Réutilise nowAirLines() (grille, ICY, slogan) + préfixe « À venir » si besoin.
  */
 function dialCompactAirLineForRadio(radio) {
   if (!radio) return '';
-  const { title, sub } = nowAirLines(radio);
+  const { title, sub, kind } = nowAirLines(radio);
   const genericListen = `Vous écoutez ${radio.name}`;
   if (title && title !== genericListen) {
-    return formatNowAirSubLine(title, sub, false);
+    return formatNowAirSubLine(title, sub, false, kind);
   }
   return radioSlogan(radio) || '';
 }
@@ -1183,7 +1219,7 @@ function updateNowAirPanel(title, sub, crossfade = false) {
   }
 }
 
-function syncTunerSubRotate(title, sub, empty, crossfade = false) {
+function syncTunerSubRotate(title, sub, empty, crossfade = false, kind = 'idle') {
   if (!TUNER_SUB || !TUNER_SUB_AIR) return;
   const wrapper = TUNER_SUB.parentElement;
 
@@ -1194,7 +1230,7 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false) {
     TUNER_SUB_AIR.classList.remove('is-active');
     TUNER_SUB.setAttribute('aria-hidden', 'false');
     TUNER_SUB_AIR.setAttribute('aria-hidden', 'true');
-    tunerSubAirText = formatNowAirSubLine(title, sub, empty);
+    tunerSubAirText = formatNowAirSubLine(title, sub, empty, kind);
     applyDialTextCrossfade(TUNER_SUB, tunerSubAirText, crossfade);
     return;
   }
@@ -1209,7 +1245,7 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false) {
     setTunerNameText(tunerDialTitleLine(currentStation), crossfade);
     tunerSubMeta = dialCompactMetaLineForRadio(currentStation);
     tunerSubAirText = dialCompactAirLineForRadio(currentStation)
-      || formatNowAirSubLine(title, sub, empty);
+      || formatNowAirSubLine(title, sub, empty, kind);
     const hasAir = !!(tunerSubAirText && tunerSubAirText !== tunerSubMeta);
 
     if (!isTunerSubRotateMode() || !hasAir) {
@@ -1246,7 +1282,7 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false) {
     return;
   }
 
-  tunerSubAirText = formatNowAirSubLine(title, sub, empty);
+  tunerSubAirText = formatNowAirSubLine(title, sub, empty, kind);
 
   if (!isTunerSubRotateMode()) {
     stopTunerSubRotate();
@@ -1361,9 +1397,17 @@ function renderTunerNowAir() {
   TUNER_NOWAIR.classList.toggle('is-live', kind === 'live');
   TUNER_NOWAIR.classList.toggle('is-upcoming', kind === 'upcoming');
   TUNER_NOWAIR.dataset.airKind = kind;
+
+  // Libellé dynamique : « À venir » remplace « À l'antenne » hors créneau.
+  // Toujours réécrire (query frais) — évite un nœud figé / i18n qui laisserait l'ancien texte.
+  const panelLabel = empty ? "À l'antenne" : nowAirPanelLabel(kind);
+  const labelEl = TUNER_NOWAIR.querySelector('.tuner-nowair-label') || TUNER_NOWAIR_LABEL;
+  if (labelEl) labelEl.textContent = panelLabel;
+  TUNER_NOWAIR.setAttribute('aria-label', panelLabel);
+
   updateNowAirPanel(title, sub, crossfadePreview);
   syncDesktopDialPreview(title, crossfadePreview);
-  syncTunerSubRotate(title, sub, empty, crossfadePreview);
+  syncTunerSubRotate(title, sub, empty, crossfadePreview, kind);
   if (currentStation && isPlaybackActive()) {
     updateMediaSession(currentStation, empty ? {} : { title, sub });
   }

@@ -52,8 +52,14 @@ function initTheme() {
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   const isDark = theme === 'dark';
-  THEME_TOGGLE?.querySelector('.ico-sun')?.classList.toggle('hidden', isDark);
-  THEME_TOGGLE?.querySelector('.ico-moon')?.classList.toggle('hidden', !isDark);
+  // Icône = action (ce qu’on active au clic), pas l’état courant.
+  THEME_TOGGLE?.querySelector('.ico-sun')?.classList.toggle('hidden', !isDark);
+  THEME_TOGGLE?.querySelector('.ico-moon')?.classList.toggle('hidden', isDark);
+  if (THEME_TOGGLE) {
+    const label = isDark ? 'Passer en mode clair' : 'Passer en mode sombre';
+    THEME_TOGGLE.setAttribute('aria-label', label);
+    THEME_TOGGLE.setAttribute('title', label);
+  }
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content', isDark ? '#0e0f12' : '#ffffff');
 }
 
