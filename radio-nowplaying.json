@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-23T14:14:08.551Z",
+  "updatedAt": "2026-07-23T15:32:21.326Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-23T14:13:45.628Z"
+      "checkedAt": "2026-07-23T15:31:55.812Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
-        "source": "api-live",
-        "start": "05:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "le-seismix"
-      },
-      "next": {
         "title": "Ici, la criminologie",
         "source": "api-live",
         "start": "07:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/362697.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "ici-la-criminologie"
       },
+      "next": {
+        "title": "Jimmy et Neutron",
+        "source": "api-live",
+        "start": "08:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364510.mp3",
+        "slug": "jimmy-et-neutron"
+      },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Ici, la criminologie",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-23T14:13:47.644Z"
+      "checkedAt": "2026-07-23T15:31:58.155Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Folk Directions",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "Under The Olive Tree",
         "source": "api-live",
         "start": "11:00",
         "end": "12:00"
       },
+      "next": {
+        "title": "Venus Radio",
+        "source": "api-live",
+        "start": "12:00",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "Folk Directions",
+      "showTitle": "Under The Olive Tree",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,73 +77,79 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-23T14:13:51.424Z"
+      "checkedAt": "2026-07-23T15:32:01.011Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
-      },
-      "next": {
         "title": "Weirdo Rippers",
         "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/weirdo-rippers"
       },
+      "next": {
+        "title": "The Power Hour",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/the-power-hour"
+      },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "Weirdo Rippers",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-23T14:14:04.759Z"
+      "checkedAt": "2026-07-23T15:32:14.573Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "À nous le futur",
         "source": "schedule",
         "start": "11:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "After 5@8",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "À nous le futur",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-23T14:14:05.749Z"
+      "checkedAt": "2026-07-23T15:32:15.143Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Intervenir ensemble",
         "source": "api-live",
         "start": "11:00",
         "end": "12:00",
         "slug": "intervenir-ensemble"
       },
-      "track": "Status/Non-Status - Tom Climate",
-      "showTitle": "",
+      "next": {
+        "title": "Palmarès CHOQ.ca",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
+      },
+      "track": "Jamaz - YOUNG GEE GENIAL",
+      "showTitle": "Intervenir ensemble",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -153,7 +159,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-23T14:14:08.201Z"
+      "checkedAt": "2026-07-23T15:32:20.975Z"
     }
   }
 }
