@@ -490,7 +490,7 @@
    * Pas de subdivision par continent pour les autres langues.
    */
   /**
-   * En-têtes de groupe (FR = langue du site ; EN quand l’utilisateur choisit English).
+   * En-têtes de groupe (FR par défaut ; localisés via UI_PHRASES / repli EN).
    */
   const GROUP_LABELS = {
     indigenous: {
@@ -503,7 +503,7 @@
     },
   };
 
-  /** Noms anglais (CLDR-style) pour la ligne secondaire du menu en mode EN. */
+  /** Repli anglais (CLDR) si Intl.DisplayNames indisponible. */
   const LANG_NAME_EN = {
     original: 'Original',
     fr: 'French',
@@ -558,6 +558,12 @@
     mic: "Mi'kmaq",
   };
 
+  const SCRIPT_TO_ISO = {
+    Simplifié: 'Hans',
+    Traditionnel: 'Hant',
+    Latin: 'Latn',
+  };
+
   const SCRIPT_LABEL_EN = {
     Simplifié: 'Simplified',
     Traditionnel: 'Traditional',
@@ -567,36 +573,173 @@
 
   let indigenousRegistryReady = false;
 
-  /** Langue des libellés du menu (secondaire, en-têtes) — FR par défaut, EN si mode English. */
-  function menuChromeLang() {
-    return activeMode === 'en' ? 'en' : 'fr';
+  /**
+   * Locale BCP-47 du chrome du menu = langue d’affichage active
+   * (Original / FR → fr ; sinon code de la langue choisie).
+   */
+  function menuChromeLocale() {
+    if (!activeMode || activeMode === DEFAULT_MODE || activeMode === 'fr') return 'fr';
+    if (activeMode === 'en') return 'en';
+    if (activeMode === 'zh') return 'zh-CN';
+    if (activeMode === 'zh-tw') return 'zh-TW';
+    if (activeMode === 'iu-latn') return 'iu-Latn';
+    if (activeMode === 'he') return 'he';
+    if (activeMode === 'tl') return 'fil';
+    const goog = MODES[activeMode]?.goog;
+    if (goog === 'iw') return 'he';
+    if (goog === 'zh-CN') return 'zh-CN';
+    if (goog === 'zh-TW') return 'zh-TW';
+    return goog || activeMode || 'fr';
+  }
+
+  /** Tag BCP-47 d’une entrée du menu pour Intl.DisplayNames.of(). */
+  function languageTagForMode(modeId) {
+    if (!modeId || modeId === 'original') return null;
+    if (modeId === 'zh') return 'zh-Hans';
+    if (modeId === 'zh-tw') return 'zh-Hant';
+    if (modeId === 'iu-latn') return 'iu-Latn';
+    if (modeId === 'iu') return 'iu';
+    if (modeId === 'tl') return 'fil';
+    if (modeId === 'he') return 'he';
+    const goog = MODES[modeId]?.goog;
+    if (goog === 'zh-CN') return 'zh-Hans';
+    if (goog === 'zh-TW') return 'zh-Hant';
+    if (goog === 'iw') return 'he';
+    if (goog === 'iu-Latn') return 'iu-Latn';
+    if (goog) return goog;
+    return modeId;
+  }
+
+  function prettifyDisplayName(name = '') {
+    const s = String(name || '').trim();
+    if (!s) return '';
+    // Ne pas toucher CJK / Hangul / arabe / hébreu / indic / cyrillique…
+    if (/[^\u0000-\u024F]/.test(s)) return s;
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
+
+  function namesRoughlyEqual(a, b) {
+    const norm = (x) => String(x || '')
+      .trim()
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/\p{M}/gu, '');
+    const na = norm(a);
+    const nb = norm(b);
+    if (!na || !nb) return false;
+    return na === nb || na.includes(nb) || nb.includes(na);
+  }
+
+  /**
+   * Nom d’une langue *dans* la locale active (CLDR via Intl.DisplayNames).
+   * Repli : nameEn / nameFr du catalogue.
+   */
+  function displayLanguageName(modeId, locale) {
+    if (modeId === 'original') {
+      if (String(locale).toLowerCase().startsWith('en')) return 'Original';
+      if (String(locale).toLowerCase().startsWith('es')) return 'Original';
+      if (String(locale).toLowerCase().startsWith('pt')) return 'Original';
+      if (String(locale).toLowerCase().startsWith('de')) return 'Original';
+      if (String(locale).toLowerCase().startsWith('ko')) return '원본';
+      if (String(locale).toLowerCase().startsWith('ja')) return '原文';
+      if (String(locale).toLowerCase().startsWith('zh')) return '原文';
+      if (String(locale).toLowerCase().startsWith('ar')) return 'الأصل';
+      if (String(locale).toLowerCase().startsWith('ru')) return 'Оригинал';
+      if (String(locale).toLowerCase().startsWith('hi')) return 'मूल';
+      return 'Original';
+    }
+    const tag = languageTagForMode(modeId);
+    if (tag && typeof Intl !== 'undefined' && typeof Intl.DisplayNames === 'function') {
+      try {
+        const dn = new Intl.DisplayNames([locale, 'en', 'fr'], { type: 'language' });
+        const raw = dn.of(tag);
+        if (raw && raw.toLowerCase() !== String(tag).toLowerCase()) {
+          return prettifyDisplayName(raw);
+        }
+      } catch { /* locale non supportée */ }
+    }
+    const loc = String(locale || '').toLowerCase();
+    if (loc.startsWith('en')) {
+      return LANG_NAME_EN[modeId] || MODES[modeId]?.nameEn || MODES[modeId]?.nameFr || '';
+    }
+    return MODES[modeId]?.nameFr || LANG_NAME_EN[modeId] || MODES[modeId]?.nameEn || '';
+  }
+
+  function displayScriptLabel(script, locale) {
+    if (!script) return '';
+    const code = SCRIPT_TO_ISO[script];
+    if (code && typeof Intl !== 'undefined' && typeof Intl.DisplayNames === 'function') {
+      try {
+        const dn = new Intl.DisplayNames([locale, 'en', 'fr'], { type: 'script' });
+        const raw = dn.of(code);
+        if (raw) return prettifyDisplayName(raw);
+      } catch { /* ignore */ }
+    }
+    const loc = String(locale || '').toLowerCase();
+    if (loc.startsWith('en')) return SCRIPT_LABEL_EN[script] || script;
+    if (loc.startsWith('fr')) return script;
+    return SCRIPT_LABEL_EN[script] || script;
+  }
+
+  function unavailableLabel(locale) {
+    const loc = String(locale || 'fr').toLowerCase();
+    if (loc.startsWith('en')) return 'Coming soon';
+    if (loc.startsWith('es')) return 'Próximamente';
+    if (loc.startsWith('pt')) return 'Em breve';
+    if (loc.startsWith('de')) return 'Demnächst';
+    if (loc.startsWith('it')) return 'Presto disponibile';
+    if (loc.startsWith('ko')) return '준비 중';
+    if (loc.startsWith('ja')) return '近日対応';
+    if (loc.startsWith('zh')) return '即将推出';
+    if (loc.startsWith('ar')) return 'قريباً';
+    if (loc.startsWith('ru')) return 'Скоро';
+    if (loc.startsWith('hi')) return 'जल्द आ रहा है';
+    if (loc.startsWith('vi')) return 'Sắp có';
+    if (loc.startsWith('tr')) return 'Yakında';
+    if (loc.startsWith('pl')) return 'Wkrótce';
+    if (loc.startsWith('nl')) return 'Binnenkort';
+    if (loc.startsWith('uk')) return 'Незабаром';
+    return 'Bientôt';
   }
 
   function groupLabelText(groupKey) {
     const entry = GROUP_LABELS[groupKey];
     if (!entry) return '';
-    if (typeof entry === 'string') return entry;
-    return entry[menuChromeLang()] || entry.fr || entry.en || '';
+    const fr = typeof entry === 'string' ? entry : entry.fr;
+    const locale = menuChromeLocale();
+    const loc = String(locale).toLowerCase();
+    if (loc.startsWith('fr')) return fr;
+    if (typeof entry === 'object' && entry.en && loc.startsWith('en')) return entry.en;
+    // Autres langues actives : glossaire UI si dispo
+    if (typeof preferredUiPhrase === 'function') {
+      const hit = preferredUiPhrase(fr, locale);
+      if (hit && hit !== fr) return hit;
+    }
+    if (typeof entry === 'object' && entry.en) return entry.en;
+    return fr;
   }
 
   /**
-   * Ligne secondaire sous l’endonyme : nom dans la langue UI (FR ou EN) + écriture.
-   * Pas de pays — une langue n’est pas un drapeau. Pas de MT gtx sur le menu.
+   * Ligne secondaire sous l’endonyme : nom de la langue *dans la langue active*
+   * (Intl.DisplayNames / CLDR) + écriture si besoin. Pas de pays, pas de gtx.
    */
   function languageSecondaryLine(m = {}) {
     const parts = [];
     const label = String(m.label || '').trim();
-    const ui = menuChromeLang();
-    const name = ui === 'en'
-      ? String(m.nameEn || LANG_NAME_EN[m.id] || m.nameFr || '').trim()
-      : String(m.nameFr || '').trim();
-    if (name && name.localeCompare(label, ui === 'en' ? 'en' : 'fr', { sensitivity: 'base' }) !== 0) {
+    const locale = menuChromeLocale();
+    const name = displayLanguageName(m.id, locale);
+    if (name && !namesRoughlyEqual(name, label)) {
       parts.push(name);
     }
     if (m.script) {
-      parts.push(ui === 'en' ? (SCRIPT_LABEL_EN[m.script] || m.script) : m.script);
+      // zh-Hans via DisplayNames inclut souvent déjà « simplifié / 간체 »
+      const scriptAlreadyInName = /simplif|tradit|simplified|traditional|간체|번체|简|繁|syllab|latin/i.test(name);
+      if (!scriptAlreadyInName) {
+        const sc = displayScriptLabel(m.script, locale);
+        if (sc && !parts.some((p) => namesRoughlyEqual(p, sc))) parts.push(sc);
+      }
     }
-    if (m.unavailable) parts.push(ui === 'en' ? 'Coming soon' : 'Bientôt');
+    if (m.unavailable) parts.push(unavailableLabel(locale));
     return parts.join(' · ');
   }
 
@@ -1076,10 +1219,11 @@
       en: 'NOW PLAYING', es: 'AHORA', fr: "À l'antenne",
     },
     'À venir': {
+      // Libellé panneau (text-transform: uppercase → UP NEXT) + sous-titres grille.
       en: 'Up next', es: 'Próximamente', pt: 'A seguir', de: 'Als Nächstes',
-      it: 'A seguire', zh: '即将播出', ar: 'التالي', ru: 'Далее',
-      ko: '다음', ja: '次の番組', nl: 'Hierna', pl: 'Następnie',
-      ht: 'A pwochen',
+      it: 'A seguire', zh: '即将播出', 'zh-tw': '即將播出', ar: 'التالي', ru: 'Далее',
+      ko: '다음', ja: '次の番組', hi: 'आगे', vi: 'Sắp tới', tr: 'Sırada',
+      nl: 'Hierna', pl: 'Następnie', ht: 'A pwochen',
     },
     'Syntoniser un poste': {
       en: 'Tune a station', es: 'Sintonizar una emisora', pt: 'Sintonizar uma estação',
@@ -1096,6 +1240,46 @@
     'Site externe': {
       en: 'External site', es: 'Sitio externo', pt: 'Site externo',
       de: 'Externe Website', it: 'Sito esterno',
+    },
+    'Langues autochtones du Québec': {
+      en: 'Indigenous languages of Quebec',
+      es: 'Lenguas indígenas de Quebec',
+      pt: 'Línguas indígenas de Quebec',
+      de: 'Indigene Sprachen Quebecs',
+      it: 'Lingue indigene del Québec',
+      ko: '퀘벡 원주민 언어',
+      ja: 'ケベックの先住民言語',
+      zh: '魁北克原住民语言',
+      'zh-tw': '魁北克原住民語言',
+      ar: 'لغات السكان الأصليين في كيبيك',
+      ru: 'Языки коренных народов Квебека',
+      hi: 'क्यूबेक की आदिवासी भाषाएँ',
+      vi: 'Ngôn ngữ bản địa Québec',
+      tr: 'Quebec yerli dilleri',
+      pl: 'Języki rdzenne Quebecu',
+      nl: 'Inheemse talen van Quebec',
+      uk: 'Корінні мови Квебеку',
+      ht: 'Lang endijèn Kebèk',
+    },
+    'Autres langues': {
+      en: 'Other languages',
+      es: 'Otras lenguas',
+      pt: 'Outros idiomas',
+      de: 'Andere Sprachen',
+      it: 'Altre lingue',
+      ko: '기타 언어',
+      ja: 'その他の言語',
+      zh: '其他语言',
+      'zh-tw': '其他語言',
+      ar: 'لغات أخرى',
+      ru: 'Другие языки',
+      hi: 'अन्य भाषाएँ',
+      vi: 'Ngôn ngữ khác',
+      tr: 'Diğer diller',
+      pl: 'Inne języki',
+      nl: 'Andere talen',
+      uk: 'Інші мови',
+      ht: 'Lòt lang',
     },
   };
 
