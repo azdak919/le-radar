@@ -221,6 +221,7 @@ a { color: inherit; }
 .masthead-weather__icon svg { display: block; width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .masthead-weather__name { display: block; flex: 1 1 auto; min-width: 0; overflow: hidden; }
 .masthead-weather__name-text { display: inline-block; white-space: nowrap; }
+.masthead-weather__name-compact { display: none; }
 .masthead-weather__city.is-overflowing .masthead-weather__name-text {
   animation: weather-name-scroll 6.2s ease-in-out infinite alternate;
 }
@@ -242,6 +243,8 @@ a { color: inherit; }
   .masthead-actions { grid-area: actions; justify-self: end; }
 }
 @media (max-width: 359.98px) { .masthead-weather { display: none !important; } }
+.masthead-weather__city.is-compact .masthead-weather__name-full { display: none; }
+.masthead-weather__city.is-compact .masthead-weather__name-compact { display: inline; }
 @keyframes weather-name-scroll {
   0%, 28% { transform: translateX(calc(var(--weather-scroll, 0) * -1)); }
   72%, 100% { transform: translateX(0); }

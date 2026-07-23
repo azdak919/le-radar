@@ -816,8 +816,8 @@ function renderTodayDate() {
 const WEATHER_CACHE_KEY = 'le_radar_masthead_weather_v2';
 const WEATHER_CACHE_MS = 15 * 60 * 1000;
 const WEATHER_CITIES = [
-  { id: 'montreal', name: 'Montréal', lat: 45.5017, lon: -73.5673 },
-  { id: 'quebec', name: 'Québec', lat: 46.8139, lon: -71.2080 },
+  { id: 'montreal', name: 'Montréal', compactName: 'MTL', lat: 45.5017, lon: -73.5673 },
+  { id: 'quebec', name: 'Québec', compactName: 'QC', lat: 46.8139, lon: -71.2080 },
   { id: 'sherbrooke', name: 'Sherbrooke', lat: 45.4000, lon: -71.9000 },
   { id: 'trois-rivieres', name: 'Trois-Rivières', lat: 46.3432, lon: -72.5430 },
   { id: 'saguenay', name: 'Saguenay', lat: 48.4284, lon: -71.0680 },
@@ -959,8 +959,9 @@ function buildMastheadWeatherBoard() {
     const provider = weatherForecastProvider(city);
     el.title = `Prévisions de ${provider} — ${context}`;
     el.setAttribute("aria-label", `Prévisions de ${provider} pour ${context}`);
-    el.innerHTML = '<span class="masthead-weather__icon" aria-hidden="true">·</span><span class="masthead-weather__name"><span class="masthead-weather__name-text"></span></span><span class="masthead-weather__temp">—</span>';
-    el.querySelector('.masthead-weather__name-text').textContent = city.name;
+    el.innerHTML = '<span class="masthead-weather__icon" aria-hidden="true">·</span><span class="masthead-weather__name"><span class="masthead-weather__name-text"><span class="masthead-weather__name-full"></span><span class="masthead-weather__name-compact" aria-hidden="true"></span></span></span><span class="masthead-weather__temp">—</span>';
+    el.querySelector('.masthead-weather__name-full').textContent = city.name;
+    el.querySelector('.masthead-weather__name-compact').textContent = city.compactName || city.name;
     fragment.append(el);
   });
   board.append(fragment);
@@ -1066,7 +1067,14 @@ function showMastheadWeatherBoard() {
   const primary = MASTHEAD_WEATHER.querySelector('.masthead-weather__city.is-active[data-weather-city="montreal"], .masthead-weather__city.is-active[data-weather-city="quebec"]');
   const primaryViewport = primary?.querySelector('.masthead-weather__name');
   if (!primary || !primaryViewport || primary.clientWidth < 1 || primaryViewport.clientWidth < 1) return;
-  const primaryOverflows = primaryViewport.scrollWidth > primaryViewport.clientWidth + 2;
+  primary.classList.remove('is-compact');
+  let primaryOverflows = primaryViewport.scrollWidth > primaryViewport.clientWidth + 2;
+  if (primaryOverflows) {
+    // Le seuil dépend de l'espace réel entre date et actions, pas du viewport.
+    // MTL/QC est la dernière forme compacte avant de retirer le bandeau.
+    primary.classList.add('is-compact');
+    primaryOverflows = primaryViewport.scrollWidth > primaryViewport.clientWidth + 2;
+  }
   if (!primaryOverflows) return;
   if (count > 1) {
     // Retirer une carte secondaire et réévaluer la carte prioritaire à sa taille réelle.
