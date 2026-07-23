@@ -32,12 +32,15 @@
     if (panel === 'quote' && !minimized && typeof window.scheduleQuoteLayout === 'function') {
       window.scheduleQuoteLayout();
     }
-    if (window.AtaraxiaLayout?.updateChromeInsets) {
-      requestAnimationFrame(() => window.AtaraxiaLayout.updateChromeInsets());
-    }
-    if (typeof window.syncWidgetScale === 'function') {
-      requestAnimationFrame(() => window.syncWidgetScale());
-    }
+    // Rescale après reflow (2 frames) pour éviter un flash mini→grand
+    const afterLayout = () => {
+      window.AtaraxiaLayout?.updateChromeInsets?.();
+      if (typeof window.syncWidgetScale === 'function') window.syncWidgetScale();
+      if (panel === 'quote' && !minimized && typeof window.scheduleQuoteLayout === 'function') {
+        window.scheduleQuoteLayout();
+      }
+    };
+    requestAnimationFrame(() => requestAnimationFrame(afterLayout));
   }
 
   function isMinimized(panel) {

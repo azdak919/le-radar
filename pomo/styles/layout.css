@@ -781,6 +781,18 @@ html[data-layout="wide"] .quote-action-row .btn:hover {
     margin-top: auto !important;
   }
 
+  /* Pomo seul réduit (téléphone) : citation remplit sous le chip jusqu’aux crédits */
+  html[data-layout="touch"] .content:has(.pomo-container.is-minimized):not(:has(.quote-card.is-minimized)) .quote-card,
+  html[data-layout="wide"] .content:has(.pomo-container.is-minimized):not(:has(.quote-card.is-minimized)) .quote-card {
+    flex: 1 1 auto !important;
+    width: var(--chrome-width) !important;
+    max-width: var(--chrome-width) !important;
+    max-height: none !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    align-self: center;
+  }
+
   html[data-layout="touch"] .quote-card,
   html[data-layout="wide"] .quote-card {
     flex: 1 1 0;

@@ -498,8 +498,12 @@ function syncWidgetScale() {
 
   const quoteMinimized = document.getElementById('quote-card')?.classList.contains('is-minimized');
 
-  /* Citation réduite → réessayer le remplissage (plus d'espace vertical) */
-  if (quoteMinimized) _pomoWideLatched = false;
+  /* Citation réduite → toujours mode phone (remplissage), jamais le compact « wide »
+     (évite 1 frame de mini-widget puis agrandissement). */
+  if (quoteMinimized) {
+    _pomoWideLatched = false;
+    setPomoScaleMode('phone'); // synchrone avant paint
+  }
 
   /* Latch wide seulement si les deux panneaux sont visibles */
   if (_pomoWideLatched && !quoteMinimized) {
@@ -536,14 +540,16 @@ function syncWidgetScale() {
   }
 
   function fitPhoneScale() {
+    // Appliquer le mode phone tout de suite (avant le 2e rAF) pour éviter le flash compact
     setPomoScaleMode('phone');
-    let base = computeBase();
-    if (base == null) return;
 
-    widget.style.setProperty('--pw-base', `${base}px`);
-
-    const shrink = () => {
+    const apply = () => {
       if (window.innerWidth > maxW || container.classList.contains('is-minimized')) return;
+      let base = computeBase();
+      if (base == null) return;
+
+      widget.style.setProperty('--pw-base', `${base}px`);
+
       let iter = 0;
       while (detectPomoOverflow(widget) && iter < 16) {
         base = Math.max(96 / POMO_RING_EM, base * 0.92);
@@ -551,14 +557,21 @@ function syncWidgetScale() {
         iter++;
       }
       if (detectPomoOverflow(widget)) {
-        if (!quoteMinimized) _pomoWideLatched = true;
-        setPomoScaleMode('wide');
+        // Avec citation réduite, rester en phone même en overflow léger
+        if (!quoteMinimized) {
+          _pomoWideLatched = true;
+          setPomoScaleMode('wide');
+          widget.style.removeProperty('--pw-base');
+        } else {
+          _pomoWideLatched = false;
+        }
       } else {
         _pomoWideLatched = false;
       }
     };
 
-    requestAnimationFrame(() => requestAnimationFrame(shrink));
+    // 1er frame : mode phone déjà posé ; 2e : mesures stables après reflow
+    requestAnimationFrame(() => requestAnimationFrame(apply));
   }
 
   fitPhoneScale();
