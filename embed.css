@@ -121,11 +121,13 @@ html[data-embed="tuner"] .tuner.is-playing .tuner-onair::before {
   animation: onairPulse 1.6s ease-out infinite;
 }
 
-/* Attribution — bleu radio pour contraster avec le coral EN ONDES */
+/* Attribution — 🎙️ + le-radar.ca (bleu radio, contraste avec coral EN ONDES) */
 html[data-embed="tuner"] .tuner-embed-credit {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
   margin: 0;
-  padding: 0 0 0 13px; /* aligne sous le texte, pas sous le point */
+  padding: 0 0 0 13px; /* aligne sous le texte EN ONDES, pas sous le point */
   font-family: var(--sans, Inter, system-ui, sans-serif);
   font-size: 8.5px;
   font-weight: 600;
@@ -135,7 +137,20 @@ html[data-embed="tuner"] .tuner-embed-credit {
   color: rgba(120, 168, 255, 0.78);
   white-space: nowrap;
   line-height: 1.1;
-  transition: color 140ms ease;
+  transition: color 140ms ease, opacity 140ms ease;
+}
+
+html[data-embed="tuner"] .tuner-embed-credit-emoji {
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 0;
+  /* Légèrement plus visible que le texte, reste discret */
+  opacity: 0.92;
+  flex-shrink: 0;
+}
+
+html[data-embed="tuner"] .tuner-embed-credit-text {
+  min-width: 0;
 }
 
 html[data-embed="tuner"] .tuner-embed-credit:hover,
@@ -143,6 +158,11 @@ html[data-embed="tuner"] .tuner-embed-credit:focus-visible {
   color: rgba(160, 198, 255, 0.95);
   text-decoration: none;
   outline: none;
+}
+
+html[data-embed="tuner"] .tuner-embed-credit:hover .tuner-embed-credit-emoji,
+html[data-embed="tuner"] .tuner-embed-credit:focus-visible .tuner-embed-credit-emoji {
+  opacity: 1;
 }
 
 /* Reste bleu en lecture (ne pas virer coral comme EN ONDES) */
