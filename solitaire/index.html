@@ -733,28 +733,50 @@
     }
 
     /* ════════════════════════════════════════
-       HI-SCORE — panneau centré à l’écran
+       HI-SCORE — modal centré (viewport)
+       inset+margin : pas de transform (évite conflit d’animation)
        ════════════════════════════════════════ */
+    #hi-score-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 315;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      animation: overlayFadeIn 0.25s ease both;
+    }
+    #hi-score-backdrop.hidden { display: none; }
+
     #hi-score-panel {
       position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      /* Vrai centre écran, indépendant du bouton ★ Scores */
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
       z-index: 320;
       width: min(17.5rem, calc(100vw - 1.5rem));
-      padding: 0.65rem 0.75rem 0.7rem;
-      border-radius: 12px;
+      height: fit-content;
+      max-height: min(70dvh, 28rem);
+      overflow-y: auto;
+      padding: 0.85rem 0.9rem 0.85rem;
+      border-radius: 14px;
       border: 1px solid rgba(255, 255, 255, 0.16);
-      background: rgba(12, 11, 10, 0.82);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(12, 11, 10, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       color: rgba(255, 248, 235, 0.92);
       font-family: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
       font-size: 0.72rem;
       letter-spacing: 0.04em;
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
       pointer-events: auto;
-      animation: winSlideUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation: hiScoreIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    @keyframes hiScoreIn {
+      from { opacity: 0; transform: translateY(12px) scale(0.96); }
+      to   { opacity: 1; transform: none; }
     }
     #hi-score-panel.hidden { display: none; }
     .hi-score-title {
@@ -1307,7 +1329,8 @@
   <button class="win-btn" id="play-again-btn">Play Again</button>
 </div>
 
-<!-- Arcade HI-SCORE (3 initials) — localStorage only; dropdown or victory entry -->
+<!-- Arcade HI-SCORE — modal centré viewport -->
+<div id="hi-score-backdrop" class="hidden" aria-hidden="true"></div>
 <div id="hi-score-panel" class="hidden" role="dialog" aria-label="High scores" aria-modal="true">
   <div class="hi-score-title" id="hi-score-title">High scores</div>
   <ol class="hi-score-list" id="hi-score-list"></ol>
