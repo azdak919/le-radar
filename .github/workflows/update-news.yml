@@ -125,32 +125,42 @@ jobs:
           CI: true
         continue-on-error: true
 
-      # Toujours committer si news.json a bougé (même sans nouveaux articles) :
-      # le timestamp « mis à jour » doit avancer après une passe réussie.
+      # Éviter un commit Git à chaque simple rafraîchissement de timestamps.
+      # Les changements éditoriaux sont poussés immédiatement; en l'absence de
+      # changement réel, un heartbeat reste publié au plus toutes les 6 h.
       - name: Check for changes
         id: check
         if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
         run: |
-          if git diff --quiet news.json author-qc.json lead-excerpt-qc.json social-feed.json lead-image-qc.json photo-credit-qc.json feed.xml news-sources.json 2>/dev/null; then
-            # Forcer un heartbeat : réécrire updated si rien n'a changé
-            # mais la passe a réussi (évite un libellé figé toute la journée).
-            node -e "
-              const fs = require('fs');
-              const p = 'news.json';
-              const n = JSON.parse(fs.readFileSync(p, 'utf8'));
-              n.updated = new Date().toISOString();
-              // Hors créneau planifié : pas de faux updatedSlot
-              if (n.updatedSlot) {
-                const slot = Date.parse(n.updatedSlot);
-                const act = Date.parse(n.updated);
-                if (!Number.isFinite(slot) || act - slot > 45 * 60 * 1000) delete n.updatedSlot;
-              }
-              fs.writeFileSync(p, JSON.stringify(n, null, 2) + '\n');
-              console.log('heartbeat updated', n.updated);
-            "
+          FILES=(news.json author-qc.json lead-excerpt-qc.json social-feed.json lead-image-qc.json photo-credit-qc.json feed.xml news-sources.json)
+          if ! git diff --quiet \
+            -I '^[[:space:]]*"updated(Slot|At)?"[[:space:]]*:' \
+            -I '^[[:space:]]*"lastFetchOk"[[:space:]]*:' \
+            -I '^[[:space:]]*"[^" ]*(CheckedAt|checkedAt|FetchedAt|fetchedAt)"[[:space:]]*:' \
+            -I '^[[:space:]]*<lastBuildDate>' \
+            -- "${FILES[@]}"; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Meaningful content or QC change — publish now."
+            exit 0
+          fi
+
+          COMMITTED_AGE_MIN=$(git show HEAD:news.json | node -e "
+            let raw = '';
+            process.stdin.on('data', c => raw += c);
+            process.stdin.on('end', () => {
+              try {
+                const updated = Date.parse(JSON.parse(raw).updated || 0) || 0;
+                console.log(Math.floor((Date.now() - updated) / 60000));
+              } catch { console.log(9999); }
+            });
+          ")
+          echo "minutes_since_committed_heartbeat=$COMMITTED_AGE_MIN"
+          if [ "$COMMITTED_AGE_MIN" -ge 360 ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Timestamp-only heartbeat due (>= 6 h)."
           else
-            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Timestamp-only refresh — skip noisy commit."
           fi
 
       - name: Commit and push updates

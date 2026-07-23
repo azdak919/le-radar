@@ -51,6 +51,19 @@ npx serve .
 
 Ouvre **http://localhost:8080** — déploiement direct sur GitHub Pages (push sur `main`).
 
+### Validation locale
+
+```bash
+npm install
+npx playwright install chromium   # première exécution seulement
+npm test
+```
+
+La suite vérifie la syntaxe JavaScript, les données générées, les liens et
+assets PWA, l'isolation des service workers, les iframes du syntoniseur ainsi
+que les quatre pages principales en formats bureau et mobile. Le workflow
+`Quality Gate` exécute les mêmes contrôles sur les changements de code.
+
 ---
 
 ## 📊 Structure du projet
@@ -158,6 +171,10 @@ Sur le site public, le crédit affiché est **[Azdak](https://www.buymeacoffee.c
 Code libre utilisé conformément aux licences applicables; contenus et médias crédités à leurs auteurs respectifs.
 
 🤖 **Agrégateur automatisé de contenus** — Le Radar collecte et reformate des publications étudiantes tierces (titres, brèves, liens, métadonnées). Chaque article renvoie vers sa source originale. Les radios et journaux listés restent propriété de leurs équipes respectives.
+
+Consulte aussi la [politique éditoriale](docs/politique-editoriale.md) et les
+[objectifs internes de fiabilité](docs/objectifs-fiabilite.md), notamment pour
+les corrections, crédits, demandes de retrait et contrôles automatisés.
 
 ---
 

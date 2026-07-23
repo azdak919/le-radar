@@ -1,0 +1,58 @@
+name: Quality Gate
+
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    # Les snapshots générés ont leurs propres contrôles dans les bots. Éviter
+    # de télécharger Chromium à chaque heartbeat ou mise à jour « en ondes ».
+    paths-ignore:
+      - 'news.json'
+      - 'author-qc.json'
+      - 'lead-excerpt-qc.json'
+      - 'lead-image-qc.json'
+      - 'photo-credit-qc.json'
+      - 'social-feed.json'
+      - 'radio-nowplaying.json'
+      - 'feed.xml'
+      - 'bot-status.json'
+      - 'docs/scan-qc-report.json'
+      - 'docs/scan-qc-report.md'
+
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install test dependencies
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run syntax, data, PWA and browser checks
+        run: npm test
+
+      - name: Upload browser traces on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: test-results/
+          retention-days: 7

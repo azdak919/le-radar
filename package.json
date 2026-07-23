@@ -1,0 +1,19 @@
+{
+  "name": "le-radar",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PWA des médias étudiants du Québec",
+  "scripts": {
+    "check:syntax": "node tests/check-js-syntax.mjs",
+    "test:unit": "node solitaire/scripts/test-solitaire-rules.mjs && node tests/data-integrity.mjs && node tests/static-integrity.mjs",
+    "check": "npm run check:syntax && npm run test:unit",
+    "test:browser": "playwright test",
+    "test": "npm run check && npm run test:browser"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1"
+  }
+}
