@@ -1305,7 +1305,7 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   min-width: 0;
   max-width: 340px;
   padding-left: 14px;
-  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  border-left: none;
 }
 
 .tuner-nowair-label {
