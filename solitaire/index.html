@@ -598,37 +598,43 @@
     /* ── Face-down ── */
     .card--back { cursor: default; }
 
-    /* ── Face-up (local SVG art — no external image / broken-alt bug) ── */
+    /* ── Face-up ── */
     .card--face {
       background: var(--card-face);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: clamp(3px, calc(var(--card-w) * 0.05), 6px) clamp(3px, calc(var(--card-w) * 0.06), 7px);
-      box-sizing: border-box;
+      padding: 4px 5px;
     }
 
+    /* ── SVG card sprite art (fills entire card, inset var(--card-svg-inset) to avoid
+          border-radius clipping the rank/suit corner labels) ── */
     .card-svg {
       position: absolute;
       inset: var(--card-svg-inset);
       pointer-events: none;
     }
 
+    /* ── Fallback built-in art (used when API image unavailable) ── */
     .card--face.card--red   { color: var(--card-red); }
     .card--face.card--black { color: var(--card-black); }
+    .card--face.card--local-art {
+      padding: clamp(3px, calc(var(--card-w) * 0.05), 6px) clamp(3px, calc(var(--card-w) * 0.06), 7px);
+      box-sizing: border-box;
+    }
     .card-corner {
       display: flex; flex-direction: column; align-items: center;
       line-height: 1; gap: 0; position: relative; z-index: 2;
-      min-width: 1.1em;
     }
     .card-corner--br { align-self: flex-end; transform: rotate(180deg); }
-    .card-val      { font-size: clamp(10px, calc(var(--card-w) * 0.20), 17px); font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
-    .card-suit-sm  { font-size: clamp(9px,  calc(var(--card-w) * 0.17), 14px); line-height: 1; margin-top: 0.05em; }
+    .card-val      { font-size: clamp(11px, calc(var(--card-w) * 0.22), 18px); font-weight: 700; line-height: 1; }
+    .card-suit-sm  { font-size: clamp(9px,  calc(var(--card-w) * 0.18), 14px); line-height: 1; }
     .card-face-art {
       position: absolute; inset: 0; width: 100%; height: 100%;
       pointer-events: none; z-index: 1; overflow: hidden;
     }
-    .card-face-art svg {
+    .card-face-art svg,
+    .card-back-art svg {
       width: 100%;
       height: 100%;
       display: block;
@@ -637,13 +643,20 @@
       position: absolute; inset: 0; width: 100%; height: 100%;
       pointer-events: none; z-index: 1; overflow: hidden;
     }
-    .card-back-art svg {
+
+    /* ── Deck of Cards API images (primary look) ── */
+    .card-api-img {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
+      object-fit: fill;
+      pointer-events: none;
+      border-radius: clamp(3px, 5%, 8px);
       display: block;
-    }
-    .card--back {
-      background: linear-gradient(145deg, #3a5f95 0%, #4a6fa5 45%, #355a90 100%);
+      /* Never show broken-image “alt” glyphs */
+      color: transparent;
+      font-size: 0;
     }
 
     /* ── Selected ── */
@@ -1431,8 +1444,11 @@
 <script src="js/solitaire-rules.js"></script>
 <script nonce="ataraxia-sol">
 /* ══════════════════════════════════════════════════════════
-   CARD ART — local SVG (pip + court). No external image CDN.
+   CARD IMAGES — Deck of Cards API (deckofcardsapi.com)
+   Primary look: https://deckofcardsapi.com/static/img/{VALUE}{SUIT}.png
+   Fallback: local SVG if the CDN image fails (no broken “3 of ♥” text).
    ══════════════════════════════════════════════════════════ */
+const DECK_API_IMG = 'https://deckofcardsapi.com/static/img';
 
 /* ══════════════════════════════════════════════════════════
    CONSTANTS
@@ -2862,9 +2878,40 @@ function makePipCardSVG(value, suit) {
 /* ══════════════════════════════════════════════════════════
    CARD BACK HTML HELPER (sprite or custom SVG fallback)
    ══════════════════════════════════════════════════════════ */
-function makeCardBackHTML() {
-  // Local ornate back — never depends on deckofcardsapi (avoids broken images)
+function makeLocalCardBackHTML() {
   return `<div class="card-back-art" aria-hidden="true">${makeCardBackSVG()}</div>`;
+}
+
+function makeLocalCardFaceHTML(c) {
+  const isCourt = c.value === 'J' || c.value === 'Q' || c.value === 'K';
+  const art = isCourt ? makeFaceCardSVG(c.value) : makePipCardSVG(c.value, c.suit);
+  const corner = `<span class="card-val">${c.value}</span><span class="card-suit-sm">${c.suit}</span>`;
+  return (
+    `<div class="card-corner" aria-hidden="true">${corner}</div>` +
+    `<div class="card-face-art" aria-hidden="true">${art}</div>` +
+    `<div class="card-corner card-corner--br" aria-hidden="true">${corner}</div>`
+  );
+}
+
+function makeCardBackHTML() {
+  // Beautiful Deck of Cards API back; silent SVG fallback if CDN fails
+  return `<img class="card-api-img" src="${DECK_API_IMG}/back.png" alt="" draggable="false" decoding="async">`;
+}
+
+function attachCardImageFallback(el, c, isBack) {
+  const img = el.querySelector('img.card-api-img');
+  if (!img) return;
+  const applyFallback = () => {
+    if (isBack) {
+      el.innerHTML = makeLocalCardBackHTML();
+    } else {
+      el.classList.add('card--local-art');
+      el.innerHTML = makeLocalCardFaceHTML(c);
+    }
+  };
+  img.addEventListener('error', applyFallback, { once: true });
+  // Cached failure / already broken
+  if (img.complete && img.naturalWidth === 0) applyFallback();
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -2878,6 +2925,7 @@ function makeCard(c, fromPile, fromCol, cardIdx) {
     el.classList.add('card--back');
     el.setAttribute('aria-label', 'Face-down card');
     el.innerHTML = makeCardBackHTML();
+    attachCardImageFallback(el, c, true);
     return el;
   }
 
@@ -2896,7 +2944,9 @@ function makeCard(c, fromPile, fromCol, cardIdx) {
     if (sameSource && inRun) el.classList.add('card--selected');
   }
 
+  // Primary: Deck of Cards API art
   el.innerHTML = makeCardFaceHTML(c);
+  attachCardImageFallback(el, c, false);
 
   // Interactions
   el.addEventListener('click',     e => onCardClick(e, fromPile, fromCol, cardIdx));
@@ -2906,16 +2956,16 @@ function makeCard(c, fromPile, fromCol, cardIdx) {
   return el;
 }
 
-/* Local SVG faces — no external CDN, no “3 of ♥” broken-image alt text */
+/* ══════════════════════════════════════════════════════════
+   CARD ART HELPERS — Deck of Cards API
+   ══════════════════════════════════════════════════════════ */
+const SUIT_API  = { '♠': 'S', '♥': 'H', '♦': 'D', '♣': 'C' };
+
 function makeCardFaceHTML(c) {
-  const isCourt = c.value === 'J' || c.value === 'Q' || c.value === 'K';
-  const art = isCourt ? makeFaceCardSVG(c.value) : makePipCardSVG(c.value, c.suit);
-  const corner = `<span class="card-val">${c.value}</span><span class="card-suit-sm">${c.suit}</span>`;
-  return (
-    `<div class="card-corner" aria-hidden="true">${corner}</div>` +
-    `<div class="card-face-art" aria-hidden="true">${art}</div>` +
-    `<div class="card-corner card-corner--br" aria-hidden="true">${corner}</div>`
-  );
+  const v = c.value === '10' ? '0' : c.value;
+  const s = SUIT_API[c.suit];
+  // Empty alt: never paint “3 of ♥” if the image fails before onerror runs
+  return `<img class="card-api-img" src="${DECK_API_IMG}/${v}${s}.png" alt="" draggable="false" decoding="async">`;
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -3018,6 +3068,7 @@ function render() {
     backCard.className = 'card card--back';
     backCard.style.cssText = 'inset:0;width:100%;height:100%;cursor:pointer;';
     backCard.innerHTML = makeCardBackHTML();
+    attachCardImageFallback(backCard, null, true);
     stockWrap.appendChild(backCard);
   }
   stockWrap.addEventListener('click', clickStock);
