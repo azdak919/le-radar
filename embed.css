@@ -1,10 +1,10 @@
 /* LE RADAR — Embed Ataraxia Solitaire
    ═══════════════════════════════════════════════════════════
-   Sur ordinateur : même barre que le site principal en ≥1100 px
-   (EN ONDES · dial 2 lignes slogan · prev/next 42 · play · vol inline).
-   L’iframe est souvent < 1100 px de large : on force le look bureau
-   en CSS ici (app.js force aussi la logique bureau).
-   Hauteur 62 px = padding 10 + contrôles 42 (comme .tuner-inner bureau).
+   Barre bureau du site :
+   · gauche : EN ONDES · dial · prev/next · play · volume inline
+   · droite : module « À l'antenne » (grille 2 colonnes)
+   L’iframe est souvent < 1100 px : look + logique bureau forcés.
+   Hauteur 62 px = padding 10 + contrôles 42.
 */
 
 html[data-embed="tuner"] {
@@ -13,7 +13,8 @@ html[data-embed="tuner"] {
   --embed-ctrl: 42px;
   --embed-play: 42px;
   --embed-gap: 9px;
-  --embed-vol-track: 112px;
+  --embed-vol-track: 96px;
+  --embed-nowair-w: minmax(200px, 280px);
   --tuner-onair-live: #ff7d6e;
   --tuner-onair-idle: rgba(255, 255, 255, 0.42);
   color-scheme: dark;
@@ -54,20 +55,23 @@ html[data-embed="tuner"] .tuner {
 html[data-embed="tuner"] .tuner-inner {
   max-width: none;
   margin: 0;
-  /* Identique au bureau : padding 10px, gap 12px */
-  padding: 10px 4px;
-  gap: 12px;
+  /* Grille bureau : synthé | À l'antenne (comme ≥1100 px du site) */
+  padding: 10px 6px;
+  gap: 0;
   height: 100%;
   box-sizing: border-box;
   overflow: hidden;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) var(--embed-nowair-w);
   align-items: center;
 }
 
 html[data-embed="tuner"] .tuner-controls {
+  grid-column: 1;
   gap: var(--embed-gap);
-  flex: 1 1 auto;
+  flex: unset;
   min-width: 0;
+  width: 100%;
   align-items: center;
   container-type: inline-size;
   container-name: tuner-controls;
@@ -306,7 +310,7 @@ html[data-embed="tuner"] .tuner-vol-labels {
   display: none !important;
 }
 
-/* Cast / EQ / module antenne latéral : hors barre embed */
+/* Cast / EQ : hors barre embed */
 html[data-embed="tuner"] .tuner-cast--bar,
 html[data-embed="tuner"] .tuner-cast--mobile,
 html[data-embed="tuner"] .tuner-cast--popover,
@@ -318,8 +322,98 @@ html[data-embed="tuner"] .tuner-eq {
   display: none !important;
 }
 
-html[data-embed="tuner"] .tuner-nowair {
-  display: none !important;
+/* ── Module « À l'antenne » (colonne droite, comme le site bureau) ── */
+html[data-embed="tuner"] .tuner-nowair,
+html[data-embed="tuner"] .tuner-nowair.hidden {
+  grid-column: 2;
+  display: flex !important;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 8px;
+  flex: unset;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  margin-left: 0;
+  padding-left: 14px;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  align-self: center;
+  opacity: 1;
+  pointer-events: auto;
+  box-sizing: border-box;
+  transition: opacity 0.3s ease;
+}
+
+html[data-embed="tuner"] .tuner-nowair.is-swapping {
+  opacity: 0;
+}
+
+html[data-embed="tuner"] .tuner-nowair-label {
+  flex-shrink: 0;
+  margin-top: 2px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tuner-onair-idle);
+  white-space: nowrap;
+  /* Vertical label stack for tight height — keep horizontal like desktop */
+  writing-mode: horizontal-tb;
+}
+
+html[data-embed="tuner"] .tuner-nowair-body {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  justify-content: center;
+}
+
+html[data-embed="tuner"] .tuner-nowair-title {
+  margin: 0;
+  font-family: var(--serif, "Source Serif 4", Georgia, serif);
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--radio-bright, #8eb8ff);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+html[data-embed="tuner"] .tuner-nowair-sub {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: rgba(255, 255, 255, 0.48);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* Teintes live / à venir (miroir bureau) */
+html[data-embed="tuner"] .tuner.is-playing .tuner-nowair.is-live .tuner-nowair-label,
+html[data-embed="tuner"] .tuner.is-playing .tuner-nowair.is-live .tuner-nowair-title {
+  color: var(--tuner-onair-live);
+}
+
+html[data-embed="tuner"] .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-label,
+html[data-embed="tuner"] .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-title {
+  color: #c9a86a;
+}
+
+html[data-embed="tuner"] .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-sub {
+  color: rgba(201, 168, 106, 0.7);
+}
+
+html[data-embed="tuner"] .tuner-nowair.is-empty .tuner-nowair-title {
+  font-style: italic;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.55);
 }
 
 html[data-embed="tuner"] .toast {
@@ -331,22 +425,8 @@ html[data-embed="tuner"] .toast {
   max-width: calc(100% - 16px);
 }
 
-/* ── Toolbar Solitaire étroite : garder le look bureau, compresser le volume ── */
-@container tuner-controls (max-width: 520px) {
-  .tuner-vol-track {
-    width: 88px;
-    max-width: 88px;
-    flex-basis: 88px;
-    min-width: 72px;
-  }
-}
-
-@container tuner-controls (max-width: 420px) {
-  /* Sous très étroit seulement : masquer EN ONDES (comme téléphone site) */
-  .tuner-label {
-    display: none !important;
-  }
-
+/* ── Largeurs : compresser volume / masquer antenne si trop serré ── */
+@container tuner-controls (max-width: 480px) {
   .tuner-vol-track {
     width: 72px;
     max-width: 72px;
@@ -355,22 +435,69 @@ html[data-embed="tuner"] .toast {
   }
 }
 
-/* Fallback sans container queries */
-@media (max-width: 479.98px) {
-  html[data-embed="tuner"] .tuner-label {
+@container tuner-controls (max-width: 380px) {
+  .tuner-label {
     display: none !important;
   }
 
+  .tuner-vol-track {
+    width: 56px;
+    max-width: 56px;
+    flex-basis: 56px;
+    min-width: 48px;
+  }
+}
+
+/* Iframe < ~640 px : une seule colonne (synthé), antenne masquée */
+@media (max-width: 639.98px) {
   html[data-embed="tuner"] {
-    --embed-vol-track: 72px;
+    --embed-nowair-w: 0px;
+    --embed-vol-track: 80px;
+  }
+
+  html[data-embed="tuner"] .tuner-inner {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 10px 4px;
+  }
+
+  html[data-embed="tuner"] .tuner-nowair,
+  html[data-embed="tuner"] .tuner-nowair.hidden {
+    display: none !important;
+  }
+
+  html[data-embed="tuner"] .tuner-label {
+    display: none !important;
+  }
+}
+
+@media (max-width: 479.98px) {
+  html[data-embed="tuner"] {
+    --embed-vol-track: 64px;
   }
 
   html[data-embed="tuner"] .tuner-inner {
     padding: 10px 2px;
-    gap: 8px;
   }
 
   html[data-embed="tuner"] .tuner-controls {
     gap: 6px;
+  }
+}
+
+/* Pastille Ataraxia large (≥720 px utiles) : antenne un peu plus large */
+@media (min-width: 720px) {
+  html[data-embed="tuner"] {
+    --embed-nowair-w: minmax(220px, 300px);
+    --embed-vol-track: 104px;
+  }
+
+  html[data-embed="tuner"] .tuner-nowair,
+  html[data-embed="tuner"] .tuner-nowair.hidden {
+    padding-left: 16px;
+    gap: 10px;
+  }
+
+  html[data-embed="tuner"] .tuner-nowair-title {
+    font-size: 13px;
   }
 }
