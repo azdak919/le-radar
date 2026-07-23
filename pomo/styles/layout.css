@@ -8,8 +8,8 @@ html[data-layout="touch"] {
   --ring-max: min(90vw, calc(100dvh - 17.5rem));
   --touch-glass: rgba(255, 255, 255, 0.38);
   --touch-glass-border: rgba(255, 255, 255, 0.18);
-  --toolbar-offset: 3.35rem;
-  --content-pad-top: max(5.25rem, calc(env(safe-area-inset-top, 0px) + var(--toolbar-offset)));
+  --toolbar-offset: 8.75rem;
+  --content-pad-top: max(9.5rem, calc(env(safe-area-inset-top, 0px) + var(--toolbar-offset)));
   --content-pad-bottom: max(7.5rem, calc(env(safe-area-inset-bottom, 0px) + 6.5rem));
   --scene-bar-offset: 4rem;
 }

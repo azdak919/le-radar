@@ -16,7 +16,7 @@
 <link rel="manifest" href="site.webmanifest">
 <meta name="theme-color" content="#8b6f4e" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1a1816" media="(prefers-color-scheme: dark)">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://images.unsplash.com https://images.pexels.com https://upload.wikimedia.org https://commons.wikimedia.org; connect-src 'self' https://api.mymemory.translated.net https://translate.googleapis.com https://libretranslate.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://images.unsplash.com https://images.pexels.com https://upload.wikimedia.org https://commons.wikimedia.org; connect-src 'self' https://api.mymemory.translated.net https://translate.googleapis.com https://libretranslate.com; frame-src 'self' https://le-radar.ca https://azdak919.github.io http://127.0.0.1:8888 http://localhost:8888 http://127.0.0.1:8080 http://localhost:8080; object-src 'none'; base-uri 'self'; form-action 'none'">
 
 <!-- Open Source Fonts from Google Fonts -->
 
@@ -67,9 +67,9 @@
 
 <div class="toast" id="toast"></div>
 
-<!-- Top toolbar — même pattern que Solitaire (une rangée, pas de sous-barre) -->
+<!-- Top toolbar — même pattern que Solitaire (chrome + synthé Le Radar) -->
 <nav class="top-right-actions" aria-label="Navigation">
-  <div class="app-toolbar-row">
+  <div class="app-toolbar-row app-toolbar-chrome">
     <button class="toolbar-btn toolbar-btn--home" id="home-reload-btn" type="button" aria-label="Reload page">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5z"/></svg>
     </button>
@@ -100,6 +100,19 @@
       <div class="lang-dropdown" id="lang-dropdown"></div>
       <div class="lang-translating" id="lang-status"></div>
     </div>
+  </div>
+
+  <!-- Synthétiseur Le Radar (même iframe que Solitaire) -->
+  <div class="app-toolbar-tuner" id="app-toolbar-tuner">
+    <iframe
+      id="radar-embed"
+      class="radar-embed-frame"
+      src="../tuner-embed.html"
+      title="Le Radar — syntoniseur radio"
+      loading="eager"
+      allow="autoplay; encrypted-media"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
   </div>
 </nav>
 

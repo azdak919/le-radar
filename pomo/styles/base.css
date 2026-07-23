@@ -25,14 +25,16 @@
     --settings-bg: rgba(252, 249, 246, 0.96);
     --settings-bg-solid: #fcf9f6;
     --settings-border: rgba(160, 148, 132, 0.45);
-    --toolbar-offset: 3.35rem;
-    --content-pad-top: max(5.25rem, calc(env(safe-area-inset-top, 0px) + var(--toolbar-offset)));
+    --toolbar-offset: 8.75rem;
+    --content-pad-top: max(9.5rem, calc(env(safe-area-inset-top, 0px) + var(--toolbar-offset)));
     --quote-fade: 220ms;
     --bg-fade: 900ms;
+    /* Aligné sur le-radar embed.css --embed-bar-h (barre bureau 62px) */
+    --radar-embed-slot-h: 62px;
 
-    /* Barres fixes (menu, crédits, scène) — même largeur que Solitaire */
+    /* Barres fixes (menu, crédits, scène) — largeur Solitaire + module « À l'antenne » */
     --chrome-gutter: 0.75rem;
-    --chrome-cap: 760px;
+    --chrome-cap: 960px;
     --chrome-width: min(calc(100vw - var(--chrome-gutter)), var(--chrome-cap));
     --chrome-surface-bg: rgba(0, 0, 0, 0.22);
     --chrome-surface-border: rgba(255, 255, 255, 0.1);
@@ -108,7 +110,7 @@
   }
 
   /* ═══════════════════════
-     TOP TOOLBAR (miroir Solitaire — une rangée)
+     TOP TOOLBAR (miroir Solitaire — chrome + synthé)
      ═══════════════════════ */
   .top-right-actions {
     --tb-font: 0.8rem;
@@ -133,13 +135,53 @@
     backdrop-filter: var(--chrome-surface-blur);
     -webkit-backdrop-filter: var(--chrome-surface-blur);
     animation: uiEnter var(--ui-enter-dur) var(--ui-enter-ease) var(--ui-delay-menu) both;
+    overflow: visible;
   }
 
-  .app-toolbar-row {
+  .app-toolbar-row,
+  .app-toolbar-chrome {
     display: flex;
     align-items: center;
     width: 100%;
     gap: 0.15rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Zone synthétiseur — même iframe que Solitaire */
+  .app-toolbar-tuner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.28rem;
+    margin-bottom: 0;
+    padding: 0.2rem 0.1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: calc(var(--radar-embed-slot-h) + 0.4rem);
+    overflow: visible;
+    position: relative;
+    z-index: 3;
+    flex-shrink: 0;
+    box-sizing: border-box;
+  }
+
+  .radar-embed-frame {
+    display: block;
+    width: 100%;
+    height: var(--radar-embed-slot-h);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color-scheme: dark;
+    overflow: hidden;
+    vertical-align: middle;
+    flex: 1 1 auto;
+  }
+
+  .radar-embed-frame.is-ready {
+    opacity: 1;
   }
 
   .app-toolbar-divider {
