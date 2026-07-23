@@ -101,7 +101,36 @@ document.addEventListener('DOMContentLoaded', () => {
   // INIT AUTO-TRANSLATE
   // ═══════════════════════════════════════
   initTranslation();
+
+  // Le Radar embed — hauteur + ready (même contrat que Solitaire)
+  initRadarEmbed();
 });
+
+function initRadarEmbed() {
+  const iframe = document.getElementById('radar-embed');
+  if (!iframe) return;
+
+  if (!iframe.getAttribute('src') || iframe.getAttribute('src') === 'about:blank') {
+    iframe.src = '../tuner-embed.html';
+  }
+
+  window.addEventListener('message', (event) => {
+    const data = event && event.data;
+    if (!data || (data.type !== 'radar-embed' && data.type !== 'ataraxia-radar-embed')) return;
+    if (typeof data.height === 'number' && data.height > 0) {
+      const h = Math.round(data.height);
+      document.documentElement.style.setProperty('--radar-embed-slot-h', h + 'px');
+      iframe.style.height = h + 'px';
+      window.AtaraxiaLayout?.updateChromeInsets?.();
+    }
+    if (data.ready) iframe.classList.add('is-ready');
+  });
+
+  iframe.addEventListener('load', () => {
+    iframe.classList.add('is-ready');
+    window.AtaraxiaLayout?.updateChromeInsets?.();
+  });
+}
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
