@@ -303,6 +303,45 @@ html[data-layout="wide"] .content:has(.is-minimized) {
   justify-content: flex-start;
 }
 
+/* Crédits : règle de secours placée après les layouts afin de rester une
+   pastille centrée, y compris lorsqu'une règle responsive est ajoutée. */
+.bottom-badges {
+  position: fixed;
+  z-index: 20;
+  left: 0;
+  right: 0;
+  bottom: var(--credits-bottom);
+  width: var(--chrome-width);
+  max-width: var(--chrome-width);
+  box-sizing: border-box;
+  margin-inline: auto;
+  padding: var(--credits-pad-y) var(--credits-pad-x);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--credits-gap);
+  text-align: center;
+  color: rgba(255, 255, 255, 0.75);
+  font: 300 var(--credits-font-size)/1.35 var(--font-body);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  background: var(--chrome-surface-bg);
+  border: 1px solid var(--chrome-surface-border);
+  border-radius: 20px;
+  backdrop-filter: var(--chrome-surface-blur);
+  -webkit-backdrop-filter: var(--chrome-surface-blur);
+  transform: none;
+}
+
+@media (orientation: portrait) {
+  .bottom-badges .img-credit {
+    flex-basis: 100%;
+    max-width: 100%;
+    white-space: normal;
+  }
+  .bottom-badges .img-credit + .credits-divider { display: none; }
+}
+
 html[data-layout="wide"] .content {
   justify-content: center;
   align-items: stretch;

@@ -322,7 +322,6 @@ const BACKGROUNDS = [
 
   /* ── Winter & Snow ── */
   { url: "https://images.unsplash.com/photo-1477601263568-180e2c6d046e?w=1920&q=90&auto=format&fit=max", credit: "Eberhard Grossgasteiger", link: "https://unsplash.com/@eberhardgross", source: "Unsplash", title: "Winter Mountains" },
-  { url: "https://images.unsplash.com/photo-1457269449834-928af64c684d?w=1920&q=90&auto=format&fit=max", credit: "Aaron Burden", link: "https://unsplash.com/@aaronburden", source: "Unsplash", title: "Snowy Branch" },
   { url: "https://images.unsplash.com/photo-1491002052546-bf38f186af56?w=1920&q=90&auto=format&fit=max", credit: "Ales Krivec", link: "https://unsplash.com/@aleskrivec", source: "Unsplash", title: "Frozen Lake" },
   { url: "https://images.unsplash.com/photo-1483664852095-d6cc6870702d?w=1920&q=90&auto=format&fit=max", credit: "Khamkeo Vilaysing", link: "https://unsplash.com/@mahkeo", source: "Unsplash", title: "Frosty Forest" },
   { url: "https://images.unsplash.com/photo-1517299321609-52687d1bc55a?w=1920&q=90&auto=format&fit=max", credit: "Nathan Anderson", link: "https://unsplash.com/@nathananderson", source: "Unsplash", title: "Snow Peaks" },
