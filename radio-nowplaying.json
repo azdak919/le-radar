@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-23T08:47:55.160Z",
+  "updatedAt": "2026-07-23T11:12:35.041Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-23T08:47:32.994Z"
+      "checkedAt": "2026-07-23T11:12:14.630Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Club classique (reprise)",
+        "title": "Par mots et par vaux (reprise)",
         "source": "api-live",
-        "start": "00:00",
+        "start": "03:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "club-classique"
+        "slug": "par-mots-et-par-vaux"
       },
       "next": {
-        "title": "Mix Franco",
+        "title": "Best of des sessions live",
         "source": "api-live",
-        "start": "02:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364876.mp3",
-        "slug": "mix-franco"
+        "start": "04:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/360264.mp3",
+        "slug": "session-live-a-cism"
       },
       "track": "",
-      "showTitle": "Club classique (reprise)",
+      "showTitle": "Par mots et par vaux (reprise)",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-23T08:47:35.373Z"
+      "checkedAt": "2026-07-23T11:12:16.435Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "William Shatner&#039;s Whiskey Tears",
+        "title": "OFC Podcast Radio",
         "source": "api-live",
-        "start": "04:00",
-        "end": "06:00"
+        "start": "07:00",
+        "end": "09:00"
       },
       "next": {
-        "title": "Total €clipse of The ☾harts",
+        "title": "Folk Directions",
         "source": "api-live",
-        "start": "06:00",
-        "end": "07:00"
+        "start": "09:00",
+        "end": "11:00"
       },
-      "track": "William Shatner",
-      "showTitle": "William Shatner&#039;s Whiskey Tears",
+      "track": "",
+      "showTitle": "OFC Podcast Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,80 +77,79 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-23T08:47:38.561Z"
+      "checkedAt": "2026-07-23T11:12:19.038Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Daydream Nation",
         "source": "schedule",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/daydream-nation"
       },
+      "next": {
+        "title": "Free City Radio",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/free-city-radio"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Daydream Nation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-23T08:47:52.424Z"
+      "checkedAt": "2026-07-23T11:12:32.400Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Folkswagen",
         "source": "schedule",
         "start": "07:00",
         "end": "08:00"
       },
+      "next": {
+        "title": "Palmarès CFAK",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Folkswagen",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-23T08:47:52.891Z"
+      "checkedAt": "2026-07-23T11:12:33.030Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Fainting Spells",
+        "title": "L'AMERIQUE PLEURE ENCORE",
         "source": "api-live",
-        "host": "Cola",
-        "url": "https://www.choq.ca/assets/playlist/palmares-site-web.jpg"
+        "host": "WHITESOCKS x KAMA x NAWFAL"
       },
       "next": null,
-      "track": "Cola - Fainting Spells",
-      "showTitle": "Fainting Spells",
-      "host": "Cola",
+      "track": "WHITESOCKS x KAMA x NAWFAL - L",
+      "showTitle": "L'AMERIQUE PLEURE ENCORE",
+      "host": "WHITESOCKS x KAMA x NAWFAL",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-23T08:47:54.809Z"
+      "checkedAt": "2026-07-23T11:12:34.690Z"
     }
   }
 }
