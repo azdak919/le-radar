@@ -217,6 +217,16 @@ html[data-translate-busy="1"] .translate-toggle { opacity: 0.75; pointer-events:
   }
 }
 
+/* Les navigateurs tactiles conservent parfois :hover après un tap. L'état
+   ouvert reste visible via aria-expanded, mais un bouton refermé redevient
+   immédiatement neutre. */
+@media (hover: none) {
+  .radar-translate-control--app .translate-toggle:hover:not([aria-expanded="true"]) {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.72);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .translate-toggle__chev { transition: none; }
 }

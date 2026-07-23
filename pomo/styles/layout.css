@@ -282,7 +282,7 @@ html[data-layout="touch"] .bottom-badges {
 }
 
 @media (prefers-color-scheme: dark) {
-  html[data-layout="touch"] {
+  html[data-theme="dark"][data-layout="touch"] {
     --touch-glass: rgba(30, 28, 26, 0.55);
     --touch-glass-border: rgba(255, 255, 255, 0.1);
   }

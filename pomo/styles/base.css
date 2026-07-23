@@ -17,7 +17,8 @@
     --accent-glow: rgba(139, 111, 78, 0.15);
     --shadow-soft: rgba(44, 40, 36, 0.06);
     --shadow-medium: rgba(44, 40, 36, 0.1);
-    --overlay: rgba(245, 240, 235, 0.35);
+    /* Le voile protège la lisibilité sans teinter ni délaver la scène. */
+    --overlay: rgba(15, 20, 22, 0.22);
     --pomo-work: #8b6f4e;
     --pomo-break: #5a7f6a;
     --pomo-ring-bg: rgba(139, 111, 78, 0.12);
@@ -79,7 +80,7 @@
     --accent-glow: rgba(201, 168, 124, 0.12);
     --shadow-soft: rgba(0, 0, 0, 0.15);
     --shadow-medium: rgba(0, 0, 0, 0.3);
-    --overlay: rgba(26, 24, 22, 0.45);
+    --overlay: rgba(15, 20, 22, 0.22);
     --pomo-work: #c9a87c;
     --pomo-break: #7aab8e;
     --pomo-ring-bg: rgba(201, 168, 124, 0.1);
@@ -101,7 +102,7 @@
       --accent-glow: rgba(201, 168, 124, 0.12);
       --shadow-soft: rgba(0, 0, 0, 0.15);
       --shadow-medium: rgba(0, 0, 0, 0.3);
-      --overlay: rgba(26, 24, 22, 0.45);
+      --overlay: rgba(15, 20, 22, 0.22);
       --pomo-work: #c9a87c;
       --pomo-break: #7aab8e;
       --pomo-ring-bg: rgba(201, 168, 124, 0.1);
@@ -122,7 +123,7 @@
     }
   }
   @media (prefers-contrast: high) and (prefers-color-scheme: dark) {
-    :root {
+    html[data-theme="dark"] {
       --bg-glass: rgba(0, 0, 0, 0.85);
       --border-glass: rgba(255, 255, 255, 0.4);
       --text-primary: #fff;
@@ -1229,14 +1230,8 @@
     outline: none;
     transition: border-color 0.25s;
   }
-  html[data-theme="dark"] .setting-row input[type="number"],
-  html:not([data-theme="light"]) .setting-row input[type="number"] {
+  html[data-theme="dark"] .setting-row input[type="number"] {
     background: rgba(255,255,255,0.06);
-  }
-  @media (prefers-color-scheme: light) {
-    html:not([data-theme="dark"]) .setting-row input[type="number"] {
-      background: rgba(0,0,0,0.04);
-    }
   }
 
   .setting-row input[type="number"]:focus {
@@ -1278,9 +1273,8 @@
   }
   .phase-chip:active { transform: scale(0.96); }
 
-  @media (prefers-color-scheme: dark) {
-    .phase-chip { background: rgba(255,255,255,0.06); }
-    .phase-chip:hover { background: var(--accent); color: #1a1816; }
+  html[data-theme="dark"] .phase-chip { background: rgba(255,255,255,0.06); }
+  html[data-theme="dark"] .phase-chip:hover { background: var(--accent); color: #1a1816; }
   }
 
   /* ═══════════════════════
@@ -1711,4 +1705,8 @@
     .pomo-btn--primary:hover { background: var(--pomo-work); color: #fff; box-shadow: 0 4px 14px var(--accent-glow); }
     .pomo-btn--primary.on-break:hover { background: var(--pomo-break); box-shadow: 0 4px 14px rgba(90, 127, 106, 0.25); }
     .btn:hover { background: var(--bg-glass); color: var(--text-secondary); border-color: var(--border-glass); }
+    .top-right-actions .toolbar-btn:hover:not(:active) {
+      background: transparent;
+      color: rgba(255, 255, 255, 0.72);
+    }
   }
