@@ -811,6 +811,9 @@ const WEATHER_CITIES = [
   { id: 'trois-rivieres', lat: 46.3432, lon: -72.5430 },
   { id: 'saguenay', lat: 48.4284, lon: -71.0680 },
   { id: 'rimouski', lat: 48.4488, lon: -68.5230 },
+  { id: 'gatineau', lat: 45.4765, lon: -75.7013 },
+  { id: 'rouyn-noranda', lat: 48.2366, lon: -79.0231 },
+  { id: 'levis', lat: 46.8033, lon: -71.1779 },
 ];
 
 function weatherIcon(code, isDay = 1) {
@@ -824,6 +827,29 @@ function weatherIcon(code, isDay = 1) {
   return '·';
 }
 
+function weatherTone(code) {
+  if (code === 0 || [1, 2].includes(code)) return 'sun';
+  if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return 'rain';
+  if ([71, 73, 75, 77, 85, 86].includes(code)) return 'snow';
+  if ([95, 96, 99].includes(code)) return 'storm';
+  return 'cloud';
+}
+
+let mastheadWeatherTimer = null;
+
+function startMastheadWeatherBoard() {
+  if (!MASTHEAD_WEATHER || mastheadWeatherTimer) return;
+  const cities = [...MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city')];
+  if (!cities.length) return;
+  let active = 0;
+  cities[active].classList.add('is-active');
+  mastheadWeatherTimer = window.setInterval(() => {
+    cities[active].classList.remove('is-active');
+    active = (active + 1) % cities.length;
+    cities[active].classList.add('is-active');
+  }, 5200);
+}
+
 function renderMastheadWeather(entries) {
   if (!MASTHEAD_WEATHER || !Array.isArray(entries)) return;
   WEATHER_CITIES.forEach((city, index) => {
@@ -832,8 +858,10 @@ function renderMastheadWeather(entries) {
     if (!el || !current || !Number.isFinite(current.temperature_2m)) return;
     el.querySelector('.masthead-weather__icon').textContent = weatherIcon(current.weather_code, current.is_day);
     el.querySelector('.masthead-weather__temp').textContent = `${Math.round(current.temperature_2m)}°`;
+    el.dataset.weatherTone = weatherTone(current.weather_code);
   });
   MASTHEAD_WEATHER.classList.remove('hidden');
+  startMastheadWeatherBoard();
 }
 
 function readWeatherCache() {
@@ -845,7 +873,7 @@ function readWeatherCache() {
 }
 
 async function initMastheadWeather() {
-  if (!MASTHEAD_WEATHER || window.innerWidth < 860) return;
+  if (!MASTHEAD_WEATHER || window.innerWidth < 1024) return;
   const cached = readWeatherCache();
   if (cached) renderMastheadWeather(cached);
   try {
