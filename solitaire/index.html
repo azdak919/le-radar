@@ -1371,6 +1371,9 @@ let bestTime    = Infinity;
 // Hint state
 let hintTimer   = null;
 let noMovesToastTimer = null;
+// Déclaré avant le premier newGame(): hideHiScorePanel() est appelé pendant
+// l'initialisation, bien avant la section HI-SCORES située en fin de script.
+let hiEntryPending = null; // { timeMs, moves } while entering name
 
 // Translation state (populated later by initTranslation)
 let currentLang = 'en';
@@ -4859,7 +4862,6 @@ const HI_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const HI_DEFAULT_NAME = 'AAA';
 
 let hiScores = [];
-let hiEntryPending = null; // { timeMs, moves } while entering name
 let hiLetters = [0, 0, 0]; // alphabet indices
 let hiHighlightName = null;
 
