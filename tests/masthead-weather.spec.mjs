@@ -10,6 +10,10 @@ const weather = [
   [20.3, 3, 1], [19.5, 61, 1], [18.9, 2, 1], [21.2, 0, 1],
   [20.8, 61, 1], [19.7, 3, 1], [21.4, 0, 1], [18.3, 63, 1], [24.6, 1, 1],
   [22.4, 1, 1],
+  [19.6, 3, 1], [18.8, 61, 1], [16.1, 2, 1], [15.3, 63, 1], [10.4, 3, 1],
+  [18.7, 0, 1], [17.9, 61, 1], [16.4, 3, 1], [15.8, 2, 1], [20.2, 0, 1],
+  [18.6, 61, 1], [21.3, 1, 1], [20.1, 2, 1], [19.8, 3, 1], [17.5, 61, 1],
+  [18.4, 3, 1], [13.7, 2, 1],
 ].map(([temperature_2m, weather_code, is_day]) => ({
   current: { temperature_2m, weather_code, is_day },
 }));
@@ -26,7 +30,7 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   const ribbon = page.locator('#masthead-weather');
   await expect(ribbon).toBeVisible();
   await expect(ribbon.locator('.masthead-weather__city.is-active .masthead-weather__temp').first()).not.toHaveText('—');
-  await expect(ribbon.locator('.masthead-weather__city')).toHaveCount(30);
+  await expect(ribbon.locator('.masthead-weather__city')).toHaveCount(47);
   await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(4);
   await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="campus"]')).toHaveCount(2);
   await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="nation"]')).toHaveCount(2);
