@@ -27,6 +27,11 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(4);
   await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="campus"]')).toHaveCount(2);
   await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="nation"]')).toHaveCount(2);
+  await expect(ribbon.locator('.masthead-weather__city.is-active').first()).toHaveAttribute('href', /^https:\/\/weather\.gc\.ca\/en\/location\/index\.html\?coords=/);
+  const [weatherBox, actionsBox] = await Promise.all([
+    ribbon.boundingBox(), page.locator('.masthead-actions').boundingBox(),
+  ]);
+  expect(actionsBox.x).toBeGreaterThan(weatherBox.x + weatherBox.width);
 
   await page.setViewportSize({ width: 1200, height: 900 });
   await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(3);
