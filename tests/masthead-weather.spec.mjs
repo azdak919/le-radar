@@ -31,6 +31,9 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   await expect(ribbon).toBeVisible();
   await expect(ribbon.locator('.masthead-weather__city.is-active .masthead-weather__temp').first()).not.toHaveText('—');
   await expect(ribbon.locator('.masthead-weather__city')).toHaveCount(47);
+  expect(await ribbon.locator('.masthead-weather__city').evaluateAll((cities) => cities.every(
+    (city) => city.href.startsWith('https://www.meteomedia.com/fr/ville/ca/quebec/'),
+  ))).toBe(true);
   await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(4);
   await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="campus"]')).toHaveCount(3);
   // Une seule ville des Premières Nations ou inuit parmi les trois cartes secondaires.
@@ -41,10 +44,13 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
     .sort((a, b) => a.x - b.x)
     .map(({ width }) => width)));
   expect(activeBoxes[0]).toBeLessThan(activeBoxes[1]);
-  await expect(ribbon.locator('.masthead-weather__city.is-active').first()).toHaveAttribute('href', /^https:\/\/meteo\.gc\.ca\/fr\/location\/index\.html\?coords=/);
+  await expect(ribbon.locator('.masthead-weather__city.is-active').first()).toHaveAttribute(
+    'href',
+    'https://www.meteomedia.com/fr/ville/ca/quebec/montreal/actuelle',
+  );
   await expect(ribbon.locator('[data-weather-city="vaudreuil-soulanges"]')).toHaveAttribute(
     'href',
-    /coords=45\.398%2C-74\.032$/,
+    'https://www.meteomedia.com/fr/ville/ca/quebec/vaudreuil-dorion/actuelle',
   );
   await expect(ribbon.locator("[data-weather-city=\"odanak\"]")).toHaveAttribute(
     "href",
@@ -54,7 +60,10 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
     window.RadarTranslate = { ...(window.RadarTranslate || {}), getMode: () => 'en' };
     window.dispatchEvent(new CustomEvent('radar:translate-mode', { detail: { mode: 'en' } }));
   });
-  await expect(ribbon.locator('.masthead-weather__city.is-active').first()).toHaveAttribute('href', /^https:\/\/weather\.gc\.ca\/en\/location\/index\.html\?coords=/);
+  await expect(ribbon.locator('.masthead-weather__city.is-active').first()).toHaveAttribute(
+    'href',
+    'https://www.meteomedia.com/fr/ville/ca/quebec/montreal/actuelle',
+  );
   const [weatherBox, actionsBox] = await Promise.all([
     ribbon.boundingBox(), page.locator('.masthead-actions').boundingBox(),
   ]);

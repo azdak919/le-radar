@@ -852,8 +852,8 @@ const WEATHER_CITIES = [
   { id: 'la-sarre', name: 'La Sarre', region: 'Abitibi–Témiscamingue', lat: 48.8000, lon: -79.2000 },
   { id: 'ville-marie', name: 'Ville-Marie', region: 'Abitibi–Témiscamingue', lat: 47.3300, lon: -79.4300 },
   { id: 'levis', name: 'Lévis', lat: 46.8033, lon: -71.1779 },
-  // Vaudreuil–Soulanges : le lien Environnement Canada vise Vaudreuil-sur-le-Lac.
-  { id: 'vaudreuil-soulanges', name: 'Vaudreuil–Soulanges', region: 'Vaudreuil–Soulanges', lat: 45.4000, lon: -74.0300, weatherLat: 45.3980, weatherLon: -74.0325 },
+  // Vaudreuil–Soulanges est représentée par la ville centre sur MétéoMédia.
+  { id: 'vaudreuil-soulanges', name: 'Vaudreuil–Soulanges', region: 'Vaudreuil–Soulanges', lat: 45.4000, lon: -74.0300, weatherSlug: 'vaudreuil-dorion' },
   { id: 'saint-ignace-de-loyola', name: 'Saint-Ignace-de-Loyola', region: 'Lanaudière', lat: 46.0800, lon: -73.0200 },
   // Une collectivité représentative par nation : il n'existe pas de capitale
   // unique pour les nations composées de plusieurs communautés.
@@ -910,20 +910,24 @@ let mastheadWeatherPrimaryIndex = 0;
 let mastheadWeatherCompactSecondaryIndex = 0;
 let mastheadWeatherResizeFrame = 0;
 
-function weatherForecastUrl(city) {
-  if (city.weatherUrl) return city.weatherUrl;
-  // Le site d'origine est francophone : ECCC reste en français pour Original,
-  // FR et toute langue traduite, sauf si l'interface est explicitement anglaise.
-  const mode = window.RadarTranslate?.getMode?.();
-  const english = mode === 'en';
-  const host = english ? 'weather.gc.ca/en' : 'meteo.gc.ca/fr';
-  const lat = Number.isFinite(city.weatherLat) ? city.weatherLat : city.lat;
-  const lon = Number.isFinite(city.weatherLon) ? city.weatherLon : city.lon;
-  return `https://${host}/location/index.html?coords=${lat.toFixed(3)}%2C${lon.toFixed(3)}`;
+function weatherLocationSlug(city) {
+  return String(city.weatherSlug || city.name || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[\u2019\u0027`]/g, "")
+    .replace(/[–—]/g, "-")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .split("-").filter(Boolean).join("-");
 }
 
-function weatherForecastProvider(city) {
-  return city.weatherUrl ? 'MétéoMédia' : 'Environnement Canada';
+function weatherForecastUrl(city) {
+  if (city.weatherUrl) return city.weatherUrl;
+  return "https://www.meteomedia.com/fr/ville/ca/quebec/" + weatherLocationSlug(city) + "/actuelle";
+}
+
+function weatherForecastProvider() {
+  return "MétéoMédia";
 }
 
 function refreshMastheadWeatherLinks() {
@@ -1219,7 +1223,12 @@ function botCurrentShow(radio) {
   const cur = entry?.current;
   if (cur?.title && String(cur.title).trim().length >= 3) {
     const live = airSlotIsLive(cur);
-    if (live === true) return cur;
+    if (live === true) {
+      // Une entrée issue de la grille peut être dépassée par une émission
+      // spéciale : la grille locale résout alors le créneau le plus récent.
+      if (cur.source === 'schedule') return scheduleCurrentSlot(radio) || cur;
+      return cur;
+    }
     if (live === false) {
       // Créneau pas commencé ou déjà fini — ne jamais l'afficher comme « en ondes »
     } else {
@@ -1301,18 +1310,27 @@ function scheduleCurrentSlot(radio) {
   const WEEK = 7 * 1440;
   const { day, minutes } = scheduleZonedNow();
   const nowAbs = day * 1440 + minutes;
+  let current = null;
+  let currentStartAbs = -Infinity;
   for (const slot of grid) {
     const start = scheduleTimeToMin(slot.start);
     const end = scheduleTimeToMin(slot.end);
     if (start == null || end == null || !slot.title) continue;
     const startAbs = slot.day * 1440 + start;
     const endAbs = slot.day * 1440 + (end <= start ? end + 1440 : end);
-    if ((nowAbs >= startAbs && nowAbs < endAbs)
-      || (nowAbs + WEEK >= startAbs && nowAbs + WEEK < endAbs)) {
-      return slot;
+    const isLive = (nowAbs >= startAbs && nowAbs < endAbs)
+      || (nowAbs + WEEK >= startAbs && nowAbs + WEEK < endAbs);
+    if (!isLive) continue;
+
+    // En cas de chevauchement, la diffusion commencée le plus récemment
+    // prévaut (ex. une émission spéciale remplace la grille régulière).
+    const effectiveStart = startAbs > nowAbs ? startAbs - WEEK : startAbs;
+    if (effectiveStart > currentStartAbs) {
+      current = slot;
+      currentStartAbs = effectiveStart;
     }
   }
-  return null;
+  return current;
 }
 
 /** Prochaine émission planifiée (utile entre deux créneaux, ex. CHYZ l'après-midi). */
