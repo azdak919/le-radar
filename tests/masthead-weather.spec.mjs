@@ -28,6 +28,11 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="campus"]')).toHaveCount(2);
   await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="nation"]')).toHaveCount(2);
   await expect(ribbon.locator('.masthead-weather__city.is-active').first()).toHaveAttribute('data-weather-city', 'montreal');
+  const activeBoxes = (await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities
+    .map((city) => city.getBoundingClientRect())
+    .sort((a, b) => a.x - b.x)
+    .map(({ width }) => width)));
+  expect(activeBoxes[0]).toBeLessThan(activeBoxes[1]);
   await expect(ribbon.locator('.masthead-weather__city.is-active').first()).toHaveAttribute('href', /^https:\/\/meteo\.gc\.ca\/fr\/location\/index\.html\?coords=/);
   await page.evaluate(() => {
     window.RadarTranslate = { ...(window.RadarTranslate || {}), getMode: () => 'en' };
