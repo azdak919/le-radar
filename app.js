@@ -369,6 +369,8 @@ let tunerSubRotateShowAir = false;
 /** CHOQ : alterne piste en cours ↔ émission à venir (musique libre + grille). */
 let choqAirRotateTimer = null;
 let choqAirRotateShowUpcoming = false;
+/** Une seule bascule CHOQ : demander un fondu sur le prochain render. */
+let choqAirCrossfadePending = false;
 const TUNER_SUB_ROTATE_MS = 8000;
 const TUNER_SUB_ROTATE_NARROW_MS = 14000;
 const TUNER_SUB_ROTATE_VERY_NARROW_MS = 18000;
@@ -771,22 +773,72 @@ function upcomingTimeRange(upcoming) {
 }
 
 /**
+ * Piste CHOQ « aberrante » (slug fichier, épisode collé, etc.)
+ * Ex. « S1 — E6intervenir-ensemble28-novAmv1 » → ignorer, garder l’émission.
+ */
+function isGarbageChoqTrack(track, relatedTitles = []) {
+  let raw = String(track || '').replace(/^♪\s*/, '').trim();
+  if (raw.length < 2) return true;
+
+  const compact = raw
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
+    .replace(/[^a-z0-9]+/g, '');
+
+  // Codes épisode / saison collés au texte (S1 E6…, E6intervenir…)
+  if (/\bs\d+\b/i.test(raw) && /\be\d+/i.test(raw)) return true;
+  if (/e\d+[a-z]{4,}/i.test(compact)) return true;
+
+  // Extensions / masters / versions fichier
+  if (/(^|[^a-z])(amv|wav|mp3|flac|aiff|master|mixdown|edit)\d*$/i.test(compact)) return true;
+  if (/\d{1,2}[a-z]{3,4}\d*/i.test(compact) && /v\d|amv|nov|jan|fev|mar|avr|mai|jun|jul|aou|sep|oct|dec/i.test(compact)) {
+    return true;
+  }
+
+  // Peu d’espaces + tirets/underscores → nom de fichier
+  const spaces = (raw.match(/\s/g) || []).length;
+  if (raw.length >= 18 && spaces <= 2 && /[-_]/.test(raw) && /[a-z]\d|\d[a-z]/i.test(raw)) {
+    return true;
+  }
+
+  // Contient le slug d’une émission liée sans espaces (intervenirensemble…)
+  for (const title of relatedTitles) {
+    const slug = String(title || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/\p{M}/gu, '')
+      .replace(/[^a-z0-9]+/g, '');
+    if (slug.length >= 8 && compact.includes(slug) && compact !== slug) return true;
+  }
+
+  return false;
+}
+
+/**
  * CHOQ — phases d’affichage alternées (cas particuliers) :
  *  A) Hors créneau : piste live ↔ prochaine émission (À venir)
  *  B) Émission en direct + piste différente : émission ↔ piste
+ *  Piste « fichier » → null (affichage simple de l’émission seulement).
  * @returns {{ live: object, alt: object } | null}
  */
 function choqHybridAirPhases(radio) {
   if (!radio || radio.id !== 'choq') return null;
   const entry = nowPlayingEntry(radio);
-  const track = String(entry?.track || '').trim();
+  const trackRaw = String(entry?.track || '').trim();
   const slogan = radioSlogan(radio);
   const botCur = botCurrentShow(radio);
   const schedCur = scheduleCurrentSlot(radio);
   const liveShow = (botCur?.title && botCur) || (schedCur?.title && schedCur) || null;
+  const upcoming = botNextShow(radio) || scheduleNextSlot(radio);
 
-  // B) Émission en ondes + morceau distinct (API live / Triton / ICY)
-  if (liveShow?.title && track && normLoose(track) !== normLoose(liveShow.title)) {
+  const related = [liveShow?.title, upcoming?.title].filter(Boolean);
+  const trackOk = trackRaw
+    && !isGarbageChoqTrack(trackRaw, related)
+    && (!liveShow?.title || normLoose(trackRaw) !== normLoose(liveShow.title));
+
+  // B) Émission en ondes + morceau distinct et « propre »
+  if (liveShow?.title && trackOk) {
     const start = liveShow.start || schedCur?.start || botCur?.start || '';
     const end = liveShow.end || schedCur?.end || botCur?.end || '';
     const timeRange = start && end ? `${start} – ${end}` : (start || '');
@@ -797,21 +849,19 @@ function choqHybridAirPhases(radio) {
         kind: 'live',
       },
       alt: {
-        title: `♪ ${track}`,
+        title: `♪ ${trackRaw}`,
         sub: liveShow.title,
         kind: 'live',
       },
     };
   }
 
-  // A) Musique libre (pas d’émission en cours) + émission à venir
-  if (!liveShow && track) {
-    const upcoming = botNextShow(radio) || scheduleNextSlot(radio);
-    if (!upcoming?.title) return null;
+  // A) Musique libre + émission à venir (piste propre seulement)
+  if (!liveShow && trackOk && upcoming?.title) {
     const upTime = upcomingTimeRange(upcoming);
     return {
       live: {
-        title: `♪ ${track}`,
+        title: `♪ ${trackRaw}`,
         sub: slogan || radio.name || '',
         kind: 'live',
       },
@@ -833,7 +883,7 @@ function stopChoqAirRotate() {
   }
 }
 
-/** Alterne les deux phases CHOQ (live ↔ alt). */
+/** Alterne les deux phases CHOQ (live ↔ alt) avec fondu. */
 function syncChoqAirRotate(radio) {
   const hybrid = choqHybridAirPhases(radio);
   if (!hybrid) {
@@ -847,6 +897,7 @@ function syncChoqAirRotate(radio) {
       return;
     }
     choqAirRotateShowUpcoming = !choqAirRotateShowUpcoming;
+    choqAirCrossfadePending = true;
     lastNowAir = { title: null, sub: null, empty: null, previewId: null, kind: null };
     renderTunerNowAir();
   }, CHOQ_AIR_ROTATE_MS);
@@ -1285,8 +1336,6 @@ function updateNowAirSubAirText(text, crossfade = false) {
 
 /**
  * Texte du panneau antenne : ellipsis + title (tooltip), sans marquee.
- * Pas de crossfade opacity (is-swapping) : en preview ça laissait le corps
- * invisible (seul le libellé « À l'antenne » restait visible).
  */
 function applyNowAirPanelText(el, text) {
   if (!el) return;
@@ -1304,22 +1353,51 @@ function applyNowAirPanelText(el, text) {
   el.setAttribute('title', value);
 }
 
-function updateNowAirPanel(title, sub, _crossfade = false) {
-  const body = TUNER_NOWAIR?.querySelector('.tuner-nowair-body');
-  // Toujours sortir d’un éventuel is-swapping résiduel
-  body?.classList.remove('is-swapping');
+/**
+ * @param {string} title
+ * @param {string} sub
+ * @param {{ crossfade?: boolean, panelLabel?: string }} [opts]
+ */
+function updateNowAirPanel(title, sub, opts = {}) {
+  const crossfade = !!opts.crossfade;
+  const panelLabel = opts.panelLabel;
+  const panel = TUNER_NOWAIR;
+  if (!panel) return;
 
-  applyNowAirPanelText(TUNER_NOWAIR_TITLE, title);
-  if (TUNER_NOWAIR_SUB) {
-    if (sub) {
-      TUNER_NOWAIR_SUB.classList.remove('hidden');
-      applyNowAirPanelText(TUNER_NOWAIR_SUB, sub);
-    } else {
-      TUNER_NOWAIR_SUB.textContent = '';
-      TUNER_NOWAIR_SUB.classList.add('hidden');
-      TUNER_NOWAIR_SUB.removeAttribute('title');
+  const write = () => {
+    if (panelLabel != null) {
+      const labelEl = panel.querySelector('.tuner-nowair-label') || TUNER_NOWAIR_LABEL;
+      if (labelEl) labelEl.textContent = panelLabel;
+      panel.setAttribute('aria-label', panelLabel);
     }
+    applyNowAirPanelText(TUNER_NOWAIR_TITLE, title);
+    if (TUNER_NOWAIR_SUB) {
+      if (sub) {
+        TUNER_NOWAIR_SUB.classList.remove('hidden');
+        applyNowAirPanelText(TUNER_NOWAIR_SUB, sub);
+      } else {
+        TUNER_NOWAIR_SUB.textContent = '';
+        TUNER_NOWAIR_SUB.classList.add('hidden');
+        TUNER_NOWAIR_SUB.removeAttribute('title');
+      }
+    }
+  };
+
+  const useFade = crossfade && !PREFERS_REDUCED_MOTION?.matches;
+  if (!useFade) {
+    panel.classList.remove('is-swapping');
+    write();
+    return;
   }
+
+  // Fondu court : fade out → écrire → fade in (ne pas rester bloqué à opacity 0)
+  panel.classList.add('is-swapping');
+  window.setTimeout(() => {
+    write();
+    requestAnimationFrame(() => {
+      panel.classList.remove('is-swapping');
+    });
+  }, 200);
 }
 
 function syncTunerSubRotate(title, sub, empty, crossfade = false, kind = 'idle') {
@@ -1502,13 +1580,22 @@ function renderTunerNowAir() {
   TUNER_NOWAIR.dataset.airKind = kind;
 
   // Libellé dynamique : « À venir » remplace « À l'antenne » hors créneau.
-  // Toujours réécrire (query frais) — évite un nœud figé / i18n qui laisserait l'ancien texte.
   const panelLabel = empty ? "À l'antenne" : nowAirPanelLabel(kind);
-  const labelEl = TUNER_NOWAIR.querySelector('.tuner-nowair-label') || TUNER_NOWAIR_LABEL;
-  if (labelEl) labelEl.textContent = panelLabel;
-  TUNER_NOWAIR.setAttribute('aria-label', panelLabel);
+  const choqFade = choqAirCrossfadePending;
+  choqAirCrossfadePending = false;
 
-  updateNowAirPanel(title, sub, crossfadePreview);
+  updateNowAirPanel(title, sub, {
+    crossfade: choqFade,
+    panelLabel,
+  });
+  // Si pas de fondu CHOQ, le libellé est déjà écrit dans updateNowAirPanel.
+  // Preview radio : pas de fondu (évite panneau vide).
+  if (!choqFade) {
+    const labelEl = TUNER_NOWAIR.querySelector('.tuner-nowair-label') || TUNER_NOWAIR_LABEL;
+    if (labelEl) labelEl.textContent = panelLabel;
+    TUNER_NOWAIR.setAttribute('aria-label', panelLabel);
+  }
+
   syncDesktopDialPreview(title, crossfadePreview);
   syncTunerSubRotate(title, sub, empty, crossfadePreview, kind);
   if (currentStation && isPlaybackActive()) {
