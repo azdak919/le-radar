@@ -966,11 +966,39 @@ function applyUIStrings(strings) {
     const lbl = document.getElementById('quote-restore-label');
     if (lbl) lbl.textContent = strings.quote;
   }
+
+  // Les traductions asynchrones peuvent terminer après que PomoUI a mémorisé
+  // sa clé de rendu. Mettre la phase à jour directement évite de conserver
+  // « Focus »/« Break » jusqu'au prochain changement du minuteur.
+  applyPomoStageStrings(strings);
 }
 
 // Patch PomoUI / onSegmentComplete for translated labels and toasts
 function getTranslatedPomoStrings() {
   return UI_STRINGS[currentLang] || UI_STRINGS.en;
+}
+
+function applyPomoStageStrings(strings = getTranslatedPomoStrings()) {
+  const breakLabel = pomo.isLongBreak ? (strings.longBreakLabel || strings.break) : strings.break;
+  const stageLabel = pomo.isBreak ? breakLabel : strings.focus;
+  const label = document.getElementById('pomo-label');
+  if (label) label.textContent = stageLabel;
+
+  const readyLabel = document.getElementById('pomo-phase-ready');
+  if (pomo.phaseJustCompleted && !pomo.isRunning && readyLabel) {
+    readyLabel.textContent = pomo.isBreak ? strings.readyBreak : strings.readyFocus;
+  }
+
+  const fpLabel = document.getElementById('pomo-fp-label');
+  if (fpLabel) fpLabel.textContent = stageLabel;
+  const fpReady = document.getElementById('pomo-fp-phase-ready');
+  if (pomo.phaseJustCompleted && !pomo.isRunning && fpReady) {
+    fpReady.textContent = pomo.isBreak ? strings.readyBreak : strings.readyFocus;
+  }
+
+  const stageEmoji = pomo.isBreak ? (pomo.isLongBreak ? '🌿' : '☕') : '🎯';
+  const pausedMark = !pomo.isRunning && (pomo.pausedRemaining != null || pomo.startedAt != null) ? '⏸ ' : '';
+  document.title = `${pausedMark}${stageEmoji} ${stageLabel} · ${formatMinutes(getRemaining())}m · Pomodoro`;
 }
 
 (function patchPomoUI() {
@@ -984,30 +1012,7 @@ function getTranslatedPomoStrings() {
     // origFn returned early (guard: nothing changed) — skip translated updates too.
     if (_lastPomoRenderKey === prevKey) return;
 
-    const s = getTranslatedPomoStrings();
-    const label = document.getElementById('pomo-label');
-    const breakLabel = pomo.isLongBreak ? (s.longBreakLabel || s.break) : s.break;
-    label.textContent = pomo.isBreak ? breakLabel : s.focus;
-
-    const readyLabel = document.getElementById('pomo-phase-ready');
-    if (pomo.phaseJustCompleted && !pomo.isRunning && readyLabel) {
-      readyLabel.textContent = pomo.isBreak ? s.readyBreak : s.readyFocus;
-    }
-
-    // Translate fullpage overlay labels
-    const fpLabel = document.getElementById('pomo-fp-label');
-    if (fpLabel) fpLabel.textContent = pomo.isBreak ? breakLabel : s.focus;
-    const fpReady = document.getElementById('pomo-fp-phase-ready');
-    if (pomo.phaseJustCompleted && !pomo.isRunning && fpReady) {
-      fpReady.textContent = pomo.isBreak ? s.readyBreak : s.readyFocus;
-    }
-
-    // Translate tab title — preserve emoji prefix and structure
-    const stageEmoji = pomo.isBreak ? (pomo.isLongBreak ? '🌿' : '☕') : '🎯';
-    const translatedStage = pomo.isBreak ? breakLabel : s.focus;
-    const pausedMark = !pomo.isRunning && (pomo.pausedRemaining != null || pomo.startedAt != null) ? '⏸ ' : '';
-    const minStr = formatMinutes(getRemaining());
-    document.title = `${pausedMark}${stageEmoji} ${translatedStage} · ${minStr}m · Pomodoro`;
+    applyPomoStageStrings();
   };
   // Reassign for the tick loop
   PomoUI = window.PomoUI;
