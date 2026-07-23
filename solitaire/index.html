@@ -5005,6 +5005,7 @@ function setHiScoreBtnExpanded(open) {
 
 function showHiScorePanel({ entryMode = false, pending = null } = {}) {
   const panel = document.getElementById('hi-score-panel');
+  const backdrop = document.getElementById('hi-score-backdrop');
   const entry = document.getElementById('hi-score-entry');
   if (!panel) return;
   renderHiScoreList(hiHighlightName);
@@ -5024,11 +5025,13 @@ function showHiScorePanel({ entryMode = false, pending = null } = {}) {
     entry?.classList.add('hidden');
   }
   setHiScoreBtnExpanded(true);
+  backdrop?.classList.remove('hidden');
   panel.classList.remove('hidden');
 }
 
 function hideHiScorePanel() {
   document.getElementById('hi-score-panel')?.classList.add('hidden');
+  document.getElementById('hi-score-backdrop')?.classList.add('hidden');
   document.getElementById('hi-score-entry')?.classList.add('hidden');
   hiEntryPending = null;
   setHiScoreBtnExpanded(false);
@@ -5064,13 +5067,14 @@ function confirmHiScoreEntry() {
 function initHiScoreUI() {
   loadHiScores();
   const panel = document.getElementById('hi-score-panel');
+  const backdrop = document.getElementById('hi-score-backdrop');
   const btn = document.getElementById('hi-score-btn');
   panel?.addEventListener('click', (e) => e.stopPropagation());
   panel?.addEventListener('pointerdown', (e) => e.stopPropagation());
 
   btn?.addEventListener('click', (e) => {
     e.stopPropagation();
-    // Toggle dropdown when browsing (not during initial entry)
+    // Toggle when browsing (not during initial entry)
     if (panel && !panel.classList.contains('hidden') && !hiEntryPending) {
       hideHiScorePanel();
       return;
@@ -5080,6 +5084,10 @@ function initHiScoreUI() {
   });
   document.getElementById('hi-score-close')?.addEventListener('click', hideHiScorePanel);
   document.getElementById('hi-score-ok')?.addEventListener('click', confirmHiScoreEntry);
+  // Clic sur le fond sombre = fermer (sauf pendant la saisie d’initiales)
+  backdrop?.addEventListener('click', () => {
+    if (!hiEntryPending) hideHiScorePanel();
+  });
 
   document.getElementById('hi-score-letters')?.addEventListener('click', (e) => {
     const spin = e.target.closest('.hi-letter-spin');
@@ -5089,14 +5097,6 @@ function initHiScoreUI() {
     }
     const letter = e.target.closest('.hi-letter');
     if (letter) bumpHiLetter(Number(letter.dataset.i), 1);
-  });
-
-  // Click outside closes panel when browsing (keep open while entering initials)
-  document.addEventListener('click', (e) => {
-    if (!panel || panel.classList.contains('hidden')) return;
-    if (hiEntryPending) return;
-    if (panel.contains(e.target) || btn?.contains(e.target)) return;
-    hideHiScorePanel();
   });
 
   // Keyboard: Escape always closes; ← → / ↑ ↓ / Enter only in entry mode
