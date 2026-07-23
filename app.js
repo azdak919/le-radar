@@ -1057,7 +1057,9 @@ function formatStationNowAirLabel(radio) {
 
 /** Téléphone (< 600 px) : acronyme dans le titre du syntoniseur seulement. */
 function isTunerDialPhoneLayout() {
-  return IS_TUNER_EMBED || !!TUNER_DIAL_PHONE_MQ?.matches;
+  // Embed Ataraxia : logique bureau (pas le mode téléphone) même si l’iframe est étroite.
+  if (IS_TUNER_EMBED) return false;
+  return !!TUNER_DIAL_PHONE_MQ?.matches;
 }
 
 /** Institution affichée dans le syntoniseur : abrégée au téléphone, complète en tablette. */
@@ -1125,20 +1127,19 @@ function tunerDesktopSubLine(radio, { external = false } = {}) {
 }
 
 /**
- * Mobile / tablette (< 1100 px) ou iframe embed Ataraxia :
- * titre du dial = poste · établissement (compact 2 lignes + volume inline).
+ * Mobile / tablette (< 1100 px) sur le site principal.
+ * Embed Ataraxia : toujours logique bureau (slogan + EN ONDES + volume inline),
+ * car la largeur de l’iframe (~700 px) ferait croire à tort qu’on est en tablette.
  */
 function isDialCompactLayout() {
-  return IS_TUNER_EMBED || !!TUNER_SUB_ROTATE_MQ?.matches;
+  if (IS_TUNER_EMBED) return false;
+  return !!TUNER_SUB_ROTATE_MQ?.matches;
 }
 
 /**
- * Titre ligne 1 selon le contexte :
- * embed → format bureau récent (« CISM 89,3 FM · UdeM ») ;
- * compact mobile → poste · institution (abrégée au téléphone).
+ * Titre ligne 1 en layout compact (site mobile/tablette uniquement).
  */
 function compactDialTitleLine(radio) {
-  if (IS_TUNER_EMBED) return tunerDesktopTitleLine(radio);
   return tunerDialTitleLine(radio);
 }
 
@@ -1275,7 +1276,7 @@ function isMobileIdleDialPreview() {
 function isDesktopIdleDialCarousel() {
   return !currentStation
     && !PREFERS_REDUCED_MOTION?.matches
-    && !TUNER_SUB_ROTATE_MQ?.matches
+    && (IS_TUNER_EMBED || !TUNER_SUB_ROTATE_MQ?.matches)
     && radios.length > 0;
 }
 
@@ -1343,6 +1344,8 @@ function startNowAirPreview() {
 }
 
 function isTunerSubRotateMode() {
+  // Embed : pas de rotation « À venir » dans le sous-titre — slogan bureau fixe.
+  if (IS_TUNER_EMBED) return false;
   return !PREFERS_REDUCED_MOTION?.matches && !!TUNER_SUB_ROTATE_MQ?.matches;
 }
 
@@ -1561,7 +1564,8 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false, kind = 'idle')
       return;
     }
 
-    const showAirInDialSub = currentStation && TUNER_SUB_ROTATE_MQ?.matches;
+    // Site compact seulement : l’iframe embed reste sur le slogan (tunerSubMeta).
+    const showAirInDialSub = currentStation && !IS_TUNER_EMBED && TUNER_SUB_ROTATE_MQ?.matches;
     if (showAirInDialSub) {
       applyMarquee(TUNER_SUB, tunerSubAirText);
     } else if (tunerSubMeta) {
@@ -2363,14 +2367,14 @@ function selectStation(id, { autoplay = false, openExternal = false } = {}) {
   const external = isExternalListen(radio);
 
   if (isDialCompactLayout()) {
-    // Embed + compact : ligne 1 = « poste FM · acronyme » ; ligne 2 = Web / fréquence.
+    // Mobile/tablette (site) : ligne 1 = poste · établissement ; ligne 2 = fréquence.
     setTunerNameText(compactDialTitleLine(radio));
     const metaLine = dialCompactMetaLineForRadio(radio);
     tunerSubMeta = metaLine;
     TUNER_SUB?.parentElement?.classList.toggle('is-empty', !metaLine);
     applyMarquee(TUNER_SUB, metaLine);
   } else {
-    // Bureau : ligne 1 = poste · institution ; ligne 2 = slogan
+    // Bureau (+ embed Ataraxia) : ligne 1 = poste FM · acronyme ; ligne 2 = slogan
     setTunerNameText(tunerDesktopTitleLine(radio));
     setTunerSubText(tunerDesktopSubLine(radio, { external }));
   }

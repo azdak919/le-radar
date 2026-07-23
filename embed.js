@@ -3,7 +3,7 @@
 (function () {
   if (document.documentElement.dataset.embed !== 'tuner') return;
 
-  const EMBED_H = 58;
+  const EMBED_H = 62; // aligné sur padding bureau 10+42+10
 
   function postHeight(extra) {
     try {
