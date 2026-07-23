@@ -25,6 +25,7 @@
 - **Bots automatisés** — agrégation des articles, images vedette, crédits photo, découverte de flux radio, horaires
 - **Mode clair / sombre** persistant
 - **PWA** — installation mobile, service worker, offline shell
+- **Pomodoro & Solitaire** — mini-apps isolées (`/pomo/`, `/solitaire/`), chacune installable en PWA avec son propre logo
 - **100 % statique** — `news.json` et `radios.json` reconstruits par GitHub Actions ; pas de backend
 
 ---
@@ -64,8 +65,10 @@ le-radar/
 ├── news.json               # Fil agrégé (généré par bot)
 ├── news-sources.json       # Registre des sources d'actualités
 ├── brand-colors.json       # Couleurs institutionnelles
-├── manifest.json           # PWA
-├── sw.js                   # Service Worker
+├── manifest.json           # PWA (shell Le Radar)
+├── sw.js                   # Service Worker shell (n'intercepte pas /pomo|/solitaire)
+├── pomo/                   # Mini-app PWA Pomodoro (🍅, isolée)
+├── solitaire/              # Mini-app PWA Solitaire (🃏, isolée)
 ├── scripts/                # Bots (fetch, images, flux, maintenance)
 ├── assets/                 # Icônes et logos
 └── docs/                   # Documentation (sources, identité)

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Pomodoro — Focus Timer | Le Radar</title>
+
+<!-- Favicons — 🍅 Twemoji on dark rounded tile (same approach as Le Radar tab icons) -->
+<link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any">
+<link rel="icon" href="favicon-32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="favicon-96x96.png" sizes="96x96" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
+<meta name="apple-mobile-web-app-title" content="Pomodoro">
+<meta name="application-name" content="Pomodoro">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#8b6f4e" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1a1816" media="(prefers-color-scheme: dark)">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://images.unsplash.com https://images.pexels.com https://upload.wikimedia.org https://commons.wikimedia.org; connect-src 'self' https://api.mymemory.translated.net https://translate.googleapis.com https://libretranslate.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+
+<!-- Open Source Fonts from Google Fonts -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Only the weights actually used in the stylesheet are requested here to minimise font payload -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Outfit:wght@300;400;500&family=Raleway:wght@300&display=swap" rel="stylesheet">
+
+<!-- Pre-warm connections to image CDNs so the first background loads faster -->
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="dns-prefetch" href="https://upload.wikimedia.org">
+<!-- Layout bootstrap (before paint) -->
+<link rel="stylesheet" href="styles/base.css">
+<link rel="stylesheet" href="styles/layout.css">
+<script src="js/layout.js"></script>
+<script>
+(function () {
+  const root = document.documentElement;
+  const coarse = matchMedia('(pointer: coarse)').matches;
+  const noHover = matchMedia('(hover: none)').matches;
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  const touch = (coarse && (w <= 1024 || h <= 520)) || (noHover && w <= 900);
+  root.dataset.layout = touch ? 'touch' : 'wide';
+  if (touch) {
+    try {
+      const saved = localStorage.getItem('ataraxia_scene')
+        || localStorage.getItem('ataraxia_focus_scene')
+        || 'timer';
+      root.dataset.scene = saved === 'quote' ? 'quote' : 'timer';
+    } catch (e) {
+      root.dataset.scene = 'timer';
+    }
+  }
+})();
+</script>
+</head>
+
+<body>
+
+<!-- Background -->
+
+<div id="bg-layer"></div>
+<div id="bg-layer-next"></div>
+<div id="bg-overlay"></div>
+
+<!-- Toast -->
+
+<div class="toast" id="toast"></div>
+
+<!-- Top toolbar — même pattern que Solitaire (une rangée, pas de sous-barre) -->
+<nav class="top-right-actions" aria-label="Navigation">
+  <div class="app-toolbar-row">
+    <button class="toolbar-btn toolbar-btn--home" id="home-reload-btn" type="button" aria-label="Reload page">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5z"/></svg>
+    </button>
+    <div class="app-toolbar-divider" aria-hidden="true"></div>
+    <div class="app-toolbar-main">
+    <a class="toolbar-btn" id="solitaire-btn" href="../solitaire/" aria-label="Play Solitaire">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L5 12l7 10 7-10z"/></svg>
+      <span id="solitaire-btn-label">Solitaire</span>
+    </a>
+    <a class="toolbar-btn" id="radar-btn"
+       href="../"
+       aria-label="Le Radar — radios étudiantes du Québec">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.2 14.47 16 12 16s-4.52-1.8-4.93-4.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20H9v2h6v-2h-2v-3.08c3.02-.43 5.42-2.78 5.91-5.78.09-.6-.39-1.14-1-1.14z"/></svg>
+      <span id="radar-btn-label">Le Radar</span>
+    </a>
+    <a class="toolbar-btn" id="coffee-btn" href="https://www.buymeacoffee.com/azdak"
+       target="_blank" rel="noopener noreferrer" aria-label="Buy me a coffee">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 3H4v10c0 3.31 2.69 6 6 6h4c3.31 0 6-2.69 6-6V8h1a1 1 0 000-2h-1V3zm-2 10c0 2.21-1.79 4-4 4h-4c-2.21 0-4-1.79-4-4V5h12v8zm2-7h-1V4h1v2z"/></svg>
+      <span id="coffee-btn-label">Buy me a coffee</span>
+    </a>
+    </div>
+    <div class="app-toolbar-divider" aria-hidden="true"></div>
+    <div class="lang-selector">
+      <button class="lang-btn toolbar-btn" id="lang-btn" aria-label="Change language" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+        <span id="lang-label">English</span>
+      </button>
+      <div class="lang-dropdown" id="lang-dropdown"></div>
+      <div class="lang-translating" id="lang-status"></div>
+    </div>
+  </div>
+</nav>
+
+<!-- Page layout: quote card and pomo stacked in center -->
+<div class="page-layout">
+
+<div class="content">
+
+<!-- Pomodoro Timer (zone principale) -->
+
+<div class="pomo-container" id="pomo-container">
+  <div class="pomo-widget" id="pomo-widget">
+    <button class="pomo-corner-btn pomo-fullscreen-btn" id="pomo-fullscreen-btn" aria-label="Open fullscreen timer" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+    </button>
+    <button class="pomo-corner-btn panel-minimize-btn" id="pomo-minimize-btn" aria-label="Minimize timer" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+    </button>
+
+    <!-- Large progress ring with time + label inside -->
+    <div class="pomo-ring-wrapper">
+      <svg class="pomo-ring" viewBox="0 0 120 120">
+        <circle class="pomo-ring-bg" cx="60" cy="60" r="52"/>
+        <circle class="pomo-ring-progress" id="pomo-progress" cx="60" cy="60" r="52"/>
+      </svg>
+      <div class="pomo-center">
+        <span class="pomo-label" id="pomo-label">Focus</span>
+        <div class="pomo-time-inside" id="pomo-display">25<span class="pomo-time-unit">m</span></div>
+        <div class="pomo-dots" id="pomo-dots"></div>
+      </div>
+    </div>
+
+    <!-- Phase-ready nudge label -->
+    <div class="pomo-phase-ready-label" id="pomo-phase-ready"></div>
+
+    <!-- Controls: reset | play/pause | settings -->
+    <div class="pomo-controls">
+      <button class="pomo-btn pomo-btn--secondary" id="pomo-reset" aria-label="Reset timer">
+        <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+      </button>
+      <button class="pomo-btn pomo-btn--primary" id="pomo-play" aria-label="Start timer">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <button class="pomo-btn pomo-btn--primary" id="pomo-pause" aria-label="Stop timer" style="display:none">
+        <svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>
+      </button>
+      <button class="pomo-btn pomo-btn--secondary" id="pomo-settings-btn" aria-label="Timer settings" aria-expanded="false" aria-controls="pomo-settings-panel">
+        <svg viewBox="0 0 24 24"><path d="M19.14 12.94a7.07 7.07 0 000-1.88l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96a7.04 7.04 0 00-1.63-.94l-.36-2.54a.48.48 0 00-.48-.41h-3.84a.48.48 0 00-.48.41l-.36 2.54c-.59.24-1.13.57-1.63.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87a.48.48 0 00.12.61l2.03 1.58a7.07 7.07 0 000 1.88l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.04.7 1.63.94l.36 2.54c.05.24.26.41.48.41h3.84c.24 0 .44-.17.48-.41l.36-2.54c.59-.24 1.13-.57 1.63-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.49.49 0 00-.12-.61l-2.03-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.6 3.6 0 0112 15.6z"/></svg>
+      </button>
+    </div>
+
+  </div><!-- /.pomo-widget -->
+  <button class="panel-restore-chip panel-restore-chip--pomo" id="pomo-restore-btn" type="button" aria-label="Restore timer" hidden>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+    <span class="panel-restore-label" id="pomo-restore-label">Pomodoro</span>
+  </button>
+</div><!-- /.pomo-container -->
+
+  <div class="quote-card" id="quote-card">
+    <button class="pomo-corner-btn panel-minimize-btn" id="quote-minimize-btn" aria-label="Minimize quote" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+    </button>
+    <div class="quote-inner">
+      <div class="quote-body">
+        <div class="quote-mark" aria-hidden="true">"</div>
+        <p class="quote-text" id="quote-text">We suffer more often in imagination than in reality.</p>
+        <p class="quote-author" id="quote-author">Seneca</p>
+      </div>
+      <div class="quote-action-row">
+        <button class="btn" id="btn-new" aria-label="New quote">New Quote</button>
+        <button class="btn" id="btn-bg" aria-label="Change background">New Scene</button>
+      </div>
+    </div>
+    <button class="panel-restore-chip" id="quote-restore-btn" type="button" aria-label="Restore quote" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+      <span class="panel-restore-label" id="quote-restore-label">Quote</span>
+    </button>
+  </div>
+
+</div><!-- /.content -->
+
+<!-- Touch layout: scene switcher (Focus Deck) -->
+<nav class="focus-scene-bar" id="focus-scene-bar" role="tablist" aria-label="View mode">
+  <button type="button" class="scene-btn scene-btn--timer active" id="scene-btn-timer" role="tab" aria-selected="true" aria-controls="pomo-widget">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+    <span id="scene-label-timer">Focus</span>
+  </button>
+  <button type="button" class="scene-btn scene-btn--quote" id="scene-btn-quote" role="tab" aria-selected="false" aria-controls="quote-card">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg>
+    <span id="scene-label-quote">Quote</span>
+  </button>
+</nav>
+
+<!-- Bottom credits bar -->
+<div class="bottom-badges">
+  <div class="img-credit" id="img-credit"></div>
+  <span class="credits-divider">&middot;</span>
+  <a class="license-badge" href="https://www.buymeacoffee.com/azdak" target="_blank" rel="noopener noreferrer" title="Buy me a coffee">
+    <span>Azdak</span>
+  </a>
+  <span class="credits-divider">&middot;</span>
+  <a class="license-badge" href="https://www.gnu.org/licenses/gpl-2.0.html" target="_blank" rel="noopener noreferrer">
+    <span class="copyleft-symbol" aria-label="Copyleft">&copy;</span>
+    <span>GPL v2</span>
+  </a>
+</div>
+
+</div><!-- /.page-layout -->
+
+<!-- Timer settings — hors du widget (évite le piège backdrop-filter sur position:fixed) -->
+<div class="pomo-settings" id="pomo-settings-panel" role="dialog" aria-label="Timer settings" aria-hidden="true">
+  <div class="pomo-settings-header">
+    <h4>Timer Settings</h4>
+    <button class="pomo-settings-close pomo-btn pomo-btn--secondary" id="pomo-settings-close" type="button" aria-label="Close settings">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+    </button>
+  </div>
+  <div class="setting-row">
+    <label>Focus (min)</label>
+    <input type="number" id="setting-work" min="1" max="90" value="25">
+  </div>
+  <div class="setting-row">
+    <label>Break (min)</label>
+    <input type="number" id="setting-break" min="1" max="30" value="5">
+  </div>
+  <div class="setting-row">
+    <label>Long break</label>
+    <input type="number" id="setting-long" min="1" max="60" value="15">
+  </div>
+  <div class="setting-row">
+    <label>Sessions</label>
+    <input type="number" id="setting-sessions" min="1" max="12" value="4">
+  </div>
+  <div class="setting-divider"></div>
+  <h4>Jump to phase</h4>
+  <div class="setting-phase-chips">
+    <button class="phase-chip" id="chip-focus">Focus</button>
+    <button class="phase-chip" id="chip-break">Break</button>
+    <button class="phase-chip" id="chip-long">Long Break</button>
+  </div>
+</div>
+
+<!-- Pomodoro Full-Page Overlay -->
+<div class="pomo-fullpage-overlay" id="pomo-fullpage">
+  <button class="pomo-fullpage-close" id="pomo-fullpage-close" aria-label="Close full-page timer">
+    <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+  </button>
+  <div class="pomo-fullpage-main">
+    <div class="pomo-fullpage-timer">
+      <div class="pomo-ring-wrapper" id="pomo-fp-ring-wrapper">
+        <svg class="pomo-ring" viewBox="0 0 120 120">
+          <circle class="pomo-ring-bg" cx="60" cy="60" r="52"/>
+          <circle class="pomo-ring-progress" id="pomo-fp-progress" cx="60" cy="60" r="52"/>
+        </svg>
+        <div class="pomo-center">
+          <span class="pomo-label" id="pomo-fp-label">Focus</span>
+          <div class="pomo-time-inside" id="pomo-fp-display">25<span class="pomo-time-unit">m</span></div>
+          <div class="pomo-dots" id="pomo-fp-dots"></div>
+        </div>
+      </div>
+      <div class="pomo-phase-ready-label" id="pomo-fp-phase-ready"></div>
+      <div class="pomo-fullpage-actions">
+        <div class="pomo-controls">
+          <button class="pomo-btn pomo-btn--secondary" id="pomo-fp-reset" aria-label="Reset timer">
+            <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+          </button>
+          <button class="pomo-btn pomo-btn--primary" id="pomo-fp-play" aria-label="Start timer">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <button class="pomo-btn pomo-btn--primary" id="pomo-fp-pause" aria-label="Stop timer" style="display:none">
+            <svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>
+          </button>
+          <button class="pomo-btn pomo-btn--secondary" id="pomo-fp-settings-btn" aria-label="Timer settings">
+            <svg viewBox="0 0 24 24"><path d="M19.14 12.94a7.07 7.07 0 000-1.88l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96a7.04 7.04 0 00-1.63-.94l-.36-2.54a.48.48 0 00-.48-.41h-3.84a.48.48 0 00-.48.41l-.36 2.54c-.59.24-1.13.57-1.63.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87a.48.48 0 00.12.61l2.03 1.58a7.07 7.07 0 000 1.88l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.04.7 1.63.94l.36 2.54c.05.24.26.41.48.41h3.84c.24 0 .44-.17.48-.41l.36-2.54c.59-.24 1.13-.57 1.63-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.49.49 0 00-.12-.61l-2.03-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.6 3.6 0 0112 15.6z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Pomodoro modules — load order matters; see js/app.js -->
+<script src="js/storage.js"></script>
+<script src="js/backgrounds-data.js"></script>
+<script src="js/quotes-data.js"></script>
+<script src="js/quotes-i18n.js"></script>
+<script src="js/toast.js"></script>
+<script src="js/pomo-audio.js"></script>
+<script src="js/pomo.js"></script>
+<script src="js/backgrounds.js"></script>
+<script src="js/quotes.js"></script>
+<script src="js/translate.js"></script>
+<script src="js/panels.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

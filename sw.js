@@ -1,4 +1,8 @@
-const CACHE_NAME = "radar-shell-v397";
+const CACHE_NAME = "radar-shell-v399";
+const CACHE_PREFIX = "radar-";
+// Isolated mini-apps under /pomo/ and /solitaire/ own their own SWs + caches.
+const ISOLATED_PATH_RE = /\/(pomo|solitaire)(\/|$)/;
+
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -34,7 +38,8 @@ self.addEventListener("activate", (event) => {
     caches.keys().then((keys) =>
       Promise.all(
         keys
-          .filter((key) => key !== CACHE_NAME)
+          // Only purge radar-* caches — never touch pomo-* or solitaire-*
+          .filter((key) => key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME)
           .map((key) => caches.delete(key))
       )
     ).then(() => self.clients.claim())
@@ -76,6 +81,11 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
 
   if (url.origin !== self.location.origin) {
+    return;
+  }
+
+  // Leave isolated mini-apps (Pomodoro / Solitaire) to their own service workers.
+  if (ISOLATED_PATH_RE.test(url.pathname)) {
     return;
   }
 

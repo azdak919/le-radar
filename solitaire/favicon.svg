@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="36%" r="84%">
+      <stop offset="0%" stop-color="#2a2622"/>
+      <stop offset="100%" stop-color="#1a1816"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#bg)"/>
+  <!-- white card -->
+  <rect x="128" y="72" width="256" height="368" rx="28" fill="#ffffff" stroke="#2c2824" stroke-width="8"/>
+  <!-- red diamond top-left -->
+  <path d="M176 140 L208 180 L176 220 L144 180 Z" fill="#c0392b"/>
+  <!-- red diamond center large -->
+  <path d="M256 168 L328 256 L256 344 L184 256 Z" fill="#c0392b"/>
+  <!-- red diamond bottom-right (rotated) -->
+  <path d="M336 292 L368 332 L336 372 L304 332 Z" fill="#c0392b"/>
+</svg>

@@ -1,0 +1,4653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Solitaire | Le Radar</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'nonce-ataraxia-sol'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://images.unsplash.com https://images.pexels.com https://upload.wikimedia.org https://commons.wikimedia.org https://deckofcardsapi.com; connect-src 'self' https://api.mymemory.translated.net https://translate.googleapis.com https://libretranslate.com; frame-src 'self' https://le-radar.ca https://azdak919.github.io http://127.0.0.1:8888 http://localhost:8888; object-src 'none'; base-uri 'self'; form-action 'none'">
+
+  <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
+  <meta name="apple-mobile-web-app-title" content="Solitaire">
+  <meta name="application-name" content="Solitaire">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#8b6f4e" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1816" media="(prefers-color-scheme: dark)">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ════════════════════════════════════════
+       CSS VARIABLES — Ataraxia theme
+       ════════════════════════════════════════ */
+    :root {
+      --font-body: 'Outfit', system-ui, sans-serif;
+
+      /* Light theme */
+      --bg-primary:      #f5f0eb;
+      --bg-glass:        rgba(255, 255, 255, 0.55);
+      --bg-glass-hover:  rgba(255, 255, 255, 0.72);
+      --border-glass:    rgba(180, 170, 155, 0.3);
+      --text-primary:    #2c2824;
+      --text-secondary:  #6b6259;
+      --text-muted:      #9a9088;
+      --accent:          #8b6f4e;
+      --accent-glow:     rgba(139, 111, 78, 0.18);
+      --shadow-soft:     rgba(44, 40, 36, 0.06);
+      --shadow-medium:   rgba(44, 40, 36, 0.12);
+      --settings-bg:     rgba(252, 249, 246, 0.96);
+      --settings-bg-solid: #fcf9f6;
+      --settings-border: rgba(160, 148, 132, 0.45);
+
+      /* Card colours */
+      --card-face:           #ffffff;
+      --card-back:           #4a6fa5;
+      --card-back-2:         #3a5f95;
+      --card-red:            #c0392b;
+      --card-black:          #1a1a1a;
+      --card-border:         rgba(120, 110, 100, 0.50);
+      --card-shadow:         rgba(44, 40, 36, 0.20);
+      --slot-bg:             rgba(139, 111, 78, 0.18);
+      --slot-border:         rgba(139, 111, 78, 0.55);
+      --selected-outline:    #8b6f4e;
+      --selected-glow:       rgba(139, 111, 78, 0.35);
+
+      /* Shared background overlay tint */
+      --overlay: rgba(245, 240, 235, 0.35);
+
+      /* Layout — card-w updated by JS */
+      --card-w:    70px;
+      --card-h:    98px;
+      --col-gap:   8px;
+      --board-pad: 12px;
+      --header-h:  56px;
+      /* inset for .card-svg to prevent border-radius clipping corner labels */
+      --card-svg-inset: 6px;
+
+      /* Barres fixes — même largeur que game-toolbar */
+      --chrome-gutter: 0.75rem;
+      /* Largeur pour barre bureau + module « À l'antenne » (~280px) */
+      --chrome-cap: 960px;
+      --chrome-width: min(calc(100vw - var(--chrome-gutter)), var(--chrome-cap));
+      --chrome-surface-bg: rgba(0, 0, 0, 0.22);
+      --chrome-surface-border: rgba(255, 255, 255, 0.1);
+      --chrome-surface-blur: blur(12px);
+      --credits-max-width: var(--chrome-width);
+      --credits-pad-y: 0.38rem;
+      --credits-pad-x: 0.85rem;
+      --credits-font-size: 0.6rem;
+      --credits-gap: 0.1rem 0.4rem;
+      --credits-bottom: max(0.65rem, env(safe-area-inset-bottom, 0px));
+      --credits-opacity-visible: 0.78;
+      --sol-toolbar-offset: calc(max(0.45rem, env(safe-area-inset-top, 0px)) + 8.75rem);
+      /* Aligné sur le-radar embed.css --embed-bar-h (barre bureau 62px) */
+      --radar-embed-slot-h: 62px;
+      --credits-bar-offset: 0px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --overlay: rgba(26, 24, 22, 0.45);
+
+        --bg-primary:     #1a1816;
+        --bg-glass:       rgba(40, 36, 32, 0.65);
+        --bg-glass-hover: rgba(50, 45, 40, 0.80);
+        --border-glass:   rgba(100, 90, 78, 0.28);
+        --text-primary:   #e8e0d8;
+        --text-secondary: #a89e94;
+        --text-muted:     #6b6259;
+        --accent:         #c9a87c;
+        --accent-glow:    rgba(201, 168, 124, 0.18);
+        --shadow-soft:    rgba(0, 0, 0, 0.18);
+        --shadow-medium:  rgba(0, 0, 0, 0.35);
+
+        --card-face:         #f8f8f8;
+        --card-back:         #3a5a8a;
+        --card-back-2:       #2e4a7a;
+        --card-red:          #e53935;
+        --card-black:        #212121;
+        --card-border:       rgba(80, 80, 80, 0.55);
+        --card-shadow:       rgba(0, 0, 0, 0.35);
+        --slot-bg:           rgba(201, 168, 124, 0.16);
+        --slot-border:       rgba(201, 168, 124, 0.50);
+        --selected-outline:  #c9a87c;
+        --selected-glow:     rgba(201, 168, 124, 0.30);
+        --settings-bg:       rgba(30, 27, 24, 0.97);
+        --settings-bg-solid: #1e1b18;
+        --settings-border:   rgba(100, 88, 72, 0.55);
+      }
+    }
+
+    /* ════════════════════════════════════════
+       RESET & BASE
+       ════════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { font-size: 16px; color-scheme: light dark; }
+
+    /* ════════════════════════════════════════
+       SHARED BACKGROUND — mirrors index.html
+       ════════════════════════════════════════ */
+    #bg-layer,
+    #bg-layer-next {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    #bg-layer { opacity: 1; }
+    #bg-layer-next {
+      opacity: 0;
+      transition: opacity 1.8s ease;
+      will-change: opacity;
+    }
+    #bg-layer-next.loaded { opacity: 1; }
+
+    #bg-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      background: var(--overlay);
+    }
+
+    .page-layout {
+      position: relative;
+      z-index: 2;
+      min-height: 100dvh;
+      padding-top: var(--sol-toolbar-offset);
+    }
+
+    html {
+      overscroll-behavior: none;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100dvh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      overscroll-behavior: none;
+    }
+
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    /* ════════════════════════════════════════
+       TOP TOOLBAR — pastille centrée (miroir Ataraxia)
+       ════════════════════════════════════════ */
+    .game-toolbar {
+      --tb-font: 0.8rem;
+      --tb-sub-font: 0.7rem;
+      --tb-ls: 0.03em;
+      position: fixed;
+      top: max(0.45rem, env(safe-area-inset-top, 0px));
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 0.42rem 0.62rem 0.34rem;
+      width: var(--chrome-width);
+      max-width: var(--chrome-width);
+      border-radius: 20px;
+      background: var(--chrome-surface-bg);
+      border: 1px solid var(--chrome-surface-border);
+      backdrop-filter: var(--chrome-surface-blur);
+      -webkit-backdrop-filter: var(--chrome-surface-blur);
+      overflow: visible;
+    }
+
+    /* Haut : navigation / ambiance / liens (hors jeu) */
+    .game-toolbar-chrome {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.18rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Zone synthétiseur — barre bureau Le Radar (sans double cadre) */
+    .game-toolbar-tuner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.28rem;
+      margin-bottom: 0;
+      padding: 0.2rem 0.1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      min-height: calc(var(--radar-embed-slot-h) + 0.4rem);
+      overflow: visible;
+      position: relative;
+      z-index: 3;
+      flex-shrink: 0;
+      box-sizing: border-box;
+    }
+
+    .radar-embed-frame {
+      display: block;
+      width: 100%;
+      height: var(--radar-embed-slot-h);
+      margin: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color-scheme: dark;
+      overflow: hidden;
+      vertical-align: middle;
+      flex: 1 1 auto;
+    }
+
+    .radar-embed-frame.is-ready {
+      opacity: 1;
+    }
+
+    /* Bas : contrôles et infos de partie */
+    .game-toolbar-game {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.28rem 0.4rem;
+      margin-top: 0.32rem;
+      padding-top: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .game-toolbar-game-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.18rem;
+    }
+
+    /* rétrocompat sélecteurs éventuels */
+    .game-toolbar-main { display: contents; }
+    .game-toolbar-sub { display: contents; }
+
+    .toolbar-stats {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-shrink: 0;
+      min-width: 11.5ch;
+    }
+
+    .toolbar-stat {
+      font-family: var(--font-body);
+      font-size: var(--tb-sub-font);
+      font-weight: 400;
+      letter-spacing: var(--tb-ls);
+      line-height: 1.2;
+      color: rgba(255, 255, 255, 0.62);
+      white-space: nowrap;
+    }
+
+    .toolbar-stat-sep {
+      font-size: var(--tb-sub-font);
+      line-height: 1;
+      color: rgba(255, 255, 255, 0.35);
+      flex-shrink: 0;
+    }
+
+    .toolbar-stat--moves,
+    .toolbar-stat--time {
+      flex-shrink: 0;
+    }
+
+    #stat-moves {
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+      display: inline-block;
+      min-width: 2ch;
+      text-align: right;
+    }
+
+    #stat-time {
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+      display: inline-block;
+      min-width: 5ch;
+      text-align: center;
+    }
+
+    .toolbar-sub-sep {
+      width: 1px;
+      height: 0.85rem;
+      background: rgba(255, 255, 255, 0.14);
+      flex-shrink: 0;
+    }
+
+    .toolbar-links {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.12rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .toolbar-btn,
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      font-family: var(--font-body);
+      font-size: var(--tb-font);
+      font-weight: 400;
+      letter-spacing: var(--tb-ls);
+      line-height: 1.2;
+      padding: 0.42rem 0.72rem;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.72);
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .toolbar-btn:hover,
+    .lang-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.95);
+    }
+    .toolbar-btn:active { transform: scale(0.96); }
+    .toolbar-btn svg,
+    .lang-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+      opacity: 0.88;
+      flex-shrink: 0;
+    }
+    .toolbar-emoji {
+      font-size: 1.12em;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .toolbar-btn--back {
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.9);
+    }
+    .toolbar-btn--sub {
+      font-size: var(--tb-sub-font);
+      padding: 0.24rem 0.52rem;
+      color: rgba(255, 255, 255, 0.58);
+    }
+    .toolbar-btn--sub:hover { color: rgba(255, 255, 255, 0.88); }
+    .toolbar-btn--sub svg {
+      width: 13px;
+      height: 13px;
+    }
+    .toolbar-btn:disabled {
+      opacity: 0.32;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    /* ════════════════════════════════════════
+       LANGUAGE SELECTOR
+       ════════════════════════════════════════ */
+    .lang-selector {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .lang-btn span { max-width: 6rem; overflow: hidden; text-overflow: ellipsis; }
+
+    .lang-dropdown {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      background: var(--settings-bg-solid);
+      border: 1px solid var(--settings-border);
+      border-radius: 12px;
+      padding: 0.35rem;
+      min-width: 150px;
+      max-height: 280px;
+      overflow-y: auto;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
+      display: none;
+      z-index: 600;
+      isolation: isolate;
+      -webkit-font-smoothing: antialiased;
+    }
+    .lang-dropdown.open { display: block; animation: fadeSlideIn 0.25s ease; }
+
+    .lang-option {
+      display: block;
+      width: 100%;
+      text-align: left;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      color: var(--text-primary);
+      background: none;
+      border: none;
+      border-radius: 8px;
+      padding: 0.4rem 0.6rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .lang-option:hover { background: var(--accent-glow); }
+    .lang-option.active { color: var(--accent); font-weight: 500; }
+
+    .lang-translating {
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 0;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-align: right;
+      padding: 0.2rem 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .lang-translating.visible { opacity: 1; }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ════════════════════════════════════════
+       GAME BOARD
+       ════════════════════════════════════════ */
+    #game-board {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: var(--board-pad);
+      padding-left:  max(var(--board-pad), env(safe-area-inset-left, 0px));
+      padding-right: max(var(--board-pad), env(safe-area-inset-right, 0px));
+      padding-bottom: max(
+        calc(var(--card-h) * 0.4 + var(--board-pad) + var(--credits-bar-offset)),
+        env(safe-area-inset-bottom, 0px)
+      );
+      display: flex;
+      flex-direction: column;
+      gap: var(--col-gap);
+      min-height: calc(100dvh - var(--sol-toolbar-offset) - var(--credits-bar-offset));
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: pan-y;
+    }
+
+    .top-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: var(--col-gap);
+    }
+
+    .tableau-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: var(--col-gap);
+      align-items: start;
+    }
+
+    /* ════════════════════════════════════════
+       CARD SLOT (empty placeholder / drop target)
+       ════════════════════════════════════════ */
+    .card-slot {
+      width: 100%;
+      height: var(--card-h);
+      border-radius: clamp(4px, 6%, 9px);
+      border: 2px solid var(--slot-border);
+      background: var(--slot-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .slot-label {
+      font-size: clamp(1.1rem, calc(var(--card-w) * 0.30), 1.8rem);
+      color: var(--slot-border);
+      pointer-events: none;
+      line-height: 1;
+      font-weight: 600;
+    }
+
+    .drop-active .card-slot,
+    .card-slot.drop-active {
+      background: var(--accent-glow);
+      border-color: var(--accent);
+      border-style: solid;
+    }
+
+    /* ════════════════════════════════════════
+       PILE WRAPPERS
+       ════════════════════════════════════════ */
+    .pile-wrapper {
+      position: relative;
+      width: 100%;
+      height: var(--card-h);
+    }
+
+    .tableau-pile {
+      position: relative;
+      width: 100%;
+    }
+
+    .stock-wrapper { cursor: pointer; }
+
+    /* ════════════════════════════════════════
+       CARD
+       ════════════════════════════════════════ */
+    .card {
+      position: absolute;
+      width: 100%;
+      height: var(--card-h);
+      border-radius: clamp(4px, 6%, 9px);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 2px 4px var(--card-shadow), 0 4px 10px var(--card-shadow);
+      cursor: pointer;
+      transition: box-shadow 0.15s, transform 0.15s;
+      overflow: hidden;
+      touch-action: manipulation;
+    }
+
+    /* ── Face-down ── */
+    .card--back { cursor: default; }
+
+    /* ── Face-up ── */
+    .card--face {
+      background: var(--card-face);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 4px 5px;
+    }
+
+    /* ── SVG card sprite art (fills entire card, inset var(--card-svg-inset) to avoid
+          border-radius clipping the rank/suit corner labels) ── */
+    .card-svg {
+      position: absolute;
+      inset: var(--card-svg-inset);
+      pointer-events: none;
+    }
+
+    /* ── Fallback built-in art (used when sprite unavailable) ── */
+    .card--face.card--red   { color: var(--card-red); }
+    .card--face.card--black { color: var(--card-black); }
+    .card-corner {
+      display: flex; flex-direction: column; align-items: center;
+      line-height: 1; gap: 0; position: relative; z-index: 2;
+    }
+    .card-corner--br { align-self: flex-end; transform: rotate(180deg); }
+    .card-val      { font-size: clamp(11px, calc(var(--card-w) * 0.22), 18px); font-weight: 700; line-height: 1; }
+    .card-suit-sm  { font-size: clamp(9px,  calc(var(--card-w) * 0.18), 14px); line-height: 1; }
+    .card-face-art {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 1; overflow: hidden;
+    }
+    .card-back-art {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 1; overflow: hidden;
+    }
+
+    /* ── Deck of Cards API images ── */
+    .card-api-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      pointer-events: none;
+      border-radius: clamp(3px, 5%, 8px);
+      display: block;
+    }
+
+    /* ── Selected ── */
+    .card--selected {
+      box-shadow:
+        0 0 0 2px var(--selected-outline),
+        0 4px 16px var(--selected-glow) !important;
+      transform: translateY(-4px);
+      z-index: 200 !important;
+    }
+
+    /* ── Drag ghost ── */
+    .card--dragging { opacity: 0.45; }
+
+    /* ── Drop zone ── */
+    .card.drop-active {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    /* ════════════════════════════════════════
+       WIN OVERLAY
+       ════════════════════════════════════════ */
+    #win-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      background: rgba(245, 240, 235, 0.88);
+      backdrop-filter: blur(14px) saturate(1.2);
+      -webkit-backdrop-filter: blur(14px) saturate(1.2);
+      animation: overlayFadeIn 0.5s ease;
+    }
+    @media (prefers-color-scheme: dark) {
+      #win-overlay { background: rgba(26, 24, 22, 0.88); }
+    }
+    #win-overlay.hidden { display: none; }
+
+    @keyframes overlayFadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .win-title {
+      font-size: clamp(2.2rem, 8vw, 3.8rem);
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: var(--text-primary);
+      animation: winSlideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+    }
+    .win-sub {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      animation: winSlideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
+    }
+    @keyframes winSlideUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    .win-btn {
+      font-family: var(--font-body);
+      font-size: 0.84rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.72rem 2.4rem;
+      border-radius: 100px;
+      border: 1px solid var(--accent);
+      background: transparent;
+      color: var(--accent);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      animation: winSlideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both;
+    }
+    .win-btn:hover {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 20px var(--accent-glow);
+    }
+
+    /* ════════════════════════════════════════
+       CASCADE WIN ANIMATION
+       ════════════════════════════════════════ */
+    #cascade-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 250;
+      overflow: hidden;
+    }
+    #cascade-container.active {
+      pointer-events: all;
+      cursor: pointer;
+    }
+    #cascade-hint {
+      position: fixed;
+      bottom: 2.5rem;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      opacity: 0.75;
+      pointer-events: none;
+      animation: winSlideUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 1.2s both;
+    }
+
+    .cascade-card {
+      position: fixed;
+      width: var(--card-w);
+      height: var(--card-h);
+      border-radius: clamp(4px, 6%, 9px);
+      border: 1px solid var(--card-border);
+      background: var(--card-face);
+      color: var(--card-black);
+      box-shadow: 0 3px 10px var(--card-shadow);
+      /* NO animation property - JS driven */
+    }
+    .cascade-card.cascade-red { color: var(--card-red); }
+    .cascade-card .cc-rank {
+      position: absolute;
+      top: 3px;
+      left: 5px;
+      font-size: clamp(9px, calc(var(--card-w) * 0.22), 20px);
+      font-weight: 700;
+      line-height: 1;
+    }
+    .cascade-card .cc-suit-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: clamp(14px, calc(var(--card-w) * 0.44), 36px);
+      line-height: 1;
+    }
+    /* confetti pieces */
+    .confetti-piece {
+      position: fixed;
+      border-radius: 2px;
+      opacity: 0.9;
+      /* NO animation property - JS driven */
+    }
+    /* fireworks particles */
+    .fw-particle {
+      position: fixed;
+      border-radius: 50%;
+      /* NO animation property - JS driven */
+    }
+
+    /* ════════════════════════════════════════
+       HINT HIGHLIGHT
+       ════════════════════════════════════════ */
+    .card--hint {
+      animation: hint-pulse 0.75s ease-in-out infinite !important;
+      box-shadow: 0 0 0 3px #f5c518, 0 4px 18px rgba(245,197,24,0.55) !important;
+      z-index: 50 !important;
+    }
+    .slot--hint {
+      background: rgba(245,197,24,0.22) !important;
+      border-color: #f5c518 !important;
+      box-shadow: 0 0 0 2px #f5c518, 0 4px 14px rgba(245,197,24,0.45) !important;
+    }
+    @keyframes hint-pulse {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-4px); }
+    }
+
+    /* ════════════════════════════════════════
+       AUTO-COMPLETE BANNER
+       ════════════════════════════════════════ */
+    #autocomplete-banner {
+      text-align: center;
+      padding: 0.45rem 1rem;
+      background: rgba(139,111,78,0.14);
+      border-bottom: 1px solid rgba(139,111,78,0.28);
+    }
+    #autocomplete-banner.hidden { display: none; }
+    #autocomplete-btn {
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.38rem 1.4rem;
+      border-radius: 100px;
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: #fff;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    #autocomplete-btn:hover { opacity: 0.85; }
+
+    /* ════════════════════════════════════════
+       NO MORE MOVES TOAST
+       ════════════════════════════════════════ */
+    #no-moves-toast {
+      position: fixed;
+      top: calc(var(--header-h) + 3.5rem);
+      left: 50%;
+      transform: translateX(-50%) translateY(-10px);
+      background: var(--settings-bg);
+      border: 1px solid var(--settings-border);
+      border-radius: 12px;
+      padding: 0.65rem 1.4rem;
+      font-size: 0.82rem;
+      color: var(--text-primary);
+      letter-spacing: 0.06em;
+      text-align: center;
+      box-shadow: 0 4px 20px var(--shadow-medium);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 150;
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+      max-width: min(90vw, 32rem);
+      overflow-wrap: break-word;
+    }
+    #no-moves-toast.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ════════════════════════════════════════
+       WIN STATS
+       ════════════════════════════════════════ */
+    .win-stats {
+      display: flex;
+      gap: 1.8rem;
+      margin-bottom: 0.6rem;
+      animation: winSlideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
+    }
+    .win-stat {
+      text-align: center;
+    }
+    .win-stat-value {
+      font-size: 1.4rem;
+      font-weight: 300;
+      color: var(--accent);
+      line-height: 1.2;
+    }
+    .win-stat-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ════════════════════════════════════════
+       REDUCED MOTION (was after cascadeFall keyframes, now after cascade-card)
+       ════════════════════════════════════════ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* ════════════════════════════════════════
+       BOTTOM-RIGHT CREDITS BAR
+       ════════════════════════════════════════ */
+    .bottom-badges {
+      position: fixed;
+      left: 0;
+      right: 0;
+      margin-inline: auto;
+      transform: none;
+      bottom: var(--credits-bottom);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: var(--credits-gap);
+      width: var(--chrome-width);
+      max-width: var(--chrome-width);
+      box-sizing: border-box;
+      opacity: 0;
+      transition: background 0.3s ease, opacity 0.35s ease;
+      z-index: 10;
+      pointer-events: auto;
+      font-family: var(--font-body);
+      font-size: var(--credits-font-size);
+      font-weight: 300;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.75);
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+      background: var(--chrome-surface-bg);
+      padding: var(--credits-pad-y) var(--credits-pad-x);
+      border-radius: 20px;
+      border: 1px solid var(--chrome-surface-border);
+      backdrop-filter: var(--chrome-surface-blur);
+      -webkit-backdrop-filter: var(--chrome-surface-blur);
+      letter-spacing: 0.02em;
+    }
+    @keyframes creditsEnter {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: var(--credits-opacity-visible); transform: translateY(0); }
+    }
+    .bottom-badges.visible {
+      opacity: var(--credits-opacity-visible);
+      animation: creditsEnter 0.52s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .bottom-badges:hover { opacity: 1; background: rgba(0, 0, 0, 0.36); }
+
+    .bottom-badges .credits-divider { margin: 0 0.35rem; opacity: 0.4; }
+
+    .img-credit {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 28rem;
+      flex-shrink: 1;
+      min-width: 0;
+    }
+    .img-credit a { color: rgba(255, 255, 255, 0.9); text-decoration: none; }
+    .img-credit a:hover { text-decoration: underline; }
+
+    .license-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      color: inherit;
+      text-decoration: none;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .license-badge:hover { color: rgba(255, 255, 255, 1); }
+
+    .copyleft-symbol {
+      font-size: 0.75rem;
+      line-height: 1;
+      flex-shrink: 0;
+      opacity: 0.9;
+      display: inline-block;
+      transform: scaleX(-1);
+    }
+
+    /* ════════════════════════════════════════
+       RESPONSIVE CREDITS — portrait (comme Ataraxia)
+       ════════════════════════════════════════ */
+    @media (orientation: portrait) {
+      .bottom-badges .img-credit {
+        flex-basis: 100%;
+        text-align: center;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: unset;
+        max-width: 100%;
+      }
+      .bottom-badges .img-credit + .credits-divider { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════ SHARED BACKGROUND ══════════════════════ -->
+<div id="bg-layer"></div>
+<div id="bg-layer-next"></div>
+<div id="bg-overlay"></div>
+
+<div class="page-layout">
+<!-- ══════════════════════ TOP TOOLBAR ══════════════════════ -->
+<nav class="game-toolbar" aria-label="Game controls">
+  <!-- Haut : Pomodoro, arrière-plan, liens Radar / café, langue -->
+  <div class="game-toolbar-chrome" aria-label="Navigation and extras">
+    <a class="toolbar-btn toolbar-btn--back" href="../pomo/" id="back-pomodoro-link" aria-label="Back to Pomodoro">
+      <span class="toolbar-emoji" aria-hidden="true">🍅</span>
+      <span id="back-pomodoro-label">Pomodoro</span>
+    </a>
+    <button class="toolbar-btn" id="shuffle-bg-btn" aria-label="Shuffle background" title="Shuffle Background">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/>
+      </svg>
+      <span id="shuffle-bg-label">Background</span>
+    </button>
+    <a class="toolbar-btn" id="radar-btn"
+       href="https://le-radar.ca/"
+       target="_blank" rel="noopener noreferrer" aria-label="Le Radar">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.2 14.47 16 12 16s-4.52-1.8-4.93-4.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20H9v2h6v-2h-2v-3.08c3.02-.43 5.42-2.78 5.91-5.78.09-.6-.39-1.14-1-1.14z"/>
+      </svg>
+      <span id="radar-btn-label">Le Radar</span>
+    </a>
+    <a class="toolbar-btn" id="coffee-btn"
+       href="https://www.buymeacoffee.com/azdak"
+       target="_blank" rel="noopener noreferrer" aria-label="Buy me a coffee">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20 3H4v10c0 3.31 2.69 6 6 6h4c3.31 0 6-2.69 6-6V8h1a1 1 0 000-2h-1V3zm-2 10c0 2.21-1.79 4-4 4h-4c-2.21 0-4-1.79-4-4V5h12v8zm2-7h-1V4h1v2z"/>
+      </svg>
+      <span id="coffee-btn-label">Buy me a coffee</span>
+    </a>
+    <div class="lang-selector">
+      <button class="lang-btn" id="lang-btn" aria-label="Change language">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+        <span id="lang-label">EN</span>
+      </button>
+      <div class="lang-dropdown" id="lang-dropdown"></div>
+      <div class="lang-translating" id="lang-status"></div>
+    </div>
+  </div>
+
+  <!-- Centre : synthétiseur Le Radar (centré entre les filets) -->
+  <div class="game-toolbar-tuner" id="game-toolbar-tuner">
+    <iframe
+      id="radar-embed"
+      class="radar-embed-frame"
+      src="../tuner-embed.html"
+      title="Le Radar — syntoniseur radio"
+      loading="eager"
+      allow="autoplay; encrypted-media"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
+  </div>
+
+  <!-- Bas : actions et infos de jeu -->
+  <div class="game-toolbar-game" aria-label="Game actions">
+    <div class="game-toolbar-game-actions">
+      <button class="toolbar-btn" id="undo-btn" aria-label="Undo last move" disabled>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/>
+        </svg>
+        <span id="undo-label">Undo</span>
+      </button>
+      <button class="toolbar-btn" id="new-game-btn" aria-label="Start new playable game" title="New playable deal">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+        </svg>
+        <span id="new-game-label">New Game</span>
+      </button>
+      <button class="toolbar-btn" id="restart-deal-btn" aria-label="Restart this deal" title="Restart this deal" disabled>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+        </svg>
+        <span id="restart-deal-label">Restart deal</span>
+      </button>
+      <button class="toolbar-btn" id="hint-btn" aria-label="Show a hint (H)" title="Hint (H)">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/>
+        </svg>
+        <span id="hint-label">Hint</span>
+      </button>
+    </div>
+    <div class="toolbar-stats" id="toolbar-stats">
+      <span class="toolbar-stat toolbar-stat--moves">
+        <span id="stat-moves">0</span>
+        <span id="moves-label">moves</span>
+      </span>
+      <span class="toolbar-stat-sep" aria-hidden="true">·</span>
+      <span class="toolbar-stat toolbar-stat--time" aria-label="Elapsed time">
+        <span id="stat-time">0:00</span>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════ AUTO-COMPLETE BANNER ══════════════════════ -->
+<div id="autocomplete-banner" class="hidden" role="complementary">
+  <button id="autocomplete-btn">Auto Complete</button>
+</div>
+
+<!-- ══════════════════════ GAME BOARD (rendered by JS) ══════════════════════ -->
+<div id="game-board" role="main" aria-label="Solitaire game board"></div>
+
+<!-- ══════════════════════ WIN OVERLAY ══════════════════════ -->
+<div id="win-overlay" class="hidden" role="dialog" aria-live="polite" aria-label="You win">
+  <div class="win-title" id="win-title">You Win ✦</div>
+  <div class="win-sub" id="win-sub">All cards placed</div>
+  <div class="win-stats" id="win-stats">
+    <div class="win-stat">
+      <div class="win-stat-value" id="stat-win-played">—</div>
+      <div class="win-stat-label" id="stat-played-label">Played</div>
+    </div>
+    <div class="win-stat">
+      <div class="win-stat-value" id="stat-win-won">—</div>
+      <div class="win-stat-label" id="stat-won-label">Won</div>
+    </div>
+    <div class="win-stat">
+      <div class="win-stat-value" id="stat-win-streak">—</div>
+      <div class="win-stat-label" id="stat-streak-label">Streak</div>
+    </div>
+    <div class="win-stat">
+      <div class="win-stat-value" id="stat-win-best">—</div>
+      <div class="win-stat-label" id="stat-best-label">Best</div>
+    </div>
+  </div>
+  <button class="win-btn" id="play-again-btn">Play Again</button>
+</div>
+
+<!-- ══════════════════════ NO MORE MOVES TOAST ══════════════════════ -->
+<div id="no-moves-toast" role="status" aria-live="polite"></div>
+
+<!-- ══════════════════════ CASCADE CONTAINER ══════════════════════ -->
+<div id="cascade-container" aria-hidden="true"></div>
+
+</div><!-- /.page-layout -->
+
+<!-- Bottom credits bar -->
+<div class="bottom-badges" id="bottom-badges">
+  <div class="img-credit" id="img-credit"></div>
+  <span class="credits-divider">&middot;</span>
+  <a class="license-badge" href="https://www.buymeacoffee.com/azdak" target="_blank" rel="noopener noreferrer" title="Buy me a coffee">
+    <span>Azdak</span>
+  </a>
+  <span class="credits-divider">&middot;</span>
+  <a class="license-badge" href="https://www.gnu.org/licenses/gpl-2.0.html" target="_blank" rel="noopener noreferrer">
+    <span class="copyleft-symbol" aria-label="Copyleft">&copy;</span>
+    <span>GPL v2</span>
+  </a>
+</div>
+
+<script src="js/solitaire-rules.js"></script>
+<script nonce="ataraxia-sol">
+/* ══════════════════════════════════════════════════════════
+   CARD IMAGES — Deck of Cards API (deckofcardsapi.com)
+   Images: https://deckofcardsapi.com/static/img/{VALUE}{SUIT}.png
+   ══════════════════════════════════════════════════════════ */
+const DECK_API_IMG = 'https://deckofcardsapi.com/static/img';
+
+/* ══════════════════════════════════════════════════════════
+   CONSTANTS
+   ══════════════════════════════════════════════════════════ */
+const MAX_HISTORY_LENGTH = 100;
+const SUITS      = ['♠', '♥', '♦', '♣'];
+const VALUES     = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+
+/* ══════════════════════════════════════════════════════════
+   STATE
+   ══════════════════════════════════════════════════════════ */
+let stock       = [];
+let waste       = [];
+let foundations = [[], [], [], []];   // 4 piles, any suit order
+let tableau     = Array.from({ length: 7 }, () => []);
+let history     = [];                 // serialised snapshots for undo
+let selected    = null;               // { pile, col, cardIdx }
+let moveCount   = 0;
+let startTime   = null;
+let timerInterval = null;
+let timerStarted = false;
+let cascadeAnimFrame = null;
+let gameInProgress = false;           // true once first move made in this game
+let gameWon        = false;           // true after win
+let initialSnapshot = null;           // restart same deal
+let stuckCount = 0;                   // consecutive "no productive move" signals
+
+// Statistics (loaded from localStorage)
+let gamesPlayed = 0;
+let gamesWon    = 0;
+let winStreak   = 0;
+let bestTime    = Infinity;
+
+// Hint state
+let hintTimer   = null;
+let noMovesToastTimer = null;
+
+// Translation state (populated later by initTranslation)
+let currentLang = 'en';
+let _cachedUIStrings = {};
+const SOL_UI_EN = {
+  pomodoro: 'Pomodoro', pomodoroBack: 'Back to Pomodoro',
+  undo: 'Undo', newGame: 'New Game', moves: 'moves',
+  youWin: 'You Win ✦',
+  allCards: 'All cards placed', playAgain: 'Play Again', solitaire: 'Solitaire',
+  hint: 'Hint', autoComplete: 'Auto Complete',
+  played: 'Played', won: 'Won', streak: 'Streak', best: 'Best',
+  shuffleBg: 'Background', restartDeal: 'Restart deal', noMoves: 'No useful move right now — try Undo, draw from the stock, or a new playable deal', playableDeal: 'Playable deal', dealing: 'Dealing a playable hand…',
+  radarBtn: 'Le Radar', coffeeBtn: 'Buy me a coffee',
+};
+
+// Hardcoded translations for languages where the generic API produces wrong results
+// (e.g. "Hint" → "Remarque" in French, "moves" untranslated)
+const SOL_UI_HARDCODED = {
+  fr: {
+    pomodoro: 'Pomodoro', pomodoroBack: 'Retour au minuteur Pomodoro',
+    undo: 'Annuler', newGame: 'Nouvelle partie', moves: 'coups',
+    youWin: 'Victoire ✦',
+    allCards: 'Toutes les cartes placées', playAgain: 'Rejouer',
+    solitaire: 'Solitaire', hint: 'Indice', autoComplete: 'Compléter',
+    played: 'Joués', won: 'Gagnés', streak: 'Série', best: 'Meilleur',
+    shuffleBg: 'Arrière-plan', restartDeal: 'Rejouer la donne', noMoves: 'Aucun coup utile pour l’instant — Annuler, piocher, ou nouvelle donne jouable', playableDeal: 'Donne jouable', dealing: 'Préparation d’une donne jouable…',
+    radarBtn: 'Le Radar', coffeeBtn: 'Offrir un café',
+  },
+  es: {
+    pomodoro: 'Pomodoro', pomodoroBack: 'Volver al Pomodoro',
+    undo: 'Deshacer', newGame: 'Nueva partida', moves: 'movimientos',
+    youWin: 'Victoria ✦',
+    allCards: 'Todas las cartas colocadas', playAgain: 'Jugar de nuevo',
+    solitaire: 'Solitario', hint: 'Pista', autoComplete: 'Completar',
+    played: 'Jugadas', won: 'Ganadas', streak: 'Racha', best: 'Mejor',
+    shuffleBg: 'Fondo', restartDeal: 'Reiniciar mano', noMoves: 'Sin jugada útil — Deshacer, robar, o nueva mano jugable', playableDeal: 'Mano jugable', dealing: 'Preparando una mano jugable…',
+    radarBtn: 'Le Radar', coffeeBtn: 'Invítame un café',
+  },
+  de: {
+    pomodoro: 'Pomodoro', pomodoroBack: 'Zurück zum Pomodoro',
+    undo: 'Rückgängig', newGame: 'Neues Spiel', moves: 'Züge',
+    youWin: 'Gewonnen ✦',
+    allCards: 'Alle Karten platziert', playAgain: 'Nochmal spielen',
+    solitaire: 'Solitär', hint: 'Hinweis', autoComplete: 'Vervollständigen',
+    played: 'Gespielt', won: 'Gewonnen', streak: 'Serie', best: 'Beste',
+    shuffleBg: 'Hintergrund', restartDeal: 'Gleiches Blatt', noMoves: 'Kein nützlicher Zug — Rückgängig, ziehen oder neues spielbares Blatt', playableDeal: 'Spielbares Blatt', dealing: 'Spielbares Blatt wird gemischt…',
+    radarBtn: 'Le Radar', coffeeBtn: 'Kauf mir einen Kaffee',
+  },
+  it: {
+    pomodoro: 'Pomodoro', pomodoroBack: 'Torna al Pomodoro',
+    undo: 'Annulla', newGame: 'Nuova partita', moves: 'mosse',
+    youWin: 'Vittoria ✦',
+    allCards: 'Tutte le carte posizionate', playAgain: 'Gioca ancora',
+    solitaire: 'Solitario', hint: 'Suggerimento', autoComplete: 'Completare',
+    played: 'Giocate', won: 'Vinte', streak: 'Serie', best: 'Migliore',
+    shuffleBg: 'Sfondo', restartDeal: 'Ricomincia mano', noMoves: 'Nessuna mossa utile — Annulla, pesca o nuova mano giocabile', playableDeal: 'Mano giocabile', dealing: 'Preparazione mano giocabile…',
+    radarBtn: 'Le Radar', coffeeBtn: 'Offrimi un caffè',
+  },
+  pt: {
+    pomodoro: 'Pomodoro', pomodoroBack: 'Voltar ao Pomodoro',
+    undo: 'Desfazer', newGame: 'Novo jogo', moves: 'movimentos',
+    youWin: 'Vitória ✦',
+    allCards: 'Todas as cartas colocadas', playAgain: 'Jogar novamente',
+    solitaire: 'Paciência', hint: 'Dica', autoComplete: 'Completar',
+    played: 'Jogadas', won: 'Ganhas', streak: 'Série', best: 'Melhor',
+    shuffleBg: 'Fundo', restartDeal: 'Reiniciar mão', noMoves: 'Sem jogada útil — Desfazer, comprar ou nova mão jogável', playableDeal: 'Mão jogável', dealing: 'Preparando mão jogável…',
+    radarBtn: 'Le Radar', coffeeBtn: 'Pague-me um café',
+  },
+};
+
+/* ══════════════════════════════════════════════════════════
+   CARD HELPERS
+   ══════════════════════════════════════════════════════════ */
+function numVal(v) {
+  return VALUES.indexOf(v) + 1; // A=1 … K=13
+}
+
+function isRed(suit) {
+  return suit === '♥' || suit === '♦';
+}
+
+function createDeck() {
+  const deck = [];
+  for (const suit of SUITS) {
+    for (const val of VALUES) {
+      deck.push({ suit, value: val, faceUp: false });
+    }
+  }
+  return deck;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* ══════════════════════════════════════════════════════════
+   NEW GAME
+   ══════════════════════════════════════════════════════════ */
+function dealFromDeck(deck) {
+  foundations = [[], [], [], []];
+  tableau     = Array.from({ length: 7 }, () => []);
+  waste       = [];
+  let di = 0;
+  for (let col = 0; col < 7; col++) {
+    for (let row = 0; row <= col; row++) {
+      const c = { ...deck[di++], faceUp: row === col };
+      tableau[col].push(c);
+    }
+  }
+  stock = deck.slice(di).map(c => ({ ...c, faceUp: false }));
+}
+
+function cloneCard(c) {
+  return { suit: c.suit, value: c.value, faceUp: !!c.faceUp };
+}
+
+function cloneState(st) {
+  return {
+    stock: st.stock.map(cloneCard),
+    waste: st.waste.map(cloneCard),
+    foundations: st.foundations.map(f => f.map(cloneCard)),
+    tableau: st.tableau.map(col => col.map(cloneCard)),
+  };
+}
+
+function stateKey(st) {
+  const enc = (c) => (c.faceUp ? '1' : '0') + c.suit + c.value;
+  return [
+    st.stock.map(enc).join(','),
+    st.waste.map(enc).join(','),
+    st.foundations.map(f => f.map(enc).join('.')).join('|'),
+    st.tableau.map(col => col.map(enc).join('.')).join('|'),
+  ].join(';');
+}
+
+function canDropOnFoundationState(card, fi, foundations) {
+  const f = foundations[fi];
+  if (f.length === 0) return card.value === 'A';
+  const top = f[f.length - 1];
+  return top.suit === card.suit && numVal(card.value) === numVal(top.value) + 1;
+}
+
+function canDropOnTableauState(card, col, tableau) {
+  const pile = tableau[col];
+  if (pile.length === 0) return card.value === 'K';
+  const top = pile[pile.length - 1];
+  if (!top.faceUp) return false;
+  return isRed(top.suit) !== isRed(card.suit) &&
+         numVal(card.value) === numVal(top.value) - 1;
+}
+
+function flipExposedState(st) {
+  for (let col = 0; col < 7; col++) {
+    const pile = st.tableau[col];
+    if (pile.length > 0 && !pile[pile.length - 1].faceUp) {
+      pile[pile.length - 1].faceUp = true;
+    }
+  }
+}
+
+/** Score a deal with greedy play: higher = more cards built + more face-ups revealed. */
+function scoreDealGreedy(startState, maxSteps = 450) {
+  let st = cloneState(startState);
+  const seen = new Set();
+  let bestFound = 0;
+  let bestFaceUp = 0;
+  let recycles = 0;
+
+  for (let step = 0; step < maxSteps; step++) {
+    const found = st.foundations.reduce((n, f) => n + f.length, 0);
+    const faceUp = st.tableau.reduce((n, col) => n + col.filter(c => c.faceUp).length, 0)
+      + st.waste.length;
+    if (found > bestFound) bestFound = found;
+    if (faceUp > bestFaceUp) bestFaceUp = faceUp;
+    if (found === 52) break;
+
+    const key = stateKey(st);
+    if (seen.has(key)) break;
+    seen.add(key);
+
+    let moved = false;
+
+    // Foundation from waste / tableau tops
+    if (st.waste.length) {
+      const card = st.waste[st.waste.length - 1];
+      for (let fi = 0; fi < 4; fi++) {
+        if (canDropOnFoundationState(card, fi, st.foundations)) {
+          st.waste.pop(); st.foundations[fi].push(card); flipExposedState(st); moved = true; break;
+        }
+      }
+    }
+    if (!moved) {
+      for (let col = 0; col < 7 && !moved; col++) {
+        const pile = st.tableau[col];
+        if (!pile.length || !pile[pile.length - 1].faceUp) continue;
+        const card = pile[pile.length - 1];
+        for (let fi = 0; fi < 4; fi++) {
+          if (canDropOnFoundationState(card, fi, st.foundations)) {
+            pile.pop(); st.foundations[fi].push(card); flipExposedState(st); moved = true; break;
+          }
+        }
+      }
+    }
+    if (moved) continue;
+
+    // Uncover face-down via tableau move
+    outerUncover:
+    for (let col = 0; col < 7; col++) {
+      const pile = st.tableau[col];
+      for (let ci = 0; ci < pile.length; ci++) {
+        if (!pile[ci].faceUp) continue;
+        if (!(ci > 0 && !pile[ci - 1].faceUp)) continue;
+        const card = pile[ci];
+        for (let tc = 0; tc < 7; tc++) {
+          if (tc === col) continue;
+          if (canDropOnTableauState(card, tc, st.tableau)) {
+            const run = pile.splice(ci);
+            st.tableau[tc].push(...run);
+            flipExposedState(st);
+            moved = true;
+            break outerUncover;
+          }
+        }
+      }
+    }
+    if (moved) continue;
+
+    // Waste → tableau
+    if (st.waste.length) {
+      const card = st.waste[st.waste.length - 1];
+      for (let tc = 0; tc < 7; tc++) {
+        if (canDropOnTableauState(card, tc, st.tableau)) {
+          st.waste.pop(); st.tableau[tc].push(card); flipExposedState(st); moved = true; break;
+        }
+      }
+    }
+    if (moved) continue;
+
+    // Other tableau moves (skip lone king empty-empty cycles)
+    outerTab:
+    for (let col = 0; col < 7; col++) {
+      const pile = st.tableau[col];
+      for (let ci = 0; ci < pile.length; ci++) {
+        if (!pile[ci].faceUp) continue;
+        if (ci === 0 && pile[ci].value === 'K' && pile.length === 1) continue;
+        const card = pile[ci];
+        for (let tc = 0; tc < 7; tc++) {
+          if (tc === col) continue;
+          if (card.value === 'K' && st.tableau[tc].length === 0 && ci === 0) continue;
+          if (canDropOnTableauState(card, tc, st.tableau)) {
+            const run = pile.splice(ci);
+            st.tableau[tc].push(...run);
+            flipExposedState(st);
+            moved = true;
+            break outerTab;
+          }
+        }
+      }
+    }
+    if (moved) continue;
+
+    if (st.stock.length > 0) {
+      const c = st.stock.pop();
+      c.faceUp = true;
+      st.waste.push(c);
+      continue;
+    }
+
+    if (st.waste.length > 0 && recycles < 8) {
+      const playable = st.waste.some(wc => {
+        for (let fi = 0; fi < 4; fi++) if (canDropOnFoundationState(wc, fi, st.foundations)) return true;
+        for (let tc = 0; tc < 7; tc++) if (canDropOnTableauState(wc, tc, st.tableau)) return true;
+        return false;
+      });
+      if (playable) {
+        st.stock = st.waste.slice().reverse().map(c => ({ ...c, faceUp: false }));
+        st.waste = [];
+        recycles++;
+        continue;
+      }
+    }
+    break;
+  }
+
+  const found = st.foundations.reduce((n, f) => n + f.length, 0);
+  const faceUp = st.tableau.reduce((n, col) => n + col.filter(c => c.faceUp).length, 0);
+  // Prefer deals that build foundations and open the board early
+  return bestFound * 12 + bestFaceUp * 2 + found * 3 + faceUp;
+}
+
+function deckToState(deck) {
+  const st = { stock: [], waste: [], foundations: [[], [], [], []], tableau: Array.from({ length: 7 }, () => []) };
+  let di = 0;
+  for (let col = 0; col < 7; col++) {
+    for (let row = 0; row <= col; row++) {
+      st.tableau[col].push({ ...deck[di++], faceUp: row === col });
+    }
+  }
+  st.stock = deck.slice(di).map(c => ({ ...c, faceUp: false }));
+  return st;
+}
+
+/** Pick the most promising of several random deals (feels far less “dead on arrival”). */
+function pickPlayableDeck(maxAttempts = 36) {
+  let bestDeck = null;
+  let bestScore = -1;
+  for (let i = 0; i < maxAttempts; i++) {
+    const deck = shuffle(createDeck());
+    const score = scoreDealGreedy(deckToState(deck));
+    if (score > bestScore) {
+      bestScore = score;
+      bestDeck = deck;
+    }
+    // Excellent deal: many cards built under simple play
+    if (bestScore >= 120) break;
+  }
+  return bestDeck || shuffle(createDeck());
+}
+
+
+function newGame() {
+  const deck = pickPlayableDeck();
+  history     = [];
+  selected    = null;
+  moveCount   = 0;
+  startTime   = null;
+  timerStarted = false;
+  gameInProgress = false;
+  gameWon        = false;
+  stuckCount = 0;
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+
+  dealFromDeck(deck);
+  initialSnapshot = snapshot();
+
+  updateUndoBtn();
+  updateRestartDealBtn();
+  document.getElementById('win-overlay').classList.add('hidden');
+  const winSubEl = document.getElementById('win-sub');
+  if (winSubEl) {
+    delete winSubEl.dataset.hasScore;
+    const strings = (_cachedUIStrings && _cachedUIStrings[currentLang]) || SOL_UI_EN;
+    winSubEl.textContent = strings.allCards || SOL_UI_EN.allCards;
+  }
+  clearCascade();
+  clearHint();
+  if (noMovesToastTimer) { clearTimeout(noMovesToastTimer); noMovesToastTimer = null; }
+  const noMovesToast = document.getElementById('no-moves-toast');
+  if (noMovesToast) noMovesToast.classList.remove('visible');
+  updateAutoCompleteUI();
+  updateStats();
+  render();
+}
+
+function restartDeal() {
+  if (!initialSnapshot) { newGame(); return; }
+  const prev = JSON.parse(initialSnapshot);
+  stock = prev.stock;
+  waste = prev.waste;
+  foundations = prev.foundations;
+  tableau = prev.tableau;
+  history = [];
+  selected = null;
+  moveCount = 0;
+  startTime = null;
+  timerStarted = false;
+  gameInProgress = false;
+  gameWon = false;
+  stuckCount = 0;
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  updateUndoBtn();
+  updateRestartDealBtn();
+  document.getElementById('win-overlay').classList.add('hidden');
+  clearCascade();
+  clearHint();
+  if (noMovesToastTimer) { clearTimeout(noMovesToastTimer); noMovesToastTimer = null; }
+  const noMovesToast = document.getElementById('no-moves-toast');
+  if (noMovesToast) noMovesToast.classList.remove('visible');
+  updateAutoCompleteUI();
+  updateStats();
+  render();
+}
+
+function updateRestartDealBtn() {
+  const btn = document.getElementById('restart-deal-btn');
+  if (btn) btn.disabled = !initialSnapshot;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   UNDO
+   ══════════════════════════════════════════════════════════ */
+function snapshot() {
+  return JSON.stringify({ stock, waste, foundations, tableau });
+}
+
+function saveHistory() {
+  history.push(snapshot());
+  if (history.length > MAX_HISTORY_LENGTH) history.shift();
+  updateUndoBtn();
+}
+
+function undoMove() {
+  if (history.length === 0) return;
+  const prev = JSON.parse(history.pop());
+  stock       = prev.stock;
+  waste       = prev.waste;
+  foundations = prev.foundations;
+  tableau     = prev.tableau;
+  selected    = null;
+  updateUndoBtn();
+  render();
+}
+
+function updateUndoBtn() {
+  const btn = document.getElementById('undo-btn');
+  if (btn) btn.disabled = history.length === 0;
+}
+
+/* ══════════════════════════════════════════════════════════
+   MOVE VALIDATION
+   ══════════════════════════════════════════════════════════ */
+function canDropOnFoundation(card, fi) {
+  const f = foundations[fi];
+  if (f.length === 0)  return card.value === 'A';
+  const top = f[f.length - 1];
+  return top.suit === card.suit && numVal(card.value) === numVal(top.value) + 1;
+}
+
+function canDropOnTableau(card, col) {
+  const pile = tableau[col];
+  if (pile.length === 0) return card.value === 'K';
+  const top = pile[pile.length - 1];
+  if (!top.faceUp) return false;
+  return isRed(top.suit) !== isRed(card.suit) &&
+         numVal(card.value) === numVal(top.value) - 1;
+}
+
+/* ══════════════════════════════════════════════════════════
+   FLIP EXPOSED FACE-DOWN CARDS
+   ══════════════════════════════════════════════════════════ */
+function flipExposed() {
+  for (let col = 0; col < 7; col++) {
+    const pile = tableau[col];
+    if (pile.length > 0 && !pile[pile.length - 1].faceUp) {
+      pile[pile.length - 1].faceUp = true;
+    }
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   EXECUTE MOVE
+   Returns true if the move was legal and applied.
+   ══════════════════════════════════════════════════════════ */
+function executeMove(from, to) {
+  // Gather cards to move
+  let cards;
+  if (from.pile === 'waste') {
+    if (!waste.length) return false;
+    cards = [waste[waste.length - 1]];
+  } else if (from.pile === 'foundation') {
+    const f = foundations[from.col];
+    if (!f.length) return false;
+    cards = [f[f.length - 1]];
+  } else {
+    // tableau
+    const col = tableau[from.col];
+    if (from.cardIdx >= col.length) return false;
+    cards = col.slice(from.cardIdx);
+  }
+
+  if (!cards.length) return false;
+
+  // Validate destination
+  if (to.pile === 'foundation') {
+    if (cards.length !== 1) return false;
+    if (!canDropOnFoundation(cards[0], to.col)) return false;
+  } else {
+    // tableau
+    if (!canDropOnTableau(cards[0], to.col)) return false;
+  }
+
+  saveHistory();
+  moveCount++;
+  updateStats();
+
+  // Remove from source
+  if (from.pile === 'waste') {
+    waste.pop();
+  } else if (from.pile === 'foundation') {
+    foundations[from.col].pop();
+  } else {
+    tableau[from.col].splice(from.cardIdx);
+  }
+
+  // Add to destination
+  if (to.pile === 'foundation') {
+    foundations[to.col].push(...cards);
+  } else {
+    tableau[to.col].push(...cards);
+  }
+
+  flipExposed();
+  clearHint();
+  updateAutoCompleteUI();
+  stuckCount = 0;
+  return true;
+}
+
+/* ══════════════════════════════════════════════════════════
+   AUTO-MOVE TO FOUNDATION — only when called from an explicit
+   user interaction (double-click path). Never cascades others.
+   ══════════════════════════════════════════════════════════ */
+function tryAutoFoundation(pile, col) {
+  let card;
+  if (pile === 'waste') {
+    if (!waste.length) return false;
+    card = waste[waste.length - 1];
+  } else if (pile === 'tableau') {
+    const p = tableau[col];
+    if (!p.length || !p[p.length - 1].faceUp) return false;
+    card = p[p.length - 1];
+  } else {
+    return false;
+  }
+
+  for (let fi = 0; fi < 4; fi++) {
+    if (canDropOnFoundation(card, fi)) {
+      saveHistory();
+      moveCount++;
+      updateStats();
+      if (pile === 'waste') waste.pop();
+      else tableau[col].pop();
+      foundations[fi].push(card);
+      flipExposed();
+      stuckCount = 0;
+      return true;
+    }
+  }
+  return false;
+}
+
+/* ══════════════════════════════════════════════════════════
+   AUTO-PLACE (explicit user click on a card)
+   Priority: 1) Foundation  2) Tableau non-empty  3) Tableau empty
+   Moves ONLY the card/run the user clicked — never cascades other cards.
+   ══════════════════════════════════════════════════════════ */
+function tryAutoPlace(pile, col, cardIdx) {
+  // Validate source
+  if (pile === 'waste') {
+    if (!waste.length) return false;
+    cardIdx = waste.length - 1;
+  } else if (pile === 'foundation') {
+    if (!foundations[col].length) return false;
+  } else {
+    const p = tableau[col];
+    if (cardIdx >= p.length || !p[cardIdx].faceUp) return false;
+  }
+
+  const from = { pile, col, cardIdx };
+  const isRun = pile === 'tableau' && cardIdx < tableau[col].length - 1;
+
+  // 1. Foundation for the clicked single card only (user intent via click on that card)
+  if (!isRun && pile !== 'foundation') {
+    for (let fi = 0; fi < 4; fi++) {
+      if (executeMove(from, { pile: 'foundation', col: fi })) return true;
+    }
+  }
+
+  // 2. Non-empty tableau columns
+  for (let tc = 0; tc < 7; tc++) {
+    if (pile === 'tableau' && tc === col) continue;
+    if (tableau[tc].length === 0) continue;
+    if (executeMove(from, { pile: 'tableau', col: tc })) return true;
+  }
+
+  // 3. Empty tableau columns
+  for (let tc = 0; tc < 7; tc++) {
+    if (pile === 'tableau' && tc === col) continue;
+    if (tableau[tc].length > 0) continue;
+    if (executeMove(from, { pile: 'tableau', col: tc })) return true;
+  }
+
+  return false;
+}
+
+/* ══════════════════════════════════════════════════════════
+   STOCK CLICK
+   ══════════════════════════════════════════════════════════ */
+function clickStock() {
+  if (stock.length > 0) {
+    saveHistory();
+    const count = Math.min(1, stock.length);
+    for (let i = 0; i < count; i++) {
+      const c = stock.pop();
+      c.faceUp = true;
+      waste.push(c);
+    }
+  } else if (waste.length > 0) {
+    saveHistory();
+    stock = [...waste].reverse().map(c => ({ ...c, faceUp: false }));
+    waste = [];
+  }
+  selected = null;
+  clearHint();
+  moveCount++;
+  updateStats();
+  render();
+  updateAutoCompleteUI();
+  checkWin();
+}
+
+/* ══════════════════════════════════════════════════════════
+   CLICK HANDLER — card
+   Restored pre-cascade interaction model. Never cascades other cards.
+   ══════════════════════════════════════════════════════════ */
+function onCardClick(e, fromPile, fromCol, cardIdx) {
+  e.stopPropagation();
+
+  // Double-click → foundation for this card only (existing interaction)
+  if (e.detail >= 2) {
+    selected = null;
+    if (tryAutoFoundation(fromPile, fromCol)) {
+      render();
+      checkWin();
+    }
+    return;
+  }
+
+  // If a card is already selected, try to move it onto the clicked position
+  if (selected) {
+    if (selected.pile === fromPile && selected.col === fromCol && selected.cardIdx === cardIdx) {
+      selected = null;
+      render();
+      return;
+    }
+
+    let toPile, toCol;
+    if (fromPile === 'foundation') {
+      toPile = 'foundation'; toCol = fromCol;
+    } else if (fromPile === 'tableau') {
+      toPile = 'tableau'; toCol = fromCol;
+    } else {
+      selected = null;
+      onCardClick(e, fromPile, fromCol, cardIdx);
+      return;
+    }
+
+    const moved = executeMove(
+      { pile: selected.pile, col: selected.col, cardIdx: selected.cardIdx },
+      { pile: toPile, col: toCol }
+    );
+    if (moved) {
+      selected = null;
+      render();
+      checkWin();
+    } else {
+      selected = null;
+      if (tryAutoPlace(fromPile, fromCol, cardIdx)) {
+        render();
+        checkWin();
+      } else {
+        onCardClick(e, fromPile, fromCol, cardIdx);
+      }
+    }
+    return;
+  }
+
+  // Nothing selected → tryAutoPlace moves only the clicked card/run
+  if (tryAutoPlace(fromPile, fromCol, cardIdx)) {
+    render();
+    checkWin();
+    return;
+  }
+
+  let ok = false;
+  if (fromPile === 'waste') {
+    ok = waste.length > 0 && waste[waste.length - 1].faceUp;
+  } else if (fromPile === 'foundation') {
+    ok = foundations[fromCol].length > 0 && cardIdx === foundations[fromCol].length - 1;
+  } else {
+    ok = cardIdx < tableau[fromCol].length && tableau[fromCol][cardIdx].faceUp;
+  }
+  if (!ok) return;
+  selected = { pile: fromPile, col: fromCol, cardIdx };
+  render();
+}
+
+/* ══════════════════════════════════════════════════════════
+   CLICK HANDLER — empty slot
+   ══════════════════════════════════════════════════════════ */
+function onSlotClick(e, toPile, toCol) {
+  e.stopPropagation();
+  if (!selected) return;
+
+  const moved = executeMove(
+    { pile: selected.pile, col: selected.col, cardIdx: selected.cardIdx },
+    { pile: toPile, col: toCol }
+  );
+
+  if (moved) {
+    selected = null;
+    render();
+    checkWin();
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   DRAG & DROP
+   ══════════════════════════════════════════════════════════ */
+let dragFrom = null;
+
+function onDragStart(e, fromPile, fromCol, cardIdx) {
+  let topCard;
+  if (fromPile === 'waste') {
+    if (!waste.length) { e.preventDefault(); return; }
+    topCard = waste[waste.length - 1];
+  } else if (fromPile === 'foundation') {
+    if (!foundations[fromCol].length) { e.preventDefault(); return; }
+    topCard = foundations[fromCol][foundations[fromCol].length - 1];
+  } else {
+    const col = tableau[fromCol];
+    if (cardIdx >= col.length || !col[cardIdx].faceUp) { e.preventDefault(); return; }
+    topCard = col[cardIdx];
+  }
+
+  if (!topCard || !topCard.faceUp) { e.preventDefault(); return; }
+
+  dragFrom = { pile: fromPile, col: fromCol, cardIdx };
+  selected = null;
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', 'card');
+  e.currentTarget.classList.add('card--dragging');
+}
+
+function onDragEnd(e) {
+  dragFrom = null;
+  e.currentTarget.classList.remove('card--dragging');
+}
+
+function onDragOver(e, toPile, toCol) {
+  if (!dragFrom) return;
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  e.currentTarget.classList.add('drop-active');
+}
+
+function onDragLeave(e) {
+  e.currentTarget.classList.remove('drop-active');
+}
+
+function onDrop(e, toPile, toCol) {
+  e.preventDefault();
+  e.stopPropagation();
+  e.currentTarget.classList.remove('drop-active');
+  if (!dragFrom) return;
+
+  const from = dragFrom;
+  dragFrom = null;
+
+  const moved = executeMove(
+    { pile: from.pile, col: from.col, cardIdx: from.cardIdx },
+    { pile: toPile, col: toCol }
+  );
+
+  if (moved) {
+    render();
+    checkWin();
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   WIN CHECK & ANIMATION
+   ══════════════════════════════════════════════════════════ */
+function checkWin() {
+  if (foundations.every(f => f.length === 13)) showWin();
+}
+
+function showWin() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+
+  // Track statistics
+  gameWon = true;
+  const elapsed = startTime ? Date.now() - startTime : 0;
+  if (elapsed > 0 && elapsed < bestTime) bestTime = elapsed;
+  recordGameResult(true);
+  updateWinStats();
+
+  const winSubEl = document.getElementById('win-sub');
+  if (winSubEl) {
+    const movesWord = (_cachedUIStrings[currentLang] && _cachedUIStrings[currentLang].moves) || SOL_UI_EN.moves;
+    winSubEl.textContent = `${moveCount} ${movesWord} · ${formatTime(elapsed)}`;
+    winSubEl.dataset.hasScore = '1';
+  }
+  updateAutoCompleteUI();
+  startCascade();
+}
+
+function startCascade() {
+  if (cascadeAnimFrame) { cancelAnimationFrame(cascadeAnimFrame); cascadeAnimFrame = null; }
+  const container = document.getElementById('cascade-container');
+  container.innerHTML = '';
+  container.classList.add('active');
+  container.onclick = () => newGame();
+
+  // Subtle "click to play again" hint
+  const hint = document.createElement('div');
+  hint.id = 'cascade-hint';
+  hint.textContent = 'Click anywhere to play again';
+  container.appendChild(hint);
+
+  runBounce(container);
+}
+
+/* ── Windows Solitaire–style bouncing cards ─────────────────────── */
+function runBounce(container) {
+  const cardW = getCardW();
+  const cardH = getCardH();
+  const sw = window.innerWidth;
+  const sh = window.innerHeight;
+
+  // 52 cards shuffled for random launch order
+  const allCardDefs = [];
+  for (const suit of SUITS) {
+    for (const val of VALUES) allCardDefs.push({ suit, value: val });
+  }
+  for (let i = allCardDefs.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [allCardDefs[i], allCardDefs[j]] = [allCardDefs[j], allCardDefs[i]];
+  }
+
+  const activeCards = [];
+  let launchedCount = 0;
+  let tick = 0;
+  const LAUNCH_EVERY = 7; // ~60fps → ~8-9 cards/second
+
+  function launchCard() {
+    if (launchedCount >= allCardDefs.length) return;
+    const def = allCardDefs[launchedCount++];
+
+    const el = document.createElement('div');
+    el.className = 'cascade-card' + (isRed(def.suit) ? ' cascade-red' : '');
+    el.innerHTML = `<span class="cc-rank">${def.value}</span><span class="cc-suit-center">${def.suit}</span>`;
+    container.appendChild(el);
+
+    // Launch from the foundation area (top 10–22% of screen, right 50–90%)
+    const startX = sw * 0.50 + Math.random() * sw * 0.40;
+    const startY = sh * 0.06 + Math.random() * sh * 0.16;
+
+    // Spread in all directions with a leftward bias, moderate upward push
+    const speed = 9 + Math.random() * 13;
+    const angle = Math.PI * (0.55 + Math.random() * 0.90); // ~99°–261° (mostly left + up/down)
+    const vx = Math.cos(angle) * speed;
+    const vy = Math.sin(angle) * speed * 0.85;
+
+    activeCards.push({
+      el,
+      x: startX, y: startY,
+      vx, vy,
+      rot: (Math.random() - 0.5) * 30,
+      rotSpeed: (Math.random() - 0.5) * 4,
+      settled: false,
+    });
+  }
+
+  function frame() {
+    tick++;
+    if (tick % LAUNCH_EVERY === 1) launchCard();
+
+    for (const c of activeCards) {
+      if (c.settled) continue;
+
+      c.vy += 0.52; // gravity
+      c.x  += c.vx;
+      c.y  += c.vy;
+      c.rot += c.rotSpeed;
+
+      // Bottom bounce — high energy retention for tall arches (Win95 style)
+      if (c.y + cardH >= sh) {
+        c.y  = sh - cardH;
+        c.vy = -Math.abs(c.vy) * 0.76;
+        c.vx *= 0.92;
+        c.rotSpeed *= 0.65;
+        if (Math.abs(c.vy) < 1.5) {
+          c.vy = 0;
+          c.settled = true;
+          c.rotSpeed = 0;
+        }
+      }
+
+      // Side walls
+      if (c.x < 0)          { c.x = 0;          c.vx =  Math.abs(c.vx) * 0.75; }
+      if (c.x + cardW > sw) { c.x = sw - cardW;  c.vx = -Math.abs(c.vx) * 0.75; }
+      // Top wall (rarely hit)
+      if (c.y < 0)          { c.y = 0;           c.vy =  Math.abs(c.vy) * 0.80; }
+
+      c.el.style.left      = `${c.x.toFixed(1)}px`;
+      c.el.style.top       = `${c.y.toFixed(1)}px`;
+      c.el.style.transform = `rotate(${c.rot.toFixed(1)}deg)`;
+    }
+
+    cascadeAnimFrame = requestAnimationFrame(frame);
+  }
+  cascadeAnimFrame = requestAnimationFrame(frame);
+}
+
+/* ── Confetti rain ───────────────────────────────────────────────── */
+function runConfetti(container) {
+  const sw = window.innerWidth;
+  const sh = window.innerHeight;
+  const COLORS = ['#e74c3c','#e67e22','#f1c40f','#2ecc71','#3498db','#9b59b6','#e91e8c','#1abc9c','#ff6b6b','#ffd93d'];
+  const PIECE_COUNT = 200;
+  const pieces = [];
+
+  for (let i = 0; i < PIECE_COUNT; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    const w = 6 + Math.random() * 10;
+    const h = w * (0.4 + Math.random() * 0.8);
+    el.style.width  = `${w}px`;
+    el.style.height = `${h}px`;
+    el.style.background = COLORS[Math.floor(Math.random() * COLORS.length)];
+    container.appendChild(el);
+
+    pieces.push({
+      el,
+      x: Math.random() * sw,
+      y: -20 - Math.random() * sh,       // start above screen at varied depths
+      vx: (Math.random() - 0.5) * 2.5,
+      vy: 2 + Math.random() * 4,
+      rot: Math.random() * 360,
+      rotSpeed: (Math.random() - 0.5) * 8,
+      sineOffset: Math.random() * Math.PI * 2,
+      sineAmp: 0.6 + Math.random() * 1.2,
+      sineFreq: 0.03 + Math.random() * 0.04,
+    });
+  }
+
+  let tick = 0;
+  function frame() {
+    tick++;
+    for (const p of pieces) {
+      p.x  += p.vx + Math.sin(tick * p.sineFreq + p.sineOffset) * p.sineAmp;
+      p.y  += p.vy;
+      p.rot += p.rotSpeed;
+
+      // Wrap around — loop back to top when off-screen
+      if (p.y > sh + 20) {
+        p.x = Math.random() * sw;
+        p.y = -20;
+      }
+      if (p.x < -20) p.x = sw + 20;
+      if (p.x > sw + 20) p.x = -20;
+
+      p.el.style.left      = `${p.x.toFixed(1)}px`;
+      p.el.style.top       = `${p.y.toFixed(1)}px`;
+      p.el.style.transform = `rotate(${p.rot.toFixed(1)}deg)`;
+    }
+    cascadeAnimFrame = requestAnimationFrame(frame);
+  }
+  cascadeAnimFrame = requestAnimationFrame(frame);
+}
+
+/* ── Fireworks sparkle bursts ────────────────────────────────────── */
+function runFireworks(container) {
+  const sw = window.innerWidth;
+  const sh = window.innerHeight;
+  const COLORS = ['#ff4757','#ffa502','#ffdd59','#7bed9f','#70a1ff','#eccc68','#ff6b81','#a29bfe','#fd79a8','#ffffff'];
+  const PARTICLES_PER_BURST = 36;
+  const MAX_BURSTS = 6;
+  const BURST_INTERVAL = 80; // ticks between bursts (~1.3s at 60fps)
+  const particles = [];
+  let burstCount = 0;
+  let lastBurstTick = -9999;
+
+  function addBurst() {
+    if (burstCount >= MAX_BURSTS) return;
+    burstCount++;
+    const bx = sw * 0.15 + Math.random() * sw * 0.70;
+    const by = sh * 0.10 + Math.random() * sh * 0.60;
+    const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+    const size  = 5 + Math.random() * 5;
+
+    for (let i = 0; i < PARTICLES_PER_BURST; i++) {
+      const el = document.createElement('div');
+      el.className = 'fw-particle';
+      const ps = size * (0.5 + Math.random() * 0.5);
+      el.style.width  = `${ps}px`;
+      el.style.height = `${ps}px`;
+      el.style.background = color;
+      container.appendChild(el);
+
+      const angle  = (i / PARTICLES_PER_BURST) * Math.PI * 2 + (Math.random() - 0.5) * 0.4;
+      const speed  = 4 + Math.random() * 9;
+      particles.push({
+        el,
+        x: bx, y: by,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        alpha: 1,
+        life: 1,
+        decay: 0.016 + Math.random() * 0.012,
+      });
+    }
+  }
+
+  let tick = 0;
+  function frame() {
+    tick++;
+
+    // Fire a new burst every BURST_INTERVAL ticks, starting immediately
+    if (tick - lastBurstTick >= BURST_INTERVAL) {
+      lastBurstTick = tick;
+      addBurst();
+    }
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.vy   += 0.12; // gentle gravity
+      p.vx   *= 0.97;
+      p.vy   *= 0.97;
+      p.x    += p.vx;
+      p.y    += p.vy;
+      p.life -= p.decay;
+      p.alpha = Math.max(0, p.life);
+
+      if (p.alpha <= 0) {
+        p.el.remove();
+        particles.splice(i, 1);
+        continue;
+      }
+
+      p.el.style.left    = `${p.x.toFixed(1)}px`;
+      p.el.style.top     = `${p.y.toFixed(1)}px`;
+      p.el.style.opacity = p.alpha.toFixed(3);
+    }
+
+    cascadeAnimFrame = requestAnimationFrame(frame);
+  }
+  cascadeAnimFrame = requestAnimationFrame(frame);
+}
+
+function clearCascade() {
+  if (cascadeAnimFrame) { cancelAnimationFrame(cascadeAnimFrame); cascadeAnimFrame = null; }
+  const container = document.getElementById('cascade-container');
+  if (container) {
+    container.innerHTML = '';
+    container.classList.remove('active');
+    container.onclick = null;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   STATS (move counter + timer)
+   ══════════════════════════════════════════════════════════ */
+function formatTime(ms) {
+  const s = Math.floor(ms / 1000);
+  const m = Math.floor(s / 60);
+  return `${m}:${String(s % 60).padStart(2, '0')}`;
+}
+
+function updateStats() {
+  if (moveCount > 0 && !timerStarted) {
+    timerStarted = true;
+    startTime = Date.now();
+    timerInterval = setInterval(updateStats, 1000);
+  }
+  if (moveCount === 1 && !gameInProgress) {
+    gameInProgress = true;
+  }
+  const movesEl = document.getElementById('stat-moves');
+  const timeEl  = document.getElementById('stat-time');
+  if (movesEl) movesEl.textContent = moveCount;
+  if (timeEl) timeEl.textContent = startTime ? formatTime(Date.now() - startTime) : '0:00';
+}
+
+/* ══════════════════════════════════════════════════════════
+   CARD SIZE (kept in sync between CSS vars and JS)
+   ══════════════════════════════════════════════════════════ */
+function updateLayoutInsets() {
+  const root = document.documentElement;
+  const toolbar = document.querySelector('.game-toolbar');
+  const credits = document.getElementById('bottom-badges');
+  const gap = 10;
+
+  if (toolbar) {
+    // Use full toolbar box (chrome + tuner + game rows)
+    const bottom = toolbar.getBoundingClientRect().bottom;
+    root.style.setProperty('--sol-toolbar-offset', `${Math.ceil(bottom + gap)}px`);
+  }
+
+  if (credits && credits.classList.contains('visible')) {
+    const top = credits.getBoundingClientRect().top;
+    root.style.setProperty(
+      '--credits-bar-offset',
+      `${Math.max(0, window.innerHeight - top + gap)}px`
+    );
+  } else {
+    root.style.setProperty('--credits-bar-offset', '0px');
+  }
+}
+
+function updateCardSize() {
+  const root    = document.documentElement;
+  // Use actual board element width for accuracy
+  const boardEl = document.getElementById('game-board');
+  const boardW  = boardEl
+    ? Math.min(980, boardEl.getBoundingClientRect().width || window.innerWidth)
+    : Math.min(980, window.innerWidth);
+
+  const GAP  = 8;
+  const PAD  = 12;
+  const raw  = (boardW - 2 * PAD - 6 * GAP) / 7;
+  const cardW = Math.min(120, Math.max(36, raw));
+  const cardH = cardW * 1.4;
+
+  root.style.setProperty('--card-w', `${cardW.toFixed(1)}px`);
+  root.style.setProperty('--card-h', `${cardH.toFixed(1)}px`);
+}
+
+function getCardW() {
+  return parseFloat(
+    getComputedStyle(document.documentElement).getPropertyValue('--card-w')
+  ) || 70;
+}
+function getCardH() {
+  return parseFloat(
+    getComputedStyle(document.documentElement).getPropertyValue('--card-h')
+  ) || 98;
+}
+function overlapDown() { return Math.min(16, getCardH() * 0.155); }
+function overlapUp()   { return Math.min(28, getCardH() * 0.28);  }
+
+/* ══════════════════════════════════════════════════════════
+   CARD-BACK SVG ART (Classic ornate rosette + corner ornaments)
+   ══════════════════════════════════════════════════════════ */
+function makeCardBackSVG() {
+  // 8-petal rosette at centre — each petal rotated 45° apart
+  const petals = Array.from({ length: 8 }, (_, i) =>
+    `<path d="M0,-17 C5,-11 5,-6 0,0 C-5,-6 -5,-11 0,-17 Z" transform="rotate(${i * 45})" fill="rgba(255,255,255,0.40)"/>`
+  ).join('');
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140" preserveAspectRatio="xMidYMid meet">
+    <!-- Centre rosette -->
+    <g transform="translate(50,70)">
+      ${petals}
+      <circle r="10" fill="none" stroke="rgba(255,255,255,0.42)" stroke-width="1.2"/>
+      <path d="M0,-6 L6,0 L0,6 L-6,0 Z" fill="rgba(255,255,255,0.70)"/>
+      <circle r="2.5" fill="rgba(255,255,255,0.88)"/>
+    </g>
+    <!-- Corner diamond ornaments -->
+    <path d="M12,7 L16,11 L12,15 L8,11 Z"    fill="rgba(255,255,255,0.58)"/>
+    <path d="M88,7 L92,11 L88,15 L84,11 Z"    fill="rgba(255,255,255,0.58)"/>
+    <path d="M12,125 L16,129 L12,133 L8,129 Z"  fill="rgba(255,255,255,0.58)"/>
+    <path d="M88,125 L92,129 L88,133 L84,129 Z"  fill="rgba(255,255,255,0.58)"/>
+  </svg>`;
+}
+
+/* ══════════════════════════════════════════════════════════
+   FACE CARD SVG ART (Classic court card portraits)
+   ══════════════════════════════════════════════════════════ */
+function makeFaceCardSVG(value) {
+  // Each portrait fills one half of the card (viewBox 0 0 100 140).
+  // The bottom half is the same portrait rotated 180° — classic two-way design.
+  const portraits = {
+    K: `
+      <!-- Imperial crown: 5 bold peaks -->
+      <polygon points="14,31 20,10 31,23 41,7 50,2 59,7 69,23 80,10 86,31"
+               fill="currentColor" stroke="currentColor" stroke-width="0.5"/>
+      <rect x="14" y="29" width="72" height="7" rx="2" fill="currentColor"/>
+      <!-- Crown gems -->
+      <circle cx="31" cy="15" r="3"   fill="rgba(255,255,255,0.92)"/>
+      <circle cx="50" cy="5"  r="3.5" fill="rgba(255,255,255,0.92)"/>
+      <circle cx="69" cy="15" r="3"   fill="rgba(255,255,255,0.92)"/>
+      <!-- Face -->
+      <ellipse cx="50" cy="50" rx="15" ry="13"
+               fill="var(--card-face,#fff)" stroke="currentColor" stroke-width="2"/>
+      <!-- Eyes -->
+      <path d="M38,47 Q42,44 46,47 Q42,50 38,47 Z" fill="currentColor"/>
+      <path d="M54,47 Q58,44 62,47 Q58,50 54,47 Z" fill="currentColor"/>
+      <!-- Eyebrows -->
+      <path d="M36,42 Q42,38 48,42" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <path d="M52,42 Q58,38 64,42" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <!-- Nose (subtle) -->
+      <path d="M49,50 Q47,54 48,56 L52,56 Q53,54 51,50 Z" fill="currentColor" opacity="0.3"/>
+      <!-- Curled mustache -->
+      <path d="M40,59 C43,63 47,63 50,61 C53,63 57,63 60,59"
+            stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <!-- Full beard -->
+      <path d="M34,61 Q30,69 50,71 Q70,69 66,61 Q59,67 50,67 Q41,67 34,61 Z"
+            fill="currentColor" opacity="0.88"/>
+      <!-- Robe / collar -->
+      <path d="M16,70 L84,70 L81,65 C70,57 30,57 19,65 Z" fill="currentColor"/>
+      <!-- Collar V trim -->
+      <path d="M36,64 L50,58 L64,64" stroke="rgba(255,255,255,0.75)" stroke-width="2" fill="none"/>
+      <!-- Sword — blade -->
+      <rect x="77.5" y="33" width="3" height="36" rx="1.5" fill="currentColor" opacity="0.8"/>
+      <!-- Sword — cross-guard -->
+      <rect x="71"   y="54" width="16" height="3"  rx="1.5" fill="currentColor" opacity="0.88"/>
+      <!-- Sword — pommel -->
+      <circle cx="79" cy="70" r="3" fill="currentColor" opacity="0.75"/>
+      <!-- Sword — tip -->
+      <polygon points="79,30 83,36 75,36" fill="currentColor"/>
+    `,
+    Q: `
+      <!-- Ornate 5-peak crown -->
+      <polygon points="15,30 22,10 33,23 42,8 50,2 58,8 67,23 78,10 85,30"
+               fill="currentColor" stroke="currentColor" stroke-width="0.5"/>
+      <rect x="15" y="28" width="70" height="6" rx="1.5" fill="currentColor"/>
+      <!-- Crown gems -->
+      <circle cx="33" cy="14" r="2.8" fill="rgba(255,255,255,0.92)"/>
+      <circle cx="50" cy="5"  r="3.3" fill="rgba(255,255,255,0.92)"/>
+      <circle cx="67" cy="14" r="2.8" fill="rgba(255,255,255,0.92)"/>
+      <!-- Flowing hair (left) -->
+      <path d="M33,60 C25,52 22,36 27,28 C29,38 30,50 35,58 Z"
+            fill="currentColor" opacity="0.72"/>
+      <!-- Flowing hair (right) -->
+      <path d="M67,60 C75,52 78,36 73,28 C71,38 70,50 65,58 Z"
+            fill="currentColor" opacity="0.72"/>
+      <!-- Face -->
+      <ellipse cx="50" cy="45" rx="14" ry="13"
+               fill="var(--card-face,#fff)" stroke="currentColor" stroke-width="2"/>
+      <!-- Eyes (almond) -->
+      <path d="M38,41 Q42,38 46,41 Q42,44 38,41 Z" fill="currentColor"/>
+      <path d="M54,41 Q58,38 62,41 Q58,44 54,41 Z" fill="currentColor"/>
+      <!-- Refined eyebrows -->
+      <path d="M36,37 Q42,33 48,37" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <path d="M52,37 Q58,33 64,37" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <!-- Delicate nose -->
+      <path d="M48,44 L46,49 L54,49" stroke="currentColor" stroke-width="0.9" fill="none" opacity="0.38" stroke-linecap="round"/>
+      <!-- Full lips -->
+      <path d="M43,54 Q50,58 57,54" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M43,54 Q50,50 57,54" stroke="currentColor" stroke-width="1.1" fill="none" opacity="0.42"/>
+      <!-- Gown bodice -->
+      <path d="M22,58 C20,64 20,70 80,70 C80,64 78,58 66,52 Q58,48 42,48 Q32,48 22,58 Z"
+            fill="currentColor" opacity="0.78"/>
+      <!-- Neckline trim -->
+      <path d="M35,56 Q50,50 65,56" stroke="rgba(255,255,255,0.75)" stroke-width="1.5" fill="none"/>
+      <!-- Orb (held in right hand) -->
+      <circle cx="79" cy="49" r="7"   fill="var(--card-face,#fff)" stroke="currentColor" stroke-width="2"/>
+      <circle cx="79" cy="49" r="3"   fill="currentColor" opacity="0.45"/>
+      <line x1="79" y1="42" x2="79" y2="56" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
+      <line x1="72" y1="49" x2="86" y2="49" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
+      <!-- Scepter handle -->
+      <line x1="79" y1="56" x2="77" y2="70"
+            stroke="currentColor" stroke-width="2" opacity="0.68" stroke-linecap="round"/>
+    `,
+    J: `
+      <!-- Tall feathered hat body -->
+      <path d="M28,26 L30,5 L70,5 L72,26 Z" fill="currentColor" opacity="0.90"/>
+      <!-- Hat wide brim -->
+      <ellipse cx="50" cy="26" rx="30" ry="6" fill="currentColor"/>
+      <!-- Hat band highlight -->
+      <rect x="30" y="20" width="40" height="5" rx="1" fill="rgba(255,255,255,0.18)"/>
+      <!-- Feather plume (left, three strands) -->
+      <path d="M28,25 C22,17 17,8  20,3 C22,9 20,16 26,21 Z"   fill="currentColor" opacity="0.82"/>
+      <path d="M25,23 C18,15 14,7  17,2 C20,8 18,15 23,19 Z"   fill="currentColor" opacity="0.55"/>
+      <path d="M31,24 C25,16 22,8  25,3 C27,9 26,16 30,20 Z"   fill="currentColor" opacity="0.40"/>
+      <!-- Face (youthful, rounder) -->
+      <ellipse cx="50" cy="43" rx="14" ry="13"
+               fill="var(--card-face,#fff)" stroke="currentColor" stroke-width="2"/>
+      <!-- Eyes -->
+      <path d="M38,39 Q42,36 46,39 Q42,42 38,39 Z" fill="currentColor"/>
+      <path d="M54,39 Q58,36 62,39 Q58,42 54,39 Z" fill="currentColor"/>
+      <!-- Arched youthful eyebrows -->
+      <path d="M36,34 Q42,30 48,34" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <path d="M52,34 Q58,30 64,34" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <!-- Nose -->
+      <path d="M50,41 L47,46 L53,46" stroke="currentColor" stroke-width="0.9" fill="none" opacity="0.4" stroke-linecap="round"/>
+      <!-- Confident smile -->
+      <path d="M43,51 Q50,56 57,51" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <!-- Tunic / doublet -->
+      <path d="M28,56 L24,70 L76,70 L72,56 C63,49 37,49 28,56 Z"
+            fill="currentColor" opacity="0.82"/>
+      <!-- Tunic V-collar -->
+      <path d="M38,56 L50,50 L62,56" stroke="rgba(255,255,255,0.75)" stroke-width="2" fill="none"/>
+      <!-- Diagonal baldric belt -->
+      <path d="M28,61 L70,70" stroke="rgba(255,255,255,0.32)" stroke-width="2.2" stroke-linecap="round"/>
+      <!-- Halberd / lance (right side) -->
+      <rect x="77" y="28" width="3" height="42" rx="1.5" fill="currentColor" opacity="0.78"/>
+      <!-- Halberd blade -->
+      <path d="M73,28 L84,21 L83,34 L75,31 Z" fill="currentColor" opacity="0.90"/>
+      <!-- Halberd axe cross-blade -->
+      <path d="M77,35 C74,30 68,30 66,35 C70,33 76,33 80,35 Z" fill="currentColor" opacity="0.72"/>
+    `
+  };
+
+  const top = portraits[value] || '';
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140"
+              preserveAspectRatio="xMidYMid meet">
+    <!-- Inner frame -->
+    <rect x="3" y="3" width="94" height="134" rx="4"
+          fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.18"/>
+    <!-- Centre divider line -->
+    <line x1="6" y1="70" x2="94" y2="70"
+          stroke="currentColor" stroke-width="0.6" opacity="0.18"/>
+    <!-- Top half portrait -->
+    <g>${top}</g>
+    <!-- Bottom half: mirrored 180° -->
+    <g transform="translate(100,140) rotate(180)">${top}</g>
+  </svg>`;
+}
+
+/* ══════════════════════════════════════════════════════════
+   PIP CARD SVG ART (Bicycle-style pip layouts)
+   ══════════════════════════════════════════════════════════ */
+function makePipCardSVG(value, suit) {
+  // Pip font size by card value (viewBox 0 0 100 140)
+  const pipSize = {
+    'A': 32, '2': 19, '3': 18, '4': 17, '5': 16,
+    '6': 15, '7': 14, '8': 13, '9': 12, '10': 11
+  }[value] || 14;
+
+  // [x, y, rotated180] — classic Bicycle pip positions
+  // Corners occupy ~y 0-38 and ~y 102-140, so safe zone is y 38-102
+  // but pips may overlap corners visually since corners have z-index:2
+  const positions = {
+    'A':  [[50, 70, false]],
+    '2':  [[50, 35, false], [50, 105, true]],
+    '3':  [[50, 35, false], [50, 70, false], [50, 105, true]],
+    '4':  [[30, 35, false], [70, 35, false],
+           [30, 105, true], [70, 105, true]],
+    '5':  [[30, 35, false], [70, 35, false], [50, 70, false],
+           [30, 105, true], [70, 105, true]],
+    '6':  [[30, 35, false], [70, 35, false],
+           [30, 70, false], [70, 70, false],
+           [30, 105, true], [70, 105, true]],
+    '7':  [[30, 35, false], [70, 35, false], [50, 52, false],
+           [30, 70, false], [70, 70, false],
+           [30, 105, true], [70, 105, true]],
+    '8':  [[30, 35, false], [70, 35, false], [50, 52, false],
+           [30, 70, false], [70, 70, false],
+           [50, 88, true],  [30, 105, true], [70, 105, true]],
+    '9':  [[30, 31, false], [70, 31, false],
+           [30, 54, false], [70, 54, false], [50, 70, false],
+           [30, 86, true],  [70, 86, true],
+           [30, 109, true], [70, 109, true]],
+    '10': [[30, 31, false], [70, 31, false], [50, 43, false],
+           [30, 57, false], [70, 57, false],
+           [30, 83, true],  [70, 83, true],
+           [50, 97, true],  [30, 109, true], [70, 109, true]],
+  }[value] || [];
+
+  const pips = positions.map(([x, y, rotated]) => {
+    const rot = rotated ? `transform="rotate(180 ${x} ${y})"` : '';
+    return `<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="central"
+      font-size="${pipSize}" font-family="inherit" ${rot}>${suit}</text>`;
+  }).join('\n    ');
+
+  // Ace gets a double inner border for classic ornate look
+  const border = value === 'A'
+    ? `<rect x="5"  y="5"  width="90" height="130" rx="3"
+             fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.28"/>
+       <rect x="11" y="11" width="78" height="118" rx="2"
+             fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.18"/>`
+    : `<rect x="5" y="5" width="90" height="130" rx="3"
+             fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.28"/>`;
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140"
+              preserveAspectRatio="xMidYMid meet">
+    ${border}
+    ${pips}
+  </svg>`;
+}
+
+/* ══════════════════════════════════════════════════════════
+   CARD BACK HTML HELPER (sprite or custom SVG fallback)
+   ══════════════════════════════════════════════════════════ */
+function makeCardBackHTML() {
+  return `<img class="card-api-img" src="${DECK_API_IMG}/back.png" alt="Card back" draggable="false">`;
+}
+
+/* ══════════════════════════════════════════════════════════
+   BUILD CARD ELEMENT
+   ══════════════════════════════════════════════════════════ */
+function makeCard(c, fromPile, fromCol, cardIdx) {
+  const el = document.createElement('div');
+  el.className = 'card';
+
+  if (!c.faceUp) {
+    el.classList.add('card--back');
+    el.setAttribute('aria-label', 'Face-down card');
+    el.innerHTML = makeCardBackHTML();
+    return el;
+  }
+
+  el.classList.add('card--face');
+  el.classList.add(isRed(c.suit) ? 'card--red' : 'card--black');
+  el.setAttribute('aria-label', `${c.value} of ${c.suit}`);
+  el.setAttribute('draggable', 'true');
+  el.dataset.key = `${c.suit}_${c.value}`;
+
+  // Selected highlight for this card (or any card in a selected tableau run)
+  if (selected) {
+    const sameSource = selected.pile === fromPile && selected.col === fromCol;
+    const inRun = fromPile === 'tableau'
+      ? cardIdx >= selected.cardIdx
+      : cardIdx === selected.cardIdx;
+    if (sameSource && inRun) el.classList.add('card--selected');
+  }
+
+  // SVG card art from sprite (or built-in fallback)
+  el.innerHTML = makeCardFaceHTML(c);
+
+  // Interactions
+  el.addEventListener('click',     e => onCardClick(e, fromPile, fromCol, cardIdx));
+  el.addEventListener('dragstart', e => onDragStart(e, fromPile, fromCol, cardIdx));
+  el.addEventListener('dragend',   onDragEnd);
+
+  return el;
+}
+
+/* ══════════════════════════════════════════════════════════
+   CARD ART HELPERS — Deck of Cards API
+   ══════════════════════════════════════════════════════════ */
+const SUIT_API  = { '♠': 'S', '♥': 'H', '♦': 'D', '♣': 'C' };
+
+function makeCardFaceHTML(c) {
+  const v = c.value === '10' ? '0' : c.value;
+  const s = SUIT_API[c.suit];
+  return `<img class="card-api-img" src="${DECK_API_IMG}/${v}${s}.png" alt="${c.value} of ${c.suit}" draggable="false">`;
+}
+
+/* ══════════════════════════════════════════════════════════
+   RENDER
+   ══════════════════════════════════════════════════════════ */
+function render() {
+  const board = document.getElementById('game-board');
+
+  // FLIP — First: snapshot positions of all visible face-up cards before DOM wipe
+  const prevRects = new Map();
+  board.querySelectorAll('.card[data-key]').forEach(el => {
+    prevRects.set(el.dataset.key, el.getBoundingClientRect());
+  });
+
+  board.innerHTML = '';
+
+  const cardH = getCardH();
+
+  /* ── TOP ROW ── */
+  const topRow = document.createElement('div');
+  topRow.className = 'top-row';
+
+  // Foundations (4) — leftmost
+  for (let fi = 0; fi < 4; fi++) {
+    const fw = document.createElement('div');
+    fw.className = 'pile-wrapper foundation-wrapper';
+    fw.setAttribute('aria-label', `Foundation ${fi + 1}`);
+
+    const fSlot = document.createElement('div');
+    fSlot.className = 'card-slot';
+    fSlot.innerHTML = `<span class="slot-label" aria-hidden="true">A</span>`;
+
+    addDropListeners(fSlot, 'foundation', fi);
+    fSlot.addEventListener('click', e => onSlotClick(e, 'foundation', fi));
+    fw.appendChild(fSlot);
+
+    if (foundations[fi].length > 0) {
+      const topF = foundations[fi][foundations[fi].length - 1];
+      const fCard = makeCard(topF, 'foundation', fi, foundations[fi].length - 1);
+      fCard.style.cssText = 'position:absolute;inset:0;width:100%;height:var(--card-h);';
+      addDropListeners(fCard, 'foundation', fi);
+      fw.appendChild(fCard);
+    }
+
+    topRow.appendChild(fw);
+  }
+
+  // Spacer
+  const spacer = document.createElement('div');
+  spacer.className = 'pile-wrapper';
+  spacer.setAttribute('aria-hidden', 'true');
+  spacer.style.visibility = 'hidden';
+  topRow.appendChild(spacer);
+
+  // Waste — show cards fanned left (1 card in draw-1 mode, up to 3 in draw-3 mode)
+  const wasteWrap = document.createElement('div');
+  wasteWrap.className = 'pile-wrapper';
+  wasteWrap.style.overflow = 'visible';
+  wasteWrap.setAttribute('aria-label', waste.length
+    ? `Waste: top card ${waste[waste.length-1].value} of ${waste[waste.length-1].suit}`
+    : 'Waste empty');
+
+  const wasteSlot = document.createElement('div');
+  wasteSlot.className = 'card-slot';
+  wasteWrap.appendChild(wasteSlot);
+
+  if (waste.length > 0) {
+    const fanCount = 3;
+    const visCount = Math.min(fanCount, waste.length);
+    for (let i = 0; i < visCount; i++) {
+      const wIdx = waste.length - visCount + i;
+      const wCard = makeCard(waste[wIdx], 'waste', null, wIdx);
+      const offset = (visCount - 1 - i) * 16; // fan left: front card has 0 offset
+      wCard.style.cssText = `position:absolute;right:${offset}px;top:0;width:100%;height:var(--card-h);z-index:${i+1};`;
+      if (i < visCount - 1) {
+        // Not the top card: remove interaction
+        wCard.style.pointerEvents = 'none';
+        wCard.removeAttribute('draggable');
+      }
+      wasteWrap.appendChild(wCard);
+    }
+  }
+  topRow.appendChild(wasteWrap);
+
+  // Stock — rightmost
+  const stockWrap = document.createElement('div');
+  stockWrap.className = 'pile-wrapper stock-wrapper';
+  stockWrap.setAttribute('aria-label', stock.length
+    ? `Stock: ${stock.length} cards`
+    : 'Stock empty – click to recycle');
+
+  const stockSlot = document.createElement('div');
+  stockSlot.className = 'card-slot';
+  stockSlot.innerHTML = `<span class="slot-label" aria-hidden="true">${stock.length === 0 ? '↩' : ''}</span>`;
+  stockSlot.addEventListener('dragover', e => { e.preventDefault(); });
+  stockWrap.appendChild(stockSlot);
+
+  if (stock.length > 0) {
+    const backCard = document.createElement('div');
+    backCard.className = 'card card--back';
+    backCard.style.cssText = 'inset:0;width:100%;height:100%;cursor:pointer;';
+    backCard.innerHTML = makeCardBackHTML();
+    stockWrap.appendChild(backCard);
+  }
+  stockWrap.addEventListener('click', clickStock);
+  topRow.appendChild(stockWrap);
+
+  board.appendChild(topRow);
+
+  /* ── TABLEAU ── */
+  const tabRow = document.createElement('div');
+  tabRow.className = 'tableau-row';
+
+  for (let col = 0; col < 7; col++) {
+    const pile = tableau[col];
+    const colEl = document.createElement('div');
+    colEl.className = 'tableau-pile';
+    colEl.setAttribute('aria-label', `Tableau column ${col + 1}`);
+
+    // Empty slot / drop target background
+    const tSlot = document.createElement('div');
+    tSlot.className = 'card-slot';
+    tSlot.innerHTML = '<span class="slot-label" style="opacity:0.25" aria-hidden="true">K</span>';
+    tSlot.style.cssText = `position:relative;z-index:0;`;
+    addDropListeners(tSlot, 'tableau', col);
+    tSlot.addEventListener('click', e => onSlotClick(e, 'tableau', col));
+    colEl.appendChild(tSlot);
+
+    // Stack cards
+    let topOffset = 0;
+    for (let ci = 0; ci < pile.length; ci++) {
+      const c = pile[ci];
+      const cEl = makeCard(c, 'tableau', col, ci);
+      cEl.style.cssText =
+        `position:absolute;inset:0;top:${topOffset.toFixed(1)}px;` +
+        `width:100%;height:var(--card-h);z-index:${ci + 1};`;
+
+      if (c.faceUp) {
+        // Also allow drop onto a face-up tableau card
+        addDropListeners(cEl, 'tableau', col);
+      }
+
+      colEl.appendChild(cEl);
+
+      if (ci < pile.length - 1) {
+        topOffset += c.faceUp ? overlapUp() : overlapDown();
+      }
+    }
+
+    // Set column height to fit all stacked cards
+    const colHeight = pile.length > 0 ? topOffset + cardH : cardH;
+    colEl.style.height = `${colHeight.toFixed(1)}px`;
+
+    tabRow.appendChild(colEl);
+  }
+
+  board.appendChild(tabRow);
+
+  // FLIP — Play: animate each card from its previous position to its new one
+  if (prevRects.size > 0) {
+    board.querySelectorAll('.card[data-key]').forEach(el => {
+      const prev = prevRects.get(el.dataset.key);
+      if (!prev) {
+        // Newly revealed card (face-down → face-up) — play a flip/reveal animation
+        el.animate(
+          [
+            { transform: 'scaleX(0.08)', filter: 'brightness(1.5)', offset: 0 },
+            { transform: 'scaleX(1)',    filter: 'brightness(1)',   offset: 1 },
+          ],
+          { duration: 220, easing: 'ease-out', fill: 'none' }
+        );
+        return;
+      }
+      const curr = el.getBoundingClientRect();
+      const dx = prev.left - curr.left;
+      const dy = prev.top - curr.top;
+      if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return;
+      el.animate(
+        [{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'translate(0px, 0px)' }],
+        { duration: 200, easing: 'cubic-bezier(0.2, 0, 0.2, 1)', fill: 'none' }
+      );
+    });
+  }
+}
+
+/* ════════════════════════════════════════
+   DROP LISTENER HELPER
+   ════════════════════════════════════════ */
+function addDropListeners(el, toPile, toCol) {
+  el.addEventListener('dragover',   e => onDragOver(e, toPile, toCol));
+  el.addEventListener('dragleave',  onDragLeave);
+  el.addEventListener('drop',       e => onDrop(e, toPile, toCol));
+}
+
+/* ══════════════════════════════════════════════════════════
+   INIT
+   ══════════════════════════════════════════════════════════ */
+document.getElementById('new-game-btn').addEventListener('click', newGame);
+document.getElementById('play-again-btn').addEventListener('click', newGame);
+const _restartDealBtn = document.getElementById('restart-deal-btn');
+if (_restartDealBtn) _restartDealBtn.addEventListener('click', restartDeal);
+document.getElementById('undo-btn').addEventListener('click', undoMove);
+document.getElementById('hint-btn').addEventListener('click', showHint);
+document.getElementById('shuffle-bg-btn').addEventListener('click', nextBackground);
+document.getElementById('autocomplete-btn').addEventListener('click', autoComplete);
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && selected) {
+    selected = null;
+    render();
+  }
+  if (e.key === 'z' && (e.ctrlKey || e.metaKey)) {
+    e.preventDefault();
+    undoMove();
+  }
+  if ((e.key === 'h' || e.key === 'H') && !e.ctrlKey && !e.metaKey) {
+    showHint();
+  }
+  if ((e.key === 'r' || e.key === 'R') && !e.ctrlKey && !e.metaKey && !e.altKey) {
+    const tag = (e.target && e.target.tagName) || '';
+    if (tag !== 'INPUT' && tag !== 'TEXTAREA') restartDeal();
+  }
+});
+
+// Deselect on board background click
+document.getElementById('game-board').addEventListener('click', () => {
+  if (selected) { selected = null; render(); }
+});
+
+// Responsive resize
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    updateLayoutInsets();
+    updateCardSize();
+    render();
+  }, 80);
+});
+
+(function watchLayoutInsets() {
+  const toolbar = document.querySelector('.game-toolbar');
+  const credits = document.getElementById('bottom-badges');
+  if (typeof ResizeObserver === 'undefined') return;
+  const ro = new ResizeObserver(() => updateLayoutInsets());
+  if (toolbar) ro.observe(toolbar);
+  if (credits) ro.observe(credits);
+})();
+
+(function initRadarEmbed() {
+  const iframe = document.getElementById('radar-embed');
+  if (!iframe) return;
+
+  const isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  if (isLocal) {
+    iframe.src = `${location.protocol}//${location.hostname}:8888/tuner-embed.html`;
+  }
+
+  // Hauteur / ready signalés par le-radar/embed.js
+  window.addEventListener('message', (event) => {
+    const data = event && event.data;
+    if (!data || data.type !== 'ataraxia-radar-embed') return;
+    if (typeof data.height === 'number' && data.height > 0) {
+      const h = Math.round(data.height);
+      document.documentElement.style.setProperty('--radar-embed-slot-h', h + 'px');
+      iframe.style.height = h + 'px';
+    }
+    if (data.ready) iframe.classList.add('is-ready');
+  });
+
+  iframe.addEventListener('load', () => {
+    // Fallback si postMessage bloqué / ancien embed
+    iframe.classList.add('is-ready');
+  });
+})();
+
+
+/* ═══════════════════════════════════════
+   OPEN-SOURCE BACKGROUND IMAGES
+   Sources: Unsplash (free open license) &
+   Wikimedia Commons (public domain art)
+   ═══════════════════════════════════════ */
+const BACKGROUNDS = [
+  // ── Natural landscapes — Unsplash ──────────────────────────────
+  { url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=90&auto=format&fit=max", credit: "Samuel Ferrara", link: "https://unsplash.com/@samferrara", source: "Unsplash", title: "Alpine Summit" },
+  { url: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1920&q=90&auto=format&fit=max", credit: "Lukasz Szmigiel", link: "https://unsplash.com/@szmigieldesign", source: "Unsplash", title: "Forest Mist" },
+  { url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=90&auto=format&fit=max", credit: "Luca Bravo", link: "https://unsplash.com/@lucabravo", source: "Unsplash", title: "Forest Light" },
+  { url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=90&auto=format&fit=max", credit: "Sean Oulashin", link: "https://unsplash.com/@oulashin", source: "Unsplash", title: "Tropical Beach" },
+  { url: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=90&auto=format&fit=max", credit: "Benjamin Voros", link: "https://unsplash.com/@vorosbenisop", source: "Unsplash", title: "Starry Mountains" },
+  { url: "https://images.unsplash.com/photo-1505144808419-1957a94ca61e?w=1920&q=90&auto=format&fit=max", credit: "Frank McKenna", link: "https://unsplash.com/@frankiefoto", source: "Unsplash", title: "Northern Lights" },
+  { url: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&q=90&auto=format&fit=max", credit: "David Marcu", link: "https://unsplash.com/@davidmarcu", source: "Unsplash", title: "Sun Through Trees" },
+  { url: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1920&q=90&auto=format&fit=max", credit: "Robert Lukeman", link: "https://unsplash.com/@robertlukeman", source: "Unsplash", title: "Lake Reflection" },
+  { url: "https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=1920&q=90&auto=format&fit=max", credit: "Kazuend", link: "https://unsplash.com/@kazuend", source: "Unsplash", title: "Waterfall Forest" },
+  { url: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1920&q=90&auto=format&fit=max", credit: "Pietro De Grandi", link: "https://unsplash.com/@pietrozj", source: "Unsplash", title: "Mountain Sunrise" },
+  // ── Meditative & ancient themes — Unsplash ─────────────────────
+  { url: "https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?w=1920&q=90&auto=format&fit=max", credit: "Luca Bravo", link: "https://unsplash.com/@lucabravo", source: "Unsplash", title: "Night Sky" },
+  { url: "https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=1920&q=90&auto=format&fit=max", credit: "Ian Dooley", link: "https://unsplash.com/@sadswim", source: "Unsplash", title: "Desert Sands" },
+  { url: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1920&q=90&auto=format&fit=max", credit: "Luca Upper", link: "https://unsplash.com/@lucaupper", source: "Unsplash", title: "Golden Road" },
+  { url: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=1920&q=90&auto=format&fit=max", credit: "Joanna Kosinska", link: "https://unsplash.com/@joannakosinska", source: "Unsplash", title: "Lavender Fields" },
+  { url: "https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=1920&q=90&auto=format&fit=max", credit: "Ricardo Gomez Angel", link: "https://unsplash.com/@rgaleriacom", source: "Unsplash", title: "Spiral Galaxy" },
+  { url: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=1920&q=90&auto=format&fit=max", credit: "Luca Zanon", link: "https://unsplash.com/@luca_zanon", source: "Unsplash", title: "Snowy Trees" },
+  { url: "https://images.unsplash.com/photo-1528702748617-c64d49f918af?w=1920&q=90&auto=format&fit=max", credit: "Alessio Lin", link: "https://unsplash.com/@lin_alessio", source: "Unsplash", title: "Stone Arch" },
+  { url: "https://images.unsplash.com/photo-1542401886-65d6c61db217?w=1920&q=90&auto=format&fit=max", credit: "v2osk", link: "https://unsplash.com/@v2osk", source: "Unsplash", title: "Volcanic Landscape" },
+  // ── Mountains, deserts, stars — Unsplash ───────────────────────
+  { url: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1920&q=90&auto=format&fit=max", credit: "Kalen Emsley", link: "https://unsplash.com/@kalenemsley", source: "Unsplash", title: "Mountain Peak" },
+  { url: "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=1920&q=90&auto=format&fit=max", credit: "Joshua Earle", link: "https://unsplash.com/@joshuaearle", source: "Unsplash", title: "Misty Summit" },
+  { url: "https://images.unsplash.com/photo-1536431311719-398b6704d4cc?w=1920&q=90&auto=format&fit=max", credit: "Vincentiu Solomon", link: "https://unsplash.com/@vincentiu", source: "Unsplash", title: "Milky Way" },
+  { url: "https://images.unsplash.com/photo-1462275646964-a0e3c11f18a6?w=1920&q=90&auto=format&fit=max", credit: "Luca Baggio", link: "https://unsplash.com/@luca42", source: "Unsplash", title: "Pine Forest" },
+  { url: "https://images.unsplash.com/photo-1491002052546-bf38f186af56?w=1920&q=90&auto=format&fit=max", credit: "Austin Neill", link: "https://unsplash.com/@arstyy", source: "Unsplash", title: "Autumn Forest" },
+  { url: "https://images.unsplash.com/photo-1504700610630-ac6edd918f09?w=1920&q=90&auto=format&fit=max", credit: "Jeremy Bishop", link: "https://unsplash.com/@jeremybishop", source: "Unsplash", title: "Ocean Cliff" },
+  { url: "https://images.unsplash.com/photo-1444080748397-f442aa95c3e5?w=1920&q=90&auto=format&fit=max", credit: "Josh Gordon", link: "https://unsplash.com/@joshgordon", source: "Unsplash", title: "Desert Stars" },
+  { url: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=1920&q=90&auto=format&fit=max", credit: "Jonatan Pie", link: "https://unsplash.com/@r3dmax", source: "Unsplash", title: "Aurora Borealis" },
+  // ── Oceans, coasts, dawn — Unsplash ────────────────────────────
+  { url: "https://images.unsplash.com/photo-1484291470158-b8f8d608850d?w=1920&q=90&auto=format&fit=max", credit: "Cristina Gottardi", link: "https://unsplash.com/@cristina_gottardi", source: "Unsplash", title: "Sea of Clouds" },
+  { url: "https://images.unsplash.com/photo-1520942702018-0862200e6873?w=1920&q=90&auto=format&fit=max", credit: "Silas Baisch", link: "https://unsplash.com/@silasbaisch", source: "Unsplash", title: "Ocean Shore" },
+  { url: "https://images.unsplash.com/photo-1414609245224-afa02bfb3fda?w=1920&q=90&auto=format&fit=max", credit: "Jordan McQueen", link: "https://unsplash.com/@jordanmcqueen", source: "Unsplash", title: "Sunrise Coast" },
+  { url: "https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=1920&q=90&auto=format&fit=max", credit: "Levi Bare", link: "https://unsplash.com/@levibare", source: "Unsplash", title: "Golden Cliffs" },
+  // ── Pexels — free open license ─────────────────────────────────
+  { url: "https://images.pexels.com/photos/1287145/pexels-photo-1287145.jpeg?auto=compress&cs=tinysrgb&w=1920", credit: "Eberhard Grossgasteiger", link: "https://www.pexels.com/photo/1287145/", source: "Pexels", title: "Alpine Meadow" },
+  { url: "https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&w=1920", credit: "Pixabay", link: "https://www.pexels.com/photo/36717/", source: "Pexels", title: "Misty Mountains" },
+  { url: "https://images.pexels.com/photos/1671325/pexels-photo-1671325.jpeg?auto=compress&cs=tinysrgb&w=1920", credit: "Rafael Cerqueira", link: "https://www.pexels.com/photo/1671325/", source: "Pexels", title: "Mountain Path" },
+  { url: "https://images.pexels.com/photos/2387418/pexels-photo-2387418.jpeg?auto=compress&cs=tinysrgb&w=1920", credit: "Felipe Palacio", link: "https://www.pexels.com/photo/2387418/", source: "Pexels", title: "Foggy Valley" },
+  { url: "https://images.pexels.com/photos/1496373/pexels-photo-1496373.jpeg?auto=compress&cs=tinysrgb&w=1920", credit: "Trace Hudson", link: "https://www.pexels.com/photo/1496373/", source: "Pexels", title: "Ocean Waves" },
+  { url: "https://images.pexels.com/photos/2166553/pexels-photo-2166553.jpeg?auto=compress&cs=tinysrgb&w=1920", credit: "Felix Mittermeier", link: "https://www.pexels.com/photo/2166553/", source: "Pexels", title: "Winter Forest" },
+  // ── Wikimedia Commons — Public Domain Art ──────────────────────
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Wanderer_above_the_sea_of_fog.jpg",
+    credit: "Wanderer above the Sea of Fog — Caspar David Friedrich, 1818",
+    link: "https://commons.wikimedia.org/wiki/File:Wanderer_above_the_sea_of_fog.jpg",
+    source: "Wikimedia Commons · Public Domain"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/%22The_School_of_Athens%22_by_Raffaello_Sanzio_da_Urbino.jpg/1920px-%22The_School_of_Athens%22_by_Raffaello_Sanzio_da_Urbino.jpg",
+    credit: "The School of Athens — Raphael, 1511",
+    link: "https://commons.wikimedia.org/wiki/File:%22The_School_of_Athens%22_by_Raffaello_Sanzio_da_Urbino.jpg",
+    source: "Wikimedia Commons · Public Domain",
+    culture: "greco-roman"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/David_-_The_Death_of_Socrates.jpg/1920px-David_-_The_Death_of_Socrates.jpg",
+    credit: "The Death of Socrates — Jacques-Louis David, 1787",
+    link: "https://commons.wikimedia.org/wiki/File:David_-_The_Death_of_Socrates.jpg",
+    source: "Wikimedia Commons · Public Domain",
+    culture: "greco-roman"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Thomas_Cole_-_The_Oxbow_%28The_Connecticut_River_near_Northampton%29.jpg/1920px-Thomas_Cole_-_The_Oxbow_%28The_Connecticut_River_near_Northampton%29.jpg",
+    credit: "The Oxbow — Thomas Cole, 1836",
+    link: "https://commons.wikimedia.org/wiki/File:Thomas_Cole_-_The_Oxbow_(The_Connecticut_River_near_Northampton).jpg",
+    source: "Wikimedia Commons · Public Domain"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1920px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg",
+    credit: "The Starry Night — Vincent van Gogh, 1889",
+    link: "https://commons.wikimedia.org/wiki/File:Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg",
+    source: "Wikimedia Commons · Public Domain"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/VanGogh-starry_night_ballance1.jpg/1920px-VanGogh-starry_night_ballance1.jpg",
+    credit: "Starry Night Over the Rhône — Vincent van Gogh, 1888",
+    link: "https://commons.wikimedia.org/wiki/File:VanGogh-starry_night_ballance1.jpg",
+    source: "Wikimedia Commons · Public Domain"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Caspar_David_Friedrich_-_Der_Mönch_am_Meer_-_Google_Art_Project.jpg/1920px-Caspar_David_Friedrich_-_Der_Mönch_am_Meer_-_Google_Art_Project.jpg",
+    credit: "The Monk by the Sea — Caspar David Friedrich, 1810",
+    link: "https://commons.wikimedia.org/wiki/File:Caspar_David_Friedrich_-_Der_M%C3%B6nch_am_Meer_-_Google_Art_Project.jpg",
+    source: "Wikimedia Commons · Public Domain"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Tsunami_by_hokusai_19th_century.jpg/1920px-Tsunami_by_hokusai_19th_century.jpg",
+    credit: "The Great Wave off Kanagawa — Hokusai, 1831",
+    link: "https://commons.wikimedia.org/wiki/File:Tsunami_by_hokusai_19th_century.jpg",
+    source: "Wikimedia Commons · Public Domain",
+    culture: "japanese"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Monet_-_Impression%2C_Sunrise.jpg/1920px-Monet_-_Impression%2C_Sunrise.jpg",
+    credit: "Impression, Sunrise — Claude Monet, 1872",
+    link: "https://commons.wikimedia.org/wiki/File:Monet_-_Impression,_Sunrise.jpg",
+    source: "Wikimedia Commons · Public Domain"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Claude_Monet_-_Water_Lilies_-_1906%2C_Chicago.jpg/1920px-Claude_Monet_-_Water_Lilies_-_1906%2C_Chicago.jpg",
+    credit: "Water Lilies — Claude Monet, 1906",
+    link: "https://commons.wikimedia.org/wiki/File:Claude_Monet_-_Water_Lilies_-_1906,_Chicago.jpg",
+    source: "Wikimedia Commons · Public Domain"
+  },
+
+  /* ── More Wikimedia Commons Public Domain Art ── */
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/The_Fighting_Temeraire%2C_JMW_Turner%2C_National_Gallery.jpg/1920px-The_Fighting_Temeraire%2C_JMW_Turner%2C_National_Gallery.jpg",
+    credit: "The Fighting Temeraire — J.M.W. Turner, 1839",
+    link: "https://commons.wikimedia.org/wiki/File:The_Fighting_Temeraire,_JMW_Turner,_National_Gallery.jpg",
+    source: "Wikimedia Commons · Public Domain"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/1665_Girl_with_a_Pearl_Earring.jpg/1920px-1665_Girl_with_a_Pearl_Earring.jpg",
+    credit: "Girl with a Pearl Earring — Johannes Vermeer, c. 1665",
+    link: "https://commons.wikimedia.org/wiki/File:1665_Girl_with_a_Pearl_Earring.jpg",
+    source: "Wikimedia Commons · Public Domain"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg/1920px-Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg",
+    credit: "The Birth of Venus — Sandro Botticelli, c. 1485",
+    link: "https://commons.wikimedia.org/wiki/File:Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg",
+    source: "Wikimedia Commons · Public Domain",
+    culture: "greco-roman"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/The_Hay_Wain_1821.jpg/1920px-The_Hay_Wain_1821.jpg",
+    credit: "The Hay Wain — John Constable, 1821",
+    link: "https://commons.wikimedia.org/wiki/File:The_Hay_Wain_1821.jpg",
+    source: "Wikimedia Commons · Public Domain"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Cole_Thomas_The_Oxbow_%28The_Connecticut_River_near_Northampton_1836%29.jpg/1920px-Cole_Thomas_The_Oxbow_%28The_Connecticut_River_near_Northampton_1836%29.jpg",
+    credit: "The Oxbow — Thomas Cole, 1836",
+    link: "https://commons.wikimedia.org/wiki/File:Cole_Thomas_The_Oxbow_(The_Connecticut_River_near_Northampton_1836).jpg",
+    source: "Wikimedia Commons · Public Domain"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Albert_Bierstadt_-_Among_the_Sierra_Nevada%2C_California_-_Google_Art_Project.jpg/1920px-Albert_Bierstadt_-_Among_the_Sierra_Nevada%2C_California_-_Google_Art_Project.jpg",
+    credit: "Among the Sierra Nevada, California — Albert Bierstadt, 1868",
+    link: "https://commons.wikimedia.org/wiki/File:Albert_Bierstadt_-_Among_the_Sierra_Nevada,_California_-_Google_Art_Project.jpg",
+    source: "Wikimedia Commons · Public Domain"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Aivazovsky%2C_Ivan_-_The_Ninth_Wave.jpg/1920px-Aivazovsky%2C_Ivan_-_The_Ninth_Wave.jpg",
+    credit: "The Ninth Wave — Ivan Aivazovsky, 1850",
+    link: "https://commons.wikimedia.org/wiki/File:Aivazovsky,_Ivan_-_The_Ninth_Wave.jpg",
+    source: "Wikimedia Commons · Public Domain"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Whistler-Nocturne_in_black_and_gold.jpg/1920px-Whistler-Nocturne_in_black_and_gold.jpg",
+    credit: "Nocturne in Black and Gold: The Falling Rocket — James McNeill Whistler, 1875",
+    link: "https://commons.wikimedia.org/wiki/File:Whistler-Nocturne_in_black_and_gold.jpg",
+    source: "Wikimedia Commons · Public Domain"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Frederic_Edwin_Church_-_Heart_of_the_Andes_-_Google_Art_Project.jpg/1920px-Frederic_Edwin_Church_-_Heart_of_the_Andes_-_Google_Art_Project.jpg",
+    credit: "Heart of the Andes — Frederic Edwin Church, 1859",
+    link: "https://commons.wikimedia.org/wiki/File:Frederic_Edwin_Church_-_Heart_of_the_Andes_-_Google_Art_Project.jpg",
+    source: "Wikimedia Commons · Public Domain"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Turner_-_Rain%2C_Steam_and_Speed_-_National_Gallery_file.jpg/1920px-Turner_-_Rain%2C_Steam_and_Speed_-_National_Gallery_file.jpg",
+    credit: "Rain, Steam and Speed — J.M.W. Turner, 1844",
+    link: "https://commons.wikimedia.org/wiki/File:Turner_-_Rain,_Steam_and_Speed_-_National_Gallery_file.jpg",
+    source: "Wikimedia Commons · Public Domain"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Caspar_David_Friedrich_-_Das_Eismeer_-_Hamburger_Kunsthalle_-_02.jpg/1920px-Caspar_David_Friedrich_-_Das_Eismeer_-_Hamburger_Kunsthalle_-_02.jpg",
+    credit: "The Sea of Ice (Das Eismeer) — Caspar David Friedrich, 1824",
+    link: "https://commons.wikimedia.org/wiki/File:Caspar_David_Friedrich_-_Das_Eismeer_-_Hamburger_Kunsthalle_-_02.jpg",
+    source: "Wikimedia Commons · Public Domain"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/John_Martin_-_The_Great_Day_of_His_Wrath_-_Google_Art_Project.jpg/1920px-John_Martin_-_The_Great_Day_of_His_Wrath_-_Google_Art_Project.jpg",
+    credit: "The Great Day of His Wrath — John Martin, 1851–1853",
+    link: "https://commons.wikimedia.org/wiki/File:John_Martin_-_The_Great_Day_of_His_Wrath_-_Google_Art_Project.jpg",
+    source: "Wikimedia Commons · Public Domain"
+  },
+
+  /* ── More Unsplash Nature ── */
+  {
+    url: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=1920&q=90&auto=format&fit=max",
+    credit: "Jonatan Pie",
+    link: "https://unsplash.com/@r3dmax",
+    source: "Unsplash",
+    title: "Aurora Borealis"
+  },
+  {
+    url: "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=1920&q=90&auto=format&fit=max",
+    credit: "Su San Lee",
+    link: "https://unsplash.com/@s_s_lee",
+    source: "Unsplash",
+    title: "Cherry Blossoms",
+    culture: "japanese"
+  },
+  {
+    url: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=1920&q=90&auto=format&fit=max",
+    credit: "Keith Hardy",
+    link: "https://unsplash.com/@keithhardy2001",
+    source: "Unsplash",
+    title: "Monument Valley",
+    culture: "indigenous"
+  },
+  {
+    url: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1920&q=90&auto=format&fit=max",
+    credit: "Federico Respini",
+    link: "https://unsplash.com/@federicorespini",
+    source: "Unsplash",
+    title: "Golden Fields"
+  },
+  {
+    url: "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920&q=90&auto=format&fit=max",
+    credit: "Sebastian Unrau",
+    link: "https://unsplash.com/@sebastian_unrau",
+    source: "Unsplash",
+    title: "Winter Pines"
+  },
+  {
+    url: "https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=1920&q=90&auto=format&fit=max",
+    credit: "Leonard Cotte",
+    link: "https://unsplash.com/@leonardcotte",
+    source: "Unsplash",
+    title: "City at Night"
+  },
+  {
+    url: "https://images.unsplash.com/photo-1483347756197-71ef80e95f73?w=1920&q=90&auto=format&fit=max",
+    credit: "Johny Goerend",
+    link: "https://unsplash.com/@johnygoerend",
+    source: "Unsplash",
+    title: "Desert Dunes"
+  },
+  {
+    url: "https://images.unsplash.com/photo-1474044159687-1ee9f3a51722?w=1920&q=90&auto=format&fit=max",
+    credit: "Josh Hild",
+    link: "https://unsplash.com/@joshhild",
+    source: "Unsplash",
+    title: "Foggy Mountains"
+  },
+  {
+    url: "https://images.unsplash.com/photo-1462275646964-a0e3c11f18a6?w=1920&q=90&auto=format&fit=max",
+    credit: "Alain Bonnardeaux",
+    link: "https://unsplash.com/@alainbonnardeaux",
+    source: "Unsplash",
+    title: "Alpine Forest"
+  },
+  {
+    url: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1920&q=90&auto=format&fit=max",
+    credit: "v2osk",
+    link: "https://unsplash.com/@v2osk",
+    source: "Unsplash",
+    title: "Forest Mist"
+  },
+  {
+    url: "https://images.unsplash.com/photo-1477601263568-180e2c6d046e?w=1920&q=90&auto=format&fit=max",
+    credit: "Joshua Earle",
+    link: "https://unsplash.com/@joshuaearle",
+    source: "Unsplash",
+    title: "Mountain Hiker"
+  },
+  {
+    url: "https://images.unsplash.com/photo-1432405972618-c6b0cfba8673?w=1920&q=90&auto=format&fit=max",
+    credit: "Liam Pozz",
+    link: "https://unsplash.com/@liampozz",
+    source: "Unsplash",
+    title: "Waterfall"
+  },
+  {
+    url: "https://images.unsplash.com/photo-1464852045489-bccb7d17fe39?w=1920&q=90&auto=format&fit=max",
+    credit: "Denis Degioanni",
+    link: "https://unsplash.com/@denisdegioanni",
+    source: "Unsplash",
+    title: "Starry Night Sky"
+  },
+  {
+    url: "https://images.unsplash.com/photo-1418985991508-e47386d96a71?w=1920&q=90&auto=format&fit=max",
+    credit: "Eberhard Grossgasteiger",
+    link: "https://unsplash.com/@eberhardgross",
+    source: "Unsplash",
+    title: "Alpine Snow"
+  },
+
+  /* ── More Pexels ── */
+  {
+    url: "https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&w=1920",
+    credit: "Pixabay",
+    link: "https://www.pexels.com/@pixabay",
+    source: "Pexels",
+    title: "Misty Mountains"
+  },
+  {
+    url: "https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg?auto=compress&cs=tinysrgb&w=1920",
+    credit: "Michael Block",
+    link: "https://www.pexels.com/@michael-block-1691617",
+    source: "Pexels",
+    title: "Forest Road"
+  },
+  {
+    url: "https://images.pexels.com/photos/1367192/pexels-photo-1367192.jpeg?auto=compress&cs=tinysrgb&w=1920",
+    credit: "Eberhard Grossgasteiger",
+    link: "https://www.pexels.com/@eberhardgross",
+    source: "Pexels",
+    title: "Mountain Valley"
+  },
+  {
+    url: "https://images.pexels.com/photos/1295138/pexels-photo-1295138.jpeg?auto=compress&cs=tinysrgb&w=1920",
+    credit: "Emiliano Arano",
+    link: "https://www.pexels.com/@emiliano-arano-167768",
+    source: "Pexels",
+    title: "Dramatic Clouds"
+  },
+  {
+    url: "https://images.pexels.com/photos/462118/pexels-photo-462118.jpeg?auto=compress&cs=tinysrgb&w=1920",
+    credit: "Pixabay",
+    link: "https://www.pexels.com/@pixabay",
+    source: "Pexels",
+    title: "Rocky Shore"
+  },
+  {
+    url: "https://images.pexels.com/photos/417173/pexels-photo-417173.jpeg?auto=compress&cs=tinysrgb&w=1920",
+    credit: "James Wheeler",
+    link: "https://www.pexels.com/@souvenirpixels",
+    source: "Pexels",
+    title: "Autumn Lake"
+  },
+  {
+    url: "https://images.pexels.com/photos/1028600/pexels-photo-1028600.jpeg?auto=compress&cs=tinysrgb&w=1920",
+    credit: "Maria Tyutina",
+    link: "https://www.pexels.com/@maria-tyutina-257298",
+    source: "Pexels",
+    title: "Seaside Cliffs"
+  },
+  {
+    url: "https://images.pexels.com/photos/2166553/pexels-photo-2166553.jpeg?auto=compress&cs=tinysrgb&w=1920",
+    credit: "Milo Miloezger",
+    link: "https://www.pexels.com/@miloezger",
+    source: "Pexels",
+    title: "Winter Forest"
+  },
+
+  /* ── Boreal & Northern Forests ── */
+  { url: "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=1920&q=90&auto=format&fit=max", credit: "Kazuend", link: "https://unsplash.com/@kazuend", source: "Unsplash", title: "Tall Redwoods", culture: "indigenous" },
+  { url: "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920&q=90&auto=format&fit=max", credit: "Sebastian Unrau", link: "https://unsplash.com/@sebastian_unrau", source: "Unsplash", title: "Green Forest", culture: "indigenous" },
+  { url: "https://images.unsplash.com/photo-1476231682828-37e571bc172f?w=1920&q=90&auto=format&fit=max", credit: "Robert Lukeman", link: "https://unsplash.com/@robertlukeman", source: "Unsplash", title: "Forest Stream", culture: "indigenous" },
+  { url: "https://images.unsplash.com/photo-1425913397330-cf8af2ff40a1?w=1920&q=90&auto=format&fit=max", credit: "Sebastian Unrau", link: "https://unsplash.com/@sebastian_unrau", source: "Unsplash", title: "Misty Pine Forest", culture: "indigenous" },
+  { url: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=1920&q=90&auto=format&fit=max", credit: "Todd Quackenbush", link: "https://unsplash.com/@toddquackenbush", source: "Unsplash", title: "Sunlit Trees", culture: "indigenous" },
+  { url: "https://images.unsplash.com/photo-1440581572325-0bea30075d9d?w=1920&q=90&auto=format&fit=max", credit: "Luca Bravo", link: "https://unsplash.com/@lucabravo", source: "Unsplash", title: "Birch Forest", culture: "indigenous" },
+  { url: "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=1920&q=90&auto=format&fit=max", credit: "Lukasz Szmigiel", link: "https://unsplash.com/@szmigieldesign", source: "Unsplash", title: "Forest Canopy", culture: "indigenous" },
+  { url: "https://images.unsplash.com/photo-1504700610630-ac6edd918aa0?w=1920&q=90&auto=format&fit=max", credit: "Tim Swaan", link: "https://unsplash.com/@timswaanphotography", source: "Unsplash", title: "Boreal Mist", culture: "indigenous" },
+
+  /* ── Rivers, Lakes & Waterfalls ── */
+  { url: "https://images.unsplash.com/photo-1432405972618-c6b0cfba8673?w=1920&q=90&auto=format&fit=max", credit: "Luca Bravo", link: "https://unsplash.com/@lucabravo", source: "Unsplash", title: "Mountain River" },
+  { url: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1920&q=90&auto=format&fit=max", credit: "Lukasz Szmigiel", link: "https://unsplash.com/@szmigieldesign", source: "Unsplash", title: "Foggy Valley" },
+  { url: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1920&q=90&auto=format&fit=max", credit: "Pietro De Grandi", link: "https://unsplash.com/@peter_mc_greats", source: "Unsplash", title: "Lake Reflections" },
+  { url: "https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=1920&q=90&auto=format&fit=max", credit: "Kazuend", link: "https://unsplash.com/@kazuend", source: "Unsplash", title: "Tropical Waterfall" },
+  { url: "https://images.unsplash.com/photo-1482685945432-29571f634909?w=1920&q=90&auto=format&fit=max", credit: "Jonatan Pie", link: "https://unsplash.com/@r3dmax", source: "Unsplash", title: "Glacial River" },
+  { url: "https://images.unsplash.com/photo-1505765050516-f72dcac9c60e?w=1920&q=90&auto=format&fit=max", credit: "Dave Hoefler", link: "https://unsplash.com/@davehoefler", source: "Unsplash", title: "Autumn Lake" },
+  { url: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=1920&q=90&auto=format&fit=max", credit: "Daan Weijers", link: "https://unsplash.com/@daanweijer", source: "Unsplash", title: "Sunbeams Through Trees" },
+  { url: "https://images.unsplash.com/photo-1500534623283-312aade485b7?w=1920&q=90&auto=format&fit=max", credit: "Robert Bye", link: "https://unsplash.com/@robertbye", source: "Unsplash", title: "Peaceful Lake" },
+
+  /* ── Fog, Mist & Rain ── */
+  { url: "https://images.unsplash.com/photo-1485236715568-ddc5ee6ca227?w=1920&q=90&auto=format&fit=max", credit: "Luca Bravo", link: "https://unsplash.com/@lucabravo", source: "Unsplash", title: "Foggy Mountain" },
+  { url: "https://images.unsplash.com/photo-1428908728789-d2de25dbd4e2?w=1920&q=90&auto=format&fit=max", credit: "Ales Krivec", link: "https://unsplash.com/@aleskrivec", source: "Unsplash", title: "Misty Hills" },
+  { url: "https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=1920&q=90&auto=format&fit=max", credit: "Johannes Plenio", link: "https://unsplash.com/@jplenio", source: "Unsplash", title: "Fog Over Lake" },
+  { url: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=90&auto=format&fit=max", credit: "Benjamin Voros", link: "https://unsplash.com/@vorosbenisop", source: "Unsplash", title: "Starry Mountain" },
+  { url: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1920&q=90&auto=format&fit=max", credit: "Kalen Emsley", link: "https://unsplash.com/@kalenemsley", source: "Unsplash", title: "Mountain Peaks" },
+  { url: "https://images.unsplash.com/photo-1500964757637-c85e8a162699?w=1920&q=90&auto=format&fit=max", credit: "Simon Berger", link: "https://unsplash.com/@8moments", source: "Unsplash", title: "Golden Hills" },
+  { url: "https://images.unsplash.com/photo-1516912481808-3406841bd33c?w=1920&q=90&auto=format&fit=max", credit: "Chandler Cruttenden", link: "https://unsplash.com/@chancruttenden", source: "Unsplash", title: "Snowy Road" },
+
+  /* ── Dawn, Dusk & Golden Hour ── */
+  { url: "https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=1920&q=90&auto=format&fit=max", credit: "Aron Visuals", link: "https://unsplash.com/@aronvisuals", source: "Unsplash", title: "Dramatic Sunset" },
+  { url: "https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=1920&q=90&auto=format&fit=max", credit: "Kym MacKinnon", link: "https://unsplash.com/@vixenly", source: "Unsplash", title: "Pink Dawn" },
+  { url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1920&q=90&auto=format&fit=max", credit: "Bailey Zindel", link: "https://unsplash.com/@baileyzindel", source: "Unsplash", title: "Valley Dawn" },
+  { url: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=1920&q=90&auto=format&fit=max", credit: "Joshua Earle", link: "https://unsplash.com/@joshuaearle", source: "Unsplash", title: "Sunrise Silhouette" },
+  { url: "https://images.unsplash.com/photo-1494500764479-0c8f2919a3d8?w=1920&q=90&auto=format&fit=max", credit: "Joshua Earle", link: "https://unsplash.com/@joshuaearle", source: "Unsplash", title: "Forest Sunset" },
+  { url: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=1920&q=90&auto=format&fit=max", credit: "Casey Horner", link: "https://unsplash.com/@mischievous_penguins", source: "Unsplash", title: "Tree Canopy Light" },
+  { url: "https://images.unsplash.com/photo-1472120435266-95c21bcfbfdd?w=1920&q=90&auto=format&fit=max", credit: "Robert Lukeman", link: "https://unsplash.com/@robertlukeman", source: "Unsplash", title: "Golden Meadow" },
+
+  /* ── Winter & Snow ── */
+  { url: "https://images.unsplash.com/photo-1477601263568-180e2c6d046e?w=1920&q=90&auto=format&fit=max", credit: "Eberhard Grossgasteiger", link: "https://unsplash.com/@eberhardgross", source: "Unsplash", title: "Winter Mountains" },
+  { url: "https://images.unsplash.com/photo-1457269449834-928af64c684d?w=1920&q=90&auto=format&fit=max", credit: "Aaron Burden", link: "https://unsplash.com/@aaronburden", source: "Unsplash", title: "Snowy Branch" },
+  { url: "https://images.unsplash.com/photo-1491002052546-bf38f186af56?w=1920&q=90&auto=format&fit=max", credit: "Ales Krivec", link: "https://unsplash.com/@aleskrivec", source: "Unsplash", title: "Frozen Lake" },
+  { url: "https://images.unsplash.com/photo-1483664852095-d6cc6870702d?w=1920&q=90&auto=format&fit=max", credit: "Khamkeo Vilaysing", link: "https://unsplash.com/@mahkeo", source: "Unsplash", title: "Frosty Forest" },
+  { url: "https://images.unsplash.com/photo-1517299321609-52687d1bc55a?w=1920&q=90&auto=format&fit=max", credit: "Nathan Anderson", link: "https://unsplash.com/@nathananderson", source: "Unsplash", title: "Snow Peaks" },
+  { url: "https://images.unsplash.com/photo-1478719059408-592965723cbc?w=1920&q=90&auto=format&fit=max", credit: "Simon Matzinger", link: "https://unsplash.com/@8moments", source: "Unsplash", title: "Winter Fog" },
+
+  /* ── Coastal & Ocean ── */
+  { url: "https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?w=1920&q=90&auto=format&fit=max", credit: "Frank McKenna", link: "https://unsplash.com/@frankiefoto", source: "Unsplash", title: "Ocean Aerial" },
+  { url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=90&auto=format&fit=max", credit: "Sean O.", link: "https://unsplash.com/@seano", source: "Unsplash", title: "Tropical Beach" },
+  { url: "https://images.unsplash.com/photo-1468581264429-2548ef9eb732?w=1920&q=90&auto=format&fit=max", credit: "Jeremy Bishop", link: "https://unsplash.com/@jeremybishop", source: "Unsplash", title: "Sea Rocks" },
+  { url: "https://images.unsplash.com/photo-1484291470158-b8f8d608850d?w=1920&q=90&auto=format&fit=max", credit: "Shifaaz Shamoon", link: "https://unsplash.com/@sotti", source: "Unsplash", title: "Maldives Beach" },
+  { url: "https://images.unsplash.com/photo-1414609245224-afa02bfb3fda?w=1920&q=90&auto=format&fit=max", credit: "Dan Gold", link: "https://unsplash.com/@danielcgold", source: "Unsplash", title: "Rocky Coast" },
+  { url: "https://images.unsplash.com/photo-1471922694854-ff1b63b20054?w=1920&q=90&auto=format&fit=max", credit: "Anastasia Taioglou", link: "https://unsplash.com/@tfrlee", source: "Unsplash", title: "Blue Coast" },
+  { url: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1920&q=90&auto=format&fit=max", credit: "Matt Hardy", link: "https://unsplash.com/@matthardy", source: "Unsplash", title: "Ocean Waves" },
+
+  /* ── Mountains & Valleys ── */
+  { url: "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=1920&q=90&auto=format&fit=max", credit: "Martin Adams", link: "https://unsplash.com/@martinadams", source: "Unsplash", title: "Himalayan Peak" },
+  { url: "https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=1920&q=90&auto=format&fit=max", credit: "Sven Scheuermeier", link: "https://unsplash.com/@sveninho", source: "Unsplash", title: "Alpine Summit" },
+  { url: "https://images.unsplash.com/photo-1464278533981-50106e6176b1?w=1920&q=90&auto=format&fit=max", credit: "Joshua Earle", link: "https://unsplash.com/@joshuaearle", source: "Unsplash", title: "Lone Wanderer" },
+  { url: "https://images.unsplash.com/photo-1491466424936-e304919aada7?w=1920&q=90&auto=format&fit=max", credit: "Dino Reichmuth", link: "https://unsplash.com/@dinoreichmuth", source: "Unsplash", title: "Mountain Road" },
+  { url: "https://images.unsplash.com/photo-1445363692815-ebcd599f7621?w=1920&q=90&auto=format&fit=max", credit: "Ales Krivec", link: "https://unsplash.com/@aleskrivec", source: "Unsplash", title: "Mountain Chapel" },
+  { url: "https://images.unsplash.com/photo-1434394354979-a235cd36269d?w=1920&q=90&auto=format&fit=max", credit: "Pedro Lastra", link: "https://unsplash.com/@peterlaster", source: "Unsplash", title: "Canyon Sunset" },
+  { url: "https://images.unsplash.com/photo-1458668383970-8ddd3927deed?w=1920&q=90&auto=format&fit=max", credit: "Sven Fischer", link: "https://unsplash.com/@svenfischer", source: "Unsplash", title: "Swiss Alps" },
+
+  /* ── Meadows & Wildflowers ── */
+  { url: "https://images.unsplash.com/photo-1462275646964-a0e3c11f18a6?w=1920&q=90&auto=format&fit=max", credit: "Joshua Harris", link: "https://unsplash.com/@joshuaharris", source: "Unsplash", title: "Wildflower Field" },
+  { url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=90&auto=format&fit=max", credit: "Luca Bravo", link: "https://unsplash.com/@lucabravo", source: "Unsplash", title: "Sunlit Meadow" },
+  { url: "https://images.unsplash.com/photo-1510797215324-95aa89f43c33?w=1920&q=90&auto=format&fit=max", credit: "Timothy Eberly", link: "https://unsplash.com/@timothyeberly", source: "Unsplash", title: "Golden Grass" },
+  { url: "https://images.unsplash.com/photo-1504567961542-e24d9439a724?w=1920&q=90&auto=format&fit=max", credit: "Geran de Klerk", link: "https://unsplash.com/@gerandeklerk", source: "Unsplash", title: "Lavender Rows" },
+  { url: "https://images.unsplash.com/photo-1444464666168-49d633b86797?w=1920&q=90&auto=format&fit=max", credit: "Boris Smokrovic", link: "https://unsplash.com/@borisworkshop", source: "Unsplash", title: "Bird in Flight" },
+
+  /* ── Desert & Canyon ── */
+  { url: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920&q=90&auto=format&fit=max", credit: "Braden Jarvis", link: "https://unsplash.com/@bradenjarvis", source: "Unsplash", title: "Desert Highway" },
+  { url: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=1920&q=90&auto=format&fit=max", credit: "Cosmic Timetraveler", link: "https://unsplash.com/@cosmictimetraveler", source: "Unsplash", title: "Desert Dunes" },
+  { url: "https://images.unsplash.com/photo-1473580044384-7ba9967e16a0?w=1920&q=90&auto=format&fit=max", credit: "Willian Justen de Vasconcellos", link: "https://unsplash.com/@willianjusten", source: "Unsplash", title: "Red Rock Canyon" },
+  { url: "https://images.unsplash.com/photo-1542401886-65d6c61db217?w=1920&q=90&auto=format&fit=max", credit: "Andrew Coelho", link: "https://unsplash.com/@andrewcoelho", source: "Unsplash", title: "Sand Ripples" },
+  { url: "https://images.unsplash.com/photo-1495567720989-cebdbdd97913?w=1920&q=90&auto=format&fit=max", credit: "Fabian Quintero", link: "https://unsplash.com/@fabianquintero", source: "Unsplash", title: "Lone Tree Sunset" },
+
+  /* ── Night Sky & Stars ── */
+  { url: "https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?w=1920&q=90&auto=format&fit=max", credit: "Greg Rakozy", link: "https://unsplash.com/@grakozy", source: "Unsplash", title: "Night Sky" },
+  { url: "https://images.unsplash.com/photo-1475274047050-1d0c55b91276?w=1920&q=90&auto=format&fit=max", credit: "Aperture Vintage", link: "https://unsplash.com/@aperturevintage", source: "Unsplash", title: "Cosmic Glow" },
+  { url: "https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=1920&q=90&auto=format&fit=max", credit: "Vincentiu Solomon", link: "https://unsplash.com/@vincentiu", source: "Unsplash", title: "Star Trails" },
+  { url: "https://images.unsplash.com/photo-1532767153700-01f1e0bae927?w=1920&q=90&auto=format&fit=max", credit: "Nathan Anderson", link: "https://unsplash.com/@nathananderson", source: "Unsplash", title: "Northern Glow" },
+  { url: "https://images.unsplash.com/photo-1465101162946-4377e57745c3?w=1920&q=90&auto=format&fit=max", credit: "Jeremy Thomas", link: "https://unsplash.com/@jeremythomasphoto", source: "Unsplash", title: "Galaxy View" },
+
+  /* ── More Nature & Landscapes ── */
+  { url: "https://images.unsplash.com/photo-1431794062232-2a99a5431c6c?w=1920&q=90&auto=format&fit=max", credit: "Ales Krivec", link: "https://unsplash.com/@aleskrivec", source: "Unsplash", title: "Village Valley" },
+  { url: "https://images.unsplash.com/photo-1510784722466-f2aa9c52fff6?w=1920&q=90&auto=format&fit=max", credit: "Eberhard Grossgasteiger", link: "https://unsplash.com/@eberhardgross", source: "Unsplash", title: "Turquoise Lake" },
+  { url: "https://images.unsplash.com/photo-1439853949127-fa647821eba0?w=1920&q=90&auto=format&fit=max", credit: "Ales Krivec", link: "https://unsplash.com/@aleskrivec", source: "Unsplash", title: "Emerald Valley" },
+  { url: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1920&q=90&auto=format&fit=max", credit: "Robert Lukeman", link: "https://unsplash.com/@robertlukeman", source: "Unsplash", title: "Green Hills" },
+  { url: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&q=90&auto=format&fit=max", credit: "Dave Hoefler", link: "https://unsplash.com/@davehoefler", source: "Unsplash", title: "Sunbeam Valley" },
+  { url: "https://images.unsplash.com/photo-1465056836900-8f1e940b2eb8?w=1920&q=90&auto=format&fit=max", credit: "Scott Webb", link: "https://unsplash.com/@scottwebb", source: "Unsplash", title: "Purple Flowers" },
+  { url: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=1920&q=90&auto=format&fit=max", credit: "Luca Bravo", link: "https://unsplash.com/@lucabravo", source: "Unsplash", title: "Tropical Paradise" },
+  { url: "https://images.unsplash.com/photo-1504198453319-5ce911bafcde?w=1920&q=90&auto=format&fit=max", credit: "Faye Cornish", link: "https://unsplash.com/@fcornish", source: "Unsplash", title: "Countryside Path" },
+  { url: "https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=1920&q=90&auto=format&fit=max", credit: "Ricardo Gomez Angel", link: "https://unsplash.com/@rgaleriacom", source: "Unsplash", title: "Autumn Leaves" },
+
+  /* ── Wikimedia Commons — Classical Paintings ── */
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/1920px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg",
+    credit: "Leonardo da Vinci",
+    link: "https://en.wikipedia.org/wiki/Mona_Lisa",
+    source: "Wikimedia Commons",
+    title: "Mona Lisa"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/VanGogh-starry_night_ballance1.jpg/1920px-VanGogh-starry_night_ballance1.jpg",
+    credit: "Vincent van Gogh",
+    link: "https://en.wikipedia.org/wiki/The_Starry_Night",
+    source: "Wikimedia Commons",
+    title: "The Starry Night"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/The_Garden_of_Earthly_Delights_by_Bosch_High_Resolution.jpg/1920px-The_Garden_of_Earthly_Delights_by_Bosch_High_Resolution.jpg",
+    credit: "Hieronymus Bosch",
+    link: "https://en.wikipedia.org/wiki/The_Garden_of_Earthly_Delights",
+    source: "Wikimedia Commons",
+    title: "The Garden of Earthly Delights"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1920px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg",
+    credit: "Vincent van Gogh",
+    link: "https://en.wikipedia.org/wiki/Starry_Night_Over_the_Rh%C3%B4ne",
+    source: "Wikimedia Commons",
+    title: "Café Terrace at Night"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Meisje_met_de_parel.jpg/1920px-Meisje_met_de_parel.jpg",
+    credit: "Johannes Vermeer",
+    link: "https://en.wikipedia.org/wiki/Girl_with_a_Pearl_Earring",
+    source: "Wikimedia Commons",
+    title: "Girl with a Pearl Earring"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Parc_Monceau_%28Monet%29.jpg/1920px-Parc_Monceau_%28Monet%29.jpg",
+    credit: "Claude Monet",
+    link: "https://en.wikipedia.org/wiki/Claude_Monet",
+    source: "Wikimedia Commons",
+    title: "Parc Monceau"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Vincent_van_Gogh_-_Wheatfield_with_crows_-_Google_Art_Project.jpg/1920px-Vincent_van_Gogh_-_Wheatfield_with_crows_-_Google_Art_Project.jpg",
+    credit: "Vincent van Gogh",
+    link: "https://en.wikipedia.org/wiki/Wheatfield_with_Crows",
+    source: "Wikimedia Commons",
+    title: "Wheatfield with Crows"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/A_Sunday_on_La_Grande_Jatte%2C_Georges_Seurat%2C_1884.jpg/1920px-A_Sunday_on_La_Grande_Jatte%2C_Georges_Seurat%2C_1884.jpg",
+    credit: "Georges Seurat",
+    link: "https://en.wikipedia.org/wiki/A_Sunday_Afternoon_on_the_Island_of_La_Grande_Jatte",
+    source: "Wikimedia Commons",
+    title: "Sunday on La Grande Jatte"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat_03.jpg/1200px-Cat_03.jpg",
+    credit: "Alvesgaspar",
+    link: "https://commons.wikimedia.org/wiki/File:Cat_03.jpg",
+    source: "Wikimedia Commons",
+    title: "European Cat"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Tsunami_by_hokusai_19th_century.jpg/1920px-Tsunami_by_hokusai_19th_century.jpg",
+    credit: "Katsushika Hokusai",
+    link: "https://en.wikipedia.org/wiki/The_Great_Wave_off_Kanagawa",
+    source: "Wikimedia Commons",
+    title: "The Great Wave",
+    culture: "japanese"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Albert_Bierstadt_-_Among_the_Sierra_Nevada%2C_California_-_Google_Art_Project.jpg/1920px-Albert_Bierstadt_-_Among_the_Sierra_Nevada%2C_California_-_Google_Art_Project.jpg",
+    credit: "Albert Bierstadt",
+    link: "https://en.wikipedia.org/wiki/Albert_Bierstadt",
+    source: "Wikimedia Commons",
+    title: "Among the Sierra Nevada"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Caspar_David_Friedrich_-_Wanderer_above_the_sea_of_fog.jpg/1920px-Caspar_David_Friedrich_-_Wanderer_above_the_sea_of_fog.jpg",
+    credit: "Caspar David Friedrich",
+    link: "https://en.wikipedia.org/wiki/Wanderer_above_the_Sea_of_Fog",
+    source: "Wikimedia Commons",
+    title: "Wanderer Above the Sea of Fog"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Monet_-_Impression%2C_Sunrise.jpg/1920px-Monet_-_Impression%2C_Sunrise.jpg",
+    credit: "Claude Monet",
+    link: "https://en.wikipedia.org/wiki/Impression,_Sunrise",
+    source: "Wikimedia Commons",
+    title: "Impression, Sunrise"
+  },
+
+  /* ── Greco-Roman Classical Art ── */
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Socrates_Louvre.jpg/1920px-Socrates_Louvre.jpg",
+    credit: "Bust of Socrates — Roman copy after Greek original, 1st–2nd c. CE",
+    link: "https://commons.wikimedia.org/wiki/File:Socrates_Louvre.jpg",
+    source: "Wikimedia Commons · Public Domain",
+    culture: "greco-roman"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Pope-Innocent-X-Velazquez.jpg/1920px-Pope-Innocent-X-Velazquez.jpg",
+    credit: "The Battle of Issus (detail) — Albrecht Altdorfer, 1529",
+    link: "https://commons.wikimedia.org/wiki/File:Albrecht_Altdorfer_-_The_Battle_of_Alexander_at_Issus_-_WGA00326.jpg",
+    source: "Wikimedia Commons · Public Domain",
+    culture: "greco-roman"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Raffael_058.jpg/1920px-Raffael_058.jpg",
+    credit: "The Parnassus — Raphael, 1510–1511",
+    link: "https://commons.wikimedia.org/wiki/File:Raffael_058.jpg",
+    source: "Wikimedia Commons · Public Domain",
+    culture: "greco-roman"
+  },
+
+  /* ── Chinese Landscape Art ── */
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Fan_Kuan-_Travelers_Among_Mountains_and_Streams.jpg/1920px-Fan_Kuan-_Travelers_Among_Mountains_and_Streams.jpg",
+    credit: "Travelers Among Mountains and Streams — Fan Kuan, c. 1000 CE",
+    link: "https://commons.wikimedia.org/wiki/File:Fan_Kuan-_Travelers_Among_Mountains_and_Streams.jpg",
+    source: "Wikimedia Commons · Public Domain",
+    culture: "chinese"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Guo_Xi-_Early_Spring.jpg/1920px-Guo_Xi-_Early_Spring.jpg",
+    credit: "Early Spring — Guo Xi, 1072 CE",
+    link: "https://commons.wikimedia.org/wiki/File:Guo_Xi-_Early_Spring.jpg",
+    source: "Wikimedia Commons · Public Domain",
+    culture: "chinese"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Wang_Ximeng_-_A_Thousand_Li_of_Rivers_and_Mountains.jpg/1920px-Wang_Ximeng_-_A_Thousand_Li_of_Rivers_and_Mountains.jpg",
+    credit: "A Thousand Li of Rivers and Mountains — Wang Ximeng, 1113 CE",
+    link: "https://commons.wikimedia.org/wiki/File:Wang_Ximeng_-_A_Thousand_Li_of_Rivers_and_Mountains.jpg",
+    source: "Wikimedia Commons · Public Domain",
+    culture: "chinese"
+  },
+
+  /* ── Japanese Woodblock Prints ── */
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Hokusai_-_Red_Fuji_southern_wind_clear_morning.jpg/1920px-Hokusai_-_Red_Fuji_southern_wind_clear_morning.jpg",
+    credit: "Red Fuji (South Wind, Clear Sky) — Katsushika Hokusai, c. 1831",
+    link: "https://commons.wikimedia.org/wiki/File:Hokusai_-_Red_Fuji_southern_wind_clear_morning.jpg",
+    source: "Wikimedia Commons · Public Domain",
+    culture: "japanese"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Hiroshige_Ohashi_Atake_no_Yudachi.jpg/1920px-Hiroshige_Ohashi_Atake_no_Yudachi.jpg",
+    credit: "Sudden Shower over Shin-Ohashi Bridge — Hiroshige, 1857",
+    link: "https://commons.wikimedia.org/wiki/File:Hiroshige_Ohashi_Atake_no_Yudachi.jpg",
+    source: "Wikimedia Commons · Public Domain",
+    culture: "japanese"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Hiroshige_-_Sixty-nine_Stations_of_the_Kisokaido_-_Station_67_-_Oiwake.jpg/1920px-Hiroshige_-_Sixty-nine_Stations_of_the_Kisokaido_-_Station_67_-_Oiwake.jpg",
+    credit: "Snowstorm at Kanbara — Hiroshige, c. 1833",
+    link: "https://commons.wikimedia.org/wiki/File:Hiroshige_Kanbara_yoru_no_yuki.jpg",
+    source: "Wikimedia Commons · Public Domain",
+    culture: "japanese"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Hiroshige_-_Hundred_Famous_Views_of_Edo_-_Plum_Garden_at_Kamata.jpg/1920px-Hiroshige_-_Hundred_Famous_Views_of_Edo_-_Plum_Garden_at_Kamata.jpg",
+    credit: "Plum Garden at Kameido — Hiroshige, 1857",
+    link: "https://commons.wikimedia.org/wiki/File:Hiroshige_Kameido_Umeyashiki.jpg",
+    source: "Wikimedia Commons · Public Domain",
+    culture: "japanese"
+  },
+
+  /* ── Buddhist & South Asian Art ── */
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Borobudur-Nothwest-view.jpg/1920px-Borobudur-Nothwest-view.jpg",
+    credit: "Borobudur Temple, Java — 9th century CE",
+    link: "https://commons.wikimedia.org/wiki/File:Borobudur-Nothwest-view.jpg",
+    source: "Wikimedia Commons · CC BY-SA",
+    culture: "buddhist"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Ajanta_cave2_1.jpg/1920px-Ajanta_cave2_1.jpg",
+    credit: "Ajanta Cave Paintings, India — 2nd century BCE – 5th century CE",
+    link: "https://commons.wikimedia.org/wiki/File:Ajanta_cave2_1.jpg",
+    source: "Wikimedia Commons · Public Domain",
+    culture: "buddhist"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Tibetan_Buddhist_Thangka_Painting.jpg/1920px-Tibetan_Buddhist_Thangka_Painting.jpg",
+    credit: "Tibetan Buddhist Thangka — 18th century",
+    link: "https://commons.wikimedia.org/wiki/File:Medicine_Buddha_Thangka.jpg",
+    source: "Wikimedia Commons · Public Domain",
+    culture: "buddhist"
+  },
+
+  /* ── Persian & Sufi Art ── */
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Rumi_Masnavi_Manuscript_Page.jpg/1920px-Rumi_Masnavi_Manuscript_Page.jpg",
+    credit: "Masnavi Manuscript, Persia — 13th–14th century",
+    link: "https://commons.wikimedia.org/wiki/File:Masnavi_Manuscript_Page.jpg",
+    source: "Wikimedia Commons · Public Domain",
+    culture: "persian"
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Sultan_Muhammad_-_Court_of_Gayumars_-_Google_Art_Project.jpg/1920px-Sultan_Muhammad_-_Court_of_Gayumars_-_Google_Art_Project.jpg",
+    credit: "Court of Gayumars — Sultan Muhammad, c. 1522–1525",
+    link: "https://commons.wikimedia.org/wiki/File:Sultan_Muhammad_-_Court_of_Gayumars_-_Google_Art_Project.jpg",
+    source: "Wikimedia Commons · Public Domain",
+    culture: "persian"
+  },
+,
+// ── Curated high-quality additions ──
+  { url: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1920&q=90&auto=format&fit=max", credit: "Qingbao Meng", link: "https://unsplash.com/@qbqn", source: "Unsplash", title: "Terraced Mountains" },
+  { url: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1920&q=90&auto=format&fit=max", credit: "Luca Bravo", link: "https://unsplash.com/@lucabravo", source: "Unsplash", title: "Mountain Lake Cabin" },
+  { url: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1920&q=90&auto=format&fit=max", credit: "Pine Watt", link: "https://unsplash.com/@pinewatt", source: "Unsplash", title: "Misty Peaks" },
+  { url: "https://images.unsplash.com/photo-1511593358241-7eea1f3c84e5?w=1920&q=90&auto=format&fit=max", credit: "John Towner", link: "https://unsplash.com/@heytowner", source: "Unsplash", title: "Calm Ocean Horizon" },
+  { url: "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=1920&q=90&auto=format&fit=max", credit: "Tim Mossholder", link: "https://unsplash.com/@timmossholder", source: "Unsplash", title: "Forest Canopy Path" },
+  { url: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=1920&q=90&auto=format&fit=max", credit: "Greg Rakozy", link: "https://unsplash.com/@grakozy", source: "Unsplash", title: "Milky Way Arch" },
+  { url: "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=1920&q=90&auto=format&fit=max", credit: "Luca Bravo", link: "https://unsplash.com/@lucabravo", source: "Unsplash", title: "Dolomite Peaks" },
+  { url: "https://images.unsplash.com/photo-1540202404-a2f29016b523?w=1920&q=90&auto=format&fit=max", credit: "Silas Baisch", link: "https://unsplash.com/@silasbaisch", source: "Unsplash", title: "Turquoise Coast" },
+  { url: "https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?w=1920&q=90&auto=format&fit=max", credit: "Marivi Pazos", link: "https://unsplash.com/@marivipazos", source: "Unsplash", title: "Nordic Fjords" },
+  { url: "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=1920&q=90&auto=format&fit=max", credit: "Cristina Gottardi", link: "https://unsplash.com/@cristina_gottardi", source: "Unsplash", title: "Snow Ridge" },
+  { url: "https://images.unsplash.com/photo-1465146633011-14f8e0781093?w=1920&q=90&auto=format&fit=max", credit: "Timothy Eberly", link: "https://unsplash.com/@timothyeberly", source: "Unsplash", title: "Wildflower Hills" },
+  { url: "https://images.unsplash.com/photo-1504198266287-1659872e6590?w=1920&q=90&auto=format&fit=max", credit: "eberhard grossgasteiger", link: "https://unsplash.com/@eberhardgross", source: "Unsplash", title: "Soft Alpine Clouds" },
+  { url: "https://images.unsplash.com/photo-1519689373023-dd07c7988603?w=1920&q=90&auto=format&fit=max", credit: "Jeremy Bishop", link: "https://unsplash.com/@jeremybishop", source: "Unsplash", title: "Palm Sunset" },
+  { url: "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1920&q=90&auto=format&fit=max", credit: "Quino Al", link: "https://unsplash.com/@quinoal", source: "Unsplash", title: "Golden Sunrise Field" },
+
+];
+
+// Deduplicate by photo identity (same asset, any params/size).
+(function() {
+  function photoKey(url) {
+    try {
+      const u = new URL(url);
+      if (u.hostname.includes('unsplash.com')) {
+        const m = u.pathname.match(/photo-([a-zA-Z0-9_-]+)/);
+        return m ? 'unsplash:' + m[1] : u.pathname;
+      }
+      if (u.hostname.includes('pexels.com')) {
+        const m = u.pathname.match(/\/photos\/(\d+)/);
+        return m ? 'pexels:' + m[1] : u.pathname;
+      }
+      if (u.hostname.includes('wikimedia.org')) {
+        return 'wiki:' + u.pathname.replace(/\/\d+px-/, '/');
+      }
+      return u.origin + u.pathname;
+    } catch { return url; }
+  }
+  const _seen = new Set();
+  const _deduped = BACKGROUNDS.filter(bg => {
+    const key = photoKey(bg.url);
+    if (_seen.has(key)) return false;
+    _seen.add(key);
+    return true;
+  });
+  BACKGROUNDS.length = 0;
+  BACKGROUNDS.push(..._deduped);
+})();
+
+let currentBgIdx = 0;
+
+// ── Background quality + smart random (aligned with js/backgrounds.js) ──
+function _randInt(n) {
+  if (n <= 1) return 0;
+  try {
+    if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
+      const buf = new Uint32Array(1);
+      const max = 0x100000000;
+      const limit = max - (max % n);
+      let x;
+      do { crypto.getRandomValues(buf); x = buf[0]; } while (x >= limit);
+      return x % n;
+    }
+  } catch (_) {}
+  return Math.floor(Math.random() * n);
+}
+function _shuffleInPlace(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = _randInt(i + 1);
+    const t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+  }
+  return arr;
+}
+function _responsiveImgWidth() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const vw = (window.innerWidth || screen.width || 1280) * dpr;
+  if (vw <= 720)  return 800;
+  if (vw <= 1100) return 1280;
+  if (vw <= 1700) return 1920;
+  return 2560;
+}
+function _optimizeBgUrl(rawUrl) {
+  if (!rawUrl) return rawUrl;
+  let url = rawUrl;
+  const w = _responsiveImgWidth();
+  if (url.includes('images.unsplash.com')) {
+    try {
+      const u = new URL(url);
+      u.searchParams.set('w', String(w));
+      u.searchParams.set('q', '90');
+      u.searchParams.set('auto', 'format');
+      u.searchParams.set('fit', 'max');
+      url = u.href;
+    } catch (_) {
+      url = url.replace(/([?&])w=\d+/g, `$1w=${w}`).replace(/([?&])q=\d+/g, '$1q=90');
+    }
+  } else if (url.includes('images.pexels.com')) {
+    try {
+      const u = new URL(url);
+      u.searchParams.set('auto', 'compress');
+      u.searchParams.set('cs', 'tinysrgb');
+      u.searchParams.set('w', String(w));
+      url = u.href;
+    } catch (_) {
+      url = url.replace(/([?&])w=\d+/g, `$1w=${w}`);
+    }
+  } else if (url.includes('upload.wikimedia.org')) {
+    url = url.replace(/\/(800|1024|1280)px-/g, '/1920px-');
+  }
+  return url;
+}
+function _bgMood(bg) {
+  if (!bg) return 'other';
+  if (bg.culture) return 'c:' + bg.culture;
+  const t = `${bg.title || ''} ${bg.credit || ''}`.toLowerCase();
+  if (/aurora|milky|star|night|galaxy|space|nocturne/.test(t)) return 'night';
+  if (/ocean|sea|coast|beach|wave|shore|cliff/.test(t)) return 'ocean';
+  if (/desert|dune|sand|canyon|arid/.test(t)) return 'desert';
+  if (/snow|winter|ice|frost|glacier/.test(t)) return 'winter';
+  if (/forest|tree|wood|pine|canopy|redwood|birch/.test(t)) return 'forest';
+  if (/mountain|peak|summit|alps|himalaya|ridge/.test(t)) return 'mountain';
+  if (/lake|river|waterfall|stream|pond/.test(t)) return 'water';
+  if (/sunset|sunrise|dawn|dusk|golden|lavender|meadow|field/.test(t)) return 'golden';
+  if (/fog|mist|cloud/.test(t)) return 'mist';
+  if (bg.source && /wikimedia|public domain/i.test(bg.source)) return 'art';
+  return 'nature';
+}
+const SOL_MAX_RECENT_BGS = 48;
+const SOL_RECENT_BGS_KEY = 'ataraxia_recent_bgs_v3';
+let recentBgs = [];
+try {
+  recentBgs = JSON.parse(localStorage.getItem(SOL_RECENT_BGS_KEY) || '[]')
+    .filter(i => Number.isInteger(i) && i >= 0 && i < BACKGROUNDS.length);
+} catch (_) { recentBgs = []; }
+let _bgBag = [];
+let _recentMoods = [];
+const _failedBg = new Set();
+
+function loadBackground(index) {
+  const bg = BACKGROUNDS[index];
+  if (!bg) { _nextFromPool(); return; }
+  const url = _optimizeBgUrl(bg.url);
+  _applyBackground(url, bg.credit, bg.link, bg.source || 'Unsplash', bg.title || '');
+}
+
+// Cleanup function for any in-progress background crossfade transition.
+let _bgCrossfadeCleanup = null;
+
+function _applyBackground(url, creditText, linkUrl, source, title = '') {
+  const layerCurrent = document.getElementById('bg-layer');
+  const layerNext    = document.getElementById('bg-layer-next');
+  const credit       = document.getElementById('img-credit');
+
+  const img = new Image();
+  try { img.decoding = 'async'; } catch (_) {}
+  img.onload = () => {
+    if (_bgCrossfadeCleanup) {
+      _bgCrossfadeCleanup();
+      _bgCrossfadeCleanup = null;
+    }
+
+    layerNext.style.transition = 'none';
+    layerNext.classList.remove('loaded');
+    layerNext.style.backgroundImage = `url(${url})`;
+    layerNext.offsetHeight;
+    layerNext.style.transition = '';
+    requestAnimationFrame(() => { layerNext.classList.add('loaded'); });
+
+    try { localStorage.setItem('ataraxia_bg_url', url); } catch(e) {}
+
+    credit.textContent = '';
+    const safeLink = (() => {
+      try {
+        const u = new URL(String(linkUrl || '').trim());
+        return u.protocol === 'https:' ? u.href : null;
+      } catch { return null; }
+    })();
+    if (source === 'Unsplash' || source === 'Pexels') {
+      const titlePart = title ? `«${title}» · ` : '';
+      credit.appendChild(document.createTextNode(`Photo: ${titlePart}`));
+      if (safeLink) {
+        const a = document.createElement('a');
+        a.href = safeLink;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.textContent = creditText;
+        credit.appendChild(a);
+      } else {
+        credit.appendChild(document.createTextNode(creditText));
+      }
+      credit.appendChild(document.createTextNode(` · ${source}`));
+    } else if (safeLink) {
+      const a = document.createElement('a');
+      a.href = safeLink;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.textContent = creditText;
+      credit.appendChild(a);
+      credit.appendChild(document.createTextNode(` · ${source}`));
+    } else {
+      credit.appendChild(document.createTextNode(`${creditText} · ${source}`));
+    }
+    document.querySelector('.bottom-badges').classList.add('visible');
+    requestAnimationFrame(() => {
+      updateLayoutInsets();
+      updateCardSize();
+    });
+
+    function onTransitionEnd(e) {
+      if (e.propertyName !== 'opacity' || e.target !== layerNext) return;
+      layerNext.removeEventListener('transitionend', onTransitionEnd);
+      _bgCrossfadeCleanup = null;
+      layerCurrent.style.backgroundImage = `url(${url})`;
+      layerNext.style.transition = 'none';
+      layerNext.classList.remove('loaded');
+      layerNext.style.backgroundImage = '';
+      requestAnimationFrame(() => { layerNext.style.transition = ''; });
+    }
+    layerNext.addEventListener('transitionend', onTransitionEnd);
+
+    _bgCrossfadeCleanup = () => {
+      layerNext.removeEventListener('transitionend', onTransitionEnd);
+      if (layerNext.style.backgroundImage) {
+        layerCurrent.style.backgroundImage = layerNext.style.backgroundImage;
+      }
+      layerNext.style.transition = 'none';
+      layerNext.classList.remove('loaded');
+      layerNext.style.backgroundImage = '';
+      requestAnimationFrame(() => { layerNext.style.transition = ''; });
+    };
+  };
+  img.onerror = () => {
+    _failedBg.add(currentBgIdx);
+    _nextFromPool();
+  };
+  img.src = url;
+}
+
+function _refillBgBag() {
+  const avoid = new Set(recentBgs.slice(-SOL_MAX_RECENT_BGS));
+  const all = Array.from({ length: BACKGROUNDS.length }, (_, i) => i)
+    .filter(i => !_failedBg.has(i));
+  const fresh = all.filter(i => !avoid.has(i));
+  const bag = (fresh.length >= 12 ? fresh : all).slice();
+  _shuffleInPlace(bag);
+  _bgBag = bag;
+}
+
+function _scoreCandidate(idx) {
+  const bg = BACKGROUNDS[idx];
+  let score = 10 + _randInt(5);
+  const mood = _bgMood(bg);
+  for (let k = 0; k < _recentMoods.length; k++) {
+    if (_recentMoods[_recentMoods.length - 1 - k] === mood) score -= (6 - k);
+  }
+  if (!recentBgs.includes(idx)) score += 3;
+  return score;
+}
+
+function getRandomBgIndex() {
+  _bgBag = _bgBag.filter(i => i !== currentBgIdx && !_failedBg.has(i) && i >= 0 && i < BACKGROUNDS.length);
+  if (_bgBag.length < 3) {
+    _refillBgBag();
+    _bgBag = _bgBag.filter(i => i !== currentBgIdx);
+    if (!_bgBag.length) _refillBgBag();
+  }
+  const window = _bgBag.slice(0, Math.min(10, _bgBag.length));
+  let best = window[0] ?? 0;
+  let bestScore = -Infinity;
+  for (const i of window) {
+    const s = _scoreCandidate(i);
+    if (s > bestScore) { bestScore = s; best = i; }
+  }
+  _bgBag = _bgBag.filter(i => i !== best);
+  return best;
+}
+
+function recordBgSeen(idx) {
+  recentBgs = recentBgs.filter(i => i !== idx);
+  recentBgs.push(idx);
+  if (recentBgs.length > SOL_MAX_RECENT_BGS) recentBgs.shift();
+  try { localStorage.setItem(SOL_RECENT_BGS_KEY, JSON.stringify(recentBgs)); } catch(e) {}
+  _recentMoods.push(_bgMood(BACKGROUNDS[idx]));
+  if (_recentMoods.length > 6) _recentMoods.shift();
+  _bgBag = _bgBag.filter(i => i !== idx);
+}
+
+function _nextFromPool() {
+  const idx = getRandomBgIndex();
+  currentBgIdx = idx;
+  recordBgSeen(idx);
+  loadBackground(idx);
+}
+
+function nextBackground() {
+  _nextFromPool();
+}
+
+// Pick a smart-random background on page load
+(function initBackground() {
+  currentBgIdx = getRandomBgIndex();
+  recordBgSeen(currentBgIdx);
+  loadBackground(currentBgIdx);
+})();
+
+
+// Start: measure chrome, size cards and deal
+updateLayoutInsets();
+updateCardSize();
+newGame();
+
+/* ══════════════════════════════════════════════════════════
+   TRANSLATION SYSTEM — same as index.html
+   ══════════════════════════════════════════════════════════ */
+
+const SUPPORTED_LANGS = [
+  { code: 'en', name: 'English',    native: 'English' },
+  { code: 'es', name: 'Spanish',    native: 'Español' },
+  { code: 'fr', name: 'French',     native: 'Français' },
+  { code: 'de', name: 'German',     native: 'Deutsch' },
+  { code: 'it', name: 'Italian',    native: 'Italiano' },
+  { code: 'pt', name: 'Portuguese', native: 'Português' },
+  { code: 'nl', name: 'Dutch',      native: 'Nederlands' },
+  { code: 'ru', name: 'Russian',    native: 'Русский' },
+  { code: 'ja', name: 'Japanese',   native: '日本語' },
+  { code: 'ko', name: 'Korean',     native: '한국어' },
+  { code: 'zh', name: 'Chinese',    native: '中文' },
+  { code: 'ar', name: 'Arabic',     native: 'العربية' },
+  { code: 'hi', name: 'Hindi',      native: 'हिन्दी' },
+  { code: 'tr', name: 'Turkish',    native: 'Türkçe' },
+  { code: 'pl', name: 'Polish',     native: 'Polski' },
+  { code: 'uk', name: 'Ukrainian',  native: 'Українська' },
+  { code: 'sv', name: 'Swedish',    native: 'Svenska' },
+  { code: 'da', name: 'Danish',     native: 'Dansk' },
+  { code: 'no', name: 'Norwegian',  native: 'Norsk' },
+  { code: 'fi', name: 'Finnish',    native: 'Suomi' },
+  { code: 'el', name: 'Greek',      native: 'Ελληνικά' },
+  { code: 'he', name: 'Hebrew',     native: 'עברית' },
+  { code: 'th', name: 'Thai',       native: 'ไทย' },
+  { code: 'vi', name: 'Vietnamese', native: 'Tiếng Việt' },
+  { code: 'id', name: 'Indonesian', native: 'Bahasa Indonesia' },
+  { code: 'ms', name: 'Malay',      native: 'Bahasa Melayu' },
+  { code: 'ro', name: 'Romanian',   native: 'Română' },
+  { code: 'cs', name: 'Czech',      native: 'Čeština' },
+  { code: 'hu', name: 'Hungarian',  native: 'Magyar' },
+  { code: 'bg', name: 'Bulgarian',  native: 'Български' },
+];
+
+// Solitaire-specific UI strings
+// (SOL_UI_EN is declared early in the STATE section)
+
+const TRANSLATION_CACHE_KEY = 'ataraxia_translations_v3';
+const TRANSLATION_CACHE_KEY_LEGACY = 'stoicflow_translations';
+const TRANSLATION_CACHE_KEY_LEGACY_V2 = 'ataraxia_translations';
+const LANG_PREF_KEY = 'ataraxia_lang';
+const LANG_PREF_KEY_LEGACY = 'stoicflow_lang';
+const TRANSLATION_CACHE_MAX = 500;
+
+// currentLang and _cachedUIStrings are declared early in the STATE section
+let translationCache = {};
+
+function cleanTranslation(str) {
+  if (typeof str !== 'string' || !str) return str;
+  let out = str.replace(/<g[^>]*>([\s\S]*?)<\/g>/gi, '$1');
+  out = out.replace(/<[^>]+>/g, '');
+  out = out
+    .replace(/&apos;/gi, "'")
+    .replace(/&quot;/gi, '"')
+    .replace(/&amp;/gi, '&')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCharCode(parseInt(h, 16)));
+  out = out.replace(/^[«»‹›"'`]+|[«»‹›"'`]+$/g, '');
+  out = out.replace(/[»›]{2,}/g, '');
+  out = out.replace(/\s+([.,;:!?])/g, '$1');
+  return out.replace(/\s+/g, ' ').trim();
+}
+
+function migrateLegacyStorage() {
+  [
+    [LANG_PREF_KEY_LEGACY, LANG_PREF_KEY],
+    [TRANSLATION_CACHE_KEY_LEGACY, TRANSLATION_CACHE_KEY],
+    [TRANSLATION_CACHE_KEY_LEGACY_V2, TRANSLATION_CACHE_KEY],
+  ].forEach(([legacy, current]) => {
+    try {
+      const value = localStorage.getItem(legacy);
+      if (value != null && localStorage.getItem(current) == null) {
+        localStorage.setItem(current, value);
+      }
+    } catch(e) {}
+  });
+}
+
+function trimTranslationCache() {
+  const keys = Object.keys(translationCache);
+  if (keys.length <= TRANSLATION_CACHE_MAX) return;
+  keys.slice(0, keys.length - TRANSLATION_CACHE_MAX).forEach((k) => {
+    delete translationCache[k];
+  });
+}
+
+function loadTranslationCache() {
+  try {
+    const raw = localStorage.getItem(TRANSLATION_CACHE_KEY)
+      || localStorage.getItem(TRANSLATION_CACHE_KEY_LEGACY);
+    if (raw) translationCache = JSON.parse(raw);
+    trimTranslationCache();
+  } catch(e) { translationCache = {}; }
+}
+
+function saveTranslationCache() {
+  try {
+    trimTranslationCache();
+    localStorage.setItem(TRANSLATION_CACHE_KEY, JSON.stringify(translationCache));
+  } catch(e) {}
+}
+
+function getCacheKey(text, targetLang) {
+  return `en|${targetLang}|${text}`;
+}
+
+function getCachedTranslation(text, targetLang) {
+  const raw = translationCache[getCacheKey(text, targetLang)];
+  return raw ? cleanTranslation(raw) : null;
+}
+
+function setCachedTranslation(text, targetLang, translated) {
+  translationCache[getCacheKey(text, targetLang)] = cleanTranslation(translated);
+  trimTranslationCache();
+}
+
+function _gtLang(lang) {
+  const map = { zh: 'zh-CN', he: 'iw' };
+  return map[lang] || lang;
+}
+
+async function translateText(text, targetLang) {
+  if (targetLang === 'en') return text;
+  if (!text || !text.trim()) return text;
+
+  const cached = getCachedTranslation(text, targetLang);
+  if (cached) return cached;
+
+  const encoded = encodeURIComponent(text);
+
+  // Provider 1: MyMemory
+  try {
+    const url = `https://api.mymemory.translated.net/get?q=${encoded}&langpair=en|${targetLang}`;
+    const resp = await fetch(url);
+    if (resp.ok) {
+      const data = await resp.json();
+      if (data.responseStatus === 200 && data.responseData && data.responseData.translatedText) {
+        const translated = cleanTranslation(data.responseData.translatedText);
+        if (translated !== text.toUpperCase()) {
+          setCachedTranslation(text, targetLang, translated);
+          return translated;
+        }
+      }
+    }
+  } catch(e) {}
+
+  // Provider 2: Google Translate (unofficial web endpoint)
+  try {
+    const tl = _gtLang(targetLang);
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${tl}&dt=t&q=${encoded}`;
+    const resp = await fetch(url);
+    if (resp.ok) {
+      const data = await resp.json();
+      const translated = cleanTranslation(data?.[0]?.map(s => s?.[0]).filter(Boolean).join(''));
+      if (translated) {
+        setCachedTranslation(text, targetLang, translated);
+        return translated;
+      }
+    }
+  } catch(e) {}
+
+  // Provider 3: LibreTranslate
+  try {
+    const resp = await fetch('https://libretranslate.com/translate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ q: text, source: 'en', target: targetLang, format: 'text' }),
+    });
+    if (resp.ok) {
+      const data = await resp.json();
+      if (data.translatedText) {
+        const translated = cleanTranslation(data.translatedText);
+        setCachedTranslation(text, targetLang, translated);
+        return translated;
+      }
+    }
+  } catch(e) {}
+
+  return text;
+}
+
+async function batchTranslate(texts, targetLang) {
+  if (targetLang === 'en') return [...texts];
+
+  const results = new Array(texts.length);
+  const uncached = [];
+
+  for (let i = 0; i < texts.length; i++) {
+    const cached = getCachedTranslation(texts[i], targetLang);
+    if (cached) {
+      results[i] = cached;
+    } else {
+      uncached.push(i);
+    }
+  }
+
+  const CONCURRENCY = 3;
+  for (let start = 0; start < uncached.length; start += CONCURRENCY) {
+    const batch = uncached.slice(start, start + CONCURRENCY);
+    const promises = batch.map(idx => translateText(texts[idx], targetLang).then(t => { results[idx] = t; }));
+    await Promise.all(promises);
+  }
+
+  saveTranslationCache();
+  return results;
+}
+
+function applyUIStrings(strings) {
+  const undoLabel = document.getElementById('undo-label');
+  const newGameLabel = document.getElementById('new-game-label');
+  const movesLabel = document.getElementById('moves-label');
+  const winTitle = document.getElementById('win-title');
+  const winSub = document.getElementById('win-sub');
+  const playAgainBtn = document.getElementById('play-again-btn');
+  const hintLabel = document.getElementById('hint-label');
+  const autoCompleteBtn = document.getElementById('autocomplete-btn');
+  const playedLabel = document.getElementById('stat-played-label');
+  const wonLabel = document.getElementById('stat-won-label');
+  const streakLabel = document.getElementById('stat-streak-label');
+  const bestLabel = document.getElementById('stat-best-label');
+  const shuffleBgLabel = document.getElementById('shuffle-bg-label');
+  const restartDealLabel = document.getElementById('restart-deal-label');
+  const restartDealBtn = document.getElementById('restart-deal-btn');
+  const newGameBtn = document.getElementById('new-game-btn');
+
+  if (undoLabel) undoLabel.textContent = strings.undo;
+  if (newGameLabel) newGameLabel.textContent = strings.newGame;
+  if (newGameBtn) newGameBtn.setAttribute('aria-label', strings.newGame || SOL_UI_EN.newGame);
+  if (restartDealLabel) restartDealLabel.textContent = strings.restartDeal || SOL_UI_EN.restartDeal;
+  if (restartDealBtn) restartDealBtn.setAttribute('aria-label', strings.restartDeal || SOL_UI_EN.restartDeal);
+  if (movesLabel) movesLabel.textContent = strings.moves;
+  if (winTitle) winTitle.textContent = strings.youWin;
+  if (winSub && !winSub.dataset.hasScore) winSub.textContent = strings.allCards;
+  if (playAgainBtn) playAgainBtn.textContent = strings.playAgain;
+  if (hintLabel) hintLabel.textContent = strings.hint;
+  if (autoCompleteBtn) autoCompleteBtn.textContent = strings.autoComplete;
+  if (playedLabel) playedLabel.textContent = strings.played;
+  if (wonLabel) wonLabel.textContent = strings.won;
+  if (streakLabel) streakLabel.textContent = strings.streak;
+  if (bestLabel) bestLabel.textContent = strings.best;
+  if (shuffleBgLabel) shuffleBgLabel.textContent = strings.shuffleBg || SOL_UI_EN.shuffleBg;
+
+  const backLabel = document.getElementById('back-pomodoro-label');
+  const backLink = document.getElementById('back-pomodoro-link');
+  if (backLabel) backLabel.textContent = strings.pomodoro || SOL_UI_EN.pomodoro;
+  if (backLink) backLink.setAttribute('aria-label', strings.pomodoroBack || SOL_UI_EN.pomodoroBack);
+
+  const radarLabel = document.getElementById('radar-btn-label');
+  const radarBtn = document.getElementById('radar-btn');
+  const coffeeLabel = document.getElementById('coffee-btn-label');
+  const coffeeBtn = document.getElementById('coffee-btn');
+  if (radarLabel) radarLabel.textContent = strings.radarBtn || SOL_UI_EN.radarBtn;
+  if (radarBtn) radarBtn.setAttribute('aria-label', strings.radarBtn || SOL_UI_EN.radarBtn);
+  if (coffeeLabel) coffeeLabel.textContent = strings.coffeeBtn || SOL_UI_EN.coffeeBtn;
+  if (coffeeBtn) coffeeBtn.setAttribute('aria-label', strings.coffeeBtn || SOL_UI_EN.coffeeBtn);
+}
+
+function setLanguageStatus(msg) {
+  const el = document.getElementById('lang-status');
+  if (msg) {
+    el.textContent = msg;
+    el.classList.add('visible');
+  } else {
+    el.classList.remove('visible');
+  }
+}
+
+async function translateUIStrings(lang) {
+  if (lang === 'en') {
+    applyUIStrings(SOL_UI_EN);
+    return;
+  }
+
+  // Use hardcoded translations when available — avoids API mistranslations
+  // (e.g. "Hint" → "Remarque" in French, "moves" left untranslated)
+  if (SOL_UI_HARDCODED[lang]) {
+    _cachedUIStrings[lang] = SOL_UI_HARDCODED[lang];
+    applyUIStrings(SOL_UI_HARDCODED[lang]);
+    return;
+  }
+
+  if (_cachedUIStrings[lang]) {
+    applyUIStrings(_cachedUIStrings[lang]);
+    return;
+  }
+
+  const keys = Object.keys(SOL_UI_EN);
+  const values = keys.map(k => SOL_UI_EN[k]);
+  const translated = await batchTranslate(values, lang);
+
+  const langStrings = {};
+  keys.forEach((k, i) => { langStrings[k] = translated[i]; });
+  _cachedUIStrings[lang] = langStrings;
+
+  applyUIStrings(langStrings);
+}
+
+async function switchLanguage(langCode) {
+  currentLang = langCode;
+  localStorage.setItem(LANG_PREF_KEY, langCode);
+
+  const langData = SUPPORTED_LANGS.find(l => l.code === langCode);
+  document.getElementById('lang-label').textContent = langData ? langData.native : langCode.toUpperCase();
+  document.documentElement.lang = langCode;
+
+  document.querySelectorAll('.lang-option').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === langCode);
+  });
+
+  document.getElementById('lang-dropdown').classList.remove('open');
+
+  if (langCode === 'en') {
+    applyUIStrings(SOL_UI_EN);
+    setLanguageStatus('');
+    return;
+  }
+
+  setLanguageStatus('Translating…');
+
+  try {
+    await translateUIStrings(langCode);
+  } catch(e) {}
+
+  setLanguageStatus('');
+}
+
+function buildLangDropdown() {
+  const dropdown = document.getElementById('lang-dropdown');
+  dropdown.innerHTML = SUPPORTED_LANGS.map(lang =>
+    `<button class="lang-option${lang.code === currentLang ? ' active' : ''}" data-lang="${lang.code}">${lang.native}</button>`
+  ).join('');
+
+  dropdown.addEventListener('click', (e) => {
+    const btn = e.target.closest('.lang-option');
+    if (btn) switchLanguage(btn.dataset.lang);
+  });
+}
+
+function initTranslation() {
+  migrateLegacyStorage();
+  loadTranslationCache();
+  buildLangDropdown();
+
+  const langBtn = document.getElementById('lang-btn');
+  const dropdown = document.getElementById('lang-dropdown');
+  langBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle('open');
+  });
+  document.addEventListener('click', (e) => {
+    if (!dropdown.contains(e.target) && e.target !== langBtn) {
+      dropdown.classList.remove('open');
+    }
+  });
+
+  const saved = localStorage.getItem(LANG_PREF_KEY)
+    || localStorage.getItem(LANG_PREF_KEY_LEGACY);
+  if (saved && saved !== 'en') {
+    switchLanguage(saved);
+  } else if (!saved) {
+    const browserLang = (navigator.language || 'en').split('-')[0].toLowerCase();
+    if (browserLang !== 'en' && SUPPORTED_LANGS.some(l => l.code === browserLang)) {
+      switchLanguage(browserLang);
+    }
+  }
+}
+
+initTranslation();
+
+/* ══════════════════════════════════════════════════════════
+   HINT — highlight the best available move
+   ══════════════════════════════════════════════════════════ */
+function findBestMove() {
+  // Priority: foundation → uncovering tableau → waste tableau → kings to empty → stock → recycle → any legal
+
+  // 1. Waste → foundation
+  if (waste.length > 0) {
+    const card = waste[waste.length - 1];
+    for (let fi = 0; fi < 4; fi++) {
+      if (canDropOnFoundation(card, fi)) {
+        return { fromPile: 'waste', fromCol: null, cardIdx: waste.length - 1, toPile: 'foundation', toCol: fi };
+      }
+    }
+  }
+
+  // 2. Tableau → foundation
+  for (let col = 0; col < 7; col++) {
+    const pile = tableau[col];
+    if (!pile.length) continue;
+    const card = pile[pile.length - 1];
+    if (!card.faceUp) continue;
+    for (let fi = 0; fi < 4; fi++) {
+      if (canDropOnFoundation(card, fi)) {
+        return { fromPile: 'tableau', fromCol: col, cardIdx: pile.length - 1, toPile: 'foundation', toCol: fi };
+      }
+    }
+  }
+
+  // 3. Waste → non-empty tableau
+  if (waste.length > 0) {
+    const card = waste[waste.length - 1];
+    for (let tc = 0; tc < 7; tc++) {
+      if (tableau[tc].length > 0 && canDropOnTableau(card, tc)) {
+        return { fromPile: 'waste', fromCol: null, cardIdx: waste.length - 1, toPile: 'tableau', toCol: tc };
+      }
+    }
+  }
+
+  // 4. Tableau run → tableau if uncovers face-down
+  for (let col = 0; col < 7; col++) {
+    const pile = tableau[col];
+    for (let ci = 0; ci < pile.length; ci++) {
+      if (!pile[ci].faceUp) continue;
+      if (ci > 0 && !pile[ci - 1].faceUp) {
+        const card = pile[ci];
+        for (let tc = 0; tc < 7; tc++) {
+          if (tc === col) continue;
+          if (canDropOnTableau(card, tc)) {
+            return { fromPile: 'tableau', fromCol: col, cardIdx: ci, toPile: 'tableau', toCol: tc };
+          }
+        }
+      }
+    }
+  }
+
+  // 5. King → empty (tableau run that uncovers, OR waste king)
+  if (waste.length > 0 && waste[waste.length - 1].value === 'K') {
+    for (let tc = 0; tc < 7; tc++) {
+      if (tableau[tc].length === 0) {
+        return { fromPile: 'waste', fromCol: null, cardIdx: waste.length - 1, toPile: 'tableau', toCol: tc };
+      }
+    }
+  }
+  for (let col = 0; col < 7; col++) {
+    const pile = tableau[col];
+    if (!pile.length) continue;
+    for (let ci = 0; ci < pile.length; ci++) {
+      if (!pile[ci].faceUp) continue;
+      const card = pile[ci];
+      if (card.value !== 'K') continue;
+      // Prefer uncovering; also allow moving a buried king stack off a partial build
+      const uncovers = ci > 0 && !pile[ci - 1].faceUp;
+      const isPartialTop = ci > 0 && pile[ci - 1].faceUp; // moving frees a face-up card too sometimes useful
+      if (!uncovers && !(ci === 0 && pile.length > 1)) {
+        // skip king already alone on its column
+        if (ci === 0) continue;
+      }
+      if (!uncovers && !isPartialTop && ci !== 0) continue;
+      if (!uncovers && ci === 0) continue;
+      for (let tc = 0; tc < 7; tc++) {
+        if (tc === col) continue;
+        if (tableau[tc].length === 0) {
+          return { fromPile: 'tableau', fromCol: col, cardIdx: ci, toPile: 'tableau', toCol: tc };
+        }
+      }
+    }
+  }
+
+  // 6. Draw from stock
+  if (stock.length > 0) {
+    return { fromPile: 'stock', fromCol: null, cardIdx: null, toPile: null, toCol: null };
+  }
+
+  // 7. Recycle waste if any waste card can land somewhere
+  if (waste.length > 0) {
+    for (let wi = 0; wi < waste.length; wi++) {
+      const wc = waste[wi];
+      for (let fi = 0; fi < 4; fi++) if (canDropOnFoundation(wc, fi)) return { fromPile: 'recycle', fromCol: null, cardIdx: null, toPile: null, toCol: null };
+      for (let tc = 0; tc < 7; tc++) if (canDropOnTableau(wc, tc)) return { fromPile: 'recycle', fromCol: null, cardIdx: null, toPile: null, toCol: null };
+    }
+  }
+
+  // 8. Fallback: any legal face-up tableau or waste move (helps when "productive-only" is too strict)
+  return findAnyLegalMove();
+}
+
+function findAnyLegalMove() {
+  if (waste.length > 0) {
+    const card = waste[waste.length - 1];
+    for (let fi = 0; fi < 4; fi++) {
+      if (canDropOnFoundation(card, fi)) {
+        return { fromPile: 'waste', fromCol: null, cardIdx: waste.length - 1, toPile: 'foundation', toCol: fi };
+      }
+    }
+    for (let tc = 0; tc < 7; tc++) {
+      if (canDropOnTableau(card, tc)) {
+        return { fromPile: 'waste', fromCol: null, cardIdx: waste.length - 1, toPile: 'tableau', toCol: tc };
+      }
+    }
+  }
+  for (let col = 0; col < 7; col++) {
+    const pile = tableau[col];
+    for (let ci = 0; ci < pile.length; ci++) {
+      if (!pile[ci].faceUp) continue;
+      // Don't suggest moving entire face-up column of just a king sitting alone to another empty
+      if (ci === 0 && pile[ci].value === 'K' && pile.every(c => c.faceUp) && pile.length === 1) {
+        // still allow if destination is empty? useless cycle empty-empty
+        continue;
+      }
+      const card = pile[ci];
+      if (ci === pile.length - 1) {
+        for (let fi = 0; fi < 4; fi++) {
+          if (canDropOnFoundation(card, fi)) {
+            return { fromPile: 'tableau', fromCol: col, cardIdx: ci, toPile: 'foundation', toCol: fi };
+          }
+        }
+      }
+      for (let tc = 0; tc < 7; tc++) {
+        if (tc === col) continue;
+        if (canDropOnTableau(card, tc)) {
+          // Avoid pure empty-to-empty king shuffles
+          if (card.value === 'K' && tableau[tc].length === 0 && ci === 0) continue;
+          return { fromPile: 'tableau', fromCol: col, cardIdx: ci, toPile: 'tableau', toCol: tc };
+        }
+      }
+    }
+  }
+  if (stock.length > 0) return { fromPile: 'stock', fromCol: null, cardIdx: null, toPile: null, toCol: null };
+  if (waste.length > 0) return { fromPile: 'recycle', fromCol: null, cardIdx: null, toPile: null, toCol: null };
+  return null;
+}
+
+
+function clearHint() {
+  if (hintTimer) { clearTimeout(hintTimer); hintTimer = null; }
+  document.querySelectorAll('.card--hint, .slot--hint').forEach(el => {
+    el.classList.remove('card--hint', 'slot--hint');
+  });
+}
+
+function showStuckNotification() {
+  const toast = document.getElementById('no-moves-toast');
+  if (!toast) return;
+  if (noMovesToastTimer) { clearTimeout(noMovesToastTimer); noMovesToastTimer = null; }
+  const strings = (_cachedUIStrings && _cachedUIStrings[currentLang]) || SOL_UI_EN;
+  stuckCount++;
+  let msg = strings.noMoves || SOL_UI_EN.noMoves;
+  if (stuckCount >= 2) {
+    msg = (strings.noMoves || SOL_UI_EN.noMoves) +
+      ' · ' + (strings.restartDeal || SOL_UI_EN.restartDeal) +
+      ' / ' + (strings.newGame || SOL_UI_EN.newGame);
+  }
+  toast.textContent = msg;
+  toast.classList.add('visible');
+  noMovesToastTimer = setTimeout(() => {
+    toast.classList.remove('visible');
+    noMovesToastTimer = null;
+  }, 4200);
+}
+
+function showHint() {
+  clearHint();
+  const move = findBestMove();
+
+  if (!move) {
+    // No productive move exists — inform the player
+    showStuckNotification();
+    return;
+  }
+
+  // Highlight stock (draw) or recycle
+  if (move.fromPile === 'stock' || move.fromPile === 'recycle') {
+    const sw = document.querySelector('.stock-wrapper');
+    if (sw) {
+      sw.classList.add('card--hint');
+      hintTimer = setTimeout(clearHint, 2500);
+    }
+    return;
+  }
+
+  // Highlight source card
+  let sourceEl = null;
+  if (move.fromPile === 'waste') {
+    // Last card element in the waste wrapper
+    const wasteWrapper = document.querySelector('[aria-label^="Waste"]');
+    if (wasteWrapper) {
+      const cards = wasteWrapper.querySelectorAll('.card');
+      if (cards.length) sourceEl = cards[cards.length - 1];
+    }
+  } else if (move.fromPile === 'tableau') {
+    const cols = document.querySelectorAll('.tableau-pile');
+    if (cols[move.fromCol]) {
+      const cards = cols[move.fromCol].querySelectorAll('.card');
+      if (cards.length) {
+        // Convert pile array index → DOM element index:
+        // pile array: [bottom…top], DOM cards: [bottom…top] (same order)
+        // offsetFromTop = distance from top of pile (0 = top card)
+        // targetIdx = corresponding DOM element (cards[last] = top card)
+        // Fallback to last card in case of face-down card DOM mismatch
+        const pileArr = tableau[move.fromCol];
+        const offsetFromTop = pileArr.length - 1 - move.cardIdx;
+        const targetIdx = cards.length - 1 - offsetFromTop;
+        sourceEl = cards[Math.max(0, targetIdx)] || cards[cards.length - 1];
+      }
+    }
+  }
+  if (sourceEl) sourceEl.classList.add('card--hint');
+
+  // Highlight destination — show the top card (if column has cards) or the empty slot
+  function highlightDest(wrapper) {
+    if (!wrapper) return;
+    const topCard = wrapper.querySelector('.card--face');
+    const slot    = wrapper.querySelector('.card-slot');
+    if (topCard) topCard.classList.add('slot--hint');
+    else if (slot) slot.classList.add('slot--hint');
+  }
+
+  if (move.toPile === 'foundation') {
+    const fw = document.querySelectorAll('#game-board .top-row .foundation-wrapper');
+    highlightDest(fw[move.toCol]);
+  } else if (move.toPile === 'tableau') {
+    const cols = document.querySelectorAll('.tableau-pile');
+    highlightDest(cols[move.toCol]);
+  }
+
+  hintTimer = setTimeout(clearHint, 3000);
+}
+
+/* ══════════════════════════════════════════════════════════
+   AUTO-COMPLETE — play all remaining cards to foundations
+   ══════════════════════════════════════════════════════════ */
+function canAutoComplete() {
+  // Auto-complete is available when:
+  //   • stock is empty (no hidden cards remain in the draw pile)
+  //   • every card in the tableau is face-up (no hidden cards there either)
+  // Waste cards are already face-up so they don't block completion.
+  if (stock.length > 0) return false;
+  for (let col = 0; col < 7; col++) {
+    if (tableau[col].some(c => !c.faceUp)) return false;
+  }
+  return foundations.some(f => f.length < 13); // not already won
+}
+
+function updateAutoCompleteUI() {
+  const banner = document.getElementById('autocomplete-banner');
+  if (banner) {
+    if (canAutoComplete()) {
+      banner.classList.remove('hidden');
+    } else {
+      banner.classList.add('hidden');
+    }
+  }
+}
+
+function autoComplete() {
+  if (!canAutoComplete()) return;
+  document.getElementById('autocomplete-banner').classList.add('hidden');
+
+  // Safety ceiling: prevents looping in degenerate states.
+  // With 52 cards, worst case is ~10 full waste recycles (each ≤52 draws)
+  // plus one move per card to a foundation (52) = well under 600 total steps.
+  let budget = 500;
+
+  function stepMove() {
+    if (--budget < 0) return; // absolute safety net
+
+    // 1. Waste → foundation
+    if (waste.length > 0) {
+      const wCard = waste[waste.length - 1];
+      for (let fi = 0; fi < 4; fi++) {
+        if (canDropOnFoundation(wCard, fi)) {
+          saveHistory();
+          moveCount++;
+          waste.pop();
+          foundations[fi].push(wCard);
+          updateStats();
+          render();
+          if (foundations.every(f => f.length === 13)) { showWin(); return; }
+          setTimeout(stepMove, 80);
+          return;
+        }
+      }
+    }
+
+    // 2. Tableau → foundation
+    for (let col = 0; col < 7; col++) {
+      const pile = tableau[col];
+      if (!pile.length) continue;
+      const card = pile[pile.length - 1];
+      if (!card.faceUp) continue;
+      for (let fi = 0; fi < 4; fi++) {
+        if (canDropOnFoundation(card, fi)) {
+          saveHistory();
+          moveCount++;
+          pile.pop();
+          foundations[fi].push(card);
+          updateStats();
+          render();
+          if (foundations.every(f => f.length === 13)) { showWin(); return; }
+          setTimeout(stepMove, 80);
+          return;
+        }
+      }
+    }
+
+    // 3. Waste → tableau (unblock: the waste top can't reach a foundation yet)
+    if (waste.length > 0) {
+      const wCard = waste[waste.length - 1];
+      for (let tc = 0; tc < 7; tc++) {
+        if (canDropOnTableau(wCard, tc)) {
+          saveHistory();
+          moveCount++;
+          waste.pop();
+          tableau[tc].push(wCard);
+          updateStats();
+          render();
+          setTimeout(stepMove, 80);
+          return;
+        }
+      }
+    }
+
+    // 4. Draw one card from stock (populated by the recycle step below)
+    if (stock.length > 0) {
+      const c = stock.pop();
+      c.faceUp = true;
+      waste.push(c);
+      moveCount++;
+      updateStats();
+      render();
+      setTimeout(stepMove, 80);
+      return;
+    }
+
+    // 5. Recycle waste into stock so we can reach buried waste cards.
+    //    This is only reached when stock is empty and waste has cards that
+    //    couldn't be played by steps 1–3 (top waste card is unplayable).
+    if (waste.length > 0) {
+      stock = [...waste].reverse().map(c => ({ ...c, faceUp: false }));
+      waste = [];
+      moveCount++;
+      updateStats();
+      render();
+      setTimeout(stepMove, 80);
+      return;
+    }
+    // Nothing left to do — stop.
+  }
+  stepMove();
+}
+
+/* ══════════════════════════════════════════════════════════
+   GAME STATISTICS — persist win/loss record
+   ══════════════════════════════════════════════════════════ */
+const STATS_KEY = 'ataraxia_sol_stats';
+
+function loadGameStats() {
+  try {
+    const data = JSON.parse(localStorage.getItem(STATS_KEY) || '{}');
+    gamesPlayed = data.gamesPlayed || 0;
+    gamesWon    = data.gamesWon    || 0;
+    winStreak   = data.winStreak   || 0;
+    bestTime    = data.bestTime    || Infinity;
+  } catch(e) {}
+}
+
+function saveGameStats() {
+  try {
+    localStorage.setItem(STATS_KEY, JSON.stringify({ gamesPlayed, gamesWon, winStreak, bestTime }));
+  } catch(e) {}
+}
+
+// Shared helper — call once per completed game (win or loss)
+function recordGameResult(won) {
+  gamesPlayed++;
+  if (won) {
+    gamesWon++;
+    winStreak++;
+  } else {
+    winStreak = 0;
+  }
+  saveGameStats();
+}
+
+function updateWinStats() {
+  const playedEl = document.getElementById('stat-win-played');
+  const wonEl    = document.getElementById('stat-win-won');
+  const streakEl = document.getElementById('stat-win-streak');
+  const bestEl   = document.getElementById('stat-win-best');
+  if (playedEl) playedEl.textContent = gamesPlayed;
+  if (wonEl)    wonEl.textContent    = gamesWon;
+  if (streakEl) streakEl.textContent = winStreak;
+  if (bestEl)   bestEl.textContent   = bestTime < Infinity ? formatTime(bestTime) : '—';
+}
+
+loadGameStats();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch((err) => console.warn('SW registration failed:', err));
+  });
+}
+</script>
+</body>
+</html>
