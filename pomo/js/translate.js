@@ -727,7 +727,7 @@ function setCachedTranslation(text, targetLang, translated) {
 
 // Some providers use different codes for the same language.
 function _gtLang(lang) {
-  const map = { zh: 'zh-CN', he: 'iw' };
+  const map = { zh: 'zh-CN', 'zh-tw': 'zh-TW', he: 'iw', 'iu-latn': 'iu-Latn' };
   return map[lang] || lang;
 }
 
@@ -1042,16 +1042,21 @@ function setLanguageStatus(msg) {
   }
 }
 
-async function switchLanguage(langCode) {
+async function switchLanguage(langCode, { radarMode = langCode, persist = true } = {}) {
+  if (langCode === 'original') langCode = 'en';
   currentLang = langCode;
-  localStorage.setItem(LANG_PREF_KEY, langCode);
+  if (persist) {
+    localStorage.setItem(LANG_PREF_KEY, langCode);
+    window.RadarLanguageMenu?.persistMode(radarMode === 'en' ? 'en' : radarMode);
+  }
 
   const langData = SUPPORTED_LANGS.find(l => l.code === langCode);
-  const langLabel = langData ? langData.native : langCode;
-  document.getElementById('lang-label').textContent = langLabel;
+  const sharedData = window._radarLanguageMenu?.getModes?.()[radarMode];
+  const langLabel = sharedData?.label || (langData ? langData.native : langCode);
+  if (!window._radarLanguageMenu) document.getElementById('lang-label').textContent = langLabel;
   const langBtn = document.getElementById('lang-btn');
   if (langBtn) langBtn.setAttribute('aria-label', `Language: ${langLabel}`);
-  document.documentElement.lang = langCode;
+  document.documentElement.lang = langCode === 'zh-tw' ? 'zh-Hant' : (langCode === 'zh' ? 'zh-Hans' : langCode);
 
   // Update active state in dropdown
   document.querySelectorAll('.lang-option').forEach(btn => {
@@ -1059,7 +1064,9 @@ async function switchLanguage(langCode) {
   });
 
   // Close dropdown
+  window._radarLanguageMenu?.setActive(radarMode);
   document.getElementById('lang-dropdown').classList.remove('open');
+  document.getElementById('lang-dropdown').hidden = true;
 
   if (langCode === 'en') {
     const quote = QUOTES[currentQuoteIdx];
@@ -1109,6 +1116,32 @@ function buildLangDropdown() {
 
 function initTranslation() {
   loadTranslationCache();
+
+  if (window.RadarLanguageMenu) {
+    const radarSaved = localStorage.getItem(window.RadarLanguageMenu.GLOBAL_PREFERENCE_KEY);
+    const legacySaved = localStorage.getItem(LANG_PREF_KEY)
+      || localStorage.getItem(LANG_PREF_KEY_LEGACY);
+    const initialMode = window.RadarLanguageMenu.normalizeMode(
+      radarSaved || legacySaved || window.RadarLanguageMenu.preferredMode('original'),
+    ) || 'original';
+    window._radarLanguageMenu = window.RadarLanguageMenu.mount({
+      button: '#lang-btn',
+      menu: '#lang-dropdown',
+      label: '#lang-label',
+      initialMode,
+      nativeLocale: 'en',
+      onSelect: (mode) => switchLanguage(mode === 'original' ? 'en' : mode, { radarMode: mode }),
+    });
+    const initialLang = initialMode === 'original' ? 'en' : initialMode;
+    if (initialLang !== 'en') {
+      switchLanguage(initialLang, { radarMode: initialMode, persist: false });
+    } else {
+      applyUIStrings(UI_STRINGS.en);
+      window._radarLanguageMenu?.setActive(initialMode);
+    }
+    return;
+  }
+
   buildLangDropdown();
 
   // Toggle dropdown
@@ -1116,11 +1149,13 @@ function initTranslation() {
   const dropdown = document.getElementById('lang-dropdown');
   langBtn.addEventListener('click', (e) => {
     e.stopPropagation();
-    dropdown.classList.toggle('open');
+    const open = dropdown.classList.toggle('open');
+    dropdown.hidden = !open;
   });
   document.addEventListener('click', (e) => {
     if (!dropdown.contains(e.target) && e.target !== langBtn) {
       dropdown.classList.remove('open');
+      dropdown.hidden = true;
     }
   });
 

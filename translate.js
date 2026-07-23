@@ -447,6 +447,14 @@
     },
   };
 
+  // Le catalogue partagé complète les trois applications. Les métadonnées plus
+  // riches du Radar ci-dessus priment lorsqu'une entrée existe déjà.
+  if (window.RadarLanguageMenu?.createModes) {
+    for (const [id, mode] of Object.entries(window.RadarLanguageMenu.createModes())) {
+      if (!MODES[id]) MODES[id] = mode;
+    }
+  }
+
   /**
    * Ordre d’affichage :
    *  1. core — Original, FR, EN (pas d’en-tête de groupe)

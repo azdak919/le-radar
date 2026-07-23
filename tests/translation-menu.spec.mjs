@@ -1,0 +1,53 @@
+import { expect, test } from '@playwright/test';
+
+const pages = [
+  { path: '/', button: '#translate-toggle' },
+  { path: '/pomo/', button: '#lang-btn' },
+  { path: '/solitaire/', button: '#lang-btn' },
+];
+
+for (const viewport of [
+  { name: 'bureau', width: 1440, height: 900 },
+  { name: 'mobile', width: 390, height: 844 },
+]) {
+  for (const app of pages) {
+    test(`menu de traduction partagé — ${viewport.name} ${app.path}`, async ({ page }) => {
+      await page.setViewportSize({ width: viewport.width, height: viewport.height });
+      await page.goto(app.path, { waitUntil: 'domcontentloaded' });
+      await page.locator(app.button).click();
+
+      const menu = page.locator('.translate-menu');
+      await expect(menu).toBeVisible();
+      await expect(menu.locator('.translate-menu__search')).toBeVisible();
+      expect(await menu.locator('.translate-menu__opt').count()).toBeGreaterThan(40);
+      await expect(menu.locator('[data-mode="fr"]')).toBeVisible();
+      await expect(menu.locator('.translate-menu__group[data-group="indigenous"]')).toBeVisible();
+
+      const bounds = await menu.boundingBox();
+      expect(bounds).not.toBeNull();
+      expect(bounds.x).toBeGreaterThanOrEqual(0);
+      expect(bounds.y).toBeGreaterThanOrEqual(0);
+      expect(bounds.x + bounds.width).toBeLessThanOrEqual(viewport.width + 1);
+      expect(bounds.y + bounds.height).toBeLessThanOrEqual(viewport.height + 1);
+
+      await menu.locator('.translate-menu__search').fill('japonais');
+      await expect(menu.locator('[data-mode="ja"]')).toBeVisible();
+      await expect(menu.locator('[data-mode="es"]')).toBeHidden();
+    });
+  }
+}
+
+test('la préférence choisie dans Pomo est reprise dans Solitaire', async ({ page }) => {
+  await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => localStorage.clear());
+  await page.reload({ waitUntil: 'domcontentloaded' });
+
+  await page.locator('#lang-btn').click();
+  await page.locator('#lang-dropdown [data-mode="fr"]').click();
+  await expect(page.locator('#lang-label')).toHaveText('FR');
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('radar-translate-mode'))).toBe('fr');
+
+  await page.goto('/solitaire/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#lang-label')).toHaveText('FR');
+  await expect(page.locator('#new-game-label')).toHaveText('Nouvelle partie');
+});

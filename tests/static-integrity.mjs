@@ -41,7 +41,7 @@ function assertServiceWorkerAssets(file, arrayName) {
   const source = readFileSync(file, 'utf8');
   const array = source.match(new RegExp(`const ${arrayName} = \\[([\\s\\S]*?)\\n\\];`));
   assert(array, `${relative(root, file)}: tableau ${arrayName} introuvable`);
-  for (const match of array[1].matchAll(/["'](\.\/[^"']+)["']/g)) {
+  for (const match of array[1].matchAll(/["'](\.\.?\/[^"']+)["']/g)) {
     const target = resolve(dirname(file), match[1]);
     assert(existsSync(target), `${relative(root, file)}: asset SW introuvable ${match[1]}`);
   }
