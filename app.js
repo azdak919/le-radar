@@ -849,6 +849,7 @@ function weatherTone(code) {
 }
 
 let mastheadWeatherTimer = null;
+const mastheadWeatherDecks = { campus: [], nation: [] };
 
 function buildMastheadWeatherBoard() {
   const board = MASTHEAD_WEATHER?.querySelector('.masthead-weather__board');
@@ -858,6 +859,7 @@ function buildMastheadWeatherBoard() {
     const el = document.createElement('span');
     el.className = 'masthead-weather__city';
     el.dataset.weatherCity = city.id;
+    el.dataset.weatherGroup = city.nation ? 'nation' : 'campus';
     el.setAttribute('aria-hidden', 'true');
     el.title = city.nation ? `${city.name} — ${city.nation}` : city.name;
     el.innerHTML = '<span class="masthead-weather__icon" aria-hidden="true">·</span><span class="masthead-weather__name"></span><span class="masthead-weather__temp">—</span>';
@@ -867,20 +869,58 @@ function buildMastheadWeatherBoard() {
   board.append(fragment);
 }
 
-function startMastheadWeatherBoard() {
-  if (!MASTHEAD_WEATHER || mastheadWeatherTimer) return;
+function weatherBoardCount() {
+  if (window.innerWidth >= 1320) return 4;
+  if (window.innerWidth >= 1100) return 3;
+  return 2;
+}
+
+function nextWeatherCity(group, usedIds) {
+  const eligible = WEATHER_CITIES.filter((city) => (city.nation ? 'nation' : 'campus') === group && !usedIds.has(city.id));
+  if (!eligible.length) return null;
+  let deck = mastheadWeatherDecks[group];
+  deck = deck.filter((city) => eligible.some((candidate) => candidate.id === city.id));
+  if (!deck.length) {
+    deck = [...eligible].sort(() => Math.random() - 0.5);
+  }
+  const city = deck.shift();
+  mastheadWeatherDecks[group] = deck;
+  return city;
+}
+
+function showMastheadWeatherBoard() {
+  if (!MASTHEAD_WEATHER) return;
   const cities = [...MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city')];
   if (!cities.length) return;
-  let active = 0;
-  cities[active].classList.add('is-active');
-  cities[active].setAttribute('aria-hidden', 'false');
+  const count = Math.min(weatherBoardCount(), cities.length);
+  // Une rangée reste toujours mixte : le panneau ne devient jamais une liste
+  // entière de collectivités autochtones (ni uniquement de grandes villes).
+  const groups = Array.from({ length: count }, (_, index) => index % 2 ? 'nation' : 'campus');
+  if (count === 2) groups.reverse();
+  const usedIds = new Set();
+  const selected = groups.map((group) => {
+    const city = nextWeatherCity(group, usedIds);
+    if (city) usedIds.add(city.id);
+    return city;
+  }).filter(Boolean);
+  cities.forEach((city) => {
+    city.classList.remove('is-active');
+    city.setAttribute('aria-hidden', 'true');
+  });
+  selected.forEach((selectedCity) => {
+    const city = MASTHEAD_WEATHER.querySelector(`[data-weather-city="${selectedCity.id}"]`);
+    city?.classList.add('is-active');
+    city?.setAttribute('aria-hidden', 'false');
+  });
+}
+
+function startMastheadWeatherBoard() {
+  if (!MASTHEAD_WEATHER || mastheadWeatherTimer) return;
+  showMastheadWeatherBoard();
   mastheadWeatherTimer = window.setInterval(() => {
-    cities[active].classList.remove('is-active');
-    cities[active].setAttribute('aria-hidden', 'true');
-    active = (active + 1) % cities.length;
-    cities[active].classList.add('is-active');
-    cities[active].setAttribute('aria-hidden', 'false');
+    showMastheadWeatherBoard();
   }, 5200);
+  window.addEventListener('resize', showMastheadWeatherBoard, { passive: true });
 }
 
 function renderMastheadWeather(entries) {

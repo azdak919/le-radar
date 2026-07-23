@@ -169,8 +169,8 @@ a { color: inherit; }
 
 .masthead-date { font-weight: 600; }
 
-/* Météo campus — panneau fixe inspiré des tableaux de gare : une ville
-   complète à la fois. Ainsi, aucune ville longue n'est tronquée. */
+/* Météo — tableau de gare : plusieurs villes côte à côte. La rangée s'adapte
+   à l'espace et les noms longs défilent dans leur propre case. */
 .masthead-weather {
   display: none;
   align-items: center;
@@ -183,8 +183,9 @@ a { color: inherit; }
 }
 .masthead-weather__board {
   position: relative;
-  display: block;
-  width: clamp(230px, 31vw, 390px);
+  display: grid;
+  grid-template-columns: repeat(var(--weather-columns, 3), minmax(0, 1fr));
+  width: min(100%, clamp(330px, 45vw, 640px));
   height: 29px;
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--rule));
@@ -195,22 +196,19 @@ a { color: inherit; }
   box-shadow: inset 0 1px 0 color-mix(in srgb, var(--bg) 75%, transparent), 0 1px 0 color-mix(in srgb, var(--accent) 10%, transparent);
 }
 .masthead-weather__city {
-  position: absolute;
-  inset: 0;
-  display: flex;
+  display: none;
   align-items: center;
   gap: 8px;
-  padding: 0 12px;
+  min-width: 0;
+  padding: 0 9px;
   font-size: 11px;
   font-weight: 650;
   letter-spacing: 0.045em;
-  opacity: 0;
-  transform: translateY(100%);
-  transition: opacity 260ms ease, transform 360ms cubic-bezier(.22,.8,.28,1);
   pointer-events: none;
 }
-.masthead-weather__city.is-active { opacity: 1; transform: translateY(0); }
-.masthead-weather__city::before { content: ''; width: 3px; align-self: stretch; margin: 5px 0; border-radius: 999px; background: var(--weather-tone, var(--accent)); box-shadow: 0 0 10px color-mix(in srgb, var(--weather-tone, var(--accent)) 55%, transparent); }
+.masthead-weather__city + .masthead-weather__city { border-left: 1px solid color-mix(in srgb, var(--accent) 16%, var(--rule)); }
+.masthead-weather__city.is-active { display: flex; }
+.masthead-weather__city::before { content: ''; flex: 0 0 3px; width: 3px; align-self: stretch; margin: 5px 0; border-radius: 999px; background: var(--weather-tone, var(--accent)); box-shadow: 0 0 10px color-mix(in srgb, var(--weather-tone, var(--accent)) 55%, transparent); }
 .masthead-weather__icon { width: 17px; color: var(--weather-tone, var(--accent)); font-size: 17px; line-height: 1; text-align: center; }
 .masthead-weather__name { display: block; flex: 1 1 auto; min-width: 0; white-space: nowrap; }
 .masthead-weather__city.is-overflowing .masthead-weather__name {
@@ -223,16 +221,19 @@ a { color: inherit; }
 .masthead-weather__city[data-weather-tone="snow"] { --weather-tone: #5498bb; }
 .masthead-weather__city[data-weather-tone="storm"] { --weather-tone: #a86dce; }
 @media (min-width: 1024px) {
-  .masthead-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(230px, 390px) minmax(0, 1fr); }
+  .masthead-top { display: grid; grid-template-columns: minmax(155px, 1fr) minmax(330px, 640px) minmax(210px, 1fr); }
   .masthead-weather { display: inline-flex; }
   .masthead-actions { justify-self: end; }
+  .masthead-weather__board { --weather-columns: 2; }
 }
+@media (min-width: 1100px) { .masthead-weather__board { --weather-columns: 3; } }
+@media (min-width: 1320px) { .masthead-weather__board { --weather-columns: 4; } }
 @media (max-width: 1023.98px) { .masthead-weather { display: none !important; } }
 @keyframes weather-name-scroll {
   0%, 28% { transform: translateX(0); }
   72%, 100% { transform: translateX(var(--weather-scroll, 0)); }
 }
-@media (prefers-reduced-motion: reduce) { .masthead-weather__city, .masthead-weather__city.is-overflowing .masthead-weather__name { transition: none; animation: none; } }
+@media (prefers-reduced-motion: reduce) { .masthead-weather__city.is-overflowing .masthead-weather__name { animation: none; } }
 
 .masthead-actions {
   display: flex;
