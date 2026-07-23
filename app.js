@@ -854,6 +854,8 @@ let mastheadWeatherTimer = null;
 const mastheadWeatherDecks = { campus: [], nation: [] };
 let mastheadWeatherSlots = [];
 let mastheadWeatherNextSlot = 0;
+const MASTHEAD_WEATHER_ANCHORS = ['montreal', 'quebec'];
+let mastheadWeatherAnchorIndex = 0;
 
 function weatherForecastUrl(city) {
   // Le site d'origine est francophone : ECCC reste en français pour Original,
@@ -888,8 +890,8 @@ function buildMastheadWeatherBoard() {
     el.rel = 'noopener noreferrer';
     el.title = `Prévisions d’Environnement Canada — ${context}`;
     el.setAttribute('aria-label', `Prévisions d’Environnement Canada pour ${context}`);
-    el.innerHTML = '<span class="masthead-weather__icon" aria-hidden="true">·</span><span class="masthead-weather__name"></span><span class="masthead-weather__temp">—</span>';
-    el.querySelector('.masthead-weather__name').textContent = city.name;
+    el.innerHTML = '<span class="masthead-weather__icon" aria-hidden="true">·</span><span class="masthead-weather__name"><span class="masthead-weather__name-text"></span></span><span class="masthead-weather__temp">—</span>';
+    el.querySelector('.masthead-weather__name-text').textContent = city.name;
     fragment.append(el);
   });
   board.append(fragment);
@@ -921,10 +923,14 @@ function showMastheadWeatherBoard() {
   if (!cities.length) return;
   const count = Math.min(weatherBoardCount(), cities.length);
   mastheadWeatherSlots = mastheadWeatherSlots.slice(0, count);
+  const anchor = WEATHER_CITIES.find((city) => city.id === MASTHEAD_WEATHER_ANCHORS[mastheadWeatherAnchorIndex]);
+  if (anchor && mastheadWeatherSlots[0]?.id !== anchor.id) mastheadWeatherSlots[0] = anchor;
   const usedIds = new Set(mastheadWeatherSlots.map((city) => city.id));
   while (mastheadWeatherSlots.length < count) {
-    const group = mastheadWeatherSlots.length % 2 ? 'nation' : 'campus';
-    const city = nextWeatherCity(group, usedIds);
+    const slot = mastheadWeatherSlots.length;
+    const city = slot === 0
+      ? anchor
+      : nextWeatherCity(slot % 2 ? 'nation' : 'campus', usedIds);
     if (!city) break;
     usedIds.add(city.id);
     mastheadWeatherSlots.push(city);
@@ -944,8 +950,9 @@ function showMastheadWeatherBoard() {
 
 function refreshWeatherNameScroll() {
   MASTHEAD_WEATHER?.querySelectorAll('.masthead-weather__city.is-active').forEach((el) => {
-    const name = el.querySelector('.masthead-weather__name');
-    const overflow = Math.max(0, name.scrollWidth - name.clientWidth);
+    const viewport = el.querySelector('.masthead-weather__name');
+    const name = el.querySelector('.masthead-weather__name-text');
+    const overflow = Math.max(0, name.scrollWidth - viewport.clientWidth);
     el.classList.toggle('is-overflowing', overflow > 2);
     el.style.setProperty('--weather-scroll', `${overflow}px`);
   });
@@ -955,9 +962,14 @@ function rotateOneMastheadWeatherCard() {
   if (!mastheadWeatherSlots.length) return;
   const slot = mastheadWeatherNextSlot % mastheadWeatherSlots.length;
   const previous = mastheadWeatherSlots[slot];
-  const group = previous.nation ? 'nation' : 'campus';
   const usedIds = new Set(mastheadWeatherSlots.filter((_, index) => index !== slot).map((city) => city.id));
-  const replacement = nextWeatherCity(group, usedIds);
+  let replacement;
+  if (slot === 0) {
+    mastheadWeatherAnchorIndex = (mastheadWeatherAnchorIndex + 1) % MASTHEAD_WEATHER_ANCHORS.length;
+    replacement = WEATHER_CITIES.find((city) => city.id === MASTHEAD_WEATHER_ANCHORS[mastheadWeatherAnchorIndex]);
+  } else {
+    replacement = nextWeatherCity(previous.nation ? 'nation' : 'campus', usedIds);
+  }
   if (!replacement) return;
   mastheadWeatherSlots[slot] = replacement;
   mastheadWeatherNextSlot = (slot + 1) % mastheadWeatherSlots.length;

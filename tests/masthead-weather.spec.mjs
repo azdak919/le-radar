@@ -27,6 +27,7 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(4);
   await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="campus"]')).toHaveCount(2);
   await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="nation"]')).toHaveCount(2);
+  await expect(ribbon.locator('.masthead-weather__city.is-active').first()).toHaveAttribute('data-weather-city', 'montreal');
   await expect(ribbon.locator('.masthead-weather__city.is-active').first()).toHaveAttribute('href', /^https:\/\/meteo\.gc\.ca\/fr\/location\/index\.html\?coords=/);
   await page.evaluate(() => {
     window.RadarTranslate = { ...(window.RadarTranslate || {}), getMode: () => 'en' };
@@ -42,6 +43,7 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   await page.waitForTimeout(5300);
   const afterRotation = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities.map((city) => city.dataset.weatherCity));
   expect(afterRotation.filter((id) => beforeRotation.includes(id))).toHaveLength(3);
+  await expect(ribbon.locator('.masthead-weather__city.is-active').first()).toHaveAttribute('data-weather-city', 'quebec');
 
   await page.setViewportSize({ width: 1200, height: 900 });
   await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(3);
