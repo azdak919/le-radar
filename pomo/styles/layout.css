@@ -328,12 +328,23 @@ html[data-layout="wide"] .pomo-container {
   animation-delay: var(--ui-delay-pomo);
 }
 
-/* Citation réduite : le timer peut occuper l’espace restant (ordi seulement) */
-html[data-layout="wide"] .content:has(.quote-card.is-minimized) .pomo-container {
-  flex: 1 1 auto;
-  max-height: none;
+/* Citation seule réduite : le timer peut grossir un peu, sans forcer un panneau vide */
+html[data-layout="wide"] .content:has(.quote-card.is-minimized):not(:has(.pomo-container.is-minimized)) .pomo-container {
+  flex: 0 1 auto;
+  max-height: min(52dvh, 380px);
   min-height: 0;
-  align-self: stretch;
+  align-self: center;
+  width: 100%;
+}
+
+/* Les deux réduits (wide) : chips en haut, pas d’espace fantôme */
+html[data-layout="wide"] .content:has(.pomo-container.is-minimized):has(.quote-card.is-minimized) {
+  justify-content: flex-start;
+  gap: 0.4rem;
+}
+
+html[data-layout="wide"] .content:has(.pomo-container.is-minimized):has(.quote-card.is-minimized) .quote-card {
+  margin-top: 0 !important;
 }
 
 html[data-layout="wide"] .pomo-settings {
@@ -365,9 +376,9 @@ html[data-layout="wide"] .pomo-widget {
   border-radius: 24px;
 }
 
-html[data-layout="wide"] .content:has(.quote-card.is-minimized) .pomo-widget {
-  max-width: min(380px, 100%);
-  max-height: min(68dvh, 420px);
+html[data-layout="wide"] .content:has(.quote-card.is-minimized):not(:has(.pomo-container.is-minimized)) .pomo-widget {
+  max-width: min(340px, 100%);
+  max-height: min(52dvh, 360px);
 }
 
 html[data-layout="wide"] .pomo-widget .pomo-ring-wrapper {
@@ -378,9 +389,9 @@ html[data-layout="wide"] .pomo-widget .pomo-ring-wrapper {
   margin: 0 auto;
 }
 
-html[data-layout="wide"] .content:has(.quote-card.is-minimized) .pomo-widget .pomo-ring-wrapper {
-  width: clamp(180px, 30dvh, 250px);
-  height: clamp(180px, 30dvh, 250px);
+html[data-layout="wide"] .content:has(.quote-card.is-minimized):not(:has(.pomo-container.is-minimized)) .pomo-widget .pomo-ring-wrapper {
+  width: clamp(160px, 26dvh, 220px);
+  height: clamp(160px, 26dvh, 220px);
 }
 
 html[data-layout="wide"] .pomo-widget .pomo-time-inside {
@@ -718,40 +729,51 @@ html[data-layout="wide"] .quote-action-row .btn:hover {
     max-width: 100%;
   }
 
-  /* Citation réduite : pomo remplit l'espace restant (miroir citation si pomo réduit) */
-  html:not([data-pomo-scale="wide"]) .content:has(.quote-card.is-minimized) .pomo-container {
+  /* Citation seule réduite : conteneur peut grandir, widget reste compact (pas de dalle vide) */
+  html:not([data-pomo-scale="wide"]) .content:has(.quote-card.is-minimized):not(:has(.pomo-container.is-minimized)) .pomo-container {
     flex: 1 1 auto;
     min-height: 0;
     max-height: none;
-    align-items: stretch;
-    justify-content: stretch;
+    align-items: center;
+    justify-content: center;
   }
 
-  html:not([data-pomo-scale="wide"]) .content:has(.quote-card.is-minimized) .pomo-widget {
-    flex: 1 1 auto;
+  html:not([data-pomo-scale="wide"]) .content:has(.quote-card.is-minimized):not(:has(.pomo-container.is-minimized)) .pomo-widget {
+    flex: 0 1 auto;
     width: 100%;
-    height: 100%;
+    height: auto;
+    max-height: min(72%, 28rem);
     min-height: 0;
-    max-height: none;
-    /* auto ×3 + align-content:center → anneau + contrôles groupés, pas collés en bas */
     grid-template-rows: auto auto auto;
     align-content: center;
     gap: 0.38em;
     padding-bottom: 0.8em;
   }
 
-  html:not([data-pomo-scale="wide"]) .content:has(.quote-card.is-minimized) .pomo-widget .pomo-ring-wrapper {
-    width: min(28em, 100%);
+  html:not([data-pomo-scale="wide"]) .content:has(.quote-card.is-minimized):not(:has(.pomo-container.is-minimized)) .pomo-widget .pomo-ring-wrapper {
+    width: min(22em, 100%);
     height: auto;
     max-width: 100%;
-    max-height: none;
+    max-height: min(42dvh, 16rem);
     aspect-ratio: 1;
   }
 
-  html:not([data-pomo-scale="wide"]) .content:has(.quote-card.is-minimized) .pomo-widget .pomo-controls {
+  html:not([data-pomo-scale="wide"]) .content:has(.quote-card.is-minimized):not(:has(.pomo-container.is-minimized)) .pomo-widget .pomo-controls {
     grid-row: auto;
     margin-top: 0;
     padding-bottom: 0.1em;
+  }
+
+  /* Les deux réduits (téléphone) : chips superposés en haut */
+  html[data-layout="touch"] .content:has(.pomo-container.is-minimized):has(.quote-card.is-minimized),
+  html[data-layout="wide"] .content:has(.pomo-container.is-minimized):has(.quote-card.is-minimized) {
+    justify-content: flex-start !important;
+    gap: 0.35rem;
+  }
+
+  html[data-layout="touch"] .content:has(.pomo-container.is-minimized):has(.quote-card.is-minimized) .quote-card,
+  html[data-layout="wide"] .content:has(.pomo-container.is-minimized):has(.quote-card.is-minimized) .quote-card {
+    margin-top: 0 !important;
   }
 
   html[data-layout="touch"] .quote-card,
