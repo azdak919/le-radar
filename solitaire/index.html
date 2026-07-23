@@ -598,52 +598,52 @@
     /* ── Face-down ── */
     .card--back { cursor: default; }
 
-    /* ── Face-up ── */
+    /* ── Face-up (local SVG art — no external image / broken-alt bug) ── */
     .card--face {
       background: var(--card-face);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 4px 5px;
+      padding: clamp(3px, calc(var(--card-w) * 0.05), 6px) clamp(3px, calc(var(--card-w) * 0.06), 7px);
+      box-sizing: border-box;
     }
 
-    /* ── SVG card sprite art (fills entire card, inset var(--card-svg-inset) to avoid
-          border-radius clipping the rank/suit corner labels) ── */
     .card-svg {
       position: absolute;
       inset: var(--card-svg-inset);
       pointer-events: none;
     }
 
-    /* ── Fallback built-in art (used when sprite unavailable) ── */
     .card--face.card--red   { color: var(--card-red); }
     .card--face.card--black { color: var(--card-black); }
     .card-corner {
       display: flex; flex-direction: column; align-items: center;
       line-height: 1; gap: 0; position: relative; z-index: 2;
+      min-width: 1.1em;
     }
     .card-corner--br { align-self: flex-end; transform: rotate(180deg); }
-    .card-val      { font-size: clamp(11px, calc(var(--card-w) * 0.22), 18px); font-weight: 700; line-height: 1; }
-    .card-suit-sm  { font-size: clamp(9px,  calc(var(--card-w) * 0.18), 14px); line-height: 1; }
+    .card-val      { font-size: clamp(10px, calc(var(--card-w) * 0.20), 17px); font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
+    .card-suit-sm  { font-size: clamp(9px,  calc(var(--card-w) * 0.17), 14px); line-height: 1; margin-top: 0.05em; }
     .card-face-art {
       position: absolute; inset: 0; width: 100%; height: 100%;
       pointer-events: none; z-index: 1; overflow: hidden;
+    }
+    .card-face-art svg {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
     .card-back-art {
       position: absolute; inset: 0; width: 100%; height: 100%;
       pointer-events: none; z-index: 1; overflow: hidden;
     }
-
-    /* ── Deck of Cards API images ── */
-    .card-api-img {
-      position: absolute;
-      inset: 0;
+    .card-back-art svg {
       width: 100%;
       height: 100%;
-      object-fit: fill;
-      pointer-events: none;
-      border-radius: clamp(3px, 5%, 8px);
       display: block;
+    }
+    .card--back {
+      background: linear-gradient(145deg, #3a5f95 0%, #4a6fa5 45%, #355a90 100%);
     }
 
     /* ── Selected ── */
@@ -984,18 +984,63 @@
        HINT HIGHLIGHT
        ════════════════════════════════════════ */
     .card--hint {
-      animation: hint-pulse 0.75s ease-in-out infinite !important;
-      box-shadow: 0 0 0 3px #f5c518, 0 4px 18px rgba(245,197,24,0.55) !important;
+      animation: hint-pulse 0.7s ease-in-out infinite !important;
+      box-shadow:
+        0 0 0 3px #f5c518,
+        0 0 0 6px rgba(245, 197, 24, 0.35),
+        0 8px 22px rgba(245, 197, 24, 0.45) !important;
       z-index: 50 !important;
+      filter: brightness(1.06);
     }
     .slot--hint {
-      background: rgba(245,197,24,0.22) !important;
+      background: rgba(245, 197, 24, 0.28) !important;
       border-color: #f5c518 !important;
-      box-shadow: 0 0 0 2px #f5c518, 0 4px 14px rgba(245,197,24,0.45) !important;
+      box-shadow:
+        0 0 0 3px #f5c518,
+        0 0 0 6px rgba(245, 197, 24, 0.28),
+        0 6px 16px rgba(245, 197, 24, 0.4) !important;
+      animation: hint-slot-pulse 0.7s ease-in-out infinite !important;
+    }
+    .stock-wrapper.card--hint,
+    .stock-wrapper.slot--hint {
+      border-radius: clamp(4px, 6%, 9px);
+      box-shadow:
+        0 0 0 3px #f5c518,
+        0 0 0 6px rgba(245, 197, 24, 0.3),
+        0 6px 18px rgba(245, 197, 24, 0.4) !important;
+      animation: hint-pulse 0.7s ease-in-out infinite !important;
     }
     @keyframes hint-pulse {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-4px); }
+      0%, 100% { transform: translateY(0) scale(1); }
+      50%       { transform: translateY(-5px) scale(1.03); }
+    }
+    @keyframes hint-slot-pulse {
+      0%, 100% { background: rgba(245, 197, 24, 0.22); }
+      50%       { background: rgba(245, 197, 24, 0.42); }
+    }
+    #hint-toast {
+      position: fixed;
+      left: 50%;
+      bottom: max(4.5rem, calc(env(safe-area-inset-bottom, 0px) + 3.5rem));
+      transform: translateX(-50%) translateY(8px);
+      z-index: 280;
+      max-width: min(22rem, calc(100vw - 1.5rem));
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(12, 11, 10, 0.88);
+      border: 1px solid rgba(245, 197, 24, 0.45);
+      color: rgba(255, 248, 235, 0.95);
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      letter-spacing: 0.03em;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+    #hint-toast.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
 
     /* ════════════════════════════════════════
@@ -1361,6 +1406,7 @@
 
 <!-- ══════════════════════ NO MORE MOVES TOAST ══════════════════════ -->
 <div id="no-moves-toast" role="status" aria-live="polite"></div>
+<div id="hint-toast" role="status" aria-live="polite"></div>
 
 <!-- ══════════════════════ CASCADE CONTAINER ══════════════════════ -->
 <div id="cascade-container" aria-hidden="true"></div>
@@ -1385,10 +1431,8 @@
 <script src="js/solitaire-rules.js"></script>
 <script nonce="ataraxia-sol">
 /* ══════════════════════════════════════════════════════════
-   CARD IMAGES — Deck of Cards API (deckofcardsapi.com)
-   Images: https://deckofcardsapi.com/static/img/{VALUE}{SUIT}.png
+   CARD ART — local SVG (pip + court). No external image CDN.
    ══════════════════════════════════════════════════════════ */
-const DECK_API_IMG = 'https://deckofcardsapi.com/static/img';
 
 /* ══════════════════════════════════════════════════════════
    CONSTANTS
@@ -1424,6 +1468,8 @@ let bestTime    = Infinity;
 
 // Hint state
 let hintTimer   = null;
+let hintToastTimer = null;
+let hintCycleIdx = 0;
 let noMovesToastTimer = null;
 // Déclaré avant le premier newGame(): hideHiScorePanel() est appelé pendant
 // l'initialisation, bien avant la section HI-SCORES située en fin de script.
@@ -1782,9 +1828,12 @@ function newGame() {
   }
   clearCascade();
   clearHint();
+  hintCycleIdx = 0;
   if (noMovesToastTimer) { clearTimeout(noMovesToastTimer); noMovesToastTimer = null; }
+  if (hintToastTimer) { clearTimeout(hintToastTimer); hintToastTimer = null; }
   const noMovesToast = document.getElementById('no-moves-toast');
   if (noMovesToast) noMovesToast.classList.remove('visible');
+  document.getElementById('hint-toast')?.classList.remove('visible');
   updateAutoCompleteUI();
   updateStats();
   render();
@@ -1811,9 +1860,12 @@ function restartDeal() {
   document.getElementById('win-overlay').classList.add('hidden');
   clearCascade();
   clearHint();
+  hintCycleIdx = 0;
   if (noMovesToastTimer) { clearTimeout(noMovesToastTimer); noMovesToastTimer = null; }
+  if (hintToastTimer) { clearTimeout(hintToastTimer); hintToastTimer = null; }
   const noMovesToast = document.getElementById('no-moves-toast');
   if (noMovesToast) noMovesToast.classList.remove('visible');
+  document.getElementById('hint-toast')?.classList.remove('visible');
   updateAutoCompleteUI();
   updateStats();
   render();
@@ -2811,7 +2863,8 @@ function makePipCardSVG(value, suit) {
    CARD BACK HTML HELPER (sprite or custom SVG fallback)
    ══════════════════════════════════════════════════════════ */
 function makeCardBackHTML() {
-  return `<img class="card-api-img" src="${DECK_API_IMG}/back.png" alt="Card back" draggable="false">`;
+  // Local ornate back — never depends on deckofcardsapi (avoids broken images)
+  return `<div class="card-back-art" aria-hidden="true">${makeCardBackSVG()}</div>`;
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -2843,7 +2896,6 @@ function makeCard(c, fromPile, fromCol, cardIdx) {
     if (sameSource && inRun) el.classList.add('card--selected');
   }
 
-  // SVG card art from sprite (or built-in fallback)
   el.innerHTML = makeCardFaceHTML(c);
 
   // Interactions
@@ -2854,15 +2906,16 @@ function makeCard(c, fromPile, fromCol, cardIdx) {
   return el;
 }
 
-/* ══════════════════════════════════════════════════════════
-   CARD ART HELPERS — Deck of Cards API
-   ══════════════════════════════════════════════════════════ */
-const SUIT_API  = { '♠': 'S', '♥': 'H', '♦': 'D', '♣': 'C' };
-
+/* Local SVG faces — no external CDN, no “3 of ♥” broken-image alt text */
 function makeCardFaceHTML(c) {
-  const v = c.value === '10' ? '0' : c.value;
-  const s = SUIT_API[c.suit];
-  return `<img class="card-api-img" src="${DECK_API_IMG}/${v}${s}.png" alt="${c.value} of ${c.suit}" draggable="false">`;
+  const isCourt = c.value === 'J' || c.value === 'Q' || c.value === 'K';
+  const art = isCourt ? makeFaceCardSVG(c.value) : makePipCardSVG(c.value, c.suit);
+  const corner = `<span class="card-val">${c.value}</span><span class="card-suit-sm">${c.suit}</span>`;
+  return (
+    `<div class="card-corner" aria-hidden="true">${corner}</div>` +
+    `<div class="card-face-art" aria-hidden="true">${art}</div>` +
+    `<div class="card-corner card-corner--br" aria-hidden="true">${corner}</div>`
+  );
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -4481,22 +4534,26 @@ function initTranslation() {
 initTranslation();
 
 /* ══════════════════════════════════════════════════════════
-   HINT — highlight the best available move
+   HINT — ranked useful moves + clear source/dest pulse + toast
    ══════════════════════════════════════════════════════════ */
-function findBestMove() {
-  // Priority: foundation → uncovering tableau → waste tableau → kings to empty → stock → recycle → any legal
+function cardLabel(c) {
+  return c ? `${c.value}${c.suit}` : '?';
+}
 
-  // 1. Waste → foundation
+/** Collect all productive / legal moves, best first (score desc). */
+function collectHintMoves() {
+  const moves = [];
+  const push = (m, score) => { if (m) moves.push({ ...m, score }); };
+
+  // 1. Foundations (highest value)
   if (waste.length > 0) {
     const card = waste[waste.length - 1];
     for (let fi = 0; fi < 4; fi++) {
       if (canDropOnFoundation(card, fi)) {
-        return { fromPile: 'waste', fromCol: null, cardIdx: waste.length - 1, toPile: 'foundation', toCol: fi };
+        push({ fromPile: 'waste', fromCol: null, cardIdx: waste.length - 1, toPile: 'foundation', toCol: fi, card }, 100 + numVal(card.value));
       }
     }
   }
-
-  // 2. Tableau → foundation
   for (let col = 0; col < 7; col++) {
     const pile = tableau[col];
     if (!pile.length) continue;
@@ -4504,135 +4561,143 @@ function findBestMove() {
     if (!card.faceUp) continue;
     for (let fi = 0; fi < 4; fi++) {
       if (canDropOnFoundation(card, fi)) {
-        return { fromPile: 'tableau', fromCol: col, cardIdx: pile.length - 1, toPile: 'foundation', toCol: fi };
+        push({ fromPile: 'tableau', fromCol: col, cardIdx: pile.length - 1, toPile: 'foundation', toCol: fi, card }, 100 + numVal(card.value));
       }
     }
   }
 
-  // 3. Waste → non-empty tableau
-  if (waste.length > 0) {
-    const card = waste[waste.length - 1];
-    for (let tc = 0; tc < 7; tc++) {
-      if (tableau[tc].length > 0 && canDropOnTableau(card, tc)) {
-        return { fromPile: 'waste', fromCol: null, cardIdx: waste.length - 1, toPile: 'tableau', toCol: tc };
-      }
-    }
-  }
-
-  // 4. Tableau run → tableau if uncovers face-down
+  // 2. Uncover face-down cards (very useful)
   for (let col = 0; col < 7; col++) {
     const pile = tableau[col];
     for (let ci = 0; ci < pile.length; ci++) {
       if (!pile[ci].faceUp) continue;
-      if (ci > 0 && !pile[ci - 1].faceUp) {
-        const card = pile[ci];
-        for (let tc = 0; tc < 7; tc++) {
-          if (tc === col) continue;
-          if (canDropOnTableau(card, tc)) {
-            return { fromPile: 'tableau', fromCol: col, cardIdx: ci, toPile: 'tableau', toCol: tc };
-          }
-        }
-      }
-    }
-  }
-
-  // 5. King → empty (tableau run that uncovers, OR waste king)
-  if (waste.length > 0 && waste[waste.length - 1].value === 'K') {
-    for (let tc = 0; tc < 7; tc++) {
-      if (tableau[tc].length === 0) {
-        return { fromPile: 'waste', fromCol: null, cardIdx: waste.length - 1, toPile: 'tableau', toCol: tc };
-      }
-    }
-  }
-  for (let col = 0; col < 7; col++) {
-    const pile = tableau[col];
-    if (!pile.length) continue;
-    for (let ci = 0; ci < pile.length; ci++) {
-      if (!pile[ci].faceUp) continue;
+      if (!(ci > 0 && !pile[ci - 1].faceUp)) continue;
       const card = pile[ci];
-      if (card.value !== 'K') continue;
-      // Prefer uncovering; also allow moving a buried king stack off a partial build
-      const uncovers = ci > 0 && !pile[ci - 1].faceUp;
-      const isPartialTop = ci > 0 && pile[ci - 1].faceUp; // moving frees a face-up card too sometimes useful
-      if (!uncovers && !(ci === 0 && pile.length > 1)) {
-        // skip king already alone on its column
-        if (ci === 0) continue;
-      }
-      if (!uncovers && !isPartialTop && ci !== 0) continue;
-      if (!uncovers && ci === 0) continue;
-      for (let tc = 0; tc < 7; tc++) {
-        if (tc === col) continue;
-        if (tableau[tc].length === 0) {
-          return { fromPile: 'tableau', fromCol: col, cardIdx: ci, toPile: 'tableau', toCol: tc };
-        }
-      }
-    }
-  }
-
-  // 6. Draw from stock
-  if (stock.length > 0) {
-    return { fromPile: 'stock', fromCol: null, cardIdx: null, toPile: null, toCol: null };
-  }
-
-  // 7. Recycle waste if any waste card can land somewhere
-  if (waste.length > 0) {
-    for (let wi = 0; wi < waste.length; wi++) {
-      const wc = waste[wi];
-      for (let fi = 0; fi < 4; fi++) if (canDropOnFoundation(wc, fi)) return { fromPile: 'recycle', fromCol: null, cardIdx: null, toPile: null, toCol: null };
-      for (let tc = 0; tc < 7; tc++) if (canDropOnTableau(wc, tc)) return { fromPile: 'recycle', fromCol: null, cardIdx: null, toPile: null, toCol: null };
-    }
-  }
-
-  // 8. Fallback: any legal face-up tableau or waste move (helps when "productive-only" is too strict)
-  return findAnyLegalMove();
-}
-
-function findAnyLegalMove() {
-  if (waste.length > 0) {
-    const card = waste[waste.length - 1];
-    for (let fi = 0; fi < 4; fi++) {
-      if (canDropOnFoundation(card, fi)) {
-        return { fromPile: 'waste', fromCol: null, cardIdx: waste.length - 1, toPile: 'foundation', toCol: fi };
-      }
-    }
-    for (let tc = 0; tc < 7; tc++) {
-      if (canDropOnTableau(card, tc)) {
-        return { fromPile: 'waste', fromCol: null, cardIdx: waste.length - 1, toPile: 'tableau', toCol: tc };
-      }
-    }
-  }
-  for (let col = 0; col < 7; col++) {
-    const pile = tableau[col];
-    for (let ci = 0; ci < pile.length; ci++) {
-      if (!pile[ci].faceUp) continue;
-      // Don't suggest moving entire face-up column of just a king sitting alone to another empty
-      if (ci === 0 && pile[ci].value === 'K' && pile.every(c => c.faceUp) && pile.length === 1) {
-        // still allow if destination is empty? useless cycle empty-empty
-        continue;
-      }
-      const card = pile[ci];
-      if (ci === pile.length - 1) {
-        for (let fi = 0; fi < 4; fi++) {
-          if (canDropOnFoundation(card, fi)) {
-            return { fromPile: 'tableau', fromCol: col, cardIdx: ci, toPile: 'foundation', toCol: fi };
-          }
-        }
-      }
       for (let tc = 0; tc < 7; tc++) {
         if (tc === col) continue;
         if (canDropOnTableau(card, tc)) {
-          // Avoid pure empty-to-empty king shuffles
-          if (card.value === 'K' && tableau[tc].length === 0 && ci === 0) continue;
-          return { fromPile: 'tableau', fromCol: col, cardIdx: ci, toPile: 'tableau', toCol: tc };
+          push({ fromPile: 'tableau', fromCol: col, cardIdx: ci, toPile: 'tableau', toCol: tc, card }, 80 + (pile.length - ci));
         }
       }
     }
   }
-  if (stock.length > 0) return { fromPile: 'stock', fromCol: null, cardIdx: null, toPile: null, toCol: null };
-  if (waste.length > 0) return { fromPile: 'recycle', fromCol: null, cardIdx: null, toPile: null, toCol: null };
-  return null;
+
+  // 3. Waste → tableau
+  if (waste.length > 0) {
+    const card = waste[waste.length - 1];
+    for (let tc = 0; tc < 7; tc++) {
+      if (canDropOnTableau(card, tc)) {
+        const empty = tableau[tc].length === 0;
+        if (empty && card.value !== 'K') continue;
+        push({ fromPile: 'waste', fromCol: null, cardIdx: waste.length - 1, toPile: 'tableau', toCol: tc, card }, empty ? 55 : 70);
+      }
+    }
+  }
+
+  // 4. Tableau → tableau (build / free space), avoid pointless king shuffle
+  for (let col = 0; col < 7; col++) {
+    const pile = tableau[col];
+    for (let ci = 0; ci < pile.length; ci++) {
+      if (!pile[ci].faceUp) continue;
+      if (ci > 0 && !pile[ci - 1].faceUp) continue; // already handled as uncover
+      const card = pile[ci];
+      for (let tc = 0; tc < 7; tc++) {
+        if (tc === col) continue;
+        if (!canDropOnTableau(card, tc)) continue;
+        if (card.value === 'K' && tableau[tc].length === 0 && ci === 0) continue;
+        const empties = tableau.filter((p) => p.length === 0).length;
+        push({ fromPile: 'tableau', fromCol: col, cardIdx: ci, toPile: 'tableau', toCol: tc, card }, 40 + (empties > 0 ? 5 : 0));
+      }
+    }
+  }
+
+  // 5. King → empty (only if uncovers)
+  for (let col = 0; col < 7; col++) {
+    const pile = tableau[col];
+    for (let ci = 0; ci < pile.length; ci++) {
+      if (!pile[ci].faceUp || pile[ci].value !== 'K') continue;
+      const uncovers = ci > 0 && !pile[ci - 1].faceUp;
+      if (!uncovers) continue;
+      for (let tc = 0; tc < 7; tc++) {
+        if (tc === col || tableau[tc].length > 0) continue;
+        push({ fromPile: 'tableau', fromCol: col, cardIdx: ci, toPile: 'tableau', toCol: tc, card: pile[ci] }, 75);
+      }
+    }
+  }
+  if (waste.length > 0 && waste[waste.length - 1].value === 'K') {
+    for (let tc = 0; tc < 7; tc++) {
+      if (tableau[tc].length === 0) {
+        push({ fromPile: 'waste', fromCol: null, cardIdx: waste.length - 1, toPile: 'tableau', toCol: tc, card: waste[waste.length - 1] }, 60);
+      }
+    }
+  }
+
+  // 6. Draw / recycle
+  if (stock.length > 0) {
+    push({ fromPile: 'stock', fromCol: null, cardIdx: null, toPile: null, toCol: null }, 25);
+  } else if (waste.length > 0) {
+    // recycle only if something in waste (eventually) is playable after draws
+    let useful = false;
+    for (const wc of waste) {
+      for (let fi = 0; fi < 4; fi++) if (canDropOnFoundation(wc, fi)) useful = true;
+      for (let tc = 0; tc < 7; tc++) if (canDropOnTableau(wc, tc)) useful = true;
+    }
+    if (useful) push({ fromPile: 'recycle', fromCol: null, cardIdx: null, toPile: null, toCol: null }, 20);
+  }
+
+  moves.sort((a, b) => b.score - a.score);
+  // Dedupe identical moves
+  const seen = new Set();
+  return moves.filter((m) => {
+    const key = [m.fromPile, m.fromCol, m.cardIdx, m.toPile, m.toCol].join('|');
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
+function findBestMove() {
+  const all = collectHintMoves();
+  return all[0] || null;
+}
+
+function describeHintMove(move) {
+  const fr = currentLang === 'fr';
+  if (!move) return fr ? 'Aucun coup utile' : 'No useful move';
+  if (move.fromPile === 'stock') {
+    return fr ? 'Pioche une carte (talon)' : 'Draw a card from the stock';
+  }
+  if (move.fromPile === 'recycle') {
+    return fr ? 'Recycle le talon (↩)' : 'Recycle the waste into stock';
+  }
+  const who = cardLabel(move.card);
+  if (move.toPile === 'foundation') {
+    return fr ? `Place ${who} sur la fondation` : `Move ${who} to a foundation`;
+  }
+  if (move.toPile === 'tableau') {
+    const dest = tableau[move.toCol];
+    if (!dest || dest.length === 0) {
+      return fr ? `Place le ${who} sur une colonne vide` : `Move ${who} to an empty column`;
+    }
+    const top = dest[dest.length - 1];
+    return fr
+      ? `Place ${who} sur ${cardLabel(top)}`
+      : `Move ${who} onto ${cardLabel(top)}`;
+  }
+  return fr ? 'Essaie ce coup' : 'Try this move';
+}
+
+function showHintToast(msg) {
+  const toast = document.getElementById('hint-toast');
+  if (!toast) return;
+  if (hintToastTimer) { clearTimeout(hintToastTimer); hintToastTimer = null; }
+  toast.textContent = msg;
+  toast.classList.add('visible');
+  hintToastTimer = setTimeout(() => {
+    toast.classList.remove('visible');
+    hintToastTimer = null;
+  }, 3200);
+}
 
 function clearHint() {
   if (hintTimer) { clearTimeout(hintTimer); hintTimer = null; }
@@ -4663,20 +4728,26 @@ function showStuckNotification() {
 
 function showHint() {
   clearHint();
-  const move = findBestMove();
-
-  if (!move) {
-    // No productive move exists — inform the player
+  const all = collectHintMoves();
+  if (!all.length) {
     showStuckNotification();
+    showHintToast(currentLang === 'fr' ? 'Aucun coup utile pour l’instant' : 'No useful move right now');
     return;
   }
+
+  // Cycle through ranked hints on repeated clicks
+  if (hintCycleIdx >= all.length) hintCycleIdx = 0;
+  const move = all[hintCycleIdx++];
+  stuckCount = 0;
+
+  showHintToast(describeHintMove(move));
 
   // Highlight stock (draw) or recycle
   if (move.fromPile === 'stock' || move.fromPile === 'recycle') {
     const sw = document.querySelector('.stock-wrapper');
     if (sw) {
-      sw.classList.add('card--hint');
-      hintTimer = setTimeout(clearHint, 2500);
+      sw.classList.add('card--hint', 'slot--hint');
+      hintTimer = setTimeout(clearHint, 3500);
     }
     return;
   }
@@ -4684,7 +4755,6 @@ function showHint() {
   // Highlight source card
   let sourceEl = null;
   if (move.fromPile === 'waste') {
-    // Last card element in the waste wrapper
     const wasteWrapper = document.querySelector('[aria-label^="Waste"]');
     if (wasteWrapper) {
       const cards = wasteWrapper.querySelectorAll('.card');
@@ -4695,11 +4765,6 @@ function showHint() {
     if (cols[move.fromCol]) {
       const cards = cols[move.fromCol].querySelectorAll('.card');
       if (cards.length) {
-        // Convert pile array index → DOM element index:
-        // pile array: [bottom…top], DOM cards: [bottom…top] (same order)
-        // offsetFromTop = distance from top of pile (0 = top card)
-        // targetIdx = corresponding DOM element (cards[last] = top card)
-        // Fallback to last card in case of face-down card DOM mismatch
         const pileArr = tableau[move.fromCol];
         const offsetFromTop = pileArr.length - 1 - move.cardIdx;
         const targetIdx = cards.length - 1 - offsetFromTop;
@@ -4709,10 +4774,11 @@ function showHint() {
   }
   if (sourceEl) sourceEl.classList.add('card--hint');
 
-  // Highlight destination — show the top card (if column has cards) or the empty slot
+  // Highlight destination — top face card or empty slot
   function highlightDest(wrapper) {
     if (!wrapper) return;
-    const topCard = wrapper.querySelector('.card--face');
+    const faces = wrapper.querySelectorAll('.card--face');
+    const topCard = faces.length ? faces[faces.length - 1] : null;
     const slot    = wrapper.querySelector('.card-slot');
     if (topCard) topCard.classList.add('slot--hint');
     else if (slot) slot.classList.add('slot--hint');
@@ -4726,7 +4792,10 @@ function showHint() {
     highlightDest(cols[move.toCol]);
   }
 
-  hintTimer = setTimeout(clearHint, 3000);
+  // Scroll source into view on small screens
+  try { sourceEl?.scrollIntoView?.({ block: 'nearest', behavior: 'smooth' }); } catch (_) {}
+
+  hintTimer = setTimeout(clearHint, 4000);
 }
 
 /* ══════════════════════════════════════════════════════════
