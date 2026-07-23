@@ -27,6 +27,23 @@ test('l’iframe alterne les postes affichés lorsque la radio est arrêtée', a
     .not.toBe(first);
 });
 
+test('le bouton annule une connexion audio en attente', async ({ page }) => {
+  await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
+  const tuner = page.locator('#radar-embed').contentFrame();
+  await tuner.locator('#tuner-select').selectOption({ index: 1 });
+  await tuner.locator('html').evaluate(() => {
+    const player = document.querySelector('#radar-player');
+    player.dispatchEvent(new Event('waiting'));
+  });
+
+  const button = tuner.locator('#tuner-play');
+  await expect(button).toHaveClass(/is-buffering/);
+  await expect(button).toHaveAttribute('aria-label', /annuler/i);
+  await button.click();
+  await expect(button).not.toHaveClass(/is-buffering/);
+  await expect(tuner.locator('#radar-player')).not.toHaveAttribute('src', /./);
+});
+
 test('Pomodoro garde son document hôte pendant une navigation avec lecture active', async ({ page }) => {
   await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
   const tuner = page.locator('#radar-embed').contentFrame();

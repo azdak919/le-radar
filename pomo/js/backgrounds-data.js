@@ -5,7 +5,6 @@ const BACKGROUNDS = [
   // ── Natural landscapes — Unsplash ──────────────────────────────
   { url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=90&auto=format&fit=max", credit: "Samuel Ferrara", link: "https://unsplash.com/@samferrara", source: "Unsplash", title: "Alpine Summit" },
     { url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=90&auto=format&fit=max", credit: "Luca Bravo", link: "https://unsplash.com/@lucabravo", source: "Unsplash", title: "Forest Light" },
-  { url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=90&auto=format&fit=max", credit: "Sean Oulashin", link: "https://unsplash.com/@oulashin", source: "Unsplash", title: "Tropical Beach" },
   { url: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=90&auto=format&fit=max", credit: "Benjamin Voros", link: "https://unsplash.com/@vorosbenisop", source: "Unsplash", title: "Starry Mountains" },
   { url: "https://images.unsplash.com/photo-1505144808419-1957a94ca61e?w=1920&q=90&auto=format&fit=max", credit: "Frank McKenna", link: "https://unsplash.com/@frankiefoto", source: "Unsplash", title: "Northern Lights" },
   { url: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&q=90&auto=format&fit=max", credit: "David Marcu", link: "https://unsplash.com/@davidmarcu", source: "Unsplash", title: "Sun Through Trees" },
@@ -308,7 +307,6 @@ const BACKGROUNDS = [
   /* ── Rivers, Lakes & Waterfalls ── */
   { url: "https://images.unsplash.com/photo-1432405972618-c6b0cfba8673?w=1920&q=90&auto=format&fit=max", credit: "Luca Bravo", link: "https://unsplash.com/@lucabravo", source: "Unsplash", title: "Mountain River" },
     { url: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1920&q=90&auto=format&fit=max", credit: "Pietro De Grandi", link: "https://unsplash.com/@peter_mc_greats", source: "Unsplash", title: "Lake Reflections" },
-  { url: "https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=1920&q=90&auto=format&fit=max", credit: "Kazuend", link: "https://unsplash.com/@kazuend", source: "Unsplash", title: "Tropical Waterfall" },
   { url: "https://images.unsplash.com/photo-1482685945432-29571f634909?w=1920&q=90&auto=format&fit=max", credit: "Jonatan Pie", link: "https://unsplash.com/@r3dmax", source: "Unsplash", title: "Glacial River" },
   { url: "https://images.unsplash.com/photo-1505765050516-f72dcac9c60e?w=1920&q=90&auto=format&fit=max", credit: "Dave Hoefler", link: "https://unsplash.com/@davehoefler", source: "Unsplash", title: "Autumn Lake" },
   { url: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=1920&q=90&auto=format&fit=max", credit: "Daan Weijers", link: "https://unsplash.com/@daanweijer", source: "Unsplash", title: "Sunbeams Through Trees" },
@@ -338,7 +336,6 @@ const BACKGROUNDS = [
   
   /* ── Coastal & Ocean ── */
   { url: "https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?w=1920&q=90&auto=format&fit=max", credit: "Frank McKenna", link: "https://unsplash.com/@frankiefoto", source: "Unsplash", title: "Ocean Aerial" },
-  { url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=90&auto=format&fit=max", credit: "Sean O.", link: "https://unsplash.com/@seano", source: "Unsplash", title: "Tropical Beach" },
   { url: "https://images.unsplash.com/photo-1468581264429-2548ef9eb732?w=1920&q=90&auto=format&fit=max", credit: "Jeremy Bishop", link: "https://unsplash.com/@jeremybishop", source: "Unsplash", title: "Sea Rocks" },
     { url: "https://images.unsplash.com/photo-1414609245224-afa02bfb3fda?w=1920&q=90&auto=format&fit=max", credit: "Dan Gold", link: "https://unsplash.com/@danielcgold", source: "Unsplash", title: "Rocky Coast" },
   { url: "https://images.unsplash.com/photo-1471922694854-ff1b63b20054?w=1920&q=90&auto=format&fit=max", credit: "Anastasia Taioglou", link: "https://unsplash.com/@tfrlee", source: "Unsplash", title: "Blue Coast" },
@@ -380,7 +377,6 @@ const BACKGROUNDS = [
   { url: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1920&q=90&auto=format&fit=max", credit: "Robert Lukeman", link: "https://unsplash.com/@robertlukeman", source: "Unsplash", title: "Green Hills" },
   { url: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&q=90&auto=format&fit=max", credit: "Dave Hoefler", link: "https://unsplash.com/@davehoefler", source: "Unsplash", title: "Sunbeam Valley" },
   { url: "https://images.unsplash.com/photo-1465056836900-8f1e940b2eb8?w=1920&q=90&auto=format&fit=max", credit: "Scott Webb", link: "https://unsplash.com/@scottwebb", source: "Unsplash", title: "Purple Flowers" },
-  { url: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=1920&q=90&auto=format&fit=max", credit: "Luca Bravo", link: "https://unsplash.com/@lucabravo", source: "Unsplash", title: "Tropical Paradise" },
   { url: "https://images.unsplash.com/photo-1504198453319-5ce911bafcde?w=1920&q=90&auto=format&fit=max", credit: "Faye Cornish", link: "https://unsplash.com/@fcornish", source: "Unsplash", title: "Countryside Path" },
   { url: "https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=1920&q=90&auto=format&fit=max", credit: "Ricardo Gomez Angel", link: "https://unsplash.com/@rgaleriacom", source: "Unsplash", title: "Autumn Leaves" },
 
@@ -602,7 +598,6 @@ const BACKGROUNDS = [
   { url: "https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?w=1920&q=90&auto=format&fit=max", credit: "Marivi Pazos", link: "https://unsplash.com/@marivipazos", source: "Unsplash", title: "Nordic Fjords" },
   { url: "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=1920&q=90&auto=format&fit=max", credit: "Cristina Gottardi", link: "https://unsplash.com/@cristina_gottardi", source: "Unsplash", title: "Snow Ridge" },
   { url: "https://images.unsplash.com/photo-1465146633011-14f8e0781093?w=1920&q=90&auto=format&fit=max", credit: "Timothy Eberly", link: "https://unsplash.com/@timothyeberly", source: "Unsplash", title: "Wildflower Hills" },
-    { url: "https://images.unsplash.com/photo-1519689373023-dd07c7988603?w=1920&q=90&auto=format&fit=max", credit: "Jeremy Bishop", link: "https://unsplash.com/@jeremybishop", source: "Unsplash", title: "Palm Sunset" },
   { url: "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1920&q=90&auto=format&fit=max", credit: "Quino Al", link: "https://unsplash.com/@quinoal", source: "Unsplash", title: "Golden Sunrise Field" },
 
 ];

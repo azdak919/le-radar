@@ -326,6 +326,8 @@ let currentStation = null; // radio object selected in tuner
 /** Another same-origin tab/page owns the real audio (Phase 1 multi-page sync). */
 let syncRemotePlaying = false;
 let audio = null;
+// Lecture demandée, mais aucun son confirmé par l'événement `playing`.
+let isBuffering = false;
 let suppressAudioError = false;
 // Amplification optionnelle via Web Audio : permet de dépasser 100 % pour les
 // flux trop faibles (ex. CKUT). Les postes sans en-tête CORS ne peuvent pas être
@@ -2686,6 +2688,11 @@ function togglePlay() {
     openListenWindow(currentStation);
     return;
   }
+  // Pendant la connexion, un second appui annule nettement la tentative.
+  if (isBuffering) {
+    stopPlayback({ keepStation: true });
+    return;
+  }
   // Cast actif : pause/reprise distante (ne pas relancer le flux local en double).
   if (window.RadarCast?.isChromecasting?.()) {
     if (window.RadarCast.isRemotePlaying?.()) {
@@ -2746,6 +2753,8 @@ async function play(radio) {
   try {
     if (audioCtx && audioCtx.state === 'suspended') { try { await audioCtx.resume(); } catch {} }
     if (audio.src !== url) audio.src = url;
+    isBuffering = true;
+    updatePlayUI();
     syncMediaSessionPlaybackState();
     syncMediaSessionLivePosition();
     await audio.play();
@@ -2759,12 +2768,15 @@ async function play(radio) {
     } catch { /* */ }
   } catch {
     // Autoplay / gesture refusée : l’UI play reste inactive ; pas de toast (bruit inutile).
+    isBuffering = false;
+    updatePlayUI();
   }
 }
 
 function stopPlayback({ keepStation = false } = {}) {
   reconnectTries = 0;
   userPaused = false;
+  isBuffering = false;
   mobilePlayback?.onPlayStop();
   window.RadarCast?.endSession?.();
   if (audio) {
@@ -2798,13 +2810,24 @@ function isPlaybackActive() {
 
 function updatePlayUI() {
   const active = isPlaybackActive();
+  const audible = active && !isBuffering;
   const external = !!currentStation && isExternalListen(currentStation);
-  ICO_PLAY.classList.toggle('hidden', active || external);
-  ICO_PAUSE.classList.toggle('hidden', !active);
-  ICO_EXTERNAL?.classList.toggle('hidden', !external || active);
-  TUNER_PLAY.classList.toggle('is-external', external && !active);
-  TUNER.classList.toggle('is-playing', active);
-  TUNER.classList.toggle('is-external', external && !active);
+  ICO_PLAY.classList.toggle('hidden', audible || external || isBuffering);
+  ICO_PAUSE.classList.toggle('hidden', !audible || isBuffering);
+  ICO_EXTERNAL?.classList.toggle('hidden', !external || audible || isBuffering);
+  TUNER_PLAY.classList.toggle('is-buffering', isBuffering);
+  TUNER_PLAY.classList.toggle('is-external', external && !audible && !isBuffering);
+  TUNER.classList.toggle('is-playing', audible);
+  TUNER.classList.toggle('is-buffering', isBuffering);
+  TUNER.classList.toggle('is-external', external && !audible && !isBuffering);
+  if (isBuffering) {
+    TUNER_PLAY.title = 'Connexion au flux — appuyer pour annuler';
+    TUNER_PLAY.setAttribute('aria-label', 'Connexion au flux — appuyer pour annuler');
+  } else {
+    const actionLabel = audible ? 'Mettre en pause' : (external ? 'Écouter sur le site du poste' : 'Écouter');
+    TUNER_PLAY.title = actionLabel;
+    TUNER_PLAY.setAttribute('aria-label', actionLabel);
+  }
   // Signal for nav-shell (Phase 2b): local stream actually playing on this page.
   if (isPlaying()) {
     document.documentElement.dataset.radarPlaying = '1';
@@ -2896,6 +2919,7 @@ function pauseForCast() {
 
 function pauseByUser() {
   userPaused = true;
+  isBuffering = false;
   syncRemotePlaying = false;
   // Cast : pause distante (ou fin de session si le LIVE ne gère pas pause).
   // Ne pas appeler endSession ici — le bouton Cast sert à arrêter la diffusion.
@@ -2965,8 +2989,23 @@ function initMobilePlayback() {
 function attachAudioListeners(el) {
   if (playerListenersAttached.has(el)) return;
   playerListenersAttached.add(el);
+  const enterBuffering = () => {
+    // Ces événements ne proviennent d'un <audio> que lorsqu'un flux est en
+    // cours de préparation; `currentStation` couvre aussi l'instant où le
+    // navigateur normalise l'URL de src.
+    if (!userPaused && (el.src || currentStation)) {
+      isBuffering = true;
+      updatePlayUI();
+    }
+  };
+  el.addEventListener('loadstart', enterBuffering);
+  el.addEventListener('waiting', enterBuffering);
+  el.addEventListener('stalled', enterBuffering);
   el.addEventListener('play',    updatePlayUI);
-  el.addEventListener('pause',   updatePlayUI);
+  el.addEventListener('pause',   () => {
+    isBuffering = false;
+    updatePlayUI();
+  });
   el.addEventListener('ended',   onAudioEnded);
   el.addEventListener('playing', onAudioPlaying);
   el.addEventListener('error',   onAudioError);
@@ -2979,11 +3018,13 @@ function currentTuning() {
 
 function onAudioPlaying() {
   reconnectTries = 0;
+  isBuffering = false;
   mobilePlayback?.onPlaying();
   updatePlayUI();
 }
 
 function onAudioEnded() {
+  isBuffering = false;
   if (mobilePlayback?.shouldHandleEnded() && mobilePlayback.attemptReconnect()) return;
   updatePlayUI();
 }
@@ -2995,6 +3036,7 @@ function reconnectResilient() {
 }
 
 function onAudioError() {
+  isBuffering = false;
   if (suppressAudioError) { updatePlayUI(); return; }
   // Poste résilient qui jouait déjà : coupure réseau → reconnexion douce
   // (currentTime > 0 distingue une vraie coupure d'un échec CORS au démarrage).

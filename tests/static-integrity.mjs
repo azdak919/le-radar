@@ -58,6 +58,11 @@ assert(rootSw.includes('const CACHE_PREFIX = "radar-"'), 'préfixe cache racine 
 assert(pomoSw.includes("const CACHE_PREFIX = 'pomo-'"), 'préfixe cache Pomodoro isolé requis');
 assert(solitaireSw.includes("const CACHE_PREFIX = 'solitaire-'"), 'préfixe cache Solitaire isolé requis');
 
+const backgroundsData = readFileSync(join(root, 'pomo/js/backgrounds-data.js'), 'utf8');
+for (const title of ['Palm Sunset', 'Tropical Beach', 'Tropical Waterfall', 'Tropical Paradise']) {
+  assert(!backgroundsData.includes(`title: "${title}"`), `fond hors ligne éditoriale interdit: ${title}`);
+}
+
 for (const app of ['pomo', 'solitaire']) {
   const html = readFileSync(join(root, app, 'index.html'), 'utf8');
   assert(/id=["']radar-embed["']/.test(html), `${app}: iframe Le Radar requis`);
