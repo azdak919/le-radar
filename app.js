@@ -900,8 +900,11 @@ function botNextShow(radio) {
   }
   const next = entry?.next;
   if (!next?.title || String(next.title).trim().length < 3) return null;
-  // Déjà en ondes (promu current) → ce n'est plus « à venir »
-  if (airSlotIsLive(next) === true) return null;
+  // Déjà en ondes (promu current) ou terminé (bot retardataire) : ce n'est
+  // plus « à venir ». Dans ce dernier cas, le repli de grille trouvera le
+  // prochain vrai créneau au lieu de conserver l'émission expirée.
+  const nextLive = airSlotIsLive(next);
+  if (nextLive === true || (nextLive === false && !airSlotIsFuture(next))) return null;
   return next;
 }
 
