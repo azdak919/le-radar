@@ -55,6 +55,15 @@
 .translate-toggle__icon,
 .translate-toggle__chev { display: inline-flex; flex-shrink: 0; opacity: 0.85; }
 .translate-toggle__label { min-width: 0; overflow: hidden; text-overflow: ellipsis; line-height: 1.35; }
+.radar-translate-control--app .translate-toggle__label {
+  /* Le libellé peut être hydraté après chargement : verrouiller les mêmes
+     métriques que le bouton pour éviter toute remontée à la taille du body. */
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+}
 .translate-toggle__chev { transition: transform 0.2s ease; }
 .translate-toggle[aria-expanded="true"] .translate-toggle__chev { transform: rotate(180deg); }
 
