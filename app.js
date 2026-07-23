@@ -830,14 +830,16 @@ const WEATHER_CITIES = [
 ];
 
 function weatherIcon(code, isDay = 1) {
-  if (code === 0) return isDay ? '☀︎' : '☾';
-  if ([1, 2].includes(code)) return isDay ? '⛅' : '☁︎';
-  if (code === 3 || code === 45 || code === 48) return '☁︎';
-  if ([51, 53, 55, 56, 57].includes(code)) return '⌇';
-  if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return '☂';
-  if ([71, 73, 75, 77, 85, 86].includes(code)) return '❄';
-  if ([95, 96, 99].includes(code)) return 'ϟ';
-  return '·';
+  const svg = (paths) => `<svg viewBox="0 0 24 24" aria-hidden="true">${paths}</svg>`;
+  if (code === 0) return isDay
+    ? svg('<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>')
+    : svg('<path d="M20 15.5A8 8 0 0 1 8.5 4 8 8 0 1 0 20 15.5Z"/>');
+  if ([1, 2].includes(code)) return svg('<path d="M7 18h10a4 4 0 0 0 .4-8A5.5 5.5 0 0 0 7 11.5 3.3 3.3 0 0 0 7 18Z"/><path d="M8 4v2M4.5 6.5l1.4 1.4M12 3v2"/>');
+  if (code === 3 || code === 45 || code === 48) return svg('<path d="M6.5 18h11a4 4 0 0 0 .4-8A5.5 5.5 0 0 0 7 11.5 3.3 3.3 0 0 0 6.5 18Z"/>');
+  if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return svg('<path d="M6.5 15h11a4 4 0 0 0 .4-8A5.5 5.5 0 0 0 7 8.5 3.3 3.3 0 0 0 6.5 15Z"/><path d="m8 18-1 2m5-2-1 2m5-2-1 2"/>');
+  if ([71, 73, 75, 77, 85, 86].includes(code)) return svg('<path d="M6.5 15h11a4 4 0 0 0 .4-8A5.5 5.5 0 0 0 7 8.5 3.3 3.3 0 0 0 6.5 15Z"/><path d="m9 18 .01 0m3 2 .01 0m3-2 .01 0"/>');
+  if ([95, 96, 99].includes(code)) return svg('<path d="M6.5 15h11a4 4 0 0 0 .4-8A5.5 5.5 0 0 0 7 8.5 3.3 3.3 0 0 0 6.5 15Z"/><path d="m13 16-3 5 4-1-2 4"/>');
+  return svg('<path d="M6.5 18h11a4 4 0 0 0 .4-8A5.5 5.5 0 0 0 7 11.5 3.3 3.3 0 0 0 6.5 18Z"/>');
 }
 
 function weatherTone(code) {
@@ -850,6 +852,8 @@ function weatherTone(code) {
 
 let mastheadWeatherTimer = null;
 const mastheadWeatherDecks = { campus: [], nation: [] };
+let mastheadWeatherSlots = [];
+let mastheadWeatherNextSlot = 0;
 
 function buildMastheadWeatherBoard() {
   const board = MASTHEAD_WEATHER?.querySelector('.masthead-weather__board');
@@ -875,9 +879,7 @@ function buildMastheadWeatherBoard() {
 }
 
 function weatherBoardCount() {
-  if (window.innerWidth >= 1320) return 4;
-  if (window.innerWidth >= 1100) return 3;
-  return 2;
+  return 4;
 }
 
 function nextWeatherCity(group, usedIds) {
@@ -898,32 +900,58 @@ function showMastheadWeatherBoard() {
   const cities = [...MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city')];
   if (!cities.length) return;
   const count = Math.min(weatherBoardCount(), cities.length);
-  // Une rangée reste toujours mixte : le panneau ne devient jamais une liste
-  // entière de collectivités autochtones (ni uniquement de grandes villes).
-  const groups = Array.from({ length: count }, (_, index) => index % 2 ? 'nation' : 'campus');
-  if (count === 2) groups.reverse();
-  const usedIds = new Set();
-  const selected = groups.map((group) => {
+  mastheadWeatherSlots = mastheadWeatherSlots.slice(0, count);
+  const usedIds = new Set(mastheadWeatherSlots.map((city) => city.id));
+  while (mastheadWeatherSlots.length < count) {
+    const group = mastheadWeatherSlots.length % 2 ? 'nation' : 'campus';
     const city = nextWeatherCity(group, usedIds);
-    if (city) usedIds.add(city.id);
-    return city;
-  }).filter(Boolean);
+    if (!city) break;
+    usedIds.add(city.id);
+    mastheadWeatherSlots.push(city);
+  }
   cities.forEach((city) => {
     city.classList.remove('is-active');
     city.setAttribute('aria-hidden', 'true');
   });
-  selected.forEach((selectedCity) => {
+  mastheadWeatherSlots.forEach((selectedCity, slot) => {
     const city = MASTHEAD_WEATHER.querySelector(`[data-weather-city="${selectedCity.id}"]`);
     city?.classList.add('is-active');
+    if (city) city.style.order = String(slot);
     city?.setAttribute('aria-hidden', 'false');
   });
+  refreshWeatherNameScroll();
+}
+
+function refreshWeatherNameScroll() {
+  MASTHEAD_WEATHER?.querySelectorAll('.masthead-weather__city.is-active').forEach((el) => {
+    const name = el.querySelector('.masthead-weather__name');
+    const overflow = Math.max(0, name.scrollWidth - name.clientWidth);
+    el.classList.toggle('is-overflowing', overflow > 2);
+    el.style.setProperty('--weather-scroll', `${overflow}px`);
+  });
+}
+
+function rotateOneMastheadWeatherCard() {
+  if (!mastheadWeatherSlots.length) return;
+  const slot = mastheadWeatherNextSlot % mastheadWeatherSlots.length;
+  const previous = mastheadWeatherSlots[slot];
+  const group = previous.nation ? 'nation' : 'campus';
+  const usedIds = new Set(mastheadWeatherSlots.filter((_, index) => index !== slot).map((city) => city.id));
+  const replacement = nextWeatherCity(group, usedIds);
+  if (!replacement) return;
+  mastheadWeatherSlots[slot] = replacement;
+  mastheadWeatherNextSlot = (slot + 1) % mastheadWeatherSlots.length;
+  showMastheadWeatherBoard();
+  const arriving = MASTHEAD_WEATHER?.querySelector(`[data-weather-city="${replacement.id}"]`);
+  arriving?.classList.add('is-arriving');
+  window.setTimeout(() => arriving?.classList.remove('is-arriving'), 500);
 }
 
 function startMastheadWeatherBoard() {
   if (!MASTHEAD_WEATHER || mastheadWeatherTimer) return;
   showMastheadWeatherBoard();
   mastheadWeatherTimer = window.setInterval(() => {
-    showMastheadWeatherBoard();
+    rotateOneMastheadWeatherCard();
   }, 5200);
   window.addEventListener('resize', showMastheadWeatherBoard, { passive: true });
 }
@@ -935,13 +963,9 @@ function renderMastheadWeather(entries) {
     const current = entries[index]?.current;
     const el = MASTHEAD_WEATHER.querySelector(`[data-weather-city="${city.id}"]`);
     if (!el || !current || !Number.isFinite(current.temperature_2m)) return;
-    el.querySelector('.masthead-weather__icon').textContent = weatherIcon(current.weather_code, current.is_day);
+    el.querySelector('.masthead-weather__icon').innerHTML = weatherIcon(current.weather_code, current.is_day);
     el.querySelector('.masthead-weather__temp').textContent = `${Math.round(current.temperature_2m)}°`;
     el.dataset.weatherTone = weatherTone(current.weather_code);
-    const name = el.querySelector('.masthead-weather__name');
-    const overflow = Math.max(0, name.scrollWidth - name.clientWidth);
-    el.classList.toggle('is-overflowing', overflow > 2);
-    el.style.setProperty('--weather-scroll', `${overflow}px`);
   });
   MASTHEAD_WEATHER.classList.remove('hidden');
   startMastheadWeatherBoard();

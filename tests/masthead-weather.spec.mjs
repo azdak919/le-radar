@@ -33,11 +33,13 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   ]);
   expect(actionsBox.x).toBeGreaterThan(weatherBox.x + weatherBox.width);
 
-  await page.setViewportSize({ width: 1200, height: 900 });
-  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(3);
+  const beforeRotation = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities.map((city) => city.dataset.weatherCity));
+  await page.waitForTimeout(5300);
+  const afterRotation = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities.map((city) => city.dataset.weatherCity));
+  expect(afterRotation.filter((id) => beforeRotation.includes(id))).toHaveLength(3);
 
   await page.setViewportSize({ width: 1050, height: 900 });
-  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(2);
+  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(4);
 
   await page.setViewportSize({ width: 1000, height: 900 });
   await expect(ribbon).toBeHidden();

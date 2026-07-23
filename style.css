@@ -184,16 +184,10 @@ a { color: inherit; }
 .masthead-weather__board {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(var(--weather-columns, 3), minmax(0, 1fr));
-  width: min(100%, clamp(330px, 45vw, 640px));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  width: 100%;
   height: 29px;
-  overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--rule));
-  border-radius: 5px;
-  background:
-    linear-gradient(90deg, color-mix(in srgb, var(--accent) 12%, transparent), transparent 32%),
-    color-mix(in srgb, var(--bg-soft) 90%, var(--accent) 10%);
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--bg) 75%, transparent), 0 1px 0 color-mix(in srgb, var(--accent) 10%, transparent);
 }
 .masthead-weather__city {
   display: none;
@@ -204,12 +198,22 @@ a { color: inherit; }
   font-size: 11px;
   font-weight: 650;
   letter-spacing: 0.045em;
-  pointer-events: none;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--rule));
+  border-radius: 5px;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--accent) 11%, transparent), transparent 48%),
+    color-mix(in srgb, var(--bg-soft) 91%, var(--accent) 9%);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--bg) 72%, transparent);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
 }
-.masthead-weather__city + .masthead-weather__city { border-left: 1px solid color-mix(in srgb, var(--accent) 16%, var(--rule)); }
 .masthead-weather__city.is-active { display: flex; }
-.masthead-weather__city::before { content: ''; flex: 0 0 3px; width: 3px; align-self: stretch; margin: 5px 0; border-radius: 999px; background: var(--weather-tone, var(--accent)); box-shadow: 0 0 10px color-mix(in srgb, var(--weather-tone, var(--accent)) 55%, transparent); }
-.masthead-weather__icon { width: 17px; color: var(--weather-tone, var(--accent)); font-size: 17px; line-height: 1; text-align: center; }
+.masthead-weather__city.is-arriving { animation: weather-tile-arrive 460ms cubic-bezier(.22,.8,.28,1); }
+.masthead-weather__city:hover { border-color: color-mix(in srgb, var(--weather-tone, var(--accent)) 68%, var(--rule)); background-color: color-mix(in srgb, var(--bg-soft) 76%, var(--weather-tone, var(--accent)) 24%); }
+.masthead-weather__icon { flex: 0 0 17px; width: 17px; color: var(--weather-tone, var(--accent)); line-height: 1; text-align: center; }
+.masthead-weather__icon svg { display: block; width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .masthead-weather__name { display: block; flex: 1 1 auto; min-width: 0; white-space: nowrap; }
 .masthead-weather__city.is-overflowing .masthead-weather__name {
   animation: weather-name-scroll 6.2s ease-in-out infinite alternate;
@@ -224,19 +228,21 @@ a { color: inherit; }
   .masthead-top {
     display: grid;
     grid-template-areas: 'date weather actions';
-    grid-template-columns: minmax(155px, 1fr) minmax(330px, 640px) minmax(210px, 1fr);
+    grid-template-columns: max-content minmax(0, 1fr) max-content;
+    column-gap: clamp(16px, 2.2vw, 32px);
   }
   .masthead-date { grid-area: date; justify-self: start; }
   .masthead-weather { display: inline-flex; grid-area: weather; justify-self: center; }
   .masthead-actions { grid-area: actions; justify-self: end; }
-  .masthead-weather__board { --weather-columns: 2; }
 }
-@media (min-width: 1100px) { .masthead-weather__board { --weather-columns: 3; } }
-@media (min-width: 1320px) { .masthead-weather__board { --weather-columns: 4; } }
 @media (max-width: 1023.98px) { .masthead-weather { display: none !important; } }
 @keyframes weather-name-scroll {
-  0%, 28% { transform: translateX(0); }
-  72%, 100% { transform: translateX(var(--weather-scroll, 0)); }
+  0%, 28% { transform: translateX(calc(var(--weather-scroll, 0) * -1)); }
+  72%, 100% { transform: translateX(0); }
+}
+@keyframes weather-tile-arrive {
+  from { opacity: 0; transform: translateY(75%); }
+  to { opacity: 1; transform: translateY(0); }
 }
 @media (prefers-reduced-motion: reduce) { .masthead-weather__city.is-overflowing .masthead-weather__name { animation: none; } }
 
