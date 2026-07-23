@@ -328,6 +328,7 @@ let syncRemotePlaying = false;
 let audio = null;
 // Lecture demandée, mais aucun son confirmé par l'événement `playing`.
 let isBuffering = false;
+let bufferingSafetyTimer = null;
 let suppressAudioError = false;
 // Amplification optionnelle via Web Audio : permet de dépasser 100 % pour les
 // flux trop faibles (ex. CKUT). Les postes sans en-tête CORS ne peuvent pas être
@@ -688,12 +689,34 @@ async function trySessionResume(boot) {
 /** Pause local media without publishing pause (used when yielding leadership). */
 function softStopLocalAudio({ clearRemoteFlag = true } = {}) {
   mobilePlayback?.onPlayStop?.();
+  setBuffering(false);
   if (audio) {
     suppressAudioError = true;
     try { audio.pause(); } catch { /* */ }
     suppressAudioError = false;
   }
   if (clearRemoteFlag) syncRemotePlaying = false;
+}
+
+/**
+ * Un flux LIVE peut ne jamais répondre (ou une page suiveuse peut recevoir un
+ * événement tardif). Le bouton ne doit alors jamais rester en boucle : il
+ * redevient un bouton lecture après un court délai, toujours annulable avant.
+ */
+function setBuffering(next) {
+  isBuffering = !!next;
+  if (bufferingSafetyTimer) {
+    clearTimeout(bufferingSafetyTimer);
+    bufferingSafetyTimer = null;
+  }
+  if (isBuffering) {
+    bufferingSafetyTimer = setTimeout(() => {
+      bufferingSafetyTimer = null;
+      if (!isBuffering) return;
+      isBuffering = false;
+      updatePlayUI();
+    }, 12_000);
+  }
 }
 
 function registerServiceWorker() {
@@ -2756,7 +2779,7 @@ async function play(radio) {
   try {
     if (audioCtx && audioCtx.state === 'suspended') { try { await audioCtx.resume(); } catch {} }
     if (audio.src !== url) audio.src = url;
-    isBuffering = true;
+    setBuffering(true);
     updatePlayUI();
     syncMediaSessionPlaybackState();
     syncMediaSessionLivePosition();
@@ -2771,7 +2794,7 @@ async function play(radio) {
     } catch { /* */ }
   } catch {
     // Autoplay / gesture refusée : l’UI play reste inactive ; pas de toast (bruit inutile).
-    isBuffering = false;
+    setBuffering(false);
     updatePlayUI();
   }
 }
@@ -2779,7 +2802,7 @@ async function play(radio) {
 function stopPlayback({ keepStation = false } = {}) {
   reconnectTries = 0;
   userPaused = false;
-  isBuffering = false;
+  setBuffering(false);
   mobilePlayback?.onPlayStop();
   window.RadarCast?.endSession?.();
   if (audio) {
@@ -2922,7 +2945,7 @@ function pauseForCast() {
 
 function pauseByUser() {
   userPaused = true;
-  isBuffering = false;
+  setBuffering(false);
   syncRemotePlaying = false;
   // Cast : pause distante (ou fin de session si le LIVE ne gère pas pause).
   // Ne pas appeler endSession ici — le bouton Cast sert à arrêter la diffusion.
@@ -2996,8 +3019,8 @@ function attachAudioListeners(el) {
     // Ces événements ne proviennent d'un <audio> que lorsqu'un flux est en
     // cours de préparation; `currentStation` couvre aussi l'instant où le
     // navigateur normalise l'URL de src.
-    if (!userPaused && (el.src || currentStation)) {
-      isBuffering = true;
+    if (!userPaused && !syncRemotePlaying && (el.src || currentStation)) {
+      setBuffering(true);
       updatePlayUI();
     }
   };
@@ -3006,7 +3029,7 @@ function attachAudioListeners(el) {
   el.addEventListener('stalled', enterBuffering);
   el.addEventListener('play',    updatePlayUI);
   el.addEventListener('pause',   () => {
-    isBuffering = false;
+    setBuffering(false);
     updatePlayUI();
   });
   el.addEventListener('ended',   onAudioEnded);
@@ -3021,13 +3044,13 @@ function currentTuning() {
 
 function onAudioPlaying() {
   reconnectTries = 0;
-  isBuffering = false;
+  setBuffering(false);
   mobilePlayback?.onPlaying();
   updatePlayUI();
 }
 
 function onAudioEnded() {
-  isBuffering = false;
+  setBuffering(false);
   if (mobilePlayback?.shouldHandleEnded() && mobilePlayback.attemptReconnect()) return;
   updatePlayUI();
 }
@@ -3039,7 +3062,7 @@ function reconnectResilient() {
 }
 
 function onAudioError() {
-  isBuffering = false;
+  setBuffering(false);
   if (suppressAudioError) { updatePlayUI(); return; }
   // Poste résilient qui jouait déjà : coupure réseau → reconnexion douce
   // (currentTime > 0 distingue une vraie coupure d'un échec CORS au démarrage).

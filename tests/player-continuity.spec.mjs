@@ -42,6 +42,24 @@ test('le bouton annule une connexion audio en attente', async ({ page }) => {
   await expect(button).not.toHaveClass(/is-buffering/);
 });
 
+test('une page suiveuse n’affiche pas un buffering tardif après navigation', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('req-player-session-v1', JSON.stringify({
+      stationId: 'ckut',
+      playing: true,
+      volume: 1,
+      leaderId: 'page-hote-encore-active',
+      updatedAt: Date.now(),
+    }));
+  });
+  await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
+  const tuner = page.locator('#radar-embed').contentFrame();
+  await tuner.locator('html').evaluate(() => {
+    document.querySelector('#radar-player').dispatchEvent(new Event('waiting'));
+  });
+  await expect(tuner.locator('#tuner-play')).not.toHaveClass(/is-buffering/);
+});
+
 test('une émission CHOQ terminée ne reste pas affichée comme à venir', async ({ page }) => {
   await page.addInitScript(() => {
     const RealDate = Date;
