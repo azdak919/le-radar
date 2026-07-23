@@ -3,8 +3,8 @@
    Scope: /solitaire/ only — isolated from root radar SW and pomo.
    ═══════════════════════════════════════════════════════ */
 
-const SHELL_CACHE  = 'solitaire-shell-v8';
-const FONT_CACHE   = 'solitaire-fonts-v8';
+const SHELL_CACHE  = 'solitaire-shell-v9';
+const FONT_CACHE   = 'solitaire-fonts-v9';
 const CACHE_PREFIX = 'solitaire-';
 const KNOWN_CACHES = [SHELL_CACHE, FONT_CACHE];
 
@@ -38,6 +38,9 @@ const SHELL_ASSETS = [
   './browserconfig.xml',
   './sw.js',
   './js/solitaire-rules.js',
+  '../translate-menu.js',
+  '../translate-menu.css',
+  '../indigenous-mt.json',
 ];
 
 self.addEventListener('install', (event) => {
@@ -85,7 +88,8 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  if (url.origin === self.location.origin && url.pathname.includes('/solitaire/')) {
+  const sharedTranslationAsset = /\/(?:translate-menu\.(?:js|css)|indigenous-mt\.json)$/.test(url.pathname);
+  if (url.origin === self.location.origin && (url.pathname.includes('/solitaire/') || sharedTranslationAsset)) {
     event.respondWith(staleWhileRevalidate(SHELL_CACHE, request));
   }
 });

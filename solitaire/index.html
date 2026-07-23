@@ -23,6 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../translate-menu.css">
 
   <style>
     /* ════════════════════════════════════════
@@ -1206,12 +1207,13 @@
       </a>
     </div>
     <div class="game-toolbar-divider" aria-hidden="true"></div>
-    <div class="lang-selector">
-      <button class="lang-btn toolbar-btn" id="lang-btn" aria-label="Change language" type="button">
+    <div class="lang-selector translate-control radar-translate-control--app notranslate" id="translate-control" translate="no">
+      <button class="lang-btn toolbar-btn translate-toggle" id="lang-btn" aria-label="Change language" aria-haspopup="listbox" aria-expanded="false" aria-controls="lang-dropdown" type="button">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
-        <span id="lang-label">EN</span>
+        <span id="lang-label" class="translate-toggle__label">Original</span>
+        <svg class="translate-toggle__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
       </button>
-      <div class="lang-dropdown" id="lang-dropdown"></div>
+      <div class="lang-dropdown translate-menu" id="lang-dropdown" role="listbox" aria-label="Langue d’affichage" hidden></div>
       <div class="lang-translating" id="lang-status"></div>
     </div>
   </div>
@@ -1364,6 +1366,7 @@
   </a>
 </div>
 
+<script src="../translate-menu.js"></script>
 <script src="js/solitaire-rules.js"></script>
 <script nonce="ataraxia-sol">
 /* ══════════════════════════════════════════════════════════
@@ -4209,7 +4212,7 @@ function setCachedTranslation(text, targetLang, translated) {
 }
 
 function _gtLang(lang) {
-  const map = { zh: 'zh-CN', he: 'iw' };
+  const map = { zh: 'zh-CN', 'zh-tw': 'zh-TW', he: 'iw', 'iu-latn': 'iu-Latn' };
   return map[lang] || lang;
 }
 
@@ -4408,19 +4411,28 @@ async function translateUIStrings(lang) {
   applyUIStrings(langStrings);
 }
 
-async function switchLanguage(langCode) {
+async function switchLanguage(langCode, { radarMode = langCode, persist = true } = {}) {
+  if (langCode === 'original') langCode = 'en';
   currentLang = langCode;
-  localStorage.setItem(LANG_PREF_KEY, langCode);
+  if (persist) {
+    localStorage.setItem(LANG_PREF_KEY, langCode);
+    window.RadarLanguageMenu?.persistMode(radarMode === 'en' ? 'en' : radarMode);
+  }
 
   const langData = SUPPORTED_LANGS.find(l => l.code === langCode);
-  document.getElementById('lang-label').textContent = langData ? langData.native : langCode.toUpperCase();
-  document.documentElement.lang = langCode;
+  const sharedData = window._radarLanguageMenu?.getModes?.()[radarMode];
+  if (!window._radarLanguageMenu) {
+    document.getElementById('lang-label').textContent = sharedData?.label || (langData ? langData.native : langCode.toUpperCase());
+  }
+  document.documentElement.lang = langCode === 'zh-tw' ? 'zh-Hant' : (langCode === 'zh' ? 'zh-Hans' : langCode);
 
   document.querySelectorAll('.lang-option').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.lang === langCode);
   });
 
+  window._radarLanguageMenu?.setActive(radarMode);
   document.getElementById('lang-dropdown').classList.remove('open');
+  document.getElementById('lang-dropdown').hidden = true;
 
   if (langCode === 'en') {
     applyUIStrings(SOL_UI_EN);
@@ -4452,17 +4464,45 @@ function buildLangDropdown() {
 function initTranslation() {
   migrateLegacyStorage();
   loadTranslationCache();
+
+  if (window.RadarLanguageMenu) {
+    const radarSaved = localStorage.getItem(window.RadarLanguageMenu.GLOBAL_PREFERENCE_KEY);
+    const legacySaved = localStorage.getItem(LANG_PREF_KEY)
+      || localStorage.getItem(LANG_PREF_KEY_LEGACY);
+    const initialMode = window.RadarLanguageMenu.normalizeMode(
+      radarSaved || legacySaved || window.RadarLanguageMenu.preferredMode('original'),
+    ) || 'original';
+    window._radarLanguageMenu = window.RadarLanguageMenu.mount({
+      button: '#lang-btn',
+      menu: '#lang-dropdown',
+      label: '#lang-label',
+      initialMode,
+      nativeLocale: 'en',
+      onSelect: (mode) => switchLanguage(mode === 'original' ? 'en' : mode, { radarMode: mode }),
+    });
+    const initialLang = initialMode === 'original' ? 'en' : initialMode;
+    if (initialLang !== 'en') {
+      switchLanguage(initialLang, { radarMode: initialMode, persist: false });
+    } else {
+      applyUIStrings(SOL_UI_EN);
+      window._radarLanguageMenu?.setActive(initialMode);
+    }
+    return;
+  }
+
   buildLangDropdown();
 
   const langBtn = document.getElementById('lang-btn');
   const dropdown = document.getElementById('lang-dropdown');
   langBtn.addEventListener('click', (e) => {
     e.stopPropagation();
-    dropdown.classList.toggle('open');
+    const open = dropdown.classList.toggle('open');
+    dropdown.hidden = !open;
   });
   document.addEventListener('click', (e) => {
     if (!dropdown.contains(e.target) && e.target !== langBtn) {
       dropdown.classList.remove('open');
+      dropdown.hidden = true;
     }
   });
 

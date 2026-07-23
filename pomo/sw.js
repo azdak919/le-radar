@@ -8,8 +8,8 @@
      • Anything else same-origin under scope → stale-while-revalidate
    ═══════════════════════════════════════════════════════ */
 
-const SHELL_CACHE  = 'pomo-shell-v6';
-const FONT_CACHE   = 'pomo-fonts-v6';
+const SHELL_CACHE  = 'pomo-shell-v7';
+const FONT_CACHE   = 'pomo-fonts-v7';
 const CACHE_PREFIX = 'pomo-';
 const KNOWN_CACHES = [SHELL_CACHE, FONT_CACHE];
 
@@ -56,6 +56,9 @@ const SHELL_ASSETS = [
   './js/layout.js',
   './js/panels.js',
   './js/app.js',
+  '../translate-menu.js',
+  '../translate-menu.css',
+  '../indigenous-mt.json',
 ];
 
 self.addEventListener('install', (event) => {
@@ -104,8 +107,9 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Only handle requests under this SW's scope (defence in depth)
-  if (url.origin === self.location.origin && url.pathname.includes('/pomo/')) {
+  const sharedTranslationAsset = /\/(?:translate-menu\.(?:js|css)|indigenous-mt\.json)$/.test(url.pathname);
+  // Le module de langue vit à la racine, mais appartient aussi au shell hors ligne.
+  if (url.origin === self.location.origin && (url.pathname.includes('/pomo/') || sharedTranslationAsset)) {
     event.respondWith(staleWhileRevalidate(SHELL_CACHE, request));
   }
 });
