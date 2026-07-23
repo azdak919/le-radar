@@ -60,3 +60,26 @@ test('la préférence choisie dans Pomo est reprise dans Solitaire', async ({ pa
   await expect(page.locator('#lang-label')).toHaveText('FR');
   await expect(page.locator('#new-game-label')).toHaveText('Nouvelle partie');
 });
+
+test('Pomo applique la phase traduite dès la fin de la traduction asynchrone', async ({ page }) => {
+  await page.route('https://api.mymemory.translated.net/**', async (route) => {
+    const source = new URL(route.request().url()).searchParams.get('q') || '';
+    const translated = source === 'Focus' ? 'ᑐᕌᒐᖅ' : `IU ${source}`;
+    await route.fulfill({
+      contentType: 'application/json',
+      body: JSON.stringify({
+        responseStatus: 200,
+        responseData: { translatedText: translated },
+      }),
+    });
+  });
+
+  await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => localStorage.clear());
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await page.locator('#lang-btn').click();
+  await page.locator('#lang-dropdown [data-mode="iu"]').click();
+
+  await expect(page.locator('#pomo-label')).toHaveText('ᑐᕌᒐᖅ');
+  await expect(page).toHaveTitle(/ᑐᕌᒐᖅ/);
+});
