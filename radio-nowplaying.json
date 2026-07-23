@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-23T05:57:21.815Z",
+  "updatedAt": "2026-07-23T08:40:04.487Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-23T05:56:57.826Z"
+      "checkedAt": "2026-07-23T08:39:41.932Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Jeunesse cosmique",
+        "title": "Club classique (reprise)",
         "source": "api-live",
-        "start": "20:00",
+        "start": "00:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "jeunesse-cosmique"
+        "slug": "club-classique"
       },
       "next": {
-        "title": "Mix anglo",
+        "title": "Mix Franco",
         "source": "api-live",
-        "start": "22:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364871.mp3",
-        "slug": "mix-anglo"
+        "start": "02:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364876.mp3",
+        "slug": "mix-franco"
       },
       "track": "",
-      "showTitle": "Jeunesse cosmique",
+      "showTitle": "Club classique (reprise)",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-23T05:57:00.157Z"
+      "checkedAt": "2026-07-23T08:39:44.322Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Off The Hook",
+        "title": "William Shatner&#039;s Whiskey Tears",
         "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
+        "start": "04:00",
+        "end": "06:00"
       },
       "next": {
-        "title": "Freeform Air",
+        "title": "Total €clipse of The ☾harts",
         "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
+        "start": "06:00",
+        "end": "07:00"
       },
-      "track": "",
-      "showTitle": "Off The Hook",
+      "track": "William Shatner",
+      "showTitle": "William Shatner&#039;s Whiskey Tears",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,7 +77,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-23T05:57:04.467Z"
+      "checkedAt": "2026-07-23T08:39:47.320Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -104,7 +104,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-23T05:57:18.284Z"
+      "checkedAt": "2026-07-23T08:40:01.124Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,28 +129,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-23T05:57:19.085Z"
+      "checkedAt": "2026-07-23T08:40:01.749Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Indomitable",
+        "title": "100",
         "source": "api-live",
-        "host": "The Blind Philosopher",
-        "url": "https://www.choq.ca/assets/playlist/les-nuits-brutales.png"
+        "host": "Lolo Zouaï",
+        "url": "https://www.choq.ca/assets/playlist/palmares-site-web.jpg"
       },
       "next": null,
-      "track": "The Blind Philosopher - Indomitable",
-      "showTitle": "Indomitable",
-      "host": "The Blind Philosopher",
+      "track": "Lolo Zouaï - 100",
+      "showTitle": "100",
+      "host": "Lolo Zouaï",
       "source": "api-live",
       "sources": [
         "api-live",
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-23T05:57:21.464Z"
+      "checkedAt": "2026-07-23T08:40:04.137Z"
     }
   }
 }
