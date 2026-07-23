@@ -1,5 +1,15 @@
 import { expect, test } from '@playwright/test';
 
+test('le volume historique par défaut est ramené à un niveau d’écoute confortable', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('req-player-vol', '1');
+    localStorage.removeItem('req-player-vol-version');
+  });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#tuner-volume')).toHaveValue('0.72');
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('req-player-vol'))).toBe('0.72');
+});
+
 test('le panneau À l’antenne reste bleu lorsque le synthétiseur est arrêté', async ({ page }) => {
   await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
   const tuner = page.locator('#radar-embed').contentFrame();

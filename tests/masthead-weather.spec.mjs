@@ -41,6 +41,10 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
     .map(({ width }) => width)));
   expect(activeBoxes[0]).toBeLessThan(activeBoxes[1]);
   await expect(ribbon.locator('.masthead-weather__city.is-active').first()).toHaveAttribute('href', /^https:\/\/meteo\.gc\.ca\/fr\/location\/index\.html\?coords=/);
+  await expect(ribbon.locator('[data-weather-city="vaudreuil-soulanges"]')).toHaveAttribute(
+    'href',
+    /coords=45\.398%2C-74\.032$/,
+  );
   await page.evaluate(() => {
     window.RadarTranslate = { ...(window.RadarTranslate || {}), getMode: () => 'en' };
     window.dispatchEvent(new CustomEvent('radar:translate-mode', { detail: { mode: 'en' } }));
