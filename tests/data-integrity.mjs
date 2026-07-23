@@ -2,6 +2,10 @@
 
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+
+const require = createRequire(import.meta.url);
+const { resolveCurrentSlot } = require('../scripts/radio-schedule-lib.js');
 
 const root = new URL('../', import.meta.url);
 const readJson = (name) => JSON.parse(readFileSync(new URL(name, root), 'utf8'));
@@ -76,5 +80,11 @@ for (const radio of radios) {
   assert(schedules[radio.id], `grille manquante pour ${radio.id}`);
   assert(nowPlaying[radio.id], `métadonnées à l'antenne manquantes pour ${radio.id}`);
 }
+
+const chyzOverlap = resolveCurrentSlot([
+  { day: 4, start: '17:30', end: '19:00', title: 'Régulier' },
+  { day: 4, start: '18:50', end: '23:00', title: 'Spécial' },
+], new Date('2026-07-23T22:55:00Z'), 'America/Toronto');
+assert.equal(chyzOverlap?.title, 'Spécial', 'le créneau CHYZ commencé le plus récemment doit primer');
 
 console.log(`OK données (${articles.length} articles, ${activeSourceNames.size} sources, ${radios.length} radios)`);

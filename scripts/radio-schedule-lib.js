@@ -153,30 +153,29 @@ function resolveCurrentSlot(grid, date = new Date(), timeZone = DEFAULT_TZ) {
   if (!Array.isArray(grid) || !grid.length) return null;
   const { day, minutes } = zonedNow(date, timeZone);
   const nowAbs = day * 1440 + minutes;
+  let current = null;
+  let currentStartAbs = -Infinity;
 
-  const slots = grid
-    .map(normalizeSlot)
-    .filter(Boolean)
-    .sort(
-      (a, b) =>
-        a.day - b.day || timeToMinutes(a.start) - timeToMinutes(b.start),
-    );
-
-  for (const slot of slots) {
+  for (const raw of grid) {
+    const slot = normalizeSlot(raw);
+    if (!slot) continue;
     const start = timeToMinutes(slot.start);
     const end = timeToMinutes(slot.end);
     const startAbs = slot.day * 1440 + start;
     const endAbs = slot.day * 1440 + (end <= start ? end + 1440 : end);
-    // On teste l'instant et son équivalent « semaine suivante » pour couvrir
-    // une plage qui démarre samedi soir et finit dimanche matin.
-    if (
-      (nowAbs >= startAbs && nowAbs < endAbs) ||
-      (nowAbs + WEEK_MIN >= startAbs && nowAbs + WEEK_MIN < endAbs)
-    ) {
-      return slot;
+    const isLive = (nowAbs >= startAbs && nowAbs < endAbs)
+      || (nowAbs + WEEK_MIN >= startAbs && nowAbs + WEEK_MIN < endAbs);
+    if (!isLive) continue;
+
+    // Une diffusion spéciale qui commence plus tard remplace une émission
+    // régulière encore ouverte : priorité au créneau le plus récent.
+    const effectiveStart = startAbs > nowAbs ? startAbs - WEEK_MIN : startAbs;
+    if (effectiveStart > currentStartAbs) {
+      current = slot;
+      currentStartAbs = effectiveStart;
     }
   }
-  return null;
+  return current;
 }
 
 /**
