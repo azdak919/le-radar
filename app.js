@@ -1070,21 +1070,44 @@ function tunerDialInstitutionLabel(radio) {
   return adaptRadarInstitutionLabel(raw);
 }
 
+/**
+ * Suffixe « FM » / « AM » depuis frequency, si absent du nom
+ * (ex. name « CISM 89,3 » + frequency « 89,3 FM » → « CISM 89,3 FM »).
+ * Web / sans bande → chaîne vide.
+ */
+function stationOnAirBandLabel(radio = {}) {
+  const name = String(radio.name || '');
+  if (/\bFM\b/i.test(name) || /\bAM\b/i.test(name)) return '';
+  // 1690AM collé sans espace
+  if (/\dAM\b/i.test(name) || /\dFM\b/i.test(name)) return '';
+  const freq = String(radio.frequency || '').trim();
+  if (/\bFM\b/i.test(freq)) return ' FM';
+  if (/\bAM\b/i.test(freq)) return ' AM';
+  return '';
+}
+
+/** Nom d’antenne affiché : « CISM 89,3 FM », « CJLO 1690AM », « CHOQ.ca ». */
+function stationDisplayName(radio = {}) {
+  const name = String(radio.name || '').trim();
+  if (!name) return '';
+  return `${name}${stationOnAirBandLabel(radio)}`;
+}
+
 /** Ligne 1 du syntoniseur (vue compacte) : « poste · établissement ». */
 function tunerDialTitleLine(radio) {
   if (!radio) return tunerSubMeta || 'Radios étudiantes en direct';
   const inst = tunerDialInstitutionLabel(radio);
-  // Nom du poste (média) intact · institution localisable
-  return inst ? `${radio.name} · ${inst}` : radio.name;
+  const name = stationDisplayName(radio) || radio.name;
+  return inst ? `${name} · ${inst}` : name;
 }
 
 /**
- * Ligne 1 du syntoniseur (bureau) : « poste · institution ».
- * Ex. CISM 89,3 · Université de Montréal
+ * Ligne 1 du syntoniseur (bureau) : « poste FM · institution ».
+ * Ex. CISM 89,3 FM · Université de Montréal
  */
 function tunerDesktopTitleLine(radio) {
   if (!radio) return 'Syntoniser un poste';
-  const name = String(radio.name || '').trim() || 'Syntoniser un poste';
+  const name = stationDisplayName(radio) || String(radio.name || '').trim() || 'Syntoniser un poste';
   const inst = adaptRadarInstitutionLabel(tunerInstitutionLabel(radio.institution));
   return inst ? `${name} · ${inst}` : name;
 }
