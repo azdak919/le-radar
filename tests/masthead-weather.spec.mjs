@@ -22,9 +22,17 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const ribbon = page.locator('#masthead-weather');
   await expect(ribbon).toBeVisible();
-  await expect(ribbon.locator('.masthead-weather__city.is-active .masthead-weather__temp')).toHaveText('25°');
+  await expect(ribbon.locator('.masthead-weather__city.is-active .masthead-weather__temp').first()).not.toHaveText('—');
   await expect(ribbon.locator('.masthead-weather__city')).toHaveCount(20);
-  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(1);
+  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(4);
+  await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="campus"]')).toHaveCount(2);
+  await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="nation"]')).toHaveCount(2);
+
+  await page.setViewportSize({ width: 1200, height: 900 });
+  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(3);
+
+  await page.setViewportSize({ width: 1050, height: 900 });
+  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(2);
 
   await page.setViewportSize({ width: 1000, height: 900 });
   await expect(ribbon).toBeHidden();
