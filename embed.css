@@ -423,7 +423,8 @@ html[data-embed="tuner"] .tuner-nowair.hidden {
   grid-column: 2;
   display: flex !important;
   flex-direction: row;
-  align-items: center;
+  /* Top-align so « À l'antenne » sits on the first line (title), not mid-stack */
+  align-items: flex-start;
   gap: 10px;
   flex: unset;
   width: 100%;
@@ -451,7 +452,8 @@ html[data-embed="tuner"] .tuner-nowair.is-swapping {
 
 html[data-embed="tuner"] .tuner-nowair-label {
   flex-shrink: 0;
-  margin-top: 0;
+  /* Optical align with .tuner-nowair-title (13px / line-height 1.15) first line */
+  margin-top: 2px;
   font-size: 10px; /* même échelle que EN ONDES */
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -460,6 +462,7 @@ html[data-embed="tuner"] .tuner-nowair-label {
   color: var(--tuner-onair-idle);
   white-space: nowrap;
   writing-mode: horizontal-tb;
+  line-height: 1.15;
 }
 
 html[data-embed="tuner"] .tuner-nowair-body {
