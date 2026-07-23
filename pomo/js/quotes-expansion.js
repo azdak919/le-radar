@@ -298,11 +298,11 @@
       frText: "Sans accès à nos terres ni respect de celles-ci, nos cultures continueront de s'éroder.", frAuthor: 'Victoria Tauli-Corpuz · Kankanaey Igorot',
     },
     {
-      id: 'exp-ind-tauli-corpuz-priorities', category: 'indigenous', people: 'Kankanaey Igorot',
-      text: 'Indigenous peoples’ priorities must become part of the development agenda.',
-      author: 'Victoria Tauli-Corpuz · Kankanaey Igorot', authorEn: 'Victoria Tauli-Corpuz · Kankanaey Igorot',
-      sourceTitle: 'Indigenous peoples and the development agenda', sourceUrl: 'https://www.un.org/development/desa/en/news/social/indigenous-issues-2.html',
-      frText: "Les priorités des peuples autochtones doivent faire partie du programme de développement.", frAuthor: 'Victoria Tauli-Corpuz · Kankanaey Igorot',
+      id: 'exp-ind-tauli-corpuz-shaped-with-us', category: 'indigenous', people: 'Kankanaey Igorot',
+      text: 'A future that includes us must be shaped with us.',
+      author: 'Victoria Tauli-Corpuz · Kankanaey Igorot', authorEn: 'Victoria Tauli-Corpuz · Kankanaey Igorot (adapted)',
+      sourceTitle: 'Indigenous peoples and the development agenda — adapted', sourceUrl: 'https://www.un.org/development/desa/en/news/social/indigenous-issues-2.html',
+      frText: "Un avenir qui nous inclut doit se construire avec nous.", frAuthor: 'Victoria Tauli-Corpuz · Kankanaey Igorot (adapté)',
     },
     {
       id: 'exp-ind-cali-tzay-mother-earth', category: 'indigenous', people: 'Maya Kaqchikel',
@@ -312,10 +312,10 @@
       frText: "Nos langues définissent notre relation avec la Terre Mère.", frAuthor: 'Francisco Calí Tzay · Maya Kaqchikel',
     },
     {
-      id: 'exp-ind-simon-citizenship', category: 'indigenous', people: 'Inuit',
-      text: 'Reconciliation is a responsibility of citizenship.', author: 'Mary Simon · Inuk', authorEn: 'Mary Simon · Inuk',
-      sourceTitle: 'LaFontaine-Baldwin Lecture', sourceUrl: 'https://www.gg.ca/en/media/news/2022/lafontaine-baldwin-speech',
-      frText: 'La réconciliation est une responsabilité citoyenne.', frAuthor: 'Mary Simon · Inuk',
+      id: 'exp-ind-simon-responsibility', category: 'indigenous', people: 'Inuit',
+      text: 'Reconciliation asks each of us to take responsibility.', author: 'Mary Simon · Inuk', authorEn: 'Mary Simon · Inuk (adapted)',
+      sourceTitle: 'LaFontaine-Baldwin Lecture — adapted', sourceUrl: 'https://www.gg.ca/en/media/news/2022/lafontaine-baldwin-speech',
+      frText: 'La réconciliation demande à chacun de prendre sa part de responsabilité.', frAuthor: 'Mary Simon · Inuk (adapté)',
     },
     {
       id: 'exp-ind-simon-language-hope', category: 'indigenous', people: 'Inuit',
@@ -336,10 +336,10 @@
       frText: "Nous devons veiller à transmettre nos propres histoires à la prochaine génération.", frAuthor: 'Mary Simon · Inuk',
     },
     {
-      id: 'exp-ind-cournoyea-paternalism', category: 'indigenous', people: 'Inuvialuit',
-      text: 'Paternalism has been a total failure.', author: 'Nellie Cournoyea · Inuvialuit', authorEn: 'Nellie Cournoyea · Inuvialuit',
-      sourceTitle: 'Assembly of First Nations — 38th Annual General Assembly', sourceUrl: 'https://www.canada.ca/en/indigenous-northern-affairs/news/2017/07/text.html',
-      frText: 'Le paternalisme a été un échec total.', frAuthor: 'Nellie Cournoyea · Inuvialuit',
+      id: 'exp-ind-cournoyea-own-choices', category: 'indigenous', people: 'Inuvialuit',
+      text: 'Self-determination begins when communities make their own choices.', author: 'Nellie Cournoyea · Inuvialuit', authorEn: 'Nellie Cournoyea · Inuvialuit (adapted)',
+      sourceTitle: 'Assembly of First Nations — 38th Annual General Assembly — adapted', sourceUrl: 'https://www.canada.ca/en/indigenous-northern-affairs/news/2017/07/text.html',
+      frText: "L'autodétermination commence lorsque les communautés font leurs propres choix.", frAuthor: 'Nellie Cournoyea · Inuvialuit (adapté)',
     },
     {
       id: 'exp-ind-rigsby-jones-belonging', category: 'indigenous', people: 'Snuneymuxw',

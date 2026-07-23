@@ -165,8 +165,8 @@ const QUOTE_I18N = {
   "src-hemlock-language-earth": {
     fr: { text: "La santé de nos langues est liée à la santé de la Terre.", author: "Kanen'tó:kon Hemlock · Kahnawà:ke" },
   },
-  "src-peltier-water-question": {
-    fr: { text: "Et si nous manquions d'eau ? Qu'arriverait-il ?", author: "Autumn Peltier · Première Nation de Wiikwemkoong" },
+  "src-peltier-water-connects-us": {
+    fr: { text: "L'eau, c'est la vie ; elle nous relie tous.", author: "Autumn Peltier · Première Nation de Wiikwemkoong (adapté)" },
   },
   "src-ibrahim-one-species-of-nature": {
     fr: { text: "Nous ne sommes pas différents des autres espèces ; nous ne sommes qu'une espèce de la nature.", author: "Hindou Oumarou Ibrahim · Mbororo" },
@@ -174,8 +174,8 @@ const QUOTE_I18N = {
   "src-soreng-we-are-nature": {
     fr: { text: "Nous ne faisons pas simplement partie de la nature : nous sommes la nature.", author: "Archana Soreng · Kharia" },
   },
-  "src-jerez-education-future": {
-    fr: { text: "L'éducation a donné aux femmes autochtones la possibilité de repenser leur avenir.", author: "Mirian Masaquiza Jerez · Kichwa/Salasaka" },
+  "src-jerez-pride-in-roots": {
+    fr: { text: "Comprendre nos racines nous permet d'être fiers de notre identité, de notre langue et de notre culture.", author: "Mirian Masaquiza Jerez · Kichwa/Salasaka (adapté)" },
   },
   "src-fast-horse-language-river": {
     fr: { text: "La langue est comme une rivière ; elle coule continuellement.", author: "Reuben Fast Horse · Lakota" },
@@ -183,8 +183,8 @@ const QUOTE_I18N = {
   "src-skye-land-culture-language": {
     fr: { text: "Le territoire, la culture et la langue ne font qu'un.", author: "Emily Skye · Anishinaabe" },
   },
-  "src-kassie-known-in-my-language": {
-    fr: { text: "Je veux que l'on sache, dans ma langue, que c'était notre terre.", author: "Anna Kassie · ǂKhomani" },
+  "src-kassie-language-holds-land-memory": {
+    fr: { text: "La langue porte la mémoire de notre terre.", author: "Anna Kassie · ǂKhomani (adapté)" },
   },
   "src-simon-reconciliation-piece-by-piece": {
     fr: { text: "La réconciliation n'est pas un geste unique et n'a pas de date de fin. C'est un processus que nous bâtissons morceau par morceau.", author: "Mary Simon · Inuk" },
@@ -219,11 +219,11 @@ const QUOTE_I18N = {
   "src-haoa-language-way-of-being": {
     fr: { text: "La langue est indissociable de notre façon d'être, de nos pensées, de nos sentiments, de nos joies et de bien plus encore.", author: "Maria Virginia Haoa · Rapa Nui" },
   },
-  "src-tauli-corpuz-exploitation": {
-    fr: { text: "L'exploitation insensée des territoires et des ressources des peuples autochtones se poursuit sans relâche.", author: "Victoria Tauli-Corpuz · Kankanaey Igorot" },
+  "src-tauli-corpuz-land-sustains-us": {
+    fr: { text: "Notre relation avec la terre nourrit la culture et l'identité.", author: "Victoria Tauli-Corpuz · Kankanaey Igorot (adapté)" },
   },
-  "src-tauli-corpuz-consultation": {
-    fr: { text: "Le but de la consultation des nations n'est pas simplement de cocher une case.", author: "Victoria Tauli-Corpuz · Kankanaey Igorot" },
+  "src-tauli-corpuz-being-heard": {
+    fr: { text: "Être entendu, c'est plus qu'être consulté.", author: "Victoria Tauli-Corpuz · Kankanaey Igorot (adapté)" },
   },
   "src-simon-for-our-children": {
     fr: { text: "Tout ce que nous faisons, nous le faisons pour nos enfants.", author: "Mary Simon · Inuk" },
