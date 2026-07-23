@@ -97,5 +97,7 @@ test('Pomo applique la phase traduite dès la fin de la traduction asynchrone', 
   await page.locator('#lang-dropdown [data-mode="iu"]').click();
 
   await expect(page.locator('#pomo-label')).toHaveText('ᑐᕌᒐᖅ');
-  await expect(page).toHaveTitle(/ᑐᕌᒐᖅ/);
+  // Le titre reste stable pour les favoris et les onglets, quelle que soit
+  // la langue appliquée au minuteur.
+  await expect(page).toHaveTitle('Pomo');
 });
