@@ -184,6 +184,19 @@ node scripts/fetch-news.js --update
 node scripts/enrich-lead-excerpts.js --update
 ```
 
+### Garde-fou qualité
+
+Après `npm install` et `npx playwright install chromium`, exécuter :
+
+```bash
+npm test
+```
+
+Le workflow `quality.yml` applique la même suite aux changements de code. Les
+commits limités à des timestamps de fraîcheur sont regroupés : un heartbeat est
+conservé au plus toutes les six heures, sans retarder un changement réel de
+contenu ou de contrôle qualité.
+
 ---
 
 ## Horaires « à l'antenne »

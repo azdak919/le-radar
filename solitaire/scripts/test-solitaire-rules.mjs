@@ -151,9 +151,9 @@ function fullStateWith(partial) {
   assert(JSON.stringify(st) === snap, 'original untouched');
 }
 
-// Source scan solitaire.html
+// Source scan index.html
 {
-  const html = readFileSync(join(root, 'solitaire.html'), 'utf8');
+  const html = readFileSync(join(root, 'index.html'), 'utf8');
   assert(!html.includes('trySafeAutoFoundations'), 'no trySafeAutoFoundations');
   assert(!html.includes('isSafeAutoFoundation'), 'no isSafeAutoFoundation');
   const stockFn = html.slice(html.indexOf('function clickStock'), html.indexOf('function onCardClick'));
@@ -170,7 +170,7 @@ function fullStateWith(partial) {
 // SW
 {
   const sw = readFileSync(join(root, 'sw.js'), 'utf8');
-  assert(/ataraxia-shell-v\d+/.test(sw), 'versioned shell cache');
+  assert(/solitaire-shell-v\d+/.test(sw), 'versioned shell cache');
   assert(sw.includes('caches.delete'), 'old caches deleted on activate');
 }
 
