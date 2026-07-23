@@ -1327,12 +1327,12 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   gap: 2px;
 }
 
-/* Fondu CHOQ (alternance piste ↔ émission) — panneau entier, court */
+/* Fondu antenne : changement de poste ou bascule CHOQ */
 .tuner-nowair {
-  transition: opacity 0.22s ease;
+  transition: opacity 0.3s ease;
 }
 .tuner-nowair.is-swapping {
-  opacity: 0.22;
+  opacity: 0;
 }
 @media (prefers-reduced-motion: reduce) {
   .tuner-nowair { transition: none; }
