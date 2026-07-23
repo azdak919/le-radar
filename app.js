@@ -1196,14 +1196,37 @@ function updateNowAirSubAirText(text, crossfade = false) {
   }, NOW_AIR_CROSSFADE_MS);
 }
 
+/**
+ * Texte du panneau antenne : ellipsis + title (tooltip), sans marquee.
+ * Le défilement horizontal provoquait un flou désagréable à l’écran.
+ */
+function applyNowAirPanelText(el, text) {
+  if (!el) return;
+  const value = String(text ?? '').trim();
+  el.classList.remove('is-marquee');
+  el.style.removeProperty('--marquee-shift');
+  el.style.removeProperty('--marquee-duration');
+  marqueeTextByEl.delete(el);
+  if (!value) {
+    el.replaceChildren();
+    el.removeAttribute('title');
+    return;
+  }
+  el.textContent = value;
+  el.setAttribute('title', value);
+}
+
 function updateNowAirPanel(title, sub, crossfade = false) {
   const body = TUNER_NOWAIR?.querySelector('.tuner-nowair-body');
   const write = () => {
-    applyMarquee(TUNER_NOWAIR_TITLE, title);
+    applyNowAirPanelText(TUNER_NOWAIR_TITLE, title);
     if (TUNER_NOWAIR_SUB) {
       TUNER_NOWAIR_SUB.classList.toggle('hidden', !sub);
-      if (sub) applyMarquee(TUNER_NOWAIR_SUB, sub);
-      else TUNER_NOWAIR_SUB.replaceChildren();
+      if (sub) applyNowAirPanelText(TUNER_NOWAIR_SUB, sub);
+      else {
+        TUNER_NOWAIR_SUB.replaceChildren();
+        TUNER_NOWAIR_SUB.removeAttribute('title');
+      }
     }
   };
 
