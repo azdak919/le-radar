@@ -389,6 +389,11 @@
       user-select: none;
       -webkit-user-drag: none;
     }
+    .toolbar-btn--home {
+      padding: 0.42rem;
+      gap: 0;
+      flex-shrink: 0;
+    }
     .toolbar-btn--back {
       font-weight: 500;
       color: rgba(255, 255, 255, 0.9);
@@ -1152,18 +1157,15 @@
 <div class="page-layout">
 <!-- ══════════════════════ TOP TOOLBAR ══════════════════════ -->
 <nav class="game-toolbar" aria-label="Game controls">
-  <!-- Haut : Pomodoro, arrière-plan, liens Radar / café, langue -->
+  <!-- Haut : home, Pomodoro, Radar, café, langue -->
   <div class="game-toolbar-chrome" aria-label="Navigation and extras">
+    <button class="toolbar-btn toolbar-btn--home" id="home-reload-btn" type="button" aria-label="Reload page">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5z"/></svg>
+    </button>
     <a class="toolbar-btn toolbar-btn--back" href="../pomo/" id="back-pomodoro-link" aria-label="Back to Pomodoro">
       <img class="app-emoji" src="../assets/emoji/tomato.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
       <span id="back-pomodoro-label">Pomodoro</span>
     </a>
-    <button class="toolbar-btn" id="shuffle-bg-btn" aria-label="Shuffle background" title="Shuffle Background">
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/>
-      </svg>
-      <span id="shuffle-bg-label">Background</span>
-    </button>
     <a class="toolbar-btn" id="radar-btn"
        href="../"
        aria-label="Le Radar — radios étudiantes du Québec">
@@ -1225,6 +1227,12 @@
           <path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/>
         </svg>
         <span id="hint-label">Hint</span>
+      </button>
+      <button class="toolbar-btn" id="shuffle-bg-btn" aria-label="Shuffle background" title="Shuffle Background">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/>
+        </svg>
+        <span id="shuffle-bg-label">Background</span>
       </button>
       <button class="toolbar-btn" id="hi-score-btn" type="button" aria-label="High scores" title="HI-SCORES">
         <span aria-hidden="true">★</span>
@@ -3013,6 +3021,7 @@ if (_restartDealBtn) _restartDealBtn.addEventListener('click', restartDeal);
 document.getElementById('undo-btn').addEventListener('click', undoMove);
 document.getElementById('hint-btn').addEventListener('click', showHint);
 document.getElementById('shuffle-bg-btn').addEventListener('click', nextBackground);
+document.getElementById('home-reload-btn')?.addEventListener('click', () => location.reload());
 document.getElementById('autocomplete-btn').addEventListener('click', autoComplete);
 
 // Keyboard shortcuts

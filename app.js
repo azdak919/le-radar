@@ -4100,11 +4100,18 @@ function bindNewsSearch() {
     clearNewsSearch({ keepOpen: true });
   });
 
-  // Clic extérieur : ferme le panneau ; si recherche active, on l'efface aussi
-  // (équivalent « quitter la recherche » sans recharger).
+  // Clic extérieur : ferme le panneau loupe.
+  // Important : un clic sur un résultat (dans #news-list) ne doit PAS effacer la
+  // recherche au pointerdown — sinon le nœud <a.article> est détruit avant le click
+  // et l'utilisateur n'atteint jamais l'article source.
   document.addEventListener('pointerdown', (e) => {
     if (!newsSearchOpen) return;
     if (NEWS_SEARCH?.contains(e.target)) return;
+    // Résultat du fil : laisser le lien s'ouvrir ; on referme seulement le panneau.
+    if (NEWS_LIST?.contains(e.target)) {
+      setNewsSearchOpen(false);
+      return;
+    }
     const hasQuery = !!(newsSearchQuery || String(NEWS_SEARCH_INPUT?.value || '').trim());
     if (hasQuery) clearNewsSearch({ keepOpen: false });
     else setNewsSearchOpen(false);
