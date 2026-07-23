@@ -181,6 +181,7 @@ a { color: inherit; }
   color: var(--ink-soft);
   white-space: nowrap;
 }
+.masthead-weather.is-too-narrow { display: none !important; }
 .masthead-weather__board {
   position: relative;
   display: grid;

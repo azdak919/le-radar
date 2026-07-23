@@ -910,6 +910,8 @@ let mastheadWeatherPrimaryIndex = 0;
 let mastheadWeatherCompactSecondaryIndex = 0;
 let mastheadWeatherNationSlot = 1;
 let mastheadWeatherLastBoardCount = 0;
+let mastheadWeatherFitCount = null;
+let mastheadWeatherTooNarrow = false;
 let mastheadWeatherResizeFrame = 0;
 
 function weatherLocationSlug(city) {
@@ -966,12 +968,13 @@ function buildMastheadWeatherBoard() {
 
 function weatherBoardCount() {
   const width = MASTHEAD_WEATHER?.querySelector('.masthead-weather__board')?.clientWidth || 0;
-  if (width >= 600) return 4;
-  if (width >= 500) return 3;
+  let count = 1;
+  if (width >= 600) count = 4;
+  else if (width >= 500) count = 3;
   // Sur téléphone, la première carte reste exclusivement Montréal/Québec.
   // La seconde disparaît avant que cette carte principale doive défiler.
-  if (width >= 280) return 2;
-  return 1;
+  else if (width >= 280) count = 2;
+  return mastheadWeatherFitCount === null ? count : Math.min(count, mastheadWeatherFitCount);
 }
 
 function nextWeatherCity(group, usedIds) {
@@ -1018,6 +1021,11 @@ function weatherSecondaryGroup(slot, count) {
 
 function showMastheadWeatherBoard() {
   if (!MASTHEAD_WEATHER) return;
+  if (mastheadWeatherTooNarrow) {
+    MASTHEAD_WEATHER.classList.add('is-too-narrow');
+    return;
+  }
+  MASTHEAD_WEATHER.classList.remove('is-too-narrow');
   const cities = [...MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city')];
   if (!cities.length) return;
   const count = Math.min(weatherBoardCount(), cities.length);
@@ -1055,6 +1063,22 @@ function showMastheadWeatherBoard() {
     city?.setAttribute('aria-hidden', 'false');
   });
   refreshWeatherNameScroll();
+  const primary = MASTHEAD_WEATHER.querySelector('.masthead-weather__city.is-active[data-weather-city="montreal"], .masthead-weather__city.is-active[data-weather-city="quebec"]');
+  const primaryViewport = primary?.querySelector('.masthead-weather__name');
+  if (!primary || !primaryViewport || primary.clientWidth < 1 || primaryViewport.clientWidth < 1) return;
+  const primaryOverflows = primaryViewport.scrollWidth > primaryViewport.clientWidth + 2;
+  if (!primaryOverflows) return;
+  if (count > 1) {
+    // Retirer une carte secondaire et réévaluer la carte prioritaire à sa taille réelle.
+    mastheadWeatherFitCount = count - 1;
+    mastheadWeatherLastBoardCount = 0;
+    mastheadWeatherSlots = [];
+    showMastheadWeatherBoard();
+    return;
+  }
+  // Même seule, la carte ne peut pas afficher ville, icône et température proprement.
+  mastheadWeatherTooNarrow = true;
+  MASTHEAD_WEATHER.classList.add('is-too-narrow');
 }
 
 function refreshWeatherNameScroll() {
@@ -1100,6 +1124,9 @@ function rotateOneMastheadWeatherCard() {
 function scheduleMastheadWeatherLayout() {
   window.cancelAnimationFrame(mastheadWeatherResizeFrame);
   mastheadWeatherResizeFrame = window.requestAnimationFrame(() => {
+    mastheadWeatherFitCount = null;
+    mastheadWeatherTooNarrow = false;
+    MASTHEAD_WEATHER?.classList.remove('is-too-narrow');
     mastheadWeatherResizeFrame = window.requestAnimationFrame(showMastheadWeatherBoard);
   });
 }
