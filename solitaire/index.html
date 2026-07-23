@@ -15,10 +15,19 @@
   <meta name="apple-mobile-web-app-title" content="Solitaire">
   <meta name="application-name" content="Solitaire">
   <link rel="manifest" href="site.webmanifest">
-  <meta name="theme-color" content="#8b6f4e" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#1a1816" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#8b6f4e" id="meta-theme-color">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <script>
+  /* Appliquer le thème avant paint (même clé que Le Radar : req-theme) */
+  (function () {
+    try {
+      var saved = localStorage.getItem('req-theme');
+      var dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    } catch (e) {}
+  })();
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -94,10 +103,38 @@
       --credits-bar-offset: 0px;
     }
 
+    /* Dark — bouton (data-theme) ou OS si non forcé clair */
+    html[data-theme="dark"] {
+      --overlay: rgba(26, 24, 22, 0.45);
+      --bg-primary:     #1a1816;
+      --bg-glass:       rgba(40, 36, 32, 0.65);
+      --bg-glass-hover: rgba(50, 45, 40, 0.80);
+      --border-glass:   rgba(100, 90, 78, 0.28);
+      --text-primary:   #e8e0d8;
+      --text-secondary: #a89e94;
+      --text-muted:     #6b6259;
+      --accent:         #c9a87c;
+      --accent-glow:    rgba(201, 168, 124, 0.18);
+      --shadow-soft:    rgba(0, 0, 0, 0.18);
+      --shadow-medium:  rgba(0, 0, 0, 0.35);
+      --card-face:         #f8f8f8;
+      --card-back:         #3a5a8a;
+      --card-back-2:       #2e4a7a;
+      --card-red:          #e53935;
+      --card-black:        #212121;
+      --card-border:       rgba(80, 80, 80, 0.55);
+      --card-shadow:       rgba(0, 0, 0, 0.35);
+      --slot-bg:           rgba(201, 168, 124, 0.16);
+      --slot-border:       rgba(201, 168, 124, 0.50);
+      --selected-outline:  #c9a87c;
+      --selected-glow:     rgba(201, 168, 124, 0.30);
+      --settings-bg:       rgba(30, 27, 24, 0.97);
+      --settings-bg-solid: #1e1b18;
+      --settings-border:   rgba(100, 88, 72, 0.55);
+    }
     @media (prefers-color-scheme: dark) {
-      :root {
+      html:not([data-theme="light"]) {
         --overlay: rgba(26, 24, 22, 0.45);
-
         --bg-primary:     #1a1816;
         --bg-glass:       rgba(40, 36, 32, 0.65);
         --bg-glass-hover: rgba(50, 45, 40, 0.80);
@@ -109,7 +146,6 @@
         --accent-glow:    rgba(201, 168, 124, 0.18);
         --shadow-soft:    rgba(0, 0, 0, 0.18);
         --shadow-medium:  rgba(0, 0, 0, 0.35);
-
         --card-face:         #f8f8f8;
         --card-back:         #3a5a8a;
         --card-back-2:       #2e4a7a;
@@ -398,6 +434,16 @@
       fill: currentColor;
       opacity: 0.88;
       flex-shrink: 0;
+    }
+    .theme-toggle .ico-sun {
+      fill: none;
+      stroke: currentColor;
+    }
+    .theme-toggle .ico-moon {
+      fill: currentColor;
+    }
+    .theme-toggle .hidden {
+      display: none;
     }
     /* Twemoji — même set que masthead Le Radar / toolbar Pomodoro */
     .app-emoji {
@@ -694,8 +740,9 @@
       -webkit-backdrop-filter: blur(14px) saturate(1.2);
       animation: overlayFadeIn 0.5s ease;
     }
+    html[data-theme="dark"] #win-overlay { background: rgba(26, 24, 22, 0.88); }
     @media (prefers-color-scheme: dark) {
-      #win-overlay { background: rgba(26, 24, 22, 0.88); }
+      html:not([data-theme="light"]) #win-overlay { background: rgba(26, 24, 22, 0.88); }
     }
     #win-overlay.hidden { display: none; }
 
@@ -1279,6 +1326,10 @@
       </a>
     </div>
     <div class="game-toolbar-divider" aria-hidden="true"></div>
+    <button class="toolbar-btn theme-toggle" id="theme-toggle" type="button" aria-label="Mode clair / sombre" title="Mode clair / sombre">
+      <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="ico-moon hidden" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
     <div class="lang-selector translate-control radar-translate-control--app notranslate" id="translate-control" translate="no">
       <button class="lang-btn toolbar-btn translate-toggle" id="lang-btn" aria-label="Change language" aria-haspopup="listbox" aria-expanded="false" aria-controls="lang-dropdown" type="button">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
@@ -3172,7 +3223,38 @@ document.getElementById('undo-btn').addEventListener('click', undoMove);
 document.getElementById('hint-btn').addEventListener('click', showHint);
 document.getElementById('shuffle-bg-btn').addEventListener('click', nextBackground);
 document.getElementById('home-reload-btn')?.addEventListener('click', () => location.reload());
+initThemeToggle();
 document.getElementById('autocomplete-btn').addEventListener('click', autoComplete);
+
+/** Clair/sombre — même clé que Le Radar (`req-theme`). */
+function initThemeToggle() {
+  const btn = document.getElementById('theme-toggle');
+  const apply = (theme) => {
+    const isDark = theme === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    btn?.querySelector('.ico-sun')?.classList.toggle('hidden', !isDark);
+    btn?.querySelector('.ico-moon')?.classList.toggle('hidden', isDark);
+    if (btn) {
+      const label = isDark ? 'Passer en mode clair' : 'Passer en mode sombre';
+      btn.setAttribute('aria-label', label);
+      btn.setAttribute('title', label);
+    }
+    const meta = document.getElementById('meta-theme-color');
+    if (meta) meta.setAttribute('content', isDark ? '#1a1816' : '#8b6f4e');
+  };
+  let theme = 'light';
+  try {
+    const saved = localStorage.getItem('req-theme');
+    const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
+    theme = saved || (prefersDark ? 'dark' : 'light');
+  } catch { /* */ }
+  apply(theme);
+  btn?.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('req-theme', next); } catch { /* */ }
+    apply(next);
+  });
+}
 
 // Keyboard shortcuts
 document.addEventListener('keydown', e => {
@@ -5017,11 +5099,15 @@ function updateWinStats() {
 }
 
 /* ══════════════════════════════════════════════════════════
-   HI-SCORES — arcade / NES style (3 initials), local only
+   HI-SCORES — low-tech, shared when possible
+   - Always localStorage (any 3 initials, no login)
+   - Merge with ./hiscores.json (shared seed / community board)
+   - Optional POST to worker if window.LE_RADAR_HISCORES_API set
    Rank: faster time first, then fewer moves.
    ══════════════════════════════════════════════════════════ */
 const HI_SCORE_KEY = 'le_radar_sol_hiscores_v1';
-const HI_SCORE_MAX = 5;
+const HI_SCORE_REMOTE = './hiscores.json';
+const HI_SCORE_MAX = 10;
 const HI_INITIALS_LEN = 3; // classic arcade / NES high-score initials
 const HI_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const HI_DEFAULT_NAME = 'AAA';
@@ -5029,32 +5115,74 @@ const HI_DEFAULT_NAME = 'AAA';
 let hiScores = [];
 let hiLetters = [0, 0, 0]; // alphabet indices
 let hiHighlightName = null;
+let hiScoresRemoteLoaded = false;
 
-function loadHiScores() {
-  try {
-    const raw = JSON.parse(localStorage.getItem(HI_SCORE_KEY) || '[]');
-    if (!Array.isArray(raw)) { hiScores = []; return; }
-    hiScores = raw
-      .filter((e) => e && typeof e.name === 'string' && Number.isFinite(e.timeMs))
-      .map((e) => ({
-        name: String(e.name).toUpperCase().replace(/[^A-Z]/g, '').slice(0, HI_INITIALS_LEN).padEnd(HI_INITIALS_LEN, 'A'),
-        timeMs: Math.max(0, Math.round(e.timeMs)),
-        moves: Number.isFinite(e.moves) ? Math.max(0, Math.round(e.moves)) : 0,
-        at: e.at || 0,
-      }));
-    sortHiScores();
-  } catch {
-    hiScores = [];
-  }
+function normalizeHiEntry(e) {
+  if (!e || typeof e.name !== 'string' || !Number.isFinite(e.timeMs)) return null;
+  return {
+    name: String(e.name).toUpperCase().replace(/[^A-Z]/g, '').slice(0, HI_INITIALS_LEN).padEnd(HI_INITIALS_LEN, 'A'),
+    timeMs: Math.max(0, Math.round(e.timeMs)),
+    moves: Number.isFinite(e.moves) ? Math.max(0, Math.round(e.moves)) : 0,
+    at: e.at || 0,
+  };
 }
 
-function sortHiScores() {
-  hiScores.sort((a, b) => {
+function sortHiScoresList(list) {
+  list.sort((a, b) => {
     if (a.timeMs !== b.timeMs) return a.timeMs - b.timeMs;
     if (a.moves !== b.moves) return a.moves - b.moves;
     return (a.at || 0) - (b.at || 0);
   });
-  if (hiScores.length > HI_SCORE_MAX) hiScores.length = HI_SCORE_MAX;
+  if (list.length > HI_SCORE_MAX) list.length = HI_SCORE_MAX;
+  return list;
+}
+
+function mergeHiScores(lists) {
+  const key = (e) => `${e.name}|${e.timeMs}|${e.moves}`;
+  const seen = new Set();
+  const out = [];
+  for (const list of lists) {
+    for (const raw of list || []) {
+      const e = normalizeHiEntry(raw);
+      if (!e) continue;
+      const k = key(e);
+      if (seen.has(k)) continue;
+      seen.add(k);
+      out.push(e);
+    }
+  }
+  return sortHiScoresList(out);
+}
+
+function loadLocalHiScores() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(HI_SCORE_KEY) || '[]');
+    if (!Array.isArray(raw)) return [];
+    return raw.map(normalizeHiEntry).filter(Boolean);
+  } catch {
+    return [];
+  }
+}
+
+function loadHiScores() {
+  hiScores = mergeHiScores([loadLocalHiScores()]);
+  // Shared board (low-tech static JSON) — merge without blocking UI
+  if (!hiScoresRemoteLoaded) {
+    hiScoresRemoteLoaded = true;
+    fetch(HI_SCORE_REMOTE, { cache: 'no-store' })
+      .then((r) => (r.ok ? r.json() : []))
+      .then((remote) => {
+        if (!Array.isArray(remote)) return;
+        hiScores = mergeHiScores([hiScores, remote, loadLocalHiScores()]);
+        try { localStorage.setItem(HI_SCORE_KEY, JSON.stringify(hiScores)); } catch { /* */ }
+        renderHiScoreList(hiHighlightName);
+      })
+      .catch(() => { /* offline / missing file */ });
+  }
+}
+
+function sortHiScores() {
+  sortHiScoresList(hiScores);
 }
 
 function saveHiScores() {
@@ -5073,9 +5201,23 @@ function qualifiesHiScore(timeMs, moves) {
 }
 
 function insertHiScore(entry) {
-  hiScores.push(entry);
+  const e = normalizeHiEntry(entry) || entry;
+  // Always accept any 3-letter tag — no login, no ownership check
+  hiScores.push(e);
   sortHiScores();
   saveHiScores();
+  // Optional shared write (Cloudflare Worker / free API) — low-tech, best-effort
+  const api = (typeof window !== 'undefined' && window.LE_RADAR_HISCORES_API) || '';
+  if (api) {
+    try {
+      fetch(api, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(e),
+        keepalive: true,
+      }).catch(() => { /* local already saved */ });
+    } catch { /* */ }
+  }
 }
 
 function renderHiScoreList(highlightName) {

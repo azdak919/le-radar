@@ -70,6 +70,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('home-reload-btn')?.addEventListener('click', () => location.reload());
 
+  // Thème clair/sombre (même clé localStorage que Le Radar : req-theme)
+  initThemeToggle();
+
   // Quote buttons
   document.getElementById('btn-new').addEventListener('click', showRandomQuote);
   document.getElementById('btn-bg').addEventListener('click', nextBackground);
@@ -106,6 +109,36 @@ document.addEventListener('DOMContentLoaded', () => {
   // Le Radar embed — hauteur + ready (même contrat que Solitaire)
   initRadarEmbed();
 });
+
+/** Clair/sombre — partagé avec Le Radar via localStorage `req-theme`. */
+function initThemeToggle() {
+  const btn = document.getElementById('theme-toggle');
+  const apply = (theme) => {
+    const isDark = theme === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    btn?.querySelector('.ico-sun')?.classList.toggle('hidden', !isDark);
+    btn?.querySelector('.ico-moon')?.classList.toggle('hidden', isDark);
+    if (btn) {
+      const label = isDark ? 'Passer en mode clair' : 'Passer en mode sombre';
+      btn.setAttribute('aria-label', label);
+      btn.setAttribute('title', label);
+    }
+    const meta = document.getElementById('meta-theme-color');
+    if (meta) meta.setAttribute('content', isDark ? '#1a1816' : '#8b6f4e');
+  };
+  let theme = 'light';
+  try {
+    const saved = localStorage.getItem('req-theme');
+    const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
+    theme = saved || (prefersDark ? 'dark' : 'light');
+  } catch { /* */ }
+  apply(theme);
+  btn?.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('req-theme', next); } catch { /* */ }
+    apply(next);
+  });
+}
 
 function initRadarEmbed() {
   const iframe = document.getElementById('radar-embed');
