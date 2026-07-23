@@ -1079,15 +1079,25 @@ function tunerDialTitleLine(radio) {
 }
 
 /**
- * Ligne 1 du syntoniseur (bureau) : « poste · slogan ».
- * Ex. CISM 89,3 · La radio étudiante de l'Université de Montréal
+ * Ligne 1 du syntoniseur (bureau) : « poste · institution ».
+ * Ex. CISM 89,3 · Université de Montréal
  */
 function tunerDesktopTitleLine(radio) {
   if (!radio) return 'Syntoniser un poste';
   const name = String(radio.name || '').trim() || 'Syntoniser un poste';
+  const inst = adaptRadarInstitutionLabel(tunerInstitutionLabel(radio.institution));
+  return inst ? `${name} · ${inst}` : name;
+}
+
+/**
+ * Ligne 2 du syntoniseur (bureau) : slogan (sinon fréquence / site externe).
+ */
+function tunerDesktopSubLine(radio, { external = false } = {}) {
+  if (!radio) return '';
   const slogan = radioSlogan(radio);
-  if (!slogan || normLoose(slogan) === normLoose(name)) return name;
-  return `${name} · ${slogan}`;
+  if (slogan) return slogan;
+  if (external) return adaptRadarUiText('Site externe');
+  return String(radio.frequency || '').trim();
 }
 
 /** Mobile / tablette (< 1100 px) : titre du dial = poste · établissement. */
@@ -2324,12 +2334,9 @@ function selectStation(id, { autoplay = false, openExternal = false } = {}) {
     TUNER_SUB?.parentElement?.classList.toggle('is-empty', !metaLine);
     applyMarquee(TUNER_SUB, metaLine);
   } else {
-    // Bureau : ligne 1 = poste · slogan ; ligne 2 = fréquence · institution
+    // Bureau : ligne 1 = poste · institution ; ligne 2 = slogan
     setTunerNameText(tunerDesktopTitleLine(radio));
-    const siteExt = adaptRadarUiText('Site externe');
-    setTunerSubText(external
-      ? `${siteExt} · ${inst}`
-      : `${radio.frequency} · ${inst}`);
+    setTunerSubText(tunerDesktopSubLine(radio, { external }));
   }
 
   // Mettre à jour l’antenne tout de suite (avant play async / métadonnées)
@@ -3466,10 +3473,7 @@ function onRadarTranslateModeChange() {
       if (!tunerSubRotateShowAir) applyMarquee(TUNER_SUB, metaLine);
     } else {
       setTunerNameText(tunerDesktopTitleLine(radio));
-      const siteExt = adaptRadarUiText('Site externe');
-      setTunerSubText(external
-        ? `${siteExt} · ${inst}`
-        : `${radio.frequency} · ${inst}`);
+      setTunerSubText(tunerDesktopSubLine(radio, { external }));
     }
   }
 }
