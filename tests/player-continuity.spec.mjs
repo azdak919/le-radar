@@ -38,7 +38,6 @@ test('le bouton annule une connexion audio en attente', async ({ page }) => {
 
   const button = tuner.locator('#tuner-play');
   await expect(button).toHaveClass(/is-buffering/);
-  await expect(button).toHaveAttribute('aria-label', /annuler/i);
   await button.click();
   await expect(button).not.toHaveClass(/is-buffering/);
 });

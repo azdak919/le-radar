@@ -70,8 +70,8 @@
       --selected-outline:    #8b6f4e;
       --selected-glow:       rgba(139, 111, 78, 0.35);
 
-      /* Shared background overlay tint */
-      --overlay: rgba(245, 240, 235, 0.35);
+      /* Voile invariant : le choix clair/sombre ne modifie jamais la scène. */
+      --overlay: rgba(15, 20, 22, 0.22);
 
       /* Layout — card-w updated by JS */
       --card-w:    70px;
@@ -105,7 +105,7 @@
 
     /* Dark — bouton (data-theme) ou OS si non forcé clair */
     html[data-theme="dark"] {
-      --overlay: rgba(26, 24, 22, 0.45);
+      --overlay: rgba(15, 20, 22, 0.22);
       --bg-primary:     #1a1816;
       --bg-glass:       rgba(40, 36, 32, 0.65);
       --bg-glass-hover: rgba(50, 45, 40, 0.80);
@@ -134,7 +134,7 @@
     }
     @media (prefers-color-scheme: dark) {
       html:not([data-theme="light"]) {
-        --overlay: rgba(26, 24, 22, 0.45);
+        --overlay: rgba(15, 20, 22, 0.22);
         --bg-primary:     #1a1816;
         --bg-glass:       rgba(40, 36, 32, 0.65);
         --bg-glass-hover: rgba(50, 45, 40, 0.80);
@@ -425,6 +425,13 @@
     .lang-btn:hover {
       background: rgba(255, 255, 255, 0.1);
       color: rgba(255, 255, 255, 0.95);
+    }
+    @media (hover: none) {
+      .toolbar-btn:hover,
+      .lang-btn:hover:not([aria-expanded="true"]) {
+        background: transparent;
+        color: rgba(255, 255, 255, 0.72);
+      }
     }
     .toolbar-btn:active { transform: scale(0.96); }
     .toolbar-btn svg,
