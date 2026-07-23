@@ -2325,7 +2325,6 @@ function selectStation(id, { autoplay = false, openExternal = false } = {}) {
   const playable = getPlayableStream(radio);
   const external = isExternalListen(radio);
 
-  const inst = adaptRadarInstitutionLabel(tunerInstitutionLabel(radio.institution));
   if (isDialCompactLayout()) {
     // Ligne 1 = poste · établissement ; ligne 2 initialisée en méta (fréquence).
     setTunerNameText(tunerDialTitleLine(radio));
@@ -3464,7 +3463,6 @@ function onRadarTranslateModeChange() {
   if (currentStation) {
     const radio = currentStation;
     const external = isExternalListen(radio);
-    const inst = adaptRadarInstitutionLabel(tunerInstitutionLabel(radio.institution));
     if (isDialCompactLayout()) {
       setTunerNameText(tunerDialTitleLine(radio));
       const metaLine = dialCompactMetaLineForRadio(radio);
