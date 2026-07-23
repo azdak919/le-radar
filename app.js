@@ -1124,9 +1124,22 @@ function tunerDesktopSubLine(radio, { external = false } = {}) {
   return String(radio.frequency || '').trim();
 }
 
-/** Mobile / tablette (< 1100 px) : titre du dial = poste · établissement. */
+/**
+ * Mobile / tablette (< 1100 px) ou iframe embed Ataraxia :
+ * titre du dial = poste · établissement (compact 2 lignes + volume inline).
+ */
 function isDialCompactLayout() {
   return IS_TUNER_EMBED || !!TUNER_SUB_ROTATE_MQ?.matches;
+}
+
+/**
+ * Titre ligne 1 selon le contexte :
+ * embed → format bureau récent (« CISM 89,3 FM · UdeM ») ;
+ * compact mobile → poste · institution (abrégée au téléphone).
+ */
+function compactDialTitleLine(radio) {
+  if (IS_TUNER_EMBED) return tunerDesktopTitleLine(radio);
+  return tunerDialTitleLine(radio);
 }
 
 /**
@@ -1495,7 +1508,7 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false, kind = 'idle')
    * (Avant : antenne figée sans rotation — cassait l'alternance et le défilement.)
    */
   if (currentStation && isDialCompactLayout()) {
-    setTunerNameText(tunerDialTitleLine(currentStation), crossfade);
+    setTunerNameText(compactDialTitleLine(currentStation), crossfade);
     tunerSubMeta = dialCompactMetaLineForRadio(currentStation);
     tunerSubAirText = dialCompactAirLineForRadio(currentStation)
       || formatNowAirSubLine(title, sub, empty, kind);
@@ -1695,7 +1708,7 @@ function renderTunerNowAir() {
     }
     setTunerNameText(
       isDialCompactLayout()
-        ? tunerDialTitleLine(currentStation)
+        ? compactDialTitleLine(currentStation)
         : tunerDesktopTitleLine(currentStation),
     );
     syncChoqAirRotate(currentStation);
@@ -2350,8 +2363,8 @@ function selectStation(id, { autoplay = false, openExternal = false } = {}) {
   const external = isExternalListen(radio);
 
   if (isDialCompactLayout()) {
-    // Ligne 1 = poste · établissement ; ligne 2 initialisée en méta (fréquence).
-    setTunerNameText(tunerDialTitleLine(radio));
+    // Embed + compact : ligne 1 = « poste FM · acronyme » ; ligne 2 = Web / fréquence.
+    setTunerNameText(compactDialTitleLine(radio));
     const metaLine = dialCompactMetaLineForRadio(radio);
     tunerSubMeta = metaLine;
     TUNER_SUB?.parentElement?.classList.toggle('is-empty', !metaLine);
@@ -3488,7 +3501,7 @@ function onRadarTranslateModeChange() {
     const radio = currentStation;
     const external = isExternalListen(radio);
     if (isDialCompactLayout()) {
-      setTunerNameText(tunerDialTitleLine(radio));
+      setTunerNameText(compactDialTitleLine(radio));
       const metaLine = dialCompactMetaLineForRadio(radio);
       tunerSubMeta = metaLine;
       TUNER_SUB?.parentElement?.classList.toggle('is-empty', !metaLine);
