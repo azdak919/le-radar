@@ -313,6 +313,8 @@ let newsSearchQuery = '';
 let newsSearchOpen = false;
 let newsSearchDebounce = null;
 let currentStation = null; // radio object selected in tuner
+/** Another same-origin tab/page owns the real audio (Phase 1 multi-page sync). */
+let syncRemotePlaying = false;
 let audio = null;
 let suppressAudioError = false;
 // Amplification optionnelle via Web Audio : permet de dépasser 100 % pour les
@@ -474,7 +476,117 @@ async function init() {
   });
   startNowAirTick();
   restoreVolume();
+  initPlayerSync();
   registerServiceWorker();
+}
+
+/**
+ * Phase 1 — multi-page / multi-tab player sync (same origin).
+ * Leader owns <audio>; followers mirror station + play UI and yield on claim.
+ */
+function initPlayerSync() {
+  const Sync = window.RadarPlayerSync;
+  if (!Sync) return;
+
+  Sync.init({
+    onYield() {
+      // Another context is taking the stream — free the audio device here.
+      softStopLocalAudio({ clearRemoteFlag: false });
+      syncRemotePlaying = true;
+      updatePlayUI();
+    },
+    onRemoteState(state) {
+      if (!state || Sync.isApplyingRemote?.()) {
+        /* still apply — guard is set by Sync around this call */
+      }
+
+      // Volume (shared preference)
+      if (Number.isFinite(state.volume) && Math.abs(state.volume - currentGain) > 0.005) {
+        currentGain = state.volume;
+        if (TUNER_VOLUME) TUNER_VOLUME.value = String(currentGain);
+        applyGain();
+        updateVolumeSliderVisual?.();
+        updateVolumeAria?.();
+      }
+
+      // Station UI without starting local audio
+      if (state.stationId && state.stationId !== currentStation?.id) {
+        const exists = radios.some((r) => r.id === state.stationId);
+        if (exists) {
+          selectStation(state.stationId, {
+            autoplay: false,
+            openExternal: false,
+            fromSync: true,
+          });
+        }
+      }
+
+      const iAmLeader = Sync.isLeader(state);
+
+      if (state.playing && !iAmLeader) {
+        softStopLocalAudio({ clearRemoteFlag: false });
+        syncRemotePlaying = true;
+        userPaused = false;
+        updatePlayUI();
+        return;
+      }
+
+      if (!state.playing) {
+        const wasRemote = syncRemotePlaying;
+        syncRemotePlaying = false;
+        if (!iAmLeader && wasRemote) {
+          // Global pause from another tab — keep station, show ▶
+          updatePlayUI();
+        } else if (iAmLeader && audio && !audio.paused) {
+          // Unusual: we think we're leader but state says paused — trust local
+          updatePlayUI();
+        } else {
+          updatePlayUI();
+        }
+      } else if (state.playing && iAmLeader) {
+        syncRemotePlaying = false;
+        // If we just became leader via our own claim, play() is already running.
+        // If state was restored and we're leader of a dead tab id, tab ids never match
+        // after reload — so this branch is only for live leaders.
+        updatePlayUI();
+      }
+    },
+  });
+
+  // Hydrate from last session (other tab or previous page)
+  const boot = Sync.readState();
+  if (!boot) return;
+
+  if (Number.isFinite(boot.volume)) {
+    currentGain = boot.volume;
+    if (TUNER_VOLUME) TUNER_VOLUME.value = String(currentGain);
+    applyGain();
+  }
+
+  if (boot.stationId && radios.some((r) => r.id === boot.stationId)) {
+    selectStation(boot.stationId, {
+      autoplay: false,
+      openExternal: false,
+      fromSync: true,
+    });
+  }
+
+  if (boot.playing) {
+    // Do not autoplay (browser policy). Mirror "en lecture ailleurs" until user hits ▶.
+    syncRemotePlaying = true;
+    updatePlayUI();
+  }
+}
+
+/** Pause local media without publishing pause (used when yielding leadership). */
+function softStopLocalAudio({ clearRemoteFlag = true } = {}) {
+  mobilePlayback?.onPlayStop?.();
+  if (audio) {
+    suppressAudioError = true;
+    try { audio.pause(); } catch { /* */ }
+    suppressAudioError = false;
+  }
+  if (clearRemoteFlag) syncRemotePlaying = false;
 }
 
 function registerServiceWorker() {
@@ -1959,6 +2071,9 @@ function bindTuner() {
     syncBoostWiring();
     applyGain();
     localStorage.setItem('req-player-vol', currentGain);
+    try {
+      window.RadarPlayerSync?.publishVolume?.(currentGain);
+    } catch { /* */ }
   });
 
   initVolumeRangeBounds();
@@ -2351,7 +2466,7 @@ function setTunerSubText(text) {
   applyMarquee(TUNER_SUB, text);
 }
 
-function selectStation(id, { autoplay = false, openExternal = false } = {}) {
+function selectStation(id, { autoplay = false, openExternal = false, fromSync = false } = {}) {
   const radio = radios.find(r => r.id === id);
   if (!radio) return;
 
@@ -2408,6 +2523,21 @@ function selectStation(id, { autoplay = false, openExternal = false } = {}) {
   } else {
     updatePlayUI();
   }
+
+  // Keep shared station id in sync when the user picks a post (not remote apply).
+  if (!fromSync && !window.RadarPlayerSync?.isApplyingRemote?.()) {
+    try {
+      const s = window.RadarPlayerSync?.readState?.();
+      if (!s?.playing) {
+        window.RadarPlayerSync?.writeState?.({
+          stationId: radio.id,
+          playing: false,
+          volume: currentGain,
+          leaderId: window.RadarPlayerSync.getTabId(),
+        });
+      }
+    } catch { /* */ }
+  }
 }
 
 function togglePlay() {
@@ -2434,6 +2564,17 @@ function togglePlay() {
     }
     return;
   }
+  // Another tab owns audio: ▶/⏸ control the shared session.
+  if (syncRemotePlaying && !window.RadarPlayerSync?.isLeader?.()) {
+    if (isPlaybackActive()) {
+      // Pause globally (leader will yield / state says paused)
+      pauseByUser();
+    } else {
+      userPaused = false;
+      play(currentStation);
+    }
+    return;
+  }
   if (isPlaybackActive()) {
     pauseByUser();
   } else {
@@ -2446,6 +2587,12 @@ async function play(radio) {
   const url = getPlayableStream(radio);
   if (!url) return;
   userPaused = false;
+  syncRemotePlaying = false;
+
+  // Claim leadership first so other same-origin players mute immediately.
+  try {
+    window.RadarPlayerSync?.claimPlay?.(radio.id, currentGain);
+  } catch { /* */ }
 
   // Reprise Cast plutôt que double lecture locale + distante.
   if (window.RadarCast?.isChromecasting?.()) {
@@ -2472,6 +2619,9 @@ async function play(radio) {
     syncMediaSessionPlaybackState();
     applyGain();
     updatePlayUI();
+    try {
+      window.RadarPlayerSync?.claimPlay?.(radio.id, currentGain);
+    } catch { /* */ }
   } catch {
     showToast('Appuie de nouveau sur ▶ pour autoriser la lecture.');
   }
@@ -2506,6 +2656,8 @@ function isPlaybackActive() {
   if (window.RadarCast?.isChromecasting?.()) {
     return !!window.RadarCast.isRemotePlaying?.();
   }
+  // Follower tab: show as playing while another Le Radar context owns the stream.
+  if (syncRemotePlaying && !isPlaying()) return true;
   return isPlaying() || isCasting();
 }
 
@@ -2601,16 +2753,21 @@ function pauseForCast() {
 
 function pauseByUser() {
   userPaused = true;
+  syncRemotePlaying = false;
   // Cast : pause distante (ou fin de session si le LIVE ne gère pas pause).
   // Ne pas appeler endSession ici — le bouton Cast sert à arrêter la diffusion.
   if (window.RadarCast?.isChromecasting?.()) {
     window.RadarCast.pauseRemote?.();
   }
   mobilePlayback?.onUserPause();
-  if (!audio) { updatePlayUI(); return; }
-  suppressAudioError = true;
-  try { audio.pause(); } catch {}
-  suppressAudioError = false;
+  if (audio) {
+    suppressAudioError = true;
+    try { audio.pause(); } catch {}
+    suppressAudioError = false;
+  }
+  try {
+    window.RadarPlayerSync?.publishPause?.(currentStation?.id, currentGain);
+  } catch { /* */ }
   updatePlayUI();
 }
 
