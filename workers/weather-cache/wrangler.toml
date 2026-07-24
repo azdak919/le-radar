@@ -1,0 +1,7 @@
+name = "le-radar-weather"
+main = "src/index.js"
+compatibility_date = "2026-07-23"
+# le-radar.ca's DNS isn't on Cloudflare (still WHC), so Workers Custom Domains
+# aren't available — served from the account's workers.dev subdomain instead.
+workers_dev = true
+preview_urls = false

@@ -96,7 +96,11 @@
     latitude: cities.map(c => c.lat).join(','), longitude: cities.map(c => c.lon).join(','),
     current: 'temperature_2m,weather_code,is_day', temperature_unit: 'celsius', timezone: 'America/Toronto',
     });
-    return fetch(`https://api.open-meteo.com/v1/forecast?${params}`, { credentials: 'omit' })
+    // Cache + repli partagés (workers/weather-cache) plutôt qu'Open-Meteo en
+    // direct : à l'échelle, chaque visiteur épuisait le quota gratuit anonyme.
+    // le-radar.ca n'est pas sur Cloudflare (DNS chez WHC), d'où le sous-domaine
+    // workers.dev plutôt qu'un domaine personnalisé.
+    return fetch(`https://le-radar-weather.azdak.workers.dev/v1/forecast?${params}`, { credentials: 'omit' })
     .then(r => r.ok ? r.json() : Promise.reject(new Error('weather')))
     .then(render)
     .catch(() => {

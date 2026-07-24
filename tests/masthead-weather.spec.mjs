@@ -19,7 +19,7 @@ const weather = [
 }));
 
 test('météo campus : elle s’adapte à la largeur du masthead', async ({ page }) => {
-  await page.route('https://api.open-meteo.com/v1/forecast**', (route) => route.fulfill({
+  await page.route('https://le-radar-weather.azdak.workers.dev/v1/forecast**', (route) => route.fulfill({
     contentType: 'application/json',
     headers: { 'access-control-allow-origin': '*' },
     body: JSON.stringify(weather),
@@ -101,6 +101,18 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
     return !city.classList.contains('is-overflowing') && name.scrollWidth <= name.clientWidth + 2;
   }))).toBe(true);
 
+  // Téléphone (≤599.98px) : le masthead réserve toute la place à la date
+  // longue ; la météo se déplace sous le syntoniseur plutôt que de disparaître.
   await page.setViewportSize({ width: 320, height: 900 });
-  await expect(ribbon).toBeHidden();
+  await page.waitForTimeout(100);
+  await expect(ribbon).toBeVisible();
+  await expect(ribbon).toHaveClass(/masthead-weather--docked/);
+  const dock = page.locator('#masthead-weather-dock');
+  await expect(dock.locator('#masthead-weather')).toHaveCount(1);
+  await expect(ribbon.locator('.masthead-weather__city.is-active')).not.toHaveCount(0);
+
+  await page.setViewportSize({ width: 900, height: 900 });
+  await page.waitForTimeout(100);
+  await expect(ribbon).not.toHaveClass(/masthead-weather--docked/);
+  await expect(page.locator('.masthead-top #masthead-weather')).toHaveCount(1);
 });

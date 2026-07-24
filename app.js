@@ -3,6 +3,10 @@
 
 // Proxy CORS optionnel pour les flux HTTP→HTTPS (déployer proxy/cloudflare-worker.js).
 const PROXY_BASE = '';
+// Cache + repli météo partagés (workers/weather-cache). le-radar.ca n'est pas
+// sur Cloudflare (DNS chez WHC) : pas de domaine personnalisé possible, donc
+// sous-domaine workers.dev de compte.
+const WEATHER_API_BASE = 'https://le-radar-weather.azdak.workers.dev';
 
 function safeHttpUrl(url, { allowHttp = false } = {}) {
   if (!url || typeof url !== 'string') return null;
@@ -302,6 +306,7 @@ const NEWS_SEARCH_CLEAR  = document.getElementById('news-search-clear');
 const NEWS_SEARCH_HINT   = document.getElementById('news-search-hint');
 const TODAY_DATE     = document.getElementById('today-date');
 const MASTHEAD_WEATHER = document.getElementById('masthead-weather');
+const MASTHEAD_WEATHER_DOCK = document.getElementById('masthead-weather-dock');
 const TOAST_EL       = document.getElementById('toast');
 const THEME_TOGGLE   = document.getElementById('theme-toggle');
 const EXTERNAL_MODAL = document.getElementById('external-listen');
@@ -434,11 +439,10 @@ let marqueeResizeScheduled = false;
 let filterMarqueeResyncTimer = null;
 const FILTER_MARQUEE_RESYNC_MS = 480;
 
-/** Rangées visibles avant « Plus de sources » — desktop 3 ; tablette/mobile 2. */
-// Ordinateur + tablette paysage : 1 rangée (le reste via « Plus de sources »).
-// Tablette / téléphone en portrait : 2 rangées pour ne pas trop cacher.
+/** Rangées visibles avant « Plus de sources » — 1 partout, + un aperçu du
+ *  titre de la rangée suivante (--filters-peek) ; jamais un bout de 3e rangée. */
 const FILTERS_COLLAPSED_ROWS_DESKTOP = 1;
-const FILTERS_COLLAPSED_ROWS_COMPACT = 2;
+const FILTERS_COLLAPSED_ROWS_COMPACT = 1;
 const FILTERS_COMPACT_MQ = window.matchMedia(
   '(max-width: 1099.98px) and (orientation: portrait)',
 );
@@ -924,6 +928,36 @@ let mastheadWeatherLastBoardCount = 0;
 let mastheadWeatherFitCount = null;
 let mastheadWeatherTooNarrow = false;
 let mastheadWeatherResizeFrame = 0;
+let mastheadWeatherDocked = false;
+// Emplacement d'origine (masthead) : mémorisé pour pouvoir ramener le
+// bandeau à sa place quand la largeur redevient suffisante.
+const mastheadWeatherHomeParent = MASTHEAD_WEATHER?.parentNode || null;
+const mastheadWeatherHomeNextSibling = MASTHEAD_WEATHER?.nextSibling || null;
+// Sous ce seuil, style.css retire carrément la zone météo du masthead (la
+// date longue a besoin de toute la place) : inutile d'attendre la mesure
+// dynamique, on docke directement sous le syntoniseur.
+const MASTHEAD_WEATHER_PHONE_MQ = window.matchMedia('(max-width: 599.98px)');
+
+/**
+ * Sur mobile, quand le masthead n'a plus de place pour la météo, on la
+ * déplace sous la barre du syntoniseur (même carte que sur bureau, pas le
+ * style Pomo) plutôt que de la faire disparaître.
+ */
+function setMastheadWeatherDocked(docked) {
+  if (!MASTHEAD_WEATHER || !MASTHEAD_WEATHER_DOCK || docked === mastheadWeatherDocked) return;
+  mastheadWeatherDocked = docked;
+  MASTHEAD_WEATHER.classList.toggle('masthead-weather--docked', docked);
+  if (docked) {
+    MASTHEAD_WEATHER_DOCK.append(MASTHEAD_WEATHER);
+  } else if (mastheadWeatherHomeParent) {
+    mastheadWeatherHomeParent.insertBefore(MASTHEAD_WEATHER, mastheadWeatherHomeNextSibling);
+  }
+  // Le contexte a changé de largeur : tout réévaluer depuis zéro.
+  mastheadWeatherFitCount = null;
+  mastheadWeatherTooNarrow = false;
+  mastheadWeatherLastBoardCount = 0;
+  MASTHEAD_WEATHER.classList.remove('is-too-narrow');
+}
 
 function weatherLocationSlug(city) {
   return String(city.weatherSlug || city.name || "")
@@ -1032,6 +1066,17 @@ function weatherSecondaryGroup(slot, count) {
 
 function showMastheadWeatherBoard() {
   if (!MASTHEAD_WEATHER) return;
+  if (MASTHEAD_WEATHER_PHONE_MQ.matches) {
+    if (!mastheadWeatherDocked) {
+      setMastheadWeatherDocked(true);
+      showMastheadWeatherBoard();
+      return;
+    }
+  } else if (mastheadWeatherDocked) {
+    setMastheadWeatherDocked(false);
+    showMastheadWeatherBoard();
+    return;
+  }
   if (mastheadWeatherTooNarrow) {
     MASTHEAD_WEATHER.classList.add('is-too-narrow');
     return;
@@ -1094,7 +1139,16 @@ function showMastheadWeatherBoard() {
     showMastheadWeatherBoard();
     return;
   }
-  // Même seule, la carte ne peut pas afficher ville, icône et température proprement.
+  // Même seule, la carte ne peut pas afficher ville, icône et température
+  // proprement dans le masthead : on la déplace sous le syntoniseur plutôt
+  // que de la masquer.
+  if (!mastheadWeatherDocked) {
+    setMastheadWeatherDocked(true);
+    showMastheadWeatherBoard();
+    return;
+  }
+  // Même docké (pleine largeur de page), une carte ne rentre pas : cas
+  // extrême, on masque.
   mastheadWeatherTooNarrow = true;
   MASTHEAD_WEATHER.classList.add('is-too-narrow');
 }
@@ -1145,6 +1199,8 @@ function scheduleMastheadWeatherLayout() {
     mastheadWeatherFitCount = null;
     mastheadWeatherTooNarrow = false;
     MASTHEAD_WEATHER?.classList.remove('is-too-narrow');
+    // showMastheadWeatherBoard réévalue lui-même le dockage (masthead vs
+    // sous le syntoniseur) selon la largeur actuelle.
     mastheadWeatherResizeFrame = window.requestAnimationFrame(showMastheadWeatherBoard);
   });
 }
@@ -1184,9 +1240,10 @@ function readWeatherCache() {
 }
 
 async function initMastheadWeather() {
-  // Le CSS compacte le bandeau jusqu'à 360 px ; ne pas empêcher le chargement
-  // sur téléphone, où une seule ville prioritaire reste affichée.
-  if (!MASTHEAD_WEATHER || window.innerWidth < 360) return;
+  // Sous le seuil du masthead, la météo se déplace sous le syntoniseur
+  // (setMastheadWeatherDocked) plutôt que d'être masquée : la charger
+  // reste utile à toutes les largeurs.
+  if (!MASTHEAD_WEATHER) return;
   const cached = readWeatherCache();
   if (cached) renderMastheadWeather(cached);
   try {
@@ -1199,7 +1256,10 @@ async function initMastheadWeather() {
     });
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 4500);
-    const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`, {
+    // Passe par le cache partagé (workers/weather-cache) plutôt qu'Open-Meteo
+    // directement : à l'échelle, chaque visiteur qui appelle l'API anonyme
+    // épuisait son quota gratuit et coupait la météo pour tout le monde.
+    const response = await fetch(`${WEATHER_API_BASE}/v1/forecast?${params}`, {
       signal: controller.signal,
       cache: 'no-store',
     });
@@ -4307,7 +4367,7 @@ function filtersColumnCount() {
   return FILTERS_DESKTOP_MAX_COLS;
 }
 
-/** Aligné sur style.css --filters-collapsed-rows (1 bureau/paysage, 2 portrait). */
+/** Aligné sur style.css --filters-collapsed-rows (1 rangée partout). */
 function filtersCollapsedRows() {
   return FILTERS_COMPACT_MQ.matches
     ? FILTERS_COLLAPSED_ROWS_COMPACT
@@ -4470,7 +4530,9 @@ function selectNewsSource(source) {
   newsSourceFilter = source;
   NEWS_FILTERS?.querySelectorAll('.filter-btn').forEach((b) =>
     b.classList.toggle('active', b.dataset.source === source));
-  if (FILTERS_MOBILE.matches && source !== 'all') filtersExpanded = false;
+  // Choisir une source (y compris « Le Radar ») referme le panneau déplié —
+  // plus besoin de le laisser ouvert une fois la sélection faite.
+  filtersExpanded = false;
   syncFiltersPanel();
   renderNews();
 }
