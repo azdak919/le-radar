@@ -815,24 +815,9 @@ function applyTheme(theme) {
 function renderTodayDate() {
   if (!TODAY_DATE) return;
   const now = new Date();
-  const long = now.toLocaleDateString('fr-CA', {
+  TODAY_DATE.textContent = now.toLocaleDateString('fr-CA', {
     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
   });
-  const short = now.toLocaleDateString('fr-CA', {
-    day: 'numeric', month: 'short', year: 'numeric',
-  }).toUpperCase();
-  // Deux versions rendues dans le DOM ; le CSS bascule selon la largeur pour
-  // éviter que la date longue rogne les icônes sous 480 px.
-  TODAY_DATE.replaceChildren();
-  const longEl = document.createElement('span');
-  longEl.className = 'date-long';
-  longEl.textContent = long;
-  const shortEl = document.createElement('span');
-  shortEl.className = 'date-short';
-  shortEl.textContent = short;
-  // Une seule des deux versions est visible ; display:none la retire aussi de
-  // l'arbre d'accessibilité, donc le lecteur d'écran lit toujours la bonne.
-  TODAY_DATE.append(longEl, shortEl);
 }
 
 // ─── Météo des principaux campus (desktop / tablette) ────────────────────────
