@@ -253,7 +253,8 @@
   }
 
   .pomo-weather-board { display: flex; align-items: center; gap: 0.45rem; min-width: 0; width: 100%; overflow: hidden; }
-  .pomo-weather-city { display: inline-flex; align-items: center; gap: 0.3rem; min-width: 0; flex: 1 1 0; padding: 0.25rem 0.5rem; border: 1px solid var(--chrome-rule); border-radius: 999px; font-size: 0.65rem; white-space: nowrap; overflow: hidden; animation: pomoWeatherArrive 720ms cubic-bezier(.22, .8, .28, 1) both; transition: background-color 500ms ease, border-color 500ms ease; }
+  .pomo-weather-city { display: inline-flex; align-items: center; gap: 0.3rem; min-width: 0; flex: 1 1 0; padding: 0.25rem 0.5rem; border: 1px solid var(--chrome-rule); border-radius: 999px; font-size: 0.65rem; white-space: nowrap; overflow: hidden; animation: pomoWeatherArrive 720ms cubic-bezier(.22, .8, .28, 1) both; transition: background-color 500ms ease, border-color 500ms ease; color: inherit; text-decoration: none; }
+  .pomo-weather-city:hover, .pomo-weather-city:focus-visible { background: var(--chrome-hover); border-color: var(--accent); outline: none; }
   .pomo-weather-city--primary { flex: 0.82 1 0; }
   .pomo-weather-icon { color: var(--accent); font-size: 0.9rem; line-height: 1; }
   .pomo-weather-name { overflow: hidden; text-overflow: ellipsis; color: var(--text-secondary); }

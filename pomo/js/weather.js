@@ -33,13 +33,24 @@
     if ([95, 96, 99].includes(code)) return '⚡';
     return '☂';
   };
+  const weatherSlugs = {
+    odanak: 'odanak-12', 'kitigan-zibi': 'kitigan-zibi', manawan: 'manawan', nemaska: 'nemaska',
+    wendake: 'wendake', uashat: 'uashat', kuujjuaq: 'kuujjuaq', cacouna: 'cacouna',
+    gesgapegiag: 'gesgapegiag-2', kahnawake: 'kahnawake-14', kawawachikamach: 'kawawachikamach',
+    'vaudreuil-soulanges': 'vaudreuil-dorion',
+  };
+  const weatherUrl = (city) => {
+    const slug = weatherSlugs[city.id] || city.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[’'`]/g, '').replace(/[–—]/g, '-').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    return `https://www.meteomedia.com/fr/ville/ca/quebec/${slug}/actuelle`;
+  };
   const render = (data) => {
     const list = Array.isArray(data) ? data : [data];
     latestEntries = list;
     const card = (item, city, extra = '') => {
       const current = item?.current || {};
       const temp = Number.isFinite(current.temperature_2m) ? `${Math.round(current.temperature_2m)}°` : '—';
-      return `<span class="pomo-weather-city${extra}" data-weather-city="${city.id}"><span class="pomo-weather-icon" aria-hidden="true">${icon(current.weather_code, current.is_day)}</span><span class="pomo-weather-name">${city.name}</span><strong class="pomo-weather-temp">${temp}</strong></span>`;
+      return `<a class="pomo-weather-city${extra}" data-weather-city="${city.id}" href="${weatherUrl(city)}" target="_blank" rel="noopener noreferrer" title="Prévisions MétéoMédia — ${city.name}"><span class="pomo-weather-icon" aria-hidden="true">${icon(current.weather_code, current.is_day)}</span><span class="pomo-weather-name">${city.name}</span><strong class="pomo-weather-temp">${temp}</strong></a>`;
     };
     const primaryIndex = rotationIndex % 2;
     const primaryItem = list[primaryIndex];
