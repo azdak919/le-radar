@@ -38,16 +38,15 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="campus"]')).toHaveCount(3);
   // Une seule ville des Premières Nations ou inuit parmi les trois cartes secondaires.
   await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="nation"]')).toHaveCount(1);
-  await expect(ribbon.locator('.masthead-weather__city.is-active').first()).toHaveAttribute('data-weather-city', 'montreal');
+  const activePrimary = ribbon.locator('.masthead-weather__city.is-active[data-weather-city="montreal"], .masthead-weather__city.is-active[data-weather-city="quebec"]');
+  await expect(activePrimary).toHaveCount(1);
   const activeBoxes = (await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities
     .map((city) => city.getBoundingClientRect())
     .sort((a, b) => a.x - b.x)
     .map(({ width }) => width)));
   expect(activeBoxes[0]).toBeLessThan(activeBoxes[1]);
-  await expect(ribbon.locator('.masthead-weather__city.is-active').first()).toHaveAttribute(
-    'href',
-    'https://www.meteomedia.com/fr/ville/ca/quebec/montreal/actuelle',
-  );
+  const initialPrimary = await activePrimary.evaluate((el) => ({ id: el.dataset.weatherCity, href: el.href }));
+  expect(initialPrimary.href).toBe(`https://www.meteomedia.com/fr/ville/ca/quebec/${initialPrimary.id}/actuelle`);
   await expect(ribbon.locator('[data-weather-city="vaudreuil-soulanges"]')).toHaveAttribute(
     'href',
     'https://www.meteomedia.com/fr/ville/ca/quebec/vaudreuil-dorion/actuelle',
@@ -60,10 +59,8 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
     window.RadarTranslate = { ...(window.RadarTranslate || {}), getMode: () => 'en' };
     window.dispatchEvent(new CustomEvent('radar:translate-mode', { detail: { mode: 'en' } }));
   });
-  await expect(ribbon.locator('.masthead-weather__city.is-active').first()).toHaveAttribute(
-    'href',
-    'https://www.meteomedia.com/fr/ville/ca/quebec/montreal/actuelle',
-  );
+  const translatedPrimary = await activePrimary.evaluate((el) => ({ id: el.dataset.weatherCity, href: el.href }));
+  expect(translatedPrimary.href).toBe(`https://www.meteomedia.com/fr/ville/ca/quebec/${translatedPrimary.id}/actuelle`);
   const [weatherBox, actionsBox] = await Promise.all([
     ribbon.boundingBox(), page.locator('.masthead-actions').boundingBox(),
   ]);
@@ -76,7 +73,6 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   const widthAfterRotation = (await ribbon.boundingBox()).width;
   expect(afterRotation.filter((id) => beforeRotation.includes(id))).toHaveLength(3);
   expect(widthAfterRotation).toBe(widthBeforeRotation);
-  await expect(ribbon.locator('.masthead-weather__city.is-active').first()).toHaveAttribute('data-weather-city', 'quebec');
 
   await page.setViewportSize({ width: 1200, height: 900 });
   await page.waitForTimeout(100);

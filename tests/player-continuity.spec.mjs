@@ -1,13 +1,13 @@
 import { expect, test } from '@playwright/test';
 
-test('le volume historique par défaut est ramené à un niveau d’écoute confortable', async ({ page }) => {
+test('le volume historique par défaut est ramené à 100 %', async ({ page }) => {
   await page.addInitScript(() => {
     localStorage.setItem('req-player-vol', '1');
     localStorage.removeItem('req-player-vol-version');
   });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('#tuner-volume')).toHaveValue('0.72');
-  await expect.poll(() => page.evaluate(() => localStorage.getItem('req-player-vol'))).toBe('0.72');
+  await expect(page.locator('#tuner-volume')).toHaveValue('1');
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('req-player-vol'))).toBe('1');
 });
 
 test('le panneau À l’antenne reste bleu lorsque le synthétiseur est arrêté', async ({ page }) => {
@@ -33,7 +33,8 @@ test('l’iframe alterne les postes affichés lorsque la radio est arrêtée', a
   await expect(title).not.toHaveText('');
   const first = await title.textContent();
 
-  await expect.poll(() => title.textContent(), { timeout: 11_000 })
+  // L’iframe Pomodoro laisse chaque station lisible 14 secondes.
+  await expect.poll(() => title.textContent(), { timeout: 18_000 })
     .not.toBe(first);
 });
 
