@@ -1,25 +1,19 @@
 {
-  "updated": "2026-07-23T22:23:22.843Z",
+  "updated": "2026-07-24T03:52:53.740Z",
   "total": 185,
   "withPhoto": 168,
   "withStock": 41,
-  "withCampusBank": 9,
+  "withCampusBank": 8,
   "fullyCovered": 185,
-  "leadReadyPhotos": 153,
+  "leadReadyPhotos": 156,
   "pageScraped": 17,
   "photosRecovered": 17,
-  "imagesCleared": 12,
-  "stockSearches": 36,
-  "stockFound": 25,
+  "imagesCleared": 11,
+  "stockSearches": 35,
+  "stockFound": 24,
   "campusBankFound": 6,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "CSU fails to reach quorum at first special council meeting of new mandate",
-      "link": "https://thelinknewspaper.ca/article/16335",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
-    },
     {
       "title": "The Cruel Optimism of Summer",
       "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
@@ -57,6 +51,12 @@
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
     },
     {
+      "title": "Letters from the Editors May 2026",
+      "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
+    },
+    {
       "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
       "link": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
       "reason": "stock-too-small",
@@ -65,8 +65,8 @@
     {
       "title": "CSU approves $36,000 in funding for student-led initiatives",
       "link": "https://thelinknewspaper.ca/article/16319",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG"
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
     },
     {
       "title": "Mars enters Aries",
