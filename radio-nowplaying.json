@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-24T06:28:01.989Z",
+  "updatedAt": "2026-07-24T08:44:34.822Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-24T06:27:38.512Z"
+      "checkedAt": "2026-07-24T08:44:12.859Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix anglo",
-        "source": "api-live",
-        "start": "22:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-anglo"
-      },
-      "next": {
         "title": "La grande ludothèque (reprise)",
         "source": "api-live",
         "start": "00:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364976.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "la-grande-ludotheque"
       },
+      "next": {
+        "title": "Mix Franco",
+        "source": "api-live",
+        "start": "02:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364939.mp3",
+        "slug": "mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix anglo",
+      "showTitle": "La grande ludothèque (reprise)",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-24T06:27:40.191Z"
+      "checkedAt": "2026-07-24T08:44:14.645Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Listen! You Smell Something?",
-        "source": "api-live",
-        "start": "01:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "G-Flex Survivor&#039;s Corner",
         "source": "api-live",
         "start": "04:00",
         "end": "07:00"
       },
-      "track": "",
-      "showTitle": "Listen! You Smell Something?",
+      "next": {
+        "title": "Morning Detour",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "09:00"
+      },
+      "track": "G-Flex Survivor",
+      "showTitle": "G-Flex Survivor&#039;s Corner",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,7 +77,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-24T06:27:42.681Z"
+      "checkedAt": "2026-07-24T08:44:17.393Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -104,7 +104,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-24T06:27:55.706Z"
+      "checkedAt": "2026-07-24T08:44:31.191Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-24T06:27:56.331Z"
+      "checkedAt": "2026-07-24T08:44:31.636Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +142,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Tiffany Day - DOIT4ME",
+      "track": "Mandy, Indiana - Sicko! ft. billy woods",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -153,7 +153,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-24T06:28:01.638Z"
+      "checkedAt": "2026-07-24T08:44:34.470Z"
     }
   }
 }
