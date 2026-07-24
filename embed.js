@@ -22,6 +22,15 @@
   // Classe utilitaire pour styles / debug parent
   document.documentElement.classList.add('is-radar-embed');
 
+  // L'iframe doit suivre le bouton clair/sombre de la mini-app parente.
+  window.addEventListener('message', (event) => {
+    if (event.origin !== window.location.origin) return;
+    const data = event.data;
+    if (data?.type === 'radar-embed-theme' && (data.theme === 'light' || data.theme === 'dark')) {
+      document.documentElement.dataset.theme = data.theme;
+    }
+  });
+
   window.addEventListener('load', () => postHeight({ event: 'load' }));
   window.addEventListener('resize', () => postHeight({ event: 'resize' }), { passive: true });
 

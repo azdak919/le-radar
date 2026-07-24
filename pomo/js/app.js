@@ -116,6 +116,7 @@ function initThemeToggle() {
   const apply = (theme) => {
     const isDark = theme === 'dark';
     document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    syncRadarEmbedTheme(isDark ? 'dark' : 'light');
     btn?.querySelector('.ico-sun')?.classList.toggle('hidden', !isDark);
     btn?.querySelector('.ico-moon')?.classList.toggle('hidden', isDark);
     if (btn) {
@@ -162,8 +163,14 @@ function initRadarEmbed() {
 
   iframe.addEventListener('load', () => {
     iframe.classList.add('is-ready');
+    syncRadarEmbedTheme(document.documentElement.getAttribute('data-theme') || 'light');
     window.AtaraxiaLayout?.updateChromeInsets?.();
   });
+}
+
+function syncRadarEmbedTheme(theme) {
+  const iframe = document.getElementById('radar-embed');
+  iframe?.contentWindow?.postMessage({ type: 'radar-embed-theme', theme }, window.location.origin);
 }
 
 if ('serviceWorker' in navigator) {

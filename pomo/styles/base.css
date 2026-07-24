@@ -41,10 +41,14 @@
     --chrome-width: min(calc(100vw - var(--chrome-gutter)), var(--chrome-cap));
     --chrome-surface-bg: rgba(250, 247, 242, 0.82);
     --chrome-surface-border: rgba(92, 76, 58, 0.28);
-    --chrome-text: #3a3028;
+    --chrome-text: #2c2824;
     --chrome-text-strong: #1f1a16;
     --chrome-rule: rgba(92, 76, 58, 0.2);
     --chrome-hover: rgba(92, 76, 58, 0.12);
+    --chrome-surface-hover: rgba(250, 247, 242, 0.94);
+    --credits-text: #4b4036;
+    --credits-text-strong: #2c2824;
+    --credits-text-shadow: 0 1px 2px rgba(255, 255, 255, 0.72);
     --chrome-surface-blur: blur(12px);
     --credits-max-width: var(--chrome-width);
     --credits-pad-y: 0.38rem;
@@ -102,6 +106,10 @@
     --chrome-text-strong: #fffaf3;
     --chrome-rule: rgba(233, 220, 204, 0.16);
     --chrome-hover: rgba(255, 255, 255, 0.12);
+    --chrome-surface-hover: rgba(20, 18, 16, 0.94);
+    --credits-text: rgba(255, 255, 255, 0.75);
+    --credits-text-strong: rgba(255, 255, 255, 0.96);
+    --credits-text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
   }
   @media (prefers-color-scheme: dark) {
     html:not([data-theme="light"]) {
@@ -150,6 +158,10 @@
       --border-glass: rgba(255, 255, 255, 0.4);
       --text-primary: #fff;
       --text-secondary: #ccc;
+      --chrome-surface-hover: rgba(20, 18, 16, 0.94);
+      --credits-text: rgba(255, 255, 255, 0.75);
+      --credits-text-strong: rgba(255, 255, 255, 0.96);
+      --credits-text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
     }
   }
 
@@ -218,7 +230,7 @@
     border: 0;
     border-radius: 0;
     background: transparent;
-    color-scheme: dark;
+    color-scheme: normal;
     overflow: hidden;
     vertical-align: middle;
     flex: 1 1 auto;
@@ -1329,8 +1341,8 @@
     font-family: var(--font-body);
     font-size: var(--credits-font-size);
     font-weight: 300;
-    color: rgba(255, 255, 255, 0.75);
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    color: var(--credits-text);
+    text-shadow: var(--credits-text-shadow);
     background: var(--chrome-surface-bg);
     padding: var(--credits-pad-y) var(--credits-pad-x);
     border-radius: 20px;
@@ -1350,7 +1362,7 @@
   }
   .bottom-badges:hover {
     opacity: 1;
-    background: rgba(0, 0, 0, 0.36);
+    background: var(--chrome-surface-hover);
   }
 
   .bottom-badges .credits-divider {
@@ -1381,7 +1393,7 @@
     min-width: 0;
   }
   .img-credit a {
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--credits-text-strong);
     text-decoration: none;
   }
   .img-credit a:hover { text-decoration: underline; }
@@ -1396,7 +1408,7 @@
     cursor: pointer;
   }
   .license-badge:hover {
-    color: rgba(255, 255, 255, 1);
+    color: var(--credits-text-strong);
   }
 
   .copyleft-symbol {

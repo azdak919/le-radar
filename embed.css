@@ -17,22 +17,44 @@ html[data-embed="tuner"] {
   --embed-vol-track: 72px;
   /* Gauche (synthé) dominante : le dial ne doit jamais être écrasé */
   --embed-cols: minmax(0, 2.1fr) minmax(160px, 0.9fr);
-  --tuner-onair-live: #ff7d6e;
-  --tuner-onair-idle: rgba(255, 255, 255, 0.42);
-  color-scheme: dark;
-  background: transparent;
+  /* Le cadre est transparent : ces couleurs suivent le chrome parent. */
+  --embed-ink: #3a3028;
+  --embed-muted: rgba(58, 48, 40, 0.62);
+  --embed-muted-strong: rgba(58, 48, 40, 0.82);
+  --embed-control-bg: rgba(92, 76, 58, 0.10);
+  --embed-control-bg-hover: rgba(92, 76, 58, 0.16);
+  --embed-control-border: rgba(92, 76, 58, 0.24);
+  --embed-control-border-hover: rgba(92, 76, 58, 0.38);
+  --embed-radio: #1f67ad;
+  --tuner-onair-live: #c8102e;
+  --tuner-onair-idle: var(--embed-muted);
+  color-scheme: normal;
+  background: transparent !important;
   overflow: hidden;
   height: var(--embed-bar-h);
   max-height: var(--embed-bar-h);
 }
 
+html[data-embed="tuner"][data-theme="dark"] {
+  --embed-ink: #fff;
+  --embed-muted: rgba(255, 255, 255, 0.50);
+  --embed-muted-strong: rgba(255, 255, 255, 0.78);
+  --embed-control-bg: rgba(255, 255, 255, 0.06);
+  --embed-control-bg-hover: rgba(255, 255, 255, 0.12);
+  --embed-control-border: rgba(255, 255, 255, 0.16);
+  --embed-control-border-hover: rgba(255, 255, 255, 0.28);
+  --embed-radio: #8eb8ff;
+  --tuner-onair-live: #ff7d6e;
+  color-scheme: dark;
+}
+
 html[data-embed="tuner"] body {
   margin: 0;
-  background: transparent;
+  background: transparent !important;
   overflow: hidden;
   height: var(--embed-bar-h);
   max-height: var(--embed-bar-h);
-  color: #fff;
+  color: var(--embed-ink);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -42,8 +64,8 @@ html[data-embed="tuner"] .tuner {
   top: auto;
   z-index: 1;
   /* Même fond que --tuner-bg du site, intégré dans la pastille Solitaire */
-  background: transparent;
-  color: #fff;
+  background: transparent !important;
+  color: var(--embed-ink);
   box-shadow: none;
   border: 0;
   border-radius: 0;
@@ -108,7 +130,7 @@ html[data-embed="tuner"] .tuner-onair::before {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.25);
+  background: var(--embed-control-border);
   transition: background 200ms ease;
 }
 
@@ -134,7 +156,7 @@ html[data-embed="tuner"] .tuner-embed-credit {
   letter-spacing: 0.06em;
   text-transform: lowercase;
   text-decoration: none;
-  color: rgba(120, 168, 255, 0.78);
+  color: var(--embed-radio);
   white-space: nowrap;
   line-height: 1.1;
   transition: color 140ms ease, opacity 140ms ease;
@@ -157,7 +179,7 @@ html[data-embed="tuner"] .tuner-embed-credit-text {
 
 html[data-embed="tuner"] .tuner-embed-credit:hover,
 html[data-embed="tuner"] .tuner-embed-credit:focus-visible {
-  color: rgba(160, 198, 255, 0.95);
+  color: var(--embed-radio);
   text-decoration: none;
   outline: none;
 }
@@ -169,12 +191,12 @@ html[data-embed="tuner"] .tuner-embed-credit:focus-visible .tuner-embed-credit-e
 
 /* Reste bleu en lecture (ne pas virer coral comme EN ONDES) */
 html[data-embed="tuner"] .tuner.is-playing .tuner-embed-credit {
-  color: rgba(120, 168, 255, 0.82);
+  color: var(--embed-radio);
 }
 
 html[data-embed="tuner"] .tuner.is-playing .tuner-embed-credit:hover,
 html[data-embed="tuner"] .tuner.is-playing .tuner-embed-credit:focus-visible {
-  color: rgba(180, 210, 255, 1);
+  color: var(--embed-radio);
 }
 
 /* ── Prev / next — 42 px comme le bureau ──────────────────── */
@@ -185,11 +207,20 @@ html[data-embed="tuner"] .tuner-step {
   border-radius: 10px;
   box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.45);
   flex-shrink: 0;
+  color: var(--embed-muted-strong);
+  background: var(--embed-control-bg);
+  border: 1px solid var(--embed-control-border);
 }
 
 html[data-embed="tuner"] .tuner-step svg {
   width: 20px;
   height: 20px;
+}
+
+html[data-embed="tuner"] .tuner-step:hover {
+  color: var(--embed-ink);
+  background: var(--embed-control-bg-hover);
+  border-color: var(--embed-control-border-hover);
 }
 
 /* ── Dial (2 lignes : poste · acronyme / slogan) ───────────── */
@@ -211,6 +242,14 @@ html[data-embed="tuner"] .tuner-now {
   width: 100%;
   min-width: 0;
   overflow: hidden;
+  color: var(--embed-ink);
+  background: var(--embed-control-bg);
+  border: 1px solid var(--embed-control-border);
+}
+
+html[data-embed="tuner"] .tuner-dial:hover .tuner-now {
+  background: var(--embed-control-bg-hover);
+  border-color: var(--embed-control-border-hover);
 }
 
 html[data-embed="tuner"] .tuner-now-name {
@@ -222,12 +261,17 @@ html[data-embed="tuner"] .tuner-now-name {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: var(--embed-radio);
+}
+
+html[data-embed="tuner"] .tuner-now::after {
+  color: var(--embed-muted);
 }
 
 html[data-embed="tuner"] .tuner-now-sub {
   font-size: 10.5px;
   line-height: 1.2;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--embed-muted);
   min-width: 0;
   max-width: 100%;
   overflow: hidden;
@@ -331,17 +375,17 @@ html[data-embed="tuner"] .tuner-vol-btn {
   padding: 0;
   margin: 0;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--embed-control-border);
+  background: var(--embed-control-bg);
+  color: var(--embed-muted-strong);
   cursor: pointer;
   transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease;
 }
 
 html[data-embed="tuner"] .tuner-vol-btn:hover {
-  color: rgba(255, 255, 255, 0.95);
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.28);
+  color: var(--embed-ink);
+  background: var(--embed-control-bg-hover);
+  border-color: var(--embed-control-border-hover);
 }
 
 html[data-embed="tuner"] .tuner-vol-btn:active {
@@ -495,7 +539,7 @@ html[data-embed="tuner"] .tuner-nowair-title {
   font-size: 13px;
   font-weight: 600;
   line-height: 1.15;
-  color: var(--radio-bright, #8eb8ff);
+  color: var(--embed-radio);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -512,7 +556,7 @@ html[data-embed="tuner"] .tuner-nowair-sub {
   font-size: 10.5px;
   font-weight: 500;
   line-height: 1.2;
-  color: rgba(255, 255, 255, 0.48);
+  color: var(--embed-muted);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -539,7 +583,7 @@ html[data-embed="tuner"] .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowa
 html[data-embed="tuner"] .tuner-nowair.is-empty .tuner-nowair-title {
   font-style: italic;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--embed-muted);
 }
 
 html[data-embed="tuner"] .toast {
