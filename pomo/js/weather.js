@@ -11,6 +11,7 @@
   const nationIds = new Set(['odanak', 'kitigan-zibi', 'manawan', 'nemaska', 'wendake', 'uashat', 'kuujjuaq', 'cacouna', 'gesgapegiag', 'kahnawake', 'kawawachikamach']);
   let rotationIndex = 0;
   let latestEntries = null;
+  const WEATHER_CACHE_KEY = 'pomo-weather-cache-v1';
   const secondaryOffsets = [0, 1, 2];
   const slotTimers = [];
   // Le catalogue de référence reste celui du Radar principal. On le lit
@@ -50,6 +51,9 @@
   const render = (data) => {
     const list = Array.isArray(data) ? data : [data];
     latestEntries = list;
+    try {
+      localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({ at: Date.now(), entries: list }));
+    } catch (_) { /* cache facultatif */ }
     const card = (item, city, extra = '') => {
       const current = item?.current || {};
       const temp = Number.isFinite(current.temperature_2m) ? `${Math.round(current.temperature_2m)}°` : '—';
@@ -90,7 +94,19 @@
     return fetch(`https://api.open-meteo.com/v1/forecast?${params}`, { credentials: 'omit' })
     .then(r => r.ok ? r.json() : Promise.reject(new Error('weather')))
     .then(render)
-    .catch(() => { board.innerHTML = '<span class="pomo-weather-loading">Météo indisponible</span>'; });
+    .catch(() => {
+      // Une panne réseau ne doit pas effacer le dernier état utile du Pomo.
+      // Le cache est volontairement court pour éviter de figer la météo.
+      if (latestEntries) return;
+      try {
+        const cached = JSON.parse(localStorage.getItem(WEATHER_CACHE_KEY) || 'null');
+        if (cached?.entries && Date.now() - cached.at < 45 * 60 * 1000) {
+          render(cached.entries);
+          return;
+        }
+      } catch (_) { /* cache absent ou invalide */ }
+      board.innerHTML = '<span class="pomo-weather-loading">Météo…</span>';
+    });
   };
   const randomBetween = (min, max) => Math.floor(min + Math.random() * (max - min + 1));
   const scheduleSlot = (slot) => {
@@ -111,6 +127,10 @@
     }, delay);
   };
   importMainCityCatalog().then(() => {
+    try {
+      const cached = JSON.parse(localStorage.getItem(WEATHER_CACHE_KEY) || 'null');
+      if (cached?.entries && Date.now() - cached.at < 45 * 60 * 1000) render(cached.entries);
+    } catch (_) { /* cache absent ou invalide */ }
     forecast();
     [0, 1, 2, 3].forEach(scheduleSlot);
   });
