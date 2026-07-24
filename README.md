@@ -8,6 +8,8 @@
 
 **LE RADAR** est une application web progressive (PWA) **éditoriale, texte d'abord** qui rassemble en un seul endroit **les radios et les journaux étudiants** des cégeps et universités du Québec. Une page unique : un **syntoniseur radio** en tête, et le **fil des actualités étudiantes** en dessous.
 
+Version courante du dépôt : **1.0.0** — voir le [journal des modifications](CHANGELOG.md).
+
 **→ [Essayer LE RADAR maintenant](https://azdak919.github.io/le-radar/)**
 
 > Projet non officiel. Le Radar n’est affilié à aucun des médias listés.
@@ -86,6 +88,23 @@ le-radar/
 ├── assets/                 # Icônes et logos
 └── docs/                   # Documentation (sources, identité)
 ```
+
+### Architecture et publication
+
+Le client est entièrement statique : GitHub Pages sert les pages HTML, les
+données JSON, les manifestes et les service workers. Les workflows GitHub
+Actions mettent à jour les données éditoriales et radio dans le dépôt; le
+navigateur lit ensuite ces fichiers publiés. Les intégrations Cloudflare sont
+facultatives et ne concernent que le proxy audio et le classement partagé de
+Solitaire.
+
+Pour publier le site principal, pousse les changements validés sur `main` :
+GitHub Pages déploie directement cette branche sur
+<https://azdak919.github.io/le-radar/>. Le fichier `CNAME` conserve le domaine
+personnalisé lorsqu’il est configuré. Avant une publication, exécute `npm test`;
+le workflow **Quality Gate** rejoue ces vérifications sur les modifications de
+code. Les Workers Cloudflare se déploient séparément depuis leurs dossiers et
+selon leurs README respectifs.
 
 ---
 
