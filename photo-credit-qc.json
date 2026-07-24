@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-23T23:52:18.168Z",
+  "updated": "2026-07-24T03:52:56.009Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
@@ -7,24 +7,24 @@
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 5,
-  "updatedCount": 5,
-  "citedNew": 4,
+  "checked": 7,
+  "updatedCount": 7,
+  "citedNew": 6,
   "fallbackNew": 1,
   "samples": [
+    {
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "source": "La Pige",
+      "credit": "Photo : Léa Morin-Letort",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
     {
       "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
       "source": "Quartier Libre",
       "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "L’épidémie de la nonchalance",
-      "source": "Le Délit",
-      "credit": "Photo : Elie Nguyen",
-      "cited": true,
-      "method": "media-credit-featured"
     },
     {
       "title": "La performance de l’homosexualité : un privilège ?",
@@ -34,11 +34,11 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Ce que nous devons aux femmes",
+      "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
-      "credit": "Photo : Alexandre Gontier",
+      "credit": "Photo : Elie Nguyen",
       "cited": true,
-      "method": "media-credit-near"
+      "method": "media-credit-featured"
     },
     {
       "title": "Les femmes MAGA au service du patriarcat",
@@ -46,6 +46,20 @@
       "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "source": "Quartier Libre",
+      "credit": "Photo : Maryse Boyce",
+      "cited": true,
+      "method": "figcaption-copyright"
     }
   ]
 }
