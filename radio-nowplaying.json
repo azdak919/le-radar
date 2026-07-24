@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-24T03:54:19.210Z",
+  "updatedAt": "2026-07-24T06:28:01.989Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-24T03:53:52.153Z"
+      "checkedAt": "2026-07-24T06:27:38.512Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La rumba",
+        "title": "Mix anglo",
         "source": "api-live",
-        "start": "19:00",
+        "start": "22:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "la-rumba"
+        "slug": "mix-anglo"
       },
       "next": {
-        "title": "La courbe 2.0",
+        "title": "La grande ludothèque (reprise)",
         "source": "api-live",
-        "start": "20:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364546.mp3",
-        "slug": "la-courbe-2-0"
+        "start": "00:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364976.mp3",
+        "slug": "la-grande-ludotheque"
       },
       "track": "",
-      "showTitle": "La rumba",
+      "showTitle": "Mix anglo",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-24T03:53:54.213Z"
+      "checkedAt": "2026-07-24T06:27:40.191Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "You Need A Heart To Live 2",
-        "source": "api-live",
-        "start": "23:00",
-        "end": "01:00"
-      },
-      "next": {
         "title": "Listen! You Smell Something?",
         "source": "api-live",
         "start": "01:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "G-Flex Survivor&#039;s Corner",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "You Need A Heart To Live 2",
+      "showTitle": "Listen! You Smell Something?",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,72 +77,72 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-24T03:53:57.200Z"
+      "checkedAt": "2026-07-24T06:27:42.681Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Raving Record Reviews",
+        "title": "CJLO Late Night",
         "source": "schedule",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/raving-record-reviews"
+        "start": "02:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
-        "title": "Finally Midnight",
+        "title": "Wake up Folks!",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "http://www.cjlo.com/shows/finally-midnight"
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/wake-up-folks"
       },
       "track": "",
-      "showTitle": "Raving Record Reviews",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-24T03:54:11.070Z"
+      "checkedAt": "2026-07-24T06:27:55.706Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "After 5@8",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule",
         "start": "00:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "After 5@8",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-24T03:54:11.729Z"
+      "checkedAt": "2026-07-24T06:27:56.331Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "D'amour et de sexe",
+        "title": "Opération beurre de cinoche",
         "source": "api-live",
-        "start": "22:00",
-        "end": "23:00",
-        "slug": "damour-et-de-sexe"
+        "start": "11:30",
+        "end": "12:30",
+        "slug": "box-sophisme"
       },
-      "track": "Taupe - New Window",
+      "track": "Tiffany Day - DOIT4ME",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -153,7 +153,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-24T03:54:18.860Z"
+      "checkedAt": "2026-07-24T06:28:01.638Z"
     }
   }
 }
