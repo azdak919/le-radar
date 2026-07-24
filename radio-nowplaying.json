@@ -1,47 +1,53 @@
 {
-  "updatedAt": "2026-07-24T15:02:47.660Z",
+  "updatedAt": "2026-07-24T17:06:18.822Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Détour",
         "source": "schedule",
         "start": "13:00",
         "end": "14:00",
         "url": "https://chyz.ca/emission/detour/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Détour",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-24T15:02:23.591Z"
+      "checkedAt": "2026-07-24T17:05:55.166Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Toute est dans toute",
+        "title": "La collation",
         "source": "api-live",
-        "start": "07:00",
+        "start": "09:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "tout-est-dans-toute"
+        "slug": "mix-collation"
       },
       "next": {
-        "title": "As-tu vu?",
+        "title": "Accents ouverts",
         "source": "api-live",
-        "start": "08:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364578.mp3",
-        "slug": "lart-en-ondes"
+        "start": "11:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364588.mp3",
+        "slug": "accents-ouverts"
       },
       "track": "",
-      "showTitle": "Toute est dans toute",
+      "showTitle": "La collation",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-24T15:02:25.546Z"
+      "checkedAt": "2026-07-24T17:05:56.913Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "electronic intifada/LegalEase/Radio AlHara/Alright, Now What?",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "Butcher T&#039;s Noontime Cuts",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
-      "track": "",
-      "showTitle": "electronic intifada/LegalEase/Radio AlHara/Alright, Now What?",
+      "next": {
+        "title": "NNB/Jewish Heretics/QPIRG/knots",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
+      "track": "Butcher T",
+      "showTitle": "Butcher T&#039;s Noontime Cuts",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,72 +83,72 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-24T15:02:28.025Z"
+      "checkedAt": "2026-07-24T17:05:59.676Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Alley",
+        "title": "the castle",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/the-alley"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/the-castle"
       },
       "next": {
-        "title": "Charts & Crafts",
+        "title": "Whatever She Wants",
         "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/charts-and-crafts"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/whatever-she-wants"
       },
       "track": "",
-      "showTitle": "The Alley",
+      "showTitle": "the castle",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-24T15:02:41.265Z"
+      "checkedAt": "2026-07-24T17:06:12.993Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Le Ré-Show : Deuxième service",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "Ciné-Histoire",
         "source": "schedule",
         "start": "12:00",
         "end": "15:00"
       },
+      "next": {
+        "title": "Nouveautés Franco",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Le Ré-Show : Deuxième service",
+      "showTitle": "Ciné-Histoire",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-24T15:02:41.840Z"
+      "checkedAt": "2026-07-24T17:06:13.436Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Opération beurre de cinoche",
+        "title": "Histoire de passer le temps",
         "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "slug": "box-sophisme"
+        "start": "16:00",
+        "end": "17:00",
+        "slug": "histoire-de-passer-le-temps"
       },
-      "track": "Softcult - Naive",
+      "track": "Snail Mail - Butterfly",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -153,7 +159,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-24T15:02:47.309Z"
+      "checkedAt": "2026-07-24T17:06:18.471Z"
     }
   }
 }
