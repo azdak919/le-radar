@@ -218,7 +218,7 @@ html[data-layout="touch"] .quote-body {
   justify-content: center;
 }
 html[data-layout="touch"] .quote-text {
-  font-size: var(--quote-text-size, clamp(1.05rem, 4.8vw, 1.35rem));
+  font-size: var(--quote-text-size, clamp(1.3rem, 5.5vw, 1.7rem));
   line-height: 1.5;
 }
 html[data-layout="touch"] .quote-author {
@@ -251,7 +251,7 @@ html[data-layout="touch"] .bottom-badges {
   html[data-layout="touch"] {
     --ring-max: min(70vw, calc(100dvh - 12rem));
     --scene-btn-pad: 0.55rem 1.4rem;
-    --quote-text-size: clamp(1.1rem, 3vw, 1.45rem);
+    --quote-text-size: clamp(1.35rem, 3.4vw, 1.8rem);
     --content-pad-top: max(3.75rem, calc(env(safe-area-inset-top, 0px) + 3.25rem));
     --content-pad-bottom: max(7rem, calc(env(safe-area-inset-bottom, 0px) + 6rem));
   }

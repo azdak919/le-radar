@@ -15,6 +15,14 @@ const INDIGENOUS_DROUGHT_LIMIT = 4;
 const INDIGENOUS_TARGET_SHARE = 0.26;
 const _quoteShuffleBags = { indigenous: [], general: [] };
 
+/** Affiche l'attribution sans transformer la note éditoriale en nom d'auteur. */
+function quoteAuthorDisplay(value) {
+  return cleanTranslation(value || '')
+    .replace(/\s*\((?:adapted|adapté|adaptée)\)\s*$/i, '')
+    .trim();
+}
+window.quoteAuthorDisplay = quoteAuthorDisplay;
+
 function resetQuoteTypography() {
   const card = document.getElementById('quote-card');
   const textEl = document.getElementById('quote-text');
@@ -126,19 +134,19 @@ window.scheduleQuoteLayout = scheduleQuoteLayout;
 async function resolveLocalizedQuote(quote, lang) {
   const authorBase = quote.authorEn || quote.author;
   if (lang === 'en') {
-    return { text: quote.text, author: cleanTranslation(authorBase) };
+    return { text: quote.text, author: quoteAuthorDisplay(authorBase) };
   }
   const curated = QUOTE_I18N[quote.id]?.[lang];
   if (curated) {
     return {
       text: cleanTranslation(curated.text),
-      author: cleanTranslation(curated.author || authorBase),
+      author: quoteAuthorDisplay(curated.author || authorBase),
     };
   }
   const [translatedText, translatedAuthor] = await batchTranslate([quote.text, authorBase], lang);
   return {
     text: cleanTranslation(translatedText),
-    author: cleanTranslation(translatedAuthor),
+    author: quoteAuthorDisplay(translatedAuthor),
   };
 }
 
@@ -170,7 +178,7 @@ function showRandomQuote() {
       if (swapGen !== _quoteSwapGen) return;
       const authorSrc = quote.authorEn || quote.author;
       textEl.textContent = quote.text;
-      authorEl.textContent = cleanTranslation(authorSrc);
+      authorEl.textContent = quoteAuthorDisplay(authorSrc);
     }
 
     invalidateQuoteLayout();
@@ -257,7 +265,12 @@ function syncQuoteSource(quote) {
     authorEl.href = quote.sourceUrl;
     authorEl.target = '_blank';
     authorEl.rel = 'noopener noreferrer';
-    authorEl.title = currentLang === 'fr' ? 'Voir la source originale' : 'View original source';
+    const adapted = /\((?:adapted|adapté|adaptée)\)\s*$/i.test(
+      quote.authorEn || quote.author || ''
+    );
+    authorEl.title = adapted
+      ? (currentLang === 'fr' ? 'Formulation adaptée — voir la source' : 'Adapted wording — view source')
+      : (currentLang === 'fr' ? 'Voir la source originale' : 'View original source');
   } else {
     authorEl.removeAttribute('href');
     authorEl.removeAttribute('target');

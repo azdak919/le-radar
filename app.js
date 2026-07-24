@@ -351,16 +351,15 @@ const MOBILE_PLAYBACK = window.matchMedia('(hover: none) and (pointer: coarse)')
 let userPaused = false;
 let mobilePlayback = null;
 const playerListenersAttached = new WeakSet();
-// 72 % est un point de départ confortable sur les flux modernes, souvent
-// déjà masterisés très fort. Le curseur conserve 100 % comme référence et
-// 200 % pour les rares postes faibles.
-const DEFAULT_GAIN = 0.72;
+// 100 % est la référence commune : le volume ne doit pas sembler réduit au
+// premier chargement, quel que soit le contexte (site, Pomo ou Solitaire).
+const DEFAULT_GAIN = 1;
 let currentGain = DEFAULT_GAIN;
 let volumeMuted = false;
 let gainBeforeMute = DEFAULT_GAIN;
 const MAX_GAIN = 2;                 // jusqu'à 200 %
 const VOLUME_PREF_VERSION_KEY = 'req-player-vol-version';
-const VOLUME_PREF_VERSION = '2';
+const VOLUME_PREF_VERSION = '3';
 const STATION_TRIMS_KEY = 'req-player-station-trims-v1';
 const stationTrims = new Map();
 let loudnessProbeTimer = null;
@@ -3918,10 +3917,10 @@ function restoreVolume() {
   loadStationTrims();
   const raw = localStorage.getItem('req-player-vol');
   const saved = parseFloat(raw ?? String(DEFAULT_GAIN));
-  // Migration douce : l'ancien réglage par défaut était 100 %. On ne touche
+  // Migration douce : 72 % était l'ancien défaut automatique. On ne touche
   // jamais aux personnes qui avaient déjà choisi une autre valeur.
   const oldDefault = localStorage.getItem(VOLUME_PREF_VERSION_KEY) !== VOLUME_PREF_VERSION
-    && (raw === null || Math.abs(saved - 1) < 0.005);
+    && (raw === null || Math.abs(saved - 0.72) < 0.005 || Math.abs(saved - 1) < 0.005);
   if (oldDefault) localStorage.setItem('req-player-vol', String(DEFAULT_GAIN));
   try { localStorage.setItem(VOLUME_PREF_VERSION_KEY, VOLUME_PREF_VERSION); } catch {}
   currentGain = oldDefault
