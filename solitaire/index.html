@@ -830,183 +830,6 @@
     }
 
     /* ════════════════════════════════════════
-       HI-SCORE — modal centré (viewport)
-       inset+margin : pas de transform (évite conflit d’animation)
-       ════════════════════════════════════════ */
-    #hi-score-backdrop {
-      position: fixed;
-      inset: 0;
-      z-index: 315;
-      background: rgba(0, 0, 0, 0.45);
-      backdrop-filter: blur(2px);
-      -webkit-backdrop-filter: blur(2px);
-      animation: overlayFadeIn 0.25s ease both;
-    }
-    #hi-score-backdrop.hidden { display: none; }
-
-    #hi-score-panel {
-      position: fixed;
-      /* Vrai centre écran, indépendant du bouton ★ Scores */
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      margin: auto;
-      z-index: 320;
-      width: min(17.5rem, calc(100vw - 1.5rem));
-      height: fit-content;
-      max-height: min(70dvh, 28rem);
-      overflow-y: auto;
-      padding: 0.85rem 0.9rem 0.85rem;
-      border-radius: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      background: rgba(12, 11, 10, 0.92);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      color: rgba(255, 248, 235, 0.92);
-      font-family: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.04em;
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
-      pointer-events: auto;
-      animation: hiScoreIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-    @keyframes hiScoreIn {
-      from { opacity: 0; transform: translateY(12px) scale(0.96); }
-      to   { opacity: 1; transform: none; }
-    }
-    #hi-score-panel.hidden { display: none; }
-    .hi-score-title {
-      text-align: center;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: #f0c14e;
-      margin-bottom: 0.45rem;
-    }
-    .hi-score-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      gap: 0.18rem;
-    }
-    .hi-score-list li {
-      display: grid;
-      grid-template-columns: 1.1rem 2.4rem 1fr auto;
-      gap: 0.35rem;
-      align-items: baseline;
-      color: rgba(255, 255, 255, 0.78);
-      line-height: 1.35;
-    }
-    .hi-score-list li.is-new {
-      color: #fff;
-      text-shadow: 0 0 10px rgba(240, 193, 78, 0.45);
-    }
-    .hi-score-list .hi-rank { color: rgba(255, 255, 255, 0.4); }
-    .hi-score-list .hi-name { font-weight: 700; letter-spacing: 0.12em; }
-    .hi-score-list .hi-time { text-align: right; color: rgba(255, 255, 255, 0.72); }
-    .hi-score-list .hi-moves {
-      text-align: right;
-      color: rgba(255, 255, 255, 0.42);
-      font-size: 0.65rem;
-      min-width: 2.6rem;
-    }
-    .hi-score-empty {
-      text-align: center;
-      color: rgba(255, 255, 255, 0.4);
-      padding: 0.25rem 0 0.15rem;
-    }
-    .hi-score-entry {
-      margin-top: 0.55rem;
-      padding-top: 0.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      text-align: center;
-    }
-    .hi-score-entry.hidden { display: none; }
-    .hi-score-entry-label {
-      font-size: 0.62rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #f0c14e;
-      margin-bottom: 0.4rem;
-    }
-    .hi-score-letters {
-      display: flex;
-      justify-content: center;
-      gap: 0.45rem;
-      margin-bottom: 0.45rem;
-    }
-    .hi-letter-col {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.1rem;
-    }
-    .hi-letter-spin {
-      width: 1.65rem;
-      height: 1.1rem;
-      padding: 0;
-      border: none;
-      background: transparent;
-      color: rgba(255, 255, 255, 0.45);
-      font-size: 0.55rem;
-      line-height: 1;
-      cursor: pointer;
-    }
-    .hi-letter-spin:hover { color: #f0c14e; }
-    .hi-letter {
-      width: 1.85rem;
-      height: 1.85rem;
-      border: 1px solid rgba(240, 193, 78, 0.45);
-      border-radius: 6px;
-      background: rgba(255, 255, 255, 0.06);
-      color: #fff;
-      font-family: inherit;
-      font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: 0;
-      cursor: pointer;
-      line-height: 1;
-    }
-    .hi-letter:focus-visible {
-      outline: 2px solid #f0c14e;
-      outline-offset: 2px;
-    }
-    .hi-score-ok {
-      font-family: inherit;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      padding: 0.38rem 1rem;
-      border-radius: 999px;
-      border: 1px solid rgba(240, 193, 78, 0.55);
-      background: transparent;
-      color: #f0c14e;
-      cursor: pointer;
-    }
-    .hi-score-ok:hover {
-      background: rgba(240, 193, 78, 0.15);
-    }
-    .hi-score-close {
-      display: block;
-      width: 100%;
-      margin-top: 0.45rem;
-      padding: 0.25rem;
-      border: none;
-      background: transparent;
-      color: rgba(255, 255, 255, 0.38);
-      font-family: inherit;
-      font-size: 0.62rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      cursor: pointer;
-    }
-    .hi-score-close:hover { color: rgba(255, 255, 255, 0.7); }
-
-    /* ════════════════════════════════════════
        CASCADE WIN ANIMATION
        ════════════════════════════════════════ */
     #cascade-container {
@@ -1415,10 +1238,6 @@
         </svg>
         <span id="shuffle-bg-label">Background</span>
       </button>
-      <button class="toolbar-btn" id="hi-score-btn" type="button" aria-label="High scores" title="High scores" aria-haspopup="dialog" aria-expanded="false">
-        <span aria-hidden="true">★</span>
-        <span id="hi-score-btn-label">Scores</span>
-      </button>
       <button class="toolbar-btn" id="undo-btn" aria-label="Undo last move" disabled>
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/>
@@ -1478,36 +1297,6 @@
   <button class="win-btn" id="play-again-btn">Play Again</button>
 </div>
 
-<!-- Arcade HI-SCORE — modal centré viewport -->
-<div id="hi-score-backdrop" class="hidden" aria-hidden="true"></div>
-<div id="hi-score-panel" class="hidden" role="dialog" aria-label="High scores" aria-modal="true">
-  <div class="hi-score-title" id="hi-score-title">High scores</div>
-  <ol class="hi-score-list" id="hi-score-list"></ol>
-  <div class="hi-score-empty hidden" id="hi-score-empty">— — —</div>
-  <div class="hi-score-entry hidden" id="hi-score-entry">
-    <div class="hi-score-entry-label" id="hi-score-entry-label">NEW RECORD · 3 LETTERS</div>
-    <div class="hi-score-letters" id="hi-score-letters" aria-label="Initials">
-      <div class="hi-letter-col">
-        <button type="button" class="hi-letter-spin" data-i="0" data-dir="1" aria-label="Letter 1 up">▲</button>
-        <button type="button" class="hi-letter" data-i="0" aria-label="Letter 1">A</button>
-        <button type="button" class="hi-letter-spin" data-i="0" data-dir="-1" aria-label="Letter 1 down">▼</button>
-      </div>
-      <div class="hi-letter-col">
-        <button type="button" class="hi-letter-spin" data-i="1" data-dir="1" aria-label="Letter 2 up">▲</button>
-        <button type="button" class="hi-letter" data-i="1" aria-label="Letter 2">A</button>
-        <button type="button" class="hi-letter-spin" data-i="1" data-dir="-1" aria-label="Letter 2 down">▼</button>
-      </div>
-      <div class="hi-letter-col">
-        <button type="button" class="hi-letter-spin" data-i="2" data-dir="1" aria-label="Letter 3 up">▲</button>
-        <button type="button" class="hi-letter" data-i="2" aria-label="Letter 3">A</button>
-        <button type="button" class="hi-letter-spin" data-i="2" data-dir="-1" aria-label="Letter 3 down">▼</button>
-      </div>
-    </div>
-    <button type="button" class="hi-score-ok" id="hi-score-ok">OK</button>
-  </div>
-  <button type="button" class="hi-score-close" id="hi-score-close">Close</button>
-</div>
-
 <!-- ══════════════════════ NO MORE MOVES TOAST ══════════════════════ -->
 <div id="no-moves-toast" role="status" aria-live="polite"></div>
 <div id="hint-toast" role="status" aria-live="polite"></div>
@@ -1532,7 +1321,6 @@
 </div>
 
 <script src="../translate-menu.js"></script>
-<script src="./scores-api.js"></script>
 <script src="js/solitaire-rules.js"></script>
 <script nonce="ataraxia-sol">
 /* ══════════════════════════════════════════════════════════
@@ -1579,9 +1367,6 @@ let hintTimer   = null;
 let hintToastTimer = null;
 let hintCycleIdx = 0;
 let noMovesToastTimer = null;
-// Déclaré avant le premier newGame(): hideHiScorePanel() est appelé pendant
-// l'initialisation, bien avant la section HI-SCORES située en fin de script.
-let hiEntryPending = null; // { timeMs, moves } while entering name
 
 // Translation state (populated later by initTranslation)
 let currentLang = 'en';
@@ -1595,7 +1380,6 @@ const SOL_UI_EN = {
   played: 'Played', won: 'Won', streak: 'Streak', best: 'Best',
   shuffleBg: 'Background', restartDeal: 'Restart deal', noMoves: 'No useful move right now — try Undo, draw from the stock, or a new playable deal', playableDeal: 'Playable deal', dealing: 'Dealing a playable hand…',
   radarBtn: 'Le Radar', coffeeBtn: 'Buy me a coffee',
-  hiScores: 'High scores', hiScoreBtn: 'Scores', newRecord: 'NEW RECORD · 3 LETTERS', hiOk: 'OK', hiClose: 'Close',
 };
 
 // Hardcoded translations for languages where the generic API produces wrong results
@@ -1610,7 +1394,6 @@ const SOL_UI_HARDCODED = {
     played: 'Joués', won: 'Gagnés', streak: 'Série', best: 'Meilleur',
     shuffleBg: 'Arrière-plan', restartDeal: 'Rejouer la donne', noMoves: 'Aucun coup utile pour l’instant — Annuler, piocher, ou nouvelle donne jouable', playableDeal: 'Donne jouable', dealing: 'Préparation d’une donne jouable…',
     radarBtn: 'Le Radar', coffeeBtn: 'Offrir un café',
-    hiScores: 'Meilleurs scores', hiScoreBtn: 'Scores', newRecord: 'NOUVEAU RECORD · 3 LETTRES', hiOk: 'OK', hiClose: 'Fermer',
   },
   es: {
     pomodoro: 'Pomodoro', pomodoroBack: 'Volver al Pomodoro',
@@ -1927,7 +1710,6 @@ function newGame() {
   updateUndoBtn();
   updateRestartDealBtn();
   document.getElementById('win-overlay').classList.add('hidden');
-  if (typeof hideHiScorePanel === 'function') hideHiScorePanel();
   const winSubEl = document.getElementById('win-sub');
   if (winSubEl) {
     delete winSubEl.dataset.hasScore;
@@ -2393,10 +2175,6 @@ function showWin() {
   }
   updateAutoCompleteUI();
   startCascade();
-  // Arcade board after a short beat so cascade can start
-  window.setTimeout(() => {
-    offerHiScore({ timeMs: elapsed, moves: moveCount });
-  }, 900);
 }
 
 function startCascade() {
@@ -4530,24 +4308,6 @@ function applyUIStrings(strings) {
   if (bestLabel) bestLabel.textContent = strings.best;
   if (shuffleBgLabel) shuffleBgLabel.textContent = strings.shuffleBg || SOL_UI_EN.shuffleBg;
 
-  const hiTitle = document.getElementById('hi-score-title');
-  const hiBtn = document.getElementById('hi-score-btn');
-  const hiBtnLabel = document.getElementById('hi-score-btn-label');
-  const hiEntryLabel = document.getElementById('hi-score-entry-label');
-  const hiOk = document.getElementById('hi-score-ok');
-  const hiClose = document.getElementById('hi-score-close');
-  const hiPanel = document.getElementById('hi-score-panel');
-  const hiScoresLabel = strings.hiScores || SOL_UI_EN.hiScores;
-  if (hiTitle) hiTitle.textContent = hiScoresLabel;
-  if (hiBtnLabel) hiBtnLabel.textContent = strings.hiScoreBtn || SOL_UI_EN.hiScoreBtn;
-  if (hiBtn) {
-    hiBtn.title = hiScoresLabel;
-    hiBtn.setAttribute('aria-label', hiScoresLabel);
-  }
-  if (hiPanel) hiPanel.setAttribute('aria-label', hiScoresLabel);
-  if (hiEntryLabel) hiEntryLabel.textContent = strings.newRecord || SOL_UI_EN.newRecord;
-  if (hiOk) hiOk.textContent = strings.hiOk || SOL_UI_EN.hiOk;
-  if (hiClose) hiClose.textContent = strings.hiClose || SOL_UI_EN.hiClose;
 
   const backLabel = document.getElementById('back-pomodoro-label');
   const backLink = document.getElementById('back-pomodoro-link');
@@ -5146,324 +4906,7 @@ function updateWinStats() {
   if (bestEl)   bestEl.textContent   = bestTime < Infinity ? formatTime(bestTime) : '—';
 }
 
-/* ══════════════════════════════════════════════════════════
-   HI-SCORES — low-tech, shared when possible
-   - Always localStorage (any 3 initials, no login)
-   - Merge with ./hiscores.json (shared seed / community board)
-   - Merge with / POST to Cloudflare Worker when configured
-   Rank: faster time first, then fewer moves.
-   ══════════════════════════════════════════════════════════ */
-const HI_SCORE_KEY = 'le_radar_sol_hiscores_v1';
-const HI_SCORE_REMOTE = './hiscores.json';
-const HI_SCORE_MAX = 10;
-const HI_INITIALS_LEN = 3; // classic arcade / NES high-score initials
-const HI_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-const HI_DEFAULT_NAME = 'AAA';
-
-let hiScores = [];
-let hiLetters = [0, 0, 0]; // alphabet indices
-let hiHighlightName = null;
-let hiScoresRemoteLoaded = false;
-
-function hiScoresApi() {
-  return (typeof window !== 'undefined' && window.LE_RADAR_HISCORES_API) || '';
-}
-
-function readHiScorePayload(payload) {
-  return Array.isArray(payload) ? payload : (Array.isArray(payload?.scores) ? payload.scores : []);
-}
-
-function normalizeHiEntry(e) {
-  if (!e || typeof e.name !== 'string' || !Number.isFinite(e.timeMs)) return null;
-  return {
-    name: String(e.name).toUpperCase().replace(/[^A-Z]/g, '').slice(0, HI_INITIALS_LEN).padEnd(HI_INITIALS_LEN, 'A'),
-    timeMs: Math.max(0, Math.round(e.timeMs)),
-    moves: Number.isFinite(e.moves) ? Math.max(0, Math.round(e.moves)) : 0,
-    at: e.at || 0,
-  };
-}
-
-function sortHiScoresList(list) {
-  list.sort((a, b) => {
-    if (a.timeMs !== b.timeMs) return a.timeMs - b.timeMs;
-    if (a.moves !== b.moves) return a.moves - b.moves;
-    return (a.at || 0) - (b.at || 0);
-  });
-  if (list.length > HI_SCORE_MAX) list.length = HI_SCORE_MAX;
-  return list;
-}
-
-function mergeHiScores(lists) {
-  const key = (e) => `${e.name}|${e.timeMs}|${e.moves}`;
-  const seen = new Set();
-  const out = [];
-  for (const list of lists) {
-    for (const raw of list || []) {
-      const e = normalizeHiEntry(raw);
-      if (!e) continue;
-      const k = key(e);
-      if (seen.has(k)) continue;
-      seen.add(k);
-      out.push(e);
-    }
-  }
-  return sortHiScoresList(out);
-}
-
-function loadLocalHiScores() {
-  try {
-    const raw = JSON.parse(localStorage.getItem(HI_SCORE_KEY) || '[]');
-    if (!Array.isArray(raw)) return [];
-    return raw.map(normalizeHiEntry).filter(Boolean);
-  } catch {
-    return [];
-  }
-}
-
-function loadHiScores() {
-  hiScores = mergeHiScores([loadLocalHiScores()]);
-  // Shared board — static seed plus optional Cloudflare D1 board, without blocking UI.
-  if (!hiScoresRemoteLoaded) {
-    hiScoresRemoteLoaded = true;
-    const sources = [fetch(HI_SCORE_REMOTE, { cache: 'no-store' }).then((r) => (r.ok ? r.json() : []))];
-    const api = hiScoresApi();
-    if (api) sources.push(fetch(api, { cache: 'no-store' }).then((r) => (r.ok ? r.json() : [])));
-    Promise.all(sources)
-      .then((remoteLists) => {
-        hiScores = mergeHiScores([hiScores, ...remoteLists.map(readHiScorePayload), loadLocalHiScores()]);
-        try { localStorage.setItem(HI_SCORE_KEY, JSON.stringify(hiScores)); } catch { /* */ }
-        renderHiScoreList(hiHighlightName);
-      })
-      .catch(() => { /* offline / missing file */ });
-  }
-}
-
-function sortHiScores() {
-  sortHiScoresList(hiScores);
-}
-
-function saveHiScores() {
-  try {
-    localStorage.setItem(HI_SCORE_KEY, JSON.stringify(hiScores));
-  } catch { /* quota */ }
-}
-
-function qualifiesHiScore(timeMs, moves) {
-  if (!Number.isFinite(timeMs) || timeMs <= 0) return false;
-  if (hiScores.length < HI_SCORE_MAX) return true;
-  const last = hiScores[hiScores.length - 1];
-  if (timeMs < last.timeMs) return true;
-  if (timeMs === last.timeMs && moves < last.moves) return true;
-  return false;
-}
-
-function insertHiScore(entry) {
-  const e = normalizeHiEntry(entry) || entry;
-  // Always accept any 3-letter tag — no login, no ownership check
-  hiScores.push(e);
-  sortHiScores();
-  saveHiScores();
-  // Optional Cloudflare Worker write — best effort; local score is already safe.
-  const api = hiScoresApi();
-  if (api) {
-    try {
-      fetch(api, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(e),
-        keepalive: true,
-      }).then((response) => (response.ok ? response.json() : null))
-        .then((remote) => {
-          const remoteScores = readHiScorePayload(remote);
-          if (!remoteScores.length) return;
-          hiScores = mergeHiScores([hiScores, remoteScores, loadLocalHiScores()]);
-          saveHiScores();
-          renderHiScoreList(hiHighlightName);
-        }).catch(() => { /* local already saved */ });
-    } catch { /* */ }
-  }
-}
-
-function renderHiScoreList(highlightName) {
-  const list = document.getElementById('hi-score-list');
-  const empty = document.getElementById('hi-score-empty');
-  if (!list) return;
-  list.innerHTML = '';
-  if (!hiScores.length) {
-    empty?.classList.remove('hidden');
-    return;
-  }
-  empty?.classList.add('hidden');
-  hiScores.forEach((e, i) => {
-    const li = document.createElement('li');
-    if (highlightName && e.name === highlightName && i === hiScores.findIndex((x) => x.name === highlightName && x.timeMs === e.timeMs && x.moves === e.moves)) {
-      li.classList.add('is-new');
-    }
-    li.innerHTML =
-      `<span class="hi-rank">${i + 1}.</span>` +
-      `<span class="hi-name">${e.name}</span>` +
-      `<span class="hi-time">${formatTime(e.timeMs)}</span>` +
-      `<span class="hi-moves">${e.moves}mv</span>`;
-    list.appendChild(li);
-  });
-}
-
-function syncHiLetterButtons() {
-  document.querySelectorAll('#hi-score-letters .hi-letter').forEach((btn) => {
-    const i = Number(btn.dataset.i);
-    btn.textContent = HI_ALPHABET[hiLetters[i]] || 'A';
-  });
-}
-
-function bumpHiLetter(index, dir) {
-  const n = HI_ALPHABET.length;
-  hiLetters[index] = (hiLetters[index] + dir + n) % n;
-  syncHiLetterButtons();
-}
-
-function currentHiName() {
-  return hiLetters.map((i) => HI_ALPHABET[i] || 'A').join('').slice(0, HI_INITIALS_LEN);
-}
-
-function setHiScoreBtnExpanded(open) {
-  document.getElementById('hi-score-btn')?.setAttribute('aria-expanded', open ? 'true' : 'false');
-}
-
-function showHiScorePanel({ entryMode = false, pending = null } = {}) {
-  const panel = document.getElementById('hi-score-panel');
-  const backdrop = document.getElementById('hi-score-backdrop');
-  const entry = document.getElementById('hi-score-entry');
-  if (!panel) return;
-  renderHiScoreList(hiHighlightName);
-  if (entryMode && pending) {
-    hiEntryPending = pending;
-    // Prefer last used initials if any
-    const last = hiScores[0]?.name || HI_DEFAULT_NAME;
-    hiLetters = last.split('').slice(0, HI_INITIALS_LEN).map((ch) => {
-      const idx = HI_ALPHABET.indexOf(ch);
-      return idx >= 0 ? idx : 0;
-    });
-    while (hiLetters.length < HI_INITIALS_LEN) hiLetters.push(0);
-    syncHiLetterButtons();
-    entry?.classList.remove('hidden');
-  } else {
-    hiEntryPending = null;
-    entry?.classList.add('hidden');
-  }
-  setHiScoreBtnExpanded(true);
-  backdrop?.classList.remove('hidden');
-  panel.classList.remove('hidden');
-}
-
-function hideHiScorePanel() {
-  document.getElementById('hi-score-panel')?.classList.add('hidden');
-  document.getElementById('hi-score-backdrop')?.classList.add('hidden');
-  document.getElementById('hi-score-entry')?.classList.add('hidden');
-  hiEntryPending = null;
-  setHiScoreBtnExpanded(false);
-}
-
-function offerHiScore({ timeMs, moves }) {
-  loadHiScores();
-  // Saisie des initiales uniquement si record ; pas d’auto-ouverture du classement
-  if (qualifiesHiScore(timeMs, moves)) {
-    showHiScorePanel({ entryMode: true, pending: { timeMs, moves } });
-  }
-}
-
-function confirmHiScoreEntry() {
-  if (!hiEntryPending) {
-    hideHiScorePanel();
-    return;
-  }
-  const name = currentHiName() || HI_DEFAULT_NAME;
-  insertHiScore({
-    name,
-    timeMs: hiEntryPending.timeMs,
-    moves: hiEntryPending.moves,
-    at: Date.now(),
-  });
-  hiHighlightName = name;
-  hiEntryPending = null;
-  document.getElementById('hi-score-entry')?.classList.add('hidden');
-  // Keep panel open (centered) so the new rank is visible
-  renderHiScoreList(hiHighlightName);
-}
-
-function initHiScoreUI() {
-  loadHiScores();
-  const panel = document.getElementById('hi-score-panel');
-  const backdrop = document.getElementById('hi-score-backdrop');
-  const btn = document.getElementById('hi-score-btn');
-  panel?.addEventListener('click', (e) => e.stopPropagation());
-  panel?.addEventListener('pointerdown', (e) => e.stopPropagation());
-
-  btn?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    // Toggle when browsing (not during initial entry)
-    if (panel && !panel.classList.contains('hidden') && !hiEntryPending) {
-      hideHiScorePanel();
-      return;
-    }
-    loadHiScores();
-    showHiScorePanel({ entryMode: false });
-  });
-  document.getElementById('hi-score-close')?.addEventListener('click', hideHiScorePanel);
-  document.getElementById('hi-score-ok')?.addEventListener('click', confirmHiScoreEntry);
-  // Clic sur le fond sombre = fermer (sauf pendant la saisie d’initiales)
-  backdrop?.addEventListener('click', () => {
-    if (!hiEntryPending) hideHiScorePanel();
-  });
-
-  document.getElementById('hi-score-letters')?.addEventListener('click', (e) => {
-    const spin = e.target.closest('.hi-letter-spin');
-    if (spin) {
-      bumpHiLetter(Number(spin.dataset.i), Number(spin.dataset.dir) || 1);
-      return;
-    }
-    const letter = e.target.closest('.hi-letter');
-    if (letter) bumpHiLetter(Number(letter.dataset.i), 1);
-  });
-
-  // Keyboard: Escape always closes; ← → / ↑ ↓ / Enter only in entry mode
-  document.addEventListener('keydown', (e) => {
-    if (!panel || panel.classList.contains('hidden')) return;
-    if (e.key === 'Escape') {
-      e.preventDefault();
-      hideHiScorePanel();
-      return;
-    }
-    const entry = document.getElementById('hi-score-entry');
-    if (!entry || entry.classList.contains('hidden')) return;
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      confirmHiScoreEntry();
-      return;
-    }
-    const active = document.activeElement;
-    const idx = active?.classList?.contains('hi-letter')
-      ? Number(active.dataset.i)
-      : 0;
-    if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      bumpHiLetter(idx, 1);
-    } else if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      bumpHiLetter(idx, -1);
-    } else if (e.key === 'ArrowLeft') {
-      e.preventDefault();
-      const next = Math.max(0, idx - 1);
-      document.querySelector(`.hi-letter[data-i="${next}"]`)?.focus();
-    } else if (e.key === 'ArrowRight') {
-      e.preventDefault();
-      const next = Math.min(HI_INITIALS_LEN - 1, idx + 1);
-      document.querySelector(`.hi-letter[data-i="${next}"]`)?.focus();
-    }
-  });
-}
-
 loadGameStats();
-initHiScoreUI();
 </script>
 
 <script>
