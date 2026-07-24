@@ -168,6 +168,14 @@ a { color: inherit; }
 }
 
 .masthead-date { font-weight: 600; }
+/* La date sort en deux versions dans le DOM (voir renderTodayDate) ; on bascule
+   sur la forme courte sous 480 px pour ne pas rogner les icônes. */
+.masthead-date .date-short { display: none; }
+@media (max-width: 480px) {
+  .masthead-date { font-size: 0.8rem; letter-spacing: 0.02em; }
+  .masthead-date .date-long { display: none; }
+  .masthead-date .date-short { display: inline; }
+}
 
 /* Météo — tableau de gare : plusieurs villes côte à côte. La rangée s'adapte
    à l'espace et les noms longs défilent dans leur propre case. */
@@ -261,6 +269,7 @@ a { color: inherit; }
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
 }
 
 .masthead-icon {

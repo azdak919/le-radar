@@ -65,9 +65,22 @@ function applyTheme(theme) {
 
 function renderTodayDate() {
   if (!TODAY_DATE) return;
-  TODAY_DATE.textContent = new Date().toLocaleDateString('fr-CA', {
+  const now = new Date();
+  const long = now.toLocaleDateString('fr-CA', {
     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
   });
+  const short = now.toLocaleDateString('fr-CA', {
+    day: 'numeric', month: 'short', year: 'numeric',
+  }).toUpperCase();
+  // Deux versions : le CSS bascule sur la forme courte sous 480 px.
+  TODAY_DATE.replaceChildren();
+  const longEl = document.createElement('span');
+  longEl.className = 'date-long';
+  longEl.textContent = long;
+  const shortEl = document.createElement('span');
+  shortEl.className = 'date-short';
+  shortEl.textContent = short;
+  TODAY_DATE.append(longEl, shortEl);
 }
 
 function showToast(msg) {
