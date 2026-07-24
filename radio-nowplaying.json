@@ -1,27 +1,33 @@
 {
-  "updatedAt": "2026-07-24T20:26:45.328Z",
+  "updatedAt": "2026-07-24T21:39:18.469Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les Arshitechs du Son",
         "source": "schedule",
         "start": "17:30",
         "end": "18:30",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "Capitales de Québec",
+        "source": "schedule",
+        "start": "18:50",
+        "end": "23:00",
+        "url": "https://chyz.ca/emission/capitales-de-quebec/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-24T20:26:20.432Z"
+      "checkedAt": "2026-07-24T21:38:51.639Z"
     },
     "cism": {
       "id": "cism",
@@ -51,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-24T20:26:22.594Z"
+      "checkedAt": "2026-07-24T21:38:53.887Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "New Shit",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Café",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "New Shit",
+      "showTitle": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-24T20:26:24.934Z"
+      "checkedAt": "2026-07-24T21:38:57.436Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Tapeworms",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/tapeworms"
-      },
-      "next": {
         "title": "The Groove Master's Hour",
         "source": "schedule",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
       },
+      "next": {
+        "title": "The Go-Go Radio Magic Show",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
+      },
       "track": "",
-      "showTitle": "Tapeworms",
+      "showTitle": "The Groove Master's Hour",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-24T20:26:38.255Z"
+      "checkedAt": "2026-07-24T21:39:11.407Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,18 +135,12 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-24T20:26:38.920Z"
+      "checkedAt": "2026-07-24T21:39:12.040Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Histoire de passer le temps",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:00",
-        "slug": "histoire-de-passer-le-temps"
-      },
+      "current": null,
       "next": {
         "title": "Mutations",
         "source": "api-live",
@@ -148,8 +148,8 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Genesis Owusu - 4LIFE",
-      "showTitle": "Histoire de passer le temps",
+      "track": "SamWoy - Si Vous Redo",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -159,7 +159,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-24T20:26:44.978Z"
+      "checkedAt": "2026-07-24T21:39:18.118Z"
     }
   }
 }
