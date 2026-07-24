@@ -618,6 +618,15 @@ html[data-embed="tuner"] .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowa
   color: rgba(240, 193, 78, 0.78);
 }
 
+/* L’ambre clair du thème sombre devient trop pâle sur le chrome lumineux. */
+html[data-embed="tuner"]:not([data-theme="dark"]) .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-label,
+html[data-embed="tuner"]:not([data-theme="dark"]) .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-title {
+  color: #8b5a00;
+}
+html[data-embed="tuner"]:not([data-theme="dark"]) .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-sub {
+  color: rgba(139, 90, 0, 0.82);
+}
+
 html[data-embed="tuner"] .tuner-nowair.is-empty .tuner-nowair-title {
   font-style: italic;
   font-weight: 500;

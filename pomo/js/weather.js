@@ -65,14 +65,17 @@
     const desired = primaryItem && primaryCity
       ? [{ item: primaryItem, city: primaryCity, extra: ' pomo-weather-city--primary' }]
       : [];
+    const usedWeatherIds = new Set(desired.map(({ city }) => city.id));
     const secondary = list.slice(2);
     const visible = Array.from({ length: Math.min(3, secondary.length) }, (_, i) => {
       // Slot central : une ville des Premières Nations / Inuit / Métis.
       // Les deux autres slots restent réservés aux pôles régionaux.
       const pool = secondary.map((item, index) => ({ item, city: cities[index + 2] }))
-        .filter(({ city }) => i === 1 ? city.nation : !city.nation);
+        .filter(({ city }) => (i === 1 ? city.nation : !city.nation) && !usedWeatherIds.has(city.id));
       const index = (secondaryOffsets[i] + i) % Math.max(1, pool.length);
-      return pool[index] || { item: secondary[(secondaryOffsets[i] + i) % secondary.length], city: cities[(secondaryOffsets[i] + i) % secondary.length + 2] };
+      const selected = pool[index] || pool.find(({ city }) => !usedWeatherIds.has(city.id));
+      if (selected) usedWeatherIds.add(selected.city.id);
+      return selected || { item: secondary[0], city: cities[2] };
     });
     desired.push(...visible.map(({ item, city }) => ({ item, city, extra: '' })));
     desired.forEach(({ item, city, extra }, index) => {
