@@ -876,7 +876,9 @@ function weatherIcon(code, isDay = 1) {
   const svg = (paths, className = '') => `<svg class="${className}" viewBox="0 0 24 24" aria-hidden="true">${paths}</svg>`;
   if (code === 0) return isDay
     ? svg('<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>')
-    : svg('<path d="M20 15.5A8 8 0 0 1 8.5 4 8 8 0 1 0 20 15.5Z"/>', 'weather-icon--night');
+    // Tracé de croissant explicite : l’ancien double arc pouvait être
+    // interprété comme une forme vide par Chromium dans le bandeau compact.
+    : svg('<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/>', 'weather-icon--night');
   if ([1, 2].includes(code)) return svg('<path d="M7 18h10a4 4 0 0 0 .4-8A5.5 5.5 0 0 0 7 11.5 3.3 3.3 0 0 0 7 18Z"/><path d="M8 4v2M4.5 6.5l1.4 1.4M12 3v2"/>');
   if (code === 3 || code === 45 || code === 48) return svg('<path d="M6.5 18h11a4 4 0 0 0 .4-8A5.5 5.5 0 0 0 7 11.5 3.3 3.3 0 0 0 6.5 18Z"/>');
   if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return svg('<path d="M6.5 15h11a4 4 0 0 0 .4-8A5.5 5.5 0 0 0 7 8.5 3.3 3.3 0 0 0 6.5 15Z"/><path d="m8 18-1 2m5-2-1 2m5-2-1 2"/>');
