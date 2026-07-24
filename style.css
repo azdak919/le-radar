@@ -169,9 +169,11 @@ a { color: inherit; }
 
 .masthead-date { font-weight: 600; }
 /* La date sort en deux versions dans le DOM (voir renderTodayDate) ; on bascule
-   sur la forme courte sous 480 px pour ne pas rogner les icônes. */
+   sur la forme courte sous 560 px : sous 480 px elle évitait déjà de rogner les
+   icônes, et entre 480 et 560 px la forme longue reprenait à la météo l'espace
+   qu'il lui faut pour afficher sa première carte compacte (~460 px et plus). */
 .masthead-date .date-short { display: none; }
-@media (max-width: 480px) {
+@media (max-width: 559.98px) {
   .masthead-date { font-size: 0.8rem; letter-spacing: 0.02em; }
   .masthead-date .date-long { display: none; }
   .masthead-date .date-short { display: inline; }
