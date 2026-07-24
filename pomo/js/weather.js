@@ -9,10 +9,12 @@
     { id: 'saguenay', name: 'Saguenay', lat: 48.4280, lon: -71.0686 },
   ];
   const nationIds = new Set(['odanak', 'kitigan-zibi', 'manawan', 'nemaska', 'wendake', 'uashat', 'kuujjuaq', 'cacouna', 'gesgapegiag', 'kahnawake', 'kawawachikamach']);
-  let rotationIndex = 0;
+  // Aucun démarrage figé : sinon chaque ouverture du Pomo affiche toujours
+  // le même trio (Sherbrooke/Manawan/Roberval) avant la première rotation.
+  let rotationIndex = Math.random() < 0.5 ? 0 : 1;
   let latestEntries = null;
   const WEATHER_CACHE_KEY = 'pomo-weather-cache-v1';
-  const secondaryOffsets = [0, 1, 2];
+  const secondaryOffsets = [0, 0, 0].map(() => Math.floor(Math.random() * 1000));
   const slotTimers = [];
   // Le catalogue de référence reste celui du Radar principal. On le lit
   // depuis app.js pour éviter de maintenir une seconde liste de 47 villes.

@@ -1002,13 +1002,12 @@ function nextWeatherCity(group, usedIds) {
     if (group === 'nation') {
       deck = shuffleWeatherCities(eligible);
     } else {
-      const priority = eligible
-        .filter((city) => MASTHEAD_WEATHER_REGIONAL_RANK.has(city.id))
-        .sort((a, b) => MASTHEAD_WEATHER_REGIONAL_RANK.get(a.id) - MASTHEAD_WEATHER_REGIONAL_RANK.get(b.id));
+      const priority = eligible.filter((city) => MASTHEAD_WEATHER_REGIONAL_RANK.has(city.id));
       const remaining = eligible.filter((city) => !MASTHEAD_WEATHER_REGIONAL_RANK.has(city.id));
-      // Les deux premiers pôles universitaires restent prioritaires; ensuite,
-      // les villes régionales sont brassées pour éviter une séquence figée.
-      deck = [...priority.slice(0, 2), ...shuffleWeatherCities([...priority.slice(2), ...remaining])];
+      // Les six pôles régionaux (Gatineau compris) passent tous devant le
+      // reste : brassés entre eux pour éviter une séquence figée, mais sans
+      // jamais être noyés dans le grand bassin des petites municipalités.
+      deck = [...shuffleWeatherCities(priority), ...shuffleWeatherCities(remaining)];
     }
   }
   const city = deck.shift();
