@@ -219,7 +219,7 @@ a { color: inherit; }
 .masthead-weather__city:hover { border-color: color-mix(in srgb, var(--weather-tone, var(--accent)) 68%, var(--rule)); background-color: color-mix(in srgb, var(--bg-soft) 76%, var(--weather-tone, var(--accent)) 24%); }
 .masthead-weather__icon { flex: 0 0 15px; width: 15px; color: var(--weather-tone, var(--accent)); line-height: 1; text-align: center; }
 .masthead-weather__icon svg { display: block; width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.masthead-weather__icon svg.weather-icon--night { stroke-width: 2.45; }
+.masthead-weather__icon svg.weather-icon--night { fill: currentColor; stroke: none; }
 .masthead-weather__name { display: block; flex: 1 1 auto; min-width: 0; overflow: hidden; }
 .masthead-weather__name-text { display: inline-block; white-space: nowrap; }
 .masthead-weather__name-compact { display: none; }
