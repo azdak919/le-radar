@@ -872,7 +872,9 @@ const WEATHER_CITIES = [
   { id: 'kawawachikamach', name: 'Kawawachikamach', nation: 'Naskapi', lat: 55.3400, lon: -66.8500, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/kawawachikamach/actuelle' },
 ];
 
-const METEOCONS_BASE = '/assets/meteocons/';
+// Radar principal : variante remplie et animée. Le Pomo pointe explicitement
+// vers /assets/meteocons/ pour rester statique et discret.
+const METEOCONS_BASE = '/assets/meteocons/animated/';
 function weatherIcon(code, isDay = 1) {
   const day = !!isDay;
   let name = day ? 'overcast-day' : 'overcast-night';
