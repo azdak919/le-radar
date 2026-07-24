@@ -1077,7 +1077,7 @@ async function switchLanguage(langCode, { radarMode = langCode, persist = true }
     const quote = QUOTES[currentQuoteIdx];
     document.getElementById('quote-text').textContent = quote.text;
     const a = quote.authorEn || quote.author;
-    document.getElementById('quote-author').textContent = cleanTranslation(a);
+    document.getElementById('quote-author').textContent = quoteAuthorDisplay(a);
     applyUIStrings(UI_STRINGS.en);
     setLanguageStatus('');
     scheduleQuoteLayout();
@@ -1089,7 +1089,7 @@ async function switchLanguage(langCode, { radarMode = langCode, persist = true }
   const currentQuote = QUOTES[currentQuoteIdx];
   if (currentQuote) {
     const a = currentQuote.authorEn || currentQuote.author;
-    document.getElementById('quote-author').textContent = cleanTranslation(a);
+    document.getElementById('quote-author').textContent = quoteAuthorDisplay(a);
   }
 
   setLanguageStatus('Translating…');

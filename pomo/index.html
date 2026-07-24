@@ -26,7 +26,7 @@
   } catch (e) {}
 })();
 </script>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cloud.umami.is; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://images.unsplash.com https://images.pexels.com https://upload.wikimedia.org https://commons.wikimedia.org; connect-src 'self' https://api.mymemory.translated.net https://translate.googleapis.com https://libretranslate.com https://cloud.umami.is https://gateway.umami.is; frame-src 'self' https://le-radar.ca https://azdak919.github.io http://127.0.0.1:8888 http://localhost:8888 http://127.0.0.1:8080 http://localhost:8080; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cloud.umami.is; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://images.unsplash.com https://images.pexels.com https://upload.wikimedia.org https://commons.wikimedia.org; connect-src 'self' https://api.mymemory.translated.net https://translate.googleapis.com https://libretranslate.com https://api.open-meteo.com https://cloud.umami.is https://gateway.umami.is; frame-src 'self' https://le-radar.ca https://azdak919.github.io http://127.0.0.1:8888 http://localhost:8888 http://127.0.0.1:8080 http://localhost:8080; object-src 'none'; base-uri 'self'; form-action 'none'">
 
 <!-- Open Source Fonts from Google Fonts -->
 
@@ -132,6 +132,10 @@
       allow="autoplay; encrypted-media"
       referrerpolicy="no-referrer-when-downgrade"
     ></iframe>
+  </div>
+
+  <div class="app-toolbar-weather" id="pomo-weather" aria-label="Météo régionale" aria-live="polite">
+    <div class="pomo-weather-board" data-weather-board><span class="pomo-weather-loading">Météo…</span></div>
   </div>
 </nav>
 
@@ -325,6 +329,7 @@
 <script src="js/pomo.js"></script>
 <script src="js/backgrounds.js"></script>
 <script src="js/quotes.js"></script>
+<script src="js/weather.js"></script>
 <script src="../translate-menu.js"></script>
 <script src="js/translate.js"></script>
 <script src="js/panels.js"></script>

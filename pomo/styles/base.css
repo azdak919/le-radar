@@ -240,6 +240,32 @@
     opacity: 1;
   }
 
+  /* Barre météo régionale — seconde rangée du menu Pomodoro. */
+  .app-toolbar-weather {
+    display: flex;
+    align-items: center;
+    min-height: 2rem;
+    margin-top: 0.2rem;
+    padding: 0.2rem 0.25rem 0.05rem;
+    border-top: 1px solid var(--chrome-rule);
+    color: var(--chrome-text);
+    overflow: hidden;
+  }
+
+  .pomo-weather-board { display: flex; align-items: center; gap: 0.45rem; min-width: 0; width: 100%; overflow: hidden; }
+  .pomo-weather-city { display: inline-flex; align-items: center; gap: 0.3rem; min-width: 0; flex: 1 1 0; padding: 0.25rem 0.5rem; border: 1px solid var(--chrome-rule); border-radius: 999px; font-size: 0.65rem; white-space: nowrap; overflow: hidden; animation: pomoWeatherArrive 720ms cubic-bezier(.22, .8, .28, 1) both; transition: background-color 500ms ease, border-color 500ms ease; }
+  .pomo-weather-city--primary { flex: 0.82 1 0; }
+  .pomo-weather-icon { color: var(--accent); font-size: 0.9rem; line-height: 1; }
+  .pomo-weather-name { overflow: hidden; text-overflow: ellipsis; color: var(--text-secondary); }
+  .pomo-weather-temp { margin-left: auto; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+  .pomo-weather-loading { color: var(--text-muted); font-size: 0.65rem; }
+  @keyframes pomoWeatherArrive { from { opacity: 0; transform: translateX(5px); } to { opacity: 1; transform: translateX(0); } }
+  @media (prefers-reduced-motion: reduce) { .pomo-weather-city { animation: none; } }
+
+  @media (max-width: 600px) {
+    .pomo-weather-city:nth-child(n+3) { display: none; }
+  }
+
   .app-toolbar-divider {
     width: 1px;
     height: 1.25rem;
@@ -1135,6 +1161,21 @@
     transform: scale(0.93);
   }
 
+  /* Thème clair : les valeurs blanches du bandeau sombre disparaissaient
+     sur la surface ivoire (recommencer et réglages). */
+  html:not([data-theme="dark"]) .pomo-widget .pomo-btn--secondary {
+    color: var(--text-primary);
+    border-color: rgba(92, 76, 58, 0.28);
+    background: rgba(92, 76, 58, 0.08);
+  }
+
+  html:not([data-theme="dark"]) .pomo-widget .pomo-btn--secondary:hover,
+  html:not([data-theme="dark"]) .pomo-widget .pomo-btn--secondary:active {
+    color: var(--text-primary);
+    border-color: rgba(92, 76, 58, 0.42);
+    background: rgba(92, 76, 58, 0.15);
+  }
+
   .pomo-btn svg {
     fill: currentColor;
   }
@@ -1601,9 +1642,14 @@
 
   .pomo-fullpage-overlay .pomo-phase-ready-label {
     margin: 0;
-    width: 28em;
-    max-width: 100%;
+    width: min(28em, calc(100vw - 2rem));
+    max-width: calc(100vw - 2rem);
     font-size: 1.5em !important;
+    box-sizing: border-box;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .pomo-fullpage-overlay .pomo-phase-ready-label:not(.visible) {

@@ -19,15 +19,20 @@ html[data-embed="tuner"] {
   --embed-cols: minmax(0, 2.1fr) minmax(160px, 0.9fr);
   /* Le cadre est transparent : ces couleurs suivent le chrome parent. */
   --embed-ink: #3a3028;
-  --embed-muted: rgba(58, 48, 40, 0.62);
-  --embed-muted-strong: rgba(58, 48, 40, 0.82);
+  --embed-muted: rgba(58, 48, 40, 0.66);
+  --embed-muted-strong: rgba(58, 48, 40, 0.86);
+  /* Un léger voile clair détache les commandes du chrome translucide parent. */
+  /* Repos clair : une teinte chaude minimale évite le blanc sur blanc. */
   --embed-control-bg: rgba(92, 76, 58, 0.10);
   --embed-control-bg-hover: rgba(92, 76, 58, 0.16);
-  --embed-control-border: rgba(92, 76, 58, 0.24);
-  --embed-control-border-hover: rgba(92, 76, 58, 0.38);
+  --embed-control-border: rgba(92, 76, 58, 0.28);
+  --embed-control-border-hover: rgba(92, 76, 58, 0.42);
   --embed-radio: #1f67ad;
   --tuner-onair-live: #c8102e;
   --tuner-onair-idle: var(--embed-muted);
+  --embed-live-border: rgba(200, 16, 46, 0.68);
+  --embed-live-bg: rgba(200, 16, 46, 0.075);
+  --embed-live-ring: rgba(200, 16, 46, 0.16);
   color-scheme: normal;
   background: transparent !important;
   overflow: hidden;
@@ -45,7 +50,13 @@ html[data-embed="tuner"][data-theme="dark"] {
   --embed-control-border-hover: rgba(255, 255, 255, 0.28);
   --embed-radio: #8eb8ff;
   --tuner-onair-live: #ff7d6e;
-  color-scheme: dark;
+  --embed-live-border: rgba(255, 125, 110, 0.7);
+  --embed-live-bg: rgba(200, 16, 46, 0.1);
+  --embed-live-ring: rgba(200, 16, 46, 0.22);
+  /* Le color-scheme sombre peut faire peindre au navigateur une toile opaque
+     dans l'iframe, même lorsque html/body sont transparents. Les contrôles
+     ont déjà leurs couleurs explicites ci-dessus. */
+  color-scheme: normal;
 }
 
 html[data-embed="tuner"] body {
@@ -74,6 +85,14 @@ html[data-embed="tuner"] .tuner {
   max-height: var(--embed-bar-h);
   min-height: var(--embed-bar-h);
   box-sizing: border-box;
+  /* style.css les définit sur .tuner pour le bandeau sombre du site. Les
+     redéfinir ici évite qu'ils écrasent le thème clair de l'iframe. */
+  --tuner-onair-live: #c8102e;
+  --tuner-onair-idle: var(--embed-muted);
+}
+
+html[data-embed="tuner"][data-theme="dark"] .tuner {
+  --tuner-onair-live: #ff7d6e;
 }
 
 html[data-embed="tuner"] .tuner-inner {
@@ -315,9 +334,9 @@ html[data-embed="tuner"] .tuner-now .is-marquee > .tuner-now-sub-text {
 
 /* Lecture : contour coral (site tous formats) */
 html[data-embed="tuner"] .tuner.is-playing .tuner-now {
-  border-color: rgba(255, 125, 110, 0.7);
-  background: rgba(200, 16, 46, 0.1);
-  box-shadow: 0 0 0 1px rgba(200, 16, 46, 0.22);
+  border-color: var(--embed-live-border);
+  background: var(--embed-live-bg);
+  box-shadow: 0 0 0 1px var(--embed-live-ring);
 }
 
 html[data-embed="tuner"] .tuner.is-playing .tuner-dial:hover .tuner-now {
@@ -461,6 +480,25 @@ html[data-embed="tuner"] .tuner-vol-slider {
 
 html[data-embed="tuner"] .tuner-vol-labels {
   display: none !important;
+}
+
+/* Volume clair : le rail hérité du bandeau sombre (blanc translucide) se
+   perdait sur le chrome ivoire. */
+html[data-embed="tuner"]:not([data-theme="dark"]) .tuner-vol-rail {
+  background: rgba(92, 76, 58, 0.22);
+}
+
+html[data-embed="tuner"]:not([data-theme="dark"]) .tuner-vol-tick {
+  background: rgba(58, 48, 40, 0.34);
+}
+
+html[data-embed="tuner"]:not([data-theme="dark"]) .tuner-vol-tick--100 {
+  background: rgba(58, 48, 40, 0.56);
+}
+
+html[data-embed="tuner"]:not([data-theme="dark"]) .tuner-vol-thumb {
+  border-color: rgba(58, 48, 40, 0.30);
+  box-shadow: 0 1px 6px rgba(44, 40, 36, 0.28);
 }
 
 /* Cast / EQ : hors barre embed */
