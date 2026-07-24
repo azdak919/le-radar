@@ -1,0 +1,51 @@
+# Météo partagée — cache + repli
+
+Chaque visiteur appelait Open-Meteo directement depuis son navigateur pour la
+météo du masthead et du Pomo. À l'échelle du site, ça épuise le quota gratuit
+et anonyme d'Open-Meteo (`429 — Daily API request limit exceeded`), et la
+météo disparaît partout en même temps, pour tout le monde.
+
+Ce Worker sert de cache partagé devant Open-Meteo (~15 min, comme le cache
+`localStorage` déjà côté client) : l'API d'origine n'est donc appelée qu'une
+fois par fenêtre de cache pour tout le site, pas une fois par visiteur. Si
+Open-Meteo échoue quand même, le Worker bascule sur MET Norway
+(`api.met.no`), gratuite, sans clé, et sans quota comparable.
+
+## Déploiement initial
+
+Depuis ce dossier, après avoir créé un compte Cloudflare gratuit (le même que
+pour `le-radar-scores` si tu l'as déjà) :
+
+```bash
+npx wrangler login
+npx wrangler deploy
+```
+
+**Pas de domaine personnalisé ici** : `le-radar.ca` reste hébergé chez WHC
+(DNS jamais migré vers Cloudflare malgré
+[`../../docs/cloudflare-dns-migration.md`](../../docs/cloudflare-dns-migration.md)),
+donc pas de zone Cloudflare pour attacher `weather.le-radar.ca`. Le Worker
+tourne à la place sur le sous-domaine `workers.dev` du compte
+(`workers_dev = true`) : `https://le-radar-weather.azdak.workers.dev`.
+
+`app.js` et `pomo/js/weather.js` pointent déjà vers cette URL — rien d'autre à
+changer côté site. Si `le-radar.ca` est un jour vraiment migré vers
+Cloudflare, on pourra repasser à un domaine personnalisé (`workers_dev = false`
++ Add Domain) et mettre à jour ces deux fichiers.
+
+## API
+
+- `GET /v1/forecast?latitude=..,..&longitude=..,..&current=temperature_2m,weather_code,is_day&temperature_unit=celsius&timezone=America/Toronto`
+  — même forme de requête et de réponse qu'Open-Meteo (un tableau
+  `{ current: { temperature_2m, weather_code, is_day } }`, un élément par
+  coordonnée, dans le même ordre). Les deux vitrines (masthead + Pomo)
+  envoient toujours la même liste de 47 villes, donc la même clé de cache.
+
+## Vérification
+
+```bash
+curl -fsS "https://le-radar-weather.azdak.workers.dev/v1/forecast?latitude=45.5,46.8&longitude=-73.6,-71.2&current=temperature_2m,weather_code,is_day"
+```
+
+La réponse doit être un tableau de deux objets `{"current":{...}}` avec des
+températures plausibles.

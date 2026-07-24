@@ -181,7 +181,7 @@ a { color: inherit; }
   color: var(--ink-soft);
   white-space: nowrap;
 }
-.masthead-weather.is-too-narrow { display: none !important; }
+.masthead-weather.is-too-narrow:not(.masthead-weather--docked) { display: none !important; }
 .masthead-weather__board {
   position: relative;
   display: grid;
@@ -244,9 +244,25 @@ a { color: inherit; }
   .masthead-weather { display: inline-flex; grid-area: weather; width: 100%; justify-self: stretch; }
   .masthead-actions { grid-area: actions; justify-self: end; }
 }
-@media (max-width: 359.98px) { .masthead-weather { display: none !important; } }
+@media (max-width: 359.98px) { .masthead-weather:not(.masthead-weather--docked) { display: none !important; } }
 .masthead-weather__city.is-compact .masthead-weather__name-full { display: none; }
 .masthead-weather__city.is-compact .masthead-weather__name-compact { display: inline; }
+
+/* Repli mobile : la météo dockée sous le syntoniseur garde la carte du
+   bureau, juste dans un conteneur pleine largeur plutôt qu'une cellule de
+   grille du masthead. */
+.masthead-weather-dock { display: none; }
+.masthead-weather-dock:not(:empty) {
+  display: block;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 10px var(--pad) 0;
+}
+.masthead-weather--docked {
+  display: inline-flex !important;
+  width: 100%;
+  justify-content: flex-start;
+}
 @keyframes weather-name-scroll {
   0%, 28% { transform: translateX(0); }
   72%, 100% { transform: translateX(calc(var(--weather-scroll, 0) * -1)); }
@@ -308,7 +324,7 @@ a { color: inherit; }
     /* Récupère quelques px du padding page pour la date. */
     margin-inline: -6px;
   }
-  .masthead-weather { display: none !important; }
+  .masthead-weather:not(.masthead-weather--docked) { display: none !important; }
   .masthead-date {
     font-size: 10.5px;
     letter-spacing: 0.02em;
@@ -426,7 +442,6 @@ a { color: inherit; }
   vertical-align: -.08em;
   object-fit: contain;
 }
-.wordmark-logo--mirror { transform: scaleX(-1); }
 .wordmark-emoji {
   font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
   font-weight: 400;
@@ -453,7 +468,6 @@ a { color: inherit; }
   hyphens: none;
 }
 @media (max-width: 480px) {
-  .wordmark-logo--mirror { display: none !important; }
   .wordmark-logo { width: .72em; height: .72em; margin-right: .1em; }
 }
 
@@ -2006,10 +2020,11 @@ html[data-translate-busy="1"] .translate-toggle {
   );
 }
 
-/* Tablette / téléphone en portrait : 2 rangées (moins de largeur pour les pastilles). */
+/* app.js pilote --filters-collapsed-rows via style inline (voir
+   FILTERS_COLLAPSED_ROWS_*) ; repli si JS désactivé, même valeur partout. */
 @media (max-width: 1099.98px) and (orientation: portrait) {
   .filters-panel {
-    --filters-collapsed-rows: 2;
+    --filters-collapsed-rows: 1;
   }
 }
 
@@ -2019,8 +2034,13 @@ html[data-translate-busy="1"] .translate-toggle {
  * puis fondu/flou en bas — pas un flou opaque sur le nom.
  */
 .filters-panel {
-  /* ~ pastille : pad-top + nom (12px/1.2) + un peu d’air */
-  --filters-peek: 30px;
+  /* Hauteur du *titre* seul (pad-top 6px + nom 12px/1.2 ≈ 14px) : cette
+     partie du peek reste toujours nette. */
+  --filters-title-h: 20px;
+  /* Titre net + un aperçu flouté du nom d'institution en dessous (pas assez
+     pour le lire, juste pour indiquer qu'il y en a un) — sans montrer une
+     rangée pleine en trop (30px) ni rien du tout (10px). */
+  --filters-peek: 34px;
 }
 
 .filters-panel:not(.is-expanded):not(.is-compact) .filters {
@@ -2048,9 +2068,10 @@ html[data-translate-busy="1"] .translate-toggle {
   position: absolute;
   left: 0;
   right: 0;
-  /* Commence un peu sous le haut du peek pour ne pas noyer le nom */
-  top: calc(var(--filters-collapsed-h) + 10px);
-  height: calc(var(--filters-peek) - 8px);
+  /* Commence juste sous le titre (net) : le nom d'institution qui suit,
+     lui, est flouté/estompé jusqu'à la coupure. */
+  top: calc(var(--filters-collapsed-h) + var(--filters-title-h));
+  height: calc(var(--filters-peek) - var(--filters-title-h));
   z-index: 2;
   pointer-events: none;
   background: linear-gradient(

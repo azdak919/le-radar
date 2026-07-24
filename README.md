@@ -2,7 +2,7 @@
 
 > *Les médias étudiants du Québec, sur ton radar • Student media on your radar.*
 
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://azdak919.github.io/le-radar/)
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://le-radar.ca/)
 ![PWA](https://img.shields.io/badge/PWA-ready-blue)
 ![License](https://img.shields.io/badge/license-GPL--2.0-green)
 
@@ -10,7 +10,7 @@
 
 Version courante du dépôt : **1.0.0** — voir le [journal des modifications](CHANGELOG.md).
 
-**→ [Essayer LE RADAR maintenant](https://azdak919.github.io/le-radar/)**
+**→ [Essayer LE RADAR maintenant](https://le-radar.ca/)**
 
 > Projet non officiel. Le Radar n’est affilié à aucun des médias listés.
 
@@ -100,8 +100,8 @@ Solitaire.
 
 Pour publier le site principal, pousse les changements validés sur `main` :
 GitHub Pages déploie directement cette branche sur
-<https://azdak919.github.io/le-radar/>. Le fichier `CNAME` conserve le domaine
-personnalisé lorsqu’il est configuré. Avant une publication, exécute `npm test`;
+<https://le-radar.ca/> (domaine personnalisé, via le fichier `CNAME`). Avant une
+publication, exécute `npm test`;
 le workflow **Quality Gate** rejoue ces vérifications sur les modifications de
 code. Les Workers Cloudflare se déploient séparément depuis leurs dossiers et
 selon leurs README respectifs.
@@ -192,11 +192,9 @@ Signale aussi les liens cassés, flux morts ou sources manquantes.
 
 ## Crédits et contenus
 
-**Auteur du code** — [Charles Tison](https://github.com/azdak919) (2026)
+**Auteur du code** — Azdak (2026)
 
-Sur le site public, le crédit affiché est **[Azdak](https://www.buymeacoffee.com/azdak)**.
-
-**Contact du projet** — [chtis6@ulaval.ca](mailto:chtis6@ulaval.ca)
+**Contact du projet** — [azdak-qc@proton.me](mailto:azdak-qc@proton.me)
 
 Code libre utilisé conformément aux licences applicables; contenus et médias crédités à leurs auteurs respectifs.
 

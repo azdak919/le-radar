@@ -26,7 +26,7 @@
   } catch (e) {}
 })();
 </script>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cloud.umami.is; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://images.unsplash.com https://images.pexels.com https://upload.wikimedia.org https://commons.wikimedia.org; connect-src 'self' https://api.mymemory.translated.net https://translate.googleapis.com https://libretranslate.com https://api.open-meteo.com https://cloud.umami.is https://gateway.umami.is; frame-src 'self' https://le-radar.ca https://azdak919.github.io http://127.0.0.1:8888 http://localhost:8888 http://127.0.0.1:8080 http://localhost:8080; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cloud.umami.is; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://images.unsplash.com https://images.pexels.com https://upload.wikimedia.org https://commons.wikimedia.org; connect-src 'self' https://api.mymemory.translated.net https://translate.googleapis.com https://libretranslate.com https://le-radar-weather.azdak.workers.dev https://cloud.umami.is https://gateway.umami.is; frame-src 'self' https://le-radar.ca https://azdak919.github.io http://127.0.0.1:8888 http://localhost:8888 http://127.0.0.1:8080 http://localhost:8080; object-src 'none'; base-uri 'self'; form-action 'none'">
 
 <!-- Open Source Fonts from Google Fonts -->
 
@@ -95,12 +95,18 @@
       <span id="radar-btn-label">Le Radar</span>
     </a>
     <a class="toolbar-btn" id="solitaire-btn" href="../solitaire/" aria-label="Play Solitaire">
-      <img class="app-emoji" src="../assets/emoji/joker.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+      <img class="app-emoji" src="../assets/emoji/playing-cards.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
       <span id="solitaire-btn-label">Solitaire</span>
     </a>
-    <a class="toolbar-btn" id="coffee-btn" href="https://www.buymeacoffee.com/azdak"
-       target="_blank" rel="noopener noreferrer" aria-label="Buy me a coffee">
-      <img class="app-emoji" src="../assets/emoji/coffee.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+    <a class="toolbar-btn toolbar-btn--coffee" id="coffee-btn" href="https://www.buymeacoffee.com/azdak"
+       target="_blank" rel="noopener noreferrer" title="Buy me a coffee" aria-label="Buy me a coffee">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path fill="none" d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+        <path fill="none" d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+        <line fill="none" x1="6" y1="1" x2="6" y2="4"/>
+        <line fill="none" x1="10" y1="1" x2="10" y2="4"/>
+        <line fill="none" x1="14" y1="1" x2="14" y2="4"/>
+      </svg>
       <span id="coffee-btn-label">Buy me a coffee</span>
     </a>
     </div>

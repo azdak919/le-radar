@@ -923,7 +923,14 @@ function applyUIStrings(strings) {
   if (radarLabel) radarLabel.textContent = strings.radarBtn || 'Le Radar';
   if (solitaireBtn) solitaireBtn.setAttribute('aria-label', strings.solitaireBtn || 'Solitaire');
   if (radarBtn) radarBtn.setAttribute('aria-label', strings.radarBtn || 'Le Radar');
-  document.getElementById('coffee-btn-label').textContent = strings.coffeeBtn || 'Buy me a coffee';
+  const coffeeBtn = document.getElementById('coffee-btn');
+  const coffeeLabelEl = document.getElementById('coffee-btn-label');
+  if (coffeeBtn) {
+    const coffeeLabel = strings.coffeeBtn || 'Buy me a coffee';
+    coffeeBtn.title = coffeeLabel;
+    coffeeBtn.setAttribute('aria-label', coffeeLabel);
+    if (coffeeLabelEl) coffeeLabelEl.textContent = coffeeLabel;
+  }
   const homeReloadBtn = document.getElementById('home-reload-btn');
   if (homeReloadBtn) homeReloadBtn.setAttribute('aria-label', strings.homeReload || 'Reload page');
 
