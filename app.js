@@ -3958,9 +3958,12 @@ function updateMediaSession(radio, { title, sub } = {}) {
     title: meta.title,
     artist: meta.artist,
     album: meta.album,
+    // Artwork opaque et carré : sur l'écran verrouillé iOS, les coins arrondis
+    // transparents des icônes d'accueil apparaissaient en blanc. iOS arrondit
+    // lui-même les coins de la pochette « À l'écoute ».
     artwork: [
-      { src: assetUrl('assets/icon-192.png'), sizes: '192x192', type: 'image/png' },
-      { src: assetUrl('assets/icon-512.png'), sizes: '512x512', type: 'image/png' },
+      { src: assetUrl('assets/icon-artwork-192.png'), sizes: '192x192', type: 'image/png' },
+      { src: assetUrl('assets/icon-artwork-512.png'), sizes: '512x512', type: 'image/png' },
     ],
   });
 }

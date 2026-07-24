@@ -374,9 +374,11 @@
       navigator.mediaSession.metadata = new MediaMetadata({
         title: `${phase} · ${remaining}m remaining`,
         artist: 'Pomodoro — Le Radar',
+        // Artwork opaque : évite les coins blancs de l'écran verrouillé iOS,
+        // qui peint en blanc les coins arrondis transparents des icônes.
         artwork: [
-          { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
-          { src: 'icon-512.png', sizes: '512x512', type: 'image/png' },
+          { src: 'icon-artwork-192.png', sizes: '192x192', type: 'image/png' },
+          { src: 'icon-artwork-512.png', sizes: '512x512', type: 'image/png' },
         ],
       });
 
