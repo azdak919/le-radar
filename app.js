@@ -1174,7 +1174,9 @@ function readWeatherCache() {
 }
 
 async function initMastheadWeather() {
-  if (!MASTHEAD_WEATHER || window.innerWidth < 620) return;
+  // Le CSS compacte le bandeau jusqu'à 360 px ; ne pas empêcher le chargement
+  // sur téléphone, où une seule ville prioritaire reste affichée.
+  if (!MASTHEAD_WEATHER || window.innerWidth < 360) return;
   const cached = readWeatherCache();
   if (cached) renderMastheadWeather(cached);
   try {
