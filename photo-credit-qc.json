@@ -1,15 +1,23 @@
 {
-  "updated": "2026-07-24T19:05:07.185Z",
+  "updated": "2026-07-24T21:00:02.229Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 128,
+  "cited": 127,
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 0,
-  "updatedCount": 0,
+  "checked": 1,
+  "updatedCount": 1,
   "citedNew": 0,
-  "fallbackNew": 0,
-  "samples": []
+  "fallbackNew": 1,
+  "samples": [
+    {
+      "title": "Des initiatives qui rassemblent",
+      "source": "Le Délit",
+      "credit": "Crédit photo : Le Délit",
+      "cited": false,
+      "method": null
+    }
+  ]
 }
