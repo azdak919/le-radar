@@ -399,7 +399,10 @@ let choqAirRotateShowUpcoming = false;
 let nowAirCrossfadePending = false;
 /** Incrémenté à chaque fondu pour annuler les timeouts obsolètes. */
 let nowAirFadeGen = 0;
-const TUNER_SUB_ROTATE_MS = 8000;
+// L’iframe du Pomodoro est un espace de concentration : laisser chaque
+// station / émission lisible plus longtemps avant de passer à la suivante.
+// La page Radar conserve son rythme plus vif.
+const TUNER_SUB_ROTATE_MS = IS_TUNER_EMBED ? 14000 : 8000;
 const TUNER_SUB_ROTATE_NARROW_MS = 14000;
 const TUNER_SUB_ROTATE_VERY_NARROW_MS = 18000;
 const CHOQ_AIR_ROTATE_MS = 8000;
