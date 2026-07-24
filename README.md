@@ -196,6 +196,8 @@ Signale aussi les liens cassés, flux morts ou sources manquantes.
 
 Sur le site public, le crédit affiché est **[Azdak](https://www.buymeacoffee.com/azdak)**.
 
+**Contact du projet** — [chtis6@ulaval.ca](mailto:chtis6@ulaval.ca)
+
 Code libre utilisé conformément aux licences applicables; contenus et médias crédités à leurs auteurs respectifs.
 
 🤖 **Agrégateur automatisé de contenus** — Le Radar collecte et reformate des publications étudiantes tierces (titres, brèves, liens, métadonnées). Chaque article renvoie vers sa source originale. Les radios et journaux listés restent propriété de leurs équipes respectives.
