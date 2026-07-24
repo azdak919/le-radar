@@ -34,7 +34,7 @@
 .radar-translate-control--app .translate-toggle {
   border: 0;
   background: transparent;
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--chrome-text, rgba(255, 255, 255, 0.72));
   /* Les mini-apps ont leur propre chrome : reprendre exactement sa métrique
      plutôt que la taille héritée du document (souvent 16 px). */
   font-family: var(--font-body, var(--sans, system-ui, sans-serif));
@@ -48,8 +48,8 @@
 .radar-translate-control--app .translate-toggle:hover,
 .radar-translate-control--app .translate-toggle[aria-expanded="true"] {
   border-color: transparent;
-  color: rgba(255, 255, 255, 0.95);
-  background: rgba(255, 255, 255, 0.1);
+  color: var(--chrome-text-strong, rgba(255, 255, 255, 0.95));
+  background: var(--chrome-hover, rgba(255, 255, 255, 0.1));
 }
 
 .translate-toggle__icon,
@@ -223,7 +223,7 @@ html[data-translate-busy="1"] .translate-toggle { opacity: 0.75; pointer-events:
 @media (hover: none) {
   .radar-translate-control--app .translate-toggle:hover:not([aria-expanded="true"]) {
     background: transparent;
-    color: rgba(255, 255, 255, 0.72);
+    color: var(--chrome-text, rgba(255, 255, 255, 0.72));
   }
 }
 

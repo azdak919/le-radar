@@ -322,9 +322,9 @@ html[data-layout="wide"] .content:has(.is-minimized) {
   justify-content: center;
   gap: var(--credits-gap);
   text-align: center;
-  color: rgba(255, 255, 255, 0.75);
+  color: var(--credits-text);
   font: 300 var(--credits-font-size)/1.35 var(--font-body);
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: var(--credits-text-shadow);
   background: var(--chrome-surface-bg);
   border: 1px solid var(--chrome-surface-border);
   border-radius: 20px;

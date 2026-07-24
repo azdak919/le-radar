@@ -58,10 +58,14 @@
       --settings-border: rgba(160, 148, 132, 0.45);
       --chrome-surface-bg: rgba(250, 247, 242, 0.82);
       --chrome-surface-border: rgba(92, 76, 58, 0.28);
-      --chrome-text: #3a3028;
+      --chrome-text: #2c2824;
       --chrome-text-strong: #1f1a16;
       --chrome-rule: rgba(92, 76, 58, 0.2);
       --chrome-hover: rgba(92, 76, 58, 0.12);
+      --chrome-surface-hover: rgba(250, 247, 242, 0.94);
+      --credits-text: #4b4036;
+      --credits-text-strong: #2c2824;
+      --credits-text-shadow: 0 1px 2px rgba(255, 255, 255, 0.72);
 
       /* Card colours */
       --card-face:           #ffffff;
@@ -71,13 +75,15 @@
       --card-black:          #1a1a1a;
       --card-border:         rgba(120, 110, 100, 0.50);
       --card-shadow:         rgba(44, 40, 36, 0.20);
-      --slot-bg:             rgba(139, 111, 78, 0.18);
-      --slot-border:         rgba(139, 111, 78, 0.55);
-      --selected-outline:    #8b6f4e;
-      --selected-glow:       rgba(139, 111, 78, 0.35);
+      /* Le plateau garde ses repères sombres, quel que soit le chrome choisi. */
+      --slot-bg:             rgba(201, 168, 124, 0.16);
+      --slot-border:         rgba(201, 168, 124, 0.50);
+      --selected-outline:    #c9a87c;
+      --selected-glow:       rgba(201, 168, 124, 0.30);
 
-      /* Voile invariant : le choix clair/sombre ne modifie jamais la scène. */
-      --overlay: rgba(15, 20, 22, 0.22);
+      /* Voile invariant : le plateau demeure lisible sur toute image, sans
+         dépendre du thème du chrome. */
+      --overlay: rgba(10, 14, 16, 0.52);
 
       /* Layout — card-w updated by JS */
       --card-w:    70px;
@@ -109,7 +115,7 @@
 
     /* Dark — bouton (data-theme) ou OS si non forcé clair */
     html[data-theme="dark"] {
-      --overlay: rgba(15, 20, 22, 0.22);
+      --overlay: rgba(10, 14, 16, 0.52);
       --bg-primary:     #1a1816;
       --bg-glass:       rgba(40, 36, 32, 0.65);
       --bg-glass-hover: rgba(50, 45, 40, 0.80);
@@ -141,10 +147,14 @@
       --chrome-text-strong: #fffaf3;
       --chrome-rule: rgba(233, 220, 204, 0.16);
       --chrome-hover: rgba(255, 255, 255, 0.12);
+      --chrome-surface-hover: rgba(20, 18, 16, 0.94);
+      --credits-text: rgba(255, 255, 255, 0.75);
+      --credits-text-strong: rgba(255, 255, 255, 0.96);
+      --credits-text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
     }
     @media (prefers-color-scheme: dark) {
       html:not([data-theme="light"]) {
-        --overlay: rgba(15, 20, 22, 0.22);
+        --overlay: rgba(10, 14, 16, 0.52);
         --bg-primary:     #1a1816;
         --bg-glass:       rgba(40, 36, 32, 0.65);
         --bg-glass-hover: rgba(50, 45, 40, 0.80);
@@ -176,6 +186,10 @@
         --chrome-text-strong: #fffaf3;
         --chrome-rule: rgba(233, 220, 204, 0.16);
         --chrome-hover: rgba(255, 255, 255, 0.12);
+        --chrome-surface-hover: rgba(20, 18, 16, 0.94);
+        --credits-text: rgba(255, 255, 255, 0.75);
+        --credits-text-strong: rgba(255, 255, 255, 0.96);
+        --credits-text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
       }
     }
 
@@ -320,7 +334,7 @@
       border: 0;
       border-radius: 0;
       background: transparent;
-      color-scheme: dark;
+      color-scheme: normal;
       overflow: hidden;
       vertical-align: middle;
       flex: 1 1 auto;
@@ -1245,8 +1259,8 @@
       font-size: var(--credits-font-size);
       font-weight: 300;
       text-align: center;
-      color: rgba(255, 255, 255, 0.75);
-      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+      color: var(--credits-text);
+      text-shadow: var(--credits-text-shadow);
       background: var(--chrome-surface-bg);
       padding: var(--credits-pad-y) var(--credits-pad-x);
       border-radius: 20px;
@@ -1263,7 +1277,7 @@
       opacity: var(--credits-opacity-visible);
       animation: creditsEnter 0.52s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
-    .bottom-badges:hover { opacity: 1; background: rgba(0, 0, 0, 0.36); }
+    .bottom-badges:hover { opacity: 1; background: var(--chrome-surface-hover); }
 
     .bottom-badges .credits-divider { margin: 0 0.35rem; opacity: 0.4; }
 
@@ -1275,7 +1289,7 @@
       flex-shrink: 1;
       min-width: 0;
     }
-    .img-credit a { color: rgba(255, 255, 255, 0.9); text-decoration: none; }
+    .img-credit a { color: var(--credits-text-strong); text-decoration: none; }
     .img-credit a:hover { text-decoration: underline; }
 
     .license-badge {
@@ -1287,7 +1301,7 @@
       white-space: nowrap;
       cursor: pointer;
     }
-    .license-badge:hover { color: rgba(255, 255, 255, 1); }
+    .license-badge:hover { color: var(--credits-text-strong); }
 
     .copyleft-symbol {
       font-size: 0.75rem;
@@ -1374,6 +1388,7 @@
       src="../tuner-embed.html"
       title="Le Radar — syntoniseur radio"
       loading="eager"
+      allowtransparency="true"
       allow="autoplay; encrypted-media"
       referrerpolicy="no-referrer-when-downgrade"
     ></iframe>
@@ -3258,6 +3273,7 @@ function initThemeToggle() {
   const apply = (theme) => {
     const isDark = theme === 'dark';
     document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    syncRadarEmbedTheme(isDark ? 'dark' : 'light');
     btn?.querySelector('.ico-sun')?.classList.toggle('hidden', !isDark);
     btn?.querySelector('.ico-moon')?.classList.toggle('hidden', isDark);
     if (btn) {
@@ -3351,8 +3367,14 @@ window.addEventListener('resize', () => {
   iframe.addEventListener('load', () => {
     // Fallback si postMessage bloqué / ancien embed
     iframe.classList.add('is-ready');
+    syncRadarEmbedTheme(document.documentElement.getAttribute('data-theme') || 'light');
   });
 })();
+
+function syncRadarEmbedTheme(theme) {
+  const iframe = document.getElementById('radar-embed');
+  iframe?.contentWindow?.postMessage({ type: 'radar-embed-theme', theme }, window.location.origin);
+}
 
 
 /* ═══════════════════════════════════════
