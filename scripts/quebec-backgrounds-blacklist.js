@@ -41,12 +41,8 @@ const HARD_BANNED = [
     reason: 'underbridge_concrete',
     note: 'Purge 2026-07-25 mât+pomo (Tourtes_04 reste OK si paysage)',
   },
-  {
-    // Curation manuelle campus Concordia (vue indésirable)
-    fragments: ['Henry_F._Hall_Building_10'],
-    reason: 'curated_drop_hall_10',
-    note: 'Purge 2026-07-25 universities ; Hall_01/07 restent',
-  },
+  // Henry_F._Hall_Building_10 : réintégré universities avec focalY fenêtres
+  // (grille modulaire Concordia) — ne pas re-bannir sans relecture visuelle.
   {
     // Clôture grillagée — effet carcéral (nation crie légitime, photo non)
     fragments: [
