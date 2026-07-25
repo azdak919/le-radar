@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
-"""Génère les PNG PWA / favicons Solitaire — joker 🃏 (Twemoji), style Le Radar / Pomodoro."""
+"""Génère les PNG PWA / favicons Solitaire depuis l'icône cartes choisie."""
 
 from pathlib import Path
 
 from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parent.parent
-# Same Twemoji joker as Le Radar masthead (assets/emoji/joker.png)
-EMOJI_PNG = ROOT.parent / "assets" / "emoji" / "joker.png"
-if not EMOJI_PNG.exists():
-    EMOJI_PNG = ROOT / "assets" / "twemoji-joker.png"
+EMOJI_PNG = ROOT.parent / "assets" / "emoji" / "playing-cards.png"
 BG = (26, 24, 22, 255)
 
 OUTPUTS = {
@@ -36,7 +33,7 @@ def rounded_mask(size: int, radius: int) -> Image.Image:
 
 
 def emoji_ratio(size: int, *, maskable: bool) -> float:
-    """Larger glyph at tiny sizes so bookmarks stay readable (🃏 not a red blob)."""
+    """Larger glyph at tiny sizes so the card remains readable in bookmarks."""
     if maskable:
         return 0.52
     if size <= 16:

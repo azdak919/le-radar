@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
-"""Génère les PNG PWA / favicons Ataraxia — tomate 🍅 (Twemoji), style Le Radar."""
+"""Génère les PNG PWA / favicons Pomodoro depuis la tomate choisie."""
 
 from pathlib import Path
 
 from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parent.parent
-ASSETS = ROOT / "assets"
-EMOJI_PNG = ASSETS / "twemoji-tomato.png"
+EMOJI_PNG = ROOT.parent / "assets" / "emoji" / "tomato.png"
 # Ataraxia dark theme (matches --bg in dark mode)
 BG = (26, 24, 22, 255)
 
