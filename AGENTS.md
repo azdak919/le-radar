@@ -98,6 +98,15 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 | D4 | **Skills Grok hors repo** (`~/.grok/skills/`) | Double source d’obsolescence ; le playbook **est** le skill du dépôt | Seulement si multi-projets perso — **ne pas** dupliquer les règles LE-RADAR | S | wontfix |
 | D5 | **Durcir audit clocher / façades** (aligner Python ↔ JS runtime) | Déjà blacklist + town hall paysage ; le reste est peaufinage | Cas réels en banque ou faux négatifs documentés | S–M | resolved |
 | D6 | **CI audit HARD offline-only** sur banques (sans fetch) | Éviter de re-découvrir en prod sans taxer chaque PR | `bank:check` + tests unit déjà là — étendre si gaps | S | resolved |
+| D7 | **Banque photo mât mobile dédiée** (option 3) | Coût double (JSON+JS+maintain+saisons+HARD) ; le fix 2026-07 (dims banque + thumb) peut suffire | Mât encore noir / crops illisibles **après** fix mobile ; flags `surfaces` (opt. 2) déjà essayés ou insuffisants | L | open |
+
+**D7 — précisions (option 3, pas 1 ni 2) :**
+
+- **Option 1** (préférée) : une banque + pipeline d’affichage — déjà en cours.
+- **Option 2** (intermédiaire) : flags par photo (`surfaces` / `mobilePrefer`) dans la **même** banque.
+- **Option 3 = D7** : vraie banque séparée `data/quebec-mobile-backgrounds.json` (+ JS, profil maintain, pick viewport mobile).
+- **Règles obligatoires** si on ouvre D7 : mêmes HARD (blacklist, religieux, town hall, dims, scènes), mêmes saisons 4/6, `bank:sync` / `audit:banks:hard`, pas de contournement.
+- Ne pas démarrer D7 tant que le mât mobile n’a pas été revalidé post-fix « low_resolution / thumb ».
 
 > Les IDs restent stables. N’ajoute une ligne que si la dette est **réelle et récurrente**, pas un wish-list décoratif.
 
