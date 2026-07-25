@@ -1,12 +1,13 @@
-const CACHE_NAME = "radar-shell-v495";
+const CACHE_NAME = "radar-shell-v497";
 const CACHE_PREFIX = "radar-";
 /** Cache permanent : page maintenance / hors-ligne (ne se purge pas au bump shell). */
-const OFFLINE_CACHE = "radar-offline-v2";
+const OFFLINE_CACHE = "radar-offline-v3";
 // Isolated mini-apps under /pomo/ and /solitaire/ own their own SWs + caches.
 const ISOLATED_PATH_RE = /\/(pomo|solitaire)(\/|$)/;
 
 const OFFLINE_ASSETS = [
   "./offline.html",
+  "./assets/icon.svg",
   "./assets/icon-192.png",
   "./assets/offline/coin.png",
 ];
