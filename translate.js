@@ -1718,6 +1718,27 @@
     return /^c[eé]gep\b/i.test(String(name || '').replace(/\s+/g, ' ').trim());
   }
 
+  /**
+   * Mots-type « collège » dans les langues où on localise le type.
+   *
+   * Le type peut arriver en tête (« Collège de Maisonneuve ») ou en queue
+   * (« Vanier College », « Dawson College ») : il faut pouvoir le retirer des
+   * deux côtés avant de le réappliquer, sinon on le compte deux fois.
+   */
+  const COLLEGE_TYPE_WORDS = 'coll[eè]ge|college|colegio|col[eé]gio|colegiul|col·legi';
+  const COLLEGE_TYPE_LEAD_RE = new RegExp(`^(?:${COLLEGE_TYPE_WORDS})\\b\\s*`, 'i');
+  const COLLEGE_TYPE_TAIL_RE = new RegExp(`\\s*\\b(?:${COLLEGE_TYPE_WORDS})$`, 'i');
+
+  /** Retire le mot-type en tête ET en queue — rend le formatage idempotent. */
+  function stripCollegeTypeWords(name = '') {
+    return String(name)
+      .replace(/\s+/g, ' ')
+      .trim()
+      .replace(COLLEGE_TYPE_LEAD_RE, '')
+      .replace(COLLEGE_TYPE_TAIL_RE, '')
+      .trim();
+  }
+
   function isCollegeInstitutionName(name = '') {
     const t = String(name || '').replace(/\s+/g, ' ').trim();
     if (!t) return false;
@@ -1956,7 +1977,10 @@
     if (!parts) {
       return String(name).replace(/\s+/g, ' ').trim().replace(/^c[eé]gep\b/i, 'Cégep');
     }
-    const { particle, place, note } = parts;
+    const { particle, note } = parts;
+    // Même garde que pour les collèges : si le toponyme portait déjà un
+    // mot-type, ne pas le réappliquer par-dessus.
+    const place = stripCollegeTypeWords(parts.place) || parts.place;
     const noteLoc = localizeCegepNote(note, lang);
     const noteSuffix = noteLoc ? ` ${noteLoc}` : '';
 
@@ -2000,13 +2024,14 @@
    */
   function formatCollegeLabel(name = '', lang = 'fr') {
     const raw = String(name).replace(/\s+/g, ' ').trim();
-    if (/^dawson\s+college$/i.test(raw)) {
+    // Dawson passe par le glossaire quelle que soit la forme reçue
+    // (« Dawson College », « Colegio Dawson », « Collège Dawson »…) : sinon un
+    // second passage produisait « Colegio de Colegio Dawson ».
+    if (/\bdawson\b/i.test(raw)) {
       const entry = INSTITUTION_LABELS['Dawson College'];
       return (entry && (entry[lang] || entry.default)) || 'Dawson College';
     }
-    const rest = raw
-      .replace(/^(?:coll[eè]ge|college)\b\s*/i, '')
-      .trim();
+    const rest = stripCollegeTypeWords(raw);
     if (!rest) return raw;
     // EN : « Maisonneuve College » si « de Maisonneuve », sinon « Lionel-Groulx College »
     if (lang === 'en') {
@@ -2027,7 +2052,12 @@
       const place = rest.replace(/^(de|du|des|d')\s+/i, '').trim();
       return `${place} College`;
     }
-    return `Collège ${rest}`;
+    // Autres langues : même convention que formatCegepLabel (« toponyme +
+    // College », modèle Dawson). Renvoyer un « Collège … » français ici mettait
+    // les deux fonctions en désaccord pour nl / ro / ca — et un libellé français
+    // n'a de sens dans aucune de ces langues.
+    const place = rest.replace(/^(de|du|des|d')\s+/i, '').trim();
+    return `${place} College`;
   }
 
   function preferredInstitutionLabel(original = '', targetLang = '') {
@@ -2992,5 +3022,18 @@
     notifyDisplayRefresh,
     DEFAULT_MODE,
     MODES,
+    /**
+     * Surface de test. Les libellés d'établissements sont de la logique pure :
+     * les exposer permet de les vérifier sans appel réseau au moteur de
+     * traduction (donc sans test instable). Lecture seule, aucune incidence
+     * sur l'exécution — voir tests/institution-labels.spec.mjs.
+     */
+    _labels: {
+      formatCegepLabel,
+      formatCollegeLabel,
+      preferredInstitutionLabel,
+      isCegepOrCollegeInstitution,
+      isUniversityInstitutionName,
+    },
   };
 })();
