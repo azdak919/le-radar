@@ -1,0 +1,136 @@
+# LE RADAR — Playbook agent (lire en premier)
+
+Doc courte pour agents et humains pressés. **Un seul point d’entrée** avant de rouvrir les monolithes.
+
+Pour la maintenance bots/CI longue : [`maintenance.md`](maintenance.md).  
+Pour ajouter un journal : [`adding-news-source.md`](adding-news-source.md).
+
+---
+
+## 1. Architecture en 10 lignes
+
+| Zone | Rôle | Fichiers pivots |
+|------|------|-----------------|
+| **Mât** | Header photo + météo + slogan | `index.html`, `quebec-backgrounds.js`, banques `QUEBEC_*` |
+| **Tuner radio** | Un lecteur, grilles, nowplaying | `app.js` (gros), `mobile-playback.js`, `radios.json` |
+| **News** | Fil RSS agrégé | `news.json`, `news-sources.json`, `scripts/fetch-news.js` |
+| **Pomo** | Mini-app isolée `/pomo/` | `pomo/`, `quebec-pomo-backgrounds-data.js`, `pomo/sw.js` |
+| **Solitaire** | Mini-app isolée `/solitaire/` | `solitaire/`, SW propre |
+| **Workers CF** | Edge (nowplaying cache, bg entropy) | `workers/` — **pas d’audio** |
+| **SW shell** | Cache offline app shell | `sw.js` (`radar-shell-vN`), `pomo/sw.js` (`pomo-shell-vN`) |
+
+Compartiments **non fusionnables** : mât ≠ pomo ≠ uni ≠ nations (sauf nations **partagée** mât+pomo). Favorites manuelles = hors purge bots.
+
+---
+
+## 2. Banques photo (fonds wallpaper)
+
+### Chemins
+
+| Profil | JSON (source de vérité) | JS miroir (shell) | Consommateurs |
+|--------|-------------------------|-------------------|---------------|
+| **masthead** | `data/quebec-backgrounds.json` | `quebec-backgrounds-data.js` | mât seulement |
+| **universities** | `data/quebec-university-backgrounds.json` | `quebec-university-backgrounds-data.js` | mât seulement |
+| **pomo** | `data/quebec-pomo-backgrounds.json` | `quebec-pomo-backgrounds-data.js` | pomo seulement |
+| **nations** | `data/quebec-nations-backgrounds.json` | `quebec-nations-backgrounds-data.js` | mât **+** pomo |
+| **favorites** | `data/quebec-favorites-backgrounds.json` | `quebec-favorites-backgrounds-data.js` | mât (+ pomo si `surfaces`) |
+
+Runtime mât : `quebec-backgrounds.js` (filtres client). Runtime pomo : `pomo/js/backgrounds.js`.
+
+### Pipeline
+
+```
+éditer JSON  →  npm run bank:sync     →  JS miroirs à jour (+ purge hard-ban)
+maintain     →  revalidate + Commons  →  JSON + JS (1×/session univ. plein ménage)
+blacklist    →  scripts/quebec-backgrounds-blacklist.js  (ne revient jamais)
+```
+
+- **Purge** = retirer une mauvaise entrée + blacklister. **Pas de re-seed hasardeux** (mieux un trou).
+- **Hard-ban** : URL / File Commons / id en priorité ; raison snake_case loggable.
+- Règles paysage mât/pomo (pas universities/nations) : religieux ; **town hall / hôtel de ville / mairie** ; scènes bad (nuit, underbridge, clôture, aéroport/hangar/industriel…).
+- Nations : spiritualité autochtone **OK** (hors filtre religieux institutionnel).
+
+### Blacklist — ajouter une entrée
+
+Éditer `scripts/quebec-backgrounds-blacklist.js` → `HARD_BANNED[]` :
+
+```js
+{
+  fragments: ['NomFichier_Commons_exact', 'eb86432b9561'],
+  reason: 'reads_as_chapel_clocher',
+  note: 'pourquoi en une ligne',
+}
+```
+
+Puis : `npm run bank:sync` → vérifier `npm run bank:check` → si `*-data.js` shell changent, **bump SW**.
+
+---
+
+## 3. Commandes npm à retenir
+
+```bash
+npm run check                 # syntaxe + unit (dont intégrité banques)
+npm run bank:check            # JSON↔JS + aucun hard-ban résiduel (offline)
+npm run bank:sync             # régénère les JS depuis les JSON + purge ban
+
+npm run maintain:masthead     # paysages mât (réseau Commons si ménage)
+npm run maintain:pomo
+npm run maintain:universities
+npm run maintain:nations
+npm run maintain:backgrounds:all   # les 4 profils maintain
+
+npm run audit:backgrounds     # audit visuel Python mât (optionnel, réseau images)
+npm run pin-background -- --from-bank masthead --match "Percé"
+```
+
+Alias historiques : `maintain:backgrounds` = masthead ; `…:pomo` etc. inchangés.
+
+---
+
+## 4. Règles de non-casse (ne pas « améliorer »)
+
+| Zone | Règle |
+|------|--------|
+| **Android radio** | Un seul `HTMLMediaElement` ; pas de 2ᵉ son ; **pas** de proxy audio dans un Worker CF |
+| **SW** | Bump `radar-shell-vN` si assets shell mât changent ; **aussi** `pomo-shell-vN` si pomo/nations/favorites data JS changent |
+| **Engage / PWA** | Promo déjà douce — ne pas renaguer ni spammer |
+| **Thèmes** | dark/light + overlays texte lisibles sur photo mât (cartes météo) |
+| **Banques** | Ne jamais coller `QUEBEC_POMO_*` dans le mât, ni l’inverse |
+| **Favorites** | `permanent: true` — immunisées purge maintain (sauf licence illégale) |
+
+---
+
+## 5. Où **ne pas** commencer
+
+| Éviter en premier (monolithes) | Préférer |
+|--------------------------------|----------|
+| `app.js` (~7k lignes) | `mobile-playback.js`, `player-sync.js`, `docs/*` |
+| `style.css` (~5k) | règles ciblées + `docs/identite-visuelle.md` |
+| Re-scan Commons bulk | blacklist + `bank:sync` + maintain ciblé |
+| Refonte UX radio/météo/PWA | hors scope sauf bug bloquant |
+
+---
+
+## 6. Checklist ship (fonds / bots / docs)
+
+1. `node --check` sur scripts JS touchés (ou `npm run check:syntax`)
+2. `npm run bank:check` — URL purgée absente des banques (sauf blacklist)
+3. `npm run test:unit` si possible (data-integrity inclut les banques)
+4. SW bump **seulement** si shell réellement impacté (mât et/ou pomo)
+5. Diff final : chaque hunk = pipeline / purge / blacklist / doc / scripts — pas d’UX gratuite
+6. Commit message orienté résultat ; push `main` si checks OK
+
+### Message type
+
+```
+Pipeline banques QC : sync JSON, blacklist durable, playbook agent
+```
+
+---
+
+## Dettes assumées (ne pas ouvrir sans besoin)
+
+- Pas de CI obligatoire sur `audit-quebec-backgrounds.py` (lourd réseau/images)
+- Découpe `app.js` / `style.css` — seulement si un extrait doc le justifie
+- Skills Grok externes hors repo — ce playbook **est** le skill unique du dépôt
+- Re-seed bulk Commons — volontairement hors pipeline quotidien
