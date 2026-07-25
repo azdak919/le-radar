@@ -173,8 +173,9 @@ cd workers/bg-rotation && npx wrangler deploy
 |--------|------|
 | `le-radar-weather` | Cache météo partagé + repli MET Norway |
 | `le-radar-bg-rotation` | Entropie pour random fonds (mât + pomo) |
+| `le-radar-nowplaying` | Cache métadonnées « à l'antenne » (JSON/XML, pas l'audio) |
 
-**Pas** de proxy de flux radio (coût bande passante trop élevé sur free tier).
+**Pas** de proxy de flux audio radio (coût bande passante trop élevé sur free tier).
 
 ---
 
