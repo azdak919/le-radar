@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-25T09:18:40.279Z",
+  "updatedAt": "2026-07-25T10:53:28.332Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-25T09:18:19.575Z"
+      "checkedAt": "2026-07-25T10:53:00.053Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rebelles soniques (reprise)",
-        "source": "api-live",
-        "start": "00:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "rebelles-soniques"
-      },
-      "next": {
         "title": "Mix Franco",
         "source": "api-live",
         "start": "02:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/365009.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "mix-franco"
       },
+      "next": {
+        "title": "Voix tropicale",
+        "source": "api-live",
+        "start": "05:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364630.mp3",
+        "slug": "voix-tropicale"
+      },
       "track": "",
-      "showTitle": "Rebelles soniques (reprise)",
+      "showTitle": "Mix Franco",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-25T09:18:21.295Z"
+      "checkedAt": "2026-07-25T10:53:02.383Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Mash Time Show",
-        "source": "api-live",
-        "start": "04:00",
-        "end": "06:00"
-      },
-      "next": {
         "title": "Quebec Acadie",
         "source": "api-live",
         "start": "06:00",
         "end": "10:00"
       },
+      "next": {
+        "title": "Making Contact / Anything Goes",
+        "source": "api-live",
+        "start": "10:00",
+        "end": "10:30"
+      },
       "track": "",
-      "showTitle": "The Mash Time Show",
+      "showTitle": "Quebec Acadie",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-25T09:18:23.483Z"
+      "checkedAt": "2026-07-25T10:53:05.633Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "World-Up'",
         "source": "schedule",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/world-up"
       },
+      "next": {
+        "title": "The Live Wire Show",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/the-live-wire-show"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "World-Up'",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-25T09:18:36.836Z"
+      "checkedAt": "2026-07-25T10:53:19.324Z"
     },
     "cfak": {
       "id": "cfak",
@@ -124,7 +124,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-25T09:18:37.457Z"
+      "checkedAt": "2026-07-25T10:53:20.056Z"
     },
     "choq": {
       "id": "choq",
@@ -137,7 +137,7 @@
         "end": "23:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Slippers - Wants For Everyone",
+      "track": "PAR.SEK - Aimer plus fort",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -148,7 +148,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-25T09:18:39.928Z"
+      "checkedAt": "2026-07-25T10:53:27.981Z"
     }
   }
 }
