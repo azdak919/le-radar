@@ -126,6 +126,9 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 | D5 | **Durcir audit clocher / façades** (aligner Python ↔ JS runtime) | Déjà blacklist + town hall paysage ; le reste est peaufinage | Cas réels en banque ou faux négatifs documentés | S–M | resolved |
 | D6 | **CI audit HARD offline-only** sur banques (sans fetch) | Éviter de re-découvrir en prod sans taxer chaque PR | `bank:check` + tests unit déjà là — étendre si gaps | S | resolved |
 | D7 | **Banque photo mât mobile dédiée** (option 3) | Coût double (JSON+JS+maintain+saisons+HARD) ; le fix 2026-07 (dims banque + thumb) peut suffire | Mât encore noir / crops illisibles **après** fix mobile ; flags `surfaces` (opt. 2) déjà essayés ou insuffisants | L | open |
+| D8 | **Détection d’arche/silhouette dans `computeBestFocalY`** (crop mât) | Le détecteur actuel vise le « trou » (Rocher Percé) ; élargir touche **tous** les crops auto — override `focalY` en banque suffit au cas par cas | 2–3 photos réelles où l’ancre arche rate, avec focalY auto vs override notés ; harnais de rendu multi-AR pour non-régression | S–M | open |
+| D9 | **Tests navigateur instables** (`player-continuity`, attentes réseau) | Le syntoniseur garde des connexions ouvertes en permanence et l’audio headless n’est pas déterministe : rendre ces tests fiables demande de réécrire les attentes, pas de rallonger les délais | Un run vert 10× d’affilée en local **et** en CI après passage à des attentes sur l’état observable ; aucun flake sur 2 semaines | S–M | open |
+| D10 | **Connaissance des établissements éclatée en 4 tables** | Chaque copie répond à un besoin distinct (affichage court, libellés RSS, localisation, pages d’entités) ; les unifier touche 4 zones d’un coup, dont le monolithe `app.js` | Une divergence réelle qui casse quelque chose — le doublon « College » du 2026-07-25 en est une ; commencer par la table de traduction, la plus autonome | M | open |
 
 **D7 — précisions (option 3, pas 1 ni 2) :**
 
@@ -135,25 +138,106 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 - **Règles obligatoires** si on ouvre D7 : mêmes HARD (blacklist, religieux, town hall, dims, scènes), mêmes saisons 4/6, `bank:sync` / `audit:banks:hard`, pas de contournement.
 - Ne pas démarrer D7 tant que le mât mobile n’a pas été revalidé post-fix « low_resolution / thumb ».
 
+**D8 — diagnostic (cas Mercier, 2026-07-25) :**
+
+- Symptôme : `Mercier Bridge, Lasalle side` (banque `nations`), crop auto **0.26–0.28** sur bandeau large
+  → l’arche du pont est coupée en bureau, alors qu’elle passe en mobile (bande visible ~62 % de l’image).
+- `computeBestFocalY()` a **déjà** une ancre arche (`hasStrongArch` / `archPeakY`, `idealRel = 0.5`,
+  `quebec-backgrounds.js:1060`) — elle n’a pas mordu ici.
+- Cause probable : `rowArch` (`quebec-backgrounds.js:543`) cherche un **trou** — flancs sombres encadrant
+  un centre clair — taillé pour le Rocher Percé et les arches côtières. Ici l’arche est un treillis d’acier
+  ajouré et lointain sur ciel clair : le pic de `archSmooth` part vraisemblablement sur la trouée d’eau
+  entre les deux tabliers, plus bas dans le cadre, et le seuil `archPeakScore > 0.015` ne qualifie pas
+  la vraie arche.
+- Piste : ajouter un critère de **silhouette** (arc convexe sombre contre ciel homogène) **en plus** du
+  critère de trou — ne pas remplacer, sous peine de casser les crops Percé/côtiers.
+- Contournement en place (pas une dette bloquante) : override `focalY: 0.19` + `note` sur l’entrée
+  `data/quebec-nations-backgrounds.json`. Le même mécanisme sert déjà pour le tipi Gesgapegiag (0.28).
+- **Avant de solder** : rendre la photo à AR 14 / 10.7 / 7.57 / 3.8 / 2.16 avant/après, et vérifier
+  qu’aucun crop existant à override ne régresse (`rowArch` sert aussi au bonus de score, pas qu’à l’ancre).
+
+**D9 — mécanisme identifié (2026-07-25, fin de session) : la parallélisation.**
+
+- `npx playwright test` → 2 échecs (`player-continuity`, `browser-smoke` easter egg).
+- `npx playwright test --workers=1` → **39 / 39 verts**, systématiquement.
+- Donc ce ne sont pas des tests fragiles isolément : ils se **marchent dessus**.
+  `playwright.config.mjs` a `fullyParallel: true` et, en local, autant de workers
+  que de cœurs. Les suspects sont les ressources partagées par origine :
+  enregistrement du service worker, caches, `localStorage`, et le périphérique
+  audio unique.
+- Piste de solde (ne pas rallonger les délais) : `test.describe.configure({
+  mode: 'serial' })` sur les fichiers qui touchent le SW et l'audio, ou les
+  isoler dans un projet Playwright à un seul worker — plutôt que de sérialiser
+  toute la suite, qui passe de 44 s à 1 min 6 s.
+- Coût actuel du contournement : lancer `--workers=1` avant de conclure à une
+  régression.
+
+**D9 — diagnostic (2026-07-25, session référencement) :**
+
+- `tests/player-continuity.spec.mjs:56` (« une page suiveuse n’affiche pas un buffering tardif
+  après navigation ») échoue **par intermittence** : rouge une fois, vert au run suivant, sans
+  changement de code.
+- **Vérifié non-régression** : le même test échoue à l’identique sur `HEAD` **non modifié** —
+  copie propre extraite par `git archive HEAD` puis servie sur un port séparé. Ce n’est donc
+  pas causé par une modification récente.
+- `tests/bookmark-metadata.spec.mjs` utilisait `waitUntil: 'networkidle'` → timeouts de 30 s sur
+  `/` et `/solitaire/` : avec le syntoniseur et la météo, le réseau n’est **jamais** « idle ».
+  Corrigé en `load` le 2026-07-25 ; c’était le dernier `networkidle` du dossier `tests/`.
+- **Ne pas** solder en augmentant les timeouts ni en ajoutant des `waitForTimeout` : remplacer
+  par des attentes sur l’état observable (`expect.poll` sur l’état du lecteur). Rallonger les
+  délais ne fait que déplacer le flake et ralentir la CI.
+- Piste : l’audio headless (pas de périphérique de sortie) rend `readyState` / événements de
+  buffering non déterministes — envisager un test qui n’exige pas de lecture réelle.
+
+**D10 — diagnostic (2026-07-25, session référencement) :**
+
+Quatre tables décrivent les mêmes établissements, chacune avec ses propres
+variantes de noms :
+
+| Fichier | Table | Sert à |
+|---------|-------|--------|
+| `app.js` | `INSTITUTION_ACRONYMS` | Formes courtes d’affichage (UdeM, UQAM…) |
+| `scripts/generate-feed.js` | `INSTITUTION_LABELS` | Libellés dans le RSS sortant |
+| `translate.js` | `INSTITUTION_LABELS` + `QC_COLLEGE_PLACE_RE` | Localisation des noms et des types |
+| `scripts/seo-pages-lib.js` | `INSTITUTIONS` | Regroupement canonique + URL des pages d’entités |
+
+- **Cause racine mesurée** : `institutions.json` porte déjà un champ `type` pour
+  **60 cégeps**, mais `translate.js` redevine ce type à partir d’une liste de
+  toponymes écrite à la main (`QC_COLLEGE_PLACE_RE`). Le registre sait déjà ce
+  que le code réinvente.
+- **Symptôme concret** (corrigé le 2026-07-25) : `formatCollegeLabel()` ne
+  retirait le mot-type qu’en préfixe puis le rajoutait en suffixe →
+  « Vanier College College » en de/it/pl, « Colegio de Vanier College » en es.
+  Trois établissements réels touchés (Vanier, John Abbott, Champlain Regional).
+  Le correctif rend la fonction idempotente ; il ne supprime pas la duplication
+  des tables, qui reste la dette.
+- Les registres n’écrivent pas les noms pareil : « UQAM » / « Université du
+  Québec à Montréal », « Université McGill » / « McGill University ». Chaque
+  table gère ça de son côté, avec des couvertures différentes.
+- **Ne pas solder en ajoutant une 5ᵉ table.** La cible : `institutions.json`
+  devient la source de vérité (nom canonique, aliases, type, région, site) et
+  les quatre consommateurs en dérivent. `app.js` en dernier (monolithe, cf. D2).
+- Filet en place en attendant : `tests/institution-labels.spec.mjs` verrouille
+  l’absence de doublon **et** l’idempotence sur les cas réels.
+
 > Les IDs restent stables. N’ajoute une ligne que si la dette est **réelle et récurrente**, pas un wish-list décoratif.
 
 ---
-
 
 ## 3c. Candidats auto (récolte vibe-code) — pas encore des dettes
 
 > Généré par `npm run agents:harvest -- --write`. **Pas des D# ouvertes.**
 > L’humain (ou l’agent avec OK) promeut une ligne en §3 si pertinent.
-> Dernière récolte : 2026-07-25T08:32:56.361Z · intensité **heavy** (score 768) · fenêtre `48h`
+> Dernière récolte : 2026-07-25T10:58:31.400Z · intensité **heavy** (score 454.4) · fenêtre `36h`
 
 | Zone | Chaleur | Effort | Suggestion | Fichiers chauds |
 |------|---------|--------|------------|-----------------|
-| pwa-sw | 410 | S | PWA / service worker / install | `sw.js`, `pomo/sw.js`, `solitaire/sw.js`, `offline.html`, `engage-prompt.js` |
-| pomo | 277.5 | S | Isolation / qualité mini-app Pomo | `pomo/sw.js`, `pomo/index.html`, `pomo/styles/base.css`, `pomo/styles/layout.css`, `pomo/js/translate.js`, `pomo/js/backgrounds.js` |
-| monolith-app | 234 | L | Découper / modulariser app.js (tranche) | `app.js`, `pomo/js/app.js` |
-| banks-photo | 230 | M | Pipeline banques photo (QC / saisons / audit) | `scripts/maintain-quebec-backgrounds.js`, `quebec-backgrounds.js`, `data/quebec-favorites-backgrounds.json`, `data/quebec-nations-backgrounds.json`, `quebec-favorites-backgrounds-data.js`, `data/quebec-backgrounds.json` |
-| bots-ci | 148.8 | M | Bots / CI / scripts de maintenance | `tests/masthead-weather.spec.mjs`, `scripts/maintain-quebec-backgrounds.js`, `tests/player-continuity.spec.mjs`, `tests/static-integrity.mjs`, `tests/translation-menu.spec.mjs`, `scripts/audit-quebec-backgrounds.py` |
-| monolith-css | 132.5 | M | Extraire CSS mât / thème (tranche style.css) | `style.css` |
+| banks-photo | 268 | M | Pipeline banques photo (QC / saisons / audit) | `scripts/maintain-quebec-backgrounds.js`, `quebec-backgrounds.js`, `data/quebec-nations-backgrounds.json`, `data/quebec-university-backgrounds.json`, `quebec-nations-backgrounds-data.js`, `data/quebec-backgrounds.json` |
+| pwa-sw | 178 | S | PWA / service worker / install | `sw.js`, `pomo/sw.js`, `offline.html`, `solitaire/sw.js`, `engage-prompt.js` |
+| pomo | 97.5 | S | Isolation / qualité mini-app Pomo | `pomo/sw.js`, `pomo/index.html`, `pomo/styles/base.css`, `pomo/js/weather.js`, `pomo/js/backgrounds.js`, `pomo/js/app.js` |
+| bots-ci | 93.6 | M | Bots / CI / scripts de maintenance | `scripts/maintain-quebec-backgrounds.js`, `scripts/quebec-backgrounds-blacklist.js`, `scripts/audit-quebec-backgrounds.py`, `tests/masthead-weather.spec.mjs`, `scripts/sync-quebec-backgrounds.js`, `tests/static-integrity.mjs` |
+| monolith-app | 93 | L | Découper / modulariser app.js (tranche) | `app.js`, `pomo/js/app.js` |
+| monolith-css | 55 | M | Extraire CSS mât / thème (tranche style.css) | `style.css` |
 
 Pour promouvoir : ajouter une ligne D# en §3 avec effort + pourquoi, après OK humain.
 ## 4. Dettes résolues (historique)
