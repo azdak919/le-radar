@@ -130,6 +130,11 @@ navigateur et décadrerait le mât).
 
 ## 4. Ce qui reste à faire à la main
 
+> Deux documents accompagnent cette section :
+> **[`referencement-suivi.md`](referencement-suivi.md)** — quoi mesurer, quand, et
+> comment repérer qu'on attire le mauvais public.
+> **[`wikidata.md`](wikidata.md)** — la fiche à créer, identifiants vérifiés.
+
 Ces actions ne sont pas automatisables, et ce sont les plus rentables.
 
 ### 4.1 Déclarer le site
