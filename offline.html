@@ -163,39 +163,9 @@
       color: var(--ink-soft);
       letter-spacing: 0.01em;
     }
-    .status-lang-label {
-      margin: 0.65rem 0 0;
-      font-size: 0.62rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .status-i18n {
-      margin: 0.55rem auto 0;
-      min-height: 1.35em;
-      max-width: 28em;
-      font-family: var(--serif);
-      font-size: clamp(0.92rem, 2.5vw, 1.05rem);
-      font-weight: 600;
-      line-height: 1.3;
-      color: var(--ink-soft);
-      opacity: 0;
-      transform: translateY(4px);
-      transition: opacity 420ms ease, transform 420ms ease;
-    }
-    .status-i18n.is-in {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .status-i18n.is-out {
-      opacity: 0;
-      transform: translateY(-4px);
-    }
-
     /* ── Mini-jeu (haut, hero) ── */
     .game-wrap {
-      margin: 0.15rem 0 0.95rem;
+      margin: 0.35rem 0 0.95rem;
       border-radius: var(--radius);
       border: 1px solid var(--rule-strong);
       background:
@@ -317,11 +287,20 @@
     }
     .reconnect.is-ok { color: var(--ok); }
 
-    /* ── Langues : rail 1 rangée (sans FR / EN — déjà dans le statut) ── */
+    /* ── Langues : libellé + rail 1 rangée (sans FR / EN) ── */
     .lang-panel {
       margin: 0 0 0.35rem;
       padding: 0.55rem 0 0.25rem;
       border-top: 1px solid var(--rule);
+    }
+    .lang-panel-label {
+      margin: 0 0 0.5rem;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
     }
     .lang-scroll-outer {
       position: relative;
@@ -438,11 +417,6 @@
       font-size: 1em;
       text-decoration: none !important;
     }
-    .site-foot__webmaster {
-      margin: 0.45rem 0 0.55rem !important;
-      font-size: 0.78rem;
-      color: var(--ink-soft);
-    }
     .site-foot__legal {
       font-size: 0.7rem;
       color: var(--muted);
@@ -459,7 +433,6 @@
       .game-bar { padding: 0.6rem 1rem; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .status-i18n { transition: none; }
       .status-kicker::before { animation: none; }
     }
   </style>
@@ -473,21 +446,19 @@
       </a>
     </header>
 
-    <section class="status" aria-live="polite">
+    <section class="status">
       <p class="status-kicker">Statut</p>
+      <!-- FR d’abord, EN secondaire (OQLF) — une seule fois chacun -->
       <h1 class="status-title">Maintenance en cours</h1>
-      <!-- OQLF : anglais secondaire, plus petit, sous le français -->
       <p class="status-en" lang="en">Maintenance in progress</p>
-      <p class="status-lang-label">Langues autochtones du Québec · puis le monde</p>
-      <p class="status-i18n is-in" id="phrase" lang="iu">ᐋᖅᑭᐅᒪᐃᓐᓇᕈᑎᑦ ᐱᕙᓪᓕᐊᔪᑦ</p>
     </section>
 
-    <!-- Jeu remonté : interaction principale pendant l’attente -->
+    <!-- Jeu : nom de langue actif dans la barre (remplace l’ancien « Signal · espace ») -->
     <section class="game-wrap" aria-label="Mini-jeu en attendant">
       <div class="game-bar">
         <span class="game-bar-title is-indigenous" id="game-lang-wrap" title="Espace ou tapez pour sauter">
           <span class="pip" aria-hidden="true"></span>
-          <span class="game-bar-lang" id="game-lang">ᐃᓄᒃᑎᑐᑦ</span>
+          <span class="game-bar-lang" id="game-lang" aria-live="polite">ᐃᓄᒃᑎᑐᑦ</span>
         </span>
         <span class="game-stats">
           <span><span class="stat-label">Score</span><b id="score">0</b></span>
@@ -512,7 +483,8 @@
       <p class="reconnect" id="reconnect" aria-live="polite"></p>
     </div>
 
-    <section class="lang-panel" aria-label="Autres langues">
+    <section class="lang-panel" aria-label="Langues">
+      <p class="lang-panel-label">Langues autochtones du Québec · puis le monde</p>
       <div class="lang-scroll-outer">
         <div class="lang-scroll" id="lang-chips" role="list"></div>
       </div>
@@ -535,8 +507,9 @@
         >licence publique générale GNU, version&nbsp;2</a>.
       </p>
       <div class="site-foot__credit">
+        <!-- Une seule ligne contact : Azdak + ✉️, les deux mailto (webmestre) -->
         <p class="site-foot__author">
-          Conçu avec ♡ par
+          Conçu avec ♡ par le webmestre
           <a
             href="mailto:azdak-qc@proton.me"
             class="site-foot__author-link"
@@ -547,17 +520,7 @@
             href="mailto:azdak-qc@proton.me"
             class="site-foot__author-mail"
             title="azdak-qc@proton.me"
-            aria-label="Écrire à Azdak — azdak-qc@proton.me"
-          >✉️</a>
-        </p>
-        <p class="site-foot__webmaster">
-          Contacter le webmestre
-          <a href="mailto:azdak-qc@proton.me" title="azdak-qc@proton.me">Azdak</a>
-          <a
-            href="mailto:azdak-qc@proton.me"
-            class="site-foot__author-mail"
-            title="azdak-qc@proton.me"
-            aria-label="Courriel au webmestre Azdak"
+            aria-label="Écrire au webmestre Azdak — azdak-qc@proton.me"
           >✉️</a>
         </p>
         <p class="site-foot__legal">
@@ -573,53 +536,52 @@
   'use strict';
 
   /**
-   * Traductions « Maintenance en cours » — défilé (pas FR/EN : déjà dans le statut OQLF).
-   * Autochtones d’abord ; sans moteur fiable : phrase FR + endonyme.
+   * Langues du défilé (chips + barre du jeu).
+   * Pas de FR/EN : déjà dans le statut (OQLF). Pas de phrase « Maintenance… »
+   * en double sous le titre — seul le nom de langue tourne dans la barre du jeu.
    */
-  const PHRASES = [
-    { text: 'ᐋᖅᑭᐅᒪᐃᓐᓇᕈᑎᑦ ᐱᕙᓪᓕᐊᔪᑦ', name: 'ᐃᓄᒃᑎᑐᑦ', nameEn: 'Inuktut', group: 'indigenous', lang: 'iu', dir: 'ltr' },
-    { text: 'Aaqqiumainnarutit pivalliajut', name: 'Inuktut', group: 'indigenous', lang: 'iu-Latn' },
-    { text: 'Maintenance en cours', name: 'Eeyou ayimuun', nameFr: 'Cri', group: 'indigenous', via: 'fr' },
-    { text: 'Maintenance en cours', name: 'Innu-aimun', nameFr: 'Innu', group: 'indigenous', via: 'fr' },
-    { text: 'Maintenance en cours', name: 'Atikamekw nehirowimowin', nameFr: 'Atikamekw', group: 'indigenous', via: 'fr' },
-    { text: 'Maintenance en cours', name: 'Anishinaabemowin', nameFr: 'Algonquin', group: 'indigenous', via: 'fr' },
-    { text: 'Maintenance en cours', name: 'Kanienʼkéha', nameFr: 'Mohawk', group: 'indigenous', via: 'fr' },
-    { text: 'Maintenance en cours', name: "Mi'kmawi'simk", nameFr: "Mi'gmaq", group: 'indigenous', via: 'fr' },
-    { text: 'Maintenance en cours', name: 'Wolastoqey Latuwewakon', nameFr: 'Malécite', group: 'indigenous', via: 'fr' },
-    { text: 'Maintenance en cours', name: 'Wendat', nameFr: 'Huron-Wendat', group: 'indigenous', via: 'fr' },
-    { text: 'Maintenance en cours', name: 'Iyuw Iyimuun', nameFr: 'Naskapi', group: 'indigenous', via: 'fr' },
-    // Monde — sans Français ni English (titre FR + sous-titre EN OQLF)
-    { text: 'Mantenimiento en curso', name: 'Español', group: 'world', lang: 'es' },
-    { text: 'Manutenção em andamento', name: 'Português', group: 'world', lang: 'pt' },
-    { text: 'Wartungsarbeiten laufen', name: 'Deutsch', group: 'world', lang: 'de' },
-    { text: 'Manutenzione in corso', name: 'Italiano', group: 'world', lang: 'it' },
-    { text: 'Onderhoud in uitvoering', name: 'Nederlands', group: 'world', lang: 'nl' },
-    { text: 'Konserwacja w toku', name: 'Polski', group: 'world', lang: 'pl' },
-    { text: 'Întreținere în curs', name: 'Română', group: 'world', lang: 'ro' },
-    { text: 'Выполняется техническое обслуживание', name: 'Русский', group: 'world', lang: 'ru' },
-    { text: 'Триває технічне обслуговування', name: 'Українська', group: 'world', lang: 'uk' },
-    { text: '维护中', name: '中文', group: 'world', lang: 'zh' },
-    { text: 'メンテナンス中', name: '日本語', group: 'world', lang: 'ja' },
-    { text: '유지보수 진행 중', name: '한국어', group: 'world', lang: 'ko' },
-    { text: 'جاري الصيانة', name: 'العربية', group: 'world', lang: 'ar', dir: 'rtl' },
-    { text: 'रखरखाव प्रगति पर है', name: 'हिन्दी', group: 'world', lang: 'hi' },
-    { text: 'Bakım devam ediyor', name: 'Türkçe', group: 'world', lang: 'tr' },
-    { text: 'Đang bảo trì', name: 'Tiếng Việt', group: 'world', lang: 'vi' },
-    { text: 'Pemeliharaan sedang berlangsung', name: 'Bahasa Indonesia', group: 'world', lang: 'id' },
-    { text: 'Matengenezo yanaendelea', name: 'Kiswahili', group: 'world', lang: 'sw' },
-    { text: 'Underhåll pågår', name: 'Svenska', group: 'world', lang: 'sv' },
-    { text: 'Συντήρηση σε εξέλιξη', name: 'Ελληνικά', group: 'world', lang: 'el' },
-    { text: 'תחזוקה בעיצומה', name: 'עברית', group: 'world', lang: 'he', dir: 'rtl' },
-    { text: 'Manteniment en curs', name: 'Català', group: 'world', lang: 'ca' },
+  const LANGS = [
+    { name: 'ᐃᓄᒃᑎᑐᑦ', nameEn: 'Inuktut', group: 'indigenous' },
+    { name: 'Inuktut', group: 'indigenous' },
+    { name: 'Eeyou ayimuun', nameFr: 'Cri', group: 'indigenous' },
+    { name: 'Innu-aimun', nameFr: 'Innu', group: 'indigenous' },
+    { name: 'Atikamekw nehirowimowin', nameFr: 'Atikamekw', group: 'indigenous' },
+    { name: 'Anishinaabemowin', nameFr: 'Algonquin', group: 'indigenous' },
+    { name: 'Kanienʼkéha', nameFr: 'Mohawk', group: 'indigenous' },
+    { name: "Mi'kmawi'simk", nameFr: "Mi'gmaq", group: 'indigenous' },
+    { name: 'Wolastoqey Latuwewakon', nameFr: 'Malécite', group: 'indigenous' },
+    { name: 'Wendat', nameFr: 'Huron-Wendat', group: 'indigenous' },
+    { name: 'Iyuw Iyimuun', nameFr: 'Naskapi', group: 'indigenous' },
+    { name: 'Español', group: 'world' },
+    { name: 'Português', group: 'world' },
+    { name: 'Deutsch', group: 'world' },
+    { name: 'Italiano', group: 'world' },
+    { name: 'Nederlands', group: 'world' },
+    { name: 'Polski', group: 'world' },
+    { name: 'Română', group: 'world' },
+    { name: 'Русский', group: 'world' },
+    { name: 'Українська', group: 'world' },
+    { name: '中文', group: 'world' },
+    { name: '日本語', group: 'world' },
+    { name: '한국어', group: 'world' },
+    { name: 'العربية', group: 'world' },
+    { name: 'हिन्दी', group: 'world' },
+    { name: 'Türkçe', group: 'world' },
+    { name: 'Tiếng Việt', group: 'world' },
+    { name: 'Bahasa Indonesia', group: 'world' },
+    { name: 'Kiswahili', group: 'world' },
+    { name: 'Svenska', group: 'world' },
+    { name: 'Ελληνικά', group: 'world' },
+    { name: 'עברית', group: 'world' },
+    { name: 'Català', group: 'world' },
   ];
 
-  const phraseEl = document.getElementById('phrase');
   const gameLangEl = document.getElementById('game-lang');
   const gameLangWrap = document.getElementById('game-lang-wrap');
   const chipsEl = document.getElementById('lang-chips');
   const reconnectEl = document.getElementById('reconnect');
 
-  PHRASES.forEach((p, i) => {
+  LANGS.forEach((p, i) => {
     const chip = document.createElement('button');
     chip.type = 'button';
     chip.className = 'lang-chip' + (p.group === 'indigenous' ? ' is-indigenous' : '');
@@ -649,41 +611,24 @@
   }
 
   function show(i, fromClick) {
-    const p = PHRASES[i];
+    const p = LANGS[i];
     if (!p) return;
-    const apply = () => {
-      // Titre FR + EN OQLF fixes ; rotation = phrase i18n + nom de langue (barre jeu)
-      phraseEl.textContent = p.text;
-      phraseEl.lang = p.lang || 'fr';
-      phraseEl.dir = p.dir || 'ltr';
-      let label = p.name;
-      if (p.nameFr) label = p.name; // endonyme seul dans la barre
-      gameLangEl.textContent = label;
-      gameLangWrap.classList.toggle('is-indigenous', p.group === 'indigenous');
-      gameLangWrap.title =
-        (p.nameFr ? p.name + ' (' + p.nameFr + ')' : p.name) +
-        ' — Espace ou tapez pour sauter';
-      chipsEl.querySelectorAll('.lang-chip').forEach((c) => {
-        c.classList.toggle('is-active', c.dataset.i === String(i));
-      });
-      phraseEl.classList.remove('is-out');
-      phraseEl.classList.add('is-in');
-      if (!fromClick) scrollChipIntoView(i);
-    };
-    if (reduceMotion) {
-      apply();
-      return;
-    }
-    phraseEl.classList.remove('is-in');
-    phraseEl.classList.add('is-out');
-    setTimeout(apply, 380);
+    gameLangEl.textContent = p.name;
+    gameLangWrap.classList.toggle('is-indigenous', p.group === 'indigenous');
+    gameLangWrap.title =
+      (p.nameFr ? p.name + ' (' + p.nameFr + ')' : p.name) +
+      ' — Espace ou tapez pour sauter';
+    chipsEl.querySelectorAll('.lang-chip').forEach((c) => {
+      c.classList.toggle('is-active', c.dataset.i === String(i));
+    });
+    if (!fromClick) scrollChipIntoView(i);
   }
 
   function startRotation() {
     if (reduceMotion) return;
     stopRotation();
     rotateTimer = setInterval(() => {
-      idx = (idx + 1) % PHRASES.length;
+      idx = (idx + 1) % LANGS.length;
       show(idx);
     }, 3200);
   }
