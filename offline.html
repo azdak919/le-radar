@@ -3,22 +3,37 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0e0f12" />
+  <meta name="theme-color" content="#0E0F12" />
   <meta name="robots" content="noindex" />
   <title>Maintenance en cours — LE RADAR</title>
+  <link rel="icon" href="assets/icon-32.png?v=2" type="image/png" sizes="32x32" />
+  <link rel="icon" href="assets/icon.svg?v=2" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
+    /* Aligné docs/identite-visuelle.md — thème sombre mât / tuner */
     :root {
-      --bg: #0e0f12;
-      --bg-soft: #181a1e;
-      --ink: #f1f2f4;
-      --ink-soft: #c2c6cd;
-      --muted: #888d96;
-      --rule: #26282d;
-      --accent: #cf7ec1;
-      --radio: #5d9be0;
-      --serif: Georgia, "Times New Roman", "Source Serif 4", serif;
-      --sans: system-ui, -apple-system, "Segoe UI", Inter, Roboto, sans-serif;
+      --bg: #0E0F12;
+      --bg-soft: #181A1E;
+      --bg-elevated: #1A1C21;
+      --ink: #F1F2F4;
+      --ink-soft: #C2C6CD;
+      --muted: #888D96;
+      --rule: #26282D;
+      --rule-strong: rgba(241, 242, 244, 0.14);
+      --accent: #CF7EC1;
+      --accent-deep: #6C2163;
+      --radio: #003DA5;
+      --radio-bright: #5D9BE0;
+      --live: #C8102E;
+      --ok: #7DCEA0;
+      --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+      --sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      --radius: 16px;
+      --shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
     }
+
     * { box-sizing: border-box; }
     html, body {
       margin: 0;
@@ -27,221 +42,384 @@
       color: var(--ink);
       font-family: var(--sans);
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
     body {
       min-height: 100dvh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: max(20px, env(safe-area-inset-top)) 20px max(24px, env(safe-area-inset-bottom));
+      padding:
+        max(18px, env(safe-area-inset-top))
+        max(16px, env(safe-area-inset-right))
+        max(20px, env(safe-area-inset-bottom))
+        max(16px, env(safe-area-inset-left));
       background:
-        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(93, 155, 224, 0.12), transparent 55%),
-        radial-gradient(ellipse 60% 40% at 80% 100%, rgba(207, 126, 193, 0.08), transparent 50%),
+        radial-gradient(ellipse 90% 55% at 50% -8%, rgba(108, 33, 99, 0.28), transparent 58%),
+        radial-gradient(ellipse 55% 40% at 100% 20%, rgba(0, 61, 165, 0.14), transparent 50%),
+        radial-gradient(ellipse 50% 35% at 0% 85%, rgba(207, 126, 193, 0.08), transparent 45%),
         var(--bg);
     }
+
     .shell {
       width: 100%;
-      max-width: 520px;
+      max-width: 640px;
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 1.25rem;
+      gap: 0;
     }
+
+    /* ── Marque ── */
     header {
       text-align: center;
-      padding-top: 0.5rem;
+      padding: 0.35rem 0 0.85rem;
     }
     .brand {
       display: inline-flex;
       align-items: center;
-      gap: 0.55rem;
+      gap: 0.65rem;
       text-decoration: none;
       color: inherit;
+      transition: opacity 160ms ease;
+    }
+    .brand:hover { opacity: 0.92; }
+    .brand:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 6px;
+      border-radius: 10px;
     }
     .brand-mark {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
       display: block;
-      object-fit: contain;
-      background: #111;
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.35);
+      object-fit: cover;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 8px 22px rgba(108, 33, 99, 0.35);
     }
     .brand-name {
       font-family: var(--serif);
+      font-weight: 700;
+      font-size: 1.45rem;
+      letter-spacing: 0.01em;
+      line-height: 1;
+    }
+    .brand-name .tld {
+      color: var(--radio-bright);
       font-weight: 600;
-      font-size: 1.35rem;
+      font-size: 0.88em;
       letter-spacing: 0.02em;
     }
-    .brand-name span { color: var(--radio); font-weight: 500; font-size: 0.92em; }
 
+    /* ── Statut éditorial ── */
     .status {
       text-align: center;
-      margin-top: 0.35rem;
+      padding: 0.15rem 0.5rem 0.9rem;
     }
     .status-kicker {
-      font-size: 0.7rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.68rem;
       font-weight: 600;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--muted);
-      margin: 0 0 0.65rem;
+      margin: 0 0 0.7rem;
     }
-    .phrase-stage {
-      min-height: 4.6rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.35rem;
-      position: relative;
+    .status-kicker::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--live);
+      box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.22);
+      animation: pulse-dot 1.8s ease-in-out infinite;
     }
-    .phrase {
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.65; transform: scale(0.88); }
+    }
+    .status-title {
       margin: 0;
       font-family: var(--serif);
-      font-size: clamp(1.35rem, 4.5vw, 1.75rem);
-      font-weight: 600;
-      line-height: 1.25;
-      text-align: center;
-      max-width: 20em;
-      opacity: 0;
-      transform: translateY(6px);
-      transition: opacity 480ms ease, transform 480ms ease;
+      font-size: clamp(1.65rem, 5.2vw, 2.15rem);
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: -0.01em;
+      color: var(--ink);
     }
-    .phrase.is-in {
+    .status-i18n {
+      margin: 0.55rem auto 0;
+      min-height: 1.45em;
+      max-width: 28em;
+      font-family: var(--serif);
+      font-size: clamp(0.95rem, 2.6vw, 1.1rem);
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--ink-soft);
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 420ms ease, transform 420ms ease;
+    }
+    .status-i18n.is-in {
       opacity: 1;
       transform: translateY(0);
     }
-    .phrase.is-out {
+    .status-i18n.is-out {
       opacity: 0;
-      transform: translateY(-6px);
+      transform: translateY(-4px);
     }
-    .phrase-meta {
-      font-size: 0.78rem;
-      color: var(--muted);
+    .status-lang {
+      margin: 0.35rem 0 0;
+      font-size: 0.75rem;
+      font-weight: 500;
       letter-spacing: 0.04em;
+      color: var(--muted);
       min-height: 1.2em;
-      opacity: 0;
-      transition: opacity 400ms ease;
     }
-    .phrase-meta.is-in { opacity: 1; }
-    .phrase-meta .dot {
-      opacity: 0.45;
-      margin: 0 0.35em;
-    }
-    .phrase-meta .tag-indigenous {
+    .status-lang .indigenous {
       color: var(--accent);
       font-weight: 600;
     }
-
-    /* Bandeau langues : autochtone d’abord, puis monde */
-    .lang-rail {
-      margin-top: 0.25rem;
-      border-top: 1px solid var(--rule);
-      border-bottom: 1px solid var(--rule);
-      padding: 0.75rem 0;
-      overflow: hidden;
+    .status-lang .via {
+      opacity: 0.7;
     }
-    .lang-rail-label {
+
+    /* ── Mini-jeu (haut, hero) ── */
+    .game-wrap {
+      margin: 0.15rem 0 0.95rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--rule-strong);
+      background:
+        linear-gradient(180deg, rgba(26, 28, 33, 0.95) 0%, rgba(14, 15, 18, 0.98) 100%);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      touch-action: manipulation;
+      user-select: none;
+      position: relative;
+    }
+    .game-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(207, 126, 193, 0.45),
+        rgba(93, 155, 224, 0.4),
+        transparent
+      );
+      z-index: 2;
+      pointer-events: none;
+    }
+    .game-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.35rem 0.75rem;
+      padding: 0.55rem 0.9rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      border-bottom: 1px solid var(--rule);
+      letter-spacing: 0.03em;
+      background: rgba(0, 0, 0, 0.18);
+    }
+    .game-bar-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: 600;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
       font-size: 0.65rem;
-      letter-spacing: 0.12em;
+    }
+    .game-bar-title .pip {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--radio-bright);
+      box-shadow: 0 0 8px rgba(93, 155, 224, 0.55);
+    }
+    .game-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.15rem 0.85rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .game-stats b {
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+    .game-stats .stat-label {
+      color: var(--muted);
+      font-weight: 500;
+      margin-right: 0.25rem;
+    }
+    canvas#game {
+      display: block;
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+      background:
+        radial-gradient(ellipse 70% 80% at 50% 100%, rgba(0, 61, 165, 0.12), transparent 55%),
+        linear-gradient(180deg, #12141A 0%, #0E0F12 52%, #12161E 100%);
+    }
+
+    /* ── Message reconnexion ── */
+    .hint-block {
+      text-align: center;
+      padding: 0.15rem 0.4rem 0.85rem;
+    }
+    .hint {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--ink-soft);
+      line-height: 1.5;
+      max-width: 34em;
+      margin-inline: auto;
+    }
+    .hint strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+    .reconnect {
+      margin: 0.45rem 0 0;
+      font-size: 0.78rem;
+      color: var(--muted);
+      min-height: 1.25em;
+      letter-spacing: 0.01em;
+    }
+    .reconnect.is-ok { color: var(--ok); }
+
+    /* ── Langues : rail élégant 1 rangée, pas de soupe ── */
+    .lang-panel {
+      margin: 0 0 0.5rem;
+      padding: 0.75rem 0 0.35rem;
+      border-top: 1px solid var(--rule);
+    }
+    .lang-panel-label {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--muted);
       text-align: center;
       margin: 0 0 0.55rem;
     }
+    .lang-scroll-outer {
+      position: relative;
+    }
+    .lang-scroll-outer::before,
+    .lang-scroll-outer::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 28px;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .lang-scroll-outer::before {
+      left: 0;
+      background: linear-gradient(90deg, var(--bg), transparent);
+    }
+    .lang-scroll-outer::after {
+      right: 0;
+      background: linear-gradient(270deg, var(--bg), transparent);
+    }
     .lang-scroll {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.35rem 0.4rem;
-      max-height: 5.5rem;
-      overflow: hidden;
+      flex-wrap: nowrap;
+      gap: 0.4rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0.15rem 1.1rem 0.45rem;
+      scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
     }
+    .lang-scroll::-webkit-scrollbar { display: none; }
     .lang-chip {
-      font-size: 0.68rem;
-      padding: 0.22rem 0.5rem;
+      flex: 0 0 auto;
+      scroll-snap-align: center;
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 500;
+      padding: 0.38rem 0.72rem;
       border-radius: 999px;
       border: 1px solid var(--rule);
       color: var(--ink-soft);
-      background: rgba(255,255,255,0.02);
+      background: rgba(255, 255, 255, 0.025);
       white-space: nowrap;
-      transition: border-color 200ms, color 200ms, background 200ms;
+      cursor: pointer;
+      transition:
+        border-color 180ms ease,
+        color 180ms ease,
+        background 180ms ease,
+        box-shadow 180ms ease;
+    }
+    .lang-chip:hover {
+      border-color: rgba(241, 242, 244, 0.22);
+      color: var(--ink);
+    }
+    .lang-chip:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
     }
     .lang-chip.is-active {
       border-color: rgba(93, 155, 224, 0.55);
       color: var(--ink);
-      background: rgba(93, 155, 224, 0.1);
+      background: rgba(93, 155, 224, 0.12);
+      box-shadow: 0 0 0 1px rgba(93, 155, 224, 0.12);
     }
     .lang-chip.is-indigenous {
-      border-color: rgba(207, 126, 193, 0.25);
+      border-color: rgba(207, 126, 193, 0.22);
     }
     .lang-chip.is-indigenous.is-active {
-      border-color: rgba(207, 126, 193, 0.6);
-      background: rgba(207, 126, 193, 0.1);
+      border-color: rgba(207, 126, 193, 0.55);
+      background: rgba(207, 126, 193, 0.12);
+      box-shadow: 0 0 0 1px rgba(207, 126, 193, 0.12);
     }
 
-    .hint {
-      text-align: center;
-      font-size: 0.85rem;
-      color: var(--ink-soft);
-      margin: 0;
-      line-height: 1.45;
-    }
-    .hint strong { color: var(--ink); font-weight: 600; }
-    .reconnect {
-      text-align: center;
-      font-size: 0.75rem;
-      color: var(--muted);
-      min-height: 1.2em;
-      margin: 0;
-    }
-    .reconnect.is-ok { color: #7dcea0; }
-
-    /* Jeu satellite */
-    .game-wrap {
-      margin-top: auto;
-      border-radius: 14px;
-      border: 1px solid var(--rule);
-      background: var(--bg-soft);
-      overflow: hidden;
-      touch-action: manipulation;
-      user-select: none;
-    }
-    .game-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.45rem 0.75rem;
-      font-size: 0.72rem;
-      color: var(--muted);
-      border-bottom: 1px solid var(--rule);
-      letter-spacing: 0.04em;
-    }
-    .game-bar b { color: var(--ink-soft); font-weight: 600; }
-    canvas {
-      display: block;
-      width: 100%;
-      height: auto;
-      cursor: pointer;
-      background: linear-gradient(180deg, #12141a 0%, #0e0f12 55%, #141820 100%);
-    }
     footer {
       text-align: center;
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       color: var(--muted);
-      padding-top: 0.65rem;
-      line-height: 1.5;
+      padding: 0.85rem 0 0.2rem;
+      line-height: 1.55;
+      margin-top: auto;
     }
     footer a {
       color: var(--ink-soft);
       text-decoration: none;
-      border-bottom: 1px solid rgba(255,255,255,0.15);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+      transition: color 150ms ease, border-color 150ms ease;
     }
-    footer .sep { opacity: 0.4; margin: 0 0.35em; }
+    footer a:hover {
+      color: var(--accent);
+      border-bottom-color: rgba(207, 126, 193, 0.45);
+    }
+    footer .sep { opacity: 0.35; margin: 0 0.4em; }
+    footer .tagline {
+      display: block;
+      margin-top: 0.2rem;
+      font-size: 0.7rem;
+      opacity: 0.85;
+    }
+
+    @media (min-width: 540px) {
+      .game-bar { padding: 0.6rem 1rem; }
+    }
     @media (prefers-reduced-motion: reduce) {
-      .phrase, .phrase-meta { transition: none; }
+      .status-i18n { transition: none; }
+      .status-kicker::before { animation: none; }
     }
   </style>
 </head>
@@ -249,48 +427,62 @@
   <div class="shell">
     <header>
       <a class="brand" href="/" rel="home">
-        <img class="brand-mark" src="assets/icon-192.png" width="40" height="40" alt="" />
-        <span class="brand-name">LE RADAR<span>.ca</span></span>
+        <img class="brand-mark" src="assets/icon.svg" width="44" height="44" alt="" />
+        <span class="brand-name notranslate" translate="no">LE RADAR<span class="tld">.ca</span></span>
       </a>
     </header>
 
     <section class="status" aria-live="polite">
       <p class="status-kicker">Statut</p>
-      <div class="phrase-stage">
-        <p class="phrase is-in" id="phrase">Maintenance en cours</p>
-        <p class="phrase-meta is-in" id="phrase-meta">
-          <span class="tag-indigenous" id="phrase-tag">Français</span>
-        </p>
-      </div>
+      <h1 class="status-title">Maintenance en cours</h1>
+      <p class="status-i18n is-in" id="phrase" lang="iu">ᐋᖅᑭᐅᒪᐃᓐᓇᕈᑎᑦ ᐱᕙᓪᓕᐊᔪᑦ</p>
+      <p class="status-lang" id="phrase-meta">
+        <span class="indigenous" id="phrase-tag">ᐃᓄᒃᑎᑐᑦ · Inuktut</span>
+      </p>
     </section>
 
-    <section class="lang-rail" aria-label="Langues">
-      <p class="lang-rail-label">Langues autochtones du Québec · puis le monde</p>
-      <div class="lang-scroll" id="lang-chips"></div>
-    </section>
-
-    <p class="hint">
-      <strong>Mise à jour ou hors ligne.</strong>
-      Le site revient dès que la connexion et le cache sont prêts.
-    </p>
-    <p class="reconnect" id="reconnect" aria-live="polite"></p>
-
+    <!-- Jeu remonté : interaction principale pendant l’attente -->
     <section class="game-wrap" aria-label="Mini-jeu en attendant">
       <div class="game-bar">
-        <span>LE RADAR · espace / tapez pour sauter</span>
-        <span>
-          Score <b id="score">0</b>
-          · Pièces <b id="coins">0</b>
-          · Record <b id="hi">0</b>
+        <span class="game-bar-title">
+          <span class="pip" aria-hidden="true"></span>
+          Signal · espace / tapez
+        </span>
+        <span class="game-stats">
+          <span><span class="stat-label">Score</span><b id="score">0</b></span>
+          <span><span class="stat-label">Pièces</span><b id="coins">0</b></span>
+          <span><span class="stat-label">Record</span><b id="hi">0</b></span>
         </span>
       </div>
-      <canvas id="game" width="520" height="160" role="img" aria-label="LE RADAR saute et collecte des pièces"></canvas>
+      <canvas
+        id="game"
+        width="640"
+        height="220"
+        role="img"
+        aria-label="LE RADAR saute et collecte des pièces"
+      ></canvas>
+    </section>
+
+    <div class="hint-block">
+      <p class="hint">
+        <strong>Mise à jour ou hors ligne.</strong>
+        Le fil étudiant revient dès que la connexion et le cache sont prêts.
+      </p>
+      <p class="reconnect" id="reconnect" aria-live="polite"></p>
+    </div>
+
+    <section class="lang-panel" aria-label="Langues">
+      <p class="lang-panel-label">Langues autochtones du Québec · puis le monde</p>
+      <div class="lang-scroll-outer">
+        <div class="lang-scroll" id="lang-chips" role="list"></div>
+      </div>
     </section>
 
     <footer>
       <a href="https://le-radar.ca/">LE-RADAR.ca</a>
       <span class="sep">·</span>
-      Les médias étudiants du Québec
+      <span>Médias étudiants du Québec</span>
+      <span class="tagline">Student media on your radar</span>
     </footer>
   </div>
 
@@ -300,14 +492,11 @@
 
   /**
    * Phrases « Maintenance en cours ».
-   * 1) Langues autochtones du Québec en premier (endonymes).
-   * 2) Puis principales langues mondiales.
-   * Inuktitut : traduction machine publique (gtx). Autres langues autochtones
-   * sans moteur public fiable : phrase FR + endonyme (honnêteté > faux texte).
+   * Autochtones du Québec d’abord (endonymes), puis langues mondiales.
+   * Sans moteur fiable : phrase FR + endonyme (honnêteté > faux texte).
    */
   const PHRASES = [
-    // ── Autochtones du Québec (d’abord) ──
-    { text: 'ᐋᖅᑭᐅᒪᐃᓐᓇᕈᑎᑦ ᐱᕙᓪᓕᐊᔪᑦ', name: 'ᐃᓄᒃᑎᑐᑦ', group: 'indigenous', lang: 'iu', dir: 'ltr' },
+    { text: 'ᐋᖅᑭᐅᒪᐃᓐᓇᕈᑎᑦ ᐱᕙᓪᓕᐊᔪᑦ', name: 'ᐃᓄᒃᑎᑐᑦ', nameEn: 'Inuktut', group: 'indigenous', lang: 'iu', dir: 'ltr' },
     { text: 'Aaqqiumainnarutit pivalliajut', name: 'Inuktut', group: 'indigenous', lang: 'iu-Latn' },
     { text: 'Maintenance en cours', name: 'Eeyou ayimuun', nameFr: 'Cri', group: 'indigenous', via: 'fr' },
     { text: 'Maintenance en cours', name: 'Innu-aimun', nameFr: 'Innu', group: 'indigenous', via: 'fr' },
@@ -318,7 +507,6 @@
     { text: 'Maintenance en cours', name: 'Wolastoqey Latuwewakon', nameFr: 'Malécite', group: 'indigenous', via: 'fr' },
     { text: 'Maintenance en cours', name: 'Wendat', nameFr: 'Huron-Wendat', group: 'indigenous', via: 'fr' },
     { text: 'Maintenance en cours', name: 'Iyuw Iyimuun', nameFr: 'Naskapi', group: 'indigenous', via: 'fr' },
-    // ── Français (site) puis monde ──
     { text: 'Maintenance en cours', name: 'Français', group: 'world', lang: 'fr' },
     { text: 'Maintenance in progress', name: 'English', group: 'world', lang: 'en' },
     { text: 'Mantenimiento en curso', name: 'Español', group: 'world', lang: 'es' },
@@ -351,37 +539,56 @@
   const chipsEl = document.getElementById('lang-chips');
   const reconnectEl = document.getElementById('reconnect');
 
-  // Chips
   PHRASES.forEach((p, i) => {
-    const chip = document.createElement('span');
+    const chip = document.createElement('button');
+    chip.type = 'button';
     chip.className = 'lang-chip' + (p.group === 'indigenous' ? ' is-indigenous' : '');
     chip.textContent = p.name;
     chip.dataset.i = String(i);
-    chip.title = p.nameFr ? p.name + ' (' + p.nameFr + ')' : p.name;
+    chip.setAttribute('role', 'listitem');
+    chip.title = p.nameFr
+      ? p.name + ' (' + p.nameFr + ')'
+      : (p.nameEn ? p.name + ' · ' + p.nameEn : p.name);
+    chip.addEventListener('click', () => {
+      idx = i;
+      show(i, true);
+      pauseRotation();
+    });
     chipsEl.appendChild(chip);
   });
 
   let idx = 0;
+  let rotateTimer = null;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function show(i) {
+  function scrollChipIntoView(i) {
+    const chip = chipsEl.querySelector('[data-i="' + i + '"]');
+    if (chip && chip.scrollIntoView) {
+      chip.scrollIntoView({ inline: 'center', block: 'nearest', behavior: reduceMotion ? 'auto' : 'smooth' });
+    }
+  }
+
+  function show(i, fromClick) {
     const p = PHRASES[i];
     if (!p) return;
     const apply = () => {
+      // Titre FR fixe : la rotation ne remplace que la ligne secondaire
+      // (évite le « gribouillis » perçu quand le H1 change de script).
       phraseEl.textContent = p.text;
       phraseEl.lang = p.lang || 'fr';
       phraseEl.dir = p.dir || 'ltr';
       let meta = p.name;
+      if (p.nameEn && p.nameEn !== p.name) meta += ' · ' + p.nameEn;
       if (p.nameFr) meta += ' · ' + p.nameFr;
       if (p.via === 'fr') meta += ' · texte FR';
       tagEl.textContent = meta;
-      tagEl.className = p.group === 'indigenous' ? 'tag-indigenous' : '';
+      tagEl.className = p.group === 'indigenous' ? 'indigenous' : '';
       chipsEl.querySelectorAll('.lang-chip').forEach((c) => {
         c.classList.toggle('is-active', c.dataset.i === String(i));
       });
       phraseEl.classList.remove('is-out');
       phraseEl.classList.add('is-in');
-      metaEl.classList.add('is-in');
+      if (!fromClick) scrollChipIntoView(i);
     };
     if (reduceMotion) {
       apply();
@@ -389,20 +596,53 @@
     }
     phraseEl.classList.remove('is-in');
     phraseEl.classList.add('is-out');
-    metaEl.classList.remove('is-in');
-    setTimeout(apply, 420);
+    setTimeout(apply, 380);
+  }
+
+  function startRotation() {
+    if (reduceMotion) return;
+    stopRotation();
+    rotateTimer = setInterval(() => {
+      idx = (idx + 1) % PHRASES.length;
+      show(idx);
+    }, 3200);
+  }
+  function stopRotation() {
+    if (rotateTimer) {
+      clearInterval(rotateTimer);
+      rotateTimer = null;
+    }
+  }
+  function pauseRotation() {
+    stopRotation();
+    // Reprend après une pause si l’utilisateur a cliqué
+    setTimeout(startRotation, 10000);
   }
 
   show(0);
-  setInterval(() => {
-    idx = (idx + 1) % PHRASES.length;
-    show(idx);
-  }, 2800);
+  startRotation();
 
-  // ── Auto-retour quand le site (index) répond en ligne ──
+  // ── Auto-retour (PROD) ──
+  const params = new URLSearchParams(location.search || '');
+  const host = String(location.hostname || '').toLowerCase();
+  const isLocalHost =
+    host === 'localhost' ||
+    host === '127.0.0.1' ||
+    host === '[::1]' ||
+    host === '0.0.0.0' ||
+    host.endsWith('.local') ||
+    host.endsWith('.lan');
+  const forceLive = params.has('live') || params.get('redirect') === '1';
+  const forcePreview =
+    params.has('preview') ||
+    params.has('stay') ||
+    params.get('demo') === '1' ||
+    params.get('offline') === '1';
+  const stayHere = forcePreview || (isLocalHost && !forceLive);
+
   let checking = false;
   async function tryReconnect() {
-    if (checking) return;
+    if (stayHere || checking) return;
     if (!navigator.onLine) {
       reconnectEl.textContent = 'Hors ligne — le jeu reste disponible.';
       reconnectEl.classList.remove('is-ok');
@@ -411,7 +651,6 @@
     checking = true;
     reconnectEl.textContent = 'Vérification de la connexion…';
     try {
-      // Probe index + un asset shell (évite de confondre avec offline.html)
       const bust = Date.now();
       const [htmlRes, cssRes] = await Promise.all([
         fetch('./index.html?_probe=' + bust, { cache: 'no-store', credentials: 'same-origin' }),
@@ -421,7 +660,7 @@
         const text = await htmlRes.text();
         const isOfflinePage =
           /Maintenance en cours — LE RADAR/.test(text) ||
-          /id="game"/.test(text) && /Le Satellite/.test(text);
+          (/id="game"/.test(text) && /Pièces/.test(text));
         const isMainSite =
           /id="bg-photo-layer"/.test(text) ||
           /Le fil étudiant/i.test(text) ||
@@ -429,7 +668,9 @@
         if (isMainSite && !isOfflinePage) {
           reconnectEl.textContent = 'Connexion rétablie — redirection…';
           reconnectEl.classList.add('is-ok');
-          setTimeout(() => { location.replace('./'); }, 500);
+          setTimeout(function () {
+            location.replace('./');
+          }, 500);
           return;
         }
       }
@@ -442,13 +683,19 @@
       checking = false;
     }
   }
-  setInterval(tryReconnect, 3000);
-  window.addEventListener('online', tryReconnect);
-  setTimeout(tryReconnect, 1200);
+
+  if (stayHere) {
+    reconnectEl.textContent = isLocalHost
+      ? 'Aperçu local — pas de redirection (ajoutez ?live=1 pour tester).'
+      : 'Mode aperçu — pas de redirection.';
+    reconnectEl.classList.add('is-ok');
+  } else {
+    setInterval(tryReconnect, 3000);
+    window.addEventListener('online', tryReconnect);
+    setTimeout(tryReconnect, 1200);
+  }
 
   // ── Mini-jeu LE RADAR ──
-  // Joueur = logo PWA (assets/icon-192.png)
-  // Pièces = spritesheet CC0 16×16 (assets/offline/coin.png · OpenGameArt / blaze_xcvi)
   const canvas = document.getElementById('game');
   const ctx = canvas.getContext('2d');
   const scoreEl = document.getElementById('score');
@@ -469,14 +716,14 @@
   const coinImg = new Image();
   coinImg.src = 'assets/offline/coin.png';
   const COIN_FW = 16;
-  const COIN_FRAMES = 20; // spritesheet 320×16
+  const COIN_FRAMES = 20;
 
   const W = canvas.width;
   const H = canvas.height;
-  const GROUND = H - 28;
-  const PLAYER_SIZE = 32;
+  const GROUND = H - 36;
+  const PLAYER_SIZE = 46;
   let player = {
-    x: 52,
+    x: 58,
     y: GROUND - PLAYER_SIZE,
     vy: 0,
     w: PLAYER_SIZE,
@@ -488,7 +735,7 @@
   let frame = 0;
   let score = 0;
   let coinsRun = 0;
-  let speed = 4.2;
+  let speed = 4.4;
   let alive = true;
   let started = false;
   let spawnIn = 70;
@@ -503,7 +750,7 @@
     frame = 0;
     score = 0;
     coinsRun = 0;
-    speed = 4.2;
+    speed = 4.4;
     alive = true;
     spawnIn = 70;
     coinSpawnIn = 40;
@@ -521,7 +768,7 @@
       return;
     }
     if (player.onGround) {
-      player.vy = -9.4;
+      player.vy = -10.2;
       player.onGround = false;
     }
   }
@@ -538,49 +785,99 @@
   });
 
   function spawnObstacle() {
-    const h = 20 + Math.random() * 26;
-    const kind = Math.random() < 0.4 ? 'tower' : 'paper';
+    const h = 22 + Math.random() * 32;
+    const kind = Math.random() < 0.45 ? 'tower' : 'paper';
     obstacles.push({
-      x: W + 12,
-      w: kind === 'tower' ? 16 : 18,
+      x: W + 14,
+      w: kind === 'tower' ? 18 : 20,
       h: h,
       kind: kind,
     });
   }
 
   function spawnCoin() {
-    // Pièce flottante (style plateforme) — à collecter, pas un obstacle
-    const floatY = GROUND - 36 - Math.random() * 50;
-    coins.push({
-      x: W + 8,
-      y: floatY,
-      r: 11,
-      taken: false,
-    });
+    const floatY = GROUND - 42 - Math.random() * 58;
+    coins.push({ x: W + 8, y: floatY, r: 12, taken: false });
+  }
+
+  function drawBackdrop() {
+    // Grille radar discrète
+    ctx.save();
+    ctx.strokeStyle = 'rgba(93, 155, 224, 0.06)';
+    ctx.lineWidth = 1;
+    const cx = W * 0.72;
+    const cy = GROUND - 20;
+    for (let r = 28; r < 200; r += 28) {
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, Math.PI * 1.05, Math.PI * 1.95);
+      ctx.stroke();
+    }
+    ctx.strokeStyle = 'rgba(207, 126, 193, 0.05)';
+    ctx.beginPath();
+    ctx.moveTo(cx - 160, cy);
+    ctx.lineTo(cx + 40, cy);
+    ctx.moveTo(cx, cy - 100);
+    ctx.lineTo(cx, cy + 10);
+    ctx.stroke();
+    ctx.restore();
+
+    // Étoiles
+    ctx.fillStyle = 'rgba(241, 242, 244, 0.18)';
+    for (let i = 0; i < 22; i++) {
+      const sx = (i * 97 + frame * 0.12) % W;
+      const sy = 12 + ((i * 37) % (GROUND - 50));
+      const s = i % 5 === 0 ? 1.8 : 1.2;
+      ctx.fillRect(sx, sy, s, s);
+    }
+
+    // Sol
+    const groundGrad = ctx.createLinearGradient(0, GROUND, 0, H);
+    groundGrad.addColorStop(0, 'rgba(93, 155, 224, 0.12)');
+    groundGrad.addColorStop(0.15, 'rgba(26, 28, 33, 0.9)');
+    groundGrad.addColorStop(1, '#0E0F12');
+    ctx.fillStyle = groundGrad;
+    ctx.fillRect(0, GROUND, W, H - GROUND);
+
+    ctx.strokeStyle = 'rgba(207, 126, 193, 0.35)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(0, GROUND + 0.5);
+    ctx.lineTo(W, GROUND + 0.5);
+    ctx.stroke();
+
+    ctx.strokeStyle = 'rgba(241, 242, 244, 0.06)';
+    ctx.lineWidth = 1;
+    const off = (frame * speed) % 28;
+    for (let x = -off; x < W; x += 28) {
+      ctx.beginPath();
+      ctx.moveTo(x, GROUND + 6);
+      ctx.lineTo(x + 12, GROUND + 18);
+      ctx.stroke();
+    }
   }
 
   function drawPlayer(x, y) {
     if (logoImg.complete && logoImg.naturalWidth) {
       ctx.save();
-      // Légère ombre
-      ctx.shadowColor = 'rgba(0,0,0,0.45)';
-      ctx.shadowBlur = 6;
-      ctx.shadowOffsetY = 2;
-      // Logo circulaire soft
+      ctx.shadowColor = 'rgba(108, 33, 99, 0.55)';
+      ctx.shadowBlur = 14;
+      ctx.shadowOffsetY = 3;
+      const r = player.w / 2 - 1;
+      const cx = x + player.w / 2;
+      const cy = y + player.h / 2;
       ctx.beginPath();
-      ctx.arc(x + player.w / 2, y + player.h / 2, player.w / 2 - 1, 0, Math.PI * 2);
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
       ctx.closePath();
       ctx.clip();
       ctx.drawImage(logoImg, x, y, player.w, player.h);
       ctx.restore();
-      ctx.strokeStyle = 'rgba(255,255,255,0.2)';
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(207, 126, 193, 0.35)';
+      ctx.lineWidth = 1.5;
       ctx.beginPath();
-      ctx.arc(x + player.w / 2, y + player.h / 2, player.w / 2 - 1, 0, Math.PI * 2);
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
       ctx.stroke();
     } else {
-      // fallback si image pas prête
-      ctx.fillStyle = '#1a1c22';
+      ctx.fillStyle = '#6C2163';
       ctx.beginPath();
       ctx.arc(x + player.w / 2, y + player.h / 2, player.w / 2 - 2, 0, Math.PI * 2);
       ctx.fill();
@@ -588,48 +885,40 @@
   }
 
   function drawCoin(c) {
-    const size = 22;
+    const size = 24;
     const fi = Math.floor(frame / 2) % COIN_FRAMES;
     if (coinImg.complete && coinImg.naturalWidth) {
-      ctx.drawImage(
-        coinImg,
-        fi * COIN_FW,
-        0,
-        COIN_FW,
-        COIN_FW,
-        c.x,
-        c.y,
-        size,
-        size
-      );
+      ctx.drawImage(coinImg, fi * COIN_FW, 0, COIN_FW, COIN_FW, c.x, c.y, size, size);
     } else {
-      // fallback dessin or
-      ctx.fillStyle = '#f4c430';
+      ctx.fillStyle = '#F4C430';
       ctx.beginPath();
       ctx.ellipse(c.x + size / 2, c.y + size / 2, size / 2 - 1, size / 2 - 1, 0, 0, Math.PI * 2);
       ctx.fill();
-      ctx.strokeStyle = '#c9a227';
-      ctx.stroke();
-      ctx.fillStyle = '#8b6914';
-      ctx.font = 'bold 11px system-ui';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText('¢', c.x + size / 2, c.y + size / 2 + 0.5);
     }
   }
 
   function drawObstacle(o) {
     const y = GROUND - o.h;
     if (o.kind === 'tower') {
-      ctx.fillStyle = '#3a4250';
+      // Tour / antenne radio (bleu QC)
+      const g = ctx.createLinearGradient(o.x, y, o.x + o.w, GROUND);
+      g.addColorStop(0, '#3A4A62');
+      g.addColorStop(1, '#252B36');
+      ctx.fillStyle = g;
       ctx.fillRect(o.x, y, o.w, o.h);
-      ctx.fillStyle = '#5d9be0';
-      ctx.fillRect(o.x - 2, y, o.w + 4, 3);
+      ctx.fillStyle = '#5D9BE0';
+      ctx.fillRect(o.x - 3, y, o.w + 6, 3);
+      ctx.fillStyle = 'rgba(93, 155, 224, 0.5)';
+      ctx.fillRect(o.x + o.w / 2 - 1, y - 8, 2, 8);
     } else {
-      ctx.fillStyle = '#2a2e38';
+      // Feuille / journal (pourpre discret)
+      ctx.fillStyle = '#2A2430';
       ctx.fillRect(o.x, y, o.w, o.h);
-      ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+      ctx.strokeStyle = 'rgba(207, 126, 193, 0.25)';
       ctx.strokeRect(o.x + 2, y + 3, o.w - 4, o.h - 6);
+      ctx.fillStyle = 'rgba(207, 126, 193, 0.15)';
+      ctx.fillRect(o.x + 4, y + 6, o.w - 8, 2);
+      ctx.fillRect(o.x + 4, y + 11, o.w - 10, 2);
     }
   }
 
@@ -646,28 +935,10 @@
   function tick() {
     frame++;
     ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = 'rgba(255,255,255,0.15)';
-    for (let i = 0; i < 18; i++) {
-      const sx = (i * 97 + frame * 0.15) % W;
-      const sy = (i * 37) % (H - 40);
-      ctx.fillRect(sx, sy, 1.5, 1.5);
-    }
-    ctx.strokeStyle = 'rgba(255,255,255,0.12)';
-    ctx.beginPath();
-    ctx.moveTo(0, GROUND + 0.5);
-    ctx.lineTo(W, GROUND + 0.5);
-    ctx.stroke();
-    ctx.strokeStyle = 'rgba(255,255,255,0.05)';
-    const off = (frame * speed) % 24;
-    for (let x = -off; x < W; x += 24) {
-      ctx.beginPath();
-      ctx.moveTo(x, GROUND + 4);
-      ctx.lineTo(x + 10, GROUND + 14);
-      ctx.stroke();
-    }
+    drawBackdrop();
 
     if (started && alive) {
-      player.vy += 0.45;
+      player.vy += 0.48;
       player.y += player.vy;
       if (player.y >= GROUND - player.h) {
         player.y = GROUND - player.h;
@@ -678,30 +949,27 @@
       spawnIn--;
       if (spawnIn <= 0) {
         spawnObstacle();
-        spawnIn = 58 + Math.random() * 48 - Math.min(22, score / 50);
+        spawnIn = 55 + Math.random() * 50 - Math.min(24, score / 50);
       }
       coinSpawnIn--;
       if (coinSpawnIn <= 0) {
         spawnCoin();
-        coinSpawnIn = 28 + Math.random() * 36;
+        coinSpawnIn = 26 + Math.random() * 34;
       }
 
-      speed = 4.2 + Math.min(4, score / 180);
+      speed = 4.4 + Math.min(4.2, score / 170);
       for (const o of obstacles) o.x -= speed;
       for (const c of coins) c.x -= speed;
       obstacles = obstacles.filter((o) => o.x + o.w > -24);
       coins = coins.filter((c) => !c.taken && c.x > -30);
 
-      // Collecte pièces
       for (const c of coins) {
         if (c.taken) continue;
-        if (
-          hitBox(player.x, player.y, player.w, player.h, c.x, c.y, 22, 22, 4)
-        ) {
+        if (hitBox(player.x, player.y, player.w, player.h, c.x, c.y, 24, 24, 4)) {
           c.taken = true;
           coinsRun += 1;
           coinsTotal += 1;
-          score += 25; // bonus points pièce
+          score += 25;
           coinsEl.textContent = String(coinsRun);
           scoreEl.textContent = String(score);
           try {
@@ -710,12 +978,9 @@
         }
       }
 
-      // Collision obstacles (tours / journaux)
       for (const o of obstacles) {
         const oy = GROUND - o.h;
-        if (
-          hitBox(player.x, player.y, player.w, player.h, o.x, oy, o.w, o.h, 6)
-        ) {
+        if (hitBox(player.x, player.y, player.w, player.h, o.x, oy, o.w, o.h, 6)) {
           alive = false;
           if (score > hi) {
             hi = score;
@@ -740,24 +1005,30 @@
     drawPlayer(player.x, player.y);
 
     if (!started) {
-      ctx.fillStyle = 'rgba(241,242,244,0.78)';
-      ctx.font = '600 13px system-ui,sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('Appuyez pour démarrer · collectez les pièces', W / 2, H / 2 - 8);
-    } else if (!alive) {
-      ctx.fillStyle = 'rgba(14,15,18,0.55)';
+      ctx.fillStyle = 'rgba(14, 15, 18, 0.35)';
       ctx.fillRect(0, 0, W, H);
-      ctx.fillStyle = '#f1f2f4';
-      ctx.font = '600 15px system-ui,sans-serif';
+      ctx.fillStyle = 'rgba(241, 242, 244, 0.9)';
+      ctx.font = '600 15px Inter, system-ui, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('Signal perdu — tapez pour rejouer', W / 2, H / 2 - 10);
-      ctx.font = '500 12px system-ui,sans-serif';
-      ctx.fillStyle = 'rgba(241,242,244,0.75)';
+      ctx.fillText('Appuyez pour démarrer', W / 2, H / 2 - 10);
+      ctx.font = '500 12px Inter, system-ui, sans-serif';
+      ctx.fillStyle = 'rgba(194, 198, 205, 0.85)';
+      ctx.fillText('Collectez les pièces · évitez les obstacles', W / 2, H / 2 + 14);
+    } else if (!alive) {
+      ctx.fillStyle = 'rgba(14, 15, 18, 0.62)';
+      ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = '#F1F2F4';
+      ctx.font = '600 16px Inter, system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Signal perdu', W / 2, H / 2 - 14);
+      ctx.font = '500 12px Inter, system-ui, sans-serif';
+      ctx.fillStyle = 'rgba(194, 198, 205, 0.9)';
+      ctx.fillText('Tapez pour rejouer', W / 2, H / 2 + 8);
       ctx.fillText(
         'Cette partie : ' + coinsRun + ' pièce' + (coinsRun === 1 ? '' : 's') +
           ' · Total : ' + coinsTotal,
         W / 2,
-        H / 2 + 14
+        H / 2 + 28
       );
     }
 
