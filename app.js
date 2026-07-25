@@ -1434,13 +1434,34 @@ function scheduleZonedNow(date = new Date()) {
 
 const SCHEDULE_DAY_NAMES = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
 
-/** Jour de grille (0-6) d'une émission d'après son titre, si elle y figure. */
+/**
+ * Jour de grille (0-6) d'une émission d'après son titre, si elle y figure.
+ * Une émission peut revenir plusieurs fois par semaine (ex. Capitales de
+ * Québec le dim/ven/sam) : on prend l'occurrence la plus proche dans le
+ * temps plutôt que la première du tableau, sinon le jour renvoyé peut être
+ * complètement décorrélé du créneau réellement à venir.
+ */
 function scheduleDayForTitle(radio, title) {
   const grid = radio?.id ? radioSchedules.stations?.[radio.id]?.grid : null;
   if (!Array.isArray(grid) || !title) return null;
   const target = normLoose(title);
-  const match = grid.find((slot) => slot.title && normLoose(slot.title) === target);
-  return match ? match.day : null;
+  const WEEK = 7 * 1440;
+  const { day, minutes } = scheduleZonedNow();
+  const nowAbs = day * 1440 + minutes;
+  let best = null;
+  let bestDelta = WEEK;
+  for (const slot of grid) {
+    if (!slot.title || normLoose(slot.title) !== target) continue;
+    const start = scheduleTimeToMin(slot.start);
+    if (start == null) continue;
+    let delta = (slot.day * 1440 + start) - nowAbs;
+    if (delta <= 0) delta += WEEK;
+    if (delta < bestDelta) {
+      bestDelta = delta;
+      best = slot;
+    }
+  }
+  return best ? best.day : null;
 }
 
 /**
@@ -1532,7 +1553,8 @@ function upcomingTimeRange(upcoming, radio) {
   const range = upcoming.start && upcoming.end
     ? `${upcoming.start} – ${upcoming.end}`
     : (upcoming.start || '');
-  const dayLabel = scheduleRelativeDayLabel(scheduleDayForTitle(radio, upcoming.title));
+  const day = upcoming.day != null ? upcoming.day : scheduleDayForTitle(radio, upcoming.title);
+  const dayLabel = scheduleRelativeDayLabel(day);
   if (!dayLabel) return range;
   return range ? `${dayLabel} · ${range}` : dayLabel;
 }
@@ -1554,6 +1576,12 @@ function isGarbageChoqTrack(track, relatedTitles = []) {
   // Codes épisode / saison collés au texte (S1 E6…, E6intervenir…)
   if (/\bs\d+\b/i.test(raw) && /\be\d+/i.test(raw)) return true;
   if (/e\d+[a-z]{4,}/i.test(compact)) return true;
+
+  // Extension de fichier littérale (ex. « Bloc Pub 21 juillet.mp3 ») : sur
+  // `raw`, avant que `compact` n'efface le point et ne recolle le mot d'avant
+  // à l'extension (juillet.mp3 → juilletmp3, qui ne matche plus le test ci-
+  // dessous faute de séparateur devant « mp3 »).
+  if (/\.(mp3|wav|flac|aiff?|m4a|ogg|wma|aac)$/i.test(raw)) return true;
 
   // Extensions / masters / versions fichier
   if (/(^|[^a-z])(amv|wav|mp3|flac|aiff|master|mixdown|edit)\d*$/i.test(compact)) return true;
@@ -1735,7 +1763,7 @@ function nowAirLines(radio) {
 
   // 3) Hors créneau (autres postes) : prochaine émission
   const upcoming = botNext || (schedNext
-    ? { title: schedNext.title, start: schedNext.start, end: schedNext.end }
+    ? { title: schedNext.title, start: schedNext.start, end: schedNext.end, day: schedNext.day }
     : null);
   const upTime = upcomingTimeRange(upcoming, radio);
 
