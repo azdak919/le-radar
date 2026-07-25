@@ -65,6 +65,7 @@ function _mergeQuebecSourceBank(source, cultureTag, flagKey, logLabel) {
         : 'Wikimedia Commons · Le Radar Québec',
       title: p.title || '',
       culture: cultureTag,
+      bank: cultureTag === 'quebec-nations' ? 'nations' : (p.bank || cultureTag),
     };
     if (typeof p.focalY === 'number' && !Number.isNaN(p.focalY)) {
       entry.focalY = p.focalY;
@@ -72,6 +73,10 @@ function _mergeQuebecSourceBank(source, cultureTag, flagKey, logLabel) {
     if (typeof p.position === 'string' && p.position.trim()) {
       entry.position = p.position.trim();
     }
+    if (p.season) entry.season = p.season;
+    if (p.season6) entry.season6 = p.season6;
+    if (p.nationId) entry.nationId = p.nationId;
+    if (p.nation) entry.nation = p.nation;
     BACKGROUNDS.push(entry);
     added += 1;
   }
@@ -556,6 +561,24 @@ function _scoreCandidate(idx) {
 function getRandomBgIndex(culture = null) {
   let pool = Array.from({ length: BACKGROUNDS.length }, (_, i) => i)
     .filter(i => !_failedBg.has(i));
+
+  // Saison courante : 4 saisons QC / 6 saisons nations–Inuit
+  if (typeof RadarSeason !== 'undefined' && RadarSeason.filterPoolByCurrentSeason) {
+    const items = pool.map((i) => ({ ...BACKGROUNDS[i], _idx: i }));
+    const r = RadarSeason.filterPoolByCurrentSeason(items, {
+      minStrict: 2,
+      minAdjacent: 2,
+    });
+    if (r.items && r.items.length) {
+      pool = r.items.map((it) => it._idx).filter((i) => i != null);
+      if (typeof console !== 'undefined' && console.info) {
+        console.info(
+          `[pomo-bg] saison 4=${r.season4} · 6=${r.season6} · tier=${r.tier}` +
+            ` · ${pool.length}/${BACKGROUNDS.length}`
+        );
+      }
+    }
+  }
 
   if (culture) {
     // Respect cultural preference (same logic as before, but on full pool first)
