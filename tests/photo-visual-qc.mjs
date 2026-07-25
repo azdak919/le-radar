@@ -139,17 +139,119 @@ assert(
   'landscape lac → keep',
 );
 
-// religious_architecture thresholds (croix + clocher blanc, ex. Wôlinak)
+// religious_architecture thresholds (croix + clocher blanc / multi-tours pierre)
+// Aligné sur quebec-backgrounds.js _religiousSpireMetrics
 function wouldRejectReligiousSpire(m) {
-  return m.dense >= 4 && m.solidWhite && m.skyAbove >= 0.55 && m.notGrid;
+  const solidBase = !!(m.solidWhite || m.solidStone);
+  const notGrid = m.notGrid !== false;
+  const rejectWhite =
+    m.dense >= 4 && m.solidWhite && m.skyAbove >= 0.55 && notGrid;
+  const rejectStone =
+    m.dense >= 3 &&
+    m.solidStone &&
+    m.skyAbove >= 0.42 &&
+    notGrid &&
+    (m.hitCount == null || m.hitCount >= 3);
+  const rejectMulti =
+    (m.multiPeaks || 0) >= 2 &&
+    solidBase &&
+    m.skyAbove >= 0.4 &&
+    ((m.hitCount || 0) >= 2 || (m.multiPeaks || 0) >= 3) &&
+    notGrid;
+  return rejectWhite || rejectStone || rejectMulti;
 }
 assert(
   wouldRejectReligiousSpire({ dense: 4, solidWhite: true, skyAbove: 0.99, notGrid: true }),
   'Wôlinak-like spire → religious_architecture',
 );
 assert(
-  !wouldRejectReligiousSpire({ dense: 22, solidWhite: false, skyAbove: 0.53, notGrid: true }),
+  wouldRejectReligiousSpire({
+    dense: 4,
+    solidWhite: false,
+    solidStone: true,
+    skyAbove: 0.6,
+    hitCount: 5,
+    multiPeaks: 2,
+    notGrid: true,
+  }),
+  'Casault-like grey multi-tower → religious_architecture',
+);
+assert(
+  wouldRejectReligiousSpire({
+    dense: 3,
+    solidWhite: false,
+    solidStone: true,
+    skyAbove: 0.5,
+    hitCount: 4,
+    multiPeaks: 3,
+    notGrid: true,
+  }),
+  'Casault multiPeaks path → reject',
+);
+assert(
+  !wouldRejectReligiousSpire({
+    dense: 22,
+    solidWhite: false,
+    solidStone: false,
+    skyAbove: 0.53,
+    multiPeaks: 0,
+    notGrid: true,
+  }),
   'campus windows (high var) → keep',
+);
+assert(
+  !wouldRejectReligiousSpire({
+    dense: 2,
+    solidWhite: false,
+    solidStone: true,
+    skyAbove: 0.5,
+    hitCount: 2,
+    multiPeaks: 1,
+    notGrid: true,
+  }),
+  'single modern pavilion peak → keep',
+);
+
+// Texte religieux : casault / collégiale (filtre titre Commons)
+assert(
+  require('../scripts/photo-visual-qc-lib.js').RELIGIOUS_SUBJECT_RE.test(
+    'Pavillon Louis-Jacques-Casault Université Laval'
+  ),
+  'casault in title → RELIGIOUS_SUBJECT_RE',
+);
+assert(
+  require('../scripts/photo-visual-qc-lib.js').RELIGIOUS_SUBJECT_RE.test('collégiale de Québec'),
+  'collégiale → RELIGIOUS_SUBJECT_RE',
+);
+
+// Hard-ban Casault fragments
+const { matchHardBanned } = require('../scripts/quebec-backgrounds-blacklist.js');
+assert(
+  matchHardBanned({
+    id: 'd80fc225abc1',
+    url: 'https://upload.wikimedia.org/wikipedia/commons/f/f9/Universit%C3%A9_Laval%2C_Quebec_Canada_3.jpg',
+    title: 'Université Laval, Quebec Canada',
+  })?.reason === 'reads_as_church_casault',
+  'Casault Canada_3 hard-ban',
+);
+assert(
+  matchHardBanned({
+    url: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Universit%C3%A9_Laval%2C_Quebec%2C_Canada_02.jpg',
+    title: 'Université Laval, Quebec, Canada 02',
+  }) == null,
+  'Canada_02 Maison Eugène-Roberge NOT banned',
+);
+assert(
+  !require('../scripts/campus-photo-bank.js').BANK['universite laval']?.some((e) =>
+    /Canada_3|Casault/i.test(e.url + e.title)
+  ),
+  'campus seed ULaval sans Casault Canada_3',
+);
+assert(
+  require('../scripts/campus-photo-bank.js').BANK['universite laval']?.some((e) =>
+    /Park_in_Universit|Ferdinand-Vandry/i.test(e.url)
+  ),
+  'campus seed ULaval a parc ou Vandry',
 );
 
 if (failed) {

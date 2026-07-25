@@ -250,21 +250,31 @@ const BANK = {
     },
   ],
   'universite laval': [
+    // Pas Casault (style église) — voir hard-ban reads_as_church_casault
     {
-      url: 'https://upload.wikimedia.org/wikipedia/commons/f/f9/Universit%C3%A9_Laval%2C_Quebec_Canada_3.jpg',
-      title: 'Université Laval, Quebec Canada',
-      creator: 'Dxlinh',
+      url: 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Park_in_Universit%C3%A9_Laval.jpg',
+      title: 'Park in Université Laval',
+      creator: 'Wilfredor',
       license: 'CC BY-SA 4.0',
-      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Universit%C3%A9_Laval,_Quebec_Canada_3.jpg',
-      tags: 'exterior campus quebec city modern',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Park_in_Universit%C3%A9_Laval.jpg',
+      tags: 'exterior campus quebec city park green summer landscape',
     },
     {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/b/b6/Pavillon_Ferdinand-Vandry_06.jpg',
+      title: 'Pavillon Ferdinand-Vandry, Université Laval',
+      creator: 'Cephas',
+      license: 'CC BY-SA 4.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Pavillon_Ferdinand-Vandry_06.jpg',
+      tags: 'exterior campus quebec city modern vandry pavilion',
+    },
+    {
+      // Maison Eugène-Roberge — patrimoine campus, PAS style église (garder)
       url: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Universit%C3%A9_Laval%2C_Quebec%2C_Canada_02.jpg',
       title: 'Université Laval, Quebec, Canada 02',
-      creator: 'Dxlinh',
-      license: 'CC BY-SA 4.0',
+      creator: 'Wilfredor',
+      license: 'CC0',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:Universit%C3%A9_Laval,_Quebec,_Canada_02.jpg',
-      tags: 'exterior campus quebec city',
+      tags: 'exterior campus quebec city maison eugene-roberge',
     },
   ],
   'universite de sherbrooke': [

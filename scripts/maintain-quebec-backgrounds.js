@@ -267,7 +267,7 @@ const LEGACY_JS = JS_PATH;
 // ── Filtres texte (règles stables — ne pas multiplier les regex fragiles) ──
 
 const RELIGIOUS_RE =
-  /(?:église|eglise|church|cathedral|cathédrale|basilique|basilica|chapelle|chapel|crucifix|\bcroix\b|crosses?\b|mosquée|mosquee|mosque|synagogue|monastère|monastere|monastery|couvent|convent|calvaire|cimetière|cimetiere|cemetery|minaret|clocher|steeple|bell[\s-]?tower|paroisse|parish|presbyt[eè]re|presbytery|lieu de culte|place of worship|\bjésus\b|\bjesus\b|\bchrist\b|crucifi|temple\s+(?:bouddh|hindou|sikh)|tabernacle)/i;
+  /(?:église|eglise|church|cathedral|cathédrale|basilique|basilica|chapelle|chapel|coll[eé]giale|collegiale|crucifix|\bcroix\b|crosses?\b|mosquée|mosquee|mosque|synagogue|monastère|monastere|monastery|couvent|convent|calvaire|cimetière|cimetiere|cemetery|minaret|clocher|steeple|bell[\s-]?tower|paroisse|parish|presbyt[eè]re|presbytery|lieu de culte|place of worship|\bjésus\b|\bjesus\b|\bchrist\b|crucifi|temple\s+(?:bouddh|hindou|sikh)|tabernacle|casault|casseault|louis[\s_-]?jacques[\s_-]?casault)/i;
 
 /**
  * Façades municipales type clocher — souvent confondues avec chapelles en

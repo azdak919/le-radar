@@ -193,18 +193,10 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     campus: true,
   },
   {
-    url: "https://upload.wikimedia.org/wikipedia/commons/f/f9/Universit%C3%A9_Laval%2C_Quebec_Canada_3.jpg",
-    credit: "Dxlinh",
-    link: "https://commons.wikimedia.org/wiki/File:Universit%C3%A9_Laval,_Quebec_Canada_3.jpg",
-    license: "CC BY-SA 4.0",
-    title: "Université Laval, Quebec Canada",
-    campus: true,
-  },
-  {
     url: "https://upload.wikimedia.org/wikipedia/commons/d/de/Universit%C3%A9_Laval%2C_Quebec%2C_Canada_02.jpg",
-    credit: "Dxlinh",
+    credit: "Wilfredor",
     link: "https://commons.wikimedia.org/wiki/File:Universit%C3%A9_Laval,_Quebec,_Canada_02.jpg",
-    license: "CC BY-SA 4.0",
+    license: "CC0",
     title: "Université Laval, Quebec, Canada 02",
     campus: true,
   },
@@ -230,6 +222,22 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Bishop%27s_University_McGreer_Hall.jpg",
     license: "CC BY 3.0",
     title: "Bishop's University McGreer Hall",
+    campus: true,
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/3/3e/Park_in_Universit%C3%A9_Laval.jpg",
+    credit: "Wilfredor",
+    link: "https://commons.wikimedia.org/wiki/File:Park_in_Universit%C3%A9_Laval.jpg",
+    license: "CC BY-SA 4.0",
+    title: "Park in Université Laval",
+    campus: true,
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/b/b6/Pavillon_Ferdinand-Vandry_06.jpg",
+    credit: "Cephas",
+    link: "https://commons.wikimedia.org/wiki/File:Pavillon_Ferdinand-Vandry_06.jpg",
+    license: "CC BY-SA 4.0",
+    title: "Pavillon Ferdinand-Vandry, Université Laval",
     campus: true,
   }
 ];

@@ -70,6 +70,27 @@ for (const title of ['Palm Sunset', 'Tropical Beach', 'Tropical Waterfall', 'Tro
 const fsQc = readFileSync(join(root, 'fullscreen-wallpaper-qc.js'), 'utf8');
 assert(fsQc.includes('FullscreenWallpaperQc'), 'module QC wallpapers plein écran requis');
 assert(fsQc.includes('1457269449834-928af64c684d'), 'hard-ban Snowy Branch (Aaron Burden) requis');
+
+// Fonds campus : Casault ULaval hard-ban + détection religieuse multi-tours
+const bgBlacklist = require('../scripts/quebec-backgrounds-blacklist.js');
+assert(
+  bgBlacklist.matchHardBanned({ id: 'd80fc225abc1' })?.reason === 'reads_as_church_casault',
+  'hard-ban Casault id d80fc225abc1 requis',
+);
+assert(
+  bgBlacklist.allFragments().some((f) => /casault|Canada_3/i.test(f)),
+  'fragments hard-ban Casault / Canada_3 requis',
+);
+const bgJsRelig = readFileSync(join(root, 'quebec-backgrounds.js'), 'utf8');
+assert(bgJsRelig.includes('casault'), 'mât RELIGIOUS_SUBJECT_RE : casault');
+assert(bgJsRelig.includes('solidStone'), 'détecteur visuel pierre grise (Casault)');
+assert(bgJsRelig.includes('multiPeaks'), 'détecteur multi-tours / flèches');
+const uniData = readFileSync(join(root, 'quebec-university-backgrounds-data.js'), 'utf8');
+assert(!/Quebec_Canada_3\.jpg/i.test(uniData), 'banque universities sans Casault Canada_3');
+assert(
+  /Park_in_Universit|Ferdinand-Vandry/i.test(uniData),
+  'banque universities : remplacement ULaval (parc ou Vandry)',
+);
 const solitaireHtml = readFileSync(join(root, 'solitaire/index.html'), 'utf8');
 assert(!solitaireHtml.includes('title: "Snowy Branch"'), 'solitaire: Snowy Branch retiré du pool');
 assert(solitaireHtml.includes('fullscreen-wallpaper-qc.js'), 'solitaire charge le QC plein écran');

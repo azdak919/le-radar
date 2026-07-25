@@ -133,7 +133,7 @@
    * (tipi, inuksuk, pow-wow…) — seulement l’architecture cultuelle classique.
    */
   const RELIGIOUS_SUBJECT_RE =
-    /(?:église|eglise|church|cathedral|cathédrale|basilique|basilica|chapelle|chapel|crucifix|\bcroix\b|crosses?\b|mosquée|mosquee|mosque|synagogue|monastère|monastere|monastery|couvent|convent|calvaire|cimetière|cimetiere|cemetery|minaret|clocher|steeple|bell[\s-]?tower|paroisse|parish|presbyt[eè]re|presbytery|lieu de culte|place of worship|\bjésus\b|\bjesus\b|\bchrist\b|crucifi|temple\s+(?:bouddh|hindou|sikh)|tabernacle)/i;
+    /(?:église|eglise|church|cathedral|cathédrale|basilique|basilica|chapelle|chapel|coll[eé]giale|collegiale|crucifix|\bcroix\b|crosses?\b|mosquée|mosquee|mosque|synagogue|monastère|monastere|monastery|couvent|convent|calvaire|cimetière|cimetiere|cemetery|minaret|clocher|steeple|bell[\s-]?tower|paroisse|parish|presbyt[eè]re|presbytery|lieu de culte|place of worship|\bjésus\b|\bjesus\b|\bchrist\b|crucifi|temple\s+(?:bouddh|hindou|sikh)|tabernacle|casault|casseault|louis[\s_-]?jacques[\s_-]?casault)/i;
 
   /** Intérieurs / objets musée (canot, expo…) — pas un paysage de bandeau. */
   const INDOOR_OBJECT_RE =
@@ -260,20 +260,44 @@
     return candidates[_randInt(candidates.length)];
   }
 
+  /**
+   * Filtre saisonnier : 4 saisons (mât/campus/pomo) + 6 saisons (nations/Inuit).
+   * Voir scripts/season-lib.js (window.RadarSeason).
+   */
+  function _seasonFilteredPool(items) {
+    if (!items || !items.length) return items || [];
+    if (typeof RadarSeason === "undefined" || !RadarSeason.filterPoolByCurrentSeason) {
+      return items;
+    }
+    const r = RadarSeason.filterPoolByCurrentSeason(items, {
+      minStrict: 2,
+      minAdjacent: 2,
+    });
+    if (typeof console !== "undefined" && console.info) {
+      console.info(
+        `[bg] saison 4=${r.season4} · 6=${r.season6} · tier=${r.tier}` +
+          ` · pool ${r.stats.chosen}/${r.stats.total}` +
+          ` (strict ${r.stats.strict}, adj ${r.stats.adjacent})`
+      );
+    }
+    return r.items.length ? r.items : items;
+  }
+
   /** Tirage multi-banques (CSPRNG + anti-répétition URL + diversité). */
   function pickBackground(items, excludeUrl) {
+    const seasonal = _seasonFilteredPool(items);
     if (_rotator) {
       const excludeId = excludeUrl
         ? _rotator.photoId({ url: excludeUrl })
         : null;
-      return _rotator.pick(items, {
+      return _rotator.pick(seasonal, {
         failedIds: _failedIds,
         excludeId,
       });
     }
     // Fallback sans lib
-    const pool = items.map((_, i) => i);
-    return items[pickIndex(pool)] || items[0] || null;
+    const pool = seasonal.map((_, i) => i);
+    return seasonal[pickIndex(pool)] || seasonal[0] || null;
   }
 
   // Passe par Special:FilePath (redirige vers un thumb JPEG dimensionné) —
@@ -820,22 +844,25 @@
    * @returns {{ ok: boolean, reason?: string, metrics?: object }}
    */
   /**
-   * Croix / flèche d’église au sommet d’un clocher blanc contre le ciel.
-   * Échantillonne le haut du crop cover : lettrage croix sombre + sous-bassement
-   * blanc uni (peinture, faible variance) + ciel au-dessus.
-   * Évite les façades de campus (fenêtres = variance haute).
+   * Croix / flèche d’église au sommet d’un clocher contre le ciel.
+   * Chemins :
+   *   1) clocher blanc uni (peinture, faible variance) — ex. chapelle Wôlinak
+   *   2) pierre grise / multi-tours + croix latines — ex. pavillon Casault ULaval
+   * Évite les façades de campus à fenêtres (variance haute / grille dense).
+   * goldenSilhouette exempté en amont (heure dorée / skyline).
    */
   function _religiousSpireMetrics(L, sampleW, sampleH) {
     const bandH = Math.max(12, Math.floor(sampleH * 0.3));
-    // Ré-échantillonner mentalement dans le haut du sample (déjà petit).
     const bw = sampleW;
     const bh = bandH;
     const hits = [];
     const yMax = Math.max(3, Math.floor(bh * 0.55));
+    // Ciel : seuil un peu plus bas pour ciels gris (Casault / hiver)
+    const skyL = 0.5;
     for (let y = 2; y < yMax; y++) {
       for (let x = 4; x < bw - 4; x++) {
         const i = y * sampleW + x;
-        if (L[i] > 0.3) continue;
+        if (L[i] > 0.32) continue;
         let sky = 0;
         for (const [dx, dy] of [
           [-4, 0],
@@ -849,7 +876,7 @@
         ]) {
           const yy = y + dy;
           const xx = x + dx;
-          if (yy >= 0 && yy < sampleH && xx >= 0 && xx < sampleW && L[yy * sampleW + xx] > 0.55) {
+          if (yy >= 0 && yy < sampleH && xx >= 0 && xx < sampleW && L[yy * sampleW + xx] > skyL) {
             sky++;
           }
         }
@@ -859,19 +886,19 @@
         let hu = 0;
         let hd = 0;
         for (let k = 1; k < 12; k++) {
-          if (y - k >= 0 && L[(y - k) * sampleW + x] < 0.34) vu++;
+          if (y - k >= 0 && L[(y - k) * sampleW + x] < 0.36) vu++;
           else break;
         }
         for (let k = 1; k < 12; k++) {
-          if (y + k < sampleH && L[(y + k) * sampleW + x] < 0.34) vd++;
+          if (y + k < sampleH && L[(y + k) * sampleW + x] < 0.36) vd++;
           else break;
         }
         for (let k = 1; k < 9; k++) {
-          if (x - k >= 0 && L[y * sampleW + x - k] < 0.34) hu++;
+          if (x - k >= 0 && L[y * sampleW + x - k] < 0.36) hu++;
           else break;
         }
         for (let k = 1; k < 9; k++) {
-          if (x + k < sampleW && L[y * sampleW + x + k] < 0.34) hd++;
+          if (x + k < sampleW && L[y * sampleW + x + k] < 0.36) hd++;
           else break;
         }
         const vlen = vu + vd + 1;
@@ -888,10 +915,62 @@
         }
       }
     }
-    if (hits.length < 4) {
-      return { hitCount: hits.length, dense: 0, solidWhite: false, skyAbove: 0, reject: false };
+
+    // Silhouette multi-tours / flèches : pics sombres contre ciel en haut du crop
+    // (toits coniques verts/gris type Casault — sans exiger croix nette).
+    const peakXs = [];
+    const peakYMax = Math.max(4, Math.floor(bh * 0.65));
+    for (let x = 6; x < bw - 6; x += 2) {
+      let bestPeak = null;
+      for (let y = 2; y < peakYMax; y++) {
+        const i = y * sampleW + x;
+        if (L[i] > 0.42) continue;
+        let skyN = 0;
+        for (let dx = -3; dx <= 3; dx++) {
+          if (y - 2 >= 0 && L[(y - 2) * sampleW + x + dx] > skyL) skyN++;
+          if (L[y * sampleW + Math.min(bw - 1, Math.max(0, x + dx))] > skyL) skyN++;
+        }
+        if (skyN < 5) continue;
+        // Colonne verticale sombre sous le pic (flèche / tourelle)
+        let down = 0;
+        for (let k = 1; k < 14; k++) {
+          if (y + k < sampleH && L[(y + k) * sampleW + x] < 0.48) down++;
+          else break;
+        }
+        if (down < 4) continue;
+        if (!bestPeak || L[i] < bestPeak.l) bestPeak = { x, y, l: L[i], down };
+      }
+      if (bestPeak) peakXs.push(bestPeak);
     }
-    const xs = hits.map((h) => h.x);
+    // Clusters de pics séparés horizontalement (multi-tours)
+    let multiPeaks = 0;
+    if (peakXs.length) {
+      peakXs.sort((a, b) => a.x - b.x);
+      const sep = Math.max(10, Math.floor(sampleW * 0.12));
+      let lastX = -999;
+      for (const p of peakXs) {
+        if (p.x - lastX >= sep) {
+          multiPeaks++;
+          lastX = p.x;
+        }
+      }
+    }
+
+    const empty = {
+      hitCount: hits.length,
+      dense: 0,
+      solidWhite: false,
+      solidStone: false,
+      skyAbove: 0,
+      multiPeaks,
+      reject: false,
+    };
+    if (hits.length < 3 && multiPeaks < 2) {
+      return empty;
+    }
+
+    const xs = hits.length ? hits.map((h) => h.x) : peakXs.map((p) => p.x);
+    if (!xs.length) return empty;
     const win = Math.max(6, Math.floor(sampleW * 0.1));
     let best = 0;
     let bestX = xs[0];
@@ -905,16 +984,17 @@
         bestX = x0;
       }
     }
-    const cluster = hits.filter((h) => h.x >= bestX && h.x < bestX + win);
-    if (best < 4 || !cluster.length) {
-      return { hitCount: hits.length, dense: best, solidWhite: false, skyAbove: 0, reject: false };
+    const cluster = (hits.length ? hits : peakXs).filter(
+      (h) => h.x >= bestX && h.x < bestX + win
+    );
+    if (!cluster.length) {
+      return { ...empty, dense: best };
     }
     const cy = Math.max(...cluster.map((h) => h.y));
-    const cx =
-      cluster.reduce((s, h) => s + h.x, 0) / cluster.length;
+    const cx = cluster.reduce((s, h) => s + h.x, 0) / cluster.length;
     const vals = [];
-    for (let y = Math.min(sampleH - 1, cy + 2); y < Math.min(sampleH, cy + 22); y++) {
-      for (let x = Math.max(0, Math.floor(cx) - 5); x < Math.min(sampleW, Math.floor(cx) + 6); x++) {
+    for (let y = Math.min(sampleH - 1, cy + 2); y < Math.min(sampleH, cy + 24); y++) {
+      for (let x = Math.max(0, Math.floor(cx) - 6); x < Math.min(sampleW, Math.floor(cx) + 7); x++) {
         vals.push(L[y * sampleW + x]);
       }
     }
@@ -925,27 +1005,58 @@
     for (const v of vals) varAcc += (v - mean) * (v - mean);
     const variance = vals.length > 1 ? Math.sqrt(varAcc / vals.length) : 0;
     let whiteN = 0;
-    for (const v of vals) if (v > 0.55) whiteN++;
+    let lightN = 0;
+    for (const v of vals) {
+      if (v > 0.55) whiteN++;
+      if (v > 0.38) lightN++;
+    }
     const whiteFrac = vals.length ? whiteN / vals.length : 0;
+    const lightFrac = vals.length ? lightN / vals.length : 0;
+    // Clocher peint blanc uni
     const solidWhite = mean >= 0.55 && variance <= 0.18 && whiteFrac >= 0.5;
+    // Pierre grise / calcaire (Casault) — texture OK, pas une grille de fenêtres
+    const solidStone =
+      mean >= 0.36 &&
+      mean <= 0.78 &&
+      variance <= 0.2 &&
+      lightFrac >= 0.42 &&
+      whiteFrac < 0.92;
+    const solidBase = solidWhite || solidStone;
     const ay = Math.max(0, Math.min(...cluster.map((h) => h.y)) - 1);
     let skyA = 0;
     let na = 0;
     for (let y = 0; y <= ay; y++) {
       for (let x = Math.max(0, Math.floor(cx) - 7); x < Math.min(sampleW, Math.floor(cx) + 8); x++) {
-        if (L[y * sampleW + x] > 0.55) skyA++;
+        if (L[y * sampleW + x] > skyL) skyA++;
         na++;
       }
     }
     const skyAbove = na ? skyA / na : 0;
-    const notGrid = hits.length <= best * 3.5;
-    const reject = best >= 4 && solidWhite && skyAbove >= 0.55 && notGrid;
+    const hitN = Math.max(hits.length, peakXs.length);
+    const notGrid = hitN <= Math.max(best, 1) * 4.2;
+    // 1) clocher blanc classique
+    const rejectWhite =
+      best >= 4 && solidWhite && skyAbove >= 0.55 && notGrid;
+    // 2) croix + pierre grise / flèche
+    const rejectStone =
+      best >= 3 && solidStone && skyAbove >= 0.42 && notGrid && hits.length >= 3;
+    // 3) multi-tours (Casault) : ≥2 pics silhouette + base claire + un peu de croix/hits
+    const rejectMulti =
+      multiPeaks >= 2 &&
+      solidBase &&
+      skyAbove >= 0.4 &&
+      (hits.length >= 2 || multiPeaks >= 3) &&
+      notGrid;
+    const reject = rejectWhite || rejectStone || rejectMulti;
     return {
       hitCount: hits.length,
       dense: best,
       solidWhite,
+      solidStone,
+      multiPeaks,
       skyAbove: +skyAbove.toFixed(3),
       whiteFrac: +whiteFrac.toFixed(3),
+      lightFrac: +lightFrac.toFixed(3),
       variance: +variance.toFixed(3),
       reject,
     };
@@ -1426,12 +1537,14 @@
       ) {
         return { ok: false, reason: "competing_logo_zone", metrics };
       }
-      // Chapelle / église : croix sombre au-dessus d’un clocher blanc uni
-      // (ex. Wôlinak titré sans « église » — filtre texte insuffisant).
+      // Chapelle / église : croix + clocher blanc OU multi-tours pierre grise
+      // (ex. Wôlinak ; pavillon Casault ULaval — titre sans « église »).
       const spireM = _religiousSpireMetrics(L, sampleW, sampleH);
       metrics.spireHits = spireM.hitCount;
       metrics.spireDense = spireM.dense;
       metrics.spireSolidWhite = spireM.solidWhite;
+      metrics.spireSolidStone = spireM.solidStone;
+      metrics.spireMultiPeaks = spireM.multiPeaks;
       metrics.spireSkyAbove = spireM.skyAbove;
       if (!goldenSilhouette && spireM.reject) {
         return { ok: false, reason: "religious_architecture", metrics };
@@ -1728,6 +1841,7 @@
   // Exposé pour tests / audit manuel en console.
   window.__lrScoreMastheadPhoto = scoreMastheadPhoto;
   window.__lrComputeBestFocalY = computeBestFocalY;
+  window.__lrSeasonFilterPool = _seasonFilteredPool;
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
