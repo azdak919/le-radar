@@ -17,7 +17,8 @@
     "maintain:backgrounds:pomo:force": "node scripts/maintain-quebec-backgrounds.js --update --force --profile pomo",
     "maintain:backgrounds:nations": "node scripts/maintain-quebec-backgrounds.js --update --profile nations",
     "maintain:backgrounds:nations:force": "node scripts/maintain-quebec-backgrounds.js --update --force --profile nations",
-    "maintain:backgrounds:all": "npm run maintain:backgrounds && npm run maintain:backgrounds:universities && npm run maintain:backgrounds:pomo && npm run maintain:backgrounds:nations"
+    "maintain:backgrounds:all": "npm run maintain:backgrounds && npm run maintain:backgrounds:universities && npm run maintain:backgrounds:pomo && npm run maintain:backgrounds:nations",
+    "pin-background": "node scripts/pin-background.js"
   },
   "engines": {
     "node": ">=20"

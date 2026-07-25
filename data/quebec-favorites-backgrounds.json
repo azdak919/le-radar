@@ -4,7 +4,7 @@
   "description": "Photos favorites validées manuellement. Jamais purgées ni écrasées par maintain-quebec-backgrounds. Ajouter via signalement manuel (agent) ou scripts/pin-background.js.",
   "photos": [
     {
-      "id": "fav-perce-ryan-sharpe-2018",
+      "id": "0c1dcc96b3dc",
       "url": "https://upload.wikimedia.org/wikipedia/commons/0/02/Rocher_Perc%C3%A9_%E2%80%93_Perc%C3%A9%2C_QC_%E2%80%93_%282018-07-19%29.jpg",
       "link": "https://commons.wikimedia.org/wiki/File:Rocher%20Perc%C3%A9%20%E2%80%93%20Perc%C3%A9%2C%20QC%20%E2%80%93%20(2018-07-19).jpg",
       "title": "Rocher Percé – Percé, QC – (2018-07-19)",
@@ -16,9 +16,13 @@
       "mime": "image/jpeg",
       "focalY": 0.66,
       "permanent": true,
-      "surfaces": ["masthead", "pomo"],
-      "pinnedAt": "2026-07-25T12:00:00.000Z",
-      "note": "Validé manuellement — excellent crop arche / trou du Percé dans le bandeau"
+      "surfaces": [
+        "masthead",
+        "pomo"
+      ],
+      "pinnedAt": "2026-07-25T06:57:28.244Z",
+      "note": "Validé manuellement — excellent crop arche / trou du Percé"
     }
-  ]
+  ],
+  "updated": "2026-07-25T06:57:28.250Z"
 }

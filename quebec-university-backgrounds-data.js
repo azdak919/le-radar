@@ -1,6 +1,8 @@
-/* LE RADAR — banque campus universitaires (généré)
- * Source : data/quebec-university-backgrounds.json
- * Bot : maintain-quebec-backgrounds.js --profile universities
+/* LE RADAR — banque de photos de fond (généré)
+ * Profil : universities (campus universitaires QC)
+ * Source de vérité : data/quebec-university-backgrounds.json
+ * Régénéré après retrait Henry F. Hall Building 10 (façade blanche stérile).
+ * campus: true → bot de focale ancre la masse du pavillon.
  */
 const QUEBEC_UNIVERSITY_BACKGROUNDS = [
   {
@@ -154,14 +156,6 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Henry_F._Hall_Building_01.JPG",
     license: "CC BY-SA 3.0",
     title: "Henry F. Hall Building 01, Concordia University",
-    campus: true,
-  },
-  {
-    url: "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg",
-    credit: "Jeangagnon",
-    link: "https://commons.wikimedia.org/wiki/File:Henry_F._Hall_Building_10.jpg",
-    license: "CC BY-SA 4.0",
-    title: "Henry F. Hall Building 10, Concordia University",
     campus: true,
   },
   {

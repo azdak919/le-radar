@@ -16,5 +16,5 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     focalY: 0.66,
     permanent: true,
     surfaces: ["masthead", "pomo"],
-  },
+  }
 ];

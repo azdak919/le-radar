@@ -38,6 +38,8 @@ Hard rejects (runtime + curation)
   HARD:busy_low_chroma_facade  façade/toits texturés désaturés (beige, béton)
                             edge haut + sat basse — wordmark illisible
                             (réf. Pavillon Roger-Gaudry crop mât)
+  HARD:underbridge_concrete dessous de pont / dalle béton (ombres denses,
+                            quasi pas de ciel) — ex. Île-aux-Tourtes_02
   HARD:low_resolution       native < ~1400×700 ou < 1.2 Mpx — upscale
                             grainy / blocky sur mât retina
   HARD:excessive_grain      bruit haute fréquence dans zones plates (ciel)
@@ -706,6 +708,18 @@ def score(metrics: dict, entry: dict | None = None) -> dict:
     ):
         hard = True
         reasons.append("HARD:religious_architecture")
+
+    # Dessous de pont / béton (ex. Île-aux-Tourtes vue sous le tablier)
+    if (
+        not golden
+        and metrics.get("sky_frac", 1) < 0.12
+        and metrics.get("dark_frac", 0) > 0.32
+        and 0.12 < metrics.get("mean_l", 0) < 0.42
+        and metrics.get("sat", 1) < 0.32
+        and metrics.get("edge", 0) > 0.016
+    ):
+        hard = True
+        reasons.append("HARD:underbridge_concrete")
 
     # Batture / vase : beaucoup de sable-beige, quasi pas de ciel
     if metrics.get("sand_frac", 0) > 0.48 and metrics.get("sky_frac", 1) < 0.08:

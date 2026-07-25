@@ -1,15 +1,6 @@
 /* LE RADAR — banque de photos de fond (généré)
- * Profil : masthead (paysages QC pour le mât page d’accueil)
- * Source de vérité : data/quebec-backgrounds.json
- * Régénéré par : node scripts/maintain-quebec-backgrounds.js --update --profile masthead
- * Ne pas éditer à la main — le bot de session écrase ce fichier.
- *
- * Consommateurs : mât page d’accueil seulement (jamais le pomo)
- *
- * Politique : pas de religieux institutionnel ; nations du Québec OK ;
- * pas de personnes reconnaissables ; plafond 50 ; ménage 1×/session univ.
- * Résolution mini ~1400×700 / 1.2 Mpx (anti-grain upscale).
- * focalY optionnel (0=haut, 1=bas) pour cover crop.
+ * Profil : masthead
+ * Source de vérité : data/…json (régénéré après retrait dessous de pont Tourtes_02)
  */
 const QUEBEC_BACKGROUNDS = [
   {
@@ -53,13 +44,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Pont_de_l-Ile-aux-Tourtes_04.jpg",
     license: "CC BY-SA 4.0",
     title: "Pont de l'Île-aux-Tourtes, Île Perrot",
-  },
-  {
-    url: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Pont_de_l-Ile-aux-Tourtes_02.JPG",
-    credit: "Jeangagnon",
-    link: "https://commons.wikimedia.org/wiki/File:Pont_de_l-Ile-aux-Tourtes_02.JPG",
-    license: "CC BY-SA 3.0",
-    title: "Pont de l'Île-aux-Tourtes",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/5/57/Deux-Montagnes%28QC%29-Parc_des_b%C3%A9n%C3%A9voles-2022-03-15.jpg",
@@ -130,8 +114,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Lac_des_Deux_Montagnes_07.JPG",
     license: "CC BY-SA 3.0",
     title: "Lac des Deux-Montagnes",
-    // Skyline des montagnes ~y 0.22–0.28 : bandeau desktop (AR~4–8) doit
-    // ancrer l’horizon, pas la grève basse (centre cover = vase seule).
     focalY: 0.22,
   },
   {
