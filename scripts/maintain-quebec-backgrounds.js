@@ -96,7 +96,7 @@ function landscapeDiscoveryQueries(sessionId) {
     'Vaudreuil-Soulanges',
     // Pas de seed « Vaudreuil-sur-le-Lac » : seule photo libre Commons
     // (…_QC.JPG) se lit chapelle/clocher — hard-bannie ci-dessous.
-    'Les Cèdres Québec',
+    'Les Cèdres Québec paysage -airport -aéroport -hangar',
     'Les Cedres QC',
     'Île-Perrot',
     'Pont Île-aux-Tourtes',
@@ -287,7 +287,7 @@ const PEOPLE_RE =
 const NON_IMAGE_RE = /\.(?:wav|mp3|ogg|flac|webm|mp4|pdf|svg|djvu|stl|obj)(?:\?|$)/i;
 
 const BAD_SCENE_RE =
-  /(?:\bnight\b|\bnuit\b|\bdark\b|\bmacro\b|\bclose[\s-]?up\b|\bgros[\s-]?plan\b|\binterior\b|\bintérieur\b|\binterieur\b|\bindoor\b|\bhouse\b|\bmaison\b|\bmuseo\b|\bmuseum\b|\bmusée\b|\bmusee\b|\boeuvre\b|\bœuvre\b|\bartiste\b|\bpainting\b|\bgravure\b|\bengraving\b|\bmicroform\b|\bletrero\b|\bsignage\b|\bboulangerie\b|\btypique\b|\btruck\b|\bcami[oó]n\b|\bcrépuscule\b|\bcrepuscule\b|\bdawn or dusk\b|\btwilight\b|\bafter[\s-]?dark\b|\bvers\s+1[789]\d{2}\b|\b1[789]\d{2}\b|\bA\d{4,}\b|\.pp\b|\bciels? invers|\bcoulombe\b|\bhiver\b|\bwinter\b|\bsnow\b|\bneige\b|\bfrozen\b|\bfreezing\b|\bglace\b|\biced?\b|\bcanot\b|\bcanoe\b|\bkayak\b|\bpaddle\b|\bpagaie\b|\bexhibit\b|\bexhibition\b|\bgallery\b|\bgalerie\b|\bartifact\b|\bart[eé]fact\b|\bdisplay\b|\bmashteuiatsh[\s_-]?0*\d{2,}\b|\bultramafic\b|\bbarren\b|\btundra\b|\bwasteland\b|\brocky plain\b|\bquarry\b|\bcarri[eè]re\b|\bmudflat\b|\bbatture\b|\bmar[eé]e basse\b|\blow[\s-]?tide\b|\bunderside\b|\bunderneath\b|\bunderpass\b|\bunder[\s-]?the[\s-]?bridge\b|\bbridge[\s-]?underside\b|\bdessous de pont\b|\bsous le pont\b|\bsous[\s-]pont\b|\bsoffit\b|\bconcrete beams?\b|\bchain[\s-]?link\b|\bbarbed[\s-]?wire\b|\bbarbel[eé]\b|\bcl[oô]ture grillag|\bprison\b|\bp[eé]nitenc|\bjail\b|\bd[eé]tention\b)/i;
+  /(?:\bnight\b|\bnuit\b|\bdark\b|\bmacro\b|\bclose[\s-]?up\b|\bgros[\s-]?plan\b|\binterior\b|\bintérieur\b|\binterieur\b|\bindoor\b|\bhouse\b|\bmaison\b|\bmuseo\b|\bmuseum\b|\bmusée\b|\bmusee\b|\boeuvre\b|\bœuvre\b|\bartiste\b|\bpainting\b|\bgravure\b|\bengraving\b|\bmicroform\b|\bletrero\b|\bsignage\b|\bboulangerie\b|\btypique\b|\btruck\b|\bcami[oó]n\b|\bcrépuscule\b|\bcrepuscule\b|\bdawn or dusk\b|\btwilight\b|\bafter[\s-]?dark\b|\bvers\s+1[789]\d{2}\b|\b1[789]\d{2}\b|\bA\d{4,}\b|\.pp\b|\bciels? invers|\bcoulombe\b|\bhiver\b|\bwinter\b|\bsnow\b|\bneige\b|\bfrozen\b|\bfreezing\b|\bglace\b|\biced?\b|\bcanot\b|\bcanoe\b|\bkayak\b|\bpaddle\b|\bpagaie\b|\bexhibit\b|\bexhibition\b|\bgallery\b|\bgalerie\b|\bartifact\b|\bart[eé]fact\b|\bdisplay\b|\bmashteuiatsh[\s_-]?0*\d{2,}\b|\bultramafic\b|\bbarren\b|\btundra\b|\bwasteland\b|\brocky plain\b|\bquarry\b|\bcarri[eè]re\b|\bmudflat\b|\bbatture\b|\bmar[eé]e basse\b|\blow[\s-]?tide\b|\bunderside\b|\bunderneath\b|\bunderpass\b|\bunder[\s-]?the[\s-]?bridge\b|\bbridge[\s-]?underside\b|\bdessous de pont\b|\bsous le pont\b|\bsous[\s-]pont\b|\bsoffit\b|\bconcrete beams?\b|\bchain[\s-]?link\b|\bbarbed[\s-]?wire\b|\bbarbel[eé]\b|\bcl[oô]ture grillag|\bprison\b|\bp[eé]nitenc|\bjail\b|\bd[eé]tention\b|\bairport\b|\ba[eé]roport\b|\bairfield\b|\bhangar\b|\bwarehouse\b|\bentrep[oô]t\b|\bindustrial\b|\bzone industrielle\b|\bfactory\b|\brailway[\s_-]?track\b|\bparking[\s_-]?lot\b|\bstationnement\b)/i;
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));

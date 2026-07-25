@@ -1,15 +1,8 @@
 /* LE RADAR — banque de photos de fond (généré)
  * Profil : pomo
- * Source de vérité : data/…json (régénéré après retrait dessous de pont Tourtes_02)
+ * Retrait aéroport Les Cèdres (scène industrielle morne).
  */
 const QUEBEC_POMO_BACKGROUNDS = [
-  {
-    url: "https://upload.wikimedia.org/wikipedia/commons/4/4b/Montr%C3%A9al-Les_C%C3%A8dres_Airport_from_railway_teack.jpg",
-    credit: "Lajmmoore",
-    link: "https://commons.wikimedia.org/wiki/File:Montréal-Les_Cèdres_Airport_from_railway_teack.jpg",
-    license: "CC BY-SA 4.0",
-    title: "Les Cèdres, aéroport Montréal–Les Cèdres",
-  },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/fc/Les_Cedres_QC.JPG",
     credit: "P199",
