@@ -366,10 +366,15 @@ body {
 }
 
 /*
- * Puces météo sur photo : cartes toujours en surface claire lisible.
- * Important : ne PAS utiliser var(--ink) ici — en thème sombre --ink est
- * quasi blanc, donc texte blanc sur carte claire = puces « vides ».
- * Encre forcée sombre + fond opaque (indépendant du thème page).
+ * Puces météo sur photo — lisibles sur n’importe quel fond, mais alignées
+ * sur le thème de la page (plus de « pastilles blanches » en dark).
+ *
+ * Thème clair : carte opaque ivoire + encre sombre (contraste max).
+ * Thème sombre : verre sombre semi-opaque + encre claire (cohérent
+ *   avec le tuner et les icônes mât en mode photo).
+ *
+ * Couleurs en hex/rgba fixes ici : ne pas s’appuyer sur var(--ink) seul,
+ * car le mât photo peut hériter d’un blanc de wordmark.
  */
 .masthead:has(#bg-photo-layer.loaded) .masthead-weather {
   color: #3a3d44;
@@ -410,8 +415,45 @@ body {
   text-shadow: none;
 }
 .masthead:has(#bg-photo-layer.loaded) .masthead-weather__icon {
-  /* ton météo conservé ; contraste un cran plus marqué sur carte claire */
   filter: none;
+  opacity: 1;
+}
+
+/* Thème sombre + photo : cartes sombres (verre), texte clair */
+[data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-weather {
+  color: rgba(236, 238, 242, 0.92);
+}
+[data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-weather__city {
+  color: rgba(236, 238, 242, 0.92);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--weather-tone, #c8102e) 22%, transparent) 0%, transparent 55%),
+    rgba(22, 24, 30, 0.82);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.35),
+    0 3px 12px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px) saturate(1.1);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+}
+[data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-weather__city:hover {
+  border-color: color-mix(in srgb, var(--weather-tone, #c8102e) 55%, rgba(255, 255, 255, 0.22));
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--weather-tone, #c8102e) 28%, transparent) 0%, transparent 55%),
+    rgba(32, 35, 44, 0.9);
+}
+[data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-weather__name,
+[data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-weather__name-text,
+[data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-weather__name-full,
+[data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-weather__name-compact {
+  color: rgba(245, 246, 248, 0.96);
+}
+[data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-weather__temp {
+  color: #ffffff;
+}
+[data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-weather__icon {
+  /* tons météo un cran plus clairs sur fond sombre */
+  filter: brightness(1.12) saturate(1.05);
   opacity: 1;
 }
 
