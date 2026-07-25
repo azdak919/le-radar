@@ -75,8 +75,53 @@
       "pinnedAt": "2026-07-25T08:02:15.488Z",
       "note": "Validé manuellement — lac + pont; focalY 0.38 masque chaussée/voiture hors bandeau",
       "focalY": 0.38
+    },
+    {
+      "id": "7128480286c6",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Lac_des_Deux_Montagnes_07.JPG",
+      "link": "https://commons.wikimedia.org/wiki/File:Lac_des_Deux_Montagnes_07.JPG",
+      "title": "Lac des Deux-Montagnes",
+      "credit": "Jeangagnon",
+      "license": "CC BY-SA 3.0",
+      "width": 3870,
+      "height": 2177,
+      "aspect": 1.778,
+      "focalY": 0.22,
+      "surfaces": [
+        "masthead",
+        "pomo"
+      ],
+      "permanent": true,
+      "pinnedAt": "2026-07-25T08:32:45.922Z",
+      "note": "Validé manuellement — bandeau mât lac + collines (Jeangagnon); crop focalY 0.22",
+      "season": "ete",
+      "seasonSource": "manual",
+      "seasonConfidence": 1
+    },
+    {
+      "id": "0fcc6ce8753e",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/d/de/Universit%C3%A9_Laval%2C_Quebec%2C_Canada_02.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Universit%C3%A9_Laval,_Quebec,_Canada_02.jpg",
+      "title": "Université Laval, Quebec, Canada 02",
+      "credit": "Wilfredor",
+      "license": "CC0",
+      "width": 7409,
+      "height": 5034,
+      "aspect": 1.472,
+      "focalY": 0.52,
+      "surfaces": [
+        "masthead",
+        "pomo"
+      ],
+      "permanent": true,
+      "pinnedAt": "2026-07-25T08:43:21.276Z",
+      "note": "Validé manuellement — hiver Laval (Wilfredor); focalY 0.52 lucarne + toiture neige (crop auto campus excellent)",
+      "mime": "image/jpeg",
+      "season": "hiver",
+      "seasonSource": "manual",
+      "seasonConfidence": 1
     }
   ],
-  "updated": "2026-07-25T08:18:57.677Z",
+  "updated": "2026-07-25T08:43:21.533Z",
   "lastSeasonDetect": "2026-07-25T08:16:57.651Z"
 }

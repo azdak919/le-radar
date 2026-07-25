@@ -51,7 +51,8 @@ blacklist    →  scripts/quebec-backgrounds-blacklist.js  (ne revient jamais)
 
 - **Purge** = retirer une mauvaise entrée + blacklister. **Pas de re-seed hasardeux** (mieux un trou).
 - **Hard-ban** : URL / File Commons / id en priorité ; raison snake_case loggable.
-- Règles paysage mât/pomo (pas universities/nations) : religieux ; **town hall / hôtel de ville / mairie** ; scènes bad (nuit, underbridge, clôture, aéroport/hangar/industriel…).
+- Règles paysage mât/pomo (pas universities/nations) : religieux ; **town hall / hôtel de ville / mairie** ; scènes bad (nuit, underbridge, clôture, aéroport/hangar/industriel…, **panneaux / enseignes / welcome signs**).
+- **Panneau toponyme** (titre = seul le lieu, image = enseigne) : hard-ban **fichier Commons exact** — ne pas bannir le lieu entier (ex. `Gesgapegiag.jpg` ban, `Gesgapegiag4` tipi OK).
 - Nations : spiritualité autochtone **OK** (hors filtre religieux institutionnel).
 - **Saisons** (`scripts/season-lib.js` + bot `detect-photo-seasons`)
   - mât / pomo / campus → **4 saisons** météo (`season`: printemps|ete|automne|hiver)

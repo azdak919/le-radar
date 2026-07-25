@@ -124,6 +124,18 @@ const HARD_BANNED = [
     reason: 'reads_as_church_casault',
     note: 'Casault multi-tours/croix — ban curaté campus style-église 2026-07-25',
   },
+  {
+    // Panneau d’entrée communauté — pas un wallpaper (titre = toponyme seul).
+    // Ne pas bannir Gesgapegiag4 / Gesgapegiag5 (tipi / structures, OK nations).
+    fragments: [
+      'commons/a/a8/Gesgapegiag.jpg',
+      'File:Gesgapegiag.jpg',
+      'File:Gesgapegiag.JPG',
+      'aa3d7c561410',
+    ],
+    reason: 'community_entrance_sign',
+    note: 'Purge 2026-07-25 nations — enseigne bleue + logo tipi sous LE RADAR ; 4/5 restent',
+  },
 ];
 
 /**

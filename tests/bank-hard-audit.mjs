@@ -13,6 +13,7 @@ const {
   auditBankHard,
   RELIGIOUS_RE,
   TOWN_HALL_FACADE_RE,
+  BAD_SCENE_RE,
 } = require('../scripts/bank-hard-audit-lib');
 const {
   RELIGIOUS_SUBJECT_RE,
@@ -72,6 +73,26 @@ const bannedHit = matchHardBanned({
   title: 'x',
 });
 assert(bannedHit, 'blacklist Vaudreuil match');
+
+// Panneau d’entrée communauté (titre = toponyme seul) — ban fichier exact
+const gesgaSign = matchHardBanned({
+  url: 'https://upload.wikimedia.org/wikipedia/commons/a/a8/Gesgapegiag.jpg',
+  title: 'Gesgapegiag',
+  id: 'aa3d7c561410',
+});
+assert(gesgaSign && gesgaSign.reason === 'community_entrance_sign', 'ban Gesgapegiag.jpg');
+assert(
+  !matchHardBanned({
+    url: 'https://upload.wikimedia.org/wikipedia/commons/4/40/Gesgapegiag4.jpg',
+    title: 'Gesgapegiag4',
+  }),
+  'Gesgapegiag4 (tipi) non banni',
+);
+assert(BAD_SCENE_RE.test('Welcome_sign_Gesgapegiag'), 'BAD_SCENE welcome_sign');
+assert(BAD_SCENE_RE.test('AbenakisStopSign'), 'BAD_SCENE camelCase StopSign');
+assert(BAD_SCENE_RE.test('panneau_municipal_qc'), 'BAD_SCENE panneau_');
+assert(BAD_SCENE_RE.test('road_sign_qc'), 'BAD_SCENE road_sign');
+assert(!BAD_SCENE_RE.test('Lac des Deux-Montagnes paysage'), 'BAD_SCENE pas de faux positif lac');
 
 const church = auditPhotoHard(
   { title: 'Chapelle du village', url: 'https://example.com/a.jpg', width: 2000, height: 1200 },
