@@ -20,6 +20,8 @@
     "agents:propose": "node scripts/agents-ledger.mjs --propose",
     "agents:record-sold": "node scripts/agents-ledger.mjs --record-sold",
     "agents:reset-session": "node scripts/agents-ledger.mjs --reset-session",
+    "agents:harvest": "node scripts/agents-harvest.mjs",
+    "agents:harvest:write": "node scripts/agents-harvest.mjs --write",
     "audit:backgrounds": "python3 scripts/audit-quebec-backgrounds.py",
     "maintain:masthead": "node scripts/maintain-quebec-backgrounds.js --update --profile masthead",
     "maintain:masthead:force": "node scripts/maintain-quebec-backgrounds.js --update --force --profile masthead",
