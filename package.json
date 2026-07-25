@@ -7,6 +7,8 @@
     "check:syntax": "node tests/check-js-syntax.mjs",
     "test:unit": "node solitaire/scripts/test-solitaire-rules.mjs && node tests/data-integrity.mjs && node tests/quotes-randomization.mjs && node tests/static-integrity.mjs && node tests/photo-visual-qc.mjs && node tests/bank-hard-audit.mjs",
     "check": "npm run check:syntax && npm run test:unit",
+    "seo": "node scripts/generate-seo.js",
+    "seo:update": "node scripts/generate-seo.js --update",
     "audit:banks:hard": "node scripts/audit-banks-hard.js",
     "test:browser": "playwright test",
     "test": "npm run check && npm run test:browser",

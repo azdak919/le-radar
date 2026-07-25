@@ -46,16 +46,28 @@ jobs:
           done
           echo "changed=$CHANGED" >> $GITHUB_OUTPUT
 
+      # Référencement : prérendu du fil + sitemap + llms.txt, régénérés à partir
+      # des registres que le pipeline vient de rafraîchir. Après le contrôle de
+      # changement, pour ne pas déclencher un commit à vide.
+      - name: Regenerate SEO artefacts
+        if: steps.check.outputs.changed == 'true'
+        run: node scripts/generate-seo.js --update
+        continue-on-error: true
+
       - name: Commit and push bot updates
         if: steps.check.outputs.changed == 'true'
         run: |
           git config user.name "RADAR Maintenance Bot"
           git config user.email "actions@users.noreply.github.com"
-          # N'ajouter que les fichiers présents : si le pipeline a échoué avant
+          # N'ajouter que les chemins présents : si le pipeline a échoué avant
           # d'écrire bot-status.json, git add sur un chemin absent est fatal et
           # les données déjà produites ne sont jamais poussées.
-          for f in institutions.json news-sources.json news.json radios.json radios-candidates.json radio-nowplaying.json bot-status.json feed.xml data/quebec-backgrounds.json quebec-backgrounds-data.js; do
-            [ -f "$f" ] && git add "$f"
+          #
+          # `-e` et non `-f` : la liste contient aussi les DOSSIERS de pages
+          # d'entités, que `-f` (fichier régulier) rejetterait silencieusement.
+          # `git add -A` pour que la suppression d'une page soit stagée.
+          for f in institutions.json news-sources.json news.json radios.json radios-candidates.json radio-nowplaying.json bot-status.json feed.xml data/quebec-backgrounds.json quebec-backgrounds-data.js index.html sitemap.xml llms.txt radios journaux etablissements medias en; do
+            [ -e "$f" ] && git add -A "$f"
           done
           git commit -m "bot: weekly maintenance run (auto)"
           # Fichiers générés : en cas de conflit avec un commit concurrent,

@@ -37,6 +37,7 @@ Version courante du dépôt : **1.0.0** — voir le [journal des modifications](
 ## 🎨 Identité visuelle
 
 La charte de marque est documentée dans **[`docs/identite-visuelle.md`](docs/identite-visuelle.md)**.
+Le référencement (moteurs et assistants IA) est documenté dans **[`docs/referencement.md`](docs/referencement.md)**.
 
 En bref — **pourpre `#6C2163`** = marque, **rouge `#C8102E`** = en direct, **bleu Québec `#003DA5`** = volet radio. Source de vérité : variables CSS dans `style.css`.
 
@@ -85,6 +86,13 @@ le-radar/
 ├── brand-colors.json       # Couleurs institutionnelles
 ├── manifest.json           # PWA (shell Le Radar)
 ├── sw.js                   # Service Worker shell (n'intercepte pas /pomo|/solitaire)
+├── robots.txt              # Robots : moteurs + assistants IA explicitement autorisés
+├── sitemap.xml             # Plan du site (généré)
+├── llms.txt                # Fiche de contexte pour assistants IA (généré)
+├── medias/                 # Annuaire des médias étudiants (généré)
+├── radios/ journaux/       # Une page par station et par journal (généré)
+├── etablissements/         # Une page par établissement (généré)
+├── en/                     # Volet anglais, hreflang en-CA (généré)
 ├── pomo/                   # Mini-app PWA Pomodoro (🍅, isolée)
 ├── solitaire/              # Mini-app PWA Solitaire (🃏, isolée)
 ├── scripts/                # Bots (fetch, images, flux, maintenance)

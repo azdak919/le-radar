@@ -1,0 +1,88 @@
+# LE-RADAR.ca
+
+> Annuaire et agrégateur des médias étudiants des cégeps et universités du
+> Québec (Canada) : 14 journaux étudiants et 6 radios de campus,
+> réunis sur une seule page. Le fil est mis à jour plusieurs fois par jour.
+
+## Ce qu'est LE-RADAR.ca
+
+LE-RADAR.ca (https://le-radar.ca) recense les journaux étudiants et les radios
+étudiantes des établissements d'enseignement supérieur du Québec. Le site
+agrège les titres, les brèves et les images des publications étudiantes, et
+renvoie systématiquement vers l'article original sur le site du média source.
+Il diffuse aussi en direct les radios de campus dont le flux est public.
+
+LE-RADAR.ca est un projet indépendant et non officiel. Il n'est affilié à aucun
+des médias, établissements ou associations étudiantes qu'il recense. Les
+contenus appartiennent à leurs publications d'origine.
+
+Public visé : les personnes étudiantes des cégeps et universités du Québec,
+y compris les étudiantes et étudiants internationaux qui étudient au Québec.
+
+Langues : français (langue principale) et anglais, selon la publication
+d'origine. Les articles ne sont pas traduits à la source ; un module de
+traduction facultatif est offert dans l'interface.
+
+## Radios étudiantes recensées (6)
+
+- CHYZ 94,3 FM — Université Laval — Québec : https://le-radar.ca/radios/chyz/ (site officiel : https://chyz.ca/)
+- CISM 89,3 FM — Université de Montréal — Montréal : https://le-radar.ca/radios/cism/ (site officiel : https://cism893.ca/)
+- CKUT 90,3 FM — McGill University — Montréal : https://le-radar.ca/radios/ckut/ (site officiel : https://ckut.ca/)
+- CJLO 1690 AM — Concordia University — Montréal : https://le-radar.ca/radios/cjlo/ (site officiel : https://www.cjlo.com/)
+- CFAK 88,3 FM — Université de Sherbrooke — Sherbrooke : https://le-radar.ca/radios/cfak/ (site officiel : https://www.cfak.ca/)
+- CHOQ.ca — Université du Québec à Montréal — Montréal : https://le-radar.ca/radios/choq/ (site officiel : https://www.choq.ca/)
+
+## Journaux étudiants recensés (14)
+
+- Quartier Libre — Université de Montréal — Montréal : https://le-radar.ca/journaux/quartier-libre/ (site officiel : https://quartierlibre.ca/)
+- Montréal Campus — Université du Québec à Montréal — Montréal : https://le-radar.ca/journaux/montreal-campus/
+- Le Délit — McGill University — Montréal : https://le-radar.ca/journaux/le-delit/
+- The McGill Daily — McGill University — Montréal : https://le-radar.ca/journaux/the-mcgill-daily/
+- The Link — Concordia University — Montréal : https://le-radar.ca/journaux/the-link/
+- Zone Campus — Université du Québec à Trois-Rivières — Mauricie : https://le-radar.ca/journaux/zone-campus/
+- L'Exemplaire — Université Laval — Capitale-Nationale : https://le-radar.ca/journaux/lexemplaire/ (site officiel : https://www.exemplaire.com.ulaval.ca/)
+- Le Collectif — Université de Sherbrooke — Estrie : https://le-radar.ca/journaux/le-collectif/
+- Exil — Cégep du Vieux Montréal — Montréal : https://le-radar.ca/journaux/exil/
+- La Pige — Cégep de Jonquière — Saguenay–Lac-Saint-Jean : https://le-radar.ca/journaux/la-pige/
+- Le Polyscope — Polytechnique Montréal — Montréal : https://le-radar.ca/journaux/le-polyscope/ (site officiel : https://www.polyscope.qc.ca/)
+- The Tribune — McGill University — Montréal : https://le-radar.ca/journaux/the-tribune/
+- The Campus — Bishop's University — Estrie : https://le-radar.ca/journaux/the-campus/ (site officiel : https://thebucampus.ca/)
+- The Plant — Dawson College — Montréal : https://le-radar.ca/journaux/the-plant/ (site officiel : https://theplantnews.com/)
+
+## Établissements couverts (12)
+
+- Bishop's University : https://le-radar.ca/etablissements/bishops-university/ (1 journal, 0 radio)
+- Cégep de Jonquière : https://le-radar.ca/etablissements/cegep-de-jonquiere/ (1 journal, 0 radio)
+- Cégep du Vieux Montréal : https://le-radar.ca/etablissements/cegep-du-vieux-montreal/ (1 journal, 0 radio)
+- Concordia University : https://le-radar.ca/etablissements/concordia-university/ (1 journal, 1 radio)
+- Dawson College : https://le-radar.ca/etablissements/dawson-college/ (1 journal, 0 radio)
+- McGill University : https://le-radar.ca/etablissements/mcgill-university/ (3 journaux, 1 radio)
+- Polytechnique Montréal : https://le-radar.ca/etablissements/polytechnique-montreal/ (1 journal, 0 radio)
+- Université de Montréal : https://le-radar.ca/etablissements/universite-de-montreal/ (1 journal, 1 radio)
+- Université de Sherbrooke : https://le-radar.ca/etablissements/universite-de-sherbrooke/ (1 journal, 1 radio)
+- Université du Québec à Montréal : https://le-radar.ca/etablissements/universite-du-quebec-a-montreal/ (1 journal, 1 radio)
+- Université du Québec à Trois-Rivières : https://le-radar.ca/etablissements/universite-du-quebec-a-trois-rivieres/ (1 journal, 0 radio)
+- Université Laval : https://le-radar.ca/etablissements/universite-laval/ (1 journal, 1 radio)
+
+## Pages de référence
+
+- https://le-radar.ca/medias/ : annuaire complet, par établissement
+- https://le-radar.ca/en/ : présentation en anglais (pour les personnes étudiantes internationales au Québec)
+- https://le-radar.ca/en/media/ : annuaire en anglais
+
+## Données ouvertes (sans JavaScript, directement analysables)
+
+- https://le-radar.ca/news.json : fil agrégé complet (185 articles), avec source, établissement, région, langue, autrice ou auteur, date et lien d'origine
+- https://le-radar.ca/radios.json : registre des radios étudiantes (fréquence, établissement, ville, flux)
+- https://le-radar.ca/news-sources.json : registre des journaux étudiants suivis
+- https://le-radar.ca/institutions.json : catalogue des établissements d'enseignement supérieur du Québec
+- https://le-radar.ca/feed.xml : flux RSS du fil étudiant
+- https://le-radar.ca/sitemap.xml : plan du site
+
+## Citation
+
+Pour citer le site comme source : « LE-RADAR.ca, agrégateur des
+médias étudiants du Québec ». Pour un article précis, citer la publication
+étudiante d'origine, pas LE-RADAR.ca.
+
+Dernière mise à jour du fil : 2026-07-25T10:52:29.458Z

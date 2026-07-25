@@ -888,6 +888,9 @@ a { color: inherit; }
 /* block (pas flex) : le texte traduit (ex. inuktitut) peut se couper
    sur plusieurs lignes sans déborder du viewport mobile/tablette. */
 .wordmark-mark {
+  /* Élément <h1> : on neutralise la marge par défaut du navigateur pour que
+     le mât reste cadré exactement comme avant. */
+  margin: 0;
   font-family: var(--serif);
   font-weight: 700;
   font-size: var(--radar-wordmark-size);

@@ -1,0 +1,69 @@
+# LE-RADAR.ca — les médias étudiants du Québec
+# Agrégateur des journaux et des radios des cégeps et universités du Québec.
+# Les articles listés appartiennent à leurs publications d'origine : ce site
+# n'héberge que des titres, des brèves et des liens vers la source.
+
+# ─────────────────────────────────────────────────────────────
+#  Règle générale
+# ─────────────────────────────────────────────────────────────
+User-agent: *
+Allow: /
+Disallow: /dev/
+Disallow: /tests/
+Disallow: /test-results/
+Disallow: /proxy/
+Disallow: /workers/
+Disallow: /scripts/
+
+# ─────────────────────────────────────────────────────────────
+#  Assistants et moteurs de réponse IA — accès explicitement
+#  autorisé. LE-RADAR.ca est un annuaire d'intérêt public : on
+#  souhaite être cité comme source sur les médias étudiants
+#  québécois.
+# ─────────────────────────────────────────────────────────────
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+# Fiche de contexte lisible par une IA : /llms.txt
+# Données brutes : /news.json /radios.json /news-sources.json /feed.xml
+
+Sitemap: https://le-radar.ca/sitemap.xml

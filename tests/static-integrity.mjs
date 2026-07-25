@@ -134,4 +134,125 @@ const embedScript = readFileSync(join(root, 'embed.js'), 'utf8');
 assert(embedScript.includes("type: 'radar-embed'"), 'contrat postMessage radar-embed requis');
 assert(embedScript.includes("type: 'ataraxia-radar-embed'"), 'contrat postMessage historique requis');
 
+// ── Référencement (moteurs + assistants IA) ────────────────────────────────
+// Ces acquis sont invisibles à l'œil : sans test, une refonte du <head> ou de
+// #news-list peut les supprimer sans que personne ne le remarque pendant des
+// mois. Voir scripts/generate-seo.js.
+for (const rel of ['robots.txt', 'sitemap.xml', 'llms.txt', 'assets/og-cover.png']) {
+  assert(existsSync(join(root, rel)), `${rel} requis pour le référencement`);
+}
+
+const robots = readFileSync(join(root, 'robots.txt'), 'utf8');
+assert(/^Sitemap:\s*https:\/\/le-radar\.ca\/sitemap\.xml$/m.test(robots), 'robots.txt : directive Sitemap requise');
+for (const bot of ['GPTBot', 'ClaudeBot', 'PerplexityBot']) {
+  assert(new RegExp(`^User-agent:\\s*${bot}$`, 'm').test(robots), `robots.txt : ${bot} doit être listé`);
+}
+
+const indexHtml = readFileSync(join(root, 'index.html'), 'utf8');
+for (const marker of [
+  '<!-- RADAR:SEO:JSONLD:START -->', '<!-- RADAR:SEO:JSONLD:END -->',
+  '<!-- RADAR:SEO:FEED:START -->', '<!-- RADAR:SEO:FEED:END -->',
+]) {
+  assert(indexHtml.includes(marker), `index.html : marqueur ${marker} requis (generate-seo.js)`);
+}
+// Le prérendu est la seule chose que voient les robots qui n'exécutent pas JS.
+assert(
+  /RADAR:SEO:FEED:START -->[\s\S]*?<h3 class="article-title">[\s\S]*?<!-- RADAR:SEO:FEED:END/.test(indexHtml),
+  'index.html : le fil prérendu est vide — lancer `npm run seo:update`'
+);
+
+// Une seule <h1> par page, et un canonical sur les pages publiques.
+for (const rel of ['index.html', 'feeds.html', 'pomo/index.html', 'solitaire/index.html']) {
+  const html = readFileSync(join(root, rel), 'utf8');
+  // Hors commentaires : un commentaire qui mentionne <h1> n'est pas une <h1>.
+  const markup = html.replace(/<!--[\s\S]*?-->/g, '');
+  const h1Count = (markup.match(/<h1\b/gi) || []).length;
+  assert(h1Count <= 1, `${rel}: une seule <h1> autorisée (trouvé ${h1Count})`);
+  assert(/<link rel="canonical"/i.test(html), `${rel}: <link rel="canonical"> requis`);
+  // Titre « effectif » pour les moteurs : og:title s'il existe, sinon <title>.
+  // Pomo garde volontairement un <title> court (libellé de favori réimposé en
+  // JS) et porte son intitulé descriptif dans og:title.
+  const ogTitle = html.match(/<meta\s+property=["']og:title["']\s+content=["']([^"']+)["']/i);
+  const title = html.match(/<title>([^<]*)<\/title>/i);
+  const effective = (ogTitle?.[1] || title?.[1] || '').trim();
+  assert(effective.length >= 15, `${rel}: titre trop court pour le référencement ("${effective}")`);
+}
+assert(/<h1 class="wordmark-mark">/.test(indexHtml), 'index.html : la <h1> du mât est requise');
+
+// Nomenclature de marque dans les surfaces vues par les moteurs et les IA.
+// Seul « le-radar.ca » est un domaine acquis : « leradar.ca » ne l'est pas, donc
+// la forme sans trait d'union ne doit jamais être ce qu'un moteur indexe.
+// Sensible à la casse, volontairement : seules les formes capitalisées
+// « LE RADAR » et « Le Radar » sont des usages de marque. CISM diffuse une
+// émission intitulée « Le radar » — c'est du contenu légitime venu de la
+// grille horaire de la station, pas une faute de nomenclature.
+const BARE_BRAND = /\b(?:LE RADAR|Le Radar)\b/;
+for (const rel of ['index.html', 'feeds.html', 'pomo/index.html', 'solitaire/index.html']) {
+  const html = readFileSync(join(root, rel), 'utf8');
+  const surfaces = [
+    ...[...html.matchAll(/<title>([^<]*)<\/title>/gi)].map((m) => [`<title>`, m[1]]),
+    ...[...html.matchAll(/<meta\s+(?:property|name)=["'](og:title|og:site_name|og:image:alt|og:description|twitter:title|twitter:description|description)["']\s+content=["']([^"']*)["']/gi)]
+      .map((m) => [m[1], m[2]]),
+  ];
+  for (const [where, value] of surfaces) {
+    assert(
+      !BARE_BRAND.test(value),
+      `${rel} → ${where} : écrire « LE-RADAR.ca » (avec trait d'union), pas « ${value.match(BARE_BRAND)?.[0]} »`
+    );
+  }
+}
+for (const rel of ['robots.txt', 'llms.txt']) {
+  const txt = readFileSync(join(root, rel), 'utf8');
+  assert(!BARE_BRAND.test(txt), `${rel} : écrire « LE-RADAR.ca », jamais la forme sans trait d'union`);
+}
+
+// ── Pages d'entités générées (scripts/seo-pages.js) ────────────────────────
+const GENERATED_ROOTS = ['radios', 'journaux', 'etablissements', 'medias', 'en'];
+const generatedPages = htmlFiles.filter((f) => {
+  const rel = relative(root, f);
+  return GENERATED_ROOTS.some((dir) => rel === `${dir}/index.html` || rel.startsWith(`${dir}/`));
+});
+
+assert(generatedPages.length >= 40, `pages d'entités absentes ou incomplètes (${generatedPages.length}) — lancer \`npm run seo:update\``);
+
+const seenCanonicals = new Set();
+for (const file of generatedPages) {
+  const rel = relative(root, file);
+  const html = readFileSync(file, 'utf8');
+  const markup = html.replace(/<!--[\s\S]*?-->/g, '');
+
+  assert((markup.match(/<h1\b/gi) || []).length === 1, `${rel}: exactement une <h1> attendue`);
+
+  const canonical = html.match(/<link rel="canonical" href="([^"]+)"/i);
+  assert(canonical, `${rel}: <link rel="canonical"> requis`);
+  // Deux pages qui se déclarent canoniques sur la même URL se cannibalisent.
+  assert(!seenCanonicals.has(canonical[1]), `${rel}: canonical en double → ${canonical[1]}`);
+  seenCanonicals.add(canonical[1]);
+
+  // hreflang réciproques : fr-CA, en-CA et x-default sur chaque page.
+  for (const tag of ['fr-CA', 'en-CA', 'x-default']) {
+    assert(
+      new RegExp(`<link rel="alternate" hreflang="${tag}"`, 'i').test(html),
+      `${rel}: hreflang ${tag} requis`
+    );
+  }
+  // x-default doit pointer vers le français, jamais vers /en/.
+  const xdef = html.match(/<link rel="alternate" hreflang="x-default" href="([^"]+)"/i);
+  assert(xdef && !xdef[1].includes('/en/'), `${rel}: x-default doit pointer vers la version française`);
+
+  assert(/application\/ld\+json/.test(html), `${rel}: données structurées requises`);
+  assert(!BARE_BRAND.test(markup), `${rel}: écrire « LE-RADAR.ca », pas la forme sans trait d'union`);
+  // Contraction française : « de Université » trahit un frOf() oublié.
+  assert(
+    !/\bde Université|\bde Cégep|\bà Université/i.test(markup),
+    `${rel}: contraction française manquante (« de l’Université », « du Cégep »)`
+  );
+}
+// La <h1> hérite sinon de la marge par défaut du navigateur → mât décadré.
+const styleCss = readFileSync(join(root, 'style.css'), 'utf8');
+assert(
+  /\.wordmark-mark \{[^}]*margin: 0;/.test(styleCss),
+  'style.css : .wordmark-mark doit neutraliser la marge (<h1>)'
+);
+
 console.log(`OK intégrité statique (${htmlFiles.length} pages HTML)`);
