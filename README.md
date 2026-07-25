@@ -10,6 +10,8 @@
 
 Version courante du dépôt : **1.0.0** — voir le [journal des modifications](CHANGELOG.md).
 
+**Agents IA / vibe-code :** lire d’abord [`AGENTS.md`](AGENTS.md) (dettes & rythme) puis [`docs/agent-playbook.md`](docs/agent-playbook.md).
+
 **→ [Essayer LE RADAR maintenant](https://le-radar.ca/)**
 
 > Projet non officiel. Le Radar n’est affilié à aucun des médias listés.
@@ -72,6 +74,7 @@ que les quatre pages principales en formats bureau et mobile. Le workflow
 
 ```
 le-radar/
+├── AGENTS.md               # Agents : dettes volontaires, rythme, tokens long terme
 ├── index.html              # Page principale (fil + syntoniseur)
 ├── feeds.html              # Page des flux RSS LE RADAR
 ├── style.css               # Styles (clair / sombre, radio, fil)
@@ -86,7 +89,7 @@ le-radar/
 ├── solitaire/              # Mini-app PWA Solitaire (🃏, isolée)
 ├── scripts/                # Bots (fetch, images, flux, maintenance)
 ├── assets/                 # Icônes et logos
-└── docs/                   # Documentation (sources, identité)
+└── docs/                   # Playbook agent, maintenance, identité…
 ```
 
 ### Architecture et publication

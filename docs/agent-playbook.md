@@ -1,6 +1,8 @@
 # LE RADAR — Playbook agent (lire en premier)
 
-Doc courte pour agents et humains pressés. **Un seul point d’entrée** avant de rouvrir les monolithes.
+Doc courte pour agents et humains pressés. **Point d’entrée technique** avant de rouvrir les monolithes.
+
+**Avant tout vibe-code :** lire aussi [`AGENTS.md`](../AGENTS.md) à la racine — dettes volontaires, rythme « un bloc à la fois », économie de tokens long terme. Ne pas ignorer le ledger.
 
 Pour la maintenance bots/CI longue : [`maintenance.md`](maintenance.md).  
 Pour ajouter un journal : [`adding-news-source.md`](adding-news-source.md).
