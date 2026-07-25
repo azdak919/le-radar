@@ -197,7 +197,7 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Fog_Gatineau.jpg",
-    credit: "No machine-readable author provided. Miguel Andrade assumed (based on copyright claims).",
+    credit: "Miguel Andrade",
     link: "https://commons.wikimedia.org/wiki/File:Fog%20Gatineau.jpg",
     license: "Public domain",
     title: "Fog Gatineau",

@@ -1485,6 +1485,33 @@
     }
   }
 
+  /**
+   * Commons : « No machine-readable author provided. NAME assumed (…) »
+   * → afficher seulement NAME (évite la ligne monstrueuse + auto-traduction).
+   * Aligné sur scripts/commons-credit-lib.js
+   */
+  function sanitizeBgCredit(raw) {
+    if (raw == null) return "";
+    let s = String(raw).replace(/\s+/g, " ").trim();
+    if (!s) return "";
+    let m = s.match(
+      /no machine-readable author provided\.?\s*(.+?)\s+assumed\s*\(\s*based on copyright claims\s*\)\.?/i
+    );
+    if (m) return m[1].replace(/^[\s,;:.-]+|[\s,;:.-]+$/g, "").trim().slice(0, 80);
+    m = s.match(
+      /aucun auteur lisible par machine n['’]est fourni[.,]?\s*(.+?)\s+l['’]a\s+suppos[ée]/i
+    );
+    if (m) return m[1].replace(/^[\s,;:.-]+|[\s,;:.-]+$/g, "").trim().slice(0, 80);
+    if (/^no machine-readable author provided\.?$/i.test(s)) return "Wikimedia Commons";
+    if (/^aucun auteur lisible par machine/i.test(s)) return "Wikimedia Commons";
+    if (s.length > 72) {
+      const head = s.split(/\s*[—–|]\s*|\s*\(/)[0].trim();
+      if (head.length >= 2 && head.length <= 60) return head;
+      return `${s.slice(0, 60).trim()}…`;
+    }
+    return s;
+  }
+
   function _renderCredit(bg) {
     const el = document.getElementById("bg-photo-credit");
     if (!el) return;
@@ -1492,12 +1519,15 @@
     el.removeAttribute("hidden");
     const link = safeHttpsUrl(bg.link);
     const title = String(bg.title || "").trim();
-    const credit = String(bg.credit || "").trim();
+    const credit = sanitizeBgCredit(bg.credit || "");
     const license = String(bg.license || "").trim();
 
     // Bureau : titre — auteur (licence)
     const full = document.createElement("span");
     full.className = "bg-photo-credit__full";
+    // notranslate : éviter que le navigateur traduise le crédit Commons en pavé
+    full.setAttribute("translate", "no");
+    full.classList.add("notranslate");
     if (title) full.appendChild(document.createTextNode(`${title} — `));
     if (link && credit) {
       const a = document.createElement("a");
@@ -1505,6 +1535,8 @@
       a.target = "_blank";
       a.rel = "noopener noreferrer";
       a.textContent = credit;
+      a.setAttribute("translate", "no");
+      a.classList.add("notranslate");
       full.appendChild(a);
     } else if (credit) {
       full.appendChild(document.createTextNode(credit));
@@ -1514,6 +1546,8 @@
     // Mobile : ligne minimale — auteur · licence (lien si possible)
     const short = document.createElement("span");
     short.className = "bg-photo-credit__short";
+    short.setAttribute("translate", "no");
+    short.classList.add("notranslate");
     const shortLabel = credit || title || "Photo";
     if (link) {
       const a = document.createElement("a");
@@ -1521,6 +1555,8 @@
       a.target = "_blank";
       a.rel = "noopener noreferrer";
       a.textContent = shortLabel;
+      a.setAttribute("translate", "no");
+      a.classList.add("notranslate");
       short.appendChild(a);
     } else {
       short.appendChild(document.createTextNode(shortLabel));
