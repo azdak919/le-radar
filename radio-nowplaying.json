@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-07-25T01:02:55.273Z",
+  "updatedAt": "2026-07-25T04:44:59.318Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Capitales de Québec",
-        "source": "schedule",
-        "start": "18:50",
-        "end": "23:00",
-        "url": "https://chyz.ca/emission/capitales-de-quebec/"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHYZ",
         "source": "schedule",
@@ -20,34 +14,34 @@
         "url": "https://chyz.ca/emission/palmares-chyz/"
       },
       "track": "",
-      "showTitle": "Capitales de Québec",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-25T01:02:29.126Z"
+      "checkedAt": "2026-07-25T04:44:34.361Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Ok Doomer",
+        "title": "Rave de nuit",
         "source": "api-live",
-        "start": "17:00",
+        "start": "20:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "ok-doomer"
+        "slug": "rave-de-nuit"
       },
       "next": {
-        "title": "Mix électro",
+        "title": "Le 120e parallèle (reprise)",
         "source": "api-live",
-        "start": "19:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364614.mp3",
-        "slug": "mix-electro"
+        "start": "21:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364700.mp3",
+        "slug": "le-120e-parallele"
       },
       "track": "",
-      "showTitle": "Ok Doomer",
+      "showTitle": "Rave de nuit",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,97 +51,92 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-25T01:02:30.806Z"
+      "checkedAt": "2026-07-25T04:44:35.867Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Macondo",
+        "title": "WEFUNK",
         "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
+        "start": "00:00",
+        "end": "02:00"
       },
       "next": {
-        "title": "Weekend Groove",
+        "title": "Soca Sessions",
         "source": "api-live",
-        "start": "22:00",
-        "end": "00:00"
+        "start": "02:00",
+        "end": "04:00"
       },
       "track": "",
-      "showTitle": "Macondo",
+      "showTitle": "WEFUNK",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-25T01:02:33.471Z"
+      "checkedAt": "2026-07-25T04:44:38.328Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Stereo Field Trip",
+        "title": "Jazz Boulevard",
         "source": "schedule",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/stereo-field-trip"
+        "start": "00:00",
+        "end": "02:00",
+        "url": "http://www.cjlo.com/shows/jazz-boulevard"
       },
       "next": {
-        "title": "The Come Up",
+        "title": "World-Up'",
         "source": "schedule",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/the-come-up"
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/world-up"
       },
       "track": "",
-      "showTitle": "Stereo Field Trip",
+      "showTitle": "Jazz Boulevard",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-25T01:02:46.777Z"
+      "checkedAt": "2026-07-25T04:44:51.769Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Mangue, Goyave et Reggae",
+        "title": "Les nuits CFAK",
         "source": "schedule",
-        "start": "21:00",
-        "end": "22:00"
+        "start": "00:00",
+        "end": "07:00"
       },
-      "next": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "22:00",
-        "end": "00:00"
-      },
+      "next": null,
       "track": "",
-      "showTitle": "Mangue, Goyave et Reggae",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-25T01:02:47.222Z"
+      "checkedAt": "2026-07-25T04:44:52.211Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Mutations",
+        "title": "D'amour et de sexe",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00",
-        "slug": "mutations"
+        "start": "22:00",
+        "end": "23:00",
+        "slug": "damour-et-de-sexe"
       },
-      "track": "CAVS - Boitata",
+      "track": "Blondshell - Heart Has To Work So Hard",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -158,7 +147,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-25T01:02:54.923Z"
+      "checkedAt": "2026-07-25T04:44:58.967Z"
     }
   }
 }
