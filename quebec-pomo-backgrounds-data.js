@@ -1,15 +1,6 @@
 /* LE RADAR — banque de photos de fond (généré)
- * Profil : pomo (paysages QC pour le pomodoro)
- * Source de vérité : data/quebec-pomo-backgrounds.json
- * Régénéré par : node scripts/maintain-quebec-backgrounds.js --update --profile pomo
- * Ne pas éditer à la main — le bot de session écrase ce fichier.
- *
- * Consommateurs : pomo uniquement (jamais le mât de la page principale)
- *
- * Politique : pas de religieux institutionnel ; nations du Québec OK ;
- * pas de personnes reconnaissables ; plafond 50 ; ménage 1×/session univ.
- * Résolution mini ~1400×700 / 1.2 Mpx (anti-grain upscale).
- * focalY optionnel (0=haut, 1=bas) pour cover crop.
+ * Profil : pomo
+ * Source de vérité : data/…json (régénéré après retrait dessous de pont Tourtes_02)
  */
 const QUEBEC_POMO_BACKGROUNDS = [
   {
@@ -53,13 +44,6 @@ const QUEBEC_POMO_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Pont_de_l-Ile-aux-Tourtes_04.jpg",
     license: "CC BY-SA 4.0",
     title: "Pont de l'Île-aux-Tourtes, Île Perrot",
-  },
-  {
-    url: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Pont_de_l-Ile-aux-Tourtes_02.JPG",
-    credit: "Jeangagnon",
-    link: "https://commons.wikimedia.org/wiki/File:Pont_de_l-Ile-aux-Tourtes_02.JPG",
-    license: "CC BY-SA 3.0",
-    title: "Pont de l'Île-aux-Tourtes",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/5/57/Deux-Montagnes%28QC%29-Parc_des_b%C3%A9n%C3%A9voles-2022-03-15.jpg",

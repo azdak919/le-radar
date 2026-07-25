@@ -143,6 +143,10 @@
   const BARREN_SCENE_RE =
     /(?:\bultramafic\b|\bbarren\b|\btundra\b|\bwasteland\b|\brocky plain\b|\bquarry\b|\bcarri[eè]re\b)/i;
 
+  /** Dessous de pont / viaduc / parking béton — pas un paysage de bandeau. */
+  const UNDERBRIDGE_SCENE_RE =
+    /(?:\bunderside\b|\bunderneath\b|\bunderpass\b|\bunder[\s-]?the[\s-]?bridge\b|\bbridge[\s-]?underside\b|\bdessous de pont\b|\bsous le pont\b|\bsous[\s-]pont\b|\bviaduc\b.*\b(dessous|sous)\b|\bconcrete beams?\b|\bpiliers? de b[eé]ton\b|\bsoffit\b)/i;
+
   /** Nuit urbaine — wordmark blanc illisible sur les lumières. */
   const NIGHT_SCENE_RE =
     /(?:\bnight\b|\bnuit\b|\btwilight\b|\bcrépuscule\b|\bcrepuscule\b|\bafter[\s-]?dark\b)/i;
@@ -172,6 +176,14 @@
     if (!bg) return false;
     const hay = [bg.title, bg.url, bg.link].filter(Boolean).join(" ");
     return BARREN_SCENE_RE.test(hay);
+  }
+
+  function isUnderbridgeSceneSubject(bg) {
+    if (!bg) return false;
+    const hay = [bg.title, bg.url, bg.link, bg.description, bg.categories]
+      .filter(Boolean)
+      .join(" ");
+    return UNDERBRIDGE_SCENE_RE.test(hay);
   }
 
   function isNightSceneSubject(bg) {
@@ -1398,6 +1410,19 @@
       if (flatGrain > MAX_FLAT_GRAIN && grainN > 80) {
         return { ok: false, reason: "excessive_grain", metrics };
       }
+      // Dessous de pont / dalle béton : ombres denses, quasi pas de ciel, gris.
+      // Ex. Pont de l'Île-aux-Tourtes_02 (vue sous le tablier).
+      if (
+        !goldenSilhouette &&
+        skyFrac < 0.12 &&
+        darkFrac > 0.32 &&
+        meanL > 0.12 &&
+        meanL < 0.42 &&
+        sat < 0.32 &&
+        edgeMean > 0.016
+      ) {
+        return { ok: false, reason: "underbridge_concrete", metrics };
+      }
       // Marqueur soft pour logs / futurs scores (réf. sweet-spot bandeau)
       if (goldenSilhouette) {
         metrics.sweetSpot = "golden_silhouette";
@@ -1513,6 +1538,10 @@
       _rejectAndRetry(bg, pool, { ok: false, reason: "barren_scene_subject" });
       return;
     }
+    if (isUnderbridgeSceneSubject(bg)) {
+      _rejectAndRetry(bg, pool, { ok: false, reason: "underbridge_scene_subject" });
+      return;
+    }
     if (isNightSceneSubject(bg)) {
       _rejectAndRetry(bg, pool, { ok: false, reason: "night_scene_subject" });
       return;
@@ -1591,8 +1620,12 @@
         typeof QUEBEC_NATIONS_BACKGROUNDS !== "undefined"
           ? QUEBEC_NATIONS_BACKGROUNDS.length
           : 0;
+      const nF =
+        typeof QUEBEC_FAVORITES_BACKGROUNDS !== "undefined"
+          ? QUEBEC_FAVORITES_BACKGROUNDS.length
+          : 0;
       console.info(
-        `[bg] pool mât : ${all.length} (paysages ${nL} + campus ${nU} + nations ${nN})` +
+        `[bg] pool mât : ${all.length} (paysages ${nL} + campus ${nU} + nations ${nN} + favorites ${nF})` +
           (_rotator ? " · rotator CSPRNG" : " · fallback")
       );
     }

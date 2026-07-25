@@ -185,7 +185,9 @@
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    padding: 0.42rem 0.62rem 0.34rem;
+    /* Padding vertical symétrique — évite plus d’air en bas qu’en haut
+       sous la rangée météo (clipping / déséquilibre visuel). */
+    padding: 0.4rem 0.62rem;
     width: var(--chrome-width);
     max-width: var(--chrome-width);
     box-sizing: border-box;
@@ -258,21 +260,53 @@
     opacity: 1;
   }
 
-  /* Barre météo régionale — seconde rangée du menu Pomodoro. */
+  /* Barre météo régionale — seconde rangée du menu Pomodoro.
+     Padding haut = bas pour centrer les pastilles sans clipper. */
   .app-toolbar-weather {
     display: flex;
     align-items: center;
-    min-height: 2.4rem;
+    min-height: 2.35rem;
     margin-top: 0.2rem;
-    padding: 0.2rem 0.25rem 0.4rem;
+    padding: 0.28rem 0.2rem;
     box-sizing: border-box;
     border-top: 1px solid var(--chrome-rule);
     color: var(--chrome-text);
-    overflow: hidden;
+    /* visible : ne pas rogner bordure/ombre des pastilles */
+    overflow: visible;
   }
 
-  .pomo-weather-board { display: flex; align-items: center; gap: 0.45rem; min-width: 0; width: 100%; overflow: hidden; }
-  .pomo-weather-city { display: inline-flex; align-items: center; gap: 0.3rem; min-width: 0; flex: 1 1 0; padding: 0.25rem 0.5rem; border: 1px solid var(--chrome-rule); border-radius: 999px; font-size: 0.65rem; white-space: nowrap; overflow: hidden; animation: pomoWeatherArrive 720ms cubic-bezier(.22, .8, .28, 1) both; transition: background-color 500ms ease, border-color 500ms ease; color: inherit; text-decoration: none; }
+  .pomo-weather-board {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-width: 0;
+    width: 100%;
+    /* clip horizontal seulement (ellipsis), pas vertical */
+    overflow-x: auto;
+    overflow-y: visible;
+    scrollbar-width: none;
+  }
+  .pomo-weather-board::-webkit-scrollbar { display: none; }
+  .pomo-weather-city {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    min-width: 0;
+    min-height: 1.55rem;
+    flex: 1 1 0;
+    padding: 0.28rem 0.55rem;
+    border: 1px solid var(--chrome-rule);
+    border-radius: 999px;
+    font-size: 0.65rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    box-sizing: border-box;
+    animation: pomoWeatherArrive 720ms cubic-bezier(.22, .8, .28, 1) both;
+    transition: background-color 500ms ease, border-color 500ms ease;
+    color: inherit;
+    text-decoration: none;
+  }
   .pomo-weather-city:hover, .pomo-weather-city:focus-visible { background: var(--chrome-hover); border-color: var(--accent); outline: none; }
   .pomo-weather-city--primary { flex: 0.82 1 0; }
   .pomo-weather-icon { color: var(--accent); font-size: 0.9rem; line-height: 1; display: inline-flex; align-items: center; flex: 0 0 1.05rem; }
@@ -409,7 +443,7 @@
      lit aussi cette variable, sinon il reste désynchronisé de .toolbar-btn. */
   @media (max-width: 400px) {
     .top-right-actions {
-      padding: 0.34rem 0.45rem 0.28rem;
+      padding: 0.32rem 0.45rem;
       --tb-font: 0.72rem;
     }
     .top-right-actions .toolbar-btn,
