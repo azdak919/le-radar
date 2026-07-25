@@ -59,15 +59,14 @@
       color: inherit;
     }
     .brand-mark {
-      width: 36px;
-      height: 36px;
-      border-radius: 9px;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: block;
+      object-fit: contain;
       background: #111;
       border: 1px solid rgba(255,255,255,0.12);
-      display: grid;
-      place-items: center;
-      font-size: 1.1rem;
-      line-height: 1;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.35);
     }
     .brand-name {
       font-family: var(--serif);
@@ -228,24 +227,19 @@
       cursor: pointer;
       background: linear-gradient(180deg, #12141a 0%, #0e0f12 55%, #141820 100%);
     }
-    .game-help {
-      text-align: center;
-      font-size: 0.7rem;
-      color: var(--muted);
-      padding: 0.4rem 0.75rem 0.55rem;
-    }
-
     footer {
       text-align: center;
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       color: var(--muted);
-      padding-top: 0.5rem;
+      padding-top: 0.65rem;
+      line-height: 1.5;
     }
     footer a {
       color: var(--ink-soft);
       text-decoration: none;
       border-bottom: 1px solid rgba(255,255,255,0.15);
     }
+    footer .sep { opacity: 0.4; margin: 0 0.35em; }
     @media (prefers-reduced-motion: reduce) {
       .phrase, .phrase-meta { transition: none; }
     }
@@ -255,7 +249,7 @@
   <div class="shell">
     <header>
       <a class="brand" href="/" rel="home">
-        <span class="brand-mark" aria-hidden="true">📡</span>
+        <img class="brand-mark" src="assets/icon-192.png" width="40" height="40" alt="" />
         <span class="brand-name">LE RADAR<span>.ca</span></span>
       </a>
     </header>
@@ -283,16 +277,20 @@
 
     <section class="game-wrap" aria-label="Mini-jeu en attendant">
       <div class="game-bar">
-        <span>Le Satellite · tapez / espace pour sauter</span>
-        <span>Score <b id="score">0</b> · Record <b id="hi">0</b></span>
+        <span>LE RADAR · espace / tapez pour sauter</span>
+        <span>
+          Score <b id="score">0</b>
+          · Pièces <b id="coins">0</b>
+          · Record <b id="hi">0</b>
+        </span>
       </div>
-      <canvas id="game" width="520" height="160" role="img" aria-label="Satellite qui saute des obstacles"></canvas>
-      <p class="game-help">Inspiré du dino hors-ligne — version LE RADAR</p>
+      <canvas id="game" width="520" height="160" role="img" aria-label="LE RADAR saute et collecte des pièces"></canvas>
     </section>
 
     <footer>
-      <a href="/">Réessayer le-radar.ca</a>
-      · médias étudiants du Québec
+      <a href="https://le-radar.ca/">LE-RADAR.ca</a>
+      <span class="sep">·</span>
+      Les médias étudiants du Québec
     </footer>
   </div>
 
@@ -448,51 +446,90 @@
   window.addEventListener('online', tryReconnect);
   setTimeout(tryReconnect, 1200);
 
-  // ── Mini-jeu : Le Satellite ──
+  // ── Mini-jeu LE RADAR ──
+  // Joueur = logo PWA (assets/icon-192.png)
+  // Pièces = spritesheet CC0 16×16 (assets/offline/coin.png · OpenGameArt / blaze_xcvi)
   const canvas = document.getElementById('game');
   const ctx = canvas.getContext('2d');
   const scoreEl = document.getElementById('score');
+  const coinsEl = document.getElementById('coins');
   const hiEl = document.getElementById('hi');
-  const HI_KEY = 'lr_satellite_hi_v1';
+  const HI_KEY = 'lr_offline_hi_v2';
+  const COINS_KEY = 'lr_offline_coins_total_v1';
   let hi = 0;
-  try { hi = parseInt(localStorage.getItem(HI_KEY) || '0', 10) || 0; } catch (_) {}
+  let coinsTotal = 0;
+  try {
+    hi = parseInt(localStorage.getItem(HI_KEY) || '0', 10) || 0;
+    coinsTotal = parseInt(localStorage.getItem(COINS_KEY) || '0', 10) || 0;
+  } catch (_) {}
   hiEl.textContent = String(hi);
+
+  const logoImg = new Image();
+  logoImg.src = 'assets/icon-192.png';
+  const coinImg = new Image();
+  coinImg.src = 'assets/offline/coin.png';
+  const COIN_FW = 16;
+  const COIN_FRAMES = 20; // spritesheet 320×16
 
   const W = canvas.width;
   const H = canvas.height;
   const GROUND = H - 28;
-  let sat = { x: 56, y: GROUND - 28, vy: 0, w: 28, h: 22, onGround: true };
+  const PLAYER_SIZE = 32;
+  let player = {
+    x: 52,
+    y: GROUND - PLAYER_SIZE,
+    vy: 0,
+    w: PLAYER_SIZE,
+    h: PLAYER_SIZE,
+    onGround: true,
+  };
   let obstacles = [];
+  let coins = [];
   let frame = 0;
   let score = 0;
+  let coinsRun = 0;
   let speed = 4.2;
   let alive = true;
   let started = false;
   let spawnIn = 70;
+  let coinSpawnIn = 40;
 
   function reset() {
-    sat.y = GROUND - 28;
-    sat.vy = 0;
-    sat.onGround = true;
+    player.y = GROUND - PLAYER_SIZE;
+    player.vy = 0;
+    player.onGround = true;
     obstacles = [];
+    coins = [];
     frame = 0;
     score = 0;
+    coinsRun = 0;
     speed = 4.2;
     alive = true;
     spawnIn = 70;
+    coinSpawnIn = 40;
     scoreEl.textContent = '0';
+    coinsEl.textContent = '0';
   }
 
   function jump() {
-    if (!started) { started = true; reset(); }
-    if (!alive) { reset(); return; }
-    if (sat.onGround) {
-      sat.vy = -9.2;
-      sat.onGround = false;
+    if (!started) {
+      started = true;
+      reset();
+    }
+    if (!alive) {
+      reset();
+      return;
+    }
+    if (player.onGround) {
+      player.vy = -9.4;
+      player.onGround = false;
     }
   }
 
-  canvas.addEventListener('pointerdown', (e) => { e.preventDefault(); jump(); });
+  canvas.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    jump();
+  });
   window.addEventListener('keydown', (e) => {
     if (e.code === 'Space' || e.code === 'ArrowUp') {
       e.preventDefault();
@@ -500,55 +537,90 @@
     }
   });
 
-  function spawn() {
-    const h = 18 + Math.random() * 28;
-    const kind = Math.random() < 0.35 ? 'tower' : Math.random() < 0.5 ? 'paper' : 'tomato';
-    obstacles.push({ x: W + 10, w: kind === 'tower' ? 16 : 20, h: h, kind: kind });
+  function spawnObstacle() {
+    const h = 20 + Math.random() * 26;
+    const kind = Math.random() < 0.4 ? 'tower' : 'paper';
+    obstacles.push({
+      x: W + 12,
+      w: kind === 'tower' ? 16 : 18,
+      h: h,
+      kind: kind,
+    });
   }
 
-  function drawSat(x, y) {
-    // corps
-    ctx.fillStyle = '#1a1c22';
-    ctx.strokeStyle = 'rgba(255,255,255,0.35)';
-    ctx.lineWidth = 1.5;
-    roundRect(x, y + 4, 26, 14, 4);
-    ctx.fill();
-    ctx.stroke();
-    // panneau
-    ctx.fillStyle = 'rgba(93,155,224,0.85)';
-    ctx.fillRect(x - 8, y + 7, 8, 8);
-    ctx.fillRect(x + 26, y + 7, 8, 8);
-    // antenne
-    ctx.strokeStyle = '#cf7ec1';
-    ctx.beginPath();
-    ctx.moveTo(x + 13, y + 4);
-    ctx.lineTo(x + 13, y - 4);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(x + 13, y - 6, 3, 0, Math.PI * 2);
-    ctx.stroke();
+  function spawnCoin() {
+    // Pièce flottante (style plateforme) — à collecter, pas un obstacle
+    const floatY = GROUND - 36 - Math.random() * 50;
+    coins.push({
+      x: W + 8,
+      y: floatY,
+      r: 11,
+      taken: false,
+    });
   }
 
-  function roundRect(x, y, w, h, r) {
-    ctx.beginPath();
-    ctx.moveTo(x + r, y);
-    ctx.arcTo(x + w, y, x + w, y + h, r);
-    ctx.arcTo(x + w, y + h, x, y + h, r);
-    ctx.arcTo(x, y + h, x, y, r);
-    ctx.arcTo(x, y, x + w, y, r);
-    ctx.closePath();
+  function drawPlayer(x, y) {
+    if (logoImg.complete && logoImg.naturalWidth) {
+      ctx.save();
+      // Légère ombre
+      ctx.shadowColor = 'rgba(0,0,0,0.45)';
+      ctx.shadowBlur = 6;
+      ctx.shadowOffsetY = 2;
+      // Logo circulaire soft
+      ctx.beginPath();
+      ctx.arc(x + player.w / 2, y + player.h / 2, player.w / 2 - 1, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.clip();
+      ctx.drawImage(logoImg, x, y, player.w, player.h);
+      ctx.restore();
+      ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(x + player.w / 2, y + player.h / 2, player.w / 2 - 1, 0, Math.PI * 2);
+      ctx.stroke();
+    } else {
+      // fallback si image pas prête
+      ctx.fillStyle = '#1a1c22';
+      ctx.beginPath();
+      ctx.arc(x + player.w / 2, y + player.h / 2, player.w / 2 - 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  function drawCoin(c) {
+    const size = 22;
+    const fi = Math.floor(frame / 2) % COIN_FRAMES;
+    if (coinImg.complete && coinImg.naturalWidth) {
+      ctx.drawImage(
+        coinImg,
+        fi * COIN_FW,
+        0,
+        COIN_FW,
+        COIN_FW,
+        c.x,
+        c.y,
+        size,
+        size
+      );
+    } else {
+      // fallback dessin or
+      ctx.fillStyle = '#f4c430';
+      ctx.beginPath();
+      ctx.ellipse(c.x + size / 2, c.y + size / 2, size / 2 - 1, size / 2 - 1, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#c9a227';
+      ctx.stroke();
+      ctx.fillStyle = '#8b6914';
+      ctx.font = 'bold 11px system-ui';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('¢', c.x + size / 2, c.y + size / 2 + 0.5);
+    }
   }
 
   function drawObstacle(o) {
     const y = GROUND - o.h;
-    if (o.kind === 'tomato') {
-      ctx.fillStyle = '#c8102e';
-      ctx.beginPath();
-      ctx.arc(o.x + o.w / 2, y + o.h / 2, o.w / 2, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = '#3a7a3a';
-      ctx.fillRect(o.x + o.w / 2 - 2, y - 2, 4, 5);
-    } else if (o.kind === 'tower') {
+    if (o.kind === 'tower') {
       ctx.fillStyle = '#3a4250';
       ctx.fillRect(o.x, y, o.w, o.h);
       ctx.fillStyle = '#5d9be0';
@@ -561,24 +633,30 @@
     }
   }
 
+  function hitBox(ax, ay, aw, ah, bx, by, bw, bh, pad) {
+    const p = pad || 0;
+    return (
+      ax + p < bx + bw - p &&
+      ax + aw - p > bx + p &&
+      ay + p < by + bh - p &&
+      ay + ah - p > by + p
+    );
+  }
+
   function tick() {
     frame++;
-    // ciel discret
     ctx.clearRect(0, 0, W, H);
-    // étoiles
     ctx.fillStyle = 'rgba(255,255,255,0.15)';
     for (let i = 0; i < 18; i++) {
       const sx = (i * 97 + frame * 0.15) % W;
       const sy = (i * 37) % (H - 40);
       ctx.fillRect(sx, sy, 1.5, 1.5);
     }
-    // sol
     ctx.strokeStyle = 'rgba(255,255,255,0.12)';
     ctx.beginPath();
     ctx.moveTo(0, GROUND + 0.5);
     ctx.lineTo(W, GROUND + 0.5);
     ctx.stroke();
-    // hachures sol
     ctx.strokeStyle = 'rgba(255,255,255,0.05)';
     const off = (frame * speed) % 24;
     for (let x = -off; x < W; x += 24) {
@@ -589,61 +667,98 @@
     }
 
     if (started && alive) {
-      sat.vy += 0.45;
-      sat.y += sat.vy;
-      if (sat.y >= GROUND - sat.h) {
-        sat.y = GROUND - sat.h;
-        sat.vy = 0;
-        sat.onGround = true;
+      player.vy += 0.45;
+      player.y += player.vy;
+      if (player.y >= GROUND - player.h) {
+        player.y = GROUND - player.h;
+        player.vy = 0;
+        player.onGround = true;
       }
+
       spawnIn--;
       if (spawnIn <= 0) {
-        spawn();
-        spawnIn = 55 + Math.random() * 50 - Math.min(25, score / 40);
+        spawnObstacle();
+        spawnIn = 58 + Math.random() * 48 - Math.min(22, score / 50);
       }
+      coinSpawnIn--;
+      if (coinSpawnIn <= 0) {
+        spawnCoin();
+        coinSpawnIn = 28 + Math.random() * 36;
+      }
+
       speed = 4.2 + Math.min(4, score / 180);
       for (const o of obstacles) o.x -= speed;
-      obstacles = obstacles.filter((o) => o.x + o.w > -20);
+      for (const c of coins) c.x -= speed;
+      obstacles = obstacles.filter((o) => o.x + o.w > -24);
+      coins = coins.filter((c) => !c.taken && c.x > -30);
 
-      // collision
+      // Collecte pièces
+      for (const c of coins) {
+        if (c.taken) continue;
+        if (
+          hitBox(player.x, player.y, player.w, player.h, c.x, c.y, 22, 22, 4)
+        ) {
+          c.taken = true;
+          coinsRun += 1;
+          coinsTotal += 1;
+          score += 25; // bonus points pièce
+          coinsEl.textContent = String(coinsRun);
+          scoreEl.textContent = String(score);
+          try {
+            localStorage.setItem(COINS_KEY, String(coinsTotal));
+          } catch (_) {}
+        }
+      }
+
+      // Collision obstacles (tours / journaux)
       for (const o of obstacles) {
-        const ox = o.x;
         const oy = GROUND - o.h;
         if (
-          sat.x + 4 < ox + o.w - 2 &&
-          sat.x + sat.w - 4 > ox + 2 &&
-          sat.y + 4 < oy + o.h &&
-          sat.y + sat.h > oy + 2
+          hitBox(player.x, player.y, player.w, player.h, o.x, oy, o.w, o.h, 6)
         ) {
           alive = false;
           if (score > hi) {
             hi = score;
-            try { localStorage.setItem(HI_KEY, String(hi)); } catch (_) {}
+            try {
+              localStorage.setItem(HI_KEY, String(hi));
+            } catch (_) {}
             hiEl.textContent = String(hi);
           }
         }
       }
+
       if (frame % 4 === 0) {
-        score++;
+        score += 1;
         scoreEl.textContent = String(score);
       }
     }
 
     for (const o of obstacles) drawObstacle(o);
-    drawSat(sat.x, sat.y);
+    for (const c of coins) {
+      if (!c.taken) drawCoin(c);
+    }
+    drawPlayer(player.x, player.y);
 
     if (!started) {
-      ctx.fillStyle = 'rgba(241,242,244,0.75)';
+      ctx.fillStyle = 'rgba(241,242,244,0.78)';
       ctx.font = '600 13px system-ui,sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('Appuyez pour démarrer', W / 2, H / 2 - 8);
+      ctx.fillText('Appuyez pour démarrer · collectez les pièces', W / 2, H / 2 - 8);
     } else if (!alive) {
       ctx.fillStyle = 'rgba(14,15,18,0.55)';
       ctx.fillRect(0, 0, W, H);
       ctx.fillStyle = '#f1f2f4';
       ctx.font = '600 15px system-ui,sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('Signal perdu — tapez pour rejouer', W / 2, H / 2);
+      ctx.fillText('Signal perdu — tapez pour rejouer', W / 2, H / 2 - 10);
+      ctx.font = '500 12px system-ui,sans-serif';
+      ctx.fillStyle = 'rgba(241,242,244,0.75)';
+      ctx.fillText(
+        'Cette partie : ' + coinsRun + ' pièce' + (coinsRun === 1 ? '' : 's') +
+          ' · Total : ' + coinsTotal,
+        W / 2,
+        H / 2 + 14
+      );
     }
 
     requestAnimationFrame(tick);

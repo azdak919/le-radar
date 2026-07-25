@@ -1,9 +1,15 @@
-const CACHE_NAME = "radar-shell-v491";
+const CACHE_NAME = "radar-shell-v495";
 const CACHE_PREFIX = "radar-";
 /** Cache permanent : page maintenance / hors-ligne (ne se purge pas au bump shell). */
-const OFFLINE_CACHE = "radar-offline-v1";
+const OFFLINE_CACHE = "radar-offline-v2";
 // Isolated mini-apps under /pomo/ and /solitaire/ own their own SWs + caches.
 const ISOLATED_PATH_RE = /\/(pomo|solitaire)(\/|$)/;
+
+const OFFLINE_ASSETS = [
+  "./offline.html",
+  "./assets/icon-192.png",
+  "./assets/offline/coin.png",
+];
 
 const APP_SHELL = [
   "./",
@@ -40,6 +46,7 @@ const APP_SHELL = [
   "./assets/icon-32.png",
   "./assets/icon-192.png",
   "./assets/icon-512.png",
+  "./assets/offline/coin.png",
   "./assets/emoji/tomato.png",
   "./assets/emoji/satellite.png",
   "./assets/emoji/playing-cards.png",
@@ -48,8 +55,8 @@ const APP_SHELL = [
 self.addEventListener("install", (event) => {
   event.waitUntil(
     Promise.all([
-      // Offline d’abord : jouable même si le reste du shell échoue à cacher
-      caches.open(OFFLINE_CACHE).then((cache) => cache.add("./offline.html")),
+      // Offline d’abord : page + logo PWA + pièces (jouable sans le shell complet)
+      caches.open(OFFLINE_CACHE).then((cache) => cache.addAll(OFFLINE_ASSETS)),
       caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)),
     ]).then(() => self.skipWaiting())
   );
