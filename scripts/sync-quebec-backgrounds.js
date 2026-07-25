@@ -20,6 +20,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const { matchHardBanned } = require('./quebec-backgrounds-blacklist');
+const { scrubBankCredits, sanitizeCommonsCredit } = require('./commons-credit-lib');
 
 const ROOT = path.join(__dirname, '..');
 const args = process.argv.slice(2);
@@ -107,9 +108,10 @@ function parseJsUrls(jsPath) {
 }
 
 function photoToJsObject(p, bank) {
+  const credit = sanitizeCommonsCredit(p.credit || '') || p.credit || '';
   const lines = [
     `    url: "${esc(p.url)}"`,
-    `    credit: "${esc(p.credit)}"`,
+    `    credit: "${esc(credit)}"`,
     `    link: "${esc(p.link)}"`,
     `    license: "${esc(p.license)}"`,
     `    title: "${esc(p.title)}"`,
@@ -206,6 +208,7 @@ function main() {
   let exitCode = 0;
   let wrote = 0;
   let purgedTotal = 0;
+  let creditScrubTotal = 0;
 
   for (const bank of banks) {
     const jsonPath = path.join(ROOT, bank.jsonRel);
@@ -221,19 +224,35 @@ function main() {
     const before = (data.photos || []).length;
     const { kept, removed } = purgeBanned(data.photos || []);
     purgedTotal += removed.length;
+    // Crédits Commons « machine-readable author… » → nom court
+    const creditFixed = scrubBankCredits({ photos: kept });
+    creditScrubTotal += creditFixed;
 
     for (const r of removed) {
       console.log(`  − ${bank.id}: hard-ban « ${r.title} » (${r.reason})`);
+    }
+    if (creditFixed) {
+      console.log(`  ✎ ${bank.id}: ${creditFixed} crédit(s) Commons normalisé(s)`);
     }
 
     const jsonUrls = kept.map((p) => p.url).filter(Boolean);
     const jsUrls = parseJsUrls(jsPath);
     const onlyJson = jsonUrls.filter((u) => !jsUrls.includes(u));
     const onlyJs = jsUrls.filter((u) => !jsonUrls.includes(u));
-    const drift = onlyJson.length > 0 || onlyJs.length > 0 || jsonUrls.length !== jsUrls.length;
+    // Drift crédit : JS a encore le gabarit long
+    const jsText = fs.existsSync(jsPath) ? fs.readFileSync(jsPath, 'utf8') : '';
+    const creditDrift =
+      creditFixed > 0 ||
+      /No machine-readable author provided/i.test(jsText) ||
+      /Aucun auteur lisible par machine/i.test(jsText);
+    const drift =
+      onlyJson.length > 0 ||
+      onlyJs.length > 0 ||
+      jsonUrls.length !== jsUrls.length ||
+      creditDrift;
 
-    if (removed.length || drift) {
-      if (drift && !removed.length) {
+    if (removed.length || drift || creditFixed) {
+      if (drift && !removed.length && !creditFixed) {
         console.log(
           `  ± ${bank.id}: drift JSON↔JS (json=${jsonUrls.length} js=${jsUrls.length}` +
             `${onlyJson.length ? ` +json=${onlyJson.length}` : ''}` +
@@ -264,6 +283,7 @@ function main() {
     console.log(
       `  ✅ ${bank.id}: ${kept.length} photos` +
         (removed.length ? ` (−${removed.length} ban)` : '') +
+        (creditFixed ? ` (crédits ✎${creditFixed})` : '') +
         ` → ${bank.jsRel}`
     );
   }
@@ -278,7 +298,9 @@ function main() {
   }
 
   console.log(
-    `\nSync terminé : ${wrote} banque(s) écrite(s), ${purgedTotal} hard-ban purgé(s).`
+    `\nSync terminé : ${wrote} banque(s) écrite(s), ${purgedTotal} hard-ban purgé(s)` +
+      (creditScrubTotal ? `, ${creditScrubTotal} crédit(s) normalisé(s)` : '') +
+      '.'
   );
   if (wrote > 0) {
     console.log(

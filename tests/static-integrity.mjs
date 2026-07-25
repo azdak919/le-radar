@@ -2,7 +2,10 @@
 
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import { dirname, join, relative, resolve } from 'node:path';
+
+const require = createRequire(import.meta.url);
 
 const root = new URL('../', import.meta.url).pathname;
 const htmlFiles = [];
@@ -74,6 +77,30 @@ const pomoHtml = readFileSync(join(root, 'pomo/index.html'), 'utf8');
 assert(pomoHtml.includes('fullscreen-wallpaper-qc.js'), 'pomo charge le QC plein écran');
 assert(pomoSw.includes('fullscreen-wallpaper-qc.js'), 'pomo SW pré-cache le QC plein écran');
 assert(solitaireSw.includes('fullscreen-wallpaper-qc.js'), 'solitaire SW pré-cache le QC plein écran');
+
+// Crédits Commons : pas de gabarit « machine-readable author » en banque
+const commonsCredit = require('../scripts/commons-credit-lib.js');
+assert(commonsCredit?.sanitizeCommonsCredit, 'commons-credit-lib requis');
+assert(
+  commonsCredit.sanitizeCommonsCredit(
+    'No machine-readable author provided. Miguel Andrade assumed (based on copyright claims).'
+  ) === 'Miguel Andrade',
+  'sanitize Commons credit → nom court'
+);
+for (const rel of [
+  'quebec-backgrounds-data.js',
+  'quebec-nations-backgrounds-data.js',
+  'quebec-university-backgrounds-data.js',
+  'quebec-pomo-backgrounds-data.js',
+]) {
+  const txt = readFileSync(join(root, rel), 'utf8');
+  assert(
+    !/No machine-readable author provided/i.test(txt),
+    `${rel}: crédit Commons machine-readable interdit`
+  );
+}
+const bgJs = readFileSync(join(root, 'quebec-backgrounds.js'), 'utf8');
+assert(bgJs.includes('sanitizeBgCredit'), 'mât : sanitize crédit runtime requis');
 
 for (const app of ['pomo', 'solitaire']) {
   const html = readFileSync(join(root, app, 'index.html'), 'utf8');

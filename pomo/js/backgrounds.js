@@ -154,6 +154,29 @@ function safeHttpsUrl(url) {
   }
 }
 
+/** Commons « machine-readable author… » → nom court (voir scripts/commons-credit-lib.js). */
+function _sanitizeCommonsCredit(raw) {
+  if (raw == null) return '';
+  let s = String(raw).replace(/\s+/g, ' ').trim();
+  if (!s) return '';
+  let m = s.match(
+    /no machine-readable author provided\.?\s*(.+?)\s+assumed\s*\(\s*based on copyright claims\s*\)\.?/i
+  );
+  if (m) return m[1].replace(/^[\s,;:.-]+|[\s,;:.-]+$/g, '').trim().slice(0, 80);
+  m = s.match(
+    /aucun auteur lisible par machine n['’]est fourni[.,]?\s*(.+?)\s+l['’]a\s+suppos[ée]/i
+  );
+  if (m) return m[1].replace(/^[\s,;:.-]+|[\s,;:.-]+$/g, '').trim().slice(0, 80);
+  if (/^no machine-readable author provided\.?$/i.test(s)) return 'Wikimedia Commons';
+  if (/^aucun auteur lisible par machine/i.test(s)) return 'Wikimedia Commons';
+  if (s.length > 72) {
+    const head = s.split(/\s*[—–|]\s*|\s*\(/)[0].trim();
+    if (head.length >= 2 && head.length <= 60) return head;
+    return `${s.slice(0, 60).trim()}…`;
+  }
+  return s;
+}
+
 /** Uniform integer in [0, n) using crypto when available. */
 function _randInt(n) {
   if (n <= 1) return 0;
@@ -373,6 +396,8 @@ function _applyBackground(url, creditText, linkUrl, source, title = '', bgMeta =
     // Safer DOM construction (was innerHTML). Prevents any future XSS risk and is more explicit.
     credit.textContent = '';
     const safeLink = safeHttpsUrl(linkUrl);
+    // Commons boilerplate → nom court (aligné mât / commons-credit-lib)
+    const creditLabel = _sanitizeCommonsCredit(creditText);
     if (source === 'Unsplash' || source === 'Pexels') {
       const titlePart = title ? `«${title}» · ` : '';
       credit.appendChild(document.createTextNode(`Photo: ${titlePart}`));
@@ -381,10 +406,10 @@ function _applyBackground(url, creditText, linkUrl, source, title = '', bgMeta =
         a.href = safeLink;
         a.target = '_blank';
         a.rel = 'noopener noreferrer';
-        a.textContent = creditText;
+        a.textContent = creditLabel;
         credit.appendChild(a);
       } else {
-        credit.appendChild(document.createTextNode(creditText));
+        credit.appendChild(document.createTextNode(creditLabel));
       }
       credit.appendChild(document.createTextNode(` · ${source}`));
     } else if (safeLink) {
@@ -396,11 +421,11 @@ function _applyBackground(url, creditText, linkUrl, source, title = '', bgMeta =
       a.href = safeLink;
       a.target = '_blank';
       a.rel = 'noopener noreferrer';
-      a.textContent = creditText;
+      a.textContent = creditLabel;
       credit.appendChild(a);
       credit.appendChild(document.createTextNode(` · ${source}`));
     } else {
-      const label = title ? `«${title}» · ${creditText}` : creditText;
+      const label = title ? `«${title}» · ${creditLabel}` : creditLabel;
       credit.appendChild(document.createTextNode(`${label} · ${source}`));
     }
     showCreditsBar();

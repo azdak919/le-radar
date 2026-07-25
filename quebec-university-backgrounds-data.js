@@ -1,8 +1,17 @@
 /* LE RADAR — banque de photos de fond (généré)
- * Profil : universities (campus universitaires QC)
+ * Profil : universities (campus universitaires QC — mât)
  * Source de vérité : data/quebec-university-backgrounds.json
- * Régénéré après retrait Henry F. Hall Building 10 (façade blanche stérile).
- * campus: true → bot de focale ancre la masse du pavillon.
+ * Régénéré par : node scripts/sync-quebec-backgrounds.js
+ * (ou maintain-quebec-backgrounds.js --update --profile universities)
+ * Ne pas éditer à la main — le bot de session / bank:sync écrase ce fichier.
+ *
+ * Consommateurs : mât page d’accueil seulement — jamais le pomo
+ *
+ * Politique : pas de religieux institutionnel ; nations du Québec OK ;
+ * pas de personnes reconnaissables ; plafond 50 ; ménage 1×/session univ.
+ * Résolution mini ~1400×700 / 1.2 Mpx (anti-grain upscale).
+ * focalY optionnel (0=haut, 1=bas) pour cover crop.
+ * Hard-ban : scripts/quebec-backgrounds-blacklist.js
  */
 const QUEBEC_UNIVERSITY_BACKGROUNDS = [
   {
@@ -80,7 +89,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg",
-    credit: "No machine-readable author provided. Gene.arboit assumed (based on copyright claims).",
+    credit: "Gene.arboit",
     link: "https://commons.wikimedia.org/wiki/File:Roddick_Gates_(McGill_University)_2005-09-02.jpg",
     license: "CC BY-SA 3.0",
     title: "Roddick Gates, McGill University",

@@ -49,6 +49,7 @@ const {
 } = require('./session-freshness-lib');
 const nationsTaxonomy = require('./quebec-nations-taxonomy');
 const { matchHardBanned } = require('./quebec-backgrounds-blacklist');
+const { sanitizeCommonsCredit } = require('./commons-credit-lib');
 
 const ROOT = path.join(__dirname, '..');
 
@@ -537,7 +538,9 @@ async function enrichFromCommons(entry) {
     const ii = page?.imageinfo?.[0];
     if (!ii) return entry;
     const em = ii.extmetadata || {};
-    const artist = stripHtml(em.Artist?.value || entry.credit || '');
+    const artist = sanitizeCommonsCredit(
+      stripHtml(em.Artist?.value || entry.credit || '')
+    );
     const license = stripHtml(em.LicenseShortName?.value || entry.license || '');
     const desc = stripHtml(em.ImageDescription?.value || entry.title || '');
     const categories = stripHtml(em.Categories?.value || '').slice(0, 400);
@@ -547,7 +550,7 @@ async function enrichFromCommons(entry) {
       width: ii.width || entry.width,
       height: ii.height || entry.height,
       aspect: ii.width && ii.height ? Math.round((ii.width / ii.height) * 1000) / 1000 : entry.aspect,
-      credit: artist || entry.credit,
+      credit: artist || sanitizeCommonsCredit(entry.credit) || entry.credit,
       license: license || entry.license,
       title: entry.title || desc.slice(0, 80),
       description: desc.slice(0, 400) || entry.description,
@@ -582,7 +585,9 @@ async function searchCommons(query, limit = 8) {
         const em = ii.extmetadata || {};
         const title = (p.title || '').replace(/^File:/, '').replace(/_/g, ' ');
         const license = stripHtml(em.LicenseShortName?.value || '');
-        const artist = stripHtml(em.Artist?.value || 'Wikimedia Commons');
+        const artist = sanitizeCommonsCredit(
+          stripHtml(em.Artist?.value || 'Wikimedia Commons')
+        );
         const description = stripHtml(em.ImageDescription?.value || '').slice(0, 400);
         const categories = stripHtml(em.Categories?.value || '').slice(0, 400);
         return {
