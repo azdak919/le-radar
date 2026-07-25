@@ -350,6 +350,188 @@
     return photo;
   }
 
+  function season4ToSeason6(s4) {
+    const map = {
+      hiver: 'ukiuq',
+      printemps: 'upingaaq',
+      ete: 'aujaq',
+      automne: 'ukiaq',
+    };
+    return map[s4] || null;
+  }
+
+  /**
+   * Détection textuelle détaillée (bot detect-photo-seasons).
+   * @returns {{
+   *   season: string|null,
+   *   season6: string|null,
+   *   confidence: number,
+   *   source: 'text'|'date'|'topo'|'none',
+   *   reasons: string[]
+   * }}
+   */
+  function detectFromText(item) {
+    const h = haystack(item);
+    const t = (h || '').toLowerCase().normalize('NFD').replace(/\p{M}/gu, '');
+    const reasons = [];
+    let season = null;
+    let confidence = 0;
+    let source = 'none';
+
+    if (!t.trim()) {
+      return { season: null, season6: null, confidence: 0, source, reasons };
+    }
+
+    // Dates fichier (signal moyen)
+    const dm = t.match(/(?:^|[^\d])((?:19|20)\d{2})[-_./](0[1-9]|1[0-2])(?:[-_./](0[1-9]|[12]\d|3[01]))?/);
+    const compact = t.match(/(?:^|[^\d])((?:19|20)\d{2})(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])/);
+    let dateSeason = null;
+    if (dm) {
+      dateSeason = getCurrentSeason4(new Date(2000, parseInt(dm[2], 10) - 1, 15));
+      reasons.push(`date_filename:${dm[2]}`);
+    } else if (compact) {
+      dateSeason = getCurrentSeason4(new Date(2000, parseInt(compact[2], 10) - 1, 15));
+      reasons.push(`date_compact:${compact[2]}`);
+    }
+
+    // Mots-clés (signaux forts)
+    if (
+      /\b(hiver|winter|neige|snow|snowy|glace|ice\b|frozen|givr|blizzard|ski\b|raquette)/i.test(t)
+      || /\b(decembre|janvier|fevrier|december|january|february)\b/i.test(t)
+    ) {
+      if (!/\b(iceout|debacle|break[\s-]?up)\b/i.test(t)) {
+        season = 'hiver';
+        confidence = 0.9;
+        source = 'text';
+        reasons.push('kw_hiver');
+      }
+    } else if (
+      /\b(automne|autumn|fall\b|foliage|erables?|maple.*(red|orange|fall)|feuilles? (rouges?|d.automne)|indian summer)/i.test(t)
+      || /\b(septembre|octobre|novembre|september|october|november)\b/i.test(t)
+    ) {
+      season = 'automne';
+      confidence = 0.88;
+      source = 'text';
+      reasons.push('kw_automne');
+    } else if (
+      /\b(printemps|spring|degel|thaw|bourgeon|tulipe|pre[\s-]?printemps|avril)\b/i.test(t)
+      || (/\b(mars|march)\b/i.test(t) && !/\b(martial)\b/i.test(t))
+    ) {
+      season = 'printemps';
+      confidence = 0.82;
+      source = 'text';
+      reasons.push('kw_printemps');
+    } else if (
+      /\b(ete|summer|estival|canicule|plage|beach|feuillage vert|juillet|aout|june|july|august|juin)\b/i.test(t)
+    ) {
+      season = 'ete';
+      confidence = 0.85;
+      source = 'text';
+      reasons.push('kw_ete');
+    }
+
+    // Toponyme arctique sans été
+    if (
+      !season
+      && /\b(arctic|arctique|nunavik|kangiqsualujjuaq|kuujjuaq|kangirsuk|pingualuit|inuksuk|tundra)\b/i.test(t)
+      && !/\b(ete|summer|aujaq|green|vert|berry|juillet|aout|june|july|august)\b/i.test(t)
+    ) {
+      season = 'hiver';
+      confidence = 0.78;
+      source = 'topo';
+      reasons.push('topo_arctique');
+    }
+
+    // Date si pas de mot-clé fort
+    if (!season && dateSeason) {
+      season = dateSeason;
+      confidence = 0.62;
+      source = 'date';
+      reasons.push('date_only');
+    } else if (season && dateSeason && season === dateSeason) {
+      confidence = Math.min(0.98, confidence + 0.08);
+      reasons.push('date_agrees');
+    } else if (season && dateSeason && season !== dateSeason) {
+      confidence = Math.max(0.45, confidence - 0.12);
+      reasons.push('date_disagrees');
+    }
+
+    // season6
+    let season6 = null;
+    if (/\b(ukiuq)\b/i.test(t)) {
+      season6 = 'ukiuq';
+      reasons.push('kw6_ukiuq');
+    } else if (/\b(upingaksaaq)\b/i.test(t)) season6 = 'upingaksaaq';
+    else if (/\b(upingaaq)\b/i.test(t)) season6 = 'upingaaq';
+    else if (/\b(aujaq)\b/i.test(t)) season6 = 'aujaq';
+    else if (/\b(ukiaqsaaq)\b/i.test(t)) season6 = 'ukiaqsaaq';
+    else if (/\b(ukiaq)\b/i.test(t) && !/\bukiaqsaaq\b/i.test(t)) season6 = 'ukiaq';
+    else if (source === 'topo' || (season === 'hiver' && /\b(arctic|nunavik|tundra|kangiqsualujjuaq)\b/i.test(t))) {
+      season6 = 'ukiuq';
+    } else if (season) {
+      season6 = season4ToSeason6(season);
+      // mois précis pour 6 saisons
+      if (dm || compact) {
+        const mon = dm
+          ? parseInt(dm[2], 10) - 1
+          : parseInt(compact[2], 10) - 1;
+        season6 = getCurrentSeason6(new Date(2000, mon, 15));
+      }
+    }
+
+    return {
+      season,
+      season6,
+      confidence,
+      source: season ? source : 'none',
+      reasons,
+    };
+  }
+
+  /**
+   * Fusionne détection texte + signal visuel optionnel.
+   * @param {object} item
+   * @param {{ season?: string, season6?: string, confidence?: number, source?: string }|null} visual
+   */
+  function mergeDetections(item, visual) {
+    const text = detectFromText(item);
+    if (!visual || !visual.season) return text;
+
+    const vConf = Number(visual.confidence) || 0.55;
+    if (!text.season) {
+      return {
+        season: visual.season,
+        season6: visual.season6 || season4ToSeason6(visual.season),
+        confidence: vConf,
+        source: 'visual',
+        reasons: [...(text.reasons || []), 'visual_only'],
+      };
+    }
+    if (text.season === visual.season) {
+      return {
+        season: text.season,
+        season6: text.season6 || visual.season6 || season4ToSeason6(text.season),
+        confidence: Math.min(0.99, Math.max(text.confidence, vConf) + 0.1),
+        source: 'text+visual',
+        reasons: [...text.reasons, 'visual_agrees'],
+      };
+    }
+    // Désaccord : privilégier le plus confiant
+    if (vConf > text.confidence + 0.08) {
+      return {
+        season: visual.season,
+        season6: visual.season6 || season4ToSeason6(visual.season),
+        confidence: vConf,
+        source: 'visual',
+        reasons: [...text.reasons, 'visual_overrides_text'],
+      };
+    }
+    return {
+      ...text,
+      reasons: [...text.reasons, 'visual_disagrees_kept_text'],
+    };
+  }
+
   return {
     SEASON4,
     SEASON6,
@@ -365,5 +547,8 @@
     enrichPhotoSeasons,
     adjacentSeason4,
     adjacentSeason6,
+    season4ToSeason6,
+    detectFromText,
+    mergeDetections,
   };
 });

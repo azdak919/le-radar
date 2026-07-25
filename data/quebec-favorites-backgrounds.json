@@ -22,7 +22,15 @@
       ],
       "pinnedAt": "2026-07-25T06:57:28.244Z",
       "note": "Validé manuellement — excellent crop arche / trou du Percé",
-      "season": "ete"
+      "season": "ete",
+      "seasonConfidence": 0.93,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:07",
+        "kw_ete",
+        "date_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.650Z"
     },
     {
       "id": "5b2e21ebe06e",
@@ -63,5 +71,6 @@
       "focalY": 0.38
     }
   ],
-  "updated": "2026-07-25T08:02:31.284Z"
+  "updated": "2026-07-25T08:16:57.740Z",
+  "lastSeasonDetect": "2026-07-25T08:16:57.651Z"
 }

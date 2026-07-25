@@ -3,7 +3,7 @@
   "maxBank": 50,
   "lastSessionCleanup": "2026-05-01",
   "lastSessionId": "ete",
-  "updated": "2026-07-25T08:02:31.278Z",
+  "updated": "2026-07-25T08:16:57.735Z",
   "photos": [
     {
       "id": "40581afcfb46",
@@ -30,7 +30,15 @@
       "aspect": 2.273,
       "addedAt": "2026-07-25T05:54:36.306Z",
       "sessionId": "ete",
-      "season": "hiver"
+      "season": "hiver",
+      "seasonConfidence": 0.98,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_compact:01",
+        "kw_hiver",
+        "date_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.642Z"
     },
     {
       "id": "e79be8bf8486",
@@ -44,7 +52,15 @@
       "aspect": 2.276,
       "addedAt": "2026-07-25T05:54:36.306Z",
       "sessionId": "ete",
-      "season": "hiver"
+      "season": "hiver",
+      "seasonConfidence": 0.98,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:01",
+        "kw_hiver",
+        "date_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.642Z"
     },
     {
       "id": "dbbb99342f74",
@@ -71,7 +87,15 @@
       "aspect": 1.987,
       "addedAt": "2026-07-25T05:54:36.306Z",
       "sessionId": "ete",
-      "season": "printemps"
+      "season": "printemps",
+      "seasonConfidence": 0.9,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:03",
+        "kw_printemps",
+        "date_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.642Z"
     },
     {
       "id": "277984cf7cd6",
@@ -111,7 +135,15 @@
       "aspect": 1.61,
       "addedAt": "2026-07-25T05:42:08.994Z",
       "sessionId": "ete",
-      "season": "automne"
+      "season": "automne",
+      "seasonConfidence": 0.96,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:09",
+        "kw_automne",
+        "date_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.643Z"
     },
     {
       "id": "d0b225c2bd71",
@@ -125,7 +157,15 @@
       "aspect": 1.768,
       "addedAt": "2026-07-25T05:42:08.994Z",
       "sessionId": "ete",
-      "season": "automne"
+      "season": "automne",
+      "seasonConfidence": 0.96,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:09",
+        "kw_automne",
+        "date_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.643Z"
     },
     {
       "id": "fec45852f13d",
@@ -139,7 +179,15 @@
       "aspect": 2.245,
       "addedAt": "2026-07-25T05:42:08.994Z",
       "sessionId": "ete",
-      "season": "automne"
+      "season": "automne",
+      "seasonConfidence": 0.96,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:09",
+        "kw_automne",
+        "date_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.643Z"
     },
     {
       "id": "3978243a4083",
@@ -153,7 +201,15 @@
       "aspect": 1.333,
       "addedAt": "2026-07-25T05:42:08.994Z",
       "sessionId": "ete",
-      "season": "automne"
+      "season": "automne",
+      "seasonConfidence": 0.96,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:09",
+        "kw_automne",
+        "date_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.643Z"
     },
     {
       "id": "e03350eab2f0",
@@ -180,7 +236,15 @@
       "aspect": 1.934,
       "addedAt": "2026-07-25T05:42:08.994Z",
       "sessionId": "ete",
-      "season": "printemps"
+      "season": "printemps",
+      "seasonConfidence": 0.9,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:05",
+        "kw_printemps",
+        "date_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.643Z"
     },
     {
       "id": "7128480286c6",
@@ -208,7 +272,13 @@
       "aspect": 1.777,
       "addedAt": "2026-07-25T05:43:24.352Z",
       "sessionId": "ete",
-      "season": "hiver"
+      "season": "hiver",
+      "seasonConfidence": 0.9,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "kw_hiver"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.643Z"
     },
     {
       "id": "6f61e48fec1d",
@@ -303,7 +373,13 @@
       "addedAt": "2026-07-25T05:42:08.994Z",
       "sessionId": "ete",
       "focalY": 0.4,
-      "season": "ete"
+      "season": "ete",
+      "seasonConfidence": 0.85,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "kw_ete"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.643Z"
     },
     {
       "id": "e1de50e914e7",
@@ -389,7 +465,15 @@
       "addedAt": "2026-07-25T05:37:28.506Z",
       "sessionId": "ete",
       "focalY": 0.66,
-      "season": "ete"
+      "season": "ete",
+      "seasonConfidence": 0.93,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:07",
+        "kw_ete",
+        "date_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.643Z"
     },
     {
       "id": "917da30c4514",
@@ -432,7 +516,15 @@
       "id": "eb8e12dadf0c",
       "addedAt": "2026-07-25T06:16:44.847Z",
       "sessionId": "ete",
-      "season": "automne"
+      "season": "automne",
+      "seasonConfidence": 0.96,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_compact:10",
+        "kw_automne",
+        "date_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.643Z"
     },
     {
       "url": "https://upload.wikimedia.org/wikipedia/commons/d/db/2016-08_Saguenay_river_01.jpg",
@@ -447,7 +539,15 @@
       "id": "c0b058b7e4ef",
       "addedAt": "2026-07-25T06:16:44.847Z",
       "sessionId": "ete",
-      "season": "ete"
+      "season": "ete",
+      "seasonConfidence": 0.93,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:08",
+        "kw_ete",
+        "date_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.643Z"
     },
     {
       "url": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Before-sunrise-perse-rock.jpg",
@@ -476,7 +576,15 @@
       "id": "6a8b5f2a19e4",
       "addedAt": "2026-07-25T06:16:44.847Z",
       "sessionId": "ete",
-      "season": "automne"
+      "season": "automne",
+      "seasonConfidence": 0.96,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:10",
+        "kw_automne",
+        "date_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.643Z"
     },
     {
       "url": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Champ_sur_l%27%C3%AEle_d%27Orl%C3%A9ans.jpg",
@@ -493,5 +601,6 @@
       "sessionId": "ete"
     }
   ],
-  "profile": "masthead"
+  "profile": "masthead",
+  "lastSeasonDetect": "2026-07-25T08:16:57.644Z"
 }

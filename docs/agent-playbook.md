@@ -53,11 +53,19 @@ blacklist    →  scripts/quebec-backgrounds-blacklist.js  (ne revient jamais)
 - **Hard-ban** : URL / File Commons / id en priorité ; raison snake_case loggable.
 - Règles paysage mât/pomo (pas universities/nations) : religieux ; **town hall / hôtel de ville / mairie** ; scènes bad (nuit, underbridge, clôture, aéroport/hangar/industriel…).
 - Nations : spiritualité autochtone **OK** (hors filtre religieux institutionnel).
-- **Saisons** (`scripts/season-lib.js`) : rotation client filtre la saison **en cours**
+- **Saisons** (`scripts/season-lib.js` + bot `detect-photo-seasons`)
   - mât / pomo / campus → **4 saisons** météo (`season`: printemps|ete|automne|hiver)
   - nations / Inuit → **6 saisons** Nunavik éducatif (`season6`: ukiuq…ukiaq)
-  - Tags inférés au `bank:sync` / maintain ; fallback adjacent si trop peu d’images.
-  - Neige arctique en juillet = hors saison (ex. Kangiqsualujjuaq) — ne pas « forcer » all pool.
+  - **Bot** (source de vérité tags) :
+    ```bash
+    npm run detect:seasons              # dry-run
+    npm run detect:seasons:update       # JSON + bank:sync (texte, offline)
+    npm run detect:seasons:visual       # + thumbs Commons / Pillow (réseau)
+    ```
+    Champs : `season`, `season6`, `seasonConfidence`, `seasonSource` (`text`|`date`|`topo`|`visual`|`manual`).
+    `seasonSource: manual` n’est **jamais** écrasé.
+  - **Client** : filtre saison en cours (fallback adjacent) — ne remplace pas le bot.
+  - Neige arctique en juillet = hors saison — ne pas forcer le pool complet.
 
 ### Blacklist — ajouter une entrée
 
@@ -81,6 +89,8 @@ Puis : `npm run bank:sync` → vérifier `npm run bank:check` → si `*-data.js`
 npm run check                 # syntaxe + unit (dont intégrité banques)
 npm run bank:check            # JSON↔JS + aucun hard-ban résiduel (offline)
 npm run bank:sync             # régénère les JS depuis les JSON + purge ban
+npm run detect:seasons        # bot saison (dry-run)
+npm run detect:seasons:update # bot saison → JSON + JS
 
 npm run maintain:masthead     # paysages mât (réseau Commons si ménage)
 npm run maintain:pomo
