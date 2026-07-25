@@ -168,33 +168,22 @@ body {
 }
 
 /*
- * Mobile : crédit minimal élégant — une ligne discrète en bas au centre.
- * Format court : « Auteur · licence » (titre complet en title=).
+ * Mobile : même ligne discrète qu’en bureau — bas à droite, une seule ligne.
+ * Format court : « Auteur » seul (titre + licence restent en title=), faute de
+ * place pour davantage à cette largeur.
  */
 @media (max-width: 720px) {
   .bg-photo-credit {
-    left: 50%;
-    right: auto;
-    bottom: max(6px, env(safe-area-inset-bottom, 0px));
-    transform: translateX(-50%);
-    width: auto;
-    max-width: min(88vw, calc(100% - 20px));
-    padding: 3px 11px;
-    font-size: 8.5px;
-    font-weight: 500;
-    letter-spacing: 0.04em;
+    /* Placement hérité du bloc de base (absolu, bas à droite, nowrap+ellipsis) :
+       on n’ajuste que ce qui doit l’être à cette largeur. */
+    bottom: max(5px, env(safe-area-inset-bottom, 0px));
+    font-size: 9px;
+    letter-spacing: 0.02em;
     line-height: 1.3;
-    text-align: center;
-    color: rgba(255, 255, 255, 0.72);
+    color: rgba(255, 255, 255, 0.74);
     text-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.75),
-      0 0 10px rgba(0, 0, 0, 0.35);
-    /* Pastille légère pour lisibilité sans « plaque » */
-    background: rgba(0, 0, 0, 0.28);
-    border-radius: 999px;
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    pointer-events: auto; /* lien auteur tappable */
+      0 1px 2px rgba(0, 0, 0, 0.7),
+      0 0 8px rgba(0, 0, 0, 0.3);
   }
   .bg-photo-credit__full { display: none; }
   .bg-photo-credit__short {
@@ -206,6 +195,8 @@ body {
   .bg-photo-credit a {
     text-decoration: none;
     text-decoration-color: transparent;
+    /* Un peu de surface de tap sans agrandir la ligne. */
+    padding: 2px 0;
   }
   .bg-photo-credit a:active,
   .bg-photo-credit a:focus-visible {
@@ -216,11 +207,11 @@ body {
   #bg-photo-layer.loaded ~ .bg-photo-credit { opacity: 0.9; }
 
   /*
-   * Photo chargée : réserver une bande basse pour la pastille crédit
+   * Photo chargée : réserver une bande basse pour la ligne de crédit
    * afin qu’elle ne clippe pas le slogan (wordmark-full).
    */
   .masthead:has(#bg-photo-layer.loaded) .masthead-inner {
-    padding-bottom: 2rem; /* ~32px : pastille + air */
+    padding-bottom: 0.75rem; /* ~12px : hauteur de la ligne + air */
   }
   .masthead:has(#bg-photo-layer.loaded) .masthead-brand {
     padding-bottom: 0.15rem;
@@ -232,12 +223,11 @@ body {
 }
 @media (max-width: 360px) {
   .bg-photo-credit {
-    font-size: 8px;
-    padding: 2px 8px;
+    font-size: 8.5px;
     max-width: calc(100% - 16px);
   }
   .masthead:has(#bg-photo-layer.loaded) .masthead-inner {
-    padding-bottom: 1.85rem;
+    padding-bottom: 0.7rem;
   }
 }
 @media (prefers-reduced-motion: reduce) {

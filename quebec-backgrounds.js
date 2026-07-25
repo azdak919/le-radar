@@ -1927,7 +1927,8 @@
     }
     if (license) full.appendChild(document.createTextNode(` (${license})`));
 
-    // Mobile : ligne minimale — auteur · licence (lien si possible)
+    // Mobile : ligne minimale — auteur seul (lien si possible).
+    // Titre et licence restent dans le title= faute de place à cette largeur.
     const short = document.createElement("span");
     short.className = "bg-photo-credit__short";
     short.setAttribute("translate", "no");
@@ -1944,9 +1945,6 @@
       short.appendChild(a);
     } else {
       short.appendChild(document.createTextNode(shortLabel));
-    }
-    if (license) {
-      short.appendChild(document.createTextNode(` · ${license}`));
     }
     short.title = [title, credit, license].filter(Boolean).join(" — ");
 

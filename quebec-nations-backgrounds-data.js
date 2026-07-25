@@ -140,6 +140,7 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Mercier%20Bridge%2C%20Lasalle%20side.JPG",
     license: "CC BY 3.0",
     title: "Mercier Bridge, Lasalle side",
+    focalY: 0.19,
     width: 2816,
     height: 2112,
     nationId: "mohawk",
