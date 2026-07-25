@@ -94,11 +94,27 @@
       width: 44px;
       height: 44px;
       border-radius: 12px;
-      display: block;
-      object-fit: cover;
+      display: inline-grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at center, #CF7EC1 0 3px, transparent 3.5px),
+        radial-gradient(circle at center, transparent 0 10px, rgba(207, 126, 193, 0.72) 10.5px 11.5px, transparent 12px),
+        radial-gradient(circle at center, transparent 0 17px, rgba(93, 155, 224, 0.5) 17.5px 18.5px, transparent 19px),
+        #121319;
       box-shadow:
         0 0 0 1px rgba(255, 255, 255, 0.1),
         0 8px 22px rgba(108, 33, 99, 0.35);
+    }
+    .brand-mark::before {
+      content: "";
+      width: 22px;
+      height: 1px;
+      position: absolute;
+      background: linear-gradient(90deg, transparent, rgba(241, 242, 244, 0.85));
+      transform: rotate(-38deg);
+      transform-origin: right center;
     }
     .brand-name {
       font-family: var(--serif);
@@ -454,7 +470,7 @@
   <div class="shell">
     <header>
       <a class="brand" href="/" rel="home">
-        <img class="brand-mark" src="assets/icon.svg" width="44" height="44" alt="" />
+        <span class="brand-mark" aria-hidden="true"></span>
         <span class="brand-name notranslate" translate="no">LE&nbsp;RADAR<span class="tld">.ca</span></span>
       </a>
     </header>
@@ -519,9 +535,9 @@
         >licence publique générale GNU, version&nbsp;2</a>.
       </p>
       <div class="site-foot__credit">
-        <!-- Une seule ligne contact : Azdak + ✉️, les deux mailto (webmestre) -->
+        <!-- Une seule ligne contact : Azdak + ✉️, les deux liens mailto. -->
         <p class="site-foot__author">
-          Conçu avec ♡ par le webmestre
+          Conçu avec ♡ par
           <a
             href="mailto:azdak-qc@proton.me"
             class="site-foot__author-link"
@@ -532,7 +548,7 @@
             href="mailto:azdak-qc@proton.me"
             class="site-foot__author-mail"
             title="azdak-qc@proton.me"
-            aria-label="Écrire au webmestre Azdak — azdak-qc@proton.me"
+            aria-label="Écrire à Azdak — azdak-qc@proton.me"
           >✉️</a>
         </p>
         <p class="site-foot__legal">
@@ -547,10 +563,19 @@
 (function () {
   'use strict';
 
+  // Une visite directe de la page (ou de l'easter egg) prépare aussi son
+  // cache, sans dépendre d'un passage préalable par l'accueil.
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').catch(function () {
+      // Hors ligne dès la première visite : la page reste tout de même utile.
+    });
+  }
+
   /**
    * Catalogue aligné sur translate-menu.js / translate.js (sans original / fr / en).
    * phrase = « Maintenance en cours » dans la langue (jamais FR/EN en double).
-   * Autochtones sans moteur : phrase null (nom seul dans chips + barre jeu).
+   * Une langue n'apparaît que si cette phrase a une traduction vérifiée.
+   * On ne substitue jamais le français ni une traduction inventée.
    */
   const RTL = new Set(['ar', 'fa', 'he', 'ur']);
 
@@ -599,7 +624,6 @@
     zh: '维护中',
     'zh-tw': '維護中',
   };
-
   /** Aligné translate-menu.js OTHER + INDIGENOUS (hors fr/en/original). */
   const CATALOG = [
     // Autochtones (catalogue + indigenous-mt)
@@ -655,9 +679,10 @@
     { id: 'yo', name: 'Yorùbá', nameFr: 'Yoruba', group: 'other', lang: 'yo' },
     { id: 'zh', name: '简体中文', nameFr: 'Chinois', group: 'other', lang: 'zh-CN' },
     { id: 'zh-tw', name: '繁體中文', nameFr: 'Chinois traditionnel', group: 'other', lang: 'zh-TW' },
-  ].map((L) => ({
+  ].filter((L) => L.group !== 'indigenous' || MAINT[L.id]).map((L) => ({
     ...L,
-    phrase: MAINT[L.id] || null,
+    phrase: MAINT[L.id],
+    phraseLang: L.lang || L.id,
     dir: L.dir || (RTL.has(L.id) ? 'rtl' : 'ltr'),
   }));
 
@@ -705,34 +730,20 @@
     const p = LANGS[i];
     if (!p) return;
     const apply = () => {
-      const hasPhrase = Boolean(p.phrase);
-      if (hasPhrase) {
-        phraseEl.textContent = p.phrase;
-        phraseEl.lang = p.lang || p.id || 'und';
-        phraseEl.dir = p.dir || 'ltr';
-        phraseEl.classList.remove('is-empty');
-      } else {
-        // Pas de faux FR pour les langues sans trad fiable
-        phraseEl.textContent = '';
-        phraseEl.removeAttribute('lang');
-        phraseEl.dir = 'ltr';
-        phraseEl.classList.add('is-empty');
-      }
+      phraseEl.textContent = p.phrase;
+      phraseEl.lang = p.phraseLang || p.lang || p.id || 'und';
+      phraseEl.dir = p.dir || 'ltr';
+      phraseEl.classList.remove('is-empty');
       chipsEl.querySelectorAll('.lang-chip').forEach((c) => {
         c.classList.toggle('is-active', c.dataset.i === String(i));
       });
       phraseEl.classList.remove('is-out');
-      if (hasPhrase) phraseEl.classList.add('is-in');
-      else phraseEl.classList.remove('is-in');
+      phraseEl.classList.add('is-in');
       if (!fromClick) scrollChipIntoView(i);
     };
-    if (reduceMotion || !p.phrase) {
-      apply();
-      return;
-    }
-    phraseEl.classList.remove('is-in');
-    phraseEl.classList.add('is-out');
-    setTimeout(apply, 380);
+    // Change the wording immediately: a maintenance page must never appear to
+    // have lost its status while a language chip is being selected.
+    apply();
   }
 
   function startRotation() {
@@ -775,15 +786,21 @@
           nameFr: lang.nameFr || name,
           group: 'indigenous',
           lang: lang.goog || id,
-          phrase: MAINT[id] || null,
+          phrase: MAINT[id],
+          phraseLang: lang.goog || id,
           dir: 'ltr',
         };
+        if (!entry.phrase) {
+          // Les langues sans traduction de cette phrase ne figurent pas ici.
+          continue;
+        }
         if (byId.has(id)) {
           Object.assign(byId.get(id), {
             name: entry.name,
             nameFr: entry.nameFr,
             lang: entry.lang,
             phrase: byId.get(id).phrase || entry.phrase,
+            phraseLang: byId.get(id).phraseLang || entry.phraseLang,
           });
         } else {
           byId.set(id, entry);
@@ -817,6 +834,7 @@
   const forcePreview =
     params.has('preview') ||
     params.has('stay') ||
+    params.has('easter-egg') ||
     params.get('demo') === '1' ||
     params.get('offline') === '1';
   const stayHere = forcePreview || (isLocalHost && !forceLive);
@@ -1201,6 +1219,7 @@
           coinsRun += 1;
           coinsTotal += 1;
           score += 25;
+          playSfx('coin');
           coinsEl.textContent = String(coinsRun);
           scoreEl.textContent = String(score);
           try {
