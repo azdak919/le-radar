@@ -53,6 +53,11 @@ blacklist    →  scripts/quebec-backgrounds-blacklist.js  (ne revient jamais)
 - **Hard-ban** : URL / File Commons / id en priorité ; raison snake_case loggable.
 - Règles paysage mât/pomo (pas universities/nations) : religieux ; **town hall / hôtel de ville / mairie** ; scènes bad (nuit, underbridge, clôture, aéroport/hangar/industriel…).
 - Nations : spiritualité autochtone **OK** (hors filtre religieux institutionnel).
+- **Saisons** (`scripts/season-lib.js`) : rotation client filtre la saison **en cours**
+  - mât / pomo / campus → **4 saisons** météo (`season`: printemps|ete|automne|hiver)
+  - nations / Inuit → **6 saisons** Nunavik éducatif (`season6`: ukiuq…ukiaq)
+  - Tags inférés au `bank:sync` / maintain ; fallback adjacent si trop peu d’images.
+  - Neige arctique en juillet = hors saison (ex. Kangiqsualujjuaq) — ne pas « forcer » all pool.
 
 ### Blacklist — ajouter une entrée
 

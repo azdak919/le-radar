@@ -27,6 +27,7 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Côteau-du-Lac-Vue_du_fleuve_St-Laurent_à_partir_du_qu20250104(1).jpg",
     license: "CC0",
     title: "Fleuve Saint-Laurent, Coteau-du-Lac (Soulanges)",
+    season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/6/6b/C%C3%B4teau-du-Lac-Canal_Soulanges_%28vue_vers_l%27est_%C3%A0_proximit%C3%A9_de_la_jet%C3%A9e_%28rue_Principale%29%29-2025-01-04%281%29.jpg",
@@ -34,6 +35,7 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Côteau-du-Lac-Canal_Soulanges_(vue_vers_l'est_à_proximité_de_la_jetée_(rue_Principale))-2025-01-04(1).jpg",
     license: "CC0",
     title: "Canal de Soulanges, Coteau-du-Lac",
+    season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Pont_de_l-Ile-aux-Tourtes_04.jpg",
@@ -48,6 +50,7 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Deux-Montagnes(QC)-Parc_des_bénévoles-2022-03-15.jpg",
     license: "CC BY-SA 4.0",
     title: "Deux-Montagnes, parc des bénévoles (rive nautique)",
+    season: "printemps",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b7/Lac_des_Deux_Montagnes_03.JPG",
@@ -69,6 +72,7 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Hudson_(Québec)-Belvédère-Lac_des_deux_Montagnes-2022-09-22.jpg",
     license: "CC BY-SA 4.0",
     title: "Hudson, Lac des Deux-Montagnes",
+    season: "automne",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/29/Rigaud_%28Qu%C3%A9bec%29-rivi%C3%A8re_Rigaud_%28vue_vers_l%27amont%29-2022-09-22.jpg",
@@ -76,6 +80,7 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Rigaud_(Québec)-rivière_Rigaud_(vue_vers_l'amont)-2022-09-22.jpg",
     license: "CC BY-SA 4.0",
     title: "Rigaud, Vaudreuil-Soulanges",
+    season: "automne",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/4/4e/Rigaud_%28Qu%C3%A9bec%29-Rivi%C3%A8re_Rigaud-2022-09-22.jpg",
@@ -83,6 +88,7 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Rigaud_(Québec)-Rivière_Rigaud-2022-09-22.jpg",
     license: "CC BY-SA 4.0",
     title: "Rivière Rigaud, Vaudreuil-Soulanges",
+    season: "automne",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/6/6e/Hudson_%28Qu%C3%A9bec%29-Lac_Deux-Montagnes-2022-09-22.jpg",
@@ -90,6 +96,7 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Hudson_(Québec)-Lac_Deux-Montagnes-2022-09-22.jpg",
     license: "CC BY-SA 4.0",
     title: "Hudson, Vaudreuil-Soulanges",
+    season: "automne",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Lac_des_Deux-Montagnes_%28Pierrefonds%29_%288514398500%29.jpg",
@@ -104,6 +111,7 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Deux-Montagnes-Belvédère_municipal_en_bordure_du_Lac_des_Deux-Montagnes-2022-05-19.jpg",
     license: "CC BY-SA 4.0",
     title: "Belvédère, Lac des Deux-Montagnes",
+    season: "printemps",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/fe/Lac_des_Deux_Montagnes_07.JPG",
@@ -119,6 +127,7 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Pingualuit_aerial_2007_(cropped).jpg",
     license: "Public domain",
     title: "Cratère Pingualuit, Nunavik",
+    season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b3/Pessamit%2C_Quebec.jpg",
@@ -171,6 +180,7 @@ const QUEBEC_BACKGROUNDS = [
     license: "CC BY-SA 3.0",
     title: "Québec depuis Lévis, juin 2009",
     focalY: 0.4,
+    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/18/Panorama_of_Quebec_City.jpg",
@@ -217,6 +227,7 @@ const QUEBEC_BACKGROUNDS = [
     license: "CC BY-SA 4.0",
     title: "Rocher Percé – Percé, QC – (2018-07-19)",
     focalY: 0.66,
+    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Rivi%C3%A8re_Saint-Fran%C3%A7ois_2025.jpg",
@@ -238,6 +249,7 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:20181012_-_01_-_Montreal_panorama_(downtown).jpg",
     license: "CC BY-SA 4.0",
     title: "Centre-ville de Montréal",
+    season: "automne",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/d/db/2016-08_Saguenay_river_01.jpg",
@@ -245,6 +257,7 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:2016-08_Saguenay_river_01.jpg",
     license: "CC BY-SA 4.0",
     title: "Rivière Saguenay",
+    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Before-sunrise-perse-rock.jpg",
@@ -259,6 +272,7 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:2016-10_Maple_leaves_autumn_Quebec_01.jpg",
     license: "CC BY-SA 4.0",
     title: "Érable à l'automne",
+    season: "automne",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/5/5f/Champ_sur_l%27%C3%AEle_d%27Orl%C3%A9ans.jpg",

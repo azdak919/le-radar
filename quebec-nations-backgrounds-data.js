@@ -31,6 +31,8 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     title: "Wôlinak",
     nationId: "abenaki",
     nation: "Abénaquis (W8banaki)",
+    season: "ete",
+    season6: "aujaq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/d/d1/Lac_F%C3%A9lix_Landscape_-_panoramio.jpg",
@@ -40,6 +42,8 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     title: "Lac Félix Landscape - panoramio",
     nationId: "inuit",
     nation: "Inuit (Nunavik)",
+    season: "hiver",
+    season6: "ukiuq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/c/ca/Lac_Madon_matin_d%27avril_2018.jpg",
@@ -49,6 +53,8 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     title: "Lac Madon matin d'avril 2018",
     nationId: "atikamekw",
     nation: "Atikamekw",
+    season: "hiver",
+    season6: "ukiuq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/0/02/Ouj%C3%A9-Bougoumou_en_ao%C3%BBt_2014_01.jpg",
@@ -58,6 +64,8 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     title: "Oujé-Bougoumou en août 2014 01 — Aanischaaukamikw",
     nationId: "cree",
     nation: "Cris (Eeyou / Eenou)",
+    season: "ete",
+    season6: "ukiaqsaaq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Fog_Gatineau.jpg",
@@ -103,6 +111,8 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     title: "Fort Listuguj 2",
     nationId: "migmaq",
     nation: "Mi'gmaq",
+    season: "ete",
+    season6: "ukiaqsaaq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/6/68/Mercier_Bridge%2C_Lasalle_side.JPG",
@@ -139,6 +149,8 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     title: "Fort Listuguj 1",
     nationId: "migmaq",
     nation: "Mi'gmaq",
+    season: "ete",
+    season6: "ukiaqsaaq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/a/a8/Gesgapegiag.jpg",
@@ -175,6 +187,8 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     title: "Pingualuit aerial 2007",
     nationId: "inuit",
     nation: "Inuit (Nunavik)",
+    season: "hiver",
+    season6: "ukiuq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/4/4b/Arctic_Sunset_Kangiqsualujjuaq.JPG",
@@ -184,6 +198,8 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     title: "Arctic Sunset Kangiqsualujjuaq",
     nationId: "inuit",
     nation: "Inuit (Nunavik)",
+    season: "hiver",
+    season6: "ukiuq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/4/44/Manawan_e_tipiskak.jpg",
@@ -212,6 +228,8 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     focalY: 0.32,
     nationId: "inuit",
     nation: "Inuit (Nunavik)",
+    season: "hiver",
+    season6: "ukiuq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/6/67/ManawanOct2016_12.jpg",
@@ -221,6 +239,8 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     title: "ManawanOct2016 12",
     nationId: "atikamekw",
     nation: "Atikamekw",
+    season: "hiver",
+    season6: "ukiuq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/1c/Notcimik_e_pipok_5_-_banner_crop.jpg",
@@ -239,6 +259,8 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     title: "Cratère Pingualuit, Nunavik",
     nationId: "inuit",
     nation: "Inuit (Nunavik)",
+    season: "hiver",
+    season6: "ukiuq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b3/Pessamit%2C_Quebec.jpg",

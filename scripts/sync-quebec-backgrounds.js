@@ -129,6 +129,9 @@ function photoToJsObject(p, bank) {
     if (p.nationId) lines.push(`    nationId: "${esc(p.nationId)}"`);
     if (p.nation) lines.push(`    nation: "${esc(p.nation)}"`);
   }
+  // Saisons pour rotation client (4 = QC ; 6 = nations/Inuit)
+  if (p.season) lines.push(`    season: "${esc(p.season)}"`);
+  if (p.season6) lines.push(`    season6: "${esc(p.season6)}"`);
   if (bank.kind === 'favorites' || p.permanent === true) {
     lines.push('    permanent: true');
   }
