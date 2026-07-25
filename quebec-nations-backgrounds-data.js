@@ -1,7 +1,7 @@
 /* LE RADAR — banque de photos de fond (généré)
  * Profil : nations (Premières Nations & Inuit du Québec)
  * Source de vérité : data/quebec-nations-backgrounds.json
- * Oujé-Bougoumou 03 (clôture grillagée) remplacé par 01 (musée Aanischaaukamikw).
+ * Nunavik Tuchscherer : focalY 0.32 (horizon / ciel dans le bandeau).
  */
 const QUEBEC_NATIONS_BACKGROUNDS = [
   {
@@ -57,6 +57,7 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     title: "Nunavik landscape - panoramio",
     nationId: "inuit",
     nation: "Inuit (Nunavik)",
+    focalY: 0.32,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/6/67/ManawanOct2016_12.jpg",

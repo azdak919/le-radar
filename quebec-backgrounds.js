@@ -584,6 +584,14 @@
       }
     }
     const hasHorizon = horizonY >= 0 && horizonStrength > 0.035;
+    // Horizon « paysage » fort en haut d’image (ciel→toundra/lac) — même
+    // si le bandeau n’est pas ultra-fin (visibleFrac ~0.45–0.5).
+    // Sans ça, la texture des rochers au premier plan gagne le score edge
+    // et le crop tombe trop bas (ex. Nunavik Tuchscherer).
+    const strongHighHorizon =
+      hasHorizon &&
+      horizonStrength > 0.07 &&
+      horizonY / sampleH < 0.42;
 
     const win = Math.max(3, Math.round(sampleH * visibleFrac));
     const maxY0 = Math.max(0, sampleH - win);
@@ -593,6 +601,7 @@
     // Bandeau très large (desktop) : l’horizon doit dominer le score,
     // sinon on colle en haut (ciel seul) ou au centre (vase seule).
     const thinBanner = visibleFrac < 0.42;
+    const preferHorizonAnchor = thinBanner || strongHighHorizon;
 
     for (let y0 = 0; y0 <= maxY0; y0++) {
       let edgeSum = 0;
@@ -683,19 +692,33 @@
         hasStrongArch && archPeakY >= y0 && archPeakY < y0 + win ? 0.55 : 0;
       const archBonus = archMid * 14 + archIn * 4 + peakCovered;
 
-      // Horizon / skyline dans le bandeau, idéalement ~22–45 % du haut.
+      // Horizon / skyline dans le bandeau, idéalement ~22–40 % du haut.
       // Campus : fortement amorti — un « horizon » urbain (toit / ciel)
       // ne doit pas coller le crop en haut (perd le pavillon UQAM).
       let horizonBonus = 0;
       if (hasHorizon && horizonY >= y0 && horizonY < y0 + win) {
         const relH = (horizonY - y0) / win;
-        const ideal = 0.32;
+        const ideal = strongHighHorizon ? 0.28 : 0.32;
         const dist = Math.abs(relH - ideal);
         horizonBonus = 0.85 * Math.max(0, 1 - dist / 0.45);
-        if (thinBanner) horizonBonus *= 1.55;
+        if (preferHorizonAnchor) horizonBonus *= 1.55;
+        if (strongHighHorizon) horizonBonus *= 1.25;
         if (campusScene) horizonBonus *= 0.2;
       } else if (hasHorizon && !campusScene) {
-        horizonBonus = thinBanner ? -0.7 : -0.35;
+        horizonBonus = preferHorizonAnchor ? -0.7 : -0.35;
+      }
+
+      // Pénalité premier plan rocailleux si on a un bel horizon haut
+      // (évite de maximiser les edges des rochers au bas).
+      let foregroundRockPenalty = 0;
+      if (strongHighHorizon && !campusScene) {
+        const botN = Math.max(1, Math.floor(win * 0.35));
+        let botEdge = 0;
+        for (let y = y0 + win - botN; y < y0 + win; y++) botEdge += rowEdge[y];
+        botEdge /= botN;
+        if (botEdge > 0.035 && skyAvg < 0.15) {
+          foregroundRockPenalty = (botEdge - 0.035) * 4;
+        }
       }
 
       // Campus : densite du pavillon + COM de la masse dans le bandeau.
@@ -720,7 +743,7 @@
       }
 
       const score =
-        edgeAvg * (campusScene ? 1.1 : 1.6) +
+        edgeAvg * (campusScene ? 1.1 : strongHighHorizon ? 1.15 : 1.6) +
         satAvg * 0.55 +
         vGradAvg * (campusScene ? 1.4 : 2.2) +
         skyBonus +
@@ -730,7 +753,8 @@
         campusBonus -
         wordmarkPenalty -
         flatPenalty -
-        mudflatPenalty;
+        mudflatPenalty -
+        foregroundRockPenalty;
 
       if (score > bestScore) {
         bestScore = score;
@@ -740,15 +764,15 @@
 
     // Ancrage final :
     //  - campus : masse du pavillon au milieu du bandeau (voir le volume UQAM) ;
-    //  - paysage + bandeau fin : horizon / skyline dans le tiers haut ;
+    //  - paysage + horizon fort / bandeau fin : skyline dans le tiers haut ;
     //  - arche forte : landmark centré.
     if (campusScene && buildWeighted > 0.02) {
       // ~0.5 = façade centrale ; un peu plus bas si COM déjà bas (rue).
       const idealRel = buildCOM / sampleH > 0.62 ? 0.48 : 0.52;
       const anchored = Math.round(buildCOM - idealRel * win);
       bestY0 = Math.max(0, Math.min(maxY0, anchored));
-    } else if (hasHorizon && thinBanner && !hasStrongArch) {
-      const idealRel = 0.3;
+    } else if (hasHorizon && preferHorizonAnchor && !hasStrongArch) {
+      const idealRel = strongHighHorizon ? 0.28 : 0.3;
       const anchored = Math.round(horizonY - idealRel * win);
       bestY0 = Math.max(0, Math.min(maxY0, anchored));
     } else if (hasStrongArch) {
