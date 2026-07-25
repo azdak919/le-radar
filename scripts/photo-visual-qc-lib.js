@@ -15,6 +15,10 @@
 
 'use strict';
 
+const {
+  RELIGIOUS_SUBJECT_RE,
+} = require('./religious-facade-lib');
+
 /** Aligné sur article-image-lib (vedette). */
 const LEAD_MIN_WIDTH = 720;
 const LEAD_MIN_HEIGHT = 405;
@@ -38,9 +42,8 @@ const INDOOR_OBJECT_RE =
 const BARREN_SCENE_RE =
   /\b(?:ultramafic|barren|tundra|wasteland|rocky plain|quarry|carri[eè]re|mudflat|batture|mar[eé]e basse)\b/i;
 
-/** Soft only — ne jamais hard-reject (articles religion / patrimoine). */
-const RELIGIOUS_SUBJECT_RE =
-  /(?:[eé]glise|eglise|church|cathedral|cath[eé]drale|basilique|basilica|chapelle|chapel|coll[eé]giale|collegiale|crucifix|\bcroix\b|crosses?\b|mosqu[eé]e|mosque|synagogue|monast[eè]re|monastery|couvent|convent|calvaire|cimeti[eè]re|cemetery|minaret|clocher|steeple|bell[\s-]?tower|paroisse|parish|presbyt[eè]re|\bj[eé]sus\b|\bchrist\b|casault|casseault|louis[\s_-]?jacques[\s_-]?casault)/i;
+// RELIGIOUS_SUBJECT_RE : source de vérité scripts/religious-facade-lib.js
+// Soft only ici (articles) — hard pour wallpaper via bank-hard / maintain.
 
 const ARCHIVAL_FLAT_RE =
   /\b(?:engraving|gravure|lithograph|etching|postcard|carte postale|glass plate|plaque de verre|s[eé]pia|monochrome|black[\s-]?and[\s-]?white|microfilm)\b/i;

@@ -954,6 +954,9 @@
    *   2) pierre grise / multi-tours + croix latines — ex. pavillon Casault ULaval
    * Évite les façades de campus à fenêtres (variance haute / grille dense).
    * goldenSilhouette exempté en amont (heure dorée / skyline).
+   *
+   * SYNC-ID: religious-spire-v1 — scripts/religious-facade-lib.js SPIRE_THRESHOLDS
+   * et audit-quebec-backgrounds.py (religious_architecture).
    */
   function _religiousSpireMetrics(L, sampleW, sampleH) {
     const bandH = Math.max(12, Math.floor(sampleH * 0.3));
@@ -961,7 +964,7 @@
     const bh = bandH;
     const hits = [];
     const yMax = Math.max(3, Math.floor(bh * 0.55));
-    // Ciel : seuil un peu plus bas pour ciels gris (Casault / hiver)
+    // Ciel : seuil un peu plus bas pour ciels gris (Casault / hiver) — SPIRE skyL
     const skyL = 0.5;
     for (let y = 2; y < yMax; y++) {
       for (let x = 4; x < bw - 4; x++) {

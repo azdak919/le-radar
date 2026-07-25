@@ -420,8 +420,9 @@ def analyze(im: Image.Image) -> dict:
     logo_wm_edge = edge_sum / max(1, edge_n)
 
     # Croix + clocher blanc / multi-tours pierre grise (religious_architecture)
-    # Aligné runtime JS (quebec-backgrounds.js _religiousSpireMetrics).
-    sky_l = 0.5
+    # SYNC-ID: religious-spire-v1 — miroir scripts/religious-facade-lib.js SPIRE_THRESHOLDS
+    # et quebec-backgrounds.js _religiousSpireMetrics (ne pas diverger les seuils).
+    sky_l = 0.5  # SPIRE_THRESHOLDS.skyL
     spire_hits: list[tuple[int, int]] = []
     y_max = max(3, int(ch * 0.3 * 0.55))
     for y in range(2, y_max):

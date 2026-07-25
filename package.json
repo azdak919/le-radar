@@ -18,6 +18,8 @@
     "detect:seasons:force": "node scripts/detect-photo-seasons.js --force --update --sync",
     "agents:ledger": "node scripts/agents-ledger.mjs",
     "agents:propose": "node scripts/agents-ledger.mjs --propose",
+    "agents:record-sold": "node scripts/agents-ledger.mjs --record-sold",
+    "agents:reset-session": "node scripts/agents-ledger.mjs --reset-session",
     "audit:backgrounds": "python3 scripts/audit-quebec-backgrounds.py",
     "maintain:masthead": "node scripts/maintain-quebec-backgrounds.js --update --profile masthead",
     "maintain:masthead:force": "node scripts/maintain-quebec-backgrounds.js --update --force --profile masthead",

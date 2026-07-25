@@ -14,13 +14,55 @@ const {
   RELIGIOUS_RE,
   TOWN_HALL_FACADE_RE,
 } = require('../scripts/bank-hard-audit-lib');
+const {
+  RELIGIOUS_SUBJECT_RE,
+  TOWN_HALL_FACADE_RE: TOWN_HALL_SHARED,
+  SPIRE_THRESHOLDS,
+  spireMetricsReject,
+} = require('../scripts/religious-facade-lib');
 const { matchHardBanned } = require('../scripts/quebec-backgrounds-blacklist');
 
 const root = new URL('../', import.meta.url);
 const readJson = (rel) =>
   JSON.parse(readFileSync(new URL(`../${rel}`, import.meta.url), 'utf8'));
 
-// ── Unit : règles ────────────────────────────────────────────
+// ── Unit : règles (lib partagée clocher / façade) ────────────
+assert.equal(
+  RELIGIOUS_RE.source,
+  RELIGIOUS_SUBJECT_RE.source,
+  'bank-hard et religious-facade partagent le même RE religieux',
+);
+assert.equal(
+  TOWN_HALL_FACADE_RE.source,
+  TOWN_HALL_SHARED.source,
+  'town hall RE partagé',
+);
+assert.equal(SPIRE_THRESHOLDS.version, 1, 'SPIRE SYNC-ID religious-spire-v1');
+assert.equal(SPIRE_THRESHOLDS.skyL, 0.5, 'skyL aligné JS/Python');
+assert(
+  spireMetricsReject({
+    hitCount: 5,
+    dense: 5,
+    solidWhite: true,
+    solidStone: false,
+    multiPeaks: 0,
+    skyAbove: 0.7,
+    reject: false,
+  }),
+  'spireMetricsReject clocher blanc',
+);
+assert(
+  spireMetricsReject({
+    hitCount: 3,
+    dense: 3,
+    solidWhite: false,
+    solidStone: true,
+    multiPeaks: 2,
+    skyAbove: 0.5,
+    reject: false,
+  }),
+  'spireMetricsReject multi-tours pierre',
+);
 assert(RELIGIOUS_RE.test('Église Notre-Dame'), 'religious RE église');
 assert(RELIGIOUS_RE.test('Pavillon Louis-Jacques-Casault'), 'religious RE casault');
 assert(TOWN_HALL_FACADE_RE.test('Town hall of Vaudreuil'), 'town hall RE');

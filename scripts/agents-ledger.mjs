@@ -3,12 +3,15 @@
  * Ledger AGENTS.md — list / propose dettes volontaires (offline, 0 réseau).
  *
  * Usage:
- *   node scripts/agents-ledger.mjs           # tableau open|ready
- *   node scripts/agents-ledger.mjs --propose # 1 suggestion + texte « notification » agent
- *   node scripts/agents-ledger.mjs --json    # machine-readable
+ *   node scripts/agents-ledger.mjs              # tableau open|ready
+ *   node scripts/agents-ledger.mjs --propose    # 1 suggestion OU balise STOP
+ *   node scripts/agents-ledger.mjs --record-sold D5
+ *   node scripts/agents-ledger.mjs --reset-session
+ *   node scripts/agents-ledger.mjs --json
  *
- * Les agents doivent lancer --propose en fin de session (si ticket OK)
- * et coller la proposition à l'humain — ne pas exécuter sans OK.
+ * Quota anti-glouton (.agents-session.json) :
+ *   max 1 dette / session de chat, max 2 / jour calendaire.
+ *   Après une dette soldée → STOP (pas d’enchaînement même si l’humain dit « continue »).
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -17,6 +20,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const AGENTS_PATH = path.join(ROOT, 'AGENTS.md');
+const SESSION_PATH = path.join(ROOT, '.agents-session.json');
 
 const EFFORT_RANK = {
   S: 1,
@@ -27,6 +31,44 @@ const EFFORT_RANK = {
   'M-L': 4,
   L: 5,
 };
+
+const DEFAULT_SESSION = {
+  maxDebtPerChatSession: 1,
+  maxDebtPerCalendarDay: 2,
+  debtsSoldToday: 0,
+  debtsSoldThisSession: 0,
+  lastDebtId: null,
+  lastDebtSoldAt: null,
+  calendarDay: null,
+  note: 'Quota anti-glouton — voir AGENTS.md § balises',
+};
+
+function todayIso() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function loadSession() {
+  let s = { ...DEFAULT_SESSION };
+  try {
+    if (fs.existsSync(SESSION_PATH)) {
+      s = { ...s, ...JSON.parse(fs.readFileSync(SESSION_PATH, 'utf8')) };
+    }
+  } catch {
+    /* ignore */
+  }
+  const day = todayIso();
+  if (s.calendarDay !== day) {
+    s.calendarDay = day;
+    s.debtsSoldToday = 0;
+    // Nouvelle journée calendaire : reset aussi le compteur session
+    s.debtsSoldThisSession = 0;
+  }
+  return s;
+}
+
+function saveSession(s) {
+  fs.writeFileSync(SESSION_PATH, `${JSON.stringify(s, null, 2)}\n`, 'utf8');
+}
 
 function parseLedger(md) {
   const lines = md.split(/\r?\n/);
@@ -69,7 +111,6 @@ function propose(rows) {
   const pool = actionable(rows)
     .slice()
     .sort((a, b) => {
-      // ready before open, then smaller effort
       if (a.status !== b.status) return a.status === 'ready' ? -1 : 1;
       return rankEffort(a.effort) - rankEffort(b.effort);
     });
@@ -90,15 +131,62 @@ function printTable(rows) {
   }
 }
 
-function printPropose(item) {
+function quotaBlocked(session) {
+  if (session.debtsSoldThisSession >= session.maxDebtPerChatSession) {
+    return {
+      code: 'SESSION_QUOTA',
+      message:
+        `Balise STOP : déjà ${session.debtsSoldThisSession} dette(s) soldée(s) ` +
+        `cette session (max ${session.maxDebtPerChatSession}). ` +
+        `Ne pas proposer ni enchaîner — même si l’humain dit « continue ».`,
+    };
+  }
+  if (session.debtsSoldToday >= session.maxDebtPerCalendarDay) {
+    return {
+      code: 'DAY_QUOTA',
+      message:
+        `Balise STOP : déjà ${session.debtsSoldToday} dette(s) aujourd’hui ` +
+        `(max ${session.maxDebtPerCalendarDay}/jour). Reprendre demain ou ticket métier seulement.`,
+    };
+  }
+  return null;
+}
+
+function printPropose(item, session) {
+  const block = quotaBlocked(session);
+  if (block) {
+    console.log('');
+    console.log('🛑 ══════════════════════════════════════════════════════════');
+    console.log('   BALISE STOP DETTE — ne pas proposer, ne pas enchaîner');
+    console.log('🛑 ══════════════════════════════════════════════════════════');
+    console.log(block.message);
+    console.log(`Dernière dette : ${session.lastDebtId || '—'} @ ${session.lastDebtSoldAt || '—'}`);
+    console.log('');
+    console.log('Message suggéré à l’utilisateur :');
+    console.log('---');
+    console.log(
+      'Quota dette atteint pour cette session (anti « oui à tout »). ' +
+        'On s’arrête sur le ledger. Nouveau ticket métier bienvenu ; ' +
+        'nouvelle dette ledger seulement dans une **nouvelle** session ' +
+        'ou demain (max 2/jour).',
+    );
+    console.log('---');
+    return;
+  }
+
   if (!item) {
     console.log('LEDGER: aucune dette actionnable (open/ready). Rien à proposer.');
     return;
   }
-  // Bloc copiable par l’agent vers le chat utilisateur
+
+  const effortWarn =
+    rankEffort(item.effort) >= 4
+      ? '\n⚠ Effort L : demander **deux** OK explicites avant de commencer.'
+      : '';
+
   console.log('');
   console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-  console.log('📌 PROPOSITION DETTE (ledger AGENTS.md) — attendre OK humain');
+  console.log('📌 PROPOSITION DETTE (ledger AGENTS.md) — 1 seule si OK');
   console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
   console.log(`ID      : ${item.id}`);
   console.log(`Statut  : ${item.status}`);
@@ -106,55 +194,107 @@ function printPropose(item) {
   console.log(`Dette   : ${item.debt}`);
   console.log(`Pourquoi: ${item.why}`);
   console.log(`Signaux : ${item.signals}`);
+  console.log(
+    `Quota   : session ${session.debtsSoldThisSession}/${session.maxDebtPerChatSession}` +
+      ` · jour ${session.debtsSoldToday}/${session.maxDebtPerCalendarDay}`,
+  );
   console.log('');
   console.log('Message suggéré à l’utilisateur :');
   console.log('---');
   console.log(
-    `Ticket principal terminé. Le ledger propose ensuite **${item.id}** ` +
-      `(effort ${item.effort}, ${item.status}) : ${item.debt}. ` +
-      `On la solde maintenant (un seul bloc), ou on s’arrête ici ?`,
+    `Ticket principal terminé. Proposition **unique** de session : **${item.id}** ` +
+      `(effort ${item.effort}) — ${item.debt}. ` +
+      `Oui = on fait **ce bloc seulement** puis STOP ledger. Non = fin.${effortWarn}`,
   );
   console.log('---');
   console.log('');
-  console.log('Règle : NE PAS commencer cette dette sans accord explicite.');
-  console.log('Si OK → faire le bloc, mettre à jour AGENTS.md §3/§4, check, commit.');
+  console.log('Après soldée : npm run agents:record-sold -- ' + item.id);
+  console.log('(ou : node scripts/agents-ledger.mjs --record-sold ' + item.id + ')');
+}
+
+function recordSold(id) {
+  const session = loadSession();
+  session.debtsSoldThisSession = (session.debtsSoldThisSession || 0) + 1;
+  session.debtsSoldToday = (session.debtsSoldToday || 0) + 1;
+  session.lastDebtId = id || session.lastDebtId;
+  session.lastDebtSoldAt = new Date().toISOString();
+  session.calendarDay = todayIso();
+  saveSession(session);
+  console.log(
+    `Enregistré : ${id} soldée. Session ${session.debtsSoldThisSession}/` +
+      `${session.maxDebtPerChatSession}, jour ${session.debtsSoldToday}/` +
+      `${session.maxDebtPerCalendarDay}. Prochain --propose → STOP.`,
+  );
 }
 
 function main() {
-  const args = new Set(process.argv.slice(2));
+  const argv = process.argv.slice(2);
+  const args = new Set(argv);
+
   if (args.has('--help') || args.has('-h')) {
     console.log(`Usage:
-  npm run agents:ledger          # liste open|ready
-  npm run agents:propose         # 1 suggestion + texte chat
+  npm run agents:ledger
+  npm run agents:propose
+  node scripts/agents-ledger.mjs --record-sold D5
+  node scripts/agents-ledger.mjs --reset-session
   node scripts/agents-ledger.mjs --json
 `);
     process.exit(0);
   }
 
+  if (args.has('--reset-session')) {
+    const s = loadSession();
+    s.debtsSoldThisSession = 0;
+    saveSession(s);
+    console.log('Compteur session remis à 0 (jour inchangé).');
+    return;
+  }
+
+  const recordIdx = argv.indexOf('--record-sold');
+  if (recordIdx >= 0) {
+    const id = argv[recordIdx + 1] || 'UNKNOWN';
+    recordSold(id);
+    return;
+  }
+
   const md = fs.readFileSync(AGENTS_PATH, 'utf8');
   const all = parseLedger(md);
   const open = actionable(all);
+  const session = loadSession();
+  // Persister calendar rollover
+  saveSession(session);
 
   if (args.has('--json')) {
-    const out = {
-      source: 'AGENTS.md',
-      generatedAt: new Date().toISOString(),
-      actionable: open,
-      propose: propose(all),
-      all,
-    };
-    console.log(JSON.stringify(out, null, 2));
+    console.log(
+      JSON.stringify(
+        {
+          source: 'AGENTS.md',
+          generatedAt: new Date().toISOString(),
+          session,
+          quotaBlocked: quotaBlocked(session),
+          actionable: open,
+          propose: propose(all),
+          all,
+        },
+        null,
+        2,
+      ),
+    );
     return;
   }
 
   if (args.has('--propose')) {
     printTable(open);
-    printPropose(propose(all));
+    printPropose(propose(all), session);
     return;
   }
 
   console.log(`Ledger AGENTS.md — ${open.length} actionnable(s) / ${all.length} total\n`);
   printTable(open);
+  console.log(
+    `\nQuota : session ${session.debtsSoldThisSession}/${session.maxDebtPerChatSession}` +
+      ` · jour ${session.debtsSoldToday}/${session.maxDebtPerCalendarDay}`,
+  );
   const p = propose(all);
   if (p) {
     console.log(`\nProchaine candidate : ${p.id} (${p.effort}, ${p.status})`);

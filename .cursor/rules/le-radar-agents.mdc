@@ -8,9 +8,9 @@ alwaysApply: true
 1. Lire `AGENTS.md` puis `docs/agent-playbook.md` avant d’éditer.
 2. Priorité = ticket humain. Pas de refonte monolithe / bulk Commons / Worker audio sans demande.
 3. **Fin de session** si le ticket est OK :
-   - Exécuter `npm run agents:propose`
-   - Afficher la proposition dette à l’utilisateur
-   - **Attendre OK** avant de travailler la dette
-   - Si soldée : mettre à jour `AGENTS.md` §3/§4
+   - `npm run agents:propose` — si **STOP balise**, ne pas enchaîner de dette
+   - Max **1 dette soldée / session**, **2 / jour** (`.agents-session.json`)
+   - « Continue » ≠ carte blanche sur tout le ledger
+   - Si dette soldée : `npm run agents:record-sold -- <ID>` + MAJ `AGENTS.md`
 4. Banques : JSON vérité, `npm run bank:sync`, blacklist durable.
 5. Checks : `npm run check`, `npm run bank:check` si banques touchées.

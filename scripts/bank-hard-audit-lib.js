@@ -14,19 +14,18 @@
 'use strict';
 
 const { matchHardBanned } = require('./quebec-backgrounds-blacklist');
+const {
+  RELIGIOUS_SUBJECT_RE: RELIGIOUS_RE,
+  TOWN_HALL_FACADE_RE,
+  looksReligiousSubject,
+  looksTownHallFacade,
+} = require('./religious-facade-lib');
 
 const MIN_WIDTH = 1400;
 const MIN_HEIGHT = 700;
 const MIN_PIXELS = 1_200_000;
 const MIN_ASPECT = 1.25;
 const MIN_ASPECT_NATIONS = 1.15;
-
-/** Même esprit que maintain — architecture cultuelle institutionnelle. */
-const RELIGIOUS_RE =
-  /(?:église|eglise|church|cathedral|cathédrale|basilique|basilica|chapelle|chapel|coll[eé]giale|collegiale|crucifix|\bcroix\b|crosses?\b|mosquée|mosquee|mosque|synagogue|monastère|monastere|monastery|couvent|convent|calvaire|cimetière|cimetiere|cemetery|minaret|clocher|steeple|bell[\s-]?tower|paroisse|parish|presbyt[eè]re|presbytery|lieu de culte|place of worship|\bjésus\b|\bjesus\b|\bchrist\b|crucifi|temple\s+(?:bouddh|hindou|sikh)|tabernacle|casault|casseault|louis[\s_-]?jacques[\s_-]?casault)/i;
-
-const TOWN_HALL_FACADE_RE =
-  /(?:town[\s-]?hall|h[oô]tel[\s-]?de[\s-]?ville|city[\s-]?hall|\bmairie\b)/i;
 
 const PEOPLE_RE =
   /(?:\bportrait\b|\bpeople\b|\bperson\b|\bpersons\b|\bman\b|\bwoman\b|\bmen\b|\bwomen\b|\bchild\b|\bchildren\b|\bfamily\b|\bfamille\b|\bhomme\b|\bfemme\b|\benfant\b|\bdancer\b|\bdancers\b|\bpow[\s-]?wow\b|\bcrowd\b|\bfoule\b|\bselfie\b|\binscription on reverse\b|\bchef\b|\bchief\b|\bleder\b|\bleader\b|\bmaire\b|\bmayor\b|\bface\b|\bvisage\b|\bgroup\b|\bgroupe\b|\bmeeting\b|\br[eé]union\b)/i;
@@ -96,8 +95,8 @@ function auditPhotoHard(photo, profile = {}) {
   if (NON_IMAGE_RE.test(full) || (photo.mime && !String(photo.mime).startsWith('image/'))) {
     reasons.push('not_image');
   }
-  if (RELIGIOUS_RE.test(full)) reasons.push('religious_subject');
-  if (profile.landscape && TOWN_HALL_FACADE_RE.test(full)) {
+  if (looksReligiousSubject(photo)) reasons.push('religious_subject');
+  if (profile.landscape && looksTownHallFacade(photo)) {
     reasons.push('town_hall_facade');
   }
   if (PEOPLE_RE.test(short)) reasons.push('people_subject');
