@@ -1,16 +1,16 @@
 {
-  "updated": "2026-07-25T11:54:42.865Z",
-  "updatedSlot": "2026-07-25T11:00:00.000Z",
+  "updated": "2026-07-25T14:05:19.005Z",
+  "updatedSlot": "2026-07-25T14:00:00.000Z",
   "count": 185,
   "freshnessSessions": 3,
   "sources": {
     "Quartier Libre": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:00:00.000Z",
-      "lastFetchOk": "2026-07-25T11:54:09.932Z"
+      "lastFetchOk": null
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-07-25T11:54:10.834Z"
+      "lastFetchOk": "2026-07-25T14:04:35.259Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-03-25T11:00:00.000Z",
-      "lastFetchOk": "2026-07-25T11:54:15.013Z"
+      "lastFetchOk": "2026-07-25T14:04:39.365Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-07-06T12:00:00.000Z",
-      "lastFetchOk": "2026-07-25T11:54:15.795Z"
+      "lastFetchOk": "2026-07-25T14:04:40.719Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,7 +42,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-07-08T14:41:00.000Z",
-      "lastFetchOk": "2026-07-25T11:54:16.992Z"
+      "lastFetchOk": "2026-07-25T14:04:41.738Z"
     },
     "Zone Campus": {
       "fetchOk": false,
@@ -58,7 +58,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-07-25T11:54:18.603Z"
+      "lastFetchOk": "2026-07-25T14:04:43.294Z"
     },
     "Le Collectif": {
       "fetchOk": false,
@@ -74,7 +74,7 @@
       "articleCount": 7,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-07-25T11:54:19.382Z"
+      "lastFetchOk": "2026-07-25T14:04:44.055Z"
     },
     "La Pige": {
       "fetchOk": false,
@@ -90,15 +90,15 @@
       "articleCount": 13,
       "freshArticleCount": 13,
       "lastArticle": "2026-02-25T14:38:32.764Z",
-      "lastFetchOk": "2026-07-25T11:54:21.566Z"
+      "lastFetchOk": "2026-07-25T14:04:45.691Z"
     },
     "The Tribune": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-07-21T13:21:49.000Z",
-      "lastFetchOk": "2026-07-25T11:54:21.784Z"
+      "lastFetchOk": null
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-07-25T11:54:22.028Z"
+      "lastFetchOk": "2026-07-25T14:04:58.077Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-07-25T11:54:22.257Z"
+      "lastFetchOk": "2026-07-25T14:04:58.232Z"
     }
   },
   "items": [
@@ -366,7 +366,8 @@
       "sourceImageCreditImageKey": "screen-shot-2026-07-21-at-9.14.03-am.png",
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
-      "leadExcerpt": "Although FIFA insists the Balogun decision is in line with FDC protocol, FIFA has not postponed a World Cup red card suspension since Manoel Francisco dos Santos—famously known as Garrincha —earned a red card in 1962 . This was another incident where extensive lobbying by the politically powerful enabled a beloved, penalized player to compete."
+      "leadExcerpt": "Although FIFA insists the Balogun decision is in line with FDC protocol, FIFA has not postponed a World Cup red card suspension since Manoel Francisco dos Santos—famously known as Garrincha —earned a red card in 1962 . This was another incident where extensive lobbying by the politically powerful enabled a beloved, penalized player to compete.",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -442,7 +443,8 @@
       "sourceImageCreditImageKey": "img_3443.png",
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
-      "leadExcerpt": "Known by many as Lumumba Vea , translating to “Lumumba Lives,” Mboladinga’s statue pose impersonates Patrice Lumumba , the DRC’s first prime minister. Patrice Lumumba was an active voice opposing Belgium’s colonization of Congo. He denounced the terror colonialism caused on many occasions during his time in office."
+      "leadExcerpt": "Known by many as Lumumba Vea , translating to “Lumumba Lives,” Mboladinga’s statue pose impersonates Patrice Lumumba , the DRC’s first prime minister. Patrice Lumumba was an active voice opposing Belgium’s colonization of Congo. He denounced the terror colonialism caused on many occasions during his time in office.",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -481,14 +483,15 @@
       "image": "",
       "authorCheckedAt": "2026-07-25T07:30:29.620Z",
       "leadImageReady": false,
-      "stockImage": "https://live.staticflickr.com/917/28627096297_a3e0756d47_b.jpg",
-      "imageTitle": "Cruel Summer (Explore)",
-      "imageCredit": "Photo : sjpowermac / CC0 · Openverse",
-      "imageCreator": "sjpowermac",
-      "imageLicense": "cc0",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/41890311@N06/28627096297",
-      "leadExcerpt": "“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt to forgo my jacket, and, if I’m feeling bold, no sweater either. It’s the first truly warm evening in Montreal, and as the city defrosts, everyone is spilling onto sidewalks and terrasses. Women are wearing tiny dresses, and men have started to write poetry. The whole city radiates optimism, as if Ch"
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/b9/View_from_McGill_University_downtown_campus_01.JPG",
+      "imageTitle": "View from McGill University downtown campus 01",
+      "imageCredit": "Photo : Jeangagnon / CC BY-SA 3.0 · Wikimedia Commons",
+      "imageCreator": "Jeangagnon",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageProvider": "campus-bank",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:View_from_McGill_University_downtown_campus_01.JPG",
+      "leadExcerpt": "“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt to forgo my jacket, and, if I’m feeling bold, no sweater either. It’s the first truly warm evening in Montreal, and as the city defrosts, everyone is spilling onto sidewalks and terrasses. Women are wearing tiny dresses, and men have started to write poetry. The whole city radiates optimism, as if Ch",
+      "_campusBank": true
     },
     {
       "source": "The Link",
@@ -557,7 +560,8 @@
       "sourceImageCreditImageKey": "screen-shot-2026-06-26-at-11.23.19-am.png",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. I’m out of errands to run—other than bumping into someone from my high school every time I leave my house. If I have to have the, “How was your year?” small talk conversation one more time, I might actually explode. Please please please, if you have any tips on how to survive life in my hometown for"
+      "leadExcerpt": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. I’m out of errands to run—other than bumping into someone from my high school every time I leave my house. If I have to have the, “How was your year?” small talk conversation one more time, I might actually explode. Please please please, if you have any tips on how to survive life in my hometown for",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -580,7 +584,8 @@
       "sourceImageCreditImageKey": "screen-shot-2026-06-23-at-1.21.20-pm.png",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "Tanzanian-American-Canadian artist Shanna Strauss ’s screenprint triad Kanga I, II, III joined the student-led digital art exhibition Projections: SANKOFA on Feb. 23. Displayed in the Lorne M. Trottier Building mezzanine, the Kanga series combines negative space with vibrant colour to assert the unifying power of shared cultural identity."
+      "leadExcerpt": "Tanzanian-American-Canadian artist Shanna Strauss ’s screenprint triad Kanga I, II, III joined the student-led digital art exhibition Projections: SANKOFA on Feb. 23. Displayed in the Lorne M. Trottier Building mezzanine, the Kanga series combines negative space with vibrant colour to assert the unifying power of shared cultural identity.",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -633,7 +638,8 @@
       "sourceImageCreditImageKey": "untitled_artwork.jpeg",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "Growing adoption of AI systems, which frequently hallucinate and possess ingrained biases against racialized groups , both negatively impacts litigants, and violates the Canadian justice system’s tenets of fairness and impartiality. Thus, AI safety —the outlining of AI risks and formation of computational and governance frameworks to address these risks—is a legal necessity."
+      "leadExcerpt": "Growing adoption of AI systems, which frequently hallucinate and possess ingrained biases against racialized groups , both negatively impacts litigants, and violates the Canadian justice system’s tenets of fairness and impartiality. Thus, AI safety —the outlining of AI risks and formation of computational and governance frameworks to address these risks—is a legal necessity.",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -708,7 +714,8 @@
       "sourceImageCreditImageKey": "screen-shot-2026-05-28-at-8.32.20-am.png",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "American artist and poet Theodore A. Harris is a genius of the political collage . Born in Manhattan, New York and raised in Philadelphia, Pennsylvania, Harris brings an autobiographical focus to the subversive , polysemous medium of the collage, one shaped by his upbringing, mentors, and personal experiences with anti-Black discrimination and American capitalism’s exploitative nature."
+      "leadExcerpt": "American artist and poet Theodore A. Harris is a genius of the political collage . Born in Manhattan, New York and raised in Philadelphia, Pennsylvania, Harris brings an autobiographical focus to the subversive , polysemous medium of the collage, one shaped by his upbringing, mentors, and personal experiences with anti-Black discrimination and American capitalism’s exploitative nature.",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -777,7 +784,8 @@
       "sourceImageCreditImageKey": "screen-shot-2026-05-22-at-7.42.52-am.png",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "On May 16, hundreds of protestors gathered in front of the Consulate General of Israel in Montreal to commemorate the 78th anniversary of the Nakba ( Nakba Day ). Demonstrators waved Palestinian, Rotisken’rakéhte ( Mohawk Warrior Society ), and post-1979 revolution Iranian flags amidst the music of live drummers."
+      "leadExcerpt": "On May 16, hundreds of protestors gathered in front of the Consulate General of Israel in Montreal to commemorate the 78th anniversary of the Nakba ( Nakba Day ). Demonstrators waved Palestinian, Rotisken’rakéhte ( Mohawk Warrior Society ), and post-1979 revolution Iranian flags amidst the music of live drummers.",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -1043,14 +1051,14 @@
       "excerpt": "À Montréal, les murs parlent, sans jamais révéler celles et ceux qui les écrivent. Sous les couches de peinture et les signatures superposées, une présence discrète s’impose : celle d’une génération, souvent étudiante, qui investit l’espace urbain en marge des cadres établis.",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/Photo-5_IMG_3586.jpg",
       "authorCheckedAt": "2026-07-25T07:30:46.751Z",
-      "_pageAuthor": "Emilie Rizkallah",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/presences-invisibles-ecrire-la-ville/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "photo-5_img_3586.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -1065,7 +1073,6 @@
       "excerpt": "Le 13 mars dernier, la rappeuse Calamine a dévoilé son nouvel album , Rétrograde . Avec cette quatrième sortie depuis 2020, l’artiste gravit les échelons et devient une voix importante du hip-hop québécois. Composé de 18 titres d’ambiance estivale tels que « CHOP CHOP », « POLY",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg",
       "authorCheckedAt": "2026-07-25T07:30:47.991Z",
-      "_pageAuthor": "Samuel Roy",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/calamine-rapper-autrement/",
       "sourceImageCreditFrom": "media",
@@ -1080,7 +1087,8 @@
       "imageLicense": "by-sa",
       "imageProvider": "openverse",
       "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=137030939",
-      "leadExcerpt": "Le concept même de Rétrograde , c’est cette sensation d’un recul sociétal, le fait qu’on est en train de retourner en arrière, politiquement parlant. Même après des avancées dans le féminisme, on est quand même en train de reculer avec la montée du masculinisme. En nommant l’album Rétrograde , ça me permettait donc de relier à la fois le queer dating et le recul général de la société."
+      "leadExcerpt": "Le concept même de Rétrograde , c’est cette sensation d’un recul sociétal, le fait qu’on est en train de retourner en arrière, politiquement parlant. Même après des avancées dans le féminisme, on est quand même en train de reculer avec la montée du masculinisme. En nommant l’album Rétrograde , ça me permettait donc de relier à la fois le queer dating et le recul général de la société.",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -1095,16 +1103,23 @@
       "excerpt": "Le 5 mai dernier, le pavillon Roger-Gaudry a accueilli le premier forum du Réseau des écoles associées ( RÉA ). Ce projet ambitieux de la Faculté des sciences de l’éducation (FSÉ) transforme des écoles primaires et secondaires en véritables « hôpitaux universitaires » de la",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/PXL_20260505_174149744-1024x768.jpg",
       "authorCheckedAt": "2026-07-25T07:30:48.591Z",
-      "_pageAuthor": "Ulysse Taillard-Hodez",
       "leadExcerpt": "Mme Fournier Dubé a insisté sur le fait que les enseignant·e·s sont les véritables « agents de changement ». Son rôle n’est pas d’imposer un cadre scientifique rigide, mais de vulgariser la recherche pour l’adapter aux besoins du terrain.",
-      "leadImageReady": true,
+      "leadImageReady": false,
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "pxl_20260505_174149744.jpg",
-      "sourceImageCreditRev": 9
+      "sourceImageCreditRev": 9,
+      "_retainedFromCache": true,
+      "stockImage": "https://live.staticflickr.com/7416/10025731476_b6da69c642_b.jpg",
+      "imageTitle": "Better Choices Better Results Forum on Education",
+      "imageCredit": "Photo : MDGovpics / CC BY · Openverse",
+      "imageCreator": "MDGovpics",
+      "imageLicense": "by",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/64018555@N03/10025731476"
     },
     {
       "source": "Quartier Libre",
@@ -1119,7 +1134,6 @@
       "excerpt": "Depuis mars 2024, l’Université de Montréal (UdeM) dispose d’une politique de soutien aux parents aux études. Le projet de loi 394 (PL394) de Québec solidaire lui imposerait, en cas d’adoption, d’en créer une destinée également aux proches aidant·e·s. Le député",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/12-13_Statuts-Politique-Parents-Proche-Aidants.jpg",
       "authorCheckedAt": "2026-07-25T07:30:49.553Z",
-      "_pageAuthor": "Mohammed Aziz Mestiri",
       "sourceImageCredit": "Photo : MOHAMMED AZIZ MESTIRI",
       "sourceImageCreator": "MOHAMMED AZIZ MESTIRI",
       "sourceImageCreditUrl": "https://quartierlibre.ca/projet-loi-etudiant-proche-aidante/",
@@ -1127,8 +1141,16 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "12-13_statuts-politique-parents-proche-aidants.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true,
-      "leadExcerpt": "Depuis mars 2024, l’Université de Montréal (UdeM) dispose d’une politique de soutien aux parents aux études. Le projet de loi 394 ( PL394 ) de Québec solidaire lui imposerait, en cas d’adoption, d’en créer une destinée également aux proches aidant·e·s."
+      "leadImageReady": false,
+      "leadExcerpt": "Depuis mars 2024, l’Université de Montréal (UdeM) dispose d’une politique de soutien aux parents aux études. Le projet de loi 394 ( PL394 ) de Québec solidaire lui imposerait, en cas d’adoption, d’en créer une destinée également aux proches aidant·e·s.",
+      "_retainedFromCache": true,
+      "stockImage": "https://cdn.stocksnap.io/img-thumbs/960w/PMZZ7WLOAJ.jpg",
+      "imageTitle": "Caregiver Nurse",
+      "imageCredit": "Photo : Direct Media / CC0 · Openverse",
+      "imageCreator": "Direct Media",
+      "imageLicense": "cc0",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://stocksnap.io/photo/caregiver-nurse-PMZZ7WLOAJ"
     },
     {
       "source": "The Tribune",
@@ -1151,7 +1173,8 @@
       "sourceImageCreditImageKey": "renderedimage-1.jpeg",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "One week before The Tribune ’s first production night, I found myself in Toronto in a black dress, black shoes, and sparkles on my eyelids. I was at the funeral of Fabienne de Cartier, a former News Editor."
+      "leadExcerpt": "One week before The Tribune ’s first production night, I found myself in Toronto in a black dress, black shoes, and sparkles on my eyelids. I was at the funeral of Fabienne de Cartier, a former News Editor.",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -1174,7 +1197,8 @@
       "sourceImageCreditImageKey": "renderedimage.jpeg",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "On May 9, Students for Palestine’s Honour and Resistance ( SPHR ) at McGill hosted a gathering to commemorate the two-year anniversary of Montreal community members establishing the Gaza Solidarity Encampment on McGill’s Lower Field. 743 days later, community members of all ages met for a potluck, arts-and-crafts, and a letter-writing campaign for Palestinian political prisoners, intended to raise awareness of, and inspire solidarity against, Israel’s prison conditions."
+      "leadExcerpt": "On May 9, Students for Palestine’s Honour and Resistance ( SPHR ) at McGill hosted a gathering to commemorate the two-year anniversary of Montreal community members establishing the Gaza Solidarity Encampment on McGill’s Lower Field. 743 days later, community members of all ages met for a potluck, arts-and-crafts, and a letter-writing campaign for Palestinian political prisoners, intended to raise awareness of, and inspire solidarity against, Israel’s prison conditions.",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -1189,7 +1213,6 @@
       "excerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg",
       "authorCheckedAt": "2026-07-25T07:30:52.161Z",
-      "_pageAuthor": "Bérénice Lemarié",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
       "sourceImageCreditFrom": "media",
@@ -1197,7 +1220,8 @@
       "sourceImageCreditImageKey": "20_florelaurentienne.jpg",
       "sourceImageCreditRev": 9,
       "leadImageReady": false,
-      "leadExcerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations d’albums 100 % québécois récemment sortis ."
+      "leadExcerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations d’albums 100 % québécois récemment sortis .",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -1212,7 +1236,6 @@
       "excerpt": "Entre absence de quorum, élections houleuses et accusations de « campagnes de salissage », la Fédération des associations du campus de l’Université de Montréal (FAÉCUM) traverse une zone de turbulences. Du fonctionnement des associations étudiantes aux congrès mouvementés, récit",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/10-11_FAECUM_photo-assemblee.jpg",
       "authorCheckedAt": "2026-07-25T07:30:52.639Z",
-      "_pageAuthor": "Ulysse Taillard-Hodez",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/faecum-la-democratie-universitaire-critiquee/",
       "sourceImageCreditFrom": "media",
@@ -1220,7 +1243,8 @@
       "sourceImageCreditImageKey": "10-11_faecum_photo-assemblee.jpg",
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
-      "leadExcerpt": "Entre absence de quorum, élections houleuses et accusations de « campagnes de salissage », la Fédération des associations du campus de l’Université de Montréal (FAÉCUM) traverse une zone de turbulences. Du fonctionnement des associations étudiantes aux congrès mouvementés, récit d’une démocratie en difficulté."
+      "leadExcerpt": "Entre absence de quorum, élections houleuses et accusations de « campagnes de salissage », la Fédération des associations du campus de l’Université de Montréal (FAÉCUM) traverse une zone de turbulences. Du fonctionnement des associations étudiantes aux congrès mouvementés, récit d’une démocratie en difficulté.",
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -1386,15 +1410,22 @@
       "excerpt": "Les 29 et 30 mai prochains, les adeptes d’ouvrages de suspense, à mystère et d’enquêtes auront rendez-vous au Centre culturel Georges-Vanier pour la troisième édition du festival du livre policier Montréal Mystère, un événement encore jeune, mais déjà bien installé dans le",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/21_Montreal-Mystere.jpg",
       "authorCheckedAt": "2026-07-25T07:30:53.040Z",
-      "_pageAuthor": "Carla Roche",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/montreal-mystere-festival-bilingue/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "21_montreal-mystere.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true,
-      "leadExcerpt": "Les 29 et 30 mai prochains, les adeptes d’ouvrages de suspense, à mystère et d’enquêtes auront rendez-vous au Centre culturel Georges-Vanier pour la troisième édition du festival du livre policier Montréal Mystère , un événement encore jeune, mais déjà bien installé dans le paysage littéraire montréalais."
+      "leadImageReady": false,
+      "leadExcerpt": "Les 29 et 30 mai prochains, les adeptes d’ouvrages de suspense, à mystère et d’enquêtes auront rendez-vous au Centre culturel Georges-Vanier pour la troisième édition du festival du livre policier Montréal Mystère , un événement encore jeune, mais déjà bien installé dans le paysage littéraire montréalais.",
+      "_retainedFromCache": true,
+      "stockImage": "https://live.staticflickr.com/3498/3735171010_90582fc99c_b.jpg",
+      "imageTitle": "Green Day Concert Stage (Montreal) - Green Day is Ever Green",
+      "imageCredit": "Photo : Anirudh Koul / CC BY · Openverse",
+      "imageCreator": "Anirudh Koul",
+      "imageLicense": "by",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/84856173@N00/3735171010"
     },
     {
       "source": "The Plant",
@@ -1417,8 +1448,7 @@
       "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Dawson_College_09.JPG",
-      "leadExcerpt": "Dear readers, Class of 2026 We did it! As May’s doting weather and perfumed flowers lull us into the promise of summer, I try to turn my tears to crystals that will decorate my legacy at The Plant. I knew I’d cry when I’d have to greet “Goodbye.” In my heart, I will forever hold 35 crystals for each member of the team that became my anchor. When hard nights of work kept me up until the moon came d",
-      "_campusBank": true
+      "leadExcerpt": "Dear readers, Class of 2026 We did it! As May’s doting weather and perfumed flowers lull us into the promise of summer, I try to turn my tears to crystals that will decorate my legacy at The Plant. I knew I’d cry when I’d have to greet “Goodbye.” In my heart, I will forever hold 35 crystals for each member of the team that became my anchor. When hard nights of work kept me up until the moon came d"
     },
     {
       "source": "The Plant",
@@ -1650,14 +1680,14 @@
       "excerpt": "La Coupe du monde 2026 (CM26), qui aura lieu du 11 juin au 19 juillet prochains, s’annonce comme le plus grand événement de soccer jamais organisé. La compétition se déroulera simultanément dans trois pays, les États-Unis, le Canada et le Mexique, et comptera un nombre record",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/16-17_CDM-1.jpg",
       "authorCheckedAt": "2026-07-25T07:30:56.175Z",
-      "_pageAuthor": "Gabriel Lapointe",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/coupe-du-monde-2026/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "16-17_cdm-1.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -1672,15 +1702,22 @@
       "excerpt": "Lors d’une assemblée universitaire tenue le 16 mars dernier, le professeur agrégé à l’École de psychoéducation de la Faculté des arts et des sciences de l’UdeM Jean-Sébastien Fallu a soulevé des préoccupations concernant le soutien informatique à l’Université. Il a partagé",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/6-7_soutien-technique.jpg",
       "authorCheckedAt": "2026-07-25T07:30:56.553Z",
-      "_pageAuthor": "Solène Gerber",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/soutien-technique-a-ludem/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "6-7_soutien-technique.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true,
-      "leadExcerpt": "Lors d’une assemblée universitaire tenue le 16 mars dernier, le professeur agrégé à l’École de psychoéducation de la Faculté des arts et des sciences de l’UdeM Jean-Sébastien Fallu a soulevé des préoccupations concernant le soutien informatique à l’Université. Il a partagé plusieurs difficultés que lui et ses collègues ont vécues, notamment liées aux délais, aux procédures et à la complexité de certains outils numériques."
+      "leadImageReady": false,
+      "leadExcerpt": "Lors d’une assemblée universitaire tenue le 16 mars dernier, le professeur agrégé à l’École de psychoéducation de la Faculté des arts et des sciences de l’UdeM Jean-Sébastien Fallu a soulevé des préoccupations concernant le soutien informatique à l’Université. Il a partagé plusieurs difficultés que lui et ses collègues ont vécues, notamment liées aux délais, aux procédures et à la complexité de certains outils numériques.",
+      "_retainedFromCache": true,
+      "stockImage": "https://live.staticflickr.com/2188/2080243782_c6ed785da4_b.jpg",
+      "imageTitle": "UdeM",
+      "imageCredit": "Photo : abdallahh / CC BY · Openverse",
+      "imageCreator": "abdallahh",
+      "imageLicense": "by",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/22168167@N00/2080243782"
     },
     {
       "source": "The Link",
@@ -1740,7 +1777,6 @@
       "excerpt": "Du 1 er au 9 mai, le festival Jamais Lu s’installe au théâtre Aux Écuries de Montréal, avec pour thème « Réparer nos Transmissions ». Le nouveau directeur artistique et cogénéral du festival, Éric Noël, partage son envie de mettre au cœur de cette édition la place des",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image.jpeg",
       "authorCheckedAt": "2026-07-25T07:30:59.083Z",
-      "_pageAuthor": "Bérénice Lemarié",
       "sourceImageCredit": "Photo : Maryse Boyce",
       "sourceImageCreator": "Maryse Boyce",
       "sourceImageCreditUrl": "https://quartierlibre.ca/festival-jamais-lu-2026/",
@@ -1748,7 +1784,15 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "image.jpeg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true,
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/8/84/Dillon_Orr_au_Festival_Jamais_Lu_2019.png",
+      "imageTitle": "Dillon Orr au Festival Jamais Lu 2019",
+      "imageCredit": "Photo : Dillonorr / CC BY-SA · Openverse",
+      "imageCreator": "Dillonorr",
+      "imageLicense": "by-sa",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=80332388"
     },
     {
       "source": "Zone Campus",
@@ -2178,7 +2222,8 @@
       "sourceImageCreditImageKey": "untitled_artwork-149.png",
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
-      "leadExcerpt": "Across the 18 months she has lived in her Plateau apartment, Alice Lee, U3 Arts & Science, has had her water shut off 13 times. Most recently—in February 2026—she turned on her tap to find the water running yellow, as she recounted in an interview with The Tribune . Lee explained that her building’s maintenance worker was unequipped to deal with the problem."
+      "leadExcerpt": "Across the 18 months she has lived in her Plateau apartment, Alice Lee, U3 Arts & Science, has had her water shut off 13 times. Most recently—in February 2026—she turned on her tap to find the water running yellow, as she recounted in an interview with The Tribune . Lee explained that her building’s maintenance worker was unequipped to deal with the problem.",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -2201,7 +2246,8 @@
       "sourceImageCreditImageKey": "untitled-11.jpeg",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "The panelists next reflected on how, in the past decade, journalists across Canada have repeatedly communicated their discontent with mainstream media’s vague coverage of Palestine through open letters . However, as Malik—director, writer, and former CBC producer for the fifth estate , Big News , and For the Culture —noted, these letters were often met with minimal institutional accountability—if not backlash and aggression."
+      "leadExcerpt": "The panelists next reflected on how, in the past decade, journalists across Canada have repeatedly communicated their discontent with mainstream media’s vague coverage of Palestine through open letters . However, as Malik—director, writer, and former CBC producer for the fifth estate , Big News , and For the Culture —noted, these letters were often met with minimal institutional accountability—if not backlash and aggression.",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -2372,7 +2418,8 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "abbey-locker-sports-1.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -2490,6 +2537,7 @@
       "sourceImageCreditImageKey": "design-sans-titre.png",
       "sourceImageCreditRev": 9,
       "leadImageReady": false,
+      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/3155/3034812064_83c18c9940_b.jpg",
       "imageTitle": "Your five decisions in photography",
       "imageCredit": "Photo : kevin dooley / CC BY · Openverse",
@@ -2765,7 +2813,8 @@
       "imageCreator": "||-SAM Nasim-||",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/65732636@N06/6753143443"
+      "imageSourceUrl": "https://www.flickr.com/photos/65732636@N06/6753143443",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -2786,7 +2835,8 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "rup_otb.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -2807,7 +2857,8 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "letter-to-ed-jan-28.png",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -2829,7 +2880,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "untitled_artwork-149.png",
       "sourceImageCreditRev": 7,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -2850,7 +2902,8 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "img_2550.png",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -2871,7 +2924,8 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "ae1_anna-seger-and-katya-loidap.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -2892,7 +2946,8 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "scitech1_annaseger.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "The Campus",
@@ -3073,13 +3128,13 @@
       "sourceImageCreditImageKey": "opinions_1_step-outside_cred-piper-howell.jpg",
       "sourceImageCreditRev": 9,
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/f/fc/GH_Step_outside_Grayson_Highlands_State_Park_Virginia_%2816243872530%29.jpg",
-      "imageTitle": "File:GH Step outside Grayson Highlands State Park Virginia (16243872530).jpg",
-      "imageCredit": "Photo : Virginia State Parks / CC BY 2.0 · Wikimedia Commons",
-      "imageCreator": "Virginia State Parks",
-      "imageLicense": "CC BY 2.0",
-      "imageProvider": "wikimedia",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:GH_Step_outside_Grayson_Highlands_State_Park_Virginia_(16243872530).jpg"
+      "stockImage": "https://live.staticflickr.com/7726/26613564544_14e83b035d_b.jpg",
+      "imageTitle": "Small 800px Amanda Zarna Jeff and Kanit at Break Free PNW 2016 Photo taken by Les Berenson 13217622_10153694166782921_78861309285289138_o",
+      "imageCredit": "Photo : Backbone Campaign / CC BY · Openverse",
+      "imageCreator": "Backbone Campaign",
+      "imageLicense": "by",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/33000102@N03/26613564544"
     },
     {
       "source": "The Campus",
@@ -3909,13 +3964,13 @@
       "image": "",
       "authorCheckedAt": "2026-07-25T10:02:35.709Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/bc/East_Austin_Gentrification_Holly_St_2018.jpg",
-      "imageTitle": "File:East Austin Gentrification Holly St 2018.jpg",
-      "imageCredit": "Photo : Larry D. Moore / CC BY 4.0 · Wikimedia Commons",
-      "imageCreator": "Larry D. Moore",
-      "imageLicense": "CC BY 4.0",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/f/f8/Although_it_looks_like_a_%28concrete%29_suspension_bridge_over_the_Dordogne%2C_it_is_an_ordinary_cantilevering_bridge_from_both_sides_of_the_river_and_a_hinged_inner_part_for_thermal_movement_possibility_-_panoramio.jpg",
+      "imageTitle": "File:Although it looks like a (concrete) suspension bridge over the Dordogne, it is an ordinary cantilevering bridge from both sides of the river and a hinged inner part for thermal movement possibility - panoramio.jpg",
+      "imageCredit": "Photo : Henk Monster / CC BY 3.0 · Wikimedia Commons",
+      "imageCreator": "Henk Monster",
+      "imageLicense": "CC BY 3.0",
       "imageProvider": "wikimedia",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:East_Austin_Gentrification_Holly_St_2018.jpg"
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Although_it_looks_like_a_(concrete)_suspension_bridge_over_the_Dordogne,_it_is_an_ordinary_cantilevering_bridge_from_both_sides_of_the_river_and_a_hinged_inner_part_for_thermal_movement_possibility_-_panoramio.jpg"
     },
     {
       "source": "The McGill Daily",
