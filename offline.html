@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0e0f12" />
+  <meta name="robots" content="noindex" />
+  <title>Maintenance en cours — LE RADAR</title>
+  <style>
+    :root {
+      --bg: #0e0f12;
+      --bg-soft: #181a1e;
+      --ink: #f1f2f4;
+      --ink-soft: #c2c6cd;
+      --muted: #888d96;
+      --rule: #26282d;
+      --accent: #cf7ec1;
+      --radio: #5d9be0;
+      --serif: Georgia, "Times New Roman", "Source Serif 4", serif;
+      --sans: system-ui, -apple-system, "Segoe UI", Inter, Roboto, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: max(20px, env(safe-area-inset-top)) 20px max(24px, env(safe-area-inset-bottom));
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(93, 155, 224, 0.12), transparent 55%),
+        radial-gradient(ellipse 60% 40% at 80% 100%, rgba(207, 126, 193, 0.08), transparent 50%),
+        var(--bg);
+    }
+    .shell {
+      width: 100%;
+      max-width: 520px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    header {
+      text-align: center;
+      padding-top: 0.5rem;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      text-decoration: none;
+      color: inherit;
+    }
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.12);
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+    .brand-name {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 1.35rem;
+      letter-spacing: 0.02em;
+    }
+    .brand-name span { color: var(--radio); font-weight: 500; font-size: 0.92em; }
+
+    .status {
+      text-align: center;
+      margin-top: 0.35rem;
+    }
+    .status-kicker {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 0.65rem;
+    }
+    .phrase-stage {
+      min-height: 4.6rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      position: relative;
+    }
+    .phrase {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(1.35rem, 4.5vw, 1.75rem);
+      font-weight: 600;
+      line-height: 1.25;
+      text-align: center;
+      max-width: 20em;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 480ms ease, transform 480ms ease;
+    }
+    .phrase.is-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .phrase.is-out {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    .phrase-meta {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      min-height: 1.2em;
+      opacity: 0;
+      transition: opacity 400ms ease;
+    }
+    .phrase-meta.is-in { opacity: 1; }
+    .phrase-meta .dot {
+      opacity: 0.45;
+      margin: 0 0.35em;
+    }
+    .phrase-meta .tag-indigenous {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* Bandeau langues : autochtone d’abord, puis monde */
+    .lang-rail {
+      margin-top: 0.25rem;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 0.75rem 0;
+      overflow: hidden;
+    }
+    .lang-rail-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+      margin: 0 0 0.55rem;
+    }
+    .lang-scroll {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.35rem 0.4rem;
+      max-height: 5.5rem;
+      overflow: hidden;
+    }
+    .lang-chip {
+      font-size: 0.68rem;
+      padding: 0.22rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid var(--rule);
+      color: var(--ink-soft);
+      background: rgba(255,255,255,0.02);
+      white-space: nowrap;
+      transition: border-color 200ms, color 200ms, background 200ms;
+    }
+    .lang-chip.is-active {
+      border-color: rgba(93, 155, 224, 0.55);
+      color: var(--ink);
+      background: rgba(93, 155, 224, 0.1);
+    }
+    .lang-chip.is-indigenous {
+      border-color: rgba(207, 126, 193, 0.25);
+    }
+    .lang-chip.is-indigenous.is-active {
+      border-color: rgba(207, 126, 193, 0.6);
+      background: rgba(207, 126, 193, 0.1);
+    }
+
+    .hint {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+      margin: 0;
+      line-height: 1.45;
+    }
+    .hint strong { color: var(--ink); font-weight: 600; }
+    .reconnect {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+      min-height: 1.2em;
+      margin: 0;
+    }
+    .reconnect.is-ok { color: #7dcea0; }
+
+    /* Jeu satellite */
+    .game-wrap {
+      margin-top: auto;
+      border-radius: 14px;
+      border: 1px solid var(--rule);
+      background: var(--bg-soft);
+      overflow: hidden;
+      touch-action: manipulation;
+      user-select: none;
+    }
+    .game-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.45rem 0.75rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      border-bottom: 1px solid var(--rule);
+      letter-spacing: 0.04em;
+    }
+    .game-bar b { color: var(--ink-soft); font-weight: 600; }
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+      background: linear-gradient(180deg, #12141a 0%, #0e0f12 55%, #141820 100%);
+    }
+    .game-help {
+      text-align: center;
+      font-size: 0.7rem;
+      color: var(--muted);
+      padding: 0.4rem 0.75rem 0.55rem;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.7rem;
+      color: var(--muted);
+      padding-top: 0.5rem;
+    }
+    footer a {
+      color: var(--ink-soft);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .phrase, .phrase-meta { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/" rel="home">
+        <span class="brand-mark" aria-hidden="true">📡</span>
+        <span class="brand-name">LE RADAR<span>.ca</span></span>
+      </a>
+    </header>
+
+    <section class="status" aria-live="polite">
+      <p class="status-kicker">Statut</p>
+      <div class="phrase-stage">
+        <p class="phrase is-in" id="phrase">Maintenance en cours</p>
+        <p class="phrase-meta is-in" id="phrase-meta">
+          <span class="tag-indigenous" id="phrase-tag">Français</span>
+        </p>
+      </div>
+    </section>
+
+    <section class="lang-rail" aria-label="Langues">
+      <p class="lang-rail-label">Langues autochtones du Québec · puis le monde</p>
+      <div class="lang-scroll" id="lang-chips"></div>
+    </section>
+
+    <p class="hint">
+      <strong>Mise à jour ou hors ligne.</strong>
+      Le site revient dès que la connexion et le cache sont prêts.
+    </p>
+    <p class="reconnect" id="reconnect" aria-live="polite"></p>
+
+    <section class="game-wrap" aria-label="Mini-jeu en attendant">
+      <div class="game-bar">
+        <span>Le Satellite · tapez / espace pour sauter</span>
+        <span>Score <b id="score">0</b> · Record <b id="hi">0</b></span>
+      </div>
+      <canvas id="game" width="520" height="160" role="img" aria-label="Satellite qui saute des obstacles"></canvas>
+      <p class="game-help">Inspiré du dino hors-ligne — version LE RADAR</p>
+    </section>
+
+    <footer>
+      <a href="/">Réessayer le-radar.ca</a>
+      · médias étudiants du Québec
+    </footer>
+  </div>
+
+  <script>
+(function () {
+  'use strict';
+
+  /**
+   * Phrases « Maintenance en cours ».
+   * 1) Langues autochtones du Québec en premier (endonymes).
+   * 2) Puis principales langues mondiales.
+   * Inuktitut : traduction machine publique (gtx). Autres langues autochtones
+   * sans moteur public fiable : phrase FR + endonyme (honnêteté > faux texte).
+   */
+  const PHRASES = [
+    // ── Autochtones du Québec (d’abord) ──
+    { text: 'ᐋᖅᑭᐅᒪᐃᓐᓇᕈᑎᑦ ᐱᕙᓪᓕᐊᔪᑦ', name: 'ᐃᓄᒃᑎᑐᑦ', group: 'indigenous', lang: 'iu', dir: 'ltr' },
+    { text: 'Aaqqiumainnarutit pivalliajut', name: 'Inuktut', group: 'indigenous', lang: 'iu-Latn' },
+    { text: 'Maintenance en cours', name: 'Eeyou ayimuun', nameFr: 'Cri', group: 'indigenous', via: 'fr' },
+    { text: 'Maintenance en cours', name: 'Innu-aimun', nameFr: 'Innu', group: 'indigenous', via: 'fr' },
+    { text: 'Maintenance en cours', name: 'Atikamekw nehirowimowin', nameFr: 'Atikamekw', group: 'indigenous', via: 'fr' },
+    { text: 'Maintenance en cours', name: 'Anishinaabemowin', nameFr: 'Algonquin', group: 'indigenous', via: 'fr' },
+    { text: 'Maintenance en cours', name: 'Kanienʼkéha', nameFr: 'Mohawk', group: 'indigenous', via: 'fr' },
+    { text: 'Maintenance en cours', name: "Mi'kmawi'simk", nameFr: "Mi'gmaq", group: 'indigenous', via: 'fr' },
+    { text: 'Maintenance en cours', name: 'Wolastoqey Latuwewakon', nameFr: 'Malécite', group: 'indigenous', via: 'fr' },
+    { text: 'Maintenance en cours', name: 'Wendat', nameFr: 'Huron-Wendat', group: 'indigenous', via: 'fr' },
+    { text: 'Maintenance en cours', name: 'Iyuw Iyimuun', nameFr: 'Naskapi', group: 'indigenous', via: 'fr' },
+    // ── Français (site) puis monde ──
+    { text: 'Maintenance en cours', name: 'Français', group: 'world', lang: 'fr' },
+    { text: 'Maintenance in progress', name: 'English', group: 'world', lang: 'en' },
+    { text: 'Mantenimiento en curso', name: 'Español', group: 'world', lang: 'es' },
+    { text: 'Manutenção em andamento', name: 'Português', group: 'world', lang: 'pt' },
+    { text: 'Wartungsarbeiten laufen', name: 'Deutsch', group: 'world', lang: 'de' },
+    { text: 'Manutenzione in corso', name: 'Italiano', group: 'world', lang: 'it' },
+    { text: 'Onderhoud in uitvoering', name: 'Nederlands', group: 'world', lang: 'nl' },
+    { text: 'Konserwacja w toku', name: 'Polski', group: 'world', lang: 'pl' },
+    { text: 'Întreținere în curs', name: 'Română', group: 'world', lang: 'ro' },
+    { text: 'Выполняется техническое обслуживание', name: 'Русский', group: 'world', lang: 'ru' },
+    { text: 'Триває технічне обслуговування', name: 'Українська', group: 'world', lang: 'uk' },
+    { text: '维护中', name: '中文', group: 'world', lang: 'zh' },
+    { text: 'メンテナンス中', name: '日本語', group: 'world', lang: 'ja' },
+    { text: '유지보수 진행 중', name: '한국어', group: 'world', lang: 'ko' },
+    { text: 'جاري الصيانة', name: 'العربية', group: 'world', lang: 'ar', dir: 'rtl' },
+    { text: 'रखरखाव प्रगति पर है', name: 'हिन्दी', group: 'world', lang: 'hi' },
+    { text: 'Bakım devam ediyor', name: 'Türkçe', group: 'world', lang: 'tr' },
+    { text: 'Đang bảo trì', name: 'Tiếng Việt', group: 'world', lang: 'vi' },
+    { text: 'Pemeliharaan sedang berlangsung', name: 'Bahasa Indonesia', group: 'world', lang: 'id' },
+    { text: 'Matengenezo yanaendelea', name: 'Kiswahili', group: 'world', lang: 'sw' },
+    { text: 'Underhåll pågår', name: 'Svenska', group: 'world', lang: 'sv' },
+    { text: 'Συντήρηση σε εξέλιξη', name: 'Ελληνικά', group: 'world', lang: 'el' },
+    { text: 'תחזוקה בעיצומה', name: 'עברית', group: 'world', lang: 'he', dir: 'rtl' },
+    { text: 'Manteniment en curs', name: 'Català', group: 'world', lang: 'ca' },
+  ];
+
+  const phraseEl = document.getElementById('phrase');
+  const metaEl = document.getElementById('phrase-meta');
+  const tagEl = document.getElementById('phrase-tag');
+  const chipsEl = document.getElementById('lang-chips');
+  const reconnectEl = document.getElementById('reconnect');
+
+  // Chips
+  PHRASES.forEach((p, i) => {
+    const chip = document.createElement('span');
+    chip.className = 'lang-chip' + (p.group === 'indigenous' ? ' is-indigenous' : '');
+    chip.textContent = p.name;
+    chip.dataset.i = String(i);
+    chip.title = p.nameFr ? p.name + ' (' + p.nameFr + ')' : p.name;
+    chipsEl.appendChild(chip);
+  });
+
+  let idx = 0;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function show(i) {
+    const p = PHRASES[i];
+    if (!p) return;
+    const apply = () => {
+      phraseEl.textContent = p.text;
+      phraseEl.lang = p.lang || 'fr';
+      phraseEl.dir = p.dir || 'ltr';
+      let meta = p.name;
+      if (p.nameFr) meta += ' · ' + p.nameFr;
+      if (p.via === 'fr') meta += ' · texte FR';
+      tagEl.textContent = meta;
+      tagEl.className = p.group === 'indigenous' ? 'tag-indigenous' : '';
+      chipsEl.querySelectorAll('.lang-chip').forEach((c) => {
+        c.classList.toggle('is-active', c.dataset.i === String(i));
+      });
+      phraseEl.classList.remove('is-out');
+      phraseEl.classList.add('is-in');
+      metaEl.classList.add('is-in');
+    };
+    if (reduceMotion) {
+      apply();
+      return;
+    }
+    phraseEl.classList.remove('is-in');
+    phraseEl.classList.add('is-out');
+    metaEl.classList.remove('is-in');
+    setTimeout(apply, 420);
+  }
+
+  show(0);
+  setInterval(() => {
+    idx = (idx + 1) % PHRASES.length;
+    show(idx);
+  }, 2800);
+
+  // ── Auto-retour quand le site (index) répond en ligne ──
+  let checking = false;
+  async function tryReconnect() {
+    if (checking) return;
+    if (!navigator.onLine) {
+      reconnectEl.textContent = 'Hors ligne — le jeu reste disponible.';
+      reconnectEl.classList.remove('is-ok');
+      return;
+    }
+    checking = true;
+    reconnectEl.textContent = 'Vérification de la connexion…';
+    try {
+      // Probe index + un asset shell (évite de confondre avec offline.html)
+      const bust = Date.now();
+      const [htmlRes, cssRes] = await Promise.all([
+        fetch('./index.html?_probe=' + bust, { cache: 'no-store', credentials: 'same-origin' }),
+        fetch('./style.css?_probe=' + bust, { cache: 'no-store', credentials: 'same-origin' }),
+      ]);
+      if (htmlRes.ok && cssRes.ok) {
+        const text = await htmlRes.text();
+        const isOfflinePage =
+          /Maintenance en cours — LE RADAR/.test(text) ||
+          /id="game"/.test(text) && /Le Satellite/.test(text);
+        const isMainSite =
+          /id="bg-photo-layer"/.test(text) ||
+          /Le fil étudiant/i.test(text) ||
+          /quebec-backgrounds/.test(text);
+        if (isMainSite && !isOfflinePage) {
+          reconnectEl.textContent = 'Connexion rétablie — redirection…';
+          reconnectEl.classList.add('is-ok');
+          setTimeout(() => { location.replace('./'); }, 500);
+          return;
+        }
+      }
+      reconnectEl.textContent = 'Toujours en maintenance ou hors ligne…';
+      reconnectEl.classList.remove('is-ok');
+    } catch (_) {
+      reconnectEl.textContent = 'Réseau indisponible.';
+      reconnectEl.classList.remove('is-ok');
+    } finally {
+      checking = false;
+    }
+  }
+  setInterval(tryReconnect, 3000);
+  window.addEventListener('online', tryReconnect);
+  setTimeout(tryReconnect, 1200);
+
+  // ── Mini-jeu : Le Satellite ──
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+  const scoreEl = document.getElementById('score');
+  const hiEl = document.getElementById('hi');
+  const HI_KEY = 'lr_satellite_hi_v1';
+  let hi = 0;
+  try { hi = parseInt(localStorage.getItem(HI_KEY) || '0', 10) || 0; } catch (_) {}
+  hiEl.textContent = String(hi);
+
+  const W = canvas.width;
+  const H = canvas.height;
+  const GROUND = H - 28;
+  let sat = { x: 56, y: GROUND - 28, vy: 0, w: 28, h: 22, onGround: true };
+  let obstacles = [];
+  let frame = 0;
+  let score = 0;
+  let speed = 4.2;
+  let alive = true;
+  let started = false;
+  let spawnIn = 70;
+
+  function reset() {
+    sat.y = GROUND - 28;
+    sat.vy = 0;
+    sat.onGround = true;
+    obstacles = [];
+    frame = 0;
+    score = 0;
+    speed = 4.2;
+    alive = true;
+    spawnIn = 70;
+    scoreEl.textContent = '0';
+  }
+
+  function jump() {
+    if (!started) { started = true; reset(); }
+    if (!alive) { reset(); return; }
+    if (sat.onGround) {
+      sat.vy = -9.2;
+      sat.onGround = false;
+    }
+  }
+
+  canvas.addEventListener('pointerdown', (e) => { e.preventDefault(); jump(); });
+  window.addEventListener('keydown', (e) => {
+    if (e.code === 'Space' || e.code === 'ArrowUp') {
+      e.preventDefault();
+      jump();
+    }
+  });
+
+  function spawn() {
+    const h = 18 + Math.random() * 28;
+    const kind = Math.random() < 0.35 ? 'tower' : Math.random() < 0.5 ? 'paper' : 'tomato';
+    obstacles.push({ x: W + 10, w: kind === 'tower' ? 16 : 20, h: h, kind: kind });
+  }
+
+  function drawSat(x, y) {
+    // corps
+    ctx.fillStyle = '#1a1c22';
+    ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+    ctx.lineWidth = 1.5;
+    roundRect(x, y + 4, 26, 14, 4);
+    ctx.fill();
+    ctx.stroke();
+    // panneau
+    ctx.fillStyle = 'rgba(93,155,224,0.85)';
+    ctx.fillRect(x - 8, y + 7, 8, 8);
+    ctx.fillRect(x + 26, y + 7, 8, 8);
+    // antenne
+    ctx.strokeStyle = '#cf7ec1';
+    ctx.beginPath();
+    ctx.moveTo(x + 13, y + 4);
+    ctx.lineTo(x + 13, y - 4);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(x + 13, y - 6, 3, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+
+  function roundRect(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  function drawObstacle(o) {
+    const y = GROUND - o.h;
+    if (o.kind === 'tomato') {
+      ctx.fillStyle = '#c8102e';
+      ctx.beginPath();
+      ctx.arc(o.x + o.w / 2, y + o.h / 2, o.w / 2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#3a7a3a';
+      ctx.fillRect(o.x + o.w / 2 - 2, y - 2, 4, 5);
+    } else if (o.kind === 'tower') {
+      ctx.fillStyle = '#3a4250';
+      ctx.fillRect(o.x, y, o.w, o.h);
+      ctx.fillStyle = '#5d9be0';
+      ctx.fillRect(o.x - 2, y, o.w + 4, 3);
+    } else {
+      ctx.fillStyle = '#2a2e38';
+      ctx.fillRect(o.x, y, o.w, o.h);
+      ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+      ctx.strokeRect(o.x + 2, y + 3, o.w - 4, o.h - 6);
+    }
+  }
+
+  function tick() {
+    frame++;
+    // ciel discret
+    ctx.clearRect(0, 0, W, H);
+    // étoiles
+    ctx.fillStyle = 'rgba(255,255,255,0.15)';
+    for (let i = 0; i < 18; i++) {
+      const sx = (i * 97 + frame * 0.15) % W;
+      const sy = (i * 37) % (H - 40);
+      ctx.fillRect(sx, sy, 1.5, 1.5);
+    }
+    // sol
+    ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+    ctx.beginPath();
+    ctx.moveTo(0, GROUND + 0.5);
+    ctx.lineTo(W, GROUND + 0.5);
+    ctx.stroke();
+    // hachures sol
+    ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+    const off = (frame * speed) % 24;
+    for (let x = -off; x < W; x += 24) {
+      ctx.beginPath();
+      ctx.moveTo(x, GROUND + 4);
+      ctx.lineTo(x + 10, GROUND + 14);
+      ctx.stroke();
+    }
+
+    if (started && alive) {
+      sat.vy += 0.45;
+      sat.y += sat.vy;
+      if (sat.y >= GROUND - sat.h) {
+        sat.y = GROUND - sat.h;
+        sat.vy = 0;
+        sat.onGround = true;
+      }
+      spawnIn--;
+      if (spawnIn <= 0) {
+        spawn();
+        spawnIn = 55 + Math.random() * 50 - Math.min(25, score / 40);
+      }
+      speed = 4.2 + Math.min(4, score / 180);
+      for (const o of obstacles) o.x -= speed;
+      obstacles = obstacles.filter((o) => o.x + o.w > -20);
+
+      // collision
+      for (const o of obstacles) {
+        const ox = o.x;
+        const oy = GROUND - o.h;
+        if (
+          sat.x + 4 < ox + o.w - 2 &&
+          sat.x + sat.w - 4 > ox + 2 &&
+          sat.y + 4 < oy + o.h &&
+          sat.y + sat.h > oy + 2
+        ) {
+          alive = false;
+          if (score > hi) {
+            hi = score;
+            try { localStorage.setItem(HI_KEY, String(hi)); } catch (_) {}
+            hiEl.textContent = String(hi);
+          }
+        }
+      }
+      if (frame % 4 === 0) {
+        score++;
+        scoreEl.textContent = String(score);
+      }
+    }
+
+    for (const o of obstacles) drawObstacle(o);
+    drawSat(sat.x, sat.y);
+
+    if (!started) {
+      ctx.fillStyle = 'rgba(241,242,244,0.75)';
+      ctx.font = '600 13px system-ui,sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Appuyez pour démarrer', W / 2, H / 2 - 8);
+    } else if (!alive) {
+      ctx.fillStyle = 'rgba(14,15,18,0.55)';
+      ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = '#f1f2f4';
+      ctx.font = '600 15px system-ui,sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Signal perdu — tapez pour rejouer', W / 2, H / 2);
+    }
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+  </script>
+</body>
+</html>

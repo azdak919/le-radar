@@ -1,11 +1,14 @@
-const CACHE_NAME = "radar-shell-v490";
+const CACHE_NAME = "radar-shell-v491";
 const CACHE_PREFIX = "radar-";
+/** Cache permanent : page maintenance / hors-ligne (ne se purge pas au bump shell). */
+const OFFLINE_CACHE = "radar-offline-v1";
 // Isolated mini-apps under /pomo/ and /solitaire/ own their own SWs + caches.
 const ISOLATED_PATH_RE = /\/(pomo|solitaire)(\/|$)/;
 
 const APP_SHELL = [
   "./",
   "./index.html",
+  "./offline.html",
   "./feeds.html",
   "./feeds-page.js",
   "./style.css",
@@ -44,7 +47,11 @@ const APP_SHELL = [
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)).then(() => self.skipWaiting())
+    Promise.all([
+      // Offline d’abord : jouable même si le reste du shell échoue à cacher
+      caches.open(OFFLINE_CACHE).then((cache) => cache.add("./offline.html")),
+      caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)),
+    ]).then(() => self.skipWaiting())
   );
 });
 
@@ -53,8 +60,13 @@ self.addEventListener("activate", (event) => {
     caches.keys().then((keys) =>
       Promise.all(
         keys
-          // Only purge radar-* caches — never touch pomo-* or solitaire-*
-          .filter((key) => key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME)
+          // Purge anciens shells — garde radar-offline-* et pomo/solitaire
+          .filter(
+            (key) =>
+              key.startsWith(CACHE_PREFIX) &&
+              key !== CACHE_NAME &&
+              !key.startsWith("radar-offline")
+          )
           .map((key) => caches.delete(key))
       )
     ).then(() => self.clients.claim())
@@ -112,7 +124,17 @@ self.addEventListener("fetch", (event) => {
           caches.open(CACHE_NAME).then((cache) => cacheIfOk(cache, request, clone));
           return networkResponse;
         })
-        .catch(() => caches.match("./index.html"))
+        .catch(() =>
+          caches
+            .open(OFFLINE_CACHE)
+            .then((c) => c.match("./offline.html"))
+            .then(
+              (r) =>
+                r ||
+                caches.match("./offline.html") ||
+                caches.match("./index.html")
+            )
+        )
     );
     return;
   }
