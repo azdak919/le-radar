@@ -1432,6 +1432,31 @@ function scheduleZonedNow(date = new Date()) {
   return { day: wd[map.weekday] ?? 0, minutes: hour * 60 + minute };
 }
 
+const SCHEDULE_DAY_NAMES = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+
+/** Jour de grille (0-6) d'une émission d'après son titre, si elle y figure. */
+function scheduleDayForTitle(radio, title) {
+  const grid = radio?.id ? radioSchedules.stations?.[radio.id]?.grid : null;
+  if (!Array.isArray(grid) || !title) return null;
+  const target = normLoose(title);
+  const match = grid.find((slot) => slot.title && normLoose(slot.title) === target);
+  return match ? match.day : null;
+}
+
+/**
+ * « Demain », le nom du jour, ou '' si c'est aujourd'hui — pour éviter
+ * qu'un « à venir » dont l'heure est déjà passée aujourd'hui (ex. 22 h vu à
+ * 23 h 47) ne paraisse être une émission manquée alors qu'elle est demain.
+ */
+function scheduleRelativeDayLabel(day) {
+  if (day == null) return '';
+  const today = scheduleZonedNow().day;
+  if (day === today) return '';
+  const diff = (day - today + 7) % 7;
+  if (diff === 1) return 'Demain';
+  return SCHEDULE_DAY_NAMES[day].replace(/^./, (c) => c.toUpperCase());
+}
+
 function scheduleTimeToMin(value) {
   const m = /^(\d{1,2}):(\d{2})$/.exec(String(value || '').trim());
   if (!m) return null;
@@ -1501,11 +1526,15 @@ function isAuthoritativeLiveShow(radio) {
   return src === 'api-live';
 }
 
-/** Créneau horaire « HH:MM – HH:MM ». */
-function upcomingTimeRange(upcoming) {
+/** Créneau horaire « HH:MM – HH:MM », préfixé de « Demain »/jour si ce n'est pas aujourd'hui. */
+function upcomingTimeRange(upcoming, radio) {
   if (!upcoming) return '';
-  if (upcoming.start && upcoming.end) return `${upcoming.start} – ${upcoming.end}`;
-  return upcoming.start || '';
+  const range = upcoming.start && upcoming.end
+    ? `${upcoming.start} – ${upcoming.end}`
+    : (upcoming.start || '');
+  const dayLabel = scheduleRelativeDayLabel(scheduleDayForTitle(radio, upcoming.title));
+  if (!dayLabel) return range;
+  return range ? `${dayLabel} · ${range}` : dayLabel;
 }
 
 /**
@@ -1594,7 +1623,7 @@ function choqHybridAirPhases(radio) {
 
   // A) Musique libre + émission à venir (piste propre seulement)
   if (!liveShow && trackOk && upcoming?.title) {
-    const upTime = upcomingTimeRange(upcoming);
+    const upTime = upcomingTimeRange(upcoming, radio);
     return {
       live: {
         title: `♪ ${trackRaw}`,
@@ -1708,7 +1737,7 @@ function nowAirLines(radio) {
   const upcoming = botNext || (schedNext
     ? { title: schedNext.title, start: schedNext.start, end: schedNext.end }
     : null);
-  const upTime = upcomingTimeRange(upcoming);
+  const upTime = upcomingTimeRange(upcoming, radio);
 
   if (upcoming?.title) {
     const bits = [];
