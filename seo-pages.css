@@ -1,0 +1,242 @@
+/*
+ * LE-RADAR.ca — Pages d'entités (radios, journaux, établissements, annuaire).
+ *
+ * Ces pages sont générées par scripts/seo-pages.js et lisibles sans
+ * JavaScript. Elles réutilisent tous les jetons de style.css (couleurs,
+ * typographies, thème clair/sombre) : ce fichier n'ajoute que la mise en page
+ * propre à ces pages, jamais une couleur ou une police en dur.
+ */
+
+.seo-wire {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 28px var(--pad) 48px;
+  color: var(--ink);
+}
+
+/* ── Fil d'Ariane ───────────────────────────────────────────────────────── */
+
+.seo-crumbs {
+  font-family: var(--sans);
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-bottom: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.seo-crumbs a { color: var(--muted); text-decoration: none; }
+.seo-crumbs a:hover { color: var(--accent); text-decoration: underline; }
+.seo-crumbs__sep { opacity: 0.55; }
+
+/* ── Titres ─────────────────────────────────────────────────────────────── */
+
+.seo-eyebrow {
+  font-family: var(--sans);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 8px;
+}
+
+.seo-title {
+  font-family: var(--serif);
+  font-size: clamp(1.7rem, 4vw + 0.3rem, 2.6rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin: 0 0 18px;
+  color: var(--ink);
+}
+
+.seo-lead {
+  font-family: var(--serif);
+  font-size: 1.12rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0 0 22px;
+}
+
+.seo-wire p {
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin: 0 0 16px;
+}
+
+.seo-section {
+  margin-top: 38px;
+  padding-top: 22px;
+  border-top: 1px solid var(--rule);
+}
+.seo-section > h2 {
+  font-family: var(--serif);
+  font-size: 1.42rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 16px;
+}
+
+/* ── Fiche de faits ─────────────────────────────────────────────────────── */
+
+.seo-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 2px 20px;
+  margin: 0 0 24px;
+  padding: 16px 18px;
+  background: var(--bg-soft);
+  border-radius: 10px;
+}
+.seo-fact { padding: 7px 0; min-width: 0; }
+.seo-fact dt {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 3px;
+}
+.seo-fact dd {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.seo-fact dd a { color: var(--accent); text-decoration: none; }
+.seo-fact dd a:hover { text-decoration: underline; }
+
+/* ── Appel à l'action ───────────────────────────────────────────────────── */
+
+.seo-cta { margin: 22px 0; }
+.seo-cta a {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--accent);
+  padding: 11px 20px;
+  border-radius: 999px;
+  text-decoration: none;
+}
+.seo-cta a:hover { background: var(--accent-dark); }
+
+/* ── Cartes (listes d'entités) ──────────────────────────────────────────── */
+
+.seo-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 10px;
+}
+.seo-card a {
+  display: block;
+  padding: 14px 16px;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: border-color 140ms ease, transform 140ms ease;
+}
+.seo-card a:hover { border-color: var(--accent); transform: translateY(-1px); }
+.seo-card__name {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1.06rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.25;
+}
+.seo-card__meta {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+/* ── Manchettes ─────────────────────────────────────────────────────────── */
+
+.seo-headlines { list-style: none; margin: 0; padding: 0; }
+.seo-headline {
+  padding: 13px 0;
+  border-bottom: 1px solid var(--rule);
+}
+/* Bloc : la date et la signature passent sous le titre plutôt que de se
+   coller à sa dernière ligne. */
+.seo-headline a {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink);
+  text-decoration: none;
+}
+.seo-headline a:hover { color: var(--accent); text-decoration: underline; }
+.seo-headline time,
+.seo-headline__by {
+  display: inline-block;
+  margin-top: 4px;
+  margin-right: 10px;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+/* ── Grille horaire ─────────────────────────────────────────────────────── */
+
+.seo-schedule {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+.seo-day h3 {
+  font-family: var(--sans);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--radio);
+  margin: 0 0 8px;
+}
+.seo-day ul { list-style: none; margin: 0; padding: 0; }
+.seo-day li {
+  font-family: var(--sans);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  padding: 3px 0;
+}
+.seo-day time { font-weight: 700; color: var(--ink); margin-right: 6px; }
+
+/* ── Notes et vides ─────────────────────────────────────────────────────── */
+
+.seo-note,
+.seo-empty {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--muted);
+  margin: 14px 0 0;
+}
+.seo-empty { font-style: italic; }
+
+.seo-foot-meta { font-size: 12.5px; }
+
+/* ── Mât simplifié (ces pages n'ont pas la banque photo, qui est en JS) ─── */
+
+.seo-wire + .site-foot { max-width: var(--maxw); margin: 0 auto; }
+
+@media (max-width: 520px) {
+  .seo-facts { grid-template-columns: 1fr; }
+  .seo-cards { grid-template-columns: 1fr; }
+}

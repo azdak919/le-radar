@@ -40,12 +40,23 @@ jobs:
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
+      # Référencement : les pages d'entités, le sitemap et llms.txt dérivent
+      # de ce registre. Sans cette étape, une nouvelle entrée n'aurait sa page
+      # qu'à la passe hebdomadaire de maintain.yml.
+      # continue-on-error : un échec du référencement ne doit jamais bloquer
+      # la publication des données.
+      - name: Regenerate SEO artefacts
+        if: steps.check.outputs.changed == 'true'
+        run: node scripts/generate-seo.js --update
+        continue-on-error: true
+
       - name: Commit and push updates
         if: steps.check.outputs.changed == 'true'
         run: |
           git config user.name "RADAR Schedule Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add radio-schedules.json radio-schedules.seed.json
+          git add radio-schedules.json radio-schedules.seed.json index.html sitemap.xml llms.txt
+          git add -A radios journaux etablissements medias en 2>/dev/null || true
           git commit -m "bot: update radio schedules + sources (auto)"
           # Fichiers générés : en cas de conflit avec un commit concurrent,
           # -X theirs garde la version fraîchement produite par ce bot, et un

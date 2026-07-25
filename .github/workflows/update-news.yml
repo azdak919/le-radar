@@ -163,12 +163,31 @@ jobs:
             echo "Timestamp-only refresh — skip noisy commit."
           fi
 
+      # Référencement : prérendu du fil dans index.html (les robots des IA
+      # n'exécutent pas JS) + sitemap + llms.txt. Volontairement APRÈS le
+      # contrôle de changement : sinon index.html bougerait à chaque passe et
+      # forcerait un commit, ce que la logique anti-bruit ci-dessus évite.
+      # continue-on-error : un échec ici ne doit jamais bloquer la publication
+      # éditoriale.
+      - name: Regenerate SEO artefacts
+        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.check.outputs.changed == 'true'
+        timeout-minutes: 2
+        run: node scripts/generate-seo.js --update
+        env:
+          CI: true
+        continue-on-error: true
+
       - name: Commit and push updates
         if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.check.outputs.changed == 'true'
         run: |
           git config user.name "RÉQ News Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add news.json author-qc.json lead-excerpt-qc.json social-feed.json lead-image-qc.json photo-credit-qc.json feed.xml news-sources.json 2>/dev/null || true
+          git add news.json author-qc.json lead-excerpt-qc.json social-feed.json lead-image-qc.json photo-credit-qc.json feed.xml news-sources.json index.html sitemap.xml llms.txt 2>/dev/null || true
+          # Pages d'entités : ce sont des DOSSIERS entièrement régénérés. `-A`
+          # est indispensable — sans lui, la suppression d'une page (journal
+          # retiré du registre) resterait non stagée et la page continuerait
+          # d'être servie et indexée.
+          git add -A radios journaux etablissements medias en 2>/dev/null || true
           git commit -m "bot: update student news feed, excerpts, images, photo credits, RSS and social (auto)" || exit 0
           for i in 1 2 3; do
             git pull --rebase -X theirs --autostash origin "${GITHUB_REF_NAME}" && git push && exit 0
