@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-25T17:01:02.879Z",
+  "updatedAt": "2026-07-25T18:04:13.589Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -27,7 +27,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-25T17:00:25.540Z"
+      "checkedAt": "2026-07-25T18:03:46.225Z"
     },
     "cism": {
       "id": "cism",
@@ -57,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-25T17:00:27.888Z"
+      "checkedAt": "2026-07-25T18:03:48.376Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Samedi Midi",
-        "source": "api-live",
-        "start": "10:30",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Funky Revolutions",
         "source": "api-live",
         "start": "14:00",
         "end": "16:00"
       },
-      "track": "",
-      "showTitle": "Samedi Midi",
+      "next": {
+        "title": "West Indian Rhythms",
+        "source": "api-live",
+        "start": "16:00",
+        "end": "19:00"
+      },
+      "track": "Airtime - offline",
+      "showTitle": "Funky Revolutions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-25T17:00:31.841Z"
+      "checkedAt": "2026-07-25T18:03:51.453Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Anatomy of Caribbean Music",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
-      },
-      "next": {
         "title": "Caribbean Callaloo",
         "source": "schedule",
         "start": "14:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/caribbean-callaloo"
       },
+      "next": {
+        "title": "Mi Dun Talk",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/mi-dun-talk"
+      },
       "track": "",
-      "showTitle": "Anatomy of Caribbean Music",
+      "showTitle": "Caribbean Callaloo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-25T17:00:45.677Z"
+      "checkedAt": "2026-07-25T18:04:05.324Z"
     },
     "cfak": {
       "id": "cfak",
@@ -130,7 +130,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-25T17:00:46.487Z"
+      "checkedAt": "2026-07-25T18:04:06.048Z"
     },
     "choq": {
       "id": "choq",
@@ -143,7 +143,7 @@
         "end": "23:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Bloc Pub 21 juillet.mp3",
+      "track": "Baby Rose - But, Nvm",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +154,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-25T17:01:02.528Z"
+      "checkedAt": "2026-07-25T18:04:13.238Z"
     }
   }
 }
