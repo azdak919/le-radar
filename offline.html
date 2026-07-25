@@ -105,18 +105,20 @@
       font-size: 1.45rem;
       letter-spacing: 0.01em;
       line-height: 1;
+      color: var(--ink);
     }
+    /* Petit bleu radio QC — comme le TLD du site */
     .brand-name .tld {
-      color: var(--radio-bright);
+      color: #5D9BE0;
       font-weight: 600;
-      font-size: 0.88em;
+      font-size: 0.9em;
       letter-spacing: 0.02em;
     }
 
     /* ── Statut éditorial ── */
     .status {
       text-align: center;
-      padding: 0.15rem 0.5rem 0.9rem;
+      padding: 0.15rem 0.5rem 0.75rem;
     }
     .status-kicker {
       display: inline-flex;
@@ -151,12 +153,30 @@
       letter-spacing: -0.01em;
       color: var(--ink);
     }
+    /* OQLF : français d’abord, anglais secondaire plus petit */
+    .status-en {
+      margin: 0.4rem 0 0;
+      font-family: var(--serif);
+      font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--ink-soft);
+      letter-spacing: 0.01em;
+    }
+    .status-lang-label {
+      margin: 0.65rem 0 0;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
     .status-i18n {
       margin: 0.55rem auto 0;
-      min-height: 1.45em;
+      min-height: 1.35em;
       max-width: 28em;
       font-family: var(--serif);
-      font-size: clamp(0.95rem, 2.6vw, 1.1rem);
+      font-size: clamp(0.92rem, 2.5vw, 1.05rem);
       font-weight: 600;
       line-height: 1.3;
       color: var(--ink-soft);
@@ -171,21 +191,6 @@
     .status-i18n.is-out {
       opacity: 0;
       transform: translateY(-4px);
-    }
-    .status-lang {
-      margin: 0.35rem 0 0;
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      color: var(--muted);
-      min-height: 1.2em;
-    }
-    .status-lang .indigenous {
-      color: var(--accent);
-      font-weight: 600;
-    }
-    .status-lang .via {
-      opacity: 0.7;
     }
 
     /* ── Mini-jeu (haut, hero) ── */
@@ -234,17 +239,31 @@
       align-items: center;
       gap: 0.4rem;
       font-weight: 600;
-      color: var(--ink-soft);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-size: 0.65rem;
+      color: var(--ink);
+      letter-spacing: 0.02em;
+      font-size: 0.78rem;
+      max-width: min(52%, 14rem);
+      min-width: 0;
     }
     .game-bar-title .pip {
+      flex: 0 0 auto;
       width: 6px;
       height: 6px;
       border-radius: 50%;
       background: var(--radio-bright);
       box-shadow: 0 0 8px rgba(93, 155, 224, 0.55);
+    }
+    .game-bar-title.is-indigenous .pip {
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(207, 126, 193, 0.5);
+    }
+    .game-bar-lang {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .game-bar-title.is-indigenous .game-bar-lang {
+      color: var(--accent);
     }
     .game-stats {
       display: flex;
@@ -298,20 +317,11 @@
     }
     .reconnect.is-ok { color: var(--ok); }
 
-    /* ── Langues : rail élégant 1 rangée, pas de soupe ── */
+    /* ── Langues : rail 1 rangée (sans FR / EN — déjà dans le statut) ── */
     .lang-panel {
-      margin: 0 0 0.5rem;
-      padding: 0.75rem 0 0.35rem;
+      margin: 0 0 0.35rem;
+      padding: 0.55rem 0 0.25rem;
       border-top: 1px solid var(--rule);
-    }
-    .lang-panel-label {
-      font-size: 0.62rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-align: center;
-      margin: 0 0 0.55rem;
     }
     .lang-scroll-outer {
       position: relative;
@@ -388,31 +398,62 @@
       box-shadow: 0 0 0 1px rgba(207, 126, 193, 0.12);
     }
 
-    footer {
-      text-align: center;
-      font-size: 0.74rem;
-      color: var(--muted);
-      padding: 0.85rem 0 0.2rem;
-      line-height: 1.55;
+    /* Footer aligné page principale (site-foot) */
+    .site-foot {
       margin-top: auto;
+      padding: 1rem 0.35rem 0.35rem;
+      text-align: center;
+      font-size: 0.78rem;
+      line-height: 1.55;
+      color: var(--muted);
+      border-top: 1px solid var(--rule);
     }
-    footer a {
-      color: var(--ink-soft);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-      transition: color 150ms ease, border-color 150ms ease;
-    }
-    footer a:hover {
+    .site-foot p { margin: 0 0 0.55rem; }
+    .site-foot a {
       color: var(--accent);
-      border-bottom-color: rgba(207, 126, 193, 0.45);
+      text-decoration: none;
+      font-weight: 600;
     }
-    footer .sep { opacity: 0.35; margin: 0 0.4em; }
-    footer .tagline {
-      display: block;
-      margin-top: 0.2rem;
+    .site-foot a:hover { text-decoration: underline; }
+    .site-foot__slogan {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin: 0 0 0.75rem !important;
+      line-height: 1.45;
+    }
+    .site-foot__credit {
+      margin-top: 0.35rem;
+      padding-top: 0.65rem;
+      border-top: 1px solid var(--rule);
+    }
+    .site-foot__author {
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+    }
+    .site-foot__author-mail {
+      margin-left: 0.15rem;
+      font-size: 1em;
+      text-decoration: none !important;
+    }
+    .site-foot__webmaster {
+      margin: 0.45rem 0 0.55rem !important;
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+    }
+    .site-foot__legal {
       font-size: 0.7rem;
-      opacity: 0.85;
+      color: var(--muted);
+      margin-bottom: 0.35rem !important;
     }
+    .site-foot__bot {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin: 0 !important;
+    }
+    .site-foot__bot-ico { margin-right: 0.25rem; }
 
     @media (min-width: 540px) {
       .game-bar { padding: 0.6rem 1rem; }
@@ -428,25 +469,25 @@
     <header>
       <a class="brand" href="/" rel="home">
         <img class="brand-mark" src="assets/icon.svg" width="44" height="44" alt="" />
-        <span class="brand-name notranslate" translate="no">LE RADAR<span class="tld">.ca</span></span>
+        <span class="brand-name notranslate" translate="no">LE&nbsp;RADAR<span class="tld">.ca</span></span>
       </a>
     </header>
 
     <section class="status" aria-live="polite">
       <p class="status-kicker">Statut</p>
       <h1 class="status-title">Maintenance en cours</h1>
+      <!-- OQLF : anglais secondaire, plus petit, sous le français -->
+      <p class="status-en" lang="en">Maintenance in progress</p>
+      <p class="status-lang-label">Langues autochtones du Québec · puis le monde</p>
       <p class="status-i18n is-in" id="phrase" lang="iu">ᐋᖅᑭᐅᒪᐃᓐᓇᕈᑎᑦ ᐱᕙᓪᓕᐊᔪᑦ</p>
-      <p class="status-lang" id="phrase-meta">
-        <span class="indigenous" id="phrase-tag">ᐃᓄᒃᑎᑐᑦ · Inuktut</span>
-      </p>
     </section>
 
     <!-- Jeu remonté : interaction principale pendant l’attente -->
     <section class="game-wrap" aria-label="Mini-jeu en attendant">
       <div class="game-bar">
-        <span class="game-bar-title">
+        <span class="game-bar-title is-indigenous" id="game-lang-wrap" title="Espace ou tapez pour sauter">
           <span class="pip" aria-hidden="true"></span>
-          Signal · espace / tapez
+          <span class="game-bar-lang" id="game-lang">ᐃᓄᒃᑎᑐᑦ</span>
         </span>
         <span class="game-stats">
           <span><span class="stat-label">Score</span><b id="score">0</b></span>
@@ -459,7 +500,7 @@
         width="640"
         height="220"
         role="img"
-        aria-label="LE RADAR saute et collecte des pièces"
+        aria-label="LE RADAR saute et collecte des pièces — espace ou tapez pour sauter"
       ></canvas>
     </section>
 
@@ -471,18 +512,59 @@
       <p class="reconnect" id="reconnect" aria-live="polite"></p>
     </div>
 
-    <section class="lang-panel" aria-label="Langues">
-      <p class="lang-panel-label">Langues autochtones du Québec · puis le monde</p>
+    <section class="lang-panel" aria-label="Autres langues">
       <div class="lang-scroll-outer">
         <div class="lang-scroll" id="lang-chips" role="list"></div>
       </div>
     </section>
 
-    <footer>
-      <a href="https://le-radar.ca/">LE-RADAR.ca</a>
-      <span class="sep">·</span>
-      <span>Médias étudiants du Québec</span>
-      <span class="tagline">Student media on your radar</span>
+    <footer class="site-foot">
+      <p class="site-foot__slogan">
+        Les journaux et les radios étudiantes du Québec, réunis au même endroit
+      </p>
+      <p>
+        Le Radar est un projet non officiel qui regroupe les radios et les journaux
+        étudiants des cégeps et universités du Québec.
+      </p>
+      <p>
+        Ce projet est distribué sous
+        <a
+          href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
+          target="_blank"
+          rel="noopener noreferrer license"
+        >licence publique générale GNU, version&nbsp;2</a>.
+      </p>
+      <div class="site-foot__credit">
+        <p class="site-foot__author">
+          Conçu avec ♡ par
+          <a
+            href="mailto:azdak-qc@proton.me"
+            class="site-foot__author-link"
+            title="azdak-qc@proton.me"
+          >Azdak</a>
+          en 2026
+          <a
+            href="mailto:azdak-qc@proton.me"
+            class="site-foot__author-mail"
+            title="azdak-qc@proton.me"
+            aria-label="Écrire à Azdak — azdak-qc@proton.me"
+          >✉️</a>
+        </p>
+        <p class="site-foot__webmaster">
+          Contacter le webmestre
+          <a href="mailto:azdak-qc@proton.me" title="azdak-qc@proton.me">Azdak</a>
+          <a
+            href="mailto:azdak-qc@proton.me"
+            class="site-foot__author-mail"
+            title="azdak-qc@proton.me"
+            aria-label="Courriel au webmestre Azdak"
+          >✉️</a>
+        </p>
+        <p class="site-foot__legal">
+          Code libre utilisé conformément aux licences applicables; contenus et médias crédités à leurs auteurs respectifs.
+        </p>
+        <p class="site-foot__bot"><span class="site-foot__bot-ico" aria-hidden="true">🤖</span> Agrégateur automatisé de contenus.</p>
+      </div>
     </footer>
   </div>
 
@@ -491,9 +573,8 @@
   'use strict';
 
   /**
-   * Phrases « Maintenance en cours ».
-   * Autochtones du Québec d’abord (endonymes), puis langues mondiales.
-   * Sans moteur fiable : phrase FR + endonyme (honnêteté > faux texte).
+   * Traductions « Maintenance en cours » — défilé (pas FR/EN : déjà dans le statut OQLF).
+   * Autochtones d’abord ; sans moteur fiable : phrase FR + endonyme.
    */
   const PHRASES = [
     { text: 'ᐋᖅᑭᐅᒪᐃᓐᓇᕈᑎᑦ ᐱᕙᓪᓕᐊᔪᑦ', name: 'ᐃᓄᒃᑎᑐᑦ', nameEn: 'Inuktut', group: 'indigenous', lang: 'iu', dir: 'ltr' },
@@ -507,8 +588,7 @@
     { text: 'Maintenance en cours', name: 'Wolastoqey Latuwewakon', nameFr: 'Malécite', group: 'indigenous', via: 'fr' },
     { text: 'Maintenance en cours', name: 'Wendat', nameFr: 'Huron-Wendat', group: 'indigenous', via: 'fr' },
     { text: 'Maintenance en cours', name: 'Iyuw Iyimuun', nameFr: 'Naskapi', group: 'indigenous', via: 'fr' },
-    { text: 'Maintenance en cours', name: 'Français', group: 'world', lang: 'fr' },
-    { text: 'Maintenance in progress', name: 'English', group: 'world', lang: 'en' },
+    // Monde — sans Français ni English (titre FR + sous-titre EN OQLF)
     { text: 'Mantenimiento en curso', name: 'Español', group: 'world', lang: 'es' },
     { text: 'Manutenção em andamento', name: 'Português', group: 'world', lang: 'pt' },
     { text: 'Wartungsarbeiten laufen', name: 'Deutsch', group: 'world', lang: 'de' },
@@ -534,8 +614,8 @@
   ];
 
   const phraseEl = document.getElementById('phrase');
-  const metaEl = document.getElementById('phrase-meta');
-  const tagEl = document.getElementById('phrase-tag');
+  const gameLangEl = document.getElementById('game-lang');
+  const gameLangWrap = document.getElementById('game-lang-wrap');
   const chipsEl = document.getElementById('lang-chips');
   const reconnectEl = document.getElementById('reconnect');
 
@@ -572,17 +652,17 @@
     const p = PHRASES[i];
     if (!p) return;
     const apply = () => {
-      // Titre FR fixe : la rotation ne remplace que la ligne secondaire
-      // (évite le « gribouillis » perçu quand le H1 change de script).
+      // Titre FR + EN OQLF fixes ; rotation = phrase i18n + nom de langue (barre jeu)
       phraseEl.textContent = p.text;
       phraseEl.lang = p.lang || 'fr';
       phraseEl.dir = p.dir || 'ltr';
-      let meta = p.name;
-      if (p.nameEn && p.nameEn !== p.name) meta += ' · ' + p.nameEn;
-      if (p.nameFr) meta += ' · ' + p.nameFr;
-      if (p.via === 'fr') meta += ' · texte FR';
-      tagEl.textContent = meta;
-      tagEl.className = p.group === 'indigenous' ? 'indigenous' : '';
+      let label = p.name;
+      if (p.nameFr) label = p.name; // endonyme seul dans la barre
+      gameLangEl.textContent = label;
+      gameLangWrap.classList.toggle('is-indigenous', p.group === 'indigenous');
+      gameLangWrap.title =
+        (p.nameFr ? p.name + ' (' + p.nameFr + ')' : p.name) +
+        ' — Espace ou tapez pour sauter';
       chipsEl.querySelectorAll('.lang-chip').forEach((c) => {
         c.classList.toggle('is-active', c.dataset.i === String(i));
       });
