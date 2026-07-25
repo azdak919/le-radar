@@ -24,7 +24,7 @@ function isLocalReference(value) {
     && !value.startsWith('#')
     && !value.startsWith('//')
     && !value.includes('${')
-    && !/^(?:https?:|mailto:|tel:|data:|blob:|javascript:)/i.test(value);
+    && !/^(?:https?:|mailto:|tel:|data:|blob:|javascript:|about:)/i.test(value);
 }
 
 collectHtml(root);

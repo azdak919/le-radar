@@ -20,6 +20,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Les_Cedres_QC.JPG",
     license: "CC BY-SA 4.0",
     title: "Les Cèdres, Vaudreuil-Soulanges",
+    width: 4200,
+    height: 2799,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/a/aa/C%C3%B4teau-du-Lac-Vue_du_fleuve_St-Laurent_%C3%A0_partir_du_qu20250104%281%29.jpg",
@@ -27,6 +29,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Côteau-du-Lac-Vue_du_fleuve_St-Laurent_à_partir_du_qu20250104(1).jpg",
     license: "CC0",
     title: "Fleuve Saint-Laurent, Coteau-du-Lac (Soulanges)",
+    width: 3598,
+    height: 1583,
     season: "hiver",
   },
   {
@@ -35,6 +39,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Côteau-du-Lac-Canal_Soulanges_(vue_vers_l'est_à_proximité_de_la_jetée_(rue_Principale))-2025-01-04(1).jpg",
     license: "CC0",
     title: "Canal de Soulanges, Coteau-du-Lac",
+    width: 3942,
+    height: 1732,
     season: "hiver",
   },
   {
@@ -43,6 +49,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Pont_de_l-Ile-aux-Tourtes_04.jpg",
     license: "CC BY-SA 4.0",
     title: "Pont de l'Île-aux-Tourtes, Île Perrot",
+    width: 3648,
+    height: 2736,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/5/57/Deux-Montagnes%28QC%29-Parc_des_b%C3%A9n%C3%A9voles-2022-03-15.jpg",
@@ -50,6 +58,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Deux-Montagnes(QC)-Parc_des_bénévoles-2022-03-15.jpg",
     license: "CC BY-SA 4.0",
     title: "Deux-Montagnes, parc des bénévoles (rive nautique)",
+    width: 10000,
+    height: 5032,
     season: "printemps",
   },
   {
@@ -58,6 +68,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Lac_des_Deux_Montagnes_03.JPG",
     license: "CC BY-SA 3.0",
     title: "Lac des Deux-Montagnes, secteur nautique",
+    width: 4000,
+    height: 3000,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/e/ee/Pointe-Calumet_%28QC%29-Vue_de_Mont%C3%A9e_de_la_Baie-2023.jpg",
@@ -65,6 +77,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Pointe-Calumet_(QC)-Vue_de_Montée_de_la_Baie-2023.jpg",
     license: "CC BY-SA 4.0",
     title: "Pointe-Calumet, baie des Deux-Montagnes",
+    width: 11860,
+    height: 4362,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/5/53/Hudson_%28Qu%C3%A9bec%29-Belv%C3%A9d%C3%A8re-Lac_des_deux_Montagnes-2022-09-22.jpg",
@@ -72,6 +86,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Hudson_(Québec)-Belvédère-Lac_des_deux_Montagnes-2022-09-22.jpg",
     license: "CC BY-SA 4.0",
     title: "Hudson, Lac des Deux-Montagnes",
+    width: 12000,
+    height: 7453,
     season: "automne",
   },
   {
@@ -80,6 +96,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Rigaud_(Québec)-rivière_Rigaud_(vue_vers_l'amont)-2022-09-22.jpg",
     license: "CC BY-SA 4.0",
     title: "Rigaud, Vaudreuil-Soulanges",
+    width: 11955,
+    height: 6763,
     season: "automne",
   },
   {
@@ -88,6 +106,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Rigaud_(Québec)-Rivière_Rigaud-2022-09-22.jpg",
     license: "CC BY-SA 4.0",
     title: "Rivière Rigaud, Vaudreuil-Soulanges",
+    width: 11975,
+    height: 5333,
     season: "automne",
   },
   {
@@ -96,6 +116,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Hudson_(Québec)-Lac_Deux-Montagnes-2022-09-22.jpg",
     license: "CC BY-SA 4.0",
     title: "Hudson, Vaudreuil-Soulanges",
+    width: 12000,
+    height: 9000,
     season: "automne",
   },
   {
@@ -104,6 +126,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Lac_des_Deux-Montagnes_(Pierrefonds)_(8514398500).jpg",
     license: "CC BY 2.0",
     title: "Lac des Deux-Montagnes, Pierrefonds",
+    width: 2896,
+    height: 1944,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Deux-Montagnes-Belv%C3%A9d%C3%A8re_municipal_en_bordure_du_Lac_des_Deux-Montagnes-2022-05-19.jpg",
@@ -111,6 +135,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Deux-Montagnes-Belvédère_municipal_en_bordure_du_Lac_des_Deux-Montagnes-2022-05-19.jpg",
     license: "CC BY-SA 4.0",
     title: "Belvédère, Lac des Deux-Montagnes",
+    width: 12000,
+    height: 6206,
     season: "printemps",
   },
   {
@@ -120,6 +146,8 @@ const QUEBEC_BACKGROUNDS = [
     license: "CC BY-SA 3.0",
     title: "Lac des Deux-Montagnes",
     focalY: 0.22,
+    width: 3870,
+    height: 2177,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Pingualuit_aerial_2007_%28cropped%29.jpg",
@@ -127,6 +155,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Pingualuit_aerial_2007_(cropped).jpg",
     license: "Public domain",
     title: "Cratère Pingualuit, Nunavik",
+    width: 5442,
+    height: 3063,
     season: "hiver",
   },
   {
@@ -135,6 +165,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Pessamit,_Quebec.jpg",
     license: "CC BY 4.0",
     title: "Pessamit, nation Innue",
+    width: 11750,
+    height: 7833,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/3/3d/Montreal_panorama.jpg",
@@ -142,6 +174,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Montreal_panorama.jpg",
     license: "CC BY-SA 2.0",
     title: "Panorama de Montréal",
+    width: 10000,
+    height: 2240,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/15/Montreal_skyline_2011.jpg",
@@ -149,6 +183,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Montreal_skyline_2011.jpg",
     license: "CC BY 2.0",
     title: "Skyline de Montréal, 2011",
+    width: 4288,
+    height: 2848,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/2c/Montreal_-_QC_-_Skyline.jpg",
@@ -156,6 +192,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Montreal_-_QC_-_Skyline.jpg",
     license: "CC BY 3.0",
     title: "Skyline de Montréal",
+    width: 4144,
+    height: 2676,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/9/92/Panorama_Montreal_Skyline_2017.jpg",
@@ -164,6 +202,8 @@ const QUEBEC_BACKGROUNDS = [
     license: "CC BY-SA 4.0",
     title: "Skyline de Montréal, 2017",
     focalY: 0.45,
+    width: 8206,
+    height: 2354,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/e/e5/Bord_de_fleuve_qu%C3%A9bec_panorama_2012.jpg",
@@ -172,6 +212,8 @@ const QUEBEC_BACKGROUNDS = [
     license: "CC BY 3.0",
     title: "Bord du fleuve, Québec",
     focalY: 0.35,
+    width: 21461,
+    height: 2939,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/c/c8/79_-_Qu%C3%A9bec_-_Juin_2009.jpg",
@@ -180,6 +222,8 @@ const QUEBEC_BACKGROUNDS = [
     license: "CC BY-SA 3.0",
     title: "Québec depuis Lévis, juin 2009",
     focalY: 0.4,
+    width: 15262,
+    height: 3628,
     season: "ete",
   },
   {
@@ -189,6 +233,8 @@ const QUEBEC_BACKGROUNDS = [
     license: "CC BY-SA 4.0",
     title: "Panorama de Québec",
     focalY: 0.4,
+    width: 3888,
+    height: 1326,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Qu%C3%A9bec_city_skyline.jpg",
@@ -197,6 +243,8 @@ const QUEBEC_BACKGROUNDS = [
     license: "CC BY-SA 4.0",
     title: "Skyline de Québec",
     focalY: 0.4,
+    width: 9778,
+    height: 4797,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/0/0e/Downtown_Montreal_%28September_2009%29.jpg",
@@ -204,6 +252,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Downtown_Montreal_(September_2009).jpg",
     license: "CC BY-SA 3.0",
     title: "Centre-ville de Montréal, 2009",
+    width: 3648,
+    height: 2736,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/6/65/Sunrise_Over_Montr%C3%A9al_%28250731329%29.jpeg",
@@ -211,6 +261,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Sunrise%20Over%20Montr%C3%A9al%20(250731329).jpeg",
     license: "CC BY 3.0",
     title: "Sunrise Over Montréal (250731329)",
+    width: 2048,
+    height: 1152,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/f5/Rocher_Perc%C3%A9_%28Gasp%C3%A9sie%29.jpg",
@@ -219,6 +271,8 @@ const QUEBEC_BACKGROUNDS = [
     license: "CC BY 2.0",
     title: "Rocher Percé (Gaspésie)",
     focalY: 0.6,
+    width: 2272,
+    height: 1704,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/0/02/Rocher_Perc%C3%A9_%E2%80%93_Perc%C3%A9%2C_QC_%E2%80%93_%282018-07-19%29.jpg",
@@ -227,6 +281,8 @@ const QUEBEC_BACKGROUNDS = [
     license: "CC BY-SA 4.0",
     title: "Rocher Percé – Percé, QC – (2018-07-19)",
     focalY: 0.66,
+    width: 3747,
+    height: 2508,
     season: "ete",
   },
   {
@@ -235,6 +291,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Rivi%C3%A8re%20Saint-Fran%C3%A7ois%202025.jpg",
     license: "CC BY-SA 4.0",
     title: "Rivière Saint-François 2025",
+    width: 5374,
+    height: 3580,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/25/Castle_Frontenac_Qu%C3%A9bec_City_Old_Quebec_Quebec.jpg",
@@ -242,6 +300,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Castle_Frontenac_Qu%C3%A9bec_City_Old_Quebec_Quebec.jpg",
     license: "CC0",
     title: "Château Frontenac, Québec",
+    width: 5184,
+    height: 3456,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/c/cd/20181012_-_01_-_Montreal_panorama_%28downtown%29.jpg",
@@ -249,6 +309,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:20181012_-_01_-_Montreal_panorama_(downtown).jpg",
     license: "CC BY-SA 4.0",
     title: "Centre-ville de Montréal",
+    width: 8906,
+    height: 2448,
     season: "automne",
   },
   {
@@ -257,6 +319,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:2016-08_Saguenay_river_01.jpg",
     license: "CC BY-SA 4.0",
     title: "Rivière Saguenay",
+    width: 6000,
+    height: 4000,
     season: "ete",
   },
   {
@@ -265,6 +329,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Before-sunrise-perse-rock.jpg",
     license: "CC BY 3.0",
     title: "Rocher Percé, Gaspésie",
+    width: 2000,
+    height: 1333,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/bd/2016-10_Maple_leaves_autumn_Quebec_01.jpg",
@@ -272,6 +338,8 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:2016-10_Maple_leaves_autumn_Quebec_01.jpg",
     license: "CC BY-SA 4.0",
     title: "Érable à l'automne",
+    width: 6000,
+    height: 4000,
     season: "automne",
   },
   {
@@ -280,5 +348,7 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Champ_sur_l%27%C3%AEle_d%27Orl%C3%A9ans.jpg",
     license: "CC0",
     title: "Île d'Orléans",
+    width: 8086,
+    height: 5276,
   }
 ];

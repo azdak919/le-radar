@@ -78,6 +78,11 @@
     // Toast « tapez lecture » : au plus une fois par session de lecture
     // intentionnelle (évite l'irritation si le OS refuse encore).
     androidPlayBlockedToastOnce: true,
+    // Après N ms en arrière-plan : recharger le flux live (évite le buffer
+    // périmé qui « rattrape » le direct avec un décalage bizarre).
+    liveStaleBackgroundMs: 18000,
+    // Toast discret une fois après resync live forcé.
+    liveResyncToastOnce: true,
 
     // ── iOS ──
     watchIntervalMs: 2500,
@@ -134,6 +139,8 @@
     let androidResumeAttempt = 0;
     let lastAndroidImmediateResumeAt = 0;
     let playBlockedToastShown = false;
+    let liveResyncToastShown = false;
+    let backgroundedAt = 0;
     let screenWakeLock = null;
     let wakeLockWanted = false;
 
@@ -333,9 +340,28 @@
       }
     }
 
+    function notifyLiveResync() {
+      if (!cfg.liveResyncToastOnce || liveResyncToastShown) return;
+      // Uniquement au premier plan — le toast est pour l’utilisateur présent.
+      if (isBackground()) return;
+      liveResyncToastShown = true;
+      try { deps.onLiveResync?.(); } catch { /* ignore */ }
+    }
+
+    /**
+     * Retour au premier plan après une longue absence : le buffer live est
+     * souvent en retard (on entend le passé, puis un « rattrapage »). Mieux
+     * vaut recharger le src pour coller à l’antenne.
+     */
+    function shouldResyncLiveEdge() {
+      if (!backgroundedAt) return false;
+      return Date.now() - backgroundedAt >= cfg.liveStaleBackgroundMs;
+    }
+
     function androidOnBackgroundEnter() {
       // Écran / onglet en fond : relâcher le Wake Lock (Doze n'en a pas besoin
       // et le garder peut irriter certains OEM).
+      backgroundedAt = Date.now();
       releaseScreenWakeLock();
       if (!wantsPlayback()) return;
       setPlaybackSession();
@@ -347,12 +373,21 @@
 
     function androidOnBackgroundExit() {
       androidResumeAttempt = 0;
+      const stale = shouldResyncLiveEdge();
+      backgroundedAt = 0;
       if (!wantsPlayback()) return;
       deps.resumeAudioCtx?.();
       deps.ensureNativePlayback?.();
       setPlaybackSession();
       deps.syncMediaSession?.();
       const player = deps.getPlayer();
+      if (stale && player?.src) {
+        // Resync live edge plutôt que play() sur un tampon périmé.
+        if (attemptReconnect()) {
+          notifyLiveResync();
+          return;
+        }
+      }
       if (player?.paused && player.src) androidAttemptResume();
       else if (player && !player.paused) requestScreenWakeLock();
     }
@@ -517,7 +552,21 @@
       clearWatch();
       clearResumeTimer();
       resumeAttempt = 0;
+      // iOS aussi : buffer live périmé après longue absence
+      if (shouldResyncLiveEdge()) {
+        backgroundedAt = 0;
+        if (attemptReconnect()) {
+          notifyLiveResync();
+          return;
+        }
+      }
+      backgroundedAt = 0;
       tryResumePlayback();
+    }
+
+    function onBackgroundEnterWithStamp() {
+      backgroundedAt = Date.now();
+      onBackgroundEnter();
     }
 
     // ═════════════════════════════════════════════════════════════════════
@@ -660,7 +709,7 @@
       document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'hidden') {
           if (IS_ANDROID) androidOnBackgroundEnter();
-          else onBackgroundEnter();
+          else onBackgroundEnterWithStamp();
         } else {
           if (IS_ANDROID) androidOnBackgroundExit();
           else onBackgroundExit();
@@ -672,7 +721,16 @@
       // une longue absence.
       window.addEventListener('pageshow', (e) => {
         if (!wantsPlayback()) return;
-        if (e.persisted || IS_ANDROID) tryResumePlayback();
+        if (e.persisted || IS_ANDROID) {
+          if (IS_ANDROID && shouldResyncLiveEdge()) {
+            backgroundedAt = 0;
+            if (attemptReconnect()) {
+              notifyLiveResync();
+              return;
+            }
+          }
+          tryResumePlayback();
+        }
       });
 
       document.addEventListener('resume', () => {
@@ -697,7 +755,7 @@
       if (!IS_ANDROID) {
         // iOS : pagehide arrive parfois avant visibilitychange au lock.
         window.addEventListener('pagehide', () => {
-          if (!deps.isUserPaused() && playbackIntended) onBackgroundEnter();
+          if (!deps.isUserPaused() && playbackIntended) onBackgroundEnterWithStamp();
         });
       }
     }
@@ -749,6 +807,8 @@
       pausedRecoveryTries = 0;
       androidResumeAttempt = 0;
       playBlockedToastShown = false;
+      // Nouvelle session de lecture intentionnelle → resync toast réarmable
+      // seulement après un vrai stop utilisateur (onPlayStop).
       clearAndroidResume();
       lastStreamProgressAt = Date.now();
       const player = deps.getPlayer();
@@ -788,6 +848,8 @@
       androidResumeAttempt = 0;
       lastStreamProgressAt = 0;
       lastStreamCurrentTime = 0;
+      backgroundedAt = 0;
+      liveResyncToastShown = false;
       stopKeepalive();
     }
 

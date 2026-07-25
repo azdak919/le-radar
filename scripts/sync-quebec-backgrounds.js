@@ -119,6 +119,13 @@ function photoToJsObject(p, bank) {
   if (typeof p.focalY === 'number' && !Number.isNaN(p.focalY)) {
     lines.push(`    focalY: ${p.focalY}`);
   }
+  // Dimensions natives Commons — gate low_resolution côté client (pas le thumb)
+  if (typeof p.width === 'number' && p.width > 0) {
+    lines.push(`    width: ${Math.round(p.width)}`);
+  }
+  if (typeof p.height === 'number' && p.height > 0) {
+    lines.push(`    height: ${Math.round(p.height)}`);
+  }
   if (typeof p.position === 'string' && p.position.trim()) {
     lines.push(`    position: "${esc(p.position.trim())}"`);
   }
