@@ -156,9 +156,16 @@ function main() {
       credit: argVal('credit') || '',
       license: argVal('license') || '',
     };
-    const fy = argVal('focalY');
-    if (fy != null) entry.focalY = Number(fy);
   }
+
+  // Overrides CLI (aussi avec --from-bank)
+  const fy = argVal('focalY');
+  if (fy != null && fy !== '') {
+    const n = Number(fy);
+    if (!Number.isNaN(n)) entry.focalY = n;
+  }
+  const pos = argVal('position');
+  if (pos) entry.position = pos;
 
   const surfacesRaw = argVal('surfaces') || 'masthead,pomo';
   entry.surfaces = surfacesRaw
