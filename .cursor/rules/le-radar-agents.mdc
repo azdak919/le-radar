@@ -1,0 +1,16 @@
+---
+description: LE RADAR — ledger dettes + playbook (toujours)
+alwaysApply: true
+---
+
+# LE RADAR — agents
+
+1. Lire `AGENTS.md` puis `docs/agent-playbook.md` avant d’éditer.
+2. Priorité = ticket humain. Pas de refonte monolithe / bulk Commons / Worker audio sans demande.
+3. **Fin de session** si le ticket est OK :
+   - Exécuter `npm run agents:propose`
+   - Afficher la proposition dette à l’utilisateur
+   - **Attendre OK** avant de travailler la dette
+   - Si soldée : mettre à jour `AGENTS.md` §3/§4
+4. Banques : JSON vérité, `npm run bank:sync`, blacklist durable.
+5. Checks : `npm run check`, `npm run bank:check` si banques touchées.

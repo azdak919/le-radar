@@ -11,6 +11,8 @@
     "test": "npm run check && npm run test:browser",
     "bank:sync": "node scripts/sync-quebec-backgrounds.js",
     "bank:check": "node scripts/sync-quebec-backgrounds.js --check",
+    "agents:ledger": "node scripts/agents-ledger.mjs",
+    "agents:propose": "node scripts/agents-ledger.mjs --propose",
     "audit:backgrounds": "python3 scripts/audit-quebec-backgrounds.py",
     "maintain:masthead": "node scripts/maintain-quebec-backgrounds.js --update --profile masthead",
     "maintain:masthead:force": "node scripts/maintain-quebec-backgrounds.js --update --force --profile masthead",
