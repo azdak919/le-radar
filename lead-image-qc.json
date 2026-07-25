@@ -1,30 +1,24 @@
 {
-  "updated": "2026-07-25T10:08:48.668Z",
+  "updated": "2026-07-25T10:57:50.816Z",
   "total": 185,
   "withPhoto": 168,
-  "withStock": 41,
+  "withStock": 65,
   "withCampusBank": 8,
   "fullyCovered": 185,
-  "leadReadyPhotos": 138,
-  "pageScraped": 17,
-  "photosRecovered": 17,
-  "imagesCleared": 11,
-  "stockSearches": 45,
-  "stockFound": 33,
-  "campusBankFound": 6,
+  "leadReadyPhotos": 134,
+  "pageScraped": 14,
+  "photosRecovered": 14,
+  "imagesCleared": 10,
+  "stockSearches": 67,
+  "stockFound": 47,
+  "campusBankFound": 5,
   "mainPageLeadReady": true,
   "gaps": [
     {
-      "title": "CSU fails to reach quorum at first special council meeting of new mandate",
-      "link": "https://thelinknewspaper.ca/article/16335",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
-    },
-    {
       "title": "The Cruel Optimism of Summer",
       "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/917/28627096297_a3e0756d47_b.jpg"
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
       "title": "CSU terminates council’s chief election officer",
@@ -39,10 +33,16 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_Sommet-de-lOTAN-a-Ankara_Getty-Images.jpg"
     },
     {
-      "title": "Marine Le Pen condamnée",
-      "link": "https://lecollectif.ca/a-la-une/marine-le-pen-condamnee/",
+      "title": "Sherbrooke permet désormais des terrains plus naturels",
+      "link": "https://lecollectif.ca/a-la-une/sherbrooke-permet-desormais-des-terrains-plus-naturels/",
       "reason": "stock-too-small",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_Marine-Le-Pen-condamnee_Getty-Images.jpg"
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_pelouse-gazon_Source-Blogue-AccentLocal.jpg"
+    },
+    {
+      "title": "Chirurgie esthétique au Québec : entre confiance en soi et quête de perfection",
+      "link": "https://lecollectif.ca/a-la-une/chirurgie-esthetique-au-quebec-entre-confiance-en-soi-et-quete-de-perfection/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_chirurgie-esthetique_SourceBeautifi.jpg"
     },
     {
       "title": "Épisode de feux de forêts en France",
@@ -51,40 +51,40 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_Episode-de-feux-de-forets-en-France_Getty-Images.jpg"
     },
     {
-      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
-      "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
-      "reason": "no-stock-match",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg"
-    },
-    {
-      "title": "Recettes musicales québécoises pour l’été",
-      "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
-      "reason": "no-stock-match",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
-    },
-    {
-      "title": "Letters from the Editors May 2026",
-      "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
-    },
-    {
-      "title": "CSU approves affinity group policy, club rules update and councillor pay increase at special meeting",
-      "link": "https://thelinknewspaper.ca/article/16326",
+      "title": "Des artistes de chez nous ont brillé à la Fête du Lac des Nations",
+      "link": "https://lecollectif.ca/culture/des-artistes-de-chez-nous-ont-brille-a-la-fete-du-lac-des-nations/",
       "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/7089/7290404684_2750bb385f_b.jpg"
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/CULTURE_FLNPhoto1_CreditAntoineMeunier.jpg"
     },
     {
-      "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
-      "link": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Assembl%C3%A9e_nationale_du_Qu%C3%A9bec%2C_l%27H%C3%B4tel_du_Parlement%2C_fa%C3%A7ade_avec_ancien_entr%C3%A9_principal.jpg"
-    },
-    {
-      "title": "CSU approves $36,000 in funding for student-led initiatives",
-      "link": "https://thelinknewspaper.ca/article/16319",
+      "title": "Le scepticisme",
+      "link": "https://lecollectif.ca/edition-papier/le-scepticisme/",
       "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG"
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_Scepticisme_JeunesDesinformationReseauxSociaux_SourceFondationJeanJaures-1.png"
+    },
+    {
+      "title": "Une page se tourne au Salon L’image de Jonquière",
+      "link": "https://lapige.atmjonquiere.com/2026/05/21/une-page-se-tourne-au-salon-limage-de-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=une-page-se-tourne-au-salon-limage-de-jonquiere",
+      "reason": "stock-too-small",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/Image-17.jpg"
+    },
+    {
+      "title": "Un investissement pour les jeunes « bienvenu » au Centre Mamik",
+      "link": "https://lapige.atmjonquiere.com/2026/05/21/un-investissement-pour-les-jeunes-bienvenu-au-centre-mamik/?utm_source=rss&utm_medium=rss&utm_campaign=un-investissement-pour-les-jeunes-bienvenu-au-centre-mamik",
+      "reason": "stock-too-small",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/image-mamik.jpg"
+    },
+    {
+      "title": "L’ERD sauvée de la dissolution par quatre membres",
+      "link": "https://lapige.atmjonquiere.com/2026/05/21/lerd-sauvee-de-la-dissolution-par-quatre-membres/?utm_source=rss&utm_medium=rss&utm_campaign=lerd-sauvee-de-la-dissolution-par-quatre-membres",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/ERD.jpeg"
+    },
+    {
+      "title": "El Niño s’approche du Québec",
+      "link": "https://lapige.atmjonquiere.com/2026/05/20/el-nino-sapproche-du-quebec/?utm_source=rss&utm_medium=rss&utm_campaign=el-nino-sapproche-du-quebec",
+      "reason": "stock-too-small",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/pexels-fatih-turan-63325184-12413177.jpg"
     }
   ]
 }
