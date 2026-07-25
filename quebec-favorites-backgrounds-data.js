@@ -16,5 +16,14 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     focalY: 0.66,
     permanent: true,
     surfaces: ["masthead", "pomo"],
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/6/65/Sunrise_Over_Montr%C3%A9al_%28250731329%29.jpeg",
+    credit: "Quentin Schulz",
+    link: "https://commons.wikimedia.org/wiki/File:Sunrise%20Over%20Montr%C3%A9al%20(250731329).jpeg",
+    license: "CC BY 3.0",
+    title: "Sunrise Over Montréal (250731329)",
+    permanent: true,
+    surfaces: ["masthead", "pomo"],
   }
 ];
