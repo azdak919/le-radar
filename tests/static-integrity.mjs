@@ -63,6 +63,18 @@ for (const title of ['Palm Sunset', 'Tropical Beach', 'Tropical Waterfall', 'Tro
   assert(!backgroundsData.includes(`title: "${title}"`), `fond hors ligne éditoriale interdit: ${title}`);
 }
 
+// QC plein écran (pomo + solitaire) — macros / Snowy Branch hard-ban
+const fsQc = readFileSync(join(root, 'fullscreen-wallpaper-qc.js'), 'utf8');
+assert(fsQc.includes('FullscreenWallpaperQc'), 'module QC wallpapers plein écran requis');
+assert(fsQc.includes('1457269449834-928af64c684d'), 'hard-ban Snowy Branch (Aaron Burden) requis');
+const solitaireHtml = readFileSync(join(root, 'solitaire/index.html'), 'utf8');
+assert(!solitaireHtml.includes('title: "Snowy Branch"'), 'solitaire: Snowy Branch retiré du pool');
+assert(solitaireHtml.includes('fullscreen-wallpaper-qc.js'), 'solitaire charge le QC plein écran');
+const pomoHtml = readFileSync(join(root, 'pomo/index.html'), 'utf8');
+assert(pomoHtml.includes('fullscreen-wallpaper-qc.js'), 'pomo charge le QC plein écran');
+assert(pomoSw.includes('fullscreen-wallpaper-qc.js'), 'pomo SW pré-cache le QC plein écran');
+assert(solitaireSw.includes('fullscreen-wallpaper-qc.js'), 'solitaire SW pré-cache le QC plein écran');
+
 for (const app of ['pomo', 'solitaire']) {
   const html = readFileSync(join(root, app, 'index.html'), 'utf8');
   assert(/id=["']radar-embed["']/.test(html), `${app}: iframe Le Radar requis`);
