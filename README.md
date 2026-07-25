@@ -38,6 +38,7 @@ Version courante du dépôt : **1.0.0** — voir le [journal des modifications](
 
 La charte de marque est documentée dans **[`docs/identite-visuelle.md`](docs/identite-visuelle.md)**.
 Le référencement (moteurs et assistants IA) est documenté dans **[`docs/referencement.md`](docs/referencement.md)**.
+Suivi des retombées : **[`docs/referencement-suivi.md`](docs/referencement-suivi.md)** · fiche Wikidata : **[`docs/wikidata.md`](docs/wikidata.md)**.
 
 En bref — **pourpre `#6C2163`** = marque, **rouge `#C8102E`** = en direct, **bleu Québec `#003DA5`** = volet radio. Source de vérité : variables CSS dans `style.css`.
 
