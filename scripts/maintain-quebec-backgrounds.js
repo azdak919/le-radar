@@ -94,7 +94,8 @@ function landscapeDiscoveryQueries(sessionId) {
     'Hudson Québec Lac Deux-Montagnes',
     'Rigaud Québec rivière',
     'Vaudreuil-Soulanges',
-    'Vaudreuil-sur-le-Lac',
+    // Pas de seed « Vaudreuil-sur-le-Lac » : seule photo libre Commons
+    // (…_QC.JPG) se lit chapelle/clocher — hard-bannie ci-dessous.
     'Les Cèdres Québec',
     'Les Cedres QC',
     'Île-Perrot',
@@ -260,6 +261,25 @@ const LEGACY_JS = JS_PATH;
 const RELIGIOUS_RE =
   /(?:église|eglise|church|cathedral|cathédrale|basilique|basilica|chapelle|chapel|crucifix|\bcroix\b|crosses?\b|mosquée|mosquee|mosque|synagogue|monastère|monastere|monastery|couvent|convent|calvaire|cimetière|cimetiere|cemetery|minaret|clocher|steeple|bell[\s-]?tower|paroisse|parish|presbyt[eè]re|presbytery|lieu de culte|place of worship|\bjésus\b|\bjesus\b|\bchrist\b|crucifi|temple\s+(?:bouddh|hindou|sikh)|tabernacle)/i;
 
+/**
+ * Curation manuelle durable — ne jamais réintroduire (URL / File Commons / id).
+ * Match sous-chaîne sur url + link + id + titre.
+ *
+ * Vaudreuil-sur-le-Lac_QC.JPG : Commons dit « town hall », mais l’image se lit
+ * édifice religieux (clocher, pignon). Pas d’autre paysage libre du village.
+ */
+const HARD_BANNED_FRAGMENTS = [
+  'Vaudreuil-sur-le-Lac_QC',
+  'eb86432b9561',
+];
+
+/**
+ * Façades municipales type clocher — souvent confondues avec chapelles en
+ * wallpaper. Appliqué aux profils paysage (masthead + pomo) seulement.
+ */
+const TOWN_HALL_FACADE_RE =
+  /(?:town[\s-]?hall|h[oô]tel[\s-]?de[\s-]?ville|city[\s-]?hall|\bmairie\b)/i;
+
 const PEOPLE_RE =
   /(?:\bportrait\b|\bpeople\b|\bperson\b|\bpersons\b|\bman\b|\bwoman\b|\bmen\b|\bwomen\b|\bchild\b|\bchildren\b|\bfamily\b|\bfamille\b|\bhomme\b|\bfemme\b|\benfant\b|\bdancer\b|\bdancers\b|\bpow[\s-]?wow\b|\bcrowd\b|\bfoule\b|\bselfie\b|\binscription on reverse\b|\bchef\b|\bchief\b|\bleder\b|\bleader\b|\bmaire\b|\bmayor\b|\bface\b|\bvisage\b|\bgroup\b|\bgroupe\b|\bmeeting\b|\br[eé]union\b)/i;
 
@@ -397,6 +417,29 @@ function looksReligious(entry) {
   return RELIGIOUS_RE.test(hay);
 }
 
+function looksHardBanned(entry) {
+  const hay = [entry.id, entry.url, entry.link, entry.title]
+    .filter(Boolean)
+    .join(' ');
+  return HARD_BANNED_FRAGMENTS.some((frag) =>
+    hay.toLowerCase().includes(String(frag).toLowerCase())
+  );
+}
+
+/** Façades mairie / town hall — paysage mât/pomo uniquement. */
+function looksTownHallFacade(entry) {
+  const hay = [
+    entry.title,
+    entry.url,
+    entry.link,
+    entry.description,
+    entry.categories,
+  ]
+    .filter(Boolean)
+    .join(' ');
+  return TOWN_HALL_FACADE_RE.test(hay);
+}
+
 function looksPeopleHeavy(entry) {
   const hay = [entry.title, entry.url, entry.link].join(' ');
   return PEOPLE_RE.test(hay);
@@ -440,7 +483,15 @@ function textGate(
   { requireCampus = false, requireNations = false } = {}
 ) {
   if (looksNonImage(entry)) return { ok: false, reason: 'not_image' };
+  if (looksHardBanned(entry)) return { ok: false, reason: 'hard_banned' };
   if (looksReligious(entry)) return { ok: false, reason: 'religious_subject' };
+  // Masthead / pomo paysage : pas de façades mairie (clocher → chapelle)
+  if (
+    (PROFILE.id === 'masthead' || PROFILE.id === 'pomo') &&
+    looksTownHallFacade(entry)
+  ) {
+    return { ok: false, reason: 'town_hall_facade' };
+  }
   if (looksPeopleHeavy(entry)) return { ok: false, reason: 'people_subject' };
   if (looksBadSceneTitle(entry)) return { ok: false, reason: 'bad_scene_title' };
   if (!isAllowedLicense(entry.license || '')) return { ok: false, reason: 'license' };
@@ -771,6 +822,20 @@ async function main() {
   // Étiqueter nations même hors ménage complet
   if (PROFILE.id === 'nations') {
     photos = photos.map((p) => nationsTaxonomy.tagPhotoNation(p));
+  }
+
+  // Hard-ban toujours actif (même hors ménage de session)
+  {
+    const next = [];
+    for (const p of photos) {
+      if (looksHardBanned(p)) {
+        console.log(`  − hard-ban ${p.title || p.id}`);
+        report.removed.push({ title: p.title, reason: 'hard_banned' });
+        continue;
+      }
+      next.push(p);
+    }
+    photos = next;
   }
 
   // ── 2. Plafond 50 : purge des plus anciennes ────────────────────

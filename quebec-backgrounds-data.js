@@ -11,13 +11,6 @@ const QUEBEC_BACKGROUNDS = [
     title: "Les Cèdres, aéroport Montréal–Les Cèdres",
   },
   {
-    url: "https://upload.wikimedia.org/wikipedia/commons/b/b0/Vaudreuil-sur-le-Lac_QC.JPG",
-    credit: "P199",
-    link: "https://commons.wikimedia.org/wiki/File:Vaudreuil-sur-le-Lac_QC.JPG",
-    license: "CC BY-SA 3.0",
-    title: "Vaudreuil-sur-le-Lac",
-  },
-  {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/fc/Les_Cedres_QC.JPG",
     credit: "P199",
     link: "https://commons.wikimedia.org/wiki/File:Les_Cedres_QC.JPG",
