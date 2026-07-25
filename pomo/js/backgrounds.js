@@ -46,6 +46,14 @@ function _mergeQuebecSourceBank(source, cultureTag, flagKey, logLabel) {
   let added = 0;
   for (const p of source) {
     if (!p || !p.url || seen.has(p.url)) continue;
+    // Même QC plein écran que le stock Unsplash (macros / branches givrées)
+    if (
+      typeof FullscreenWallpaperQc !== 'undefined' &&
+      FullscreenWallpaperQc.isBadFullscreenWallpaper &&
+      !FullscreenWallpaperQc.isBadFullscreenWallpaper(p).ok
+    ) {
+      continue;
+    }
     seen.add(p.url);
     const license = String(p.license || '').trim();
     const entry = {
@@ -106,6 +114,16 @@ function _mergeQuebecPomoBanks() {
 }
 
 _mergeQuebecPomoBanks();
+
+// QC plein écran pomo/solitaire (pas le mât) — retire macros / hard-bans
+if (typeof FullscreenWallpaperQc !== 'undefined') {
+  if (FullscreenWallpaperQc.scrubArrayInPlace) {
+    FullscreenWallpaperQc.scrubArrayInPlace(BACKGROUNDS);
+  }
+  if (FullscreenWallpaperQc.scrubPersistedBgUrl) {
+    FullscreenWallpaperQc.scrubPersistedBgUrl('ataraxia_bg_url');
+  }
+}
 
 /** CSS background-position depuis override banque ou focalY (0–1). */
 function _bgPositionCss(bg) {
@@ -300,6 +318,16 @@ function showCreditsBar() {
 function loadBackground(index) {
   const bg = BACKGROUNDS[index];
   if (!bg) {
+    _nextFromPool();
+    return;
+  }
+  // Filet runtime : ne jamais afficher un fond plein écran rejeté
+  if (
+    typeof FullscreenWallpaperQc !== 'undefined' &&
+    FullscreenWallpaperQc.isBadFullscreenWallpaper &&
+    !FullscreenWallpaperQc.isBadFullscreenWallpaper(bg).ok
+  ) {
+    _failedBg.add(index);
     _nextFromPool();
     return;
   }
