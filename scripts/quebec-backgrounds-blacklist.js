@@ -66,6 +66,18 @@ const HARD_BANNED = [
     reason: 'drab_industrial_airport',
     note: 'Purge 2026-07-25 mât+pomo ; Les_Cedres_QC.JPG (village) reste OK',
   },
+  {
+    // Vue aérienne Odanak : superbe paysage fluvial, mais clocher d’église
+    // blanc dominant au centre-droit du bandeau (titre sans « église »).
+    fragments: [
+      'Odanak_Vue_aérienne_2025',
+      'Odanak_Vue_a%C3%A9rienne_2025',
+      'Odanak_Vue_aerienne_2025',
+      '223778e14b51',
+    ],
+    reason: 'church_steeple_visible',
+    note: 'Purge 2026-07-25 mât+nations+pomo ; Gabriel Picard CC BY-SA 4.0 — chercher autre vue W8banaki sans clocher',
+  },
 ];
 
 /**

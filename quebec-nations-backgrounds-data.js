@@ -1,7 +1,17 @@
 /* LE RADAR — banque de photos de fond (généré)
- * Profil : nations (Premières Nations & Inuit du Québec)
+ * Profil : nations (Premières Nations & Inuit — mât + pomo)
  * Source de vérité : data/quebec-nations-backgrounds.json
- * Nunavik Tuchscherer : focalY 0.32 (horizon / ciel dans le bandeau).
+ * Régénéré par : node scripts/sync-quebec-backgrounds.js
+ * (ou maintain-quebec-backgrounds.js --update --profile nations)
+ * Ne pas éditer à la main — le bot de session / bank:sync écrase ce fichier.
+ *
+ * Consommateurs : mât page d’accueil ET pomo (banque partagée thématique)
+ *
+ * Politique : pas de religieux institutionnel ; nations du Québec OK ;
+ * pas de personnes reconnaissables ; plafond 50 ; ménage 1×/session univ.
+ * Résolution mini ~1400×700 / 1.2 Mpx (anti-grain upscale).
+ * focalY optionnel (0=haut, 1=bas) pour cover crop.
+ * Hard-ban : scripts/quebec-backgrounds-blacklist.js
  */
 const QUEBEC_NATIONS_BACKGROUNDS = [
   {
@@ -55,9 +65,9 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Nunavik%20landscape%20-%20panoramio.jpg",
     license: "CC BY-SA 3.0",
     title: "Nunavik landscape - panoramio",
+    focalY: 0.32,
     nationId: "inuit",
     nation: "Inuit (Nunavik)",
-    focalY: 0.32,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/6/67/ManawanOct2016_12.jpg",
@@ -76,15 +86,6 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     title: "Notcimik e pipok 5 - banner crop",
     nationId: "atikamekw",
     nation: "Atikamekw",
-  },
-  {
-    url: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Odanak_Vue_a%C3%A9rienne_2025.jpg",
-    credit: "Gabriel Picard",
-    link: "https://commons.wikimedia.org/wiki/File:Odanak_Vue_a%C3%A9rienne_2025.jpg",
-    license: "CC BY-SA 4.0",
-    title: "Odanak, nation W8banaki",
-    nationId: "abenaki",
-    nation: "Abénaquis (W8banaki)",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Pingualuit_aerial_2007_%28cropped%29.jpg",
