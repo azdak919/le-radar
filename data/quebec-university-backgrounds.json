@@ -4,7 +4,7 @@
   "maxBank": 50,
   "lastSessionCleanup": "2026-05-01",
   "lastSessionId": "ete",
-  "updated": "2026-07-25T07:42:40.858Z",
+  "updated": "2026-07-25T07:59:56.008Z",
   "photos": [
     {
       "id": "4989965eb4df",
@@ -339,25 +339,11 @@
       "mime": "image/jpeg"
     },
     {
-      "id": "d80fc225abc1",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/f/f9/Universit%C3%A9_Laval%2C_Quebec_Canada_3.jpg",
-      "credit": "Dxlinh",
-      "link": "https://commons.wikimedia.org/wiki/File:Universit%C3%A9_Laval,_Quebec_Canada_3.jpg",
-      "license": "CC BY-SA 4.0",
-      "title": "Université Laval, Quebec Canada",
-      "addedAt": "2026-07-25T06:20:25.680Z",
-      "sessionId": "ete",
-      "bank": "universities",
-      "width": null,
-      "height": null,
-      "aspect": null
-    },
-    {
       "id": "0fcc6ce8753e",
       "url": "https://upload.wikimedia.org/wikipedia/commons/d/de/Universit%C3%A9_Laval%2C_Quebec%2C_Canada_02.jpg",
-      "credit": "Dxlinh",
+      "credit": "Wilfredor",
       "link": "https://commons.wikimedia.org/wiki/File:Universit%C3%A9_Laval,_Quebec,_Canada_02.jpg",
-      "license": "CC BY-SA 4.0",
+      "license": "CC0",
       "title": "Université Laval, Quebec, Canada 02",
       "addedAt": "2026-07-25T06:20:25.680Z",
       "sessionId": "ete",
@@ -408,6 +394,36 @@
       "width": null,
       "height": null,
       "aspect": null
+    },
+    {
+      "id": "0733bf6bce32",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Park_in_Universit%C3%A9_Laval.jpg",
+      "credit": "Wilfredor",
+      "link": "https://commons.wikimedia.org/wiki/File:Park_in_Universit%C3%A9_Laval.jpg",
+      "license": "CC BY-SA 4.0",
+      "title": "Park in Université Laval",
+      "addedAt": "2026-07-25T07:58:04.692Z",
+      "sessionId": "ete",
+      "bank": "universities",
+      "width": 6000,
+      "height": 4000,
+      "aspect": 1.5,
+      "mime": "image/jpeg"
+    },
+    {
+      "id": "f1a23eb08d38",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Pavillon_Ferdinand-Vandry_06.jpg",
+      "credit": "Cephas",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_Ferdinand-Vandry_06.jpg",
+      "license": "CC BY-SA 4.0",
+      "title": "Pavillon Ferdinand-Vandry, Université Laval",
+      "addedAt": "2026-07-25T07:58:04.692Z",
+      "sessionId": "ete",
+      "bank": "universities",
+      "width": 5526,
+      "height": 3684,
+      "aspect": 1.5,
+      "mime": "image/jpeg"
     }
   ]
 }

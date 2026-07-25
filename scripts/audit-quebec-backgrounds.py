@@ -105,7 +105,7 @@ RELIGIOUS_SUBJECT_RE = re.compile(
     r"(?i)"
     r"(?:"
     r"[\séè]glise|eglise|church|cathedral|cath[eé]drale?|"
-    r"basilique|basilica|chapelle|chapel|"
+    r"basilique|basilica|chapelle|chapel|coll[eé]giale|collegiale|"
     r"crucifix|\bcroix\b|crosses?\b|"
     r"mosqu[eé]e?|mosque|synagogue|"
     r"monast[eè]re|monastery|couvent|convent|"
@@ -114,7 +114,8 @@ RELIGIOUS_SUBJECT_RE = re.compile(
     r"presbyt[eè]re|presbytery|lieu de culte|place of worship|"
     r"\bj[eé]sus\b|\bchrist\b|crucifi|"
     r"temple\s+(?:bouddh|hindou|sikh)|"
-    r"tabernacle"
+    r"tabernacle|"
+    r"casault|casseault|louis[\s_-]?jacques[\s_-]?casault"
     r")"
 )
 
@@ -418,13 +419,15 @@ def analyze(im: Image.Image) -> dict:
     logo_bright_frac = bright / max(1, n_logo)
     logo_wm_edge = edge_sum / max(1, edge_n)
 
-    # Croix + clocher blanc (religious_architecture) — aligné runtime JS
+    # Croix + clocher blanc / multi-tours pierre grise (religious_architecture)
+    # Aligné runtime JS (quebec-backgrounds.js _religiousSpireMetrics).
+    sky_l = 0.5
     spire_hits: list[tuple[int, int]] = []
     y_max = max(3, int(ch * 0.3 * 0.55))
     for y in range(2, y_max):
         for x in range(4, cw - 4):
             i = y * cw + x
-            if L[i] > 0.30:
+            if L[i] > 0.32:
                 continue
             sky = 0
             for dx, dy in (
@@ -438,28 +441,28 @@ def analyze(im: Image.Image) -> dict:
                 (3, 2),
             ):
                 yy, xx = y + dy, x + dx
-                if 0 <= yy < ch and 0 <= xx < cw and L[yy * cw + xx] > 0.55:
+                if 0 <= yy < ch and 0 <= xx < cw and L[yy * cw + xx] > sky_l:
                     sky += 1
             if sky < 4:
                 continue
             vu = vd = hu = hd = 0
             for k in range(1, 12):
-                if y - k >= 0 and L[(y - k) * cw + x] < 0.34:
+                if y - k >= 0 and L[(y - k) * cw + x] < 0.36:
                     vu += 1
                 else:
                     break
             for k in range(1, 12):
-                if y + k < ch and L[(y + k) * cw + x] < 0.34:
+                if y + k < ch and L[(y + k) * cw + x] < 0.36:
                     vd += 1
                 else:
                     break
             for k in range(1, 9):
-                if x - k >= 0 and L[y * cw + x - k] < 0.34:
+                if x - k >= 0 and L[y * cw + x - k] < 0.36:
                     hu += 1
                 else:
                     break
             for k in range(1, 9):
-                if x + k < cw and L[y * cw + x + k] < 0.34:
+                if x + k < cw and L[y * cw + x + k] < 0.36:
                     hd += 1
                 else:
                     break
@@ -473,10 +476,56 @@ def analyze(im: Image.Image) -> dict:
                 and vu >= 1
             ):
                 spire_hits.append((x, y))
+
+    # Silhouette multi-tours / flèches (Casault)
+    peak_xs: list[tuple[int, int, float]] = []
+    band_h_sp = max(12, int(ch * 0.3))
+    peak_y_max = max(4, int(band_h_sp * 0.65))
+    for x in range(6, cw - 6, 2):
+        best_peak = None
+        for y in range(2, peak_y_max):
+            i = y * cw + x
+            if L[i] > 0.42:
+                continue
+            sky_n = 0
+            for dx in range(-3, 4):
+                if y - 2 >= 0 and L[(y - 2) * cw + x + dx] > sky_l:
+                    sky_n += 1
+                xx = min(cw - 1, max(0, x + dx))
+                if L[y * cw + xx] > sky_l:
+                    sky_n += 1
+            if sky_n < 5:
+                continue
+            down = 0
+            for k in range(1, 14):
+                if y + k < ch and L[(y + k) * cw + x] < 0.48:
+                    down += 1
+                else:
+                    break
+            if down < 4:
+                continue
+            if best_peak is None or L[i] < best_peak[2]:
+                best_peak = (x, y, L[i])
+        if best_peak:
+            peak_xs.append(best_peak)
+    multi_peaks = 0
+    if peak_xs:
+        peak_xs.sort(key=lambda t: t[0])
+        sep = max(10, int(cw * 0.12))
+        last_x = -999
+        for px, _py, _pl in peak_xs:
+            if px - last_x >= sep:
+                multi_peaks += 1
+                last_x = px
+
     spire_dense = 0
     spire_reject = False
-    if len(spire_hits) >= 4:
-        xs = [t[0] for t in spire_hits]
+    solid_white = False
+    solid_stone = False
+    sky_a = 0.0
+    pts = spire_hits if spire_hits else [(t[0], t[1]) for t in peak_xs]
+    if len(pts) >= 1 and (len(spire_hits) >= 3 or multi_peaks >= 2):
+        xs = [t[0] for t in pts]
         win = max(6, int(cw * 0.1))
         best_x = xs[0]
         for x0 in range(min(xs), max(xs) + 1):
@@ -484,20 +533,28 @@ def analyze(im: Image.Image) -> dict:
             if c > spire_dense:
                 spire_dense = c
                 best_x = x0
-        cluster = [t for t in spire_hits if best_x <= t[0] < best_x + win]
-        if spire_dense >= 4 and cluster:
+        cluster = [t for t in pts if best_x <= t[0] < best_x + win]
+        if cluster:
             cy = max(t[1] for t in cluster)
             cx = sum(t[0] for t in cluster) / len(cluster)
             vals = [
                 L[y * cw + x]
-                for y in range(min(ch - 1, cy + 2), min(ch, cy + 22))
-                for x in range(max(0, int(cx) - 5), min(cw, int(cx) + 6))
+                for y in range(min(ch - 1, cy + 2), min(ch, cy + 24))
+                for x in range(max(0, int(cx) - 6), min(cw, int(cx) + 7))
             ]
             if vals:
                 mean_v = sum(vals) / len(vals)
                 var_v = statistics.pstdev(vals) if len(vals) > 1 else 0.0
                 white_f = sum(1 for v in vals if v > 0.55) / len(vals)
-                solid = mean_v >= 0.55 and var_v <= 0.18 and white_f >= 0.5
+                light_f = sum(1 for v in vals if v > 0.38) / len(vals)
+                solid_white = mean_v >= 0.55 and var_v <= 0.18 and white_f >= 0.5
+                solid_stone = (
+                    0.36 <= mean_v <= 0.78
+                    and var_v <= 0.2
+                    and light_f >= 0.42
+                    and white_f < 0.92
+                )
+                solid_base = solid_white or solid_stone
                 ay = max(0, min(t[1] for t in cluster) - 1)
                 sky_vals = [
                     L[y * cw + x]
@@ -505,12 +562,30 @@ def analyze(im: Image.Image) -> dict:
                     for x in range(max(0, int(cx) - 7), min(cw, int(cx) + 8))
                 ]
                 sky_a = (
-                    sum(1 for v in sky_vals if v > 0.55) / len(sky_vals)
+                    sum(1 for v in sky_vals if v > sky_l) / len(sky_vals)
                     if sky_vals
                     else 0.0
                 )
-                not_grid = len(spire_hits) <= spire_dense * 3.5
-                spire_reject = solid and sky_a >= 0.55 and not_grid
+                hit_n = max(len(spire_hits), len(peak_xs))
+                not_grid = hit_n <= max(spire_dense, 1) * 4.2
+                reject_white = (
+                    spire_dense >= 4 and solid_white and sky_a >= 0.55 and not_grid
+                )
+                reject_stone = (
+                    spire_dense >= 3
+                    and solid_stone
+                    and sky_a >= 0.42
+                    and not_grid
+                    and len(spire_hits) >= 3
+                )
+                reject_multi = (
+                    multi_peaks >= 2
+                    and solid_base
+                    and sky_a >= 0.4
+                    and (len(spire_hits) >= 2 or multi_peaks >= 3)
+                    and not_grid
+                )
+                spire_reject = reject_white or reject_stone or reject_multi
 
     # Bandes haut/milieu pour silhouette skyline (heure dorée)
     band_h = max(1, ch // 3)
@@ -570,6 +645,10 @@ def analyze(im: Image.Image) -> dict:
         "logo_wm_edge": round(logo_wm_edge, 4),
         "spire_reject": bool(spire_reject),
         "spire_dense": int(spire_dense),
+        "spire_solid_white": bool(solid_white),
+        "spire_solid_stone": bool(solid_stone),
+        "spire_multi_peaks": int(multi_peaks),
+        "spire_sky_above": round(sky_a, 3),
         "left": round(left_m, 3),
         "mid": round(mid_m, 3),
         "right": round(right_m, 3),

@@ -40,7 +40,7 @@ const BARREN_SCENE_RE =
 
 /** Soft only — ne jamais hard-reject (articles religion / patrimoine). */
 const RELIGIOUS_SUBJECT_RE =
-  /(?:[eé]glise|eglise|church|cathedral|cath[eé]drale|basilique|basilica|chapelle|chapel|crucifix|\bcroix\b|crosses?\b|mosqu[eé]e|mosque|synagogue|monast[eè]re|monastery|couvent|convent|calvaire|cimeti[eè]re|cemetery|minaret|clocher|steeple|bell[\s-]?tower|paroisse|parish|presbyt[eè]re|\bj[eé]sus\b|\bchrist\b)/i;
+  /(?:[eé]glise|eglise|church|cathedral|cath[eé]drale|basilique|basilica|chapelle|chapel|coll[eé]giale|collegiale|crucifix|\bcroix\b|crosses?\b|mosqu[eé]e|mosque|synagogue|monast[eè]re|monastery|couvent|convent|calvaire|cimeti[eè]re|cemetery|minaret|clocher|steeple|bell[\s-]?tower|paroisse|parish|presbyt[eè]re|\bj[eé]sus\b|\bchrist\b|casault|casseault|louis[\s_-]?jacques[\s_-]?casault)/i;
 
 const ARCHIVAL_FLAT_RE =
   /\b(?:engraving|gravure|lithograph|etching|postcard|carte postale|glass plate|plaque de verre|s[eé]pia|monochrome|black[\s-]?and[\s-]?white|microfilm)\b/i;
