@@ -31,6 +31,10 @@
  * Usage :
  *   node scripts/maintain-quebec-backgrounds.js [--profile masthead|universities|pomo|nations]
  *   node scripts/maintain-quebec-backgrounds.js --update --profile nations
+ *
+ * Blacklist durable (URL-first) : scripts/quebec-backgrounds-blacklist.js
+ * Sync offline JSON→JS (sans Commons) : scripts/sync-quebec-backgrounds.js
+ * Doc agent : docs/agent-playbook.md
  */
 
 'use strict';
@@ -44,6 +48,7 @@ const {
   getCurrentUniversitySessionStart,
 } = require('./session-freshness-lib');
 const nationsTaxonomy = require('./quebec-nations-taxonomy');
+const { matchHardBanned } = require('./quebec-backgrounds-blacklist');
 
 const ROOT = path.join(__dirname, '..');
 
@@ -258,24 +263,15 @@ const JSON_PATH = PROFILE.jsonPath;
 const JS_PATH = PROFILE.jsPath;
 const LEGACY_JS = JS_PATH;
 
+// ── Filtres texte (règles stables — ne pas multiplier les regex fragiles) ──
+
 const RELIGIOUS_RE =
   /(?:église|eglise|church|cathedral|cathédrale|basilique|basilica|chapelle|chapel|crucifix|\bcroix\b|crosses?\b|mosquée|mosquee|mosque|synagogue|monastère|monastere|monastery|couvent|convent|calvaire|cimetière|cimetiere|cemetery|minaret|clocher|steeple|bell[\s-]?tower|paroisse|parish|presbyt[eè]re|presbytery|lieu de culte|place of worship|\bjésus\b|\bjesus\b|\bchrist\b|crucifi|temple\s+(?:bouddh|hindou|sikh)|tabernacle)/i;
 
 /**
- * Curation manuelle durable — ne jamais réintroduire (URL / File Commons / id).
- * Match sous-chaîne sur url + link + id + titre.
- *
- * Vaudreuil-sur-le-Lac_QC.JPG : Commons dit « town hall », mais l’image se lit
- * édifice religieux (clocher, pignon). Pas d’autre paysage libre du village.
- */
-const HARD_BANNED_FRAGMENTS = [
-  'Vaudreuil-sur-le-Lac_QC',
-  'eb86432b9561',
-];
-
-/**
  * Façades municipales type clocher — souvent confondues avec chapelles en
  * wallpaper. Appliqué aux profils paysage (masthead + pomo) seulement.
+ * Hard-ban URL : quebec-backgrounds-blacklist.js
  */
 const TOWN_HALL_FACADE_RE =
   /(?:town[\s-]?hall|h[oô]tel[\s-]?de[\s-]?ville|city[\s-]?hall|\bmairie\b)/i;
@@ -418,12 +414,12 @@ function looksReligious(entry) {
 }
 
 function looksHardBanned(entry) {
-  const hay = [entry.id, entry.url, entry.link, entry.title]
-    .filter(Boolean)
-    .join(' ');
-  return HARD_BANNED_FRAGMENTS.some((frag) =>
-    hay.toLowerCase().includes(String(frag).toLowerCase())
-  );
+  return matchHardBanned(entry) != null;
+}
+
+function hardBanReason(entry) {
+  const hit = matchHardBanned(entry);
+  return hit ? hit.reason : 'hard_banned';
 }
 
 /** Façades mairie / town hall — paysage mât/pomo uniquement. */
@@ -483,7 +479,9 @@ function textGate(
   { requireCampus = false, requireNations = false } = {}
 ) {
   if (looksNonImage(entry)) return { ok: false, reason: 'not_image' };
-  if (looksHardBanned(entry)) return { ok: false, reason: 'hard_banned' };
+  if (looksHardBanned(entry)) {
+    return { ok: false, reason: hardBanReason(entry) };
+  }
   if (looksReligious(entry)) return { ok: false, reason: 'religious_subject' };
   // Masthead / pomo paysage : pas de façades mairie (clocher → chapelle)
   if (
@@ -706,7 +704,8 @@ function writeJsExport(photos) {
  * Profil : ${PROFILE.id} (${PROFILE.label})
  * Source de vérité : ${path.relative(ROOT, JSON_PATH)}
  * Régénéré par : node scripts/maintain-quebec-backgrounds.js --update --profile ${PROFILE.id}
- * Ne pas éditer à la main — le bot de session écrase ce fichier.
+ * (ou : node scripts/sync-quebec-backgrounds.js)
+ * Ne pas éditer à la main — le bot de session / bank:sync écrase ce fichier.
  *
  * Consommateurs : ${PROFILE.consumers}
  *
@@ -714,6 +713,7 @@ function writeJsExport(photos) {
  * pas de personnes reconnaissables ; plafond ${MAX_BANK} ; ménage 1×/session univ.
  * Résolution mini ~1400×700 / 1.2 Mpx (anti-grain upscale).
  * focalY optionnel (0=haut, 1=bas) pour cover crop.
+ * Hard-ban : scripts/quebec-backgrounds-blacklist.js
  */
 `;
   const body = photos
@@ -824,13 +824,14 @@ async function main() {
     photos = photos.map((p) => nationsTaxonomy.tagPhotoNation(p));
   }
 
-  // Hard-ban toujours actif (même hors ménage de session)
+  // Hard-ban toujours actif (même hors ménage de session) — voir blacklist.js
   {
     const next = [];
     for (const p of photos) {
-      if (looksHardBanned(p)) {
-        console.log(`  − hard-ban ${p.title || p.id}`);
-        report.removed.push({ title: p.title, reason: 'hard_banned' });
+      const ban = matchHardBanned(p);
+      if (ban) {
+        console.log(`  − hard-ban ${p.title || p.id} (${ban.reason})`);
+        report.removed.push({ title: p.title, reason: ban.reason });
         continue;
       }
       next.push(p);
