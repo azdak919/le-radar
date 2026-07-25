@@ -17,7 +17,8 @@
  *        (un second flux — même ultrasonique — vole le focus audio)
  *     2. Pause inattendue (OEM au lock, perte de focus passagère) →
  *        play() simple sur le MÊME élément : immédiat dans le handler,
- *        puis backoff doux. Aucun démontage du pipeline sur une pause.
+ *        puis backoff doux (longue queue pour Doze). Aucun démontage
+ *        du pipeline sur une pause.
  *     3. Pipeline mort PROUVÉ (error / ended / « playing » mais
  *        currentTime figé / waiting sans fin) → rechargement src+load()
  *        sans retirer l'attribut src ni cache-bust, budget régénérant.
@@ -25,6 +26,13 @@
  *        les événements média restent la source primaire de signal.
  *     5. Media Session maintenue (metadata + playbackState) — c'est la
  *        voie privilégiée d'Android pour relancer depuis le lockscreen.
+ *     6. Reprise aussi sur pageshow / focus / retour visible (GPS, multi-
+ *        app, Deep Doze) — sans guerre play/pause.
+ *     7. Screen Wake Lock tant que lecture + écran visible (n'aide pas
+ *        Doze écran éteint, mais évite la suspension « écran allumé /
+ *        app en fond »).
+ *     8. play() bloqué (NotAllowedError) en premier plan → un toast
+ *        discret unique (geste requis), jamais en boucle.
  *
  *   iOS — inchangé (fonctionne) :
  *     1. Boucle WAV quasi-silencieuse (2e MediaElement) — garde la session
@@ -56,15 +64,20 @@
     androidWatchdogMs: 5000,
     // « playing » mais currentTime figé au-delà de ce délai = pipeline mort.
     androidFrozenAfterMs: 9000,
-    // Backoff des reprises play() après pause inattendue (dernier répété).
-    androidResumeStepsMs: [250, 1000, 3000, 8000, 15000, 30000],
+    // Backoff des reprises play() après pause inattendue.
+    // Queue longue : après Doze / deep sleep le système peut mettre 30–90 s
+    // avant d'autoriser à nouveau le play() ; le dernier délai se répète.
+    androidResumeStepsMs: [250, 1000, 3000, 8000, 15000, 30000, 45000, 60000, 90000],
     // Deux pauses en moins d'une seconde = focus refusé → backoff, pas de
-    // reprise immédiate en boucle (guerre pause/play qui tue la session).
+    // reprise immédiate en boucle (guerre pause/pause qui tue la session).
     androidResumeImmediateGapMs: 1000,
     // Après N play() sans reprise effective, tenter un rechargement du flux.
     androidResumeReloadAfter: 4,
     // waiting/stalled prolongé avant intervention (laisser Chrome tamponner).
     androidStallMs: 6000,
+    // Toast « tapez lecture » : au plus une fois par session de lecture
+    // intentionnelle (évite l'irritation si le OS refuse encore).
+    androidPlayBlockedToastOnce: true,
 
     // ── iOS ──
     watchIntervalMs: 2500,
@@ -120,6 +133,9 @@
     let androidResumeTimer = null;
     let androidResumeAttempt = 0;
     let lastAndroidImmediateResumeAt = 0;
+    let playBlockedToastShown = false;
+    let screenWakeLock = null;
+    let wakeLockWanted = false;
 
     // ── État iOS ──
     let keepaliveAudio = null;
@@ -164,6 +180,50 @@
         && !deps.isUserPaused()
         && !deps.isCasting?.()
         && !deps.isExternalListen?.();
+    }
+
+    /**
+     * Screen Wake Lock — utile quand l'écran est allumé (navigation GPS,
+     * multi-tâche). N'empêche pas Doze écran éteint ; on relâche donc
+     * dès que la page est hidden pour ne pas battre le système.
+     */
+    async function requestScreenWakeLock() {
+      if (!IS_MOBILE || !('wakeLock' in navigator)) return;
+      if (!wakeLockWanted || !wantsPlayback()) return;
+      if (document.visibilityState !== 'visible') return;
+      if (screenWakeLock) return;
+      try {
+        screenWakeLock = await navigator.wakeLock.request('screen');
+        screenWakeLock.addEventListener('release', () => {
+          screenWakeLock = null;
+          // Re-acquérir si on joue encore et l'écran est visible.
+          if (wakeLockWanted && wantsPlayback()
+            && document.visibilityState === 'visible') {
+            requestScreenWakeLock();
+          }
+        });
+      } catch {
+        screenWakeLock = null;
+      }
+    }
+
+    async function releaseScreenWakeLock() {
+      const lock = screenWakeLock;
+      screenWakeLock = null;
+      if (!lock) return;
+      try { await lock.release(); } catch { /* déjà relâché */ }
+    }
+
+    function notifyPlayBlocked(err) {
+      if (!cfg.androidPlayBlockedToastOnce) return;
+      if (playBlockedToastShown) return;
+      // En arrière-plan le toast est invisible et inutile ; le Media Session
+      // play handler reste le levier principal.
+      if (isBackground()) return;
+      const name = err?.name || '';
+      if (name && name !== 'NotAllowedError' && name !== 'NotSupportedError') return;
+      playBlockedToastShown = true;
+      try { deps.onPlayBlocked?.(err); } catch { /* ignore */ }
     }
 
     // ═════════════════════════════════════════════════════════════════════
@@ -246,8 +306,14 @@
       if (androidResumeAttempt > cfg.androidResumeReloadAfter && attemptReconnect()) return;
 
       const playAttempt = player.play();
-      if (playAttempt && typeof playAttempt.catch === 'function') {
-        playAttempt.catch(() => androidScheduleResume());
+      if (playAttempt && typeof playAttempt.then === 'function') {
+        playAttempt.then(() => {
+          androidResumeAttempt = 0;
+          requestScreenWakeLock();
+        }).catch((err) => {
+          notifyPlayBlocked(err);
+          androidScheduleResume();
+        });
       }
     }
 
@@ -268,6 +334,9 @@
     }
 
     function androidOnBackgroundEnter() {
+      // Écran / onglet en fond : relâcher le Wake Lock (Doze n'en a pas besoin
+      // et le garder peut irriter certains OEM).
+      releaseScreenWakeLock();
       if (!wantsPlayback()) return;
       setPlaybackSession();
       deps.syncMediaSession?.();
@@ -279,9 +348,13 @@
     function androidOnBackgroundExit() {
       androidResumeAttempt = 0;
       if (!wantsPlayback()) return;
+      deps.resumeAudioCtx?.();
+      deps.ensureNativePlayback?.();
+      setPlaybackSession();
       deps.syncMediaSession?.();
       const player = deps.getPlayer();
       if (player?.paused && player.src) androidAttemptResume();
+      else if (player && !player.paused) requestScreenWakeLock();
     }
 
     /** Progression du flux (timeupdate) : l'horloge de santé du pipeline. */
@@ -455,6 +528,8 @@
       if (!IS_MOBILE || !deps.isPlaying() || deps.isUserPaused()) return;
       setPlaybackSession();
       deps.syncMediaSession?.();
+      wakeLockWanted = true;
+      requestScreenWakeLock();
 
       // Android : pas de 2e piste audio — le flux live tient la session,
       // le watchdog sert de filet.
@@ -592,8 +667,12 @@
         }
       });
 
+      // pageshow : bfcache (persisted) ET retour multi-app / GPS / onglet
+      // restauré. Sur Android c'est souvent le signal le plus fiable après
+      // une longue absence.
       window.addEventListener('pageshow', (e) => {
-        if (e.persisted) tryResumePlayback();
+        if (!wantsPlayback()) return;
+        if (e.persisted || IS_ANDROID) tryResumePlayback();
       });
 
       document.addEventListener('resume', () => {
@@ -601,20 +680,24 @@
         tryResumePlayback();
       });
 
+      // freeze / focus : iOS + Android (Page Lifecycle, multi-fenêtre).
+      document.addEventListener('freeze', () => {
+        if (!wantsPlayback()) return;
+        deps.syncMediaSession?.();
+        if (IS_ANDROID) releaseScreenWakeLock();
+        else tryResumePlayback();
+      });
+
+      window.addEventListener('focus', () => {
+        if (!wantsPlayback()) return;
+        if (IS_ANDROID) androidOnBackgroundExit();
+        else tryResumePlayback();
+      });
+
       if (!IS_ANDROID) {
-        // iOS : pagehide/blur arrivent parfois avant visibilitychange au lock.
+        // iOS : pagehide arrive parfois avant visibilitychange au lock.
         window.addEventListener('pagehide', () => {
           if (!deps.isUserPaused() && playbackIntended) onBackgroundEnter();
-        });
-        document.addEventListener('freeze', () => {
-          if (!deps.isUserPaused() && playbackIntended) {
-            deps.syncMediaSession?.();
-            // Tenter une dernière reprise avant gel (Page Lifecycle).
-            tryResumePlayback();
-          }
-        });
-        window.addEventListener('focus', () => {
-          if (playbackIntended && !deps.isUserPaused()) tryResumePlayback();
         });
       }
     }
@@ -665,12 +748,15 @@
       resumeAttempt = 0;
       pausedRecoveryTries = 0;
       androidResumeAttempt = 0;
+      playBlockedToastShown = false;
       clearAndroidResume();
       lastStreamProgressAt = Date.now();
       const player = deps.getPlayer();
       lastStreamCurrentTime = player?.currentTime || 0;
       clearStallTimer();
       startKeepalive();
+      wakeLockWanted = true;
+      requestScreenWakeLock();
       deps.syncMediaSession?.();
     }
 
@@ -680,12 +766,17 @@
       resumeAttempt = 0;
       pausedRecoveryTries = 0;
       androidResumeAttempt = 0;
+      playBlockedToastShown = false;
       lastStreamProgressAt = Date.now();
       startKeepalive();
+      wakeLockWanted = true;
+      requestScreenWakeLock();
     }
 
     function onPlayStop() {
       playbackIntended = false;
+      wakeLockWanted = false;
+      releaseScreenWakeLock();
       clearWatch();
       clearResumeTimer();
       clearStallTimer();

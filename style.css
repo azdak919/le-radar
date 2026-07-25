@@ -347,38 +347,54 @@ body {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
 }
 
-/* Puces météo sur photo : cartes opaques autonomes (ne pas hériter du blanc du mât). */
+/*
+ * Puces météo sur photo : cartes toujours en surface claire lisible.
+ * Important : ne PAS utiliser var(--ink) ici — en thème sombre --ink est
+ * quasi blanc, donc texte blanc sur carte claire = puces « vides ».
+ * Encre forcée sombre + fond opaque (indépendant du thème page).
+ */
 .masthead:has(#bg-photo-layer.loaded) .masthead-weather {
-  color: var(--ink-soft);
+  color: #3a3d44;
   -webkit-text-stroke: 0;
   text-shadow: none;
 }
 .masthead:has(#bg-photo-layer.loaded) .masthead-weather__city {
-  color: var(--ink-soft);
+  color: #3a3d44;
   -webkit-text-stroke: 0;
   text-shadow: none;
   background:
-    linear-gradient(90deg, color-mix(in srgb, var(--accent) 12%, #fff) 0%, #f7f6f4 55%),
+    linear-gradient(90deg, rgba(200, 16, 46, 0.1) 0%, #f7f6f4 52%),
     #f4f3f1;
-  border-color: color-mix(in srgb, var(--accent) 28%, rgba(0, 0, 0, 0.12));
+  border-color: rgba(0, 0, 0, 0.14);
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.2),
-    0 3px 10px rgba(0, 0, 0, 0.14);
+    0 1px 2px rgba(0, 0, 0, 0.22),
+    0 3px 10px rgba(0, 0, 0, 0.16);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
+}
+.masthead:has(#bg-photo-layer.loaded) .masthead-weather__city:hover {
+  border-color: color-mix(in srgb, var(--weather-tone, #c8102e) 55%, rgba(0, 0, 0, 0.2));
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--weather-tone, #c8102e) 14%, #fff) 0%, #faf9f7 55%),
+    #f7f6f4;
 }
 .masthead:has(#bg-photo-layer.loaded) .masthead-weather__name,
 .masthead:has(#bg-photo-layer.loaded) .masthead-weather__name-text,
 .masthead:has(#bg-photo-layer.loaded) .masthead-weather__name-full,
 .masthead:has(#bg-photo-layer.loaded) .masthead-weather__name-compact {
-  color: var(--ink);
+  color: #16181c;
   -webkit-text-stroke: 0;
   text-shadow: none;
 }
 .masthead:has(#bg-photo-layer.loaded) .masthead-weather__temp {
-  color: var(--ink);
+  color: #12141a;
   -webkit-text-stroke: 0;
   text-shadow: none;
+}
+.masthead:has(#bg-photo-layer.loaded) .masthead-weather__icon {
+  /* ton météo conservé ; contraste un cran plus marqué sur carte claire */
+  filter: none;
+  opacity: 1;
 }
 
 /* Filet sous la rangée date/actions — voile, pas trait blanc. */
@@ -4888,6 +4904,10 @@ body.external-listen-open {
 .engage-prompt__steps li {
   margin: 0.28em 0;
 }
+.engage-prompt__steps li strong {
+  color: var(--ink);
+  font-weight: 600;
+}
 .engage-prompt__steps code {
   font-size: 0.78em;
   padding: 1px 5px;
@@ -4895,6 +4915,11 @@ body.external-listen-open {
   background: var(--bg-soft);
   border: 1px solid var(--rule);
   word-break: break-all;
+}
+/* Guides longs (accueil + nouvel onglet) : un peu plus de hauteur utile */
+.engage-prompt[data-kind="home"] .engage-prompt__inner {
+  max-height: min(70vh, 520px);
+  overflow-y: auto;
 }
 .engage-prompt__actions {
   display: flex;

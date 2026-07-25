@@ -3612,6 +3612,18 @@ function initMobilePlayback() {
     },
     performReconnect: () => mobilePlayback?.attemptReconnect(),
     setSuppressErrors: (v) => { suppressAudioError = v; },
+    // Une seule invitation discrète si Android refuse le play() sans geste
+    // (pas de spam : le contrôleur mobile gate déjà « une fois / session »).
+    onPlayBlocked: () => {
+      try {
+        const en = window.RadarTranslate?.getMode?.() === 'en';
+        showToast(en
+          ? 'Tap ▶ to resume the radio (browser paused background audio).'
+          : 'Touchez ▶ pour relancer la radio (le navigateur a suspendu l’audio).');
+      } catch {
+        showToast('Touchez ▶ pour relancer la radio.');
+      }
+    },
   });
   mobilePlayback.setupLifecycle();
 }
@@ -3998,7 +4010,9 @@ function setupAudio() {
   if ('mediaSession' in navigator) {
     // Les handlers Media Session sont privilégiés par Android pour relancer
     // l'audio depuis l'écran de verrouillage / la notification média.
-    navigator.mediaSession.setActionHandler('play', () => {
+    // On les ré-enregistre aussi après une longue pause (certaines OEM les
+    // perdent) via rebindMediaSessionActions si besoin.
+    const onMsPlay = () => {
       userPaused = false;
       mobilePlayback?.onPlayStart();
       if (window.RadarCast?.isChromecasting?.()) {
@@ -4015,9 +4029,9 @@ function setupAudio() {
       }
       syncMediaSessionPlaybackState();
       syncMediaSessionLivePosition();
-    });
-    navigator.mediaSession.setActionHandler('pause', () => pauseByUser());
-    navigator.mediaSession.setActionHandler('stop', () => {
+    };
+    const onMsPause = () => pauseByUser();
+    const onMsStop = () => {
       userPaused = true;
       window.RadarCast?.endSession?.();
       mobilePlayback?.onUserPause();
@@ -4027,12 +4041,27 @@ function setupAudio() {
         suppressAudioError = false;
       }
       updatePlayUI();
+    };
+    const bindMs = () => {
+      try {
+        navigator.mediaSession.setActionHandler('play', onMsPlay);
+        navigator.mediaSession.setActionHandler('pause', onMsPause);
+        navigator.mediaSession.setActionHandler('stop', onMsStop);
+        navigator.mediaSession.setActionHandler('previoustrack', () => stepStation(-1));
+        navigator.mediaSession.setActionHandler('nexttrack', () => stepStation(1));
+        try { navigator.mediaSession.setActionHandler('seekto', null); } catch {}
+      } catch { /* Media Session indisponible */ }
+    };
+    bindMs();
+    // Re-lier au retour visible (Deep Doze / OEM) pour que ▶ du lockscreen
+    // fonctionne encore après une longue absence.
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible' && currentStation && !userPaused) {
+        bindMs();
+        syncMediaSessionPlaybackState();
+        syncMediaSessionLivePosition();
+      }
     });
-    navigator.mediaSession.setActionHandler('previoustrack', () => stepStation(-1));
-    navigator.mediaSession.setActionHandler('nexttrack', () => stepStation(1));
-    try {
-      navigator.mediaSession.setActionHandler('seekto', null);
-    } catch {}
   }
 
   window.RadarCast?.init?.({
