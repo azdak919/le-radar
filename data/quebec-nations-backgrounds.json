@@ -4,7 +4,7 @@
   "maxBank": 50,
   "lastSessionCleanup": "2026-05-01",
   "lastSessionId": "ete",
-  "updated": "2026-07-25T07:49:48.183Z",
+  "updated": "2026-07-25T08:02:31.283Z",
   "photos": [
     {
       "id": "917da30c4514",
@@ -42,7 +42,9 @@
       "sessionId": "ete",
       "bank": "nations",
       "nationId": "abenaki",
-      "nation": "Abénaquis (W8banaki)"
+      "nation": "Abénaquis (W8banaki)",
+      "season": "ete",
+      "season6": "aujaq"
     },
     {
       "id": "bc3d92f46829",
@@ -61,7 +63,9 @@
       "sessionId": "ete",
       "bank": "nations",
       "nationId": "inuit",
-      "nation": "Inuit (Nunavik)"
+      "nation": "Inuit (Nunavik)",
+      "season": "hiver",
+      "season6": "ukiuq"
     },
     {
       "id": "1ffb3a1a4410",
@@ -80,7 +84,9 @@
       "sessionId": "ete",
       "bank": "nations",
       "nationId": "atikamekw",
-      "nation": "Atikamekw"
+      "nation": "Atikamekw",
+      "season": "hiver",
+      "season6": "ukiuq"
     },
     {
       "id": "776de9800f28",
@@ -99,7 +105,9 @@
       "nationId": "cree",
       "nation": "Cris (Eeyou / Eenou)",
       "description": "Oujé-Bougoumou en août 2014",
-      "categories": "Oujé-Bougoumou|Self-published work|Images by Fralambert|Files with coordinates missing SDC location of creation|Canada photographs taken on 2014-08-10|August 2014 in Quebec|Community halls in Canada"
+      "categories": "Oujé-Bougoumou|Self-published work|Images by Fralambert|Files with coordinates missing SDC location of creation|Canada photographs taken on 2014-08-10|August 2014 in Quebec|Community halls in Canada",
+      "season": "ete",
+      "season6": "ukiaqsaaq"
     },
     {
       "id": "a1e61ec2abac",
@@ -190,7 +198,9 @@
       "nationId": "migmaq",
       "nation": "Mi'gmaq",
       "description": "Fort Listuguj at the Listuguj First Nation Reserve near Cross Point, Quebec. Historic site and museum.",
-      "categories": "Taken with Nikon D300|Flickr images reviewed by FlickreviewR|Flickr images missing SDC creator|Flickr images missing SDC source of file|Canada photographs taken on 2010-08-23|August 2010 in Quebec|Photographs of Canada by Dennis G. Jarvis|Fort Listuguj|Listuguj First Nation Reserve|Flickr images missing SDC Flickr photo ID|Flickr images missing SDC published in"
+      "categories": "Taken with Nikon D300|Flickr images reviewed by FlickreviewR|Flickr images missing SDC creator|Flickr images missing SDC source of file|Canada photographs taken on 2010-08-23|August 2010 in Quebec|Photographs of Canada by Dennis G. Jarvis|Fort Listuguj|Listuguj First Nation Reserve|Flickr images missing SDC Flickr photo ID|Flickr images missing SDC published in",
+      "season": "ete",
+      "season6": "ukiaqsaaq"
     },
     {
       "id": "e2d1f0e85f69",
@@ -262,7 +272,9 @@
       "nationId": "migmaq",
       "nation": "Mi'gmaq",
       "description": "Fort Listuguj at Listuguj First Nation Reserve in Quebec, near Cross Point, Quebec and Restigouche, New Brunswick. Historical site and museum.",
-      "categories": "Taken with Nikon D300|Flickr images reviewed by FlickreviewR|Flickr images missing SDC creator|Flickr images missing SDC source of file|Canada photographs taken on 2010-08-23|August 2010 in Quebec|Photographs of Canada by Dennis G. Jarvis|Fort Listuguj|Flickr images missing SDC Flickr photo ID|Flickr images missing SDC published in"
+      "categories": "Taken with Nikon D300|Flickr images reviewed by FlickreviewR|Flickr images missing SDC creator|Flickr images missing SDC source of file|Canada photographs taken on 2010-08-23|August 2010 in Quebec|Photographs of Canada by Dennis G. Jarvis|Fort Listuguj|Flickr images missing SDC Flickr photo ID|Flickr images missing SDC published in",
+      "season": "ete",
+      "season6": "ukiaqsaaq"
     },
     {
       "id": "aa3d7c561410",
@@ -334,7 +346,9 @@
       "sessionId": "ete",
       "bank": "nations",
       "nationId": "inuit",
-      "nation": "Inuit (Nunavik)"
+      "nation": "Inuit (Nunavik)",
+      "season": "hiver",
+      "season6": "ukiuq"
     },
     {
       "id": "61ccfc7b7f6e",
@@ -351,7 +365,9 @@
       "sessionId": "ete",
       "bank": "nations",
       "nationId": "inuit",
-      "nation": "Inuit (Nunavik)"
+      "nation": "Inuit (Nunavik)",
+      "season": "hiver",
+      "season6": "ukiuq"
     },
     {
       "id": "398524378425",
@@ -403,7 +419,9 @@
       "bank": "nations",
       "nationId": "inuit",
       "nation": "Inuit (Nunavik)",
-      "focalY": 0.32
+      "focalY": 0.32,
+      "season": "hiver",
+      "season6": "ukiuq"
     },
     {
       "id": "88da7e457739",
@@ -420,7 +438,9 @@
       "sessionId": "ete",
       "bank": "nations",
       "nationId": "atikamekw",
-      "nation": "Atikamekw"
+      "nation": "Atikamekw",
+      "season": "hiver",
+      "season6": "ukiuq"
     },
     {
       "id": "19f4f7844c7c",
@@ -456,7 +476,9 @@
       "nationId": "inuit",
       "nation": "Inuit (Nunavik)",
       "description": "Pingualuit crater in Nunavik, northern Quebec, Canada, looking west. It contains a lake named Lake Pingualuk.",
-      "categories": "PD NASA|Pingualuit|Extracted images|Files uploaded by PDTillman|Aerial photographs of lakes of Canada|October 2007 in Quebec|2007 aerial photographs of Canada|Radial drainage in nature|Aerial photographs of Nord-du-Québec"
+      "categories": "PD NASA|Pingualuit|Extracted images|Files uploaded by PDTillman|Aerial photographs of lakes of Canada|October 2007 in Quebec|2007 aerial photographs of Canada|Radial drainage in nature|Aerial photographs of Nord-du-Québec",
+      "season": "hiver",
+      "season6": "ukiuq"
     },
     {
       "id": "6f61e48fec1d",

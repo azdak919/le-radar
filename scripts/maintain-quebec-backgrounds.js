@@ -141,8 +141,17 @@ function landscapeDiscoveryQueries(sessionId) {
       'rivière Québec été',
       'Charlevoix paysage été',
     ],
+    // 4e saison météo (session univ. n’a que 3 ids)
+    printemps: [
+      'Québec printemps paysage',
+      'dégel rivière Québec',
+      'printemps Gaspésie paysage',
+    ],
   };
-  return [...core, ...(bySession[sessionId] || bySession.ete)];
+  // Préférer la saison météo courante (4) pour le seed visuel
+  const season4 = getCurrentSeason4();
+  const seasonal = bySession[season4] || bySession[sessionId] || bySession.ete;
+  return [...core, ...seasonal];
 }
 
 function universityDiscoveryQueries(sessionId) {

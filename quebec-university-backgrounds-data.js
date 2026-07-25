@@ -94,6 +94,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     license: "CC BY-SA 3.0",
     title: "Roddick Gates, McGill University",
     campus: true,
+    season: "automne",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/2d/McGill_University_Montr%C3%A9al.jpeg",
@@ -110,6 +111,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     license: "CC0",
     title: "Roddick Gates closed, McGill University, July 17, 2024",
     campus: true,
+    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG",
