@@ -1,0 +1,290 @@
+#!/usr/bin/env node
+/**
+ * LE RADAR — sync banques fonds QC (JSON → JS, hors réseau)
+ *
+ * JSON = source de vérité. Les `*-data.js` sont dérivés.
+ * Purge aussi les entrées hard-bannies (voir quebec-backgrounds-blacklist.js).
+ *
+ * Usage :
+ *   node scripts/sync-quebec-backgrounds.js           # purge + écrit JS
+ *   node scripts/sync-quebec-backgrounds.js --check   # dry-run, exit 1 si drift/ban
+ *   node scripts/sync-quebec-backgrounds.js --profile masthead
+ *
+ * Ne découvre PAS Commons. Pour revalidation + seeds :
+ *   npm run maintain:masthead  (etc.)
+ */
+
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
+const { matchHardBanned } = require('./quebec-backgrounds-blacklist');
+
+const ROOT = path.join(__dirname, '..');
+const args = process.argv.slice(2);
+const checkOnly = args.includes('--check');
+const profileFilter = (() => {
+  const eq = args.find((a) => a.startsWith('--profile='));
+  if (eq) return eq.slice('--profile='.length).trim().toLowerCase();
+  const i = args.indexOf('--profile');
+  if (i >= 0 && args[i + 1]) return String(args[i + 1]).trim().toLowerCase();
+  return null;
+})();
+
+/** Cartographie banques — garder alignée avec maintain-quebec-backgrounds + pin-background. */
+const BANKS = [
+  {
+    id: 'masthead',
+    label: 'paysages QC — mât',
+    jsonRel: 'data/quebec-backgrounds.json',
+    jsRel: 'quebec-backgrounds-data.js',
+    globalName: 'QUEBEC_BACKGROUNDS',
+    consumers: 'mât page d’accueil seulement — jamais le pomo',
+    kind: 'maintain',
+  },
+  {
+    id: 'universities',
+    label: 'campus universitaires QC — mât',
+    jsonRel: 'data/quebec-university-backgrounds.json',
+    jsRel: 'quebec-university-backgrounds-data.js',
+    globalName: 'QUEBEC_UNIVERSITY_BACKGROUNDS',
+    consumers: 'mât page d’accueil seulement — jamais le pomo',
+    kind: 'maintain',
+  },
+  {
+    id: 'pomo',
+    label: 'paysages QC — pomo',
+    jsonRel: 'data/quebec-pomo-backgrounds.json',
+    jsRel: 'quebec-pomo-backgrounds-data.js',
+    globalName: 'QUEBEC_POMO_BACKGROUNDS',
+    consumers: 'pomo uniquement — jamais le mât de la page principale',
+    kind: 'maintain',
+  },
+  {
+    id: 'nations',
+    label: 'Premières Nations & Inuit — mât + pomo',
+    jsonRel: 'data/quebec-nations-backgrounds.json',
+    jsRel: 'quebec-nations-backgrounds-data.js',
+    globalName: 'QUEBEC_NATIONS_BACKGROUNDS',
+    consumers: 'mât page d’accueil ET pomo (banque partagée thématique)',
+    kind: 'maintain',
+  },
+  {
+    id: 'favorites',
+    label: 'favorites manuelles (permanentes)',
+    jsonRel: 'data/quebec-favorites-backgrounds.json',
+    jsRel: 'quebec-favorites-backgrounds-data.js',
+    globalName: 'QUEBEC_FAVORITES_BACKGROUNDS',
+    consumers: 'mât (+ pomo si surfaces inclut « pomo »)',
+    kind: 'favorites',
+  },
+];
+
+function photoIdFromUrl(url) {
+  return crypto.createHash('sha1').update(String(url)).digest('hex').slice(0, 12);
+}
+
+function esc(s) {
+  return String(s || '').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+}
+
+function loadBank(jsonPath) {
+  if (!fs.existsSync(jsonPath)) {
+    return { version: 1, photos: [], _missing: true };
+  }
+  return JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+}
+
+function parseJsUrls(jsPath) {
+  if (!fs.existsSync(jsPath)) return [];
+  const text = fs.readFileSync(jsPath, 'utf8');
+  const urls = [];
+  const re = /url:\s*"([^"]+)"/g;
+  let m;
+  while ((m = re.exec(text))) urls.push(m[1]);
+  return urls;
+}
+
+function photoToJsObject(p, bank) {
+  const lines = [
+    `    url: "${esc(p.url)}"`,
+    `    credit: "${esc(p.credit)}"`,
+    `    link: "${esc(p.link)}"`,
+    `    license: "${esc(p.license)}"`,
+    `    title: "${esc(p.title)}"`,
+  ];
+  if (typeof p.focalY === 'number' && !Number.isNaN(p.focalY)) {
+    lines.push(`    focalY: ${p.focalY}`);
+  }
+  if (typeof p.position === 'string' && p.position.trim()) {
+    lines.push(`    position: "${esc(p.position.trim())}"`);
+  }
+  if (bank.id === 'universities') {
+    lines.push('    campus: true');
+  }
+  if (bank.id === 'nations') {
+    if (p.nationId) lines.push(`    nationId: "${esc(p.nationId)}"`);
+    if (p.nation) lines.push(`    nation: "${esc(p.nation)}"`);
+  }
+  if (bank.kind === 'favorites' || p.permanent === true) {
+    lines.push('    permanent: true');
+  }
+  if (Array.isArray(p.surfaces) && p.surfaces.length) {
+    lines.push(
+      `    surfaces: [${p.surfaces.map((s) => `"${esc(s)}"`).join(', ')}]`
+    );
+  }
+  return `  {\n${lines.join(',\n')},\n  }`;
+}
+
+function buildJs(bank, photos) {
+  if (bank.kind === 'favorites') {
+    const header = `/* LE RADAR — banque favorites (permanente, manuelle)
+ * Source de vérité : ${bank.jsonRel}
+ * Régénéré par : node scripts/sync-quebec-backgrounds.js
+ * Ne pas écraser via maintain-quebec-backgrounds (ménage / purge).
+ * Ajouts : signalement manuel ou node scripts/pin-background.js
+ *
+ * Consommateurs : ${bank.consumers}
+ * permanent: true → immunisé contre la purge des bots
+ */
+`;
+    const body = photos.map((p) => photoToJsObject(p, bank)).join(',\n');
+    return `${header}const ${bank.globalName} = [\n${body}\n];\n`;
+  }
+
+  const header = `/* LE RADAR — banque de photos de fond (généré)
+ * Profil : ${bank.id} (${bank.label})
+ * Source de vérité : ${bank.jsonRel}
+ * Régénéré par : node scripts/sync-quebec-backgrounds.js
+ * (ou maintain-quebec-backgrounds.js --update --profile ${bank.id})
+ * Ne pas éditer à la main — le bot de session / bank:sync écrase ce fichier.
+ *
+ * Consommateurs : ${bank.consumers}
+ *
+ * Politique : pas de religieux institutionnel ; nations du Québec OK ;
+ * pas de personnes reconnaissables ; plafond 50 ; ménage 1×/session univ.
+ * Résolution mini ~1400×700 / 1.2 Mpx (anti-grain upscale).
+ * focalY optionnel (0=haut, 1=bas) pour cover crop.
+ * Hard-ban : scripts/quebec-backgrounds-blacklist.js
+ */
+`;
+  const body = photos.map((p) => photoToJsObject(p, bank)).join(',\n');
+  return `${header}const ${bank.globalName} = [\n${body}\n];\n`;
+}
+
+function purgeBanned(photos) {
+  const kept = [];
+  const removed = [];
+  for (const p of photos || []) {
+    const hit = matchHardBanned(p);
+    if (hit) {
+      removed.push({ title: p.title || p.id || p.url, reason: hit.reason, fragment: hit.fragment });
+      continue;
+    }
+    if (!p.id && p.url) p.id = photoIdFromUrl(p.url);
+    kept.push(p);
+  }
+  return { kept, removed };
+}
+
+function main() {
+  const banks = profileFilter
+    ? BANKS.filter((b) => b.id === profileFilter || (profileFilter === 'landscape' && b.id === 'masthead'))
+    : BANKS;
+
+  if (profileFilter && !banks.length) {
+    console.error(`Profil inconnu « ${profileFilter} ».`);
+    process.exit(2);
+  }
+
+  console.log(
+    `LE RADAR — bank ${checkOnly ? 'check' : 'sync'} (${banks.map((b) => b.id).join(', ')})\n`
+  );
+
+  let exitCode = 0;
+  let wrote = 0;
+  let purgedTotal = 0;
+
+  for (const bank of banks) {
+    const jsonPath = path.join(ROOT, bank.jsonRel);
+    const jsPath = path.join(ROOT, bank.jsRel);
+    const data = loadBank(jsonPath);
+
+    if (data._missing) {
+      console.log(`  ⚠ ${bank.id}: JSON manquant (${bank.jsonRel})`);
+      exitCode = 1;
+      continue;
+    }
+
+    const before = (data.photos || []).length;
+    const { kept, removed } = purgeBanned(data.photos || []);
+    purgedTotal += removed.length;
+
+    for (const r of removed) {
+      console.log(`  − ${bank.id}: hard-ban « ${r.title} » (${r.reason})`);
+    }
+
+    const jsonUrls = kept.map((p) => p.url).filter(Boolean);
+    const jsUrls = parseJsUrls(jsPath);
+    const onlyJson = jsonUrls.filter((u) => !jsUrls.includes(u));
+    const onlyJs = jsUrls.filter((u) => !jsonUrls.includes(u));
+    const drift = onlyJson.length > 0 || onlyJs.length > 0 || jsonUrls.length !== jsUrls.length;
+
+    if (removed.length || drift) {
+      if (drift && !removed.length) {
+        console.log(
+          `  ± ${bank.id}: drift JSON↔JS (json=${jsonUrls.length} js=${jsUrls.length}` +
+            `${onlyJson.length ? ` +json=${onlyJson.length}` : ''}` +
+            `${onlyJs.length ? ` +js=${onlyJs.length}` : ''})`
+        );
+      }
+      if (checkOnly) {
+        exitCode = 1;
+        console.log(`  ✗ ${bank.id}: ${before} photos — action requise (bank:sync)`);
+        continue;
+      }
+    } else if (checkOnly) {
+      console.log(`  ✓ ${bank.id}: ${kept.length} photos, JSON↔JS OK, aucun ban`);
+      continue;
+    }
+
+    if (checkOnly) continue;
+
+    data.photos = kept;
+    data.updated = new Date().toISOString();
+    if (bank.kind === 'maintain' && !data.profile) data.profile = bank.id;
+    fs.mkdirSync(path.dirname(jsonPath), { recursive: true });
+    fs.writeFileSync(jsonPath, JSON.stringify(data, null, 2) + '\n', 'utf8');
+
+    const jsOut = buildJs(bank, kept);
+    fs.writeFileSync(jsPath, jsOut, 'utf8');
+    wrote += 1;
+    console.log(
+      `  ✅ ${bank.id}: ${kept.length} photos` +
+        (removed.length ? ` (−${removed.length} ban)` : '') +
+        ` → ${bank.jsRel}`
+    );
+  }
+
+  if (checkOnly) {
+    if (exitCode === 0) {
+      console.log('\nCheck OK — JSON et JS alignés, aucun hard-ban en banque.');
+    } else {
+      console.log('\nCheck ÉCHEC — lancer : npm run bank:sync');
+    }
+    process.exit(exitCode);
+  }
+
+  console.log(
+    `\nSync terminé : ${wrote} banque(s) écrite(s), ${purgedTotal} hard-ban purgé(s).`
+  );
+  if (wrote > 0) {
+    console.log(
+      'Si des *-data.js shell ont changé : bump SW (radar-shell + pomo-shell si pomo/nations/favorites).'
+    );
+  }
+}
+
+main();

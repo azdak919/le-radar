@@ -3,6 +3,9 @@
 Ce document décrit comment le projet se maintient **sans intervention humaine**
 dans l'idéal, et ce qui reste volontairement manuel.
 
+> **Agents / sessions courtes** : commencer par [`agent-playbook.md`](agent-playbook.md)
+> (banques photo, `bank:sync`, blacklist, non-casse Android/SW, checklist ship).
+
 ---
 
 ## Philosophie
@@ -39,6 +42,8 @@ dans l'idéal, et ce qui reste volontairement manuel.
 | `scripts/quebec-nations-taxonomy.js` | Taxonomie des 11 nations + détection / couverture | bot nations |
 | `data/quebec-favorites-backgrounds.json` | **Favorites manuelles** (permanentes, hors purge bots) | signalement manuel / `pin-background.js` |
 | `quebec-favorites-backgrounds-data.js` | Export favorites (`QUEBEC_FAVORITES_BACKGROUNDS`) | idem |
+| `scripts/quebec-backgrounds-blacklist.js` | **Hard-ban durable** (URL/File/id) — anti-réintroduction | curation manuelle |
+| `scripts/sync-quebec-backgrounds.js` | Sync offline JSON → JS + purge ban (`npm run bank:sync`) | agent / CI locale |
 | `bot-status.json` | Tableau de bord santé des bots | `maintain.js` |
 
 ---
@@ -192,6 +197,14 @@ node scripts/maintain.js --update
 
 # Sans rafraîchir institutions (plus rapide)
 node scripts/maintain.js --update --skip-institutions
+
+# Banques fonds QC (offline)
+npm run bank:check          # JSON↔JS + hard-ban
+npm run bank:sync           # régénère les *-data.js depuis data/*.json
+npm run maintain:masthead   # + Commons si ménage de session
+npm run maintain:pomo
+npm run maintain:universities
+npm run maintain:nations
 
 # Étape individuelle
 node scripts/scan-media.js --update

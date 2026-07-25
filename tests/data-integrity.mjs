@@ -87,4 +87,47 @@ const chyzOverlap = resolveCurrentSlot([
 ], new Date('2026-07-23T22:55:00Z'), 'America/Toronto');
 assert.equal(chyzOverlap?.title, 'Spécial', 'le créneau CHYZ commencé le plus récemment doit primer');
 
-console.log(`OK données (${articles.length} articles, ${activeSourceNames.size} sources, ${radios.length} radios)`);
+// ── Banques fonds QC : JSON source de vérité ↔ JS miroir + hard-ban ──
+const { matchHardBanned } = require('../scripts/quebec-backgrounds-blacklist');
+const bankPairs = [
+  ['data/quebec-backgrounds.json', 'quebec-backgrounds-data.js'],
+  ['data/quebec-pomo-backgrounds.json', 'quebec-pomo-backgrounds-data.js'],
+  ['data/quebec-university-backgrounds.json', 'quebec-university-backgrounds-data.js'],
+  ['data/quebec-nations-backgrounds.json', 'quebec-nations-backgrounds-data.js'],
+  ['data/quebec-favorites-backgrounds.json', 'quebec-favorites-backgrounds-data.js'],
+];
+const extractJsUrls = (text) => {
+  const urls = [];
+  const re = /url:\s*"([^"]+)"/g;
+  let m;
+  while ((m = re.exec(text))) urls.push(m[1]);
+  return urls;
+};
+let bankPhotoCount = 0;
+for (const [jsonRel, jsRel] of bankPairs) {
+  const bank = readJson(jsonRel);
+  assert(Array.isArray(bank.photos), `${jsonRel}: photos[] requis`);
+  const jsonUrls = bank.photos.map((p) => p.url).filter(Boolean);
+  const jsText = readFileSync(new URL(`../${jsRel}`, import.meta.url), 'utf8');
+  const jsUrls = extractJsUrls(jsText);
+  assert.equal(
+    jsonUrls.length,
+    jsUrls.length,
+    `${jsonRel} ↔ ${jsRel}: nombre d'URL (json=${jsonUrls.length} js=${jsUrls.length}) — npm run bank:sync`
+  );
+  for (const url of jsonUrls) {
+    assert(jsUrls.includes(url), `${jsRel}: URL absente du miroir JS — npm run bank:sync`);
+  }
+  for (const photo of bank.photos) {
+    const ban = matchHardBanned(photo);
+    assert(
+      !ban,
+      `${jsonRel}: photo hard-bannie encore en banque (${photo.title || photo.url}) reason=${ban?.reason}`
+    );
+  }
+  bankPhotoCount += bank.photos.length;
+}
+
+console.log(
+  `OK données (${articles.length} articles, ${activeSourceNames.size} sources, ${radios.length} radios, ${bankPhotoCount} fonds QC)`
+);

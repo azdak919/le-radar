@@ -118,9 +118,15 @@ RELIGIOUS_SUBJECT_RE = re.compile(
     r")"
 )
 
+# Aligné maintain paysage (masthead/pomo) : façades mairie type clocher.
+# L’audit mât est paysage — town hall n’est pas un wallpaper de bandeau.
+TOWN_HALL_FACADE_RE = re.compile(
+    r"(?i)(?:town[\s-]?hall|h[oô]tel[\s-]?de[\s-]?ville|city[\s-]?hall|\bmairie\b)"
+)
 
-def looks_religious_subject(entry: dict) -> bool:
-    hay = " ".join(
+
+def _entry_hay(entry: dict) -> str:
+    return " ".join(
         str(entry.get(k) or "")
         for k in (
             "title",
@@ -132,7 +138,14 @@ def looks_religious_subject(entry: dict) -> bool:
             "categories",
         )
     )
-    return bool(RELIGIOUS_SUBJECT_RE.search(hay))
+
+
+def looks_religious_subject(entry: dict) -> bool:
+    return bool(RELIGIOUS_SUBJECT_RE.search(_entry_hay(entry)))
+
+
+def looks_town_hall_facade(entry: dict) -> bool:
+    return bool(TOWN_HALL_FACADE_RE.search(_entry_hay(entry)))
 
 
 def parse_bank(path: Path) -> list[dict]:
@@ -573,6 +586,9 @@ def score(metrics: dict, entry: dict | None = None) -> dict:
     if entry and looks_religious_subject(entry):
         hard = True
         reasons.append("HARD:religious_subject")
+    if entry and looks_town_hall_facade(entry):
+        hard = True
+        reasons.append("HARD:town_hall_facade")
     if metrics["portrait"] or metrics["aspect"] < MIN_ASPECT:
         hard = True
         reasons.append("HARD:portrait_or_narrow")

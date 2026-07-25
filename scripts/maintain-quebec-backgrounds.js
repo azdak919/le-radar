@@ -100,7 +100,7 @@ function landscapeDiscoveryQueries(sessionId) {
     'Rigaud Québec rivière',
     'Vaudreuil-Soulanges',
     // Pas de seed « Vaudreuil-sur-le-Lac » : seule photo libre Commons
-    // (…_QC.JPG) se lit chapelle/clocher — hard-bannie ci-dessous.
+    // (…_QC.JPG) se lit chapelle/clocher — hard-ban dans blacklist.js.
     'Les Cèdres Québec paysage -airport -aéroport -hangar',
     'Les Cedres QC',
     'Île-Perrot',
