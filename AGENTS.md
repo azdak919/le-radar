@@ -85,6 +85,7 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 | ID | Résolu | Note |
 |----|--------|------|
 | — | 2026-07 | Pipeline banques : JSON source, `bank:sync` / `bank:check`, blacklist durable (`quebec-backgrounds-blacklist.js`), playbook agent, purge chapelle-like Vaudreuil-sur-le-Lac |
+| — | 2026-07-25 | Protocole fin de session : `npm run agents:propose` + points d’entrée multi-outils (`CLAUDE.md`, `.cursor/rules/`, copilot-instructions) |
 
 *(Ajouter une ligne ici quand une dette §3 passe à résolu — ne pas supprimer le passé.)*
 
@@ -92,25 +93,48 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 
 ## 5. Protocole session agent (vibe code)
 
-**Au démarrage (obligatoire, court) :**
+### Au démarrage (obligatoire, court)
 
-1. Lire **`AGENTS.md`** (ce fichier) — y a-t-il une dette **prête** et pertinente pour le ticket ?
-2. Lire **`docs/agent-playbook.md`** pour le ticket (banques, SW, radio, etc.).
-3. Faire **le ticket de l’humain** en priorité.
-4. **Seulement si** le ticket est fini, le diff est propre, et il reste du budget raisonnable :
-   - soit **un** item `open`/`ready` du ledger (le plus petit utile),
-   - soit **mettre à jour** le ledger (note, statut) sans code.
+1. Lire **`AGENTS.md`** (ce fichier).
+2. Lire **`docs/agent-playbook.md`** pour le domaine du ticket.
+3. Faire **le ticket de l’humain** en priorité — rien d’autre tant qu’il n’est pas OK.
 
-**Interdit sans demande explicite :**
+### Fin de session — « notification » dette (obligatoire)
 
-- Bulk Commons, refonte monolithe complète, nouveau Worker audio, « cleanup général » du dépôt.
-- Ignorer blacklist / `bank:sync` pour « juste patcher le JS miroir ».
-- Inventer des dettes pour justifier un gros chantier.
+Quand le ticket est **terminé** et le diff **propre** (pas au milieu d’un fix cassé) :
 
-**En fin de session :**
+```bash
+npm run agents:propose
+```
 
-- Si tu as soldé ou avancé une dette → mettre à jour §3 / §4.
-- Commit messages en phrases claires ; push seulement si le flux du projet et les checks le permettent.
+1. **Coller / reformuler** le bloc « PROPOSITION DETTE » dans le chat utilisateur  
+   (= la notification humaine : pas un toast OS, mais une **question explicite**).
+2. **Attendre l’OK** avant d’écrire une ligne pour cette dette.
+3. Si l’humain dit non / plus tard / ignore → **s’arrêter** (intérêts composés : on reviendra).
+4. Si OK → **un seul** bloc, puis mettre à jour §3 / §4, `npm run check` (et `bank:check` si banques).
+
+Exceptions (pas de propose) :
+
+- Session purement exploratoire / question sans code
+- L’humain a déjà dit « pas de dette » / « ticket only »
+- `agents:propose` affiche zéro actionnable
+
+### Auto-entretien du ledger
+
+| Qui | Quoi |
+|-----|------|
+| **Agent** | Met à jour §3/§4 quand une dette avance ou est soldée ; n’efface pas l’historique |
+| **Script** | `npm run agents:ledger` / `agents:propose` **lit** le tableau (ne l’écrit pas) |
+| **Humain** | Peut marquer `ready` / `blocked` / `wontfix` à la main |
+
+Il n’y a **pas** de daemon magique : l’entretien = **discipline de fin de session** + points d’entrée multi-outils (`CLAUDE.md`, `.cursor/rules/`, `copilot-instructions.md`).
+
+### Interdit sans demande explicite
+
+- Bulk Commons, refonte monolithe complète, nouveau Worker audio, « cleanup général »
+- Ignorer blacklist / `bank:sync` pour patcher seulement le JS miroir
+- **Commencer** une dette ledger sans OK après `agents:propose`
+- Inventer des dettes pour justifier un gros chantier
 
 ---
 
