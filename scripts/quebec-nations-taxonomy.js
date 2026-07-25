@@ -22,15 +22,47 @@ const QUEBEC_NATIONS = [
     id: 'abenaki',
     label: 'Abénaquis (W8banaki)',
     aliases: ['abénaqui', 'abenaki', 'w8banaki', 'wabanaki', 'abenakis'],
-    communities: ['Odanak', 'Wôlinak', 'Wolinak'],
+    communities: ['Odanak', 'Wôlinak', 'Wolinak', 'Pierreville'],
+    /**
+     * Graines Commons (File:…) quand la recherche plein texte rate :
+     * Odanak Vue aérienne 2025 est hard-ban (clocher) — rivière adjacente OK.
+     */
+    curatedSeeds: [
+      {
+        fileTitle: 'File:Rivière Saint-François 2025.jpg',
+        title: "Rivière Saint-François près d'Odanak",
+        nationId: 'abenaki',
+      },
+      {
+        fileTitle: 'File:Archipel Saint-François-du-Lac 02.jpg',
+        title: 'Archipel Saint-François près d’Odanak',
+        nationId: 'abenaki',
+      },
+    ],
     queries: [
-      // -church/-chapelle : éviter clochers catholiques (ex. Wôlinak.jpg)
-      'Odanak Quebec aerial landscape -people -portrait -church -église -chapel -chapelle',
-      'Odanak Québec paysage -people -church -église',
-      'Wolinak Quebec landscape -people -church -église -chapel -chapelle -cross -croix',
-      'Wôlinak paysage -people -église -chapelle -church',
-      'Abénaquis Québec paysage -people -portrait -église -church',
-      'Abenaki Quebec landscape -people -church -chapel',
+      // -church/-chapelle : éviter clochers catholiques (ex. Wôlinak.jpg, Odanak aérien village)
+      'Odanak Quebec aerial landscape -people -portrait -church -église -chapel -chapelle -steeple -clocher',
+      'Odanak Québec paysage rivière -people -church -église -clocher',
+      'intitle:Odanak -église -eglise -church -chapelle -clocher -steeple -diagram -carte',
+      'incategory:Odanak filetype:bitmap -église -church -chapelle',
+      'Rivière Saint-François Odanak -people -église -church',
+      'Rivière Saint-François-du-Lac aerial -people -church -église',
+      'Archipel Saint-François-du-Lac -people -church',
+      'Wolinak Quebec landscape -people -church -église -chapel -chapelle -cross -croix -clocher',
+      'Wôlinak paysage -people -église -chapelle -church -clocher',
+      'intitle:Wôlinak -chapelle -église -church -diagram',
+      'Abénaquis Québec paysage -people -portrait -église -church -barrage -hydro',
+      'Abenaki Quebec landscape river -people -church -chapel -hotel',
+      'W8banaki OR Wabanaki Odanak landscape -people -church',
+      'Saint-François River near Odanak aerial -church -people',
+      'Gabriel Picard Odanak OR "Saint-François" aerial -église -church -rue',
+    ],
+    // Requêtes Openverse (Commons + Flickr + …) si toujours 0 photo
+    openverseQueries: [
+      'Odanak Quebec landscape river',
+      'Odanak Québec rivière',
+      'Wôlinak Quebec',
+      'Abenaki Odanak Quebec nature',
     ],
   },
   {
@@ -275,7 +307,16 @@ function normalizeHay(s) {
  */
 function detectNationId(entry) {
   const hay = normalizeHay(
-    [entry.title, entry.url, entry.link, entry.credit, entry.nation, entry.nationId]
+    [
+      entry.title,
+      entry.url,
+      entry.link,
+      entry.credit,
+      entry.nation,
+      entry.nationId,
+      entry.description,
+      entry.categories,
+    ]
       .filter(Boolean)
       .join(' ')
   );
@@ -314,7 +355,8 @@ function buildDiscoveryQueries(sessionId, photos = []) {
     );
   } else if (sessionId === 'ete') {
     queries.push(
-      'Odanak été vue aérienne -people',
+      // Pas « Odanak vue aérienne » seule : ramène le village+clocher hard-ban
+      'Rivière Saint-François Odanak été -people -église -church',
       'Pessamit été paysage -people',
       'Mistissini été paysage -people',
       'Nunavik summer landscape -people -portrait'
@@ -361,6 +403,38 @@ function tagPhotoNation(entry) {
   };
 }
 
+/** Graines File: Commons pour nations encore à 0 (après ban clocher, etc.). */
+function curatedSeedsForMissing(photos = []) {
+  const counts = coverageCounts(photos);
+  /** @type {{ fileTitle: string, title?: string, nationId: string }[]} */
+  const seeds = [];
+  for (const nation of QUEBEC_NATIONS) {
+    if ((counts[nation.id] || 0) > 0) continue;
+    for (const s of nation.curatedSeeds || []) {
+      if (!s || !s.fileTitle) continue;
+      seeds.push({
+        fileTitle: s.fileTitle,
+        title: s.title,
+        nationId: s.nationId || nation.id,
+      });
+    }
+  }
+  return seeds;
+}
+
+/** Requêtes Openverse pour nations absentes (source secondaire). */
+function openverseQueriesForMissing(photos = []) {
+  const counts = coverageCounts(photos);
+  const queries = [];
+  for (const nation of QUEBEC_NATIONS) {
+    if ((counts[nation.id] || 0) > 0) continue;
+    for (const q of nation.openverseQueries || []) {
+      queries.push({ query: q, nationId: nation.id });
+    }
+  }
+  return queries;
+}
+
 module.exports = {
   QUEBEC_NATIONS,
   detectNationId,
@@ -368,4 +442,6 @@ module.exports = {
   coverageCounts,
   coverageReport,
   tagPhotoNation,
+  curatedSeedsForMissing,
+  openverseQueriesForMissing,
 };

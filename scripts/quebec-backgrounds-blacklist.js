@@ -76,7 +76,23 @@ const HARD_BANNED = [
       '223778e14b51',
     ],
     reason: 'church_steeple_visible',
-    note: 'Purge 2026-07-25 mât+nations+pomo ; Gabriel Picard CC BY-SA 4.0 — chercher autre vue W8banaki sans clocher',
+    note: 'Purge 2026-07-25 mât+nations+pomo ; remplacé par Rivière Saint-François 2025 (même auteur, sans clocher)',
+  },
+  {
+    // Usine d’épuration — pas un paysage de bandeau (même si Odanak)
+    fragments: [
+      'Station_d\'épuration_Odanak',
+      'Station_d%27%C3%A9puration_Odanak',
+      'Station_d_epuration_Odanak',
+    ],
+    reason: 'industrial_water_treatment',
+    note: 'Découverte 2026-07-25 nations — filtré + ban',
+  },
+  {
+    // Gros plan panneau d’arrêt — pas un wallpaper
+    fragments: ['AbenakisStopSign', 'Abenaki_stop_sign', 'Abenaki stop sign odanak'],
+    reason: 'signage_closeup',
+    note: 'Découverte 2026-07-25 nations — filtré + ban',
   },
 ];
 
