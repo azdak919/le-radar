@@ -1,47 +1,28 @@
-# Migration DNS vers Cloudflare — le-radar.ca
+# Migration DNS Cloudflare (optionnel)
 
-Objectif : conserver GitHub Pages pour le site et exposer le Worker de scores
-sous `https://scores.le-radar.ca`, sans URL portant un nom personnel.
+Objectif : conserver GitHub Pages pour le site et éventuellement attacher des
+Workers sous `*.le-radar.ca` (au lieu de `*.azdak.workers.dev`).
 
-## Avant le basculement
+## État actuel
 
-Les enregistrements actifs vérifiés le 23 juillet 2026 sont :
+- **Site** : GitHub Pages + DNS chez le registrar (WHC) — pas de zone CF requise
+- **Workers live** (sous-domaine compte) :
+  - `https://le-radar-weather.azdak.workers.dev` — météo
+  - `https://le-radar-bg-rotation.azdak.workers.dev` — entropie rotation fonds
 
-| Hôte | Type | Valeur |
-| --- | --- | --- |
-| `@` | A | `185.199.108.153` |
-| `@` | A | `185.199.109.153` |
-| `@` | A | `185.199.110.153` |
-| `@` | A | `185.199.111.153` |
-| `www` | CNAME | `azdak919.github.io` |
+Les Workers tournent en `workers_dev = true` tant que le DNS de `le-radar.ca`
+n’est pas sur Cloudflare.
 
-Ces cinq entrées doivent être présentes dans Cloudflare avant de remplacer les
-serveurs de noms chez WHC. Elles maintiennent GitHub Pages et le `CNAME` du
-dépôt reste `le-radar.ca`.
+## Si un jour le DNS passe sur Cloudflare
 
-## Basculement
+1. Ajouter la zone `le-radar.ca` dans Cloudflare (DNS only ou full proxy selon besoin)
+2. Workers & Pages → worker concerné → **Add Domain**
+   - ex. `weather.le-radar.ca`, `bg.le-radar.ca`
+3. Mettre à jour les URL côté client (`app.js` `WEATHER_API_BASE`,
+   `bg-rotation-lib.js` `DEFAULT_ENTROPY_URL`)
+4. Redéployer avec `workers_dev = false` si tu n’as plus besoin de `workers.dev`
 
-1. Dans Cloudflare : **Add a domain** → `le-radar.ca` → plan **Free**.
-2. Reproduire le tableau ci-dessus dans **DNS**. Les A et le CNAME `www`
-   restent en **DNS only** (nuage gris) : GitHub Pages ne doit pas être proxyfié.
-3. Chez WHC, remplacer les serveurs de noms par les deux noms fournis par
-   Cloudflare. Ne modifie aucun autre réglage du domaine.
-4. Attendre que Cloudflare confirme la zone active, puis vérifier
-   `https://le-radar.ca` et `https://www.le-radar.ca`.
-5. Dans **Workers & Pages → le-radar-scores → Domains**, choisir
-   **Add Domain** et saisir `scores.le-radar.ca`. Cloudflare crée la route
-   sécurisée du Worker; ne crée pas de CNAME manuel vers `workers.dev`.
+## Ce qui n’est plus prévu
 
-Quand le domaine répond, renseigner son endpoint (`https://scores.le-radar.ca/v1/scores`)
-dans `solitaire/scores-api.js`, ajouter ce même hôte à `connect-src` dans
-`solitaire/index.html`, puis déployer le Worker avec `workers_dev = false`.
-
-## Vérification
-
-```bash
-curl -fsS https://scores.le-radar.ca/v1/scores
-```
-
-La réponse initiale doit être `[]`. Le Worker n'accepte les écritures du
-navigateur que depuis `le-radar.ca`, `www.le-radar.ca` ou le domaine GitHub
-Pages historique; il ne conserve qu'une empreinte anti-spam temporaire.
+- Classement Solitaire partagé (`scores.le-radar.ca` / D1) — **retiré**
+- Proxy de flux radio sur Workers free — **évité** (bande passante)

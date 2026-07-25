@@ -27,7 +27,16 @@ dans l'idéal, et ce qui reste volontairement manuel.
 | `radio-schedules.seed.json` | Config sources + grilles manuelles | humain + `discover-schedule-sources.js` |
 | `radio-schedules.json` | Grilles colligées « à l'antenne » (lu par le site) | `fetch-radio-schedules.js` |
 | `radio-nowplaying.json` | En cours + à venir (API live / grille / ICY) | `fetch-radio-nowplaying.js` (+ re-poll navigateur si `clientPoll`) |
-| Photos vedette | Source → scrape page → banque libre thématique → **campus curaté** | `ensure-lead-images.js` + `stock-photo-lib.js` + `campus-photo-bank.js` |
+| Photos vedette | Source → scrape page → banque libre thématique (+ QC visuelle soft mât) → **campus curaté** (+ merge banque universities) | `ensure-lead-images.js` + `stock-photo-lib.js` + `photo-visual-qc-lib.js` + `campus-photo-bank.js` |
+| `data/quebec-backgrounds.json` | Banque **mât** paysages QC (max 50) — jamais le pomo | `maintain-quebec-backgrounds.js --profile masthead` |
+| `quebec-backgrounds-data.js` | Export mât paysages (`QUEBEC_BACKGROUNDS`) | idem |
+| `data/quebec-university-backgrounds.json` | Banque **mât** campus univ. QC (max 50) — jamais le pomo | `maintain-quebec-backgrounds.js --profile universities` |
+| `quebec-university-backgrounds-data.js` | Export mât campus (`QUEBEC_UNIVERSITY_BACKGROUNDS`) | idem |
+| `data/quebec-pomo-backgrounds.json` | Banque **pomo** paysages QC (max 50) — jamais le mât | `maintain-quebec-backgrounds.js --profile pomo` |
+| `quebec-pomo-backgrounds-data.js` | Export pomo (`QUEBEC_POMO_BACKGROUNDS`) | idem |
+| `data/quebec-nations-backgrounds.json` | Banque **Premières Nations & Inuit** (max 50) — **mât + pomo** ; **11 nations QC** | `maintain-quebec-backgrounds.js --profile nations` |
+| `quebec-nations-backgrounds-data.js` | Export nations (`QUEBEC_NATIONS_BACKGROUNDS`, champs `nationId` / `nation`) | idem |
+| `scripts/quebec-nations-taxonomy.js` | Taxonomie des 11 nations + détection / couverture | bot nations |
 | `bot-status.json` | Tableau de bord santé des bots | `maintain.js` |
 
 ---
@@ -49,6 +58,11 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 | En cours + à venir (API / grille / ICY) | `fetch-radio-nowplaying.js` | Aux 30 min |
 | Découverte sources horaires | `discover-schedule-sources.js` | **Aux 2 semaines** (avant les horaires) |
 | Horaires « à l'antenne » | `fetch-radio-schedules.js` | **Aux 2 semaines** |
+| Wallpaper mât paysages | `maintain-quebec-backgrounds.js --profile masthead` | Hebdo ; plafond 50 ; **mât seulement** |
+| Wallpaper mât campus univ. | `maintain-quebec-backgrounds.js --profile universities` | Hebdo ; plafond 50 ; **mât seulement** |
+| Wallpaper pomo paysages QC | `maintain-quebec-backgrounds.js --profile pomo` | Hebdo ; plafond 50 ; **pomo seulement** |
+| Wallpaper nations / Inuit | `maintain-quebec-backgrounds.js --profile nations` | Hebdo ; plafond 50 ; **mât + pomo** (partagée) |
+| Rotation / random fonds | `bg-rotation-lib.js` + Worker optionnel `workers/bg-rotation` | Client CSPRNG ; entropie edge CF free (0 $) |
 | **Orchestrateur** | `maintain.js` | **Hebdo (lundi)** |
 
 ### Workflows GitHub Actions

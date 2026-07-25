@@ -1,0 +1,6 @@
+name = "le-radar-bg-rotation"
+main = "src/index.js"
+compatibility_date = "2026-07-23"
+# DNS le-radar.ca pas encore sur Cloudflare → workers.dev
+workers_dev = true
+preview_urls = false

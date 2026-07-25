@@ -1,5 +1,11 @@
 /* Ataraxia — background image pool (data only)
  * Exports: BACKGROUNDS (global array)
+ *
+ * Complété au runtime par :
+ *   - ../quebec-pomo-backgrounds-data.js → QUEBEC_POMO_BACKGROUNDS (pomo only)
+ *   - ../quebec-nations-backgrounds-data.js → QUEBEC_NATIONS_BACKGROUNDS
+ *     (Premières Nations & Inuit — partagée avec le mât)
+ * QUEBEC_BACKGROUNDS / QUEBEC_UNIVERSITY_BACKGROUNDS ne sont jamais chargés ici.
  */
 const BACKGROUNDS = [
   // ── Natural landscapes — Unsplash ──────────────────────────────

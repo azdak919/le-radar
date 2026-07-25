@@ -44,6 +44,29 @@
     return new Date(year, 0, 1); // hiver
   }
 
+  /**
+   * Id de session pour le thème UI (bandeau radio bureau).
+   * @returns {'automne'|'hiver'|'ete'}
+   */
+  function getCurrentUniversitySessionId(referenceDate = new Date()) {
+    const month = referenceDate.getMonth();
+    if (month >= 8) return 'automne';
+    if (month >= 4) return 'ete';
+    return 'hiver';
+  }
+
+  /**
+   * Pose html[data-uni-session] pour le CSS du synthé (desktop).
+   * Calendrier : automne 1er sept · hiver 1er janv · été 1er mai.
+   */
+  function applyUniversitySessionTheme(referenceDate = new Date()) {
+    const id = getCurrentUniversitySessionId(referenceDate);
+    if (typeof document !== 'undefined' && document.documentElement) {
+      document.documentElement.setAttribute('data-uni-session', id);
+    }
+    return id;
+  }
+
   function getPriorUniversitySessionStart(sessionStart) {
     const year = sessionStart.getFullYear();
     const month = sessionStart.getMonth();
@@ -125,11 +148,13 @@
     return getUniversitySessionStart(referenceDate, freshnessMaxSessionsBack(referenceDate));
   }
 
-  return {
+  const api = {
     FRESHNESS_SESSION_COUNT,
     CONTINGENCY_MAX_SESSIONS_BACK,
     SEPTEMBER_AUTUMN_GRACE_MONTH,
     getCurrentUniversitySessionStart,
+    getCurrentUniversitySessionId,
+    applyUniversitySessionTheme,
     getPriorUniversitySessionStart,
     getUniversitySessionStart,
     getUniversitySessionBand,
@@ -143,4 +168,13 @@
     pruneToFreshWindow,
     freshnessWindowStart,
   };
+
+  // Navigateur : pose data-uni-session dès le chargement du script (defer).
+  if (typeof document !== 'undefined' && document.documentElement) {
+    try {
+      applyUniversitySessionTheme();
+    } catch (_) { /* ignore */ }
+  }
+
+  return api;
 }));

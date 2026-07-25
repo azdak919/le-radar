@@ -125,6 +125,19 @@ function buildStatus(steps) {
   const authorQc = readJson('author-qc.json', {});
   const leadQc = readJson('lead-image-qc.json', {});
   const photoCreditQc = readJson('photo-credit-qc.json', {});
+  const bgBank = readJson('data/quebec-backgrounds.json', { photos: [], maxBank: 50 });
+  const uniBgBank = readJson('data/quebec-university-backgrounds.json', {
+    photos: [],
+    maxBank: 50,
+  });
+  const pomoBgBank = readJson('data/quebec-pomo-backgrounds.json', {
+    photos: [],
+    maxBank: 50,
+  });
+  const nationsBgBank = readJson('data/quebec-nations-backgrounds.json', {
+    photos: [],
+    maxBank: 50,
+  });
 
   if (authorQc.ok === false && (authorQc.mismatches || 0) > 0) {
     alerts.push({
@@ -194,6 +207,37 @@ function buildStatus(steps) {
           missingHero: photoCreditQc.missingHero ?? null,
         },
       },
+      backgrounds: {
+        masthead: {
+          count: (bgBank.photos || []).length,
+          maxBank: bgBank.maxBank || 50,
+          lastSessionCleanup: bgBank.lastSessionCleanup || null,
+          lastSessionId: bgBank.lastSessionId || null,
+        },
+        universities: {
+          count: (uniBgBank.photos || []).length,
+          maxBank: uniBgBank.maxBank || 50,
+          lastSessionCleanup: uniBgBank.lastSessionCleanup || null,
+          lastSessionId: uniBgBank.lastSessionId || null,
+        },
+        pomo: {
+          count: (pomoBgBank.photos || []).length,
+          maxBank: pomoBgBank.maxBank || 50,
+          lastSessionCleanup: pomoBgBank.lastSessionCleanup || null,
+          lastSessionId: pomoBgBank.lastSessionId || null,
+        },
+        nations: {
+          count: (nationsBgBank.photos || []).length,
+          maxBank: nationsBgBank.maxBank || 50,
+          lastSessionCleanup: nationsBgBank.lastSessionCleanup || null,
+          lastSessionId: nationsBgBank.lastSessionId || null,
+        },
+        // rétrocompat résumé plat = paysages mât
+        count: (bgBank.photos || []).length,
+        maxBank: bgBank.maxBank || 50,
+        lastSessionCleanup: bgBank.lastSessionCleanup || null,
+        lastSessionId: bgBank.lastSessionId || null,
+      },
       radios: {
         listed: radios.length,
         withStream: radiosWithStream.length,
@@ -234,6 +278,11 @@ async function main() {
     ['Lead excerpt enrichment', `node scripts/enrich-lead-excerpts.js ${flag}`.trim()],
     ['Lead image QC', `node scripts/ensure-lead-images.js ${flag}`.trim()],
     ['Photo credit QC', `node scripts/verify-photo-credits.js ${flag}`.trim()],
+    // Wallpaper compartimenté + nations partagée (mât + pomo)
+    ['Quebec masthead landscape bank', `node scripts/maintain-quebec-backgrounds.js --profile masthead ${flag}`.trim()],
+    ['Quebec masthead university bank', `node scripts/maintain-quebec-backgrounds.js --profile universities ${flag}`.trim()],
+    ['Quebec pomo landscape bank', `node scripts/maintain-quebec-backgrounds.js --profile pomo ${flag}`.trim()],
+    ['Quebec nations/Inuit bank (shared)', `node scripts/maintain-quebec-backgrounds.js --profile nations ${flag}`.trim()],
     ['Social feed', `node scripts/fetch-social.js ${flag}`.trim()],
     ['RSS export', `node scripts/generate-feed.js ${flag}`.trim()],
   ];

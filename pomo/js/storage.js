@@ -4,9 +4,10 @@
 const POMO_KEY = 'ataraxia_pomo';
 const POMO_KEY_LEGACY = 'stoicflow_pomo';
 const RECENT_QUOTES_KEY = 'ataraxia_recent_quotes_v2';
-const RECENT_BGS_KEY    = 'ataraxia_recent_bgs_v3'; // v3: longer window + smarter shuffle bag
+const RECENT_BGS_KEY    = 'ataraxia_recent_bgs_v3'; // legacy indices (migré → rotator URL)
+const RECENT_BGS_URL_KEY = 'ataraxia_recent_bg_urls_v4'; // stable anti-repeat by URL
 const MAX_RECENT_QUOTES = 26;   // good variety on 125 quotes (~21%)
-const MAX_RECENT_BGS    = 48;   // ~30% of ~156 unique wallpapers — strong anti-repeat
+const MAX_RECENT_BGS    = 48;   // ~30% of pool — strong anti-repeat
 const TRANSLATION_CACHE_KEY = 'ataraxia_translations_v3';
 const TRANSLATION_CACHE_KEY_LEGACY = 'stoicflow_translations';
 const LANG_PREF_KEY = 'ataraxia_lang';

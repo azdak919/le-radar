@@ -13,8 +13,7 @@ Open-Meteo échoue quand même, le Worker bascule sur MET Norway
 
 ## Déploiement initial
 
-Depuis ce dossier, après avoir créé un compte Cloudflare gratuit (le même que
-pour `le-radar-scores` si tu l'as déjà) :
+Depuis ce dossier, après avoir créé un compte Cloudflare gratuit :
 
 ```bash
 npx wrangler login

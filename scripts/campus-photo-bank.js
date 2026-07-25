@@ -11,6 +11,8 @@
  */
 
 const crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
 
 function normalizeKey(text = '') {
   return String(text)
@@ -20,6 +22,80 @@ function normalizeKey(text = '') {
     .replace(/[^\p{L}\p{N}\s]/gu, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+/**
+ * Mappe un titre / URL de la banque mât universities → clé BANK.
+ * Lecture seule de data/quebec-university-backgrounds.json (pas d’écriture croisée).
+ */
+const WALLPAPER_INST_RULES = [
+  { re: /uqam|judith[\s-]?jasmin/i, key: 'uqam' },
+  { re: /mcgill|roddick|wilson\s*hall|avenue\s*mcgill/i, key: 'mcgill university' },
+  { re: /concordia|henry\s*f\.?\s*hall|loyola|mackay/i, key: 'concordia university' },
+  { re: /polytechnique|roger[\s-]?gaudry|universit[eé]\s*de\s*montr[eé]al|\budem\b/i, key: 'universite de montreal' },
+  { re: /laval/i, key: 'universite laval' },
+  { re: /sherbrooke|longueuil/i, key: 'universite de sherbrooke' },
+  { re: /bishop/i, key: "bishop's university" },
+  { re: /uqtr|trois[\s-]?rivi/i, key: 'universite du quebec a trois rivieres' },
+  { re: /dawson/i, key: 'dawson college' },
+  { re: /vieux\s*montr[eé]al/i, key: 'cegep du vieux montreal' },
+  { re: /jonqui[eè]re/i, key: 'cegep de jonquiere' },
+];
+
+function mapWallpaperToBankKey(photo = {}) {
+  const hay = `${photo.title || ''} ${photo.url || ''} ${photo.link || ''}`;
+  for (const rule of WALLPAPER_INST_RULES) {
+    if (rule.re.test(hay)) return rule.key;
+  }
+  return null;
+}
+
+/** Cache lazy des entrées wallpaper universities → format banque campus. */
+let _wallpaperCampusCache = null;
+
+function loadWallpaperCampusExtras() {
+  if (_wallpaperCampusCache) return _wallpaperCampusCache;
+  _wallpaperCampusCache = new Map(); // key → entries[]
+  try {
+    const jsonPath = path.join(__dirname, '..', 'data', 'quebec-university-backgrounds.json');
+    if (!fs.existsSync(jsonPath)) return _wallpaperCampusCache;
+    const bank = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+    const photos = Array.isArray(bank?.photos) ? bank.photos : [];
+    for (const p of photos) {
+      if (!p?.url) continue;
+      const key = mapWallpaperToBankKey(p);
+      if (!key) continue;
+      const entry = {
+        url: p.url,
+        title: p.title || '',
+        creator: p.credit || '',
+        license: p.license || '',
+        sourceUrl: p.link || p.url,
+        tags: `exterior campus wallpaper-bank ${normalizeKey(p.title || '')}`,
+        _fromWallpaperBank: true,
+        focalY: typeof p.focalY === 'number' ? p.focalY : undefined,
+      };
+      if (!_wallpaperCampusCache.has(key)) _wallpaperCampusCache.set(key, []);
+      _wallpaperCampusCache.get(key).push(entry);
+    }
+  } catch (err) {
+    // Banque mât absente / JSON invalide : pas de crash — banque curatée seule.
+    _wallpaperCampusCache = new Map();
+  }
+  return _wallpaperCampusCache;
+}
+
+/** Fusionne BANK curatée + extras mât (dédup par URL). */
+function mergeCampusEntries(curated = [], extras = []) {
+  const seen = new Set();
+  const out = [];
+  for (const e of [...curated, ...extras]) {
+    const u = String(e?.url || '').trim();
+    if (!u || seen.has(u)) continue;
+    seen.add(u);
+    out.push(e);
+  }
+  return out;
 }
 
 /** Entrée : { url, title, creator, license, sourceUrl, tags? } */
@@ -430,7 +506,16 @@ function resolveBankKey(institution = '') {
 function bankEntriesFor(institution = '') {
   const key = resolveBankKey(institution);
   if (!key) return [];
-  return BANK[key] || [];
+  const curated = BANK[key] || [];
+  // Enrichissement soft : photos du pool mât universities (même établissement).
+  // Désactiver : LE_RADAR_CAMPUS_WALLPAPER_MERGE=0
+  const mergeEnv = String(process.env.LE_RADAR_CAMPUS_WALLPAPER_MERGE || '1').trim().toLowerCase();
+  if (mergeEnv === '0' || mergeEnv === 'false' || mergeEnv === 'off' || mergeEnv === 'no') {
+    return curated.slice();
+  }
+  const extras = loadWallpaperCampusExtras().get(key) || [];
+  if (!extras.length) return curated.slice();
+  return mergeCampusEntries(curated, extras);
 }
 
 const WINTER_RE = /\b(snow|neige|winter|hiver|glacial|blizzard|ice rink|patinoire)\b/i;
@@ -605,4 +690,7 @@ module.exports = {
   clearCampusBankFields,
   hasCampusBank,
   entryToStockFields,
+  loadWallpaperCampusExtras,
+  mapWallpaperToBankKey,
+  mergeCampusEntries,
 };

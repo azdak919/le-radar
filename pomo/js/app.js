@@ -3,6 +3,8 @@
  * MODULE MAP (js/):
  *   storage.js         — localStorage keys + legacy migration
  *   backgrounds-data.js— BACKGROUNDS[] image pool
+ *   ../quebec-pomo-backgrounds-data.js — banque QC pomo (jamais le mât)
+ *   ../quebec-nations-backgrounds-data.js — nations/Inuit (partagée mât)
  *   backgrounds.js     — load/switch backgrounds, smart random
  *   quotes-data.js     — QUOTES[] citation database
  *   quotes-i18n.js     — curated per-language quote translations
