@@ -1,6 +1,17 @@
 /* LE RADAR — banque de photos de fond (généré)
- * Profil : pomo
- * Retrait aéroport Les Cèdres (scène industrielle morne).
+ * Profil : pomo (paysages QC — pomo)
+ * Source de vérité : data/quebec-pomo-backgrounds.json
+ * Régénéré par : node scripts/sync-quebec-backgrounds.js
+ * (ou maintain-quebec-backgrounds.js --update --profile pomo)
+ * Ne pas éditer à la main — le bot de session / bank:sync écrase ce fichier.
+ *
+ * Consommateurs : pomo uniquement — jamais le mât de la page principale
+ *
+ * Politique : pas de religieux institutionnel ; nations du Québec OK ;
+ * pas de personnes reconnaissables ; plafond 50 ; ménage 1×/session univ.
+ * Résolution mini ~1400×700 / 1.2 Mpx (anti-grain upscale).
+ * focalY optionnel (0=haut, 1=bas) pour cover crop.
+ * Hard-ban : scripts/quebec-backgrounds-blacklist.js
  */
 const QUEBEC_POMO_BACKGROUNDS = [
   {
@@ -254,12 +265,5 @@ const QUEBEC_POMO_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Champ_sur_l%27%C3%AEle_d%27Orl%C3%A9ans.jpg",
     license: "CC0",
     title: "Île d'Orléans",
-  },
-  {
-    url: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Odanak_Vue_a%C3%A9rienne_2025.jpg",
-    credit: "Gabriel Picard",
-    link: "https://commons.wikimedia.org/wiki/File:Odanak_Vue_a%C3%A9rienne_2025.jpg",
-    license: "CC BY-SA 4.0",
-    title: "Odanak, nation W8banaki",
   }
 ];
