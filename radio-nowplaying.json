@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-25T04:44:59.318Z",
+  "updatedAt": "2026-07-25T07:19:57.552Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-25T04:44:34.361Z"
+      "checkedAt": "2026-07-25T07:19:28.821Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rave de nuit",
+        "title": "Mix anglo",
         "source": "api-live",
-        "start": "20:00",
+        "start": "22:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "rave-de-nuit"
+        "slug": "mix-anglo"
       },
       "next": {
-        "title": "Le 120e parallèle (reprise)",
+        "title": "Rebelles soniques (reprise)",
         "source": "api-live",
-        "start": "21:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364700.mp3",
-        "slug": "le-120e-parallele"
+        "start": "00:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/365044.mp3",
+        "slug": "rebelles-soniques"
       },
       "track": "",
-      "showTitle": "Rave de nuit",
+      "showTitle": "Mix anglo",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,42 +51,43 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-25T04:44:35.867Z"
+      "checkedAt": "2026-07-25T07:19:31.260Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "WEFUNK",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "Soca Sessions",
         "source": "api-live",
         "start": "02:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "The Mash Time Show",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "06:00"
+      },
       "track": "",
-      "showTitle": "WEFUNK",
+      "showTitle": "Soca Sessions",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-25T04:44:38.328Z"
+      "checkedAt": "2026-07-25T07:19:34.282Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Jazz Boulevard",
+        "title": "CJLO Late Night",
         "source": "schedule",
         "start": "00:00",
-        "end": "02:00",
-        "url": "http://www.cjlo.com/shows/jazz-boulevard"
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "World-Up'",
@@ -96,14 +97,14 @@
         "url": "http://www.cjlo.com/shows/world-up"
       },
       "track": "",
-      "showTitle": "Jazz Boulevard",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-25T04:44:51.769Z"
+      "checkedAt": "2026-07-25T07:19:48.105Z"
     },
     "cfak": {
       "id": "cfak",
@@ -123,7 +124,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-25T04:44:52.211Z"
+      "checkedAt": "2026-07-25T07:19:48.896Z"
     },
     "choq": {
       "id": "choq",
@@ -136,7 +137,7 @@
         "end": "23:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Blondshell - Heart Has To Work So Hard",
+      "track": "Slippers - LWH",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +148,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-25T04:44:58.967Z"
+      "checkedAt": "2026-07-25T07:19:57.202Z"
     }
   }
 }
