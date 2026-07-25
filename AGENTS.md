@@ -45,20 +45,33 @@ Pas une blockchain réelle — une **discipline** :
 
 | Règle | Détail |
 |-------|--------|
-| **Un bloc à la fois** | 1 dette (ou 1 slice clairement bornée) par session « backlog », sauf ordre explicite de l’humain |
-| **Preuve de travail légère** | `npm run check` / `bank:check` / tests ciblés avant commit — pas un audit réseau à chaque push |
-| **Chaîne append-only** | Mettre à jour le tableau §3 (statut, date ISO, note) ; ne pas effacer l’historique des dettes résolues — les déplacer en §4 |
-| **Consensus humain** | Si le risque UX est non trivial (radio, mât, PWA, thème), **demander** ou s’arrêter |
-| **Validité du bloc** | Le commit doit pouvoir se lire seul : message clair, pas de régression volontaire |
+| **Un bloc à la fois** | 1 dette (ou 1 slice clairement bornée) par session « backlog » |
+| **Preuve de travail légère** | `npm run check` / `bank:check` / tests ciblés avant commit |
+| **Chaîne append-only** | Dettes résolues → §4 ; ne pas effacer l’historique |
+| **Consensus humain** | Toujours attendre OK avant de commencer une dette |
+| **Validité du bloc** | Commit lisible seul ; pas de régression volontaire |
 
-**Quand solider une dette « tech améliorée » ?**
+### 2b. Balises anti-glouton (lis-moi si tu dis « oui » à tout)
 
-- Le modèle / l’outil rend la tâche **fiable** (moins d’hallucinations sur gros fichiers, meilleurs refactors guidés par tests).
-- Il existe déjà des **tests ou scripts** qui catchent une casse.
-- L’humain n’a pas demandé un fix urgent concurrent.
-- Tu peux finir le bloc **dans une session** sans laisser le repo à moitié migré.
+L’humain a tendance à dire **oui** à chaque proposition. Les agents **doivent** appliquer ces freins :
 
-Sinon : **noter**, ne pas entamer.
+| Balise | Règle dure |
+|--------|------------|
+| **MAX 1 dette / session de chat** | Après une dette **soldée**, `npm run agents:propose` → **STOP**. Ne pas enchaîner D5 puis D3 puis D1. |
+| **MAX 2 dettes / jour calendaire** | Même sur plusieurs sessions le même jour. |
+| **« Continue » ≠ carte blanche** | = finir le **ticket en cours** ou la **dette déjà acceptée**, pas « tout le ledger ». |
+| **Effort L** | Deux OK explicites séparés avant de commencer. |
+| **Ticket métier d’abord** | Si l’humain a un bug/feature, **zéro** dette ledger tant que ce n’est pas livré. |
+| **Ajouter une ligne au ledger** | Seulement si le même problème revient **2×** dans des sessions distinctes, ou l’humain le demande. **Jamais** inventer une dette pour prolonger la session. |
+| **Auto-nourriture** | **Non magique.** Le ledger ne se détecte pas tout seul : l’agent lit/écrit le fichier + `.agents-session.json` (quota). Pas de daemon. |
+
+Commandes quota :
+
+```bash
+npm run agents:propose           # propose OU affiche STOP si quota
+npm run agents:record-sold -- D5 # après avoir soldé D5
+npm run agents:reset-session     # nouveau chat seulement (pas pour contourner le jour)
+```
 
 ---
 
@@ -73,7 +86,7 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 | D2 | **Découpe** `app.js` / `style.css` en modules | Risque régression UX (tuner, mât, thèmes) ; gain surtout agent | Tranche unique (ex. CSS mât photo seul) + smoke manuel/playwright | L | open |
 | D3 | **Re-seed bulk** Commons pour trous de banques | 429, qualité inégale, risque de réintroduire religieux/façades | Seeds **ciblés** 1–3 lieux + `bank:check` + audit offline d’abord | M | open |
 | D4 | **Skills Grok hors repo** (`~/.grok/skills/`) | Double source d’obsolescence ; le playbook **est** le skill du dépôt | Seulement si multi-projets perso — **ne pas** dupliquer les règles LE-RADAR | S | wontfix |
-| D5 | **Durcir audit clocher / façades** (aligner Python ↔ JS runtime) | Déjà blacklist + town hall paysage ; le reste est peaufinage | Cas réels en banque ou faux négatifs documentés | S–M | open |
+| D5 | **Durcir audit clocher / façades** (aligner Python ↔ JS runtime) | Déjà blacklist + town hall paysage ; le reste est peaufinage | Cas réels en banque ou faux négatifs documentés | S–M | resolved |
 | D6 | **CI audit HARD offline-only** sur banques (sans fetch) | Éviter de re-découvrir en prod sans taxer chaque PR | `bank:check` + tests unit déjà là — étendre si gaps | S | resolved |
 
 > Les IDs restent stables. N’ajoute une ligne que si la dette est **réelle et récurrente**, pas un wish-list décoratif.
@@ -88,6 +101,8 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 | — | 2026-07-25 | Protocole fin de session : `npm run agents:propose` + points d’entrée multi-outils (`CLAUDE.md`, `.cursor/rules/`, copilot-instructions) |
 | — | 2026-07-25 | Bot `detect-photo-seasons` (tags season/season6 + confidence) + filtre client 4/6 saisons |
 | D6 | 2026-07-25 | `audit:banks:hard` + `tests/bank-hard-audit.mjs` dans `npm test` (0 réseau) |
+| D5 | 2026-07-25 | `religious-facade-lib.js` partagé (RE + SPIRE_THRESHOLDS v1) maintain/bank-hard/photo-qc + SYNC Python/JS |
+| — | 2026-07-25 | Balises anti-glouton + `.agents-session.json` (1 dette/session, 2/jour) |
 
 *(Ajouter une ligne ici quand une dette §3 passe à résolu — ne pas supprimer le passé.)*
 
@@ -101,25 +116,21 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 2. Lire **`docs/agent-playbook.md`** pour le domaine du ticket.
 3. Faire **le ticket de l’humain** en priorité — rien d’autre tant qu’il n’est pas OK.
 
-### Fin de session — « notification » dette (obligatoire)
+### Fin de session — « notification » dette
 
-Quand le ticket est **terminé** et le diff **propre** (pas au milieu d’un fix cassé) :
+Quand le ticket est **terminé** et le diff **propre** :
 
 ```bash
 npm run agents:propose
 ```
 
-1. **Coller / reformuler** le bloc « PROPOSITION DETTE » dans le chat utilisateur  
-   (= la notification humaine : pas un toast OS, mais une **question explicite**).
-2. **Attendre l’OK** avant d’écrire une ligne pour cette dette.
-3. Si l’humain dit non / plus tard / ignore → **s’arrêter** (intérêts composés : on reviendra).
-4. Si OK → **un seul** bloc, puis mettre à jour §3 / §4, `npm run check` (et `bank:check` si banques).
+1. Si sortie **🛑 BALISE STOP** → **ne rien proposer**, fin ledger.
+2. Sinon coller la proposition **unique** et **attendre OK**.
+3. Non / ignore → stop.
+4. Oui → **un** bloc → `npm run agents:record-sold -- <ID>` → MAJ §3/§4 → check.  
+   **Puis STOP** (pas de 2ᵉ propose).
 
-Exceptions (pas de propose) :
-
-- Session purement exploratoire / question sans code
-- L’humain a déjà dit « pas de dette » / « ticket only »
-- `agents:propose` affiche zéro actionnable
+Exceptions (pas de propose) : question pure, « ticket only », quota déjà plein.
 
 ### Auto-entretien du ledger
 
