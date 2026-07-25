@@ -10,6 +10,12 @@
  *
  *   node scripts/ensure-lead-images.js
  *   node scripts/ensure-lead-images.js --update
+ *   node scripts/ensure-lead-images.js --update --no-visual-qc
+ *     (désactive pénalités QC mât sur le stock libre uniquement)
+ *
+ * Env :
+ *   LE_RADAR_VISUAL_QC=0              → idem stock
+ *   LE_RADAR_CAMPUS_WALLPAPER_MERGE=0  → pas d’enrichissement banque universities
  */
 
 const fs = require('fs');
@@ -45,6 +51,10 @@ const PAGE_SCRAPE_LIMIT = 40;
 /* Assez large pour couvrir le pool frais de toutes les sources. */
 const STOCK_SEARCH_LIMIT = 120;
 const doUpdate = process.argv.includes('--update');
+/* QC visuelle soft (photo-visual-qc-lib) sur le stock libre seulement. */
+if (process.argv.includes('--no-visual-qc')) {
+  process.env.LE_RADAR_VISUAL_QC = '0';
+}
 
 function readJson(p, fallback) {
   try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return fallback; }

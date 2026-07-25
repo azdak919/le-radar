@@ -460,6 +460,14 @@ init().catch((e) => console.error('init failed', e));
 
 async function init() {
   initTheme();
+  // Thème bandeau radio bureau (sessions univ. QC).
+  // RadarSessionFreshness (script defer avant app.js) l’applique déjà au load ;
+  // rappel idempotent ici pour les chemins qui ne passent pas par le lib.
+  try {
+    if (typeof RadarSessionFreshness !== 'undefined') {
+      RadarSessionFreshness.applyUniversitySessionTheme();
+    }
+  } catch (_) { /* ignore */ }
   initMastheadActions();
   renderTodayDate();
   // Les constantes météo sont déclarées plus bas dans ce script : microtask

@@ -1,5 +1,9 @@
 /* Ataraxia — background loader & smart random selection
  * Depends: backgrounds-data.js, storage.js
+ * Optional:
+ *   ../quebec-pomo-backgrounds-data.js    → QUEBEC_POMO_BACKGROUNDS (pomo only)
+ *   ../quebec-nations-backgrounds-data.js → QUEBEC_NATIONS_BACKGROUNDS
+ *     (Premières Nations & Inuit — partagée avec le mât)
  * Exports: loadBackground, nextBackground, getRandomBgIndex, recordBgSeen
  *
  * Randomness:
@@ -15,6 +19,105 @@
 let currentBgIdx = 0;
 let recentBgs = [];
 const BG_CROSSFADE_MS = 900;
+
+/** Rotator partagé (CSPRNG + anti-répétition URL + diversité banque). */
+const _pomoRotator =
+  typeof BgRotation !== 'undefined' && BgRotation.createRotator
+    ? BgRotation.createRotator({
+        surface: 'pomo',
+        storageKey: 'ataraxia_bg_rot_pomo_v1',
+        maxRecent: MAX_RECENT_BGS || 48,
+        moodFn: (bg) => _bgMood(bg),
+      })
+    : null;
+
+/**
+ * Fusionne une banque QC dans BACKGROUNDS (dédoublonnage URL).
+ * @param {object[]} source
+ * @param {string} cultureTag  ex. 'quebec' | 'quebec-nations'
+ * @param {string} flagKey     propriété sur BACKGROUNDS pour l’idempotence
+ * @param {string} logLabel
+ */
+function _mergeQuebecSourceBank(source, cultureTag, flagKey, logLabel) {
+  if (typeof BACKGROUNDS === 'undefined' || !Array.isArray(BACKGROUNDS)) return;
+  if (!source || !Array.isArray(source) || !source.length) return;
+  if (BACKGROUNDS[flagKey]) return;
+  const seen = new Set(BACKGROUNDS.map((b) => b && b.url).filter(Boolean));
+  let added = 0;
+  for (const p of source) {
+    if (!p || !p.url || seen.has(p.url)) continue;
+    seen.add(p.url);
+    const license = String(p.license || '').trim();
+    const entry = {
+      url: p.url,
+      credit: p.credit || p.title || 'Québec',
+      link: p.link || '',
+      source: license
+        ? `Wikimedia Commons · ${license}`
+        : 'Wikimedia Commons · Le Radar Québec',
+      title: p.title || '',
+      culture: cultureTag,
+    };
+    if (typeof p.focalY === 'number' && !Number.isNaN(p.focalY)) {
+      entry.focalY = p.focalY;
+    }
+    if (typeof p.position === 'string' && p.position.trim()) {
+      entry.position = p.position.trim();
+    }
+    BACKGROUNDS.push(entry);
+    added += 1;
+  }
+  BACKGROUNDS[flagKey] = true;
+  if (added && typeof console !== 'undefined' && console.info) {
+    console.info(`[pomo-bg] ${logLabel} : +${added} (total ${BACKGROUNDS.length})`);
+  }
+}
+
+function _mergeQuebecPomoBanks() {
+  // Pomo-only landscapes
+  if (typeof QUEBEC_POMO_BACKGROUNDS !== 'undefined') {
+    _mergeQuebecSourceBank(
+      QUEBEC_POMO_BACKGROUNDS,
+      'quebec',
+      '_quebecPomoMerged',
+      'banque QC pomo'
+    );
+  }
+  // Shared First Nations / Inuit (also on masthead)
+  if (typeof QUEBEC_NATIONS_BACKGROUNDS !== 'undefined') {
+    _mergeQuebecSourceBank(
+      QUEBEC_NATIONS_BACKGROUNDS,
+      'quebec-nations',
+      '_quebecNationsMerged',
+      'banque nations / Inuit'
+    );
+  }
+  // Favorites manuelles (permanent) si surfaces inclut pomo
+  if (typeof QUEBEC_FAVORITES_BACKGROUNDS !== 'undefined') {
+    const favs = QUEBEC_FAVORITES_BACKGROUNDS.filter((p) => {
+      if (!p || !p.url) return false;
+      const surfaces = Array.isArray(p.surfaces) ? p.surfaces : ['masthead', 'pomo'];
+      return surfaces.includes('pomo') || surfaces.includes('*');
+    });
+    if (favs.length) {
+      _mergeQuebecSourceBank(favs, 'quebec-favorites', '_quebecFavoritesMerged', 'banque favorites');
+    }
+  }
+}
+
+_mergeQuebecPomoBanks();
+
+/** CSS background-position depuis override banque ou focalY (0–1). */
+function _bgPositionCss(bg) {
+  if (bg && typeof bg.position === 'string' && bg.position.trim()) {
+    return bg.position.trim();
+  }
+  if (bg && typeof bg.focalY === 'number' && !Number.isNaN(bg.focalY)) {
+    const pct = Math.round(Math.min(1, Math.max(0, bg.focalY)) * 1000) / 10;
+    return `50% ${pct}%`;
+  }
+  return 'center center';
+}
 
 /** Session bag of remaining indices (reshuffled when empty). */
 let _bgBag = [];
@@ -122,17 +225,47 @@ function _optimizeBgUrl(rawUrl) {
 /** Coarse mood from title/credit for diversity (not culture tags). */
 function _bgMood(bg) {
   if (!bg) return 'other';
-  if (bg.culture) return `c:${bg.culture}`;
+  // Québec : sous-mood par sujet (pas un seul bucket « c:quebec ») pour
+  // diversifier entre Percé, skylines, lacs, fleuve, nations, etc.
   const t = `${bg.title || ''} ${bg.credit || ''}`.toLowerCase();
+  if (bg.culture === 'quebec-nations' || bg.bank === 'nations' || bg.nationId) {
+    // Diversité fine par nation (11 nations QC)
+    if (bg.nationId) return `nation:${bg.nationId}`;
+    if (/nunavik|inuit|kuujj|kangi|pingualuit|salluit|puvirnituq|inukjuak|akulivik|umiujaq|tasiujaq|aupaluk/.test(t)) {
+      return 'nation:inuit';
+    }
+    if (/cri|eeyou|mistissini|chisasibi|whapmagoostui|waswanipi|nemaska|waskaganish|wemindji|ouj[eé]/.test(t)) {
+      return 'nation:cree';
+    }
+    if (/innu|ilnu|pessamit|mashteuiatsh|essipit|uashat|natashquan|nutashkuan|matimekosh|ekuanitshit/.test(t)) {
+      return 'nation:innu';
+    }
+    if (/atikamekw|manawan|wemotaci|opitciwan|notcimik/.test(t)) return 'nation:atikamekw';
+    if (/wendat|wendake|huron/.test(t)) return 'nation:wendat';
+    if (/mohawk|kahnaw|kanesat|akwesasne|kanien/.test(t)) return 'nation:mohawk';
+    if (/mi.?g?maq|micmac|listuguj|gesgapegiag|gespeg/.test(t)) return 'nation:migmaq';
+    if (/algonquin|anishinaab|kitigan|lac-simon|kitcisakik/.test(t)) return 'nation:algonquin';
+    if (/ab[eé]naki|odanak|w[oô]linak|w8banaki/.test(t)) return 'nation:abenaki';
+    if (/naskapi|kawawachikamach/.test(t)) return 'nation:naskapi';
+    if (/mal[eé]cite|wolastoq|wahsipekuk|cacouna/.test(t)) return 'nation:maliseet';
+    return 'qc-nations';
+  }
+  if (bg.culture === 'quebec' || bg.region === 'quebec') {
+    if (/skyline|panorama|montr[eé]al|qu[eé]bec\s*city|centre-ville|downtown/.test(t)) return 'qc-city';
+    if (/perc[eé]|gasp|rocher|falaise|cliff|c[oô]te|baie|fleuve|saint-laurent|lac|rivi[eè]re|canal|voile|marina/.test(t)) return 'qc-water';
+    if (/for[eê]t|forest|automn|autumn|[eé]rable|montagne|mountain|parc|nation|inuit|nunavik/.test(t)) return 'qc-land';
+    return 'qc-scene';
+  }
+  if (bg.culture) return `c:${bg.culture}`;
   if (/aurora|milky|star|night|galaxy|space|nocturne/.test(t)) return 'night';
-  if (/ocean|sea|coast|beach|wave|shore|cliff/.test(t)) return 'ocean';
+  if (/ocean|sea|coast|beach|wave|shore|cliff|fleuve|c[oô]te|baie/.test(t)) return 'ocean';
   if (/desert|dune|sand|canyon|arid/.test(t)) return 'desert';
-  if (/snow|winter|ice|frost|glacier|alpine snow/.test(t)) return 'winter';
-  if (/forest|tree|wood|pine|canopy|redwood|birch/.test(t)) return 'forest';
-  if (/mountain|peak|summit|alps|himalaya|ridge/.test(t)) return 'mountain';
-  if (/lake|river|waterfall|stream|pond/.test(t)) return 'water';
-  if (/sunset|sunrise|dawn|dusk|golden|lavender|meadow|field/.test(t)) return 'golden';
-  if (/fog|mist|cloud|haze|overcast/.test(t)) return 'mist';
+  if (/snow|winter|ice|frost|glacier|alpine snow|neige|hiver/.test(t)) return 'winter';
+  if (/forest|tree|wood|pine|canopy|redwood|birch|for[eê]t|[eé]rable/.test(t)) return 'forest';
+  if (/mountain|peak|summit|alps|himalaya|ridge|montagne/.test(t)) return 'mountain';
+  if (/lake|river|waterfall|stream|pond|rivi[eè]re|lac|chute/.test(t)) return 'water';
+  if (/sunset|sunrise|dawn|dusk|golden|lavender|meadow|field|lever|coucher/.test(t)) return 'golden';
+  if (/fog|mist|cloud|haze|overcast|brume|brouillard/.test(t)) return 'mist';
   if (bg.source && /wikimedia|public domain/i.test(bg.source)) return 'art';
   return 'nature';
 }
@@ -171,17 +304,18 @@ function loadBackground(index) {
     return;
   }
   const url = _optimizeBgUrl(bg.url);
-  _applyBackground(url, bg.credit, bg.link, bg.source || 'Unsplash', bg.title || '');
+  _applyBackground(url, bg.credit, bg.link, bg.source || 'Unsplash', bg.title || '', bg);
 }
 
 // Cleanup function for any in-progress background crossfade transition.
 let _bgCrossfadeCleanup = null;
 let _bgFadeTimer = null;
 
-function _applyBackground(url, creditText, linkUrl, source, title = '') {
+function _applyBackground(url, creditText, linkUrl, source, title = '', bgMeta = null) {
   const layerCurrent = document.getElementById('bg-layer');
   const layerNext    = document.getElementById('bg-layer-next');
   const credit       = document.getElementById('img-credit');
+  const posCss       = _bgPositionCss(bgMeta);
 
   const img = new Image();
   // Hint decoder for large wallpapers
@@ -199,6 +333,7 @@ function _applyBackground(url, creditText, linkUrl, source, title = '') {
     layerNext.style.transition = 'none';
     layerNext.classList.remove('loaded');
     layerNext.style.backgroundImage = `url(${url})`;
+    layerNext.style.backgroundPosition = posCss;
     layerNext.offsetHeight; // read layout to force reflow and commit opacity:0 before re-enabling the transition
     layerNext.style.transition = '';
     layerNext.classList.add('is-fading');
@@ -225,6 +360,10 @@ function _applyBackground(url, creditText, linkUrl, source, title = '') {
       }
       credit.appendChild(document.createTextNode(` · ${source}`));
     } else if (safeLink) {
+      // Wikimedia / banque Québec : titre optionnel + auteur lié + source/licence
+      if (title) {
+        credit.appendChild(document.createTextNode(`«${title}» · `));
+      }
       const a = document.createElement('a');
       a.href = safeLink;
       a.target = '_blank';
@@ -233,7 +372,8 @@ function _applyBackground(url, creditText, linkUrl, source, title = '') {
       credit.appendChild(a);
       credit.appendChild(document.createTextNode(` · ${source}`));
     } else {
-      credit.appendChild(document.createTextNode(`${creditText} · ${source}`));
+      const label = title ? `«${title}» · ${creditText}` : creditText;
+      credit.appendChild(document.createTextNode(`${label} · ${source}`));
     }
     showCreditsBar();
 
@@ -245,9 +385,11 @@ function _applyBackground(url, creditText, linkUrl, source, title = '') {
       layerNext.removeEventListener('transitionend', onTransitionEnd);
       _bgCrossfadeCleanup = null;
       layerCurrent.style.backgroundImage = `url(${url})`;
+      layerCurrent.style.backgroundPosition = posCss;
       layerNext.style.transition = 'none';
       layerNext.classList.remove('loaded', 'is-fading');
       layerNext.style.backgroundImage = '';
+      layerNext.style.backgroundPosition = '';
       requestAnimationFrame(() => { layerNext.style.transition = ''; });
     }
 
@@ -289,7 +431,15 @@ function recordBgSeen(idx) {
   if (recentBgs.length > MAX_RECENT_BGS) recentBgs.shift();
   try { localStorage.setItem(RECENT_BGS_KEY, JSON.stringify(recentBgs)); } catch(e) {}
 
-  const mood = _bgMood(BACKGROUNDS[idx]);
+  const bg = BACKGROUNDS[idx];
+  if (_pomoRotator && bg) {
+    _pomoRotator.record({
+      ...bg,
+      bank: bg.bank || bg.culture || 'stock',
+    });
+  }
+
+  const mood = _bgMood(bg);
   _recentMoods.push(mood);
   if (_recentMoods.length > 6) _recentMoods.shift();
 
@@ -373,6 +523,35 @@ function getRandomBgIndex(culture = null) {
     pool = Array.from({ length: BACKGROUNDS.length }, (_, i) => i);
   }
 
+  // Prefer shared rotator (stable URL identity + multi-bank diversity)
+  if (_pomoRotator && !culture) {
+    const items = pool.map((i) => ({
+      ...BACKGROUNDS[i],
+      _idx: i,
+      bank: BACKGROUNDS[i].bank || BACKGROUNDS[i].culture || 'stock',
+    }));
+    const excludeUrl =
+      currentBgIdx >= 0 && BACKGROUNDS[currentBgIdx]
+        ? BACKGROUNDS[currentBgIdx].url
+        : null;
+    const failedIds = new Set();
+    for (const i of _failedBg) {
+      if (BACKGROUNDS[i] && BACKGROUNDS[i].url) {
+        failedIds.add(_pomoRotator.photoId(BACKGROUNDS[i]));
+      }
+    }
+    const chosen = _pomoRotator.pick(items, {
+      failedIds,
+      excludeId: excludeUrl ? _pomoRotator.photoId({ url: excludeUrl }) : null,
+    });
+    if (chosen && typeof chosen._idx === 'number') return chosen._idx;
+    // Map back by URL if _idx lost
+    if (chosen && chosen.url) {
+      const hit = pool.find((i) => BACKGROUNDS[i] && BACKGROUNDS[i].url === chosen.url);
+      if (hit != null) return hit;
+    }
+  }
+
   // Culture-scoped picks don't use the global bag (small pool)
   if (culture) {
     const avoid = new Set(recentBgs.slice(-Math.min(MAX_RECENT_BGS, Math.max(3, pool.length - 1))));
@@ -396,7 +575,7 @@ function getRandomBgIndex(culture = null) {
     return best;
   }
 
-  // Main path: session bag + scored pick among bag head
+  // Fallback path: session bag + scored pick among bag head
   _bgBag = _bgBag.filter(i => pool.includes(i) && i !== currentBgIdx && !_failedBg.has(i));
   if (_bgBag.length < 3) {
     _refillBgBag(pool);

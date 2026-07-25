@@ -90,6 +90,12 @@ html[data-embed="tuner"] .tuner {
   --tuner-onair-live: #c8102e;
   --tuner-onair-idle: var(--embed-muted);
 }
+/* Pas de texture session (desktop) ni grain dans l’embed pastille. */
+html[data-embed="tuner"] .tuner::before,
+html[data-embed="tuner"] .tuner::after {
+  content: none !important;
+  display: none !important;
+}
 
 html[data-embed="tuner"][data-theme="dark"] .tuner {
   --tuner-onair-live: #ff7d6e;

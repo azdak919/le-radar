@@ -36,7 +36,7 @@ jobs:
         id: check
         run: |
           CHANGED=false
-          for f in institutions.json news-sources.json news.json radios.json radios-candidates.json radio-nowplaying.json bot-status.json feed.xml; do
+          for f in institutions.json news-sources.json news.json radios.json radios-candidates.json radio-nowplaying.json bot-status.json feed.xml data/quebec-backgrounds.json quebec-backgrounds-data.js; do
             # git status voit aussi les fichiers pas encore suivis (bot-status.json
             # à sa première écriture), contrairement à git diff.
             if [ -n "$(git status --porcelain -- "$f")" ]; then
@@ -54,7 +54,7 @@ jobs:
           # N'ajouter que les fichiers présents : si le pipeline a échoué avant
           # d'écrire bot-status.json, git add sur un chemin absent est fatal et
           # les données déjà produites ne sont jamais poussées.
-          for f in institutions.json news-sources.json news.json radios.json radios-candidates.json radio-nowplaying.json bot-status.json feed.xml; do
+          for f in institutions.json news-sources.json news.json radios.json radios-candidates.json radio-nowplaying.json bot-status.json feed.xml data/quebec-backgrounds.json quebec-backgrounds-data.js; do
             [ -f "$f" ] && git add "$f"
           done
           git commit -m "bot: weekly maintenance run (auto)"

@@ -9,6 +9,11 @@
 const https = require('https');
 const http = require('http');
 const { meetsLeadDisplaySize, probeRemoteImageSize, sleep } = require('./article-image-lib');
+const {
+  applyVisualQcToScore,
+  scoreVisualQuality,
+  visualQcEnabled,
+} = require('./photo-visual-qc-lib');
 
 const USER_AGENT = 'LE-RADAR-NewsBot/1.0 (student media aggregator; contact: le-radar)';
 
@@ -938,6 +943,18 @@ function scoreCandidate(hit, matchTokens, context = null) {
 
   score += applyContextScoring(hit, context);
 
+  // QC visuelle soft (bots mât) : pénalités qualité sans écraser le match
+  // thématique. Désactiver : LE_RADAR_VISUAL_QC=0. Ne s'applique qu'ici
+  // (stock libre), jamais aux images source scrapées.
+  if (visualQcEnabled()) {
+    score = applyVisualQcToScore(score, hit, {
+      context: {
+        norm: context?.norm || '',
+        titleNorm: context?.titleNorm || '',
+      },
+    });
+  }
+
   return score > 0 ? score : -1;
 }
 
@@ -1162,4 +1179,7 @@ module.exports = {
   SUMMER_TOPIC_RE,
   WINTER_TOPIC_RE,
   WINTER_PHOTO_RE,
+  // QC visuelle partagée (photo-visual-qc-lib) — export pour tests / dry-run
+  scoreVisualQuality,
+  visualQcEnabled,
 };

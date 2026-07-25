@@ -157,14 +157,24 @@ Pour les flux HTTP ou CORS difficiles, un Cloudflare Worker léger est fourni da
 const PROXY_BASE = 'https://ton-worker.workers.dev';
 ```
 
-## 🃏 Classement Solitaire partagé (optionnel)
+## 🎲 Rotation des fonds (Cloudflare Worker, optionnel)
 
-Le jeu fonctionne hors ligne avec ses scores locaux. Pour afficher les mêmes dix
-meilleurs scores à tous les visiteurs, le backend gratuit Cloudflare Workers +
-D1 est prêt dans [`workers/solitaire-scores/`](workers/solitaire-scores/).
-Les instructions de premier déploiement sont dans son
-[`README`](workers/solitaire-scores/README.md). Une fois l'URL du Worker connue,
-il suffit de la renseigner dans `solitaire/scores-api.js`.
+Entropie edge pour le tirage mât / pomo : [`workers/bg-rotation/`](workers/bg-rotation/).
+Le client (`bg-rotation-lib.js`) fonctionne aussi sans Worker (CSPRNG local).
+
+```bash
+cd workers/bg-rotation && npx wrangler deploy
+# → https://le-radar-bg-rotation.azdak.workers.dev
+```
+
+## ☁️ Workers Cloudflare actifs
+
+| Worker | Rôle |
+|--------|------|
+| `le-radar-weather` | Cache météo partagé + repli MET Norway |
+| `le-radar-bg-rotation` | Entropie pour random fonds (mât + pomo) |
+
+**Pas** de proxy de flux radio (coût bande passante trop élevé sur free tier).
 
 ---
 

@@ -1,17 +1,17 @@
 /* LE RADAR — banque de photos de fond (généré)
- * Profil : masthead (paysages QC pour le mât page d’accueil)
- * Source de vérité : data/quebec-backgrounds.json
- * Régénéré par : node scripts/maintain-quebec-backgrounds.js --update --profile masthead
+ * Profil : pomo (paysages QC pour le pomodoro)
+ * Source de vérité : data/quebec-pomo-backgrounds.json
+ * Régénéré par : node scripts/maintain-quebec-backgrounds.js --update --profile pomo
  * Ne pas éditer à la main — le bot de session écrase ce fichier.
  *
- * Consommateurs : mât page d’accueil seulement (jamais le pomo)
+ * Consommateurs : pomo uniquement (jamais le mât de la page principale)
  *
  * Politique : pas de religieux institutionnel ; nations du Québec OK ;
  * pas de personnes reconnaissables ; plafond 50 ; ménage 1×/session univ.
  * Résolution mini ~1400×700 / 1.2 Mpx (anti-grain upscale).
  * focalY optionnel (0=haut, 1=bas) pour cover crop.
  */
-const QUEBEC_BACKGROUNDS = [
+const QUEBEC_POMO_BACKGROUNDS = [
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/4/4b/Montr%C3%A9al-Les_C%C3%A8dres_Airport_from_railway_teack.jpg",
     credit: "Lajmmoore",
@@ -130,9 +130,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Lac_des_Deux_Montagnes_07.JPG",
     license: "CC BY-SA 3.0",
     title: "Lac des Deux-Montagnes",
-    // Skyline des montagnes ~y 0.22–0.28 : bandeau desktop (AR~4–8) doit
-    // ancrer l’horizon, pas la grève basse (centre cover = vase seule).
-    focalY: 0.22,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Pingualuit_aerial_2007_%28cropped%29.jpg",

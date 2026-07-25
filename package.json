@@ -5,10 +5,19 @@
   "description": "PWA des médias étudiants du Québec",
   "scripts": {
     "check:syntax": "node tests/check-js-syntax.mjs",
-    "test:unit": "node solitaire/scripts/test-solitaire-rules.mjs && node tests/data-integrity.mjs && node tests/quotes-randomization.mjs && node tests/static-integrity.mjs",
+    "test:unit": "node solitaire/scripts/test-solitaire-rules.mjs && node tests/data-integrity.mjs && node tests/quotes-randomization.mjs && node tests/static-integrity.mjs && node tests/photo-visual-qc.mjs",
     "check": "npm run check:syntax && npm run test:unit",
     "test:browser": "playwright test",
-    "test": "npm run check && npm run test:browser"
+    "test": "npm run check && npm run test:browser",
+    "maintain:backgrounds": "node scripts/maintain-quebec-backgrounds.js --update --profile masthead",
+    "maintain:backgrounds:force": "node scripts/maintain-quebec-backgrounds.js --update --force --profile masthead",
+    "maintain:backgrounds:universities": "node scripts/maintain-quebec-backgrounds.js --update --profile universities",
+    "maintain:backgrounds:universities:force": "node scripts/maintain-quebec-backgrounds.js --update --force --profile universities",
+    "maintain:backgrounds:pomo": "node scripts/maintain-quebec-backgrounds.js --update --profile pomo",
+    "maintain:backgrounds:pomo:force": "node scripts/maintain-quebec-backgrounds.js --update --force --profile pomo",
+    "maintain:backgrounds:nations": "node scripts/maintain-quebec-backgrounds.js --update --profile nations",
+    "maintain:backgrounds:nations:force": "node scripts/maintain-quebec-backgrounds.js --update --force --profile nations",
+    "maintain:backgrounds:all": "npm run maintain:backgrounds && npm run maintain:backgrounds:universities && npm run maintain:backgrounds:pomo && npm run maintain:backgrounds:nations"
   },
   "engines": {
     "node": ">=20"

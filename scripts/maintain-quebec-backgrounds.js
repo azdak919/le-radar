@@ -1,0 +1,934 @@
+#!/usr/bin/env node
+/**
+ * LE RADAR — bot de banques wallpaper (compartimentées)
+ *
+ * Profils indépendants (mêmes règles, plafond 50, cadence session univ.) :
+ *
+ *   masthead (défaut ; alias : landscape)
+ *     data/quebec-backgrounds.json → QUEBEC_BACKGROUNDS
+ *     → mât seulement
+ *
+ *   universities
+ *     data/quebec-university-backgrounds.json → QUEBEC_UNIVERSITY_BACKGROUNDS
+ *     → mât seulement
+ *
+ *   pomo
+ *     data/quebec-pomo-backgrounds.json → QUEBEC_POMO_BACKGROUNDS
+ *     → pomo seulement
+ *
+ *   nations  (**partagée** mât + pomo)
+ *     data/quebec-nations-backgrounds.json → QUEBEC_NATIONS_BACKGROUNDS
+ *     → Premières Nations & Inuit du Québec / Nunavik
+ *     → mât ET pomo (seule banque explicitement partagée)
+ *
+ * Politique commune :
+ *   - plafond MAX_BANK (50) photos
+ *   - ménage complet **une fois par session universitaire QC**
+ *   - revalidation (aspect, religieux institutionnel, licence, résolution)
+ *   - pas de personnes reconnaissables ; spiritualité autochtone OK
+ *   - découverte Commons pour combler / rafraîchir
+ *
+ * Usage :
+ *   node scripts/maintain-quebec-backgrounds.js [--profile masthead|universities|pomo|nations]
+ *   node scripts/maintain-quebec-backgrounds.js --update --profile nations
+ */
+
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
+const https = require('https');
+const {
+  getCurrentUniversitySessionId,
+  getCurrentUniversitySessionStart,
+} = require('./session-freshness-lib');
+const nationsTaxonomy = require('./quebec-nations-taxonomy');
+
+const ROOT = path.join(__dirname, '..');
+
+const MAX_BANK = 50;
+const MIN_ASPECT = 1.25;
+/** Banque favorites manuelle — URLs jamais purgées par ce bot. */
+const FAVORITES_JSON = path.join(ROOT, 'data', 'quebec-favorites-backgrounds.json');
+/**
+ * Résolution native mini — mât / pomo plein écran retina.
+ * Sous ~1.2 Mpx / 1400 px de large, le cover upscale montre du grain.
+ */
+const MIN_WIDTH = 1400;
+const MIN_HEIGHT = 700;
+const MIN_PIXELS = 1_200_000;
+const UA = 'LeRadar-bg-maintain/1.2 (https://le-radar.ca; compartmented wallpaper banks)';
+
+const args = process.argv.slice(2);
+const doUpdate = args.includes('--update');
+const forceSession = args.includes('--force');
+
+function readProfileArg() {
+  const eq = args.find((a) => a.startsWith('--profile='));
+  if (eq) return eq.slice('--profile='.length).trim().toLowerCase();
+  const i = args.indexOf('--profile');
+  if (i >= 0 && args[i + 1]) return String(args[i + 1]).trim().toLowerCase();
+  return 'masthead';
+}
+
+/** Titre/URL doit évoquer un campus universitaire QC (profil universities). */
+const CAMPUS_SUBJECT_RE =
+  /(?:universit|campus|mcgill|concordia|laval|sherbrooke|bishop|uqam|uqtr|uqac|uqar|uqo|uqat|polytechnique|\b[eé]ts\b|hec\s*montr|enap|inrs|t[eé]luq|pavillon|facult[eé]|arts building|hall building|roger-?gaudry|judith-?jasmin|loyola)/i;
+
+/**
+ * Titre/URL doit évoquer Premières Nations / Inuit / territoires du Québec
+ * (profil nations). Spiritualité autochtone volontairement hors RELIGIOUS_RE.
+ */
+const NATIONS_SUBJECT_RE =
+  /(?:premi[eè]res?\s*nations|first\s*nations|indigenous|autochtone|inuit|innu|ilnu|naskapi|atikamekw|wabanaki|w8banaki|mi['’]?g?maq|micmac|huronne|wendat|mohawk|kanien|ab[eé]nakis?|mal[eé]cite|wolastoq|anishinaab|algonquin|eeyou|eenou|iyiyiu|\bcri\b|\bcree\b|nunavik|nunavut|inukjuak|mashteuiatsh|odanak|w[oô]linak|pessamit|betsiamites|kuujjuaq|kangirsuk|pingualuit|kuujjuarapik|puvirnituq|salluit|ivujivik|kangiqsualujjuaq|kangiqsujuaq|quaqtaq|akulivik|aupaluk|tasiujaq|umiujaq|whapmagoostui|chisasibi|mistissini|waswanipi|nemaska|eastmain|wemindji|waskaganish|ouj[eé]-?bougoumou|wendake|kahnaw[aà]ke|kanehsat[aà]ke|akwesasne|listuguj|gesgapegiag|gespeg|opitciwan|manawan|wemotaci|essipit|nutashkuan|unamen|pakua|matimekosh|ekuanitshit|uteinam|kitigan|lac[\s-]?simon|winneway|timiskaming|eagle village|kebaowek|wolf lake|kitcisakik|pakuashipi|natashquan|mingan|kawawachikamach|eeyou istchee|baie[\s-]?james|james bay cree|côte[\s-]?nord inn|wahsipekuk|cacouna|whitworth|r[eé]serve\s+(?:indienne|autochtone)|territoir(?:e|ial)\s+(?:cri|innu|naskapi))/i;
+
+function landscapeDiscoveryQueries(sessionId) {
+  const core = [
+    'Québec paysage filetype:bitmap',
+    'Montreal skyline landscape -interior -night',
+    'Montreal skyline panorama -night',
+    'Québec city skyline -night',
+    'Panorama of Quebec City',
+    'Lac des Deux-Montagnes',
+    'Hudson Québec Lac Deux-Montagnes',
+    'Rigaud Québec rivière',
+    'Vaudreuil-Soulanges',
+    'Vaudreuil-sur-le-Lac',
+    'Les Cèdres Québec',
+    'Les Cedres QC',
+    'Île-Perrot',
+    'Pont Île-aux-Tourtes',
+    'Deux-Montagnes parc',
+    'Canal de Soulanges',
+    'Coteau-du-Lac fleuve',
+    'Pointe-Calumet baie',
+    'Saguenay river Quebec',
+    'Gaspésie paysage',
+    'Rocher Percé',
+    'Chute Montmorency',
+    "Île d'Orléans paysage",
+    'Lac Saint-Jean paysage',
+    'Odanak vue aérienne',
+    'Pessamit Quebec aerial',
+    'Mashteuiatsh',
+    'Nunavik landscape -portrait',
+    'Kangirsuk',
+    'Pingualuit',
+    'Kuujjuaq landscape',
+    'fleuve Saint-Laurent paysage',
+  ];
+  const bySession = {
+    automne: [
+      'érable automne Québec',
+      'automne Québec paysage',
+      'maple autumn Quebec landscape',
+    ],
+    hiver: [
+      'Québec hiver paysage jour',
+      'Montreal winter landscape day',
+      'Gaspésie hiver paysage',
+    ],
+    ete: [
+      'Québec été lac paysage',
+      'rivière Québec été',
+      'Charlevoix paysage été',
+    ],
+  };
+  return [...core, ...(bySession[sessionId] || bySession.ete)];
+}
+
+function universityDiscoveryQueries(sessionId) {
+  const core = [
+    'McGill University campus exterior -interior -night -portrait -people',
+    'McGill University Arts Building exterior -winter',
+    'Roddick Gates McGill',
+    'Université de Montréal campus exterior -interior -night',
+    'Pavillon Roger-Gaudry Université de Montréal',
+    'Concordia University campus exterior Montreal -interior',
+    'Henry F Hall Building Concordia exterior',
+    'Loyola Campus Concordia University exterior',
+    'Université Laval campus Québec exterior -interior -night',
+    'Université de Sherbrooke campus exterior -interior',
+    "Bishop's University campus exterior -interior",
+    'UQAM campus exterior Montreal -interior',
+    'Pavillon Judith-Jasmin UQAM',
+    'UQTR campus exterior Trois-Rivières',
+    'UQAC campus Chicoutimi exterior',
+    'UQAR campus Rimouski exterior',
+    'UQO campus Gatineau exterior',
+    'UQAT campus exterior',
+    'Polytechnique Montréal campus exterior',
+    'École de technologie supérieure campus exterior Montréal',
+    'HEC Montréal campus exterior',
+    'INRS campus Québec exterior',
+    'ENAP Québec campus exterior',
+  ];
+  const bySession = {
+    automne: [
+      'McGill University campus autumn exterior',
+      'Université Laval campus automne exterior',
+      'campus universitaire Québec automne',
+    ],
+    hiver: [
+      // Même politique « pas d’hiver » côté filtre ; on cherche plutôt des vues jour claires
+      'McGill University campus exterior summer day',
+      'Université de Montréal campus day exterior',
+    ],
+    ete: [
+      'campus universitaire Québec été exterior',
+      'McGill University campus summer exterior',
+      'Université Laval campus summer exterior',
+    ],
+  };
+  return [...core, ...(bySession[sessionId] || bySession.ete)];
+}
+
+/** Requêtes par les 11 nations (priorité aux nations absentes de la banque). */
+function nationsDiscoveryQueries(sessionId, photos = []) {
+  return nationsTaxonomy.buildDiscoveryQueries(sessionId, photos);
+}
+
+const PROFILES = {
+  masthead: {
+    id: 'masthead',
+    label: 'paysages QC — mât',
+    jsonPath: path.join(ROOT, 'data', 'quebec-backgrounds.json'),
+    jsPath: path.join(ROOT, 'quebec-backgrounds-data.js'),
+    globalName: 'QUEBEC_BACKGROUNDS',
+    consumers: 'mât page d’accueil seulement — jamais le pomo',
+    requireCampusSubject: false,
+    requireNationsSubject: false,
+    discoveryQueries: landscapeDiscoveryQueries,
+  },
+  universities: {
+    id: 'universities',
+    label: 'campus universitaires QC — mât',
+    jsonPath: path.join(ROOT, 'data', 'quebec-university-backgrounds.json'),
+    jsPath: path.join(ROOT, 'quebec-university-backgrounds-data.js'),
+    globalName: 'QUEBEC_UNIVERSITY_BACKGROUNDS',
+    consumers: 'mât page d’accueil seulement — jamais le pomo',
+    requireCampusSubject: true,
+    requireNationsSubject: false,
+    discoveryQueries: universityDiscoveryQueries,
+  },
+  pomo: {
+    id: 'pomo',
+    label: 'paysages QC — pomo',
+    jsonPath: path.join(ROOT, 'data', 'quebec-pomo-backgrounds.json'),
+    jsPath: path.join(ROOT, 'quebec-pomo-backgrounds-data.js'),
+    globalName: 'QUEBEC_POMO_BACKGROUNDS',
+    consumers: 'pomo uniquement — jamais le mât de la page principale',
+    requireCampusSubject: false,
+    requireNationsSubject: false,
+    discoveryQueries: landscapeDiscoveryQueries,
+  },
+  nations: {
+    id: 'nations',
+    label: 'Premières Nations & Inuit — mât + pomo',
+    jsonPath: path.join(ROOT, 'data', 'quebec-nations-backgrounds.json'),
+    jsPath: path.join(ROOT, 'quebec-nations-backgrounds-data.js'),
+    globalName: 'QUEBEC_NATIONS_BACKGROUNDS',
+    consumers: 'mât page d’accueil ET pomo (banque partagée thématique)',
+    requireCampusSubject: false,
+    requireNationsSubject: true,
+    discoveryQueries: (sessionId, photos) =>
+      nationsDiscoveryQueries(sessionId, photos),
+  },
+};
+// Alias rétrocompat
+PROFILES.landscape = PROFILES.masthead;
+PROFILES.indigenous = PROFILES.nations;
+PROFILES.nation = PROFILES.nations;
+
+const profileKey = readProfileArg();
+const PROFILE =
+  PROFILES[profileKey] ||
+  PROFILES[profileKey.replace(/s$/, '')] ||
+  null;
+if (!PROFILE) {
+  console.error(
+    `Profil inconnu « ${profileKey} ». Utiliser : masthead | universities | pomo | nations`
+  );
+  process.exit(2);
+}
+
+const JSON_PATH = PROFILE.jsonPath;
+const JS_PATH = PROFILE.jsPath;
+const LEGACY_JS = JS_PATH;
+
+const RELIGIOUS_RE =
+  /(?:église|eglise|church|cathedral|cathédrale|basilique|basilica|chapelle|chapel|crucifix|\bcroix\b|crosses?\b|mosquée|mosquee|mosque|synagogue|monastère|monastere|monastery|couvent|convent|calvaire|cimetière|cimetiere|cemetery|minaret|clocher|steeple|bell[\s-]?tower|paroisse|parish|presbyt[eè]re|presbytery|lieu de culte|place of worship|\bjésus\b|\bjesus\b|\bchrist\b|crucifi|temple\s+(?:bouddh|hindou|sikh)|tabernacle)/i;
+
+const PEOPLE_RE =
+  /(?:\bportrait\b|\bpeople\b|\bperson\b|\bpersons\b|\bman\b|\bwoman\b|\bmen\b|\bwomen\b|\bchild\b|\bchildren\b|\bfamily\b|\bfamille\b|\bhomme\b|\bfemme\b|\benfant\b|\bdancer\b|\bdancers\b|\bpow[\s-]?wow\b|\bcrowd\b|\bfoule\b|\bselfie\b|\binscription on reverse\b|\bchef\b|\bchief\b|\bleder\b|\bleader\b|\bmaire\b|\bmayor\b|\bface\b|\bvisage\b|\bgroup\b|\bgroupe\b|\bmeeting\b|\br[eé]union\b)/i;
+
+/** Fichiers non-image (Commons renvoie parfois audio/PDF). */
+const NON_IMAGE_RE = /\.(?:wav|mp3|ogg|flac|webm|mp4|pdf|svg|djvu|stl|obj)(?:\?|$)/i;
+
+const BAD_SCENE_RE =
+  /(?:\bnight\b|\bnuit\b|\bdark\b|\bmacro\b|\bclose[\s-]?up\b|\bgros[\s-]?plan\b|\binterior\b|\bintérieur\b|\binterieur\b|\bindoor\b|\bhouse\b|\bmaison\b|\bmuseo\b|\bmuseum\b|\bmusée\b|\bmusee\b|\boeuvre\b|\bœuvre\b|\bartiste\b|\bpainting\b|\bgravure\b|\bengraving\b|\bmicroform\b|\bletrero\b|\bsignage\b|\bboulangerie\b|\btypique\b|\btruck\b|\bcami[oó]n\b|\bcrépuscule\b|\bcrepuscule\b|\bdawn or dusk\b|\btwilight\b|\bafter[\s-]?dark\b|\bvers\s+1[789]\d{2}\b|\b1[789]\d{2}\b|\bA\d{4,}\b|\.pp\b|\bciels? invers|\bcoulombe\b|\bhiver\b|\bwinter\b|\bsnow\b|\bneige\b|\bfrozen\b|\bfreezing\b|\bglace\b|\biced?\b|\bcanot\b|\bcanoe\b|\bkayak\b|\bpaddle\b|\bpagaie\b|\bexhibit\b|\bexhibition\b|\bgallery\b|\bgalerie\b|\bartifact\b|\bart[eé]fact\b|\bdisplay\b|\bmashteuiatsh[\s_-]?0*\d{2,}\b|\bultramafic\b|\bbarren\b|\btundra\b|\bwasteland\b|\brocky plain\b|\bquarry\b|\bcarri[eè]re\b|\bmudflat\b|\bbatture\b|\bmar[eé]e basse\b|\blow[\s-]?tide\b)/i;
+
+function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+function fetchJson(url) {
+  return new Promise((resolve, reject) => {
+    const req = https.get(
+      url,
+      { headers: { 'User-Agent': UA, Accept: 'application/json' } },
+      (res) => {
+        if (res.statusCode && res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+          fetchJson(res.headers.location).then(resolve, reject);
+          res.resume();
+          return;
+        }
+        if (res.statusCode !== 200) {
+          reject(new Error(`HTTP ${res.statusCode} for ${url}`));
+          res.resume();
+          return;
+        }
+        const chunks = [];
+        res.on('data', (c) => chunks.push(c));
+        res.on('end', () => {
+          try {
+            resolve(JSON.parse(Buffer.concat(chunks).toString('utf8')));
+          } catch (e) {
+            reject(e);
+          }
+        });
+      }
+    );
+    req.on('error', reject);
+    req.setTimeout(45000, () => {
+      req.destroy(new Error('timeout'));
+    });
+  });
+}
+
+function stripHtml(s = '') {
+  return String(s)
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function photoIdFromUrl(url) {
+  return crypto.createHash('sha1').update(String(url)).digest('hex').slice(0, 12);
+}
+
+function sessionStartKey(date = new Date()) {
+  const start = getCurrentUniversitySessionStart(date);
+  return start.toISOString().slice(0, 10);
+}
+
+function emptyBank() {
+  return {
+    version: 1,
+    profile: PROFILE.id,
+    maxBank: MAX_BANK,
+    lastSessionCleanup: null,
+    lastSessionId: null,
+    updated: null,
+    photos: [],
+  };
+}
+
+function parseLegacyJsBank(jsPath) {
+  if (!fs.existsSync(jsPath)) return [];
+  const text = fs.readFileSync(jsPath, 'utf8');
+  const entries = [];
+  const re =
+    /\{\s*url:\s*"([^"]+)"\s*,\s*credit:\s*"([^"]*)"\s*,\s*link:\s*"([^"]+)"\s*,\s*license:\s*"([^"]*)"\s*,\s*title:\s*"([^"]*)"\s*,?\s*\}/g;
+  let m;
+  while ((m = re.exec(text))) {
+    entries.push({
+      url: m[1],
+      credit: m[2],
+      link: m[3],
+      license: m[4],
+      title: m[5],
+    });
+  }
+  return entries;
+}
+
+function loadBank() {
+  if (fs.existsSync(JSON_PATH)) {
+    try {
+      const data = JSON.parse(fs.readFileSync(JSON_PATH, 'utf8'));
+      if (data && Array.isArray(data.photos)) {
+        data.maxBank = MAX_BANK;
+        return data;
+      }
+    } catch (e) {
+      console.warn('JSON banque illisible, migration depuis JS…', e.message);
+    }
+  }
+  const legacy = parseLegacyJsBank(LEGACY_JS);
+  const now = new Date().toISOString();
+  const sessionId = getCurrentUniversitySessionId();
+  const bank = emptyBank();
+  bank.photos = legacy.map((p, i) => ({
+    id: photoIdFromUrl(p.url),
+    ...p,
+    addedAt: new Date(Date.now() - (legacy.length - i) * 86400000).toISOString(),
+    sessionId,
+    width: null,
+    height: null,
+    aspect: null,
+  }));
+  bank.updated = now;
+  return bank;
+}
+
+function looksReligious(entry) {
+  const hay = [
+    entry.title,
+    entry.url,
+    entry.link,
+    entry.credit,
+    entry.description,
+    entry.categories,
+  ]
+    .filter(Boolean)
+    .join(' ');
+  return RELIGIOUS_RE.test(hay);
+}
+
+function looksPeopleHeavy(entry) {
+  const hay = [entry.title, entry.url, entry.link].join(' ');
+  return PEOPLE_RE.test(hay);
+}
+
+function looksBadSceneTitle(entry) {
+  const hay = [entry.title, entry.url].join(' ');
+  return BAD_SCENE_RE.test(hay);
+}
+
+function looksNonImage(entry) {
+  const hay = [entry.url, entry.title, entry.mime, entry.link].join(' ');
+  if (NON_IMAGE_RE.test(hay)) return true;
+  const mime = String(entry.mime || '').toLowerCase();
+  if (mime && !mime.startsWith('image/')) return true;
+  return false;
+}
+
+function isAllowedLicense(license = '') {
+  const l = license.toLowerCase();
+  if (!l) return true;
+  if (/public domain|cc0|cc-zero|pd-/.test(l)) return true;
+  if (/cc by|cc-by|creative commons/.test(l)) return true;
+  if (/gfdl/.test(l)) return true;
+  if (/all rights reserved|copyright|fair use|noncommercial|nc-/.test(l)) return false;
+  return true;
+}
+
+function looksCampusSubject(entry) {
+  const hay = [entry.title, entry.url, entry.link, entry.credit].join(' ');
+  return CAMPUS_SUBJECT_RE.test(hay);
+}
+
+function looksNationsSubject(entry) {
+  const hay = [entry.title, entry.url, entry.link, entry.credit].join(' ');
+  return NATIONS_SUBJECT_RE.test(hay);
+}
+
+function textGate(
+  entry,
+  { requireCampus = false, requireNations = false } = {}
+) {
+  if (looksNonImage(entry)) return { ok: false, reason: 'not_image' };
+  if (looksReligious(entry)) return { ok: false, reason: 'religious_subject' };
+  if (looksPeopleHeavy(entry)) return { ok: false, reason: 'people_subject' };
+  if (looksBadSceneTitle(entry)) return { ok: false, reason: 'bad_scene_title' };
+  if (!isAllowedLicense(entry.license || '')) return { ok: false, reason: 'license' };
+  if (requireCampus && !looksCampusSubject(entry)) {
+    return { ok: false, reason: 'not_campus_subject' };
+  }
+  if (requireNations && !looksNationsSubject(entry)) {
+    return { ok: false, reason: 'not_nations_subject' };
+  }
+  return { ok: true };
+}
+
+function dimensionGate(entry) {
+  const w = Number(entry.width) || 0;
+  const h = Number(entry.height) || 0;
+  if (w && h) {
+    if (w < MIN_WIDTH) return { ok: false, reason: 'low_resolution_width' };
+    if (h < MIN_HEIGHT) return { ok: false, reason: 'low_resolution_height' };
+    if (w * h < MIN_PIXELS) return { ok: false, reason: 'low_resolution_pixels' };
+    const ar = w / h;
+    // Nations : orthophotos aériennes parfois ~1.2:1 (ex. Oujé-Bougoumou)
+    const minAr = PROFILE.id === 'nations' ? 1.2 : MIN_ASPECT;
+    if (ar < minAr) return { ok: false, reason: 'portrait_or_narrow' };
+    entry.aspect = Math.round(ar * 1000) / 1000;
+  }
+  return { ok: true };
+}
+
+async function enrichFromCommons(entry) {
+  const fileTitle = entry.link?.includes('File:')
+    ? entry.link.split('/wiki/').pop()
+    : entry.url?.match(/\/([^/]+\.(?:jpe?g|png|webp))$/i)
+      ? `File:${decodeURIComponent(entry.url.match(/\/([^/]+\.(?:jpe?g|png|webp))$/i)[1])}`
+      : null;
+  if (!fileTitle) return entry;
+
+  const api =
+    'https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo' +
+    '&iiprop=url|size|extmetadata|mime' +
+    `&titles=${encodeURIComponent(fileTitle.replace(/_/g, ' '))}`;
+
+  try {
+    const data = await fetchJson(api);
+    const page = Object.values(data?.query?.pages || {})[0];
+    const ii = page?.imageinfo?.[0];
+    if (!ii) return entry;
+    const em = ii.extmetadata || {};
+    const artist = stripHtml(em.Artist?.value || entry.credit || '');
+    const license = stripHtml(em.LicenseShortName?.value || entry.license || '');
+    const desc = stripHtml(em.ImageDescription?.value || entry.title || '');
+    const categories = stripHtml(em.Categories?.value || '').slice(0, 400);
+    return {
+      ...entry,
+      url: ii.url || entry.url,
+      width: ii.width || entry.width,
+      height: ii.height || entry.height,
+      aspect: ii.width && ii.height ? Math.round((ii.width / ii.height) * 1000) / 1000 : entry.aspect,
+      credit: artist || entry.credit,
+      license: license || entry.license,
+      title: entry.title || desc.slice(0, 80),
+      description: desc.slice(0, 400) || entry.description,
+      categories: categories || entry.categories,
+      mime: ii.mime || entry.mime,
+    };
+  } catch (e) {
+    console.warn('  enrich fail', entry.title || entry.url, e.message);
+    return entry;
+  }
+}
+
+async function searchCommons(query, limit = 8) {
+  const api =
+    'https://commons.wikimedia.org/w/api.php?action=query&format=json' +
+    '&generator=search&gsrnamespace=6' +
+    `&gsrlimit=${limit}` +
+    `&gsrsearch=${encodeURIComponent(query)}` +
+    '&prop=imageinfo&iiprop=url|size|extmetadata|mime';
+  try {
+    const data = await fetchJson(api);
+    const pages = Object.values(data?.query?.pages || {});
+    return pages
+      .map((p) => {
+        const ii = p.imageinfo?.[0];
+        if (!ii?.url) return null;
+        const mime = String(ii.mime || '').toLowerCase();
+        if (mime && !mime.startsWith('image/')) return null;
+        if (NON_IMAGE_RE.test(ii.url) || NON_IMAGE_RE.test(p.title || '')) return null;
+        // SVG / diagrammes : pas du wallpaper photo
+        if (mime === 'image/svg+xml') return null;
+        const em = ii.extmetadata || {};
+        const title = (p.title || '').replace(/^File:/, '').replace(/_/g, ' ');
+        const license = stripHtml(em.LicenseShortName?.value || '');
+        const artist = stripHtml(em.Artist?.value || 'Wikimedia Commons');
+        const description = stripHtml(em.ImageDescription?.value || '').slice(0, 400);
+        const categories = stripHtml(em.Categories?.value || '').slice(0, 400);
+        return {
+          id: photoIdFromUrl(ii.url),
+          url: ii.url,
+          link: `https://commons.wikimedia.org/wiki/${encodeURIComponent(p.title).replace(/%3A/g, ':')}`,
+          title: title.replace(/\.(jpe?g|png|webp)$/i, '').slice(0, 90),
+          credit: artist.slice(0, 120) || 'Wikimedia Commons',
+          license,
+          description,
+          categories,
+          width: ii.width,
+          height: ii.height,
+          aspect: ii.width && ii.height ? Math.round((ii.width / ii.height) * 1000) / 1000 : null,
+          mime: ii.mime,
+        };
+      })
+      .filter(Boolean);
+  } catch (e) {
+    console.warn('  search fail', query, e.message);
+    return [];
+  }
+}
+
+function sortByAge(photos) {
+  return [...photos].sort((a, b) => {
+    const ta = new Date(a.addedAt || 0).getTime();
+    const tb = new Date(b.addedAt || 0).getTime();
+    return ta - tb; // oldest first
+  });
+}
+
+/** Photos favorites / permanent: true — hors plafond et hors ménage. */
+function loadFavoriteUrlSet() {
+  try {
+    if (!fs.existsSync(FAVORITES_JSON)) return new Set();
+    const bank = JSON.parse(fs.readFileSync(FAVORITES_JSON, 'utf8'));
+    return new Set(
+      (bank.photos || []).map((p) => p.url).filter(Boolean)
+    );
+  } catch {
+    return new Set();
+  }
+}
+
+function isPermanentPhoto(entry, favoriteUrls = null) {
+  if (!entry) return false;
+  if (entry.permanent === true) return true;
+  const favs = favoriteUrls || loadFavoriteUrlSet();
+  return !!(entry.url && favs.has(entry.url));
+}
+
+function purgeOldest(photos, max) {
+  if (photos.length <= max) return { photos, removed: [] };
+  const favs = loadFavoriteUrlSet();
+  const permanent = photos.filter((p) => isPermanentPhoto(p, favs));
+  const mutable = photos.filter((p) => !isPermanentPhoto(p, favs));
+  // Les permanentes ne comptent pas dans le plafond (ou y tiennent toujours).
+  const room = Math.max(0, max - permanent.length);
+  if (mutable.length <= room) {
+    return { photos: [...permanent, ...mutable], removed: [] };
+  }
+  const sorted = sortByAge(mutable);
+  const removed = sorted.slice(0, mutable.length - room);
+  const keepIds = new Set(sorted.slice(mutable.length - room).map((p) => p.id));
+  return {
+    photos: [
+      ...permanent,
+      ...mutable.filter((p) => keepIds.has(p.id)),
+    ],
+    removed,
+  };
+}
+
+/**
+ * Purge en préservant au moins 1 photo par nation quand c’est possible.
+ * On retire d’abord les plus anciennes des nations sur-représentées.
+ */
+function purgeOldestPreferNationCoverage(photos, max) {
+  if (photos.length <= max) return { photos, removed: [] };
+  const favs = loadFavoriteUrlSet();
+  let list = photos.map((p) => nationsTaxonomy.tagPhotoNation({ ...p }));
+  const removed = [];
+  while (list.length > max) {
+    const counts = nationsTaxonomy.coverageCounts(list);
+    // Candidats : nations avec count >= 2, sinon toutes — jamais les permanentes
+    const over = list.filter(
+      (p) => !isPermanentPhoto(p, favs) && (counts[p.nationId] || 0) >= 2
+    );
+    const pool = over.length
+      ? over
+      : list.filter((p) => !isPermanentPhoto(p, favs));
+    if (!pool.length) break;
+    const oldest = sortByAge(pool)[0];
+    if (!oldest) break;
+    list = list.filter((p) => p.id !== oldest.id);
+    removed.push(oldest);
+  }
+  return { photos: list, removed };
+}
+
+/** Retire une photo d’une nation déjà bien couverte (pour laisser place aux manques). */
+function sacrificeOverrepresented(photos) {
+  const favs = loadFavoriteUrlSet();
+  const tagged = photos.map((p) => nationsTaxonomy.tagPhotoNation({ ...p }));
+  const counts = nationsTaxonomy.coverageCounts(tagged);
+  const over = tagged.filter(
+    (p) =>
+      !isPermanentPhoto(p, favs) &&
+      p.nationId &&
+      (counts[p.nationId] || 0) >= 2
+  );
+  if (!over.length) return null;
+  return sortByAge(over)[0] || null;
+}
+
+function writeJsExport(photos) {
+  const header = `/* LE RADAR — banque de photos de fond (généré)
+ * Profil : ${PROFILE.id} (${PROFILE.label})
+ * Source de vérité : ${path.relative(ROOT, JSON_PATH)}
+ * Régénéré par : node scripts/maintain-quebec-backgrounds.js --update --profile ${PROFILE.id}
+ * Ne pas éditer à la main — le bot de session écrase ce fichier.
+ *
+ * Consommateurs : ${PROFILE.consumers}
+ *
+ * Politique : pas de religieux institutionnel ; nations du Québec OK ;
+ * pas de personnes reconnaissables ; plafond ${MAX_BANK} ; ménage 1×/session univ.
+ * Résolution mini ~1400×700 / 1.2 Mpx (anti-grain upscale).
+ * focalY optionnel (0=haut, 1=bas) pour cover crop.
+ */
+`;
+  const body = photos
+    .map((p) => {
+      const esc = (s) => String(s || '').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+      const lines = [
+        `    url: "${esc(p.url)}"`,
+        `    credit: "${esc(p.credit)}"`,
+        `    link: "${esc(p.link)}"`,
+        `    license: "${esc(p.license)}"`,
+        `    title: "${esc(p.title)}"`,
+      ];
+      if (typeof p.focalY === 'number' && !Number.isNaN(p.focalY)) {
+        lines.push(`    focalY: ${p.focalY}`);
+      }
+      if (typeof p.position === 'string' && p.position.trim()) {
+        lines.push(`    position: "${esc(p.position.trim())}"`);
+      }
+      // Marqueur pour le bot de focale mât (computeBestFocalY mode campus).
+      if (PROFILE.id === 'universities') {
+        lines.push('    campus: true');
+      }
+      if (PROFILE.id === 'nations') {
+        if (p.nationId) lines.push(`    nationId: "${esc(p.nationId)}"`);
+        if (p.nation) lines.push(`    nation: "${esc(p.nation)}"`);
+      }
+      return `  {\n${lines.join(',\n')},\n  }`;
+    })
+    .join(',\n');
+  const out = `${header}const ${PROFILE.globalName} = [\n${body}\n];\n`;
+  fs.writeFileSync(JS_PATH, out, 'utf8');
+}
+
+function writeJsonBank(bank) {
+  fs.mkdirSync(path.dirname(JSON_PATH), { recursive: true });
+  bank.updated = new Date().toISOString();
+  bank.maxBank = MAX_BANK;
+  bank.profile = PROFILE.id;
+  fs.writeFileSync(JSON_PATH, JSON.stringify(bank, null, 2) + '\n', 'utf8');
+}
+
+async function main() {
+  console.log(`LE RADAR — maintain backgrounds [${PROFILE.id}] ${PROFILE.label}`);
+  console.log(
+    `Mode: ${doUpdate ? 'UPDATE' : 'dry-run'}${forceSession ? ' --force' : ''} · profil ${PROFILE.id}\n`
+  );
+
+  const sessionId = getCurrentUniversitySessionId();
+  const sessionKey = sessionStartKey();
+  const bank = loadBank();
+  const subjectGate = {
+    requireCampus: !!PROFILE.requireCampusSubject,
+    requireNations: !!PROFILE.requireNationsSubject,
+  };
+
+  console.log(`Session univ. : ${sessionId} (début ${sessionKey})`);
+  console.log(`Banque actuelle : ${bank.photos.length} / ${MAX_BANK}`);
+  console.log(`Dernier ménage session : ${bank.lastSessionCleanup || 'jamais'}\n`);
+
+  const needSessionCleanup =
+    forceSession || !bank.lastSessionCleanup || bank.lastSessionCleanup !== sessionKey;
+
+  let photos = [...bank.photos];
+  const report = {
+    profile: PROFILE.id,
+    sessionId,
+    sessionKey,
+    sessionCleanup: needSessionCleanup,
+    removed: [],
+    added: [],
+    kept: 0,
+  };
+
+  // ── 1. Revalidation / ménage de session ─────────────────────────
+  if (needSessionCleanup) {
+    console.log('▸ Ménage de session (revalidation + purge + découverte)');
+    const kept = [];
+    for (const raw of photos) {
+      let entry = { ...raw };
+      if (!entry.id) entry.id = photoIdFromUrl(entry.url);
+      await sleep(350);
+      entry = await enrichFromCommons(entry);
+      const tg = textGate(entry, subjectGate);
+      const dg = dimensionGate(entry);
+      if (!tg.ok || !dg.ok) {
+        const reason = tg.reason || dg.reason;
+        // Favorites / permanent : ne jamais drop au ménage (sauf licence illégale)
+        if (isPermanentPhoto(entry) && reason !== 'license' && reason !== 'not_image') {
+          console.log(`  · keep permanent ${entry.title || entry.id} (skip ${reason})`);
+          if (PROFILE.id === 'nations') entry = nationsTaxonomy.tagPhotoNation(entry);
+          kept.push(entry);
+          continue;
+        }
+        console.log(`  − drop ${entry.title || entry.id} (${reason})`);
+        report.removed.push({ title: entry.title, reason });
+        continue;
+      }
+      if (PROFILE.id === 'nations') entry = nationsTaxonomy.tagPhotoNation(entry);
+      kept.push(entry);
+    }
+    photos = kept;
+  } else {
+    console.log('▸ Pas de ménage de session (déjà fait cette session) — purge plafond seulement');
+  }
+
+  // Étiqueter nations même hors ménage complet
+  if (PROFILE.id === 'nations') {
+    photos = photos.map((p) => nationsTaxonomy.tagPhotoNation(p));
+  }
+
+  // ── 2. Plafond 50 : purge des plus anciennes ────────────────────
+  {
+    const before = photos.length;
+    const { photos: next, removed } =
+      PROFILE.id === 'nations'
+        ? purgeOldestPreferNationCoverage(photos, MAX_BANK)
+        : purgeOldest(photos, MAX_BANK);
+    photos = next;
+    for (const r of removed) {
+      console.log(`  − purge oldest ${r.title || r.id}`);
+      report.removed.push({ title: r.title, reason: 'oldest_over_cap' });
+    }
+    if (before !== photos.length) {
+      console.log(`  plafond : ${before} → ${photos.length}`);
+    }
+  }
+
+  // ── 3. Découverte si ménage de session ou banque sous-remplie ───
+  // Nations : toujours tenter de combler les nations manquantes
+  const coverageBefore =
+    PROFILE.id === 'nations' ? nationsTaxonomy.coverageReport(photos) : null;
+  const shouldDiscover =
+    needSessionCleanup ||
+    photos.length < Math.min(20, MAX_BANK) ||
+    (PROFILE.id === 'nations' &&
+      coverageBefore &&
+      coverageBefore.missing.length > 0);
+  if (shouldDiscover) {
+    console.log('▸ Découverte Commons…');
+    if (coverageBefore && coverageBefore.missing.length) {
+      console.log(
+        `  nations absentes : ${coverageBefore.missing.join(' · ')}`
+      );
+    }
+    const existing = new Set(photos.map((p) => p.url));
+    const existingIds = new Set(photos.map((p) => p.id));
+    const queries =
+      PROFILE.id === 'nations'
+        ? PROFILE.discoveryQueries(sessionId, photos)
+        : PROFILE.discoveryQueries(sessionId);
+    const nowIso = new Date().toISOString();
+
+    for (const q of queries) {
+      if (photos.length >= MAX_BANK) {
+        // Nations : libérer une place si des nations manquent encore
+        if (PROFILE.id === 'nations') {
+          const cov = nationsTaxonomy.coverageReport(photos);
+          if (!cov.missing.length) break;
+          const sacrificed = sacrificeOverrepresented(photos);
+          if (!sacrificed) break;
+          existing.delete(sacrificed.url);
+          existingIds.delete(sacrificed.id);
+          photos = photos.filter((p) => p.id !== sacrificed.id);
+          report.removed.push({
+            title: sacrificed.title,
+            reason: 'rebalance_for_coverage',
+          });
+          console.log(`  ± libère ${sacrificed.title} (rééquilibrage)`);
+        } else break;
+      }
+      await sleep(450);
+      const hits = await searchCommons(q, 8);
+      for (const hit of hits) {
+        if (photos.length >= MAX_BANK) break;
+        if (existing.has(hit.url) || existingIds.has(hit.id)) continue;
+        const tg = textGate(hit, subjectGate);
+        const dg = dimensionGate(hit);
+        if (!tg.ok || !dg.ok) continue;
+        let entry = {
+          ...hit,
+          addedAt: nowIso,
+          sessionId,
+          bank: PROFILE.id,
+        };
+        if (PROFILE.id === 'nations') {
+          entry = nationsTaxonomy.tagPhotoNation(entry);
+          // Prioriser les hits qui comblent une nation absente
+          const cov = nationsTaxonomy.coverageReport(photos);
+          if (
+            cov.missing.length &&
+            entry.nationId &&
+            (nationsTaxonomy.coverageCounts(photos)[entry.nationId] || 0) > 0
+          ) {
+            // déjà couverte : n’accepter que si place libre (toujours vrai ici)
+          }
+        }
+        photos.push(entry);
+        existing.add(entry.url);
+        existingIds.add(entry.id);
+        report.added.push(entry.title);
+        const tag = entry.nationId ? ` [${entry.nationId}]` : '';
+        console.log(`  + ${entry.title}${tag}`);
+      }
+    }
+  }
+
+  // Re-cap après découverte
+  {
+    const { photos: next, removed } =
+      PROFILE.id === 'nations'
+        ? purgeOldestPreferNationCoverage(photos, MAX_BANK)
+        : purgeOldest(photos, MAX_BANK);
+    photos = next;
+    for (const r of removed) {
+      report.removed.push({ title: r.title, reason: 'oldest_over_cap' });
+    }
+  }
+
+  if (PROFILE.id === 'nations') {
+    photos = photos.map((p) => nationsTaxonomy.tagPhotoNation(p));
+  }
+
+  report.kept = photos.length;
+  // Trier pour export stable : plus récentes d’abord (fraîcheur perçue)
+  photos = [...photos].sort(
+    (a, b) => new Date(b.addedAt || 0) - new Date(a.addedAt || 0)
+  );
+
+  bank.photos = photos;
+  if (PROFILE.id === 'nations') {
+    bank.nationCoverage = nationsTaxonomy.coverageReport(photos);
+  }
+  if (needSessionCleanup) {
+    bank.lastSessionCleanup = sessionKey;
+    bank.lastSessionId = sessionId;
+  }
+
+  console.log(`\nRésultat : ${photos.length} photos (retirées ${report.removed.length}, ajoutées ${report.added.length})`);
+  if (PROFILE.id === 'nations') {
+    const cov = nationsTaxonomy.coverageReport(photos);
+    console.log('\n▸ Couverture des 11 nations autochtones du Québec :');
+    for (const row of cov.rows) {
+      const mark = row.count > 0 ? '✓' : '✗';
+      console.log(`  ${mark} ${row.label}: ${row.count}`);
+    }
+    if (cov.missing.length) {
+      console.log(
+        `\n  ⚠ Encore absentes (${cov.missing.length}/${cov.totalNations}) : ${cov.missing.join(' · ')}`
+      );
+    } else {
+      console.log('\n  ✓ Toutes les nations sont représentées.');
+    }
+  }
+
+  if (!doUpdate) {
+    console.log('\nDry-run — aucune écriture. Relancer avec --update pour persister.');
+    return;
+  }
+
+  writeJsonBank(bank);
+  writeJsExport(photos);
+  console.log(`✅ ${path.relative(ROOT, JSON_PATH)}`);
+  console.log(`✅ ${path.relative(ROOT, JS_PATH)}`);
+}
+
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
