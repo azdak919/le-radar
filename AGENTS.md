@@ -85,6 +85,33 @@ ticket OK → agents:harvest[:write] → montrer candidats → (option promote 1
 
 ---
 
+## 2c. WIP non commité (reprise après coupure de session)
+
+> Détecté par observation `git status`/`git diff` — pas soldé, pas testé, **rien commité**.
+> À retirer de cette section dès que le ticket est terminé (commité) ou explicitement abandonné.
+
+**Priorité : HAUTE** — humain a demandé de committer/pousser tel quel (2026-07-25 09:45). `npm run check` **OK** (syntaxe + unit, 0 réseau) avant commit ; le test à l'oreille (jump/coin/hit) et le test hors-ligne réel (couper le réseau, recharger, jouer) **restent à faire manuellement** post-déploiement — ce n'est pas une vérification automatisable ici.
+
+**2026-07-25 09:31 — session Grok coupée (tokens épuisés), 2 derniers prompts non finis.**
+
+Feature en cours : **SFX pour le mini-jeu `offline.html`** (bips jump/coin/hit, synthèse Python, domaine public) + petit nettoyage de la barre de jeu.
+
+| Fichier | État | Détail |
+|---------|------|--------|
+| `assets/offline/sounds/{jump,coin,hit}.wav` | **non suivi (untracked)** | 3 WAV mono 22 kHz synthétisés pour le projet |
+| `offline.html` | modifié | `sfx`/`loadSfx`/`playSfx`/`unlockAudio` (déverrouillage audio mobile au premier geste) câblés sur `jump()` et la collision ; barre de jeu : nom de langue autochtone retiré (affichait `ᐃᓄᒃᑎᑐᑦ` hors contexte, lisait comme un bug) → texte fixe FR ; `notranslate` / `google notranslate` ajoutés pour bloquer Google Translate sur cette page |
+| `sw.js` | modifié | cache bumpé `radar-shell-v503→v504`, `radar-offline-v6→v7` ; 3 wav ajoutés à `OFFLINE_ASSETS` et `APP_SHELL` |
+| `assets/offline/README.md` | modifié | licence des sons documentée (domaine public, créés pour LE RADAR) |
+| `data/quebec-*-backgrounds.json` (5 fichiers) | modifié | uniquement le timestamp `updated` — effet de bord probable d'un `bank:sync`/`bank:check` lancé pendant la session, **pas** lié au SFX |
+
+**Reste à faire avant commit :**
+- Vérifier à l'oreille (jump/coin/hit) + test offline réel (couper le réseau, recharger, jouer).
+- `npm run check` (le bump de cache SW doit être validé — non-casse §6).
+- Confirmer que le retrait du nom de langue dans la barre de jeu est voulu définitivement (pas juste un test) avant de committer.
+- Si tout est bon : un seul commit couvrant `offline.html` + `sw.js` + `assets/offline/`. Les 5 JSON de banques (timestamp seul) peuvent être laissés de côté ou re-générés proprement via `bank:sync`, pas committés tels quels sans revue.
+
+---
+
 ## 3. Ledger — dettes ouvertes (volontaires)
 
 Mettre à jour ce tableau quand tu touches une ligne.  

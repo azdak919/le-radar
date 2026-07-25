@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="notranslate" translate="no">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0E0F12" />
   <meta name="robots" content="noindex" />
+  <meta name="google" content="notranslate" />
   <title>Maintenance en cours — LE RADAR</title>
   <link rel="icon" href="assets/icon-32.png?v=2" type="image/png" sizes="32x32" />
   <link rel="icon" href="assets/icon.svg?v=2" type="image/svg+xml" />
@@ -107,10 +108,10 @@
       line-height: 1;
       color: var(--ink);
     }
-    /* Petit bleu radio QC — comme le TLD du site */
+    /* .ca : même blanc que LE RADAR (pas de bleu) */
     .brand-name .tld {
-      color: #5D9BE0;
-      font-weight: 600;
+      color: inherit;
+      font-weight: 700;
       font-size: 0.9em;
       letter-spacing: 0.02em;
     }
@@ -250,31 +251,10 @@
       align-items: center;
       gap: 0.4rem;
       font-weight: 600;
-      color: var(--ink);
+      color: var(--ink-soft);
       letter-spacing: 0.02em;
-      font-size: 0.78rem;
-      max-width: min(52%, 14rem);
+      font-size: 0.75rem;
       min-width: 0;
-    }
-    .game-bar-title .pip {
-      flex: 0 0 auto;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--radio-bright);
-      box-shadow: 0 0 8px rgba(93, 155, 224, 0.55);
-    }
-    .game-bar-title.is-indigenous .pip {
-      background: var(--accent);
-      box-shadow: 0 0 8px rgba(207, 126, 193, 0.5);
-    }
-    .game-bar-lang {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .game-bar-title.is-indigenous .game-bar-lang {
-      color: var(--accent);
     }
     .game-stats {
       display: flex;
@@ -493,12 +473,11 @@
       </div>
     </section>
 
-    <!-- Jeu : nom de langue actif dans la barre -->
+    <!-- Jeu : barre fixe FR (pas le nom de langue — ça se lisait comme une erreur) -->
     <section class="game-wrap" aria-label="Mini-jeu en attendant">
-      <div class="game-bar">
-        <span class="game-bar-title is-indigenous" id="game-lang-wrap" title="Espace ou tapez pour sauter">
-          <span class="pip" aria-hidden="true"></span>
-          <span class="game-bar-lang" id="game-lang">ᐃᓄᒃᑎᑐᑦ</span>
+      <div class="game-bar notranslate" translate="no">
+        <span class="game-bar-title" title="Espace ou tapez pour sauter">
+          Espace / tapez · sauter · pièces
         </span>
         <span class="game-stats">
           <span><span class="stat-label">Score</span><b id="score">0</b></span>
@@ -685,8 +664,6 @@
   let LANGS = CATALOG.slice();
 
   const phraseEl = document.getElementById('phrase');
-  const gameLangEl = document.getElementById('game-lang');
-  const gameLangWrap = document.getElementById('game-lang-wrap');
   const chipsEl = document.getElementById('lang-chips');
   const reconnectEl = document.getElementById('reconnect');
 
@@ -741,11 +718,6 @@
         phraseEl.dir = 'ltr';
         phraseEl.classList.add('is-empty');
       }
-      gameLangEl.textContent = p.name;
-      gameLangWrap.classList.toggle('is-indigenous', p.group === 'indigenous');
-      gameLangWrap.title =
-        (p.nameFr ? p.name + ' (' + p.nameFr + ')' : p.name) +
-        ' — Espace ou tapez pour sauter';
       chipsEl.querySelectorAll('.lang-chip').forEach((c) => {
         c.classList.toggle('is-active', c.dataset.i === String(i));
       });
@@ -950,6 +922,54 @@
   let spawnIn = 70;
   let coinSpawnIn = 40;
 
+  // Sons libres (WAV synthétisés, domaine public — assets/offline/sounds/)
+  // Pas de dépendance réseau ; compatibles hors-ligne / cache SW.
+  const sfx = {
+    jump: null,
+    coin: null,
+    hit: null,
+    unlocked: false,
+  };
+  function loadSfx() {
+    try {
+      sfx.jump = new Audio('assets/offline/sounds/jump.wav');
+      sfx.coin = new Audio('assets/offline/sounds/coin.wav');
+      sfx.hit = new Audio('assets/offline/sounds/hit.wav');
+      [sfx.jump, sfx.coin, sfx.hit].forEach((a) => {
+        if (!a) return;
+        a.preload = 'auto';
+        a.volume = 0.45;
+      });
+    } catch (_) {}
+  }
+  loadSfx();
+  function playSfx(name) {
+    const a = sfx[name];
+    if (!a) return;
+    try {
+      a.currentTime = 0;
+      const p = a.play();
+      if (p && typeof p.catch === 'function') p.catch(function () {});
+    } catch (_) {}
+  }
+  function unlockAudio() {
+    if (sfx.unlocked) return;
+    sfx.unlocked = true;
+    // Gesture utilisateur → autorise l’audio mobile
+    ['jump', 'coin', 'hit'].forEach(function (n) {
+      const a = sfx[n];
+      if (!a) return;
+      try {
+        a.volume = 0.001;
+        a.play().then(function () {
+          a.pause();
+          a.currentTime = 0;
+          a.volume = 0.45;
+        }).catch(function () {});
+      } catch (_) {}
+    });
+  }
+
   function reset() {
     player.y = GROUND - PLAYER_SIZE;
     player.vy = 0;
@@ -968,6 +988,7 @@
   }
 
   function jump() {
+    unlockAudio();
     if (!started) {
       started = true;
       reset();
@@ -979,6 +1000,7 @@
     if (player.onGround) {
       player.vy = -10.2;
       player.onGround = false;
+      playSfx('jump');
     }
   }
 
@@ -1191,6 +1213,7 @@
         const oy = GROUND - o.h;
         if (hitBox(player.x, player.y, player.w, player.h, o.x, oy, o.w, o.h, 6)) {
           alive = false;
+          playSfx('hit');
           if (score > hi) {
             hi = score;
             try {
