@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-25T14:59:54.167Z",
+  "updated": "2026-07-25T16:45:56.165Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
@@ -7,11 +7,18 @@
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 3,
-  "updatedCount": 3,
-  "citedNew": 3,
-  "fallbackNew": 0,
+  "checked": 5,
+  "updatedCount": 5,
+  "citedNew": 4,
+  "fallbackNew": 1,
   "samples": [
+    {
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "La performance de l’homosexualité : un privilège ?",
       "source": "Le Délit",
@@ -32,6 +39,13 @@
       "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }
