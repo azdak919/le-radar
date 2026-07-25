@@ -11,7 +11,7 @@
     "test:browser": "playwright test",
     "test": "npm run check && npm run test:browser",
     "bank:sync": "node scripts/sync-quebec-backgrounds.js",
-    "bank:check": "node scripts/sync-quebec-backgrounds.js --check",
+    "bank:check": "node scripts/sync-quebec-backgrounds.js --check && node scripts/audit-banks-hard.js",
     "detect:seasons": "node scripts/detect-photo-seasons.js",
     "detect:seasons:update": "node scripts/detect-photo-seasons.js --update --sync",
     "detect:seasons:visual": "node scripts/detect-photo-seasons.js --visual --update --sync",
