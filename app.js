@@ -3634,6 +3634,18 @@ function initMobilePlayback() {
         showToast('Touchez ▶ pour relancer la radio.');
       }
     },
+    // Après longue absence : flux rechargé pour coller au live (évite le
+    // « rattrapage » décalé du buffer périmé).
+    onLiveResync: () => {
+      try {
+        const en = window.RadarTranslate?.getMode?.() === 'en';
+        showToast(en
+          ? 'Back on the live stream (synced after background pause).'
+          : 'Retour au direct (flux resynchronisé après pause en arrière-plan).');
+      } catch {
+        showToast('Retour au direct — flux resynchronisé.');
+      }
+    },
   });
   mobilePlayback.setupLifecycle();
 }

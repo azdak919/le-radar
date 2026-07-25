@@ -347,7 +347,9 @@
   function _responsiveWidth() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const vw = (window.innerWidth || screen.width || 1280) * dpr;
-    if (vw <= 900) return 1024;
+    // Mobile : 1600 (pas 1024) — assez net en retina, et évite le piège
+    // naturalWidth=1024 < MIN_NATIVE_W=1400 qui rejetait tout le pool.
+    if (vw <= 900) return 1600;
     if (vw <= 1600) return 1600;
     if (vw <= 2200) return 2000;
     return 2560;
@@ -355,6 +357,24 @@
 
   function _optimizedUrl(bg) {
     return _wikimediaThumb(bg.url, _responsiveWidth());
+  }
+
+  /**
+   * Dimensions pour le gate « low_resolution » : préférer la méta banque
+   * (résolution native Commons). Le thumb Special:FilePath a un naturalWidth
+   * = largeur demandée (ex. 1600) — ne pas confondre avec le fichier source.
+   */
+  function _dimsForQualityGate(img, bg) {
+    const metaW = Number(bg && bg.width) || 0;
+    const metaH = Number(bg && bg.height) || 0;
+    if (metaW >= 32 && metaH >= 32) {
+      return { w: metaW, h: metaH, source: "bank" };
+    }
+    return {
+      w: (img && img.naturalWidth) || 0,
+      h: (img && img.naturalHeight) || 0,
+      source: "natural",
+    };
   }
 
   function _srgbToLin(c) {
@@ -1356,22 +1376,26 @@
   }
 
   function scoreMastheadPhoto(img, bg) {
-    const w = img.naturalWidth || 0;
-    const h = img.naturalHeight || 0;
-    if (w < 32 || h < 32) {
+    // Aspect : pixels chargés (thumb) suffisent
+    const nw = img.naturalWidth || 0;
+    const nh = img.naturalHeight || 0;
+    if (nw < 32 || nh < 32) {
       return { ok: false, reason: "too_small" };
     }
-    const aspect = w / h;
+    const aspect = nw / nh;
     if (aspect < MIN_ASPECT) {
       return {
         ok: false,
         reason: "portrait_or_narrow",
-        metrics: { aspect: +aspect.toFixed(3), width: w, height: h },
+        metrics: { aspect: +aspect.toFixed(3), width: nw, height: nh },
       };
     }
-    // Trop petit pour un bandeau large : upscale → grain / flou blocky
+    // Résolution native : méta banque si dispo (pas le thumb 1600px)
+    const { w, h, source: dimSrc } = _dimsForQualityGate(img, bg);
     const pixels = w * h;
-    if (w < MIN_NATIVE_W || h < MIN_NATIVE_H || pixels < MIN_NATIVE_PX) {
+    // Hauteur souple si très panoramique (bandeau mât ~3.8:1)
+    const heightOk = h >= MIN_NATIVE_H || (aspect >= 2.2 && w >= MIN_NATIVE_W && pixels >= MIN_NATIVE_PX);
+    if (w < MIN_NATIVE_W || !heightOk || pixels < MIN_NATIVE_PX) {
       return {
         ok: false,
         reason: "low_resolution",
@@ -1380,6 +1404,7 @@
           width: w,
           height: h,
           megapixels: +(pixels / 1e6).toFixed(2),
+          dimSource: dimSrc,
         },
       };
     }
@@ -1941,16 +1966,36 @@
       _failedIds.add(id);
     }
     const pool = items || _mastheadPool();
-    // Cap anti-boucle : si trop d’échecs, retomber sur le pool complet
-    // (sinon mât restait noir sur mobile après rejets en chaîne).
-    const next =
-      pickBackground(pool, bg && bg.url) ||
-      (_failedIds.size >= 8 ? pickBackground(pool, bg && bg.url, { fullPool: true }) : null);
-    if (next && next.url !== (bg && bg.url)) {
-      _applyBackground(next, pool);
-    } else if (typeof console !== "undefined" && console.warn) {
-      console.warn("[bg] aucune photo mât affichable (pool épuisé)");
-    }
+    // Différer le retry : enchaîner 10× Image() synchrone fige le main thread mobile.
+    const attempt = () => {
+      const next =
+        pickBackground(pool, bg && bg.url) ||
+        (_failedIds.size >= 6
+          ? pickBackground(pool, bg && bg.url, { fullPool: true })
+          : null);
+      if (next && next.url !== (bg && bg.url)) {
+        _applyBackground(next, pool);
+        return;
+      }
+      // Ultime secours : peindre n’importe quelle favorite/perm sans QC canvas
+      const emergency =
+        pool.find((p) => p && p.permanent && p.url && !_failedIds.has(p.url)) ||
+        pool.find((p) => p && p.url && !_failedIds.has(
+          _rotator && _rotator.photoId ? _rotator.photoId(p) : p.url
+        ));
+      if (emergency) {
+        const url = _optimizedUrl(emergency);
+        _paintBackground(emergency, url, null);
+        if (typeof console !== "undefined" && console.warn) {
+          console.warn("[bg] fallback d’urgence (sans QC canvas)", emergency.title);
+        }
+        return;
+      }
+      if (typeof console !== "undefined" && console.warn) {
+        console.warn("[bg] aucune photo mât affichable (pool épuisé)");
+      }
+    };
+    window.setTimeout(attempt, 40);
   }
 
   function _paintBackground(bg, url, img) {
@@ -2030,19 +2075,24 @@
         fallback.decoding = "async";
       } catch (_) {}
       fallback.onload = () => {
-        // Sans CORS : pas d’échantillonnage canvas — filtre aspect / résolution + position banque.
-        const w = fallback.naturalWidth || 0;
-        const h = fallback.naturalHeight || 0;
-        const aspect = h ? w / h : 0;
+        // Sans CORS : aspect du thumb + résolution native (méta banque).
+        const nw = fallback.naturalWidth || 0;
+        const nh = fallback.naturalHeight || 0;
+        const aspect = nh ? nw / nh : 0;
         if (aspect < MIN_ASPECT) {
           _rejectAndRetry(bg, pool, {
             ok: false,
             reason: "portrait_or_narrow",
-            metrics: { aspect: +aspect.toFixed(3), width: w, height: h },
+            metrics: { aspect: +aspect.toFixed(3), width: nw, height: nh },
           });
           return;
         }
-        if (w < MIN_NATIVE_W || h < MIN_NATIVE_H || w * h < MIN_NATIVE_PX) {
+        const { w, h, source: dimSrc } = _dimsForQualityGate(fallback, bg);
+        const pixels = w * h;
+        const heightOk =
+          h >= MIN_NATIVE_H ||
+          (aspect >= 2.2 && w >= MIN_NATIVE_W && pixels >= MIN_NATIVE_PX);
+        if (w < MIN_NATIVE_W || !heightOk || pixels < MIN_NATIVE_PX) {
           _rejectAndRetry(bg, pool, {
             ok: false,
             reason: "low_resolution",
@@ -2050,7 +2100,8 @@
               aspect: +aspect.toFixed(3),
               width: w,
               height: h,
-              megapixels: +((w * h) / 1e6).toFixed(2),
+              megapixels: +(pixels / 1e6).toFixed(2),
+              dimSource: dimSrc,
             },
           });
           return;

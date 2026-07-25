@@ -147,8 +147,18 @@ function initRadarEmbed() {
   const iframe = document.getElementById('radar-embed');
   if (!iframe) return;
 
-  if (!iframe.getAttribute('src') || iframe.getAttribute('src') === 'about:blank') {
-    iframe.src = '../tuner-embed.html';
+  // Différer le chargement du tuner : laisse la page pomo peindre d’abord
+  // (évite « page qui ne finit pas de charger » sur mobile lent).
+  const loadTuner = () => {
+    const src = iframe.getAttribute('data-src') || '../tuner-embed.html';
+    if (!iframe.getAttribute('src') || iframe.getAttribute('src') === 'about:blank') {
+      iframe.src = src;
+    }
+  };
+  if (typeof requestIdleCallback === 'function') {
+    requestIdleCallback(loadTuner, { timeout: 900 });
+  } else {
+    window.setTimeout(loadTuner, 120);
   }
 
   window.addEventListener('message', (event) => {
@@ -164,6 +174,7 @@ function initRadarEmbed() {
   });
 
   iframe.addEventListener('load', () => {
+    if (iframe.getAttribute('src') === 'about:blank') return;
     iframe.classList.add('is-ready');
     syncRadarEmbedTheme(document.documentElement.getAttribute('data-theme') || 'light');
     window.AtaraxiaLayout?.updateChromeInsets?.();

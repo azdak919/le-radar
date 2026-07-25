@@ -20,6 +20,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Avenue%20McGill%20College%2007.JPG",
     license: "CC BY-SA 3.0",
     title: "Avenue McGill College 07",
+    width: 5152,
+    height: 3864,
     campus: true,
   },
   {
@@ -28,6 +30,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Universit%C3%A9%20de%20Montr%C3%A9al%20(Roger-Gaudry).JPG",
     license: "CC BY-SA 3.0",
     title: "Université de Montréal (Roger-Gaudry)",
+    width: 3072,
+    height: 2304,
     campus: true,
   },
   {
@@ -36,6 +40,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Universit%C3%A9%20de%20Montr%C3%A9al%20(%20%C3%89cole%20polytechnique%20de%20Montr%C3%A9al%20et%20Pavillon%20Roger-Gaudry).JPG",
     license: "CC BY-SA 4.0",
     title: "Université de Montréal ( École polytechnique de Montréal et Pavillon Roger-Gaudry)",
+    width: 5074,
+    height: 3806,
     campus: true,
   },
   {
@@ -44,6 +50,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Pavillon%20Roger-Gaudry%20II.jpg",
     license: "CC BY-SA 4.0",
     title: "Pavillon Roger-Gaudry II",
+    width: 4537,
+    height: 2552,
     campus: true,
   },
   {
@@ -52,6 +60,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Pavillon%20Judith-Jasmin%20UQAM%2008.JPG",
     license: "CC BY-SA 3.0",
     title: "Pavillon Judith-Jasmin UQAM 08",
+    width: 5152,
+    height: 3864,
     campus: true,
   },
   {
@@ -60,6 +70,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Pavillon%20Judith-Jasmin%20UQAM%2015.JPG",
     license: "CC BY-SA 3.0",
     title: "Pavillon Judith-Jasmin UQAM 15",
+    width: 5152,
+    height: 3864,
     campus: true,
   },
   {
@@ -69,6 +81,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     license: "CC BY-SA 4.0",
     title: "Pavillon Judith-Jasmin UQAM 24",
     focalY: 0.54,
+    width: 4608,
+    height: 3456,
     campus: true,
   },
   {
@@ -77,6 +91,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Pavillon%20Judith-Jasmin%20UQAM%2037.jpg",
     license: "CC BY-SA 4.0",
     title: "Pavillon Judith-Jasmin UQAM 37",
+    width: 4608,
+    height: 3456,
     campus: true,
   },
   {
@@ -85,6 +101,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Pavillon%20Judith-Jasmin%20UQAM%201.jpg",
     license: "CC BY-SA 4.0",
     title: "Pavillon Judith-Jasmin UQAM 1",
+    width: 6000,
+    height: 4000,
     campus: true,
   },
   {
@@ -93,6 +111,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Roddick_Gates_(McGill_University)_2005-09-02.jpg",
     license: "CC BY-SA 3.0",
     title: "Roddick Gates, McGill University",
+    width: 2560,
+    height: 1920,
     campus: true,
     season: "automne",
   },
@@ -110,6 +130,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Roddick_Gates_closed,_McGill_University,_July_17,_2024.jpg",
     license: "CC0",
     title: "Roddick Gates closed, McGill University, July 17, 2024",
+    width: 8146,
+    height: 5431,
     campus: true,
     season: "ete",
   },
@@ -119,6 +141,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:McGill_University_downtown_campus_31.JPG",
     license: "CC BY-SA 3.0",
     title: "McGill University downtown campus 31",
+    width: 4000,
+    height: 3000,
     campus: true,
   },
   {
@@ -127,6 +151,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:View_from_McGill_University_downtown_campus_01.JPG",
     license: "CC BY-SA 3.0",
     title: "View from McGill University downtown campus 01",
+    width: 4608,
+    height: 3456,
     campus: true,
   },
   {
@@ -135,6 +161,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Wilson_Hall,_McGill_University.jpg",
     license: "CC BY-SA 3.0",
     title: "Wilson Hall, McGill University",
+    width: 4608,
+    height: 3456,
     campus: true,
   },
   {
@@ -143,6 +171,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:4_McGill_University,_Montreal,Quebec_2009.jpg",
     license: "CC BY-SA 4.0",
     title: "McGill University, Montreal, Quebec 2009",
+    width: 3264,
+    height: 2448,
     campus: true,
   },
   {
@@ -151,6 +181,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:UQAM-Judith-Jasmin.jpg",
     license: "CC BY-SA 4.0",
     title: "UQAM — Pavillon Judith-Jasmin",
+    width: 2616,
+    height: 1483,
     campus: true,
   },
   {
@@ -159,6 +191,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Henry_F._Hall_Building_07.JPG",
     license: "CC BY-SA 3.0",
     title: "Henry F. Hall Building, Concordia University",
+    width: 5152,
+    height: 3864,
     campus: true,
   },
   {
@@ -168,6 +202,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     license: "CC BY-SA 4.0",
     title: "Henry F. Hall Building 10, Concordia University",
     focalY: 0.28,
+    width: 4608,
+    height: 3456,
     campus: true,
   },
   {
@@ -176,6 +212,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Henry_F._Hall_Building_01.JPG",
     license: "CC BY-SA 3.0",
     title: "Henry F. Hall Building 01, Concordia University",
+    width: 4608,
+    height: 3456,
     campus: true,
   },
   {
@@ -184,6 +222,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Loyola_College_Building_15.JPG",
     license: "CC BY-SA 3.0",
     title: "Loyola College Building, Concordia University",
+    width: 3648,
+    height: 2736,
     campus: true,
   },
   {
@@ -192,6 +232,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:2135-2149_Mackay_Street,_Montreal.JPG",
     license: "CC BY-SA 3.0",
     title: "Mackay Street near Concordia University, Montreal",
+    width: 3648,
+    height: 2736,
     campus: true,
   },
   {
@@ -201,6 +243,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     license: "CC0",
     title: "Université Laval, Quebec, Canada 02",
     focalY: 0.52,
+    width: 7409,
+    height: 5034,
     campus: true,
   },
   {
@@ -209,6 +253,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Campus_de_Longueuil_-_Universite_de_Sherbrooke_09.jpg",
     license: "CC BY-SA 3.0",
     title: "Campus de Longueuil — Université de Sherbrooke",
+    width: 5152,
+    height: 3864,
     campus: true,
   },
   {
@@ -233,6 +279,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Park_in_Universit%C3%A9_Laval.jpg",
     license: "CC BY-SA 4.0",
     title: "Park in Université Laval",
+    width: 6000,
+    height: 4000,
     campus: true,
   },
   {
@@ -241,6 +289,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Pavillon_Ferdinand-Vandry_06.jpg",
     license: "CC BY-SA 4.0",
     title: "Pavillon Ferdinand-Vandry, Université Laval",
+    width: 5526,
+    height: 3684,
     campus: true,
   }
 ];

@@ -1257,9 +1257,10 @@
     <iframe
       id="radar-embed"
       class="radar-embed-frame"
-      src="../tuner-embed.html"
+      src="about:blank"
+      data-src="../tuner-embed.html"
       title="Le Radar — syntoniseur radio"
-      loading="eager"
+      loading="lazy"
       allowtransparency="true"
       allow="autoplay; encrypted-media"
       referrerpolicy="no-referrer-when-downgrade"
@@ -3174,9 +3175,17 @@ window.addEventListener('resize', () => {
   const iframe = document.getElementById('radar-embed');
   if (!iframe) return;
 
-  // Same-origin embed (Le Radar root). Keep relative path — works on le-radar.ca and local :port.
-  if (!iframe.getAttribute('src') || iframe.getAttribute('src') === 'about:blank') {
-    iframe.src = '../tuner-embed.html';
+  // Différer le chargement : la page solitaire peint d’abord (mobile).
+  const loadTuner = () => {
+    const src = iframe.getAttribute('data-src') || '../tuner-embed.html';
+    if (!iframe.getAttribute('src') || iframe.getAttribute('src') === 'about:blank') {
+      iframe.src = src;
+    }
+  };
+  if (typeof requestIdleCallback === 'function') {
+    requestIdleCallback(loadTuner, { timeout: 900 });
+  } else {
+    window.setTimeout(loadTuner, 120);
   }
 
   // Hauteur / ready signalés par le-radar/embed.js
@@ -3193,6 +3202,7 @@ window.addEventListener('resize', () => {
   });
 
   iframe.addEventListener('load', () => {
+    if (iframe.getAttribute('src') === 'about:blank') return;
     // Fallback si postMessage bloqué / ancien embed
     iframe.classList.add('is-ready');
     syncRadarEmbedTheme(document.documentElement.getAttribute('data-theme') || 'light');
