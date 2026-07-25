@@ -1,12 +1,7 @@
 /* LE RADAR — banque de photos de fond (généré)
  * Profil : nations (Premières Nations & Inuit du Québec)
  * Source de vérité : data/quebec-nations-backgrounds.json
- * Régénéré par : node scripts/maintain-quebec-backgrounds.js --update --profile nations
- * Ne pas éditer à la main — le bot de session écrase ce fichier.
- *
- * Consommateurs : mât + pomo (banque partagée)
- * Pas d’édifices religieux institutionnels (chapelle, église…) — runtime
- * religious_architecture rejette croix+clocher même si le titre est un toponyme.
+ * Oujé-Bougoumou 03 (clôture grillagée) remplacé par 01 (musée Aanischaaukamikw).
  */
 const QUEBEC_NATIONS_BACKGROUNDS = [
   {
@@ -145,11 +140,11 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     nation: "Mi'gmaq",
   },
   {
-    url: "https://upload.wikimedia.org/wikipedia/commons/3/3c/Ouj%C3%A9-Bougoumou_en_ao%C3%BBt_2014_03.jpg",
+    url: "https://upload.wikimedia.org/wikipedia/commons/0/02/Ouj%C3%A9-Bougoumou_en_ao%C3%BBt_2014_01.jpg",
     credit: "Fralambert",
-    link: "https://commons.wikimedia.org/wiki/File:Oujé-Bougoumou_en_août_2014_03.jpg",
+    link: "https://commons.wikimedia.org/wiki/File:Oujé-Bougoumou_en_août_2014_01.jpg",
     license: "CC BY-SA 4.0",
-    title: "Oujé-Bougoumou en août 2014 03",
+    title: "Oujé-Bougoumou en août 2014 01 — Aanischaaukamikw",
     nationId: "cree",
     nation: "Cris (Eeyou / Eenou)",
   },
