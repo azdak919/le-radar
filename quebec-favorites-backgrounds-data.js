@@ -25,6 +25,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Sunrise%20Over%20Montr%C3%A9al%20(250731329).jpeg",
     license: "CC BY 3.0",
     title: "Sunrise Over Montréal (250731329)",
+    season: "ete",
     permanent: true,
     surfaces: ["masthead", "pomo"],
   },
@@ -35,6 +36,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     license: "CC BY-SA 4.0",
     title: "Pont de l'Île-aux-Tourtes, Île Perrot",
     focalY: 0.38,
+    season: "ete",
     permanent: true,
     surfaces: ["masthead", "pomo"],
   }

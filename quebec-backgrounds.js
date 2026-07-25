@@ -263,6 +263,10 @@
   /**
    * Filtre saisonnier : 4 saisons (mât/campus/pomo) + 6 saisons (nations/Inuit).
    * Voir scripts/season-lib.js (window.RadarSeason).
+   *
+   * minStrict élevé : avec peu de photos taguées « ete » en juillet, le tier
+   * strict seul (~5 images) épuisait le mât après rejets QC → fond noir mobile.
+   * Les non-taguées passent en adjacent ; favorites permanent toujours incluses.
    */
   function _seasonFilteredPool(items) {
     if (!items || !items.length) return items || [];
@@ -270,34 +274,63 @@
       return items;
     }
     const r = RadarSeason.filterPoolByCurrentSeason(items, {
-      minStrict: 2,
-      minAdjacent: 2,
+      minStrict: 12,
+      minAdjacent: 16,
     });
+    // Favorites permanentes : toujours dans le pool (hors purge saison)
+    const permanent = items.filter((p) => p && p.permanent === true && p.url);
+    let out = r.items && r.items.length ? r.items.slice() : items.slice();
+    if (permanent.length) {
+      const seen = new Set(out.map((p) => p.url));
+      for (const p of permanent) {
+        if (!seen.has(p.url)) {
+          out.push(p);
+          seen.add(p.url);
+        }
+      }
+    }
     if (typeof console !== "undefined" && console.info) {
       console.info(
         `[bg] saison 4=${r.season4} · 6=${r.season6} · tier=${r.tier}` +
-          ` · pool ${r.stats.chosen}/${r.stats.total}` +
-          ` (strict ${r.stats.strict}, adj ${r.stats.adjacent})`
+          ` · pool ${out.length}/${r.stats.total}` +
+          ` (strict ${r.stats.strict}, adj ${r.stats.adjacent}` +
+          (permanent.length ? `, +perm ${permanent.length}` : "") +
+          `)`
       );
     }
-    return r.items.length ? r.items : items;
+    return out.length ? out : items;
   }
 
   /** Tirage multi-banques (CSPRNG + anti-répétition URL + diversité). */
-  function pickBackground(items, excludeUrl) {
-    const seasonal = _seasonFilteredPool(items);
+  function pickBackground(items, excludeUrl, opts) {
+    const full = items || [];
+    const seasonal = _seasonFilteredPool(full);
+    const useFull = opts && opts.fullPool;
+    const pool = useFull ? full : seasonal;
     if (_rotator) {
       const excludeId = excludeUrl
         ? _rotator.photoId({ url: excludeUrl })
         : null;
-      return _rotator.pick(seasonal, {
+      const picked = _rotator.pick(pool, {
         failedIds: _failedIds,
         excludeId,
       });
+      // Si le pool saisonnier est épuisé (tous failed) → essayer le pool complet
+      if (!picked && !useFull && full.length > pool.length) {
+        return pickBackground(full, excludeUrl, { fullPool: true });
+      }
+      return picked;
     }
-    // Fallback sans lib
-    const pool = seasonal.map((_, i) => i);
-    return seasonal[pickIndex(pool)] || seasonal[0] || null;
+    const idxs = pool.map((_, i) => i).filter((i) => {
+      const id = pool[i] && pool[i].url;
+      return id && !_failedIds.has(id);
+    });
+    const candidates = idxs.length ? idxs : pool.map((_, i) => i);
+    const pick = pool[pickIndex(candidates)] || pool[0] || null;
+    if (!pick && !useFull && full.length) {
+      return pickBackground(full, excludeUrl, { fullPool: true });
+    }
+    return pick;
   }
 
   // Passe par Special:FilePath (redirige vers un thumb JPEG dimensionné) —
@@ -1767,8 +1800,17 @@
           : String(bg.url);
       _failedIds.add(id);
     }
-    const next = pickBackground(items, bg && bg.url);
-    if (next) _applyBackground(next, items);
+    const pool = items || _mastheadPool();
+    // Cap anti-boucle : si trop d’échecs, retomber sur le pool complet
+    // (sinon mât restait noir sur mobile après rejets en chaîne).
+    const next =
+      pickBackground(pool, bg && bg.url) ||
+      (_failedIds.size >= 8 ? pickBackground(pool, bg && bg.url, { fullPool: true }) : null);
+    if (next && next.url !== (bg && bg.url)) {
+      _applyBackground(next, pool);
+    } else if (typeof console !== "undefined" && console.warn) {
+      console.warn("[bg] aucune photo mât affichable (pool épuisé)");
+    }
   }
 
   function _paintBackground(bg, url, img) {
