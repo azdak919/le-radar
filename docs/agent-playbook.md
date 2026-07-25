@@ -89,6 +89,7 @@ Puis : `npm run bank:sync` → vérifier `npm run bank:check` → si `*-data.js`
 npm run check                 # syntaxe + unit (dont intégrité banques)
 npm run bank:check            # JSON↔JS + aucun hard-ban résiduel (offline)
 npm run bank:sync             # régénère les JS depuis les JSON + purge ban
+npm run audit:banks:hard      # HARD offline (religieux, ban, dims, scènes) — 0 réseau
 npm run detect:seasons        # bot saison (dry-run)
 npm run detect:seasons:update # bot saison → JSON + JS
 
