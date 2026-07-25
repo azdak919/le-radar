@@ -1,6 +1,6 @@
 {
-  "updated": "2026-07-25T18:27:04.585Z",
-  "updatedSlot": "2026-07-25T17:30:00.000Z",
+  "updated": "2026-07-25T20:38:07.165Z",
+  "updatedSlot": "2026-07-25T20:00:00.000Z",
   "count": 185,
   "freshnessSessions": 3,
   "sources": {
@@ -10,7 +10,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:00:00.000Z",
-      "lastFetchOk": "2026-07-25T18:26:22.138Z"
+      "lastFetchOk": "2026-07-25T20:37:28.223Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-07-25T18:26:23.354Z"
+      "lastFetchOk": "2026-07-25T20:37:29.499Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-03-25T11:00:00.000Z",
-      "lastFetchOk": "2026-07-25T18:26:27.454Z"
+      "lastFetchOk": "2026-07-25T20:37:35.269Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-07-06T12:00:00.000Z",
-      "lastFetchOk": "2026-07-25T18:26:27.848Z"
+      "lastFetchOk": "2026-07-25T20:37:36.203Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,7 +42,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-07-08T14:41:00.000Z",
-      "lastFetchOk": "2026-07-25T18:26:28.966Z"
+      "lastFetchOk": "2026-07-25T20:37:36.838Z"
     },
     "Zone Campus": {
       "fetchOk": true,
@@ -50,7 +50,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-07-25T18:26:30.321Z"
+      "lastFetchOk": "2026-07-25T20:37:38.222Z"
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,7 +58,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-07-25T18:26:31.377Z"
+      "lastFetchOk": "2026-07-25T20:37:39.596Z"
     },
     "Le Collectif": {
       "fetchOk": true,
@@ -66,7 +66,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-07-23T15:03:36.000Z",
-      "lastFetchOk": "2026-07-25T18:26:32.320Z"
+      "lastFetchOk": "2026-07-25T20:37:40.462Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -74,7 +74,7 @@
       "articleCount": 7,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-07-25T18:26:32.549Z"
+      "lastFetchOk": "2026-07-25T20:37:40.670Z"
     },
     "La Pige": {
       "fetchOk": true,
@@ -82,7 +82,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-06-22T14:36:10.000Z",
-      "lastFetchOk": "2026-07-25T18:26:33.224Z"
+      "lastFetchOk": "2026-07-25T20:37:41.501Z"
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,15 +90,15 @@
       "articleCount": 13,
       "freshArticleCount": 13,
       "lastArticle": "2026-02-25T14:38:32.764Z",
-      "lastFetchOk": "2026-07-25T18:26:34.556Z"
+      "lastFetchOk": "2026-07-25T20:37:45.099Z"
     },
     "The Tribune": {
-      "fetchOk": false,
-      "stale": true,
+      "fetchOk": true,
+      "stale": false,
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-07-21T13:21:49.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-07-25T20:37:45.452Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-07-25T18:26:46.904Z"
+      "lastFetchOk": "2026-07-25T20:37:45.706Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-07-25T18:26:47.040Z"
+      "lastFetchOk": "2026-07-25T20:37:45.862Z"
     }
   },
   "items": [
@@ -358,8 +358,7 @@
       "sourceImageCreditImageKey": "screen-shot-2026-07-21-at-9.14.03-am.png",
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
-      "leadExcerpt": "Although FIFA insists the Balogun decision is in line with FDC protocol, FIFA has not postponed a World Cup red card suspension since Manoel Francisco dos Santos—famously known as Garrincha —earned a red card in 1962 . This was another incident where extensive lobbying by the politically powerful enabled a beloved, penalized player to compete.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Although FIFA insists the Balogun decision is in line with FDC protocol, FIFA has not postponed a World Cup red card suspension since Manoel Francisco dos Santos—famously known as Garrincha —earned a red card in 1962 . This was another incident where extensive lobbying by the politically powerful enabled a beloved, penalized player to compete."
     },
     {
       "source": "Le Collectif",
@@ -433,8 +432,7 @@
       "sourceImageCreditImageKey": "img_3443.png",
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
-      "leadExcerpt": "Known by many as Lumumba Vea , translating to “Lumumba Lives,” Mboladinga’s statue pose impersonates Patrice Lumumba , the DRC’s first prime minister. Patrice Lumumba was an active voice opposing Belgium’s colonization of Congo. He denounced the terror colonialism caused on many occasions during his time in office.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Known by many as Lumumba Vea , translating to “Lumumba Lives,” Mboladinga’s statue pose impersonates Patrice Lumumba , the DRC’s first prime minister. Patrice Lumumba was an active voice opposing Belgium’s colonization of Congo. He denounced the terror colonialism caused on many occasions during his time in office."
     },
     {
       "source": "The Link",
@@ -548,7 +546,7 @@
       "sourceImageCreditImageKey": "screen-shot-2026-06-26-at-11.23.19-am.png",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "_retainedFromCache": true
+      "leadExcerpt": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. I’m out of errands to run—other than bumping into someone from my high school every time I leave my house. If I have to have the, “How was your year?” small talk conversation one more time, I might actually explode. Please please please, if you have any tips on how to survive life in my hometown for"
     },
     {
       "source": "The Tribune",
@@ -571,8 +569,7 @@
       "sourceImageCreditImageKey": "screen-shot-2026-06-23-at-1.21.20-pm.png",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "Tanzanian-American-Canadian artist Shanna Strauss ’s screenprint triad Kanga I, II, III joined the student-led digital art exhibition Projections: SANKOFA on Feb. 23. Displayed in the Lorne M. Trottier Building mezzanine, the Kanga series combines negative space with vibrant colour to assert the unifying power of shared cultural identity.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Tanzanian-American-Canadian artist Shanna Strauss ’s screenprint triad Kanga I, II, III joined the student-led digital art exhibition Projections: SANKOFA on Feb. 23. Displayed in the Lorne M. Trottier Building mezzanine, the Kanga series combines negative space with vibrant colour to assert the unifying power of shared cultural identity."
     },
     {
       "source": "La Pige",
@@ -616,8 +613,7 @@
       "sourceImageCreditImageKey": "untitled_artwork.jpeg",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "Growing adoption of AI systems, which frequently hallucinate and possess ingrained biases against racialized groups , both negatively impacts litigants, and violates the Canadian justice system’s tenets of fairness and impartiality. Thus, AI safety —the outlining of AI risks and formation of computational and governance frameworks to address these risks—is a legal necessity.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Growing adoption of AI systems, which frequently hallucinate and possess ingrained biases against racialized groups , both negatively impacts litigants, and violates the Canadian justice system’s tenets of fairness and impartiality. Thus, AI safety —the outlining of AI risks and formation of computational and governance frameworks to address these risks—is a legal necessity."
     },
     {
       "source": "The Link",
@@ -691,8 +687,7 @@
       "sourceImageCreditImageKey": "screen-shot-2026-05-28-at-8.32.20-am.png",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "American artist and poet Theodore A. Harris is a genius of the political collage . Born in Manhattan, New York and raised in Philadelphia, Pennsylvania, Harris brings an autobiographical focus to the subversive , polysemous medium of the collage, one shaped by his upbringing, mentors, and personal experiences with anti-Black discrimination and American capitalism’s exploitative nature.",
-      "_retainedFromCache": true
+      "leadExcerpt": "American artist and poet Theodore A. Harris is a genius of the political collage . Born in Manhattan, New York and raised in Philadelphia, Pennsylvania, Harris brings an autobiographical focus to the subversive , polysemous medium of the collage, one shaped by his upbringing, mentors, and personal experiences with anti-Black discrimination and American capitalism’s exploitative nature."
     },
     {
       "source": "The Link",
@@ -761,8 +756,7 @@
       "sourceImageCreditImageKey": "screen-shot-2026-05-22-at-7.42.52-am.png",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "On May 16, hundreds of protestors gathered in front of the Consulate General of Israel in Montreal to commemorate the 78th anniversary of the Nakba ( Nakba Day ). Demonstrators waved Palestinian, Rotisken’rakéhte ( Mohawk Warrior Society ), and post-1979 revolution Iranian flags amidst the music of live drummers.",
-      "_retainedFromCache": true
+      "leadExcerpt": "On May 16, hundreds of protestors gathered in front of the Consulate General of Israel in Montreal to commemorate the 78th anniversary of the Nakba ( Nakba Day ). Demonstrators waved Palestinian, Rotisken’rakéhte ( Mohawk Warrior Society ), and post-1979 revolution Iranian flags amidst the music of live drummers."
     },
     {
       "source": "La Pige",
@@ -1141,8 +1135,7 @@
       "sourceImageCreditImageKey": "renderedimage-1.jpeg",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "One week before The Tribune ’s first production night, I found myself in Toronto in a black dress, black shoes, and sparkles on my eyelids. I was at the funeral of Fabienne de Cartier, a former News Editor.",
-      "_retainedFromCache": true
+      "leadExcerpt": "One week before The Tribune ’s first production night, I found myself in Toronto in a black dress, black shoes, and sparkles on my eyelids. I was at the funeral of Fabienne de Cartier, a former News Editor."
     },
     {
       "source": "The Tribune",
@@ -1165,8 +1158,7 @@
       "sourceImageCreditImageKey": "renderedimage.jpeg",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "On May 9, Students for Palestine’s Honour and Resistance ( SPHR ) at McGill hosted a gathering to commemorate the two-year anniversary of Montreal community members establishing the Gaza Solidarity Encampment on McGill’s Lower Field. 743 days later, community members of all ages met for a potluck, arts-and-crafts, and a letter-writing campaign for Palestinian political prisoners, intended to raise awareness of, and inspire solidarity against, Israel’s prison conditions.",
-      "_retainedFromCache": true
+      "leadExcerpt": "On May 9, Students for Palestine’s Honour and Resistance ( SPHR ) at McGill hosted a gathering to commemorate the two-year anniversary of Montreal community members establishing the Gaza Solidarity Encampment on McGill’s Lower Field. 743 days later, community members of all ages met for a potluck, arts-and-crafts, and a letter-writing campaign for Palestinian political prisoners, intended to raise awareness of, and inspire solidarity against, Israel’s prison conditions."
     },
     {
       "source": "Quartier Libre",
@@ -2184,8 +2176,7 @@
       "sourceImageCreditImageKey": "untitled_artwork-149.png",
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
-      "leadExcerpt": "Across the 18 months she has lived in her Plateau apartment, Alice Lee, U3 Arts & Science, has had her water shut off 13 times. Most recently—in February 2026—she turned on her tap to find the water running yellow, as she recounted in an interview with The Tribune . Lee explained that her building’s maintenance worker was unequipped to deal with the problem.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Across the 18 months she has lived in her Plateau apartment, Alice Lee, U3 Arts & Science, has had her water shut off 13 times. Most recently—in February 2026—she turned on her tap to find the water running yellow, as she recounted in an interview with The Tribune . Lee explained that her building’s maintenance worker was unequipped to deal with the problem."
     },
     {
       "source": "The Tribune",
@@ -2208,8 +2199,7 @@
       "sourceImageCreditImageKey": "untitled-11.jpeg",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "The panelists next reflected on how, in the past decade, journalists across Canada have repeatedly communicated their discontent with mainstream media’s vague coverage of Palestine through open letters . However, as Malik—director, writer, and former CBC producer for the fifth estate , Big News , and For the Culture —noted, these letters were often met with minimal institutional accountability—if not backlash and aggression.",
-      "_retainedFromCache": true
+      "leadExcerpt": "The panelists next reflected on how, in the past decade, journalists across Canada have repeatedly communicated their discontent with mainstream media’s vague coverage of Palestine through open letters . However, as Malik—director, writer, and former CBC producer for the fifth estate , Big News , and For the Culture —noted, these letters were often met with minimal institutional accountability—if not backlash and aggression."
     },
     {
       "source": "Zone Campus",
@@ -2375,8 +2365,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "abbey-locker-sports-1.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true,
-      "_retainedFromCache": true
+      "leadImageReady": true
     },
     {
       "source": "The Link",
@@ -2500,8 +2489,7 @@
       "imageCreator": "kevin dooley",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/12836528@N00/3034812064",
-      "_retainedFromCache": true
+      "imageSourceUrl": "https://www.flickr.com/photos/12836528@N00/3034812064"
     },
     {
       "source": "The Link",
@@ -2769,8 +2757,7 @@
       "imageCreator": "||-SAM Nasim-||",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/65732636@N06/6753143443",
-      "_retainedFromCache": true
+      "imageSourceUrl": "https://www.flickr.com/photos/65732636@N06/6753143443"
     },
     {
       "source": "The Tribune",
@@ -2791,8 +2778,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "rup_otb.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true,
-      "_retainedFromCache": true
+      "leadImageReady": true
     },
     {
       "source": "The Tribune",
@@ -2813,8 +2799,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "letter-to-ed-jan-28.png",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true,
-      "_retainedFromCache": true
+      "leadImageReady": true
     },
     {
       "source": "The Tribune",
@@ -2836,8 +2821,7 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "untitled_artwork-149.png",
       "sourceImageCreditRev": 7,
-      "leadImageReady": true,
-      "_retainedFromCache": true
+      "leadImageReady": true
     },
     {
       "source": "The Tribune",
@@ -2858,8 +2842,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "img_2550.png",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true,
-      "_retainedFromCache": true
+      "leadImageReady": true
     },
     {
       "source": "The Tribune",
@@ -2880,8 +2863,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "ae1_anna-seger-and-katya-loidap.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true,
-      "_retainedFromCache": true
+      "leadImageReady": true
     },
     {
       "source": "The Tribune",
@@ -2902,8 +2884,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "scitech1_annaseger.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true,
-      "_retainedFromCache": true
+      "leadImageReady": true
     },
     {
       "source": "The Campus",
@@ -3545,6 +3526,29 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
+      "title": "La performance de l’homosexualité : un privilège ?",
+      "link": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
+      "author": "Joséphine Miton",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Blague innocente, signe d’ouverture ou nouveau costume ?",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/coinqueer-1.jpeg",
+      "featured": true,
+      "_pageAuthor": "Joséphine Miton",
+      "sourceImageCredit": "Photo : Félix Fournier",
+      "sourceImageCreator": "Félix Fournier",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "coinqueer-1.jpeg",
+      "sourceImageCreditRev": 9,
+      "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie."
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
       "title": "L’épidémie de la nonchalance",
       "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
       "author": "Elie Nguyen",
@@ -3653,29 +3657,6 @@
       "sourceImageCreditImageKey": "concordiareponsev2.jpeg",
       "leadImageReady": true,
       "leadExcerpt": "Première gaffe intellectuelle (in)volontaire du Concordian . En trente secondes de recherches plus ou moins rigoureuses, il aurait pu comprendre les réelles causes de la décote du Québec par la Standard and Poor’s (S&P) – qui n’a absolument rien à voir avec la recrudescence de l’intérêt des Québécois envers la souveraineté."
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "La performance de l’homosexualité : un privilège ?",
-      "link": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
-      "author": "Joséphine Miton",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Blague innocente, signe d’ouverture ou nouveau costume ?",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/coinqueer-1.jpeg",
-      "featured": true,
-      "_pageAuthor": "Joséphine Miton",
-      "sourceImageCredit": "Photo : Félix Fournier",
-      "sourceImageCreator": "Félix Fournier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "coinqueer-1.jpeg",
-      "sourceImageCreditRev": 9,
-      "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie."
     },
     {
       "source": "The McGill Daily",
@@ -4019,22 +4000,21 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "Élections de l’exécutif de l’AÉUM",
-      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
-      "author": "Timotée Allouch-Chantepie, Héloïse Durning, Aurélien Quéméner et Eugénie St-Pierre",
+      "title": "Ce que nous devons aux femmes",
+      "link": "https://www.delitfrancais.com/2026/03/18/ce-que-nous-devons-aux-femmes/",
+      "author": "Eugénie St-Pierre",
       "date": "2026-03-18T07:00:00.000Z",
-      "excerpt": "Présentation des candidats à l’exécutif de l’AÉUM.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2025/11/P1160269-scaled.jpeg",
+      "excerpt": "Votre entourage, en tant qu’étudiantes et étudiants de l’Université McGill, est peut-être composé en majorité de personnes qui se revendiquent comme féministes. Certaines le sont, d’autres le prétendent, mais relativement rares sont les McGillois qui refusent ouvertement le féminisme.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Capture-decran-le-2026-03-22-a-17.22.07.png",
       "featured": true,
-      "_pageAuthor": "Timotée Allouch-Chantepie, Héloïse Durning, Aurélien Quéméner et Eugénie St-Pierre",
-      "authorCheckedAt": "2026-07-25T18:27:14.089Z",
-      "leadExcerpt": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « plus politique ». L’étudiante de deuxième année en études sur le genre explique qu’elle ne se sentait pas représentée par les élus de l’AÉUM et que c’est ce qui a motivé sa décision de se présenter. « On [les candidats du S.T.A.N.D.] est là depuis deux, trois, quatre ans et on voit comment l’AÉUM n’e",
-      "sourceImageCredit": "Photo : Toscane Ralaimongo",
-      "sourceImageCreator": "Toscane Ralaimongo",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
+      "_pageAuthor": "Eugénie St-Pierre",
+      "authorCheckedAt": "2026-07-25T20:38:16.729Z",
+      "sourceImageCredit": "Photo : Alexandre Gontier",
+      "sourceImageCreator": "Alexandre Gontier",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/ce-que-nous-devons-aux-femmes/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "p1160269.jpeg",
+      "sourceImageCreditImageKey": "capture-decran-le-2026-03-22-a-17.22.07.png",
       "sourceImageCreditRev": 9
     },
     {
@@ -4043,22 +4023,22 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "Pourquoi le L est en premier dans LGBTQ+",
-      "link": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
-      "author": "Sixtine Nicolaÿ",
+      "title": "Les femmes MAGA au service du patriarcat",
+      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
+      "author": "Anonyme",
       "date": "2026-03-18T07:00:00.000Z",
-      "excerpt": "Le rôle des lesbiennes pendant l’épidémie du sida.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/lesbians-against-sida-_-sixtine.png",
+      "excerpt": "Kristi Noem et Erika Kirk comme figures de proue du néo-fascisme américain.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/MAGA_marius.png",
       "featured": true,
-      "_pageAuthor": "Sixtine Nicolaÿ",
-      "authorCheckedAt": "2026-07-25T18:27:14.387Z",
-      "leadExcerpt": "Cependant, l’épidémie du sida a modifié le rapport entre les deux groupes. Au cours de cette crise, les hommes homosexuels, qui en étaient les principales victimes, ont souvent été abandonnés, que ce soit par le gouvernement ou plus largement par la société. La stigmatisation et la marginalisation des homosexuels ont conduit certains professionnels de la santé à refuser de traiter les personnes at",
+      "_pageAuthor": "Anonyme",
+      "authorCheckedAt": "2026-07-25T20:38:17.195Z",
+      "leadExcerpt": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer en instrumentalisant certaines femmes pour reproduire les structures qui les subordonnent. C’est à travers ce mécanisme d’opacité que sa présence se resserre sur la société, et que ses contradictions se dissimulent sous le couvert de liberté individuelle, de traditions ou de choix personnels.",
       "sourceImageCredit": "Photo : Stu Doré",
       "sourceImageCreator": "Stu Doré",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "lesbians-against-sida-_-sixtine.png",
+      "sourceImageCreditImageKey": "maga_marius.png",
       "sourceImageCreditRev": 9
     },
     {
