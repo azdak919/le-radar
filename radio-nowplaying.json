@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-25T07:19:57.552Z",
+  "updatedAt": "2026-07-25T08:24:15.923Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-25T07:19:28.821Z"
+      "checkedAt": "2026-07-25T08:23:55.652Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix anglo",
-        "source": "api-live",
-        "start": "22:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-anglo"
-      },
-      "next": {
         "title": "Rebelles soniques (reprise)",
         "source": "api-live",
         "start": "00:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/365044.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "rebelles-soniques"
       },
+      "next": {
+        "title": "Mix Franco",
+        "source": "api-live",
+        "start": "02:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/365009.mp3",
+        "slug": "mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix anglo",
+      "showTitle": "Rebelles soniques (reprise)",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-25T07:19:31.260Z"
+      "checkedAt": "2026-07-25T08:23:57.275Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Soca Sessions",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "The Mash Time Show",
         "source": "api-live",
         "start": "04:00",
         "end": "06:00"
       },
+      "next": {
+        "title": "Quebec Acadie",
+        "source": "api-live",
+        "start": "06:00",
+        "end": "10:00"
+      },
       "track": "",
-      "showTitle": "Soca Sessions",
+      "showTitle": "The Mash Time Show",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,7 +77,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-25T07:19:34.282Z"
+      "checkedAt": "2026-07-25T08:23:59.553Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -104,7 +104,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-25T07:19:48.105Z"
+      "checkedAt": "2026-07-25T08:24:12.761Z"
     },
     "cfak": {
       "id": "cfak",
@@ -124,7 +124,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-25T07:19:48.896Z"
+      "checkedAt": "2026-07-25T08:24:13.225Z"
     },
     "choq": {
       "id": "choq",
@@ -137,7 +137,7 @@
         "end": "23:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Slippers - LWH",
+      "track": "Roselle - STP",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -148,7 +148,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-25T07:19:57.202Z"
+      "checkedAt": "2026-07-25T08:24:15.572Z"
     }
   }
 }
