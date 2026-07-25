@@ -37,6 +37,8 @@ dans l'idéal, et ce qui reste volontairement manuel.
 | `data/quebec-nations-backgrounds.json` | Banque **Premières Nations & Inuit** (max 50) — **mât + pomo** ; **11 nations QC** | `maintain-quebec-backgrounds.js --profile nations` |
 | `quebec-nations-backgrounds-data.js` | Export nations (`QUEBEC_NATIONS_BACKGROUNDS`, champs `nationId` / `nation`) | idem |
 | `scripts/quebec-nations-taxonomy.js` | Taxonomie des 11 nations + détection / couverture | bot nations |
+| `data/quebec-favorites-backgrounds.json` | **Favorites manuelles** (permanentes, hors purge bots) | signalement manuel / `pin-background.js` |
+| `quebec-favorites-backgrounds-data.js` | Export favorites (`QUEBEC_FAVORITES_BACKGROUNDS`) | idem |
 | `bot-status.json` | Tableau de bord santé des bots | `maintain.js` |
 
 ---
@@ -62,7 +64,8 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 | Wallpaper mât campus univ. | `maintain-quebec-backgrounds.js --profile universities` | Hebdo ; plafond 50 ; **mât seulement** |
 | Wallpaper pomo paysages QC | `maintain-quebec-backgrounds.js --profile pomo` | Hebdo ; plafond 50 ; **pomo seulement** |
 | Wallpaper nations / Inuit | `maintain-quebec-backgrounds.js --profile nations` | Hebdo ; plafond 50 ; **mât + pomo** (partagée) |
-| Rotation / random fonds | `bg-rotation-lib.js` + Worker optionnel `workers/bg-rotation` | Client CSPRNG ; entropie edge CF free (0 $) |
+| Rotation / random fonds | `bg-rotation-lib.js` + Worker `workers/bg-rotation` | Client CSPRNG ; entropie edge CF free |
+| Nowplaying (re-poll) | `app.js` `clientPoll` + Worker `workers/nowplaying-cache` | Cache JSON/XML ~60 s ; **pas** d’audio |
 | **Orchestrateur** | `maintain.js` | **Hebdo (lundi)** |
 
 ### Workflows GitHub Actions

@@ -9,6 +9,7 @@ Workers sous `*.le-radar.ca` (au lieu de `*.azdak.workers.dev`).
 - **Workers live** (sous-domaine compte) :
   - `https://le-radar-weather.azdak.workers.dev` — météo
   - `https://le-radar-bg-rotation.azdak.workers.dev` — entropie rotation fonds
+  - `https://le-radar-nowplaying.azdak.workers.dev` — métadonnées nowplaying (JSON/XML)
 
 Les Workers tournent en `workers_dev = true` tant que le DNS de `le-radar.ca`
 n’est pas sur Cloudflare.

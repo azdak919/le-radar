@@ -2,11 +2,15 @@
 // Page unique : un syntoniseur radio en haut, un fil d'articles (texte) en dessous.
 
 // Proxy CORS optionnel pour les flux HTTP→HTTPS (déployer proxy/cloudflare-worker.js).
+// Désactivé volontairement : un proxy audio ferait exploser le free tier CF.
 const PROXY_BASE = '';
 // Cache + repli météo partagés (workers/weather-cache). le-radar.ca n'est pas
 // sur Cloudflare (DNS chez WHC) : pas de domaine personnalisé possible, donc
 // sous-domaine workers.dev de compte.
 const WEATHER_API_BASE = 'https://le-radar-weather.azdak.workers.dev';
+// Métadonnées « à l'antenne » (JSON/XML only — pas l'audio). Cache edge ~60 s.
+// workers/nowplaying-cache — évite CORS / 429 sur Triton & co. côté navigateur.
+const NOWPLAYING_API_BASE = 'https://le-radar-nowplaying.azdak.workers.dev';
 
 function safeHttpUrl(url, { allowHttp = false } = {}) {
   if (!url || typeof url !== 'string') return null;
@@ -2666,22 +2670,64 @@ function parseTritonNowPlayingXml(xmlText = '') {
   return { current: null, next: null, track };
 }
 
+/**
+ * URL de re-poll : passe par le Worker de métadonnées (CORS + cache partagé).
+ * Repli direct si le Worker est vide / hors service.
+ */
+function nowplayingFetchUrl(rawUrl) {
+  const safe = safeHttpUrl(rawUrl, { allowHttp: true });
+  if (!safe) return null;
+  if (!NOWPLAYING_API_BASE) return safe;
+  try {
+    // Toujours HTTPS côté proxy
+    const u = new URL(safe);
+    if (u.protocol === 'http:') u.protocol = 'https:';
+    return `${NOWPLAYING_API_BASE.replace(/\/+$/, '')}/v1/fetch?url=${encodeURIComponent(u.href)}`;
+  } catch {
+    return safe;
+  }
+}
+
 async function fetchClientLivePoll(id, poll) {
   if (!poll?.url) return null;
-  try {
-    const isTriton = poll.type === 'triton-np' || poll.type === 'triton'
-      || /tritondigital\.com|nowplaying/i.test(poll.url);
-    const res = await fetch(poll.url, {
+  const isTriton = poll.type === 'triton-np' || poll.type === 'triton'
+    || /tritondigital\.com|nowplaying/i.test(poll.url);
+  const accept = isTriton ? 'application/xml, text/xml, */*' : 'application/json';
+
+  async function attempt(url) {
+    if (!url) return null;
+    const res = await fetch(url, {
       cache: 'no-store',
-      headers: { Accept: isTriton ? 'application/xml, text/xml, */*' : 'application/json' },
+      headers: { Accept: accept },
     });
     if (!res.ok) return null;
+    // Worker renvoie du JSON d'erreur { error: ... } si upstream KO
+    const ctype = (res.headers.get('Content-Type') || '').toLowerCase();
+    if (ctype.includes('application/json') && !isTriton) {
+      const body = await res.json();
+      if (body && body.error) return null;
+      return parseClientLivePayload(poll.type, body);
+    }
+    if (isTriton || ctype.includes('xml') || ctype.includes('text/')) {
+      const text = await res.text();
+      // Erreur JSON du worker parfois en text/plain
+      if (text.trimStart().startsWith('{') && text.includes('"error"')) return null;
+      if (isTriton) return parseTritonNowPlayingXml(text);
+      try {
+        return parseClientLivePayload(poll.type, JSON.parse(text));
+      } catch {
+        return null;
+      }
+    }
+    return parseClientLivePayload(poll.type, await res.json());
+  }
 
-    let parsed = null;
-    if (isTriton) {
-      parsed = parseTritonNowPlayingXml(await res.text());
-    } else {
-      parsed = parseClientLivePayload(poll.type, await res.json());
+  try {
+    // 1) Worker cache + CORS
+    let parsed = await attempt(nowplayingFetchUrl(poll.url));
+    // 2) Repli direct (si l’API a déjà CORS, ex. certains endpoints)
+    if (!parsed && NOWPLAYING_API_BASE) {
+      parsed = await attempt(safeHttpUrl(poll.url, { allowHttp: true }));
     }
     if (!parsed) return null;
     if (!parsed.current?.title && !parsed.track) return null;
