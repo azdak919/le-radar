@@ -147,6 +147,13 @@
   const UNDERBRIDGE_SCENE_RE =
     /(?:\bunderside\b|\bunderneath\b|\bunderpass\b|\bunder[\s-]?the[\s-]?bridge\b|\bbridge[\s-]?underside\b|\bdessous de pont\b|\bsous le pont\b|\bsous[\s-]pont\b|\bviaduc\b.*\b(dessous|sous)\b|\bconcrete beams?\b|\bpiliers? de b[eé]ton\b|\bsoffit\b)/i;
 
+  /**
+   * Scène industrielle / aéroport / hangar — gris, sans intérêt « lieu ».
+   * Ex. Montréal–Les Cèdres Airport from railway track.
+   */
+  const INDUSTRIAL_SCENE_RE =
+    /(?:\bairport\b|\ba[eé]roport\b|\bairfield\b|\bhangar\b|\bwarehouse\b|\bentrep[oô]t\b|\bindustrial\b|\bzone industrielle\b|\bfactory\b|\busine\b|\bscrapyard\b|\bjunkyard\b|\brailway[\s_-]?track\b|\bparking[\s_-]?lot\b|\bstationnement\b|\bpower[\s_-]?plant\b|\bcentrale[\s_-]?[eé]lectrique\b)/i;
+
   /** Nuit urbaine — wordmark blanc illisible sur les lumières. */
   const NIGHT_SCENE_RE =
     /(?:\bnight\b|\bnuit\b|\btwilight\b|\bcrépuscule\b|\bcrepuscule\b|\bafter[\s-]?dark\b)/i;
@@ -184,6 +191,14 @@
       .filter(Boolean)
       .join(" ");
     return UNDERBRIDGE_SCENE_RE.test(hay);
+  }
+
+  function isIndustrialSceneSubject(bg) {
+    if (!bg) return false;
+    const hay = [bg.title, bg.url, bg.link, bg.description, bg.categories, bg.credit]
+      .filter(Boolean)
+      .join(" ");
+    return INDUSTRIAL_SCENE_RE.test(hay);
   }
 
   function isNightSceneSubject(bg) {
@@ -1423,6 +1438,19 @@
       ) {
         return { ok: false, reason: "underbridge_concrete", metrics };
       }
+      // Ciel bas gris + scène désaturée (aéroport / hangar / friche).
+      // Ex. Les Cèdres Airport from railway track (topSat ~0.09, grey ~0.45).
+      if (
+        !goldenSilhouette &&
+        topSat < 0.11 &&
+        topMean > 0.28 &&
+        topMean < 0.62 &&
+        greyFrac > 0.35 &&
+        sat < 0.26 &&
+        meanL < 0.4
+      ) {
+        return { ok: false, reason: "drab_industrial_sky", metrics };
+      }
       // Marqueur soft pour logs / futurs scores (réf. sweet-spot bandeau)
       if (goldenSilhouette) {
         metrics.sweetSpot = "golden_silhouette";
@@ -1540,6 +1568,10 @@
     }
     if (isUnderbridgeSceneSubject(bg)) {
       _rejectAndRetry(bg, pool, { ok: false, reason: "underbridge_scene_subject" });
+      return;
+    }
+    if (isIndustrialSceneSubject(bg)) {
+      _rejectAndRetry(bg, pool, { ok: false, reason: "industrial_scene_subject" });
       return;
     }
     if (isNightSceneSubject(bg)) {

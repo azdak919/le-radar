@@ -40,6 +40,8 @@ Hard rejects (runtime + curation)
                             (réf. Pavillon Roger-Gaudry crop mât)
   HARD:underbridge_concrete dessous de pont / dalle béton (ombres denses,
                             quasi pas de ciel) — ex. Île-aux-Tourtes_02
+  HARD:drab_industrial_sky  ciel bas gris + scène désaturée (aéroport /
+                            hangar / friche) — ex. Les Cèdres Airport
   HARD:low_resolution       native < ~1400×700 ou < 1.2 Mpx — upscale
                             grainy / blocky sur mât retina
   HARD:excessive_grain      bruit haute fréquence dans zones plates (ciel)
@@ -720,6 +722,18 @@ def score(metrics: dict, entry: dict | None = None) -> dict:
     ):
         hard = True
         reasons.append("HARD:underbridge_concrete")
+
+    # Ciel bas gris + scène désaturée (aéroport / hangar / friche)
+    if (
+        not golden
+        and metrics.get("top_sat", 1) < 0.11
+        and 0.28 < metrics.get("top_mean", 0) < 0.62
+        and metrics.get("grey_frac", 0) > 0.35
+        and metrics.get("sat", 1) < 0.26
+        and metrics.get("mean_l", 1) < 0.4
+    ):
+        hard = True
+        reasons.append("HARD:drab_industrial_sky")
 
     # Batture / vase : beaucoup de sable-beige, quasi pas de ciel
     if metrics.get("sand_frac", 0) > 0.48 and metrics.get("sky_frac", 1) < 0.08:
