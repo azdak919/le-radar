@@ -4,7 +4,7 @@
   "maxBank": 50,
   "lastSessionCleanup": "2026-05-01",
   "lastSessionId": "ete",
-  "updated": "2026-07-25T08:02:31.280Z",
+  "updated": "2026-07-25T08:16:57.737Z",
   "photos": [
     {
       "id": "4989965eb4df",
@@ -156,7 +156,15 @@
       "height": 1920,
       "aspect": 1.333,
       "mime": "image/jpeg",
-      "season": "automne"
+      "season": "automne",
+      "seasonConfidence": 0.96,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:09",
+        "kw_automne",
+        "date_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.645Z"
     },
     {
       "id": "2879683e6f38",
@@ -186,7 +194,13 @@
       "height": 5431,
       "aspect": 1.5,
       "mime": "image/jpeg",
-      "season": "ete"
+      "season": "ete",
+      "seasonConfidence": 0.85,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "kw_ete"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.645Z"
     },
     {
       "id": "d83f724160b3",
@@ -427,5 +441,6 @@
       "aspect": 1.5,
       "mime": "image/jpeg"
     }
-  ]
+  ],
+  "lastSeasonDetect": "2026-07-25T08:16:57.646Z"
 }

@@ -4,7 +4,7 @@
   "maxBank": 50,
   "lastSessionCleanup": "2026-05-01",
   "lastSessionId": "ete",
-  "updated": "2026-07-25T08:02:31.283Z",
+  "updated": "2026-07-25T08:16:57.739Z",
   "photos": [
     {
       "id": "917da30c4514",
@@ -44,7 +44,13 @@
       "nationId": "abenaki",
       "nation": "Abénaquis (W8banaki)",
       "season": "ete",
-      "season6": "aujaq"
+      "season6": "aujaq",
+      "seasonConfidence": 0.85,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "kw_ete"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.649Z"
     },
     {
       "id": "bc3d92f46829",
@@ -65,7 +71,16 @@
       "nationId": "inuit",
       "nation": "Inuit (Nunavik)",
       "season": "hiver",
-      "season6": "ukiuq"
+      "season6": "ukiuq",
+      "seasonConfidence": 0.78,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:08",
+        "kw_hiver",
+        "date_disagrees",
+        "kw6_ukiuq"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.649Z"
     },
     {
       "id": "1ffb3a1a4410",
@@ -86,7 +101,14 @@
       "nationId": "atikamekw",
       "nation": "Atikamekw",
       "season": "hiver",
-      "season6": "ukiuq"
+      "season6": "ukiuq",
+      "seasonConfidence": 0.9,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "kw_hiver",
+        "kw6_ukiuq"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.649Z"
     },
     {
       "id": "776de9800f28",
@@ -107,7 +129,15 @@
       "description": "Oujé-Bougoumou en août 2014",
       "categories": "Oujé-Bougoumou|Self-published work|Images by Fralambert|Files with coordinates missing SDC location of creation|Canada photographs taken on 2014-08-10|August 2014 in Quebec|Community halls in Canada",
       "season": "ete",
-      "season6": "ukiaqsaaq"
+      "season6": "ukiaqsaaq",
+      "seasonConfidence": 0.93,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:08",
+        "kw_ete",
+        "date_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.649Z"
     },
     {
       "id": "a1e61ec2abac",
@@ -200,7 +230,15 @@
       "description": "Fort Listuguj at the Listuguj First Nation Reserve near Cross Point, Quebec. Historic site and museum.",
       "categories": "Taken with Nikon D300|Flickr images reviewed by FlickreviewR|Flickr images missing SDC creator|Flickr images missing SDC source of file|Canada photographs taken on 2010-08-23|August 2010 in Quebec|Photographs of Canada by Dennis G. Jarvis|Fort Listuguj|Listuguj First Nation Reserve|Flickr images missing SDC Flickr photo ID|Flickr images missing SDC published in",
       "season": "ete",
-      "season6": "ukiaqsaaq"
+      "season6": "ukiaqsaaq",
+      "seasonConfidence": 0.93,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:08",
+        "kw_ete",
+        "date_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.649Z"
     },
     {
       "id": "e2d1f0e85f69",
@@ -274,7 +312,15 @@
       "description": "Fort Listuguj at Listuguj First Nation Reserve in Quebec, near Cross Point, Quebec and Restigouche, New Brunswick. Historical site and museum.",
       "categories": "Taken with Nikon D300|Flickr images reviewed by FlickreviewR|Flickr images missing SDC creator|Flickr images missing SDC source of file|Canada photographs taken on 2010-08-23|August 2010 in Quebec|Photographs of Canada by Dennis G. Jarvis|Fort Listuguj|Flickr images missing SDC Flickr photo ID|Flickr images missing SDC published in",
       "season": "ete",
-      "season6": "ukiaqsaaq"
+      "season6": "ukiaqsaaq",
+      "seasonConfidence": 0.93,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:08",
+        "kw_ete",
+        "date_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.649Z"
     },
     {
       "id": "aa3d7c561410",
@@ -348,7 +394,14 @@
       "nationId": "inuit",
       "nation": "Inuit (Nunavik)",
       "season": "hiver",
-      "season6": "ukiuq"
+      "season6": "ukiuq",
+      "seasonConfidence": 0.9,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "kw_hiver",
+        "kw6_ukiuq"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.649Z"
     },
     {
       "id": "61ccfc7b7f6e",
@@ -367,7 +420,14 @@
       "nationId": "inuit",
       "nation": "Inuit (Nunavik)",
       "season": "hiver",
-      "season6": "ukiuq"
+      "season6": "ukiuq",
+      "seasonConfidence": 0.9,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "kw_hiver",
+        "kw6_ukiuq"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.649Z"
     },
     {
       "id": "398524378425",
@@ -421,7 +481,14 @@
       "nation": "Inuit (Nunavik)",
       "focalY": 0.32,
       "season": "hiver",
-      "season6": "ukiuq"
+      "season6": "ukiuq",
+      "seasonConfidence": 0.9,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "kw_hiver",
+        "kw6_ukiuq"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.649Z"
     },
     {
       "id": "88da7e457739",
@@ -440,7 +507,16 @@
       "nationId": "atikamekw",
       "nation": "Atikamekw",
       "season": "hiver",
-      "season6": "ukiuq"
+      "season6": "ukiuq",
+      "seasonConfidence": 0.98,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:12",
+        "kw_hiver",
+        "date_agrees",
+        "kw6_ukiuq"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.649Z"
     },
     {
       "id": "19f4f7844c7c",
@@ -478,7 +554,14 @@
       "description": "Pingualuit crater in Nunavik, northern Quebec, Canada, looking west. It contains a lake named Lake Pingualuk.",
       "categories": "PD NASA|Pingualuit|Extracted images|Files uploaded by PDTillman|Aerial photographs of lakes of Canada|October 2007 in Quebec|2007 aerial photographs of Canada|Radial drainage in nature|Aerial photographs of Nord-du-Québec",
       "season": "hiver",
-      "season6": "ukiuq"
+      "season6": "ukiuq",
+      "seasonConfidence": 0.9,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "kw_hiver",
+        "kw6_ukiuq"
+      ],
+      "seasonDetectedAt": "2026-07-25T08:16:57.649Z"
     },
     {
       "id": "6f61e48fec1d",
@@ -562,5 +645,6 @@
       "Naskapis"
     ],
     "totalNations": 11
-  }
+  },
+  "lastSeasonDetect": "2026-07-25T08:16:57.650Z"
 }
