@@ -1,15 +1,15 @@
 {
-  "updated": "2026-07-25T10:57:50.816Z",
+  "updated": "2026-07-25T12:00:29.027Z",
   "total": 185,
   "withPhoto": 168,
-  "withStock": 65,
-  "withCampusBank": 8,
+  "withStock": 60,
+  "withCampusBank": 7,
   "fullyCovered": 185,
-  "leadReadyPhotos": 134,
-  "pageScraped": 14,
-  "photosRecovered": 14,
-  "imagesCleared": 10,
-  "stockSearches": 67,
+  "leadReadyPhotos": 140,
+  "pageScraped": 16,
+  "photosRecovered": 16,
+  "imagesCleared": 11,
+  "stockSearches": 64,
   "stockFound": 47,
   "campusBankFound": 5,
   "mainPageLeadReady": true,
@@ -17,8 +17,8 @@
     {
       "title": "The Cruel Optimism of Summer",
       "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/917/28627096297_a3e0756d47_b.jpg"
     },
     {
       "title": "CSU terminates council’s chief election officer",
@@ -45,6 +45,18 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_chirurgie-esthetique_SourceBeautifi.jpg"
     },
     {
+      "title": "Marine Le Pen condamnée",
+      "link": "https://lecollectif.ca/a-la-une/marine-le-pen-condamnee/",
+      "reason": "stock-too-small",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_Marine-Le-Pen-condamnee_Getty-Images.jpg"
+    },
+    {
+      "title": "Des centaines d’étudiants dans l’incertitude",
+      "link": "https://lecollectif.ca/a-la-une/des-centaines-detudiants-dans-lincertitude/",
+      "reason": "stock-too-small",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_College-superieur-de-Sherbrooke_Source-College-superieur-de-Sherbrooke-1.jpg"
+    },
+    {
       "title": "Épisode de feux de forêts en France",
       "link": "https://lecollectif.ca/a-la-une/episode-de-feux-de-forets-en-france/",
       "reason": "no-stock-match",
@@ -63,28 +75,16 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_Scepticisme_JeunesDesinformationReseauxSociaux_SourceFondationJeanJaures-1.png"
     },
     {
+      "title": "L’écoanxiété",
+      "link": "https://lecollectif.ca/societe/lecoanxiete/",
+      "reason": "stock-too-small",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/OBSESSIONS_Ecoanxiete_SourceNatureActionQuebec.jpg"
+    },
+    {
       "title": "Une page se tourne au Salon L’image de Jonquière",
       "link": "https://lapige.atmjonquiere.com/2026/05/21/une-page-se-tourne-au-salon-limage-de-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=une-page-se-tourne-au-salon-limage-de-jonquiere",
       "reason": "stock-too-small",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/Image-17.jpg"
-    },
-    {
-      "title": "Un investissement pour les jeunes « bienvenu » au Centre Mamik",
-      "link": "https://lapige.atmjonquiere.com/2026/05/21/un-investissement-pour-les-jeunes-bienvenu-au-centre-mamik/?utm_source=rss&utm_medium=rss&utm_campaign=un-investissement-pour-les-jeunes-bienvenu-au-centre-mamik",
-      "reason": "stock-too-small",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/image-mamik.jpg"
-    },
-    {
-      "title": "L’ERD sauvée de la dissolution par quatre membres",
-      "link": "https://lapige.atmjonquiere.com/2026/05/21/lerd-sauvee-de-la-dissolution-par-quatre-membres/?utm_source=rss&utm_medium=rss&utm_campaign=lerd-sauvee-de-la-dissolution-par-quatre-membres",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/ERD.jpeg"
-    },
-    {
-      "title": "El Niño s’approche du Québec",
-      "link": "https://lapige.atmjonquiere.com/2026/05/20/el-nino-sapproche-du-quebec/?utm_source=rss&utm_medium=rss&utm_campaign=el-nino-sapproche-du-quebec",
-      "reason": "stock-too-small",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/pexels-fatih-turan-63325184-12413177.jpg"
     }
   ]
 }

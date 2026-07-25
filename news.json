@@ -1,16 +1,16 @@
 {
-  "updated": "2026-07-25T10:52:29.458Z",
-  "updatedSlot": null,
+  "updated": "2026-07-25T11:54:42.865Z",
+  "updatedSlot": "2026-07-25T11:00:00.000Z",
   "count": 185,
   "freshnessSessions": 3,
   "sources": {
     "Quartier Libre": {
-      "fetchOk": false,
-      "stale": true,
+      "fetchOk": true,
+      "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:00:00.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-07-25T11:54:09.932Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-07-25T10:52:03.830Z"
+      "lastFetchOk": "2026-07-25T11:54:10.834Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-03-25T11:00:00.000Z",
-      "lastFetchOk": "2026-07-25T10:52:07.945Z"
+      "lastFetchOk": "2026-07-25T11:54:15.013Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-07-06T12:00:00.000Z",
-      "lastFetchOk": "2026-07-25T10:52:08.348Z"
+      "lastFetchOk": "2026-07-25T11:54:15.795Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,7 +42,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-07-08T14:41:00.000Z",
-      "lastFetchOk": "2026-07-25T10:52:08.822Z"
+      "lastFetchOk": "2026-07-25T11:54:16.992Z"
     },
     "Zone Campus": {
       "fetchOk": false,
@@ -58,7 +58,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-07-25T10:52:10.341Z"
+      "lastFetchOk": "2026-07-25T11:54:18.603Z"
     },
     "Le Collectif": {
       "fetchOk": false,
@@ -74,7 +74,7 @@
       "articleCount": 7,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-07-25T10:52:10.983Z"
+      "lastFetchOk": "2026-07-25T11:54:19.382Z"
     },
     "La Pige": {
       "fetchOk": false,
@@ -90,7 +90,7 @@
       "articleCount": 13,
       "freshArticleCount": 13,
       "lastArticle": "2026-02-25T14:38:32.764Z",
-      "lastFetchOk": "2026-07-25T10:52:12.412Z"
+      "lastFetchOk": "2026-07-25T11:54:21.566Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-07-21T13:21:49.000Z",
-      "lastFetchOk": "2026-07-25T10:52:12.541Z"
+      "lastFetchOk": "2026-07-25T11:54:21.784Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-07-25T10:52:12.750Z"
+      "lastFetchOk": "2026-07-25T11:54:22.028Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-07-25T10:52:12.855Z"
+      "lastFetchOk": "2026-07-25T11:54:22.257Z"
     }
   },
   "items": [
@@ -169,14 +169,14 @@
       "sourceImageCreditRev": 9,
       "leadImageReady": false,
       "leadExcerpt": "Les citoyens et citoyennes de Sherbrooke auront désormais plus de liberté dans l’aménagement de leur terrain. Réuni le 6 juillet, le conseil municipal a adopté une modification au règlement qui permet aux propriétaires de remplacer une partie de leur pelouse par des aménagements favorisant la biodiversité.",
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/4075/4901566526_6e3898378a_b.jpg",
       "imageTitle": "DGJ_8039 - Sherbrooke Village Blacksmith Shop",
       "imageCredit": "Photo : archer10 (Dennis) / CC BY-SA · Openverse",
       "imageCreator": "archer10 (Dennis)",
       "imageLicense": "by-sa",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/22490717@N02/4901566526"
+      "imageSourceUrl": "https://www.flickr.com/photos/22490717@N02/4901566526",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -307,14 +307,14 @@
       "sourceImageCreditRev": 9,
       "leadImageReady": false,
       "leadExcerpt": "En tout, plus de 150 000 festivaliers et festivalières étaient au rendez-vous cette année, selon les données recueillies par l’équipe de la FLN. La programmation annoncée en mars dernier avait fait réagir la population qui dénonçait le manque d’artistes internationaux, Three Days Grace, seul groupe international en tête d’affiche du festival, n’ayant été annoncé qu’en mai.",
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/4054/4267750500_40b54d01f5_b.jpg",
       "imageTitle": "19 repas de fete",
       "imageCredit": "Photo : pilllpat (agence eureka) / CC BY · Openverse",
       "imageCreator": "pilllpat (agence eureka)",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/30533017@N00/4267750500"
+      "imageSourceUrl": "https://www.flickr.com/photos/30533017@N00/4267750500",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -481,15 +481,14 @@
       "image": "",
       "authorCheckedAt": "2026-07-25T07:30:29.620Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/b9/View_from_McGill_University_downtown_campus_01.JPG",
-      "imageTitle": "View from McGill University downtown campus 01",
-      "imageCredit": "Photo : Jeangagnon / CC BY-SA 3.0 · Wikimedia Commons",
-      "imageCreator": "Jeangagnon",
-      "imageLicense": "CC BY-SA 3.0",
-      "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:View_from_McGill_University_downtown_campus_01.JPG",
-      "leadExcerpt": "“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt to forgo my jacket, and, if I’m feeling bold, no sweater either. It’s the first truly warm evening in Montreal, and as the city defrosts, everyone is spilling onto sidewalks and terrasses. Women are wearing tiny dresses, and men have started to write poetry. The whole city radiates optimism, as if Ch",
-      "_campusBank": true
+      "stockImage": "https://live.staticflickr.com/917/28627096297_a3e0756d47_b.jpg",
+      "imageTitle": "Cruel Summer (Explore)",
+      "imageCredit": "Photo : sjpowermac / CC0 · Openverse",
+      "imageCreator": "sjpowermac",
+      "imageLicense": "cc0",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/41890311@N06/28627096297",
+      "leadExcerpt": "“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt to forgo my jacket, and, if I’m feeling bold, no sweater either. It’s the first truly warm evening in Montreal, and as the city defrosts, everyone is spilling onto sidewalks and terrasses. Women are wearing tiny dresses, and men have started to write poetry. The whole city radiates optimism, as if Ch"
     },
     {
       "source": "The Link",
@@ -679,14 +678,14 @@
       "sourceImageCreditImageKey": "shared-image-5.jpg",
       "leadImageReady": false,
       "leadExcerpt": "Mylène Sasseville est la proche aidante de ses deux fils, Maïk et Travis, tous les deux atteints du syndrome rare Allan Herndon Dudley causant une déficience physique et intellectuelle. Son conjoint, l’accompagne également dans son parcours de proche aidante. (Photo : Mathilde Bellon)",
-      "_retainedFromCache": true,
       "stockImage": "https://cdn.stocksnap.io/img-thumbs/960w/PMZZ7WLOAJ.jpg",
       "imageTitle": "Caregiver Nurse",
       "imageCredit": "Photo : Direct Media / CC0 · Openverse",
       "imageCreator": "Direct Media",
       "imageLicense": "cc0",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://stocksnap.io/photo/caregiver-nurse-PMZZ7WLOAJ"
+      "imageSourceUrl": "https://stocksnap.io/photo/caregiver-nurse-PMZZ7WLOAJ",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -800,14 +799,14 @@
       "sourceImageCreditRev": 9,
       "leadImageReady": false,
       "leadExcerpt": "La présidente du groupe Accro-Vélo Alma, Anne Lafrance, et Sylvie Beaumont, la mairesse d’Alma, étaient sur place pour le départ des cyclistes. (Crédit : Colin Perron) Quatre commémorations pour les cyclistes décédés ont eu lieu mercredi soir au Saguenay-Lac-Saint-Jean, dont une à Alma. C’était la 3e édition du Tour du Silence, qui débutait à l’hôtel de ville.",
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/3116/2750714149_36a7b7bfe0_b.jpg",
       "imageTitle": "Ghost Bicycle @ 20th/R & Ct. Ave. NW in Memory of Alice Swanson",
       "imageCredit": "Photo : dbking / CC BY · Openverse",
       "imageCreator": "dbking",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/65193799@N00/2750714149"
+      "imageSourceUrl": "https://www.flickr.com/photos/65193799@N00/2750714149",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -830,14 +829,14 @@
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
       "leadExcerpt": "Après 40 ans, les coiffeuses Kathy Blackburn et Manon Tremblay accrochent leur paire de ciseaux. Le Salon L’image, situé à Place Centre-Ville Jonquière, fermera définitivement ses portes le 29 mai prochain.",
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/2630/3909102032_627000c926_b.jpg",
       "imageTitle": "Car Crash Studies (detail) by Nicolai Howalt, Chelsea Art Galleries Openings / 20090910.10D.53391 / SML",
       "imageCredit": "Photo : See-ming Lee (SML) / CC BY-SA · Openverse",
       "imageCreator": "See-ming Lee (SML)",
       "imageLicense": "by-sa",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/48973657@N00/3909102032"
+      "imageSourceUrl": "https://www.flickr.com/photos/48973657@N00/3909102032",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -859,14 +858,14 @@
       "sourceImageCreditRev": 9,
       "leadImageReady": false,
       "leadExcerpt": "Le Centre Mamik a déposé une demande de projet pilote pour donner accès à des services de halte garderie, spécifiquement pour les parents qui sont étudiants. (Crédit : Tirée de Facebook / Centre Mamik)",
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/318/19359042510_8475521eea_b.jpg",
       "imageTitle": "Centre de la Galaxie",
       "imageCredit": "Photo : Amanclos / CC BY · Openverse",
       "imageCreator": "Amanclos",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/108892623@N02/19359042510"
+      "imageSourceUrl": "https://www.flickr.com/photos/108892623@N02/19359042510",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -970,14 +969,14 @@
       "sourceImageCreditImageKey": "pexels-fatih-turan-63325184-12413177.jpg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/1147/707867671_a6497fc5f6_b.jpg",
       "imageTitle": "El Nino",
       "imageCredit": "Photo : paris_tx / CC BY · Openverse",
       "imageCreator": "paris_tx",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/35213891@N00/707867671"
+      "imageSourceUrl": "https://www.flickr.com/photos/35213891@N00/707867671",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -1000,14 +999,14 @@
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
       "leadExcerpt": "Mélissa Girard, Cindy Duchesne, Mireille Fortin, Claudia Boily et Julie Guay, du programme d’Assistance technique en pharmacie, étaient présentes pour la Journée portes ouvertes, mercredi. (Crédit : Étienne Harvey-Soucy)",
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/5822/23949768042_e7e0484839_b.jpg",
       "imageTitle": "CVS/Pharmacy- Manitowoc, WI",
       "imageCredit": "Photo : MichaelSteeber / CC BY-SA · Openverse",
       "imageCreator": "MichaelSteeber",
       "imageLicense": "by-sa",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/43698709@N08/23949768042"
+      "imageSourceUrl": "https://www.flickr.com/photos/43698709@N08/23949768042",
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -1044,14 +1043,14 @@
       "excerpt": "À Montréal, les murs parlent, sans jamais révéler celles et ceux qui les écrivent. Sous les couches de peinture et les signatures superposées, une présence discrète s’impose : celle d’une génération, souvent étudiante, qui investit l’espace urbain en marge des cadres établis.",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/Photo-5_IMG_3586.jpg",
       "authorCheckedAt": "2026-07-25T07:30:46.751Z",
+      "_pageAuthor": "Emilie Rizkallah",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/presences-invisibles-ecrire-la-ville/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "photo-5_img_3586.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": false,
-      "_retainedFromCache": true
+      "leadImageReady": true
     },
     {
       "source": "Quartier Libre",
@@ -1066,6 +1065,7 @@
       "excerpt": "Le 13 mars dernier, la rappeuse Calamine a dévoilé son nouvel album , Rétrograde . Avec cette quatrième sortie depuis 2020, l’artiste gravit les échelons et devient une voix importante du hip-hop québécois. Composé de 18 titres d’ambiance estivale tels que « CHOP CHOP », « POLY",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg",
       "authorCheckedAt": "2026-07-25T07:30:47.991Z",
+      "_pageAuthor": "Samuel Roy",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/calamine-rapper-autrement/",
       "sourceImageCreditFrom": "media",
@@ -1080,8 +1080,7 @@
       "imageLicense": "by-sa",
       "imageProvider": "openverse",
       "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=137030939",
-      "leadExcerpt": "Le concept même de Rétrograde , c’est cette sensation d’un recul sociétal, le fait qu’on est en train de retourner en arrière, politiquement parlant. Même après des avancées dans le féminisme, on est quand même en train de reculer avec la montée du masculinisme. En nommant l’album Rétrograde , ça me permettait donc de relier à la fois le queer dating et le recul général de la société.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Le concept même de Rétrograde , c’est cette sensation d’un recul sociétal, le fait qu’on est en train de retourner en arrière, politiquement parlant. Même après des avancées dans le féminisme, on est quand même en train de reculer avec la montée du masculinisme. En nommant l’album Rétrograde , ça me permettait donc de relier à la fois le queer dating et le recul général de la société."
     },
     {
       "source": "Quartier Libre",
@@ -1096,23 +1095,16 @@
       "excerpt": "Le 5 mai dernier, le pavillon Roger-Gaudry a accueilli le premier forum du Réseau des écoles associées ( RÉA ). Ce projet ambitieux de la Faculté des sciences de l’éducation (FSÉ) transforme des écoles primaires et secondaires en véritables « hôpitaux universitaires » de la",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/PXL_20260505_174149744-1024x768.jpg",
       "authorCheckedAt": "2026-07-25T07:30:48.591Z",
+      "_pageAuthor": "Ulysse Taillard-Hodez",
+      "leadExcerpt": "Mme Fournier Dubé a insisté sur le fait que les enseignant·e·s sont les véritables « agents de changement ». Son rôle n’est pas d’imposer un cadre scientifique rigide, mais de vulgariser la recherche pour l’adapter aux besoins du terrain.",
+      "leadImageReady": true,
       "sourceImageCredit": "Crédit photo : Quartier Libre",
+      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "pxl_20260505_174149744.jpg",
-      "sourceImageCreditRev": 9,
-      "leadExcerpt": "Mme Fournier Dubé a insisté sur le fait que les enseignant·e·s sont les véritables « agents de changement ». Son rôle n’est pas d’imposer un cadre scientifique rigide, mais de vulgariser la recherche pour l’adapter aux besoins du terrain.",
-      "leadImageReady": false,
-      "sourceImageCreator": "",
-      "_retainedFromCache": true,
-      "stockImage": "https://live.staticflickr.com/7416/10025731476_b6da69c642_b.jpg",
-      "imageTitle": "Better Choices Better Results Forum on Education",
-      "imageCredit": "Photo : MDGovpics / CC BY · Openverse",
-      "imageCreator": "MDGovpics",
-      "imageLicense": "by",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/64018555@N03/10025731476"
+      "sourceImageCreditRev": 9
     },
     {
       "source": "Quartier Libre",
@@ -1127,6 +1119,7 @@
       "excerpt": "Depuis mars 2024, l’Université de Montréal (UdeM) dispose d’une politique de soutien aux parents aux études. Le projet de loi 394 (PL394) de Québec solidaire lui imposerait, en cas d’adoption, d’en créer une destinée également aux proches aidant·e·s. Le député",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/12-13_Statuts-Politique-Parents-Proche-Aidants.jpg",
       "authorCheckedAt": "2026-07-25T07:30:49.553Z",
+      "_pageAuthor": "Mohammed Aziz Mestiri",
       "sourceImageCredit": "Photo : MOHAMMED AZIZ MESTIRI",
       "sourceImageCreator": "MOHAMMED AZIZ MESTIRI",
       "sourceImageCreditUrl": "https://quartierlibre.ca/projet-loi-etudiant-proche-aidante/",
@@ -1134,16 +1127,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "12-13_statuts-politique-parents-proche-aidants.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": false,
-      "leadExcerpt": "Depuis mars 2024, l’Université de Montréal (UdeM) dispose d’une politique de soutien aux parents aux études. Le projet de loi 394 ( PL394 ) de Québec solidaire lui imposerait, en cas d’adoption, d’en créer une destinée également aux proches aidant·e·s.",
-      "_retainedFromCache": true,
-      "stockImage": "https://cdn.stocksnap.io/img-thumbs/960w/PMZZ7WLOAJ.jpg",
-      "imageTitle": "Caregiver Nurse",
-      "imageCredit": "Photo : Direct Media / CC0 · Openverse",
-      "imageCreator": "Direct Media",
-      "imageLicense": "cc0",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://stocksnap.io/photo/caregiver-nurse-PMZZ7WLOAJ"
+      "leadImageReady": true,
+      "leadExcerpt": "Depuis mars 2024, l’Université de Montréal (UdeM) dispose d’une politique de soutien aux parents aux études. Le projet de loi 394 ( PL394 ) de Québec solidaire lui imposerait, en cas d’adoption, d’en créer une destinée également aux proches aidant·e·s."
     },
     {
       "source": "The Tribune",
@@ -1204,6 +1189,7 @@
       "excerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg",
       "authorCheckedAt": "2026-07-25T07:30:52.161Z",
+      "_pageAuthor": "Bérénice Lemarié",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
       "sourceImageCreditFrom": "media",
@@ -1211,8 +1197,7 @@
       "sourceImageCreditImageKey": "20_florelaurentienne.jpg",
       "sourceImageCreditRev": 9,
       "leadImageReady": false,
-      "leadExcerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations d’albums 100 % québécois récemment sortis .",
-      "_retainedFromCache": true
+      "leadExcerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations d’albums 100 % québécois récemment sortis ."
     },
     {
       "source": "Quartier Libre",
@@ -1227,15 +1212,15 @@
       "excerpt": "Entre absence de quorum, élections houleuses et accusations de « campagnes de salissage », la Fédération des associations du campus de l’Université de Montréal (FAÉCUM) traverse une zone de turbulences. Du fonctionnement des associations étudiantes aux congrès mouvementés, récit",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/10-11_FAECUM_photo-assemblee.jpg",
       "authorCheckedAt": "2026-07-25T07:30:52.639Z",
+      "_pageAuthor": "Ulysse Taillard-Hodez",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/faecum-la-democratie-universitaire-critiquee/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "10-11_faecum_photo-assemblee.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": false,
-      "leadExcerpt": "Entre absence de quorum, élections houleuses et accusations de « campagnes de salissage », la Fédération des associations du campus de l’Université de Montréal (FAÉCUM) traverse une zone de turbulences. Du fonctionnement des associations étudiantes aux congrès mouvementés, récit d’une démocratie en difficulté.",
-      "_retainedFromCache": true
+      "leadImageReady": true,
+      "leadExcerpt": "Entre absence de quorum, élections houleuses et accusations de « campagnes de salissage », la Fédération des associations du campus de l’Université de Montréal (FAÉCUM) traverse une zone de turbulences. Du fonctionnement des associations étudiantes aux congrès mouvementés, récit d’une démocratie en difficulté."
     },
     {
       "source": "L'Exemplaire",
@@ -1401,22 +1386,15 @@
       "excerpt": "Les 29 et 30 mai prochains, les adeptes d’ouvrages de suspense, à mystère et d’enquêtes auront rendez-vous au Centre culturel Georges-Vanier pour la troisième édition du festival du livre policier Montréal Mystère, un événement encore jeune, mais déjà bien installé dans le",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/21_Montreal-Mystere.jpg",
       "authorCheckedAt": "2026-07-25T07:30:53.040Z",
+      "_pageAuthor": "Carla Roche",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/montreal-mystere-festival-bilingue/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "21_montreal-mystere.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": false,
-      "leadExcerpt": "Les 29 et 30 mai prochains, les adeptes d’ouvrages de suspense, à mystère et d’enquêtes auront rendez-vous au Centre culturel Georges-Vanier pour la troisième édition du festival du livre policier Montréal Mystère , un événement encore jeune, mais déjà bien installé dans le paysage littéraire montréalais.",
-      "_retainedFromCache": true,
-      "stockImage": "https://live.staticflickr.com/3498/3735171010_90582fc99c_b.jpg",
-      "imageTitle": "Green Day Concert Stage (Montreal) - Green Day is Ever Green",
-      "imageCredit": "Photo : Anirudh Koul / CC BY · Openverse",
-      "imageCreator": "Anirudh Koul",
-      "imageLicense": "by",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/84856173@N00/3735171010"
+      "leadImageReady": true,
+      "leadExcerpt": "Les 29 et 30 mai prochains, les adeptes d’ouvrages de suspense, à mystère et d’enquêtes auront rendez-vous au Centre culturel Georges-Vanier pour la troisième édition du festival du livre policier Montréal Mystère , un événement encore jeune, mais déjà bien installé dans le paysage littéraire montréalais."
     },
     {
       "source": "The Plant",
@@ -1439,7 +1417,8 @@
       "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Dawson_College_09.JPG",
-      "leadExcerpt": "Dear readers, Class of 2026 We did it! As May’s doting weather and perfumed flowers lull us into the promise of summer, I try to turn my tears to crystals that will decorate my legacy at The Plant. I knew I’d cry when I’d have to greet “Goodbye.” In my heart, I will forever hold 35 crystals for each member of the team that became my anchor. When hard nights of work kept me up until the moon came d"
+      "leadExcerpt": "Dear readers, Class of 2026 We did it! As May’s doting weather and perfumed flowers lull us into the promise of summer, I try to turn my tears to crystals that will decorate my legacy at The Plant. I knew I’d cry when I’d have to greet “Goodbye.” In my heart, I will forever hold 35 crystals for each member of the team that became my anchor. When hard nights of work kept me up until the moon came d",
+      "_campusBank": true
     },
     {
       "source": "The Plant",
@@ -1671,14 +1650,14 @@
       "excerpt": "La Coupe du monde 2026 (CM26), qui aura lieu du 11 juin au 19 juillet prochains, s’annonce comme le plus grand événement de soccer jamais organisé. La compétition se déroulera simultanément dans trois pays, les États-Unis, le Canada et le Mexique, et comptera un nombre record",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/16-17_CDM-1.jpg",
       "authorCheckedAt": "2026-07-25T07:30:56.175Z",
+      "_pageAuthor": "Gabriel Lapointe",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/coupe-du-monde-2026/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "16-17_cdm-1.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": false,
-      "_retainedFromCache": true
+      "leadImageReady": true
     },
     {
       "source": "Quartier Libre",
@@ -1693,22 +1672,15 @@
       "excerpt": "Lors d’une assemblée universitaire tenue le 16 mars dernier, le professeur agrégé à l’École de psychoéducation de la Faculté des arts et des sciences de l’UdeM Jean-Sébastien Fallu a soulevé des préoccupations concernant le soutien informatique à l’Université. Il a partagé",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/6-7_soutien-technique.jpg",
       "authorCheckedAt": "2026-07-25T07:30:56.553Z",
+      "_pageAuthor": "Solène Gerber",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/soutien-technique-a-ludem/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "6-7_soutien-technique.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": false,
-      "leadExcerpt": "Lors d’une assemblée universitaire tenue le 16 mars dernier, le professeur agrégé à l’École de psychoéducation de la Faculté des arts et des sciences de l’UdeM Jean-Sébastien Fallu a soulevé des préoccupations concernant le soutien informatique à l’Université. Il a partagé plusieurs difficultés que lui et ses collègues ont vécues, notamment liées aux délais, aux procédures et à la complexité de certains outils numériques.",
-      "_retainedFromCache": true,
-      "stockImage": "https://live.staticflickr.com/2188/2080243782_c6ed785da4_b.jpg",
-      "imageTitle": "UdeM",
-      "imageCredit": "Photo : abdallahh / CC BY · Openverse",
-      "imageCreator": "abdallahh",
-      "imageLicense": "by",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/22168167@N00/2080243782"
+      "leadImageReady": true,
+      "leadExcerpt": "Lors d’une assemblée universitaire tenue le 16 mars dernier, le professeur agrégé à l’École de psychoéducation de la Faculté des arts et des sciences de l’UdeM Jean-Sébastien Fallu a soulevé des préoccupations concernant le soutien informatique à l’Université. Il a partagé plusieurs difficultés que lui et ses collègues ont vécues, notamment liées aux délais, aux procédures et à la complexité de certains outils numériques."
     },
     {
       "source": "The Link",
@@ -1768,6 +1740,7 @@
       "excerpt": "Du 1 er au 9 mai, le festival Jamais Lu s’installe au théâtre Aux Écuries de Montréal, avec pour thème « Réparer nos Transmissions ». Le nouveau directeur artistique et cogénéral du festival, Éric Noël, partage son envie de mettre au cœur de cette édition la place des",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image.jpeg",
       "authorCheckedAt": "2026-07-25T07:30:59.083Z",
+      "_pageAuthor": "Bérénice Lemarié",
       "sourceImageCredit": "Photo : Maryse Boyce",
       "sourceImageCreator": "Maryse Boyce",
       "sourceImageCreditUrl": "https://quartierlibre.ca/festival-jamais-lu-2026/",
@@ -1775,15 +1748,7 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "image.jpeg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": false,
-      "_retainedFromCache": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/8/84/Dillon_Orr_au_Festival_Jamais_Lu_2019.png",
-      "imageTitle": "Dillon Orr au Festival Jamais Lu 2019",
-      "imageCredit": "Photo : Dillonorr / CC BY-SA · Openverse",
-      "imageCreator": "Dillonorr",
-      "imageLicense": "by-sa",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=80332388"
+      "leadImageReady": true
     },
     {
       "source": "Zone Campus",
@@ -1804,14 +1769,14 @@
       "sourceImageCreditImageKey": "1.jpg",
       "sourceImageCreditRev": 9,
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/2649/4133148330_cbf64fac42_b.jpg",
       "imageTitle": "Zone WST TFL MCI LosAngeles Graffiti Art",
       "imageCredit": "Photo : anarchosyn / CC BY-SA · Openverse",
       "imageCreator": "anarchosyn",
       "imageLicense": "by-sa",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/24293932@N00/4133148330"
+      "imageSourceUrl": "https://www.flickr.com/photos/24293932@N00/4133148330",
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -2013,14 +1978,14 @@
       "sourceImageCreditImageKey": "17c4541a-839d-48b8-b5aa-2cc81e91e3c8.jpeg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/65535/53597191835_aefb051f37_b.jpg",
       "imageTitle": "University of New Brunswick Reds wtn the 2024 University Cup with a 4-0 victory over the Université du Québec à Trois-Rivières Patriotes",
       "imageCredit": "Photo : chester902 / Domaine public · Openverse",
       "imageCreator": "chester902",
       "imageLicense": "pdm",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/74039487@N02/53597191835"
+      "imageSourceUrl": "https://www.flickr.com/photos/74039487@N02/53597191835",
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -2155,14 +2120,14 @@
       "sourceImageCreditImageKey": "img_3939.jpg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "_retainedFromCache": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Mairie_de_Carnet.jpg",
-      "imageTitle": "File:Mairie de Carnet.jpg",
-      "imageCredit": "Photo : Mairie de Carnet / CC BY-SA 4.0 · Wikimedia Commons",
-      "imageCreator": "Mairie de Carnet",
-      "imageLicense": "CC BY-SA 4.0",
-      "imageProvider": "wikimedia",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Mairie_de_Carnet.jpg"
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Carnet_de_la_Patria.png",
+      "imageTitle": "Carnet de la Patria",
+      "imageCredit": "Photo : Prensa Presidencial - Government of Venezuela / CC BY · Openverse",
+      "imageCreator": "Prensa Presidencial - Government of Venezuela",
+      "imageLicense": "by",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=57575832",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -2184,14 +2149,14 @@
       "sourceImageCreditImageKey": "img_9786.jpeg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/3505/3973947773_f685cd523c_b.jpg",
       "imageTitle": "Installation (Detail) FASTFORWARDFOSSIL: Part 2 by Ellen Driscoll at Smack Mellon / Dumbo Arts Center: Art Under the Bridge Festival 2009 / 20090926.10D.54754.P1.L1.BW / SML",
       "imageCredit": "Photo : See-ming Lee (SML) / CC BY-SA · Openverse",
       "imageCreator": "See-ming Lee (SML)",
       "imageLicense": "by-sa",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/48973657@N00/3973947773"
+      "imageSourceUrl": "https://www.flickr.com/photos/48973657@N00/3973947773",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -2258,14 +2223,14 @@
       "sourceImageCreditImageKey": "img_3397-1.jpeg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/8/80/Orelsan-LFEA-logoremake.png",
       "imageTitle": "Orelsan-LFEA-logoremake",
       "imageCredit": "Photo : RayTihange / CC0 · Openverse",
       "imageCreator": "RayTihange",
       "imageLicense": "cc0",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=186099522"
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=186099522",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -2287,14 +2252,14 @@
       "sourceImageCreditImageKey": "img_3405.jpeg",
       "sourceImageCreditRev": 8,
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/65535/53597191835_aefb051f37_b.jpg",
       "imageTitle": "University of New Brunswick Reds wtn the 2024 University Cup with a 4-0 victory over the Université du Québec à Trois-Rivières Patriotes",
       "imageCredit": "Photo : chester902 / Domaine public · Openverse",
       "imageCreator": "chester902",
       "imageLicense": "pdm",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/74039487@N02/53597191835"
+      "imageSourceUrl": "https://www.flickr.com/photos/74039487@N02/53597191835",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -2336,14 +2301,14 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "604823445_853711280773514_928679255052921821_n.jpg",
       "leadImageReady": false,
-      "_retainedFromCache": true,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/9/99/G%C3%AEte_universitaire_UQTR.JPG",
       "imageTitle": "Gîte universitaire UQTR",
       "imageCredit": "Photo : Khayman / CC BY-SA · Openverse",
       "imageCreator": "Khayman",
       "imageLicense": "by-sa",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=6942186"
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=6942186",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -3108,13 +3073,13 @@
       "sourceImageCreditImageKey": "opinions_1_step-outside_cred-piper-howell.jpg",
       "sourceImageCreditRev": 9,
       "leadImageReady": false,
-      "stockImage": "https://live.staticflickr.com/7726/26613564544_14e83b035d_b.jpg",
-      "imageTitle": "Small 800px Amanda Zarna Jeff and Kanit at Break Free PNW 2016 Photo taken by Les Berenson 13217622_10153694166782921_78861309285289138_o",
-      "imageCredit": "Photo : Backbone Campaign / CC BY · Openverse",
-      "imageCreator": "Backbone Campaign",
-      "imageLicense": "by",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/33000102@N03/26613564544"
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/f/fc/GH_Step_outside_Grayson_Highlands_State_Park_Virginia_%2816243872530%29.jpg",
+      "imageTitle": "File:GH Step outside Grayson Highlands State Park Virginia (16243872530).jpg",
+      "imageCredit": "Photo : Virginia State Parks / CC BY 2.0 · Wikimedia Commons",
+      "imageCreator": "Virginia State Parks",
+      "imageLicense": "CC BY 2.0",
+      "imageProvider": "wikimedia",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:GH_Step_outside_Grayson_Highlands_State_Park_Virginia_(16243872530).jpg"
     },
     {
       "source": "The Campus",
@@ -3944,13 +3909,13 @@
       "image": "",
       "authorCheckedAt": "2026-07-25T10:02:35.709Z",
       "leadImageReady": false,
-      "stockImage": "https://live.staticflickr.com/7352/11472619204_9031b1fdec_b.jpg",
-      "imageTitle": "Stop gentrification here for humanity",
-      "imageCredit": "Photo : Eric Fischer / CC BY · Openverse",
-      "imageCreator": "Eric Fischer",
-      "imageLicense": "by",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/24431382@N03/11472619204"
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/bc/East_Austin_Gentrification_Holly_St_2018.jpg",
+      "imageTitle": "File:East Austin Gentrification Holly St 2018.jpg",
+      "imageCredit": "Photo : Larry D. Moore / CC BY 4.0 · Wikimedia Commons",
+      "imageCreator": "Larry D. Moore",
+      "imageLicense": "CC BY 4.0",
+      "imageProvider": "wikimedia",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:East_Austin_Gentrification_Holly_St_2018.jpg"
     },
     {
       "source": "The McGill Daily",
@@ -4053,16 +4018,16 @@
       "excerpt": "Votre entourage, en tant qu’étudiantes et étudiants de l’Université McGill, est peut-être composé en majorité de personnes qui se revendiquent comme féministes. Certaines le sont, d’autres le prétendent, mais relativement rares sont les McGillois qui refusent ouvertement le féminisme.",
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Capture-decran-le-2026-03-22-a-17.22.07.png",
       "featured": true,
-      "_pageAuthor": "Eugénie St-Pierre",
       "authorCheckedAt": "2026-07-25T10:52:38.804Z",
-      "leadImageReady": true,
+      "_pageAuthor": "Eugénie St-Pierre",
       "sourceImageCredit": "Photo : Alexandre Gontier",
       "sourceImageCreator": "Alexandre Gontier",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/ce-que-nous-devons-aux-femmes/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "capture-decran-le-2026-03-22-a-17.22.07.png",
-      "sourceImageCreditRev": 9
+      "sourceImageCreditRev": 9,
+      "leadImageReady": true
     },
     {
       "source": "Le Délit",
