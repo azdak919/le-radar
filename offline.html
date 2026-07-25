@@ -131,14 +131,20 @@
       color: var(--muted);
       margin: 0 0 0.7rem;
     }
-    .status-kicker::before {
+    /* Voyants maintenance : ambre (pas live rouge), un de chaque côté */
+    .status-kicker::before,
+    .status-kicker::after {
       content: "";
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: var(--live);
-      box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.22);
+      flex-shrink: 0;
+      background: #F4C430;
+      box-shadow: 0 0 0 3px rgba(244, 196, 48, 0.28);
       animation: pulse-dot 1.8s ease-in-out infinite;
+    }
+    .status-kicker::after {
+      animation-delay: 0.9s;
     }
     @keyframes pulse-dot {
       0%, 100% { opacity: 1; transform: scale(1); }
@@ -458,7 +464,8 @@
       .game-bar { padding: 0.6rem 1rem; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .status-kicker::before { animation: none; }
+      .status-kicker::before,
+      .status-kicker::after { animation: none; }
       .status-i18n { transition: none; }
     }
   </style>
