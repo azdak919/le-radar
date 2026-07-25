@@ -63,14 +63,24 @@ L’humain a tendance à dire **oui** à chaque proposition. Les agents **doiven
 | **Effort L** | Deux OK explicites séparés avant de commencer. |
 | **Ticket métier d’abord** | Si l’humain a un bug/feature, **zéro** dette ledger tant que ce n’est pas livré. |
 | **Ajouter une ligne au ledger** | Seulement si le même problème revient **2×** dans des sessions distinctes, ou l’humain le demande. **Jamais** inventer une dette pour prolonger la session. |
-| **Auto-nourriture** | **Non magique.** Le ledger ne se détecte pas tout seul : l’agent lit/écrit le fichier + `.agents-session.json` (quota). Pas de daemon. |
+| **Auto-nourriture magique** | **Non** (pas de lecture du chat). |
+| **Récolte vibe (git)** | **Oui** : `npm run agents:harvest` détecte un vibe intense via commits + fichiers touchés → **candidats** §3c (pas des D# tant que non promus). |
 
-Commandes quota :
+Commandes :
 
 ```bash
-npm run agents:propose           # propose OU affiche STOP si quota
+npm run agents:harvest           # détecte vibe intense (git) → candidats
+npm run agents:harvest:write     # écrit §3c dans AGENTS.md
+npm run agents:propose           # propose 1 dette D# OU STOP quota
 npm run agents:record-sold -- D5 # après avoir soldé D5
-npm run agents:reset-session     # nouveau chat seulement (pas pour contourner le jour)
+npm run agents:reset-session     # nouveau chat (pas pour contourner le jour)
+```
+
+**Chaîne fin de session intensive :**
+
+```text
+ticket OK → agents:harvest[:write] → montrer candidats → (option promote 1 D#)
+         → agents:propose → OK? → 1 dette max → record-sold → STOP
 ```
 
 ---
@@ -93,6 +103,23 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 
 ---
 
+
+## 3c. Candidats auto (récolte vibe-code) — pas encore des dettes
+
+> Généré par `npm run agents:harvest -- --write`. **Pas des D# ouvertes.**
+> L’humain (ou l’agent avec OK) promeut une ligne en §3 si pertinent.
+> Dernière récolte : 2026-07-25T08:32:56.361Z · intensité **heavy** (score 768) · fenêtre `48h`
+
+| Zone | Chaleur | Effort | Suggestion | Fichiers chauds |
+|------|---------|--------|------------|-----------------|
+| pwa-sw | 410 | S | PWA / service worker / install | `sw.js`, `pomo/sw.js`, `solitaire/sw.js`, `offline.html`, `engage-prompt.js` |
+| pomo | 277.5 | S | Isolation / qualité mini-app Pomo | `pomo/sw.js`, `pomo/index.html`, `pomo/styles/base.css`, `pomo/styles/layout.css`, `pomo/js/translate.js`, `pomo/js/backgrounds.js` |
+| monolith-app | 234 | L | Découper / modulariser app.js (tranche) | `app.js`, `pomo/js/app.js` |
+| banks-photo | 230 | M | Pipeline banques photo (QC / saisons / audit) | `scripts/maintain-quebec-backgrounds.js`, `quebec-backgrounds.js`, `data/quebec-favorites-backgrounds.json`, `data/quebec-nations-backgrounds.json`, `quebec-favorites-backgrounds-data.js`, `data/quebec-backgrounds.json` |
+| bots-ci | 148.8 | M | Bots / CI / scripts de maintenance | `tests/masthead-weather.spec.mjs`, `scripts/maintain-quebec-backgrounds.js`, `tests/player-continuity.spec.mjs`, `tests/static-integrity.mjs`, `tests/translation-menu.spec.mjs`, `scripts/audit-quebec-backgrounds.py` |
+| monolith-css | 132.5 | M | Extraire CSS mât / thème (tranche style.css) | `style.css` |
+
+Pour promouvoir : ajouter une ligne D# en §3 avec effort + pourquoi, après OK humain.
 ## 4. Dettes résolues (historique)
 
 | ID | Résolu | Note |
@@ -116,31 +143,34 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 2. Lire **`docs/agent-playbook.md`** pour le domaine du ticket.
 3. Faire **le ticket de l’humain** en priorité — rien d’autre tant qu’il n’est pas OK.
 
-### Fin de session — « notification » dette
+### Fin de session (vibe normal ou intense)
 
 Quand le ticket est **terminé** et le diff **propre** :
 
 ```bash
-npm run agents:propose
+npm run agents:harvest -- --write   # 1) détecte si on a beaucoup vibé (git)
+npm run agents:propose              # 2) dette D# existante (quota)
 ```
 
-1. Si sortie **🛑 BALISE STOP** → **ne rien proposer**, fin ledger.
-2. Sinon coller la proposition **unique** et **attendre OK**.
-3. Non / ignore → stop.
-4. Oui → **un** bloc → `npm run agents:record-sold -- <ID>` → MAJ §3/§4 → check.  
-   **Puis STOP** (pas de 2ᵉ propose).
+1. **Harvest** : si intensité moderate/intense/heavy → coller les **candidats** (zones chaudes).  
+   Demander : « promouvoir **une** zone en D# ? » — sinon ignorer.  
+   **Ne pas** créer 5 dettes d’un coup.
+2. **Propose** : si **🛑 STOP** quota → fin ledger.  
+   Sinon une dette D# open → attendre OK → un bloc → `agents:record-sold` → STOP.
+3. Les candidats harvest **ne sont pas** des dettes tant qu’ils ne sont pas en §3 avec un ID D#.
 
-Exceptions (pas de propose) : question pure, « ticket only », quota déjà plein.
+Exceptions : question pure, « ticket only », quota plein.
 
 ### Auto-entretien du ledger
 
 | Qui | Quoi |
 |-----|------|
-| **Agent** | Met à jour §3/§4 quand une dette avance ou est soldée ; n’efface pas l’historique |
-| **Script** | `npm run agents:ledger` / `agents:propose` **lit** le tableau (ne l’écrit pas) |
-| **Humain** | Peut marquer `ready` / `blocked` / `wontfix` à la main |
+| **Harvest (git)** | Détecte vibe intense + zones chaudes → §3c candidats |
+| **Agent** | Montre harvest + propose ; promeut D# seulement avec OK ; MAJ §3/§4 |
+| **Humain** | Valide promote / dette / ignore |
+| **Scripts** | `agents:harvest`, `agents:propose`, `agents:record-sold` |
 
-Il n’y a **pas** de daemon magique : l’entretien = **discipline de fin de session** + points d’entrée multi-outils (`CLAUDE.md`, `.cursor/rules/`, `copilot-instructions.md`).
+Pas de daemon qui lit le chat : la « détection pendant le vibe » = **observation git en fin de session** (et WIP non commité).
 
 ### Interdit sans demande explicite
 

@@ -1,0 +1,163 @@
+{
+  "generatedAt": "2026-07-25T08:32:56.361Z",
+  "since": "48h",
+  "sinceGit": "48 hours ago",
+  "intense": true,
+  "intensity": {
+    "score": 768,
+    "level": "heavy",
+    "files": 225,
+    "touches": 1180,
+    "commitCount": 233
+  },
+  "candidates": [
+    {
+      "zone": "pwa-sw",
+      "title": "PWA / service worker / install",
+      "why": "SW et install touchés souvent ; risque de cache oublié",
+      "effort": "S",
+      "related": null,
+      "heat": 410,
+      "files": [
+        "sw.js",
+        "pomo/sw.js",
+        "solitaire/sw.js",
+        "offline.html",
+        "engage-prompt.js"
+      ]
+    },
+    {
+      "zone": "pomo",
+      "title": "Isolation / qualité mini-app Pomo",
+      "why": "Activité concentrée sur /pomo/",
+      "effort": "S",
+      "related": null,
+      "heat": 277.5,
+      "files": [
+        "pomo/sw.js",
+        "pomo/index.html",
+        "pomo/styles/base.css",
+        "pomo/styles/layout.css",
+        "pomo/js/translate.js",
+        "pomo/js/backgrounds.js"
+      ]
+    },
+    {
+      "zone": "monolith-app",
+      "title": "Découper / modulariser app.js (tranche)",
+      "why": "Fichier monolithe touché souvent en vibe-code → re-lit cher en tokens",
+      "effort": "L",
+      "related": "D2",
+      "heat": 234,
+      "files": [
+        "app.js",
+        "pomo/js/app.js"
+      ]
+    },
+    {
+      "zone": "banks-photo",
+      "title": "Pipeline banques photo (QC / saisons / audit)",
+      "why": "Beaucoup d’activité sur les fonds — documenter ou automatiser le reste",
+      "effort": "M",
+      "related": "D3",
+      "heat": 230,
+      "files": [
+        "scripts/maintain-quebec-backgrounds.js",
+        "quebec-backgrounds.js",
+        "data/quebec-favorites-backgrounds.json",
+        "data/quebec-nations-backgrounds.json",
+        "quebec-favorites-backgrounds-data.js",
+        "data/quebec-backgrounds.json"
+      ]
+    },
+    {
+      "zone": "bots-ci",
+      "title": "Bots / CI / scripts de maintenance",
+      "why": "Beaucoup de scripts touchés — opportunité de factoriser",
+      "effort": "M",
+      "related": "D1",
+      "heat": 148.8,
+      "files": [
+        "tests/masthead-weather.spec.mjs",
+        "scripts/maintain-quebec-backgrounds.js",
+        "tests/player-continuity.spec.mjs",
+        "tests/static-integrity.mjs",
+        "tests/translation-menu.spec.mjs",
+        "scripts/audit-quebec-backgrounds.py"
+      ]
+    },
+    {
+      "zone": "monolith-css",
+      "title": "Extraire CSS mât / thème (tranche style.css)",
+      "why": "style.css monolithe ; changements UI = relecture large",
+      "effort": "M",
+      "related": "D2",
+      "heat": 132.5,
+      "files": [
+        "style.css"
+      ]
+    }
+  ],
+  "topFiles": [
+    {
+      "file": "sw.js",
+      "n": 113
+    },
+    {
+      "file": "app.js",
+      "n": 71
+    },
+    {
+      "file": "pomo/sw.js",
+      "n": 53
+    },
+    {
+      "file": "style.css",
+      "n": 53
+    },
+    {
+      "file": "solitaire/sw.js",
+      "n": 35
+    },
+    {
+      "file": "solitaire/index.html",
+      "n": 30
+    },
+    {
+      "file": "radio-nowplaying.json",
+      "n": 29
+    },
+    {
+      "file": "index.html",
+      "n": 29
+    },
+    {
+      "file": "news.json",
+      "n": 27
+    },
+    {
+      "file": "author-qc.json",
+      "n": 26
+    },
+    {
+      "file": "lead-excerpt-qc.json",
+      "n": 26
+    },
+    {
+      "file": "news-sources.json",
+      "n": 26
+    },
+    {
+      "file": "photo-credit-qc.json",
+      "n": 26
+    },
+    {
+      "file": "social-feed.json",
+      "n": 24
+    },
+    {
+      "file": "embed.css",
+      "n": 24
+    }
+  ]
+}

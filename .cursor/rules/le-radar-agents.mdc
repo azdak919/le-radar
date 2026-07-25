@@ -8,9 +8,11 @@ alwaysApply: true
 1. Lire `AGENTS.md` puis `docs/agent-playbook.md` avant d’éditer.
 2. Priorité = ticket humain. Pas de refonte monolithe / bulk Commons / Worker audio sans demande.
 3. **Fin de session** si le ticket est OK :
-   - `npm run agents:propose` — si **STOP balise**, ne pas enchaîner de dette
-   - Max **1 dette soldée / session**, **2 / jour** (`.agents-session.json`)
-   - « Continue » ≠ carte blanche sur tout le ledger
-   - Si dette soldée : `npm run agents:record-sold -- <ID>` + MAJ `AGENTS.md`
+   - `npm run agents:harvest -- --write` — détecte vibe intense (git) → candidats §3c
+   - Si intense : proposer de **promouvoir 1** candidat en D# (OK humain)
+   - `npm run agents:propose` — dette open ou **STOP** quota
+   - Max **1 dette soldée / session**, **2 / jour**
+   - « Continue » ≠ carte blanche ledger
+   - Soldée : `npm run agents:record-sold -- <ID>`
 4. Banques : JSON vérité, `npm run bank:sync`, blacklist durable.
 5. Checks : `npm run check`, `npm run bank:check` si banques touchées.
