@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-25T14:11:03.569Z",
+  "updated": "2026-07-25T14:59:54.167Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
@@ -7,22 +7,22 @@
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 4,
-  "updatedCount": 4,
-  "citedNew": 4,
+  "checked": 3,
+  "updatedCount": 3,
+  "citedNew": 3,
   "fallbackNew": 0,
   "samples": [
-    {
-      "title": "L’épidémie de la nonchalance",
-      "source": "Le Délit",
-      "credit": "Photo : Elie Nguyen",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
     {
       "title": "La performance de l’homosexualité : un privilège ?",
       "source": "Le Délit",
       "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "L’épidémie de la nonchalance",
+      "source": "Le Délit",
+      "credit": "Photo : Elie Nguyen",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -32,13 +32,6 @@
       "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
     }
   ]
 }
