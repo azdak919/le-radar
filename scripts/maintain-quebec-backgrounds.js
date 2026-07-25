@@ -26,7 +26,7 @@
  *   - ménage complet **une fois par session universitaire QC**
  *   - revalidation (aspect, religieux institutionnel, licence, résolution)
  *   - pas de personnes reconnaissables ; spiritualité autochtone OK
- *   - découverte Commons pour combler / rafraîchir
+ *   - découverte Commons (+ graines File: + Openverse si nations manquent)
  *
  * Usage :
  *   node scripts/maintain-quebec-backgrounds.js [--profile masthead|universities|pomo|nations]
@@ -284,7 +284,7 @@ const PEOPLE_RE =
 const NON_IMAGE_RE = /\.(?:wav|mp3|ogg|flac|webm|mp4|pdf|svg|djvu|stl|obj)(?:\?|$)/i;
 
 const BAD_SCENE_RE =
-  /(?:\bnight\b|\bnuit\b|\bdark\b|\bmacro\b|\bclose[\s-]?up\b|\bgros[\s-]?plan\b|\binterior\b|\bintérieur\b|\binterieur\b|\bindoor\b|\bhouse\b|\bmaison\b|\bmuseo\b|\bmuseum\b|\bmusée\b|\bmusee\b|\boeuvre\b|\bœuvre\b|\bartiste\b|\bpainting\b|\bgravure\b|\bengraving\b|\bmicroform\b|\bletrero\b|\bsignage\b|\bboulangerie\b|\btypique\b|\btruck\b|\bcami[oó]n\b|\bcrépuscule\b|\bcrepuscule\b|\bdawn or dusk\b|\btwilight\b|\bafter[\s-]?dark\b|\bvers\s+1[789]\d{2}\b|\b1[789]\d{2}\b|\bA\d{4,}\b|\.pp\b|\bciels? invers|\bcoulombe\b|\bhiver\b|\bwinter\b|\bsnow\b|\bneige\b|\bfrozen\b|\bfreezing\b|\bglace\b|\biced?\b|\bcanot\b|\bcanoe\b|\bkayak\b|\bpaddle\b|\bpagaie\b|\bexhibit\b|\bexhibition\b|\bgallery\b|\bgalerie\b|\bartifact\b|\bart[eé]fact\b|\bdisplay\b|\bmashteuiatsh[\s_-]?0*\d{2,}\b|\bultramafic\b|\bbarren\b|\btundra\b|\bwasteland\b|\brocky plain\b|\bquarry\b|\bcarri[eè]re\b|\bmudflat\b|\bbatture\b|\bmar[eé]e basse\b|\blow[\s-]?tide\b|\bunderside\b|\bunderneath\b|\bunderpass\b|\bunder[\s-]?the[\s-]?bridge\b|\bbridge[\s-]?underside\b|\bdessous de pont\b|\bsous le pont\b|\bsous[\s-]pont\b|\bsoffit\b|\bconcrete beams?\b|\bchain[\s-]?link\b|\bbarbed[\s-]?wire\b|\bbarbel[eé]\b|\bcl[oô]ture grillag|\bprison\b|\bp[eé]nitenc|\bjail\b|\bd[eé]tention\b|\bairport\b|\ba[eé]roport\b|\bairfield\b|\bhangar\b|\bwarehouse\b|\bentrep[oô]t\b|\bindustrial\b|\bzone industrielle\b|\bfactory\b|\brailway[\s_-]?track\b|\bparking[\s_-]?lot\b|\bstationnement\b)/i;
+  /(?:\bnight\b|\bnuit\b|\bdark\b|\bmacro\b|\bclose[\s-]?up\b|\bgros[\s-]?plan\b|\binterior\b|\bintérieur\b|\binterieur\b|\bindoor\b|\bhouse\b|\bmaison\b|\bmuseo\b|\bmuseum\b|\bmusée\b|\bmusee\b|\boeuvre\b|\bœuvre\b|\bartiste\b|\bpainting\b|\bgravure\b|\bengraving\b|\bmicroform\b|\bletrero\b|\bsignage\b|\bboulangerie\b|\btypique\b|\btruck\b|\bcami[oó]n\b|\bcrépuscule\b|\bcrepuscule\b|\bdawn or dusk\b|\btwilight\b|\bafter[\s-]?dark\b|\bvers\s+1[789]\d{2}\b|\b1[789]\d{2}\b|\bA\d{4,}\b|\.pp\b|\bciels? invers|\bcoulombe\b|\bhiver\b|\bwinter\b|\bsnow\b|\bneige\b|\bfrozen\b|\bfreezing\b|\bglace\b|\biced?\b|\bcanot\b|\bcanoe\b|\bkayak\b|\bpaddle\b|\bpagaie\b|\bexhibit\b|\bexhibition\b|\bgallery\b|\bgalerie\b|\bartifact\b|\bart[eé]fact\b|\bdisplay\b|\bmashteuiatsh[\s_-]?0*\d{2,}\b|\bultramafic\b|\bbarren\b|\btundra\b|\bwasteland\b|\brocky plain\b|\bquarry\b|\bcarri[eè]re\b|\bmudflat\b|\bbatture\b|\bmar[eé]e basse\b|\blow[\s-]?tide\b|\bunderside\b|\bunderneath\b|\bunderpass\b|\bunder[\s-]?the[\s-]?bridge\b|\bbridge[\s-]?underside\b|\bdessous de pont\b|\bsous le pont\b|\bsous[\s-]pont\b|\bsoffit\b|\bconcrete beams?\b|\bchain[\s-]?link\b|\bbarbed[\s-]?wire\b|\bbarbel[eé]\b|\bcl[oô]ture grillag|\bprison\b|\bp[eé]nitenc|\bjail\b|\bd[eé]tention\b|\bairport\b|\ba[eé]roport\b|\bairfield\b|\bhangar\b|\bwarehouse\b|\bentrep[oô]t\b|\bindustrial\b|\bzone industrielle\b|\bfactory\b|\brailway[\s_-]?track\b|\bparking[\s_-]?lot\b|\bstationnement\b|\b[eé]puration\b|\bsewage\b|\bwaste[\s-]?water\b|\bwater[\s-]?treatment\b|\btreatment[\s-]?plant\b|\bstop[\s-]?sign\b|\bstopsign\b|\bpanneau\s+d['’]?arr[eê]t\b|\bdiagram\b|\blocation\s+diagram\b|\bmap\s+of\b)/i;
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
@@ -443,7 +443,9 @@ function looksPeopleHeavy(entry) {
 }
 
 function looksBadSceneTitle(entry) {
-  const hay = [entry.title, entry.url].join(' ');
+  const hay = [entry.title, entry.url, entry.link, entry.description, entry.categories]
+    .filter(Boolean)
+    .join(' ');
   return BAD_SCENE_RE.test(hay);
 }
 
@@ -471,7 +473,19 @@ function looksCampusSubject(entry) {
 }
 
 function looksNationsSubject(entry) {
-  const hay = [entry.title, entry.url, entry.link, entry.credit].join(' ');
+  // description/categories Commons : « near Odanak » sans Odanak dans le filename
+  const hay = [
+    entry.title,
+    entry.url,
+    entry.link,
+    entry.credit,
+    entry.description,
+    entry.categories,
+    entry.nation,
+    entry.nationId,
+  ]
+    .filter(Boolean)
+    .join(' ');
   return NATIONS_SUBJECT_RE.test(hay);
 }
 
@@ -563,6 +577,37 @@ async function enrichFromCommons(entry) {
   }
 }
 
+function mapCommonsPage(p) {
+  const ii = p?.imageinfo?.[0];
+  if (!ii?.url) return null;
+  const mime = String(ii.mime || '').toLowerCase();
+  if (mime && !mime.startsWith('image/')) return null;
+  if (NON_IMAGE_RE.test(ii.url) || NON_IMAGE_RE.test(p.title || '')) return null;
+  if (mime === 'image/svg+xml') return null;
+  const em = ii.extmetadata || {};
+  const title = (p.title || '').replace(/^File:/, '').replace(/_/g, ' ');
+  const license = stripHtml(em.LicenseShortName?.value || '');
+  const artist = sanitizeCommonsCredit(
+    stripHtml(em.Artist?.value || 'Wikimedia Commons')
+  );
+  const description = stripHtml(em.ImageDescription?.value || '').slice(0, 400);
+  const categories = stripHtml(em.Categories?.value || '').slice(0, 400);
+  return {
+    id: photoIdFromUrl(ii.url),
+    url: ii.url,
+    link: `https://commons.wikimedia.org/wiki/${encodeURIComponent(p.title).replace(/%3A/g, ':')}`,
+    title: title.replace(/\.(jpe?g|png|webp)$/i, '').slice(0, 90),
+    credit: artist.slice(0, 120) || 'Wikimedia Commons',
+    license,
+    description,
+    categories,
+    width: ii.width,
+    height: ii.height,
+    aspect: ii.width && ii.height ? Math.round((ii.width / ii.height) * 1000) / 1000 : null,
+    mime: ii.mime,
+  };
+}
+
 async function searchCommons(query, limit = 8) {
   const api =
     'https://commons.wikimedia.org/w/api.php?action=query&format=json' +
@@ -573,41 +618,84 @@ async function searchCommons(query, limit = 8) {
   try {
     const data = await fetchJson(api);
     const pages = Object.values(data?.query?.pages || {});
-    return pages
-      .map((p) => {
-        const ii = p.imageinfo?.[0];
-        if (!ii?.url) return null;
-        const mime = String(ii.mime || '').toLowerCase();
-        if (mime && !mime.startsWith('image/')) return null;
-        if (NON_IMAGE_RE.test(ii.url) || NON_IMAGE_RE.test(p.title || '')) return null;
-        // SVG / diagrammes : pas du wallpaper photo
-        if (mime === 'image/svg+xml') return null;
-        const em = ii.extmetadata || {};
-        const title = (p.title || '').replace(/^File:/, '').replace(/_/g, ' ');
-        const license = stripHtml(em.LicenseShortName?.value || '');
-        const artist = sanitizeCommonsCredit(
-          stripHtml(em.Artist?.value || 'Wikimedia Commons')
+    return pages.map(mapCommonsPage).filter(Boolean);
+  } catch (e) {
+    console.warn('  search fail', query, e.message);
+    return [];
+  }
+}
+
+/** Charge un fichier Commons exact (graine File:… curatée). */
+async function fetchCommonsFile(fileTitle) {
+  const title = String(fileTitle || '').startsWith('File:')
+    ? fileTitle
+    : `File:${fileTitle}`;
+  const api =
+    'https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo' +
+    '&iiprop=url|size|extmetadata|mime' +
+    `&titles=${encodeURIComponent(title.replace(/_/g, ' '))}`;
+  try {
+    const data = await fetchJson(api);
+    const page = Object.values(data?.query?.pages || {})[0];
+    if (!page || page.missing != null) return null;
+    return mapCommonsPage(page);
+  } catch (e) {
+    console.warn('  fetch file fail', fileTitle, e.message);
+    return null;
+  }
+}
+
+/**
+ * Openverse (Commons + Flickr + …) — source secondaire pour nations absentes.
+ * API publique : https://api.openverse.org/v1/
+ */
+async function searchOpenverse(query, limit = 8) {
+  const params = new URLSearchParams({
+    q: query,
+    page_size: String(Math.min(limit, 20)),
+    license_type: 'commercial,modification',
+    // wallpaper paysage
+    aspect_ratio: 'wide',
+    size: 'large',
+  });
+  const url = `https://api.openverse.org/v1/images/?${params}`;
+  try {
+    const data = await fetchJson(url);
+    const results = Array.isArray(data?.results) ? data.results : [];
+    return results
+      .map((r) => {
+        const imgUrl = r.url || r.thumbnail;
+        if (!imgUrl || !/^https:\/\//i.test(imgUrl)) return null;
+        // Préférer l’original Commons si présent
+        const foreign =
+          r.foreign_landing_url || r.foreign_landing_url || r.detail_url || '';
+        const w = Number(r.width) || 0;
+        const h = Number(r.height) || 0;
+        const license = String(r.license || r.license_url || '')
+          .replace(/^by/i, 'CC BY')
+          .slice(0, 40);
+        const credit = sanitizeCommonsCredit(
+          stripHtml(r.creator || r.creator_name || 'Openverse')
         );
-        const description = stripHtml(em.ImageDescription?.value || '').slice(0, 400);
-        const categories = stripHtml(em.Categories?.value || '').slice(0, 400);
         return {
-          id: photoIdFromUrl(ii.url),
-          url: ii.url,
-          link: `https://commons.wikimedia.org/wiki/${encodeURIComponent(p.title).replace(/%3A/g, ':')}`,
-          title: title.replace(/\.(jpe?g|png|webp)$/i, '').slice(0, 90),
-          credit: artist.slice(0, 120) || 'Wikimedia Commons',
-          license,
-          description,
-          categories,
-          width: ii.width,
-          height: ii.height,
-          aspect: ii.width && ii.height ? Math.round((ii.width / ii.height) * 1000) / 1000 : null,
-          mime: ii.mime,
+          id: photoIdFromUrl(imgUrl),
+          url: imgUrl,
+          link: foreign || imgUrl,
+          title: String(r.title || query).replace(/\.(jpe?g|png|webp)$/i, '').slice(0, 90),
+          credit: credit.slice(0, 120) || 'Openverse',
+          license: license || 'CC',
+          description: stripHtml(r.description || '').slice(0, 400),
+          categories: '',
+          width: w || null,
+          height: h || null,
+          aspect: w && h ? Math.round((w / h) * 1000) / 1000 : null,
+          mime: r.filetype ? `image/${r.filetype}` : 'image/jpeg',
+          source: 'openverse',
         };
       })
       .filter(Boolean);
   } catch (e) {
-    console.warn('  search fail', query, e.message);
+    console.warn('  openverse fail', query, e.message);
     return [];
   }
 }
@@ -872,7 +960,7 @@ async function main() {
       coverageBefore &&
       coverageBefore.missing.length > 0);
   if (shouldDiscover) {
-    console.log('▸ Découverte Commons…');
+    console.log('▸ Découverte images (Commons + graines + Openverse si besoin)…');
     if (coverageBefore && coverageBefore.missing.length) {
       console.log(
         `  nations absentes : ${coverageBefore.missing.join(' · ')}`
@@ -885,57 +973,130 @@ async function main() {
         ? PROFILE.discoveryQueries(sessionId, photos)
         : PROFILE.discoveryQueries(sessionId);
     const nowIso = new Date().toISOString();
+    const subjectGate = {
+      requireCampus: !!PROFILE.requireCampusSubject,
+      requireNations: !!PROFILE.requireNationsSubject,
+    };
 
+    function tryFreeSlotForCoverage() {
+      if (PROFILE.id !== 'nations') return false;
+      if (photos.length < MAX_BANK) return true;
+      const cov = nationsTaxonomy.coverageReport(photos);
+      if (!cov.missing.length) return false;
+      const sacrificed = sacrificeOverrepresented(photos);
+      if (!sacrificed) return false;
+      existing.delete(sacrificed.url);
+      existingIds.delete(sacrificed.id);
+      photos = photos.filter((p) => p.id !== sacrificed.id);
+      report.removed.push({
+        title: sacrificed.title,
+        reason: 'rebalance_for_coverage',
+      });
+      console.log(`  ± libère ${sacrificed.title} (rééquilibrage)`);
+      return true;
+    }
+
+    function acceptHit(hit, opts = {}) {
+      if (!hit || !hit.url) return false;
+      if (photos.length >= MAX_BANK && !tryFreeSlotForCoverage()) return false;
+      if (existing.has(hit.url) || existingIds.has(hit.id)) return false;
+      const tg = textGate(hit, subjectGate);
+      const dg = dimensionGate(hit);
+      if (!tg.ok || !dg.ok) return false;
+      let entry = {
+        ...hit,
+        addedAt: nowIso,
+        sessionId,
+        bank: PROFILE.id,
+      };
+      if (opts.forceTitle) entry.title = opts.forceTitle;
+      if (opts.forceNationId) {
+        entry.nationId = opts.forceNationId;
+      }
+      if (PROFILE.id === 'nations') {
+        entry = nationsTaxonomy.tagPhotoNation(entry);
+      }
+      photos.push(entry);
+      existing.add(entry.url);
+      existingIds.add(entry.id);
+      report.added.push(entry.title);
+      const tag = entry.nationId ? ` [${entry.nationId}]` : '';
+      const src = entry.source === 'openverse' ? ' openverse' : '';
+      console.log(`  + ${entry.title}${tag}${src}`);
+      return true;
+    }
+
+    // ── 3a. Graines File: Commons (nations absentes, ex. Abénaquis) ──
+    if (PROFILE.id === 'nations') {
+      const seeds = nationsTaxonomy.curatedSeedsForMissing(photos);
+      for (const seed of seeds) {
+        if ((nationsTaxonomy.coverageCounts(photos)[seed.nationId] || 0) > 0) {
+          continue;
+        }
+        await sleep(400);
+        const hit = await fetchCommonsFile(seed.fileTitle);
+        if (!hit) {
+          console.log(`  ⚠ graine introuvable ${seed.fileTitle}`);
+          continue;
+        }
+        // Forcer le sujet nation même si le filename n’a pas « Odanak »
+        if (seed.nationId) {
+          hit.nationId = seed.nationId;
+          const def = nationsTaxonomy.QUEBEC_NATIONS.find(
+            (n) => n.id === seed.nationId
+          );
+          if (def) hit.nation = def.label;
+        }
+        acceptHit(hit, {
+          forceTitle: seed.title,
+          forceNationId: seed.nationId,
+        });
+      }
+    }
+
+    // ── 3b. Recherche Commons plein texte ──
     for (const q of queries) {
-      if (photos.length >= MAX_BANK) {
-        // Nations : libérer une place si des nations manquent encore
+      if (photos.length >= MAX_BANK && !tryFreeSlotForCoverage()) {
         if (PROFILE.id === 'nations') {
           const cov = nationsTaxonomy.coverageReport(photos);
           if (!cov.missing.length) break;
-          const sacrificed = sacrificeOverrepresented(photos);
-          if (!sacrificed) break;
-          existing.delete(sacrificed.url);
-          existingIds.delete(sacrificed.id);
-          photos = photos.filter((p) => p.id !== sacrificed.id);
-          report.removed.push({
-            title: sacrificed.title,
-            reason: 'rebalance_for_coverage',
-          });
-          console.log(`  ± libère ${sacrificed.title} (rééquilibrage)`);
         } else break;
       }
       await sleep(450);
       const hits = await searchCommons(q, 8);
       for (const hit of hits) {
-        if (photos.length >= MAX_BANK) break;
-        if (existing.has(hit.url) || existingIds.has(hit.id)) continue;
-        const tg = textGate(hit, subjectGate);
-        const dg = dimensionGate(hit);
-        if (!tg.ok || !dg.ok) continue;
-        let entry = {
-          ...hit,
-          addedAt: nowIso,
-          sessionId,
-          bank: PROFILE.id,
-        };
-        if (PROFILE.id === 'nations') {
-          entry = nationsTaxonomy.tagPhotoNation(entry);
-          // Prioriser les hits qui comblent une nation absente
-          const cov = nationsTaxonomy.coverageReport(photos);
-          if (
-            cov.missing.length &&
-            entry.nationId &&
-            (nationsTaxonomy.coverageCounts(photos)[entry.nationId] || 0) > 0
-          ) {
-            // déjà couverte : n’accepter que si place libre (toujours vrai ici)
-          }
+        if (photos.length >= MAX_BANK && !tryFreeSlotForCoverage()) break;
+        acceptHit(hit);
+      }
+    }
+
+    // ── 3c. Openverse (source secondaire) si nations encore absentes ──
+    if (PROFILE.id === 'nations') {
+      const ovJobs = nationsTaxonomy.openverseQueriesForMissing(photos);
+      if (ovJobs.length) {
+        console.log(`  ▸ Openverse (${ovJobs.length} requête(s) nations manquantes)…`);
+      }
+      for (const job of ovJobs) {
+        if ((nationsTaxonomy.coverageCounts(photos)[job.nationId] || 0) > 0) {
+          continue;
         }
-        photos.push(entry);
-        existing.add(entry.url);
-        existingIds.add(entry.id);
-        report.added.push(entry.title);
-        const tag = entry.nationId ? ` [${entry.nationId}]` : '';
-        console.log(`  + ${entry.title}${tag}`);
+        await sleep(500);
+        const hits = await searchOpenverse(job.query, 8);
+        for (const hit of hits) {
+          if ((nationsTaxonomy.coverageCounts(photos)[job.nationId] || 0) > 0) {
+            break;
+          }
+          hit.nationId = job.nationId;
+          const def = nationsTaxonomy.QUEBEC_NATIONS.find(
+            (n) => n.id === job.nationId
+          );
+          if (def) hit.nation = def.label;
+          // Injecter le nom de communauté dans description pour le gate nations
+          hit.description = `${hit.description || ''} ${def ? def.label : ''} ${
+            (def && def.communities && def.communities[0]) || job.nationId
+          }`.trim();
+          acceptHit(hit, { forceNationId: job.nationId });
+        }
       }
     }
   }
