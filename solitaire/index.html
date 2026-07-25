@@ -908,26 +908,9 @@
       border-radius: clamp(4px, 6%, 9px);
       border: 1px solid var(--card-border);
       background: var(--card-face);
-      color: var(--card-black);
       box-shadow: 0 3px 10px var(--card-shadow);
+      overflow: hidden;
       /* NO animation property - JS driven */
-    }
-    .cascade-card.cascade-red { color: var(--card-red); }
-    .cascade-card .cc-rank {
-      position: absolute;
-      top: 3px;
-      left: 5px;
-      font-size: clamp(9px, calc(var(--card-w) * 0.22), 20px);
-      font-weight: 700;
-      line-height: 1;
-    }
-    .cascade-card .cc-suit-center {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: clamp(14px, calc(var(--card-w) * 0.44), 36px);
-      line-height: 1;
     }
     /* confetti pieces */
     .confetti-piece {
@@ -2271,8 +2254,9 @@ function runBounce(container) {
     const def = allCardDefs[launchedCount++];
 
     const el = document.createElement('div');
-    el.className = 'cascade-card' + (isRed(def.suit) ? ' cascade-red' : '');
-    el.innerHTML = `<span class="cc-rank">${def.value}</span><span class="cc-suit-center">${def.suit}</span>`;
+    el.className = 'cascade-card card--face' + (isRed(def.suit) ? ' card--red' : ' card--black');
+    el.innerHTML = makeCardFaceHTML(def);
+    attachCardImageFallback(el, def, false);
     container.appendChild(el);
 
     // Launch from the foundation area (top 10–22% of screen, right 50–90%)
