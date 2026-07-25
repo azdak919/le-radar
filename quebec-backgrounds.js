@@ -468,6 +468,9 @@
     const rowSky = new Float32Array(sampleH);
     // Masse bâtie (brique chaude / béton gris / vitrage structurée) — campus.
     const rowBuild = new Float32Array(sampleH);
+    // Chaussée / tablier de pont / parapet : bande grise horizontale
+    // (voiture souvent en bas du frame, hors bandeau si bon focalY).
+    const rowDeck = new Float32Array(sampleH);
     for (let y = 0; y < sampleH; y++) {
       let e = 0;
       let s = 0;
@@ -476,6 +479,7 @@
       let sand = 0;
       let sky = 0;
       let build = 0;
+      let deck = 0;
       const rowBase = y * sampleW;
       for (let x = 0; x < sampleW; x++) {
         const i = rowBase + x;
@@ -517,6 +521,18 @@
             sat[i] < 0.28;
           if (brick || concrete || glassBand) build += 1;
         }
+        // Tablier / parapet / asphalte : gris désaturé, mi-tons, pas ciel.
+        // (Pont Île-aux-Tourtes : voiture sur la chaussée sous le bandeau.)
+        if (
+          lv > 0.18 &&
+          lv < 0.72 &&
+          sat[i] < 0.14 &&
+          Math.abs(r - g) < 18 &&
+          Math.abs(g - b) < 22 &&
+          !(b > r + 10 && b > g - 5)
+        ) {
+          deck += 1;
+        }
         if (x >= 5 && x < sampleW - 5) {
           const isDark = lv < 0.18;
           const isSkyPocket =
@@ -546,6 +562,31 @@
       rowSand[y] = sand / sampleW;
       rowSky[y] = sky / sampleW;
       rowBuild[y] = build / sampleW;
+      rowDeck[y] = deck / sampleW;
+    }
+
+    // Bande « chaussée / tablier » concentrée dans le bas de l’image source
+    // → le crop mât peut la masquer (voiture hors bandeau = OK).
+    let deckBottomFrac = 0;
+    {
+      const bot0 = Math.floor(sampleH * 0.62);
+      let botDeck = 0;
+      let topDeck = 0;
+      let botN = 0;
+      let topN = 0;
+      for (let y = 0; y < sampleH; y++) {
+        if (y >= bot0) {
+          botDeck += rowDeck[y];
+          botN++;
+        } else {
+          topDeck += rowDeck[y];
+          topN++;
+        }
+      }
+      const botAvg = botN ? botDeck / botN : 0;
+      const topAvg = topN ? topDeck / topN : 0;
+      // Signal utile seulement si le bas est nettement plus « deck » que le haut
+      deckBottomFrac = botAvg > 0.22 && botAvg > topAvg + 0.08 ? botAvg : 0;
     }
 
     // Masse structurée du pavillon (bâtiment × edges) — centre de masse.
@@ -745,6 +786,35 @@
         }
       }
 
+      // Chaussée / tablier / parapet : OK en bas mince du bandeau ; pénaliser
+      // si le « deck » occupe le milieu (voiture lisible) ou trop de surface.
+      // Réf. Pont de l'Île-aux-Tourtes_04 — voiture hors crop = excellente.
+      let deckPenalty = 0;
+      if (!campusScene && deckBottomFrac > 0) {
+        const botN = Math.max(1, Math.floor(win * 0.28));
+        const mid0 = y0 + Math.floor(win * 0.2);
+        const mid1 = y0 + Math.floor(win * 0.75);
+        let midDeck = 0;
+        let midNd = 0;
+        let botDeck = 0;
+        for (let y = mid0; y < mid1; y++) {
+          midDeck += rowDeck[y];
+          midNd++;
+        }
+        for (let y = y0 + win - botN; y < y0 + win; y++) botDeck += rowDeck[y];
+        midDeck /= Math.max(1, midNd);
+        botDeck /= botN;
+        // Deck dans la zone wordmark / milieu → mauvais
+        if (midDeck > 0.28) deckPenalty += (midDeck - 0.28) * 2.2;
+        // Préférer fenêtres qui laissent le tablier seulement en bas (ou hors)
+        if (botDeck > 0.35 && midDeck < 0.2) deckPenalty -= 0.12; // léger bonus
+        // Fenêtre trop bas (englobe la chaussée) vs fenêtre plus haute
+        const winBottom = (y0 + win) / sampleH;
+        if (winBottom > 0.88 && botDeck > 0.3) {
+          deckPenalty += 0.25;
+        }
+      }
+
       // Campus : densite du pavillon + COM de la masse dans le bandeau.
       let campusBonus = 0;
       if (campusScene) {
@@ -778,7 +848,8 @@
         wordmarkPenalty -
         flatPenalty -
         mudflatPenalty -
-        foregroundRockPenalty;
+        foregroundRockPenalty -
+        deckPenalty;
 
       if (score > bestScore) {
         bestScore = score;
@@ -1144,6 +1215,8 @@
 
     // Analyse canvas (CORS). Si tainted → aspect seul (la banque reste le filtre principal).
     // Crop = même logique que le paint (focalY auto / campus / banque).
+    // Important : seuls les pixels DANS le bandeau comptent — une voiture /
+    // chaussée hors fenêtre cover (ex. Tourtes_04) ne doit pas faire rejeter.
     try {
       const sampleW = 240;
       const sampleH = Math.max(36, Math.round(sampleW / MASTHEAD_AR));
