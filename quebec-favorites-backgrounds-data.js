@@ -39,5 +39,27 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "ete",
     permanent: true,
     surfaces: ["masthead", "pomo"],
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/f/fe/Lac_des_Deux_Montagnes_07.JPG",
+    credit: "Jeangagnon",
+    link: "https://commons.wikimedia.org/wiki/File:Lac_des_Deux_Montagnes_07.JPG",
+    license: "CC BY-SA 3.0",
+    title: "Lac des Deux-Montagnes",
+    focalY: 0.22,
+    season: "ete",
+    permanent: true,
+    surfaces: ["masthead", "pomo"],
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/d/de/Universit%C3%A9_Laval%2C_Quebec%2C_Canada_02.jpg",
+    credit: "Wilfredor",
+    link: "https://commons.wikimedia.org/wiki/File:Universit%C3%A9_Laval,_Quebec,_Canada_02.jpg",
+    license: "CC0",
+    title: "Université Laval, Quebec, Canada 02",
+    focalY: 0.52,
+    season: "hiver",
+    permanent: true,
+    surfaces: ["masthead", "pomo"],
   }
 ];

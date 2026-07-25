@@ -200,6 +200,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Universit%C3%A9_Laval,_Quebec,_Canada_02.jpg",
     license: "CC0",
     title: "Université Laval, Quebec, Canada 02",
+    focalY: 0.52,
     campus: true,
   },
   {

@@ -427,16 +427,26 @@
    *    (ex. Judith-Jasmin UQAM : voir le volume UQAM, pas les cimes d’arbres) ;
    *  - détecter les « arches / trous » (Rocher Percé…) et les garder
    *    dans le crop, idéalement près du milieu vertical ;
+   *  - détecter toile claire conique (tipi / tente) : le sommet doit
+   *    rester dans le bandeau (sinon les troncs d’arbres gagnent le score) ;
    *  - éviter les crops « vase / batture » (bas texturé sans ciel) ;
    *  - un peu de ciel en haut de bande ; wordmark pas saturé de texture
-   *    sauf si un landmark (arche) y est présent.
+   *    sauf si un landmark (arche / tipi) y est présent.
    *
    * @param {HTMLImageElement} img
    * @param {number} mastheadAr
-   * @param {{ campus?: boolean }} [opts]
+   * @param {{ campus?: boolean, title?: string, url?: string }} [opts]
    */
   function computeBestFocalY(img, mastheadAr, opts) {
     const campusMode = !!(opts && opts.campus);
+    const subjectHay = [opts && opts.title, opts && opts.url]
+      .filter(Boolean)
+      .join(" ");
+    // Titre / fichier : tipi, teepee, tente, wigwam… (ex. Gesgapegiag4 sans
+    // le mot dans le titre — la détection visuelle toile prend le relais).
+    const TIPI_SUBJECT_RE =
+      /(?:\btipi\b|\bteepee\b|\bt[eé]pee\b|\bwigwam\b|\byourte\b|\btente\b|\bcanvas\s+tent\b)/i;
+    const tipiTitleHint = TIPI_SUBJECT_RE.test(subjectHay);
     const w = img.naturalWidth || 0;
     const h = img.naturalHeight || 0;
     if (w < 32 || h < 32) return 0.5;
@@ -504,6 +514,8 @@
     // Chaussée / tablier de pont / parapet : bande grise horizontale
     // (voiture souvent en bas du frame, hors bandeau si bon focalY).
     const rowDeck = new Float32Array(sampleH);
+    // Toile / canvas clair (tipi, tente) — sommet à garder dans le bandeau.
+    const rowCanvas = new Float32Array(sampleH);
     for (let y = 0; y < sampleH; y++) {
       let e = 0;
       let s = 0;
@@ -513,6 +525,7 @@
       let sky = 0;
       let build = 0;
       let deck = 0;
+      let canvas = 0;
       const rowBase = y * sampleW;
       for (let x = 0; x < sampleW; x++) {
         const i = rowBase + x;
@@ -566,6 +579,19 @@
         ) {
           deck += 1;
         }
+        // Toile tipi / tente : clair, désaturé, R≈G (blanc–beige), pas ciel bleu.
+        // Réf. Gesgapegiag4 — sans ça les troncs d’arbres maximisent edge et
+        // le crop coupe le sommet de la tente.
+        if (
+          lv > 0.48 &&
+          sat[i] < 0.28 &&
+          r > 145 &&
+          Math.abs(r - g) < 35 &&
+          Math.abs(g - b) < 40 &&
+          !(b > r + 18 && b > g + 8)
+        ) {
+          canvas += 1;
+        }
         if (x >= 5 && x < sampleW - 5) {
           const isDark = lv < 0.18;
           const isSkyPocket =
@@ -596,8 +622,8 @@
       rowSky[y] = sky / sampleW;
       rowBuild[y] = build / sampleW;
       rowDeck[y] = deck / sampleW;
+      rowCanvas[y] = canvas / sampleW;
     }
-
     // Bande « chaussée / tablier » concentrée dans le bas de l’image source
     // → le crop mât peut la masquer (voiture hors bandeau = OK).
     let deckBottomFrac = 0;
@@ -661,6 +687,49 @@
     }
     const hasStrongArch = archPeakScore > 0.015;
 
+    // Toile tipi / tente : lissage + sommet (première masse dense) + COM.
+    // On ancre le *sommet* (pas le bas de la toile) dans le tiers haut du bandeau.
+    const canvasSmooth = new Float32Array(sampleH);
+    for (let y = 0; y < sampleH; y++) {
+      const a0 = Math.max(0, y - 2);
+      const a1 = Math.min(sampleH, y + 3);
+      let sum = 0;
+      for (let yy = a0; yy < a1; yy++) sum += rowCanvas[yy];
+      canvasSmooth[y] = sum / (a1 - a0);
+    }
+    let canvasMass = 0;
+    let canvasCOM = sampleH * 0.45;
+    let canvasPeakY = -1;
+    let canvasPeakScore = 0;
+    let canvasTopY = -1;
+    {
+      let m = 0;
+      let wgt = 0;
+      for (let y = 0; y < sampleH; y++) {
+        const c = canvasSmooth[y];
+        wgt += c;
+        m += c * y;
+        if (c > canvasPeakScore) {
+          canvasPeakScore = c;
+          canvasPeakY = y;
+        }
+        // Sommet = première ligne (haut) avec toile significative
+        if (canvasTopY < 0 && c > 0.08) canvasTopY = y;
+      }
+      canvasMass = wgt;
+      if (wgt > 1e-4) canvasCOM = m / wgt;
+    }
+    const canvasFrac = canvasMass / Math.max(1, sampleH);
+    // Signal tipi : masse toile + sommet dans les 2/3 hauts (pas un mur blanc bas)
+    const tipY = canvasTopY >= 0 ? canvasTopY : canvasPeakY;
+    const hasStrongCanvas =
+      !campusMode &&
+      canvasFrac > 0.04 &&
+      canvasPeakScore > 0.12 &&
+      tipY >= 0 &&
+      tipY / sampleH < 0.62;
+    const preferTipiAnchor =
+      hasStrongCanvas || (tipiTitleHint && canvasFrac > 0.02);
     // Horizon / skyline : plus fort gradient vertical de luminance dans
     // la moitié haute–médiane (évite le rivage bas). Ex. Lac des Deux-
     // Montagnes : chute ciel→montagnes/eau ~ y 0.22–0.28.
@@ -711,6 +780,8 @@
       let sandSum = 0;
       let skySum = 0;
       let buildSum = 0;
+      let canvasIn = 0;
+      let canvasMid = 0;
       for (let y = y0; y < y0 + win; y++) {
         edgeSum += rowEdge[y];
         satSum += rowSat[y];
@@ -721,9 +792,13 @@
         if (y > y0) vGrad += Math.abs(rowMean[y] - rowMean[y - 1]);
         const a = archSmooth[y];
         if (a > archIn) archIn = a;
+        const c = canvasSmooth[y];
+        if (c > canvasIn) canvasIn = c;
         const rel = (y - y0) / win;
         // Prefer landmark in the middle band of the crop (readable).
         if (rel >= 0.22 && rel <= 0.78 && a > archMid) archMid = a;
+        // Tipi : sommet + toile lisibles plutôt dans le tiers haut–médian.
+        if (rel >= 0.08 && rel <= 0.55 && c > canvasMid) canvasMid = c;
       }
       const edgeAvg = edgeSum / win;
       const satAvg = satSum / win;
@@ -789,6 +864,19 @@
       const peakCovered =
         hasStrongArch && archPeakY >= y0 && archPeakY < y0 + win ? 0.55 : 0;
       const archBonus = archMid * 14 + archIn * 4 + peakCovered;
+
+      // Bonus tipi / toile : sommet couvert + masse dans le tiers haut du bandeau
+      // (évite crop troncs seuls sous le cone — Gesgapegiag4).
+      let canvasBonus = 0;
+      if (preferTipiAnchor || hasStrongCanvas) {
+        const tipCovered =
+          tipY >= 0 && tipY >= y0 && tipY < y0 + win ? 0.7 : -0.45;
+        canvasBonus =
+          canvasMid * 10 +
+          canvasIn * 3 +
+          tipCovered +
+          (tipiTitleHint ? 0.2 : 0);
+      }
 
       // Horizon / skyline dans le bandeau, idéalement ~22–40 % du haut.
       // Campus : fortement amorti — un « horizon » urbain (toit / ciel)
@@ -869,13 +957,24 @@
         if (thinBanner) campusBonus *= 1.35;
       }
 
+      // Forêt de troncs sans landmark : edge gagne trop et noie le tipi.
+      // Amortir edge quand on ancre une toile / titre tipi.
+      const edgeWeight = campusScene
+        ? 1.1
+        : preferTipiAnchor
+          ? 0.85
+          : strongHighHorizon
+            ? 1.15
+            : 1.6;
+
       const score =
-        edgeAvg * (campusScene ? 1.1 : strongHighHorizon ? 1.15 : 1.6) +
+        edgeAvg * edgeWeight +
         satAvg * 0.55 +
         vGradAvg * (campusScene ? 1.4 : 2.2) +
         skyBonus +
         topBias +
         archBonus +
+        canvasBonus +
         horizonBonus +
         campusBonus -
         wordmarkPenalty -
@@ -892,13 +991,48 @@
 
     // Ancrage final :
     //  - campus : masse du pavillon au milieu du bandeau (voir le volume UQAM) ;
+    //  - tipi / toile : sommet dans le tiers haut du bandeau (pas troncs seuls) ;
     //  - paysage + horizon fort / bandeau fin : skyline dans le tiers haut ;
     //  - arche forte : landmark centré.
     if (campusScene && buildWeighted > 0.02) {
       // ~0.5 = façade centrale ; un peu plus bas si COM déjà bas (rue).
-      const idealRel = buildCOM / sampleH > 0.62 ? 0.48 : 0.52;
-      const anchored = Math.round(buildCOM - idealRel * win);
-      bestY0 = Math.max(0, Math.min(maxY0, anchored));
+      // Hiver / toiture neige : si masse blanche (toit) au-dessus du COM
+      // bâti, remonter un peu pour garder lucarne + arête (réf. Laval 02
+      // Wilfredor — crop auto déjà excellent, on stabilise le pattern).
+      let idealRel = buildCOM / sampleH > 0.62 ? 0.48 : 0.52;
+      let snowRoofY = -1;
+      let snowAbove = 0;
+      let snowN = 0;
+      const comY = Math.max(1, Math.floor(buildCOM));
+      for (let y = 0; y < comY; y++) {
+        // Toit neige : L haut, sat bas (rowMean + inverse sat approx via mean)
+        if (rowMean[y] > 0.62 && rowSat[y] < 0.18) {
+          snowAbove += 1;
+          if (snowRoofY < 0) snowRoofY = y;
+          snowN++;
+        }
+      }
+      if (snowN > 2 && snowRoofY >= 0 && snowRoofY / sampleH < 0.55) {
+        // Lucarne / arête dans le tiers haut–médian du bandeau
+        idealRel = thinBanner ? 0.36 : 0.4;
+        const roofAnchor = Math.round(snowRoofY - idealRel * win * 0.35);
+        const massAnchor = Math.round(buildCOM - 0.52 * win);
+        bestY0 = Math.max(
+          0,
+          Math.min(maxY0, Math.round(0.45 * roofAnchor + 0.55 * massAnchor))
+        );
+      } else {
+        const anchored = Math.round(buildCOM - idealRel * win);
+        bestY0 = Math.max(0, Math.min(maxY0, anchored));
+      }
+    } else if (preferTipiAnchor && tipY >= 0 && !hasStrongArch) {
+      // Sommet ~ 28–35 % du haut du bandeau (lisible sous le wordmark).
+      const idealRel = thinBanner ? 0.28 : 0.32;
+      const anchored = Math.round(tipY - idealRel * win);
+      bestY0 = Math.round(
+        0.25 * bestY0 + 0.75 * Math.max(0, Math.min(maxY0, anchored))
+      );
+      bestY0 = Math.max(0, Math.min(maxY0, bestY0));
     } else if (hasHorizon && preferHorizonAnchor && !hasStrongArch) {
       const idealRel = strongHighHorizon ? 0.28 : 0.3;
       const anchored = Math.round(horizonY - idealRel * win);
@@ -933,12 +1067,13 @@
       try {
         focalY = computeBestFocalY(img, _mastheadAspect(), {
           campus: isCampusBackground(bg),
+          title: bg && bg.title,
+          url: bg && bg.url,
         });
       } catch (_) {
         focalY = 0.5;
       }
-    }
-    const pct = Math.round(focalY * 1000) / 10; // 1 décimale
+    }    const pct = Math.round(focalY * 1000) / 10; // 1 décimale
     return { position: `50% ${pct}%`, focalY };
   }
 
@@ -1273,6 +1408,8 @@
           try {
             focalY = computeBestFocalY(img, MASTHEAD_AR, {
               campus: isCampusBackground(bg),
+              title: bg && bg.title,
+              url: bg && bg.url,
             });
           } catch (_) {
             focalY = 0.5;
