@@ -43,6 +43,9 @@
       "height": 1152,
       "aspect": 1.778,
       "mime": "image/jpeg",
+      "season": "ete",
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
       "surfaces": [
         "masthead",
         "pomo"
@@ -61,6 +64,9 @@
       "width": 3648,
       "height": 2736,
       "aspect": 1.333,
+      "season": "ete",
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
       "surfaces": [
         "masthead",
         "pomo"
@@ -71,6 +77,6 @@
       "focalY": 0.38
     }
   ],
-  "updated": "2026-07-25T08:16:57.740Z",
+  "updated": "2026-07-25T08:18:57.677Z",
   "lastSeasonDetect": "2026-07-25T08:16:57.651Z"
 }

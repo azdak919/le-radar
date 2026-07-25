@@ -760,26 +760,36 @@ function setBuffering(next) {
 
 function registerServiceWorker() {
   if (IS_TUNER_EMBED || !('serviceWorker' in navigator)) return;
-  // Ne jamais recharger pendant une écoute : un déploiement coupait la radio.
-  // La nouvelle version s'appliquera à la prochaine navigation / pause.
+  // Recharge uniquement après une *mise à jour* (pas la 1ʳᵉ prise de contrôle SW),
+  // sinon la page charge → SW claim → controllerchange → reload = double flash.
+  // Ne jamais recharger pendant une écoute (déploiement coupait la radio).
+  const hadControllerOnLoad = !!navigator.serviceWorker.controller;
+  let reloading = false;
   const reloadUnlessListening = () => {
-    if (!isPlaybackActive()) window.location.reload();
+    if (reloading) return;
+    if (!hadControllerOnLoad) return; // 1ʳᵉ activation : rester sur cette page
+    if (isPlaybackActive()) return;
+    reloading = true;
+    window.location.reload();
   };
   navigator.serviceWorker.register('./sw.js').then((reg) => {
+    // waiting déjà prêt (onglet ouvert pendant deploy) → activer sans double-écoute
+    if (reg.waiting && hadControllerOnLoad) {
+      reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+    }
     reg.addEventListener('updatefound', () => {
       const worker = reg.installing;
       worker?.addEventListener('statechange', () => {
-        if (worker.state === 'activated' && navigator.serviceWorker.controller) {
-          reloadUnlessListening();
+        // Laisser controllerchange gérer le reload (une seule fois).
+        if (worker.state === 'installed' && reg.waiting && hadControllerOnLoad) {
+          reg.waiting.postMessage({ type: 'SKIP_WAITING' });
         }
       });
     });
-    if (reg.waiting && navigator.serviceWorker.controller) {
-      reg.waiting.postMessage({ type: 'SKIP_WAITING' });
-    }
   }).catch((e) => {
     console.warn('Service worker registration failed', e);
   });
+  // update() en arrière-plan — ne force pas de reload immédiat
   navigator.serviceWorker.getRegistrations?.().then((regs) => {
     regs.forEach((reg) => reg.update());
   }).catch(() => {});

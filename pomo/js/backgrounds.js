@@ -565,12 +565,20 @@ function getRandomBgIndex(culture = null) {
   // Saison courante : 4 saisons QC / 6 saisons nations–Inuit
   if (typeof RadarSeason !== 'undefined' && RadarSeason.filterPoolByCurrentSeason) {
     const items = pool.map((i) => ({ ...BACKGROUNDS[i], _idx: i }));
+    // minStrict élevé : sinon en été le pool se réduit à ~5 photos taguées
+    // et le plein écran peut rester vide après rejets.
     const r = RadarSeason.filterPoolByCurrentSeason(items, {
-      minStrict: 2,
-      minAdjacent: 2,
+      minStrict: 12,
+      minAdjacent: 16,
     });
     if (r.items && r.items.length) {
       pool = r.items.map((it) => it._idx).filter((i) => i != null);
+      // Favorites permanent toujours dans le pool
+      for (let i = 0; i < BACKGROUNDS.length; i++) {
+        if (BACKGROUNDS[i] && BACKGROUNDS[i].permanent && !pool.includes(i) && !_failedBg.has(i)) {
+          pool.push(i);
+        }
+      }
       if (typeof console !== 'undefined' && console.info) {
         console.info(
           `[pomo-bg] saison 4=${r.season4} · 6=${r.season6} · tier=${r.tier}` +
