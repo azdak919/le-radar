@@ -18,7 +18,7 @@
   --live-dark: #9c0c24;
   --radio: #003da5;        /* bleu officiel du Québec — volet radio / syntoniseur */
   --radio-bright: #5d9be0; /* version éclaircie pour le bandeau sombre */
-  --tuner-bg: #111317;
+  --tuner-bg: #0b0c0f; /* obsidienne mate (synthé) */
   --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
   --sans: "Inter", system-ui, -apple-system, sans-serif;
   --maxw: 800px;
@@ -34,7 +34,7 @@
   --muted: #888d96;
   --rule: #26282d;
   --rule-strong: #f1f2f4;
-  --tuner-bg: #1a1c21;
+  --tuner-bg: #0b0c0f; /* même obsidienne en thème sombre */
   --accent: #cf7ec1;       /* pourpre éclairci pour lisibilité sur fond sombre */
   --accent-dark: #b85fa8;
   color-scheme: dark;
@@ -70,6 +70,124 @@ body {
   overscroll-behavior-x: none;
   touch-action: pan-y;
 }
+
+/* ═══════════════════════════════════════════════════════════
+   FOND PHOTO DU MÂT — banque du Québec (Wikimedia Commons, licences ouvertes)
+   Bannière plein-largeur derrière le mât (date/titre/actions/météo)
+   uniquement — le reste de la page garde son fond plein habituel.
+   ═══════════════════════════════════════════════════════════ */
+.masthead { position: relative; }
+#bg-photo-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 1600ms ease-out;
+}
+#bg-photo-layer.loaded { opacity: 1; }
+
+/* Voile : thème clair = photo quasi originale (juste assez pour le texte
+   aux bords) ; thème sombre = voile fin, à peine plus marqué. */
+.bg-photo-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 900ms ease-out;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(10, 12, 16, 0.16) 0%,
+      rgba(10, 12, 16, 0.06) 60%,
+      rgba(10, 12, 16, 0.18) 100%
+    );
+}
+[data-theme="dark"] .bg-photo-scrim {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.32) 0%,
+      rgba(0, 0, 0, 0.2) 60%,
+      rgba(0, 0, 0, 0.34) 100%
+    );
+}
+#bg-photo-layer.loaded + .bg-photo-scrim { opacity: 1; }
+
+.masthead-inner { position: relative; z-index: 2; }
+
+.bg-photo-credit {
+  position: absolute;
+  z-index: 3;
+  right: max(10px, env(safe-area-inset-right, 0px));
+  bottom: 5px;
+  max-width: min(280px, calc(100% - 20px));
+  font-size: 9.5px;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.72);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65);
+  opacity: 0;
+  text-align: right;
+  transition: opacity 900ms ease-out;
+  pointer-events: none;
+}
+#bg-photo-layer.loaded ~ .bg-photo-credit { opacity: 1; }
+.bg-photo-credit a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  pointer-events: auto;
+}
+.bg-photo-credit:hover,
+.bg-photo-credit:focus-within { color: #fff; }
+@media (max-width: 480px) {
+  .bg-photo-credit { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #bg-photo-layer,
+  .bg-photo-scrim,
+  .bg-photo-credit { transition: none; }
+}
+
+/* Texte / icônes du mât : lisibles sur photo dans les deux thèmes, une fois
+   la photo chargée — contour net façon vecteur (stroke fin, pas de flou
+   diffus) plutôt qu'une ombre portée floue. */
+.masthead:has(#bg-photo-layer.loaded) .masthead-top,
+.masthead:has(#bg-photo-layer.loaded) .masthead-date,
+.masthead:has(#bg-photo-layer.loaded) .wordmark-mark,
+.masthead:has(#bg-photo-layer.loaded) .wordmark-full {
+  color: #ffffff;
+  -webkit-text-stroke: 0.6px rgba(0, 0, 0, 0.85);
+  paint-order: stroke fill;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.9);
+}
+/* Les puces météo restent des cartes opaques autonomes (déjà lisibles dans
+   les deux thèmes) — ne pas forcer le blanc dedans, seulement leur donner
+   un peu de relief sur la photo. */
+.masthead:has(#bg-photo-layer.loaded) .masthead-weather__city {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+.masthead:has(#bg-photo-layer.loaded) .masthead-top {
+  border-bottom-color: rgba(255, 255, 255, 0.22);
+}
+.masthead:has(#bg-photo-layer.loaded) .masthead-icon {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.55);
+  background: rgba(0, 0, 0, 0.28);
+  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.85));
+}
+.masthead:has(#bg-photo-layer.loaded) .masthead-icon svg {
+  stroke-width: 2.2;
+}
+.masthead:has(#bg-photo-layer.loaded) .masthead-home.is-active,
+.masthead:has(#bg-photo-layer.loaded) .masthead-home[aria-current="page"] {
+  background: color-mix(in srgb, var(--accent) 30%, rgba(0,0,0,0.22));
+  border-color: color-mix(in srgb, var(--accent) 60%, rgba(255,255,255,0.35));
+}
+/* Jointure mât → synthé : même teinte que l’obsidienne (pas de filet clair). */
+.masthead:has(#bg-photo-layer.loaded) { border-bottom-color: #0b0c0f; }
 
 /* Conteneurs principaux : jamais plus larges que le viewport */
 .masthead,
@@ -144,10 +262,10 @@ a { color: inherit; }
 .hidden { display: none !important; }
 
 /* ─────────────── MASTHEAD ─────────────── */
-.masthead { border-bottom: 2px solid var(--rule-strong); }
-/* En thème sombre, --rule-strong est presque blanc : ce trait apparaissait
-   comme une ligne blanche juste au-dessus du module radio. On l'adoucit. */
-[data-theme="dark"] .masthead { border-bottom-color: var(--rule); }
+/* Filet bas : sombre dans les deux thèmes pour ne jamais créer de « barre tin »
+   claire au-dessus du synthé (obsidienne). */
+.masthead { border-bottom: 1px solid #0b0c0f; }
+[data-theme="dark"] .masthead { border-bottom-color: #0a0b0e; }
 
 .masthead-inner {
   max-width: var(--maxw);
@@ -551,12 +669,73 @@ html[data-script-dir="rtl"] .wordmark-full {
   /* Au-dessus du fil / bouton traduction : le popover volume sort sous la barre
      et ne doit pas passer sous .translate-control (même z-index + DOM plus bas). */
   z-index: 100;
+  /* Obsidienne mate : fond sombre uniforme, sans filet clair ni chrome métallique. */
   background: var(--tuner-bg);
   color: #fff;
-  box-shadow: 0 1px 0 rgba(0,0,0,0.3), 0 6px 22px -16px rgba(0,0,0,0.7);
+  /* Ombre uniquement vers le bas — pas de highlight haut (ex-« barre tin »). */
+  box-shadow: 0 8px 24px -14px rgba(0, 0, 0, 0.78);
+  border-top: none;
+}
+
+/* Grain minéral mat (obsidienne) — mobile + base. 100 % CSS, net à tout DPI. */
+.tuner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-color: var(--tuner-bg);
+  background-image:
+    /* Micro-grain (pierre mate, sans brillance) */
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.012) 0 1px,
+      transparent 1px 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.008) 0 1px,
+      transparent 1px 4px
+    ),
+    /* Profondeur mate : plus sombre en bas, jamais de bande claire en haut */
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.12) 0%,
+      transparent 42%,
+      rgba(0, 0, 0, 0.28) 100%
+    );
+}
+
+/* Bureau : même obsidienne mate, grain un peu plus présent (surface plus large). */
+@media (min-width: 600px) {
+  .tuner::before {
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.014) 0 1px,
+        transparent 1px 3px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.01) 0 1px,
+        transparent 1px 5px
+      ),
+      radial-gradient(
+        120% 90% at 50% 120%,
+        rgba(0, 0, 0, 0.35) 0%,
+        transparent 55%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.1) 0%,
+        transparent 40%,
+        rgba(0, 0, 0, 0.32) 100%
+      );
+  }
 }
 
 .tuner-inner {
+  position: relative;
+  z-index: 1;
   max-width: var(--maxw);
   margin: 0 auto;
   padding: 10px var(--pad);

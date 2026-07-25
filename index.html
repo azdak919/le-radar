@@ -79,6 +79,11 @@
   <body>
     <!-- ══════════ MASTHEAD ══════════ -->
     <header class="masthead">
+      <!-- Fond photo (banque du Québec) : bannière plein largeur derrière le
+           mât seulement — pas ailleurs sur la page. -->
+      <div id="bg-photo-layer" aria-hidden="true"></div>
+      <div class="bg-photo-scrim" aria-hidden="true"></div>
+      <div class="bg-photo-credit" id="bg-photo-credit"></div>
       <div class="masthead-inner">
         <div class="masthead-top">
           <span id="today-date" class="masthead-date"></span>
@@ -450,6 +455,8 @@
     <script src="translate.js" defer></script>
     <!-- Règle universelle de fraîcheur (sessions QC) — avant app.js -->
     <script src="scripts/session-freshness-lib.js" defer></script>
+    <script src="quebec-backgrounds-data.js" defer></script>
+    <script src="quebec-backgrounds.js" defer></script>
     <script src="app.js" defer></script>
     <!-- Invitations douces : PWA mobile + page d’accueil bureau (2ᵉ visite + engagement) -->
     <script src="engage-prompt.js" defer></script>
