@@ -177,6 +177,80 @@ test('une ligne d’antenne qui ne dit que le slogan ne déclenche pas d’alter
   expect(verdicts.sansMeta, 'pas de slogan → alternance utile').toBe(false);
 });
 
+test('la ligne d’aperçu suit l’ordre poste → libellé → émission → heure → établissement', async ({ page }) => {
+  await pure(page);
+
+  const lines = await page.evaluate(async () => {
+    const P = window.RadarAir._pure;
+    const radios = await fetch('./radios.json').then((r) => r.json());
+    return radios.map((r) => ({
+      id: r.id,
+      name: r.name,
+      inst: r.institution,
+      line: P.previewDialLine(r),
+      banded: P.stationBandedName(r),
+    }));
+  });
+
+  const ACRONYMS = /^(ULaval|UdeM|UdeS|UQAM|McGill|Concordia)$/;
+
+  for (const st of lines) {
+    const parts = st.line.split('·').map((s) => s.trim());
+
+    // 1. Le poste ouvre la ligne, avec sa bande de diffusion.
+    expect(
+      st.line.startsWith(st.banded),
+      `${st.id} : la ligne doit commencer par « ${st.banded} » — ${st.line}`,
+    ).toBe(true);
+    expect(parts[0], `${st.id} : le nom du poste ouvre la ligne`).toContain(st.name);
+    expect(st.banded, `${st.id} : bande de diffusion (FM, AM ou Web) requise`)
+      .toMatch(/(?:\b|\d)(?:FM|AM)\b|·\s*Web$/);
+    // « CHOQ.ca · Web » occupe deux segments ; « CJLO 1690AM » un seul.
+    const bandOffset = st.banded.includes('·') ? 1 : 0;
+
+    // 2. Le libellé vient juste après le poste.
+    expect(
+      parts[1 + bandOffset],
+      `${st.id} : libellé attendu en 2ᵉ position — ${st.line}`,
+    ).toMatch(/^(À l['’]antenne|À venir)$/);
+
+    // 3. L'établissement ferme la ligne, en acronyme (jamais la forme longue).
+    const last = parts[parts.length - 1];
+    expect(last, `${st.id} : acronyme d’établissement attendu en fin de ligne — ${st.line}`)
+      .toMatch(ACRONYMS);
+    expect(st.line, `${st.id} : forme longue d’établissement interdite sur mobile`)
+      .not.toContain(st.inst);
+
+    // Régression : « CJLO 1690AM · 1690 AM » — la bande était doublée parce
+    // que `\bAM\b` ne mord pas dans « 1690AM ».
+    expect(st.banded, `${st.id} : bande dupliquée — ${st.banded}`)
+      .not.toMatch(/(FM|AM).*·.*(FM|AM)/i);
+  }
+});
+
+test('l’émission en ondes reste affichée plus longtemps que les autres phases', async ({ page }) => {
+  await pure(page);
+
+  const dwell = await page.evaluate(() => {
+    const { airPhaseDwellMs } = window.RadarAir._pure;
+    const base = 8000;
+    return {
+      live: airPhaseDwellMs({ kind: 'live', title: 'Bhum Bhum Time' }, base),
+      track: airPhaseDwellMs({ kind: 'live', title: '♪ Artiste — Titre' }, base),
+      upcoming: airPhaseDwellMs({ kind: 'upcoming', title: 'Desi Beats' }, base),
+      slogan: airPhaseDwellMs({ kind: 'idle', title: 'La radio de l’UQAM' }, base),
+      base,
+    };
+  });
+
+  expect(dwell.live, 'l’émission en ondes doit durer plus que la base').toBeGreaterThan(dwell.base);
+  expect(dwell.live, 'plus longtemps que le « à venir »').toBeGreaterThan(dwell.upcoming);
+  // Une piste est de type « live » mais n'est pas une émission.
+  expect(dwell.track, 'une piste garde la durée de base').toBe(dwell.base);
+  expect(dwell.upcoming, 'le « à venir » garde la durée de base').toBe(dwell.base);
+  expect(dwell.slogan, 'le slogan garde la durée de base').toBe(dwell.base);
+});
+
 test('les métadonnées techniques ne sont jamais affichées comme une piste', async ({ page }) => {
   await pure(page);
 

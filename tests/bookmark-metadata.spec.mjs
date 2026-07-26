@@ -29,9 +29,12 @@ for (const { path, title, iconSelector, icon } of [
   },
 ]) {
   test(`favori ${path} : titre et favicon dédiés`, async ({ page }) => {
-    // `load` et non `networkidle` : le syntoniseur et la météo gardent des
-    // requêtes ouvertes, le réseau n'est jamais « idle » sur ces pages.
-    await page.goto(path, { waitUntil: 'load' });
+    // Ni `networkidle` — le syntoniseur et la météo gardent des requêtes
+    // ouvertes, le réseau n'est jamais « idle » — ni `load`, qui attend la
+    // photo Wikimedia du mât et le script umami, deux ressources externes qui
+    // font dépasser les 30 s sous un runner chargé. Le titre et le favicon
+    // sont dans le <head> : `domcontentloaded` les a déjà.
+    await page.goto(path, { waitUntil: 'domcontentloaded' });
     await expect(page).toHaveTitle(title);
     await expect(page.locator(iconSelector)).toHaveAttribute('href', icon);
   });

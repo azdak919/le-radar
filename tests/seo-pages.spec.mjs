@@ -9,8 +9,16 @@ import { expect, test } from '@playwright/test';
  * JavaScript ne s'exécute pas.
  */
 
+/*
+ * `domcontentloaded` et non `load` sur l'accueil : `load` attend la photo
+ * Wikimedia du mât (plusieurs Mo, hôte externe) et le script umami. Ces tests
+ * ne cliquent que des liens du pied de page, déjà présents dans le HTML
+ * prérendu — attendre des ressources externes ne prouvait rien et faisait
+ * dépasser les 30 s sous un runner chargé. Les fiches statiques (/radios/…)
+ * gardent `load` : elles ne chargent rien d'externe.
+ */
 test('depuis l’accueil, on atteint l’annuaire puis une fiche de journal', async ({ page }) => {
-  await page.goto('/', { waitUntil: 'load' });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
 
   await page.getByRole('link', { name: 'Tous les médias étudiants du Québec' }).click();
   await expect(page).toHaveURL(/\/medias\/$/);
@@ -35,7 +43,7 @@ test('une fiche de radio expose ses faits et renvoie vers l’écoute', async ({
 });
 
 test('depuis l’accueil, on atteint le hub des horaires puis une grille complète', async ({ page }) => {
-  await page.goto('/', { waitUntil: 'load' });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
 
   await page.getByRole('link', { name: 'Les horaires des radios étudiantes' }).click();
   await expect(page).toHaveURL(/\/horaires\/$/);
@@ -56,7 +64,7 @@ test('depuis l’accueil, on atteint le hub des horaires puis une grille complè
 
 test('le volet anglais est atteignable et jamais imposé', async ({ page }) => {
   // Navigateur en espagnol : on ne doit PAS être redirigé vers /en/.
-  await page.goto('/', { waitUntil: 'load' });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
   await expect(page).toHaveURL(/\/$/);
   expect(new URL(page.url()).pathname).not.toContain('/en/');
 

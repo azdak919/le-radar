@@ -91,6 +91,10 @@ for (const radio of radios) {
  *    `track` faute de filtre → « ♪ Offline » sous le titre de l'émission.
  */
 const HTML_ENTITY_RE = /&(?:#\d+|#x[0-9a-f]+|[a-z][a-z0-9]{1,31});/i;
+// Consignes internes laissées dans le nom d'émission par les stations —
+// « Desi Beats (must be .mp3!!) » chez CKUT. Le filtre a manqué deux fois à un
+// endroit différent (grille, puis flux live) : ce test couvre les deux sorties.
+const PRODUCTION_NOTE_RE = /\(\s*(?:must|please|do not|don't|new time|tba|tbd|test)\b|\([^)]*\.(?:mp3|wav|flac|aiff?|m4a|ogg)\b/i;
 const TECHNICAL_AIR_RE = /^(?:off ?line|off ?air|dead ?air|silence(?: detected)?|station ?id|airtime!?|liquidsoap(?:\s+radio!?)?|no name|unknown|unspecified|n\/a)$/i;
 
 const airTextFields = [];
@@ -120,6 +124,10 @@ for (const [label, value] of airTextFields) {
   assert(
     !TECHNICAL_AIR_RE.test(text),
     `${label}: métadonnée technique diffusée comme contenu (${text}) — voir isUsableTrackLine`
+  );
+  assert(
+    !PRODUCTION_NOTE_RE.test(text),
+    `${label}: consigne interne diffusée comme titre (${text}) — voir stripProductionNote`
   );
 }
 

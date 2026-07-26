@@ -462,6 +462,12 @@ const TUNER_SUB_ROTATE_MS = IS_TUNER_EMBED ? 14000 : 8000;
 const TUNER_SUB_ROTATE_NARROW_MS = 14000;
 const TUNER_SUB_ROTATE_VERY_NARROW_MS = 18000;
 const AIR_PANEL_ROTATE_MS = 8000;
+/** Aller + retour : l'animation marquee est `alternate`. */
+const MARQUEE_ROUND_TRIPS = 2;
+/** Pause de lecture ajoutée à l'aller-retour avant de changer de texte. */
+const MARQUEE_REST_MS = 2500;
+/** L'émission en ondes reste plus longtemps que les autres phases. */
+const AIR_LIVE_DWELL_FACTOR = 2;
 const NOW_AIR_CROSSFADE_MS = 700;
 /** Bascule du contenu du panneau antenne (fondu CSS de 0,3 s). */
 const NOW_AIR_PANEL_SWAP_MS = 280;
@@ -1748,7 +1754,7 @@ function isGarbageChoqTrack(track, relatedTitles = []) {
 /** Arrête le timer de rotation du panneau bureau. */
 function stopAirPanelRotate() {
   if (airPanelRotateTimer) {
-    clearInterval(airPanelRotateTimer);
+    clearTimeout(airPanelRotateTimer);
     airPanelRotateTimer = null;
   }
 }
@@ -1779,15 +1785,41 @@ function syncAirPanelRotate(radio) {
     return;
   }
   if (airPanelRotateTimer) return;
-  airPanelRotateTimer = setInterval(() => {
-    const live = airRotationPhases(currentStation, { withSlogan: false });
-    if (!currentStation || live.length < 2 || isTunerSubRotateMode()) {
-      stopAirPanelRotate();
-      return;
-    }
-    advanceAirPhase(live.length);
-    renderTunerNowAir();
-  }, AIR_PANEL_ROTATE_MS);
+  scheduleAirPanelRotateTick();
+}
+
+/**
+ * Chaîne de `setTimeout` plutôt qu'un `setInterval` fixe : la durée dépend de
+ * la phase affichée. L'émission en ondes reste deux fois plus longtemps que la
+ * piste ou le « à venir », et un titre qui déborde a le temps de faire son
+ * aller-retour complet avant d'être remplacé — la même règle que le dial.
+ */
+function scheduleAirPanelRotateTick() {
+  stopAirPanelRotate();
+  if (!currentStation || isTunerSubRotateMode()) return;
+
+  const phases = airRotationPhases(currentStation, { withSlogan: false });
+  if (phases.length < 2) return;
+
+  const phase = phases[airPhaseIndex % phases.length];
+
+  whenMarqueeSettled(TUNER_NOWAIR_TITLE, () => {
+    if (!currentStation || isTunerSubRotateMode() || airPanelRotateTimer) return;
+    const delay = Math.max(
+      airPhaseDwellMs(phase, AIR_PANEL_ROTATE_MS),
+      marqueeRoundTripMs(TUNER_NOWAIR_TITLE),
+      marqueeRoundTripMs(TUNER_NOWAIR_SUB),
+    );
+    airPanelRotateTimer = setTimeout(() => {
+      airPanelRotateTimer = null;
+      const live = airRotationPhases(currentStation, { withSlogan: false });
+      if (!currentStation || live.length < 2 || isTunerSubRotateMode()) return;
+      advanceAirPhase(live.length);
+      // `renderTunerNowAir()` réarme le cycle via `syncAirPanelRotate()` :
+      // ne pas replanifier ici, on programmerait deux fois.
+      renderTunerNowAir();
+    }, delay);
+  });
 }
 
 /**
@@ -1964,6 +1996,11 @@ window.RadarAir = {
     isRedundantAirLine,
     airRotationPhases,
     dialPhaseLinesForRadio,
+    previewDialLine,
+    stationBandedName,
+    airPhaseDwellMs,
+    marqueeRoundTripMs,
+    getTunerSubRotateDelayMs,
     trackForAirDisplay,
     isGarbageChoqTrack,
   },
@@ -2047,6 +2084,24 @@ function stationDisplayName(radio = {}) {
   return `${name}${stationOnAirBandLabel(radio)}`;
 }
 
+/**
+ * Poste **et** sa bande de diffusion : « CISM 89,3 FM », « CJLO 1690AM »,
+ * « CHOQ.ca · Web ». `stationOnAirBandLabel()` ne connaît que FM et AM ;
+ * un poste sans fréquence hertzienne annonce donc « Web », sans quoi rien
+ * n'indiquerait comment il se diffuse.
+ */
+function stationBandedName(radio = {}) {
+  const display = stationDisplayName(radio);
+  if (!display) return '';
+  // « CJLO 1690AM » porte déjà sa bande, collée au chiffre : `\bAM\b` ne la
+  // voyait pas (pas de frontière de mot entre « 0 » et « A »), et on ajoutait
+  // « · 1690 AM » derrière.
+  if (/(?:\b|\d)(?:FM|AM)\b/i.test(display)) return display;
+  const freq = String(radio.frequency || '').trim();
+  if (!freq || /^web$/i.test(freq)) return `${display} · Web`;
+  return `${display} · ${freq}`;
+}
+
 /** Ligne 1 du syntoniseur (vue compacte) : « poste · établissement ». */
 function tunerDialTitleLine(radio) {
   if (!radio) return tunerSubMeta || 'Radios étudiantes en direct';
@@ -2126,18 +2181,54 @@ function dialCompactMetaLineForRadio(radio) {
  * Le slogan n'est qu'une phase parmi d'autres et ferme le cycle ; il
  * n'apparaît plus une fois sur deux comme du temps de l'alternance binaire.
  */
-function dialPhaseLinesForRadio(radio) {
+function dialPhasesForRadio(radio) {
   if (!radio) return [];
   const seen = new Set();
-  const lines = [];
+  const out = [];
   for (const phase of airRotationPhases(radio, { withSlogan: true })) {
     const line = formatNowAirSubLine(phase.title, phase.sub, false, phase.kind, { liveLabel: true });
     const key = normLoose(line);
     if (!line || seen.has(key)) continue;
     seen.add(key);
-    lines.push(line);
+    out.push({ ...phase, line });
   }
-  return lines;
+  return out;
+}
+
+/** Les mêmes phases, réduites à leur texte. */
+function dialPhaseLinesForRadio(radio) {
+  return dialPhasesForRadio(radio).map((p) => p.line);
+}
+
+/**
+ * Ligne d'aperçu du dial au repos (« Syntoniser un poste », téléphone).
+ *
+ * Ordre : **poste + bande → à l'antenne / à venir → émission → horaire →
+ * établissement**. On commence par identifier la station, puisque le
+ * carrousel en change ; le libellé vient ensuite dire si l'émission passe
+ * maintenant ou plus tard ; l'établissement ferme la ligne, en acronyme, sa
+ * forme longue doublerait presque le temps de défilement sur téléphone.
+ *
+ * Le panneau bureau n'utilise pas cette composition : il porte son libellé à
+ * part et affiche titre et sous-titre sur deux lignes.
+ */
+function previewDialLine(radio) {
+  if (!radio) return '';
+  const phase = airRotationPhases(radio, { withSlogan: false })[0];
+  if (!phase) return stationBandedName(radio);
+
+  const isTrack = String(phase.title || '').startsWith('♪');
+  const label = phase.kind === 'upcoming'
+    ? 'À venir'
+    : (phase.kind === 'live' && !isTrack ? "À l'antenne" : '');
+
+  return [
+    stationBandedName(radio),
+    label,
+    phase.title,
+    phase.sub,
+    shortInstitution(radio.institution, radio.type),
+  ].map((part) => String(part || '').trim()).filter(Boolean).join(' · ');
 }
 
 function formatPreviewNowAir(radio, { omitStation = false } = {}) {
@@ -2181,16 +2272,44 @@ function stopNowAirPreview() {
   }
 }
 
-/** Temps de lecture minimal quand le texte défile (aller-retour + pauses). */
-function marqueeReadingTimeMs(el) {
+/**
+ * Temps qu'il faut à un texte qui défile pour partir **et revenir**.
+ *
+ * L'animation est `alternate` : une itération fait l'aller, la suivante le
+ * retour. Un cycle complet vaut donc 2 × `--marquee-duration`. On ajoute une
+ * marge pour la pause de lecture aux deux extrémités (14 % de la durée de
+ * chaque côté, cf. les keyframes `tunerMarquee`).
+ *
+ * Règle générale du site : **on ne change jamais un texte avant la fin de son
+ * aller-retour.** Toute surface qui alterne doit passer par ici.
+ */
+function marqueeRoundTripMs(el) {
   if (!el?.classList.contains('is-marquee')) return 0;
   const sec = parseFloat(el.style.getPropertyValue('--marquee-duration'));
   if (!Number.isFinite(sec) || sec <= 0) return 0;
-  return Math.ceil(sec * 1000 * 2.4) + 2500;
+  return Math.ceil(sec * 1000 * MARQUEE_ROUND_TRIPS) + MARQUEE_REST_MS;
 }
 
-/** Délai avant la prochaine alternance du sous-titre (plus long si écran étroit / texte long). */
-function getTunerSubRotateDelayMs(activeEl) {
+/**
+ * Combien de temps laisser une phase à l'écran, avant la contrainte de
+ * défilement. L'émission en ondes est l'information principale : elle reste
+ * deux fois plus longtemps qu'une piste, qu'un « à venir » ou qu'un slogan.
+ */
+function airPhaseDwellMs(phase, baseMs) {
+  const title = String(phase?.title || '');
+  const isLiveShow = phase?.kind === 'live' && !title.startsWith('♪');
+  return isLiveShow ? Math.round(baseMs * AIR_LIVE_DWELL_FACTOR) : baseMs;
+}
+
+/**
+ * Délai avant la prochaine alternance du sous-titre.
+ *
+ * La durée **de base** dépend de la largeur (un écran étroit se lit moins
+ * vite) ; la contrainte de défilement, elle, vaut à **toute** largeur — elle
+ * était auparavant enfermée dans la garde `< 1100 px`, si bien qu'en embed
+ * large une ligne qui défilait pouvait changer en pleine course.
+ */
+function getTunerSubRotateDelayMs(activeEl, phase = null) {
   let delay = TUNER_SUB_ROTATE_MS;
 
   if (TUNER_SUB_ROTATE_MQ?.matches) {
@@ -2199,24 +2318,41 @@ function getTunerSubRotateDelayMs(activeEl) {
     } else if (TUNER_SUB_ROTATE_NARROW_MQ?.matches) {
       delay = TUNER_SUB_ROTATE_NARROW_MS;
     }
-    const readTime = marqueeReadingTimeMs(activeEl);
-    if (readTime) delay = Math.max(delay, readTime);
   }
 
-  return delay;
+  if (phase) delay = airPhaseDwellMs(phase, delay);
+  return Math.max(delay, marqueeRoundTripMs(activeEl));
 }
 
-function planTunerSubRotateDelay(activeEl, attempt, onReady) {
-  const span = activeEl?.querySelector('.tuner-now-sub-text');
-  const mightOverflow = span && activeEl?.clientWidth > 0
-    && span.scrollWidth > activeEl.clientWidth + 4;
+/**
+ * Attend que la mesure du défilement soit posée avant de calculer le délai.
+ *
+ * Le budget suit celui de `scheduleMarqueeMeasure()` (2 rAF par tentative,
+ * jusqu'à 5) : plus court, on calculait le délai avant que
+ * `--marquee-duration` n'existe, la durée retombait à la base et la ligne
+ * changeait en plein défilement.
+ */
+const MARQUEE_MEASURE_FRAMES = 12;
 
-  if (attempt < 4 && mightOverflow && !activeEl?.classList.contains('is-marquee')) {
-    requestAnimationFrame(() => planTunerSubRotateDelay(activeEl, attempt + 1, onReady));
+/**
+ * Appelle `cb` une fois que `el` sait s'il défile ou non. Partagé par le dial
+ * et le panneau : sans cette attente, on calcule un délai à partir d'un
+ * `--marquee-duration` qui n'existe pas encore.
+ */
+function whenMarqueeSettled(el, cb, attempt = 0) {
+  const span = el?.querySelector('.tuner-now-sub-text');
+  const mightOverflow = span && el?.clientWidth > 0
+    && span.scrollWidth > el.clientWidth + 4;
+
+  if (attempt < MARQUEE_MEASURE_FRAMES && mightOverflow && !el?.classList.contains('is-marquee')) {
+    requestAnimationFrame(() => whenMarqueeSettled(el, cb, attempt + 1));
     return;
   }
+  cb();
+}
 
-  onReady(getTunerSubRotateDelayMs(activeEl));
+function planTunerSubRotateDelay(activeEl, attempt, onReady, phase = null) {
+  whenMarqueeSettled(activeEl, () => onReady(getTunerSubRotateDelayMs(activeEl, phase)), attempt);
 }
 
 function isNowAirPanelPreviewMode() {
@@ -2377,25 +2513,30 @@ function scheduleTunerSubRotateTick() {
   if (!isTunerSubRotateMode() || !currentStation) return;
 
   const activeEl = dialRotateSlotB ? TUNER_SUB_AIR : TUNER_SUB;
+  // Phase actuellement lisible : c'est elle qui décide du temps d'affichage
+  // (l'émission en ondes reste plus longtemps que la piste ou le « à venir »).
+  const shown = dialPhasesForRadio(currentStation);
+  const phase = shown.length ? shown[airPhaseIndex % shown.length] : null;
+
   planTunerSubRotateDelay(activeEl, 0, (delay) => {
     if (!isTunerSubRotateMode() || !currentStation) return;
     tunerSubRotateTimer = setTimeout(() => {
       tunerSubRotateTimer = null;
       if (!isTunerSubRotateMode() || !currentStation) return;
-      const lines = dialPhaseLinesForRadio(currentStation);
-      if (lines.length < 2) {
+      const phases = dialPhasesForRadio(currentStation);
+      if (phases.length < 2) {
         renderTunerNowAir();
         return;
       }
       // La phase n'avance qu'ici, entre deux affichages — jamais pendant
       // qu'on lit la ligne.
-      airPhaseIndex = (airPhaseIndex + 1) % lines.length;
+      airPhaseIndex = (airPhaseIndex + 1) % phases.length;
       dialRotateSlotB = !dialRotateSlotB;
-      setDialRotateSlot(dialRotateSlotB, lines[airPhaseIndex]);
+      setDialRotateSlot(dialRotateSlotB, phases[airPhaseIndex].line);
       syncNowAirCacheToPhase(currentStation);
       scheduleTunerSubRotateTick();
     }, delay);
-  });
+  }, phase);
 }
 
 function restartTunerSubRotateTimer() {
@@ -2495,7 +2636,11 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false, kind = 'idle')
     TUNER_SUB_AIR.classList.remove('is-active');
     TUNER_SUB.setAttribute('aria-hidden', 'false');
     TUNER_SUB_AIR.setAttribute('aria-hidden', 'true');
-    tunerSubAirText = formatNowAirSubLine(title, sub, empty, kind);
+    // Composition dédiée : poste + bande, libellé, émission, horaire,
+    // établissement. Le panneau latéral étant masqué, cette ligne est le seul
+    // endroit qui dise de quelle station il s'agit.
+    tunerSubAirText = previewDialLine(nowAirPreviewRadio)
+      || formatNowAirSubLine(title, sub, empty, kind);
     applyDialTextCrossfade(TUNER_SUB, tunerSubAirText, crossfade);
     return;
   }

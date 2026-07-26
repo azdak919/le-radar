@@ -198,6 +198,28 @@ est repassé vert sans changement de code. **Ne pas rallonger le timeout** — c
 cette dette interdit ; si le cas se reproduit, chercher du côté du parallélisme (le `webServer`
 `python3 -m http.server` est mono-thread et sert deux workers) plutôt que des délais.
 
+**Cause mesurée, et traitée (2026-07-26, run 30219804595).** Le cas s’est reproduit : 7 tests
+rouges, tous en dépassement de 30 s sur `page.goto('/', { waitUntil: 'load' })`, suite passée de
+1 m 35 s à 4 m 42 s. Ce n’était **pas** un ralentissement du code (app.js +3 %, news.json inchangé).
+Mesure sur l’accueil : `domcontentloaded` à **412 ms**, `load` à **1 404 ms**, et surtout
+**35 requêtes externes** qui bloquent `load` — Google Fonts (CSS + woff2), `cloud.umami.is`,
+la photo Wikimedia du mât, `gstatic.com/cv/js/sender`. Aucune n’est sous notre contrôle : sous un
+runner chargé ou une réponse lente de Commons, `load` dépasse trivialement les 30 s.
+
+Correctif conforme à la consigne de la dette — réécrire les attentes, pas rallonger les délais :
+les tests qui n’ont besoin ni de la photo ni des polices attendent désormais `domcontentloaded`
+(`bookmark-metadata`, `institution-labels`, les trois `goto('/')` de `seo-pages`). Les fiches
+statiques `/radios/…` gardent `load`, elles ne chargent rien d’externe. En complément, le
+`webServer` passe à `ThreadingHTTPServer` : le mono-thread servant deux workers restait un
+goulot réel, même s’il n’est pas la cause mesurée ici (aucun écart local : 55 s contre 55 s).
+
+**Reste à faire avant de solder** : le critère de sortie est inchangé — 10 runs verts d’affilée en
+local *et* en CI, aucun flake sur deux semaines. `masthead-weather` échoue encore ~1 fois sur 5,
+**identiquement sur le code d’avant cette session** (5 runs de chaque côté) : c’est une assertion
+d’égalité au pixel près (`expect(widthAfterRotation).toBe(widthBeforeRotation)`) sur une largeur
+qui bouge de ~3 px quand une ville plus large entre dans le bandeau. À réécrire vers l’état
+observable, pas à tolérancer à l’aveugle.
+
 **D15 — pourquoi l’audit pixel informe sans purger (2026-07-26).**
 
 Signalement humain : des églises et des images hors standard passaient encore
