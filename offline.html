@@ -294,6 +294,18 @@
       font-weight: 500;
       margin-right: 0.25rem;
     }
+    .game-audio {
+      width: 26px;
+      height: 26px;
+      border: 1px solid var(--rule-strong);
+      border-radius: 50%;
+      display: inline-grid;
+      place-items: center;
+      color: var(--ink-soft);
+      background: rgba(255,255,255,.03);
+      cursor: pointer;
+    }
+    .game-audio svg { width: 14px; height: 14px; }
     canvas#game {
       display: block;
       width: 100%;
@@ -507,6 +519,9 @@
           <span><span class="stat-label">Record</span><b id="hi">0</b></span>
           <span><span class="stat-label">Record pièces</span><b id="coins-hi">0</b></span>
         </span>
+        <button id="bgm-toggle" class="game-audio" type="button" aria-label="Couper la musique" aria-pressed="true" title="Couper la musique">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+        </button>
       </div>
       <canvas
         id="game"
@@ -930,6 +945,54 @@
   coinImg.src = 'assets/offline/coin.png';
   const COIN_FW = 16;
   const COIN_FRAMES = 20;
+
+  // Musique d'ambiance : boucle Web Audio avec recouvrement de 2 s, afin que
+  // la reprise ne révèle pas la jointure du MP3. L'autoplay est tenté; les
+  // navigateurs qui l'interdisent démarrent au premier geste sur le bouton.
+  const bgmToggle = document.getElementById('bgm-toggle');
+  const bgm = { ctx: null, buffer: null, enabled: true, token: 0, sources: [] };
+  async function startBgm() {
+    if (!bgm.enabled || bgm.buffer) return;
+    try {
+      bgm.ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const response = await fetch('assets/offline/elevator-loop.mp3');
+      bgm.buffer = await bgm.ctx.decodeAudioData(await response.arrayBuffer());
+      const play = (at) => {
+        if (!bgm.enabled || !bgm.buffer) return;
+        const source = bgm.ctx.createBufferSource();
+        const gain = bgm.ctx.createGain();
+        const fade = 2;
+        source.buffer = bgm.buffer;
+        source.connect(gain).connect(bgm.ctx.destination);
+        gain.gain.setValueAtTime(0, at);
+        gain.gain.linearRampToValueAtTime(0.16, at + fade);
+        gain.gain.setValueAtTime(0.16, at + bgm.buffer.duration - fade);
+        gain.gain.linearRampToValueAtTime(0, at + bgm.buffer.duration);
+        source.start(at);
+        source.stop(at + bgm.buffer.duration + .05);
+        bgm.sources.push(source);
+        window.setTimeout(() => play(at + bgm.buffer.duration - fade), (bgm.buffer.duration - fade) * 1000);
+      };
+      play(bgm.ctx.currentTime + .05);
+      await bgm.ctx.resume();
+    } catch (_) { /* autoplay refusé ou audio indisponible : bouton conservé */ }
+  }
+  function setBgm(enabled) {
+    bgm.enabled = enabled;
+    bgmToggle.setAttribute('aria-pressed', String(enabled));
+    bgmToggle.setAttribute('aria-label', enabled ? 'Couper la musique' : 'Jouer la musique');
+    bgmToggle.title = enabled ? 'Couper la musique' : 'Jouer la musique';
+    if (!enabled) {
+      bgm.sources.forEach((source) => { try { source.stop(); } catch (_) {} });
+      bgm.sources = [];
+      if (bgm.ctx) bgm.ctx.suspend();
+    } else if (bgm.ctx && bgm.buffer) {
+      bgm.ctx.resume();
+      if (!bgm.sources.length) { bgm.buffer = null; startBgm(); }
+    } else startBgm();
+  }
+  bgmToggle.addEventListener('click', () => setBgm(!bgm.enabled));
+  startBgm();
 
   const W = canvas.width;
   const H = canvas.height;
