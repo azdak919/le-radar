@@ -178,16 +178,6 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     campus: true,
   },
   {
-    url: "https://upload.wikimedia.org/wikipedia/commons/2/2f/UQAM-Judith-Jasmin.jpg",
-    credit: "Groov3",
-    link: "https://commons.wikimedia.org/wiki/File:UQAM-Judith-Jasmin.jpg",
-    license: "CC BY-SA 4.0",
-    title: "UQAM — Pavillon Judith-Jasmin",
-    width: 2616,
-    height: 1483,
-    campus: true,
-  },
-  {
     url: "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG",
     credit: "Jeangagnon",
     link: "https://commons.wikimedia.org/wiki/File:Henry_F._Hall_Building_07.JPG",
