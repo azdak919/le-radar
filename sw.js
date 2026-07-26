@@ -1,7 +1,7 @@
-const CACHE_NAME = "radar-shell-v514";
+const CACHE_NAME = "radar-shell-v515";
 const CACHE_PREFIX = "radar-";
 /** Cache permanent : page maintenance / hors-ligne (ne se purge pas au bump shell). */
-const OFFLINE_CACHE = "radar-offline-v13";
+const OFFLINE_CACHE = "radar-offline-v14";
 // Isolated mini-apps under /pomo/ and /solitaire/ own their own SWs + caches.
 const ISOLATED_PATH_RE = /\/(pomo|solitaire)(\/|$)/;
 
@@ -11,6 +11,7 @@ const OFFLINE_ASSETS = [
   "./assets/icon.svg",
   "./assets/icon-192.png",
   "./assets/offline/coin.png",
+  "./assets/offline/elevator-loop.opus",
   "./assets/offline/elevator-loop.mp3",
   "./assets/offline/sounds/jump.wav",
   "./assets/offline/sounds/coin.wav",
@@ -55,6 +56,7 @@ const APP_SHELL = [
   "./assets/icon-192.png",
   "./assets/icon-512.png",
   "./assets/offline/coin.png",
+  "./assets/offline/elevator-loop.opus",
   "./assets/offline/elevator-loop.mp3",
   "./assets/offline/sounds/jump.wav",
   "./assets/offline/sounds/coin.wav",
@@ -79,12 +81,13 @@ self.addEventListener("activate", (event) => {
     caches.keys().then((keys) =>
       Promise.all(
         keys
-          // Purge anciens shells — garde radar-offline-* et pomo/solitaire
+          // Purge anciens shells et anciennes versions offline ; l'actuelle
+          // reste durablement disponible jusqu'au prochain bump offline.
           .filter(
             (key) =>
               key.startsWith(CACHE_PREFIX) &&
               key !== CACHE_NAME &&
-              !key.startsWith("radar-offline")
+              key !== OFFLINE_CACHE
           )
           .map((key) => caches.delete(key))
       )
