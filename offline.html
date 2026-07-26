@@ -236,7 +236,8 @@
         linear-gradient(180deg, rgba(26, 28, 33, 0.95) 0%, rgba(14, 15, 18, 0.98) 100%);
       box-shadow: var(--shadow);
       overflow: hidden;
-      touch-action: manipulation;
+      touch-action: none;
+      overscroll-behavior: contain;
       user-select: none;
       position: relative;
     }
@@ -360,8 +361,10 @@
       width: 100%;
       height: auto;
       cursor: pointer;
+      touch-action: none;
+      -webkit-tap-highlight-color: transparent;
       background:
-        radial-gradient(ellipse 70% 80% at 50% 100%, rgba(0, 61, 165, 0.12), transparent 55%),
+        radial-gradient(ellipse 70% 80% at 50% 100%, rgba(0, 61, 165, 0.08), transparent 55%),
         linear-gradient(180deg, #12141A 0%, #0E0F12 52%, #12161E 100%);
     }
 
@@ -538,7 +541,7 @@
     <header>
       <a class="brand" href="/" rel="home">
         <img class="brand-mark" src="assets/icon.svg" width="44" height="44" alt="" />
-        <span class="brand-name notranslate" translate="no">LE&nbsp;RADAR<span class="tld">.ca</span></span>
+        <span class="brand-name notranslate" translate="no">LE‑RADAR<span class="tld">.ca</span></span>
       </a>
     </header>
 
@@ -1229,6 +1232,7 @@
   }
 
   canvas.addEventListener('pointerdown', (e) => {
+    if (!e.isPrimary) return;
     e.preventDefault();
     jump();
   });
@@ -1256,6 +1260,10 @@
   }
 
   function drawBackdrop() {
+    // Le canevas est transparent après clearRect : repeindre le ciel évite que
+    // le fond CSS bleu prenne toute la place sur certains navigateurs mobiles.
+    ctx.fillStyle = '#0E0F12';
+    ctx.fillRect(0, 0, W, H);
     // Grille radar discrète
     ctx.save();
     ctx.strokeStyle = 'rgba(93, 155, 224, 0.06)';
@@ -1404,7 +1412,7 @@
       spawnIn--;
       if (spawnIn <= 0) {
         spawnObstacle();
-        spawnIn = 55 + Math.random() * 50 - Math.min(24, score / 50);
+      spawnIn = 55 + Math.random() * 50;
       }
       coinSpawnIn--;
       if (coinSpawnIn <= 0) {
@@ -1412,7 +1420,8 @@
         coinSpawnIn = 26 + Math.random() * 34;
       }
 
-      speed = 4.4 + Math.min(4.2, score / 170);
+      // Vitesse stable : le mini-jeu doit rester prévisible au doigt.
+      speed = 4.4;
       for (const o of obstacles) o.x -= speed;
       for (const c of coins) c.x -= speed;
       obstacles = obstacles.filter((o) => o.x + o.w > -24);
