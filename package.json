@@ -42,7 +42,9 @@
     "maintain:backgrounds:nations": "npm run maintain:nations",
     "maintain:backgrounds:nations:force": "npm run maintain:nations:force",
     "maintain:backgrounds:all": "npm run maintain:masthead && npm run maintain:universities && npm run maintain:pomo && npm run maintain:nations",
-    "pin-background": "node scripts/pin-background.js"
+    "pin-background": "node scripts/pin-background.js",
+    "archive": "node scripts/archive-articles.js",
+    "archive:update": "node scripts/archive-articles.js --update"
   },
   "engines": {
     "node": ">=20"
