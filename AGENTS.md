@@ -127,7 +127,7 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 | D6 | **CI audit HARD offline-only** sur banques (sans fetch) | Éviter de re-découvrir en prod sans taxer chaque PR | `bank:check` + tests unit déjà là — étendre si gaps | S | resolved |
 | D7 | **Banque photo mât mobile dédiée** (option 3) | Coût double (JSON+JS+maintain+saisons+HARD) ; le fix 2026-07 (dims banque + thumb) peut suffire | Mât encore noir / crops illisibles **après** fix mobile ; flags `surfaces` (opt. 2) déjà essayés ou insuffisants | L | open |
 | D8 | **Détection d’arche/silhouette dans `computeBestFocalY`** (crop mât) | Le détecteur actuel vise le « trou » (Rocher Percé) ; élargir touche **tous** les crops auto — override `focalY` en banque suffit au cas par cas | 2–3 photos réelles où l’ancre arche rate, avec focalY auto vs override notés ; harnais de rendu multi-AR pour non-régression | S–M | open |
-| D9 | **Tests navigateur instables** (`player-continuity`, attentes réseau) | Le syntoniseur garde des connexions ouvertes en permanence et l’audio headless n’est pas déterministe : rendre ces tests fiables demande de réécrire les attentes, pas de rallonger les délais | Un run vert 10× d’affilée en local **et** en CI après passage à des attentes sur l’état observable ; aucun flake sur 2 semaines | S–M | open |
+| D9 | **Tests navigateur instables** (`player-continuity`, attentes réseau) | Le syntoniseur garde des connexions ouvertes en permanence et l’audio headless n’est pas déterministe : rendre ces tests fiables demande de réécrire les attentes, pas de rallonger les délais | Un run vert 10× d’affilée en local **et** en CI après passage à des attentes sur l’état observable ; aucun flake sur 2 semaines | S–M | open (avancée 2026-07-26, voir ci-dessous) |
 | D10 | **Connaissance des établissements éclatée en 4 tables** | Chaque copie répond à un besoin distinct (affichage court, libellés RSS, localisation, pages d’entités) ; les unifier touche 4 zones d’un coup, dont le monolithe `app.js` | Une divergence réelle qui casse quelque chose — le doublon « College » du 2026-07-25 en est une ; commencer par la table de traduction, la plus autonome | M | open |
 | D11 | **Déclaration du site aux consoles de recherche** (Search Console, Bing, IndexNow) | Aucun agent ne peut le faire : ça demande les comptes Google / Microsoft / Cloudflare de l’humain. Le travail technique est livré et en ligne ; il ne reste que les clics | Rien à attendre — à faire dès que possible : sans soumission du sitemap, les 71 URL neuves mettent bien plus longtemps à être découvertes | S | blocked |
 | D12 | **Cohérence fil ↔ RSS ↔ JSON-LD non garantie** | Trois générateurs écrits pour des besoins distincts ; les coupler figerait des formats encore mouvants | Rien à attendre : un test comparant les premiers titres des quatre sorties coûte peu et doit exister **avant** qu’un décalage n’apparaisse | S | ready |
@@ -160,6 +160,43 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
   `data/quebec-nations-backgrounds.json`. Le même mécanisme sert déjà pour le tipi Gesgapegiag (0.28).
 - **Avant de solder** : rendre la photo à AR 14 / 10.7 / 7.57 / 3.8 / 2.16 avant/après, et vérifier
   qu’aucun crop existant à override ne régresse (`rowArch` sert aussi au bonus de score, pas qu’à l’ancre).
+
+**D9 — avancée du 2026-07-26 (attentes réécrites, dette non soldée).**
+
+`Quality Gate` échouait sur chaque push. Deux attentes ont été réécrites vers l’état observable,
+conformément à la consigne de la dette — **aucun délai n’a été rallongé** :
+
+- `player-continuity.spec.mjs` : `tuner.locator('html').evaluate(...)` puis
+  `document.querySelector('#radar-player')` renvoyait `null`. L’iframe `#radar-embed` démarre sur
+  `about:blank` et `pomo/js/app.js` ne pose son `src` que dans un
+  `requestIdleCallback(loadTuner, { timeout: 900 })` ; `locator('html')` se résolvait donc aussitôt
+  sur `about:blank`, où l’audio n’existe pas. Remplacé par `tuner.locator('#radar-player')`, qui
+  attend le vrai document. Appliqué aux **deux** occurrences — la seconde n’échappait au problème
+  que grâce au `selectOption` qui la précède.
+- `browser-smoke.spec.mjs` : `waitForURL` attendait l’événement `load` de l’accueil (son défaut),
+  donc tout le fil étudiant et ses images en 4 s. Seule la redirection est testée → `domcontentloaded`.
+
+**Statut inchangé — et une mesure qui le confirme.** Trois `npm test` d’affilée le 2026-07-26, même
+code, machine chargée : **2 échecs, puis 1, puis 0**. Le test qui lâche est
+`player-continuity.spec.mjs:52` (« le bouton annule une connexion audio en attente »), qui passe
+systématiquement en isolation (`--repeat-each=3` vert) et échoue en suite complète. Le correctif
+ci-dessus a donc supprimé une course **déterministe** (`#radar-player` absent d’`about:blank`) sans
+toucher au flake **sous charge** : entre le `dispatchEvent('waiting')` et l’assertion
+`toHaveClass(/is-buffering/)`, l’état peut être écrasé quand le `webServer` mono-thread sature.
+
+Le critère de sortie — 10 runs verts d’affilée en local *et* en CI, aucun flake sur deux semaines —
+est donc loin d’être atteint. Prochaine piste, cohérente avec la consigne de la dette : ne pas
+allonger les délais, mais rendre l’assertion indépendante du timing (attendre l’état de bufferisation
+publié par le lecteur plutôt que la classe CSS qui en découle).
+
+**Signal distinct à recouper — ne pas confondre avec l’attente réseau.** Le rouge de 05:08 UTC
+portait sur `bookmark-metadata` et `institution-labels`, avec des dépassements du timeout **global**
+de 30 s, pendant que six autres workflows tournaient. `masthead-weather` mesure déjà 26 s en local ;
+`playwright.config.mjs` fixe `timeout: 30_000` et `workers: 2` en CI. La marge est donc mince sous
+contention du runner. Un `npm test` sur clone propre à ce même commit passe 40/40, et le run suivant
+est repassé vert sans changement de code. **Ne pas rallonger le timeout** — c’est précisément ce que
+cette dette interdit ; si le cas se reproduit, chercher du côté du parallélisme (le `webServer`
+`python3 -m http.server` est mono-thread et sert deux workers) plutôt que des délais.
 
 **D15 — pourquoi l’audit pixel informe sans purger (2026-07-26).**
 
