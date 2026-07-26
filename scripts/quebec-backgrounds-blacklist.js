@@ -96,10 +96,17 @@ const HARD_BANNED = [
     note: 'Purge 2026-07-25 mât+pomo ; pas de paysage libre du village',
   },
   {
-    // Dessous de pont / dalle béton — crop bandeau inutile
-    fragments: ['Pont_de_l-Ile-aux-Tourtes_02'],
-    reason: 'underbridge_concrete',
-    note: 'Purge 2026-07-25 mât+pomo (Tourtes_04 reste OK si paysage)',
+    // Décision éditoriale : retirer toutes les variantes du pont de l'Île-
+    // aux-Tourtes, trop récurrentes et peu intéressantes en fond.
+    fragments: [
+      'Pont_de_l-Ile-aux-Tourtes_02',
+      'Pont_de_l-Ile-aux-Tourtes_04',
+      '%C3%8Ele_aux_Tourtes_Bridge.JPG',
+      '7cc36bfa6f04',
+      'dbbb99342f74',
+    ],
+    reason: 'user_curated_location_rejected',
+    note: 'Purge 2026-07-26 de toutes les banques et surfaces (mât + pomo).',
   },
   // Henry_F._Hall_Building_10 : réintégré universities avec focalY fenêtres
   // (grille modulaire Concordia) — ne pas re-bannir sans relecture visuelle.
