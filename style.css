@@ -652,6 +652,10 @@ a { color: inherit; }
 }
 
 .masthead-date { font-weight: 600; }
+.masthead-time {
+  display: none;
+  font-variant-numeric: tabular-nums;
+}
 
 /* Météo — tableau de gare : plusieurs villes côte à côte. La rangée s'adapte
    à l'espace et les noms longs défilent dans leur propre case. */
@@ -844,12 +848,30 @@ a { color: inherit; }
   }
   .masthead-weather:not(.masthead-weather--docked) { display: none !important; }
   .masthead-date {
+    position: relative;
+    transform: translateY(-3px);
     font-size: 10.5px;
     letter-spacing: 0.02em;
     min-width: 0;
+    overflow: visible;
+    white-space: normal;
+  }
+  .masthead-date #today-date {
+    display: block;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+  .masthead-time {
+    position: absolute;
+    top: 1.15em;
+    left: 0;
+    display: block;
+    font-size: 0.82em;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    white-space: nowrap;
+    opacity: 0.9;
   }
   .masthead-actions { gap: 4px; }
   .masthead-shuffle-slot { display: none; }
