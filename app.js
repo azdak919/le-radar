@@ -6444,13 +6444,13 @@ function createArticle(item, role = 'standard') {
   const titleHtml = `<h3 class="article-title">${escapeHtml(cleanTitle(item.title))}</h3>`;
   const mediaHtml = hasImageCandidate ? '<figure class="article-media"></figure>' : '';
   if (role === 'lead') {
-    // Titre au-dessus de l'image : eyebrow → meta → titre → photo → byline → extrait
+    // À la une : l'auteur suit directement le titre, avant la photo.
     a.innerHTML = `
       <span class="article-eyebrow">À la une</span>
       ${metaHtml}
       ${titleHtml}
-      ${mediaHtml}
       ${bylineHtml}
+      ${mediaHtml}
       ${briefHtml}
     `;
   } else {
