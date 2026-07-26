@@ -1156,6 +1156,8 @@
   let score = 0;
   let coinsRun = 0;
   let speed = 4.4;
+  let scoreProgress = 0;
+  let lastTick = performance.now();
   let alive = true;
   let started = false;
   let spawnIn = 70;
@@ -1219,6 +1221,7 @@
     score = 0;
     coinsRun = 0;
     speed = 4.4;
+    scoreProgress = 0;
     alive = true;
     spawnIn = 70;
     coinSpawnIn = 40;
@@ -1407,26 +1410,31 @@
     );
   }
 
-  function tick() {
-    frame++;
+  function tick(now) {
+    // Tout est exprimé en unités de 60 i/s : un écran 120 Hz ou un regain
+    // momentané de cadence après un tap ne peut plus accélérer le jeu.
+    const frameMs = 1000 / 60;
+    const step = Math.min(1.25, Math.max(0, (now - lastTick) / frameMs));
+    lastTick = now;
+    frame += step;
     ctx.clearRect(0, 0, W, H);
     drawBackdrop();
 
     if (started && alive) {
-      player.vy += 0.48;
-      player.y += player.vy;
+      player.vy += 0.48 * step;
+      player.y += player.vy * step;
       if (player.y >= GROUND - player.h) {
         player.y = GROUND - player.h;
         player.vy = 0;
         player.onGround = true;
       }
 
-      spawnIn--;
+      spawnIn -= step;
       if (spawnIn <= 0) {
         spawnObstacle();
       spawnIn = 55 + Math.random() * 50;
       }
-      coinSpawnIn--;
+      coinSpawnIn -= step;
       if (coinSpawnIn <= 0) {
         spawnCoin();
         coinSpawnIn = 26 + Math.random() * 34;
@@ -1434,8 +1442,8 @@
 
       // Vitesse stable : le mini-jeu doit rester prévisible au doigt.
       speed = 4.4;
-      for (const o of obstacles) o.x -= speed;
-      for (const c of coins) c.x -= speed;
+      for (const o of obstacles) o.x -= speed * step;
+      for (const c of coins) c.x -= speed * step;
       obstacles = obstacles.filter((o) => o.x + o.w > -24);
       coins = coins.filter((c) => !c.taken && c.x > -30);
 
@@ -1475,7 +1483,9 @@
         }
       }
 
-      if (frame % 4 === 0) {
+      scoreProgress += step;
+      while (scoreProgress >= 4) {
+        scoreProgress -= 4;
         score += 1;
         scoreEl.textContent = String(score);
       }
