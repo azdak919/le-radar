@@ -455,6 +455,35 @@ body {
     rgba(67, 73, 84, 0.78);
 }
 
+/* Sans photo de mât, le thème clair conserve les cartes ardoise récentes
+   plutôt que l'ancien panneau pâle. Elles restent ainsi cohérentes avec la
+   variante claire sur photo. */
+:root:not([data-theme="dark"]) .masthead:not(:has(#bg-photo-layer.loaded)) .masthead-weather__city {
+  color: rgba(236, 238, 242, 0.92);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--weather-tone, #c8102e) 16%, transparent) 0%, transparent 55%),
+    rgba(54, 59, 68, 0.68);
+  border-color: rgba(255, 255, 255, 0.24);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.24),
+    0 3px 10px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px) saturate(1.06);
+  -webkit-backdrop-filter: blur(10px) saturate(1.06);
+}
+:root:not([data-theme="dark"]) .masthead:not(:has(#bg-photo-layer.loaded)) .masthead-weather__name,
+:root:not([data-theme="dark"]) .masthead:not(:has(#bg-photo-layer.loaded)) .masthead-weather__name-text,
+:root:not([data-theme="dark"]) .masthead:not(:has(#bg-photo-layer.loaded)) .masthead-weather__name-full,
+:root:not([data-theme="dark"]) .masthead:not(:has(#bg-photo-layer.loaded)) .masthead-weather__name-compact,
+:root:not([data-theme="dark"]) .masthead:not(:has(#bg-photo-layer.loaded)) .masthead-weather__temp {
+  color: rgba(245, 246, 248, 0.96);
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+}
+:root:not([data-theme="dark"]) .masthead:not(:has(#bg-photo-layer.loaded)) .masthead-weather__icon {
+  filter: brightness(1.12) saturate(1.05);
+}
+
 /* Filet sous la rangée date/actions — voile, pas trait blanc. */
 .masthead:has(#bg-photo-layer.loaded) .masthead-top {
   border-bottom-color: rgba(255, 255, 255, 0.12);
@@ -3195,8 +3224,8 @@ html[data-translate-busy="1"] .translate-toggle {
 .article--lead > .article-eyebrow { order: 1; }
 .article--lead > .article-meta { order: 2; }
 .article--lead > .article-title { order: 3; }
-.article--lead > .article-media { order: 4; }
-.article--lead > .article-byline { order: 5; }
+.article--lead > .article-byline { order: 4; }
+.article--lead > .article-media { order: 5; }
 .article--lead > .article-brief { order: 6; }
 
 .article--lead::before { top: 56px; }
