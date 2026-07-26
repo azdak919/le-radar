@@ -214,16 +214,55 @@ plus ce qui alimente les corpus d'entraînement des modèles : c'est **Common
 Crawl**, un organisme distinct, dont le robot `CCBot` est déjà autorisé dans
 `robots.txt`. Confondre les deux est l'erreur la plus courante sur le sujet.
 
-**Ce que ça fait vraiment** : les publications étudiantes disparaissent. Mesuré
-le 2026-07-25 — Quartier Libre et Le Collectif dépassent 20 000 captures, mais
-Exil (Cégep du Vieux Montréal), tenu sur un blogue gratuit, n'en a que 985.
-C'est exactement le profil de journal qui s'éteint quand l'équipe finit son DEC.
-Le Radar connaît l'URL de chaque article : les soumettre coûte une requête et
-rend ce travail consultable au-delà de la vie de son site.
+**Ce que ça fait vraiment** : les publications étudiantes disparaissent, et pas
+toutes au même rythme. Couverture mesurée le 2026-07-26 (pages d'index CDX) :
+
+| Pages | Source | Établissement |
+|---|---|---|
+| **1** | Exil | Cégep du Vieux Montréal |
+| **3** | The Plant | Dawson College |
+| **4** | The Campus | Bishop's University |
+| **8** | La Pige | Cégep de Jonquière |
+| 9 → 38 | L'Exemplaire, Zone Campus, Le Collectif, Le Polyscope, The Tribune, Montréal Campus, Quartier Libre | — |
+| 128–129 | The Link, Le Délit | Concordia, McGill |
+| **229** | The McGill Daily | McGill |
+
+Écart de **229×**, et les quatre plus menacés sont des cégeps ou de petits
+collèges — le profil de rédaction qui s'éteint quand l'équipe finit son DEC.
+
+> Une mesure antérieure laissait croire à un partage binaire « gros = sûr,
+> petit = fragile ». Elle était plafonnée par sa propre requête (`limit=20000`)
+> et renvoyait la même valeur pour plusieurs sources. Le classement était bon,
+> les chiffres non.
+
+**Cas Exil, disparition en cours** : le registre déclare `exilecvm.ca` (3 pages)
+alors que les liens d'articles pointent encore vers `exilecvm.wordpress.com`
+(1 page). C'est ce dernier domaine que le bot mesure et archive — celui qui
+porte le fonds historique sur la plateforme la moins pérenne.
+
+**Ordre de passage** : piloté par la fragilité, pas par la date
+(`scripts/archive-priority-lib.js`). 75 % du lot va aux sources les moins
+archivées, **25 % sont réservés aux articles les plus récents** toutes sources
+confondues — un article publié aujourd'hui est vulnérable avant qu'un passage
+spontané ne l'attrape, même chez un journal bien couvert. La réserve est
+insérée *dans* le lot et non à sa suite : avec ~190 candidats pour 20 places,
+la concaténer en fin de liste l'aurait rendue inatteignable.
+
+**Une mesure en échec n'est jamais de la fragilité.** `montrealcampus.ca` a
+d'abord renvoyé une erreur — simple délai dépassé, la source compte 36 pages.
+Le bot conserve alors la dernière valeur connue et marque la source
+« périmée » ; une source jamais mesurée reste neutre, ni prioritaire ni
+pénalisée. Sans cette règle, une panne réseau ferait remonter un journal solide
+en tête de file au détriment des vrais fragiles.
+
+Amorçage : `node scripts/archive-articles.js --measure 14` mesure toutes les
+sources d'un coup. Sans lui, il faut cinq passes avant que la priorisation ait
+de quoi travailler.
 
 **Contraintes mesurées, qui expliquent la conception** : une capture prend ~18 s
 et l'API est limitée en débit. D'où un plafond par passe (20), une pause entre
-les requêtes, un arrêt net au premier 429, et un état persistant
+les requêtes, un arrêt net au premier 429, un rafraîchissement de fragilité
+limité à 3 sources par passe (TTL 7 jours), et un état persistant
 (`archive-status.json`) qui évite de resoumettre pendant 180 jours. Mieux vaut
 archiver lentement pour toujours que vite une seule fois.
 

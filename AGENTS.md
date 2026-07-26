@@ -195,6 +195,21 @@ qu’on attire le mauvais public : [`docs/referencement-suivi.md`](docs/referenc
 - Coût actuel du contournement : lancer `--workers=1` avant de conclure à une
   régression.
 
+**Correction (2026-07-26, plus tard) — la sérialisation ne suffit pas.**
+
+- Observé depuis : `--workers=1` sur la suite complète laisse encore 1 à 2
+  rouges (`player-continuity`, parfois `browser-smoke`), alors que
+  `player-continuity` seul passe **3 fois sur 3**.
+- Donc le problème n'est pas seulement la concurrence : c'est l'**accumulation
+  d'état entre tests** sur la même origine — service worker enregistré, caches,
+  `localStorage`, périphérique audio — qui persiste d'un fichier à l'autre même
+  en série.
+- Conséquence pratique : un rouge sur ces deux fichiers ne prouve rien. Le
+  vérifier en lançant **le fichier seul** avant de suspecter une régression.
+- Piste révisée : ne pas se contenter de sérialiser. Nettoyer l'état entre
+  fichiers (désenregistrer le SW, vider caches et `localStorage` en
+  `afterEach`), ou isoler ces tests dans un projet Playwright distinct.
+
 **D9 — diagnostic (2026-07-25, session référencement) :**
 
 - `tests/player-continuity.spec.mjs:56` (« une page suiveuse n’affiche pas un buffering tardif
