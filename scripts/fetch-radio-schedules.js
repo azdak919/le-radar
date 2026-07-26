@@ -12,13 +12,25 @@
 
 const fs = require('fs');
 const path = require('path');
-const { collateStationGrid, DEFAULT_TZ } = require('./radio-schedule-lib');
+const { collateStationGrid, gridCoverage, DEFAULT_TZ } = require('./radio-schedule-lib');
 
 const ROOT = path.join(__dirname, '..');
 const RADIOS_PATH = path.join(ROOT, 'radios.json');
 const SEED_PATH = path.join(ROOT, 'radio-schedules.seed.json');
 const OUT_PATH = path.join(ROOT, 'radio-schedules.json');
 const doUpdate = process.argv.includes('--update');
+/** Passe outre le garde-fou d'effondrement (refonte de grille légitime). */
+const doForce = process.argv.includes('--force');
+
+/**
+ * En deçà de cette proportion de l'ancienne grille, on refuse la nouvelle.
+ *
+ * Le risque n'est pas qu'une source tombe — ce cas est déjà couvert — mais
+ * qu'elle réponde 200 avec une page refondue que le parseur ne comprend plus :
+ * on écraserait alors 102 créneaux justes par 3. Une vraie refonte de grille
+ * (rentrée) se passe avec `--force`.
+ */
+const COLLAPSE_RATIO = 0.6;
 
 function readJson(p, fallback) {
   try {
@@ -36,6 +48,7 @@ async function main() {
   const now = new Date().toISOString();
 
   const stations = {};
+  const coverage = [];
   let totalSlots = 0;
 
   for (const radio of radios) {
@@ -52,10 +65,31 @@ async function main() {
     let checkedAt = now;
     let carried = false;
 
+    const prevGrid = prev.stations?.[radio.id]?.grid;
+    const prevCount = Array.isArray(prevGrid) ? prevGrid.length : 0;
+
     // Résilience : si toutes les sources sont injoignables ce cycle mais qu'on
     // avait déjà une grille, on conserve la dernière connue.
-    if (!finalGrid.length && prev.stations?.[radio.id]?.grid?.length) {
-      finalGrid = prev.stations[radio.id].grid;
+    if (!finalGrid.length && prevCount) {
+      finalGrid = prevGrid;
+      finalSources = prev.stations[radio.id].sources || [];
+      checkedAt = prev.stations[radio.id].checkedAt || now;
+      carried = true;
+    } else if (
+      !doForce
+      && prevCount >= 10
+      && finalGrid.length
+      && finalGrid.length < prevCount * COLLAPSE_RATIO
+    ) {
+      // Effondrement : la source répond, mais le parseur n'en tire presque
+      // plus rien — typiquement une refonte du site. Garder l'ancienne grille
+      // plutôt que de publier une semaine amputée.
+      console.warn(
+        `  ⚠ ${radio.id}: ${finalGrid.length} plages contre ${prevCount} précédemment `
+        + `(< ${Math.round(COLLAPSE_RATIO * 100)} %) — grille conservée. `
+        + 'Vérifier la source, puis relancer avec --force si le changement est réel.',
+      );
+      finalGrid = prevGrid;
       finalSources = prev.stations[radio.id].sources || [];
       checkedAt = prev.stations[radio.id].checkedAt || now;
       carried = true;
@@ -76,9 +110,12 @@ async function main() {
       grid: finalGrid,
     };
     totalSlots += finalGrid.length;
+    const cov = gridCoverage(finalGrid);
     console.log(
-      `  ✓ ${radio.id}: ${finalGrid.length} plages [${finalSources.join(', ') || '—'}]${carried ? ' (conservé)' : ''}`,
+      `  ✓ ${radio.id}: ${finalGrid.length} plages, ${cov.weekPercent} % de la semaine`
+      + ` [${finalSources.join(', ') || '—'}]${carried ? ' (conservé)' : ''}`,
     );
+    coverage.push({ id: radio.id, ...cov });
   }
 
   const out = { updatedAt: now, timezone, stations };
@@ -104,6 +141,26 @@ async function main() {
   }
   if (uncovered.length) {
     console.warn(`\n⚠ ${uncovered.length} poste(s) natif(s) sans horaire : ${uncovered.join(', ')}`);
+  }
+
+  // Couverture : une grille peut être « à jour » et pourtant ne décrire qu'un
+  // huitième de la semaine. C'est le cas de CHOQ et CHYZ, dont les sites ne
+  // publient que les émissions parlées — le repli est la grille manuelle du
+  // seed, qui est fusionnée sans jamais être écrasée par les sources.
+  if (coverage.length) {
+    const DAYS = ['dim', 'lun', 'mar', 'mer', 'jeu', 'ven', 'sam'];
+    console.log('\n── Couverture des grilles ──');
+    for (const c of coverage.sort((a, b) => a.weekPercent - b.weekPercent)) {
+      const thin = c.perDay
+        .map((min, day) => ({ day, pct: Math.round((min / 1440) * 100) }))
+        .filter((d) => d.pct < 50)
+        .map((d) => `${DAYS[d.day]} ${d.pct}%`);
+      const flag = c.weekPercent < 50 ? '⚠' : ' ';
+      console.log(
+        `  ${flag} ${c.id.padEnd(6)} ${String(c.weekPercent).padStart(3)} % de la semaine`
+        + `${thin.length ? ` — jours creux : ${thin.join(', ')}` : ''}`,
+      );
+    }
   }
 
   if (doUpdate) {

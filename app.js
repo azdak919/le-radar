@@ -294,7 +294,9 @@ function nowAirSchedulePath(radio) {
   if (!radio?.id) return null;
   const prefix = ORIGINAL_ENGLISH_SCHEDULES.has(radio.id) ? 'en/' : '';
   // Chemin absolu : le même contrôle est aussi rendu dans tuner-embed.html.
-  return `/${prefix}radios/${encodeURIComponent(radio.id)}/`;
+  // Ancre #horaire : la fiche s'ouvre directement sur la grille de la semaine,
+  // sans obliger à faire défiler les faits de la station.
+  return `/${prefix}radios/${encodeURIComponent(radio.id)}/#horaire`;
 }
 
 function openNowAirSchedule() {
@@ -438,11 +440,18 @@ let lastNowAir = { title: null, sub: null, empty: null, previewId: null, kind: n
 let tunerSubMeta = '';
 let tunerSubAirText = '';
 let tunerSubRotateTimer = null;
-let tunerSubRotateShowAir = false;
-/** CHOQ : alterne piste en cours ↔ émission à venir (musique libre + grille). */
-let choqAirRotateTimer = null;
-let choqAirRotateShowUpcoming = false;
-/** Demander un fondu sur le prochain render (CHOQ ou changement de poste). */
+/** Quel créneau du dial est actif (false = A, true = B). */
+let dialRotateSlotB = false;
+/**
+ * Rotation de l'antenne : index dans `airRotationPhases()`.
+ * Une seule horloge le fait avancer — le tick du dial en compact, le timer du
+ * panneau sur bureau. Les deux surfaces sont exclusives (le panneau est
+ * `display:none` sous 1100 px), donc jamais deux cadences concurrentes.
+ */
+let airPhaseIndex = 0;
+/** Timer du panneau bureau uniquement (le dial a le sien). */
+let airPanelRotateTimer = null;
+/** Demander un fondu sur le prochain render (bascule de phase ou de poste). */
 let nowAirCrossfadePending = false;
 /** Incrémenté à chaque fondu pour annuler les timeouts obsolètes. */
 let nowAirFadeGen = 0;
@@ -452,8 +461,10 @@ let nowAirFadeGen = 0;
 const TUNER_SUB_ROTATE_MS = IS_TUNER_EMBED ? 14000 : 8000;
 const TUNER_SUB_ROTATE_NARROW_MS = 14000;
 const TUNER_SUB_ROTATE_VERY_NARROW_MS = 18000;
-const CHOQ_AIR_ROTATE_MS = 8000;
+const AIR_PANEL_ROTATE_MS = 8000;
 const NOW_AIR_CROSSFADE_MS = 700;
+/** Bascule du contenu du panneau antenne (fondu CSS de 0,3 s). */
+const NOW_AIR_PANEL_SWAP_MS = 280;
 const PREFERS_REDUCED_MOTION = window.matchMedia?.('(prefers-reduced-motion: reduce)');
 let sourceColors = {};     // source name → accent colour
 let brandColors = { institutions: {}, fallback_palette: ['#003DA5', '#6C2163', '#047857'] };
@@ -545,7 +556,9 @@ async function init() {
   radios = radiosData.status === 'fulfilled'
     ? sortRadios(radiosData.value).filter((r) => getPlayableStream(r))
     : [];
-  radioNowPlaying = nowPlayingData.status === 'fulfilled' ? nowPlayingData.value : { stations: {} };
+  radioNowPlaying = nowPlayingData.status === 'fulfilled'
+    ? decodeNowPlayingPayload(nowPlayingData.value)
+    : { stations: {} };
   radioSchedules = schedulesData.status === 'fulfilled' && schedulesData.value?.stations
     ? schedulesData.value
     : { stations: {}, timezone: 'America/Toronto' };
@@ -1395,6 +1408,42 @@ function nowPlayingEntry(radio) {
   return radio?.id ? radioNowPlaying.stations?.[radio.id] : null;
 }
 
+/**
+ * Les APIs des stations servent du HTML échappé : Airtime (CKUT) renvoie
+ * « Utopia&#039;s Paradise ». Le bot décode déjà à la source, mais le JSON
+ * publié peut dater d'avant ce correctif et les sondes navigateur (CISM,
+ * Triton) tapent les APIs en direct. On décode donc **une fois** à l'arrivée
+ * de la charge utile, pas à chaque rendu (l'antenne se redessine toutes les
+ * secondes).
+ */
+function decodeAirShow(show) {
+  if (!show || typeof show !== 'object') return show;
+  const title = decodeHtmlEntities(String(show.title || ''));
+  const host = decodeHtmlEntities(String(show.host || ''));
+  if (title === show.title && host === (show.host || '')) return show;
+  return { ...show, title, ...(show.host != null ? { host } : {}) };
+}
+
+function decodeNowPlayingStation(entry) {
+  if (!entry || typeof entry !== 'object') return entry;
+  return {
+    ...entry,
+    current: decodeAirShow(entry.current),
+    next: decodeAirShow(entry.next),
+    track: decodeHtmlEntities(String(entry.track || '')),
+    showTitle: decodeHtmlEntities(String(entry.showTitle || '')),
+    host: decodeHtmlEntities(String(entry.host || '')),
+  };
+}
+
+function decodeNowPlayingPayload(payload) {
+  const stations = payload?.stations;
+  if (!stations || typeof stations !== 'object') return payload || { stations: {} };
+  const out = {};
+  for (const [id, entry] of Object.entries(stations)) out[id] = decodeNowPlayingStation(entry);
+  return { ...payload, stations: out };
+}
+
 function normLoose(s) {
   return String(s || '').toLowerCase().replace(/\s+/g, ' ').trim();
 }
@@ -1518,7 +1567,7 @@ const SCHEDULE_DAY_NAMES = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', '
  * temps plutôt que la première du tableau, sinon le jour renvoyé peut être
  * complètement décorrélé du créneau réellement à venir.
  */
-function scheduleDayForTitle(radio, title) {
+function scheduleSlotForTitle(radio, title) {
   const grid = radio?.id ? radioSchedules.stations?.[radio.id]?.grid : null;
   if (!Array.isArray(grid) || !title) return null;
   const target = normLoose(title);
@@ -1538,7 +1587,11 @@ function scheduleDayForTitle(radio, title) {
       best = slot;
     }
   }
-  return best ? best.day : null;
+  return best;
+}
+
+function scheduleDayForTitle(radio, title) {
+  return scheduleSlotForTitle(radio, title)?.day ?? null;
 }
 
 /**
@@ -1627,10 +1680,17 @@ function isAuthoritativeLiveShow(radio) {
 /** Créneau horaire « HH:MM – HH:MM », préfixé de « Demain »/jour si ce n'est pas aujourd'hui. */
 function upcomingTimeRange(upcoming, radio) {
   if (!upcoming) return '';
-  const range = upcoming.start && upcoming.end
-    ? `${upcoming.start} – ${upcoming.end}`
-    : (upcoming.start || '');
-  const day = upcoming.day != null ? upcoming.day : scheduleDayForTitle(radio, upcoming.title);
+  // Les APIs station ne donnent pas toujours la fin (CISM n'expose qu'un
+  // horodatage de début) : la grille locale la complète, sinon « À venir »
+  // s'affiche sans heure de fin, voire sans heure du tout.
+  const slot = scheduleSlotForTitle(radio, upcoming.title);
+  const start = upcoming.start || slot?.start || '';
+  // N'apparier une fin venue de la grille qu'avec le même début : une émission
+  // revient plusieurs fois par semaine, et coller la fin d'une autre diffusion
+  // afficherait une plage qui n'a jamais existé.
+  const end = upcoming.end || (slot && slot.start === start ? slot.end : '') || '';
+  const range = start && end ? `${start} – ${end}` : (start || '');
+  const day = upcoming.day != null ? upcoming.day : (slot?.day ?? null);
   const dayLabel = scheduleRelativeDayLabel(day);
   if (!dayLabel) return range;
   return range ? `${dayLabel} · ${range}` : dayLabel;
@@ -1685,117 +1745,96 @@ function isGarbageChoqTrack(track, relatedTitles = []) {
   return false;
 }
 
+/** Arrête le timer de rotation du panneau bureau. */
+function stopAirPanelRotate() {
+  if (airPanelRotateTimer) {
+    clearInterval(airPanelRotateTimer);
+    airPanelRotateTimer = null;
+  }
+}
+
+/** Passe à la phase suivante et demande un fondu au prochain rendu. */
+function advanceAirPhase(phaseCount) {
+  if (!(phaseCount > 1)) return;
+  airPhaseIndex = (airPhaseIndex + 1) % phaseCount;
+  nowAirCrossfadePending = true;
+  lastNowAir = { title: null, sub: null, empty: null, previewId: null, kind: null, stationId: null };
+}
+
 /**
- * CHOQ — phases d’affichage alternées (cas particuliers) :
- *  A) Hors créneau : piste live ↔ prochaine émission (À venir)
- *  B) Émission en direct + piste différente : émission ↔ piste
- *  Piste « fichier » → null (affichage simple de l’émission seulement).
- * @returns {{ live: object, alt: object } | null}
+ * Rotation du panneau « À l'antenne » — **bureau, poste syntonisé seulement**.
+ *
+ * Une seule horloge à la fois, dans les deux sens :
+ *  - sous 1100 px le panneau est `display:none` et c'est le tick du dial qui
+ *    fait avancer la phase, à sa cadence adaptée à la longueur du texte ;
+ *  - au repos (aucun poste choisi), c'est le carrousel de postes qui rythme
+ *    l'affichage, et le panneau montre toujours la première phase du poste
+ *    présenté. Y superposer ce timer ne changeait donc aucun texte, mais
+ *    forçait un fondu du panneau toutes les 8 s sur un contenu identique.
  */
-function choqHybridAirPhases(radio) {
-  if (!radio || radio.id !== 'choq') return null;
-  const entry = nowPlayingEntry(radio);
-  const trackRaw = String(entry?.track || '').trim();
-  const slogan = radioSlogan(radio);
-  const botCur = botCurrentShow(radio);
-  const schedCur = scheduleCurrentSlot(radio);
-  const liveShow = (botCur?.title && botCur) || (schedCur?.title && schedCur) || null;
-  const upcoming = botNextShow(radio) || scheduleNextSlot(radio);
-
-  const related = [liveShow?.title, upcoming?.title].filter(Boolean);
-  const trackOk = trackRaw
-    && !isGarbageChoqTrack(trackRaw, related)
-    && (!liveShow?.title || normLoose(trackRaw) !== normLoose(liveShow.title));
-
-  // B) Émission en ondes + morceau distinct et « propre »
-  if (liveShow?.title && trackOk) {
-    const start = liveShow.start || schedCur?.start || botCur?.start || '';
-    const end = liveShow.end || schedCur?.end || botCur?.end || '';
-    const timeRange = start && end ? `${start} – ${end}` : (start || '');
-    return {
-      live: {
-        title: liveShow.title,
-        sub: timeRange || slogan || radio.name || '',
-        kind: 'live',
-      },
-      alt: {
-        title: `♪ ${trackRaw}`,
-        sub: liveShow.title,
-        kind: 'live',
-      },
-    };
-  }
-
-  // A) Musique libre + émission à venir (piste propre seulement)
-  if (!liveShow && trackOk && upcoming?.title) {
-    const upTime = upcomingTimeRange(upcoming, radio);
-    return {
-      live: {
-        title: `♪ ${trackRaw}`,
-        sub: slogan || radio.name || '',
-        kind: 'live',
-      },
-      alt: {
-        title: upcoming.title,
-        sub: upTime || slogan || '',
-        kind: 'upcoming',
-      },
-    };
-  }
-
-  return null;
-}
-
-function stopChoqAirRotate() {
-  if (choqAirRotateTimer) {
-    clearInterval(choqAirRotateTimer);
-    choqAirRotateTimer = null;
-  }
-}
-
-/** Alterne les deux phases CHOQ (live ↔ alt) avec fondu. */
-function syncChoqAirRotate(radio) {
-  const hybrid = choqHybridAirPhases(radio);
-  if (!hybrid) {
-    stopChoqAirRotate();
+function syncAirPanelRotate(radio) {
+  const phases = airRotationPhases(radio, { withSlogan: false });
+  if (!currentStation || phases.length < 2 || isTunerSubRotateMode()) {
+    stopAirPanelRotate();
     return;
   }
-  if (choqAirRotateTimer) return;
-  choqAirRotateTimer = setInterval(() => {
-    if (!choqHybridAirPhases(currentStation || nowAirPreviewRadio)) {
-      stopChoqAirRotate();
+  if (airPanelRotateTimer) return;
+  airPanelRotateTimer = setInterval(() => {
+    const live = airRotationPhases(currentStation, { withSlogan: false });
+    if (!currentStation || live.length < 2 || isTunerSubRotateMode()) {
+      stopAirPanelRotate();
       return;
     }
-    choqAirRotateShowUpcoming = !choqAirRotateShowUpcoming;
-    nowAirCrossfadePending = true;
-    lastNowAir = { title: null, sub: null, empty: null, previewId: null, kind: null, stationId: null };
+    advanceAirPhase(live.length);
     renderTunerNowAir();
-  }, CHOQ_AIR_ROTATE_MS);
+  }, AIR_PANEL_ROTATE_MS);
 }
+
+/**
+ * Métadonnée technique plutôt qu'un contenu : ce que l'automate émet entre
+ * deux émissions. Le bot filtre déjà à la source (radio-nowplaying-lib.js),
+ * mais le JSON publié peut dater d'avant ce filtre — d'où le double garde.
+ * Vaut pour tous les postes, pas seulement CKUT/McGill.
+ */
+const AIR_TECHNICAL_RE = /^(?:off ?line|off ?air|dead ?air|silence(?: detected)?|station ?id|airtime!?|liquidsoap(?:\s+radio!?)?|no name|unknown|unspecified|n\/a)$/i;
 
 /**
  * Piste affichable (CHOQ : ignore les slugs fichier / métadonnées pourries).
  */
 function trackForAirDisplay(radio, track, relatedTitles = []) {
-  const t = String(track || '').replace(/^♪\s*/, '').trim();
+  const t = decodeHtmlEntities(String(track || '')).replace(/^♪\s*/, '').trim();
   if (!t) return '';
+  if (AIR_TECHNICAL_RE.test(t)) return '';
+  // « ♪ CKUT 90,3 » ou « ♪ <slogan> » : le nom du poste n'est pas un morceau.
+  const low = normLoose(t);
+  if (low === normLoose(radio?.name) || low === normLoose(radioSlogan(radio || {}))) return '';
   if (radio?.id === 'choq' && isGarbageChoqTrack(t, relatedTitles)) return '';
   return t;
 }
 
 /**
- * Lignes d'antenne pour le syntoniseur.
- * Priorité : CHOQ hybride → émission en cours → à venir → piste → idle.
- * @returns {{ title: string, sub: string, kind: 'live'|'upcoming'|'idle' }}
+ * Phases de la ligne d'antenne, dans l'ordre d'affichage.
+ *
+ * Une **liste** plutôt qu'une alternance à deux temps : c'est ce qui rend
+ * « À venir » visible. Auparavant la prochaine émission n'était atteignable
+ * que si aucune émission n'était en ondes — c'est-à-dire presque jamais.
+ *
+ *   1. émission en cours   2. à venir   3. piste   4. slogan (mobile seulement)
+ *
+ * Le slogan ferme le cycle sur mobile et n'y figure pas sur bureau, où il
+ * occupe déjà la ligne 2 du syntoniseur (`tunerDesktopSubLine`) — l'ajouter
+ * l'afficherait deux fois au même écran.
+ *
+ * @returns {{ title: string, sub: string, kind: 'live'|'upcoming'|'idle' }[]}
  */
-function nowAirLines(radio) {
+function airRotationPhases(radio, { withSlogan = false } = {}) {
+  if (!radio) return [];
   const slogan = radioSlogan(radio);
   const entry = nowPlayingEntry(radio);
   const botCur = botCurrentShow(radio);
   const botNext = botNextShow(radio);
   const schedCur = scheduleCurrentSlot(radio);
   const schedNext = scheduleNextSlot(radio);
-  const trackRaw = String(entry?.track || '').trim();
   const relatedTitles = [
     botCur?.title,
     schedCur?.title,
@@ -1803,70 +1842,64 @@ function nowAirLines(radio) {
     schedNext?.title,
   ].filter(Boolean);
   // CHOQ : ne jamais afficher une piste « fichier » (titre ni sous-titre)
-  const track = trackForAirDisplay(radio, trackRaw, relatedTitles);
+  const track = trackForAirDisplay(radio, entry?.track, relatedTitles);
 
-  // 0) CHOQ hybride (émission+piste OU piste+à venir) — avant le rendu simple
-  const hybrid = choqHybridAirPhases(radio);
-  if (hybrid) {
-    return choqAirRotateShowUpcoming ? hybrid.alt : hybrid.live;
-  }
+  const phases = [];
+  const seen = new Set();
+  const push = (title, sub, kind) => {
+    const t = String(title || '').trim();
+    if (!t) return;
+    const key = normLoose(t);
+    if (!key || seen.has(key)) return;
+    seen.add(key);
+    phases.push({ title: t, sub: String(sub || '').trim(), kind });
+  };
 
-  // 1) Émission en cours (bot, déjà fusionné api > schedule)
-  if (botCur?.title) {
-    const host = String(botCur.host || entry?.host || '').trim();
-    const start = botCur.start || schedCur?.start || '';
-    const end = botCur.end || schedCur?.end || '';
+  // 1) Émission en cours — bot (api > grille) puis repli grille locale
+  const cur = (botCur?.title && botCur) || (schedCur?.title && schedCur) || null;
+  if (cur) {
+    const host = String(cur.host || entry?.host || '').trim();
+    const start = cur.start || schedCur?.start || '';
+    const end = cur.end || schedCur?.end || '';
     const timeRange = start && end ? `${start} – ${end}` : (start || '');
-    let sub;
-    if (track && normLoose(track) !== normLoose(botCur.title)) sub = `♪ ${track}`;
-    else if (host && normLoose(host) !== normLoose(botCur.title)) sub = `avec ${host}`;
-    else if (timeRange) sub = timeRange;
-    else sub = slogan || `Vous écoutez ${radio.name}`;
-    return { title: botCur.title, sub, kind: 'live' };
+    // La piste a sa propre phase : inutile de la répéter en sous-titre.
+    const sub = timeRange
+      || (host && normLoose(host) !== normLoose(cur.title) ? `avec ${host}` : '');
+    push(cur.title, sub, 'live');
   }
 
-  // 2) Repli grille locale (bot pas encore à jour)
-  if (schedCur?.title) {
-    const timeRange = schedCur.start && schedCur.end
-      ? `${schedCur.start} – ${schedCur.end}`
-      : '';
-    let sub;
-    if (track && normLoose(track) !== normLoose(schedCur.title)) sub = `♪ ${track}`;
-    else if (schedCur.host) sub = `avec ${schedCur.host}`;
-    else if (timeRange) sub = timeRange;
-    else sub = slogan || `Vous écoutez ${radio.name}`;
-    return { title: schedCur.title, sub, kind: 'live' };
-  }
-
-  // 3) Hors créneau (autres postes) : prochaine émission
+  // 2) À venir — désormais affiché même pendant qu'une émission est en ondes
   const upcoming = botNext || (schedNext
     ? { title: schedNext.title, start: schedNext.start, end: schedNext.end, day: schedNext.day }
     : null);
-  const upTime = upcomingTimeRange(upcoming, radio);
+  if (upcoming?.title) push(upcoming.title, upcomingTimeRange(upcoming, radio), 'upcoming');
 
-  if (upcoming?.title) {
-    const bits = [];
-    if (upTime) bits.push(upTime);
-    if (track && normLoose(track) !== normLoose(upcoming.title)) {
-      bits.push(`♪ ${track}`);
-    }
-    return {
-      title: upcoming.title,
-      sub: bits.join(' · ') || slogan || '',
-      kind: 'upcoming',
-    };
+  // 3) Piste en cours
+  if (track) push(`♪ ${track}`, '', 'live');
+
+  // 4) Slogan : ferme le cycle sur mobile, jamais seul en tête
+  if (withSlogan && slogan && phases.length) push(slogan, '', 'idle');
+
+  // Rien à annoncer : le slogan (ou un repli) devient la seule phase.
+  if (!phases.length) push(slogan || `Vous écoutez ${radio.name}`, '', 'idle');
+
+  return phases;
+}
+
+/**
+ * Phase courante d'un poste. Le poste écouté suit l'index de rotation ;
+ * un poste seulement prévisualisé montre sa phase la plus informative.
+ * @returns {{ title: string, sub: string, kind: 'live'|'upcoming'|'idle' }}
+ */
+function nowAirLines(radio) {
+  const phases = airRotationPhases(radio, { withSlogan: isTunerSubRotateMode() });
+  if (!phases.length) {
+    return { title: `Vous écoutez ${radio?.name || ''}`.trim(), sub: '', kind: 'idle' };
   }
-
-  // 4) Piste seule (musique libre sans grille) — déjà filtrée pour CHOQ
-  if (track) {
-    return {
-      title: `♪ ${track}`,
-      sub: slogan || `Vous écoutez ${radio.name}`,
-      kind: 'live',
-    };
-  }
-
-  return { title: `Vous écoutez ${radio.name}`, sub: slogan, kind: 'idle' };
+  const index = radio && currentStation && radio.id === currentStation.id
+    ? airPhaseIndex % phases.length
+    : 0;
+  return phases[index];
 }
 
 /** Libellé du panneau bureau : « À l'antenne » (live/idle) ou « À venir ». */
@@ -1879,13 +1912,62 @@ function nowAirPanelLabel(kind = 'idle') {
  * Sur bureau le libellé panneau porte déjà « À venir » ; ici on le préfixe
  * quand kind === upcoming (le panneau est masqué sous 1100px).
  */
-function formatNowAirSubLine(title, sub, empty, kind = 'idle') {
+function formatNowAirSubLine(title, sub, empty, kind = 'idle', { liveLabel = false } = {}) {
   if (empty) return 'Les radios étudiantes jouent en direct, 24/7';
-  const core = sub ? `${title} · ${sub}` : (title || '');
+  const t = String(title || '').trim();
+  const s = String(sub || '').trim();
+  // Ne pas juxtaposer deux fois la même information : « ♪ Rotten · Rotten »
+  // ou « Mutations · Mutations (reprise) » se lisent comme un bégaiement.
+  const lowT = normLoose(t);
+  const lowS = normLoose(s);
+  const redundant = !!lowS && !!lowT && (lowT.includes(lowS) || lowS.includes(lowT));
+  const core = s && !redundant ? `${t} · ${s}` : (t || s);
   if (!core) return '';
   if (kind === 'upcoming') return `À venir · ${core}`;
+  // « À l'antenne » n'est posé que pour le poste syntonisé, sous 1100 px, là
+  // où le panneau latéral est masqué : sans lui, rien ne distingue l'émission
+  // en cours de la suivante une fois la ligne « À venir » passée.
+  //
+  // Au repos, la ligne nomme déjà la station et le carrousel enchaîne les
+  // postes : ce préfixe n'y apporterait rien, allongerait le texte, donc le
+  // défilement, donc l'attente avant le poste suivant. L'absence de « À venir »
+  // y suffit à dire « en ondes ». Le ♪ d'une piste se suffit aussi à lui-même.
+  if (liveLabel && kind === 'live' && !t.startsWith('♪')) return `À l'antenne · ${core}`;
   return core;
 }
+
+/**
+ * true si la ligne antenne n'apporte rien de plus que la ligne méta (slogan).
+ * Faire alterner deux lignes équivalentes donne l'impression que l'affichage
+ * hésite, alors qu'il n'a qu'une chose à dire — on n'alterne pas dans ce cas.
+ */
+function isRedundantAirLine(airLine, metaLine) {
+  const air = normLoose(airLine);
+  const meta = normLoose(metaLine);
+  if (!air) return true;
+  if (air === meta) return true;
+  if (!meta) return false;
+  const rest = air.split('·').map((p) => p.trim()).filter((p) => p && p !== meta);
+  return rest.length === 0;
+}
+
+/**
+ * Surface de test. La mise en forme de la ligne d'antenne est de la logique
+ * pure : l'exposer permet de vérifier les règles anti-répétition sans dépendre
+ * de ce que les stations diffusent au moment du test (donc sans test
+ * instable). Lecture seule, aucune incidence sur l'exécution — voir
+ * tests/now-air-lines.spec.mjs.
+ */
+window.RadarAir = {
+  _pure: {
+    formatNowAirSubLine,
+    isRedundantAirLine,
+    airRotationPhases,
+    dialPhaseLinesForRadio,
+    trackForAirDisplay,
+    isGarbageChoqTrack,
+  },
+};
 
 function nowAirInterestScore(radio) {
   if (botCurrentShow(radio) && isAuthoritativeLiveShow(radio)) return 4;
@@ -2038,34 +2120,24 @@ function dialCompactMetaLineForRadio(radio) {
 }
 
 /**
- * Ligne antenne pour le bas du dial compact (mobile / tablette).
- * Réutilise nowAirLines() (grille, ICY, slogan) + préfixe « À venir » si besoin.
+ * Les lignes qui défilent en bas du dial compact, dans l'ordre :
+ * émission en cours → à venir → piste → slogan.
+ *
+ * Le slogan n'est qu'une phase parmi d'autres et ferme le cycle ; il
+ * n'apparaît plus une fois sur deux comme du temps de l'alternance binaire.
  */
-function dialCompactAirLineForRadio(radio) {
-  if (!radio) return '';
-  const { title, sub, kind } = nowAirLines(radio);
-  const genericListen = `Vous écoutez ${radio.name}`;
-  if (title && title !== genericListen) {
-    return formatNowAirSubLine(title, sub, false, kind);
+function dialPhaseLinesForRadio(radio) {
+  if (!radio) return [];
+  const seen = new Set();
+  const lines = [];
+  for (const phase of airRotationPhases(radio, { withSlogan: true })) {
+    const line = formatNowAirSubLine(phase.title, phase.sub, false, phase.kind, { liveLabel: true });
+    const key = normLoose(line);
+    if (!line || seen.has(key)) continue;
+    seen.add(key);
+    lines.push(line);
   }
-  return radioSlogan(radio) || '';
-}
-
-/** @deprecated — préférer dialCompactMetaLineForRadio + rotation */
-function dialCompactSubLineForRadio(radio) {
-  return dialCompactAirLineForRadio(radio) || dialCompactMetaLineForRadio(radio);
-}
-
-function applyDialCompactSub(radio, crossfade = false) {
-  // Utilisé hors rotation uniquement (repli).
-  const line = dialCompactSubLineForRadio(radio);
-  TUNER_SUB?.parentElement?.classList.toggle('is-empty', !line);
-  tunerSubMeta = line;
-  if (crossfade) {
-    applyDialTextCrossfade(TUNER_SUB, line, true);
-  } else {
-    applyMarquee(TUNER_SUB, line);
-  }
+  return lines;
 }
 
 function formatPreviewNowAir(radio, { omitStation = false } = {}) {
@@ -2228,6 +2300,14 @@ function scheduleNowAirPreviewTick() {
 
   planTunerSubRotateDelay(TUNER_SUB, 0, (delay) => {
     if (currentStation || !isNowAirPanelPreviewMode()) return;
+    // Ne PAS plafonner ce délai. Sur téléphone la ligne porte l'émission, la
+    // station, l'établissement et l'horaire d'un seul tenant — le panneau
+    // latéral étant masqué — donc elle défile, et `marqueeReadingTimeMs()`
+    // calcule le temps qu'il faut pour la lire jusqu'au bout. D'où ~38 s sur
+    // téléphone contre ~8 s sur bureau, où le même sous-titre tient sans
+    // défiler parce que le panneau porte l'antenne à part. L'écart n'est pas
+    // une anomalie de cadence : c'est le prix de la lecture. Le raccourcir
+    // change de poste avant la fin du défilement.
     nowAirPreviewTimer = setTimeout(() => {
       nowAirPreviewTimer = null;
       if (currentStation || !isNowAirPanelPreviewMode()) return;
@@ -2259,6 +2339,36 @@ function stopTunerSubRotate() {
   TUNER_SUB?.parentElement?.classList.remove('is-rotating');
 }
 
+/**
+ * Écrit `text` dans le créneau qui devient actif, puis bascule.
+ *
+ * Les deux éléments ne portent plus un rôle figé (slogan d'un côté, antenne de
+ * l'autre) : ce sont deux créneaux interchangeables entre lesquels on fait un
+ * fondu, et le contenu vient de la liste de phases. C'est ce qui permet
+ * d'avoir plus de deux phases.
+ */
+function setDialRotateSlot(slotB, text) {
+  if (!TUNER_SUB || !TUNER_SUB_AIR) return;
+  const incoming = slotB ? TUNER_SUB_AIR : TUNER_SUB;
+  const outgoing = slotB ? TUNER_SUB : TUNER_SUB_AIR;
+  applyMarquee(incoming, text);
+  outgoing.classList.remove('is-marquee');
+  TUNER_SUB.classList.toggle('is-active', !slotB);
+  TUNER_SUB_AIR.classList.toggle('is-active', slotB);
+  TUNER_SUB.setAttribute('aria-hidden', String(slotB));
+  TUNER_SUB_AIR.setAttribute('aria-hidden', String(!slotB));
+  scheduleMarqueeRefresh();
+}
+
+/**
+ * Garde `lastNowAir` aligné sur la phase courante : sans ça, le prochain
+ * `renderTunerNowAir()` (tick 30 s) croit à un changement et refait un fondu.
+ */
+function syncNowAirCacheToPhase(radio) {
+  const { title, sub, kind } = nowAirLines(radio);
+  lastNowAir = { ...lastNowAir, title, sub, kind };
+}
+
 function scheduleTunerSubRotateTick() {
   if (tunerSubRotateTimer) {
     clearTimeout(tunerSubRotateTimer);
@@ -2266,14 +2376,23 @@ function scheduleTunerSubRotateTick() {
   }
   if (!isTunerSubRotateMode() || !currentStation) return;
 
-  const activeEl = tunerSubRotateShowAir ? TUNER_SUB_AIR : TUNER_SUB;
+  const activeEl = dialRotateSlotB ? TUNER_SUB_AIR : TUNER_SUB;
   planTunerSubRotateDelay(activeEl, 0, (delay) => {
     if (!isTunerSubRotateMode() || !currentStation) return;
     tunerSubRotateTimer = setTimeout(() => {
       tunerSubRotateTimer = null;
       if (!isTunerSubRotateMode() || !currentStation) return;
-      tunerSubRotateShowAir = !tunerSubRotateShowAir;
-      setTunerSubRotateActive(tunerSubRotateShowAir);
+      const lines = dialPhaseLinesForRadio(currentStation);
+      if (lines.length < 2) {
+        renderTunerNowAir();
+        return;
+      }
+      // La phase n'avance qu'ici, entre deux affichages — jamais pendant
+      // qu'on lit la ligne.
+      airPhaseIndex = (airPhaseIndex + 1) % lines.length;
+      dialRotateSlotB = !dialRotateSlotB;
+      setDialRotateSlot(dialRotateSlotB, lines[airPhaseIndex]);
+      syncNowAirCacheToPhase(currentStation);
       scheduleTunerSubRotateTick();
     }, delay);
   });
@@ -2285,37 +2404,16 @@ function restartTunerSubRotateTimer() {
   }
 }
 
-function setTunerSubRotateActive(showAir) {
+/** Fige l'affichage sur le créneau A (hors rotation). */
+function resetDialRotateSlots(text) {
   if (!TUNER_SUB || !TUNER_SUB_AIR) return;
-  TUNER_SUB.classList.toggle('is-active', !showAir);
-  TUNER_SUB_AIR.classList.toggle('is-active', showAir);
-  TUNER_SUB.setAttribute('aria-hidden', String(showAir));
-  TUNER_SUB_AIR.setAttribute('aria-hidden', String(!showAir));
-  if (showAir) {
-    TUNER_SUB.classList.remove('is-marquee');
-    applyMarquee(TUNER_SUB_AIR, tunerSubAirText);
-  } else {
-    TUNER_SUB_AIR.classList.remove('is-marquee');
-    applyMarquee(TUNER_SUB, tunerSubMeta);
-  }
-  scheduleMarqueeRefresh();
-}
-
-/**
- * Compact (< 1100 px) + poste : ligne 1 = poste · institution, ligne 2 = antenne / à venir / slogan.
- * Bureau : ligne 1 = poste, ligne 2 = fréquence · institution ; panneau latéral pour l'antenne.
- */
-function updateNowAirSubAirText(text, crossfade = false) {
-  if (!TUNER_SUB_AIR) return;
-  if (!crossfade || !isTunerSubRotateMode()) {
-    applyMarquee(TUNER_SUB_AIR, text);
-    return;
-  }
-  TUNER_SUB_AIR.classList.add('is-crossfading');
-  setTimeout(() => {
-    applyMarquee(TUNER_SUB_AIR, text);
-    requestAnimationFrame(() => TUNER_SUB_AIR.classList.remove('is-crossfading'));
-  }, NOW_AIR_CROSSFADE_MS);
+  dialRotateSlotB = false;
+  TUNER_SUB.classList.add('is-active');
+  TUNER_SUB_AIR.classList.remove('is-active');
+  TUNER_SUB.setAttribute('aria-hidden', 'false');
+  TUNER_SUB_AIR.setAttribute('aria-hidden', 'true');
+  TUNER_SUB_AIR.classList.remove('is-marquee');
+  if (text != null) applyMarquee(TUNER_SUB, text);
 }
 
 /** Texte du panneau antenne : marquee doux seulement en cas de débordement. */
@@ -2339,6 +2437,7 @@ function applyNowAirPanelText(el, text) {
  */
 function updateNowAirPanel(title, sub, opts = {}) {
   const crossfade = !!opts.crossfade;
+  const swapDelayMs = Number.isFinite(opts.swapDelayMs) ? opts.swapDelayMs : NOW_AIR_PANEL_SWAP_MS;
   const panelLabel = opts.panelLabel;
   const onWritten = typeof opts.onWritten === 'function' ? opts.onWritten : null;
   const panel = TUNER_NOWAIR;
@@ -2382,7 +2481,7 @@ function updateNowAirPanel(title, sub, opts = {}) {
       if (gen !== nowAirFadeGen) return;
       panel.classList.remove('is-swapping');
     });
-  }, 280);
+  }, swapDelayMs);
 }
 
 function syncTunerSubRotate(title, sub, empty, crossfade = false, kind = 'idle') {
@@ -2410,20 +2509,16 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false, kind = 'idle')
   if (currentStation && isDialCompactLayout()) {
     setTunerNameText(compactDialTitleLine(currentStation), crossfade);
     tunerSubMeta = dialCompactMetaLineForRadio(currentStation);
-    tunerSubAirText = dialCompactAirLineForRadio(currentStation)
-      || formatNowAirSubLine(title, sub, empty, kind);
-    // Ne pas « tourner » si la ligne air n’est que le slogan (déjà en bas)
-    const hasAir = !!(tunerSubAirText && tunerSubAirText !== tunerSubMeta);
 
-    if (!isTunerSubRotateMode() || !hasAir) {
-      // Pas d’émission distincte : bas = slogan (méta) en priorité
+    const lines = dialPhaseLinesForRadio(currentStation);
+    // Une seule phase : rien à faire tourner, on la pose et on s'arrête.
+    if (!isTunerSubRotateMode() || lines.length < 2) {
       stopTunerSubRotate();
       wrapper?.classList.remove('is-rotating');
-      TUNER_SUB.classList.add('is-active');
-      TUNER_SUB_AIR.classList.remove('is-active');
-      TUNER_SUB.setAttribute('aria-hidden', 'false');
-      TUNER_SUB_AIR.setAttribute('aria-hidden', 'true');
-      const line = hasAir ? tunerSubAirText : tunerSubMeta;
+      airPhaseIndex = 0;
+      const line = lines[0] || tunerSubMeta;
+      tunerSubAirText = line;
+      resetDialRotateSlots(null);
       TUNER_SUB?.parentElement?.classList.toggle('is-empty', !line);
       if (crossfade) applyDialTextCrossfade(TUNER_SUB, line, true);
       else applyMarquee(TUNER_SUB, line);
@@ -2433,17 +2528,19 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false, kind = 'idle')
 
     wrapper?.classList.add('is-rotating');
     TUNER_SUB?.parentElement?.classList.remove('is-empty');
-    applyMarquee(TUNER_SUB, tunerSubMeta);
-    updateNowAirSubAirText(tunerSubAirText, crossfade);
+    // L'index peut dépasser si la liste a rétréci entre deux rendus.
+    airPhaseIndex %= lines.length;
+    tunerSubAirText = lines[airPhaseIndex];
 
     if (!tunerSubRotateTimer) {
-      tunerSubRotateShowAir = false;
-      setTunerSubRotateActive(false);
+      airPhaseIndex = 0;
+      resetDialRotateSlots(lines[0]);
       scheduleTunerSubRotateTick();
-    } else if (tunerSubRotateShowAir) {
-      updateNowAirSubAirText(tunerSubAirText, crossfade);
     } else {
-      applyMarquee(TUNER_SUB, tunerSubMeta);
+      // Rafraîchir la phase visible sans toucher au créneau masqué : le fondu
+      // est porté par la bascule de créneau, pas par une réécriture.
+      const activeEl = dialRotateSlotB ? TUNER_SUB_AIR : TUNER_SUB;
+      applyMarquee(activeEl, lines[airPhaseIndex]);
     }
     scheduleMarqueeRefresh();
     return;
@@ -2472,19 +2569,10 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false, kind = 'idle')
     return;
   }
 
+  // Rotation demandée sans poste syntonisé (embed large au repos) : il n'y a
+  // pas de liste de phases à faire tourner, on pose la ligne disponible.
   wrapper?.classList.add('is-rotating');
-  applyMarquee(TUNER_SUB, tunerSubMeta);
-  updateNowAirSubAirText(tunerSubAirText, crossfade);
-
-  if (!tunerSubRotateTimer) {
-    tunerSubRotateShowAir = false;
-    setTunerSubRotateActive(false);
-    scheduleTunerSubRotateTick();
-  } else if (tunerSubRotateShowAir) {
-    updateNowAirSubAirText(tunerSubAirText, crossfade);
-  } else {
-    applyMarquee(TUNER_SUB, tunerSubMeta);
-  }
+  resetDialRotateSlots(tunerSubAirText || tunerSubMeta);
   scheduleMarqueeRefresh();
 }
 
@@ -2554,8 +2642,8 @@ function renderTunerNowAir() {
     else if (previewing) startNowAirPreview();
     else stopNowAirPreview();
     // Timer CHOQ peut encore être démarré
-    if (currentStation) syncChoqAirRotate(currentStation);
-    else if (previewing) syncChoqAirRotate(nowAirPreviewRadio);
+    if (currentStation) syncAirPanelRotate(currentStation);
+    else if (previewing) syncAirPanelRotate(nowAirPreviewRadio);
     return;
   }
 
@@ -2589,7 +2677,14 @@ function renderTunerNowAir() {
   const panelLabel = empty ? "À l'antenne" : nowAirPanelLabel(kind);
 
   updateNowAirPanel(title, sub, {
-    crossfade: shouldFade && !empty,
+    crossfade: (shouldFade || crossfadePreview) && !empty,
+    // Carrousel au repos : le panneau et le dial décrivent le MÊME poste, mais
+    // leurs fondus n'ont pas la même durée (0,3 s contre 0,7 s). En échangeant
+    // chacun à son rythme, le panneau annonçait l'émission du poste suivant
+    // pendant que le dial nommait encore le précédent. On aligne l'instant de
+    // bascule sur le plus lent des deux ; le panneau est déjà invisible depuis
+    // longtemps, l'attente ne se voit pas.
+    swapDelayMs: crossfadePreview ? NOW_AIR_CROSSFADE_MS : NOW_AIR_PANEL_SWAP_MS,
     panelLabel,
     onWritten: applyKindClasses,
   });
@@ -2614,13 +2709,13 @@ function renderTunerNowAir() {
         ? compactDialTitleLine(currentStation)
         : tunerDesktopTitleLine(currentStation),
     );
-    syncChoqAirRotate(currentStation);
+    syncAirPanelRotate(currentStation);
   } else if (previewing) {
     startNowAirPreview();
-    syncChoqAirRotate(nowAirPreviewRadio);
+    syncAirPanelRotate(nowAirPreviewRadio);
   } else {
     stopNowAirPreview();
-    stopChoqAirRotate();
+    stopAirPanelRotate();
     setTunerNameText('Syntoniser un poste');
   }
 }
@@ -2638,7 +2733,9 @@ function startNowAirTick() {
 
 async function refreshNowPlayingCache() {
   try {
-    radioNowPlaying = await fetch('./radio-nowplaying.json', { cache: 'no-store' }).then((r) => r.json());
+    radioNowPlaying = decodeNowPlayingPayload(
+      await fetch('./radio-nowplaying.json', { cache: 'no-store' }).then((r) => r.json()),
+    );
   } catch {
     /* ignore */
   }
@@ -2652,31 +2749,59 @@ async function refreshNowPlayingCache() {
  * Types CORS : cism-v1 (émissions), triton-np (piste). Craft/CHOQ /api/live
  * n'a pas de CORS — ne pas l'utiliser ici comme « émission ».
  */
+/**
+ * « HH:MM » dans le fuseau de la grille, depuis un horodatage Unix (s ou ms)
+ * ou une chaîne ISO.
+ *
+ * CISM n'expose que `datetime` (Unix). Le bot le convertit déjà
+ * (`timeFromStamp`, radio-nowplaying-lib.js) ; sans équivalent ici, la sonde
+ * navigateur écrasait l'heure calculée par le bot par une chaîne vide — d'où
+ * un « À venir » sans heure dès que le poll client passait.
+ */
+function airClockFromStamp(value) {
+  if (value == null || value === '') return '';
+  let ms = NaN;
+  if (typeof value === 'number' || /^\d{9,}$/.test(String(value))) {
+    const n = Number(value);
+    if (!Number.isFinite(n) || n <= 0) return '';
+    ms = n > 1e12 ? n : n * 1000;
+  } else if (/^\d{4}-\d{2}-\d{2}T/.test(String(value))) {
+    ms = Date.parse(String(value));
+  } else {
+    // Déjà « HH:MM » (ou « HH:MM:SS ») : normaliser sans conversion de fuseau.
+    const m = /^(\d{1,2}):(\d{2})/.exec(String(value).trim());
+    return m ? `${String(Number(m[1])).padStart(2, '0')}:${m[2]}` : '';
+  }
+  if (!Number.isFinite(ms) || ms <= 0) return '';
+  const tz = radioNowPlaying.timezone || radioSchedules.timezone || 'America/Toronto';
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: tz, hour: '2-digit', minute: '2-digit', hour12: false,
+  }).formatToParts(new Date(ms));
+  const map = {};
+  for (const p of parts) map[p.type] = p.value;
+  let hour = parseInt(map.hour, 10);
+  if (hour === 24 || Number.isNaN(hour)) hour = 0;
+  const minute = parseInt(map.minute, 10) || 0;
+  return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+}
+
 function parseClientLivePayload(type, payload) {
   if (!payload) return null;
   if (type === 'cism-v1' || type === 'cism') {
     const cur = payload?.data?.current || payload?.current;
     const up = payload?.data?.upcoming || payload?.data?.next || payload?.upcoming;
     if (!cur?.title) return null;
+    const show = (raw) => ({
+      title: String(raw.title).trim(),
+      host: String(raw.host || '').trim(),
+      source: 'api-live',
+      slug: String(raw.slug || '').trim(),
+      start: airClockFromStamp(raw.datetime ?? raw.starts ?? raw.start),
+      end: airClockFromStamp(raw.end ?? raw.ends),
+    });
     return {
-      current: {
-        title: String(cur.title).trim(),
-        host: String(cur.host || '').trim(),
-        source: 'api-live',
-        slug: String(cur.slug || '').trim(),
-        start: cur.start || cur.starts || '',
-        end: cur.end || cur.ends || '',
-      },
-      next: up?.title
-        ? {
-          title: String(up.title).trim(),
-          host: String(up.host || '').trim(),
-          source: 'api-live',
-          slug: String(up.slug || '').trim(),
-          start: up.start || up.starts || '',
-          end: up.end || up.ends || '',
-        }
-        : null,
+      current: show(cur),
+      next: up?.title ? show(up) : null,
     };
   }
   // CHOQ / Craft /api/live : title+artist = PISTE uniquement
@@ -2809,8 +2934,10 @@ async function refreshStationLiveApis() {
     .map(([id, st]) => fetchClientLivePoll(id, st.clientPoll));
   if (!jobs.length) return;
   const results = await Promise.all(jobs);
-  for (const hit of results) {
-    if (!hit) continue;
+  for (const raw of results) {
+    if (!raw) continue;
+    // Sonde navigateur = API station en direct, donc entités possibles.
+    const hit = decodeNowPlayingStation(raw);
     const prev = radioNowPlaying.stations[hit.id] || {};
     const nextCurrent = hit.current?.title ? hit.current : (prev.current || null);
     const nextNext = hit.next?.title ? hit.next : (prev.next || null);
@@ -3148,7 +3275,11 @@ function measureMarquee(el) {
     return;
   }
 
-  const distance = overflow + 12;
+  // Arrondi au pixel : `available` dérive d'un padding calculé, souvent
+  // fractionnaire. Un décalage à la virgule fait reposer le texte entre deux
+  // pixels, et le compositeur le rééchantillonne — c'est flou précisément aux
+  // deux extrémités, là où l'animation marque une pause pour qu'on lise.
+  const distance = Math.round(overflow + 12);
   const duration = Math.max(7, distance / 16);
   el.style.setProperty('--marquee-shift', `-${distance}px`);
   el.style.setProperty('--marquee-duration', `${duration.toFixed(1)}s`);
@@ -3300,9 +3431,12 @@ function selectStation(id, { autoplay = false, openExternal = false, fromSync = 
   const prevId = currentStation?.id || null;
   currentStation = radio;
 
-  // Changement de poste : reset CHOQ + fondu antenne (évite l’hésitation visuelle)
-  stopChoqAirRotate();
-  choqAirRotateShowUpcoming = false;
+  // Changement de poste : repartir de la phase 1 (émission en cours) + fondu
+  // antenne, sinon le nouveau poste hérite de l'index du précédent.
+  stopAirPanelRotate();
+  stopTunerSubRotate();
+  airPhaseIndex = 0;
+  dialRotateSlotB = false;
   if (prevId !== radio.id) {
     cancelLoudnessProbe();
     nowAirCrossfadePending = true;
@@ -3312,12 +3446,13 @@ function selectStation(id, { autoplay = false, openExternal = false, fromSync = 
   const external = isExternalListen(radio);
 
   if (isDialCompactLayout()) {
-    // Mobile / embed étroit : L1 = poste · acronyme ; L2 = slogan (ou antenne en rotation)
+    // Mobile / embed étroit : L1 = poste · acronyme ; L2 = première phase
+    // (l'émission en cours), que renderTunerNowAir() enchaîne juste après.
     setTunerNameText(compactDialTitleLine(radio));
-    const metaLine = dialCompactMetaLineForRadio(radio);
-    tunerSubMeta = metaLine;
-    TUNER_SUB?.parentElement?.classList.toggle('is-empty', !metaLine);
-    applyMarquee(TUNER_SUB, metaLine);
+    tunerSubMeta = dialCompactMetaLineForRadio(radio);
+    const firstLine = dialPhaseLinesForRadio(radio)[0] || tunerSubMeta;
+    TUNER_SUB?.parentElement?.classList.toggle('is-empty', !firstLine);
+    resetDialRotateSlots(firstLine);
   } else {
     // Bureau (+ embed large) : L1 = poste FM · acronyme ; L2 = slogan
     setTunerNameText(tunerDesktopTitleLine(radio));
@@ -4697,10 +4832,15 @@ function onRadarTranslateModeChange() {
     const external = isExternalListen(radio);
     if (isDialCompactLayout()) {
       setTunerNameText(compactDialTitleLine(radio));
-      const metaLine = dialCompactMetaLineForRadio(radio);
-      tunerSubMeta = metaLine;
-      TUNER_SUB?.parentElement?.classList.toggle('is-empty', !metaLine);
-      if (!tunerSubRotateShowAir) applyMarquee(TUNER_SUB, metaLine);
+      tunerSubMeta = dialCompactMetaLineForRadio(radio);
+      // Reposer la phase courante traduite dans le créneau visible seulement.
+      // Pas de renderTunerNowAir() ici : un rendu complet relance les marquees
+      // et l'observateur de taille, ce qui reflue tout le mât au moment même
+      // où l'on change de langue.
+      const lines = dialPhaseLinesForRadio(radio);
+      const line = lines[airPhaseIndex % Math.max(1, lines.length)] || tunerSubMeta;
+      TUNER_SUB?.parentElement?.classList.toggle('is-empty', !line);
+      applyMarquee(dialRotateSlotB ? TUNER_SUB_AIR : TUNER_SUB, line);
     } else {
       setTunerNameText(tunerDesktopTitleLine(radio));
       setTunerSubText(tunerDesktopSubLine(radio, { external }));

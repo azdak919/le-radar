@@ -61,7 +61,7 @@ jobs:
           git config user.name "RÉQ Stream Bot"
           git config user.email "actions@users.noreply.github.com"
           git add radios.json radios-candidates.json radio-nowplaying.json index.html sitemap.xml llms.txt
-          git add -A radios journaux etablissements medias en 2>/dev/null || true
+          git add -A radios journaux etablissements medias horaires en 2>/dev/null || true
           git commit -m "bot: update discovered streams (auto)"
           # Rebase onto any work pushed since checkout so the bot never
           # clobbers manual commits and never fails on a fast-forward race.

@@ -187,7 +187,7 @@ jobs:
           # est indispensable — sans lui, la suppression d'une page (journal
           # retiré du registre) resterait non stagée et la page continuerait
           # d'être servie et indexée.
-          git add -A radios journaux etablissements medias en 2>/dev/null || true
+          git add -A radios journaux etablissements medias horaires en 2>/dev/null || true
           git commit -m "bot: update student news feed, excerpts, images, photo credits, RSS and social (auto)" || exit 0
           for i in 1 2 3; do
             git pull --rebase -X theirs --autostash origin "${GITHUB_REF_NAME}" && git push && exit 0

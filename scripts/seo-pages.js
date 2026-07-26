@@ -6,6 +6,7 @@
  *   /journaux/<slug>/        /en/newspapers/<slug>/
  *   /etablissements/<slug>/  /en/institutions/<slug>/
  *   /medias/                 /en/media/
+ *   /horaires/               /en/schedules/
  *
  * Voir scripts/seo-pages-lib.js pour le gabarit et les chaînes bilingues,
  * et docs/referencement.md pour le pourquoi.
@@ -49,6 +50,7 @@ function institutionUpdated(group, ctx) {
 /** Chemins jumeaux FR/EN d'un même contenu. */
 const ROUTES = {
   directory: { fr: 'medias/', en: 'en/media/' },
+  schedules: { fr: 'horaires/', en: 'en/schedules/' },
   radio: { fr: (s) => `radios/${s}/`, en: (s) => `en/radios/${s}/` },
   paper: { fr: (s) => `journaux/${s}/`, en: (s) => `en/newspapers/${s}/` },
   institution: { fr: (s) => `etablissements/${s}/`, en: (s) => `en/institutions/${s}/` },
@@ -171,9 +173,12 @@ function radioPage(radio, lang, ctx) {
     html: renderPage({
       lang, path, altPath, title, description, h1,
       eyebrow: t.radios,
+      // Le hub horaires est dans le fil : sans lien entrant, une page générée
+      // est mal explorée (même raisonnement que les liens de pied de page).
       crumbs: [
         { label: t.home, href: up },
         { label: t.directory, href: `${up}${ROUTES.directory[lang]}` },
+        { label: t.schedules, href: `${up}${ROUTES.schedules[lang]}` },
         { label: name },
       ],
       bodyHtml: body, jsonLd, siteBase: ctx.siteBase, updated: radioUpdated(radio, ctx),
@@ -425,6 +430,90 @@ function directoryPage(model, lang, ctx) {
   };
 }
 
+/**
+ * Hub des horaires — une entrée par station vers sa grille complète.
+ *
+ * Le syntoniseur renvoie déjà vers `/radios/<id>/#horaire` quand on clique sur
+ * « À l'antenne », mais rien ne permettait de parcourir les grilles sans
+ * d'abord syntoniser un poste. Cette page est le point d'entrée manquant ;
+ * elle ne duplique pas les grilles, elle y mène.
+ *
+ * Les données viennent de `radio-schedules.json`, seule source alimentée par
+ * les bots — cette page en est une vue, pas une source.
+ */
+function schedulesHubPage(model, lang, ctx) {
+  const t = T[lang];
+  const path = ROUTES.schedules[lang];
+  const altPath = ROUTES.schedules[lang === 'fr' ? 'en' : 'fr'];
+  const up = '../'.repeat(path.split('/').filter(Boolean).length);
+
+  // Une station n'apparaît que si elle a réellement une grille : une carte
+  // vide promettrait un horaire inexistant.
+  const withGrid = model.radioEntries
+    .map((r) => ({ radio: r, station: ctx.schedules?.[r.id] || null }))
+    .filter((e) => Array.isArray(e.station?.grid) && e.station.grid.length)
+    .sort((a, b) => (a.radio.fullName || a.radio.name)
+      .localeCompare(b.radio.fullName || b.radio.name, 'fr'));
+
+  const description = fill(t.schedulesDesc, { r: withGrid.length });
+
+  let body = `      <p class="seo-lead">${escapeHtml(t.schedulesLead)}</p>\n`;
+
+  if (!withGrid.length) {
+    body += `      <p class="seo-empty">${escapeHtml(t.schedulesEmpty)}</p>\n`;
+  } else {
+    body += cardGrid(withGrid.map(({ radio, station }) => {
+      const count = station.grid.length;
+      const slots = `${count} ${count > 1 ? t.slotsCount : t.slotsCountOne}`;
+      const collected = isoDay(station.checkedAt);
+      return {
+        name: radio.fullName || radio.name,
+        meta: [
+          radio.group ? radio.group.short : radio.institution,
+          slots,
+          collected ? `${t.collectedOn} ${collected}` : '',
+        ].filter(Boolean).join(' · '),
+        href: `${up}${ROUTES.radio[lang](radio.slug)}#horaire`,
+      };
+    }));
+  }
+
+  body += `      <p class="seo-note">${escapeHtml(t.scheduleNote)}</p>\n`;
+
+  const jsonLd = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: t.schedulesH1,
+    description,
+    inLanguage: lang === 'fr' ? 'fr-CA' : 'en-CA',
+    about: {
+      '@type': 'ItemList',
+      numberOfItems: withGrid.length,
+      itemListElement: withGrid.map(({ radio }, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: radio.fullName || radio.name,
+        url: `${ctx.siteBase}/${ROUTES.radio[lang](radio.slug)}#horaire`,
+      })),
+    },
+  }).replace(/</g, '\\u003c');
+
+  return {
+    path,
+    html: renderPage({
+      lang, path, altPath,
+      title: `${t.schedulesTitle} | LE-RADAR.ca`,
+      description,
+      h1: t.schedulesH1,
+      eyebrow: t.radios,
+      crumbs: [{ label: t.home, href: up }, { label: t.schedules }],
+      bodyHtml: body, jsonLd, siteBase: ctx.siteBase, updated: null,
+    }),
+    changefreq: 'weekly',
+    priority: '0.7',
+  };
+}
+
 /** Page d'accueil du volet anglais : présentation du projet, pas le fil. */
 function englishHomePage(model, ctx) {
   const t = T.en;
@@ -494,6 +583,7 @@ function buildEntityPages({ radios, sources, news, institutions, schedules, site
 
   for (const lang of ['fr', 'en']) {
     pages.push(directoryPage(model, lang, ctx));
+    pages.push(schedulesHubPage(model, lang, ctx));
     for (const radio of model.radioEntries) pages.push(radioPage(radio, lang, ctx));
     for (const paper of model.paperEntries) pages.push(paperPage(paper, lang, ctx));
     for (const group of model.groups) pages.push(institutionPage(group, lang, ctx));

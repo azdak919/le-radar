@@ -139,6 +139,17 @@ const T = {
     noHeadlines: 'Aucun article récent au moment de la dernière mise à jour.',
     schedule: 'À l’antenne cette semaine',
     scheduleNote: 'Grille colligée automatiquement à partir du site de la station ; elle peut varier.',
+    overnight: 'de nuit',
+    noSlots: 'Aucune émission annoncée.',
+    schedules: 'Les horaires des radios étudiantes',
+    schedulesTitle: 'Horaires des radios étudiantes du Québec — grilles de la semaine',
+    schedulesDesc: 'Les grilles horaires des {r} radios étudiantes des cégeps et universités du Québec, colligées automatiquement et réunies au même endroit.',
+    schedulesH1: 'Les horaires des radios étudiantes du Québec',
+    schedulesLead: 'Une grille par station, mise à jour automatiquement à partir du site de chaque radio. Toutes les heures sont données à l’heure du Québec.',
+    schedulesEmpty: 'Aucune grille horaire disponible au moment de la dernière mise à jour.',
+    slotsCount: 'créneaux',
+    slotsCountOne: 'créneau',
+    collectedOn: 'colligé le',
     mediaOf: 'Les médias étudiants {of}',
     mediaOfDesc: 'Les journaux étudiants et la radio de campus {of} : qui ils sont, où les lire et les écouter.',
     radioOf: 'la radio étudiante {of}',
@@ -180,6 +191,17 @@ const T = {
     noHeadlines: 'No recent articles as of the last update.',
     schedule: 'On air this week',
     scheduleNote: 'Schedule collected automatically from the station’s website; it may change.',
+    overnight: 'overnight',
+    noSlots: 'No scheduled shows.',
+    schedules: 'Campus radio schedules',
+    schedulesTitle: 'Québec campus radio schedules — this week’s line-up',
+    schedulesDesc: 'Weekly schedules for the {r} campus radio stations at Québec CEGEPs and universities, collected automatically and gathered in one place.',
+    schedulesH1: 'Québec campus radio schedules',
+    schedulesLead: 'One grid per station, updated automatically from each station’s own website. All times are Québec time.',
+    schedulesEmpty: 'No schedule available as of the last update.',
+    slotsCount: 'slots',
+    slotsCountOne: 'slot',
+    collectedOn: 'collected',
     mediaOf: 'Student media at {name}',
     mediaOfDesc: 'The student newspapers and campus radio of {name}: who they are, where to read and listen to them.',
     radioOf: 'the campus radio station of {name}',
@@ -369,25 +391,76 @@ function cardGrid(cards) {
   return `      <ul class="seo-cards">\n${items}\n      </ul>\n`;
 }
 
+/** "HH:MM" → minutes depuis minuit, ou null. Tri numérique, pas lexical. */
+function slotMinutes(value) {
+  const m = /^(\d{1,2}):(\d{2})$/.exec(String(value || '').trim());
+  if (!m) return null;
+  const h = Number(m[1]);
+  const min = Number(m[2]);
+  if (h > 24 || min > 59) return null;
+  return h * 60 + min;
+}
+
+/**
+ * Grille hebdomadaire complète.
+ *
+ * Pas de troncature : ces pages sont la vue de référence de l'horaire (le
+ * syntoniseur y renvoie depuis « À l'antenne »), et couper à 8 créneaux
+ * cachait près de la moitié de la semaine de CKUT. La plage complète
+ * `début – fin` est affichée parce qu'elle est déjà dans la donnée, et qu'une
+ * heure de début seule ne dit pas si l'émission dure 30 minutes ou 6 heures.
+ */
 function scheduleTable(grid, t) {
   if (!grid || !grid.length) return '';
   const byDay = new Map();
   for (const slot of grid) {
+    if (!slot || !slot.title) continue;
     if (!byDay.has(slot.day)) byDay.set(slot.day, []);
     byDay.get(slot.day).push(slot);
   }
-  const days = [...byDay.keys()].sort((a, b) => a - b);
+  if (!byDay.size) return '';
+
+  // Les sept jours, toujours. Une colonne qui disparaît ne dit pas si la
+  // station ne diffuse rien ce jour-là ou si la collecte a échoué ; un jour
+  // explicitement vide, si.
+  //
+  // Ordre lundi → dimanche (et non l'index 0-6 des données, qui commence le
+  // dimanche) : sur cinq colonnes, la première rangée est alors la semaine et
+  // la seconde le week-end, au lieu de couper samedi et dimanche en deux.
+  const days = [1, 2, 3, 4, 5, 6, 0];
   const blocks = days.map((day) => {
+    if (!byDay.has(day)) {
+      return `        <div class="seo-day seo-day--empty">\n          <h3>${escapeHtml(t.days[day] || '')}</h3>\n`
+        + `          <p class="seo-day__none">${escapeHtml(t.noSlots)}</p>\n        </div>`;
+    }
     const slots = byDay.get(day)
       .slice()
-      .sort((a, b) => String(a.start).localeCompare(String(b.start)))
-      .slice(0, 8)
-      .map((s) => `            <li><time>${escapeHtml(s.start)}</time> ${escapeHtml(s.title || '')}</li>`)
+      .sort((a, b) => (slotMinutes(a.start) ?? 0) - (slotMinutes(b.start) ?? 0))
+      .map((s) => {
+        const start = slotMinutes(s.start);
+        const end = slotMinutes(s.end);
+        // Traverse réellement minuit (23:00 → 01:00). `end === 0` s'arrête *à*
+        // minuit : c'est déjà lisible tel quel, la mention serait du bruit.
+        const overnight = start != null && end != null && end < start && end > 0;
+        const range = s.end
+          ? `${escapeHtml(s.start)}<span class="seo-slot__dash" aria-hidden="true">–</span>${escapeHtml(s.end)}`
+          : escapeHtml(s.start);
+        const title = escapeHtml(s.title || '');
+        const label = s.url
+          ? `<a href="${escapeHtml(s.url)}" rel="noopener">${title}</a>`
+          : title;
+        return `            <li${overnight ? ' class="seo-slot--overnight"' : ''}>`
+          + `<time class="seo-slot__time">${range}</time>`
+          + `<span class="seo-slot__title">${label}</span>`
+          + (overnight ? `<span class="seo-slot__note">${escapeHtml(t.overnight)}</span>` : '')
+          + '</li>';
+      })
       .join('\n');
     return `        <div class="seo-day">\n          <h3>${escapeHtml(t.days[day] || '')}</h3>\n          <ul>\n${slots}\n          </ul>\n        </div>`;
   });
-  return `      <section class="seo-section">\n        <h2>${escapeHtml(t.schedule)}</h2>\n`
-    + `      <div class="seo-schedule">\n${blocks.join('\n')}\n      </div>\n`
+
+  return `      <section class="seo-section" id="horaire">\n        <h2>${escapeHtml(t.schedule)}</h2>\n`
+    + `      <div class="seo-schedule-scroll">\n      <div class="seo-schedule">\n${blocks.join('\n')}\n      </div>\n      </div>\n`
     + `      <p class="seo-note">${escapeHtml(t.scheduleNote)}</p>\n      </section>\n`;
 }
 
@@ -408,5 +481,6 @@ module.exports = {
   factsList,
   headlineList,
   cardGrid,
+  slotMinutes,
   scheduleTable,
 };

@@ -10,9 +10,14 @@ const require = createRequire(import.meta.url);
 const root = new URL('../', import.meta.url).pathname;
 const htmlFiles = [];
 
+// Les traces Playwright sont du HTML : sans cette exclusion, un run de tests
+// interrompu laisse des artefacts qui font échouer `npm run check` alors que
+// le site est intact (ces dossiers sont déjà dans .gitignore).
+const SKIP_DIRS = new Set(['.git', 'node_modules', 'test-results', 'playwright-report']);
+
 function collectHtml(directory) {
   for (const entry of readdirSync(directory, { withFileTypes: true })) {
-    if (entry.name === '.git' || entry.name === 'node_modules') continue;
+    if (SKIP_DIRS.has(entry.name)) continue;
     const fullPath = join(directory, entry.name);
     if (entry.isDirectory()) collectHtml(fullPath);
     else if (entry.name.endsWith('.html')) htmlFiles.push(fullPath);
@@ -207,7 +212,7 @@ for (const rel of ['robots.txt', 'llms.txt']) {
 }
 
 // ── Pages d'entités générées (scripts/seo-pages.js) ────────────────────────
-const GENERATED_ROOTS = ['radios', 'journaux', 'etablissements', 'medias', 'en'];
+const GENERATED_ROOTS = ['radios', 'journaux', 'etablissements', 'medias', 'horaires', 'en'];
 const generatedPages = htmlFiles.filter((f) => {
   const rel = relative(root, f);
   return GENERATED_ROOTS.some((dir) => rel === `${dir}/index.html` || rel.startsWith(`${dir}/`));
@@ -248,6 +253,41 @@ for (const file of generatedPages) {
     `${rel}: contraction française manquante (« de l’Université », « du Cégep »)`
   );
 }
+/*
+ * Hub des horaires : les grilles complètes ne servent à rien si rien n'y mène.
+ * Une page générée sans lien entrant est mal explorée, quoi qu'en dise le
+ * sitemap — d'où le lien de pied de page, testé ici comme les autres.
+ */
+for (const hub of ['horaires/index.html', 'en/schedules/index.html']) {
+  assert(existsSync(join(root, hub)), `${hub} manquant — lancer \`npm run seo:update\``);
+}
+assert(
+  /<a href="horaires\/">/.test(indexHtml),
+  'index.html : lien de pied de page vers /horaires/ requis (page autrement orpheline)'
+);
+
+// Les fiches station portent l'ancre visée par « À l'antenne » (app.js).
+const ckutPage = readFileSync(join(root, 'radios/ckut/index.html'), 'utf8');
+assert(
+  /<section class="seo-section" id="horaire">/.test(ckutPage),
+  'radios/ckut/index.html : ancre #horaire requise (cible de nowAirSchedulePath)'
+);
+// La grille n'est plus tronquée : CKUT compte une centaine de créneaux.
+assert(
+  (ckutPage.match(/<li><time|<li[^>]*><time/g) || []).length >= 60,
+  'radios/ckut/index.html : grille hebdomadaire tronquée — scheduleTable ne doit plus couper à 8 créneaux/jour'
+);
+// Ordre lundi → dimanche : sur cinq colonnes, la semaine occupe la première
+// rangée et le week-end la seconde. L'ordre 0-6 des données couperait samedi
+// et dimanche de part et d'autre du retour à la ligne.
+const ckutDays = [...ckutPage.matchAll(/<div class="seo-day[^"]*">\s*<h3>([^<]+)<\/h3>/g)]
+  .map((m) => m[1]);
+assert.deepEqual(
+  ckutDays,
+  ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'],
+  `radios/ckut/index.html : ordre des jours attendu lundi→dimanche, obtenu ${ckutDays.join(', ')}`
+);
+
 // La <h1> hérite sinon de la marge par défaut du navigateur → mât décadré.
 const styleCss = readFileSync(join(root, 'style.css'), 'utf8');
 assert(
