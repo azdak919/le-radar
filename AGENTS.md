@@ -130,6 +130,9 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 | D9 | **Tests navigateur instables** (`player-continuity`, attentes réseau) | Le syntoniseur garde des connexions ouvertes en permanence et l’audio headless n’est pas déterministe : rendre ces tests fiables demande de réécrire les attentes, pas de rallonger les délais | Un run vert 10× d’affilée en local **et** en CI après passage à des attentes sur l’état observable ; aucun flake sur 2 semaines | S–M | open |
 | D10 | **Connaissance des établissements éclatée en 4 tables** | Chaque copie répond à un besoin distinct (affichage court, libellés RSS, localisation, pages d’entités) ; les unifier touche 4 zones d’un coup, dont le monolithe `app.js` | Une divergence réelle qui casse quelque chose — le doublon « College » du 2026-07-25 en est une ; commencer par la table de traduction, la plus autonome | M | open |
 | D11 | **Déclaration du site aux consoles de recherche** (Search Console, Bing, IndexNow) | Aucun agent ne peut le faire : ça demande les comptes Google / Microsoft / Cloudflare de l’humain. Le travail technique est livré et en ligne ; il ne reste que les clics | Rien à attendre — à faire dès que possible : sans soumission du sitemap, les 71 URL neuves mettent bien plus longtemps à être découvertes | S | blocked |
+| D12 | **Cohérence fil ↔ RSS ↔ JSON-LD non garantie** | Trois générateurs écrits pour des besoins distincts ; les coupler figerait des formats encore mouvants | Rien à attendre : un test comparant les premiers titres des quatre sorties coûte peu et doit exister **avant** qu’un décalage n’apparaisse | S | ready |
+| D13 | **Contraste `--muted` en thème clair + focus invisible du menu de langue** | `--muted` est un jeton global : l’assombrir touche tout le site clair d’un coup et impose une relecture visuelle complète | Captures avant/après sur accueil, fiche journal et annuaire, en clair **et** en sombre ; le thème sombre est déjà conforme et ne doit pas régresser | S–M | open |
+| D14 | **CSP trop large** sur `frame-src` et `connect-src` | Le site consomme des tiers énumérables mais nombreux (YouTube, umami, workers, météo, moteurs de traduction) ; resserrer d’un coup casse en production, pas en test | Resserrer **une directive à la fois**, en commençant par `frame-src`, avec vérification du syntoniseur et de l’intégration YouTube | S par étape | open |
 
 **D7 — précisions (option 3, pas 1 ni 2) :**
 
@@ -156,6 +159,61 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
   `data/quebec-nations-backgrounds.json`. Le même mécanisme sert déjà pour le tipi Gesgapegiag (0.28).
 - **Avant de solder** : rendre la photo à AR 14 / 10.7 / 7.57 / 3.8 / 2.16 avant/après, et vérifier
   qu’aucun crop existant à override ne régresse (`rowArch` sert aussi au bonus de score, pas qu’à l’ancre).
+
+**D12 à D14 — origine et mesures (2026-07-26, audit externe Perplexity).**
+
+Cinq recommandations reçues, **vérifiées sur le dépôt avant inscription** : deux
+décrivent des défauts réels, deux étaient déjà satisfaites, une n’est
+qu’à moitié applicable. Les mesures sont consignées ici pour que la prochaine
+session parte du constat et non de l’audit.
+
+**D12 — cohérence des quatre représentations du fil**
+
+- Quatre sorties, trois générateurs : `fetch-news.js` → `news.json`,
+  `generate-feed.js` → `feed.xml`, `generate-seo.js` → prérendu HTML **et**
+  `ItemList` JSON-LD.
+- Vérifié le 2026-07-26 : les quatre affichent la **même tête de fil**. Il n’y a
+  donc rien à réparer — le risque est qu’elles divergent sans que rien ne le
+  signale, et qu’un lecteur RSS, un humain et un moteur voient trois fils
+  différents.
+- À faire : un test comparant les N premiers titres des quatre sorties, ajouté à
+  `test:unit`. Attention aux entités HTML (`&#8217;` vs `’`) : normaliser avant
+  de comparer, sinon le test échoue sur des différences d’encodage sans intérêt.
+
+**D13 — accessibilité, deux points distincts**
+
+| Jeton | Contexte | Ratio | Seuil AA |
+|-------|----------|-------|----------|
+| `--muted` `#80858c` | sur `--bg` blanc | **3,72** | 4,5 |
+| `--muted` `#80858c` | sur `--bg-soft` | **3,43** | 4,5 |
+| `--muted` `#888d96` | thème **sombre** | 5,75 | conforme |
+
+- Le défaut est **propre au thème clair**. `--muted` porte les métadonnées
+  d’articles, dates, libellés de signature, pieds de page et `.seo-card__meta` —
+  du texte de 12–13 px, donc soumis au seuil normal de 4,5.
+- Second point, sans rapport avec le premier : `.translate-menu__opt:focus-visible`
+  ne pose qu’un `background: var(--bg-soft)` avec `outline: none`. L’indicateur
+  de focus est donc **identique au survol** et à ~1,05:1 du fond — invisible au
+  clavier, là où WCAG demande 3:1 pour un indicateur non textuel.
+- **Déjà bon, ne pas re-auditer** : les 8 contrôles du tuner sont de vrais
+  `<button>` / `<select>`, il n’y a aucun `div onclick` dans `index.html`, et le
+  libellé du bouton lecture est mis à jour dynamiquement (`app.js:3505-3509`).
+  La plupart des `outline: none` sont correctement appariés à un
+  `:focus-visible` visible (`.masthead-icon`, `.feed-btn`, `.news-search__fab`).
+
+**D14 — ce qui est resserrable, et ce qui ne l’est pas**
+
+- `img-src https:` **ne peut pas** être resserré de façon réaliste : les images
+  d’articles viennent des 14 domaines de journaux, de Wikimedia et des banques
+  photo — imprévisibles par nature. C’est une **décision assumée**, pas une
+  dette : ne pas la rouvrir à chaque audit.
+- `style-src 'unsafe-inline'` reste nécessaire tant que le bloc de style critique
+  du synthé est inline dans `index.html`.
+- `frame-src` et `connect-src` sont, eux, énumérables → seuls ceux-là sont visés.
+
+**Écarté volontairement** : la partie « hiérarchie typographique et
+breakpoints » de l’audit est un examen stylistique sans défaut mesuré ; elle
+relève de **D2** (découpe `style.css`). Pas de dette décorative — cf. §2b.
 
 **D11 — le chemin exact (2026-07-25) :**
 
