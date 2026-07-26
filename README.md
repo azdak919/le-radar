@@ -90,6 +90,7 @@ le-radar/
 ├── robots.txt              # Robots : moteurs + assistants IA explicitement autorisés
 ├── sitemap.xml             # Plan du site (généré)
 ├── llms.txt                # Fiche de contexte pour assistants IA (généré)
+├── archive-status.json     # Suivi de l'archivage Wayback (bot)
 ├── medias/                 # Annuaire des médias étudiants (généré)
 ├── radios/ journaux/       # Une page par station et par journal (généré)
 ├── etablissements/         # Une page par établissement (généré)

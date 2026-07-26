@@ -1,0 +1,79 @@
+name: Archive Student Journalism
+
+# Pérennité : les publications étudiantes disparaissent quand l'équipe change
+# et que personne ne renouvelle l'hébergement. Ce bot soumet les articles
+# agrégés à la Wayback Machine pour qu'ils restent consultables.
+#
+# Rythme volontairement lent : une capture prend ~18 s et l'API d'Internet
+# Archive est partagée et limitée en débit. On rattrape le fil petit à petit
+# plutôt que de tout tenter d'un coup — mieux vaut archiver lentement pour
+# toujours que vite une seule fois.
+
+on:
+  schedule:
+    # Quatre fois par jour, décalé des passes éditoriales pour ne pas
+    # concurrencer la publication du fil.
+    - cron: '40 3,9,15,21 * * *'
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Nombre d'URL à soumettre pour cette passe"
+        required: false
+        default: '20'
+
+concurrency:
+  group: archive-articles
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    # 20 URL × (~18 s de capture + 4 s de pause) ≈ 8 min ; 20 min de marge.
+    timeout-minutes: 20
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      - name: Submit URLs to the Wayback Machine
+        id: archive
+        run: node scripts/archive-articles.js --update --limit "${{ github.event.inputs.limit || '20' }}"
+        env:
+          CI: true
+        # Internet Archive peut être lent ou indisponible : ça ne doit jamais
+        # faire échouer un run ni bloquer quoi que ce soit d'autre.
+        continue-on-error: true
+
+      - name: Check for changes
+        id: check
+        run: |
+          if [ -n "$(git status --porcelain -- archive-status.json)" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Aucune nouvelle capture — pas de commit."
+          fi
+
+      - name: Commit and push
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          git config user.name "RADAR Archive Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add archive-status.json
+          git commit -m "bot: archive student articles in the Wayback Machine (auto)" || exit 0
+          for i in 1 2 3; do
+            git pull --rebase -X theirs --autostash origin "${GITHUB_REF_NAME}" && git push && exit 0
+            git rebase --abort 2>/dev/null || true
+            echo "push attempt $i failed, retrying…"
+            sleep $((i * 3))
+          done
+          echo "::error::could not push archive update after retries"
+          exit 1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

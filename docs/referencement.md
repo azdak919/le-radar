@@ -202,7 +202,34 @@ Pour les personnes étudiantes internationales **déjà inscrites au Québec**.
 
 ---
 
-## 6. Suites possibles (non faites)
+## 6. Archivage — pérennité, pas référencement
+
+`scripts/archive-articles.js` soumet les articles agrégés et les pages du site
+à la **Wayback Machine** (`npm run archive` en dry-run, `archive:update` pour
+soumettre). Le workflow `archive-articles.yml` tourne quatre fois par jour.
+
+**Ce n'est pas du référencement.** Les liens `web.archive.org` ne transmettent
+aucune autorité et ne comptent pas comme signal de classement. Ce n'est pas non
+plus ce qui alimente les corpus d'entraînement des modèles : c'est **Common
+Crawl**, un organisme distinct, dont le robot `CCBot` est déjà autorisé dans
+`robots.txt`. Confondre les deux est l'erreur la plus courante sur le sujet.
+
+**Ce que ça fait vraiment** : les publications étudiantes disparaissent. Mesuré
+le 2026-07-25 — Quartier Libre et Le Collectif dépassent 20 000 captures, mais
+Exil (Cégep du Vieux Montréal), tenu sur un blogue gratuit, n'en a que 985.
+C'est exactement le profil de journal qui s'éteint quand l'équipe finit son DEC.
+Le Radar connaît l'URL de chaque article : les soumettre coûte une requête et
+rend ce travail consultable au-delà de la vie de son site.
+
+**Contraintes mesurées, qui expliquent la conception** : une capture prend ~18 s
+et l'API est limitée en débit. D'où un plafond par passe (20), une pause entre
+les requêtes, un arrêt net au premier 429, et un état persistant
+(`archive-status.json`) qui évite de resoumettre pendant 180 jours. Mieux vaut
+archiver lentement pour toujours que vite une seule fois.
+
+---
+
+## 7. Suites possibles (non faites)
 
 - **Pages par région** (`/regions/montreal/`, `/regions/estrie/`…) si les
   requêtes géographiques apparaissent dans Search Console.
