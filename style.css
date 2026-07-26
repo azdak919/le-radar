@@ -196,7 +196,9 @@ body {
   .bg-photo-credit__full { display: none; }
   .bg-photo-credit__short {
     display: inline-flex;
-    align-items: center;
+    /* L'icône copyleft suit la ligne de base du nom, pas le centre de la
+       zone de tap du lien (qui possède 2 px de padding vertical). */
+    align-items: baseline;
     justify-content: flex-end;
     gap: 0.28rem;
     overflow: hidden;
@@ -211,9 +213,10 @@ body {
   }
   .bg-photo-credit__copyleft {
     display: inline-block;
+    align-self: baseline;
     flex: 0 0 auto;
     font-size: 0.95em;
-    line-height: 1;
+    line-height: inherit;
     transform: scaleX(-1);
   }
   .bg-photo-credit a:active,
