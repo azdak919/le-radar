@@ -302,9 +302,11 @@ function openNowAirSchedule() {
   const path = nowAirSchedulePath(radio);
   if (!path) return;
 
-  // Dans Pomo et Solitaire, ne pas charger la page horaire dans la minuscule
-  // iframe du syntoniseur : la navigation doit remplacer l'application hôte.
-  (IS_TUNER_EMBED ? window.top : window).location.assign(path);
+  // Conserver le flux courant : l'horaire s'ouvre dans un nouvel onglet, y
+  // compris depuis l'iframe Pomo/Solitaire. `noopener` coupe la référence
+  // inverse sans empêcher l'ouverture déclenchée par le geste utilisateur.
+  const host = IS_TUNER_EMBED ? window.top : window;
+  host.open(path, '_blank', 'noopener,noreferrer');
 }
 
 TUNER_NOWAIR?.addEventListener('click', openNowAirSchedule);
