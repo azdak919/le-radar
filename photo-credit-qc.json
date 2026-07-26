@@ -1,24 +1,17 @@
 {
-  "updated": "2026-07-26T04:24:22.040Z",
+  "updated": "2026-07-26T07:13:33.452Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 127,
+  "cited": 128,
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 7,
-  "updatedCount": 7,
-  "citedNew": 6,
-  "fallbackNew": 1,
+  "checked": 4,
+  "updatedCount": 4,
+  "citedNew": 4,
+  "fallbackNew": 0,
   "samples": [
-    {
-      "title": "L’épidémie de la nonchalance",
-      "source": "Le Délit",
-      "credit": "Photo : Elie Nguyen",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
     {
       "title": "La performance de l’homosexualité : un privilège ?",
       "source": "Le Délit",
@@ -27,39 +20,25 @@
       "method": "media-credit-featured"
     },
     {
+      "title": "L’épidémie de la nonchalance",
+      "source": "Le Délit",
+      "credit": "Photo : Elie Nguyen",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Ce que nous devons aux femmes",
+      "source": "Le Délit",
+      "credit": "Photo : Alexandre Gontier",
+      "cited": true,
+      "method": "media-credit-near"
+    },
+    {
       "title": "Les femmes MAGA au service du patriarcat",
       "source": "Le Délit",
       "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
-    },
-    {
-      "title": "Des initiatives qui rassemblent",
-      "source": "Le Délit",
-      "credit": "Crédit photo : Le Délit",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "source": "La Pige",
-      "credit": "Photo : Léa Morin-Letort",
-      "cited": true,
-      "method": "figcaption-paren-kind"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
-      "source": "Quartier Libre",
-      "credit": "Photo : Maryse Boyce",
-      "cited": true,
-      "method": "figcaption-copyright"
     }
   ]
 }
