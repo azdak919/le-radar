@@ -1,47 +1,53 @@
 {
-  "updatedAt": "2026-07-26T16:03:13.584Z",
+  "updatedAt": "2026-07-26T17:33:50.359Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Radio Futura",
         "source": "schedule",
         "start": "13:00",
         "end": "16:00",
         "url": "https://chyz.ca/emission/radio-futura/"
       },
+      "next": {
+        "title": "Capitales de Québec",
+        "source": "schedule",
+        "start": "16:50",
+        "end": "20:30",
+        "url": "https://chyz.ca/emission/capitales-de-quebec/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Radio Futura",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T16:02:46.721Z"
+      "checkedAt": "2026-07-26T17:33:24.763Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Par mots et par vaux",
-        "source": "api-live",
-        "start": "08:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "par-mots-et-par-vaux"
-      },
-      "next": {
         "title": "Le 120e parallèle",
         "source": "api-live",
         "start": "09:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364700.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "le-120e-parallele"
       },
+      "next": {
+        "title": "Ya Raï",
+        "source": "api-live",
+        "start": "10:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364703.mp3",
+        "slug": "ya-rai"
+      },
       "track": "",
-      "showTitle": "Par mots et par vaux",
+      "showTitle": "Le 120e parallèle",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-26T16:02:48.921Z"
+      "checkedAt": "2026-07-26T17:33:26.732Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Free Kick",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "13:00"
-      },
-      "next": {
         "title": "Modular Systems/Future Classics",
         "source": "api-live",
         "start": "13:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "The Magic Roundabout",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "16:00"
+      },
       "track": "",
-      "showTitle": "Free Kick",
+      "showTitle": "Modular Systems/Future Classics",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T16:02:51.787Z"
+      "checkedAt": "2026-07-26T17:33:28.907Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Brave Little Emo Girl",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/brave-little-emo-girl"
-      },
-      "next": {
         "title": "Northern Stagelights",
         "source": "schedule",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/northern-stagelights"
       },
+      "next": {
+        "title": "Cinema Smackdown",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/cinema-smackdown"
+      },
       "track": "",
-      "showTitle": "Brave Little Emo Girl",
+      "showTitle": "Northern Stagelights",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T16:03:05.564Z"
+      "checkedAt": "2026-07-26T17:33:42.438Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +135,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T16:03:06.046Z"
+      "checkedAt": "2026-07-26T17:33:43.243Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +148,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "feeble little horse - Rewind",
+      "track": "Tatyana Jane - Brutal",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -153,7 +159,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-26T16:03:13.234Z"
+      "checkedAt": "2026-07-26T17:33:50.009Z"
     }
   }
 }
