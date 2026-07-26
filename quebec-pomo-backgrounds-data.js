@@ -249,15 +249,6 @@ const QUEBEC_POMO_BACKGROUNDS = [
     height: 3850,
   },
   {
-    url: "https://upload.wikimedia.org/wikipedia/commons/8/80/%C3%8Ele_aux_Tourtes_Bridge.JPG",
-    credit: "Author=Blanchardb",
-    link: "https://commons.wikimedia.org/wiki/File:%C3%8Ele%20aux%20Tourtes%20Bridge.JPG",
-    license: "CC BY-SA 3.0",
-    title: "Île aux Tourtes Bridge",
-    width: 2784,
-    height: 1638,
-  },
-  {
     url: "https://upload.wikimedia.org/wikipedia/commons/c/cd/20181012_-_01_-_Montreal_panorama_%28downtown%29.jpg",
     credit: "Andre Carrotflower",
     link: "https://commons.wikimedia.org/wiki/File:20181012_-_01_-_Montreal_panorama_(downtown).jpg",
@@ -314,15 +305,6 @@ const QUEBEC_POMO_BACKGROUNDS = [
     width: 3942,
     height: 1732,
     season: "hiver",
-  },
-  {
-    url: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Pont_de_l-Ile-aux-Tourtes_04.jpg",
-    credit: "Jeangagnon",
-    link: "https://commons.wikimedia.org/wiki/File:Pont_de_l-Ile-aux-Tourtes_04.jpg",
-    license: "CC BY-SA 4.0",
-    title: "Pont de l'Île-aux-Tourtes, Île Perrot",
-    width: 3648,
-    height: 2736,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Pingualuit_aerial_2007_%28cropped%29.jpg",

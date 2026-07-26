@@ -149,7 +149,12 @@
     const moodFn = typeof opts.moodFn === 'function' ? opts.moodFn : () => 'other';
     const entropyUrl = opts.entropyUrl;
 
-    let bag = []; // photoIds
+    // Le sac survit aux rechargements : un visiteur qui revient sur l'accueil
+    // continue le cycle déjà commencé au lieu de retomber dans une nouvelle
+    // douzaine aléatoire. Les ids absents du pool courant sont réconciliés
+    // dans `pick` (saison, purge de banque ou photo en échec).
+    let bag = loadJson(`${storageKey}_bag`, []);
+    if (!Array.isArray(bag)) bag = [];
     let recentIds = loadJson(`${storageKey}_recent`, []);
     if (!Array.isArray(recentIds)) recentIds = [];
     let recentBanks = loadJson(`${storageKey}_banks`, []);
@@ -180,6 +185,7 @@
       saveJson(`${storageKey}_recent`, recentIds.slice(-maxRecent));
       saveJson(`${storageKey}_banks`, recentBanks.slice(-12));
       saveJson(`${storageKey}_moods`, recentMoods.slice(-8));
+      saveJson(`${storageKey}_bag`, bag);
     }
 
     function record(item) {
@@ -203,14 +209,15 @@
 
     function refillBag(items, failedIds) {
       const failed = failedIds || new Set();
-      const avoid = new Set(recentIds.slice(-maxRecent));
       const ids = items
         .map((it) => photoId(it))
         .filter((id) => id && !failed.has(id));
-      const fresh = ids.filter((id) => !avoid.has(id));
-      const base =
-        fresh.length >= Math.min(8, ids.length) ? fresh : ids.slice();
-      bag = shuffleInPlace(base.slice());
+      // Un cycle contient toutes les photos éligibles, même celles présentes
+      // dans l'historique. Sinon, une fenêtre « récente » pouvait former de
+      // petits sous-cycles et donner l'impression de revoir toujours le même
+      // groupe. Le score conserve tout de même l'anti-répétition au moment du
+      // choix dans le sac.
+      bag = shuffleInPlace(Array.from(new Set(ids)));
     }
 
     function scoreItem(item, byId) {
@@ -287,7 +294,10 @@
       // Sac : ids encore dans le pool éligible
       const eligibleIds = new Set(eligible.map(photoId));
       bag = bag.filter((id) => eligibleIds.has(id));
-      if (bag.length < 3) {
+      // Ne jamais jeter les deux dernières cartes du sac : le seuil « < 3 »
+      // recréait un sac avant la fin du cycle et était la source des retours
+      // prématurés vers un petit groupe de photos.
+      if (!bag.length) {
         refillBag(eligible, failed);
         bag = bag.filter((id) => id !== excludeId);
         if (!bag.length) refillBag(eligible, failed);
@@ -326,6 +336,9 @@
 
       const chosen = byId.get(bestId) || eligible[randInt(eligible.length)];
       bag = bag.filter((id) => id !== photoId(chosen));
+      // `pick` retire déjà l'item du sac; persister ici est indispensable si
+      // l'image finit de charger après une navigation ou un rechargement.
+      persist();
       return chosen;
     }
 

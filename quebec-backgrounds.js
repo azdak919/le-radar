@@ -27,6 +27,7 @@
   const RECENT_KEY = "lr_bg_recent"; // legacy indices (migré → rotator URL ids)
   const MAX_RECENT = 6;
   const _failedIds = new Set();
+  let _activePhotoTransition = null;
 
   /**
    * Pool mât = paysages mât + campus + nations (Inuit / PN) + favorites.
@@ -2032,27 +2033,48 @@
       !window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
 
     if (!shouldCrossfade) {
+      _activePhotoTransition?.cancel();
       commit();
     } else {
       // La couche d'origine ne bouge pas ; la nouvelle se fond simplement
       // par-dessus, puis devient la couche persistante à la fin du fondu.
+      // Un clic rapide ne doit jamais laisser le timeout du fondu précédent
+      // réappliquer une photo devenue obsolète après le nouveau choix.
+      _activePhotoTransition?.cancel();
       document.querySelector(".bg-photo-transition")?.remove();
       const incoming = document.createElement("div");
       incoming.className = "bg-photo-transition";
       paint(incoming);
       layer.parentElement?.insertBefore(incoming, layer.nextSibling);
       let settled = false;
+      let timer = 0;
       const settle = () => {
         if (settled) return;
         settled = true;
+        window.clearTimeout(timer);
         commit();
         incoming.remove();
+        if (_activePhotoTransition?.incoming === incoming) {
+          _activePhotoTransition = null;
+        }
+      };
+      _activePhotoTransition = {
+        incoming,
+        cancel() {
+          if (settled) return;
+          settled = true;
+          window.clearTimeout(timer);
+          incoming.remove();
+          if (_activePhotoTransition?.incoming === incoming) {
+            _activePhotoTransition = null;
+          }
+        },
       };
       incoming.addEventListener("transitionend", (event) => {
         if (event.propertyName === "opacity") settle();
       }, { once: true });
       requestAnimationFrame(() => incoming.classList.add("is-visible"));
-      window.setTimeout(settle, 560);
+      timer = window.setTimeout(settle, 560);
     }
     if (typeof console !== "undefined" && console.info) {
       console.info(
