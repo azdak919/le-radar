@@ -276,9 +276,10 @@
       align-items: center;
       gap: 0.4rem;
       font-weight: 600;
-      color: var(--ink-soft);
-      letter-spacing: 0.02em;
-      font-size: 0.75rem;
+      color: var(--ink);
+      letter-spacing: 0.1em;
+      font-size: 0.72rem;
+      text-transform: uppercase;
       min-width: 0;
       grid-area: title;
     }
@@ -573,14 +574,14 @@
     <!-- Jeu : barre fixe FR (pas le nom de langue — ça se lisait comme une erreur) -->
     <section class="game-wrap" aria-label="Mini-jeu en attendant">
       <div class="game-bar notranslate" translate="no">
-        <span class="game-bar-title" title="Espace ou tapez pour sauter">
-          Espace / tapez · sauter · pièces
+        <span class="game-bar-title" title="Sautez pour collecter les pièces et éviter les obstacles">
+          Radar Run
         </span>
         <span class="game-stats">
           <span><span class="stat-label">Score</span><b id="score">0</b></span>
           <span><span class="stat-label">Pièces</span><b id="coins">0</b></span>
-          <span><span class="stat-label">Record</span><b id="hi">0</b></span>
-          <span><span class="stat-label">Record pièces</span><b id="coins-hi">0</b></span>
+          <span><span class="stat-label">Meilleur</span><b id="hi">0</b></span>
+          <span><span class="stat-label">Pièces max</span><b id="coins-hi">0</b></span>
         </span>
         <div class="game-audio-controls" aria-label="Musique du jeu">
           <button id="bgm-play" class="game-audio game-audio--play" type="button" aria-label="Jouer la musique" aria-pressed="false" title="Jouer la musique">
