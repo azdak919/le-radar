@@ -1371,13 +1371,20 @@ html[data-script-dir="rtl"] .wordmark-full {
   display: inline-block;
   white-space: nowrap;
 }
-/* Défilement droite → gauche (dial / filtres). GPU pour limiter le flou. */
+/* Défilement droite → gauche (dial / filtres).
+ *
+ * `will-change: transform` suffit à confier l'animation au compositeur, et il
+ * n'est posé que pendant le défilement (.is-marquee). On n'y ajoute PAS
+ * `translateZ(0)` ni `backface-visibility: hidden` : ces deux vieilles ruses
+ * font la même chose en triple, mais figent la tramage du texte dans une
+ * texture rasterisée une seule fois — d'où un rendu mou, surtout sur écran à
+ * forte densité. Le décalage est arrondi au pixel entier côté JS
+ * (`measureMarquee`) pour que les deux positions de repos, celles qu'on lit
+ * réellement, tombent sur la grille de pixels. */
 .is-marquee { text-overflow: clip; }
 .is-marquee > .tuner-now-sub-text {
   animation: tunerMarquee var(--marquee-duration, 12s) linear infinite alternate;
   will-change: transform;
-  backface-visibility: hidden;
-  transform: translateZ(0);
 }
 @keyframes tunerMarquee {
   0%, 14%   { transform: translate3d(0, 0, 0); }

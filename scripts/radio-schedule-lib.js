@@ -51,6 +51,28 @@ function stripTags(html = '') {
   return String(html).replace(/<[^>]+>/g, ' ');
 }
 
+/**
+ * Consignes internes que les stations laissent dans le nom de l'émission.
+ * Airtime (CKUT) publie « Desi Beats (must be .mp3!!) » : c'est une note à
+ * l'animateur, pas le titre de l'émission, et elle se retrouvait telle quelle
+ * sur la page horaire. On ne retire que la parenthèse **finale**, et seulement
+ * si elle est clairement une directive — « (reprise) » chez CISM ou
+ * « (feat. …) » doivent survivre.
+ */
+const PRODUCTION_NOTE_RE = /\s*\(\s*(?:must|please|do not|don't|dont|new time|no |tba|tbd|test)\b[^)]*\)\s*$/i;
+const FILE_HINT_NOTE_RE = /\s*\([^)]*\.(?:mp3|wav|flac|aiff?|m4a|ogg)\b[^)]*\)\s*$/i;
+
+function stripProductionNote(title = '') {
+  let out = String(title);
+  for (let pass = 0; pass < 2; pass += 1) {
+    const before = out;
+    out = out.replace(FILE_HINT_NOTE_RE, '').replace(PRODUCTION_NOTE_RE, '');
+    if (out === before) break;
+  }
+  // Ne jamais vider un titre : mieux vaut la note que rien.
+  return out.trim() || String(title).trim();
+}
+
 // ─── Temps ───────────────────────────────────────────────────────────────────
 function timeToMinutes(value) {
   const m = /^(\d{1,2}):(\d{2})$/.exec(String(value || '').trim());
@@ -88,7 +110,9 @@ function normalizeSlot(slot) {
   const end = timeToMinutes(slot.end);
   if (start == null || end == null) return null;
 
-  const title = decodeHtmlEntities(String(slot.title || '')).replace(/\s+/g, ' ').trim();
+  const title = stripProductionNote(
+    decodeHtmlEntities(String(slot.title || '')).replace(/\s+/g, ' ').trim(),
+  );
   if (!title) return null;
 
   const out = { day, start: minutesToTime(start), end: minutesToTime(end), title };
@@ -203,6 +227,65 @@ function resolveNextSlot(grid, date = new Date(), timeZone = DEFAULT_TZ) {
     }
   }
   return best;
+}
+
+// ─── Couverture d'une grille ────────────────────────────────────────────────────
+/**
+ * Combien de la semaine une grille couvre-t-elle réellement.
+ *
+ * Sert à deux choses : rendre visible qu'une station publie 13 % de sa semaine
+ * (CHOQ) plutôt que de le découvrir sur la page, et transformer « la grille a
+ * l'air bizarre » en test rouge quand un parseur se met à ne plus rien rendre.
+ *
+ * Les créneaux qui se chevauchent (émissions en alternance quinzaine, très
+ * courantes à CJLO) ne comptent qu'une fois : on mesure du temps couvert, pas
+ * une somme de durées.
+ *
+ * @returns {{ perDay: number[], weekPercent: number, slots: number, gaps: Array }}
+ */
+function gridCoverage(grid) {
+  const perDay = [0, 0, 0, 0, 0, 0, 0];
+  const gaps = [];
+  const byDay = new Map();
+
+  for (const raw of Array.isArray(grid) ? grid : []) {
+    const slot = normalizeSlot(raw);
+    if (!slot) continue;
+    if (!byDay.has(slot.day)) byDay.set(slot.day, []);
+    byDay.get(slot.day).push(slot);
+  }
+
+  for (let day = 0; day < 7; day += 1) {
+    const slots = (byDay.get(day) || [])
+      .map((s) => {
+        const start = timeToMinutes(s.start);
+        const end = timeToMinutes(s.end);
+        return { start, end: end <= start ? end + 1440 : end, title: s.title };
+      })
+      .filter((s) => s.start != null && Number.isFinite(s.end))
+      .sort((a, b) => a.start - b.start);
+
+    // Fusion des intervalles → temps réellement couvert, sans double compte.
+    let covered = 0;
+    let cursor = 0;
+    for (const s of slots) {
+      const from = Math.max(s.start, cursor);
+      const to = Math.min(s.end, 1440);
+      if (to > from) covered += to - from;
+      if (s.start > cursor && s.start < 1440) gaps.push({ day, start: cursor, end: s.start });
+      cursor = Math.max(cursor, Math.min(s.end, 1440));
+    }
+    if (cursor < 1440) gaps.push({ day, start: cursor, end: 1440 });
+    perDay[day] = Math.min(covered, 1440);
+  }
+
+  const total = perDay.reduce((a, b) => a + b, 0);
+  return {
+    perDay,
+    weekPercent: Math.round((total / (1440 * 7)) * 100),
+    slots: Array.isArray(grid) ? grid.length : 0,
+    gaps: gaps.filter((g) => g.end - g.start >= 30),
+  };
 }
 
 // ─── Adaptateurs de sources ─────────────────────────────────────────────────────
@@ -945,6 +1028,8 @@ module.exports = {
   minutesToTime,
   hhmm,
   dayNameToIndex,
+  stripProductionNote,
+  gridCoverage,
   normalizeSlot,
   mergeGrids,
   zonedNow,

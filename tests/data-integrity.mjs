@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-const { resolveCurrentSlot } = require('../scripts/radio-schedule-lib.js');
+const { resolveCurrentSlot, gridCoverage } = require('../scripts/radio-schedule-lib.js');
 
 const root = new URL('../', import.meta.url);
 const readJson = (name) => JSON.parse(readFileSync(new URL(name, root), 'utf8'));
@@ -79,6 +79,73 @@ for (const radio of radios) {
   assert(isHttpUrl(radio.website), `site HTTP(S) valide requis pour ${radio.id}`);
   assert(schedules[radio.id], `grille manquante pour ${radio.id}`);
   assert(nowPlaying[radio.id], `métadonnées à l'antenne manquantes pour ${radio.id}`);
+}
+
+/*
+ * Ce qui sort des bots horaires doit être lisible tel quel à l'antenne.
+ *
+ * Deux régressions vécues, toutes deux invisibles en dry-run :
+ *  - Airtime (CKUT) sert du HTML échappé → « Utopia&#039;s Paradise » affiché
+ *    brut dans le syntoniseur ;
+ *  - le même automate émet « Offline » entre deux émissions, qui filait dans
+ *    `track` faute de filtre → « ♪ Offline » sous le titre de l'émission.
+ */
+const HTML_ENTITY_RE = /&(?:#\d+|#x[0-9a-f]+|[a-z][a-z0-9]{1,31});/i;
+const TECHNICAL_AIR_RE = /^(?:off ?line|off ?air|dead ?air|silence(?: detected)?|station ?id|airtime!?|liquidsoap(?:\s+radio!?)?|no name|unknown|unspecified|n\/a)$/i;
+
+const airTextFields = [];
+for (const [id, station] of Object.entries(nowPlaying)) {
+  for (const [key, show] of [['current', station.current], ['next', station.next]]) {
+    if (!show) continue;
+    airTextFields.push([`radio-nowplaying.json ${id}.${key}.title`, show.title]);
+    if (show.host) airTextFields.push([`radio-nowplaying.json ${id}.${key}.host`, show.host]);
+  }
+  airTextFields.push([`radio-nowplaying.json ${id}.track`, station.track]);
+  airTextFields.push([`radio-nowplaying.json ${id}.showTitle`, station.showTitle]);
+}
+for (const [id, station] of Object.entries(schedules)) {
+  for (const [i, slot] of (station.grid || []).entries()) {
+    airTextFields.push([`radio-schedules.json ${id}.grid[${i}].title`, slot.title]);
+    if (slot.host) airTextFields.push([`radio-schedules.json ${id}.grid[${i}].host`, slot.host]);
+  }
+}
+
+for (const [label, value] of airTextFields) {
+  const text = String(value || '').trim();
+  if (!text) continue;
+  assert(
+    !HTML_ENTITY_RE.test(text),
+    `${label}: entité HTML non décodée (${text}) — voir normalizeShowTitle / normalizeSlot`
+  );
+  assert(
+    !TECHNICAL_AIR_RE.test(text),
+    `${label}: métadonnée technique diffusée comme contenu (${text}) — voir isUsableTrackLine`
+  );
+}
+
+/*
+ * Couverture des grilles.
+ *
+ * Une grille peut être fraîche et pourtant ne décrire qu'un huitième de la
+ * semaine. Ces planchers sont relevés sur l'état connu et servent d'alarme :
+ * ils attrapent le cas où une source répond 200 mais où le parseur ne
+ * comprend plus la page — le bot garde alors l'ancienne grille (garde-fou
+ * COLLAPSE_RATIO), et ce test dit pourquoi. Les relever quand une station
+ * publie mieux ; ne jamais les baisser sans savoir ce qui a été perdu.
+ */
+const COVERAGE_FLOOR = {
+  cism: 95, cjlo: 95, ckut: 95, cfak: 80, chyz: 20, choq: 10,
+};
+
+for (const [id, floor] of Object.entries(COVERAGE_FLOOR)) {
+  const station = schedules[id];
+  if (!station) continue;
+  const cov = gridCoverage(station.grid);
+  assert(
+    cov.weekPercent >= floor,
+    `radio-schedules.json ${id} : couverture tombée à ${cov.weekPercent} % `
+    + `(plancher ${floor} %, ${cov.slots} créneaux) — parseur cassé ou source refondue ?`
+  );
 }
 
 const chyzOverlap = resolveCurrentSlot([

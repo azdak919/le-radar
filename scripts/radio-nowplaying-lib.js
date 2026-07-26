@@ -31,9 +31,12 @@ const {
   resolveNextSlot,
   hhmm,
 } = require('./radio-schedule-lib');
+const { decodeHtmlEntities } = require('./html-entities-lib');
 
 const DEFAULT_TIMEOUT = 12000;
-const GENERIC_SHOW_RE = /^(?:airtime!?|liquidsoap(?:\s+radio!?)?|no name|unknown|unspecified|\.+|-+|n\/a)$/i;
+// « Offline » n'est pas un titre : c'est ce qu'Airtime émet quand la relève
+// bascule (vu sur CKUT, dont le StreamTitle est « CKUT (BACKUP ONLY!) - … »).
+const GENERIC_SHOW_RE = /^(?:airtime!?|liquidsoap(?:\s+radio!?)?|no name|unknown|unspecified|off ?line|off ?air|dead ?air|silence(?: detected)?|station ?id|\.+|-+|n\/a)$/i;
 const GENERIC_FEED_RE = /(?:high quality|low band|backup only|stream\s*#|feed for)/i;
 const GENERIC_GEO_RE = /^(?:montréal|montreal|québec|quebec|sherbrooke|laval|canada)$/i;
 
@@ -46,8 +49,15 @@ function normKey(text = '') {
     .toLowerCase();
 }
 
+/**
+ * Titre propre. Le décodage des entités se fait **ici** parce que les APIs
+ * station servent du HTML échappé (Airtime/CKUT renvoie « Utopia&#039;s
+ * Paradise ») : sans lui, l'entité brute finit telle quelle à l'antenne. Même
+ * traitement que `normalizeSlot()` dans radio-schedule-lib.js — garder les
+ * deux alignés.
+ */
 function normalizeShowTitle(raw = '') {
-  return String(raw || '')
+  return decodeHtmlEntities(String(raw || ''))
     .replace(/\u0000/g, '')
     .replace(/\s+/g, ' ')
     .trim();
@@ -102,6 +112,24 @@ function isUsableShowTitle(title = '', radio = {}, opts = {}) {
     return false;
   }
   if (radio.id && low === String(radio.id).toLowerCase()) return false;
+  return true;
+}
+
+/**
+ * Piste diffusable. Plus permissif que `isUsableShowTitle` sur la longueur
+ * (un morceau peut s'appeler « Rotten »), mais il faut le **même** filtre
+ * générique : sans lui, le « Offline » d'Airtime part dans `track` et s'affiche
+ * comme « ♪ Offline » sous le titre de l'émission (cas CKUT).
+ */
+function isUsableTrackLine(track = '', radio = {}) {
+  const t = normalizeShowTitle(track).replace(/^♪\s*/, '');
+  if (!t || t.length < 2) return false;
+  if (GENERIC_SHOW_RE.test(t)) return false;
+  if (GENERIC_FEED_RE.test(t)) return false;
+  if (GENERIC_GEO_RE.test(t)) return false;
+  const low = normKey(t);
+  if (stationTokens(radio).some((tok) => tok && low === normKey(tok))) return false;
+  if (radio.slogan && low === normKey(radio.slogan)) return false;
   return true;
 }
 
@@ -664,9 +692,10 @@ async function adaptIcy(src = {}, radio = {}) {
   const icy = await fetchIcyNowPlaying(stream);
   if (!icy) return null;
 
-  // track = StreamTitle (piste). Toujours renseigné si présent.
+  // track = StreamTitle (piste), sauf métadonnée technique (« Offline », nom
+  // du flux de relève…) : ces chaînes ne sont pas de la musique.
   const trackRaw = extractShowFromIcyTitle(icy.streamTitle, radio);
-  const track = trackRaw && trackRaw.length >= 2 ? trackRaw : '';
+  const track = isUsableTrackLine(trackRaw, radio) ? trackRaw : '';
 
   // CHOQ (et sources trackOnly) : le StreamTitle est la musique, jamais l'émission.
   // Sinon on affiche « Status/Non-Status - Tom Climate » comme titre À L'ANTENNE.
@@ -847,7 +876,8 @@ function mergeOnAirResults(hits, scheduleHit, radio) {
     if (hit.next?.source) sourcesUsed.push(hit.next.source);
     current = pickBetterShow(current, hit.current, radio);
     next = pickBetterShow(next, hit.next, radio);
-    if (hit.track) track = hit.track;
+    // Filet pour tous les adaptateurs (Triton, Craft…), pas seulement l'ICY.
+    if (hit.track && isUsableTrackLine(hit.track, radio)) track = hit.track;
   }
 
   // Grille : comble les trous ; enrichit les horaires si titres alignés.
@@ -1042,6 +1072,7 @@ module.exports = {
   LIVE_ADAPTERS,
   normalizeShowTitle,
   isUsableShowTitle,
+  isUsableTrackLine,
   extractShowFromIcyTitle,
   formatTrackLine,
   makeShow,

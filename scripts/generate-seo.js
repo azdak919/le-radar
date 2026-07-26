@@ -44,7 +44,7 @@ const INSTITUTIONS_PATH = path.join(ROOT, 'institutions.json');
 const SCHEDULES_PATH = path.join(ROOT, 'radio-schedules.json');
 
 /** Dossiers entièrement générés : purgés puis réécrits à chaque passe. */
-const GENERATED_DIRS = ['radios', 'journaux', 'etablissements', 'medias', 'en'];
+const GENERATED_DIRS = ['radios', 'journaux', 'etablissements', 'medias', 'horaires', 'en'];
 
 /** Nombre de manchettes prérendues. Assez pour être substantiel, assez peu
  *  pour que le diff des bots horaires reste lisible. */

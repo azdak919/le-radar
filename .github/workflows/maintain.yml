@@ -66,7 +66,7 @@ jobs:
           # `-e` et non `-f` : la liste contient aussi les DOSSIERS de pages
           # d'entités, que `-f` (fichier régulier) rejetterait silencieusement.
           # `git add -A` pour que la suppression d'une page soit stagée.
-          for f in institutions.json news-sources.json news.json radios.json radios-candidates.json radio-nowplaying.json bot-status.json feed.xml data/quebec-backgrounds.json quebec-backgrounds-data.js index.html sitemap.xml llms.txt radios journaux etablissements medias en; do
+          for f in institutions.json news-sources.json news.json radios.json radios-candidates.json radio-nowplaying.json bot-status.json feed.xml data/quebec-backgrounds.json quebec-backgrounds-data.js index.html sitemap.xml llms.txt radios journaux etablissements medias horaires en; do
             [ -e "$f" ] && git add -A "$f"
           done
           git commit -m "bot: weekly maintenance run (auto)"

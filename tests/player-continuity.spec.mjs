@@ -33,7 +33,9 @@ test('À l’antenne ouvre l’horaire dans un nouvel onglet sans quitter le lec
     page.waitForEvent('popup'),
     page.locator('#tuner-nowair').click(),
   ]);
-  await expect(schedule).toHaveURL(/\/radios\/chyz\/$/);
+  // L'ancre #horaire ouvre la fiche directement sur la grille de la semaine,
+  // sans faire défiler les faits de la station.
+  await expect(schedule).toHaveURL(/\/radios\/chyz\/#horaire$/);
   await expect(page).toHaveURL(/\/$/);
 });
 

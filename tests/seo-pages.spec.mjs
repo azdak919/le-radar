@@ -34,6 +34,26 @@ test('une fiche de radio expose ses faits et renvoie vers l’écoute', async ({
   await expect(page).toHaveURL(/\/etablissements\/universite-laval\/$/);
 });
 
+test('depuis l’accueil, on atteint le hub des horaires puis une grille complète', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'load' });
+
+  await page.getByRole('link', { name: 'Les horaires des radios étudiantes' }).click();
+  await expect(page).toHaveURL(/\/horaires\/$/);
+  await expect(page.locator('h1')).toHaveText('Les horaires des radios étudiantes du Québec');
+
+  // Une carte par station, avec le volume réel de sa grille.
+  await expect(page.locator('.seo-card')).not.toHaveCount(0);
+  await page.getByRole('link', { name: /CKUT/ }).first().click();
+  await expect(page).toHaveURL(/\/radios\/ckut\/#horaire$/);
+
+  // La semaine entière, pas les 8 premiers créneaux d'un jour.
+  await expect(page.locator('.seo-day')).toHaveCount(7);
+  const slots = await page.locator('.seo-day li').count();
+  expect(slots, 'grille CKUT tronquée').toBeGreaterThan(60);
+  // Plage complète : une heure de début seule ne dit pas la durée.
+  await expect(page.locator('.seo-slot__time').first()).toContainText('–');
+});
+
 test('le volet anglais est atteignable et jamais imposé', async ({ page }) => {
   // Navigateur en espagnol : on ne doit PAS être redirigé vers /en/.
   await page.goto('/', { waitUntil: 'load' });
