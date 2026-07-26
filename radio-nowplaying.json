@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-26T21:30:54.242Z",
+  "updatedAt": "2026-07-26T21:32:14.107Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -27,7 +27,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T21:30:41.322Z"
+      "checkedAt": "2026-07-26T21:32:00.092Z"
     },
     "cism": {
       "id": "cism",
@@ -57,7 +57,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-26T21:30:43.073Z"
+      "checkedAt": "2026-07-26T21:32:02.009Z"
     },
     "ckut": {
       "id": "ckut",
@@ -69,7 +69,7 @@
         "end": "18:00"
       },
       "next": {
-        "title": "Desi Beats (must be .mp3!!)",
+        "title": "Desi Beats",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
@@ -83,7 +83,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T21:30:45.608Z"
+      "checkedAt": "2026-07-26T21:32:05.772Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -110,7 +110,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T21:30:47.048Z"
+      "checkedAt": "2026-07-26T21:32:07.115Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,7 +135,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T21:30:47.624Z"
+      "checkedAt": "2026-07-26T21:32:08.112Z"
     },
     "choq": {
       "id": "choq",
@@ -165,7 +165,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-26T21:30:53.891Z"
+      "checkedAt": "2026-07-26T21:32:13.756Z"
     }
   }
 }
