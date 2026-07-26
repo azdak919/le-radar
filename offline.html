@@ -1507,12 +1507,8 @@
       ctx.font = '500 12px Inter, system-ui, sans-serif';
       ctx.fillStyle = 'rgba(194, 198, 205, 0.9)';
       ctx.fillText('Tapez pour rejouer', W / 2, H / 2 + 8);
-      ctx.fillText(
-        'Cette partie : ' + coinsRun + ' pièce' + (coinsRun === 1 ? '' : 's') +
-          ' · Total : ' + coinsTotal,
-        W / 2,
-        H / 2 + 28
-      );
+      ctx.fillText('Score : ' + score + ' · Pièces : ' + coinsRun, W / 2, H / 2 + 28);
+      ctx.fillText('Meilleur : ' + hi + ' · Pièces max : ' + coinsHi, W / 2, H / 2 + 46);
     }
 
     requestAnimationFrame(tick);
