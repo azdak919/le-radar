@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-26T07:42:48.925Z",
+  "updatedAt": "2026-07-26T08:43:41.888Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T07:42:25.838Z"
+      "checkedAt": "2026-07-26T08:43:19.217Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix anglo",
-        "source": "api-live",
-        "start": "22:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-anglo"
-      },
-      "next": {
         "title": "Rythmologie (reprise)",
         "source": "api-live",
         "start": "00:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364989.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "rythmologie"
       },
+      "next": {
+        "title": "Mix Franco",
+        "source": "api-live",
+        "start": "02:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/365076.mp3",
+        "slug": "mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix anglo",
+      "showTitle": "Rythmologie (reprise)",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,7 +51,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-26T07:42:27.934Z"
+      "checkedAt": "2026-07-26T08:43:21.352Z"
     },
     "ckut": {
       "id": "ckut",
@@ -76,7 +76,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T07:42:31.124Z"
+      "checkedAt": "2026-07-26T08:43:24.172Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -103,7 +103,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T07:42:44.912Z"
+      "checkedAt": "2026-07-26T08:43:38.372Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T07:42:45.555Z"
+      "checkedAt": "2026-07-26T08:43:38.756Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +141,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Julie Aubé - Preneur",
+      "track": "Wizaard - Main dans la main (Cover)",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -152,7 +152,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-26T07:42:48.574Z"
+      "checkedAt": "2026-07-26T08:43:41.537Z"
     }
   }
 }
