@@ -337,6 +337,7 @@ const NEWS_SEARCH_INPUT  = document.getElementById('news-search-input');
 const NEWS_SEARCH_CLEAR  = document.getElementById('news-search-clear');
 const NEWS_SEARCH_HINT   = document.getElementById('news-search-hint');
 const TODAY_DATE     = document.getElementById('today-date');
+const TODAY_TIME     = document.getElementById('today-time');
 const MASTHEAD_WEATHER = document.getElementById('masthead-weather');
 const MASTHEAD_WEATHER_DOCK = document.getElementById('masthead-weather-dock');
 const MASTHEAD_ACTIONS = document.querySelector('.masthead-actions');
@@ -505,6 +506,8 @@ async function init() {
   } catch (_) { /* ignore */ }
   initMastheadActions();
   renderTodayDate();
+  // L'heure du mât est décorative, mais doit rester juste sans recharger la page.
+  window.setInterval(renderTodayDate, 30_000);
   // Les constantes météo sont déclarées plus bas dans ce script : microtask
   // = après l'évaluation complète du fichier, sans retarder le reste du site.
   queueMicrotask(() => { void initMastheadWeather(); });
@@ -870,11 +873,19 @@ function applyTheme(theme) {
 
 // ─── Today date (masthead) ─────────────────────────────────────────────────────
 function renderTodayDate() {
-  if (!TODAY_DATE) return;
+  if (!TODAY_DATE && !TODAY_TIME) return;
   const now = new Date();
-  TODAY_DATE.textContent = now.toLocaleDateString('fr-CA', {
-    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
-  });
+  if (TODAY_DATE) {
+    TODAY_DATE.textContent = now.toLocaleDateString('fr-CA', {
+      weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+    });
+  }
+  if (TODAY_TIME) {
+    TODAY_TIME.dateTime = now.toTimeString().slice(0, 5);
+    TODAY_TIME.textContent = now.toLocaleTimeString('fr-CA', {
+      hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+    });
+  }
 }
 
 // ─── Météo des principaux campus (desktop / tablette) ────────────────────────
