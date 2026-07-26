@@ -140,7 +140,9 @@ body {
 .masthead-shuffle-slot {
   position: absolute;
   z-index: 4;
-  top: max(10px, env(safe-area-inset-top, 0px));
+  /* Même origine verticale que .masthead-inner : le shuffle reste calé sur
+     les icônes lors d'un redimensionnement, y compris en zone sûre PWA. */
+  top: calc(12px + env(safe-area-inset-top, 0px));
   right: max(10px, env(safe-area-inset-right, 0px));
 }
 .masthead-bg-shuffle { cursor: pointer; }
