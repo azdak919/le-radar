@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-26T09:34:36.276Z",
+  "updated": "2026-07-26T11:08:08.247Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
@@ -7,9 +7,24 @@
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 0,
-  "updatedCount": 0,
-  "citedNew": 0,
+  "checked": 2,
+  "updatedCount": 2,
+  "citedNew": 2,
   "fallbackNew": 0,
-  "samples": []
+  "samples": [
+    {
+      "title": "Sois belle et tais-toi",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré/Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    }
+  ]
 }
