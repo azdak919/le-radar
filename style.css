@@ -436,6 +436,25 @@ body {
   opacity: 1;
 }
 
+/* Clair : même famille ardoise que les boutons, mais un verre plus léger. */
+[data-theme="light"] .masthead:has(#bg-photo-layer.loaded) .masthead-weather__city {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--weather-tone, #c8102e) 16%, transparent) 0%, transparent 55%),
+    rgba(54, 59, 68, 0.68);
+  border-color: rgba(255, 255, 255, 0.24);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.24),
+    0 3px 10px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px) saturate(1.06);
+  -webkit-backdrop-filter: blur(10px) saturate(1.06);
+}
+[data-theme="light"] .masthead:has(#bg-photo-layer.loaded) .masthead-weather__city:hover {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--weather-tone, #c8102e) 23%, transparent) 0%, transparent 55%),
+    rgba(67, 73, 84, 0.78);
+}
+
 /* Filet sous la rangée date/actions — voile, pas trait blanc. */
 .masthead:has(#bg-photo-layer.loaded) .masthead-top {
   border-bottom-color: rgba(255, 255, 255, 0.12);
