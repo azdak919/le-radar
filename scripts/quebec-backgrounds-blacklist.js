@@ -26,6 +26,66 @@
 /** @type {HardBanEntry[]} */
 const HARD_BANNED = [
   {
+    // Sélection visuelle humaine : scène de village trop chargée pour le mât.
+    fragments: ['Les_Cedres_QC.JPG', '40581afcfb46'],
+    reason: 'user_curated_photo_rejected',
+    note: 'Retiré 2026-07-26 des banques mât+pomo.',
+  },
+  {
+    // Sélection visuelle humaine : promenade / quais trop présents au bandeau.
+    fragments: ['Deux-Montagnes%28QC%29-Parc_des_b%C3%A9n%C3%A9voles-2022-03-15', 'cce0e2776f36'],
+    reason: 'user_curated_photo_rejected',
+    note: 'Retiré 2026-07-26 des banques mât+pomo.',
+  },
+  {
+    // Sélection visuelle humaine : rue résidentielle, pas un fond panoramique.
+    fragments: ['Pointe-Calumet_%28QC%29-Vue_de_Mont%C3%A9e_de_la_Baie-2023', '04a174343ff8'],
+    reason: 'user_curated_photo_rejected',
+    note: 'Retiré 2026-07-26 des banques mât+pomo.',
+  },
+  {
+    // Sélection visuelle humaine : rivière encadrée de trop près par le bâti.
+    fragments: ['Rigaud_%28Qu%C3%A9bec%29-rivi%C3%A8re_Rigaud_%28vue_vers_l%27amont%29-2022-09-22', 'd0b225c2bd71'],
+    reason: 'user_curated_photo_rejected',
+    note: 'Retiré 2026-07-26 des banques mât+pomo.',
+  },
+  {
+    // Sélection visuelle humaine : vue urbaine trop chargée pour le mât.
+    fragments: ['Rigaud_%28Qu%C3%A9bec%29-Rivi%C3%A8re_Rigaud-2022-09-22', 'fec45852f13d'],
+    reason: 'user_curated_photo_rejected',
+    note: 'Retiré 2026-07-26 des banques mât+pomo.',
+  },
+  {
+    // Sélection visuelle humaine : arche de Percé trop dominante en bandeau.
+    fragments: ['Rocher_Perc%C3%A9_%28Gasp%C3%A9sie%29.jpg', '99b5a01e8421'],
+    reason: 'user_curated_photo_rejected',
+    note: 'Retiré 2026-07-26 des banques mât+pomo.',
+  },
+  {
+    // Sélection visuelle humaine : macro de feuilles, pas un paysage de mât.
+    fragments: ['2016-10_Maple_leaves_autumn_Quebec_01', '6a8b5f2a19e4'],
+    reason: 'user_curated_photo_rejected',
+    note: 'Retiré 2026-07-26 des banques mât+pomo.',
+  },
+  {
+    // Sélection visuelle humaine : premier plan de champ trop uniforme.
+    fragments: ['Champ_sur_l%27%C3%AEle_d%27Orl%C3%A9ans', 'f0460e0fa873'],
+    reason: 'user_curated_photo_rejected',
+    note: 'Retiré 2026-07-26 des banques mât+pomo.',
+  },
+  {
+    // Chapelle très lisible au centre de Wôlinak, malgré le titre neutre.
+    fragments: ['W%C3%B4linak.jpg', '3e9586b9617b'],
+    reason: 'church_steeple_visible',
+    note: 'Retiré 2026-07-26 de la banque Nations.',
+  },
+  {
+    // Sélection visuelle humaine : scène nocturne peu lisible en bandeau.
+    fragments: ['Manawan_e_tipiskak', '398524378425'],
+    reason: 'user_curated_photo_rejected',
+    note: 'Retiré 2026-07-26 de la banque Nations.',
+  },
+  {
     // Commons : « town hall » ; image : clocher / pignon type chapelle
     fragments: [
       'Vaudreuil-sur-le-Lac_QC',
