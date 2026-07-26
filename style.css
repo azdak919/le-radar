@@ -385,65 +385,22 @@ body {
 }
 
 /*
- * Puces météo sur photo — lisibles sur n’importe quel fond, mais alignées
- * sur le thème de la page (plus de « pastilles blanches » en dark).
+ * Puces météo sur photo — toujours sombres, comme les boutons du mât.
+ * Elles ne suivent pas le thème clair afin de conserver un contraste stable
+ * sur chaque photo de fond.
  *
- * Thème clair : carte opaque ivoire + encre sombre (contraste max).
- * Thème sombre : verre sombre semi-opaque + encre claire (cohérent
- *   avec le tuner et les icônes mât en mode photo).
- *
- * Couleurs en hex/rgba fixes ici : ne pas s’appuyer sur var(--ink) seul,
- * car le mât photo peut hériter d’un blanc de wordmark.
+ * Couleurs en hex/rgba fixes : ne pas s’appuyer sur var(--ink) seul, car le
+ * mât photo peut hériter d’un blanc de wordmark.
  */
 .masthead:has(#bg-photo-layer.loaded) .masthead-weather {
-  color: #3a3d44;
+  color: rgba(236, 238, 242, 0.92);
   -webkit-text-stroke: 0;
   text-shadow: none;
 }
 .masthead:has(#bg-photo-layer.loaded) .masthead-weather__city {
-  color: #3a3d44;
-  -webkit-text-stroke: 0;
-  text-shadow: none;
-  background:
-    linear-gradient(90deg, rgba(200, 16, 46, 0.1) 0%, #f7f6f4 52%),
-    #f4f3f1;
-  border-color: rgba(0, 0, 0, 0.14);
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.22),
-    0 3px 10px rgba(0, 0, 0, 0.16);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-}
-.masthead:has(#bg-photo-layer.loaded) .masthead-weather__city:hover {
-  border-color: color-mix(in srgb, var(--weather-tone, #c8102e) 55%, rgba(0, 0, 0, 0.2));
-  background:
-    linear-gradient(90deg, color-mix(in srgb, var(--weather-tone, #c8102e) 14%, #fff) 0%, #faf9f7 55%),
-    #f7f6f4;
-}
-.masthead:has(#bg-photo-layer.loaded) .masthead-weather__name,
-.masthead:has(#bg-photo-layer.loaded) .masthead-weather__name-text,
-.masthead:has(#bg-photo-layer.loaded) .masthead-weather__name-full,
-.masthead:has(#bg-photo-layer.loaded) .masthead-weather__name-compact {
-  color: #16181c;
-  -webkit-text-stroke: 0;
-  text-shadow: none;
-}
-.masthead:has(#bg-photo-layer.loaded) .masthead-weather__temp {
-  color: #12141a;
-  -webkit-text-stroke: 0;
-  text-shadow: none;
-}
-.masthead:has(#bg-photo-layer.loaded) .masthead-weather__icon {
-  filter: none;
-  opacity: 1;
-}
-
-/* Thème sombre + photo : cartes sombres (verre), texte clair */
-[data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-weather {
   color: rgba(236, 238, 242, 0.92);
-}
-[data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-weather__city {
-  color: rgba(236, 238, 242, 0.92);
+  -webkit-text-stroke: 0;
+  text-shadow: none;
   background:
     linear-gradient(90deg, color-mix(in srgb, var(--weather-tone, #c8102e) 22%, transparent) 0%, transparent 55%),
     rgba(22, 24, 30, 0.82);
@@ -455,23 +412,26 @@ body {
   backdrop-filter: blur(10px) saturate(1.1);
   -webkit-backdrop-filter: blur(10px) saturate(1.1);
 }
-[data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-weather__city:hover {
+.masthead:has(#bg-photo-layer.loaded) .masthead-weather__city:hover {
   border-color: color-mix(in srgb, var(--weather-tone, #c8102e) 55%, rgba(255, 255, 255, 0.22));
   background:
     linear-gradient(90deg, color-mix(in srgb, var(--weather-tone, #c8102e) 28%, transparent) 0%, transparent 55%),
     rgba(32, 35, 44, 0.9);
 }
-[data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-weather__name,
-[data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-weather__name-text,
-[data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-weather__name-full,
-[data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-weather__name-compact {
+.masthead:has(#bg-photo-layer.loaded) .masthead-weather__name,
+.masthead:has(#bg-photo-layer.loaded) .masthead-weather__name-text,
+.masthead:has(#bg-photo-layer.loaded) .masthead-weather__name-full,
+.masthead:has(#bg-photo-layer.loaded) .masthead-weather__name-compact {
   color: rgba(245, 246, 248, 0.96);
+  -webkit-text-stroke: 0;
+  text-shadow: none;
 }
-[data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-weather__temp {
+.masthead:has(#bg-photo-layer.loaded) .masthead-weather__temp {
   color: #ffffff;
+  -webkit-text-stroke: 0;
+  text-shadow: none;
 }
-[data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-weather__icon {
-  /* tons météo un cran plus clairs sur fond sombre */
+.masthead:has(#bg-photo-layer.loaded) .masthead-weather__icon {
   filter: brightness(1.12) saturate(1.05);
   opacity: 1;
 }
