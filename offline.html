@@ -107,6 +107,11 @@
         0 0 0 1px rgba(255, 255, 255, 0.1),
         0 8px 22px rgba(108, 33, 99, 0.35);
     }
+    img.brand-mark {
+      display: block;
+      object-fit: cover;
+      background: none;
+    }
     .brand-mark::before {
       content: "";
       width: 22px;
@@ -138,9 +143,10 @@
       padding: 0.15rem 0.5rem 0.75rem;
     }
     .status-kicker {
-      display: inline-flex;
+      display: inline-grid;
+      grid-template-columns: 7px auto 7px;
       align-items: center;
-      gap: 0.45rem;
+      column-gap: 0.45rem;
       font-size: 0.68rem;
       font-weight: 600;
       letter-spacing: 0.16em;
@@ -470,7 +476,7 @@
   <div class="shell">
     <header>
       <a class="brand" href="/" rel="home">
-        <span class="brand-mark" aria-hidden="true"></span>
+        <img class="brand-mark" src="assets/icon.svg" width="44" height="44" alt="" />
         <span class="brand-name notranslate" translate="no">LE&nbsp;RADAR<span class="tld">.ca</span></span>
       </a>
     </header>
@@ -499,6 +505,7 @@
           <span><span class="stat-label">Score</span><b id="score">0</b></span>
           <span><span class="stat-label">Pièces</span><b id="coins">0</b></span>
           <span><span class="stat-label">Record</span><b id="hi">0</b></span>
+          <span><span class="stat-label">Record pièces</span><b id="coins-hi">0</b></span>
         </span>
       </div>
       <canvas
@@ -537,7 +544,7 @@
       <div class="site-foot__credit">
         <!-- Une seule ligne contact : Azdak + ✉️, les deux liens mailto. -->
         <p class="site-foot__author">
-          Conçu avec ♡ par
+          Conçu avec <a href="easter-egg.html" class="site-foot__heart" aria-label="Ouvrir l'easter egg">♡</a> par
           <a
             href="mailto:azdak-qc@proton.me"
             class="site-foot__author-link"
@@ -884,7 +891,9 @@
   }
 
   if (stayHere) {
-    reconnectEl.textContent = isLocalHost
+    reconnectEl.textContent = params.has('easter-egg')
+      ? 'Mode easter egg.'
+      : isLocalHost
       ? 'Aperçu local — pas de redirection (ajoutez ?live=1 pour tester).'
       : 'Mode aperçu — pas de redirection.';
     reconnectEl.classList.add('is-ok');
@@ -900,15 +909,20 @@
   const scoreEl = document.getElementById('score');
   const coinsEl = document.getElementById('coins');
   const hiEl = document.getElementById('hi');
+  const coinsHiEl = document.getElementById('coins-hi');
   const HI_KEY = 'lr_offline_hi_v2';
   const COINS_KEY = 'lr_offline_coins_total_v1';
+  const COINS_HI_KEY = 'lr_offline_coins_hi_v1';
   let hi = 0;
   let coinsTotal = 0;
+  let coinsHi = 0;
   try {
     hi = parseInt(localStorage.getItem(HI_KEY) || '0', 10) || 0;
     coinsTotal = parseInt(localStorage.getItem(COINS_KEY) || '0', 10) || 0;
+    coinsHi = parseInt(localStorage.getItem(COINS_HI_KEY) || '0', 10) || 0;
   } catch (_) {}
   hiEl.textContent = String(hi);
+  coinsHiEl.textContent = String(coinsHi);
 
   const logoImg = new Image();
   logoImg.src = 'assets/icon-192.png';
@@ -1218,6 +1232,11 @@
           c.taken = true;
           coinsRun += 1;
           coinsTotal += 1;
+          if (coinsRun > coinsHi) {
+            coinsHi = coinsRun;
+            coinsHiEl.textContent = String(coinsHi);
+            try { localStorage.setItem(COINS_HI_KEY, String(coinsHi)); } catch (_) {}
+          }
           score += 25;
           playSfx('coin');
           coinsEl.textContent = String(coinsRun);

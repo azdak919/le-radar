@@ -124,6 +124,14 @@ body {
 #bg-photo-layer.loaded + .bg-photo-scrim { opacity: 1; }
 
 .masthead-inner { position: relative; z-index: 2; }
+.masthead-shuffle-slot {
+  position: absolute;
+  z-index: 4;
+  top: max(10px, env(safe-area-inset-top, 0px));
+  right: max(10px, env(safe-area-inset-right, 0px));
+}
+.masthead-bg-shuffle { cursor: pointer; }
+.masthead-bg-shuffle svg { width: 15px; height: 15px; }
 
 .bg-photo-credit {
   position: absolute;
@@ -187,7 +195,10 @@ body {
   }
   .bg-photo-credit__full { display: none; }
   .bg-photo-credit__short {
-    display: block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.28rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -197,6 +208,13 @@ body {
     text-decoration-color: transparent;
     /* Un peu de surface de tap sans agrandir la ligne. */
     padding: 2px 0;
+  }
+  .bg-photo-credit__copyleft {
+    display: inline-block;
+    flex: 0 0 auto;
+    font-size: 0.95em;
+    line-height: 1;
+    transform: scaleX(-1);
   }
   .bg-photo-credit a:active,
   .bg-photo-credit a:focus-visible {
@@ -751,6 +769,9 @@ a { color: inherit; }
   gap: 8px;
   flex-shrink: 0;
 }
+@media (min-width: 600px) {
+  .masthead-actions { padding-right: 36px; }
+}
 
 .masthead-icon {
   display: inline-flex;
@@ -806,6 +827,7 @@ a { color: inherit; }
     white-space: nowrap;
   }
   .masthead-actions { gap: 4px; }
+  .masthead-shuffle-slot { display: none; }
   .masthead-icon { width: 24px; height: 24px; }
   .masthead-icon svg { width: 13px; height: 13px; }
   .masthead-icon .app-emoji { width: 13px; height: 13px; }

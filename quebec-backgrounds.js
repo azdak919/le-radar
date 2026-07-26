@@ -1903,7 +1903,10 @@
     el.removeAttribute("hidden");
     const link = safeHttpsUrl(bg.link);
     const title = String(bg.title || "").trim();
-    const credit = sanitizeBgCredit(bg.credit || "");
+    const rawCredit = sanitizeBgCredit(bg.credit || "");
+    // Commons emploie le pseudo « Jeangagnon » : le crédit éditorial affiche
+    // le vrai nom tout en gardant le lien de la photo comme source.
+    const credit = /^jeangagnon$/i.test(rawCredit) ? "Jean Gagnon" : rawCredit;
     const license = String(bg.license || "").trim();
 
     // Bureau : titre — auteur (licence)
@@ -1934,6 +1937,13 @@
     short.setAttribute("translate", "no");
     short.classList.add("notranslate");
     const shortLabel = credit || title || "Photo";
+    if (shortLabel) {
+      const copyleft = document.createElement("span");
+      copyleft.className = "bg-photo-credit__copyleft";
+      copyleft.textContent = "©";
+      copyleft.setAttribute("aria-label", "Copyleft");
+      short.appendChild(copyleft);
+    }
     if (link) {
       const a = document.createElement("a");
       a.href = link;
@@ -2004,6 +2014,8 @@
     layer.style.backgroundSize = "cover";
     layer.style.backgroundRepeat = "no-repeat";
     layer.style.backgroundPosition = position;
+    layer.dataset.bgId = _rotator ? _rotator.photoId(bg) : String(bg.url || "");
+    layer.dataset.bgUrl = String(bg.url || "");
     if (typeof console !== "undefined" && console.info) {
       console.info(
         "[bg] paint",
@@ -2142,10 +2154,22 @@
     if (chosen) _applyBackground(chosen, all);
   }
 
+  function shuffleMastheadBackground() {
+    const pool = _mastheadPool();
+    const current = document.getElementById("bg-photo-layer")?.dataset.bgUrl || "";
+    const next = pickBackground(pool, current) || pickBackground(pool);
+    if (next) _applyBackground(next, pool);
+  }
+
   // Exposé pour tests / audit manuel en console.
   window.__lrScoreMastheadPhoto = scoreMastheadPhoto;
   window.__lrComputeBestFocalY = computeBestFocalY;
   window.__lrSeasonFilterPool = _seasonFilteredPool;
+  window.__lrShuffleMastheadPhoto = shuffleMastheadBackground;
+
+  document.addEventListener("click", (event) => {
+    if (event.target.closest("#masthead-bg-shuffle")) shuffleMastheadBackground();
+  });
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);

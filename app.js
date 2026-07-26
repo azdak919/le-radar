@@ -311,6 +311,9 @@ const NEWS_SEARCH_HINT   = document.getElementById('news-search-hint');
 const TODAY_DATE     = document.getElementById('today-date');
 const MASTHEAD_WEATHER = document.getElementById('masthead-weather');
 const MASTHEAD_WEATHER_DOCK = document.getElementById('masthead-weather-dock');
+const MASTHEAD_ACTIONS = document.querySelector('.masthead-actions');
+const MASTHEAD_BG_SHUFFLE = document.getElementById('masthead-bg-shuffle');
+const MASTHEAD_BG_SHUFFLE_HOME = document.getElementById('masthead-shuffle-slot');
 const TOAST_EL       = document.getElementById('toast');
 const THEME_TOGGLE   = document.getElementById('theme-toggle');
 const EXTERNAL_MODAL = document.getElementById('external-listen');
@@ -960,6 +963,17 @@ const mastheadWeatherHomeNextSibling = MASTHEAD_WEATHER?.nextSibling || null;
 // dynamique, on docke directement sous le syntoniseur.
 const MASTHEAD_WEATHER_PHONE_MQ = window.matchMedia('(max-width: 599.98px)');
 
+function syncMastheadShuffleButton() {
+  if (!MASTHEAD_BG_SHUFFLE || !MASTHEAD_BG_SHUFFLE_HOME) return;
+  const showInMobileMenu = mastheadWeatherDocked && !MASTHEAD_WEATHER?.classList.contains('hidden');
+  if (showInMobileMenu && MASTHEAD_ACTIONS) {
+    MASTHEAD_ACTIONS.append(MASTHEAD_BG_SHUFFLE);
+  } else if (!mastheadWeatherDocked) {
+    MASTHEAD_BG_SHUFFLE_HOME.append(MASTHEAD_BG_SHUFFLE);
+  }
+  MASTHEAD_BG_SHUFFLE.hidden = mastheadWeatherDocked && !showInMobileMenu;
+}
+
 /**
  * Sur mobile, quand le masthead n'a plus de place pour la météo, on la
  * déplace sous la barre du syntoniseur (même carte que sur bureau, pas le
@@ -979,6 +993,7 @@ function setMastheadWeatherDocked(docked) {
   mastheadWeatherTooNarrow = false;
   mastheadWeatherLastBoardCount = 0;
   MASTHEAD_WEATHER.classList.remove('is-too-narrow');
+  syncMastheadShuffleButton();
 }
 
 function weatherLocationSlug(city) {
@@ -1248,6 +1263,7 @@ function renderMastheadWeather(entries) {
     el.dataset.weatherTone = weatherTone(current.weather_code);
   });
   MASTHEAD_WEATHER.classList.remove('hidden');
+  syncMastheadShuffleButton();
   startMastheadWeatherBoard();
 }
 
