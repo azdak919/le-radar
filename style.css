@@ -651,9 +651,23 @@ a { color: inherit; }
   border-bottom: 1px solid var(--rule);
 }
 
-.masthead-date { font-weight: 600; }
+.masthead-date {
+  position: relative;
+  font-weight: 600;
+}
 .masthead-time {
-  display: none;
+  position: absolute;
+  top: 1.2em;
+  left: 0;
+  display: block;
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: 0.82em;
+  letter-spacing: inherit;
+  line-height: 1;
+  text-transform: inherit;
+  white-space: nowrap;
+  opacity: 0.9;
   font-variant-numeric: tabular-nums;
 }
 
@@ -850,7 +864,9 @@ a { color: inherit; }
   .masthead-date {
     position: relative;
     transform: translateY(-3px);
-    font-size: 10.5px;
+    /* Échelle fluide : 390 px reste compact, 500–600 px gagne en confort
+       sans saut brutal lorsque l'appareil bascule en tablette. */
+    font-size: clamp(10.5px, 2.5vw, 12px);
     letter-spacing: 0.02em;
     min-width: 0;
     overflow: visible;
@@ -868,16 +884,16 @@ a { color: inherit; }
     left: 0;
     display: block;
     font-size: 0.82em;
-    letter-spacing: 0.04em;
+    letter-spacing: inherit;
     line-height: 1;
     white-space: nowrap;
     opacity: 0.9;
   }
-  .masthead-actions { gap: 4px; }
+  .masthead-actions { gap: clamp(4px, .8vw, 6px); }
   .masthead-shuffle-slot { display: none; }
-  .masthead-icon { width: 24px; height: 24px; }
-  .masthead-icon svg { width: 13px; height: 13px; }
-  .masthead-icon .app-emoji { width: 13px; height: 13px; }
+  .masthead-icon { width: clamp(24px, 5.5vw, 28px); height: clamp(24px, 5.5vw, 28px); }
+  .masthead-icon svg { width: clamp(13px, 3vw, 15px); height: clamp(13px, 3vw, 15px); }
+  .masthead-icon .app-emoji { width: clamp(13px, 3vw, 15px); height: clamp(13px, 3vw, 15px); }
 }
 @media (max-width: 374.98px) {
   .masthead-date { font-size: 10px; letter-spacing: 0.01em; }
