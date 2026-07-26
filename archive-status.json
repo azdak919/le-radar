@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-26T00:20:26.249Z",
+  "updated": "2026-07-26T00:39:30.560Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -36,15 +36,120 @@
       "via": "save-page-now",
       "source": "LE-RADAR.ca",
       "snapshot": "https://web.archive.org/web/20260726002020/https://le-radar.ca/feed.xml"
+    },
+    "https://le-radar.ca/llms.txt": {
+      "at": "2026-07-26T00:37:36.181Z",
+      "via": "save-page-now",
+      "source": "LE-RADAR.ca",
+      "snapshot": "https://web.archive.org/web/20260726003730/https://le-radar.ca/llms.txt"
+    },
+    "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/": {
+      "at": "2026-04-18T22:22:53.000Z",
+      "via": "existant",
+      "source": "Exil"
+    },
+    "https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/": {
+      "at": "2026-03-13T19:43:03.000Z",
+      "via": "existant",
+      "source": "Exil"
+    },
+    "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/": {
+      "at": "2026-02-28T23:43:30.000Z",
+      "via": "existant",
+      "source": "Exil"
+    },
+    "https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/": {
+      "at": "2026-07-26T00:38:38.950Z",
+      "via": "save-page-now",
+      "source": "Exil",
+      "snapshot": "https://web.archive.org/web/20260726003823/https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/"
+    },
+    "https://lecollectif.ca/a-la-une/sommet-de-lotan-a-ankara/": {
+      "at": "2026-07-26T00:39:30.560Z",
+      "via": "save-page-now",
+      "source": "Le Collectif",
+      "snapshot": "https://web.archive.org/web/20260726003917/https://lecollectif.ca/a-la-une/sommet-de-lotan-a-ankara/"
     }
   },
   "stats": {
-    "total": 6,
+    "total": 12,
     "lastRun": {
-      "saved": 6,
-      "skipped": 0,
+      "saved": 3,
+      "skipped": 3,
       "failed": 0,
       "stoppedEarly": false
+    }
+  },
+  "sources": {
+    "Le Collectif": {
+      "host": "lecollectif.ca",
+      "pages": 25,
+      "checkedAt": "2026-07-26T00:36:42.836Z"
+    },
+    "The Tribune": {
+      "host": "www.thetribune.ca",
+      "pages": 33,
+      "checkedAt": "2026-07-26T00:36:43.961Z"
+    },
+    "The Link": {
+      "host": "thelinknewspaper.ca",
+      "pages": 128,
+      "checkedAt": "2026-07-26T00:36:45.390Z"
+    },
+    "The McGill Daily": {
+      "host": "www.mcgilldaily.com",
+      "pages": 229,
+      "checkedAt": "2026-07-26T00:36:50.511Z"
+    },
+    "La Pige": {
+      "host": "lapige.atmjonquiere.com",
+      "pages": 8,
+      "checkedAt": "2026-07-26T00:36:52.558Z"
+    },
+    "L'Exemplaire": {
+      "host": "www.exemplaire.com.ulaval.ca",
+      "pages": 9,
+      "checkedAt": "2026-07-26T00:36:55.531Z"
+    },
+    "Quartier Libre": {
+      "host": "quartierlibre.ca",
+      "pages": 38,
+      "checkedAt": "2026-07-26T00:36:58.085Z"
+    },
+    "The Plant": {
+      "host": "theplantnews.com",
+      "pages": 3,
+      "checkedAt": "2026-07-26T00:37:00.342Z"
+    },
+    "Montréal Campus": {
+      "host": "montrealcampus.ca",
+      "pages": 36,
+      "checkedAt": "2026-07-26T00:37:01.342Z"
+    },
+    "Zone Campus": {
+      "host": "zonecampus.ca",
+      "pages": 15,
+      "checkedAt": "2026-07-26T00:37:03.722Z"
+    },
+    "Exil": {
+      "host": "exilecvm.wordpress.com",
+      "pages": 1,
+      "checkedAt": "2026-07-26T00:37:05.973Z"
+    },
+    "The Campus": {
+      "host": "thebucampus.ca",
+      "pages": 4,
+      "checkedAt": "2026-07-26T00:37:13.653Z"
+    },
+    "Le Délit": {
+      "host": "www.delitfrancais.com",
+      "pages": 129,
+      "checkedAt": "2026-07-26T00:37:16.313Z"
+    },
+    "Le Polyscope": {
+      "host": "www.polyscope.qc.ca",
+      "pages": 33,
+      "checkedAt": "2026-07-26T00:37:19.386Z"
     }
   }
 }

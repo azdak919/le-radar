@@ -5,9 +5,12 @@
  * POURQUOI
  * Les publications étudiantes disparaissent. Un journal de cégep tenu sur un
  * blogue gratuit s'éteint quand l'équipe finit son DEC et que personne ne
- * renouvelle l'hébergement. Mesuré le 2026-07-25 : Quartier Libre et Le
- * Collectif dépassent 20 000 captures dans la Wayback Machine, mais Exil
- * (Cégep du Vieux Montréal) n'en a que 985.
+ * renouvelle l'hébergement.
+ *
+ * Couverture mesurée le 2026-07-26 (pages d'index CDX) : Exil 1, The Plant 3,
+ * The Campus 4, La Pige 8 — contre The McGill Daily 229. Un écart de 229×, et
+ * les plus menacés sont les cégeps et petits collèges. D'où l'ordre de passage
+ * piloté par la fragilité (voir archive-priority-lib.js) et non par la date.
  *
  * Le Radar connaît l'URL de chaque article publié. Les soumettre à Save Page
  * Now coûte une requête et rend le travail de ces rédactions consultable
@@ -24,14 +27,17 @@
  * plafond par passe, une pause entre les requêtes, et un arrêt net au premier
  * 429. On préfère archiver lentement pour toujours que vite une seule fois.
  *
- *   node scripts/archive-articles.js              # dry-run
- *   node scripts/archive-articles.js --update     # soumet et écrit l'état
+ *   node scripts/archive-articles.js                    # dry-run
+ *   node scripts/archive-articles.js --update           # soumet et écrit l'état
  *   node scripts/archive-articles.js --update --limit 5
- *   node scripts/archive-articles.js --update --self   # pages du site seulement
+ *   node scripts/archive-articles.js --update --self    # pages du site seulement
+ *   node scripts/archive-articles.js --measure 14       # amorçage : mesure toutes
+ *                                                       # les sources d'un coup
  */
 
 const fs = require('fs');
 const path = require('path');
+const { orderCandidates, fragilityRanking } = require('./archive-priority-lib');
 
 const ROOT = path.join(__dirname, '..');
 const NEWS_PATH = path.join(ROOT, 'news.json');
@@ -49,6 +55,11 @@ const PAUSE_MS = 4000;
 /** Une URL déjà capturée depuis moins de N jours n'est pas resoumise. */
 const RECAPTURE_AFTER_DAYS = 180;
 const REQUEST_TIMEOUT_MS = 90_000;
+
+/** Fraîcheur de la mesure de fragilité par source, et débit de rafraîchissement. */
+const FRAGILITY_TTL_DAYS = 7;
+const FRAGILITY_PER_RUN = 3;
+const FRAGILITY_TIMEOUT_MS = 25_000;
 
 // ═══════════════════════════════════════════════════════════════════════════
 //  Utilitaires
@@ -148,6 +159,77 @@ async function savePage(url) {
   return { ok: false, status: res.status };
 }
 
+/**
+ * Ampleur de la couverture d'un domaine dans la Wayback Machine, en pages
+ * d'index CDX. Sert de mesure de fragilité : peu de pages = publication peu
+ * archivée, donc la plus menacée de disparaître sans trace.
+ *
+ * Renvoie `null` si la mesure échoue — jamais 0. La distinction est capitale :
+ * un délai réseau dépassé ferait autrement passer un journal solide pour
+ * menacé. C'est arrivé en conditions réelles avec montrealcampus.ca, qui a
+ * d'abord renvoyé une erreur alors qu'il compte 36 pages.
+ */
+async function cdxPageCount(host) {
+  const q = `${CDX_ENDPOINT}?url=${encodeURIComponent(`${host}*`)}&output=json&showNumPages=true`;
+  try {
+    const res = await withTimeout(fetch(q, { headers: { 'User-Agent': UA } }), FRAGILITY_TIMEOUT_MS, 'cdx-pages');
+    if (!res.ok) return null;
+    const m = (await res.text()).match(/\[\s*"(\d+)"\s*\]/);
+    return m ? parseInt(m[1], 10) : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Domaine réellement porté par les liens d'articles, par source.
+ *  Pas le site déclaré au registre : Exil déclare exilecvm.ca alors que ses
+ *  articles pointent encore vers exilecvm.wordpress.com — et c'est ce dernier,
+ *  le moins archivé, qu'il faut mesurer. */
+function articleHostsBySource(items) {
+  const hosts = {};
+  for (const it of items) {
+    if (!it?.source || !it?.link) continue;
+    try { hosts[it.source] ||= new URL(it.link).host; } catch { /* lien invalide */ }
+  }
+  return hosts;
+}
+
+/**
+ * Rafraîchit la fragilité d'au plus quelques sources par passe, les plus
+ * périmées d'abord. Une mesure en échec **conserve** la valeur connue et se
+ * marque `stale` : on ne dégrade jamais une information acquise.
+ */
+async function refreshFragility(state, items, { quiet = false, budget = FRAGILITY_PER_RUN } = {}) {
+  state.sources = state.sources || {};
+  const hosts = articleHostsBySource(items);
+  const now = Date.now();
+
+  const due = Object.entries(hosts)
+    .map(([source, host]) => {
+      const rec = state.sources[source];
+      const age = rec?.checkedAt ? (now - new Date(rec.checkedAt).getTime()) / 86_400_000 : Infinity;
+      return { source, host, age, known: Number.isFinite(rec?.pages) };
+    })
+    .filter((s) => s.age >= FRAGILITY_TTL_DAYS)
+    // Les sources jamais mesurées d'abord : sans mesure, elles restent neutres
+    // et ne peuvent pas être priorisées même si elles sont fragiles.
+    .sort((a, b) => (a.known === b.known ? b.age - a.age : (a.known ? 1 : -1)))
+    .slice(0, budget);
+
+  for (const { source, host } of due) {
+    const pages = await cdxPageCount(host);
+    const prev = state.sources[source] || {};
+    if (pages === null) {
+      state.sources[source] = { ...prev, host, stale: true };
+      if (!quiet) console.log(`   ⚠ mesure indisponible pour ${source} — valeur connue conservée`);
+    } else {
+      state.sources[source] = { host, pages, checkedAt: new Date().toISOString() };
+      if (!quiet) console.log(`   · fragilité ${source} : ${pages} page(s) d'index`);
+    }
+    await sleep(700);
+  }
+}
+
 // ═══════════════════════════════════════════════════════════════════════════
 //  Sélection des URL
 // ═══════════════════════════════════════════════════════════════════════════
@@ -202,20 +284,48 @@ async function main() {
   const selfOnly = process.argv.includes('--self');
   const limit = Math.max(1, parseInt(arg('--limit', String(DEFAULT_LIMIT)), 10) || DEFAULT_LIMIT);
 
-  const state = readJson(STATE_PATH, { updated: null, archived: {}, stats: {} });
+  const state = readJson(STATE_PATH, { updated: null, archived: {}, sources: {}, stats: {} });
   state.archived = state.archived || {};
-
-  const candidates = selfOnly
-    ? ownPages().filter((url) => needsCapture(url, state)).map((url) => ({ url, source: 'LE-RADAR.ca' }))
-    : [
-      ...ownPages().filter((url) => needsCapture(url, state)).map((url) => ({ url, source: 'LE-RADAR.ca' })),
-      ...articleUrls(state),
-    ];
-
-  const batch = candidates.slice(0, limit);
+  state.sources = state.sources || {};
 
   console.log('LE-RADAR.ca — archivage Wayback Machine');
   console.log('=========================================\n');
+
+  const news = readJson(NEWS_PATH, { items: [] });
+  const newsItems = Array.isArray(news) ? news : (news.items || []);
+
+  // Mesure de fragilité : quelques sources par passe, jamais destructive.
+  // --measure N : amorçage. Sans lui, il faut 5 passes avant que les sources
+  // les plus fragiles soient seulement mesurées — donc 5 passes pendant
+  // lesquelles la priorisation ne sert à rien.
+  const measureBudget = Math.max(1, parseInt(arg('--measure', String(FRAGILITY_PER_RUN)), 10) || FRAGILITY_PER_RUN);
+  if (!selfOnly) await refreshFragility(state, newsItems, { budget: measureBudget });
+
+  const ranking = fragilityRanking(state.sources);
+  if (ranking.length) {
+    console.log('\nFragilité des sources (pages d’index CDX — moins = plus menacé)');
+    for (const r of ranking) {
+      const val = r.pages === null ? '  ?' : String(r.pages).padStart(3);
+      console.log(`   ${val}  ${r.source}${r.stale ? '  (mesure périmée)' : ''}`);
+    }
+    console.log('');
+  }
+
+  // Les pages du site passent devant : elles sont peu nombreuses et c'est le
+  // point d'entrée vers tout le reste.
+  const own = ownPages()
+    .filter((url) => needsCapture(url, state))
+    .map((url) => ({ url, source: 'LE-RADAR.ca', date: new Date().toISOString() }));
+
+  const articles = selfOnly ? [] : orderCandidates({
+    items: articleUrls(state),
+    fragility: state.sources,
+    size: Math.max(1, limit - own.length),
+  });
+
+  const candidates = [...own, ...articles];
+  const batch = candidates.slice(0, limit);
+
   console.log(`Déjà archivées : ${Object.keys(state.archived).length}`);
   console.log(`Candidates     : ${candidates.length} (plafond ${limit} cette passe)\n`);
 
