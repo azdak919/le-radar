@@ -1,19 +1,25 @@
 {
-  "updated": "2026-07-26T04:05:24.219Z",
+  "updated": "2026-07-26T04:24:19.986Z",
   "total": 185,
   "withPhoto": 168,
   "withStock": 42,
   "withCampusBank": 8,
   "fullyCovered": 185,
-  "leadReadyPhotos": 156,
+  "leadReadyPhotos": 155,
   "pageScraped": 16,
   "photosRecovered": 16,
   "imagesCleared": 11,
-  "stockSearches": 33,
+  "stockSearches": 35,
   "stockFound": 23,
   "campusBankFound": 6,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "CSU fails to reach quorum at first special council meeting of new mandate",
+      "link": "https://thelinknewspaper.ca/article/16335",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
+    },
     {
       "title": "The Cruel Optimism of Summer",
       "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
@@ -39,6 +45,12 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_Episode-de-feux-de-forets-en-France_Getty-Images.jpg"
     },
     {
+      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
+      "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg"
+    },
+    {
       "title": "Recettes musicales québécoises pour l’été",
       "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
       "reason": "no-stock-match",
@@ -59,8 +71,8 @@
     {
       "title": "CSU approves $36,000 in funding for student-led initiatives",
       "link": "https://thelinknewspaper.ca/article/16319",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG"
     },
     {
       "title": "Mars enters Aries",
@@ -73,18 +85,6 @@
       "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
       "reason": "stock-too-small",
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/e2/McGill_University_downtown_campus_12.JPG"
-    },
-    {
-      "title": "Gaiters wrap up hard-fought season with eyes on next year",
-      "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
-    },
-    {
-      "title": "The Gentrification of Online Fandom Spaces",
-      "link": "https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/7352/11472619204_9031b1fdec_b.jpg"
     }
   ]
 }
