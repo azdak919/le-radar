@@ -288,6 +288,27 @@ const TUNER_NOWAIR = document.getElementById('tuner-nowair');
 const TUNER_NOWAIR_LABEL = TUNER_NOWAIR?.querySelector?.('.tuner-nowair-label') || null;
 const TUNER_NOWAIR_TITLE = document.getElementById('tuner-nowair-title');
 const TUNER_NOWAIR_SUB = document.getElementById('tuner-nowair-sub');
+const ORIGINAL_ENGLISH_SCHEDULES = new Set(['cjlo', 'ckut']);
+
+function nowAirSchedulePath(radio) {
+  if (!radio?.id) return null;
+  const prefix = ORIGINAL_ENGLISH_SCHEDULES.has(radio.id) ? 'en/' : '';
+  return `${prefix}radios/${encodeURIComponent(radio.id)}/`;
+}
+
+function openNowAirSchedule() {
+  const radio = currentStation || (isNowAirPanelPreviewMode() ? nowAirPreviewRadio : null);
+  const path = nowAirSchedulePath(radio);
+  if (path) location.assign(path);
+}
+
+TUNER_NOWAIR?.addEventListener('click', openNowAirSchedule);
+TUNER_NOWAIR?.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    openNowAirSchedule();
+  }
+});
 const ICO_PLAY       = TUNER_PLAY.querySelector('.ico-play');
 const ICO_PAUSE      = TUNER_PLAY.querySelector('.ico-pause');
 const ICO_EXTERNAL   = TUNER_PLAY.querySelector('.ico-external');
