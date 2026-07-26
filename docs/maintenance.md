@@ -227,6 +227,46 @@ commits limités à des timestamps de fraîcheur sont regroupés : un heartbeat 
 conservé au plus toutes les six heures, sans retarder un changement réel de
 contenu ou de contrôle qualité.
 
+### Banques photo : deux contrôles, pas un
+
+| Contrôle | Ce qu'il voit | Quand |
+|---|---|---|
+| `maintain-quebec-backgrounds.js` | **titre**, résolution, ratio | à chaque passe hebdomadaire |
+| `audit-quebec-backgrounds.py` | **les pixels** : clochers, objet centré, enseignes concurrentes, ciel, variété horizontale | rapport hebdomadaire, non bloquant |
+
+La distinction est essentielle : le premier ne lit que des métadonnées. **Une
+photo d'église intitulée « Vieux-Québec en hiver » lui échappe entièrement.**
+Seul l'audit pixel peut l'attraper.
+
+**Panne silencieuse de 2026 (à ne pas reproduire).** L'audit pixel lisait le
+miroir généré `quebec-backgrounds-data.js` avec une expression régulière
+exigeant `title` immédiatement suivi de `}`. L'ajout de `width` / `height` après
+`title` a fait qu'il ne trouvait plus **aucune** entrée : il sortait sur
+« Aucune entrée trouvée » et passait pour un contrôle réussi. Il lit désormais
+`data/quebec-*.json`, la source de vérité, et **échoue bruyamment** si une
+banque est vide. Un test (`tests/bank-hard-audit.mjs`) verrouille les deux
+points.
+
+Il n'auditait par ailleurs qu'**une banque sur cinq** ; campus, nations et
+favoris n'étaient jamais examinés alors qu'ils alimentent aussi le mât.
+
+**Rapport, pas verdict.** Les seuils sur-déclenchent : mesuré le 2026-07-26,
+54 % des paysages, 60 % des nations et 79 % du campus sont rejetés, sur des
+banques pourtant curées. Exemple de faux positif : « Bishop's University campus
+2011 » est signalé `religious_architecture` pour un clocheton de toit sur un
+pavillon académique de 1891. L'étape est donc en `|| true` dans
+`scripts/maintain.js` : elle informe, elle ne purge pas. Le calibrage est
+consigné en dette **D15**.
+
+**Retirer une photo** passe toujours par `scripts/quebec-backgrounds-blacklist.js`
+puis `npm run bank:sync` — jamais par une édition du miroir `*-data.js`, qui est
+régénéré. Si `nations`, `pomo` ou `favorites` changent, bumper aussi
+`pomo/sw.js`.
+
+**Ce que l'audit ne fait pas** : il ne détecte pas les **visages**. La règle
+« pas de personnes reconnaissables », inscrite en tête de chaque banque, reste
+une revue humaine.
+
 ---
 
 ## Horaires « à l'antenne »

@@ -158,17 +158,6 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     nation: "Malécites (Wolastoqiyik)",
   },
   {
-    url: "https://upload.wikimedia.org/wikipedia/commons/5/5d/Wendake-Qu%C3%A9bec.JPG",
-    credit: "Gilbertus",
-    link: "https://commons.wikimedia.org/wiki/File:Wendake-Québec.JPG",
-    license: "CC BY 3.0",
-    title: "Wendake-Québec",
-    width: 2160,
-    height: 1033,
-    nationId: "wendat",
-    nation: "Hurons-Wendat",
-  },
-  {
     url: "https://upload.wikimedia.org/wikipedia/commons/a/a8/Fort_Listuguj_1.jpg",
     credit: "Dennis G. Jarvis",
     link: "https://commons.wikimedia.org/wiki/File:Fort_Listuguj_1.jpg",

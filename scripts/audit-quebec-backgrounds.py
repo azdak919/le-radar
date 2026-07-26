@@ -83,7 +83,7 @@ except ImportError:
     sys.exit(2)
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT / "quebec-backgrounds-data.js"
+DATA_DIR = ROOT / "data"
 
 MASTHEAD_AR = 3.8
 MIN_ASPECT = 1.25
@@ -150,26 +150,56 @@ def looks_town_hall_facade(entry: dict) -> bool:
 
 
 def parse_bank(path: Path) -> list[dict]:
-    text = path.read_text(encoding="utf-8")
-    entries = []
-    for m in re.finditer(
-        r"\{\s*url:\s*\"([^\"]+)\"\s*,\s*credit:\s*\"([^\"]*)\"\s*,\s*"
-        r"link:\s*\"([^\"]+)\"\s*,\s*license:\s*\"([^\"]*)\"\s*,\s*"
-        r"title:\s*\"([^\"]*)\"\s*,?\s*\}",
-        text,
-    ):
-        entries.append(
-            {
-                "url": m.group(1),
-                "credit": m.group(2),
-                "link": m.group(3),
-                "license": m.group(4),
-                "title": m.group(5),
-            }
-        )
+    """Lit une banque depuis sa source de vérité JSON.
+
+    Historique : cette fonction analysait le miroir généré
+    `quebec-backgrounds-data.js` avec une expression régulière exigeant
+    `{ url, credit, link, license, title }` et un `}` juste après `title`.
+    L'ajout de `width` / `height` après `title` a fait que la regex ne
+    correspondait plus à rien : le script s'arrêtait alors sur « Aucune entrée
+    trouvée » et personne ne s'en apercevait — un audit muet passe pour un audit
+    propre. On lit désormais le JSON, qui est la source déclarée en tête des
+    miroirs, et dont le format ne dépend pas d'un ordre de champs.
+    """
+    if not path.exists():
+        raise SystemExit(f"Banque introuvable : {path}")
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise SystemExit(f"Banque illisible ({path.name}) : {exc}") from exc
+
+    if isinstance(raw, list):
+        entries = raw
+    elif isinstance(raw, dict):
+        entries = next((v for v in raw.values() if isinstance(v, list)), [])
+    else:
+        entries = []
+
+    entries = [e for e in entries if isinstance(e, dict) and e.get("url")]
     if not entries:
-        raise SystemExit(f"Aucune entrée trouvée dans {path}")
+        # Bruyant et fatal, jamais silencieux : une banque vide est soit une
+        # régression de format, soit une purge accidentelle. Les deux doivent
+        # se voir.
+        raise SystemExit(f"Aucune entrée exploitable dans {path.name}")
     return entries
+
+
+def discover_banks() -> list[tuple[str, Path]]:
+    """Toutes les banques du mât et du pomo, pas seulement les paysages.
+
+    L'audit ne portait historiquement que sur `quebec-backgrounds-data.js` :
+    campus, nations et favoris n'étaient jamais examinés, alors qu'ils
+    alimentent eux aussi le mât.
+    """
+    banks = []
+    for path in sorted(DATA_DIR.glob("quebec-*-backgrounds.json")):
+        banks.append((path.stem.replace("quebec-", "").replace("-backgrounds", ""), path))
+    landscapes = DATA_DIR / "quebec-backgrounds.json"
+    if landscapes.exists():
+        banks.insert(0, ("paysages", landscapes))
+    if not banks:
+        raise SystemExit(f"Aucune banque trouvée dans {DATA_DIR}")
+    return banks
 
 
 def thumb_url(raw_url: str, width: int) -> str:
@@ -672,9 +702,24 @@ def score(metrics: dict, entry: dict | None = None) -> dict:
     if metrics["portrait"] or metrics["aspect"] < MIN_ASPECT:
         hard = True
         reasons.append("HARD:portrait_or_narrow")
-    # Résolution native (anti-grain upscale mât / pomo)
-    nw = int(metrics.get("native_w") or 0)
-    nh = int(metrics.get("native_h") or 0)
+    # Résolution native (anti-grain upscale mât / pomo).
+    #
+    # `metrics.native_*` décrit la VIGNETTE téléchargée (--width, 1000 px par
+    # défaut), jamais l'original : s'en servir ici rejetait les 127 photos en
+    # « low_resolution », y compris des images 3648×2736. Un audit qui rejette
+    # tout ne dit plus rien, et c'est probablement pourquoi ses sorties
+    # n'étaient pas suivies. On lit donc les dimensions natives stockées en
+    # banque, et on ne retombe sur la vignette que si elles manquent.
+    nw = int((entry or {}).get("width") or 0)
+    nh = int((entry or {}).get("height") or 0)
+    if not (nw and nh):
+        nw = int(metrics.get("native_w") or 0)
+        nh = int(metrics.get("native_h") or 0)
+        # Vignette seule : on ne peut pas conclure sur la résolution native.
+        # Le signaler comme lacune de données plutôt que comme rejet.
+        if nw and nh:
+            reasons.append("SOFT:native_size_unknown")
+            nw = nh = 0
     if nw and nh:
         if nw < MIN_NATIVE_W or nh < MIN_NATIVE_H or nw * nh < MIN_NATIVE_PX:
             hard = True
@@ -895,9 +940,23 @@ def main() -> int:
     ap.add_argument("--width", type=int, default=1000, help="Largeur du thumb Commons")
     ap.add_argument("--json", action="store_true", help="Sortie JSON")
     ap.add_argument("--delay", type=float, default=0.8, help="Pause entre fetch (anti-429)")
+    ap.add_argument("--bank", default=None, help="Limiter à une banque (paysages, university, nations…)")
+    ap.add_argument("--limit", type=int, default=0, help="Plafond d'entrées (0 = toutes)")
     args = ap.parse_args()
 
-    bank = parse_bank(DATA)
+    banks = discover_banks()
+    if args.bank:
+        banks = [(n, p) for n, p in banks if args.bank.lower() in n.lower()]
+        if not banks:
+            raise SystemExit(f"Aucune banque ne correspond à « {args.bank} »")
+
+    bank = []
+    for name, path in banks:
+        for idx, entry in enumerate(parse_bank(path)):
+            bank.append({**entry, "bank": name, "bankIndex": idx})
+    if args.limit:
+        bank = bank[: args.limit]
+
     rows = []
     for i, entry in enumerate(bank):
         if i and args.delay:

@@ -133,6 +133,7 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 | D12 | **Cohérence fil ↔ RSS ↔ JSON-LD non garantie** | Trois générateurs écrits pour des besoins distincts ; les coupler figerait des formats encore mouvants | Rien à attendre : un test comparant les premiers titres des quatre sorties coûte peu et doit exister **avant** qu’un décalage n’apparaisse | S | ready |
 | D13 | **Contraste `--muted` en thème clair + focus invisible du menu de langue** | `--muted` est un jeton global : l’assombrir touche tout le site clair d’un coup et impose une relecture visuelle complète | Captures avant/après sur accueil, fiche journal et annuaire, en clair **et** en sombre ; le thème sombre est déjà conforme et ne doit pas régresser | S–M | open |
 | D14 | **CSP trop large** sur `frame-src` et `connect-src` | Le site consomme des tiers énumérables mais nombreux (YouTube, umami, workers, météo, moteurs de traduction) ; resserrer d’un coup casse en production, pas en test | Resserrer **une directive à la fois**, en commençant par `frame-src`, avec vérification du syntoniseur et de l’intégration YouTube | S par étape | open |
+| D15 | **Calibrage des seuils de l’audit pixel** (banques photo) | Les seuils ont été réglés sur un autre corpus ; les rebaisser à l’aveugle laisserait passer ce qu’on cherche justement à bloquer | Un lot de photos **étiquetées à la main** (garder / rejeter) servant de référence, pour régler les seuils sur des cas jugés plutôt que sur une intuition | M | open |
 
 **D7 — précisions (option 3, pas 1 ni 2) :**
 
@@ -159,6 +160,36 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
   `data/quebec-nations-backgrounds.json`. Le même mécanisme sert déjà pour le tipi Gesgapegiag (0.28).
 - **Avant de solder** : rendre la photo à AR 14 / 10.7 / 7.57 / 3.8 / 2.16 avant/après, et vérifier
   qu’aucun crop existant à override ne régresse (`rowArch` sert aussi au bonus de score, pas qu’à l’ancre).
+
+**D15 — pourquoi l’audit pixel informe sans purger (2026-07-26).**
+
+Signalement humain : des églises et des images hors standard passaient encore
+dans le mât. L’audit a montré que le contrôle pixel était **cassé**, pas
+seulement absent — voir `docs/maintenance.md` § « Banques photo ». Réparé,
+étendu aux 5 banques et branché en hebdomadaire.
+
+Reste le calibrage. Taux de rejet mesuré sur des banques curées :
+
+| Banque | Rejets |
+|--------|--------|
+| paysages | 19 / 35 (54 %) |
+| nations | 15 / 25 (60 %) |
+| campus | 22 / 28 (79 %) |
+
+- Un contrôle qui rejette 4 photos sur 5 ne discrimine plus rien, et c’est
+  probablement pourquoi ses sorties n’étaient pas suivies même avant la panne.
+- **Faux positif documenté** : « Bishop's University campus 2011 » signalée
+  `religious_architecture` à cause d’un clocheton de toit sur un pavillon
+  académique de 1891 — décision humaine : conservée.
+- Deuxième bug corrigé au passage : `score()` prenait les dimensions de la
+  **vignette téléchargée** pour la résolution native, ce qui rejetait les 127
+  photos en `low_resolution`, y compris des images 3648×2736. Il lit désormais
+  `width` / `height` de la banque, et signale `SOFT:native_size_unknown` quand
+  ils manquent.
+- **Ne pas solder en baissant les seuils au jugé.** La bonne voie est un lot de
+  photos étiquetées à la main, servant de référence pour régler chaque seuil.
+- Rappel : la détection de **visages** n’existe pas et n’est pas au programme —
+  « pas de personnes reconnaissables » reste une revue humaine.
 
 **D12 à D14 — origine et mesures (2026-07-26, audit externe Perplexity).**
 

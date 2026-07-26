@@ -283,6 +283,14 @@ async function main() {
     ['Quebec masthead university bank', `node scripts/maintain-quebec-backgrounds.js --profile universities ${flag}`.trim()],
     ['Quebec pomo landscape bank', `node scripts/maintain-quebec-backgrounds.js --profile pomo ${flag}`.trim()],
     ['Quebec nations/Inuit bank (shared)', `node scripts/maintain-quebec-backgrounds.js --profile nations ${flag}`.trim()],
+    // Audit pixel des banques — le seul contrôle qui REGARDE les images.
+    // Les étapes ci-dessus ne filtrent que sur le titre, la résolution et le
+    // ratio : une église intitulée « Vieux-Québec en hiver » leur échappe.
+    // Rapport seulement (jamais bloquant) : les seuils sur-déclenchent encore
+    // (54 à 79 % de rejets sur des banques curées, mesuré le 2026-07-26), donc
+    // on publie le constat sans purger automatiquement. Voir docs/maintenance.md.
+    // ~3 min pour 127 vignettes de 900 px — acceptable en hebdomadaire, pas par push.
+    ['Quebec photo bank pixel audit (report)', 'python3 scripts/audit-quebec-backgrounds.py --width 900 --delay 0.5 || true'],
     ['Social feed', `node scripts/fetch-social.js ${flag}`.trim()],
     ['RSS export', `node scripts/generate-feed.js ${flag}`.trim()],
   ];

@@ -122,6 +122,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:McGill_University_Montr%C3%A9al.jpeg",
     license: "CC BY-SA 4.0",
     title: "McGill University, Montréal",
+    width: 1862,
+    height: 1162,
     campus: true,
   },
   {
@@ -217,16 +219,6 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     campus: true,
   },
   {
-    url: "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG",
-    credit: "Thomas1313",
-    link: "https://commons.wikimedia.org/wiki/File:Loyola_College_Building_15.JPG",
-    license: "CC BY-SA 3.0",
-    title: "Loyola College Building, Concordia University",
-    width: 3648,
-    height: 2736,
-    campus: true,
-  },
-  {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_Mackay_Street%2C_Montreal.JPG",
     credit: "Thomas1313",
     link: "https://commons.wikimedia.org/wiki/File:2135-2149_Mackay_Street,_Montreal.JPG",
@@ -263,14 +255,8 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Bishop%27s_University_campus_2011.jpg",
     license: "CC BY 3.0",
     title: "Bishop's University campus 2011",
-    campus: true,
-  },
-  {
-    url: "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg",
-    credit: "Balcer",
-    link: "https://commons.wikimedia.org/wiki/File:Bishop%27s_University_McGreer_Hall.jpg",
-    license: "CC BY 3.0",
-    title: "Bishop's University McGreer Hall",
+    width: 3846,
+    height: 2884,
     campus: true,
   },
   {
