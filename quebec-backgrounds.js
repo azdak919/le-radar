@@ -2010,12 +2010,50 @@
     const layer = document.getElementById("bg-photo-layer");
     if (!layer) return;
     const { position, focalY } = resolveBackgroundPosition(img || null, bg);
-    layer.style.backgroundImage = `url("${url}")`;
-    layer.style.backgroundSize = "cover";
-    layer.style.backgroundRepeat = "no-repeat";
-    layer.style.backgroundPosition = position;
-    layer.dataset.bgId = _rotator ? _rotator.photoId(bg) : String(bg.url || "");
-    layer.dataset.bgUrl = String(bg.url || "");
+    const paint = (target) => {
+      target.style.backgroundImage = `url("${url}")`;
+      target.style.backgroundSize = "cover";
+      target.style.backgroundRepeat = "no-repeat";
+      target.style.backgroundPosition = position;
+    };
+    const commit = () => {
+      paint(layer);
+      layer.dataset.bgId = _rotator ? _rotator.photoId(bg) : String(bg.url || "");
+      layer.dataset.bgUrl = String(bg.url || "");
+      layer.classList.add("loaded");
+      _renderCredit(bg);
+      if (_rotator) _rotator.record(bg);
+      else _recordRecent(0);
+    };
+    const shouldCrossfade =
+      layer.classList.contains("loaded") &&
+      layer.dataset.bgUrl &&
+      layer.dataset.bgUrl !== String(bg.url || "") &&
+      !window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+
+    if (!shouldCrossfade) {
+      commit();
+    } else {
+      // La couche d'origine ne bouge pas ; la nouvelle se fond simplement
+      // par-dessus, puis devient la couche persistante à la fin du fondu.
+      document.querySelector(".bg-photo-transition")?.remove();
+      const incoming = document.createElement("div");
+      incoming.className = "bg-photo-transition";
+      paint(incoming);
+      layer.parentElement?.insertBefore(incoming, layer.nextSibling);
+      let settled = false;
+      const settle = () => {
+        if (settled) return;
+        settled = true;
+        commit();
+        incoming.remove();
+      };
+      incoming.addEventListener("transitionend", (event) => {
+        if (event.propertyName === "opacity") settle();
+      }, { once: true });
+      requestAnimationFrame(() => incoming.classList.add("is-visible"));
+      window.setTimeout(settle, 560);
+    }
     if (typeof console !== "undefined" && console.info) {
       console.info(
         "[bg] paint",
@@ -2025,10 +2063,6 @@
         focalY != null ? `focalY=${focalY}` : ""
       );
     }
-    requestAnimationFrame(() => layer.classList.add("loaded"));
-    _renderCredit(bg);
-    if (_rotator) _rotator.record(bg);
-    else _recordRecent(0);
   }
 
   function _applyBackground(bg, items) {

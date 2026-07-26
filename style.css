@@ -86,9 +86,22 @@ body {
   background-position: center center;
   background-repeat: no-repeat;
   opacity: 0;
-  transition: opacity 1600ms ease-out, background-position 400ms ease;
+  /* La photo ne panote jamais lors d'un changement : seul son fondu initial. */
+  transition: opacity 500ms ease-out;
 }
 #bg-photo-layer.loaded { opacity: 1; }
+/* Calque temporaire posé au-dessus de l'ancienne photo pendant le shuffle. */
+.bg-photo-transition {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 480ms ease;
+}
+.bg-photo-transition.is-visible { opacity: 1; }
 
 /*
  * Voile photo minimal : pas de « film sombre » derrière LE RADAR.
@@ -253,6 +266,7 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   #bg-photo-layer,
+  .bg-photo-transition,
   .bg-photo-scrim,
   .bg-photo-credit { transition: none; }
 }
