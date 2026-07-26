@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-26T04:59:35.666Z",
+  "updatedAt": "2026-07-26T07:42:48.925Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T04:59:09.728Z"
+      "checkedAt": "2026-07-26T07:42:25.838Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les criquets crinqués (reprise)",
-        "source": "api-live",
-        "start": "20:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "les-criquets-crinques"
-      },
-      "next": {
         "title": "Mix anglo",
         "source": "api-live",
         "start": "22:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/365073.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "mix-anglo"
       },
+      "next": {
+        "title": "Rythmologie (reprise)",
+        "source": "api-live",
+        "start": "00:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364989.mp3",
+        "slug": "rythmologie"
+      },
       "track": "",
-      "showTitle": "Les criquets crinqués (reprise)",
+      "showTitle": "Mix anglo",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,33 +51,32 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-26T04:59:11.400Z"
+      "checkedAt": "2026-07-26T07:42:27.934Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "stereOphobic",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "Utopia&#039;s Paradise",
         "source": "api-live",
         "start": "02:00",
         "end": "06:00"
       },
-      "track": "",
-      "showTitle": "stereOphobic",
+      "next": {
+        "title": "Mind, Soul, &amp; Spirit",
+        "source": "api-live",
+        "start": "06:00",
+        "end": "09:00"
+      },
+      "track": "Utopia",
+      "showTitle": "Utopia&#039;s Paradise",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T04:59:14.469Z"
+      "checkedAt": "2026-07-26T07:42:31.124Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -104,7 +103,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T04:59:28.516Z"
+      "checkedAt": "2026-07-26T07:42:44.912Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T04:59:29.250Z"
+      "checkedAt": "2026-07-26T07:42:45.555Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +141,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Sandrine Masse - Les soufflees",
+      "track": "Julie Aubé - Preneur",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -153,7 +152,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-26T04:59:35.316Z"
+      "checkedAt": "2026-07-26T07:42:48.574Z"
     }
   }
 }
