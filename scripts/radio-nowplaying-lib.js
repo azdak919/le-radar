@@ -32,6 +32,7 @@ const {
   hhmm,
 } = require('./radio-schedule-lib');
 const { decodeHtmlEntities } = require('./html-entities-lib');
+const { stripProductionNote } = require('./radio-schedule-lib');
 
 const DEFAULT_TIMEOUT = 12000;
 // « Offline » n'est pas un titre : c'est ce qu'Airtime émet quand la relève
@@ -57,6 +58,16 @@ function normKey(text = '') {
  * deux alignés.
  */
 function normalizeShowTitle(raw = '') {
+  return stripProductionNote(cleanShowTitle(raw));
+}
+
+/**
+ * Retrait des consignes internes : la même API Airtime annonce « Desi Beats
+ * (must be .mp3!!) », une note à l'animateur qui n'a rien à faire à l'écran.
+ * Le filtre existait pour la grille hebdomadaire (`normalizeSlot`) mais pas
+ * pour le flux en direct, d'où la note qui réapparaissait dans « À venir ».
+ */
+function cleanShowTitle(raw = '') {
   return decodeHtmlEntities(String(raw || ''))
     .replace(/\u0000/g, '')
     .replace(/\s+/g, ' ')

@@ -16,7 +16,12 @@ import { expect, test } from '@playwright/test';
  */
 
 async function labels(page) {
-  await page.goto('/', { waitUntil: 'load' });
+  // `domcontentloaded` et non `load` : les scripts sont en `defer`, donc déjà
+  // exécutés, alors que `load` attendrait en plus la photo Wikimedia du mât et
+  // le script umami — deux ressources externes qui font dépasser les 30 s sous
+  // un runner chargé. Le `waitForFunction` ci-dessous est le vrai point
+  // d'attente : il porte sur l'état observable, pas sur un évènement réseau.
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => window.RadarTranslate?._labels);
   return page;
 }

@@ -9,9 +9,11 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 - La ligne d’antenne défile désormais sur une **liste de phases** — émission en cours → à venir → piste → slogan — au lieu d’alterner entre deux seules lignes. « À venir » était jusqu’ici inaccessible dès qu’une émission était en ondes ; le slogan revenait une fois sur deux.
 - Libellé « À l’antenne · » sur la ligne compacte du poste syntonisé, là où le panneau latéral est masqué.
+- Au repos, la ligne d’aperçu suit un ordre explicite — **poste + bande de diffusion (FM, AM ou Web) → à l’antenne / à venir → émission → horaire → établissement en acronyme**.
+- L’émission en ondes reste affichée deux fois plus longtemps que la piste, le « à venir » ou le slogan.
+- Règle générale : **un texte qui défile n’est jamais remplacé avant la fin de son aller-retour**. Elle ne s’appliquait qu’au dial sous 1100 px ; elle vaut maintenant à toute largeur et sur le panneau « À l’antenne », qui tournait à 8 s fixes.
 - Rapport de couverture des grilles (`fetch-radio-schedules.js`) et planchers par station dans `data-integrity`.
 - Garde-fou anti-effondrement : une grille qui perd plus de 40 % de ses créneaux est refusée au profit de la précédente (`--force` pour outrepasser).
-
 - Page `/horaires/` (et `/en/schedules/`) réunissant les grilles horaires de toutes les stations, liée depuis le pied de page et depuis le fil d’Ariane des fiches radio.
 - Les fiches radio affichent désormais la grille hebdomadaire **complète** avec les plages `début – fin` ; « À l’antenne » y renvoie directement via l’ancre `#horaire`.
 
@@ -26,6 +28,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 - Défilement horizontal moins flou : décalage arrondi au pixel entier et suppression des promotions de couche GPU redondantes (`translateZ(0)`, `backface-visibility`) qui figeaient la rastérisation du texte.
 - Grille horaire ordonnée lundi → dimanche : la semaine occupe la première rangée, le week-end la seconde.
 - La CI publie enfin le dossier `horaires/` (absent des six workflows).
+- Quality Gate : 7 tests dépassaient les 30 s sur `page.goto('/', { waitUntil: 'load' })`. Mesuré — `domcontentloaded` à 412 ms, `load` à 1 404 ms, avec **35 requêtes externes** bloquantes (Google Fonts, umami, la photo Wikimedia du mât). Les tests qui n'ont besoin d'aucune de ces ressources attendent désormais `domcontentloaded` ; le serveur de test passe en `ThreadingHTTPServer`.
+- Les consignes internes des stations (« Desi Beats (must be .mp3!!) ») étaient filtrées dans la grille hebdomadaire mais pas dans le flux en direct, d'où leur retour dans « À venir ».
 
 ## [1.0.0] — 2026-07-23
 
