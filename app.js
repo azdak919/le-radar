@@ -884,7 +884,7 @@ function renderTodayDate() {
     TODAY_TIME.dateTime = now.toTimeString().slice(0, 5);
     TODAY_TIME.textContent = now.toLocaleTimeString('fr-CA', {
       hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
-    });
+    }).replace(/\s*h\s*/u, ':');
   }
 }
 
