@@ -293,13 +293,18 @@ const ORIGINAL_ENGLISH_SCHEDULES = new Set(['cjlo', 'ckut']);
 function nowAirSchedulePath(radio) {
   if (!radio?.id) return null;
   const prefix = ORIGINAL_ENGLISH_SCHEDULES.has(radio.id) ? 'en/' : '';
-  return `${prefix}radios/${encodeURIComponent(radio.id)}/`;
+  // Chemin absolu : le même contrôle est aussi rendu dans tuner-embed.html.
+  return `/${prefix}radios/${encodeURIComponent(radio.id)}/`;
 }
 
 function openNowAirSchedule() {
   const radio = currentStation || (isNowAirPanelPreviewMode() ? nowAirPreviewRadio : null);
   const path = nowAirSchedulePath(radio);
-  if (path) location.assign(path);
+  if (!path) return;
+
+  // Dans Pomo et Solitaire, ne pas charger la page horaire dans la minuscule
+  // iframe du syntoniseur : la navigation doit remplacer l'application hôte.
+  (IS_TUNER_EMBED ? window.top : window).location.assign(path);
 }
 
 TUNER_NOWAIR?.addEventListener('click', openNowAirSchedule);
