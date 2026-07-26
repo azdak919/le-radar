@@ -240,21 +240,11 @@ body {
   /* Quand la photo n’est pas chargée, rester invisible (opacity 0). */
   #bg-photo-layer.loaded ~ .bg-photo-credit { opacity: 0.9; }
 
-  /*
-   * Photo chargée : réserver une bande basse pour la ligne de crédit
-   * afin qu’elle ne clippe pas le slogan (wordmark-full).
-   */
-  .masthead:has(#bg-photo-layer.loaded) .masthead-inner {
-    /* Laisse seulement la hauteur du crédit et un petit interligne : suffisant
-       en paysage sans créer une grande zone vide sous le slogan. */
-    padding-bottom: 1.25rem;
-  }
+  /* Le crédit demeure ancré au bas du mât. On remonte le bloc logo/slogan
+     plutôt que d'ajouter une bande sous lui : la radio reste donc collée au
+     bas de la photo et le crédit ne recouvre plus le slogan. */
   .masthead:has(#bg-photo-layer.loaded) .masthead-brand {
-    padding-bottom: 0.15rem;
-  }
-  .masthead:has(#bg-photo-layer.loaded) .wordmark-full {
-    margin-bottom: 0.15rem;
-    padding-bottom: 0.1rem;
+    transform: translateY(-1rem);
   }
 }
 @media (max-width: 360px) {
@@ -262,8 +252,8 @@ body {
     font-size: 8.5px;
     max-width: calc(100% - 16px);
   }
-  .masthead:has(#bg-photo-layer.loaded) .masthead-inner {
-    padding-bottom: 0.7rem;
+  .masthead:has(#bg-photo-layer.loaded) .masthead-brand {
+    transform: translateY(-0.8rem);
   }
 }
 @media (prefers-reduced-motion: reduce) {
