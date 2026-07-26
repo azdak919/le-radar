@@ -257,9 +257,11 @@
       pointer-events: none;
     }
     .game-bar {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas:
+        "title controls"
+        "stats stats";
       align-items: center;
       gap: 0.35rem 0.75rem;
       padding: 0.55rem 0.9rem;
@@ -278,14 +280,20 @@
       letter-spacing: 0.02em;
       font-size: 0.75rem;
       min-width: 0;
+      grid-area: title;
     }
     .game-stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.15rem 0.85rem;
+      grid-area: stats;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.25rem 0.5rem;
       font-variant-numeric: tabular-nums;
     }
+    .game-stats > span { white-space: nowrap; }
     .game-stats b {
+      display: inline-block;
+      min-width: 4ch;
+      text-align: right;
       color: var(--ink);
       font-weight: 600;
       font-size: 0.8rem;
@@ -325,7 +333,7 @@
       box-shadow: 0 3px 10px rgba(200,16,46,.28);
     }
     .game-audio--play:hover:not(:disabled) { background: #df1d3e; color: #fff; }
-    .game-audio-controls { display: flex; align-items: center; gap: .35rem; }
+    .game-audio-controls { grid-area: controls; display: flex; align-items: center; gap: .35rem; }
     .game-volume { position: relative; }
     .game-volume-popover {
       position: absolute;
@@ -528,6 +536,9 @@
 
     @media (min-width: 540px) {
       .game-bar { padding: 0.6rem 1rem; }
+    }
+    @media (max-width: 430px) {
+      .game-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (prefers-reduced-motion: reduce) {
       .status-kicker::before,
