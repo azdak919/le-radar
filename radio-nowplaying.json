@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-26T21:32:14.107Z",
+  "updatedAt": "2026-07-26T23:00:00.822Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -27,27 +27,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T21:32:00.092Z"
+      "checkedAt": "2026-07-26T22:59:43.996Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Basses fréquences",
-        "source": "api-live",
-        "start": "12:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "basses-frequences"
-      },
-      "next": {
         "title": "Le char de marge",
         "source": "api-live",
         "start": "14:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364713.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "le-char-de-marge"
       },
+      "next": {
+        "title": "Vibrance",
+        "source": "api-live",
+        "start": "16:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364717.mp3",
+        "slug": "vibrance"
+      },
       "track": "",
-      "showTitle": "Basses fréquences",
+      "showTitle": "Le char de marge",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-26T21:32:02.009Z"
+      "checkedAt": "2026-07-26T22:59:46.192Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Bhum Bhum Time",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Desi Beats",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Bluegrass Rambling",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "Bhum Bhum Time",
+      "showTitle": "Desi Beats",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T21:32:05.772Z"
+      "checkedAt": "2026-07-26T22:59:49.307Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Grade A Explosives",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/grade-a-explosives"
-      },
-      "next": {
         "title": "Bill's Country & Western Favou...",
         "source": "schedule",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
       },
+      "next": {
+        "title": "No Boundaries",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/no-boundaries"
+      },
       "track": "",
-      "showTitle": "Grade A Explosives",
+      "showTitle": "Bill's Country & Western Favou...",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T21:32:07.115Z"
+      "checkedAt": "2026-07-26T22:59:51.151Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,18 +135,12 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T21:32:08.112Z"
+      "checkedAt": "2026-07-26T22:59:51.706Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Mutations",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00",
-        "slug": "mutations"
-      },
+      "current": null,
       "next": {
         "title": "Les rois de l'arène",
         "source": "api-live",
@@ -154,8 +148,8 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Brutalismus 3000 - Leonard Cohen",
-      "showTitle": "Mutations",
+      "track": "Dolphin Hyperspace - My Big Break feat. Louis Cole",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -165,7 +159,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-26T21:32:13.756Z"
+      "checkedAt": "2026-07-26T23:00:00.472Z"
     }
   }
 }
