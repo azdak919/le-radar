@@ -136,6 +136,44 @@ const HARD_BANNED = [
     reason: 'community_entrance_sign',
     note: 'Purge 2026-07-25 nations — enseigne bleue + logo tipi sous LE RADAR ; 4/5 restent',
   },
+  {
+    // Gros plan d’un bas-relief sur mur de brique : ni paysage ni campus.
+    // Le ratio (1,333) passait le seuil 1,25 et « close-up » n’est pas dans le
+    // titre — seul un regard sur l’image le révèle.
+    // Audit pixel : busy_low_chroma_facade + competing_logo_zone + low_landscape.
+    fragments: [
+      'Loyola_College_Building_15',
+      'File:Loyola_College_Building_15.JPG',
+    ],
+    reason: 'closeup_wall_relief',
+    note: 'Purge 2026-07-26 campus — inutilisable en bandeau ; Concordia garde Hall Building',
+  },
+  {
+    // Visages nettement identifiables au premier plan (groupe en habits de
+    // noce). La politique en tête de banque dit « pas de personnes
+    // reconnaissables » : ce motif suffit, sans avoir à trancher sur le
+    // néogothique de la tour. Entrée par ailleurs sans width/height.
+    fragments: [
+      "Bishop's_University_McGreer_Hall",
+      'Bishop%27s_University_McGreer_Hall',
+      'Bishop_s_University_McGreer_Hall',
+    ],
+    reason: 'recognizable_people',
+    note: 'Purge 2026-07-26 campus — décision humaine ; Bishop\'s garde campus 2011 si recadré',
+  },
+  {
+    // Rue commerçante : enseignes de boutiques, poteaux électriques, chaussée
+    // au premier plan. La regex négative connaît « enseigne » et « signage »
+    // mais ne lit que le titre, ici réduit au toponyme.
+    // Audit pixel : competing_logo_zone.
+    fragments: [
+      'commons/5/5d/Wendake-Qu',
+      'File:Wendake-Québec.JPG',
+      'File:Wendake-Quebec.JPG',
+    ],
+    reason: 'commercial_street_signage',
+    note: 'Purge 2026-07-26 nations — pas un paysage ; Wendake reste éligible via une autre vue',
+  },
 ];
 
 /**

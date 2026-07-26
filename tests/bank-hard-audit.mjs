@@ -164,6 +164,48 @@ for (const spec of BANK_SPECS) {
   );
 }
 
+// ── Anti-rechute : une banque vide doit être une erreur, pas un silence ────
+//
+// L'audit pixel (scripts/audit-quebec-backgrounds.py) est resté cassé des
+// semaines parce qu'il lisait le miroir JS à la regex : l'ajout de width/height
+// après title a fait qu'il ne trouvait plus aucune entrée, sortait sur
+// « Aucune entrée trouvée » et passait pour un contrôle propre. Ce test est
+// celui qui l'aurait attrapé.
+for (const spec of BANK_SPECS) {
+  const data = readJson(spec.jsonRel);
+  const entries = Array.isArray(data)
+    ? data
+    : Object.values(data).find(Array.isArray) || [];
+  assert.ok(
+    entries.length > 0,
+    `${spec.id}: banque vide ou format illisible (${spec.jsonRel}) — un audit qui ne trouve rien doit échouer bruyamment`
+  );
+}
+
+// ── Dimensions natives renseignées ─────────────────────────────────────────
+//
+// Sans width/height, une entrée contourne le contrôle de résolution : c'était
+// le cas de « Bishop's University McGreer Hall », entrée en banque sans jamais
+// être mesurée. L'audit pixel ne peut pas conclure non plus — il ne voit que la
+// vignette qu'il a téléchargée.
+const missingDims = [];
+for (const spec of BANK_SPECS) {
+  const data = readJson(spec.jsonRel);
+  const entries = Array.isArray(data)
+    ? data
+    : Object.values(data).find(Array.isArray) || [];
+  for (const e of entries) {
+    if (!Number.isFinite(e?.width) || !Number.isFinite(e?.height)) {
+      missingDims.push(`${spec.id}: ${e?.title || e?.url || '(sans titre)'}`);
+    }
+  }
+}
+assert.equal(
+  missingDims.length,
+  0,
+  `dimensions natives manquantes (${missingDims.length}) — contourne le seuil de résolution :\n  ${missingDims.join('\n  ')}`
+);
+
 console.log(
-  `OK bank-hard-audit (${total} photos, 0 HARD, ${BANK_SPECS.length} banques)`
+  `OK bank-hard-audit (${total} photos, 0 HARD, ${BANK_SPECS.length} banques, dimensions complètes)`
 );
