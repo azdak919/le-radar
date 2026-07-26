@@ -26,6 +26,13 @@ test('le panneau À l’antenne reste bleu lorsque le synthétiseur est arrêté
   expect(colors.idle).not.toBe(colors.playing);
 });
 
+test('À l’antenne ouvre l’horaire du poste sélectionné', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.locator('#tuner-select').selectOption('chyz');
+  await page.locator('#tuner-nowair').click();
+  await expect(page).toHaveURL(/\/radios\/chyz\/$/);
+});
+
 test('l’iframe alterne les postes affichés lorsque la radio est arrêtée', async ({ page }) => {
   await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
   const tuner = page.locator('#radar-embed').contentFrame();

@@ -74,7 +74,7 @@ test('maintenance : aperçu local, retour en ligne et easter egg persistant', as
   await expect(page).toHaveURL(/offline\.html\?easter-egg=1/);
   await page.waitForTimeout(1300);
   await expect(page).toHaveURL(/offline\.html\?easter-egg=1/);
-  await expect(page.locator('#reconnect')).toContainText('Aperçu local');
+  await expect(page.locator('#reconnect')).toContainText('Mode easter egg');
   expect(pageErrors).toEqual([]);
 });
 
