@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-07-26T19:14:17.085Z",
+  "updatedAt": "2026-07-26T20:29:58.503Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Radio Futura",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "16:00",
-        "url": "https://chyz.ca/emission/radio-futura/"
-      },
+      "current": null,
       "next": {
         "title": "Capitales de Québec",
         "source": "schedule",
@@ -20,34 +14,34 @@
         "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
       "track": "",
-      "showTitle": "Radio Futura",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T19:14:08.339Z"
+      "checkedAt": "2026-07-26T20:29:42.542Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Yallah lâcher prise",
-        "source": "api-live",
-        "start": "11:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "yallah-lacher-prise-avec-rhabibiii"
-      },
-      "next": {
         "title": "Basses fréquences",
         "source": "api-live",
         "start": "12:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364705.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "basses-frequences"
       },
+      "next": {
+        "title": "Le char de marge",
+        "source": "api-live",
+        "start": "14:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364713.mp3",
+        "slug": "le-char-de-marge"
+      },
       "track": "",
-      "showTitle": "Yallah lâcher prise",
+      "showTitle": "Basses fréquences",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-26T19:14:10.344Z"
+      "checkedAt": "2026-07-26T20:29:44.753Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Magic Roundabout",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "16:00"
-      },
-      "next": {
         "title": "Bhum Bhum Time",
         "source": "api-live",
         "start": "16:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Desi Beats (must be .mp3!!)",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "The Magic Roundabout",
+      "showTitle": "Bhum Bhum Time",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T19:14:12.693Z"
+      "checkedAt": "2026-07-26T20:29:48.276Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "next": {
         "title": "Grade A Explosives",
         "source": "schedule",
         "start": "16:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/grade-a-explosives"
       },
+      "next": {
+        "title": "Bill's Country & Western Favou...",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
+      },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "Grade A Explosives",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T19:14:14.020Z"
+      "checkedAt": "2026-07-26T20:29:50.229Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,18 +129,12 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T19:14:14.826Z"
+      "checkedAt": "2026-07-26T20:29:50.708Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Pôle hip-hop",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "https://www.choq.ca/emissions/pole-hip-hop"
-      },
+      "current": null,
       "next": {
         "title": "Mutations",
         "source": "api-live",
@@ -154,19 +142,18 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Edward Skeletrix - Turn Off The Lights",
-      "showTitle": "Pôle hip-hop",
+      "track": "Irène Schrader - Eclipse",
+      "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-26T19:14:16.734Z"
+      "checkedAt": "2026-07-26T20:29:58.153Z"
     }
   }
 }
