@@ -65,7 +65,12 @@ test('maintenance : aperçu local, retour en ligne et easter egg persistant', as
     body: '<!doctype html><main id="bg-photo-layer">Le fil étudiant</main>',
   }));
   await page.goto('/offline.html?live=1', { waitUntil: 'domcontentloaded' });
-  await page.waitForURL((url) => url.pathname === '/', { timeout: 4000 });
+  // Seule la redirection compte ici : attendre l'événement « load » de l'accueil
+  // (défaut de waitForURL) dépend de tout le fil étudiant et de ses images.
+  await page.waitForURL((url) => url.pathname === '/', {
+    timeout: 4000,
+    waitUntil: 'domcontentloaded',
+  });
   await page.unroute(/\/index\.html\?_probe=/);
 
   // L'easter egg est volontairement persistant, même si l'accueil est disponible.

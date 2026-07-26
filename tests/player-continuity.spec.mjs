@@ -53,8 +53,11 @@ test('le bouton annule une connexion audio en attente', async ({ page }) => {
   await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
   const tuner = page.locator('#radar-embed').contentFrame();
   await tuner.locator('#tuner-select').selectOption({ index: 1 });
-  await tuner.locator('html').evaluate(() => {
-    const player = document.querySelector('#radar-player');
+  // Cibler l'élément plutôt que <html> : l'iframe démarre sur about:blank et
+  // pomo/js/app.js ne pose son src que dans un requestIdleCallback. Un locator
+  // sur #radar-player attend le vrai document ; locator('html') se résout tout
+  // de suite sur about:blank, où l'audio n'existe pas encore.
+  await tuner.locator('#radar-player').evaluate((player) => {
     player.dispatchEvent(new Event('waiting'));
   });
 
@@ -76,8 +79,8 @@ test('une page suiveuse n’affiche pas un buffering tardif après navigation', 
   });
   await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
   const tuner = page.locator('#radar-embed').contentFrame();
-  await tuner.locator('html').evaluate(() => {
-    document.querySelector('#radar-player').dispatchEvent(new Event('waiting'));
+  await tuner.locator('#radar-player').evaluate((player) => {
+    player.dispatchEvent(new Event('waiting'));
   });
   await expect(tuner.locator('#tuner-play')).not.toHaveClass(/is-buffering/);
 });
