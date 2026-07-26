@@ -129,6 +129,7 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 | D8 | **Détection d’arche/silhouette dans `computeBestFocalY`** (crop mât) | Le détecteur actuel vise le « trou » (Rocher Percé) ; élargir touche **tous** les crops auto — override `focalY` en banque suffit au cas par cas | 2–3 photos réelles où l’ancre arche rate, avec focalY auto vs override notés ; harnais de rendu multi-AR pour non-régression | S–M | open |
 | D9 | **Tests navigateur instables** (`player-continuity`, attentes réseau) | Le syntoniseur garde des connexions ouvertes en permanence et l’audio headless n’est pas déterministe : rendre ces tests fiables demande de réécrire les attentes, pas de rallonger les délais | Un run vert 10× d’affilée en local **et** en CI après passage à des attentes sur l’état observable ; aucun flake sur 2 semaines | S–M | open |
 | D10 | **Connaissance des établissements éclatée en 4 tables** | Chaque copie répond à un besoin distinct (affichage court, libellés RSS, localisation, pages d’entités) ; les unifier touche 4 zones d’un coup, dont le monolithe `app.js` | Une divergence réelle qui casse quelque chose — le doublon « College » du 2026-07-25 en est une ; commencer par la table de traduction, la plus autonome | M | open |
+| D11 | **Déclaration du site aux consoles de recherche** (Search Console, Bing, IndexNow) | Aucun agent ne peut le faire : ça demande les comptes Google / Microsoft / Cloudflare de l’humain. Le travail technique est livré et en ligne ; il ne reste que les clics | Rien à attendre — à faire dès que possible : sans soumission du sitemap, les 71 URL neuves mettent bien plus longtemps à être découvertes | S | blocked |
 
 **D7 — précisions (option 3, pas 1 ni 2) :**
 
@@ -155,6 +156,28 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
   `data/quebec-nations-backgrounds.json`. Le même mécanisme sert déjà pour le tipi Gesgapegiag (0.28).
 - **Avant de solder** : rendre la photo à AR 14 / 10.7 / 7.57 / 3.8 / 2.16 avant/après, et vérifier
   qu’aucun crop existant à override ne régresse (`rowArch` sert aussi au bonus de score, pas qu’à l’ancre).
+
+**D11 — le chemin exact (2026-07-25) :**
+
+Bloquée sur les comptes de l’humain, pas sur du code. Statut `blocked` et non
+`open` : aucun agent ne peut la solder.
+
+1. **Google Search Console** — [search.google.com/search-console](https://search.google.com/search-console)
+   → *Ajouter une propriété* → type **Domaine** (et non « Préfixe d’URL » : le
+   type Domaine couvre https, http et tous les sous-domaines d’un coup) →
+   `le-radar.ca`. Google demande un enregistrement **TXT** : l’ajouter dans
+   Cloudflare (DNS → Add record → TXT). Puis *Sitemaps* → soumettre
+   `sitemap.xml`.
+2. **Bing Webmaster Tools** — [bing.com/webmasters](https://www.bing.com/webmasters)
+   → *Import from GSC* une fois l’étape 1 faite. Pas redondant : Bing alimente
+   aussi ChatGPT Search.
+3. **IndexNow** — tableau de bord Cloudflare → `le-radar.ca` →
+   **Caching → Configuration → Crawler Hints** → activer. Utile vu que les bots
+   publient plusieurs fois par jour.
+
+Ensuite : ne rien attendre avant **4 à 6 semaines**. 71 URL neuves sur un
+domaine sans historique, ça prend ce temps-là. Quoi mesurer et comment repérer
+qu’on attire le mauvais public : [`docs/referencement-suivi.md`](docs/referencement-suivi.md).
 
 **D9 — mécanisme identifié (2026-07-25, fin de session) : la parallélisation.**
 
