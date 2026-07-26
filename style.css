@@ -245,9 +245,9 @@ body {
    * afin qu’elle ne clippe pas le slogan (wordmark-full).
    */
   .masthead:has(#bg-photo-layer.loaded) .masthead-inner {
-    /* Une bande basse complète : en paysage le slogan peut tenir sur deux
-       lignes, donc 12 px ne suffisaient pas à dégager le crédit. */
-    padding-bottom: 1.75rem;
+    /* Laisse seulement la hauteur du crédit et un petit interligne : suffisant
+       en paysage sans créer une grande zone vide sous le slogan. */
+    padding-bottom: 1.25rem;
   }
   .masthead:has(#bg-photo-layer.loaded) .masthead-brand {
     padding-bottom: 0.15rem;
