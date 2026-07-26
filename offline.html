@@ -304,15 +304,57 @@
       color: var(--ink-soft);
       background: rgba(255,255,255,.03);
       cursor: pointer;
+      transition: color 120ms ease, background 120ms ease, border-color 120ms ease, transform 120ms ease;
     }
+    .game-audio:hover:not(:disabled) {
+      color: var(--ink);
+      background: rgba(255,255,255,.1);
+    }
+    .game-audio:active:not(:disabled) { transform: scale(.93); }
+    .game-audio:disabled { opacity: .38; cursor: not-allowed; }
     .game-audio svg { width: 14px; height: 14px; }
-    .game-audio .icon-muted { display: none; }
-    .game-audio[aria-pressed="false"] {
-      color: var(--muted);
-      background: rgba(255,255,255,.08);
+    .game-audio .icon-muted, .game-audio .icon-stop { display: none; }
+    .game-audio[aria-pressed="true"] .icon-playing { display: none; }
+    .game-audio[aria-pressed="true"] .icon-muted,
+    .game-audio[aria-pressed="true"] .icon-stop { display: block; }
+    .game-audio--play {
+      color: #fff;
+      border-color: rgba(255, 105, 100, .82);
+      background: #c8102e;
+      box-shadow: 0 3px 10px rgba(200,16,46,.28);
     }
-    .game-audio[aria-pressed="false"] .icon-playing { display: none; }
-    .game-audio[aria-pressed="false"] .icon-muted { display: block; }
+    .game-audio--play:hover:not(:disabled) { background: #df1d3e; color: #fff; }
+    .game-audio-controls { display: flex; align-items: center; gap: .35rem; }
+    .game-volume { position: relative; }
+    .game-volume-popover {
+      position: absolute;
+      z-index: 4;
+      top: calc(100% + .45rem);
+      right: 0;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      width: 174px;
+      padding: .55rem .6rem;
+      border: 1px solid var(--rule-strong);
+      border-radius: .55rem;
+      background: #1a1d24;
+      box-shadow: 0 10px 26px rgba(0,0,0,.42);
+    }
+    .game-volume-popover[hidden] { display: none; }
+    .game-volume-range { width: 100%; accent-color: #cf7ec1; cursor: pointer; }
+    .game-volume-mute {
+      flex: 0 0 auto;
+      width: 26px;
+      height: 26px;
+      border: 1px solid var(--rule-strong);
+      border-radius: 50%;
+      color: var(--ink-soft);
+      background: rgba(255,255,255,.04);
+      cursor: pointer;
+    }
+    .game-volume-mute[aria-pressed="true"] { color: #ff9a90; border-color: rgba(255,125,110,.72); background: rgba(255,125,110,.14); }
+    .game-volume-mute svg { width: 14px; height: 14px; vertical-align: middle; }
     canvas#game {
       display: block;
       width: 100%;
@@ -526,10 +568,24 @@
           <span><span class="stat-label">Record</span><b id="hi">0</b></span>
           <span><span class="stat-label">Record pièces</span><b id="coins-hi">0</b></span>
         </span>
-        <button id="bgm-toggle" class="game-audio" type="button" aria-label="Couper la musique" aria-pressed="true" title="Musique activée — cliquer pour couper">
-          <svg class="icon-playing" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
-          <svg class="icon-muted" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm14.59 3L21 8.59 19.59 7.17 16.17 10.59 12.76 7.17 11.34 8.59 14.76 12l-3.42 3.41 1.42 1.42L16.17 13.41l3.42 3.42L21 15.41 17.59 12z"/></svg>
-        </button>
+        <div class="game-audio-controls" aria-label="Musique du jeu">
+          <button id="bgm-play" class="game-audio game-audio--play" type="button" aria-label="Jouer la musique" aria-pressed="false" title="Jouer la musique">
+            <svg class="icon-playing" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 7h10v10H7z"/></svg>
+          </button>
+          <div class="game-volume">
+            <button id="bgm-volume-toggle" class="game-audio" type="button" aria-label="Réglages du volume" aria-expanded="false" aria-controls="bgm-volume-popover" title="Réglages du volume" disabled>
+              <svg class="icon-playing" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+              <svg class="icon-muted" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm14.59 3L21 8.59 19.59 7.17 16.17 10.59 12.76 7.17 11.34 8.59 14.76 12l-3.42 3.41 1.42 1.42L16.17 13.41l3.42 3.42L21 15.41 17.59 12z"/></svg>
+            </button>
+            <div id="bgm-volume-popover" class="game-volume-popover" hidden>
+              <input id="bgm-volume" class="game-volume-range" type="range" min="0" max="1" step="0.01" value="1" aria-label="Volume de la musique" aria-valuetext="100 %">
+              <button id="bgm-mute" class="game-volume-mute" type="button" aria-label="Couper le son" aria-pressed="false" title="Couper le son">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm7.59-3.41L9.17 7H3v6h4l5 5v-6.17l2.59 2.59 1.41-1.42L3.83 3 2.41 4.41 7 9v6h4l5 5v-6.17l1.59 1.59 1.41-1.41L12 12.83V4l-1.41 1.59z"/><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v1.99c3.01.89 5.25 3.71 5.25 7.02z"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
       <canvas
         id="game"
@@ -956,16 +1012,26 @@
 
   // Musique d'ambiance : boucle courte Web Audio avec recouvrement de 2 s.
   // Opus est privilégié là où il est lisible, MP3 reste le repli universel.
-  const bgmToggle = document.getElementById('bgm-toggle');
-  const bgm = { ctx: null, buffer: null, enabled: true, token: 0, sources: [] };
+  const bgmPlay = document.getElementById('bgm-play');
+  const bgmVolumeToggle = document.getElementById('bgm-volume-toggle');
+  const bgmVolumePopover = document.getElementById('bgm-volume-popover');
+  const bgmVolume = document.getElementById('bgm-volume');
+  const bgmMute = document.getElementById('bgm-mute');
+  const bgm = { ctx: null, master: null, buffer: null, loading: null, playing: false, muted: false, volume: 1, token: 0, sources: [] };
   const bgmAssets = [
     { path: 'assets/offline/elevator-loop.opus', type: 'audio/ogg; codecs="opus"' },
     { path: 'assets/offline/elevator-loop.mp3', type: 'audio/mpeg' },
   ];
-  function updateBgmToggle() {
-    bgmToggle.setAttribute('aria-pressed', String(bgm.enabled));
-    bgmToggle.setAttribute('aria-label', bgm.enabled ? 'Couper la musique' : 'Jouer la musique');
-    bgmToggle.title = bgm.enabled ? 'Musique activée — cliquer pour couper' : 'Musique coupée — cliquer pour jouer';
+  function updateBgmControls() {
+    bgmPlay.setAttribute('aria-pressed', String(bgm.playing));
+    bgmPlay.setAttribute('aria-label', bgm.playing ? 'Arrêter la musique' : 'Jouer la musique');
+    bgmPlay.title = bgm.playing ? 'Arrêter la musique' : 'Jouer la musique';
+    bgmVolumeToggle.disabled = !bgm.playing;
+    bgmVolumeToggle.setAttribute('aria-pressed', String(bgm.muted));
+    bgmMute.setAttribute('aria-pressed', String(bgm.muted));
+    bgmMute.setAttribute('aria-label', bgm.muted ? 'Rétablir le son' : 'Couper le son');
+    bgmMute.title = bgm.muted ? 'Rétablir le son' : 'Couper le son';
+    bgmVolume.setAttribute('aria-valuetext', `${Math.round(bgm.volume * 100)} %`);
   }
   async function loadBgmBuffer() {
     const probe = document.createElement('audio');
@@ -981,17 +1047,30 @@
     throw lastError || new Error('Audio indisponible');
   }
   async function startBgm() {
-    if (!bgm.enabled || bgm.buffer) return;
+    if (bgm.playing) return;
+    bgm.playing = true;
+    const token = ++bgm.token;
+    updateBgmControls();
     try {
-      bgm.ctx = new (window.AudioContext || window.webkitAudioContext)();
-      bgm.buffer = await loadBgmBuffer();
+      bgm.ctx ||= new (window.AudioContext || window.webkitAudioContext)();
+      if (!bgm.master) {
+        bgm.master = bgm.ctx.createGain();
+        bgm.master.connect(bgm.ctx.destination);
+      }
+      bgm.master.gain.setValueAtTime(bgm.muted ? 0 : bgm.volume, bgm.ctx.currentTime);
+      if (!bgm.buffer) {
+        bgm.loading ||= loadBgmBuffer();
+        bgm.buffer = await bgm.loading;
+      }
+      if (!bgm.playing || token !== bgm.token) return;
+      await bgm.ctx.resume();
       const play = (at) => {
-        if (!bgm.enabled || !bgm.buffer) return;
+        if (!bgm.playing || token !== bgm.token || !bgm.buffer) return;
         const source = bgm.ctx.createBufferSource();
         const gain = bgm.ctx.createGain();
         const fade = 2;
         source.buffer = bgm.buffer;
-        source.connect(gain).connect(bgm.ctx.destination);
+        source.connect(gain).connect(bgm.master);
         gain.gain.setValueAtTime(0, at);
         gain.gain.linearRampToValueAtTime(0.16, at + fade);
         gain.gain.setValueAtTime(0.16, at + bgm.buffer.duration - fade);
@@ -999,26 +1078,50 @@
         source.start(at);
         source.stop(at + bgm.buffer.duration + .05);
         bgm.sources.push(source);
+        source.addEventListener('ended', () => { bgm.sources = bgm.sources.filter((item) => item !== source); }, { once: true });
         window.setTimeout(() => play(at + bgm.buffer.duration - fade), (bgm.buffer.duration - fade) * 1000);
       };
       play(bgm.ctx.currentTime + .05);
-      await bgm.ctx.resume();
-    } catch (_) { /* autoplay refusé ou audio indisponible : bouton conservé */ }
+    } catch (_) {
+      bgm.playing = false;
+      updateBgmControls();
+    }
   }
-  function setBgm(enabled) {
-    bgm.enabled = enabled;
-    updateBgmToggle();
-    if (!enabled) {
-      bgm.sources.forEach((source) => { try { source.stop(); } catch (_) {} });
-      bgm.sources = [];
-      if (bgm.ctx) bgm.ctx.suspend();
-    } else if (bgm.ctx && bgm.buffer) {
-      bgm.ctx.resume();
-      if (!bgm.sources.length) { bgm.buffer = null; startBgm(); }
-    } else startBgm();
+  function stopBgm() {
+    bgm.playing = false;
+    bgm.token += 1;
+    bgmVolumePopover.hidden = true;
+    bgmVolumeToggle.setAttribute('aria-expanded', 'false');
+    bgm.sources.forEach((source) => { try { source.stop(); } catch (_) {} });
+    bgm.sources = [];
+    if (bgm.ctx) bgm.ctx.suspend();
+    updateBgmControls();
   }
-  bgmToggle.addEventListener('click', () => setBgm(!bgm.enabled));
-  startBgm();
+  function setBgmMuted(muted) {
+    bgm.muted = muted;
+    if (bgm.master && bgm.ctx) bgm.master.gain.setValueAtTime(muted ? 0 : bgm.volume, bgm.ctx.currentTime);
+    updateBgmControls();
+  }
+  bgmPlay.addEventListener('click', () => { if (bgm.playing) stopBgm(); else startBgm(); });
+  bgmVolumeToggle.addEventListener('click', () => {
+    const expanded = bgmVolumePopover.hidden;
+    bgmVolumePopover.hidden = !expanded;
+    bgmVolumeToggle.setAttribute('aria-expanded', String(expanded));
+  });
+  bgmMute.addEventListener('click', () => setBgmMuted(!bgm.muted));
+  bgmVolume.addEventListener('input', () => {
+    bgm.volume = Number(bgmVolume.value);
+    if (bgm.volume > 0 && bgm.muted) bgm.muted = false;
+    if (bgm.master && bgm.ctx) bgm.master.gain.setValueAtTime(bgm.muted ? 0 : bgm.volume, bgm.ctx.currentTime);
+    updateBgmControls();
+  });
+  document.addEventListener('click', (event) => {
+    if (!event.target.closest('.game-volume')) {
+      bgmVolumePopover.hidden = true;
+      bgmVolumeToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+  updateBgmControls();
 
   const W = canvas.width;
   const H = canvas.height;
