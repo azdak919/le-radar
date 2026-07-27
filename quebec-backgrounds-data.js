@@ -1,8 +1,8 @@
 /* LE RADAR — banque de photos de fond (généré)
  * Profil : masthead (paysages QC — mât)
  * Source de vérité : data/quebec-backgrounds.json
- * Régénéré par : node scripts/sync-quebec-backgrounds.js
- * (ou maintain-quebec-backgrounds.js --update --profile masthead)
+ * Régénéré par : node scripts/maintain-quebec-backgrounds.js --update --profile masthead
+ * (ou : node scripts/sync-quebec-backgrounds.js)
  * Ne pas éditer à la main — le bot de session / bank:sync écrase ce fichier.
  *
  * Consommateurs : mât page d’accueil seulement — jamais le pomo
@@ -20,9 +20,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Chutes_Waber_-_Parc_national_de_la_Mauricie,_Qu%C3%A9bec.jpg",
     license: "CC BY-SA 3.0",
     title: "Chutes Waber — Parc national de la Mauricie, Québec",
-    width: 5913,
-    height: 2996,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/d/da/Wapizagonke_Lake_in_the_Mauricie_National_Park%2C_Quebec%2C_Canada.jpg",
@@ -30,9 +27,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Wapizagonke_Lake_in_the_Mauricie_National_Park,_Quebec,_Canada.jpg",
     license: "CC BY-SA 4.0",
     title: "Lac Wapizagonke — Parc national de la Mauricie",
-    width: 5616,
-    height: 3744,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/1c/Rivi%C3%A8re_Sainte-Anne_-_Parc_national_de_la_Gasp%C3%A9sie_02.JPG",
@@ -40,9 +34,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Rivi%C3%A8re_Sainte-Anne_-_Parc_national_de_la_Gasp%C3%A9sie_02.JPG",
     license: "CC BY-SA 4.0",
     title: "Rivière Sainte-Anne — Parc national de la Gaspésie",
-    width: 3264,
-    height: 2448,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/fc/View_from_Mont_Olivine_to_the_east_PN_de_la_Gaspesie.jpg",
@@ -50,9 +41,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:View_from_Mont_Olivine_to_the_east_PN_de_la_Gaspesie.jpg",
     license: "CC BY-SA 4.0",
     title: "Vue du mont Olivine vers l’est — Gaspésie",
-    width: 3648,
-    height: 2736,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/8/82/Lac_aux_Am%C3%A9ricains_vu_du_Mont_Xalibu%2C_Parc_national_de_la_Gasp%C3%A9sie%2C_Qu%C3%A9bec%2C_Canada.jpg",
@@ -60,9 +48,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Lac_aux_Am%C3%A9ricains_vu_du_Mont_Xalibu,_Parc_national_de_la_Gasp%C3%A9sie,_Qu%C3%A9bec,_Canada.jpg",
     license: "CC BY-SA 4.0",
     title: "Lac aux Américains vu du mont Xalibu — Gaspésie",
-    width: 4032,
-    height: 3024,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/c/c6/Paysage_rural_%C3%A0_Saint-Claude_-_Normand_Lemieux.jpg",
@@ -70,9 +55,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Paysage_rural_%C3%A0_Saint-Claude_-_Normand_Lemieux.jpg",
     license: "CC BY-SA 4.0",
     title: "Paysage rural à Saint-Claude",
-    width: 3984,
-    height: 2656,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/d/d8/Bas-Saint-Laurent_2.JPG",
@@ -80,9 +62,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Bas-Saint-Laurent_2.JPG",
     license: "Public domain",
     title: "Paysage du Bas-Saint-Laurent",
-    width: 2080,
-    height: 1544,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Les_collines_escarp%C3%A9es_du_parc_du_Saguenay.jpg",
@@ -90,9 +69,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Les_collines_escarp%C3%A9es_du_parc_du_Saguenay.jpg",
     license: "CC BY-SA 4.0",
     title: "Collines escarpées du parc du Saguenay",
-    width: 4592,
-    height: 3448,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/3/3c/Paysage_hivernal%2C_Mont_Tremblant%2C_Laurentides_Qu%C3%A9bec.jpg",
@@ -100,8 +76,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Paysage%20hivernal%2C%20Mont%20Tremblant%2C%20Laurentides%20Qu%C3%A9bec.jpg",
     license: "CC BY-SA 3.0",
     title: "Paysage hivernal, Mont Tremblant, Laurentides Québec",
-    width: 1920,
-    height: 1080,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/a/ac/Adstock_%28Qu%C3%A9bec%29%2C_paysage_rural_et_minier_02.jpg",
@@ -109,8 +83,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Adstock%20(Qu%C3%A9bec)%2C%20paysage%20rural%20et%20minier%2002.jpg",
     license: "CC BY 4.0",
     title: "Adstock (Québec), paysage rural et minier 02",
-    width: 4288,
-    height: 3216,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/23/Adstock_%28Qu%C3%A9bec%29%2C_paysage_rural_et_minier_01.jpg",
@@ -118,8 +90,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Adstock%20(Qu%C3%A9bec)%2C%20paysage%20rural%20et%20minier%2001.jpg",
     license: "CC BY 4.0",
     title: "Adstock (Québec), paysage rural et minier 01",
-    width: 4288,
-    height: 3216,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Montreal_Skyline_winter_panorama_Jan_2006.jpg",
@@ -127,8 +97,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Montreal%20Skyline%20winter%20panorama%20Jan%202006.jpg",
     license: "CC BY 2.5",
     title: "Montreal Skyline winter panorama Jan 2006",
-    width: 7065,
-    height: 3689,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/7/76/Montreal_Panorama_II.jpg",
@@ -136,8 +104,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Montreal%20Panorama%20II.jpg",
     license: "CC BY-SA 2.0",
     title: "Montreal Panorama II",
-    width: 6847,
-    height: 2298,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/16/Montreal_Skyline_from_Mont_Royal.jpg",
@@ -145,8 +111,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Montreal%20Skyline%20from%20Mont%20Royal.jpg",
     license: "CC0",
     title: "Montreal Skyline from Mont Royal",
-    width: 25603,
-    height: 4755,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/8/8d/Montreal_Skyline_from_Mont_Royal_50mm.jpg",
@@ -154,8 +118,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Montreal%20Skyline%20from%20Mont%20Royal%2050mm.jpg",
     license: "CC0",
     title: "Montreal Skyline from Mont Royal 50mm",
-    width: 29780,
-    height: 5790,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/3/37/Montreal_Skyline_from_Mont_Royal_raw.png",
@@ -163,8 +125,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Montreal%20Skyline%20from%20Mont%20Royal%20raw.png",
     license: "CC0",
     title: "Montreal Skyline from Mont Royal raw",
-    width: 29684,
-    height: 7620,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/5/57/Montreal_Skyline_from_Mont_Royal_raw.jpg",
@@ -172,8 +132,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Montreal%20Skyline%20from%20Mont%20Royal%20raw.jpg",
     license: "CC0",
     title: "Montreal Skyline from Mont Royal raw",
-    width: 29684,
-    height: 7620,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/9/98/Qu%C3%A9bec_City_skyline_%28Quintin_Soloviev%29.jpg",
@@ -181,8 +139,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Qu%C3%A9bec%20City%20skyline%20(Quintin%20Soloviev).jpg",
     license: "CC BY-SA 4.0",
     title: "Québec City skyline (Quintin Soloviev)",
-    width: 5302,
-    height: 2982,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/8/88/Skylines_of_Quebec_City_%28skyline%29.jpg",
@@ -190,8 +146,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Skylines%20of%20Quebec%20City%20(skyline).jpg",
     license: "CC0",
     title: "Skylines of Quebec City (skyline)",
-    width: 17456,
-    height: 5660,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/9/92/Cityscapes_of_Quebec_City_%28skyline_2%29.jpg",
@@ -199,8 +153,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Cityscapes%20of%20Quebec%20City%20(skyline%202).jpg",
     license: "CC0",
     title: "Cityscapes of Quebec City (skyline 2)",
-    width: 8980,
-    height: 5394,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/d/d7/Skylines_of_Quebec_City_%28skyline_5%29.jpg",
@@ -208,8 +160,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Skylines%20of%20Quebec%20City%20(skyline%205).jpg",
     license: "CC0",
     title: "Skylines of Quebec City (skyline 5)",
-    width: 10836,
-    height: 6376,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/0/09/Autumnal_Retreat_in_Old_Quebec-_A_Canvas_of_Fading_Reds_and_Vibrant_Oranges.jpg",
@@ -217,8 +167,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Autumnal%20Retreat%20in%20Old%20Quebec-%20A%20Canvas%20of%20Fading%20Reds%20and%20Vibrant%20Oranges.jpg",
     license: "CC0",
     title: "Autumnal Retreat in Old Quebec- A Canvas of Fading Reds and Vibrant Oranges",
-    width: 8009,
-    height: 5339,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/bf/Gare_fluviale_de_Qu%C3%A9bec%2C_Quebec_city%2C_Canada.jpg",
@@ -226,8 +174,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Gare%20fluviale%20de%20Qu%C3%A9bec%2C%20Quebec%20city%2C%20Canada.jpg",
     license: "CC0",
     title: "Gare fluviale de Québec, Quebec city, Canada",
-    width: 14296,
-    height: 5323,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/f8/Hudson_%28Qu%C3%A9bec%29-Belv%C3%A9d%C3%A8re_sur_lac_des_Deux_Montagnes-Vue_vers_l%27est-2022-09-22.jpg",
@@ -235,8 +181,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Hudson%20(Qu%C3%A9bec)-Belv%C3%A9d%C3%A8re%20sur%20lac%20des%20Deux%20Montagnes-Vue%20vers%20l'est-2022-09-22.jpg",
     license: "CC BY-SA 4.0",
     title: "Hudson (Québec)-Belvédère sur lac des Deux Montagnes-Vue vers l'est-2022-09-22",
-    width: 12000,
-    height: 6805,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/0/01/Lac_des_Deux_Montagnes_-_Sainte-Marthe-sur-le-Lac.jpg",
@@ -244,8 +188,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Lac%20des%20Deux%20Montagnes%20-%20Sainte-Marthe-sur-le-Lac.jpg",
     license: "CC BY-SA 4.0",
     title: "Lac des Deux Montagnes - Sainte-Marthe-sur-le-Lac",
-    width: 5464,
-    height: 3640,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/6/6f/Hudson_%28Qu%C3%A9bec%29-Pont_sur_le_sentier_Sandy_Beach-2022-09-22.jpg",
@@ -253,8 +195,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Hudson%20(Qu%C3%A9bec)-Pont%20sur%20le%20sentier%20Sandy%20Beach-2022-09-22.jpg",
     license: "CC BY-SA 4.0",
     title: "Hudson (Québec)-Pont sur le sentier Sandy Beach-2022-09-22",
-    width: 12000,
-    height: 9000,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/5/5a/%C3%8Ele-Perrot_train_station_%28exo%29.jpg",
@@ -262,8 +202,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:%C3%8Ele-Perrot%20train%20station%20(exo).jpg",
     license: "CC BY-SA 4.0",
     title: "Île-Perrot train station (exo)",
-    width: 4032,
-    height: 3024,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/c/cd/20181012_-_01_-_Montreal_panorama_%28downtown%29.jpg",
@@ -271,9 +209,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:20181012_-_01_-_Montreal_panorama_(downtown).jpg",
     license: "CC BY-SA 4.0",
     title: "Centre-ville de Montréal",
-    width: 8906,
-    height: 2448,
-    season: "automne",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/d/db/2016-08_Saguenay_river_01.jpg",
@@ -281,9 +216,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:2016-08_Saguenay_river_01.jpg",
     license: "CC BY-SA 4.0",
     title: "Rivière Saguenay",
-    width: 6000,
-    height: 4000,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Before-sunrise-perse-rock.jpg",
@@ -291,8 +223,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Before-sunrise-perse-rock.jpg",
     license: "CC BY 3.0",
     title: "Rocher Percé, Gaspésie",
-    width: 2000,
-    height: 1333,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/25/Castle_Frontenac_Qu%C3%A9bec_City_Old_Quebec_Quebec.jpg",
@@ -300,8 +230,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Castle_Frontenac_Qu%C3%A9bec_City_Old_Quebec_Quebec.jpg",
     license: "CC0",
     title: "Château Frontenac, Québec",
-    width: 5184,
-    height: 3456,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/a/aa/C%C3%B4teau-du-Lac-Vue_du_fleuve_St-Laurent_%C3%A0_partir_du_qu20250104%281%29.jpg",
@@ -309,9 +237,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Côteau-du-Lac-Vue_du_fleuve_St-Laurent_à_partir_du_qu20250104(1).jpg",
     license: "CC0",
     title: "Fleuve Saint-Laurent, Coteau-du-Lac (Soulanges)",
-    width: 3598,
-    height: 1583,
-    season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/6/6b/C%C3%B4teau-du-Lac-Canal_Soulanges_%28vue_vers_l%27est_%C3%A0_proximit%C3%A9_de_la_jet%C3%A9e_%28rue_Principale%29%29-2025-01-04%281%29.jpg",
@@ -319,9 +244,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Côteau-du-Lac-Canal_Soulanges_(vue_vers_l'est_à_proximité_de_la_jetée_(rue_Principale))-2025-01-04(1).jpg",
     license: "CC0",
     title: "Canal de Soulanges, Coteau-du-Lac",
-    width: 3942,
-    height: 1732,
-    season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Pingualuit_aerial_2007_%28cropped%29.jpg",
@@ -329,9 +251,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Pingualuit_aerial_2007_(cropped).jpg",
     license: "Public domain",
     title: "Cratère Pingualuit, Nunavik",
-    width: 5442,
-    height: 3063,
-    season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b3/Pessamit%2C_Quebec.jpg",
@@ -339,8 +258,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Pessamit,_Quebec.jpg",
     license: "CC BY 4.0",
     title: "Pessamit, nation Innue",
-    width: 11750,
-    height: 7833,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/5/53/Hudson_%28Qu%C3%A9bec%29-Belv%C3%A9d%C3%A8re-Lac_des_deux_Montagnes-2022-09-22.jpg",
@@ -348,9 +265,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Hudson_(Québec)-Belvédère-Lac_des_deux_Montagnes-2022-09-22.jpg",
     license: "CC BY-SA 4.0",
     title: "Hudson, Lac des Deux-Montagnes",
-    width: 12000,
-    height: 7453,
-    season: "automne",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/6/6e/Hudson_%28Qu%C3%A9bec%29-Lac_Deux-Montagnes-2022-09-22.jpg",
@@ -358,9 +272,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Hudson_(Québec)-Lac_Deux-Montagnes-2022-09-22.jpg",
     license: "CC BY-SA 4.0",
     title: "Hudson, Vaudreuil-Soulanges",
-    width: 12000,
-    height: 9000,
-    season: "automne",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Lac_des_Deux-Montagnes_%28Pierrefonds%29_%288514398500%29.jpg",
@@ -368,8 +279,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Lac_des_Deux-Montagnes_(Pierrefonds)_(8514398500).jpg",
     license: "CC BY 2.0",
     title: "Lac des Deux-Montagnes, Pierrefonds",
-    width: 2896,
-    height: 1944,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Deux-Montagnes-Belv%C3%A9d%C3%A8re_municipal_en_bordure_du_Lac_des_Deux-Montagnes-2022-05-19.jpg",
@@ -377,9 +286,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Deux-Montagnes-Belvédère_municipal_en_bordure_du_Lac_des_Deux-Montagnes-2022-05-19.jpg",
     license: "CC BY-SA 4.0",
     title: "Belvédère, Lac des Deux-Montagnes",
-    width: 12000,
-    height: 6206,
-    season: "printemps",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/fe/Lac_des_Deux_Montagnes_07.JPG",
@@ -388,8 +294,6 @@ const QUEBEC_BACKGROUNDS = [
     license: "CC BY-SA 3.0",
     title: "Lac des Deux-Montagnes",
     focalY: 0.22,
-    width: 3870,
-    height: 2177,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/3/3d/Montreal_panorama.jpg",
@@ -397,8 +301,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Montreal_panorama.jpg",
     license: "CC BY-SA 2.0",
     title: "Panorama de Montréal",
-    width: 10000,
-    height: 2240,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/15/Montreal_skyline_2011.jpg",
@@ -406,8 +308,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Montreal_skyline_2011.jpg",
     license: "CC BY 2.0",
     title: "Skyline de Montréal, 2011",
-    width: 4288,
-    height: 2848,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/2c/Montreal_-_QC_-_Skyline.jpg",
@@ -415,8 +315,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Montreal_-_QC_-_Skyline.jpg",
     license: "CC BY 3.0",
     title: "Skyline de Montréal",
-    width: 4144,
-    height: 2676,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/e/e5/Bord_de_fleuve_qu%C3%A9bec_panorama_2012.jpg",
@@ -425,8 +323,6 @@ const QUEBEC_BACKGROUNDS = [
     license: "CC BY 3.0",
     title: "Bord du fleuve, Québec",
     focalY: 0.35,
-    width: 21461,
-    height: 2939,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/18/Panorama_of_Quebec_City.jpg",
@@ -435,8 +331,6 @@ const QUEBEC_BACKGROUNDS = [
     license: "CC BY-SA 4.0",
     title: "Panorama de Québec",
     focalY: 0.4,
-    width: 3888,
-    height: 1326,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Qu%C3%A9bec_city_skyline.jpg",
@@ -445,8 +339,6 @@ const QUEBEC_BACKGROUNDS = [
     license: "CC BY-SA 4.0",
     title: "Skyline de Québec",
     focalY: 0.4,
-    width: 9778,
-    height: 4797,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/6/65/Sunrise_Over_Montr%C3%A9al_%28250731329%29.jpeg",
@@ -454,8 +346,6 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Sunrise%20Over%20Montr%C3%A9al%20(250731329).jpeg",
     license: "CC BY 3.0",
     title: "Sunrise Over Montréal (250731329)",
-    width: 2048,
-    height: 1152,
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/0/02/Rocher_Perc%C3%A9_%E2%80%93_Perc%C3%A9%2C_QC_%E2%80%93_%282018-07-19%29.jpg",
@@ -464,9 +354,6 @@ const QUEBEC_BACKGROUNDS = [
     license: "CC BY-SA 4.0",
     title: "Rocher Percé – Percé, QC – (2018-07-19)",
     focalY: 0.66,
-    width: 3747,
-    height: 2508,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Rivi%C3%A8re_Saint-Fran%C3%A7ois_2025.jpg",
@@ -474,7 +361,5 @@ const QUEBEC_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Rivi%C3%A8re%20Saint-Fran%C3%A7ois%202025.jpg",
     license: "CC BY-SA 4.0",
     title: "Rivière Saint-François 2025",
-    width: 5374,
-    height: 3580,
   }
 ];

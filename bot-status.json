@@ -1,72 +1,97 @@
 {
-  "updated": "2026-07-20T11:21:47.548Z",
+  "updated": "2026-07-27T12:16:05.085Z",
   "healthy": true,
   "needsHuman": false,
   "pipeline": [
     {
       "step": "Institutions catalogue",
       "ok": true,
-      "ms": 879
+      "ms": 488
     },
     {
       "step": "Media scanner (gaps)",
       "ok": true,
-      "ms": 3695
+      "ms": 3437
     },
     {
       "step": "News source maintainer",
       "ok": true,
-      "ms": 138578
+      "ms": 144109
     },
     {
       "step": "Stream tracker + radio promotion",
       "ok": true,
-      "ms": 597958
+      "ms": 613818
     },
     {
       "step": "Radio now-playing metadata",
       "ok": true,
-      "ms": 45785
+      "ms": 48384
     },
     {
       "step": "News sources verify",
       "ok": true,
-      "ms": 30218
+      "ms": 28752
     },
     {
       "step": "News aggregator",
       "ok": true,
-      "ms": 48753
+      "ms": 60502
     },
     {
       "step": "Author QC",
       "ok": true,
-      "ms": 97381
+      "ms": 519323
     },
     {
       "step": "Lead excerpt enrichment",
       "ok": true,
-      "ms": 3955
+      "ms": 13069
     },
     {
       "step": "Lead image QC",
       "ok": true,
-      "ms": 437275
+      "ms": 1161606
     },
     {
       "step": "Photo credit QC",
       "ok": true,
-      "ms": 16735
+      "ms": 16688
+    },
+    {
+      "step": "Quebec masthead landscape bank",
+      "ok": true,
+      "ms": 42
+    },
+    {
+      "step": "Quebec masthead university bank",
+      "ok": true,
+      "ms": 34
+    },
+    {
+      "step": "Quebec pomo landscape bank",
+      "ok": true,
+      "ms": 36
+    },
+    {
+      "step": "Quebec nations/Inuit bank (shared)",
+      "ok": true,
+      "ms": 115383
+    },
+    {
+      "step": "Quebec photo bank pixel audit (report)",
+      "ok": true,
+      "ms": 57
     },
     {
       "step": "Social feed",
       "ok": true,
-      "ms": 55838
+      "ms": 67470
     },
     {
       "step": "RSS export",
       "ok": true,
-      "ms": 67
+      "ms": 56
     }
   ],
   "summary": {
@@ -74,30 +99,60 @@
     "news": {
       "active": 14,
       "dead": 0,
-      "stale": 0,
+      "stale": 1,
       "candidates": 6,
       "articles": 185,
       "withAuthor": 185,
       "withExcerpt": 184,
       "authorQc": {
         "ok": true,
-        "mismatches": 106
+        "mismatches": 4
       },
       "leadImageQc": {
         "fullyCovered": 185,
         "withPhoto": 168,
-        "withStock": 40,
-        "leadReadyPhotos": 139,
-        "pageScraped": 17,
+        "withStock": 41,
+        "leadReadyPhotos": 138,
+        "pageScraped": 14,
         "mainPageLeadReady": true
       },
       "photoCreditQc": {
         "ok": true,
         "withCredit": 168,
-        "cited": 122,
+        "cited": 128,
         "pending": 0,
         "missingHero": 0
       }
+    },
+    "backgrounds": {
+      "masthead": {
+        "count": 49,
+        "maxBank": 50,
+        "lastSessionCleanup": "2026-05-01",
+        "lastSessionId": "ete"
+      },
+      "universities": {
+        "count": 25,
+        "maxBank": 50,
+        "lastSessionCleanup": "2026-05-01",
+        "lastSessionId": "ete"
+      },
+      "pomo": {
+        "count": 41,
+        "maxBank": 50,
+        "lastSessionCleanup": "2026-05-01",
+        "lastSessionId": "ete"
+      },
+      "nations": {
+        "count": 20,
+        "maxBank": 50,
+        "lastSessionCleanup": "2026-05-01",
+        "lastSessionId": "ete"
+      },
+      "count": 49,
+      "maxBank": 50,
+      "lastSessionCleanup": "2026-05-01",
+      "lastSessionId": "ete"
     },
     "radios": {
       "listed": 6,
@@ -126,6 +181,16 @@
     "radios": 72
   },
   "alerts": [
+    {
+      "level": "info",
+      "code": "stale_news_feed",
+      "message": "Flux inactif : The Tribune — dernier article 2026-07-21"
+    },
+    {
+      "level": "warn",
+      "code": "stale_news_cache",
+      "message": "Cache conservé : The Tribune — flux indisponible, articles frais du run précédent"
+    },
     {
       "level": "info",
       "code": "news_coverage_gap",
