@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-07-27T21:40:27.346Z",
+  "updatedAt": "2026-07-27T23:04:14.782Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "schedule",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
+      "current": null,
       "next": {
         "title": "Mardi Champ Gauche",
         "source": "schedule",
@@ -20,34 +14,34 @@
         "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
       },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T21:40:00.695Z"
+      "checkedAt": "2026-07-27T23:03:50.141Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "L'Alter Ego",
+        "title": "Les garçons pleurent aussi",
         "source": "api-live",
-        "start": "12:00",
+        "start": "15:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "lalter-ego"
+        "slug": "les-garcons-pleurent-aussi"
       },
       "next": {
-        "title": "Le palmarès",
+        "title": "Les criquets crinqués",
         "source": "api-live",
-        "start": "14:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/365056.mp3",
-        "slug": "palmares-de-cism"
+        "start": "17:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364793.mp3",
+        "slug": "les-criquets-crinques"
       },
       "track": "",
-      "showTitle": "L'Alter Ego",
+      "showTitle": "Les garçons pleurent aussi",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-27T21:40:02.908Z"
+      "checkedAt": "2026-07-27T23:03:51.961Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "En Profondeur",
+        "title": "Dykes on Mykes",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "19:00",
+        "end": "20:00"
       },
       "next": {
-        "title": "Queercorps",
+        "title": "Underground Sounds",
         "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
+        "start": "20:00",
+        "end": "22:00"
       },
       "track": "",
-      "showTitle": "En Profondeur",
+      "showTitle": "Dykes on Mykes",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,70 +77,64 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T21:40:05.345Z"
+      "checkedAt": "2026-07-27T23:03:54.708Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Pressure Drop",
+        "title": "Queer Chaos",
         "source": "schedule",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/the-pressure-drop"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/queer-chaos"
       },
       "next": {
-        "title": "Voice of the Voiceless",
+        "title": "In The Garage",
         "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/voice-of-the-voiceless"
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/in-the-garage"
       },
       "track": "",
-      "showTitle": "The Pressure Drop",
+      "showTitle": "Queer Chaos",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T21:40:18.854Z"
+      "checkedAt": "2026-07-27T23:04:08.179Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Solénoïde",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Ma radio Académia",
         "source": "schedule",
         "start": "18:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Le terrain sportif",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "00:01"
+      },
       "track": "",
-      "showTitle": "Solénoïde",
+      "showTitle": "Ma radio Académia",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T21:40:19.648Z"
+      "checkedAt": "2026-07-27T23:04:08.969Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Bitume",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00",
-        "slug": "bitume"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHOQ.ca",
         "source": "api-live",
@@ -154,8 +142,8 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "L'Rain — soulless cycle",
-      "showTitle": "Bitume",
+      "track": "blesse — Aeroport",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -165,7 +153,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-27T21:40:26.995Z"
+      "checkedAt": "2026-07-27T23:04:14.431Z"
     }
   }
 }
