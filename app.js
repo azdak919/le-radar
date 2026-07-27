@@ -569,6 +569,17 @@ async function init() {
     ? schedulesData.value
     : { stations: {}, timezone: 'America/Toronto' };
   buildTunerOptions();
+  // Surface publique versionnée du Kiosque : la station demandée est
+  // appliquée seulement après le chargement de radios.json. Auparavant le
+  // paramètre était présent dans l'URL mais ignoré, donc chaque journal
+  // affichait le sélecteur vide.
+  if (IS_TUNER_EMBED) {
+    const requestedStation = new URLSearchParams(window.location.search).get('station');
+    if (requestedStation && radios.some((radio) => radio.id === requestedStation)) {
+      TUNER_SELECT.value = requestedStation;
+      selectStation(requestedStation, { autoplay: false, openExternal: false });
+    }
+  }
   tunerSubMeta = TUNER_SUB?.textContent?.trim() || 'Radios étudiantes en direct';
   initTunerSubRotateListeners();
   initMarqueeResizeListeners();

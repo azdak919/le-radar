@@ -4,6 +4,10 @@
   if (document.documentElement.dataset.embed !== 'tuner') return;
 
   const EMBED_H = 62; // aligné sur padding bureau 10+42+10
+  const params = new URLSearchParams(window.location.search);
+  const surface = params.get('surface') === 'kiosque-v1' ? 'kiosque-v1' : 'legacy';
+  document.documentElement.dataset.surface = surface;
+  if (surface === 'kiosque-v1') document.documentElement.dataset.theme = 'dark';
 
   // Hauteur souhaitée de l'iframe : hauteur de base, sauf quand le popover
   // volume (téléphone < 560 px) est ouvert — il déborde alors sous la rangée
@@ -26,8 +30,10 @@
       // du popover, pas EMBED_H — sinon l'iframe rétrécit et rogne la bulle.
       const payload = {
         type: 'radar-embed',
+        protocol: 1,
+        surface,
         height: desiredHeight(),
-        ready: true,
+        ready: surface !== 'kiosque-v1',
         ...(extra || {}),
       };
       parent.postMessage(payload, '*');
@@ -79,4 +85,24 @@
     // Petite latence : app.js (defer) peut peupler le dial juste après
     setTimeout(() => postHeight({ event: 'hydrate' }), 400);
   });
+
+  // Le Kiosque ne révèle jamais une coquille vide. Le signal prêt arrive
+  // après l'hydratation réelle du sélecteur; une panne de radios.json produit
+  // un état indisponible explicite que l'hôte peut remplacer par son filet.
+  if (surface === 'kiosque-v1') {
+    const deadline = Date.now() + 5000;
+    const announceAvailability = () => {
+      const options = document.querySelectorAll('#tuner-select option:not([disabled])');
+      if (options.length) {
+        postHeight({ event: 'ready', ready: true, available: true });
+        return;
+      }
+      if (Date.now() >= deadline) {
+        postHeight({ event: 'unavailable', ready: true, available: false });
+        return;
+      }
+      setTimeout(announceAvailability, 100);
+    };
+    announceAvailability();
+  }
 })();
