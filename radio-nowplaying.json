@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-27T04:22:52.772Z",
+  "updatedAt": "2026-07-27T08:02:13.313Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T04:22:28.550Z"
+      "checkedAt": "2026-07-27T08:01:50.700Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "London café (reprise)",
+        "title": "Basses fréquences (reprise)",
         "source": "api-live",
-        "start": "20:00",
+        "start": "00:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "london-cafe"
+        "slug": "basses-frequences"
       },
       "next": {
-        "title": "Mix Anglo",
+        "title": "Mix Franco",
         "source": "api-live",
-        "start": "21:30",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/365121.mp3",
-        "slug": "mix-anglo"
+        "start": "02:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/365126.mp3",
+        "slug": "mix-franco"
       },
       "track": "",
-      "showTitle": "London café (reprise)",
+      "showTitle": "Basses fréquences (reprise)",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-27T04:22:30.246Z"
+      "checkedAt": "2026-07-27T08:01:52.611Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Sound Of Soul",
+        "title": "Adventures In Music",
         "source": "api-live",
-        "start": "00:00",
-        "end": "01:00"
+        "start": "04:00",
+        "end": "07:00"
       },
       "next": {
-        "title": "Roots, Rock, Reggae",
+        "title": "Unmuted with Svetlana and Miss Trish",
         "source": "api-live",
-        "start": "01:00",
-        "end": "04:00"
+        "start": "07:00",
+        "end": "08:00"
       },
       "track": "",
-      "showTitle": "Sound Of Soul",
+      "showTitle": "Adventures In Music",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,7 +77,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T04:22:32.726Z"
+      "checkedAt": "2026-07-27T08:01:55.417Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -104,7 +104,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T04:22:45.953Z"
+      "checkedAt": "2026-07-27T08:02:08.998Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T04:22:46.700Z"
+      "checkedAt": "2026-07-27T08:02:09.713Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +142,7 @@
         "end": "18:00",
         "slug": "bitume"
       },
-      "track": "Thierry Larose - Conversation dans le noir",
+      "track": "Maelydée - Sanzaru",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -153,7 +153,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-27T04:22:52.421Z"
+      "checkedAt": "2026-07-27T08:02:12.962Z"
     }
   }
 }
