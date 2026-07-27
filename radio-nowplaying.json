@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-07-27T00:08:58.399Z",
+  "updatedAt": "2026-07-27T04:22:52.772Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Capitales de Québec",
-        "source": "schedule",
-        "start": "16:50",
-        "end": "20:30",
-        "url": "https://chyz.ca/emission/capitales-de-quebec/"
-      },
+      "current": null,
       "next": {
         "title": "Lundi Indie",
         "source": "schedule",
@@ -20,34 +14,34 @@
         "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
       },
       "track": "",
-      "showTitle": "Capitales de Québec",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T00:08:32.278Z"
+      "checkedAt": "2026-07-27T04:22:28.550Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Vibrance",
+        "title": "London café (reprise)",
         "source": "api-live",
-        "start": "16:00",
+        "start": "20:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "vibrance"
+        "slug": "london-cafe"
       },
       "next": {
-        "title": "L'Avenue des concerts",
+        "title": "Mix Anglo",
         "source": "api-live",
-        "start": "17:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364722.mp3",
-        "slug": "lavenue-des-concerts"
+        "start": "21:30",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/365121.mp3",
+        "slug": "mix-anglo"
       },
       "track": "",
-      "showTitle": "Vibrance",
+      "showTitle": "London café (reprise)",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-27T00:08:34.070Z"
+      "checkedAt": "2026-07-27T04:22:30.246Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Country Classics",
+        "title": "Sound Of Soul",
         "source": "api-live",
-        "start": "20:00",
-        "end": "21:00"
+        "start": "00:00",
+        "end": "01:00"
       },
       "next": {
-        "title": "Cha Cha In Blue",
+        "title": "Roots, Rock, Reggae",
         "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
+        "start": "01:00",
+        "end": "04:00"
       },
       "track": "",
-      "showTitle": "Country Classics",
+      "showTitle": "Sound Of Soul",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T00:08:36.783Z"
+      "checkedAt": "2026-07-27T04:22:32.726Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Eastern ...",
+        "title": "CJLO Late Night",
         "source": "schedule",
-        "start": "20:00",
-        "end": "20:30",
-        "url": "http://www.cjlo.com/shows/eastern-promises"
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
-        "title": "Afro Archives",
+        "title": "Experiments",
         "source": "schedule",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/afro-archives"
+        "start": "06:00",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/experiments"
       },
       "track": "",
-      "showTitle": "Eastern ...",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T00:08:50.118Z"
+      "checkedAt": "2026-07-27T04:22:45.953Z"
     },
     "cfak": {
       "id": "cfak",
@@ -118,14 +112,14 @@
       "current": {
         "title": "Les nuits CFAK",
         "source": "schedule",
-        "start": "00:00",
-        "end": "21:00"
+        "start": "00:01",
+        "end": "07:00"
       },
       "next": {
-        "title": "Solénoïde",
+        "title": "Folkswagen",
         "source": "schedule",
-        "start": "21:00",
-        "end": "00:00"
+        "start": "07:00",
+        "end": "08:00"
       },
       "track": "",
       "showTitle": "Les nuits CFAK",
@@ -135,20 +129,20 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T00:08:50.902Z"
+      "checkedAt": "2026-07-27T04:22:46.700Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Les rois de l'arène",
+        "title": "Bitume",
         "source": "api-live",
-        "start": "05:00",
-        "end": "07:00",
-        "slug": "les-rois-de-larene"
+        "start": "17:00",
+        "end": "18:00",
+        "slug": "bitume"
       },
-      "track": "Leys - Black Woman",
+      "track": "Thierry Larose - Conversation dans le noir",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -159,7 +153,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-27T00:08:58.048Z"
+      "checkedAt": "2026-07-27T04:22:52.421Z"
     }
   }
 }
