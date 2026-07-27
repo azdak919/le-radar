@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-27T08:02:13.313Z",
+  "updatedAt": "2026-07-27T10:12:08.922Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T08:01:50.700Z"
+      "checkedAt": "2026-07-27T10:11:38.857Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Basses fréquences (reprise)",
-        "source": "api-live",
-        "start": "00:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "basses-frequences"
-      },
-      "next": {
         "title": "Mix Franco",
         "source": "api-live",
         "start": "02:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/365126.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "mix-franco"
       },
+      "next": {
+        "title": "Le char de marge (reprise)",
+        "source": "api-live",
+        "start": "03:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/365162.mp3",
+        "slug": "le-char-de-marge"
+      },
       "track": "",
-      "showTitle": "Basses fréquences (reprise)",
+      "showTitle": "Mix Franco",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,7 +51,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-27T08:01:52.611Z"
+      "checkedAt": "2026-07-27T10:11:40.783Z"
     },
     "ckut": {
       "id": "ckut",
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T08:01:55.417Z"
+      "checkedAt": "2026-07-27T10:11:47.002Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Experiments",
         "source": "schedule",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/experiments"
       },
+      "next": {
+        "title": "The Starting Rotation",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/the-starting-rotation"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Experiments",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T08:02:08.998Z"
+      "checkedAt": "2026-07-27T10:12:00.553Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T08:02:09.713Z"
+      "checkedAt": "2026-07-27T10:12:01.582Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +142,7 @@
         "end": "18:00",
         "slug": "bitume"
       },
-      "track": "Maelydée - Sanzaru",
+      "track": "Wesley Joseph - Distant Man",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -153,7 +153,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-27T08:02:12.962Z"
+      "checkedAt": "2026-07-27T10:12:08.570Z"
     }
   }
 }
