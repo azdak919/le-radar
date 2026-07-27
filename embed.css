@@ -59,6 +59,33 @@ html[data-embed="tuner"][data-theme="dark"] {
   color-scheme: normal;
 }
 
+/* Surface contractuelle pour les journaux Le Kiosque. Elle reprend la barre
+   sombre du site principal et reste indépendante du thème du parent. */
+html[data-embed="tuner"][data-surface="kiosque-v1"] {
+  --embed-ink: #fff;
+  --embed-muted: rgba(255, 255, 255, 0.52);
+  --embed-muted-strong: rgba(255, 255, 255, 0.82);
+  --embed-control-bg: rgba(255, 255, 255, 0.06);
+  --embed-control-bg-hover: rgba(255, 255, 255, 0.12);
+  --embed-control-border: rgba(255, 255, 255, 0.16);
+  --embed-control-border-hover: rgba(255, 255, 255, 0.28);
+  --embed-radio: #8eb8ff;
+  --tuner-onair-live: #ff7d6e;
+  background: #0d1412 !important;
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] body,
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
+  background: #0d1412 !important;
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-inner {
+  width: min(100%, 1120px);
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-inline: 14px;
+}
+
 html[data-embed="tuner"] body {
   margin: 0;
   background: transparent !important;

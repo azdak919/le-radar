@@ -138,6 +138,13 @@ for (const app of ['pomo', 'solitaire']) {
 const embedScript = readFileSync(join(root, 'embed.js'), 'utf8');
 assert(embedScript.includes("type: 'radar-embed'"), 'contrat postMessage radar-embed requis');
 assert(embedScript.includes("type: 'ataraxia-radar-embed'"), 'contrat postMessage historique requis');
+assert(embedScript.includes("surface === 'kiosque-v1'"), 'surface kiosque-v1 requise');
+assert(embedScript.includes("available: false"), 'repli indisponible kiosque requis');
+assert(embedScript.includes('protocol: 1'), 'version du contrat embed requise');
+const embedCss = readFileSync(join(root, 'embed.css'), 'utf8');
+assert(embedCss.includes('[data-surface="kiosque-v1"]'), 'surface sombre kiosque-v1 requise');
+const appScript = readFileSync(join(root, 'app.js'), 'utf8');
+assert(appScript.includes("get('station')"), 'station demandée par l’embed requise');
 
 // ── Référencement (moteurs + assistants IA) ────────────────────────────────
 // Ces acquis sont invisibles à l'œil : sans test, une refonte du <head> ou de
