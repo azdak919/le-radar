@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-27T19:02:51.888Z",
+  "updated": "2026-07-27T20:51:03.865Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
@@ -7,9 +7,9 @@
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 4,
-  "updatedCount": 4,
-  "citedNew": 3,
+  "checked": 7,
+  "updatedCount": 7,
+  "citedNew": 6,
   "fallbackNew": 1,
   "samples": [
     {
@@ -39,6 +39,27 @@
       "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "source": "La Pige",
+      "credit": "Photo : Léa Morin-Letort",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "source": "Quartier Libre",
+      "credit": "Photo : Maryse Boyce",
+      "cited": true,
+      "method": "figcaption-copyright"
     }
   ]
 }
