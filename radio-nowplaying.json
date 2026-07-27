@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-27T14:39:38.871Z",
+  "updatedAt": "2026-07-27T17:00:01.742Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T14:39:13.097Z"
+      "checkedAt": "2026-07-27T16:59:35.146Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le terrain sportif",
-        "source": "api-live",
-        "start": "06:30",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "le-terrain-sportif"
-      },
-      "next": {
         "title": "Ya Raï (reprise)",
         "source": "api-live",
         "start": "08:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/365151.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "ya-rai"
       },
+      "next": {
+        "title": "La collation",
+        "source": "api-live",
+        "start": "09:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/365038.mp3",
+        "slug": "mix-collation"
+      },
       "track": "",
-      "showTitle": "Le terrain sportif",
+      "showTitle": "Ya Raï (reprise)",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-27T14:39:15.477Z"
+      "checkedAt": "2026-07-27T16:59:37.484Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Latin Music Mondays",
+        "title": "World Skip The Beat",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "12:00",
+        "end": "14:00"
       },
       "next": {
-        "title": "All Things Campus",
+        "title": "Radio Is Dead",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
+        "start": "14:00",
+        "end": "15:00"
       },
       "track": "",
-      "showTitle": "Latin Music Mondays",
+      "showTitle": "World Skip The Beat",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T14:39:18.874Z"
+      "checkedAt": "2026-07-27T16:59:41.487Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
+        "title": "Twang City",
         "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/twang-city"
       },
       "next": {
-        "title": "2 Days and a Night",
+        "title": "Eldest Daughter",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/2-days-and-a-night"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/eldest-daughter"
       },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "Twang City",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T14:39:32.863Z"
+      "checkedAt": "2026-07-27T16:59:55.329Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T14:39:33.444Z"
+      "checkedAt": "2026-07-27T16:59:55.889Z"
     },
     "choq": {
       "id": "choq",
@@ -142,15 +142,18 @@
         "end": "18:00",
         "slug": "bitume"
       },
-      "track": "Élégie — Demain minuit",
+      "track": "Webster — Old Schoolers",
       "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": null,
-      "checkedAt": "2026-07-27T14:39:38.521Z"
+      "clientPoll": {
+        "type": "triton-np",
+        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
+      },
+      "checkedAt": "2026-07-27T17:00:01.391Z"
     }
   }
 }
