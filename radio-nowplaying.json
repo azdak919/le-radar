@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-26T23:00:00.822Z",
+  "updatedAt": "2026-07-27T00:08:58.399Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -27,27 +27,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T22:59:43.996Z"
+      "checkedAt": "2026-07-27T00:08:32.278Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le char de marge",
-        "source": "api-live",
-        "start": "14:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "le-char-de-marge"
-      },
-      "next": {
         "title": "Vibrance",
         "source": "api-live",
         "start": "16:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364717.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "vibrance"
       },
+      "next": {
+        "title": "L'Avenue des concerts",
+        "source": "api-live",
+        "start": "17:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364722.mp3",
+        "slug": "lavenue-des-concerts"
+      },
       "track": "",
-      "showTitle": "Le char de marge",
+      "showTitle": "Vibrance",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -57,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-26T22:59:46.192Z"
+      "checkedAt": "2026-07-27T00:08:34.070Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Desi Beats",
+        "title": "Country Classics",
         "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
+        "start": "20:00",
+        "end": "21:00"
       },
       "next": {
-        "title": "Bluegrass Rambling",
+        "title": "Cha Cha In Blue",
         "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
+        "start": "21:00",
+        "end": "23:00"
       },
       "track": "",
-      "showTitle": "Desi Beats",
+      "showTitle": "Country Classics",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T22:59:49.307Z"
+      "checkedAt": "2026-07-27T00:08:36.783Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Bill's Country & Western Favou...",
+        "title": "Eastern ...",
         "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
+        "start": "20:00",
+        "end": "20:30",
+        "url": "http://www.cjlo.com/shows/eastern-promises"
       },
       "next": {
-        "title": "No Boundaries",
+        "title": "Afro Archives",
         "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/no-boundaries"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/afro-archives"
       },
       "track": "",
-      "showTitle": "Bill's Country & Western Favou...",
+      "showTitle": "Eastern ...",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T22:59:51.151Z"
+      "checkedAt": "2026-07-27T00:08:50.118Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,7 +135,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-26T22:59:51.706Z"
+      "checkedAt": "2026-07-27T00:08:50.902Z"
     },
     "choq": {
       "id": "choq",
@@ -148,7 +148,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Dolphin Hyperspace - My Big Break feat. Louis Cole",
+      "track": "Leys - Black Woman",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -159,7 +159,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-26T23:00:00.472Z"
+      "checkedAt": "2026-07-27T00:08:58.048Z"
     }
   }
 }
