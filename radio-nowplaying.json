@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-27T11:42:50.431Z",
+  "updatedAt": "2026-07-27T14:39:38.871Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Lundi Indie",
+        "title": "Les Arshitechs du Son",
         "source": "schedule",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
       "track": "",
       "showTitle": "",
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T11:42:26.178Z"
+      "checkedAt": "2026-07-27T14:39:13.097Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le char de marge (reprise)",
+        "title": "Le terrain sportif",
         "source": "api-live",
-        "start": "03:00",
+        "start": "06:30",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "le-char-de-marge"
+        "slug": "le-terrain-sportif"
       },
       "next": {
-        "title": "Le Séismix",
+        "title": "Ya Raï (reprise)",
         "source": "api-live",
-        "start": "05:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/365022.mp3",
-        "slug": "le-seismix"
+        "start": "08:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/365151.mp3",
+        "slug": "ya-rai"
       },
       "track": "",
-      "showTitle": "Le char de marge (reprise)",
+      "showTitle": "Le terrain sportif",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-27T11:42:28.585Z"
+      "checkedAt": "2026-07-27T14:39:15.477Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Unmuted with Svetlana and Miss Trish",
+        "title": "Latin Music Mondays",
         "source": "api-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "09:00",
+        "end": "11:00"
       },
       "next": {
-        "title": "Le Lendemain de la veille",
+        "title": "All Things Campus",
         "source": "api-live",
-        "start": "08:00",
-        "end": "09:00"
+        "start": "11:00",
+        "end": "12:00"
       },
       "track": "",
-      "showTitle": "Unmuted with Svetlana and Miss Trish",
+      "showTitle": "Latin Music Mondays",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,59 +77,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T11:42:32.333Z"
+      "checkedAt": "2026-07-27T14:39:18.874Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Experiments",
+        "title": "Democracy Now",
         "source": "schedule",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/experiments"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
       },
       "next": {
-        "title": "The Starting Rotation",
+        "title": "2 Days and a Night",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/the-starting-rotation"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/2-days-and-a-night"
       },
       "track": "",
-      "showTitle": "Experiments",
+      "showTitle": "Democracy Now",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T11:42:46.245Z"
+      "checkedAt": "2026-07-27T14:39:32.863Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Folkswagen",
+        "title": "Solénoïde",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "09:00",
+        "end": "18:00"
       },
       "next": {
-        "title": "Palmarès CFAK",
+        "title": "Ma radio Académia",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00"
+        "start": "18:00",
+        "end": "20:00"
       },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Solénoïde",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-27T11:42:46.816Z"
+      "checkedAt": "2026-07-27T14:39:33.444Z"
     },
     "choq": {
       "id": "choq",
@@ -142,18 +142,15 @@
         "end": "18:00",
         "slug": "bitume"
       },
-      "track": "Static Dress - ...hospice",
+      "track": "Élégie — Demain minuit",
       "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": {
-        "type": "triton-np",
-        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
-      },
-      "checkedAt": "2026-07-27T11:42:50.079Z"
+      "clientPoll": null,
+      "checkedAt": "2026-07-27T14:39:38.521Z"
     }
   }
 }
