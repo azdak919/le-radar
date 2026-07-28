@@ -1,16 +1,16 @@
 {
-  "updated": "2026-07-28T20:38:03.791Z",
+  "updated": "2026-07-28T20:55:30.297Z",
   "updatedSlot": "2026-07-28T20:00:00.000Z",
   "count": 185,
   "freshnessSessions": 3,
   "sources": {
     "Quartier Libre": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:00:00.000Z",
-      "lastFetchOk": "2026-07-28T20:35:45.621Z"
+      "lastFetchOk": null
     },
     "Montréal Campus": {
       "fetchOk": false,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-03-25T11:00:00.000Z",
-      "lastFetchOk": "2026-07-28T20:36:04.791Z"
+      "lastFetchOk": "2026-07-28T20:54:41.297Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-07-06T12:00:00.000Z",
-      "lastFetchOk": "2026-07-28T20:36:05.828Z"
+      "lastFetchOk": "2026-07-28T20:54:41.717Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,15 +42,15 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-07-08T14:41:00.000Z",
-      "lastFetchOk": "2026-07-28T20:36:07.087Z"
+      "lastFetchOk": "2026-07-28T20:54:42.870Z"
     },
     "Zone Campus": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-07-28T20:36:08.505Z"
+      "lastFetchOk": null
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,7 +58,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-07-28T20:36:10.246Z"
+      "lastFetchOk": "2026-07-28T20:54:44.850Z"
     },
     "Le Collectif": {
       "fetchOk": false,
@@ -74,7 +74,7 @@
       "articleCount": 7,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-07-28T20:36:22.557Z"
+      "lastFetchOk": "2026-07-28T20:54:45.461Z"
     },
     "La Pige": {
       "fetchOk": false,
@@ -90,7 +90,7 @@
       "articleCount": 13,
       "freshArticleCount": 13,
       "lastArticle": "2026-02-25T14:38:32.764Z",
-      "lastFetchOk": "2026-07-28T20:36:37.936Z"
+      "lastFetchOk": "2026-07-28T20:54:47.097Z"
     },
     "The Tribune": {
       "fetchOk": false,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-07-28T20:36:50.270Z"
+      "lastFetchOk": "2026-07-28T20:54:59.449Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-07-28T20:36:50.436Z"
+      "lastFetchOk": "2026-07-28T20:54:59.615Z"
     }
   },
   "items": [
@@ -979,14 +979,14 @@
       "excerpt": "À Montréal, les murs parlent, sans jamais révéler celles et ceux qui les écrivent. Sous les couches de peinture et les signatures superposées, une présence discrète s’impose : celle d’une génération, souvent étudiante, qui investit l’espace urbain en marge des cadres établis.",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/Photo-5_IMG_3586-1024x768.jpg",
       "authorCheckedAt": "2026-07-28T12:28:48.207Z",
-      "_pageAuthor": "Emilie Rizkallah",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/presences-invisibles-ecrire-la-ville/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "photo-5_img_3586.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -1001,7 +1001,6 @@
       "excerpt": "Le 13 mars dernier, la rappeuse Calamine a dévoilé son nouvel album , Rétrograde . Avec cette quatrième sortie depuis 2020, l’artiste gravit les échelons et devient une voix importante du hip-hop québécois. Composé de 18 titres d’ambiance estivale tels que « CHOP CHOP », « POLY",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg",
       "authorCheckedAt": "2026-07-28T12:28:48.451Z",
-      "_pageAuthor": "Samuel Roy",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/calamine-rapper-autrement/",
       "sourceImageCreditFrom": "media",
@@ -1016,7 +1015,8 @@
       "imageLicense": "by-sa",
       "imageProvider": "openverse",
       "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=137030939",
-      "leadExcerpt": "Le concept même de Rétrograde , c’est cette sensation d’un recul sociétal, le fait qu’on est en train de retourner en arrière, politiquement parlant. Même après des avancées dans le féminisme, on est quand même en train de reculer avec la montée du masculinisme. En nommant l’album Rétrograde , ça me permettait donc de relier à la fois le queer dating et le recul général de la société."
+      "leadExcerpt": "Le concept même de Rétrograde , c’est cette sensation d’un recul sociétal, le fait qu’on est en train de retourner en arrière, politiquement parlant. Même après des avancées dans le féminisme, on est quand même en train de reculer avec la montée du masculinisme. En nommant l’album Rétrograde , ça me permettait donc de relier à la fois le queer dating et le recul général de la société.",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -1031,14 +1031,14 @@
       "excerpt": "Le 5 mai dernier, le pavillon Roger-Gaudry a accueilli le premier forum du Réseau des écoles associées ( RÉA ). Ce projet ambitieux de la Faculté des sciences de l’éducation (FSÉ) transforme des écoles primaires et secondaires en véritables « hôpitaux universitaires » de la",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-2-768x1024.jpeg",
       "authorCheckedAt": "2026-07-28T12:28:48.702Z",
-      "_pageAuthor": "Ulysse Taillard-Hodez",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "image-2.jpeg",
       "sourceImageCreditRev": 9,
-      "leadExcerpt": "Mme Fournier Dubé a insisté sur le fait que les enseignant·e·s sont les véritables « agents de changement ». Son rôle n’est pas d’imposer un cadre scientifique rigide, mais de vulgariser la recherche pour l’adapter aux besoins du terrain."
+      "leadExcerpt": "Mme Fournier Dubé a insisté sur le fait que les enseignant·e·s sont les véritables « agents de changement ». Son rôle n’est pas d’imposer un cadre scientifique rigide, mais de vulgariser la recherche pour l’adapter aux besoins du terrain.",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -1053,7 +1053,6 @@
       "excerpt": "Depuis mars 2024, l’Université de Montréal (UdeM) dispose d’une politique de soutien aux parents aux études. Le projet de loi 394 (PL394) de Québec solidaire lui imposerait, en cas d’adoption, d’en créer une destinée également aux proches aidant·e·s. Le député",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/12-13_Statuts-Politique-Parents-Proche-Aidants-1024x768.jpg",
       "authorCheckedAt": "2026-07-28T12:28:48.946Z",
-      "_pageAuthor": "Mohammed Aziz Mestiri",
       "sourceImageCredit": "Photo : MOHAMMED AZIZ MESTIRI",
       "sourceImageCreator": "MOHAMMED AZIZ MESTIRI",
       "sourceImageCreditUrl": "https://quartierlibre.ca/projet-loi-etudiant-proche-aidante/",
@@ -1062,7 +1061,8 @@
       "sourceImageCreditImageKey": "12-13_statuts-politique-parents-proche-aidants.jpg",
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
-      "leadExcerpt": "Depuis mars 2024, l’Université de Montréal (UdeM) dispose d’une politique de soutien aux parents aux études. Le projet de loi 394 ( PL394 ) de Québec solidaire lui imposerait, en cas d’adoption, d’en créer une destinée également aux proches aidant·e·s."
+      "leadExcerpt": "Depuis mars 2024, l’Université de Montréal (UdeM) dispose d’une politique de soutien aux parents aux études. Le projet de loi 394 ( PL394 ) de Québec solidaire lui imposerait, en cas d’adoption, d’en créer une destinée également aux proches aidant·e·s.",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -1125,7 +1125,6 @@
       "excerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg",
       "authorCheckedAt": "2026-07-28T12:28:49.190Z",
-      "_pageAuthor": "Bérénice Lemarié",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
       "sourceImageCreditFrom": "media",
@@ -1133,7 +1132,8 @@
       "sourceImageCreditImageKey": "20_florelaurentienne.jpg",
       "sourceImageCreditRev": 9,
       "leadImageReady": false,
-      "leadExcerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations d’albums 100 % québécois récemment sortis ."
+      "leadExcerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations d’albums 100 % québécois récemment sortis .",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -1148,7 +1148,6 @@
       "excerpt": "Entre absence de quorum, élections houleuses et accusations de « campagnes de salissage », la Fédération des associations du campus de l’Université de Montréal (FAÉCUM) traverse une zone de turbulences. Du fonctionnement des associations étudiantes aux congrès mouvementés, récit",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/10-11_FAECUM_photo-assemblee-1024x768.jpg",
       "authorCheckedAt": "2026-07-28T12:28:49.433Z",
-      "_pageAuthor": "Ulysse Taillard-Hodez",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/faecum-la-democratie-universitaire-critiquee/",
       "sourceImageCreditFrom": "media",
@@ -1156,7 +1155,8 @@
       "sourceImageCreditImageKey": "10-11_faecum_photo-assemblee.jpg",
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
-      "leadExcerpt": "Entre absence de quorum, élections houleuses et accusations de « campagnes de salissage », la Fédération des associations du campus de l’Université de Montréal (FAÉCUM) traverse une zone de turbulences. Du fonctionnement des associations étudiantes aux congrès mouvementés, récit d’une démocratie en difficulté."
+      "leadExcerpt": "Entre absence de quorum, élections houleuses et accusations de « campagnes de salissage », la Fédération des associations du campus de l’Université de Montréal (FAÉCUM) traverse une zone de turbulences. Du fonctionnement des associations étudiantes aux congrès mouvementés, récit d’une démocratie en difficulté.",
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -1322,7 +1322,6 @@
       "excerpt": "Les 29 et 30 mai prochains, les adeptes d’ouvrages de suspense, à mystère et d’enquêtes auront rendez-vous au Centre culturel Georges-Vanier pour la troisième édition du festival du livre policier Montréal Mystère, un événement encore jeune, mais déjà bien installé dans le",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/21_Montreal-Mystere-1024x768.jpg",
       "authorCheckedAt": "2026-07-28T12:28:49.676Z",
-      "_pageAuthor": "Carla Roche",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/montreal-mystere-festival-bilingue/",
       "sourceImageCreditFrom": "media",
@@ -1330,7 +1329,8 @@
       "sourceImageCreditImageKey": "21_montreal-mystere.jpg",
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
-      "leadExcerpt": "Les 29 et 30 mai prochains, les adeptes d’ouvrages de suspense, à mystère et d’enquêtes auront rendez-vous au Centre culturel Georges-Vanier pour la troisième édition du festival du livre policier Montréal Mystère , un événement encore jeune, mais déjà bien installé dans le paysage littéraire montréalais."
+      "leadExcerpt": "Les 29 et 30 mai prochains, les adeptes d’ouvrages de suspense, à mystère et d’enquêtes auront rendez-vous au Centre culturel Georges-Vanier pour la troisième édition du festival du livre policier Montréal Mystère , un événement encore jeune, mais déjà bien installé dans le paysage littéraire montréalais.",
+      "_retainedFromCache": true
     },
     {
       "source": "The Plant",
@@ -1584,14 +1584,14 @@
       "excerpt": "La Coupe du monde 2026 (CM26), qui aura lieu du 11 juin au 19 juillet prochains, s’annonce comme le plus grand événement de soccer jamais organisé. La compétition se déroulera simultanément dans trois pays, les États-Unis, le Canada et le Mexique, et comptera un nombre record",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/16-17_CDM-1-1024x574.jpg",
       "authorCheckedAt": "2026-07-28T12:28:52.159Z",
-      "_pageAuthor": "Gabriel Lapointe",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/coupe-du-monde-2026/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "16-17_cdm-1.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -1606,7 +1606,6 @@
       "excerpt": "Lors d’une assemblée universitaire tenue le 16 mars dernier, le professeur agrégé à l’École de psychoéducation de la Faculté des arts et des sciences de l’UdeM Jean-Sébastien Fallu a soulevé des préoccupations concernant le soutien informatique à l’Université. Il a partagé",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/6-7_soutien-technique-1024x683.jpg",
       "authorCheckedAt": "2026-07-28T12:28:52.402Z",
-      "_pageAuthor": "Solène Gerber",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/soutien-technique-a-ludem/",
       "sourceImageCreditFrom": "media",
@@ -1614,7 +1613,8 @@
       "sourceImageCreditImageKey": "6-7_soutien-technique.jpg",
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
-      "leadExcerpt": "Lors d’une assemblée universitaire tenue le 16 mars dernier, le professeur agrégé à l’École de psychoéducation de la Faculté des arts et des sciences de l’UdeM Jean-Sébastien Fallu a soulevé des préoccupations concernant le soutien informatique à l’Université. Il a partagé plusieurs difficultés que lui et ses collègues ont vécues, notamment liées aux délais, aux procédures et à la complexité de certains outils numériques."
+      "leadExcerpt": "Lors d’une assemblée universitaire tenue le 16 mars dernier, le professeur agrégé à l’École de psychoéducation de la Faculté des arts et des sciences de l’UdeM Jean-Sébastien Fallu a soulevé des préoccupations concernant le soutien informatique à l’Université. Il a partagé plusieurs difficultés que lui et ses collègues ont vécues, notamment liées aux délais, aux procédures et à la complexité de certains outils numériques.",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -1674,14 +1674,14 @@
       "excerpt": "Du 1 er au 9 mai, le festival Jamais Lu s’installe au théâtre Aux Écuries de Montréal, avec pour thème « Réparer nos Transmissions ». Le nouveau directeur artistique et cogénéral du festival, Éric Noël, partage son envie de mettre au cœur de cette édition la place des",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-1-1024x677.jpeg",
       "authorCheckedAt": "2026-07-28T12:28:54.598Z",
-      "_pageAuthor": "Bérénice Lemarié",
       "sourceImageCredit": "Photo : Maryse Boyce",
       "sourceImageCreator": "Maryse Boyce",
       "sourceImageCreditUrl": "https://quartierlibre.ca/festival-jamais-lu-2026/",
       "sourceImageCreditFrom": "rss-content",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "image-1.jpeg",
-      "sourceImageCreditRev": 9
+      "sourceImageCreditRev": 9,
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -1701,7 +1701,8 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "1.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -1767,7 +1768,8 @@
       "sourceImageCreditImageKey": "template-da-radio-3.jpg",
       "leadImageReady": true,
       "leadExcerpt": "Une odeur de vieux livres, des allées étroites, des kiosques débordant d’objets oubliés, le Marché aux puces Saint-Michel n’a pas changé. Alors que les friperies vintage et les reventes en ligne gagnent en popularité, ce précurseur tient bon. Il continue de séduire par ses trouvailles insolites et par ses trésors millésimés. Le Montréal Campus a poussé la porte du marché et est allé à la rencontre de ceux et de celles qui y tiennent boutique ou qui continuent de s’y aventurer.",
-      "_retainedFromCache": true
+      "_retainedFromCache": true,
+      "_pageAuthor": "Julianne Mondoloni"
     },
     {
       "source": "Montréal Campus",
@@ -1790,7 +1792,8 @@
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
       "leadExcerpt": "Entre le texto et l’appel téléphonique, il y a le message vocal. S’il est bien ancré chez les plus jeunes, comment se fait-il que certains adorent cette méthode de communication et que d’autres la boudent complètement? Le Montréal Campus a rencontré une experte et des étudiant(e)s de l’UQAM pour mieux comprendre le phénomène.",
-      "_retainedFromCache": true
+      "_retainedFromCache": true,
+      "_pageAuthor": "Magalie Lagacé"
     },
     {
       "source": "Zone Campus",
@@ -1811,7 +1814,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3417.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -1834,7 +1838,8 @@
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
       "leadExcerpt": "Le club de tricot de la Faculté des sciences de l’UQAM se réunit chaque semaine autour d’activités créatives pour contrer le stress engendré par des études en sciences. Le Montréal Campus a participé à une de leurs activités d’initiation au tricot.",
-      "_retainedFromCache": true
+      "_retainedFromCache": true,
+      "_pageAuthor": "Juliette Benoît"
     },
     {
       "source": "Montréal Campus",
@@ -1857,7 +1862,8 @@
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
       "leadExcerpt": "La chaîne de gyms montréalaise Le Vestiaire propose des cours de groupe aux futurs ou très jeunes parents. Poids adaptés, temps alloué à l’allaitement et ambiance décontractée : le fonctionnement des cours « Moms and Dads » est pensé spécialement pour les parents accompagnés de leurs bébés.",
-      "_retainedFromCache": true
+      "_retainedFromCache": true,
+      "_pageAuthor": "Jade Trudelle"
     },
     {
       "source": "Montréal Campus",
@@ -1880,7 +1886,8 @@
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
       "leadExcerpt": "« Êtes-vous prêt à réveiller l’homme que vous voulez être? », c’est ce qu’affiche le site Web de ManKind Project. Actif dans une vingtaine de pays, cet organisme a pour objectif de « développer un sentiment de masculinité sain et mature ».",
-      "_retainedFromCache": true
+      "_retainedFromCache": true,
+      "_pageAuthor": "Camélie Bourret et Félicitée Audet"
     },
     {
       "source": "Zone Campus",
@@ -1901,7 +1908,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "17c4541a-839d-48b8-b5aa-2cc81e91e3c8.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -1923,7 +1931,8 @@
       "sourceImageCreditImageKey": "wegovy-template-1.png",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "_retainedFromCache": true
+      "_retainedFromCache": true,
+      "_pageAuthor": "Juliette Benoît et Flora Paquet"
     },
     {
       "source": "Montréal Campus",
@@ -1946,7 +1955,8 @@
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
       "leadExcerpt": "Avec le dérèglement climatique, certain(e)s sont tenté(e)s de modifier leurs habitudes alimentaires pour donner un répit à la planète. Est-il possible de réaliser un basculement de régime alimentaire vers le végétalisme en un mois? À titre de cobaye, notre chroniqueur Pierre-Alexandre Larouche s’est prêté au jeu en devenant végétalien pendant trente jours.",
-      "_retainedFromCache": true
+      "_retainedFromCache": true,
+      "_pageAuthor": "Pierre-Alexandre Larouche"
     },
     {
       "source": "Montréal Campus",
@@ -1969,7 +1979,8 @@
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
       "leadExcerpt": "L’artiste québécois Alphonse Bisaillon remplit les salles de spectacle sans l’appui des algorithmes. Il construit son public lentement, une conversation à la fois. Une stratégie portée par le bouche-à-oreille presque à contre-courant dans une époque où la visibilité culturelle dépend largement des plateformes numériques.",
-      "_retainedFromCache": true
+      "_retainedFromCache": true,
+      "_pageAuthor": "Julianne Mondoloni"
     },
     {
       "source": "Montréal Campus",
@@ -1991,7 +2002,8 @@
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
       "leadExcerpt": "Sous-estimées et sous-représentées dans le milieu du plein air, les femmes ne composent que 14 % des guides au Québec. Si ce métier est encore considéré comme « non traditionnel pour les femmes » , des initiatives féminines apparaissent depuis quelques années pour faire progresser la parité dans le milieu.",
-      "_retainedFromCache": true
+      "_retainedFromCache": true,
+      "_pageAuthor": "Valentin Nucci"
     },
     {
       "source": "The Link",
@@ -2035,7 +2047,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3939.jpg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -2056,7 +2069,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_9786.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -2124,7 +2138,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3397-1.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -2145,7 +2160,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3405.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -2165,7 +2181,8 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "dany_portrait_vignette_zc-copie-1068x641-3-2.jpg",
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -2185,7 +2202,8 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "604823445_853711280773514_928679255052921821_n.jpg",
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -2205,7 +2223,8 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "672687004_1331193022389249_583407324812045529_n.jpg",
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Exil",
@@ -3876,16 +3895,16 @@
       "excerpt": "Le rôle des lesbiennes pendant l’épidémie du sida.",
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/lesbians-against-sida-_-sixtine.png",
       "featured": true,
-      "_pageAuthor": "Sixtine Nicolaÿ",
       "authorCheckedAt": "2026-07-28T20:38:13.510Z",
-      "leadExcerpt": "Cependant, l’épidémie du sida a modifié le rapport entre les deux groupes. Au cours de cette crise, les hommes homosexuels, qui en étaient les principales victimes, ont souvent été abandonnés, que ce soit par le gouvernement ou plus largement par la société. La stigmatisation et la marginalisation des homosexuels ont conduit certains professionnels de la santé à refuser de traiter les personnes at",
+      "_pageAuthor": "Sixtine Nicolaÿ",
       "sourceImageCredit": "Photo : Stu Doré",
       "sourceImageCreator": "Stu Doré",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "lesbians-against-sida-_-sixtine.png",
-      "sourceImageCreditRev": 9
+      "sourceImageCreditRev": 9,
+      "leadExcerpt": "Cependant, l’épidémie du sida a modifié le rapport entre les deux groupes. Au cours de cette crise, les hommes homosexuels, qui en étaient les principales victimes, ont souvent été abandonnés, que ce soit par le gouvernement ou plus largement par la société. La stigmatisation et la marginalisation des homosexuels ont conduit certains professionnels de la santé à refuser de traiter les personnes at"
     },
     {
       "source": "Le Délit",
@@ -3900,16 +3919,16 @@
       "excerpt": "Petit guide pratique pour écarter les femmes du canon littéraire.",
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/canon-litteraire.jpg",
       "featured": true,
-      "_pageAuthor": "Rose Langlois",
       "authorCheckedAt": "2026-07-28T20:38:13.927Z",
-      "leadExcerpt": "C’est la sécheresse totale dans le cerveau de bien des gens. Le vôtre, peut-être. Mais ne craignez rien, ce n’est pas de votre faute. Cette absence de figures féminines dans le canon littéraire tient à une multitude de facteurs qui se résument à l’oubli. Un oubli collectif. Un oubli volontaire.",
+      "_pageAuthor": "Rose Langlois",
       "sourceImageCredit": "Photo : Catvy Tran",
       "sourceImageCreator": "Catvy Tran",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "canon-litteraire.jpg",
-      "sourceImageCreditRev": 9
+      "sourceImageCreditRev": 9,
+      "leadExcerpt": "C’est la sécheresse totale dans le cerveau de bien des gens. Le vôtre, peut-être. Mais ne craignez rien, ce n’est pas de votre faute. Cette absence de figures féminines dans le canon littéraire tient à une multitude de facteurs qui se résument à l’oubli. Un oubli collectif. Un oubli volontaire."
     },
     {
       "source": "The McGill Daily",
