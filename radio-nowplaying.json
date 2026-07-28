@@ -1,47 +1,53 @@
 {
-  "updatedAt": "2026-07-28T18:16:20.153Z",
+  "updatedAt": "2026-07-28T20:01:57.319Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Chéri.e, j’arrive!",
         "source": "schedule",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Chéri.e, j’arrive!",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-28T18:15:55.783Z"
+      "checkedAt": "2026-07-28T20:01:30.437Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
+        "title": "Les sentinelles de l'art",
         "source": "api-live",
-        "start": "10:00",
+        "start": "12:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-collation"
+        "slug": "les-sentinelles-de-lart"
       },
       "next": {
-        "title": "Roche aux platines",
+        "title": "Le palmarès",
         "source": "api-live",
-        "start": "11:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364842.mp3",
-        "slug": "roche-aux-platines"
+        "start": "14:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/365232.mp3",
+        "slug": "palmares-de-cism"
       },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "Les sentinelles de l'art",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-28T18:15:57.785Z"
+      "checkedAt": "2026-07-28T20:01:32.851Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Voice of Korea",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "Montreal Sessions",
         "source": "api-live",
         "start": "15:00",
         "end": "17:00"
       },
+      "next": {
+        "title": "Off The Hour: Local Journalism Stories",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Voice of Korea",
+      "showTitle": "Montreal Sessions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-28T18:16:00.095Z"
+      "checkedAt": "2026-07-28T20:01:36.303Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Code Switch",
+        "title": "The Fluid Mosaic",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/code-switch"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
       },
       "next": {
-        "title": "Sonic Lit: A SpokenWeb Radio Show",
+        "title": "Cherry Vamp and the Sonic Coffin",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/sonic-lit-a-spokenweb-radio-show"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
       },
       "track": "",
-      "showTitle": "Code Switch",
+      "showTitle": "The Fluid Mosaic",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-28T18:16:13.539Z"
+      "checkedAt": "2026-07-28T20:01:49.918Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,20 +135,20 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-28T18:16:14.341Z"
+      "checkedAt": "2026-07-28T20:01:50.398Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Palmarès CHOQ.ca",
+        "title": "Le Studio",
         "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
+        "start": "18:00",
+        "end": "19:00",
+        "slug": "live"
       },
-      "track": "Junes - Bye 1000X",
+      "track": "La Sécurité - Chill Pill",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -153,7 +159,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-28T18:16:19.802Z"
+      "checkedAt": "2026-07-28T20:01:56.969Z"
     }
   }
 }
