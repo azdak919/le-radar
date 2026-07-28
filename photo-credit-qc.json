@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-28T21:02:44.086Z",
+  "updated": "2026-07-28T22:27:58.512Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
@@ -7,9 +7,24 @@
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 0,
-  "updatedCount": 0,
-  "citedNew": 0,
+  "checked": 2,
+  "updatedCount": 2,
+  "citedNew": 2,
   "fallbackNew": 0,
-  "samples": []
+  "samples": [
+    {
+      "title": "Ce que nous devons aux femmes",
+      "source": "Le Délit",
+      "credit": "Photo : Alexandre Gontier",
+      "cited": true,
+      "method": "media-credit-near"
+    },
+    {
+      "title": "Les femmes MAGA au service du patriarcat",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré",
+      "cited": true,
+      "method": "media-credit-featured"
+    }
+  ]
 }
