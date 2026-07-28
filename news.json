@@ -1,6 +1,6 @@
 {
-  "updated": "2026-07-28T06:44:17.407Z",
-  "updatedSlot": null,
+  "updated": "2026-07-28T09:58:53.061Z",
+  "updatedSlot": "2026-07-28T09:30:00.000Z",
   "count": 185,
   "freshnessSessions": 3,
   "sources": {
@@ -10,7 +10,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:00:00.000Z",
-      "lastFetchOk": "2026-07-28T06:43:16.755Z"
+      "lastFetchOk": "2026-07-28T09:57:59.067Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-07-28T06:43:18.352Z"
+      "lastFetchOk": "2026-07-28T09:58:00.036Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-03-25T11:00:00.000Z",
-      "lastFetchOk": "2026-07-28T06:43:28.667Z"
+      "lastFetchOk": "2026-07-28T09:58:05.273Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-07-06T12:00:00.000Z",
-      "lastFetchOk": "2026-07-28T06:43:29.509Z"
+      "lastFetchOk": "2026-07-28T09:58:05.830Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,7 +42,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-07-08T14:41:00.000Z",
-      "lastFetchOk": "2026-07-28T06:43:30.316Z"
+      "lastFetchOk": "2026-07-28T09:58:06.917Z"
     },
     "Zone Campus": {
       "fetchOk": true,
@@ -50,7 +50,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-07-28T06:43:31.706Z"
+      "lastFetchOk": "2026-07-28T09:58:07.836Z"
     },
     "L'Exemplaire": {
       "fetchOk": false,
@@ -66,7 +66,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-07-23T15:03:36.000Z",
-      "lastFetchOk": "2026-07-28T06:43:46.193Z"
+      "lastFetchOk": "2026-07-28T09:58:22.332Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -74,7 +74,7 @@
       "articleCount": 7,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-07-28T06:43:46.400Z"
+      "lastFetchOk": "2026-07-28T09:58:22.523Z"
     },
     "La Pige": {
       "fetchOk": true,
@@ -82,7 +82,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-06-22T14:36:10.000Z",
-      "lastFetchOk": "2026-07-28T06:43:48.494Z"
+      "lastFetchOk": "2026-07-28T09:58:23.170Z"
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,15 +90,15 @@
       "articleCount": 13,
       "freshArticleCount": 13,
       "lastArticle": "2026-02-25T14:38:32.764Z",
-      "lastFetchOk": "2026-07-28T06:43:52.510Z"
+      "lastFetchOk": "2026-07-28T09:58:24.459Z"
     },
     "The Tribune": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-07-21T13:21:49.000Z",
-      "lastFetchOk": "2026-07-28T06:43:52.721Z"
+      "lastFetchOk": null
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-07-28T06:43:52.972Z"
+      "lastFetchOk": "2026-07-28T09:58:36.785Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-07-28T06:43:53.148Z"
+      "lastFetchOk": "2026-07-28T09:58:36.969Z"
     }
   },
   "items": [
@@ -337,7 +337,8 @@
       "sourceImageCreditImageKey": "screen-shot-2026-07-21-at-9.14.03-am.png",
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
-      "leadExcerpt": "Although FIFA insists the Balogun decision is in line with FDC protocol, FIFA has not postponed a World Cup red card suspension since Manoel Francisco dos Santos—famously known as Garrincha —earned a red card in 1962 . This was another incident where extensive lobbying by the politically powerful enabled a beloved, penalized player to compete."
+      "leadExcerpt": "Although FIFA insists the Balogun decision is in line with FDC protocol, FIFA has not postponed a World Cup red card suspension since Manoel Francisco dos Santos—famously known as Garrincha —earned a red card in 1962 . This was another incident where extensive lobbying by the politically powerful enabled a beloved, penalized player to compete.",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -404,7 +405,8 @@
       "sourceImageCreditImageKey": "img_3443.png",
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
-      "leadExcerpt": "Known by many as Lumumba Vea , translating to “Lumumba Lives,” Mboladinga’s statue pose impersonates Patrice Lumumba , the DRC’s first prime minister. Patrice Lumumba was an active voice opposing Belgium’s colonization of Congo. He denounced the terror colonialism caused on many occasions during his time in office."
+      "leadExcerpt": "Known by many as Lumumba Vea , translating to “Lumumba Lives,” Mboladinga’s statue pose impersonates Patrice Lumumba , the DRC’s first prime minister. Patrice Lumumba was an active voice opposing Belgium’s colonization of Congo. He denounced the terror colonialism caused on many occasions during his time in office.",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -518,7 +520,8 @@
       "sourceImageCreditImageKey": "screen-shot-2026-06-26-at-11.23.19-am.png",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. I’m out of errands to run—other than bumping into someone from my high school every time I leave my house. If I have to have the, “How was your year?” small talk conversation one more time, I might actually explode. Please please please, if you have any tips on how to survive life in my hometown for"
+      "leadExcerpt": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. I’m out of errands to run—other than bumping into someone from my high school every time I leave my house. If I have to have the, “How was your year?” small talk conversation one more time, I might actually explode. Please please please, if you have any tips on how to survive life in my hometown for",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -541,7 +544,8 @@
       "sourceImageCreditImageKey": "screen-shot-2026-06-23-at-1.21.20-pm.png",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "Tanzanian-American-Canadian artist Shanna Strauss ’s screenprint triad Kanga I, II, III joined the student-led digital art exhibition Projections: SANKOFA on Feb. 23. Displayed in the Lorne M. Trottier Building mezzanine, the Kanga series combines negative space with vibrant colour to assert the unifying power of shared cultural identity."
+      "leadExcerpt": "Tanzanian-American-Canadian artist Shanna Strauss ’s screenprint triad Kanga I, II, III joined the student-led digital art exhibition Projections: SANKOFA on Feb. 23. Displayed in the Lorne M. Trottier Building mezzanine, the Kanga series combines negative space with vibrant colour to assert the unifying power of shared cultural identity.",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -555,14 +559,14 @@
       "date": "2026-06-22T14:36:10.000Z",
       "excerpt": "« Les gens ont tendance à frapper un mur au moment de la retraite par manque de préparation », estime Le directeur général de la Fédération de l’âge d’or du Québec (Fadoq) pour la région Saguenay-Lac-Saint-Jean – Ungava, Patrice Saint-Pierre. (Photo : Léa Morin-Letort) L’heure",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/06/Bruno-Cormier-retraite-benevole.png",
-      "leadExcerpt": "« Les gens ont tendance à frapper un mur au moment de la retraite par manque de préparation », estime Le directeur général de la Fédération de l’âge d’or du Québec (Fadoq) pour la région Saguenay-Lac-Saint-Jean – Ungava, Patrice Saint-Pierre. (Photo : Léa Morin-Letort)",
       "sourceImageCredit": "Photo : Léa Morin-Letort",
       "sourceImageCreator": "Léa Morin-Letort",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/06/22/se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille/?utm_source=rss&utm_medium=rss&utm_campaign=se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille",
       "sourceImageCreditFrom": "rss-content",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "bruno-cormier-retraite-benevole.png",
-      "sourceImageCreditRev": 9
+      "sourceImageCreditRev": 9,
+      "leadExcerpt": "« Les gens ont tendance à frapper un mur au moment de la retraite par manque de préparation », estime Le directeur général de la Fédération de l’âge d’or du Québec (Fadoq) pour la région Saguenay-Lac-Saint-Jean – Ungava, Patrice Saint-Pierre. (Photo : Léa Morin-Letort)"
     },
     {
       "source": "The Tribune",
@@ -585,7 +589,8 @@
       "sourceImageCreditImageKey": "untitled_artwork.jpeg",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "Growing adoption of AI systems, which frequently hallucinate and possess ingrained biases against racialized groups , both negatively impacts litigants, and violates the Canadian justice system’s tenets of fairness and impartiality. Thus, AI safety —the outlining of AI risks and formation of computational and governance frameworks to address these risks—is a legal necessity."
+      "leadExcerpt": "Growing adoption of AI systems, which frequently hallucinate and possess ingrained biases against racialized groups , both negatively impacts litigants, and violates the Canadian justice system’s tenets of fairness and impartiality. Thus, AI safety —the outlining of AI risks and formation of computational and governance frameworks to address these risks—is a legal necessity.",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -652,7 +657,8 @@
       "sourceImageCreditImageKey": "screen-shot-2026-05-28-at-8.32.20-am.png",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "American artist and poet Theodore A. Harris is a genius of the political collage . Born in Manhattan, New York and raised in Philadelphia, Pennsylvania, Harris brings an autobiographical focus to the subversive , polysemous medium of the collage, one shaped by his upbringing, mentors, and personal experiences with anti-Black discrimination and American capitalism’s exploitative nature."
+      "leadExcerpt": "American artist and poet Theodore A. Harris is a genius of the political collage . Born in Manhattan, New York and raised in Philadelphia, Pennsylvania, Harris brings an autobiographical focus to the subversive , polysemous medium of the collage, one shaped by his upbringing, mentors, and personal experiences with anti-Black discrimination and American capitalism’s exploitative nature.",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -721,7 +727,8 @@
       "sourceImageCreditImageKey": "screen-shot-2026-05-22-at-7.42.52-am.png",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "On May 16, hundreds of protestors gathered in front of the Consulate General of Israel in Montreal to commemorate the 78th anniversary of the Nakba ( Nakba Day ). Demonstrators waved Palestinian, Rotisken’rakéhte ( Mohawk Warrior Society ), and post-1979 revolution Iranian flags amidst the music of live drummers."
+      "leadExcerpt": "On May 16, hundreds of protestors gathered in front of the Consulate General of Israel in Montreal to commemorate the 78th anniversary of the Nakba ( Nakba Day ). Demonstrators waved Palestinian, Rotisken’rakéhte ( Mohawk Warrior Society ), and post-1979 revolution Iranian flags amidst the music of live drummers.",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -984,14 +991,13 @@
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-2-768x1024.jpeg",
       "authorCheckedAt": "2026-07-27T11:47:09.329Z",
       "_pageAuthor": "Ulysse Taillard-Hodez",
-      "leadExcerpt": "Mme Fournier Dubé a insisté sur le fait que les enseignant·e·s sont les véritables « agents de changement ». Son rôle n’est pas d’imposer un cadre scientifique rigide, mais de vulgariser la recherche pour l’adapter aux besoins du terrain.",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "image-2.jpeg",
-      "sourceImageCreditRev": 9
+      "sourceImageCreditRev": 9,
+      "leadExcerpt": "Mme Fournier Dubé a insisté sur le fait que les enseignant·e·s sont les véritables « agents de changement ». Son rôle n’est pas d’imposer un cadre scientifique rigide, mais de vulgariser la recherche pour l’adapter aux besoins du terrain."
     },
     {
       "source": "Quartier Libre",
@@ -1038,7 +1044,8 @@
       "sourceImageCreditImageKey": "renderedimage-1.jpeg",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "One week before The Tribune ’s first production night, I found myself in Toronto in a black dress, black shoes, and sparkles on my eyelids. I was at the funeral of Fabienne de Cartier, a former News Editor."
+      "leadExcerpt": "One week before The Tribune ’s first production night, I found myself in Toronto in a black dress, black shoes, and sparkles on my eyelids. I was at the funeral of Fabienne de Cartier, a former News Editor.",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -1061,7 +1068,8 @@
       "sourceImageCreditImageKey": "renderedimage.jpeg",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "On May 9, Students for Palestine’s Honour and Resistance ( SPHR ) at McGill hosted a gathering to commemorate the two-year anniversary of Montreal community members establishing the Gaza Solidarity Encampment on McGill’s Lower Field. 743 days later, community members of all ages met for a potluck, arts-and-crafts, and a letter-writing campaign for Palestinian political prisoners, intended to raise awareness of, and inspire solidarity against, Israel’s prison conditions."
+      "leadExcerpt": "On May 9, Students for Palestine’s Honour and Resistance ( SPHR ) at McGill hosted a gathering to commemorate the two-year anniversary of Montreal community members establishing the Gaza Solidarity Encampment on McGill’s Lower Field. 743 days later, community members of all ages met for a potluck, arts-and-crafts, and a letter-writing campaign for Palestinian political prisoners, intended to raise awareness of, and inspire solidarity against, Israel’s prison conditions.",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -2038,7 +2046,8 @@
       "sourceImageCreditImageKey": "untitled_artwork-149.png",
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
-      "leadExcerpt": "Across the 18 months she has lived in her Plateau apartment, Alice Lee, U3 Arts & Science, has had her water shut off 13 times. Most recently—in February 2026—she turned on her tap to find the water running yellow, as she recounted in an interview with The Tribune . Lee explained that her building’s maintenance worker was unequipped to deal with the problem."
+      "leadExcerpt": "Across the 18 months she has lived in her Plateau apartment, Alice Lee, U3 Arts & Science, has had her water shut off 13 times. Most recently—in February 2026—she turned on her tap to find the water running yellow, as she recounted in an interview with The Tribune . Lee explained that her building’s maintenance worker was unequipped to deal with the problem.",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -2061,7 +2070,8 @@
       "sourceImageCreditImageKey": "untitled-11.jpeg",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "The panelists next reflected on how, in the past decade, journalists across Canada have repeatedly communicated their discontent with mainstream media’s vague coverage of Palestine through open letters . However, as Malik—director, writer, and former CBC producer for the fifth estate , Big News , and For the Culture —noted, these letters were often met with minimal institutional accountability—if not backlash and aggression."
+      "leadExcerpt": "The panelists next reflected on how, in the past decade, journalists across Canada have repeatedly communicated their discontent with mainstream media’s vague coverage of Palestine through open letters . However, as Malik—director, writer, and former CBC producer for the fifth estate , Big News , and For the Culture —noted, these letters were often met with minimal institutional accountability—if not backlash and aggression.",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -2206,7 +2216,8 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "abbey-locker-sports-1.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -2330,7 +2341,8 @@
       "imageCreator": "Mike Pennington",
       "imageLicense": "CC BY-SA 2.0",
       "imageProvider": "wikimedia",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Better_Together_campaign_tent_at_the_Unst_Show,_Haroldswick_-_geograph.org.uk_-_4144733.jpg"
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Better_Together_campaign_tent_at_the_Unst_Show,_Haroldswick_-_geograph.org.uk_-_4144733.jpg",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -2598,7 +2610,8 @@
       "imageCreator": "||-SAM Nasim-||",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/65732636@N06/6753143443"
+      "imageSourceUrl": "https://www.flickr.com/photos/65732636@N06/6753143443",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -2619,7 +2632,8 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "rup_otb.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -2640,7 +2654,8 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "letter-to-ed-jan-28.png",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -2662,7 +2677,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "untitled_artwork-149.png",
       "sourceImageCreditRev": 7,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -2683,7 +2699,8 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "img_2550.png",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -2704,7 +2721,8 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "ae1_anna-seger-and-katya-loidap.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -2725,7 +2743,8 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "scitech1_annaseger.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "The Campus",
@@ -3367,29 +3386,6 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "Le retard et les bienfaits du temps long",
-      "link": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
-      "author": "Dalia Djazouli",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Imposer sa propre subjectivité temporelle.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/retard-1-scaled.jpeg",
-      "featured": true,
-      "_pageAuthor": "Dalia Djazouli",
-      "sourceImageCredit": "Photo : Félix Fournier",
-      "sourceImageCreator": "Félix Fournier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "retard-1.jpeg",
-      "leadImageReady": true,
-      "leadExcerpt": "L’imposition de la ponctualité comme norme suprême ne se cantonne pas à notre journal étudiant : elle est propre à nos sociétés industrialisées, dont la conception du temps est particulièrement rigoureuse et utilitariste. La temporalité est perçue comme un objet tangible, que l’on peut et doit rentabiliser autant que possible. Les journées sont compartimentées, et chaque heure doit être mise à profit."
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
       "title": "Rassembler pour mieux diviser",
       "link": "https://www.delitfrancais.com/2026/03/25/rassembler-pour-mieux-diviser/",
       "author": "Catherine Brunet Rodriguez",
@@ -3467,14 +3463,14 @@
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/coinqueer-1.jpeg",
       "featured": true,
       "_pageAuthor": "Joséphine Miton",
-      "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie.",
       "sourceImageCredit": "Photo : Félix Fournier",
       "sourceImageCreator": "Félix Fournier",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "coinqueer-1.jpeg",
-      "sourceImageCreditRev": 9
+      "sourceImageCreditRev": 9,
+      "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie."
     },
     {
       "source": "Le Délit",
@@ -3490,14 +3486,37 @@
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Creation-sans-titre-2-768x1024.png",
       "featured": true,
       "_pageAuthor": "Elie Nguyen",
-      "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance.",
       "sourceImageCredit": "Photo : Elie Nguyen",
       "sourceImageCreator": "Elie Nguyen",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "creation-sans-titre-2.png",
-      "sourceImageCreditRev": 9
+      "sourceImageCreditRev": 9,
+      "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance."
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "Le retard et les bienfaits du temps long",
+      "link": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
+      "author": "Dalia Djazouli",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Imposer sa propre subjectivité temporelle.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/retard-1-scaled.jpeg",
+      "featured": true,
+      "_pageAuthor": "Dalia Djazouli",
+      "sourceImageCredit": "Photo : Félix Fournier",
+      "sourceImageCreator": "Félix Fournier",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "retard-1.jpeg",
+      "leadImageReady": true,
+      "leadExcerpt": "L’imposition de la ponctualité comme norme suprême ne se cantonne pas à notre journal étudiant : elle est propre à nos sociétés industrialisées, dont la conception du temps est particulièrement rigoureuse et utilitariste. La temporalité est perçue comme un objet tangible, que l’on peut et doit rentabiliser autant que possible. Les journées sont compartimentées, et chaque heure doit être mise à profit."
     },
     {
       "source": "The McGill Daily",
@@ -3850,14 +3869,14 @@
       "featured": true,
       "authorCheckedAt": "2026-07-28T03:53:30.395Z",
       "_pageAuthor": "Eugénie St-Pierre",
-      "leadImageReady": true,
       "sourceImageCredit": "Photo : Alexandre Gontier",
       "sourceImageCreator": "Alexandre Gontier",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/ce-que-nous-devons-aux-femmes/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "capture-decran-le-2026-03-22-a-17.22.07.png",
-      "sourceImageCreditRev": 9
+      "sourceImageCreditRev": 9,
+      "leadImageReady": true
     },
     {
       "source": "Le Délit",
@@ -3874,14 +3893,14 @@
       "featured": true,
       "authorCheckedAt": "2026-07-28T03:53:30.723Z",
       "_pageAuthor": "Anonyme",
-      "leadExcerpt": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer en instrumentalisant certaines femmes pour reproduire les structures qui les subordonnent. C’est à travers ce mécanisme d’opacité que sa présence se resserre sur la société, et que ses contradictions se dissimulent sous le couvert de liberté individuelle, de traditions ou de choix personnels.",
       "sourceImageCredit": "Photo : Stu Doré",
       "sourceImageCreator": "Stu Doré",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "maga_marius.png",
-      "sourceImageCreditRev": 9
+      "sourceImageCreditRev": 9,
+      "leadExcerpt": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer en instrumentalisant certaines femmes pour reproduire les structures qui les subordonnent. C’est à travers ce mécanisme d’opacité que sa présence se resserre sur la société, et que ses contradictions se dissimulent sous le couvert de liberté individuelle, de traditions ou de choix personnels."
     },
     {
       "source": "The McGill Daily",
