@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-28T07:15:00.969Z",
+  "updatedAt": "2026-07-28T08:54:26.705Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-28T07:14:39.643Z"
+      "checkedAt": "2026-07-28T08:54:03.297Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix anglo",
-        "source": "api-live",
-        "start": "22:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-anglo"
-      },
-      "next": {
         "title": "L'Alter Ego (reprise)",
         "source": "api-live",
         "start": "00:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/365221.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "lalter-ego"
       },
+      "next": {
+        "title": "Mix Franco",
+        "source": "api-live",
+        "start": "02:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/365185.mp3",
+        "slug": "mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix anglo",
+      "showTitle": "L'Alter Ego (reprise)",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,7 +51,7 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-28T07:14:41.456Z"
+      "checkedAt": "2026-07-28T08:54:05.430Z"
     },
     "ckut": {
       "id": "ckut",
@@ -77,7 +77,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-28T07:14:44.152Z"
+      "checkedAt": "2026-07-28T08:54:08.492Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -104,7 +104,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-28T07:14:57.659Z"
+      "checkedAt": "2026-07-28T08:54:22.541Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-28T07:14:58.804Z"
+      "checkedAt": "2026-07-28T08:54:23.005Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +142,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Pure Wrath — Bleak Days Ahead, Pt. II",
+      "track": "Wesley Joseph - Pluto Baby",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -153,7 +153,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-28T07:15:00.619Z"
+      "checkedAt": "2026-07-28T08:54:26.354Z"
     }
   }
 }
