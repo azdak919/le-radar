@@ -1,33 +1,33 @@
 {
-  "updatedAt": "2026-07-28T20:01:57.319Z",
+  "updatedAt": "2026-07-28T21:39:49.316Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
-      },
-      "next": {
         "title": "Les Arshitechs du Son",
         "source": "schedule",
         "start": "17:30",
         "end": "18:30",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "Mercredi Bonbon",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/mercredi-bonbon/"
+      },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-28T20:01:30.437Z"
+      "checkedAt": "2026-07-28T21:39:21.154Z"
     },
     "cism": {
       "id": "cism",
@@ -57,25 +57,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-28T20:01:32.851Z"
+      "checkedAt": "2026-07-28T21:39:23.414Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Montreal Sessions",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "Off The Hour: Local Journalism Stories",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Prison Radio",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Montreal Sessions",
+      "showTitle": "Off The Hour: Local Journalism Stories",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -83,34 +83,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-28T20:01:36.303Z"
+      "checkedAt": "2026-07-28T21:39:26.135Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Fluid Mosaic",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
-      },
-      "next": {
         "title": "Cherry Vamp and the Sonic Coffin",
         "source": "schedule",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
       },
+      "next": {
+        "title": "Bikini Brrroadcast",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
+      },
       "track": "",
-      "showTitle": "The Fluid Mosaic",
+      "showTitle": "Cherry Vamp and the Sonic Coffin",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-28T20:01:49.918Z"
+      "checkedAt": "2026-07-28T21:39:39.761Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,7 +135,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-28T20:01:50.398Z"
+      "checkedAt": "2026-07-28T21:39:40.480Z"
     },
     "choq": {
       "id": "choq",
@@ -148,7 +148,7 @@
         "end": "19:00",
         "slug": "live"
       },
-      "track": "La Sécurité - Chill Pill",
+      "track": "Coup dur - Tu Dis Des Choses",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -159,7 +159,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-28T20:01:56.969Z"
+      "checkedAt": "2026-07-28T21:39:48.965Z"
     }
   }
 }
