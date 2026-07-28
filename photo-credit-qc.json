@@ -1,15 +1,93 @@
 {
-  "updated": "2026-07-28T16:03:24.507Z",
+  "updated": "2026-07-28T17:25:02.887Z",
   "total": 185,
-  "withImage": 165,
-  "withCredit": 165,
-  "cited": 128,
+  "withImage": 168,
+  "withCredit": 168,
+  "cited": 130,
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 0,
-  "updatedCount": 0,
-  "citedNew": 0,
-  "fallbackNew": 0,
-  "samples": []
+  "checked": 11,
+  "updatedCount": 11,
+  "citedNew": 8,
+  "fallbackNew": 3,
+  "samples": [
+    {
+      "title": "A conversation with Ehab Lotayef: A lifelong voyage to the conscience of humanity",
+      "source": "The Tribune",
+      "credit": "Photo : Zoe Lee",
+      "cited": true,
+      "method": "figcaption-attribution"
+    },
+    {
+      "title": "Parc-Extension tenants rally against abusive rent hikes, demanding effective rent control",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Senior spotlight: Sophie Courville, Ayoub Sabri, and Erik Linseisen",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "source": "La Pige",
+      "credit": "Photo : Léa Morin-Letort",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "La performance de l’homosexualité : un privilège ?",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "L’épidémie de la nonchalance",
+      "source": "Le Délit",
+      "credit": "Photo : Elie Nguyen",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Les femmes MAGA au service du patriarcat",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "source": "Quartier Libre",
+      "credit": "Photo : Maryse Boyce",
+      "cited": true,
+      "method": "figcaption-copyright"
+    },
+    {
+      "title": "The apprenticeship of public voice",
+      "source": "The Link",
+      "credit": "Illustration: Halle Keays",
+      "cited": true,
+      "method": "figcaption-trailing"
+    }
+  ]
 }
