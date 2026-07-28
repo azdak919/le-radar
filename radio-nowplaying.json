@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-28T04:12:34.781Z",
+  "updatedAt": "2026-07-28T07:15:00.969Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-28T04:12:09.603Z"
+      "checkedAt": "2026-07-28T07:14:39.643Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rock à la casbah",
+        "title": "Mix anglo",
         "source": "api-live",
-        "start": "20:00",
+        "start": "22:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "rock-a-la-casbah"
+        "slug": "mix-anglo"
       },
       "next": {
-        "title": "Toute est dans toute (reprise)",
+        "title": "L'Alter Ego (reprise)",
         "source": "api-live",
-        "start": "21:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/365028.mp3",
-        "slug": "tout-est-dans-toute"
+        "start": "00:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/365221.mp3",
+        "slug": "lalter-ego"
       },
       "track": "",
-      "showTitle": "Rock à la casbah",
+      "showTitle": "Mix anglo",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-28T04:12:11.485Z"
+      "checkedAt": "2026-07-28T07:14:41.456Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Harmony Express",
+        "title": "Attik / Show For Children",
         "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
+        "start": "03:00",
+        "end": "05:00"
       },
       "next": {
-        "title": "Pirate et Libres",
+        "title": "The Beat Power Hour",
         "source": "api-live",
-        "start": "02:00",
-        "end": "03:00"
+        "start": "05:00",
+        "end": "07:00"
       },
       "track": "",
-      "showTitle": "Harmony Express",
+      "showTitle": "Attik / Show For Children",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-28T04:12:13.892Z"
+      "checkedAt": "2026-07-28T07:14:44.152Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Floydian Slip",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "01:00",
-        "url": "http://www.cjlo.com/shows/floydian-slip"
-      },
-      "next": {
         "title": "CJLO Late Night",
         "source": "schedule",
         "start": "01:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
+      "next": {
+        "title": "Hip's Time to Wake Hop",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
+      },
       "track": "",
-      "showTitle": "Floydian Slip",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-28T04:12:27.196Z"
+      "checkedAt": "2026-07-28T07:14:57.659Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-28T04:12:27.981Z"
+      "checkedAt": "2026-07-28T07:14:58.804Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +142,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Immolation — Bend Towards The Dark",
+      "track": "Pure Wrath — Bleak Days Ahead, Pt. II",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -153,7 +153,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-28T04:12:34.430Z"
+      "checkedAt": "2026-07-28T07:15:00.619Z"
     }
   }
 }
