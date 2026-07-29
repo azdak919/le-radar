@@ -451,6 +451,10 @@ if (existsSync(archiveHub)) {
   assert(archiveHtml.includes('"@type":"CreativeWork"'), 'archives : attribution externe factuelle requise');
   assert(!archiveHtml.includes('"@type":"NewsArticle"'), 'archives : LE-RADAR.ca ne doit pas devenir l’éditeur d’un article externe');
   assert(!archiveHtml.includes('<img class="seo-archive'), 'archives : image externe sans licence non republiée');
+  assert(archiveHtml.includes('>Le Trait d\'Union</a>'), 'archives : Le Trait d’Union doit figurer dans l’annuaire');
+  assert(!archiveHtml.includes('Catalogue expérimental'), 'archives : libellé interne superflu interdit');
+  assert(!archiveHtml.includes('article vérifié'), 'archives : compteurs techniques superflus interdits');
+  assert(!archiveHtml.includes('Consulter les autres archives par publication'), 'archives : catégories internes superflues interdites');
 }
 
 // La <h1> hérite sinon de la marge par défaut du navigateur → mât décadré.
