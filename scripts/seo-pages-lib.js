@@ -47,6 +47,9 @@ function renderNativeTuner() {
 //  Utilitaires
 // ═══════════════════════════════════════════════════════════════════════════
 
+/** Attributs des liens hors site : nouvel onglet + isolation tabnabbing. */
+const EXTERNAL_LINK_ATTRS = ' target="_blank" rel="noopener noreferrer"';
+
 function escapeHtml(text = '') {
   return String(text)
     .replace(/&/g, '&amp;')
@@ -177,6 +180,7 @@ const T = {
     byline: 'Par',
     readMore: 'Lire la suite →',
     allSourceArticles: 'Voir tous les articles de {name}',
+    historicalArchive: 'Consulter les archives historiques vérifiées',
     noHeadlines: 'Aucun article récent au moment de la dernière mise à jour.',
     schedule: 'À l’antenne cette semaine',
     scheduleLive: 'À l’antenne',
@@ -253,6 +257,7 @@ const T = {
     byline: 'By',
     readMore: 'Read more →',
     allSourceArticles: 'View all articles from {name}',
+    historicalArchive: 'Browse verified historical archives',
     noHeadlines: 'No recent articles as of the last update.',
     schedule: 'On air this week',
     scheduleLive: 'On air',
@@ -478,7 +483,7 @@ ${p}</footer>`;
  */
 function renderPage({
   lang, path, altPath, title, description, h1, eyebrow, crumbs = [],
-  bodyHtml, jsonLd, siteBase, updated,
+  bodyHtml, jsonLd, siteBase, updated, robots = 'index,follow', alternate = true,
 }) {
   const t = T[lang];
   const depth = path.split('/').filter(Boolean).length;
@@ -501,14 +506,15 @@ function renderPage({
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content="${escapeHtml(description)}" />
+    <meta name="robots" content="${escapeHtml(robots)}" />
     <meta name="theme-color" content="#ffffff" />
     <meta http-equiv="Content-Security-Policy" content="${CSP}" />
     <title>${escapeHtml(title)}</title>
     <link rel="canonical" href="${escapeHtml(canonical)}" />
-    <link rel="alternate" hreflang="fr-CA" href="${escapeHtml(lang === 'fr' ? canonical : altUrl)}" />
+${alternate ? `    <link rel="alternate" hreflang="fr-CA" href="${escapeHtml(lang === 'fr' ? canonical : altUrl)}" />
     <link rel="alternate" hreflang="en-CA" href="${escapeHtml(lang === 'en' ? canonical : altUrl)}" />
     <!-- x-default → français : c'est la langue principale du projet. -->
-    <link rel="alternate" hreflang="x-default" href="${escapeHtml(frUrl)}" />
+    <link rel="alternate" hreflang="x-default" href="${escapeHtml(frUrl)}" />` : ''}
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="${SITE_NAME}" />
@@ -574,7 +580,7 @@ ${bodyHtml}
 function factsList(rows) {
   const items = rows.filter((r) => r && r.value).map((r) => {
     const value = r.href
-      ? `<a href="${escapeHtml(r.href)}"${r.external ? ' rel="noopener"' : ''}${r.ariaLabel ? ` aria-label="${escapeHtml(r.ariaLabel)}"` : ''}>${escapeHtml(r.value)}</a>`
+      ? `<a href="${escapeHtml(r.href)}"${r.external ? EXTERNAL_LINK_ATTRS : ''}${r.ariaLabel ? ` aria-label="${escapeHtml(r.ariaLabel)}"` : ''}>${escapeHtml(r.value)}</a>`
       : escapeHtml(r.value);
     return `          <div class="seo-fact"><dt>${escapeHtml(r.label)}</dt><dd>${value}</dd></div>`;
   });
@@ -650,13 +656,13 @@ function headlineList(items, t) {
     const published = headlineDateTime(it.date, t.lang);
     const { text: brief, truncated } = headlineBrief(it.leadExcerpt || it.excerpt);
     return `          <li class="seo-headline">`
-      + `<a class="seo-headline__title" href="${escapeHtml(it.link)}" rel="noopener">${escapeHtml(it.title)}</a>`
+      + `<a class="seo-headline__title" href="${escapeHtml(it.link)}"${EXTERNAL_LINK_ATTRS}>${escapeHtml(it.title)}</a>`
       + `<p class="seo-headline__meta">`
       + (published ? `<time datetime="${escapeHtml(published.machine)}">${escapeHtml(published.label)}</time>` : '')
       + (it.author ? `<span class="seo-headline__by">${escapeHtml(t.byline)} ${escapeHtml(it.author)}</span>` : '')
       + '</p>'
       + (brief ? `<p class="seo-headline__brief">${escapeHtml(brief)}${truncated ? ' …' : ''} ` : '<p class="seo-headline__brief">')
-      + `<a class="seo-headline__more" href="${escapeHtml(it.link)}" rel="noopener">${escapeHtml(t.readMore)}</a></p>`
+      + `<a class="seo-headline__more" href="${escapeHtml(it.link)}"${EXTERNAL_LINK_ATTRS}>${escapeHtml(t.readMore)}</a></p>`
       + '</li>';
   });
   return `      <ul class="seo-headlines">\n${rows.join('\n')}\n      </ul>\n`;
@@ -818,7 +824,7 @@ function scheduleTable(grid, t, { checkedAt = null, verifiedWeekOf = null, stati
           : escapeHtml(s.start);
         const title = escapeHtml(s.title || '');
         const label = s.url
-          ? `<a href="${escapeHtml(s.url)}" rel="noopener">${title}</a>`
+          ? `<a href="${escapeHtml(s.url)}"${EXTERNAL_LINK_ATTRS}>${title}</a>`
           : title;
         const state = slotStates.get(s);
         const classes = [overnight && 'seo-slot--overnight', state && `seo-slot--${state}`]

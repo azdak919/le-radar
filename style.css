@@ -14,8 +14,14 @@
   --rule-strong: #14161a;
   --accent: #6c2163;       /* pourpre de marque (bleu QC + rouge Canada) */
   --accent-dark: #4f1749;
-  --live: #c8102e;         /* rouge « en direct » — sémantique diffusion live */
+  --live: #c8102e;         /* rouge « en direct » — bouton play, pastille solide */
   --live-dark: #9c0c24;
+  /* Statuts d’antenne — partagés barre radio + grilles SEO (même teinte). */
+  --status-live: #c8102e;          /* en ondes, lisible sur fond clair */
+  --status-live-soft: #ff7d6e;     /* coral EN ONDES / titre live (bandeau sombre) */
+  --status-upcoming: #9a6900;      /* à venir, lisible sur fond clair */
+  --status-upcoming-soft: #e8c07a; /* ambre « À venir » (bandeau sombre) */
+  --status-upcoming-mid: #bd8a18;  /* bordure / lueur ambre */
   --radio: #003da5;        /* bleu officiel du Québec — volet radio / syntoniseur */
   --radio-bright: #5d9be0; /* version éclaircie pour le bandeau sombre */
   --tuner-bg: #111317; /* synthé — mobile + fallback (couleur d’origine) */
@@ -1188,10 +1194,11 @@ html[data-script-dir="rtl"] .wordmark-full {
 }
 
 .tuner-label { flex-shrink: 0; }
-/* Coral « en ondes » — partagé avec le titre d’émission (À l’antenne) sur bureau. */
+/* Coral « en ondes » — même token que les grilles SEO (--status-live-soft). */
 .tuner {
-  --tuner-onair-live: #ff7d6e;
+  --tuner-onair-live: var(--status-live-soft);
   --tuner-onair-idle: rgba(255, 255, 255, 0.42);
+  --tuner-upcoming: var(--status-upcoming-soft);
 }
 .tuner-onair {
   display: inline-flex;
@@ -2250,8 +2257,8 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
 
   /*
    * Bureau — couleur de l'émission selon le statut :
-   *  - live (en cours) = même coral que « EN ONDES »
-   *  - upcoming (à venir / entre créneaux) = ambre distinct (pas le live)
+   *  - live (en cours) = même coral que « EN ONDES » (--status-live-soft)
+   *  - upcoming (à venir / entre créneaux) = même ambre que la grille SEO
    *  - idle / empty = neutre
    */
   .tuner.is-playing .tuner-nowair.is-live .tuner-nowair-label,
@@ -2260,10 +2267,10 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   }
   .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-label,
   .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-title {
-    color: #e8c07a;
+    color: var(--tuner-upcoming);
   }
   .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-sub {
-    color: rgba(232, 192, 122, 0.72);
+    color: color-mix(in srgb, var(--tuner-upcoming) 72%, transparent);
   }
   .tuner.is-playing .tuner-nowair.is-idle .tuner-nowair-label,
   .tuner.is-playing .tuner-nowair.is-idle .tuner-nowair-title,
@@ -2277,7 +2284,7 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   }
   .tuner.is-external .tuner-nowair.is-upcoming .tuner-nowair-label,
   .tuner.is-external .tuner-nowair.is-upcoming .tuner-nowair-title {
-    color: #c9a86a;
+    color: color-mix(in srgb, var(--status-upcoming-soft) 78%, #000);
   }
 
   /* Ne jamais masquer le panneau en display:none sur bureau (collapse de colonne). */

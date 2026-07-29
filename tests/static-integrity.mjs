@@ -186,9 +186,19 @@ assert(!/Crédit photo\s*:/i.test(laPigePage), 'journal : crédits photo absents
 assert(!/Cégep de Jonquière \(Saguenay/u.test(laPigePage), 'journal : région redondante dans le chapeau interdite');
 assert(laPigePage.includes('?source=La%20Pige#news-list'), 'journal : retour filtré vers tous les articles requis');
 const seoPagesCss = readFileSync(join(root, 'seo-pages.css'), 'utf8');
-assert(seoPagesCss.includes('border-left-color: var(--radio)'), 'horaire : créneau actif bleu requis');
+// Liens hors site (ville, région, site officiel, articles) → nouvel onglet.
+assert(
+  readFileSync(join(root, 'scripts/seo-pages-lib.js'), 'utf8').includes('EXTERNAL_LINK_ATTRS'),
+  'SEO : attributs target=_blank partagés pour les liens externes requis',
+);
+assert(
+  /target="_blank" rel="noopener noreferrer"/.test(readFileSync(join(root, 'radios/cfak/index.html'), 'utf8')),
+  'radio CFAK : liens externes (région, site…) doivent ouvrir un nouvel onglet',
+);
+assert(seoPagesCss.includes('var(--status-live)'), 'horaire : créneau actif = rouge EN ONDES requis');
+assert(seoPagesCss.includes('var(--status-live-soft)'), 'horaire : coral bandeau sombre requis');
+assert(seoPagesCss.includes('var(--status-upcoming-soft)'), 'horaire : ambre « À venir » requis');
 assert(seoPagesCss.includes('.seo-slot--playing'), 'horaire : état de lecture réelle requis');
-assert(seoPagesCss.includes('border-left-color: var(--live)'), 'horaire : créneau en lecture rouge requis');
 assert(seoPagesCss.includes('animation: seo-live-pulse'), 'horaire : pulsation live requise');
 assert(seoPagesCss.includes('animation: seo-upcoming-pulse'), 'horaire : pulsation du prochain créneau requise');
 assert(seoPagesCss.includes('prefers-reduced-motion'), 'horaire : réduction des animations requise');
@@ -416,11 +426,29 @@ assert.deepEqual(
   `radios/ckut/index.html : ordre des jours attendu lundi→dimanche, obtenu ${ckutDays.join(', ')}`
 );
 
+// Catalogue historique : sitemap séparé, canonique local et aucune
+// réattribution de la paternité des articles externes à LE-RADAR.ca.
+const archiveSitemap = readFileSync(join(root, 'sitemap-archives.xml'), 'utf8');
+const archiveRobots = readFileSync(join(root, 'robots.txt'), 'utf8');
+assert(archiveRobots.includes('Sitemap: https://le-radar.ca/sitemap-archives.xml'), 'robots.txt : sitemap historique explicite requis');
+assert(archiveSitemap.includes('<urlset'), 'sitemap-archives.xml : urlset requis');
+const archiveHub = join(root, 'archives/index.html');
+if (existsSync(archiveHub)) {
+  const archiveHtml = readFileSync(archiveHub, 'utf8');
+  assert(archiveHtml.includes('<meta name="robots" content="index,follow"'), 'archives : indexation explicite requise');
+  assert(archiveHtml.includes('"@type":"CollectionPage"'), 'archives : CollectionPage requis');
+  assert(archiveHtml.includes('"@type":"CreativeWork"'), 'archives : attribution externe factuelle requise');
+  assert(!archiveHtml.includes('"@type":"NewsArticle"'), 'archives : LE-RADAR.ca ne doit pas devenir l’éditeur d’un article externe');
+  assert(!archiveHtml.includes('<img class="seo-archive'), 'archives : image externe sans licence non republiée');
+}
+
 // La <h1> hérite sinon de la marge par défaut du navigateur → mât décadré.
 const styleCss = readFileSync(join(root, 'style.css'), 'utf8');
 assert(
   /\.wordmark-mark \{[^}]*margin: 0;/.test(styleCss),
   'style.css : .wordmark-mark doit neutraliser la marge (<h1>)'
 );
+assert(styleCss.includes('--status-live-soft: #ff7d6e'), 'style : coral EN ONDES partagé requis');
+assert(styleCss.includes('--status-upcoming-soft: #e8c07a'), 'style : ambre À venir partagé requis');
 
 console.log(`OK intégrité statique (${htmlFiles.length} pages HTML)`);

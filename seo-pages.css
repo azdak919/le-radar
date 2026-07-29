@@ -143,6 +143,57 @@
   text-decoration: none;
 }
 .seo-cta a:hover { background: var(--accent-dark); }
+.seo-archive-link {
+  margin: 12px 0 0;
+  font-family: var(--sans);
+  font-size: 13px;
+}
+.seo-archive-link a { color: var(--accent); font-weight: 600; }
+
+/* ── Catalogue historique expérimental ─────────────────────────────────── */
+
+.seo-archive-sources { margin: 0; padding-left: 1.2rem; }
+.seo-archive-sources li { margin: 8px 0; }
+.seo-archive-sources span { color: var(--muted); font-family: var(--sans); font-size: .9rem; }
+.seo-archive-year { margin: 32px 0; }
+.seo-archive-year > h2 { margin-bottom: 0; }
+.seo-archive-record {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.seo-archive-record h2 {
+  margin: 2px 0 5px;
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+.seo-archive-record h2 a { color: var(--ink); }
+.seo-archive-record h2 a:hover { color: var(--accent); }
+.seo-archive-record p { margin: 7px 0 0; }
+.seo-archive-record__source {
+  color: var(--accent);
+  font-family: var(--sans);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.seo-archive-record__meta,
+.seo-archive-record__origin {
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: .84rem;
+}
+.seo-archive-record__origin a { color: var(--accent); font-weight: 600; }
+.seo-archive-unavailable {
+  margin: 32px 0 8px;
+  padding: 16px 18px;
+  border-left: 3px solid var(--rule-strong);
+  background: var(--bg-soft);
+}
+.seo-archive-unavailable h2 { margin: 0; font-size: 1.1rem; }
+.seo-archive-unavailable p,
+.seo-archive-unavailable li { color: var(--ink-soft); font-size: .9rem; }
 
 /* ── Cartes (listes d'entités) ──────────────────────────────────────────── */
 
@@ -294,44 +345,77 @@
   border-left: 3px solid transparent;
   border-radius: 4px;
 }
+/*
+ * Créneaux = mêmes teintes que la barre radio :
+ *  - live / playing → coral EN ONDES (--status-live-soft sur sombre)
+ *  - upcoming → ambre « À venir » (--status-upcoming-soft)
+ * Tokens définis dans style.css (:root).
+ */
 .seo-day li.seo-slot--live {
-  border-left-color: var(--radio);
-  background: color-mix(in srgb, var(--radio) 13%, transparent);
+  border-left-color: var(--status-live);
+  background: color-mix(in srgb, var(--status-live) 12%, transparent);
   animation: seo-live-pulse 2.8s ease-in-out infinite alternate;
 }
 .seo-day li.seo-slot--live .seo-slot__title,
-.seo-day li.seo-slot--live .seo-slot__title a { color: var(--radio); font-weight: 600; }
+.seo-day li.seo-slot--live .seo-slot__title a {
+  color: var(--status-live);
+  font-weight: 600;
+}
+/* Lecture réelle : même famille coral, un cran plus marqué (bouton play). */
 .seo-day li.seo-slot--live.seo-slot--playing {
-  border-left-color: var(--live);
-  background: color-mix(in srgb, var(--live) 13%, transparent);
+  border-left-color: var(--status-live);
+  background: color-mix(in srgb, var(--status-live) 16%, transparent);
   animation-name: seo-playing-pulse;
 }
 .seo-day li.seo-slot--live.seo-slot--playing .seo-slot__title,
-.seo-day li.seo-slot--live.seo-slot--playing .seo-slot__title a { color: var(--live); }
+.seo-day li.seo-slot--live.seo-slot--playing .seo-slot__title a {
+  color: var(--status-live);
+}
 .seo-day li.seo-slot--upcoming {
-  border-left-color: #bd8a18;
-  background: color-mix(in srgb, #d9a12b 15%, transparent);
+  border-left-color: var(--status-upcoming-mid);
+  background: color-mix(in srgb, var(--status-upcoming-soft) 18%, transparent);
   animation: seo-upcoming-pulse 2.8s ease-in-out infinite alternate;
 }
 .seo-day li.seo-slot--upcoming .seo-slot__title,
-.seo-day li.seo-slot--upcoming .seo-slot__title a { color: #9a6900; font-weight: 600; }
-[data-theme="dark"] .seo-day li.seo-slot--upcoming .seo-slot__title,
-[data-theme="dark"] .seo-day li.seo-slot--upcoming .seo-slot__title a { color: #f0c45a; }
+.seo-day li.seo-slot--upcoming .seo-slot__title a {
+  color: var(--status-upcoming);
+  font-weight: 600;
+}
+[data-theme="dark"] .seo-day li.seo-slot--live {
+  border-left-color: var(--status-live-soft);
+  background: color-mix(in srgb, var(--status-live-soft) 14%, transparent);
+}
 [data-theme="dark"] .seo-day li.seo-slot--live .seo-slot__title,
-[data-theme="dark"] .seo-day li.seo-slot--live .seo-slot__title a { color: var(--radio-bright); }
+[data-theme="dark"] .seo-day li.seo-slot--live .seo-slot__title a {
+  color: var(--status-live-soft);
+}
+[data-theme="dark"] .seo-day li.seo-slot--live.seo-slot--playing {
+  border-left-color: var(--status-live-soft);
+  background: color-mix(in srgb, var(--status-live-soft) 18%, transparent);
+}
 [data-theme="dark"] .seo-day li.seo-slot--live.seo-slot--playing .seo-slot__title,
-[data-theme="dark"] .seo-day li.seo-slot--live.seo-slot--playing .seo-slot__title a { color: #ff7186; }
+[data-theme="dark"] .seo-day li.seo-slot--live.seo-slot--playing .seo-slot__title a {
+  color: var(--status-live-soft);
+}
+[data-theme="dark"] .seo-day li.seo-slot--upcoming {
+  border-left-color: var(--status-upcoming-soft);
+  background: color-mix(in srgb, var(--status-upcoming-soft) 14%, transparent);
+}
+[data-theme="dark"] .seo-day li.seo-slot--upcoming .seo-slot__title,
+[data-theme="dark"] .seo-day li.seo-slot--upcoming .seo-slot__title a {
+  color: var(--status-upcoming-soft);
+}
 @keyframes seo-live-pulse {
   from { box-shadow: 0 0 0 transparent; }
-  to { box-shadow: 0 0 12px color-mix(in srgb, var(--radio) 62%, transparent); }
+  to { box-shadow: 0 0 12px color-mix(in srgb, var(--status-live-soft) 55%, transparent); }
 }
 @keyframes seo-playing-pulse {
   from { box-shadow: 0 0 0 transparent; }
-  to { box-shadow: 0 0 12px color-mix(in srgb, var(--live) 62%, transparent); }
+  to { box-shadow: 0 0 12px color-mix(in srgb, var(--status-live-soft) 62%, transparent); }
 }
 @keyframes seo-upcoming-pulse {
   from { box-shadow: 0 0 0 transparent; }
-  to { box-shadow: 0 0 12px color-mix(in srgb, #d9a12b 58%, transparent); }
+  to { box-shadow: 0 0 12px color-mix(in srgb, var(--status-upcoming-soft) 55%, transparent); }
 }
 .seo-day time { font-weight: 700; color: var(--ink); }
 .seo-slot__time { white-space: nowrap; font-variant-numeric: tabular-nums; }

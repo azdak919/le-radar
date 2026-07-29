@@ -61,8 +61,10 @@ const {
   pruneToFreshWindow,
   getBotHints,
 } = require('./source-retention-lib');
+const { mergeHistoricalCatalog } = require('./historical-catalog-lib');
 
 const NEWS_PATH = path.join(__dirname, '..', 'news.json');
+const ARCHIVE_PATH = path.join(__dirname, '..', 'news-archive.json');
 const SOURCES_PATH = path.join(__dirname, '..', 'news-sources.json');
 
 // Passes quotidiennes planifiées du bot d'actualités, en UTC — doit refléter
@@ -609,7 +611,7 @@ function wpPostToItem(post) {
   };
 }
 
-async function fetchWpFeaturedPosts(feedUrl, src, referenceDate = new Date()) {
+async function fetchWpFeaturedPosts(feedUrl, src) {
   const base = wpApiBase(feedUrl);
   if (!base || !src.wpFeaturedCategories?.length) return [];
 
@@ -633,10 +635,10 @@ async function fetchWpFeaturedPosts(feedUrl, src, referenceDate = new Date()) {
     if (posts.length) break;
   }
 
-  return pruneToFreshWindow(
-    posts.map(wpPostToItem).filter(Boolean),
-    referenceDate,
-  );
+  // La fraîcheur est appliquée une seule fois, à la fin du pipeline. Les
+  // vedettes anciennes restent ainsi disponibles pour le registre historique
+  // sans pouvoir réapparaître dans le fil principal.
+  return posts.map(wpPostToItem).filter(Boolean);
 }
 
 function sourceMaxItems(src = {}) {
@@ -946,6 +948,7 @@ async function main() {
   const referenceDate = new Date();
   let priorByLink = new Map();
   let priorBySource = new Map();
+  let priorArchive = { schemaVersion: 1, records: [] };
   try {
     const prev = JSON.parse(fs.readFileSync(NEWS_PATH, 'utf8'));
     for (const item of prev.items || []) {
@@ -957,6 +960,7 @@ async function main() {
     priorByLink = new Map();
     priorBySource = new Map();
   }
+  try { priorArchive = JSON.parse(fs.readFileSync(ARCHIVE_PATH, 'utf8')); } catch { /* première collecte */ }
 
   const registry = readRegistry();
   const sourceByName = new Map(SOURCES.map((s) => [s.name, s]));
@@ -987,7 +991,7 @@ async function main() {
         if (src.wpFeaturedCategories?.length) {
           try {
             const featuredItems = await withTimeout(
-              fetchWpFeaturedPosts(src.url, src, referenceDate),
+              fetchWpFeaturedPosts(src.url, src),
               20_000,
               [],
             );
@@ -1138,6 +1142,17 @@ async function main() {
     return db - da;
   });
 
+  // Le catalogue est mis à jour AVANT la règle de fraîcheur. Il ne reçoit que
+  // des éléments réellement récupérés : une ligne réutilisée depuis le cache
+  // n’est pas une nouvelle découverte et ne doit pas rafraîchir son état.
+  const archiveObserved = new Date().toISOString();
+  const archiveResult = mergeHistoricalCatalog(
+    priorArchive,
+    all.filter((item) => !item._retainedFromCache),
+    archiveObserved,
+    { firstDiscoveredAt: archiveObserved },
+  );
+
   const beforePrune = all.length;
   const prunedAll = pruneToFreshWindow(all, referenceDate);
   const prunedCount = beforePrune - prunedAll.length;
@@ -1178,9 +1193,11 @@ async function main() {
 
   if (doUpdate) {
     fs.writeFileSync(NEWS_PATH, JSON.stringify(news, null, 2) + '\n');
+    fs.writeFileSync(ARCHIVE_PATH, JSON.stringify(archiveResult.catalog, null, 2) + '\n');
     registry._lastFetchRun = news.updated;
     writeRegistry(registry);
     console.log(`✅ Wrote ${NEWS_PATH}`);
+    console.log(`✅ Historical catalogue: +${archiveResult.added}, ${archiveResult.updated} re-observed (${archiveResult.catalog.records.length} records)`);
     console.log(`✅ Updated ${SOURCES_PATH}`);
   } else {
     console.log('Dry-run complete. Use --update to write news.json.');

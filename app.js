@@ -650,19 +650,21 @@ function initPlayerSync() {
         updateVolumeAria?.();
       }
 
-      // Station UI without starting local audio
+      const iAmLeader = Sync.isLeader(state);
+
+      // Changement de poste demandé par un autre onglet (suiveur) : le leader
+      // doit basculer le flux ici. Auparavant autoplay était toujours false, donc
+      // le menu changeait d’UI sans jamais changer l’audio.
       if (state.stationId && state.stationId !== currentStation?.id) {
         const exists = radios.some((r) => r.id === state.stationId);
         if (exists) {
           selectStation(state.stationId, {
-            autoplay: false,
+            autoplay: !!(iAmLeader && state.playing),
             openExternal: false,
             fromSync: true,
           });
         }
       }
-
-      const iAmLeader = Sync.isLeader(state);
 
       if (state.playing && !iAmLeader) {
         softStopLocalAudio({ clearRemoteFlag: false });
@@ -1577,10 +1579,25 @@ function sortRadios(list) {
   });
 }
 
+/** Une session live est détenue par un autre onglet/page (pair confirmé). */
+function isRemoteSessionActive() {
+  if (isPlaying() || isCasting()) return false;
+  if (!remoteLeaderConfirmed) return false;
+  try {
+    const s = window.RadarPlayerSync?.readState?.();
+    if (!s?.playing || !s.leaderId) return false;
+    return s.leaderId !== window.RadarPlayerSync.getTabId();
+  } catch {
+    return false;
+  }
+}
+
 /** Mode radio : enchaîner les flux natifs après un poste externe (prev/next ou menu). */
 function tunerShouldAutoplayNative(next) {
   if (!next || !getPlayableStream(next)) return false;
   if (isPlaying()) return true;
+  // Suiveur : prev/next doit aussi demander le changement au leader.
+  if (isRemoteSessionActive()) return true;
   return !!(currentStation && isExternalListen(currentStation));
 }
 
@@ -3884,7 +3901,18 @@ function selectStation(id, { autoplay = false, openExternal = false, fromSync = 
   window.RadarCast?.onStationChange?.();
 
   if (autoplay) {
-    play(radio);
+    // Autre onglet possède déjà le flux : publier le nouveau poste pour que
+    // le leader bascule, sans voler l’audio (sinon silence côté « lecteur
+    // principal » et double claim fragiles).
+    if (!fromSync && isRemoteSessionActive()) {
+      try {
+        window.RadarPlayerSync?.publishStation?.(radio.id);
+      } catch { /* */ }
+      syncRemotePlaying = true;
+      updatePlayUI();
+    } else {
+      play(radio);
+    }
   } else {
     updatePlayUI();
   }
@@ -3893,6 +3921,7 @@ function selectStation(id, { autoplay = false, openExternal = false, fromSync = 
   if (!fromSync && !window.RadarPlayerSync?.isApplyingRemote?.()) {
     try {
       const s = window.RadarPlayerSync?.readState?.();
+      // En session distante, publishStation (ci-dessus) a déjà posé le stationId.
       if (!s?.playing) {
         window.RadarPlayerSync?.writeState?.({
           stationId: radio.id,
