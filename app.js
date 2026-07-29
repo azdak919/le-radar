@@ -375,6 +375,13 @@ let newsSearchDebounce = null;
 let currentStation = null; // radio object selected in tuner
 /** Another same-origin tab/page owns the real audio (Phase 1 multi-page sync). */
 let syncRemotePlaying = false;
+/**
+ * True only after a *live* peer announced itself (BroadcastChannel state/yield).
+ * localStorage alone can leave a ghost `playing: true` after the leader tab died;
+ * without this flag the UI shows ⏸ and the first click only clears the ghost
+ * instead of starting audio — silence until a second press.
+ */
+let remoteLeaderConfirmed = false;
 let audio = null;
 // Lecture demandée, mais aucun son confirmé par l'événement `playing`.
 let isBuffering = false;
@@ -626,6 +633,7 @@ function initPlayerSync() {
       // Another context is taking the stream — free the audio device here.
       softStopLocalAudio({ clearRemoteFlag: false });
       syncRemotePlaying = true;
+      remoteLeaderConfirmed = true;
       updatePlayUI();
     },
     onRemoteState(state) {
@@ -659,6 +667,8 @@ function initPlayerSync() {
       if (state.playing && !iAmLeader) {
         softStopLocalAudio({ clearRemoteFlag: false });
         syncRemotePlaying = true;
+        // Channel/storage event from another context = a living peer, not a ghost.
+        remoteLeaderConfirmed = true;
         userPaused = false;
         updatePlayUI();
         return;
@@ -667,6 +677,7 @@ function initPlayerSync() {
       if (!state.playing) {
         const wasRemote = syncRemotePlaying;
         syncRemotePlaying = false;
+        remoteLeaderConfirmed = false;
         if (!iAmLeader && wasRemote) {
           // Global pause from another tab — keep station, show ▶
           updatePlayUI();
@@ -678,6 +689,7 @@ function initPlayerSync() {
         }
       } else if (state.playing && iAmLeader) {
         syncRemotePlaying = false;
+        remoteLeaderConfirmed = false;
         // If we just became leader via our own claim, play() is already running.
         // If state was restored and we're leader of a dead tab id, tab ids never match
         // after reload — so this branch is only for live leaders.
@@ -705,10 +717,13 @@ function initPlayerSync() {
 
     if (boot.playing) {
       // Phase 2a: best-effort resume if this tab already had a play gesture (session armed).
-      // Otherwise mirror "en lecture ailleurs" until the user hits ▶.
+      // Otherwise wait for a live peer's hello reply before mirroring "en lecture".
+      // localStorage alone is not proof — a closed tab leaves playing:true forever.
       syncRemotePlaying = true;
+      remoteLeaderConfirmed = false;
       updatePlayUI();
       scheduleSessionResume(boot);
+      scheduleOrphanRemoteCleanup(boot);
     }
   }
 
@@ -784,9 +799,17 @@ async function trySessionResume(boot) {
   // Only resume when we still look like the orphaned "playing" session (dead leader id).
   const live = Sync.readState();
   if (live && live.playing && live.leaderId && live.leaderId !== Sync.getTabId()) {
-    // Peer may still be alive — wait: if we never got yield, they might be dead.
-    // Attempt resume only when armed (same tab nav) — claimPlay will yield a live peer (OK: user moved here).
-    if (!isPlayerSessionArmed()) {
+    // Live peer confirmed over the channel: stay follower, do not steal.
+    if (remoteLeaderConfirmed && !isPlayerSessionArmed()) {
+      syncRemotePlaying = true;
+      updatePlayUI();
+      return;
+    }
+    // Armed same-tab navigation: claimPlay will yield a live peer (OK: user moved here).
+    // Unconfirmed leader id may be a ghost from a closed tab — resume when armed.
+    if (!isPlayerSessionArmed() && !remoteLeaderConfirmed) {
+      // Cold tab, no peer hello yet: wait — orphan cleanup will drop the mirror
+      // if nobody answers; a late hello will set remoteLeaderConfirmed.
       syncRemotePlaying = true;
       updatePlayUI();
       return;
@@ -794,9 +817,11 @@ async function trySessionResume(boot) {
   }
 
   syncRemotePlaying = false;
+  remoteLeaderConfirmed = false;
   try {
     await play(radio);
     if (!isPlaying()) {
+      // Autoplay blocked or stream not up yet: keep mirror so UI can show remote/armed state.
       syncRemotePlaying = true;
       updatePlayUI();
     }
@@ -815,7 +840,43 @@ function softStopLocalAudio({ clearRemoteFlag = true } = {}) {
     try { audio.pause(); } catch { /* */ }
     suppressAudioError = false;
   }
-  if (clearRemoteFlag) syncRemotePlaying = false;
+  if (clearRemoteFlag) {
+    syncRemotePlaying = false;
+    remoteLeaderConfirmed = false;
+  }
+}
+
+/**
+ * After boot, a live leader answers `hello` with a state rebroadcast (~ms).
+ * If nobody confirms, only relax the *local* "en lecture ailleurs" mirror so ▶
+ * is shown and one click starts audio.
+ *
+ * Critical: never write `playing: false` into the shared session here.
+ * A follower page (nav-shell iframe / SEO) that ran this cleanup used to
+ * publish a global pause and kill continuity on the host that still owned
+ * the real <audio>. Same-tab resume (session armed) must also be left alone.
+ */
+let orphanRemoteTimer = null;
+function scheduleOrphanRemoteCleanup(boot) {
+  if (orphanRemoteTimer) {
+    clearTimeout(orphanRemoteTimer);
+    orphanRemoteTimer = null;
+  }
+  if (!boot?.playing) return;
+  // Continuity Phase 2a: this tab will claim+play shortly — not a ghost.
+  if (isPlayerSessionArmed()) return;
+
+  orphanRemoteTimer = window.setTimeout(() => {
+    orphanRemoteTimer = null;
+    if (remoteLeaderConfirmed || isPlaying() || isCasting() || userPaused) return;
+    if (isPlayerSessionArmed() || isBuffering) return;
+    if (!syncRemotePlaying) return;
+    // Local UI only — shared localStorage stays intact so a live host
+    // (or a later armed resume) is not paused from a cold follower tab.
+    syncRemotePlaying = false;
+    remoteLeaderConfirmed = false;
+    updatePlayUI();
+  }, 800);
 }
 
 /**
@@ -3767,6 +3828,10 @@ function selectStation(id, { autoplay = false, openExternal = false, fromSync = 
 
   const prevId = currentStation?.id || null;
   currentStation = radio;
+  // Garder la liste déroulante alignée (hydratation multi-onglets, prev/next, deep-link).
+  if (TUNER_SELECT && TUNER_SELECT.value !== radio.id) {
+    TUNER_SELECT.value = radio.id;
+  }
 
   // Changement de poste : repartir de la phase 1 (émission en cours) + fondu
   // antenne, sinon le nouveau poste hérite de l'index du précédent.
@@ -3870,9 +3935,12 @@ function togglePlay() {
     return;
   }
   // Another tab owns audio: ▶/⏸ control the shared session.
+  // Only treat as global pause when a *live* peer was confirmed — otherwise a
+  // ghost localStorage session would swallow the first click as "pause".
   if (syncRemotePlaying && !window.RadarPlayerSync?.isLeader?.()) {
-    if (isPlaybackActive()) {
-      // Pause globally (leader will yield / state says paused)
+    if (isPlaying() || isCasting()) {
+      pauseByUser();
+    } else if (remoteLeaderConfirmed) {
       pauseByUser();
     } else {
       userPaused = false;
@@ -3893,6 +3961,7 @@ async function play(radio) {
   if (!url) return;
   userPaused = false;
   syncRemotePlaying = false;
+  remoteLeaderConfirmed = false;
 
   // Claim leadership first so other same-origin players mute immediately.
   try {
@@ -3968,8 +4037,9 @@ function isPlaybackActive() {
   if (window.RadarCast?.isChromecasting?.()) {
     return !!window.RadarCast.isRemotePlaying?.();
   }
-  // Follower tab: show as playing while another Le Radar context owns the stream.
-  if (syncRemotePlaying && !isPlaying()) return true;
+  // Follower tab: show as playing only when another *live* context owns the stream.
+  // Ghost sessions (localStorage playing, dead leader) must not look active.
+  if (syncRemotePlaying && !isPlaying()) return remoteLeaderConfirmed;
   return isPlaying() || isCasting();
 }
 
@@ -4090,6 +4160,7 @@ function pauseByUser() {
   userPaused = true;
   setBuffering(false);
   syncRemotePlaying = false;
+  remoteLeaderConfirmed = false;
   // Cast : pause distante (ou fin de session si le LIVE ne gère pas pause).
   // Ne pas appeler endSession ici — le bouton Cast sert à arrêter la diffusion.
   if (window.RadarCast?.isChromecasting?.()) {
