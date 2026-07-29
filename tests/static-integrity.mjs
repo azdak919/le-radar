@@ -273,6 +273,15 @@ for (const rel of ['index.html', 'tuner-embed.html']) {
     assert(frameSrc.includes(origin), `${rel}: frame-src doit autoriser ${origin}`);
   }
 }
+// Pages avec lecteur natif : sans media-src https:, les flux radio sont bloqués
+// par default-src 'self' (silence au play sur SEO / feeds).
+for (const rel of ['index.html', 'feeds.html', 'radios/chyz/index.html', 'scripts/seo-pages-lib.js']) {
+  const text = readFileSync(join(root, rel), 'utf8');
+  assert(
+    /media-src[^;\n]*https:/.test(text) || /media-src[\s\S]{0,80}https:/.test(text),
+    `${rel}: media-src https: requis pour les flux radio`,
+  );
+}
 for (const marker of [
   '<!-- RADAR:SEO:JSONLD:START -->', '<!-- RADAR:SEO:JSONLD:END -->',
   '<!-- RADAR:SEO:FEED:START -->', '<!-- RADAR:SEO:FEED:END -->',

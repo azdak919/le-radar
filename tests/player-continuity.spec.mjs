@@ -96,6 +96,80 @@ test('une page suiveuse n’affiche pas un buffering tardif après navigation', 
   await expect(tuner.locator('#tuner-play')).not.toHaveClass(/is-buffering/);
 });
 
+test('un suiveur froid ne publie pas de pause globale sur une session active', async ({ page, context }) => {
+  // Régression : le nettoyage « fantôme » écrivait playing:false dans localStorage
+  // et coupait l’hôte (nav-shell / SEO) qui détenait encore le vrai <audio>.
+  const host = page;
+  const follower = await context.newPage();
+
+  await host.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect.poll(() => host.evaluate(() => Boolean(window.RadarPlayerSync))).toBe(true);
+
+  const leaderId = await host.evaluate(() => {
+    window.RadarPlayerSync.claimPlay('chyz', 1);
+    return window.RadarPlayerSync.getTabId();
+  });
+
+  await expect.poll(() => host.evaluate(() => window.RadarPlayerSync.readState())).toMatchObject({
+    stationId: 'chyz',
+    playing: true,
+    leaderId,
+  });
+
+  await follower.goto('/radios/chyz/', { waitUntil: 'domcontentloaded' });
+  // Laisser le timer de nettoyage local (800 ms) s’écouler largement.
+  await follower.waitForTimeout(1200);
+
+  await expect.poll(() => host.evaluate(() => window.RadarPlayerSync.readState())).toMatchObject({
+    stationId: 'chyz',
+    playing: true,
+    leaderId,
+  });
+
+  // L’hôte doit rester leader — le suiveur n’a pas volé ni annulé la session.
+  const followerSees = await follower.evaluate(() => window.RadarPlayerSync?.readState?.() || null);
+  expect(followerSees?.playing).toBe(true);
+  expect(followerSees?.leaderId).toBe(leaderId);
+});
+
+test('une session fantôme n’exige pas deux clics pour entendre le flux', async ({ page }) => {
+  // Simule un onglet leader fermé la veille : localStorage dit encore « playing »
+  // mais personne ne répond au hello. L’UI doit montrer ▶, et un seul geste
+  // doit démarrer le flux — pas un premier clic « pause » qui ne fait que
+  // effacer le fantôme.
+  await page.addInitScript(() => {
+    localStorage.setItem('radar-player-session-v1', JSON.stringify({
+      stationId: 'chyz',
+      playing: true,
+      volume: 1,
+      leaderId: 'dead-tab-from-yesterday',
+      updatedAt: Date.now() - 3_600_000,
+    }));
+    localStorage.setItem('radar-player-vol', '1');
+    localStorage.setItem('radar-player-vol-version', '2');
+  });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  // Attendre que radios.json peuplé le <select> et que l’hydratation sync s’applique.
+  await expect(page.locator('#tuner-select option[value="chyz"]')).toBeAttached();
+  await expect(page.locator('#tuner-select')).toHaveValue('chyz', { timeout: 10_000 });
+  // Avant confirmation d’un pair vivant : pas d’état « en lecture » fantôme.
+  await expect(page.locator('#tuner')).not.toHaveClass(/is-playing/);
+  await expect(page.locator('#tuner-play')).toHaveAttribute('aria-label', /écouter/i);
+
+  await page.locator('#tuner-play').click();
+  // Un seul clic : connexion ou lecture, jamais un retour immédiat à « Écouter »
+  // après une fausse pause.
+  await expect.poll(async () => {
+    const aria = await page.locator('#tuner-play').getAttribute('aria-label');
+    const classes = await page.locator('#tuner-play').getAttribute('class');
+    const src = await page.locator('#radar-player').evaluate((a) => a.src || '');
+    if (/pause/i.test(aria || '')) return 'playing';
+    if (classes?.includes('is-buffering') || /connexion/i.test(aria || '')) return 'buffering';
+    if (src.includes('chyz')) return 'has-src';
+    return 'idle';
+  }, { timeout: 8_000 }).not.toBe('idle');
+});
+
 test('une émission CHOQ terminée ne reste pas affichée comme à venir', async ({ page }) => {
   await page.addInitScript(() => {
     const RealDate = Date;

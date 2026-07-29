@@ -342,9 +342,16 @@ function frAt(name = '') {
 //  Gabarit
 // ═══════════════════════════════════════════════════════════════════════════
 
-const CSP = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' "
-  + 'https://fonts.googleapis.com; font-src \'self\' https://fonts.gstatic.com; '
-  + "img-src 'self' data: https:; connect-src 'self' https:; "
+// Aligné sur l'accueil pour le lecteur natif : sans media-src, default-src
+// 'self' bloque les flux Icecast/Shoutcast HTTPS → play silencieux sur les
+// fiches SEO. gstatic = Cast SDK optionnel (cast.js).
+const CSP = "default-src 'self'; "
+  + "script-src 'self' https://www.gstatic.com blob:; "
+  + "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+  + "font-src 'self' https://fonts.gstatic.com; "
+  + "img-src 'self' data: https:; "
+  + "media-src 'self' https: blob:; "
+  + "connect-src 'self' https:; "
   + "frame-src 'self' https://chyz.ca https://cism893.ca https://ckut.ca https://www.cjlo.com https://www.cfak.ca https://www.choq.ca; "
   + "object-src 'none'; base-uri 'self'; form-action 'none'";
 

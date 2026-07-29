@@ -50,6 +50,45 @@ test('une fiche de radio expose ses faits et renvoie vers les autres horaires', 
   await expect(page).toHaveURL(/\/etablissements\/universite-laval\/$/);
 });
 
+test('sur une fiche SEO, play démarre le flux (CSP media-src)', async ({ page }) => {
+  const cspBlocks = [];
+  page.on('console', (msg) => {
+    const text = msg.text();
+    if (/Content Security Policy|violates.*media|Loading media/i.test(text)) cspBlocks.push(text);
+  });
+
+  // CSP figée dans le HTML : sans media-src https:, default-src 'self' refuse
+  // les Icecast distants → play silencieux sur les fiches SEO (repro 2026-07-29).
+  await page.goto('/radios/chyz/', { waitUntil: 'domcontentloaded' });
+  const csp = await page.locator('meta[http-equiv="Content-Security-Policy"]').getAttribute('content');
+  expect(csp || '').toMatch(/media-src[^;]*https:/);
+
+  await expect.poll(async () => page.locator('#tuner-select option').count(), { timeout: 15_000 })
+    .toBeGreaterThan(1);
+
+  // Un seul geste utilisateur : le change du <select> autoplay déjà le flux.
+  // Un second clic sur ▶ pendant le tamponnage l’annulerait (comportement voulu).
+  await page.locator('#tuner-select').selectOption('cism');
+
+  await expect.poll(async () => {
+    return page.locator('#radar-player').evaluate((a) => ({
+      src: a.src || '',
+      paused: a.paused,
+      ct: a.currentTime,
+    }));
+  }, { timeout: 12_000 }).toMatchObject({
+    src: expect.stringMatching(/cism|ustream|stream/i),
+  });
+
+  const state = await page.locator('#radar-player').evaluate((a) => ({
+    paused: a.paused,
+    ct: a.currentTime,
+    rs: a.readyState,
+  }));
+  expect(state.paused === false || state.rs > 0 || state.ct > 0).toBe(true);
+  expect(cspBlocks.join('\n')).not.toMatch(/Loading media.*violates/i);
+});
+
 test('une fiche de journal garde byline, bref et fraîcheur factuelle', async ({ page }) => {
   await page.goto('/journaux/la-pige/', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('.seo-headlines__status')).toContainText('Dernier article publié le');
