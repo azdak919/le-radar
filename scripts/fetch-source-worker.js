@@ -285,8 +285,12 @@ process.on('message', async (msg) => {
       }
     }
 
-    items = pruneToFreshWindow(items, referenceDate);
-    process.send({ ok: items.length > 0, items, note, error: null });
+    // Le fil vivant ne reçoit que les articles frais; le parent reçoit aussi
+    // la liste brute afin d'alimenter le catalogue historique, sans jamais
+    // réinjecter ces entrées dans news.json.
+    const rawItems = items;
+    const freshItems = pruneToFreshWindow(items, referenceDate);
+    process.send({ ok: rawItems.length > 0, items: freshItems, rawItems, note, error: null });
   } catch (e) {
     process.send({ ok: false, items: [], note: '', error: String(e && e.message || e) });
   }

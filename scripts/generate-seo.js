@@ -478,7 +478,8 @@ function main() {
   console.log(`Site      : ${SITE_BASE}`);
   console.log(`Articles  : ${items.length} (prérendu : ${prerendered.length})`);
   const archivePublicPages = archive.pages.filter((page) => page.indexable !== false);
-  console.log(`Archives  : ${archivePublicPages.length} page(s) indexables + ${archive.pages.length - archivePublicPages.length} conservation (${archive.sample.records.length}/${archive.sample.eligible} entrées vérifiées)`);
+  const archiveNoindexPages = archive.pages.length - archivePublicPages.length;
+  console.log(`Archives  : ${archivePublicPages.length} page(s) indexables + ${archiveNoindexPages} hors index (${archive.sample.records.length}/${archive.sample.eligible} entrées vérifiées)`);
   console.log(`Journaux  : ${sources.length}   Radios : ${radios.length}\n`);
 
   const written = [];
@@ -516,7 +517,7 @@ function main() {
     note: `${entityPages.length} pages — ${model.groups.length} établissements, `
       + `${model.paperEntries.length} journaux, ${model.radioEntries.length} radios (FR + EN)`,
   });
-  written.push({ file: 'catalogue historique', note: `${archivePublicPages.length} page(s) indexable(s), ${archive.pages.length - archivePublicPages.length} de conservation, ${archive.sample.records.length} entrée(s) vérifiée(s)` });
+  written.push({ file: 'catalogue historique', note: `${archivePublicPages.length} page(s) indexable(s), ${archiveNoindexPages} hors index, ${archive.sample.records.length} entrée(s) vérifiée(s)` });
 
   // ── sitemap.xml ──
   const sitemap = buildSitemap(newsUpdated, entityPages);

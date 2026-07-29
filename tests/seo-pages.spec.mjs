@@ -91,7 +91,7 @@ test('sur une fiche SEO, play démarre le flux (CSP media-src)', async ({ page }
 
 test('une fiche de journal garde byline, bref et fraîcheur factuelle', async ({ page }) => {
   await page.goto('/journaux/la-pige/', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('.seo-headlines__status')).toContainText('Dernier article publié le');
+  await expect(page.locator('.seo-headlines__status')).toContainText('Dernier article :');
   await expect(page.locator('.seo-headline__by').first()).toHaveText(/^Par /);
   await expect(page.locator('.seo-headline time').first()).toContainText(/\d{4}-\d{2}-\d{2} · \d{1,2} h \d{2}/);
   await expect(page.locator('.seo-headline__brief').first()).not.toBeEmpty();

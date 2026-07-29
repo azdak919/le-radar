@@ -345,7 +345,7 @@ function paperPage(paper, lang, ctx) {
   body += `      <section class="seo-section">\n        <h2>${escapeHtml(t.latestHeadlines)}</h2>\n`
     + (latestLabel ? `        <p class="seo-headlines__status">${escapeHtml(fill(t.latestArticleStatus, { date: latestLabel }))}`
       + (lastCheckLabel && shouldExplainStaleSource(paper, lastCheck)
-        ? ` ${escapeHtml(fill(t.sourceStaleStatus, { date: lastCheckLabel }))}`
+        ? ` · ${escapeHtml(fill(t.sourceStaleStatus, { date: lastCheckLabel }))}`
         : '')
       + '</p>\n' : '');
   body += headlineList(paper.headlines, t);

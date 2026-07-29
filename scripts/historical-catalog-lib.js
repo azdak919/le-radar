@@ -159,11 +159,12 @@ function ageBand(record, config, now = Date.now()) {
 }
 
 function partialPublicSample(records, config, now = Date.now()) {
-  if (config.mode === 'off') return { records: [], eligible: 0, verified: 0, conservation: [] };
+  if (config.mode === 'off') return { records: [], eligible: 0, verified: 0, conservation: [], reference: [] };
   const verified = records.filter((record) => verifyable(record, now, config));
   const eligible = verified.filter((record) => ageBand(record, config, now) === 'indexable');
   const conservation = verified.filter((record) => ageBand(record, config, now) === 'conservation');
-  if (config.mode === 'full') return { records: eligible, eligible: eligible.length, verified: verified.length, conservation };
+  const reference = verified.filter((record) => ageBand(record, config, now) === 'preserved');
+  if (config.mode === 'full') return { records: eligible, eligible: eligible.length, verified: verified.length, conservation, reference };
   const max = Math.max(0, Number(config?.partial?.maxRecords) || 0);
   const chosen = [];
   const used = new Set();
@@ -178,7 +179,7 @@ function partialPublicSample(records, config, now = Date.now()) {
     if (chosen.length >= max || chosen.includes(record)) continue;
     chosen.push(record);
   }
-  return { records: chosen, eligible: eligible.length, verified: verified.length, conservation };
+  return { records: chosen, eligible: eligible.length, verified: verified.length, conservation, reference };
 }
 
 module.exports = {

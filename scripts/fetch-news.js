@@ -160,16 +160,17 @@ function fetchSourceIsolated(src, referenceDate) {
         env: process.env,
       });
     } catch (e) {
-      return finish({ ok: false, items: [], note: '', timedOut: false, error: String(e.message || e) });
+      return finish({ ok: false, items: [], rawItems: [], note: '', timedOut: false, error: String(e.message || e) });
     }
     const timer = setTimeout(() => {
-      finish({ ok: false, items: [], note: '', timedOut: true, error: 'source_timeout' });
+      finish({ ok: false, items: [], rawItems: [], note: '', timedOut: true, error: 'source_timeout' });
     }, SOURCE_BUDGET_MS);
     child.on('message', (msg) => {
       clearTimeout(timer);
       finish({
         ok: !!(msg && msg.ok),
         items: (msg && msg.items) || [],
+        rawItems: (msg && msg.rawItems) || [],
         note: (msg && msg.note) || '',
         timedOut: false,
         error: (msg && msg.error) || null,
@@ -177,12 +178,12 @@ function fetchSourceIsolated(src, referenceDate) {
     });
     child.on('error', () => {
       clearTimeout(timer);
-      finish({ ok: false, items: [], note: '', timedOut: false, error: 'worker_error' });
+      finish({ ok: false, items: [], rawItems: [], note: '', timedOut: false, error: 'worker_error' });
     });
     child.on('exit', () => {
       clearTimeout(timer);
       if (!settled) {
-        finish({ ok: false, items: [], note: '', timedOut: false, error: 'worker_exit' });
+        finish({ ok: false, items: [], rawItems: [], note: '', timedOut: false, error: 'worker_exit' });
       }
     });
     child.send({
@@ -944,6 +945,9 @@ async function main() {
   }
 
   const all = [];
+  // Flux bruts reçus cette passe : le catalogue historique les garde avant
+  // qu'ils soient exclus du fil par la règle de fraîcheur.
+  const historicalItems = [];
   const sourceRuns = {};
   const referenceDate = new Date();
   let priorByLink = new Map();
@@ -968,6 +972,7 @@ async function main() {
   for (const src of SOURCES) {
     process.stdout.write(`→ ${src.name} (${src.institution}) … `);
     let items = [];
+    let registryItems = [];
     let fetchOk = false;
     let usedStaleCache = false;
     const priorForSource = priorBySource.get(src.name) || [];
@@ -979,16 +984,32 @@ async function main() {
 
       if (result.timedOut) {
         console.log(`⚠ timeout ${SOURCE_BUDGET_MS / 1000}s — source sautée (cache si dispo)`);
-      } else if (result.error && !result.items.length) {
+      } else if (result.error && !result.items.length && !result.rawItems.length) {
         console.log(`⚠ ${result.error}`);
-      } else if (result.ok && result.items.length) {
+      } else if (result.ok && (result.items.length || result.rawItems.length)) {
+        const rawItems = (result.rawItems.length ? result.rawItems : result.items).map((it) => ({
+          ...it,
+          title: sanitizeTitle(it.title),
+          excerpt: truncateExcerpt(it.excerpt, 280),
+        }));
         items = result.items.map((it) => ({
           ...it,
           title: sanitizeTitle(it.title),
           excerpt: truncateExcerpt(it.excerpt, 280),
         }));
+        registryItems = rawItems;
+        const archiveSourceItems = rawItems.map((it) => ({
+          source: src.name,
+          institution: src.institution,
+          region: src.region || '',
+          type: src.type,
+          lang: src.lang,
+          ...it,
+          author: getBotHints(src, 'authors').ignoreRssAuthor ? '' : it.author,
+        }));
+        historicalItems.push(...archiveSourceItems);
         // Vedettes WP (Délit, etc.) — budget court séparé, non bloquant
-        if (src.wpFeaturedCategories?.length) {
+        if (items.length && src.wpFeaturedCategories?.length) {
           try {
             const featuredItems = await withTimeout(
               fetchWpFeaturedPosts(src.url, src),
@@ -1002,7 +1023,7 @@ async function main() {
           } catch { /* ignore featured failures */ }
         }
         fetchOk = true;
-        console.log(`✓ ${items.length} articles${result.note || ''}`);
+        console.log(`✓ ${items.length} article(s) frais / ${rawItems.length} reçu(s)${result.note || ''}`);
       }
     } catch (err) {
       console.log(`⚠ erreur: ${(err && err.message) || err}`);
@@ -1010,7 +1031,7 @@ async function main() {
       fetchOk = false;
     }
 
-    if (!items.length) {
+    if (!items.length && !fetchOk) {
       const retainable = retainablePriorArticles(priorForSource, referenceDate);
       if (retainable.length) {
         items = markRetainedArticles(retainable);
@@ -1045,13 +1066,13 @@ async function main() {
 
     applyFetchRegistryUpdate(
       (registry.active || []).find((s) => s.name === src.name),
-      { fetchOk, usedStaleCache, items, referenceDate },
+      { fetchOk, usedStaleCache, items: registryItems.length ? registryItems : items, referenceDate },
     );
     sourceRuns[src.name] = buildSourceRunMeta({
       sourceName: src.name,
       fetchOk,
       usedStaleCache,
-      items,
+      items: registryItems.length ? registryItems : items,
       referenceDate,
     });
 
@@ -1148,7 +1169,7 @@ async function main() {
   const archiveObserved = new Date().toISOString();
   const archiveResult = mergeHistoricalCatalog(
     priorArchive,
-    all.filter((item) => !item._retainedFromCache),
+    [...historicalItems, ...all.filter((item) => !item._retainedFromCache)],
     archiveObserved,
     { firstDiscoveredAt: archiveObserved, ingestedAt: archiveObserved },
   );

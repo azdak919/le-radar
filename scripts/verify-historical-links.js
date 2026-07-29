@@ -15,6 +15,8 @@ const ARCHIVE = path.join(__dirname, '..', 'news-archive.json');
 const update = process.argv.includes('--update');
 const limitArg = process.argv.find((arg) => arg.startsWith('--limit='));
 const limit = Math.max(0, Math.min(100, Number(limitArg?.slice(8) || 20) || 20));
+const sourceArg = process.argv.find((arg) => arg.startsWith('--source='));
+const sourceFilter = String(sourceArg?.slice(9) || '').trim().toLocaleLowerCase('fr-CA');
 const USER_AGENT = 'LE-RADAR-HistoryVerifier/1.0 (+https://le-radar.ca/)';
 
 function request(url, method = 'HEAD', redirects = 3, origin = url) {
@@ -54,7 +56,10 @@ function due(record) {
 
 async function main() {
   const catalog = JSON.parse(fs.readFileSync(ARCHIVE, 'utf8'));
-  const dueRecords = (catalog.records || []).filter((record) => record?.originalUrl && due(record));
+  const dueRecords = (catalog.records || []).filter((record) => {
+    if (!record?.originalUrl || !due(record)) return false;
+    return !sourceFilter || String(record.source || '').toLocaleLowerCase('fr-CA') === sourceFilter;
+  });
   const candidates = [];
   const seenSources = new Set();
   // Même logique que l’échantillon public : éviter qu’une seule publication
@@ -85,7 +90,7 @@ async function main() {
     await new Promise((resolve) => setTimeout(resolve, 350));
   }
   catalog.updated = new Date().toISOString();
-  console.log(`Liens historiques : ${candidates.length} contrôlé(s); ${available} accessibles, ${missing} disparus, ${unreachable} injoignables.`);
+  console.log(`Liens historiques${sourceFilter ? ` (${sourceFilter})` : ''} : ${candidates.length} contrôlé(s); ${available} accessibles, ${missing} disparus, ${unreachable} injoignables.`);
   if (update) fs.writeFileSync(ARCHIVE, JSON.stringify(catalog, null, 2) + '\n');
   else console.log('Dry-run — utilisez --update pour enregistrer les statuts.');
 }

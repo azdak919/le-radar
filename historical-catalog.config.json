@@ -6,6 +6,7 @@
     "maxRecords": 120,
     "maxPages": 24,
     "conservationRecordsPerSource": 20,
+    "referenceRecordsPerSource": 20,
     "minimumExcerptCharacters": 90,
     "verifiedWithinDays": 35
   },
@@ -28,6 +29,6 @@
     "Les pages historiques externes ne republient jamais le corps intégral ni les images sans licence documentée.",
     "Le mode partial est public mais exige un lien original vérifié et des métadonnées suffisamment riches.",
     "Le rétro-crawl est séquentiel, reprenable et ne lit que des listes publiques paginées des trois dernières années : jamais les corps complets ni les médias.",
-    "Une publication est indexable au plus un an après sa date originale; de un à trois ans, ses métadonnées restent consultables sans indexation automatique; au-delà, elles sont conservées sans page publique."
+    "Une publication est indexable au plus un an après sa date originale; de un à trois ans, ses métadonnées restent consultables sans indexation automatique; au-delà, elles restent consultables dans les archives de référence, elles aussi en noindex."
   ]
 }
