@@ -1135,9 +1135,34 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-thumb {
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.48);
 }
 
-/* Cast en barre (largeur bureau), comme le site. */
-@media (min-width: 720px) {
+/*
+ * Cast — mêmes seuils que style.css (barre bureau LE-RADAR) :
+ *  · ≥ 1100 px → cast--bar
+ *  · 600–1099 → cast--mobile (entre play et EQ)
+ *  · < 600 → cast--popover dans la bulle volume
+ */
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-cast--bar,
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-cast--mobile {
+  display: none !important;
+}
+
+@media (min-width: 1100px) {
   html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-cast--bar:not(.hidden):not([hidden]) {
+    display: flex !important;
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+  }
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-cast--mobile {
+    display: none !important;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1099.98px) {
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-cast--bar {
+    display: none !important;
+  }
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-cast--mobile:not(.hidden):not([hidden]) {
     display: flex !important;
     width: 42px;
     height: 42px;
@@ -1145,11 +1170,25 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-thumb {
   }
 }
 
+@media (max-width: 599.98px) {
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-cast--bar,
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-cast--mobile {
+    display: none !important;
+  }
+  /* Popover volume : afficher le cast interne (l’embed générique le masque ≥ 560). */
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-cast--popover:not(.hidden):not([hidden]) {
+    display: flex !important;
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+  }
+}
+
 /*
- * EQ entre Cast et volume — hérite de style.css :
+ * EQ entre Cast et volume (ordre HTML = play · cast · eq · vol) :
  *  · lecture → barres rouges + animation « eq »
- *  · buffering → barres grises + « eq-buffer »
- * L’embed legacy le masque (place) ; kiosque-v1 le réaffiche.
+ *  · buffering → barres rouges + animation « eq-buffer » (même teinte live)
+ *  · visible ≥ 600 px en lecture ; toujours en buffering (comme style.css)
  */
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-eq {
   flex-shrink: 0;
@@ -1164,13 +1203,12 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-eq {
     display: flex !important;
   }
 }
-/* Tamponnage : toujours visible dans l’iframe (même < 600 px). */
+/* Tamponnage : toujours visible (même < 600 px), comme le site. */
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-buffering .tuner-eq {
   display: flex !important;
 }
-/* Spécificité embed : forcer gris en buffering (sinon fond --live hérité). */
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-buffering .tuner-eq span {
-  background: rgba(255, 255, 255, 0.45);
+  background: var(--live, #c8102e);
   height: 40%;
   max-height: 16px;
   border-radius: 1px;
