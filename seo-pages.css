@@ -123,6 +123,14 @@
 /* ── Appel à l'action ───────────────────────────────────────────────────── */
 
 .seo-cta { margin: 22px 0; }
+/* À la fin d'une liste d'articles, le retour vers le fil filtré reste aligné
+   avec le contenu. Sa marge supérieure le détache clairement de la dernière
+   manchette, sans créer une zone vide avant le pied de page. */
+.seo-wire .seo-cta--source {
+  margin: 22px 0 0;
+  text-align: left;
+}
+.seo-wire:has(.seo-cta--source) { padding-bottom: 28px; }
 .seo-cta a {
   display: inline-block;
   font-family: var(--sans);
@@ -174,13 +182,20 @@
 /* ── Manchettes ─────────────────────────────────────────────────────────── */
 
 .seo-headlines { list-style: none; margin: 0; padding: 0; }
+.seo-headlines__status {
+  margin: -9px 0 12px;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--muted);
+}
 .seo-headline {
   padding: 13px 0;
   border-bottom: 1px solid var(--rule);
 }
 /* Bloc : la date et la signature passent sous le titre plutôt que de se
    coller à sa dernière ligne. */
-.seo-headline a {
+.seo-headline__title {
   display: block;
   font-family: var(--serif);
   font-size: 1.08rem;
@@ -189,16 +204,34 @@
   color: var(--ink);
   text-decoration: none;
 }
-.seo-headline a:hover { color: var(--accent); text-decoration: underline; }
+.seo-headline__title:hover { color: var(--accent); text-decoration: underline; }
+.seo-headline__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 4px 0 0;
+}
 .seo-headline time,
 .seo-headline__by {
-  display: inline-block;
-  margin-top: 4px;
-  margin-right: 10px;
+  margin: 0;
   font-family: var(--sans);
   font-size: 12.5px;
   color: var(--muted);
 }
+.seo-headline__brief {
+  margin: 7px 0 0;
+  font-family: var(--sans);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.seo-headline__more {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.seo-headline__more:hover { text-decoration: underline; }
 
 /* ── Grille horaire ─────────────────────────────────────────────────────── */
 
@@ -227,6 +260,18 @@
   color: var(--radio);
   margin: 0 0 8px;
 }
+.seo-day--today {
+  border-color: color-mix(in srgb, var(--accent) 62%, var(--rule));
+  box-shadow: inset 3px 0 0 color-mix(in srgb, var(--accent) 72%, transparent);
+}
+.seo-day--today h3 {
+  color: var(--accent);
+  animation: seo-highlight-pulse 2.8s ease-in-out infinite alternate;
+}
+@keyframes seo-highlight-pulse {
+  from { text-shadow: 0 0 0 transparent; opacity: 0.76; }
+  to { text-shadow: 0 0 12px color-mix(in srgb, var(--accent) 60%, transparent); opacity: 1; }
+}
 .seo-day ul { list-style: none; margin: 0; padding: 0; }
 .seo-day li {
   display: grid;
@@ -242,6 +287,52 @@
 }
 .seo-day li:first-child { border-top: 0; padding-top: 0; }
 .seo-day li:last-child { padding-bottom: 0; }
+.seo-day li.seo-slot--live,
+.seo-day li.seo-slot--upcoming {
+  margin-inline: -8px;
+  padding-inline: 8px;
+  border-left: 3px solid transparent;
+  border-radius: 4px;
+}
+.seo-day li.seo-slot--live {
+  border-left-color: var(--radio);
+  background: color-mix(in srgb, var(--radio) 13%, transparent);
+  animation: seo-live-pulse 2.8s ease-in-out infinite alternate;
+}
+.seo-day li.seo-slot--live .seo-slot__title,
+.seo-day li.seo-slot--live .seo-slot__title a { color: var(--radio); font-weight: 600; }
+.seo-day li.seo-slot--live.seo-slot--playing {
+  border-left-color: var(--live);
+  background: color-mix(in srgb, var(--live) 13%, transparent);
+  animation-name: seo-playing-pulse;
+}
+.seo-day li.seo-slot--live.seo-slot--playing .seo-slot__title,
+.seo-day li.seo-slot--live.seo-slot--playing .seo-slot__title a { color: var(--live); }
+.seo-day li.seo-slot--upcoming {
+  border-left-color: #bd8a18;
+  background: color-mix(in srgb, #d9a12b 15%, transparent);
+  animation: seo-upcoming-pulse 2.8s ease-in-out infinite alternate;
+}
+.seo-day li.seo-slot--upcoming .seo-slot__title,
+.seo-day li.seo-slot--upcoming .seo-slot__title a { color: #9a6900; font-weight: 600; }
+[data-theme="dark"] .seo-day li.seo-slot--upcoming .seo-slot__title,
+[data-theme="dark"] .seo-day li.seo-slot--upcoming .seo-slot__title a { color: #f0c45a; }
+[data-theme="dark"] .seo-day li.seo-slot--live .seo-slot__title,
+[data-theme="dark"] .seo-day li.seo-slot--live .seo-slot__title a { color: var(--radio-bright); }
+[data-theme="dark"] .seo-day li.seo-slot--live.seo-slot--playing .seo-slot__title,
+[data-theme="dark"] .seo-day li.seo-slot--live.seo-slot--playing .seo-slot__title a { color: #ff7186; }
+@keyframes seo-live-pulse {
+  from { box-shadow: 0 0 0 transparent; }
+  to { box-shadow: 0 0 12px color-mix(in srgb, var(--radio) 62%, transparent); }
+}
+@keyframes seo-playing-pulse {
+  from { box-shadow: 0 0 0 transparent; }
+  to { box-shadow: 0 0 12px color-mix(in srgb, var(--live) 62%, transparent); }
+}
+@keyframes seo-upcoming-pulse {
+  from { box-shadow: 0 0 0 transparent; }
+  to { box-shadow: 0 0 12px color-mix(in srgb, #d9a12b 58%, transparent); }
+}
 .seo-day time { font-weight: 700; color: var(--ink); }
 .seo-slot__time { white-space: nowrap; font-variant-numeric: tabular-nums; }
 .seo-slot__dash { margin: 0 2px; opacity: 0.6; }
@@ -270,6 +361,11 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--muted);
+}
+@media (prefers-reduced-motion: reduce) {
+  .seo-day--today h3,
+  .seo-day li.seo-slot--live,
+  .seo-day li.seo-slot--upcoming { animation: none; opacity: 1; }
 }
 @media (max-width: 420px) {
   .seo-day { padding: 14px; }
@@ -300,6 +396,17 @@
   max-width: var(--maxw);
   margin: 0 auto;
   padding: 0 var(--pad) 48px;
+  position: relative;
+  border-top: 0;
+}
+.seo-wire + .site-foot::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--pad);
+  right: var(--pad);
+  border-top: 1px solid var(--rule);
+  pointer-events: none;
 }
 
 @media (max-width: 520px) {

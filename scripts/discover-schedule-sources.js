@@ -186,7 +186,16 @@ async function main() {
     // Persiste seulement les postes déjà suivis ou qui ont une source validée
     // (on n'ajoute pas d'entrées vides pour les postes sans horaire).
     if (configured.has(radio.id) || workingSources.length) {
-      seed.stations[radio.id] = { ...seedCfg, sources: workingSources };
+      // Une source connue peut tomber quelques heures ou quelques jours
+      // (CJLO/Drupal 500 en est le cas concret). La supprimer ici empêchait
+      // le bot de la retester au prochain passage : le dernier horaire restait
+      // alors figé indéfiniment, même après le retour du site. On conserve les
+      // sources précédentes quand aucune ne répond; le rapport continue de
+      // signaler la panne, sans perdre le mécanisme de récupération.
+      const sourcesToPersist = workingSources.length
+        ? workingSources
+        : (seedCfg.sources || []);
+      seed.stations[radio.id] = { ...seedCfg, sources: sourcesToPersist };
     }
   }
 

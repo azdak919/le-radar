@@ -79,7 +79,7 @@ const MARKERS = {
 const FOOTER_PAGES = [
   { file: 'index.html', lang: 'fr', up: './', home: true, altPath: 'en/', indent: '      ' },
   { file: 'feeds.html', lang: 'fr', up: './', altPath: 'en/', indent: '      ' },
-  { file: 'offline.html', lang: 'fr', up: './', altPath: 'en/', indent: '    ' },
+  { file: 'offline.html', lang: 'fr', up: './', altPath: 'en/', indent: '    ', variant: 'maintenance' },
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -148,11 +148,19 @@ function isoDay(value) {
   return d.toISOString().slice(0, 10);
 }
 
-function frenchDate(value) {
+function articleCardDateTime(value, lang = 'fr') {
   const d = new Date(value);
   if (Number.isNaN(d.getTime())) return '';
   try {
-    return d.toLocaleDateString('fr-CA', { day: 'numeric', month: 'short', year: 'numeric' });
+    const isEnglish = lang === 'en';
+    const locale = isEnglish ? 'en-CA' : 'fr-CA';
+    const date = d.toLocaleDateString(locale, {
+      timeZone: 'America/Toronto', day: 'numeric', month: 'short', year: 'numeric',
+    });
+    const clock = d.toLocaleTimeString(locale, isEnglish
+      ? { timeZone: 'America/Toronto', hour: 'numeric', minute: '2-digit', hour12: true }
+      : { timeZone: 'America/Toronto', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+    return `${date} · ${clock}`;
   } catch {
     return isoDay(d) || '';
   }
@@ -355,7 +363,7 @@ function buildFeedHtml(items) {
     const brief = cleanText(item.excerpt || '').slice(0, 300);
     const byLabel = item.lang === 'en' ? 'By' : 'Par';
     const author = cleanText(item.author || '');
-    const date = frenchDate(item.date);
+    const date = articleCardDateTime(item.date, item.lang);
 
     const meta = [
       item.source ? `<span class="article-source notranslate" translate="no">${escapeHtml(item.source)}</span>` : '',

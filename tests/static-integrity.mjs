@@ -155,6 +155,8 @@ assert(chyzPage.includes('Dernière collecte réussie le'), 'radio CHYZ : date d
 assert(chyzPage.includes('id="tuner" class="tuner"'), 'radio CHYZ : lecteur natif requis');
 assert(!chyzPage.includes('id="radar-embed"'), 'radio CHYZ : iframe tuner interdit');
 assert(chyzPage.includes('id="theme-toggle"'), 'radio CHYZ : bascule clair/sombre requise');
+assert(chyzPage.includes('href="https://www.ville.quebec.qc.ca/?lang=fr"'), 'radio CHYZ : ville officielle liée requise');
+assert(chyzPage.includes('href="https://www.quebec-cite.com/fr"'), 'radio CHYZ : tourisme régional lié requis');
 // Localisation des établissements : le français adapte les noms anglais,
 // tandis que le volet anglais conserve leurs formes officielles.
 const cjloFrPage = readFileSync(join(root, 'radios/cjlo/index.html'), 'utf8');
@@ -166,6 +168,35 @@ const ckutFrPage = readFileSync(join(root, 'radios/ckut/index.html'), 'utf8');
 const ckutEnPage = readFileSync(join(root, 'en/radios/ckut/index.html'), 'utf8');
 assert(ckutFrPage.includes('>Université McGill</a>'), 'radio CKUT FR : établissement francisé requis');
 assert(ckutEnPage.includes('>McGill University</a>'), 'radio CKUT EN : nom officiel anglais requis');
+const cjloPage = readFileSync(join(root, 'radios/cjlo/index.html'), 'utf8');
+assert(cjloPage.includes('data-current-day="true"'), 'radio CJLO : le jour courant doit rester repérable même si la collecte est ancienne');
+assert(/seo-slot--(?:live|upcoming)/.test(cjloPage), 'radio CJLO : émission en cours ou à venir doit être repérée');
+assert(cjloPage.includes('data-schedule-day="'), 'radio CJLO : jour de grille recalculable côté navigateur requis');
+const jonquierePage = readFileSync(join(root, 'etablissements/cegep-de-jonquiere/index.html'), 'utf8');
+assert(jonquierePage.includes('href="https://www.saguenaylacsaintjean.ca/"'), 'établissement Jonquière : tourisme régional lié requis');
+const laPigePage = readFileSync(join(root, 'journaux/la-pige/index.html'), 'utf8');
+assert(laPigePage.includes('Dernier article publié le '), 'journal : fraîcheur des articles requise');
+assert(!laPigePage.includes('Chaque titre renvoie à l’article original'), 'journal : note redondante retirée');
+assert(laPigePage.includes('class="seo-headline__by">Par '), 'journal : byline préfixée requise');
+assert(laPigePage.includes('class="seo-headline__brief"'), 'journal : bref article requis');
+assert(laPigePage.includes('class="seo-headline__more"'), 'journal : lien lire la suite requis');
+assert(/datetime="2026-05-20T/.test(laPigePage), 'journal : heure de publication machine requise');
+assert(laPigePage.includes(' · '), 'journal : heure de publication visible requise');
+assert(!/Crédit photo\s*:/i.test(laPigePage), 'journal : crédits photo absents des extraits SEO requis');
+assert(!/Cégep de Jonquière \(Saguenay/u.test(laPigePage), 'journal : région redondante dans le chapeau interdite');
+assert(laPigePage.includes('?source=La%20Pige#news-list'), 'journal : retour filtré vers tous les articles requis');
+const seoPagesCss = readFileSync(join(root, 'seo-pages.css'), 'utf8');
+assert(seoPagesCss.includes('border-left-color: var(--radio)'), 'horaire : créneau actif bleu requis');
+assert(seoPagesCss.includes('.seo-slot--playing'), 'horaire : état de lecture réelle requis');
+assert(seoPagesCss.includes('border-left-color: var(--live)'), 'horaire : créneau en lecture rouge requis');
+assert(seoPagesCss.includes('animation: seo-live-pulse'), 'horaire : pulsation live requise');
+assert(seoPagesCss.includes('animation: seo-upcoming-pulse'), 'horaire : pulsation du prochain créneau requise');
+assert(seoPagesCss.includes('prefers-reduced-motion'), 'horaire : réduction des animations requise');
+const appJs = readFileSync(join(root, 'app.js'), 'utf8');
+assert(appJs.includes('syncSeoSchedulePlayback()'), 'horaire : synchronisation avec la lecture réelle requise');
+assert(appJs.includes("slot.classList.toggle('seo-slot--playing'"), 'horaire : classe de lecture réelle requise');
+const scheduleSeed = readFileSync(join(root, 'radio-schedules.seed.json'), 'utf8');
+assert(scheduleSeed.includes('"type": "cjlo"'), 'horaire CJLO : source conservée malgré une panne temporaire');
 const offlineHtml = readFileSync(join(root, 'offline.html'), 'utf8');
 assert(offlineHtml.includes("params.has('maintenance')"), 'offline.html : mode maintenance durable requis');
 assert(!offlineHtml.includes('id="tuner" class="tuner"'), 'offline.html : barre radio interdite en maintenance');
@@ -173,12 +204,23 @@ assert(offlineHtml.includes('id="lang-scroll-prev"'), 'offline.html : bouton lan
 assert(offlineHtml.includes('id="lang-scroll-next"'), 'offline.html : bouton langues droite requis');
 assert(offlineHtml.includes("chipsEl.addEventListener('wheel'"), 'offline.html : défilement souris des langues requis');
 assert(offlineHtml.includes("chipsEl.addEventListener('pointerdown'"), 'offline.html : glisser souris des langues requis');
+assert(offlineHtml.includes('LANGUAGE_MANUAL_PAUSE_MS = 10 * 60 * 1000'), 'offline.html : pause manuelle des langues de dix minutes requise');
+assert(offlineHtml.includes('site-foot--maintenance'), 'offline.html : variante de footer compact requise');
+assert(offlineHtml.includes('<summary>À propos de LE-RADAR.ca</summary>'), 'offline.html : détails du footer maintenance requis');
+assert(appJs.includes('initTunerPresentationLifecycle()'), 'app.js : cycle de vie du synthétiseur requis');
+assert(appJs.includes("refreshNowPlayingCache({ render: false })"), 'app.js : actualisation avant reprise du synthétiseur requise');
+assert(appJs.includes('syncSeoScheduleNow()'), 'app.js : repère quotidien des grilles SEO requis');
 const maintenanceDoc = readFileSync(join(root, 'docs/maintenance.md'), 'utf8');
 assert(maintenanceDoc.includes('Le DNS de `le-radar.ca` reste chez **WHC**'), 'documentation maintenance : hébergement WHC requis');
 assert(maintenanceDoc.includes('npm run maintenance:status'), 'documentation maintenance : commande de statut requise');
 const feedsHtml = readFileSync(join(root, 'feeds.html'), 'utf8');
 assert(feedsHtml.includes('src="native-tuner.js"'), 'feeds.html : lecteur natif requis');
 assert(feedsHtml.includes('src="nav-shell.js"'), 'feeds.html : navigation persistante requise');
+assert(readFileSync(join(root, 'index.html'), 'utf8').includes('src="seo-page-theme.js"'), 'index.html : amorçage de thème avant paint requis');
+assert(feedsHtml.includes('src="seo-page-theme.js"'), 'feeds.html : amorçage de thème avant paint requis');
+assert(feedsHtml.includes('class="wordmark-logo"'), 'feeds.html : logo de marque courant requis');
+assert(!feedsHtml.includes('wordmark-emoji'), 'feeds.html : ancien titre à emojis interdit');
+assert(feedsHtml.includes('id="today-time"'), 'feeds.html : heure du mât requise');
 const schedulesHub = readFileSync(join(root, 'horaires/index.html'), 'utf8');
 assert(schedulesHub.includes('Grilles colligées automatiquement'), 'hub horaires : note au pluriel requise');
 
@@ -346,8 +388,8 @@ assert(
 // Les fiches station portent l'ancre visée par « À l'antenne » (app.js).
 const ckutPage = readFileSync(join(root, 'radios/ckut/index.html'), 'utf8');
 assert(
-  /<section class="seo-section" id="horaire">/.test(ckutPage),
-  'radios/ckut/index.html : ancre #horaire requise (cible de nowAirSchedulePath)'
+  /<section class="seo-section" id="horaire"[^>]*data-schedule-station="ckut"/.test(ckutPage),
+  'radios/ckut/index.html : ancre #horaire et identifiant de station requis (cible de nowAirSchedulePath)'
 );
 // La grille n'est plus tronquée : CKUT compte une centaine de créneaux.
 assert(
@@ -357,7 +399,7 @@ assert(
 // Ordre lundi → dimanche : sur cinq colonnes, la semaine occupe la première
 // rangée et le week-end la seconde. L'ordre 0-6 des données couperait samedi
 // et dimanche de part et d'autre du retour à la ligne.
-const ckutDays = [...ckutPage.matchAll(/<div class="seo-day[^"]*">\s*<h3>([^<]+)<\/h3>/g)]
+const ckutDays = [...ckutPage.matchAll(/<div class="seo-day[^"]*"[^>]*>\s*<h3>([^<]+)<\/h3>/g)]
   .map((m) => m[1]);
 assert.deepEqual(
   ckutDays,

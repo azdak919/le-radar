@@ -40,6 +40,11 @@ const DEFAULT_TIMEOUT = 12000;
 const GENERIC_SHOW_RE = /^(?:airtime!?|liquidsoap(?:\s+radio!?)?|no name|unknown|unspecified|off ?line|off ?air|dead ?air|silence(?: detected)?|station ?id|\.+|-+|n\/a)$/i;
 const GENERIC_FEED_RE = /(?:high quality|low band|backup only|stream\s*#|feed for)/i;
 const GENERIC_GEO_RE = /^(?:montréal|montreal|québec|quebec|sherbrooke|laval|canada)$/i;
+// L'API CISM fournit le début de l'émission suivante. Quand cette borne est
+// déjà passée, son `current` ne décrit plus l'antenne à Québec et ne doit pas
+// battre une grille horaire. Une petite grâce absorbe le retard normal d'une
+// transition, pas plusieurs heures de décalage côté API.
+const CISM_LIVE_WINDOW_GRACE_MS = 5 * 60 * 1000;
 
 // ─── Normalisation ─────────────────────────────────────────────────────────────
 
@@ -207,6 +212,30 @@ function timeFromStamp(value, timeZone = DEFAULT_TZ) {
   return hhmm(raw) || '';
 }
 
+/** Timestamp API (secondes, millisecondes ou ISO) normalisé en millisecondes. */
+function timestampMs(value) {
+  if (value == null || value === '') return null;
+  if (typeof value === 'number' || /^\d{9,}$/.test(String(value))) {
+    const n = Number(value);
+    if (!Number.isFinite(n) || n <= 0) return null;
+    return n > 1e12 ? n : n * 1000;
+  }
+  const parsed = Date.parse(String(value));
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+/**
+ * L'endpoint CISM peut rester bloqué sur une fenêtre déjà écoulée. Dans ce
+ * cas, l'API est un état périmé et la grille locale reste la source fiable.
+ * Sans borne exploitable, on conserve l'API : une réponse incomplète ne doit
+ * pas être considérée fausse arbitrairement.
+ */
+function isCismLiveWindowCurrent(data = {}, nowMs = Date.now()) {
+  const next = data.upcoming || data.next;
+  const boundary = timestampMs(next?.datetime ?? next?.starts ?? next?.start);
+  return boundary == null || boundary > nowMs - CISM_LIVE_WINDOW_GRACE_MS;
+}
+
 // ─── HTTP ──────────────────────────────────────────────────────────────────────
 
 function fetchIcyNowPlaying(url, redirects = 0, timeout = DEFAULT_TIMEOUT) {
@@ -362,6 +391,7 @@ async function adaptCismV1(src = {}, radio = {}, ctx = {}) {
   const data = payload.data || payload;
   const cur = data.current;
   const up = data.upcoming || data.next;
+  if (!isCismLiveWindowCurrent(data, ctx.nowMs)) return null;
   const tz = ctx.timeZone || DEFAULT_TZ;
   const current = cur?.title
     ? makeShow({
@@ -1087,6 +1117,8 @@ module.exports = {
   extractShowFromIcyTitle,
   formatTrackLine,
   makeShow,
+  timestampMs,
+  isCismLiveWindowCurrent,
   fetchIcyNowPlaying,
   fetchJsonText,
   fetchJson,

@@ -639,9 +639,9 @@ a { color: inherit; }
 .hidden { display: none !important; }
 
 /* ─────────────── MASTHEAD ─────────────── */
-/* Filet bas : même teinte que le synthé (pas de « barre tin » claire). */
-.masthead { border-bottom: 1px solid var(--tuner-bg); }
-[data-theme="dark"] .masthead { border-bottom-color: var(--tuner-bg); }
+/* Le synthétiseur suit directement le mât : aucun filet intermédiaire. Cela
+   évite une couture sombre dans les shells qui intègrent le lecteur natif. */
+.masthead { border-bottom: 0; }
 
 .masthead-inner {
   max-width: var(--maxw);
@@ -1414,6 +1414,11 @@ html[data-script-dir="rtl"] .wordmark-full {
 .is-marquee > .tuner-now-sub-text {
   animation: tunerMarquee var(--marquee-duration, 12s) linear infinite alternate;
   will-change: transform;
+}
+/* L'audio reste actif en arrière-plan; seules les animations de lecture sont
+   suspendues. Au retour, app.js recrée volontairement un cycle calme. */
+html.is-tuner-presentation-paused .is-marquee > .tuner-now-sub-text {
+  animation-play-state: paused;
 }
 @keyframes tunerMarquee {
   0%, 14%   { transform: translate3d(0, 0, 0); }

@@ -26,7 +26,8 @@ test('depuis l’accueil, on atteint l’annuaire puis une fiche de journal', as
 
   await page.getByRole('link', { name: /Quartier Libre/ }).first().click();
   await expect(page).toHaveURL(/\/journaux\/quartier-libre\/$/);
-  await expect(page.locator('h1')).toContainText('Université de Montréal');
+  await expect(page.locator('h1')).toHaveText('Quartier Libre');
+  await expect(page.locator('.seo-facts')).toContainText('Université de Montréal');
 });
 
 test('une fiche de radio expose ses faits et renvoie vers les autres horaires', async ({ page }) => {
@@ -35,6 +36,11 @@ test('une fiche de radio expose ses faits et renvoie vers les autres horaires', 
   await expect(page.locator('h1')).toContainText('CHYZ');
   await expect(page.locator('.seo-facts')).toContainText('94,3 FM');
   await expect(page.locator('.seo-facts')).toContainText('Université Laval');
+  await expect(page.getByRole('link', { name: 'Ville de Québec — site officiel' }))
+    .toHaveAttribute('href', 'https://www.ville.quebec.qc.ca/?lang=fr');
+  await expect(page.getByRole('link', { name: 'Tourisme Capitale-Nationale — site officiel' }))
+    .toHaveAttribute('href', 'https://www.quebec-cite.com/fr');
+  await expect(page.locator('.seo-slot--live.seo-slot--playing')).toHaveCount(0);
   const schedulesLink = page.getByRole('link', { name: 'Choisir une autre radio' });
   await expect(schedulesLink).toBeVisible();
   await expect(schedulesLink).toHaveAttribute('href', '../../horaires/');
@@ -42,6 +48,108 @@ test('une fiche de radio expose ses faits et renvoie vers les autres horaires', 
   // Le lien vers l'établissement doit résoudre, pas juste exister.
   await page.getByRole('link', { name: 'Université Laval' }).first().click();
   await expect(page).toHaveURL(/\/etablissements\/universite-laval\/$/);
+});
+
+test('une fiche de journal garde byline, bref et fraîcheur factuelle', async ({ page }) => {
+  await page.goto('/journaux/la-pige/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.seo-headlines__status')).toContainText('Dernier article publié le');
+  await expect(page.locator('.seo-headline__by').first()).toHaveText(/^Par /);
+  await expect(page.locator('.seo-headline time').first()).toContainText(/\d{4}-\d{2}-\d{2} · \d{1,2} h \d{2}/);
+  await expect(page.locator('.seo-headline__brief').first()).not.toBeEmpty();
+  expect(await page.locator('.seo-headline__brief').allTextContents()).not.toContainEqual(expect.stringMatching(/Crédit photo/i));
+  await expect(page.getByRole('link', { name: 'Lire la suite →' }).first()).toHaveAttribute('href', /^https:\/\//);
+  await expect(page.getByRole('link', { name: 'Voir tous les articles de La Pige' }))
+    .toHaveAttribute('href', '../../?source=La%20Pige#news-list');
+  await expect(page.locator('.seo-cta--source')).toHaveCSS('text-align', 'left');
+  await expect(page.locator('.seo-cta--source')).toHaveCSS('margin-top', '22px');
+  const rulesAlign = await page.evaluate(() => {
+    const headline = document.querySelector('.seo-headlines > li:last-child');
+    const footer = document.querySelector('.site-foot');
+    const inset = parseFloat(getComputedStyle(footer, '::before').left);
+    const headlineRect = headline.getBoundingClientRect();
+    const footerRect = footer.getBoundingClientRect();
+    return {
+      headlineLeft: headlineRect.left,
+      headlineRight: headlineRect.right,
+      footerRuleLeft: footerRect.left + inset,
+      footerRuleRight: footerRect.right - inset,
+    };
+  });
+  expect(rulesAlign.footerRuleLeft).toBeCloseTo(rulesAlign.headlineLeft, 1);
+  expect(rulesAlign.footerRuleRight).toBeCloseTo(rulesAlign.headlineRight, 1);
+});
+
+test('un journal francophone garde son nom sans pseudo-slogan traduit', async ({ page }) => {
+  await page.goto('/en/newspapers/quartier-libre/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('h1')).toHaveText('Quartier Libre');
+});
+
+test('le retour d’une fiche journal active son filtre source sur l’accueil', async ({ page }) => {
+  await page.goto('/?source=La%20Pige#news-list', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.filter-btn.active')).toHaveAttribute('data-source', 'La Pige');
+  await expect(page.locator('#news-list .article')).not.toHaveCount(0);
+  await expect(page.locator('#news-list .article').first()).toContainText('La Pige');
+});
+
+test('les cartes d’articles affichent aussi leur heure de publication', async ({ page }) => {
+  await page.goto('/?source=La%20Pige', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#news-list .article-time').first()).toHaveText(/\d{1,2} h \d{2}/);
+});
+
+test('chaque filtre source expose tous ses articles, même hors de la fenêtre de fraîcheur', async ({ page }) => {
+  const expectedBySource = await page.request.get('/news.json').then(async (response) => {
+    const data = await response.json();
+    return data.items.reduce((counts, item) => {
+      counts[item.source] = (counts[item.source] || 0) + 1;
+      return counts;
+    }, {});
+  });
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  for (const [source, expected] of Object.entries(expectedBySource)) {
+    // Le clic synthétique déclenche exactement le gestionnaire du filtre sans
+    // attendre que les images externes déplacent la grille entre 14 sources.
+    // Un autre test couvre déjà le clic Playwright de la navigation source.
+    await page.locator(`.filter-btn[data-source=${JSON.stringify(source)}]`).evaluate((button) => button.click());
+    await expect.poll(
+      async () => page.locator('#news-list .article').count(),
+      { message: `${source} doit garder tous ses articles` },
+    ).toBe(expected);
+  }
+});
+
+test('une vue source remplit En bref sans dépasser la colonne une et vedettes', async ({ page }) => {
+  await page.setViewportSize({ width: 1206, height: 812 });
+  await page.goto('/?source=La%20Pige', { waitUntil: 'domcontentloaded' });
+
+  // Les images et les fontes peuvent se résoudre après la première passe de
+  // rendu. Attendre l'état équilibré (et non une durée arbitraire) reproduit
+  // la perception réelle : aucune colonne ne doit finir plus longue.
+  const readBounds = () => page.evaluate(() => {
+    const lastBottom = (selector) => {
+      const cards = [...document.querySelectorAll(selector)];
+      return cards.at(-1)?.getBoundingClientRect().bottom ?? 0;
+    };
+    return {
+      hero: lastBottom('.news-hero > .article'),
+      brief: lastBottom('.brief-rail > .article'),
+      briefCount: document.querySelectorAll('.brief-rail .article').length,
+      tailCount: document.querySelectorAll('.news-tail .article').length,
+    };
+  });
+
+  await expect.poll(async () => {
+    const bounds = await readBounds();
+    return bounds.briefCount >= 2
+      && bounds.briefCount + bounds.tailCount === 7
+      && bounds.brief <= bounds.hero + 1;
+  }, { timeout: 15_000 }).toBe(true);
+
+  const bounds = await readBounds();
+  expect(bounds.briefCount).toBeGreaterThanOrEqual(2);
+  expect(bounds.briefCount + bounds.tailCount).toBe(7);
+  expect(bounds.brief).toBeLessThanOrEqual(bounds.hero + 1);
+  expect(bounds.hero - bounds.brief).toBeLessThanOrEqual(96);
 });
 
 test('depuis l’accueil, on atteint le hub des horaires puis une grille complète', async ({ page }) => {

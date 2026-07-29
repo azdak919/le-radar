@@ -14,6 +14,7 @@
   <link rel="shortcut icon" href="favicon.ico?v=3">
   <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
   <meta name="apple-mobile-web-app-title" content="Solitaire">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="application-name" content="Solitaire">
   <link rel="manifest" href="site.webmanifest">
   <meta name="theme-color" content="#8b6f4e" id="meta-theme-color">
@@ -23,9 +24,11 @@
   /* Appliquer le thème avant paint (même clé que Le Radar : radar-theme) */
   (function () {
     try {
-      var saved = localStorage.getItem('radar-theme');
-      var dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    var saved = localStorage.getItem('radar-theme');
+    var dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    var themeColor = document.getElementById('meta-theme-color');
+    if (themeColor) themeColor.setAttribute('content', dark ? '#1a1816' : '#8b6f4e');
     } catch (e) {}
   })();
   </script>

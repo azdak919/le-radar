@@ -122,7 +122,10 @@ marque (radar) et la fusion des couleurs nationales (le pourpre).
 ## 5. PWA
 
 - `manifest.json` : `name` = « LE-RADAR.ca », `short_name` = « LE-RADAR.ca ».
-- `theme_color` / `background_color` : `#FFFFFF`.
+- Splash de LE-RADAR : `theme_color` / `background_color` : `#0E0F12`.
+  Ce fond sombre est volontairement fixe avant le chargement; l'interface
+  respecte ensuite le thème clair ou sombre déjà choisi.
+- Pomo et Solitaire gardent leur fond de lancement distinct `#1A1816`.
 - Service worker : cache nommé `radar-shell-vN` — **incrémenter `N`** à chaque modification
   du shell (HTML/CSS/JS/icônes) pour pousser la mise à jour aux apps installées.
 

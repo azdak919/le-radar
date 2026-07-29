@@ -594,12 +594,64 @@
       margin: 0 !important;
     }
     .site-foot__bot-ico { margin-right: 0.25rem; }
+    /* Variante maintenance : le contenu courant tient sans scroll; les
+       mentions secondaires restent accessibles dans un <details> natif. */
+    .site-foot--maintenance {
+      padding-top: 0.7rem;
+      font-size: 0.72rem;
+      line-height: 1.42;
+    }
+    .site-foot--maintenance .site-foot__brand { margin-bottom: 0.25rem; }
+    .site-foot--maintenance .site-foot__wordmark { font-size: 0.95rem; }
+    .site-foot--maintenance .site-foot__summary { margin-bottom: 0.28rem; }
+    .site-foot--maintenance .site-foot__contact {
+      margin: 0 0 0.28rem !important;
+      font-size: 0.72rem;
+    }
+    .site-foot__details {
+      display: inline-block;
+      max-width: 100%;
+      text-align: left;
+    }
+    .site-foot__details > summary {
+      cursor: pointer;
+      color: var(--accent);
+      font-weight: 600;
+      text-align: center;
+      list-style-position: inside;
+    }
+    .site-foot__details > summary:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+    .site-foot__details-body {
+      padding-top: 0.6rem;
+      text-align: center;
+    }
+    .site-foot--maintenance .site-foot__signature { margin-bottom: 0.4rem !important; }
+    .site-foot--maintenance .site-foot__links { margin-bottom: 0.4rem; }
+    .site-foot--maintenance .site-foot__credit {
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+    }
 
     @media (min-width: 540px) {
       .game-bar { padding: 0.6rem 1rem; }
     }
     @media (max-width: 430px) {
       .game-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    /* Téléphone bas : conserver le jeu et le footer fermé dans un seul écran,
+       sans cacher de contenu ni imposer de défilement. */
+    @media (max-height: 760px) {
+      body {
+        padding-top: max(10px, env(safe-area-inset-top));
+        padding-bottom: max(10px, env(safe-area-inset-bottom));
+      }
+      header { padding-bottom: 0.55rem; }
+      .game-wrap { margin-top: 0.6rem; margin-bottom: 0.65rem; }
+      .hint-block { padding-bottom: 0.45rem; }
     }
     @media (prefers-reduced-motion: reduce) {
       .status-kicker::before,
@@ -682,32 +734,37 @@
     </div>
 
     <!-- RADAR:FOOTER:START -->
-    <footer class="site-foot">
+    <footer class="site-foot site-foot--maintenance">
       <div class="site-foot__brand">
         <p class="site-foot__wordmark notranslate" translate="no"><img class="site-foot__logo" src="./assets/icon.svg" width="24" height="24" alt="" aria-hidden="true">LE-RADAR.ca</p>
-        <p class="site-foot__signature" lang="fr">Le Réseau Académique de Découverte et d’Agrégation de Ressources</p>
       </div>
-      <p>LE-RADAR.ca est un projet indépendant et non officiel. Il n’est affilié à aucun des médias ni des établissements recensés. Les contenus appartiennent à leurs publications d’origine.</p>
-      <nav class="site-foot__links" aria-label="Liens de pied de page">
-        <a href="./">Retour à l’accueil de LE-RADAR.ca</a>
-        <span class="site-foot__sep" aria-hidden="true">·</span>
-        <a href="medias/">Tous les médias étudiants du Québec</a>
-        <span class="site-foot__sep" aria-hidden="true">·</span>
-        <a href="horaires/">Les horaires des radios étudiantes</a>
-        <span class="site-foot__sep" aria-hidden="true">·</span>
-        <a href="en/" hreflang="en-CA">English</a>
-      </nav>
-      <p>Ce projet est distribué sous <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" rel="noopener noreferrer license">licence publique générale GNU, version 2</a>.</p>
-      <div class="site-foot__credit">
-        <p class="site-foot__author">
-          Conçu avec <a href="easter-egg.html" class="site-foot__heart" aria-label="Ouvrir l’easter egg">♡</a>
-          par <a href="https://www.buymeacoffee.com/azdak" class="site-foot__author-link" target="_blank" rel="noopener noreferrer" title="Offrir un café — Buy me a coffee">Azdak</a>
-          en 2026
-        </p>
-        <p class="site-foot__contact"><a href="mailto:azdak-qc@proton.me" data-contact-channel="email" aria-label="Nous joindre par courriel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>Nous joindre</a></p>
-        <p class="site-foot__legal">Code libre utilisé conformément aux licences applicables; contenus et médias crédités à leurs auteurs respectifs.</p>
-        <p class="site-foot__bot"><span class="site-foot__bot-ico" aria-hidden="true">🤖</span> Agrégateur automatisé de contenus.</p>
-      </div>
+      <p class="site-foot__summary">LE-RADAR.ca est un projet indépendant et non officiel. Il n’est affilié à aucun des médias ni des établissements recensés. Les contenus appartiennent à leurs publications d’origine.</p>
+      <p class="site-foot__contact"><a href="mailto:azdak-qc@proton.me" data-contact-channel="email" aria-label="Nous joindre par courriel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>Nous joindre</a></p>
+      <details class="site-foot__details">
+        <summary>À propos de LE-RADAR.ca</summary>
+        <div class="site-foot__details-body">
+          <p class="site-foot__signature" lang="fr">Le Réseau Académique de Découverte et d’Agrégation de Ressources</p>
+          <nav class="site-foot__links" aria-label="Liens de pied de page">
+            <a href="./">Retour à l’accueil de LE-RADAR.ca</a>
+            <span class="site-foot__sep" aria-hidden="true">·</span>
+            <a href="medias/">Tous les médias étudiants du Québec</a>
+            <span class="site-foot__sep" aria-hidden="true">·</span>
+            <a href="horaires/">Les horaires des radios étudiantes</a>
+            <span class="site-foot__sep" aria-hidden="true">·</span>
+            <a href="en/" hreflang="en-CA">English</a>
+          </nav>
+          <p>Ce projet est distribué sous <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" rel="noopener noreferrer license">licence publique générale GNU, version 2</a>.</p>
+          <div class="site-foot__credit">
+            <p class="site-foot__author">
+              Conçu avec <a href="easter-egg.html" class="site-foot__heart" aria-label="Ouvrir l’easter egg">♡</a>
+              par <a href="https://www.buymeacoffee.com/azdak" class="site-foot__author-link" target="_blank" rel="noopener noreferrer" title="Offrir un café — Buy me a coffee">Azdak</a>
+              en 2026
+            </p>
+            <p class="site-foot__legal">Code libre utilisé conformément aux licences applicables; contenus et médias crédités à leurs auteurs respectifs.</p>
+            <p class="site-foot__bot"><span class="site-foot__bot-ico" aria-hidden="true">🤖</span> Agrégateur automatisé de contenus.</p>
+          </div>
+        </div>
+      </details>
     </footer>
     <!-- RADAR:FOOTER:END -->
   </div>
@@ -882,16 +939,22 @@
 
   let idx = 0;
   let rotateTimer = null;
+  let rotationResumeTimer = null;
+  const LANGUAGE_MANUAL_PAUSE_MS = 10 * 60 * 1000;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  chipsPrevEl.addEventListener('click', () => scrollLanguages(-1));
-  chipsNextEl.addEventListener('click', () => scrollLanguages(1));
+  chipsPrevEl.addEventListener('click', () => { pauseRotation(); scrollLanguages(-1); });
+  chipsNextEl.addEventListener('click', () => { pauseRotation(); scrollLanguages(1); });
   chipsEl.addEventListener('scroll', updateLangScrollControls, { passive: true });
   window.addEventListener('resize', updateLangScrollControls, { passive: true });
 
   // Molette verticale → rail horizontal, et glisser-déposer à la souris.
   // Le geste tactile conserve son comportement natif de défilement.
   chipsEl.addEventListener('wheel', (event) => {
+    // Une personne qui parcourt les langues reprend explicitement la main :
+    // garder son choix/sa position pendant dix minutes, même si le rail ne
+    // déborde pas dans le viewport courant.
+    pauseRotation();
     if (!chipsEl.scrollWidth || chipsEl.scrollWidth <= chipsEl.clientWidth) return;
     const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
     if (!delta) return;
@@ -901,21 +964,33 @@
 
   let dragStartX = 0;
   let dragStartScroll = 0;
+  let dragPointerId = null;
   chipsEl.addEventListener('pointerdown', (event) => {
     if (event.pointerType !== 'mouse' || event.button !== 0) return;
+    pauseRotation();
     dragStartX = event.clientX;
     dragStartScroll = chipsEl.scrollLeft;
-    chipsEl.classList.add('is-dragging');
-    chipsEl.setPointerCapture(event.pointerId);
+    dragPointerId = event.pointerId;
   });
   chipsEl.addEventListener('pointermove', (event) => {
-    if (!chipsEl.classList.contains('is-dragging')) return;
-    chipsEl.scrollLeft = dragStartScroll - (event.clientX - dragStartX);
+    if (event.pointerId !== dragPointerId) return;
+    const delta = event.clientX - dragStartX;
+    // Ne capter le pointeur qu'après un vrai glissement : le code précédent
+    // le capturait dès pointerdown et empêchait le clic sur une langue.
+    if (!chipsEl.classList.contains('is-dragging')) {
+      if (Math.abs(delta) < 4) return;
+      chipsEl.classList.add('is-dragging');
+      chipsEl.setPointerCapture(event.pointerId);
+    }
+    chipsEl.scrollLeft = dragStartScroll - delta;
   });
   function stopLanguageDrag(event) {
-    if (!chipsEl.classList.contains('is-dragging')) return;
-    chipsEl.classList.remove('is-dragging');
-    if (chipsEl.hasPointerCapture(event.pointerId)) chipsEl.releasePointerCapture(event.pointerId);
+    if (event.pointerId !== dragPointerId) return;
+    if (chipsEl.classList.contains('is-dragging')) {
+      chipsEl.classList.remove('is-dragging');
+      if (chipsEl.hasPointerCapture(event.pointerId)) chipsEl.releasePointerCapture(event.pointerId);
+    }
+    dragPointerId = null;
   }
   chipsEl.addEventListener('pointerup', stopLanguageDrag);
   chipsEl.addEventListener('pointercancel', stopLanguageDrag);
@@ -967,7 +1042,11 @@
   }
   function pauseRotation() {
     stopRotation();
-    setTimeout(startRotation, 10000);
+    if (rotationResumeTimer) clearTimeout(rotationResumeTimer);
+    rotationResumeTimer = setTimeout(() => {
+      rotationResumeTimer = null;
+      startRotation();
+    }, LANGUAGE_MANUAL_PAUSE_MS);
   }
 
   rebuildChips();
@@ -1017,7 +1096,10 @@
         ...all.filter((L) => L.group === 'indigenous'),
         ...all.filter((L) => L.group !== 'indigenous'),
       ];
-      const prevId = CATALOG[idx] && CATALOG[idx].id;
+      // `idx` pointe dans LANGS, dont l'ordre change quand les langues
+      // autochtones arrivent. Garder l'identifiant réellement sélectionné,
+      // sinon cette mise à jour asynchrone annule un choix manuel.
+      const prevId = LANGS[idx] && LANGS[idx].id;
       rebuildChips();
       idx = Math.max(0, LANGS.findIndex((L) => L.id === prevId));
       if (idx < 0) idx = 0;

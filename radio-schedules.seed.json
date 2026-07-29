@@ -46,7 +46,12 @@
     },
     "cjlo": {
       "_note": "Grille Drupal 7 sur http://www.cjlo.com/schedule (Daytime + Late Night, colonnes Sun–Sat). HTTP seulement : le port 443 ne répond pas, garder l'URL en http://. Le site rend par intermittence une page d'erreur Drupal « 500 Service unavailable » sur toutes les URL, y compris l'accueil, quel que soit l'agent (vérifié 2026-07-26) : c'est une panne de leur côté, pas un blocage d'IP — inutile de router via le worker Cloudflare, il recevrait le même 500. Le bot conserve alors la dernière grille connue.",
-      "sources": [],
+      "sources": [
+        {
+          "type": "cjlo",
+          "url": "http://www.cjlo.com/schedule"
+        }
+      ],
       "grid": []
     },
     "cfak": {
