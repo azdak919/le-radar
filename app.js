@@ -419,6 +419,8 @@ let volumeMuted = false;
 let gainBeforeMute = DEFAULT_GAIN;
 const MAX_GAIN = 2;                 // jusqu'à 200 %
 const VOLUME_PREF_VERSION_KEY = 'radar-player-vol-version';
+/** Mute explicite — survit au rechargement (en plus de la session multi-onglets). */
+const VOLUME_MUTE_KEY = 'radar-player-muted';
 const VOLUME_PREF_VERSION = '3';
 const STATION_TRIMS_KEY = 'radar-player-station-trims-v1';
 const stationTrims = new Map();
@@ -4528,6 +4530,7 @@ function setSharedVolume(gain, { muted, publish = false } = {}) {
   if (TUNER_VOLUME) TUNER_VOLUME.value = String(currentGain);
   try {
     localStorage.setItem('radar-player-vol', String(currentGain));
+    localStorage.setItem(VOLUME_MUTE_KEY, volumeMuted ? '1' : '0');
   } catch { /* private mode */ }
 
   // Franchir 100 % côté suiveur doit aussi brancher le graphe sur le leader.
@@ -4840,10 +4843,16 @@ function restoreVolume() {
   currentGain = oldDefault
     ? DEFAULT_GAIN
     : (Number.isFinite(saved) ? Math.min(GAIN_UI_MAX, Math.max(0, saved)) : DEFAULT_GAIN);
-  gainBeforeMute = currentGain;
-  TUNER_VOLUME.value = currentGain;
-  volumeMuted = false;
+  gainBeforeMute = currentGain > 0.001 ? currentGain : (gainBeforeMute || DEFAULT_GAIN);
+  if (TUNER_VOLUME) TUNER_VOLUME.value = String(currentGain);
+  // Mute mémorisé (clé dédiée). La session multi-onglets peut encore
+  // surcharger juste après via applyRemoteVolumeState(boot).
+  let savedMuted = false;
+  try { savedMuted = localStorage.getItem(VOLUME_MUTE_KEY) === '1'; } catch { /* */ }
+  volumeMuted = savedMuted;
   applyGain();
+  updateVolumeUI();
+  updateVolumeSliderVisual();
 }
 
 // ═══════════════════════════════════════════════════════════════════════════

@@ -10,6 +10,31 @@ test('le volume historique par défaut est ramené à 100 %', async ({ page }) =
   await expect.poll(() => page.evaluate(() => localStorage.getItem('radar-player-vol'))).toBe('1');
 });
 
+test('le mute survit au rechargement de la page', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('radar-player-vol', '0.65');
+    localStorage.setItem('radar-player-vol-version', '2');
+    localStorage.setItem('radar-player-muted', '1');
+    localStorage.removeItem('radar-player-session-v1');
+  });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#tuner-volume')).toHaveValue('0.65');
+  await expect.poll(() => page.evaluate(() => {
+    const vol = document.getElementById('tuner-vol');
+    const player = document.getElementById('radar-player');
+    return {
+      mutedUi: vol?.classList.contains('is-muted') || false,
+      mutedAttr: localStorage.getItem('radar-player-muted'),
+      audioMuted: !!player?.muted,
+      audioVolume: player?.volume,
+    };
+  })).toMatchObject({
+    mutedUi: true,
+    mutedAttr: '1',
+    audioMuted: true,
+  });
+});
+
 test('le panneau À l’antenne reste bleu lorsque le synthétiseur est arrêté', async ({ page }) => {
   await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
   const tuner = page.locator('#radar-embed').contentFrame();

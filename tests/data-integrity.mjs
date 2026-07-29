@@ -81,6 +81,17 @@ const schedules = readJson('radio-schedules.json').stations;
 const nowPlaying = readJson('radio-nowplaying.json').stations;
 assert(Array.isArray(radios) && radios.length > 0, 'radios.json doit contenir des radios');
 assert(schedules && typeof schedules === 'object', 'radio-schedules.json.stations requis');
+
+// Slogans SEO : CISM = « La Marge » (Wikipédia FR + branding site).
+{
+  const radiosList = readJson('radios.json');
+  const cism = (Array.isArray(radiosList) ? radiosList : []).find((r) => r.id === 'cism');
+  assert(cism?.slogan === 'La Marge', `CISM slogan attendu « La Marge », obtenu ${JSON.stringify(cism?.slogan)}`);
+  assert(
+    !/radio étudiante de l'Université de Montréal/i.test(String(cism?.slogan || '')),
+    'CISM : ne pas confondre slogan de marque et description institutionnelle',
+  );
+}
 assert(nowPlaying && typeof nowPlaying === 'object', 'radio-nowplaying.json.stations requis');
 
 const radioIds = new Set();

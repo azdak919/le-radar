@@ -9,7 +9,7 @@
     "type": "universite",
     "frequency": "94,3 FM",
     "website": "https://chyz.ca/",
-    "slogan": "La radio des étudiant·e·s de l'Université Laval",
+    "slogan": "La radio des étudiants de l'Université Laval",
     "logo": "assets/logos/chyz-logo.jpg",
     "stream": "https://ecoutez.chyz.ca/proxy/chyz943/stream",
     "description": "La radio des étudiantes et étudiants de l'Université Laval depuis 1997. Musique d'ici et d'ailleurs, sports universitaires et vie de campus.",
@@ -28,7 +28,10 @@
       {
         "type": "icy"
       }
-    ]
+    ],
+    "_sloganSource": "https://chyz.ca/",
+    "_sloganEvidence": "Meta description CHYZ : « la radio des étudiants de l'Université Laval ». Pas de slogan court type marque dans l'infobox Wikipédia.",
+    "_sloganChecked": "2026-07-29"
   },
   {
     "id": "cism",
@@ -40,7 +43,7 @@
     "type": "universite",
     "frequency": "89,3 FM",
     "website": "https://cism893.ca/",
-    "slogan": "La radio étudiante de l'Université de Montréal",
+    "slogan": "La Marge",
     "logo": "assets/logos/cism-logo.jpg",
     "stream": "https://stream03.ustream.ca/cism128.mp3",
     "description": "La radio étudiante de l'Université de Montréal. Musique alternative, francophone et découvertes, émissions culturelles.",
@@ -63,7 +66,10 @@
       {
         "type": "icy"
       }
-    ]
+    ],
+    "_sloganSource": "https://fr.wikipedia.org/wiki/CISM-FM",
+    "_sloganEvidence": "Wikipédia FR infobox Slogan « La Marge »; site cism893.ca : « dans la marge » / branding Marge; EN wiki branding « la marge »",
+    "_sloganChecked": "2026-07-29"
   },
   {
     "id": "ckut",
@@ -75,7 +81,7 @@
     "type": "universite",
     "frequency": "90,3 FM",
     "website": "https://ckut.ca/",
-    "slogan": "McGill's campus-community radio",
+    "slogan": "McGill campus-community radio",
     "logo": "assets/logos/ckut-logo.jpg",
     "stream": "https://ckut.out.airtime.pro/ckut_a",
     "description": "Campus-community radio de McGill. Programmation musicale audacieuse, nouvelles alternatives et voix communautaires.",
@@ -98,7 +104,10 @@
       {
         "type": "icy"
       }
-    ]
+    ],
+    "_sloganSource": "https://ckut.ca/",
+    "_sloganEvidence": "Meta CKUT : « campus-community radio station based in Montreal »; ancrage McGill dans le nom officiel de la station. Formulation courte pour le H1 SEO.",
+    "_sloganChecked": "2026-07-29"
   },
   {
     "id": "cjlo",
@@ -129,7 +138,10 @@
       {
         "type": "icy"
       }
-    ]
+    ],
+    "_sloganSource": "https://www.cjlo.com/",
+    "_sloganEvidence": "Accroche historique / branding CJLO (site parfois instable SSL). Conservée faute de slogan alternatif officiel trouvé le 2026-07-29.",
+    "_sloganChecked": "2026-07-29"
   },
   {
     "id": "cfak",
@@ -141,7 +153,7 @@
     "type": "universite",
     "frequency": "88,3 FM",
     "website": "https://www.cfak.ca/",
-    "slogan": "Ça part ici — radio de l'Université de Sherbrooke",
+    "slogan": "Ça part ici",
     "stream": "https://audio-edge-2a8hd.sfo.he.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
     "logo": "assets/logos/cfak-logo.jpg",
     "description": "La radio officielle de l'Université de Sherbrooke depuis 2003. Musique et vie étudiante en Estrie.",
@@ -159,7 +171,10 @@
       {
         "type": "icy"
       }
-    ]
+    ],
+    "_sloganSource": "https://www.cfak.ca/",
+    "_sloganEvidence": "H1 du site officiel « Ça part ici » (2026-07-29). Wikipédia FR : « Premier de la bande » (conservé en note).",
+    "_sloganChecked": "2026-07-29"
   },
   {
     "id": "choq",
@@ -171,7 +186,7 @@
     "type": "universite",
     "frequency": "Web",
     "website": "https://www.choq.ca/",
-    "slogan": "La radio numérique de l'UQAM",
+    "slogan": "La radio numérique des étudiants de l'UQAM",
     "logo": "assets/logos/choq-logo.jpg",
     "stream": "https://18213.live.streamtheworld.com/SP_R4799664_SC",
     "description": "Radio numérique étudiante de l'UQAM. Émissions, musique et culture émergente.",
@@ -202,6 +217,9 @@
       {
         "type": "icy"
       }
-    ]
+    ],
+    "_sloganSource": "https://www.choq.ca/",
+    "_sloganEvidence": "Meta description CHOQ.ca : « radio numérique des étudiants de l’UQAM »",
+    "_sloganChecked": "2026-07-29"
   }
 ]
