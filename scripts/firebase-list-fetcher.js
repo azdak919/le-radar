@@ -303,6 +303,19 @@ async function fetchFirebaseFeed(src = {}, options = {}) {
   return items.slice(0, maxItems);
 }
 
+/**
+ * Passage historique borné pour une source Firestore. À la différence du fil
+ * vivant, il ne se limite pas aux vingt dernières entrées, mais reste plafonné
+ * par l'appelant et ne récupère jamais les pages d'article ni leurs médias.
+ */
+async function fetchFirebaseArchive(src = {}, options = {}) {
+  const maxItems = Math.max(1, Number(options.maxItems) || 1000);
+  const pageSize = Math.min(100, Math.max(1, Number(options.pageSize) || 50));
+  const maxPages = Math.max(1, Number(options.maxPages) || Math.ceil(maxItems / pageSize));
+  const items = await listFirestoreDocuments(src, { pageSize, maxPages });
+  return items.slice(0, maxItems);
+}
+
 function classifyFirebaseItems(items = []) {
   if (!items.length) return { status: 'dead', lastItemDate: null };
 
@@ -329,6 +342,7 @@ module.exports = {
   slugifyTitle,
   articleLink,
   fetchFirebaseFeed,
+  fetchFirebaseArchive,
   classifyFirebaseItems,
   classifyFirebaseSource,
   runFirestoreQuery,

@@ -1,0 +1,58 @@
+name: Retro-crawl Historical Metadata
+
+on:
+  schedule:
+    # Trois sources, quatre pages de listes publiques (12 requêtes au plus) : une passe quotidienne
+    # répartit le travail sans rafale ni concurrence avec le fil vivant.
+    - cron: '45 6 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: retro-crawl-historical-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+      - name: Collect a polite, resumable metadata-only slice
+        id: crawl
+        run: node scripts/retro-crawl-historical.js --update
+        # Un média qui ferme son API est un état à consigner, jamais un motif
+        # de courriel Quality Gate ni un blocage de l’agrégation quotidienne.
+        continue-on-error: true
+        env:
+          FIREBASE_POLYSCOPE_API_KEY: ${{ secrets.FIREBASE_POLYSCOPE_API_KEY }}
+      - name: Verify a small rotating sample of original links
+        if: steps.crawl.outcome == 'success'
+        id: links
+        run: node scripts/verify-historical-links.js --update --limit=12
+        continue-on-error: true
+      - name: Regenerate archives after a successful pass
+        if: steps.crawl.outcome == 'success' && steps.links.outcome == 'success'
+        run: node scripts/generate-seo.js --update
+        continue-on-error: true
+      - name: Commit only the historical artefacts
+        if: steps.crawl.outcome == 'success'
+        run: |
+          if git diff --quiet; then
+            echo "No historical catalogue change."
+            exit 0
+          fi
+          git config user.name "LE-RADAR History Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add news-archive.json historical-crawl-state.json sitemap-archives.xml llms.txt
+          git add -A archives journaux en
+          git commit -m "bot: retro-crawl historical metadata (auto)" || exit 0
+          # Un push concurrencé par le bot d’actualités sera repris à la passe
+          # suivante; ne pas transformer cet aléa en notification d’échec.
+          git push || echo "Push deferred: next scheduled pass will retry."
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

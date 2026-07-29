@@ -5,12 +5,29 @@
   "partial": {
     "maxRecords": 120,
     "maxPages": 24,
+    "conservationRecordsPerSource": 20,
     "minimumExcerptCharacters": 90,
     "verifiedWithinDays": 35
+  },
+  "age": {
+    "indexableYears": 1,
+    "conservationYears": 3
+  },
+  "retroCrawl": {
+    "sourcesPerRun": 3,
+    "pagesPerSource": 4,
+    "postsPerPage": 50,
+    "maxPagesPerSource": 120,
+    "maxRecordsPerSource": 6000,
+    "requestDelayMs": 900,
+    "retryAfterDays": 14,
+    "windowYears": 3
   },
   "notes": [
     "Le fil principal reste gouverné uniquement par la fenêtre de fraîcheur.",
     "Les pages historiques externes ne republient jamais le corps intégral ni les images sans licence documentée.",
-    "Le mode partial est public mais exige un lien original vérifié et des métadonnées suffisamment riches."
+    "Le mode partial est public mais exige un lien original vérifié et des métadonnées suffisamment riches.",
+    "Le rétro-crawl est séquentiel, reprenable et ne lit que des listes publiques paginées des trois dernières années : jamais les corps complets ni les médias.",
+    "Une publication est indexable au plus un an après sa date originale; de un à trois ans, ses métadonnées restent consultables sans indexation automatique; au-delà, elles sont conservées sans page publique."
   ]
 }

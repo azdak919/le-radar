@@ -149,7 +149,9 @@ for (const app of ['pomo', 'solitaire']) {
 }
 
 const chyzPage = readFileSync(join(root, 'radios/chyz/index.html'), 'utf8');
-assert(chyzPage.includes("<h1 class=\"seo-title\">CHYZ 94,3 FM — La radio des étudiant·e·s de l'Université Laval</h1>"), 'radio CHYZ : nom, fréquence et slogan requis en titre');
+const chyzSource = JSON.parse(readFileSync(join(root, 'radios.json'), 'utf8')).find((radio) => radio.id === 'chyz');
+assert(chyzSource?.slogan && chyzSource?._sloganSource && chyzSource?._sloganEvidence, 'radio CHYZ : provenance du slogan requise');
+assert(chyzPage.includes(`<h1 class="seo-title">CHYZ 94,3 FM — ${chyzSource.slogan}</h1>`), 'radio CHYZ : nom, fréquence et slogan sourcé requis en titre');
 assert(chyzPage.includes('href="../../horaires/">Choisir une autre radio</a>'), 'radio CHYZ : retour aux autres horaires requis');
 assert(chyzPage.includes('Dernière collecte réussie le'), 'radio CHYZ : date de collecte requise');
 assert(chyzPage.includes('id="tuner" class="tuner"'), 'radio CHYZ : lecteur natif requis');
