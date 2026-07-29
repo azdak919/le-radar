@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-29T11:55:35.875Z",
+  "updated": "2026-07-29T17:06:25.984Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -752,14 +752,38 @@
       "at": "2026-07-26T00:19:17.000Z",
       "via": "existant",
       "source": "Quartier Libre"
+    },
+    "https://thelinknewspaper.ca/article/16328": {
+      "at": "2026-07-29T17:02:12.325Z",
+      "via": "save-page-now",
+      "source": "The Link",
+      "snapshot": "https://web.archive.org/web/20260729170152/https://thelinknewspaper.ca/article/16328"
+    },
+    "https://thelinknewspaper.ca/article/16325": {
+      "at": "2026-07-29T17:03:15.974Z",
+      "via": "save-page-now",
+      "source": "The Link",
+      "snapshot": "https://web.archive.org/web/20260729170256/https://thelinknewspaper.ca/article/16325"
+    },
+    "https://thelinknewspaper.ca/article/16324": {
+      "at": "2026-07-29T17:04:00.455Z",
+      "via": "save-page-now",
+      "source": "The Link",
+      "snapshot": "https://web.archive.org/web/20260729170334/https://thelinknewspaper.ca/article/16324"
+    },
+    "https://lecollectif.ca/a-la-une/les-avantages-du-transport-en-commun/": {
+      "at": "2026-07-29T17:04:36.597Z",
+      "via": "save-page-now",
+      "source": "Le Collectif",
+      "snapshot": "https://web.archive.org/web/20260729170418/https://lecollectif.ca/a-la-une/les-avantages-du-transport-en-commun/"
     }
   },
   "stats": {
-    "total": 135,
+    "total": 139,
     "lastRun": {
-      "saved": 1,
-      "skipped": 9,
-      "failed": 10,
+      "saved": 4,
+      "skipped": 0,
+      "failed": 16,
       "stoppedEarly": false
     }
   },
