@@ -1,72 +1,78 @@
 {
-  "updatedAt": "2026-07-29T11:23:57.016Z",
+  "updatedAt": "2026-07-29T13:14:35.556Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Mercredi Bonbon",
         "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mercredi-bonbon/"
       },
+      "next": {
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Mercredi Bonbon",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T11:23:35.894Z"
+      "checkedAt": "2026-07-29T13:14:12.757Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Club classique",
-        "source": "schedule",
-        "start": "07:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/club-classique"
-      },
-      "next": {
         "title": "La collation",
         "source": "schedule",
         "start": "09:00",
         "end": "11:00",
         "url": "https://cism893.ca/emissions/mix-collation"
       },
+      "next": {
+        "title": "Genre de bleu (reprise)",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/genre-de-bleu"
+      },
       "track": "",
-      "showTitle": "Club classique",
+      "showTitle": "La collation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T11:23:37.574Z"
+      "checkedAt": "2026-07-29T13:14:14.618Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Wednesday Morning After",
-        "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "The Sleepy King/Terminal 5",
         "source": "api-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "Free City Radio",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "11:30"
+      },
       "track": "",
-      "showTitle": "The Wednesday Morning After",
+      "showTitle": "The Sleepy King/Terminal 5",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +80,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T11:23:40.497Z"
+      "checkedAt": "2026-07-29T13:14:18.800Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Morning Electro-shock",
+        "title": "Are We There Yet?",
         "source": "schedule",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/morning-electro-shock"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/are-we-there-yet"
       },
       "next": {
-        "title": "Words and Culture",
+        "title": "Democracy Now",
         "source": "schedule",
-        "start": "07:30",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/words-and-culture"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
       },
       "track": "",
-      "showTitle": "Morning Electro-shock",
+      "showTitle": "Are We There Yet?",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T11:23:53.835Z"
+      "checkedAt": "2026-07-29T13:14:32.354Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Folkswagen",
-        "source": "schedule",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
         "title": "Palmarès CFAK",
         "source": "schedule",
         "start": "08:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "Le popcorn de l'infini",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T11:23:54.479Z"
+      "checkedAt": "2026-07-29T13:14:33.068Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +145,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Noé Lira - compas",
+      "track": "Francouvertes 2026 - De Lafe",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-29T11:23:56.664Z"
+      "checkedAt": "2026-07-29T13:14:35.205Z"
     }
   }
 }
