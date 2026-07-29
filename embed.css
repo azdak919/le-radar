@@ -903,7 +903,13 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] {
   --tuner-onair-idle: rgba(255, 255, 255, 0.42);
   /* Fond session (défaut hiver) — comme style.css ≥720px. */
   --tuner-session-base: #121820;
-  background: var(--tuner-session-base) !important;
+  /*
+   * html/body toujours transparents : le fond session est UNIQUEMENT sur
+   * .tuner (hauteur fixe de la barre). Sinon, à l’ouverture du popover
+   * volume l’iframe grandit et un bandeau noir pleine largeur flash
+   * pendant que html/body peignent encore la session.
+   */
+  background: transparent !important;
   height: var(--embed-bar-h);
   max-height: var(--embed-bar-h);
 }
@@ -918,7 +924,16 @@ html[data-embed="tuner"][data-surface="kiosque-v1"][data-uni-session="ete"] {
   --tuner-session-base: #101816;
 }
 
-html[data-embed="tuner"][data-surface="kiosque-v1"] body,
+html[data-embed="tuner"][data-surface="kiosque-v1"] body {
+  background: transparent !important;
+  height: var(--embed-bar-h);
+  max-height: var(--embed-bar-h);
+  min-height: 0;
+  box-shadow: none;
+  font-family: var(--sans);
+}
+
+/* Seule la barre porte le fond session (pleine largeur, hauteur fixe). */
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
   background: var(--tuner-session-base) !important;
   height: var(--embed-bar-h);
@@ -930,9 +945,7 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
 
 /*
  * Popover volume (téléphone) : l’iframe grandit pour peindre la bulle.
- * html/body redeviennent transparents hors barre — sinon le fond session
- * remplit toute la hauteur de l’iframe et forme un bandeau sombre sous
- * le popover (le journal parent doit aussi plafonner l’hôte à baseH).
+ * html/body restent transparents ; .tuner garde la barre session fixe.
  */
 @media (max-width: 559.98px) {
   html[data-embed="tuner"][data-surface="kiosque-v1"]:has(.tuner-vol.is-open) {
@@ -950,13 +963,11 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
     box-shadow: none !important;
   }
   html[data-embed="tuner"][data-surface="kiosque-v1"]:has(.tuner-vol.is-open) .tuner {
-    /* Barre seule garde le fond session ; le surplus iframe est transparent. */
     background: var(--tuner-session-base) !important;
     height: var(--embed-bar-h);
     max-height: var(--embed-bar-h);
     min-height: var(--embed-bar-h);
     overflow: visible;
-    /* Pas d’ombre sous la barre : sinon un flou noir fuit sous le popover. */
     box-shadow: none !important;
   }
   /* Ombre lourde de style.css (0 14px 34px) = « flou noir » sous la bulle. */
