@@ -38,7 +38,7 @@ Version courante du dépôt : **1.0.0** — voir le [journal des modifications](
 - **Mode clair / sombre** persistant
 - **PWA** — installation mobile, service worker, offline shell
 - **Pomodoro & Solitaire** — mini-apps isolées (`/pomo/`, `/solitaire/`), chacune installable en PWA avec son propre logo
-- **Statique, avec classement optionnel** — le site et les données éditoriales restent sur GitHub Pages; le classement Solitaire peut utiliser le Worker D1 gratuit fourni
+- **Statique et hors ligne** — le site et les données éditoriales restent sur GitHub Pages; les statistiques de Solitaire restent sur l’appareil
 
 ---
 
@@ -116,8 +116,8 @@ Le client est entièrement statique : GitHub Pages sert les pages HTML, les
 données JSON, les manifestes et les service workers. Les workflows GitHub
 Actions mettent à jour les données éditoriales et radio dans le dépôt; le
 navigateur lit ensuite ces fichiers publiés. Les intégrations Cloudflare sont
-facultatives et ne concernent que le proxy audio et le classement partagé de
-Solitaire.
+facultatives et ne concernent que les petits services de cache et d’entropie;
+Solitaire ne dépend d’aucun service distant.
 
 Pour publier le site principal, pousse les changements validés sur `main` :
 GitHub Pages déploie directement cette branche sur

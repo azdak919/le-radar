@@ -1,3 +1,6 @@
+(() => {
+'use strict';
+
 const TODAY_DATE = document.getElementById('today-date');
 const THEME_TOGGLE = document.getElementById('theme-toggle');
 const TOAST_EL = document.getElementById('toast');
@@ -306,3 +309,4 @@ renderTodayDate();
 initFeedCards();
 renderFeedsCampuses();
 renderFeedsUpdated();
+})();

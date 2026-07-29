@@ -58,6 +58,7 @@ L’humain a tendance à dire **oui** à chaque proposition. Les agents **doiven
 | Balise | Règle dure |
 |--------|------------|
 | **MAX 1 dette / session de chat** | Après une dette **soldée**, `npm run agents:propose` → **STOP**. Ne pas enchaîner D5 puis D3 puis D1. |
+| **Objectif : 1 dette / session de maintenance** | Une fois le ticket métier livré et le worktree propre, choisir **une** dette mûre, la solder puis STOP. Ce n’est pas exigible pour une question, une urgence, un WIP ou une dette sans précondition satisfaite. |
 | **MAX 2 dettes / jour calendaire** | Même sur plusieurs sessions le même jour. |
 | **« Continue » ≠ carte blanche** | = finir le **ticket en cours** ou la **dette déjà acceptée**, pas « tout le ledger ». |
 | **Effort L** | Deux OK explicites séparés avant de commencer. |
@@ -72,6 +73,7 @@ Commandes :
 npm run agents:harvest           # détecte vibe intense (git) → candidats
 npm run agents:harvest:write     # écrit §3c dans AGENTS.md
 npm run agents:propose           # propose 1 dette D# OU STOP quota
+npm run agents:review-session    # dit si c'est le bon moment de proposer une dette
 npm run agents:record-sold -- D5 # après avoir soldé D5
 npm run agents:reset-session     # nouveau chat (pas pour contourner le jour)
 ```
@@ -82,6 +84,13 @@ npm run agents:reset-session     # nouveau chat (pas pour contourner le jour)
 ticket OK → agents:harvest[:write] → montrer candidats → (option promote 1 D#)
          → agents:propose → OK? → 1 dette max → record-sold → STOP
 ```
+
+**Moment d’intégration :** ne pas ouvrir une dette au démarrage ni au milieu d’un
+WIP. À la fin d’un ticket de maintenance, après les checks et un worktree propre,
+exécuter `npm run agents:review-session`. Le script attend si le WIP existe,
+confirme si la dette unique de la session est déjà soldée, sinon propose le plus
+petit bloc `ready`, puis le plus petit effort. Si aucun bloc ne satisfait ses
+préconditions, noter le report plutôt que créer une dette artificielle.
 
 ---
 
@@ -134,6 +143,9 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 | D13 | **Contraste `--muted` en thème clair + focus invisible du menu de langue** | `--muted` est un jeton global : l’assombrir touche tout le site clair d’un coup et impose une relecture visuelle complète | Captures avant/après sur accueil, fiche journal et annuaire, en clair **et** en sombre ; le thème sombre est déjà conforme et ne doit pas régresser | S–M | open |
 | D14 | **CSP trop large** sur `frame-src` et `connect-src` | Le site consomme des tiers énumérables mais nombreux (YouTube, umami, workers, météo, moteurs de traduction) ; resserrer d’un coup casse en production, pas en test | Resserrer **une directive à la fois**, en commençant par `frame-src`, avec vérification du syntoniseur et de l’intégration YouTube | S par étape | open |
 | D15 | **Calibrage des seuils de l’audit pixel** (banques photo) | Les seuils ont été réglés sur un autre corpus ; les rebaisser à l’aveugle laisserait passer ce qu’on cherche justement à bloquer | Un lot de photos **étiquetées à la main** (garder / rejeter) servant de référence, pour régler les seuils sur des cas jugés plutôt que sur une intuition | M | open |
+| D16 | **Provenance des slogans et descriptions des radios** | Les champs éditoriaux de `radios.json` mélangent slogan officiel, description et formulations historiques ; une page peut donc être exacte sur le fond mais erronée comme citation de marque | Registre par station : URL officielle, extrait, date de vérification, niveau de confiance ; toute formulation non confirmée devient une description neutre | S | ready |
+| D17 | **Contrat du lecteur natif sur toutes les routes publiques** | Le lecteur est maintenant natif sur les fiches SEO et le RSS, mais l’intégration mêle génération HTML, scripts dynamiques et shell de continuité ; une route peut afficher le bandeau sans initialiser le lecteur, ou inversement | Matrice testée accueil/RSS/SEO/annuaire/maintenance/Pomo/Solitaire, en navigation avec lecture ; zéro iframe hors exceptions explicites et zéro erreur console | M | open |
+| D18 | **Régression visuelle du chrome partagé** (footer, thème, grilles) | Les tests structurels ont laissé passer des écarts visibles : footer non conforme, note collée à une carte, slogan mal placé. Le rendu partagé a besoin d’une preuve visuelle, pas seulement de présence HTML | Captures de référence clair/sombre pour accueil, RSS, fiche radio, fiche journal et maintenance ; test visuel ciblé ou revue humaine consignée avant toute propagation globale | M | open |
 
 **D7 — précisions (option 3, pas 1 ni 2) :**
 
@@ -300,6 +312,16 @@ session parte du constat et non de l’audit.
 - `style-src 'unsafe-inline'` reste nécessaire tant que le bloc de style critique
   du synthé est inline dans `index.html`.
 - `frame-src` et `connect-src` sont, eux, énumérables → seuls ceux-là sont visés.
+
+**Avancée 2026-07-29 — `frame-src` soldé comme tranche, dette conservée.**
+
+- `index.html` et `tuner-embed.html` n’acceptent plus tout `https:` en iframe.
+  La liste autorise seulement le même site et les six sites des radios déclarées
+  dans `radios.json` (CHYZ, CISM, CKUT, CJLO, CFAK, CHOQ).
+- `tests/static-integrity.mjs` interdit le retour de `frame-src https:` et
+  vérifie ces origines sur les deux surfaces.
+- `connect-src` reste volontairement ouvert pour l’instant : c’est la prochaine
+  tranche D14, à inventorier et vérifier séparément.
 
 **Écarté volontairement** : la partie « hiérarchie typographique et
 breakpoints » de l’audit est un examen stylistique sans défaut mesuré ; elle

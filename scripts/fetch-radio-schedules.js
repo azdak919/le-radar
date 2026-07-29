@@ -40,6 +40,18 @@ function readJson(p, fallback) {
   }
 }
 
+/** Lundi de la semaine Québec associée à une collecte effectivement réussie. */
+function weekStartIso(value, timeZone) {
+  const date = new Date(value);
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone, year: 'numeric', month: '2-digit', day: '2-digit',
+  }).formatToParts(date);
+  const part = (type) => Number(parts.find((entry) => entry.type === type)?.value);
+  const local = new Date(Date.UTC(part('year'), part('month') - 1, part('day'), 12));
+  local.setUTCDate(local.getUTCDate() - ((local.getUTCDay() + 6) % 7));
+  return local.toISOString().slice(0, 10);
+}
+
 async function main() {
   const radios = readJson(RADIOS_PATH, []);
   const seed = readJson(SEED_PATH, { stations: {} });
@@ -63,6 +75,7 @@ async function main() {
     let finalGrid = grid;
     let finalSources = sources;
     let checkedAt = now;
+    let verifiedWeekOf = weekStartIso(now, timezone);
     let carried = false;
 
     const prevGrid = prev.stations?.[radio.id]?.grid;
@@ -74,6 +87,11 @@ async function main() {
       finalGrid = prevGrid;
       finalSources = prev.stations[radio.id].sources || [];
       checkedAt = prev.stations[radio.id].checkedAt || now;
+      // Migration sûre des grilles antérieures : `checkedAt` désigne déjà la
+      // dernière collecte réussie. Sa semaine Québec est donc traçable, même
+      // si l'ancien fichier ne portait pas encore `verifiedWeekOf`.
+      verifiedWeekOf = prev.stations[radio.id].verifiedWeekOf
+        || weekStartIso(checkedAt, timezone);
       carried = true;
     } else if (
       !doForce
@@ -92,6 +110,8 @@ async function main() {
       finalGrid = prevGrid;
       finalSources = prev.stations[radio.id].sources || [];
       checkedAt = prev.stations[radio.id].checkedAt || now;
+      verifiedWeekOf = prev.stations[radio.id].verifiedWeekOf
+        || weekStartIso(checkedAt, timezone);
       carried = true;
     }
 
@@ -107,6 +127,7 @@ async function main() {
       name: radio.name,
       sources: finalSources,
       checkedAt,
+      ...(verifiedWeekOf ? { verifiedWeekOf } : {}),
       grid: finalGrid,
     };
     totalSlots += finalGrid.length;

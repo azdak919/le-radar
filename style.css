@@ -3525,9 +3525,20 @@ html[data-translate-busy="1"] .translate-toggle {
   color: var(--ink-soft);
 }
 
-.site-foot__author-mail {
-  font-variant-emoji: text;
+.site-foot__contact {
+  margin: 6px 0 12px;
+  font-size: 12.5px;
+  color: var(--muted);
 }
+.site-foot__contact a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: inherit;
+  text-underline-offset: 3px;
+}
+.site-foot__contact svg { width: 15px; height: 15px; flex: 0 0 auto; }
+.site-foot__contact a:hover { color: var(--accent); }
 
 .site-foot__legal {
   font-size: 12px;

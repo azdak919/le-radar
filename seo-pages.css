@@ -14,6 +14,13 @@
   color: var(--ink);
 }
 
+.masthead-inner { position: relative; }
+.seo-masthead-actions {
+  position: absolute;
+  top: 16px;
+  right: 0;
+}
+
 /* ── Fil d'Ariane ───────────────────────────────────────────────────────── */
 
 .seo-crumbs {
@@ -195,26 +202,21 @@
 
 /* ── Grille horaire ─────────────────────────────────────────────────────── */
 
-/* La grille complète (7 jours × jusqu'à ~20 créneaux) ne tient pas sur un
-   téléphone : on la laisse défiler dans son propre conteneur plutôt que de
-   faire déborder la page entière. */
+/* Une journée est une carte lisible plutôt qu'une colonne comprimée. */
 .seo-schedule-scroll {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  margin: 0 -4px;
-  padding: 0 4px;
+  margin: 0;
 }
 .seo-schedule {
   display: grid;
-  /* Étroit : autant de colonnes que la largeur en permet. */
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px 20px;
-  min-width: 0;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 14px;
 }
-/* Assez large pour cinq colonnes : rangée 1 = lundi→vendredi,
-   rangée 2 = samedi + dimanche. L'ordre des jours vient de scheduleTable(). */
-@media (min-width: 900px) {
-  .seo-schedule { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.seo-day {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--bg-soft);
 }
 .seo-day h3 {
   font-family: var(--sans);
@@ -227,21 +229,25 @@
 }
 .seo-day ul { list-style: none; margin: 0; padding: 0; }
 .seo-day li {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 2px 8px;
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  align-items: start;
+  column-gap: 10px;
   font-family: var(--sans);
   font-size: 13.5px;
   line-height: 1.5;
   color: var(--ink-soft);
-  padding: 3px 0;
+  padding: 8px 0;
+  border-top: 1px solid color-mix(in srgb, var(--rule) 78%, transparent);
 }
+.seo-day li:first-child { border-top: 0; padding-top: 0; }
+.seo-day li:last-child { padding-bottom: 0; }
 .seo-day time { font-weight: 700; color: var(--ink); }
 .seo-slot__time { white-space: nowrap; font-variant-numeric: tabular-nums; }
 .seo-slot__dash { margin: 0 2px; opacity: 0.6; }
 .seo-slot__title { min-width: 0; }
-.seo-slot__title a { color: inherit; }
+.seo-slot__title a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.seo-slot__title a:hover { color: var(--accent); }
 .seo-day__none {
   font-family: var(--sans);
   font-size: 13px;
@@ -249,11 +255,25 @@
   color: var(--muted);
   margin: 0;
 }
+.seo-schedule-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  margin: -6px 0 14px !important;
+  font-family: var(--sans);
+  font-size: 12.5px !important;
+  color: var(--muted) !important;
+}
 .seo-slot__note {
+  grid-column: 2;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--muted);
+}
+@media (max-width: 420px) {
+  .seo-day { padding: 14px; }
+  .seo-day li { grid-template-columns: 82px minmax(0, 1fr); column-gap: 8px; }
 }
 
 /* ── Notes et vides ─────────────────────────────────────────────────────── */
@@ -265,6 +285,7 @@
   color: var(--muted);
   margin: 14px 0 0;
 }
+.seo-wire .seo-note { margin: 18px 0 0; }
 .seo-empty { font-style: italic; }
 
 .seo-foot-meta { font-size: 12.5px; }

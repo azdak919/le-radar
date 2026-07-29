@@ -20,6 +20,32 @@ dans l'idéal, et ce qui reste volontairement manuel.
 
 ---
 
+## Fenêtre de maintenance manuelle
+
+Pour une intervention qui touche les gabarits, le service worker ou les données
+générées, protéger le site et éviter les commits concurrents des bots :
+
+1. Dans **Cloudflare → Rules → Redirect Rules**, activer une règle **302** qui
+   redirige les pages publiques vers
+   `https://le-radar.ca/offline.html?maintenance=1`, en excluant
+   `/offline.html`, `/assets/offline/*`, `/assets/icon.svg`,
+   `/assets/icon-32.png`, `/assets/icon-192.png` et `/indigenous-mt.json`.
+   Ces exclusions évitent une boucle et gardent la page jouable; `maintenance=1`
+   empêche son retour automatique à l'accueil tant que la règle est active.
+2. Dans **GitHub Actions**, désactiver temporairement les neuf workflows qui
+   écrivent dans `main` : archive, découverte des sources, maintenance,
+   traduction autochtone, institutions, nouvelles, now-playing, horaires et
+   flux radio. Laisser **Quality Gate** actif.
+3. Travailler localement, exécuter les checks et vérifier les URLs locales
+   demandées par l'humain avant tout commit ou push. Publier une seule fois.
+4. Vérifier le run Quality Gate; s'il est vert, réactiver les neuf workflows
+   et désactiver la règle Cloudflare. En cas d'échec, garder la maintenance
+   active et corriger avant un nouveau push.
+
+La page de maintenance reste aussi utilisable hors ligne via le cache PWA.
+
+---
+
 ## Fichiers sources de vérité
 
 | Fichier | Rôle | Qui le met à jour |
