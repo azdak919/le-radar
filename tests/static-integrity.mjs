@@ -263,6 +263,19 @@ assert(
   'kiosque-v1 : labels volume 0/100/200 % réaffichés',
 );
 assert(
+  embedCss.includes('--tuner-upcoming: var(--status-upcoming-soft')
+    || embedCss.includes('--tuner-upcoming: var(--status-upcoming-soft,'),
+  'embed : ambre « À venir » aligné sur --status-upcoming-soft (#e8c07a)',
+);
+assert(
+  !embedCss.includes('#f0c14e'),
+  'embed : plus d’or vif #f0c14e pour « À venir » (utiliser #e8c07a)',
+);
+assert(
+  embedCss.includes('[data-surface="kiosque-v1"] .tuner-vol-fill--base'),
+  'kiosque-v1 : remplissage volume (bleu radio-bright) comme le bureau',
+);
+assert(
   embedCss.includes('[data-surface="kiosque-v1"] .tuner-cast--bar'),
   'kiosque-v1 : cast en barre sur largeur bureau',
 );

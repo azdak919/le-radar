@@ -737,23 +737,26 @@ html[data-embed="tuner"] .tuner.is-playing .tuner-nowair.is-live .tuner-nowair-t
   color: var(--tuner-onair-live);
 }
 
-/* À VENIR : ambre uniquement pendant la lecture; hors lecture = bleu inactif. */
+/* À VENIR : même ambre que le site (--status-upcoming-soft / --tuner-upcoming = #e8c07a). */
+html[data-embed="tuner"] .tuner {
+  --tuner-upcoming: var(--status-upcoming-soft, #e8c07a);
+}
 html[data-embed="tuner"] .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-label,
 html[data-embed="tuner"] .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-title {
-  color: #f0c14e;
+  color: var(--tuner-upcoming);
 }
 
 html[data-embed="tuner"] .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-sub {
-  color: rgba(240, 193, 78, 0.78);
+  color: color-mix(in srgb, var(--tuner-upcoming) 72%, transparent);
 }
 
-/* L’ambre clair du thème sombre devient trop pâle sur le chrome lumineux. */
+/* Sur chrome ivoire (legacy clair) : ambre plus foncé pour le contraste. */
 html[data-embed="tuner"]:not([data-theme="dark"]) .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-label,
 html[data-embed="tuner"]:not([data-theme="dark"]) .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-title {
-  color: #8b5a00;
+  color: var(--status-upcoming, #9a6900);
 }
 html[data-embed="tuner"]:not([data-theme="dark"]) .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-sub {
-  color: rgba(139, 90, 0, 0.82);
+  color: color-mix(in srgb, var(--status-upcoming, #9a6900) 82%, transparent);
 }
 
 html[data-embed="tuner"] .tuner-nowair.is-empty .tuner-nowair-title {
@@ -944,43 +947,163 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-step {
   border-radius: 10px;
 }
 
-/* Volume : layout colonne bureau (rail + 0/100/200 %). */
+/*
+ * Volume kiosque-v1 = barre bureau LE-RADAR (≥1100 px dans style.css) :
+ * pastille 42 × rail inline + libellés 0 % / 100 % / 200 % en bas du rail.
+ * (L’embed legacy masque les labels et force un rail plus court.)
+ */
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol {
-  height: auto;
+  align-self: center;
+  height: 42px;
   align-items: center;
+  gap: 0;
+  flex: 0 0 auto;
   max-width: calc(42px + var(--embed-vol-track));
+  min-width: 0;
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-btn {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  margin: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.72);
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-btn:hover {
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-btn .ico-vol,
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-btn .ico-vol-mute {
+  width: 20px;
+  height: 20px;
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-slot {
+  display: flex;
+  align-items: center;
+  height: 42px;
+  overflow: visible;
+  flex: 0 0 auto;
+  max-width: var(--embed-vol-track);
+  min-width: 0;
+  position: static;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-slot::before {
+  display: none;
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-popover {
+  display: contents;
+}
+
+/* Mute dédié = popover téléphone uniquement (bureau = clic sur l’icône volume). */
+@media (min-width: 560px) {
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-mute-btn {
+    display: none !important;
+  }
 }
 
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-track {
+  --vol-thumb: 16px;
   width: var(--embed-vol-track);
   max-width: var(--embed-vol-track);
-  min-width: 108px;
-  flex: 0 1 var(--embed-vol-track);
-  height: auto;
-  min-height: 0;
-  gap: 4px;
+  min-width: 96px;
+  flex: 0 0 var(--embed-vol-track);
+  height: 42px;
+  min-height: 42px;
+  gap: 0;
   justify-content: center;
+  position: relative;
   overflow: visible;
 }
 
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-slider {
-  height: auto;
-  min-height: 16px;
+  min-height: 0;
+  height: 100%;
+  width: 100%;
 }
 
+/* Libellés superposés en bas du rail (comme style.css ≥1100). */
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-labels {
   display: block !important;
-  position: relative;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   height: 10px;
+  overflow: visible;
   font-size: 9px;
   font-weight: 600;
   line-height: 1;
+  letter-spacing: 0;
   color: rgba(255, 255, 255, 0.34);
   user-select: none;
 }
 
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-labels span {
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-label--min {
+  left: calc(var(--vol-thumb) / 2);
+  transform: translateX(0);
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-label--mid {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-label--max {
+  left: calc(100% - var(--vol-thumb) / 2);
+  transform: translateX(-100%);
   color: rgba(255, 154, 144, 0.72);
+}
+
+/* Remplissage / rail / pastille : tokens exacts du bandeau sombre LE-RADAR. */
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-rail {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-fill--base {
+  background: var(--radio-bright, #5d9be0);
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-fill--boost {
+  background: #ff7d6e;
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-tick {
+  background: rgba(255, 255, 255, 0.34);
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-tick--100 {
+  background: rgba(255, 255, 255, 0.58);
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-thumb {
+  border: 2px solid rgba(12, 14, 18, 0.22);
+  background: #fff;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.48);
 }
 
 /* Cast en barre (largeur bureau), comme le site. */
@@ -1052,14 +1175,103 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair.hidden {
   }
 }
 
-/* Mobile kiosque : labels volume seulement dans la bulle (popover). */
+/* Mobile kiosque : volume en popover (comme l’embed générique < 560 px).
+   Labels sous le rail de la bulle, mute visible — pas le layout bureau. */
 @media (max-width: 559.98px) {
-  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-track > .tuner-vol-labels {
-    display: none !important;
-  }
   html[data-embed="tuner"][data-surface="kiosque-v1"] {
     --embed-bar-h: 62px;
     --embed-vol-track: 72px;
     --embed-pad: 12px;
+  }
+
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol {
+    height: 42px;
+    max-width: 42px;
+  }
+
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-slot {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    z-index: 20;
+    width: min(300px, calc(100vw - 20px), calc(100dvw - 20px));
+    max-width: none;
+    height: auto;
+    min-height: 0;
+    padding: 12px 14px 10px;
+    background: #22252c;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 12px;
+    box-shadow: 0 14px 34px -14px rgba(0, 0, 0, 0.85);
+    opacity: 0;
+    transform: translateY(-6px) scale(0.96);
+    transform-origin: top right;
+    pointer-events: none;
+  }
+
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-slot::before {
+    display: block;
+    content: "";
+    position: absolute;
+    top: -5px;
+    right: 15px;
+    width: 10px;
+    height: 10px;
+    background: #22252c;
+    border-left: 1px solid rgba(255, 255, 255, 0.14);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    transform: rotate(45deg);
+  }
+
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol.is-open .tuner-vol-slot {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-popover {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+  }
+
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-mute-btn {
+    display: flex !important;
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+  }
+
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-track {
+    flex: 1 1 auto;
+    width: auto;
+    max-width: none;
+    min-width: 0;
+    height: auto;
+    min-height: 0;
+    gap: 4px;
+  }
+
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-slider {
+    min-height: 34px;
+    height: 34px;
+  }
+
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-labels {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    height: 11px;
+    margin-top: 1px;
+    font-size: 8px;
+    color: rgba(255, 255, 255, 0.38);
+  }
+
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-label--max {
+    color: rgba(255, 154, 144, 0.62);
   }
 }
