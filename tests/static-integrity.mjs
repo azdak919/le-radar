@@ -277,10 +277,11 @@ assert(
 );
 assert(
   embedCss.includes('[data-surface="kiosque-v1"] .tuner.is-playing .tuner-eq span')
-    && embedCss.includes('var(--live')
     && embedCss.includes('[data-surface="kiosque-v1"] .tuner.is-buffering .tuner-eq span')
-    && !embedCss.includes('embedEq'),
-  'kiosque-v1 : EQ lecture rouge + buffering gris (pas d’animation maison)',
+    && embedCss.includes('eq-buffer')
+    && !embedCss.includes('embedEq')
+    && /is-buffering \.tuner-eq span \{[^}]*var\(--live/.test(embedCss.replace(/\s+/g, ' ')),
+  'kiosque-v1 : EQ lecture + buffering en rouge live (pas d’animation maison)',
 );
 assert(
   embedCss.includes('[data-surface="kiosque-v1"] .tuner-cast--bar'),
@@ -561,8 +562,9 @@ assert(styleCss.includes('--status-live-soft: #ff7d6e'), 'style : coral EN ONDES
 assert(styleCss.includes('--status-upcoming-soft: #e8c07a'), 'style : ambre À venir partagé requis');
 assert(
   styleCss.includes('@keyframes eq-buffer')
-    && styleCss.includes('.tuner.is-buffering .tuner-eq span'),
-  'style : EQ grise réservée au buffering (site + iframe)',
+    && styleCss.includes('.tuner.is-buffering .tuner-eq span')
+    && /is-buffering \.tuner-eq span \{[^}]*var\(--live/.test(styleCss.replace(/\s+/g, ' ')),
+  'style : EQ rouge live en buffering (animation eq-buffer, site + iframe)',
 );
 
 console.log(`OK intégrité statique (${htmlFiles.length} pages HTML)`);

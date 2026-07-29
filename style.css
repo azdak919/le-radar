@@ -1578,14 +1578,15 @@ html.is-tuner-presentation-paused .is-marquee > .tuner-now-sub-text {
 @keyframes eq { 0%,100% { height: 4px; } 50% { height: 16px; } }
 
 /*
- * Buffering : barres grises (ex-animation kiosque).
- * is-playing et is-buffering sont exclusifs dans app.js (updatePlayUI).
+ * Buffering : barres rouges (même --live que la lecture), animation scale
+ * distincte pour signaler le tampon. is-playing / is-buffering exclusifs.
  */
 .tuner.is-buffering .tuner-eq span {
-  background: rgba(255, 255, 255, 0.45);
+  background: var(--live, #c8102e);
   height: 40%;
   max-height: 16px;
   border-radius: 1px;
+  opacity: 0.9;
   animation: eq-buffer 0.9s ease-in-out infinite alternate;
 }
 .tuner.is-buffering .tuner-eq span:nth-child(2) {
