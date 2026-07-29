@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-07-29T13:14:35.556Z",
+  "updatedAt": "2026-07-29T15:28:59.191Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Mercredi Bonbon",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/mercredi-bonbon/"
-      },
+      "current": null,
       "next": {
         "title": "Chéri.e, j’arrive!",
         "source": "schedule",
@@ -20,59 +14,59 @@
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Mercredi Bonbon",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T13:14:12.757Z"
+      "checkedAt": "2026-07-29T15:28:34.376Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "next": {
         "title": "Genre de bleu (reprise)",
         "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "https://cism893.ca/emissions/genre-de-bleu"
       },
+      "next": {
+        "title": "La carte cadeau",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/la-carte-cadeau"
+      },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "Genre de bleu (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T13:14:14.618Z"
+      "checkedAt": "2026-07-29T15:28:36.122Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Sleepy King/Terminal 5",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "Free City Radio",
         "source": "api-live",
         "start": "11:00",
         "end": "11:30"
       },
+      "next": {
+        "title": "ffiles",
+        "source": "api-live",
+        "start": "11:30",
+        "end": "12:00"
+      },
       "track": "",
-      "showTitle": "The Sleepy King/Terminal 5",
+      "showTitle": "Free City Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -80,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T13:14:18.800Z"
+      "checkedAt": "2026-07-29T15:28:38.620Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Are We There Yet?",
+        "title": "Unheard Of",
         "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/are-we-there-yet"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/unheard-of"
       },
       "next": {
-        "title": "Democracy Now",
+        "title": "North-South Hockey",
         "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/north-south-hockey"
       },
       "track": "",
-      "showTitle": "Are We There Yet?",
+      "showTitle": "Unheard Of",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T13:14:32.354Z"
+      "checkedAt": "2026-07-29T15:28:52.165Z"
     },
     "cfak": {
       "id": "cfak",
@@ -132,7 +126,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T13:14:33.068Z"
+      "checkedAt": "2026-07-29T15:28:52.849Z"
     },
     "choq": {
       "id": "choq",
@@ -145,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Francouvertes 2026 - De Lafe",
+      "track": "Mantisse - Drop",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -156,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-29T13:14:35.205Z"
+      "checkedAt": "2026-07-29T15:28:58.840Z"
     }
   }
 }
