@@ -142,6 +142,10 @@ for (const [label, value] of airTextFields) {
     !PRODUCTION_NOTE_RE.test(text),
     `${label}: consigne interne diffusée comme titre (${text}) — voir stripProductionNote`
   );
+  assert(
+    !/^(?:ffiles|files|file|track\d*|untitled)$/i.test(text),
+    `${label}: titre déchet type fichier/placeholder (${text}) — voir isJunkShowTitle`
+  );
 }
 
 /*

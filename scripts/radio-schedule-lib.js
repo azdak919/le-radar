@@ -73,6 +73,30 @@ function stripProductionNote(title = '') {
   return out.trim() || String(title).trim();
 }
 
+/**
+ * Titres non éditables issus d'Airtime/fichiers : « ffiles », « track01.mp3 »,
+ * placeholders. CKUT a déjà publié `name: "ffiles"` (show id 55, description
+ * vide) — un fragment de nom de fichier, pas une émission.
+ */
+const JUNK_TITLE_EXACT = new Set([
+  'untitled', 'no name', 'noname', 'n/a', 'na', 'tba', 'tbd', 'null', 'none',
+  'test', 'placeholder', 'unknown', 'files', 'ffiles', 'file', 'audio', 'track',
+]);
+const JUNK_TITLE_RE = [
+  /\.(?:mp3|wav|flac|aiff?|m4a|ogg|aac)$/i,
+  /^[a-z]{0,4}files?$/i,          // ffiles, xfiles en bas de casse seul
+  /^track\s*\d+$/i,
+  /^audio[_\s-]?\d*$/i,
+  /^[a-z0-9_-]{1,3}$/i,           // trop court pour un vrai titre
+];
+
+function isJunkShowTitle(title = '') {
+  const t = String(title || '').replace(/\s+/g, ' ').trim();
+  if (!t || t.length < 2) return true;
+  if (JUNK_TITLE_EXACT.has(t.toLowerCase())) return true;
+  return JUNK_TITLE_RE.some((re) => re.test(t));
+}
+
 // ─── Temps ───────────────────────────────────────────────────────────────────
 function timeToMinutes(value) {
   const m = /^(\d{1,2}):(\d{2})$/.exec(String(value || '').trim());
@@ -113,7 +137,7 @@ function normalizeSlot(slot) {
   const title = stripProductionNote(
     decodeHtmlEntities(String(slot.title || '')).replace(/\s+/g, ' ').trim(),
   );
-  if (!title) return null;
+  if (!title || isJunkShowTitle(title)) return null;
 
   const out = { day, start: minutesToTime(start), end: minutesToTime(end), title };
   const host = decodeHtmlEntities(String(slot.host || '')).replace(/\s+/g, ' ').trim();
@@ -1029,6 +1053,7 @@ module.exports = {
   hhmm,
   dayNameToIndex,
   stripProductionNote,
+  isJunkShowTitle,
   gridCoverage,
   normalizeSlot,
   mergeGrids,
