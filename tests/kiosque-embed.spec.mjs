@@ -76,6 +76,12 @@ test.describe('LE-KIOSQUE démo × tuner-embed LE-RADAR', () => {
       document.querySelectorAll('#tuner-select option:not([disabled])').length)).toBeGreaterThan(0);
 
     const embedJs = await page.locator('script[src*="embed.js"]').getAttribute('src');
-    expect(embedJs || '').toMatch(/embed\.js\?v=560/);
+    // Cache-bust aligné sur tuner-embed.html (ne pas figer une vieille révision).
+    expect(embedJs || '').toMatch(/embed\.js\?v=\d+/);
+    const htmlVer = await page.locator('script[src*="embed.js"]').evaluate((el) => {
+      const m = String(el.getAttribute('src') || '').match(/[?&]v=(\d+)/);
+      return m ? m[1] : '';
+    });
+    expect(Number(htmlVer)).toBeGreaterThanOrEqual(568);
   });
 });
