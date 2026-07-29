@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-28T23:01:53.084Z",
+  "updatedAt": "2026-07-29T00:57:51.537Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-28T23:01:24.851Z"
+      "checkedAt": "2026-07-29T00:57:25.324Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "À la bonne heure",
-        "source": "api-live",
-        "start": "15:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "a-la-bonne-heure"
-      },
-      "next": {
         "title": "London café",
         "source": "api-live",
         "start": "16:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364858.mp3",
+        "url": "https://stream03.ustream.ca/cism128.mp3",
         "slug": "london-cafe"
       },
+      "next": {
+        "title": "Les Pénibles",
+        "source": "api-live",
+        "start": "17:30",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/364862.mp3",
+        "slug": "les-penibles"
+      },
       "track": "",
-      "showTitle": "À la bonne heure",
+      "showTitle": "London café",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-28T23:01:27.559Z"
+      "checkedAt": "2026-07-29T00:57:27.496Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Soul Perspectives",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:30"
-      },
-      "next": {
         "title": "Marca-RO",
         "source": "api-live",
         "start": "20:30",
         "end": "21:00"
       },
+      "next": {
+        "title": "Montreal Sound Ark",
+        "source": "api-live",
+        "start": "21:00",
+        "end": "23:00"
+      },
       "track": "",
-      "showTitle": "Soul Perspectives",
+      "showTitle": "Marca-RO",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,59 +77,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-28T23:01:30.581Z"
+      "checkedAt": "2026-07-29T00:57:30.422Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Ashes to Ashes",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/ashes-to-ashes"
-      },
-      "next": {
         "title": "Hittin' All The Bases",
         "source": "schedule",
         "start": "20:00",
         "end": "21:00",
         "url": "http://www.cjlo.com/shows/hittin-all-the-bases"
       },
+      "next": {
+        "title": "Beatnik Boy: Mixtape",
+        "source": "schedule",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/beatnik-boy-mixtape"
+      },
       "track": "",
-      "showTitle": "Ashes to Ashes",
+      "showTitle": "Hittin' All The Bases",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-28T23:01:44.488Z"
+      "checkedAt": "2026-07-29T00:57:44.430Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "L'Aut'Rock",
-        "source": "schedule",
-        "start": "18:30",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Dichotomie 88.3",
         "source": "schedule",
         "start": "20:00",
         "end": "22:00"
       },
+      "next": {
+        "title": "Mix Franco",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "L'Aut'Rock",
+      "showTitle": "Dichotomie 88.3",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-28T23:01:45.044Z"
+      "checkedAt": "2026-07-29T00:57:45.044Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +142,7 @@
         "end": "12:00",
         "slug": "intervenir-ensemble"
       },
-      "track": "Mamas Gun - Joy",
+      "track": "Gia Margaret - Moon Not Mine",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -153,7 +153,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-28T23:01:52.733Z"
+      "checkedAt": "2026-07-29T00:57:51.186Z"
     }
   }
 }
