@@ -308,11 +308,13 @@ function openNowAirSchedule() {
   const path = nowAirSchedulePath(radio);
   if (!path) return;
 
-  // Conserver le flux courant : l'horaire s'ouvre dans un nouvel onglet, y
-  // compris depuis l'iframe Pomo/Solitaire. `noopener` coupe la référence
-  // inverse sans empêcher l'ouverture déclenchée par le geste utilisateur.
-  const host = IS_TUNER_EMBED ? window.top : window;
-  host.open(path, '_blank', 'noopener,noreferrer');
+  // Toujours résoudre sur l’origine de CE document (le-radar.ca), même quand
+  // l’iframe est embarquée en cross-origin (Kiosque sur github.io, etc.).
+  // `window.top.open('/radios/…')` résolvait le chemin relatif sur l’origine
+  // du parent → 404 hors le-radar.ca, ou silence si le top bloque l’accès.
+  // Nouvel onglet + absolute URL : le flux audio de l’iframe continue.
+  const url = new URL(path, window.location.origin).href;
+  window.open(url, '_blank', 'noopener,noreferrer');
 }
 
 TUNER_NOWAIR?.addEventListener('click', openNowAirSchedule);
