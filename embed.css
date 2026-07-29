@@ -928,6 +928,37 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
   font-family: var(--sans);
 }
 
+/*
+ * Popover volume (téléphone) : l’iframe grandit pour peindre la bulle.
+ * html/body redeviennent transparents hors barre — sinon le fond session
+ * remplit toute la hauteur de l’iframe et forme un bandeau sombre sous
+ * le popover (le journal parent doit aussi plafonner l’hôte à baseH).
+ */
+@media (max-width: 559.98px) {
+  html[data-embed="tuner"][data-surface="kiosque-v1"]:has(.tuner-vol.is-open) {
+    background: transparent !important;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+  }
+  html[data-embed="tuner"][data-surface="kiosque-v1"]:has(.tuner-vol.is-open) body {
+    background: transparent !important;
+    height: auto;
+    max-height: none;
+    min-height: 0;
+    overflow: visible;
+    box-shadow: none;
+  }
+  html[data-embed="tuner"][data-surface="kiosque-v1"]:has(.tuner-vol.is-open) .tuner {
+    /* Barre seule garde le fond session ; le surplus iframe est transparent. */
+    background: var(--tuner-session-base) !important;
+    height: var(--embed-bar-h);
+    max-height: var(--embed-bar-h);
+    min-height: var(--embed-bar-h);
+    overflow: visible;
+  }
+}
+
 /* Titres d’émission / poste : serif ; libellés UI : Inter — comme le-radar.ca */
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-now-name,
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair-title {
