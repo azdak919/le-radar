@@ -130,7 +130,7 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 | D9 | **Tests navigateur instables** (`player-continuity`, attentes réseau) | Le syntoniseur garde des connexions ouvertes en permanence et l’audio headless n’est pas déterministe : rendre ces tests fiables demande de réécrire les attentes, pas de rallonger les délais | Un run vert 10× d’affilée en local **et** en CI après passage à des attentes sur l’état observable ; aucun flake sur 2 semaines | S–M | open (avancée 2026-07-26, voir ci-dessous) |
 | D10 | **Connaissance des établissements éclatée en 4 tables** | Chaque copie répond à un besoin distinct (affichage court, libellés RSS, localisation, pages d’entités) ; les unifier touche 4 zones d’un coup, dont le monolithe `app.js` | Une divergence réelle qui casse quelque chose — le doublon « College » du 2026-07-25 en est une ; commencer par la table de traduction, la plus autonome | M | open |
 | D11 | **Déclaration du site aux consoles de recherche** (Search Console, Bing, IndexNow) | Aucun agent ne peut le faire : ça demande les comptes Google / Microsoft / Cloudflare de l’humain. Le travail technique est livré et en ligne ; il ne reste que les clics | Rien à attendre — à faire dès que possible : sans soumission du sitemap, les 71 URL neuves mettent bien plus longtemps à être découvertes | S | blocked |
-| D12 | **Cohérence fil ↔ RSS ↔ JSON-LD non garantie** | Trois générateurs écrits pour des besoins distincts ; les coupler figerait des formats encore mouvants | Rien à attendre : un test comparant les premiers titres des quatre sorties coûte peu et doit exister **avant** qu’un décalage n’apparaisse | S | ready |
+| D12 | **Cohérence fil ↔ RSS ↔ JSON-LD non garantie** | Trois générateurs écrits pour des besoins distincts ; les coupler figerait des formats encore mouvants | Test des dix premières manchettes des quatre sorties dans `npm run test:unit` | S | resolved |
 | D13 | **Contraste `--muted` en thème clair + focus invisible du menu de langue** | `--muted` est un jeton global : l’assombrir touche tout le site clair d’un coup et impose une relecture visuelle complète | Captures avant/après sur accueil, fiche journal et annuaire, en clair **et** en sombre ; le thème sombre est déjà conforme et ne doit pas régresser | S–M | open |
 | D14 | **CSP trop large** sur `frame-src` et `connect-src` | Le site consomme des tiers énumérables mais nombreux (YouTube, umami, workers, météo, moteurs de traduction) ; resserrer d’un coup casse en production, pas en test | Resserrer **une directive à la fois**, en commençant par `frame-src`, avec vérification du syntoniseur et de l’intégration YouTube | S par étape | open |
 | D15 | **Calibrage des seuils de l’audit pixel** (banques photo) | Les seuils ont été réglés sur un autre corpus ; les rebaisser à l’aveugle laisserait passer ce qu’on cherche justement à bloquer | Un lot de photos **étiquetées à la main** (garder / rejeter) servant de référence, pour régler les seuils sur des cas jugés plutôt que sur une intuition | M | open |
@@ -257,7 +257,7 @@ décrivent des défauts réels, deux étaient déjà satisfaites, une n’est
 qu’à moitié applicable. Les mesures sont consignées ici pour que la prochaine
 session parte du constat et non de l’audit.
 
-**D12 — cohérence des quatre représentations du fil**
+**D12 — cohérence des quatre représentations du fil (résolue le 2026-07-29)**
 
 - Quatre sorties, trois générateurs : `fetch-news.js` → `news.json`,
   `generate-feed.js` → `feed.xml`, `generate-seo.js` → prérendu HTML **et**
@@ -266,9 +266,9 @@ session parte du constat et non de l’audit.
   donc rien à réparer — le risque est qu’elles divergent sans que rien ne le
   signale, et qu’un lecteur RSS, un humain et un moteur voient trois fils
   différents.
-- À faire : un test comparant les N premiers titres des quatre sorties, ajouté à
-  `test:unit`. Attention aux entités HTML (`&#8217;` vs `’`) : normaliser avant
-  de comparer, sinon le test échoue sur des différences d’encodage sans intérêt.
+- Le test `tests/news-representations.mjs` compare les dix premières manchettes
+  des quatre sorties dans `npm run test:unit`, après normalisation des entités
+  HTML (`&#8217;` vs `’`).
 
 **D13 — accessibilité, deux points distincts**
 
@@ -435,6 +435,7 @@ Pour promouvoir : ajouter une ligne D# en §3 avec effort + pourquoi, après OK 
 | — | 2026-07-25 | Bot `detect-photo-seasons` (tags season/season6 + confidence) + filtre client 4/6 saisons |
 | D6 | 2026-07-25 | `audit:banks:hard` + `tests/bank-hard-audit.mjs` dans `npm test` (0 réseau) |
 | D5 | 2026-07-25 | `religious-facade-lib.js` partagé (RE + SPIRE_THRESHOLDS v1) maintain/bank-hard/photo-qc + SYNC Python/JS |
+| D12 | 2026-07-29 | `tests/news-representations.mjs` compare les dix premières manchettes de `news.json`, du RSS, du prérendu HTML et du JSON-LD |
 | — | 2026-07-25 | Balises anti-glouton + `.agents-session.json` (1 dette/session, 2/jour) |
 | — | 2026-07-29 | Identité unifiée sur **LE-RADAR** (jamais « RADAR » seul) : 9 workflows, 8 User-Agent, 6 clés `localStorage` `req-*` → `radar-*` (sans repli), titre de l'issue de maintenance |
 | — | 2026-07-29 | Acronyme officiel « Le Réseau Académique de Découverte et d'Agrégation de Ressources » — README + `docs/{identite-visuelle,agent-playbook,maintenance,politique-editoriale}.md`, une fois par document |

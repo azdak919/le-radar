@@ -3506,6 +3506,13 @@ html[data-translate-busy="1"] .translate-toggle {
   user-select: none;
 }
 
+.site-foot__logo {
+  width: 20px;
+  height: 20px;
+  margin-right: 6px;
+  vertical-align: -.12em;
+}
+
 .site-foot__credit {
   margin-top: 20px;
   padding-top: 18px;
@@ -3516,6 +3523,10 @@ html[data-translate-busy="1"] .translate-toggle {
   font-size: 14px;
   font-weight: 600;
   color: var(--ink-soft);
+}
+
+.site-foot__author-mail {
+  font-variant-emoji: text;
 }
 
 .site-foot__legal {
