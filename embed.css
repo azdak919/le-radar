@@ -8,6 +8,9 @@
 */
 
 html[data-embed="tuner"] {
+  /* Même stack que le site (style.css :root) — l’iframe charge Inter + Source Serif 4. */
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans: "Inter", system-ui, -apple-system, sans-serif;
   --pad: 12px;
   --embed-bar-h: 62px;
   --embed-ctrl: 42px;
@@ -71,7 +74,9 @@ html[data-embed="tuner"] body {
   height: var(--embed-bar-h);
   max-height: var(--embed-bar-h);
   color: var(--embed-ink);
+  font-family: var(--sans);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 /* Barre pleine largeur — silhouette sticky du site (sans double chrome) */
@@ -283,6 +288,8 @@ html[data-embed="tuner"] .tuner-dial:hover .tuner-now {
 }
 
 html[data-embed="tuner"] .tuner-now-name {
+  /* Parité barre bureau LE-RADAR (.tuner-now-name → Source Serif 4). */
+  font-family: var(--serif);
   font-size: 13px;
   line-height: 1.15;
   font-weight: 600;
@@ -679,6 +686,7 @@ html[data-embed="tuner"] .tuner-nowair-label {
   flex-shrink: 0;
   /* Optical align with .tuner-nowair-title (13px / line-height 1.15) first line */
   margin-top: 2px;
+  font-family: var(--sans);
   font-size: 10px; /* même échelle que EN ONDES */
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -702,10 +710,11 @@ html[data-embed="tuner"] .tuner-nowair-body {
 
 html[data-embed="tuner"] .tuner-nowair-title {
   margin: 0;
-  font-family: var(--serif, "Source Serif 4", Georgia, serif);
+  /* Titre d’émission = serif éditorial (LE-RADAR .tuner-nowair-title). */
+  font-family: var(--serif);
   font-size: 13px;
   font-weight: 600;
-  line-height: 1.15;
+  line-height: 1.2;
   color: var(--embed-radio);
   white-space: nowrap;
   overflow: hidden;
@@ -720,6 +729,7 @@ html[data-embed="tuner"] .tuner-nowair-sub.is-marquee {
 
 html[data-embed="tuner"] .tuner-nowair-sub {
   margin: 0;
+  font-family: var(--sans);
   font-size: 10.5px;
   font-weight: 500;
   line-height: 1.2;
@@ -872,6 +882,9 @@ html[data-embed="tuner"] .toast {
    Seul écart volontaire pour le journal : crédit le-radar.ca sous EN ONDES.
    ═══════════════════════════════════════════════════════════════════════════ */
 html[data-embed="tuner"][data-surface="kiosque-v1"] {
+  /* Réaffirme la stack site (évite tout héritage system-ui dans le journal). */
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans: "Inter", system-ui, -apple-system, sans-serif;
   --embed-bar-h: 68px;
   --embed-vol-track: 120px;
   --embed-gap: 9px;
@@ -911,6 +924,21 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
   max-height: var(--embed-bar-h);
   min-height: var(--embed-bar-h);
   box-shadow: 0 8px 24px -14px rgba(0, 0, 0, 0.78);
+  font-family: var(--sans);
+}
+
+/* Titres d’émission / poste : serif ; libellés UI : Inter — comme le-radar.ca */
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-now-name,
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair-title {
+  font-family: var(--serif);
+}
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-onair,
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair-label,
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair-sub,
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-now-sub,
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-embed-credit,
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-labels {
+  font-family: var(--sans);
 }
 
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
