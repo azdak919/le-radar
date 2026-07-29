@@ -1,4 +1,6 @@
-# LE RADAR — Playbook agent (lire en premier)
+# LE-RADAR — Playbook agent (lire en premier)
+
+**LE-RADAR** — Le Réseau Académique de Découverte et d'Agrégation de Ressources.
 
 Doc courte pour agents et humains pressés. **Point d’entrée technique** avant de rouvrir les monolithes.
 

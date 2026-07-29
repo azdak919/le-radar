@@ -11,7 +11,7 @@
   'use strict';
 
   const CHANNEL_NAME = 'le-radar-player';
-  const STORAGE_KEY = 'req-player-session-v1';
+  const STORAGE_KEY = 'radar-player-session-v1';
   const TAB_ID = `t-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 9)}`;
 
   /** @type {BroadcastChannel|null} */

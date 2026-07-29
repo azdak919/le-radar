@@ -21,6 +21,16 @@ const SITE_NAME = 'LE-RADAR.ca';
 const TAGLINE_FR = 'Les journaux et les radios étudiantes du Québec, réunis au même endroit';
 const TAGLINE_EN = 'Québec student newspapers and campus radio, all in one place';
 
+/** Marque publique et signature institutionnelle du pied de page.
+ *  La signature reste en français sur le volet anglais : c'est un nom propre. */
+const BRAND_NAME = 'LE-RADAR';
+const BRAND_SIGNATURE = 'Le Réseau Académique de Découverte et d’Agrégation de Ressources';
+
+const REPO_URL = 'https://github.com/azdak919/le-radar';
+const LICENSE_URL = 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.html';
+const COFFEE_URL = 'https://www.buymeacoffee.com/azdak';
+const CONTACT_MAIL = 'azdak-qc@proton.me';
+
 // ═══════════════════════════════════════════════════════════════════════════
 //  Utilitaires
 // ═══════════════════════════════════════════════════════════════════════════
@@ -159,6 +169,19 @@ const T = {
     unofficial: 'LE-RADAR.ca est un projet indépendant et non officiel. Il n’est affilié à aucun des médias ni des établissements recensés. Les contenus appartiennent à leurs publications d’origine.',
     updated: 'Mise à jour',
     otherLang: 'English',
+    footerNav: 'Liens de pied de page',
+    footerDirectory: 'Tous les médias étudiants du Québec',
+    licenseIntro: 'Ce projet est distribué sous',
+    licenseName: 'licence publique générale GNU, version 2',
+    sourceCode: 'Code source (GitHub)',
+    creditMade: 'Conçu avec',
+    creditBy: 'par',
+    creditYear: 'en 2026',
+    creditHeart: 'Ouvrir l’easter egg',
+    creditCoffee: 'Offrir un café — Buy me a coffee',
+    creditMail: 'Écrire à Azdak',
+    legalNote: 'Code libre utilisé conformément aux licences applicables; contenus et médias crédités à leurs auteurs respectifs.',
+    botNote: 'Agrégateur automatisé de contenus.',
     noRadio: 'Aucune radio de campus recensée pour cet établissement.',
     noPaper: 'Aucun journal étudiant recensé pour cet établissement.',
     days: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
@@ -211,6 +234,19 @@ const T = {
     unofficial: 'LE-RADAR.ca is an independent, unofficial project. It is not affiliated with any of the media outlets or institutions listed. All content belongs to its original publisher.',
     updated: 'Updated',
     otherLang: 'Français',
+    footerNav: 'Footer links',
+    footerDirectory: 'All Québec student media',
+    licenseIntro: 'This project is distributed under the',
+    licenseName: 'GNU General Public License, version 2',
+    sourceCode: 'Source code (GitHub)',
+    creditMade: 'Made with',
+    creditBy: 'by',
+    creditYear: 'in 2026',
+    creditHeart: 'Open the easter egg',
+    creditCoffee: 'Buy me a coffee',
+    creditMail: 'Email Azdak',
+    legalNote: 'Open-source code used in accordance with the applicable licences; content and media credited to their respective authors.',
+    botNote: 'Automated content aggregator.',
     noRadio: 'No campus radio station listed for this institution.',
     noPaper: 'No student newspaper listed for this institution.',
     days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
@@ -261,6 +297,84 @@ const CSP = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inl
   + 'https://fonts.googleapis.com; font-src \'self\' https://fonts.gstatic.com; '
   + "img-src 'self' data: https:; connect-src 'none'; frame-src 'none'; "
   + "object-src 'none'; base-uri 'self'; form-action 'none'";
+
+/**
+ * Pied de page du site — SOURCE DE VÉRITÉ UNIQUE.
+ *
+ * POURQUOI ICI
+ * Le pied de page existait en quatre versions divergentes : une par page
+ * écrite à la main (`index.html`, `feeds.html`, `offline.html`) et une dans ce
+ * gabarit pour les pages d'entités. Corriger une mention légale demandait
+ * quatre modifications, et la troisième était systématiquement oubliée.
+ *
+ * Les pages générées l'obtiennent via `renderPage()`; les trois pages
+ * statiques via les marqueurs `RADAR:FOOTER` que `generate-seo.js` remplit.
+ * Aucun JavaScript de rendu côté navigateur : la garantie « lisible sans JS »
+ * des pages d'entités s'applique aussi au pied de page.
+ *
+ * POURQUOI CES LIENS
+ * Annuaire et horaires sont là d'abord pour que les pages générées ne soient
+ * pas orphelines : une page sans lien entrant est mal explorée, quoi qu'en
+ * dise le sitemap. Le volet anglais n'est jamais choisi automatiquement —
+ * translate.js garde la main.
+ *
+ * `home` supprime le lien « retour à l'accueil » sur l'accueil lui-même.
+ * `updated` n'est passé que par les pages qui ont une fraîcheur propre.
+ */
+function renderSiteFooter({
+  lang = 'fr', up = './', home = false, altPath = null, updated = null, indent = '      ',
+} = {}) {
+  const t = T[lang];
+  const p = indent;
+  const dirPath = lang === 'fr' ? 'medias/' : 'en/media/';
+  const schedPath = lang === 'fr' ? 'horaires/' : 'en/schedules/';
+
+  // À la racine, `up` vaut './' : on le retire devant un chemin pour écrire
+  // « horaires/ » et non « ./horaires/ », la forme que le reste du site et
+  // tests/static-integrity.mjs attendent. Seul le lien d'accueil garde './'.
+  const href = (rel) => (rel ? `${up}${rel}`.replace(/^\.\//, '') : up);
+
+  const links = [];
+  if (!home) links.push(`<a href="${href('')}">${escapeHtml(t.backHome)}</a>`);
+  links.push(`<a href="${href(dirPath)}">${escapeHtml(t.footerDirectory)}</a>`);
+  links.push(`<a href="${href(schedPath)}">${escapeHtml(t.schedules)}</a>`);
+  // `altPath` vaut '' sur /en/ : la version française est la racine du site.
+  // Tester la valeur et non sa véracité, sinon le volet anglais perd sa bascule.
+  if (altPath !== null && altPath !== undefined) {
+    const alt = lang === 'fr' ? 'en-CA' : 'fr-CA';
+    links.push(`<a href="${href(altPath)}" hreflang="${alt}">${escapeHtml(t.otherLang)}</a>`);
+  }
+  links.push(`<a href="${REPO_URL}" target="_blank" rel="noopener noreferrer">${escapeHtml(t.sourceCode)}</a>`);
+
+  const sep = `<span class="site-foot__sep" aria-hidden="true">·</span>`;
+  const nav = links.join(`\n${p}    ${sep}\n${p}    `);
+
+  const meta = updated
+    ? `\n${p}  <p class="seo-foot-meta">${escapeHtml(t.updated)} ${escapeHtml(updated)}</p>`
+    : '';
+
+  return `<footer class="site-foot">
+${p}  <div class="site-foot__brand">
+${p}    <p class="site-foot__wordmark notranslate" translate="no">${BRAND_NAME}</p>
+${p}    <p class="site-foot__signature" lang="fr">${escapeHtml(BRAND_SIGNATURE)}</p>
+${p}  </div>
+${p}  <p>${escapeHtml(t.unofficial)}</p>
+${p}  <nav class="site-foot__links" aria-label="${escapeHtml(t.footerNav)}">
+${p}    ${nav}
+${p}  </nav>
+${p}  <p>${escapeHtml(t.licenseIntro)} <a href="${LICENSE_URL}" target="_blank" rel="noopener noreferrer license">${escapeHtml(t.licenseName)}</a>.</p>
+${p}  <div class="site-foot__credit">
+${p}    <p class="site-foot__author">
+${p}      ${escapeHtml(t.creditMade)} <a href="${href('easter-egg.html')}" class="site-foot__heart" aria-label="${escapeHtml(t.creditHeart)}">♡</a>
+${p}      ${escapeHtml(t.creditBy)} <a href="${COFFEE_URL}" class="site-foot__author-link" target="_blank" rel="noopener noreferrer" title="${escapeHtml(t.creditCoffee)}">Azdak</a>
+${p}      ${escapeHtml(t.creditYear)}
+${p}      <a href="mailto:${CONTACT_MAIL}" class="site-foot__author-mail" title="${CONTACT_MAIL}" aria-label="${escapeHtml(t.creditMail)} — ${CONTACT_MAIL}">✉️</a>
+${p}    </p>
+${p}    <p class="site-foot__legal">${escapeHtml(t.legalNote)}</p>
+${p}    <p class="site-foot__bot"><span class="site-foot__bot-ico" aria-hidden="true">🤖</span> ${escapeHtml(t.botNote)}</p>
+${p}  </div>${meta}
+${p}</footer>`;
+}
 
 /**
  * Rend une page complète.
@@ -340,14 +454,8 @@ ${jsonLd ? `    <script type="application/ld+json">${jsonLd}</script>\n` : ''}  
       ${eyebrow ? `<p class="seo-eyebrow">${escapeHtml(eyebrow)}</p>` : ''}
       <h1 class="seo-title">${escapeHtml(h1)}</h1>
 ${bodyHtml}
-      <footer class="site-foot">
-        <p>${escapeHtml(t.unofficial)}</p>
-        <p><a href="${up}">${escapeHtml(t.backHome)}</a></p>
-        <p class="seo-foot-meta">
-          <a href="${up}${altPath}" hreflang="${lang === 'fr' ? 'en-CA' : 'fr-CA'}">${escapeHtml(t.otherLang)}</a>${updated ? ` · ${escapeHtml(t.updated)} ${escapeHtml(updated)}` : ''}
-        </p>
-      </footer>
     </main>
+    ${renderSiteFooter({ lang, up, home: depth === 0, altPath, updated, indent: '    ' })}
   </body>
 </html>
 `;
@@ -478,6 +586,7 @@ module.exports = {
   plural,
   frAt,
   renderPage,
+  renderSiteFooter,
   factsList,
   headlineList,
   cardGrid,

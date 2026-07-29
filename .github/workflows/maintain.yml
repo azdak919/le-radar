@@ -57,7 +57,7 @@ jobs:
       - name: Commit and push bot updates
         if: steps.check.outputs.changed == 'true'
         run: |
-          git config user.name "RADAR Maintenance Bot"
+          git config user.name "LE-RADAR Maintenance Bot"
           git config user.email "actions@users.noreply.github.com"
           # N'ajouter que les chemins présents : si le pipeline a échoué avant
           # d'écrire bot-status.json, git add sur un chemin absent est fatal et
@@ -104,7 +104,7 @@ jobs:
               + '**Alertes**\n' + (alerts || '_aucune_'));
           ")
           fi
-          gh issue list --repo "${{ github.repository }}" --search "in:title RADAR maintenance alert" --state open --json number --jq 'length' | {
+          gh issue list --repo "${{ github.repository }}" --search "in:title LE-RADAR maintenance alert" --state open --json number --jq 'length' | {
             read OPEN
             if [ "$OPEN" -gt 0 ]; then
               echo "An open maintenance issue already exists — skipping."
@@ -112,6 +112,6 @@ jobs:
             fi
             gh issue create \
               --repo "${{ github.repository }}" \
-              --title "RADAR maintenance alert — vérification humaine suggérée" \
+              --title "LE-RADAR maintenance alert — vérification humaine suggérée" \
               --body "$BODY"
           }

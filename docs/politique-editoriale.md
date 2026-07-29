@@ -1,5 +1,7 @@
 # Politique éditoriale de LE-RADAR.ca
 
+**LE-RADAR** — Le Réseau Académique de Découverte et d'Agrégation de Ressources.
+
 Cette politique décrit le fonctionnement de l'agrégateur. Elle vise la
 transparence envers les médias sources, les personnes autrices et le public.
 

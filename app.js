@@ -407,9 +407,9 @@ let currentGain = DEFAULT_GAIN;
 let volumeMuted = false;
 let gainBeforeMute = DEFAULT_GAIN;
 const MAX_GAIN = 2;                 // jusqu'à 200 %
-const VOLUME_PREF_VERSION_KEY = 'req-player-vol-version';
+const VOLUME_PREF_VERSION_KEY = 'radar-player-vol-version';
 const VOLUME_PREF_VERSION = '3';
-const STATION_TRIMS_KEY = 'req-player-station-trims-v1';
+const STATION_TRIMS_KEY = 'radar-player-station-trims-v1';
 const stationTrims = new Map();
 let loudnessProbeTimer = null;
 let loudnessProbeStationId = null;
@@ -703,7 +703,7 @@ function initPlayerSync() {
   });
 }
 
-const PLAYER_ARMED_KEY = 'req-player-armed';
+const PLAYER_ARMED_KEY = 'radar-player-armed';
 
 function isPlayerSessionArmed() {
   try {
@@ -875,13 +875,13 @@ function initMastheadActions() {
 
 // ─── Theme (clair / sombre) ────────────────────────────────────────────────────
 function initTheme() {
-  const saved = localStorage.getItem('req-theme');
+  const saved = localStorage.getItem('radar-theme');
   const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
   const theme = saved || (prefersDark ? 'dark' : 'light');
   applyTheme(theme);
   THEME_TOGGLE?.addEventListener('click', () => {
     const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('req-theme', next);
+    localStorage.setItem('radar-theme', next);
     applyTheme(next);
   });
 }
@@ -3180,7 +3180,7 @@ function bindTuner() {
     // Au passage au-dessus de 100 %, brancher le graphe d'amplification.
     syncBoostWiring();
     applyGain();
-    localStorage.setItem('req-player-vol', currentGain);
+    localStorage.setItem('radar-player-vol', currentGain);
     try {
       window.RadarPlayerSync?.publishVolume?.(currentGain);
     } catch { /* */ }
@@ -4503,13 +4503,13 @@ function updateMediaSession(radio, { title, sub } = {}) {
 
 function restoreVolume() {
   loadStationTrims();
-  const raw = localStorage.getItem('req-player-vol');
+  const raw = localStorage.getItem('radar-player-vol');
   const saved = parseFloat(raw ?? String(DEFAULT_GAIN));
   // Migration douce : 72 % était l'ancien défaut automatique. On ne touche
   // jamais aux personnes qui avaient déjà choisi une autre valeur.
   const oldDefault = localStorage.getItem(VOLUME_PREF_VERSION_KEY) !== VOLUME_PREF_VERSION
     && (raw === null || Math.abs(saved - 0.72) < 0.005 || Math.abs(saved - 1) < 0.005);
-  if (oldDefault) localStorage.setItem('req-player-vol', String(DEFAULT_GAIN));
+  if (oldDefault) localStorage.setItem('radar-player-vol', String(DEFAULT_GAIN));
   try { localStorage.setItem(VOLUME_PREF_VERSION_KEY, VOLUME_PREF_VERSION); } catch {}
   currentGain = oldDefault
     ? DEFAULT_GAIN

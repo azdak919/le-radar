@@ -27,7 +27,7 @@ const path = require('path');
 const https = require('https');
 
 const OUT_PATH = path.join(__dirname, '..', 'institutions.json');
-const UA = 'REQ-InstitutionsBot/1.0 (https://le-radar.ca)';
+const UA = 'LE-RADAR-InstitutionsBot/1.0 (https://le-radar.ca)';
 const SPARQL = 'https://query.wikidata.org/sparql';
 const CEGEP_QID = 'Q1110056';
 const TIMEOUT = 60000;

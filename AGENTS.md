@@ -436,6 +436,9 @@ Pour promouvoir : ajouter une ligne D# en §3 avec effort + pourquoi, après OK 
 | D6 | 2026-07-25 | `audit:banks:hard` + `tests/bank-hard-audit.mjs` dans `npm test` (0 réseau) |
 | D5 | 2026-07-25 | `religious-facade-lib.js` partagé (RE + SPIRE_THRESHOLDS v1) maintain/bank-hard/photo-qc + SYNC Python/JS |
 | — | 2026-07-25 | Balises anti-glouton + `.agents-session.json` (1 dette/session, 2/jour) |
+| — | 2026-07-29 | Identité unifiée sur **LE-RADAR** (jamais « RADAR » seul) : 9 workflows, 8 User-Agent, 6 clés `localStorage` `req-*` → `radar-*` (sans repli), titre de l'issue de maintenance |
+| — | 2026-07-29 | Acronyme officiel « Le Réseau Académique de Découverte et d'Agrégation de Ressources » — README + `docs/{identite-visuelle,agent-playbook,maintenance,politique-editoriale}.md`, une fois par document |
+| — | 2026-07-29 | Pied de page unique : `renderSiteFooter()` (`seo-pages-lib.js`) + marqueurs `RADAR:FOOTER` pour `index`/`feeds`/`offline` — 4 copies divergentes supprimées, lien GitHub ajouté, signature institutionnelle, contraste AA. `/pomo/` et `/solitaire/` hors périmètre |
 
 *(Ajouter une ligne ici quand une dette §3 passe à résolu — ne pas supprimer le passé.)*
 

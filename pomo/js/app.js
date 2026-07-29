@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('home-reload-btn')?.addEventListener('click', () => location.reload());
 
-  // Thème clair/sombre (même clé localStorage que Le Radar : req-theme)
+  // Thème clair/sombre (même clé localStorage que Le Radar : radar-theme)
   initThemeToggle();
 
   // Quote buttons
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initRadarEmbed();
 });
 
-/** Clair/sombre — partagé avec Le Radar via localStorage `req-theme`. */
+/** Clair/sombre — partagé avec Le Radar via localStorage `radar-theme`. */
 function initThemeToggle() {
   const btn = document.getElementById('theme-toggle');
   const apply = (theme) => {
@@ -131,14 +131,14 @@ function initThemeToggle() {
   };
   let theme = 'light';
   try {
-    const saved = localStorage.getItem('req-theme');
+    const saved = localStorage.getItem('radar-theme');
     const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
     theme = saved || (prefersDark ? 'dark' : 'light');
   } catch { /* */ }
   apply(theme);
   btn?.addEventListener('click', () => {
     const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    try { localStorage.setItem('req-theme', next); } catch { /* */ }
+    try { localStorage.setItem('radar-theme', next); } catch { /* */ }
     apply(next);
   });
 }

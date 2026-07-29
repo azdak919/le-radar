@@ -271,7 +271,15 @@
 
 /* ── Mât simplifié (ces pages n'ont pas la banque photo, qui est en JS) ─── */
 
-.seo-wire + .site-foot { max-width: var(--maxw); margin: 0 auto; }
+/* Le pied de page est un frère de <main>, pas son enfant : il sort ainsi de
+   `.seo-wire p` (15 px, couleur du corps) et garde la typographie qu'il a
+   partout ailleurs sur le site. Il reprend en revanche la gouttière et la
+   largeur de la colonne principale pour rester aligné avec elle. */
+.seo-wire + .site-foot {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--pad) 48px;
+}
 
 @media (max-width: 520px) {
   .seo-facts { grid-template-columns: 1fr; }

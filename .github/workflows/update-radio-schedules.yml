@@ -60,7 +60,7 @@ jobs:
       - name: Commit and push updates
         if: steps.check.outputs.changed == 'true'
         run: |
-          git config user.name "RADAR Schedule Bot"
+          git config user.name "LE-RADAR Schedule Bot"
           git config user.email "actions@users.noreply.github.com"
           git add radio-schedules.json radio-schedules.seed.json index.html sitemap.xml llms.txt
           git add -A radios journaux etablissements medias horaires en 2>/dev/null || true

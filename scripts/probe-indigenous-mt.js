@@ -45,7 +45,7 @@ function fetchText(url, { method = 'GET', body = null, headers = {}, timeoutMs =
         {
           method,
           headers: {
-            'User-Agent': 'Mozilla/5.0 (compatible; REQ-IndigenousMTProbe/1.0; +https://le-radar.ca)',
+            'User-Agent': 'Mozilla/5.0 (compatible; LE-RADAR-IndigenousMTProbe/1.0; +https://le-radar.ca)',
             Accept: 'application/json, text/plain, */*',
             ...headers,
           },
