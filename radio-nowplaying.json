@@ -1,54 +1,60 @@
 {
-  "updatedAt": "2026-07-29T19:52:38.717Z",
+  "updatedAt": "2026-07-29T20:53:12.935Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Chéri.e, j’arrive!",
         "source": "schedule",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Chéri.e, j’arrive!",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T19:52:10.477Z"
+      "checkedAt": "2026-07-29T20:52:46.391Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Parler pour jaser",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/parler-pour-jaser"
-      },
-      "next": {
         "title": "Le cours de math",
         "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "https://cism893.ca/emissions/le-cours-de-math"
       },
+      "next": {
+        "title": "Feu | Metal | Chaos",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/feu-metal-chaos"
+      },
       "track": "",
-      "showTitle": "Parler pour jaser",
+      "showTitle": "Le cours de math",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T19:52:12.863Z"
+      "checkedAt": "2026-07-29T20:52:49.109Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +80,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T19:52:15.926Z"
+      "checkedAt": "2026-07-29T20:52:52.084Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Patch Notes",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/patch-notes"
-      },
-      "next": {
         "title": "Borderline",
         "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/borderline"
       },
+      "next": {
+        "title": "Advice By The Fireplace",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/advice-by-the-fireplace"
+      },
       "track": "",
-      "showTitle": "Patch Notes",
+      "showTitle": "Borderline",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T19:52:29.798Z"
+      "checkedAt": "2026-07-29T20:53:05.904Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,18 +132,12 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T19:52:30.320Z"
+      "checkedAt": "2026-07-29T20:53:06.595Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Palmarès CHOQ.ca",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
-      },
+      "current": null,
       "next": {
         "title": "Opération beurre de cinoche",
         "source": "api-live",
@@ -145,8 +145,8 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Les Georges Leningrad - Supa Doopa",
-      "showTitle": "Palmarès CHOQ.ca",
+      "track": "Marco Ema - Un, deux, trois",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -156,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-29T19:52:38.367Z"
+      "checkedAt": "2026-07-29T20:53:12.585Z"
     }
   }
 }
