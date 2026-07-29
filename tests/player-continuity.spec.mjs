@@ -65,6 +65,24 @@ test('À l’antenne ouvre l’horaire dans un nouvel onglet sans quitter le lec
   await expect(page).toHaveURL(/\/$/);
 });
 
+test('iframe kiosque-v1 : À l’antenne ouvre l’horaire sur le-radar (URL absolue)', async ({ page, baseURL }) => {
+  // Même bug que Kiosque cross-origin : un open() root-relatif via top
+  // résolvait sur l’origine du parent. Ici on vérifie l’URL absolue
+  // sur l’origine de l’iframe (le-radar).
+  await page.goto('/tuner-embed.html?station=chyz&surface=kiosque-v1', {
+    waitUntil: 'domcontentloaded',
+  });
+  await expect.poll(async () => page.locator('#tuner-select option').count(), { timeout: 15_000 })
+    .toBeGreaterThan(1);
+  await page.locator('#tuner-select').selectOption('chyz');
+  const [schedule] = await Promise.all([
+    page.waitForEvent('popup'),
+    page.locator('#tuner-nowair').click(),
+  ]);
+  const origin = new URL(baseURL || page.url()).origin;
+  await expect(schedule).toHaveURL(new RegExp(`^${origin.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\$&')}/radios/chyz/#horaire$`));
+});
+
 test('l’iframe alterne les postes affichés lorsque la radio est arrêtée', async ({ page }) => {
   await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
   const tuner = page.locator('#radar-embed').contentFrame();
