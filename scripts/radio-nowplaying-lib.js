@@ -30,9 +30,10 @@ const {
   resolveCurrentSlot,
   resolveNextSlot,
   hhmm,
+  isJunkShowTitle,
+  stripProductionNote,
 } = require('./radio-schedule-lib');
 const { decodeHtmlEntities } = require('./html-entities-lib');
-const { stripProductionNote } = require('./radio-schedule-lib');
 
 const DEFAULT_TIMEOUT = 12000;
 // « Offline » n'est pas un titre : c'est ce qu'Airtime émet quand la relève
@@ -113,6 +114,9 @@ function extractShowFromIcyTitle(title = '', radio = {}) {
 function isUsableShowTitle(title = '', radio = {}, opts = {}) {
   const t = extractShowFromIcyTitle(title, radio);
   if (!t || t.length < 2) return false;
+  // Airtime/CKUT publie parfois name: « ffiles » (fragment de fichier) — même
+  // filtre que la grille hebdo (isJunkShowTitle).
+  if (isJunkShowTitle(t)) return false;
   if (GENERIC_SHOW_RE.test(t)) return false;
   if (GENERIC_FEED_RE.test(t)) return false;
   if (GENERIC_GEO_RE.test(t)) return false;
@@ -160,7 +164,7 @@ function makeShow({
   slug = '',
 } = {}) {
   const t = normalizeShowTitle(title);
-  if (!t) return null;
+  if (!t || isJunkShowTitle(t)) return null;
   const out = { title: t, source: source || '' };
   const h = normalizeShowTitle(host);
   if (h) out.host = h;
