@@ -11,14 +11,16 @@ test('le volume historique par défaut est ramené à 100 %', async ({ page }) =
 });
 
 test('le mute survit au rechargement de la page', async ({ page }) => {
+  // 0.60 aligne le step 0.02 du curseur (0.65 peut être quantifié à 0.66).
   await page.addInitScript(() => {
-    localStorage.setItem('radar-player-vol', '0.65');
-    localStorage.setItem('radar-player-vol-version', '2');
+    localStorage.setItem('radar-player-vol', '0.6');
+    localStorage.setItem('radar-player-vol-version', '3');
     localStorage.setItem('radar-player-muted', '1');
     localStorage.removeItem('radar-player-session-v1');
   });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('#tuner-volume')).toHaveValue('0.65');
+  await expect(page.locator('#tuner-volume')).toHaveValue('0.6');
+  await expect(page.locator('#tuner-volume')).toHaveAttribute('aria-valuetext', /muet/i);
   await expect.poll(() => page.evaluate(() => {
     const vol = document.getElementById('tuner-vol');
     const player = document.getElementById('radar-player');
@@ -26,7 +28,6 @@ test('le mute survit au rechargement de la page', async ({ page }) => {
       mutedUi: vol?.classList.contains('is-muted') || false,
       mutedAttr: localStorage.getItem('radar-player-muted'),
       audioMuted: !!player?.muted,
-      audioVolume: player?.volume,
     };
   })).toMatchObject({
     mutedUi: true,

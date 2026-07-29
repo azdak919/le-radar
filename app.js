@@ -594,6 +594,10 @@ async function init() {
     ? schedulesData.value
     : { stations: {}, timezone: 'America/Toronto' };
   buildTunerOptions();
+  // Volume/mute avant toute selectStation : celle-ci peut écrire la session
+  // partagée (stationId) et ne doit pas republier le gain par défaut 100 %
+  // par-dessus un mute mémorisé (embed Kiosque, rechargement).
+  restoreVolume();
   // Surface publique versionnée du Kiosque : la station demandée est
   // appliquée seulement après le chargement de radios.json. Auparavant le
   // paramètre était présent dans l'URL mais ignoré, donc chaque journal
@@ -617,7 +621,6 @@ async function init() {
   });
   startNowAirTick();
   initTunerPresentationLifecycle();
-  restoreVolume();
   initPlayerSync();
   registerServiceWorker();
 }
@@ -3921,6 +3924,7 @@ function selectStation(id, { autoplay = false, openExternal = false, fromSync = 
           stationId: radio.id,
           playing: false,
           volume: currentGain,
+          muted: volumeMuted,
           leaderId: window.RadarPlayerSync.getTabId(),
         });
       }
