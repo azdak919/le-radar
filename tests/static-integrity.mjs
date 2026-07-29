@@ -270,6 +270,15 @@ assert(
   embedScript.includes("surface === 'kiosque-v1' ? 68 : 62"),
   'kiosque-v1 : hauteur embed 68 px pour les labels',
 );
+assert(
+  embedCss.includes('--tuner-session-base') && embedCss.includes('data-uni-session="automne"'),
+  'kiosque-v1 : fond de session univ. comme le bureau',
+);
+const tunerEmbedHtml = readFileSync(join(root, 'tuner-embed.html'), 'utf8');
+assert(
+  tunerEmbedHtml.includes('session-freshness-lib.js'),
+  'tuner-embed charge session-freshness pour le thème kiosque-v1',
+);
 const appScript = readFileSync(join(root, 'app.js'), 'utf8');
 assert(appScript.includes("get('station')"), 'station demandée par l’embed requise');
 
