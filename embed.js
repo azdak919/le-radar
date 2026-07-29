@@ -3,11 +3,14 @@
 (function () {
   if (document.documentElement.dataset.embed !== 'tuner') return;
 
-  const EMBED_H = 62; // aligné sur padding bureau 10+42+10
   const params = new URLSearchParams(window.location.search);
   const surface = params.get('surface') === 'kiosque-v1' ? 'kiosque-v1' : 'legacy';
+  // kiosque-v1 : un peu plus haut pour les labels 0/100/200 % (parité bureau).
+  // legacy / Solitaire : 62 px inchangé.
+  const EMBED_H = surface === 'kiosque-v1' ? 68 : 62;
   document.documentElement.dataset.surface = surface;
   if (surface === 'kiosque-v1') document.documentElement.dataset.theme = 'dark';
+  document.documentElement.style.setProperty('--embed-bar-h', `${EMBED_H}px`);
 
   // Hauteur souhaitée de l'iframe : hauteur de base, sauf quand le popover
   // volume (téléphone < 560 px) est ouvert — il déborde alors sous la rangée
