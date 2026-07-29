@@ -2,12 +2,12 @@ import { expect, test } from '@playwright/test';
 
 test('le volume historique par défaut est ramené à 100 %', async ({ page }) => {
   await page.addInitScript(() => {
-    localStorage.setItem('req-player-vol', '1');
-    localStorage.removeItem('req-player-vol-version');
+    localStorage.setItem('radar-player-vol', '1');
+    localStorage.removeItem('radar-player-vol-version');
   });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('#tuner-volume')).toHaveValue('1');
-  await expect.poll(() => page.evaluate(() => localStorage.getItem('req-player-vol'))).toBe('1');
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('radar-player-vol'))).toBe('1');
 });
 
 test('le panneau À l’antenne reste bleu lorsque le synthétiseur est arrêté', async ({ page }) => {
@@ -71,7 +71,7 @@ test('le bouton annule une connexion audio en attente', async ({ page }) => {
 
 test('une page suiveuse n’affiche pas un buffering tardif après navigation', async ({ page }) => {
   await page.addInitScript(() => {
-    localStorage.setItem('req-player-session-v1', JSON.stringify({
+    localStorage.setItem('radar-player-session-v1', JSON.stringify({
       stationId: 'ckut',
       playing: true,
       volume: 1,

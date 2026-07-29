@@ -1,6 +1,8 @@
-# LE RADAR — Identité visuelle
+# LE-RADAR — Identité visuelle
 
-Document de référence pour la marque **LE RADAR**. Source de vérité des couleurs :
+**LE-RADAR** signifie **Le Réseau Académique de Découverte et d'Agrégation de Ressources**.
+
+Document de référence pour la marque **LE-RADAR**. Source de vérité des couleurs :
 les variables CSS dans [`style.css`](../style.css) (`:root` et `[data-theme="dark"]`).
 Garder ce document et le code synchronisés.
 
@@ -10,15 +12,19 @@ Garder ce document et le code synchronisés.
 
 | | |
 |---|---|
-| **Nom** | LE RADAR |
+| **Nom** | LE-RADAR |
+| **Signature institutionnelle** | Le Réseau Académique de Découverte et d'Agrégation de Ressources |
 | **Forme courante** | Le Radar (texte courant, pastille « toutes les sources ») |
 | **Slogan (FR)** | Les journaux et les radios étudiantes du Québec, réunis au même endroit |
 | **Slogan (EN)** | Student media on your radar |
 | **Nature** | Agrégateur des **radios** et **journaux étudiants** des cégeps et universités du Québec |
 | **Ton** | Indépendant, jeune, éditorial. Français québécois, ouvert au bilingue (sources FR + EN). |
 
-**Pourquoi « LE RADAR » :** nom bilingue (identique FR/EN), évoque « être sur le radar »
+**Pourquoi « LE-RADAR » :** nom bilingue (identique FR/EN), évoque « être sur le radar »
 (découvrir, ne rien manquer) et l'héritage radio (RAdio Detection And Ranging).
+
+**Ne jamais écrire « RADAR » seul** comme nom du projet, d'un bot, d'un User-Agent ou d'un
+libellé d'interface : l'identité officielle est **LE-RADAR**, d'un seul tenant.
 
 ---
 
@@ -30,7 +36,7 @@ Système **sémantique** : chaque couleur a un rôle, pas seulement une esthéti
 
 | Rôle | Nom | Hex | Usage |
 |---|---|---|---|
-| **Marque / éditorial** | Pourpre LE RADAR | `#6C2163` | Logo, « À la une », liens, survol des titres, accents éditoriaux. C'est le **mélange 50/50 du bleu du Québec et du rouge du Canada**. |
+| **Marque / éditorial** | Pourpre LE-RADAR | `#6C2163` | Logo, « À la une », liens, survol des titres, accents éditoriaux. C'est le **mélange 50/50 du bleu du Québec et du rouge du Canada**. |
 | **En direct / live** | Rouge diffusion | `#C8102E` | *Uniquement* le sémantique « en ondes » : bouton Écouter, indicateur EN ONDES, égaliseur, pastille « frais » (article récent). |
 | **Volet radio** | Bleu officiel du Québec | `#003DA5` | Titrage et contrôles du syntoniseur (nom du poste, volume). Pantone 293. Version éclaircie `#5D9BE0` sur le bandeau sombre. |
 
@@ -103,7 +109,7 @@ marque (radar) et la fusion des couleurs nationales (le pourpre).
 - Fichier vectoriel maître : [`assets/icon.svg`](../assets/icon.svg) (1024×1024, coins arrondis `rx=232`)
 - PNG d'app : `assets/icon-192.png`, `assets/icon-512.png` (plein-cadre, compatibles *maskable*)
 - Le motif (fleur de lys + anneaux) tient dans ~70 % central → sûr pour le masquage Android.
-- Mot-symbole : **LE RADAR** en Source Serif 4, 700, lettres capitales.
+- Mot-symbole : **LE-RADAR** en Source Serif 4, 700, lettres capitales.
 
 **À faire / à éviter**
 - ✅ Fleur de lys blanche sur pourpre ; conserver l'air autour du motif.
@@ -115,7 +121,7 @@ marque (radar) et la fusion des couleurs nationales (le pourpre).
 
 ## 5. PWA
 
-- `manifest.json` : `name` = « LE RADAR — Les médias étudiants du Québec », `short_name` = « LE RADAR ».
+- `manifest.json` : `name` = « LE-RADAR.ca », `short_name` = « LE-RADAR.ca ».
 - `theme_color` / `background_color` : `#FFFFFF`.
 - Service worker : cache nommé `radar-shell-vN` — **incrémenter `N`** à chaque modification
   du shell (HTML/CSS/JS/icônes) pour pousser la mise à jour aux apps installées.

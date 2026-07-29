@@ -85,7 +85,7 @@ function fetchText(url, redirects = 4) {
         url,
         {
           headers: {
-            'User-Agent': 'Mozilla/5.0 (compatible; REQ-NewsBot/1.0)',
+            'User-Agent': 'Mozilla/5.0 (compatible; LE-RADAR-NewsBot/1.0)',
             Accept: 'application/rss+xml, application/xml, text/xml, */*',
           },
           timeout: TIMEOUT,

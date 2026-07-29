@@ -27,7 +27,7 @@ function isPathRejected(path = '', extraRejectPatterns = []) {
 
 const { decodeEntities } = require('./html-entities-lib');
 
-const BOT_USER_AGENT = 'Mozilla/5.0 (compatible; REQ-NewsBot/1.0)';
+const BOT_USER_AGENT = 'Mozilla/5.0 (compatible; LE-RADAR-NewsBot/1.0)';
 // Certains journaux (Wordfence, Elementor…) bloquent les UA « bot » : on
 // retente une fois avec une signature navigateur avant d'abandonner —
 // sans byline ni crédit lisibles, ces articles retombaient au repli générique.
@@ -123,7 +123,7 @@ function fetchBinaryPrefix(url, maxBytes = 65536, redirects = 3, timeout = DEFAU
         url,
         {
           headers: {
-            'User-Agent': 'Mozilla/5.0 (compatible; REQ-NewsBot/1.0)',
+            'User-Agent': 'Mozilla/5.0 (compatible; LE-RADAR-NewsBot/1.0)',
             Accept: 'image/*,*/*',
           },
           timeout,

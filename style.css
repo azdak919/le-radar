@@ -3464,6 +3464,48 @@ html[data-translate-busy="1"] .translate-toggle {
 .site-foot a:hover { text-decoration: underline; }
 .site-foot p { margin: 0 0 8px; }
 
+/* Signature institutionnelle. La marque domine ; le développement de
+   l'acronyme reste volontairement discret et ne doit jamais lui voler la
+   vedette. Il peut faire deux lignes sur mobile : on le laisse passer à la
+   ligne plutôt que de le tronquer ou de forcer un débordement. */
+.site-foot__brand {
+  margin-bottom: 16px;
+}
+
+.site-foot__wordmark {
+  margin: 0 0 2px;
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+
+.site-foot__signature {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.45;
+  /* --ink-soft et non --muted : à 12 px, --muted tombe à 3,7:1 sur le fond,
+     sous le seuil AA. La hiérarchie tient par la taille et la graisse de la
+     marque au-dessus, pas par un contraste affaibli. */
+  color: var(--ink-soft);
+  overflow-wrap: break-word;
+}
+
+.site-foot__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+  margin-bottom: 8px;
+}
+
+.site-foot__sep {
+  color: var(--rule);
+  user-select: none;
+}
+
 .site-foot__credit {
   margin-top: 20px;
   padding-top: 18px;

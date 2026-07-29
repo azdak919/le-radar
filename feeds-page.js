@@ -39,12 +39,12 @@ function feedUrl(file) {
 }
 
 function initTheme() {
-  const saved = localStorage.getItem('req-theme');
+  const saved = localStorage.getItem('radar-theme');
   const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
   applyTheme(saved || (prefersDark ? 'dark' : 'light'));
   THEME_TOGGLE?.addEventListener('click', () => {
     const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('req-theme', next);
+    localStorage.setItem('radar-theme', next);
     applyTheme(next);
   });
 }

@@ -28,6 +28,7 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 const { decodeHtmlEntities } = require('./html-entities-lib');
 const { buildEntityPages } = require('./seo-pages');
+const { renderSiteFooter } = require('./seo-pages-lib');
 
 const ROOT = path.join(__dirname, '..');
 /** Domaine canonique (Pages + custom domain). Surcharge : RADAR_SITE_URL. */
@@ -61,7 +62,25 @@ const PAGES = [
 const MARKERS = {
   jsonld: ['<!-- RADAR:SEO:JSONLD:START -->', '<!-- RADAR:SEO:JSONLD:END -->'],
   feed: ['<!-- RADAR:SEO:FEED:START -->', '<!-- RADAR:SEO:FEED:END -->'],
+  footer: ['<!-- RADAR:FOOTER:START -->', '<!-- RADAR:FOOTER:END -->'],
 };
+
+/**
+ * Pages écrites à la main qui reçoivent le pied de page partagé.
+ *
+ * Les 69 pages d'entités l'obtiennent directement par `renderPage()`. Ces
+ * trois-là ne passent pas par le gabarit : elles déclarent des marqueurs
+ * `RADAR:FOOTER` et le générateur y injecte exactement le même bloc. C'est ce
+ * qui garantit qu'il n'existe plus qu'une seule définition du pied de page.
+ *
+ * `home` retire le lien « retour à l'accueil » sur l'accueil lui-même.
+ * `indent` doit correspondre à l'indentation du marqueur dans le fichier.
+ */
+const FOOTER_PAGES = [
+  { file: 'index.html', lang: 'fr', up: './', home: true, altPath: 'en/', indent: '      ' },
+  { file: 'feeds.html', lang: 'fr', up: './', altPath: 'en/', indent: '      ' },
+  { file: 'offline.html', lang: 'fr', up: './', altPath: 'en/', indent: '    ' },
+];
 
 // ═══════════════════════════════════════════════════════════════════════════
 //  Utilitaires
@@ -144,16 +163,23 @@ function frenchDate(value) {
  * produit exactement le même fichier. Lève si les marqueurs sont absents ou
  * mal ordonnés — on ne réécrit jamais index.html à l'aveugle.
  */
-function injectBetween(source, [start, end], payload, label) {
+function injectBetween(source, [start, end], payload, label, file = 'index.html') {
   const from = source.indexOf(start);
   const to = source.indexOf(end);
   if (from === -1 || to === -1) {
-    throw new Error(`Marqueurs « ${label} » introuvables dans index.html — injection annulée.`);
+    throw new Error(`Marqueurs « ${label} » introuvables dans ${file} — injection annulée.`);
   }
   if (to < from) {
-    throw new Error(`Marqueurs « ${label} » inversés dans index.html — injection annulée.`);
+    throw new Error(`Marqueurs « ${label} » inversés dans ${file} — injection annulée.`);
   }
   return source.slice(0, from + start.length) + payload + source.slice(to);
+}
+
+/** Injecte le pied de page partagé entre les marqueurs d'une page statique. */
+function injectFooter(html, page) {
+  const { file, indent, ...opts } = page;
+  const footer = renderSiteFooter({ ...opts, indent });
+  return injectBetween(html, MARKERS.footer, `\n${indent}${footer}\n${indent}`, 'FOOTER', file);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -455,17 +481,33 @@ function main() {
   if (doUpdate) fs.writeFileSync(LLMS_PATH, llms, 'utf8');
   written.push({ file: 'llms.txt', note: `${sources.length} journaux, ${radios.length} radios` });
 
-  // ── index.html : prérendu + JSON-LD ──
+  // ── index.html : prérendu + JSON-LD + pied de page ──
+  // Une seule écriture pour les trois injections : relire le fichier entre
+  // deux passes perdrait celles qui ne sont pas encore sur le disque.
+  const indexPage = FOOTER_PAGES.find((p) => p.file === 'index.html');
   const before = fs.readFileSync(INDEX_PATH, 'utf8');
   let html = before;
   html = injectBetween(html, MARKERS.jsonld, buildItemListJsonLd(prerendered), 'JSONLD');
   html = injectBetween(html, MARKERS.feed, buildFeedHtml(prerendered), 'FEED');
+  html = injectFooter(html, indexPage);
 
   if (doUpdate && html !== before) fs.writeFileSync(INDEX_PATH, html, 'utf8');
   written.push({
     file: 'index.html',
-    note: html === before ? 'inchangé' : `prérendu de ${prerendered.length} manchettes`,
+    note: html === before ? 'inchangé' : `prérendu de ${prerendered.length} manchettes + pied de page`,
   });
+
+  // ── pied de page partagé : autres pages écrites à la main ──
+  for (const page of FOOTER_PAGES.filter((p) => p.file !== 'index.html')) {
+    const target = path.join(ROOT, page.file);
+    const original = fs.readFileSync(target, 'utf8');
+    const updatedHtml = injectFooter(original, page);
+    if (doUpdate && updatedHtml !== original) fs.writeFileSync(target, updatedHtml, 'utf8');
+    written.push({
+      file: page.file,
+      note: updatedHtml === original ? 'pied de page inchangé' : 'pied de page mis à jour',
+    });
+  }
 
   if (!doUpdate) {
     console.log('Dry-run — aucun fichier écrit. Utilisez --update.\n');

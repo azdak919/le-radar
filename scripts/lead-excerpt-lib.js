@@ -80,7 +80,7 @@ function fetchText(url, redirects = 3, timeout = FETCH_TIMEOUT) {
       url,
       {
         headers: {
-          'User-Agent': 'Mozilla/5.0 (compatible; REQ-NewsBot/1.0)',
+          'User-Agent': 'Mozilla/5.0 (compatible; LE-RADAR-NewsBot/1.0)',
           Accept: 'text/html, application/xhtml+xml, */*',
         },
         timeout,
