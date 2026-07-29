@@ -1,78 +1,78 @@
 {
-  "updatedAt": "2026-07-29T20:53:12.935Z",
+  "updatedAt": "2026-07-29T21:58:32.555Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
-      },
-      "next": {
         "title": "Les Arshitechs du Son",
         "source": "schedule",
         "start": "17:30",
         "end": "18:30",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "Jeudi Révolte",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/jeudi-revolte/"
+      },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T20:52:46.391Z"
+      "checkedAt": "2026-07-29T21:58:06.837Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le cours de math",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/le-cours-de-math"
-      },
-      "next": {
         "title": "Feu | Metal | Chaos",
         "source": "schedule",
         "start": "17:00",
         "end": "19:00",
         "url": "https://cism893.ca/emissions/feu-metal-chaos"
       },
+      "next": {
+        "title": "O'Keb (reprise)",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/okeb"
+      },
       "track": "",
-      "showTitle": "Le cours de math",
+      "showTitle": "Feu | Metal | Chaos",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T20:52:49.109Z"
+      "checkedAt": "2026-07-29T21:58:09.158Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "All Da Way Live",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "Off the Hour/Sounds of Resistance",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Hersay: Audio Smut/OWL/The Teachings/Metro Boulot Dodo",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "All Da Way Live",
+      "showTitle": "Off the Hour/Sounds of Resistance",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -80,34 +80,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T20:52:52.084Z"
+      "checkedAt": "2026-07-29T21:58:12.006Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Borderline",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/borderline"
-      },
-      "next": {
         "title": "Advice By The Fireplace",
         "source": "schedule",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/advice-by-the-fireplace"
       },
+      "next": {
+        "title": "The New Consonance",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/the-new-consonance"
+      },
       "track": "",
-      "showTitle": "Borderline",
+      "showTitle": "Advice By The Fireplace",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T20:53:05.904Z"
+      "checkedAt": "2026-07-29T21:58:25.908Z"
     },
     "cfak": {
       "id": "cfak",
@@ -132,12 +132,18 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T20:53:06.595Z"
+      "checkedAt": "2026-07-29T21:58:26.366Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
+      "current": {
+        "title": "Podcast Nomade: L'art de se rencontrer",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "https://www.choq.ca/emissions/podcast-nomade-lart-de-se-rencontrer"
+      },
       "next": {
         "title": "Opération beurre de cinoche",
         "source": "api-live",
@@ -145,18 +151,19 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Marco Ema - Un, deux, trois",
-      "showTitle": "",
+      "track": "Webster - RacSyst",
+      "showTitle": "Podcast Nomade: L'art de se rencontrer",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-29T20:53:12.585Z"
+      "checkedAt": "2026-07-29T21:58:32.204Z"
     }
   }
 }
