@@ -134,15 +134,18 @@ function normalizeSlot(slot) {
   const end = timeToMinutes(slot.end);
   if (start == null || end == null) return null;
 
-  const title = stripProductionNote(
+  const url = String(slot.url || '').trim();
+  let title = stripProductionNote(
     decodeHtmlEntities(String(slot.title || '')).replace(/\s+/g, ' ').trim(),
   );
+  // CJLO (et d'autres grilles HTML) tronquent l'affichage : « Words an... »
+  // alors que le slug de la fiche d'émission porte le nom complet.
+  if (url) title = expandTruncatedTitle(title, url);
   if (!title || isJunkShowTitle(title)) return null;
 
   const out = { day, start: minutesToTime(start), end: minutesToTime(end), title };
   const host = decodeHtmlEntities(String(slot.host || '')).replace(/\s+/g, ' ').trim();
   if (host) out.host = host;
-  const url = String(slot.url || '').trim();
   if (url) out.url = url;
   return out;
 }
@@ -835,21 +838,94 @@ function normalizeCjloShowUrl(href = '') {
   return url;
 }
 
+/** Titre affiché tronqué côté grille Drupal (« Words an... »). */
+function isTruncatedShowTitle(title = '') {
+  return /\.\.\.\s*$|…\s*$/.test(String(title || '').trim());
+}
+
+/**
+ * Reconstitue un titre lisible depuis le slug `/shows/words-and-culture`.
+ * CJLO tronque le libellé dans la grille mais garde un slug complet.
+ */
+function titleFromShowSlug(url = '') {
+  try {
+    const path = new URL(String(url), 'http://www.cjlo.com').pathname;
+    const m = /\/shows\/([^/?#]+)/i.exec(path);
+    if (!m) return '';
+    const raw = decodeURIComponent(m[1]).replace(/[_]+/g, '-').replace(/-+/g, ' ').trim();
+    if (!raw || raw.length < 3) return '';
+    const small = new Set(['a', 'an', 'and', 'as', 'at', 'by', 'for', 'from', 'in', 'of', 'on', 'or', 'the', 'to', 'with']);
+    return raw.split(/\s+/).map((word, i) => {
+      const low = word.toLowerCase();
+      if (i > 0 && small.has(low)) return low;
+      // Bill's, Go-Go, 514
+      return low.replace(/(^|[-'])\p{L}/gu, (ch) => ch.toUpperCase());
+    }).join(' ');
+  } catch {
+    return '';
+  }
+}
+
+/**
+ * Si le titre est tronqué et qu'une URL de fiche d'émission existe, préférer
+ * le titre dérivé du slug (plus long, sans « … »).
+ */
+/** Compare sans ponctuation / apostrophes (« Bill's » ≈ « bills »). */
+function titleMatchKey(value = '') {
+  return String(value)
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
+    .replace(/&/g, ' and ')
+    .replace(/[''']/g, '')
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function expandTruncatedTitle(title = '', url = '') {
+  const t = String(title || '').replace(/\s+/g, ' ').trim();
+  if (!t || !url || !isTruncatedShowTitle(t)) return t;
+  const fromSlug = titleFromShowSlug(url);
+  if (!fromSlug) return t;
+  const stem = titleMatchKey(t.replace(/\.\.\.\s*$|…\s*$/g, ''));
+  const slugKey = titleMatchKey(fromSlug);
+  if (!stem || !slugKey) return t;
+  // Le slug doit prolonger le début visible (évite un mauvais match d'URL).
+  if (!slugKey.startsWith(stem.slice(0, Math.min(stem.length, 12)))) {
+    const stemWords = stem.split(/\s+/).filter(Boolean);
+    const slugWords = slugKey.split(/\s+/);
+    if (!stemWords.length || stemWords[0] !== slugWords[0]) return t;
+  }
+  return fromSlug.length >= t.replace(/\.\.\.|…/g, '').length ? fromSlug : t;
+}
+
 /**
  * CJLO (cjlo.com/schedule) : grille Drupal 7 en HTML (Daytime + Late Night).
  * Chaque bloc .show-sched a une colonne (left) et une plage AM/PM dans <b>.
+ * Le libellé visible est souvent tronqué avec « ... » ; l'URL /shows/… porte
+ * le nom complet (ex. words-and-culture → Words and Culture).
  */
 function parseCjloGrid(htmlText) {
   const grid = [];
-  const showRe = /<div class='show-sched[^']*'[^>]*style='[^']*left:([\d.]+)px[\s\S]*?<div class='show-title'><a[^>]*href='([^']*)'[^>]*>([\s\S]*?)<\/a><\/div>[\s\S]*?<b>([\s\S]*?)<\/b>/gi;
+  const showRe = /<div class='show-sched[^']*'[^>]*style='[^']*left:([\d.]+)px[\s\S]*?<div class='show-title'><a([^>]*)href='([^']*)'[^>]*>([\s\S]*?)<\/a><\/div>[\s\S]*?<b>([\s\S]*?)<\/b>/gi;
   let m;
   while ((m = showRe.exec(htmlText))) {
     const day = cjloLeftToDay(m[1]);
-    const title = decodeHtmlEntities(stripTags(m[3])).replace(/\s+/g, ' ').trim();
-    const range = parseCjloTimeRange(stripTags(m[4]));
+    const anchorAttrs = m[2] || '';
+    const href = m[3];
+    let title = decodeHtmlEntities(stripTags(m[4])).replace(/\s+/g, ' ').trim();
+    // title="…" sur l'ancre, s'il est complet, prime sur le libellé tronqué.
+    const titleAttr = /title\s*=\s*['"]([^'"]+)['"]/i.exec(anchorAttrs);
+    if (titleAttr) {
+      const full = decodeHtmlEntities(titleAttr[1]).replace(/\s+/g, ' ').trim();
+      if (full && !isTruncatedShowTitle(full) && full.length >= title.length) title = full;
+    }
+    const range = parseCjloTimeRange(stripTags(m[5]));
     if (day == null || !title || !range) continue;
+    const url = normalizeCjloShowUrl(href);
+    title = expandTruncatedTitle(title, url);
     const slot = { day, start: range.start, end: range.end, title };
-    const url = normalizeCjloShowUrl(m[2]);
     if (url) slot.url = url;
     grid.push(slot);
   }
@@ -1054,6 +1130,9 @@ module.exports = {
   dayNameToIndex,
   stripProductionNote,
   isJunkShowTitle,
+  isTruncatedShowTitle,
+  titleFromShowSlug,
+  expandTruncatedTitle,
   gridCoverage,
   normalizeSlot,
   mergeGrids,
