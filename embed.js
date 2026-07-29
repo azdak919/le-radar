@@ -1,15 +1,24 @@
-// Iframe embed (Solitaire, etc.) :
-// hauteur fixe 58 px, volume en ligne, signale le parent via postMessage.
+// Iframe embed :
+// · legacy (Pomo/Solitaire, sans surface=) — barre compacte 62 px
+// · kiosque-v1 — parité barre bureau LE-RADAR (+ crédit), 68 px
+// Signale le parent via postMessage (hauteur, ready, available).
 (function () {
   if (document.documentElement.dataset.embed !== 'tuner') return;
 
   const params = new URLSearchParams(window.location.search);
   const surface = params.get('surface') === 'kiosque-v1' ? 'kiosque-v1' : 'legacy';
-  // kiosque-v1 : un peu plus haut pour les labels 0/100/200 % (parité bureau).
-  // legacy / Solitaire : 62 px inchangé.
   const EMBED_H = surface === 'kiosque-v1' ? 68 : 62;
   document.documentElement.dataset.surface = surface;
-  if (surface === 'kiosque-v1') document.documentElement.dataset.theme = 'dark';
+  if (surface === 'kiosque-v1') {
+    document.documentElement.dataset.theme = 'dark';
+    // Fond de session univ. (automne/hiver/été) comme le site principal.
+    try {
+      if (typeof RadarSessionFreshness !== 'undefined'
+          && typeof RadarSessionFreshness.applyUniversitySessionTheme === 'function') {
+        RadarSessionFreshness.applyUniversitySessionTheme();
+      }
+    } catch (_) { /* optionnel */ }
+  }
   document.documentElement.style.setProperty('--embed-bar-h', `${EMBED_H}px`);
 
   // Hauteur souhaitée de l'iframe : hauteur de base, sauf quand le popover

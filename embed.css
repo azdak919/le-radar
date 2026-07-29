@@ -59,32 +59,10 @@ html[data-embed="tuner"][data-theme="dark"] {
   color-scheme: normal;
 }
 
-/* Surface contractuelle pour les journaux Le Kiosque. Elle reprend la barre
-   sombre du site principal et reste indépendante du thème du parent. */
-html[data-embed="tuner"][data-surface="kiosque-v1"] {
-  --embed-ink: #fff;
-  --embed-muted: rgba(255, 255, 255, 0.52);
-  --embed-muted-strong: rgba(255, 255, 255, 0.82);
-  --embed-control-bg: rgba(255, 255, 255, 0.06);
-  --embed-control-bg-hover: rgba(255, 255, 255, 0.12);
-  --embed-control-border: rgba(255, 255, 255, 0.16);
-  --embed-control-border-hover: rgba(255, 255, 255, 0.28);
-  --embed-radio: #8eb8ff;
-  --tuner-onair-live: #ff7d6e;
-  background: #0d1412 !important;
-}
-
-html[data-embed="tuner"][data-surface="kiosque-v1"] body,
-html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
-  background: #0d1412 !important;
-}
-
-html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-inner {
-  width: min(100%, 1120px);
-  max-width: 1120px;
-  margin-inline: auto;
-  padding-inline: 14px;
-}
+/* Surface contractuelle Kiosque (journaux).
+   Distincte de l’embed legacy utilisé par Pomo/Solitaire (pas de surface=).
+   Objectif : même look que la barre bureau de le-radar.ca (+ crédit le-radar.ca).
+   Détails de parité plus bas (§ kiosque-v1 parity). */
 
 html[data-embed="tuner"] body {
   margin: 0;
@@ -886,44 +864,93 @@ html[data-embed="tuner"] .toast {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Surface kiosque-v1 — parité visuelle avec la barre bureau LE-RADAR
-   (sans casser Solitaire / embed legacy). Crédit le-radar.ca conservé.
+   kiosque-v1 — parité avec la barre bureau de le-radar.ca
+   Embed legacy (Pomo/Solitaire, sans surface=) : règles ci-dessus, 62 px.
+   Seul écart volontaire pour le journal : crédit le-radar.ca sous EN ONDES.
    ═══════════════════════════════════════════════════════════════════════════ */
 html[data-embed="tuner"][data-surface="kiosque-v1"] {
-  /* Un peu plus haut pour les labels 0 / 100 / 200 % sous le rail. */
   --embed-bar-h: 68px;
-  --embed-vol-track: 118px;
-  --embed-gap: 8px;
-  /* Tokens alignés sur le bandeau sombre du site principal. */
+  --embed-vol-track: 120px;
+  --embed-gap: 9px;
+  --embed-pad: 24px;
   --embed-ink: #fff;
-  --embed-muted: rgba(255, 255, 255, 0.5);
+  --embed-muted: rgba(255, 255, 255, 0.42);
   --embed-muted-strong: rgba(255, 255, 255, 0.78);
   --embed-control-bg: rgba(255, 255, 255, 0.06);
   --embed-control-bg-hover: rgba(255, 255, 255, 0.12);
   --embed-control-border: rgba(255, 255, 255, 0.16);
   --embed-control-border-hover: rgba(255, 255, 255, 0.28);
   --embed-radio: #8eb8ff;
+  /* Coral live = même soft que le site (--status-live-soft ≈ #ff7d6e). */
   --tuner-onair-live: #ff7d6e;
-  --tuner-onair-idle: rgba(255, 255, 255, 0.5);
-  background: #111317 !important;
+  --tuner-onair-idle: rgba(255, 255, 255, 0.42);
+  /* Fond session (défaut hiver) — comme style.css ≥720px. */
+  --tuner-session-base: #121820;
+  background: var(--tuner-session-base) !important;
   height: var(--embed-bar-h);
   max-height: var(--embed-bar-h);
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"][data-uni-session="automne"] {
+  --tuner-session-base: #1a1214;
+}
+html[data-embed="tuner"][data-surface="kiosque-v1"][data-uni-session="hiver"] {
+  --tuner-session-base: #121820;
+}
+html[data-embed="tuner"][data-surface="kiosque-v1"][data-uni-session="ete"] {
+  --tuner-session-base: #101816;
 }
 
 html[data-embed="tuner"][data-surface="kiosque-v1"] body,
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
-  background: #111317 !important;
+  background: var(--tuner-session-base) !important;
   height: var(--embed-bar-h);
   max-height: var(--embed-bar-h);
   min-height: var(--embed-bar-h);
+  box-shadow: 0 8px 24px -14px rgba(0, 0, 0, 0.78);
 }
 
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
   --tuner-onair-live: #ff7d6e;
-  --tuner-onair-idle: rgba(255, 255, 255, 0.5);
+  --tuner-onair-idle: rgba(255, 255, 255, 0.42);
 }
 
-/* Volume : même layout colonne que le bureau (rail + labels). */
+/* Largeur contenu = --maxw du site (~1180), pas un pastille Solitaire. */
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-inner {
+  width: min(100%, 1180px);
+  max-width: 1180px;
+  margin-inline: auto;
+  padding: 10px var(--embed-pad);
+  gap: 12px;
+  box-shadow: none;
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-controls {
+  gap: var(--embed-gap);
+}
+
+/* Play : ombre et taille comme le bureau. */
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-play {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  box-shadow: 0 6px 18px -6px rgba(200, 16, 46, 0.7);
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-step {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  border-radius: 10px;
+}
+
+/* Volume : layout colonne bureau (rail + 0/100/200 %). */
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol {
+  height: auto;
+  align-items: center;
+  max-width: calc(42px + var(--embed-vol-track));
+}
+
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-track {
   width: var(--embed-vol-track);
   max-width: var(--embed-vol-track);
@@ -931,8 +958,9 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-track {
   flex: 0 1 var(--embed-vol-track);
   height: auto;
   min-height: 0;
-  gap: 3px;
+  gap: 4px;
   justify-content: center;
+  overflow: visible;
 }
 
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-slider {
@@ -942,24 +970,30 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-slider {
 
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-labels {
   display: block !important;
+  position: relative;
   height: 10px;
   font-size: 9px;
   font-weight: 600;
+  line-height: 1;
   color: rgba(255, 255, 255, 0.34);
+  user-select: none;
 }
 
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-label--max {
   color: rgba(255, 154, 144, 0.72);
 }
 
-/* Cast en barre quand la largeur le permet (comme le site principal). */
+/* Cast en barre (largeur bureau), comme le site. */
 @media (min-width: 720px) {
   html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-cast--bar:not(.hidden):not([hidden]) {
     display: flex !important;
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
   }
 }
 
-/* EQ visible en lecture (discret) — masqué sur embed legacy pour la place. */
+/* EQ en lecture — masqué sur embed legacy (Pomo/Solitaire) pour la place. */
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing .tuner-eq {
   display: inline-flex !important;
   align-items: flex-end;
@@ -973,6 +1007,7 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-eq span {
   border-radius: 1px;
   background: rgba(255, 255, 255, 0.45);
   height: 40%;
+  transform-origin: bottom center;
 }
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing .tuner-eq span {
   animation: embedEq 0.9s ease-in-out infinite alternate;
@@ -994,20 +1029,30 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing .tuner-eq 
   to { transform: scaleY(1); }
 }
 
+/* Module « À venir » : un peu plus large comme le bureau. */
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair,
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair.hidden {
+  max-width: 320px;
+  height: auto;
+  min-height: var(--embed-ctrl);
+  align-self: center;
+}
+
 @media (min-width: 720px) {
   html[data-embed="tuner"][data-surface="kiosque-v1"] {
-    --embed-vol-track: 128px;
-    --embed-gap: 8px;
+    --embed-vol-track: 132px;
+    --embed-gap: 9px;
+    --embed-pad: 32px;
   }
 }
 
 @media (min-width: 900px) {
   html[data-embed="tuner"][data-surface="kiosque-v1"] {
-    --embed-vol-track: 140px;
+    --embed-vol-track: 148px;
   }
 }
 
-/* Mobile kiosque : labels volume dans la bulle uniquement (comportement popover). */
+/* Mobile kiosque : labels volume seulement dans la bulle (popover). */
 @media (max-width: 559.98px) {
   html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-track > .tuner-vol-labels {
     display: none !important;
@@ -1015,5 +1060,6 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing .tuner-eq 
   html[data-embed="tuner"][data-surface="kiosque-v1"] {
     --embed-bar-h: 62px;
     --embed-vol-track: 72px;
+    --embed-pad: 12px;
   }
 }
