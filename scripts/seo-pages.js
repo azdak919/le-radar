@@ -384,25 +384,32 @@ function paperPage(paper, lang, ctx) {
   const sourceHome = `${up}${lang === 'en' ? 'en/' : ''}?source=${encodeURIComponent(paper.name)}#news-list`;
   const archivePath = ctx.archivePaths?.get(paper.name);
   const hasRecentHeadlines = Array.isArray(paper.headlines) && paper.headlines.length > 0;
-  if (!hasRecentHeadlines && archivePath) {
-    // Une source peut n'avoir que des métadonnées historiques. Dans ce cas,
-    // le filtre du fil vivant serait vide : la fiche mène directement au
-    // catalogue plutôt que d'afficher un bouton sans résultat.
-    body += `      <section class="seo-section">\n        <h2>${escapeHtml(t.historicalHeadlines)}</h2>\n`
-      + `        <p class="seo-empty">${escapeHtml(fill(t.historicalOnly, { name: paper.name }))}</p>\n`
-      + `        <p class="seo-cta seo-cta--source"><a href="${up}${escapeHtml(archivePath)}">${escapeHtml(fill(t.historicalSourceArticles, { name: paper.name }))}</a></p>\n`;
-  } else {
-    body += `      <section class="seo-section">\n        <h2>${escapeHtml(t.latestHeadlines)}</h2>\n`
-      + (latestLabel ? `        <p class="seo-headlines__status">${escapeHtml(fill(t.latestArticleStatus, { date: latestLabel }))}`
-        + (lastCheckLabel && shouldExplainStaleSource(paper, lastCheck)
-          ? ` · ${escapeHtml(fill(t.sourceStaleStatus, { date: lastCheckLabel }))}`
-          : '')
-        + '</p>\n' : '');
+  // Même squelette pour toutes les sources : « Derniers articles », puis soit
+  // la liste, soit un vide qui cite la fenêtre de fraîcheur (3 sessions univ.),
+  // puis une rangée de CTA (récents et/ou archives).
+  body += `      <section class="seo-section">\n        <h2>${escapeHtml(t.latestHeadlines)}</h2>\n`;
+  if (hasRecentHeadlines) {
+    body += (latestLabel ? `        <p class="seo-headlines__status">${escapeHtml(fill(t.latestArticleStatus, { date: latestLabel }))}`
+      + (lastCheckLabel && shouldExplainStaleSource(paper, lastCheck)
+        ? ` · ${escapeHtml(fill(t.sourceStaleStatus, { date: lastCheckLabel }))}`
+        : '')
+      + '</p>\n' : '');
     body += headlineList(paper.headlines, t);
-    body += `      <p class="seo-cta seo-cta--source"><a href="${escapeHtml(sourceHome)}" data-news-source="${escapeHtml(paper.name)}">${escapeHtml(fill(t.allSourceArticles, { name: paper.name }))}</a></p>\n`;
-    if (archivePath) {
-      body += `      <p class="seo-archive-link"><a href="${up}${escapeHtml(archivePath)}">${escapeHtml(t.historicalArchive)}</a></p>\n`;
+  } else {
+    body += `        <p class="seo-empty">${escapeHtml(t.noRecentInWindow)}</p>\n`;
+  }
+  if (hasRecentHeadlines || archivePath) {
+    body += '        <div class="seo-source-actions">\n';
+    if (hasRecentHeadlines) {
+      body += `          <p class="seo-cta seo-cta--source"><a href="${escapeHtml(sourceHome)}" data-news-source="${escapeHtml(paper.name)}">${escapeHtml(t.allRecentArticles)}</a></p>\n`;
     }
+    if (archivePath) {
+      const archiveClass = hasRecentHeadlines
+        ? 'seo-cta seo-cta--secondary seo-cta--source'
+        : 'seo-cta seo-cta--source';
+      body += `          <p class="${archiveClass}"><a href="${up}${escapeHtml(archivePath)}">${escapeHtml(t.viewArchives)}</a></p>\n`;
+    }
+    body += '        </div>\n';
   }
   body += '      </section>\n';
 
