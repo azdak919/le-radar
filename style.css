@@ -4727,9 +4727,10 @@ body.external-listen-open {
     grid-template-columns: minmax(0, 1.15fr) minmax(300px, 370px);
     column-gap: 0;
     row-gap: 0;
-    /* Colonnes de même hauteur → bas (bordures) flush */
+    /* Colonnes de même hauteur ; un seul filet bas (pas un par colonne). */
     align-items: stretch;
     border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
   }
 
   .article {
@@ -4749,11 +4750,13 @@ body.external-listen-open {
     min-height: 0;
     height: 100%;
     padding-right: 32px;
-    border-bottom: 1px solid var(--rule);
+    /* Pas de border-bottom ici : le .news-list porte le filet bas unique. */
+    border-bottom: none;
     overflow: visible;
     isolation: isolate;
   }
 
+  /* Filets entre cartes uniquement (jamais sous le dernier item de colonne). */
   .news-hero .article--lead,
   .news-hero .article--feature {
     border-bottom: 1px solid var(--rule);
@@ -4769,11 +4772,9 @@ body.external-listen-open {
     flex: 0 0 auto;
   }
 
-  /* Dernière vedette : pas de bordure si le spacer suit (bas flush). */
-  .news-hero .article--feature:last-of-type {
-    border-bottom: 1px solid var(--rule);
-  }
-  .news-hero .article--feature:has(+ .news-hero-spacer) {
+  .news-hero .article--feature:last-of-type,
+  .news-hero .article--feature:has(+ .news-hero-spacer),
+  .news-hero > .article:last-child {
     border-bottom: none;
   }
 
@@ -4960,9 +4961,15 @@ body.external-listen-open {
     height: 100%;
     padding-left: 28px;
     border-left: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
+    /* Filet bas unique sur .news-list — évite le croisement de lignes. */
+    border-bottom: none;
     overflow: visible;
     isolation: isolate;
+  }
+
+  .brief-rail .article--compact:last-of-type,
+  .brief-rail > .article:last-child {
+    border-bottom: none;
   }
 
   .brief-rail-title {
