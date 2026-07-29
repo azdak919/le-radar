@@ -43,6 +43,19 @@ for (const file of htmlFiles) {
     const target = resolve(dirname(file), raw);
     assert(existsSync(target), `${relative(root, file)}: ressource locale introuvable ${raw}`);
   }
+
+  // Le footer partagé doit rester identique à la référence visuelle : pas de
+  // lien GitHub ajouté par erreur, ni de pictogramme courriel emoji.
+  if (html.includes('class="site-foot"')) {
+    const rel = relative(root, file);
+    assert(!html.includes('Code source (GitHub)'), `${rel}: lien GitHub absent du footer requis`);
+    assert(!html.includes('>✉️</a>'), `${rel}: emoji courriel interdit dans le footer`);
+    assert(!html.includes('site-foot__author-mail'), `${rel}: icône courriel interdite dans le footer`);
+    assert(/class="site-foot__logo"/.test(html), `${rel}: logo footer requis`);
+    assert(/class="site-foot__contact"/.test(html), `${rel}: ligne de contact footer requise`);
+    assert(/data-contact-channel="email"/.test(html), `${rel}: point d’entrée contact requis`);
+    assert(!html.includes('>azdak-qc@proton.me</a>'), `${rel}: adresse courriel non affichée requise`);
+  }
 }
 
 function assertServiceWorkerAssets(file, arrayName) {
@@ -135,6 +148,36 @@ for (const app of ['pomo', 'solitaire']) {
   assert(/allow=["'][^"']*autoplay/.test(html), `${app}: permission autoplay iframe requise`);
 }
 
+const chyzPage = readFileSync(join(root, 'radios/chyz/index.html'), 'utf8');
+assert(chyzPage.includes("<h1 class=\"seo-title\">CHYZ 94,3 FM — La radio des étudiant·e·s de l'Université Laval</h1>"), 'radio CHYZ : nom, fréquence et slogan requis en titre');
+assert(chyzPage.includes('href="../../horaires/">Choisir une autre radio</a>'), 'radio CHYZ : retour aux autres horaires requis');
+assert(chyzPage.includes('Dernière collecte réussie le'), 'radio CHYZ : date de collecte requise');
+assert(chyzPage.includes('id="tuner" class="tuner"'), 'radio CHYZ : lecteur natif requis');
+assert(!chyzPage.includes('id="radar-embed"'), 'radio CHYZ : iframe tuner interdit');
+assert(chyzPage.includes('id="theme-toggle"'), 'radio CHYZ : bascule clair/sombre requise');
+// Localisation des établissements : le français adapte les noms anglais,
+// tandis que le volet anglais conserve leurs formes officielles.
+const cjloFrPage = readFileSync(join(root, 'radios/cjlo/index.html'), 'utf8');
+const cjloEnPage = readFileSync(join(root, 'en/radios/cjlo/index.html'), 'utf8');
+assert(cjloFrPage.includes('>Université Concordia</a>'), 'radio CJLO FR : établissement francisé requis');
+assert(!cjloFrPage.includes('>Concordia University</a>'), 'radio CJLO FR : nom anglais interdit dans la fiche');
+assert(cjloEnPage.includes('>Concordia University</a>'), 'radio CJLO EN : nom officiel anglais requis');
+const ckutFrPage = readFileSync(join(root, 'radios/ckut/index.html'), 'utf8');
+const ckutEnPage = readFileSync(join(root, 'en/radios/ckut/index.html'), 'utf8');
+assert(ckutFrPage.includes('>Université McGill</a>'), 'radio CKUT FR : établissement francisé requis');
+assert(ckutEnPage.includes('>McGill University</a>'), 'radio CKUT EN : nom officiel anglais requis');
+const offlineHtml = readFileSync(join(root, 'offline.html'), 'utf8');
+assert(offlineHtml.includes("params.has('maintenance')"), 'offline.html : mode maintenance durable requis');
+assert(offlineHtml.includes('id="lang-scroll-prev"'), 'offline.html : bouton langues gauche requis');
+assert(offlineHtml.includes('id="lang-scroll-next"'), 'offline.html : bouton langues droite requis');
+assert(offlineHtml.includes("chipsEl.addEventListener('wheel'"), 'offline.html : défilement souris des langues requis');
+assert(offlineHtml.includes("chipsEl.addEventListener('pointerdown'"), 'offline.html : glisser souris des langues requis');
+const feedsHtml = readFileSync(join(root, 'feeds.html'), 'utf8');
+assert(feedsHtml.includes('src="native-tuner.js"'), 'feeds.html : lecteur natif requis');
+assert(feedsHtml.includes('src="nav-shell.js"'), 'feeds.html : navigation persistante requise');
+const schedulesHub = readFileSync(join(root, 'horaires/index.html'), 'utf8');
+assert(schedulesHub.includes('Grilles colligées automatiquement'), 'hub horaires : note au pluriel requise');
+
 const embedScript = readFileSync(join(root, 'embed.js'), 'utf8');
 assert(embedScript.includes("type: 'radar-embed'"), 'contrat postMessage radar-embed requis');
 assert(embedScript.includes("type: 'ataraxia-radar-embed'"), 'contrat postMessage historique requis');
@@ -161,6 +204,29 @@ for (const bot of ['GPTBot', 'ClaudeBot', 'PerplexityBot']) {
 }
 
 const indexHtml = readFileSync(join(root, 'index.html'), 'utf8');
+const engagePrompt = readFileSync(join(root, 'engage-prompt.js'), 'utf8');
+assert(!/coque hors-ligne/i.test(engagePrompt), 'invitation PWA : jargon « coque » interdit');
+assert(engagePrompt.includes("Ouvrir LE-RADAR.ca au démarrage ?"), 'invitation accueil : titre orienté résultat requis');
+assert(engagePrompt.includes("event.key === 'Escape'"), 'invitation : fermeture Échap requise');
+const TUNER_FRAME_ORIGINS = [
+  "'self'",
+  'https://chyz.ca',
+  'https://cism893.ca',
+  'https://ckut.ca',
+  'https://www.cjlo.com',
+  'https://www.cfak.ca',
+  'https://www.choq.ca',
+];
+for (const rel of ['index.html', 'tuner-embed.html']) {
+  const html = readFileSync(join(root, rel), 'utf8');
+  const csp = html.match(/Content-Security-Policy" content="([^"]+)"/i)?.[1] || '';
+  const frameSrc = csp.match(/(?:^|;\s*)frame-src\s+([^;]+)/i)?.[1] || '';
+  assert(frameSrc, `${rel}: directive frame-src CSP requise`);
+  assert(!/(^|\s)https:(?:\s|$)/.test(frameSrc), `${rel}: frame-src ne doit pas autoriser tout https:`);
+  for (const origin of TUNER_FRAME_ORIGINS) {
+    assert(frameSrc.includes(origin), `${rel}: frame-src doit autoriser ${origin}`);
+  }
+}
 for (const marker of [
   '<!-- RADAR:SEO:JSONLD:START -->', '<!-- RADAR:SEO:JSONLD:END -->',
   '<!-- RADAR:SEO:FEED:START -->', '<!-- RADAR:SEO:FEED:END -->',

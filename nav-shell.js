@@ -29,11 +29,9 @@
     const base = pathNorm(new URL('.', location.href).pathname);
     const rel = p === base ? '/' : (p.startsWith(base + '/') ? p.slice(base.length) : p);
     const r = rel.startsWith('/') ? rel : '/' + rel;
-    if (r === '/' || r === '/index.html') return true;
-    if (r === '/feeds.html' || r.endsWith('/feeds.html')) return true;
-    if (r === '/pomo' || r.startsWith('/pomo/')) return true;
-    if (r === '/solitaire' || r.startsWith('/solitaire/')) return true;
-    return false;
+    // Le lecteur natif existe sur toutes les pages publiques. Les exceptions
+    // sont la maintenance, les pages techniques et l'iframe des mini-apps.
+    return r !== '/offline.html' && r !== '/tuner-embed.html' && r !== '/easter-egg.html' && !r.startsWith('/dev/');
   }
 
   // A page already displayed inside the shell must delegate its own internal

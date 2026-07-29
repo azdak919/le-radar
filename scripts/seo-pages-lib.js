@@ -23,13 +23,25 @@ const TAGLINE_EN = 'Québec student newspapers and campus radio, all in one plac
 
 /** Marque publique et signature institutionnelle du pied de page.
  *  La signature reste en français sur le volet anglais : c'est un nom propre. */
-const BRAND_NAME = 'LE-RADAR';
+const BRAND_NAME = 'LE-RADAR.ca';
 const BRAND_SIGNATURE = 'Le Réseau Académique de Découverte et d’Agrégation de Ressources';
 
-const REPO_URL = 'https://github.com/azdak919/le-radar';
 const LICENSE_URL = 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.html';
 const COFFEE_URL = 'https://www.buymeacoffee.com/azdak';
 const CONTACT_MAIL = 'azdak-qc@proton.me';
+const CONTACT_URL = `mailto:${CONTACT_MAIL}`;
+
+/** Le tuner natif a une seule source : le balisage de l'accueil.
+ * Les pages SEO le recopient à la génération, jamais dans un iframe. */
+function renderNativeTuner() {
+  const { readFileSync } = require('node:fs');
+  const { join } = require('node:path');
+  const source = readFileSync(join(__dirname, '..', 'index.html'), 'utf8');
+  const start = source.indexOf('    <div id="tuner" class="tuner">');
+  const end = source.indexOf('\n\n    <!-- Repli mobile', start);
+  if (start < 0 || end < 0) throw new Error('Fragment du tuner natif introuvable dans index.html');
+  return source.slice(start, end);
+}
 
 // ═══════════════════════════════════════════════════════════════════════════
 //  Utilitaires
@@ -85,16 +97,19 @@ function normKey(name = '') {
 const INSTITUTIONS = [
   { slug: 'universite-de-montreal', name: 'Université de Montréal', short: 'UdeM' },
   { slug: 'universite-du-quebec-a-montreal', name: 'Université du Québec à Montréal', short: 'UQAM', aliases: ['UQAM'] },
-  { slug: 'mcgill-university', name: 'McGill University', short: 'McGill', aliases: ['Université McGill'] },
-  { slug: 'concordia-university', name: 'Concordia University', short: 'Concordia' },
+  // `name` est la forme anglaise officielle. `nameFr` est uniquement une
+  // adaptation de l'interface française : les pages anglaises ne francisent
+  // jamais un nom d'établissement déjà français.
+  { slug: 'mcgill-university', name: 'McGill University', nameFr: 'Université McGill', short: 'McGill', aliases: ['Université McGill'] },
+  { slug: 'concordia-university', name: 'Concordia University', nameFr: 'Université Concordia', short: 'Concordia' },
   { slug: 'universite-du-quebec-a-trois-rivieres', name: 'Université du Québec à Trois-Rivières', short: 'UQTR' },
   { slug: 'universite-laval', name: 'Université Laval', short: 'ULaval' },
   { slug: 'universite-de-sherbrooke', name: 'Université de Sherbrooke', short: 'UdeS' },
   { slug: 'cegep-du-vieux-montreal', name: 'Cégep du Vieux Montréal', short: 'Cégep Vieux-Montréal' },
   { slug: 'cegep-de-jonquiere', name: 'Cégep de Jonquière', short: 'Cégep de Jonquière' },
   { slug: 'polytechnique-montreal', name: 'Polytechnique Montréal', short: 'Polytechnique' },
-  { slug: 'bishops-university', name: "Bishop's University", short: "Bishop's" },
-  { slug: 'dawson-college', name: 'Dawson College', short: 'Dawson' },
+  { slug: 'bishops-university', name: "Bishop's University", nameFr: "Université Bishop's", short: "Bishop's" },
+  { slug: 'dawson-college', name: 'Dawson College', nameFr: 'Collège Dawson', short: 'Dawson' },
 ];
 
 const INSTITUTION_BY_KEY = new Map();
@@ -116,6 +131,18 @@ function canonicalInstitution(rawName = '') {
   return { slug: slugify(cleaned), name: cleaned, short: cleaned };
 }
 
+/** Nom adapté à la langue de la page, sans modifier les données sources.
+ * Une page EN garde toujours la forme officielle anglaise ; en FR, seuls les
+ * établissements dont le nom source est anglais reçoivent leur forme usuelle
+ * française. */
+function localizedInstitutionName(institution, lang = 'fr') {
+  const entry = typeof institution === 'object' && institution
+    ? institution
+    : canonicalInstitution(institution);
+  if (!entry) return '';
+  return lang === 'fr' ? (entry.nameFr || entry.name) : entry.name;
+}
+
 // ═══════════════════════════════════════════════════════════════════════════
 //  Chaînes bilingues
 // ═══════════════════════════════════════════════════════════════════════════
@@ -132,7 +159,7 @@ const T = {
     radios: 'Radios étudiantes',
     newspapers: 'Journaux étudiants',
     institutions: 'Établissements',
-    listenLive: 'Écouter en direct sur LE-RADAR.ca',
+    browseSchedules: 'Choisir une autre radio',
     officialSite: 'Site officiel',
     frequency: 'Fréquence',
     institution: 'Établissement',
@@ -149,6 +176,9 @@ const T = {
     noHeadlines: 'Aucun article récent au moment de la dernière mise à jour.',
     schedule: 'À l’antenne cette semaine',
     scheduleNote: 'Grille colligée automatiquement à partir du site de la station ; elle peut varier.',
+    schedulesNote: 'Grilles colligées automatiquement à partir des sites des stations ; elles peuvent varier.',
+    scheduleWeek: 'Semaine du',
+    scheduleUpdated: 'Dernière collecte réussie le',
     overnight: 'de nuit',
     noSlots: 'Aucune émission annoncée.',
     schedules: 'Les horaires des radios étudiantes',
@@ -179,7 +209,8 @@ const T = {
     creditYear: 'en 2026',
     creditHeart: 'Ouvrir l’easter egg',
     creditCoffee: 'Offrir un café — Buy me a coffee',
-    creditMail: 'Écrire à Azdak',
+    contactLabel: 'Nous joindre',
+    contactAria: 'Nous joindre par courriel',
     legalNote: 'Code libre utilisé conformément aux licences applicables; contenus et médias crédités à leurs auteurs respectifs.',
     botNote: 'Agrégateur automatisé de contenus.',
     noRadio: 'Aucune radio de campus recensée pour cet établissement.',
@@ -197,7 +228,7 @@ const T = {
     radios: 'Campus radio stations',
     newspapers: 'Student newspapers',
     institutions: 'Institutions',
-    listenLive: 'Listen live on LE-RADAR.ca',
+    browseSchedules: 'Choose another station',
     officialSite: 'Official website',
     frequency: 'Frequency',
     institution: 'Institution',
@@ -214,6 +245,9 @@ const T = {
     noHeadlines: 'No recent articles as of the last update.',
     schedule: 'On air this week',
     scheduleNote: 'Schedule collected automatically from the station’s website; it may change.',
+    schedulesNote: 'Schedules collected automatically from each station’s website; they may change.',
+    scheduleWeek: 'Week of',
+    scheduleUpdated: 'Last successful collection',
     overnight: 'overnight',
     noSlots: 'No scheduled shows.',
     schedules: 'Campus radio schedules',
@@ -244,7 +278,8 @@ const T = {
     creditYear: 'in 2026',
     creditHeart: 'Open the easter egg',
     creditCoffee: 'Buy me a coffee',
-    creditMail: 'Email Azdak',
+    contactLabel: 'Contact us',
+    contactAria: 'Contact us by email',
     legalNote: 'Open-source code used in accordance with the applicable licences; content and media credited to their respective authors.',
     botNote: 'Automated content aggregator.',
     noRadio: 'No campus radio station listed for this institution.',
@@ -295,7 +330,8 @@ function frAt(name = '') {
 
 const CSP = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' "
   + 'https://fonts.googleapis.com; font-src \'self\' https://fonts.gstatic.com; '
-  + "img-src 'self' data: https:; connect-src 'none'; frame-src 'none'; "
+  + "img-src 'self' data: https:; connect-src 'self' https:; "
+  + "frame-src 'self' https://chyz.ca https://cism893.ca https://ckut.ca https://www.cjlo.com https://www.cfak.ca https://www.choq.ca; "
   + "object-src 'none'; base-uri 'self'; form-action 'none'";
 
 /**
@@ -344,7 +380,6 @@ function renderSiteFooter({
     const alt = lang === 'fr' ? 'en-CA' : 'fr-CA';
     links.push(`<a href="${href(altPath)}" hreflang="${alt}">${escapeHtml(t.otherLang)}</a>`);
   }
-  links.push(`<a href="${REPO_URL}" target="_blank" rel="noopener noreferrer">${escapeHtml(t.sourceCode)}</a>`);
 
   const sep = `<span class="site-foot__sep" aria-hidden="true">·</span>`;
   const nav = links.join(`\n${p}    ${sep}\n${p}    `);
@@ -355,7 +390,7 @@ function renderSiteFooter({
 
   return `<footer class="site-foot">
 ${p}  <div class="site-foot__brand">
-${p}    <p class="site-foot__wordmark notranslate" translate="no">${BRAND_NAME}</p>
+${p}    <p class="site-foot__wordmark notranslate" translate="no"><img class="site-foot__logo" src="${up}assets/icon.svg" width="24" height="24" alt="" aria-hidden="true">${BRAND_NAME}</p>
 ${p}    <p class="site-foot__signature" lang="fr">${escapeHtml(BRAND_SIGNATURE)}</p>
 ${p}  </div>
 ${p}  <p>${escapeHtml(t.unofficial)}</p>
@@ -368,8 +403,8 @@ ${p}    <p class="site-foot__author">
 ${p}      ${escapeHtml(t.creditMade)} <a href="${href('easter-egg.html')}" class="site-foot__heart" aria-label="${escapeHtml(t.creditHeart)}">♡</a>
 ${p}      ${escapeHtml(t.creditBy)} <a href="${COFFEE_URL}" class="site-foot__author-link" target="_blank" rel="noopener noreferrer" title="${escapeHtml(t.creditCoffee)}">Azdak</a>
 ${p}      ${escapeHtml(t.creditYear)}
-${p}      <a href="mailto:${CONTACT_MAIL}" class="site-foot__author-mail" title="${CONTACT_MAIL}" aria-label="${escapeHtml(t.creditMail)} — ${CONTACT_MAIL}">✉️</a>
 ${p}    </p>
+${p}    <p class="site-foot__contact"><a href="${CONTACT_URL}" data-contact-channel="email" aria-label="${escapeHtml(t.contactAria)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>${escapeHtml(t.contactLabel)}</a></p>
 ${p}    <p class="site-foot__legal">${escapeHtml(t.legalNote)}</p>
 ${p}    <p class="site-foot__bot"><span class="site-foot__bot-ico" aria-hidden="true">🤖</span> ${escapeHtml(t.botNote)}</p>
 ${p}  </div>${meta}
@@ -436,10 +471,21 @@ function renderPage({
     <link rel="stylesheet" href="${up}style.css" />
     <link rel="stylesheet" href="${up}seo-pages.css" />
     <script src="${up}seo-page-theme.js"></script>
+    <script src="${up}nav-shell.js" defer></script>
+    <script src="${up}cast.js" defer></script>
+    <script src="${up}mobile-playback.js" defer></script>
+    <script src="${up}player-sync.js" defer></script>
+    <script src="${up}app.js" defer></script>
 ${jsonLd ? `    <script type="application/ld+json">${jsonLd}</script>\n` : ''}  </head>
   <body>
     <header class="masthead">
       <div class="masthead-inner">
+        <div class="seo-masthead-actions">
+          <button id="theme-toggle" class="masthead-icon theme-toggle" type="button" aria-label="Changer de thème" title="Mode clair / sombre">
+            <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+            <svg class="ico-moon hidden" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7.21 7.21 0 0 0 21 12.79z"/></svg>
+          </button>
+        </div>
         <div class="masthead-brand">
           <a href="${up}" class="wordmark">
             <span class="wordmark-mark"><img class="wordmark-logo" src="${up}assets/icon.svg" width="48" height="48" alt="" aria-hidden="true"><span class="wordmark-brand notranslate" translate="no">LE-RADAR.ca</span></span>
@@ -448,6 +494,8 @@ ${jsonLd ? `    <script type="application/ld+json">${jsonLd}</script>\n` : ''}  
         </div>
       </div>
     </header>
+
+${renderNativeTuner()}
 
     <main class="wire seo-wire">
       ${crumbHtml}
@@ -518,7 +566,24 @@ function slotMinutes(value) {
  * `début – fin` est affichée parce qu'elle est déjà dans la donnée, et qu'une
  * heure de début seule ne dit pas si l'émission dure 30 minutes ou 6 heures.
  */
-function scheduleTable(grid, t) {
+function scheduleContext(checkedAt, verifiedWeekOf, t) {
+  const checked = checkedAt ? new Date(checkedAt) : null;
+  const week = verifiedWeekOf ? new Date(`${verifiedWeekOf}T12:00:00Z`) : null;
+  const format = (date, timeZone = 'UTC') => new Intl.DateTimeFormat(t.lang, {
+    timeZone, day: 'numeric', month: 'long', year: 'numeric',
+  }).format(date);
+  const items = [];
+  if (week && !Number.isNaN(week.getTime())) {
+    items.push(`<span>${escapeHtml(t.scheduleWeek)} ${escapeHtml(format(week))}</span>`);
+  }
+  if (checked && !Number.isNaN(checked.getTime())) {
+    items.push(`<span>${escapeHtml(t.scheduleUpdated)} ${escapeHtml(format(checked, 'America/Toronto'))}</span>`);
+  }
+  if (!items.length) return '';
+  return `      <p class="seo-schedule-meta">${items.join('<span aria-hidden="true">·</span>')}</p>\n`;
+}
+
+function scheduleTable(grid, t, { checkedAt = null, verifiedWeekOf = null } = {}) {
   if (!grid || !grid.length) return '';
   const byDay = new Map();
   for (const slot of grid) {
@@ -568,6 +633,7 @@ function scheduleTable(grid, t) {
   });
 
   return `      <section class="seo-section" id="horaire">\n        <h2>${escapeHtml(t.schedule)}</h2>\n`
+    + scheduleContext(checkedAt, verifiedWeekOf, t)
     + `      <div class="seo-schedule-scroll">\n      <div class="seo-schedule">\n${blocks.join('\n')}\n      </div>\n      </div>\n`
     + `      <p class="seo-note">${escapeHtml(t.scheduleNote)}</p>\n      </section>\n`;
 }
@@ -580,6 +646,7 @@ module.exports = {
   normKey,
   isoDay,
   canonicalInstitution,
+  localizedInstitutionName,
   INSTITUTIONS,
   fill,
   frOf,
@@ -587,9 +654,11 @@ module.exports = {
   frAt,
   renderPage,
   renderSiteFooter,
+  renderNativeTuner,
   factsList,
   headlineList,
   cardGrid,
   slotMinutes,
   scheduleTable,
+  scheduleContext,
 };

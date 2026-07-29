@@ -20,6 +20,7 @@
     "detect:seasons:force": "node scripts/detect-photo-seasons.js --force --update --sync",
     "agents:ledger": "node scripts/agents-ledger.mjs",
     "agents:propose": "node scripts/agents-ledger.mjs --propose",
+    "agents:review-session": "node scripts/agents-ledger.mjs --review-session",
     "agents:record-sold": "node scripts/agents-ledger.mjs --record-sold",
     "agents:reset-session": "node scripts/agents-ledger.mjs --reset-session",
     "agents:harvest": "node scripts/agents-harvest.mjs",

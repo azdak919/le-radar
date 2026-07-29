@@ -12,7 +12,7 @@
  *  - à partir de la 2ᵉ session (≥ 6 h d’écart) + un signal d’engagement
  *    (écoute radio, scroll fil, clic article, ou ~40 s sur la page)
  *  - un seul bandeau par chargement de page
- *  - snooze 21 j ; « Ne plus demander » permanent par type
+ *  - snooze 7 j ; « Ne plus demander » permanent par type
  *  - rien si déjà installé (standalone / minimal-ui / iOS standalone)
  *  - pas de mini-barre Chrome immédiate (beforeinstallprompt preventDefault)
  *  - file d’attente douce : install d’abord, puis home/new-tab plus tard
@@ -32,7 +32,7 @@
   const MIN_VISITS = 2;
   const MIN_DWELL_MS = 40 * 1000;
   const SHOW_DELAY_MS = 2400;
-  const SNOOZE_MS = 21 * 24 * 60 * 60 * 1000;
+  const SNOOZE_MS = 7 * 24 * 60 * 60 * 1000;
   const FIRST_PAINT_GRACE_MS = 12 * 1000;
   /** Après un install accepté / « c’est fait », attendre avant home. */
   const POST_INSTALL_COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
@@ -305,7 +305,7 @@
         : [
           'Touchez le menu <strong>⋮</strong> (ou l’icône d’install dans la barre d’adresse).',
           'Choisissez <strong>Installer l’application</strong> ou <strong>Ajouter à l’écran d’accueil</strong>.',
-          'Validez — coque hors-ligne + icône, sans magasin d’apps.',
+          'Validez — une icône et un accès hors ligne, sans magasin d’apps.',
         ];
     }
 
@@ -506,6 +506,13 @@
       snoozeKind(kind);
       closeCard();
     });
+    root.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        snoozeKind(kind);
+        closeCard();
+      }
+    });
     root.querySelector('[data-act="later"]')?.addEventListener('click', () => {
       snoozeKind(kind);
       closeCard();
@@ -536,7 +543,7 @@
         title: lang === 'en' ? 'Install LE-RADAR.ca' : 'Installer LE-RADAR.ca',
         body: lang === 'en'
           ? 'Student radio & news in one tap — no app store, works offline for the shell.'
-          : 'Radios étudiantes et fil d’actus en un tap — sans magasin d’apps, coque hors-ligne.',
+          : 'Radios étudiantes et fil d’actus en un tap — sans magasin d’apps, accès hors ligne inclus.',
         primaryLabel: lang === 'en' ? 'Install' : 'Installer',
         onPrimary: async () => {
           const ev = deferredInstall;
@@ -585,11 +592,11 @@
       kind: 'home',
       icon: '🏠',
       title: lang === 'en'
-        ? 'Homepage & new tab?'
-        : 'Accueil & nouvel onglet ?',
+        ? 'Open LE-RADAR.ca when you start?'
+        : 'Ouvrir LE-RADAR.ca au démarrage ?',
       body: lang === 'en'
-        ? `Browsers block sites from changing this automatically (for your safety). ${label ? `In ${label}:` : 'In your browser:'}`
-        : `Les navigateurs bloquent ce réglage automatique (sécurité). ${label ? `Sous ${label} :` : 'Dans votre navigateur :'}`,
+        ? `For your security, browsers do not let sites change this setting automatically. ${label ? `In ${label}:` : 'In your browser:'}`
+        : `Pour votre sécurité, les navigateurs ne laissent pas un site modifier ce réglage automatiquement. ${label ? `Sous ${label} :` : 'Dans votre navigateur :'}`,
       steps: homeAndNewTabSteps(plat),
       primaryLabel: lang === 'en' ? 'Done' : 'C’est fait',
       onPrimary: () => {

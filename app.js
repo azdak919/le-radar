@@ -249,6 +249,10 @@ function openListenWindow(radio) {
 
 // ─── DOM refs ────────────────────────────────────────────────────────────────
 const IS_TUNER_EMBED = document.documentElement.dataset.embed === 'tuner';
+// app.js est aussi chargé depuis les fiches SEO imbriquées : les données
+// restent ancrées à la racine du site, jamais au dossier courant de la fiche.
+const APP_BASE_URL = new URL('.', document.currentScript?.src || location.href);
+const appAsset = (path) => new URL(path, APP_BASE_URL).href;
 const TUNER          = document.getElementById('tuner');
 const TUNER_SELECT   = document.getElementById('tuner-select');
 const TUNER_PREV     = document.getElementById('tuner-prev');
@@ -535,14 +539,14 @@ async function init() {
   bindNewsSearch();
 
   try {
-    const brandData = await fetch('./brand-colors.json').then((r) => r.json());
+    const brandData = await fetch(appAsset('brand-colors.json')).then((r) => r.json());
     if (brandData?.institutions) brandColors = brandData;
   } catch (e) {
     console.warn('Failed to load brand-colors.json', e);
   }
 
   try {
-    const sourcesRegistry = await fetch('./news-sources.json')
+    const sourcesRegistry = await fetch(appAsset('news-sources.json'))
       .then((r) => r.json())
       .catch(() => ({ active: [] }));
     newsSourcesByName = Object.fromEntries(
@@ -553,9 +557,9 @@ async function init() {
   }
 
   const [radiosData, nowPlayingData, schedulesData] = await Promise.allSettled([
-    fetch('./radios.json').then((r) => r.json()),
-    fetch('./radio-nowplaying.json').then((r) => r.json()),
-    fetch('./radio-schedules.json').then((r) => r.json()),
+    fetch(appAsset('radios.json')).then((r) => r.json()),
+    fetch(appAsset('radio-nowplaying.json')).then((r) => r.json()),
+    fetch(appAsset('radio-schedules.json')).then((r) => r.json()),
     ...(IS_TUNER_EMBED ? [] : [loadNews()]),
   ]);
 
@@ -2890,7 +2894,7 @@ function startNowAirTick() {
 async function refreshNowPlayingCache() {
   try {
     radioNowPlaying = decodeNowPlayingPayload(
-      await fetch('./radio-nowplaying.json', { cache: 'no-store' }).then((r) => r.json()),
+      await fetch(appAsset('radio-nowplaying.json'), { cache: 'no-store' }).then((r) => r.json()),
     );
   } catch {
     /* ignore */
@@ -4527,7 +4531,7 @@ async function loadNews() {
   if (!NEWS_LIST) return;
   NEWS_LIST.innerHTML = newsSkeleton(6);
   try {
-    const res = await fetch('./news.json', { cache: 'no-cache' });
+    const res = await fetch(appAsset('news.json'), { cache: 'no-cache' });
     const data = await res.json();
     news = Array.isArray(data) ? data : (data.items || []);
     news.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));

@@ -15,6 +15,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -35,6 +36,7 @@ const EFFORT_RANK = {
 const DEFAULT_SESSION = {
   maxDebtPerChatSession: 1,
   maxDebtPerCalendarDay: 2,
+  targetDebtPerMaintenanceSession: 1,
   debtsSoldToday: 0,
   debtsSoldThisSession: 0,
   lastDebtId: null,
@@ -152,6 +154,35 @@ function quotaBlocked(session) {
   return null;
 }
 
+function hasWorkingTreeChanges() {
+  try {
+    return execFileSync('git', ['status', '--porcelain'], { cwd: ROOT, encoding: 'utf8' }).trim().length > 0;
+  } catch {
+    return false;
+  }
+}
+
+function reviewSession(item, session) {
+  const target = session.targetDebtPerMaintenanceSession || 1;
+  if (session.debtsSoldThisSession >= target) {
+    console.log(`Session ledger complète : ${session.debtsSoldThisSession}/${target} dette soldée. STOP.`);
+    return;
+  }
+  if (hasWorkingTreeChanges()) {
+    console.log('Pas encore le moment : WIP détecté. Finir, vérifier et committer le ticket avant une dette ledger.');
+    return;
+  }
+  if (quotaBlocked(session)) {
+    console.log('Pas de dette additionnelle : quota atteint.');
+    return;
+  }
+  if (!item) {
+    console.log('Aucune dette mûre : ne rien inventer pour remplir le quota de session.');
+    return;
+  }
+  console.log(`Bon moment pour une dette : ticket terminé et worktree propre. Candidate : ${item.id} (${item.effort}) — ${item.debt}`);
+}
+
 function printPropose(item, session) {
   const block = quotaBlocked(session);
   if (block) {
@@ -236,6 +267,7 @@ function main() {
   npm run agents:ledger
   npm run agents:propose
   node scripts/agents-ledger.mjs --record-sold D5
+  node scripts/agents-ledger.mjs --review-session
   node scripts/agents-ledger.mjs --reset-session
   node scripts/agents-ledger.mjs --json
 `);
@@ -286,6 +318,11 @@ function main() {
   if (args.has('--propose')) {
     printTable(open);
     printPropose(propose(all), session);
+    return;
+  }
+
+  if (args.has('--review-session')) {
+    reviewSession(propose(all), session);
     return;
   }
 

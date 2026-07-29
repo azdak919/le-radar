@@ -83,6 +83,33 @@ test('maintenance : aperçu local, retour en ligne et easter egg persistant', as
   expect(pageErrors).toEqual([]);
 });
 
+test('maintenance : le mode public ne redirige pas tant qu’il est actif', async ({ page }) => {
+  await page.goto('/offline.html?maintenance=1', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#game')).toBeVisible();
+  await expect(page.locator('#reconnect')).toContainText('Maintenance active');
+  await page.waitForTimeout(1400);
+  await expect(page).toHaveURL(/offline\.html\?maintenance=1/);
+});
+
+test('SEO : lecteur natif et bascule de thème', async ({ page }) => {
+  await page.goto('/radios/chyz/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#tuner')).toBeVisible();
+  await expect(page.locator('#radar-embed')).toHaveCount(0);
+  const toggle = page.locator('#theme-toggle');
+  await expect(toggle).toBeVisible();
+  const before = await page.locator('html').getAttribute('data-theme');
+  await toggle.click();
+  await expect(page.locator('html')).not.toHaveAttribute('data-theme', before || '');
+  await expect(page.locator('#tuner-select')).toContainText('CHYZ');
+});
+
+test('RSS : lecteur natif, sans iframe', async ({ page }) => {
+  await page.goto('/feeds.html', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#tuner')).toBeVisible();
+  await expect(page.locator('#radar-embed')).toHaveCount(0);
+  await expect(page.locator('#tuner-select')).toContainText('CHYZ');
+});
+
 test.describe('maintenance hors ligne', () => {
   test.use({ serviceWorkers: 'allow' });
 

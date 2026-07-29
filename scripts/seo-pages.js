@@ -13,7 +13,7 @@
  */
 
 const {
-  T, escapeHtml, slugify, normKey, canonicalInstitution, isoDay,
+  T, escapeHtml, slugify, normKey, canonicalInstitution, localizedInstitutionName, isoDay,
   fill, frOf, frAt, plural, renderPage, factsList, headlineList, cardGrid, scheduleTable,
 } = require('./seo-pages-lib');
 
@@ -126,8 +126,11 @@ function buildModel({ radios, sources, news, institutions }) {
 function radioPage(radio, lang, ctx) {
   const t = T[lang];
   const name = radio.fullName || radio.name;
-  const instName = radio.group ? radio.group.name : radio.institution;
-  const h1 = `${name} — ${fill(t.radioOf, { name: instName, of: frOf(instName) })}`;
+  const instName = localizedInstitutionName(radio.group || radio.institution, lang);
+  // Le nom et la fréquence restent le repère principal, suivis du slogan sur
+  // la même ligne : l'identité de la station est visible sans sacrifier son
+  // accroche éditoriale.
+  const h1 = radio.slogan ? `${name} — ${radio.slogan}` : name;
   const title = lang === 'fr'
     ? `${name} — radio étudiante ${frOf(instName)} | LE-RADAR.ca`
     : `${name} — ${instName} campus radio | LE-RADAR.ca`;
@@ -143,7 +146,6 @@ function radioPage(radio, lang, ctx) {
 
   let body = '';
   if (radio.description) body += `      <p class="seo-lead">${escapeHtml(radio.description)}</p>\n`;
-  else if (radio.slogan) body += `      <p class="seo-lead">${escapeHtml(radio.slogan)}</p>\n`;
 
   body += factsList([
     { label: t.frequency, value: radio.frequency },
@@ -153,8 +155,11 @@ function radioPage(radio, lang, ctx) {
     { label: t.officialSite, value: radio.website, href: radio.website, external: true },
   ]);
 
-  body += `      <p class="seo-cta"><a href="${up}">${escapeHtml(t.listenLive)}</a></p>\n`;
-  body += scheduleTable(ctx.schedules?.[radio.id]?.grid, t);
+  body += `      <p class="seo-cta"><a href="${up}${ROUTES.schedules[lang]}">${escapeHtml(t.browseSchedules)}</a></p>\n`;
+  body += scheduleTable(ctx.schedules?.[radio.id]?.grid, t, {
+    checkedAt: ctx.schedules?.[radio.id]?.checkedAt,
+    verifiedWeekOf: ctx.schedules?.[radio.id]?.verifiedWeekOf,
+  });
 
   const jsonLd = JSON.stringify({
     '@context': 'https://schema.org',
@@ -191,7 +196,7 @@ function radioPage(radio, lang, ctx) {
 
 function paperPage(paper, lang, ctx) {
   const t = T[lang];
-  const instName = paper.group ? paper.group.name : paper.institution;
+  const instName = localizedInstitutionName(paper.group || paper.institution, lang);
   const h1 = `${paper.name} — ${fill(t.paperOf, { name: instName, of: frOf(instName) })}`;
   const title = lang === 'fr'
     ? `${paper.name} — journal étudiant ${frOf(instName)} | LE-RADAR.ca`
@@ -264,9 +269,10 @@ function paperPage(paper, lang, ctx) {
 
 function institutionPage(group, lang, ctx) {
   const t = T[lang];
-  const h1 = fill(t.mediaOf, { name: group.name, of: frOf(group.name) });
+  const instName = localizedInstitutionName(group, lang);
+  const h1 = fill(t.mediaOf, { name: instName, of: frOf(instName) });
   const title = `${h1} | LE-RADAR.ca`;
-  const description = fill(t.mediaOfDesc, { name: group.name, of: frOf(group.name) });
+  const description = fill(t.mediaOfDesc, { name: instName, of: frOf(instName) });
 
   const path = ROUTES.institution[lang](group.slug);
   const altPath = ROUTES.institution[lang === 'fr' ? 'en' : 'fr'](group.slug);
@@ -278,8 +284,8 @@ function institutionPage(group, lang, ctx) {
 
   let body = `      <p class="seo-lead">${escapeHtml(
     lang === 'fr'
-      ? `LE-RADAR.ca recense ${counts} ${frAt(group.name)}.`
-      : `LE-RADAR.ca lists ${counts} at ${group.name}.`,
+      ? `LE-RADAR.ca recense ${counts} ${frAt(instName)}.`
+      : `LE-RADAR.ca lists ${counts} at ${instName}.`,
   )}</p>\n`;
 
   body += factsList([
@@ -311,7 +317,7 @@ function institutionPage(group, lang, ctx) {
   const jsonLd = JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'CollegeOrUniversity',
-    name: group.name,
+    name: instName,
     ...(group.official?.website ? { url: group.official.website } : {}),
     address: {
       '@type': 'PostalAddress',
@@ -333,7 +339,7 @@ function institutionPage(group, lang, ctx) {
       crumbs: [
         { label: t.home, href: up },
         { label: t.directory, href: `${up}${ROUTES.directory[lang]}` },
-        { label: group.name },
+        { label: instName },
       ],
       bodyHtml: body, jsonLd, siteBase: ctx.siteBase, updated: institutionUpdated(group, ctx),
     }),
@@ -359,9 +365,9 @@ function directoryPage(model, lang, ctx) {
   body += `      <section class="seo-section">\n        <h2>${escapeHtml(t.institutions)}</h2>\n`;
   body += cardGrid(model.groups
     .slice()
-    .sort((a, b) => a.name.localeCompare(b.name, 'fr'))
+    .sort((a, b) => localizedInstitutionName(a, lang).localeCompare(localizedInstitutionName(b, lang), lang))
     .map((g) => ({
-      name: g.name,
+      name: localizedInstitutionName(g, lang),
       meta: lang === 'fr'
         ? `${plural(g.papers.length, 'journal', 'journaux')} · ${plural(g.radios.length, 'radio', 'radios')}`
         : `${plural(g.papers.length, 'newspaper', 'newspapers')} · ${plural(g.radios.length, 'radio', 'radios')}`,
@@ -375,7 +381,7 @@ function directoryPage(model, lang, ctx) {
     .sort((a, b) => a.name.localeCompare(b.name, 'fr'))
     .map((p) => ({
       name: p.name,
-      meta: [p.group ? p.group.short : p.institution, langLabel(p.lang, t)].filter(Boolean).join(' · '),
+      meta: [p.group ? p.group.short : localizedInstitutionName(p.institution, lang), langLabel(p.lang, t)].filter(Boolean).join(' · '),
       href: `${up}${ROUTES.paper[lang](p.slug)}`,
     })));
   body += '      </section>\n';
@@ -386,7 +392,7 @@ function directoryPage(model, lang, ctx) {
     .sort((a, b) => (a.fullName || a.name).localeCompare(b.fullName || b.name, 'fr'))
     .map((r) => ({
       name: r.fullName || r.name,
-      meta: [r.group ? r.group.short : r.institution, r.city].filter(Boolean).join(' · '),
+      meta: [r.group ? r.group.short : localizedInstitutionName(r.institution, lang), r.city].filter(Boolean).join(' · '),
       href: `${up}${ROUTES.radio[lang](r.slug)}`,
     })));
   body += '      </section>\n';
@@ -469,7 +475,7 @@ function schedulesHubPage(model, lang, ctx) {
       return {
         name: radio.fullName || radio.name,
         meta: [
-          radio.group ? radio.group.short : radio.institution,
+          radio.group ? radio.group.short : localizedInstitutionName(radio.institution, lang),
           slots,
           collected ? `${t.collectedOn} ${collected}` : '',
         ].filter(Boolean).join(' · '),
@@ -478,7 +484,7 @@ function schedulesHubPage(model, lang, ctx) {
     }));
   }
 
-  body += `      <p class="seo-note">${escapeHtml(t.scheduleNote)}</p>\n`;
+  body += `      <p class="seo-note">${escapeHtml(t.schedulesNote)}</p>\n`;
 
   const jsonLd = JSON.stringify({
     '@context': 'https://schema.org',
@@ -535,9 +541,9 @@ function englishHomePage(model, ctx) {
   body += `      <section class="seo-section">\n        <h2>${escapeHtml(t.institutions)}</h2>\n`;
   body += cardGrid(model.groups
     .slice()
-    .sort((a, b) => a.name.localeCompare(b.name, 'fr'))
+    .sort((a, b) => localizedInstitutionName(a, 'en').localeCompare(localizedInstitutionName(b, 'en'), 'en'))
     .map((g) => ({
-      name: g.name,
+      name: localizedInstitutionName(g, 'en'),
       meta: `${plural(g.papers.length, 'newspaper', 'newspapers')} · ${plural(g.radios.length, 'radio', 'radios')}`,
       href: `${up}${ROUTES.institution.en(g.slug)}`,
     })));
