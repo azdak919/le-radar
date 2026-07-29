@@ -470,7 +470,12 @@ function main() {
   const radios = loadRadios();
   const archiveConfig = readJson(ARCHIVE_CONFIG_PATH, { mode: 'off', partial: {} });
   const historicalCatalog = readJson(ARCHIVE_PATH, { records: [] });
-  const archive = buildHistoricalArchivePages({ catalog: historicalCatalog, config: archiveConfig, siteBase: SITE_BASE });
+  const archive = buildHistoricalArchivePages({
+    catalog: historicalCatalog,
+    config: archiveConfig,
+    siteBase: SITE_BASE,
+    sources,
+  });
   const prerendered = items.slice(0, PRERENDER_MAX);
 
   console.log(`${BRAND} — artefacts de référencement`);

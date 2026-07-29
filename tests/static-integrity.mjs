@@ -437,6 +437,33 @@ assert.deepEqual(
   `radios/ckut/index.html : ordre des jours attendu lundi→dimanche, obtenu ${ckutDays.join(', ')}`
 );
 
+// Annuaire /medias/ : compartiments stables, fraîcheur auto, liens utiles.
+const mediasHub = join(root, 'medias/index.html');
+if (existsSync(mediasHub)) {
+  const mediasHtml = readFileSync(mediasHub, 'utf8');
+  assert(mediasHtml.includes('class="seo-toc"'), 'medias : sommaire interne requis');
+  assert(mediasHtml.includes('id="journaux"'), 'medias : ancre journaux requise');
+  assert(mediasHtml.includes('id="radios"'), 'medias : ancre radios requise');
+  assert(mediasHtml.includes('id="etablissements"'), 'medias : ancre établissements requise');
+  assert(mediasHtml.includes('id="archives"'), 'medias : ancre archives requise');
+  assert(mediasHtml.includes('>Français</h3>'), 'medias : sous-section journaux français requise');
+  assert(mediasHtml.includes('>Anglais</h3>'), 'medias : sous-section journaux anglais requise');
+  assert(mediasHtml.includes('>Universités</h3>'), 'medias : sous-section universités requise');
+  assert(mediasHtml.includes('>Cégeps et collèges</h3>'), 'medias : sous-section cégeps requise');
+  assert(mediasHtml.includes('Dernier article : '), 'medias : date du dernier article requise');
+  assert(mediasHtml.includes('href="../horaires/"'), 'medias : lien vers les horaires requis');
+  assert(mediasHtml.includes('href="../archives/"'), 'medias : lien vers les archives requis');
+  // Fraîcheur : Le Collectif ou The Tribune avant un titre alphabétique type Exil.
+  const frBlock = mediasHtml.match(/id="journaux"[\s\S]*?<h3>Français<\/h3>([\s\S]*?)(?:<h3>Anglais<\/h3>|<\/section>)/);
+  assert(frBlock, 'medias : bloc journaux français requis');
+  if (frBlock[1].includes('>Le Collectif</span>') && frBlock[1].includes('>Exil</span>')) {
+    assert(
+      frBlock[1].indexOf('>Le Collectif</span>') < frBlock[1].indexOf('>Exil</span>'),
+      'medias : journaux FR triés par fraîcheur (Collectif avant Exil)',
+    );
+  }
+}
+
 // Catalogue historique : sitemap séparé, canonique local et aucune
 // réattribution de la paternité des articles externes à LE-RADAR.ca.
 const archiveSitemap = readFileSync(join(root, 'sitemap-archives.xml'), 'utf8');
@@ -455,6 +482,27 @@ if (existsSync(archiveHub)) {
   assert(!archiveHtml.includes('Catalogue expérimental'), 'archives : libellé interne superflu interdit');
   assert(!archiveHtml.includes('article vérifié'), 'archives : compteurs techniques superflus interdits');
   assert(!archiveHtml.includes('Consulter les autres archives par publication'), 'archives : catégories internes superflues interdites');
+  assert(archiveHtml.includes('aria-current="page">Archives</span>'), 'archives : fil d’Ariane « Archives » (sans « historiques ») requis');
+  assert(!archiveHtml.includes('Archives historiques'), 'archives : libellé « Archives historiques » superflu interdit');
+  assert(archiveHtml.includes('Dernier article : '), 'archives : date du dernier article par publication requise');
+  // L’annuaire suit la fraîcheur éditoriale, pas l’ordre alphabétique.
+  const pubBlock = archiveHtml.match(/<ul class="seo-archive-sources">([\s\S]*?)<\/ul>/);
+  assert(pubBlock, 'archives : liste des publications requise');
+  if (pubBlock[1].includes('>Exil</a>') && pubBlock[1].includes('>The Tribune</a>')) {
+    assert(
+      pubBlock[1].indexOf('>The Tribune</a>') < pubBlock[1].indexOf('>Exil</a>'),
+      'archives : The Tribune (plus récent) avant Exil requis',
+    );
+  }
+  const laGifleArchive = join(root, 'archives/la-gifle/index.html');
+  if (existsSync(laGifleArchive)) {
+    const gifleHtml = readFileSync(laGifleArchive, 'utf8');
+    assert(gifleHtml.includes('Collège Lionel-Groulx'), 'archives La Gifle : établissement requis');
+    assert(gifleHtml.includes('<dt>Langue</dt>'), 'archives La Gifle : fiche langue requise');
+    assert(gifleHtml.includes('>Français<'), 'archives La Gifle : langue Française requise');
+    assert(!gifleHtml.includes('Une sélection d’articles de La Gifle, avec leur date'), 'archives La Gifle : chapeau générique superflu interdit');
+    assert(gifleHtml.includes('Archives</a>'), 'archives La Gifle : fil d’Ariane parent « Archives » requis');
+  }
 }
 
 // La <h1> hérite sinon de la marge par défaut du navigateur → mât décadré.

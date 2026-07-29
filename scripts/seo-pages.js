@@ -73,6 +73,27 @@ function localDateTime(value, lang) {
   return lang === 'fr' ? label.replace(',', ' à') : label;
 }
 
+function localDateOnly(value, lang) {
+  const date = value ? new Date(value) : null;
+  if (!date || Number.isNaN(date.getTime())) return '';
+  return new Intl.DateTimeFormat(lang === 'en' ? 'en-CA' : 'fr-CA', {
+    timeZone: 'America/Toronto',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(date);
+}
+
+/** Dernier article connu : manchette du fil, sinon date de registre. */
+function paperLatestRaw(paper) {
+  return paper?.headlines?.[0]?.date || paper?._lastItemDate || null;
+}
+
+function paperLatestMs(paper) {
+  const t = Date.parse(paperLatestRaw(paper) || 0);
+  return Number.isFinite(t) ? t : 0;
+}
+
 function radioUpdated(radio, ctx) {
   return isoDay(ctx.schedules?.[radio.id]?.checkedAt);
 }
@@ -83,6 +104,24 @@ function institutionUpdated(group, ctx) {
     ...group.radios.map((r) => radioUpdated(r, ctx)),
   ].filter(Boolean);
   return dates.length ? dates.sort().at(-1) : null;
+}
+
+function directoryUpdated(model, ctx) {
+  const dates = [
+    ...model.paperEntries.map((p) => isoDay(paperLatestRaw(p))),
+    ...model.radioEntries.map((r) => radioUpdated(r, ctx)),
+  ].filter(Boolean);
+  return dates.length ? dates.sort().at(-1) : null;
+}
+
+function institutionKind(group) {
+  const type = group?.official?.type || group?.type || '';
+  if (type === 'universite' || type === 'university') return 'university';
+  if (type === 'cegep' || type === 'college') return 'cegep';
+  // Repli sur le nom : certains groupes n’ont pas encore de type officiel.
+  const name = `${group?.name || ''} ${group?.nameFr || ''}`;
+  if (/c[ée]gep|coll[eè]ge|college|dawson|champlain|vanier|ahuntsic/i.test(name)) return 'cegep';
+  return 'university';
 }
 
 /** Chemins jumeaux FR/EN d'un même contenu. */
@@ -490,6 +529,38 @@ function institutionPage(group, lang, ctx) {
   };
 }
 
+function sortPapersByFreshness(papers) {
+  return papers.slice().sort((a, b) => {
+    const delta = paperLatestMs(b) - paperLatestMs(a);
+    if (delta) return delta;
+    return a.name.localeCompare(b.name, 'fr');
+  });
+}
+
+function paperDirectoryCard(paper, lang, t, up) {
+  const latest = localDateOnly(paperLatestRaw(paper), lang);
+  const meta = [
+    paper.group ? paper.group.short : localizedInstitutionName(paper.institution, lang),
+    langLabel(paper.lang, t),
+    latest ? fill(t.latestArticleStatus, { date: latest }) : null,
+  ].filter(Boolean).join(' · ');
+  return {
+    name: paper.name,
+    meta,
+    href: `${up}${ROUTES.paper[lang](paper.slug)}`,
+  };
+}
+
+function institutionDirectoryCard(group, lang, t, up) {
+  return {
+    name: localizedInstitutionName(group, lang),
+    meta: lang === 'fr'
+      ? `${plural(group.papers.length, 'journal', 'journaux')} · ${plural(group.radios.length, 'radio', 'radios')}`
+      : `${plural(group.papers.length, 'newspaper', 'newspapers')} · ${plural(group.radios.length, 'radio', 'radios')}`,
+    href: `${up}${ROUTES.institution[lang](group.slug)}`,
+  };
+}
+
 function directoryPage(model, lang, ctx) {
   const t = T[lang];
   const path = ROUTES.directory[lang];
@@ -501,43 +572,79 @@ function directoryPage(model, lang, ctx) {
     r: model.radioEntries.length,
   });
 
+  const papersFr = sortPapersByFreshness(model.paperEntries.filter((p) => p.lang !== 'en'));
+  const papersEn = sortPapersByFreshness(model.paperEntries.filter((p) => p.lang === 'en'));
+  const groupsUni = model.groups
+    .filter((g) => institutionKind(g) === 'university')
+    .sort((a, b) => localizedInstitutionName(a, lang).localeCompare(localizedInstitutionName(b, lang), lang));
+  const groupsCegep = model.groups
+    .filter((g) => institutionKind(g) === 'cegep')
+    .sort((a, b) => localizedInstitutionName(a, lang).localeCompare(localizedInstitutionName(b, lang), lang));
+
   let body = `      <p class="seo-lead">${escapeHtml(description)}</p>\n`;
 
-  body += `      <section class="seo-section">\n        <h2>${escapeHtml(t.institutions)}</h2>\n`;
-  body += cardGrid(model.groups
-    .slice()
-    .sort((a, b) => localizedInstitutionName(a, lang).localeCompare(localizedInstitutionName(b, lang), lang))
-    .map((g) => ({
-      name: localizedInstitutionName(g, lang),
-      meta: lang === 'fr'
-        ? `${plural(g.papers.length, 'journal', 'journaux')} · ${plural(g.radios.length, 'radio', 'radios')}`
-        : `${plural(g.papers.length, 'newspaper', 'newspapers')} · ${plural(g.radios.length, 'radio', 'radios')}`,
-      href: `${up}${ROUTES.institution[lang](g.slug)}`,
-    })));
+  body += `      <nav class="seo-toc" aria-label="${escapeHtml(t.directoryToc)}">\n`
+    + `        <p class="seo-toc__label">${escapeHtml(t.directoryToc)}</p>\n`
+    + '        <ul class="seo-toc__list">\n'
+    + `          <li><a href="#journaux">${escapeHtml(t.newspapers)}</a></li>\n`
+    + `          <li><a href="#radios">${escapeHtml(t.radios)}</a></li>\n`
+    + `          <li><a href="#etablissements">${escapeHtml(t.institutions)}</a></li>\n`
+    + `          <li><a href="#archives">${escapeHtml(t.archives)}</a></li>\n`
+    + '        </ul>\n'
+    + '      </nav>\n';
+
+  // ── Journaux (par langue, tri fraîcheur) ──
+  body += `      <section class="seo-section" id="journaux">\n        <h2>${escapeHtml(t.newspapers)}</h2>\n`;
+  body += `        <p class="seo-section__lead">${escapeHtml(t.directoryNewspapersLead)}</p>\n`;
+  if (papersFr.length) {
+    body += `        <h3>${escapeHtml(t.french)}</h3>\n`;
+    body += cardGrid(papersFr.map((p) => paperDirectoryCard(p, lang, t, up)));
+  }
+  if (papersEn.length) {
+    body += `        <h3>${escapeHtml(t.english)}</h3>\n`;
+    body += cardGrid(papersEn.map((p) => paperDirectoryCard(p, lang, t, up)));
+  }
   body += '      </section>\n';
 
-  body += `      <section class="seo-section">\n        <h2>${escapeHtml(t.newspapers)}</h2>\n`;
-  body += cardGrid(model.paperEntries
-    .slice()
-    .sort((a, b) => a.name.localeCompare(b.name, 'fr'))
-    .map((p) => ({
-      name: p.name,
-      meta: [p.group ? p.group.short : localizedInstitutionName(p.institution, lang), langLabel(p.lang, t)].filter(Boolean).join(' · '),
-      href: `${up}${ROUTES.paper[lang](p.slug)}`,
-    })));
-  body += '      </section>\n';
-
-  body += `      <section class="seo-section">\n        <h2>${escapeHtml(t.radios)}</h2>\n`;
+  // ── Radios ──
+  body += `      <section class="seo-section" id="radios">\n        <h2>${escapeHtml(t.radios)}</h2>\n`;
+  body += `        <p class="seo-section__lead">${escapeHtml(t.directoryRadiosLead)}</p>\n`;
+  body += `        <p class="seo-cta"><a href="${up}${ROUTES.schedules[lang]}">${escapeHtml(t.browseSchedulesCta)}</a></p>\n`;
   body += cardGrid(model.radioEntries
     .slice()
     .sort((a, b) => (a.fullName || a.name).localeCompare(b.fullName || b.name, 'fr'))
     .map((r) => ({
       name: r.fullName || r.name,
-      meta: [r.group ? r.group.short : localizedInstitutionName(r.institution, lang), r.city].filter(Boolean).join(' · '),
+      meta: [
+        r.group ? r.group.short : localizedInstitutionName(r.institution, lang),
+        r.frequency || null,
+        r.city,
+      ].filter(Boolean).join(' · '),
       href: `${up}${ROUTES.radio[lang](r.slug)}`,
     })));
   body += '      </section>\n';
 
+  // ── Établissements (universités / cégeps) ──
+  body += `      <section class="seo-section" id="etablissements">\n        <h2>${escapeHtml(t.institutions)}</h2>\n`;
+  body += `        <p class="seo-section__lead">${escapeHtml(t.directoryInstitutionsLead)}</p>\n`;
+  if (groupsUni.length) {
+    body += `        <h3>${escapeHtml(t.universities)}</h3>\n`;
+    body += cardGrid(groupsUni.map((g) => institutionDirectoryCard(g, lang, t, up)));
+  }
+  if (groupsCegep.length) {
+    body += `        <h3>${escapeHtml(t.cegepsColleges)}</h3>\n`;
+    body += cardGrid(groupsCegep.map((g) => institutionDirectoryCard(g, lang, t, up)));
+  }
+  body += '      </section>\n';
+
+  // ── Archives ──
+  body += `      <section class="seo-section" id="archives">\n        <h2>${escapeHtml(t.archives)}</h2>\n`;
+  body += `        <p class="seo-section__lead">${escapeHtml(t.directoryArchivesLead)}</p>\n`;
+  body += `        <p class="seo-cta"><a href="${up}archives/">${escapeHtml(t.browseArchivesCta)}</a></p>\n`;
+  body += '      </section>\n';
+
+  // JSON-LD : journaux par fraîcheur globale, puis radios.
+  const papersOrdered = sortPapersByFreshness(model.paperEntries);
   const jsonLd = JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
@@ -548,12 +655,12 @@ function directoryPage(model, lang, ctx) {
       '@type': 'ItemList',
       numberOfItems: model.paperEntries.length + model.radioEntries.length,
       itemListElement: [
-        ...model.paperEntries.map((p, i) => ({
+        ...papersOrdered.map((p, i) => ({
           '@type': 'ListItem', position: i + 1, name: p.name,
           url: `${ctx.siteBase}/${ROUTES.paper[lang](p.slug)}`,
         })),
         ...model.radioEntries.map((r, i) => ({
-          '@type': 'ListItem', position: model.paperEntries.length + i + 1,
+          '@type': 'ListItem', position: papersOrdered.length + i + 1,
           name: r.fullName || r.name,
           url: `${ctx.siteBase}/${ROUTES.radio[lang](r.slug)}`,
         })),
@@ -561,6 +668,7 @@ function directoryPage(model, lang, ctx) {
     },
   }).replace(/</g, '\\u003c');
 
+  const updated = directoryUpdated(model, ctx);
   return {
     path,
     html: renderPage({
@@ -570,10 +678,11 @@ function directoryPage(model, lang, ctx) {
       h1: t.directoryH1,
       eyebrow: null,
       crumbs: [{ label: t.home, href: up }, { label: t.directory }],
-      bodyHtml: body, jsonLd, siteBase: ctx.siteBase, updated: null,
+      bodyHtml: body, jsonLd, siteBase: ctx.siteBase, updated,
     }),
-    changefreq: 'weekly',
+    changefreq: 'daily',
     priority: '0.9',
+    lastmod: updated,
   };
 }
 
