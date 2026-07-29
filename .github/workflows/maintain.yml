@@ -57,7 +57,7 @@ jobs:
       - name: Commit and push bot updates
         if: steps.check.outputs.changed == 'true'
         run: |
-          git config user.name "RADAR Maintenance Bot"
+          git config user.name "LE-RADAR Maintenance Bot"
           git config user.email "actions@users.noreply.github.com"
           # N'ajouter que les chemins présents : si le pipeline a échoué avant
           # d'écrire bot-status.json, git add sur un chemin absent est fatal et

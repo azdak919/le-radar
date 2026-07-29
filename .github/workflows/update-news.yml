@@ -180,7 +180,7 @@ jobs:
       - name: Commit and push updates
         if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.check.outputs.changed == 'true'
         run: |
-          git config user.name "RÉQ News Bot"
+          git config user.name "LE-RADAR News Bot"
           git config user.email "actions@users.noreply.github.com"
           git add news.json author-qc.json lead-excerpt-qc.json social-feed.json lead-image-qc.json photo-credit-qc.json feed.xml news-sources.json index.html sitemap.xml llms.txt 2>/dev/null || true
           # Pages d'entités : ce sont des DOSSIERS entièrement régénérés. `-A`
