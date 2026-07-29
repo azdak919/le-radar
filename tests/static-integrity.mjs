@@ -276,6 +276,12 @@ assert(
   'kiosque-v1 : remplissage volume (bleu radio-bright) comme le bureau',
 );
 assert(
+  embedCss.includes('[data-surface="kiosque-v1"] .tuner-eq span')
+    && embedCss.includes('var(--live')
+    && !embedCss.includes('embedEq'),
+  'kiosque-v1 : EQ entre cast et volume = barres --live + animation eq (pas blanc)',
+);
+assert(
   embedCss.includes('[data-surface="kiosque-v1"] .tuner-cast--bar'),
   'kiosque-v1 : cast en barre sur largeur bureau',
 );
