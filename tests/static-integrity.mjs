@@ -283,11 +283,6 @@ assert(
   'kiosque-v1 : EQ lecture rouge + buffering gris (pas d’animation maison)',
 );
 assert(
-  styleCss.includes('@keyframes eq-buffer')
-    && styleCss.includes('.tuner.is-buffering .tuner-eq span'),
-  'style : EQ grise réservée au buffering (site + iframe)',
-);
-assert(
   embedCss.includes('[data-surface="kiosque-v1"] .tuner-cast--bar'),
   'kiosque-v1 : cast en barre sur largeur bureau',
 );
@@ -564,5 +559,10 @@ assert(
 );
 assert(styleCss.includes('--status-live-soft: #ff7d6e'), 'style : coral EN ONDES partagé requis');
 assert(styleCss.includes('--status-upcoming-soft: #e8c07a'), 'style : ambre À venir partagé requis');
+assert(
+  styleCss.includes('@keyframes eq-buffer')
+    && styleCss.includes('.tuner.is-buffering .tuner-eq span'),
+  'style : EQ grise réservée au buffering (site + iframe)',
+);
 
 console.log(`OK intégrité statique (${htmlFiles.length} pages HTML)`);
