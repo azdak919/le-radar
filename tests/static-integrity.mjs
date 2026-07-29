@@ -258,6 +258,18 @@ assert(embedScript.includes("available: false"), 'repli indisponible kiosque req
 assert(embedScript.includes('protocol: 1'), 'version du contrat embed requise');
 const embedCss = readFileSync(join(root, 'embed.css'), 'utf8');
 assert(embedCss.includes('[data-surface="kiosque-v1"]'), 'surface sombre kiosque-v1 requise');
+assert(
+  embedCss.includes('[data-surface="kiosque-v1"] .tuner-vol-labels'),
+  'kiosque-v1 : labels volume 0/100/200 % réaffichés',
+);
+assert(
+  embedCss.includes('[data-surface="kiosque-v1"] .tuner-cast--bar'),
+  'kiosque-v1 : cast en barre sur largeur bureau',
+);
+assert(
+  embedScript.includes("surface === 'kiosque-v1' ? 68 : 62"),
+  'kiosque-v1 : hauteur embed 68 px pour les labels',
+);
 const appScript = readFileSync(join(root, 'app.js'), 'utf8');
 assert(appScript.includes("get('station')"), 'station demandée par l’embed requise');
 

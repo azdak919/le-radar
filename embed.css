@@ -884,3 +884,136 @@ html[data-embed="tuner"] .toast {
     min-width: 200px;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Surface kiosque-v1 — parité visuelle avec la barre bureau LE-RADAR
+   (sans casser Solitaire / embed legacy). Crédit le-radar.ca conservé.
+   ═══════════════════════════════════════════════════════════════════════════ */
+html[data-embed="tuner"][data-surface="kiosque-v1"] {
+  /* Un peu plus haut pour les labels 0 / 100 / 200 % sous le rail. */
+  --embed-bar-h: 68px;
+  --embed-vol-track: 118px;
+  --embed-gap: 8px;
+  /* Tokens alignés sur le bandeau sombre du site principal. */
+  --embed-ink: #fff;
+  --embed-muted: rgba(255, 255, 255, 0.5);
+  --embed-muted-strong: rgba(255, 255, 255, 0.78);
+  --embed-control-bg: rgba(255, 255, 255, 0.06);
+  --embed-control-bg-hover: rgba(255, 255, 255, 0.12);
+  --embed-control-border: rgba(255, 255, 255, 0.16);
+  --embed-control-border-hover: rgba(255, 255, 255, 0.28);
+  --embed-radio: #8eb8ff;
+  --tuner-onair-live: #ff7d6e;
+  --tuner-onair-idle: rgba(255, 255, 255, 0.5);
+  background: #111317 !important;
+  height: var(--embed-bar-h);
+  max-height: var(--embed-bar-h);
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] body,
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
+  background: #111317 !important;
+  height: var(--embed-bar-h);
+  max-height: var(--embed-bar-h);
+  min-height: var(--embed-bar-h);
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
+  --tuner-onair-live: #ff7d6e;
+  --tuner-onair-idle: rgba(255, 255, 255, 0.5);
+}
+
+/* Volume : même layout colonne que le bureau (rail + labels). */
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-track {
+  width: var(--embed-vol-track);
+  max-width: var(--embed-vol-track);
+  min-width: 108px;
+  flex: 0 1 var(--embed-vol-track);
+  height: auto;
+  min-height: 0;
+  gap: 3px;
+  justify-content: center;
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-slider {
+  height: auto;
+  min-height: 16px;
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-labels {
+  display: block !important;
+  height: 10px;
+  font-size: 9px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.34);
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-label--max {
+  color: rgba(255, 154, 144, 0.72);
+}
+
+/* Cast en barre quand la largeur le permet (comme le site principal). */
+@media (min-width: 720px) {
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-cast--bar:not(.hidden):not([hidden]) {
+    display: flex !important;
+  }
+}
+
+/* EQ visible en lecture (discret) — masqué sur embed legacy pour la place. */
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing .tuner-eq {
+  display: inline-flex !important;
+  align-items: flex-end;
+  gap: 2px;
+  height: 16px;
+  margin: 0 2px;
+}
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-eq span {
+  display: block;
+  width: 3px;
+  border-radius: 1px;
+  background: rgba(255, 255, 255, 0.45);
+  height: 40%;
+}
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing .tuner-eq span {
+  animation: embedEq 0.9s ease-in-out infinite alternate;
+}
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing .tuner-eq span:nth-child(2) {
+  animation-delay: 0.15s;
+  height: 70%;
+}
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing .tuner-eq span:nth-child(3) {
+  animation-delay: 0.3s;
+  height: 100%;
+}
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing .tuner-eq span:nth-child(4) {
+  animation-delay: 0.45s;
+  height: 55%;
+}
+@keyframes embedEq {
+  from { transform: scaleY(0.45); }
+  to { transform: scaleY(1); }
+}
+
+@media (min-width: 720px) {
+  html[data-embed="tuner"][data-surface="kiosque-v1"] {
+    --embed-vol-track: 128px;
+    --embed-gap: 8px;
+  }
+}
+
+@media (min-width: 900px) {
+  html[data-embed="tuner"][data-surface="kiosque-v1"] {
+    --embed-vol-track: 140px;
+  }
+}
+
+/* Mobile kiosque : labels volume dans la bulle uniquement (comportement popover). */
+@media (max-width: 559.98px) {
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-track > .tuner-vol-labels {
+    display: none !important;
+  }
+  html[data-embed="tuner"][data-surface="kiosque-v1"] {
+    --embed-bar-h: 62px;
+    --embed-vol-track: 72px;
+  }
+}
