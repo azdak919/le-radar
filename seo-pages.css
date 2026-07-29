@@ -172,6 +172,17 @@
 /* ── Appel à l'action ───────────────────────────────────────────────────── */
 
 .seo-cta { margin: 22px 0; }
+/* Rangée d’actions sur une fiche journal : récents + archives côte à côte. */
+.seo-source-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 14px;
+  margin: 22px 0 0;
+}
+.seo-source-actions .seo-cta {
+  margin: 0;
+}
 /* À la fin d'une liste d'articles, le retour vers le fil filtré reste aligné
    avec le contenu. Sa marge supérieure le détache clairement de la dernière
    manchette, sans créer une zone vide avant le pied de page. */
@@ -179,7 +190,9 @@
   margin: 22px 0 0;
   text-align: left;
 }
-.seo-wire:has(.seo-cta--source) { padding-bottom: 28px; }
+.seo-wire .seo-source-actions .seo-cta--source { margin: 0; }
+.seo-wire:has(.seo-cta--source),
+.seo-wire:has(.seo-source-actions) { padding-bottom: 28px; }
 .seo-cta a {
   display: inline-block;
   font-family: var(--sans);
@@ -192,12 +205,28 @@
   text-decoration: none;
 }
 .seo-cta a:hover { background: var(--accent-dark); }
+/* CTA secondaire (archives) : même pilule, contour accent. */
+.seo-cta--secondary a {
+  color: var(--accent);
+  background: transparent;
+  border: 1.5px solid color-mix(in srgb, var(--accent) 72%, transparent);
+  box-shadow: none;
+}
+.seo-cta--secondary a:hover {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
 .seo-archive-link {
   margin: 12px 0 0;
   font-family: var(--sans);
   font-size: 13px;
 }
 .seo-archive-link a { color: var(--accent); font-weight: 600; }
+@media (max-width: 560px) {
+  .seo-source-actions { flex-direction: column; align-items: stretch; }
+  .seo-source-actions .seo-cta a { width: 100%; text-align: center; box-sizing: border-box; }
+}
 
 /* ── Catalogue historique expérimental ─────────────────────────────────── */
 

@@ -97,10 +97,12 @@ test('une fiche de journal garde byline, bref et fraîcheur factuelle', async ({
   await expect(page.locator('.seo-headline__brief').first()).not.toBeEmpty();
   expect(await page.locator('.seo-headline__brief').allTextContents()).not.toContainEqual(expect.stringMatching(/Crédit photo/i));
   await expect(page.getByRole('link', { name: 'Lire la suite →' }).first()).toHaveAttribute('href', /^https:\/\//);
-  await expect(page.getByRole('link', { name: 'Voir tous les articles de La Pige' }))
+  await expect(page.getByRole('link', { name: 'Voir les articles les plus récents' }))
     .toHaveAttribute('href', '../../?source=La%20Pige#news-list');
-  await expect(page.locator('.seo-cta--source')).toHaveCSS('text-align', 'left');
-  await expect(page.locator('.seo-cta--source')).toHaveCSS('margin-top', '22px');
+  await expect(page.getByRole('link', { name: 'Voir les archives' }))
+    .toHaveAttribute('href', '../../archives/la-pige/');
+  await expect(page.locator('.seo-source-actions')).toBeVisible();
+  await expect(page.locator('.seo-source-actions .seo-cta--source').first()).toHaveCSS('text-align', 'left');
   const rulesAlign = await page.evaluate(() => {
     const headline = document.querySelector('.seo-headlines > li:last-child');
     const footer = document.querySelector('.site-foot');
