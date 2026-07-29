@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-29T00:57:51.537Z",
+  "updatedAt": "2026-07-29T04:18:45.797Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,27 +21,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T00:57:25.324Z"
+      "checkedAt": "2026-07-29T04:18:21.530Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "London café",
+        "title": "Les garçons pleurent aussi (reprise)",
         "source": "api-live",
-        "start": "16:00",
+        "start": "20:00",
         "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "london-cafe"
+        "slug": "les-garcons-pleurent-aussi"
       },
       "next": {
-        "title": "Les Pénibles",
+        "title": "Mix anglo",
         "source": "api-live",
-        "start": "17:30",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/364862.mp3",
-        "slug": "les-penibles"
+        "start": "22:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/365250.mp3",
+        "slug": "mix-anglo"
       },
       "track": "",
-      "showTitle": "London café",
+      "showTitle": "Les garçons pleurent aussi (reprise)",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -51,25 +51,25 @@
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-07-29T00:57:27.496Z"
+      "checkedAt": "2026-07-29T04:18:23.674Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Marca-RO",
+        "title": "Space Plane",
         "source": "api-live",
-        "start": "20:30",
-        "end": "21:00"
+        "start": "00:00",
+        "end": "02:00"
       },
       "next": {
-        "title": "Montreal Sound Ark",
+        "title": "WarpCor / Out of the Void",
         "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
+        "start": "02:00",
+        "end": "04:00"
       },
       "track": "",
-      "showTitle": "Marca-RO",
+      "showTitle": "Space Plane",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -77,72 +77,72 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T00:57:30.422Z"
+      "checkedAt": "2026-07-29T04:18:25.961Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Hittin' All The Bases",
+        "title": "CJLO Late Night",
         "source": "schedule",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/hittin-all-the-bases"
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
-        "title": "Beatnik Boy: Mixtape",
+        "title": "Morning Electro-shock",
         "source": "schedule",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/beatnik-boy-mixtape"
+        "start": "06:00",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/morning-electro-shock"
       },
       "track": "",
-      "showTitle": "Hittin' All The Bases",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T00:57:44.430Z"
+      "checkedAt": "2026-07-29T04:18:39.310Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Dichotomie 88.3",
+        "title": "Les nuits CFAK",
         "source": "schedule",
-        "start": "20:00",
-        "end": "22:00"
+        "start": "00:00",
+        "end": "07:00"
       },
       "next": {
-        "title": "Mix Franco",
+        "title": "Folkswagen",
         "source": "schedule",
-        "start": "22:00",
-        "end": "00:00"
+        "start": "07:00",
+        "end": "08:00"
       },
       "track": "",
-      "showTitle": "Dichotomie 88.3",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T00:57:45.044Z"
+      "checkedAt": "2026-07-29T04:18:40.114Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Intervenir ensemble",
+        "title": "Palmarès CHOQ.ca",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
-        "slug": "intervenir-ensemble"
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
       },
-      "track": "Gia Margaret - Moon Not Mine",
+      "track": "MIRAR - Heksebal",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -153,7 +153,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-29T00:57:51.186Z"
+      "checkedAt": "2026-07-29T04:18:45.446Z"
     }
   }
 }
