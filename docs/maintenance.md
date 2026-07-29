@@ -20,29 +20,68 @@ dans l'idéal, et ce qui reste volontairement manuel.
 
 ---
 
-## Fenêtre de maintenance manuelle
+## Publication directe et fenêtre de maintenance
 
-Pour une intervention qui touche les gabarits, le service worker ou les données
-générées, protéger le site et éviter les commits concurrents des bots :
+Le flux habituel est le **push direct contrôlé** : les petites corrections ne
+mettent pas le site hors ligne. Avant chaque publication, rebaser sur `main`,
+vérifier localement les URLs touchées, exécuter `npm run check`, puis pousser
+sans jamais utiliser `git push --force` sur `main`. Les bots peuvent committer
+entre deux sessions; un push refusé se résout par `git fetch origin && git
+rebase origin/main`, jamais par l'écrasement de leur commit.
 
-1. Dans **Cloudflare → Rules → Redirect Rules**, activer une règle **302** qui
-   redirige les pages publiques vers
-   `https://le-radar.ca/offline.html?maintenance=1`, en excluant
-   `/offline.html`, `/assets/offline/*`, `/assets/icon.svg`,
-   `/assets/icon-32.png`, `/assets/icon-192.png` et `/indigenous-mt.json`.
-   Ces exclusions évitent une boucle et gardent la page jouable; `maintenance=1`
-   empêche son retour automatique à l'accueil tant que la règle est active.
-2. Dans **GitHub Actions**, désactiver temporairement les neuf workflows qui
-   écrivent dans `main` : archive, découverte des sources, maintenance,
-   traduction autochtone, institutions, nouvelles, now-playing, horaires et
-   flux radio. Laisser **Quality Gate** actif.
-3. Travailler localement, exécuter les checks et vérifier les URLs locales
-   demandées par l'humain avant tout commit ou push. Publier une seule fois.
-4. Vérifier le run Quality Gate; s'il est vert, réactiver les neuf workflows
-   et désactiver la règle Cloudflare. En cas d'échec, garder la maintenance
-   active et corriger avant un nouveau push.
+La maintenance publique est réservée aux changements de risque élevé : service
+worker, lecteur, navigation globale, gabarits générés ou migration de données.
 
-La page de maintenance reste aussi utilisable hors ligne via le cache PWA.
+### Prérequis d’hébergement
+
+Le DNS de `le-radar.ca` reste chez **WHC**. Les Workers Cloudflare existants,
+sur `*.workers.dev`, ne peuvent donc pas intercepter le domaine et ne sont pas
+un interrupteur de maintenance. Ne pas documenter ni utiliser une règle
+Cloudflare comme si elle protégeait ce site.
+
+Avant la première fenêtre publique, identifier dans WHC l’option de
+redirection/maintenance pour le domaine. Elle doit rediriger les routes
+publiques vers `https://le-radar.ca/offline.html?maintenance=1` tout en
+excluant `/offline.html`, `/assets/offline/*`, `/assets/icon.svg`,
+`/assets/icon-32.png`, `/assets/icon-192.png` et `/indigenous-mt.json`. Ces
+exclusions évitent une boucle et gardent la page jouable. Si WHC ne fournit pas
+cette fonction, **ne pas simuler une maintenance par commit ou JavaScript** :
+publier normalement après validation locale et garder cette amélioration pour
+une éventuelle migration DNS ultérieure.
+
+### Commandes de contrôle
+
+```bash
+npm run maintenance:status
+npm run maintenance:release-check
+
+# Après avoir confirmé la redirection publique :
+npm run maintenance:bots:pause -- --confirm
+
+# Après Quality Gate, Pages et retour public vérifiés :
+npm run maintenance:bots:resume -- --confirm
+```
+
+`maintenance:status` contrôle l’URL publique et l’état des neuf workflows qui
+écrivent dans `main`. Il affiche aussi **Quality Gate** et **Pages**, qui ne
+doivent jamais être désactivés. Les commandes de pause/reprise exigent
+`--confirm` afin qu’un copier-coller ne coupe pas les bots accidentellement.
+
+### Séquence d’une fenêtre sensible
+
+1. Activer le basculement WHC et exécuter
+   `npm run maintenance:status -- --expect maintenance`. Ne suspendre les bots
+   qu’après cette preuve publique.
+2. Exécuter `npm run maintenance:bots:pause -- --confirm`.
+3. Travailler localement; avant le commit, exécuter
+   `npm run maintenance:release-check -- --maintenance`, les tests ciblés et
+   ouvrir les liens locaux convenus.
+4. Rebaser, publier un seul commit, puis attendre Quality Gate et Pages.
+5. Désactiver le basculement WHC, vérifier l’accueil public, puis exécuter
+   `npm run maintenance:bots:resume -- --confirm`.
+
+La page de maintenance reste utilisable hors ligne via le cache PWA; elle ne
+porte jamais la barre radio.
 
 ---
 

@@ -29,13 +29,15 @@ test('depuis l’accueil, on atteint l’annuaire puis une fiche de journal', as
   await expect(page.locator('h1')).toContainText('Université de Montréal');
 });
 
-test('une fiche de radio expose ses faits et renvoie vers l’écoute', async ({ page }) => {
+test('une fiche de radio expose ses faits et renvoie vers les autres horaires', async ({ page }) => {
   await page.goto('/radios/chyz/', { waitUntil: 'load' });
 
   await expect(page.locator('h1')).toContainText('CHYZ');
   await expect(page.locator('.seo-facts')).toContainText('94,3 FM');
   await expect(page.locator('.seo-facts')).toContainText('Université Laval');
-  await expect(page.getByRole('link', { name: /Écouter en direct/ })).toBeVisible();
+  const schedulesLink = page.getByRole('link', { name: 'Choisir une autre radio' });
+  await expect(schedulesLink).toBeVisible();
+  await expect(schedulesLink).toHaveAttribute('href', '../../horaires/');
 
   // Le lien vers l'établissement doit résoudre, pas juste exister.
   await page.getByRole('link', { name: 'Université Laval' }).first().click();

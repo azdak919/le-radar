@@ -168,10 +168,14 @@ assert(ckutFrPage.includes('>Université McGill</a>'), 'radio CKUT FR : établis
 assert(ckutEnPage.includes('>McGill University</a>'), 'radio CKUT EN : nom officiel anglais requis');
 const offlineHtml = readFileSync(join(root, 'offline.html'), 'utf8');
 assert(offlineHtml.includes("params.has('maintenance')"), 'offline.html : mode maintenance durable requis');
+assert(!offlineHtml.includes('id="tuner" class="tuner"'), 'offline.html : barre radio interdite en maintenance');
 assert(offlineHtml.includes('id="lang-scroll-prev"'), 'offline.html : bouton langues gauche requis');
 assert(offlineHtml.includes('id="lang-scroll-next"'), 'offline.html : bouton langues droite requis');
 assert(offlineHtml.includes("chipsEl.addEventListener('wheel'"), 'offline.html : défilement souris des langues requis');
 assert(offlineHtml.includes("chipsEl.addEventListener('pointerdown'"), 'offline.html : glisser souris des langues requis');
+const maintenanceDoc = readFileSync(join(root, 'docs/maintenance.md'), 'utf8');
+assert(maintenanceDoc.includes('Le DNS de `le-radar.ca` reste chez **WHC**'), 'documentation maintenance : hébergement WHC requis');
+assert(maintenanceDoc.includes('npm run maintenance:status'), 'documentation maintenance : commande de statut requise');
 const feedsHtml = readFileSync(join(root, 'feeds.html'), 'utf8');
 assert(feedsHtml.includes('src="native-tuner.js"'), 'feeds.html : lecteur natif requis');
 assert(feedsHtml.includes('src="nav-shell.js"'), 'feeds.html : navigation persistante requise');
