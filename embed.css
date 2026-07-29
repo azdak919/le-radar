@@ -886,9 +886,10 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] {
   --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
   --sans: "Inter", system-ui, -apple-system, sans-serif;
   --embed-bar-h: 68px;
-  --embed-vol-track: 120px;
-  --embed-gap: 9px;
-  --embed-pad: 24px;
+  /* Volume compact par défaut ; élargi seulement ≥ 1100 px (voir plus bas). */
+  --embed-vol-track: 88px;
+  --embed-gap: 8px;
+  --embed-pad: 16px;
   --embed-ink: #fff;
   --embed-muted: rgba(255, 255, 255, 0.42);
   --embed-muted-strong: rgba(255, 255, 255, 0.78);
@@ -1209,25 +1210,93 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing .tuner-eq 
   animation-delay: 40ms;
 }
 
-/* Module « À venir » : un peu plus large comme le bureau. */
-html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair,
-html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair.hidden {
-  max-width: 320px;
-  height: auto;
-  min-height: var(--embed-ctrl);
-  align-self: center;
+/*
+ * Parité barre bureau LE-RADAR (style.css) :
+ *  - < 1100 px : une seule colonne (synthé), panneau « À l’antenne » masqué
+ *    → l’horaire vit dans le sous-titre du dial (marquee), sans écrasement.
+ *  - ≥ 1100 px : grille 2 col + panneau antenne + volume large avec labels.
+ * Demi-écran / fenêtre étroite = largeur iframe < 1100 → mode compact.
+ */
+html[data-embed="tuner"][data-surface="kiosque-v1"] {
+  --embed-cols: minmax(0, 1fr);
+  --embed-vol-track: 88px;
 }
 
-@media (min-width: 720px) {
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-inner {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair,
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair.hidden {
+  display: none !important;
+}
+
+/* Labels 0/100/200 % : seulement quand la barre a la place (bureau large). */
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-labels {
+  display: none !important;
+}
+
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-track {
+  min-width: 64px;
+}
+
+@media (min-width: 720px) and (max-width: 1099.98px) {
   html[data-embed="tuner"][data-surface="kiosque-v1"] {
+    --embed-vol-track: 100px;
+    --embed-gap: 8px;
+    --embed-pad: 24px;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1099.98px) {
+  html[data-embed="tuner"][data-surface="kiosque-v1"] {
+    --embed-vol-track: 112px;
+    --embed-pad: 28px;
+  }
+}
+
+@media (min-width: 1100px) {
+  html[data-embed="tuner"][data-surface="kiosque-v1"] {
+    --embed-cols: minmax(0, 1.15fr) minmax(280px, 340px);
     --embed-vol-track: 132px;
     --embed-gap: 9px;
     --embed-pad: 32px;
   }
+
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-inner {
+    grid-template-columns: var(--embed-cols);
+    gap: 0;
+  }
+
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair,
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair.hidden {
+    display: flex !important;
+    max-width: none;
+    width: 100%;
+    height: auto;
+    min-height: var(--embed-ctrl);
+    align-self: center;
+    padding-left: 16px;
+    box-sizing: border-box;
+  }
+
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-labels {
+    display: block !important;
+  }
+
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-track {
+    min-width: 96px;
+  }
+
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-dial {
+    min-width: 160px;
+  }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1200px) {
   html[data-embed="tuner"][data-surface="kiosque-v1"] {
+    --embed-cols: minmax(0, 1.15fr) minmax(300px, 360px);
     --embed-vol-track: 148px;
   }
 }
