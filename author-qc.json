@@ -1,10 +1,18 @@
 {
-  "updated": "2026-07-29T11:41:42.228Z",
+  "updated": "2026-07-29T13:02:55.811Z",
   "total": 185,
   "withAuthor": 185,
-  "mismatches": 5,
+  "mismatches": 7,
   "ok": true,
   "samples": [
+    {
+      "title": "Entre Sherbrooke et Montreux, deux façons de vivre la musique en ville",
+      "link": "https://lecollectif.ca/a-la-une/entre-sherbrooke-et-montreux-deux-facons-de-vivre-la-musique-en-ville/",
+      "source": "Le Collectif",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Nicolas Mathieu",
+      "reason": "page-byline"
+    },
     {
       "title": "Letters from the Editors May 2026",
       "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
@@ -30,6 +38,14 @@
       "reason": "no-author-source"
     },
     {
+      "title": "Ce que nous devons aux femmes",
+      "link": "https://www.delitfrancais.com/2026/03/18/ce-que-nous-devons-aux-femmes/",
+      "source": "Le Délit",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Eugénie St-Pierre",
+      "reason": "page-byline"
+    },
+    {
       "title": "Les femmes MAGA au service du patriarcat",
       "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
       "source": "Le Délit",
@@ -46,5 +62,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 5
+  "fixed": 7
 }

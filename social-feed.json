@@ -1,6 +1,6 @@
 {
-  "updated": "2026-07-29T11:49:25.324Z",
-  "count": 20,
+  "updated": "2026-07-29T13:10:29.648Z",
+  "count": 22,
   "items": [
     {
       "name": "Quartier Libre",
@@ -193,7 +193,7 @@
           "type": "facebook",
           "url": "https://www.facebook.com/lexemplaire",
           "handle": "lexemplaire",
-          "stats": "",
+          "stats": "851 mentions J'aime",
           "label": "Facebook"
         },
         {
@@ -222,7 +222,7 @@
           "type": "facebook",
           "url": "https://www.facebook.com/journallecollectif",
           "handle": "journallecollectif",
-          "stats": "",
+          "stats": "4 053 mentions J'aime",
           "label": "Facebook"
         }
       ]
@@ -377,6 +377,57 @@
           "handle": "@theplantdawson",
           "stats": "",
           "label": "TikTok"
+        }
+      ]
+    },
+    {
+      "name": "L'Oisif",
+      "institution": "Cégep de Chicoutimi",
+      "type": "cegep",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/cegepchicoutimi/",
+          "handle": "@cegepchicoutimi",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/CegepChicoutimi",
+          "handle": "CegepChicoutimi",
+          "stats": "",
+          "label": "Facebook"
+        },
+        {
+          "type": "x",
+          "url": "https://www.twitter.com/CegepChicoutimi",
+          "handle": "@CegepChicoutimi",
+          "stats": "",
+          "label": "X"
+        },
+        {
+          "type": "youtube",
+          "url": "https://www.youtube.com/channel/UCK61mhwLjnBG2QgN5vex2bw",
+          "handle": "@UCK61mhwLjnBG2QgN5vex2bw",
+          "stats": "",
+          "label": "YouTube"
+        }
+      ]
+    },
+    {
+      "name": "La Gifle",
+      "institution": "Collège Lionel-Groulx",
+      "type": "cegep",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/WordPresscom",
+          "handle": "WordPresscom",
+          "stats": "",
+          "label": "Facebook"
         }
       ]
     },
