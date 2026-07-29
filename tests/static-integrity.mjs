@@ -177,7 +177,7 @@ assert(cjloPage.includes('data-schedule-day="'), 'radio CJLO : jour de grille re
 const jonquierePage = readFileSync(join(root, 'etablissements/cegep-de-jonquiere/index.html'), 'utf8');
 assert(jonquierePage.includes('href="https://www.saguenaylacsaintjean.ca/"'), 'établissement Jonquière : tourisme régional lié requis');
 const laPigePage = readFileSync(join(root, 'journaux/la-pige/index.html'), 'utf8');
-assert(laPigePage.includes('Dernier article publié le '), 'journal : fraîcheur des articles requise');
+assert(laPigePage.includes('Dernier article : '), 'journal : fraîcheur des articles requise');
 assert(!laPigePage.includes('Chaque titre renvoie à l’article original'), 'journal : note redondante retirée');
 assert(laPigePage.includes('class="seo-headline__by">Par '), 'journal : byline préfixée requise');
 assert(laPigePage.includes('class="seo-headline__brief"'), 'journal : bref article requis');

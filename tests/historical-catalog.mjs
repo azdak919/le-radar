@@ -50,5 +50,6 @@ assert.equal(ageBand(preserved, ageConfig, ageNow), 'preserved');
 const ageSample = partialPublicSample([verified, conservation, preserved], ageConfig, ageNow);
 assert.equal(ageSample.records.length, 1, 'les articles de conservation ne rejoignent pas le sitemap public');
 assert.equal(ageSample.conservation.length, 1, 'la tranche 5–10 ans reste consultable sans indexation automatique');
+assert.equal(ageSample.reference.length, 1, 'les métadonnées plus anciennes restent accessibles dans les archives de référence');
 
 console.log('✓ Catalogue historique : identité, rétention et sélection publique vérifiées.');

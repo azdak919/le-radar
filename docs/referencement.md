@@ -124,16 +124,16 @@ versionnée est volontairement en trois bandes :
 - **0 à 12 mois** : indexables si le lien est vérifié et que l’extrait est utile;
 - **plus de 12 mois à 3 ans** : consultables dans `/archives/conservation/`, avec
   `noindex,follow` et hors sitemap;
-- **plus de 3 ans** : métadonnées conservées dans le registre, sans page
-  publique automatique. Une décision éditoriale explicite est requise avant de
-  les exposer.
+- **plus de 3 ans** : consultables dans `/archives/reference/`, avec
+  `noindex,follow` et hors sitemap.
 
 Le premier seuil offre une archive utile sans faire croire qu’un volume de
-courts extraits externes est du contenu original. Le second protège la
-continuité documentaire sans gonfler artificiellement l’index. Le rétro-crawl
-ne lit donc lui-même que la fenêtre de trois ans : les données plus anciennes
-déjà connues restent conservées, mais aucune nouvelle collecte massive ne les
-recherche automatiquement.
+courts extraits externes est du contenu original. Les deux autres bandes
+protègent la continuité documentaire sans gonfler artificiellement l’index. Le
+rétro-crawl ne lit donc lui-même que la fenêtre de trois ans; lorsqu’un flux
+d’une source nouvellement recensée fournit des articles plus anciens, leurs
+métadonnées peuvent néanmoins rejoindre les archives de référence après
+vérification du lien.
 
 ```bash
 # lecture réseau, sans écriture
@@ -154,6 +154,13 @@ réserver à une revue humaine, puisqu’il relit les listes déjà parcourues.
 Pour un domaine personnalisé hébergé par WordPress.com, le registre de source
 peut déclarer `historyWordpressComSite`; le même crawl minimal utilise alors
 l’API publique WordPress.com plutôt que d’inventer une extraction HTML.
+
+Pour vérifier expressément les liens d’une source promue, sans attendre la
+rotation hebdomadaire :
+
+```bash
+node scripts/verify-historical-links.js --update --source="La Gifle" --limit=20
+```
 
 `scripts/verify-historical-links.js --update --limit=20` vérifie une URL à la
 fois, en répartissant la passe entre les publications. Un 404/410 devient
