@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-const { mergeHistoricalCatalog, partialPublicSample, stableId } = require('../scripts/historical-catalog-lib.js');
+const { mergeHistoricalCatalog, partialPublicSample, ageBand, stableId } = require('../scripts/historical-catalog-lib.js');
 
 const item = {
   source: 'Journal témoin', institution: 'Université témoin', region: 'Montréal', type: 'universite', lang: 'fr',
@@ -35,5 +35,20 @@ const sample = partialPublicSample([verified, unknown], {
 }, Date.parse('2026-07-31T10:00:00.000Z'));
 assert.equal(sample.records.length, 1, 'un lien non vérifié est exclu du catalogue public');
 assert.equal(sample.records[0].id, verified.id);
+
+const conservation = structuredClone(verified);
+conservation.id = 'history-conservation';
+conservation.publishedAt = '2019-07-30T10:00:00.000Z';
+const preserved = structuredClone(verified);
+preserved.id = 'history-preserved';
+preserved.publishedAt = '2014-07-30T10:00:00.000Z';
+const ageConfig = { mode: 'partial', age: { indexableYears: 5, conservationYears: 10 }, partial: { maxRecords: 10, minimumExcerptCharacters: 90, verifiedWithinDays: 35 } };
+const ageNow = Date.parse('2026-07-29T10:00:00.000Z');
+assert.equal(ageBand(verified, ageConfig, ageNow), 'indexable');
+assert.equal(ageBand(conservation, ageConfig, ageNow), 'conservation');
+assert.equal(ageBand(preserved, ageConfig, ageNow), 'preserved');
+const ageSample = partialPublicSample([verified, conservation, preserved], ageConfig, ageNow);
+assert.equal(ageSample.records.length, 1, 'les articles de conservation ne rejoignent pas le sitemap public');
+assert.equal(ageSample.conservation.length, 1, 'la tranche 5–10 ans reste consultable sans indexation automatique');
 
 console.log('✓ Catalogue historique : identité, rétention et sélection publique vérifiées.');

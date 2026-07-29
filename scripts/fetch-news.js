@@ -1150,7 +1150,7 @@ async function main() {
     priorArchive,
     all.filter((item) => !item._retainedFromCache),
     archiveObserved,
-    { firstDiscoveredAt: archiveObserved },
+    { firstDiscoveredAt: archiveObserved, ingestedAt: archiveObserved },
   );
 
   const beforePrune = all.length;

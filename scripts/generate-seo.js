@@ -263,7 +263,7 @@ function buildSitemap(newsUpdated, entityPages = []) {
 /** Sitemap séparé : le test historique reste mesurable et réversible sans
  * gonfler le sitemap principal ni prétendre que tout le cache est indexable. */
 function buildArchiveSitemap(pages = []) {
-  const urls = pages.map((page) => [
+  const urls = pages.filter((page) => page.indexable !== false).map((page) => [
     '  <url>',
     `    <loc>${escapeXml(`${SITE_BASE}/${page.path}`)}</loc>`,
     page.lastmod ? `    <lastmod>${escapeXml(isoDay(page.lastmod) || '')}</lastmod>` : null,
@@ -477,7 +477,8 @@ function main() {
   console.log('==========================================\n');
   console.log(`Site      : ${SITE_BASE}`);
   console.log(`Articles  : ${items.length} (prérendu : ${prerendered.length})`);
-  console.log(`Archives  : ${archive.pages.length} page(s) publiques (${archive.sample.records.length}/${archive.sample.eligible} entrées vérifiées)`);
+  const archivePublicPages = archive.pages.filter((page) => page.indexable !== false);
+  console.log(`Archives  : ${archivePublicPages.length} page(s) indexables + ${archive.pages.length - archivePublicPages.length} conservation (${archive.sample.records.length}/${archive.sample.eligible} entrées vérifiées)`);
   console.log(`Journaux  : ${sources.length}   Radios : ${radios.length}\n`);
 
   const written = [];
@@ -515,7 +516,7 @@ function main() {
     note: `${entityPages.length} pages — ${model.groups.length} établissements, `
       + `${model.paperEntries.length} journaux, ${model.radioEntries.length} radios (FR + EN)`,
   });
-  written.push({ file: 'catalogue historique', note: `${archive.pages.length} page(s), ${archive.sample.records.length} entrée(s) vérifiée(s)` });
+  written.push({ file: 'catalogue historique', note: `${archivePublicPages.length} page(s) indexable(s), ${archive.pages.length - archivePublicPages.length} de conservation, ${archive.sample.records.length} entrée(s) vérifiée(s)` });
 
   // ── sitemap.xml ──
   const sitemap = buildSitemap(newsUpdated, entityPages);
@@ -524,7 +525,7 @@ function main() {
 
   const archiveSitemap = buildArchiveSitemap(archive.pages);
   if (doUpdate) fs.writeFileSync(ARCHIVE_SITEMAP_PATH, archiveSitemap, 'utf8');
-  written.push({ file: 'sitemap-archives.xml', note: `${archive.pages.length} URL indexable(s)` });
+  written.push({ file: 'sitemap-archives.xml', note: `${archivePublicPages.length} URL indexable(s)` });
 
   // ── llms.txt ──
   const llms = buildLlmsTxt(sources, radios, items, newsUpdated, model, archive.sample.records.length);

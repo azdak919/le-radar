@@ -1,9 +1,9 @@
 /**
  * LE-RADAR — registre historique indépendant de la fraîcheur du fil.
  *
- * Le registre ne récupère pas rétroactivement le Web : il retient les
- * métadonnées déjà découvertes par les bots, même lorsqu'un article sort du
- * fil principal. Il ne conserve jamais le corps complet d’un article externe.
+ * Le registre retient les métadonnées découvertes par les bots — y compris le
+ * rétro-crawl de listes publiques — même lorsqu'un article sort du fil
+ * principal. Il ne conserve jamais le corps complet d’un article externe.
  */
 
 const crypto = require('crypto');
@@ -80,6 +80,7 @@ function recordFromItem(item, now, provenance = {}) {
       originalUrl: item.image ? normalizeOriginalUrl(item.image) || null : null,
     },
     firstDiscoveredAt: provenance.firstDiscoveredAt || null,
+    ingestedAt: provenance.ingestedAt || null,
     importedAt: provenance.importedAt || null,
     lastSeenAt: now,
     lastVerifiedAt: provenance.lastVerifiedAt || null,
@@ -113,6 +114,7 @@ function mergeHistoricalCatalog(previous, items, observedAt = new Date().toISOSt
       ...prior,
       ...next,
       firstDiscoveredAt: prior.firstDiscoveredAt || next.firstDiscoveredAt || null,
+      ingestedAt: prior.ingestedAt || next.ingestedAt || null,
       importedAt: prior.importedAt || next.importedAt || null,
       image: { ...next.image, ...(prior.image?.license ? { license: prior.image.license } : {}) },
       link: { ...next.link, ...(prior.link || {}) },
@@ -139,10 +141,29 @@ function verifyable(record, now, config) {
   return Number.isFinite(checked) && now - checked <= verifiedWithinDays * 86400000;
 }
 
+/**
+ * Le catalogue peut préserver des décennies de métadonnées sans les pousser
+ * toutes vers les moteurs. L'âge est calculé sur la publication originale,
+ * jamais sur l'ingestion — un rétro-crawl ne rend pas un article « frais ».
+ */
+function ageBand(record, config, now = Date.now()) {
+  const policy = config?.age || {};
+  const indexableYears = Math.max(1, Number(policy.indexableYears) || 5);
+  const conservationYears = Math.max(indexableYears, Number(policy.conservationYears) || 10);
+  const published = Date.parse(record?.publishedAt || '');
+  if (!Number.isFinite(published)) return 'undated';
+  const age = Math.max(0, now - published);
+  if (age <= indexableYears * 365.25 * 86400000) return 'indexable';
+  if (age <= conservationYears * 365.25 * 86400000) return 'conservation';
+  return 'preserved';
+}
+
 function partialPublicSample(records, config, now = Date.now()) {
-  if (config.mode === 'off') return { records: [], eligible: 0 };
-  const eligible = records.filter((record) => verifyable(record, now, config));
-  if (config.mode === 'full') return { records: eligible, eligible: eligible.length };
+  if (config.mode === 'off') return { records: [], eligible: 0, verified: 0, conservation: [] };
+  const verified = records.filter((record) => verifyable(record, now, config));
+  const eligible = verified.filter((record) => ageBand(record, config, now) === 'indexable');
+  const conservation = verified.filter((record) => ageBand(record, config, now) === 'conservation');
+  if (config.mode === 'full') return { records: eligible, eligible: eligible.length, verified: verified.length, conservation };
   const max = Math.max(0, Number(config?.partial?.maxRecords) || 0);
   const chosen = [];
   const used = new Set();
@@ -157,7 +178,7 @@ function partialPublicSample(records, config, now = Date.now()) {
     if (chosen.length >= max || chosen.includes(record)) continue;
     chosen.push(record);
   }
-  return { records: chosen, eligible: eligible.length };
+  return { records: chosen, eligible: eligible.length, verified: verified.length, conservation };
 }
 
 module.exports = {
@@ -167,5 +188,6 @@ module.exports = {
   stableId,
   recordFromItem,
   mergeHistoricalCatalog,
+  ageBand,
   partialPublicSample,
 };

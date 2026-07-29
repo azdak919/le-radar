@@ -83,9 +83,14 @@ retiré du registre ne laisse pas de page orpheline indexée derrière lui.
 `news.json` reste le **fil vivant** : la règle de fraîcheur y retire les
 articles qui ne doivent plus occuper l’accueil. En parallèle,
 `news-archive.json` conserve les métadonnées des articles réellement découverts
-par les bots, avant ce filtrage. Ce registre ne lance pas de rétro-crawl et ne
-fabrique pas une date de découverte pour les entrées déjà présentes dans le
-cache : elles portent plutôt leur `importedAt`.
+par les bots, avant ce filtrage. Il peut aussi être enrichi par un
+**rétro-crawl lent, séquentiel et reprenable** des listes publiques paginées.
+Ce passage ne consulte jamais une page d’article une à une et sa projection
+WordPress exclut explicitement `content.rendered` : il ne conserve donc que le
+titre, l’extrait, l’auteur disponible, la date originale et l’URL. Les entrées
+historiques déjà présentes dans le cache portent `importedAt`; celles du
+rétro-crawl reçoivent `firstDiscoveredAt` et `ingestedAt` au moment réel de la
+collecte, sans se faire passer pour nouvelles.
 
 Le modèle distingue explicitement `publishedAt`, `firstDiscoveredAt`,
 `importedAt`, `lastSeenAt`, `lastVerifiedAt`, URL originale/canonique, état du
@@ -110,6 +115,46 @@ d’origine reste clairement identifiée comme éditrice dans le HTML et le JSON
 Le balisage emploie `CollectionPage` / `ItemList` / `CreativeWork`, **pas** un
 `NewsArticle` attribué à LE-RADAR.ca.
 
+### Fenêtre d’âge et rétro-crawl
+
+La date qui compte est toujours `publishedAt`, jamais la date d’ingestion :
+collecter aujourd’hui un article de 2018 ne le rend pas récent. La politique
+versionnée est volontairement en trois bandes :
+
+- **0 à 12 mois** : indexables si le lien est vérifié et que l’extrait est utile;
+- **plus de 12 mois à 3 ans** : consultables dans `/archives/conservation/`, avec
+  `noindex,follow` et hors sitemap;
+- **plus de 3 ans** : métadonnées conservées dans le registre, sans page
+  publique automatique. Une décision éditoriale explicite est requise avant de
+  les exposer.
+
+Le premier seuil offre une archive utile sans faire croire qu’un volume de
+courts extraits externes est du contenu original. Le second protège la
+continuité documentaire sans gonfler artificiellement l’index. Le rétro-crawl
+ne lit donc lui-même que la fenêtre de trois ans : les données plus anciennes
+déjà connues restent conservées, mais aucune nouvelle collecte massive ne les
+recherche automatiquement.
+
+```bash
+# lecture réseau, sans écriture
+node scripts/retro-crawl-historical.js
+
+# trois sources, quatre pages de listes publiques chacune (défaut prudent)
+node scripts/retro-crawl-historical.js --update
+
+# pilote ciblé / reprise de la seule source demandée
+node scripts/retro-crawl-historical.js --update --source="La Pige" --pages-per-source=1
+```
+
+L’avancement versionné de chaque source est dans
+`historical-crawl-state.json`. Une source indisponible est reportée avec une
+date de reprise; elle n’échoue pas le Quality Gate. `--restart` réinitialise
+l’avancement d’une source (ou de toutes si aucun `--source` n’est précisé) : à
+réserver à une revue humaine, puisqu’il relit les listes déjà parcourues.
+Pour un domaine personnalisé hébergé par WordPress.com, le registre de source
+peut déclarer `historyWordpressComSite`; le même crawl minimal utilise alors
+l’API publique WordPress.com plutôt que d’inventer une extraction HTML.
+
 `scripts/verify-historical-links.js --update --limit=20` vérifie une URL à la
 fois, en répartissant la passe entre les publications. Un 404/410 devient
 `missing`, une panne devient `unreachable`; les deux sont exclus de l’échantillon
@@ -118,9 +163,9 @@ tolérant aux incidents réseau pour ne pas transformer une source indisponible 
 bruit de Quality Gate.
 
 Ce catalogue est **expérimental** : suivre impressions, indexation, erreurs de
-canonique et clics avant d’augmenter les plafonds ou de soumettre son sitemap à
-Search Console. Les contenus historiques n’ont aucune voie de retour vers le
-fil principal.
+canonique et clics pendant 4 à 6 semaines avant d’augmenter les plafonds ou de
+soumettre son sitemap à Search Console. Les contenus historiques n’ont aucune
+voie de retour vers le fil principal.
 
 ### Pourquoi le prérendu ne casse rien
 
