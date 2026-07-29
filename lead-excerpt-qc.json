@@ -1,39 +1,21 @@
 {
-  "updated": "2026-07-28T23:46:54.020Z",
+  "updated": "2026-07-29T03:45:36.887Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 6,
-  "withLeadExcerpt": 78,
-  "candidates": 6,
-  "enriched": 5,
+  "incomplete": 4,
+  "withLeadExcerpt": 77,
+  "candidates": 4,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
     {
-      "title": "Sois belle et tais-toi",
-      "link": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
-      "ok": true,
-      "score": 96,
-      "chars": 295,
-      "sample": "C’est la sécheresse totale dans le cerveau de bien des gens. Le vôtre, peut-être. Mais ne craignez r",
-      "changed": true
-    },
-    {
-      "title": "Qui sont les agents qui patrouillent notre campus ?",
-      "link": "https://www.delitfrancais.com/2026/03/18/qui-sont-les-agents-qui-patrouillent-notre-campus/",
+      "title": "Les femmes MAGA au service du patriarcat",
+      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
       "ok": true,
       "score": 100,
-      "chars": 396,
-      "sample": "« L’Université McGill est à la recherche de patrouilleurs dynamiques et engagés pour assurer la sécu",
-      "changed": true
-    },
-    {
-      "title": "Global T20 cricket tournament returns to Canada, yet coverage lags behind",
-      "link": "https://www.thetribune.ca/sports/global-t20-cricket-tournament-returns-to-canada-yet-coverage-lags-behind-28072026/?utm_source=rss&utm_medium=rss&utm_campaign=global-t20-cricket-tournament-returns-to-canada-yet-coverage-lags-behind-28072026",
-      "ok": true,
-      "score": 100,
-      "chars": 291,
-      "sample": "In many sports, bringing back a professional league following months of legal issues would be consid",
+      "chars": 393,
+      "sample": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer ",
       "changed": true
     },
     {
@@ -43,7 +25,7 @@
       "score": 70,
       "chars": 400,
       "sample": "On May 14, 429 activists carrying more than 11,000 kilograms of humanitarian aid set sail to Gaza fr",
-      "changed": true
+      "changed": false
     },
     {
       "title": "The Cruel Optimism of Summer",
@@ -61,7 +43,7 @@
       "score": 66,
       "chars": 400,
       "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
-      "changed": true
+      "changed": false
     }
   ]
 }
