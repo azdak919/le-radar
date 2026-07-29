@@ -641,14 +641,8 @@ function initPlayerSync() {
         /* still apply — guard is set by Sync around this call */
       }
 
-      // Volume (shared preference)
-      if (Number.isFinite(state.volume) && Math.abs(state.volume - currentGain) > 0.005) {
-        currentGain = state.volume;
-        if (TUNER_VOLUME) TUNER_VOLUME.value = String(currentGain);
-        applyGain();
-        updateVolumeSliderVisual?.();
-        updateVolumeAria?.();
-      }
+      // Volume / mute partagés — y compris depuis un onglet suiveur (SEO, Pomo…).
+      applyRemoteVolumeState(state);
 
       const iAmLeader = Sync.isLeader(state);
 
@@ -703,10 +697,8 @@ function initPlayerSync() {
   // Hydrate from last session (other tab or previous page)
   const boot = Sync.readState();
   if (boot) {
-    if (Number.isFinite(boot.volume)) {
-      currentGain = boot.volume;
-      if (TUNER_VOLUME) TUNER_VOLUME.value = String(currentGain);
-      applyGain();
+    if (Number.isFinite(boot.volume) || boot.muted) {
+      applyRemoteVolumeState(boot);
     }
 
     if (boot.stationId && radios.some((r) => r.id === boot.stationId)) {
@@ -3432,18 +3424,18 @@ function bindTuner() {
 
   TUNER_PLAY.addEventListener('click', togglePlay);
 
-  TUNER_VOLUME.addEventListener('input', (e) => {
+  const onVolumeInput = (e) => {
     const v = parseFloat(e.target.value);
-    currentGain = Number.isFinite(v) ? v : currentGain;
-    if (volumeMuted && currentGain > 0) setVolumeMuted(false);
-    // Au passage au-dessus de 100 %, brancher le graphe d'amplification.
-    syncBoostWiring();
-    applyGain();
-    localStorage.setItem('radar-player-vol', currentGain);
-    try {
-      window.RadarPlayerSync?.publishVolume?.(currentGain);
-    } catch { /* */ }
-  });
+    if (!Number.isFinite(v)) return;
+    // Curseur > 0 annule le mute local ; publier pour que le leader suive.
+    setSharedVolume(v, {
+      muted: v <= 0.001 ? true : false,
+      publish: true,
+    });
+  };
+  TUNER_VOLUME.addEventListener('input', onVolumeInput);
+  // change : certains navigateurs ne répètent pas input à la fin du glisser.
+  TUNER_VOLUME.addEventListener('change', onVolumeInput);
 
   initVolumeRangeBounds();
   bindVolumePopover();
@@ -3994,7 +3986,7 @@ async function play(radio) {
 
   // Claim leadership first so other same-origin players mute immediately.
   try {
-    window.RadarPlayerSync?.claimPlay?.(radio.id, currentGain);
+    window.RadarPlayerSync?.claimPlay?.(radio.id, currentGain, volumeMuted);
   } catch { /* */ }
 
   // Reprise Cast plutôt que double lecture locale + distante.
@@ -4026,7 +4018,7 @@ async function play(radio) {
     armPlayerSession();
     updatePlayUI();
     try {
-      window.RadarPlayerSync?.claimPlay?.(radio.id, currentGain);
+      window.RadarPlayerSync?.claimPlay?.(radio.id, currentGain, volumeMuted);
     } catch { /* */ }
   } catch {
     // Autoplay / gesture refusée : l’UI play reste inactive ; pas de toast (bruit inutile).
@@ -4202,7 +4194,7 @@ function pauseByUser() {
     suppressAudioError = false;
   }
   try {
-    window.RadarPlayerSync?.publishPause?.(currentStation?.id, currentGain);
+    window.RadarPlayerSync?.publishPause?.(currentStation?.id, currentGain, volumeMuted);
   } catch { /* */ }
   updatePlayUI();
 }
@@ -4510,17 +4502,69 @@ function rebuildAudio(withBoost) {
   applyGain();
 }
 
-function setVolumeMuted(muted) {
-  volumeMuted = muted;
-  if (muted) {
-    gainBeforeMute = currentGain > 0 ? currentGain : (gainBeforeMute || DEFAULT_GAIN);
+/**
+ * Applique gain + mute localement et, si demandé, publie aux autres onglets.
+ * Le leader possède le vrai <audio> : sans cette publication, un suiveur
+ * (fiche SEO, second onglet) ne changeait que son curseur.
+ */
+function setSharedVolume(gain, { muted, publish = false } = {}) {
+  if (Number.isFinite(gain)) {
+    currentGain = Math.min(GAIN_UI_MAX, Math.max(0, gain));
   }
-  updateVolumeUI();
+  if (muted !== undefined) {
+    if (muted) {
+      gainBeforeMute = currentGain > 0.001 ? currentGain : (gainBeforeMute || DEFAULT_GAIN);
+      volumeMuted = true;
+    } else {
+      volumeMuted = false;
+      if (currentGain <= 0.001 && gainBeforeMute > 0.001) {
+        currentGain = gainBeforeMute;
+      }
+    }
+  } else if (currentGain > 0.001 && volumeMuted) {
+    volumeMuted = false;
+  }
+
+  if (TUNER_VOLUME) TUNER_VOLUME.value = String(currentGain);
+  try {
+    localStorage.setItem('radar-player-vol', String(currentGain));
+  } catch { /* private mode */ }
+
+  // Franchir 100 % côté suiveur doit aussi brancher le graphe sur le leader.
+  syncBoostWiring();
   applyGain();
+  updateVolumeUI();
+  updateVolumeSliderVisual();
+
+  if (publish) {
+    try {
+      window.RadarPlayerSync?.publishVolume?.(currentGain, volumeMuted);
+    } catch { /* */ }
+  }
+}
+
+/** Applique volume/mute reçus d’un autre contexte (BroadcastChannel / storage). */
+function applyRemoteVolumeState(state) {
+  if (!state) return;
+  const hasVol = Number.isFinite(state.volume);
+  const hasMute = state.muted !== undefined && state.muted !== null;
+  if (!hasVol && !hasMute) return;
+
+  const nextGain = hasVol ? state.volume : currentGain;
+  const nextMuted = hasMute ? !!state.muted : volumeMuted;
+  const gainChanged = hasVol && Math.abs(nextGain - currentGain) > 0.005;
+  const muteChanged = hasMute && nextMuted !== volumeMuted;
+  if (!gainChanged && !muteChanged) return;
+
+  setSharedVolume(nextGain, { muted: nextMuted, publish: false });
+}
+
+function setVolumeMuted(muted, { publish = true } = {}) {
+  setSharedVolume(currentGain, { muted: !!muted, publish });
 }
 
 function toggleVolumeMute() {
-  setVolumeMuted(!volumeMuted);
+  setVolumeMuted(!volumeMuted, { publish: true });
 }
 
 function updateVolumeSliderVisual() {
