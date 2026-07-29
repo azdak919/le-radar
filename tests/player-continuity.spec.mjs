@@ -148,6 +148,55 @@ test('changer de poste sur un onglet suiveur bascule le flux du leader', async (
   }).toBe(true);
 });
 
+test('le volume réglé sur un onglet suiveur s’applique au leader', async ({ page, context }) => {
+  const host = page;
+  const peer = await context.newPage();
+
+  await host.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect.poll(() => host.evaluate(() => Boolean(window.RadarPlayerSync))).toBe(true);
+  await expect.poll(async () => host.locator('#tuner-select option').count()).toBeGreaterThan(1);
+  await host.locator('#tuner-select').selectOption('cism');
+  await expect.poll(async () => {
+    return host.locator('#radar-player').evaluate((a) => !a.paused && !!a.src);
+  }, { timeout: 12_000 }).toBe(true);
+
+  await peer.goto('/radios/cism/', { waitUntil: 'domcontentloaded' });
+  await expect.poll(async () => peer.locator('#tuner-volume').count(), { timeout: 15_000 }).toBe(1);
+  await expect.poll(() => peer.evaluate(() => {
+    const s = window.RadarPlayerSync?.readState?.();
+    return Boolean(s?.playing && s.leaderId && s.leaderId !== window.RadarPlayerSync.getTabId());
+  }), { timeout: 5_000 }).toBe(true);
+
+  // Suiveur : volume à 40 % (sans boost).
+  await peer.locator('#tuner-volume').evaluate((el) => {
+    el.value = '0.4';
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+
+  await expect.poll(() => host.evaluate(() => window.RadarPlayerSync.readState()?.volume), {
+    timeout: 5_000,
+  }).toBeCloseTo(0.4, 1);
+
+  await expect.poll(() => host.evaluate(() => {
+    const a = document.getElementById('radar-player');
+    // Lecture native (≤ 100 %) : audio.volume suit le gain effectif.
+    return {
+      gain: Number(document.getElementById('tuner-volume')?.value),
+      volume: a?.volume,
+      muted: a?.muted,
+    };
+  }), { timeout: 5_000 }).toMatchObject({
+    gain: expect.closeTo(0.4, 1),
+    muted: false,
+  });
+
+  await expect.poll(() => host.evaluate(() => {
+    const a = document.getElementById('radar-player');
+    // Selon boost branché ou non, volume élément = 1 ou ≈ gain.
+    return a.volume <= 1.001 && (Math.abs(a.volume - 0.4) < 0.08 || a.volume === 1);
+  })).toBe(true);
+});
+
 test('un suiveur froid ne publie pas de pause globale sur une session active', async ({ page, context }) => {
   // Régression : le nettoyage « fantôme » écrivait playing:false dans localStorage
   // et coupait l’hôte (nav-shell / SEO) qui détenait encore le vrai <audio>.

@@ -37,6 +37,7 @@
         stationId: s.stationId || null,
         playing: !!s.playing,
         volume: Number.isFinite(s.volume) ? s.volume : null,
+        muted: !!s.muted,
         leaderId: s.leaderId || null,
         updatedAt: s.updatedAt || 0,
       };
@@ -50,6 +51,7 @@
       stationId: null,
       playing: false,
       volume: null,
+      muted: false,
       leaderId: null,
       updatedAt: 0,
     };
@@ -57,6 +59,7 @@
       stationId: partial.stationId !== undefined ? partial.stationId : prev.stationId,
       playing: partial.playing !== undefined ? !!partial.playing : prev.playing,
       volume: partial.volume !== undefined ? partial.volume : prev.volume,
+      muted: partial.muted !== undefined ? !!partial.muted : prev.muted,
       leaderId: partial.leaderId !== undefined ? partial.leaderId : prev.leaderId,
       updatedAt: Date.now(),
     };
@@ -94,29 +97,39 @@
    * Claim leadership and start (or keep) playing.
    * Other tabs receive yield + state.
    */
-  function claimPlay(stationId, volume) {
+  function claimPlay(stationId, volume, muted) {
     post({ type: 'yield', stationId });
+    const prev = readState();
     return writeState({
       stationId,
       playing: true,
-      volume: volume != null ? volume : readState()?.volume,
+      volume: volume != null ? volume : prev?.volume,
+      muted: muted !== undefined ? !!muted : !!prev?.muted,
       leaderId: TAB_ID,
     });
   }
 
   /** Local pause published as global pause (only meaningful from leader / explicit pause). */
-  function publishPause(stationId, volume) {
+  function publishPause(stationId, volume, muted) {
+    const prev = readState();
     return writeState({
-      stationId: stationId != null ? stationId : readState()?.stationId,
+      stationId: stationId != null ? stationId : prev?.stationId,
       playing: false,
-      volume: volume != null ? volume : readState()?.volume,
+      volume: volume != null ? volume : prev?.volume,
+      muted: muted !== undefined ? !!muted : !!prev?.muted,
       leaderId: TAB_ID,
     });
   }
 
-  /** Volume-only update (any tab). */
-  function publishVolume(volume) {
-    return writeState({ volume });
+  /**
+   * Volume / mute — n’importe quel onglet (suiveur ou leader).
+   * Le leader applique le gain sur le vrai <audio> ; les autres mettent l’UI à jour.
+   */
+  function publishVolume(volume, muted) {
+    const partial = {};
+    if (volume !== undefined) partial.volume = volume;
+    if (muted !== undefined) partial.muted = !!muted;
+    return writeState(partial);
   }
 
   /** Station selected while not necessarily playing. */
