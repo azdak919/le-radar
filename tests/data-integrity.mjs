@@ -148,6 +148,25 @@ for (const [label, value] of airTextFields) {
   );
 }
 
+// Titres tronqués CJLO (« Words an... ») : si une URL /shows/… existe, le
+// bot doit reconstituer le nom complet (expandTruncatedTitle).
+{
+  const { expandTruncatedTitle } = require('../scripts/radio-schedule-lib.js');
+  assert(
+    expandTruncatedTitle('Words an...', 'http://www.cjlo.com/shows/words-and-culture') === 'Words and Culture',
+    'expandTruncatedTitle : Words and Culture depuis le slug',
+  );
+  for (const [id, station] of Object.entries(schedules)) {
+    for (const [i, slot] of (station.grid || []).entries()) {
+      if (!slot?.url || !/\.\.\.|…/.test(String(slot.title || ''))) continue;
+      assert(
+        false,
+        `radio-schedules.json ${id}.grid[${i}].title encore tronqué (${slot.title}) avec url — expandTruncatedTitle`,
+      );
+    }
+  }
+}
+
 /*
  * Couverture des grilles.
  *
