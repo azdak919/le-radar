@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-29T04:05:04.462Z",
+  "updated": "2026-07-29T06:57:12.042Z",
   "count": 19,
   "items": [
     {
@@ -178,7 +178,7 @@
           "type": "facebook",
           "url": "https://www.facebook.com/zonecampus",
           "handle": "zonecampus",
-          "stats": "2 043 mentions J'aime",
+          "stats": "",
           "label": "Facebook"
         }
       ]
@@ -202,6 +202,28 @@
           "handle": "@lexemplaire",
           "stats": "Le média-école des étudiant.e.s en journalisme de l'Université Laval, Québec.",
           "label": "X"
+        }
+      ]
+    },
+    {
+      "name": "Le Collectif",
+      "institution": "Université de Sherbrooke",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/jlecollectif/",
+          "handle": "@jlecollectif",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/journallecollectif",
+          "handle": "journallecollectif",
+          "stats": "",
+          "label": "Facebook"
         }
       ]
     },
@@ -275,42 +297,6 @@
           "handle": "@Polyscope",
           "stats": "Journal étudiant de Polytechnique Montréal @PolyMTL − De toute façon, on est les meilleurs depuis 1967!",
           "label": "X"
-        }
-      ]
-    },
-    {
-      "name": "The Tribune",
-      "institution": "McGill University",
-      "type": "universite",
-      "kind": "journal",
-      "networks": [
-        {
-          "type": "instagram",
-          "url": "https://instagram.com/thetribuneca/",
-          "handle": "@thetribuneca",
-          "stats": "",
-          "label": "Instagram"
-        },
-        {
-          "type": "facebook",
-          "url": "https://www.facebook.com/thetribuneca",
-          "handle": "thetribuneca",
-          "stats": "",
-          "label": "Facebook"
-        },
-        {
-          "type": "x",
-          "url": "https://twitter.com/thetribuneca",
-          "handle": "@thetribuneca",
-          "stats": "",
-          "label": "X"
-        },
-        {
-          "type": "youtube",
-          "url": "https://www.youtube.com/channel/UCdG5a0c987HGzvWUBENoyEA",
-          "handle": "@UCdG5a0c987HGzvWUBENoyEA",
-          "stats": "",
-          "label": "YouTube"
         }
       ]
     },
