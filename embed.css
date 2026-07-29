@@ -1117,12 +1117,12 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-thumb {
 }
 
 /*
- * EQ entre Cast et volume — même look que style.css (barres rouges --live,
- * animation height « eq »). L’embed legacy le masque (place) ; kiosque-v1
- * le réaffiche comme le bureau.
+ * EQ entre Cast et volume — hérite de style.css :
+ *  · lecture → barres rouges + animation « eq »
+ *  · buffering → barres grises + « eq-buffer »
+ * L’embed legacy le masque (place) ; kiosque-v1 le réaffiche.
  */
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-eq {
-  display: none;
   flex-shrink: 0;
   align-items: flex-end;
   gap: 2px;
@@ -1135,32 +1135,50 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-eq {
     display: flex !important;
   }
 }
-html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-eq span {
-  display: block;
-  width: 3px;
-  height: 4px;
-  background: var(--live, #c8102e);
-  border-radius: 2px;
+/* Tamponnage : toujours visible dans l’iframe (même < 600 px). */
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-buffering .tuner-eq {
+  display: flex !important;
+}
+/* Spécificité embed : forcer gris en buffering (sinon fond --live hérité). */
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-buffering .tuner-eq span {
+  background: rgba(255, 255, 255, 0.45);
+  height: 40%;
+  max-height: 16px;
+  border-radius: 1px;
   opacity: 0.9;
-  transform: none;
+  transform-origin: bottom center;
+  animation: eq-buffer 0.9s ease-in-out infinite alternate;
+}
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-buffering .tuner-eq span:nth-child(2) {
+  animation-delay: 0.15s;
+  height: 70%;
+}
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-buffering .tuner-eq span:nth-child(3) {
+  animation-delay: 0.3s;
+  height: 100%;
+}
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-buffering .tuner-eq span:nth-child(4) {
+  animation-delay: 0.45s;
+  height: 55%;
 }
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing .tuner-eq span {
+  background: var(--live, #c8102e);
+  border-radius: 2px;
+  height: 4px;
   animation: eq 760ms ease-in-out infinite;
+  transform: none;
 }
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing .tuner-eq span:nth-child(2) {
   animation-duration: 1000ms;
   animation-delay: 0s;
-  height: 4px;
 }
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing .tuner-eq span:nth-child(3) {
   animation-duration: 600ms;
   animation-delay: 90ms;
-  height: 4px;
 }
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing .tuner-eq span:nth-child(4) {
   animation-duration: 880ms;
   animation-delay: 40ms;
-  height: 4px;
 }
 
 /* Module « À venir » : un peu plus large comme le bureau. */

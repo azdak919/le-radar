@@ -1560,18 +1560,58 @@ html.is-tuner-presentation-paused .is-marquee > .tuner-now-sub-text {
   height: 18px;
   padding: 0 2px;
 }
+/* Visible en lecture (bureau) et pendant le tamponnage (tous formats). */
 @media (min-width: 600px) { .tuner-eq { display: flex; } }
+.tuner.is-buffering .tuner-eq { display: flex; }
 .tuner-eq span {
   width: 3px; height: 4px;
   background: var(--live);
   border-radius: 2px;
   opacity: 0.9;
+  transform-origin: bottom center;
 }
+/* Lecture : barres rouges, animation hauteur. */
 .tuner.is-playing .tuner-eq span { animation: eq 760ms ease-in-out infinite; }
 .tuner.is-playing .tuner-eq span:nth-child(2) { animation-duration: 1000ms; }
 .tuner.is-playing .tuner-eq span:nth-child(3) { animation-duration: 600ms; animation-delay: 90ms; }
 .tuner.is-playing .tuner-eq span:nth-child(4) { animation-duration: 880ms; animation-delay: 40ms; }
 @keyframes eq { 0%,100% { height: 4px; } 50% { height: 16px; } }
+
+/*
+ * Buffering : barres grises (ex-animation kiosque).
+ * is-playing et is-buffering sont exclusifs dans app.js (updatePlayUI).
+ */
+.tuner.is-buffering .tuner-eq span {
+  background: rgba(255, 255, 255, 0.45);
+  height: 40%;
+  max-height: 16px;
+  border-radius: 1px;
+  animation: eq-buffer 0.9s ease-in-out infinite alternate;
+}
+.tuner.is-buffering .tuner-eq span:nth-child(2) {
+  animation-delay: 0.15s;
+  height: 70%;
+}
+.tuner.is-buffering .tuner-eq span:nth-child(3) {
+  animation-delay: 0.3s;
+  height: 100%;
+}
+.tuner.is-buffering .tuner-eq span:nth-child(4) {
+  animation-delay: 0.45s;
+  height: 55%;
+}
+@keyframes eq-buffer {
+  from { transform: scaleY(0.45); }
+  to { transform: scaleY(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tuner.is-playing .tuner-eq span,
+  .tuner.is-buffering .tuner-eq span {
+    animation: none;
+    transform: none;
+  }
+  .tuner.is-buffering .tuner-eq span { height: 10px; }
+}
 
 .tuner-vol {
   position: relative;

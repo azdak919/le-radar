@@ -276,10 +276,16 @@ assert(
   'kiosque-v1 : remplissage volume (bleu radio-bright) comme le bureau',
 );
 assert(
-  embedCss.includes('[data-surface="kiosque-v1"] .tuner-eq span')
+  embedCss.includes('[data-surface="kiosque-v1"] .tuner.is-playing .tuner-eq span')
     && embedCss.includes('var(--live')
+    && embedCss.includes('[data-surface="kiosque-v1"] .tuner.is-buffering .tuner-eq span')
     && !embedCss.includes('embedEq'),
-  'kiosque-v1 : EQ entre cast et volume = barres --live + animation eq (pas blanc)',
+  'kiosque-v1 : EQ lecture rouge + buffering gris (pas d’animation maison)',
+);
+assert(
+  styleCss.includes('@keyframes eq-buffer')
+    && styleCss.includes('.tuner.is-buffering .tuner-eq span'),
+  'style : EQ grise réservée au buffering (site + iframe)',
 );
 assert(
   embedCss.includes('[data-surface="kiosque-v1"] .tuner-cast--bar'),
