@@ -7,6 +7,7 @@
  */
 const { decodeHtmlEntities } = require('./html-entities-lib');
 const { cleanText, slugify } = require('./historical-catalog-lib');
+const { normalizeAuthor } = require('./author-lib');
 
 function wordpressApiBase(source = {}) {
   const declared = String(source.historyApiBase || '').trim();
@@ -41,7 +42,7 @@ function wordpressPostToItem(post = {}, source = {}) {
   const title = cleanText(decodeHtmlEntities(post?.title?.rendered || ''));
   const link = String(post?.link || '').trim();
   if (!title || !link) return null;
-  const author = cleanText(decodeHtmlEntities(post?._embedded?.author?.[0]?.name || ''));
+  const author = normalizeAuthor(cleanText(decodeHtmlEntities(post?._embedded?.author?.[0]?.name || '')));
   const excerpt = cleanText(decodeHtmlEntities(
     post?.excerpt?.rendered || post?.yoast_head_json?.description || '',
   )).slice(0, 520);

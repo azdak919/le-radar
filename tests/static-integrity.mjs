@@ -187,6 +187,15 @@ assert(laPigePage.includes(' · '), 'journal : heure de publication visible requ
 assert(!/Crédit photo\s*:/i.test(laPigePage), 'journal : crédits photo absents des extraits SEO requis');
 assert(!/Cégep de Jonquière \(Saguenay/u.test(laPigePage), 'journal : région redondante dans le chapeau interdite');
 assert(laPigePage.includes('?source=La%20Pige#news-list'), 'journal : retour filtré vers tous les articles requis');
+assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lien Archives partagé requis');
+const traitPage = readFileSync(join(root, 'journaux/le-trait-dunion/index.html'), 'utf8');
+assert(traitPage.includes('>Articles historiques<'), 'journal historique : section adaptée requise');
+assert(traitPage.includes("Consulter les articles historiques de Le Trait d'Union"), 'journal historique : CTA d’archives requis');
+assert(!traitPage.includes("Voir tous les articles de Le Trait d'Union"), 'journal historique : CTA du fil vivant interdit');
+assert(traitPage.includes('href="../../archives/le-trait-dunion/"'), 'journal historique : lien direct vers les archives unifiées requis');
+const traitArchivePage = readFileSync(join(root, 'archives/le-trait-dunion/index.html'), 'utf8');
+assert(traitArchivePage.includes('>Lire la suite →</a>'), 'archive historique : action éditoriale cohérente requise');
+assert(!traitArchivePage.includes('Lien original redirigé et vérifié'), 'archive historique : statut technique caché requis');
 const seoPagesCss = readFileSync(join(root, 'seo-pages.css'), 'utf8');
 // Liens hors site (ville, région, site officiel, articles) → nouvel onglet.
 assert(

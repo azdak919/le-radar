@@ -421,7 +421,13 @@
       "popularity": 16,
       "_status": "stale",
       "_lastItemDate": "2024-11-14T14:41:41.000Z",
-      "_note": "Adresse corrigée : letdu.org (et non letraitdunion.org, domaine désormais sans lien avec le journal). Flux RSS WordPress fonctionnel; les articles historiques restent hors du fil selon la fraîcheur.",
+      "_note": "Adresse corrigée : letdu.org (et non letraitdunion.org, domaine désormais sans lien avec le journal). Flux RSS WordPress fonctionnel; les signatures réelles sont dans le premier paragraphe et non dans le compte WordPress « letdu ».",
+      "botHints": {
+        "authors": {
+          "ignoreRssAuthor": true,
+          "forcePageAuthor": true
+        }
+      },
       "_lastChecked": "2026-07-29T12:31:01.662Z",
       "_failCount": 0,
       "_lastFetchOk": "2026-07-29T12:31:01.662Z"

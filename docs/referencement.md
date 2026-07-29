@@ -169,6 +169,17 @@ public. Le workflow hebdomadaire `verify-historical-links.yml` est borné et
 tolérant aux incidents réseau pour ne pas transformer une source indisponible en
 bruit de Quality Gate.
 
+Quand un flux expose un compte technique à la place de la signature éditoriale,
+une passe distincte peut vérifier uniquement la byline visible, sans sauvegarder
+le corps de l’article :
+
+```bash
+node scripts/verify-historical-authors.js --update --source="Le Trait d'Union" --limit=20
+```
+
+Une signature absente reste absente : le catalogue ne remplace jamais une
+attribution inconnue par le nom d’un compte WordPress.
+
 Ce catalogue est **expérimental** : suivre impressions, indexation, erreurs de
 canonique et clics pendant 4 à 6 semaines avant d’augmenter les plafonds ou de
 soumettre son sitemap à Search Console. Les contenus historiques n’ont aucune
