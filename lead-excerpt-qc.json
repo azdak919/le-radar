@@ -1,30 +1,30 @@
 {
-  "updated": "2026-07-29T13:03:13.940Z",
+  "updated": "2026-07-29T14:33:27.543Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 5,
-  "withLeadExcerpt": 77,
-  "candidates": 5,
-  "enriched": 2,
+  "incomplete": 6,
+  "withLeadExcerpt": 76,
+  "candidates": 6,
+  "enriched": 3,
   "failed": 0,
   "ok": true,
   "samples": [
     {
-      "title": "Les femmes MAGA au service du patriarcat",
-      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
+      "title": "Les bases du plein air durable",
+      "link": "https://lecollectif.ca/a-la-une/les-bases-du-plein-air-durable/",
       "ok": true,
       "score": 100,
-      "chars": 393,
-      "sample": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer ",
+      "chars": 336,
+      "sample": "La première étape se réalise bien avant de franchir la porte, soit la planification de l’activité. O",
       "changed": true
     },
     {
-      "title": "Entre Sherbrooke et Montreux, deux façons de vivre la musique en ville",
-      "link": "https://lecollectif.ca/a-la-une/entre-sherbrooke-et-montreux-deux-facons-de-vivre-la-musique-en-ville/",
+      "title": "Une ligue d’été pour garder le hockey vivant en Estrie",
+      "link": "https://lecollectif.ca/a-la-une/une-ligue-dete-pour-garder-le-hockey-vivant-en-estrie/",
       "ok": true,
       "score": 100,
-      "chars": 400,
-      "sample": "Le Sherblues à Sherbrooke et le Montreux Jazz Festival en Suisse se déroulent presque en même temps ",
+      "chars": 345,
+      "sample": "Dans une région où le hockey occupe une place importante, la LBS s’ajoute à l’ensemble des programme",
       "changed": true
     },
     {
@@ -53,6 +53,15 @@
       "chars": 400,
       "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
       "changed": false
+    },
+    {
+      "title": "Les avantages du transport en commun",
+      "link": "https://lecollectif.ca/a-la-une/les-avantages-du-transport-en-commun/",
+      "ok": true,
+      "score": 76,
+      "chars": 400,
+      "sample": "Le transport en commun représente une solution importante pour réduire la pollution causée par les d",
+      "changed": true
     }
   ]
 }
