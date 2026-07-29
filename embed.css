@@ -947,7 +947,7 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
     max-height: none;
     min-height: 0;
     overflow: visible;
-    box-shadow: none;
+    box-shadow: none !important;
   }
   html[data-embed="tuner"][data-surface="kiosque-v1"]:has(.tuner-vol.is-open) .tuner {
     /* Barre seule garde le fond session ; le surplus iframe est transparent. */
@@ -956,6 +956,14 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
     max-height: var(--embed-bar-h);
     min-height: var(--embed-bar-h);
     overflow: visible;
+    /* Pas d’ombre sous la barre : sinon un flou noir fuit sous le popover. */
+    box-shadow: none !important;
+  }
+  /* Ombre lourde de style.css (0 14px 34px) = « flou noir » sous la bulle. */
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-slot,
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol.is-open .tuner-vol-slot {
+    box-shadow: none !important;
+    filter: none !important;
   }
 }
 
