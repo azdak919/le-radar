@@ -16,20 +16,18 @@ function recordHtml(record) {
     record.publishedAt ? localDate(record.publishedAt) : '',
     record.categories?.length ? record.categories.join(', ') : '',
   ].filter(Boolean).join(' · ');
-  const status = record.link?.status === 'redirected' ? 'Lien original redirigé et vérifié.' : 'Lien original vérifié.';
   return `      <article class="seo-archive-record">
-        <p class="seo-archive-record__source">${escapeHtml(record.source)}</p>
         <h2><a href="${escapeHtml(record.originalUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(record.title)}</a></h2>
         ${metadata ? `<p class="seo-archive-record__meta">${escapeHtml(metadata)}</p>` : ''}
         ${record.excerpt ? `<p>${escapeHtml(record.excerpt)}</p>` : ''}
-        <p class="seo-archive-record__origin"><a href="${escapeHtml(record.originalUrl)}" target="_blank" rel="noopener noreferrer">Lire l’article original sur ${escapeHtml(record.source)}</a> · ${status}</p>
+        <p class="seo-archive-record__origin"><a href="${escapeHtml(record.originalUrl)}" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p>
       </article>`;
 }
 
 function unavailableReferences(records) {
   if (!records.length) return '';
   const rows = records.slice(0, 10).map((record) => `          <li><strong>${escapeHtml(record.title)}</strong>${record.publishedAt ? ` <span>(${escapeHtml(localDate(record.publishedAt))})</span>` : ''} — lien original signalé indisponible lors de la dernière vérification.</li>`);
-  return `\n      <section class="seo-archive-unavailable"><h2>Références devenues indisponibles</h2><p>LE-RADAR.ca conserve ces métadonnées factuelles sans reproduire le contenu disparu.</p><ul>\n${rows.join('\n')}\n      </ul></section>`;
+  return `\n      <section class="seo-archive-unavailable"><h2>Références devenues indisponibles</h2><p>LE-RADAR.ca conserve les informations disponibles sans reproduire le contenu disparu.</p><ul>\n${rows.join('\n')}\n      </ul></section>`;
 }
 
 function collectionJsonLd({ siteBase, path, title, records }) {
@@ -73,13 +71,6 @@ function bySource(records, perSource = Infinity) {
   return [...groups.entries()].sort(([a], [b]) => a.localeCompare(b, 'fr'));
 }
 
-function sourceGenitive(source) {
-  const name = String(source || '').trim();
-  if (/^Le\s+/u.test(name)) return `du ${name.replace(/^Le\s+/u, '')}`;
-  if (/^Les\s+/u.test(name)) return `des ${name.replace(/^Les\s+/u, '')}`;
-  return `de ${name}`;
-}
-
 function buildHistoricalArchivePages({ catalog, config, siteBase }) {
   const initialSample = partialPublicSample(catalog?.records || [], config);
   const sample = {
@@ -92,9 +83,6 @@ function buildHistoricalArchivePages({ catalog, config, siteBase }) {
   const pages = [];
   const sourcePaths = new Map();
   const maxPages = Math.max(1, Number(config?.partial?.maxPages) || 1);
-  const indexableYears = Math.max(1, Number(config?.age?.indexableYears) || 1);
-  const conservationYears = Math.max(indexableYears, Number(config?.age?.conservationYears) || 3);
-  const conservationLabel = `${indexableYears} à ${conservationYears} ans`;
   const maxSourcePages = Math.max(0, maxPages - 1);
   const sources = bySource(sample.records).slice(0, maxSourcePages);
   const included = new Set(sources.map(([source]) => source));
@@ -123,7 +111,7 @@ function buildHistoricalArchivePages({ catalog, config, siteBase }) {
     sourcePaths.set(source, path);
     const grouped = groupedRecords(records);
     const conservationLink = conservationBySource.has(source)
-      ? `\n      <p class="seo-archive-record__origin"><a href="../conservation/${slug}/">Consulter les archives de conservation (${conservationLabel})</a></p>`
+      ? `\n      <p class="seo-archive-record__origin"><a href="../conservation/${slug}/">Consulter les archives historiques</a></p>`
       : '';
     const referenceLink = referenceBySource.has(source)
       ? `\n      <p class="seo-archive-record__origin"><a href="../reference/${slug}/">Consulter les archives de référence</a></p>`
@@ -149,37 +137,36 @@ function buildHistoricalArchivePages({ catalog, config, siteBase }) {
   for (const [source, records] of conservationSources) {
     const slug = slugify(source);
     const path = `archives/conservation/${slug}/`;
-    const sourceOf = sourceGenitive(source);
-    const title = `Archives de conservation ${sourceOf} | LE-RADAR.ca`;
+    const title = `Archives — ${source} | LE-RADAR.ca`;
     pages.push({
       path, changefreq: 'yearly', priority: '0.1', indexable: false,
       lastmod: records.map((record) => record.lastVerifiedAt).sort().at(-1) || null,
       html: renderPage({
         lang: 'fr', path, altPath: path, title,
-        description: `Métadonnées historiques de conservation ${sourceOf}, avec attribution et lien vers la publication originale.`,
-        h1: `Archives de conservation — ${source}`, eyebrow: `${conservationLabel} · non indexées`,
-        crumbs: [{ label: 'Accueil', href: '../../../' }, { label: 'Archives historiques', href: '../../' }, { label: 'Archives de conservation', href: '../' }, { label: source }],
-        bodyHtml: `      <p class="seo-lead">Ces métadonnées ont entre ${indexableYears} et ${conservationYears} ans. Elles restent consultables et attribuées; elles ne sont pas proposées à l’indexation automatique.</p>\n${groupedRecords(records)}`,
+        description: `Articles historiques de ${source}, avec attribution et lien vers la publication originale.`,
+        h1: `Archives — ${source}`,
+        crumbs: [{ label: 'Accueil', href: '../../../' }, { label: 'Archives historiques', href: '../../' }, { label: source }],
+        bodyHtml: `      <p class="seo-lead">Une sélection d’articles de ${escapeHtml(source)}, avec leur date, leur auteur lorsqu’il est indiqué et un lien vers la publication originale.</p>\n${groupedRecords(records)}`,
         jsonLd: collectionJsonLd({ siteBase, path, title, records }), siteBase, alternate: false,
         robots: 'noindex,follow', updated: records.map((record) => record.lastVerifiedAt).sort().at(-1),
       }),
     });
-    conservationRows.push(`        <li><a href="${slug}/">${escapeHtml(source)}</a> <span>${records.length} métadonnée${records.length > 1 ? 's' : ''} conservée${records.length > 1 ? 's' : ''}</span></li>`);
+    conservationRows.push(`        <li><a href="${slug}/">${escapeHtml(source)}</a> <span>${records.length} article${records.length > 1 ? 's' : ''}</span></li>`);
     if (!sourcePaths.has(source)) sourcePaths.set(source, path);
   }
 
   if (conservationRows.length) {
     const path = 'archives/conservation/';
-    const title = 'Archives de conservation des médias étudiants | LE-RADAR.ca';
+    const title = 'Archives par publication | LE-RADAR.ca';
     pages.push({
       path, changefreq: 'yearly', priority: '0.1', indexable: false,
       lastmod: displayedConservation.map((record) => record.lastVerifiedAt).sort().at(-1) || null,
       html: renderPage({
         lang: 'fr', path, altPath: path, title,
-        description: 'Métadonnées historiques de conservation de médias étudiants du Québec.',
-        h1: 'Archives de conservation', eyebrow: `${conservationLabel} · non indexées`,
-        crumbs: [{ label: 'Accueil', href: '../../' }, { label: 'Archives historiques', href: '../' }, { label: 'Archives de conservation' }],
-        bodyHtml: `      <p class="seo-lead">Ces archives restent consultables pour la continuité documentaire. Elles ne sont pas incluses dans les sitemaps d’indexation et ne réinjectent jamais d’articles dans le fil vivant.</p>\n      <section class="seo-section"><h2>Publications conservées</h2><ul class="seo-archive-sources">\n${conservationRows.join('\n')}\n      </ul></section>`,
+        description: 'Archives d’articles de médias étudiants du Québec, classées par publication.',
+        h1: 'Archives par publication',
+        crumbs: [{ label: 'Accueil', href: '../../' }, { label: 'Archives historiques', href: '../' }, { label: 'Archives par publication' }],
+        bodyHtml: `      <p class="seo-lead">Ces archives restent consultables pour la continuité documentaire et ne réinjectent jamais d’articles dans le fil vivant.</p>\n      <section class="seo-section"><h2>Publications</h2><ul class="seo-archive-sources">\n${conservationRows.join('\n')}\n      </ul></section>`,
         jsonLd: collectionJsonLd({ siteBase, path, title, records: displayedConservation }), siteBase, alternate: false,
         robots: 'noindex,follow', updated: displayedConservation.map((record) => record.lastVerifiedAt).sort().at(-1),
       }),
@@ -190,37 +177,67 @@ function buildHistoricalArchivePages({ catalog, config, siteBase }) {
   for (const [source, records] of referenceSources) {
     const slug = slugify(source);
     const path = `archives/reference/${slug}/`;
-    const sourceOf = sourceGenitive(source);
-    const title = `Archives de référence ${sourceOf} | LE-RADAR.ca`;
+    const title = `Archives — ${source} | LE-RADAR.ca`;
     pages.push({
       path, changefreq: 'yearly', priority: '0.1', indexable: false,
       lastmod: records.map((record) => record.lastVerifiedAt).sort().at(-1) || null,
       html: renderPage({
         lang: 'fr', path, altPath: path, title,
-        description: `Archives de référence ${sourceOf}, avec attribution et lien vers chaque publication originale.`,
-        h1: `Archives de référence — ${source}`, eyebrow: `Plus de ${conservationYears} ans · non indexées`,
-        crumbs: [{ label: 'Accueil', href: '../../../' }, { label: 'Archives historiques', href: '../../' }, { label: 'Archives de référence', href: '../' }, { label: source }],
-        bodyHtml: `      <p class="seo-lead">Articles historiques vérifiés de ${escapeHtml(source)}. Ils restent consultables avec leur attribution et leur lien d’origine, sans être proposés à l’indexation automatique.</p>\n${groupedRecords(records)}`,
+        description: `Articles historiques de ${source}, avec attribution et lien vers chaque publication originale.`,
+        h1: `Archives — ${source}`,
+        crumbs: [{ label: 'Accueil', href: '../../../' }, { label: 'Archives historiques', href: '../../' }, { label: source }],
+        bodyHtml: `      <p class="seo-lead">Une sélection d’articles de ${escapeHtml(source)}, avec leur date, leur auteur lorsqu’il est indiqué et un lien vers la publication originale.</p>\n${groupedRecords(records)}`,
         jsonLd: collectionJsonLd({ siteBase, path, title, records }), siteBase, alternate: false,
         robots: 'noindex,follow', updated: records.map((record) => record.lastVerifiedAt).sort().at(-1),
       }),
     });
-    referenceRows.push(`        <li><a href="${slug}/">${escapeHtml(source)}</a> <span>${records.length} article${records.length > 1 ? 's' : ''} référencé${records.length > 1 ? 's' : ''}</span></li>`);
+    referenceRows.push(`        <li><a href="${slug}/">${escapeHtml(source)}</a> <span>${records.length} article${records.length > 1 ? 's' : ''}</span></li>`);
     if (!sourcePaths.has(source)) sourcePaths.set(source, path);
+  }
+
+  // Une publication sans article indexable peut être répartie entre les
+  // bandes internes de conservation. Sa fiche ne doit jamais cacher une
+  // partie de ses archives derrière ces détails de pipeline : une route
+  // unifiée, hors index, rassemble tous ses articles accessibles.
+  const nonIndexBySource = new Map();
+  for (const record of [...displayedConservation, ...displayedReference]) {
+    if (included.has(record.source)) continue;
+    if (!nonIndexBySource.has(record.source)) nonIndexBySource.set(record.source, []);
+    nonIndexBySource.get(record.source).push(record);
+  }
+  for (const [source, records] of nonIndexBySource) {
+    const slug = slugify(source);
+    const path = `archives/${slug}/`;
+    const allRecords = records.sort((a, b) => Date.parse(b.publishedAt || 0) - Date.parse(a.publishedAt || 0));
+    const title = `Archives — ${source} | LE-RADAR.ca`;
+    pages.push({
+      path, changefreq: 'yearly', priority: '0.1', indexable: false,
+      lastmod: allRecords.map((record) => record.lastVerifiedAt).sort().at(-1) || null,
+      html: renderPage({
+        lang: 'fr', path, altPath: path, title,
+        description: `Articles historiques de ${source}, avec attribution et lien vers chaque publication originale.`,
+        h1: `Archives — ${source}`,
+        crumbs: [{ label: 'Accueil', href: '../../' }, { label: 'Archives historiques', href: '../' }, { label: source }],
+        bodyHtml: `      <p class="seo-lead">Une sélection d’articles de ${escapeHtml(source)}, avec leur date, leur auteur lorsqu’il est indiqué et un lien vers la publication originale.</p>\n${groupedRecords(allRecords)}`,
+        jsonLd: collectionJsonLd({ siteBase, path, title, records: allRecords }), siteBase, alternate: false,
+        robots: 'noindex,follow', updated: allRecords.map((record) => record.lastVerifiedAt).sort().at(-1),
+      }),
+    });
+    sourcePaths.set(source, path);
   }
 
   if (referenceRows.length) {
     const path = 'archives/reference/';
-    const title = 'Archives de référence des médias étudiants | LE-RADAR.ca';
+    const title = 'Archives par publication | LE-RADAR.ca';
     pages.push({
       path, changefreq: 'yearly', priority: '0.1', indexable: false,
       lastmod: displayedReference.map((record) => record.lastVerifiedAt).sort().at(-1) || null,
       html: renderPage({
         lang: 'fr', path, altPath: path, title,
-        description: 'Archives de référence de médias étudiants du Québec.',
-        h1: 'Archives de référence', eyebrow: `Plus de ${conservationYears} ans · non indexées`,
-        crumbs: [{ label: 'Accueil', href: '../../' }, { label: 'Archives historiques', href: '../' }, { label: 'Archives de référence' }],
-        bodyHtml: `      <p class="seo-lead">Ces archives rendent les publications historiques consultables sans les confondre avec l’actualité ni les pousser artificiellement dans les résultats de recherche.</p>\n      <section class="seo-section"><h2>Publications référencées</h2><ul class="seo-archive-sources">\n${referenceRows.join('\n')}\n      </ul></section>`,
+        description: 'Archives d’articles de médias étudiants du Québec, classées par publication.',
+        h1: 'Archives par publication',
+        crumbs: [{ label: 'Accueil', href: '../../' }, { label: 'Archives historiques', href: '../' }, { label: 'Archives par publication' }],
+        bodyHtml: `      <p class="seo-lead">Ces archives rendent les publications historiques consultables sans les confondre avec l’actualité.</p>\n      <section class="seo-section"><h2>Publications</h2><ul class="seo-archive-sources">\n${referenceRows.join('\n')}\n      </ul></section>`,
         jsonLd: collectionJsonLd({ siteBase, path, title, records: displayedReference }), siteBase, alternate: false,
         robots: 'noindex,follow', updated: displayedReference.map((record) => record.lastVerifiedAt).sort().at(-1),
       }),
@@ -236,7 +253,7 @@ function buildHistoricalArchivePages({ catalog, config, siteBase }) {
       description: 'Catalogue historique expérimental d’articles de médias étudiants du Québec, avec attribution et liens vérifiés vers les publications originales.',
       h1: 'Archives historiques des médias étudiants', eyebrow: 'Catalogue expérimental',
       crumbs: [{ label: 'Accueil', href: '../' }, { label: 'Archives historiques' }],
-      bodyHtml: `      <p class="seo-lead">Cette sélection publique est volontairement limitée et vérifiée. Les articles anciens restent exclus du fil d’actualité; chaque entrée renvoie clairement vers son média d’origine.</p>${conservationRows.length ? `\n      <p class="seo-archive-record__origin"><a href="conservation/">Consulter les archives de conservation (${conservationLabel})</a></p>` : ''}${referenceRows.length ? '\n      <p class="seo-archive-record__origin"><a href="reference/">Consulter les archives de référence</a></p>' : ''}\n      <section class="seo-section"><h2>Publications incluses</h2><ul class="seo-archive-sources">\n${hubRows.join('\n')}\n      </ul></section>`,
+      bodyHtml: `      <p class="seo-lead">Cette sélection publique est volontairement limitée et vérifiée. Les articles anciens restent exclus du fil d’actualité; chaque entrée renvoie clairement vers son média d’origine.</p>${conservationRows.length ? '\n      <p class="seo-archive-record__origin"><a href="conservation/">Consulter les archives par publication</a></p>' : ''}${referenceRows.length ? '\n      <p class="seo-archive-record__origin"><a href="reference/">Consulter les autres archives par publication</a></p>' : ''}\n      <section class="seo-section"><h2>Publications incluses</h2><ul class="seo-archive-sources">\n${hubRows.join('\n')}\n      </ul></section>`,
       jsonLd: collectionJsonLd({ siteBase, path: hubPath, title: hubTitle, records: sample.records }), siteBase, alternate: false,
       updated: sample.records.map((record) => record.lastVerifiedAt).sort().at(-1),
     }),

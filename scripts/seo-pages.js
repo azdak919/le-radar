@@ -342,18 +342,28 @@ function paperPage(paper, lang, ctx) {
   const latestLabel = localDateTime(paper.headlines?.[0]?.date, lang);
   const lastCheck = paperLastSuccessfulCheck(paper);
   const lastCheckLabel = localDateTime(lastCheck, lang);
-  body += `      <section class="seo-section">\n        <h2>${escapeHtml(t.latestHeadlines)}</h2>\n`
-    + (latestLabel ? `        <p class="seo-headlines__status">${escapeHtml(fill(t.latestArticleStatus, { date: latestLabel }))}`
-      + (lastCheckLabel && shouldExplainStaleSource(paper, lastCheck)
-        ? ` · ${escapeHtml(fill(t.sourceStaleStatus, { date: lastCheckLabel }))}`
-        : '')
-      + '</p>\n' : '');
-  body += headlineList(paper.headlines, t);
   const sourceHome = `${up}${lang === 'en' ? 'en/' : ''}?source=${encodeURIComponent(paper.name)}#news-list`;
-  body += `      <p class="seo-cta seo-cta--source"><a href="${escapeHtml(sourceHome)}" data-news-source="${escapeHtml(paper.name)}">${escapeHtml(fill(t.allSourceArticles, { name: paper.name }))}</a></p>\n`;
-  const archivePath = lang === 'fr' ? ctx.archivePaths?.get(paper.name) : null;
-  if (archivePath) {
-    body += `      <p class="seo-archive-link"><a href="${up}${escapeHtml(archivePath)}">${escapeHtml(t.historicalArchive)}</a></p>\n`;
+  const archivePath = ctx.archivePaths?.get(paper.name);
+  const hasRecentHeadlines = Array.isArray(paper.headlines) && paper.headlines.length > 0;
+  if (!hasRecentHeadlines && archivePath) {
+    // Une source peut n'avoir que des métadonnées historiques. Dans ce cas,
+    // le filtre du fil vivant serait vide : la fiche mène directement au
+    // catalogue plutôt que d'afficher un bouton sans résultat.
+    body += `      <section class="seo-section">\n        <h2>${escapeHtml(t.historicalHeadlines)}</h2>\n`
+      + `        <p class="seo-empty">${escapeHtml(fill(t.historicalOnly, { name: paper.name }))}</p>\n`
+      + `        <p class="seo-cta seo-cta--source"><a href="${up}${escapeHtml(archivePath)}">${escapeHtml(fill(t.historicalSourceArticles, { name: paper.name }))}</a></p>\n`;
+  } else {
+    body += `      <section class="seo-section">\n        <h2>${escapeHtml(t.latestHeadlines)}</h2>\n`
+      + (latestLabel ? `        <p class="seo-headlines__status">${escapeHtml(fill(t.latestArticleStatus, { date: latestLabel }))}`
+        + (lastCheckLabel && shouldExplainStaleSource(paper, lastCheck)
+          ? ` · ${escapeHtml(fill(t.sourceStaleStatus, { date: lastCheckLabel }))}`
+          : '')
+        + '</p>\n' : '');
+    body += headlineList(paper.headlines, t);
+    body += `      <p class="seo-cta seo-cta--source"><a href="${escapeHtml(sourceHome)}" data-news-source="${escapeHtml(paper.name)}">${escapeHtml(fill(t.allSourceArticles, { name: paper.name }))}</a></p>\n`;
+    if (archivePath) {
+      body += `      <p class="seo-archive-link"><a href="${up}${escapeHtml(archivePath)}">${escapeHtml(t.historicalArchive)}</a></p>\n`;
+    }
   }
   body += '      </section>\n';
 

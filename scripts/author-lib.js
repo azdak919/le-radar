@@ -6,7 +6,7 @@
  * « La rédaction » / « The editorial team ».
  */
 
-const GENERIC_AUTHORS = /^(admin|administrator|administrateur|editor|éditeur|editeur|rédaction|redaction|staff|wordpress|webmaster|collectif|tribune|link|daily|coordinating|exemplaire|quartier libre|zone campus|la pige|le délit|le delit|the link|the tribune|the mcgill daily|the campus|the plant|theplantnews)$/i;
+const GENERIC_AUTHORS = /^(admin|administrator|administrateur|editor|éditeur|editeur|rédaction|redaction|staff|wordpress|webmaster|collectif|tribune|link|daily|coordinating|exemplaire|quartier libre|zone campus|la pige|le délit|le delit|the link|the tribune|the mcgill daily|the campus|the plant|theplantnews|letdu)$/i;
 
 const EDITORIAL_BYLINE_RE = /^(?:Par|By)\s+(?:(?:La|L')\s*)?[Rr]édaction\b\.?/i;
 const EDITORIAL_BYLINE_EN_RE = /^(?:Par|By)\s+Editorial\s+(?:team|staff|board)\b\.?/i;
@@ -439,6 +439,51 @@ function authorsFromStandaloneByParagraph(html = '') {
   return [...new Set(names)];
 }
 
+/**
+ * Le Trait d’Union signe ses textes dans le premier paragraphe plutôt que dans
+ * la méta WordPress : « Un poème d’Iliana Radeva », « Un texte d’opinion par
+ * Écologie populaire », etc. Le compte WP `letdu` n’est pas une byline.
+ * Seuls les crédits explicites ou une ligne constituée d’un nom sont retenus.
+ */
+function authorFromLeTraitLeadCredit(html = '') {
+  if (!html) return '';
+  const bodyMatches = [...html.matchAll(
+    /class=["'][^"']*(?:entry-content|wp-block-post-content|post-content|article-content)[^"']*["'][^>]*>([\s\S]{0,5000})/gi,
+  )];
+  const body = bodyMatches.map((match) => match[1]).find((region) => /<p\b/i.test(region)) || '';
+  const leads = [...body.matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/gi)]
+    .map((match) => decodeBasicEntities(stripHtml(match[1])).replace(/\s+/g, ' ').trim())
+    .filter(Boolean);
+  const candidates = [...leads, decodeBasicEntities(stripHtml(body)).replace(/\s+/g, ' ').trim().slice(0, 900)];
+  if (!candidates.length) return '';
+
+  const patterns = [
+    /un\s+texte\s+d[’']opinion\b[\s\S]{0,100}?\s+(?:de|par)\s+(.+)$/iu,
+    /un\s+(?:poème|essai)\s+(?:de\s+|d[’'])(.+)$/iu,
+    /un\s+texte\s+d[’'](.+)$/iu,
+    /une\s+série\s+photographique\s+produite?\s+par\s+(.+)$/iu,
+  ];
+  for (const lead of candidates) {
+    for (const pattern of patterns) {
+      const explicit = lead.match(pattern);
+      if (!explicit) continue;
+      let raw = explicit[1]
+        .replace(/\s+(?:et|,)\s+(?:photographie|illustration)\b[\s\S]*$/iu, '')
+        .replace(/\s+([.])/gu, '$1')
+        .trim();
+      if (!/^(?:\p{Lu}\.){1,4}$/u.test(raw)) raw = raw.replace(/[.!?]+$/u, '').trim();
+      const author = normalizeAuthor(raw);
+      if (author && !isJunkAuthorName(author)) return author;
+    }
+    // Certaines contributions littéraires ne contiennent que la signature.
+    if (looksLikePersonNameLine(lead)) {
+      const author = expandAuthorName(lead, 'fr');
+      if (author && !isJunkAuthorName(author)) return author;
+    }
+  }
+  return '';
+}
+
 function authorsFromSchemaPerson(html = '') {
   const names = [];
   for (const m of html.matchAll(
@@ -782,6 +827,11 @@ function authorFromArticleHtml(html = '', lang = 'fr', hints = {}, sourceName = 
   const candidates = [];
   const l = lang === 'en' ? 'en' : 'fr';
   const sourceKey = normAuthorKey(String(sourceName || ''));
+
+  if (/^le\s+trait\s+d[’']union$/iu.test(String(sourceName || '').trim())) {
+    const leadCredit = authorFromLeTraitLeadCredit(html);
+    if (leadCredit) return leadCredit;
+  }
 
   const hintAuthors = authorsFromHintSelectors(html, hints);
   if (hintAuthors.length) {
@@ -1257,6 +1307,7 @@ module.exports = {
   authorsFromElementorPar,
   authorsFromTribuneAuthor,
   authorsFromHintSelectors,
+  authorFromLeTraitLeadCredit,
   focusHtmlForAuthorExtraction,
   detectFeedDefaultAuthors,
   isFeedDefaultAuthor,

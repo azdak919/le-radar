@@ -175,12 +175,15 @@ const T = {
     french: 'Français',
     english: 'Anglais',
     latestHeadlines: 'Derniers articles',
+    historicalHeadlines: 'Articles historiques',
     latestArticleStatus: 'Dernier article : {date}',
     sourceStaleStatus: 'Vérifiée le {date}',
     byline: 'Par',
     readMore: 'Lire la suite →',
     allSourceArticles: 'Voir tous les articles de {name}',
     historicalArchive: 'Consulter les archives historiques vérifiées',
+    historicalOnly: 'Les articles référencés de {name} restent accessibles dans les archives historiques.',
+    historicalSourceArticles: 'Consulter les articles historiques de {name}',
     noHeadlines: 'Aucun article récent au moment de la dernière mise à jour.',
     schedule: 'À l’antenne cette semaine',
     scheduleLive: 'À l’antenne',
@@ -212,6 +215,7 @@ const T = {
     footerNav: 'Liens de pied de page',
     footerDetails: 'À propos de LE-RADAR.ca',
     footerDirectory: 'Tous les médias étudiants du Québec',
+    archives: 'Archives',
     licenseIntro: 'Ce projet est distribué sous',
     licenseName: 'licence publique générale GNU, version 2',
     sourceCode: 'Code source (GitHub)',
@@ -252,12 +256,15 @@ const T = {
     french: 'French',
     english: 'English',
     latestHeadlines: 'Latest articles',
+    historicalHeadlines: 'Historical articles',
     latestArticleStatus: 'Latest article: {date}',
     sourceStaleStatus: 'Checked {date}',
     byline: 'By',
     readMore: 'Read more →',
     allSourceArticles: 'View all articles from {name}',
     historicalArchive: 'Browse verified historical archives',
+    historicalOnly: 'The referenced articles from {name} remain available in the historical archive.',
+    historicalSourceArticles: 'Browse historical articles from {name}',
     noHeadlines: 'No recent articles as of the last update.',
     schedule: 'On air this week',
     scheduleLive: 'On air',
@@ -289,6 +296,7 @@ const T = {
     footerNav: 'Footer links',
     footerDetails: 'About LE-RADAR.ca',
     footerDirectory: 'All Québec student media',
+    archives: 'Archives',
     licenseIntro: 'This project is distributed under the',
     licenseName: 'GNU General Public License, version 2',
     sourceCode: 'Source code (GitHub)',
@@ -390,6 +398,9 @@ function renderSiteFooter({
   const p = indent;
   const dirPath = lang === 'fr' ? 'medias/' : 'en/media/';
   const schedPath = lang === 'fr' ? 'horaires/' : 'en/schedules/';
+  // Le catalogue est actuellement francophone, mais son libellé est neutre et
+  // l’archive reste utile depuis le volet anglais.
+  const archivePath = 'archives/';
 
   // À la racine, `up` vaut './' : on le retire devant un chemin pour écrire
   // « horaires/ » et non « ./horaires/ », la forme que le reste du site et
@@ -400,6 +411,7 @@ function renderSiteFooter({
   if (!home) links.push(`<a href="${href('')}">${escapeHtml(t.backHome)}</a>`);
   links.push(`<a href="${href(dirPath)}">${escapeHtml(t.footerDirectory)}</a>`);
   links.push(`<a href="${href(schedPath)}">${escapeHtml(t.schedules)}</a>`);
+  links.push(`<a href="${href(archivePath)}">${escapeHtml(t.archives)}</a>`);
   // `altPath` vaut '' sur /en/ : la version française est la racine du site.
   // Tester la valeur et non sa véracité, sinon le volet anglais perd sa bascule.
   if (altPath !== null && altPath !== undefined) {
@@ -563,8 +575,7 @@ ${renderNativeTuner()}
 
     <main class="wire seo-wire">
       ${crumbHtml}
-      ${eyebrow ? `<p class="seo-eyebrow">${escapeHtml(eyebrow)}</p>` : ''}
-      <h1 class="seo-title">${escapeHtml(h1)}</h1>
+${eyebrow ? `      <p class="seo-eyebrow">${escapeHtml(eyebrow)}</p>\n` : ''}      <h1 class="seo-title">${escapeHtml(h1)}</h1>
 ${bodyHtml}
     </main>
     ${renderSiteFooter({ lang, up, home: depth === 0, altPath, updated, indent: '    ' })}
