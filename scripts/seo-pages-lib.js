@@ -172,9 +172,15 @@ const T = {
     french: 'Français',
     english: 'Anglais',
     latestHeadlines: 'Derniers articles',
-    readOnSource: 'Chaque titre renvoie à l’article original, sur le site du média.',
+    latestArticleStatus: 'Dernier article publié le {date}.',
+    sourceStaleStatus: 'La source a été vérifiée le {date}; aucun article plus récent n’a été détecté.',
+    byline: 'Par',
+    readMore: 'Lire la suite →',
+    allSourceArticles: 'Voir tous les articles de {name}',
     noHeadlines: 'Aucun article récent au moment de la dernière mise à jour.',
     schedule: 'À l’antenne cette semaine',
+    scheduleLive: 'À l’antenne',
+    scheduleUpcoming: 'À venir',
     scheduleNote: 'Grille colligée automatiquement à partir du site de la station ; elle peut varier.',
     schedulesNote: 'Grilles colligées automatiquement à partir des sites des stations ; elles peuvent varier.',
     scheduleWeek: 'Semaine du',
@@ -200,6 +206,7 @@ const T = {
     updated: 'Mise à jour',
     otherLang: 'English',
     footerNav: 'Liens de pied de page',
+    footerDetails: 'À propos de LE-RADAR.ca',
     footerDirectory: 'Tous les médias étudiants du Québec',
     licenseIntro: 'Ce projet est distribué sous',
     licenseName: 'licence publique générale GNU, version 2',
@@ -241,9 +248,15 @@ const T = {
     french: 'French',
     english: 'English',
     latestHeadlines: 'Latest articles',
-    readOnSource: 'Every headline links to the original article on the publication’s own site.',
+    latestArticleStatus: 'Latest article published on {date}.',
+    sourceStaleStatus: 'The source was checked on {date}; no newer article was found.',
+    byline: 'By',
+    readMore: 'Read more →',
+    allSourceArticles: 'View all articles from {name}',
     noHeadlines: 'No recent articles as of the last update.',
     schedule: 'On air this week',
+    scheduleLive: 'On air',
+    scheduleUpcoming: 'Up next',
     scheduleNote: 'Schedule collected automatically from the station’s website; it may change.',
     schedulesNote: 'Schedules collected automatically from each station’s website; they may change.',
     scheduleWeek: 'Week of',
@@ -269,6 +282,7 @@ const T = {
     updated: 'Updated',
     otherLang: 'Français',
     footerNav: 'Footer links',
+    footerDetails: 'About LE-RADAR.ca',
     footerDirectory: 'All Québec student media',
     licenseIntro: 'This project is distributed under the',
     licenseName: 'GNU General Public License, version 2',
@@ -358,7 +372,7 @@ const CSP = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inl
  * `updated` n'est passé que par les pages qui ont une fraîcheur propre.
  */
 function renderSiteFooter({
-  lang = 'fr', up = './', home = false, altPath = null, updated = null, indent = '      ',
+  lang = 'fr', up = './', home = false, altPath = null, updated = null, indent = '      ', variant = 'default',
 } = {}) {
   const t = T[lang];
   const p = indent;
@@ -382,11 +396,47 @@ function renderSiteFooter({
   }
 
   const sep = `<span class="site-foot__sep" aria-hidden="true">·</span>`;
-  const nav = links.join(`\n${p}    ${sep}\n${p}    `);
+  const navFor = (baseIndent) => links.join(`\n${baseIndent}    ${sep}\n${baseIndent}    `);
+  const nav = navFor(p);
+  const detailsNav = navFor(`${p}    `);
 
   const meta = updated
     ? `\n${p}  <p class="seo-foot-meta">${escapeHtml(t.updated)} ${escapeHtml(updated)}</p>`
     : '';
+
+  // La page de maintenance doit tenir dans un petit viewport sans perdre les
+  // mentions importantes. Le résumé reste toujours visible; le reste du
+  // pied de page demeure disponible à la demande, dans le même gabarit que
+  // partout ailleurs. Cette variante reste générée, donc `seo:update` ne
+  // peut pas la remplacer par un ancien footer complet.
+  if (variant === 'maintenance') {
+    return `<footer class="site-foot site-foot--maintenance">
+${p}  <div class="site-foot__brand">
+${p}    <p class="site-foot__wordmark notranslate" translate="no"><img class="site-foot__logo" src="${up}assets/icon.svg" width="24" height="24" alt="" aria-hidden="true">${BRAND_NAME}</p>
+${p}  </div>
+${p}  <p class="site-foot__summary">${escapeHtml(t.unofficial)}</p>
+${p}  <p class="site-foot__contact"><a href="${CONTACT_URL}" data-contact-channel="email" aria-label="${escapeHtml(t.contactAria)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>${escapeHtml(t.contactLabel)}</a></p>
+${p}  <details class="site-foot__details">
+${p}    <summary>${escapeHtml(t.footerDetails)}</summary>
+${p}    <div class="site-foot__details-body">
+${p}      <p class="site-foot__signature" lang="fr">${escapeHtml(BRAND_SIGNATURE)}</p>
+${p}      <nav class="site-foot__links" aria-label="${escapeHtml(t.footerNav)}">
+${p}        ${detailsNav}
+${p}      </nav>
+${p}      <p>${escapeHtml(t.licenseIntro)} <a href="${LICENSE_URL}" target="_blank" rel="noopener noreferrer license">${escapeHtml(t.licenseName)}</a>.</p>
+${p}      <div class="site-foot__credit">
+${p}        <p class="site-foot__author">
+${p}          ${escapeHtml(t.creditMade)} <a href="${href('easter-egg.html')}" class="site-foot__heart" aria-label="${escapeHtml(t.creditHeart)}">♡</a>
+${p}          ${escapeHtml(t.creditBy)} <a href="${COFFEE_URL}" class="site-foot__author-link" target="_blank" rel="noopener noreferrer" title="${escapeHtml(t.creditCoffee)}">Azdak</a>
+${p}          ${escapeHtml(t.creditYear)}
+${p}        </p>
+${p}        <p class="site-foot__legal">${escapeHtml(t.legalNote)}</p>
+${p}        <p class="site-foot__bot"><span class="site-foot__bot-ico" aria-hidden="true">🤖</span> ${escapeHtml(t.botNote)}</p>
+${p}      </div>${meta}
+${p}    </div>
+${p}  </details>
+${p}</footer>`;
+  }
 
   return `<footer class="site-foot">
 ${p}  <div class="site-foot__brand">
@@ -444,6 +494,7 @@ function renderPage({
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content="${escapeHtml(description)}" />
+    <meta name="theme-color" content="#ffffff" />
     <meta http-equiv="Content-Security-Policy" content="${CSP}" />
     <title>${escapeHtml(title)}</title>
     <link rel="canonical" href="${escapeHtml(canonical)}" />
@@ -516,26 +567,92 @@ ${bodyHtml}
 function factsList(rows) {
   const items = rows.filter((r) => r && r.value).map((r) => {
     const value = r.href
-      ? `<a href="${escapeHtml(r.href)}"${r.external ? ' rel="noopener"' : ''}>${escapeHtml(r.value)}</a>`
+      ? `<a href="${escapeHtml(r.href)}"${r.external ? ' rel="noopener"' : ''}${r.ariaLabel ? ` aria-label="${escapeHtml(r.ariaLabel)}"` : ''}>${escapeHtml(r.value)}</a>`
       : escapeHtml(r.value);
     return `          <div class="seo-fact"><dt>${escapeHtml(r.label)}</dt><dd>${value}</dd></div>`;
   });
   return items.length ? `      <dl class="seo-facts">\n${items.join('\n')}\n      </dl>\n` : '';
 }
 
+/* Une fiche SEO peut donner un peu plus de contexte qu'une carte compacte de
+ * l'accueil, sans devenir une copie de l'article. Les crédits photo, utiles à
+ * proximité d'une image, ne sont pas du contenu éditorial : on les retire
+ * seulement ici, avant le découpage. */
+const SEO_STANDARD_BRIEF_LIMIT = 360;
+
+function endsHeadlineSentence(text = '') {
+  return /[.!?»"')\]]\s*$/u.test(String(text).trim());
+}
+
+function cleanHeadlineBrief(value) {
+  let text = String(value || '')
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/\]\]>/g, '')
+    .replace(/\s*L['’]article\b[\s\S]*?est apparu en premier sur[\s\S]*$/i, '')
+    .replace(/\s*The\s+post\b[\s\S]*?appeared first on[\s\S]*$/i, '');
+
+  // « (Crédit photo : Nom, source). » et les variantes sans parenthèses.
+  text = text
+    .replace(/\s*\(\s*(?:crédit(?:\s+(?:photo|image|photographie))?|photo|image)\s*:\s*[^)]{1,220}\)\.?\s*/gi, ' ')
+    .replace(/\s*(?:crédit(?:\s+(?:photo|image|photographie))?|photo|image)\s*:\s*[^.]{1,180}\.\s*/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return text;
+}
+
+function headlineBrief(value, maxLength = SEO_STANDARD_BRIEF_LIMIT) {
+  const text = cleanHeadlineBrief(value);
+  // Plusieurs flux ne livrent qu'un extrait sans ponctuation finale. Même s'il
+  // tient dans le budget, l'ellipse doit alors annoncer honnêtement sa coupe.
+  if (!text || text.length <= maxLength) {
+    return { text, truncated: !!text && !endsHeadlineSentence(text) };
+  }
+
+  let cut = text.slice(0, maxLength);
+  // Même règle de fin de phrase que les cartes standard de l'accueil : jusqu'à
+  // 100 caractères de souplesse évitent une phrase amputée sans gonfler la carte.
+  const sentenceEnd = text.slice(maxLength).search(/[.!?»"')\]](?:\s|$)/);
+  if (sentenceEnd >= 0 && sentenceEnd < 100) {
+    cut = text.slice(0, maxLength + sentenceEnd + 1);
+  } else {
+    const lastSpace = cut.lastIndexOf(' ');
+    if (lastSpace > maxLength * 0.5) cut = cut.slice(0, lastSpace);
+  }
+  return { text: cut.replace(/[,;:\s]+$/u, '').trimEnd(), truncated: true };
+}
+
+function headlineDateTime(value, lang) {
+  const date = value ? new Date(value) : null;
+  if (!date || Number.isNaN(date.getTime())) return null;
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Toronto', year: 'numeric', month: '2-digit', day: '2-digit',
+  }).formatToParts(date);
+  const get = (type) => parts.find((part) => part.type === type)?.value;
+  const day = `${get('year')}-${get('month')}-${get('day')}`;
+  const clock = new Intl.DateTimeFormat(lang === 'en-CA' ? 'en-CA' : 'fr-CA', {
+    timeZone: 'America/Toronto', hour: '2-digit', minute: '2-digit',
+    hour12: lang === 'en-CA',
+  }).format(date);
+  const renderedClock = lang === 'en-CA' ? clock : clock.replace(':', ' h ');
+  return { machine: date.toISOString(), label: `${day} · ${renderedClock}` };
+}
+
 function headlineList(items, t) {
   if (!items.length) return `      <p class="seo-empty">${escapeHtml(t.noHeadlines)}</p>\n`;
   const rows = items.map((it) => {
-    const date = it.date ? new Date(it.date) : null;
-    const iso = date && !Number.isNaN(date.getTime()) ? date.toISOString().slice(0, 10) : '';
+    const published = headlineDateTime(it.date, t.lang);
+    const { text: brief, truncated } = headlineBrief(it.leadExcerpt || it.excerpt);
     return `          <li class="seo-headline">`
-      + `<a href="${escapeHtml(it.link)}" rel="noopener">${escapeHtml(it.title)}</a>`
-      + (iso ? `<time datetime="${iso}">${iso}</time>` : '')
-      + (it.author ? `<span class="seo-headline__by">${escapeHtml(it.author)}</span>` : '')
+      + `<a class="seo-headline__title" href="${escapeHtml(it.link)}" rel="noopener">${escapeHtml(it.title)}</a>`
+      + `<p class="seo-headline__meta">`
+      + (published ? `<time datetime="${escapeHtml(published.machine)}">${escapeHtml(published.label)}</time>` : '')
+      + (it.author ? `<span class="seo-headline__by">${escapeHtml(t.byline)} ${escapeHtml(it.author)}</span>` : '')
+      + '</p>'
+      + (brief ? `<p class="seo-headline__brief">${escapeHtml(brief)}${truncated ? ' …' : ''} ` : '<p class="seo-headline__brief">')
+      + `<a class="seo-headline__more" href="${escapeHtml(it.link)}" rel="noopener">${escapeHtml(t.readMore)}</a></p>`
       + '</li>';
   });
-  return `      <ul class="seo-headlines">\n${rows.join('\n')}\n      </ul>\n`
-    + `      <p class="seo-note">${escapeHtml(t.readOnSource)}</p>\n`;
+  return `      <ul class="seo-headlines">\n${rows.join('\n')}\n      </ul>\n`;
 }
 
 function cardGrid(cards) {
@@ -583,7 +700,78 @@ function scheduleContext(checkedAt, verifiedWeekOf, t) {
   return `      <p class="seo-schedule-meta">${items.join('<span aria-hidden="true">·</span>')}</p>\n`;
 }
 
-function scheduleTable(grid, t, { checkedAt = null, verifiedWeekOf = null } = {}) {
+/** Jour actuel à Québec. Même une grille ancienne reste plus facile à lire
+ * quand son mercredi, jeudi, etc. est repérable d'un coup d'œil; sa fraîcheur
+ * est déjà explicitement indiquée juste au-dessus par la date de collecte. */
+function scheduleTodayDay() {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Toronto', year: 'numeric', month: '2-digit', day: '2-digit',
+  }).formatToParts(new Date());
+  const get = (type) => parts.find((p) => p.type === type)?.value;
+  const year = Number(get('year'));
+  const month = Number(get('month'));
+  const day = Number(get('day'));
+  if (![year, month, day].every(Number.isFinite)) return null;
+  return new Date(Date.UTC(year, month - 1, day)).getUTCDay();
+}
+
+/** Heure actuelle à Québec, dans le même référentiel que les grilles. */
+function scheduleCurrentMinute() {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Toronto', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+  }).formatToParts(new Date());
+  const get = (type) => Number(parts.find((p) => p.type === type)?.value);
+  const hour = get('hour');
+  const minute = get('minute');
+  return Number.isFinite(hour) && Number.isFinite(minute) ? hour * 60 + minute : null;
+}
+
+/**
+ * Marque l'émission censée être à l'antenne d'après la grille et, lorsqu'il
+ * y a un trou, la prochaine. La source peut être ancienne : ces classes
+ * facilitent alors la lecture sans prétendre que la collecte vient d'avoir
+ * lieu (la date, affichée séparément, reste la source de vérité sur fraîcheur).
+ */
+function scheduleSlotStates(grid) {
+  const nowDay = scheduleTodayDay();
+  const nowMinute = scheduleCurrentMinute();
+  const state = new Map();
+  if (nowDay == null || nowMinute == null) return state;
+
+  const slots = grid.filter((slot) => slot && slot.title && slotMinutes(slot.start) != null);
+  const active = slots.filter((slot) => {
+    const start = slotMinutes(slot.start);
+    const end = slotMinutes(slot.end);
+    if (end == null) return slot.day === nowDay && nowMinute >= start;
+    if (end > start) return slot.day === nowDay && nowMinute >= start && nowMinute < end;
+    // 23:00–00:00 et les émissions qui franchissent minuit.
+    return (slot.day === nowDay && nowMinute >= start)
+      || (slot.day === (nowDay + 6) % 7 && nowMinute < end);
+  });
+  if (active.length) {
+    // En cas de chevauchement éditorial, privilégier le créneau commencé le
+    // plus récemment : c'est généralement la mise à jour la plus précise.
+    active.sort((a, b) => (slotMinutes(b.start) ?? 0) - (slotMinutes(a.start) ?? 0));
+    state.set(active[0], 'live');
+    return state;
+  }
+
+  let next = null;
+  let nextDistance = Infinity;
+  for (const slot of slots) {
+    const start = slotMinutes(slot.start);
+    let distance = ((slot.day - nowDay + 7) % 7) * 1440 + start - nowMinute;
+    if (distance < 0) distance += 7 * 1440;
+    if (distance < nextDistance) {
+      nextDistance = distance;
+      next = slot;
+    }
+  }
+  if (next) state.set(next, 'upcoming');
+  return state;
+}
+
+function scheduleTable(grid, t, { checkedAt = null, verifiedWeekOf = null, stationId = '' } = {}) {
   if (!grid || !grid.length) return '';
   const byDay = new Map();
   for (const slot of grid) {
@@ -601,9 +789,12 @@ function scheduleTable(grid, t, { checkedAt = null, verifiedWeekOf = null } = {}
   // dimanche) : sur cinq colonnes, la première rangée est alors la semaine et
   // la seconde le week-end, au lieu de couper samedi et dimanche en deux.
   const days = [1, 2, 3, 4, 5, 6, 0];
+  const todayDay = scheduleTodayDay();
+  const slotStates = scheduleSlotStates(grid);
   const blocks = days.map((day) => {
+    const todayClass = day === todayDay ? ' seo-day--today' : '';
     if (!byDay.has(day)) {
-      return `        <div class="seo-day seo-day--empty">\n          <h3>${escapeHtml(t.days[day] || '')}</h3>\n`
+      return `        <div class="seo-day seo-day--empty${todayClass}" data-schedule-day="${day}"${day === todayDay ? ' data-current-day="true"' : ''}>\n          <h3>${escapeHtml(t.days[day] || '')}</h3>\n`
         + `          <p class="seo-day__none">${escapeHtml(t.noSlots)}</p>\n        </div>`;
     }
     const slots = byDay.get(day)
@@ -622,17 +813,22 @@ function scheduleTable(grid, t, { checkedAt = null, verifiedWeekOf = null } = {}
         const label = s.url
           ? `<a href="${escapeHtml(s.url)}" rel="noopener">${title}</a>`
           : title;
-        return `            <li${overnight ? ' class="seo-slot--overnight"' : ''}>`
+        const state = slotStates.get(s);
+        const classes = [overnight && 'seo-slot--overnight', state && `seo-slot--${state}`]
+          .filter(Boolean)
+          .join(' ');
+        const stateLabel = state === 'live' ? t.scheduleLive : (state === 'upcoming' ? t.scheduleUpcoming : '');
+        return `            <li${classes ? ` class="${classes}"` : ''} data-schedule-start="${escapeHtml(s.start)}" data-schedule-end="${escapeHtml(s.end || '')}"${stateLabel ? ` aria-label="${escapeHtml(stateLabel)} : ${title}"` : ''}>`
           + `<time class="seo-slot__time">${range}</time>`
           + `<span class="seo-slot__title">${label}</span>`
           + (overnight ? `<span class="seo-slot__note">${escapeHtml(t.overnight)}</span>` : '')
           + '</li>';
       })
       .join('\n');
-    return `        <div class="seo-day">\n          <h3>${escapeHtml(t.days[day] || '')}</h3>\n          <ul>\n${slots}\n          </ul>\n        </div>`;
+    return `        <div class="seo-day${todayClass}" data-schedule-day="${day}"${day === todayDay ? ' data-current-day="true"' : ''}>\n          <h3>${escapeHtml(t.days[day] || '')}</h3>\n          <ul>\n${slots}\n          </ul>\n        </div>`;
   });
 
-  return `      <section class="seo-section" id="horaire">\n        <h2>${escapeHtml(t.schedule)}</h2>\n`
+  return `      <section class="seo-section" id="horaire"${stationId ? ` data-schedule-station="${escapeHtml(stationId)}"` : ''}>\n        <h2>${escapeHtml(t.schedule)}</h2>\n`
     + scheduleContext(checkedAt, verifiedWeekOf, t)
     + `      <div class="seo-schedule-scroll">\n      <div class="seo-schedule">\n${blocks.join('\n')}\n      </div>\n      </div>\n`
     + `      <p class="seo-note">${escapeHtml(t.scheduleNote)}</p>\n      </section>\n`;
@@ -661,4 +857,7 @@ module.exports = {
   slotMinutes,
   scheduleTable,
   scheduleContext,
+  scheduleTodayDay,
+  scheduleCurrentMinute,
+  scheduleSlotStates,
 };

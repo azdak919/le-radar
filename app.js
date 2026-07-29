@@ -435,6 +435,7 @@ let listenWindowId = null;
 let radioNowPlaying = { stations: {}, updatedAt: null };
 let radioSchedules = { stations: {}, timezone: 'America/Toronto' };
 let nowPlayingPollTimer = null;
+let nowPlayingRefreshPromise = null;
 let nowAirTick = null;
 let nowAirPreviewTimer = null;
 let nowAirPreviewRadio = null;
@@ -459,6 +460,13 @@ let airPanelRotateTimer = null;
 let nowAirCrossfadePending = false;
 /** Incrémenté à chaque fondu pour annuler les timeouts obsolètes. */
 let nowAirFadeGen = 0;
+// La lecture audio continue en arrière-plan; seules les animations de
+// présentation sont figées. Sans cette séparation, les navigateurs qui
+// suspendent leurs timers font « rattraper » le synthétiseur au retour.
+let tunerPresentationPaused = false;
+let tunerPresentationNeedsRefresh = false;
+let tunerPresentationResumePromise = null;
+let tunerPresentationResumeGeneration = 0;
 // L’iframe du Pomodoro est un espace de concentration : laisser chaque
 // station / émission lisible plus longtemps avant de passer à la suivante.
 // La page Radar conserve son rythme plus vif.
@@ -527,8 +535,12 @@ async function init() {
   } catch (_) { /* ignore */ }
   initMastheadActions();
   renderTodayDate();
+  syncSeoScheduleNow();
   // L'heure du mât est décorative, mais doit rester juste sans recharger la page.
-  window.setInterval(renderTodayDate, 30_000);
+  window.setInterval(() => {
+    renderTodayDate();
+    syncSeoScheduleNow();
+  }, 30_000);
   // Les constantes météo sont déclarées plus bas dans ce script : microtask
   // = après l'évaluation complète du fichier, sans retarder le reste du site.
   queueMicrotask(() => { void initMastheadWeather(); });
@@ -595,6 +607,7 @@ async function init() {
     renderTunerNowAir();
   });
   startNowAirTick();
+  initTunerPresentationLifecycle();
   restoreVolume();
   initPlayerSync();
   registerServiceWorker();
@@ -920,6 +933,101 @@ function renderTodayDate() {
       hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
     }).replace(/\s*h\s*/u, ':');
   }
+}
+
+/** Heure et jour à Québec, même si la personne consulte le site ailleurs. */
+function seoScheduleMoment() {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Toronto', year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+  }).formatToParts(new Date());
+  const n = (type) => Number(parts.find((part) => part.type === type)?.value);
+  const year = n('year');
+  const month = n('month');
+  const day = n('day');
+  const hour = n('hour');
+  const minute = n('minute');
+  if (![year, month, day, hour, minute].every(Number.isFinite)) return null;
+  return {
+    day: new Date(Date.UTC(year, month - 1, day)).getUTCDay(),
+    minute: hour * 60 + minute,
+  };
+}
+
+function seoScheduleMinute(value = '') {
+  const match = /^(\d{1,2}):(\d{2})$/.exec(String(value).trim());
+  if (!match) return null;
+  const hour = Number(match[1]);
+  const minute = Number(match[2]);
+  return hour <= 24 && minute < 60 ? hour * 60 + minute : null;
+}
+
+/**
+ * Les pages SEO sont statiques pour rester lisibles sans JavaScript, mais
+ * leur repère temporel ne doit pas rester bloqué au jour de génération.
+ * Cette amélioration progressive actualise le jour et un seul créneau — en
+ * ondes, ou à venir si la grille contient un trou — selon l'heure de Québec.
+ */
+function syncSeoScheduleNow() {
+  const days = [...document.querySelectorAll('.seo-day[data-schedule-day]')];
+  if (!days.length) return;
+  const now = seoScheduleMoment();
+  if (!now) return;
+  const slots = [];
+  for (const dayEl of days) {
+    const day = Number(dayEl.dataset.scheduleDay);
+    const isToday = day === now.day;
+    dayEl.classList.toggle('seo-day--today', isToday);
+    if (isToday) dayEl.dataset.currentDay = 'true';
+    else delete dayEl.dataset.currentDay;
+    for (const el of dayEl.querySelectorAll('li[data-schedule-start]')) {
+      el.classList.remove('seo-slot--live', 'seo-slot--upcoming', 'seo-slot--playing');
+      el.removeAttribute('aria-label');
+      const start = seoScheduleMinute(el.dataset.scheduleStart);
+      const end = seoScheduleMinute(el.dataset.scheduleEnd);
+      if (start != null) slots.push({ el, day, start, end });
+    }
+  }
+  const active = slots.filter((slot) => {
+    if (slot.end == null) return slot.day === now.day && now.minute >= slot.start;
+    if (slot.end > slot.start) return slot.day === now.day && now.minute >= slot.start && now.minute < slot.end;
+    return (slot.day === now.day && now.minute >= slot.start)
+      || (slot.day === (now.day + 6) % 7 && now.minute < slot.end);
+  }).sort((a, b) => b.start - a.start)[0];
+
+  let selected = active;
+  let state = active ? 'live' : 'upcoming';
+  if (!selected) {
+    let distance = Infinity;
+    for (const slot of slots) {
+      let delta = ((slot.day - now.day + 7) % 7) * 1440 + slot.start - now.minute;
+      if (delta < 0) delta += 7 * 1440;
+      if (delta < distance) { distance = delta; selected = slot; }
+    }
+  }
+  if (!selected) {
+    syncSeoSchedulePlayback();
+    return;
+  }
+  selected.el.classList.add(state === 'live' ? 'seo-slot--live' : 'seo-slot--upcoming');
+  const en = document.documentElement.lang.startsWith('en');
+  const label = state === 'live' ? (en ? 'On air' : 'À l’antenne') : (en ? 'Up next' : 'À venir');
+  selected.el.setAttribute('aria-label', `${label}: ${selected.el.textContent.trim()}`);
+  syncSeoSchedulePlayback();
+}
+
+/** Un créneau présent est bleu; il ne devient rouge que si cette station joue ici. */
+function syncSeoSchedulePlayback() {
+  const stationId = document.querySelector('[data-schedule-station]')?.dataset.scheduleStation;
+  const playingThisStation = Boolean(
+    stationId
+    && currentStation?.id === stationId
+    && isPlaybackActive()
+    && !isBuffering,
+  );
+  document.querySelectorAll('.seo-slot--live').forEach((slot) => {
+    slot.classList.toggle('seo-slot--playing', playingThisStation);
+  });
 }
 
 // ─── Météo des principaux campus (desktop / tablette) ────────────────────────
@@ -1795,7 +1903,7 @@ function advanceAirPhase(phaseCount) {
  */
 function syncAirPanelRotate(radio) {
   const phases = airRotationPhases(radio, { withSlogan: false });
-  if (!currentStation || phases.length < 2 || isTunerSubRotateMode()) {
+  if (isTunerPresentationPaused() || !currentStation || phases.length < 2 || isTunerSubRotateMode()) {
     stopAirPanelRotate();
     return;
   }
@@ -1811,7 +1919,7 @@ function syncAirPanelRotate(radio) {
  */
 function scheduleAirPanelRotateTick() {
   stopAirPanelRotate();
-  if (!currentStation || isTunerSubRotateMode()) return;
+  if (isTunerPresentationPaused() || !currentStation || isTunerSubRotateMode()) return;
 
   const phases = airRotationPhases(currentStation, { withSlogan: false });
   if (phases.length < 2) return;
@@ -1819,7 +1927,7 @@ function scheduleAirPanelRotateTick() {
   const phase = phases[airPhaseIndex % phases.length];
 
   whenMarqueeSettled(TUNER_NOWAIR_TITLE, () => {
-    if (!currentStation || isTunerSubRotateMode() || airPanelRotateTimer) return;
+    if (isTunerPresentationPaused() || !currentStation || isTunerSubRotateMode() || airPanelRotateTimer) return;
     const delay = Math.max(
       airPhaseDwellMs(phase, AIR_PANEL_ROTATE_MS),
       marqueeRoundTripMs(TUNER_NOWAIR_TITLE),
@@ -1828,7 +1936,7 @@ function scheduleAirPanelRotateTick() {
     airPanelRotateTimer = setTimeout(() => {
       airPanelRotateTimer = null;
       const live = airRotationPhases(currentStation, { withSlogan: false });
-      if (!currentStation || live.length < 2 || isTunerSubRotateMode()) return;
+      if (isTunerPresentationPaused() || !currentStation || live.length < 2 || isTunerSubRotateMode()) return;
       advanceAirPhase(live.length);
       // `renderTunerNowAir()` réarme le cycle via `syncAirPanelRotate()` :
       // ne pas replanifier ici, on programmerait deux fois.
@@ -2432,7 +2540,7 @@ function scheduleNowAirPreviewTick() {
     clearTimeout(nowAirPreviewTimer);
     nowAirPreviewTimer = null;
   }
-  if (currentStation || !isNowAirPanelPreviewMode()) return;
+  if (isTunerPresentationPaused() || currentStation || !isNowAirPanelPreviewMode()) return;
 
   // Dans l'iframe, le sous-titre du dial est volontairement étroit et peut
   // défiler longtemps. Ne pas faire dépendre l'aperçu des postes de cette
@@ -2441,7 +2549,7 @@ function scheduleNowAirPreviewTick() {
   if (IS_TUNER_EMBED) {
     nowAirPreviewTimer = setTimeout(() => {
       nowAirPreviewTimer = null;
-      if (currentStation || !isNowAirPanelPreviewMode()) return;
+      if (isTunerPresentationPaused() || currentStation || !isNowAirPanelPreviewMode()) return;
       pickNowAirPreviewRadio();
       renderTunerNowAir();
       scheduleNowAirPreviewTick();
@@ -2450,7 +2558,7 @@ function scheduleNowAirPreviewTick() {
   }
 
   planTunerSubRotateDelay(TUNER_SUB, 0, (delay) => {
-    if (currentStation || !isNowAirPanelPreviewMode()) return;
+    if (isTunerPresentationPaused() || currentStation || !isNowAirPanelPreviewMode()) return;
     // Ne PAS plafonner ce délai. Sur téléphone la ligne porte l'émission, la
     // station, l'établissement et l'horaire d'un seul tenant — le panneau
     // latéral étant masqué — donc elle défile, et `marqueeReadingTimeMs()`
@@ -2461,7 +2569,7 @@ function scheduleNowAirPreviewTick() {
     // change de poste avant la fin du défilement.
     nowAirPreviewTimer = setTimeout(() => {
       nowAirPreviewTimer = null;
-      if (currentStation || !isNowAirPanelPreviewMode()) return;
+      if (isTunerPresentationPaused() || currentStation || !isNowAirPanelPreviewMode()) return;
       pickNowAirPreviewRadio();
       renderTunerNowAir();
       scheduleNowAirPreviewTick();
@@ -2470,7 +2578,7 @@ function scheduleNowAirPreviewTick() {
 }
 
 function startNowAirPreview() {
-  if (nowAirPreviewTimer || currentStation || !isNowAirPanelPreviewMode()) return;
+  if (isTunerPresentationPaused() || nowAirPreviewTimer || currentStation || !isNowAirPanelPreviewMode()) return;
   if (!nowAirPreviewRadio) pickNowAirPreviewRadio();
   scheduleNowAirPreviewTick();
 }
@@ -2525,7 +2633,7 @@ function scheduleTunerSubRotateTick() {
     clearTimeout(tunerSubRotateTimer);
     tunerSubRotateTimer = null;
   }
-  if (!isTunerSubRotateMode() || !currentStation) return;
+  if (isTunerPresentationPaused() || !isTunerSubRotateMode() || !currentStation) return;
 
   const activeEl = dialRotateSlotB ? TUNER_SUB_AIR : TUNER_SUB;
   // Phase actuellement lisible : c'est elle qui décide du temps d'affichage
@@ -2534,10 +2642,10 @@ function scheduleTunerSubRotateTick() {
   const phase = shown.length ? shown[airPhaseIndex % shown.length] : null;
 
   planTunerSubRotateDelay(activeEl, 0, (delay) => {
-    if (!isTunerSubRotateMode() || !currentStation) return;
+    if (isTunerPresentationPaused() || !isTunerSubRotateMode() || !currentStation) return;
     tunerSubRotateTimer = setTimeout(() => {
       tunerSubRotateTimer = null;
-      if (!isTunerSubRotateMode() || !currentStation) return;
+      if (isTunerPresentationPaused() || !isTunerSubRotateMode() || !currentStation) return;
       const phases = dialPhasesForRadio(currentStation);
       if (phases.length < 2) {
         renderTunerNowAir();
@@ -2555,7 +2663,7 @@ function scheduleTunerSubRotateTick() {
 }
 
 function restartTunerSubRotateTimer() {
-  if (TUNER_SUB?.parentElement?.classList.contains('is-rotating') && currentStation) {
+  if (!isTunerPresentationPaused() && TUNER_SUB?.parentElement?.classList.contains('is-rotating') && currentStation) {
     scheduleTunerSubRotateTick();
   }
 }
@@ -2755,7 +2863,7 @@ function initTunerSubRotateListeners() {
 }
 
 function renderTunerNowAir() {
-  if (!TUNER_NOWAIR) return;
+  if (!TUNER_NOWAIR || isTunerPresentationPaused()) return;
 
   const previewing = isNowAirPanelPreviewMode();
   let title;
@@ -2891,17 +2999,86 @@ function startNowAirTick() {
   nowAirTick = setInterval(renderTunerNowAir, 30000);
 }
 
-async function refreshNowPlayingCache() {
-  try {
-    radioNowPlaying = decodeNowPlayingPayload(
-      await fetch(appAsset('radio-nowplaying.json'), { cache: 'no-store' }).then((r) => r.json()),
-    );
-  } catch {
-    /* ignore */
+function isTunerPresentationPaused() {
+  return tunerPresentationPaused || document.visibilityState === 'hidden';
+}
+
+/** Gèle seulement le visuel : ni l'audio, ni Media Session, ni les polls ne sont touchés. */
+function pauseTunerPresentation() {
+  if (tunerPresentationPaused) return;
+  tunerPresentationPaused = true;
+  tunerPresentationNeedsRefresh = true;
+  tunerPresentationResumeGeneration += 1;
+  document.documentElement.classList.add('is-tuner-presentation-paused');
+  stopAirPanelRotate();
+  stopTunerSubRotate();
+  stopNowAirPreview();
+  // Annule tout fondu commencé juste avant l'arrière-plan.
+  nowAirFadeGen += 1;
+}
+
+/**
+ * Retour visible : actualiser d'abord les deux sources live, puis seulement
+ * ensuite réécrire le synthétiseur à la première phase (« À l’antenne »).
+ * Une promesse partagée absorbe visibilitychange + pageshow + focus, qui
+ * arrivent généralement ensemble au retour d'un onglet.
+ */
+function resumeTunerPresentation() {
+  if (document.visibilityState === 'hidden' || !tunerPresentationNeedsRefresh) {
+    return tunerPresentationResumePromise || Promise.resolve();
   }
-  // Re-poll navigateur des APIs CORS signalées par le bot (clientPoll).
-  await refreshStationLiveApis();
-  renderTunerNowAir();
+  if (tunerPresentationResumePromise) return tunerPresentationResumePromise;
+
+  const generation = ++tunerPresentationResumeGeneration;
+  tunerPresentationResumePromise = refreshNowPlayingCache({ render: false })
+    .catch(() => { /* la dernière information fiable reste affichable */ })
+    .finally(() => {
+      tunerPresentationResumePromise = null;
+      if (generation !== tunerPresentationResumeGeneration || document.visibilityState === 'hidden') return;
+      tunerPresentationPaused = false;
+      tunerPresentationNeedsRefresh = false;
+      document.documentElement.classList.remove('is-tuner-presentation-paused');
+      // Repartir de la phase la plus utile et d'un marquee neuf, jamais d'un
+      // timer vieux de plusieurs minutes qui tenterait de combler son retard.
+      airPhaseIndex = 0;
+      dialRotateSlotB = false;
+      nowAirCrossfadePending = false;
+      nowAirFadeGen += 1;
+      lastNowAir = { title: null, sub: null, empty: null, previewId: null, kind: null, stationId: null };
+      renderTunerNowAir();
+      scheduleMarqueeRefresh();
+    });
+  return tunerPresentationResumePromise;
+}
+
+function initTunerPresentationLifecycle() {
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') pauseTunerPresentation();
+    else resumeTunerPresentation();
+  });
+  window.addEventListener('pagehide', pauseTunerPresentation);
+  window.addEventListener('pageshow', resumeTunerPresentation);
+  window.addEventListener('focus', resumeTunerPresentation);
+}
+
+async function refreshNowPlayingCache({ render = true } = {}) {
+  if (!nowPlayingRefreshPromise) {
+    nowPlayingRefreshPromise = (async () => {
+      try {
+        radioNowPlaying = decodeNowPlayingPayload(
+          await fetch(appAsset('radio-nowplaying.json'), { cache: 'no-store' }).then((r) => r.json()),
+        );
+      } catch {
+        /* Le cache mémoire reste le repli si la collecte échoue. */
+      }
+      // Re-poll navigateur des APIs CORS signalées par le bot (clientPoll).
+      await refreshStationLiveApis();
+    })().finally(() => {
+      nowPlayingRefreshPromise = null;
+    });
+  }
+  await nowPlayingRefreshPromise;
+  if (render && !isTunerPresentationPaused()) renderTunerNowAir();
 }
 
 /**
@@ -3806,6 +3983,7 @@ function updatePlayUI() {
   TUNER_PLAY.classList.toggle('is-buffering', isBuffering);
   TUNER_PLAY.classList.toggle('is-external', external && !audible && !isBuffering);
   TUNER.classList.toggle('is-playing', audible);
+  syncSeoSchedulePlayback();
   TUNER.classList.toggle('is-buffering', isBuffering);
   TUNER.classList.toggle('is-external', external && !audible && !isBuffering);
   if (isBuffering) {
@@ -4536,6 +4714,13 @@ async function loadNews() {
     news = Array.isArray(data) ? data : (data.items || []);
     news.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
     assignSourceColors();
+    // Les fiches SEO de journaux ramènent ici avec ?source=… : on valide
+    // d'abord contre les données réellement chargées, plutôt que d'afficher
+    // un filtre inexistant après une URL ancienne ou bricolée.
+    const requestedSource = new URLSearchParams(window.location.search).get('source');
+    if (requestedSource && news.some((item) => item.source === requestedSource)) {
+      newsSourceFilter = requestedSource;
+    }
     if (data.updated) {
       // Heure réelle de la dernière écriture de news.json.
       // updatedSlot (passe planifiée) n'est utilisé que s'il est proche de l'heure
@@ -6073,9 +6258,10 @@ function removeTailArticleForItem(item) {
  * Prochain En bref depuis la réserve (date desc) :
  *  1) nouvelle institution, **hors** institutions déjà en une / vedette
  *  2) filet anti-vide (allowExtra) : encore hors une/vedette, même si l’institution
- *     est déjà en En bref — jamais une institution hero (place aux autres campus)
+ *     est déjà en En bref. En vue source, `allowHeroInstitution` autorise le
+ *     média filtré à remplir sa propre colonne.
  */
-function takeNextBriefFromReserve({ allowExtra = false } = {}) {
+function takeNextBriefFromReserve({ allowExtra = false, allowHeroInstitution = false } = {}) {
   if (!magazineReserve.length) return null;
 
   const notHeroInst = (item) => {
@@ -6087,7 +6273,7 @@ function takeNextBriefFromReserve({ allowExtra = false } = {}) {
     const idx = magazineReserve.findIndex((item) => {
       const key = articleKey(item);
       if (magazineMeta.heroKeys.has(key) || magazineMeta.briefKeys.has(key)) return false;
-      if (!notHeroInst(item)) return false;
+      if (!allowHeroInstitution && !notHeroInst(item)) return false;
       return pred(item);
     });
     if (idx < 0) return null;
@@ -6098,7 +6284,8 @@ function takeNextBriefFromReserve({ allowExtra = false } = {}) {
   const freshInst = tryPick((item) => !magazineMeta.briefInsts.has(institutionKey(item)));
   if (freshInst) return freshInst;
 
-  // 2) Filet hauteur : d’autres articles d’institutions non-hero seulement
+  // 2) Filet hauteur : d’autres articles du même média seulement lorsque la
+  // vue source l'a demandé; le fil général garde sa diversité institutionnelle.
   if (allowExtra) {
     return tryPick(() => true);
   }
@@ -6266,13 +6453,17 @@ function demoteBriefCardToTail(brief, cardEl) {
   magazineReserve = sortByDateDesc(magazineReserve);
 
   let tail = NEWS_LIST.querySelector('.news-tail');
-  if (!tail) {
+  // La promotion précédente peut avoir vidé « Suite du fil ». Dans ce cas,
+  // `removeTailArticleForItem()` détache le conteneur; il ne faut jamais y
+  // ajouter ensuite une carte hors DOM, sinon l'article disparaît de la vue
+  // source. On recrée/attache le conteneur *après* toute déduplication.
+  if (tail) removeTailArticleForItem(item);
+  if (!tail || !tail.isConnected) {
     tail = document.createElement('div');
     tail.className = 'news-tail';
     tail.innerHTML = '<h3 class="news-tail-title">Suite du fil</h3>';
     NEWS_LIST.appendChild(tail);
   }
-  removeTailArticleForItem(item);
   const el = safeCreateArticle(item, 'standard');
   if (el) {
     const body = ensureNewsTailBody(tail);
@@ -6302,8 +6493,12 @@ function balanceMagazineColumns() {
   magazineBalanceBusy = true;
   magazineBalanceQueued = false;
   const isSourceMode = NEWS_LIST.dataset.mode === 'source';
-  // Tolérance : petit spacer OK ; 1 carte de trop (overshoot) non.
-  const tol = isSourceMode ? 56 : COLUMN_HEIGHT_TOL;
+  // Tolérance : un petit spacer est acceptable dans le fil général. En vue
+  // d'un seul média, « En bref » ne doit en revanche jamais descendre sous
+  // la une et ses vedettes : cette page est une lecture verticale, où une
+  // colonne latérale plus longue crée un vide très visible sous les articles
+  // principaux. La prochaine carte reste donc dans « Suite du fil ».
+  const tol = isSourceMode ? 0 : COLUMN_HEIGHT_TOL;
   const hardMin = isSourceMode ? 2 : BRIEF_SIDEBAR_HARD_MIN;
 
   const trimBriefIfTaller = () => {
@@ -6327,7 +6522,7 @@ function balanceMagazineColumns() {
     trimBriefIfTaller();
 
     // --- 2) FILL : En bref trop basse → ajouter (sans dépasser) ---
-    // Vue source : allowExtra (une seule institution / source).
+    // Vue source : la réserve contient nécessairement le même média.
     let fillGuard = 0;
     const maxFill = isSourceMode ? 40 : 24;
     while (fillGuard < maxFill) {
@@ -6340,8 +6535,12 @@ function balanceMagazineColumns() {
       const briefCount = brief.querySelectorAll('.article--compact').length;
       if (briefCount >= BRIEF_SIDEBAR_MAX || !magazineReserve.length) break;
 
-      let item = takeNextBriefFromReserve({ allowExtra: isSourceMode });
-      if (!item) item = takeNextBriefFromReserve({ allowExtra: true });
+      const reserveOptions = {
+        allowExtra: isSourceMode,
+        allowHeroInstitution: isSourceMode,
+      };
+      let item = takeNextBriefFromReserve(reserveOptions);
+      if (!item) item = takeNextBriefFromReserve({ ...reserveOptions, allowExtra: true });
       if (!item) break;
 
       const el = safeCreateArticle(item, 'compact');
@@ -6353,6 +6552,14 @@ function balanceMagazineColumns() {
       const overshoot = afterBrief - afterHero;
 
       if (overshoot > tol) {
+        // Une fiche d'un média doit remplir « En bref » avant de basculer dans
+        // la suite, mais pas au prix d'une colonne plus basse que la une et
+        // les vedettes. En vue source, on garde donc le dernier état qui ne
+        // dépasse pas cette marge; l'article reste dans la suite du fil.
+        if (isSourceMode) {
+          demoteBriefCardToTail(brief, el);
+          break;
+        }
         // Uniquement garder si le dépassement est *plus petit* que le trou
         // qu’on comblait (net gain). Sinon → suite (évite 1 carte de trop).
         if (gap > overshoot) {
@@ -6428,13 +6635,13 @@ function bindMagazineImageBalanceOnce() {
     const once = () => {
       img.removeEventListener('load', once);
       img.removeEventListener('error', once);
-      if (magazineBalancePasses >= MAGAZINE_BALANCE_PASS_CAP) return;
+      // Une image distante peut finir bien après les quatre passes initiales
+      // (connexion lente, onglet revenu à l'avant-plan). Même si ce plafond
+      // est atteint, sa hauteur définitive doit rééquilibrer les colonnes.
+      // L'écouteur est à usage unique par image, donc cela ne crée pas de
+      // boucle de rebalance.
       clearTimeout(magazineBalanceTimer);
       magazineBalanceTimer = window.setTimeout(() => {
-        magazineBalancePasses = Math.min(
-          MAGAZINE_BALANCE_PASS_CAP,
-          Math.max(magazineBalancePasses + 1, 2),
-        );
         balanceMagazineColumns();
       }, 180);
     };
@@ -6444,20 +6651,18 @@ function bindMagazineImageBalanceOnce() {
 }
 
 /**
- * Pool d'un seul média : articles dans la fenêtre de fraîcheur (3 sessions),
- * alignée sur le fil global et sur fetch-news.js.
+ * Pool d'un seul média : le filtre source est explicitement une vue « tous les
+ * articles ». Il ne doit donc jamais réappliquer la fenêtre de fraîcheur du
+ * fil général, sinon une fiche SEO peut promettre un article que son bouton de
+ * retour rend introuvable. Le tri reste chronologique et les futurs articles
+ * sont toujours exclus.
  */
 function sortSourcePool(items) {
   return sortByDateDesc(items);
 }
 
 function collectSourcePool(items, referenceDate = new Date()) {
-  const pool = sortSourcePool(
-    filterFreshItems(
-      items.filter((item) => isPublishedOnOrBefore(item, referenceDate)),
-      referenceDate,
-    ),
-  );
+  const pool = sortSourcePool(items.filter((item) => isPublishedOnOrBefore(item, referenceDate)));
   return { items: pool, contingencyBand: 0 };
 }
 
@@ -7411,27 +7616,32 @@ function formatTime(d, lang = 'fr') {
   if (isNaN(d)) return '';
   if (lang === 'en') {
     return d.toLocaleTimeString('en-CA', {
+      timeZone: 'America/Toronto',
       hour: 'numeric',
       minute: '2-digit',
       hour12: true,
     });
   }
-  const h = d.getHours();
-  const m = String(d.getMinutes()).padStart(2, '0');
-  return `${h} h ${m}`;
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Toronto', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+  }).formatToParts(d);
+  const part = (type) => parts.find((entry) => entry.type === type)?.value;
+  return `${part('hour')} h ${part('minute')}`;
 }
 
 function formatCompactCalendarDate(d, lang = 'fr') {
   if (isNaN(d)) return '';
   if (lang === 'en') {
     return d.toLocaleDateString('en-CA', {
+      timeZone: 'America/Toronto',
       day: 'numeric',
       month: 'short',
       year: 'numeric',
     });
   }
-  const months = MONTH_SHORT.fr;
-  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`.trim();
+  return d.toLocaleDateString('fr-CA', {
+    timeZone: 'America/Toronto', day: 'numeric', month: 'short', year: 'numeric',
+  });
 }
 
 function formatStamp(d) {
@@ -7458,10 +7668,6 @@ function formatStamp(d) {
   return `${dateStr}, ${time}`;
 }
 
-const MONTH_SHORT = {
-  fr: ['jan.', 'fév.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'],
-};
-
 /** Date courte pour cartes compactes (En bref, Suite du fil). */
 function formatStampCompact(d, lang = 'fr') {
   if (isNaN(d)) return '';
@@ -7486,7 +7692,8 @@ function formatStampCompact(d, lang = 'fr') {
     return clock ? `hier, ${clock}` : 'hier';
   }
 
-  return formatCompactCalendarDate(d, l);
+  const date = formatCompactCalendarDate(d, l);
+  return [date, clock].filter(Boolean).join(' · ');
 }
 
 // ─── Title / brief cleanup ───────────────────────────────────────────────────────

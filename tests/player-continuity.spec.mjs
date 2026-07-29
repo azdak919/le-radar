@@ -55,6 +55,15 @@ test('le bouton annule une connexion audio en attente', async ({ page }) => {
   await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
   const tuner = page.locator('#radar-embed').contentFrame();
   await tuner.locator('#tuner-select').selectOption({ index: 1 });
+  // Un autre contexte de test peut avoir publié une lecture juste avant
+  // l'iframe. Repartir de l'état arrêté ici isole le scénario « attente »
+  // plutôt que de lui faire tester une pause distante.
+  const playButton = tuner.locator('#tuner-play');
+  await playButton.evaluate((button) => {
+    if (button.classList.contains('is-buffering') || /mettre en pause/i.test(button.getAttribute('aria-label') || '')) {
+      button.click();
+    }
+  });
   // Cibler l'élément plutôt que <html> : l'iframe démarre sur about:blank et
   // pomo/js/app.js ne pose son src que dans un requestIdleCallback. Un locator
   // sur #radar-player attend le vrai document ; locator('html') se résout tout
@@ -63,7 +72,7 @@ test('le bouton annule une connexion audio en attente', async ({ page }) => {
     player.dispatchEvent(new Event('waiting'));
   });
 
-  const button = tuner.locator('#tuner-play');
+  const button = playButton;
   await expect(button).toHaveClass(/is-buffering/);
   await button.click();
   await expect(button).not.toHaveClass(/is-buffering/);
@@ -139,8 +148,13 @@ test('un seul leader radio est partagé entre deux pages', async ({ page, contex
     peer.goto('/pomo/', { waitUntil: 'domcontentloaded' }),
   ]);
 
-  const peerTuner = peer.locator('#radar-embed').contentFrame();
-  await expect(peerTuner.locator('#tuner-play')).toBeVisible();
+  const peerEmbed = peer.locator('#radar-embed');
+  // Le document Pomo charge l'iframe après sa première peinture. Attendre
+  // son URL réelle évite d'interroger l'about:blank lorsque le runner est
+  // chargé, sans imposer de délai arbitraire au produit.
+  await expect(peerEmbed).toHaveAttribute('src', /tuner-embed\.html/, { timeout: 10_000 });
+  const peerTuner = peerEmbed.contentFrame();
+  await expect(peerTuner.locator('#tuner-play')).toBeVisible({ timeout: 10_000 });
   await expect.poll(() => page.evaluate(() => Boolean(window.RadarPlayerSync))).toBe(true);
   await expect.poll(() => peerTuner.locator('html').evaluate(() => Boolean(window.RadarPlayerSync))).toBe(true);
 

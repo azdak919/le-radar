@@ -91,6 +91,44 @@ test('maintenance : le mode public ne redirige pas tant qu’il est actif', asyn
   await expect(page).toHaveURL(/offline\.html\?maintenance=1/);
 });
 
+test('maintenance : un choix de langue manuel suspend la rotation', async ({ page }) => {
+  await page.goto('/offline.html?maintenance=1', { waitUntil: 'domcontentloaded' });
+  const german = page.locator('.lang-chip', { hasText: 'Deutsch' });
+  await german.click();
+  const phrase = page.locator('#phrase');
+  await expect(phrase).toHaveText('Wartungsarbeiten laufen');
+  // La cadence automatique est de 3,2 s : après un clic, elle ne doit pas
+  // remplacer la phrase au prochain cycle.
+  await page.waitForTimeout(3400);
+  await expect(phrase).toHaveText('Wartungsarbeiten laufen');
+});
+
+for (const viewport of [
+  { name: 'bureau', width: 1440, height: 900 },
+  { name: 'mobile courant', width: 390, height: 844 },
+  { name: 'mobile compact', width: 390, height: 740 },
+]) {
+  test(`maintenance : footer compact sans défilement — ${viewport.name}`, async ({ page }) => {
+    await page.setViewportSize(viewport);
+    await page.goto('/offline.html?maintenance=1', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('.site-foot--maintenance')).toBeVisible();
+    await expect(page.locator('.site-foot__details')).not.toHaveAttribute('open', '');
+
+    const overflow = await page.evaluate(() => ({
+      vertical: document.documentElement.scrollHeight - document.documentElement.clientHeight,
+      horizontal: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    }));
+    expect(overflow.vertical, 'le footer fermé doit tenir dans le viewport').toBeLessThanOrEqual(1);
+    expect(overflow.horizontal, 'aucun défilement latéral').toBeLessThanOrEqual(2);
+
+    const details = page.locator('.site-foot__details');
+    await details.locator('summary').focus();
+    await page.keyboard.press('Enter');
+    await expect(details).toHaveAttribute('open', '');
+    await expect(details.locator('.site-foot__legal')).toBeVisible();
+  });
+}
+
 test('SEO : lecteur natif et bascule de thème', async ({ page }) => {
   await page.goto('/radios/chyz/', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('#tuner')).toBeVisible();
@@ -101,6 +139,8 @@ test('SEO : lecteur natif et bascule de thème', async ({ page }) => {
   await toggle.click();
   await expect(page.locator('html')).not.toHaveAttribute('data-theme', before || '');
   await expect(page.locator('#tuner-select')).toContainText('CHYZ');
+  await expect(page.locator('.seo-day[data-current-day="true"]')).toHaveCount(1);
+  await expect(page.locator('.seo-slot--live, .seo-slot--upcoming')).toHaveCount(1);
 });
 
 test('RSS : lecteur natif, sans iframe', async ({ page }) => {
@@ -108,6 +148,26 @@ test('RSS : lecteur natif, sans iframe', async ({ page }) => {
   await expect(page.locator('#tuner')).toBeVisible();
   await expect(page.locator('#radar-embed')).toHaveCount(0);
   await expect(page.locator('#tuner-select')).toContainText('CHYZ');
+});
+
+test('RSS : l’heure locale est lisible', async ({ page }) => {
+  await page.goto('/feeds.html', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#today-time')).toBeVisible();
+  await expect(page.locator('#today-time')).toHaveText(/^\d{2}:\d{2}$/);
+});
+
+test('mât : aucune couture au-dessus du synthétiseur', async ({ page }) => {
+  await page.goto('/feeds.html', { waitUntil: 'domcontentloaded' });
+  await expect.poll(() => page.locator('.masthead').evaluate((el) => getComputedStyle(el).borderBottomWidth)).toBe('0px');
+});
+
+test('thème : le choix suit les pages natives et les mini-apps', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => localStorage.setItem('radar-theme', 'dark'));
+  for (const path of ['/', '/radios/chyz/', '/feeds.html', '/pomo/', '/solitaire/']) {
+    await page.goto(path, { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  }
 });
 
 test.describe('maintenance hors ligne', () => {

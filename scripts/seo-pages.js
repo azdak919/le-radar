@@ -18,6 +18,7 @@ const {
 } = require('./seo-pages-lib');
 
 const HEADLINES_PER_PAPER = 12;
+const STALE_SOURCE_NOTICE_MS = 14 * 24 * 60 * 60 * 1000;
 
 /**
  * Date affichée en pied de page — propre à CHAQUE page.
@@ -33,6 +34,43 @@ const HEADLINES_PER_PAPER = 12;
 function paperUpdated(paper) {
   // headlines est déjà trié du plus récent au plus ancien (buildModel).
   return isoDay(paper.headlines?.[0]?.date);
+}
+
+/**
+ * Une publication peut ne pas avoir publié depuis longtemps sans que son fil
+ * soit délaissé. `_lastFetchOk` est écrit seulement après une vraie collecte
+ * réussie (jamais après l'emploi d'un cache périmé), ce qui en fait la bonne
+ * donnée à montrer séparément de la date du dernier article.
+ */
+function paperLastSuccessfulCheck(paper) {
+  const checked = paper?._lastFetchOk;
+  return checked && !Number.isNaN(new Date(checked).getTime()) ? checked : null;
+}
+
+function latestArticleTimestamp(paper) {
+  const value = paper?.headlines?.[0]?.date;
+  const timestamp = value ? new Date(value).getTime() : NaN;
+  return Number.isFinite(timestamp) ? timestamp : null;
+}
+
+function shouldExplainStaleSource(paper, checkedAt) {
+  const latest = latestArticleTimestamp(paper);
+  const checked = checkedAt ? new Date(checkedAt).getTime() : NaN;
+  return Number.isFinite(latest)
+    && Number.isFinite(checked)
+    && checked - latest >= STALE_SOURCE_NOTICE_MS;
+}
+
+function localDateTime(value, lang) {
+  const date = value ? new Date(value) : null;
+  if (!date || Number.isNaN(date.getTime())) return '';
+  const locale = lang === 'en' ? 'en-CA' : 'fr-CA';
+  const label = new Intl.DateTimeFormat(locale, {
+    timeZone: 'America/Toronto',
+    day: 'numeric', month: 'long', year: 'numeric',
+    hour: '2-digit', minute: '2-digit',
+  }).format(date);
+  return lang === 'fr' ? label.replace(',', ' à') : label;
 }
 
 function radioUpdated(radio, ctx) {
@@ -56,6 +94,81 @@ const ROUTES = {
   institution: { fr: (s) => `etablissements/${s}/`, en: (s) => `en/institutions/${s}/` },
   home: { fr: '', en: 'en/' },
 };
+
+// Liens de repérage local : une seule table évite de répéter des URL dans les
+// registres des médias et reste utilisable quand une nouvelle radio arrive.
+// Les régions administratives et touristiques ne coïncident pas toujours :
+// l'URL pointe donc vers l'organisme touristique mandaté pour le territoire.
+const GEO_LINKS = {
+  city: {
+    'Montréal': { fr: 'https://montreal.ca/', en: 'https://montreal.ca/en' },
+    'Québec': { fr: 'https://www.ville.quebec.qc.ca/?lang=fr', en: 'https://www.ville.quebec.qc.ca/?lang=en' },
+    'Sherbrooke': { fr: 'https://www.sherbrooke.ca/fr/', en: 'https://www.sherbrooke.ca/en/' },
+  },
+  region: {
+    'Abitibi-Témiscamingue': { fr: 'https://www.tourismeabitibi-temiscamingue.org/', en: 'https://www.tourismeabitibi-temiscamingue.org/en/' },
+    'Bas-Saint-Laurent': { fr: 'https://www.tourismebsl.com/', en: 'https://www.tourismebsl.com/en/' },
+    'Capitale-Nationale': { fr: 'https://www.quebec-cite.com/fr', en: 'https://www.quebec-cite.com/en' },
+    'Centre-du-Québec': { fr: 'https://www.tourismecentreduquebec.com/', en: 'https://www.tourismecentreduquebec.com/en/' },
+    'Chaudière-Appalaches': { fr: 'https://www.tourismechaudiereappalaches.com/', en: 'https://www.tourismechaudiereappalaches.com/en/' },
+    'Côte-Nord': { fr: 'https://www.tourismecote-nord.com/', en: 'https://www.tourismecote-nord.com/en/' },
+    'Estrie': { fr: 'https://www.cantonsdelest.com/', en: 'https://www.easterntownships.org/' },
+    'Gaspésie–Îles-de-la-Madeleine': { fr: 'https://www.tourisme-gaspesie.com/', en: 'https://www.tourisme-gaspesie.com/en/' },
+    'Lanaudière': { fr: 'https://lanaudiere.ca/', en: 'https://lanaudiere.ca/en/' },
+    'Laurentides': { fr: 'https://www.laurentides.com/', en: 'https://www.laurentides.com/en/' },
+    'Laval': { fr: 'https://www.tourismelaval.com/', en: 'https://www.tourismelaval.com/en/' },
+    'Mauricie': { fr: 'https://www.tourismemauricie.com/', en: 'https://www.tourismemauricie.com/en/' },
+    'Montréal': { fr: 'https://www.mtl.org/fr', en: 'https://www.mtl.org/en' },
+    'Montérégie': { fr: 'https://www.tourisme-monteregie.qc.ca/', en: 'https://www.tourisme-monteregie.qc.ca/en/' },
+    'Outaouais': { fr: 'https://www.tourismeoutaouais.com/', en: 'https://www.tourismeoutaouais.com/en/' },
+    'Saguenay–Lac-Saint-Jean': { fr: 'https://www.saguenaylacsaintjean.ca/', en: 'https://www.saguenaylacsaintjean.ca/en/' },
+  },
+};
+
+function geoFact(kind, value, lang, label) {
+  const href = GEO_LINKS[kind]?.[value]?.[lang];
+  if (!href) return { label, value };
+  const destination = kind === 'city'
+    ? (lang === 'fr' ? `Ville de ${value} — site officiel` : `City of ${value} — official website`)
+    : (lang === 'fr' ? `Tourisme ${value} — site officiel` : `${value} tourism — official website`);
+  return { label, value, href, external: true, ariaLabel: destination };
+}
+
+/**
+ * Un nouveau média ne doit pas produire silencieusement une fiche avec une
+ * ville ou une région devenue du texte mort. Les robots peuvent ajouter des
+ * entrées aux registres; cette garde bloque la génération tant que le lien
+ * officiel correspondant n'a pas été choisi et inscrit dans GEO_LINKS.
+ */
+function assertGeoLinkCoverage(model, institutions = []) {
+  const missing = [];
+  const requiresBothLanguages = (kind, value, label) => {
+    if (!value) return;
+    const link = GEO_LINKS[kind]?.[value];
+    if (!link?.fr || !link?.en) missing.push(`${label} (${value})`);
+  };
+
+  for (const radio of model.radioEntries) {
+    requiresBothLanguages('city', radio.city, `ville de ${radio.fullName || radio.name}`);
+    requiresBothLanguages('region', radio.region, `région de ${radio.fullName || radio.name}`);
+  }
+  for (const paper of model.paperEntries) {
+    requiresBothLanguages('region', paper.region, `région de ${paper.name}`);
+  }
+  for (const group of model.groups) {
+    requiresBothLanguages('region', group.official?.region, `région de ${group.name}`);
+  }
+  for (const institution of institutions) {
+    requiresBothLanguages('region', institution.region, `région de ${institution.name}`);
+  }
+
+  if (missing.length) {
+    throw new Error(
+      `Liens géographiques manquants dans GEO_LINKS : ${missing.join(', ')}. `
+      + 'Ajouter les URL officielles FR et EN avant de générer les pages.',
+    );
+  }
+}
 
 function typeLabel(type, t) {
   if (type === 'cegep') return t.cegep;
@@ -150,8 +263,8 @@ function radioPage(radio, lang, ctx) {
   body += factsList([
     { label: t.frequency, value: radio.frequency },
     { label: t.institution, value: instName, href: radio.group ? `${up}${ROUTES.institution[lang](radio.group.slug)}` : null },
-    { label: t.city, value: radio.city },
-    { label: t.region, value: radio.region },
+    geoFact('city', radio.city, lang, t.city),
+    geoFact('region', radio.region, lang, t.region),
     { label: t.officialSite, value: radio.website, href: radio.website, external: true },
   ]);
 
@@ -159,6 +272,7 @@ function radioPage(radio, lang, ctx) {
   body += scheduleTable(ctx.schedules?.[radio.id]?.grid, t, {
     checkedAt: ctx.schedules?.[radio.id]?.checkedAt,
     verifiedWeekOf: ctx.schedules?.[radio.id]?.verifiedWeekOf,
+    stationId: radio.id,
   });
 
   const jsonLd = JSON.stringify({
@@ -197,7 +311,10 @@ function radioPage(radio, lang, ctx) {
 function paperPage(paper, lang, ctx) {
   const t = T[lang];
   const instName = localizedInstitutionName(paper.group || paper.institution, lang);
-  const h1 = `${paper.name} — ${fill(t.paperOf, { name: instName, of: frOf(instName) })}`;
+  // Un journal n'a pas nécessairement de slogan public. Le qualificatif
+  // générique du gabarit n'en est pas un et ne doit surtout pas se greffer au
+  // nom propre, encore moins dans une autre langue que celle du média.
+  const h1 = paper.name;
   const title = lang === 'fr'
     ? `${paper.name} — journal étudiant ${frOf(instName)} | LE-RADAR.ca`
     : `${paper.name} — ${instName} student newspaper | LE-RADAR.ca`;
@@ -211,19 +328,29 @@ function paperPage(paper, lang, ctx) {
 
   let body = `      <p class="seo-lead">${escapeHtml(
     lang === 'fr'
-      ? `${paper.name} est le journal étudiant ${frOf(instName)}${paper.region ? ` (${paper.region})` : ''}. LE-RADAR.ca en agrège le fil et renvoie vers les articles d’origine.`
-      : `${paper.name} is the student newspaper of ${instName}${paper.region ? ` (${paper.region})` : ''}. LE-RADAR.ca aggregates its feed and links back to the original articles.`,
+      ? `${paper.name} est le journal étudiant ${frOf(instName)}.`
+      : `${paper.name} is the student newspaper of ${instName}.`,
   )}</p>\n`;
 
   body += factsList([
     { label: t.institution, value: instName, href: paper.group ? `${up}${ROUTES.institution[lang](paper.group.slug)}` : null },
-    { label: t.region, value: paper.region },
+    geoFact('region', paper.region, lang, t.region),
     { label: t.language, value: langLabel(paper.lang, t) },
     { label: t.officialSite, value: paper.site, href: paper.site, external: true },
   ]);
 
-  body += `      <section class="seo-section">\n        <h2>${escapeHtml(t.latestHeadlines)}</h2>\n`;
+  const latestLabel = localDateTime(paper.headlines?.[0]?.date, lang);
+  const lastCheck = paperLastSuccessfulCheck(paper);
+  const lastCheckLabel = localDateTime(lastCheck, lang);
+  body += `      <section class="seo-section">\n        <h2>${escapeHtml(t.latestHeadlines)}</h2>\n`
+    + (latestLabel ? `        <p class="seo-headlines__status">${escapeHtml(fill(t.latestArticleStatus, { date: latestLabel }))}`
+      + (lastCheckLabel && shouldExplainStaleSource(paper, lastCheck)
+        ? ` ${escapeHtml(fill(t.sourceStaleStatus, { date: lastCheckLabel }))}`
+        : '')
+      + '</p>\n' : '');
   body += headlineList(paper.headlines, t);
+  const sourceHome = `${up}${lang === 'en' ? 'en/' : ''}?source=${encodeURIComponent(paper.name)}#news-list`;
+  body += `      <p class="seo-cta seo-cta--source"><a href="${escapeHtml(sourceHome)}" data-news-source="${escapeHtml(paper.name)}">${escapeHtml(fill(t.allSourceArticles, { name: paper.name }))}</a></p>\n`;
   body += '      </section>\n';
 
   const jsonLd = JSON.stringify({
@@ -290,7 +417,7 @@ function institutionPage(group, lang, ctx) {
 
   body += factsList([
     { label: t.type, value: typeLabel(group.official?.type, t) },
-    { label: t.region, value: group.official?.region },
+    geoFact('region', group.official?.region, lang, t.region),
     { label: t.officialSite, value: group.official?.website, href: group.official?.website, external: true },
   ]);
 
@@ -584,6 +711,7 @@ function englishHomePage(model, ctx) {
 
 function buildEntityPages({ radios, sources, news, institutions, schedules, siteBase }) {
   const model = buildModel({ radios, sources, news, institutions });
+  assertGeoLinkCoverage(model, institutions);
   const ctx = { siteBase, schedules: schedules || {} };
   const pages = [];
 

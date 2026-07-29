@@ -140,7 +140,11 @@ function itemSimpleDate(item = {}) {
   const now = new Date();
   const opts = { day: 'numeric', month: 'short', timeZone: 'America/Toronto' };
   if (d.getFullYear() !== now.getFullYear()) opts.year = 'numeric';
-  return d.toLocaleDateString(en ? 'en-CA' : 'fr-CA', opts);
+  const date = d.toLocaleDateString(en ? 'en-CA' : 'fr-CA', opts);
+  const time = d.toLocaleTimeString(en ? 'en-CA' : 'fr-CA', en
+    ? { timeZone: 'America/Toronto', hour: 'numeric', minute: '2-digit', hour12: true }
+    : { timeZone: 'America/Toronto', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+  return [date, time].filter(Boolean).join(' · ');
 }
 
 /** Ligne prioritaire : média · auteur · date (affichée sous le titre dans les apps RSS). */

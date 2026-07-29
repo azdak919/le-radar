@@ -27,6 +27,7 @@
     <link rel="apple-touch-icon" href="assets/icon-192.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script src="seo-page-theme.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <link rel="alternate" type="application/rss+xml" title="LE-RADAR.ca — Fil étudiant" href="feed.xml" />
@@ -38,7 +39,10 @@
       <div class="bg-photo-credit" id="bg-photo-credit"></div>
       <div class="masthead-inner">
         <div class="masthead-top">
-          <span id="today-date" class="masthead-date"></span>
+          <span class="masthead-date">
+            <span id="today-date"></span>
+            <time id="today-time" class="masthead-time" aria-label="Heure actuelle"></time>
+          </span>
           <div class="masthead-actions">
             <a href="./" class="masthead-icon masthead-home" title="Accueil" aria-label="Retour à l'accueil — Le Radar">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg>
@@ -69,7 +73,7 @@
         </div>
         <div class="masthead-brand">
           <a href="./" class="wordmark">
-            <span class="wordmark-mark"><span class="wordmark-emoji" aria-hidden="true">📰</span> <span class="wordmark-brand notranslate" translate="no">LE-RADAR.ca</span> <span class="wordmark-emoji wordmark-emoji--radio" aria-hidden="true">🎙️</span></span>
+            <span class="wordmark-mark"><img class="wordmark-logo" src="assets/icon.svg" width="48" height="48" alt="" aria-hidden="true"><span class="wordmark-brand notranslate" translate="no">LE‑RADAR.ca</span></span>
             <span class="wordmark-full">Les journaux et les radios étudiantes du Québec, réunis au même endroit</span>
           </a>
         </div>

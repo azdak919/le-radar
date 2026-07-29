@@ -28,8 +28,21 @@ for (const file of [
   'institutions.json',
   'brand-colors.json',
   'manifest.json',
+  'pomo/site.webmanifest',
+  'solitaire/site.webmanifest',
 ]) {
   assert.doesNotThrow(() => readJson(file), `${file} doit contenir du JSON valide`);
+}
+
+for (const [file, background] of [
+  ['manifest.json', '#0e0f12'],
+  ['pomo/site.webmanifest', '#1a1816'],
+  ['solitaire/site.webmanifest', '#1a1816'],
+]) {
+  const manifest = readJson(file);
+  assert.equal(manifest.display, 'standalone', `${file} : affichage standalone requis`);
+  assert.equal(manifest.background_color, background, `${file} : fond de lancement cohérent requis`);
+  assert.equal(manifest.theme_color, background, `${file} : couleur système initiale cohérente requise`);
 }
 
 const newsDocument = readJson('news.json');
