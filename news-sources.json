@@ -403,9 +403,15 @@
       "url": "https://lagifleblog.wordpress.com/feed/",
       "site": "https://lagifleblog.wordpress.com/",
       "popularity": 15,
+      "botHints": {
+        "authors": {
+          "ignoreRssAuthor": true,
+          "forcePageAuthor": true
+        }
+      },
       "_status": "stale",
       "_lastItemDate": "2018-05-19T20:19:20.000Z",
-      "_note": "Flux RSS WordPress du journal étudiant du Collège Lionel-Groulx. Les articles historiques sont conservés dans le catalogue; la règle de fraîcheur les exclut naturellement du fil vivant.",
+      "_note": "Flux RSS WordPress du journal étudiant du Collège Lionel-Groulx. Le compte RSS « lagifleblog » est technique : la signature visible de chaque article prévaut. Les articles historiques sont conservés dans le catalogue; la règle de fraîcheur les exclut naturellement du fil vivant.",
       "_lastChecked": "2026-07-29T13:01:55.541Z",
       "_failCount": 0,
       "_lastFetchOk": "2026-07-29T13:01:55.541Z"

@@ -97,7 +97,6 @@ function buildHistoricalArchivePages({ catalog, config, siteBase }) {
   const referenceSources = bySource(sample.reference, referenceLimit).slice(0, maxSourcePages);
   const referenceBySource = new Map(referenceSources);
   const displayedReference = referenceSources.flatMap(([, records]) => records);
-  const hubRows = [];
   const missingBySource = new Map();
   for (const record of catalog?.records || []) {
     if (record?.link?.status !== 'missing') continue;
@@ -130,7 +129,6 @@ function buildHistoricalArchivePages({ catalog, config, siteBase }) {
         updated: records.map((record) => record.lastVerifiedAt).sort().at(-1),
       }),
     });
-    hubRows.push(`        <li><a href="${slug}/">${escapeHtml(source)}</a> <span>${records.length} article${records.length > 1 ? 's' : ''} vérifié${records.length > 1 ? 's' : ''}</span></li>`);
   }
 
   const conservationRows = [];
@@ -244,16 +242,26 @@ function buildHistoricalArchivePages({ catalog, config, siteBase }) {
     });
   }
 
+  // L’entrée des archives est un annuaire : les choix de conservation et
+  // d’indexation restent des détails internes. Une source ayant seulement des
+  // archives hors index y figure donc au même titre que les autres.
+  const archiveDirectoryRows = [...sourcePaths.entries()]
+    .sort(([left], [right]) => left.localeCompare(right, 'fr'))
+    .map(([source, path]) => {
+      const relativePath = path.startsWith('archives/') ? path.slice('archives/'.length) : path;
+      return `        <li><a href="${escapeHtml(relativePath)}">${escapeHtml(source)}</a></li>`;
+    });
+
   const hubPath = 'archives/';
-  const hubTitle = 'Archives historiques de médias étudiants | LE-RADAR.ca';
+  const hubTitle = 'Archives des médias étudiants | LE-RADAR.ca';
   if (sample.records.length) pages.unshift({
     path: hubPath, changefreq: 'weekly', priority: '0.5', lastmod: sample.records.map((record) => record.lastVerifiedAt).sort().at(-1) || null,
     html: renderPage({
       lang: 'fr', path: hubPath, altPath: hubPath, title: hubTitle,
-      description: 'Catalogue historique expérimental d’articles de médias étudiants du Québec, avec attribution et liens vérifiés vers les publications originales.',
-      h1: 'Archives historiques des médias étudiants', eyebrow: 'Catalogue expérimental',
+      description: 'Archives d’articles de médias étudiants du Québec, classées par publication et liées à leur média d’origine.',
+      h1: 'Archives des médias étudiants',
       crumbs: [{ label: 'Accueil', href: '../' }, { label: 'Archives historiques' }],
-      bodyHtml: `      <p class="seo-lead">Cette sélection publique est volontairement limitée et vérifiée. Les articles anciens restent exclus du fil d’actualité; chaque entrée renvoie clairement vers son média d’origine.</p>${conservationRows.length ? '\n      <p class="seo-archive-record__origin"><a href="conservation/">Consulter les archives par publication</a></p>' : ''}${referenceRows.length ? '\n      <p class="seo-archive-record__origin"><a href="reference/">Consulter les autres archives par publication</a></p>' : ''}\n      <section class="seo-section"><h2>Publications incluses</h2><ul class="seo-archive-sources">\n${hubRows.join('\n')}\n      </ul></section>`,
+      bodyHtml: `      <p class="seo-lead">Consultez les archives par publication. Chaque article renvoie vers le site du média.</p>\n      <section class="seo-section"><h2>Publications</h2><ul class="seo-archive-sources">\n${archiveDirectoryRows.join('\n')}\n      </ul></section>`,
       jsonLd: collectionJsonLd({ siteBase, path: hubPath, title: hubTitle, records: sample.records }), siteBase, alternate: false,
       updated: sample.records.map((record) => record.lastVerifiedAt).sort().at(-1),
     }),
