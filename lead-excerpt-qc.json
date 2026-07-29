@@ -1,31 +1,40 @@
 {
-  "updated": "2026-07-29T14:33:27.543Z",
+  "updated": "2026-07-29T15:52:33.873Z",
   "total": 185,
   "pool": 58,
   "incomplete": 6,
-  "withLeadExcerpt": 76,
+  "withLeadExcerpt": 77,
   "candidates": 6,
-  "enriched": 3,
+  "enriched": 2,
   "failed": 0,
   "ok": true,
   "samples": [
     {
-      "title": "Les bases du plein air durable",
-      "link": "https://lecollectif.ca/a-la-une/les-bases-du-plein-air-durable/",
+      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "link": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
       "ok": true,
-      "score": 100,
-      "chars": 336,
-      "sample": "La première étape se réalise bien avant de franchir la porte, soit la planification de l’activité. O",
+      "score": 81,
+      "chars": 400,
+      "sample": "Cependant, l’épidémie du sida a modifié le rapport entre les deux groupes. Au cours de cette crise, ",
       "changed": true
     },
     {
-      "title": "Une ligue d’été pour garder le hockey vivant en Estrie",
-      "link": "https://lecollectif.ca/a-la-une/une-ligue-dete-pour-garder-le-hockey-vivant-en-estrie/",
+      "title": "Sois belle et tais-toi",
+      "link": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
       "ok": true,
-      "score": 100,
-      "chars": 345,
-      "sample": "Dans une région où le hockey occupe une place importante, la LBS s’ajoute à l’ensemble des programme",
+      "score": 96,
+      "chars": 295,
+      "sample": "C’est la sécheresse totale dans le cerveau de bien des gens. Le vôtre, peut-être. Mais ne craignez r",
       "changed": true
+    },
+    {
+      "title": "Les avantages du transport en commun",
+      "link": "https://lecollectif.ca/a-la-une/les-avantages-du-transport-en-commun/",
+      "ok": true,
+      "score": 76,
+      "chars": 400,
+      "sample": "Le transport en commun représente une solution importante pour réduire la pollution causée par les d",
+      "changed": false
     },
     {
       "title": "A conversation with Ehab Lotayef: A lifelong voyage to the conscience of humanity",
@@ -53,15 +62,6 @@
       "chars": 400,
       "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
       "changed": false
-    },
-    {
-      "title": "Les avantages du transport en commun",
-      "link": "https://lecollectif.ca/a-la-une/les-avantages-du-transport-en-commun/",
-      "ok": true,
-      "score": 76,
-      "chars": 400,
-      "sample": "Le transport en commun représente une solution importante pour réduire la pollution causée par les d",
-      "changed": true
     }
   ]
 }
