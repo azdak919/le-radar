@@ -1,4 +1,4 @@
-# LE RADAR — Les médias étudiants du Québec
+# LE-RADAR — Les médias étudiants du Québec
 
 > *Les médias étudiants du Québec, sur ton radar • Student media on your radar.*
 
@@ -6,15 +6,23 @@
 ![PWA](https://img.shields.io/badge/PWA-ready-blue)
 ![License](https://img.shields.io/badge/license-GPL--2.0-green)
 
-**LE RADAR** est une application web progressive (PWA) **éditoriale, texte d'abord** qui rassemble en un seul endroit **les radios et les journaux étudiants** des cégeps et universités du Québec. Une page unique : un **syntoniseur radio** en tête, et le **fil des actualités étudiantes** en dessous.
+**LE-RADAR** signifie :
+
+> **Le Réseau Académique de Découverte et d'Agrégation de Ressources**
+
+LE-RADAR est une plateforme libre destinée à **fédérer les médias étudiants** et à leur
+offrir une infrastructure moderne : journaux étudiants, radios étudiantes et autres
+ressources académiques réunis au même endroit.
+
+Concrètement, c'est une application web progressive (PWA) **éditoriale, texte d'abord** qui rassemble en un seul endroit **les radios et les journaux étudiants** des cégeps et universités du Québec. Une page unique : un **syntoniseur radio** en tête, et le **fil des actualités étudiantes** en dessous.
 
 Version courante du dépôt : **1.0.0** — voir le [journal des modifications](CHANGELOG.md).
 
 **Agents IA / vibe-code :** lire d’abord [`AGENTS.md`](AGENTS.md) (dettes & rythme) puis [`docs/agent-playbook.md`](docs/agent-playbook.md). En fin de session : `npm run agents:propose` (proposition de dette à confirmer — pas d’auto-exécution).
 
-**→ [Essayer LE RADAR maintenant](https://le-radar.ca/)**
+**→ [Essayer LE-RADAR maintenant](https://le-radar.ca/)**
 
-> Projet non officiel. Le Radar n’est affilié à aucun des médias listés.
+> Projet non officiel. LE-RADAR n’est affilié à aucun des médias listés.
 
 ---
 
@@ -22,7 +30,7 @@ Version courante du dépôt : **1.0.0** — voir le [journal des modifications](
 
 - **Design éditorial, texte d'abord** — titres, brèves et hiérarchie visuelle (manchette « À la une »)
 - **Syntoniseur radio** collant : choix du poste, lecture native (flux HTTPS), volume, Media Session API
-- **Postes natifs** — écoute directe sur Le Radar pour les stations avec flux validé (ex. CHYZ, CISM, CKUT, CJLO, CFAK)
+- **Postes natifs** — écoute directe sur LE-RADAR pour les stations avec flux validé (ex. CHYZ, CISM, CKUT, CJLO, CFAK)
 - **Fil étudiant** — agrégation RSS des journaux étudiants, filtrable par source
 - **Identité couleur par établissement** — pastilles sources, accents radio et marques institutionnelles (`brand-colors.json`)
 - **« À l'antenne »** — émission en cours selon la grille horaire colligée (bot) + titre live via métadonnées ICY du flux
@@ -78,14 +86,14 @@ que les quatre pages principales en formats bureau et mobile. Le workflow
 le-radar/
 ├── AGENTS.md               # Agents : dettes volontaires, rythme, tokens long terme
 ├── index.html              # Page principale (fil + syntoniseur)
-├── feeds.html              # Page des flux RSS LE RADAR
+├── feeds.html              # Page des flux RSS LE-RADAR
 ├── style.css               # Styles (clair / sombre, radio, fil)
 ├── app.js                  # Logique client (tuner, fil, PWA)
 ├── radios.json             # Registre des radios étudiantes
 ├── news.json               # Fil agrégé (généré par bot)
 ├── news-sources.json       # Registre des sources d'actualités
 ├── brand-colors.json       # Couleurs institutionnelles
-├── manifest.json           # PWA (shell Le Radar)
+├── manifest.json           # PWA (shell LE-RADAR)
 ├── sw.js                   # Service Worker shell (n'intercepte pas /pomo|/solitaire)
 ├── robots.txt              # Robots : moteurs + assistants IA explicitement autorisés
 ├── sitemap.xml             # Plan du site (généré)
@@ -222,7 +230,7 @@ Signale aussi les liens cassés, flux morts ou sources manquantes.
 
 Code libre utilisé conformément aux licences applicables; contenus et médias crédités à leurs auteurs respectifs.
 
-🤖 **Agrégateur automatisé de contenus** — Le Radar collecte et reformate des publications étudiantes tierces (titres, brèves, liens, métadonnées). Chaque article renvoie vers sa source originale. Les radios et journaux listés restent propriété de leurs équipes respectives.
+🤖 **Agrégateur automatisé de contenus** — LE-RADAR collecte et reformate des publications étudiantes tierces (titres, brèves, liens, métadonnées). Chaque article renvoie vers sa source originale. Les radios et journaux listés restent propriété de leurs équipes respectives.
 
 Consulte aussi la [politique éditoriale](docs/politique-editoriale.md) et les
 [objectifs internes de fiabilité](docs/objectifs-fiabilite.md), notamment pour
