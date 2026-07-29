@@ -146,6 +146,7 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 | D16 | **Provenance des slogans et descriptions des radios** | Les champs éditoriaux de `radios.json` mélangent slogan officiel, description et formulations historiques ; une page peut donc être exacte sur le fond mais erronée comme citation de marque | Registre par station : URL officielle, extrait, date de vérification, niveau de confiance ; toute formulation non confirmée devient une description neutre | S | ready |
 | D17 | **Contrat du lecteur natif sur toutes les routes publiques** | Le lecteur est maintenant natif sur les fiches SEO et le RSS, mais l’intégration mêle génération HTML, scripts dynamiques et shell de continuité ; une route peut afficher le bandeau sans initialiser le lecteur, ou inversement | Matrice testée accueil/RSS/SEO/annuaire/maintenance/Pomo/Solitaire, en navigation avec lecture ; zéro iframe hors exceptions explicites et zéro erreur console | M | open |
 | D18 | **Régression visuelle du chrome partagé** (footer, thème, grilles) | Les tests structurels ont laissé passer des écarts visibles : footer non conforme, note collée à une carte, slogan mal placé. Le rendu partagé a besoin d’une preuve visuelle, pas seulement de présence HTML | Captures de référence clair/sombre pour accueil, RSS, fiche radio, fiche journal et maintenance ; test visuel ciblé ou revue humaine consignée avant toute propagation globale | M | open |
+| D19 | **Mesure de l’échantillon SEO historique** | Le catalogue `/archives/` est public mais expérimental : augmenter son volume sans impressions, clics et anomalies de canonique créerait des pages de faible valeur | 4–6 semaines de Search Console/Bing : couverture, canonicals, impressions/clics et absence de pages exclues inattendues ; revue humaine avant tout passage à `full` | S | ready |
 
 **D7 — précisions (option 3, pas 1 ni 2) :**
 
@@ -458,6 +459,7 @@ Pour promouvoir : ajouter une ligne D# en §3 avec effort + pourquoi, après OK 
 | D6 | 2026-07-25 | `audit:banks:hard` + `tests/bank-hard-audit.mjs` dans `npm test` (0 réseau) |
 | D5 | 2026-07-25 | `religious-facade-lib.js` partagé (RE + SPIRE_THRESHOLDS v1) maintain/bank-hard/photo-qc + SYNC Python/JS |
 | D12 | 2026-07-29 | `tests/news-representations.mjs` compare les dix premières manchettes de `news.json`, du RSS, du prérendu HTML et du JSON-LD |
+| — | 2026-07-29 | Catalogue SEO historique expérimental : `news-archive.json` distinct du fil frais, échantillon public borné et liens originaux vérifiés, `sitemap-archives.xml`, robots explicite et workflow hebdomadaire à faible volume; aucune republication intégrale |
 | — | 2026-07-25 | Balises anti-glouton + `.agents-session.json` (1 dette/session, 2/jour) |
 | — | 2026-07-29 | Identité unifiée sur **LE-RADAR** (jamais « RADAR » seul) : 9 workflows, 8 User-Agent, 6 clés `localStorage` `req-*` → `radar-*` (sans repli), titre de l'issue de maintenance |
 | — | 2026-07-29 | Acronyme officiel « Le Réseau Académique de Découverte et d'Agrégation de Ressources » — README + `docs/{identite-visuelle,agent-playbook,maintenance,politique-editoriale}.md`, une fois par document |

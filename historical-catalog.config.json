@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "mode": "partial",
+  "pageSize": 20,
+  "partial": {
+    "maxRecords": 120,
+    "maxPages": 24,
+    "minimumExcerptCharacters": 90,
+    "verifiedWithinDays": 35
+  },
+  "notes": [
+    "Le fil principal reste gouverné uniquement par la fenêtre de fraîcheur.",
+    "Les pages historiques externes ne republient jamais le corps intégral ni les images sans licence documentée.",
+    "Le mode partial est public mais exige un lien original vérifié et des métadonnées suffisamment riches."
+  ]
+}

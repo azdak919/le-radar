@@ -29,6 +29,7 @@ const { execFileSync } = require('child_process');
 const { decodeHtmlEntities } = require('./html-entities-lib');
 const { buildEntityPages } = require('./seo-pages');
 const { renderSiteFooter } = require('./seo-pages-lib');
+const { buildHistoricalArchivePages } = require('./historical-seo-pages');
 
 const ROOT = path.join(__dirname, '..');
 /** Domaine canonique (Pages + custom domain). Surcharge : RADAR_SITE_URL. */
@@ -40,12 +41,15 @@ const SOURCES_PATH = path.join(ROOT, 'news-sources.json');
 const RADIOS_PATH = path.join(ROOT, 'radios.json');
 const INDEX_PATH = path.join(ROOT, 'index.html');
 const SITEMAP_PATH = path.join(ROOT, 'sitemap.xml');
+const ARCHIVE_SITEMAP_PATH = path.join(ROOT, 'sitemap-archives.xml');
 const LLMS_PATH = path.join(ROOT, 'llms.txt');
 const INSTITUTIONS_PATH = path.join(ROOT, 'institutions.json');
 const SCHEDULES_PATH = path.join(ROOT, 'radio-schedules.json');
+const ARCHIVE_PATH = path.join(ROOT, 'news-archive.json');
+const ARCHIVE_CONFIG_PATH = path.join(ROOT, 'historical-catalog.config.json');
 
 /** Dossiers entièrement générés : purgés puis réécrits à chaque passe. */
-const GENERATED_DIRS = ['radios', 'journaux', 'etablissements', 'medias', 'horaires', 'en'];
+const GENERATED_DIRS = ['radios', 'journaux', 'etablissements', 'medias', 'horaires', 'en', 'archives'];
 
 /** Nombre de manchettes prérendues. Assez pour être substantiel, assez peu
  *  pour que le diff des bots horaires reste lisible. */
@@ -256,11 +260,32 @@ function buildSitemap(newsUpdated, entityPages = []) {
   ].join('\n');
 }
 
+/** Sitemap séparé : le test historique reste mesurable et réversible sans
+ * gonfler le sitemap principal ni prétendre que tout le cache est indexable. */
+function buildArchiveSitemap(pages = []) {
+  const urls = pages.map((page) => [
+    '  <url>',
+    `    <loc>${escapeXml(`${SITE_BASE}/${page.path}`)}</loc>`,
+    page.lastmod ? `    <lastmod>${escapeXml(isoDay(page.lastmod) || '')}</lastmod>` : null,
+    `    <changefreq>${page.changefreq || 'monthly'}</changefreq>`,
+    `    <priority>${page.priority || '0.4'}</priority>`,
+    '  </url>',
+  ].filter(Boolean).join('\n'));
+  return [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<!-- Catalogue historique expérimental, généré par scripts/generate-seo.js. -->',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ...urls,
+    '</urlset>',
+    '',
+  ].join('\n');
+}
+
 // ═══════════════════════════════════════════════════════════════════════════
 //  llms.txt — fiche de contexte pour les assistants IA
 // ═══════════════════════════════════════════════════════════════════════════
 
-function buildLlmsTxt(sources, radios, items, newsUpdated, model) {
+function buildLlmsTxt(sources, radios, items, newsUpdated, model, historicalSample = 0) {
   // Chaque entité pointe vers SA page sur le site : c'est l'URL qu'un
   // assistant peut citer, et elle est lisible sans JavaScript.
   const pageFor = (kind, slug) => `${SITE_BASE}/${kind}/${slug}/`;
@@ -326,6 +351,7 @@ ${instLines.join('\n') || '- (aucun)'}
 - ${SITE_BASE}/medias/ : annuaire complet, par établissement
 - ${SITE_BASE}/en/ : présentation en anglais (pour les personnes étudiantes internationales au Québec)
 - ${SITE_BASE}/en/media/ : annuaire en anglais
+${historicalSample ? `- ${SITE_BASE}/archives/ : catalogue historique expérimental (${historicalSample} entrées vérifiées, sans republication intégrale)` : ''}
 
 ## Données ouvertes (sans JavaScript, directement analysables)
 
@@ -335,6 +361,7 @@ ${instLines.join('\n') || '- (aucun)'}
 - ${SITE_BASE}/institutions.json : catalogue des établissements d'enseignement supérieur du Québec
 - ${SITE_BASE}/feed.xml : flux RSS du fil étudiant
 - ${SITE_BASE}/sitemap.xml : plan du site
+${historicalSample ? `- ${SITE_BASE}/sitemap-archives.xml : sitemap séparé du catalogue historique expérimental` : ''}
 
 ## Citation
 
@@ -371,7 +398,7 @@ function buildFeedHtml(items) {
     ].filter(Boolean).join('');
 
     return [
-      `        <a class="article article--text" href="${escapeHtml(item.link)}" rel="noopener">`,
+      `        <a class="article article--text" href="${escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer">`,
       `          <div class="article-meta"><span class="article-meta__lead">${meta}</span>`
         + (date ? `<time class="article-time" datetime="${escapeHtml(item.date || '')}">${escapeHtml(date)}</time>` : '')
         + '</div>',
@@ -441,12 +468,16 @@ function main() {
   const items = loadNewsItems();
   const sources = loadSources();
   const radios = loadRadios();
+  const archiveConfig = readJson(ARCHIVE_CONFIG_PATH, { mode: 'off', partial: {} });
+  const historicalCatalog = readJson(ARCHIVE_PATH, { records: [] });
+  const archive = buildHistoricalArchivePages({ catalog: historicalCatalog, config: archiveConfig, siteBase: SITE_BASE });
   const prerendered = items.slice(0, PRERENDER_MAX);
 
   console.log(`${BRAND} — artefacts de référencement`);
   console.log('==========================================\n');
   console.log(`Site      : ${SITE_BASE}`);
   console.log(`Articles  : ${items.length} (prérendu : ${prerendered.length})`);
+  console.log(`Archives  : ${archive.pages.length} page(s) publiques (${archive.sample.records.length}/${archive.sample.eligible} entrées vérifiées)`);
   console.log(`Journaux  : ${sources.length}   Radios : ${radios.length}\n`);
 
   const written = [];
@@ -459,6 +490,7 @@ function main() {
     institutions: readJson(INSTITUTIONS_PATH, {}).institutions || [],
     schedules: readJson(SCHEDULES_PATH, {}).stations || {},
     siteBase: SITE_BASE,
+    archivePaths: archive.sourcePaths,
   });
 
   if (doUpdate) {
@@ -472,20 +504,30 @@ function main() {
       fs.mkdirSync(path.dirname(out), { recursive: true });
       fs.writeFileSync(out, page.html, 'utf8');
     }
+    for (const page of archive.pages) {
+      const out = path.join(ROOT, page.path, 'index.html');
+      fs.mkdirSync(path.dirname(out), { recursive: true });
+      fs.writeFileSync(out, page.html, 'utf8');
+    }
   }
   written.push({
     file: 'pages d’entités',
     note: `${entityPages.length} pages — ${model.groups.length} établissements, `
       + `${model.paperEntries.length} journaux, ${model.radioEntries.length} radios (FR + EN)`,
   });
+  written.push({ file: 'catalogue historique', note: `${archive.pages.length} page(s), ${archive.sample.records.length} entrée(s) vérifiée(s)` });
 
   // ── sitemap.xml ──
   const sitemap = buildSitemap(newsUpdated, entityPages);
   if (doUpdate) fs.writeFileSync(SITEMAP_PATH, sitemap, 'utf8');
   written.push({ file: 'sitemap.xml', note: `${PAGES.length + entityPages.length} URL` });
 
+  const archiveSitemap = buildArchiveSitemap(archive.pages);
+  if (doUpdate) fs.writeFileSync(ARCHIVE_SITEMAP_PATH, archiveSitemap, 'utf8');
+  written.push({ file: 'sitemap-archives.xml', note: `${archive.pages.length} URL indexable(s)` });
+
   // ── llms.txt ──
-  const llms = buildLlmsTxt(sources, radios, items, newsUpdated, model);
+  const llms = buildLlmsTxt(sources, radios, items, newsUpdated, model, archive.sample.records.length);
   if (doUpdate) fs.writeFileSync(LLMS_PATH, llms, 'utf8');
   written.push({ file: 'llms.txt', note: `${sources.length} journaux, ${radios.length} radios` });
 

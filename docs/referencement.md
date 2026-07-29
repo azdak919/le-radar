@@ -40,6 +40,7 @@ produit :
 | Sortie | Rôle |
 |---|---|
 | `sitemap.xml` | Toutes les pages indexables (71 URL) |
+| `sitemap-archives.xml` | Échantillon public, borné et vérifié du catalogue historique — séparé du sitemap principal pour pouvoir mesurer, réduire ou désactiver l’expérience |
 | `llms.txt` | Fiche de contexte pour assistants IA : ce qu'est LE-RADAR.ca, les journaux, radios et établissements **nommés avec l'URL de leur page**, et les données brutes |
 | `index.html` | Prérendu des 20 dernières manchettes + JSON-LD `ItemList` |
 | `radios/` `journaux/` `etablissements/` `medias/` `en/` | **67 pages d'entités** statiques, FR + EN (`scripts/seo-pages.js`) |
@@ -76,6 +77,50 @@ Deux pièges traités, à ne pas réintroduire :
 
 Les dossiers générés sont **purgés puis réécrits** à chaque passe : un journal
 retiré du registre ne laisse pas de page orpheline indexée derrière lui.
+
+### Catalogue historique expérimental
+
+`news.json` reste le **fil vivant** : la règle de fraîcheur y retire les
+articles qui ne doivent plus occuper l’accueil. En parallèle,
+`news-archive.json` conserve les métadonnées des articles réellement découverts
+par les bots, avant ce filtrage. Ce registre ne lance pas de rétro-crawl et ne
+fabrique pas une date de découverte pour les entrées déjà présentes dans le
+cache : elles portent plutôt leur `importedAt`.
+
+Le modèle distingue explicitement `publishedAt`, `firstDiscoveredAt`,
+`importedAt`, `lastSeenAt`, `lastVerifiedAt`, URL originale/canonique, état du
+lien, empreinte, statut d’image et décision d’indexation. Une panne de flux ne
+fait donc ni disparaître une métadonnée connue ni passer un cache réutilisé pour
+une nouvelle découverte.
+
+Le réglage versionné [`historical-catalog.config.json`](../historical-catalog.config.json)
+offre trois modes :
+
+- `off` : aucune page publique;
+- `partial` : défaut public actuel, représentatif mais plafonné;
+- `full` : réservé à une décision humaine ultérieure, jamais activé par un bot.
+
+En `partial`, une entrée doit avoir un titre, un extrait assez informatif et un
+lien original récemment vérifié. Les pages `/archives/` et `/archives/<source>/`
+ne conservent qu’un court extrait factuel, les métadonnées et un lien évident
+vers le média. Elles ne copient ni corps intégral ni image externe à licence
+inconnue. Leur canonique est leur URL d’agrégation, car la page apporte une
+valeur propre (attribution, date de collecte et état du lien); la publication
+d’origine reste clairement identifiée comme éditrice dans le HTML et le JSON-LD.
+Le balisage emploie `CollectionPage` / `ItemList` / `CreativeWork`, **pas** un
+`NewsArticle` attribué à LE-RADAR.ca.
+
+`scripts/verify-historical-links.js --update --limit=20` vérifie une URL à la
+fois, en répartissant la passe entre les publications. Un 404/410 devient
+`missing`, une panne devient `unreachable`; les deux sont exclus de l’échantillon
+public. Le workflow hebdomadaire `verify-historical-links.yml` est borné et
+tolérant aux incidents réseau pour ne pas transformer une source indisponible en
+bruit de Quality Gate.
+
+Ce catalogue est **expérimental** : suivre impressions, indexation, erreurs de
+canonique et clics avant d’augmenter les plafonds ou de soumettre son sitemap à
+Search Console. Les contenus historiques n’ont aucune voie de retour vers le
+fil principal.
 
 ### Pourquoi le prérendu ne casse rien
 
@@ -144,6 +189,10 @@ Ces actions ne sont pas automatisables, et ce sont les plus rentables.
 2. **Bing Webmaster Tools** — même chose (alimente aussi ChatGPT Search).
 3. **IndexNow** — activable en un clic depuis le tableau de bord Cloudflare.
    Utile vu le rythme de mise à jour du fil.
+
+Le sitemap historique reste volontairement séparé : ne le soumettre qu’après
+une première lecture des rapports du sitemap principal et de l’échantillon
+public. Cela préserve un vrai groupe de contrôle pour l’expérience.
 
 ### 4.2 Vérifier que la cible est la bonne
 

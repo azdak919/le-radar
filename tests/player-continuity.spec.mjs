@@ -96,6 +96,58 @@ test('une page suiveuse n’affiche pas un buffering tardif après navigation', 
   await expect(tuner.locator('#tuner-play')).not.toHaveClass(/is-buffering/);
 });
 
+test('changer de poste sur un onglet suiveur bascule le flux du leader', async ({ page, context }) => {
+  // Le lecteur principal (accueil) joue ; un second onglet SEO change de poste.
+  // L’audio doit rester sur le leader, qui bascule vers le nouveau flux —
+  // pas un vol de leadership qui coupe le son côté onglet principal.
+  const host = page;
+  const peer = await context.newPage();
+
+  await host.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect.poll(() => host.evaluate(() => Boolean(window.RadarPlayerSync))).toBe(true);
+  await expect.poll(async () => host.locator('#tuner-select option').count()).toBeGreaterThan(1);
+
+  await host.locator('#tuner-select').selectOption('chyz');
+  await expect.poll(async () => {
+    return host.locator('#radar-player').evaluate((a) => !a.paused && /chyz/i.test(a.src || ''));
+  }, { timeout: 12_000 }).toBe(true);
+
+  const leaderId = await host.evaluate(() => window.RadarPlayerSync.getTabId());
+
+  await peer.goto('/radios/cfak/', { waitUntil: 'domcontentloaded' });
+  await expect.poll(async () => peer.locator('#tuner-select option').count(), { timeout: 15_000 })
+    .toBeGreaterThan(1);
+  // Laisser le hello confirmer le leader distant.
+  await expect.poll(() => peer.evaluate(() => {
+    const s = window.RadarPlayerSync?.readState?.();
+    return Boolean(s?.playing && s.leaderId);
+  }), { timeout: 5_000 }).toBe(true);
+
+  await peer.locator('#tuner-select').selectOption('ckut');
+
+  await expect.poll(() => host.evaluate(() => window.RadarPlayerSync.readState()), { timeout: 8_000 })
+    .toMatchObject({
+      stationId: 'ckut',
+      playing: true,
+      leaderId,
+    });
+
+  await expect.poll(async () => {
+    return host.locator('#radar-player').evaluate((a) => ({
+      paused: a.paused,
+      src: a.src || '',
+    }));
+  }, { timeout: 12_000 }).toMatchObject({
+    paused: false,
+    src: expect.stringMatching(/ckut|airtime/i),
+  });
+
+  // Le suiveur n’a pas volé le flux local.
+  await expect.poll(async () => {
+    return peer.locator('#radar-player').evaluate((a) => a.paused || !(a.src || ''));
+  }).toBe(true);
+});
+
 test('un suiveur froid ne publie pas de pause globale sur une session active', async ({ page, context }) => {
   // Régression : le nettoyage « fantôme » écrivait playing:false dans localStorage
   // et coupait l’hôte (nav-shell / SEO) qui détenait encore le vrai <audio>.

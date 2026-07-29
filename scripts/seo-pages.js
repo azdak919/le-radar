@@ -351,6 +351,10 @@ function paperPage(paper, lang, ctx) {
   body += headlineList(paper.headlines, t);
   const sourceHome = `${up}${lang === 'en' ? 'en/' : ''}?source=${encodeURIComponent(paper.name)}#news-list`;
   body += `      <p class="seo-cta seo-cta--source"><a href="${escapeHtml(sourceHome)}" data-news-source="${escapeHtml(paper.name)}">${escapeHtml(fill(t.allSourceArticles, { name: paper.name }))}</a></p>\n`;
+  const archivePath = lang === 'fr' ? ctx.archivePaths?.get(paper.name) : null;
+  if (archivePath) {
+    body += `      <p class="seo-archive-link"><a href="${up}${escapeHtml(archivePath)}">${escapeHtml(t.historicalArchive)}</a></p>\n`;
+  }
   body += '      </section>\n';
 
   const jsonLd = JSON.stringify({
@@ -709,10 +713,10 @@ function englishHomePage(model, ctx) {
 //  Entrée
 // ═══════════════════════════════════════════════════════════════════════════
 
-function buildEntityPages({ radios, sources, news, institutions, schedules, siteBase }) {
+function buildEntityPages({ radios, sources, news, institutions, schedules, siteBase, archivePaths }) {
   const model = buildModel({ radios, sources, news, institutions });
   assertGeoLinkCoverage(model, institutions);
-  const ctx = { siteBase, schedules: schedules || {} };
+  const ctx = { siteBase, schedules: schedules || {}, archivePaths: archivePaths || new Map() };
   const pages = [];
 
   for (const lang of ['fr', 'en']) {
