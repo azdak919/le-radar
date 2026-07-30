@@ -1704,13 +1704,15 @@ const SPORTS_ROTATE_MS = SPORTS_READ_MIN_MS;
  * Une voie du marquee CSS `sports-chip-scroll` (style.css) — tenir synchro
  * avec `--sports-scroll-duration`. `alternate` → aller-retour = 2 ×.
  */
-const SPORTS_SCROLL_ONE_WAY_MS = 7000;
+/** Synchro style.css `--sports-scroll-duration` (marquee L→R). */
+const SPORTS_SCROLL_ONE_WAY_MS = 8500;
 const SPORTS_SCROLL_ROUND_TRIP_MS = SPORTS_SCROLL_ONE_WAY_MS * 2;
 /** Pause au repos après le retour (re-ack du début de ligne). */
-const SPORTS_SCROLL_POST_PAUSE_MS = 2000;
+const SPORTS_SCROLL_POST_PAUSE_MS = 2200;
 /** Décalage initial entre slots pour éviter un flip simultané au 1er paint. */
 const SPORTS_SLOT_STAGGER_MS = 1100;
-const SPORTS_ARRIVE_MS = 500;
+/** Entrée d’une puce score (CSS sports-chip-arrive) — plus long = moins brutal. */
+const SPORTS_ARRIVE_MS = 640;
 /**
  * CTA type alerte bandeau : pastille fixe « SPORTS » (toujours à droite)
  * + accroche = score / prochain match le plus frais de chaque sport
@@ -1720,6 +1722,8 @@ const SPORTS_ARRIVE_MS = 500;
 const SPORTS_CTA_TAG = 'Sports';
 /** Demi-cycle du fondu (sortie puis entrée) — total ~1,1 s, plus doux que 320 ms. */
 const SPORTS_CTA_CROSSFADE_MS = 560;
+/** Sortie douce d’une puce score avant replaceWith (synchro CSS is-leaving). */
+const SPORTS_CHIP_LEAVE_MS = 420;
 /** Popularité sports étudiants QC (aligné page /sports/). */
 const SPORTS_POPULARITY = [
   'hockey',
@@ -3197,14 +3201,33 @@ function rotateSportsSlot(slot) {
     return;
   }
 
-  const newChip = paintSportsChip(replacement, true);
-  if (oldChip) {
-    oldChip.replaceWith(newChip);
-  } else {
+  // Scores / prochains : sortie en fondu → entrée en fondu (évite le « clac » gare).
+  const newChip = paintSportsChip(replacement, !sportsReducedMotion);
+  if (!oldChip) {
     MASTHEAD_SPORTS_STRIP.append(newChip);
+    window.requestAnimationFrame(() => refreshSportsChipScroll(newChip));
+    return;
   }
-  // Uniquement cette puce — ne pas relancer le marquee des voisines.
-  window.requestAnimationFrame(() => refreshSportsChipScroll(newChip));
+  if (sportsReducedMotion) {
+    oldChip.replaceWith(newChip);
+    window.requestAnimationFrame(() => refreshSportsChipScroll(newChip));
+    return;
+  }
+  // Annuler une sortie en cours sur ce slot.
+  if (oldChip._leaveTimer) {
+    clearTimeout(oldChip._leaveTimer);
+    oldChip._leaveTimer = null;
+  }
+  oldChip.classList.remove('is-arriving');
+  oldChip.classList.add('is-leaving');
+  oldChip.style.pointerEvents = 'none';
+  oldChip._leaveTimer = window.setTimeout(() => {
+    oldChip._leaveTimer = null;
+    if (!oldChip.isConnected) return;
+    oldChip.replaceWith(newChip);
+    // Uniquement cette puce — ne pas relancer le marquee des voisines.
+    window.requestAnimationFrame(() => refreshSportsChipScroll(newChip));
+  }, SPORTS_CHIP_LEAVE_MS);
 }
 
 /** Compat tests / appels historiques : un tick = slot 0 (ou le prochain round-robin). */
