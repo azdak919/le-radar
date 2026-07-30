@@ -5,7 +5,7 @@
   "description": "PWA des médias étudiants du Québec",
   "scripts": {
     "check:syntax": "node tests/check-js-syntax.mjs",
-    "test:unit": "node solitaire/scripts/test-solitaire-rules.mjs && node tests/data-integrity.mjs && node tests/radio-nowplaying.mjs && node tests/news-representations.mjs && node tests/author-lib.mjs && node tests/historical-catalog.mjs && node tests/historical-retro-crawl.mjs && node tests/archive-priority.mjs && node tests/maintenance-window.mjs && node tests/static-integrity.mjs && node tests/native-player-contract.mjs && node tests/college-places.mjs && node tests/photo-visual-qc.mjs && node tests/bg-rotation.mjs && node tests/bank-hard-audit.mjs && node tests/news-image-mirror.mjs",
+    "test:unit": "node solitaire/scripts/test-solitaire-rules.mjs && node tests/data-integrity.mjs && node tests/radio-nowplaying.mjs && node tests/news-representations.mjs && node tests/author-lib.mjs && node tests/historical-catalog.mjs && node tests/historical-retro-crawl.mjs && node tests/archive-priority.mjs && node tests/maintenance-window.mjs && node tests/static-integrity.mjs && node tests/native-player-contract.mjs && node tests/college-places.mjs && node tests/institution-labels-lib.mjs && node tests/photo-visual-qc.mjs && node tests/bg-rotation.mjs && node tests/bank-hard-audit.mjs && node tests/news-image-mirror.mjs",
     "check": "npm run check:syntax && npm run test:unit",
     "seo": "node scripts/generate-seo.js",
     "seo:update": "node scripts/generate-seo.js --update",
@@ -56,7 +56,9 @@
     "sports:refresh": "node scripts/discover-sports.js --update --fetch",
     "sports:check": "node scripts/fetch-sports.js",
     "images:mirror": "node scripts/mirror-news-images.js",
-    "images:mirror:update": "node scripts/mirror-news-images.js --update"
+    "images:mirror:update": "node scripts/mirror-news-images.js --update",
+    "institutions:sync": "node scripts/sync-institution-labels.js && node scripts/sync-college-places.js",
+    "institutions:check": "node scripts/sync-institution-labels.js --check && node scripts/sync-college-places.js --check"
   },
   "engines": {
     "node": ">=20"

@@ -14,6 +14,7 @@
 const fs = require('fs');
 const path = require('path');
 const { pruneToFreshWindow } = require('./source-retention-lib');
+const { buildAcronymMap } = require('./institution-labels-lib');
 
 const ROOT = path.join(__dirname, '..');
 const NEWS_PATH = path.join(ROOT, 'news.json');
@@ -24,21 +25,8 @@ const BRAND = 'LE-RADAR.ca';
 const MAX_ITEMS = 50;
 const BRIEF_MAX = 900;
 
-const INSTITUTION_LABELS = {
-  'Université de Montréal': 'UdeM',
-  UQAM: 'UQAM',
-  'Université du Québec à Montréal': 'UQAM',
-  'Université McGill': 'McGill',
-  'McGill University': 'McGill',
-  'Concordia University': 'Concordia',
-  'Université Laval': 'ULaval',
-  'Université de Sherbrooke': 'UdeS',
-  'Université du Québec à Trois-Rivières': 'UQTR',
-  'Université du Québec à Chicoutimi': 'UQAC',
-  'Université du Québec à Rimouski': 'UQAR',
-  'Polytechnique Montréal': 'Poly Montréal',
-  'Cégep du Vieux Montréal': 'Cégep Vieux-Montréal',
-};
+/** D10 : dérivé de institutions.json — plus de table parallèle. */
+const INSTITUTION_LABELS = buildAcronymMap();
 
 const FEEDS = [
   {
