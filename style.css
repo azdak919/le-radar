@@ -4609,9 +4609,9 @@ body.external-listen-open {
   bottom: calc(max(16px, env(safe-area-inset-bottom, 0px)) + var(--vk-inset, 0px));
   z-index: 180;
   display: flex;
-  /* DOM = [flèche, loupe] → flèche gauche, loupe droite. */
+  /* DOM = [flèche, loupe] → flèche gauche, loupe collée à droite (même sans flèche). */
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: flex-end;
   gap: 12px;
   padding-left: var(--tools-side-left);
@@ -4619,6 +4619,10 @@ body.external-listen-open {
   pointer-events: none;
 }
 .page-tools > * { pointer-events: auto; }
+/* Loupe toujours à droite : si la flèche est hidden, space-between la laissait à gauche. */
+.page-tools > .news-search {
+  margin-left: auto;
+}
 
 .page-tools__fab {
   width: 48px;
