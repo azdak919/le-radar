@@ -26,6 +26,7 @@ export default defineConfig({
         '**/player-continuity.spec.mjs',
         '**/masthead-weather.spec.mjs',
         '**/seo-pages.spec.mjs',
+        '**/player-routes.spec.mjs',
       ],
     },
     {
@@ -34,6 +35,7 @@ export default defineConfig({
         '**/player-continuity.spec.mjs',
         '**/masthead-weather.spec.mjs',
         '**/seo-pages.spec.mjs',
+        '**/player-routes.spec.mjs',
       ],
       fullyParallel: false,
     },
