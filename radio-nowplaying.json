@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-30T06:25:38.150Z",
+  "updatedAt": "2026-07-30T08:51:33.113Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T06:25:11.494Z"
+      "checkedAt": "2026-07-30T08:51:06.750Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Franco",
+        "title": "Best of des sessions live",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "04:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/session-live-a-cism"
       },
       "next": {
-        "title": "Par mots et par vaux (reprise)",
+        "title": "Le Séismix",
         "source": "schedule",
-        "start": "03:00",
-        "end": "04:00",
-        "url": "https://cism893.ca/emissions/par-mots-et-par-vaux"
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
       },
       "track": "",
-      "showTitle": "Mix Franco",
+      "showTitle": "Best of des sessions live",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T06:25:13.500Z"
+      "checkedAt": "2026-07-30T08:51:09.027Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Freeform Air",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "William Shatner's Whiskey Tears",
         "source": "api-live",
         "start": "04:00",
         "end": "06:00"
       },
-      "track": "",
-      "showTitle": "Freeform Air",
+      "next": {
+        "title": "Total €clipse of The ☾harts",
+        "source": "api-live",
+        "start": "06:00",
+        "end": "07:00"
+      },
+      "track": "William Shatner",
+      "showTitle": "William Shatner's Whiskey Tears",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T06:25:17.690Z"
+      "checkedAt": "2026-07-30T08:51:11.892Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T06:25:31.078Z"
+      "checkedAt": "2026-07-30T08:51:25.485Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T06:25:31.701Z"
+      "checkedAt": "2026-07-30T08:51:25.924Z"
     },
     "choq": {
       "id": "choq",
@@ -139,18 +139,15 @@
         "end": "12:00",
         "slug": "intervenir-ensemble"
       },
-      "track": "Chloé Jara-Buto - nouveau grappin",
+      "track": "Jules — Vagues (Interlude)",
       "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": {
-        "type": "triton-np",
-        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
-      },
-      "checkedAt": "2026-07-30T06:25:37.799Z"
+      "clientPoll": null,
+      "checkedAt": "2026-07-30T08:51:32.762Z"
     }
   }
 }
