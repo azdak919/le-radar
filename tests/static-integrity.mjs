@@ -675,15 +675,17 @@ assert(
   appJs.includes('crossfadeSportsCtaLabel') && appJs.includes('is-crossfade'),
   'app.js : rotation CTA = crossfade du label interne',
 );
-// Puces scores : indépendantes + dwell lecture + marquee aller-retour.
+// Puces scores : indépendantes + dwell lecture + marquee aller-retour complet.
 assert(
   appJs.includes('scheduleSportsSlot')
     && appJs.includes('sportsSlotDwellMs')
     && appJs.includes('sportsLabelReadingMs')
+    && appJs.includes('sportsChipNeedsMarquee')
     && /SPORTS_READ_MIN_MS\s*=\s*7800/.test(appJs)
-    && /SPORTS_SCROLL_ONE_WAY_MS\s*=\s*7000/.test(appJs)
-    && appJs.includes('SPORTS_SCROLL_ROUND_TRIP_MS'),
-  'app.js : rotation sports par slot + dwell lecture + marquee',
+    && /SPORTS_SCROLL_ONE_WAY_MS\s*=\s*8500/.test(appJs)
+    && appJs.includes('SPORTS_SCROLL_ROUND_TRIP_MS')
+    && appJs.includes('SPORTS_CHIP_LEAVE_MS'),
+  'app.js : rotation sports par slot + dwell lecture + marquee aller-retour',
 );
 assert(
   appJs.includes('sportsWeatherCardCount')
@@ -692,9 +694,9 @@ assert(
   'app.js : plafond scores sports ≤ cartes météo (CTA hors compte)',
 );
 assert(
-  styleCss.includes('--sports-scroll-duration: 7s')
-    || styleCss.includes('--sports-scroll-duration:7s'),
-  'style : durée marquee sports alignée sur SPORTS_SCROLL_ONE_WAY_MS (7s)',
+  styleCss.includes('--sports-scroll-duration: 8.5s')
+    || styleCss.includes('--sports-scroll-duration:8.5s'),
+  'style : durée marquee sports alignée sur SPORTS_SCROLL_ONE_WAY_MS (8.5s)',
 );
 
 console.log(`OK intégrité statique (${htmlFiles.length} pages HTML)`);
