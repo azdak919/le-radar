@@ -27,6 +27,7 @@ export default defineConfig({
         '**/masthead-weather.spec.mjs',
         '**/seo-pages.spec.mjs',
         '**/player-routes.spec.mjs',
+        '**/shared-chrome.spec.mjs',
       ],
     },
     {
@@ -36,6 +37,7 @@ export default defineConfig({
         '**/masthead-weather.spec.mjs',
         '**/seo-pages.spec.mjs',
         '**/player-routes.spec.mjs',
+        '**/shared-chrome.spec.mjs',
       ],
       fullyParallel: false,
     },
