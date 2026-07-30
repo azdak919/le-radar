@@ -49,7 +49,9 @@
     "maintain:backgrounds:all": "npm run maintain:masthead && npm run maintain:universities && npm run maintain:pomo && npm run maintain:nations",
     "pin-background": "node scripts/pin-background.js",
     "archive": "node scripts/archive-articles.js",
-    "archive:update": "node scripts/archive-articles.js --update"
+    "archive:update": "node scripts/archive-articles.js --update",
+    "sports:update": "node scripts/fetch-sports.js --update",
+    "sports:check": "node scripts/fetch-sports.js"
   },
   "engines": {
     "node": ">=20"

@@ -1,0 +1,81 @@
+{
+  "description": "Ligues RSEQ à agréger pour sports.json (collégial + universitaire QC). LeagueId = diffusion S1.",
+  "source": "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/",
+  "leagues": [
+    {
+      "id": "357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f",
+      "sector": "collegial",
+      "sport": "football",
+      "sportLabel": "Football",
+      "division": "D1",
+      "sex": "M",
+      "label": "Football collégial D1"
+    },
+    {
+      "id": "03379141-30ad-4961-aa29-0d9c0e1692f9",
+      "sector": "collegial",
+      "sport": "basketball",
+      "sportLabel": "Basketball",
+      "division": "D1",
+      "sex": "M",
+      "label": "Basketball collégial D1 masculin"
+    },
+    {
+      "id": "3f4585ce-0bbf-41b0-a726-7a294098a074",
+      "sector": "collegial",
+      "sport": "soccer",
+      "sportLabel": "Soccer",
+      "division": "D1",
+      "sex": "M",
+      "label": "Soccer collégial D1 masculin"
+    },
+    {
+      "id": "e37ad3ba-0089-455e-8b95-4d0198962b3e",
+      "sector": "collegial",
+      "sport": "volleyball",
+      "sportLabel": "Volleyball",
+      "division": "D1",
+      "sex": "M",
+      "label": "Volleyball collégial D1 masculin"
+    },
+    {
+      "id": "7bb98e00-cc04-43d2-adc6-5a98fb65218b",
+      "sector": "collegial",
+      "sport": "volleyball",
+      "sportLabel": "Volleyball",
+      "division": "D1",
+      "sex": "F",
+      "label": "Volleyball collégial D1 féminin"
+    },
+    {
+      "id": "d9538539-2732-439b-8521-02da4f3da6e8",
+      "sector": "universitaire",
+      "sport": "football",
+      "sportLabel": "Football",
+      "division": null,
+      "sex": "M",
+      "label": "Football universitaire RSEQ",
+      "usports": true
+    },
+    {
+      "id": "b1f083ac-4748-4563-b3bf-b3369204417b",
+      "sector": "universitaire",
+      "sport": "basketball",
+      "sportLabel": "Basketball",
+      "division": null,
+      "sex": "M",
+      "label": "Basketball universitaire RSEQ",
+      "usports": true
+    },
+    {
+      "id": "bf91ad12-b8fc-4259-92a2-551a8da949e7",
+      "sector": "universitaire",
+      "sport": "soccer",
+      "sportLabel": "Soccer",
+      "division": null,
+      "sex": "M",
+      "label": "Soccer universitaire RSEQ",
+      "usports": true
+    }
+  ]
+}

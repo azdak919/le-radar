@@ -822,6 +822,107 @@ a { color: inherit; }
 }
 @media (prefers-reduced-motion: reduce) { .masthead-weather__city.is-overflowing .masthead-weather__name-text { animation: none; } }
 
+/* ── Scoreboard RSEQ / unis QC — sous la barre radio ── */
+.masthead-sports-strip {
+  display: none;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 8px var(--pad) 0;
+  box-sizing: border-box;
+  gap: 6px;
+  align-items: stretch;
+  min-width: 0;
+}
+.masthead-sports-strip:not([hidden]) {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+.masthead-sports-strip .sports-chip {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 4px 10px 4px 7px;
+  border: 1px solid color-mix(in srgb, var(--sports-tone, var(--accent)) 35%, var(--rule));
+  border-radius: 6px;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--sports-tone, var(--accent)) 18%, transparent) 0%, transparent 55%),
+    color-mix(in srgb, var(--bg-soft) 88%, var(--sports-tone, var(--accent)) 12%);
+  color: var(--ink-soft);
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+}
+.masthead-sports-strip .sports-chip:hover {
+  border-color: color-mix(in srgb, var(--sports-tone, var(--accent)) 55%, var(--rule));
+}
+.masthead-sports-strip .sports-chip__glyph {
+  flex: 0 0 auto;
+  font-size: 13px;
+  line-height: 1;
+}
+.masthead-sports-strip .sports-chip__badge {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.1rem;
+  height: 1.1rem;
+  padding: 0 3px;
+  border-radius: 3px;
+  font-size: 9px;
+  font-weight: 800;
+  color: #fff;
+  background: #2f8f5b;
+}
+.masthead-sports-strip .sports-chip__badge--l { background: #b84848; }
+.masthead-sports-strip .sports-chip__badge--d { background: #6b7c8c; }
+.masthead-sports-strip .sports-chip__line {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+}
+.masthead-sports-strip .sports-chip__line-inner {
+  display: inline-block;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+.masthead-sports-strip .sports-chip__code { font-weight: 800; letter-spacing: 0.03em; }
+.masthead-sports-strip .sports-chip__score {
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 1px;
+}
+.masthead-sports-strip .sports-chip__vs {
+  opacity: 0.72;
+  font-weight: 650;
+  font-size: 0.92em;
+  text-transform: lowercase;
+}
+.masthead-sports-strip .sports-chip__when {
+  opacity: 0.88;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 599.98px) {
+  .masthead-sports-strip:not([hidden]) {
+    padding-top: 8px;
+    padding-bottom: 2px;
+  }
+}
+
 .masthead-actions {
   display: flex;
   align-items: center;
@@ -3229,6 +3330,13 @@ html[data-translate-busy="1"] .translate-toggle {
   margin: 0 0 6px;
   font-weight: 500;
 }
+/* Vedettes : titre ↔ auteur plus serrés ; air avant photo / extrait. */
+.article--feature .article-title {
+  margin-bottom: 4px;
+}
+.article--feature .article-byline {
+  margin: 0 0 10px;
+}
 /* Espace stable entre libellé et auteur — survit aux traductions qui
    retirent le blanc final de « Par » / « By » / « Por »… */
 .article-byline .article-author {
@@ -4354,23 +4462,69 @@ body.external-listen-open {
   }
 
   /*
-   * Vedettes seulement : vignette un cran plus étroite + plus d'extrait
-   * pour combler la zone noire à côté de la photo (pas En bref / Suite).
+   * Vedettes (parité LE-KIOSQUE) : float gauche + extrait qui enroule sous
+   * la photo. La une reste en colonne (16:9 pleine largeur).
    */
   .news-hero .article--feature.article--thumb.has-image {
-    grid-template-columns: clamp(72px, 24vw, 100px) minmax(0, 1fr);
-    column-gap: 12px;
+    display: block;
+    grid-template-columns: none;
   }
-  .news-hero .article--feature.article--thumb.has-image .article-brief,
+  .news-hero .article--feature.article--thumb.has-image > .article-meta {
+    display: block;
+    margin-bottom: 6px;
+  }
+  .news-hero .article--feature.article--thumb.has-image > .article-title {
+    display: block;
+    margin-bottom: 4px;
+  }
+  .news-hero .article--feature.article--thumb.has-image > .article-byline {
+    display: block;
+    margin: 0 0 8px;
+  }
+  .news-hero .article--feature.article--thumb.has-image > .article-media {
+    float: left;
+    width: clamp(92px, 28vw, 118px);
+    margin: 2px 14px 4px 0;
+    shape-outside: margin-box;
+    grid-column: auto;
+    grid-row: auto;
+    aspect-ratio: auto;
+    overflow: visible;
+    background: transparent;
+  }
+  .news-hero .article--feature.article--thumb.has-image > .article-title,
+  .news-hero .article--feature.article--thumb.has-image > .article-byline,
+  .news-hero .article--feature.article--thumb.has-image > .article-brief {
+    grid-column: auto;
+  }
+  .news-hero .article--feature.article--thumb.has-image > .article-brief {
+    display: block;
+    overflow: visible;
+    margin-top: 0;
+    min-height: clamp(92px, 28vw, 118px);
+  }
+  .news-hero .article--feature.article--thumb.has-image > .article-brief,
   .news-hero .article--feature.article--thumb.has-image .article-brief-text {
     max-width: none;
   }
   .news-hero .article--feature.article--thumb.has-image .article-brief-text,
   .news-hero .article--feature.article--thumb.has-image .article-brief.is-truncated .article-brief-text {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 6;
-    overflow: hidden;
+    display: inline;
+    -webkit-line-clamp: unset;
+    overflow: visible;
+    -webkit-box-orient: initial;
+  }
+  .news-hero .article--feature.article--thumb.has-image::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  .news-hero .article--feature.article--thumb.has-image .article-media img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 7px;
   }
 }
 
@@ -4890,10 +5044,11 @@ body.external-listen-open {
   .article--feature .article-title {
     font-size: 1.36rem;
     line-height: 1.2;
+    margin-bottom: 4px;
   }
 
   .article--feature .article-byline {
-    margin-bottom: 5px;
+    margin: 0 0 10px;
   }
 
   /* Suite du fil : pleine largeur sous le bloc magazine */
