@@ -1559,14 +1559,32 @@ async function initMastheadWeather() {
 
 // ═══════════════════════════════════════════════════════════════════════════
 //  SPORTS STRIP (RSEQ collégial + universitaire QC) — sous la radio
+//  Rotation carte-par-carte (comme la météo), tons par sport / résultat.
 // ═══════════════════════════════════════════════════════════════════════════
 const SPORTS_FAV_KEY = 'radar-sports-favorites-v1';
 const SPORTS_DEFAULT_CODES = ['LAV', 'MCG', 'CON', 'MTL', 'UQAM', 'SHE', 'BIS', 'GAR', 'LIM', 'VAN'];
+/** Palette par sport (évite le tout-rouge des prochains matchs). */
+const SPORTS_SPORT_TONES = {
+  football: '#c45c2a',
+  basketball: '#d88a0a',
+  soccer: '#3d9a6a',
+  volleyball: '#3b82c4',
+  hockey: '#5498bb',
+  default: '#66839e',
+};
 let sportsData = null;
 let sportsSlides = [];
-let sportsDeck = [];
+/** Slides actuellement affichées (1 par slot), comme mastheadWeatherSlots. */
+let sportsVisible = [];
+let sportsNextSlot = 0;
 let sportsTimer = null;
-const SPORTS_ROTATE_MS = 7000;
+let sportsReducedMotion = false;
+try {
+  sportsReducedMotion = !!(window.matchMedia
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+} catch { /* ignore */ }
+const SPORTS_ROTATE_MS = 5200; // même rythme que la météo
+const SPORTS_ARRIVE_MS = 500;
 
 function sportsGlyph(sport) {
   const s = String(sport || '').toLowerCase();
@@ -1582,7 +1600,25 @@ function sportsResultTone(result) {
   if (result === 'W') return '#3d9a6a';
   if (result === 'L') return '#c45c5c';
   if (result === 'D' || result === 'T') return '#8fa3b0';
-  return '#c8102e';
+  return SPORTS_SPORT_TONES.default;
+}
+
+function sportsSportTone(sport) {
+  const s = String(sport || '').toLowerCase();
+  if (s.includes('basket')) return SPORTS_SPORT_TONES.basketball;
+  if (s.includes('hockey')) return SPORTS_SPORT_TONES.hockey;
+  if (s.includes('soccer')) return SPORTS_SPORT_TONES.soccer;
+  if (s.includes('volley')) return SPORTS_SPORT_TONES.volleyball;
+  if (s.includes('football') || s.includes('flag')) return SPORTS_SPORT_TONES.football;
+  return SPORTS_SPORT_TONES.default;
+}
+
+function sportsSlideTone(slide) {
+  if (!slide) return SPORTS_SPORT_TONES.default;
+  if (slide.mode === 'result' && slide.game?.result) {
+    return sportsResultTone(slide.game.result);
+  }
+  return sportsSportTone(slide.game?.sport || slide.team?.sport);
 }
 
 function readSportsFavorites() {
@@ -1617,7 +1653,6 @@ function buildSportsSlides(data) {
     const ar = ad === -1 ? 99 : ad;
     const br = bd === -1 ? 99 : bd;
     if (ar !== br) return ar - br;
-    // Préférer un résultat joué, sinon un prochain match.
     const as = a.lastGame ? 0 : a.nextGame ? 1 : 2;
     const bs = b.lastGame ? 0 : b.nextGame ? 1 : 2;
     if (as !== bs) return as - bs;
@@ -1626,22 +1661,24 @@ function buildSportsSlides(data) {
 
   return ranked.map((team) => {
     if (team.lastGame) {
-      return {
+      const slide = {
         mode: 'result',
         team,
         game: team.lastGame,
-        tone: sportsResultTone(team.lastGame.result),
         key: `r:${team.id}:${team.lastGame.date}`,
       };
+      slide.tone = sportsSlideTone(slide);
+      return slide;
     }
     if (team.nextGame) {
-      return {
+      const slide = {
         mode: 'next',
         team,
         game: team.nextGame,
-        tone: '#c8102e',
         key: `n:${team.id}:${team.nextGame.date}`,
       };
+      slide.tone = sportsSlideTone(slide);
+      return slide;
     }
     return null;
   }).filter(Boolean);
@@ -1658,18 +1695,37 @@ function formatSportsWhen(iso, time) {
   return label;
 }
 
-function paintSportsChip(slide) {
+/** Lien diffusion RSEQ (match joué, à venir, ou page ligue en repli). */
+function sportsGameHref(slide) {
+  const g = slide?.game || {};
+  if (g.url && /^https?:\/\//i.test(g.url)) return g.url;
+  if (g.gameId) {
+    return `https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=${encodeURIComponent(g.gameId)}`;
+  }
+  const leagueId = slide?.team?.leagueId;
+  if (leagueId) {
+    return `https://diffusion.rseq.ca/?Type=League&LeagueId=${encodeURIComponent(leagueId)}`;
+  }
+  return 'https://www.rseq-stats.ca/';
+}
+
+function paintSportsChip(slide, animate = false) {
   const team = slide.team;
   const code = String(team.code || 'EQ').toUpperCase().slice(0, 4);
   const sport = slide.game.sport || team.sport || '';
-  const a = document.createElement(slide.game.url ? 'a' : 'span');
+  const tone = slide.tone || sportsSlideTone(slide);
+  const href = sportsGameHref(slide);
+  // Toujours un lien : match passé, prochain, ou calendrier de ligue.
+  const a = document.createElement('a');
   a.className = 'sports-chip';
-  a.style.setProperty('--sports-tone', slide.tone);
-  if (slide.game.url) {
-    a.href = slide.game.url;
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
-  }
+  a.href = href;
+  a.target = '_blank';
+  a.rel = 'noopener noreferrer';
+  if (animate && !sportsReducedMotion) a.classList.add('is-arriving');
+  a.dataset.sportsKey = slide.key || '';
+  a.dataset.sportsMode = slide.mode || '';
+  a.dataset.sportsSport = sport || '';
+  a.style.setProperty('--sports-tone', tone);
 
   const glyph = document.createElement('span');
   glyph.className = 'sports-chip__glyph';
@@ -1695,8 +1751,8 @@ function paintSportsChip(slide) {
       + `<span class="sports-chip__score">${escapeHtml(String(g.scoreFor))}–${escapeHtml(String(g.scoreAgainst))}</span> `
       + `<span class="sports-chip__code sports-chip__opp">${escapeHtml(opp)}</span>`;
     const issue = g.result === 'W' ? 'Victoire' : g.result === 'L' ? 'Défaite' : 'Match nul';
-    a.title = `${issue} · ${team.name} · ${g.scoreFor}–${g.scoreAgainst} vs ${g.opponent || opp}`;
-    a.setAttribute('aria-label', a.title);
+    a.title = `${issue} · ${team.name} · ${g.scoreFor}–${g.scoreAgainst} vs ${g.opponent || opp} — ouvrir la feuille de match RSEQ`;
+    a.setAttribute('aria-label', `${issue} des ${team.name} contre ${g.opponent || opp}. Ouvrir les détails du match.`);
   } else {
     a.append(glyph);
     const n = slide.game;
@@ -1706,45 +1762,95 @@ function paintSportsChip(slide) {
       + `<span class="sports-chip__vs">vs</span> `
       + `<span class="sports-chip__code sports-chip__opp">${escapeHtml(opp)}</span>`
       + (when ? ` · <span class="sports-chip__when">${escapeHtml(when)}</span>` : '');
-    a.title = `Prochain · ${team.name} vs ${n.opponent || opp}${when ? ` · ${when}` : ''}`;
-    a.setAttribute('aria-label', a.title);
+    a.title = `Prochain · ${team.name} vs ${n.opponent || opp}${when ? ` · ${when}` : ''} — ouvrir le calendrier RSEQ`;
+    a.setAttribute('aria-label', `Prochain match des ${team.name} contre ${n.opponent || opp}${when ? ` le ${when}` : ''}. Ouvrir les détails du match.`);
   }
   line.append(inner);
   a.append(line);
+  if (animate && !sportsReducedMotion) {
+    window.setTimeout(() => a.classList.remove('is-arriving'), SPORTS_ARRIVE_MS);
+  }
   return a;
 }
 
+function nextSportsSlide(usedKeys) {
+  const used = usedKeys instanceof Set ? usedKeys : new Set(usedKeys || []);
+  const pool = sportsSlides.filter((s) => !used.has(s.key));
+  if (!pool.length) return sportsSlides[0] || null;
+  // Légère préférence : ne pas toujours le même sport à la suite.
+  const lastSport = sportsVisible[sportsNextSlot]?.team?.sport;
+  const diverse = lastSport
+    ? pool.filter((s) => (s.team?.sport || '') !== lastSport)
+    : pool;
+  const pickFrom = diverse.length ? diverse : pool;
+  return pickFrom[Math.floor(Math.random() * pickFrom.length)];
+}
+
+/** Remplit / recalcule les slots visibles (resize ou 1er paint). */
 function renderSportsStrip() {
   if (!MASTHEAD_SPORTS_STRIP || !sportsSlides.length) {
     if (MASTHEAD_SPORTS_STRIP) {
       MASTHEAD_SPORTS_STRIP.hidden = true;
       MASTHEAD_SPORTS_STRIP.replaceChildren();
     }
+    sportsVisible = [];
     return;
   }
   const count = Math.min(sportsBoardCount(), sportsSlides.length);
-  if (!sportsDeck.length) {
-    sportsDeck = sportsSlides.slice();
+  const used = new Set();
+  // Conserver ce qu’on peut des slots déjà affichés.
+  const nextVisible = [];
+  for (let i = 0; i < count; i += 1) {
+    const prev = sportsVisible[i];
+    if (prev && !used.has(prev.key) && sportsSlides.some((s) => s.key === prev.key)) {
+      nextVisible.push(prev);
+      used.add(prev.key);
+    }
   }
-  while (sportsDeck.length < count) {
-    sportsDeck = sportsDeck.concat(sportsSlides);
+  while (nextVisible.length < count) {
+    const slide = nextSportsSlide(used);
+    if (!slide) break;
+    nextVisible.push(slide);
+    used.add(slide.key);
   }
-  const visible = sportsDeck.splice(0, count);
-  // Remettre en fin de file pour rotation.
-  sportsDeck = sportsDeck.concat(visible);
+  sportsVisible = nextVisible;
+  sportsNextSlot = sportsNextSlot % Math.max(1, sportsVisible.length);
   const frag = document.createDocumentFragment();
-  visible.forEach((slide) => frag.append(paintSportsChip(slide)));
+  sportsVisible.forEach((slide) => frag.append(paintSportsChip(slide, false)));
   MASTHEAD_SPORTS_STRIP.replaceChildren(frag);
   MASTHEAD_SPORTS_STRIP.hidden = false;
-  MASTHEAD_SPORTS_STRIP.dataset.count = String(count);
+  MASTHEAD_SPORTS_STRIP.dataset.count = String(sportsVisible.length);
+}
+
+/** Comme rotateOneMastheadWeatherCard : une seule carte change + is-arriving. */
+function rotateOneSportsCard() {
+  if (!MASTHEAD_SPORTS_STRIP || sportsVisible.length < 1 || sportsSlides.length <= 1) return;
+  const slot = sportsNextSlot % sportsVisible.length;
+  const used = new Set(sportsVisible.filter((_, i) => i !== slot).map((s) => s.key));
+  const replacement = nextSportsSlide(used);
+  if (!replacement || replacement.key === sportsVisible[slot]?.key) {
+    sportsNextSlot = (slot + 1) % sportsVisible.length;
+    return;
+  }
+  sportsVisible[slot] = replacement;
+  sportsNextSlot = (slot + 1) % sportsVisible.length;
+  const chips = MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip');
+  const oldChip = chips[slot];
+  const newChip = paintSportsChip(replacement, true);
+  if (oldChip) {
+    oldChip.replaceWith(newChip);
+  } else {
+    MASTHEAD_SPORTS_STRIP.append(newChip);
+  }
 }
 
 function scheduleSportsRotate() {
   if (sportsTimer) clearInterval(sportsTimer);
   sportsTimer = null;
-  if (sportsSlides.length <= sportsBoardCount()) return;
+  if (sportsSlides.length <= 1) return;
+  // Même avec 1 slot visible, on tourne le contenu ; avec N slots, un par un.
   sportsTimer = window.setInterval(() => {
-    renderSportsStrip();
+    rotateOneSportsCard();
   }, SPORTS_ROTATE_MS);
 }
 
@@ -1755,16 +1861,20 @@ async function initMastheadSports() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     sportsData = await res.json();
     sportsSlides = buildSportsSlides(sportsData);
+    sportsVisible = [];
+    sportsNextSlot = 0;
     renderSportsStrip();
     scheduleSportsRotate();
-    window.addEventListener('resize', () => {
-      // Recalcule N cartes selon largeur (debounce léger).
-      if (initMastheadSports._rz) clearTimeout(initMastheadSports._rz);
-      initMastheadSports._rz = setTimeout(() => {
-        renderSportsStrip();
-        scheduleSportsRotate();
-      }, 180);
-    }, { passive: true });
+    if (!initMastheadSports._resizeBound) {
+      initMastheadSports._resizeBound = true;
+      window.addEventListener('resize', () => {
+        if (initMastheadSports._rz) clearTimeout(initMastheadSports._rz);
+        initMastheadSports._rz = setTimeout(() => {
+          renderSportsStrip();
+          scheduleSportsRotate();
+        }, 180);
+      }, { passive: true });
+    }
   } catch (err) {
     console.warn('Le Radar: sports indisponibles', err);
     if (MASTHEAD_SPORTS_STRIP) {
@@ -7199,9 +7309,8 @@ function createArticle(item, role = 'standard') {
       ${mediaHtml}
       ${briefHtml}
     `;
-  } else if (role === 'feature') {
-    // Vedettes : titre + byline au-dessus, photo flottante, extrait qui enroule
-    // (même ordre que LE-KIOSQUE / source-view).
+  } else if (role === 'feature' || (role === 'compact' && hasImageCandidate)) {
+    // Vedettes + En bref avec photo : titre + byline puis media (float wrap).
     a.innerHTML = `
       ${metaHtml}
       ${titleHtml}
@@ -7210,7 +7319,7 @@ function createArticle(item, role = 'standard') {
       ${briefHtml}
     `;
   } else {
-    // En bref / suite : vignette grille (media avant titre en DOM).
+    // Suite du fil / En bref sans photo : media d’abord si présent.
     a.innerHTML = `
       ${metaHtml}
       ${mediaHtml}
@@ -7227,7 +7336,9 @@ function createArticle(item, role = 'standard') {
   }
 
   // Filet : garantir titre avant photo même si un attach restructure le DOM.
-  if (role === 'lead' || role === 'feature') ensureLeadTitleAboveMedia(a);
+  if (role === 'lead' || role === 'feature' || role === 'compact') {
+    ensureLeadTitleAboveMedia(a);
+  }
 
   return a;
 }

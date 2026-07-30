@@ -98,6 +98,16 @@ function allGames(league) {
     .concat(league.ConferenceChampionshipGames || []);
 }
 
+function gamePageUrl(gameId, leagueId) {
+  if (gameId) {
+    return `https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=${gameId}`;
+  }
+  if (leagueId) {
+    return `https://diffusion.rseq.ca/?Type=League&LeagueId=${leagueId}`;
+  }
+  return 'https://www.rseq-stats.ca/';
+}
+
 function normalizeGame(game, teamId, meta) {
   const home = game.HomeTeamId === teamId;
   const oppName = home ? game.VisitingTeamName : game.HomeTeamName;
@@ -108,6 +118,7 @@ function normalizeGame(game, teamId, meta) {
   let result = 'D';
   if (scoreFor > scoreAgainst) result = 'W';
   else if (scoreFor < scoreAgainst) result = 'L';
+  const gameId = game.GameId || null;
   return {
     date: gameDate(game),
     time: game.GameTimeFormatted || '',
@@ -119,10 +130,8 @@ function normalizeGame(game, teamId, meta) {
     result,
     sport: meta.sport,
     competition: meta.label,
-    gameId: game.GameId || null,
-    url: game.GameId
-      ? `https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=${game.GameId}`
-      : null,
+    gameId,
+    url: gamePageUrl(gameId, meta.id),
   };
 }
 
@@ -137,6 +146,7 @@ function nextGameForTeam(games, teamId, meta) {
   const home = g.HomeTeamId === teamId;
   const oppName = home ? g.VisitingTeamName : g.HomeTeamName;
   const oppCode = (home ? g.VisitingTeamCode : g.HomeTeamCode) || codeFromName(oppName);
+  const gameId = g.GameId || null;
   return {
     date: gameDate(g),
     time: g.GameTimeFormatted || '',
@@ -145,7 +155,8 @@ function nextGameForTeam(games, teamId, meta) {
     home,
     sport: meta.sport,
     competition: meta.label,
-    gameId: g.GameId || null,
+    gameId,
+    url: gamePageUrl(gameId, meta.id),
   };
 }
 
