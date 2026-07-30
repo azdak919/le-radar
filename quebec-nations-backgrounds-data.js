@@ -8,7 +8,7 @@
  * Consommateurs : mât page d’accueil ET pomo (banque partagée thématique)
  *
  * Politique : pas de religieux institutionnel ; nations du Québec OK ;
- * pas de personnes reconnaissables ; plafond 50 ; ménage 1×/session univ.
+ * pas de personnes reconnaissables ; plafond large ; ménage 1×/session univ.
  * Résolution mini ~1400×700 / 1.2 Mpx (anti-grain upscale).
  * focalY optionnel (0=haut, 1=bas) pour cover crop.
  * Hard-ban : scripts/quebec-backgrounds-blacklist.js
@@ -24,6 +24,8 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     height: 3580,
     nationId: "abenaki",
     nation: "Abénaquis (W8banaki)",
+    season: "hiver",
+    season6: "ukiuq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/d/d1/Lac_F%C3%A9lix_Landscape_-_panoramio.jpg",
@@ -74,6 +76,8 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     height: 1465,
     nationId: "algonquin",
     nation: "Algonquins (Anishinaabeg)",
+    season: "hiver",
+    season6: "ukiuq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/29/Beaver_dam_in_Gatineau_Park_Jan_14.jpg",
@@ -85,6 +89,8 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     height: 3096,
     nationId: "algonquin",
     nation: "Algonquins (Anishinaabeg)",
+    season: "ete",
+    season6: "aujaq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/ba/Orthophotographie_2009_de_Ouj%C3%A9-Bougoumou_02.jpg",
@@ -96,6 +102,8 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     height: 8595,
     nationId: "cree",
     nation: "Cris (Eeyou / Eenou)",
+    season: "ete",
+    season6: "aujaq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/fc/Gesgapegiag5.JPG",
@@ -107,6 +115,8 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     height: 1704,
     nationId: "migmaq",
     nation: "Mi'gmaq",
+    season: "ete",
+    season6: "aujaq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/6/68/Mercier_Bridge%2C_Lasalle_side.JPG",
@@ -119,6 +129,8 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     height: 2112,
     nationId: "mohawk",
     nation: "Mohawks (Kanien'kehá:ka)",
+    season: "hiver",
+    season6: "ukiuq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b3/Observatoire_wahsipekuk.jpg",
@@ -130,6 +142,8 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     height: 4536,
     nationId: "maliseet",
     nation: "Malécites (Wolastoqiyik)",
+    season: "hiver",
+    season6: "ukiuq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/4/40/Gesgapegiag4.jpg",
@@ -142,6 +156,8 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     height: 1704,
     nationId: "migmaq",
     nation: "Mi'gmaq",
+    season: "ete",
+    season6: "aujaq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Paysage_%C3%A0_Manawan.jpg",
@@ -153,6 +169,8 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     height: 1332,
     nationId: "atikamekw",
     nation: "Atikamekw",
+    season: "hiver",
+    season6: "ukiuq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/5/5b/Pingualuit_aerial_2007.jpg",
@@ -190,6 +208,8 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     height: 3320,
     nationId: "atikamekw",
     nation: "Atikamekw",
+    season: "hiver",
+    season6: "ukiuq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/12/Nunavik_landscape_-_panoramio.jpg",
@@ -228,6 +248,8 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     height: 1843,
     nationId: "atikamekw",
     nation: "Atikamekw",
+    season: "hiver",
+    season6: "ukiuq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Pingualuit_aerial_2007_%28cropped%29.jpg",
@@ -252,5 +274,7 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     height: 7833,
     nationId: "innu",
     nation: "Innus (Ilnu / Innu)",
+    season: "ete",
+    season6: "aujaq",
   }
 ];

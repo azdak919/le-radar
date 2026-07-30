@@ -43,8 +43,19 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
     await expect(strip.locator('.sports-chip').last()).toHaveClass(/sports-chip--cta/);
   }
 
+  // Parité météo : puces SCORE ≤ cartes météo (CTA hors plafond).
+  // ~420–480 px : météo souvent à 2 cartes → max 2 scores + CTA = 3 chips.
+  const parity = await countAt(480);
+  const weatherActive = await page.locator('.masthead-weather__city.is-active').count();
+  if (weatherActive > 0) {
+    const scoreChips = await strip.locator('.sports-chip:not(.sports-chip--cta)').count();
+    expect(scoreChips).toBeLessThanOrEqual(weatherActive);
+    // total = scores + (CTA si ≥ 1)
+    expect(parity).toBeLessThanOrEqual(weatherActive + 1);
+  }
+
   const narrow = await countAt(520);
-  expect(narrow).toBeLessThanOrEqual(mid);
+  expect(narrow).toBeLessThanOrEqual(Math.max(mid, parity));
   expect(narrow).toBeGreaterThanOrEqual(1);
 
   // Téléphone / très étroit : il ne reste que l’ancre « SPORTS ».

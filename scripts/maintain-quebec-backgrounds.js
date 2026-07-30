@@ -2,7 +2,7 @@
 /**
  * LE RADAR — bot de banques wallpaper (compartimentées)
  *
- * Profils indépendants (mêmes règles, plafond 50, cadence session univ.) :
+ * Profils indépendants (mêmes règles, plafond large, cadence session univ.) :
  *
  *   masthead (défaut ; alias : landscape)
  *     data/quebec-backgrounds.json → QUEBEC_BACKGROUNDS
@@ -22,7 +22,7 @@
  *     → mât ET pomo (seule banque explicitement partagée)
  *
  * Politique commune :
- *   - plafond MAX_BANK (50) photos
+ *   - plafond MAX_BANK (défaut 200, override --max-bank=N) — plus de « 50 max »
  *   - ménage complet **une fois par session universitaire QC**
  *   - revalidation (aspect, religieux institutionnel, licence, résolution)
  *   - pas de personnes reconnaissables ; spiritualité autochtone OK
@@ -31,6 +31,7 @@
  * Usage :
  *   node scripts/maintain-quebec-backgrounds.js [--profile masthead|universities|pomo|nations]
  *   node scripts/maintain-quebec-backgrounds.js --update --profile nations
+ *   node scripts/maintain-quebec-backgrounds.js --update --force --max-bank=200
  *
  * Blacklist durable (URL-first) : scripts/quebec-backgrounds-blacklist.js
  * Sync offline JSON→JS (sans Commons) : scripts/sync-quebec-backgrounds.js
@@ -58,7 +59,25 @@ const { enrichPhotoSeasons, getCurrentSeason4 } = require('./season-lib');
 
 const ROOT = path.join(__dirname, '..');
 
-const MAX_BANK = 50;
+const args = process.argv.slice(2);
+const doUpdate = args.includes('--update');
+const forceSession = args.includes('--force');
+
+/** Plafond large : les saisons ont besoin de profondeur, pas d’un cap 50. */
+function readMaxBankArg() {
+  const eq = args.find((a) => a.startsWith('--max-bank='));
+  if (eq) {
+    const n = parseInt(eq.split('=')[1], 10);
+    if (Number.isFinite(n) && n >= 20) return Math.min(n, 500);
+  }
+  const i = args.indexOf('--max-bank');
+  if (i >= 0 && args[i + 1]) {
+    const n = parseInt(args[i + 1], 10);
+    if (Number.isFinite(n) && n >= 20) return Math.min(n, 500);
+  }
+  return 200;
+}
+const MAX_BANK = readMaxBankArg();
 const MIN_ASPECT = 1.25;
 /** Banque favorites manuelle — URLs jamais purgées par ce bot. */
 const FAVORITES_JSON = path.join(ROOT, 'data', 'quebec-favorites-backgrounds.json');
@@ -70,10 +89,6 @@ const MIN_WIDTH = 1400;
 const MIN_HEIGHT = 700;
 const MIN_PIXELS = 1_200_000;
 const UA = 'LeRadar-bg-maintain/1.2 (https://le-radar.ca; compartmented wallpaper banks)';
-
-const args = process.argv.slice(2);
-const doUpdate = args.includes('--update');
-const forceSession = args.includes('--force');
 
 function readProfileArg() {
   const eq = args.find((a) => a.startsWith('--profile='));
@@ -135,28 +150,70 @@ function landscapeDiscoveryQueries(sessionId) {
       'érable automne Québec',
       'automne Québec paysage',
       'maple autumn Quebec landscape',
+      'feuilles d\'automne Laurentides',
+      'forêt automnale Québec',
+      'Charlevoix automne paysage',
+      'Parc national Mauricie automne',
+      'Cantons-de-l\'Est automne',
     ],
     hiver: [
       'Québec hiver paysage jour',
       'Montreal winter landscape day',
       'Gaspésie hiver paysage',
+      'Laurentides hiver neige paysage',
+      'Charlevoix hiver paysage',
     ],
     ete: [
       'Québec été lac paysage',
       'rivière Québec été',
       'Charlevoix paysage été',
+      'lac Québec été vert',
+      'Parc national de la Mauricie été',
+      'Gaspésie été littoral',
+      'Îles-de-la-Madeleine paysage été',
+      'Bas-Saint-Laurent été',
+      'Outaouais lac été',
+      'Estrie lac été paysage',
+      'Mont-Tremblant été paysage -ski',
+      'Saguenay été paysage -glace -frozen',
+      'lac Memphrémagog été',
+      'Parc national du Bic été',
+      'Tadoussac été paysage',
+      'Parc national Jacques-Cartier été',
+      'Forillon national park summer',
+      'Mingan archipelago summer',
+      'lac Saint-Jean été plage',
+      'Abitibi lac été paysage',
+      'Gatineau park summer landscape',
+      'Mont Orford été',
+      'Mont Saint-Hilaire été',
+      'Parc de la Gatineau été',
+      'rivière Magog été',
+      'baie des Chaleurs été',
+      'Percé village été -hiver',
+      'Cap-Bon-Ami Forillon',
+      'Sept-Îles paysage été',
+      'Baie-Comeau paysage',
     ],
     // 4e saison météo (session univ. n’a que 3 ids)
     printemps: [
       'Québec printemps paysage',
       'dégel rivière Québec',
       'printemps Gaspésie paysage',
+      'printemps érable Québec',
+      'bourgeons forêt Québec',
+      'printemps Laurentides paysage',
+      'printemps Charlevoix',
+      'fleuve Saint-Laurent printemps',
     ],
   };
-  // Préférer la saison météo courante (4) pour le seed visuel
+  // Toutes les saisons en banque (rotation année) + priorité saison météo courante.
   const season4 = getCurrentSeason4();
-  const seasonal = bySession[season4] || bySession[sessionId] || bySession.ete;
-  return [...core, ...seasonal];
+  const current = bySession[season4] || bySession[sessionId] || bySession.ete;
+  const rest = ['ete', 'printemps', 'automne', 'hiver']
+    .filter((s) => s !== season4)
+    .flatMap((s) => bySession[s] || []);
+  return [...core, ...current, ...rest];
 }
 
 function universityDiscoveryQueries(sessionId) {
@@ -200,9 +257,24 @@ function universityDiscoveryQueries(sessionId) {
       'campus universitaire Québec été exterior',
       'McGill University campus summer exterior',
       'Université Laval campus summer exterior',
+      'Université de Montréal campus summer day exterior',
+      'Concordia University campus summer exterior',
+      'Université de Sherbrooke campus summer exterior',
+      'UQAM campus summer exterior Montreal',
+      'Bishop\'s University campus summer exterior',
+    ],
+    printemps: [
+      'McGill University campus spring exterior',
+      'Université Laval campus printemps exterior',
+      'campus universitaire Québec printemps exterior',
     ],
   };
-  return [...core, ...(bySession[sessionId] || bySession.ete)];
+  const season4 = getCurrentSeason4();
+  const current = bySession[season4] || bySession[sessionId] || bySession.ete;
+  const rest = ['ete', 'printemps', 'automne', 'hiver']
+    .filter((s) => s !== season4)
+    .flatMap((s) => bySession[s] || []);
+  return [...core, ...current, ...rest];
 }
 
 /** Requêtes par les 11 nations (priorité aux nations absentes de la banque). */
@@ -281,7 +353,7 @@ const LEGACY_JS = JS_PATH;
 // ── Filtres texte (règles stables — RELIGIOUS / TOWN_HALL via religious-facade-lib) ──
 
 const PEOPLE_RE =
-  /(?:\bportrait\b|\bpeople\b|\bperson\b|\bpersons\b|\bman\b|\bwoman\b|\bmen\b|\bwomen\b|\bchild\b|\bchildren\b|\bfamily\b|\bfamille\b|\bhomme\b|\bfemme\b|\benfant\b|\bdancer\b|\bdancers\b|\bpow[\s-]?wow\b|\bcrowd\b|\bfoule\b|\bselfie\b|\binscription on reverse\b|\bchef\b|\bchief\b|\bleder\b|\bleader\b|\bmaire\b|\bmayor\b|\bface\b|\bvisage\b|\bgroup\b|\bgroupe\b|\bmeeting\b|\br[eé]union\b)/i;
+  /(?:\bportrait\b|\bpeople\b|\bperson\b|\bpersons\b|\bman\b|\bwoman\b|\bmen\b|\bwomen\b|\bchild\b|\bchildren\b|\bfamily\b|\bfamille\b|\bhomme\b|\bfemme\b|\benfant\b|\bdancer\b|\bdancers\b|\bpow[\s-]?wow\b|\bcrowd\b|\bfoule\b|\bselfie\b|\binscription on reverse\b|\bchef\b|\bchief\b|\bleder\b|\bleader\b|\bmaire\b|\bmayor\b|\bface\b|\bvisage\b|\bgroup\b|\bgroupe\b|\bmeeting\b|\br[eé]union\b|\bmanifestation\b|\bauditeurs?\b|\bprotest\b|\bgr[eè]ve\b|\bdemo(?:nstration)?\b)/i;
 
 /** Fichiers non-image (Commons renvoie parfois audio/PDF). */
 const NON_IMAGE_RE = /\.(?:wav|mp3|ogg|flac|webm|mp4|pdf|svg|djvu|stl|obj)(?:\?|$)/i;
@@ -917,7 +989,7 @@ async function main() {
     photos = next;
   }
 
-  // ── 2. Plafond 50 : purge des plus anciennes ────────────────────
+  // ── 2. Plafond : purge des plus anciennes si au-dessus de MAX_BANK ─
   {
     const before = photos.length;
     const { photos: next, removed } =
@@ -938,9 +1010,11 @@ async function main() {
   // Nations : toujours tenter de combler les nations manquantes
   const coverageBefore =
     PROFILE.id === 'nations' ? nationsTaxonomy.coverageReport(photos) : null;
+  // Remplir tant qu’on n’est pas au plafond (user : pas de « 50 max » serré).
+  // Force session OU banque sous-remplie OU nations à couvrir.
   const shouldDiscover =
     needSessionCleanup ||
-    photos.length < Math.min(20, MAX_BANK) ||
+    photos.length < MAX_BANK ||
     (PROFILE.id === 'nations' &&
       coverageBefore &&
       coverageBefore.missing.length > 0);
