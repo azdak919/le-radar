@@ -8626,6 +8626,31 @@ function isWeakImagePath(path = '', { forThumb = false } = {}) {
 }
 
 /**
+ * Hôtes dont les médias sont souvent injoignables (site journal down).
+ * On bascule vers la capture Wayback (modificateur id_ = binaire original).
+ * L'Exemplaire (ULaval) : 2026-07-30 — connexion refusée sur :80/:443.
+ */
+const IMAGE_ARCHIVE_FALLBACK_HOSTS = new Set([
+  'exemplaire.com.ulaval.ca',
+  'www.exemplaire.com.ulaval.ca',
+]);
+
+/** Réécrit une URL image vers Internet Archive si l’hôte est en repli. */
+function withArchiveImageFallback(href = '') {
+  const raw = String(href || '').trim();
+  if (!raw) return '';
+  try {
+    const u = new URL(raw, typeof location !== 'undefined' ? location.href : 'https://le-radar.ca/');
+    if (u.hostname.toLowerCase().includes('web.archive.org')) return u.href;
+    if (!IMAGE_ARCHIVE_FALLBACK_HOSTS.has(u.hostname.toLowerCase())) return u.href;
+    // 2id_ → dernière capture utile, contenu original (pas la barre Wayback).
+    return `https://web.archive.org/web/2id_/${u.href}`;
+  } catch {
+    return raw;
+  }
+}
+
+/**
  * @param {string} src
  * @param {{ forThumb?: boolean }} [opts] — seuils assouplis pour feature / En bref
  */
@@ -8662,7 +8687,7 @@ function getCandidateImage(src = '', { forThumb = false } = {}) {
     if (width > 0 && height > 0 && width * height < minPx) return '';
   }
   if (isWeakImagePath(path, { forThumb })) return '';
-  return url.href;
+  return withArchiveImageFallback(url.href);
 }
 
 /**
@@ -9141,6 +9166,15 @@ function attachArticleImage(article, item, role) {
         settled = true;
         loadImage(src, kind, allowRetry, { forceRaw: true });
         return;
+      }
+      // Hôte source mort : tenter Wayback si pas déjà en archive.
+      if (allowRetry && kind === 'photo' && !/web\.archive\.org/i.test(src)) {
+        const archived = withArchiveImageFallback(src);
+        if (archived && archived !== src) {
+          settled = true;
+          loadImage(archived, kind, false, { forceRaw: true });
+          return;
+        }
       }
       if (allowRetry && (kind === 'photo' || kind === 'stock')) {
         const alt = alternateDisplayImage(item, kind, role);
