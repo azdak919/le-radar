@@ -1,23 +1,23 @@
 {
-  "updated": "2026-07-30T21:18:53.799Z",
+  "updated": "2026-07-30T23:35:56.055Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 131,
+  "cited": 130,
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 9,
-  "updatedCount": 9,
-  "citedNew": 8,
-  "fallbackNew": 1,
+  "checked": 55,
+  "updatedCount": 55,
+  "citedNew": 18,
+  "fallbackNew": 37,
   "samples": [
     {
-      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
+      "title": "La performance de l’homosexualité : un privilège ?",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
       "title": "L’épidémie de la nonchalance",
@@ -27,16 +27,9 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "La performance de l’homosexualité : un privilège ?",
+      "title": "Les femmes MAGA au service du patriarcat",
       "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Qui sont les agents qui patrouillent notre campus ?",
-      "source": "Le Délit",
-      "credit": "Photo : Stu Doré/Félix Fournier",
+      "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -50,30 +43,58 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Illustration: Halle Keays",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "title": "The Balogun scandal is just the latest instance of FIFA’s political pandering",
+      "source": "The Tribune",
+      "credit": "Photo : Ellen Lurie",
+      "cited": true,
+      "method": "figcaption-attribution"
+    },
+    {
+      "title": "Un hommage aux cyclistes décédés sur les routes",
       "source": "La Pige",
-      "credit": "Photo : Léa Morin-Letort",
-      "cited": true,
-      "method": "figcaption-paren-kind"
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
+      "title": "Un investissement pour les jeunes « bienvenu » au Centre Mamik",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "title": "L’ERD sauvée de la dissolution par quatre membres",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Jeunes auteurs, à vos crayons : le « pouvoir des mots » pour rejoindre les étudiants",
+      "source": "La Pige",
+      "credit": "Photo : Marc Andre Houde",
+      "cited": true,
+      "method": "filename-credit"
+    },
+    {
+      "title": "Présences invisibles : écrire la ville sans permission",
       "source": "Quartier Libre",
-      "credit": "Photo : Maryse Boyce",
-      "cited": true,
-      "method": "figcaption-copyright"
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
     }
   ]
 }
