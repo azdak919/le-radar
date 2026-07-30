@@ -1,7 +1,7 @@
 /**
  * LE-RADAR — page « Au tableau » (/sports/).
  * Progressive enhancement : sans ce script, toute la grille reste visible.
- * Filtres : sport · catégorie (féminin/masculin) · secteur · ?team=
+ * Filtres : sport · catégorie · secteur · période (semaine / mois / session)
  * + loupe de recherche locale (équipe, institution, sport…)
  * + flèche « haut de page » (bas-gauche, suit le défilement)
  */
@@ -18,6 +18,7 @@
   const sportButtons = Array.from(root.querySelectorAll('[data-filter-sport]'));
   const sectorButtons = Array.from(root.querySelectorAll('[data-filter-sector]'));
   const sexButtons = Array.from(root.querySelectorAll('[data-filter-sex]'));
+  const periodButtons = Array.from(root.querySelectorAll('[data-filter-period]'));
   // Compter seulement les formations avec scores (pas les cartes « liens »).
   const scoredPanels = panels.filter((p) => !p.classList.contains('sports-panel--external'));
 
@@ -30,6 +31,9 @@
   const searchClear = document.getElementById('sports-search-clear');
   const searchHint = document.getElementById('sports-search-hint');
 
+  const TZ = 'America/Toronto';
+  const PERIOD_KEYS = new Set(['all', 'week', 'next-week', 'month', 'session']);
+
   const labels = {
     fr: {
       status: (n, total) => (n === total
@@ -37,6 +41,12 @@
         : `${n} formation${n > 1 ? 's' : ''} sur ${total}`),
       boardsOnly: 'Tableaux officiels (liens)',
       empty: 'Aucune formation pour ce filtre.',
+      emptyPeriod: {
+        week: 'Aucun match cette semaine.',
+        'next-week': 'Aucun match la semaine prochaine.',
+        month: 'Aucun match ce mois-ci.',
+        session: 'Aucun match cette session.',
+      },
       searchEmpty: 'Aucune formation ne correspond à cette recherche.',
       searchStatus: (n, q) => (n === 0
         ? `Aucun résultat pour « ${q} »`
@@ -48,6 +58,12 @@
         : `${n} of ${total} team${total > 1 ? 's' : ''}`),
       boardsOnly: 'Official boards (links)',
       empty: 'No teams match this filter.',
+      emptyPeriod: {
+        week: 'No games this week.',
+        'next-week': 'No games next week.',
+        month: 'No games this month.',
+        session: 'No games this term.',
+      },
       searchEmpty: 'No teams match this search.',
       searchStatus: (n, q) => (n === 0
         ? `No results for “${q}”`
@@ -56,6 +72,115 @@
   };
   const lang = (document.documentElement.lang || 'fr').slice(0, 2) === 'en' ? 'en' : 'fr';
   const t = labels[lang];
+
+  /** YYYY-MM-DD civil à Québec. */
+  function ymdInToronto(date = new Date()) {
+    try {
+      return new Intl.DateTimeFormat('en-CA', {
+        timeZone: TZ,
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }).format(date);
+    } catch {
+      return date.toISOString().slice(0, 10);
+    }
+  }
+
+  function parseYmd(ymd) {
+    const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(ymd || ''));
+    if (!m) return null;
+    return { y: Number(m[1]), m: Number(m[2]), d: Number(m[3]) };
+  }
+
+  function addDaysYmd(ymd, days) {
+    const p = parseYmd(ymd);
+    if (!p) return ymd;
+    const dt = new Date(Date.UTC(p.y, p.m - 1, p.d + days));
+    return dt.toISOString().slice(0, 10);
+  }
+
+  /** Lundi de la semaine ISO (lundi–dimanche), pour ymd civil. */
+  function startOfWeekMonday(ymd) {
+    const p = parseYmd(ymd);
+    if (!p) return ymd;
+    const wd = new Date(Date.UTC(p.y, p.m - 1, p.d)).getUTCDay(); // 0 = dim
+    const offset = wd === 0 ? -6 : 1 - wd;
+    return addDaysYmd(ymd, offset);
+  }
+
+  /**
+   * Plage [startYmd, endYmd] inclusive pour le filtre période.
+   * Session = calendrier univ. QC (A: sep–déc, H: jan–avr, É: mai–août).
+   */
+  function periodRange(periodKey, ref = new Date()) {
+    const today = ymdInToronto(ref);
+    if (!periodKey || periodKey === 'all') return null;
+    if (periodKey === 'week') {
+      const start = startOfWeekMonday(today);
+      return { start, end: addDaysYmd(start, 6) };
+    }
+    if (periodKey === 'next-week') {
+      const start = addDaysYmd(startOfWeekMonday(today), 7);
+      return { start, end: addDaysYmd(start, 6) };
+    }
+    if (periodKey === 'month') {
+      const p = parseYmd(today);
+      if (!p) return null;
+      const start = `${p.y}-${String(p.m).padStart(2, '0')}-01`;
+      const end = addDaysYmd(
+        p.m === 12 ? `${p.y + 1}-01-01` : `${p.y}-${String(p.m + 1).padStart(2, '0')}-01`,
+        -1,
+      );
+      return { start, end };
+    }
+    if (periodKey === 'session') {
+      const p = parseYmd(today);
+      if (!p) return null;
+      const month0 = p.m - 1;
+      if (month0 >= 8) return { start: `${p.y}-09-01`, end: `${p.y}-12-31` }; // automne
+      if (month0 >= 4) return { start: `${p.y}-05-01`, end: `${p.y}-08-31` }; // été
+      return { start: `${p.y}-01-01`, end: `${p.y}-04-30` }; // hiver
+    }
+    return null;
+  }
+
+  function ymdInRange(ymd, range) {
+    if (!range || !ymd) return true;
+    return ymd >= range.start && ymd <= range.end;
+  }
+
+  /** Dates de matchs d’un panneau (prochain + résultats listés). */
+  function panelGameYmds(panel) {
+    const dates = new Set();
+    const nextTs = parseFloat(panel.getAttribute('data-next-ts') || '');
+    if (Number.isFinite(nextTs) && nextTs > 0) {
+      dates.add(ymdInToronto(new Date(nextTs)));
+    }
+    const lastTs = parseFloat(panel.getAttribute('data-last-ts') || '');
+    if (Number.isFinite(lastTs) && lastTs > 0) {
+      dates.add(ymdInToronto(new Date(lastTs)));
+    }
+    panel.querySelectorAll('time[datetime]').forEach((el) => {
+      const raw = el.getAttribute('datetime') || '';
+      if (/^\d{4}-\d{2}-\d{2}/.test(raw)) dates.add(raw.slice(0, 10));
+    });
+    return dates;
+  }
+
+  function panelMatchesPeriod(panel, periodKey) {
+    if (!periodKey || periodKey === 'all') return true;
+    // Cartes « liens officiels » sans calendrier : hors filtres temporels.
+    if (panel.classList.contains('sports-panel--external')) return false;
+    const range = periodRange(periodKey);
+    if (!range) return true;
+    const dates = panelGameYmds(panel);
+    if (!dates.size) return false;
+    for (const ymd of dates) {
+      if (ymdInRange(ymd, range)) return true;
+    }
+    return false;
+  }
 
   let searchOpen = false;
   let searchQuery = '';
@@ -101,15 +226,16 @@
         sport: (q.get('sport') || 'all').toLowerCase(),
         sector: (q.get('sector') || 'all').toLowerCase(),
         sex: (q.get('sex') || 'all').toLowerCase(),
+        period: (q.get('period') || 'all').toLowerCase(),
         team: (q.get('team') || '').trim(),
         q: (q.get('q') || '').trim(),
       };
     } catch {
-      return { sport: 'all', sector: 'all', sex: 'all', team: '', q: '' };
+      return { sport: 'all', sector: 'all', sex: 'all', period: 'all', team: '', q: '' };
     }
   }
 
-  function writeQuery(sport, sector, sex, team, q) {
+  function writeQuery(sport, sector, sex, period, team, q) {
     try {
       const url = new URL(window.location.href);
       if (!sport || sport === 'all') url.searchParams.delete('sport');
@@ -118,6 +244,8 @@
       else url.searchParams.set('sector', sector);
       if (!sex || sex === 'all') url.searchParams.delete('sex');
       else url.searchParams.set('sex', sex);
+      if (!period || period === 'all') url.searchParams.delete('period');
+      else url.searchParams.set('period', period);
       if (!team) url.searchParams.delete('team');
       else url.searchParams.set('team', team);
       if (!q) url.searchParams.delete('q');
@@ -185,10 +313,13 @@
     } catch { /* ignore */ }
   }
 
-  function apply(sport, sector, sex, team, query) {
+  function apply(sport, sector, sex, period, team, query) {
     const sportKey = sport || 'all';
     const sectorKey = sector || 'all';
     const sexKey = (sex || 'all').toLowerCase();
+    const periodKey = PERIOD_KEYS.has(String(period || 'all').toLowerCase())
+      ? String(period || 'all').toLowerCase()
+      : 'all';
     const teamId = (team || '').trim();
     const qRaw = query !== undefined ? String(query || '') : searchQuery;
     searchQuery = qRaw;
@@ -223,7 +354,9 @@
       // External boards : toujours ok pour le filtre sexe (pas de catégorie).
       const okSex = isExternal || effectiveSex === 'all' || !pSex || pSex === effectiveSex;
       const okSearch = panelMatchesSearch(panel, tokens);
-      const show = okSport && okSector && okSex && okSearch;
+      // Période : matchs (scores ou à venir) dans la fenêtre ; masque les cartes liens.
+      const okPeriod = panelMatchesPeriod(panel, periodKey);
+      const show = okSport && okSector && okSex && okSearch && okPeriod;
       panel.hidden = !show;
       if (show && !isExternal) visible += 1;
       if (show && isExternal) externalVisible += 1;
@@ -281,12 +414,15 @@
     setPressed(sportButtons, tokens.length ? 'all' : effectiveSport, 'data-filter-sport');
     setPressed(sectorButtons, sectorKey, 'data-filter-sector');
     setPressed(sexButtons, tokens.length ? 'all' : effectiveSex, 'data-filter-sex');
+    setPressed(periodButtons, periodKey, 'data-filter-period');
 
     if (statusEl) {
       if (tokens.length) {
         statusEl.textContent = t.searchStatus(visible, qRaw.trim());
       } else if (visible) {
         statusEl.textContent = t.status(visible, scoredPanels.length);
+      } else if (periodKey !== 'all' && t.emptyPeriod?.[periodKey]) {
+        statusEl.textContent = t.emptyPeriod[periodKey];
       } else if (externalVisible) {
         statusEl.textContent = t.boardsOnly;
       } else {
@@ -297,6 +433,7 @@
       tokens.length ? 'all' : effectiveSport,
       sectorKey,
       tokens.length ? 'all' : effectiveSex,
+      periodKey,
       teamId,
       qRaw.trim(),
     );
@@ -325,11 +462,12 @@
     const sport = sportButtons.find((b) => b.getAttribute('aria-pressed') === 'true')?.getAttribute('data-filter-sport') || 'all';
     const sector = sectorButtons.find((b) => b.getAttribute('aria-pressed') === 'true')?.getAttribute('data-filter-sector') || 'all';
     const sex = sexButtons.find((b) => b.getAttribute('aria-pressed') === 'true')?.getAttribute('data-filter-sex') || 'all';
-    return { sport, sector, sex };
+    const period = periodButtons.find((b) => b.getAttribute('aria-pressed') === 'true')?.getAttribute('data-filter-period') || 'all';
+    return { sport, sector, sex, period };
   }
 
   function onFilterClick(e) {
-    const btn = e.target.closest('[data-filter-sport], [data-filter-sector], [data-filter-sex]');
+    const btn = e.target.closest('[data-filter-sport], [data-filter-sector], [data-filter-sex], [data-filter-period]');
     if (!btn || !root.contains(btn)) return;
     const sport = btn.hasAttribute('data-filter-sport')
       ? btn.getAttribute('data-filter-sport')
@@ -340,10 +478,13 @@
     const sex = btn.hasAttribute('data-filter-sex')
       ? btn.getAttribute('data-filter-sex')
       : (sexButtons.find((b) => b.getAttribute('aria-pressed') === 'true')?.getAttribute('data-filter-sex') || 'all');
+    const period = btn.hasAttribute('data-filter-period')
+      ? btn.getAttribute('data-filter-period')
+      : (periodButtons.find((b) => b.getAttribute('aria-pressed') === 'true')?.getAttribute('data-filter-period') || 'all');
     // Nouveau filtre chips : on efface la requête texte pour éviter le conflit.
     if (searchInput) searchInput.value = '';
     searchQuery = '';
-    apply(sport, sector, sex, '', '');
+    apply(sport, sector, sex, period, '', '');
   }
 
   root.addEventListener('click', onFilterClick);
@@ -406,8 +547,8 @@
   function scheduleSearchApply() {
     window.clearTimeout(searchTimer);
     searchTimer = window.setTimeout(() => {
-      const { sport, sector, sex } = currentFilters();
-      apply(sport, sector, sex, '', searchInput?.value || '');
+      const { sport, sector, sex, period } = currentFilters();
+      apply(sport, sector, sex, period, '', searchInput?.value || '');
     }, 120);
   }
 
@@ -419,8 +560,8 @@
       if (!searchOpen && searchQuery.trim()) {
         if (searchInput) searchInput.value = '';
         searchQuery = '';
-        const { sport, sector, sex } = currentFilters();
-        apply(sport, sector, sex, '', '');
+        const { sport, sector, sex, period } = currentFilters();
+        apply(sport, sector, sex, period, '', '');
         setSearchOpen(false);
         return;
       }
@@ -444,8 +585,8 @@
       e.preventDefault();
       if (searchInput) searchInput.value = '';
       searchQuery = '';
-      const { sport, sector, sex } = currentFilters();
-      apply(sport, sector, sex, '', '');
+      const { sport, sector, sex, period } = currentFilters();
+      apply(sport, sector, sex, period, '', '');
       try { searchInput?.focus({ preventScroll: true }); } catch { searchInput?.focus(); }
     });
 
@@ -519,12 +660,13 @@
   const sport = knownSports.has(initial.sport) || initial.sport === 'all' ? initial.sport : 'all';
   const sector = knownSectors.has(initial.sector) || initial.sector === 'all' ? initial.sector : 'all';
   const sex = knownSexes.has(sexInit) ? sexInit : 'all';
+  const period = PERIOD_KEYS.has(initial.period) ? initial.period : 'all';
   const team = knownTeams.has(initial.team) ? initial.team : '';
   if (searchInput && initial.q) {
     searchInput.value = initial.q;
     searchQuery = initial.q;
   }
-  apply(sport, sector, sex, team, initial.q || '');
+  apply(sport, sector, sex, period, team, initial.q || '');
   if (initial.q) setSearchOpen(true);
   if (!team && !initial.q) openHashSport();
   window.addEventListener('hashchange', openHashSport);

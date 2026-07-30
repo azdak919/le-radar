@@ -1279,6 +1279,10 @@ function sportsPanelHtml(team, t, lang) {
   const nextAttr = Number.isFinite(nextTs) && nextTs < Number.POSITIVE_INFINITY
     ? ` data-next-ts="${nextTs}"`
     : ' data-next-ts=""';
+  const lastTs = sportsLastGameTs(team);
+  const lastAttr = Number.isFinite(lastTs) && lastTs > Number.NEGATIVE_INFINITY
+    ? ` data-last-ts="${lastTs}"`
+    : ' data-last-ts=""';
   /* Index local pour la loupe (équipe, institution, sport, codes…). */
   const searchHay = [
     team.name, shortName, nick, team.fullName, team.code, team.institution,
@@ -1288,7 +1292,7 @@ function sportsPanelHtml(team, t, lang) {
   const searchAttr = searchHay
     ? ` data-search="${escapeHtml(searchHay)}"`
     : '';
-  return `<section class="sports-panel" data-sport="${escapeHtml(sport)}" data-sector="${escapeHtml(team.sector || '')}" data-team="${escapeHtml(team.id || '')}"${sexAttr}${nextAttr}${regAttr}${searchAttr} style="--sports-panel-c:${escapeHtml(tone)}">
+  return `<section class="sports-panel" data-sport="${escapeHtml(sport)}" data-sector="${escapeHtml(team.sector || '')}" data-team="${escapeHtml(team.id || '')}"${sexAttr}${nextAttr}${lastAttr}${regAttr}${searchAttr} style="--sports-panel-c:${escapeHtml(tone)}">
   <header class="sports-panel__head">
     <span class="sports-panel__glyph" aria-hidden="true">${glyph}</span>
     <div class="sports-panel__identity">
@@ -1467,6 +1471,15 @@ function sportsHubPage(lang, ctx) {
       }
       body += '          </div>\n';
     }
+    /* Période : semaine / semaine prochaine / mois / session univ. QC. */
+    body += `          <div class="sports-filters__row" data-filter-period-row>\n`;
+    body += `            <span class="sports-filters__label">${escapeHtml(t.sportsFilterPeriod)}</span>\n`;
+    body += `            <button type="button" class="sports-filter is-active" data-filter-period="all" aria-pressed="true">${escapeHtml(t.sportsPeriodAll || t.sportsAll)}</button>\n`;
+    body += `            <button type="button" class="sports-filter" data-filter-period="week" aria-pressed="false">${escapeHtml(t.sportsPeriodWeek)}</button>\n`;
+    body += `            <button type="button" class="sports-filter" data-filter-period="next-week" aria-pressed="false">${escapeHtml(t.sportsPeriodNextWeek)}</button>\n`;
+    body += `            <button type="button" class="sports-filter" data-filter-period="month" aria-pressed="false">${escapeHtml(t.sportsPeriodMonth)}</button>\n`;
+    body += `            <button type="button" class="sports-filter" data-filter-period="session" aria-pressed="false">${escapeHtml(t.sportsPeriodSession)}</button>\n`;
+    body += '          </div>\n';
     body += '        </div>\n';
     body += `        <p class="sports-board-status" data-sports-status>${teams.length} ${teams.length > 1 ? t.sportsTeams : t.sportsTeamOne}</p>\n`;
 

@@ -32,6 +32,8 @@ const {
   hhmm,
   isJunkShowTitle,
   stripProductionNote,
+  timeToMinutes,
+  zonedNow,
 } = require('./radio-schedule-lib');
 const { decodeHtmlEntities } = require('./html-entities-lib');
 
@@ -905,22 +907,48 @@ function pickBetterShow(current, candidate, radio) {
 }
 
 /**
+ * Minutes jusqu’au début `HH:MM` (repli +1 jour si l’heure est déjà passée).
+ * Sans jour de grille sur les payloads API : suffisant pour arbitrer deux
+ * « next » le même jour civil ; la grille resolveNextSlot reste la référence
+ * calendaire quand les titres divergent (CHOQ GraphQL qui saute un créneau).
+ */
+function startDeltaFromNow(show, nowMinutes) {
+  const start = timeToMinutes(show?.start);
+  if (start == null) return Infinity;
+  let delta = start - nowMinutes;
+  if (delta <= 0) delta += 7 * 1440;
+  return delta;
+}
+
+/** Le « next » le plus tôt gagne ; à égalité, le rang de source (api > grille). */
+function pickSoonerNext(currentNext, candidate, nowMinutes) {
+  if (!candidate?.title) return currentNext;
+  if (!currentNext?.title) return candidate;
+  const dCur = startDeltaFromNow(currentNext, nowMinutes);
+  const dCand = startDeltaFromNow(candidate, nowMinutes);
+  if (dCand < dCur) return candidate;
+  if (dCand > dCur) return currentNext;
+  return sourceRank(candidate) > sourceRank(currentNext) ? candidate : currentNext;
+}
+
+/**
  * Fusionne les hits d'adaptateurs + grille horaire.
  * Priorité current : api-live > schedule > icy/stream.
- * Priorité next    : api-live > schedule.
+ * Priorité next    : le plus tôt chronologiquement (plus le rang de source).
  */
-function mergeOnAirResults(hits, scheduleHit, radio) {
+function mergeOnAirResults(hits, scheduleHit, radio, { timeZone = DEFAULT_TZ, now = new Date() } = {}) {
   let current = null;
   let next = null;
   let track = '';
   const sourcesUsed = [];
+  const { minutes: nowMinutes } = zonedNow(now, timeZone);
 
   for (const hit of hits) {
     if (!hit) continue;
     if (hit.current?.source) sourcesUsed.push(hit.current.source);
     if (hit.next?.source) sourcesUsed.push(hit.next.source);
     current = pickBetterShow(current, hit.current, radio);
-    next = pickBetterShow(next, hit.next, radio);
+    next = pickSoonerNext(next, hit.next, nowMinutes);
     // Filet pour tous les adaptateurs (Triton, Craft…), pas seulement l'ICY.
     if (hit.track && isUsableTrackLine(hit.track, radio)) track = hit.track;
   }
@@ -948,11 +976,11 @@ function mergeOnAirResults(hits, scheduleHit, radio) {
   }
 
   if (scheduleHit?.next) {
-    if (!next) {
-      next = scheduleHit.next;
+    const before = next;
+    next = pickSoonerNext(next, scheduleHit.next, nowMinutes);
+    if (next && normKey(next.title) === normKey(scheduleHit.next.title)
+      && (!before || normKey(before.title) !== normKey(next.title))) {
       sourcesUsed.push('schedule');
-    } else if (sourceRank(scheduleHit.next) > sourceRank(next)) {
-      next = scheduleHit.next;
     }
   }
 
@@ -1036,7 +1064,7 @@ async function probeStationOnAir(radio = {}, {
   }
 
   const scheduleHit = scheduleToHit(schedules, radio.id, timeZone);
-  const merged = mergeOnAirResults(hits, scheduleHit, radio);
+  const merged = mergeOnAirResults(hits, scheduleHit, radio, { timeZone, now: new Date() });
 
   const current = merged.current;
   const next = merged.next;
