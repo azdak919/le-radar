@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-30T17:24:07.320Z",
+  "updatedAt": "2026-07-30T18:55:41.077Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,86 +21,87 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T17:23:42.273Z"
+      "checkedAt": "2026-07-30T18:55:13.374Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La grande ludothèque",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
-      },
-      "next": {
         "title": "Le palmarès",
         "source": "schedule",
         "start": "14:00",
         "end": "15:00",
         "url": "https://cism893.ca/emissions/palmares-de-cism"
       },
+      "next": {
+        "title": "La boussole culturelle",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/la-boussole-culturelle"
+      },
       "track": "",
-      "showTitle": "La grande ludothèque",
+      "showTitle": "Le palmarès",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T17:23:43.963Z"
+      "checkedAt": "2026-07-30T18:55:15.831Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Venus Radio",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
         "source": "api-live",
         "start": "14:00",
         "end": "15:00"
       },
+      "next": {
+        "title": "Positive Vibes",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "17:00"
+      },
       "track": "",
-      "showTitle": "Venus Radio",
+      "showTitle": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T17:23:46.620Z"
+      "checkedAt": "2026-07-30T18:55:19.134Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "What's Happening in NDG",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/whats-happening-in-ndg"
-      },
-      "next": {
         "title": "The 514",
         "source": "schedule",
         "start": "14:00",
         "end": "15:00",
         "url": "http://www.cjlo.com/shows/the-514"
       },
+      "next": {
+        "title": "Secondhand Sounds",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/secondhand-sounds"
+      },
       "track": "",
-      "showTitle": "What's Happening in NDG",
+      "showTitle": "The 514",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T17:24:00.006Z"
+      "checkedAt": "2026-07-30T18:55:33.094Z"
     },
     "cfak": {
       "id": "cfak",
@@ -125,7 +126,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T17:24:00.744Z"
+      "checkedAt": "2026-07-30T18:55:33.479Z"
     },
     "choq": {
       "id": "choq",
@@ -138,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "MUNA - Why Do I Get A Good Feeling",
+      "track": "Carla dal Forno - Blue Skies",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-30T17:24:06.971Z"
+      "checkedAt": "2026-07-30T18:55:40.726Z"
     }
   }
 }
