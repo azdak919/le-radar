@@ -706,7 +706,80 @@
         archPeakY = y;
       }
     }
-    const hasStrongArch = archPeakScore > 0.015;
+    // Silhouette d’arche (D8) : arête sombre convexe contre ciel homogène —
+    // ponts en treillis lointains (ex. Mercier) sans « trou » Percé.
+    // Pour chaque colonne : premier passage ciel→structure depuis le haut.
+    const rowSilhouette = new Float32Array(sampleH);
+    {
+      const edgeYs = [];
+      for (let x = 2; x < sampleW - 2; x++) {
+        let edgeY = -1;
+        for (let y = 2; y < sampleH - 2; y++) {
+          const i = y * sampleW + x;
+          const above = L[(y - 2) * sampleW + x];
+          const here = L[i];
+          const skyAbove =
+            (Bch[(y - 2) * sampleW + x] > Rch[(y - 2) * sampleW + x] + 4 &&
+              above > 0.35) ||
+            (above > 0.5 && sat[(y - 2) * sampleW + x] < 0.2);
+          const structureHere = here < above - 0.08 && here < 0.55;
+          if (skyAbove && structureHere) {
+            edgeY = y;
+            break;
+          }
+        }
+        if (edgeY >= 0) edgeYs.push(edgeY);
+      }
+      // Histogramme lissé des hauteurs d’arête + bonus convexité (milieu plus bas
+      // dans l’image = arche) : centre horizontal plus bas que les côtés.
+      for (const ey of edgeYs) {
+        if (ey >= 0 && ey < sampleH) rowSilhouette[ey] += 1 / Math.max(1, edgeYs.length);
+      }
+      // Bonus convexité : si le centre des arêtes est plus bas que les flancs.
+      if (edgeYs.length > 12) {
+        const mid = edgeYs.slice(
+          Math.floor(edgeYs.length * 0.35),
+          Math.ceil(edgeYs.length * 0.65),
+        );
+        const flanks = [
+          ...edgeYs.slice(0, Math.floor(edgeYs.length * 0.2)),
+          ...edgeYs.slice(Math.ceil(edgeYs.length * 0.8)),
+        ];
+        const avg = (a) => (a.length ? a.reduce((s, v) => s + v, 0) / a.length : 0);
+        const midAvg = avg(mid);
+        const flankAvg = avg(flanks);
+        if (midAvg > flankAvg + sampleH * 0.03) {
+          const yBonus = Math.round(midAvg);
+          if (yBonus >= 0 && yBonus < sampleH) {
+            rowSilhouette[yBonus] += 0.25;
+          }
+        }
+      }
+    }
+    const silSmooth = new Float32Array(sampleH);
+    for (let y = 0; y < sampleH; y++) {
+      const a0 = Math.max(0, y - 2);
+      const a1 = Math.min(sampleH, y + 3);
+      let sum = 0;
+      for (let yy = a0; yy < a1; yy++) sum += rowSilhouette[yy];
+      silSmooth[y] = sum / (a1 - a0);
+    }
+    let silPeakY = 0;
+    let silPeakScore = 0;
+    for (let y = 0; y < sampleH; y++) {
+      if (silSmooth[y] > silPeakScore) {
+        silPeakScore = silSmooth[y];
+        silPeakY = y;
+      }
+    }
+    // Trou Percé prioritaire ; silhouette en renfort si le trou est faible.
+    const hasHoleArch = archPeakScore > 0.015;
+    const hasSilhouetteArch = !hasHoleArch && silPeakScore > 0.012;
+    const hasStrongArch = hasHoleArch || hasSilhouetteArch;
+    if (hasSilhouetteArch) {
+      archPeakY = silPeakY;
+      archPeakScore = silPeakScore;
+    }
 
     // Toile tipi / tente : lissage + sommet (première masse dense) + COM.
     // On ancre le *sommet* (pas le bas de la toile) dans le tiers haut du bandeau.

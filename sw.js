@@ -27,6 +27,7 @@ const APP_SHELL = [
   "./feeds.html",
   "./feeds-page.js",
   "./style.css",
+  "./style-masthead.css",
   "./embed.css",
   "./embed.js",
   "./tuner-embed.html",
