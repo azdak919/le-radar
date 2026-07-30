@@ -9,7 +9,8 @@
   --bg-soft: #f6f6f4;
   --ink: #16181c;
   --ink-soft: #44474d;
-  --muted: #80858c;
+  /* AA normal text ≥ 4.5:1 on --bg and --bg-soft (was #80858c ≈ 3.7) */
+  --muted: #5f646c;
   --rule: #e7e7e3;
   --rule-strong: #14161a;
   --accent: #6c2163;       /* pourpre de marque (bleu QC + rouge Canada) */
@@ -2921,10 +2922,14 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
 .translate-menu__opt[hidden] {
   display: none !important;
 }
-.translate-menu__opt:hover,
+.translate-menu__opt:hover {
+  background: var(--bg-soft);
+}
+/* Focus clavier distinct du survol — indicateur ≥ 3:1 (WCAG non-text). */
 .translate-menu__opt:focus-visible {
   background: var(--bg-soft);
-  outline: none;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 .translate-menu__opt.is-active {
   background: color-mix(in srgb, var(--accent) 12%, var(--bg));
