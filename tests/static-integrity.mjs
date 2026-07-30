@@ -333,7 +333,19 @@ const TUNER_FRAME_ORIGINS = [
   'https://www.cfak.ca',
   'https://www.choq.ca',
 ];
-for (const rel of ['index.html', 'tuner-embed.html']) {
+/** connect-src inventorié (D14) — pas de https: générique. */
+const CONNECT_ORIGINS = [
+  "'self'",
+  'blob:',
+  'https://le-radar-weather.azdak.workers.dev',
+  'https://le-radar-nowplaying.azdak.workers.dev',
+  'https://le-radar-bg-rotation.azdak.workers.dev',
+  'https://cloud.umami.is',
+  'https://gateway.umami.is',
+  'https://translate.googleapis.com',
+  'https://api.mymemory.translated.net',
+];
+for (const rel of ['index.html', 'tuner-embed.html', 'feeds.html']) {
   const html = readFileSync(join(root, rel), 'utf8');
   const csp = html.match(/Content-Security-Policy" content="([^"]+)"/i)?.[1] || '';
   const frameSrc = csp.match(/(?:^|;\s*)frame-src\s+([^;]+)/i)?.[1] || '';
@@ -341,6 +353,13 @@ for (const rel of ['index.html', 'tuner-embed.html']) {
   assert(!/(^|\s)https:(?:\s|$)/.test(frameSrc), `${rel}: frame-src ne doit pas autoriser tout https:`);
   for (const origin of TUNER_FRAME_ORIGINS) {
     assert(frameSrc.includes(origin), `${rel}: frame-src doit autoriser ${origin}`);
+  }
+  const connectSrc = csp.match(/(?:^|;\s*)connect-src\s+([^;]+)/i)?.[1] || '';
+  assert(connectSrc, `${rel}: directive connect-src CSP requise`);
+  assert(!/(^|\s)https:(?:\s|$)/.test(connectSrc), `${rel}: connect-src ne doit pas autoriser tout https:`);
+  assert(!/(^|\s)wss:(?:\s|$)/.test(connectSrc), `${rel}: connect-src ne doit pas autoriser tout wss:`);
+  for (const origin of CONNECT_ORIGINS) {
+    assert(connectSrc.includes(origin), `${rel}: connect-src doit autoriser ${origin}`);
   }
 }
 // Pages avec lecteur natif : sans media-src https:, les flux radio sont bloqués
