@@ -37,20 +37,20 @@
   const labels = {
     fr: {
       status: (n, total) => (n === total
-        ? `${n} formation${n > 1 ? 's' : ''}`
-        : `${n} formation${n > 1 ? 's' : ''} sur ${total}`),
+        ? `${n} équipe${n > 1 ? 's' : ''}`
+        : `${n} équipe${n > 1 ? 's' : ''} sur ${total}`),
       boardsOnly: 'Tableaux officiels (liens)',
-      empty: 'Aucune formation pour ce filtre.',
+      empty: 'Aucune équipe pour ce filtre.',
       emptyPeriod: {
         week: 'Aucun match cette semaine.',
         'next-week': 'Aucun match la semaine prochaine.',
         month: 'Aucun match ce mois-ci.',
         session: 'Aucun match cette session.',
       },
-      searchEmpty: 'Aucune formation ne correspond à cette recherche.',
+      searchEmpty: 'Aucune équipe ne correspond à cette recherche.',
       searchStatus: (n, q) => (n === 0
         ? `Aucun résultat pour « ${q} »`
-        : `${n} formation${n > 1 ? 's' : ''} pour « ${q} »`),
+        : `${n} équipe${n > 1 ? 's' : ''} pour « ${q} »`),
     },
     en: {
       status: (n, total) => (n === total
