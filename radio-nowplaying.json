@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-30T15:31:03.160Z",
+  "updatedAt": "2026-07-30T17:24:07.320Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,87 +21,86 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T15:30:38.802Z"
+      "checkedAt": "2026-07-30T17:23:42.273Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Une fenêtre sur le monde",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/une-fenetre-sur-le-monde"
-      },
-      "next": {
         "title": "La grande ludothèque",
         "source": "schedule",
         "start": "12:00",
         "end": "14:00",
         "url": "https://cism893.ca/emissions/la-grande-ludotheque"
       },
+      "next": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
       "track": "",
-      "showTitle": "Une fenêtre sur le monde",
+      "showTitle": "La grande ludothèque",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T15:30:40.699Z"
+      "checkedAt": "2026-07-30T17:23:43.963Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Under The Olive Tree",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "Venus Radio",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
       "track": "",
-      "showTitle": "Under The Olive Tree",
+      "showTitle": "Venus Radio",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T15:30:43.117Z"
+      "checkedAt": "2026-07-30T17:23:46.620Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Weirdo Rippers",
+        "title": "What's Happening in NDG",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/weirdo-rippers"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/whats-happening-in-ndg"
       },
       "next": {
-        "title": "The Power Hour",
+        "title": "The 514",
         "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/the-power-hour"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/the-514"
       },
       "track": "",
-      "showTitle": "Weirdo Rippers",
+      "showTitle": "What's Happening in NDG",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T15:30:56.439Z"
+      "checkedAt": "2026-07-30T17:24:00.006Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,18 +125,12 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T15:30:57.175Z"
+      "checkedAt": "2026-07-30T17:24:00.744Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Intervenir ensemble",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
-        "slug": "intervenir-ensemble"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHOQ.ca",
         "source": "api-live",
@@ -145,8 +138,8 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "S1 - E8intervenir-ensemble27-novAMv3",
-      "showTitle": "Intervenir ensemble",
+      "track": "MUNA - Why Do I Get A Good Feeling",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -156,7 +149,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-30T15:31:02.810Z"
+      "checkedAt": "2026-07-30T17:24:06.971Z"
     }
   }
 }
