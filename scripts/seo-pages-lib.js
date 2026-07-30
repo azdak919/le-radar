@@ -783,6 +783,7 @@ ${alternate ? `    <link rel="alternate" hreflang="fr-CA" href="${escapeHtml(lan
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="${up}style-masthead.css" />
     <link rel="stylesheet" href="${up}style.css" />
     <link rel="stylesheet" href="${up}seo-pages.css" />
 ${renderTunerCriticalCss()}    <script src="${up}seo-page-theme.js"></script>
