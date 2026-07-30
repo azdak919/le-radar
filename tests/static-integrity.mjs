@@ -276,7 +276,9 @@ assert(
   'kiosque-v1 : remplissage volume (bleu radio-bright) comme le bureau',
 );
 assert(
-  embedCss.includes('[data-surface="kiosque-v1"] .tuner.is-playing .tuner-eq span')
+  /* Lecture : `.is-playing:not(.is-buffering)` pour ne pas chevaucher le tampon. */
+  (embedCss.includes('[data-surface="kiosque-v1"] .tuner.is-playing .tuner-eq span')
+    || embedCss.includes('[data-surface="kiosque-v1"] .tuner.is-playing:not(.is-buffering) .tuner-eq span'))
     && embedCss.includes('[data-surface="kiosque-v1"] .tuner.is-buffering .tuner-eq span')
     && embedCss.includes('eq-buffer')
     && !embedCss.includes('embedEq')
