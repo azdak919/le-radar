@@ -1717,11 +1717,12 @@ const SPORTS_ARRIVE_MS = 640;
  * CTA type alerte bandeau : pastille fixe « SPORTS » (toujours à droite)
  * + accroche = score / prochain match le plus frais de chaque sport
  *   (ordre de popularité campus QC — pas de libellés marketing).
- * Rotation d’accroche = crossfade du texte interne (pas de carte type gare).
+ * Rotation d’accroche = crossfade *superposé* deux couches (focus-group
+ * le-radar-cta-sports-transition D) — jamais de trou vide.
  */
 const SPORTS_CTA_TAG = 'Sports';
-/** Demi-cycle du fondu (sortie puis entrée) — total ~1,1 s, plus doux que 320 ms. */
-const SPORTS_CTA_CROSSFADE_MS = 560;
+/** Durée du crossfade superposé A∥B (une seule phase, pas sortie+entrée). */
+const SPORTS_CTA_CROSSFADE_MS = 500;
 /** Sortie douce d’une puce score avant replaceWith (synchro CSS is-leaving). */
 const SPORTS_CHIP_LEAVE_MS = 420;
 /** Popularité sports étudiants QC (aligné page /sports/). */
@@ -2415,6 +2416,87 @@ function sportsCtaLabelFromSlide(slide) {
 }
 
 /**
+ * Clé de dédup d’un match pour la CTA (focus-group le-radar-cta-sports-transition).
+ * Priorité gameId ; sinon date + sport + paire d’équipes triée (miroir A↔B).
+ */
+function sportsMatchDedupeKey(slide) {
+  const g = slide?.game || {};
+  if (g.gameId != null && String(g.gameId).trim()) {
+    return `gid:${String(g.gameId).trim()}`;
+  }
+  const sport = String(slide?.team?.sport || g.sport || '').toLowerCase();
+  const a = String(slide?.team?.code || '').toUpperCase().slice(0, 4);
+  const b = String(g.opponentCode || g.opponent || '').toUpperCase().slice(0, 4);
+  const pair = [a, b].filter(Boolean).sort().join('|');
+  return `pair:${g.date || ''}|${g.time || ''}|${sport}|${pair}`;
+}
+
+/**
+ * Face éditoriale d’un match miroir : domicile → favori → rang éditorial.
+ * (Un match = une accroche CTA.)
+ */
+function sportsPreferMatchFace(a, b) {
+  if (!a) return b;
+  if (!b) return a;
+  let favSet = null;
+  try {
+    favSet = new Set(readSportsFavorites());
+  } catch { favSet = new Set(); }
+  const score = (s) => {
+    let n = 0;
+    if (s.game?.home === true) n += 100;
+    if (s.game?.home === false) n -= 10;
+    if (sportsIsFavorite(s.team, favSet)) n += 50;
+    n += Math.max(0, 40 - sportsEditorialRank(s.team));
+    return n;
+  };
+  return score(a) >= score(b) ? a : b;
+}
+
+/** Une entrée par match (gameId / paire) — garde la face préférée. */
+function sportsDedupeMatchSlides(slides) {
+  const map = new Map();
+  for (const s of slides) {
+    if (!s) continue;
+    const key = sportsMatchDedupeKey(s);
+    if (!key || key === 'pair:|||') {
+      // Sans ancre de match : garder tel quel (clé slide).
+      map.set(s.key || `solo:${map.size}`, s);
+      continue;
+    }
+    map.set(key, sportsPreferMatchFace(map.get(key), s));
+  }
+  return [...map.values()];
+}
+
+/**
+ * Diversité sport souple après ordre chrono : évite 2× le même sport d’affilée
+ * si une alternative existe dans les ~4 prochains slots — sans enterrer le
+ * match le plus proche (verdict D, soft vs pure round-robin).
+ */
+function sportsSoftSportDiversity(slides) {
+  if (!Array.isArray(slides) || slides.length < 3) return slides || [];
+  const arr = slides.slice();
+  const sportOf = (s) => String(s?.team?.sport || s?.game?.sport || '').toLowerCase();
+  for (let i = 0; i < arr.length - 1; i += 1) {
+    if (sportOf(arr[i]) !== sportOf(arr[i + 1])) continue;
+    const same = sportOf(arr[i]);
+    let swapAt = -1;
+    for (let j = i + 2; j < Math.min(arr.length, i + 5); j += 1) {
+      if (sportOf(arr[j]) && sportOf(arr[j]) !== same) {
+        swapAt = j;
+        break;
+      }
+    }
+    if (swapAt > 0) {
+      const [item] = arr.splice(swapAt, 1);
+      arr.splice(i + 1, 0, item);
+    }
+  }
+  return arr;
+}
+
+/**
  * Partage des rôles bandeau (mise à jour 2026-07-30) :
  *
  *  CARTE ROUGE (CTA) = « maintenant / bientôt »
@@ -2423,6 +2505,7 @@ function sportsCtaLabelFromSlide(slide) {
  *   • prochains matchs ≤ 14 j, sinon **le prochain en grille** (pas de slogan
  *     « Hors saison » tant qu’un match est planifié)
  *   • creux total : accroches idle
+ *   • **dédup miroir** + diversité sport souple (focus-group 2026-07-30)
  *
  *  CARTES GAUCHE
  *   • Saison : **uniquement résultats passés**, ordre fraîcheur
@@ -2485,7 +2568,19 @@ function sportsCtaCandidateSlides() {
 
   // CTA : vif du jour → calendrier ≤14 j → sinon prochain match lointain (évite
   // les slogans idle alors que des matchs d’août sont déjà en grille).
-  return todayResults.concat(upcomingHot, upcomingLater).slice(0, 36);
+  // Puis : 1 accroche par match (anti-miroir) + diversité sport souple.
+  const raw = todayResults.concat(upcomingHot, upcomingLater);
+  const deduped = sportsDedupeMatchSlides(raw);
+  // Re-trier après dédup (la face gardée peut changer l’ordre relatif).
+  deduped.sort((a, b) => {
+    const modeRank = (s) => (s.mode === 'result' ? 0 : 1);
+    if (modeRank(a) !== modeRank(b)) return modeRank(a) - modeRank(b);
+    if (a.mode === 'result') {
+      return (sportsGameMs(b.game) || 0) - (sportsGameMs(a.game) || 0);
+    }
+    return bySoonest(a, b);
+  });
+  return sportsSoftSportDiversity(deduped).slice(0, 36);
 }
 
 /** Libellés CTA : matchs chauds, sinon messages hors saison / creux. */
@@ -2564,8 +2659,18 @@ function sportsCtaA11y(slide) {
 }
 
 /**
- * Crossfade doux de l’accroche CTA en place (carte stable, pas de gare).
- * Sortie en fondu → swap texte → entrée en fondu (ease, ~560 ms × 2).
+ * Label CTA visible (couche front) — pour marquee / dwell / a11y.
+ */
+function sportsCtaActiveLabel(chip) {
+  if (!chip) return null;
+  return chip.querySelector('.sports-chip__cta-label.is-front')
+    || chip.querySelector('.sports-chip__cta-label');
+}
+
+/**
+ * Crossfade superposé de l’accroche CTA (focus-group le-radar-cta-sports-transition D).
+ * Deux couches : A fade-out pendant que B fade-in — jamais de trou vide.
+ * Pastille + chevron stables ; carte non remplacée.
  */
 function crossfadeSportsCtaLabel(chip, slide) {
   if (!chip || !slide) return;
@@ -2575,41 +2680,58 @@ function crossfadeSportsCtaLabel(chip, slide) {
   chip.title = title;
   chip.setAttribute('aria-label', aria);
   const nextText = slide.label || 'Scores étudiants QC';
-  const inner = chip.querySelector('.sports-chip__cta-label');
-  if (!inner) return;
-  if (inner.textContent === nextText) return;
-  if (sportsReducedMotion) {
-    inner.textContent = nextText;
-    inner.classList.remove('is-crossfade', 'is-crossfade-in');
-    refreshSportsChipScroll(chip);
-    return;
-  }
-  // Annuler un crossfade en cours sur ce chip.
+  const stack = chip.querySelector('.sports-chip__cta-stack');
+  const front = sportsCtaActiveLabel(chip);
+  if (!front) return;
+  if (front.textContent === nextText) return;
+
+  // Annuler un crossfade en cours.
   if (chip._ctaFadeTimer) {
     clearTimeout(chip._ctaFadeTimer);
     chip._ctaFadeTimer = null;
   }
-  // Couper marquee / pulse pendant le fondu (évite un à-coup transform+opacity).
+  // Nettoyer une couche fantôme éventuelle.
+  chip.querySelectorAll('.sports-chip__cta-label.is-back, .sports-chip__cta-label.is-fading-out')
+    .forEach((el) => {
+      if (el !== front) el.remove();
+    });
+  front.classList.remove('is-fading-out', 'is-fading-in', 'is-back');
+  front.classList.add('is-front');
+
+  if (sportsReducedMotion) {
+    front.textContent = nextText;
+    front.classList.remove('is-fading-out', 'is-fading-in');
+    chip.classList.remove('is-overflowing');
+    chip.style.removeProperty('--sports-scroll');
+    refreshSportsChipScroll(chip);
+    return;
+  }
+
+  // Couper marquee pendant le fondu (transform + opacity croisées = à-coup).
   chip.classList.remove('is-overflowing');
   chip.style.removeProperty('--sports-scroll');
-  inner.classList.remove('is-crossfade-in');
-  inner.classList.add('is-crossfade');
+
+  const back = document.createElement('span');
+  back.className = 'sports-chip__line-inner sports-chip__cta-label is-back is-fading-in';
+  back.textContent = nextText;
+  back.setAttribute('aria-hidden', 'true');
+  (stack || front.parentElement || chip).append(back);
+
+  // Force reflow avant d’animer l’opacity croisée.
+  void back.offsetWidth;
+  front.classList.add('is-fading-out');
+  front.classList.remove('is-front');
+  front.setAttribute('aria-hidden', 'true');
+  back.classList.add('is-front');
+  back.classList.remove('is-back');
+
   chip._ctaFadeTimer = window.setTimeout(() => {
-    inner.textContent = nextText;
-    // Rester opaque à 0 un frame (sinon le navigateur saute le fondu entrant).
-    inner.style.opacity = '0';
-    inner.classList.remove('is-crossfade');
-    void inner.offsetWidth;
-    requestAnimationFrame(() => {
-      inner.classList.add('is-crossfade-in');
-      inner.style.opacity = '';
-      chip._ctaFadeTimer = window.setTimeout(() => {
-        inner.classList.remove('is-crossfade-in');
-        chip._ctaFadeTimer = null;
-        // Après le fondu entrant : mesurer le marquee sans brusquer le texte.
-        refreshSportsChipScroll(chip);
-      }, SPORTS_CTA_CROSSFADE_MS);
-    });
+    chip._ctaFadeTimer = null;
+    if (front.isConnected) front.remove();
+    back.classList.remove('is-fading-in', 'is-back');
+    back.classList.add('is-front');
+    back.removeAttribute('aria-hidden');
+    refreshSportsChipScroll(chip);
   }, SPORTS_CTA_CROSSFADE_MS);
 }
 
@@ -2628,16 +2750,28 @@ function refreshSportsChipScroll(chipOrRoot = null) {
     : Array.from(root.querySelectorAll?.('.sports-chip') || []);
   chips.forEach((chip) => {
     const viewport = chip.querySelector('.sports-chip__line');
-    const inner = chip.querySelector('.sports-chip__line-inner');
+    // CTA : mesurer la couche front uniquement (pas la couche sortante).
+    const inner = chip.classList.contains('sports-chip--cta')
+      ? sportsCtaActiveLabel(chip)
+      : chip.querySelector('.sports-chip__line-inner');
     if (!viewport || !inner) {
       chip.classList.remove('is-overflowing');
       chip.style.removeProperty('--sports-scroll');
       return;
     }
+    // Pendant un crossfade superposé : ne pas lancer le marquee (couches en fondu).
+    if (
+      chip.classList.contains('sports-chip--cta')
+      && (
+        inner.classList.contains('is-fading-in')
+        || chip.querySelector('.sports-chip__cta-label.is-fading-out')
+      )
+    ) {
+      return;
+    }
     // Mesure sans retirer is-overflowing (sinon l’animation CSS redémarre).
     const hadOverflow = chip.classList.contains('is-overflowing');
     if (!hadOverflow) inner.style.maxWidth = 'none';
-    // Pendant un crossfade CTA, le label est en opacity 0 — mesurer quand même.
     const overflow = Math.max(0, inner.scrollWidth - viewport.clientWidth);
     if (!hadOverflow) inner.style.maxWidth = '';
     const needsScroll = overflow > 2;
@@ -2787,10 +2921,14 @@ function paintSportsChip(slide, animate = false) {
 
     const line = document.createElement('span');
     line.className = 'sports-chip__line';
+    // Stack 2 couches : crossfade superposé (jamais de trou vide).
+    const stack = document.createElement('span');
+    stack.className = 'sports-chip__cta-stack';
     const inner = document.createElement('span');
-    inner.className = 'sports-chip__line-inner sports-chip__cta-label';
+    inner.className = 'sports-chip__line-inner sports-chip__cta-label is-front';
     inner.textContent = slide.label || 'Scores étudiants QC';
-    line.append(inner);
+    stack.append(inner);
+    line.append(stack);
 
     const chev = document.createElement('span');
     chev.className = 'sports-chip__cta-chev';
@@ -3111,7 +3249,9 @@ function sportsLabelReadingMs(text) {
 function sportsChipNeedsMarquee(chip) {
   if (!chip || sportsReducedMotion) return false;
   const viewport = chip.querySelector('.sports-chip__line');
-  const inner = chip.querySelector('.sports-chip__line-inner');
+  const inner = chip.classList.contains('sports-chip--cta')
+    ? sportsCtaActiveLabel(chip)
+    : chip.querySelector('.sports-chip__line-inner');
   if (!viewport || !inner) return false;
   if (chip.classList.contains('is-overflowing')) return true;
   const prev = inner.style.maxWidth;
@@ -3130,7 +3270,10 @@ function sportsChipNeedsMarquee(chip) {
  */
 function sportsSlotDwellMs(slot) {
   const chip = MASTHEAD_SPORTS_STRIP?.querySelectorAll('.sports-chip')?.[slot];
-  const label = chip?.querySelector('.sports-chip__line-inner')?.textContent || '';
+  const labelEl = chip?.classList?.contains('sports-chip--cta')
+    ? sportsCtaActiveLabel(chip)
+    : chip?.querySelector('.sports-chip__line-inner');
+  const label = labelEl?.textContent || '';
   const readMs = sportsLabelReadingMs(label);
   if (sportsReducedMotion) return readMs;
   if (!chip) return SPORTS_READ_MIN_MS;
@@ -3145,8 +3288,8 @@ function sportsSlotDwellMs(slot) {
 function sportsSlotSettleMs(slot, replacement) {
   if (sportsReducedMotion) return 80;
   if (replacement?.mode === 'cta') {
-    // Sortie + entrée crossfade label.
-    return SPORTS_CTA_CROSSFADE_MS * 2 + 80;
+    // Crossfade superposé = une seule phase (plus de ×2).
+    return SPORTS_CTA_CROSSFADE_MS + 80;
   }
   // Sortie is-leaving + entrée is-arriving + layout marquee.
   return SPORTS_CHIP_LEAVE_MS + SPORTS_ARRIVE_MS + 100;
