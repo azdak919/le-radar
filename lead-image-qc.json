@@ -1,29 +1,35 @@
 {
-  "updated": "2026-07-29T21:05:24.822Z",
+  "updated": "2026-07-30T00:08:54.470Z",
   "total": 185,
   "withPhoto": 168,
-  "withStock": 64,
-  "withCampusBank": 8,
+  "withStock": 63,
+  "withCampusBank": 9,
   "fullyCovered": 185,
-  "leadReadyPhotos": 152,
-  "pageScraped": 20,
-  "photosRecovered": 20,
-  "imagesCleared": 10,
-  "stockSearches": 59,
-  "stockFound": 45,
-  "campusBankFound": 4,
+  "leadReadyPhotos": 148,
+  "pageScraped": 21,
+  "photosRecovered": 21,
+  "imagesCleared": 11,
+  "stockSearches": 46,
+  "stockFound": 30,
+  "campusBankFound": 6,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "CSU fails to reach quorum at first special council meeting of new mandate",
+      "link": "https://thelinknewspaper.ca/article/16335",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
+    },
     {
       "title": "The Cruel Optimism of Summer",
       "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg"
     },
     {
       "title": "Les avantages du transport en commun",
       "link": "https://lecollectif.ca/a-la-une/les-avantages-du-transport-en-commun/",
-      "reason": "stock-too-small",
+      "reason": "no-stock-match",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_Transport-en-commun_Source-IRIS-Recherche.jpeg"
     },
     {
@@ -67,12 +73,6 @@
       "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
       "reason": "stock-too-small",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg"
-    },
-    {
-      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
-      "link": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
-      "reason": "stock-too-small",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-2-768x1024.jpeg"
     },
     {
       "title": "Recettes musicales québécoises pour l’été",
