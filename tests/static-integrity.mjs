@@ -148,8 +148,20 @@ for (const app of ['pomo', 'solitaire']) {
   assert(/allow=["'][^"']*autoplay/.test(html), `${app}: permission autoplay iframe requise`);
 }
 
+const radiosRegistry = JSON.parse(readFileSync(join(root, 'radios.json'), 'utf8'));
+// D16 : chaque station a une provenance de slogan vérifiable (source, extrait, date, confiance).
+for (const radio of radiosRegistry) {
+  assert(radio.slogan, `radio ${radio.id} : slogan requis`);
+  assert(radio._sloganSource, `radio ${radio.id} : _sloganSource requis`);
+  assert(radio._sloganEvidence, `radio ${radio.id} : _sloganEvidence requis`);
+  assert(radio._sloganChecked, `radio ${radio.id} : _sloganChecked requis`);
+  assert(
+    ['high', 'medium', 'low'].includes(radio._sloganConfidence),
+    `radio ${radio.id} : _sloganConfidence high|medium|low requis`,
+  );
+}
 const chyzPage = readFileSync(join(root, 'radios/chyz/index.html'), 'utf8');
-const chyzSource = JSON.parse(readFileSync(join(root, 'radios.json'), 'utf8')).find((radio) => radio.id === 'chyz');
+const chyzSource = radiosRegistry.find((radio) => radio.id === 'chyz');
 assert(chyzSource?.slogan && chyzSource?._sloganSource && chyzSource?._sloganEvidence, 'radio CHYZ : provenance du slogan requise');
 assert(chyzPage.includes(`<h1 class="seo-title">CHYZ 94,3 FM — ${chyzSource.slogan}</h1>`), 'radio CHYZ : nom, fréquence et slogan sourcé requis en titre');
 assert(chyzPage.includes('href="../../horaires/">Choisir une autre radio</a>'), 'radio CHYZ : retour aux autres horaires requis');
