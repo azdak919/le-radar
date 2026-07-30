@@ -8111,9 +8111,9 @@ const LEAD_BRIEF_MIN_CHARS_MID = 110;
 const BRIEF_COMPACT_MIN_CHARS_MID = 120;
 const FEATURE_BRIEF_MIN_CHARS_MID = 100;
 
-/** Bureau magazine ≥1100 (hors preview mid). */
+/** Bureau magazine ≥1100 (hors mid 900–1099). */
 function isDesktopMagazineLayout() {
-  if (isMidwidthMagazinePreview()) return false;
+  if (isMidwidthMagazineLayout()) return false;
   try {
     return window.matchMedia('(min-width: 1100px)').matches;
   } catch {
@@ -8379,27 +8379,40 @@ function partitionNewsFeed(items, referenceDate = new Date()) {
 }
 
 /**
- * Bureau magazine ≥1100px : fil global *et* vue source.
- * Prévisualisation midwidth C : seuil 900 px (focus-group hybride).
- * (Recherche = liste plate — pas d’équilibre colonnes.)
+ * Magazine 2 col dès 900 px (focus-group midwidth-fil C — hybride).
+ * · 900–1099 : magazine mid (rail étroit)
+ * · ≥1100 : magazine bureau
+ * Recherche = liste plate — pas d’équilibre colonnes.
  */
 function canBalanceMagazineColumns() {
   if (!NEWS_LIST) return false;
   if (NEWS_LIST.dataset.mode === 'search') return false;
-  const minPx = (typeof window.__radarMidwidthPreview?.magazineMinPx === 'function')
+  // Override local preview A (densify seul) : pas de magazine mid.
+  if (document.documentElement.dataset.midwidthPreview === 'A') return false;
+  const minPx = (typeof window.__radarMidwidthPreview?.magazineMinPx === 'function'
+    && document.documentElement.dataset.midwidthPreview)
     ? window.__radarMidwidthPreview.magazineMinPx()
-    : 1100;
+    : 900;
   return window.matchMedia(`(min-width: ${minPx}px)`).matches;
 }
 
-/** Magazine mid (preview C, 900–1099) : rail étroit → cartes En bref plus hautes. */
+/**
+ * Magazine mid 900–1099 (prod) — ou preview C forcée.
+ * Rail étroit → cartes En bref plus hautes ; budgets d’extrait MID.
+ */
 function isMidwidthMagazinePreview() {
-  if (document.documentElement.dataset.midwidthPreview !== 'C') return false;
+  // Preview A = densify 1 col seulement.
+  if (document.documentElement.dataset.midwidthPreview === 'A') return false;
   try {
     return window.matchMedia('(min-width: 900px) and (max-width: 1099.98px)').matches;
   } catch {
     return false;
   }
+}
+
+/** Alias sémantique prod (même plage que isMidwidthMagazinePreview). */
+function isMidwidthMagazineLayout() {
+  return isMidwidthMagazinePreview();
 }
 
 function removeTailArticleForItem(item) {
