@@ -1,16 +1,16 @@
 {
-  "updated": "2026-07-30T12:52:25.357Z",
+  "updated": "2026-07-30T14:40:02.305Z",
   "total": 185,
   "withPhoto": 168,
   "withStock": 40,
   "withCampusBank": 8,
   "fullyCovered": 185,
-  "leadReadyPhotos": 161,
-  "pageScraped": 22,
-  "photosRecovered": 22,
+  "leadReadyPhotos": 164,
+  "pageScraped": 23,
+  "photosRecovered": 23,
   "imagesCleared": 11,
-  "stockSearches": 26,
-  "stockFound": 22,
+  "stockSearches": 25,
+  "stockFound": 19,
   "campusBankFound": 5,
   "mainPageLeadReady": true,
   "gaps": [
@@ -43,12 +43,6 @@
       "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
       "reason": "no-stock-match",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
-    },
-    {
-      "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
-      "link": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Assembl%C3%A9e_nationale_du_Qu%C3%A9bec%2C_l%27H%C3%B4tel_du_Parlement%2C_fa%C3%A7ade_avec_ancien_entr%C3%A9_principal.jpg"
     },
     {
       "title": "CSU approves $36,000 in funding for student-led initiatives",
@@ -85,6 +79,12 @@
       "link": "https://thelinknewspaper.ca/article/16320",
       "reason": "stock-too-small",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/ODIE_HARR-2_690_1034_90.jpg"
+    },
+    {
+      "title": "In conversation with Aaron Maté",
+      "link": "https://thelinknewspaper.ca/article/16314",
+      "reason": "no-stock-match",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12.news.AaronMaté.Sean.online.CourtesyAaronMaté_690_1034_90.jpg"
     }
   ]
 }
