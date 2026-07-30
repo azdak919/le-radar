@@ -130,7 +130,7 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 | Santé + promotion journaux | `discover-news-sources.js` | Hebdo + quotidien via news |
 | Flux radio + promotion candidats | `discover-streams.js` | Quotidien + hebdo |
 | Agrégation articles | `fetch-news.js` | 7×/jour |
-| Résultats sportifs RSEQ | `fetch-sports.js` | 4×/jour (`update-sports.yml`) |
+| Résultats sportifs RSEQ | `fetch-sports.js` | **6×/jour + sam/dim 14 h** (`update-sports.yml`) — heures de consultation QC (matin, midi, fin de cours, soirée matchs, post-match, rattrapage) ; source en panne → snapshot précédent conservé |
 | Extrait « à la une » | `enrich-lead-excerpts.js` | 7×/jour (après `fetch-news`) |
 | En cours + à venir (API / grille / ICY) | `fetch-radio-nowplaying.js` | Aux 30 min |
 | Découverte sources horaires | `discover-schedule-sources.js` | **Aux 2 semaines** (avant les horaires) |
@@ -147,6 +147,7 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 
 - `maintain.yml` — pipeline complet + `bot-status.json` + issue si besoin
 - `update-news.yml` — articles frais (8 passes/jour + **filet horaire :20** si la dernière mise à jour a > 75 min). Timeouts durs par source (90 s) et par étape ; concurrency `cancel-in-progress` pour ne pas empiler un job coincé 40 min.
+- `update-sports.yml` — scores RSEQ/Spordle/voile : **matin · midi · fin de cours · 20 h · 22 h 30 · minuit+** (UTC mappé sur Amérique/Toronto ±1 h EST/EDT) + **week-end après-midi**. Abort si chute >50 % d’équipes ou majorité de ligues en panne ; sinon préserve le snapshot précédent par ligue. Push avec retry comme les autres bots.
 - `update-streams.yml` — validation des flux (quotidien)
 - `update-radio-nowplaying.yml` — titre en ondes via API station / ICY (aux 30 min)
 - `update-radio-schedules.yml` — horaires colligés « à l'antenne » (aux 2 semaines)

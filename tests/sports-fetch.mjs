@@ -75,4 +75,21 @@ test('fetch-sports.js est du JS Node valide', () => {
   assert.match(src, /--update/);
   assert.match(src, /SCORE_NONE/);
   assert.match(src, /loadSportsTeamsRegistry|sports-teams-lib/);
+  // Fraîcheur ops : préservation sur panne + abort si payload catastrophique.
+  assert.match(src, /preserveByLeagueId|preservePreviousTeams/);
+  assert.match(src, /ABORT/);
+  assert.match(src, /teamsPreservedOnError/);
+});
+
+test('update-sports.yml couvre les heures de consultation QC', () => {
+  const yml = readFileSync(join(ROOT, '.github/workflows/update-sports.yml'), 'utf8');
+  // 6 passes quotidiennes + week-end après-midi
+  assert.match(yml, /30 11 \* \* \*/);
+  assert.match(yml, /15 16 \* \* \*/);
+  assert.match(yml, /45 20 \* \* \*/);
+  assert.match(yml, /0 0 \* \* \*/);
+  assert.match(yml, /30 2 \* \* \*/);
+  assert.match(yml, /15 4 \* \* \*/);
+  assert.match(yml, /0 18 \* \* 0,6/);
+  assert.match(yml, /could not push sports update after retries/);
 });
