@@ -1662,6 +1662,15 @@ let sportsSlides = [];
 let sportsVisible = [];
 let sportsNextSlot = 0;
 let sportsTimer = null;
+/**
+ * Plafond mesuré après paint (parité météo `mastheadWeatherFitCount`).
+ * null = pas encore contraint ; sinon min(base largeur, fit).
+ * On retire une carte score à la fois tant que le bandeau est à l’étroit ;
+ * le dernier chip restant est toujours la CTA « Au tableau ».
+ */
+let sportsFitCount = null;
+/** Garde-fou récursion fit (max 4 → 1). */
+let sportsFitDepth = 0;
 let sportsReducedMotion = false;
 try {
   sportsReducedMotion = !!(window.matchMedia
@@ -1935,30 +1944,32 @@ function sportsPickTeamSlide(team, now = Date.now()) {
   return candidates[0];
 }
 
-/**
- * Nombre de chips selon la largeur **réelle** du bandeau.
- * On retire une carte à la fois en rétrécissant (4 → 3 → 2 → 1 mobile).
- * Max desktop : 3 scores + CTA = 4.
- */
-function sportsBoardCount() {
+/** Largeur utile du bandeau sports (contenu, hors padding). */
+function sportsStripAvailWidth() {
   const strip = MASTHEAD_SPORTS_STRIP;
-  // Largeur utile = clientWidth du strip (padding déjà soustrait du contenu box)
-  // ou fallback viewport.
-  let avail = 0;
   if (strip && strip.clientWidth > 0) {
     const cs = window.getComputedStyle(strip);
     const padL = parseFloat(cs.paddingLeft) || 0;
     const padR = parseFloat(cs.paddingRight) || 0;
-    avail = Math.max(0, strip.clientWidth - padL - padR);
-  } else {
-    avail = document.documentElement.clientWidth || 360;
+    return Math.max(0, strip.clientWidth - padL - padR);
   }
-  const gap = 6;
-  // Largeurs mini pour rester lisible (score vs CTA un peu plus large).
-  const minScore = 132;
-  const minCta = 148;
+  return document.documentElement.clientWidth || 360;
+}
 
-  // 4 = 3 scores + CTA ; 3 = 2+CTA ; 2 = 1+CTA ; 1 = mobile (score|CTA en rotation)
+/**
+ * Plafond depuis la largeur seule (estimation, avant mesure post-paint).
+ * Max desktop : 3 scores + CTA = 4. Minimum : 1 (CTA seule).
+ */
+function sportsBoardCountBase() {
+  const avail = sportsStripAvailWidth();
+  const gap = 6;
+  // Un peu plus généreux que le min CSS : on préfère retirer une carte
+  // (cascade type météo) plutôt que d’écraser scores + CTA.
+  // Téléphone (~360 CSS px) → 1 = CTA « Au tableau » seule.
+  const minScore = 152;
+  const minCta = 172;
+
+  // 4 = 3 scores + CTA ; 3 = 2+CTA ; 2 = 1+CTA ; 1 = CTA seule
   for (let n = 4; n >= 2; n -= 1) {
     const scores = n - 1;
     const need = scores * minScore + minCta + gap * (n - 1);
@@ -1968,12 +1979,70 @@ function sportsBoardCount() {
 }
 
 /**
- * CTA « Au tableau » épinglée à droite : dès qu’il y a 2+ chips
- * (tablette → desktop). Mobile (1 chip) = comportement historique.
- * Suit le redimensionnement dynamiquement via sportsBoardCount().
+ * Nombre de chips cible : largeur × contrainte de fit mesurée (parité météo).
+ * On retire une carte à la fois en rétrécissant (4 → 3 → 2 → 1 = Au tableau).
+ */
+function sportsBoardCount() {
+  const base = sportsBoardCountBase();
+  return sportsFitCount === null ? base : Math.min(base, sportsFitCount);
+}
+
+/**
+ * CTA « Au tableau » épinglée à droite dès qu’il y a 2+ chips.
+ * À 1 chip : CTA seule (plus d’alternance score ↔ CTA).
  */
 function sportsCtaPinned() {
   return sportsBoardCount() >= 2;
+}
+
+/**
+ * Le bandeau est-il trop étroit pour les chips peints ?
+ * Parité météo : on ne se fie pas seulement au bucket largeur — on mesure
+ * après paint. La CTA « Au tableau » est l’ancre protégée (comme MTL/QC) :
+ * si elle est écrasée, on retire une carte score. Les libellés CTA peuvent
+ * ellipsis ; on ne compare pas leur largeur « naturelle » (trop agressif).
+ */
+function sportsStripCramped() {
+  const strip = MASTHEAD_SPORTS_STRIP;
+  if (!strip || strip.hidden) return false;
+  const chips = [...strip.querySelectorAll('.sports-chip')];
+  if (chips.length <= 1) return false;
+
+  const minScore = 118;
+  const minCta = 148;
+
+  const cta = strip.querySelector('.sports-chip--cta');
+  // CTA manquante alors qu’on affiche plusieurs chips → forcer un re-fit.
+  if (!cta) return true;
+  if (cta.clientWidth + 0.5 < minCta) return true;
+  // Pastille « AU TABLEAU » coupée = illisible.
+  const tag = cta.querySelector('.sports-chip__cta-tag');
+  if (tag && tag.scrollWidth > tag.clientWidth + 1) return true;
+
+  for (const chip of chips) {
+    if (chip.classList.contains('sports-chip--cta')) continue;
+    if (chip.clientWidth + 0.5 < minScore) return true;
+  }
+  return false;
+}
+
+/**
+ * Après paint : retirer une carte score si le bandeau est à l’étroit,
+ * jusqu’à ce qu’il ne reste que la CTA « Au tableau » (parité météo).
+ */
+function fitSportsStripAfterPaint() {
+  if (!MASTHEAD_SPORTS_STRIP || MASTHEAD_SPORTS_STRIP.hidden) return;
+  const count = sportsVisible.length;
+  if (count <= 1) return;
+  if (!sportsStripCramped()) return;
+  if (sportsFitDepth >= 4) return;
+  sportsFitDepth += 1;
+  sportsFitCount = count - 1;
+  try {
+    renderSportsStrip();
+  } finally {
+    sportsFitDepth = Math.max(0, sportsFitDepth - 1);
+  }
 }
 
 /** Remplacement pour le mode mobile (1 slot) — respecte la voie de gauche. */
@@ -2716,20 +2785,30 @@ function nextSportsSlide(usedKeys, opts = {}) {
 
 /**
  * Première peinture.
- * Desktop/tablette (≥ 2) : scores/next (gauche) + CTA épinglée à droite.
- * Mobile (1) : un score (la CTA entre en rotation ensuite).
+ * ≥ 2 chips : scores/next (gauche) + CTA épinglée à droite.
+ * 1 chip : CTA « Au tableau » seule (fin de la cascade de fit, parité météo).
  * Saison → résultats ; hors saison → prochains matchs (pas de puces info).
  */
 function pickInitialSportsVisible(count) {
-  const pinned = sportsCtaPinned();
-  const contentCount = pinned ? Math.max(0, count - 1) : count;
-  const picked = [];
-  const usedKeys = new Set();
-  const usedSports = new Set();
+  const pool = sportsCtaLabelPool();
+  sportsCtaLabelIndex = pool.length
+    ? Math.floor(Math.random() * pool.length)
+    : 0;
   sportsSportCursor = 0;
   sportsLeftCursor = 0;
   sportsInfoCursor = 0;
   sportsLeftWantInfo = false;
+
+  // Dernier cran de largeur / fit : uniquement l’ancre « Au tableau ».
+  if (count <= 1) {
+    sportsCtaOnRightMobile = true;
+    return [sportsCtaSlide(sportsCtaLabelIndex)];
+  }
+
+  const contentCount = Math.max(0, count - 1);
+  const picked = [];
+  const usedKeys = new Set();
+  const usedSports = new Set();
 
   // Remplir la gauche avec le pool de la voie (résultats ou next) uniquement.
   while (picked.length < contentCount) {
@@ -2741,16 +2820,8 @@ function pickInitialSportsVisible(count) {
     if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
   }
 
-  const pool = sportsCtaLabelPool();
-  sportsCtaLabelIndex = pool.length
-    ? Math.floor(Math.random() * pool.length)
-    : 0;
-  if (pinned) {
-    picked.push(sportsCtaSlide(sportsCtaLabelIndex));
-  } else if (!picked.length) {
-    picked.push(sportsCtaSlide(sportsCtaLabelIndex));
-  }
-  sportsCtaOnRightMobile = pinned ? true : false;
+  picked.push(sportsCtaSlide(sportsCtaLabelIndex));
+  sportsCtaOnRightMobile = true;
   return picked;
 }
 
@@ -2765,22 +2836,29 @@ function renderSportsStrip() {
     return;
   }
   const board = sportsBoardCount();
-  const pinned = sportsCtaPinned();
-  const count = Math.min(board, Math.max(1, sportsSlides.length + (pinned ? 1 : 0)));
-  // Desktop : N-1 scores + CTA. Mobile : N scores (souvent 1).
-  const contentSlots = pinned ? Math.max(0, count - 1) : count;
+  // Toujours réserver la CTA (ancre). Scores = board - 1, min 0.
+  const count = Math.min(board, Math.max(1, sportsSlides.length + 1));
+  const pinned = count >= 2;
+  const contentSlots = pinned ? Math.max(0, count - 1) : 0;
 
-  // Resize : si le mode pin/mobile change ou le nb de slots, re-semer.
+  // Resize / fit : si le mode pin ou le nb de slots change, re-semer.
   const wasPinned = sportsVisible.length >= 2
     && sportsVisible[sportsVisible.length - 1]?.mode === 'cta';
+  const wasCtaOnly = sportsVisible.length === 1 && sportsVisible[0]?.mode === 'cta';
   const slideStillValid = (s) => {
     if (!s || s.mode === 'cta') return false;
     // Anciennes puces « info » : purger au prochain paint (plus dans la gauche).
     if (s.mode === 'info') return false;
     return sportsSlides.some((x) => x.key === s.key);
   };
-  const canReuse = sportsVisible.some((s) => s && s.mode !== 'cta' && slideStillValid(s));
-  if (!canReuse || sportsVisible.length !== count || wasPinned !== pinned) {
+  const canReuse = pinned
+    && sportsVisible.some((s) => s && s.mode !== 'cta' && slideStillValid(s));
+  if (
+    !canReuse
+    || sportsVisible.length !== count
+    || wasPinned !== pinned
+    || (count === 1 && !wasCtaOnly)
+  ) {
     sportsVisible = pickInitialSportsVisible(count);
   } else {
     const used = new Set();
@@ -2812,10 +2890,8 @@ function renderSportsStrip() {
       used.add(slide.key);
       if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
     }
-    if (pinned) {
-      // CTA prime à droite tant qu’on n’est pas en mobile 1-chip.
-      nextVisible.push(sportsCtaSlide(sportsCtaLabelIndex));
-    }
+    // CTA toujours à droite (ou seule si contentSlots = 0).
+    nextVisible.push(sportsCtaSlide(sportsCtaLabelIndex));
     sportsVisible = nextVisible;
   }
 
@@ -2827,19 +2903,25 @@ function renderSportsStrip() {
   MASTHEAD_SPORTS_STRIP.hidden = false;
   MASTHEAD_SPORTS_STRIP.dataset.count = String(sportsVisible.length);
   MASTHEAD_SPORTS_STRIP.dataset.ctaPinned = pinned ? '1' : '0';
-  // Défilement texte (parité météo) après layout.
-  window.requestAnimationFrame(() => refreshSportsChipScroll());
+  // Défilement texte + cascade de fit (parité météo) après layout.
+  window.requestAnimationFrame(() => {
+    refreshSportsChipScroll();
+    // Un second frame : les largeurs flex sont stables avant de mesurer.
+    window.requestAnimationFrame(() => {
+      fitSportsStripAfterPaint();
+    });
+  });
 }
 
 /**
  * Rotation carte par carte.
- * Desktop/tablette : CTA épinglée à droite (accroche seule) ; scores en ronde.
- * Mobile (1 chip) : alterne score ↔ CTA comme avant.
+ * ≥ 2 chips : CTA épinglée à droite (accroche seule) ; scores en ronde.
+ * 1 chip : CTA seule — on ne fait tourner que l’accroche (pas de scores).
  */
 function rotateOneSportsCard() {
   if (!MASTHEAD_SPORTS_STRIP || sportsVisible.length < 1 || sportsSlides.length < 1) return;
   const n = sportsVisible.length;
-  const pinned = sportsCtaPinned();
+  const pinned = n >= 2;
   const rightSlot = n - 1;
   const slot = sportsNextSlot % n;
   const used = new Set(
@@ -2856,24 +2938,11 @@ function rotateOneSportsCard() {
   );
 
   let replacement = null;
-  if (pinned && slot === rightSlot) {
-    // CTA fixe : on ne fait tourner que le sous-texte.
+  if (!pinned || slot === rightSlot) {
+    // CTA fixe (seule ou à droite) : on ne fait tourner que le sous-texte.
     const poolLen = Math.max(1, sportsCtaLabelPool().length);
     sportsCtaLabelIndex = (sportsCtaLabelIndex + 1) % poolLen;
     replacement = sportsCtaSlide(sportsCtaLabelIndex);
-  } else if (!pinned) {
-    // Mobile : alternance score / CTA sur l’unique slot.
-    sportsCtaOnRightMobile = !sportsCtaOnRightMobile;
-    if (sportsCtaOnRightMobile) {
-      sportsCtaLabelIndex = (sportsCtaLabelIndex + 1) % Math.max(1, sportsCtaLabelPool().length);
-      replacement = sportsCtaSlide(sportsCtaLabelIndex);
-    } else {
-      replacement = sportsRandomResultSlide(used) || nextSportsSlide(used, { usedSports });
-      if (!replacement) {
-        sportsCtaOnRightMobile = true;
-        replacement = sportsCtaSlide(sportsCtaLabelIndex);
-      }
-    }
   } else {
     // Voie de gauche : résultats (saison) ou prochains matchs (hors saison).
     const cur = sportsVisible[slot];
@@ -2946,15 +3015,31 @@ async function initMastheadSports() {
     sportsSlides = buildSportsSlides(sportsData);
     sportsVisible = [];
     sportsNextSlot = 0;
+    sportsFitCount = null;
+    sportsFitDepth = 0;
     renderSportsStrip();
     scheduleSportsRotate();
     if (!initMastheadSports._resizeBound) {
       initMastheadSports._resizeBound = true;
-      const onSportsLayout = () => {
+      initMastheadSports._lastWidth = MASTHEAD_SPORTS_STRIP.clientWidth || 0;
+      const onSportsLayout = (source = 'resize') => {
         if (initMastheadSports._rz) clearTimeout(initMastheadSports._rz);
         // Léger debounce pour enchaîner 4→3→2→1 pendant le drag de fenêtre.
+        // Comme la météo : on annule le plafond mesuré et on re-fit depuis zéro.
+        // Ignore les RO purement internes (reflow des chips) : seule une vraie
+        // variation de largeur du bandeau doit resetter le fit.
         initMastheadSports._rz = setTimeout(() => {
+          const w = MASTHEAD_SPORTS_STRIP?.clientWidth || 0;
+          if (
+            source === 'ro'
+            && Math.abs(w - (initMastheadSports._lastWidth || 0)) < 2
+          ) {
+            return;
+          }
+          initMastheadSports._lastWidth = w;
           const prev = sportsVisible.length;
+          sportsFitCount = null;
+          sportsFitDepth = 0;
           renderSportsStrip();
           scheduleSportsRotate();
           // Si le nombre de chips a changé, le scroll texte doit se recalculer.
@@ -2963,9 +3048,9 @@ async function initMastheadSports() {
           }
         }, 40);
       };
-      window.addEventListener('resize', onSportsLayout, { passive: true });
+      window.addEventListener('resize', () => onSportsLayout('resize'), { passive: true });
       if (typeof ResizeObserver !== 'undefined' && MASTHEAD_SPORTS_STRIP) {
-        initMastheadSports._ro = new ResizeObserver(onSportsLayout);
+        initMastheadSports._ro = new ResizeObserver(() => onSportsLayout('ro'));
         initMastheadSports._ro.observe(MASTHEAD_SPORTS_STRIP);
       }
     }
