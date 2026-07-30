@@ -666,14 +666,26 @@ assert(
   /\.news-tail-toggle\s*\{[^}]*padding:\s*8px 12px/.test(styleCss.replace(/\s+/g, ' ')),
   'style : .news-tail-toggle padding 8px 12px (parité Plus de sources)',
 );
-// CTA mât : pastille « Sports », crossfade accroche (pas gare).
+// CTA mât : pastille « Sports », crossfade superposé + dédup miroirs (focus-group D).
 assert(
   /const SPORTS_CTA_TAG\s*=\s*['"]Sports['"]/.test(appJs),
   'app.js : pastille CTA mât = « Sports » (pas « Au tableau »)',
 );
 assert(
-  appJs.includes('crossfadeSportsCtaLabel') && appJs.includes('is-crossfade'),
-  'app.js : rotation CTA = crossfade du label interne',
+  appJs.includes('crossfadeSportsCtaLabel')
+    && appJs.includes('sports-chip__cta-stack')
+    && appJs.includes('is-fading-out')
+    && appJs.includes('is-fading-in')
+    && appJs.includes('sportsDedupeMatchSlides')
+    && appJs.includes('sportsMatchDedupeKey')
+    && appJs.includes('sportsSoftSportDiversity'),
+  'app.js : CTA = dédup matchs + crossfade superposé 2 couches (pas de trou)',
+);
+assert(
+  styleCss.includes('sports-chip__cta-stack')
+    && styleCss.includes('is-fading-out')
+    && styleCss.includes('is-fading-in'),
+  'style : stack CTA 2 couches pour crossfade superposé',
 );
 // Puces scores : indépendantes + dwell lecture + marquee aller-retour complet.
 assert(
