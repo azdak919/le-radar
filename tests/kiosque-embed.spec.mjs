@@ -175,12 +175,12 @@ test.describe('LE-KIOSQUE démo × tuner-embed LE-RADAR', () => {
     // Ouvrir le popover volume (téléphone).
     await page.locator('#tuner-vol-toggle').click();
     await expect(page.locator('#tuner-vol')).toHaveClass(/is-open/);
-    // :has(.is-open) masque le crédit — attendre le style appliqué.
+    // Crédit bas-gauche : reste visible (plus de masquage à l’ouverture).
     await expect.poll(() => page.evaluate(() => {
       const el = document.querySelector('a.tuner-embed-credit');
       if (!el) return false;
       const s = getComputedStyle(el);
-      return Number(s.opacity) === 0 && s.pointerEvents === 'none';
+      return Number(s.opacity) > 0.5 && s.pointerEvents !== 'none';
     })).toBe(true);
 
     const openState = await page.evaluate(() => {
@@ -191,26 +191,38 @@ test.describe('LE-KIOSQUE démo × tuner-embed LE-RADAR', () => {
       if (!bar || !creditEl || !slot || !mute) return null;
       const b = bar.getBoundingClientRect();
       const s = slot.getBoundingClientRect();
+      const c = creditEl.getBoundingClientRect();
       const creditStyle = getComputedStyle(creditEl);
+      const barBg = getComputedStyle(bar).backgroundColor;
       return {
         popoverVisible: s.width > 40 && s.height > 20 && getComputedStyle(slot).opacity !== '0',
         popoverExtendsBelowBar: s.bottom > b.bottom + 20,
         slotZ: Number(getComputedStyle(slot).zIndex) || 0,
         creditZ: Number(creditStyle.zIndex) || 0,
+        creditVisible: Number(creditStyle.opacity) > 0.5,
+        /* Crédit à gauche, popover à droite — pas de chevauchement utile. */
+        creditLeftOfPopover: c.right <= s.left + 8 || c.left < b.left + b.width * 0.55,
         muteClickable: mute.getClientRects().length > 0
           && getComputedStyle(mute).pointerEvents !== 'none',
+        /* Barre session opaque (pas de bandeau transparent / flou sous le popover). */
+        barOpaque: barBg !== 'rgba(0, 0, 0, 0)' && barBg !== 'transparent',
+        barBoxShadowNone: getComputedStyle(bar).boxShadow === 'none',
       };
     });
     expect(openState).toBeTruthy();
     expect(openState.popoverVisible, 'popover visible').toBe(true);
     expect(openState.popoverExtendsBelowBar, 'popover s’étend sous la barre').toBe(true);
+    expect(openState.creditVisible, 'crédit reste visible').toBe(true);
+    expect(openState.creditLeftOfPopover, 'crédit à gauche du popover').toBe(true);
     expect(openState.slotZ).toBeGreaterThan(openState.creditZ);
     expect(openState.muteClickable).toBe(true);
+    expect(openState.barOpaque, 'fond barre opaque').toBe(true);
+    expect(openState.barBoxShadowNone, 'pas d’ombre .tuner sous le popover').toBe(true);
 
     // Le mute reste actionnable (crédit ne capture pas le tap).
     await page.locator('#tuner-vol-mute').click({ force: false });
 
-    // Fermer le popover : le crédit réapparaît.
+    // Fermer le popover : le crédit reste visible.
     await page.locator('#tuner-vol-toggle').click();
     await expect(page.locator('#tuner-vol')).not.toHaveClass(/is-open/);
     await expect.poll(() => page.evaluate(() => {
