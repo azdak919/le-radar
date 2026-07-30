@@ -21,7 +21,13 @@
     if (anchor?.parentNode) anchor.parentNode.insertBefore(tuner, anchor.nextSibling);
     else document.body.prepend(tuner);
 
-    for (const asset of ['cast.js', 'mobile-playback.js', 'player-sync.js', 'app.js']) {
+    for (const asset of [
+      'cast.js',
+      'mobile-playback.js',
+      'player-sync.js',
+      'institution-acronyms-data.js',
+      'app.js',
+    ]) {
       await new Promise((resolve, reject) => {
         const node = document.createElement('script');
         node.src = new URL(asset, base).href;
