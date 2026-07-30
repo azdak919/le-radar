@@ -147,8 +147,10 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 
 - `maintain.yml` — pipeline complet + `bot-status.json` + issue si besoin
 - `update-news.yml` — articles frais (8 passes/jour + **filet horaire :20** si la dernière mise à jour a > 75 min). Timeouts durs par source (90 s) et par étape ; concurrency `cancel-in-progress` pour ne pas empiler un job coincé 40 min.
-- `update-sports.yml` — scores RSEQ/Spordle/voile : **matin · midi · fin de cours · 20 h · 22 h 30 · minuit+** (UTC mappé sur Amérique/Toronto ±1 h EST/EDT) + **week-end après-midi**. Abort si chute >50 % d’équipes ou majorité de ligues en panne ; sinon préserve le snapshot précédent par ligue. Push avec retry comme les autres bots.
+- `update-sports.yml` — scores RSEQ/Spordle/voile : **matin · midi · fin de cours · 20 h · 22 h 30 · minuit+** (UTC mappé sur Amérique/Toronto ±1 h EST/EDT) + **week-end après-midi**. Abort si chute >50 % d’équipes ou majorité de ligues en panne ; sinon préserve le snapshot précédent par ligue. Push avec retry comme les autres bots. `sports.json` est en `paths-ignore` du Quality Gate (pas de Chromium à chaque refresh).
 - `update-streams.yml` — validation des flux (quotidien)
+- **Bots SEO/HTML** (news, streams, institutions, schedules, discover, maintain, archives) : étape **`bot-prepush-check.sh`** (`npm run check`) **avant** le commit pour éviter un mail Quality Gate après coup.
+- Playwright CI : **2 retries** + specs mât (météo/sports) en projet serial.
 - `update-radio-nowplaying.yml` — titre en ondes via API station / ICY (aux 30 min)
 - `update-radio-schedules.yml` — horaires colligés « à l'antenne » (aux 2 semaines)
 - `discover-news-sources.yml` — santé des flux RSS (hebdo)

@@ -49,6 +49,11 @@ jobs:
         run: node scripts/generate-seo.js --update
         continue-on-error: true
 
+      - name: Pre-push integrity (bot gate)
+        if: steps.check.outputs.changed == 'true'
+        timeout-minutes: 8
+        run: bash scripts/bot-prepush-check.sh
+
       - name: Commit and push updates
         if: steps.check.outputs.changed == 'true'
         run: |
