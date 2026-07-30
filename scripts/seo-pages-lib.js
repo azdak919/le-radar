@@ -313,6 +313,8 @@ const T = {
     schedulesLead: 'Une grille par station, mise à jour automatiquement à partir du site de chaque radio. Toutes les heures sont données à l’heure du Québec.',
     schedulesEmpty: 'Aucune grille horaire disponible au moment de la dernière mise à jour.',
     sports: 'Au tableau',
+    /** Pied de page seulement (focus-group le-radar-footer-sports) — pas le H1/CTA. */
+    sportsFooter: 'Sports',
     sportsTitle: 'Au tableau — scores collégiaux et universitaires du Québec',
     sportsDesc: 'Scores et prochains matchs de {n} formations collégiales et universitaires du Québec (catalogue RSEQ) : hockey, football, soccer, basketball, volleyball, badminton, natation et plus.',
     sportsH1: 'Au tableau',
@@ -320,7 +322,13 @@ const T = {
     sportsEmpty: 'Aucun résultat sportif disponible au moment de la dernière mise à jour.',
     sportsClubPending: 'Association étudiante de voile — scores à venir.',
     sportsMeta: 'Sports collégiaux et universitaires du Québec',
-    sportsNote: 'Les scores sont colligés à partir des calendriers officiels du sport étudiant québécois (RSEQ), du tableau public de hockey et des régates de voile campus au Québec (clubs et associations étudiantes). Un clic ouvre la source officielle.',
+    sportsScrollTop: 'Haut de page',
+    sportsPriorSeason: 'Saison précédente',
+    sportsSearchLabel: 'Rechercher une équipe, un établissement, un sport…',
+    sportsSearchTitle: 'Rechercher',
+    sportsSearchPlaceholder: 'Équipe, institution, sport, code…',
+    sportsSearchClear: 'Effacer la recherche',
+    sportsSearchHint: 'Recherche locale : noms d’équipes, institutions, sports, codes et secteurs.',
     sportsHockeyLabel: 'Hockey',
     sportsHockeyWhy: 'Le hockey collégial et universitaire se consulte sur les calendriers officiels RSEQ Hockey et, pour le masculin universitaire, sur l’OUA (U Sports).',
     sportsHockeyColl: 'Hockey collégial (RSEQ)',
@@ -445,6 +453,8 @@ const T = {
     schedulesLead: 'One grid per station, updated automatically from each station’s own website. All times are Québec time.',
     schedulesEmpty: 'No schedule available as of the last update.',
     sports: 'Scoreboard',
+    /** Footer only (same decision as FR sportsFooter). */
+    sportsFooter: 'Sports',
     sportsTitle: 'Scoreboard — Québec CEGEP and university sports results',
     sportsDesc: 'Scores and upcoming games for {n} CEGEP and university teams in Québec (RSEQ catalog): hockey, football, soccer, basketball, volleyball, badminton, swimming and more.',
     sportsH1: 'Scoreboard',
@@ -452,7 +462,13 @@ const T = {
     sportsEmpty: 'No sports results available as of the last update.',
     sportsClubPending: 'Student sailing association — scores coming soon.',
     sportsMeta: 'Québec CEGEP & university sports',
-    sportsNote: 'Scores are gathered from official Québec student-sport calendars (RSEQ), the public hockey scoreboard, and campus sailing regattas in Québec (student clubs and associations). Clicks open the official source.',
+    sportsScrollTop: 'Back to top',
+    sportsPriorSeason: 'Previous season',
+    sportsSearchLabel: 'Search teams, institutions, sports…',
+    sportsSearchTitle: 'Search',
+    sportsSearchPlaceholder: 'Team, school, sport, code…',
+    sportsSearchClear: 'Clear search',
+    sportsSearchHint: 'Local search: team names, institutions, sports, codes and sectors.',
     sportsHockeyLabel: 'Hockey',
     sportsHockeyWhy: 'CEGEP and university hockey schedules live on RSEQ Hockey and, for men’s university hockey, on the OUA (U Sports).',
     sportsHockeyColl: 'CEGEP hockey (RSEQ)',
@@ -620,7 +636,7 @@ function renderSiteFooter({
   links.push(`<a href="${href(dirPath)}">${escapeHtml(t.footerDirectory)}</a>`);
   links.push(`<a href="${href(schedPath)}">${escapeHtml(t.schedules)}</a>`);
   // data-sports-reset : depuis /sports/?sport=… recharge sans filtres.
-  links.push(`<a href="${href(sportsPath)}" data-sports-reset>${escapeHtml(t.sports)}</a>`);
+  links.push(`<a href="${href(sportsPath)}" data-sports-reset>${escapeHtml(t.sportsFooter || t.sports)}</a>`);
   links.push(`<a href="${href(archivePath)}">${escapeHtml(t.archives)}</a>`);
   // `altPath` vaut '' sur /en/ : la version française est la racine du site.
   // Tester la valeur et non sa véracité, sinon le volet anglais perd sa bascule.

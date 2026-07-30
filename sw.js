@@ -47,6 +47,7 @@ const APP_SHELL = [
   "./indigenous-mt.json",
   "./engage-prompt.js",
   "./scripts/session-freshness-lib.js",
+  "./scripts/sports-freshness-lib.js",
   "./scripts/season-lib.js",
   "./brand-colors.json",
   "./radios.json",

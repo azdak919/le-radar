@@ -18,6 +18,7 @@ const {
   sportsUpdatedStamp,
   fill, frOf, frAt, plural, renderPage, factsList, headlineList, cardGrid, scheduleTable,
 } = require('./seo-pages-lib');
+const { pruneSportsTeam } = require('./sports-freshness-lib');
 
 const HEADLINES_PER_PAPER = 12;
 const STALE_SOURCE_NOTICE_MS = 14 * 24 * 60 * 60 * 1000;
@@ -1118,11 +1119,16 @@ function sportsResultRows(team, t, lang) {
       ? `${t.sportsPlace} ${last.scoreFor} / ${last.scoreAgainst} · ${label}`
       : label;
     const when = formatSportsDate(last.date, lang);
-    rows.push(`<li class="sports-result sports-result--${escapeHtml(last.result || 'D')}" data-result="${escapeHtml(last.result || 'D')}">
+    const prior = !!(last.priorSeason || team.lastGamePriorSeason);
+    const priorClass = prior ? ' sports-result--prior-season' : '';
+    const priorMeta = prior
+      ? `\n  <span class="sports-result__season-meta">${escapeHtml(t.sportsPriorSeason)}</span>`
+      : '';
+    rows.push(`<li class="sports-result sports-result--${escapeHtml(last.result || 'D')}${priorClass}" data-result="${escapeHtml(last.result || 'D')}"${prior ? ' data-prior-season="1"' : ''}>
   <time class="sports-result__time" datetime="${escapeHtml(last.date || '')}">${escapeHtml(when)}</time>
   <span class="sports-result__score" aria-label="${escapeHtml(scoreAria)}">${escapeHtml(score)}</span>
   <span class="sports-result__title">${formatTitle(last, opp)}</span>
-  <span class="sports-result__badge" title="${escapeHtml(label)}">${badge}</span>
+  <span class="sports-result__badge" title="${escapeHtml(label)}">${badge}</span>${priorMeta}
 </li>`);
   }
   const next = team.nextGame;
@@ -1149,6 +1155,78 @@ function sportsResultRows(team, t, lang) {
     return `<p class="sports-panel__empty">${escapeHtml(t.sportsEmpty)}</p>`;
   }
   return `<ul class="sports-panel__list">${rows.join('\n')}</ul>`;
+}
+
+/**
+ * Outils flottants de la page Au tableau :
+ * flèche « haut de page » (gauche) + loupe de recherche sports (droite).
+ */
+function sportsPageToolsHtml(t) {
+  return `      <div class="sports-page-tools" id="sports-page-tools" data-sports-tools>
+        <button
+          type="button"
+          class="sports-page-tools__fab sports-page-tools__top"
+          id="sports-scroll-top"
+          aria-label="${escapeHtml(t.sportsScrollTop)}"
+          title="${escapeHtml(t.sportsScrollTop)}"
+          hidden
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+          </svg>
+        </button>
+        <div class="sports-search" id="sports-search">
+          <div
+            id="sports-search-panel"
+            class="sports-search__panel"
+            role="search"
+            hidden
+            aria-hidden="true"
+          >
+            <label class="sr-only" for="sports-search-input">${escapeHtml(t.sportsSearchLabel)}</label>
+            <div class="sports-search__field">
+              <svg class="sports-search__field-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>
+              </svg>
+              <input
+                id="sports-search-input"
+                class="sports-search__input"
+                type="search"
+                enterkeyhint="search"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
+                placeholder="${escapeHtml(t.sportsSearchPlaceholder)}"
+              />
+              <button
+                type="button"
+                id="sports-search-clear"
+                class="sports-search__clear hidden"
+                aria-label="${escapeHtml(t.sportsSearchClear)}"
+                title="${escapeHtml(t.sportsSearchClear)}"
+              >×</button>
+            </div>
+            <p id="sports-search-hint" class="sports-search__hint">${escapeHtml(t.sportsSearchHint)}</p>
+          </div>
+          <button
+            type="button"
+            id="sports-search-toggle"
+            class="sports-search__fab"
+            aria-label="${escapeHtml(t.sportsSearchLabel)}"
+            aria-expanded="false"
+            aria-controls="sports-search-panel"
+            title="${escapeHtml(t.sportsSearchTitle)}"
+          >
+            <svg class="sports-search__fab-loupe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>
+            </svg>
+            <svg class="sports-search__fab-close hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+              <path d="M6 6l12 12M18 6L6 18"/>
+            </svg>
+          </button>
+        </div>
+      </div>\n`;
 }
 
 function sportsPanelHtml(team, t, lang) {
@@ -1201,7 +1279,16 @@ function sportsPanelHtml(team, t, lang) {
   const nextAttr = Number.isFinite(nextTs) && nextTs < Number.POSITIVE_INFINITY
     ? ` data-next-ts="${nextTs}"`
     : ' data-next-ts=""';
-  return `<section class="sports-panel" data-sport="${escapeHtml(sport)}" data-sector="${escapeHtml(team.sector || '')}" data-team="${escapeHtml(team.id || '')}"${sexAttr}${nextAttr}${regAttr} style="--sports-panel-c:${escapeHtml(tone)}">
+  /* Index local pour la loupe (équipe, institution, sport, codes…). */
+  const searchHay = [
+    team.name, shortName, nick, team.fullName, team.code, team.institution,
+    team.school, team.division, team.sector, sport, sportsSportLabel(team, t, lang),
+    sexLabel, team.league, team.conference,
+  ].filter(Boolean).join(' ');
+  const searchAttr = searchHay
+    ? ` data-search="${escapeHtml(searchHay)}"`
+    : '';
+  return `<section class="sports-panel" data-sport="${escapeHtml(sport)}" data-sector="${escapeHtml(team.sector || '')}" data-team="${escapeHtml(team.id || '')}"${sexAttr}${nextAttr}${regAttr}${searchAttr} style="--sports-panel-c:${escapeHtml(tone)}">
   <header class="sports-panel__head">
     <span class="sports-panel__glyph" aria-hidden="true">${glyph}</span>
     <div class="sports-panel__identity">
@@ -1291,8 +1378,12 @@ function sportsHubPage(lang, ctx) {
   const altPath = ROUTES.sports[lang === 'fr' ? 'en' : 'fr'];
   const up = '../'.repeat(path.split('/').filter(Boolean).length);
   const sports = ctx.sports || {};
+  // Focus-group B : prune sessions (réf. = maintenant au build).
   const teamsRaw = Object.values(sports.teams || {})
-    .filter((team) => team && (team.lastGame || team.nextGame || team.name));
+    .map((team) => pruneSportsTeam(team, new Date()))
+    .filter((team) => team && (team.lastGame || team.nextGame || team.name
+      || (Array.isArray(team.results) && team.results.length)
+      || team.status === 'club' || team.status === 'upcoming'));
   // Compteurs F/M par sport (pastilles titre) — n’influence plus l’ordre des cartes.
   const sexLeadBySport = {};
   for (const sport of [...new Set(teamsRaw.map((t) => t.sport).filter(Boolean))]) {
@@ -1420,7 +1511,9 @@ function sportsHubPage(lang, ctx) {
     body += '      </div>\n';
   }
 
-  body += `      <p class="sports-board-note">${escapeHtml(t.sportsNote)}</p>\n`;
+  /* Note sources retirée (inutile en bas de page) — les liens de match restent
+   * la source officielle au clic. Outils : flèche haut (gauche) + loupe sports. */
+  body += sportsPageToolsHtml(t);
 
   const jsonLd = JSON.stringify({
     '@context': 'https://schema.org',

@@ -1158,13 +1158,228 @@
 .sports-result--next .sports-result__badge--next {
   color: var(--status-upcoming, #9a6900);
 }
-.sports-board-note {
-  margin: 8px 0 0;
-  font-family: var(--sans);
-  font-size: 12.5px;
+/* Ancienne note sources (retirée du HTML) — garde le sélecteur inoffensif. */
+.sports-board-note { display: none; }
+
+/* Méta hors saison (focus-group B) — sous le score, secondaire. */
+.sports-result__season-meta {
+  grid-column: 1 / -1;
+  margin: -2px 0 2px;
+  padding: 0 0 0 0.15rem;
+  font: 500 0.7rem/1.3 var(--sans);
+  letter-spacing: 0.01em;
   color: var(--muted);
-  line-height: 1.5;
-  max-width: 42rem;
+}
+.sports-result--prior-season .sports-result__score {
+  opacity: 0.92;
+}
+.sports-chip__season-meta {
+  display: inline;
+  margin-left: 0.35rem;
+  font: 500 0.65rem/1.2 var(--sans);
+  color: var(--muted);
+  white-space: nowrap;
+}
+.sports-chip--prior-season {
+  opacity: 0.94;
+}
+
+/* ── Outils page Au tableau : flèche haut (gauche) + loupe (droite) ── */
+.sports-page-tools {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(max(16px, env(safe-area-inset-bottom, 0px)) + var(--vk-inset, 0px));
+  z-index: 180;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+  padding-left: max(14px, env(safe-area-inset-left, 0px));
+  padding-right: max(14px, env(safe-area-inset-right, 0px));
+  pointer-events: none;
+}
+.sports-page-tools > * { pointer-events: auto; }
+
+.sports-page-tools__fab {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  background: var(--bg);
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow:
+    0 2px 8px -2px rgba(0, 0, 0, 0.12),
+    0 8px 24px -10px rgba(0, 0, 0, 0.18);
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 160ms ease;
+}
+.sports-page-tools__fab svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+.sports-page-tools__fab[hidden] { display: none !important; }
+@media (hover: hover) and (pointer: fine) {
+  .sports-page-tools__fab:hover {
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--rule));
+    color: var(--accent);
+  }
+}
+.sports-page-tools__fab:active { transform: scale(0.96); }
+.sports-page-tools__fab:focus { outline: none; }
+.sports-page-tools__fab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+[data-theme="dark"] .sports-page-tools__fab {
+  background: var(--bg-soft);
+  border-color: var(--rule);
+  box-shadow:
+    0 2px 10px -2px rgba(0, 0, 0, 0.45),
+    0 10px 28px -12px rgba(0, 0, 0, 0.55);
+}
+
+.sports-search {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  max-width: min(360px, calc(100vw - 28px));
+}
+.sports-search__fab {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  background: var(--bg);
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow:
+    0 2px 8px -2px rgba(0, 0, 0, 0.12),
+    0 8px 24px -10px rgba(0, 0, 0, 0.18);
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.sports-search__fab svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+.sports-search__fab .hidden { display: none !important; }
+@media (hover: hover) and (pointer: fine) {
+  .sports-search__fab:hover {
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--rule));
+    color: var(--accent);
+  }
+}
+.sports-search__fab:active { transform: scale(0.96); }
+.sports-search__fab:focus { outline: none; }
+.sports-search__fab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.sports-search__fab.is-active,
+.sports-search.has-query .sports-search__fab {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+[data-theme="dark"] .sports-search__fab {
+  background: var(--bg-soft);
+  border-color: var(--rule);
+}
+
+.sports-search__panel {
+  width: min(320px, calc(100vw - 28px));
+  padding: 12px 12px 10px;
+  border-radius: 14px;
+  border: 1px solid var(--rule);
+  background: var(--bg);
+  box-shadow:
+    0 4px 16px -6px rgba(0, 0, 0, 0.14),
+    0 16px 40px -16px rgba(0, 0, 0, 0.22);
+}
+.sports-search__panel[hidden] { display: none !important; }
+[data-theme="dark"] .sports-search__panel {
+  background: var(--bg-soft);
+}
+
+.sports-search__field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 4px 0 10px;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--bg-soft, var(--bg));
+}
+.sports-search__field:focus-within {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--rule));
+}
+.sports-search__field-ico {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  color: var(--muted);
+}
+.sports-search__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: 500 14px/1.3 var(--sans);
+  padding: 10px 0;
+  outline: none;
+}
+.sports-search__input::placeholder { color: var(--muted); opacity: 0.9; }
+/* Masquer la loupe native type=search (WebKit) */
+.sports-search__input::-webkit-search-decoration,
+.sports-search__input::-webkit-search-cancel-button { -webkit-appearance: none; }
+
+.sports-search__clear {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  margin: 0 4px 0 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+.sports-search__clear.hidden { display: none !important; }
+@media (hover: hover) and (pointer: fine) {
+  .sports-search__clear:hover { color: var(--ink); background: color-mix(in srgb, var(--ink) 6%, transparent); }
+}
+
+.sports-search__hint {
+  margin: 8px 2px 0;
+  font: 400 11.5px/1.4 var(--sans);
+  color: var(--muted);
+}
+
+@media print {
+  .sports-page-tools { display: none !important; }
 }
 
 @media (max-width: 560px) {
