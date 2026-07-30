@@ -6515,36 +6515,37 @@ function newsSkeleton(n) {
     </div>`).join('');
 }
 
+// D10 : acronymes générés depuis institutions.json
+// (institution-acronyms-data.js via scripts/sync-institution-labels.js).
+// Repli minimal si le script data n’est pas encore chargé.
 const INSTITUTION_ACRONYMS = {
-  'Université de Montréal': 'UdeM',
-  UQAM: 'UQAM',
-  'Université du Québec à Montréal': 'UQAM',
-  'Université du Québec à Montréal (UQAM)': 'UQAM',
-  'Université McGill': 'McGill',
-  'McGill University': 'McGill',
-  'Concordia University': 'Concordia',
-  'Université Laval': 'ULaval',
-  'Université de Sherbrooke': 'UdeS',
-  'Université du Québec à Trois-Rivières': 'UQTR',
-  'Université du Québec à Trois-Rivières (UQTR)': 'UQTR',
-  'Université du Québec à Chicoutimi': 'UQAC',
-  'Université du Québec à Chicoutimi (UQAC)': 'UQAC',
-  'Université du Québec à Rimouski': 'UQAR',
-  'Université du Québec à Rimouski (UQAR)': 'UQAR',
-  'Université du Québec en Outaouais': 'UQO',
-  'Université du Québec en Outaouais (UQO)': 'UQO',
-  'Université du Québec en Abitibi-Témiscamingue': 'UQAT',
-  'Université du Québec en Abitibi-Témiscamingue (UQAT)': 'UQAT',
-  'Polytechnique Montréal': 'Poly Montréal',
-  "Bishop's University": "Bishop's",
+  ...(typeof window !== 'undefined' && window.RadarInstitutionAcronyms
+    ? window.RadarInstitutionAcronyms
+    : {
+        'Université de Montréal': 'UdeM',
+        UQAM: 'UQAM',
+        'Université du Québec à Montréal': 'UQAM',
+        'Université McGill': 'McGill',
+        'McGill University': 'McGill',
+        'Concordia University': 'Concordia',
+        'Université Laval': 'ULaval',
+        'Université de Sherbrooke': 'UdeS',
+        'Polytechnique Montréal': 'Poly Montréal',
+      }),
 };
 
-const INSTITUTION_FULL_BY_ACRONYM = {};
-for (const [full, acr] of Object.entries(INSTITUTION_ACRONYMS)) {
-  const clean = full.replace(/\s*\([^)]*\)\s*$/, '').trim();
-  const prev = INSTITUTION_FULL_BY_ACRONYM[acr];
-  if (!prev || (clean.includes(' ') && clean.length > prev.length)) {
-    INSTITUTION_FULL_BY_ACRONYM[acr] = clean;
+const INSTITUTION_FULL_BY_ACRONYM = {
+  ...(typeof window !== 'undefined' && window.RadarInstitutionFullByAcronym
+    ? window.RadarInstitutionFullByAcronym
+    : {}),
+};
+if (!Object.keys(INSTITUTION_FULL_BY_ACRONYM).length) {
+  for (const [full, acr] of Object.entries(INSTITUTION_ACRONYMS)) {
+    const clean = full.replace(/\s*\([^)]*\)\s*$/, '').trim();
+    const prev = INSTITUTION_FULL_BY_ACRONYM[acr];
+    if (!prev || (clean.includes(' ') && clean.length > prev.length)) {
+      INSTITUTION_FULL_BY_ACRONYM[acr] = clean;
+    }
   }
 }
 

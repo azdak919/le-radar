@@ -192,32 +192,12 @@ function normKey(name = '') {
 }
 
 /**
- * Établissements canoniques.
- *
- * Les registres n'écrivent pas les noms de la même façon (« UQAM » et
- * « Université du Québec à Montréal », « Université McGill » et « McGill
- * University »). Sans cette table, on générerait deux pages concurrentes pour
- * le même établissement — exactement le contenu dupliqué qu'on cherche à
- * éviter. `app.js` a une table d'acronymes équivalente pour l'affichage ;
- * celle-ci sert au regroupement et aux URL.
+ * Établissements canoniques — D10 : dérivés de institutions.json
+ * (scripts/institution-labels-lib.js). Les registres n'écrivent pas les noms
+ * de la même façon ; sans regroupement on générerait des pages concurrentes.
  */
-const INSTITUTIONS = [
-  { slug: 'universite-de-montreal', name: 'Université de Montréal', short: 'UdeM' },
-  { slug: 'universite-du-quebec-a-montreal', name: 'Université du Québec à Montréal', short: 'UQAM', aliases: ['UQAM'] },
-  // `name` est la forme anglaise officielle. `nameFr` est uniquement une
-  // adaptation de l'interface française : les pages anglaises ne francisent
-  // jamais un nom d'établissement déjà français.
-  { slug: 'mcgill-university', name: 'McGill University', nameFr: 'Université McGill', short: 'McGill', aliases: ['Université McGill'] },
-  { slug: 'concordia-university', name: 'Concordia University', nameFr: 'Université Concordia', short: 'Concordia' },
-  { slug: 'universite-du-quebec-a-trois-rivieres', name: 'Université du Québec à Trois-Rivières', short: 'UQTR' },
-  { slug: 'universite-laval', name: 'Université Laval', short: 'ULaval' },
-  { slug: 'universite-de-sherbrooke', name: 'Université de Sherbrooke', short: 'UdeS' },
-  { slug: 'cegep-du-vieux-montreal', name: 'Cégep du Vieux Montréal', short: 'Cégep Vieux-Montréal' },
-  { slug: 'cegep-de-jonquiere', name: 'Cégep de Jonquière', short: 'Cégep de Jonquière' },
-  { slug: 'polytechnique-montreal', name: 'Polytechnique Montréal', short: 'Polytechnique' },
-  { slug: 'bishops-university', name: "Bishop's University", nameFr: "Université Bishop's", short: "Bishop's" },
-  { slug: 'dawson-college', name: 'Dawson College', nameFr: 'Collège Dawson', short: 'Dawson' },
-];
+const { buildSeoInstitutions } = require('./institution-labels-lib');
+const INSTITUTIONS = buildSeoInstitutions();
 
 const INSTITUTION_BY_KEY = new Map();
 for (const entry of INSTITUTIONS) {
@@ -810,6 +790,7 @@ ${renderTunerCriticalCss()}    <script src="${up}seo-page-theme.js"></script>
     <script src="${up}cast.js" defer></script>
     <script src="${up}mobile-playback.js" defer></script>
     <script src="${up}player-sync.js" defer></script>
+    <script src="${up}institution-acronyms-data.js" defer></script>
     <script src="${up}app.js" defer></script>
 ${(Array.isArray(extraScripts) ? extraScripts : []).map((src) => `    <script src="${up}${escapeHtml(src)}" defer></script>`).join('\n')}${Array.isArray(extraScripts) && extraScripts.length ? '\n' : ''}${jsonLd ? `    <script type="application/ld+json">${jsonLd}</script>\n` : ''}  </head>
   <body>
