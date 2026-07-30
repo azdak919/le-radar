@@ -2169,6 +2169,18 @@ function sportsBoardHref(slide) {
 }
 
 /**
+ * Nouvel onglet pour les liens « Au tableau » / puces sports.
+ * Même règle que les articles du fil : ne pas décharger la page où la radio joue
+ * (sinon le flux et la synchro lecteurs se coupent).
+ */
+function markSportsBoardLink(a) {
+  if (!a || a.tagName !== 'A') return a;
+  a.target = '_blank';
+  a.rel = 'noopener noreferrer';
+  return a;
+}
+
+/**
  * Meilleure carte (déjà triée : urgence / fraîcheur) par sport.
  * Sert à la diversité des chips scores (pas la CTA).
  */
@@ -2457,13 +2469,14 @@ function paintSportsChip(slide, animate = false) {
     const a = document.createElement('a');
     a.className = 'sports-chip sports-chip--info';
     a.href = new URL('sports/', window.location.href).pathname;
+    markSportsBoardLink(a);
     if (animate && !sportsReducedMotion) a.classList.add('is-arriving');
     a.dataset.sportsKey = slide.key || 'info';
     a.dataset.sportsMode = 'info';
     a.dataset.sportsSport = 'board';
     a.style.setProperty('--sports-tone', slide.tone || '#5a6570');
     a.title = slide.label || 'Au tableau';
-    a.setAttribute('aria-label', slide.label || 'Voir le tableau des scores');
+    a.setAttribute('aria-label', slide.label || 'Voir le tableau des scores (nouvel onglet)');
     const line = document.createElement('span');
     line.className = 'sports-chip__line';
     const inner = document.createElement('span');
@@ -2483,6 +2496,7 @@ function paintSportsChip(slide, animate = false) {
     const a = document.createElement('a');
     a.className = 'sports-chip sports-chip--cta';
     a.href = href;
+    markSportsBoardLink(a);
     if (animate && !sportsReducedMotion) a.classList.add('is-arriving');
     a.dataset.sportsKey = SPORTS_CTA_KEY;
     a.dataset.sportsMode = 'cta';
@@ -2511,7 +2525,7 @@ function paintSportsChip(slide, animate = false) {
     }
     a.setAttribute(
       'aria-label',
-      `Au tableau : ${slide.label || 'résultats sportifs étudiants du Québec'}`,
+      `Au tableau : ${slide.label || 'résultats sportifs étudiants du Québec'} (nouvel onglet)`,
     );
 
     // Pastille type BREAKING : point live + libellé fixe.
@@ -2545,11 +2559,12 @@ function paintSportsChip(slide, animate = false) {
   const code = String(team.code || 'EQ').toUpperCase().slice(0, 4);
   const sport = slide.game.sport || team.sport || '';
   const tone = slide.tone || sportsSlideTone(slide);
-  // Clic principal → page SEO locale ; la feuille RSEQ reste sur /sports/.
+  // Clic principal → page SEO locale (nouvel onglet, radio intacte).
   const href = sportsBoardHref(slide);
   const a = document.createElement('a');
   a.className = 'sports-chip';
   a.href = href;
+  markSportsBoardLink(a);
   if (animate && !sportsReducedMotion) a.classList.add('is-arriving');
   a.dataset.sportsKey = slide.key || '';
   a.dataset.sportsMode = slide.mode || '';
@@ -2587,7 +2602,7 @@ function paintSportsChip(slide, animate = false) {
       + (prior ? ` <span class="sports-chip__season-meta">Saison précédente</span>` : '');
     if (prior) a.classList.add('sports-chip--prior-season');
     a.title = sportsChipTitle(slide) + (prior ? ' · Saison précédente' : '');
-    a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores.`);
+    a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
   } else {
     a.append(glyph);
     const n = slide.game;
@@ -2598,7 +2613,7 @@ function paintSportsChip(slide, animate = false) {
       + `<span class="sports-chip__code sports-chip__opp">${escapeHtml(opp)}</span>`
       + (when ? ` · <span class="sports-chip__when">${escapeHtml(when)}</span>` : '');
     a.title = sportsChipTitle(slide);
-    a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores.`);
+    a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
   }
   line.append(inner);
   a.append(line);
