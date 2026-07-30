@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-30T09:13:08.092Z",
+  "updatedAt": "2026-07-30T11:28:51.098Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T09:12:44.994Z"
+      "checkedAt": "2026-07-30T11:28:24.111Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
-        "source": "schedule",
-        "start": "05:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
-      },
-      "next": {
         "title": "Ici, la criminologie",
         "source": "schedule",
         "start": "07:00",
         "end": "08:00",
         "url": "https://cism893.ca/emissions/ici-la-criminologie"
       },
+      "next": {
+        "title": "Jimmy et Neutron",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/jimmy-et-neutron"
+      },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Ici, la criminologie",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T09:12:47.191Z"
+      "checkedAt": "2026-07-30T11:28:26.356Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "William Shatner's Whiskey Tears",
+        "title": "OFC Podcast Radio",
         "source": "api-live",
-        "start": "04:00",
-        "end": "06:00"
+        "start": "07:00",
+        "end": "09:00"
       },
       "next": {
-        "title": "Total €clipse of The ☾harts",
+        "title": "Folk Directions",
         "source": "api-live",
-        "start": "06:00",
-        "end": "07:00"
+        "start": "09:00",
+        "end": "11:00"
       },
-      "track": "William Shatner",
-      "showTitle": "William Shatner's Whiskey Tears",
+      "track": "",
+      "showTitle": "OFC Podcast Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T09:12:50.178Z"
+      "checkedAt": "2026-07-30T11:28:29.571Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Daydream Nation",
         "source": "schedule",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/daydream-nation"
       },
+      "next": {
+        "title": "Free City Radio",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/free-city-radio"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Daydream Nation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T09:13:03.958Z"
+      "checkedAt": "2026-07-30T11:28:43.414Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Folkswagen",
         "source": "schedule",
         "start": "07:00",
         "end": "08:00"
       },
+      "next": {
+        "title": "Palmarès CFAK",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Folkswagen",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T09:13:04.341Z"
+      "checkedAt": "2026-07-30T11:28:43.891Z"
     },
     "choq": {
       "id": "choq",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T09:13:07.740Z"
+      "checkedAt": "2026-07-30T11:28:50.748Z"
     }
   }
 }
