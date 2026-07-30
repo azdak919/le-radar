@@ -188,14 +188,15 @@ html[data-embed="tuner"] .tuner {
 }
 html[data-embed="tuner"] .tuner-dial {
   position: relative;
-  /* Hauteur de la rangée de contrôles pour ancrer le crédit en bas. */
-  align-self: stretch;
+  /* Même hauteur visuelle que prev/next/play — pas de padding bas qui décale. */
+  align-self: center;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: var(--embed-ctrl, 42px);
-  /* Réserve sous le panneau poste/émissions pour le crédit (sans chevauchement). */
+  /* Bureau : réserve sous le panneau pour le crédit (sans décaler les boutons). */
   padding-bottom: 11px;
+  margin-bottom: -11px; /* annule l’effet sur la ligne de contrôles */
   box-sizing: border-box;
 }
 html[data-embed="tuner"] .tuner-embed-credit {
@@ -225,15 +226,26 @@ html[data-embed="tuner"] .tuner-embed-credit {
   pointer-events: auto;
   max-width: calc(100% - 8px);
 }
-/* Mobile : signature à gauche du panneau poste/émissions (alignée au texte). */
+/*
+ * Mobile : signature à gauche sous le panneau poste/émissions.
+ * Pas de padding-bottom sur le dial → boutons alignés avec le panneau.
+ * Crédit en dessous du panneau (bottom négatif), dans le padding de la barre.
+ */
 @media (max-width: 559.98px) {
+  html[data-embed="tuner"] .tuner-dial {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    align-self: center;
+  }
   html[data-embed="tuner"] .tuner-embed-credit {
     left: 11px; /* = padding-left de .tuner-now */
+    bottom: -10px;
     transform: none;
     justify-content: flex-start;
   }
   html[data-embed="tuner"] .tuner > .tuner-embed-credit {
     left: 11px;
+    bottom: 3px;
     transform: none;
   }
 }
@@ -1540,13 +1552,20 @@ html[data-embed="tuner"][data-surface="kiosque-v1"]:has(.tuner-vol.is-open) .tun
   html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-label {
     display: none !important;
   }
+  /* Dial = hauteur des boutons (42) ; crédit sous le panneau, pas dedans. */
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-dial {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    align-self: center !important;
+    min-height: var(--embed-ctrl, 42px);
+  }
   /*
-   * Crédit mobile : bas du panneau poste/émissions, aligné à gauche
-   * (même padding que le titre CHYZ / émission) — pas centré, pas bas-droite barre.
+   * Crédit mobile : sous le panneau poste/émissions, aligné à gauche
+   * (padding du titre CHYZ) — ne décale pas prev/next/play.
    */
   html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-dial .tuner-embed-credit {
     font-size: 8px !important;
-    bottom: 0 !important;
+    bottom: -9px !important;
     left: 11px !important;
     right: auto !important;
     transform: none !important;
