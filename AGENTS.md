@@ -96,28 +96,10 @@ préconditions, noter le report plutôt que créer une dette artificielle.
 
 ## 2c. WIP non commité (reprise après coupure de session)
 
-> Détecté par observation `git status`/`git diff` — pas soldé, pas testé, **rien commité**.
-> À retirer de cette section dès que le ticket est terminé (commité) ou explicitement abandonné.
+> Section **vide** tant qu’aucun ticket n’est en cours hors Git.
+> Quand un travail est interrompu : lister ici fichiers + reste à faire, puis **retirer** dès commit ou abandon.
 
-**Priorité : HAUTE** — humain a demandé de committer/pousser tel quel (2026-07-25 09:45). `npm run check` **OK** (syntaxe + unit, 0 réseau) avant commit ; le test à l'oreille (jump/coin/hit) et le test hors-ligne réel (couper le réseau, recharger, jouer) **restent à faire manuellement** post-déploiement — ce n'est pas une vérification automatisable ici.
-
-**2026-07-25 09:31 — session Grok coupée (tokens épuisés), 2 derniers prompts non finis.**
-
-Feature en cours : **SFX pour le mini-jeu `offline.html`** (bips jump/coin/hit, synthèse Python, domaine public) + petit nettoyage de la barre de jeu.
-
-| Fichier | État | Détail |
-|---------|------|--------|
-| `assets/offline/sounds/{jump,coin,hit}.wav` | **non suivi (untracked)** | 3 WAV mono 22 kHz synthétisés pour le projet |
-| `offline.html` | modifié | `sfx`/`loadSfx`/`playSfx`/`unlockAudio` (déverrouillage audio mobile au premier geste) câblés sur `jump()` et la collision ; barre de jeu : nom de langue autochtone retiré (affichait `ᐃᓄᒃᑎᑐᑦ` hors contexte, lisait comme un bug) → texte fixe FR ; `notranslate` / `google notranslate` ajoutés pour bloquer Google Translate sur cette page |
-| `sw.js` | modifié | cache bumpé `radar-shell-v503→v504`, `radar-offline-v6→v7` ; 3 wav ajoutés à `OFFLINE_ASSETS` et `APP_SHELL` |
-| `assets/offline/README.md` | modifié | licence des sons documentée (domaine public, créés pour LE RADAR) |
-| `data/quebec-*-backgrounds.json` (5 fichiers) | modifié | uniquement le timestamp `updated` — effet de bord probable d'un `bank:sync`/`bank:check` lancé pendant la session, **pas** lié au SFX |
-
-**Reste à faire avant commit :**
-- Vérifier à l'oreille (jump/coin/hit) + test offline réel (couper le réseau, recharger, jouer).
-- `npm run check` (le bump de cache SW doit être validé — non-casse §6).
-- Confirmer que le retrait du nom de langue dans la barre de jeu est voulu définitivement (pas juste un test) avant de committer.
-- Si tout est bon : un seul commit couvrant `offline.html` + `sw.js` + `assets/offline/`. Les 5 JSON de banques (timestamp seul) peuvent être laissés de côté ou re-générés proprement via `bank:sync`, pas committés tels quels sans revue.
+*(Aucun WIP hors ledger — 2026-07-30. L’ancien WIP « SFX offline.html » est livré sur main : `assets/offline/sounds/*`, `loadSfx`/`playSfx` dans `offline.html`.)*
 
 ---
 
@@ -140,8 +122,8 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 | D10 | **Connaissance des établissements éclatée en 4 tables** | Chaque copie répond à un besoin distinct (affichage court, libellés RSS, localisation, pages d’entités) ; les unifier touche 4 zones d’un coup, dont le monolithe `app.js` | Une divergence réelle qui casse quelque chose — le doublon « College » du 2026-07-25 en est une ; commencer par la table de traduction, la plus autonome | M | open |
 | D11 | **Déclaration du site aux consoles de recherche** (Search Console, Bing, IndexNow) | Aucun agent ne peut le faire : ça demande les comptes Google / Microsoft / Cloudflare de l’humain. Le travail technique est livré et en ligne ; il ne reste que les clics | Rien à attendre — à faire dès que possible : sans soumission du sitemap, les 71 URL neuves mettent bien plus longtemps à être découvertes | S | blocked |
 | D12 | **Cohérence fil ↔ RSS ↔ JSON-LD non garantie** | Trois générateurs écrits pour des besoins distincts ; les coupler figerait des formats encore mouvants | Test des dix premières manchettes des quatre sorties dans `npm run test:unit` | S | resolved |
-| D13 | **Contraste `--muted` en thème clair + focus invisible du menu de langue** | `--muted` est un jeton global : l’assombrir touche tout le site clair d’un coup et impose une relecture visuelle complète | Captures avant/après sur accueil, fiche journal et annuaire, en clair **et** en sombre ; le thème sombre est déjà conforme et ne doit pas régresser | S–M | open |
-| D14 | **CSP trop large** sur `frame-src` et `connect-src` | Le site consomme des tiers énumérables mais nombreux (YouTube, umami, workers, météo, moteurs de traduction) ; resserrer d’un coup casse en production, pas en test | Resserrer **une directive à la fois**, en commençant par `frame-src`, avec vérification du syntoniseur et de l’intégration YouTube | S par étape | open |
+| D13 | **Contraste `--muted` en thème clair + focus invisible du menu de langue** | `--muted` est un jeton global : l’assombrir touche tout le site clair d’un coup et impose une relecture visuelle complète | Captures avant/après sur accueil, fiche journal et annuaire, en clair **et** en sombre ; le thème sombre est déjà conforme et ne doit pas régresser | S–M | resolved |
+| D14 | **CSP trop large** sur `frame-src` et `connect-src` | Le site consomme des tiers énumérables mais nombreux (YouTube, umami, workers, météo, moteurs de traduction) ; resserrer d’un coup casse en production, pas en test | Resserrer **une directive à la fois**, en commençant par `frame-src`, avec vérification du syntoniseur et de l’intégration YouTube | S par étape | resolved |
 | D15 | **Calibrage des seuils de l’audit pixel** (banques photo) | Les seuils ont été réglés sur un autre corpus ; les rebaisser à l’aveugle laisserait passer ce qu’on cherche justement à bloquer | Un lot de photos **étiquetées à la main** (garder / rejeter) servant de référence, pour régler les seuils sur des cas jugés plutôt que sur une intuition | M | open |
 | D16 | **Provenance des slogans et descriptions des radios** | Les champs éditoriaux de `radios.json` mélangent slogan officiel, description et formulations historiques ; une page peut donc être exacte sur le fond mais erronée comme citation de marque | Registre par station : URL officielle, extrait, date de vérification, niveau de confiance ; toute formulation non confirmée devient une description neutre | S | ready |
 | D17 | **Contrat du lecteur natif sur toutes les routes publiques** | Le lecteur est maintenant natif sur les fiches SEO et le RSS, mais l’intégration mêle génération HTML, scripts dynamiques et shell de continuité ; une route peut afficher le bandeau sans initialiser le lecteur, ou inversement | Matrice testée accueil/RSS/SEO/annuaire/maintenance/Pomo/Solitaire, en navigation avec lecture ; zéro iframe hors exceptions explicites et zéro erreur console | M | open |
@@ -284,26 +266,19 @@ session parte du constat et non de l’audit.
   des quatre sorties dans `npm run test:unit`, après normalisation des entités
   HTML (`&#8217;` vs `’`).
 
-**D13 — accessibilité, deux points distincts**
+**D13 — soldée 2026-07-30**
 
 | Jeton | Contexte | Ratio | Seuil AA |
 |-------|----------|-------|----------|
-| `--muted` `#80858c` | sur `--bg` blanc | **3,72** | 4,5 |
-| `--muted` `#80858c` | sur `--bg-soft` | **3,43** | 4,5 |
-| `--muted` `#888d96` | thème **sombre** | 5,75 | conforme |
+| `--muted` `#5f646c` | sur `--bg` blanc | **≈ 5,96** | 4,5 |
+| `--muted` `#5f646c` | sur `--bg-soft` | **≈ 5,50** | 4,5 |
+| `--muted` `#888d96` | thème **sombre** (inchangé) | 5,75 | conforme |
 
-- Le défaut est **propre au thème clair**. `--muted` porte les métadonnées
-  d’articles, dates, libellés de signature, pieds de page et `.seo-card__meta` —
-  du texte de 12–13 px, donc soumis au seuil normal de 4,5.
-- Second point, sans rapport avec le premier : `.translate-menu__opt:focus-visible`
-  ne pose qu’un `background: var(--bg-soft)` avec `outline: none`. L’indicateur
-  de focus est donc **identique au survol** et à ~1,05:1 du fond — invisible au
-  clavier, là où WCAG demande 3:1 pour un indicateur non textuel.
+- Thème clair seulement : `#80858c` → `#5f646c`.
+- `.translate-menu__opt:focus-visible` : outline `2px solid var(--accent)` +
+  offset 2px (distinct du survol qui ne change que le fond).
 - **Déjà bon, ne pas re-auditer** : les 8 contrôles du tuner sont de vrais
-  `<button>` / `<select>`, il n’y a aucun `div onclick` dans `index.html`, et le
-  libellé du bouton lecture est mis à jour dynamiquement (`app.js:3505-3509`).
-  La plupart des `outline: none` sont correctement appariés à un
-  `:focus-visible` visible (`.masthead-icon`, `.feed-btn`, `.news-search__fab`).
+  `<button>` / `<select>`, il n’y a aucun `div onclick` dans `index.html`.
 
 **D14 — ce qui est resserrable, et ce qui ne l’est pas**
 
@@ -315,15 +290,17 @@ session parte du constat et non de l’audit.
   du synthé est inline dans `index.html`.
 - `frame-src` et `connect-src` sont, eux, énumérables → seuls ceux-là sont visés.
 
-**Avancée 2026-07-29 — `frame-src` soldé comme tranche, dette conservée.**
+**Soldée 2026-07-30 — `frame-src` (2026-07-29) + `connect-src`.**
 
-- `index.html` et `tuner-embed.html` n’acceptent plus tout `https:` en iframe.
-  La liste autorise seulement le même site et les six sites des radios déclarées
-  dans `radios.json` (CHYZ, CISM, CKUT, CJLO, CFAK, CHOQ).
-- `tests/static-integrity.mjs` interdit le retour de `frame-src https:` et
-  vérifie ces origines sur les deux surfaces.
-- `connect-src` reste volontairement ouvert pour l’instant : c’est la prochaine
-  tranche D14, à inventorier et vérifier séparément.
+- `frame-src` : même site + six radios (`radios.json`).
+- `connect-src` inventorié depuis le code client : workers météo / nowplaying /
+  bg-rotation, umami (+ gateway), Google gtx, MyMemory, `blob:` ; **plus** de
+  `https:` ni `wss:` génériques. `img-src https:` et `media-src https:` restent
+  des décisions assumées (images multi-sources, flux radio).
+- Surfaces : `index.html`, `feeds.html`, `tuner-embed.html`, gabarit
+  `seo-pages-lib.js` et pages SEO régénérées ; pomo/solitaire avaient déjà une
+  liste serrée.
+- `tests/static-integrity.mjs` interdit le retour de `connect-src https:`.
 
 **Écarté volontairement** : la partie « hiérarchie typographique et
 breakpoints » de l’audit est un examen stylistique sans défaut mesuré ; elle
@@ -459,7 +436,9 @@ Pour promouvoir : ajouter une ligne D# en §3 avec effort + pourquoi, après OK 
 | — | 2026-07-25 | Bot `detect-photo-seasons` (tags season/season6 + confidence) + filtre client 4/6 saisons |
 | D6 | 2026-07-25 | `audit:banks:hard` + `tests/bank-hard-audit.mjs` dans `npm test` (0 réseau) |
 | D5 | 2026-07-25 | `religious-facade-lib.js` partagé (RE + SPIRE_THRESHOLDS v1) maintain/bank-hard/photo-qc + SYNC Python/JS |
-| D12 | 2026-07-29 | `tests/news-representations.mjs` compare les dix premières manchettes de `news.json`, du RSS, du prérendu HTML et du JSON-LD |
+| D12 | 2026-07-29 | `tests/news-outputs.mjs` compare les dix premières manchettes de `news.json`, du RSS, du prérendu HTML et du JSON-LD |
+| D13 | 2026-07-30 | Thème clair : `--muted` `#80858c` → `#5f646c` (≥ 4,5:1 sur `--bg` et `--bg-soft`) ; `.translate-menu__opt:focus-visible` outline accent 2px (indicateur ≥ 3:1) ; thème sombre inchangé |
+| D14 | 2026-07-30 | `connect-src` resserré (plus de `https:` / `wss:` génériques) : self, blob, 3 workers LE-RADAR, umami, gateway.umami, translate.googleapis, mymemory — index/feeds/tuner-embed + gabarit SEO + pages générées ; `tests/static-integrity.mjs` verrouille |
 | — | 2026-07-29 | Catalogue SEO historique expérimental : `news-archive.json` distinct du fil frais, échantillon public borné et liens originaux vérifiés, `sitemap-archives.xml`, robots explicite et workflow hebdomadaire à faible volume; aucune republication intégrale |
 | — | 2026-07-29 | Rétro-crawl historique contrôlé : `retro-crawl-historical.js` lit seulement des listes publiques paginées, exclut explicitement les corps WordPress et les médias, reprend dans `historical-crawl-state.json`; 0–12 mois indexables après vérification, 12 mois–3 ans dans les archives de conservation et au-delà dans les archives de référence, toutes deux en `noindex,follow` |
 | — | 2026-07-25 | Balises anti-glouton + `.agents-session.json` (1 dette/session, 2/jour) |
