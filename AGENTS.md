@@ -23,9 +23,10 @@ Voir la source de vérité multi-outils :
 ou `VisualCode/GIT-AND-TEST-SAFETY.md`.
 
 **Interdit** : commit/push non testé sur `main`.  
-**Obligatoire** : branche `fix|feat|chore/...` → tests locaux verts → push branche → PR/merge.  
+**Obligatoire** : branche `fix|feat|chore/...` → tests locaux verts → push → **PR** →
+checks CI verts → **merge + delete branch**.  
+**Push ≠ livré** : avertir avec `gh pr merge <N> --merge --delete-branch` si clôture en attente.  
 **LE-RADAR UI/CSS** : `npm run check` + Playwright (au minimum mât/smoke) avant push.
-
 
 ## 1. Économie composée de tokens (long terme)
 

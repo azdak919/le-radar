@@ -724,6 +724,50 @@ function loadPreviousTeams() {
   }
 }
 
+/**
+ * Réinjecte les formations du run précédent quand une source est en panne
+ * (null, HTTP, timeout). Mieux vaut un score encore valide que des cartes
+ * qui disparaissent — la fraîcheur B continue de purger l’obsolète.
+ *
+ * @param {Record<string, object>} previousTeams
+ * @param {(team: object, id: string) => boolean} predicate
+ * @param {string} reason
+ * @returns {Record<string, object>}
+ */
+function preservePreviousTeams(previousTeams, predicate, reason) {
+  const out = {};
+  if (!previousTeams || typeof previousTeams !== 'object') return out;
+  for (const [id, team] of Object.entries(previousTeams)) {
+    if (!team || typeof team !== 'object') continue;
+    if (!predicate(team, id)) continue;
+    out[id] = {
+      ...team,
+      staleSource: true,
+      staleReason: reason || 'source-unavailable',
+    };
+  }
+  return out;
+}
+
+function preserveByLeagueId(previousTeams, leagueId, reason) {
+  const lid = String(leagueId);
+  return preservePreviousTeams(
+    previousTeams,
+    (team, id) => String(team.leagueId || '') === lid
+      || String(id).includes(`:${lid}:`),
+    reason,
+  );
+}
+
+function preserveBySource(previousTeams, source, reason) {
+  const src = String(source);
+  return preservePreviousTeams(
+    previousTeams,
+    (team) => String(team.source || '') === src,
+    reason,
+  );
+}
+
 async function main() {
   const catalog = JSON.parse(fs.readFileSync(LEAGUES_PATH, 'utf8'));
   // Tous les sports du catalogue S1, sans exception (hockey S1 inclus en plus de Spordle).
@@ -735,6 +779,9 @@ async function main() {
   let registryHits = 0;
   let leaguesWithTeams = 0;
   let preservedPast = 0;
+  let leaguesOk = 0;
+  let leaguesFailed = 0;
+  let teamsPreservedOnError = 0;
   const sportsFetched = new Set();
 
   for (const meta of leagues) {
@@ -742,8 +789,19 @@ async function main() {
     try {
       const data = await getJson(API + meta.id);
       if (!data || data === null) {
-        process.stderr.write('null\n');
+        // API vide : garder le snapshot précédent de la ligue (pas d’effacement).
+        const kept = preserveByLeagueId(previousTeams, meta.id, 's1-null');
+        const n = Object.keys(kept).length;
+        if (n) {
+          Object.assign(teams, kept);
+          teamsPreservedOnError += n;
+          leaguesWithTeams += 1;
+          process.stderr.write(`null → conservé ${n} équipes\n`);
+        } else {
+          process.stderr.write('null\n');
+        }
         sportsFetched.add(meta.sport);
+        leaguesOk += 1; // réponse reçue (vide), pas une panne réseau
         continue;
       }
       const games = allGames(data);
@@ -810,39 +868,73 @@ async function main() {
       }
       if (teamCount) leaguesWithTeams += 1;
       sportsFetched.add(meta.sport);
+      leaguesOk += 1;
       process.stderr.write(`${teamCount} équipes · ${games.length} matchs\n`);
     } catch (err) {
       process.stderr.write(`ERREUR ${err.message}\n`);
       errors.push({ leagueId: meta.id, label: meta.label, error: String(err.message || err) });
       sportsFetched.add(meta.sport);
+      leaguesFailed += 1;
+      // Ne jamais effacer une ligue entière sur panne ponctuelle.
+      const kept = preserveByLeagueId(previousTeams, meta.id, `s1-error:${err.message || err}`);
+      const n = Object.keys(kept).length;
+      if (n) {
+        Object.assign(teams, kept);
+        teamsPreservedOnError += n;
+        leaguesWithTeams += 1;
+        process.stderr.write(`sports: ${meta.label} → conservé ${n} équipes (run précédent)\n`);
+      }
     }
   }
 
   // Hockey RSEQ via Spordle (scoreboard public) — complète S1 souvent vide.
   const hockey = await fetchHockeyTeams(reg);
-  for (const [key, team] of Object.entries(hockey.teams)) {
-    if (Array.isArray(team.results)) {
-      team.results.sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+  if (Object.keys(hockey.teams).length) {
+    for (const [key, team] of Object.entries(hockey.teams)) {
+      if (Array.isArray(team.results)) {
+        team.results.sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+      }
+      if (Array.isArray(team.nextGames)) {
+        team.nextGames.sort((a, b) => String(a.date || '').localeCompare(String(b.date || '')));
+        if (!team.nextGame && team.nextGames[0]) team.nextGame = team.nextGames[0];
+      }
+      let entry = mergePreservedPast(team, previousTeams);
+      if (!team.lastGame && !((team.results || []).length) && (entry.lastGame || (entry.results || []).length)) {
+        preservedPast += 1;
+      }
+      teams[key] = SportsFreshness.pruneSportsTeam(entry);
     }
-    if (Array.isArray(team.nextGames)) {
-      team.nextGames.sort((a, b) => String(a.date || '').localeCompare(String(b.date || '')));
-      if (!team.nextGame && team.nextGames[0]) team.nextGame = team.nextGames[0];
+  } else if (hockey.errors.length) {
+    const kept = preserveBySource(previousTeams, 'spordle-rseqhockey', 'hockey-spordle-failed');
+    const n = Object.keys(kept).length;
+    if (n) {
+      Object.assign(teams, kept);
+      teamsPreservedOnError += n;
+      process.stderr.write(`sports: hockey Spordle en panne → conservé ${n} équipes\n`);
     }
-    let entry = mergePreservedPast(team, previousTeams);
-    if (!team.lastGame && !((team.results || []).length) && (entry.lastGame || (entry.results || []).length)) {
-      preservedPast += 1;
-    }
-    teams[key] = SportsFreshness.pruneSportsTeam(entry);
   }
   errors.push(...hockey.errors);
   sportsFetched.add('hockey');
 
   // Voile campus QC (ICSA + watchlist) — sport hors S1.
   const sailing = await fetchSailingTeams(reg);
-  for (const [key, team] of Object.entries(sailing.teams)) {
-    let entry = mergePreservedPast(team, previousTeams);
-    if (!team.lastGame && entry.lastGame) preservedPast += 1;
-    teams[key] = SportsFreshness.pruneSportsTeam(entry);
+  if (Object.keys(sailing.teams).length) {
+    for (const [key, team] of Object.entries(sailing.teams)) {
+      let entry = mergePreservedPast(team, previousTeams);
+      if (!team.lastGame && entry.lastGame) preservedPast += 1;
+      teams[key] = SportsFreshness.pruneSportsTeam(entry);
+    }
+  } else if (sailing.errors.length) {
+    const kept = {
+      ...preserveBySource(previousTeams, 'icsa-collegesailing', 'sailing-failed'),
+      ...preserveBySource(previousTeams, 'sailing-watchlist', 'sailing-failed'),
+    };
+    const n = Object.keys(kept).length;
+    if (n) {
+      Object.assign(teams, kept);
+      teamsPreservedOnError += n;
+      process.stderr.write(`sports: voile en panne → conservé ${n} équipes\n`);
+    }
   }
   errors.push(...sailing.errors);
   sportsFetched.add('sailing');
@@ -864,21 +956,51 @@ async function main() {
 
   const withResults = Object.values(prunedTeams).filter((t) => (t.results && t.results.length) || t.lastGame).length;
   const priorSeason = Object.values(prunedTeams).filter((t) => t.lastGamePriorSeason || t.lastGame?.priorSeason).length;
+  const teamCount = Object.keys(prunedTeams).length;
+  const fetchedAt = new Date().toISOString();
+  const prevCount = Object.keys(previousTeams).length;
+
+  // Garde-fous : ne jamais publier un payload catastrophique (cartes vides / panne massive).
+  const failRatio = leagues.length
+    ? leaguesFailed / leagues.length
+    : 0;
+  if (teamCount < 50) {
+    console.error(
+      `sports: ABORT — trop peu d’équipes (${teamCount}). Refus d’écraser sports.json.`,
+    );
+    process.exit(1);
+  }
+  if (prevCount >= 100 && teamCount < prevCount * 0.5) {
+    console.error(
+      `sports: ABORT — chute d’équipes ${prevCount} → ${teamCount} (>50 %). Refus d’écraser.`,
+    );
+    process.exit(1);
+  }
+  if (leaguesFailed > 0 && failRatio > 0.5) {
+    console.error(
+      `sports: ABORT — majorité des ligues S1 en erreur (${leaguesFailed}/${leagues.length}).`,
+    );
+    process.exit(1);
+  }
 
   const payload = SportsFreshness.pruneSportsPayload({
-    updated: new Date().toISOString(),
+    updated: fetchedAt,
+    fetchedAt,
     source: 'rseq-s1-all+spordle-hockey+sailing-qc',
-    note: 'Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante).',
-    sportsFreshness: { rule: 'B', referenceDate: new Date().toISOString() },
+    note: 'Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.',
+    sportsFreshness: { rule: 'B', referenceDate: fetchedAt },
     registry: 'sports-teams.json',
     registryMatched: registryHits,
     leagueCatalog: catalog.leagueCount || leagues.length,
     leaguesWithTeams,
+    leaguesOk,
+    leaguesFailed,
+    teamsPreservedOnError: teamsPreservedOnError || undefined,
     sportsCovered,
     sportsCatalog: catalogSports,
     sportsFetched: [...sportsFetched].sort(),
     sportsMissing: missingSports.length ? missingSports : undefined,
-    teamCount: Object.keys(prunedTeams).length,
+    teamCount,
     errors: errors.length ? errors : undefined,
     teams: prunedTeams,
   });
@@ -893,6 +1015,9 @@ async function main() {
         withResults,
         priorSeasonLastGame: priorSeason,
         preservedPastFromPrevious: preservedPast,
+        teamsPreservedOnError,
+        leaguesOk,
+        leaguesFailed,
         sportsCovered,
         sportsMissing: missingSports,
         errors: errors.length,
@@ -905,7 +1030,7 @@ async function main() {
 
   if (update) {
     fs.writeFileSync(OUT_PATH, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
-    console.error(`sports: écrit ${path.relative(ROOT, OUT_PATH)}`);
+    console.error(`sports: écrit ${path.relative(ROOT, OUT_PATH)} (${teamCount} équipes, ${leaguesFailed} erreurs ligue)`);
   } else {
     console.error('sports: dry-run (passe --update pour écrire)');
   }

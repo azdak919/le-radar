@@ -2,8 +2,25 @@ name: Update Student Sports (RSEQ)
 
 on:
   schedule:
-    # 4×/jour UTC — matin, midi, soir, nuit (saison collégiale / universitaire)
-    - cron: '15 12,16,21,2 * * *'
+    # Heures de consultation des scores étudiants (Amérique/Toronto).
+    # GitHub Actions = UTC seulement → cibles ±1 h selon EST/EDT.
+    #
+    # | UTC        | ≈ EDT (été) | ≈ EST (hiver) | Intention              |
+    # |------------|-------------|---------------|------------------------|
+    # | 11:30      | 07:30       | 06:30         | matin / trajet         |
+    # | 16:15      | 12:15       | 11:15         | pause midi             |
+    # | 20:45      | 16:45       | 15:45         | fin de cours           |
+    # | 00:00      | 20:00       | 19:00         | soirée matchs          |
+    # | 02:30      | 22:30       | 21:30         | scores post-match      |
+    # | 04:15      | 00:15       | 23:15         | rattrapage tardif      |
+    # | 18:00 sam/dim | 14:00    | 13:00         | matchs d’après-midi WE |
+    - cron: '30 11 * * *'
+    - cron: '15 16 * * *'
+    - cron: '45 20 * * *'
+    - cron: '0 0 * * *'
+    - cron: '30 2 * * *'
+    - cron: '15 4 * * *'
+    - cron: '0 18 * * 0,6'
   workflow_dispatch:
 
 concurrency:
@@ -13,7 +30,7 @@ concurrency:
 jobs:
   aggregate:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     permissions:
       contents: write
 
@@ -25,7 +42,7 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Fetch RSEQ sports
+      - name: Fetch RSEQ sports (tous sports, sans exception)
         run: node scripts/fetch-sports.js --update
 
       - name: Commit sports.json
@@ -34,8 +51,17 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add sports.json
           if git diff --staged --quiet; then
-            echo "No sports changes."
+            echo "No sports changes (payload identique après re-fetch)."
             exit 0
           fi
           git commit -m "chore(sports): refresh RSEQ results"
-          git push
+          # Fichiers générés : en cas de conflit avec un commit concurrent,
+          # -X theirs garde la version fraîchement produite par ce bot.
+          for i in 1 2 3; do
+            git pull --rebase -X theirs --autostash origin "${GITHUB_REF_NAME}" && git push && exit 0
+            git rebase --abort 2>/dev/null || true
+            echo "push attempt $i failed, retrying…"
+            sleep $((i * 3))
+          done
+          echo "::error::could not push sports update after retries"
+          exit 1

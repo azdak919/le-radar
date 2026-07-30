@@ -102,6 +102,12 @@ body {
   flex-wrap: nowrap;
   overflow: hidden;
 }
+/* Dernier cran de fit : CTA « Au tableau » seule (parité météo → 1 carte). */
+.masthead-sports-strip[data-count="1"] .sports-chip--cta {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+}
 .masthead-sports-strip .sports-chip {
   flex: 1 1 0;
   min-width: 0;
