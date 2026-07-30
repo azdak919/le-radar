@@ -92,6 +92,8 @@ porte jamais la barre radio.
 | `institutions.json` | Catalogue cégeps + universités (Wikidata + liste curée) | `update-institutions.js` |
 | `news-sources.json` | Registre des journaux (`active` + `candidates`) | `discover-news-sources.js`, `scan-media.js` |
 | `news.json` | Fil d'articles agrégé (lu par le site) | `fetch-news.js` |
+| `sports.json` | Résultats RSEQ collégial + universitaire QC | `fetch-sports.js` |
+| `sports-leagues.json` | Catalogue des ligues (LeagueId S1) | manuel |
 | `radios.json` | Radios listées dans le syntoniseur | humain + `discover-streams.js` |
 | `radios-candidates.json` | Radios à tester avant promotion | `scan-media.js`, `discover-streams.js` |
 | `radio-schedules.seed.json` | Config sources + grilles manuelles | humain + `discover-schedule-sources.js` |
@@ -128,6 +130,7 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 | Santé + promotion journaux | `discover-news-sources.js` | Hebdo + quotidien via news |
 | Flux radio + promotion candidats | `discover-streams.js` | Quotidien + hebdo |
 | Agrégation articles | `fetch-news.js` | 7×/jour |
+| Résultats sportifs RSEQ | `fetch-sports.js` | 4×/jour (`update-sports.yml`) |
 | Extrait « à la une » | `enrich-lead-excerpts.js` | 7×/jour (après `fetch-news`) |
 | En cours + à venir (API / grille / ICY) | `fetch-radio-nowplaying.js` | Aux 30 min |
 | Découverte sources horaires | `discover-schedule-sources.js` | **Aux 2 semaines** (avant les horaires) |

@@ -348,6 +348,7 @@ const TODAY_DATE     = document.getElementById('today-date');
 const TODAY_TIME     = document.getElementById('today-time');
 const MASTHEAD_WEATHER = document.getElementById('masthead-weather');
 const MASTHEAD_WEATHER_DOCK = document.getElementById('masthead-weather-dock');
+const MASTHEAD_SPORTS_STRIP = document.getElementById('masthead-sports-strip');
 const MASTHEAD_ACTIONS = document.querySelector('.masthead-actions');
 const MASTHEAD_BG_SHUFFLE = document.getElementById('masthead-bg-shuffle');
 const MASTHEAD_BG_SHUFFLE_HOME = document.getElementById('masthead-shuffle-slot');
@@ -554,7 +555,10 @@ async function init() {
   }, 30_000);
   // Les constantes météo sont déclarées plus bas dans ce script : microtask
   // = après l'évaluation complète du fichier, sans retarder le reste du site.
-  queueMicrotask(() => { void initMastheadWeather(); });
+  queueMicrotask(() => {
+    void initMastheadWeather();
+    void initMastheadSports();
+  });
   setupAudio();
   bindTuner();
   bindExternalListen();
@@ -1551,6 +1555,223 @@ async function initMastheadWeather() {
     try { localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({ at: Date.now(), entries })); } catch { /* quota */ }
     renderMastheadWeather(entries);
   } catch { /* module discret : absent si la météo est indisponible */ }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  SPORTS STRIP (RSEQ collégial + universitaire QC) — sous la radio
+// ═══════════════════════════════════════════════════════════════════════════
+const SPORTS_FAV_KEY = 'radar-sports-favorites-v1';
+const SPORTS_DEFAULT_CODES = ['LAV', 'MCG', 'CON', 'MTL', 'UQAM', 'SHE', 'BIS', 'GAR', 'LIM', 'VAN'];
+let sportsData = null;
+let sportsSlides = [];
+let sportsDeck = [];
+let sportsTimer = null;
+const SPORTS_ROTATE_MS = 7000;
+
+function sportsGlyph(sport) {
+  const s = String(sport || '').toLowerCase();
+  if (s.includes('basket')) return '🏀';
+  if (s.includes('hockey')) return '🏒';
+  if (s.includes('soccer') || (s.includes('foot') && !s.includes('flag'))) return '⚽';
+  if (s.includes('football') || s.includes('flag')) return '🏈';
+  if (s.includes('volley')) return '🏐';
+  return '🏅';
+}
+
+function sportsResultTone(result) {
+  if (result === 'W') return '#3d9a6a';
+  if (result === 'L') return '#c45c5c';
+  if (result === 'D' || result === 'T') return '#8fa3b0';
+  return '#c8102e';
+}
+
+function readSportsFavorites() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(SPORTS_FAV_KEY) || '[]');
+    return Array.isArray(raw) ? raw.map(String) : [];
+  } catch {
+    return [];
+  }
+}
+
+function sportsBoardCount() {
+  const width = MASTHEAD_SPORTS_STRIP?.clientWidth
+    || document.documentElement.clientWidth
+    || 360;
+  if (width >= 900) return 4;
+  if (width >= 700) return 3;
+  if (width >= 480) return 2;
+  return 1;
+}
+
+function buildSportsSlides(data) {
+  const teams = Object.values(data?.teams || {});
+  if (!teams.length) return [];
+  const fav = new Set(readSportsFavorites());
+  const ranked = teams.slice().sort((a, b) => {
+    const af = fav.has(a.id) || fav.has(a.code) ? 0 : 1;
+    const bf = fav.has(b.id) || fav.has(b.code) ? 0 : 1;
+    if (af !== bf) return af - bf;
+    const ad = SPORTS_DEFAULT_CODES.indexOf(a.code);
+    const bd = SPORTS_DEFAULT_CODES.indexOf(b.code);
+    const ar = ad === -1 ? 99 : ad;
+    const br = bd === -1 ? 99 : bd;
+    if (ar !== br) return ar - br;
+    // Préférer un résultat joué, sinon un prochain match.
+    const as = a.lastGame ? 0 : a.nextGame ? 1 : 2;
+    const bs = b.lastGame ? 0 : b.nextGame ? 1 : 2;
+    if (as !== bs) return as - bs;
+    return String(a.name).localeCompare(String(b.name), 'fr');
+  });
+
+  return ranked.map((team) => {
+    if (team.lastGame) {
+      return {
+        mode: 'result',
+        team,
+        game: team.lastGame,
+        tone: sportsResultTone(team.lastGame.result),
+        key: `r:${team.id}:${team.lastGame.date}`,
+      };
+    }
+    if (team.nextGame) {
+      return {
+        mode: 'next',
+        team,
+        game: team.nextGame,
+        tone: '#c8102e',
+        key: `n:${team.id}:${team.nextGame.date}`,
+      };
+    }
+    return null;
+  }).filter(Boolean);
+}
+
+function formatSportsWhen(iso, time) {
+  if (!iso) return '';
+  let label = iso;
+  try {
+    label = new Intl.DateTimeFormat('fr-CA', { day: 'numeric', month: 'short' })
+      .format(new Date(`${iso}T12:00:00`));
+  } catch { /* keep iso */ }
+  if (time) label += ` · ${String(time).replace(':', ' h ')}`;
+  return label;
+}
+
+function paintSportsChip(slide) {
+  const team = slide.team;
+  const code = String(team.code || 'EQ').toUpperCase().slice(0, 4);
+  const sport = slide.game.sport || team.sport || '';
+  const a = document.createElement(slide.game.url ? 'a' : 'span');
+  a.className = 'sports-chip';
+  a.style.setProperty('--sports-tone', slide.tone);
+  if (slide.game.url) {
+    a.href = slide.game.url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+  }
+
+  const glyph = document.createElement('span');
+  glyph.className = 'sports-chip__glyph';
+  glyph.setAttribute('aria-hidden', 'true');
+  glyph.textContent = sportsGlyph(sport);
+
+  const line = document.createElement('span');
+  line.className = 'sports-chip__line';
+  const inner = document.createElement('span');
+  inner.className = 'sports-chip__line-inner';
+
+  if (slide.mode === 'result') {
+    const g = slide.game;
+    const badge = g.result === 'W' ? 'V' : g.result === 'L' ? 'D' : 'N';
+    const badgeMod = g.result === 'W' ? 'w' : g.result === 'L' ? 'l' : 'd';
+    const badgeEl = document.createElement('span');
+    badgeEl.className = `sports-chip__badge sports-chip__badge--${badgeMod}`;
+    badgeEl.textContent = badge;
+    badgeEl.setAttribute('aria-hidden', 'true');
+    a.append(glyph, badgeEl);
+    const opp = String(g.opponentCode || g.opponent || 'ADV').toUpperCase().slice(0, 4);
+    inner.innerHTML = `<span class="sports-chip__code">${escapeHtml(code)}</span> `
+      + `<span class="sports-chip__score">${escapeHtml(String(g.scoreFor))}–${escapeHtml(String(g.scoreAgainst))}</span> `
+      + `<span class="sports-chip__code sports-chip__opp">${escapeHtml(opp)}</span>`;
+    const issue = g.result === 'W' ? 'Victoire' : g.result === 'L' ? 'Défaite' : 'Match nul';
+    a.title = `${issue} · ${team.name} · ${g.scoreFor}–${g.scoreAgainst} vs ${g.opponent || opp}`;
+    a.setAttribute('aria-label', a.title);
+  } else {
+    a.append(glyph);
+    const n = slide.game;
+    const opp = String(n.opponentCode || n.opponent || 'ADV').toUpperCase().slice(0, 4);
+    const when = formatSportsWhen(n.date, n.time);
+    inner.innerHTML = `<span class="sports-chip__code">${escapeHtml(code)}</span> `
+      + `<span class="sports-chip__vs">vs</span> `
+      + `<span class="sports-chip__code sports-chip__opp">${escapeHtml(opp)}</span>`
+      + (when ? ` · <span class="sports-chip__when">${escapeHtml(when)}</span>` : '');
+    a.title = `Prochain · ${team.name} vs ${n.opponent || opp}${when ? ` · ${when}` : ''}`;
+    a.setAttribute('aria-label', a.title);
+  }
+  line.append(inner);
+  a.append(line);
+  return a;
+}
+
+function renderSportsStrip() {
+  if (!MASTHEAD_SPORTS_STRIP || !sportsSlides.length) {
+    if (MASTHEAD_SPORTS_STRIP) {
+      MASTHEAD_SPORTS_STRIP.hidden = true;
+      MASTHEAD_SPORTS_STRIP.replaceChildren();
+    }
+    return;
+  }
+  const count = Math.min(sportsBoardCount(), sportsSlides.length);
+  if (!sportsDeck.length) {
+    sportsDeck = sportsSlides.slice();
+  }
+  while (sportsDeck.length < count) {
+    sportsDeck = sportsDeck.concat(sportsSlides);
+  }
+  const visible = sportsDeck.splice(0, count);
+  // Remettre en fin de file pour rotation.
+  sportsDeck = sportsDeck.concat(visible);
+  const frag = document.createDocumentFragment();
+  visible.forEach((slide) => frag.append(paintSportsChip(slide)));
+  MASTHEAD_SPORTS_STRIP.replaceChildren(frag);
+  MASTHEAD_SPORTS_STRIP.hidden = false;
+  MASTHEAD_SPORTS_STRIP.dataset.count = String(count);
+}
+
+function scheduleSportsRotate() {
+  if (sportsTimer) clearInterval(sportsTimer);
+  sportsTimer = null;
+  if (sportsSlides.length <= sportsBoardCount()) return;
+  sportsTimer = window.setInterval(() => {
+    renderSportsStrip();
+  }, SPORTS_ROTATE_MS);
+}
+
+async function initMastheadSports() {
+  if (!MASTHEAD_SPORTS_STRIP) return;
+  try {
+    const res = await fetch(appAsset('sports.json'), { cache: 'no-store' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    sportsData = await res.json();
+    sportsSlides = buildSportsSlides(sportsData);
+    renderSportsStrip();
+    scheduleSportsRotate();
+    window.addEventListener('resize', () => {
+      // Recalcule N cartes selon largeur (debounce léger).
+      if (initMastheadSports._rz) clearTimeout(initMastheadSports._rz);
+      initMastheadSports._rz = setTimeout(() => {
+        renderSportsStrip();
+        scheduleSportsRotate();
+      }, 180);
+    }, { passive: true });
+  } catch (err) {
+    console.warn('Le Radar: sports indisponibles', err);
+    if (MASTHEAD_SPORTS_STRIP) {
+      MASTHEAD_SPORTS_STRIP.hidden = true;
+      MASTHEAD_SPORTS_STRIP.replaceChildren();
+    }
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -6140,7 +6361,8 @@ const FRESHNESS_SESSION_COUNT = _SF?.FRESHNESS_SESSION_COUNT ?? 3;
 const CONTINGENCY_MAX_SESSIONS_BACK = _SF?.CONTINGENCY_MAX_SESSIONS_BACK
   ?? (FRESHNESS_SESSION_COUNT - 1);
 /* Vedettes (feature) = même budget / sources d'extrait que « À la une ». */
-const BRIEF_LIMITS = { lead: 720, feature: 720, compact: 400, standard: 260 };
+/* Feature un peu plus long : float wrap sous la vignette (parité Kiosque). */
+const BRIEF_LIMITS = { lead: 720, feature: 1000, compact: 400, standard: 260 };
 const LEAD_BRIEF_MIN_CHARS = 160;
 const BRIEF_COMPACT_MIN_CHARS = 150;
 const FEATURE_BRIEF_MIN_CHARS = LEAD_BRIEF_MIN_CHARS;
@@ -6977,7 +7199,18 @@ function createArticle(item, role = 'standard') {
       ${mediaHtml}
       ${briefHtml}
     `;
+  } else if (role === 'feature') {
+    // Vedettes : titre + byline au-dessus, photo flottante, extrait qui enroule
+    // (même ordre que LE-KIOSQUE / source-view).
+    a.innerHTML = `
+      ${metaHtml}
+      ${titleHtml}
+      ${bylineHtml}
+      ${mediaHtml}
+      ${briefHtml}
+    `;
   } else {
+    // En bref / suite : vignette grille (media avant titre en DOM).
     a.innerHTML = `
       ${metaHtml}
       ${mediaHtml}
@@ -6994,7 +7227,7 @@ function createArticle(item, role = 'standard') {
   }
 
   // Filet : garantir titre avant photo même si un attach restructure le DOM.
-  if (role === 'lead') ensureLeadTitleAboveMedia(a);
+  if (role === 'lead' || role === 'feature') ensureLeadTitleAboveMedia(a);
 
   return a;
 }

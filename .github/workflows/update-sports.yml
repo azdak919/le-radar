@@ -1,0 +1,41 @@
+name: Update Student Sports (RSEQ)
+
+on:
+  schedule:
+    # 4×/jour UTC — matin, midi, soir, nuit (saison collégiale / universitaire)
+    - cron: '15 12,16,21,2 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: update-sports-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  aggregate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      - name: Fetch RSEQ sports
+        run: node scripts/fetch-sports.js --update
+
+      - name: Commit sports.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sports.json
+          if git diff --staged --quiet; then
+            echo "No sports changes."
+            exit 0
+          fi
+          git commit -m "chore(sports): refresh RSEQ results"
+          git push
