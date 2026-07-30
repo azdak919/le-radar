@@ -85,7 +85,7 @@ test.describe('LE-KIOSQUE démo × tuner-embed LE-RADAR', () => {
     expect(Number(htmlVer)).toBeGreaterThanOrEqual(568);
   });
 
-  test('crédit le-radar.ca bas-centré sous le dial sans collision volume (mobile)', async ({ page }) => {
+  test('crédit le-radar.ca bas-gauche sous le dial sans collision volume (mobile)', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/tuner-embed.html?station=chyz&surface=kiosque-v1', {
       waitUntil: 'domcontentloaded',
@@ -100,23 +100,24 @@ test.describe('LE-KIOSQUE démo × tuner-embed LE-RADAR', () => {
       const bar = document.getElementById('tuner');
       const creditEl = document.querySelector('a.tuner-embed-credit');
       const dial = document.querySelector('.tuner-dial');
+      const now = document.querySelector('.tuner-now');
       const volBtn = document.getElementById('tuner-vol-toggle');
       const vol = document.getElementById('tuner-vol');
-      if (!bar || !creditEl || !dial || !volBtn || !vol) return null;
+      if (!bar || !creditEl || !dial || !now || !volBtn || !vol) return null;
       const b = bar.getBoundingClientRect();
       const c = creditEl.getBoundingClientRect();
       const d = dial.getBoundingClientRect();
+      const n = now.getBoundingClientRect();
       const creditStyle = getComputedStyle(creditEl);
-      const creditCx = (c.left + c.right) / 2;
-      const dialCx = (d.left + d.right) / 2;
       return {
         credit: { left: c.left, right: c.right, top: c.top, bottom: c.bottom },
         bar: { left: b.left, right: b.right, top: b.top, bottom: b.bottom, width: b.width },
         dial: { left: d.left, right: d.right, top: d.top, bottom: d.bottom },
+        now: { left: n.left, right: n.right },
         inDial: dial.contains(creditEl),
         creditPosition: creditStyle.position,
-        /* Centré horizontalement sous le dial (tolérance 12 px). */
-        centerDelta: Math.abs(creditCx - dialCx),
+        /* Aligné à gauche du panneau poste (tolérance 14 px = padding). */
+        leftDelta: Math.abs(c.left - n.left),
         zIndex: Number(creditStyle.zIndex) || 0,
         volZ: Number(getComputedStyle(vol).zIndex) || 0,
       };
@@ -127,10 +128,11 @@ test.describe('LE-KIOSQUE démo × tuner-embed LE-RADAR', () => {
     // Bas de l’iframe : le bas du crédit est dans les 18 px inférieurs de la barre.
     expect(geometry.credit.bottom).toBeLessThanOrEqual(geometry.bar.bottom + 1);
     expect(geometry.credit.bottom).toBeGreaterThan(geometry.bar.bottom - 18);
-    // Centré sous le dial (poste + émissions), pas bas-droite de la barre.
-    expect(geometry.centerDelta).toBeLessThanOrEqual(12);
+    // Mobile : gauche du panneau poste/émissions, pas centré ni bas-droite barre.
+    expect(geometry.leftDelta).toBeLessThanOrEqual(14);
     expect(geometry.credit.left).toBeGreaterThanOrEqual(geometry.dial.left - 2);
     expect(geometry.credit.right).toBeLessThanOrEqual(geometry.dial.right + 2);
+    expect(geometry.credit.left).toBeLessThan(geometry.bar.left + geometry.bar.width * 0.55);
     // Le volume reste au-dessus du crédit pour le hit-test.
     expect(geometry.volZ).toBeGreaterThan(geometry.zIndex);
 

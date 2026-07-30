@@ -179,8 +179,9 @@ html[data-embed="tuner"] .tuner.is-playing .tuner-onair::before {
 }
 
 /*
- * Attribution le-radar.ca — bas, centré sous le synthétiseur
- * (.tuner-dial = poste + émissions), pas sous EN ONDES ni bas-droite barre.
+ * Attribution le-radar.ca — bas, sous le synthétiseur (.tuner-dial =
+ * poste + émissions). Bureau : centré. Mobile : aligné à gauche du panneau.
+ * Jamais sous EN ONDES ni bas-droite de la barre entière.
  */
 html[data-embed="tuner"] .tuner {
   position: relative;
@@ -223,6 +224,18 @@ html[data-embed="tuner"] .tuner-embed-credit {
   transition: color 140ms ease, opacity 140ms ease;
   pointer-events: auto;
   max-width: calc(100% - 8px);
+}
+/* Mobile : signature à gauche du panneau poste/émissions (alignée au texte). */
+@media (max-width: 559.98px) {
+  html[data-embed="tuner"] .tuner-embed-credit {
+    left: 11px; /* = padding-left de .tuner-now */
+    transform: none;
+    justify-content: flex-start;
+  }
+  html[data-embed="tuner"] .tuner > .tuner-embed-credit {
+    left: 11px;
+    transform: none;
+  }
 }
 /* Repli si un fork a encore le crédit en enfant direct de #tuner. */
 html[data-embed="tuner"] .tuner > .tuner-embed-credit {
@@ -1527,10 +1540,17 @@ html[data-embed="tuner"][data-surface="kiosque-v1"]:has(.tuner-vol.is-open) .tun
   html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-label {
     display: none !important;
   }
-  /* Crédit : toujours bas-centré sous le dial (même règle bureau). */
+  /*
+   * Crédit mobile : bas du panneau poste/émissions, aligné à gauche
+   * (même padding que le titre CHYZ / émission) — pas centré, pas bas-droite barre.
+   */
   html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-dial .tuner-embed-credit {
     font-size: 8px !important;
     bottom: 0 !important;
+    left: 11px !important;
+    right: auto !important;
+    transform: none !important;
+    justify-content: flex-start !important;
   }
 
   html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol {
