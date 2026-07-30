@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-29T23:01:36.768Z",
+  "updatedAt": "2026-07-30T00:54:11.777Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T23:01:09.237Z"
+      "checkedAt": "2026-07-30T00:53:44.915Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "O'Keb (reprise)",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/okeb"
-      },
-      "next": {
         "title": "Jeunesse cosmique",
         "source": "schedule",
         "start": "20:00",
         "end": "22:00",
         "url": "https://cism893.ca/emissions/jeunesse-cosmique"
       },
+      "next": {
+        "title": "Mix anglo",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
       "track": "",
-      "showTitle": "O'Keb (reprise)",
+      "showTitle": "Jeunesse cosmique",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T23:01:11.980Z"
+      "checkedAt": "2026-07-30T00:53:47.248Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Harbinger Showcase",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Jazz Euphorium",
         "source": "api-live",
         "start": "20:00",
         "end": "22:00"
       },
+      "next": {
+        "title": "Lo Signal / Meanwhile/ Rhizomatic",
+        "source": "api-live",
+        "start": "22:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Harbinger Showcase",
+      "showTitle": "Jazz Euphorium",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T23:01:15.414Z"
+      "checkedAt": "2026-07-30T00:53:50.195Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T23:01:29.092Z"
+      "checkedAt": "2026-07-30T00:54:03.957Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-29T23:01:29.569Z"
+      "checkedAt": "2026-07-30T00:54:04.342Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "La Sécurité - Snack City",
+      "track": "Static Dress - lip critic",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-29T23:01:36.416Z"
+      "checkedAt": "2026-07-30T00:54:11.427Z"
     }
   }
 }
