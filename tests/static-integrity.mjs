@@ -462,6 +462,25 @@ assert(
   'index.html : lien de pied de page vers /horaires/ requis (page autrement orpheline)'
 );
 
+// Hub sports « Au tableau » : scores RSEQ + filtres, lien de pied de page.
+for (const hub of ['sports/index.html', 'en/sports/index.html']) {
+  assert(existsSync(join(root, hub)), `${hub} manquant — lancer \`npm run seo:update\``);
+}
+assert(
+  /<a href="sports\/">/.test(indexHtml),
+  'index.html : lien de pied de page vers /sports/ requis (page autrement orpheline)'
+);
+const sportsHub = readFileSync(join(root, 'sports/index.html'), 'utf8');
+assert(sportsHub.includes('data-sports-board'), 'sports : racine filtrable requise');
+assert(sportsHub.includes('data-filter-sport="football"'), 'sports : filtre football requis');
+assert(sportsHub.includes('class="sports-panel"'), 'sports : panneaux d’équipes requis');
+assert(sportsHub.includes('sports-board.js'), 'sports : script de filtres requis');
+assert(sportsHub.includes('À venir'), 'sports : lignes prochain match requises');
+assert(
+  /sports-board-meta[\s\S]*?<time[^>]+datetime="\d{4}-\d{2}-\d{2}T/.test(sportsHub),
+  'sports : horodatage exact (date + heure) requis dans la méta',
+);
+
 // Les fiches station portent l'ancre visée par « À l'antenne » (app.js).
 const ckutPage = readFileSync(join(root, 'radios/ckut/index.html'), 'utf8');
 assert(

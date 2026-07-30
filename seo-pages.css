@@ -58,6 +58,22 @@
   margin: 0 0 18px;
   color: var(--ink);
 }
+/* Titre « Au tableau » cliquable : reset filtres + rechargement. */
+.seo-title__link {
+  color: inherit;
+  text-decoration: none;
+  border-radius: 4px;
+}
+.seo-title__link:hover {
+  color: var(--accent);
+}
+.seo-title__link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+.seo-title__link:active {
+  opacity: 0.85;
+}
 
 .seo-lead {
   font-family: var(--serif);
@@ -574,4 +590,594 @@
 @media (max-width: 520px) {
   .seo-facts { grid-template-columns: 1fr; }
   .seo-cards { grid-template-columns: 1fr; }
+}
+
+/* ── Page /sports/ — tableau RSEQ (parité LE-KIOSQUE « Au tableau ») ─── */
+
+.seo-wire--sports { padding-bottom: 56px; }
+
+.sports-board-meta {
+  margin: -8px 0 14px;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+/* Horodatage exact : un peu plus lisible que le reste de la méta (exigence stats). */
+.sports-board-meta__time {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--ink, inherit);
+  font-weight: 600;
+}
+
+.sports-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 0 18px;
+}
+.sports-filters__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.sports-filters__label {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-right: 2px;
+}
+.sports-filter {
+  appearance: none;
+  border: 1px solid var(--rule);
+  background: var(--bg-soft);
+  color: var(--ink-soft);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  padding: 7px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 120ms ease, color 120ms ease, background 120ms ease;
+}
+.sports-filter:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--rule));
+  color: var(--ink);
+}
+.sports-filter[aria-pressed="true"],
+.sports-filter.is-active {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--rule));
+  background: color-mix(in srgb, var(--accent) 12%, var(--bg));
+  color: var(--accent);
+}
+.sports-filter:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.sports-board-status {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0 0 14px;
+}
+
+.sports-sport-block {
+  margin: 0 0 28px;
+  border: 0;
+}
+/*
+ * Focus group (5 personas) : option B unanime —
+ * chevron collé au groupe « glyphe + libellé + compteur », pas au bord droit.
+ * Cluster éditorial compact ; summary full-width reste cliquable.
+ */
+.sports-sport-block__title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  gap: 0.4rem;
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0 0 12px;
+  /* Zone tactile confortable (~44px) sans orphelin à droite. */
+  padding: 0.45rem 0.15rem 0.45rem 0;
+  min-height: 2.5rem;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  border-radius: 6px;
+  /* Full-width = grande cible de clic ; contenu + chevron restent en cluster (flex-start). */
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.sports-sport-block__title::-webkit-details-marker { display: none; }
+.sports-sport-block__title::marker { content: ''; }
+.sports-sport-block__title:hover { color: var(--accent); }
+.sports-sport-block__title:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.sports-sport-block__glyph {
+  font-size: 1.15rem;
+  line-height: 1;
+  flex: 0 0 auto;
+}
+.sports-sport-block__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sports-sport-block__count {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  background: var(--bg-soft);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 2px 8px;
+  line-height: 1.3;
+  flex: 0 0 auto;
+}
+/* Répartition Fém. / Masc. dans le titre de section. */
+.sports-sport-block__sex-split {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex: 0 0 auto;
+}
+.sports-sport-block__sex {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+  border-radius: 999px;
+  padding: 2px 7px;
+  white-space: nowrap;
+}
+.sports-sport-block__sex--f {
+  color: #9d174d;
+  background: color-mix(in srgb, #db2777 14%, transparent);
+  border: 1px solid color-mix(in srgb, #db2777 32%, transparent);
+}
+.sports-sport-block__sex--m {
+  color: #1e3a8a;
+  background: color-mix(in srgb, #3b82f6 14%, transparent);
+  border: 1px solid color-mix(in srgb, #3b82f6 32%, transparent);
+}
+/* Chevron dans le cluster (pas margin-inline-start: auto). */
+.sports-sport-block__chevron {
+  margin-inline-start: 0.15rem;
+  width: 0.5em;
+  height: 0.5em;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  /* Ouvert : pointe vers le bas (V). */
+  transform: rotate(45deg);
+  transition: transform 160ms ease, opacity 160ms ease;
+  opacity: 0.55;
+  flex: 0 0 auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sports-sport-block__chevron { transition: none; }
+}
+.sports-sport-block:not([open]) > .sports-sport-block__title {
+  margin-bottom: 0;
+}
+/* Fermé : pointe vers la droite (›). */
+.sports-sport-block:not([open]) .sports-sport-block__chevron {
+  transform: rotate(-45deg);
+  opacity: 0.8;
+}
+.sports-sport-block[hidden],
+.sports-panel[hidden],
+.sports-sex-group[hidden] {
+  display: none !important;
+}
+
+.sports-board {
+  display: grid;
+  /*
+   * auto-fill : 1 → 2 → 3 colonnes selon largeur (pas 3 forcées).
+   * min 288 px : assez pour nom + ligne de match sans « É T S » empilé.
+   */
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 288px), 1fr));
+  gap: 14px;
+  align-items: start;
+}
+
+/* Sous-titres Féminin / Masculin : pleine largeur de la grille. */
+.sports-sex-group {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin: 0.35rem 0 0;
+  padding: 0.35rem 0 0.1rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--rule) 85%, transparent);
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+.sports-sex-group:first-child {
+  margin-top: 0;
+}
+.sports-sex-group__label--f {
+  color: #9d174d;
+}
+.sports-sex-group__label--m {
+  color: #1e3a8a;
+}
+.sports-sex-group__count {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.sports-panel {
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--bg-soft);
+  padding: 14px 14px 12px;
+  border-top: 3px solid var(--sports-panel-c, var(--accent));
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  scroll-margin-top: 5.5rem; /* sous barre radio sticky */
+  transition: box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
+  min-width: 0; /* évite le débordement grid */
+}
+/* Deep-link depuis le bandeau (puce match) — carte formation ciblée. */
+.sports-panel.is-spotlight {
+  border-color: color-mix(in srgb, var(--sports-panel-c, var(--accent)) 55%, var(--rule));
+  background: color-mix(in srgb, var(--sports-panel-c, var(--accent)) 12%, var(--bg-soft));
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--sports-panel-c, var(--accent)) 35%, transparent),
+    0 6px 20px -10px color-mix(in srgb, var(--sports-panel-c, var(--accent)) 45%, transparent);
+}
+/* Carte « liens officiels » (hockey hors API S1) : un peu plus large. */
+.sports-panel--external {
+  grid-column: 1 / -1;
+  max-width: 42rem;
+}
+.sports-panel--external .sports-panel__meta {
+  max-width: 40rem;
+}
+.sports-panel__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+}
+.sports-panel__glyph {
+  font-size: 1.35rem;
+  line-height: 1;
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+.sports-panel__identity {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+/*
+ * Identité d’équipe (focus group stats univ.) :
+ *  - H3 = surnom / marque (Cougars, Carabins…) — honneur au club
+ *  - programme = établissement court + code (sous-marque)
+ *  - school = nom légal
+ */
+.sports-panel__name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 5px 8px;
+  margin: 0 0 3px;
+  font-family: var(--serif);
+  font-size: 1.22rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.sports-panel__name--branded .sports-panel__brand {
+  color: color-mix(in srgb, var(--sports-panel-c, var(--accent)) 42%, var(--ink));
+}
+.sports-panel__brand {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.sports-panel__program {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 6px;
+  margin: 0 0 3px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.sports-panel__name-text {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.sports-panel__code {
+  font-family: var(--sans);
+  font-size: 0.72em;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+  flex: 0 0 auto;
+  opacity: 0.85;
+}
+/* Ancienne pastille surnom — conservée si un template externe s’y réfère. */
+.sports-panel__nick {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+  color: color-mix(in srgb, var(--sports-panel-c, var(--accent)) 78%, var(--ink));
+  background: color-mix(in srgb, var(--sports-panel-c, var(--accent)) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--sports-panel-c, var(--accent)) 28%, transparent);
+  border-radius: 999px;
+  padding: 2px 7px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* Catégorie Féminin / Masculin — pastille bien visible (pas un « F » perdu dans la meta). */
+.sports-panel__sex {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  border-radius: 999px;
+  padding: 2px 7px;
+  flex: 0 0 auto;
+}
+.sports-panel__sex--f {
+  color: #9d174d;
+  background: color-mix(in srgb, #db2777 16%, transparent);
+  border: 1px solid color-mix(in srgb, #db2777 36%, transparent);
+}
+.sports-panel__sex--m {
+  color: #1e3a8a;
+  background: color-mix(in srgb, #3b82f6 14%, transparent);
+  border: 1px solid color-mix(in srgb, #3b82f6 32%, transparent);
+}
+.sports-panel__sex--x {
+  color: var(--muted);
+  background: var(--bg-soft);
+  border: 1px solid var(--rule);
+}
+/* Ligne 2 : établissement (registre). */
+.sports-panel__school {
+  margin: 0 0 3px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink-soft);
+  overflow-wrap: anywhere;
+}
+/* Ligne 3 : sport · sexe · division · secteur · fiche. */
+.sports-panel__meta {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.sports-panel__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  /* Date | score | adversaire | badge — colonne adversaire un peu plus large. */
+  display: grid;
+  grid-template-columns: 4.5rem 4.25rem minmax(0, 1fr) 1.25rem;
+  column-gap: 8px;
+}
+.sports-panel__empty {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--muted);
+}
+.sports-result {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  align-items: start;
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink-soft);
+  padding: 8px 0;
+  border-top: 1px solid color-mix(in srgb, var(--rule) 78%, transparent);
+}
+@supports not (grid-template-columns: subgrid) {
+  .sports-panel__list { display: block; }
+  .sports-result {
+    display: grid;
+    grid-template-columns: 4.75rem 4.5rem minmax(0, 1fr) 1.35rem;
+    column-gap: 8px;
+    grid-column: auto;
+  }
+}
+/* Même grille que les scores — seul le bandeau change. */
+.sports-result--next {
+  border-left: 3px solid var(--status-upcoming-mid, #bd8a18);
+  margin-inline: -6px;
+  padding-inline: 6px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--status-upcoming-soft, #e8c07a) 16%, transparent);
+}
+.sports-result:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+.sports-result__time {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  font-size: 12px;
+  line-height: 1.3;
+  min-width: 0;
+}
+.sports-result__clock {
+  font-weight: 600;
+  font-size: 11px;
+  color: var(--muted);
+}
+.sports-result__score {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.sports-result__score--next {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--status-upcoming, #9a6900);
+  white-space: normal;
+  line-height: 1.25;
+}
+.sports-result__title {
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: manual;
+}
+.sports-result__title a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  min-width: 0;
+}
+.sports-result__title a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+.sports-result__vs {
+  opacity: 0.65;
+  margin-right: 3px;
+  font-weight: 600;
+}
+/* Ligne adversaire : surnom (identité) en gras ; établissement court à côté. */
+.sports-result__opp {
+  font-weight: 700;
+  color: var(--ink);
+}
+.sports-result__opp-school,
+.sports-result__opp-nick {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+}
+/* Établissement sur sa propre ligne — plus de (parenthèse) qui casse en vertical. */
+.sports-result__opp-full {
+  display: block;
+  margin-top: 1px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.sports-result__venue {
+  display: inline-block;
+  margin-top: 2px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.sports-result__venue::before {
+  content: "· ";
+  opacity: 0.7;
+}
+.sports-result__badge {
+  justify-self: end;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.sports-result--W {
+  border-left: 3px solid #3d9a6a;
+  margin-inline: -6px;
+  padding-inline: 6px;
+  border-radius: 4px;
+  background: color-mix(in srgb, #3d9a6a 9%, transparent);
+}
+.sports-result--W .sports-result__badge { color: #2f7a54; }
+.sports-result--L {
+  border-left: 3px solid #c45c5c;
+  margin-inline: -6px;
+  padding-inline: 6px;
+  border-radius: 4px;
+  background: color-mix(in srgb, #c45c5c 9%, transparent);
+}
+.sports-result--L .sports-result__badge { color: #a04545; }
+.sports-result--D,
+.sports-result--T {
+  border-left: 3px solid #8fa3b0;
+  margin-inline: -6px;
+  padding-inline: 6px;
+  border-radius: 4px;
+  background: color-mix(in srgb, #8fa3b0 10%, transparent);
+}
+.sports-result--next .sports-result__badge--next {
+  color: var(--status-upcoming, #9a6900);
+}
+.sports-board-note {
+  margin: 8px 0 0;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.5;
+  max-width: 42rem;
+}
+
+@media (max-width: 560px) {
+  .sports-panel__list {
+    grid-template-columns: 4.25rem 4rem minmax(0, 1fr) 1.2rem;
+    column-gap: 6px;
+  }
+  .sports-result { font-size: 12.5px; }
+  @supports not (grid-template-columns: subgrid) {
+    .sports-result {
+      grid-template-columns: 4.25rem 4rem minmax(0, 1fr) 1.2rem;
+      column-gap: 6px;
+    }
+  }
+  .sports-panel { padding: 12px 12px 10px; }
 }

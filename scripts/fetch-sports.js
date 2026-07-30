@@ -23,6 +23,13 @@ const OUT_PATH = path.join(ROOT, 'sports.json');
 const API = 'https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=';
 const SCORE_NONE = -999;
 
+const {
+  loadSportsTeamsRegistry,
+  resolveSportsTeam,
+  applyRegistryToTeam,
+  codeFromName: registryCodeFromName,
+} = require('./sports-teams-lib');
+
 const update = process.argv.includes('--update');
 
 function getJson(url) {
@@ -67,16 +74,7 @@ function getJson(url) {
 }
 
 function codeFromName(name) {
-  const raw = String(name || '').trim();
-  if (!raw) return 'EQ';
-  const parts = raw.split(/[\s.-]+/).filter(Boolean);
-  if (parts.length === 1) return parts[0].slice(0, 3).toUpperCase();
-  return parts
-    .slice(0, 3)
-    .map((p) => p[0])
-    .join('')
-    .toUpperCase()
-    .slice(0, 4);
+  return registryCodeFromName(name);
 }
 
 function hasScore(game) {
@@ -108,22 +106,28 @@ function gamePageUrl(gameId, leagueId) {
   return 'https://www.rseq-stats.ca/';
 }
 
-function normalizeGame(game, teamId, meta) {
+function normalizeGame(game, teamId, meta, reg) {
   const home = game.HomeTeamId === teamId;
-  const oppName = home ? game.VisitingTeamName : game.HomeTeamName;
-  const oppCode =
-    (home ? game.VisitingTeamCode : game.HomeTeamCode) || codeFromName(oppName);
+  const rawOppName = home ? game.VisitingTeamName : game.HomeTeamName;
+  const rawOppCode =
+    (home ? game.VisitingTeamCode : game.HomeTeamCode) || codeFromName(rawOppName);
+  const opp = resolveSportsTeam(reg, {
+    name: rawOppName,
+    code: rawOppCode,
+    sector: meta.sector,
+    rseqTeamId: home ? game.VisitingTeamId : game.HomeTeamId,
+  });
   const scoreFor = home ? game.HomeTeamScore : game.VisitingTeamScore;
   const scoreAgainst = home ? game.VisitingTeamScore : game.HomeTeamScore;
   let result = 'D';
   if (scoreFor > scoreAgainst) result = 'W';
   else if (scoreFor < scoreAgainst) result = 'L';
   const gameId = game.GameId || null;
-  return {
+  const out = {
     date: gameDate(game),
     time: game.GameTimeFormatted || '',
-    opponent: oppName || '',
-    opponentCode: String(oppCode || '').toUpperCase().slice(0, 4),
+    opponent: opp.shortName || rawOppName || '',
+    opponentCode: opp.code || String(rawOppCode || '').toUpperCase().slice(0, 4),
     home,
     scoreFor,
     scoreAgainst,
@@ -133,9 +137,13 @@ function normalizeGame(game, teamId, meta) {
     gameId,
     url: gamePageUrl(gameId, meta.id),
   };
+  if (opp.fullName) out.opponentFullName = opp.fullName;
+  if (opp.nickname) out.opponentNickname = opp.nickname;
+  if (opp.registryId) out.opponentRegistryId = opp.registryId;
+  return out;
 }
 
-function nextGameForTeam(games, teamId, meta) {
+function nextGameForTeam(games, teamId, meta, reg) {
   const today = new Date().toISOString().slice(0, 10);
   const upcoming = games
     .filter((g) => (g.HomeTeamId === teamId || g.VisitingTeamId === teamId) && !hasScore(g))
@@ -144,27 +152,37 @@ function nextGameForTeam(games, teamId, meta) {
   const g = upcoming[0];
   if (!g) return null;
   const home = g.HomeTeamId === teamId;
-  const oppName = home ? g.VisitingTeamName : g.HomeTeamName;
-  const oppCode = (home ? g.VisitingTeamCode : g.HomeTeamCode) || codeFromName(oppName);
+  const rawOppName = home ? g.VisitingTeamName : g.HomeTeamName;
+  const rawOppCode = (home ? g.VisitingTeamCode : g.HomeTeamCode) || codeFromName(rawOppName);
+  const opp = resolveSportsTeam(reg, {
+    name: rawOppName,
+    code: rawOppCode,
+    sector: meta.sector,
+    rseqTeamId: home ? g.VisitingTeamId : g.HomeTeamId,
+  });
   const gameId = g.GameId || null;
-  return {
+  const out = {
     date: gameDate(g),
     time: g.GameTimeFormatted || '',
-    opponent: oppName || '',
-    opponentCode: String(oppCode || '').toUpperCase().slice(0, 4),
+    opponent: opp.shortName || rawOppName || '',
+    opponentCode: opp.code || String(rawOppCode || '').toUpperCase().slice(0, 4),
     home,
     sport: meta.sport,
     competition: meta.label,
     gameId,
     url: gamePageUrl(gameId, meta.id),
   };
+  if (opp.fullName) out.opponentFullName = opp.fullName;
+  if (opp.nickname) out.opponentNickname = opp.nickname;
+  if (opp.registryId) out.opponentRegistryId = opp.registryId;
+  return out;
 }
 
-function lastGameForTeam(games, teamId, meta) {
+function lastGameForTeam(games, teamId, meta, reg) {
   const scored = games
     .filter((g) => (g.HomeTeamId === teamId || g.VisitingTeamId === teamId) && hasScore(g))
     .sort((a, b) => gameDate(b).localeCompare(gameDate(a)));
-  return scored[0] ? normalizeGame(scored[0], teamId, meta) : null;
+  return scored[0] ? normalizeGame(scored[0], teamId, meta, reg) : null;
 }
 
 function standingForTeam(standings, teamId) {
@@ -182,47 +200,503 @@ function standingForTeam(standings, teamId) {
   };
 }
 
+/**
+ * Hockey RSEQ (Spordle / rseqhockey.com) — pas sur l’API S1.
+ * On lit le scoreboard SSR (__NEXT_DATA__) des pages publiques collégial + universitaire.
+ */
+const HOCKEY_SOURCES = [
+  {
+    sector: 'collegial',
+    url: 'https://collegial.rseqhockey.com/fr',
+    site: 'https://collegial.rseqhockey.com/fr',
+  },
+  {
+    sector: 'universitaire',
+    url: 'https://universitaire.rseqhockey.com/fr',
+    site: 'https://universitaire.rseqhockey.com/fr',
+  },
+];
+
+function fetchText(url) {
+  return new Promise((resolve, reject) => {
+    const req = https.get(
+      url,
+      {
+        headers: {
+          Accept: 'text/html,application/xhtml+xml',
+          'User-Agent':
+            'Mozilla/5.0 (compatible; LE-RADAR-SportsBot/1.0; +https://le-radar.ca) Chrome/122.0.0.0',
+          'Accept-Language': 'fr-CA,fr;q=0.9,en;q=0.8',
+        },
+        timeout: 30000,
+      },
+      (res) => {
+        if (res.statusCode && res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+          const next = res.headers.location.startsWith('http')
+            ? res.headers.location
+            : new URL(res.headers.location, url).href;
+          res.resume();
+          fetchText(next).then(resolve, reject);
+          return;
+        }
+        if (res.statusCode !== 200) {
+          reject(new Error(`HTTP ${res.statusCode} ${url}`));
+          res.resume();
+          return;
+        }
+        const chunks = [];
+        res.on('data', (c) => chunks.push(c));
+        res.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
+      },
+    );
+    req.on('error', reject);
+    req.on('timeout', () => {
+      req.destroy();
+      reject(new Error(`timeout ${url}`));
+    });
+  });
+}
+
+function parseHockeyScoreboard(html, { sector, site }) {
+  const m = html.match(
+    /<script id="__NEXT_DATA__" type="application\/json">([\s\S]*?)<\/script>/,
+  );
+  if (!m) throw new Error('__NEXT_DATA__ introuvable');
+  const data = JSON.parse(m[1]);
+  const games = data?.props?.pageProps?.scoreboardMatches || [];
+  const teams = {};
+  const now = Date.now();
+
+  for (const g of games) {
+    const cat = g.category || {};
+    const catName = cat.nameFr || cat.name || 'Hockey RSEQ';
+    const sex = String(cat.gender || '').toLowerCase().startsWith('f') ? 'F' : 'M';
+    const division = cat.class?.shortName || cat.class?.name || null;
+    const startMs = g.startTime ? Date.parse(g.startTime) : NaN;
+    const isPast = Number.isFinite(startMs) && startMs < now;
+    const time = g.startTime && g.startTime.length >= 16
+      ? g.startTime.slice(11, 16)
+      : '';
+
+    const stats = Array.isArray(g.teamStats) ? g.teamStats : [];
+    const scoreMap = new Map();
+    for (const st of stats) {
+      const tid = st.teamId ?? st.id;
+      if (tid == null) continue;
+      const sc = st.score ?? st.goals;
+      if (sc != null) scoreMap.set(tid, sc);
+    }
+
+    for (const [side, other] of [['homeTeam', 'awayTeam'], ['awayTeam', 'homeTeam']]) {
+      const tmeta = g[side] || {};
+      const ometa = g[other] || {};
+      const name = tmeta.name || tmeta.shortName;
+      if (!name) continue;
+      const teamId = String(
+        tmeta.externalId
+        || g[side === 'homeTeam' ? 'homeTeamId' : 'awayTeamId']
+        || name,
+      );
+      const key = `hockey:${sector}:${teamId}`;
+      if (!teams[key]) {
+        teams[key] = {
+          id: key,
+          rseqTeamId: teamId,
+          leagueId: `spordle-${sector}`,
+          name,
+          code: codeFromName(tmeta.shortName || name),
+          sector,
+          sport: 'hockey',
+          sportLabel: 'Hockey',
+          sex,
+          division,
+          usports: sector === 'universitaire',
+          leagueLabel: catName,
+          lastGame: null,
+          nextGame: null,
+          record: null,
+          source: 'spordle-rseqhockey',
+        };
+      }
+
+      const myId = g[side === 'homeTeam' ? 'homeTeamId' : 'awayTeamId'];
+      const oppId = g[side === 'homeTeam' ? 'awayTeamId' : 'homeTeamId'];
+      const myScore = scoreMap.get(myId);
+      const oppScore = scoreMap.get(oppId);
+      const oppName = ometa.shortName || ometa.name || 'ADV';
+      const entry = {
+        date: g.date || (g.startTime || '').slice(0, 10),
+        time,
+        opponent: oppName,
+        opponentCode: codeFromName(oppName),
+        home: side === 'homeTeam',
+        sport: 'hockey',
+        competition: catName,
+        gameId: g.id != null ? String(g.id) : null,
+        url: site,
+      };
+
+      if (myScore != null && oppScore != null) {
+        entry.scoreFor = myScore;
+        entry.scoreAgainst = oppScore;
+        entry.result = myScore > oppScore ? 'W' : myScore < oppScore ? 'L' : 'D';
+        if (isPast) {
+          const cur = teams[key].lastGame;
+          if (!cur || String(entry.date) >= String(cur.date || '')) {
+            teams[key].lastGame = entry;
+          }
+        }
+      } else if (!isPast) {
+        const cur = teams[key].nextGame;
+        if (!cur || String(entry.date || '9999') < String(cur.date || '9999')) {
+          teams[key].nextGame = entry;
+        }
+      }
+    }
+  }
+  return teams;
+}
+
+async function fetchHockeyTeams(reg) {
+  const out = {};
+  const errors = [];
+  for (const src of HOCKEY_SOURCES) {
+    process.stderr.write(`sports: hockey ${src.sector} (Spordle)… `);
+    try {
+      const html = await fetchText(src.url);
+      const batch = parseHockeyScoreboard(html, src);
+      for (const team of Object.values(batch)) {
+        applyRegistryToTeam(team, reg);
+      }
+      Object.assign(out, batch);
+      process.stderr.write(`${Object.keys(batch).length} équipes\n`);
+    } catch (err) {
+      process.stderr.write(`ERREUR ${err.message}\n`);
+      errors.push({
+        leagueId: `spordle-${src.sector}`,
+        label: `Hockey ${src.sector}`,
+        error: String(err.message || err),
+      });
+    }
+  }
+  return { teams: out, errors };
+}
+
+/**
+ * Voile campus — Québec seulement (sports-sailing.json).
+ * ICSA = scores réels ; watchlist = clubs QC sans feed encore (UdeM, Sherbrooke, Laval…).
+ */
+const SAILING_CFG_PATH = path.join(ROOT, 'sports-sailing.json');
+
+function loadSailingConfig() {
+  try {
+    return JSON.parse(fs.readFileSync(SAILING_CFG_PATH, 'utf8'));
+  } catch {
+    return { schools: [], watchlist: [] };
+  }
+}
+
+const MONTH_MAP = {
+  jan: 1, january: 1, feb: 2, february: 2, mar: 3, march: 3,
+  apr: 4, april: 4, may: 5, jun: 6, june: 6, jul: 7, july: 7,
+  aug: 8, august: 8, sep: 9, sept: 9, september: 9,
+  oct: 10, october: 10, nov: 11, november: 11, dec: 12, december: 12,
+};
+
+function decodeHtmlEntities(str) {
+  return String(str || '')
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(parseInt(n, 10)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCharCode(parseInt(h, 16)))
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;|&#0?39;/g, "'");
+}
+
+function parseSailingDate(label, seasonHint = '') {
+  // "Apr 19" / "Mar 08" — année depuis le saison s26 → 2026, f25 → 2025
+  const m = String(label || '').trim().match(/^([A-Za-z]+)\s+(\d{1,2})/);
+  if (!m) return null;
+  const mon = MONTH_MAP[m[1].toLowerCase()];
+  if (!mon) return null;
+  let year = new Date().getFullYear();
+  const sm = String(seasonHint).match(/([fs])(\d{2})/i);
+  if (sm) {
+    year = 2000 + parseInt(sm[2], 10);
+    // Fall: Aug–Dec ; Spring: Jan–Jun — si mois d’automne et saison spring, année-1 rare
+  }
+  const day = parseInt(m[2], 10);
+  return `${year}-${String(mon).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+}
+
+function parseSailingSchoolPage(html, school) {
+  const seasonHint = (html.match(/\/schools\/[^/]+\/([fs]\d{2})\//i) || [])[1]
+    || (html.match(/Spring\s+(20\d{2})|Fall\s+(20\d{2})/i) || [])[0]
+    || 's26';
+  // Prefer explicit season in title: "Spring 2026"
+  let year = null;
+  const ty = html.match(/(?:Spring|Fall)\s+(20\d{2})/i);
+  if (ty) year = parseInt(ty[1], 10);
+
+  const rows = [];
+  const trRe = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
+  let tr;
+  while ((tr = trRe.exec(html))) {
+    const cells = [...tr[1].matchAll(/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi)].map((c) => {
+      const raw = c[1];
+      const href = (raw.match(/href="([^"]+)"/) || [])[1] || '';
+      const text = decodeHtmlEntities(raw.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim());
+      return { text, href };
+    });
+    if (cells.length < 6) continue;
+    if (/^Name$/i.test(cells[0].text)) continue;
+    const event = cells[0].text;
+    const host = cells[1].text;
+    const type = cells[2].text;
+    const dateLabel = cells[4].text;
+    const status = cells[5].text;
+    const placeRaw = cells[6] ? cells[6].text : '';
+    const placeM = placeRaw.match(/(\d+)\s*\/\s*(\d+)/);
+    let date = parseSailingDate(dateLabel, seasonHint);
+    if (date && year) date = `${year}-${date.slice(5)}`;
+    const href = cells[0].href
+      ? (cells[0].href.startsWith('http')
+        ? cells[0].href
+        : `https://scores.collegesailing.org${cells[0].href}`)
+      : `https://scores.collegesailing.org/schools/${school.slug}/`;
+    rows.push({
+      event,
+      host,
+      type,
+      date,
+      status,
+      place: placeM ? parseInt(placeM[1], 10) : null,
+      field: placeM ? parseInt(placeM[2], 10) : null,
+      url: href,
+    });
+  }
+  if (!rows.length) return null;
+
+  // Official results first as lastGame candidates; pending as nextGame
+  const official = rows.filter((r) => /official/i.test(r.status) && r.place != null);
+  const pending = rows.filter((r) => /pending|scheduled|upcoming/i.test(r.status));
+  official.sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+  pending.sort((a, b) => String(a.date || '9999').localeCompare(String(b.date || '9999')));
+
+  const toEntry = (r, withScore) => {
+    const entry = {
+      date: r.date || null,
+      time: '',
+      // Régate : nom d’événement (+ hôte), pas un « adversaire » unique.
+      opponent: r.event || r.host || 'Régate',
+      opponentFullName: r.host && r.event && r.host !== r.event
+        ? `${r.event} · ${r.host}`
+        : (r.host || r.event || ''),
+      opponentCode: codeFromName(r.host || r.event).slice(0, 4),
+      // Pas de domicile/extérieur en régate multi-équipages.
+      home: null,
+      sport: 'sailing',
+      scoreKind: 'place',
+      competition: `ICSA ${school.conference || ''} · ${r.type || 'Regatta'}`.trim(),
+      url: r.url,
+    };
+    if (withScore && r.place != null && r.field != null) {
+      entry.scoreFor = r.place;
+      entry.scoreAgainst = r.field;
+      // Podium / top 3 → V ; sinon place dans la 1ʳᵉ moitié → N ; bas de tableau → D
+      if (r.place <= 3) entry.result = 'W';
+      else if (r.place <= Math.ceil(r.field / 2)) entry.result = 'D';
+      else entry.result = 'L';
+    }
+    return entry;
+  };
+
+  const key = `sailing:universitaire:${school.slug}`;
+  const team = {
+    id: key,
+    rseqTeamId: school.code,
+    leagueId: 'icsa-collegesailing',
+    name: school.shortName || school.name,
+    code: school.code,
+    sector: school.sector || 'universitaire',
+    sport: 'sailing',
+    sportLabel: 'Voile',
+    sex: null,
+    division: school.conference || 'ICSA',
+    usports: false,
+    leagueLabel: `ICSA · ${school.conference || 'College sailing'}`,
+    lastGame: official[0] ? toEntry(official[0], true) : null,
+    nextGame: pending[0] ? toEntry(pending[0], false) : null,
+    record: official.length
+      ? {
+        wins: official.filter((r) => r.place <= Math.ceil(r.field / 2)).length,
+        losses: official.filter((r) => r.place > Math.ceil(r.field / 2)).length,
+        draws: 0,
+        played: official.length,
+        label: `${official.filter((r) => r.place <= Math.ceil(r.field / 2)).length}-${official.filter((r) => r.place > Math.ceil(r.field / 2)).length}`,
+      }
+      : null,
+    source: 'icsa-collegesailing',
+    fullName: school.name,
+    province: school.province || 'QC',
+    registryId: school.registryId || null,
+  };
+  // Si pas de next mais des résultats : garder last uniquement
+  if (!team.nextGame && !team.lastGame && rows[0]) {
+    team.nextGame = toEntry(rows[0], false);
+  }
+  return team;
+}
+
+function sailingWatchlistTeam(club, reg) {
+  const rid = club.registryId || club.code || club.shortName;
+  const key = `sailing:universitaire:watch:${rid}`;
+  const team = {
+    id: key,
+    rseqTeamId: club.code || rid,
+    leagueId: 'sailing-qc-watchlist',
+    name: club.shortName || club.name,
+    code: club.code || '',
+    sector: club.sector || 'universitaire',
+    sport: 'sailing',
+    sportLabel: 'Voile',
+    sex: null,
+    division: club.status === 'upcoming' ? 'À venir' : 'Club',
+    usports: false,
+    leagueLabel: 'Voile campus QC',
+    lastGame: null,
+    nextGame: null,
+    record: null,
+    source: 'sailing-watchlist',
+    status: club.status || 'club',
+    clubNote: club.note || 'Club de voile campus — scores ICSA à venir.',
+    fullName: club.name,
+    registryId: club.registryId || null,
+    province: 'QC',
+  };
+  applyRegistryToTeam(team, reg);
+  return team;
+}
+
+async function fetchSailingTeams(reg) {
+  const cfg = loadSailingConfig();
+  const schools = (cfg.schools || []).filter((s) => !s.province || s.province === 'QC');
+  const watchlist = (cfg.watchlist || []).filter((s) => !s.province || s.province === 'QC');
+  const out = {};
+  const errors = [];
+
+  for (const school of schools) {
+    process.stderr.write(`sports: voile ${school.slug} (ICSA QC)… `);
+    try {
+      const html = await fetchText(`https://scores.collegesailing.org/schools/${school.slug}/`);
+      if (/not found|404/i.test(html.slice(0, 400)) && html.length < 5000) {
+        process.stderr.write('absent\n');
+        continue;
+      }
+      const team = parseSailingSchoolPage(html, school);
+      if (!team) {
+        process.stderr.write('sans régates\n');
+        continue;
+      }
+      team.province = 'QC';
+      if (school.registryId) team.registryId = school.registryId;
+      applyRegistryToTeam(team, reg);
+      out[team.id] = team;
+      process.stderr.write(`ok (${team.lastGame ? 'last' : '-'}/${team.nextGame ? 'next' : '-'})\n`);
+    } catch (err) {
+      process.stderr.write(`ERREUR ${err.message}\n`);
+      errors.push({
+        leagueId: `icsa-${school.slug}`,
+        label: `Voile ${school.shortName}`,
+        error: String(err.message || err),
+      });
+    }
+  }
+
+  // Clubs QC sans ICSA (UdeM, Sherbrooke, Laval…) — cartes campus, pas de scores hors province.
+  for (const club of watchlist) {
+    const team = sailingWatchlistTeam(club, reg);
+    out[team.id] = team;
+    process.stderr.write(`sports: voile watchlist ${team.name} (${team.status})\n`);
+  }
+
+  return { teams: out, errors };
+}
+
 async function main() {
   const catalog = JSON.parse(fs.readFileSync(LEAGUES_PATH, 'utf8'));
-  const leagues = catalog.leagues || [];
+  // Catalogue RSEQ collégial + universitaire (découvert GetLeagueList region=14).
+  // Hockey collégial S1 est souvent vide côté calendrier public → Spordle en complément.
+  const leagues = (catalog.leagues || []).filter((meta) => meta.sport !== 'hockey');
+  const reg = loadSportsTeamsRegistry();
   const teams = {};
   const errors = [];
+  let registryHits = 0;
+  let leaguesWithTeams = 0;
 
   for (const meta of leagues) {
     process.stderr.write(`sports: ${meta.label}… `);
     try {
       const data = await getJson(API + meta.id);
+      if (!data || data === null) {
+        process.stderr.write('null\n');
+        continue;
+      }
       const games = allGames(data);
       const standings = data.Standings || [];
       let teamCount = 0;
       for (const t of data.Teams || []) {
         const id = t.TeamId;
         if (!id) continue;
-        const name = t.TeamName || 'Équipe';
-        const code = (t.TeamCode || codeFromName(name)).toUpperCase().slice(0, 4);
-        const key = `${meta.sector}:${meta.sport}:${id}`;
-        const lastGame = lastGameForTeam(games, id, meta);
-        const nextGame = nextGameForTeam(games, id, meta);
+        const rawName = t.TeamName || 'Équipe';
+        const rawCode = (t.TeamCode || codeFromName(rawName)).toUpperCase().slice(0, 4);
+        const resolved = resolveSportsTeam(reg, {
+          name: rawName,
+          code: rawCode,
+          sector: meta.sector,
+          rseqTeamId: id,
+        });
+        if (resolved.matched) registryHits += 1;
+        // Clé stable : ligue + équipe (évite collision multi-divisions).
+        const key = `${meta.sector}:${meta.sport}:${meta.id}:${id}`;
+        const lastGame = lastGameForTeam(games, id, meta, reg);
+        const nextGame = nextGameForTeam(games, id, meta, reg);
         const record = standingForTeam(standings, id);
-        teams[key] = {
+        // Sexe : méta ligue, sinon inféré de SexType S1.
+        let sex = meta.sex || null;
+        if (!sex && data.SexTypeName) {
+          const sn = String(data.SexTypeName).toLowerCase();
+          if (sn.startsWith('f')) sex = 'F';
+          else if (sn.startsWith('m') && !sn.includes('ix')) sex = 'M';
+          else if (sn.includes('mix')) sex = 'X';
+        }
+        const entry = {
           id: key,
           rseqTeamId: id,
           leagueId: meta.id,
-          name,
-          code,
+          name: resolved.shortName || rawName,
+          code: resolved.code || rawCode,
           sector: meta.sector,
           sport: meta.sport,
-          sportLabel: meta.sportLabel,
-          sex: meta.sex || null,
-          division: meta.division || null,
+          sportLabel: meta.sportLabel || data.SportName || meta.sport,
+          sex,
+          division: meta.division || data.DivisionName || null,
           usports: Boolean(meta.usports),
-          leagueLabel: meta.label,
+          leagueLabel: meta.label || data.LeagueName || meta.sport,
           lastGame,
           nextGame,
           record,
+          source: 'rseq-s1',
+          priority: resolved.priority,
         };
+        if (resolved.fullName) entry.fullName = resolved.fullName;
+        if (resolved.nickname) entry.nickname = resolved.nickname;
+        if (resolved.registryId) entry.registryId = resolved.registryId;
+        teams[key] = entry;
         teamCount += 1;
       }
+      if (teamCount) leaguesWithTeams += 1;
       process.stderr.write(`${teamCount} équipes\n`);
     } catch (err) {
       process.stderr.write(`ERREUR ${err.message}\n`);
@@ -230,10 +704,32 @@ async function main() {
     }
   }
 
+  // Hockey RSEQ via Spordle (scoreboard public collégial + universitaire).
+  const hockey = await fetchHockeyTeams(reg);
+  Object.assign(teams, hockey.teams);
+  errors.push(...hockey.errors);
+
+  // Voile campus QC seulement (ICSA + watchlist UdeM/Sherbrooke/Laval…).
+  const sailing = await fetchSailingTeams(reg);
+  Object.assign(teams, sailing.teams);
+  errors.push(...sailing.errors);
+
+  // Filet registre (adversaires + champs) sur tout le payload.
+  for (const team of Object.values(teams)) {
+    applyRegistryToTeam(team, reg);
+  }
+
+  const sportsCovered = [...new Set(Object.values(teams).map((t) => t.sport))].sort();
+
   const payload = {
     updated: new Date().toISOString(),
-    source: 'rseq-s1',
-    note: 'Résultats collégiaux et universitaires du Québec (RSEQ). Unis = conférence U Sports locale.',
+    source: 'rseq-s1-full+spordle-hockey+sailing-qc',
+    note: 'Catalogue RSEQ collégial+universitaire (GetLeagueList). Hockey : Spordle. Voile : ICSA Québec seulement + watchlist clubs QC. Aucun tableau externe.',
+    registry: 'sports-teams.json',
+    registryMatched: registryHits,
+    leagueCatalog: catalog.leagueCount || (catalog.leagues || []).length,
+    leaguesWithTeams,
+    sportsCovered,
     teamCount: Object.keys(teams).length,
     errors: errors.length ? errors : undefined,
     teams,
@@ -243,6 +739,7 @@ async function main() {
     JSON.stringify(
       {
         teams: payload.teamCount,
+        registryMatched: registryHits,
         withLastGame: Object.values(teams).filter((t) => t.lastGame).length,
         withNextGame: Object.values(teams).filter((t) => t.nextGame).length,
         errors: errors.length,

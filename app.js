@@ -919,7 +919,9 @@ function registerServiceWorker() {
     reloading = true;
     window.location.reload();
   };
-  navigator.serviceWorker.register('./sw.js').then((reg) => {
+  // Toujours depuis la racine de l’app (app.js), pas le chemin de la page :
+  // sinon /sports/ enregistre /sports/sw.js (404) et casse le lecteur SEO.
+  navigator.serviceWorker.register(appAsset('sw.js')).then((reg) => {
     // waiting déjà prêt (onglet ouvert pendant deploy) → activer sans double-écoute
     if (reg.waiting && hadControllerOnLoad) {
       reg.waiting.postMessage({ type: 'SKIP_WAITING' });
@@ -1562,16 +1564,50 @@ async function initMastheadWeather() {
 //  Rotation carte-par-carte (comme la météo), tons par sport / résultat.
 // ═══════════════════════════════════════════════════════════════════════════
 const SPORTS_FAV_KEY = 'radar-sports-favorites-v1';
-const SPORTS_DEFAULT_CODES = ['LAV', 'MCG', 'CON', 'MTL', 'UQAM', 'SHE', 'BIS', 'GAR', 'LIM', 'VAN'];
+/**
+ * Boost éditorial doux (fallback si sports.json n’a pas encore `priority`
+ * du registre sports-teams.json). Après favoris + imminence.
+ */
+const SPORTS_DEFAULT_CODES = ['LAV', 'MCG', 'UCON', 'MTL', 'UQAM', 'USHE', 'BIS', 'GAR', 'LIM', 'VAN'];
 /** Palette par sport (évite le tout-rouge des prochains matchs). */
 const SPORTS_SPORT_TONES = {
   football: '#c45c2a',
   basketball: '#d88a0a',
   soccer: '#3d9a6a',
+  'soccer-interieur': '#15803d',
+  futsal: '#166534',
   volleyball: '#3b82c4',
   hockey: '#5498bb',
+  sailing: '#0e7490',
+  rugby: '#7c2d12',
+  badminton: '#0f766e',
+  baseball: '#9a3412',
+  'flag-football': '#854d0e',
+  athletisme: '#b45309',
+  'cross-country': '#92400e',
+  natation: '#0369a1',
+  golf: '#15803d',
+  cheerleading: '#be185d',
+  ultimate: '#7c3aed',
   default: '#66839e',
 };
+/** Fenêtres d’urgence (ms) — parité scoreboards ESPN / apps scores. */
+const SPORTS_LIVE_BEFORE_MS = 2 * 3600 * 1000; /* coup d’envoi −2 h → proxy « en cours » */
+const SPORTS_LIVE_AFTER_MS = 3 * 3600 * 1000; /* +3 h après le coup d’envoi */
+const SPORTS_IMMINENT_MS = 7 * 24 * 3600 * 1000; /* 7 jours */
+const SPORTS_RECENT_RESULT_MS = 4 * 24 * 3600 * 1000; /* résultats < 4 j — cartes de gauche */
+/** CTA : à venir dans cette fenêtre seulement (sinon hors saison / calendrier lointain). */
+const SPORTS_CTA_UPCOMING_MS = 14 * 24 * 3600 * 1000;
+/**
+ * Accroches CTA quand aucun match « chaud » (hors saison / creux).
+ * Pas de vieux scores d’hier — ceux-là vont à gauche.
+ */
+const SPORTS_CTA_IDLE_LABELS = [
+  'Calendrier à venir',
+  'Hors saison · voir le tableau',
+  'Scores collégiaux & univ.',
+  'Voir tout le tableau',
+];
 let sportsData = null;
 let sportsSlides = [];
 /** Slides actuellement affichées (1 par slot), comme mastheadWeatherSlots. */
@@ -1585,14 +1621,77 @@ try {
 } catch { /* ignore */ }
 const SPORTS_ROTATE_MS = 5200; // même rythme que la météo
 const SPORTS_ARRIVE_MS = 500;
+/**
+ * CTA type alerte bandeau : pastille fixe « AU TABLEAU » (toujours à droite)
+ * + accroche = score / prochain match le plus frais de chaque sport
+ *   (ordre de popularité campus QC — pas de libellés marketing).
+ */
+const SPORTS_CTA_TAG = 'Au tableau';
+/** Popularité sports étudiants QC (aligné page /sports/). */
+const SPORTS_POPULARITY = [
+  'hockey',
+  'football',
+  'soccer',
+  'basketball',
+  'volleyball',
+  'rugby',
+  'flag-football',
+  'soccer-interieur',
+  'futsal',
+  'baseball',
+  'badminton',
+  'natation',
+  'athletisme',
+  'cross-country',
+  'golf',
+  'cheerleading',
+  'ultimate',
+  'sailing',
+];
+const SPORTS_CTA_KEY = 'cta:board';
+/** Curseur d’accroche CTA (un sport à la fois, par popularité). */
+let sportsCtaLabelIndex = 0;
+/** Curseur de diversité sport pour la rotation des chips de scores. */
+let sportsSportCursor = 0;
+/**
+ * Mobile (1 chip) seulement : alterne score ↔ CTA.
+ * Desktop/tablette (≥ 2 chips) : CTA toujours épinglée à droite.
+ */
+let sportsCtaOnRightMobile = true;
 
+/**
+ * Glyphes — d’abord reconnaissables par les pratiquants.
+ * Variantes (intérieur, futsal, cross) partagent l’emoji « métier » ;
+ * le libellé + la teinte de section font la distinction.
+ */
 function sportsGlyph(sport) {
   const s = String(sport || '').toLowerCase();
   if (s.includes('basket')) return '🏀';
   if (s.includes('hockey')) return '🏒';
-  if (s.includes('soccer') || (s.includes('foot') && !s.includes('flag'))) return '⚽';
-  if (s.includes('football') || s.includes('flag')) return '🏈';
+  if (s.includes('sail') || s.includes('voile')) return '⛵';
+  if (s.includes('badminton')) return '🏸';
+  if (s.includes('baseball') || s.includes('base-ball')) return '⚾';
+  if (s.includes('ultimate') || s.includes('frisbee')) return '🥏';
+  if (s.includes('rugby')) return '🏉';
   if (s.includes('volley')) return '🏐';
+  // Soccer extérieur, intérieur et futsal → ballon (identité terrain).
+  if (
+    s.includes('futsal')
+    || s.includes('soccer')
+    || s.includes('interieur')
+    || s.includes('intérieur')
+    || (s.includes('foot') && !s.includes('flag') && !s.includes('football'))
+  ) return '⚽';
+  if (s.includes('flag')) return '🚩';
+  if (s.includes('football')) return '🏈';
+  if (s.includes('natat') || s.includes('swim')) return '🏊';
+  if (s.includes('golf')) return '⛳';
+  // Athlé + cross-country course → coureur (pas un arbre abstrait).
+  if (s.includes('cross') || s.includes('athlet')) return '🏃';
+  if (s.includes('cheer')) return '📣';
+  if (s.includes('tennis')) return '🎾';
+  if (s.includes('handball')) return '🤾';
+  if (s.includes('ski')) return '⛷️';
   return '🏅';
 }
 
@@ -1607,9 +1706,22 @@ function sportsSportTone(sport) {
   const s = String(sport || '').toLowerCase();
   if (s.includes('basket')) return SPORTS_SPORT_TONES.basketball;
   if (s.includes('hockey')) return SPORTS_SPORT_TONES.hockey;
-  if (s.includes('soccer')) return SPORTS_SPORT_TONES.soccer;
+  if (s.includes('sail') || s.includes('voile')) return SPORTS_SPORT_TONES.sailing;
+  if (s.includes('badminton')) return SPORTS_SPORT_TONES.badminton;
+  if (s.includes('baseball') || s.includes('base-ball')) return SPORTS_SPORT_TONES.baseball;
+  if (s.includes('ultimate')) return SPORTS_SPORT_TONES.ultimate;
+  if (s.includes('rugby')) return SPORTS_SPORT_TONES.rugby;
   if (s.includes('volley')) return SPORTS_SPORT_TONES.volleyball;
-  if (s.includes('football') || s.includes('flag')) return SPORTS_SPORT_TONES.football;
+  if (s.includes('futsal')) return SPORTS_SPORT_TONES.futsal;
+  if (s.includes('interieur') || s.includes('intérieur')) return SPORTS_SPORT_TONES['soccer-interieur'];
+  if (s.includes('soccer')) return SPORTS_SPORT_TONES.soccer;
+  if (s.includes('flag')) return SPORTS_SPORT_TONES['flag-football'];
+  if (s.includes('football')) return SPORTS_SPORT_TONES.football;
+  if (s.includes('natat') || s.includes('swim')) return SPORTS_SPORT_TONES.natation;
+  if (s.includes('golf')) return SPORTS_SPORT_TONES.golf;
+  if (s.includes('cheer')) return SPORTS_SPORT_TONES.cheerleading;
+  if (s.includes('cross')) return SPORTS_SPORT_TONES['cross-country'];
+  if (s.includes('athlet')) return SPORTS_SPORT_TONES.athletisme;
   return SPORTS_SPORT_TONES.default;
 }
 
@@ -1630,58 +1742,235 @@ function readSportsFavorites() {
   }
 }
 
+function sportsIsFavorite(team, favSet) {
+  if (!team || !favSet?.size) return false;
+  return favSet.has(team.id) || favSet.has(team.code)
+    || favSet.has(String(team.code || '').toUpperCase());
+}
+
+/** Instant du match (ms) — date ISO + time « HH:MM » (fuseau du navigateur / QC). */
+function sportsGameMs(game) {
+  if (!game?.date) return NaN;
+  const rawTime = String(game.time || '12:00').trim();
+  const m = rawTime.match(/^(\d{1,2}):(\d{2})/);
+  const hh = m ? String(Math.min(23, Number(m[1]))).padStart(2, '0') : '12';
+  const mm = m ? m[2] : '00';
+  const t = Date.parse(`${game.date}T${hh}:${mm}:00`);
+  return Number.isFinite(t) ? t : NaN;
+}
+
+/** Jour civil America/Toronto (YYYY-MM-DD) — frontière « hier / aujourd’hui ». */
+function sportsTorontoDayKey(msOrDate = Date.now()) {
+  try {
+    return new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'America/Toronto',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).format(new Date(msOrDate));
+  } catch {
+    return new Date(msOrDate).toISOString().slice(0, 10);
+  }
+}
+
+/** true si le match est le jour civil d’aujourd’hui (QC). */
+function sportsGameIsToday(game) {
+  const ms = sportsGameMs(game);
+  if (!Number.isFinite(ms)) {
+    // Fallback date seule
+    if (!game?.date) return false;
+    return game.date === sportsTorontoDayKey();
+  }
+  return sportsTorontoDayKey(ms) === sportsTorontoDayKey();
+}
+
+/** true si le match est strictement avant aujourd’hui (QC) — ex. hier. */
+function sportsGameIsBeforeToday(game) {
+  const day = game?.date || (Number.isFinite(sportsGameMs(game))
+    ? sportsTorontoDayKey(sportsGameMs(game))
+    : '');
+  if (!day) return false;
+  return day < sportsTorontoDayKey();
+}
+
+/**
+ * Palier d’urgence (plus bas = plus prioritaire), style scoreboards populaires :
+ *  0 live (proxy) · 1 aujourd’hui / ≤7 j · 2 résultat récent · 3 à venir plus tard
+ *  · 4 vieux résultat · 5 rien
+ * @returns {{ tier: number, sortMs: number }}
+ */
+function sportsUrgency(mode, game, now = Date.now()) {
+  const t = sportsGameMs(game);
+  if (!Number.isFinite(t)) return { tier: 5, sortMs: Number.POSITIVE_INFINITY };
+
+  if (mode === 'next') {
+    // Proxy « en direct » : fenêtre autour du coup d’envoi (tant que l’API
+    // S1 n’expose pas un statut live fiable).
+    if (t <= now + SPORTS_LIVE_AFTER_MS && t >= now - SPORTS_LIVE_BEFORE_MS) {
+      return { tier: 0, sortMs: t };
+    }
+    if (t >= now && t - now <= SPORTS_IMMINENT_MS) {
+      return { tier: 1, sortMs: t }; // bientôt : le plus proche d’abord
+    }
+    if (t >= now) {
+      return { tier: 3, sortMs: t }; // plus loin
+    }
+    // nextGame dans le passé hors fenêtre live → traiter comme peu urgent
+    return { tier: 4, sortMs: -t };
+  }
+
+  // Résultat
+  const age = now - t;
+  if (age >= 0 && age <= SPORTS_RECENT_RESULT_MS) {
+    return { tier: 2, sortMs: -t }; // plus récent d’abord
+  }
+  return { tier: 4, sortMs: -t };
+}
+
+function sportsEditorialRank(teamOrCode) {
+  if (teamOrCode && typeof teamOrCode === 'object') {
+    if (Number.isFinite(teamOrCode.priority)) return teamOrCode.priority;
+    return sportsEditorialRank(teamOrCode.code);
+  }
+  const i = SPORTS_DEFAULT_CODES.indexOf(String(teamOrCode || '').toUpperCase());
+  return i === -1 ? 99 : i;
+}
+
+/**
+ * Choisit le meilleur signal pour une équipe (résultat récent vs prochain).
+ * Un résultat < 4 j prime sur un prochain lointain ; un prochain imminent
+ * prime sur un vieux score.
+ */
+function sportsPickTeamSlide(team, now = Date.now()) {
+  const candidates = [];
+  if (team.lastGame) {
+    const u = sportsUrgency('result', team.lastGame, now);
+    candidates.push({
+      mode: 'result',
+      team,
+      game: team.lastGame,
+      key: `r:${team.id}:${team.lastGame.date}`,
+      urgency: u,
+    });
+  }
+  if (team.nextGame) {
+    const u = sportsUrgency('next', team.nextGame, now);
+    candidates.push({
+      mode: 'next',
+      team,
+      game: team.nextGame,
+      key: `n:${team.id}:${team.nextGame.date}`,
+      urgency: u,
+    });
+  }
+  if (!candidates.length) return null;
+  candidates.sort((a, b) => {
+    if (a.urgency.tier !== b.urgency.tier) return a.urgency.tier - b.urgency.tier;
+    if (a.urgency.sortMs !== b.urgency.sortMs) return a.urgency.sortMs - b.urgency.sortMs;
+    return a.mode === 'result' ? -1 : 1;
+  });
+  return candidates[0];
+}
+
+/**
+ * Nombre de chips selon la largeur **réelle** du bandeau.
+ * On retire une carte à la fois en rétrécissant (4 → 3 → 2 → 1 mobile).
+ * Max desktop : 3 scores + CTA = 4.
+ */
 function sportsBoardCount() {
-  const width = MASTHEAD_SPORTS_STRIP?.clientWidth
-    || document.documentElement.clientWidth
-    || 360;
-  if (width >= 900) return 4;
-  if (width >= 700) return 3;
-  if (width >= 480) return 2;
+  const strip = MASTHEAD_SPORTS_STRIP;
+  // Largeur utile = clientWidth du strip (padding déjà soustrait du contenu box)
+  // ou fallback viewport.
+  let avail = 0;
+  if (strip && strip.clientWidth > 0) {
+    const cs = window.getComputedStyle(strip);
+    const padL = parseFloat(cs.paddingLeft) || 0;
+    const padR = parseFloat(cs.paddingRight) || 0;
+    avail = Math.max(0, strip.clientWidth - padL - padR);
+  } else {
+    avail = document.documentElement.clientWidth || 360;
+  }
+  const gap = 6;
+  // Largeurs mini pour rester lisible (score vs CTA un peu plus large).
+  const minScore = 132;
+  const minCta = 148;
+
+  // 4 = 3 scores + CTA ; 3 = 2+CTA ; 2 = 1+CTA ; 1 = mobile (score|CTA en rotation)
+  for (let n = 4; n >= 2; n -= 1) {
+    const scores = n - 1;
+    const need = scores * minScore + minCta + gap * (n - 1);
+    if (avail >= need) return n;
+  }
   return 1;
 }
 
+/**
+ * CTA « Au tableau » épinglée à droite : dès qu’il y a 2+ chips
+ * (tablette → desktop). Mobile (1 chip) = comportement historique.
+ * Suit le redimensionnement dynamiquement via sportsBoardCount().
+ */
+function sportsCtaPinned() {
+  return sportsBoardCount() >= 2;
+}
+
+/** Remplacement score pour le mode mobile (1 slot). */
+function sportsRandomResultSlide(usedKeys) {
+  const used = usedKeys instanceof Set ? usedKeys : new Set(usedKeys || []);
+  const pool = sportsSlides.filter((s) => s && s.mode !== 'cta' && !used.has(s.key));
+  if (!pool.length) {
+    const any = sportsSlides.filter((s) => s && s.mode !== 'cta');
+    if (!any.length) return null;
+    return any[Math.floor(Math.random() * any.length)];
+  }
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+/**
+ * Tri scoreboard (bonnes pratiques ESPN / apps scores) :
+ *  1. Favoris
+ *  2. Urgence (live → imminence → résultats récents → plus tard)
+ *  3. Boost éditorial campus QC (liste douce)
+ *  4. Alpha
+ */
 function buildSportsSlides(data) {
   const teams = Object.values(data?.teams || {});
   if (!teams.length) return [];
   const fav = new Set(readSportsFavorites());
-  const ranked = teams.slice().sort((a, b) => {
-    const af = fav.has(a.id) || fav.has(a.code) ? 0 : 1;
-    const bf = fav.has(b.id) || fav.has(b.code) ? 0 : 1;
+  const now = Date.now();
+
+  // Voile : Québec seulement (pas Queen’s / Toronto / etc. sur le masthead).
+  // Clubs watchlist sans match : exclus du strip (pas de slide score).
+  const slides = teams
+    .filter((team) => {
+      if (team.sport !== 'sailing') return true;
+      if (team.province && team.province !== 'QC') return false;
+      if (team.status === 'club' || team.status === 'upcoming') return false;
+      if (team.source === 'sailing-watchlist') return false;
+      return true;
+    })
+    .map((team) => sportsPickTeamSlide(team, now))
+    .filter(Boolean);
+
+  slides.sort((a, b) => {
+    const af = sportsIsFavorite(a.team, fav) ? 0 : 1;
+    const bf = sportsIsFavorite(b.team, fav) ? 0 : 1;
     if (af !== bf) return af - bf;
-    const ad = SPORTS_DEFAULT_CODES.indexOf(a.code);
-    const bd = SPORTS_DEFAULT_CODES.indexOf(b.code);
-    const ar = ad === -1 ? 99 : ad;
-    const br = bd === -1 ? 99 : bd;
-    if (ar !== br) return ar - br;
-    const as = a.lastGame ? 0 : a.nextGame ? 1 : 2;
-    const bs = b.lastGame ? 0 : b.nextGame ? 1 : 2;
-    if (as !== bs) return as - bs;
-    return String(a.name).localeCompare(String(b.name), 'fr');
+
+    const ua = a.urgency || sportsUrgency(a.mode, a.game, now);
+    const ub = b.urgency || sportsUrgency(b.mode, b.game, now);
+    if (ua.tier !== ub.tier) return ua.tier - ub.tier;
+    if (ua.sortMs !== ub.sortMs) return ua.sortMs - ub.sortMs;
+
+    const er = sportsEditorialRank(a.team) - sportsEditorialRank(b.team);
+    if (er !== 0) return er;
+
+    return String(a.team.name || '').localeCompare(String(b.team.name || ''), 'fr');
   });
 
-  return ranked.map((team) => {
-    if (team.lastGame) {
-      const slide = {
-        mode: 'result',
-        team,
-        game: team.lastGame,
-        key: `r:${team.id}:${team.lastGame.date}`,
-      };
-      slide.tone = sportsSlideTone(slide);
-      return slide;
-    }
-    if (team.nextGame) {
-      const slide = {
-        mode: 'next',
-        team,
-        game: team.nextGame,
-        key: `n:${team.id}:${team.nextGame.date}`,
-      };
-      slide.tone = sportsSlideTone(slide);
-      return slide;
-    }
-    return null;
-  }).filter(Boolean);
+  return slides.map((slide) => {
+    slide.tone = sportsSlideTone(slide);
+    return slide;
+  });
 }
 
 function formatSportsWhen(iso, time) {
@@ -1709,18 +1998,386 @@ function sportsGameHref(slide) {
   return 'https://www.rseq-stats.ca/';
 }
 
+/**
+ * Page SEO « Au tableau » — sport + équipe (deep-link).
+ * sports-board.js filtre le sport, ouvre la section, surbrille et scroll
+ * jusqu’à la carte formation (parité sélection d’une station radio).
+ */
+function sportsBoardHref(slide) {
+  const base = new URL('sports/', window.location.href).pathname;
+  // CTA avec match en accroche : deep-link vers ce match / sport.
+  if (slide?.mode === 'cta') {
+    const from = slide.ctaFrom;
+    if (from?.team || from?.game) {
+      const sport = String(from.game?.sport || from.team?.sport || '').toLowerCase();
+      const teamId = String(from.team?.id || '').trim();
+      const params = new URLSearchParams();
+      if (sport) params.set('sport', sport);
+      if (teamId) params.set('team', teamId);
+      const q = params.toString();
+      return q ? `${base}?${q}` : base;
+    }
+    return base;
+  }
+  const sport = String(slide?.game?.sport || slide?.team?.sport || '').toLowerCase();
+  const teamId = String(slide?.team?.id || '').trim();
+  const params = new URLSearchParams();
+  if (sport) params.set('sport', sport);
+  if (teamId) params.set('team', teamId);
+  const q = params.toString();
+  return q ? `${base}?${q}` : base;
+}
+
+/**
+ * Meilleure carte (déjà triée : urgence / fraîcheur) par sport.
+ * Sert à la diversité des chips scores (pas la CTA).
+ */
+function sportsBestSlidesBySport() {
+  const map = new Map();
+  for (const s of sportsSlides) {
+    if (!s || s.mode === 'cta') continue;
+    const sp = String(s.team?.sport || s.game?.sport || '').toLowerCase();
+    if (!sp || map.has(sp)) continue;
+    map.set(sp, s);
+  }
+  return map;
+}
+
+/** Sports triés par popularité QC, puis le reste alpha. */
+function sportsOrderedKeys(bestMap) {
+  const keys = [...bestMap.keys()];
+  const rank = (sp) => {
+    const i = SPORTS_POPULARITY.indexOf(sp);
+    return i < 0 ? 100 + sp.localeCompare('') : i;
+  };
+  return keys.sort((a, b) => rank(a) - rank(b) || a.localeCompare(b, 'fr'));
+}
+
+/**
+ * Accroche CTA = même info qu’une chip score (codes + score/date).
+ * Ex. « GAR vs LEN · 28 août · 19 h 30 » ou « MCG 1/9 MID ».
+ */
+function sportsCtaLabelFromSlide(slide) {
+  if (!slide?.team || !slide.game) return '';
+  const code = String(slide.team.code || slide.team.name || 'EQ').toUpperCase().slice(0, 4);
+  const g = slide.game;
+  const opp = String(g.opponentCode || g.opponent || 'ADV').toUpperCase().slice(0, 4);
+  const glyph = sportsGlyph(slide.team.sport || g.sport);
+  if (slide.mode === 'next') {
+    const when = formatSportsWhen(g.date, g.time);
+    return when
+      ? `${glyph} ${code} vs ${opp} · ${when}`
+      : `${glyph} ${code} vs ${opp}`;
+  }
+  if (slide.mode === 'result') {
+    const placeKind = g.scoreKind === 'place' || slide.team.sport === 'sailing';
+    const score = placeKind
+      ? `${g.scoreFor}/${g.scoreAgainst}`
+      : `${g.scoreFor}–${g.scoreAgainst}`;
+    const badge = g.result === 'W' ? 'V' : g.result === 'L' ? 'D' : 'N';
+    const when = formatSportsWhen(g.date, g.time);
+    return when
+      ? `${glyph} ${code} ${score} ${opp} · ${badge} · ${when}`
+      : `${glyph} ${code} ${score} ${opp} · ${badge}`;
+  }
+  return `${glyph} ${code}`;
+}
+
+/**
+ * Focus group — partage des rôles bandeau :
+ *
+ *  CARTE ROUGE (CTA) = « maintenant / bientôt »
+ *   • live / proxy live
+ *   • résultats d’**aujourd’hui** seulement
+ *   • prochains matchs (dès aujourd’hui, ≤ 14 j)
+ *   • ✗ hier et avant → cartes de gauche
+ *
+ *  CARTES GAUCHE = « fil des scores »
+ *   • résultats d’hier et récents (< 4 j)
+ *   • prochains matchs (diversité par sport)
+ *   • hors saison : derniers résultats connus
+ *
+ *  CREUX / HORS SAISON (rien de chaud pour la CTA)
+ *   • accroches idle : calendrier à venir, voir le tableau…
+ *   • pas de vieux scores recyclés dans le rouge
+ */
+function sportsCtaCandidateSlides() {
+  const now = Date.now();
+  const todayResults = [];
+  const upcoming = [];
+  const seen = new Set();
+
+  for (const s of sportsSlides) {
+    if (!s || s.mode === 'cta' || !s.game || !s.key || seen.has(s.key)) continue;
+    seen.add(s.key);
+
+    if (s.mode === 'result') {
+      // Hier et avant : hors CTA (restent disponibles pour les chips de gauche).
+      if (sportsGameIsBeforeToday(s.game)) continue;
+      // Uniquement les scores du jour civil QC.
+      if (sportsGameIsToday(s.game)) todayResults.push(s);
+      continue;
+    }
+
+    if (s.mode === 'next') {
+      const ms = sportsGameMs(s.game);
+      if (!Number.isFinite(ms)) continue;
+      // Prochains passés mal classés → ignorer ici.
+      if (ms < now - SPORTS_LIVE_AFTER_MS) continue;
+      // Fenêtre CTA : jusqu’à 14 jours.
+      if (ms > now + SPORTS_CTA_UPCOMING_MS) continue;
+      upcoming.push(s);
+    }
+  }
+
+  const sportRank = (slide) => {
+    const sp = String(slide.team?.sport || slide.game?.sport || '').toLowerCase();
+    const i = SPORTS_POPULARITY.indexOf(sp);
+    return i < 0 ? 99 : i;
+  };
+
+  // Scores d’aujourd’hui : plus récent d’abord (plusieurs matchs le même jour OK).
+  todayResults.sort((a, b) => {
+    const fa = sportsGameMs(a.game) || 0;
+    const fb = sportsGameMs(b.game) || 0;
+    if (fb !== fa) return fb - fa;
+    return sportRank(a) - sportRank(b);
+  });
+
+  // À venir (dans la fenêtre) : plus proche d’abord ; même jour = ordre horaire.
+  upcoming.sort((a, b) => {
+    const fa = sportsGameMs(a.game) || Number.POSITIVE_INFINITY;
+    const fb = sportsGameMs(b.game) || Number.POSITIVE_INFINITY;
+    if (fa !== fb) return fa - fb;
+    return sportRank(a) - sportRank(b);
+  });
+
+  // CTA : d’abord le vif du jour, puis le calendrier proche.
+  return todayResults.concat(upcoming).slice(0, 36);
+}
+
+/** Libellés CTA : matchs chauds, sinon messages hors saison / creux. */
+function sportsCtaLabelPool() {
+  const hot = sportsCtaCandidateSlides()
+    .map(sportsCtaLabelFromSlide)
+    .filter(Boolean);
+  if (hot.length) return hot;
+  return SPORTS_CTA_IDLE_LABELS.slice();
+}
+
+/**
+ * Slide CTA — slot de droite.
+ * Match « chaud » (aujourd’hui / ≤14 j) ou accroche idle hors saison.
+ */
+function sportsCtaSlide(labelIndex = sportsCtaLabelIndex) {
+  const candidates = sportsCtaCandidateSlides();
+  if (!candidates.length) {
+    const idle = SPORTS_CTA_IDLE_LABELS;
+    const idx = ((labelIndex % idle.length) + idle.length) % idle.length;
+    return {
+      mode: 'cta',
+      key: SPORTS_CTA_KEY,
+      label: idle[idx],
+      labelIndex: idx,
+      tone: '#c8102e',
+      team: { sport: 'board', name: 'Au tableau', code: 'RSEQ' },
+      game: { sport: 'board' },
+      ctaIdle: true,
+      titleExtra: idle[idx],
+    };
+  }
+  const idx = ((labelIndex % candidates.length) + candidates.length) % candidates.length;
+  const src = candidates[idx];
+  const label = sportsCtaLabelFromSlide(src);
+  return {
+    mode: 'cta',
+    key: SPORTS_CTA_KEY,
+    label: label || SPORTS_CTA_IDLE_LABELS[0],
+    labelIndex: idx,
+    tone: '#c8102e',
+    team: { sport: 'board', name: 'Au tableau', code: 'RSEQ' },
+    game: { sport: 'board' },
+    ctaFrom: src,
+    titleExtra: src
+      ? `${src.team?.fullName || src.team?.name || ''} · ${label}`
+      : '',
+  };
+}
+
+/**
+ * Défilement gauche → droite du texte trop long (parité météo masthead).
+ * À appeler après chaque paint / rotation de chip.
+ */
+function refreshSportsChipScroll() {
+  if (!MASTHEAD_SPORTS_STRIP) return;
+  MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip').forEach((chip) => {
+    const viewport = chip.querySelector('.sports-chip__line');
+    const inner = chip.querySelector('.sports-chip__line-inner');
+    if (!viewport || !inner) {
+      chip.classList.remove('is-overflowing');
+      return;
+    }
+    // Mesurer sans ellipsis forcée.
+    chip.classList.remove('is-overflowing');
+    inner.style.maxWidth = 'none';
+    const overflow = Math.max(0, inner.scrollWidth - viewport.clientWidth);
+    inner.style.maxWidth = '';
+    chip.classList.toggle('is-overflowing', overflow > 2);
+    chip.style.setProperty('--sports-scroll', `${overflow}px`);
+  });
+}
+
+/**
+ * Libellé tooltip d’une formation — focus group stats :
+ * une identité claire, pas le dump « court · surnom · établissement ».
+ * Préfère surnom (Cougars) + court entre parenthèses si utile.
+ */
+function sportsTooltipTeamLabel({ name, nickname, fullName, code } = {}) {
+  const short = String(name || code || '').trim();
+  const nick = String(nickname || '').trim();
+  if (nick && short && nick.toLowerCase() !== short.toLowerCase()) {
+    return `${nick} (${short})`;
+  }
+  if (short) return short;
+  if (nick) return nick;
+  const full = String(fullName || '').trim();
+  return full || 'Équipe';
+}
+
+function sportsSportLabelFr(sport) {
+  const s = String(sport || '').toLowerCase();
+  const map = {
+    hockey: 'Hockey',
+    football: 'Football',
+    soccer: 'Soccer',
+    'soccer-interieur': 'Soccer intérieur',
+    futsal: 'Futsal',
+    basketball: 'Basketball',
+    volleyball: 'Volleyball',
+    rugby: 'Rugby',
+    'flag-football': 'Flag-football',
+    baseball: 'Baseball',
+    badminton: 'Badminton',
+    natation: 'Natation',
+    athletisme: 'Athlétisme',
+    'cross-country': 'Cross-country',
+    golf: 'Golf',
+    cheerleading: 'Cheerleading',
+    ultimate: 'Ultimate',
+    sailing: 'Voile',
+  };
+  return map[s] || (s ? s.charAt(0).toUpperCase() + s.slice(1) : '');
+}
+
+/**
+ * Tooltip / title d’une puce score — scannable en un coup d’œil :
+ * Statut · Sport · Équipe vs Adversaire · [score] · Quand
+ * (sans « voir le tableau… » redondant — le clic est déjà le CTA).
+ */
+function sportsChipTitle(slide) {
+  if (!slide?.team || !slide.game) return 'Au tableau — scores étudiants';
+  const team = slide.team;
+  const g = slide.game;
+  const sport = sportsSportLabelFr(g.sport || team.sport);
+  const home = sportsTooltipTeamLabel(team);
+  const opp = sportsTooltipTeamLabel({
+    name: g.opponent,
+    nickname: g.opponentNickname,
+    fullName: g.opponentFullName,
+    code: g.opponentCode,
+  });
+  const when = formatSportsWhen(g.date, g.time);
+
+  if (slide.mode === 'result') {
+    const issue = g.result === 'W' ? 'Victoire' : g.result === 'L' ? 'Défaite' : 'Match nul';
+    const placeKind = g.scoreKind === 'place' || team.sport === 'sailing' || g.sport === 'sailing';
+    const score = placeKind
+      ? `place ${g.scoreFor}/${g.scoreAgainst}`
+      : `${g.scoreFor}–${g.scoreAgainst}`;
+    return [issue, sport, `${home} ${score} ${opp}`, when].filter(Boolean).join(' · ');
+  }
+
+  // next / live proxy (urgency.tier 0 = fenêtre « en cours »)
+  const status = slide.urgency?.tier === 0 ? 'En cours' : 'Prochain match';
+  return [status, sport, `${home} vs ${opp}`, when].filter(Boolean).join(' · ');
+}
+
 function paintSportsChip(slide, animate = false) {
+  if (!slide) return document.createElement('span');
+
+  /* ── CTA « Au tableau » — pastille alerte + accroche (halo/texte, pas la carte) ── */
+  if (slide.mode === 'cta') {
+    const href = sportsBoardHref(slide);
+    const a = document.createElement('a');
+    a.className = 'sports-chip sports-chip--cta';
+    a.href = href;
+    if (animate && !sportsReducedMotion) a.classList.add('is-arriving');
+    a.dataset.sportsKey = SPORTS_CTA_KEY;
+    a.dataset.sportsMode = 'cta';
+    a.dataset.sportsSport = 'board';
+    a.style.setProperty('--sports-tone', '#c8102e');
+    const updated = sportsData?.updated
+      ? (() => {
+        try {
+          return new Intl.DateTimeFormat('fr-CA', {
+            dateStyle: 'medium',
+            timeStyle: 'short',
+            timeZone: 'America/Toronto',
+          }).format(new Date(sportsData.updated));
+        } catch {
+          return String(sportsData.updated).slice(0, 16);
+        }
+      })()
+      : '';
+    // CTA : accroche + MAJ exacte, sans jargon.
+    if (slide.ctaFrom?.team) {
+      a.title = [sportsChipTitle({ ...slide.ctaFrom, mode: slide.ctaFrom.mode || 'next' }), updated ? `MAJ ${updated}` : '']
+        .filter(Boolean).join(' · ');
+    } else {
+      const detail = slide.titleExtra || slide.label || 'Scores collégiaux et universitaires';
+      a.title = [`Au tableau · ${detail}`, updated ? `MAJ ${updated}` : ''].filter(Boolean).join(' · ');
+    }
+    a.setAttribute(
+      'aria-label',
+      `Au tableau : ${slide.label || 'résultats sportifs étudiants du Québec'}`,
+    );
+
+    // Pastille type BREAKING : point live + libellé fixe.
+    const tag = document.createElement('span');
+    tag.className = 'sports-chip__cta-tag';
+    tag.setAttribute('aria-hidden', 'true');
+    const live = document.createElement('span');
+    live.className = 'sports-chip__cta-live';
+    tag.append(live, document.createTextNode(SPORTS_CTA_TAG));
+
+    const line = document.createElement('span');
+    line.className = 'sports-chip__line';
+    const inner = document.createElement('span');
+    inner.className = 'sports-chip__line-inner sports-chip__cta-label';
+    inner.textContent = slide.label || 'Scores étudiants QC';
+    line.append(inner);
+
+    const chev = document.createElement('span');
+    chev.className = 'sports-chip__cta-chev';
+    chev.setAttribute('aria-hidden', 'true');
+    chev.textContent = '→';
+
+    a.append(tag, line, chev);
+    if (animate && !sportsReducedMotion) {
+      window.setTimeout(() => a.classList.remove('is-arriving'), SPORTS_ARRIVE_MS);
+    }
+    return a;
+  }
+
   const team = slide.team;
   const code = String(team.code || 'EQ').toUpperCase().slice(0, 4);
   const sport = slide.game.sport || team.sport || '';
   const tone = slide.tone || sportsSlideTone(slide);
-  const href = sportsGameHref(slide);
-  // Toujours un lien : match passé, prochain, ou calendrier de ligue.
+  // Clic principal → page SEO locale ; la feuille RSEQ reste sur /sports/.
+  const href = sportsBoardHref(slide);
   const a = document.createElement('a');
   a.className = 'sports-chip';
   a.href = href;
-  a.target = '_blank';
-  a.rel = 'noopener noreferrer';
   if (animate && !sportsReducedMotion) a.classList.add('is-arriving');
   a.dataset.sportsKey = slide.key || '';
   a.dataset.sportsMode = slide.mode || '';
@@ -1747,12 +2404,16 @@ function paintSportsChip(slide, animate = false) {
     badgeEl.setAttribute('aria-hidden', 'true');
     a.append(glyph, badgeEl);
     const opp = String(g.opponentCode || g.opponent || 'ADV').toUpperCase().slice(0, 4);
+    const placeKind = g.scoreKind === 'place' || sport === 'sailing';
+    const scoreTxt = placeKind
+      ? `${g.scoreFor}/${g.scoreAgainst}`
+      : `${g.scoreFor}–${g.scoreAgainst}`;
+    const vsWord = placeKind ? '·' : 'vs';
     inner.innerHTML = `<span class="sports-chip__code">${escapeHtml(code)}</span> `
-      + `<span class="sports-chip__score">${escapeHtml(String(g.scoreFor))}–${escapeHtml(String(g.scoreAgainst))}</span> `
+      + `<span class="sports-chip__score">${escapeHtml(String(scoreTxt))}</span> `
       + `<span class="sports-chip__code sports-chip__opp">${escapeHtml(opp)}</span>`;
-    const issue = g.result === 'W' ? 'Victoire' : g.result === 'L' ? 'Défaite' : 'Match nul';
-    a.title = `${issue} · ${team.name} · ${g.scoreFor}–${g.scoreAgainst} vs ${g.opponent || opp} — ouvrir la feuille de match RSEQ`;
-    a.setAttribute('aria-label', `${issue} des ${team.name} contre ${g.opponent || opp}. Ouvrir les détails du match.`);
+    a.title = sportsChipTitle(slide);
+    a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores.`);
   } else {
     a.append(glyph);
     const n = slide.game;
@@ -1762,8 +2423,8 @@ function paintSportsChip(slide, animate = false) {
       + `<span class="sports-chip__vs">vs</span> `
       + `<span class="sports-chip__code sports-chip__opp">${escapeHtml(opp)}</span>`
       + (when ? ` · <span class="sports-chip__when">${escapeHtml(when)}</span>` : '');
-    a.title = `Prochain · ${team.name} vs ${n.opponent || opp}${when ? ` · ${when}` : ''} — ouvrir le calendrier RSEQ`;
-    a.setAttribute('aria-label', `Prochain match des ${team.name} contre ${n.opponent || opp}${when ? ` le ${when}` : ''}. Ouvrir les détails du match.`);
+    a.title = sportsChipTitle(slide);
+    a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores.`);
   }
   line.append(inner);
   a.append(line);
@@ -1773,17 +2434,118 @@ function paintSportsChip(slide, animate = false) {
   return a;
 }
 
-function nextSportsSlide(usedKeys) {
+/**
+ * Poids pour les chips de **gauche** : privilégier hier / récents + prochains.
+ * (Les scores d’aujourd’hui peuvent aussi apparaître à gauche, mais la CTA
+ * les porte en priorité.)
+ */
+function sportsLeftLaneScore(slide, now = Date.now()) {
+  if (!slide?.game) return 9e15;
+  const ms = sportsGameMs(slide.game);
+  if (!Number.isFinite(ms)) return 8e15;
+  if (slide.mode === 'result') {
+    // Hier et récents d’abord ; plus vieux = score plus haut (moins prioritaire).
+    if (sportsGameIsBeforeToday(slide.game)) {
+      return (now - ms); // plus petit = plus récent hier
+    }
+    if (sportsGameIsToday(slide.game)) {
+      return 1e12 + (now - ms); // aujourd’hui OK mais après hier
+    }
+    return 2e12 + (now - ms);
+  }
+  // À venir : plus proche d’abord
+  if (ms >= now) return 3e12 + (ms - now);
+  return 4e12 + (now - ms);
+}
+
+/**
+ * Prochaine carte (gauche) : match pertinent hors CTA-only,
+ * diversité de sport, plusieurs matchs/jour possibles en rotation.
+ */
+function nextSportsSlide(usedKeys, opts = {}) {
   const used = usedKeys instanceof Set ? usedKeys : new Set(usedKeys || []);
-  const pool = sportsSlides.filter((s) => !used.has(s.key));
-  if (!pool.length) return sportsSlides[0] || null;
-  // Légère préférence : ne pas toujours le même sport à la suite.
-  const lastSport = sportsVisible[sportsNextSlot]?.team?.sport;
-  const diverse = lastSport
-    ? pool.filter((s) => (s.team?.sport || '') !== lastSport)
-    : pool;
-  const pickFrom = diverse.length ? diverse : pool;
-  return pickFrom[Math.floor(Math.random() * pickFrom.length)];
+  const pool = sportsSlides.filter((s) => s && s.mode !== 'cta' && !used.has(s.key));
+  if (!pool.length) {
+    const any = sportsSlides.filter((s) => s && s.mode !== 'cta');
+    return any[0] || null;
+  }
+
+  const now = Date.now();
+  const avoidSport = String(
+    opts.avoidSport
+      ?? sportsVisible[sportsNextSlot]?.team?.sport
+      ?? '',
+  ).toLowerCase();
+  const usedSports = opts.usedSports instanceof Set
+    ? opts.usedSports
+    : new Set(
+      sportsVisible
+        .filter((s) => s && s.mode !== 'cta')
+        .map((s) => String(s.team?.sport || '').toLowerCase())
+        .filter(Boolean),
+    );
+
+  // Trier le pool : hier/récents + prochains, puis popularité sport.
+  const ranked = pool.slice().sort((a, b) => {
+    const sa = sportsLeftLaneScore(a, now);
+    const sb = sportsLeftLaneScore(b, now);
+    if (sa !== sb) return sa - sb;
+    const pa = SPORTS_POPULARITY.indexOf(String(a.team?.sport || '').toLowerCase());
+    const pb = SPORTS_POPULARITY.indexOf(String(b.team?.sport || '').toLowerCase());
+    return (pa < 0 ? 99 : pa) - (pb < 0 ? 99 : pb);
+  });
+
+  // 1) Sport pas encore dans le bandeau — meilleur candidat de ce sport
+  for (const s of ranked) {
+    const sp = String(s.team?.sport || '').toLowerCase();
+    if (sp && !usedSports.has(sp)) {
+      sportsSportCursor = (sportsSportCursor + 1) % Math.max(1, SPORTS_POPULARITY.length);
+      return s;
+    }
+  }
+
+  // 2) Sport différent du slot remplacé (varier même si même jour / même sport déjà vu)
+  if (avoidSport) {
+    const diverse = ranked.find((s) => String(s.team?.sport || '').toLowerCase() !== avoidSport);
+    if (diverse) return diverse;
+  }
+
+  // 3) Suivant dans l’ordre chronologique (plusieurs matchs le même jour)
+  return ranked[0];
+}
+
+/**
+ * Première peinture.
+ * Desktop/tablette (≥ 2) : scores + CTA épinglée à droite.
+ * Mobile (1) : un score (la CTA entre en rotation ensuite).
+ */
+function pickInitialSportsVisible(count) {
+  const pinned = sportsCtaPinned();
+  const contentCount = pinned ? Math.max(0, count - 1) : count;
+  const picked = [];
+  const usedKeys = new Set();
+  const usedSports = new Set();
+  sportsSportCursor = 0;
+  while (picked.length < contentCount) {
+    const slide = nextSportsSlide(usedKeys, { usedSports, avoidSport: '' });
+    if (!slide || usedKeys.has(slide.key)) break;
+    picked.push(slide);
+    usedKeys.add(slide.key);
+    if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
+  }
+  const pool = sportsCtaLabelPool();
+  sportsCtaLabelIndex = pool.length
+    ? Math.floor(Math.random() * pool.length)
+    : 0;
+  if (pinned) {
+    // Slot de droite : « Au tableau » prime toujours.
+    picked.push(sportsCtaSlide(sportsCtaLabelIndex));
+  } else if (!picked.length) {
+    // Mobile sans score : au moins la CTA.
+    picked.push(sportsCtaSlide(sportsCtaLabelIndex));
+  }
+  sportsCtaOnRightMobile = pinned ? true : false;
+  return picked;
 }
 
 /** Remplit / recalcule les slots visibles (resize ou 1er paint). */
@@ -1796,44 +2558,130 @@ function renderSportsStrip() {
     sportsVisible = [];
     return;
   }
-  const count = Math.min(sportsBoardCount(), sportsSlides.length);
-  const used = new Set();
-  // Conserver ce qu’on peut des slots déjà affichés.
-  const nextVisible = [];
-  for (let i = 0; i < count; i += 1) {
-    const prev = sportsVisible[i];
-    if (prev && !used.has(prev.key) && sportsSlides.some((s) => s.key === prev.key)) {
-      nextVisible.push(prev);
-      used.add(prev.key);
+  const board = sportsBoardCount();
+  const pinned = sportsCtaPinned();
+  const count = Math.min(board, Math.max(1, sportsSlides.length + (pinned ? 1 : 0)));
+  // Desktop : N-1 scores + CTA. Mobile : N scores (souvent 1).
+  const contentSlots = pinned ? Math.max(0, count - 1) : count;
+
+  // Resize : si le mode pin/mobile change ou le nb de slots, re-semer.
+  const wasPinned = sportsVisible.length >= 2
+    && sportsVisible[sportsVisible.length - 1]?.mode === 'cta';
+  const canReuse = sportsVisible.some((s) => s && s.mode !== 'cta'
+    && sportsSlides.some((x) => x.key === s.key));
+  if (!canReuse || sportsVisible.length !== count || wasPinned !== pinned) {
+    sportsVisible = pickInitialSportsVisible(count);
+  } else {
+    const used = new Set();
+    const nextVisible = [];
+    for (let i = 0; i < contentSlots; i += 1) {
+      const prev = sportsVisible[i];
+      if (
+        prev
+        && prev.mode !== 'cta'
+        && !used.has(prev.key)
+        && sportsSlides.some((s) => s.key === prev.key)
+      ) {
+        nextVisible.push(prev);
+        used.add(prev.key);
+      }
     }
+    const usedSports = new Set(
+      nextVisible.map((s) => String(s.team?.sport || '').toLowerCase()).filter(Boolean),
+    );
+    while (nextVisible.length < contentSlots) {
+      const slide = nextSportsSlide(used, { usedSports });
+      if (!slide || used.has(slide.key)) break;
+      nextVisible.push(slide);
+      used.add(slide.key);
+      if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
+    }
+    if (pinned) {
+      // CTA prime à droite tant qu’on n’est pas en mobile 1-chip.
+      nextVisible.push(sportsCtaSlide(sportsCtaLabelIndex));
+    }
+    sportsVisible = nextVisible;
   }
-  while (nextVisible.length < count) {
-    const slide = nextSportsSlide(used);
-    if (!slide) break;
-    nextVisible.push(slide);
-    used.add(slide.key);
-  }
-  sportsVisible = nextVisible;
-  sportsNextSlot = sportsNextSlot % Math.max(1, sportsVisible.length);
+
+  // Rotation L→R : toujours repartir du slot le plus à gauche après un re-paint.
+  sportsNextSlot = 0;
   const frag = document.createDocumentFragment();
   sportsVisible.forEach((slide) => frag.append(paintSportsChip(slide, false)));
   MASTHEAD_SPORTS_STRIP.replaceChildren(frag);
   MASTHEAD_SPORTS_STRIP.hidden = false;
   MASTHEAD_SPORTS_STRIP.dataset.count = String(sportsVisible.length);
+  MASTHEAD_SPORTS_STRIP.dataset.ctaPinned = pinned ? '1' : '0';
+  // Défilement texte (parité météo) après layout.
+  window.requestAnimationFrame(() => refreshSportsChipScroll());
 }
 
-/** Comme rotateOneMastheadWeatherCard : une seule carte change + is-arriving. */
+/**
+ * Rotation carte par carte.
+ * Desktop/tablette : CTA épinglée à droite (accroche seule) ; scores en ronde.
+ * Mobile (1 chip) : alterne score ↔ CTA comme avant.
+ */
 function rotateOneSportsCard() {
-  if (!MASTHEAD_SPORTS_STRIP || sportsVisible.length < 1 || sportsSlides.length <= 1) return;
-  const slot = sportsNextSlot % sportsVisible.length;
-  const used = new Set(sportsVisible.filter((_, i) => i !== slot).map((s) => s.key));
-  const replacement = nextSportsSlide(used);
-  if (!replacement || replacement.key === sportsVisible[slot]?.key) {
-    sportsNextSlot = (slot + 1) % sportsVisible.length;
+  if (!MASTHEAD_SPORTS_STRIP || sportsVisible.length < 1 || sportsSlides.length < 1) return;
+  const n = sportsVisible.length;
+  const pinned = sportsCtaPinned();
+  const rightSlot = n - 1;
+  const slot = sportsNextSlot % n;
+  const used = new Set(
+    sportsVisible
+      .filter((_, i) => i !== slot)
+      .map((s) => s.key)
+      .filter(Boolean),
+  );
+  const usedSports = new Set(
+    sportsVisible
+      .filter((_, i) => i !== slot && sportsVisible[i]?.mode !== 'cta')
+      .map((s) => String(s.team?.sport || '').toLowerCase())
+      .filter(Boolean),
+  );
+
+  let replacement = null;
+  if (pinned && slot === rightSlot) {
+    // CTA fixe : on ne fait tourner que le sous-texte.
+    const poolLen = Math.max(1, sportsCtaLabelPool().length);
+    sportsCtaLabelIndex = (sportsCtaLabelIndex + 1) % poolLen;
+    replacement = sportsCtaSlide(sportsCtaLabelIndex);
+  } else if (!pinned) {
+    // Mobile : alternance score / CTA sur l’unique slot.
+    sportsCtaOnRightMobile = !sportsCtaOnRightMobile;
+    if (sportsCtaOnRightMobile) {
+      sportsCtaLabelIndex = (sportsCtaLabelIndex + 1) % Math.max(1, sportsCtaLabelPool().length);
+      replacement = sportsCtaSlide(sportsCtaLabelIndex);
+    } else {
+      replacement = sportsRandomResultSlide(used) || nextSportsSlide(used, { usedSports });
+      if (!replacement) {
+        sportsCtaOnRightMobile = true;
+        replacement = sportsCtaSlide(sportsCtaLabelIndex);
+      }
+    }
+  } else {
+    const avoid = String(sportsVisible[slot]?.team?.sport || '').toLowerCase();
+    replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid });
+    if (replacement?.mode === 'cta') {
+      replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid });
+    }
+  }
+
+  if (!replacement) {
+    sportsNextSlot = (slot + 1) % n;
     return;
   }
+  // Même match déjà affiché : passer au slot suivant (sauf CTA qui change d’accroche).
+  if (
+    replacement.mode !== 'cta'
+    && replacement.key === sportsVisible[slot]?.key
+  ) {
+    sportsNextSlot = (slot + 1) % n;
+    return;
+  }
+
   sportsVisible[slot] = replacement;
-  sportsNextSlot = (slot + 1) % sportsVisible.length;
+  // Prochain tick = slot suivant à droite (puis retour à gauche).
+  sportsNextSlot = (slot + 1) % n;
   const chips = MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip');
   const oldChip = chips[slot];
   const newChip = paintSportsChip(replacement, true);
@@ -1842,6 +2690,7 @@ function rotateOneSportsCard() {
   } else {
     MASTHEAD_SPORTS_STRIP.append(newChip);
   }
+  window.requestAnimationFrame(() => refreshSportsChipScroll());
 }
 
 function scheduleSportsRotate() {
@@ -1867,13 +2716,24 @@ async function initMastheadSports() {
     scheduleSportsRotate();
     if (!initMastheadSports._resizeBound) {
       initMastheadSports._resizeBound = true;
-      window.addEventListener('resize', () => {
+      const onSportsLayout = () => {
         if (initMastheadSports._rz) clearTimeout(initMastheadSports._rz);
+        // Léger debounce pour enchaîner 4→3→2→1 pendant le drag de fenêtre.
         initMastheadSports._rz = setTimeout(() => {
+          const prev = sportsVisible.length;
           renderSportsStrip();
           scheduleSportsRotate();
-        }, 180);
-      }, { passive: true });
+          // Si le nombre de chips a changé, le scroll texte doit se recalculer.
+          if (sportsVisible.length !== prev) {
+            window.requestAnimationFrame(() => refreshSportsChipScroll());
+          }
+        }, 40);
+      };
+      window.addEventListener('resize', onSportsLayout, { passive: true });
+      if (typeof ResizeObserver !== 'undefined' && MASTHEAD_SPORTS_STRIP) {
+        initMastheadSports._ro = new ResizeObserver(onSportsLayout);
+        initMastheadSports._ro.observe(MASTHEAD_SPORTS_STRIP);
+      }
     }
   } catch (err) {
     console.warn('Le Radar: sports indisponibles', err);
@@ -6415,8 +7275,12 @@ const AVG_LEAD_CARD_H = 400;
 const AVG_FEATURE_CARD_H = 148;
 const AVG_BRIEF_CARD_H = 108;
 const AVG_BRIEF_TITLE_H = 42;
-/* Marge volontaire : mieux un petit spacer qu’une chaise musicale. */
-const COLUMN_HEIGHT_TOL = 96;
+/*
+ * Tolérance d’équité colonnes (hero vs En bref).
+ * Doit rester nettement sous une carte En bref (~108 px) : à 96 px, une fiche
+ * de trop restait visible sous les vedettes. 40 px = petit spacer OK, 1 carte non.
+ */
+const COLUMN_HEIGHT_TOL = 40;
 /* Vue source : 1 une + jusqu’à 2 vedettes (fraîcheur), puis En bref / suite. */
 const SOURCE_FEATURE_MAX = 2;
 const SOURCE_HERO_SPOTLIGHT_MAX = 1 + SOURCE_FEATURE_MAX;
@@ -6470,9 +7334,8 @@ const _SF = (typeof RadarSessionFreshness !== 'undefined') ? RadarSessionFreshne
 const FRESHNESS_SESSION_COUNT = _SF?.FRESHNESS_SESSION_COUNT ?? 3;
 const CONTINGENCY_MAX_SESSIONS_BACK = _SF?.CONTINGENCY_MAX_SESSIONS_BACK
   ?? (FRESHNESS_SESSION_COUNT - 1);
-/* Vedettes (feature) = même budget / sources d'extrait que « À la une ». */
-/* Feature un peu plus long : float wrap sous la vignette (parité Kiosque). */
-const BRIEF_LIMITS = { lead: 720, feature: 1000, compact: 400, standard: 260 };
+/* Une + vedettes : même budget d’extrait (parité visuelle flottante / Kiosque). */
+const BRIEF_LIMITS = { lead: 960, feature: 960, compact: 400, standard: 260 };
 const LEAD_BRIEF_MIN_CHARS = 160;
 const BRIEF_COMPACT_MIN_CHARS = 150;
 const FEATURE_BRIEF_MIN_CHARS = LEAD_BRIEF_MIN_CHARS;
@@ -8399,7 +9262,14 @@ function sanitizeBriefBody(raw = '') {
   s = s.replace(/\[[^\]]*(?:read more|lire la suite|continue reading)[^\]]*\]/gi, '');
   s = s.replace(/\b(?:read more|lire la suite|continue reading)\b\.?\s*$/i, '');
   s = s.replace(/^(?:Dear Tribune|Dear Editor),?\s*/i, '');
+  // Crédits photo collés au chapô RSS (ex. « …Pierre. (Photo : Léa Morin-Letort) L’heure »)
+  // — le crédit reste sous la vignette (.article-media-credit), pas dans le corps.
+  s = s.replace(/\s*\(\s*(?:Photo(?:\s*credit)?|Crédit(?:\s*photo)?|Credit|Image|Illustration)\s*:\s*[^)]+\)\.?\s*/gi, ' ');
+  s = s.replace(/(?:^|[.\s])(?:Photo(?:\s*credit)?|Crédit(?:\s*photo)?|Credit|Image|Illustration)\s*:\s*[^.!?\n(]{2,80}\.?\s*/gi, ' ');
+  // Orphelin après une phrase complète (début de phrase suivante coupé par le scrape).
+  s = s.replace(/([.!?»"')\]])\s+[\p{L}'’]{1,18}\s*$/u, '$1');
   s = s.replace(/(?:…|\.{3,}|\[…\]|\[\.\.\.\]|\[&hellip;\])/gi, '');
+  s = s.replace(/\.\s*\./g, '.');
   s = s.replace(/\s+/g, ' ').trim();
   // WP has-drop-cap dans le flux : « L e 18… » / « L 'identité »
   s = s.replace(/^([\p{Lu}])\s+([''’])/u, '$1$2').replace(/^([\p{Lu}])\s+([\p{Ll}])/u, '$1$2');

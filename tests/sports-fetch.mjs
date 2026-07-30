@@ -1,5 +1,5 @@
 /**
- * Contrôles unitaires du bot sports + payload sports.json.
+ * Contrôles unitaires du bot sports + payload sports.json + registre.
  */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -29,20 +29,50 @@ test('sports.json a des équipes normalisées', () => {
   assert.ok(existsSync(path), 'sports.json absent — lancer node scripts/fetch-sports.js --update');
   const data = JSON.parse(readFileSync(path, 'utf8'));
   assert.ok(data.updated);
-  assert.equal(data.source, 'rseq-s1');
+  assert.match(String(data.source || ''), /rseq-s1/);
   const teams = Object.values(data.teams || {});
   assert.ok(teams.length >= 10, `attendu ≥10 équipes, reçu ${teams.length}`);
-  for (const team of teams.slice(0, 20)) {
+  // Certaines disciplines (athlétisme, cross…) n’ont pas toujours de match
+  // calendrier ; on vérifie le contrat sur les formations qui en ont un.
+  const withGames = teams.filter((t) => t.lastGame || t.nextGame);
+  assert.ok(withGames.length >= 10, `attendu ≥10 équipes avec match, reçu ${withGames.length}`);
+  for (const team of withGames.slice(0, 20)) {
     assert.ok(team.id && team.name && team.code, team.id);
     assert.ok(team.sector === 'collegial' || team.sector === 'universitaire');
     assert.ok(team.lastGame || team.nextGame, `${team.name} sans match`);
   }
+  // Registre appliqué (noms enrichis)
+  const withReg = teams.filter((t) => t.registryId);
+  assert.ok(withReg.length >= 30, `attendu beaucoup de registryId, reçu ${withReg.length}`);
+  const garneau = teams.find((t) => t.code === 'GAR');
+  assert.ok(garneau, 'Garneau présent');
+  assert.ok(garneau.fullName, 'Garneau.fullName depuis le registre');
+});
+
+test('sports-teams.json registre des formations', () => {
+  const reg = JSON.parse(readFileSync(join(ROOT, 'sports-teams.json'), 'utf8'));
+  assert.ok(Array.isArray(reg.teams));
+  assert.ok(reg.teams.length >= 30, `registre trop petit: ${reg.teams.length}`);
+  for (const t of reg.teams) {
+    assert.ok(t.id && t.code && t.shortName && t.sector, t.id);
+    assert.ok(Array.isArray(t.aliases) && t.aliases.length >= 1, t.id);
+  }
+  const { loadSportsTeamsRegistry, resolveSportsTeam } = require(join(ROOT, 'scripts/sports-teams-lib.js'));
+  const loaded = loadSportsTeamsRegistry();
+  const garneau = resolveSportsTeam(loaded, { name: 'Garneau', code: 'GAR', sector: 'collegial' });
+  assert.equal(garneau.matched, true);
+  assert.equal(garneau.shortName, 'Garneau');
+  assert.match(garneau.fullName || '', /Garneau/);
+  assert.equal(garneau.code, 'GAR');
+  const len = resolveSportsTeam(loaded, { name: 'Ch.-Lennoxville', code: 'LEN' });
+  assert.equal(len.matched, true);
+  assert.match(len.fullName || '', /Lennoxville|Champlain/i);
 });
 
 test('fetch-sports.js est du JS Node valide', () => {
-  // Charge sans exécuter main (pas d’export) — juste présence + require syntax via fs
   const src = readFileSync(join(ROOT, 'scripts/fetch-sports.js'), 'utf8');
   assert.match(src, /GetLeagueDiffusion/);
   assert.match(src, /--update/);
   assert.match(src, /SCORE_NONE/);
+  assert.match(src, /loadSportsTeamsRegistry|sports-teams-lib/);
 });
