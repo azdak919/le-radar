@@ -4370,7 +4370,11 @@ body.external-listen-open {
   }
 }
 
-@media (max-width: 1099.98px) {
+/*
+ * Stack 1 col sous 900 px (focus-group midwidth-fil C).
+ * 900–1099 = magazine mid ; ≥1100 = magazine bureau.
+ */
+@media (max-width: 899.98px) {
   /* Crédits photo : figcaption hors du cadre image (overflow/aspect-ratio) */
   .article--lead.has-image .article-media {
     aspect-ratio: auto;
@@ -4412,6 +4416,24 @@ body.external-listen-open {
 
   .article:hover {
     transform: none;
+  }
+}
+
+/* Densité 600–899 (stack) : un peu moins d’air vertical. */
+@media (min-width: 600px) and (max-width: 899.98px) {
+  .news-hero .article--feature,
+  .brief-rail .article--compact,
+  .news-tail .article--standard {
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+  }
+  .news-hero .article--feature.article--thumb.has-image {
+    grid-template-columns: minmax(6rem, 8.5rem) minmax(0, 1fr);
+    column-gap: 0.75rem;
+  }
+  .article--thumb.has-image {
+    grid-template-columns: clamp(72px, 20%, 88px) minmax(0, 1fr);
+    column-gap: 0.75rem;
   }
 }
 
@@ -4726,6 +4748,124 @@ body.external-listen-open {
 }
 .news-tail.is-expanded .news-tail-body::after {
   display: none;
+}
+
+/*
+ * Magazine mid 900–1099 (focus-group midwidth-fil C) — demi-écran / tablette paysage.
+ * Rail En bref 240–280 px ; bureau ≥1100 garde les tracks larges ci-dessous.
+ */
+@media (min-width: 900px) and (max-width: 1099.98px) {
+  .news-list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 280px);
+    column-gap: 0;
+    row-gap: 0;
+    align-items: stretch;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .article {
+    min-width: 0;
+  }
+
+  .article:hover {
+    transform: none;
+  }
+
+  .news-hero {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%;
+    padding-right: 1rem;
+    border-bottom: none;
+    overflow: visible;
+    isolation: isolate;
+  }
+
+  .news-hero .article--lead,
+  .news-hero .article--feature {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .news-hero .article--feature:last-of-type,
+  .news-hero .article--feature:has(+ .news-hero-spacer),
+  .news-hero > .article:last-child {
+    border-bottom: none;
+  }
+
+  .news-hero-spacer {
+    flex: 1 1 auto;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    pointer-events: none;
+  }
+
+  .brief-rail {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%;
+    padding-left: 0.85rem;
+    border-left: 1px solid var(--rule);
+    margin-top: 0;
+  }
+
+  .brief-rail-title {
+    flex: 0 0 auto;
+  }
+
+  .brief-rail .article--compact {
+    flex: 0 0 auto;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .brief-rail .article--compact:last-of-type,
+  .brief-rail .article--compact:has(+ .brief-rail-spacer) {
+    border-bottom: none;
+  }
+
+  .brief-rail-spacer {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .news-tail {
+    grid-column: 1 / -1;
+    border-top: 2px solid var(--rule-strong);
+    padding-top: 6px;
+  }
+
+  .news-hero .article--feature.article--thumb.has-image {
+    grid-template-columns: minmax(6rem, 8.5rem) minmax(0, 1fr);
+    column-gap: 0.75rem;
+  }
+
+  .brief-rail .article--compact.article--thumb.has-image {
+    grid-template-columns: minmax(3.75rem, 5.25rem) minmax(0, 1fr);
+    column-gap: 0.55rem;
+  }
+
+  .news-hero .article--feature .article-title {
+    font-size: 1.32rem;
+    line-height: 1.18;
+  }
+
+  .brief-rail .article--compact .article-title {
+    font-size: 1.08rem;
+    line-height: 1.2;
+  }
+
+  .article--feature {
+    padding: 11px 0;
+  }
 }
 
 @media (min-width: 1100px) {
