@@ -641,7 +641,39 @@ assert(
   styleCss.includes('@keyframes eq-buffer')
     && styleCss.includes('.tuner.is-buffering .tuner-eq span')
     && /is-buffering \.tuner-eq span \{[^}]*var\(--live/.test(styleCss.replace(/\s+/g, ' ')),
-  'style : EQ rouge live en buffering (animation eq-buffer, site + iframe)',
+  'style : EQ rouge live en buffering bureau (animation eq-buffer)',
+);
+// Mobile : ne pas forcer l’EQ en buffering (parité kiosque — spinner play suffit).
+assert(
+  !/\.tuner\.is-buffering \.tuner-eq\s*\{\s*display:\s*flex/.test(styleCss.replace(/\s+/g, ' ')),
+  'style : .tuner.is-buffering ne doit pas forcer display:flex sur .tuner-eq (mobile)',
+);
+// Invitation PWA : carte au-dessus des FABs bas (loupe + flèche), pas collée à bottom:0.
+assert(
+  /\.engage-prompt\s*\{[^}]*var\(--tools-fab/.test(styleCss.replace(/\s+/g, ' ')),
+  'style : .engage-prompt doit réserver la bande des FABs (--tools-fab)',
+);
+assert(
+  /\.engage-prompt\s*\{[^}]*z-index:\s*200/.test(styleCss.replace(/\s+/g, ' ')),
+  'style : .engage-prompt z-index au-dessus de .page-tools (180)',
+);
+// « Plus de sources » : parité kiosque .nav-toggle (padding 8px 12px).
+assert(
+  /\.filters-toggle,\s*\.filters-compact\s*\{[^}]*padding:\s*8px 12px/.test(styleCss.replace(/\s+/g, ' ')),
+  'style : .filters-toggle padding 8px 12px (parité kiosque rubriques)',
+);
+assert(
+  /\.news-tail-toggle\s*\{[^}]*padding:\s*8px 12px/.test(styleCss.replace(/\s+/g, ' ')),
+  'style : .news-tail-toggle padding 8px 12px (parité Plus de sources)',
+);
+// CTA mât : pastille « Sports », crossfade accroche (pas gare).
+assert(
+  /const SPORTS_CTA_TAG\s*=\s*['"]Sports['"]/.test(appJs),
+  'app.js : pastille CTA mât = « Sports » (pas « Au tableau »)',
+);
+assert(
+  appJs.includes('crossfadeSportsCtaLabel') && appJs.includes('is-crossfade'),
+  'app.js : rotation CTA = crossfade du label interne',
 );
 
 console.log(`OK intégrité statique (${htmlFiles.length} pages HTML)`);
