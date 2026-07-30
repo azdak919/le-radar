@@ -3104,10 +3104,29 @@ function sportsLabelReadingMs(text) {
 }
 
 /**
+ * True si le libellé de la puce déborde (marquee nécessaire).
+ * Mesure réelle scrollWidth — ne dépend pas seulement de la classe
+ * (qui peut arriver un frame après le schedule).
+ */
+function sportsChipNeedsMarquee(chip) {
+  if (!chip || sportsReducedMotion) return false;
+  const viewport = chip.querySelector('.sports-chip__line');
+  const inner = chip.querySelector('.sports-chip__line-inner');
+  if (!viewport || !inner) return false;
+  if (chip.classList.contains('is-overflowing')) return true;
+  const prev = inner.style.maxWidth;
+  inner.style.maxWidth = 'none';
+  const overflow = Math.max(0, inner.scrollWidth - viewport.clientWidth);
+  inner.style.maxWidth = prev;
+  return overflow > 2;
+}
+
+/**
  * Temps d’affichage d’un slot avant rotation — assez long pour *apprécier*
  * la carte et enregistrer l’info.
  * · Texte entier visible : dwell = lecture estimée (7,8–11 s).
- * · Texte qui défile : max(lecture, 1 aller-retour marquee + pause repos).
+ * · Texte qui défile : **toujours** 1 aller-retour marquee + pause repos
+ *   (ne jamais changer la carte au milieu du scroll).
  */
 function sportsSlotDwellMs(slot) {
   const chip = MASTHEAD_SPORTS_STRIP?.querySelectorAll('.sports-chip')?.[slot];
@@ -3115,11 +3134,22 @@ function sportsSlotDwellMs(slot) {
   const readMs = sportsLabelReadingMs(label);
   if (sportsReducedMotion) return readMs;
   if (!chip) return SPORTS_READ_MIN_MS;
-  if (chip.classList.contains('is-overflowing')) {
-    // Voir toute la ligne (aller) + revenir au début (retour) + reposer.
+  if (sportsChipNeedsMarquee(chip)) {
+    // Aller (8,5 s) + retour (8,5 s) + pause au début — synchro CSS.
     return Math.max(readMs, SPORTS_SCROLL_ROUND_TRIP_MS + SPORTS_SCROLL_POST_PAUSE_MS);
   }
   return readMs;
+}
+
+/** Délai après rotateSportsSlot avant de re-mesurer / re-planifier le dwell. */
+function sportsSlotSettleMs(slot, replacement) {
+  if (sportsReducedMotion) return 80;
+  if (replacement?.mode === 'cta') {
+    // Sortie + entrée crossfade label.
+    return SPORTS_CTA_CROSSFADE_MS * 2 + 80;
+  }
+  // Sortie is-leaving + entrée is-arriving + layout marquee.
+  return SPORTS_CHIP_LEAVE_MS + SPORTS_ARRIVE_MS + 100;
 }
 
 function clearSportsSlotTimers() {
@@ -3198,7 +3228,7 @@ function rotateSportsSlot(slot) {
     && oldChip.classList.contains('sports-chip--cta')
   ) {
     crossfadeSportsCtaLabel(oldChip, replacement);
-    return;
+    return sportsSlotSettleMs(slot, replacement);
   }
 
   // Scores / prochains : sortie en fondu → entrée en fondu (évite le « clac » gare).
@@ -3206,12 +3236,12 @@ function rotateSportsSlot(slot) {
   if (!oldChip) {
     MASTHEAD_SPORTS_STRIP.append(newChip);
     window.requestAnimationFrame(() => refreshSportsChipScroll(newChip));
-    return;
+    return sportsSlotSettleMs(slot, replacement);
   }
   if (sportsReducedMotion) {
     oldChip.replaceWith(newChip);
     window.requestAnimationFrame(() => refreshSportsChipScroll(newChip));
-    return;
+    return 80;
   }
   // Annuler une sortie en cours sur ce slot.
   if (oldChip._leaveTimer) {
@@ -3228,6 +3258,7 @@ function rotateSportsSlot(slot) {
     // Uniquement cette puce — ne pas relancer le marquee des voisines.
     window.requestAnimationFrame(() => refreshSportsChipScroll(newChip));
   }, SPORTS_CHIP_LEAVE_MS);
+  return sportsSlotSettleMs(slot, replacement);
 }
 
 /** Compat tests / appels historiques : un tick = slot 0 (ou le prochain round-robin). */
@@ -3239,7 +3270,8 @@ function rotateOneSportsCard() {
 
 /**
  * Programme un timeout pour un slot, puis se re-planifie après rotation.
- * Dwell = base, ou aller-retour marquee si is-overflowing.
+ * Dwell = lecture, ou **aller-retour marquee complet + pause** si overflow.
+ * Après rotation : attendre la fin du fondu, mesurer le marquee, puis dwell.
  */
 function scheduleSportsSlot(slot, { initialStagger = 0 } = {}) {
   if (!MASTHEAD_SPORTS_STRIP) return;
@@ -3249,14 +3281,25 @@ function scheduleSportsSlot(slot, { initialStagger = 0 } = {}) {
   }
   const n = sportsVisible.length;
   if (slot < 0 || slot >= n) return;
+  // Mesurer le marquee avant de fixer le dwell (classe peut être absente un instant).
+  const chipNow = MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip')?.[slot];
+  if (chipNow) refreshSportsChipScroll(chipNow);
   const delay = Math.max(0, sportsSlotDwellMs(slot) + initialStagger);
   sportsSlotTimers[slot] = window.setTimeout(() => {
     sportsSlotTimers[slot] = null;
-    rotateSportsSlot(slot);
-    // Après paint + mesure overflow : reprogrammer avec le bon dwell.
-    window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(() => scheduleSportsSlot(slot));
-    });
+    // Ne pas couper un marquee en cours : si overflow encore actif et temps
+    // écoulé trop court, le dwell a déjà inclus l’aller-retour ; on rotate.
+    const settleMs = rotateSportsSlot(slot) || 80;
+    // Attendre sortie+entrée, puis mesurer overflow sur la *nouvelle* carte
+    // avant de reprogrammer le prochain dwell (sinon lecture seule trop courte).
+    sportsSlotTimers[slot] = window.setTimeout(() => {
+      sportsSlotTimers[slot] = null;
+      const chip = MASTHEAD_SPORTS_STRIP?.querySelectorAll('.sports-chip')?.[slot];
+      if (chip) refreshSportsChipScroll(chip);
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => scheduleSportsSlot(slot));
+      });
+    }, settleMs);
   }, delay);
 }
 
