@@ -50,7 +50,10 @@
     "pin-background": "node scripts/pin-background.js",
     "archive": "node scripts/archive-articles.js",
     "archive:update": "node scripts/archive-articles.js --update",
+    "sports:discover": "node scripts/discover-sports.js",
+    "sports:discover:update": "node scripts/discover-sports.js --update",
     "sports:update": "node scripts/fetch-sports.js --update",
+    "sports:refresh": "node scripts/discover-sports.js --update --fetch",
     "sports:check": "node scripts/fetch-sports.js"
   },
   "engines": {

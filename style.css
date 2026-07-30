@@ -823,17 +823,22 @@ a { color: inherit; }
 }
 @media (prefers-reduced-motion: reduce) { .masthead-weather__city.is-overflowing .masthead-weather__name-text { animation: none; } }
 
-/* ── Scoreboard RSEQ / unis QC — sous la barre radio ── */
+/* ── Scoreboard RSEQ / unis QC — sous la barre radio ──
+ * Rythme vertical : 8 px au-dessus et 8 px en dessous des cartes.
+ * Le wire-head qui suit ne rajoute pas de margin-top (voir + .wire). */
 .masthead-sports-strip {
   display: none;
   max-width: var(--maxw);
   margin: 0 auto;
-  /* Haut = bas : même air qu’entre radio et cartes. */
   padding: 8px var(--pad);
   box-sizing: border-box;
   gap: 6px;
   align-items: stretch;
   min-width: 0;
+}
+/* Si le bandeau sports est visible, le fil ne double pas l’air en dessous. */
+.masthead-sports-strip:not([hidden]) + .wire .wire-head {
+  margin-top: 0;
 }
 .masthead-sports-strip:not([hidden]) {
   display: flex;
@@ -920,6 +925,25 @@ a { color: inherit; }
   text-overflow: ellipsis;
   vertical-align: middle;
 }
+/* Défilement L→R du texte trop long (même rythme que la météo masthead). */
+.masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner {
+  max-width: none;
+  overflow: visible;
+  text-overflow: clip;
+  animation: sports-chip-scroll 6.2s ease-in-out infinite alternate;
+}
+@keyframes sports-chip-scroll {
+  0%, 28% { transform: translateX(0); }
+  72%, 100% { transform: translateX(calc(var(--sports-scroll, 0) * -1)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner {
+    animation: none;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
 .masthead-sports-strip .sports-chip__code { font-weight: 800; letter-spacing: 0.03em; }
 .masthead-sports-strip .sports-chip__score {
   font-variant-numeric: tabular-nums;
@@ -942,6 +966,128 @@ a { color: inherit; }
   opacity: 0.88;
   font-weight: 650;
   font-variant-numeric: tabular-nums;
+}
+
+/* ── CTA « Au tableau » — style alerte bandeau (type breaking), thème LE-RADAR.
+ * La carte reste fixe : seuls le halo / bordure et le texte pulse. ── */
+.masthead-sports-strip .sports-chip--cta {
+  /* Un peu plus de place pour pastille + accroche (style alerte bandeau). */
+  flex: 1.2 1 9.5rem;
+  min-width: 9.5rem;
+  justify-content: flex-start;
+  gap: 8px;
+  /* Corps stable : pas de scale ni de pulse sur le fond. */
+  border-color: color-mix(in srgb, #c8102e 62%, rgba(255, 255, 255, 0.2));
+  background:
+    linear-gradient(90deg, color-mix(in srgb, #c8102e 38%, transparent) 0%, transparent 58%),
+    rgba(54, 59, 68, 0.9);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 0 0 rgba(200, 16, 46, 0);
+  animation: sports-cta-ring-pulse 2.6s ease-in-out infinite;
+}
+.masthead-sports-strip .sports-chip--cta:hover {
+  border-color: color-mix(in srgb, #c8102e 78%, rgba(255, 255, 255, 0.28));
+  background:
+    linear-gradient(90deg, color-mix(in srgb, #c8102e 48%, transparent) 0%, transparent 58%),
+    rgba(70, 40, 44, 0.94);
+}
+/* Pastille rouge « AU TABLEAU » — ancre visuelle type BREAKING. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 7px 2px 6px;
+  border-radius: 3px;
+  background: #c8102e;
+  color: #fff;
+  font-size: 9.5px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  box-shadow: 0 0 0 0 rgba(200, 16, 46, 0.55);
+  animation: sports-cta-tag-pulse 2.6s ease-in-out infinite;
+}
+/* Point live à côté du libellé d’alerte. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-live {
+  flex: 0 0 auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+  animation: sports-cta-live-dot 1.4s ease-out infinite;
+}
+/* Titre / accroche à côté de la pastille — pulse de couleur, pas de carte. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: #fff;
+  animation: sports-cta-label-pulse 2.6s ease-in-out infinite;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-chev {
+  flex: 0 0 auto;
+  font-size: 13px;
+  font-weight: 800;
+  color: color-mix(in srgb, #ff8a80 80%, #fff);
+  margin-left: auto;
+  padding-left: 4px;
+  animation: sports-cta-label-pulse 2.6s ease-in-out infinite;
+}
+/* Halo / bordure seulement — la carte ne grossit pas. */
+@keyframes sports-cta-ring-pulse {
+  0%, 100% {
+    border-color: color-mix(in srgb, #c8102e 55%, rgba(255, 255, 255, 0.18));
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 0 0 0 rgba(200, 16, 46, 0),
+      0 0 10px 0 rgba(200, 16, 46, 0.12);
+  }
+  50% {
+    border-color: color-mix(in srgb, #ff3b4a 75%, rgba(255, 255, 255, 0.3));
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 0 0 2px rgba(200, 16, 46, 0.38),
+      0 0 14px 1px rgba(200, 16, 46, 0.32);
+  }
+}
+@keyframes sports-cta-tag-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(200, 16, 46, 0.35);
+    filter: brightness(1);
+  }
+  50% {
+    box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.28);
+    filter: brightness(1.12);
+  }
+}
+@keyframes sports-cta-live-dot {
+  0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.65); opacity: 1; }
+  70% { box-shadow: 0 0 0 5px rgba(255, 255, 255, 0); opacity: 0.85; }
+  100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); opacity: 1; }
+}
+@keyframes sports-cta-label-pulse {
+  0%, 100% { opacity: 0.82; color: rgba(255, 236, 238, 0.92); }
+  50% { opacity: 1; color: #fff; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .masthead-sports-strip .sports-chip--cta,
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag,
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-live,
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label,
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-chev {
+    animation: none;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag {
+    filter: none;
+  }
 }
 /* Mobile : même 8 px haut/bas (pas de padding bas réduit). */
 
@@ -2498,7 +2644,7 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
-  /* Aligné sur le rythme sports (8 px) : moins de vide sous le bandeau. */
+  /* 8 px si pas de bandeau sports (sinon 0 via .masthead-sports-strip + .wire). */
   margin-top: 8px;
   padding-bottom: 6px;
   border-bottom: 2px solid var(--rule-strong);
@@ -2815,12 +2961,10 @@ html[data-translate-busy="1"] .translate-toggle {
 .article-meta--time-only .article-time::before {
   display: none;
 }
-.article--lead .article-eyebrow {
-  margin-bottom: 10px;
-}
+/* Eyebrow / méta une : une seule source de vérité (voir .article-eyebrow plus bas). */
 .article--lead .article-eyebrow + .article-meta {
-  margin-top: -2px;
-  margin-bottom: 6px;
+  margin-top: 0;
+  margin-bottom: 4px;
 }
 .article--lead .article-meta .article-time {
   justify-self: end;
@@ -2829,8 +2973,9 @@ html[data-translate-busy="1"] .translate-toggle {
 /* Source filter chips */
 .filters-panel {
   position: relative;
-  margin: 10px 0 4px;
-  --filters-row-h: 48px;
+  /* Moins d’air sous « Le fil » et avant la une. */
+  margin: 8px 0 2px;
+  --filters-row-h: 42px;
   --filters-cols: 5;
   /* Ordinateur + tablette paysage : une seule rangée ; le reste via « Plus de sources ». */
   --filters-collapsed-rows: 1;
@@ -2858,10 +3003,9 @@ html[data-translate-busy="1"] .translate-toggle {
   /* Hauteur du *titre* seul (pad-top 6px + nom 12px/1.2 ≈ 14px) : cette
      partie du peek reste toujours nette. */
   --filters-title-h: 20px;
-  /* Titre net + un aperçu flouté du nom d'institution en dessous (pas assez
-     pour le lire, juste pour indiquer qu'il y en a un) — sans montrer une
-     rangée pleine en trop (30px) ni rien du tout (10px). */
-  --filters-peek: 34px;
+  /* Peek plus bas : moins de « fausse » 2ᵉ rangée avant « Plus de sources ». */
+  --filters-peek: 22px;
+  --filters-title-h: 16px;
 }
 
 .filters-panel:not(.is-expanded):not(.is-compact) .filters {
@@ -2939,9 +3083,10 @@ html[data-translate-busy="1"] .translate-toggle {
   justify-content: center;
   gap: 6px;
   width: 100%;
-  /* Même respiration que sports strip (8 px) — pas un double gap. */
+  /* Même respiration que sports strip (8 px). */
   margin-top: 6px;
-  padding: 6px 12px;
+  margin-bottom: 0;
+  padding: 5px 12px;
   border: 1px solid var(--rule);
   border-radius: 999px;
   background: var(--bg-soft);
@@ -3397,13 +3542,14 @@ html[data-translate-busy="1"] .translate-toggle {
 }
 @media (min-width: 600px) { .article-title { font-size: 1.6rem; } }
 
-/* ── Lead / À la une ── */
+/* ── Lead / À la une (densité type LE-KIOSQUE démo) ── */
 .article--lead {
-  padding: 12px 0 16px;
+  padding: 10px 0 14px;
   border-bottom: 2px solid var(--rule-strong);
   /* Colonne flex + order : titre toujours au-dessus de la photo, même si le DOM diverge. */
   display: flex;
   flex-direction: column;
+  gap: 0;
 }
 .article--lead > .article-eyebrow { order: 1; }
 .article--lead > .article-meta { order: 2; }
@@ -3412,7 +3558,8 @@ html[data-translate-busy="1"] .translate-toggle {
 .article--lead > .article-media { order: 5; }
 .article--lead > .article-brief { order: 6; }
 
-.article--lead::before { top: 48px; }
+.article--lead::before { top: 40px; }
+/* Espacement eyebrow → source : même bas que .brief-rail-title (padding-bottom 8px). */
 .article-eyebrow {
   display: inline-block;
   font-size: 11px;
@@ -3420,29 +3567,35 @@ html[data-translate-busy="1"] .translate-toggle {
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--accent);
+  margin: 0 0 8px;
+}
+.article--lead .article-eyebrow {
   margin-bottom: 8px;
 }
 .article--lead .article-title {
   /* Toujours < --radar-wordmark-size (voir :root). */
   font-size: var(--radar-lead-title-size);
-  line-height: 1.1;
-  margin-bottom: 4px;
+  line-height: 1.08;
+  margin: 0 0 2px;
 }
-/* Titre → auteur collés ; air avant la photo. */
+/* Titre → auteur → photo : pile serrée (parité Kiosque). */
 .article--lead.has-image .article-title {
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 .article--lead.has-image .article-media {
-  margin-bottom: 10px;
+  margin: 0 0 8px;
 }
 .article--lead .article-byline {
-  font-size: 0.95rem;
-  margin-bottom: 8px;
+  font-size: 0.92rem;
+  margin: 0 0 6px;
 }
 .article--lead .article-brief {
-  font-size: 1.08rem;
-  line-height: 1.6;
+  font-size: 1.05rem;
+  line-height: 1.55;
   max-width: none;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
 /* Vedettes : même longueur d'extrait que la une, typo intermédiaire
@@ -3452,6 +3605,9 @@ html[data-translate-busy="1"] .translate-toggle {
   line-height: 1.52;
   max-width: none;
   color: var(--ink-soft);
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 .news-hero .article--feature .article-brief-text,
 .news-hero .article--feature .article-brief.is-truncated .article-brief-text,
@@ -3487,6 +3643,16 @@ html[data-translate-busy="1"] .translate-toggle {
   line-height: 1.45;
   color: var(--ink-soft);
   margin-top: 0;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+/* Corps de texte des extraits (toutes cartes) */
+.article-brief,
+.article-brief-text {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 .brief-rail .article--compact .article-brief-text {
   display: -webkit-box;
@@ -3505,8 +3671,12 @@ html[data-translate-busy="1"] .translate-toggle {
   display: block;
   grid-template-columns: none;
 }
+/* Garder la grille méta (source | date) — display:block cassait l’alignement droite. */
 .brief-rail .article--compact.article--thumb.has-image > .article-meta {
-  display: block;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  column-gap: 8px;
   margin-bottom: 3px;
 }
 .brief-rail .article--compact.article--thumb.has-image > .article-title {
@@ -3630,13 +3800,84 @@ html[data-translate-busy="1"] .translate-toggle {
   overflow-wrap: anywhere;
   word-break: break-word;
 }
-/* Vedettes (2 features) : clairement plus grandes que En bref, mais toujours
-   en vignette à gauche — jamais pleine largeur comme À la une (~16:9). */
+/*
+ * Vedettes (2 features) — float wrap comme En bref / démo LE-KIOSQUE :
+ * le texte enroule sous la vignette (plus d’espace perdu à droite de la photo).
+ * Toutes largeurs ; la une reste en colonne 16:9.
+ */
 .news-hero .article--feature.article--thumb.has-image {
-  grid-template-columns: clamp(96px, 30vw, 128px) minmax(0, 1fr);
-  column-gap: 14px;
+  display: block;
+  grid-template-columns: none;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+/* Garder la grille méta (source | date) — display:block collait date à l’institution. */
+.news-hero .article--feature.article--thumb.has-image > .article-meta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  column-gap: 8px;
+  margin-bottom: 4px;
+}
+.news-hero .article--feature.article--thumb.has-image > .article-meta .article-time {
+  grid-row: 1;
+  grid-column: 2;
+  justify-self: end;
+  text-align: right;
+  align-self: start;
+  white-space: nowrap;
+}
+.news-hero .article--feature.article--thumb.has-image > .article-meta .article-time::before {
+  display: none;
+}
+.news-hero .article--feature.article--thumb.has-image > .article-title {
+  display: block;
+  margin-bottom: 4px;
+}
+.news-hero .article--feature.article--thumb.has-image > .article-byline {
+  display: block;
+  margin: 0 0 6px;
+}
+.news-hero .article--feature.article--thumb.has-image > .article-media {
+  float: left;
+  width: clamp(96px, 30vw, 128px);
+  margin: 2px 14px 4px 0;
+  shape-outside: margin-box;
+  grid-column: auto;
+  grid-row: auto;
+  aspect-ratio: auto;
+  overflow: visible;
+  background: transparent;
+}
+.news-hero .article--feature.article--thumb.has-image > .article-title,
+.news-hero .article--feature.article--thumb.has-image > .article-byline,
+.news-hero .article--feature.article--thumb.has-image > .article-brief {
+  grid-column: auto;
+}
+.news-hero .article--feature.article--thumb.has-image > .article-brief {
+  display: block;
+  overflow: visible;
+  margin-top: 0;
+  min-height: clamp(96px, 30vw, 128px);
+  max-width: none;
+}
+.news-hero .article--feature.article--thumb.has-image .article-brief-text,
+.news-hero .article--feature.article--thumb.has-image .article-brief.is-truncated .article-brief-text {
+  display: inline;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+  -webkit-box-orient: initial;
+}
+.news-hero .article--feature.article--thumb.has-image::after {
+  content: "";
+  display: table;
+  clear: both;
 }
 .news-hero .article--feature.article--thumb.has-image .article-media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
   border-radius: 7px;
 }
 .news-hero .article--feature.article--thumb.has-image .article-media-credit {
@@ -3645,7 +3886,7 @@ html[data-translate-busy="1"] .translate-toggle {
 }
 
 @media (min-width: 601px) {
-  /* En bref : petite vignette */
+  /* En bref / suite : petite vignette grille (hors float En bref). */
   .article--thumb.has-image {
     grid-template-columns: clamp(72px, 22%, 110px) minmax(0, 1fr);
     column-gap: 14px;
@@ -3658,21 +3899,26 @@ html[data-translate-busy="1"] .translate-toggle {
     line-height: 1.3;
     -webkit-line-clamp: 3;
   }
-  /* Features : ~1,4–1,5× En bref ; plafond loin de la une */
-  .news-hero .article--feature.article--thumb.has-image {
-    grid-template-columns: clamp(128px, 34%, 168px) minmax(0, 1fr);
-    column-gap: 16px;
+  /* Vedettes : ~1,4× En bref */
+  .news-hero .article--feature.article--thumb.has-image > .article-media {
+    width: clamp(128px, 34%, 168px);
+  }
+  .news-hero .article--feature.article--thumb.has-image > .article-brief {
+    min-height: clamp(128px, 34%, 168px);
   }
   .news-hero .article--feature.article--thumb.has-image .article-media-credit {
     font-size: 0.62rem;
   }
 }
 
-/* Desktop magazine : features un cran plus présentes, toujours sous la une */
+/* Desktop magazine : vignette un cran plus présente */
 @media (min-width: 1100px) {
-  .news-hero .article--feature.article--thumb.has-image {
-    grid-template-columns: clamp(140px, 36%, 184px) minmax(0, 1fr);
-    column-gap: 18px;
+  .news-hero .article--feature.article--thumb.has-image > .article-media {
+    width: clamp(140px, 36%, 184px);
+    margin: 2px 16px 4px 0;
+  }
+  .news-hero .article--feature.article--thumb.has-image > .article-brief {
+    min-height: clamp(140px, 36%, 184px);
   }
 }
 
@@ -4522,8 +4768,7 @@ body.external-listen-open {
   :root { --pad: 18px; }
   /* Filet reste dans le flux (left:0) — plus de left négatif iPad/téléphone */
 
-  /* Cartes avec vignette : un peu moins de padding vertical pour compenser
-     la hauteur crédit photo, sans écraser le bloc texte. */
+  /* Cartes avec vignette : padding vertical un peu plus bas. */
   .brief-rail .article--compact.article--thumb.has-image,
   .news-hero .article--feature.article--thumb.has-image {
     padding-top: 11px;
@@ -4535,70 +4780,12 @@ body.external-listen-open {
     padding-right: 0;
   }
 
-  /*
-   * Vedettes (parité LE-KIOSQUE) : float gauche + extrait qui enroule sous
-   * la photo. La une reste en colonne (16:9 pleine largeur).
-   */
-  .news-hero .article--feature.article--thumb.has-image {
-    display: block;
-    grid-template-columns: none;
-  }
-  .news-hero .article--feature.article--thumb.has-image > .article-meta {
-    display: block;
-    margin-bottom: 6px;
-  }
-  .news-hero .article--feature.article--thumb.has-image > .article-title {
-    display: block;
-    margin-bottom: 4px;
-  }
-  .news-hero .article--feature.article--thumb.has-image > .article-byline {
-    display: block;
-    margin: 0 0 8px;
-  }
+  /* Vedettes mobile : vignette un cran plus petite (float déjà global). */
   .news-hero .article--feature.article--thumb.has-image > .article-media {
-    float: left;
     width: clamp(92px, 28vw, 118px);
-    margin: 2px 14px 4px 0;
-    shape-outside: margin-box;
-    grid-column: auto;
-    grid-row: auto;
-    aspect-ratio: auto;
-    overflow: visible;
-    background: transparent;
-  }
-  .news-hero .article--feature.article--thumb.has-image > .article-title,
-  .news-hero .article--feature.article--thumb.has-image > .article-byline,
-  .news-hero .article--feature.article--thumb.has-image > .article-brief {
-    grid-column: auto;
   }
   .news-hero .article--feature.article--thumb.has-image > .article-brief {
-    display: block;
-    overflow: visible;
-    margin-top: 0;
     min-height: clamp(92px, 28vw, 118px);
-  }
-  .news-hero .article--feature.article--thumb.has-image > .article-brief,
-  .news-hero .article--feature.article--thumb.has-image .article-brief-text {
-    max-width: none;
-  }
-  .news-hero .article--feature.article--thumb.has-image .article-brief-text,
-  .news-hero .article--feature.article--thumb.has-image .article-brief.is-truncated .article-brief-text {
-    display: inline;
-    -webkit-line-clamp: unset;
-    overflow: visible;
-    -webkit-box-orient: initial;
-  }
-  .news-hero .article--feature.article--thumb.has-image::after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-  .news-hero .article--feature.article--thumb.has-image .article-media img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    border-radius: 7px;
   }
 }
 
@@ -4993,8 +5180,9 @@ body.external-listen-open {
 
   .news-hero .article--lead {
     flex: 0 0 auto;
-    padding-top: 20px;
-    padding-bottom: 18px;
+    /* Densité type démo LE-KIOSQUE (ne pas ré-aérer la une). */
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
 
   .news-hero .article--feature {
@@ -5017,12 +5205,12 @@ body.external-listen-open {
   }
 
   .article--lead {
-    padding-top: 20px;
-    padding-bottom: 18px;
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
 
   .article--lead::before {
-    top: 58px;
+    top: 42px;
   }
 
   .news-list[data-hero="text"] .article--lead {
@@ -5043,7 +5231,7 @@ body.external-listen-open {
   }
 
   .news-list[data-hero="image"] .article--lead.has-image .article-media {
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     aspect-ratio: auto;
     overflow: visible;
   }
@@ -5061,7 +5249,7 @@ body.external-listen-open {
   /* Titre au-dessus de l'image — pas de marge « sous photo ». */
   .news-list[data-hero="image"] .article--lead.has-image .article-title {
     margin-top: 0;
-    margin-bottom: 14px;
+    margin-bottom: 6px;
   }
 
   .news-list[data-hero="image"]:not([data-mode="source"]) .article--lead .article-title {
@@ -5108,11 +5296,11 @@ body.external-listen-open {
   }
 
   .news-hero .article--feature {
-    padding: 16px 0;
+    padding: 12px 0;
   }
 
   .article--feature {
-    padding: 16px 32px 16px 0;
+    padding: 12px 32px 12px 0;
   }
 
   .article--feature .article-title {
@@ -5122,7 +5310,7 @@ body.external-listen-open {
   }
 
   .article--feature .article-byline {
-    margin: 0 0 10px;
+    margin: 0 0 6px;
   }
 
   /* Suite du fil : pleine largeur sous le bloc magazine */

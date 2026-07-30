@@ -15,9 +15,9 @@ Garder ce document et le code synchronisés.
 | **Nom** | LE-RADAR |
 | **Signature institutionnelle** | Le Réseau Académique de Découverte et d'Agrégation de Ressources |
 | **Forme courante** | Le Radar (texte courant, pastille « toutes les sources ») |
-| **Slogan (FR)** | Les journaux et les radios étudiantes du Québec, réunis au même endroit |
+| **Slogan (FR)** | Journaux, radios et sports étudiants du Québec, réunis au même endroit |
 | **Slogan (EN)** | Student media on your radar |
-| **Nature** | Agrégateur des **radios** et **journaux étudiants** des cégeps et universités du Québec |
+| **Nature** | Agrégateur des **journaux**, **radios** et **sports étudiants** des cégeps et universités du Québec |
 | **Ton** | Indépendant, jeune, éditorial. Français québécois, ouvert au bilingue (sources FR + EN). |
 
 **Pourquoi « LE-RADAR » :** nom bilingue (identique FR/EN), évoque « être sur le radar »

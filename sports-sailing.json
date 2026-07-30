@@ -1,0 +1,72 @@
+{
+  "description": "Voile campus — Québec seulement. ICSA = scores réels. watchlist = clubs QC sans feed ICSA (ou à venir).",
+  "region": "QC",
+  "icsaBase": "https://scores.collegesailing.org/schools/",
+  "schools": [
+    {
+      "slug": "mcgill",
+      "registryId": "mcgill",
+      "name": "McGill University",
+      "shortName": "McGill",
+      "code": "MCG",
+      "sector": "universitaire",
+      "conference": "NEISA",
+      "status": "icsa",
+      "province": "QC",
+      "lastSeen": "2026-07-30T02:41:20.973Z"
+    }
+  ],
+  "watchlist": [
+    {
+      "registryId": "udem",
+      "name": "Université de Montréal",
+      "shortName": "Montréal",
+      "code": "MTL",
+      "sector": "universitaire",
+      "status": "club",
+      "province": "QC",
+      "note": "Club de voile campus signalé ; pas d’équipe ICSA publique pour l’instant.",
+      "icsaSlugCandidates": [
+        "montreal",
+        "udem",
+        "universite-de-montreal",
+        "montreal-u"
+      ],
+      "lastChecked": "2026-07-30T02:41:21.791Z"
+    },
+    {
+      "registryId": "usherbrooke",
+      "name": "Université de Sherbrooke",
+      "shortName": "Sherbrooke",
+      "code": "USHE",
+      "sector": "universitaire",
+      "status": "club",
+      "province": "QC",
+      "note": "Activité voile / nautisme régional à surveiller (pas d’ICSA public).",
+      "icsaSlugCandidates": [
+        "sherbrooke",
+        "sherbrooke-u",
+        "udes"
+      ],
+      "lastChecked": "2026-07-30T02:41:22.405Z"
+    },
+    {
+      "registryId": "ulaval",
+      "name": "Université Laval",
+      "shortName": "Laval",
+      "code": "LAV",
+      "sector": "universitaire",
+      "status": "upcoming",
+      "province": "QC",
+      "note": "Équipe de voile annoncée pour une prochaine session — découverte ICSA en attente.",
+      "icsaSlugCandidates": [
+        "laval",
+        "ulaval",
+        "universite-laval",
+        "quebec-laval"
+      ],
+      "lastChecked": "2026-07-30T02:41:23.225Z"
+    }
+  ],
+  "updated": "2026-07-30T02:41:23.226Z"
+}

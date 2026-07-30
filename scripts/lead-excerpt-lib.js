@@ -172,6 +172,11 @@ function normalizeLeadParagraph(text = '') {
   s = s.replace(/\s*The\s+post\b[\s\S]*?appeared first on[\s\S]*$/i, '');
   s = s.replace(/\[[^\]]*(?:read more|lire la suite|continue reading)[^\]]*\]/gi, '');
   s = s.replace(/\b(?:read more|lire la suite|continue reading)\b\.?\s*$/i, '');
+  // Crédits photo collés en fin de chapô (ex. « …Pierre. (Photo : Léa Morin-Letort) »)
+  s = s.replace(/\s*\(\s*(?:Photo(?:\s*credit)?|Crédit(?:\s*photo)?|Credit|Image|Illustration)\s*:\s*[^)]+\)\.?\s*/gi, ' ');
+  s = s.replace(/(?:^|[.\s])(?:Photo(?:\s*credit)?|Crédit(?:\s*photo)?|Credit|Image|Illustration)\s*:\s*[^.!?\n(]{2,80}\.?\s*/gi, ' ');
+  s = s.replace(/([.!?»"')\]])\s+[\p{L}'’]{1,18}\s*$/u, '$1');
+  s = s.replace(/\.\s*\./g, '.');
   // WP has-drop-cap : première lettre détachée (« L e 18… »)
   s = s.replace(/^([\p{Lu}])\s+([''’])/u, '$1$2').replace(/^([\p{Lu}])\s+([\p{Ll}])/u, '$1$2');
   const byline = extractBylineFromText(s);

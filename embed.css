@@ -178,22 +178,17 @@ html[data-embed="tuner"] .tuner.is-playing .tuner-onair::before {
   animation: onairPulse 1.6s ease-out infinite;
 }
 
-/* Attribution le-radar.ca — bas-droite de #tuner (enfant direct, hors flex). */
+/* Attribution le-radar.ca — sous EN ONDES (flux .tuner-label), bureau. */
 html[data-embed="tuner"] .tuner {
   position: relative;
 }
-html[data-embed="tuner"] .tuner > .tuner-embed-credit {
-  position: absolute;
-  right: max(6px, env(safe-area-inset-right, 0px));
-  bottom: 3px;
-  left: auto;
-  top: auto;
-  z-index: 4;
+html[data-embed="tuner"] .tuner-embed-credit {
   display: inline-flex;
   align-items: center;
   gap: 3px;
   margin: 0;
-  padding: 0;
+  /* Aligne sous le texte EN ONDES, pas sous le point live. */
+  padding: 0 0 0 13px;
   font-family: var(--sans, Inter, system-ui, sans-serif);
   font-size: 8.5px;
   font-weight: 600;
@@ -206,23 +201,15 @@ html[data-embed="tuner"] .tuner > .tuner-embed-credit {
   transition: color 140ms ease, opacity 140ms ease;
   pointer-events: auto;
 }
-/* Repli si le crédit est encore dans .tuner-label (caches / forks). */
-html[data-embed="tuner"] .tuner-embed-credit {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  margin: 0;
+/* Repli si un fork a encore le crédit en enfant direct de #tuner. */
+html[data-embed="tuner"] .tuner > .tuner-embed-credit {
+  position: absolute;
+  right: max(6px, env(safe-area-inset-right, 0px));
+  bottom: 3px;
+  left: auto;
+  top: auto;
+  z-index: 4;
   padding: 0;
-  font-family: var(--sans, Inter, system-ui, sans-serif);
-  font-size: 8.5px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: lowercase;
-  text-decoration: none;
-  color: var(--embed-radio);
-  white-space: nowrap;
-  line-height: 1.1;
-  transition: color 140ms ease, opacity 140ms ease;
 }
 
 html[data-embed="tuner"] .tuner-embed-credit-emoji,
@@ -848,6 +835,10 @@ html[data-embed="tuner"] .toast {
   .tuner-label {
     display: none !important;
   }
+  /* Kiosque : ne pas masquer le crédit avec le label. */
+  html[data-surface="kiosque-v1"] .tuner-label {
+    display: flex !important;
+  }
 }
 
 /* Iframe < ~640 px : une seule colonne (synthé), antenne masquée */
@@ -870,6 +861,10 @@ html[data-embed="tuner"] .toast {
 
   html[data-embed="tuner"] .tuner-label {
     display: none !important;
+  }
+  /* Kiosque : garder le label (crédit sous EN ONDES ou bas-droite mobile). */
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-label {
+    display: flex !important;
   }
 }
 
@@ -916,7 +911,7 @@ html[data-embed="tuner"] .toast {
 /* ═══════════════════════════════════════════════════════════════════════════
    kiosque-v1 — parité avec la barre bureau de le-radar.ca
    Embed legacy (Pomo/Solitaire, sans surface=) : règles ci-dessus, 62 px.
-   Seul écart volontaire pour le journal : crédit le-radar.ca en bas à droite.
+   Crédit le-radar.ca : sous EN ONDES (bureau) ; bas-droite (mobile, label masqué).
    ═══════════════════════════════════════════════════════════════════════════ */
 html[data-embed="tuner"][data-surface="kiosque-v1"] {
   /* Réaffirme la stack site (évite tout héritage system-ui dans le journal). */
@@ -1408,9 +1403,8 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-track {
 }
 
 /*
- * Crédit le-radar.ca — enfant direct de #tuner, bas-droite de la barre.
- * (Plus dans .tuner-label : le width:0 mobile cassait le containing block.)
- * z-index < volume (10) et < popover (20).
+ * Crédit le-radar.ca (kiosque bureau) : dans .tuner-label, sous EN ONDES.
+ * z-index volume reste au-dessus pour le tap.
  */
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
   position: relative;
@@ -1420,34 +1414,33 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-label {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0;
+  justify-content: center;
+  gap: 2px;
 }
-html[data-embed="tuner"][data-surface="kiosque-v1"] > .tuner .tuner-embed-credit,
-html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner > .tuner-embed-credit {
-  position: absolute !important;
-  right: max(6px, env(safe-area-inset-right, 0px)) !important;
-  bottom: 2px !important;
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-label .tuner-embed-credit {
+  position: static !important;
+  right: auto !important;
+  bottom: auto !important;
   left: auto !important;
   top: auto !important;
-  z-index: 4;
   display: inline-flex !important;
   align-items: center;
   gap: 3px;
   margin: 0 !important;
-  padding: 0 !important;
-  max-width: min(48%, 10rem);
+  padding: 0 0 0 13px !important; /* sous le libellé, pas sous le point */
+  max-width: none;
   font-size: 8.5px;
   font-weight: 650;
   letter-spacing: 0.04em;
-  line-height: 1;
-  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.1;
+  color: var(--embed-radio, #8eb8ff);
   opacity: 0.95;
   pointer-events: auto;
   transform: none !important;
 }
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-embed-credit:hover,
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-embed-credit:focus-visible {
-  color: rgba(255, 255, 255, 0.92);
+  color: color-mix(in srgb, var(--embed-radio, #8eb8ff) 88%, #fff);
 }
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-embed-credit-emoji,
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-embed-credit .app-emoji {
@@ -1480,19 +1473,33 @@ html[data-embed="tuner"][data-surface="kiosque-v1"]:has(.tuner-vol.is-open) .tun
     --embed-pad: 12px;
   }
 
-  /* EN ONDES trop large sur téléphone. */
-  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-label {
-    display: none !important;
-  }
+  /* EN ONDES trop large sur téléphone — on garde le label pour le crédit. */
   html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-onair {
     display: none !important;
   }
-  /* Coin bas-droit réel de la barre mobile. */
-  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner > .tuner-embed-credit {
-    right: max(6px, env(safe-area-inset-right, 0px)) !important;
-    bottom: 3px !important;
-    font-size: 8px;
-    max-width: min(44%, 9rem);
+  /*
+   * Mobile : le crédit (dans .tuner-label) part en bas-droite de la barre.
+   * On ne masque pas tout le label (sinon le crédit disparaît).
+   */
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-label {
+    display: flex !important;
+    position: absolute;
+    right: max(6px, env(safe-area-inset-right, 0px));
+    bottom: 3px;
+    left: auto;
+    top: auto;
+    z-index: 4;
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+    pointer-events: none;
+  }
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-label .tuner-embed-credit {
+    position: static !important;
+    padding: 0 !important;
+    font-size: 8px !important;
+    max-width: min(44vw, 9rem);
+    pointer-events: auto;
   }
 
   html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol {

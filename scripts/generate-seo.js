@@ -45,11 +45,12 @@ const ARCHIVE_SITEMAP_PATH = path.join(ROOT, 'sitemap-archives.xml');
 const LLMS_PATH = path.join(ROOT, 'llms.txt');
 const INSTITUTIONS_PATH = path.join(ROOT, 'institutions.json');
 const SCHEDULES_PATH = path.join(ROOT, 'radio-schedules.json');
+const SPORTS_PATH = path.join(ROOT, 'sports.json');
 const ARCHIVE_PATH = path.join(ROOT, 'news-archive.json');
 const ARCHIVE_CONFIG_PATH = path.join(ROOT, 'historical-catalog.config.json');
 
 /** Dossiers entièrement générés : purgés puis réécrits à chaque passe. */
-const GENERATED_DIRS = ['radios', 'journaux', 'etablissements', 'medias', 'horaires', 'en', 'archives'];
+const GENERATED_DIRS = ['radios', 'journaux', 'etablissements', 'medias', 'horaires', 'sports', 'en', 'archives'];
 
 /** Nombre de manchettes prérendues. Assez pour être substantiel, assez peu
  *  pour que le diff des bots horaires reste lisible. */
@@ -349,8 +350,11 @@ ${instLines.join('\n') || '- (aucun)'}
 ## Pages de référence
 
 - ${SITE_BASE}/medias/ : annuaire complet, par établissement
+- ${SITE_BASE}/horaires/ : grilles des radios étudiantes
+- ${SITE_BASE}/sports/ : tableau des scores RSEQ (collégial et universitaire)
 - ${SITE_BASE}/en/ : présentation en anglais (pour les personnes étudiantes internationales au Québec)
 - ${SITE_BASE}/en/media/ : annuaire en anglais
+- ${SITE_BASE}/en/sports/ : scoreboard in English
 ${historicalSample ? `- ${SITE_BASE}/archives/ : catalogue historique expérimental (${historicalSample} entrées vérifiées, sans republication intégrale)` : ''}
 
 ## Données ouvertes (sans JavaScript, directement analysables)
@@ -359,6 +363,7 @@ ${historicalSample ? `- ${SITE_BASE}/archives/ : catalogue historique expérimen
 - ${SITE_BASE}/radios.json : registre des radios étudiantes (fréquence, établissement, ville, flux)
 - ${SITE_BASE}/news-sources.json : registre des journaux étudiants suivis
 - ${SITE_BASE}/institutions.json : catalogue des établissements d'enseignement supérieur du Québec
+- ${SITE_BASE}/sports.json : formations et matchs RSEQ (collégial + universitaire)
 - ${SITE_BASE}/feed.xml : flux RSS du fil étudiant
 - ${SITE_BASE}/sitemap.xml : plan du site
 ${historicalSample ? `- ${SITE_BASE}/sitemap-archives.xml : sitemap séparé du catalogue historique expérimental` : ''}
@@ -496,6 +501,7 @@ function main() {
     news: items,
     institutions: readJson(INSTITUTIONS_PATH, {}).institutions || [],
     schedules: readJson(SCHEDULES_PATH, {}).stations || {},
+    sports: readJson(SPORTS_PATH, {}),
     siteBase: SITE_BASE,
     archivePaths: archive.sourcePaths,
   });

@@ -32,6 +32,58 @@
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../../../style.css" />
     <link rel="stylesheet" href="../../../seo-pages.css" />
+    <!--
+      CSS critique du synthé bureau : réserve « À l'antenne » + volume compact
+      dès le premier paint (avant le CSS mis en cache / le JS async).
+    -->
+    <style>
+      @media (min-width: 1100px) {
+        .tuner-inner {
+          display: grid !important;
+          grid-template-columns: minmax(0, 1.15fr) minmax(300px, 370px) !important;
+          gap: 0 !important;
+          align-items: center !important;
+          max-width: 1180px;
+        }
+        .tuner-controls { grid-column: 1; min-width: 0; }
+        .tuner-actions { margin-left: 0 !important; flex-shrink: 0; }
+        .tuner-nowair {
+          grid-column: 2;
+          display: flex !important;
+          flex-direction: row !important;
+          align-items: flex-start !important;
+          gap: 10px;
+          width: 100% !important;
+          min-width: 0;
+          padding-left: 20px;
+          border-left: none !important;
+          opacity: 1 !important;
+          pointer-events: auto !important;
+          box-sizing: border-box;
+        }
+        .tuner-nowair-body {
+          flex: 1 1 auto !important;
+          min-width: 0 !important;
+          opacity: 1 !important;
+        }
+        .tuner-vol {
+          flex: 0 0 auto !important;
+          max-width: 168px !important;
+          min-width: 0 !important;
+        }
+        .tuner-vol-slot {
+          display: flex !important;
+          align-items: center;
+          max-width: 120px !important;
+        }
+        .tuner-vol-track {
+          width: 112px !important;
+          max-width: 112px !important;
+          min-width: 96px !important;
+          flex: 0 0 112px !important;
+        }
+      }
+    </style>
     <script src="../../../seo-page-theme.js"></script>
     <script src="../../../nav-shell.js" defer></script>
     <script src="../../../cast.js" defer></script>
@@ -52,7 +104,7 @@
         <div class="masthead-brand">
           <a href="../../../" class="wordmark">
             <span class="wordmark-mark"><img class="wordmark-logo" src="../../../assets/icon.svg" width="48" height="48" alt="" aria-hidden="true"><span class="wordmark-brand notranslate" translate="no">LE-RADAR.ca</span></span>
-            <span class="wordmark-full">Québec student newspapers and campus radio, all in one place</span>
+            <span class="wordmark-full">Québec student newspapers, campus radio and sports, all in one place</span>
           </a>
         </div>
       </div>
@@ -152,6 +204,10 @@
       </div>
     </div>
 
+    <!-- Lecteur natif : requis pour la lecture en arrière-plan (écran verrouillé). -->
+    <audio id="radar-player" class="sr-only" preload="none" playsinline webkit-playsinline x-webkit-airplay="allow" aria-hidden="true"></audio>
+
+
     <main class="wire seo-wire">
       <nav class="seo-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><a href="../../../en/media/">Student media</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><span aria-current="page">Université du Québec à Montréal</span></nav>
       <p class="seo-eyebrow">Institutions</p>
@@ -188,6 +244,8 @@
         <a href="../../../en/media/">All Québec student media</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../../en/schedules/">Campus radio schedules</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../../en/sports/" data-sports-reset>Scoreboard</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../../archives/">Archives</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>

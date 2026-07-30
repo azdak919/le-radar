@@ -1,0 +1,2795 @@
+{
+  "description": "Registre des formations sportives RSEQ (collégial + universitaire QC) pour LE-RADAR. shortName = libellé puce/tableau ; fullName = établissement ; nickname = surnom d'équipe si connu. aliases + rseqTeamIds servent à rattacher le flux S1.",
+  "source": "curated + sports.json (rseq-s1)",
+  "updated": "2026-07-30T02:41:56.006Z",
+  "teamCount": 84,
+  "teams": [
+    {
+      "id": "ulaval",
+      "code": "LAV",
+      "sector": "universitaire",
+      "shortName": "Laval",
+      "fullName": "Université Laval",
+      "nickname": "Rouge et Or",
+      "aliases": [
+        "Laval",
+        "LAV",
+        "ULaval",
+        "U. Laval"
+      ],
+      "priority": 1,
+      "sports": [
+        "athletisme",
+        "badminton",
+        "basketball",
+        "cheerleading",
+        "cross-country",
+        "flag-football",
+        "football",
+        "golf",
+        "hockey",
+        "natation",
+        "rugby",
+        "sailing",
+        "soccer",
+        "soccer-interieur",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "2f98c3ef-7627-4b7d-8933-f497c21c3cf9",
+        "4597b5c1-78ec-469d-92ce-afcb0546351b",
+        "ada42b41-7c83-4b45-9386-3e62ffab6206",
+        "f1a1590d-7899-46a7-8a8f-de63270062c0",
+        "ac21da40-660a-4cee-b532-1c8b3637342d",
+        "2746c1b7-eb9e-41ed-9d56-f28b9b64c792",
+        "774e3a85-9ec0-49ca-8ebb-4529a0c54989",
+        "3b5ce58d-ce2e-4720-bfcc-f5ced46a2cb7",
+        "0cb66fbc-1d50-491a-b87c-1f6bb9d94139",
+        "1f939c0c-40ed-4f87-a833-c123bae9781c",
+        "ba18688e-4d0a-4591-9c65-9eed00a62379",
+        "e65ae8f1-e0a7-41bf-ba5b-89df4168a4e1",
+        "c4e4f09d-9e22-44c7-8bd1-5862bf89868c",
+        "517478b7-b696-410d-90eb-926999e40d3b",
+        "70637b28-26db-40c9-a1db-716e504e45b6",
+        "c75e77f3-a2aa-471f-ae76-1f160c7d562c",
+        "53543aa9-9a6c-443d-b9c9-9fe34e4111c0",
+        "d1d71a75-3425-4fd1-90ea-edb17726c2d9",
+        "6ed334e6-ac52-428c-ba21-42de67c337f5",
+        "6d34e3ee-1fb1-4a60-91ef-235241bd79df",
+        "70fa06db-d625-4c8c-b1d1-08d645bcfa2d",
+        "1f15dcbb-6b6d-6a50-8317-06a08a8b9e2f",
+        "LAV"
+      ]
+    },
+    {
+      "id": "mcgill",
+      "code": "MCG",
+      "sector": "universitaire",
+      "shortName": "McGill",
+      "fullName": "Université McGill",
+      "nickname": "Redbirds",
+      "aliases": [
+        "McGill",
+        "MCG"
+      ],
+      "priority": 2,
+      "sports": [
+        "basketball",
+        "cheerleading",
+        "cross-country",
+        "flag-football",
+        "football",
+        "hockey",
+        "natation",
+        "rugby",
+        "sailing",
+        "soccer",
+        "soccer-interieur",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "3370de45-2cfb-4007-af50-d0b83afe36e6",
+        "5ca94d05-bed5-46bc-85b9-be6fc69eaec1",
+        "f2b92cbf-7cd2-439d-875e-b169248c62c1",
+        "dfee85d0-adbe-434d-8bfc-5150ada604a9",
+        "6157a449-142d-4909-b26e-41b2f5576786",
+        "93198a8b-f305-4435-84e2-d3dc48aae9e6",
+        "9c309735-f109-404c-9f6e-9ee1621fb2c1",
+        "c4e1032f-aa88-4a8b-87dd-c4c773ed980a",
+        "980a1335-d42a-4d68-b992-c6cf2dcd3bf3",
+        "7f567349-af43-49e5-a07d-f9747997a1e3",
+        "6cad5550-80f3-4ec3-8de8-c53bb6cffcb1",
+        "8da1c885-51ab-48a0-ae71-e7c01f97f8d7",
+        "b82a088d-fb34-466e-8612-76d77947c78b",
+        "f5829bd6-4406-41d4-b1f0-babd05fdb1cb",
+        "86bf569b-acec-4087-a738-9355c68dc222",
+        "1f15dcb8-8519-6290-9bd8-0293bf2c2559",
+        "MCG"
+      ]
+    },
+    {
+      "id": "concordia",
+      "code": "UCON",
+      "sector": "universitaire",
+      "shortName": "Concordia",
+      "fullName": "Université Concordia",
+      "nickname": "Stingers",
+      "aliases": [
+        "Concordia",
+        "UCON",
+        "CONCORDIA UNIVERSITY",
+        "CON",
+        "Concordia University"
+      ],
+      "priority": 3,
+      "sports": [
+        "athletisme",
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "football",
+        "golf",
+        "hockey",
+        "rugby",
+        "soccer",
+        "soccer-interieur"
+      ],
+      "rseqTeamIds": [
+        "1ccc45dd-8f8e-415f-b7e9-8d8b149d8ed5",
+        "26271cd6-bce1-44ff-9bd2-830e7b66139c",
+        "dc08dc63-1b69-4aa2-86f8-b444a532f39c",
+        "1b23dbca-26a3-4d17-bbce-d7341b9463aa",
+        "06a6ebe1-34be-40f2-883a-81338a65195e",
+        "506592f6-2f7c-4d43-972b-94f18374c500",
+        "0727ec7e-da62-4ddb-88f0-726af5cfc8d4",
+        "f37c5f1e-0c9b-4b6d-860f-10f1377e9578",
+        "d0b63533-e9d4-417e-a481-0232b392242e",
+        "76af97bf-e5b5-4498-9236-3870c0ef517c",
+        "fa51f119-1b35-4ff9-83f9-0fe9a1a3cb41",
+        "b01d3f40-cdba-41a7-a334-82e5bbac4e45",
+        "4ead91a4-c0f9-448c-ae65-aefa11e2efe0",
+        "3470444a-361e-470d-aba5-1f2ac64d670a",
+        "d20c4f76-6b0a-42fb-babb-2fcc6411612f",
+        "72deeba3-0450-433c-a32b-0310497addfc",
+        "1f15dcb4-2202-6a5c-9208-06a08a8b9e2f"
+      ]
+    },
+    {
+      "id": "udem",
+      "code": "MTL",
+      "sector": "universitaire",
+      "shortName": "Montréal",
+      "fullName": "Université de Montréal",
+      "nickname": "Carabins",
+      "aliases": [
+        "Montréal",
+        "MTL",
+        "Montreal",
+        "UdeM",
+        "U. de Montréal"
+      ],
+      "priority": 4,
+      "sports": [
+        "athletisme",
+        "badminton",
+        "cheerleading",
+        "cross-country",
+        "flag-football",
+        "football",
+        "golf",
+        "hockey",
+        "natation",
+        "rugby",
+        "sailing",
+        "soccer",
+        "soccer-interieur",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "793df9bf-39d8-47dd-923a-c34cf31d9974",
+        "d6fe43e4-2b0f-4b97-9c8d-333916870f0c",
+        "657c4463-b4f1-4b08-9117-6c7cbb15c8e0",
+        "558d9381-2fac-417c-ae93-44b95e8d1008",
+        "5df5c28f-8462-41ec-a6f2-bdf382960221",
+        "ec21b030-ea57-471a-b93b-418202c1a84a",
+        "e953f4e1-629f-4d82-8c14-687ce9005238",
+        "fa0c9925-241d-479e-af6d-9b36103f5f06",
+        "8c27e646-480e-4644-ab26-b30f7a49b1e4",
+        "5ba702d6-44f3-42a8-80cd-5dc1627df7dd",
+        "a280a7a1-960d-477f-8881-aabc46f4e974",
+        "a3f2e16a-a67a-4054-a795-a3e815da3992",
+        "c5a33041-e13a-439d-967e-f27fb5d363ba",
+        "c910600d-06d6-40ef-b5a6-2d81bd7cb438",
+        "ad64dbe9-936d-424b-9488-1038f4a7b291",
+        "f312bcc3-0e7e-4bfc-9d08-5a725a558be6",
+        "abeada9d-eb63-4325-92f4-921881ef3c1f",
+        "ed0be222-652a-45dd-9444-ccf1380245bd",
+        "3889fe85-e149-4e71-b2e0-2c87f101d5f5",
+        "ac731835-41f9-4cab-a830-31d1958977f0",
+        "1f15dcb2-9f24-60aa-9f89-02bb122e4421",
+        "MTL"
+      ]
+    },
+    {
+      "id": "uqam",
+      "code": "UQAM",
+      "sector": "universitaire",
+      "shortName": "UQAM",
+      "fullName": "Université du Québec à Montréal",
+      "nickname": "Citadins",
+      "aliases": [
+        "UQAM"
+      ],
+      "priority": 5,
+      "sports": [
+        "athletisme",
+        "badminton",
+        "basketball",
+        "cheerleading",
+        "cross-country",
+        "flag-football",
+        "soccer",
+        "soccer-interieur",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "5574025c-bc34-41ce-bfd4-bcabc6c98120",
+        "90877391-0df6-4345-a63b-cad6212fdb28",
+        "dc805401-6da6-46c5-a3f9-d22a1ff58f74",
+        "d3574fe0-9328-4934-842e-ee846e420bc8",
+        "90ca87c7-2d0d-49db-b9c0-175b3bad5748",
+        "6578caed-d641-471c-bf7b-833a298faa4c",
+        "d17fca9f-5b81-4034-8bdd-7a0c3305e43c",
+        "8a8f515a-f523-4ca1-b41a-478882530c24",
+        "2ee5620f-ee70-474c-8a11-a5df1ddff932",
+        "009f55f4-a4b8-42f4-973e-b4d8e23901e0",
+        "6c330bc7-5a4c-45e4-9118-8c8dc9cadc22",
+        "932b666d-5dd4-436e-a72e-04b67fa0fbad",
+        "abcdddf7-9731-440f-9c6e-47b78649fc31",
+        "c4858621-4dd0-4ce5-85ae-345ec2badce8"
+      ]
+    },
+    {
+      "id": "usherbrooke",
+      "code": "USHE",
+      "sector": "universitaire",
+      "shortName": "Sherbrooke",
+      "fullName": "Université de Sherbrooke",
+      "nickname": "Vert & Or",
+      "aliases": [
+        "Sherbrooke",
+        "USHE",
+        "UdeS",
+        "U. de Sherbrooke"
+      ],
+      "priority": 6,
+      "sports": [
+        "athletisme",
+        "badminton",
+        "cheerleading",
+        "cross-country",
+        "flag-football",
+        "football",
+        "golf",
+        "hockey",
+        "natation",
+        "rugby",
+        "sailing",
+        "soccer",
+        "soccer-interieur",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "0d7d0a80-8b60-4c8c-bed2-2ee3bc4ae772",
+        "38ca819c-1c2f-4434-a7bf-4deb24db640c",
+        "48265aed-63fb-4373-8d30-f7052934a712",
+        "41f44cf0-a661-45df-a8f2-8066c914ab43",
+        "3ca9a5ba-2511-41d8-b935-e1127201ee2c",
+        "c6ff35a4-a28d-40a1-be18-9106443d1e6a",
+        "540f61d8-70c5-4b26-9ad2-5dced1d142be",
+        "1e1baaa6-5ce4-4920-aaed-2c4a3fa7146e",
+        "9857e670-7a99-4b86-b07a-187b1460327e",
+        "f94ba090-c412-45e3-bb60-372495cfbae1",
+        "04827067-b184-43bb-bdf5-acb4a4e0461d",
+        "30d241e2-6941-409e-95d7-10b715245f92",
+        "4a57bb3c-523e-43b2-b939-c76b626d78c3",
+        "3760190c-42c5-420f-bf7e-76acaf959664",
+        "7335a241-b2c2-4fb8-b1a0-c24ae1e2de51",
+        "a813e518-a7d2-4bba-8252-0bb1f8d02ca1",
+        "0a4cd8b9-add1-4f6a-aa83-945737cf8b1b",
+        "3ded2920-fe0b-438e-aa29-4f0657dd3ea6",
+        "560e08e2-dae6-494c-b4a3-feb9b50de0fa",
+        "1f15dcc2-cd97-686e-8fe1-0293bf2c2559",
+        "USHE"
+      ]
+    },
+    {
+      "id": "bishops",
+      "code": "BIS",
+      "sector": "universitaire",
+      "shortName": "Bishop's",
+      "fullName": "Bishop's University",
+      "nickname": "Gaiters",
+      "aliases": [
+        "Bishop's",
+        "BIS",
+        "Bishops",
+        "Bishop’s"
+      ],
+      "priority": 7,
+      "sports": [
+        "basketball",
+        "football",
+        "golf",
+        "hockey",
+        "rugby",
+        "soccer",
+        "soccer-interieur"
+      ],
+      "rseqTeamIds": [
+        "3d80bae8-d346-4179-ba55-d424adb25e23",
+        "6a9c1012-fe7d-48bf-a431-b6c13076bac5",
+        "5f105854-cc41-42f8-9c0b-47b775302f30",
+        "4e38c737-f1a8-4e6d-a917-9736af1d4fc2",
+        "2828d1bb-3afb-4066-99f9-576f2d59fa9e",
+        "4c00ece5-bc80-4c38-adba-cf0c6a0f433d",
+        "5465ba69-4861-4924-a678-5ac0899b408f",
+        "afd48cf0-d89e-43b2-89cf-0a5579bfaedb",
+        "d55a3e3c-373d-4c6b-b0af-5014e320d1e5",
+        "1f15dcb9-e055-6766-b01d-02bb122e4421"
+      ]
+    },
+    {
+      "id": "garneau",
+      "code": "GAR",
+      "sector": "collegial",
+      "shortName": "Garneau",
+      "fullName": "Cégep François-Xavier-Garneau",
+      "nickname": "Boomerang",
+      "aliases": [
+        "Garneau",
+        "GAR",
+        "FX Garneau",
+        "F.-X.-Garneau",
+        "François-Xavier-Garneau",
+        "F.X. Garneau"
+      ],
+      "priority": 8,
+      "sports": [
+        "badminton",
+        "basketball",
+        "cheerleading",
+        "cross-country",
+        "football",
+        "natation",
+        "rugby",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "660a03cf-b785-432c-8c92-b74009c2a98f",
+        "6c2f62ba-942f-46e4-bf7f-74d2d02e11cc",
+        "9bde1e10-c3b6-406e-a80a-4c3eae278001",
+        "5d3d6acf-e986-473e-a4fc-e60816220f91",
+        "e98b64e1-a9ae-4e43-8f94-fa1e97f983b4",
+        "cda9b085-2c0d-4b2d-8620-c25eb1d9f226",
+        "7e86ae7f-12bd-4a08-a6ba-d6782b21e035",
+        "b7204ad6-1fd0-4dad-9433-002a2457b789",
+        "56a37da9-64a2-4f5f-a95f-e3ef9363c1d2",
+        "2517a315-587d-493c-bc8c-bc7f38a9f8f8",
+        "5ec48fd0-cdd0-4b8b-a88e-a8b1499ae38c",
+        "82c18d4a-1399-4985-982e-c98674f4a30c",
+        "e547fecb-e449-49ea-ad55-7ed63604b812",
+        "7bafe947-da99-4c1e-be95-75d1d3e4cd0c",
+        "98c522d0-2f3d-4e29-953f-b1b1250eb5eb"
+      ]
+    },
+    {
+      "id": "limoilou",
+      "code": "LIM",
+      "sector": "collegial",
+      "shortName": "Limoilou",
+      "fullName": "Cégep Limoilou",
+      "nickname": "Titans",
+      "aliases": [
+        "Limoilou",
+        "LIM"
+      ],
+      "priority": 9,
+      "sports": [
+        "baseball",
+        "basketball",
+        "football",
+        "rugby",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "57a28731-15fe-475c-8c9f-d92b4393c648",
+        "d9e8bc5a-48c6-4507-bbb9-cde12dcaf4a7",
+        "817d1119-b2ec-4c4a-bfa6-d41b6dcc6511",
+        "51150fc2-f89e-43bd-9c48-e4e0d10cc67a",
+        "dcbfbcb3-6d8f-4e6a-bb19-ad39463afef6",
+        "f9609e92-68e9-4841-abfc-3d2f7e87bc82",
+        "92729c91-96dd-471c-80ae-3186cd1f7b03",
+        "773cb01b-430c-4050-8453-7b2ce112a3c3",
+        "84df2a26-c411-4dd5-a458-4301dc9a261e",
+        "54b40d75-1969-4a64-8d73-ba0204fc9b3f"
+      ]
+    },
+    {
+      "id": "vanier",
+      "code": "VAN",
+      "sector": "collegial",
+      "shortName": "Vanier",
+      "fullName": "Vanier College",
+      "nickname": "Cheetahs",
+      "aliases": [
+        "Vanier",
+        "VAN"
+      ],
+      "priority": 10,
+      "sports": [
+        "basketball",
+        "flag-football",
+        "football",
+        "rugby",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "0688eb11-6688-4397-aa67-2485339ef362",
+        "8f3d7e31-5303-4b6b-bca8-f7f0f8089a28",
+        "f8d012b7-5c88-4d27-b768-52ff3a2b0727",
+        "ab7cdf54-c6b3-43f3-8a7d-78bb463bfea4",
+        "fe037a3e-650c-4ed5-a147-4e953c52321e",
+        "4e1b90f9-7432-4150-a1f4-476b7a69080a",
+        "81b41b1f-b115-4b1f-b11b-4c06d1d38a91",
+        "16b97c13-583d-472f-aed1-68481ca0cb39",
+        "1ef2f3a1-d9ac-4fe0-81a3-dbc7d26c905c",
+        "6f15f810-d92d-4525-895c-8ede5556f0bf",
+        "31273809-eb77-4373-83b3-6f7916bd2353"
+      ]
+    },
+    {
+      "id": "uqtr",
+      "code": "UQTR",
+      "sector": "universitaire",
+      "shortName": "UQTR",
+      "fullName": "Université du Québec à Trois-Rivières",
+      "nickname": "Patriotes",
+      "aliases": [
+        "UQTR"
+      ],
+      "priority": 11,
+      "sports": [
+        "athletisme",
+        "badminton",
+        "cheerleading",
+        "cross-country",
+        "flag-football",
+        "golf",
+        "natation",
+        "soccer",
+        "soccer-interieur",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "f493476b-8c11-4f01-bcb5-5eab25b2f6e8",
+        "6d3ae1b7-1586-4191-9bc3-aa2986aa5462",
+        "5393bc21-2a7e-47f9-98d7-5acceda8246a",
+        "dc451e11-edf7-4093-a5bf-be8d06baf144",
+        "e9f33eaa-160a-4fb2-b224-eb59bd29bb3c",
+        "cc80b423-a0af-4dfb-8a69-6c60b867bcfe",
+        "4bdf936d-5df9-4fb4-8c40-1b054425be0d",
+        "772408da-7808-4a53-b7e2-60b2a251b300",
+        "a1f0d77c-bcd2-40e9-b5b8-5f698debdd09",
+        "1b378ed7-7933-4185-8ffb-718b1b975bf4",
+        "b3242776-9738-4d4e-8214-063dc4b8c422",
+        "2fd7d161-5a88-4a99-a58f-b2558beaa553",
+        "070aa425-59f4-4039-9bfb-af19a23c4e63",
+        "3746940a-4095-4887-a418-d0582963cef7",
+        "df33916d-7766-44bf-8079-8c7cd10be850",
+        "c43500bf-6497-4d60-8e7f-f917719d366d"
+      ]
+    },
+    {
+      "id": "ets",
+      "code": "ÉTS",
+      "sector": "universitaire",
+      "shortName": "ÉTS",
+      "fullName": "École de technologie supérieure",
+      "nickname": null,
+      "aliases": [
+        "ÉCOLE DE TECHNOLOGIE SUPÉRIEURE",
+        "ÉTS",
+        "ETS",
+        "École de technologie supérieure"
+      ],
+      "priority": 12,
+      "sports": [
+        "athletisme",
+        "badminton",
+        "cross-country",
+        "flag-football",
+        "golf",
+        "hockey",
+        "rugby",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "b0e073c0-5114-4594-bc7c-b0accec17ce2",
+        "90c49758-33af-4a6b-bb76-504b528ed295",
+        "039d7c18-ffab-4b43-a3f5-2c3367f93c3c",
+        "e0650fe1-9212-4288-b459-d8ae4432f58c",
+        "67847594-9cf0-48d8-97a5-39de13884bd1",
+        "844393cd-90da-4267-93f4-c4e44e2d378a",
+        "e217ffbe-c921-4d11-ad38-84736f6a7cf0",
+        "11946282-ae57-4a0a-a927-320618638c0c",
+        "9dd61618-f121-4dc9-8b24-f775000dc895",
+        "a820fb66-c73e-4ee8-97c2-5fba3e08aafe",
+        "1f15dcbb-18bd-61de-9791-02bb122e4421"
+      ]
+    },
+    {
+      "id": "uqac",
+      "code": "UQAC",
+      "sector": "universitaire",
+      "shortName": "UQAC",
+      "fullName": "Université du Québec à Chicoutimi",
+      "nickname": null,
+      "aliases": [
+        "UNIVERSITÉ DU QUÉBEC À CHICOUTIMI",
+        "UQAC",
+        "U. du Québec à Chicoutimi"
+      ],
+      "priority": 13,
+      "sports": [
+        "athletisme",
+        "cross-country",
+        "hockey",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "43bb3824-004f-4545-8274-f9d0d9af6f93",
+        "7938d950-ac44-4553-b5e8-01deafa9d2e6",
+        "a92ee273-92a5-49e1-882e-b5d5c180d577",
+        "02811e91-3664-42cb-8a59-bb3c832e49b4",
+        "9e1a409f-d54b-4c26-8353-702662852538",
+        "1f15dcb4-2ae9-6288-996a-02bb122e4421"
+      ]
+    },
+    {
+      "id": "uqo",
+      "code": "UQO",
+      "sector": "universitaire",
+      "shortName": "UQO",
+      "fullName": "Université du Québec en Outaouais",
+      "nickname": null,
+      "aliases": [
+        "UNIVERSITÉ DU QUÉBEC EN OUTAOUAIS",
+        "UQO"
+      ],
+      "priority": 14,
+      "sports": [
+        "golf",
+        "hockey"
+      ],
+      "rseqTeamIds": [
+        "acc7aed5-4d3a-4285-b4c7-566c4b45a62a",
+        "fd4b635b-5133-4a33-97e0-22dcf952ffb8",
+        "1f15dcb8-a493-63a0-8193-06a08a8b9e2f"
+      ]
+    },
+    {
+      "id": "ahuntsic",
+      "code": "AHU",
+      "sector": "collegial",
+      "shortName": "Ahuntsic",
+      "fullName": "Collège Ahuntsic",
+      "nickname": null,
+      "aliases": [
+        "Ahuntsic",
+        "AHU"
+      ],
+      "priority": 20,
+      "sports": [
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "football",
+        "soccer",
+        "soccer-interieur",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "5b15e46b-5391-4b9d-8b85-329ac3de5fff",
+        "d05c21e4-555d-4e3e-bc3b-d1e9d101ccd0",
+        "39982553-5c70-47ad-af63-3eae456dd80d",
+        "4f2e79e5-5c06-484f-bbd9-6ffbaee5ad1f",
+        "addc0b26-da3a-4867-882f-537b12620b9d",
+        "1bf13ddc-5eb1-4c0f-8e55-24fd9bd7809c",
+        "0a2de31f-bb58-4730-b6ec-0f8c3c168c1e",
+        "c45ba072-cb42-4923-ac76-891d37f42481",
+        "66e4869b-25ff-486a-97d6-0e615f875e32",
+        "767c0106-cf4c-42b8-8f42-341960994a22",
+        "7c33eb41-361f-40bf-8d28-bfe16f3bf4d0",
+        "b6fc1bf3-48a1-4a77-abc3-00b18ad98457",
+        "deae535b-2a8b-4654-b432-f2c28befae8f",
+        "aabdbfb8-3af3-4d45-96da-e5f7e8689646",
+        "e47952cf-2e9f-4236-9710-5350100ea09e"
+      ]
+    },
+    {
+      "id": "andre-grasset",
+      "code": "CAG",
+      "sector": "collegial",
+      "shortName": "André-Grasset",
+      "fullName": "Collège André-Grasset",
+      "nickname": null,
+      "aliases": [
+        "André-Grasset",
+        "CAG",
+        "Andre-Grasset",
+        "Grasset"
+      ],
+      "priority": 21,
+      "sports": [
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "football",
+        "soccer",
+        "soccer-interieur",
+        "ultimate",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "25c41afb-a403-43cf-9b85-2121580eafbe",
+        "01d9f693-ef0a-44e2-a3d7-4e13d6b945e2",
+        "7a4c3e0c-5e08-4ce8-99e0-08ef68338207",
+        "27fa235f-f37d-4506-b77b-b1112067d0d6",
+        "6fbb367b-1696-4d7f-99e2-ffb5baeea3c1",
+        "c2f167c7-7dbc-459a-ab6a-79555aa32b3e",
+        "0b4e3947-e020-4fa7-b77d-8ea191a7dfad",
+        "2c30cbf4-5246-4a03-920b-a7248ab9bc9b",
+        "8830f738-16f1-4dc9-aecb-337401f0e29e",
+        "e0573c05-91d2-47b5-bb3c-42ec5622812a",
+        "28e6258b-f96c-4eb5-ad32-6fbf830060bf"
+      ]
+    },
+    {
+      "id": "andre-laurendeau",
+      "code": "CAL",
+      "sector": "collegial",
+      "shortName": "André-Laurendeau",
+      "fullName": "Cégep André-Laurendeau",
+      "nickname": "Cheetahs",
+      "aliases": [
+        "André-Laurendeau",
+        "CAL",
+        "Andre-Laurendeau",
+        "Laurendeau"
+      ],
+      "priority": 22,
+      "sports": [
+        "baseball",
+        "basketball",
+        "golf",
+        "hockey",
+        "rugby",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "c45ef362-70bc-4add-b7ff-d0d91c4dcd00",
+        "75d3749d-c79f-4b5f-bc54-f1dd13fae290",
+        "47dfe02a-e63f-4c3b-8be7-1196a7ff35d4",
+        "a45a4153-d87f-42a1-ac59-a8d0f37f4a6f",
+        "e1e9a466-6ba9-4e58-9abc-5dd4e88a81c1",
+        "ecfade0e-732c-44ea-ad63-006ea79d72da",
+        "6bbb040f-95f3-47df-b03f-9245485a3fec",
+        "40c3a10e-75e4-4e8c-8f88-a09f48cab5c5",
+        "bafd3546-845d-46d1-917f-a205e86fb022",
+        "e0183435-6ddc-43a0-9311-7789bcd63fa0",
+        "1f15de39-617a-68ca-9eb7-024cdcc06dcd"
+      ]
+    },
+    {
+      "id": "bois-de-boulogne",
+      "code": "BDB",
+      "sector": "collegial",
+      "shortName": "Bois-de-Boulogne",
+      "fullName": "Collège de Bois-de-Boulogne",
+      "nickname": null,
+      "aliases": [
+        "Bois-de-Boulogne",
+        "BDB",
+        "BdB",
+        "BdeB"
+      ],
+      "priority": 23,
+      "sports": [
+        "badminton",
+        "basketball",
+        "flag-football",
+        "futsal",
+        "natation",
+        "soccer",
+        "ultimate",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "4d34fed8-9196-49ff-91af-3d8eee7bad16",
+        "7ee0b336-b7b8-4665-8e73-0ca53112c7a1",
+        "e40a772f-04fe-4286-874d-ff7e9a2cd49c",
+        "e24a6336-f0ef-42f1-9d23-ac25c3be786d",
+        "60a2e947-eaa5-4fa1-bf65-00e62f01e5d5",
+        "0cb32b73-97de-452e-8d97-5b53710a47cc",
+        "efe570c3-1f6b-4337-9d91-4dde5aa479ff",
+        "877ccc75-3ac0-4046-9a1d-cad2bc8950cb",
+        "fafcefe9-2192-4add-87a6-ed0daae37d77",
+        "e720d48c-91c5-4e9f-bc7a-79fe3d0ce67f",
+        "73ff1158-ee6f-45dd-aad6-c225ea76c24a"
+      ]
+    },
+    {
+      "id": "champlain-lennoxville",
+      "code": "LEN",
+      "sector": "collegial",
+      "shortName": "Ch.-Lennoxville",
+      "fullName": "Champlain College Lennoxville",
+      "nickname": null,
+      "aliases": [
+        "Ch.-Lennoxville",
+        "LEN",
+        "Champlain Lennoxville",
+        "Lennoxville",
+        "Champlain-Lennoxville"
+      ],
+      "priority": 24,
+      "sports": [
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "football",
+        "soccer"
+      ],
+      "rseqTeamIds": [
+        "b11e5431-4bc6-44a1-aa63-61f65bf7b1bf",
+        "33c8aa74-14c1-4b67-bf19-63784cb94bb7",
+        "73e3a35a-e00a-41d9-828a-ac7ef5ac7214",
+        "28867f3b-a0c7-457e-87fc-745bb879a634",
+        "449c7245-ec36-43cb-ac6b-134e8b6809ec",
+        "4f4983e8-5e8b-48b0-a3ff-491bbda96b03"
+      ]
+    },
+    {
+      "id": "champlain-st-lambert",
+      "code": "SLA",
+      "sector": "collegial",
+      "shortName": "Ch.-St-Lambert",
+      "fullName": "Champlain College Saint-Lambert",
+      "nickname": "Barons",
+      "aliases": [
+        "Ch.-St-Lambert",
+        "SLA",
+        "Champlain St-Lambert",
+        "Saint-Lambert",
+        "St-Lambert",
+        "Champlain Saint-Lambert"
+      ],
+      "priority": 25,
+      "sports": [
+        "badminton",
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "football",
+        "golf",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "2af2518f-9369-4ffc-a700-b3ac6b5938f3",
+        "9c8c9a30-5711-41f4-84bd-c5951b65a90e",
+        "ad986bf1-3ed5-43fa-8398-424e0254cfa2",
+        "23c214a6-fac5-44ba-a985-cb84d3d11ee0",
+        "7688632c-3fbd-4522-b21b-918cbcc2ff83",
+        "315574d3-5c0d-4d53-a59d-d6e9a9738a80",
+        "0bc306a7-5cbf-4fff-8d3e-065a0e399954",
+        "a58bb01b-17a8-4c40-a3e4-93f76042a6c3",
+        "229b5684-2d84-4915-b3e8-f863766d91e2",
+        "164d052a-05a4-43c8-b6ad-d997adb5ab7f",
+        "e3bfc16b-b695-43eb-a25f-71282f2aa9ec"
+      ]
+    },
+    {
+      "id": "dawson",
+      "code": "DAW",
+      "sector": "collegial",
+      "shortName": "Dawson",
+      "fullName": "Dawson College",
+      "nickname": "Blues",
+      "aliases": [
+        "Dawson",
+        "DAW"
+      ],
+      "priority": 26,
+      "sports": [
+        "badminton",
+        "baseball",
+        "basketball",
+        "cross-country",
+        "rugby",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "5a39a275-e149-4ee8-813e-074320eb3c47",
+        "86e9a25b-9e94-462b-b4c9-27064fa228ee",
+        "8786ecb1-046c-427b-9beb-2da3ef5e7170",
+        "fd2cf6ef-e882-4820-b48e-7a1890812fef",
+        "637a929d-b671-4f64-b5e8-e11959a84c71",
+        "add2e4fb-d457-45a0-9427-d40db44f1387",
+        "0e7d5ece-ca68-4f86-b5c4-38fb121833d0",
+        "3c94ec1d-a130-4400-836a-29a6724833a9",
+        "cf28127d-e08d-49f8-b15d-e940cb194de6",
+        "e63440e1-568f-4a09-b623-cef874ee0cd9",
+        "c67b6294-b434-4f14-a4c4-24386f91b3b8",
+        "bdfb6400-6eb0-4764-897c-f4137f5326bc",
+        "6bdf3fd0-d399-4d3d-8209-fb47b4302f9c"
+      ]
+    },
+    {
+      "id": "brebeuf",
+      "code": "BRÉ",
+      "sector": "collegial",
+      "shortName": "Jean-de-Brébeuf",
+      "fullName": "Collège Jean-de-Brébeuf",
+      "nickname": null,
+      "aliases": [
+        "Jean-de-Brébeuf",
+        "BRÉ",
+        "Jean-de-Brebeuf",
+        "Brébeuf",
+        "Brebeuf"
+      ],
+      "priority": 27,
+      "sports": [
+        "badminton",
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "rugby",
+        "soccer",
+        "soccer-interieur",
+        "ultimate",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "b11a61ce-4fb9-4e0f-82ee-92856f294053",
+        "9a7dc9f2-d2cc-4b1d-86f2-81a292544ddb",
+        "983f9654-c1a7-4a07-bbc3-fff8a4f981ce",
+        "7f6e810a-5638-4c2b-9f2b-13ed6b208144",
+        "6a2ab61f-4087-4fab-9e16-f738d8af7d2b",
+        "8c144d3e-5f3e-49aa-aa89-a6396431b50a",
+        "08785d73-4eee-48ae-b8a9-99ea0f902190",
+        "58840701-bbdf-4939-a9ed-3679e7f3a609",
+        "0637bc2d-551e-44c2-8ac6-8f640199813b",
+        "14c02c76-a881-4f3b-ad84-20dd40bcff09",
+        "9d7433d9-7950-421e-a2a4-9e9aa44f6dce",
+        "8956ca5e-bb0f-46cb-9a7b-b1673b13dba5",
+        "f9fa4636-1384-47bb-a672-e640fddd0d43",
+        "569335e7-5b04-4366-8f3b-75cfce9bd0a6"
+      ]
+    },
+    {
+      "id": "john-abbott",
+      "code": "JAC",
+      "sector": "collegial",
+      "shortName": "John Abbott",
+      "fullName": "John Abbott College",
+      "nickname": "Islanders",
+      "aliases": [
+        "John Abbott",
+        "JAC"
+      ],
+      "priority": 28,
+      "sports": [
+        "baseball",
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "football",
+        "golf",
+        "rugby",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "44121561-6789-4a1e-9db8-13c2d1614870",
+        "11475f0b-100e-48b6-99f3-cf7a7fc22eea",
+        "c955c398-cd87-4981-a807-e75f5a0ae974",
+        "a09f6046-8f4f-4760-9ec0-4d20844f6abe",
+        "a666184c-8022-4f5e-b1b8-45c4e949f5e0",
+        "1e7dc1dd-1d1e-436c-b9db-315e84b09054",
+        "582d083e-fb13-466d-b0ce-64b53aceec40",
+        "70e6370c-4bb8-44d1-95f7-8573d7f11721",
+        "a03f186f-7e9c-4bc1-933c-674df9449302",
+        "b6710080-ffb4-4400-a0c4-48cfdd668107",
+        "01d5436d-5897-43bc-afa8-c0104c1f4f89",
+        "de213693-59bf-4472-b19f-d550b447029f",
+        "0cc63b84-4df0-4a22-ac78-ad47e886c10b"
+      ]
+    },
+    {
+      "id": "jonquiere",
+      "code": "JON",
+      "sector": "collegial",
+      "shortName": "Jonquière",
+      "fullName": "Cégep de Jonquière",
+      "nickname": null,
+      "aliases": [
+        "Jonquière",
+        "JON",
+        "Jonquiere"
+      ],
+      "priority": 29,
+      "sports": [
+        "basketball",
+        "cheerleading",
+        "cross-country",
+        "flag-football",
+        "football",
+        "natation",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "8dcc42a4-b395-4e09-b03c-422a010d9e9e",
+        "adfeb517-41c0-4442-b000-44b208e0b060",
+        "c124a90f-c484-4df4-b5ff-723e3eab8225",
+        "d0daf331-b76d-4491-9668-cf9064a98f94",
+        "38fe4d52-c3d0-4612-b8fa-92134197b9f6",
+        "8fdb6d46-4904-4946-b4d9-9fdb5cbe09ed",
+        "33629fc0-205a-4279-a457-2830bdbd8156",
+        "adaa126e-f3aa-4e44-96ae-054a2cb73c94",
+        "3ef747ea-d465-4d62-863f-3d3680b98d3b",
+        "ad6b3368-7dbf-4163-a90e-8fb7d2026546",
+        "d6c4f103-21a2-4b35-9973-a3399892b994",
+        "67652c52-66af-47e2-9f5f-d771db1ec0ea",
+        "378bfde7-7599-4044-89ae-4cd7fa82f574"
+      ]
+    },
+    {
+      "id": "lionel-groulx",
+      "code": "CLG",
+      "sector": "collegial",
+      "shortName": "Lionel-Groulx",
+      "fullName": "Collège Lionel-Groulx",
+      "nickname": null,
+      "aliases": [
+        "Lionel-Groulx",
+        "CLG",
+        "Groulx"
+      ],
+      "priority": 30,
+      "sports": [
+        "badminton",
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "football",
+        "futsal",
+        "hockey",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "5a8bfe75-34ca-4a71-8880-6647b437318a",
+        "20ad934d-c313-43dd-9967-c5e8897fa8bb",
+        "cad459e2-4a76-43ff-ab41-e4f16730bf04",
+        "c6c0d877-b06a-4c75-acd4-d67587011836",
+        "403d7adf-6e86-4471-893a-48e613345e19",
+        "6dca32e2-627f-4650-8f94-a20c331013b3",
+        "b96f844d-43a5-4854-8bb8-f08ebb6fd830",
+        "cd69b601-8e3b-422a-baee-842394c8d15c",
+        "411b12b6-87fb-4e62-a35e-733c3d2d66b5",
+        "db18d8ce-c3bf-4b1f-832d-63c5587a3d98",
+        "c1d93696-18f8-4ab2-aa34-da6dbff11e3d",
+        "2beca87a-b6d8-4c5a-a40a-3f08333c3aad",
+        "04df76e4-56d7-4ccf-906d-360298ae7f4f",
+        "21b58f0d-8cc7-4858-842c-9b0d24579ea0",
+        "1f15de3d-ae62-6242-90b4-06ea9bff85b5"
+      ]
+    },
+    {
+      "id": "montmorency",
+      "code": "MON",
+      "sector": "collegial",
+      "shortName": "Montmorency",
+      "fullName": "Collège Montmorency",
+      "nickname": "Nomades",
+      "aliases": [
+        "Montmorency",
+        "MON"
+      ],
+      "priority": 31,
+      "sports": [
+        "badminton",
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "football",
+        "futsal",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "206f8747-e053-48cd-82a7-d1512393bdcb",
+        "7ed47ed6-c066-4d03-a7a2-0e6f0dbd1074",
+        "5de5989a-3eb0-431e-9ba2-bc76c6bbcf56",
+        "fe0d20db-6b42-4218-9c01-11d6da0b8139",
+        "d4a6e19d-14f4-4501-852c-1cd3f355594e",
+        "648abe74-d790-4111-b85c-9b434f38e919",
+        "c58db171-79db-4efe-a6d4-7174a93abcdf",
+        "f9994acc-85d9-4cd6-a119-e4d095ff3a05",
+        "e6f1af21-833c-4538-91f0-e2bcb59dbf32",
+        "938617d1-334b-4fea-ac94-f6da6196d4e2",
+        "579ca9a8-0837-40a1-b739-ff9d24c18316",
+        "1e567dee-63c9-4f88-8ad4-6fda9e380a72",
+        "7b4009d0-51e1-4e93-975c-664e0f81458f",
+        "c01983d9-14c7-4484-a0eb-85a87f1f15c4",
+        "3b2dc342-9138-49d7-802b-ade74c0895fb"
+      ]
+    },
+    {
+      "id": "notre-dame-foy",
+      "code": "NDF",
+      "sector": "collegial",
+      "shortName": "Notre-Dame",
+      "fullName": "Campus Notre-Dame-de-Foy",
+      "nickname": null,
+      "aliases": [
+        "Notre-Dame",
+        "NDF",
+        "Notre-Dame-de-Foy",
+        "CNDF"
+      ],
+      "priority": 32,
+      "sports": [
+        "cheerleading",
+        "cross-country",
+        "flag-football",
+        "football",
+        "natation"
+      ],
+      "rseqTeamIds": [
+        "d387591f-12eb-4afb-9011-a6c7a18291ef",
+        "c7756cd1-7b23-41db-a368-4242da844e56",
+        "5f16a48d-9336-4e64-ac54-603557975561",
+        "efc24406-7fef-4f8b-8642-3981d0d9722c",
+        "0b77da64-53a6-4042-a774-6257737f489f",
+        "3556c283-8c99-414f-947a-b1416f42de9e"
+      ]
+    },
+    {
+      "id": "outaouais",
+      "code": "OUT",
+      "sector": "collegial",
+      "shortName": "Outaouais",
+      "fullName": "Cégep de l'Outaouais",
+      "nickname": null,
+      "aliases": [
+        "Outaouais",
+        "OUT"
+      ],
+      "priority": 33,
+      "sports": [
+        "badminton",
+        "basketball",
+        "flag-football",
+        "football",
+        "hockey",
+        "soccer",
+        "soccer-interieur",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "46b27a9c-2a4d-475d-81fd-048394a4804c",
+        "6e371403-ccca-4a36-bc52-d69d63236ff8",
+        "8bb10183-17cc-4417-872d-88c73ca7c017",
+        "4d1c22e9-6d1b-4ef7-a867-e579d18fb03b",
+        "3dab18f0-05bc-444d-bbca-de48df13a023",
+        "42357e18-2659-4dcf-b119-e6ad344221af",
+        "c224f7b8-2825-4479-8af7-50ee21f80275",
+        "72a2395b-5e55-4b0e-9acd-2fe5e3dfc9af",
+        "991f9c74-ba22-48f5-a0fd-b858504a21a9",
+        "bae40843-cef5-4fc5-915e-4d7613e3aeb9",
+        "2f14ba85-4803-4843-ba17-4d83f24e81f3",
+        "11bcf373-46a7-4191-9202-3bbd01586887",
+        "6582ca1a-9db7-4948-a308-1976c8c1faf2",
+        "1f15de41-1320-662c-9001-024cdcc06dcd"
+      ]
+    },
+    {
+      "id": "saint-hyacinthe",
+      "code": "STH",
+      "sector": "collegial",
+      "shortName": "Saint-Hyacinthe",
+      "fullName": "Cégep de Saint-Hyacinthe",
+      "nickname": null,
+      "aliases": [
+        "Saint-Hyacinthe",
+        "STH",
+        "St-Hyacinthe"
+      ],
+      "priority": 34,
+      "sports": [
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "football",
+        "hockey",
+        "rugby",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "85580e0a-39a7-46ce-8005-80ff281cf9d6",
+        "ca0983e7-85d6-4d8b-9684-89eef3418a9a",
+        "8d15b218-9005-4513-b2d8-17a5ed4fbd71",
+        "b7d28212-1411-495e-84e6-4549c28a1933",
+        "5a13d980-758e-4de4-ba9c-f48446305f16",
+        "1eeaee25-6751-4286-97bf-fca2a2c7e210",
+        "eace9aba-ec30-4e34-8b90-6ef930a6e82b",
+        "725dcd50-001d-436b-baad-6a8573b8ddad",
+        "f885eead-6861-4ba7-a2d6-9c3ec201d476",
+        "174f7b18-6cc1-4f95-bc65-b500b8f23828",
+        "1f15de3b-af0e-6bac-a022-024cdcc06dcd"
+      ]
+    },
+    {
+      "id": "saint-jean-sur-richelieu",
+      "code": "SJR",
+      "sector": "collegial",
+      "shortName": "Saint-Jean",
+      "fullName": "Cégep Saint-Jean-sur-Richelieu",
+      "nickname": "Dragons",
+      "aliases": [
+        "Saint-Jean",
+        "SJR",
+        "St-Jean",
+        "Saint-Jean-sur-Richelieu"
+      ],
+      "priority": 35,
+      "sports": [
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "football",
+        "golf",
+        "soccer",
+        "ultimate",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "95788c50-9e61-4e6f-a362-915fc4e5d1fb",
+        "c8ecfddf-7d9f-4907-8b6b-b920a80fb510",
+        "d07d119f-66ae-4c91-a029-517229960aa6",
+        "97c93275-4c4f-42a6-90b8-c13c4347eb88",
+        "93703ac6-8125-4c98-a884-0d5f11bcb3df",
+        "c77450f2-b5e6-4516-8739-57d40b3dd448",
+        "9c493102-e928-40fb-aab9-b9c6fcaf0c19",
+        "832863ca-1c19-479c-af3a-b6512031460e",
+        "d43cc84e-7958-4388-9420-faff620b218f",
+        "189a2496-5d7d-4602-bdbe-cd8869fdcfcc",
+        "4783ec64-3e3a-4763-98f4-a868ad40a778",
+        "400b1044-9a60-4830-bc07-0bff06c63716"
+      ]
+    },
+    {
+      "id": "saint-jerome",
+      "code": "SJÉ",
+      "sector": "collegial",
+      "shortName": "Saint-Jérôme",
+      "fullName": "Cégep de Saint-Jérôme",
+      "nickname": null,
+      "aliases": [
+        "Saint-Jérôme",
+        "SJÉ",
+        "Saint-Jerome",
+        "St-Jérôme",
+        "St-Jerome"
+      ],
+      "priority": 36,
+      "sports": [
+        "basketball",
+        "cheerleading",
+        "cross-country",
+        "natation",
+        "soccer",
+        "soccer-interieur",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "b61c7654-40c1-4e40-9215-d3f7cd3a143a",
+        "f7c3c02a-84cc-4cf4-a14e-b0ae633814d2",
+        "9a35f7c6-6192-4548-aa17-0b3e18a30015",
+        "41900184-84e1-48c5-9180-ac403b19ccbb",
+        "5c9d9dd4-2810-4270-b442-0f0a11083817",
+        "bc274b36-93f7-452e-b47a-250d59d022ca",
+        "792b293f-8f89-46fb-a1f4-7a28b3b6c947",
+        "9780f49e-38ad-44ca-9397-33c64f5796fe",
+        "68f303d4-e2a0-40cb-ac14-d05ece7bf1db",
+        "a1e2442c-258b-4ed8-b4ed-1cd964027e3b",
+        "d17d8093-3525-4771-a4be-67dccac780cb"
+      ]
+    },
+    {
+      "id": "sainte-foy",
+      "code": "CSF",
+      "sector": "collegial",
+      "shortName": "Sainte-Foy",
+      "fullName": "Cégep de Sainte-Foy",
+      "nickname": "Géants",
+      "aliases": [
+        "Sainte-Foy",
+        "CSF",
+        "Ste-Foy"
+      ],
+      "priority": 37,
+      "sports": [
+        "badminton",
+        "basketball",
+        "cheerleading",
+        "cross-country",
+        "hockey",
+        "rugby",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "27ae8d14-01f3-4487-a25c-d1dd90bfe0ee",
+        "5694e464-b633-4afa-8867-82c6af306546",
+        "21ffe7f2-0a59-4785-bd5c-d660584d889e",
+        "7b9a1777-c69f-4831-9da1-d4ba20c7cc40",
+        "d25d2d2f-5d3f-4f52-ae0b-ca022b076ec9",
+        "06112e90-4936-4ac0-91f0-da2532467cbb",
+        "631e619f-c928-494b-ac70-efd0cc469013",
+        "2d1f3e95-d892-4b2f-9a10-7875ac951d4c",
+        "ee710f25-ae49-474a-a9d3-73ec9f7779ae",
+        "7cb236e4-75a2-4ede-bd07-e82ac9d3eaed",
+        "f5e7efe5-3fc4-4446-9b3d-61d6bad5f243",
+        "99d16594-3736-4db2-8307-9747a990a04c",
+        "4130e12e-1e70-4f46-aa46-4aa94906c020",
+        "35041059-eb8b-45f4-9932-7c7777814758",
+        "1f15de35-5c4b-6dd0-8a20-06ea9bff85b5"
+      ]
+    },
+    {
+      "id": "cegep-sherbrooke",
+      "code": "SHE",
+      "sector": "collegial",
+      "shortName": "Sherbrooke",
+      "fullName": "Cégep de Sherbrooke",
+      "nickname": null,
+      "aliases": [
+        "Sherbrooke",
+        "SHE"
+      ],
+      "priority": 38,
+      "sports": [
+        "badminton",
+        "basketball",
+        "cheerleading",
+        "cross-country",
+        "flag-football",
+        "football",
+        "natation",
+        "rugby",
+        "soccer",
+        "ultimate",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "410d21fd-3258-4ef7-ad83-85aeea0f0a3d",
+        "6bdddcf3-8886-4696-8263-08ff8e2a8e07",
+        "c81aaaac-d67e-493d-9900-7943802e3ff5",
+        "e4184f05-2c9b-42d1-90e3-840d50fc03b9",
+        "68599a7b-b6d7-4b1b-bce7-caa55600af22",
+        "9f7f1bf2-11a8-4a56-ab47-6561f199989d",
+        "9fa2593a-e668-47fd-826e-d59511c882a5",
+        "f278e1e7-6a26-4a5b-a529-1e37354eeea4",
+        "74ced5ab-9874-4a6c-a817-ebc0a46ce7f7",
+        "dd8c765f-f5a3-49f4-9178-e1f55bb53808",
+        "93677501-cdfa-4def-a7c8-364984944176",
+        "001fc1c1-3674-4d65-af4b-cdfdb36b0b58",
+        "7b6aef49-441b-4b43-b75c-31bd79d34ab8",
+        "ac231607-b0b8-48d2-a46b-b3a957c898ee",
+        "38f40d40-0370-470f-957b-24832ecb8995",
+        "76619078-d11c-4bb5-bf4b-d7bbd28d79cd",
+        "6ced806d-c877-4f7d-b2af-65368bc85ee7"
+      ]
+    },
+    {
+      "id": "thetford",
+      "code": "THE",
+      "sector": "collegial",
+      "shortName": "Thetford",
+      "fullName": "Cégep de Thetford",
+      "nickname": null,
+      "aliases": [
+        "Thetford",
+        "THE"
+      ],
+      "priority": 39,
+      "sports": [
+        "badminton",
+        "basketball",
+        "flag-football",
+        "football",
+        "hockey",
+        "natation",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "d8d10d51-05d5-4dd9-952e-e513f71863f7",
+        "28e4fe41-b5e9-4b69-973b-bb9ff487eb63",
+        "7e97d32a-3bd2-4a9f-a9ac-2fee1bec60fe",
+        "9982bac5-16c9-4246-9e65-be26457145a1",
+        "282ae44b-f7a2-43d7-a740-8c94a5e3d1a7",
+        "9d370408-f809-4bfc-a659-d2cae8cba0fe",
+        "80c7de9c-3c35-4ae5-a848-917b178d949f",
+        "350f1a0d-40bc-4a8c-ae43-3ad07695a8b4",
+        "b9fe0b8d-d527-4e5e-94b9-f747a054861e",
+        "c88deccb-eade-4833-9135-5fe63d520a4c",
+        "fb2fd271-efc5-4eb8-9899-5b09f32126d9",
+        "1f15de30-b8c6-6b1e-83bd-0602a60cf5a7"
+      ]
+    },
+    {
+      "id": "trois-rivieres",
+      "code": "TRV",
+      "sector": "collegial",
+      "shortName": "Trois-Rivières",
+      "fullName": "Cégep de Trois-Rivières",
+      "nickname": "Diablos",
+      "aliases": [
+        "Trois-Rivières",
+        "TRV",
+        "Trois-Rivieres",
+        "Trois Rivières"
+      ],
+      "priority": 40,
+      "sports": [
+        "badminton",
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "football",
+        "golf",
+        "natation",
+        "rugby",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "40e9464d-53a8-4380-a90f-09a19eb968f7",
+        "7d01261f-befb-41ea-aa36-9d7687662a5d",
+        "1203ef51-0888-4c63-9edd-8eda9e4583af",
+        "c09d8a8c-7d83-4577-a6c9-06f988f87376",
+        "f4c5f91f-2ae4-4b71-a90d-52f160af3ef4",
+        "2a991ddd-1782-4bbb-993e-d16c67db5e84",
+        "fe34e542-f233-4a10-8986-0dc9e159d9d9",
+        "8d9d3081-18d9-4ebd-b840-b03db8da5cda",
+        "94327e32-8c96-4a02-809f-ad5be761a2d1",
+        "23f50452-1326-4380-8c20-76eb2514f2db",
+        "f516f54d-9f36-4d7f-b2a4-8f86ce7b1d00",
+        "121b9cc5-0791-4485-b8ec-a1b947f77265",
+        "50fc8ed6-d381-4930-90e1-b55d53115e64",
+        "8c00b4cc-c53b-490d-8b85-6a40462d1aec",
+        "f182dddb-5a8c-489d-a124-99f70415fae3",
+        "b49a8b8d-50f9-4bdf-a377-d512cfec0319",
+        "5689503a-d3bb-4e9e-bacb-18b5bf8ff184"
+      ]
+    },
+    {
+      "id": "vieux-montreal",
+      "code": "CVM",
+      "sector": "collegial",
+      "shortName": "Vieux Montréal",
+      "fullName": "Cégep du Vieux Montréal",
+      "nickname": null,
+      "aliases": [
+        "Vieux Montréal",
+        "CVM",
+        "Vieux Montreal"
+      ],
+      "priority": 41,
+      "sports": [
+        "basketball",
+        "flag-football",
+        "football",
+        "natation",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "253fe1e5-95e3-4f72-8597-ab2de6b038db",
+        "eb85bd6c-025f-48f1-be26-aafd2329a558",
+        "65edf9cc-e1a6-4a0c-b020-8a0e44831166",
+        "d6e8d094-fe6f-4d79-a7a2-aa67d88be8b2",
+        "a1a25c06-5bad-4844-ac10-0b0cc8dddfc9",
+        "34cbb3c7-43b2-4020-9fc6-44b0c68d34cc"
+      ]
+    },
+    {
+      "id": "edouard-montpetit",
+      "code": "CEM",
+      "sector": "collegial",
+      "shortName": "Édouard-Montpetit",
+      "fullName": "Cégep Édouard-Montpetit",
+      "nickname": "Cougars",
+      "aliases": [
+        "Édouard-Montpetit",
+        "CEM",
+        "Edouard-Montpetit",
+        "É.-Montpetit",
+        "Montpetit"
+      ],
+      "priority": 42,
+      "sports": [
+        "badminton",
+        "baseball",
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "football",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "00971491-439a-4ace-ae67-293a339b9fdb",
+        "0bafea76-9d16-4853-a839-466351dc5ee2",
+        "6eebddc4-c709-4675-aa17-e9f687731bba",
+        "69767a19-b7d7-4693-92a3-e6c8765fd76e",
+        "d8553a87-d53f-4cae-a740-33269eae0354",
+        "9c51df59-5318-4de8-b3cd-d4d25720f51c",
+        "9058dcc3-bd44-4f6f-b056-1b4887507569",
+        "0da8a438-d107-43b5-8953-de3bf2bde50a",
+        "0a066e81-53bf-46c4-9347-3cc99c244d74",
+        "d8d63ffc-3a10-435e-a141-8eac6dca27fc",
+        "4b148d3a-40c4-4276-b3b5-79c860804861",
+        "e4a5aa0c-efb5-4164-a523-ad4e9d7da987",
+        "36dc01ed-fcb3-4d47-a5ad-4fcae71e48cd",
+        "052881db-5c66-4129-9dc1-fce9abb1f522"
+      ]
+    },
+    {
+      "id": "levis",
+      "code": "LÉV",
+      "sector": "collegial",
+      "shortName": "Lévis",
+      "fullName": "Cégep de Lévis",
+      "nickname": null,
+      "aliases": [
+        "CÉGEP DE LÉVIS",
+        "Cégep de Lévis",
+        "Lévis",
+        "Levis"
+      ],
+      "priority": 50,
+      "sports": [
+        "badminton",
+        "cheerleading",
+        "cross-country",
+        "football",
+        "golf",
+        "hockey",
+        "natation",
+        "rugby",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "9cd62fc0-31bc-4a88-aea7-845c69758fd1",
+        "223bb910-777c-4cb8-8720-3bab981d8ce6",
+        "974e3689-8669-4ba4-be2d-d98e63259d45",
+        "1fe9bdc7-9dd2-4667-bcb4-8a9c837ae40d",
+        "81087a6d-3678-48b1-beb4-032d1e195e37",
+        "d7ee07ed-87a4-447d-92fd-4b2354110a9c",
+        "61bbe2bf-d97d-4ec8-9f17-9a90bc917c77",
+        "db9efd00-6393-4e61-a16c-d9a6466339b9",
+        "7f95c248-09ff-485c-9242-355cd6048c7c",
+        "0d92ddf2-14f4-4703-9833-efb22a7212d3",
+        "258e7c3b-455e-461b-9f9b-4213b40b9f56",
+        "1f15de3a-f13c-6e30-9ff6-024cdcc06dcd"
+      ]
+    },
+    {
+      "id": "lafleche",
+      "code": "LAF",
+      "sector": "collegial",
+      "shortName": "Laflèche",
+      "fullName": "Collège Laflèche",
+      "nickname": null,
+      "aliases": [
+        "COLLÈGE LAFLÈCHE",
+        "Collège Laflèche",
+        "Laflèche",
+        "Lafleche"
+      ],
+      "priority": 51,
+      "sports": [
+        "basketball",
+        "flag-football",
+        "golf",
+        "hockey",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "fda2c13a-ae9f-40e4-bb6a-be5f793f37a5",
+        "2a480dfa-dac2-4087-a491-7cb649f3443d",
+        "918a9c08-a040-4bd5-9dd4-152d326387ae",
+        "92a8a2a2-f2e0-4ca2-97c6-3ba88af9e992",
+        "1f15de39-c3c5-67f0-adfa-024cdcc06dcd",
+        "1f15de39-c3bc-620e-9793-024cdcc06dcd"
+      ]
+    },
+    {
+      "id": "sorel-tracy",
+      "code": "ST",
+      "sector": "collegial",
+      "shortName": "Sorel-Tracy",
+      "fullName": "Cégep de Sorel-Tracy",
+      "nickname": null,
+      "aliases": [
+        "CÉGEP DE SOREL-TRACY",
+        "Sorel-Tracy",
+        "Sorel Tracy"
+      ],
+      "priority": 52,
+      "sports": [
+        "badminton",
+        "basketball",
+        "cross-country",
+        "golf",
+        "hockey",
+        "natation",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "e80d9a0f-77a3-487e-bdfb-6ec607faf098",
+        "8c0749c7-13a0-4d3a-928a-cba989ca65ec",
+        "d56b4e0a-d4a4-4c68-9423-2a4675378eb4",
+        "63fb4008-e425-45f7-88b4-654f6d689253",
+        "67f097b2-6d38-4e23-879f-b6e56e97abd8",
+        "c99abc71-8f07-4900-9a9b-d31bca49da1a",
+        "d28da799-a7b3-4cac-8d79-f0bcaed4f8bf",
+        "ffc9e367-b7e0-402b-b797-458e09550192",
+        "1f15de3f-76ad-698a-91ba-024cdcc06dcd"
+      ]
+    },
+    {
+      "id": "saint-laurent",
+      "code": "SL",
+      "sector": "collegial",
+      "shortName": "Saint-Laurent",
+      "fullName": "Cégep de Saint-Laurent",
+      "nickname": "Cavaliers",
+      "aliases": [
+        "CÉGEP DE SAINT-LAURENT",
+        "Saint-Laurent",
+        "St-Laurent"
+      ],
+      "priority": 53,
+      "sports": [
+        "basketball",
+        "flag-football",
+        "hockey",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "7ac00c82-836b-49d8-a6bb-10597f9dbbb8",
+        "49d2bbe7-b1e6-449d-a464-b441c50f646d",
+        "4d2bd2e5-6e3e-4d0b-82f0-c49c5dfc7dec",
+        "c178e8bb-7dbf-4e4d-bd21-ebc18dcd700a",
+        "1f15de2f-025f-63ea-b66c-06ea9bff85b5",
+        "1f15de2f-0251-6e34-9f09-06ea9bff85b5"
+      ]
+    },
+    {
+      "id": "abitibi-temisc",
+      "code": "CAT",
+      "sector": "collegial",
+      "shortName": "Abitibi-Témisc.",
+      "fullName": "Cégep de Abitibi-Témisc.",
+      "nickname": null,
+      "aliases": [
+        "Abitibi-Témisc.",
+        "CAT"
+      ],
+      "priority": 80,
+      "sports": [
+        "badminton",
+        "basketball",
+        "cross-country",
+        "natation",
+        "soccer",
+        "soccer-interieur",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "39c4e62e-c5d5-44d5-afcc-3553aa07aaa3",
+        "f46280e1-cf49-4e5a-abeb-9509da162db2",
+        "4c16001a-c1e5-4124-8575-54b9fb31d0d1",
+        "53e0ff8e-bce3-4c1c-a7d6-2604bbd609c7",
+        "940f1dad-c15a-4d75-8907-4a6237554934",
+        "10dc9a71-0524-4820-9c53-649a4e5feb34",
+        "2c022f86-04be-4e29-906a-b58a742223c4",
+        "e533ce93-b10f-4690-b1ff-a648a2b91538",
+        "ce37611a-5f49-4359-be79-06e420470d8a",
+        "53ea6a90-6977-4450-999c-fc8b9d36244d"
+      ]
+    },
+    {
+      "id": "alma",
+      "code": "ALM",
+      "sector": "collegial",
+      "shortName": "Alma",
+      "fullName": "Cégep de Alma",
+      "nickname": null,
+      "aliases": [
+        "Alma",
+        "ALM"
+      ],
+      "priority": 80,
+      "sports": [
+        "basketball",
+        "cheerleading",
+        "cross-country",
+        "natation",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "1c816156-ab1c-4aa3-9d35-34b9e9971478",
+        "7ad33e01-ef9b-4d01-9d35-ba387bb09e2e",
+        "38874ddd-7aea-46b7-a24a-e5d3ab5b4a14",
+        "b43fc17a-7622-44f1-bb58-805a58404017",
+        "ead40133-6e36-4f46-8e22-0e2939fcb7ce",
+        "be25934f-cff3-40f8-8161-4b6fb4a6f4a1",
+        "84f7a832-eb0f-4ce0-a475-4efe42ba066b",
+        "3ca40f35-c42d-4f46-ae34-99f1842a073e"
+      ]
+    },
+    {
+      "id": "baie-comeau",
+      "code": "BCO",
+      "sector": "collegial",
+      "shortName": "Baie-Comeau",
+      "fullName": "Cégep de Baie-Comeau",
+      "nickname": null,
+      "aliases": [
+        "Baie-Comeau",
+        "BCO"
+      ],
+      "priority": 80,
+      "sports": [
+        "basketball",
+        "cross-country",
+        "natation",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "46427217-e1a3-418d-bda2-ea000a25e647",
+        "95ff29ee-5766-4a32-813c-08da3e0ab29e",
+        "e1b1b2a1-5cca-41c3-bc3f-d9426ee4c67b",
+        "3c8467fd-93a3-4fa1-8028-f6d36b6e97bc"
+      ]
+    },
+    {
+      "id": "beauce-appalaches",
+      "code": "BAP",
+      "sector": "collegial",
+      "shortName": "Beauce-Appalaches",
+      "fullName": "Cégep de Beauce-Appalaches",
+      "nickname": null,
+      "aliases": [
+        "Beauce-Appalaches",
+        "BAP"
+      ],
+      "priority": 80,
+      "sports": [
+        "badminton",
+        "baseball",
+        "cross-country",
+        "flag-football",
+        "football",
+        "natation",
+        "rugby",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "32ac5fff-5a0e-4597-9165-5be3b4b817d0",
+        "d4e804cb-0fbb-4a6a-902b-864e6bb1a71d",
+        "c04735c6-4434-4204-b3c9-b92dbcc9ea51",
+        "48b1a5dd-bed4-413e-8d63-929178bed685",
+        "059e433f-c69d-4001-8db1-f84d2778b9bd",
+        "ee75f984-84eb-4f3c-8372-5ea6306ed7f9",
+        "2df178bd-1b07-42fa-a202-5b9b44c446be",
+        "2c63bd7a-1c9f-4671-8acc-2c5de5bf5ec9",
+        "a289a69e-9e21-47c0-9aa6-d517d0e47d20",
+        "70d24eae-d2a6-4e4e-9102-a8b9898cc2d8",
+        "f9c504bf-b8c9-4b35-930a-ac7cb08e84fe",
+        "175bdf5a-e02d-45fe-80fb-00b64c2ce6e4"
+      ]
+    },
+    {
+      "id": "carleton",
+      "code": "CAR",
+      "sector": "universitaire",
+      "shortName": "Carleton",
+      "fullName": "Carleton University",
+      "nickname": "Ravens",
+      "aliases": [
+        "Carleton",
+        "CAR"
+      ],
+      "priority": 80,
+      "sports": [
+        "athletisme",
+        "cross-country",
+        "rugby"
+      ],
+      "rseqTeamIds": [
+        "f608bc62-d943-45e9-bf55-b0c7786b4e25",
+        "2bdde087-bca8-41ee-b58a-cbb7b0b02338",
+        "fc4cd5eb-9659-4c83-aadd-b422b00ff78f",
+        "7cecfaaf-8b37-423a-8233-2787b570ad3e",
+        "1a5ddfd4-c119-4f66-b996-6aa3c4257657",
+        "e3a776b9-561f-47ff-ad80-8c415d6402dd"
+      ]
+    },
+    {
+      "id": "ch-st-lawrence",
+      "code": "SLC",
+      "sector": "collegial",
+      "shortName": "Ch.-St-Lawrence",
+      "fullName": "Cégep de Ch.-St-Lawrence",
+      "nickname": null,
+      "aliases": [
+        "Ch.-St-Lawrence",
+        "SLC"
+      ],
+      "priority": 80,
+      "sports": [
+        "basketball",
+        "cross-country",
+        "golf",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "c2cdf3d0-3232-4038-9ac1-fc039a6c7f4e",
+        "be8463de-e00e-4c62-a64c-153ba9720ba7",
+        "05cf481a-7441-444d-98b1-17a13d59c1a0",
+        "ed70b88e-aef4-48ba-a97d-7fc454312bae",
+        "04a285f6-2cf0-4724-a1af-23ebb3595127",
+        "a0467cbb-70d3-46cc-8faf-fdaded90c77c"
+      ]
+    },
+    {
+      "id": "charlevoix",
+      "code": "CHX",
+      "sector": "collegial",
+      "shortName": "Charlevoix",
+      "fullName": "Cégep de Charlevoix",
+      "nickname": null,
+      "aliases": [
+        "Charlevoix",
+        "CHX"
+      ],
+      "priority": 80,
+      "sports": [
+        "cross-country",
+        "flag-football"
+      ],
+      "rseqTeamIds": [
+        "0a9c9922-e0fb-4561-a4a7-e1d8f2603798",
+        "f687d3ca-5d4f-4e11-915a-0ba069134055"
+      ]
+    },
+    {
+      "id": "chicoutimi",
+      "code": "CHI",
+      "sector": "collegial",
+      "shortName": "Chicoutimi",
+      "fullName": "Cégep de Chicoutimi",
+      "nickname": null,
+      "aliases": [
+        "Chicoutimi",
+        "CHI"
+      ],
+      "priority": 80,
+      "sports": [
+        "basketball",
+        "cheerleading",
+        "cross-country",
+        "flag-football",
+        "football",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "4a44babc-a1e9-4665-a832-0eced706e4cf",
+        "e540153a-2b6f-45fe-bda4-9922fa336f02",
+        "5381e300-14f5-4368-a21e-280a93def32a",
+        "529c962d-76c2-4f40-82dd-b5b5925692bf",
+        "1a77a6f5-244a-4681-8f11-e0fa576cb42d",
+        "ab2aa041-5c5c-4d6d-8c17-794c9f08fd22",
+        "ced14a5e-25d8-4566-917e-5fcae50e98a4",
+        "52ddf56a-ada6-4e95-8615-ec6325c9497a"
+      ]
+    },
+    {
+      "id": "college-militaire-royal",
+      "code": "CMR",
+      "sector": "universitaire",
+      "shortName": "Collège Militaire Royal",
+      "fullName": "Collège militaire royal du Canada",
+      "nickname": null,
+      "aliases": [
+        "Collège Militaire Royal",
+        "CMR"
+      ],
+      "priority": 80,
+      "sports": [
+        "athletisme"
+      ],
+      "rseqTeamIds": [
+        "a21ca3d9-3528-42d7-8483-fe2986af8999",
+        "90a3ff4f-29b4-40ed-a855-f7dcc67f0ecc"
+      ]
+    },
+    {
+      "id": "dalhousie",
+      "code": "DAL",
+      "sector": "universitaire",
+      "shortName": "Dalhousie",
+      "fullName": "Université Dalhousie",
+      "nickname": null,
+      "aliases": [
+        "Dalhousie",
+        "DAL"
+      ],
+      "priority": 80,
+      "sports": [
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "a767b28c-0966-40ef-b942-56e2ac1fac58"
+      ]
+    },
+    {
+      "id": "drummondville",
+      "code": "DRU",
+      "sector": "collegial",
+      "shortName": "Drummondville",
+      "fullName": "Cégep de Drummondville",
+      "nickname": null,
+      "aliases": [
+        "Drummondville",
+        "DRU"
+      ],
+      "priority": 80,
+      "sports": [
+        "badminton",
+        "baseball",
+        "basketball",
+        "flag-football",
+        "football",
+        "natation",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "588dfa95-36af-47e4-8684-f4024875b431",
+        "5099f0a7-8d8f-4dc5-a53b-9d77dd8687af",
+        "9465d0c7-810a-455d-b6f9-454238866818",
+        "7aa13584-7f16-4501-ae58-e2ed1a8fc1a7",
+        "7f29fa90-2fb2-467e-a299-31fecb769e41",
+        "4e01a7e5-eab3-4452-b131-33520cef7de2",
+        "a63c4f45-8485-4774-91e4-1e7268e7b0a3",
+        "910fc45a-571f-46e5-8c46-95e6ec71f0b0",
+        "eb63ff68-5f89-4dc9-89dd-34d95c53d8ab",
+        "628105a9-01b9-4be7-bab4-9b34f8bc3f35"
+      ]
+    },
+    {
+      "id": "ellis",
+      "code": "ELI",
+      "sector": "collegial",
+      "shortName": "Ellis",
+      "fullName": "Cégep de Ellis",
+      "nickname": null,
+      "aliases": [
+        "Ellis",
+        "ELI"
+      ],
+      "priority": 80,
+      "sports": [
+        "cross-country",
+        "soccer"
+      ],
+      "rseqTeamIds": [
+        "97532839-7cf8-41a5-b91d-fbbbe81422a8",
+        "101ca532-2b93-4785-ab87-0d329c40a552"
+      ]
+    },
+    {
+      "id": "gaspesie-et-iles",
+      "code": "GAS",
+      "sector": "collegial",
+      "shortName": "Gaspésie et Îles",
+      "fullName": "Cégep de Gaspésie et Îles",
+      "nickname": null,
+      "aliases": [
+        "Gaspésie et Îles",
+        "GAS"
+      ],
+      "priority": 80,
+      "sports": [
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "26f8bc61-daa7-453a-a49f-51d2d60b29f4"
+      ]
+    },
+    {
+      "id": "gerald-godin",
+      "code": "CGG",
+      "sector": "collegial",
+      "shortName": "Gérald-Godin",
+      "fullName": "Cégep de Gérald-Godin",
+      "nickname": null,
+      "aliases": [
+        "Gérald-Godin",
+        "CGG"
+      ],
+      "priority": 80,
+      "sports": [
+        "badminton",
+        "cross-country",
+        "flag-football",
+        "futsal",
+        "soccer",
+        "soccer-interieur",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "2aa07ff1-7d3d-4a84-ba1d-cc5a1dc608f8",
+        "1b563b7b-46b6-4122-a896-17f69bfd6d90",
+        "d4ade005-332e-46c0-85b2-b1f313c8d646",
+        "530fe75e-0b85-4280-a021-67605257939e",
+        "dd8e2b8f-1d1a-49e2-a53d-c003a9657d22",
+        "e6c5c7dc-a5e3-4626-8e18-cf124d8e2d5f",
+        "77fc7e03-a5ec-4fc4-ab1f-b17cf79d05c8",
+        "de1e886c-f35f-4a4a-8be3-9dbc97efbce6"
+      ]
+    },
+    {
+      "id": "granby",
+      "code": "GBY",
+      "sector": "collegial",
+      "shortName": "Granby",
+      "fullName": "Cégep de Granby",
+      "nickname": null,
+      "aliases": [
+        "Granby",
+        "GBY"
+      ],
+      "priority": 80,
+      "sports": [
+        "badminton",
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "golf",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "c88074ce-bad0-4ad3-b384-d80368b7c422",
+        "e065b589-421a-4ce7-833f-f6e0b9cb6acd",
+        "49982f3f-0175-4959-be05-8bbb04688404",
+        "9d31fd9f-df19-4c9c-9d01-67b2918cc862",
+        "16a1057c-b320-4b1a-a8db-c5aa49c3cc3e",
+        "5453cdbf-e978-4b65-b3e2-bb1b25204879",
+        "6ba50c57-09cc-4375-aef9-c36df6db1022",
+        "35aacf87-b30c-4c41-9c8e-0241191c7dbf",
+        "9f8d1a9d-ad3f-4121-bb64-fb8a85cffcce",
+        "2554209a-f7fc-4540-b5f9-3ea108df893e"
+      ]
+    },
+    {
+      "id": "heritage",
+      "code": "HER",
+      "sector": "collegial",
+      "shortName": "Héritage",
+      "fullName": "Héritage College",
+      "nickname": null,
+      "aliases": [
+        "Héritage",
+        "HER"
+      ],
+      "priority": 80,
+      "sports": [
+        "basketball",
+        "flag-football",
+        "ultimate",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "d84bcc7c-f14c-406c-b796-316b82c06471",
+        "bb946bed-ddd8-46db-894f-651816f5d37a",
+        "2f2b6a0b-aacd-4d81-b6aa-7ab77f17fb0f",
+        "f1d44e8c-0786-4ef5-bf46-f3a3b46afb60",
+        "7f634f47-f77b-4084-912c-8ac282960202",
+        "3fdef215-033c-47d9-811e-09dd2831b992"
+      ]
+    },
+    {
+      "id": "joliette",
+      "code": "JOL",
+      "sector": "collegial",
+      "shortName": "Joliette",
+      "fullName": "Cégep de Joliette",
+      "nickname": null,
+      "aliases": [
+        "Joliette",
+        "JOL"
+      ],
+      "priority": 80,
+      "sports": [
+        "cross-country",
+        "flag-football",
+        "soccer-interieur",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "5a7b9a1b-9073-4885-8cd3-d09d06e26fcc",
+        "6175d30c-eaa2-4ebb-ac87-cd85e44e4e01",
+        "b7c0e77d-76f5-401e-a3ea-beacbf8d27a8",
+        "65adc764-74a5-417e-8e73-5830e9cd9934",
+        "23a657c1-7232-4758-9ecf-c030f3a907fc",
+        "91725f85-5790-4d8f-a3f1-19264b07791c",
+        "656a9dff-3510-45ce-a32e-5c80d1933548"
+      ]
+    },
+    {
+      "id": "lassomption",
+      "code": "LAS",
+      "sector": "collegial",
+      "shortName": "L'Assomption",
+      "fullName": "Cégep de L'Assomption",
+      "nickname": null,
+      "aliases": [
+        "L'Assomption",
+        "LAS"
+      ],
+      "priority": 80,
+      "sports": [
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "16378795-955a-4ae2-a5f8-d763a564ffed",
+        "79582975-2ed8-419c-8ae8-097299e4ffe9",
+        "87083e57-4a0d-4b85-85c6-253067a9da14",
+        "ca78f7f9-fefe-44d4-9906-84b7e842a4bd",
+        "386fd2fc-f667-4fd7-8305-690008ab8d67",
+        "e90db245-0ac4-4ea7-94e0-dea5d642b44b",
+        "e5ef6ca0-38ea-4cff-8cc3-d9c2413c678f",
+        "3dbcc66e-d73a-470a-af8a-65499a20f47f",
+        "ca92f83c-1348-48c2-950a-739354f40deb"
+      ]
+    },
+    {
+      "id": "la-pocatiere",
+      "code": "POC",
+      "sector": "collegial",
+      "shortName": "La Pocatière",
+      "fullName": "Cégep de La Pocatière",
+      "nickname": null,
+      "aliases": [
+        "La Pocatière",
+        "POC"
+      ],
+      "priority": 80,
+      "sports": [
+        "badminton",
+        "cheerleading",
+        "cross-country",
+        "flag-football",
+        "football",
+        "golf",
+        "natation",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "ef075248-ffed-4ac4-b165-70621926912f",
+        "633e10a6-ff87-4ce8-b46c-071fdd1ca78a",
+        "2b65e6be-63a6-4b8d-b428-16d9c6780163",
+        "ea3c7f8d-5821-4a8b-a240-08abb32761aa",
+        "c54735b4-f2e5-4186-9184-31a5c695127f",
+        "563b8c7b-dd12-4c1e-a57d-956544846a56",
+        "f177d451-bc69-4598-9a3b-8915a2637d00",
+        "b8655fd6-dac7-476f-8565-4669672b141d",
+        "db30e05a-454b-4070-8283-c9c442b96c48"
+      ]
+    },
+    {
+      "id": "lanaudiere",
+      "code": "LAN",
+      "sector": "collegial",
+      "shortName": "Lanaudière",
+      "fullName": "Cégep de Lanaudière",
+      "nickname": null,
+      "aliases": [
+        "Lanaudière",
+        "LAN"
+      ],
+      "priority": 80,
+      "sports": [
+        "football"
+      ],
+      "rseqTeamIds": [
+        "852aec9b-114f-4665-95b9-b0544b3f6029"
+      ]
+    },
+    {
+      "id": "maisonneuve",
+      "code": "MAI",
+      "sector": "collegial",
+      "shortName": "Maisonneuve",
+      "fullName": "Cégep de Maisonneuve",
+      "nickname": null,
+      "aliases": [
+        "Maisonneuve",
+        "MAI"
+      ],
+      "priority": 80,
+      "sports": [
+        "basketball",
+        "flag-football",
+        "futsal",
+        "natation",
+        "soccer",
+        "ultimate",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "a3947d15-2c2d-489d-b01d-2cf7c0afb26d",
+        "1041bdd3-d39e-49fa-ae1d-242f50df950f",
+        "d7c71683-d3c1-4e57-ab50-9eba999ff2d6",
+        "e70bc364-ff21-4255-aba6-fa4279b74a52",
+        "746c9221-c07a-475f-9feb-c2ae9bf34be2",
+        "f4d42239-c706-457e-8b14-82b89d227661",
+        "b2d480f8-1a23-4ff4-8463-f00bee1bb5aa",
+        "01350d67-f342-446c-8d3f-0274762df198",
+        "794d2cf2-718b-4a75-a06e-ace3be0e1ff5",
+        "57e41db0-e4f2-4bb2-8cbf-84c6f6d9f9e8"
+      ]
+    },
+    {
+      "id": "marianopolis",
+      "code": "MAR",
+      "sector": "collegial",
+      "shortName": "Marianopolis",
+      "fullName": "Marianopolis College",
+      "nickname": null,
+      "aliases": [
+        "Marianopolis",
+        "MAR"
+      ],
+      "priority": 80,
+      "sports": [
+        "badminton",
+        "basketball",
+        "flag-football",
+        "ultimate",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "7a335aea-b32b-4f69-b484-388ad888c6ad",
+        "bfe9daa9-6493-48bc-be79-38ad987eaeee",
+        "80c76d27-c8dc-46d0-a1cf-2d96fc51f190",
+        "6761a16b-b596-48af-845c-824e36ec84e6",
+        "afb2fb6d-041f-4fcd-987d-e4f33626d11f",
+        "336628d2-df21-4399-8ca3-3e8f56cc4e64",
+        "e502ca9f-73d9-4382-a0b3-4dfc7df4f74a"
+      ]
+    },
+    {
+      "id": "marie-victorin",
+      "code": "CMV",
+      "sector": "collegial",
+      "shortName": "Marie-Victorin",
+      "fullName": "Cégep de Marie-Victorin",
+      "nickname": null,
+      "aliases": [
+        "Marie-Victorin",
+        "CMV"
+      ],
+      "priority": 80,
+      "sports": [
+        "badminton",
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "natation",
+        "soccer",
+        "soccer-interieur",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "bd55ed19-4682-4347-954a-5771a2b239f1",
+        "744f5cae-f4f6-45ff-a951-1669b5bf71fa",
+        "39a61fee-635e-4d50-b924-03b3291498ef",
+        "001c5ac2-d381-4f17-976a-05ecb2e079e7",
+        "688a5b04-1a18-4e62-a0d3-60f6244089bc",
+        "7a963f15-659c-42a9-b890-cbcb0e9760f4",
+        "54e53960-4430-4180-a21d-7c2542620c47",
+        "e74e265e-c4ef-4833-a9a3-16bbfb449c52",
+        "974e5d04-571a-4996-a6e5-6f4d5faf005a",
+        "48fc5d96-475d-40d1-ba81-9794be273517",
+        "3edcb54c-9d40-4349-9a1f-e9dcc04f7664",
+        "b6ab0647-1f19-45c5-8e8b-71a214ee33de"
+      ]
+    },
+    {
+      "id": "matane",
+      "code": "MAT",
+      "sector": "collegial",
+      "shortName": "Matane",
+      "fullName": "Cégep de Matane",
+      "nickname": null,
+      "aliases": [
+        "Matane",
+        "MAT"
+      ],
+      "priority": 80,
+      "sports": [
+        "badminton",
+        "natation",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "16742cae-1883-4c4d-93dd-df4735c4741c",
+        "fffd082b-f4bd-4477-85f0-77285090f2a9",
+        "1fdbedff-c2b6-4e3e-9fa1-c3a179bfe5a8"
+      ]
+    },
+    {
+      "id": "matapedien",
+      "code": "MPN",
+      "sector": "collegial",
+      "shortName": "Matapédien",
+      "fullName": "Cégep de Matapédien",
+      "nickname": null,
+      "aliases": [
+        "Matapédien",
+        "MPN"
+      ],
+      "priority": 80,
+      "sports": [
+        "golf",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "ff76dab0-bffc-4874-a023-c3dc9aee9254",
+        "b0dd43d1-0a77-4503-ab65-4085ffcf0e96"
+      ]
+    },
+    {
+      "id": "merici",
+      "code": "MER",
+      "sector": "collegial",
+      "shortName": "Mérici",
+      "fullName": "Cégep de Mérici",
+      "nickname": null,
+      "aliases": [
+        "Mérici",
+        "MER"
+      ],
+      "priority": 80,
+      "sports": [
+        "cross-country",
+        "flag-football",
+        "football",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "86b1f879-7a25-4e14-b744-5df3fbba61bc",
+        "0f1a06e4-391b-46c3-adb3-90928824bc00",
+        "abbb8d0e-36b2-49fd-8a1d-9bb359e473b8",
+        "d00882ff-e70e-40a4-a4c1-3f55b4cb1d89"
+      ]
+    },
+    {
+      "id": "notre-dame-bleu",
+      "code": "NDFB",
+      "sector": "collegial",
+      "shortName": "Notre-Dame Bleu",
+      "fullName": "Cégep de Notre-Dame Bleu",
+      "nickname": null,
+      "aliases": [
+        "Notre-Dame Bleu",
+        "NDFB"
+      ],
+      "priority": 80,
+      "sports": [
+        "rugby"
+      ],
+      "rseqTeamIds": [
+        "ba51f1e5-39cc-4335-8616-a62ed6793387"
+      ]
+    },
+    {
+      "id": "notre-dame-jaune",
+      "code": "NDFJ",
+      "sector": "collegial",
+      "shortName": "Notre-Dame Jaune",
+      "fullName": "Cégep de Notre-Dame Jaune",
+      "nickname": null,
+      "aliases": [
+        "Notre-Dame Jaune",
+        "NDFJ"
+      ],
+      "priority": 80,
+      "sports": [
+        "rugby"
+      ],
+      "rseqTeamIds": [
+        "46e24feb-0394-4ecc-8ceb-cccf513cad17"
+      ]
+    },
+    {
+      "id": "ottawa",
+      "code": "OTT",
+      "sector": "universitaire",
+      "shortName": "Ottawa",
+      "fullName": "University of Ottawa",
+      "nickname": "Gee-Gees",
+      "aliases": [
+        "Ottawa",
+        "OTT"
+      ],
+      "priority": 80,
+      "sports": [
+        "natation",
+        "rugby"
+      ],
+      "rseqTeamIds": [
+        "d61ef4b5-8ddc-48f1-897d-22c6553820b8",
+        "4b02cfe9-3166-4d05-93a8-01a313bce3c9",
+        "8c722fb0-1a6c-4a55-944a-95e9fe3cccfd",
+        "c93abc73-9ba2-4b9f-b1a0-37ad40d81bef"
+      ]
+    },
+    {
+      "id": "rimouski",
+      "code": "RIM",
+      "sector": "collegial",
+      "shortName": "Rimouski",
+      "fullName": "Cégep de Rimouski",
+      "nickname": null,
+      "aliases": [
+        "Rimouski",
+        "RIM"
+      ],
+      "priority": 80,
+      "sports": [
+        "badminton",
+        "basketball",
+        "cross-country",
+        "football",
+        "natation",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "3db6b273-09ae-4f73-a010-79afe1397cdb",
+        "15bff569-b580-4b7a-b941-ab4ebd3d4867",
+        "09583df5-92fc-4acc-89a1-63c1e45265b4",
+        "222f7996-13bd-4a80-9091-ceea8344c417",
+        "ab13aa51-05dc-4924-b284-dde60def23b2",
+        "f2ddee0f-7f61-4c75-900b-f2b54628e768",
+        "311f654d-298d-4ed4-bcba-87db544ec53d",
+        "8bbf8276-c8f3-4ace-b954-16036ecbc8c8",
+        "f3b2da3b-fb71-4318-a09a-d23121321370"
+      ]
+    },
+    {
+      "id": "riviere-du-loup",
+      "code": "RDL",
+      "sector": "collegial",
+      "shortName": "Rivière-du-Loup",
+      "fullName": "Cégep de Rivière-du-Loup",
+      "nickname": null,
+      "aliases": [
+        "Rivière-du-Loup",
+        "RDL"
+      ],
+      "priority": 80,
+      "sports": [
+        "badminton",
+        "baseball",
+        "cross-country",
+        "golf",
+        "natation",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "90f2d3fb-fb1b-4925-8aa9-26d7cc1d8333",
+        "7d18c4cc-fb1e-43ee-b5c8-8ee128322d6b",
+        "b932f450-f0e3-4cd6-b7ab-f35759e6db61",
+        "19c90ca8-ae1f-413d-bf94-86df209773a0",
+        "da5f47ec-7e28-4537-bc6a-08381ca04e0b",
+        "62c27c37-fb06-418d-9fae-8ffa7f24cf30",
+        "3ef76380-dc43-4cb8-af11-a1eb2206c5f3",
+        "afec2087-d252-4e2d-bb29-b8c47ce24b80"
+      ]
+    },
+    {
+      "id": "rosemont",
+      "code": "ROS",
+      "sector": "collegial",
+      "shortName": "Rosemont",
+      "fullName": "Cégep de Rosemont",
+      "nickname": null,
+      "aliases": [
+        "Rosemont",
+        "ROS"
+      ],
+      "priority": 80,
+      "sports": [
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "futsal",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "3655ea87-532f-44c5-acf5-3c95d703b520",
+        "99056790-8669-4efe-8565-7f3ef6c8a71b",
+        "bc316338-8df5-484d-bd50-0dc2f92cd02b",
+        "2f69bb56-abb4-488c-a584-3c0ea9777293",
+        "106a2d07-9ddf-4224-a740-13e133049d20",
+        "b4106bc5-b82b-472d-a1d5-bfabd18ffd3b",
+        "733e3183-1d22-49e7-a7f3-245746ed77ed",
+        "e5de3d3a-86a1-43d4-b2c8-19e8c2d1d68e"
+      ]
+    },
+    {
+      "id": "saint-felicien",
+      "code": "FEL",
+      "sector": "collegial",
+      "shortName": "Saint-Félicien",
+      "fullName": "Cégep de Saint-Félicien",
+      "nickname": null,
+      "aliases": [
+        "Saint-Félicien",
+        "FEL"
+      ],
+      "priority": 80,
+      "sports": [
+        "basketball",
+        "natation",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "a2067e2b-6606-4dba-b49e-d4a0773cb31b",
+        "07a40f81-0d8a-46dd-9a28-bcc64fb32660",
+        "db46fc1c-32c3-4860-a610-2367c1e34051",
+        "2001cd84-dae9-4d5f-829a-cc290bfa97ba"
+      ]
+    },
+    {
+      "id": "sainte-anne",
+      "code": "CSA",
+      "sector": "collegial",
+      "shortName": "Sainte-Anne",
+      "fullName": "Cégep de Sainte-Anne",
+      "nickname": null,
+      "aliases": [
+        "Sainte-Anne",
+        "CSA"
+      ],
+      "priority": 80,
+      "sports": [
+        "badminton",
+        "cross-country",
+        "flag-football",
+        "golf",
+        "ultimate",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "f72018be-2052-4c2e-8778-bd3e4d8255bd",
+        "14f4fa3a-37ad-4751-89cb-d2d7ca8989ea",
+        "cfc4b2fc-a29a-4c23-a58b-b6b51837c84b",
+        "94b16796-ba2e-4d9b-9e72-1780d377c32e",
+        "597f97db-61f4-46f0-afdf-d72b94fca5dd",
+        "8a51d7e7-944a-495f-a728-e21f1c313910",
+        "c0b974c8-3c62-4174-836d-79214509067c",
+        "a027cd25-1059-4772-b4e0-1e6ccc0166f7"
+      ]
+    },
+    {
+      "id": "seminaire-de-sherbrooke",
+      "code": "SSH",
+      "sector": "collegial",
+      "shortName": "Séminaire de Sherbrooke",
+      "fullName": "Séminaire de Sherbrooke",
+      "nickname": null,
+      "aliases": [
+        "Séminaire de Sherbrooke",
+        "SSH"
+      ],
+      "priority": 80,
+      "sports": [
+        "basketball",
+        "flag-football",
+        "golf",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "965299e0-f613-49eb-a01b-3ba6824a3202",
+        "028950e6-34ca-4f08-b8b5-7337529be45c",
+        "f91d0a36-7e00-41dc-bbd4-1c1e34615b36",
+        "dafcd2b2-a145-4ca9-997d-9c5070bd6fed",
+        "e2fbc9c8-663d-4f20-947e-f8e20df3e3c6",
+        "0e4d7a10-f890-4636-a874-f6c07f62d09e"
+      ]
+    },
+    {
+      "id": "sept-iles",
+      "code": "CSI",
+      "sector": "collegial",
+      "shortName": "Sept-Îles",
+      "fullName": "Cégep de Sept-Îles",
+      "nickname": null,
+      "aliases": [
+        "Sept-Îles",
+        "CSI"
+      ],
+      "priority": 80,
+      "sports": [
+        "badminton",
+        "basketball",
+        "cross-country",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "262ca2b0-cbb5-4c90-9814-00cd02102c1d",
+        "5a3b64c6-2639-4675-8868-572202ea2c90",
+        "821aa878-0d70-4618-bb9a-542020c7bd93",
+        "ec3a1b8d-0d64-428e-af60-337d8ec22b54",
+        "3ab574e0-ee0e-47ee-b5c9-c955c9074db4"
+      ]
+    },
+    {
+      "id": "shawinigan",
+      "code": "SHA",
+      "sector": "collegial",
+      "shortName": "Shawinigan",
+      "fullName": "Cégep de Shawinigan",
+      "nickname": null,
+      "aliases": [
+        "Shawinigan",
+        "SHA"
+      ],
+      "priority": 80,
+      "sports": [
+        "badminton",
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "football",
+        "natation",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "75b35c05-d2a6-445a-a214-66bae45d392a",
+        "931b39c9-12d8-4df9-8072-01ace9ee1ce5",
+        "893301a6-f8e0-4263-bc82-d0a026fd1b24",
+        "de192c9b-cfe6-4b00-bea1-6172125eec57",
+        "05e0f5c8-7ee9-494c-a115-4c4e000d3054",
+        "1bb48aad-d7b9-484d-8f49-1dbe927f8f57",
+        "894e4990-41fa-4467-8f13-f919192de926",
+        "44c4bb05-e7f8-4821-b410-055634d1ba59"
+      ]
+    },
+    {
+      "id": "terrebonne",
+      "code": "TER",
+      "sector": "collegial",
+      "shortName": "Terrebonne",
+      "fullName": "Cégep de Terrebonne",
+      "nickname": null,
+      "aliases": [
+        "Terrebonne",
+        "TER"
+      ],
+      "priority": 80,
+      "sports": [
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "soccer-interieur",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "718ba640-664c-40d5-993b-acc2fc1cfa1e",
+        "612311f9-0c31-462e-99b9-b69abc8d8c43",
+        "da2d7246-5536-4ed7-b749-1200974a1f88",
+        "9dee648b-dc8f-417f-859e-6daf168e1064",
+        "b73e9855-57d6-4e56-a83b-7194439907e5",
+        "1c5a3e98-a1b3-4171-bf39-e9c3b8ef249d",
+        "1fc17c27-c24c-405c-9f2b-145d76b2720f"
+      ]
+    },
+    {
+      "id": "unb",
+      "code": "UNB",
+      "sector": "universitaire",
+      "shortName": "UNB",
+      "fullName": "Université UNB",
+      "nickname": null,
+      "aliases": [
+        "UNB",
+        "UNB"
+      ],
+      "priority": 80,
+      "sports": [
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "d2b40b1f-8e56-451e-88b7-942ac0ce8ed6"
+      ]
+    },
+    {
+      "id": "universel",
+      "code": "UNI",
+      "sector": "collegial",
+      "shortName": "Universel",
+      "fullName": "Cégep de Universel",
+      "nickname": null,
+      "aliases": [
+        "Universel",
+        "UNI"
+      ],
+      "priority": 80,
+      "sports": [
+        "basketball",
+        "flag-football",
+        "soccer-interieur",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "8163037f-3ae5-45f5-bbc6-f9a6909cf617",
+        "0f334a4e-c3e0-4f54-99cb-e58c2b2905a2",
+        "195d3cb2-487d-44ea-9281-2a59d4577376",
+        "163aa084-e90e-46fb-8a03-29a16fd0858f"
+      ]
+    },
+    {
+      "id": "uqar",
+      "code": "UQAR",
+      "sector": "universitaire",
+      "shortName": "UQAR",
+      "fullName": "UQAR",
+      "nickname": null,
+      "aliases": [
+        "UQAR",
+        "UQAR"
+      ],
+      "priority": 80,
+      "sports": [
+        "natation"
+      ],
+      "rseqTeamIds": [
+        "c0ce3dc9-b80d-41bc-92be-75e922d14f79",
+        "3c7859e7-8051-42a9-8f7f-8a322ced92db"
+      ]
+    },
+    {
+      "id": "valleyfield",
+      "code": "VAL",
+      "sector": "collegial",
+      "shortName": "Valleyfield",
+      "fullName": "Cégep de Valleyfield",
+      "nickname": null,
+      "aliases": [
+        "Valleyfield",
+        "VAL"
+      ],
+      "priority": 80,
+      "sports": [
+        "badminton",
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "football",
+        "soccer",
+        "soccer-interieur",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "95902150-8251-4e8e-817e-b3c5954ffb88",
+        "92eaa0b1-0b55-4e38-abfb-5df0b21f72db",
+        "30717450-50d7-41d7-82c9-8b2193307fd0",
+        "05509bb0-09b7-4930-83b9-7dddf3f66af8",
+        "8287ef4c-3e0b-4254-a218-d88d04d4622d",
+        "b7648949-c431-4d23-b6f6-09a1aca2dd8f",
+        "473cfc4a-1a4f-4fdf-8673-a66b210da8e6",
+        "6f32ef9f-117a-48dd-8f2a-960ed90a49ba",
+        "56aa48e3-4de2-4435-b3be-e300e92c5c01",
+        "525fc1a1-e98c-47b0-a43f-73dc1846a4f7",
+        "e4cf5cde-aff6-4925-9609-2d9e9b300e61",
+        "aa434d38-3b65-487e-849b-4db9e841b968",
+        "7af5794b-1e82-4e66-a54b-f3e4166fbe56"
+      ]
+    },
+    {
+      "id": "victoriaville",
+      "code": "VIC",
+      "sector": "collegial",
+      "shortName": "Victoriaville",
+      "fullName": "Cégep de Victoriaville",
+      "nickname": null,
+      "aliases": [
+        "Victoriaville",
+        "VIC"
+      ],
+      "priority": 80,
+      "sports": [
+        "badminton",
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "football",
+        "natation",
+        "rugby",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "ec32ba96-b1a9-4052-994a-e1816ca5fb96",
+        "1ade5725-9bf4-4e63-bbae-bb8ff6f0ca6e",
+        "3a3bc42a-323b-4c83-968e-309541f46058",
+        "1d948ad9-5836-488e-bcef-5cbec8d84809",
+        "50b5e9a1-9464-4bf8-931d-5b0da02cb900",
+        "9ba4fdbe-fd8d-414e-acc0-78782a48d37f",
+        "e565da73-7bca-4e30-90ed-ce8871e83028",
+        "9e36e3f9-0311-4196-a160-5149b5fff2e5",
+        "5130a735-0804-40e9-be98-9ca5940f494c",
+        "610832dd-eb86-4681-849f-8a67cec1971b",
+        "55fbcd37-d4ef-43c7-b0ba-3d50a92b7640",
+        "41d897b8-3126-4088-92b9-93d8a571e836"
+      ]
+    }
+  ]
+}

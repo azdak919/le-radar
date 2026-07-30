@@ -7,6 +7,7 @@
  *   /etablissements/<slug>/  /en/institutions/<slug>/
  *   /medias/                 /en/media/
  *   /horaires/               /en/schedules/
+ *   /sports/                 /en/sports/
  *
  * Voir scripts/seo-pages-lib.js pour le gabarit et les chaînes bilingues,
  * et docs/referencement.md pour le pourquoi.
@@ -14,6 +15,7 @@
 
 const {
   T, escapeHtml, slugify, normKey, canonicalInstitution, localizedInstitutionName, isoDay,
+  sportsUpdatedStamp,
   fill, frOf, frAt, plural, renderPage, factsList, headlineList, cardGrid, scheduleTable,
 } = require('./seo-pages-lib');
 
@@ -128,11 +130,85 @@ function institutionKind(group) {
 const ROUTES = {
   directory: { fr: 'medias/', en: 'en/media/' },
   schedules: { fr: 'horaires/', en: 'en/schedules/' },
+  sports: { fr: 'sports/', en: 'en/sports/' },
   radio: { fr: (s) => `radios/${s}/`, en: (s) => `en/radios/${s}/` },
   paper: { fr: (s) => `journaux/${s}/`, en: (s) => `en/newspapers/${s}/` },
   institution: { fr: (s) => `etablissements/${s}/`, en: (s) => `en/institutions/${s}/` },
   home: { fr: '', en: 'en/' },
 };
+
+/*
+ * Glyphes sport — priorite pratiquants :
+ * l’emoji « métier » du sport d’abord (même s’il se répète un peu).
+ * Soccer / intérieur / futsal → ⚽ ; athlé / cross → 🏃.
+ * La différenciation se fait par libellé + couleur de section, pas par un
+ * symbole abstrait (🏟️ 🌲 🥅) peu reconnu sur le terrain.
+ */
+const SPORT_GLYPH = {
+  hockey: '🏒',
+  football: '🏈',
+  soccer: '⚽',
+  'soccer-interieur': '⚽',
+  basketball: '🏀',
+  volleyball: '🏐',
+  rugby: '🏉',
+  'flag-football': '🚩',
+  futsal: '⚽',
+  baseball: '⚾',
+  sailing: '⛵',
+  badminton: '🏸',
+  athletisme: '🏃',
+  'cross-country': '🏃',
+  natation: '🏊',
+  golf: '⛳',
+  cheerleading: '📣',
+  ultimate: '🥏',
+  tennis: '🎾',
+  ski: '⛷️',
+  'ski-de-fond': '⛷️',
+  handball: '🤾',
+};
+const SPORT_TONE = {
+  hockey: '#0b3d91',
+  football: '#6b4f2a',
+  soccer: '#1a7a4c',
+  'soccer-interieur': '#15803d',
+  basketball: '#c45c26',
+  volleyball: '#6c2163',
+  rugby: '#7c2d12',
+  'flag-football': '#854d0e',
+  futsal: '#166534',
+  baseball: '#9a3412',
+  sailing: '#0e7490',
+  badminton: '#0f766e',
+  athletisme: '#b45309',
+  'cross-country': '#92400e',
+  natation: '#0369a1',
+  golf: '#15803d',
+  cheerleading: '#be185d',
+  ultimate: '#7c3aed',
+};
+/* Popularité campus QC (cégep/univ.) — sports d’équipe vitrine d’abord, puis autres disciplines RSEQ. */
+const SPORT_ORDER = [
+  'hockey',
+  'football',
+  'soccer',
+  'basketball',
+  'volleyball',
+  'rugby',
+  'flag-football',
+  'soccer-interieur',
+  'futsal',
+  'baseball',
+  'badminton',
+  'natation',
+  'athletisme',
+  'cross-country',
+  'golf',
+  'cheerleading',
+  'ultimate',
+  'sailing',
+];
 
 // Liens de repérage local : une seule table évite de répéter des URL dans les
 // registres des médias et reste utilisable quand une nouvelle radio arrive.
@@ -777,6 +853,553 @@ function schedulesHubPage(model, lang, ctx) {
   };
 }
 
+function formatSportsDate(iso, lang) {
+  if (!iso) return '';
+  try {
+    return new Intl.DateTimeFormat(lang === 'en' ? 'en-CA' : 'fr-CA', {
+      timeZone: 'America/Toronto',
+      day: 'numeric',
+      month: 'short',
+    }).format(new Date(`${iso}T12:00:00`));
+  } catch {
+    return iso;
+  }
+}
+
+function formatSportsClock(time, lang) {
+  if (!time) return '';
+  return String(time).replace(':', lang === 'en' ? ':' : ' h ');
+}
+
+/** HTML date (+ heure empilée) pour aligner les colonnes avec les lignes de score. */
+function formatSportsTimeHtml(date, time, lang) {
+  const day = formatSportsDate(date, lang) || date || '';
+  const clock = formatSportsClock(time, lang);
+  if (clock) {
+    return `<span class="sports-result__day">${escapeHtml(day)}</span><span class="sports-result__clock">${escapeHtml(clock)}</span>`;
+  }
+  return escapeHtml(day);
+}
+
+/** Normalise sex → 'F' | 'M' | 'X' | '' */
+function sportsSexKey(sex) {
+  const s = String(sex || '').toUpperCase();
+  if (s === 'F' || s === 'W') return 'F';
+  if (s === 'M') return 'M';
+  if (s === 'X' || s === 'MIXTE' || s === 'MIXED') return 'X';
+  return '';
+}
+
+/** Libellé lisible (pas seulement « F » / « M » — trop facile à rater). */
+function sportsSexLabel(sex, t, lang) {
+  const key = sportsSexKey(sex);
+  if (key === 'F') return t.sportsWomen;
+  if (key === 'M') return t.sportsMen;
+  if (key === 'X') return t.sportsMixed;
+  if (!sex) return '';
+  return String(sex);
+}
+
+function sportsSectorLabel(sector, t) {
+  if (sector === 'collegial') return t.sportsCollegial;
+  if (sector === 'universitaire') return t.sportsUniversity;
+  return sector || '';
+}
+
+/**
+ * Catégorie mise en avant par sport (popularité campus QC).
+ * Sources : culture médiatique QC + effectifs RSEQ typiques.
+ *  - hockey : masculin (largement plus suivi ; ~3× plus d’équipes)
+ *  - football : masculin (discipline varsity H)
+ *  - basketball : masculin légèrement devant (effectifs + vitrine)
+ *  - soccer : féminin au moins aussi fort en collégial/univ. (souvent plus d’équipes)
+ *  - volleyball : féminin (effectifs + médiatisation campus)
+ *  - rugby : masculin par tradition (parité d’équipes)
+ *  - flag-football : féminin (RSEQ = F)
+ * null = décider selon l’effectif du payload (auto).
+ */
+const SPORT_SEX_LEAD = {
+  hockey: 'M',
+  football: 'M',
+  basketball: 'M',
+  soccer: 'F',
+  'soccer-interieur': 'F',
+  volleyball: 'F',
+  rugby: 'M',
+  'flag-football': 'F',
+  futsal: 'M',
+  baseball: 'M',
+  sailing: null,
+  badminton: null, // souvent mixte
+  athletisme: 'M',
+  'cross-country': 'M',
+  natation: 'F',
+  golf: 'M',
+  cheerleading: null, // mixte
+  ultimate: null,
+};
+
+/** Catégorie en tête pour un sport (override + auto sur effectifs). */
+function sportsSexLead(sport, teamsForSport = []) {
+  const fixed = SPORT_SEX_LEAD[sport];
+  if (fixed === 'F' || fixed === 'M') return fixed;
+  let f = 0;
+  let m = 0;
+  for (const team of teamsForSport) {
+    const k = sportsSexKey(team.sex);
+    if (k === 'F') f += 1;
+    else if (k === 'M') m += 1;
+  }
+  if (f > m) return 'F';
+  if (m > f) return 'M';
+  // Égalité / inconnu : masculin par défaut (sauf sports 100 % F déjà couverts).
+  return 'M';
+}
+
+/** Rang de tri sexe dans un sport : 0 = catégorie la plus populaire, 1 = l’autre, 2 = n.d. */
+function sportsSexSortRank(sex, lead = 'M') {
+  const key = sportsSexKey(sex);
+  if (!key) return 2;
+  if (key === lead) return 0;
+  return 1;
+}
+
+/** Ordre des sous-groupes F/M pour un sport. */
+function sportsSexGroupOrder(lead) {
+  return lead === 'F' ? ['F', 'M', ''] : ['M', 'F', ''];
+}
+
+/** Timestamp prochain match (ms) — Infinity si aucun (va en bas). */
+function sportsNextGameTs(team) {
+  const g = team?.nextGame;
+  if (!g || !g.date) return Number.POSITIVE_INFINITY;
+  const rawTime = String(g.time || '23:59').replace(/\s*h\s*/i, ':').replace(/[^\d:]/g, '');
+  const parts = rawTime.split(':').map((n) => parseInt(n, 10));
+  const hh = Number.isFinite(parts[0]) ? parts[0] : 23;
+  const mm = Number.isFinite(parts[1]) ? parts[1] : 59;
+  const iso = `${g.date}T${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}:00`;
+  const ts = Date.parse(iso);
+  return Number.isFinite(ts) ? ts : Number.POSITIVE_INFINITY;
+}
+
+/** Timestamp dernier match (ms) — -Infinity si aucun (après les « à venir »). */
+function sportsLastGameTs(team) {
+  const g = team?.lastGame;
+  if (!g || !g.date) return Number.NEGATIVE_INFINITY;
+  const ts = Date.parse(`${g.date}T12:00:00`);
+  return Number.isFinite(ts) ? ts : Number.NEGATIVE_INFINITY;
+}
+
+/**
+ * Tri des cartes dans un sport (vue « Tous ») :
+ * 1. Prochain match le plus proche en premier (H/F indifférent)
+ * 2. Sinon résultat le plus récent
+ * 3. Nom
+ */
+function compareSportsTeamsBySchedule(a, b) {
+  const na = sportsNextGameTs(a);
+  const nb = sportsNextGameTs(b);
+  if (na !== nb) return na - nb;
+  const la = sportsLastGameTs(a);
+  const lb = sportsLastGameTs(b);
+  if (la !== lb) return lb - la; // plus récent d’abord
+  return String(a.name || '').localeCompare(String(b.name || ''), 'fr');
+}
+
+function sportsResultRows(team, t, lang) {
+  const rows = [];
+  const isSailing = team.sport === 'sailing';
+  /** Adversaire : surnom en 1ʳᵉ si connu (identité d’équipe), sinon nom court. */
+  const formatOpp = (game) => {
+    const short = game.opponent || game.opponentCode || '—';
+    const full = game.opponentFullName && game.opponentFullName !== short
+      ? game.opponentFullName
+      : '';
+    const nick = game.opponentNickname && game.opponentNickname !== short
+      ? game.opponentNickname
+      : '';
+    let html;
+    if (nick) {
+      html = `<span class="sports-result__opp">${escapeHtml(nick)}</span>`
+        + ` <span class="sports-result__opp-school">${escapeHtml(short)}</span>`;
+    } else {
+      html = `<span class="sports-result__opp">${escapeHtml(short)}</span>`;
+    }
+    if (full && full !== short && full !== nick) {
+      html += `<span class="sports-result__opp-full">${escapeHtml(full)}</span>`;
+    }
+    return html;
+  };
+  const formatTitle = (game, opp, venueHtml = '') => {
+    const href = game.url && /^https?:\/\//i.test(game.url) ? game.url : '';
+    const tip = [game.opponent, game.opponentFullName, t.sportsOpenGame].filter(Boolean).join(' — ');
+    const vs = isSailing
+      ? `<span class="sports-result__vs">${escapeHtml(t.sportsRegatta)}</span>`
+      : '<span class="sports-result__vs">vs</span>';
+    const inner = `${vs} ${opp}${venueHtml}`;
+    return href
+      ? `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(tip)}">${inner}</a>`
+      : inner;
+  };
+  const last = team.lastGame;
+  if (last) {
+    const badge = last.result === 'W' ? 'V' : last.result === 'L' ? 'D' : 'N';
+    const label = last.result === 'W' ? t.sportsWin : last.result === 'L' ? t.sportsLoss : t.sportsDraw;
+    const opp = formatOpp(last);
+    const placeKind = last.scoreKind === 'place' || isSailing;
+    const score = placeKind && last.scoreFor != null && last.scoreAgainst != null
+      ? `${last.scoreFor}/${last.scoreAgainst}`
+      : `${last.scoreFor}–${last.scoreAgainst}`;
+    const scoreAria = placeKind
+      ? `${t.sportsPlace} ${last.scoreFor} / ${last.scoreAgainst} · ${label}`
+      : label;
+    const when = formatSportsDate(last.date, lang);
+    rows.push(`<li class="sports-result sports-result--${escapeHtml(last.result || 'D')}" data-result="${escapeHtml(last.result || 'D')}">
+  <time class="sports-result__time" datetime="${escapeHtml(last.date || '')}">${escapeHtml(when)}</time>
+  <span class="sports-result__score" aria-label="${escapeHtml(scoreAria)}">${escapeHtml(score)}</span>
+  <span class="sports-result__title">${formatTitle(last, opp)}</span>
+  <span class="sports-result__badge" title="${escapeHtml(label)}">${badge}</span>
+</li>`);
+  }
+  const next = team.nextGame;
+  if (next) {
+    const timeHtml = formatSportsTimeHtml(next.date, next.time, lang);
+    const opp = formatOpp(next);
+    const venue = next.home === false
+      ? `<span class="sports-result__venue">${escapeHtml(t.sportsAway)}</span>`
+      : next.home
+        ? `<span class="sports-result__venue">${escapeHtml(t.sportsHome)}</span>`
+        : '';
+    rows.push(`<li class="sports-result sports-result--next">
+  <time class="sports-result__time" datetime="${escapeHtml(next.date || '')}">${timeHtml}</time>
+  <span class="sports-result__score sports-result__score--next" aria-label="${escapeHtml(t.sportsUpcoming)}">${escapeHtml(t.sportsUpcoming)}</span>
+  <span class="sports-result__title">${formatTitle(next, opp, venue)}</span>
+  <span class="sports-result__badge sports-result__badge--next" title="${escapeHtml(t.sportsUpcoming)}">→</span>
+</li>`);
+  }
+  if (!rows.length) {
+    if (team.clubNote || team.status === 'club' || team.status === 'upcoming') {
+      const note = team.clubNote || t.sportsClubPending;
+      return `<p class="sports-panel__empty sports-panel__empty--club">${escapeHtml(note)}</p>`;
+    }
+    return `<p class="sports-panel__empty">${escapeHtml(t.sportsEmpty)}</p>`;
+  }
+  return `<ul class="sports-panel__list">${rows.join('\n')}</ul>`;
+}
+
+function sportsPanelHtml(team, t, lang) {
+  const sport = team.sport || '';
+  const glyph = SPORT_GLYPH[sport] || '🏅';
+  const tone = SPORT_TONE[sport] || 'var(--accent)';
+  const sexKey = sportsSexKey(team.sex);
+  const sexLabel = sportsSexLabel(team.sex, t, lang);
+  const sexBadge = sexLabel
+    ? ` <span class="sports-panel__sex sports-panel__sex--${sexKey === 'F' ? 'f' : sexKey === 'M' ? 'm' : 'x'}"${sexKey === 'X' ? ' title="Mixte"' : ''}>${escapeHtml(sexLabel)}</span>`
+    : '';
+  const nick = String(team.nickname || '').trim();
+  const shortName = String(team.name || '').trim() || 'Équipe';
+  const code = String(team.code || '').trim();
+  const codeHtml = code
+    ? ` <span class="sports-panel__code">${escapeHtml(code)}</span>`
+    : '';
+  /*
+   * Hiérarchie « focus group » stats univ. :
+   *  - le surnom (Cougars, Carabins…) est l’identité d’équipe → titre H3
+   *  - l’établissement court + code se placent en sous-marque
+   *  - le nom légal complet reste en 3ᵉ ligne
+   * Sans surnom : shortName reste le titre (code discret à côté).
+   */
+  let nameBlock;
+  if (nick && nick.toLowerCase() !== shortName.toLowerCase()) {
+    nameBlock = `<h3 class="sports-panel__name sports-panel__name--branded"><span class="sports-panel__brand">${escapeHtml(nick)}</span>${sexBadge}</h3>\n`
+      + `      <p class="sports-panel__program"><span class="sports-panel__name-text">${escapeHtml(shortName)}</span>${codeHtml}</p>`;
+  } else {
+    nameBlock = `<h3 class="sports-panel__name"><span class="sports-panel__brand">${escapeHtml(shortName)}</span>${codeHtml}${sexBadge}</h3>`;
+  }
+  const schoolHtml = team.fullName && team.fullName !== shortName && team.fullName !== nick
+    ? `<p class="sports-panel__school">${escapeHtml(team.fullName)}</p>`
+    : '';
+  const meta = [
+    team.sportLabel || sport,
+    team.division,
+    sportsSectorLabel(team.sector, t),
+    team.record?.label ? `${t.sportsRecord} ${team.record.label}` : '',
+  ].filter(Boolean).join(' · ');
+  const regAttr = team.registryId ? ` data-registry="${escapeHtml(team.registryId)}"` : '';
+  const sexAttr = sexKey ? ` data-sex="${sexKey.toLowerCase()}"` : ' data-sex=""';
+  const nextTs = sportsNextGameTs(team);
+  const nextAttr = Number.isFinite(nextTs) && nextTs < Number.POSITIVE_INFINITY
+    ? ` data-next-ts="${nextTs}"`
+    : ' data-next-ts=""';
+  return `<section class="sports-panel" data-sport="${escapeHtml(sport)}" data-sector="${escapeHtml(team.sector || '')}" data-team="${escapeHtml(team.id || '')}"${sexAttr}${nextAttr}${regAttr} style="--sports-panel-c:${escapeHtml(tone)}">
+  <header class="sports-panel__head">
+    <span class="sports-panel__glyph" aria-hidden="true">${glyph}</span>
+    <div class="sports-panel__identity">
+      ${nameBlock}
+      ${schoolHtml}
+      <p class="sports-panel__meta">${escapeHtml(meta)}</p>
+    </div>
+  </header>
+  ${sportsResultRows(team, t, lang)}
+</section>`;
+}
+
+/** Sous-titre Féminin / Masculin dans une section sport. */
+function sportsSexGroupHeading(sexKey, t, count) {
+  const label = sexKey === 'F' ? t.sportsWomen : sexKey === 'M' ? t.sportsMen : t.sportsMixed;
+  const mod = sexKey === 'F' ? 'f' : sexKey === 'M' ? 'm' : 'x';
+  return `<h4 class="sports-sex-group" data-sex-group="${escapeHtml(sexKey.toLowerCase() || 'x')}">
+  <span class="sports-sex-group__label sports-sex-group__label--${mod}">${escapeHtml(label)}</span>
+  <span class="sports-sex-group__count">${count}</span>
+</h4>`;
+}
+
+/**
+ * Sports hors feed scores (ou secours fetch) : carte informative + liens officiels.
+ * Préfère le payload `externalBoards` de sports.json ; secours hardcodé hockey/voile.
+ */
+function externalSportPanelHtml(sport, t, board) {
+  const fallback = {
+    hockey: {
+      sportLabel: t.sportsHockeyLabel,
+      why: t.sportsHockeyWhy,
+      links: [
+        { href: 'https://collegial.rseqhockey.com/fr/', label: t.sportsHockeyColl },
+        { href: 'https://oua.hockeytech.com/men/stats/schedule/all-teams/170/all-months?league=5&gametype=-1', label: t.sportsHockeyUniM },
+        { href: 'https://www.rseq-stats.ca/universitaire/hockey-f', label: t.sportsHockeyUniF },
+      ],
+    },
+    sailing: {
+      sportLabel: t.sportsSailingLabel,
+      why: t.sportsSailingWhy,
+      links: [
+        { href: 'https://scores.collegesailing.org/', label: t.sportsSailingIcsa },
+        { href: 'https://mcgillathletics.ca/sports/sailing', label: t.sportsSailingMcgill },
+        { href: 'https://neisa.collegesailing.org/', label: t.sportsSailingNeisa },
+      ],
+    },
+  };
+  const src = board && Array.isArray(board.links) && board.links.length
+    ? board
+    : fallback[sport];
+  if (!src) return '';
+  const label = src.sportLabel || fallback[sport]?.sportLabel || sport;
+  const why = src.why || '';
+  const glyph = SPORT_GLYPH[sport] || '🏅';
+  const tone = SPORT_TONE[sport] || 'var(--accent)';
+  const open = t.sportsHockeyOpen;
+  const list = src.links.map((l) => (
+    `<li class="sports-result sports-result--next">
+  <span class="sports-result__time" aria-hidden="true">${glyph}</span>
+  <span class="sports-result__score sports-result__score--next">${escapeHtml(open)}</span>
+  <span class="sports-result__title"><a href="${escapeHtml(l.href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(l.label)}</a></span>
+  <span class="sports-result__badge sports-result__badge--next" aria-hidden="true">→</span>
+</li>`
+  )).join('\n');
+  const sector = src.sector || '';
+  return `<section class="sports-panel sports-panel--external" data-sport="${escapeHtml(sport)}" data-sector="${escapeHtml(sector)}" data-team="${escapeHtml(sport)}-external" style="--sports-panel-c:${escapeHtml(tone)}">
+  <header class="sports-panel__head">
+    <span class="sports-panel__glyph" aria-hidden="true">${glyph}</span>
+    <div class="sports-panel__identity">
+      <h3 class="sports-panel__name">${escapeHtml(label)}</h3>
+      ${why ? `<p class="sports-panel__meta">${escapeHtml(why)}</p>` : ''}
+    </div>
+  </header>
+  <ul class="sports-panel__list">
+${list}
+  </ul>
+</section>`;
+}
+
+/**
+ * Hub « Au tableau » — scores RSEQ collégial + universitaire.
+ * Contenu 100 % statique (sports.json) ; filtres en progressive enhancement.
+ */
+function sportsHubPage(lang, ctx) {
+  const t = T[lang];
+  const path = ROUTES.sports[lang];
+  const altPath = ROUTES.sports[lang === 'fr' ? 'en' : 'fr'];
+  const up = '../'.repeat(path.split('/').filter(Boolean).length);
+  const sports = ctx.sports || {};
+  const teamsRaw = Object.values(sports.teams || {})
+    .filter((team) => team && (team.lastGame || team.nextGame || team.name));
+  // Compteurs F/M par sport (pastilles titre) — n’influence plus l’ordre des cartes.
+  const sexLeadBySport = {};
+  for (const sport of [...new Set(teamsRaw.map((t) => t.sport).filter(Boolean))]) {
+    sexLeadBySport[sport] = sportsSexLead(
+      sport,
+      teamsRaw.filter((t) => t.sport === sport),
+    );
+  }
+  // Ordre : sport (popularité) → prochain match le plus proche (H/F mélangés) → nom.
+  const teams = teamsRaw.slice().sort((a, b) => {
+    const sa = SPORT_ORDER.indexOf(a.sport);
+    const sb = SPORT_ORDER.indexOf(b.sport);
+    const so = (sa < 0 ? 99 : sa) - (sb < 0 ? 99 : sb);
+    if (so) return so;
+    return compareSportsTeamsBySchedule(a, b);
+  });
+
+  const sportsPresent = [...new Set(teams.map((team) => team.sport).filter(Boolean))];
+  sportsPresent.sort((a, b) => {
+    const ia = SPORT_ORDER.indexOf(a);
+    const ib = SPORT_ORDER.indexOf(b);
+    return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+  });
+  const sectorsPresent = [...new Set(teams.map((team) => team.sector).filter(Boolean))];
+  const sexesPresent = [...new Set(
+    teams.map((team) => sportsSexKey(team.sex)).filter((s) => s === 'F' || s === 'M'),
+  )];
+
+  const sportLabelOf = (sport) => {
+    if (sport === 'hockey') return t.sportsHockeyLabel;
+    if (sport === 'sailing') return t.sportsSailingLabel;
+    return teams.find((team) => team.sport === sport)?.sportLabel || sport;
+  };
+
+  const description = fill(t.sportsDesc, { n: teams.length });
+  // Horodatage exact (date + heure + fuseau QC) : un jour civil seul ne permet
+  // pas de savoir si les scores de la soirée sont déjà entrés.
+  const stamp = sportsUpdatedStamp(sports.updated, lang);
+  const updated = stamp?.label || null;
+  const hasContent = teams.length > 0;
+
+  let body = `      <p class="seo-lead">${escapeHtml(t.sportsLead)}</p>\n`;
+  body += `      <p class="sports-board-meta">${escapeHtml(t.sportsMeta)}${
+    stamp
+      ? ` · ${escapeHtml(t.updated)} <time class="sports-board-meta__time" datetime="${escapeHtml(stamp.machine)}">${escapeHtml(stamp.label)}</time>`
+      : ''
+  }</p>\n`;
+
+  if (!hasContent) {
+    body += `      <p class="seo-empty">${escapeHtml(t.sportsEmpty)}</p>\n`;
+  } else {
+    body += `      <div class="sports-board-root" data-sports-board>\n`;
+    body += `        <div class="sports-filters" role="group" aria-label="${escapeHtml(t.sports)}">\n`;
+    body += `          <div class="sports-filters__row">\n`;
+    body += `            <span class="sports-filters__label">${escapeHtml(t.sportsFilterSport)}</span>\n`;
+    body += `            <button type="button" class="sports-filter is-active" data-filter-sport="all" aria-pressed="true">${escapeHtml(t.sportsAll)}</button>\n`;
+    for (const sport of sportsPresent) {
+      body += `            <button type="button" class="sports-filter" data-filter-sport="${escapeHtml(sport)}" aria-pressed="false">${escapeHtml(sportLabelOf(sport))}</button>\n`;
+    }
+    body += '          </div>\n';
+    if (sexesPresent.length > 1) {
+      body += `          <div class="sports-filters__row">\n`;
+      body += `            <span class="sports-filters__label">${escapeHtml(t.sportsFilterSex)}</span>\n`;
+      body += `            <button type="button" class="sports-filter is-active" data-filter-sex="all" aria-pressed="true">${escapeHtml(t.sportsAll)}</button>\n`;
+      if (sexesPresent.includes('F')) {
+        body += `            <button type="button" class="sports-filter" data-filter-sex="f" aria-pressed="false">${escapeHtml(t.sportsWomen)}</button>\n`;
+      }
+      if (sexesPresent.includes('M')) {
+        body += `            <button type="button" class="sports-filter" data-filter-sex="m" aria-pressed="false">${escapeHtml(t.sportsMen)}</button>\n`;
+      }
+      body += '          </div>\n';
+    }
+    if (sectorsPresent.length > 1) {
+      body += `          <div class="sports-filters__row">\n`;
+      body += `            <span class="sports-filters__label">${escapeHtml(t.sportsFilterSector)}</span>\n`;
+      body += `            <button type="button" class="sports-filter is-active" data-filter-sector="all" aria-pressed="true">${escapeHtml(t.sportsAll)}</button>\n`;
+      if (sectorsPresent.includes('collegial')) {
+        body += `            <button type="button" class="sports-filter" data-filter-sector="collegial" aria-pressed="false">${escapeHtml(t.sportsCollegial)}</button>\n`;
+      }
+      if (sectorsPresent.includes('universitaire')) {
+        body += `            <button type="button" class="sports-filter" data-filter-sector="universitaire" aria-pressed="false">${escapeHtml(t.sportsUniversity)}</button>\n`;
+      }
+      body += '          </div>\n';
+    }
+    body += '        </div>\n';
+    body += `        <p class="sports-board-status" data-sports-status>${teams.length} ${teams.length > 1 ? t.sportsTeams : t.sportsTeamOne}</p>\n`;
+
+    for (const sport of sportsPresent) {
+      const group = teams.filter((team) => team.sport === sport);
+      const label = sportLabelOf(sport);
+      const glyph = SPORT_GLYPH[sport] || '🏅';
+      const countLabel = String(group.length);
+      const fCount = group.filter((team) => sportsSexKey(team.sex) === 'F').length;
+      const mCount = group.filter((team) => sportsSexKey(team.sex) === 'M').length;
+      const xCount = group.filter((team) => sportsSexKey(team.sex) === 'X').length;
+      // <details open> : repliable au clic sur le titre, lisible sans JS.
+      body += `        <details class="sports-sport-block" data-sport="${escapeHtml(sport)}" id="sport-${escapeHtml(sport)}" open>\n`;
+      body += `          <summary class="sports-sport-block__title">\n`;
+      body += `            <span class="sports-sport-block__glyph" aria-hidden="true">${glyph}</span>\n`;
+      body += `            <span class="sports-sport-block__label">${escapeHtml(label)}</span>\n`;
+      const sexLead = sexLeadBySport[sport] || sportsSexLead(sport, group);
+      if (fCount || mCount) {
+        body += `            <span class="sports-sport-block__sex-split" aria-label="${escapeHtml(t.sportsWomen)} ${fCount}, ${escapeHtml(t.sportsMen)} ${mCount}">`;
+        for (const sk of sportsSexGroupOrder(sexLead)) {
+          if (sk === 'F' && fCount) {
+            body += `<span class="sports-sport-block__sex sports-sport-block__sex--f">${escapeHtml(t.sportsWomenShort)} ${fCount}</span>`;
+          }
+          if (sk === 'M' && mCount) {
+            body += `<span class="sports-sport-block__sex sports-sport-block__sex--m">${escapeHtml(t.sportsMenShort)} ${mCount}</span>`;
+          }
+        }
+        body += '</span>\n';
+      }
+      body += `            <span class="sports-sport-block__count">${escapeHtml(countLabel)}</span>\n`;
+      body += `            <span class="sports-sport-block__chevron" aria-hidden="true"></span>\n`;
+      body += '          </summary>\n';
+      body += `          <div class="sports-board" role="list" data-sports-schedule-sort>\n`;
+      if (group.length) {
+        // Liste plate triée par prochain match (H/F mélangés) — pas de sous-blocs genre.
+        body += group.map((team) => sportsPanelHtml(team, t, lang)).join('\n');
+      } else {
+        body += `            <p class="sports-panel__empty">${escapeHtml(t.sportsEmpty)}</p>\n`;
+      }
+      body += '\n          </div>\n        </details>\n';
+    }
+    body += '      </div>\n';
+  }
+
+  body += `      <p class="sports-board-note">${escapeHtml(t.sportsNote)}</p>\n`;
+
+  const jsonLd = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: t.sportsH1,
+    description,
+    inLanguage: lang === 'fr' ? 'fr-CA' : 'en-CA',
+    about: {
+      '@type': 'ItemList',
+      numberOfItems: teams.length,
+      itemListElement: sportsPresent.map((sport, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: sportLabelOf(sport),
+        url: `${ctx.siteBase}/${path}#sport-${sport}`,
+      })),
+    },
+  }).replace(/</g, '\\u003c');
+
+  return {
+    path,
+    html: renderPage({
+      lang,
+      path,
+      altPath,
+      title: `${t.sportsTitle} | LE-RADAR.ca`,
+      description,
+      h1: t.sportsH1,
+      // Clic sur le titre = rechargement propre sans filtres (?sport=…, ?sex=…).
+      h1Href: './',
+      // Pas d’eyebrow : même libellé que le h1 (« Au tableau » / « Scoreboard »).
+      eyebrow: null,
+      crumbs: [
+        { label: t.home, href: up },
+        { label: t.sports, href: './', reset: true },
+      ],
+      bodyHtml: body,
+      jsonLd,
+      siteBase: ctx.siteBase,
+      updated,
+      extraScripts: ['sports-board.js'],
+      wireClass: 'seo-wire--sports',
+    }),
+    changefreq: 'daily',
+    priority: '0.7',
+  };
+}
+
 /** Page d'accueil du volet anglais : présentation du projet, pas le fil. */
 function englishHomePage(model, ctx) {
   const t = T.en;
@@ -839,15 +1462,21 @@ function englishHomePage(model, ctx) {
 //  Entrée
 // ═══════════════════════════════════════════════════════════════════════════
 
-function buildEntityPages({ radios, sources, news, institutions, schedules, siteBase, archivePaths }) {
+function buildEntityPages({ radios, sources, news, institutions, schedules, sports, siteBase, archivePaths }) {
   const model = buildModel({ radios, sources, news, institutions });
   assertGeoLinkCoverage(model, institutions);
-  const ctx = { siteBase, schedules: schedules || {}, archivePaths: archivePaths || new Map() };
+  const ctx = {
+    siteBase,
+    schedules: schedules || {},
+    sports: sports || {},
+    archivePaths: archivePaths || new Map(),
+  };
   const pages = [];
 
   for (const lang of ['fr', 'en']) {
     pages.push(directoryPage(model, lang, ctx));
     pages.push(schedulesHubPage(model, lang, ctx));
+    pages.push(sportsHubPage(lang, ctx));
     for (const radio of model.radioEntries) pages.push(radioPage(radio, lang, ctx));
     for (const paper of model.paperEntries) pages.push(paperPage(paper, lang, ctx));
     for (const group of model.groups) pages.push(institutionPage(group, lang, ctx));

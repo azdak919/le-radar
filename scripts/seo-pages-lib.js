@@ -18,8 +18,8 @@
  */
 
 const SITE_NAME = 'LE-RADAR.ca';
-const TAGLINE_FR = 'Les journaux et les radios étudiantes du Québec, réunis au même endroit';
-const TAGLINE_EN = 'Québec student newspapers and campus radio, all in one place';
+const TAGLINE_FR = 'Journaux, radios et sports étudiants du Québec, réunis au même endroit';
+const TAGLINE_EN = 'Québec student newspapers, campus radio and sports, all in one place';
 
 /** Marque publique et signature institutionnelle du pied de page.
  *  La signature reste en français sur le volet anglais : c'est un nom propre. */
@@ -33,6 +33,66 @@ const CONTACT_URL = `mailto:${CONTACT_MAIL}`;
 
 /** Le tuner natif a une seule source : le balisage de l'accueil.
  * Les pages SEO le recopient à la génération, jamais dans un iframe. */
+/**
+ * CSS critique du synthé (copie de index.html) — FOUC sur pages SEO sans ce bloc.
+ * Sans lui, la colonne « À l'antenne » peut rester figée / mal calée avant style.css.
+ */
+function renderTunerCriticalCss() {
+  return `    <!--
+      CSS critique du synthé bureau : réserve « À l'antenne » + volume compact
+      dès le premier paint (avant le CSS mis en cache / le JS async).
+    -->
+    <style>
+      @media (min-width: 1100px) {
+        .tuner-inner {
+          display: grid !important;
+          grid-template-columns: minmax(0, 1.15fr) minmax(300px, 370px) !important;
+          gap: 0 !important;
+          align-items: center !important;
+          max-width: 1180px;
+        }
+        .tuner-controls { grid-column: 1; min-width: 0; }
+        .tuner-actions { margin-left: 0 !important; flex-shrink: 0; }
+        .tuner-nowair {
+          grid-column: 2;
+          display: flex !important;
+          flex-direction: row !important;
+          align-items: flex-start !important;
+          gap: 10px;
+          width: 100% !important;
+          min-width: 0;
+          padding-left: 20px;
+          border-left: none !important;
+          opacity: 1 !important;
+          pointer-events: auto !important;
+          box-sizing: border-box;
+        }
+        .tuner-nowair-body {
+          flex: 1 1 auto !important;
+          min-width: 0 !important;
+          opacity: 1 !important;
+        }
+        .tuner-vol {
+          flex: 0 0 auto !important;
+          max-width: 168px !important;
+          min-width: 0 !important;
+        }
+        .tuner-vol-slot {
+          display: flex !important;
+          align-items: center;
+          max-width: 120px !important;
+        }
+        .tuner-vol-track {
+          width: 112px !important;
+          max-width: 112px !important;
+          min-width: 96px !important;
+          flex: 0 0 112px !important;
+        }
+      }
+    </style>
+`;
+}
+
 function renderNativeTuner() {
   const { readFileSync } = require('node:fs');
   const { join } = require('node:path');
@@ -40,7 +100,10 @@ function renderNativeTuner() {
   const start = source.indexOf('    <div id="tuner" class="tuner">');
   const end = source.indexOf('\n\n    <!-- Repli mobile', start);
   if (start < 0 || end < 0) throw new Error('Fragment du tuner natif introuvable dans index.html');
-  return source.slice(start, end);
+  // Audio hors fragment d’accueil : requis pour le même cycle « À l'antenne » / lecture.
+  const audio = '    <!-- Lecteur natif : requis pour la lecture en arrière-plan (écran verrouillé). -->\n'
+    + '    <audio id="radar-player" class="sr-only" preload="none" playsinline webkit-playsinline x-webkit-airplay="allow" aria-hidden="true"></audio>\n';
+  return `${source.slice(start, end)}\n\n${audio}`;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -74,6 +137,47 @@ function isoDay(value) {
   const d = value instanceof Date ? value : new Date(value);
   if (Number.isNaN(d.getTime())) return null;
   return d.toISOString().slice(0, 10);
+}
+
+/**
+ * Horodatage exact (date + heure + fuseau) à l’heure du Québec.
+ * Les lecteurs de tableaux sportifs univ. (athlètes, parents, journalistes campus)
+ * exigent de savoir si le refresh nocturne a déjà pris les scores de la soirée —
+ * un jour civil seul ne suffit pas. `machine` = ISO pour <time datetime>.
+ */
+function sportsUpdatedStamp(value, lang = 'fr') {
+  if (!value) return null;
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) return null;
+  const isEn = lang === 'en' || lang === 'en-CA';
+  const locale = isEn ? 'en-CA' : 'fr-CA';
+  const day = date.toLocaleDateString(locale, {
+    timeZone: 'America/Toronto',
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
+  const clock = date.toLocaleTimeString(locale, isEn
+    ? {
+      timeZone: 'America/Toronto',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+      timeZoneName: 'short',
+    }
+    : {
+      timeZone: 'America/Toronto',
+      hour: '2-digit',
+      minute: '2-digit',
+      hourCycle: 'h23',
+      timeZoneName: 'short',
+    });
+  // fr-CA peut rendre « 22:27 » ou « 22 h 27 » selon le runtime : normaliser.
+  const renderedClock = isEn ? clock : clock.replace(/(\d{1,2}):(\d{2})/, '$1 h $2');
+  return {
+    machine: date.toISOString(),
+    label: `${day} · ${renderedClock}`,
+  };
 }
 
 /** Clé de comparaison tolérante aux accents, à la casse et aux parenthèses. */
@@ -208,6 +312,50 @@ const T = {
     schedulesH1: 'Les horaires des radios étudiantes du Québec',
     schedulesLead: 'Une grille par station, mise à jour automatiquement à partir du site de chaque radio. Toutes les heures sont données à l’heure du Québec.',
     schedulesEmpty: 'Aucune grille horaire disponible au moment de la dernière mise à jour.',
+    sports: 'Au tableau',
+    sportsTitle: 'Au tableau — scores collégiaux et universitaires du Québec',
+    sportsDesc: 'Scores et prochains matchs de {n} formations collégiales et universitaires du Québec (catalogue RSEQ) : hockey, football, soccer, basketball, volleyball, badminton, natation et plus.',
+    sportsH1: 'Au tableau',
+    sportsLead: 'Scores et prochains matchs des formations collégiales et universitaires du Québec. Filtrez par sport, par secteur ou par catégorie pour trouver une équipe.',
+    sportsEmpty: 'Aucun résultat sportif disponible au moment de la dernière mise à jour.',
+    sportsClubPending: 'Club campus québécois — scores à venir (pas encore sur le circuit ICSA).',
+    sportsMeta: 'Catalogue RSEQ collégial + universitaire · hockey Spordle · voile QC · mise à jour automatique',
+    sportsNote: 'Toutes les ligues collégiales et universitaires provinciales du RSEQ sont agrégées via l’API S1. Hockey : Spordle. Voile : équipes campus du Québec seulement (ICSA + clubs à surveiller). Un clic ouvre la source officielle.',
+    sportsHockeyLabel: 'Hockey',
+    sportsHockeyWhy: 'Le hockey collégial et universitaire se consulte sur les calendriers officiels RSEQ Hockey et, pour le masculin universitaire, sur l’OUA (U Sports).',
+    sportsHockeyColl: 'Hockey collégial (RSEQ)',
+    sportsHockeyUniM: 'Hockey universitaire masculin (OUA / U Sports)',
+    sportsHockeyUniF: 'Hockey universitaire féminin (RSEQ stats)',
+    sportsHockeyOpen: 'Ouvrir le site officiel',
+    sportsSailingLabel: 'Voile',
+    sportsSailingWhy: 'La voile universitaire au Québec (McGill et clubs campus) se dispute surtout en régates ICSA / NEISA. Les équipages hors Québec ne sont pas affichés.',
+    sportsSailingIcsa: 'Scores College Sailing (ICSA)',
+    sportsSailingMcgill: 'Voile McGill Athletics',
+    sportsSailingNeisa: 'Conférence NEISA',
+    sportsRegatta: 'régate',
+    sportsPlace: 'Place',
+    sportsBoardsOnly: 'Tableaux officiels (liens)',
+    sportsFilterSport: 'Sport',
+    sportsFilterSector: 'Secteur',
+    sportsFilterSex: 'Catégorie',
+    sportsWomen: 'Féminin',
+    sportsMen: 'Masculin',
+    sportsWomenShort: 'Fém.',
+    sportsMenShort: 'Masc.',
+    sportsMixed: 'Ouvert / mixte',
+    sportsAll: 'Tous',
+    sportsCollegial: 'Collégial',
+    sportsUniversity: 'Universitaire',
+    sportsTeams: 'formations',
+    sportsTeamOne: 'formation',
+    sportsUpcoming: 'À venir',
+    sportsWin: 'Victoire',
+    sportsLoss: 'Défaite',
+    sportsDraw: 'Nul',
+    sportsHome: 'domicile',
+    sportsAway: 'extérieur',
+    sportsRecord: 'Fiche',
+    sportsOpenGame: 'Ouvrir la source officielle',
     slotsCount: 'créneaux',
     slotsCountOne: 'créneau',
     collectedOn: 'colligé le',
@@ -296,6 +444,50 @@ const T = {
     schedulesH1: 'Québec campus radio schedules',
     schedulesLead: 'One grid per station, updated automatically from each station’s own website. All times are Québec time.',
     schedulesEmpty: 'No schedule available as of the last update.',
+    sports: 'Scoreboard',
+    sportsTitle: 'Scoreboard — Québec CEGEP and university sports results',
+    sportsDesc: 'Scores and upcoming games for {n} CEGEP and university teams in Québec (RSEQ catalog): hockey, football, soccer, basketball, volleyball, badminton, swimming and more.',
+    sportsH1: 'Scoreboard',
+    sportsLead: 'Scores and upcoming games for CEGEP and university teams in Québec. Filter by sport, sector or category to find a team.',
+    sportsEmpty: 'No sports results available as of the last update.',
+    sportsClubPending: 'Québec campus club — scores pending (not yet on the ICSA circuit).',
+    sportsMeta: 'RSEQ CEGEP + university catalog · Spordle hockey · QC sailing · updated automatically',
+    sportsNote: 'All provincial CEGEP and university RSEQ leagues are aggregated via the S1 API. Hockey: Spordle. Sailing: Québec campus crews only (ICSA + watchlisted clubs). Clicks open the official source.',
+    sportsHockeyLabel: 'Hockey',
+    sportsHockeyWhy: 'CEGEP and university hockey schedules live on RSEQ Hockey and, for men’s university hockey, on the OUA (U Sports).',
+    sportsHockeyColl: 'CEGEP hockey (RSEQ)',
+    sportsHockeyUniM: 'Men’s university hockey (OUA / U Sports)',
+    sportsHockeyUniF: 'Women’s university hockey (RSEQ stats)',
+    sportsHockeyOpen: 'Open official site',
+    sportsSailingLabel: 'Sailing',
+    sportsSailingWhy: 'University sailing in Québec (McGill and campus clubs) is mainly ICSA / NEISA. Non-Québec crews are not shown.',
+    sportsSailingIcsa: 'College Sailing scores (ICSA)',
+    sportsSailingMcgill: 'McGill Athletics sailing',
+    sportsSailingNeisa: 'NEISA conference',
+    sportsRegatta: 'regatta',
+    sportsPlace: 'Place',
+    sportsBoardsOnly: 'Official boards (links)',
+    sportsFilterSport: 'Sport',
+    sportsFilterSector: 'Sector',
+    sportsFilterSex: 'Category',
+    sportsWomen: 'Women’s',
+    sportsMen: 'Men’s',
+    sportsWomenShort: 'W',
+    sportsMenShort: 'M',
+    sportsMixed: 'Open / mixed',
+    sportsAll: 'All',
+    sportsCollegial: 'CEGEP',
+    sportsUniversity: 'University',
+    sportsTeams: 'teams',
+    sportsTeamOne: 'team',
+    sportsUpcoming: 'Upcoming',
+    sportsWin: 'Win',
+    sportsLoss: 'Loss',
+    sportsDraw: 'Draw',
+    sportsHome: 'home',
+    sportsAway: 'away',
+    sportsRecord: 'Record',
+    sportsOpenGame: 'Open official source',
     slotsCount: 'slots',
     slotsCountOne: 'slot',
     collectedOn: 'collected',
@@ -413,6 +605,7 @@ function renderSiteFooter({
   const p = indent;
   const dirPath = lang === 'fr' ? 'medias/' : 'en/media/';
   const schedPath = lang === 'fr' ? 'horaires/' : 'en/schedules/';
+  const sportsPath = lang === 'fr' ? 'sports/' : 'en/sports/';
   // Le catalogue est actuellement francophone, mais son libellé est neutre et
   // l’archive reste utile depuis le volet anglais.
   const archivePath = 'archives/';
@@ -426,6 +619,8 @@ function renderSiteFooter({
   if (!home) links.push(`<a href="${href('')}">${escapeHtml(t.backHome)}</a>`);
   links.push(`<a href="${href(dirPath)}">${escapeHtml(t.footerDirectory)}</a>`);
   links.push(`<a href="${href(schedPath)}">${escapeHtml(t.schedules)}</a>`);
+  // data-sports-reset : depuis /sports/?sport=… recharge sans filtres.
+  links.push(`<a href="${href(sportsPath)}" data-sports-reset>${escapeHtml(t.sports)}</a>`);
   links.push(`<a href="${href(archivePath)}">${escapeHtml(t.archives)}</a>`);
   // `altPath` vaut '' sur /en/ : la version française est la racine du site.
   // Tester la valeur et non sa véracité, sinon le volet anglais perd sa bascule.
@@ -511,6 +706,11 @@ ${p}</footer>`;
 function renderPage({
   lang, path, altPath, title, description, h1, eyebrow, crumbs = [],
   bodyHtml, jsonLd, siteBase, updated, robots = 'index,follow', alternate = true,
+  extraScripts = [],
+  wireClass = '',
+  /** Si défini : le h1 devient un lien (ex. reset filtres « Au tableau »). */
+  h1Href = null,
+  h1Attrs = '',
 }) {
   const t = T[lang];
   const depth = path.split('/').filter(Boolean).length;
@@ -522,10 +722,14 @@ function renderPage({
   const crumbHtml = crumbs.length
     ? `<nav class="seo-crumbs" aria-label="${lang === 'fr' ? 'Fil d’Ariane' : 'Breadcrumb'}">`
       + crumbs.map((c) => (c.href
-        ? `<a href="${escapeHtml(c.href)}">${escapeHtml(c.label)}</a>`
+        ? `<a href="${escapeHtml(c.href)}"${c.reset ? ' data-sports-reset' : ''}>${escapeHtml(c.label)}</a>`
         : `<span aria-current="page">${escapeHtml(c.label)}</span>`)).join('<span class="seo-crumbs__sep" aria-hidden="true">›</span>')
       + '</nav>'
     : '';
+
+  const h1Html = h1Href
+    ? `<h1 class="seo-title"><a class="seo-title__link" href="${escapeHtml(h1Href)}" data-sports-reset${h1Attrs ? ` ${h1Attrs}` : ''}>${escapeHtml(h1)}</a></h1>`
+    : `<h1 class="seo-title">${escapeHtml(h1)}</h1>`;
 
   return `<!doctype html>
 <html lang="${t.lang}">
@@ -561,13 +765,13 @@ ${alternate ? `    <link rel="alternate" hreflang="fr-CA" href="${escapeHtml(lan
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="${up}style.css" />
     <link rel="stylesheet" href="${up}seo-pages.css" />
-    <script src="${up}seo-page-theme.js"></script>
+${renderTunerCriticalCss()}    <script src="${up}seo-page-theme.js"></script>
     <script src="${up}nav-shell.js" defer></script>
     <script src="${up}cast.js" defer></script>
     <script src="${up}mobile-playback.js" defer></script>
     <script src="${up}player-sync.js" defer></script>
     <script src="${up}app.js" defer></script>
-${jsonLd ? `    <script type="application/ld+json">${jsonLd}</script>\n` : ''}  </head>
+${(Array.isArray(extraScripts) ? extraScripts : []).map((src) => `    <script src="${up}${escapeHtml(src)}" defer></script>`).join('\n')}${Array.isArray(extraScripts) && extraScripts.length ? '\n' : ''}${jsonLd ? `    <script type="application/ld+json">${jsonLd}</script>\n` : ''}  </head>
   <body>
     <header class="masthead">
       <div class="masthead-inner">
@@ -588,9 +792,9 @@ ${jsonLd ? `    <script type="application/ld+json">${jsonLd}</script>\n` : ''}  
 
 ${renderNativeTuner()}
 
-    <main class="wire seo-wire">
+    <main class="wire seo-wire${wireClass ? ` ${escapeHtml(wireClass)}` : ''}">
       ${crumbHtml}
-${eyebrow ? `      <p class="seo-eyebrow">${escapeHtml(eyebrow)}</p>\n` : ''}      <h1 class="seo-title">${escapeHtml(h1)}</h1>
+${eyebrow ? `      <p class="seo-eyebrow">${escapeHtml(eyebrow)}</p>\n` : ''}      ${h1Html}
 ${bodyHtml}
     </main>
     ${renderSiteFooter({ lang, up, home: depth === 0, altPath, updated, indent: '    ' })}
@@ -880,6 +1084,7 @@ module.exports = {
   slugify,
   normKey,
   isoDay,
+  sportsUpdatedStamp,
   canonicalInstitution,
   localizedInstitutionName,
   INSTITUTIONS,
