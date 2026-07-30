@@ -1,33 +1,33 @@
 {
-  "updatedAt": "2026-07-30T20:13:30.894Z",
+  "updatedAt": "2026-07-30T21:42:26.321Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
-      },
-      "next": {
         "title": "Les Arshitechs du Son",
         "source": "schedule",
         "start": "17:30",
         "end": "19:00",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "Vendredi Nostalgie",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/vendredi-nostalgie/"
+      },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T20:13:06.689Z"
+      "checkedAt": "2026-07-30T21:42:00.889Z"
     },
     "cism": {
       "id": "cism",
@@ -54,25 +54,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T20:13:08.694Z"
+      "checkedAt": "2026-07-30T21:42:03.371Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Positive Vibes",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "5th week",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Upstage",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Positive Vibes",
+      "showTitle": "5th week",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -80,7 +80,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T20:13:10.855Z"
+      "checkedAt": "2026-07-30T21:42:05.515Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -107,7 +107,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T20:13:24.472Z"
+      "checkedAt": "2026-07-30T21:42:18.853Z"
     },
     "cfak": {
       "id": "cfak",
@@ -132,31 +132,38 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T20:13:25.118Z"
+      "checkedAt": "2026-07-30T21:42:19.591Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "La 3ème demie",
         "source": "api-live",
         "start": "17:15",
         "end": "18:00",
         "slug": "le-12-mtlsup"
       },
-      "track": "Mantisse - Rouge Cardinal",
-      "showTitle": "",
+      "next": {
+        "title": "Les Apatrides Anonymes",
+        "source": "schedule",
+        "start": "18:30",
+        "end": "19:40",
+        "url": "https://www.choq.ca/emissions/apatrides-anonymes"
+      },
+      "track": "ID - Velours-Velours",
+      "showTitle": "La 3ème demie",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-30T20:13:30.543Z"
+      "checkedAt": "2026-07-30T21:42:25.970Z"
     }
   }
 }
