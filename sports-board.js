@@ -1,7 +1,9 @@
 /**
- * LE-RADAR — filtres de la page « Au tableau » (/sports/).
+ * LE-RADAR — page « Au tableau » (/sports/).
  * Progressive enhancement : sans ce script, toute la grille reste visible.
  * Filtres : sport · catégorie (féminin/masculin) · secteur · ?team=
+ * + loupe de recherche locale (équipe, institution, sport…)
+ * + flèche « haut de page » (bas-gauche, suit le défilement)
  */
 (function () {
   'use strict';
@@ -19,6 +21,15 @@
   // Compter seulement les formations avec scores (pas les cartes « liens »).
   const scoredPanels = panels.filter((p) => !p.classList.contains('sports-panel--external'));
 
+  const tools = document.querySelector('[data-sports-tools]');
+  const scrollTopBtn = document.getElementById('sports-scroll-top');
+  const searchRoot = document.getElementById('sports-search');
+  const searchToggle = document.getElementById('sports-search-toggle');
+  const searchPanel = document.getElementById('sports-search-panel');
+  const searchInput = document.getElementById('sports-search-input');
+  const searchClear = document.getElementById('sports-search-clear');
+  const searchHint = document.getElementById('sports-search-hint');
+
   const labels = {
     fr: {
       status: (n, total) => (n === total
@@ -26,6 +37,10 @@
         : `${n} formation${n > 1 ? 's' : ''} sur ${total}`),
       boardsOnly: 'Tableaux officiels (liens)',
       empty: 'Aucune formation pour ce filtre.',
+      searchEmpty: 'Aucune formation ne correspond à cette recherche.',
+      searchStatus: (n, q) => (n === 0
+        ? `Aucun résultat pour « ${q} »`
+        : `${n} formation${n > 1 ? 's' : ''} pour « ${q} »`),
     },
     en: {
       status: (n, total) => (n === total
@@ -33,10 +48,51 @@
         : `${n} of ${total} team${total > 1 ? 's' : ''}`),
       boardsOnly: 'Official boards (links)',
       empty: 'No teams match this filter.',
+      searchEmpty: 'No teams match this search.',
+      searchStatus: (n, q) => (n === 0
+        ? `No results for “${q}”`
+        : `${n} team${n > 1 ? 's' : ''} for “${q}”`),
     },
   };
   const lang = (document.documentElement.lang || 'fr').slice(0, 2) === 'en' ? 'en' : 'fr';
   const t = labels[lang];
+
+  let searchOpen = false;
+  let searchQuery = '';
+  let searchTimer = 0;
+
+  function normalizeSearchText(str = '') {
+    return String(str)
+      .normalize('NFD')
+      .replace(/\p{M}/gu, '')
+      .toLowerCase()
+      .replace(/['’`]/g, '')
+      .replace(/[^\p{L}\p{N}\s-]+/gu, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function searchTokens(query = '') {
+    const q = normalizeSearchText(query);
+    if (!q) return [];
+    return q.split(' ').filter((tok) => tok.length >= 1);
+  }
+
+  function panelHaystack(panel) {
+    const attr = panel.getAttribute('data-search') || '';
+    if (attr) return normalizeSearchText(attr);
+    return normalizeSearchText(panel.textContent || '');
+  }
+
+  // Cache des haystacks (772 panels) — une seule normalisation.
+  const hayByPanel = new Map();
+  panels.forEach((p) => hayByPanel.set(p, panelHaystack(p)));
+
+  function panelMatchesSearch(panel, tokens) {
+    if (!tokens.length) return true;
+    const hay = hayByPanel.get(panel) || '';
+    return tokens.every((tok) => hay.includes(tok));
+  }
 
   function readQuery() {
     try {
@@ -46,13 +102,14 @@
         sector: (q.get('sector') || 'all').toLowerCase(),
         sex: (q.get('sex') || 'all').toLowerCase(),
         team: (q.get('team') || '').trim(),
+        q: (q.get('q') || '').trim(),
       };
     } catch {
-      return { sport: 'all', sector: 'all', sex: 'all', team: '' };
+      return { sport: 'all', sector: 'all', sex: 'all', team: '', q: '' };
     }
   }
 
-  function writeQuery(sport, sector, sex, team) {
+  function writeQuery(sport, sector, sex, team, q) {
     try {
       const url = new URL(window.location.href);
       if (!sport || sport === 'all') url.searchParams.delete('sport');
@@ -63,6 +120,8 @@
       else url.searchParams.set('sex', sex);
       if (!team) url.searchParams.delete('team');
       else url.searchParams.set('team', team);
+      if (!q) url.searchParams.delete('q');
+      else url.searchParams.set('q', q);
       window.history.replaceState({}, '', url.pathname + url.search + url.hash);
     } catch { /* ignore */ }
   }
@@ -116,22 +175,41 @@
     return panel;
   }
 
-  function apply(sport, sector, sex, team) {
+  function focusFirstVisible() {
+    const first = panels.find((p) => !p.hidden && !p.classList.contains('sports-panel--external'));
+    if (!first) return;
+    const block = first.closest('.sports-sport-block');
+    if (block && 'open' in block) block.open = true;
+    try {
+      first.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch { /* ignore */ }
+  }
+
+  function apply(sport, sector, sex, team, query) {
     const sportKey = sport || 'all';
     const sectorKey = sector || 'all';
     const sexKey = (sex || 'all').toLowerCase();
     const teamId = (team || '').trim();
+    const qRaw = query !== undefined ? String(query || '') : searchQuery;
+    searchQuery = qRaw;
+    const tokens = searchTokens(qRaw);
     let visible = 0;
 
     // Si une équipe est ciblée, dériver sport/sexe du panneau.
     let effectiveSport = sportKey;
     let effectiveSex = sexKey;
-    if (teamId) {
+    if (teamId && !tokens.length) {
       const target = panels.find((p) => (p.getAttribute('data-team') || '') === teamId);
       const tSport = (target?.getAttribute('data-sport') || '').toLowerCase();
       const tSex = (target?.getAttribute('data-sex') || '').toLowerCase();
       if (tSport) effectiveSport = tSport;
       if (tSex) effectiveSex = tSex;
+    }
+
+    // Recherche texte : élargir sport/sexe (sinon les chips bloquent le scan).
+    if (tokens.length) {
+      effectiveSport = 'all';
+      effectiveSex = 'all';
     }
 
     let externalVisible = 0;
@@ -144,7 +222,8 @@
       const okSector = isExternal || sectorKey === 'all' || !pSector || pSector === sectorKey;
       // External boards : toujours ok pour le filtre sexe (pas de catégorie).
       const okSex = isExternal || effectiveSex === 'all' || !pSex || pSex === effectiveSex;
-      const show = okSport && okSector && okSex;
+      const okSearch = panelMatchesSearch(panel, tokens);
+      const show = okSport && okSector && okSex && okSearch;
       panel.hidden = !show;
       if (show && !isExternal) visible += 1;
       if (show && isExternal) externalVisible += 1;
@@ -194,17 +273,19 @@
       ));
       const sportOk = effectiveSport === 'all' || bSport === effectiveSport;
       block.hidden = !(any && sportOk);
-      if (effectiveSport !== 'all' && bSport === effectiveSport && any && 'open' in block) {
-        block.open = true;
+      if ((effectiveSport !== 'all' || tokens.length) && any && 'open' in block) {
+        if (bSport === effectiveSport || tokens.length) block.open = true;
       }
     });
 
-    setPressed(sportButtons, effectiveSport, 'data-filter-sport');
+    setPressed(sportButtons, tokens.length ? 'all' : effectiveSport, 'data-filter-sport');
     setPressed(sectorButtons, sectorKey, 'data-filter-sector');
-    setPressed(sexButtons, effectiveSex, 'data-filter-sex');
+    setPressed(sexButtons, tokens.length ? 'all' : effectiveSex, 'data-filter-sex');
 
     if (statusEl) {
-      if (visible) {
+      if (tokens.length) {
+        statusEl.textContent = t.searchStatus(visible, qRaw.trim());
+      } else if (visible) {
         statusEl.textContent = t.status(visible, scoredPanels.length);
       } else if (externalVisible) {
         statusEl.textContent = t.boardsOnly;
@@ -212,8 +293,39 @@
         statusEl.textContent = t.empty;
       }
     }
-    writeQuery(effectiveSport, sectorKey, effectiveSex, teamId);
-    focusTeam(teamId);
+    writeQuery(
+      tokens.length ? 'all' : effectiveSport,
+      sectorKey,
+      tokens.length ? 'all' : effectiveSex,
+      teamId,
+      qRaw.trim(),
+    );
+
+    if (searchRoot) {
+      searchRoot.classList.toggle('has-query', tokens.length > 0);
+    }
+    if (searchClear) {
+      searchClear.classList.toggle('hidden', !qRaw.trim());
+    }
+    if (searchToggle) {
+      searchToggle.classList.toggle('is-active', tokens.length > 0);
+    }
+
+    if (teamId && !tokens.length) {
+      focusTeam(teamId);
+    } else if (tokens.length && visible) {
+      // Ne pas auto-scroller à chaque frappe — seulement si un seul match.
+      if (visible === 1) focusFirstVisible();
+    } else {
+      clearTeamSpotlight();
+    }
+  }
+
+  function currentFilters() {
+    const sport = sportButtons.find((b) => b.getAttribute('aria-pressed') === 'true')?.getAttribute('data-filter-sport') || 'all';
+    const sector = sectorButtons.find((b) => b.getAttribute('aria-pressed') === 'true')?.getAttribute('data-filter-sector') || 'all';
+    const sex = sexButtons.find((b) => b.getAttribute('aria-pressed') === 'true')?.getAttribute('data-filter-sex') || 'all';
+    return { sport, sector, sex };
   }
 
   function onFilterClick(e) {
@@ -228,7 +340,10 @@
     const sex = btn.hasAttribute('data-filter-sex')
       ? btn.getAttribute('data-filter-sex')
       : (sexButtons.find((b) => b.getAttribute('aria-pressed') === 'true')?.getAttribute('data-filter-sex') || 'all');
-    apply(sport, sector, sex, '');
+    // Nouveau filtre chips : on efface la requête texte pour éviter le conflit.
+    if (searchInput) searchInput.value = '';
+    searchQuery = '';
+    apply(sport, sector, sex, '', '');
   }
 
   root.addEventListener('click', onFilterClick);
@@ -266,6 +381,129 @@
     try { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch { /* ignore */ }
   }
 
+  // ── Loupe de recherche ───────────────────────────────────────────────────
+  function setSearchOpen(open) {
+    searchOpen = !!open;
+    if (!searchPanel || !searchToggle) return;
+    if (searchOpen) {
+      searchPanel.hidden = false;
+      searchPanel.setAttribute('aria-hidden', 'false');
+      searchToggle.setAttribute('aria-expanded', 'true');
+      window.requestAnimationFrame(() => {
+        try { searchInput?.focus({ preventScroll: true }); } catch { searchInput?.focus(); }
+      });
+    } else {
+      searchPanel.hidden = true;
+      searchPanel.setAttribute('aria-hidden', 'true');
+      searchToggle.setAttribute('aria-expanded', 'false');
+    }
+    const loupe = searchToggle.querySelector('.sports-search__fab-loupe');
+    const close = searchToggle.querySelector('.sports-search__fab-close');
+    loupe?.classList.toggle('hidden', searchOpen);
+    close?.classList.toggle('hidden', !searchOpen);
+  }
+
+  function scheduleSearchApply() {
+    window.clearTimeout(searchTimer);
+    searchTimer = window.setTimeout(() => {
+      const { sport, sector, sex } = currentFilters();
+      apply(sport, sector, sex, '', searchInput?.value || '');
+    }, 120);
+  }
+
+  if (searchToggle && searchPanel) {
+    searchToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      // Si requête active et panneau fermé + clic X (is-active) : effacer.
+      if (!searchOpen && searchQuery.trim()) {
+        if (searchInput) searchInput.value = '';
+        searchQuery = '';
+        const { sport, sector, sex } = currentFilters();
+        apply(sport, sector, sex, '', '');
+        setSearchOpen(false);
+        return;
+      }
+      setSearchOpen(!searchOpen);
+    });
+
+    searchInput?.addEventListener('input', scheduleSearchApply);
+    searchInput?.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        if (searchInput.value) {
+          searchInput.value = '';
+          scheduleSearchApply();
+        } else {
+          setSearchOpen(false);
+        }
+      }
+    });
+
+    searchClear?.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (searchInput) searchInput.value = '';
+      searchQuery = '';
+      const { sport, sector, sex } = currentFilters();
+      apply(sport, sector, sex, '', '');
+      try { searchInput?.focus({ preventScroll: true }); } catch { searchInput?.focus(); }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!searchOpen) return;
+      if (searchRoot && searchRoot.contains(e.target)) return;
+      setSearchOpen(false);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && searchOpen) {
+        setSearchOpen(false);
+      }
+    });
+  }
+
+  // ── Flèche haut de page (bas-gauche, suit le scroll) ─────────────────────
+  const SCROLL_TOP_SHOW_PX = 360;
+
+  function syncScrollTopBtn() {
+    if (!scrollTopBtn) return;
+    const y = window.scrollY || document.documentElement.scrollTop || 0;
+    const show = y > SCROLL_TOP_SHOW_PX;
+    if (show) {
+      scrollTopBtn.hidden = false;
+      scrollTopBtn.setAttribute('aria-hidden', 'false');
+    } else {
+      scrollTopBtn.hidden = true;
+      scrollTopBtn.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      try {
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      } catch {
+        window.scrollTo(0, 0);
+      }
+    });
+    window.addEventListener('scroll', syncScrollTopBtn, { passive: true });
+    syncScrollTopBtn();
+  }
+
+  // Safe-area clavier (visualViewport) — même idée que la loupe articles.
+  function syncVkInset() {
+    if (!tools || !window.visualViewport) return;
+    const vv = window.visualViewport;
+    const inset = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+    tools.style.setProperty('--vk-inset', `${Math.round(inset)}px`);
+  }
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', syncVkInset);
+    window.visualViewport.addEventListener('scroll', syncVkInset);
+    syncVkInset();
+  }
+
   const initial = readQuery();
   const knownSports = new Set([
     ...panels.map((p) => (p.getAttribute('data-sport') || '').toLowerCase()),
@@ -282,7 +520,12 @@
   const sector = knownSectors.has(initial.sector) || initial.sector === 'all' ? initial.sector : 'all';
   const sex = knownSexes.has(sexInit) ? sexInit : 'all';
   const team = knownTeams.has(initial.team) ? initial.team : '';
-  apply(sport, sector, sex, team);
-  if (!team) openHashSport();
+  if (searchInput && initial.q) {
+    searchInput.value = initial.q;
+    searchQuery = initial.q;
+  }
+  apply(sport, sector, sex, team, initial.q || '');
+  if (initial.q) setSearchOpen(true);
+  if (!team && !initial.q) openHashSport();
   window.addEventListener('hashchange', openHashSport);
 })();

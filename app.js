@@ -564,6 +564,7 @@ async function init() {
   bindExternalListen();
   bindFiltersPanel();
   bindNewsSearch();
+  initPageScrollTop();
 
   try {
     const brandData = await fetch(appAsset('brand-colors.json')).then((r) => r.json());
@@ -1605,7 +1606,7 @@ const SPORTS_CTA_UPCOMING_MS = 14 * 24 * 3600 * 1000;
 const SPORTS_CTA_IDLE_LABELS = [
   'Calendrier à venir',
   'Hors saison · voir le tableau',
-  'Scores collégiaux & univ.',
+  'Scores collégiaux et universitaires',
   'Voir tout le tableau',
 ];
 let sportsData = null;
@@ -1653,6 +1654,15 @@ const SPORTS_CTA_KEY = 'cta:board';
 let sportsCtaLabelIndex = 0;
 /** Curseur de diversité sport pour la rotation des chips de scores. */
 let sportsSportCursor = 0;
+/** Curseur circulaire dans le pool de gauche (résultats ou next). */
+let sportsLeftCursor = 0;
+/** Curseur des accroches « info » hors saison. */
+let sportsInfoCursor = 0;
+/**
+ * Hors saison : true → prochaine puce de gauche = info ;
+ * false → prochaine = match à venir. Alterne à chaque tirage.
+ */
+let sportsLeftWantInfo = true;
 /**
  * Mobile (1 chip) seulement : alterne score ↔ CTA.
  * Desktop/tablette (≥ 2 chips) : CTA toujours épinglée à droite.
@@ -1836,33 +1846,39 @@ function sportsEditorialRank(teamOrCode) {
   return i === -1 ? 99 : i;
 }
 
+/** Slide résultat passé pour une équipe (null si aucun lastGame). */
+function sportsResultSlide(team, now = Date.now()) {
+  if (!team?.lastGame) return null;
+  const u = sportsUrgency('result', team.lastGame, now);
+  return {
+    mode: 'result',
+    team,
+    game: team.lastGame,
+    key: `r:${team.id}:${team.lastGame.date}`,
+    urgency: u,
+  };
+}
+
+/** Slide match à venir pour une équipe (null si aucun nextGame). */
+function sportsNextSlide(team, now = Date.now()) {
+  if (!team?.nextGame) return null;
+  const u = sportsUrgency('next', team.nextGame, now);
+  return {
+    mode: 'next',
+    team,
+    game: team.nextGame,
+    key: `n:${team.id}:${team.nextGame.date}`,
+    urgency: u,
+  };
+}
+
 /**
- * Choisit le meilleur signal pour une équipe (résultat récent vs prochain).
+ * Ancien « meilleur signal » par équipe — conservé pour la CTA (urgence).
  * Un résultat < 4 j prime sur un prochain lointain ; un prochain imminent
  * prime sur un vieux score.
  */
 function sportsPickTeamSlide(team, now = Date.now()) {
-  const candidates = [];
-  if (team.lastGame) {
-    const u = sportsUrgency('result', team.lastGame, now);
-    candidates.push({
-      mode: 'result',
-      team,
-      game: team.lastGame,
-      key: `r:${team.id}:${team.lastGame.date}`,
-      urgency: u,
-    });
-  }
-  if (team.nextGame) {
-    const u = sportsUrgency('next', team.nextGame, now);
-    candidates.push({
-      mode: 'next',
-      team,
-      game: team.nextGame,
-      key: `n:${team.id}:${team.nextGame.date}`,
-      urgency: u,
-    });
-  }
+  const candidates = [sportsResultSlide(team, now), sportsNextSlide(team, now)].filter(Boolean);
   if (!candidates.length) return null;
   candidates.sort((a, b) => {
     if (a.urgency.tier !== b.urgency.tier) return a.urgency.tier - b.urgency.tier;
@@ -1913,64 +1929,136 @@ function sportsCtaPinned() {
   return sportsBoardCount() >= 2;
 }
 
-/** Remplacement score pour le mode mobile (1 slot). */
+/** Remplacement pour le mode mobile (1 slot) — respecte la voie de gauche. */
 function sportsRandomResultSlide(usedKeys) {
-  const used = usedKeys instanceof Set ? usedKeys : new Set(usedKeys || []);
-  const pool = sportsSlides.filter((s) => s && s.mode !== 'cta' && !used.has(s.key));
-  if (!pool.length) {
-    const any = sportsSlides.filter((s) => s && s.mode !== 'cta');
-    if (!any.length) return null;
-    return any[Math.floor(Math.random() * any.length)];
-  }
-  return pool[Math.floor(Math.random() * pool.length)];
+  return nextSportsSlide(usedKeys, { avoidSport: '' });
 }
 
 /**
- * Tri scoreboard (bonnes pratiques ESPN / apps scores) :
- *  1. Favoris
- *  2. Urgence (live → imminence → résultats récents → plus tard)
- *  3. Boost éditorial campus QC (liste douce)
- *  4. Alpha
+ * Construit le pool de slides mât :
+ *  - tous les résultats passés (lastGame)
+ *  - tous les matchs à venir (nextGame)
+ * Les puces de GAUCHE n’utilisent que les résultats en saison ;
+ * hors saison elles basculent sur next + infos (voir sportsLeftLaneState).
+ * La CTA (droite) continue de piocher via sportsCtaCandidateSlides.
  */
 function buildSportsSlides(data) {
   const teams = Object.values(data?.teams || {});
   if (!teams.length) return [];
-  const fav = new Set(readSportsFavorites());
   const now = Date.now();
 
-  // Voile : Québec seulement (pas Queen’s / Toronto / etc. sur le masthead).
-  // Clubs watchlist sans match : exclus du strip (pas de slide score).
-  const slides = teams
-    .filter((team) => {
-      if (team.sport !== 'sailing') return true;
-      if (team.province && team.province !== 'QC') return false;
-      if (team.status === 'club' || team.status === 'upcoming') return false;
-      if (team.source === 'sailing-watchlist') return false;
-      return true;
-    })
-    .map((team) => sportsPickTeamSlide(team, now))
-    .filter(Boolean);
-
-  slides.sort((a, b) => {
-    const af = sportsIsFavorite(a.team, fav) ? 0 : 1;
-    const bf = sportsIsFavorite(b.team, fav) ? 0 : 1;
-    if (af !== bf) return af - bf;
-
-    const ua = a.urgency || sportsUrgency(a.mode, a.game, now);
-    const ub = b.urgency || sportsUrgency(b.mode, b.game, now);
-    if (ua.tier !== ub.tier) return ua.tier - ub.tier;
-    if (ua.sortMs !== ub.sortMs) return ua.sortMs - ub.sortMs;
-
-    const er = sportsEditorialRank(a.team) - sportsEditorialRank(b.team);
-    if (er !== 0) return er;
-
-    return String(a.team.name || '').localeCompare(String(b.team.name || ''), 'fr');
+  // Voile : Québec seulement. Clubs watchlist sans match : hors strip.
+  const eligible = teams.filter((team) => {
+    if (team.sport !== 'sailing') return true;
+    if (team.province && team.province !== 'QC') return false;
+    if (team.status === 'club' || team.status === 'upcoming') return false;
+    if (team.source === 'sailing-watchlist') return false;
+    return true;
   });
 
-  return slides.map((slide) => {
+  const results = [];
+  const nexts = [];
+  for (const team of eligible) {
+    const r = sportsResultSlide(team, now);
+    if (r) results.push(r);
+    const n = sportsNextSlide(team, now);
+    if (n) nexts.push(n);
+  }
+
+  // Résultats : plus récents d’abord (fraîcheur d’affichage).
+  results.sort((a, b) => {
+    const ma = sportsGameMs(a.game) || 0;
+    const mb = sportsGameMs(b.game) || 0;
+    if (mb !== ma) return mb - ma;
+    return sportsEditorialRank(a.team) - sportsEditorialRank(b.team);
+  });
+  // À venir : plus proches d’abord.
+  nexts.sort((a, b) => {
+    const ma = sportsGameMs(a.game) || Number.POSITIVE_INFINITY;
+    const mb = sportsGameMs(b.game) || Number.POSITIVE_INFINITY;
+    if (ma !== mb) return ma - mb;
+    return sportsEditorialRank(a.team) - sportsEditorialRank(b.team);
+  });
+
+  return [...results, ...nexts].map((slide) => {
     slide.tone = sportsSlideTone(slide);
     return slide;
   });
+}
+
+/** Résultats passés triés (plus récent → plus vieux). */
+function sportsResultSlidesSorted() {
+  return sportsSlides
+    .filter((s) => s && s.mode === 'result')
+    .slice()
+    .sort((a, b) => (sportsGameMs(b.game) || 0) - (sportsGameMs(a.game) || 0));
+}
+
+/** Matchs à venir triés (plus proche → plus loin). */
+function sportsNextSlidesSorted() {
+  const now = Date.now();
+  return sportsSlides
+    .filter((s) => s && s.mode === 'next')
+    .filter((s) => {
+      const ms = sportsGameMs(s.game);
+      return Number.isFinite(ms) && ms >= now - SPORTS_LIVE_AFTER_MS;
+    })
+    .slice()
+    .sort((a, b) => (sportsGameMs(a.game) || 0) - (sportsGameMs(b.game) || 0));
+}
+
+/**
+ * État de la voie de gauche :
+ *  - « results » : saison active (résultats passés + activité CTA chaude)
+ *    → uniquement résultats, ordre fraîcheur desc.
+ *  - « offseason » : creux / hors saison (pas de résultats, ou CTA en idle)
+ *    → matchs à venir (proximité) en alternance avec accroches info
+ */
+function sportsLeftLaneState() {
+  const results = sportsResultSlidesSorted();
+  const nexts = sportsNextSlidesSorted();
+  // « Chaud » pour la CTA = scores du jour ou prochains ≤ 14 j.
+  // Si la CTA est en idle, on considère le bandeau gauche en mode hors saison
+  // même s’il reste un vieux lastGame isolé (ex. voile d’avril en plein été).
+  let ctaHasHot = false;
+  try {
+    const now = Date.now();
+    for (const s of results) {
+      if (sportsGameIsToday(s.game)) { ctaHasHot = true; break; }
+    }
+    if (!ctaHasHot) {
+      for (const s of nexts) {
+        const ms = sportsGameMs(s.game);
+        if (Number.isFinite(ms) && ms >= now - SPORTS_LIVE_AFTER_MS
+          && ms <= now + SPORTS_CTA_UPCOMING_MS) {
+          ctaHasHot = true;
+          break;
+        }
+      }
+    }
+  } catch { /* ignore */ }
+
+  if (results.length && ctaHasHot) {
+    return { kind: 'results', pool: results };
+  }
+  // Hors saison / creux : privilégier le calendrier à venir + infos.
+  // S’il n’y a ni next ni résultats, pool vide → infos seules.
+  return { kind: 'offseason', pool: nexts.length ? nexts : results };
+}
+
+/** Accroche info (hors saison) — même ton que les messages idle CTA, chip grise. */
+function sportsInfoSlide(index = 0) {
+  const labels = SPORTS_CTA_IDLE_LABELS;
+  const idx = ((index % labels.length) + labels.length) % labels.length;
+  return {
+    mode: 'info',
+    key: `info:${idx}:${index}`,
+    label: labels[idx],
+    labelIndex: idx,
+    tone: '#5a6570',
+    team: { sport: 'board', name: 'Info', code: 'QC' },
+    game: { sport: 'board' },
+  };
 }
 
 function formatSportsWhen(iso, time) {
@@ -2084,22 +2172,19 @@ function sportsCtaLabelFromSlide(slide) {
 }
 
 /**
- * Focus group — partage des rôles bandeau :
+ * Partage des rôles bandeau (mise à jour 2026-07-30) :
  *
  *  CARTE ROUGE (CTA) = « maintenant / bientôt »
  *   • live / proxy live
  *   • résultats d’**aujourd’hui** seulement
  *   • prochains matchs (dès aujourd’hui, ≤ 14 j)
- *   • ✗ hier et avant → cartes de gauche
+ *   • creux : accroches idle (calendrier, voir le tableau…)
  *
- *  CARTES GAUCHE = « fil des scores »
- *   • résultats d’hier et récents (< 4 j)
- *   • prochains matchs (diversité par sport)
- *   • hors saison : derniers résultats connus
- *
- *  CREUX / HORS SAISON (rien de chaud pour la CTA)
- *   • accroches idle : calendrier à venir, voir le tableau…
- *   • pas de vieux scores recyclés dans le rouge
+ *  CARTES GAUCHE
+ *   • Saison : **uniquement résultats passés**, ordre fraîcheur (plus récent d’abord),
+ *     rotation circulaire + diversité de sport
+ *   • Hors saison (aucun lastGame) : alterne **info** ↔ **match à venir**
+ *     (next triés par proximité)
  */
 function sportsCtaCandidateSlides() {
   const now = Date.now();
@@ -2211,6 +2296,12 @@ function sportsCtaSlide(labelIndex = sportsCtaLabelIndex) {
 function refreshSportsChipScroll() {
   if (!MASTHEAD_SPORTS_STRIP) return;
   MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip').forEach((chip) => {
+    // CTA « Au tableau » : pas de défilement type gare — ellipsis fixe seulement.
+    if (chip.classList.contains('sports-chip--cta')) {
+      chip.classList.remove('is-overflowing');
+      chip.style.removeProperty('--sports-scroll');
+      return;
+    }
     const viewport = chip.querySelector('.sports-chip__line');
     const inner = chip.querySelector('.sports-chip__line-inner');
     if (!viewport || !inner) {
@@ -2304,6 +2395,31 @@ function sportsChipTitle(slide) {
 
 function paintSportsChip(slide, animate = false) {
   if (!slide) return document.createElement('span');
+
+  /* ── Info hors saison (gauche) : accroche calendrier / tableau, ton ardoise ── */
+  if (slide.mode === 'info') {
+    const a = document.createElement('a');
+    a.className = 'sports-chip sports-chip--info';
+    a.href = new URL('sports/', window.location.href).pathname;
+    if (animate && !sportsReducedMotion) a.classList.add('is-arriving');
+    a.dataset.sportsKey = slide.key || 'info';
+    a.dataset.sportsMode = 'info';
+    a.dataset.sportsSport = 'board';
+    a.style.setProperty('--sports-tone', slide.tone || '#5a6570');
+    a.title = slide.label || 'Au tableau';
+    a.setAttribute('aria-label', slide.label || 'Voir le tableau des scores');
+    const line = document.createElement('span');
+    line.className = 'sports-chip__line';
+    const inner = document.createElement('span');
+    inner.className = 'sports-chip__line-inner sports-chip__info-label';
+    inner.textContent = slide.label || 'Calendrier à venir';
+    line.append(inner);
+    a.append(line);
+    if (animate && !sportsReducedMotion) {
+      window.setTimeout(() => a.classList.remove('is-arriving'), SPORTS_ARRIVE_MS);
+    }
+    return a;
+  }
 
   /* ── CTA « Au tableau » — pastille alerte + accroche (halo/texte, pas la carte) ── */
   if (slide.mode === 'cta') {
@@ -2408,11 +2524,13 @@ function paintSportsChip(slide, animate = false) {
     const scoreTxt = placeKind
       ? `${g.scoreFor}/${g.scoreAgainst}`
       : `${g.scoreFor}–${g.scoreAgainst}`;
-    const vsWord = placeKind ? '·' : 'vs';
+    const prior = g.priorSeason || team.lastGamePriorSeason;
     inner.innerHTML = `<span class="sports-chip__code">${escapeHtml(code)}</span> `
       + `<span class="sports-chip__score">${escapeHtml(String(scoreTxt))}</span> `
-      + `<span class="sports-chip__code sports-chip__opp">${escapeHtml(opp)}</span>`;
-    a.title = sportsChipTitle(slide);
+      + `<span class="sports-chip__code sports-chip__opp">${escapeHtml(opp)}</span>`
+      + (prior ? ` <span class="sports-chip__season-meta">Saison précédente</span>` : '');
+    if (prior) a.classList.add('sports-chip--prior-season');
+    a.title = sportsChipTitle(slide) + (prior ? ' · Saison précédente' : '');
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores.`);
   } else {
     a.append(glyph);
@@ -2435,89 +2553,107 @@ function paintSportsChip(slide, animate = false) {
 }
 
 /**
- * Poids pour les chips de **gauche** : privilégier hier / récents + prochains.
- * (Les scores d’aujourd’hui peuvent aussi apparaître à gauche, mais la CTA
- * les porte en priorité.)
- */
-function sportsLeftLaneScore(slide, now = Date.now()) {
-  if (!slide?.game) return 9e15;
-  const ms = sportsGameMs(slide.game);
-  if (!Number.isFinite(ms)) return 8e15;
-  if (slide.mode === 'result') {
-    // Hier et récents d’abord ; plus vieux = score plus haut (moins prioritaire).
-    if (sportsGameIsBeforeToday(slide.game)) {
-      return (now - ms); // plus petit = plus récent hier
-    }
-    if (sportsGameIsToday(slide.game)) {
-      return 1e12 + (now - ms); // aujourd’hui OK mais après hier
-    }
-    return 2e12 + (now - ms);
-  }
-  // À venir : plus proche d’abord
-  if (ms >= now) return 3e12 + (ms - now);
-  return 4e12 + (now - ms);
-}
-
-/**
- * Prochaine carte (gauche) : match pertinent hors CTA-only,
- * diversité de sport, plusieurs matchs/jour possibles en rotation.
+ * Prochaine carte de GAUCHE.
+ * Saison : résultats passés uniquement, ordre fraîcheur (plus récent d’abord),
+ * curseur circulaire + diversité de sport.
+ * Hors saison : alterne info ↔ match à venir (prochains par proximité).
  */
 function nextSportsSlide(usedKeys, opts = {}) {
   const used = usedKeys instanceof Set ? usedKeys : new Set(usedKeys || []);
-  const pool = sportsSlides.filter((s) => s && s.mode !== 'cta' && !used.has(s.key));
-  if (!pool.length) {
-    const any = sportsSlides.filter((s) => s && s.mode !== 'cta');
-    return any[0] || null;
-  }
-
-  const now = Date.now();
-  const avoidSport = String(
-    opts.avoidSport
-      ?? sportsVisible[sportsNextSlot]?.team?.sport
-      ?? '',
-  ).toLowerCase();
+  const lane = sportsLeftLaneState();
+  const avoidSport = String(opts.avoidSport || '').toLowerCase();
   const usedSports = opts.usedSports instanceof Set
     ? opts.usedSports
     : new Set(
       sportsVisible
-        .filter((s) => s && s.mode !== 'cta')
+        .filter((s) => s && s.mode !== 'cta' && s.mode !== 'info')
         .map((s) => String(s.team?.sport || '').toLowerCase())
         .filter(Boolean),
     );
 
-  // Trier le pool : hier/récents + prochains, puis popularité sport.
-  const ranked = pool.slice().sort((a, b) => {
-    const sa = sportsLeftLaneScore(a, now);
-    const sb = sportsLeftLaneScore(b, now);
-    if (sa !== sb) return sa - sb;
-    const pa = SPORTS_POPULARITY.indexOf(String(a.team?.sport || '').toLowerCase());
-    const pb = SPORTS_POPULARITY.indexOf(String(b.team?.sport || '').toLowerCase());
-    return (pa < 0 ? 99 : pa) - (pb < 0 ? 99 : pb);
-  });
+  // ── Hors saison : info, next, info, next… ──
+  if (lane.kind === 'offseason') {
+    const forceMode = opts.forceMode; // 'info' | 'next' | undefined
+    const wantInfo = forceMode === 'info'
+      || (forceMode !== 'next' && sportsLeftWantInfo);
+    if (wantInfo || !lane.pool.length) {
+      sportsLeftWantInfo = false;
+      const slide = sportsInfoSlide(sportsInfoCursor);
+      sportsInfoCursor += 1;
+      return slide;
+    }
+    sportsLeftWantInfo = true;
+    const pool = lane.pool;
+    // Diversité sport puis curseur.
+    for (let i = 0; i < pool.length; i += 1) {
+      const s = pool[(sportsLeftCursor + i) % pool.length];
+      if (used.has(s.key)) continue;
+      const sp = String(s.team?.sport || '').toLowerCase();
+      if (sp && usedSports.has(sp) && usedSports.size < pool.length) continue;
+      if (avoidSport && sp === avoidSport) continue;
+      sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
+      return s;
+    }
+    for (let i = 0; i < pool.length; i += 1) {
+      const s = pool[(sportsLeftCursor + i) % pool.length];
+      if (!used.has(s.key)) {
+        sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
+        return s;
+      }
+    }
+    // Tout déjà affiché : avancer quand même (rotation).
+    if (pool.length) {
+      const s = pool[sportsLeftCursor % pool.length];
+      sportsLeftCursor = (sportsLeftCursor + 1) % pool.length;
+      return s;
+    }
+    return sportsInfoSlide(sportsInfoCursor++);
+  }
 
-  // 1) Sport pas encore dans le bandeau — meilleur candidat de ce sport
-  for (const s of ranked) {
+  // ── Saison : résultats passés seulement ──
+  const pool = lane.pool;
+  if (!pool.length) return null;
+
+  // 1) Sport pas encore dans le bandeau
+  for (let i = 0; i < pool.length; i += 1) {
+    const s = pool[(sportsLeftCursor + i) % pool.length];
+    if (used.has(s.key)) continue;
     const sp = String(s.team?.sport || '').toLowerCase();
     if (sp && !usedSports.has(sp)) {
-      sportsSportCursor = (sportsSportCursor + 1) % Math.max(1, SPORTS_POPULARITY.length);
+      sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
       return s;
     }
   }
-
-  // 2) Sport différent du slot remplacé (varier même si même jour / même sport déjà vu)
+  // 2) Sport ≠ slot remplacé
   if (avoidSport) {
-    const diverse = ranked.find((s) => String(s.team?.sport || '').toLowerCase() !== avoidSport);
-    if (diverse) return diverse;
+    for (let i = 0; i < pool.length; i += 1) {
+      const s = pool[(sportsLeftCursor + i) % pool.length];
+      if (used.has(s.key)) continue;
+      if (String(s.team?.sport || '').toLowerCase() !== avoidSport) {
+        sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
+        return s;
+      }
+    }
   }
-
-  // 3) Suivant dans l’ordre chronologique (plusieurs matchs le même jour)
-  return ranked[0];
+  // 3) Suivant non utilisé dans l’ordre de fraîcheur
+  for (let i = 0; i < pool.length; i += 1) {
+    const s = pool[(sportsLeftCursor + i) % pool.length];
+    if (!used.has(s.key)) {
+      sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
+      return s;
+    }
+  }
+  // 4) Rotation forcée (tous les slots déjà dans le bandeau)
+  const s = pool[sportsLeftCursor % pool.length];
+  sportsLeftCursor = (sportsLeftCursor + 1) % pool.length;
+  return s;
 }
 
 /**
  * Première peinture.
- * Desktop/tablette (≥ 2) : scores + CTA épinglée à droite.
+ * Desktop/tablette (≥ 2) : scores (gauche) + CTA épinglée à droite.
  * Mobile (1) : un score (la CTA entre en rotation ensuite).
+ * Saison → uniquement résultats ; hors saison → info/next alternés.
  */
 function pickInitialSportsVisible(count) {
   const pinned = sportsCtaPinned();
@@ -2526,22 +2662,60 @@ function pickInitialSportsVisible(count) {
   const usedKeys = new Set();
   const usedSports = new Set();
   sportsSportCursor = 0;
-  while (picked.length < contentCount) {
-    const slide = nextSportsSlide(usedKeys, { usedSports, avoidSport: '' });
-    if (!slide || usedKeys.has(slide.key)) break;
-    picked.push(slide);
-    usedKeys.add(slide.key);
-    if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
+  sportsLeftCursor = 0;
+  sportsInfoCursor = 0;
+  sportsLeftWantInfo = true;
+
+  const lane = sportsLeftLaneState();
+  if (lane.kind === 'offseason') {
+    // info, next, info, next… (déterministe, sans dépendre du flag global)
+    let ni = 0;
+    for (let i = 0; i < contentCount; i += 1) {
+      if (i % 2 === 0 || !lane.pool.length) {
+        picked.push(sportsInfoSlide(sportsInfoCursor++));
+      } else {
+        // Match à venir par proximité, sans doublon si possible
+        let slide = null;
+        for (let k = 0; k < lane.pool.length; k += 1) {
+          const s = lane.pool[(ni + k) % lane.pool.length];
+          if (!usedKeys.has(s.key)) {
+            slide = s;
+            ni = ni + k + 1;
+            break;
+          }
+        }
+        if (!slide && lane.pool.length) {
+          slide = lane.pool[ni % lane.pool.length];
+          ni += 1;
+        }
+        if (slide) {
+          picked.push(slide);
+          usedKeys.add(slide.key);
+          if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
+        } else {
+          picked.push(sportsInfoSlide(sportsInfoCursor++));
+        }
+      }
+    }
+    sportsLeftCursor = ni % Math.max(1, lane.pool.length || 1);
+    sportsLeftWantInfo = contentCount % 2 === 0; // prochaine rotation : info si on a fini sur next
+  } else {
+    while (picked.length < contentCount) {
+      const slide = nextSportsSlide(usedKeys, { usedSports, avoidSport: '' });
+      if (!slide || usedKeys.has(slide.key)) break;
+      picked.push(slide);
+      usedKeys.add(slide.key);
+      if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
+    }
   }
+
   const pool = sportsCtaLabelPool();
   sportsCtaLabelIndex = pool.length
     ? Math.floor(Math.random() * pool.length)
     : 0;
   if (pinned) {
-    // Slot de droite : « Au tableau » prime toujours.
     picked.push(sportsCtaSlide(sportsCtaLabelIndex));
   } else if (!picked.length) {
-    // Mobile sans score : au moins la CTA.
     picked.push(sportsCtaSlide(sportsCtaLabelIndex));
   }
   sportsCtaOnRightMobile = pinned ? true : false;
@@ -2567,8 +2741,13 @@ function renderSportsStrip() {
   // Resize : si le mode pin/mobile change ou le nb de slots, re-semer.
   const wasPinned = sportsVisible.length >= 2
     && sportsVisible[sportsVisible.length - 1]?.mode === 'cta';
-  const canReuse = sportsVisible.some((s) => s && s.mode !== 'cta'
-    && sportsSlides.some((x) => x.key === s.key));
+  const slideStillValid = (s) => {
+    if (!s || s.mode === 'cta') return false;
+    // Accroches info hors saison : toujours valides (pas dans sportsSlides).
+    if (s.mode === 'info') return true;
+    return sportsSlides.some((x) => x.key === s.key);
+  };
+  const canReuse = sportsVisible.some((s) => s && s.mode !== 'cta' && slideStillValid(s));
   if (!canReuse || sportsVisible.length !== count || wasPinned !== pinned) {
     sportsVisible = pickInitialSportsVisible(count);
   } else {
@@ -2580,21 +2759,33 @@ function renderSportsStrip() {
         prev
         && prev.mode !== 'cta'
         && !used.has(prev.key)
-        && sportsSlides.some((s) => s.key === prev.key)
+        && slideStillValid(prev)
       ) {
         nextVisible.push(prev);
-        used.add(prev.key);
+        // Les clés info sont uniques par instance — ne pas bloquer la rotation.
+        if (prev.mode !== 'info') used.add(prev.key);
       }
     }
     const usedSports = new Set(
-      nextVisible.map((s) => String(s.team?.sport || '').toLowerCase()).filter(Boolean),
+      nextVisible
+        .filter((s) => s.mode !== 'info')
+        .map((s) => String(s.team?.sport || '').toLowerCase())
+        .filter(Boolean),
     );
+    // Compléter en respectant l’alternance hors saison.
+    const lane = sportsLeftLaneState();
     while (nextVisible.length < contentSlots) {
-      const slide = nextSportsSlide(used, { usedSports });
-      if (!slide || used.has(slide.key)) break;
+      const forceMode = lane.kind === 'offseason'
+        ? (nextVisible.length % 2 === 0 ? 'info' : 'next')
+        : undefined;
+      const slide = nextSportsSlide(used, { usedSports, forceMode });
+      if (!slide) break;
+      if (slide.mode !== 'info' && used.has(slide.key)) break;
       nextVisible.push(slide);
-      used.add(slide.key);
-      if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
+      if (slide.mode !== 'info') {
+        used.add(slide.key);
+        if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
+      }
     }
     if (pinned) {
       // CTA prime à droite tant qu’on n’est pas en mobile 1-chip.
@@ -2659,8 +2850,17 @@ function rotateOneSportsCard() {
       }
     }
   } else {
-    const avoid = String(sportsVisible[slot]?.team?.sport || '').toLowerCase();
-    replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid });
+    // Voie de gauche : résultats (saison) ou info↔next (hors saison).
+    const cur = sportsVisible[slot];
+    const avoid = String(cur?.team?.sport || '').toLowerCase();
+    const lane = sportsLeftLaneState();
+    if (lane.kind === 'offseason') {
+      // Alterne le type affiché dans ce slot.
+      const forceMode = cur?.mode === 'info' ? 'next' : 'info';
+      replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid, forceMode });
+    } else {
+      replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid });
+    }
     if (replacement?.mode === 'cta') {
       replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid });
     }
@@ -2670,13 +2870,19 @@ function rotateOneSportsCard() {
     sportsNextSlot = (slot + 1) % n;
     return;
   }
-  // Même match déjà affiché : passer au slot suivant (sauf CTA qui change d’accroche).
+  // Même match déjà affiché : forcer le curseur suivant puis retenter une fois.
   if (
     replacement.mode !== 'cta'
+    && replacement.mode !== 'info'
     && replacement.key === sportsVisible[slot]?.key
   ) {
-    sportsNextSlot = (slot + 1) % n;
-    return;
+    const avoid = String(sportsVisible[slot]?.team?.sport || '').toLowerCase();
+    sportsLeftCursor = (sportsLeftCursor + 1) % Math.max(1, sportsLeftLaneState().pool.length || 1);
+    replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid });
+    if (!replacement || replacement.key === sportsVisible[slot]?.key) {
+      sportsNextSlot = (slot + 1) % n;
+      return;
+    }
   }
 
   sportsVisible[slot] = replacement;
@@ -2696,8 +2902,13 @@ function rotateOneSportsCard() {
 function scheduleSportsRotate() {
   if (sportsTimer) clearInterval(sportsTimer);
   sportsTimer = null;
-  if (sportsSlides.length <= 1) return;
-  // Même avec 1 slot visible, on tourne le contenu ; avec N slots, un par un.
+  const lane = sportsLeftLaneState();
+  // Tourner s’il y a de la matière (pool résultats/next, infos hors saison, ou CTA multi-accroches).
+  const canSpin = lane.pool.length > 1
+    || lane.kind === 'offseason'
+    || sportsCtaLabelPool().length > 1
+    || sportsVisible.length > 1;
+  if (!canSpin) return;
   sportsTimer = window.setInterval(() => {
     rotateOneSportsCard();
   }, SPORTS_ROTATE_MS);
@@ -2708,7 +2919,12 @@ async function initMastheadSports() {
   try {
     const res = await fetch(appAsset('sports.json'), { cache: 'no-store' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    sportsData = await res.json();
+    const raw = await res.json();
+    /* Focus-group B : même fenêtre de sessions que les articles + filet hors saison. */
+    sportsData = (typeof RadarSportsFreshness !== 'undefined'
+      && typeof RadarSportsFreshness.pruneSportsPayload === 'function')
+      ? RadarSportsFreshness.pruneSportsPayload(raw)
+      : raw;
     sportsSlides = buildSportsSlides(sportsData);
     sportsVisible = [];
     sportsNextSlot = 0;
@@ -6714,23 +6930,50 @@ function getNewsSearchQuery() {
 }
 
 /*
- * Clavier virtuel : les éléments fixed ancrés en bas restent derrière le
- * clavier quand seul le viewport visuel rétrécit. On mesure la zone occluse
- * via visualViewport et on remonte le panneau d'autant (--vk-inset).
+ * Clavier virtuel : les outils fixed bas de page restent derrière le clavier
+ * quand seul le viewport visuel rétrécit. On remonte d'autant (--vk-inset).
  */
+function pageToolsRoot() {
+  return document.getElementById('page-tools') || NEWS_SEARCH;
+}
+
 function updateNewsSearchKeyboardInset() {
-  if (!NEWS_SEARCH) return;
+  const root = pageToolsRoot();
+  if (!root) return;
   const vv = window.visualViewport;
   if (!vv || !newsSearchOpen) {
-    NEWS_SEARCH.style.removeProperty('--vk-inset');
+    root.style.removeProperty('--vk-inset');
     return;
   }
   const occluded = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
   if (occluded > 1) {
-    NEWS_SEARCH.style.setProperty('--vk-inset', `${Math.round(occluded)}px`);
+    root.style.setProperty('--vk-inset', `${Math.round(occluded)}px`);
   } else {
-    NEWS_SEARCH.style.removeProperty('--vk-inset');
+    root.style.removeProperty('--vk-inset');
   }
+}
+
+/** Flèche « haut de page » (bas-gauche) — parité page sports. */
+function initPageScrollTop() {
+  const btn = document.getElementById('page-scroll-top');
+  if (!btn) return;
+  const SHOW_PX = 360;
+  const sync = () => {
+    const y = window.scrollY || document.documentElement.scrollTop || 0;
+    const show = y > SHOW_PX;
+    btn.hidden = !show;
+    btn.setAttribute('aria-hidden', show ? 'false' : 'true');
+  };
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    try {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    } catch {
+      window.scrollTo(0, 0);
+    }
+  });
+  window.addEventListener('scroll', sync, { passive: true });
+  sync();
 }
 
 function setNewsSearchOpen(open) {

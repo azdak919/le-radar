@@ -467,8 +467,12 @@ for (const hub of ['sports/index.html', 'en/sports/index.html']) {
   assert(existsSync(join(root, hub)), `${hub} manquant — lancer \`npm run seo:update\``);
 }
 assert(
-  /<a href="sports\/">/.test(indexHtml),
-  'index.html : lien de pied de page vers /sports/ requis (page autrement orpheline)'
+  /<a href="sports\/" data-sports-reset>Sports<\/a>/.test(indexHtml),
+  'index.html : footer /sports/ libellé « Sports » (focus-group footer, pas « Au tableau »)'
+);
+assert(
+  /<h1 class="seo-title"[^>]*>[\s\S]*?Au tableau/.test(readFileSync(join(root, 'sports/index.html'), 'utf8')),
+  'sports/index.html : H1 reste « Au tableau » (marque de section)'
 );
 const sportsHub = readFileSync(join(root, 'sports/index.html'), 'utf8');
 assert(sportsHub.includes('data-sports-board'), 'sports : racine filtrable requise');
@@ -480,6 +484,14 @@ assert(
   /sports-board-meta[\s\S]*?<time[^>]+datetime="\d{4}-\d{2}-\d{2}T/.test(sportsHub),
   'sports : horodatage exact (date + heure) requis dans la méta',
 );
+assert(
+  !/colligés à partir des calendriers officiels/.test(sportsHub),
+  'sports : note sources longue retirée (inutile)',
+);
+assert(sportsHub.includes('data-sports-tools'), 'sports : outils flottants (haut + loupe) requis');
+assert(sportsHub.includes('id="sports-scroll-top"'), 'sports : flèche haut de page requise');
+assert(sportsHub.includes('id="sports-search-toggle"'), 'sports : loupe de recherche requise');
+assert(sportsHub.includes('data-search='), 'sports : index data-search sur les panneaux requis');
 
 // Les fiches station portent l'ancre visée par « À l'antenne » (app.js).
 const ckutPage = readFileSync(join(root, 'radios/ckut/index.html'), 'utf8');

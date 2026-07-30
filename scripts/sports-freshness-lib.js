@@ -1,0 +1,231 @@
+/**
+ * LE-RADAR / LE-KIOSQUE — fraîcheur des scores (verdict focus-group B).
+ *
+ * Résultats passés :
+ *  - fenêtre = session-freshness-lib (session en cours + 2 précédentes, grâce sept.)
+ *  - hors fenêtre : au plus 1 lastGame le plus récent, flag priorSeason
+ *
+ * Matchs à venir :
+ *  - date ≥ aujourd’hui (calendrier civil local)
+ *  - dans la session en cours OU la session suivante
+ *
+ * UMD : require() Node ou window.RadarSportsFreshness en navigateur.
+ * Dépend de session-freshness-lib (RadarSessionFreshness).
+ */
+(function (root, factory) {
+  if (typeof module === 'object' && module.exports) {
+    module.exports = factory(require('./session-freshness-lib'));
+  } else {
+    root.RadarSportsFreshness = factory(root.RadarSessionFreshness);
+  }
+}(typeof self !== 'undefined' ? self : this, function (SF) {
+  'use strict';
+
+  if (!SF) {
+    throw new Error('sports-freshness-lib requires session-freshness-lib / RadarSessionFreshness');
+  }
+
+  function parseGameDay(gameOrDate) {
+    const raw = typeof gameOrDate === 'string'
+      ? gameOrDate
+      : (gameOrDate && gameOrDate.date) || '';
+    const day = String(raw).slice(0, 10);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) return null;
+    const t = Date.parse(`${day}T12:00:00`);
+    return Number.isFinite(t) ? new Date(t) : null;
+  }
+
+  function dayKey(date) {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  }
+
+  /** Début de la session universitaire suivante (A→H, H→É, É→A). */
+  function getNextUniversitySessionStart(sessionStart) {
+    const year = sessionStart.getFullYear();
+    const month = sessionStart.getMonth();
+    if (month === 0) return new Date(year, 4, 1); // hiver → été
+    if (month === 4) return new Date(year, 8, 1); // été → automne
+    return new Date(year + 1, 0, 1); // automne → hiver
+  }
+
+  /** Fin inclusive de « session courante + 1 suivante ». */
+  function nextGameHorizonEnd(referenceDate = new Date()) {
+    const currentStart = SF.getCurrentUniversitySessionStart(referenceDate);
+    const nextStart = getNextUniversitySessionStart(currentStart);
+    const afterNext = getNextUniversitySessionStart(nextStart);
+    return new Date(afterNext.getTime() - 1);
+  }
+
+  function isPastGameFresh(game, referenceDate = new Date()) {
+    const d = parseGameDay(game);
+    if (!d) return false;
+    return SF.isWithinFreshnessWindow({ date: dayKey(d) }, referenceDate);
+  }
+
+  function isPastGameKeepable(game, referenceDate = new Date()) {
+    const d = parseGameDay(game);
+    if (!d) return false;
+    // Pas de résultat « futur » dans lastGame.
+    if (d.getTime() > referenceDate.getTime()) return false;
+    return true;
+  }
+
+  /**
+   * nextGame admissible : ≥ aujourd’hui et ≤ fin de la session suivante.
+   */
+  function isNextGameInHorizon(game, referenceDate = new Date()) {
+    const d = parseGameDay(game);
+    if (!d) return false;
+    const todayKey = dayKey(referenceDate);
+    const gameKey = dayKey(d);
+    if (gameKey < todayKey) return false;
+    const end = nextGameHorizonEnd(referenceDate);
+    return d.getTime() <= end.getTime();
+  }
+
+  function sortPastDesc(a, b) {
+    return String(b?.date || '').localeCompare(String(a?.date || ''));
+  }
+
+  /**
+   * Filtre une liste de résultats passés.
+   * @returns {{ games: object[], priorSeason: boolean }}
+   */
+  function prunePastGames(gamesList = [], referenceDate = new Date()) {
+    const source = Array.isArray(gamesList) ? gamesList : [];
+    const list = source
+      .filter((g) => isPastGameKeepable(g, referenceDate))
+      .slice()
+      .sort(sortPastDesc);
+
+    const fresh = list.filter((g) => isPastGameFresh(g, referenceDate));
+    if (fresh.length) {
+      return {
+        games: fresh.map((g) => ({ ...g, priorSeason: false })),
+        priorSeason: false,
+      };
+    }
+    // Hors fenêtre : au plus 1 (le plus récent).
+    if (list.length) {
+      return {
+        games: [{ ...list[0], priorSeason: true }],
+        priorSeason: true,
+      };
+    }
+    return { games: [], priorSeason: false };
+  }
+
+  function pruneNextGame(game, referenceDate = new Date()) {
+    if (!game) return null;
+    return isNextGameInHorizon(game, referenceDate) ? { ...game } : null;
+  }
+
+  function pruneNextGames(list = [], referenceDate = new Date()) {
+    return (Array.isArray(list) ? list : [])
+      .filter((g) => isNextGameInHorizon(g, referenceDate))
+      .slice()
+      .sort((a, b) => String(a?.date || '').localeCompare(String(b?.date || '')));
+  }
+
+  /**
+   * Applique la règle B à une formation sports.json / payload kiosque.
+   * Ne mute pas l’entrée d’origine.
+   */
+  function pruneSportsTeam(team, referenceDate = new Date()) {
+    if (!team || typeof team !== 'object') return team;
+    const out = { ...team };
+
+    if (Array.isArray(team.results)) {
+      const pruned = prunePastGames(team.results, referenceDate);
+      out.results = pruned.games;
+    }
+
+    if (team.lastGame) {
+      const pruned = prunePastGames([team.lastGame], referenceDate);
+      out.lastGame = pruned.games[0] || null;
+      if (out.lastGame) {
+        out.lastGamePriorSeason = !!out.lastGame.priorSeason;
+      } else {
+        delete out.lastGamePriorSeason;
+      }
+    }
+
+    if (team.nextGame) {
+      out.nextGame = pruneNextGame(team.nextGame, referenceDate);
+    }
+    if (Array.isArray(team.nextGames)) {
+      out.nextGames = pruneNextGames(team.nextGames, referenceDate);
+    }
+
+    // Équipe sans aucun signal après prune : on la garde (carte + empty),
+    // le consommateur décide de l’afficher.
+    return out;
+  }
+
+  /**
+   * Prune d’un payload complet { teams: {}|[], results?, nextGame?, nextGames? }.
+   */
+  function pruneSportsPayload(data, referenceDate = new Date()) {
+    if (!data || typeof data !== 'object') return data;
+    const out = { ...data, sportsFreshness: { rule: 'B', referenceDate: referenceDate.toISOString() } };
+
+    if (data.teams && typeof data.teams === 'object' && !Array.isArray(data.teams)) {
+      const map = {};
+      for (const [id, team] of Object.entries(data.teams)) {
+        map[id] = pruneSportsTeam(team, referenceDate);
+      }
+      out.teams = map;
+    } else if (Array.isArray(data.teams)) {
+      out.teams = data.teams.map((t) => pruneSportsTeam(t, referenceDate));
+    }
+
+    if (Array.isArray(data.results)) {
+      out.results = prunePastGames(data.results, referenceDate).games;
+    }
+    if (data.nextGame) {
+      out.nextGame = pruneNextGame(data.nextGame, referenceDate);
+    }
+    if (Array.isArray(data.nextGames)) {
+      out.nextGames = pruneNextGames(data.nextGames, referenceDate);
+    }
+    return out;
+  }
+
+  /**
+   * Référence de prune pour une démo éditoriale (LE-KIOSQUE).
+   * demoAsOf (ISO date) > now.
+   */
+  function resolveReferenceDate(opts = {}) {
+    if (opts.demoAsOf) {
+      const d = parseGameDay(opts.demoAsOf) || new Date(opts.demoAsOf);
+      if (d && Number.isFinite(d.getTime())) return d;
+    }
+    if (opts.referenceDate instanceof Date && Number.isFinite(opts.referenceDate.getTime())) {
+      return opts.referenceDate;
+    }
+    if (opts.referenceDate) {
+      const d = new Date(opts.referenceDate);
+      if (Number.isFinite(d.getTime())) return d;
+    }
+    return new Date();
+  }
+
+  return {
+    getNextUniversitySessionStart,
+    nextGameHorizonEnd,
+    parseGameDay,
+    dayKey,
+    isPastGameFresh,
+    isPastGameKeepable,
+    isNextGameInHorizon,
+    prunePastGames,
+    pruneNextGame,
+    pruneNextGames,
+    pruneSportsTeam,
+    pruneSportsPayload,
+    resolveReferenceDate,
+  };
+}));
