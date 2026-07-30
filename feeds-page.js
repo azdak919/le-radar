@@ -10,19 +10,13 @@ const FEEDS_GRID_CEGEP = document.getElementById('feeds-grid-cegep');
 const FEEDS_CEGEP_WRAP = document.getElementById('feeds-cegep-wrap');
 const FEEDS_GRID_NOTE = document.getElementById('feeds-grid-note');
 
+// D10 : même table que l’accueil (institution-acronyms-data.js), avec
+// surcharges d’affichage propres à la page des flux.
 const FEEDS_INSTITUTION_ACRONYMS = {
-  'Université de Montréal': 'UdeM',
-  UQAM: 'UQAM',
-  'Université du Québec à Montréal': 'UQAM',
-  'Université McGill': 'McGill',
-  'McGill University': 'McGill',
-  'Concordia University': 'Concordia',
-  'Université Laval': 'ULaval',
-  'Université de Sherbrooke': 'UdeS',
-  'Université du Québec à Trois-Rivières': 'UQTR',
+  ...(typeof window !== 'undefined' && window.RadarInstitutionAcronyms
+    ? window.RadarInstitutionAcronyms
+    : {}),
   'Polytechnique Montréal': 'Poly',
-  "Bishop's University": "Bishop's",
-  'Cégep du Vieux Montréal': 'Cégep Vieux-Montréal',
   'Cégep de Jonquière (ATM – journalisme)': 'Jonquière',
   'Cégep de Jonquière': 'Jonquière',
 };
