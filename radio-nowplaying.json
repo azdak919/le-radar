@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-30T08:51:33.113Z",
+  "updatedAt": "2026-07-30T09:13:08.092Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T08:51:06.750Z"
+      "checkedAt": "2026-07-30T09:12:44.994Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Best of des sessions live",
-        "source": "schedule",
-        "start": "04:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/session-live-a-cism"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "05:00",
         "end": "07:00",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "Ici, la criminologie",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/ici-la-criminologie"
+      },
       "track": "",
-      "showTitle": "Best of des sessions live",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T08:51:09.027Z"
+      "checkedAt": "2026-07-30T09:12:47.191Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T08:51:11.892Z"
+      "checkedAt": "2026-07-30T09:12:50.178Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T08:51:25.485Z"
+      "checkedAt": "2026-07-30T09:13:03.958Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T08:51:25.924Z"
+      "checkedAt": "2026-07-30T09:13:04.341Z"
     },
     "choq": {
       "id": "choq",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T08:51:32.762Z"
+      "checkedAt": "2026-07-30T09:13:07.740Z"
     }
   }
 }
