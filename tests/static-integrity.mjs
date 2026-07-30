@@ -469,8 +469,13 @@ for (const hub of ['sports/index.html', 'en/sports/index.html']) {
   assert(existsSync(join(root, hub)), `${hub} manquant — lancer \`npm run seo:update\``);
 }
 assert(
-  /<a href="sports\/" data-sports-reset>Sports<\/a>/.test(indexHtml),
+  /<a href="sports\/" data-sports-reset[^>]*>Sports<\/a>/.test(indexHtml),
   'index.html : footer /sports/ libellé « Sports » (focus-group footer, pas « Au tableau »)'
+);
+assert(
+  /href="sports\/"[^>]*target="_blank"[^>]*rel="noopener noreferrer"/.test(indexHtml)
+    || /href="sports\/"[^>]*rel="noopener noreferrer"[^>]*target="_blank"/.test(indexHtml),
+  'index.html : lien Sports en nouvel onglet (préserve la radio)'
 );
 assert(
   /<h1 class="seo-title"[^>]*>[\s\S]*?Au tableau/.test(readFileSync(join(root, 'sports/index.html'), 'utf8')),

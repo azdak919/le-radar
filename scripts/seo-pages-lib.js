@@ -658,7 +658,9 @@ function renderSiteFooter({
   links.push(`<a href="${href(dirPath)}">${escapeHtml(t.footerDirectory)}</a>`);
   links.push(`<a href="${href(schedPath)}">${escapeHtml(t.schedules)}</a>`);
   // data-sports-reset : depuis /sports/?sport=… recharge sans filtres.
-  links.push(`<a href="${href(sportsPath)}" data-sports-reset>${escapeHtml(t.sportsFooter || t.sports)}</a>`);
+  // Nouvel onglet hors /sports/ (radio continue) — sur le tableau, sports-board.js
+  // intercepte et reste dans le même onglet pour un reset propre.
+  links.push(`<a href="${href(sportsPath)}" data-sports-reset target="_blank" rel="noopener noreferrer">${escapeHtml(t.sportsFooter || t.sports)}</a>`);
   links.push(`<a href="${href(archivePath)}">${escapeHtml(t.archives)}</a>`);
   // `altPath` vaut '' sur /en/ : la version française est la racine du site.
   // Tester la valeur et non sa véracité, sinon le volet anglais perd sa bascule.
