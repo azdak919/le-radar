@@ -8723,7 +8723,23 @@ function displaySizedImageUrl(raw = '', role = 'lead') {
   return src;
 }
 
+/** Photo mirroirée sur GitHub Pages (assets/news-images/…). */
+function hasLocalPhoto(item) {
+  const p = String(item?.imageLocal || '').trim();
+  return /^assets\/news-images\/[a-z0-9]+\.(?:jpe?g|png|webp|gif)$/i.test(p);
+}
+
+function resolveLocalPhotoUrl(item) {
+  if (!hasLocalPhoto(item)) return '';
+  try {
+    return new URL(String(item.imageLocal).trim(), location.href).href;
+  } catch {
+    return '';
+  }
+}
+
 function hasUsablePhoto(item, role = 'lead') {
+  if (hasLocalPhoto(item)) return true;
   const forThumb = role === 'feature' || role === 'compact';
   return !!getCandidateImage(item?.image, { forThumb });
 }
@@ -8803,13 +8819,19 @@ function resolveDisplayImage(item, { preferPhoto = true, role = 'lead' } = {}) {
   const forThumb = role === 'feature' || role === 'compact';
   if (shouldPreferStockPhoto(item, role)) preferPhoto = false;
 
-  // Photo source d'abord, sauf si on a explicitement préféré le stock thématique.
-  if (preferPhoto && hasUsablePhoto(item, role)) {
+  // 1) Miroir local (GitHub Pages) — résilient si l’origine journal est down.
+  if (preferPhoto && hasLocalPhoto(item)) {
+    return { src: resolveLocalPhotoUrl(item), kind: 'photo' };
+  }
+  // 2) Photo source distante (évent. réécrite Wayback pour hôtes fragiles).
+  if (preferPhoto && getCandidateImage(item?.image, { forThumb })) {
     return { src: getCandidateImage(item.image, { forThumb }), kind: 'photo' };
   }
-  // Banque libre thématique OK ; campus bank seulement sans photo source.
+  // 3) Banque libre thématique ; campus bank seulement sans photo source.
   if (hasStockPhoto(item, role)) {
     if (item.imageProvider === 'campus-bank' && hasUsablePhoto(item, role)) {
+      const local = resolveLocalPhotoUrl(item);
+      if (local) return { src: local, kind: 'photo' };
       return { src: getCandidateImage(item.image, { forThumb }), kind: 'photo' };
     }
     return { src: getCandidateImage(item.stockImage, { forThumb }), kind: 'stock' };
@@ -8817,8 +8839,12 @@ function resolveDisplayImage(item, { preferPhoto = true, role = 'lead' } = {}) {
   if (isFallbackImageUrl(item?.fallbackImage)) {
     return { src: getCandidateImage(item.fallbackImage), kind: 'fallback' };
   }
-  if (!preferPhoto && hasUsablePhoto(item, role)) {
-    return { src: getCandidateImage(item.image, { forThumb }), kind: 'photo' };
+  if (!preferPhoto) {
+    const local = resolveLocalPhotoUrl(item);
+    if (local) return { src: local, kind: 'photo' };
+    if (getCandidateImage(item?.image, { forThumb })) {
+      return { src: getCandidateImage(item.image, { forThumb }), kind: 'photo' };
+    }
   }
   return { src: '', kind: 'none' };
 }
@@ -8828,7 +8854,14 @@ function resolveDisplayImage(item, { preferPhoto = true, role = 'lead' } = {}) {
  * an otherwise valid image supplied by the publication. */
 function alternateDisplayImage(item, failedKind, role = 'lead') {
   const forThumb = role === 'feature' || role === 'compact';
-  if (failedKind === 'stock' && hasUsablePhoto(item, role)) {
+  // Miroir local cassé → origin / Wayback.
+  if (failedKind === 'photo' && getCandidateImage(item?.image, { forThumb })) {
+    return { src: getCandidateImage(item.image, { forThumb }), kind: 'photo' };
+  }
+  if (failedKind === 'stock' && hasLocalPhoto(item)) {
+    return { src: resolveLocalPhotoUrl(item), kind: 'photo' };
+  }
+  if (failedKind === 'stock' && getCandidateImage(item?.image, { forThumb })) {
     return { src: getCandidateImage(item.image, { forThumb }), kind: 'photo' };
   }
   if (failedKind === 'photo' && hasStockPhoto(item, role)) {
@@ -9167,18 +9200,28 @@ function attachArticleImage(article, item, role) {
         loadImage(src, kind, allowRetry, { forceRaw: true });
         return;
       }
-      // Hôte source mort : tenter Wayback si pas déjà en archive.
-      if (allowRetry && kind === 'photo' && !/web\.archive\.org/i.test(src)) {
-        const archived = withArchiveImageFallback(src);
-        if (archived && archived !== src) {
-          settled = true;
-          loadImage(archived, kind, false, { forceRaw: true });
-          return;
+      // Miroir local mort → distante/Wayback ; distante morte → Wayback ; puis stock.
+      if (allowRetry && kind === 'photo') {
+        if (/assets\/news-images\//i.test(src) && item?.image) {
+          const remote = getCandidateImage(item.image, { forThumb: isThumb });
+          if (remote && remote !== src) {
+            settled = true;
+            loadImage(remote, 'photo', true, { forceRaw: true });
+            return;
+          }
+        }
+        if (!/web\.archive\.org/i.test(src)) {
+          const archived = withArchiveImageFallback(String(item?.image || src || '').trim());
+          if (archived && archived !== src) {
+            settled = true;
+            loadImage(archived, kind, false, { forceRaw: true });
+            return;
+          }
         }
       }
       if (allowRetry && (kind === 'photo' || kind === 'stock')) {
         const alt = alternateDisplayImage(item, kind, role);
-        if (alt.src && alt.kind !== kind && alt.src !== src) {
+        if (alt.src && alt.src !== src) {
           settled = true;
           loadImage(alt.src, alt.kind, false);
         } else {

@@ -107,6 +107,17 @@ jobs:
           CI: true
         continue-on-error: true
 
+      # Miroir local des photos source (GitHub Pages) — si un journal tombe
+      # (ex. L’Exemplaire), le fil garde les images déjà cachées. Hôtes fragiles
+      # : repli Wayback au téléchargement.
+      - name: Mirror source images
+        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
+        timeout-minutes: 8
+        run: node scripts/mirror-news-images.js --update
+        env:
+          CI: true
+        continue-on-error: true
+
       - name: Verify photo credits
         if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
         timeout-minutes: 5
@@ -132,7 +143,7 @@ jobs:
         id: check
         if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
         run: |
-          FILES=(news.json news-archive.json author-qc.json lead-excerpt-qc.json social-feed.json lead-image-qc.json photo-credit-qc.json feed.xml news-sources.json)
+          FILES=(news.json news-archive.json author-qc.json lead-excerpt-qc.json social-feed.json lead-image-qc.json photo-credit-qc.json feed.xml news-sources.json assets/news-images)
           if ! git diff --quiet \
             -I '^[[:space:]]*"updated(Slot|At)?"[[:space:]]*:' \
             -I '^[[:space:]]*"lastFetchOk"[[:space:]]*:' \
@@ -182,7 +193,7 @@ jobs:
         run: |
           git config user.name "LE-RADAR News Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add news.json news-archive.json historical-catalog.config.json author-qc.json lead-excerpt-qc.json social-feed.json lead-image-qc.json photo-credit-qc.json feed.xml news-sources.json index.html sitemap.xml sitemap-archives.xml llms.txt 2>/dev/null || true
+          git add news.json news-archive.json historical-catalog.config.json author-qc.json lead-excerpt-qc.json social-feed.json lead-image-qc.json photo-credit-qc.json feed.xml news-sources.json index.html sitemap.xml sitemap-archives.xml llms.txt assets/news-images 2>/dev/null || true
           # Pages d'entités : ce sont des DOSSIERS entièrement régénérés. `-A`
           # est indispensable — sans lui, la suppression d'une page (journal
           # retiré du registre) resterait non stagée et la page continuerait
