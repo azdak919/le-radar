@@ -840,13 +840,41 @@
   transition: box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
   min-width: 0; /* évite le débordement grid */
 }
-/* Deep-link depuis le bandeau (puce match) — carte formation ciblée. */
+/*
+ * Deep-link / sélection (puce mât ou ?team=) — carte formation ciblée.
+ * Pas de voile coloré sur le fond : le contenu (titres, scores) reste lisible.
+ * Seule la bordure / le halo pulse (parité CTA « Au tableau »).
+ */
 .sports-panel.is-spotlight {
-  border-color: color-mix(in srgb, var(--sports-panel-c, var(--accent)) 55%, var(--rule));
-  background: color-mix(in srgb, var(--sports-panel-c, var(--accent)) 12%, var(--bg-soft));
+  background: var(--bg-soft);
+  border-color: var(--sports-panel-c, var(--accent));
   box-shadow:
-    0 0 0 2px color-mix(in srgb, var(--sports-panel-c, var(--accent)) 35%, transparent),
-    0 6px 20px -10px color-mix(in srgb, var(--sports-panel-c, var(--accent)) 45%, transparent);
+    0 0 0 2px color-mix(in srgb, var(--sports-panel-c, var(--accent)) 42%, transparent),
+    0 8px 22px -12px color-mix(in srgb, var(--sports-panel-c, var(--accent)) 38%, transparent);
+  animation: sports-panel-spotlight-pulse 2.4s ease-in-out infinite;
+}
+@keyframes sports-panel-spotlight-pulse {
+  0%, 100% {
+    border-color: color-mix(in srgb, var(--sports-panel-c, var(--accent)) 72%, var(--rule));
+    box-shadow:
+      0 0 0 2px color-mix(in srgb, var(--sports-panel-c, var(--accent)) 28%, transparent),
+      0 6px 18px -12px color-mix(in srgb, var(--sports-panel-c, var(--accent)) 30%, transparent);
+  }
+  50% {
+    border-color: var(--sports-panel-c, var(--accent));
+    box-shadow:
+      0 0 0 3px color-mix(in srgb, var(--sports-panel-c, var(--accent)) 48%, transparent),
+      0 10px 26px -10px color-mix(in srgb, var(--sports-panel-c, var(--accent)) 42%, transparent);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sports-panel.is-spotlight {
+    animation: none;
+    border-color: var(--sports-panel-c, var(--accent));
+    box-shadow:
+      0 0 0 2px color-mix(in srgb, var(--sports-panel-c, var(--accent)) 40%, transparent),
+      0 6px 18px -12px color-mix(in srgb, var(--sports-panel-c, var(--accent)) 32%, transparent);
+  }
 }
 /* Carte « liens officiels » (hockey hors API S1) : un peu plus large. */
 .sports-panel--external {
