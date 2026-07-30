@@ -9,7 +9,7 @@ import { expect, test } from '@playwright/test';
 for (const { path, title, iconSelector, icon } of [
   {
     path: '/',
-    title: 'LE-RADAR.ca — Les journaux et les radios étudiantes du Québec',
+    title: 'LE-RADAR.ca — Journaux, radios et sports étudiants du Québec',
     iconSelector: 'link[rel="icon"][type="image/svg+xml"]',
     icon: 'assets/icon.svg?v=2',
   },
