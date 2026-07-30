@@ -805,7 +805,8 @@ a { color: inherit; }
   display: block;
   max-width: var(--maxw);
   margin: 0 auto;
-  padding: 10px var(--pad) 0;
+  /* Même rythme vertical que le bandeau sports (8 px). */
+  padding: 8px var(--pad) 0;
 }
 .masthead-weather--docked {
   display: inline-flex !important;
@@ -827,7 +828,8 @@ a { color: inherit; }
   display: none;
   max-width: var(--maxw);
   margin: 0 auto;
-  padding: 8px var(--pad) 0;
+  /* Haut = bas : même air qu’entre radio et cartes. */
+  padding: 8px var(--pad);
   box-sizing: border-box;
   gap: 6px;
   align-items: stretch;
@@ -847,12 +849,13 @@ a { color: inherit; }
   gap: 6px;
   min-height: 32px;
   padding: 4px 10px 4px 7px;
-  border: 1px solid color-mix(in srgb, var(--sports-tone, var(--accent)) 35%, var(--rule));
+  border: 1px solid color-mix(in srgb, var(--sports-tone, #66839e) 42%, rgba(255, 255, 255, 0.18));
   border-radius: 6px;
+  /* Ardoise + bandeau teinté par sport / résultat (pas tout rouge). */
   background:
-    linear-gradient(90deg, color-mix(in srgb, var(--sports-tone, var(--accent)) 18%, transparent) 0%, transparent 55%),
-    color-mix(in srgb, var(--bg-soft) 88%, var(--sports-tone, var(--accent)) 12%);
-  color: var(--ink-soft);
+    linear-gradient(90deg, color-mix(in srgb, var(--sports-tone, #66839e) 28%, transparent) 0%, transparent 55%),
+    rgba(54, 59, 68, 0.78);
+  color: rgba(245, 246, 248, 0.96);
   font-size: 11px;
   font-weight: 700;
   text-decoration: none;
@@ -860,9 +863,28 @@ a { color: inherit; }
   white-space: nowrap;
   overflow: hidden;
   cursor: pointer;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 .masthead-sports-strip .sports-chip:hover {
-  border-color: color-mix(in srgb, var(--sports-tone, var(--accent)) 55%, var(--rule));
+  border-color: color-mix(in srgb, var(--sports-tone, #66839e) 58%, rgba(255, 255, 255, 0.22));
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--sports-tone, #66839e) 34%, transparent) 0%, transparent 55%),
+    rgba(62, 68, 78, 0.88);
+}
+.masthead-sports-strip .sports-chip:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--sports-tone, #66839e) 70%, #fff);
+  outline-offset: 2px;
+}
+/* Arrivée type carte météo (weather-tile-arrive). */
+.masthead-sports-strip .sports-chip.is-arriving {
+  animation: weather-tile-arrive 460ms cubic-bezier(.22, .8, .28, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .masthead-sports-strip .sports-chip.is-arriving {
+    animation: none;
+  }
 }
 .masthead-sports-strip .sports-chip__glyph {
   flex: 0 0 auto;
@@ -902,8 +924,13 @@ a { color: inherit; }
 .masthead-sports-strip .sports-chip__score {
   font-variant-numeric: tabular-nums;
   font-weight: 800;
-  color: var(--ink);
+  color: #fff;
   margin: 0 1px;
+}
+.masthead-sports-strip .sports-chip__code,
+.masthead-sports-strip .sports-chip__opp,
+.masthead-sports-strip .sports-chip__when {
+  color: rgba(245, 246, 248, 0.96);
 }
 .masthead-sports-strip .sports-chip__vs {
   opacity: 0.72;
@@ -916,12 +943,7 @@ a { color: inherit; }
   font-weight: 650;
   font-variant-numeric: tabular-nums;
 }
-@media (max-width: 599.98px) {
-  .masthead-sports-strip:not([hidden]) {
-    padding-top: 8px;
-    padding-bottom: 2px;
-  }
-}
+/* Mobile : même 8 px haut/bas (pas de padding bas réduit). */
 
 .masthead-actions {
   display: flex;
@@ -2476,9 +2498,9 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
-  /* Entre tuner et fil : même ordre de grandeur que les autres respirations (~20px) */
-  margin-top: 20px;
-  padding-bottom: 8px;
+  /* Aligné sur le rythme sports (8 px) : moins de vide sous le bandeau. */
+  margin-top: 8px;
+  padding-bottom: 6px;
   border-bottom: 2px solid var(--rule-strong);
 }
 .wire-title-group {
@@ -2798,7 +2820,7 @@ html[data-translate-busy="1"] .translate-toggle {
 }
 .article--lead .article-eyebrow + .article-meta {
   margin-top: -2px;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 .article--lead .article-meta .article-time {
   justify-self: end;
@@ -2807,7 +2829,7 @@ html[data-translate-busy="1"] .translate-toggle {
 /* Source filter chips */
 .filters-panel {
   position: relative;
-  margin: 16px 0 6px;
+  margin: 10px 0 4px;
   --filters-row-h: 48px;
   --filters-cols: 5;
   /* Ordinateur + tablette paysage : une seule rangée ; le reste via « Plus de sources ». */
@@ -2917,8 +2939,9 @@ html[data-translate-busy="1"] .translate-toggle {
   justify-content: center;
   gap: 6px;
   width: 100%;
-  margin-top: 8px;
-  padding: 8px 12px;
+  /* Même respiration que sports strip (8 px) — pas un double gap. */
+  margin-top: 6px;
+  padding: 6px 12px;
   border: 1px solid var(--rule);
   border-radius: 999px;
   background: var(--bg-soft);
@@ -3137,7 +3160,7 @@ html[data-translate-busy="1"] .translate-toggle {
   display: block;
   text-decoration: none;
   color: inherit;
-  padding: 22px 0;
+  padding: 14px 0;
   border-bottom: 1px solid var(--rule);
   transition: transform 160ms cubic-bezier(0.22,1,0.36,1);
   max-width: 100%;
@@ -3150,7 +3173,7 @@ html[data-translate-busy="1"] .translate-toggle {
      vignette — jamais par-dessus l'image. Le débordement à gauche reste
      contenu par .wire { overflow-x: clip } (pas de pan horizontal iPad). */
   left: -14px;
-  top: 22px; bottom: 22px;
+  top: 14px; bottom: 14px;
   width: 3px;
   border-radius: 3px;
   background: var(--c, var(--accent));
@@ -3173,7 +3196,7 @@ html[data-translate-busy="1"] .translate-toggle {
 
 .article-media {
   display: none;
-  margin: 0 0 14px;
+  margin: 0 0 10px;
   overflow: hidden;
   background: var(--bg-soft);
   border-radius: 8px;
@@ -3248,7 +3271,7 @@ html[data-translate-busy="1"] .translate-toggle {
   column-gap: 10px;
   row-gap: 2px;
   font-size: 12px;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 .article-meta__lead {
   display: inline-flex;
@@ -3317,7 +3340,7 @@ html[data-translate-busy="1"] .translate-toggle {
   font-size: 1.45rem;
   line-height: 1.2;
   letter-spacing: -0.012em;
-  margin: 0 0 7px;
+  margin: 0 0 4px;
   color: var(--ink);
   transition: color 140ms ease;
   overflow-wrap: anywhere;
@@ -3330,12 +3353,12 @@ html[data-translate-busy="1"] .translate-toggle {
   margin: 0 0 6px;
   font-weight: 500;
 }
-/* Vedettes : titre ↔ auteur plus serrés ; air avant photo / extrait. */
+/* Vedettes : titre ↔ auteur collés ; air avant photo / extrait. */
 .article--feature .article-title {
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 .article--feature .article-byline {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
 }
 /* Espace stable entre libellé et auteur — survit aux traductions qui
    retirent le blanc final de « Par » / « By » / « Por »… */
@@ -3376,7 +3399,7 @@ html[data-translate-busy="1"] .translate-toggle {
 
 /* ── Lead / À la une ── */
 .article--lead {
-  padding: 14px 0 22px;
+  padding: 12px 0 16px;
   border-bottom: 2px solid var(--rule-strong);
   /* Colonne flex + order : titre toujours au-dessus de la photo, même si le DOM diverge. */
   display: flex;
@@ -3389,7 +3412,7 @@ html[data-translate-busy="1"] .translate-toggle {
 .article--lead > .article-media { order: 5; }
 .article--lead > .article-brief { order: 6; }
 
-.article--lead::before { top: 56px; }
+.article--lead::before { top: 48px; }
 .article-eyebrow {
   display: inline-block;
   font-size: 11px;
@@ -3397,24 +3420,24 @@ html[data-translate-busy="1"] .translate-toggle {
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 14px;
+  margin-bottom: 8px;
 }
 .article--lead .article-title {
   /* Toujours < --radar-wordmark-size (voir :root). */
   font-size: var(--radar-lead-title-size);
   line-height: 1.1;
-  margin-bottom: 12px;
+  margin-bottom: 4px;
 }
-/* Titre au-dessus de l'image : un peu d'air avant la photo. */
+/* Titre → auteur collés ; air avant la photo. */
 .article--lead.has-image .article-title {
-  margin-bottom: 14px;
+  margin-bottom: 4px;
 }
 .article--lead.has-image .article-media {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 .article--lead .article-byline {
   font-size: 0.95rem;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .article--lead .article-brief {
   font-size: 1.08rem;
@@ -3441,28 +3464,29 @@ html[data-translate-busy="1"] .translate-toggle {
 }
 
 .article--compact {
-  padding: 14px 0;
+  padding: 11px 0;
 }
 .article--compact .article-meta {
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
 .article--compact .article-title {
   font-size: 1.28rem;
   line-height: 1.18;
   margin-top: 0;
+  margin-bottom: 2px;
   hyphens: manual;
   -webkit-hyphens: manual;
   word-break: normal;
 }
 .article--compact .article-byline {
   font-size: 0.78rem;
-  margin: 2px 0 4px;
+  margin: 0 0 6px;
 }
 .article--compact .article-brief {
   font-size: 0.88rem;
   line-height: 1.45;
   color: var(--ink-soft);
-  margin-top: 5px;
+  margin-top: 0;
 }
 .brief-rail .article--compact .article-brief-text {
   display: -webkit-box;
@@ -3473,10 +3497,66 @@ html[data-translate-busy="1"] .translate-toggle {
 .brief-rail .article--compact .article-brief.is-truncated .article-brief-text {
   -webkit-line-clamp: 2;
 }
-/* En bref avec photo : plus de lignes d'extrait à côté de la vignette */
+/*
+ * En bref + photo : float wrap (comme les vedettes) — le texte épouse le bas
+ * de la vignette. Tous écrans de la colonne latérale.
+ */
+.brief-rail .article--compact.article--thumb.has-image {
+  display: block;
+  grid-template-columns: none;
+}
+.brief-rail .article--compact.article--thumb.has-image > .article-meta {
+  display: block;
+  margin-bottom: 3px;
+}
+.brief-rail .article--compact.article--thumb.has-image > .article-title {
+  display: block;
+  margin-bottom: 2px;
+}
+.brief-rail .article--compact.article--thumb.has-image > .article-byline {
+  display: block;
+  margin: 0 0 6px;
+}
+.brief-rail .article--compact.article--thumb.has-image > .article-media {
+  float: left;
+  width: clamp(64px, 22%, 96px);
+  margin: 2px 12px 4px 0;
+  shape-outside: margin-box;
+  grid-column: auto;
+  grid-row: auto;
+  aspect-ratio: auto;
+  overflow: visible;
+  background: transparent;
+}
+.brief-rail .article--compact.article--thumb.has-image > .article-title,
+.brief-rail .article--compact.article--thumb.has-image > .article-byline,
+.brief-rail .article--compact.article--thumb.has-image > .article-brief {
+  grid-column: auto;
+}
+.brief-rail .article--compact.article--thumb.has-image > .article-brief {
+  display: block;
+  overflow: visible;
+  margin-top: 0;
+  min-height: clamp(64px, 22%, 96px);
+}
 .brief-rail .article--compact.article--thumb.has-image .article-brief-text,
 .brief-rail .article--compact.article--thumb.has-image .article-brief.is-truncated .article-brief-text {
-  -webkit-line-clamp: 5;
+  display: inline;
+  -webkit-line-clamp: unset;
+  -webkit-box-orient: initial;
+  overflow: visible;
+}
+.brief-rail .article--compact.article--thumb.has-image::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.brief-rail .article--compact.article--thumb.has-image .article-media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 6px;
 }
 
 /* En bref : date à droite sur la ligne source */
@@ -4453,12 +4533,6 @@ body.external-listen-open {
   /* Titre / extrait : laisser de l'air à côté de la vignette */
   .article--thumb.has-image .article-title {
     padding-right: 0;
-  }
-
-  /* Mobile En bref + photo : 4 lignes (inchangé — pas de « fill » agressif) */
-  .brief-rail .article--compact.article--thumb.has-image .article-brief-text,
-  .brief-rail .article--compact.article--thumb.has-image .article-brief.is-truncated .article-brief-text {
-    -webkit-line-clamp: 4;
   }
 
   /*
