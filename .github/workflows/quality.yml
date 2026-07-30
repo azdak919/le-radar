@@ -5,20 +5,36 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    # Les snapshots générés ont leurs propres contrôles dans les bots. Éviter
-    # de télécharger Chromium à chaque heartbeat ou mise à jour « en ondes ».
+    # Snapshots / données bot purs : pas de Chromium ni mail QG à chaque heartbeat.
+    # Dès qu’un bot touche HTML/SEO/app/CSS/tests, le job tourne encore (chemins hors liste).
     paths-ignore:
       - 'news.json'
+      - 'news-archive.json'
+      - 'news-sources.json'
       - 'author-qc.json'
       - 'lead-excerpt-qc.json'
       - 'lead-image-qc.json'
       - 'photo-credit-qc.json'
       - 'social-feed.json'
       - 'radio-nowplaying.json'
+      - 'radio-schedules.json'
+      - 'radio-schedules.seed.json'
+      - 'radios.json'
+      - 'radios-candidates.json'
+      - 'sports.json'
+      - 'sports-leagues.json'
+      - 'sports-teams.json'
+      - 'sports-sailing.json'
+      - 'institutions.json'
+      - 'indigenous-mt.json'
+      - 'archive-status.json'
+      - 'historical-crawl-state.json'
+      - 'historical-catalog.config.json'
       - 'feed.xml'
       - 'bot-status.json'
       - 'docs/scan-qc-report.json'
       - 'docs/scan-qc-report.md'
+      - 'assets/news-images/**'
 
 concurrency:
   group: quality-${{ github.ref }}
