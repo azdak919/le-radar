@@ -1,0 +1,14 @@
+---
+description: Hard rule — branch and test before main (all UI/CSS work)
+globs:
+alwaysApply: true
+---
+
+# Git and test safety
+
+Obey `VisualCode/GIT-AND-TEST-SAFETY.md`.
+
+- Never commit or push untested work to `main` unless the human explicitly orders direct main.
+- Always: branch from updated main → implement → `npm run check` → Playwright for CSS/chrome/player → push branch.
+- CSS masthead: explicit `<link>` to stylesheets; never `@import` after other rules.
+- Red tests = stop. Do not ship.

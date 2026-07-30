@@ -15,6 +15,18 @@
 
 ---
 
+
+## ⛔ RÈGLE DURE — branche + tests avant `main`
+
+Voir la source de vérité multi-outils :
+[`../GIT-AND-TEST-SAFETY.md`](../GIT-AND-TEST-SAFETY.md) (depuis un dépôt sous `VisualCode/`)
+ou `VisualCode/GIT-AND-TEST-SAFETY.md`.
+
+**Interdit** : commit/push non testé sur `main`.  
+**Obligatoire** : branche `fix|feat|chore/...` → tests locaux verts → push branche → PR/merge.  
+**LE-RADAR UI/CSS** : `npm run check` + Playwright (au minimum mât/smoke) avant push.
+
+
 ## 1. Économie composée de tokens (long terme)
 
 Chaque session qui **re-explore** monolithes et règles déjà documentées **brûle des tokens sans intérêt**.

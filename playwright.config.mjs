@@ -28,6 +28,7 @@ export default defineConfig({
         '**/seo-pages.spec.mjs',
         '**/player-routes.spec.mjs',
         '**/shared-chrome.spec.mjs',
+        '**/masthead-css-load.spec.mjs',
       ],
     },
     {
@@ -38,6 +39,7 @@ export default defineConfig({
         '**/seo-pages.spec.mjs',
         '**/player-routes.spec.mjs',
         '**/shared-chrome.spec.mjs',
+        '**/masthead-css-load.spec.mjs',
       ],
       fullyParallel: false,
     },
