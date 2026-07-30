@@ -4586,8 +4586,8 @@ body.external-listen-open {
 }
 
 /* ─────────────── OUTILS BAS DE PAGE ───────────────
- * Loupe : à gauche, hors de la colonne de contenu (gutter).
- * Flèche haut : à droite, hors de la colonne (symétrique).
+ * Flèche haut : à gauche, hors de la colonne de contenu (gutter).
+ * Loupe : à droite, hors de la colonne (symétrique).
  * Mobile / tablette : sans gutter, repli sur safe-area + 14 px.
  */
 .page-tools {
@@ -4609,8 +4609,8 @@ body.external-listen-open {
   bottom: calc(max(16px, env(safe-area-inset-bottom, 0px)) + var(--vk-inset, 0px));
   z-index: 180;
   display: flex;
-  /* DOM = [flèche, loupe] → row-reverse = loupe gauche, flèche droite. */
-  flex-direction: row-reverse;
+  /* DOM = [flèche, loupe] → flèche gauche, loupe droite. */
+  flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
   gap: 12px;
@@ -4671,7 +4671,7 @@ body.external-listen-open {
   .page-tools { display: none !important; }
 }
 
-/* ─────────────── RECHERCHE LOCALE (loupe bas-gauche, hors contenu) ─────────────── */
+/* ─────────────── RECHERCHE LOCALE (loupe bas-droite, hors contenu) ─────────────── */
 .news-search {
   position: relative;
   right: auto;
@@ -4680,8 +4680,8 @@ body.external-listen-open {
   z-index: auto;
   display: flex;
   flex-direction: column;
-  /* Panneau au-dessus de la loupe, ancré à gauche. */
-  align-items: flex-start;
+  /* Panneau au-dessus de la loupe, ancré à droite. */
+  align-items: flex-end;
   gap: 10px;
   pointer-events: none;
   max-width: min(360px, calc(100vw - 28px));

@@ -1179,7 +1179,7 @@ function sportsResultRows(team, t, lang) {
 
 /**
  * Outils flottants de la page Au tableau :
- * loupe hors contenu à gauche + flèche haut hors contenu à droite
+ * flèche haut hors contenu à gauche + loupe hors contenu à droite
  * (CSS : gutter autour de --maxw ; safe-area sur mobile).
  */
 function sportsPageToolsHtml(t) {
