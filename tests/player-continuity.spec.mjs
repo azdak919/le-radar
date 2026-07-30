@@ -1,5 +1,25 @@
 import { expect, test } from '@playwright/test';
 
+// D9 : ces tests partagent localStorage / audio / sync multi-onglets.
+// Série + nettoyage d’état entre cas, sans allonger les timeouts globaux.
+test.describe.configure({ mode: 'serial' });
+
+test.afterEach(async ({ page, context }) => {
+  for (const p of context.pages()) {
+    try {
+      await p.evaluate(() => {
+        for (const key of Object.keys(localStorage)) {
+          if (key.startsWith('radar-player') || key.startsWith('radar-')) {
+            localStorage.removeItem(key);
+          }
+        }
+      });
+    } catch {
+      // Page déjà fermée ou contexte navigué hors origine.
+    }
+  }
+});
+
 test('le volume historique par défaut est ramené à 100 %', async ({ page }) => {
   await page.addInitScript(() => {
     localStorage.setItem('radar-player-vol', '1');
@@ -117,9 +137,16 @@ test('le bouton annule une connexion audio en attente', async ({ page }) => {
   });
 
   const button = playButton;
-  await expect(button).toHaveClass(/is-buffering/);
+  // État publié (aria + data-radar-buffering), pas seulement la classe CSS.
+  await expect.poll(async () => button.getAttribute('aria-label'), { timeout: 5_000 })
+    .toMatch(/connexion au flux/i);
+  await expect.poll(async () => tuner.locator('html').getAttribute('data-radar-buffering'))
+    .toBe('1');
   await button.click();
-  await expect(button).not.toHaveClass(/is-buffering/);
+  await expect.poll(async () => button.getAttribute('aria-label'), { timeout: 5_000 })
+    .not.toMatch(/connexion au flux/i);
+  await expect.poll(async () => tuner.locator('html').getAttribute('data-radar-buffering'))
+    .not.toBe('1');
 });
 
 test('une page suiveuse n’affiche pas un buffering tardif après navigation', async ({ page }) => {
@@ -137,7 +164,11 @@ test('une page suiveuse n’affiche pas un buffering tardif après navigation', 
   await tuner.locator('#radar-player').evaluate((player) => {
     player.dispatchEvent(new Event('waiting'));
   });
-  await expect(tuner.locator('#tuner-play')).not.toHaveClass(/is-buffering/);
+  // Suiveur froid : un waiting tardif ne doit pas publier l’état buffering.
+  await expect.poll(async () => tuner.locator('html').getAttribute('data-radar-buffering'), {
+    timeout: 3_000,
+  }).not.toBe('1');
+  await expect(tuner.locator('#tuner-play')).not.toHaveAttribute('aria-label', /connexion au flux/i);
 });
 
 test('changer de poste sur un onglet suiveur bascule le flux du leader', async ({ page, context }) => {

@@ -3391,10 +3391,21 @@ html[data-translate-busy="1"] .translate-toggle {
   aspect-ratio: 16 / 9;
 }
 .article.has-image .article-media { display: block; }
+/* Crédit sous la photo : l’image reste cadré 16:9 ; le crédit suit en dessous.
+   Avant : aspect-ratio:auto sur le conteneur laissait les JPEG miroir
+   (ex. 2560×1707) gonfler la une à 700+ px et casser l’équilibre En bref. */
 .article.has-image .article-media:has(.article-media-credit) {
   aspect-ratio: auto;
   overflow: visible;
   background: transparent;
+}
+.article.has-image .article-media:has(.article-media-credit) img {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  background: var(--bg-soft);
 }
 .article-media img {
   display: block;
@@ -3627,6 +3638,16 @@ html[data-translate-busy="1"] .translate-toggle {
 }
 .article--lead.has-image .article-media {
   margin: 0 0 8px;
+}
+/* Une : plafonner la photo pour que l’équilibre En bref reste possible.
+   Sans plafond, un JPEG miroir 16:9 pleine largeur (~440 px) + extrait long
+   pousse la une à 700+ px et laisse un trou structurel sous les vedettes. */
+.article--lead.has-image .article-media img {
+  max-height: min(42vh, 320px);
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
 }
 .article--lead .article-byline {
   font-size: 0.92rem;

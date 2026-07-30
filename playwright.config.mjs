@@ -7,6 +7,8 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 1 : 0,
+  // CI : 2 workers pour le lot principal. player-continuity tourne en projet
+  // séparé (voir projects) pour ne pas se marcher dessus avec l’audio partagé.
   workers: process.env.CI ? 2 : undefined,
   reporter: process.env.CI ? 'github' : 'list',
   use: {
@@ -15,6 +17,27 @@ export default defineConfig({
     serviceWorkers: 'block',
     trace: 'retain-on-failure',
   },
+  projects: [
+    {
+      name: 'main',
+      // Audio multi-onglets + mesures layout masthead/SEO : sensibles à la
+      // contention du webServer et au localStorage partagé (D9).
+      testIgnore: [
+        '**/player-continuity.spec.mjs',
+        '**/masthead-weather.spec.mjs',
+        '**/seo-pages.spec.mjs',
+      ],
+    },
+    {
+      name: 'serial-sensitive',
+      testMatch: [
+        '**/player-continuity.spec.mjs',
+        '**/masthead-weather.spec.mjs',
+        '**/seo-pages.spec.mjs',
+      ],
+      fullyParallel: false,
+    },
+  ],
   webServer: {
     // `python3 -m http.server` est MONO-THREAD : il sert une requête à la fois.
     // Avec deux workers qui chargent chacun une page tirant ~20 sous-ressources
