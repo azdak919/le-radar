@@ -1184,19 +1184,31 @@
   opacity: 0.94;
 }
 
-/* ── Outils page Au tableau : flèche haut (gauche) + loupe (droite) ── */
+/* ── Outils page Au tableau : loupe (gauche hors contenu) + flèche (droite) ── */
 .sports-page-tools {
+  --tools-fab: 48px;
+  --tools-outset: 12px;
+  --tools-gutter: max(0px, calc((100vw - min(var(--maxw), 100vw)) / 2));
+  --tools-side-left: max(
+    max(14px, env(safe-area-inset-left, 0px)),
+    calc(var(--tools-gutter) - var(--tools-fab) - var(--tools-outset))
+  );
+  --tools-side-right: max(
+    max(14px, env(safe-area-inset-right, 0px)),
+    calc(var(--tools-gutter) - var(--tools-fab) - var(--tools-outset))
+  );
   position: fixed;
   left: 0;
   right: 0;
   bottom: calc(max(16px, env(safe-area-inset-bottom, 0px)) + var(--vk-inset, 0px));
   z-index: 180;
   display: flex;
+  flex-direction: row-reverse;
   justify-content: space-between;
   align-items: flex-end;
   gap: 12px;
-  padding-left: max(14px, env(safe-area-inset-left, 0px));
-  padding-right: max(14px, env(safe-area-inset-right, 0px));
+  padding-left: var(--tools-side-left);
+  padding-right: var(--tools-side-right);
   pointer-events: none;
 }
 .sports-page-tools > * { pointer-events: auto; }
@@ -1252,7 +1264,7 @@
 .sports-search {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 10px;
   max-width: min(360px, calc(100vw - 28px));
 }
