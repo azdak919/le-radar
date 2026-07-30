@@ -1,54 +1,43 @@
 {
-  "description": "Voile campus — Québec seulement. ICSA = scores réels. watchlist = clubs QC sans feed ICSA (ou à venir).",
+  "description": "Voile campus QC. ICSA = régates scorees. watchlist = associations étudiantes confirmées (pas les programmes d’excellence type Rouge et Or / Carabins). Ne pas inventer d’équipages.",
   "region": "QC",
   "icsaBase": "https://scores.collegesailing.org/schools/",
   "schools": [
     {
       "slug": "mcgill",
       "registryId": "mcgill",
-      "name": "McGill University",
+      "name": "Université McGill",
       "shortName": "McGill",
       "code": "MCG",
       "sector": "universitaire",
       "conference": "NEISA",
       "status": "icsa",
       "province": "QC",
-      "lastSeen": "2026-07-30T02:41:20.973Z"
+      "kind": "association-etudiante",
+      "clubName": "McGill Sailing",
+      "note": "Équipe de voile étudiante (student-led), distincte du programme d’excellence Redbirds.",
+      "url": "https://www.mcgillsailing.com/"
     }
   ],
   "watchlist": [
     {
-      "registryId": "udem",
-      "name": "Université de Montréal",
-      "shortName": "Montréal",
-      "code": "MTL",
+      "registryId": "polytechnique",
+      "name": "Polytechnique Montréal",
+      "shortName": "Polytechnique",
+      "code": "POLY",
       "sector": "universitaire",
       "status": "club",
       "province": "QC",
-      "note": "Club de voile campus signalé ; pas d’équipe ICSA publique pour l’instant.",
+      "kind": "association-etudiante",
+      "clubName": "PolyVoile",
+      "note": "Association de voile étudiante (comité AEP) — pas un programme d’excellence varsity. Pas d’équipe ICSA publique pour l’instant.",
+      "url": "https://polyvoile.wordpress.com/",
       "icsaSlugCandidates": [
-        "montreal",
-        "udem",
-        "universite-de-montreal",
-        "montreal-u"
-      ],
-      "lastChecked": "2026-07-30T02:41:21.791Z"
-    },
-    {
-      "registryId": "usherbrooke",
-      "name": "Université de Sherbrooke",
-      "shortName": "Sherbrooke",
-      "code": "USHE",
-      "sector": "universitaire",
-      "status": "club",
-      "province": "QC",
-      "note": "Activité voile / nautisme régional à surveiller (pas d’ICSA public).",
-      "icsaSlugCandidates": [
-        "sherbrooke",
-        "sherbrooke-u",
-        "udes"
-      ],
-      "lastChecked": "2026-07-30T02:41:22.405Z"
+        "polytechnique",
+        "polymtl",
+        "polytechnique-montreal",
+        "polyvoile"
+      ]
     },
     {
       "registryId": "ulaval",
@@ -58,15 +47,16 @@
       "sector": "universitaire",
       "status": "upcoming",
       "province": "QC",
-      "note": "Équipe de voile annoncée pour une prochaine session — découverte ICSA en attente.",
+      "kind": "association-etudiante",
+      "clubName": "ULaVoile",
+      "note": "Club / association étudiante ULaVoile — distinct du programme d’excellence Rouge et Or. Découverte ICSA en attente.",
+      "url": "https://www.instagram.com/clubdevoileulaval/",
       "icsaSlugCandidates": [
         "laval",
         "ulaval",
         "universite-laval",
         "quebec-laval"
-      ],
-      "lastChecked": "2026-07-30T02:41:23.225Z"
+      ]
     }
-  ],
-  "updated": "2026-07-30T02:41:23.226Z"
+  ]
 }

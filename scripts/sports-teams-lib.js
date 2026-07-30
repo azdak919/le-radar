@@ -155,18 +155,35 @@ function codeFromName(name) {
  */
 function applyRegistryToTeam(team, reg) {
   if (!team) return team;
+  // Associations de voile (ULaVoile, PolyVoile, McGill Sailing) : le nom du club
+  // et l’établissement hôte priment — pas le surnom d’excellence (Rouge et Or…).
+  const sailingClub = team.sport === 'sailing'
+    && (team.kind === 'association-etudiante' || team.source === 'sailing-watchlist' || team.source === 'icsa-collegesailing');
+  const clubName = team.kind === 'association-etudiante' ? team.name : null;
+  const clubFull = sailingClub ? team.fullName : null;
   const resolved = resolveSportsTeam(reg, {
     name: team.name,
     code: team.code,
     sector: team.sector,
     rseqTeamId: team.rseqTeamId,
   });
-  team.name = resolved.shortName;
-  team.code = resolved.code;
-  team.fullName = resolved.fullName || undefined;
-  team.nickname = resolved.nickname || undefined;
-  team.registryId = resolved.registryId || undefined;
-  team.priority = resolved.priority;
+  if (sailingClub) {
+    // Établissement hôte + code depuis le registre ; garder le nom de club.
+    if (resolved.fullName) team.fullName = resolved.fullName;
+    else if (clubFull) team.fullName = clubFull;
+    if (resolved.code) team.code = resolved.code;
+    if (resolved.registryId) team.registryId = resolved.registryId;
+    team.priority = resolved.priority;
+    team.nickname = undefined; // jamais Redbirds / Rouge et Or sur un club voile
+    if (clubName) team.name = clubName;
+  } else {
+    team.name = resolved.shortName;
+    team.code = resolved.code;
+    team.fullName = resolved.fullName || undefined;
+    team.nickname = resolved.nickname || undefined;
+    team.registryId = resolved.registryId || undefined;
+    team.priority = resolved.priority;
+  }
   if (team.lastGame) applyRegistryToGameSide(team.lastGame, reg, team.sector);
   if (team.nextGame) applyRegistryToGameSide(team.nextGame, reg, team.sector);
   return team;

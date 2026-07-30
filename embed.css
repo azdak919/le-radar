@@ -1268,10 +1268,10 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-cast--mobile {
 }
 
 /*
- * EQ kiosque :
- *  · lecture ≥ 600 px uniquement (barres rouges)
- *  · buffering : jamais dans l’iframe — le spinner du bouton play suffit ;
- *    l’EQ forcé en tampon sur mobile squeezeait les contrôles.
+ * EQ kiosque (parité barre bureau LE-RADAR) :
+ *  · < 600 px : masqué (place aux contrôles ; tampon = spinner play)
+ *  · ≥ 600 px : toujours visible — idle = barres basses au repos ;
+ *    lecture = animation rouge ; buffering = animation tampon
  */
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-eq {
   display: none !important;
@@ -1283,32 +1283,61 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-eq {
   margin: 0;
 }
 @media (min-width: 600px) {
-  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing:not(.is-buffering) .tuner-eq {
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-eq {
     display: flex !important;
   }
 }
-/* Ne pas réafficher l’EQ en tampon (override style.css .tuner.is-buffering). */
-html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-buffering .tuner-eq {
-  display: none !important;
-}
-html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing .tuner-eq span {
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-eq span {
+  width: 3px;
+  height: 4px;
   background: var(--live, #c8102e);
   border-radius: 2px;
-  height: 4px;
+  opacity: 0.9;
+  transform-origin: bottom center;
+}
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing:not(.is-buffering) .tuner-eq span {
   animation: eq 760ms ease-in-out infinite;
   transform: none;
 }
-html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing .tuner-eq span:nth-child(2) {
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing:not(.is-buffering) .tuner-eq span:nth-child(2) {
   animation-duration: 1000ms;
   animation-delay: 0s;
 }
-html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing .tuner-eq span:nth-child(3) {
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing:not(.is-buffering) .tuner-eq span:nth-child(3) {
   animation-duration: 600ms;
   animation-delay: 90ms;
 }
-html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing .tuner-eq span:nth-child(4) {
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-playing:not(.is-buffering) .tuner-eq span:nth-child(4) {
   animation-duration: 880ms;
   animation-delay: 40ms;
+}
+/* Buffering bureau : barres animées (scaleY), comme style.css */
+@media (min-width: 600px) {
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-buffering .tuner-eq span {
+    background: var(--live, #c8102e);
+    height: 40%;
+    max-height: 16px;
+    border-radius: 1px;
+    animation: eq-buffer 0.9s ease-in-out infinite alternate;
+  }
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-buffering .tuner-eq span:nth-child(2) {
+    animation-delay: 0.15s;
+    height: 70%;
+  }
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-buffering .tuner-eq span:nth-child(3) {
+    animation-delay: 0.3s;
+    height: 100%;
+  }
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-buffering .tuner-eq span:nth-child(4) {
+    animation-delay: 0.45s;
+    height: 55%;
+  }
+}
+/* Mobile kiosque : pas d’EQ en tampon (évite de serrer play / volume). */
+@media (max-width: 599.98px) {
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner.is-buffering .tuner-eq {
+    display: none !important;
+  }
 }
 
 /*

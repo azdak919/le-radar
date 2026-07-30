@@ -483,6 +483,9 @@ function syncSportsTeamsRegistry(sailingResult) {
         set.add('sailing');
         sailingTagged += 1;
       }
+    } else if (set.has('sailing') && !obs?.has('sailing')) {
+      // Retirer un tag voile inventé (ex. UdeM / Sherbrooke sans club confirmé).
+      set.delete('sailing');
     }
     if (!team.nickname && CURATED_NICKNAMES[team.id]) {
       team.nickname = CURATED_NICKNAMES[team.id];
@@ -523,19 +526,36 @@ function syncSportsTeamsRegistry(sailingResult) {
     rseqIdsAdded += entry.rseqTeamIds.length;
   }
 
-  // S’assurer que McGill / UdeM / Sherbrooke / Laval existent
+  // Hôtes institutionnels des clubs voile QC (surnom = programme d’excellence,
+  // distinct du club : ULaVoile / PolyVoile / McGill Sailing).
   const ensure = [
     { id: 'mcgill', code: 'MCG', shortName: 'McGill', fullName: 'Université McGill', nickname: 'Redbirds', priority: 2 },
-    { id: 'udem', code: 'MTL', shortName: 'Montréal', fullName: 'Université de Montréal', nickname: 'Carabins', priority: 4 },
-    { id: 'usherbrooke', code: 'USHE', shortName: 'Sherbrooke', fullName: 'Université de Sherbrooke', nickname: 'Vert & Or', priority: 6 },
+    {
+      id: 'polytechnique',
+      code: 'POLY',
+      shortName: 'Polytechnique',
+      fullName: 'Polytechnique Montréal',
+      nickname: null,
+      priority: 5,
+    },
     { id: 'ulaval', code: 'LAV', shortName: 'Laval', fullName: 'Université Laval', nickname: 'Rouge et Or', priority: 1 },
   ];
   for (const e of ensure) {
-    if (byId.has(e.id)) continue;
+    if (byId.has(e.id)) {
+      const existing = byId.get(e.id);
+      if (sailingIds.has(e.id)) {
+        if (!existing.sports) existing.sports = [];
+        if (!existing.sports.includes('sailing')) {
+          existing.sports = [...existing.sports, 'sailing'].sort();
+          sailingTagged += 1;
+        }
+      }
+      continue;
+    }
     teams.push({
       ...e,
       sector: 'universitaire',
-      aliases: [e.shortName, e.fullName, e.code],
+      aliases: [e.shortName, e.fullName, e.code].filter(Boolean),
       sports: sailingIds.has(e.id) ? ['sailing'] : [],
       rseqTeamIds: [],
     });
@@ -583,7 +603,7 @@ async function main() {
   const sailingOut = {
     ...sailingCfg,
     description:
-      'Voile campus — Québec seulement. ICSA = scores réels. watchlist = clubs QC sans feed ICSA (ou à venir).',
+      'Voile campus — Québec seulement. ICSA = scores réels. watchlist = clubs QC confirmés seulement (pas d’équipages inventés).',
     region: 'QC',
     updated: new Date().toISOString(),
     schools: sailingResult.schools,

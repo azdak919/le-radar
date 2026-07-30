@@ -856,14 +856,78 @@ function schedulesHubPage(model, lang, ctx) {
 function formatSportsDate(iso, lang) {
   if (!iso) return '';
   try {
-    return new Intl.DateTimeFormat(lang === 'en' ? 'en-CA' : 'fr-CA', {
+    const d = new Date(`${iso}T12:00:00`);
+    const year = d.getFullYear();
+    const nowY = new Date().getFullYear();
+    // Année affichée si ≠ année civile courante (évite « 25 avr. » ambigu hors saison).
+    const opts = {
       timeZone: 'America/Toronto',
       day: 'numeric',
       month: 'short',
-    }).format(new Date(`${iso}T12:00:00`));
+    };
+    if (year !== nowY) opts.year = 'numeric';
+    return new Intl.DateTimeFormat(lang === 'en' ? 'en-CA' : 'fr-CA', opts).format(d);
   } catch {
     return iso;
   }
+}
+
+/** Libellés sport localisés (filtres + meta carte). */
+const SPORT_LABEL_I18N = {
+  fr: {
+    hockey: 'Hockey',
+    football: 'Football',
+    soccer: 'Soccer',
+    'soccer-interieur': 'Soccer intérieur',
+    basketball: 'Basketball',
+    volleyball: 'Volleyball',
+    rugby: 'Rugby',
+    'flag-football': 'Flag-football',
+    futsal: 'Futsal',
+    baseball: 'Baseball',
+    badminton: 'Badminton',
+    natation: 'Natation',
+    athletisme: 'Athlétisme',
+    'cross-country': 'Cross-country',
+    golf: 'Golf',
+    cheerleading: 'Cheerleading',
+    ultimate: 'Ultimate',
+    sailing: 'Voile',
+  },
+  en: {
+    hockey: 'Hockey',
+    football: 'Football',
+    soccer: 'Soccer',
+    'soccer-interieur': 'Indoor soccer',
+    basketball: 'Basketball',
+    volleyball: 'Volleyball',
+    rugby: 'Rugby',
+    'flag-football': 'Flag football',
+    futsal: 'Futsal',
+    baseball: 'Baseball',
+    badminton: 'Badminton',
+    natation: 'Swimming',
+    athletisme: 'Track & field',
+    'cross-country': 'Cross-country',
+    golf: 'Golf',
+    cheerleading: 'Cheerleading',
+    ultimate: 'Ultimate',
+    sailing: 'Sailing',
+  },
+};
+
+function sportsSportLabel(teamOrSport, t, lang) {
+  const sport = typeof teamOrSport === 'string'
+    ? teamOrSport
+    : (teamOrSport?.sport || '');
+  if (sport === 'hockey') return t.sportsHockeyLabel;
+  if (sport === 'sailing') return t.sportsSailingLabel;
+  const table = SPORT_LABEL_I18N[lang === 'en' ? 'en' : 'fr'] || {};
+  if (table[sport]) return table[sport];
+  if (typeof teamOrSport === 'object' && teamOrSport?.sportLabel) {
+    return teamOrSport.sportLabel;
+  }
+  return sport;
 }
 
 function formatSportsClock(time, lang) {
@@ -1096,7 +1160,12 @@ function sportsPanelHtml(team, t, lang) {
   const sexBadge = sexLabel
     ? ` <span class="sports-panel__sex sports-panel__sex--${sexKey === 'F' ? 'f' : sexKey === 'M' ? 'm' : 'x'}"${sexKey === 'X' ? ' title="Mixte"' : ''}>${escapeHtml(sexLabel)}</span>`
     : '';
-  const nick = String(team.nickname || '').trim();
+  // Associations de voile (ULaVoile, PolyVoile, McGill Sailing) : jamais le surnom varsity.
+  const isSailingClub = sport === 'sailing'
+    && (team.kind === 'association-etudiante'
+      || team.source === 'sailing-watchlist'
+      || team.source === 'icsa-collegesailing');
+  const nick = isSailingClub ? '' : String(team.nickname || '').trim();
   const shortName = String(team.name || '').trim() || 'Équipe';
   const code = String(team.code || '').trim();
   const codeHtml = code
@@ -1108,6 +1177,7 @@ function sportsPanelHtml(team, t, lang) {
    *  - l’établissement court + code se placent en sous-marque
    *  - le nom légal complet reste en 3ᵉ ligne
    * Sans surnom : shortName reste le titre (code discret à côté).
+   * Exception voile club : nom du club uniquement (pas Redbirds / Rouge et Or).
    */
   let nameBlock;
   if (nick && nick.toLowerCase() !== shortName.toLowerCase()) {
@@ -1120,7 +1190,7 @@ function sportsPanelHtml(team, t, lang) {
     ? `<p class="sports-panel__school">${escapeHtml(team.fullName)}</p>`
     : '';
   const meta = [
-    team.sportLabel || sport,
+    sportsSportLabel(team, t, lang),
     team.division,
     sportsSectorLabel(team.sector, t),
     team.record?.label ? `${t.sportsRecord} ${team.record.label}` : '',
@@ -1252,9 +1322,8 @@ function sportsHubPage(lang, ctx) {
   )];
 
   const sportLabelOf = (sport) => {
-    if (sport === 'hockey') return t.sportsHockeyLabel;
-    if (sport === 'sailing') return t.sportsSailingLabel;
-    return teams.find((team) => team.sport === sport)?.sportLabel || sport;
+    const sample = teams.find((team) => team.sport === sport);
+    return sportsSportLabel(sample || sport, t, lang);
   };
 
   const description = fill(t.sportsDesc, { n: teams.length });
