@@ -39,6 +39,15 @@ jobs:
         if: steps.crawl.outcome == 'success' && steps.links.outcome == 'success'
         run: node scripts/generate-seo.js --update
         continue-on-error: true
+      - name: Pre-push integrity (bot gate)
+        if: steps.crawl.outcome == 'success'
+        timeout-minutes: 8
+        run: |
+          if git diff --quiet; then
+            echo "No diff — skip prepush."
+            exit 0
+          fi
+          bash scripts/bot-prepush-check.sh
       - name: Commit only the historical artefacts
         if: steps.crawl.outcome == 'success'
         run: |
