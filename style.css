@@ -102,7 +102,7 @@ body {
   flex-wrap: nowrap;
   overflow: hidden;
 }
-/* Dernier cran de fit : CTA « Au tableau » seule (parité météo → 1 carte). */
+/* Dernier cran de fit : CTA « SPORTS » seule (parité météo → 1 carte). */
 .masthead-sports-strip[data-count="1"] .sports-chip--cta {
   flex: 1 1 auto;
   min-width: 0;
@@ -145,8 +145,9 @@ body {
   outline: 2px solid color-mix(in srgb, var(--sports-tone, #66839e) 70%, #fff);
   outline-offset: 2px;
 }
-/* Arrivée type carte météo (weather-tile-arrive). */
-.masthead-sports-strip .sports-chip.is-arriving {
+/* Arrivée type carte météo (weather-tile-arrive) — scores / info seulement.
+ * La CTA « SPORTS » ne l’utilise pas : le texte d’accroche crossfade à l’intérieur. */
+.masthead-sports-strip .sports-chip.is-arriving:not(.sports-chip--cta) {
   animation: weather-tile-arrive 460ms cubic-bezier(.22, .8, .28, 1);
 }
 @media (prefers-reduced-motion: reduce) {
@@ -269,8 +270,8 @@ body {
   opacity: 0.92;
 }
 
-/* ── CTA « Au tableau » — style alerte bandeau (type breaking), thème LE-RADAR.
- * La carte reste fixe : seuls le halo / bordure et le texte pulse. ── */
+/* ── CTA « SPORTS » — style alerte bandeau (type breaking), thème LE-RADAR.
+ * Carte fixe : halo / bordure pulse ; l’accroche crossfade en place (pas de gare). ── */
 .masthead-sports-strip .sports-chip--cta {
   /* Un peu plus de place pour pastille + accroche (style alerte bandeau). */
   flex: 1.2 1 9.5rem;
@@ -294,7 +295,7 @@ body {
     linear-gradient(90deg, color-mix(in srgb, #c8102e 48%, transparent) 0%, transparent 58%),
     rgba(70, 40, 44, 0.94);
 }
-/* Pastille rouge « AU TABLEAU » — ancre visuelle type BREAKING. */
+/* Pastille rouge « SPORTS » — ancre visuelle type BREAKING. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag {
   flex: 0 0 auto;
   display: inline-flex;
@@ -322,7 +323,7 @@ body {
   box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
   animation: sports-cta-live-dot 1.4s ease-out infinite;
 }
-/* Titre / accroche à côté de la pastille — pulse de couleur, pas de carte. */
+/* Accroche à côté de la pastille — pulse léger ; crossfade à la rotation. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label {
   font-size: 11px;
   font-weight: 800;
@@ -330,6 +331,12 @@ body {
   text-transform: none;
   color: #fff;
   animation: sports-cta-label-pulse 2.6s ease-in-out infinite;
+  transition: opacity 0.32s ease;
+}
+/* Pendant le crossfade : coupe le pulse pour un fondu propre. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-crossfade {
+  animation: none;
+  opacity: 0;
 }
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-chev {
   flex: 0 0 auto;
@@ -388,6 +395,9 @@ body {
   }
   .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag {
     filter: none;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label {
+    transition: none;
   }
 }
 /* Mobile : même 8 px haut/bas (pas de padding bas réduit). */
@@ -1130,9 +1140,16 @@ html.is-tuner-presentation-paused .is-marquee > .tuner-now-sub-text {
   height: 18px;
   padding: 0 2px;
 }
-/* Visible en lecture (bureau) et pendant le tamponnage (tous formats). */
-@media (min-width: 600px) { .tuner-eq { display: flex; } }
-.tuner.is-buffering .tuner-eq { display: flex; }
+/*
+ * EQ (parité kiosque-v1) :
+ *  · < 600 px : masqué — le tampon = spinner du play (pas d’EQ qui
+ *    s’insère entre play et volume et « squeeze » le dial mobile).
+ *  · ≥ 600 px : toujours visible — idle = barres basses ; lecture =
+ *    animation rouge ; buffering = animation tampon (eq-buffer).
+ */
+@media (min-width: 600px) {
+  .tuner-eq { display: flex; }
+}
 .tuner-eq span {
   width: 3px; height: 4px;
   background: var(--live);
@@ -1148,28 +1165,31 @@ html.is-tuner-presentation-paused .is-marquee > .tuner-now-sub-text {
 @keyframes eq { 0%,100% { height: 4px; } 50% { height: 16px; } }
 
 /*
- * Buffering : barres rouges (même --live que la lecture), animation scale
- * distincte pour signaler le tampon. is-playing / is-buffering exclusifs.
+ * Buffering bureau seulement (≥ 600 px) : barres rouges (même --live),
+ * animation scale distincte. Mobile : EQ déjà display:none.
+ * is-playing / is-buffering exclusifs (updatePlayUI).
  */
-.tuner.is-buffering .tuner-eq span {
-  background: var(--live, #c8102e);
-  height: 40%;
-  max-height: 16px;
-  border-radius: 1px;
-  opacity: 0.9;
-  animation: eq-buffer 0.9s ease-in-out infinite alternate;
-}
-.tuner.is-buffering .tuner-eq span:nth-child(2) {
-  animation-delay: 0.15s;
-  height: 70%;
-}
-.tuner.is-buffering .tuner-eq span:nth-child(3) {
-  animation-delay: 0.3s;
-  height: 100%;
-}
-.tuner.is-buffering .tuner-eq span:nth-child(4) {
-  animation-delay: 0.45s;
-  height: 55%;
+@media (min-width: 600px) {
+  .tuner.is-buffering .tuner-eq span {
+    background: var(--live, #c8102e);
+    height: 40%;
+    max-height: 16px;
+    border-radius: 1px;
+    opacity: 0.9;
+    animation: eq-buffer 0.9s ease-in-out infinite alternate;
+  }
+  .tuner.is-buffering .tuner-eq span:nth-child(2) {
+    animation-delay: 0.15s;
+    height: 70%;
+  }
+  .tuner.is-buffering .tuner-eq span:nth-child(3) {
+    animation-delay: 0.3s;
+    height: 100%;
+  }
+  .tuner.is-buffering .tuner-eq span:nth-child(4) {
+    animation-delay: 0.45s;
+    height: 55%;
+  }
 }
 @keyframes eq-buffer {
   from { transform: scaleY(0.45); }
@@ -2388,10 +2408,10 @@ html[data-translate-busy="1"] .translate-toggle {
   justify-content: center;
   gap: 6px;
   width: 100%;
-  /* Même respiration que sports strip (8 px). */
+  /* Parité le-kiosque .nav-toggle (« Toutes les rubriques ») : 8×12. */
   margin-top: 6px;
   margin-bottom: 0;
-  padding: 5px 12px;
+  padding: 8px 12px;
   border: 1px solid var(--rule);
   border-radius: 999px;
   background: var(--bg-soft);
@@ -4474,7 +4494,7 @@ body.external-listen-open {
   overflow: visible;
   transition: max-height 0.45s ease;
 }
-/* Même langage visuel que « Plus de sources » */
+/* Même langage + taille que « Plus de sources » / kiosque « Toutes les rubriques ». */
 .news-tail-toggle {
   display: none;
   font-family: var(--sans);
@@ -4482,7 +4502,7 @@ body.external-listen-open {
   justify-content: center;
   width: 100%;
   margin: 10px 0 4px;
-  padding: 10px 14px;
+  padding: 8px 12px;
   border: 1px solid var(--rule);
   border-radius: 999px;
   background: var(--bg-soft);
@@ -4927,17 +4947,27 @@ body.external-listen-open {
   bottom: calc(22px + env(safe-area-inset-bottom, 0px));
 }
 
-/* ── Soft prompts : installer l’app (mobile) / page d’accueil (bureau) ── */
+/* ── Soft prompts : installer l’app (mobile) / page d’accueil (bureau) ──
+ * Ne pas coller au bas : les FABs .page-tools (loupe + flèche, 48 px) y
+ * vivent déjà (z-index 180). Sans offset, la carte passe sous/à travers
+ * les pastilles et coupe « Installer » (mobile). On réserve la bande FAB
+ * + sa marge bas + un entrefer ; z-index au-dessus des outils pour que
+ * le dialogue reste entièrement cliquable s’il y a encore un chevauchement.
+ */
 .engage-prompt {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 0;
-  z-index: 80;
+  bottom: calc(
+    var(--tools-fab, 48px)
+    + max(16px, env(safe-area-inset-bottom, 0px))
+    + 12px
+  );
+  z-index: 200;
   display: flex;
   justify-content: center;
   padding: 0 max(12px, env(safe-area-inset-left, 0px))
-    calc(12px + env(safe-area-inset-bottom, 0px))
+    0
     max(12px, env(safe-area-inset-right, 0px));
   pointer-events: none;
   opacity: 0;

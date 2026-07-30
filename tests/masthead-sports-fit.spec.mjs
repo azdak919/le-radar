@@ -3,9 +3,9 @@ import { expect, test } from '@playwright/test';
 /**
  * Bandeau scores : cascade de fit comme la météo.
  * On retire des cartes score en rétrécissant jusqu’à ne garder que
- * la CTA « Au tableau ».
+ * la CTA « SPORTS ».
  */
-test('sports strip : collapse progressif jusqu’à Au tableau seule', async ({ page }) => {
+test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ page }) => {
   const pageErrors = [];
   page.on('pageerror', (error) => pageErrors.push(error.message));
 
@@ -47,17 +47,19 @@ test('sports strip : collapse progressif jusqu’à Au tableau seule', async ({ 
   expect(narrow).toBeLessThanOrEqual(mid);
   expect(narrow).toBeGreaterThanOrEqual(1);
 
-  // Téléphone / très étroit : il ne reste que l’ancre « Au tableau ».
+  // Téléphone / très étroit : il ne reste que l’ancre « SPORTS ».
   const phone = await countAt(360);
   expect(phone).toBe(1);
   await expect(strip.locator('.sports-chip')).toHaveCount(1);
   await expect(strip.locator('.sports-chip--cta')).toHaveCount(1);
   await expect(strip).toHaveAttribute('data-count', '1');
   await expect(strip).toHaveAttribute('data-cta-pinned', '0');
-  // Pastille visible (pas coupée hors flux).
-  const tagBox = await strip.locator('.sports-chip__cta-tag').boundingBox();
+  // Pastille « SPORTS » visible (pas coupée hors flux).
+  const tag = strip.locator('.sports-chip__cta-tag');
+  await expect(tag).toContainText(/sports/i);
+  const tagBox = await tag.boundingBox();
   expect(tagBox).toBeTruthy();
-  expect(tagBox.width).toBeGreaterThan(40);
+  expect(tagBox.width).toBeGreaterThan(30);
 
   // En élargissant, on retrouve des scores + CTA (fit remesuré depuis zéro).
   const back = await countAt(1280);
