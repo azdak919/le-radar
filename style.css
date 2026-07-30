@@ -4585,19 +4585,37 @@ body.external-listen-open {
   color: #fff;
 }
 
-/* ─────────────── OUTILS BAS DE PAGE (haut gauche + loupe droite) ─────────────── */
+/* ─────────────── OUTILS BAS DE PAGE ───────────────
+ * Loupe : à gauche, hors de la colonne de contenu (gutter).
+ * Flèche haut : à droite, hors de la colonne (symétrique).
+ * Mobile / tablette : sans gutter, repli sur safe-area + 14 px.
+ */
 .page-tools {
+  --tools-fab: 48px;
+  --tools-outset: 12px;
+  /* Marge latérale de la colonne centrée (0 si le contenu est pleine largeur). */
+  --tools-gutter: max(0px, calc((100vw - min(var(--maxw), 100vw)) / 2));
+  --tools-side-left: max(
+    max(14px, env(safe-area-inset-left, 0px)),
+    calc(var(--tools-gutter) - var(--tools-fab) - var(--tools-outset))
+  );
+  --tools-side-right: max(
+    max(14px, env(safe-area-inset-right, 0px)),
+    calc(var(--tools-gutter) - var(--tools-fab) - var(--tools-outset))
+  );
   position: fixed;
   left: 0;
   right: 0;
   bottom: calc(max(16px, env(safe-area-inset-bottom, 0px)) + var(--vk-inset, 0px));
   z-index: 180;
   display: flex;
+  /* DOM = [flèche, loupe] → row-reverse = loupe gauche, flèche droite. */
+  flex-direction: row-reverse;
   justify-content: space-between;
   align-items: flex-end;
   gap: 12px;
-  padding-left: max(14px, env(safe-area-inset-left, 0px));
-  padding-right: max(14px, env(safe-area-inset-right, 0px));
+  padding-left: var(--tools-side-left);
+  padding-right: var(--tools-side-right);
   pointer-events: none;
 }
 .page-tools > * { pointer-events: auto; }
@@ -4653,7 +4671,7 @@ body.external-listen-open {
   .page-tools { display: none !important; }
 }
 
-/* ─────────────── RECHERCHE LOCALE (loupe bas-droite, dans .page-tools) ─────────────── */
+/* ─────────────── RECHERCHE LOCALE (loupe bas-gauche, hors contenu) ─────────────── */
 .news-search {
   position: relative;
   right: auto;
@@ -4662,7 +4680,8 @@ body.external-listen-open {
   z-index: auto;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  /* Panneau au-dessus de la loupe, ancré à gauche. */
+  align-items: flex-start;
   gap: 10px;
   pointer-events: none;
   max-width: min(360px, calc(100vw - 28px));
