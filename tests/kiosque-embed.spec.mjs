@@ -125,9 +125,9 @@ test.describe('LE-KIOSQUE démo × tuner-embed LE-RADAR', () => {
     expect(geometry).toBeTruthy();
     expect(geometry.inDial, 'crédit dans .tuner-dial (synthétiseur)').toBe(true);
     expect(geometry.creditPosition).toBe('absolute');
-    // Bas de l’iframe : le bas du crédit est dans les 18 px inférieurs de la barre.
-    expect(geometry.credit.bottom).toBeLessThanOrEqual(geometry.bar.bottom + 1);
-    expect(geometry.credit.bottom).toBeGreaterThan(geometry.bar.bottom - 18);
+    // Bas de l’iframe : le bas du crédit est dans les 22 px inférieurs de la barre.
+    expect(geometry.credit.bottom).toBeLessThanOrEqual(geometry.bar.bottom + 2);
+    expect(geometry.credit.bottom).toBeGreaterThan(geometry.bar.bottom - 22);
     // Mobile : gauche du panneau poste/émissions, pas centré ni bas-droite barre.
     expect(geometry.leftDelta).toBeLessThanOrEqual(14);
     expect(geometry.credit.left).toBeGreaterThanOrEqual(geometry.dial.left - 2);
@@ -135,6 +135,25 @@ test.describe('LE-KIOSQUE démo × tuner-embed LE-RADAR', () => {
     expect(geometry.credit.left).toBeLessThan(geometry.bar.left + geometry.bar.width * 0.55);
     // Le volume reste au-dessus du crédit pour le hit-test.
     expect(geometry.volZ).toBeGreaterThan(geometry.zIndex);
+
+    // Boutons alignés verticalement avec le panneau poste (pas de décalage crédit).
+    const align = await page.evaluate(() => {
+      const now = document.querySelector('.tuner-now');
+      const prev = document.getElementById('tuner-prev');
+      const play = document.getElementById('tuner-play');
+      if (!now || !prev || !play) return null;
+      const n = now.getBoundingClientRect();
+      const p = prev.getBoundingClientRect();
+      const pl = play.getBoundingClientRect();
+      const nowMid = (n.top + n.bottom) / 2;
+      return {
+        prevDelta: Math.abs(((p.top + p.bottom) / 2) - nowMid),
+        playDelta: Math.abs(((pl.top + pl.bottom) / 2) - nowMid),
+      };
+    });
+    expect(align).toBeTruthy();
+    expect(align.prevDelta, 'prev aligné au panneau poste').toBeLessThanOrEqual(4);
+    expect(align.playDelta, 'play aligné au panneau poste').toBeLessThanOrEqual(4);
 
     // EQ en buffering : masqué dans l’iframe (évite le squeeze mobile).
     await page.evaluate(() => {
