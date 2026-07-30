@@ -195,6 +195,11 @@ function photoCreditLine(item = {}) {
 }
 
 function itemImageUrl(item = {}) {
+  // Préférer le miroir GitHub Pages si présent (résilience multi-sources).
+  const local = String(item.imageLocal || '').trim();
+  if (/^assets\/news-images\//i.test(local)) {
+    return `https://le-radar.ca/${local.replace(/^\//, '')}`;
+  }
   return String(item.image || item.stockImage || '').trim();
 }
 
