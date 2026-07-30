@@ -38,6 +38,128 @@ function segments(line) {
     .map((s) => s.toLowerCase());
 }
 
+test('« À venir » : grille la plus tôt + pas de current recyclé (toutes stations)', async ({ page }) => {
+  await pure(page);
+
+  const report = await page.evaluate(async () => {
+    const P = window.RadarAir._pure;
+    const radios = await fetch('./radios.json').then((r) => r.json());
+    if (!Array.isArray(radios) || !radios.length) {
+      return { ok: false, reason: 'radios.json vide', stations: [] };
+    }
+
+    const stations = radios.map((r) => {
+      const live = P.botCurrentShow(r) || P.scheduleCurrentSlot(r);
+      const botNext = P.botNextShow(r);
+      const schedNext = P.scheduleNextSlot(r);
+      const resolved = P.resolveUpcomingShow(r);
+      const phases = P.airRotationPhases(r, { withSlogan: false });
+      const upcomingPhases = phases.filter((p) => p.kind === 'upcoming');
+      const upcomingTitles = upcomingPhases.map((p) => p.title);
+
+      // resolveUpcoming ne doit pas être plus lointain que la grille.
+      let alignedWithSchedule = true;
+      if (schedNext?.title && resolved?.title) {
+        const dRes = P.showUpcomingDeltaMin(r, resolved);
+        const dSched = P.showUpcomingDeltaMin(r, {
+          title: schedNext.title,
+          start: schedNext.start,
+          end: schedNext.end,
+          day: schedNext.day,
+        });
+        // Tolérance 1 min (arrondis HH:MM).
+        alignedWithSchedule = dRes <= dSched + 1;
+      }
+
+      // Si une émission live est affichée, « à venir » ≠ ce live.
+      const upcomingIsLiveTitle = Boolean(
+        live?.title
+        && upcomingTitles.some((t) => t && P.showUpcomingDeltaMin
+          && String(t).toLowerCase() === String(live.title).toLowerCase()),
+      );
+
+      // CISM : régression Mix anglo 22:00–00:00 recyclé après minuit.
+      const mixAngloWhileOtherLive = Boolean(
+        r.id === 'cism'
+        && live?.title
+        && !/mix anglo/i.test(String(live.title))
+        && upcomingTitles.some((t) => /mix anglo/i.test(String(t || ''))),
+      );
+
+      // Phases : si live show, upcoming présent (sauf grille vide + bot vide).
+      const hasLiveShow = phases.some((p) => p.kind === 'live' && !p.title.startsWith('♪'));
+      const hasUpcomingPhase = upcomingPhases.length > 0;
+      const missingUpcomingWhileLive = hasLiveShow
+        && Boolean(schedNext?.title || botNext?.title || resolved?.title)
+        && !hasUpcomingPhase;
+
+      // À venir avec heure quand start/end connus.
+      const upcomingWithoutTime = upcomingPhases.filter((p) => {
+        if (!p.sub) return true;
+        return !/\d{1,2}:\d{2}/.test(p.sub);
+      });
+
+      return {
+        id: r.id,
+        live: live?.title || null,
+        botNext: botNext?.title || null,
+        schedNext: schedNext?.title || null,
+        resolved: resolved?.title || null,
+        resolvedStart: resolved?.start || null,
+        phases: phases.map((p) => `${p.kind}:${p.title}`),
+        alignedWithSchedule,
+        upcomingIsLiveTitle,
+        mixAngloWhileOtherLive,
+        missingUpcomingWhileLive,
+        upcomingWithoutTime: upcomingWithoutTime.map((p) => p.title),
+      };
+    });
+
+    return { ok: true, stations };
+  });
+
+  expect(report.ok, report.reason || 'ok').toBe(true);
+  expect(report.stations.length).toBeGreaterThanOrEqual(4);
+
+  const ids = report.stations.map((s) => s.id);
+  // Stations du réseau attendues (au moins le noyau).
+  for (const need of ['cism', 'choq', 'chyz', 'ckut']) {
+    expect(ids, `station manquante : ${need}`).toContain(need);
+  }
+
+  for (const st of report.stations) {
+    expect(
+      st.alignedWithSchedule,
+      `${st.id} : à venir plus lointain que la grille `
+        + `(resolved=${st.resolved}, sched=${st.schedNext}, phases=${JSON.stringify(st.phases)})`,
+    ).toBe(true);
+
+    expect(
+      st.upcomingIsLiveTitle,
+      `${st.id} : l’émission en ondes (« ${st.live} ») est aussi annoncée en à-venir`,
+    ).toBe(false);
+
+    expect(
+      st.mixAngloWhileOtherLive,
+      `${st.id} : Mix anglo recyclé en à-venir pendant « ${st.live} »`,
+    ).toBe(false);
+
+    expect(
+      st.missingUpcomingWhileLive,
+      `${st.id} : émission live sans phase « À venir » alors qu’un next existe `
+        + `(sched=${st.schedNext}, bot=${st.botNext})`,
+    ).toBe(false);
+
+    // Si l’heure est connue (start), le sous-titre doit l’afficher.
+    if (st.resolvedStart && st.resolved) {
+      expect(
+        st.upcomingWithoutTime,
+        `${st.id} : « ${st.resolved} » annoncé sans heure (start=${st.resolvedStart})`,
+      ).not.toContain(st.resolved);
+    }
+  }
+});
+
 test('« À venir » reste visible pendant qu’une émission est en ondes', async ({ page }) => {
   await pure(page);
 

@@ -548,6 +548,7 @@ async function init() {
   initMastheadActions();
   renderTodayDate();
   syncSeoScheduleNow();
+  initSeoScheduleHashScroll();
   // L'heure du mât est décorative, mais doit rester juste sans recharger la page.
   window.setInterval(() => {
     renderTodayDate();
@@ -1085,6 +1086,52 @@ function syncSeoScheduleNow() {
   syncSeoSchedulePlayback();
 }
 
+/**
+ * Clic « à l'antenne » / ancre #horaire : amener la grille au jour en cours
+ * (carte .seo-day--today) et au créneau live/à venir — pas seulement le
+ * titre de section en haut de page.
+ */
+function scrollSeoScheduleToNow({ smooth = true } = {}) {
+  const hash = String(location.hash || '').toLowerCase();
+  if (hash && hash !== '#horaire') return false;
+  const hasSchedule = document.querySelector('.seo-day[data-schedule-day], #horaire[data-schedule-station]');
+  if (!hasSchedule) return false;
+  // D’abord le créneau actif, sinon la carte du jour.
+  const target = document.querySelector('.seo-slot--live, .seo-slot--upcoming')
+    || document.querySelector('.seo-day--today')
+    || document.getElementById('horaire');
+  if (!target) return false;
+  const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+  try {
+    target.scrollIntoView({
+      behavior: smooth && !reduce ? 'smooth' : 'auto',
+      block: 'center',
+      inline: 'nearest',
+    });
+  } catch {
+    try { target.scrollIntoView(true); } catch { /* ignore */ }
+  }
+  return true;
+}
+
+function initSeoScheduleHashScroll() {
+  const run = () => {
+    syncSeoScheduleNow();
+    // Double rAF : laisse le layout (grille + classes today) se poser.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => scrollSeoScheduleToNow({ smooth: true }));
+    });
+  };
+  if (String(location.hash || '').toLowerCase() === '#horaire') {
+    // Après paint initial (fonts / images mât peuvent décaler le offset).
+    if (document.readyState === 'complete') setTimeout(run, 50);
+    else window.addEventListener('load', () => setTimeout(run, 50), { once: true });
+  }
+  window.addEventListener('hashchange', () => {
+    if (String(location.hash || '').toLowerCase() === '#horaire') run();
+  });
+}
+
 /** Un créneau présent est bleu; il ne devient rouge que si cette station joue ici. */
 function syncSeoSchedulePlayback() {
   const stationId = document.querySelector('[data-schedule-station]')?.dataset.scheduleStation;
@@ -1600,14 +1647,14 @@ const SPORTS_RECENT_RESULT_MS = 4 * 24 * 3600 * 1000; /* résultats < 4 j — ca
 /** CTA : à venir dans cette fenêtre seulement (sinon hors saison / calendrier lointain). */
 const SPORTS_CTA_UPCOMING_MS = 14 * 24 * 3600 * 1000;
 /**
- * Accroches CTA quand aucun match « chaud » (hors saison / creux).
- * Pas de vieux scores d’hier — ceux-là vont à gauche.
+ * Accroches CTA **uniquement** quand il n’y a ni match chaud (≤14 j)
+ * ni aucun match à venir en grille. Pas de puces grises à gauche pour
+ * ces messages — elles se confondaient avec des scores (régression UX
+ * 2026-07-30 : « Hors saison » à côté de vrais prochains matchs).
  */
 const SPORTS_CTA_IDLE_LABELS = [
-  'Calendrier à venir',
-  'Hors saison · voir le tableau',
   'Scores collégiaux et universitaires',
-  'Voir tout le tableau',
+  'Voir le tableau des scores',
 ];
 let sportsData = null;
 let sportsSlides = [];
@@ -2011,8 +2058,9 @@ function sportsNextSlidesSorted() {
  * État de la voie de gauche :
  *  - « results » : saison active (résultats passés + activité CTA chaude)
  *    → uniquement résultats, ordre fraîcheur desc.
- *  - « offseason » : creux / hors saison (pas de résultats, ou CTA en idle)
- *    → matchs à venir (proximité) en alternance avec accroches info
+ *  - « offseason » : creux (pas de résultats chauds)
+ *    → matchs à venir par proximité, **sans** puces grises « Hors saison… »
+ *      (celles-ci n’apparaissaient qu’en filet total — voir CTA idle).
  */
 function sportsLeftLaneState() {
   const results = sportsResultSlidesSorted();
@@ -2041,12 +2089,16 @@ function sportsLeftLaneState() {
   if (results.length && ctaHasHot) {
     return { kind: 'results', pool: results };
   }
-  // Hors saison / creux : privilégier le calendrier à venir + infos.
-  // S’il n’y a ni next ni résultats, pool vide → infos seules.
+  // Hors saison / creux : calendrier à venir s’il existe, sinon vieux résultats
+  // en filet. Jamais de puces « info » marketing dans la voie de gauche.
   return { kind: 'offseason', pool: nexts.length ? nexts : results };
 }
 
-/** Accroche info (hors saison) — même ton que les messages idle CTA, chip grise. */
+/**
+ * Accroche info — **désactivée dans la voie de gauche** (conservée pour
+ * tests / repli extrême si un appel force encore mode info).
+ * Les messages creux vivent uniquement sur la CTA rouge.
+ */
 function sportsInfoSlide(index = 0) {
   const labels = SPORTS_CTA_IDLE_LABELS;
   const idx = ((index % labels.length) + labels.length) % labels.length;
@@ -2177,19 +2229,20 @@ function sportsCtaLabelFromSlide(slide) {
  *  CARTE ROUGE (CTA) = « maintenant / bientôt »
  *   • live / proxy live
  *   • résultats d’**aujourd’hui** seulement
- *   • prochains matchs (dès aujourd’hui, ≤ 14 j)
- *   • creux : accroches idle (calendrier, voir le tableau…)
+ *   • prochains matchs ≤ 14 j, sinon **le prochain en grille** (pas de slogan
+ *     « Hors saison » tant qu’un match est planifié)
+ *   • creux total : accroches idle
  *
  *  CARTES GAUCHE
- *   • Saison : **uniquement résultats passés**, ordre fraîcheur (plus récent d’abord),
- *     rotation circulaire + diversité de sport
- *   • Hors saison (aucun lastGame) : alterne **info** ↔ **match à venir**
- *     (next triés par proximité)
+ *   • Saison : **uniquement résultats passés**, ordre fraîcheur
+ *   • Hors saison : **uniquement matchs à venir** (proximité) — jamais de
+ *     puces grises « Calendrier / Hors saison / Voir le tableau »
  */
 function sportsCtaCandidateSlides() {
   const now = Date.now();
   const todayResults = [];
-  const upcoming = [];
+  const upcomingHot = [];
+  const upcomingLater = [];
   const seen = new Set();
 
   for (const s of sportsSlides) {
@@ -2209,9 +2262,9 @@ function sportsCtaCandidateSlides() {
       if (!Number.isFinite(ms)) continue;
       // Prochains passés mal classés → ignorer ici.
       if (ms < now - SPORTS_LIVE_AFTER_MS) continue;
-      // Fenêtre CTA : jusqu’à 14 jours.
-      if (ms > now + SPORTS_CTA_UPCOMING_MS) continue;
-      upcoming.push(s);
+      // Fenêtre CTA chaude : ≤ 14 jours ; au-delà : filet calendrier (pas idle).
+      if (ms <= now + SPORTS_CTA_UPCOMING_MS) upcomingHot.push(s);
+      else upcomingLater.push(s);
     }
   }
 
@@ -2229,16 +2282,19 @@ function sportsCtaCandidateSlides() {
     return sportRank(a) - sportRank(b);
   });
 
-  // À venir (dans la fenêtre) : plus proche d’abord ; même jour = ordre horaire.
-  upcoming.sort((a, b) => {
+  // À venir : plus proche d’abord ; même jour = ordre horaire.
+  const bySoonest = (a, b) => {
     const fa = sportsGameMs(a.game) || Number.POSITIVE_INFINITY;
     const fb = sportsGameMs(b.game) || Number.POSITIVE_INFINITY;
     if (fa !== fb) return fa - fb;
     return sportRank(a) - sportRank(b);
-  });
+  };
+  upcomingHot.sort(bySoonest);
+  upcomingLater.sort(bySoonest);
 
-  // CTA : d’abord le vif du jour, puis le calendrier proche.
-  return todayResults.concat(upcoming).slice(0, 36);
+  // CTA : vif du jour → calendrier ≤14 j → sinon prochain match lointain (évite
+  // les slogans idle alors que des matchs d’août sont déjà en grille).
+  return todayResults.concat(upcomingHot, upcomingLater).slice(0, 36);
 }
 
 /** Libellés CTA : matchs chauds, sinon messages hors saison / creux. */
@@ -2556,7 +2612,8 @@ function paintSportsChip(slide, animate = false) {
  * Prochaine carte de GAUCHE.
  * Saison : résultats passés uniquement, ordre fraîcheur (plus récent d’abord),
  * curseur circulaire + diversité de sport.
- * Hors saison : alterne info ↔ match à venir (prochains par proximité).
+ * Hors saison : matchs à venir uniquement (prochains par proximité).
+ * Jamais de puce grise « Hors saison / Calendrier… » ici.
  */
 function nextSportsSlide(usedKeys, opts = {}) {
   const used = usedKeys instanceof Set ? usedKeys : new Set(usedKeys || []);
@@ -2571,19 +2628,12 @@ function nextSportsSlide(usedKeys, opts = {}) {
         .filter(Boolean),
     );
 
-  // ── Hors saison : info, next, info, next… ──
+  // ── Hors saison : prochains matchs seulement (pas d’accroches info) ──
   if (lane.kind === 'offseason') {
-    const forceMode = opts.forceMode; // 'info' | 'next' | undefined
-    const wantInfo = forceMode === 'info'
-      || (forceMode !== 'next' && sportsLeftWantInfo);
-    if (wantInfo || !lane.pool.length) {
-      sportsLeftWantInfo = false;
-      const slide = sportsInfoSlide(sportsInfoCursor);
-      sportsInfoCursor += 1;
-      return slide;
-    }
-    sportsLeftWantInfo = true;
+    // forceMode 'info' ignoré : les slogans ne vont plus à gauche.
+    if (!lane.pool.length) return null;
     const pool = lane.pool;
+    sportsLeftWantInfo = false;
     // Diversité sport puis curseur.
     for (let i = 0; i < pool.length; i += 1) {
       const s = pool[(sportsLeftCursor + i) % pool.length];
@@ -2607,7 +2657,7 @@ function nextSportsSlide(usedKeys, opts = {}) {
       sportsLeftCursor = (sportsLeftCursor + 1) % pool.length;
       return s;
     }
-    return sportsInfoSlide(sportsInfoCursor++);
+    return null;
   }
 
   // ── Saison : résultats passés seulement ──
@@ -2651,9 +2701,9 @@ function nextSportsSlide(usedKeys, opts = {}) {
 
 /**
  * Première peinture.
- * Desktop/tablette (≥ 2) : scores (gauche) + CTA épinglée à droite.
+ * Desktop/tablette (≥ 2) : scores/next (gauche) + CTA épinglée à droite.
  * Mobile (1) : un score (la CTA entre en rotation ensuite).
- * Saison → uniquement résultats ; hors saison → info/next alternés.
+ * Saison → résultats ; hors saison → prochains matchs (pas de puces info).
  */
 function pickInitialSportsVisible(count) {
   const pinned = sportsCtaPinned();
@@ -2664,49 +2714,16 @@ function pickInitialSportsVisible(count) {
   sportsSportCursor = 0;
   sportsLeftCursor = 0;
   sportsInfoCursor = 0;
-  sportsLeftWantInfo = true;
+  sportsLeftWantInfo = false;
 
-  const lane = sportsLeftLaneState();
-  if (lane.kind === 'offseason') {
-    // info, next, info, next… (déterministe, sans dépendre du flag global)
-    let ni = 0;
-    for (let i = 0; i < contentCount; i += 1) {
-      if (i % 2 === 0 || !lane.pool.length) {
-        picked.push(sportsInfoSlide(sportsInfoCursor++));
-      } else {
-        // Match à venir par proximité, sans doublon si possible
-        let slide = null;
-        for (let k = 0; k < lane.pool.length; k += 1) {
-          const s = lane.pool[(ni + k) % lane.pool.length];
-          if (!usedKeys.has(s.key)) {
-            slide = s;
-            ni = ni + k + 1;
-            break;
-          }
-        }
-        if (!slide && lane.pool.length) {
-          slide = lane.pool[ni % lane.pool.length];
-          ni += 1;
-        }
-        if (slide) {
-          picked.push(slide);
-          usedKeys.add(slide.key);
-          if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
-        } else {
-          picked.push(sportsInfoSlide(sportsInfoCursor++));
-        }
-      }
-    }
-    sportsLeftCursor = ni % Math.max(1, lane.pool.length || 1);
-    sportsLeftWantInfo = contentCount % 2 === 0; // prochaine rotation : info si on a fini sur next
-  } else {
-    while (picked.length < contentCount) {
-      const slide = nextSportsSlide(usedKeys, { usedSports, avoidSport: '' });
-      if (!slide || usedKeys.has(slide.key)) break;
-      picked.push(slide);
-      usedKeys.add(slide.key);
-      if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
-    }
+  // Remplir la gauche avec le pool de la voie (résultats ou next) uniquement.
+  while (picked.length < contentCount) {
+    const slide = nextSportsSlide(usedKeys, { usedSports, avoidSport: '' });
+    if (!slide || slide.mode === 'info') break;
+    if (usedKeys.has(slide.key)) break;
+    picked.push(slide);
+    usedKeys.add(slide.key);
+    if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
   }
 
   const pool = sportsCtaLabelPool();
@@ -2743,8 +2760,8 @@ function renderSportsStrip() {
     && sportsVisible[sportsVisible.length - 1]?.mode === 'cta';
   const slideStillValid = (s) => {
     if (!s || s.mode === 'cta') return false;
-    // Accroches info hors saison : toujours valides (pas dans sportsSlides).
-    if (s.mode === 'info') return true;
+    // Anciennes puces « info » : purger au prochain paint (plus dans la gauche).
+    if (s.mode === 'info') return false;
     return sportsSlides.some((x) => x.key === s.key);
   };
   const canReuse = sportsVisible.some((s) => s && s.mode !== 'cta' && slideStillValid(s));
@@ -2758,34 +2775,27 @@ function renderSportsStrip() {
       if (
         prev
         && prev.mode !== 'cta'
+        && prev.mode !== 'info'
         && !used.has(prev.key)
         && slideStillValid(prev)
       ) {
         nextVisible.push(prev);
-        // Les clés info sont uniques par instance — ne pas bloquer la rotation.
-        if (prev.mode !== 'info') used.add(prev.key);
+        used.add(prev.key);
       }
     }
     const usedSports = new Set(
       nextVisible
-        .filter((s) => s.mode !== 'info')
         .map((s) => String(s.team?.sport || '').toLowerCase())
         .filter(Boolean),
     );
-    // Compléter en respectant l’alternance hors saison.
-    const lane = sportsLeftLaneState();
+    // Compléter avec scores / prochains matchs uniquement.
     while (nextVisible.length < contentSlots) {
-      const forceMode = lane.kind === 'offseason'
-        ? (nextVisible.length % 2 === 0 ? 'info' : 'next')
-        : undefined;
-      const slide = nextSportsSlide(used, { usedSports, forceMode });
-      if (!slide) break;
-      if (slide.mode !== 'info' && used.has(slide.key)) break;
+      const slide = nextSportsSlide(used, { usedSports });
+      if (!slide || slide.mode === 'info') break;
+      if (used.has(slide.key)) break;
       nextVisible.push(slide);
-      if (slide.mode !== 'info') {
-        used.add(slide.key);
-        if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
-      }
+      used.add(slide.key);
+      if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
     }
     if (pinned) {
       // CTA prime à droite tant qu’on n’est pas en mobile 1-chip.
@@ -2850,19 +2860,12 @@ function rotateOneSportsCard() {
       }
     }
   } else {
-    // Voie de gauche : résultats (saison) ou info↔next (hors saison).
+    // Voie de gauche : résultats (saison) ou prochains matchs (hors saison).
     const cur = sportsVisible[slot];
     const avoid = String(cur?.team?.sport || '').toLowerCase();
-    const lane = sportsLeftLaneState();
-    if (lane.kind === 'offseason') {
-      // Alterne le type affiché dans ce slot.
-      const forceMode = cur?.mode === 'info' ? 'next' : 'info';
-      replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid, forceMode });
-    } else {
-      replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid });
-    }
-    if (replacement?.mode === 'cta') {
-      replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid });
+    replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid });
+    if (replacement?.mode === 'cta' || replacement?.mode === 'info') {
+      replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid, forceMode: 'next' });
     }
   }
 
@@ -3135,10 +3138,21 @@ function botCurrentShow(radio) {
 
 function botNextShow(radio) {
   const entry = nowPlayingEntry(radio);
+  // Émission déjà résolue en ondes (peut provenir de entry.next promu).
+  // Sert à ne pas recycler un `current` périmé en « à venir ».
+  const liveShow = botCurrentShow(radio);
   // current futur (bot a mis l'émission dans current trop tôt) → à venir
   const cur = entry?.current;
   if (cur?.title && String(cur.title).trim().length >= 3) {
-    if (airSlotIsLive(cur) === false && airSlotIsFuture(cur)) return cur;
+    if (airSlotIsLive(cur) === false && airSlotIsFuture(cur)) {
+      /*
+       * Piège minuit (CISM Mix anglo 22:00–00:00) : après la fin, airSlotIsFuture
+       * reste vrai toute la journée (fenêtre « ce soir »), alors que l’entrée
+       * bot est encore le current d’hier. Si une autre émission est en ondes
+       * (ou a été promue depuis next), ne pas annoncer l’ancienne en « à venir ».
+       */
+      if (!liveShow || normLoose(liveShow.title) === normLoose(cur.title)) return cur;
+    }
   }
   const next = entry?.next;
   if (!next?.title || String(next.title).trim().length < 3) return null;
@@ -3147,7 +3161,76 @@ function botNextShow(radio) {
   // prochain vrai créneau au lieu de conserver l'émission expirée.
   const nextLive = airSlotIsLive(next);
   if (nextLive === true || (nextLive === false && !airSlotIsFuture(next))) return null;
+  if (liveShow && normLoose(liveShow.title) === normLoose(next.title)) return null;
   return next;
+}
+
+/**
+ * Minutes jusqu’au prochain début de `show` (0–7×1440).
+ * Jour de grille via `show.day` ou la grille locale ; sans jour, heuristique
+ * « aujourd’hui si l’heure est encore devant, sinon demain ».
+ */
+function showUpcomingDeltaMin(radio, show) {
+  if (!show?.title) return Infinity;
+  const WEEK = 7 * 1440;
+  const { day, minutes } = scheduleZonedNow();
+  const nowAbs = day * 1440 + minutes;
+  const slot = radio ? scheduleSlotForTitle(radio, show.title) : null;
+  const start = scheduleTimeToMin(show.start || slot?.start);
+  if (start == null) return Infinity;
+  const showDay = show.day != null ? Number(show.day) : (slot?.day ?? null);
+  if (showDay == null || Number.isNaN(showDay)) {
+    let delta = start - minutes;
+    if (delta <= 0) delta += 1440;
+    return delta;
+  }
+  let delta = showDay * 1440 + start - nowAbs;
+  if (delta <= 0) delta += WEEK;
+  return delta;
+}
+
+/**
+ * Prochaine émission à afficher : le plus tôt entre le bot et la grille.
+ * La grille hebdo gagne quand l’API annonce une émission plus lointaine
+ * (ex. CHOQ GraphQL saute un créneau du jour → « Opération… » vendredi
+ * alors qu’Intervenir ensemble est jeudi 11 h).
+ */
+function resolveUpcomingShow(radio) {
+  if (!radio) return null;
+  const bot = botNextShow(radio);
+  const sched = scheduleNextSlot(radio);
+  if (!bot?.title && !sched) return null;
+  if (!bot?.title && sched) {
+    return { title: sched.title, start: sched.start, end: sched.end, day: sched.day, source: 'schedule' };
+  }
+  if (bot?.title && !sched) {
+    const slot = scheduleSlotForTitle(radio, bot.title);
+    return {
+      title: bot.title,
+      start: bot.start || slot?.start || '',
+      end: bot.end || slot?.end || '',
+      day: bot.day != null ? bot.day : (slot?.day ?? null),
+      source: bot.source || 'api-live',
+    };
+  }
+  const dBot = showUpcomingDeltaMin(radio, bot);
+  const dSched = showUpcomingDeltaMin(radio, {
+    title: sched.title,
+    start: sched.start,
+    end: sched.end,
+    day: sched.day,
+  });
+  if (dSched < dBot) {
+    return { title: sched.title, start: sched.start, end: sched.end, day: sched.day, source: 'schedule' };
+  }
+  const slot = scheduleSlotForTitle(radio, bot.title);
+  return {
+    title: bot.title,
+    start: bot.start || slot?.start || '',
+    end: bot.end || (slot && slot.start === (bot.start || slot.start) ? slot.end : '') || '',
+    day: bot.day != null ? bot.day : (slot?.day ?? null),
+    source: bot.source || 'api-live',
+  };
 }
 
 function nowAirShowTitle(radio) {
@@ -3471,14 +3554,12 @@ function airRotationPhases(radio, { withSlogan = false } = {}) {
   const slogan = radioSlogan(radio);
   const entry = nowPlayingEntry(radio);
   const botCur = botCurrentShow(radio);
-  const botNext = botNextShow(radio);
   const schedCur = scheduleCurrentSlot(radio);
-  const schedNext = scheduleNextSlot(radio);
+  const upcomingResolved = resolveUpcomingShow(radio);
   const relatedTitles = [
     botCur?.title,
     schedCur?.title,
-    botNext?.title,
-    schedNext?.title,
+    upcomingResolved?.title,
   ].filter(Boolean);
   // CHOQ : ne jamais afficher une piste « fichier » (titre ni sous-titre)
   const track = trackForAirDisplay(radio, entry?.track, relatedTitles);
@@ -3507,11 +3588,11 @@ function airRotationPhases(radio, { withSlogan = false } = {}) {
     push(cur.title, sub, 'live');
   }
 
-  // 2) À venir — désormais affiché même pendant qu'une émission est en ondes
-  const upcoming = botNext || (schedNext
-    ? { title: schedNext.title, start: schedNext.start, end: schedNext.end, day: schedNext.day }
-    : null);
-  if (upcoming?.title) push(upcoming.title, upcomingTimeRange(upcoming, radio), 'upcoming');
+  // 2) À venir — désormais affiché même pendant qu'une émission est en ondes.
+  // resolveUpcomingShow arbitrage bot vs grille (le plus tôt gagne).
+  if (upcomingResolved?.title) {
+    push(upcomingResolved.title, upcomingTimeRange(upcomingResolved, radio), 'upcoming');
+  }
 
   // 3) Piste en cours
   if (track) push(`♪ ${track}`, '', 'live');
@@ -3610,6 +3691,14 @@ window.RadarAir = {
     getTunerSubRotateDelayMs,
     trackForAirDisplay,
     isGarbageChoqTrack,
+    botCurrentShow,
+    botNextShow,
+    resolveUpcomingShow,
+    scheduleNextSlot,
+    scheduleCurrentSlot,
+    showUpcomingDeltaMin,
+    airSlotIsLive,
+    airSlotIsFuture,
   },
 };
 
