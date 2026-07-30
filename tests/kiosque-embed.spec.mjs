@@ -99,22 +99,29 @@ test.describe('LE-KIOSQUE démo × tuner-embed LE-RADAR', () => {
     const geometry = await page.evaluate(() => {
       const bar = document.getElementById('tuner');
       const creditEl = document.querySelector('a.tuner-embed-credit');
+      const label = document.querySelector('.tuner-label');
       const volBtn = document.getElementById('tuner-vol-toggle');
       const vol = document.getElementById('tuner-vol');
       if (!bar || !creditEl || !volBtn || !vol) return null;
       const b = bar.getBoundingClientRect();
       const c = creditEl.getBoundingClientRect();
-      const style = getComputedStyle(creditEl);
+      const labelStyle = label ? getComputedStyle(label) : null;
+      const creditStyle = getComputedStyle(creditEl);
       return {
         credit: { left: c.left, right: c.right, top: c.top, bottom: c.bottom },
         bar: { left: b.left, right: b.right, top: b.top, bottom: b.bottom, width: b.width },
-        position: style.position,
-        zIndex: Number(style.zIndex) || 0,
+        /* Mobile : le label (hôte) est absolute bas-droite ; le crédit y est en flux. */
+        labelPosition: labelStyle?.position || '',
+        creditPosition: creditStyle.position,
+        zIndex: Number(creditStyle.zIndex) || Number(labelStyle?.zIndex) || 0,
         volZ: Number(getComputedStyle(vol).zIndex) || 0,
       };
     });
     expect(geometry).toBeTruthy();
-    expect(geometry.position).toBe('absolute');
+    expect(
+      geometry.labelPosition === 'absolute' || geometry.creditPosition === 'absolute',
+      'crédit ou son hôte .tuner-label positionné en bas-droite',
+    ).toBe(true);
     // Bas de l’iframe : le bas du crédit est dans les 16 px inférieurs de la barre.
     expect(geometry.credit.bottom).toBeLessThanOrEqual(geometry.bar.bottom + 1);
     expect(geometry.credit.bottom).toBeGreaterThan(geometry.bar.bottom - 16);
@@ -191,7 +198,7 @@ test.describe('LE-KIOSQUE démo × tuner-embed LE-RADAR', () => {
     })).toBeGreaterThan(0.5);
   });
 
-  test('crédit bas-droite aussi en largeur bureau kiosque', async ({ page }) => {
+  test('crédit sous EN ONDES en largeur bureau kiosque', async ({ page }) => {
     await page.setViewportSize({ width: 1100, height: 800 });
     await page.goto('/tuner-embed.html?station=chyz&surface=kiosque-v1', {
       waitUntil: 'domcontentloaded',
@@ -201,19 +208,30 @@ test.describe('LE-KIOSQUE démo × tuner-embed LE-RADAR', () => {
     const geo = await page.evaluate(() => {
       const bar = document.getElementById('tuner');
       const creditEl = document.querySelector('a.tuner-embed-credit');
-      if (!bar || !creditEl) return null;
+      const onair = document.querySelector('.tuner-onair');
+      const label = document.querySelector('.tuner-label');
+      if (!bar || !creditEl || !label) return null;
       const b = bar.getBoundingClientRect();
       const c = creditEl.getBoundingClientRect();
+      const o = onair?.getBoundingClientRect();
+      const l = label.getBoundingClientRect();
       return {
-        position: getComputedStyle(creditEl).position,
-        rightGap: b.right - c.right,
-        bottomGap: b.bottom - c.bottom,
-        inRightHalf: c.left > b.width * 0.5,
+        /* Bureau kiosque : crédit en flux sous EN ONDES (static dans .tuner-label). */
+        creditPosition: getComputedStyle(creditEl).position,
+        inLabel: label.contains(creditEl),
+        visible: c.width > 0 && c.height > 0 && getComputedStyle(creditEl).opacity !== '0',
+        underOnair: o ? c.top >= o.top - 2 : true,
+        /* Aligné à gauche de la zone label, pas un coin bas-droit flottant. */
+        leftOfCenter: c.left < b.width * 0.5,
+        withinBar: c.bottom <= b.bottom + 2 && c.top >= b.top - 2,
+        labelVisible: l.width > 0,
       };
     });
-    expect(geo.position).toBe('absolute');
-    expect(geo.rightGap).toBeLessThanOrEqual(16);
-    expect(geo.bottomGap).toBeLessThanOrEqual(16);
-    expect(geo.inRightHalf).toBe(true);
+    expect(geo).toBeTruthy();
+    expect(geo.inLabel).toBe(true);
+    expect(geo.visible).toBe(true);
+    expect(geo.withinBar).toBe(true);
+    expect(geo.leftOfCenter).toBe(true);
+    expect(['static', 'relative'].includes(geo.creditPosition)).toBe(true);
   });
 });
