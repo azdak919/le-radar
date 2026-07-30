@@ -4,6 +4,8 @@
    typographie expressive, identité couleur par source, sobre et clair.
 ═══════════════════════════════════════════════════════════ */
 
+/* D2 — mât dans style-masthead.css, chargé via <link> avant style.css (pas @import) */
+
 :root {
   --bg: #ffffff;
   --bg-soft: #f6f6f4;
@@ -77,9 +79,6 @@ body {
   overscroll-behavior-x: none;
   touch-action: pan-y;
 }
-
-/* D2 — tranche mât : voir style-masthead.css */
-@import url("style-masthead.css");
 
 /* ── Scoreboard RSEQ / unis QC — sous la barre radio ──
  * Rythme vertical : 8 px au-dessus et 8 px en dessous des cartes.
