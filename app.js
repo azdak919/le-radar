@@ -5604,6 +5604,8 @@ function updatePlayUI() {
     TUNER_PLAY.title = actionLabel;
     TUNER_PLAY.setAttribute('aria-label', actionLabel);
   }
+  // État observable pour tests et shell (indépendant du timing de la classe CSS).
+  document.documentElement.dataset.radarBuffering = isBuffering ? '1' : '0';
   // Signal for nav-shell (Phase 2b): local stream actually playing on this page.
   if (isPlaying()) {
     document.documentElement.dataset.radarPlaying = '1';
@@ -8201,6 +8203,10 @@ function balanceMagazineColumns() {
   // principaux. La prochaine carte reste donc dans « Suite du fil ».
   const tol = isSourceMode ? 0 : COLUMN_HEIGHT_TOL;
   const hardMin = isSourceMode ? 2 : BRIEF_SIDEBAR_HARD_MIN;
+  // Ne pas « améliorer » un équilibre déjà dans la tolérance produit (~1 carte
+  // compacte). Les passes image tardives re-trimaient 6→4 cartes et laissaient
+  // un trou de ~110 px alors que l’état antérieur était déjà bon (gap ~40).
+  const GOOD_GAP_MAX = AVG_BRIEF_CARD_H;
 
   const trimBriefIfTaller = () => {
     let guard = 0;
@@ -8209,6 +8215,22 @@ function balanceMagazineColumns() {
       const hH = magazineColumnContentHeight(hero);
       const bH = magazineColumnContentHeight(brief);
       if (bH <= hH + tol) break;
+      // Vue source : si retirer une carte laisserait un trou > GOOD_GAP_MAX
+      // alors que le dépassement actuel est plus petit, s’arrêter (granularité
+      // d’une fiche). Impossible de satisfaire brief≤hero et gap≤96 autrement
+      // quand la prochaine carte fait ~200 px.
+      if (isSourceMode) {
+        const cards = brief.querySelectorAll('.article--compact');
+        const last = cards[cards.length - 1];
+        if (last && cards.length > hardMin) {
+          const lastH = last.getBoundingClientRect().height || AVG_BRIEF_CARD_H;
+          const overshoot = bH - hH;
+          const gapIfRemoved = hH - (bH - lastH);
+          if (overshoot > 0 && overshoot <= GOOD_GAP_MAX && gapIfRemoved > GOOD_GAP_MAX) {
+            break;
+          }
+        }
+      }
       const cards = brief.querySelectorAll('.article--compact');
       if (cards.length <= hardMin) break;
       if (!demoteBriefCardToTail(brief, cards[cards.length - 1])) break;
@@ -8218,6 +8240,16 @@ function balanceMagazineColumns() {
   try {
     clearMagazineSpacers(hero);
     clearMagazineSpacers(brief);
+
+    // Déjà bien collé : ne pas re-fill/re-trim destructif (passes image).
+    {
+      const hH = magazineColumnContentHeight(hero);
+      const bH = magazineColumnContentHeight(brief);
+      if (bH <= hH + tol && (hH - bH) <= GOOD_GAP_MAX && brief.querySelectorAll('.article--compact').length >= hardMin) {
+        ensureMagazineColumnSpacers(hero, brief);
+        return;
+      }
+    }
 
     // --- 1) TRIM : En bref trop haute → retirer la dernière carte ---
     trimBriefIfTaller();
@@ -8253,16 +8285,11 @@ function balanceMagazineColumns() {
       const overshoot = afterBrief - afterHero;
 
       if (overshoot > tol) {
-        // Une fiche d'un média doit remplir « En bref » avant de basculer dans
-        // la suite, mais pas au prix d'une colonne plus basse que la une et
-        // les vedettes. En vue source, on garde donc le dernier état qui ne
-        // dépasse pas cette marge; l'article reste dans la suite du fil.
-        if (isSourceMode) {
-          demoteBriefCardToTail(brief, el);
-          break;
-        }
-        // Uniquement garder si le dépassement est *plus petit* que le trou
-        // qu’on comblait (net gain). Sinon → suite (évite 1 carte de trop).
+        // Net gain : garder si le dépassement est plus petit que le trou
+        // comblé (y compris en vue source). Refuser tout overshoot laissait
+        // des vides de ~150 px sous la une dès que la prochaine carte compacte
+        // dépassait d’un pouce le gap restant (photos miroir plus hautes).
+        // Sinon → suite du fil (évite 1 carte de trop).
         if (gap > overshoot) {
           markPromotedToBrief(item);
           removeTailArticleForItem(item);

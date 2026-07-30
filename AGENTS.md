@@ -118,7 +118,7 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 | D6 | **CI audit HARD offline-only** sur banques (sans fetch) | Éviter de re-découvrir en prod sans taxer chaque PR | `bank:check` + tests unit déjà là — étendre si gaps | S | resolved |
 | D7 | **Banque photo mât mobile dédiée** (option 3) | Coût double (JSON+JS+maintain+saisons+HARD) ; le fix 2026-07 (dims banque + thumb) peut suffire | Mât encore noir / crops illisibles **après** fix mobile ; flags `surfaces` (opt. 2) déjà essayés ou insuffisants | L | open |
 | D8 | **Détection d’arche/silhouette dans `computeBestFocalY`** (crop mât) | Le détecteur actuel vise le « trou » (Rocher Percé) ; élargir touche **tous** les crops auto — override `focalY` en banque suffit au cas par cas | 2–3 photos réelles où l’ancre arche rate, avec focalY auto vs override notés ; harnais de rendu multi-AR pour non-régression | S–M | open |
-| D9 | **Tests navigateur instables** (`player-continuity`, attentes réseau) | Le syntoniseur garde des connexions ouvertes en permanence et l’audio headless n’est pas déterministe : rendre ces tests fiables demande de réécrire les attentes, pas de rallonger les délais | Un run vert 10× d’affilée en local **et** en CI après passage à des attentes sur l’état observable ; aucun flake sur 2 semaines | S–M | open (avancée 2026-07-26, voir ci-dessous) |
+| D9 | **Tests navigateur instables** (`player-continuity`, attentes réseau) | Le syntoniseur garde des connexions ouvertes en permanence et l’audio headless n’est pas déterministe : rendre ces tests fiables demande de réécrire les attentes, pas de rallonger les délais | Un run vert 10× d’affilée en local **et** en CI après passage à des attentes sur l’état observable ; aucun flake sur 2 semaines | S–M | open (avancée 2026-07-30 : projet `serial-sensitive`, `data-radar-buffering`, équilibre magazine stable — reste preuve 10×/2 sem. CI) |
 | D10 | **Connaissance des établissements éclatée en 4 tables** | Chaque copie répond à un besoin distinct (affichage court, libellés RSS, localisation, pages d’entités) ; les unifier touche 4 zones d’un coup, dont le monolithe `app.js` | Une divergence réelle qui casse quelque chose — le doublon « College » du 2026-07-25 en est une ; commencer par la table de traduction, la plus autonome | M | open |
 | D11 | **Déclaration du site aux consoles de recherche** (Search Console, Bing, IndexNow) | Aucun agent ne peut le faire : ça demande les comptes Google / Microsoft / Cloudflare de l’humain. Le travail technique est livré et en ligne ; il ne reste que les clics | Rien à attendre — à faire dès que possible : sans soumission du sitemap, les 71 URL neuves mettent bien plus longtemps à être découvertes | S | blocked |
 | D12 | **Cohérence fil ↔ RSS ↔ JSON-LD non garantie** | Trois générateurs écrits pour des besoins distincts ; les coupler figerait des formats encore mouvants | Test des dix premières manchettes des quatre sorties dans `npm run test:unit` | S | resolved |
@@ -156,6 +156,22 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
   `data/quebec-nations-backgrounds.json`. Le même mécanisme sert déjà pour le tipi Gesgapegiag (0.28).
 - **Avant de solder** : rendre la photo à AR 14 / 10.7 / 7.57 / 3.8 / 2.16 avant/après, et vérifier
   qu’aucun crop existant à override ne régresse (`rowArch` sert aussi au bonus de score, pas qu’à l’ancre).
+
+**D9 — avancée du 2026-07-30 (suite 2026-07-26).**
+
+- `document.documentElement.dataset.radarBuffering` publié dans `updatePlayUI` ;
+  tests player-continuity attendent aria-label + `data-radar-buffering`, pas
+  seulement la classe CSS.
+- `playwright.config.mjs` : projet `serial-sensitive` (player-continuity,
+  masthead-weather, seo-pages) hors du lot parallèle `main`.
+- `player-continuity` : `test.describe.configure({ mode: 'serial' })` +
+  `afterEach` qui purge les clés `radar-*` du localStorage.
+- Équilibre magazine vue source : early-exit si gap déjà ≤ `AVG_BRIEF_CARD_H` ;
+  trim ne détruit plus un bon collège pour un overshoot plus petit que le trou
+  créé ; photo une plafonnée (`max-height: min(42vh, 320px)` 16:9) ; crédit
+  n’annule plus le cadre 16:9 de l’image.
+- Preuve locale : suite Playwright **81/81** verts (un run complet). Critère
+  de sortie inchangé (10× + 2 sem. CI) — **non soldée**.
 
 **D9 — avancée du 2026-07-26 (attentes réécrites, dette non soldée).**
 
