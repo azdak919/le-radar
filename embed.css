@@ -1059,10 +1059,13 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
     max-height: var(--embed-bar-h);
     min-height: var(--embed-bar-h);
     overflow: visible;
-    /* Ombre de barre conservée (hauteur fixe = pas de bandeau sous le popover). */
-    box-shadow: 0 8px 24px -14px rgba(0, 0, 0, 0.78) !important;
+    /*
+     * Pas d’ombre sur .tuner à l’ouverture : l’hôte (hauteur = barre) porte
+     * déjà l’ombre. Sinon un halo sombre fuit sous le popover (bande étrange).
+     */
+    box-shadow: none !important;
   }
-  /* Ombre lourde de la bulle seule (pas l’ombre de la barre). */
+  /* Ombre lourde de style.css (0 14px 34px) = flou sous la bulle — désactivée. */
   html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-slot,
   html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol.is-open .tuner-vol-slot {
     box-shadow: none !important;
@@ -1556,13 +1559,9 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-actions {
   z-index: 10;
 }
 /*
- * Popover ouvert : masquer le crédit (évite chevauchement avec la bulle).
+ * Crédit mobile = bas-gauche sous le dial ; popover volume = bas-droite.
+ * Plus de masquage à l’ouverture : le crédit reste visible (z-index plus bas).
  */
-html[data-embed="tuner"][data-surface="kiosque-v1"]:has(.tuner-vol.is-open) .tuner-embed-credit {
-  opacity: 0 !important;
-  pointer-events: none !important;
-  transition: opacity 120ms ease;
-}
 
 /* Mobile kiosque : volume en popover (comme l’embed générique < 560 px). */
 @media (max-width: 559.98px) {
