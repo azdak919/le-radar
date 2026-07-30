@@ -95,6 +95,11 @@ test.describe('LE-KIOSQUE démo × tuner-embed LE-RADAR', () => {
     const credit = page.locator('a.tuner-embed-credit');
     await expect(credit).toBeVisible();
     await expect(credit).toContainText('le-radar.ca');
+    // Tooltip = périmètre site (journaux + radios + sports), pas « radios » seul.
+    await expect(credit).toHaveAttribute(
+      'title',
+      /journaux.*radios.*sports|LE-RADAR\.ca/i,
+    );
 
     const geometry = await page.evaluate(() => {
       const bar = document.getElementById('tuner');
