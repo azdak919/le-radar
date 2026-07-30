@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-30T03:55:08.083Z",
+  "updatedAt": "2026-07-30T06:25:38.150Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T03:54:41.873Z"
+      "checkedAt": "2026-07-30T06:25:11.494Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix anglo",
+        "title": "Mix Franco",
         "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
       },
       "next": {
-        "title": "La grande ludothèque (reprise)",
+        "title": "Par mots et par vaux (reprise)",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
+        "start": "03:00",
+        "end": "04:00",
+        "url": "https://cism893.ca/emissions/par-mots-et-par-vaux"
       },
       "track": "",
-      "showTitle": "Mix anglo",
+      "showTitle": "Mix Franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T03:54:44.390Z"
+      "checkedAt": "2026-07-30T06:25:13.500Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Lo Signal / Meanwhile/ Rhizomatic",
+        "title": "Freeform Air",
         "source": "api-live",
-        "start": "22:00",
-        "end": "00:00"
+        "start": "02:00",
+        "end": "04:00"
       },
       "next": {
-        "title": "Off The Hook",
+        "title": "William Shatner's Whiskey Tears",
         "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
+        "start": "04:00",
+        "end": "06:00"
       },
       "track": "",
-      "showTitle": "Lo Signal / Meanwhile/ Rhizomatic",
+      "showTitle": "Freeform Air",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,72 +74,72 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T03:54:47.337Z"
+      "checkedAt": "2026-07-30T06:25:17.690Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "next": {
         "title": "CJLO Late Night",
         "source": "schedule",
         "start": "00:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
+      "next": {
+        "title": "Daydream Nation",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/daydream-nation"
+      },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T03:55:01.067Z"
+      "checkedAt": "2026-07-30T06:25:31.078Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Le popcorn de l'infini",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule",
         "start": "00:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Le popcorn de l'infini",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T03:55:01.520Z"
+      "checkedAt": "2026-07-30T06:25:31.701Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Opération beurre de cinoche",
+        "title": "Intervenir ensemble",
         "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "slug": "box-sophisme"
+        "start": "11:00",
+        "end": "12:00",
+        "slug": "intervenir-ensemble"
       },
-      "track": "Lolo Zouaï - Toute seule a la plage",
+      "track": "Chloé Jara-Buto - nouveau grappin",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-30T03:55:07.733Z"
+      "checkedAt": "2026-07-30T06:25:37.799Z"
     }
   }
 }
