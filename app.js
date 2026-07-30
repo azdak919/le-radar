@@ -1679,11 +1679,13 @@ try {
 const SPORTS_ROTATE_MS = 5200; // même rythme que la météo
 const SPORTS_ARRIVE_MS = 500;
 /**
- * CTA type alerte bandeau : pastille fixe « AU TABLEAU » (toujours à droite)
+ * CTA type alerte bandeau : pastille fixe « SPORTS » (toujours à droite)
  * + accroche = score / prochain match le plus frais de chaque sport
  *   (ordre de popularité campus QC — pas de libellés marketing).
+ * Rotation d’accroche = crossfade du texte interne (pas de carte type gare).
  */
-const SPORTS_CTA_TAG = 'Au tableau';
+const SPORTS_CTA_TAG = 'Sports';
+const SPORTS_CTA_CROSSFADE_MS = 320;
 /** Popularité sports étudiants QC (aligné page /sports/). */
 const SPORTS_POPULARITY = [
   'hockey',
@@ -2402,7 +2404,7 @@ function sportsCtaSlide(labelIndex = sportsCtaLabelIndex) {
       label: idle[idx],
       labelIndex: idx,
       tone: '#c8102e',
-      team: { sport: 'board', name: 'Au tableau', code: 'RSEQ' },
+      team: { sport: 'board', name: 'Sports', code: 'RSEQ' },
       game: { sport: 'board' },
       ctaIdle: true,
       titleExtra: idle[idx],
@@ -2417,13 +2419,74 @@ function sportsCtaSlide(labelIndex = sportsCtaLabelIndex) {
     label: label || SPORTS_CTA_IDLE_LABELS[0],
     labelIndex: idx,
     tone: '#c8102e',
-    team: { sport: 'board', name: 'Au tableau', code: 'RSEQ' },
+    team: { sport: 'board', name: 'Sports', code: 'RSEQ' },
     game: { sport: 'board' },
     ctaFrom: src,
     titleExtra: src
       ? `${src.team?.fullName || src.team?.name || ''} · ${label}`
       : '',
   };
+}
+
+/** Tooltip + aria de la CTA SPORTS (sans reconstruire le DOM). */
+function sportsCtaA11y(slide) {
+  const updated = sportsData?.updated
+    ? (() => {
+      try {
+        return new Intl.DateTimeFormat('fr-CA', {
+          dateStyle: 'medium',
+          timeStyle: 'short',
+          timeZone: 'America/Toronto',
+        }).format(new Date(sportsData.updated));
+      } catch {
+        return String(sportsData.updated).slice(0, 16);
+      }
+    })()
+    : '';
+  let title;
+  if (slide?.ctaFrom?.team) {
+    title = [sportsChipTitle({ ...slide.ctaFrom, mode: slide.ctaFrom.mode || 'next' }), updated ? `MAJ ${updated}` : '']
+      .filter(Boolean).join(' · ');
+  } else {
+    const detail = slide?.titleExtra || slide?.label || 'Scores collégiaux et universitaires';
+    title = [`Sports · ${detail}`, updated ? `MAJ ${updated}` : ''].filter(Boolean).join(' · ');
+  }
+  const aria = `Sports : ${slide?.label || 'résultats sportifs étudiants du Québec'} (nouvel onglet)`;
+  return { title, aria };
+}
+
+/**
+ * Crossfade de l’accroche CTA en place (carte stable, pas d’arrivée type gare).
+ */
+function crossfadeSportsCtaLabel(chip, slide) {
+  if (!chip || !slide) return;
+  const href = sportsBoardHref(slide);
+  chip.href = href;
+  const { title, aria } = sportsCtaA11y(slide);
+  chip.title = title;
+  chip.setAttribute('aria-label', aria);
+  const nextText = slide.label || 'Scores étudiants QC';
+  const inner = chip.querySelector('.sports-chip__cta-label');
+  if (!inner) return;
+  if (inner.textContent === nextText) return;
+  if (sportsReducedMotion) {
+    inner.textContent = nextText;
+    inner.classList.remove('is-crossfade');
+    return;
+  }
+  // Annuler un crossfade en cours sur ce chip.
+  if (chip._ctaFadeTimer) {
+    clearTimeout(chip._ctaFadeTimer);
+    chip._ctaFadeTimer = null;
+  }
+  inner.classList.add('is-crossfade');
+  chip._ctaFadeTimer = window.setTimeout(() => {
+    inner.textContent = nextText;
+    // Force reflow pour rejouer le fondu entrant.
+    void inner.offsetWidth;
+    inner.classList.remove('is-crossfade');
+    chip._ctaFadeTimer = null;
+  }, SPORTS_CTA_CROSSFADE_MS);
 }
 
 /**
@@ -2433,7 +2496,7 @@ function sportsCtaSlide(labelIndex = sportsCtaLabelIndex) {
 function refreshSportsChipScroll() {
   if (!MASTHEAD_SPORTS_STRIP) return;
   MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip').forEach((chip) => {
-    // CTA « Au tableau » : pas de défilement type gare — ellipsis fixe seulement.
+    // CTA « SPORTS » : pas de défilement type gare — ellipsis + crossfade seulement.
     if (chip.classList.contains('sports-chip--cta')) {
       chip.classList.remove('is-overflowing');
       chip.style.removeProperty('--sports-scroll');
@@ -2503,7 +2566,7 @@ function sportsSportLabelFr(sport) {
  * (sans « voir le tableau… » redondant — le clic est déjà le CTA).
  */
 function sportsChipTitle(slide) {
-  if (!slide?.team || !slide.game) return 'Au tableau — scores étudiants';
+  if (!slide?.team || !slide.game) return 'Sports — scores étudiants';
   const team = slide.team;
   const g = slide.game;
   const sport = sportsSportLabelFr(g.sport || team.sport);
@@ -2544,7 +2607,7 @@ function paintSportsChip(slide, animate = false) {
     a.dataset.sportsMode = 'info';
     a.dataset.sportsSport = 'board';
     a.style.setProperty('--sports-tone', slide.tone || '#5a6570');
-    a.title = slide.label || 'Au tableau';
+    a.title = slide.label || 'Sports';
     a.setAttribute('aria-label', slide.label || 'Voir le tableau des scores (nouvel onglet)');
     const line = document.createElement('span');
     line.className = 'sports-chip__line';
@@ -2559,45 +2622,23 @@ function paintSportsChip(slide, animate = false) {
     return a;
   }
 
-  /* ── CTA « Au tableau » — pastille alerte + accroche (halo/texte, pas la carte) ── */
+  /* ── CTA « SPORTS » — pastille fixe + accroche (crossfade, jamais is-arriving) ── */
   if (slide.mode === 'cta') {
     const href = sportsBoardHref(slide);
     const a = document.createElement('a');
     a.className = 'sports-chip sports-chip--cta';
     a.href = href;
     markSportsBoardLink(a);
-    if (animate && !sportsReducedMotion) a.classList.add('is-arriving');
+    // Pas d’animation « arrivée carte » : la rotation crossfade le label seul.
     a.dataset.sportsKey = SPORTS_CTA_KEY;
     a.dataset.sportsMode = 'cta';
     a.dataset.sportsSport = 'board';
     a.style.setProperty('--sports-tone', '#c8102e');
-    const updated = sportsData?.updated
-      ? (() => {
-        try {
-          return new Intl.DateTimeFormat('fr-CA', {
-            dateStyle: 'medium',
-            timeStyle: 'short',
-            timeZone: 'America/Toronto',
-          }).format(new Date(sportsData.updated));
-        } catch {
-          return String(sportsData.updated).slice(0, 16);
-        }
-      })()
-      : '';
-    // CTA : accroche + MAJ exacte, sans jargon.
-    if (slide.ctaFrom?.team) {
-      a.title = [sportsChipTitle({ ...slide.ctaFrom, mode: slide.ctaFrom.mode || 'next' }), updated ? `MAJ ${updated}` : '']
-        .filter(Boolean).join(' · ');
-    } else {
-      const detail = slide.titleExtra || slide.label || 'Scores collégiaux et universitaires';
-      a.title = [`Au tableau · ${detail}`, updated ? `MAJ ${updated}` : ''].filter(Boolean).join(' · ');
-    }
-    a.setAttribute(
-      'aria-label',
-      `Au tableau : ${slide.label || 'résultats sportifs étudiants du Québec'} (nouvel onglet)`,
-    );
+    const { title, aria } = sportsCtaA11y(slide);
+    a.title = title;
+    a.setAttribute('aria-label', aria);
 
-    // Pastille type BREAKING : point live + libellé fixe.
+    // Pastille type BREAKING : point live + libellé fixe « SPORTS ».
     const tag = document.createElement('span');
     tag.className = 'sports-chip__cta-tag';
     tag.setAttribute('aria-hidden', 'true');
@@ -2618,9 +2659,6 @@ function paintSportsChip(slide, animate = false) {
     chev.textContent = '→';
 
     a.append(tag, line, chev);
-    if (animate && !sportsReducedMotion) {
-      window.setTimeout(() => a.classList.remove('is-arriving'), SPORTS_ARRIVE_MS);
-    }
     return a;
   }
 
@@ -2977,6 +3015,17 @@ function rotateOneSportsCard() {
   sportsNextSlot = (slot + 1) % n;
   const chips = MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip');
   const oldChip = chips[slot];
+
+  // CTA : carte stable — crossfade du texte d’info seulement (pas de gare / is-arriving).
+  if (
+    replacement.mode === 'cta'
+    && oldChip
+    && oldChip.classList.contains('sports-chip--cta')
+  ) {
+    crossfadeSportsCtaLabel(oldChip, replacement);
+    return;
+  }
+
   const newChip = paintSportsChip(replacement, true);
   if (oldChip) {
     oldChip.replaceWith(newChip);
