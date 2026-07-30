@@ -1,8 +1,8 @@
 {
   "description": "Registre des formations sportives RSEQ (collégial + universitaire QC) pour LE-RADAR. shortName = libellé puce/tableau ; fullName = établissement ; nickname = surnom d'équipe si connu. aliases + rseqTeamIds servent à rattacher le flux S1.",
   "source": "curated + sports.json (rseq-s1)",
-  "updated": "2026-07-30T02:41:56.006Z",
-  "teamCount": 84,
+  "updated": "2026-07-30T03:06:27.199Z",
+  "teamCount": 85,
   "teams": [
     {
       "id": "ulaval",
@@ -180,7 +180,6 @@
         "hockey",
         "natation",
         "rugby",
-        "sailing",
         "soccer",
         "soccer-interieur",
         "volleyball"
@@ -209,6 +208,25 @@
         "1f15dcb2-9f24-60aa-9f89-02bb122e4421",
         "MTL"
       ]
+    },
+    {
+      "id": "polytechnique",
+      "code": "POLY",
+      "shortName": "Polytechnique",
+      "fullName": "Polytechnique Montréal",
+      "nickname": "PolyVoile",
+      "priority": 5,
+      "sector": "universitaire",
+      "aliases": [
+        "Polytechnique",
+        "Polytechnique Montréal",
+        "POLY",
+        "PolyVoile"
+      ],
+      "sports": [
+        "sailing"
+      ],
+      "rseqTeamIds": []
     },
     {
       "id": "uqam",
@@ -274,7 +292,6 @@
         "hockey",
         "natation",
         "rugby",
-        "sailing",
         "soccer",
         "soccer-interieur",
         "volleyball"

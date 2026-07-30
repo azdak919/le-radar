@@ -478,9 +478,21 @@ function parseSailingSchoolPage(html, school) {
   }
   if (!rows.length) return null;
 
+  const today = new Date().toISOString().slice(0, 10);
   // Official results first as lastGame candidates; pending as nextGame
+  // (mais une date déjà passée n’est jamais « À venir », même si ICSA dit Pending).
   const official = rows.filter((r) => /official/i.test(r.status) && r.place != null);
-  const pending = rows.filter((r) => /pending|scheduled|upcoming/i.test(r.status));
+  const pending = rows.filter((r) => {
+    if (!/pending|scheduled|upcoming/i.test(r.status)) return false;
+    if (r.date && r.date < today) return false;
+    return true;
+  });
+  // Régates « pending » datées dans le passé avec place → traiter comme résultats.
+  for (const r of rows) {
+    if (r.date && r.date < today && r.place != null && !official.includes(r)) {
+      official.push(r);
+    }
+  }
   official.sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
   pending.sort((a, b) => String(a.date || '9999').localeCompare(String(b.date || '9999')));
 
@@ -517,7 +529,7 @@ function parseSailingSchoolPage(html, school) {
     id: key,
     rseqTeamId: school.code,
     leagueId: 'icsa-collegesailing',
-    name: school.shortName || school.name,
+    name: school.clubName || school.shortName || school.name,
     code: school.code,
     sector: school.sector || 'universitaire',
     sport: 'sailing',
@@ -525,9 +537,13 @@ function parseSailingSchoolPage(html, school) {
     sex: null,
     division: school.conference || 'ICSA',
     usports: false,
-    leagueLabel: `ICSA · ${school.conference || 'College sailing'}`,
+    leagueLabel: school.kind === 'association-etudiante'
+      ? `ICSA · association étudiante · ${school.conference || 'College sailing'}`
+      : `ICSA · ${school.conference || 'College sailing'}`,
     lastGame: official[0] ? toEntry(official[0], true) : null,
-    nextGame: pending[0] ? toEntry(pending[0], false) : null,
+    nextGame: (pending.find((r) => !r.date || r.date >= today)
+      ? toEntry(pending.find((r) => !r.date || r.date >= today), false)
+      : null),
     record: official.length
       ? {
         wins: official.filter((r) => r.place <= Math.ceil(r.field / 2)).length,
@@ -541,11 +557,40 @@ function parseSailingSchoolPage(html, school) {
     fullName: school.name,
     province: school.province || 'QC',
     registryId: school.registryId || null,
+    kind: school.kind || null,
   };
+  if (school.note) team.clubNote = school.note;
+  if (school.url) team.url = school.url;
   // Si pas de next mais des résultats : garder last uniquement
   if (!team.nextGame && !team.lastGame && rows[0]) {
     team.nextGame = toEntry(rows[0], false);
   }
+  return team;
+}
+
+/**
+ * Voile campus : souvent une **association étudiante** (ULaVoile, PolyVoile,
+ * McGill Sailing), pas le programme d’excellence (Rouge et Or, Carabins…).
+ * name = nom du club ; fullName = établissement hôte ; pas de nickname varsity.
+ */
+function applySailingClubIdentity(team, clubOrSchool) {
+  const isAssoc = clubOrSchool.kind === 'association-etudiante'
+    || clubOrSchool.notAthletics
+    || Boolean(clubOrSchool.clubName);
+  if (!isAssoc) return team;
+  const clubName = clubOrSchool.clubName || clubOrSchool.shortName || team.name;
+  team.name = clubName;
+  team.nickname = null; // ne pas coller Rouge et Or / Redbirds sur un club voile
+  if (clubOrSchool.name) team.fullName = clubOrSchool.name;
+  team.kind = 'association-etudiante';
+  team.division = clubOrSchool.status === 'upcoming'
+    ? 'Association · à venir'
+    : clubOrSchool.status === 'icsa'
+      ? (clubOrSchool.conference || 'ICSA')
+      : 'Association étudiante';
+  team.leagueLabel = 'Voile · association étudiante QC';
+  if (clubOrSchool.note) team.clubNote = clubOrSchool.note;
+  if (clubOrSchool.url) team.url = clubOrSchool.url;
   return team;
 }
 
@@ -556,26 +601,30 @@ function sailingWatchlistTeam(club, reg) {
     id: key,
     rseqTeamId: club.code || rid,
     leagueId: 'sailing-qc-watchlist',
-    name: club.shortName || club.name,
+    name: club.clubName || club.shortName || club.name,
     code: club.code || '',
     sector: club.sector || 'universitaire',
     sport: 'sailing',
     sportLabel: 'Voile',
     sex: null,
-    division: club.status === 'upcoming' ? 'À venir' : 'Club',
+    division: club.status === 'upcoming' ? 'Association · à venir' : 'Association étudiante',
     usports: false,
-    leagueLabel: 'Voile campus QC',
+    leagueLabel: 'Voile · association étudiante QC',
     lastGame: null,
     nextGame: null,
     record: null,
     source: 'sailing-watchlist',
     status: club.status || 'club',
-    clubNote: club.note || 'Club de voile campus — scores ICSA à venir.',
+    clubNote: club.note || 'Association étudiante de voile — scores ICSA à venir.',
     fullName: club.name,
     registryId: club.registryId || null,
     province: 'QC',
+    kind: club.kind || 'association-etudiante',
   };
+  if (club.url) team.url = club.url;
   applyRegistryToTeam(team, reg);
+  // Après le registre : réimposer l’identité club (pas le surnom varsity).
+  applySailingClubIdentity(team, club);
   return team;
 }
 
@@ -602,6 +651,8 @@ async function fetchSailingTeams(reg) {
       team.province = 'QC';
       if (school.registryId) team.registryId = school.registryId;
       applyRegistryToTeam(team, reg);
+      // McGill Sailing etc. : association étudiante, pas Redbirds/varsity.
+      applySailingClubIdentity(team, school);
       out[team.id] = team;
       process.stderr.write(`ok (${team.lastGame ? 'last' : '-'}/${team.nextGame ? 'next' : '-'})\n`);
     } catch (err) {
