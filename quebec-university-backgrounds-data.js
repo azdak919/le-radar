@@ -8,12 +8,101 @@
  * Consommateurs : mât page d’accueil seulement — jamais le pomo
  *
  * Politique : pas de religieux institutionnel ; nations du Québec OK ;
- * pas de personnes reconnaissables ; plafond 50 ; ménage 1×/session univ.
+ * pas de personnes reconnaissables ; plafond large ; ménage 1×/session univ.
  * Résolution mini ~1400×700 / 1.2 Mpx (anti-grain upscale).
  * focalY optionnel (0=haut, 1=bas) pour cover crop.
  * Hard-ban : scripts/quebec-backgrounds-blacklist.js
  */
 const QUEBEC_UNIVERSITY_BACKGROUNDS = [
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/a/a8/Pavillon_Judith-Jasmin_UQAM_5.jpg",
+    credit: "Great11",
+    link: "https://commons.wikimedia.org/wiki/File:Pavillon%20Judith-Jasmin%20UQAM%205.jpg",
+    license: "CC BY-SA 4.0",
+    title: "Pavillon Judith-Jasmin UQAM 5",
+    width: 5808,
+    height: 2187,
+    campus: true,
+    season: "hiver",
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/6/69/Universit%C3%A9_de_Montr%C3%A9al%2C_pavillon_principal%2C_rentr%C3%A9e_01.JPG",
+    credit: "Pierre5018",
+    link: "https://commons.wikimedia.org/wiki/File:Universit%C3%A9%20de%20Montr%C3%A9al%2C%20pavillon%20principal%2C%20rentr%C3%A9e%2001.JPG",
+    license: "CC BY-SA 4.0",
+    title: "Université de Montréal, pavillon principal, rentrée 01",
+    width: 3072,
+    height: 1728,
+    campus: true,
+    season: "hiver",
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/a/ab/Universit%C3%A9_de_Montr%C3%A9al%2C_Pavillon_Roger-Gaudry.JPG",
+    credit: "Laurent Bélanger",
+    link: "https://commons.wikimedia.org/wiki/File:Universit%C3%A9%20de%20Montr%C3%A9al%2C%20Pavillon%20Roger-Gaudry.JPG",
+    license: "CC BY-SA 4.0",
+    title: "Université de Montréal, Pavillon Roger-Gaudry",
+    width: 5079,
+    height: 2222,
+    campus: true,
+    season: "hiver",
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/0/05/Pavillon_Judith-Jasmin_UQAM_17.JPG",
+    credit: "Jeangagnon",
+    link: "https://commons.wikimedia.org/wiki/File:Pavillon%20Judith-Jasmin%20UQAM%2017.JPG",
+    license: "CC BY-SA 4.0",
+    title: "Pavillon Judith-Jasmin UQAM 17",
+    width: 5152,
+    height: 3864,
+    campus: true,
+    season: "ete",
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/c/cf/Pavillon_Judith-Jasmin_UQAM_23.JPG",
+    credit: "Jeangagnon",
+    link: "https://commons.wikimedia.org/wiki/File:Pavillon%20Judith-Jasmin%20UQAM%2023.JPG",
+    license: "CC BY-SA 4.0",
+    title: "Pavillon Judith-Jasmin UQAM 23",
+    width: 4608,
+    height: 3456,
+    campus: true,
+    season: "automne",
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/3/3e/Park_in_Universit%C3%A9_Laval.jpg",
+    credit: "Wilfredor",
+    link: "https://commons.wikimedia.org/wiki/File:Park_in_Universit%C3%A9_Laval.jpg",
+    license: "CC BY-SA 4.0",
+    title: "Park in Université Laval",
+    width: 6000,
+    height: 4000,
+    campus: true,
+    season: "ete",
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/b/b6/Pavillon_Ferdinand-Vandry_06.jpg",
+    credit: "Cephas",
+    link: "https://commons.wikimedia.org/wiki/File:Pavillon_Ferdinand-Vandry_06.jpg",
+    license: "CC BY-SA 4.0",
+    title: "Pavillon Ferdinand-Vandry, Université Laval",
+    width: 5526,
+    height: 3684,
+    campus: true,
+    season: "hiver",
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg",
+    credit: "Jeangagnon",
+    link: "https://commons.wikimedia.org/wiki/File:Henry_F._Hall_Building_10.jpg",
+    license: "CC BY-SA 4.0",
+    title: "Henry F. Hall Building 10, Concordia University",
+    focalY: 0.28,
+    width: 4608,
+    height: 3456,
+    campus: true,
+    season: "hiver",
+  },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/f3/Avenue_McGill_College_07.JPG",
     credit: "Jeangagnon",
@@ -23,6 +112,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 5152,
     height: 3864,
     campus: true,
+    season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/9/91/Universit%C3%A9_de_Montr%C3%A9al_%28Roger-Gaudry%29.JPG",
@@ -33,6 +123,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 3072,
     height: 2304,
     campus: true,
+    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/21/Universit%C3%A9_de_Montr%C3%A9al_%28_%C3%89cole_polytechnique_de_Montr%C3%A9al_et_Pavillon_Roger-Gaudry%29.JPG",
@@ -43,6 +134,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 5074,
     height: 3806,
     campus: true,
+    season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Pavillon_Roger-Gaudry_II.jpg",
@@ -53,6 +145,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 4537,
     height: 2552,
     campus: true,
+    season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/8/82/Pavillon_Judith-Jasmin_UQAM_08.JPG",
@@ -63,6 +156,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 5152,
     height: 3864,
     campus: true,
+    season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/f5/Pavillon_Judith-Jasmin_UQAM_15.JPG",
@@ -73,6 +167,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 5152,
     height: 3864,
     campus: true,
+    season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/8/80/Pavillon_Judith-Jasmin_UQAM_24.JPG",
@@ -84,6 +179,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 4608,
     height: 3456,
     campus: true,
+    season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/0/00/Pavillon_Judith-Jasmin_UQAM_37.jpg",
@@ -94,6 +190,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 4608,
     height: 3456,
     campus: true,
+    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/9/90/Pavillon_Judith-Jasmin_UQAM_1.jpg",
@@ -104,6 +201,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 6000,
     height: 4000,
     campus: true,
+    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg",
@@ -125,6 +223,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 1862,
     height: 1162,
     campus: true,
+    season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg",
@@ -146,6 +245,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 4000,
     height: 3000,
     campus: true,
+    season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b9/View_from_McGill_University_downtown_campus_01.JPG",
@@ -156,16 +256,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 4608,
     height: 3456,
     campus: true,
-  },
-  {
-    url: "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg",
-    credit: "Jeangagnon",
-    link: "https://commons.wikimedia.org/wiki/File:Wilson_Hall,_McGill_University.jpg",
-    license: "CC BY-SA 3.0",
-    title: "Wilson Hall, McGill University",
-    width: 4608,
-    height: 3456,
-    campus: true,
+    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg",
@@ -176,6 +267,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 3264,
     height: 2448,
     campus: true,
+    season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG",
@@ -186,17 +278,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 5152,
     height: 3864,
     campus: true,
-  },
-  {
-    url: "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg",
-    credit: "Jeangagnon",
-    link: "https://commons.wikimedia.org/wiki/File:Henry_F._Hall_Building_10.jpg",
-    license: "CC BY-SA 4.0",
-    title: "Henry F. Hall Building 10, Concordia University",
-    focalY: 0.28,
-    width: 4608,
-    height: 3456,
-    campus: true,
+    season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG",
@@ -207,16 +289,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 4608,
     height: 3456,
     campus: true,
-  },
-  {
-    url: "https://upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_Mackay_Street%2C_Montreal.JPG",
-    credit: "Thomas1313",
-    link: "https://commons.wikimedia.org/wiki/File:2135-2149_Mackay_Street,_Montreal.JPG",
-    license: "CC BY-SA 3.0",
-    title: "Mackay Street near Concordia University, Montreal",
-    width: 3648,
-    height: 2736,
-    campus: true,
+    season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/d/de/Universit%C3%A9_Laval%2C_Quebec%2C_Canada_02.jpg",
@@ -228,6 +301,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 7409,
     height: 5034,
     campus: true,
+    season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/a/af/Campus_de_Longueuil_-_Universite_de_Sherbrooke_09.jpg",
@@ -238,6 +312,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 5152,
     height: 3864,
     campus: true,
+    season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg",
@@ -248,25 +323,6 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 3846,
     height: 2884,
     campus: true,
-  },
-  {
-    url: "https://upload.wikimedia.org/wikipedia/commons/3/3e/Park_in_Universit%C3%A9_Laval.jpg",
-    credit: "Wilfredor",
-    link: "https://commons.wikimedia.org/wiki/File:Park_in_Universit%C3%A9_Laval.jpg",
-    license: "CC BY-SA 4.0",
-    title: "Park in Université Laval",
-    width: 6000,
-    height: 4000,
-    campus: true,
-  },
-  {
-    url: "https://upload.wikimedia.org/wikipedia/commons/b/b6/Pavillon_Ferdinand-Vandry_06.jpg",
-    credit: "Cephas",
-    link: "https://commons.wikimedia.org/wiki/File:Pavillon_Ferdinand-Vandry_06.jpg",
-    license: "CC BY-SA 4.0",
-    title: "Pavillon Ferdinand-Vandry, Université Laval",
-    width: 5526,
-    height: 3684,
-    campus: true,
+    season: "automne",
   }
 ];
