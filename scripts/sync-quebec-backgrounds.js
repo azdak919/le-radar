@@ -176,7 +176,7 @@ function buildJs(bank, photos) {
  * Consommateurs : ${bank.consumers}
  *
  * Politique : pas de religieux institutionnel ; nations du Québec OK ;
- * pas de personnes reconnaissables ; plafond 50 ; ménage 1×/session univ.
+ * pas de personnes reconnaissables ; plafond large ; ménage 1×/session univ.
  * Résolution mini ~1400×700 / 1.2 Mpx (anti-grain upscale).
  * focalY optionnel (0=haut, 1=bas) pour cover crop.
  * Hard-ban : scripts/quebec-backgrounds-blacklist.js

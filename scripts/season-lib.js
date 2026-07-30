@@ -102,8 +102,10 @@
     const t = h.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '');
 
     // Signaux forts hiver (neige / froid / arctique sans marqueur d’été)
+    // « pipok » (atikamekw) / « pipon » (innu-aimun) = hiver — titres Commons
+    // du type « Notcimik e pipok » (paysage de neige).
     if (
-      /\b(hiver|winter|neige|snow|snowy|glace|ice\b|frozen|givr|blizzard|ski\b|raquette)/i.test(t)
+      /\b(hiver|winter|neige|snow|snowy|glace|ice\b|frozen|givr|blizzard|ski\b|raquette|pipok|pipon)\b/i.test(t)
       || /\b(decembre|janvier|fevrier|december|january|february)\b/i.test(t)
       || (
         /\b(arctic|arctique|nunavik|kangiqsualujjuaq|kuujjuaq|kangirsuk|pingualuit|inuksuk)\b/i.test(t)
@@ -156,7 +158,7 @@
     const h = haystack(item);
     const t = (h || '').toLowerCase().normalize('NFD').replace(/\p{M}/gu, '');
 
-    if (/\b(ukiuq)\b/i.test(t)) return 'ukiuq';
+    if (/\b(ukiuq|pipok|pipon)\b/i.test(t)) return 'ukiuq';
     if (/\b(upingaksaaq|pre[\s-]?printemps arctique)\b/i.test(t)) return 'upingaksaaq';
     if (/\b(upingaaq)\b/i.test(t)) return 'upingaaq';
     if (/\b(aujaq)\b/i.test(t)) return 'aujaq';
@@ -265,7 +267,9 @@
       return annotated.filter(predicate).map((a) => a.it);
     }
 
-    // Strict : saison courante (ou unknown gardé en soft bonus? non — unknown en adjacent tier)
+    // Strict : saison courante uniquement (pas d’unknown ici).
+    // Unknown → soft seulement : sinon une neige non taguée entre en « adjacent »
+    // et s’affiche en juillet (ex. « Notcimik e pipok » Missatikamekw).
     const strict = pickTier((a) => {
       if (a.nations) return a.s6 === season6;
       return a.s4 === season4;
@@ -274,10 +278,11 @@
     const adjacent = pickTier((a) => {
       if (a.nations) {
         if (a.s6 === season6) return false;
-        return !a.s6 || adj6.has(a.s6);
+        // Saison 6 connue et adjacente seulement — pas d’unknown.
+        return !!a.s6 && adj6.has(a.s6);
       }
       if (a.s4 === season4) return false;
-      return !a.s4 || adj4.has(a.s4);
+      return !!a.s4 && adj4.has(a.s4);
     });
 
     // Évite l’opposé (neige en juillet) tant qu’il reste autre chose

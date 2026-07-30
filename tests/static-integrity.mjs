@@ -675,5 +675,26 @@ assert(
   appJs.includes('crossfadeSportsCtaLabel') && appJs.includes('is-crossfade'),
   'app.js : rotation CTA = crossfade du label interne',
 );
+// Puces scores : indépendantes + dwell lecture + marquee aller-retour.
+assert(
+  appJs.includes('scheduleSportsSlot')
+    && appJs.includes('sportsSlotDwellMs')
+    && appJs.includes('sportsLabelReadingMs')
+    && /SPORTS_READ_MIN_MS\s*=\s*7800/.test(appJs)
+    && /SPORTS_SCROLL_ONE_WAY_MS\s*=\s*7000/.test(appJs)
+    && appJs.includes('SPORTS_SCROLL_ROUND_TRIP_MS'),
+  'app.js : rotation sports par slot + dwell lecture + marquee',
+);
+assert(
+  appJs.includes('sportsWeatherCardCount')
+    && appJs.includes('queueSportsWeatherParitySync')
+    && appJs.includes('weatherN + 1'),
+  'app.js : plafond scores sports ≤ cartes météo (CTA hors compte)',
+);
+assert(
+  styleCss.includes('--sports-scroll-duration: 7s')
+    || styleCss.includes('--sports-scroll-duration:7s'),
+  'style : durée marquee sports alignée sur SPORTS_SCROLL_ONE_WAY_MS (7s)',
+);
 
 console.log(`OK intégrité statique (${htmlFiles.length} pages HTML)`);
