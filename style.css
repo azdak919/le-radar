@@ -229,7 +229,8 @@ body {
   /* Un peu plus lent + holds aux extrémités = moins d’à-coups aux virages. */
   --sports-scroll-duration: 8.5s;
 }
-.masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner {
+/* Marquee scores (gauche) — CTA a sa propre règle sur .is-front uniquement. */
+.masthead-sports-strip .sports-chip:not(.sports-chip--cta).is-overflowing .sports-chip__line-inner {
   max-width: none;
   overflow: visible;
   text-overflow: clip;
@@ -347,30 +348,71 @@ body {
   box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
   animation: sports-cta-live-dot 1.4s ease-out infinite;
 }
-/* Accroche à côté de la pastille — pulse au repos ; marquee si overflow. */
+/*
+ * Stack 2 couches pour crossfade superposé (focus-group le-radar-cta-sports-transition).
+ * Jamais de trou : A fade-out pendant que B fade-in (SPORTS_CTA_CROSSFADE_MS ≈ 500 ms).
+ */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-stack {
+  position: relative;
+  display: block;
+  min-height: 1.25em;
+  width: 100%;
+  overflow: hidden;
+}
+/* Accroche — pulse au repos ; marquee si overflow (couche front seule). */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label {
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: none;
   color: #fff;
-  /* Fondu doux (synchro SPORTS_CTA_CROSSFADE_MS ≈ 560 ms). */
-  transition: opacity 0.56s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
 }
-.masthead-sports-strip .sports-chip--cta:not(.is-overflowing) .sports-chip__cta-label:not(.is-crossfade):not(.is-crossfade-in) {
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-front {
+  position: relative;
+  z-index: 1;
+  opacity: 1;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-back {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+}
+/* Pendant le fondu croisé : les deux couches sont superposées. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-fading-out {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  animation: none !important;
+  display: flex;
+  align-items: center;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-fading-in {
+  position: relative;
+  z-index: 2;
+  opacity: 1;
+  animation: none !important;
+}
+.masthead-sports-strip .sports-chip--cta:not(.is-overflowing) .sports-chip__cta-label.is-front:not(.is-fading-out):not(.is-fading-in) {
   animation: sports-cta-label-pulse 2.6s ease-in-out infinite;
 }
-/* Sortie : fondu vers transparent (coupe pulse / marquee). */
-.masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-crossfade {
-  animation: none !important;
-  opacity: 0;
-  transition: opacity 0.56s cubic-bezier(0.4, 0, 0.2, 1);
+/* Marquee : uniquement la couche front (pas la sortante). */
+.masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-front:not(.is-fading-out) {
+  max-width: none;
+  overflow: visible;
+  text-overflow: clip;
+  animation: sports-chip-scroll var(--sports-scroll-duration, 8.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  will-change: transform;
 }
-/* Entrée : part de 0 (pas de pulse tant que le fondu n’est pas fini). */
-.masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-crossfade-in {
+.masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-fading-out,
+.masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-back {
   animation: none !important;
-  opacity: 1;
-  transition: opacity 0.56s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: none;
 }
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-chev {
   flex: 0 0 auto;
@@ -433,9 +475,12 @@ body {
   .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label {
     transition: none;
   }
-  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-crossfade,
-  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-crossfade-in {
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-fading-out,
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-fading-in,
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-back {
     transition: none;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-front {
     opacity: 1;
   }
 }
