@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-07-29T12:15:21.189Z",
+  "updated": "2026-07-30T09:17:54.084Z",
   "sources": {
     "la-pige": {
       "strategy": "wordpress-rest",
@@ -40,6 +40,37 @@
       "retryAt": null,
       "error": null,
       "windowStart": "2023-07-29T18:15:18.583Z",
+      "windowYears": 3
+    },
+    "loisif": {
+      "strategy": "unsupported",
+      "lastAttemptAt": "2026-07-30T09:17:38.312Z",
+      "error": "wordpress_http_401",
+      "retryAt": "2026-08-29T09:17:38.312Z",
+      "windowStart": "2023-07-30T15:17:38.284Z",
+      "windowYears": 3
+    },
+    "la-gifle": {
+      "strategy": "wordpress-com-rest",
+      "nextPage": null,
+      "totalPages": 0,
+      "lastAttemptAt": "2026-07-30T09:17:43.193Z",
+      "lastSuccessAt": "2026-07-30T09:17:43.193Z",
+      "completedAt": "2026-07-30T09:17:43.193Z",
+      "retryAt": null,
+      "error": null,
+      "windowStart": "2023-07-30T15:17:38.284Z",
+      "windowYears": 3
+    },
+    "le-delit": {
+      "strategy": "wordpress-rest",
+      "nextPage": 5,
+      "totalPages": 16,
+      "lastAttemptAt": "2026-07-30T09:17:51.798Z",
+      "lastSuccessAt": "2026-07-30T09:17:51.798Z",
+      "retryAt": null,
+      "error": null,
+      "windowStart": "2023-07-30T15:17:38.284Z",
       "windowYears": 3
     }
   }
