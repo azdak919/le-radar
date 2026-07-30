@@ -1,10 +1,10 @@
 {
   "version": 1,
   "profile": "nations",
-  "maxBank": 50,
+  "maxBank": 200,
   "lastSessionCleanup": "2026-05-01",
   "lastSessionId": "ete",
-  "updated": "2026-07-26T06:43:33.051Z",
+  "updated": "2026-07-30T22:39:07.629Z",
   "photos": [
     {
       "id": "917da30c4514",
@@ -23,7 +23,17 @@
       "nation": "Abénaquis (W8banaki)",
       "addedAt": "2026-07-25T07:47:13.001Z",
       "sessionId": "ete",
-      "bank": "nations"
+      "bank": "nations",
+      "season": "hiver",
+      "season6": "ukiuq",
+      "seasonConfidence": 0.99,
+      "seasonSource": "text+visual",
+      "seasonReasons": [
+        "kw_hiver",
+        "kw6_ukiuq",
+        "visual_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-30T22:38:29.072Z"
     },
     {
       "id": "bc3d92f46829",
@@ -45,15 +55,16 @@
       "nation": "Inuit (Nunavik)",
       "season": "hiver",
       "season6": "ukiuq",
-      "seasonConfidence": 0.78,
-      "seasonSource": "text",
+      "seasonConfidence": 0.88,
+      "seasonSource": "text+visual",
       "seasonReasons": [
         "date_filename:08",
         "kw_hiver",
         "date_disagrees",
-        "kw6_ukiuq"
+        "kw6_ukiuq",
+        "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-25T08:16:57.649Z"
+      "seasonDetectedAt": "2026-07-30T22:38:29.072Z"
     },
     {
       "id": "1ffb3a1a4410",
@@ -75,13 +86,14 @@
       "nation": "Atikamekw",
       "season": "hiver",
       "season6": "ukiuq",
-      "seasonConfidence": 0.9,
-      "seasonSource": "text",
+      "seasonConfidence": 0.99,
+      "seasonSource": "text+visual",
       "seasonReasons": [
         "kw_hiver",
-        "kw6_ukiuq"
+        "kw6_ukiuq",
+        "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-25T08:16:57.649Z"
+      "seasonDetectedAt": "2026-07-30T22:38:29.072Z"
     },
     {
       "id": "776de9800f28",
@@ -108,9 +120,10 @@
       "seasonReasons": [
         "date_filename:08",
         "kw_ete",
-        "date_agrees"
+        "date_agrees",
+        "visual_disagrees_kept_text"
       ],
-      "seasonDetectedAt": "2026-07-25T08:16:57.649Z"
+      "seasonDetectedAt": "2026-07-30T22:38:29.073Z"
     },
     {
       "id": "a1e61ec2abac",
@@ -127,7 +140,17 @@
       "sessionId": "ete",
       "bank": "nations",
       "nationId": "algonquin",
-      "nation": "Algonquins (Anishinaabeg)"
+      "nation": "Algonquins (Anishinaabeg)",
+      "season": "hiver",
+      "season6": "ukiuq",
+      "seasonConfidence": 0.99,
+      "seasonSource": "text+visual",
+      "seasonReasons": [
+        "kw_hiver",
+        "kw6_ukiuq",
+        "visual_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-30T22:38:29.073Z"
     },
     {
       "id": "5fbd11e3f791",
@@ -144,7 +167,11 @@
       "sessionId": "ete",
       "bank": "nations",
       "nationId": "algonquin",
-      "nation": "Algonquins (Anishinaabeg)"
+      "nation": "Algonquins (Anishinaabeg)",
+      "season": "ete",
+      "seasonConfidence": 0.3,
+      "seasonSource": "sessionId-fallback",
+      "season6": "aujaq"
     },
     {
       "id": "e8f8b64477f2",
@@ -163,7 +190,16 @@
       "nationId": "cree",
       "nation": "Cris (Eeyou / Eenou)",
       "description": "Orthophotographie 2009 de Oujé-Bougoumou",
-      "categories": "OGL-C|Oujé-Bougoumou|Large images|2009 aerial photographs of Canada"
+      "categories": "OGL-C|Oujé-Bougoumou|Large images|2009 aerial photographs of Canada",
+      "season": "ete",
+      "season6": "aujaq",
+      "seasonConfidence": 0.95,
+      "seasonSource": "text+visual",
+      "seasonReasons": [
+        "kw_ete",
+        "visual_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-30T22:38:29.073Z"
     },
     {
       "id": "ca3b6d4f8a9c",
@@ -182,7 +218,16 @@
       "nationId": "migmaq",
       "nation": "Mi'gmaq",
       "description": "Gesgapegiag",
-      "categories": "Taken with Canon PowerShot A520|Gesgapegiag|Self-published work"
+      "categories": "Taken with Canon PowerShot A520|Gesgapegiag|Self-published work",
+      "season": "ete",
+      "season6": "aujaq",
+      "seasonConfidence": 0.95,
+      "seasonSource": "text+visual",
+      "seasonReasons": [
+        "kw_ete",
+        "visual_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-30T22:38:29.073Z"
     },
     {
       "id": "e2d1f0e85f69",
@@ -201,7 +246,17 @@
       "nationId": "mohawk",
       "nation": "Mohawks (Kanien'kehá:ka)",
       "focalY": 0.19,
-      "note": "focalY 0.19 — arche du pont Mercier visible jusque sur bandeau très large (auto donnait 0.26-0.28 = arche coupée en bureau)"
+      "note": "focalY 0.19 — arche du pont Mercier visible jusque sur bandeau très large (auto donnait 0.26-0.28 = arche coupée en bureau)",
+      "season": "hiver",
+      "season6": "ukiuq",
+      "seasonConfidence": 0.99,
+      "seasonSource": "text+visual",
+      "seasonReasons": [
+        "kw_hiver",
+        "kw6_ukiuq",
+        "visual_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-30T22:38:29.073Z"
     },
     {
       "id": "1cf216abbc30",
@@ -218,7 +273,17 @@
       "sessionId": "ete",
       "bank": "nations",
       "nationId": "maliseet",
-      "nation": "Malécites (Wolastoqiyik)"
+      "nation": "Malécites (Wolastoqiyik)",
+      "season": "hiver",
+      "season6": "ukiuq",
+      "seasonConfidence": 0.99,
+      "seasonSource": "text+visual",
+      "seasonReasons": [
+        "kw_hiver",
+        "kw6_ukiuq",
+        "visual_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-30T22:38:29.073Z"
     },
     {
       "id": "26e1eaed0318",
@@ -239,7 +304,16 @@
       "description": "Village Micmac de Gesgapegiag",
       "categories": "Gesgapegiag|Self-published work",
       "focalY": 0.28,
-      "note": "focalY 0.28 — sommet tipi visible dans bandeau mât (arbres sinon dominent)"
+      "note": "focalY 0.28 — sommet tipi visible dans bandeau mât (arbres sinon dominent)",
+      "season": "ete",
+      "season6": "aujaq",
+      "seasonConfidence": 0.95,
+      "seasonSource": "text+visual",
+      "seasonReasons": [
+        "kw_ete",
+        "visual_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-30T22:38:29.073Z"
     },
     {
       "id": "a9a0bb388bde",
@@ -256,7 +330,17 @@
       "sessionId": "ete",
       "bank": "nations",
       "nationId": "atikamekw",
-      "nation": "Atikamekw"
+      "nation": "Atikamekw",
+      "season": "hiver",
+      "season6": "ukiuq",
+      "seasonConfidence": 0.99,
+      "seasonSource": "text+visual",
+      "seasonReasons": [
+        "kw_hiver",
+        "kw6_ukiuq",
+        "visual_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-30T22:38:29.073Z"
     },
     {
       "id": "cc172d74ac5a",
@@ -282,7 +366,7 @@
         "kw_hiver",
         "kw6_ukiuq"
       ],
-      "seasonDetectedAt": "2026-07-25T08:16:57.649Z"
+      "seasonDetectedAt": "2026-07-30T22:38:29.073Z"
     },
     {
       "id": "61ccfc7b7f6e",
@@ -308,7 +392,7 @@
         "kw_hiver",
         "kw6_ukiuq"
       ],
-      "seasonDetectedAt": "2026-07-25T08:16:57.649Z"
+      "seasonDetectedAt": "2026-07-30T22:38:29.073Z"
     },
     {
       "id": "f7c052e10db9",
@@ -325,7 +409,17 @@
       "sessionId": "ete",
       "bank": "nations",
       "nationId": "atikamekw",
-      "nation": "Atikamekw"
+      "nation": "Atikamekw",
+      "season": "hiver",
+      "season6": "ukiuq",
+      "seasonConfidence": 0.99,
+      "seasonSource": "text+visual",
+      "seasonReasons": [
+        "kw_hiver",
+        "kw6_ukiuq",
+        "visual_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-30T22:38:29.073Z"
     },
     {
       "id": "926e5cfce284",
@@ -346,13 +440,14 @@
       "focalY": 0.32,
       "season": "hiver",
       "season6": "ukiuq",
-      "seasonConfidence": 0.9,
-      "seasonSource": "text",
+      "seasonConfidence": 0.99,
+      "seasonSource": "text+visual",
       "seasonReasons": [
         "kw_hiver",
-        "kw6_ukiuq"
+        "kw6_ukiuq",
+        "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-25T08:16:57.649Z"
+      "seasonDetectedAt": "2026-07-30T22:38:29.073Z"
     },
     {
       "id": "88da7e457739",
@@ -380,7 +475,7 @@
         "date_agrees",
         "kw6_ukiuq"
       ],
-      "seasonDetectedAt": "2026-07-25T08:16:57.649Z"
+      "seasonDetectedAt": "2026-07-30T22:38:29.073Z"
     },
     {
       "id": "19f4f7844c7c",
@@ -397,7 +492,14 @@
       "sessionId": "ete",
       "bank": "nations",
       "nationId": "atikamekw",
-      "nation": "Atikamekw"
+      "nation": "Atikamekw",
+      "season": "hiver",
+      "season6": "ukiuq",
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "seasonReasons": [
+        "manual: Atikamekw « pipok » = hiver / neige visible"
+      ]
     },
     {
       "id": "12b5c2f3a59a",
@@ -425,7 +527,7 @@
         "kw_hiver",
         "kw6_ukiuq"
       ],
-      "seasonDetectedAt": "2026-07-25T08:16:57.649Z"
+      "seasonDetectedAt": "2026-07-30T22:38:29.073Z"
     },
     {
       "id": "6f61e48fec1d",
@@ -444,7 +546,16 @@
       "nationId": "innu",
       "nation": "Innus (Ilnu / Innu)",
       "description": "Aerial view of Pessamit (pop. 2,428), an Innu First Nations community on Quebec’s Côte-Nord, along the north shore of the St. Lawrence River.",
-      "categories": "Pessamit First Nation|Self-published work|Creative Commons Attribution 4.0 missing SDC copyright license|Creative Commons Attribution missing SDC copyright status|Self-published work missing SDC copyright license|Files with coordinates missing SDC location of creation|Photographs by Quintin Soloviev"
+      "categories": "Pessamit First Nation|Self-published work|Creative Commons Attribution 4.0 missing SDC copyright license|Creative Commons Attribution missing SDC copyright status|Self-published work missing SDC copyright license|Files with coordinates missing SDC location of creation|Photographs by Quintin Soloviev",
+      "season": "ete",
+      "season6": "aujaq",
+      "seasonConfidence": 0.95,
+      "seasonSource": "text+visual",
+      "seasonReasons": [
+        "kw_ete",
+        "visual_agrees"
+      ],
+      "seasonDetectedAt": "2026-07-30T22:38:29.073Z"
     }
   ],
   "nationCoverage": {
@@ -511,5 +622,5 @@
     ],
     "totalNations": 11
   },
-  "lastSeasonDetect": "2026-07-25T08:16:57.650Z"
+  "lastSeasonDetect": "2026-07-30T22:38:29.073Z"
 }

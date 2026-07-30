@@ -18,7 +18,7 @@ const PHOTO_CREDIT_FIELDS = [
 
 // Version des extracteurs de crédit : l'incrémenter force une re-vérification
 // (repli média + crédits cités issus d'anciens extracteurs buggés).
-const CREDIT_EXTRACTOR_REV = 9;
+const CREDIT_EXTRACTOR_REV = 10;
 
 /** Placeholders WP / comptes génériques (Zone Campus : « Crédit : Journaliste »). */
 const PLACEHOLDER_CREDIT_RE = /^(?:journaliste|journalist|photographe|photographer|staff|rédaction|redaction|la\s+rédaction|the\s+editorial\s+team|unknown|inconnu|n\/?a|none|anonyme|anonymous|auteur|author|admin)$/i;
@@ -46,6 +46,29 @@ function isJournalistRoleCredit(name = '') {
     .replace(/\s+/g, ' ')
     .trim();
   return JOURNALIST_ROLE_CREDIT_RE.test(n);
+}
+
+/**
+ * « Source : X » en fin d'article (Le Collectif) = souvent la source du *texte*
+ * (think tank, institut, étude), pas le crédit photo.
+ * On n'accepte « Source : » comme provenance image que si ça ressemble à une
+ * source visuelle (agence, réseau, site, photographe), sinon → repli média.
+ */
+const TEXT_CITATION_SOURCE_RE = /\b(?:recherche|research|institut(?:e|ion)?s?|observatoire|think\s*tanks?|centre\s+d['’]études|centre\s+de\s+recherche|études?\s+(?:et|sur)|statistique|statcan|ministère|ministry|gouvernement|government|rapport|rapport\s+annuel)\b/iu;
+const IMAGE_PROVENANCE_HINT_RE = /\b(?:getty|afp|reuters|associated\s+press|\bap\b|facebook|instagram|flickr|unsplash|pexels|wikimedia|commons|site\s+(?:internet|web)|blogue|blog|photo|photographe|photographer|illustration|courtoisie|courtesy|avec\s+l['’]aimable|shutterstock|adobe\s+stock)\b/iu;
+
+function looksLikeTextCitationSource(name = '') {
+  const n = String(name || '').replace(/\s+/g, ' ').trim();
+  if (!n) return true;
+  // Indices forts de provenance *image* → ce n'est pas une citation de texte.
+  if (IMAGE_PROVENANCE_HINT_RE.test(n)) return false;
+  // Prénom Nom (photographe probable) → garder.
+  if (/^[\p{L}][\p{L}'’.-]+(?:\s+[\p{L}][\p{L}'’.-]+){1,3}$/u.test(n)
+    && !TEXT_CITATION_SOURCE_RE.test(n)) {
+    return false;
+  }
+  if (TEXT_CITATION_SOURCE_RE.test(n)) return true;
+  return false;
 }
 
 const LEAD_IMAGE_FIELDS = [
@@ -593,13 +616,21 @@ function extractBodyCredit(html = '', imageUrl = '') {
   }
 
   // Ligne de crédit en fin d'article (Le Collectif) :
-  // « Source : Festival international de jazz de Montréal ».
+  //   « Crédit : Rebecca Gagné » → photographe
+  //   « Source : Site internet du Montreux Jazz Festival » → provenance image
+  //   « Source : IRIS Recherche » → citation du *texte* (pas la photo) → ignorer
   for (const p of paragraphs.slice(-6)) {
     const text = stripHtml(p);
     if (text.length < 8 || text.length > 110) continue;
     const m = text.match(/^(?:Source|Crédit(?:\s+photo)?|Photo|Credit)\s*:\s*(.+)$/i);
     if (!m) continue;
-    const parsed = creditFromPhrase(m[1]);
+    const kind = (text.match(/^(Source|Crédit(?:\s+photo)?|Photo|Credit)\s*:/i) || [])[1] || '';
+    const label = m[1].trim();
+    // « Source : … » ambigu (image vs bibliographie article).
+    // On garde les provenances image (site, Facebook, Getty, prénom nom…)
+    // et on rejette les sources de *texte* (recherche, institut, étude…).
+    if (/^source$/i.test(kind) && looksLikeTextCitationSource(label)) continue;
+    const parsed = creditFromPhrase(label);
     if (parsed) return { ...parsed, source: 'body-tail' };
   }
 

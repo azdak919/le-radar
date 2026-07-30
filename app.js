@@ -1452,6 +1452,8 @@ function showMastheadWeatherBoard() {
     if (city) city.style.order = String(slot);
     city?.setAttribute('aria-hidden', 'false');
   });
+  // Plafond sports = cartes météo (CTA hors compte) : resync si le nombre a changé.
+  queueSportsWeatherParitySync();
   refreshWeatherNameScroll();
   const primary = MASTHEAD_WEATHER.querySelector('.masthead-weather__city.is-active[data-weather-city="montreal"], .masthead-weather__city.is-active[data-weather-city="quebec"]');
   const primaryViewport = primary?.querySelector('.masthead-weather__name');
@@ -1562,6 +1564,10 @@ function renderMastheadWeather(entries) {
   MASTHEAD_WEATHER.classList.remove('hidden');
   syncMastheadShuffleButton();
   startMastheadWeatherBoard();
+  // Sports peut s’être peint avant la météo (cap scores = 0) : resync parité.
+  queueSportsWeatherParitySync();
+  window.setTimeout(() => queueSportsWeatherParitySync(), 400);
+  window.setTimeout(() => queueSportsWeatherParitySync(), 1200);
 }
 
 window.addEventListener('radar:translate-mode', refreshMastheadWeatherLinks);
@@ -1660,13 +1666,17 @@ let sportsData = null;
 let sportsSlides = [];
 /** Slides actuellement affichées (1 par slot), comme mastheadWeatherSlots. */
 let sportsVisible = [];
+/** @deprecated remplacé par des timers par slot (indépendants). */
 let sportsNextSlot = 0;
+/** @deprecated interval global — voir sportsSlotTimers. */
 let sportsTimer = null;
+/** Un timeout par slot : chaque puce tourne à son rythme (marquee inclus). */
+let sportsSlotTimers = [];
 /**
  * Plafond mesuré après paint (parité météo `mastheadWeatherFitCount`).
  * null = pas encore contraint ; sinon min(base largeur, fit).
  * On retire une carte score à la fois tant que le bandeau est à l’étroit ;
- * le dernier chip restant est toujours la CTA « Au tableau ».
+ * le dernier chip restant est toujours la CTA « SPORTS ».
  */
 let sportsFitCount = null;
 /** Garde-fou récursion fit (max 4 → 1). */
@@ -1676,7 +1686,30 @@ try {
   sportsReducedMotion = !!(window.matchMedia
     && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 } catch { /* ignore */ }
-const SPORTS_ROTATE_MS = 5200; // même rythme que la météo
+/**
+ * Temps d’affichage des puces sports — calibré pour *lire* l’info
+ * (glyphe + équipes + date + heure), pas seulement un tick météo.
+ *
+ * Sans défilement : ~7,8–11 s selon la longueur du libellé
+ *   (scan UI ~40 ms/car. + plancher pour acknowledgement).
+ * Avec marquee : ≥ 1 aller-retour CSS + pause au repos pour relire le début
+ *   (même esprit que MARQUEE_REST_MS du dial radio).
+ */
+const SPORTS_READ_MIN_MS = 7800;
+const SPORTS_READ_PER_CHAR_MS = 42;
+const SPORTS_READ_MAX_MS = 11000;
+/** Alias historique / repli. */
+const SPORTS_ROTATE_MS = SPORTS_READ_MIN_MS;
+/**
+ * Une voie du marquee CSS `sports-chip-scroll` (style.css) — tenir synchro
+ * avec `--sports-scroll-duration`. `alternate` → aller-retour = 2 ×.
+ */
+const SPORTS_SCROLL_ONE_WAY_MS = 7000;
+const SPORTS_SCROLL_ROUND_TRIP_MS = SPORTS_SCROLL_ONE_WAY_MS * 2;
+/** Pause au repos après le retour (re-ack du début de ligne). */
+const SPORTS_SCROLL_POST_PAUSE_MS = 2000;
+/** Décalage initial entre slots pour éviter un flip simultané au 1er paint. */
+const SPORTS_SLOT_STAGGER_MS = 1100;
 const SPORTS_ARRIVE_MS = 500;
 /**
  * CTA type alerte bandeau : pastille fixe « SPORTS » (toujours à droite)
@@ -1685,7 +1718,8 @@ const SPORTS_ARRIVE_MS = 500;
  * Rotation d’accroche = crossfade du texte interne (pas de carte type gare).
  */
 const SPORTS_CTA_TAG = 'Sports';
-const SPORTS_CTA_CROSSFADE_MS = 320;
+/** Demi-cycle du fondu (sortie puis entrée) — total ~1,1 s, plus doux que 320 ms. */
+const SPORTS_CTA_CROSSFADE_MS = 560;
 /** Popularité sports étudiants QC (aligné page /sports/). */
 const SPORTS_POPULARITY = [
   'hockey',
@@ -1959,34 +1993,104 @@ function sportsStripAvailWidth() {
 }
 
 /**
- * Plafond depuis la largeur seule (estimation, avant mesure post-paint).
+ * Cartes météo pour plafonner les puces SCORE (CTA hors compte).
+ * Priorité : villes `.is-active` peintes → slots → lastBoardCount →
+ * estimé weatherBoardCount si le bandeau est déjà visible.
+ */
+function sportsWeatherCardCount() {
+  if (!MASTHEAD_WEATHER) return 0;
+  if (MASTHEAD_WEATHER.classList.contains('is-too-narrow')) return 0;
+  const active = MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city.is-active').length;
+  if (active > 0) return active;
+  if (mastheadWeatherSlots.length > 0) return mastheadWeatherSlots.length;
+  if (mastheadWeatherLastBoardCount > 0) return mastheadWeatherLastBoardCount;
+  // Bandeau déjà affiché mais slots vides : même barème de largeur.
+  if (!MASTHEAD_WEATHER.classList.contains('hidden')) {
+    try {
+      if (typeof weatherBoardCount === 'function') {
+        const est = weatherBoardCount();
+        if (est > 0) return est;
+      }
+    } catch { /* ignore */ }
+  }
+  return 0;
+}
+
+/**
+ * Plafond depuis la largeur + parité météo (avant mesure post-paint).
  * Max desktop : 3 scores + CTA = 4. Minimum : 1 (CTA seule).
+ * Les puces SCORE ne dépassent jamais le nombre de cartes météo ;
+ * la CTA « SPORTS » (tout à droite) est hors de ce plafond.
+ * Ex. météo 2 → max 2 scores + CTA (= 3 chips), jamais 3 scores.
  */
 function sportsBoardCountBase() {
   const avail = sportsStripAvailWidth();
   const gap = 6;
   // Un peu plus généreux que le min CSS : on préfère retirer une carte
   // (cascade type météo) plutôt que d’écraser scores + CTA.
-  // Téléphone (~360 CSS px) → 1 = CTA « Au tableau » seule.
+  // Téléphone (~360 CSS px) → 1 = CTA « SPORTS » seule.
   const minScore = 152;
   const minCta = 172;
 
   // 4 = 3 scores + CTA ; 3 = 2+CTA ; 2 = 1+CTA ; 1 = CTA seule
-  for (let n = 4; n >= 2; n -= 1) {
-    const scores = n - 1;
-    const need = scores * minScore + minCta + gap * (n - 1);
-    if (avail >= need) return n;
+  let n = 1;
+  for (let tryN = 4; tryN >= 2; tryN -= 1) {
+    const scores = tryN - 1;
+    const need = scores * minScore + minCta + gap * (tryN - 1);
+    if (avail >= need) {
+      n = tryN;
+      break;
+    }
   }
-  return 1;
+
+  // Parité météo : scores ≤ cartes météo (CTA exclue).
+  const weatherN = sportsWeatherCardCount();
+  if (weatherN > 0 && n >= 2) {
+    const maxScores = weatherN;
+    const maxTotal = maxScores + 1; // + CTA
+    n = Math.min(n, maxTotal);
+  }
+  return n;
 }
 
 /**
- * Nombre de chips cible : largeur × contrainte de fit mesurée (parité météo).
- * On retire une carte à la fois en rétrécissant (4 → 3 → 2 → 1 = Au tableau).
+ * Nombre de chips cible : largeur × parité météo × contrainte de fit mesurée.
+ * On retire une carte à la fois en rétrécissant (4 → 3 → 2 → 1 = SPORTS).
  */
 function sportsBoardCount() {
   const base = sportsBoardCountBase();
-  return sportsFitCount === null ? base : Math.min(base, sportsFitCount);
+  // Le fit mesuré ne doit pas *outrepasser* le plafond météo (scores ≤ weather).
+  let n = sportsFitCount === null ? base : Math.min(base, sportsFitCount);
+  const weatherN = sportsWeatherCardCount();
+  if (weatherN > 0 && n >= 2) {
+    n = Math.min(n, weatherN + 1);
+  }
+  return n;
+}
+
+/**
+ * Quand la météo change de nombre de cartes, resynchroniser le bandeau scores
+ * (même largeur de page, mais le cap parité a bougé).
+ */
+let sportsWeatherParityRaf = 0;
+function queueSportsWeatherParitySync() {
+  if (typeof cancelAnimationFrame === 'function' && sportsWeatherParityRaf) {
+    cancelAnimationFrame(sportsWeatherParityRaf);
+  }
+  sportsWeatherParityRaf = requestAnimationFrame(() => {
+    sportsWeatherParityRaf = 0;
+    if (!MASTHEAD_SPORTS_STRIP || !sportsSlides.length) return;
+    const weatherN = sportsWeatherCardCount();
+    const scoreCount = sportsVisible.filter((s) => s && s.mode !== 'cta').length;
+    const target = sportsBoardCount();
+    // Resync si le total change OU si trop de scores vs météo.
+    const overWeather = weatherN > 0 && scoreCount > weatherN;
+    if (sportsVisible.length === target && !overWeather) return;
+    sportsFitCount = null;
+    sportsFitDepth = 0;
+    renderSportsStrip();
+    scheduleSportsRotate();
+  });
 }
 
 /**
@@ -2456,7 +2560,8 @@ function sportsCtaA11y(slide) {
 }
 
 /**
- * Crossfade de l’accroche CTA en place (carte stable, pas d’arrivée type gare).
+ * Crossfade doux de l’accroche CTA en place (carte stable, pas de gare).
+ * Sortie en fondu → swap texte → entrée en fondu (ease, ~560 ms × 2).
  */
 function crossfadeSportsCtaLabel(chip, slide) {
   if (!chip || !slide) return;
@@ -2471,7 +2576,8 @@ function crossfadeSportsCtaLabel(chip, slide) {
   if (inner.textContent === nextText) return;
   if (sportsReducedMotion) {
     inner.textContent = nextText;
-    inner.classList.remove('is-crossfade');
+    inner.classList.remove('is-crossfade', 'is-crossfade-in');
+    refreshSportsChipScroll(chip);
     return;
   }
   // Annuler un crossfade en cours sur ce chip.
@@ -2479,42 +2585,71 @@ function crossfadeSportsCtaLabel(chip, slide) {
     clearTimeout(chip._ctaFadeTimer);
     chip._ctaFadeTimer = null;
   }
+  // Couper marquee / pulse pendant le fondu (évite un à-coup transform+opacity).
+  chip.classList.remove('is-overflowing');
+  chip.style.removeProperty('--sports-scroll');
+  inner.classList.remove('is-crossfade-in');
   inner.classList.add('is-crossfade');
   chip._ctaFadeTimer = window.setTimeout(() => {
     inner.textContent = nextText;
-    // Force reflow pour rejouer le fondu entrant.
-    void inner.offsetWidth;
+    // Rester opaque à 0 un frame (sinon le navigateur saute le fondu entrant).
+    inner.style.opacity = '0';
     inner.classList.remove('is-crossfade');
-    chip._ctaFadeTimer = null;
+    void inner.offsetWidth;
+    requestAnimationFrame(() => {
+      inner.classList.add('is-crossfade-in');
+      inner.style.opacity = '';
+      chip._ctaFadeTimer = window.setTimeout(() => {
+        inner.classList.remove('is-crossfade-in');
+        chip._ctaFadeTimer = null;
+        // Après le fondu entrant : mesurer le marquee sans brusquer le texte.
+        refreshSportsChipScroll(chip);
+      }, SPORTS_CTA_CROSSFADE_MS);
+    });
   }, SPORTS_CTA_CROSSFADE_MS);
 }
 
 /**
- * Défilement gauche → droite du texte trop long (parité météo masthead).
- * À appeler après chaque paint / rotation de chip.
+ * Défilement L→R du texte trop long (scores + accroche CTA).
+ * @param {Element|null} [chipOrRoot] une puce, le bandeau, ou null (= tout le bandeau).
+ * Ne relance PAS l’animation CSS des puces déjà stables (évite le « tous
+ * se rafraîchissent » quand une seule change).
  */
-function refreshSportsChipScroll() {
-  if (!MASTHEAD_SPORTS_STRIP) return;
-  MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip').forEach((chip) => {
-    // CTA « SPORTS » : pas de défilement type gare — ellipsis + crossfade seulement.
-    if (chip.classList.contains('sports-chip--cta')) {
-      chip.classList.remove('is-overflowing');
-      chip.style.removeProperty('--sports-scroll');
-      return;
-    }
+function refreshSportsChipScroll(chipOrRoot = null) {
+  if (!MASTHEAD_SPORTS_STRIP && !chipOrRoot) return;
+  const root = chipOrRoot || MASTHEAD_SPORTS_STRIP;
+  if (!root) return;
+  const chips = root.classList?.contains('sports-chip')
+    ? [root]
+    : Array.from(root.querySelectorAll?.('.sports-chip') || []);
+  chips.forEach((chip) => {
     const viewport = chip.querySelector('.sports-chip__line');
     const inner = chip.querySelector('.sports-chip__line-inner');
     if (!viewport || !inner) {
       chip.classList.remove('is-overflowing');
+      chip.style.removeProperty('--sports-scroll');
       return;
     }
-    // Mesurer sans ellipsis forcée.
-    chip.classList.remove('is-overflowing');
-    inner.style.maxWidth = 'none';
+    // Mesure sans retirer is-overflowing (sinon l’animation CSS redémarre).
+    const hadOverflow = chip.classList.contains('is-overflowing');
+    if (!hadOverflow) inner.style.maxWidth = 'none';
+    // Pendant un crossfade CTA, le label est en opacity 0 — mesurer quand même.
     const overflow = Math.max(0, inner.scrollWidth - viewport.clientWidth);
-    inner.style.maxWidth = '';
-    chip.classList.toggle('is-overflowing', overflow > 2);
-    chip.style.setProperty('--sports-scroll', `${overflow}px`);
+    if (!hadOverflow) inner.style.maxWidth = '';
+    const needsScroll = overflow > 2;
+    if (!needsScroll) {
+      if (hadOverflow) {
+        chip.classList.remove('is-overflowing');
+        chip.style.removeProperty('--sports-scroll');
+      }
+      return;
+    }
+    const next = `${overflow}px`;
+    const prev = (chip.style.getPropertyValue('--sports-scroll') || '').trim();
+    // Même décalage déjà en cours : laisser l’aller-retour continuer.
+    if (hadOverflow && prev === next) return;
+    chip.style.setProperty('--sports-scroll', next);
+    if (!hadOverflow) chip.classList.add('is-overflowing');
   });
 }
 
@@ -2952,16 +3087,59 @@ function renderSportsStrip() {
 }
 
 /**
- * Rotation carte par carte.
- * ≥ 2 chips : CTA épinglée à droite (accroche seule) ; scores en ronde.
- * 1 chip : CTA seule — on ne fait tourner que l’accroche (pas de scores).
+ * Temps de lecture estimé d’un libellé de puce (scan compact FR).
+ * Ex. « CLG vs OUT · 19 août · 23 h 40 » ≈ 8 s ; accroche plus longue → plus.
  */
-function rotateOneSportsCard() {
+function sportsLabelReadingMs(text) {
+  const len = String(text || '').replace(/\s+/g, ' ').trim().length;
+  if (!len) return SPORTS_READ_MIN_MS;
+  return Math.min(
+    SPORTS_READ_MAX_MS,
+    Math.max(SPORTS_READ_MIN_MS, 2600 + len * SPORTS_READ_PER_CHAR_MS),
+  );
+}
+
+/**
+ * Temps d’affichage d’un slot avant rotation — assez long pour *apprécier*
+ * la carte et enregistrer l’info.
+ * · Texte entier visible : dwell = lecture estimée (7,8–11 s).
+ * · Texte qui défile : max(lecture, 1 aller-retour marquee + pause repos).
+ */
+function sportsSlotDwellMs(slot) {
+  const chip = MASTHEAD_SPORTS_STRIP?.querySelectorAll('.sports-chip')?.[slot];
+  const label = chip?.querySelector('.sports-chip__line-inner')?.textContent || '';
+  const readMs = sportsLabelReadingMs(label);
+  if (sportsReducedMotion) return readMs;
+  if (!chip) return SPORTS_READ_MIN_MS;
+  if (chip.classList.contains('is-overflowing')) {
+    // Voir toute la ligne (aller) + revenir au début (retour) + reposer.
+    return Math.max(readMs, SPORTS_SCROLL_ROUND_TRIP_MS + SPORTS_SCROLL_POST_PAUSE_MS);
+  }
+  return readMs;
+}
+
+function clearSportsSlotTimers() {
+  for (let i = 0; i < sportsSlotTimers.length; i += 1) {
+    if (sportsSlotTimers[i]) clearTimeout(sportsSlotTimers[i]);
+  }
+  sportsSlotTimers = [];
+  if (sportsTimer) {
+    clearInterval(sportsTimer);
+    sportsTimer = null;
+  }
+}
+
+/**
+ * Rotation d’un seul slot — indépendante des voisines.
+ * ≥ 2 chips : CTA à droite (accroche seule) ; scores à gauche.
+ * 1 chip : CTA seule.
+ */
+function rotateSportsSlot(slot) {
   if (!MASTHEAD_SPORTS_STRIP || sportsVisible.length < 1 || sportsSlides.length < 1) return;
   const n = sportsVisible.length;
+  if (slot < 0 || slot >= n) return;
   const pinned = n >= 2;
   const rightSlot = n - 1;
-  const slot = sportsNextSlot % n;
   const used = new Set(
     sportsVisible
       .filter((_, i) => i !== slot)
@@ -2991,10 +3169,7 @@ function rotateOneSportsCard() {
     }
   }
 
-  if (!replacement) {
-    sportsNextSlot = (slot + 1) % n;
-    return;
-  }
+  if (!replacement) return;
   // Même match déjà affiché : forcer le curseur suivant puis retenter une fois.
   if (
     replacement.mode !== 'cta'
@@ -3004,14 +3179,10 @@ function rotateOneSportsCard() {
     const avoid = String(sportsVisible[slot]?.team?.sport || '').toLowerCase();
     sportsLeftCursor = (sportsLeftCursor + 1) % Math.max(1, sportsLeftLaneState().pool.length || 1);
     replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid });
-    if (!replacement || replacement.key === sportsVisible[slot]?.key) {
-      sportsNextSlot = (slot + 1) % n;
-      return;
-    }
+    if (!replacement || replacement.key === sportsVisible[slot]?.key) return;
   }
 
   sportsVisible[slot] = replacement;
-  // Prochain tick = slot suivant à droite (puis retour à gauche).
   sportsNextSlot = (slot + 1) % n;
   const chips = MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip');
   const oldChip = chips[slot];
@@ -3032,12 +3203,44 @@ function rotateOneSportsCard() {
   } else {
     MASTHEAD_SPORTS_STRIP.append(newChip);
   }
-  window.requestAnimationFrame(() => refreshSportsChipScroll());
+  // Uniquement cette puce — ne pas relancer le marquee des voisines.
+  window.requestAnimationFrame(() => refreshSportsChipScroll(newChip));
+}
+
+/** Compat tests / appels historiques : un tick = slot 0 (ou le prochain round-robin). */
+function rotateOneSportsCard() {
+  if (!sportsVisible.length) return;
+  const slot = sportsNextSlot % sportsVisible.length;
+  rotateSportsSlot(slot);
+}
+
+/**
+ * Programme un timeout pour un slot, puis se re-planifie après rotation.
+ * Dwell = base, ou aller-retour marquee si is-overflowing.
+ */
+function scheduleSportsSlot(slot, { initialStagger = 0 } = {}) {
+  if (!MASTHEAD_SPORTS_STRIP) return;
+  if (sportsSlotTimers[slot]) {
+    clearTimeout(sportsSlotTimers[slot]);
+    sportsSlotTimers[slot] = null;
+  }
+  const n = sportsVisible.length;
+  if (slot < 0 || slot >= n) return;
+  const delay = Math.max(0, sportsSlotDwellMs(slot) + initialStagger);
+  sportsSlotTimers[slot] = window.setTimeout(() => {
+    sportsSlotTimers[slot] = null;
+    rotateSportsSlot(slot);
+    // Après paint + mesure overflow : reprogrammer avec le bon dwell.
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => scheduleSportsSlot(slot));
+    });
+  }, delay);
 }
 
 function scheduleSportsRotate() {
-  if (sportsTimer) clearInterval(sportsTimer);
-  sportsTimer = null;
+  clearSportsSlotTimers();
+  const n = sportsVisible.length;
+  if (n < 1) return;
   const lane = sportsLeftLaneState();
   // Tourner s’il y a de la matière (pool résultats/next, infos hors saison, ou CTA multi-accroches).
   const canSpin = lane.pool.length > 1
@@ -3045,9 +3248,10 @@ function scheduleSportsRotate() {
     || sportsCtaLabelPool().length > 1
     || sportsVisible.length > 1;
   if (!canSpin) return;
-  sportsTimer = window.setInterval(() => {
-    rotateOneSportsCard();
-  }, SPORTS_ROTATE_MS);
+  // Chaque slot a son horloge ; stagger initial pour ne pas tout basculer d’un coup.
+  for (let i = 0; i < n; i += 1) {
+    scheduleSportsSlot(i, { initialStagger: i * SPORTS_SLOT_STAGGER_MS });
+  }
 }
 
 async function initMastheadSports() {
@@ -3068,6 +3272,9 @@ async function initMastheadSports() {
     sportsFitDepth = 0;
     renderSportsStrip();
     scheduleSportsRotate();
+    // Parité météo : resync si la météo s’est peinte juste avant/après.
+    queueSportsWeatherParitySync();
+    window.setTimeout(() => queueSportsWeatherParitySync(), 600);
     if (!initMastheadSports._resizeBound) {
       initMastheadSports._resizeBound = true;
       initMastheadSports._lastWidth = MASTHEAD_SPORTS_STRIP.clientWidth || 0;
@@ -6799,9 +7006,8 @@ function articleInstitutionMetaHtml(name = '', type = '', role = 'standard') {
   if (!name) return '';
   const short = articleInstitutionLabel(name, type, 'short');
   const full = articleInstitutionLabel(name, type, 'full');
-  // Nom complet seulement pour la une et les vedettes (plus d’espace).
-  // En bref + Suite du fil : toujours acronyme / forme courte.
-  const spacious = role === 'lead' || role === 'feature';
+  // Une + vedettes + En bref + suite du fil : nom complet (dual full/short responsive).
+  const spacious = role === 'lead' || role === 'feature' || role === 'standard' || role === 'compact';
   // Pas de notranslate : hors Original/FR/EN, translate.js localise (ES/PT…).
   // En Original / FR / EN : libellés d’origine intacts.
   if (spacious && full && full !== short) {
@@ -7782,17 +7988,20 @@ function estimateHeroSeedHeight(heroCount) {
  */
 function briefSeedCountForHero(heroCount, opts = {}) {
   const sourceMode = !!opts.sourceMode;
+  const mid = !sourceMode && isMidwidthMagazinePreview();
+  // Mid : rail 240–280 px → chaque carte En bref est plus haute (titres wrap).
+  const cardH = mid ? Math.round(AVG_BRIEF_CARD_H * 1.35) : AVG_BRIEF_CARD_H;
   const target = Math.max(0, estimateHeroSeedHeight(heroCount) - AVG_BRIEF_TITLE_H);
   // Source : un peu au-dessus de l’estimé (images), sans graine trop haute
   // (sinon 1 carte de trop en En bref après paint).
-  const mult = sourceMode ? 1.45 : 1;
-  const n = Math.round((target * mult) / AVG_BRIEF_CARD_H);
+  const mult = sourceMode ? 1.45 : (mid ? 0.85 : 1);
+  const n = Math.round((target * mult) / cardH);
   const min = sourceMode
     ? Math.max(BRIEF_SIDEBAR_SEED_MIN, 5)
-    : BRIEF_SIDEBAR_SEED_MIN;
+    : (mid ? 3 : BRIEF_SIDEBAR_SEED_MIN);
   const max = sourceMode
     ? Math.min(BRIEF_SIDEBAR_MAX, BRIEF_SIDEBAR_SEED_MAX + 2)
-    : BRIEF_SIDEBAR_SEED_MAX;
+    : (mid ? Math.min(8, BRIEF_SIDEBAR_SEED_MAX) : BRIEF_SIDEBAR_SEED_MAX);
   return Math.min(max, Math.max(min, n));
 }
 
@@ -7818,11 +8027,57 @@ const _SF = (typeof RadarSessionFreshness !== 'undefined') ? RadarSessionFreshne
 const FRESHNESS_SESSION_COUNT = _SF?.FRESHNESS_SESSION_COUNT ?? 3;
 const CONTINGENCY_MAX_SESSIONS_BACK = _SF?.CONTINGENCY_MAX_SESSIONS_BACK
   ?? (FRESHNESS_SESSION_COUNT - 1);
-/* Une + vedettes : même budget d’extrait (parité visuelle flottante / Kiosque). */
-const BRIEF_LIMITS = { lead: 960, feature: 960, compact: 400, standard: 260 };
+/* Stack 1 col / hors magazine : budgets larges (parité Kiosque). */
+const BRIEF_LIMITS = { lead: 960, feature: 960, compact: 420, standard: 300 };
+/**
+ * Magazine 2 colonnes — extraits bornés pour l’équilibre, sans affamer En bref.
+ * (compact trop bas → chapôs ridicules + « Lire la suite » trop tôt.)
+ */
+const BRIEF_LIMITS_DESKTOP_MAG = { lead: 780, feature: 680, compact: 340, standard: 280 };
+const BRIEF_LIMITS_MID = { lead: 700, feature: 580, compact: 300, standard: 260 };
 const LEAD_BRIEF_MIN_CHARS = 160;
 const BRIEF_COMPACT_MIN_CHARS = 150;
 const FEATURE_BRIEF_MIN_CHARS = LEAD_BRIEF_MIN_CHARS;
+const LEAD_BRIEF_MIN_CHARS_MAG = 120;
+const BRIEF_COMPACT_MIN_CHARS_MAG = 130;
+const FEATURE_BRIEF_MIN_CHARS_MAG = 110;
+const LEAD_BRIEF_MIN_CHARS_MID = 110;
+const BRIEF_COMPACT_MIN_CHARS_MID = 120;
+const FEATURE_BRIEF_MIN_CHARS_MID = 100;
+
+/** Bureau magazine ≥1100 (hors preview mid). */
+function isDesktopMagazineLayout() {
+  if (isMidwidthMagazinePreview()) return false;
+  try {
+    return window.matchMedia('(min-width: 1100px)').matches;
+  } catch {
+    return false;
+  }
+}
+
+/** Budgets d’extrait : mid C → desktop mag → stack large. */
+function briefLimitForRole(role = 'standard') {
+  let table = BRIEF_LIMITS;
+  if (isMidwidthMagazinePreview()) table = BRIEF_LIMITS_MID;
+  else if (isDesktopMagazineLayout()) table = BRIEF_LIMITS_DESKTOP_MAG;
+  return table[role] ?? 170;
+}
+
+function briefMinCharsForRole(role = 'standard') {
+  if (isMidwidthMagazinePreview()) {
+    if (role === 'compact') return BRIEF_COMPACT_MIN_CHARS_MID;
+    if (role === 'feature') return FEATURE_BRIEF_MIN_CHARS_MID;
+    if (role === 'lead') return LEAD_BRIEF_MIN_CHARS_MID;
+  }
+  if (isDesktopMagazineLayout()) {
+    if (role === 'compact') return BRIEF_COMPACT_MIN_CHARS_MAG;
+    if (role === 'feature') return FEATURE_BRIEF_MIN_CHARS_MAG;
+    if (role === 'lead') return LEAD_BRIEF_MIN_CHARS_MAG;
+  }
+  if (role === 'compact') return BRIEF_COMPACT_MIN_CHARS;
+  if (role === 'feature') return FEATURE_BRIEF_MIN_CHARS;
+  return LEAD_BRIEF_MIN_CHARS;
+}
 
 function articleKey(item) {
   return item.link || `${item.source}::${item.date}::${item.title}`;
@@ -8059,12 +8314,26 @@ function partitionNewsFeed(items, referenceDate = new Date()) {
 
 /**
  * Bureau magazine ≥1100px : fil global *et* vue source.
+ * Prévisualisation midwidth C : seuil 900 px (focus-group hybride).
  * (Recherche = liste plate — pas d’équilibre colonnes.)
  */
 function canBalanceMagazineColumns() {
   if (!NEWS_LIST) return false;
   if (NEWS_LIST.dataset.mode === 'search') return false;
-  return window.matchMedia('(min-width: 1100px)').matches;
+  const minPx = (typeof window.__radarMidwidthPreview?.magazineMinPx === 'function')
+    ? window.__radarMidwidthPreview.magazineMinPx()
+    : 1100;
+  return window.matchMedia(`(min-width: ${minPx}px)`).matches;
+}
+
+/** Magazine mid (preview C, 900–1099) : rail étroit → cartes En bref plus hautes. */
+function isMidwidthMagazinePreview() {
+  if (document.documentElement.dataset.midwidthPreview !== 'C') return false;
+  try {
+    return window.matchMedia('(min-width: 900px) and (max-width: 1099.98px)').matches;
+  } catch {
+    return false;
+  }
 }
 
 function removeTailArticleForItem(item) {
@@ -8169,6 +8438,38 @@ function rebuildBriefMetaFromDom(brief) {
     magazineMeta.briefSources.add(sourceKey(item));
     magazineMeta.briefInsts.add(institutionKey(item));
   });
+}
+
+/** Resync institutions une/vedettes depuis le DOM (évite meta désync après fill). */
+function rebuildHeroMetaFromDom(hero) {
+  magazineMeta.heroKeys = new Set();
+  magazineMeta.heroSources = new Set();
+  magazineMeta.heroInsts = new Set();
+  hero?.querySelectorAll('.article--lead, .article--feature').forEach((el) => {
+    const item = el.__radarItem;
+    if (!item) return;
+    magazineMeta.heroKeys.add(articleKey(item));
+    magazineMeta.heroSources.add(sourceKey(item));
+    magazineMeta.heroInsts.add(institutionKey(item));
+  });
+}
+
+/**
+ * Filet fil général : aucune institution déjà en une/vedette dans En bref.
+ * (Vue source : même média partout — on ne purge pas.)
+ */
+function purgeBriefCardsFromHeroInstitutions(brief) {
+  if (!brief || NEWS_LIST?.dataset.mode === 'source') return 0;
+  let removed = 0;
+  const cards = [...brief.querySelectorAll('.article--compact')];
+  for (const card of cards) {
+    const item = resolveItemFromCard(card);
+    if (!item) continue;
+    const inst = institutionKey(item);
+    if (!inst || !magazineMeta.heroInsts.has(inst)) continue;
+    if (demoteBriefCardToTail(brief, card)) removed += 1;
+  }
+  return removed;
 }
 
 function clearMagazineSpacers(root) {
@@ -8331,17 +8632,25 @@ function balanceMagazineColumns() {
   magazineBalanceBusy = true;
   magazineBalanceQueued = false;
   const isSourceMode = NEWS_LIST.dataset.mode === 'source';
+  const mid = !isSourceMode && isMidwidthMagazinePreview();
   // Tolérance : un petit spacer est acceptable dans le fil général. En vue
   // d'un seul média, « En bref » ne doit en revanche jamais descendre sous
   // la une et ses vedettes : cette page est une lecture verticale, où une
   // colonne latérale plus longue crée un vide très visible sous les articles
   // principaux. La prochaine carte reste donc dans « Suite du fil ».
-  const tol = isSourceMode ? 0 : COLUMN_HEIGHT_TOL;
-  const hardMin = isSourceMode ? 2 : BRIEF_SIDEBAR_HARD_MIN;
+  // Midwidth : rail étroit → vide sous vedettes très visible : tolérance plus
+  // serrée et plancher En bref à 1 carte (plutôt que 2).
+  const tol = isSourceMode ? 0 : (mid ? 16 : COLUMN_HEIGHT_TOL);
+  const hardMin = isSourceMode ? 2 : (mid ? 1 : BRIEF_SIDEBAR_HARD_MIN);
   // Ne pas « améliorer » un équilibre déjà dans la tolérance produit (~1 carte
   // compacte). Les passes image tardives re-trimaient 6→4 cartes et laissaient
   // un trou de ~110 px alors que l’état antérieur était déjà bon (gap ~40).
-  const GOOD_GAP_MAX = AVG_BRIEF_CARD_H;
+  const GOOD_GAP_MAX = mid ? Math.round(AVG_BRIEF_CARD_H * 0.75) : AVG_BRIEF_CARD_H;
+
+  // Toujours resync hero meta avant trim/fill (institutions une/vedettes).
+  rebuildHeroMetaFromDom(hero);
+  // Filet immédiat : jamais d’institution hero en En bref (hors vue source).
+  purgeBriefCardsFromHeroInstitutions(brief);
 
   const trimBriefIfTaller = () => {
     let guard = 0;
@@ -8439,8 +8748,70 @@ function balanceMagazineColumns() {
 
     // --- 3) TRIM final (images / fill ont pu dépasser d’une carte) ---
     trimBriefIfTaller();
+    // Re-purge si un fill a glissé une institution hero (ne devrait plus arriver).
+    if (purgeBriefCardsFromHeroInstitutions(brief)) trimBriefIfTaller();
 
-    ensureMagazineColumnSpacers(hero, brief);
+    // --- 4) Midwidth : priorité = zéro grand vide sous les vedettes.
+    // (Le spacer flex sous le hero est très visible en rail étroit.)
+    if (mid) {
+      const equalizeMid = () => {
+        // Trim d’abord : En bref ne doit pas dépasser le hero (+tol).
+        let guard = 0;
+        while (guard < 16) {
+          guard += 1;
+          const hH = magazineColumnContentHeight(hero);
+          const bH = magazineColumnContentHeight(brief);
+          if (bH <= hH + tol) break;
+          const cards = brief.querySelectorAll('.article--compact');
+          if (cards.length <= hardMin) break;
+          if (!demoteBriefCardToTail(brief, cards[cards.length - 1])) break;
+        }
+        // Fill prudent : trou sous En bref > ½ carte. Overshoot sous vedettes
+        // plafonné à COLUMN_HEIGHT_TOL (petit spacer OK, pas de grand vide).
+        const fillOvershootMax = COLUMN_HEIGHT_TOL;
+        guard = 0;
+        while (guard < 8) {
+          guard += 1;
+          const hH = magazineColumnContentHeight(hero);
+          const bH = magazineColumnContentHeight(brief);
+          const voidUnderBrief = hH - bH;
+          if (voidUnderBrief <= GOOD_GAP_MAX) break;
+          if (!magazineReserve.length) break;
+          if (brief.querySelectorAll('.article--compact').length >= BRIEF_SIDEBAR_MAX) break;
+          // Fil général : jamais d’institution déjà en une/vedette, même en fill mid.
+          // (allowHeroInstitution réservé à la vue source.)
+          const item = takeNextBriefFromReserve({
+            allowExtra: true,
+            allowHeroInstitution: false,
+          });
+          if (!item) break;
+          const el = safeCreateArticle(item, 'compact');
+          if (!el) break;
+          appendBeforeMagazineSpacer(brief, el);
+          const overshoot = magazineColumnContentHeight(brief) - magazineColumnContentHeight(hero);
+          if (overshoot > fillOvershootMax) {
+            demoteBriefCardToTail(brief, el);
+            break;
+          }
+          markPromotedToBrief(item);
+          removeTailArticleForItem(item);
+        }
+        // Filet : pas d’institution une/vedettes en En bref (mid fill).
+        purgeBriefCardsFromHeroInstitutions(brief);
+      };
+      equalizeMid();
+      ensureMagazineColumnSpacers(hero, brief);
+      // Spacer mesuré : si encore un trou sous le hero, re-trim + reposer.
+      const hSp = hero.querySelector('.news-hero-spacer')?.offsetHeight || 0;
+      if (hSp > tol) {
+        clearMagazineSpacers(hero);
+        clearMagazineSpacers(brief);
+        equalizeMid();
+        ensureMagazineColumnSpacers(hero, brief);
+      }
+    } else {
+      ensureMagazineColumnSpacers(hero, brief);
+    }
   } finally {
     window.setTimeout(() => {
       magazineBalanceBusy = false;
@@ -8469,6 +8840,7 @@ const MAGAZINE_BALANCE_PASS_CAP = 4;
 function scheduleMagazineColumnBalance() {
   clearTimeout(magazineBalanceTimer);
   magazineBalancePasses = 0;
+  const mid = isMidwidthMagazinePreview();
   magazineBalanceTimer = window.setTimeout(() => {
     magazineBalancePasses = 1;
     balanceMagazineColumns();
@@ -8486,6 +8858,17 @@ function scheduleMagazineColumnBalance() {
       magazineBalancePasses = Math.max(magazineBalancePasses, 4);
       balanceMagazineColumns();
     }, 2200);
+    // Midwidth : passes tardives (images + wrap titres En bref en rail étroit).
+    if (mid) {
+      window.setTimeout(() => {
+        magazineBalancePasses = Math.max(magazineBalancePasses, 5);
+        balanceMagazineColumns();
+      }, 3600);
+      window.setTimeout(() => {
+        magazineBalancePasses = Math.max(magazineBalancePasses, 6);
+        balanceMagazineColumns();
+      }, 5200);
+    }
   }, 80);
 }
 
@@ -8621,7 +9004,12 @@ function createArticle(item, role = 'standard') {
     ({ text: brief, truncated: briefTruncated } = resolveBrief(item, item.excerpt || body, role));
   }
   if (isLeadLikeBrief && brief) {
-    ({ text: brief, truncated: briefTruncated } = ensureLeadBriefMinLines(brief, briefTruncated, item));
+    ({ text: brief, truncated: briefTruncated } = ensureLeadBriefMinLines(
+      brief,
+      briefTruncated,
+      item,
+      role === 'feature' ? 'feature' : 'lead',
+    ));
     const fullSource = sanitizeBriefBody(leadBody);
     if (fullSource.length > brief.length + 12 || (brief.length >= 100 && item.link)) {
       briefTruncated = true;
@@ -8663,8 +9051,10 @@ function createArticle(item, role = 'standard') {
   const metaHtml = (metaLead || timeHtml)
     ? `<div class="article-meta">${metaLead}${timeHtml}</div>`
     : '';
+  // Espace insécable + classe : évite « meLire la suite » (margin seule insuffisante
+  // quand le chapô est en inline à côté d’une vignette flottante).
   const briefHtml = item.link || brief
-    ? `<p class="article-brief${briefTruncated ? ' is-truncated' : ''}"><span class="article-brief-text">${escapeHtml(brief || '')}</span>${briefTruncated ? `<span class="article-more" style="color: ${color}">${readMore}</span>` : ''}</p>`
+    ? `<p class="article-brief${briefTruncated ? ' is-truncated' : ''}"><span class="article-brief-text">${escapeHtml(brief || '')}</span>${briefTruncated ? `<span class="article-more" style="color: ${color}">\u00a0${escapeHtml(readMore)}</span>` : ''}</p>`
     : '';
   // « Par »/« By » se traduit (UI) ; le nom d’auteur reste en original (notranslate).
   // Espace garanti en CSS (.article-author) : la trad du libellé mange l’espace final.
@@ -9771,14 +10161,15 @@ function featureBriefSource(item) {
 }
 
 function ensureFeatureBriefMinLines(brief, truncated, item) {
-  return ensureLeadBriefMinLines(brief, truncated, item);
+  return ensureLeadBriefMinLines(brief, truncated, item, 'feature');
 }
 
 function ensureCompactBriefMinLines(brief, truncated, item) {
   const { author } = splitByline(item);
   brief = stripLeadingByline(brief, author);
+  const minChars = briefMinCharsForRole('compact');
 
-  if (brief.length >= BRIEF_COMPACT_MIN_CHARS) {
+  if (brief.length >= minChars) {
     const full = compactBriefSource(item);
     if (full.length > brief.length + 12) truncated = true;
     return { text: brief, truncated };
@@ -9796,23 +10187,25 @@ function ensureCompactBriefMinLines(brief, truncated, item) {
   return { text: brief, truncated };
 }
 
-function ensureLeadBriefMinLines(brief, truncated, item) {
+function ensureLeadBriefMinLines(brief, truncated, item, role = 'lead') {
   const { author } = splitByline(item);
   brief = stripLeadingByline(brief, author);
+  const minChars = briefMinCharsForRole(role === 'feature' ? 'feature' : 'lead');
+  const prepRole = role === 'feature' ? 'feature' : 'lead';
 
-  if (brief.length >= LEAD_BRIEF_MIN_CHARS) {
+  if (brief.length >= minChars) {
     return { text: brief, truncated };
   }
 
   const fallback = leadBriefSource(item);
   if (fallback.length > brief.length) {
-    const extended = prepareBrief(fallback, 'lead');
+    const extended = prepareBrief(fallback, prepRole);
     if (extended.text.length > brief.length) {
       brief = stripLeadingByline(extended.text, author);
       truncated = extended.truncated;
     }
   }
-  if (brief.length >= LEAD_BRIEF_MIN_CHARS) {
+  if (brief.length >= minChars) {
     return { text: brief, truncated };
   }
 
@@ -9827,7 +10220,7 @@ function ensureLeadBriefMinLines(brief, truncated, item) {
       : `Dans ${item.source}${inst ? ` (${inst})` : ''}.`;
     pieces.push(ctx);
   }
-  const combined = prepareBrief(pieces.join(' '), 'lead');
+  const combined = prepareBrief(pieces.join(' '), prepRole);
   if (combined.text.length > brief.length) {
     return {
       text: stripLeadingByline(combined.text, author),
@@ -9883,7 +10276,7 @@ function resolveBrief(item, body, role) {
 }
 
 function prepareBrief(raw = '', role = 'standard') {
-  const limit = BRIEF_LIMITS[role] ?? 170;
+  const limit = briefLimitForRole(role);
   let s = sanitizeBriefBody(raw);
   if (!s || limit === 0 || s.length < 8) return { text: '', truncated: false };
 
@@ -9896,15 +10289,41 @@ function prepareBrief(raw = '', role = 'standard') {
   }
 
   let cut = s.slice(0, limit);
+  // Magazine 2 col : ne pas laisser la fin de phrase allonger l’extrait
+  // (sinon les cartes varient trop et l’équilibre une|En bref casse).
+  const sentenceSlack = isMidwidthMagazinePreview()
+    ? 36
+    : (isDesktopMagazineLayout() ? 48 : 100);
   const sentenceEnd = s.slice(limit).search(/[.!?»"')\]](?:\s|$)/);
-  if (sentenceEnd >= 0 && sentenceEnd < 100) {
+  if (sentenceEnd >= 0 && sentenceEnd < sentenceSlack) {
     cut = s.slice(0, limit + sentenceEnd + 1);
   } else {
-    const lastSpace = cut.lastIndexOf(' ');
-    if (lastSpace > limit * 0.5) cut = cut.slice(0, lastSpace);
+    // Préférer une coupure sur ponctuation faible, sinon dernier mot complet
+    // (éviter « si je me » + Lire la suite collé).
+    const soft = Math.max(
+      cut.lastIndexOf('. '),
+      cut.lastIndexOf('! '),
+      cut.lastIndexOf('? '),
+      cut.lastIndexOf(', '),
+      cut.lastIndexOf('; '),
+      cut.lastIndexOf(' : '),
+      cut.lastIndexOf(' — '),
+      cut.lastIndexOf(' – '),
+    );
+    if (soft > limit * 0.55) {
+      cut = cut.slice(0, soft + 1);
+    } else {
+      const lastSpace = cut.lastIndexOf(' ');
+      if (lastSpace > limit * 0.5) cut = cut.slice(0, lastSpace);
+    }
   }
   cut = cut.replace(/[,;:\s]+$/u, '').trimEnd();
   if (!cut) return { text: '', truncated: false };
+
+  // Points de suspension si la phrase n’est pas terminée (sépare du « Lire la suite »).
+  if (!endsCompleteSentence(cut) && !/[…]\s*$/.test(cut)) {
+    cut = `${cut}…`;
+  }
 
   return { text: cut, truncated: true };
 }
