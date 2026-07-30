@@ -30,6 +30,8 @@ const {
   codeFromName: registryCodeFromName,
 } = require('./sports-teams-lib');
 
+const SportsFreshness = require('./sports-freshness-lib');
+
 const update = process.argv.includes('--update');
 
 function getJson(url) {
@@ -143,46 +145,56 @@ function normalizeGame(game, teamId, meta, reg) {
   return out;
 }
 
-function nextGameForTeam(games, teamId, meta, reg) {
+/** Prochains matchs bruts (avant prune fraîcheur B). */
+function nextGamesForTeam(games, teamId, meta, reg) {
   const today = new Date().toISOString().slice(0, 10);
-  const upcoming = games
+  return games
     .filter((g) => (g.HomeTeamId === teamId || g.VisitingTeamId === teamId) && !hasScore(g))
     .filter((g) => gameDate(g) >= today || !gameDate(g))
-    .sort((a, b) => gameDate(a).localeCompare(gameDate(b)));
-  const g = upcoming[0];
-  if (!g) return null;
-  const home = g.HomeTeamId === teamId;
-  const rawOppName = home ? g.VisitingTeamName : g.HomeTeamName;
-  const rawOppCode = (home ? g.VisitingTeamCode : g.HomeTeamCode) || codeFromName(rawOppName);
-  const opp = resolveSportsTeam(reg, {
-    name: rawOppName,
-    code: rawOppCode,
-    sector: meta.sector,
-    rseqTeamId: home ? g.VisitingTeamId : g.HomeTeamId,
-  });
-  const gameId = g.GameId || null;
-  const out = {
-    date: gameDate(g),
-    time: g.GameTimeFormatted || '',
-    opponent: opp.shortName || rawOppName || '',
-    opponentCode: opp.code || String(rawOppCode || '').toUpperCase().slice(0, 4),
-    home,
-    sport: meta.sport,
-    competition: meta.label,
-    gameId,
-    url: gamePageUrl(gameId, meta.id),
-  };
-  if (opp.fullName) out.opponentFullName = opp.fullName;
-  if (opp.nickname) out.opponentNickname = opp.nickname;
-  if (opp.registryId) out.opponentRegistryId = opp.registryId;
-  return out;
+    .sort((a, b) => gameDate(a).localeCompare(gameDate(b)))
+    .map((g) => {
+      const home = g.HomeTeamId === teamId;
+      const rawOppName = home ? g.VisitingTeamName : g.HomeTeamName;
+      const rawOppCode = (home ? g.VisitingTeamCode : g.HomeTeamCode) || codeFromName(rawOppName);
+      const opp = resolveSportsTeam(reg, {
+        name: rawOppName,
+        code: rawOppCode,
+        sector: meta.sector,
+        rseqTeamId: home ? g.VisitingTeamId : g.HomeTeamId,
+      });
+      const gameId = g.GameId || null;
+      const out = {
+        date: gameDate(g),
+        time: g.GameTimeFormatted || '',
+        opponent: opp.shortName || rawOppName || '',
+        opponentCode: opp.code || String(rawOppCode || '').toUpperCase().slice(0, 4),
+        home,
+        sport: meta.sport,
+        competition: meta.label,
+        gameId,
+        url: gamePageUrl(gameId, meta.id),
+      };
+      if (opp.fullName) out.opponentFullName = opp.fullName;
+      if (opp.nickname) out.opponentNickname = opp.nickname;
+      if (opp.registryId) out.opponentRegistryId = opp.registryId;
+      return out;
+    });
+}
+
+function nextGameForTeam(games, teamId, meta, reg) {
+  return nextGamesForTeam(games, teamId, meta, reg)[0] || null;
+}
+
+/** Résultats passés bruts (tous scores), plus récent d’abord — prune B ensuite. */
+function pastGamesForTeam(games, teamId, meta, reg) {
+  return games
+    .filter((g) => (g.HomeTeamId === teamId || g.VisitingTeamId === teamId) && hasScore(g))
+    .map((g) => normalizeGame(g, teamId, meta, reg))
+    .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
 }
 
 function lastGameForTeam(games, teamId, meta, reg) {
-  const scored = games
-    .filter((g) => (g.HomeTeamId === teamId || g.VisitingTeamId === teamId) && hasScore(g))
-    .sort((a, b) => gameDate(b).localeCompare(gameDate(a)));
-  return scored[0] ? normalizeGame(scored[0], teamId, meta, reg) : null;
+  return pastGamesForTeam(games, teamId, meta, reg)[0] || null;
 }
 
 function standingForTeam(standings, teamId) {
@@ -314,6 +326,8 @@ function parseHockeyScoreboard(html, { sector, site }) {
           leagueLabel: catName,
           lastGame: null,
           nextGame: null,
+          results: [],
+          nextGames: [],
           record: null,
           source: 'spordle-rseqhockey',
         };
@@ -341,12 +355,14 @@ function parseHockeyScoreboard(html, { sector, site }) {
         entry.scoreAgainst = oppScore;
         entry.result = myScore > oppScore ? 'W' : myScore < oppScore ? 'L' : 'D';
         if (isPast) {
+          teams[key].results.push(entry);
           const cur = teams[key].lastGame;
           if (!cur || String(entry.date) >= String(cur.date || '')) {
             teams[key].lastGame = entry;
           }
         }
       } else if (!isPast) {
+        teams[key].nextGames.push(entry);
         const cur = teams[key].nextGame;
         if (!cur || String(entry.date || '9999') < String(cur.date || '9999')) {
           teams[key].nextGame = entry;
@@ -675,16 +691,51 @@ async function fetchSailingTeams(reg) {
   return { teams: out, errors };
 }
 
+/**
+ * Conserve lastGame / results encore frais du sports.json précédent quand
+ * l’API S1 ne renvoie que le calendrier à venir (scores -999, saison basculée).
+ */
+function mergePreservedPast(entry, previousTeams) {
+  if (!entry || !previousTeams) return entry;
+  const prev = previousTeams[entry.id];
+  if (!prev) return entry;
+  const hasNewPast = (entry.results && entry.results.length) || entry.lastGame;
+  if (hasNewPast) return entry;
+  const out = { ...entry };
+  if (Array.isArray(prev.results) && prev.results.length) {
+    out.results = prev.results.map((g) => ({ ...g }));
+  }
+  if (prev.lastGame) {
+    out.lastGame = { ...prev.lastGame };
+  }
+  if (prev.lastGamePriorSeason != null) {
+    out.lastGamePriorSeason = prev.lastGamePriorSeason;
+  }
+  return out;
+}
+
+function loadPreviousTeams() {
+  try {
+    if (!fs.existsSync(OUT_PATH)) return {};
+    const prev = JSON.parse(fs.readFileSync(OUT_PATH, 'utf8'));
+    return prev.teams && typeof prev.teams === 'object' ? prev.teams : {};
+  } catch {
+    return {};
+  }
+}
+
 async function main() {
   const catalog = JSON.parse(fs.readFileSync(LEAGUES_PATH, 'utf8'));
-  // Catalogue RSEQ collégial + universitaire (découvert GetLeagueList region=14).
-  // Hockey collégial S1 est souvent vide côté calendrier public → Spordle en complément.
-  const leagues = (catalog.leagues || []).filter((meta) => meta.sport !== 'hockey');
+  // Tous les sports du catalogue S1, sans exception (hockey S1 inclus en plus de Spordle).
+  const leagues = catalog.leagues || [];
+  const previousTeams = loadPreviousTeams();
   const reg = loadSportsTeamsRegistry();
   const teams = {};
   const errors = [];
   let registryHits = 0;
   let leaguesWithTeams = 0;
+  let preservedPast = 0;
+  const sportsFetched = new Set();
 
   for (const meta of leagues) {
     process.stderr.write(`sports: ${meta.label}… `);
@@ -692,6 +743,7 @@ async function main() {
       const data = await getJson(API + meta.id);
       if (!data || data === null) {
         process.stderr.write('null\n');
+        sportsFetched.add(meta.sport);
         continue;
       }
       const games = allGames(data);
@@ -711,8 +763,8 @@ async function main() {
         if (resolved.matched) registryHits += 1;
         // Clé stable : ligue + équipe (évite collision multi-divisions).
         const key = `${meta.sector}:${meta.sport}:${meta.id}:${id}`;
-        const lastGame = lastGameForTeam(games, id, meta, reg);
-        const nextGame = nextGameForTeam(games, id, meta, reg);
+        const results = pastGamesForTeam(games, id, meta, reg);
+        const nextGames = nextGamesForTeam(games, id, meta, reg);
         const record = standingForTeam(standings, id);
         // Sexe : méta ligue, sinon inféré de SexType S1.
         let sex = meta.sex || null;
@@ -722,7 +774,7 @@ async function main() {
           else if (sn.startsWith('m') && !sn.includes('ix')) sex = 'M';
           else if (sn.includes('mix')) sex = 'X';
         }
-        const entry = {
+        let entry = {
           id: key,
           rseqTeamId: id,
           leagueId: meta.id,
@@ -735,8 +787,10 @@ async function main() {
           division: meta.division || data.DivisionName || null,
           usports: Boolean(meta.usports),
           leagueLabel: meta.label || data.LeagueName || meta.sport,
-          lastGame,
-          nextGame,
+          results,
+          lastGame: results[0] || null,
+          nextGames: nextGames.slice(0, 12),
+          nextGame: nextGames[0] || null,
           record,
           source: 'rseq-s1',
           priority: resolved.priority,
@@ -744,55 +798,103 @@ async function main() {
         if (resolved.fullName) entry.fullName = resolved.fullName;
         if (resolved.nickname) entry.nickname = resolved.nickname;
         if (resolved.registryId) entry.registryId = resolved.registryId;
+        const beforePast = Boolean(entry.lastGame || (entry.results && entry.results.length));
+        entry = mergePreservedPast(entry, previousTeams);
+        if (!beforePast && (entry.lastGame || (entry.results && entry.results.length))) {
+          preservedPast += 1;
+        }
+        // Fraîcheur B : fenêtre sessions + 1 lastGame hors saison max + next horizon.
+        entry = SportsFreshness.pruneSportsTeam(entry);
         teams[key] = entry;
         teamCount += 1;
       }
       if (teamCount) leaguesWithTeams += 1;
-      process.stderr.write(`${teamCount} équipes\n`);
+      sportsFetched.add(meta.sport);
+      process.stderr.write(`${teamCount} équipes · ${games.length} matchs\n`);
     } catch (err) {
       process.stderr.write(`ERREUR ${err.message}\n`);
       errors.push({ leagueId: meta.id, label: meta.label, error: String(err.message || err) });
+      sportsFetched.add(meta.sport);
     }
   }
 
-  // Hockey RSEQ via Spordle (scoreboard public collégial + universitaire).
+  // Hockey RSEQ via Spordle (scoreboard public) — complète S1 souvent vide.
   const hockey = await fetchHockeyTeams(reg);
-  Object.assign(teams, hockey.teams);
+  for (const [key, team] of Object.entries(hockey.teams)) {
+    if (Array.isArray(team.results)) {
+      team.results.sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+    }
+    if (Array.isArray(team.nextGames)) {
+      team.nextGames.sort((a, b) => String(a.date || '').localeCompare(String(b.date || '')));
+      if (!team.nextGame && team.nextGames[0]) team.nextGame = team.nextGames[0];
+    }
+    let entry = mergePreservedPast(team, previousTeams);
+    if (!team.lastGame && !((team.results || []).length) && (entry.lastGame || (entry.results || []).length)) {
+      preservedPast += 1;
+    }
+    teams[key] = SportsFreshness.pruneSportsTeam(entry);
+  }
   errors.push(...hockey.errors);
+  sportsFetched.add('hockey');
 
-  // Voile campus QC seulement (ICSA + watchlist UdeM/Sherbrooke/Laval…).
+  // Voile campus QC (ICSA + watchlist) — sport hors S1.
   const sailing = await fetchSailingTeams(reg);
-  Object.assign(teams, sailing.teams);
+  for (const [key, team] of Object.entries(sailing.teams)) {
+    let entry = mergePreservedPast(team, previousTeams);
+    if (!team.lastGame && entry.lastGame) preservedPast += 1;
+    teams[key] = SportsFreshness.pruneSportsTeam(entry);
+  }
   errors.push(...sailing.errors);
+  sportsFetched.add('sailing');
 
   // Filet registre (adversaires + champs) sur tout le payload.
   for (const team of Object.values(teams)) {
     applyRegistryToTeam(team, reg);
   }
 
-  const sportsCovered = [...new Set(Object.values(teams).map((t) => t.sport))].sort();
+  // Seconde passe fraîcheur (registre peut avoir muté lastGame).
+  const prunedTeams = {};
+  for (const [id, team] of Object.entries(teams)) {
+    prunedTeams[id] = SportsFreshness.pruneSportsTeam(team);
+  }
 
-  const payload = {
+  const sportsCovered = [...new Set(Object.values(prunedTeams).map((t) => t.sport))].sort();
+  const catalogSports = [...new Set(leagues.map((l) => l.sport).filter(Boolean))].sort();
+  const missingSports = catalogSports.filter((s) => !sportsCovered.includes(s));
+
+  const withResults = Object.values(prunedTeams).filter((t) => (t.results && t.results.length) || t.lastGame).length;
+  const priorSeason = Object.values(prunedTeams).filter((t) => t.lastGamePriorSeason || t.lastGame?.priorSeason).length;
+
+  const payload = SportsFreshness.pruneSportsPayload({
     updated: new Date().toISOString(),
-    source: 'rseq-s1-full+spordle-hockey+sailing-qc',
-    note: 'Catalogue RSEQ collégial+universitaire (GetLeagueList). Hockey : Spordle. Voile : ICSA Québec seulement + watchlist clubs QC. Aucun tableau externe.',
+    source: 'rseq-s1-all+spordle-hockey+sailing-qc',
+    note: 'Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante).',
+    sportsFreshness: { rule: 'B', referenceDate: new Date().toISOString() },
     registry: 'sports-teams.json',
     registryMatched: registryHits,
-    leagueCatalog: catalog.leagueCount || (catalog.leagues || []).length,
+    leagueCatalog: catalog.leagueCount || leagues.length,
     leaguesWithTeams,
     sportsCovered,
-    teamCount: Object.keys(teams).length,
+    sportsCatalog: catalogSports,
+    sportsFetched: [...sportsFetched].sort(),
+    sportsMissing: missingSports.length ? missingSports : undefined,
+    teamCount: Object.keys(prunedTeams).length,
     errors: errors.length ? errors : undefined,
-    teams,
-  };
+    teams: prunedTeams,
+  });
 
   console.log(
     JSON.stringify(
       {
         teams: payload.teamCount,
         registryMatched: registryHits,
-        withLastGame: Object.values(teams).filter((t) => t.lastGame).length,
-        withNextGame: Object.values(teams).filter((t) => t.nextGame).length,
+        withLastGame: Object.values(prunedTeams).filter((t) => t.lastGame).length,
+        withNextGame: Object.values(prunedTeams).filter((t) => t.nextGame).length,
+        withResults,
+        priorSeasonLastGame: priorSeason,
+        preservedPastFromPrevious: preservedPast,
+        sportsCovered,
+        sportsMissing: missingSports,
         errors: errors.length,
         update,
       },
