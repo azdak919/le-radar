@@ -134,6 +134,8 @@
   // Hook pour app.js (balance magazine dès 900 en mode C).
   window.__radarMidwidthPreview = {
     mode: () => currentMode(),
-    magazineMinPx: () => (currentMode() === 'C' ? 900 : 1100),
+    // Prod = C (magazine ≥900). A = densify 1 col (balance off via app.js).
+    // D = même seuil prod (900) pour ne pas régresser le demi-écran.
+    magazineMinPx: () => (currentMode() === 'A' ? 1100 : 900),
   };
 })();
