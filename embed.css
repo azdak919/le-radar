@@ -133,6 +133,7 @@ html[data-embed="tuner"] .tuner-controls {
   width: 100%;
   max-width: 100%;
   align-items: center;
+  position: relative; /* ancre crédit mobile */
   container-type: inline-size;
   container-name: tuner-controls;
 }
@@ -179,40 +180,31 @@ html[data-embed="tuner"] .tuner.is-playing .tuner-onair::before {
 }
 
 /*
- * Attribution le-radar.ca — bas, sous le synthétiseur (.tuner-dial =
- * poste + émissions). Bureau : centré. Mobile : aligné à gauche du panneau.
- * Jamais sous EN ONDES ni bas-droite de la barre entière.
+ * Attribution le-radar.ca
+ * ── Bureau + tablette (≥560px) : SOUS EN ONDES (flux dans .tuner-label).
+ * ── Mobile (<560px) : sous le panneau poste/émissions, aligné à gauche.
  */
 html[data-embed="tuner"] .tuner {
   position: relative;
 }
 html[data-embed="tuner"] .tuner-dial {
   position: relative;
-  /* Même hauteur visuelle que prev/next/play — pas de padding bas qui décale. */
   align-self: center;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: var(--embed-ctrl, 42px);
-  /* Bureau : réserve sous le panneau pour le crédit (sans décaler les boutons). */
-  padding-bottom: 11px;
-  margin-bottom: -11px; /* annule l’effet sur la ligne de contrôles */
   box-sizing: border-box;
 }
-html[data-embed="tuner"] .tuner-embed-credit {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  top: auto;
-  right: auto;
-  transform: translateX(-50%);
-  z-index: 4;
+/* Défaut = bureau/tablette : dans le label, sous le libellé EN ONDES. */
+html[data-embed="tuner"] .tuner-label .tuner-embed-credit {
+  position: static;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 3px;
   margin: 0;
-  padding: 0;
+  /* Aligne sous le texte EN ONDES, pas sous le point live. */
+  padding: 0 0 0 13px;
   font-family: var(--sans, Inter, system-ui, sans-serif);
   font-size: 8.5px;
   font-weight: 600;
@@ -224,41 +216,55 @@ html[data-embed="tuner"] .tuner-embed-credit {
   line-height: 1.1;
   transition: color 140ms ease, opacity 140ms ease;
   pointer-events: auto;
-  max-width: calc(100% - 8px);
-}
-/*
- * Mobile : signature à gauche sous le panneau poste/émissions.
- * Pas de padding-bottom sur le dial → boutons alignés avec le panneau.
- * Crédit en dessous du panneau (bottom négatif), dans le padding de la barre.
- */
-@media (max-width: 559.98px) {
-  html[data-embed="tuner"] .tuner-dial {
-    padding-bottom: 0;
-    margin-bottom: 0;
-    align-self: center;
-  }
-  html[data-embed="tuner"] .tuner-embed-credit {
-    left: 11px; /* = padding-left de .tuner-now */
-    bottom: -10px;
-    transform: none;
-    justify-content: flex-start;
-  }
-  html[data-embed="tuner"] .tuner > .tuner-embed-credit {
-    left: 11px;
-    bottom: 3px;
-    transform: none;
-  }
+  max-width: none;
+  transform: none;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  top: auto;
 }
 /* Repli si un fork a encore le crédit en enfant direct de #tuner. */
 html[data-embed="tuner"] .tuner > .tuner-embed-credit {
   position: absolute;
-  left: 50%;
+  left: 13px;
   right: auto;
   bottom: 3px;
   top: auto;
-  transform: translateX(-50%);
+  transform: none;
   z-index: 4;
   padding: 0;
+}
+/*
+ * Mobile : EN ONDES masqué ; crédit sous le panneau poste (gauche),
+ * sans décaler prev/next/play.
+ */
+@media (max-width: 559.98px) {
+  html[data-embed="tuner"] .tuner-onair {
+    display: none !important;
+  }
+  html[data-embed="tuner"] .tuner-label {
+    display: flex !important;
+    position: absolute;
+    /* Après prev (42) + gap (≈8) + padding texte panneau (11) */
+    left: calc(var(--embed-ctrl, 42px) + var(--embed-gap, 8px) + 11px);
+    right: auto;
+    bottom: 2px;
+    top: auto;
+    z-index: 4;
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+    pointer-events: none;
+    line-height: 1;
+  }
+  html[data-embed="tuner"] .tuner-label .tuner-embed-credit {
+    position: static !important;
+    padding: 0 !important;
+    font-size: 8px;
+    max-width: min(44vw, 9rem);
+    pointer-events: auto;
+    transform: none !important;
+  }
 }
 
 html[data-embed="tuner"] .tuner-embed-credit-emoji,
@@ -885,7 +891,10 @@ html[data-embed="tuner"] .toast {
   .tuner-label {
     display: none !important;
   }
-  /* Crédit reste dans .tuner-dial (hors label) — pas de règle spéciale. */
+  /* Kiosque : label = EN ONDES + crédit — ne pas masquer. */
+  html[data-surface="kiosque-v1"] .tuner-label {
+    display: flex !important;
+  }
 }
 
 /* Iframe < ~640 px : une seule colonne (synthé), antenne masquée */
@@ -909,7 +918,13 @@ html[data-embed="tuner"] .toast {
   html[data-embed="tuner"] .tuner-label {
     display: none !important;
   }
-  /* Crédit : toujours bas-centré sous le dial (kiosque + legacy). */
+  /*
+   * Kiosque : garder .tuner-label (EN ONDES + crédit bureau/tablette ;
+   * crédit seul sur téléphone via règles ≤559).
+   */
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-label {
+    display: flex !important;
+  }
 }
 
 @media (max-width: 479.98px) {
@@ -1476,31 +1491,44 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-track {
 }
 
 /*
- * Crédit le-radar.ca (kiosque) : bas, centré sous .tuner-dial (poste + émissions).
- * z-index volume reste au-dessus pour le tap.
+ * Crédit le-radar.ca (kiosque)
+ * ── ≥560px (ordi + tablette) : SOUS EN ONDES, dans .tuner-label.
+ * ── <560px (téléphone) : bas-gauche sous le panneau poste/émissions.
  */
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
   position: relative;
   overflow: visible;
 }
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-controls {
+  position: relative;
+}
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-dial {
   position: relative;
-  align-self: stretch;
+  align-self: center;
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
-html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-dial .tuner-embed-credit {
-  position: absolute !important;
-  left: 50% !important;
+/* Bureau + tablette : flux sous EN ONDES (comme avant). */
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+}
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-label .tuner-embed-credit {
+  position: static !important;
+  left: auto !important;
   right: auto !important;
-  bottom: 0 !important;
+  bottom: auto !important;
   top: auto !important;
-  transform: translateX(-50%) !important;
+  transform: none !important;
   display: inline-flex !important;
   align-items: center;
-  justify-content: center;
   gap: 3px;
   margin: 0 !important;
-  padding: 0 !important;
-  max-width: calc(100% - 8px);
+  padding: 0 0 0 13px !important;
+  max-width: none;
   font-size: 8.5px;
   font-weight: 650;
   letter-spacing: 0.04em;
@@ -1508,7 +1536,7 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-dial .tuner-embed-cre
   color: var(--embed-radio, #8eb8ff);
   opacity: 0.95;
   pointer-events: auto;
-  z-index: 4;
+  z-index: auto;
 }
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-embed-credit:hover,
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-embed-credit:focus-visible {
@@ -1536,8 +1564,7 @@ html[data-embed="tuner"][data-surface="kiosque-v1"]:has(.tuner-vol.is-open) .tun
   transition: opacity 120ms ease;
 }
 
-/* Mobile kiosque : volume en popover (comme l’embed générique < 560 px).
-   Labels sous le rail de la bulle, mute visible — pas le layout bureau. */
+/* Mobile kiosque : volume en popover (comme l’embed générique < 560 px). */
 @media (max-width: 559.98px) {
   html[data-embed="tuner"][data-surface="kiosque-v1"] {
     --embed-bar-h: 62px;
@@ -1545,31 +1572,39 @@ html[data-embed="tuner"][data-surface="kiosque-v1"]:has(.tuner-vol.is-open) .tun
     --embed-pad: 12px;
   }
 
-  /* EN ONDES trop large sur téléphone. */
   html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-onair {
     display: none !important;
   }
+  /*
+   * Mobile : .tuner-label ne contient plus que le crédit → sous le dial,
+   * aligné à gauche (padding texte du panneau). Boutons non décalés.
+   */
   html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-label {
-    display: none !important;
+    display: flex !important;
+    position: absolute !important;
+    left: calc(var(--embed-ctrl, 42px) + var(--embed-gap, 8px) + 11px) !important;
+    right: auto !important;
+    bottom: 2px !important;
+    top: auto !important;
+    z-index: 4;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 0;
+    pointer-events: none;
   }
-  /* Dial = hauteur des boutons (42) ; crédit sous le panneau, pas dedans. */
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-label .tuner-embed-credit {
+    position: static !important;
+    padding: 0 !important;
+    font-size: 8px !important;
+    max-width: min(44vw, 9rem);
+    pointer-events: auto;
+    transform: none !important;
+  }
   html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-dial {
     padding-bottom: 0 !important;
     margin-bottom: 0 !important;
     align-self: center !important;
     min-height: var(--embed-ctrl, 42px);
-  }
-  /*
-   * Crédit mobile : sous le panneau poste/émissions, aligné à gauche
-   * (padding du titre CHYZ) — ne décale pas prev/next/play.
-   */
-  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-dial .tuner-embed-credit {
-    font-size: 8px !important;
-    bottom: -9px !important;
-    left: 11px !important;
-    right: auto !important;
-    transform: none !important;
-    justify-content: flex-start !important;
   }
 
   html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol {

@@ -99,44 +99,41 @@ test.describe('LE-KIOSQUE démo × tuner-embed LE-RADAR', () => {
     const geometry = await page.evaluate(() => {
       const bar = document.getElementById('tuner');
       const creditEl = document.querySelector('a.tuner-embed-credit');
+      const label = document.querySelector('.tuner-label');
       const dial = document.querySelector('.tuner-dial');
       const now = document.querySelector('.tuner-now');
-      const volBtn = document.getElementById('tuner-vol-toggle');
+      const onair = document.querySelector('.tuner-onair');
       const vol = document.getElementById('tuner-vol');
-      if (!bar || !creditEl || !dial || !now || !volBtn || !vol) return null;
+      if (!bar || !creditEl || !label || !dial || !now || !vol) return null;
       const b = bar.getBoundingClientRect();
       const c = creditEl.getBoundingClientRect();
       const d = dial.getBoundingClientRect();
       const n = now.getBoundingClientRect();
-      const creditStyle = getComputedStyle(creditEl);
       return {
         credit: { left: c.left, right: c.right, top: c.top, bottom: c.bottom },
         bar: { left: b.left, right: b.right, top: b.top, bottom: b.bottom, width: b.width },
-        dial: { left: d.left, right: d.right, top: d.top, bottom: d.bottom },
-        now: { left: n.left, right: n.right },
-        inDial: dial.contains(creditEl),
-        creditPosition: creditStyle.position,
-        /* Aligné à gauche du panneau poste (tolérance 14 px = padding). */
+        dial: { left: d.left, right: d.right },
+        now: { left: n.left },
+        inLabel: label.contains(creditEl),
+        onairHidden: onair ? getComputedStyle(onair).display === 'none' : true,
+        labelPosition: getComputedStyle(label).position,
         leftDelta: Math.abs(c.left - n.left),
-        zIndex: Number(creditStyle.zIndex) || 0,
         volZ: Number(getComputedStyle(vol).zIndex) || 0,
       };
     });
     expect(geometry).toBeTruthy();
-    expect(geometry.inDial, 'crédit dans .tuner-dial (synthétiseur)').toBe(true);
-    expect(geometry.creditPosition).toBe('absolute');
-    // Bas de l’iframe : le bas du crédit est dans les 22 px inférieurs de la barre.
+    expect(geometry.inLabel, 'crédit reste dans .tuner-label (DOM)').toBe(true);
+    expect(geometry.onairHidden, 'EN ONDES masqué mobile').toBe(true);
+    expect(geometry.labelPosition).toBe('absolute');
+    // Bas de l’iframe
     expect(geometry.credit.bottom).toBeLessThanOrEqual(geometry.bar.bottom + 2);
     expect(geometry.credit.bottom).toBeGreaterThan(geometry.bar.bottom - 22);
-    // Mobile : gauche du panneau poste/émissions, pas centré ni bas-droite barre.
-    expect(geometry.leftDelta).toBeLessThanOrEqual(14);
-    expect(geometry.credit.left).toBeGreaterThanOrEqual(geometry.dial.left - 2);
-    expect(geometry.credit.right).toBeLessThanOrEqual(geometry.dial.right + 2);
+    // Aligné à gauche du panneau poste
+    expect(geometry.leftDelta).toBeLessThanOrEqual(16);
+    expect(geometry.credit.left).toBeGreaterThanOrEqual(geometry.dial.left - 4);
     expect(geometry.credit.left).toBeLessThan(geometry.bar.left + geometry.bar.width * 0.55);
-    // Le volume reste au-dessus du crédit pour le hit-test.
-    expect(geometry.volZ).toBeGreaterThan(geometry.zIndex);
 
-    // Boutons alignés verticalement avec le panneau poste (pas de décalage crédit).
+    // Boutons alignés verticalement avec le panneau poste
     const align = await page.evaluate(() => {
       const now = document.querySelector('.tuner-now');
       const prev = document.getElementById('tuner-prev');
@@ -222,43 +219,39 @@ test.describe('LE-KIOSQUE démo × tuner-embed LE-RADAR', () => {
     })).toBeGreaterThan(0.5);
   });
 
-  test('crédit bas-centré sous le dial en largeur bureau kiosque', async ({ page }) => {
-    await page.setViewportSize({ width: 1100, height: 800 });
-    await page.goto('/tuner-embed.html?station=chyz&surface=kiosque-v1', {
-      waitUntil: 'domcontentloaded',
-    });
-    await expect(page.locator('#tuner-play')).toBeVisible({ timeout: 15_000 });
+  test('crédit SOUS EN ONDES en bureau + tablette kiosque', async ({ page }) => {
+    for (const width of [1100, 768]) {
+      await page.setViewportSize({ width, height: 800 });
+      await page.goto('/tuner-embed.html?station=chyz&surface=kiosque-v1', {
+        waitUntil: 'domcontentloaded',
+      });
+      await expect(page.locator('#tuner-play')).toBeVisible({ timeout: 15_000 });
 
-    const geo = await page.evaluate(() => {
-      const bar = document.getElementById('tuner');
-      const creditEl = document.querySelector('a.tuner-embed-credit');
-      const dial = document.querySelector('.tuner-dial');
-      const now = document.querySelector('.tuner-now');
-      if (!bar || !creditEl || !dial || !now) return null;
-      const b = bar.getBoundingClientRect();
-      const c = creditEl.getBoundingClientRect();
-      const d = dial.getBoundingClientRect();
-      const n = now.getBoundingClientRect();
-      const creditCx = (c.left + c.right) / 2;
-      const dialCx = (d.left + d.right) / 2;
-      return {
-        creditPosition: getComputedStyle(creditEl).position,
-        inDial: dial.contains(creditEl),
-        visible: c.width > 0 && c.height > 0 && getComputedStyle(creditEl).opacity !== '0',
-        /* Sous le panneau poste/émissions. */
-        underNow: c.top >= n.bottom - 4,
-        centerDelta: Math.abs(creditCx - dialCx),
-        withinBar: c.bottom <= b.bottom + 2 && c.top >= b.top - 2,
-        withinDialX: c.left >= d.left - 2 && c.right <= d.right + 2,
-      };
-    });
-    expect(geo).toBeTruthy();
-    expect(geo.inDial).toBe(true);
-    expect(geo.visible).toBe(true);
-    expect(geo.withinBar).toBe(true);
-    expect(geo.underNow).toBe(true);
-    expect(geo.centerDelta).toBeLessThanOrEqual(12);
-    expect(geo.withinDialX).toBe(true);
-    expect(geo.creditPosition).toBe('absolute');
+      const geo = await page.evaluate(() => {
+        const creditEl = document.querySelector('a.tuner-embed-credit');
+        const onair = document.querySelector('.tuner-onair');
+        const label = document.querySelector('.tuner-label');
+        const dial = document.querySelector('.tuner-dial');
+        if (!creditEl || !onair || !label || !dial) return null;
+        const c = creditEl.getBoundingClientRect();
+        const o = onair.getBoundingClientRect();
+        const d = dial.getBoundingClientRect();
+        return {
+          inLabel: label.contains(creditEl),
+          creditPosition: getComputedStyle(creditEl).position,
+          onairVisible: getComputedStyle(onair).display !== 'none',
+          underOnair: c.top >= o.top - 2 && c.left < o.right + 40,
+          /* Pas sous le dial (centré) — à gauche sous EN ONDES. */
+          leftOfDial: c.right <= d.left + 8 || c.left < d.left,
+          visible: c.width > 0 && c.height > 0 && getComputedStyle(creditEl).opacity !== '0',
+        };
+      });
+      expect(geo, `viewport ${width}`).toBeTruthy();
+      expect(geo.inLabel, `viewport ${width}: dans .tuner-label`).toBe(true);
+      expect(geo.onairVisible, `viewport ${width}: EN ONDES visible`).toBe(true);
+      expect(geo.visible, `viewport ${width}: crédit visible`).toBe(true);
+      expect(geo.underOnair, `viewport ${width}: sous EN ONDES`).toBe(true);
+      expect(['static', 'relative'].includes(geo.creditPosition), `viewport ${width}: flux`).toBe(true);
+    }
   });
 });

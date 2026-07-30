@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style-masthead.css" />
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="embed.css?v=581" />
+    <link rel="stylesheet" href="embed.css?v=582" />
   </head>
   <body>
     <div id="tuner" class="tuner">
@@ -19,6 +19,16 @@
         <div class="tuner-controls">
           <div class="tuner-label">
             <span id="tuner-onair" class="tuner-onair">EN ONDES</span>
+            <!--
+              Bureau + tablette (≥560px) : sous EN ONDES (flux dans .tuner-label).
+              Mobile : repositionné sous le panneau poste/émissions, à gauche (CSS).
+            -->
+            <a
+              class="tuner-embed-credit"
+              href="../"
+              target="_top"
+              title="Le Radar — radios étudiantes du Québec"
+            ><img class="app-emoji tuner-embed-credit-emoji" src="assets/icon-32.png" width="12" height="12" alt="" decoding="async" aria-hidden="true"><span class="tuner-embed-credit-text">le-radar.ca</span></a>
           </div>
 
           <button id="tuner-prev" class="tuner-step" title="Poste précédent" aria-label="Poste précédent">
@@ -35,13 +45,6 @@
                 <span id="tuner-now-sub-air" class="tuner-now-sub tuner-now-sub--air" aria-hidden="true"></span>
               </div>
             </div>
-            <!-- Bas, centré sous le synthétiseur (poste + émissions). -->
-            <a
-              class="tuner-embed-credit"
-              href="../"
-              target="_top"
-              title="Le Radar — radios étudiantes du Québec"
-            ><img class="app-emoji tuner-embed-credit-emoji" src="assets/icon-32.png" width="12" height="12" alt="" decoding="async" aria-hidden="true"><span class="tuner-embed-credit-text">le-radar.ca</span></a>
           </div>
 
           <button id="tuner-next" class="tuner-step" title="Poste suivant" aria-label="Poste suivant">
