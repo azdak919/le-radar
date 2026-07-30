@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-07-30T21:42:26.321Z",
+  "updatedAt": "2026-07-30T23:03:16.548Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "schedule",
-        "start": "17:30",
-        "end": "19:00",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
+      "current": null,
       "next": {
         "title": "Vendredi Nostalgie",
         "source": "schedule",
@@ -20,59 +14,59 @@
         "url": "https://chyz.ca/emission/vendredi-nostalgie/"
       },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T21:42:00.889Z"
+      "checkedAt": "2026-07-30T23:02:51.778Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rythmologie",
+        "title": "La rumba",
         "source": "schedule",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "https://cism893.ca/emissions/rythmologie"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/la-rumba"
       },
       "next": {
-        "title": "Entropie",
+        "title": "La courbe 2.0",
         "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/entropie"
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/la-courbe-2-0"
       },
       "track": "",
-      "showTitle": "Rythmologie",
+      "showTitle": "La rumba",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T21:42:03.371Z"
+      "checkedAt": "2026-07-30T23:02:53.392Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "5th week",
+        "title": "Grey Matters",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "19:00",
+        "end": "20:00"
       },
       "next": {
-        "title": "Upstage",
+        "title": "Other Worlds on Earth/Dromostexte",
         "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
+        "start": "20:00",
+        "end": "21:00"
       },
       "track": "",
-      "showTitle": "5th week",
+      "showTitle": "Grey Matters",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -80,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T21:42:05.515Z"
+      "checkedAt": "2026-07-30T23:02:55.726Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Hooked On Sonics",
+        "title": "Teen Radio",
         "source": "schedule",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/hooked-on-sonics"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/teen-radio"
       },
       "next": {
-        "title": "Electric Messiah",
+        "title": "Maiden Voyage",
         "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/electric-messiah"
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/maiden-voyage"
       },
       "track": "",
-      "showTitle": "Hooked On Sonics",
+      "showTitle": "Teen Radio",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T21:42:18.853Z"
+      "checkedAt": "2026-07-30T23:03:09.034Z"
     },
     "cfak": {
       "id": "cfak",
@@ -132,29 +126,29 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T21:42:19.591Z"
+      "checkedAt": "2026-07-30T23:03:09.686Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "La 3ème demie",
-        "source": "api-live",
-        "start": "17:15",
-        "end": "18:00",
-        "slug": "le-12-mtlsup"
-      },
-      "next": {
         "title": "Les Apatrides Anonymes",
         "source": "schedule",
         "start": "18:30",
         "end": "19:40",
         "url": "https://www.choq.ca/emissions/apatrides-anonymes"
       },
-      "track": "ID - Velours-Velours",
-      "showTitle": "La 3ème demie",
+      "next": {
+        "title": "La nouvelle école des surdoués",
+        "source": "api-live",
+        "start": "20:00",
+        "end": "21:00",
+        "slug": "la-nouvelle-ecole-des-surdoues"
+      },
+      "track": "Lolo Zouaï - 3AM in San Francisco",
+      "showTitle": "Les Apatrides Anonymes",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
         "api-live",
         "schedule"
@@ -163,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-30T21:42:25.970Z"
+      "checkedAt": "2026-07-30T23:03:16.197Z"
     }
   }
 }
