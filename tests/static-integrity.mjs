@@ -46,6 +46,8 @@ for (const file of htmlFiles) {
 
   // Le footer partagé doit rester identique à la référence visuelle : pas de
   // lien GitHub ajouté par erreur, ni de pictogramme courriel emoji.
+  // D18 : structure minimale commune (logo, contact, signature) sur toute
+  // page publique hors pomo/solitaire.
   if (html.includes('class="site-foot"')) {
     const rel = relative(root, file);
     assert(!html.includes('Code source (GitHub)'), `${rel}: lien GitHub absent du footer requis`);
@@ -55,6 +57,12 @@ for (const file of htmlFiles) {
     assert(/class="site-foot__contact"/.test(html), `${rel}: ligne de contact footer requise`);
     assert(/data-contact-channel="email"/.test(html), `${rel}: point d’entrée contact requis`);
     assert(!html.includes('>azdak-qc@proton.me</a>'), `${rel}: adresse courriel non affichée requise`);
+    assert(/LE-RADAR/.test(html), `${rel}: marque LE-RADAR requise dans le chrome partagé`);
+    // Structure générée par renderSiteFooter (seo-pages-lib)
+    assert(
+      /site-foot__inner|site-foot__brand|site-foot__logo/.test(html),
+      `${rel}: structure footer partagée (inner/brand/logo) requise`,
+    );
   }
 }
 
