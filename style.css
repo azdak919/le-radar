@@ -145,14 +145,29 @@ body {
   outline: 2px solid color-mix(in srgb, var(--sports-tone, #66839e) 70%, #fff);
   outline-offset: 2px;
 }
-/* Arrivée type carte météo (weather-tile-arrive) — scores / info seulement.
- * La CTA « SPORTS » ne l’utilise pas : le texte d’accroche crossfade à l’intérieur. */
+/*
+ * Rotation scores / prochains : fondu croisé doux (pas le « clac » gare météo).
+ * Sortie (is-leaving) puis entrée (is-arriving) — CTA : crossfade texte seul.
+ */
+.masthead-sports-strip .sports-chip.is-leaving:not(.sports-chip--cta) {
+  animation: sports-chip-leave 0.42s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
 .masthead-sports-strip .sports-chip.is-arriving:not(.sports-chip--cta) {
-  animation: weather-tile-arrive 460ms cubic-bezier(.22, .8, .28, 1);
+  animation: sports-chip-arrive 0.64s cubic-bezier(0.33, 0.1, 0.2, 1) both;
+}
+@keyframes sports-chip-leave {
+  from { opacity: 1; transform: translateY(0); filter: blur(0); }
+  to   { opacity: 0; transform: translateY(-5%); filter: blur(0.4px); }
+}
+@keyframes sports-chip-arrive {
+  from { opacity: 0; transform: translateY(8%); filter: blur(0.5px); }
+  to   { opacity: 1; transform: translateY(0); filter: blur(0); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .masthead-sports-strip .sports-chip.is-arriving {
+  .masthead-sports-strip .sports-chip.is-arriving,
+  .masthead-sports-strip .sports-chip.is-leaving {
     animation: none;
+    filter: none;
   }
 }
 .masthead-sports-strip .sports-chip__glyph {
@@ -211,18 +226,21 @@ body {
  * Durée 7 s × alternate = 14 s aller-retour — app.js (SPORTS_SCROLL_*)
  * attend ce cycle + pause repos avant de changer le match (lecture confortable). */
 .masthead-sports-strip {
-  --sports-scroll-duration: 7s;
+  /* Un peu plus lent + holds aux extrémités = moins d’à-coups aux virages. */
+  --sports-scroll-duration: 8.5s;
 }
 .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner {
   max-width: none;
   overflow: visible;
   text-overflow: clip;
   /* Remplace le pulse CTA : transform pour le marquee, pas d’ellipsis. */
-  animation: sports-chip-scroll var(--sports-scroll-duration, 7s) ease-in-out infinite alternate;
+  animation: sports-chip-scroll var(--sports-scroll-duration, 8.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  will-change: transform;
 }
 @keyframes sports-chip-scroll {
-  0%, 28% { transform: translateX(0); }
-  72%, 100% { transform: translateX(calc(var(--sports-scroll, 0) * -1)); }
+  /* Holds plus longs au début / fin pour lire l’info au calme. */
+  0%, 32% { transform: translateX(0); }
+  68%, 100% { transform: translateX(calc(var(--sports-scroll, 0) * -1)); }
 }
 /* CTA au repos (pas d’overflow) : ellipsis + pulse d’opacité inchangé. */
 .masthead-sports-strip .sports-chip--cta:not(.is-overflowing) .sports-chip__line-inner,
