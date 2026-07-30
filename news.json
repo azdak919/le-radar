@@ -1,16 +1,16 @@
 {
-  "updated": "2026-07-30T14:33:13.359Z",
-  "updatedSlot": "2026-07-30T14:00:00.000Z",
+  "updated": "2026-07-30T15:52:51.780Z",
+  "updatedSlot": null,
   "count": 185,
   "freshnessSessions": 3,
   "sources": {
     "Quartier Libre": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:00:00.000Z",
-      "lastFetchOk": "2026-07-30T14:32:35.698Z"
+      "lastFetchOk": null
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-07-30T14:32:36.607Z"
+      "lastFetchOk": "2026-07-30T15:52:15.401Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-03-25T11:00:00.000Z",
-      "lastFetchOk": "2026-07-30T14:32:41.994Z"
+      "lastFetchOk": "2026-07-30T15:52:20.082Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-07-06T12:00:00.000Z",
-      "lastFetchOk": "2026-07-30T14:32:42.557Z"
+      "lastFetchOk": "2026-07-30T15:52:20.954Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,15 +42,15 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-07-08T14:41:00.000Z",
-      "lastFetchOk": "2026-07-30T14:32:43.629Z"
+      "lastFetchOk": "2026-07-30T15:52:22.163Z"
     },
     "Zone Campus": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-07-30T14:32:45.515Z"
+      "lastFetchOk": null
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,15 +58,15 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-07-30T14:32:47.941Z"
+      "lastFetchOk": "2026-07-30T15:52:24.633Z"
     },
     "Le Collectif": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-07-29T14:24:20.000Z",
-      "lastFetchOk": "2026-07-30T14:32:49.055Z"
+      "lastFetchOk": null
     },
     "Exil": {
       "fetchOk": true,
@@ -74,15 +74,15 @@
       "articleCount": 10,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-07-30T14:32:49.254Z"
+      "lastFetchOk": "2026-07-30T15:52:25.250Z"
     },
     "La Pige": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-06-22T14:36:10.000Z",
-      "lastFetchOk": "2026-07-30T14:32:49.975Z"
+      "lastFetchOk": null
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,7 +90,7 @@
       "articleCount": 20,
       "freshArticleCount": 13,
       "lastArticle": "2026-02-25T14:38:32.764Z",
-      "lastFetchOk": "2026-07-30T14:32:51.255Z"
+      "lastFetchOk": "2026-07-30T15:52:28.354Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-07-28T19:05:07.000Z",
-      "lastFetchOk": "2026-07-30T14:32:51.418Z"
+      "lastFetchOk": "2026-07-30T15:52:28.730Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-07-30T14:32:51.680Z"
+      "lastFetchOk": "2026-07-30T15:52:29.173Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-07-30T14:32:51.808Z"
+      "lastFetchOk": "2026-07-30T15:52:29.420Z"
     },
     "L'Oisif": {
       "fetchOk": true,
@@ -122,7 +122,7 @@
       "articleCount": 3,
       "freshArticleCount": 0,
       "lastArticle": "2019-08-23T18:43:43.000Z",
-      "lastFetchOk": "2026-07-30T14:32:53.092Z"
+      "lastFetchOk": "2026-07-30T15:52:31.803Z"
     },
     "La Gifle": {
       "fetchOk": true,
@@ -130,7 +130,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2018-05-19T20:19:20.000Z",
-      "lastFetchOk": "2026-07-30T14:32:53.205Z"
+      "lastFetchOk": "2026-07-30T15:52:32.026Z"
     },
     "Le Trait d'Union": {
       "fetchOk": true,
@@ -138,7 +138,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2024-11-14T14:41:41.000Z",
-      "lastFetchOk": "2026-07-30T14:32:54.107Z"
+      "lastFetchOk": "2026-07-30T15:52:33.730Z"
     }
   },
   "items": [
@@ -162,10 +162,10 @@
       "sourceImageCreditImageKey": "societe_transport-en-commun_source-iris-recherche.jpeg",
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
-      "leadExcerpt": "Le transport en commun représente une solution importante pour réduire la pollution causée par les déplacements quotidiens. Les personnes qui utilisent l’autobus, le métro ou le train remplacent souvent l’utilisation d’une automobile personnelle pour une partie ou la totalité de leur trajet. Ainsi, il y a moins de véhicules sur les routes, ce qui contribue à diminuer les émissions de gaz à effet d",
       "imageLocal": "assets/news-images/3fb1fde52287b07f.jpg",
       "imageLocalKey": "3fb1fde52287b07f",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -190,7 +190,8 @@
       "leadImageReady": false,
       "imageLocal": "assets/news-images/10ad653b36227a8c.jpg",
       "imageLocalKey": "10ad653b36227a8c",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -212,7 +213,8 @@
       "sourceImageCreditImageKey": "capture-decran-le-2026-07-29-a-10.03.28.png",
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
-      "leadExcerpt": "La première étape se réalise bien avant de franchir la porte, soit la planification de l’activité. On ne s’en tient pas uniquement ici à décider de son accoutrement ou de quelles collations seraient les plus alléchantes; il est plutôt question d’étudier le parcours visé, comme sa réglementation, son trajet et son risque d’achalandage."
+      "leadExcerpt": "La première étape se réalise bien avant de franchir la porte, soit la planification de l’activité. On ne s’en tient pas uniquement ici à décider de son accoutrement ou de quelles collations seraient les plus alléchantes; il est plutôt question d’étudier le parcours visé, comme sa réglementation, son trajet et son risque d’achalandage.",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -238,7 +240,8 @@
       "leadExcerpt": "Dans une région où le hockey occupe une place importante, la LBS s’ajoute à l’ensemble des programmes et ligues déjà en place. En combinant une structure claire, un calibre relevé et une atmosphère conviviale, elle s’est taillé une place dans le paysage sportif estrien comme un rendez‑vous estival apprécié autant des joueurs que des partisans.",
       "imageLocal": "assets/news-images/070ff3d60ff05ec3.jpg",
       "imageLocalKey": "070ff3d60ff05ec3",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -261,7 +264,8 @@
       "sourceImageCreditImageKey": "culture_montreux-jazz-festival_source-site-internet-du-montreux-jazz-festival.png",
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
-      "leadExcerpt": "Le Sherblues à Sherbrooke et le Montreux Jazz Festival en Suisse se déroulent presque en même temps au début de juillet. Les deux événements transforment leur ville en lieu de rencontre autour de la musique. L’un se déploie au centre‑ville de Sherbrooke, l’autre sur les rives du lac Léman. L’un attire des dizaines de milliers de personnes, l’autre plus de 250 000 festivaliers pour sa 60 e édition."
+      "leadExcerpt": "Le Sherblues à Sherbrooke et le Montreux Jazz Festival en Suisse se déroulent presque en même temps au début de juillet. Les deux événements transforment leur ville en lieu de rencontre autour de la musique. L’un se déploie au centre‑ville de Sherbrooke, l’autre sur les rives du lac Léman. L’un attire des dizaines de milliers de personnes, l’autre plus de 250 000 festivaliers pour sa 60 e édition.",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -298,7 +302,7 @@
       "date": "2026-07-28T14:15:18.000Z",
       "excerpt": "On May 14, 429 activists carrying more than 11,000 kilograms of humanitarian aid set sail to Gaza from Marmaris, Türkiye, to protest against Israel’s blockade of the Gaza Strip and ongoing genocide of Palestinians. Two Palestinian solidarity activist coalitions—the Global Sumud",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/07/Untitled_Artwork.jpeg",
-      "authorCheckedAt": "2026-07-29T15:51:32.178Z",
+      "authorCheckedAt": "2026-07-30T15:53:02.006Z",
       "sourceImageCredit": "Photo : Zoe Lee",
       "sourceImageCreator": "Zoe Lee",
       "sourceImageCreditUrl": "https://www.thetribune.ca/news/a-conversation-with-ehab-lotayef-a-lifelong-voyage-to-the-conscience-of-humanity-28072026/?utm_source=rss&utm_medium=rss&utm_campaign=a-conversation-with-ehab-lotayef-a-lifelong-voyage-to-the-conscience-of-humanity-28072026",
@@ -342,7 +346,8 @@
       "leadExcerpt": "Les personnes dirigeantes des États membres de l’OTAN se sont réunies les 7 et 8 juillet derniers pour un sommet où les objectifs militaires, la défense ukrainienne et les changements d’humeur de Donald Trump ont été les moments forts. De son côté, Mark Carney en profite pour réitérer le désir canadien de tisser des liens avec le continent européen.",
       "imageLocal": "assets/news-images/62bcdfce6a2a229e.jpg",
       "imageLocalKey": "62bcdfce6a2a229e",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -364,7 +369,8 @@
       "sourceImageCreditImageKey": "societe_pelouse-gazon_source-blogue-accentlocal.jpg",
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
-      "leadExcerpt": "Les citoyens et citoyennes de Sherbrooke auront désormais plus de liberté dans l’aménagement de leur terrain. Réuni le 6 juillet, le conseil municipal a adopté une modification au règlement qui permet aux propriétaires de remplacer une partie de leur pelouse par des aménagements favorisant la biodiversité."
+      "leadExcerpt": "Les citoyens et citoyennes de Sherbrooke auront désormais plus de liberté dans l’aménagement de leur terrain. Réuni le 6 juillet, le conseil municipal a adopté une modification au règlement qui permet aux propriétaires de remplacer une partie de leur pelouse par des aménagements favorisant la biodiversité.",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -389,7 +395,8 @@
       "leadExcerpt": "Présente au Canada depuis près de 100 ans, l’industrie de la chirurgie esthétique continue de se développer. Avec l’influence des réseaux sociaux et l’évolution des standards de beauté, de plus en plus de personnes ressentent une pression pour atteindre une apparence considérée comme idéale.",
       "imageLocal": "assets/news-images/88ce9963cf5d1b4e.jpg",
       "imageLocalKey": "88ce9963cf5d1b4e",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -422,7 +429,8 @@
       "leadExcerpt": "La présidente du Rassemblement national, parti d’extrême droite en France, a été condamnée pour détournements de fonds publics, notamment en raison de l’embauche d’assistants au profit de son parti. Malgré cela, elle tient à réaffirmer ses intentions de se présenter comme candidate aux élections présidentielles de 2027.",
       "imageLocal": "assets/news-images/049a98f2c55acca3.jpg",
       "imageLocalKey": "049a98f2c55acca3",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -447,7 +455,8 @@
       "leadExcerpt": "Le Collège supérieur de Sherbrooke doit fermer ses portes à la suite de la décision du ministère de l’Éducation de ne pas renouveler son permis d’exploitation. Cette fermeture, effective depuis le 1 er juillet, touche plusieurs centaines d’étudiants inscrits à des formations professionnelles et suscite de nombreuses inquiétudes quant à leur avenir scolaire.",
       "imageLocal": "assets/news-images/d1140299eeeea4ef.jpg",
       "imageLocalKey": "d1140299eeeea4ef",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -483,7 +492,7 @@
       "date": "2026-07-20T18:02:11.000Z",
       "excerpt": "For the last month, the 2026 Fédération Internationale de Football Association ( FIFA ) World Cup has produced beautiful stories, displayed tremendous underdog wins, and brought together fans from all corners of our vast planet: right here in Canada , as well as in the United",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/07/IMG_3443.png",
-      "authorCheckedAt": "2026-07-29T15:51:34.371Z",
+      "authorCheckedAt": "2026-07-30T15:53:03.250Z",
       "sourceImageCredit": "Photo : Eliot Loose",
       "sourceImageCreator": "Eliot Loose",
       "sourceImageCreditUrl": "https://www.thetribune.ca/sports/lumumbas-legacy-on-footballs-biggest-stage-how-one-fan-utilized-fifas-fandom-to-remember-a-martyr-of-colonial-violence-20072026/?utm_source=rss&utm_medium=rss&utm_campaign=lumumbas-legacy-on-footballs-biggest-stage-how-one-fan-utilized-fifas-fandom-to-remember-a-martyr-of-colonial-violence-20072026",
@@ -538,8 +547,7 @@
       "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:View_from_McGill_University_downtown_campus_01.JPG",
-      "leadExcerpt": "“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt to forgo my jacket, and, if I’m feeling bold, no sweater either. It’s the first truly warm evening in Montreal, and as the city defrosts, everyone is spilling onto sidewalks and terrasses. Women are wearing tiny dresses, and men have started to write poetry. The whole city radiates optimism, as if Ch",
-      "_campusBank": true
+      "leadExcerpt": "“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt to forgo my jacket, and, if I’m feeling bold, no sweater either. It’s the first truly warm evening in Montreal, and as the city defrosts, everyone is spilling onto sidewalks and terrasses. Women are wearing tiny dresses, and men have started to write poetry. The whole city radiates optimism, as if Ch"
     },
     {
       "source": "The Link",
@@ -562,8 +570,7 @@
       "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:2135-2149_Mackay_Street,_Montreal.JPG",
-      "leadExcerpt": "Elbakaye added that she has been attempting to contact Ellis for over three months, but he has not responded. She also explained that she is working on a training guide for the next CEO alongside the council's administrative coordinator.",
-      "_campusBank": true
+      "leadExcerpt": "Elbakaye added that she has been attempting to contact Ellis for over three months, but he has not responded. She also explained that she is working on a training guide for the next CEO alongside the council's administrative coordinator."
     },
     {
       "source": "The McGill Daily",
@@ -602,7 +609,7 @@
       "date": "2026-06-26T15:24:28.000Z",
       "excerpt": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. I’m out of errands to run—other than bumping into someone from my high school every time I leave my house. If I have to have the, “How was your year?” small talk conversation one",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/06/Screen-Shot-2026-06-26-at-11.23.19-AM.png",
-      "authorCheckedAt": "2026-07-29T15:51:35.938Z",
+      "authorCheckedAt": "2026-07-30T15:53:04.922Z",
       "sourceImageCredit": "Photo : Zoe Lee",
       "sourceImageCreator": "Zoe Lee",
       "sourceImageCreditUrl": "https://www.thetribune.ca/student-life/ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026/?utm_source=rss&utm_medium=rss&utm_campaign=ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026",
@@ -625,7 +632,7 @@
       "date": "2026-06-23T17:24:27.000Z",
       "excerpt": "Tanzanian-American-Canadian artist Shanna Strauss’s screenprint triad Kanga I, II, III joined the student-led digital art exhibition Projections: SANKOFA on Feb. 23. Displayed in the Lorne M. Trottier Building mezzanine, the Kanga series combines negative space with vibrant",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/06/Screen-Shot-2026-06-23-at-1.21.20-PM.png",
-      "authorCheckedAt": "2026-07-29T15:51:37.773Z",
+      "authorCheckedAt": "2026-07-30T15:53:06.016Z",
       "sourceImageCredit": "Photo : McGill Visual Arts Collection",
       "sourceImageCreator": "McGill Visual Arts Collection",
       "sourceImageCreditUrl": "https://www.thetribune.ca/a-e/kanga-i-ii-iii-brings-projections-sankofas-afrofuturist-vision-to-trottier-23062026/?utm_source=rss&utm_medium=rss&utm_campaign=kanga-i-ii-iii-brings-projections-sankofas-afrofuturist-vision-to-trottier-23062026",
@@ -659,7 +666,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/13463c587fd35910.jpg",
       "imageLocalKey": "13463c587fd35910",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -673,7 +681,7 @@
       "date": "2026-06-10T23:02:04.000Z",
       "excerpt": "On April 22, the Superior Court of Quebec annulled the August 2025 arbitration Association des Ressources Intermédiaires D’Hébergement du Québec (ARIHQ) v. Santé Québec , as the ruling was based on nonexistent, likely artificial intelligence ( AI )-generated legal doctrine and",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/06/Untitled_Artwork-scaled.jpeg",
-      "authorCheckedAt": "2026-07-29T15:51:39.678Z",
+      "authorCheckedAt": "2026-07-30T15:53:07.106Z",
       "sourceImageCredit": "Photo : Zoe Lee",
       "sourceImageCreator": "Zoe Lee",
       "sourceImageCreditUrl": "https://www.thetribune.ca/opinion/ais-use-in-legal-decisions-poses-major-risks-to-the-canadian-judicial-systems-integrity-and-neutrality-11062026/?utm_source=rss&utm_medium=rss&utm_campaign=ais-use-in-legal-decisions-poses-major-risks-to-the-canadian-judicial-systems-integrity-and-neutrality-11062026",
@@ -698,7 +706,7 @@
       "author": "Marisa Filice",
       "date": "2026-06-10T17:09:00.000Z",
       "excerpt": "The Canadian national men’s soccer team drew 1-1 with the Republic of Ireland in its final match before the tournament Canada players celebrate after the opening goal in the 23rd minute of the international friendly match against Ireland at Saputo Stadium in Montreal on June 5,",
-      "image": "https://thelinknewspaper.ca/images/articles/_resized/CAMNT06052026-40.jpg",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/CAMNT06052026-40_690_460_90.jpg",
       "authorCheckedAt": "2026-07-30T14:33:27.410Z",
       "sourceImageCredit": "Photo: Marisa Filice",
       "sourceImageCreator": "Marisa Filice",
@@ -709,9 +717,8 @@
       "sourceImageCreditRev": 4,
       "leadImageReady": true,
       "leadExcerpt": "The Canadian men's national soccer team hosted the Republic of Ireland at Saputo Stadium for a friendly match on June 5, drawing a sold-out crowd of 19,619 fans for the team's final home match ahead of the 2026 FIFA World Cup.",
-      "imageLocal": "assets/news-images/9291241d3c3ede01.jpg",
-      "imageLocalKey": "9291241d3c3ede01",
-      "imageLocalVia": "origin"
+      "imageLocal": "assets/news-images/8478f151ef83b033.jpg",
+      "imageLocalKey": "8478f151ef83b033"
     },
     {
       "source": "La Pige",
@@ -735,7 +742,8 @@
       "leadExcerpt": "Mylène Sasseville est la proche aidante de ses deux fils, Maïk et Travis, tous les deux atteints du syndrome rare Allan Herndon Dudley causant une déficience physique et intellectuelle. Son conjoint, l’accompagne également dans son parcours de proche aidante. (Photo : Mathilde Bellon)",
       "imageLocal": "assets/news-images/3b738155c39d092b.jpg",
       "imageLocalKey": "3b738155c39d092b",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -749,7 +757,7 @@
       "date": "2026-05-27T22:38:59.000Z",
       "excerpt": "American artist and poet Theodore A. Harris is a genius of the political collage . Born in Manhattan, New York and raised in Philadelphia, Pennsylvania, Harris brings an autobiographical focus to the subversive , polysemous medium of the collage, one shaped by his upbringing,",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/05/Screen-Shot-2026-05-28-at-8.32.20-AM.png",
-      "authorCheckedAt": "2026-07-29T15:51:41.420Z",
+      "authorCheckedAt": "2026-07-30T15:53:08.439Z",
       "sourceImageCredit": "Photo : Theodore A. Harris",
       "sourceImageCreator": "Theodore A. Harris",
       "sourceImageCreditUrl": "https://www.thetribune.ca/a-e/know-your-artist-theodore-a-harris-27052026/?utm_source=rss&utm_medium=rss&utm_campaign=know-your-artist-theodore-a-harris-27052026",
@@ -771,7 +779,7 @@
       "author": "Samuel Kayll",
       "date": "2026-05-22T16:55:00.000Z",
       "excerpt": "The crew of astronauts sat down in Montreal to discuss their mission and the future of space exploration The crew of the Artemis II mission was greeted by a packed house at Place-des-Arts on the final stop of their Canada tour. Photo Daniel Gonzalez",
-      "image": "https://thelinknewspaper.ca/images/articles/_resized/12.news.artemis.sam.online.daniel.1U5A7650.jpg",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12.news.artemis.sam.online.daniel.1U5A7650_690_460_90.jpg",
       "authorCheckedAt": "2026-07-30T14:33:28.788Z",
       "sourceImageCredit": "Photo: Daniel Gonzalez",
       "sourceImageCreator": "Daniel Gonzalez",
@@ -782,9 +790,8 @@
       "sourceImageCreditRev": 4,
       "leadImageReady": true,
       "leadExcerpt": "Thousands of people filled the seats of Salle Wilfrid-Pelletier at Place-des-Arts for a panel featuring the astronauts of the Artemis II mission on Friday, May 15. Hosted by the Chamber of Commerce of Metropolitan Montreal (CCMM), the discussion marked the final stop on the group’s Canada tour , which featured a meeting with Prime Minister Mark Carney.",
-      "imageLocal": "assets/news-images/1f02270f4f3edd35.jpg",
-      "imageLocalKey": "1f02270f4f3edd35",
-      "imageLocalVia": "origin"
+      "imageLocal": "assets/news-images/1a2d452dc3e32ed7.jpg",
+      "imageLocalKey": "1a2d452dc3e32ed7"
     },
     {
       "source": "The Link",
@@ -821,7 +828,7 @@
       "date": "2026-05-21T21:49:14.000Z",
       "excerpt": "On May 16, hundreds of protestors gathered in front of the Consulate General of Israel in Montreal to commemorate the 78th anniversary of the Nakba (Nakba Day). Demonstrators waved Palestinian, Rotisken’rakéhte (Mohawk Warrior Society), and post-1979 revolution Iranian flags",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/05/Screen-Shot-2026-05-22-at-7.42.52-AM.png",
-      "authorCheckedAt": "2026-07-29T15:51:43.124Z",
+      "authorCheckedAt": "2026-07-30T15:53:09.502Z",
       "sourceImageCredit": "Photo : Ellen Lurie",
       "sourceImageCreator": "Ellen Lurie",
       "sourceImageCreditUrl": "https://www.thetribune.ca/news/montreal-protestors-commemorate-the-78th-anniversary-of-the-nakba-21052026/?utm_source=rss&utm_medium=rss&utm_campaign=montreal-protestors-commemorate-the-78th-anniversary-of-the-nakba-21052026",
@@ -854,7 +861,8 @@
       "leadExcerpt": "La présidente du groupe Accro-Vélo Alma, Anne Lafrance, et Sylvie Beaumont, la mairesse d’Alma, étaient sur place pour le départ des cyclistes. (Crédit : Colin Perron) Quatre commémorations pour les cyclistes décédés ont eu lieu mercredi soir au Saguenay-Lac-Saint-Jean, dont une à Alma. C’était la 3e édition du Tour du Silence, qui débutait à l’hôtel de ville.",
       "imageLocal": "assets/news-images/b52cb98fdf0de965.jpg",
       "imageLocalKey": "b52cb98fdf0de965",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -876,7 +884,8 @@
       "sourceImageCreditImageKey": "image-17.jpg",
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
-      "leadExcerpt": "Après 40 ans, les coiffeuses Kathy Blackburn et Manon Tremblay accrochent leur paire de ciseaux. Le Salon L’image, situé à Place Centre-Ville Jonquière, fermera définitivement ses portes le 29 mai prochain."
+      "leadExcerpt": "Après 40 ans, les coiffeuses Kathy Blackburn et Manon Tremblay accrochent leur paire de ciseaux. Le Salon L’image, situé à Place Centre-Ville Jonquière, fermera définitivement ses portes le 29 mai prochain.",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -900,7 +909,8 @@
       "leadExcerpt": "Le Centre Mamik a déposé une demande de projet pilote pour donner accès à des services de halte garderie, spécifiquement pour les parents qui sont étudiants. (Crédit : Tirée de Facebook / Centre Mamik)",
       "imageLocal": "assets/news-images/cd26304af044029a.jpg",
       "imageLocalKey": "cd26304af044029a",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -921,7 +931,8 @@
       "sourceImageCreditImageKey": "erd.jpeg",
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
-      "leadExcerpt": "Le départ de huit des onze membres du conseil d’administration a failli mener la dissolution de l’Équipe du renouveau démocratique de Saguenay (ERD), mercredi soir. In extrémis, quatre membres pourraient secourir le parti."
+      "leadExcerpt": "Le départ de huit des onze membres du conseil d’administration a failli mener la dissolution de l’Équipe du renouveau démocratique de Saguenay (ERD), mercredi soir. In extrémis, quatre membres pourraient secourir le parti.",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -943,7 +954,8 @@
       "sourceImageCreditImageKey": "3-credit-photo-marc-andre-houde.jpeg",
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
-      "leadExcerpt": "Le concours « Jeunes auteurs à vos crayons! » était dans la région mardi, en compagnie de sa marraine Frédérique Dufort, écrivaine et comédienne, pour distribuer des prix destinés aux élèves. La thématique cette année, « Le pouvoir des mots », orientera le travail de 2346 participants provenant de 160 écoles à travers le Québec et le Canada francophone."
+      "leadExcerpt": "Le concours « Jeunes auteurs à vos crayons! » était dans la région mardi, en compagnie de sa marraine Frédérique Dufort, écrivaine et comédienne, pour distribuer des prix destinés aux élèves. La thématique cette année, « Le pouvoir des mots », orientera le travail de 2346 participants provenant de 160 écoles à travers le Québec et le Canada francophone.",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -968,7 +980,8 @@
       "leadExcerpt": "Le pont de Sainte-Anne ne se contente plus de relier deux rives ; il relie désormais les citoyens à une réalité souvent invisible. Jusqu’au 4 octobre prochain, l’exposition de photographie et de témoignages Ici on se rencontre met en lumière une vocation de l’ombre : celle des travailleurs de rue.",
       "imageLocal": "assets/news-images/e66dde8ccf18ba77.jpg",
       "imageLocalKey": "e66dde8ccf18ba77",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -989,7 +1002,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "pexels-fatih-turan-63325184-12413177.jpg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -1011,7 +1025,8 @@
       "sourceImageCreditImageKey": "image-1-6.jpg",
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
-      "leadExcerpt": "Mélissa Girard, Cindy Duchesne, Mireille Fortin, Claudia Boily et Julie Guay, du programme d’Assistance technique en pharmacie, étaient présentes pour la Journée portes ouvertes, mercredi. (Crédit : Étienne Harvey-Soucy)"
+      "leadExcerpt": "Mélissa Girard, Cindy Duchesne, Mireille Fortin, Claudia Boily et Julie Guay, du programme d’Assistance technique en pharmacie, étaient présentes pour la Journée portes ouvertes, mercredi. (Crédit : Étienne Harvey-Soucy)",
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -1048,14 +1063,14 @@
       "excerpt": "À Montréal, les murs parlent, sans jamais révéler celles et ceux qui les écrivent. Sous les couches de peinture et les signatures superposées, une présence discrète s’impose : celle d’une génération, souvent étudiante, qui investit l’espace urbain en marge des cadres établis.",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/Photo-5_IMG_3586.jpg",
       "authorCheckedAt": "2026-07-30T14:33:31.482Z",
-      "_pageAuthor": "Emilie Rizkallah",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/presences-invisibles-ecrire-la-ville/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "photo-5_img_3586.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -1070,7 +1085,6 @@
       "excerpt": "Le 13 mars dernier, la rappeuse Calamine a dévoilé son nouvel album , Rétrograde . Avec cette quatrième sortie depuis 2020, l’artiste gravit les échelons et devient une voix importante du hip-hop québécois. Composé de 18 titres d’ambiance estivale tels que « CHOP CHOP », « POLY",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg",
       "authorCheckedAt": "2026-07-30T14:33:31.716Z",
-      "_pageAuthor": "Samuel Roy",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/calamine-rapper-autrement/",
       "sourceImageCreditFrom": "media",
@@ -1088,7 +1102,8 @@
       "leadExcerpt": "Le concept même de Rétrograde , c’est cette sensation d’un recul sociétal, le fait qu’on est en train de retourner en arrière, politiquement parlant. Même après des avancées dans le féminisme, on est quand même en train de reculer avec la montée du masculinisme. En nommant l’album Rétrograde , ça me permettait donc de relier à la fois le queer dating et le recul général de la société.",
       "imageLocal": "assets/news-images/e7fd49aa202781bb.jpg",
       "imageLocalKey": "e7fd49aa202781bb",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -1103,7 +1118,6 @@
       "excerpt": "Le 5 mai dernier, le pavillon Roger-Gaudry a accueilli le premier forum du Réseau des écoles associées ( RÉA ). Ce projet ambitieux de la Faculté des sciences de l’éducation (FSÉ) transforme des écoles primaires et secondaires en véritables « hôpitaux universitaires » de la",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-2-768x1024.jpeg",
       "authorCheckedAt": "2026-07-30T14:33:31.952Z",
-      "_pageAuthor": "Ulysse Taillard-Hodez",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
       "sourceImageCreditFrom": "media",
@@ -1121,7 +1135,8 @@
       "leadExcerpt": "Mme Fournier Dubé a insisté sur le fait que les enseignant·e·s sont les véritables « agents de changement ». Son rôle n’est pas d’imposer un cadre scientifique rigide, mais de vulgariser la recherche pour l’adapter aux besoins du terrain.",
       "imageLocal": "assets/news-images/f5291c863e27cad4.jpg",
       "imageLocalKey": "f5291c863e27cad4",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -1136,7 +1151,6 @@
       "excerpt": "Depuis mars 2024, l’Université de Montréal (UdeM) dispose d’une politique de soutien aux parents aux études. Le projet de loi 394 (PL394) de Québec solidaire lui imposerait, en cas d’adoption, d’en créer une destinée également aux proches aidant·e·s. Le député",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/12-13_Statuts-Politique-Parents-Proche-Aidants.jpg",
       "authorCheckedAt": "2026-07-30T14:33:32.174Z",
-      "_pageAuthor": "Mohammed Aziz Mestiri",
       "sourceImageCredit": "Photo : MOHAMMED AZIZ MESTIRI",
       "sourceImageCreator": "MOHAMMED AZIZ MESTIRI",
       "sourceImageCreditUrl": "https://quartierlibre.ca/projet-loi-etudiant-proche-aidante/",
@@ -1148,7 +1162,8 @@
       "leadExcerpt": "Depuis mars 2024, l’Université de Montréal (UdeM) dispose d’une politique de soutien aux parents aux études. Le projet de loi 394 ( PL394 ) de Québec solidaire lui imposerait, en cas d’adoption, d’en créer une destinée également aux proches aidant·e·s.",
       "imageLocal": "assets/news-images/a50bcc72f82c0178.jpg",
       "imageLocalKey": "a50bcc72f82c0178",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -1162,7 +1177,7 @@
       "date": "2026-05-14T08:23:13.000Z",
       "excerpt": "One week before The Tribune’s first production night, I found myself in Toronto in a black dress, black shoes, and sparkles on my eyelids. I was at the funeral of Fabienne de Cartier, a former News Editor. We dedicated Volume 45 to Fabienne, an unforgettable force of nature who",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/05/RenderedImage-1-scaled.jpeg",
-      "authorCheckedAt": "2026-07-29T15:51:44.673Z",
+      "authorCheckedAt": "2026-07-30T15:53:10.447Z",
       "sourceImageCredit": "Photo : Yusur Al-Sharqi",
       "sourceImageCreator": "Yusur Al-Sharqi",
       "sourceImageCreditUrl": "https://www.thetribune.ca/opinion/op-off-the-board/a-final-note-from-the-editor-in-chief-of-volume-45-for-the-record-14052026/?utm_source=rss&utm_medium=rss&utm_campaign=a-final-note-from-the-editor-in-chief-of-volume-45-for-the-record-14052026",
@@ -1188,7 +1203,7 @@
       "date": "2026-05-14T03:18:18.000Z",
       "excerpt": "On May 9, Students for Palestine’s Honour and Resistance ( SPHR ) at McGill hosted a gathering to commemorate the two-year anniversary of Montreal community members establishing the Gaza Solidarity Encampment on McGill’s Lower Field. 743 days later, community members of all ages",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/05/RenderedImage-1000x600.jpeg",
-      "authorCheckedAt": "2026-07-29T15:51:46.266Z",
+      "authorCheckedAt": "2026-07-30T15:53:11.467Z",
       "sourceImageCredit": "Photo : Ellen Lurie",
       "sourceImageCreator": "Ellen Lurie",
       "sourceImageCreditUrl": "https://www.thetribune.ca/news/sphr-remembers-gaza-solidarity-encampment-ahead-of-nakba-anniversary-protest-13052026/?utm_source=rss&utm_medium=rss&utm_campaign=sphr-remembers-gaza-solidarity-encampment-ahead-of-nakba-anniversary-protest-13052026",
@@ -1215,7 +1230,6 @@
       "excerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg",
       "authorCheckedAt": "2026-07-30T14:33:32.409Z",
-      "_pageAuthor": "Bérénice Lemarié",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
       "sourceImageCreditFrom": "media",
@@ -1226,7 +1240,8 @@
       "leadExcerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations d’albums 100 % québécois récemment sortis .",
       "imageLocal": "assets/news-images/0aaf12beea2d8dbd.jpg",
       "imageLocalKey": "0aaf12beea2d8dbd",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -1241,7 +1256,6 @@
       "excerpt": "Entre absence de quorum, élections houleuses et accusations de « campagnes de salissage », la Fédération des associations du campus de l’Université de Montréal (FAÉCUM) traverse une zone de turbulences. Du fonctionnement des associations étudiantes aux congrès mouvementés, récit",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/10-11_FAECUM_photo-assemblee.jpg",
       "authorCheckedAt": "2026-07-30T14:33:32.642Z",
-      "_pageAuthor": "Ulysse Taillard-Hodez",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/faecum-la-democratie-universitaire-critiquee/",
       "sourceImageCreditFrom": "media",
@@ -1252,7 +1266,8 @@
       "leadExcerpt": "Entre absence de quorum, élections houleuses et accusations de « campagnes de salissage », la Fédération des associations du campus de l’Université de Montréal (FAÉCUM) traverse une zone de turbulences. Du fonctionnement des associations étudiantes aux congrès mouvementés, récit d’une démocratie en difficulté.",
       "imageLocal": "assets/news-images/75faed9047858c77.jpg",
       "imageLocalKey": "75faed9047858c77",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -1403,7 +1418,7 @@
       "author": "Mano Le Bris",
       "date": "2026-05-12T18:48:26.000Z",
       "excerpt": "Des fruits qui parlent, nouent des relations et suivent les codes de la téléréalité : c’est le concept derrière ces vidéos d’un nouveau genre. Entre humour, viralité et controverse, ces contenus ont explosé, début 2026, sur les réseaux sociaux. Mais derrière ces visuels",
-      "image": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/05/SKIBIDI-MINIA-2.png",
+      "image": "https://i0.wp.com/www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/05/SKIBIDI-MINIA-2.png?resize=696%2C392&ssl=1",
       "sourceImageCredit": "Illustration : Mano Le Bris / L’Exemplaire",
       "sourceImageCreator": "Mano Le Bris",
       "sourceImageCreditUrl": "https://www.exemplaire.com.ulaval.ca/a-la-une/skibidi-tentafruit-ou-quand-lia-accentue-les-stereotypes/?utm_source=rss&utm_medium=rss&utm_campaign=skibidi-tentafruit-ou-quand-lia-accentue-les-stereotypes",
@@ -1412,7 +1427,9 @@
       "sourceImageCreditImageKey": "skibidi-minia-2.png",
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
-      "leadExcerpt": "Des fruits qui parlent, nouent des relations et suivent les codes de la téléréalité : c’est le concept derrière ces vidéos d’un nouveau genre. Entre humour, viralité et controverse, ces contenus explosent sur les réseaux sociaux. Mais, derrière ces visuels enfantins générés par intelligence artificielle, se dessinent des discours moins légers qui dépassent le simple divertissement."
+      "leadExcerpt": "Des fruits qui parlent, nouent des relations et suivent les codes de la téléréalité : c’est le concept derrière ces vidéos d’un nouveau genre. Entre humour, viralité et controverse, ces contenus explosent sur les réseaux sociaux. Mais, derrière ces visuels enfantins générés par intelligence artificielle, se dessinent des discours moins légers qui dépassent le simple divertissement.",
+      "imageLocal": "assets/news-images/44f01b932a4f2373.webp",
+      "imageLocalKey": "44f01b932a4f2373"
     },
     {
       "source": "Quartier Libre",
@@ -1427,7 +1444,6 @@
       "excerpt": "Les 29 et 30 mai prochains, les adeptes d’ouvrages de suspense, à mystère et d’enquêtes auront rendez-vous au Centre culturel Georges-Vanier pour la troisième édition du festival du livre policier Montréal Mystère, un événement encore jeune, mais déjà bien installé dans le",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/21_Montreal-Mystere.jpg",
       "authorCheckedAt": "2026-07-30T14:33:32.863Z",
-      "_pageAuthor": "Carla Roche",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/montreal-mystere-festival-bilingue/",
       "sourceImageCreditFrom": "media",
@@ -1438,7 +1454,8 @@
       "leadExcerpt": "Les 29 et 30 mai prochains, les adeptes d’ouvrages de suspense, à mystère et d’enquêtes auront rendez-vous au Centre culturel Georges-Vanier pour la troisième édition du festival du livre policier Montréal Mystère , un événement encore jeune, mais déjà bien installé dans le paysage littéraire montréalais.",
       "imageLocal": "assets/news-images/2e20cf914d14b398.jpg",
       "imageLocalKey": "2e20cf914d14b398",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Plant",
@@ -1655,19 +1672,17 @@
       "author": "Minola Grent",
       "date": "2026-05-11T20:43:48.000Z",
       "excerpt": "Via My Little Princess (2011) Minola GrentEditor-in-Chief Every story has the right to be told. Even difficult stories of abuse and manipulation do. So, with an asterisk: leave the children out of this. In the midst of the 1970s cultural confusion, Franco-Romanian photographer",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-5.png",
+      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-4.jpeg?w=731",
       "authorCheckedAt": "2026-07-30T14:33:34.756Z",
       "sourceImageCredit": "Photo: My Little Princess (2011)",
       "sourceImageCreator": "My Little Princess (2011)",
       "sourceImageCreditUrl": "https://theplantnews.com/2026/05/11/leave-the-children-out-of-this/",
-      "sourceImageCreditFrom": "article",
+      "sourceImageCreditFrom": "rss-content",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "image-5.png",
+      "sourceImageCreditImageKey": "image-4.jpeg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true,
-      "imageLocal": "assets/news-images/870cb1894ff8b3e6.png",
-      "imageLocalKey": "870cb1894ff8b3e6",
-      "imageLocalVia": "origin"
+      "imageLocal": "assets/news-images/a7f72017b9324103.webp",
+      "imageLocalKey": "a7f72017b9324103"
     },
     {
       "source": "The Plant",
@@ -1714,7 +1729,6 @@
       "excerpt": "La Coupe du monde 2026 (CM26), qui aura lieu du 11 juin au 19 juillet prochains, s’annonce comme le plus grand événement de soccer jamais organisé. La compétition se déroulera simultanément dans trois pays, les États-Unis, le Canada et le Mexique, et comptera un nombre record",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/16-17_CDM-1.jpg",
       "authorCheckedAt": "2026-07-30T14:33:35.236Z",
-      "_pageAuthor": "Gabriel Lapointe",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/coupe-du-monde-2026/",
       "sourceImageCreditFrom": "media",
@@ -1724,7 +1738,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/9570aaea4dc36d1a.jpg",
       "imageLocalKey": "9570aaea4dc36d1a",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -1739,7 +1754,6 @@
       "excerpt": "Lors d’une assemblée universitaire tenue le 16 mars dernier, le professeur agrégé à l’École de psychoéducation de la Faculté des arts et des sciences de l’UdeM Jean-Sébastien Fallu a soulevé des préoccupations concernant le soutien informatique à l’Université. Il a partagé",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/6-7_soutien-technique.jpg",
       "authorCheckedAt": "2026-07-30T14:33:35.471Z",
-      "_pageAuthor": "Solène Gerber",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/soutien-technique-a-ludem/",
       "sourceImageCreditFrom": "media",
@@ -1750,7 +1764,8 @@
       "leadExcerpt": "Lors d’une assemblée universitaire tenue le 16 mars dernier, le professeur agrégé à l’École de psychoéducation de la Faculté des arts et des sciences de l’UdeM Jean-Sébastien Fallu a soulevé des préoccupations concernant le soutien informatique à l’Université. Il a partagé plusieurs difficultés que lui et ses collègues ont vécues, notamment liées aux délais, aux procédures et à la complexité de certains outils numériques.",
       "imageLocal": "assets/news-images/ee87629ac347e229.jpg",
       "imageLocalKey": "ee87629ac347e229",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -1763,7 +1778,7 @@
       "author": "Alma Perreault",
       "date": "2026-05-09T21:18:00.000Z",
       "excerpt": "May 5 marks a day of awareness for MMIWG2S+ Around 300 demonstrators attended the May 5, 2026 march, a stark contrast to the thousands of Montrealers who took to the streets for May Day demonstrations five days earlier. Photo Alma Perreault",
-      "image": "https://thelinknewspaper.ca/images/articles/_resized/almaperreault-6683.jpg",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/almaperreault-6683_690_460_90.jpg",
       "authorCheckedAt": "2026-07-30T14:33:37.141Z",
       "sourceImageCredit": "Photo: Alma Perreault",
       "sourceImageCreator": "Alma Perreault",
@@ -1774,9 +1789,8 @@
       "sourceImageCreditRev": 4,
       "leadImageReady": true,
       "leadExcerpt": "The vigil on May 5 this year included speeches, performances and a march through downtown Montreal. Around 300 people attended the events, in contrast to the thousands who gathered in other Canadian cities. Among the speakers was Wet’suwet’en chef, activist and filmmaker Marlene Hale, who noted that similar demonstrations in Vancouver consistently draw significantly larger crowds.",
-      "imageLocal": "assets/news-images/32ab04722436dd85.jpg",
-      "imageLocalKey": "32ab04722436dd85",
-      "imageLocalVia": "origin"
+      "imageLocal": "assets/news-images/0b9ec00c9ff8bc35.jpg",
+      "imageLocalKey": "0b9ec00c9ff8bc35"
     },
     {
       "source": "Montréal Campus",
@@ -1789,7 +1803,7 @@
       "author": "Allyson Caron-Pelletier",
       "date": "2026-05-09T03:14:30.000Z",
       "excerpt": "D’origine moldave, Iulian Ciobanu arrive au Canada en 2010 sans même connaître le boccia. Cinq ans plus tard, il quitte son emploi pour devenir joueur BC4 breveté avec l’équipe nationale. « Je n’avais jamais fait de sport de ma vie, mais j’ai toujours été curieux et capable de",
-      "image": "https://montrealcampus.ca/wp-content/uploads/2026/05/1-Photo-couverture.png",
+      "image": "https://montrealcampus.ca/wp-content/uploads/2026/05/1-Photo-couverture-1280x855.png",
       "_pageAuthor": "Allyson Caron-Pelletier",
       "sourceImageCredit": "Photo : Allyson Caron-Pelletier",
       "sourceImageCreator": "Allyson Caron-Pelletier",
@@ -1813,7 +1827,6 @@
       "excerpt": "Du 1 er au 9 mai, le festival Jamais Lu s’installe au théâtre Aux Écuries de Montréal, avec pour thème « Réparer nos Transmissions ». Le nouveau directeur artistique et cogénéral du festival, Éric Noël, partage son envie de mettre au cœur de cette édition la place des",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image.jpeg",
       "authorCheckedAt": "2026-07-30T14:33:37.678Z",
-      "_pageAuthor": "Bérénice Lemarié",
       "sourceImageCredit": "Photo : Maryse Boyce",
       "sourceImageCreator": "Maryse Boyce",
       "sourceImageCreditUrl": "https://quartierlibre.ca/festival-jamais-lu-2026/",
@@ -1824,7 +1837,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/9c2294ec02e2ad2b.jpg",
       "imageLocalKey": "9c2294ec02e2ad2b",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -1847,7 +1861,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/7aa5ab9dd7648781.jpg",
       "imageLocalKey": "7aa5ab9dd7648781",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -1969,7 +1984,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/23af229881dbdeec.jpg",
       "imageLocalKey": "23af229881dbdeec",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -2034,7 +2050,7 @@
       "author": "Camélie Bourret et Félicitée Audet",
       "date": "2026-05-01T18:02:05.000Z",
       "excerpt": "« Êtes-vous prêt à réveiller l’homme que vous voulez être? », c’est ce qu’affiche le site Web de ManKind Project. Actif dans une vingtaine de pays, cet organisme a pour objectif de « développer un sentiment de masculinité sain et mature ». Retraites, groupes de discussion et",
-      "image": "https://montrealcampus.ca/wp-content/uploads/2026/04/Mankind-template-1.png",
+      "image": "https://montrealcampus.ca/wp-content/uploads/2026/04/Mankind-template-1-1280x720.png",
       "_pageAuthor": "Camélie Bourret et Félicitée Audet",
       "sourceImageCredit": "Illustration : Kilian Beauchesne et Allyson Caron-Pelletier",
       "sourceImageCreator": "Kilian Beauchesne et Allyson Caron-Pelletier",
@@ -2068,7 +2084,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/16a813216f7afeb2.jpg",
       "imageLocalKey": "16a813216f7afeb2",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -2081,7 +2098,7 @@
       "author": "Juliette Benoît et Flora Paquet",
       "date": "2026-04-30T17:42:59.000Z",
       "excerpt": "Au début de 2026, la compagnie pharmaceutique Novo Nordisk a placardé de nombreuses publicités de Wegovy les murs et les tourniquets de la station de métro Berri-UQAM. Wegovy est un médicament destiné au traitement du diabète de type 2 et pour les personnes atteintes d’obésité.",
-      "image": "https://montrealcampus.ca/wp-content/uploads/2026/04/Wegovy-template-1.png",
+      "image": "https://montrealcampus.ca/wp-content/uploads/2026/04/Wegovy-template-1-1280x720.png",
       "_pageAuthor": "Juliette Benoît et Flora Paquet",
       "sourceImageCredit": "Illustration : Charles Dessureault",
       "sourceImageCreator": "Charles Dessureault",
@@ -2180,14 +2197,14 @@
       "image": "",
       "authorCheckedAt": "2026-07-30T14:33:39.146Z",
       "leadImageReady": false,
-      "leadExcerpt": "Chairperson Asa Kohn called the SCM to order at 3:07 p.m. and called on the policy committee to present its report, which consisted of the meeting’s recommended motions.",
       "stockImage": "https://live.staticflickr.com/7089/7290404684_2750bb385f_b.jpg",
       "imageTitle": "Guy Fawkes on Guy Street",
       "imageCredit": "Photo : Indrid__Cold / CC BY-SA · Openverse",
       "imageCreator": "Indrid__Cold",
       "imageLicense": "by-sa",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/29442760@N00/7290404684"
+      "imageSourceUrl": "https://www.flickr.com/photos/29442760@N00/7290404684",
+      "leadExcerpt": "Chairperson Asa Kohn called the SCM to order at 3:07 p.m. and called on the policy committee to present its report, which consisted of the meeting’s recommended motions."
     },
     {
       "source": "Zone Campus",
@@ -2208,7 +2225,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3939.jpg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -2229,7 +2247,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_9786.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -2243,7 +2262,7 @@
       "date": "2026-04-26T23:32:27.000Z",
       "excerpt": "Across the 18 months she has lived in her Plateau apartment, Alice Lee, U3 Arts & Science, has had her water shut off 13 times. Most recently—in February 2026—she turned on her tap to find the water running yellow, as she recounted in an interview with The Tribune . Lee",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/04/Untitled_Artwork-149.png",
-      "authorCheckedAt": "2026-07-29T15:51:47.984Z",
+      "authorCheckedAt": "2026-07-30T15:53:12.463Z",
       "sourceImageCredit": "Photo credit: The Tribune",
       "sourceImageCreditUrl": "https://www.thetribune.ca/news/mcgill-community-members-express-concerns-about-mcgill-athletics-former-partnership-with-interrent-reit-26042026/?utm_source=rss&utm_medium=rss&utm_campaign=mcgill-community-members-express-concerns-about-mcgill-athletics-former-partnership-with-interrent-reit-26042026",
       "sourceImageCreditFrom": "media",
@@ -2268,7 +2287,7 @@
       "date": "2026-04-26T23:02:59.000Z",
       "excerpt": "On April 9, the McGill Institute of Islamic Studies hosted a panel event titled “ Journalism After Gaza: A Roundtable Discussion on the Present & Future of the Media ,” featuring Saman Malik , Sana Saeed , and Kareem Shaheen . The panel was led by Pasha M. Khan , associate",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/04/Untitled-11-scaled.jpeg",
-      "authorCheckedAt": "2026-07-29T15:51:49.519Z",
+      "authorCheckedAt": "2026-07-30T15:53:13.520Z",
       "sourceImageCredit": "Photo : Reya Khanna",
       "sourceImageCreator": "Reya Khanna",
       "sourceImageCreditUrl": "https://www.thetribune.ca/student-life/journalism-after-gaza-panel-discusses-media-bias-and-the-future-of-reporting-in-palestine-27042026/?utm_source=rss&utm_medium=rss&utm_campaign=journalism-after-gaza-panel-discusses-media-bias-and-the-future-of-reporting-in-palestine-27042026",
@@ -2304,7 +2323,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/7428914d1b64d542.jpg",
       "imageLocalKey": "7428914d1b64d542",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -2328,7 +2348,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/7f86c6d6d4e73d30.jpg",
       "imageLocalKey": "7f86c6d6d4e73d30",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -2351,7 +2372,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/df8807d73a194404.jpg",
       "imageLocalKey": "df8807d73a194404",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -2374,7 +2396,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/4828a1e7cbf0e7ff.jpg",
       "imageLocalKey": "4828a1e7cbf0e7ff",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -2394,7 +2417,8 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "672687004_1331193022389249_583407324812045529_n.jpg",
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Exil",
@@ -2430,7 +2454,7 @@
       "date": "2026-04-18T13:13:18.000Z",
       "excerpt": "Sad endings are unfortunately part of life, but they do not have to ruin our greatest stories. The most popular romance movie on Letterboxd is La La Land , a movie with a horribly unsatisfying ending to an otherwise lovely story. That summary is one so often befitting in sports.",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/07/IMG_3442.png",
-      "authorCheckedAt": "2026-07-29T15:51:50.679Z",
+      "authorCheckedAt": "2026-07-30T15:53:14.564Z",
       "sourceImageCredit": "Photo credit: The Tribune",
       "sourceImageCreditUrl": "https://www.thetribune.ca/sports/sad-endings-do-not-ruin-a-great-story-haliburton-vanmoen-and-carlyle-18042026/?utm_source=rss&utm_medium=rss&utm_campaign=sad-endings-do-not-ruin-a-great-story-haliburton-vanmoen-and-carlyle-18042026",
       "sourceImageCreditFrom": "media",
@@ -2450,7 +2474,7 @@
       "author": "Racha Rais",
       "date": "2026-04-14T03:37:00.000Z",
       "excerpt": "Youth involvement in politics and the place of AI in Canada dominated discussion Members of the winning Young Liberals of Canada slate, Team Renaissance, with member of Parliament Sameer Zuberi at the Liberal National Convention in Montreal on April 11, 2026. Photo Racha Rais",
-      "image": "https://thelinknewspaper.ca/images/articles/_resized/P1144275.jpg",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/P1144275_690_358_90.jpg",
       "authorCheckedAt": "2026-07-30T14:33:40.863Z",
       "sourceImageCredit": "Photo: Racha Rais",
       "sourceImageCreator": "Racha Rais",
@@ -2461,9 +2485,8 @@
       "sourceImageCreditRev": 4,
       "leadImageReady": true,
       "leadExcerpt": "The first day saw the regroupment of a number of commissions, namely the Indigenous Peoples' Commission, the National Women’s Liberal Commission, the Senior Liberals' Commission and the Young Liberals of Canada (YLC) commission.",
-      "imageLocal": "assets/news-images/0bdd597768e50e6a.jpg",
-      "imageLocalKey": "0bdd597768e50e6a",
-      "imageLocalVia": "origin"
+      "imageLocal": "assets/news-images/7eff684db1c9736f.jpg",
+      "imageLocalKey": "7eff684db1c9736f"
     },
     {
       "source": "The Link",
@@ -2508,7 +2531,7 @@
       "author": "Sydney Nethersole",
       "date": "2026-04-14T03:00:00.000Z",
       "excerpt": "The two-venue festival invites people to move between spaces LaVendertown is set to perform at Sala Rossa during the music festival Jaywalk. Courtesy Sayplus.",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/Full_band_B-W_(1)_900_600_90.jpeg",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/Full_band_B-W_(1)_690_460_90.jpeg",
       "authorCheckedAt": "2026-07-30T14:33:44.296Z",
       "sourceImageCredit": "Photo: Courtesy of Sayplus",
       "sourceImageCreator": "Sayplus",
@@ -2518,9 +2541,8 @@
       "sourceImageCreditImageKey": "full_band_b-w_(1).jpeg",
       "sourceImageCreditRev": 4,
       "leadImageReady": true,
-      "imageLocal": "assets/news-images/891b9ee70dc7654a.jpg",
-      "imageLocalKey": "891b9ee70dc7654a",
-      "imageLocalVia": "origin"
+      "imageLocal": "assets/news-images/cc3a943dc3805fee.jpg",
+      "imageLocalKey": "cc3a943dc3805fee"
     },
     {
       "source": "The Link",
@@ -2533,7 +2555,7 @@
       "author": "Rojiar Ghezelbash",
       "date": "2026-04-14T02:36:00.000Z",
       "excerpt": "The university issued a general message without naming the conflict and no email was sent to students Iranian students at Concordia University are expressing concern over a lack of recognition and support resources from the university regarding the conflict in Iran. Photo",
-      "image": "https://thelinknewspaper.ca/images/articles/_resized/Concordia.Stock.CarolineMarsh-3.jpg",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/Concordia.Stock.CarolineMarsh-3_690_460_90.jpg",
       "authorCheckedAt": "2026-07-30T14:33:45.945Z",
       "sourceImageCredit": "Photo: Caroline Marsh",
       "sourceImageCreator": "Caroline Marsh",
@@ -2543,9 +2565,8 @@
       "sourceImageCreditImageKey": "concordia.stock.carolinemarsh-3.jpg",
       "sourceImageCreditRev": 4,
       "leadImageReady": true,
-      "imageLocal": "assets/news-images/a4bb70a32fb1257f.jpg",
-      "imageLocalKey": "a4bb70a32fb1257f",
-      "imageLocalVia": "origin"
+      "imageLocal": "assets/news-images/7a6153b27f25bced.jpg",
+      "imageLocalKey": "7a6153b27f25bced"
     },
     {
       "source": "The Tribune",
@@ -2559,7 +2580,7 @@
       "date": "2026-04-13T04:44:51.000Z",
       "excerpt": "Canada’s prison system is predicated on rehabilitation and reintegration—yet, the country’s own correctional service is defunding the most integral program to realizing that aim. Correctional Service Canada (CSC) has announced the suspension of its federal prison education",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/04/Design-sans-titre.png",
-      "authorCheckedAt": "2026-07-29T15:51:51.700Z",
+      "authorCheckedAt": "2026-07-30T15:53:15.634Z",
       "sourceImageCredit": "Photo credit: The Tribune",
       "sourceImageCreditUrl": "https://www.thetribune.ca/features/how-can-i-show-you-im-doing-better-if-theres-nothing-good-for-me-to-do/?utm_source=rss&utm_medium=rss&utm_campaign=how-can-i-show-you-im-doing-better-if-theres-nothing-good-for-me-to-do",
       "sourceImageCreditFrom": "media",
@@ -2590,7 +2611,7 @@
       "date": "2026-04-13T01:00:00.000Z",
       "excerpt": "Odie Harr’s ever-shifting collective turns their shows into something shared Members of Odie Harr. Courtesy Alice Hirsch",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/ODIE_HARR-2_690_1034_90.jpg",
-      "authorCheckedAt": "2026-07-29T15:51:54.138Z",
+      "authorCheckedAt": "2026-07-30T15:53:17.546Z",
       "sourceImageCredit": "Photo: Courtesy of Alice Hirsch",
       "sourceImageCreator": "Alice Hirsch",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16320",
@@ -2622,7 +2643,7 @@
       "date": "2026-04-12T01:14:00.000Z",
       "excerpt": "Lebanon and Palestine solidarity fund, Students for Consent Culture and the Spinach Collective to benefit from funding The Concordia Student Union passed eight motions during their regular council meeting on April 8. Graphic Naya Hachwa",
       "image": "",
-      "authorCheckedAt": "2026-07-29T15:51:56.057Z",
+      "authorCheckedAt": "2026-07-30T15:53:18.952Z",
       "leadImageReady": false,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG",
       "imageTitle": "Henry F. Hall Building 01, Concordia University",
@@ -2630,8 +2651,7 @@
       "imageCreator": "Jeangagnon",
       "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Henry_F._Hall_Building_01.JPG",
-      "_campusBank": true
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Henry_F._Hall_Building_01.JPG"
     },
     {
       "source": "The McGill Daily",
@@ -2666,18 +2686,16 @@
       "author": "Safa Hachi",
       "date": "2026-04-11T20:45:00.000Z",
       "excerpt": "Chandler Levack on Montreal’s music scene, early-2010s nostalgia and the charm of being awkward Chandler Levack on the set of her latest film Mile End Kicks. Courtesy Joe Fuda",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/_MG_2324_900_600_90.jpeg",
-      "authorCheckedAt": "2026-07-29T15:51:58.083Z",
-      "leadImageReady": true,
-      "imageLocal": "assets/news-images/c34d91afb7378837.jpg",
-      "imageLocalKey": "c34d91afb7378837",
-      "imageLocalVia": "origin",
+      "image": "https://thelinknewspaper.ca/images/articles/_resized/Screenshot_2026-04-11_17.01.52.png",
+      "authorCheckedAt": "2026-07-30T15:53:20.637Z",
+      "imageLocal": "assets/news-images/56c3154b93336503.png",
+      "imageLocalKey": "56c3154b93336503",
       "sourceImageCredit": "Photo: Courtesy of Joe Fuda",
       "sourceImageCreator": "Joe Fuda",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16318",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "_mg_2324.jpeg",
+      "sourceImageCreditImageKey": "screenshot_2026-04-11_17.01.52.png",
       "sourceImageCreditRev": 9
     },
     {
@@ -2691,8 +2709,8 @@
       "author": "Anaïssa Dauphin",
       "date": "2026-04-09T21:04:00.000Z",
       "excerpt": "Canada has an impartiality problem Canada’s human rights image is sustained by a lack of accountability for its history of systemic harm. Graphic Naya Hachwa",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_OPS_SlaveTrade_NayaHachwa_900_494_90.jpg",
-      "authorCheckedAt": "2026-07-29T15:52:00.002Z",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_OPS_SlaveTrade_NayaHachwa_690_379_90.jpg",
+      "authorCheckedAt": "2026-07-30T15:53:22.092Z",
       "sourceImageCredit": "Illustration: Naya Hachwa",
       "sourceImageCreator": "Naya Hachwa",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16316",
@@ -2701,9 +2719,8 @@
       "sourceImageCreditImageKey": "12_ops_slavetrade_nayahachwa.jpg",
       "sourceImageCreditRev": 4,
       "leadImageReady": true,
-      "imageLocal": "assets/news-images/7b44024add6da15f.jpg",
-      "imageLocalKey": "7b44024add6da15f",
-      "imageLocalVia": "origin"
+      "imageLocal": "assets/news-images/9078ded119444ef9.jpg",
+      "imageLocalKey": "9078ded119444ef9"
     },
     {
       "source": "The Link",
@@ -2716,8 +2733,8 @@
       "author": "Yoan Safar",
       "date": "2026-04-09T21:00:00.000Z",
       "excerpt": "Aplan to preserve the façade while removing the interior is drawing mixed reactions The Empress has been left destitute since the fire that shut it down in 1992. Photo Yoan Safar",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/Empress_theater_900_675_90.JPG",
-      "authorCheckedAt": "2026-07-29T15:52:01.909Z",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/Empress_theater_690_518_90.JPG",
+      "authorCheckedAt": "2026-07-30T15:53:23.651Z",
       "sourceImageCredit": "Photo: Yoan Safar",
       "sourceImageCreator": "Yoan Safar",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16317",
@@ -2726,9 +2743,8 @@
       "sourceImageCreditImageKey": "empress_theater.jpg",
       "sourceImageCreditRev": 4,
       "leadImageReady": true,
-      "imageLocal": "assets/news-images/7a7761841228a115.jpg",
-      "imageLocalKey": "7a7761841228a115",
-      "imageLocalVia": "origin"
+      "imageLocal": "assets/news-images/1eba3e0e26e185a9.jpg",
+      "imageLocalKey": "1eba3e0e26e185a9"
     },
     {
       "source": "The Link",
@@ -2741,18 +2757,16 @@
       "author": "Mani Asadieraghi",
       "date": "2026-04-09T20:52:00.000Z",
       "excerpt": "Why student newspapers remain one of the last places people learn to speak publicly Public discourse does not survive automatically. It depends on people’s willingness to question institutions and place their ideas into shared space. Graphic Halle Keays",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_OPS_900_675.png",
-      "authorCheckedAt": "2026-07-29T15:52:03.761Z",
-      "leadImageReady": true,
-      "imageLocal": "assets/news-images/ed63a7ef08244b69.png",
-      "imageLocalKey": "ed63a7ef08244b69",
-      "imageLocalVia": "origin",
-      "sourceImageCredit": "Illustration: Halle Keays",
-      "sourceImageCreator": "Halle Keays",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_OPS_690_518.png",
+      "authorCheckedAt": "2026-07-30T15:53:25.044Z",
+      "imageLocal": "assets/news-images/d031f6fbd81a93ca.png",
+      "imageLocalKey": "d031f6fbd81a93ca",
+      "sourceImageCredit": "Photo credit: The Link",
+      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16315",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "12_ops_900_675.png",
+      "sourceImageCreditFrom": "media",
+      "sourceImageCreditCited": false,
+      "sourceImageCreditImageKey": "12_ops_690_518.png",
       "sourceImageCreditRev": 9
     },
     {
@@ -2767,7 +2781,7 @@
       "date": "2026-04-09T18:16:00.000Z",
       "excerpt": "The Concordia alumnus sits down with The Link to speak about his experiences as an activist for the Palestinian cause Courtesy Aaron Maté",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12.news.AaronMaté.Sean.online.CourtesyAaronMaté_690_1034_90.jpg",
-      "authorCheckedAt": "2026-07-29T15:52:05.673Z",
+      "authorCheckedAt": "2026-07-30T15:53:26.615Z",
       "sourceImageCredit": "Photo : Courtesy Aaron Maté",
       "sourceImageCreator": "Courtesy Aaron Maté",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16314",
@@ -2798,8 +2812,8 @@
       "author": "Bryanna O’Brien",
       "date": "2026-04-08T22:05:00.000Z",
       "excerpt": "FIFA has the authority to relocate or cancel its Guadalajara games, but it is choosing not to The 2026 FIFA World Cup has the potential for incredible action, but also extensive controversy. Graphic Evelyn Ho Lee",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_SPORTS_WCHostCountries_EvelynHoLee_900_686_90.jpg",
-      "authorCheckedAt": "2026-07-29T15:52:07.562Z",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_SPORTS_WCHostCountries_EvelynHoLee_690_526_90.jpg",
+      "authorCheckedAt": "2026-07-30T15:53:28.033Z",
       "sourceImageCredit": "Illustration: Evelyn Ho Lee",
       "sourceImageCreator": "Evelyn Ho Lee",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16313",
@@ -2808,9 +2822,8 @@
       "sourceImageCreditImageKey": "12_sports_wchostcountries_evelynholee.jpg",
       "sourceImageCreditRev": 4,
       "leadImageReady": true,
-      "imageLocal": "assets/news-images/78e851c51f8b517d.jpg",
-      "imageLocalKey": "78e851c51f8b517d",
-      "imageLocalVia": "origin"
+      "imageLocal": "assets/news-images/c8ae8e3aedde925d.jpg",
+      "imageLocalKey": "c8ae8e3aedde925d"
     },
     {
       "source": "The Link",
@@ -2823,8 +2836,8 @@
       "author": "Zoya Ramadan",
       "date": "2026-04-08T21:28:00.000Z",
       "excerpt": "Amulti-million-dollar industry built on never being enough Self-improvement, a genre once intended for the passing down of generational wisdom, has turned into a toxic, capitalist machine. Graphic Naya Hachwa",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_OPS_SelfHelp_NayaHachwa_900_674_90.jpg",
-      "authorCheckedAt": "2026-07-29T15:52:09.441Z",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_OPS_SelfHelp_NayaHachwa_690_517_90.jpg",
+      "authorCheckedAt": "2026-07-30T15:53:29.669Z",
       "sourceImageCredit": "Illustration: Naya Hachwa",
       "sourceImageCreator": "Naya Hachwa",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16312",
@@ -2833,9 +2846,8 @@
       "sourceImageCreditImageKey": "12_ops_selfhelp_nayahachwa.jpg",
       "sourceImageCreditRev": 4,
       "leadImageReady": true,
-      "imageLocal": "assets/news-images/a342782f9009d997.jpg",
-      "imageLocalKey": "a342782f9009d997",
-      "imageLocalVia": "origin"
+      "imageLocal": "assets/news-images/94836a8f5ca171ef.jpg",
+      "imageLocalKey": "94836a8f5ca171ef"
     },
     {
       "source": "The Tribune",
@@ -2849,7 +2861,7 @@
       "date": "2026-04-08T15:08:43.000Z",
       "excerpt": "“I got in an accident that involved some sea urchins,” Natalie Joy Gale, a PhD student in McGill’s Department of History and Classical Studies, said in an interview with //The Tribune//. Gale recalls wiping out in an ‘urchin-y’ area of reef while surfing in Puerto Rico,",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/04/bottle.png",
-      "authorCheckedAt": "2026-07-29T15:52:10.798Z",
+      "authorCheckedAt": "2026-07-30T15:53:31.083Z",
       "sourceImageCredit": "Photo credit: The Tribune",
       "sourceImageCreditUrl": "https://www.thetribune.ca/features/your-health-your-problem/?utm_source=rss&utm_medium=rss&utm_campaign=your-health-your-problem",
       "sourceImageCreditFrom": "media",
@@ -2880,7 +2892,7 @@
       "date": "2026-04-07T22:00:00.000Z",
       "excerpt": "At the airport, I learned to expect the pauses, the extra questions, the glances at my passport that lingered a second too long. I did everything right—got into McGill, applied for my visa, and carried proof that I would leave once my degree was over. Even in places I call home,",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/04/Rup_OTB.jpg",
-      "authorCheckedAt": "2026-07-29T15:52:11.862Z",
+      "authorCheckedAt": "2026-07-30T15:53:32.577Z",
       "sourceImageCredit": "Photo credit: The Tribune",
       "sourceImageCreditUrl": "https://www.thetribune.ca/opinion/oh-the-places-ill-go-but-not-stay-07042026/?utm_source=rss&utm_medium=rss&utm_campaign=oh-the-places-ill-go-but-not-stay-07042026",
       "sourceImageCreditFrom": "media",
@@ -2904,7 +2916,7 @@
       "date": "2026-04-07T15:29:55.000Z",
       "excerpt": "The Tribune ‘s special issue for the Winter 2026 semester was centred around the theme of ‘ memory ,’ with our writers, staff, editors, and creative team discussing the role of institutional, collective, and personal memory in society, politics, educational institutions, and",
       "image": "https://www.thetribune.ca/wp-content/uploads/2025/01/LETTER-TO-ED-JAN-28.png",
-      "authorCheckedAt": "2026-07-29T15:52:12.940Z",
+      "authorCheckedAt": "2026-07-30T15:53:33.566Z",
       "sourceImageCredit": "Photo credit: The Tribune",
       "sourceImageCreditUrl": "https://www.thetribune.ca/opinion/letters-to-the-editor/open-letter-how-can-i-show-you-im-doing-better-if-theres-nothing-good-for-me-to-do-07042026/?utm_source=rss&utm_medium=rss&utm_campaign=open-letter-how-can-i-show-you-im-doing-better-if-theres-nothing-good-for-me-to-do-07042026",
       "sourceImageCreditFrom": "media",
@@ -2925,7 +2937,7 @@
       "date": "2026-04-07T10:05:00.000Z",
       "excerpt": "Content warning: Mentions of racial violence After Black Sisterhood at McGill (BSISSY) began recruiting members to start an Alpha Kappa Alpha (AKA) sorority chapter at McGill, co-founders Lena Karis Moussio, U1 Arts, and Astou Badiane, U1 Arts, received racist comments and",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/04/Untitled_Artwork-149-scaled.png",
-      "authorCheckedAt": "2026-07-29T15:52:13.953Z",
+      "authorCheckedAt": "2026-07-30T15:53:34.529Z",
       "sourceImageCredit": "Photo : Eliot Loose",
       "sourceImageCreator": "Eliot Loose",
       "sourceImageCreditUrl": "https://www.thetribune.ca/news/mcgill-news/black-sisterhood-at-mcgill-targeted-with-online-racist-harassment-07042026/?utm_source=rss&utm_medium=rss&utm_campaign=black-sisterhood-at-mcgill-targeted-with-online-racist-harassment-07042026",
@@ -3652,17 +3664,16 @@
       "author": "Elie Nguyen",
       "date": "2026-03-25T07:00:00.000Z",
       "excerpt": "Pour en finir avec l’insouciance de façade et embrasser pleinement l’authenticité.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/QC.jpeg",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Creation-sans-titre-2-768x1024.png",
       "featured": true,
       "_pageAuthor": "Elie Nguyen",
       "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance.",
-      "leadImageReady": true,
       "sourceImageCredit": "Photo : Elie Nguyen",
       "sourceImageCreator": "Elie Nguyen",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "qc.jpeg",
+      "sourceImageCreditImageKey": "creation-sans-titre-2.png",
       "sourceImageCreditRev": 9
     },
     {
@@ -3780,17 +3791,18 @@
       "author": "Joséphine Miton",
       "date": "2026-03-25T07:00:00.000Z",
       "excerpt": "Blague innocente, signe d’ouverture ou nouveau costume ?",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/ecriture-inclusive.png",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/coinqueer-1.jpeg",
       "featured": true,
       "_pageAuthor": "Joséphine Miton",
       "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie.",
-      "leadImageReady": true,
+      "imageLocal": "assets/news-images/4d808d99f444a191.jpg",
+      "imageLocalKey": "4d808d99f444a191",
       "sourceImageCredit": "Photo : Félix Fournier",
       "sourceImageCreator": "Félix Fournier",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "ecriture-inclusive.png",
+      "sourceImageCreditImageKey": "coinqueer-1.jpeg",
       "sourceImageCreditRev": 9
     },
     {
@@ -3907,8 +3919,7 @@
       "imageCreator": "Balcer",
       "imageLicense": "CC BY 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop%27s_University_McGreer_Hall.jpg",
-      "_campusBank": true
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop%27s_University_McGreer_Hall.jpg"
     },
     {
       "source": "The Campus",
@@ -4157,23 +4168,23 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "Ce que nous devons aux femmes",
-      "link": "https://www.delitfrancais.com/2026/03/18/ce-que-nous-devons-aux-femmes/",
-      "author": "Eugénie St-Pierre",
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
+      "author": "Timotée Allouch-Chantepie, Héloïse Durning, Aurélien Quéméner et Eugénie St-Pierre",
       "date": "2026-03-18T07:00:00.000Z",
-      "excerpt": "Votre entourage, en tant qu’étudiantes et étudiants de l’Université McGill, est peut-être composé en majorité de personnes qui se revendiquent comme féministes. Certaines le sont, d’autres le prétendent, mais relativement rares sont les McGillois qui refusent ouvertement le féminisme.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Capture-decran-le-2026-03-22-a-17.22.07.png",
+      "excerpt": "Présentation des candidats à l’exécutif de l’AÉUM.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2025/11/P1160269-scaled.jpeg",
       "featured": true,
-      "authorCheckedAt": "2026-07-30T06:43:07.579Z",
-      "_pageAuthor": "Eugénie St-Pierre",
-      "sourceImageCredit": "Photo : Alexandre Gontier",
-      "sourceImageCreator": "Alexandre Gontier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/ce-que-nous-devons-aux-femmes/",
+      "_pageAuthor": "Timotée Allouch-Chantepie, Héloïse Durning, Aurélien Quéméner et Eugénie St-Pierre",
+      "authorCheckedAt": "2026-07-30T15:53:35.190Z",
+      "leadExcerpt": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « plus politique ». L’étudiante de deuxième année en études sur le genre explique qu’elle ne se sentait pas représentée par les élus de l’AÉUM et que c’est ce qui a motivé sa décision de se présenter. « On [les candidats du S.T.A.N.D.] est là depuis deux, trois, quatre ans et on voit comment l’AÉUM n’e",
+      "sourceImageCredit": "Photo : Toscane Ralaimongo",
+      "sourceImageCreator": "Toscane Ralaimongo",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "capture-decran-le-2026-03-22-a-17.22.07.png",
-      "sourceImageCreditRev": 9,
-      "leadImageReady": true
+      "sourceImageCreditImageKey": "p1160269.jpeg",
+      "sourceImageCreditRev": 9
     },
     {
       "source": "Le Délit",
@@ -4181,23 +4192,22 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "Les femmes MAGA au service du patriarcat",
-      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
-      "author": "Anonyme",
+      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "link": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
+      "author": "Sixtine Nicolaÿ",
       "date": "2026-03-18T07:00:00.000Z",
-      "excerpt": "Kristi Noem et Erika Kirk comme figures de proue du néo-fascisme américain.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Capture-decran-le-2026-03-22-a-17.22.07.png",
+      "excerpt": "Le rôle des lesbiennes pendant l’épidémie du sida.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/lesbians-against-sida-_-sixtine.png",
       "featured": true,
-      "authorCheckedAt": "2026-07-30T06:43:07.982Z",
-      "_pageAuthor": "Anonyme",
-      "leadExcerpt": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer en instrumentalisant certaines femmes pour reproduire les structures qui les subordonnent. C’est à travers ce mécanisme d’opacité que sa présence se resserre sur la société, et que ses contradictions se dissimulent sous le couvert de liberté individuelle, de traditions ou de choix personnels.",
-      "leadImageReady": true,
+      "_pageAuthor": "Sixtine Nicolaÿ",
+      "authorCheckedAt": "2026-07-30T15:53:35.519Z",
+      "leadExcerpt": "Cependant, l’épidémie du sida a modifié le rapport entre les deux groupes. Au cours de cette crise, les hommes homosexuels, qui en étaient les principales victimes, ont souvent été abandonnés, que ce soit par le gouvernement ou plus largement par la société. La stigmatisation et la marginalisation des homosexuels ont conduit certains professionnels de la santé à refuser de traiter les personnes at",
       "sourceImageCredit": "Photo : Stu Doré",
       "sourceImageCreator": "Stu Doré",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "capture-decran-le-2026-03-22-a-17.22.07.png",
+      "sourceImageCreditImageKey": "lesbians-against-sida-_-sixtine.png",
       "sourceImageCreditRev": 9
     },
     {
@@ -4236,7 +4246,7 @@
       "author": "La rédaction",
       "date": "2026-03-13T19:42:16.000Z",
       "excerpt": "GardaWorld, la compagnie québécoise qui fournit les gardes de sécurité du Cégep du Vieux-Montréal, est au centre de la controverse. L’entreprise entretient des relations avec la police immigratoire américaine ICE – qui est reconnue par plusieurs organisations humanitaires comme",
-      "image": "https://exilecvm.wordpress.com/wp-content/uploads/2026/03/img_3527.jpg",
+      "image": "https://exilecvm.wordpress.com/wp-content/uploads/2026/03/img_3527.jpg?w=1024",
       "authorCheckedAt": "2026-07-30T14:33:54.436Z",
       "sourceImageCredit": "Crédit photo : Exil",
       "sourceImageCreditUrl": "https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/",
@@ -4268,8 +4278,7 @@
       "imageCreator": "Jeangagnon",
       "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG",
-      "_campusBank": true
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
     },
     {
       "source": "Le Polyscope",
