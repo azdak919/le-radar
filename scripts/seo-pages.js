@@ -948,16 +948,36 @@ function formatSportsTimeHtml(date, time, lang) {
 
 /** Normalise sex → 'F' | 'M' | 'X' | '' */
 function sportsSexKey(sex) {
-  const s = String(sex || '').toUpperCase();
-  if (s === 'F' || s === 'W') return 'F';
-  if (s === 'M') return 'M';
-  if (s === 'X' || s === 'MIXTE' || s === 'MIXED') return 'X';
+  const s = String(sex || '').toUpperCase().trim();
+  if (s === 'F' || s === 'W' || s === 'WOMEN' || s === 'FEMININ' || s === 'FÉMININ') return 'F';
+  if (s === 'M' || s === 'MEN' || s === 'MASCULIN') return 'M';
+  if (
+    s === 'X'
+    || s === 'MIXTE'
+    || s === 'MIXED'
+    || s === 'COED'
+    || s === 'CO-ED'
+    || s === 'OPEN'
+    || s === 'OUVERT'
+  ) return 'X';
+  return '';
+}
+
+/**
+ * Sexe effectif d’une formation pour filtres / data-sex.
+ * Voile campus QC (ICSA, associations) : équipages ouverts — pas de tableau F/M RSEQ.
+ * (focus-group 2026-07-30 : catégorie Mixte + voile vérifiée.)
+ */
+function sportsEffectiveSexKey(team) {
+  const key = sportsSexKey(team?.sex);
+  if (key) return key;
+  if (String(team?.sport || '').toLowerCase() === 'sailing') return 'X';
   return '';
 }
 
 /** Libellé lisible (pas seulement « F » / « M » — trop facile à rater). */
 function sportsSexLabel(sex, t, lang) {
-  const key = sportsSexKey(sex);
+  const key = sportsSexKey(sex) || (sex === 'X' ? 'X' : '');
   if (key === 'F') return t.sportsWomen;
   if (key === 'M') return t.sportsMen;
   if (key === 'X') return t.sportsMixed;
@@ -1233,8 +1253,8 @@ function sportsPanelHtml(team, t, lang) {
   const sport = team.sport || '';
   const glyph = SPORT_GLYPH[sport] || '🏅';
   const tone = SPORT_TONE[sport] || 'var(--accent)';
-  const sexKey = sportsSexKey(team.sex);
-  const sexLabel = sportsSexLabel(team.sex, t, lang);
+  const sexKey = sportsEffectiveSexKey(team);
+  const sexLabel = sexKey ? sportsSexLabel(sexKey === 'X' && !team.sex ? 'X' : team.sex || sexKey, t, lang) : '';
   const sexBadge = sexLabel
     ? ` <span class="sports-panel__sex sports-panel__sex--${sexKey === 'F' ? 'f' : sexKey === 'M' ? 'm' : 'x'}"${sexKey === 'X' ? ' title="Mixte"' : ''}>${escapeHtml(sexLabel)}</span>`
     : '';
@@ -1274,7 +1294,8 @@ function sportsPanelHtml(team, t, lang) {
     team.record?.label ? `${t.sportsRecord} ${team.record.label}` : '',
   ].filter(Boolean).join(' · ');
   const regAttr = team.registryId ? ` data-registry="${escapeHtml(team.registryId)}"` : '';
-  const sexAttr = sexKey ? ` data-sex="${sexKey.toLowerCase()}"` : ' data-sex=""';
+  const effectiveSex = sportsEffectiveSexKey(team) || sexKey;
+  const sexAttr = effectiveSex ? ` data-sex="${effectiveSex.toLowerCase()}"` : ' data-sex=""';
   const nextTs = sportsNextGameTs(team);
   const nextAttr = Number.isFinite(nextTs) && nextTs < Number.POSITIVE_INFINITY
     ? ` data-next-ts="${nextTs}"`
@@ -1413,7 +1434,7 @@ function sportsHubPage(lang, ctx) {
   });
   const sectorsPresent = [...new Set(teams.map((team) => team.sector).filter(Boolean))];
   const sexesPresent = [...new Set(
-    teams.map((team) => sportsSexKey(team.sex)).filter((s) => s === 'F' || s === 'M'),
+    teams.map((team) => sportsEffectiveSexKey(team)).filter((s) => s === 'F' || s === 'M' || s === 'X'),
   )];
 
   const sportLabelOf = (sport) => {
@@ -1457,6 +1478,10 @@ function sportsHubPage(lang, ctx) {
       if (sexesPresent.includes('M')) {
         body += `            <button type="button" class="sports-filter" data-filter-sex="m" aria-pressed="false">${escapeHtml(t.sportsMen)}</button>\n`;
       }
+      /* Mixte / ouvert (ultimate, badminton X, voile campus…) — puce courte. */
+      if (sexesPresent.includes('X')) {
+        body += `            <button type="button" class="sports-filter" data-filter-sex="x" aria-pressed="false">${escapeHtml(t.sportsMixedShort || t.sportsMixed)}</button>\n`;
+      }
       body += '          </div>\n';
     }
     if (sectorsPresent.length > 1) {
@@ -1488,9 +1513,9 @@ function sportsHubPage(lang, ctx) {
       const label = sportLabelOf(sport);
       const glyph = SPORT_GLYPH[sport] || '🏅';
       const countLabel = String(group.length);
-      const fCount = group.filter((team) => sportsSexKey(team.sex) === 'F').length;
-      const mCount = group.filter((team) => sportsSexKey(team.sex) === 'M').length;
-      const xCount = group.filter((team) => sportsSexKey(team.sex) === 'X').length;
+      const fCount = group.filter((team) => sportsEffectiveSexKey(team) === 'F').length;
+      const mCount = group.filter((team) => sportsEffectiveSexKey(team) === 'M').length;
+      const xCount = group.filter((team) => sportsEffectiveSexKey(team) === 'X').length;
       // <details open> : repliable au clic sur le titre, lisible sans JS.
       body += `        <details class="sports-sport-block" data-sport="${escapeHtml(sport)}" id="sport-${escapeHtml(sport)}" open>\n`;
       body += `          <summary class="sports-sport-block__title">\n`;

@@ -651,7 +651,7 @@
     ...blocks.map((b) => (b.getAttribute('data-sport') || '').toLowerCase()),
   ].filter(Boolean));
   const knownSectors = new Set(panels.map((p) => (p.getAttribute('data-sector') || '').toLowerCase()).filter(Boolean));
-  const knownSexes = new Set(['f', 'm', 'all']);
+  const knownSexes = new Set(['f', 'm', 'x', 'all']);
   const knownTeams = new Set(panels.map((p) => p.getAttribute('data-team') || '').filter(Boolean));
   // Alias w → f (anglais women's).
   let sexInit = initial.sex === 'w' ? 'f' : initial.sex;
