@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-30T23:03:16.548Z",
+  "updatedAt": "2026-07-31T01:04:06.931Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T23:02:51.778Z"
+      "checkedAt": "2026-07-31T01:03:31.014Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La rumba",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/la-rumba"
-      },
-      "next": {
         "title": "La courbe 2.0",
         "source": "schedule",
         "start": "20:00",
         "end": "22:00",
         "url": "https://cism893.ca/emissions/la-courbe-2-0"
       },
+      "next": {
+        "title": "Mix anglo",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
       "track": "",
-      "showTitle": "La rumba",
+      "showTitle": "La courbe 2.0",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T23:02:53.392Z"
+      "checkedAt": "2026-07-31T01:03:32.994Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Grey Matters",
+        "title": "Chaud Pour/Francis",
         "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
+        "start": "21:00",
+        "end": "23:00"
       },
       "next": {
-        "title": "Other Worlds on Earth/Dromostexte",
+        "title": "L'aire du Diable",
         "source": "api-live",
-        "start": "20:00",
-        "end": "21:00"
+        "start": "23:00",
+        "end": "01:00"
       },
       "track": "",
-      "showTitle": "Grey Matters",
+      "showTitle": "Chaud Pour/Francis",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,90 +74,89 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T23:02:55.726Z"
+      "checkedAt": "2026-07-31T01:03:44.240Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Teen Radio",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/teen-radio"
+        "start": "21:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
-        "title": "Maiden Voyage",
+        "title": "Raving Record Reviews",
         "source": "schedule",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/maiden-voyage"
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/raving-record-reviews"
       },
       "track": "",
-      "showTitle": "Teen Radio",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T23:03:09.034Z"
+      "checkedAt": "2026-07-31T01:03:57.915Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "À nous le futur",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "After 5@8",
         "source": "schedule",
         "start": "20:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "À nous le futur",
+      "showTitle": "After 5@8",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-30T23:03:09.686Z"
+      "checkedAt": "2026-07-31T01:03:58.601Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Les Apatrides Anonymes",
-        "source": "schedule",
-        "start": "18:30",
-        "end": "19:40",
-        "url": "https://www.choq.ca/emissions/apatrides-anonymes"
+        "title": "Le grand maître des jeux",
+        "source": "api-live",
+        "start": "21:00",
+        "end": "22:30",
+        "slug": "le-maitre-des-jeux"
       },
       "next": {
-        "title": "La nouvelle école des surdoués",
+        "title": "D'amour et de sexe",
         "source": "api-live",
-        "start": "20:00",
-        "end": "21:00",
-        "slug": "la-nouvelle-ecole-des-surdoues"
+        "start": "22:00",
+        "end": "00:00",
+        "slug": "damour-et-de-sexe"
       },
-      "track": "Lolo Zouaï - 3AM in San Francisco",
-      "showTitle": "Les Apatrides Anonymes",
+      "track": "Surprise - Seule au monde",
+      "showTitle": "Le grand maître des jeux",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-30T23:03:16.197Z"
+      "checkedAt": "2026-07-31T01:04:06.580Z"
     }
   }
 }
