@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-31T19:00:18.931Z",
+  "updated": "2026-07-31T20:43:00.713Z",
   "total": 185,
   "withPhoto": 167,
   "withStock": 39,
   "withCampusBank": 8,
   "fullyCovered": 185,
-  "leadReadyPhotos": 165,
-  "pageScraped": 24,
-  "photosRecovered": 24,
+  "leadReadyPhotos": 167,
+  "pageScraped": 23,
+  "photosRecovered": 23,
   "imagesCleared": 12,
-  "stockSearches": 22,
-  "stockFound": 16,
-  "campusBankFound": 4,
+  "stockSearches": 21,
+  "stockFound": 15,
+  "campusBankFound": 3,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -31,12 +31,6 @@
       "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
       "reason": "no-stock-match",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
-    },
-    {
-      "title": "CSU approves $36,000 in funding for student-led initiatives",
-      "link": "https://thelinknewspaper.ca/article/16319",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
     },
     {
       "title": "Mars enters Aries",
@@ -85,6 +79,12 @@
       "link": "https://www.polyscope.qc.ca/blog/post/lZU7aZPFn4T8eG8oO1hX",
       "reason": "stock-too-small",
       "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Ffrancois_legault_continuons.png?alt=media&token=61a13d51-f27f-4eb9-a0ca-88da3419cb9b"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "link": "https://exilecvm.wordpress.com/2025/10/24/une-jeune-candidate-qui-na-pas-froid-aux-yeux/",
+      "reason": "stock-too-small",
+      "image": "https://exilecvm.wordpress.com/wp-content/uploads/2025/10/shirley-barnea-1.jpg?w=727"
     }
   ]
 }
