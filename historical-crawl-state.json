@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-07-30T09:17:54.084Z",
+  "updated": "2026-07-31T09:32:12.222Z",
   "sources": {
     "la-pige": {
       "strategy": "wordpress-rest",
@@ -71,6 +71,41 @@
       "retryAt": null,
       "error": null,
       "windowStart": "2023-07-30T15:17:38.284Z",
+      "windowYears": 3
+    },
+    "le-polyscope": {
+      "strategy": "firestore-rest",
+      "nextPage": null,
+      "totalPages": 1,
+      "lastAttemptAt": "2026-07-31T09:31:59.016Z",
+      "lastSuccessAt": "2026-07-31T09:31:59.016Z",
+      "completedAt": "2026-07-31T09:31:59.016Z",
+      "retryAt": null,
+      "error": null,
+      "windowStart": "2023-07-31T15:31:58.988Z",
+      "windowYears": 3
+    },
+    "le-trait-dunion": {
+      "strategy": "wordpress-rest",
+      "nextPage": null,
+      "totalPages": 1,
+      "lastAttemptAt": "2026-07-31T09:32:02.885Z",
+      "lastSuccessAt": "2026-07-31T09:32:02.885Z",
+      "completedAt": "2026-07-31T09:32:02.885Z",
+      "retryAt": null,
+      "error": null,
+      "windowStart": "2023-07-31T15:31:58.988Z",
+      "windowYears": 3
+    },
+    "montreal-campus": {
+      "strategy": "wordpress-rest",
+      "nextPage": 5,
+      "totalPages": 12,
+      "lastAttemptAt": "2026-07-31T09:32:10.238Z",
+      "lastSuccessAt": "2026-07-31T09:32:10.238Z",
+      "retryAt": null,
+      "error": null,
+      "windowStart": "2023-07-31T15:31:58.988Z",
       "windowYears": 3
     }
   }
