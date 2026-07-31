@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-31T01:04:06.931Z",
+  "updatedAt": "2026-07-31T04:57:42.166Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,132 +21,125 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-31T01:03:31.014Z"
+      "checkedAt": "2026-07-31T04:57:16.162Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La courbe 2.0",
+        "title": "Rebelles soniques (reprise)",
         "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/la-courbe-2-0"
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/rebelles-soniques"
       },
       "next": {
-        "title": "Mix anglo",
+        "title": "Mix Franco",
         "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
       },
       "track": "",
-      "showTitle": "La courbe 2.0",
+      "showTitle": "Rebelles soniques (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-31T01:03:32.994Z"
+      "checkedAt": "2026-07-31T04:57:17.964Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Chaud Pour/Francis",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
-      },
-      "next": {
         "title": "L'aire du Diable",
         "source": "api-live",
         "start": "23:00",
         "end": "01:00"
       },
+      "next": {
+        "title": "Listen! You Smell Something?",
+        "source": "api-live",
+        "start": "01:00",
+        "end": "04:00"
+      },
       "track": "",
-      "showTitle": "Chaud Pour/Francis",
+      "showTitle": "L'aire du Diable",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-31T01:03:44.240Z"
+      "checkedAt": "2026-07-31T04:57:20.191Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "Finally Midnight",
         "source": "schedule",
-        "start": "21:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "00:00",
+        "end": "02:00",
+        "url": "http://www.cjlo.com/shows/finally-midnight"
       },
       "next": {
-        "title": "Raving Record Reviews",
+        "title": "CJLO Late Night",
         "source": "schedule",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/raving-record-reviews"
+        "start": "02:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "Finally Midnight",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-31T01:03:57.915Z"
+      "checkedAt": "2026-07-31T04:57:33.515Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "After 5@8",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule",
         "start": "00:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "After 5@8",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-31T01:03:58.601Z"
+      "checkedAt": "2026-07-31T04:57:34.501Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Le grand maître des jeux",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "22:30",
-        "slug": "le-maitre-des-jeux"
-      },
+      "current": null,
       "next": {
-        "title": "D'amour et de sexe",
+        "title": "Opération beurre de cinoche",
         "source": "api-live",
-        "start": "22:00",
-        "end": "00:00",
-        "slug": "damour-et-de-sexe"
+        "start": "11:30",
+        "end": "12:30",
+        "slug": "box-sophisme"
       },
-      "track": "Surprise - Seule au monde",
-      "showTitle": "Le grand maître des jeux",
+      "track": "Vitrified Entity - Reigne entomique",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -156,7 +149,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-31T01:04:06.580Z"
+      "checkedAt": "2026-07-31T04:57:41.815Z"
     }
   }
 }
