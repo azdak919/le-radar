@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-31T17:10:25.081Z",
+  "updated": "2026-07-31T22:41:45.238Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -1062,15 +1062,45 @@
       "at": "2026-07-31T06:49:10.000Z",
       "via": "existant",
       "source": "L'Exemplaire"
+    },
+    "https://www.exemplaire.com.ulaval.ca/a-la-une/rachat-des-armes-a-feu-le-quebec-est-il-lexception-canadienne/": {
+      "at": "2026-07-31T06:47:24.000Z",
+      "via": "existant",
+      "source": "L'Exemplaire"
+    },
+    "https://www.exemplaire.com.ulaval.ca/a-la-une/sports-dendurance-quand-est-ce-le-temps-de-arreter/": {
+      "at": "2026-07-31T06:38:53.000Z",
+      "via": "existant",
+      "source": "L'Exemplaire"
+    },
+    "https://www.exemplaire.com.ulaval.ca/a-la-une/quand-la-politique-passe-a-table/": {
+      "at": "2026-07-31T06:39:52.000Z",
+      "via": "existant",
+      "source": "L'Exemplaire"
+    },
+    "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/": {
+      "at": "2026-07-31T06:40:33.000Z",
+      "via": "existant",
+      "source": "Le Délit"
+    },
+    "https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/": {
+      "at": "2026-07-26T00:18:18.000Z",
+      "via": "existant",
+      "source": "The McGill Daily"
+    },
+    "https://www.mcgilldaily.com/2026/03/another-doomed-love-story-the-american-media-carolyn-bessette/": {
+      "at": "2026-07-31T06:43:39.000Z",
+      "via": "existant",
+      "source": "The McGill Daily"
     }
   },
   "stats": {
-    "total": 192,
+    "total": 198,
     "lastRun": {
       "saved": 0,
-      "skipped": 1,
-      "failed": 0,
-      "stoppedEarly": true
+      "skipped": 6,
+      "failed": 5,
+      "stoppedEarly": false
     }
   },
   "sources": {
