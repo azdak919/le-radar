@@ -1,33 +1,33 @@
 {
-  "updatedAt": "2026-07-31T21:37:58.830Z",
+  "updatedAt": "2026-07-31T22:57:52.803Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "schedule",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
-      "next": {
         "title": "Capitales de Québec",
         "source": "schedule",
         "start": "18:50",
         "end": "23:00",
         "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
+      "next": {
+        "title": "Palmarès CHYZ",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "10:30",
+        "url": "https://chyz.ca/emission/palmares-chyz/"
+      },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
+      "showTitle": "Capitales de Québec",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-31T21:37:32.028Z"
+      "checkedAt": "2026-07-31T22:57:23.797Z"
     },
     "cism": {
       "id": "cism",
@@ -54,85 +54,84 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-31T21:37:34.253Z"
+      "checkedAt": "2026-07-31T22:57:25.884Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Café",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "LLA/Macondo",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
+      "showTitle": "Café",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-31T21:37:37.207Z"
+      "checkedAt": "2026-07-31T22:57:29.077Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Groove Master's Hour",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
-      },
-      "next": {
         "title": "The Go-Go Radio Magic Show",
         "source": "schedule",
         "start": "18:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
       },
+      "next": {
+        "title": "El Encuentro Latino",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/el-encuentro-latino"
+      },
       "track": "",
-      "showTitle": "The Groove Master's Hour",
+      "showTitle": "The Go-Go Radio Magic Show",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-31T21:37:50.949Z"
+      "checkedAt": "2026-07-31T22:57:42.778Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Nouveautés Franco",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "La récréation",
         "source": "schedule",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Enfin vendredi",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "21:00"
+      },
       "track": "",
-      "showTitle": "Nouveautés Franco",
+      "showTitle": "La récréation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-31T21:37:51.654Z"
+      "checkedAt": "2026-07-31T22:57:43.432Z"
     },
     "choq": {
       "id": "choq",
@@ -145,7 +144,7 @@
         "end": "23:00",
         "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
       },
-      "track": "Arielle Soucy - Nid de vie",
+      "track": "Status/Non-Status - Big Changes",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -157,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-31T21:37:58.479Z"
+      "checkedAt": "2026-07-31T22:57:52.453Z"
     }
   }
 }
