@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-31T18:53:06.190Z",
+  "updatedAt": "2026-07-31T20:18:03.611Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-31T18:52:36.098Z"
+      "checkedAt": "2026-07-31T20:17:38.630Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
+        "title": "Turbo tannant",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/turbo-tannant"
       },
       "next": {
-        "title": "Salsa & Bembê",
+        "title": "Ok Doomer",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/salsa-et-bembe"
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/ok-doomer"
       },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Turbo tannant",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-31T18:52:38.487Z"
+      "checkedAt": "2026-07-31T20:17:40.697Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "NNB/SQUAT FM/QPIRG/knots",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "New Shit",
         "source": "api-live",
         "start": "15:00",
         "end": "17:00"
       },
+      "next": {
+        "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "NNB/SQUAT FM/QPIRG/knots",
+      "showTitle": "New Shit",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,83 +74,90 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-31T18:52:41.650Z"
+      "checkedAt": "2026-07-31T20:17:42.959Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Whatever She Wants",
+        "title": "Tapeworms",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/whatever-she-wants"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/tapeworms"
       },
       "next": {
-        "title": "Dead Beats",
+        "title": "The Groove Master's Hour",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/dead-beats"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
       },
       "track": "",
-      "showTitle": "Whatever She Wants",
+      "showTitle": "Tapeworms",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-31T18:52:55.934Z"
+      "checkedAt": "2026-07-31T20:17:56.349Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Ciné-Histoire",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "Nouveautés Franco",
         "source": "schedule",
         "start": "15:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "La récréation",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Ciné-Histoire",
+      "showTitle": "Nouveautés Franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-31T18:52:56.600Z"
+      "checkedAt": "2026-07-31T20:17:56.909Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Histoire de passer le temps",
         "source": "api-live",
         "start": "16:00",
         "end": "17:00",
         "slug": "histoire-de-passer-le-temps"
       },
-      "track": "Mélodie-Jade - t",
-      "showTitle": "",
+      "next": {
+        "title": "D'amour et de sexe",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "23:00",
+        "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
+      },
+      "track": "Andre Waithe - Heaven Wit U (feat. Tony Stone)",
+      "showTitle": "Histoire de passer le temps",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-31T18:53:05.838Z"
+      "checkedAt": "2026-07-31T20:18:03.260Z"
     }
   }
 }
