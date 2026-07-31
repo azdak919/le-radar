@@ -1,16 +1,16 @@
 {
-  "updated": "2026-07-31T10:06:36.809Z",
+  "updated": "2026-07-31T11:45:06.907Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 129,
+  "cited": 128,
   "pending": 0,
   "missingHero": 0,
   "ok": true,
-  "checked": 6,
-  "updatedCount": 6,
-  "citedNew": 4,
-  "fallbackNew": 2,
+  "checked": 10,
+  "updatedCount": 10,
+  "citedNew": 6,
+  "fallbackNew": 4,
   "samples": [
     {
       "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
@@ -20,16 +20,16 @@
       "method": null
     },
     {
-      "title": "L’épidémie de la nonchalance",
+      "title": "La performance de l’homosexualité : un privilège ?",
       "source": "Le Délit",
-      "credit": "Photo : Elie Nguyen",
+      "credit": "Photo : Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "La performance de l’homosexualité : un privilège ?",
+      "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
+      "credit": "Photo : Elie Nguyen",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -50,7 +50,35 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
+      "credit": "Illustration: Halle Keays",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "McGill community members express concerns about McGill Athletics’ former partnership with Inter Rent REIT",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
       "cited": false,
       "method": null
     }
