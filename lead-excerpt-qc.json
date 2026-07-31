@@ -1,21 +1,21 @@
 {
-  "updated": "2026-07-31T20:37:57.366Z",
+  "updated": "2026-07-31T21:09:19.199Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 7,
+  "incomplete": 6,
   "withLeadExcerpt": 77,
-  "candidates": 7,
+  "candidates": 6,
   "enriched": 1,
-  "failed": 1,
+  "failed": 3,
   "ok": true,
   "samples": [
     {
-      "title": "Élections de l’exécutif de l’AÉUM",
-      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
+      "title": "Les femmes MAGA au service du patriarcat",
+      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
       "ok": true,
-      "score": 66,
-      "chars": 400,
-      "sample": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « p",
+      "score": 100,
+      "chars": 393,
+      "sample": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer ",
       "changed": true
     },
     {
@@ -28,39 +28,12 @@
       "changed": false
     },
     {
-      "title": "Les avantages du transport en commun",
-      "link": "https://lecollectif.ca/a-la-une/les-avantages-du-transport-en-commun/",
-      "ok": true,
-      "score": 76,
-      "chars": 400,
-      "sample": "Le transport en commun représente une solution importante pour réduire la pollution causée par les d",
-      "changed": false
-    },
-    {
-      "title": "A conversation with Ehab Lotayef: A lifelong voyage to the conscience of humanity",
-      "link": "https://www.thetribune.ca/news/a-conversation-with-ehab-lotayef-a-lifelong-voyage-to-the-conscience-of-humanity-28072026/?utm_source=rss&utm_medium=rss&utm_campaign=a-conversation-with-ehab-lotayef-a-lifelong-voyage-to-the-conscience-of-humanity-28072026",
-      "ok": true,
-      "score": 70,
-      "chars": 400,
-      "sample": "On May 14, 429 activists carrying more than 11,000 kilograms of humanitarian aid set sail to Gaza fr",
-      "changed": false
-    },
-    {
       "title": "The Cruel Optimism of Summer",
       "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
       "ok": true,
       "score": 66,
       "chars": 400,
       "sample": "“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt t",
-      "changed": false
-    },
-    {
-      "title": "Ask the Trib: How do I survive summer in my hometown?",
-      "link": "https://www.thetribune.ca/student-life/ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026/?utm_source=rss&utm_medium=rss&utm_campaign=ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026",
-      "ok": true,
-      "score": 66,
-      "chars": 400,
-      "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
       "changed": false
     }
   ]
