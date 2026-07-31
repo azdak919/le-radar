@@ -1,72 +1,78 @@
 {
-  "updatedAt": "2026-07-31T15:17:19.702Z",
+  "updatedAt": "2026-07-31T17:04:07.264Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Détour",
         "source": "schedule",
         "start": "13:00",
         "end": "14:00",
         "url": "https://chyz.ca/emission/detour/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Détour",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-31T15:16:51.608Z"
+      "checkedAt": "2026-07-31T17:03:41.478Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Accents ouverts",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/accents-ouverts"
-      },
-      "next": {
         "title": "Rebelles soniques",
         "source": "schedule",
         "start": "12:00",
         "end": "14:00",
         "url": "https://cism893.ca/emissions/rebelles-soniques"
       },
+      "next": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
       "track": "",
-      "showTitle": "Accents ouverts",
+      "showTitle": "Rebelles soniques",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-31T15:16:53.757Z"
+      "checkedAt": "2026-07-31T17:03:43.568Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "electronic intifada/Jewish Heretics/Radio AlHara/Alright, Now What?",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "Butcher T's Noontime Cuts",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
-      "track": "",
-      "showTitle": "electronic intifada/Jewish Heretics/Radio AlHara/Alright, Now What?",
+      "next": {
+        "title": "NNB/SQUAT FM/QPIRG/knots",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
+      "track": "Butcher T",
+      "showTitle": "Butcher T's Noontime Cuts",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,72 +80,72 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-31T15:16:56.457Z"
+      "checkedAt": "2026-07-31T17:03:46.554Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Alley",
+        "title": "the castle",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/the-alley"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/the-castle"
       },
       "next": {
-        "title": "Charts & Crafts",
+        "title": "Whatever She Wants",
         "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/charts-and-crafts"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/whatever-she-wants"
       },
       "track": "",
-      "showTitle": "The Alley",
+      "showTitle": "the castle",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-31T15:17:09.986Z"
+      "checkedAt": "2026-07-31T17:04:00.170Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Le Ré-Show : Deuxième service",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "Ciné-Histoire",
         "source": "schedule",
         "start": "12:00",
         "end": "15:00"
       },
+      "next": {
+        "title": "Nouveautés Franco",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Le Ré-Show : Deuxième service",
+      "showTitle": "Ciné-Histoire",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-07-31T15:17:10.496Z"
+      "checkedAt": "2026-07-31T17:04:00.730Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Opération beurre de cinoche",
+        "title": "Histoire de passer le temps",
         "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "slug": "box-sophisme"
+        "start": "16:00",
+        "end": "17:00",
+        "slug": "histoire-de-passer-le-temps"
       },
-      "track": "Caltar-Bateau - Personne ne le sais pas",
+      "track": "Shinichi Atobe - Durability",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-07-31T15:17:19.351Z"
+      "checkedAt": "2026-07-31T17:04:06.913Z"
     }
   }
 }
