@@ -1,25 +1,19 @@
 {
-  "updated": "2026-07-31T14:47:46.893Z",
+  "updated": "2026-07-31T19:00:18.931Z",
   "total": 185,
   "withPhoto": 167,
-  "withStock": 40,
-  "withCampusBank": 9,
+  "withStock": 39,
+  "withCampusBank": 8,
   "fullyCovered": 185,
-  "leadReadyPhotos": 147,
-  "pageScraped": 23,
-  "photosRecovered": 23,
-  "imagesCleared": 11,
-  "stockSearches": 33,
-  "stockFound": 28,
+  "leadReadyPhotos": 165,
+  "pageScraped": 24,
+  "photosRecovered": 24,
+  "imagesCleared": 12,
+  "stockSearches": 22,
+  "stockFound": 16,
   "campusBankFound": 4,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "Review: Sullivan Fortner Solo at Gesú Concert Hall",
-      "link": "https://www.mcgilldaily.com/2026/07/review-sullivan-fortner-solo-at-gesu-concert-hall/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/4199/34273881353_56632433e1_b.jpg"
-    },
     {
       "title": "CSU terminates council’s chief election officer",
       "link": "https://thelinknewspaper.ca/article/16334",
@@ -33,34 +27,16 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/CAMPUS_Lecture_Source-Ask-The-Scientists.jpg"
     },
     {
-      "title": "Sommet de l’OTAN à Ankara",
-      "link": "https://lecollectif.ca/a-la-une/sommet-de-lotan-a-ankara/",
-      "reason": "stock-too-small",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_Sommet-de-lOTAN-a-Ankara_Getty-Images.jpg"
-    },
-    {
-      "title": "Marine Le Pen condamnée",
-      "link": "https://lecollectif.ca/a-la-une/marine-le-pen-condamnee/",
-      "reason": "stock-too-small",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_Marine-Le-Pen-condamnee_Getty-Images.jpg"
-    },
-    {
       "title": "Recettes musicales québécoises pour l’été",
       "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
       "reason": "no-stock-match",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
     },
     {
-      "title": "CSU approves affinity group policy, club rules update and councillor pay increase at special meeting",
-      "link": "https://thelinknewspaper.ca/article/16326",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/7089/7290404684_2750bb385f_b.jpg"
-    },
-    {
-      "title": "From the rink to the links",
-      "link": "https://thebucampus.ca/2026/04/06/from-the-rink-to-the-links/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/4031/4400844746_a47c17ef6d_b.jpg"
+      "title": "CSU approves $36,000 in funding for student-led initiatives",
+      "link": "https://thelinknewspaper.ca/article/16319",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
     },
     {
       "title": "Mars enters Aries",
@@ -71,20 +47,44 @@
     {
       "title": "Spotlighting Powerful McGill Alumnae",
       "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Avenue_McGill_College_07.JPG"
-    },
-    {
-      "title": "National Golf tournament",
-      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
       "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/80/Masters_Tournament_-_2013_-_Augusta_National_Golf_Club_%288689649572%29.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e2/McGill_University_downtown_campus_12.JPG"
     },
     {
       "title": "Gaiters wrap up hard-fought season with eyes on next year",
       "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
+    },
+    {
+      "title": "Le pays avant tout – esquisse",
+      "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6c/C%C3%A9gep_du_Vieux_Montr%C3%A9al%2C_Nov_03_2022.jpg"
+    },
+    {
+      "title": "In conversation with Aaron Maté",
+      "link": "https://thelinknewspaper.ca/article/16314",
+      "reason": "no-stock-match",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12.news.AaronMaté.Sean.online.CourtesyAaronMaté_690_1034_90.jpg"
+    },
+    {
+      "title": "THE NUMBERED? I HOPE THEY COUNTED CORRECTLY!",
+      "link": "https://thebucampus.ca/2026/04/06/the-numbered-i-hope-they-counted-correctly/",
+      "reason": "no-stock-match",
+      "image": "https://thebucampus.ca/wp-content/uploads/2026/04/numbered-crd-journey-bardati.jpg"
+    },
+    {
+      "title": "L’espérance d’un vendredi 13 février",
+      "link": "https://www.polyscope.qc.ca/blog/post/L30XNFOBtLJVjpcgWrxo",
+      "reason": "no-stock-match",
+      "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Fillustration.jpg?alt=media&token=7d052946-f86e-42af-afe9-363b2b16dc63"
+    },
+    {
+      "title": "La politique, c'est un sport extrême » : François Legault quitte le pouvoir",
+      "link": "https://www.polyscope.qc.ca/blog/post/lZU7aZPFn4T8eG8oO1hX",
+      "reason": "stock-too-small",
+      "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Ffrancois_legault_continuons.png?alt=media&token=61a13d51-f27f-4eb9-a0ca-88da3419cb9b"
     }
   ]
 }
