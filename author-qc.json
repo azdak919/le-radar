@@ -1,10 +1,18 @@
 {
-  "updated": "2026-07-31T11:39:36.041Z",
+  "updated": "2026-07-31T12:59:04.390Z",
   "total": 185,
   "withAuthor": 185,
-  "mismatches": 4,
+  "mismatches": 7,
   "ok": true,
   "samples": [
+    {
+      "title": "Review: Sullivan Fortner Solo at Gesú Concert Hall",
+      "link": "https://www.mcgilldaily.com/2026/07/review-sullivan-fortner-solo-at-gesu-concert-hall/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Shai Geballe",
+      "reason": "page-byline"
+    },
     {
       "title": "Letters from the Editors May 2026",
       "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
@@ -30,6 +38,22 @@
       "reason": "no-author-source"
     },
     {
+      "title": "Sois belle et tais-toi",
+      "link": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
+      "source": "Le Délit",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Rose Langlois",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "link": "https://www.delitfrancais.com/2026/03/18/qui-sont-les-agents-qui-patrouillent-notre-campus/",
+      "source": "Le Délit",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Héloïse Durning",
+      "reason": "page-byline"
+    },
+    {
       "title": "Garda World au CVM (Éditorial)",
       "link": "https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/",
       "source": "Exil",
@@ -38,5 +62,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 4
+  "fixed": 7
 }
