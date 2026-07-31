@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-30T22:49:41.745Z",
+  "updated": "2026-07-31T06:49:01.351Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -1042,14 +1042,24 @@
       "via": "save-page-now",
       "source": "The McGill Daily",
       "snapshot": "https://web.archive.org/web/20260730224719/https://www.mcgilldaily.com/2026/03/the-emotional-whiplash-of-infinite-scroll/"
+    },
+    "https://www.mcgilldaily.com/2026/03/tvm-reveals-the-first-issue-of-post-credits-magazine/": {
+      "at": "2026-07-26T00:18:19.000Z",
+      "via": "existant",
+      "source": "The McGill Daily"
+    },
+    "https://www.mcgilldaily.com/2026/03/the-wax-talk/": {
+      "at": "2026-06-29T02:39:08.000Z",
+      "via": "existant",
+      "source": "The McGill Daily"
     }
   },
   "stats": {
-    "total": 188,
+    "total": 190,
     "lastRun": {
-      "saved": 3,
-      "skipped": 12,
-      "failed": 5,
+      "saved": 0,
+      "skipped": 2,
+      "failed": 11,
       "stoppedEarly": false
     }
   },
