@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-08-01T19:22:10.549Z",
+  "updatedAt": "2026-08-01T20:26:13.372Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Radio Futura",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "16:00",
-        "url": "https://chyz.ca/emission/radio-futura/"
-      },
+      "current": null,
       "next": {
         "title": "Capitales de Québec",
         "source": "schedule",
@@ -20,59 +14,59 @@
         "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
       "track": "",
-      "showTitle": "Radio Futura",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T19:21:42.138Z"
+      "checkedAt": "2026-08-01T20:25:46.396Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Faites entrer un DJ",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/faites-entrer-un-dj"
-      },
-      "next": {
         "title": "Contenu explicite",
         "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "https://cism893.ca/emissions/contenu-explicite"
       },
+      "next": {
+        "title": "Le radar",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "17:30",
+        "url": "https://cism893.ca/emissions/le-radar-2"
+      },
       "track": "",
-      "showTitle": "Faites entrer un DJ",
+      "showTitle": "Contenu explicite",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T19:21:44.219Z"
+      "checkedAt": "2026-08-01T20:25:48.773Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Funky Revolutions",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "16:00"
-      },
-      "next": {
         "title": "West Indian Rhythms",
         "source": "api-live",
         "start": "16:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Masters At Work",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "21:00"
+      },
       "track": "",
-      "showTitle": "Funky Revolutions",
+      "showTitle": "West Indian Rhythms",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -80,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T19:21:47.127Z"
+      "checkedAt": "2026-08-01T20:25:51.708Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Caribbean Callaloo",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/caribbean-callaloo"
-      },
-      "next": {
         "title": "Mi Dun Talk",
         "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/mi-dun-talk"
       },
+      "next": {
+        "title": "Mo' Ritmo Radio",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/mo-ritmo-radio"
+      },
       "track": "",
-      "showTitle": "Caribbean Callaloo",
+      "showTitle": "Mi Dun Talk",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T19:22:00.905Z"
+      "checkedAt": "2026-08-01T20:26:05.491Z"
     },
     "cfak": {
       "id": "cfak",
@@ -127,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T19:22:01.515Z"
+      "checkedAt": "2026-08-01T20:26:06.110Z"
     },
     "choq": {
       "id": "choq",
@@ -140,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Muhoza - Fire",
+      "track": "Little Simz - Introvert (Clean)",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -151,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-01T19:22:10.199Z"
+      "checkedAt": "2026-08-01T20:26:13.022Z"
     }
   }
 }
