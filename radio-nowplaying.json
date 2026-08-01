@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-01T10:57:26.238Z",
+  "updatedAt": "2026-08-01T12:03:10.095Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T10:57:00.098Z"
+      "checkedAt": "2026-08-01T12:02:47.125Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T10:57:02.116Z"
+      "checkedAt": "2026-08-01T12:02:49.227Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T10:57:05.306Z"
+      "checkedAt": "2026-08-01T12:02:52.170Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,27 +101,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T10:57:19.075Z"
+      "checkedAt": "2026-08-01T12:03:05.924Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
+      "current": null,
+      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule",
         "start": "00:00",
-        "end": "07:00"
+        "end": "21:00"
       },
-      "next": null,
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T10:57:19.556Z"
+      "checkedAt": "2026-08-01T12:03:06.537Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Cola - Polished Knives",
+      "track": "KEZIA - Innocence",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-01T10:57:25.887Z"
+      "checkedAt": "2026-08-01T12:03:09.745Z"
     }
   }
 }
