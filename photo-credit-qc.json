@@ -1,14 +1,14 @@
 {
-  "updated": "2026-08-01T14:45:26.514Z",
+  "updated": "2026-08-01T15:53:41.117Z",
   "total": 185,
-  "withImage": 168,
-  "withCredit": 168,
-  "cited": 130,
+  "withImage": 167,
+  "withCredit": 167,
+  "cited": 129,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
   "checked": 21,
-  "updatedCount": 9,
+  "updatedCount": 10,
   "citedNew": 9,
   "fallbackNew": 12,
   "samples": [
@@ -20,6 +20,20 @@
       "method": "media-credit-featured"
     },
     {
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "source": "Le Délit",
+      "credit": "Photo : Toscane Ralaimongo",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
       "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
       "source": "La Pige",
       "credit": "Photo : Léa Morin-Letort",
@@ -27,11 +41,11 @@
       "method": "figcaption-paren-kind"
     },
     {
-      "title": "La performance de l’homosexualité : un privilège ?",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
     },
     {
       "title": "L’épidémie de la nonchalance",
@@ -41,9 +55,9 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Les femmes MAGA au service du patriarcat",
+      "title": "La performance de l’homosexualité : un privilège ?",
       "source": "Le Délit",
-      "credit": "Photo : Stu Doré",
+      "credit": "Photo : Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -53,13 +67,6 @@
       "credit": "Photo: My Little Princess (2011)",
       "cited": true,
       "method": "via-attribution"
-    },
-    {
-      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
-      "source": "Quartier Libre",
-      "credit": "Photo : Maryse Boyce",
-      "cited": true,
-      "method": "figcaption-copyright"
     },
     {
       "title": "Inside Mile End Kicks",

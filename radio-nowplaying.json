@@ -1,33 +1,33 @@
 {
-  "updatedAt": "2026-08-01T14:06:21.790Z",
+  "updatedAt": "2026-08-01T15:36:12.859Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Palmarès CHYZ",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
-      },
-      "next": {
         "title": "Le Ré-Show : Deuxième Service",
         "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
       },
+      "next": {
+        "title": "Radio Futura",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "16:00",
+        "url": "https://chyz.ca/emission/radio-futura/"
+      },
       "track": "",
-      "showTitle": "Palmarès CHYZ",
+      "showTitle": "Le Ré-Show : Deuxième Service",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T14:05:55.289Z"
+      "checkedAt": "2026-08-01T15:35:47.935Z"
     },
     "cism": {
       "id": "cism",
@@ -54,25 +54,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T14:05:57.387Z"
+      "checkedAt": "2026-08-01T15:35:49.782Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Making Contact/Anything Goes",
-        "source": "api-live",
-        "start": "10:00",
-        "end": "10:30"
-      },
-      "next": {
         "title": "Samedi Midi",
         "source": "api-live",
         "start": "10:30",
         "end": "14:00"
       },
+      "next": {
+        "title": "Funky Revolutions",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "16:00"
+      },
       "track": "",
-      "showTitle": "Making Contact/Anything Goes",
+      "showTitle": "Samedi Midi",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -80,7 +80,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T14:06:00.471Z"
+      "checkedAt": "2026-08-01T15:35:52.136Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -107,7 +107,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T14:06:14.533Z"
+      "checkedAt": "2026-08-01T15:36:05.466Z"
     },
     "cfak": {
       "id": "cfak",
@@ -127,7 +127,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T14:06:15.157Z"
+      "checkedAt": "2026-08-01T15:36:05.948Z"
     },
     "choq": {
       "id": "choq",
@@ -140,7 +140,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Striky — Enfant",
+      "track": "Mort Rose - Je sais pas (one shop cowboy)",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -151,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-01T14:06:21.439Z"
+      "checkedAt": "2026-08-01T15:36:12.509Z"
     }
   }
 }
