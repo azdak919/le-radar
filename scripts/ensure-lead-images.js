@@ -568,7 +568,12 @@ async function main() {
       const hints = imageHintsFor(item, sourceMap);
       if (hints.disableCampusBank === true || isSubstackItem(item)) continue;
       if (!hasCampusBank(item.institution)) continue;
-      const campus = pickCampusPhoto(item, { avoidUrls: usedCampusUrls });
+      // L'unicité est une préférence, pas une condition : une banque
+      // d'établissement épuisée (Bishop's, 14 vues déjà placées) laissait
+      // l'article sans aucun visuel. Une photo de campus répétée vaut mieux
+      // qu'un trou dans la une — c'est le dernier filet.
+      const campus = pickCampusPhoto(item, { avoidUrls: usedCampusUrls })
+        || pickCampusPhoto(item, { avoidUrls: [] });
       if (!campus?.stockImage) continue;
       applyPhotoFields(item, campus);
       item.leadImageReady = false;
