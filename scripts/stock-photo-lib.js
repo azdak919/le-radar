@@ -29,12 +29,40 @@ const STOP_WORDS = new Set([
   'medias', 'médias', 'sociaux', 'sera', 'etre', 'être', 'comme', 'aussi', 'tres', 'très',
 ]);
 
-/** Faux-amis à exclure des requêtes (résumé ≠ resume anglais, etc.) */
+/**
+ * Faux-amis à exclure des requêtes (résumé ≠ resume anglais, etc.) et
+ * étiquettes de genre journalistique : elles décrivent le format de l'article,
+ * pas son sujet — « Review » a ramené « Wonder Woman Review! » pour la
+ * critique d'un récital de piano solo.
+ */
 const FALSE_FRIENDS = new Set([
   'resume', 'résumé', 'opinion', 'chronique', 'entrevue', 'critique', 'reportage', 'editorial',
   'feature', 'features', 'news', 'article', 'journal', 'campus', 'etudiant', 'étudiant',
   'lancement', 'officiel', 'annoncee', 'annoncée', 'approche',
+  'review', 'reviews', 'preview', 'recap', 'interview', 'interviews', 'analysis',
+  'essay', 'column', 'commentary', 'podcast', 'dossier', 'billet',
 ]);
+
+/**
+ * Étiquette de genre en tête de titre (« Review: … », « Opinion – … ») :
+ * même raison, mais côté requêtes de recherche — « review sullivan fortner
+ * solo » part chercher des critiques de cinéma. On la retire du titre avant
+ * d'en tirer tokens et requêtes ; `isGenericEditorialItem` garde le titre brut.
+ */
+const GENRE_LABEL_PREFIX_RE = new RegExp(
+  '^\\s*(?:review|preview|recap|analysis|opinion|op-?ed|editorial|éditorial|interview|profile|'
+  + 'feature|essay|column|commentary|podcast|gallery|photo\\s+essay|live|critique|chronique|'
+  + 'entrevue|reportage|dossier|billet|portrait|point de vue|lettre ouverte)'
+  + '\\s*(?::|\\u2013|\\u2014|\\||\\s-\\s)\\s*',
+  'i',
+);
+
+/** Titre sans étiquette de genre — base des tokens et des requêtes. */
+function editorialTitle(item = {}) {
+  const raw = String(item.title || '');
+  const stripped = raw.replace(GENRE_LABEL_PREFIX_RE, '').trim();
+  return stripped.length >= 8 ? stripped : raw;
+}
 
 /**
  * Mots abstraits / polysémiques sans ancrage visuel : ils peuvent contribuer
@@ -162,10 +190,28 @@ function tokenize(text = '') {
     .filter((w) => w.length > 2 && !STOP_WORDS.has(w) && !FALSE_FRIENDS.has(w) && !/^\d+$/.test(w));
 }
 
+const CAPITALIZED_WORD_RE = /\b[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+(?:['’-][A-ZÀ-ÖØ-Þa-zà-öø-ÿ]+)*/g;
+/** Fin de phrase (ponctuation + guillemet/parenthèse ouvrante éventuels). */
+const SENTENCE_BOUNDARY_RE = /[.!?…:;—–]$/;
+
+/**
+ * Noms propres — hors majuscules de début de phrase, où la capitale est
+ * grammaticale et ne désigne personne. « Seated at a Kawai grand piano… » ou
+ * « Throughout the tune… » remplissaient la liste des mots importants et en
+ * chassaient les vrais mots du sujet (« piano »), pendant que « Wonder »
+ * (Stevie Wonder) y accédait au rang d'ancre.
+ */
 function extractProperNouns(text = '') {
   const raw = String(text);
   const acronyms = raw.match(/\b[A-Z0-9]{2,}\b|\bG\d+\b/g) || [];
-  const words = raw.match(/\b[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+(?:['’-][A-ZÀ-ÖØ-Þa-zà-öø-ÿ]+)*/g) || [];
+  const words = [];
+  CAPITALIZED_WORD_RE.lastIndex = 0;
+  let match = CAPITALIZED_WORD_RE.exec(raw);
+  while (match) {
+    const before = raw.slice(0, match.index).replace(/["'“«‘(\[\s]+$/u, '');
+    if (before && !SENTENCE_BOUNDARY_RE.test(before)) words.push(match[0]);
+    match = CAPITALIZED_WORD_RE.exec(raw);
+  }
   return [...new Set([...acronyms, ...words]
     .map((w) => normalizeText(w))
     .filter((w) => w.length > 1 && !STOP_WORDS.has(w) && !FALSE_FRIENDS.has(w)))];
@@ -191,7 +237,7 @@ function institutionPhrases(item = {}) {
 
 function detectEditorialContext(item = {}) {
   const content = extractArticleContent(item);
-  const title = item.title || '';
+  const title = editorialTitle(item);
   const full = `${title} ${content} ${item.institution || ''} ${item.region || ''} ${item.source || ''}`;
   const norm = normalizeText(full);
 
@@ -234,7 +280,7 @@ function detectEditorialContext(item = {}) {
 
 function extractContextualQueries(item, context = detectEditorialContext(item)) {
   const queries = [];
-  const title = item.title || '';
+  const title = editorialTitle(item);
   const content = extractArticleContent(item);
   const combined = `${title} ${content}`;
 
@@ -413,7 +459,7 @@ function extractArticleContent(item) {
  * Openverse/Commons répondent mieux aux libellés anglais concrets.
  */
 function extractVisualTopicQueries(item = {}) {
-  const title = item.title || '';
+  const title = editorialTitle(item);
   const content = extractArticleContent(item);
   const full = `${title} ${content}`;
   const queries = [];
@@ -460,6 +506,31 @@ function extractVisualTopicQueries(item = {}) {
     queries.push('couple watching television');
     queries.push('reality television show');
   }
+  // Concert / récital / festival de musique. L'instrument d'abord : les
+  // requêtes génériques (« concert hall stage ») ramènent n'importe quel
+  // spectacle — les tags automatiques d'Openverse contiennent tous « concert »
+  // et « hall », ce qui suffirait à ancrer un concert de rap sur un récital
+  // de piano. On ne les lance donc qu'à défaut d'instrument identifié.
+  if (/\b(concert|r[eé]cital|orchestre|orchestra|symphoni\w*|jazz|piano|pianiste|pianist|quatuor|quartet|chorale|choir|guitare|guitar|violon|violin|saxophone|festival de musique|music festival|salle de spectacle|concert hall)\b/i.test(full)) {
+    const instrument = [];
+    if (/\b(jazz|piano|pianiste|pianist)\b/i.test(full)) {
+      instrument.push('jazz pianist grand piano concert');
+      instrument.push('pianist playing grand piano stage');
+    }
+    if (/\b(orchestre|orchestra|symphoni\w*|philharmoni\w*)\b/i.test(full)) {
+      instrument.push('symphony orchestra concert stage');
+    }
+    if (/\b(chorale|choir|chant choral)\b/i.test(full)) instrument.push('choir singing concert');
+    if (/\b(guitare|guitar|guitariste|guitarist)\b/i.test(full)) instrument.push('guitarist playing guitar stage');
+    if (/\b(violon|violin|violoniste|violinist)\b/i.test(full)) instrument.push('violinist playing violin concert');
+    if (/\bsaxophone|saxophoniste|saxophonist\b/i.test(full)) instrument.push('saxophonist playing saxophone stage');
+    if (instrument.length) {
+      queries.push(...instrument);
+    } else {
+      queries.push('musician performing concert hall stage');
+      queries.push('live music concert stage performance');
+    }
+  }
   // Handicap / aidants
   if (/\b(handicap|aidants?|proche.?aidant|disability|caregiver)\b/i.test(full)) {
     queries.push('caregiver helping disabled person');
@@ -498,10 +569,10 @@ function extractVisualTopicQueries(item = {}) {
 
 function buildMatchTokens(item) {
   const content = extractArticleContent(item);
-  const titleTokens = tokenize(item.title || '');
+  const titleTokens = tokenize(editorialTitle(item));
   const contentTokens = tokenize(content)
     .filter((t) => !GENERIC_GEO_TOKENS.has(t) || t.length >= 6);
-  const proper = extractProperNouns(`${item.title || ''} ${content}`)
+  const proper = extractProperNouns(`${editorialTitle(item)} ${content}`)
     .filter((t) => !GENERIC_GEO_TOKENS.has(t) && t !== 'credit' && t !== 'photo');
   const isUsefulToken = (t) => t.length >= 3
     && !/^(?:19|20)\d{2}$/.test(t)
@@ -520,8 +591,8 @@ function extractSearchQueries(item, context = detectEditorialContext(item)) {
   const content = extractArticleContent(item);
   const contentProper = extractProperNouns(content)
     .filter((t) => !GENERIC_GEO_TOKENS.has(t) && t !== 'credit' && t !== 'photo');
-  const titleProper = extractProperNouns(item.title || '');
-  const titleTokens = tokenize(item.title || '');
+  const titleProper = extractProperNouns(editorialTitle(item));
+  const titleTokens = tokenize(editorialTitle(item));
   const contentTokens = tokenize(content)
     .filter((t) => !GENERIC_GEO_TOKENS.has(t) && t.length >= 4)
     .slice(0, 12);
@@ -558,7 +629,7 @@ function extractSearchQueries(item, context = detectEditorialContext(item)) {
     if (sentToks.length >= 2) queries.push(sentToks.join(' '));
   }
 
-  if (/g7/i.test(content) || /g7/i.test(item.title || '') || match.proper.includes('g7')) {
+  if (/g7/i.test(content) || /g7/i.test(editorialTitle(item)) || match.proper.includes('g7')) {
     queries.push('G7 summit 2026 Evian leaders');
     queries.push('G7 family photo Evian France');
   }
@@ -758,6 +829,9 @@ function countSubstantiveMatches(hay, matchTokens = {}) {
   let importantMatched = 0;
   let acronymOnly = 0;
   let concreteMatched = 0;
+  /* Mots d'ancrage distincts (titre ∪ importants) : titre et importants se
+     recoupent, les compter deux fois ferait passer un match unique pour deux. */
+  const anchors = new Set();
 
   const isConcrete = (tok) => !ABSTRACT_TOKENS.has(normalizeText(tok));
 
@@ -772,7 +846,10 @@ function countSubstantiveMatches(hay, matchTokens = {}) {
     if (!isTopicToken(tok) || tok.length < 3) continue;
     if (hayHasToken(hay, tok)) {
       titleMatched += 1;
-      if (isConcrete(tok)) concreteMatched += 1;
+      if (isConcrete(tok)) {
+        concreteMatched += 1;
+        anchors.add(normalizeText(tok));
+      }
     }
   }
   for (const tok of important) {
@@ -783,10 +860,20 @@ function countSubstantiveMatches(hay, matchTokens = {}) {
       continue;
     }
     importantMatched += 1;
-    if (isConcrete(tok)) concreteMatched += 1;
+    if (isConcrete(tok)) {
+      concreteMatched += 1;
+      anchors.add(normalizeText(tok));
+    }
   }
 
-  return { contentMatched, titleMatched, importantMatched, acronymOnly, concreteMatched };
+  return {
+    contentMatched,
+    titleMatched,
+    importantMatched,
+    acronymOnly,
+    concreteMatched,
+    anchorCount: anchors.size,
+  };
 }
 
 function scoreCandidate(hit, matchTokens, context = null) {
@@ -820,7 +907,9 @@ function scoreCandidate(hit, matchTokens, context = null) {
 
   const { important = [], content = [], title = [] } = matchTokens || {};
   const matches = countSubstantiveMatches(hay, matchTokens);
-  const { contentMatched, titleMatched, importantMatched, acronymOnly, concreteMatched } = matches;
+  const {
+    contentMatched, titleMatched, importantMatched, acronymOnly, concreteMatched, anchorCount,
+  } = matches;
 
   // Établissement : bonus seulement s'il y a déjà un ancrage thématique.
   let institutionMatched = 0;
@@ -868,6 +957,12 @@ function scoreCandidate(hit, matchTokens, context = null) {
   // Titre avec ≥2 tokens : exiger au moins 1 match titre OU 2 importants.
   const titleTopicCount = title.filter((t) => isTopicToken(t) && t.length >= 3).length;
   if (titleTopicCount >= 2 && titleMatched === 0 && importantMatched < 2) {
+    return -1;
+  }
+  // Titre riche (≥3 mots de sujet) : un seul mot en commun est une coïncidence
+  // de vocabulaire, pas un ancrage — « Wonder » (Stevie Wonder) ↔ « Wonder
+  // Woman Review! ». Il en faut deux distincts, sinon mieux vaut aucune photo.
+  if (titleTopicCount >= 3 && anchorCount < 2) {
     return -1;
   }
 

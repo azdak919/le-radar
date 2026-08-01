@@ -152,6 +152,20 @@ Lecture : `getBotHints(src, 'authors')` dans `scripts/source-retention-lib.js`.
 Les bots spécialisés (`author-lib.js`, `article-image-lib.js`, etc.) peuvent s'y
 brancher progressivement.
 
+**`images` — `rejectPathPatterns` vs `demotePathPatterns`**
+
+| Champ | Effet | Quand l'utiliser |
+|-------|-------|------------------|
+| `rejectPathPatterns` | Disqualifie la photo, définitivement | Le motif ne désigne **jamais** une photo d'article : logo, bannière d'édito, image par défaut du site |
+| `demotePathPatterns` | Classe la photo **après** toutes les autres de l'article, mais la garde en dernier recours | Le motif est un simple soupçon sur le nom de fichier |
+
+Un rejet dur sur un motif ambigu ne laisse pas l'article sans photo : il le
+renvoie vers la banque libre, qui peut lui coller un visuel **hors-sujet**.
+Cas mesuré (2026-08-01) : `Screenshot-\d{4}-\d{2}-\d{2}` chez The McGill Daily
+est le nom d'export de leurs vraies photos (récital de Sullivan Fortner,
+Festival de jazz) ; le rejet dur a donné une photo de Wonder Woman à la
+critique d'un récital de piano. Passé en `demotePathPatterns`.
+
 ### Rétention des sources (flux RSS peu fiables)
 
 `fetch-news.js` **ne retire plus une source** lorsqu'un flux échoue une fois.

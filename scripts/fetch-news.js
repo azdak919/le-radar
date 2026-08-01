@@ -282,7 +282,7 @@ function withTimeout(promise, ms, fallback) {
   });
 }
 
-const { decodeEntities, stripHtml } = require('./html-entities-lib');
+const { decodeEntities, stripHtml, fixDropCapSpacing } = require('./html-entities-lib');
 
 // === Minimal RSS / Atom parsing ==============================================
 
@@ -391,13 +391,6 @@ function stripExcerptBoilerplate(text = '') {
   const li = s.search(/\sL['’]article\s/);
   if (li > 30) s = s.slice(0, li);
   return s.replace(/\s+/g, ' ').trim();
-}
-
-/** WP has-drop-cap : première lettre détachée dans le flux (« L e 18… »). */
-function fixDropCapSpacing(text = '') {
-  return String(text)
-    .replace(/^([\p{Lu}])\s+([''’])/u, '$1$2')
-    .replace(/^([\p{Lu}])\s+([\p{Ll}])/u, '$1$2');
 }
 
 function normalizeExcerptText(text = '') {
