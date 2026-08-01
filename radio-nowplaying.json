@@ -1,72 +1,78 @@
 {
-  "updatedAt": "2026-08-01T12:03:10.095Z",
+  "updatedAt": "2026-08-01T14:06:21.790Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Palmarès CHYZ",
         "source": "schedule",
         "start": "10:00",
         "end": "10:30",
         "url": "https://chyz.ca/emission/palmares-chyz/"
       },
+      "next": {
+        "title": "Le Ré-Show : Deuxième Service",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Palmarès CHYZ",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T12:02:47.125Z"
+      "checkedAt": "2026-08-01T14:05:55.289Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Voix tropicale",
-        "source": "schedule",
-        "start": "05:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/voix-tropicale"
-      },
-      "next": {
         "title": "Elkin Polo El Show",
         "source": "schedule",
         "start": "09:00",
         "end": "13:00",
         "url": "https://cism893.ca/emissions/elkin-polo-el-show"
       },
+      "next": {
+        "title": "Change le beat",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/change-le-beat"
+      },
       "track": "",
-      "showTitle": "Voix tropicale",
+      "showTitle": "Elkin Polo El Show",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T12:02:49.227Z"
+      "checkedAt": "2026-08-01T14:05:57.387Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Quebec Acadie",
-        "source": "api-live",
-        "start": "06:00",
-        "end": "10:00"
-      },
-      "next": {
         "title": "Making Contact/Anything Goes",
         "source": "api-live",
         "start": "10:00",
         "end": "10:30"
       },
+      "next": {
+        "title": "Samedi Midi",
+        "source": "api-live",
+        "start": "10:30",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "Quebec Acadie",
+      "showTitle": "Making Contact/Anything Goes",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +80,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T12:02:52.170Z"
+      "checkedAt": "2026-08-01T14:06:00.471Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "World-Up'",
+        "title": "Gospel Unlimited",
         "source": "schedule",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/world-up"
+        "start": "10:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/gospel-unlimited"
       },
       "next": {
-        "title": "The Live Wire Show",
+        "title": "Anatomy of Caribbean Music",
         "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/the-live-wire-show"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
       },
       "track": "",
-      "showTitle": "World-Up'",
+      "showTitle": "Gospel Unlimited",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T12:03:05.924Z"
+      "checkedAt": "2026-08-01T14:06:14.533Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +127,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T12:03:06.537Z"
+      "checkedAt": "2026-08-01T14:06:15.157Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +140,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "KEZIA - Innocence",
+      "track": "Striky — Enfant",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-01T12:03:09.745Z"
+      "checkedAt": "2026-08-01T14:06:21.439Z"
     }
   }
 }
