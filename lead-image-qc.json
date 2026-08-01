@@ -1,17 +1,17 @@
 {
-  "updated": "2026-08-01T15:53:23.981Z",
+  "updated": "2026-08-01T17:59:54.968Z",
   "total": 185,
-  "withPhoto": 167,
-  "withStock": 25,
-  "withCampusBank": 12,
+  "withPhoto": 168,
+  "withStock": 22,
+  "withCampusBank": 11,
   "fullyCovered": 185,
-  "leadReadyPhotos": 139,
-  "pageScraped": 12,
-  "photosRecovered": 12,
-  "imagesCleared": 12,
-  "stockSearches": 43,
-  "stockFound": 16,
-  "campusBankFound": 5,
+  "leadReadyPhotos": 144,
+  "pageScraped": 22,
+  "photosRecovered": 22,
+  "imagesCleared": 11,
+  "stockSearches": 38,
+  "stockFound": 12,
+  "campusBankFound": 4,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -33,28 +33,16 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_Sommet-de-lOTAN-a-Ankara_Getty-Images.jpg"
     },
     {
-      "title": "L’ERD sauvée de la dissolution par quatre membres",
-      "link": "https://lapige.atmjonquiere.com/2026/05/21/lerd-sauvee-de-la-dissolution-par-quatre-membres/?utm_source=rss&utm_medium=rss&utm_campaign=lerd-sauvee-de-la-dissolution-par-quatre-membres",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/ERD.jpeg"
-    },
-    {
-      "title": "Un pont entre l’art et le travail de rue",
-      "link": "https://lapige.atmjonquiere.com/2026/05/20/un-pont-entre-lart-et-le-travail-de-rue/?utm_source=rss&utm_medium=rss&utm_campaign=un-pont-entre-lart-et-le-travail-de-rue",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/Image-16.jpg"
-    },
-    {
-      "title": "El Niño s’approche du Québec",
-      "link": "https://lapige.atmjonquiere.com/2026/05/20/el-nino-sapproche-du-quebec/?utm_source=rss&utm_medium=rss&utm_campaign=el-nino-sapproche-du-quebec",
-      "reason": "stock-too-small",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/pexels-fatih-turan-63325184-12413177.jpg"
-    },
-    {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
       "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
       "reason": "no-stock-match",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg"
+    },
+    {
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "link": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-2-768x1024.jpeg"
     },
     {
       "title": "Un projet de loi rendrait obligatoire le statut d’étudiant·e proche aidant·e",
@@ -69,12 +57,6 @@
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
     },
     {
-      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
-      "link": "https://quartierlibre.ca/festival-jamais-lu-2026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/69/Universit%C3%A9_de_Montr%C3%A9al%2C_pavillon_principal%2C_rentr%C3%A9e_01.JPG"
-    },
-    {
       "title": "CSU approves affinity group policy, club rules update and councillor pay increase at special meeting",
       "link": "https://thelinknewspaper.ca/article/16326",
       "reason": "stock-too-small",
@@ -85,6 +67,24 @@
       "link": "https://thebucampus.ca/2026/04/06/from-the-rink-to-the-links/",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/4031/4400844746_a47c17ef6d_b.jpg"
+    },
+    {
+      "title": "Spotlighting Powerful McGill Alumnae",
+      "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
+    },
+    {
+      "title": "National Golf tournament",
+      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/24/99099986_4195128a59_b.jpg"
+    },
+    {
+      "title": "Second-Class Citizens",
+      "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/7056/6831154200_b7057b4237_b.jpg"
     }
   ]
 }
