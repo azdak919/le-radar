@@ -1,29 +1,30 @@
 {
-  "generatedAt": "2026-07-25T08:32:56.361Z",
-  "since": "48h",
-  "sinceGit": "48 hours ago",
+  "generatedAt": "2026-08-01T05:44:19.998Z",
+  "since": "36h",
+  "sinceGit": "36 hours ago",
   "intense": true,
   "intensity": {
-    "score": 768,
+    "score": 943.6,
     "level": "heavy",
-    "files": 225,
-    "touches": 1180,
-    "commitCount": 233
+    "files": 658,
+    "touches": 3053,
+    "commitCount": 61
   },
   "candidates": [
     {
-      "zone": "pwa-sw",
-      "title": "PWA / service worker / install",
-      "why": "SW et install touchés souvent ; risque de cache oublié",
-      "effort": "S",
-      "related": null,
-      "heat": 410,
+      "zone": "bots-ci",
+      "title": "Bots / CI / scripts de maintenance",
+      "why": "Beaucoup de scripts touchés — opportunité de factoriser",
+      "effort": "M",
+      "related": "D1",
+      "heat": 471.6,
       "files": [
-        "sw.js",
-        "pomo/sw.js",
-        "solitaire/sw.js",
-        "offline.html",
-        "engage-prompt.js"
+        "tests/static-integrity.mjs",
+        "scripts/article-photo-credit-lib.js",
+        "scripts/maintain-quebec-backgrounds.js",
+        "scripts/article-image-lib.js",
+        "scripts/fetch-news.js",
+        "scripts/fetch-source-worker.js"
       ]
     },
     {
@@ -32,26 +33,14 @@
       "why": "Activité concentrée sur /pomo/",
       "effort": "S",
       "related": null,
-      "heat": 277.5,
+      "heat": 180,
       "files": [
-        "pomo/sw.js",
-        "pomo/index.html",
-        "pomo/styles/base.css",
-        "pomo/styles/layout.css",
-        "pomo/js/translate.js",
-        "pomo/js/backgrounds.js"
-      ]
-    },
-    {
-      "zone": "monolith-app",
-      "title": "Découper / modulariser app.js (tranche)",
-      "why": "Fichier monolithe touché souvent en vibe-code → re-lit cher en tokens",
-      "effort": "L",
-      "related": "D2",
-      "heat": 234,
-      "files": [
-        "app.js",
-        "pomo/js/app.js"
+        "pomo/LICENSE",
+        "pomo/README.md",
+        "pomo/apple-touch-icon-120x120.png",
+        "pomo/apple-touch-icon-152x152.png",
+        "pomo/apple-touch-icon-180x180.png",
+        "pomo/apple-touch-icon.png"
       ]
     },
     {
@@ -60,104 +49,121 @@
       "why": "Beaucoup d’activité sur les fonds — documenter ou automatiser le reste",
       "effort": "M",
       "related": "D3",
-      "heat": 230,
+      "heat": 164,
       "files": [
-        "scripts/maintain-quebec-backgrounds.js",
-        "quebec-backgrounds.js",
+        "data/quebec-backgrounds.json",
         "data/quebec-favorites-backgrounds.json",
         "data/quebec-nations-backgrounds.json",
-        "quebec-favorites-backgrounds-data.js",
-        "data/quebec-backgrounds.json"
+        "data/quebec-pomo-backgrounds.json",
+        "data/quebec-university-backgrounds.json",
+        "quebec-nations-backgrounds-data.js"
       ]
     },
     {
-      "zone": "bots-ci",
-      "title": "Bots / CI / scripts de maintenance",
-      "why": "Beaucoup de scripts touchés — opportunité de factoriser",
-      "effort": "M",
-      "related": "D1",
-      "heat": 148.8,
+      "zone": "pwa-sw",
+      "title": "PWA / service worker / install",
+      "why": "SW et install touchés souvent ; risque de cache oublié",
+      "effort": "S",
+      "related": null,
+      "heat": 78,
       "files": [
-        "tests/masthead-weather.spec.mjs",
-        "scripts/maintain-quebec-backgrounds.js",
-        "tests/player-continuity.spec.mjs",
-        "tests/static-integrity.mjs",
-        "tests/translation-menu.spec.mjs",
-        "scripts/audit-quebec-backgrounds.py"
+        "assets/news-images/manifest.json",
+        "sw.js",
+        "engage-prompt.js",
+        "manifest.json",
+        "offline.html",
+        "pomo/sw.js"
       ]
     },
     {
-      "zone": "monolith-css",
-      "title": "Extraire CSS mât / thème (tranche style.css)",
-      "why": "style.css monolithe ; changements UI = relecture large",
+      "zone": "radio-mobile",
+      "title": "Radio mobile / Media Session / reprise",
+      "why": "Zone audio mobile sensible ; regroupe les fix récurrents",
       "effort": "M",
+      "related": null,
+      "heat": 75,
+      "files": [
+        ".github/workflows/update-radio-nowplaying.yml",
+        "cast.js",
+        "mobile-playback.js",
+        "player-sync.js",
+        "scripts/fetch-radio-nowplaying.js",
+        "scripts/radio-nowplaying-lib.js"
+      ]
+    },
+    {
+      "zone": "monolith-app",
+      "title": "Découper / modulariser app.js (tranche)",
+      "why": "Fichier monolithe touché souvent en vibe-code → re-lit cher en tokens",
+      "effort": "L",
       "related": "D2",
-      "heat": 132.5,
+      "heat": 36,
       "files": [
-        "style.css"
+        "app.js",
+        "pomo/js/app.js"
       ]
     }
   ],
   "topFiles": [
     {
-      "file": "sw.js",
-      "n": 113
-    },
-    {
-      "file": "app.js",
-      "n": 71
-    },
-    {
-      "file": "pomo/sw.js",
-      "n": 53
-    },
-    {
-      "file": "style.css",
-      "n": 53
-    },
-    {
-      "file": "solitaire/sw.js",
-      "n": 35
-    },
-    {
-      "file": "solitaire/index.html",
-      "n": 30
-    },
-    {
-      "file": "radio-nowplaying.json",
-      "n": 29
-    },
-    {
-      "file": "index.html",
-      "n": 29
-    },
-    {
-      "file": "news.json",
-      "n": 27
-    },
-    {
-      "file": "author-qc.json",
-      "n": 26
-    },
-    {
-      "file": "lead-excerpt-qc.json",
-      "n": 26
-    },
-    {
       "file": "news-sources.json",
-      "n": 26
+      "n": 20
     },
     {
-      "file": "photo-credit-qc.json",
-      "n": 26
+      "file": "llms.txt",
+      "n": 20
     },
     {
-      "file": "social-feed.json",
-      "n": 24
+      "file": "news-archive.json",
+      "n": 20
     },
     {
-      "file": "embed.css",
-      "n": 24
+      "file": "assets/news-images/manifest.json",
+      "n": 19
+    },
+    {
+      "file": "en/newspapers/exil/index.html",
+      "n": 19
+    },
+    {
+      "file": "en/newspapers/le-delit/index.html",
+      "n": 19
+    },
+    {
+      "file": "en/newspapers/le-polyscope/index.html",
+      "n": 19
+    },
+    {
+      "file": "en/newspapers/montreal-campus/index.html",
+      "n": 19
+    },
+    {
+      "file": "en/newspapers/the-campus/index.html",
+      "n": 19
+    },
+    {
+      "file": "en/newspapers/the-link/index.html",
+      "n": 19
+    },
+    {
+      "file": "en/newspapers/the-plant/index.html",
+      "n": 19
+    },
+    {
+      "file": "journaux/exil/index.html",
+      "n": 19
+    },
+    {
+      "file": "journaux/le-delit/index.html",
+      "n": 19
+    },
+    {
+      "file": "journaux/le-polyscope/index.html",
+      "n": 19
+    },
+    {
+      "file": "journaux/montreal-campus/index.html",
+      "n": 19
     }
   ]
 }
