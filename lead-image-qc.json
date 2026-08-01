@@ -1,42 +1,24 @@
 {
-  "updated": "2026-08-01T12:09:27.062Z",
+  "updated": "2026-08-01T15:11:18.712Z",
   "total": 185,
   "withPhoto": 167,
   "withStock": 39,
   "withCampusBank": 7,
   "fullyCovered": 185,
   "leadReadyPhotos": 147,
-  "pageScraped": 23,
-  "photosRecovered": 23,
-  "imagesCleared": 11,
-  "stockSearches": 36,
-  "stockFound": 29,
-  "campusBankFound": 4,
+  "pageScraped": 24,
+  "photosRecovered": 24,
+  "imagesCleared": 12,
+  "stockSearches": 30,
+  "stockFound": 26,
+  "campusBankFound": 2,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "Review: Sullivan Fortner Solo at Gesú Concert Hall",
-      "link": "https://www.mcgilldaily.com/2026/07/review-sullivan-fortner-solo-at-gesu-concert-hall/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/4199/34273881353_56632433e1_b.jpg"
-    },
-    {
-      "title": "CSU fails to reach quorum at first special council meeting of new mandate",
-      "link": "https://thelinknewspaper.ca/article/16335",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
-    },
     {
       "title": "The Cruel Optimism of Summer",
       "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/917/28627096297_a3e0756d47_b.jpg"
-    },
-    {
-      "title": "CSU terminates council’s chief election officer",
-      "link": "https://thelinknewspaper.ca/article/16334",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
     },
     {
       "title": "Pourquoi la lecture est-elle importante?",
@@ -63,18 +45,6 @@
       "image": "https://live.staticflickr.com/7089/7290404684_2750bb385f_b.jpg"
     },
     {
-      "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
-      "link": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Assembl%C3%A9e_nationale_du_Qu%C3%A9bec%2C_l%27H%C3%B4tel_du_Parlement%2C_fa%C3%A7ade_avec_ancien_entr%C3%A9_principal.jpg"
-    },
-    {
-      "title": "CSU approves $36,000 in funding for student-led initiatives",
-      "link": "https://thelinknewspaper.ca/article/16319",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG"
-    },
-    {
       "title": "From the rink to the links",
       "link": "https://thebucampus.ca/2026/04/06/from-the-rink-to-the-links/",
       "reason": "stock-too-small",
@@ -85,6 +55,36 @@
       "link": "https://thebucampus.ca/2026/04/06/mars-enters-aries/",
       "reason": "stock-too-small",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Mars%2C_Aries_and_Scorpio_from_Persian_Manusc_Wellcome_L0030660.jpg"
+    },
+    {
+      "title": "Spotlighting Powerful McGill Alumnae",
+      "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e2/McGill_University_downtown_campus_12.JPG"
+    },
+    {
+      "title": "National Golf tournament",
+      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/24/99099986_4195128a59_b.jpg"
+    },
+    {
+      "title": "Gaiters wrap up hard-fought season with eyes on next year",
+      "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
+    },
+    {
+      "title": "Second-Class Citizens",
+      "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/7056/6831154200_b7057b4237_b.jpg"
+    },
+    {
+      "title": "The Gentrification of Online Fandom Spaces",
+      "link": "https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/bc/East_Austin_Gentrification_Holly_St_2018.jpg"
     }
   ]
 }
