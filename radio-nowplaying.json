@@ -1,72 +1,78 @@
 {
-  "updatedAt": "2026-08-01T16:56:59.171Z",
+  "updatedAt": "2026-08-01T18:00:38.164Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Radio Futura",
         "source": "schedule",
         "start": "13:00",
         "end": "16:00",
         "url": "https://chyz.ca/emission/radio-futura/"
       },
+      "next": {
+        "title": "Capitales de Québec",
+        "source": "schedule",
+        "start": "18:50",
+        "end": "23:00",
+        "url": "https://chyz.ca/emission/capitales-de-quebec/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Radio Futura",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T16:56:32.365Z"
+      "checkedAt": "2026-08-01T18:00:12.999Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Elkin Polo El Show",
+        "title": "Faites entrer un DJ",
         "source": "schedule",
-        "start": "09:00",
-        "end": "13:00",
-        "url": "https://cism893.ca/emissions/elkin-polo-el-show"
+        "start": "14:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/faites-entrer-un-dj"
       },
       "next": {
-        "title": "Change le beat",
+        "title": "Contenu explicite",
         "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/change-le-beat"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/contenu-explicite"
       },
       "track": "",
-      "showTitle": "Elkin Polo El Show",
+      "showTitle": "Faites entrer un DJ",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T16:56:34.537Z"
+      "checkedAt": "2026-08-01T18:00:15.305Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Samedi Midi",
-        "source": "api-live",
-        "start": "10:30",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Funky Revolutions",
         "source": "api-live",
         "start": "14:00",
         "end": "16:00"
       },
+      "next": {
+        "title": "West Indian Rhythms",
+        "source": "api-live",
+        "start": "16:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Samedi Midi",
+      "showTitle": "Funky Revolutions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +80,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T16:56:37.620Z"
+      "checkedAt": "2026-08-01T18:00:17.733Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Anatomy of Caribbean Music",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
-      },
-      "next": {
         "title": "Caribbean Callaloo",
         "source": "schedule",
         "start": "14:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/caribbean-callaloo"
       },
+      "next": {
+        "title": "Mi Dun Talk",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/mi-dun-talk"
+      },
       "track": "",
-      "showTitle": "Anatomy of Caribbean Music",
+      "showTitle": "Caribbean Callaloo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T16:56:51.389Z"
+      "checkedAt": "2026-08-01T18:00:31.223Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +127,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T16:56:52.006Z"
+      "checkedAt": "2026-08-01T18:00:31.698Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +140,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Misa & Nicholas Craven - Civilise, Pt. III",
+      "track": "ID - Alix-Fernz",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-01T16:56:58.821Z"
+      "checkedAt": "2026-08-01T18:00:37.813Z"
     }
   }
 }

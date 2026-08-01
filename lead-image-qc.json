@@ -1,24 +1,24 @@
 {
-  "updated": "2026-08-01T17:59:54.968Z",
+  "updated": "2026-08-01T19:07:27.255Z",
   "total": 185,
   "withPhoto": 168,
-  "withStock": 22,
-  "withCampusBank": 11,
+  "withStock": 24,
+  "withCampusBank": 12,
   "fullyCovered": 185,
-  "leadReadyPhotos": 144,
-  "pageScraped": 22,
-  "photosRecovered": 22,
+  "leadReadyPhotos": 135,
+  "pageScraped": 12,
+  "photosRecovered": 12,
   "imagesCleared": 11,
-  "stockSearches": 38,
-  "stockFound": 12,
+  "stockSearches": 52,
+  "stockFound": 14,
   "campusBankFound": 4,
   "mainPageLeadReady": true,
   "gaps": [
     {
-      "title": "The Cruel Optimism of Summer",
-      "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/917/28627096297_a3e0756d47_b.jpg"
+      "title": "L’écotourisme comme nouvelle façon de voyager",
+      "link": "https://lecollectif.ca/environnement/lecotourisme-comme-nouvelle-facon-de-voyager/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/ENVIRO_Ecotourisme_RebeccaGagne.png"
     },
     {
       "title": "Pourquoi la lecture est-elle importante?",
@@ -27,10 +27,40 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/CAMPUS_Lecture_Source-Ask-The-Scientists.jpg"
     },
     {
+      "title": "Les bases du plein air durable",
+      "link": "https://lecollectif.ca/a-la-une/les-bases-du-plein-air-durable/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/Capture-decran-le-2026-07-29-a-10.03.28.png"
+    },
+    {
+      "title": "Une ligue d’été pour garder le hockey vivant en Estrie",
+      "link": "https://lecollectif.ca/a-la-une/une-ligue-dete-pour-garder-le-hockey-vivant-en-estrie/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SPORTS_LBS_Source-Facebook-Ligue-de-hockey-estivale-A-Bout-de-Souffle.jpg"
+    },
+    {
+      "title": "Entre Sherbrooke et Montreux, deux façons de vivre la musique en ville",
+      "link": "https://lecollectif.ca/a-la-une/entre-sherbrooke-et-montreux-deux-facons-de-vivre-la-musique-en-ville/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/CULTURE_Montreux-Jazz-festival_Source-Site-internet-du-Montreux-Jazz-Festival.png"
+    },
+    {
       "title": "Sommet de l’OTAN à Ankara",
       "link": "https://lecollectif.ca/a-la-une/sommet-de-lotan-a-ankara/",
       "reason": "stock-too-small",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_Sommet-de-lOTAN-a-Ankara_Getty-Images.jpg"
+    },
+    {
+      "title": "Sherbrooke permet désormais des terrains plus naturels",
+      "link": "https://lecollectif.ca/a-la-une/sherbrooke-permet-desormais-des-terrains-plus-naturels/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_pelouse-gazon_Source-Blogue-AccentLocal.jpg"
+    },
+    {
+      "title": "Chirurgie esthétique au Québec : entre confiance en soi et quête de perfection",
+      "link": "https://lecollectif.ca/a-la-une/chirurgie-esthetique-au-quebec-entre-confiance-en-soi-et-quete-de-perfection/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_chirurgie-esthetique_SourceBeautifi.jpg"
     },
     {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
@@ -42,7 +72,7 @@
       "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
       "link": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
       "reason": "no-stock-match",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-2-768x1024.jpeg"
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/PXL_20260505_174149744.jpg"
     },
     {
       "title": "Un projet de loi rendrait obligatoire le statut d’étudiant·e proche aidant·e",
@@ -55,36 +85,6 @@
       "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
       "reason": "no-stock-match",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
-    },
-    {
-      "title": "CSU approves affinity group policy, club rules update and councillor pay increase at special meeting",
-      "link": "https://thelinknewspaper.ca/article/16326",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/7089/7290404684_2750bb385f_b.jpg"
-    },
-    {
-      "title": "From the rink to the links",
-      "link": "https://thebucampus.ca/2026/04/06/from-the-rink-to-the-links/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/4031/4400844746_a47c17ef6d_b.jpg"
-    },
-    {
-      "title": "Spotlighting Powerful McGill Alumnae",
-      "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
-    },
-    {
-      "title": "National Golf tournament",
-      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/24/99099986_4195128a59_b.jpg"
-    },
-    {
-      "title": "Second-Class Citizens",
-      "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/7056/6831154200_b7057b4237_b.jpg"
     }
   ]
 }
