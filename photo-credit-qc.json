@@ -1,30 +1,15 @@
 {
-  "updated": "2026-08-01T06:48:45.630Z",
+  "updated": "2026-08-01T09:24:02.607Z",
   "total": 185,
-  "withImage": 167,
-  "withCredit": 167,
-  "cited": 127,
-  "pending": 0,
+  "withImage": 168,
+  "withCredit": 168,
+  "cited": 129,
+  "pending": 13,
   "missingHero": 0,
-  "ok": true,
-  "checked": 2,
-  "updatedCount": 2,
-  "citedNew": 1,
-  "fallbackNew": 1,
-  "samples": [
-    {
-      "title": "Des initiatives qui rassemblent",
-      "source": "Le Délit",
-      "credit": "Crédit photo : Le Délit",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Élections de l’exécutif de l’AÉUM",
-      "source": "Le Délit",
-      "credit": "Photo : Toscane Ralaimongo",
-      "cited": true,
-      "method": "media-credit-featured"
-    }
-  ]
+  "ok": false,
+  "checked": 13,
+  "updatedCount": 0,
+  "citedNew": 0,
+  "fallbackNew": 13,
+  "samples": []
 }

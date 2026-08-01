@@ -13,6 +13,8 @@ const {
   buildMatchTokens,
   detectEditorialContext,
   extractSearchQueries,
+  hasNamedVisualSubject,
+  matchesRequestedScene,
   scoreCandidate,
   STOCK_MIN_RETAIN_SCORE,
 } = require('../scripts/stock-photo-lib.js');
@@ -125,6 +127,67 @@ const singleWordFluke = scoreCandidate(
 assert(
   singleWordFluke < STOCK_MIN_RETAIN_SCORE,
   `un seul mot en commun (« concert ») ne suffit pas (score ${singleWordFluke})`,
+);
+
+// ── Sujet visuel nommé : sinon banque campus, pas de pêche libre ──
+assert(
+  hasNamedVisualSubject(recital),
+  'récital de piano : sujet visuel nommé (branche musique)',
+);
+
+const personalEssay = {
+  title: 'Step outside… and change your life',
+  source: 'The Campus',
+  institution: 'Bishop’s University',
+  region: 'Estrie',
+  lang: 'en',
+  leadExcerpt: 'I had spent months indoors, and the day I finally walked out of my '
+    + 'apartment something in me shifted. The air was different, and so was I.',
+};
+assert(
+  !hasNamedVisualSubject(personalEssay),
+  'essai personnel sans sujet visuel : pas de recherche libre (repli campus)',
+);
+
+const politics = {
+  title: '« La politique, c’est un sport extrême » : François Legault se confie',
+  source: 'Le Délit',
+  institution: 'Université McGill',
+  region: 'Montréal',
+  lang: 'fr',
+  leadExcerpt: 'Le premier ministre du Québec revient sur ses années à la tête du '
+    + 'gouvernement et sur les compromis du pouvoir.',
+};
+assert(
+  hasNamedVisualSubject(politics),
+  'personnalité politique nommée : sujet visuel (branche François Legault)',
+);
+assert(
+  matchesRequestedScene(politics, {
+    title: 'Dr Daniel Borsuk and Prime Minister François Legault',
+    tags: 'quebec politics',
+    url: 'https://commons.wikimedia.org/x/legault.jpg',
+  }),
+  'portrait de la personne : répond à la scène demandée',
+);
+
+// Écho du titre ≠ réponse à la scène demandée.
+const secondClass = {
+  title: 'Second-Class Citizens',
+  source: 'The McGill Daily',
+  institution: 'McGill University',
+  region: 'Montréal',
+  lang: 'en',
+  leadExcerpt: 'The fight for women’s rights at McGill did not end with the first '
+    + 'women graduates: every march since has been met with the same indignation.',
+};
+assert(
+  !matchesRequestedScene(secondClass, {
+    title: 'Sgt. 1st Class Lindlay Johnson (left), and Sgt. Chuck Hunter',
+    tags: 'us army soldiers',
+    url: 'https://commons.wikimedia.org/x/sgt.jpg',
+  }),
+  '« Sgt. 1st Class » ne répond pas à la scène « women rights demonstration »',
 );
 
 // ── Motifs « demote » : dernier recours, pas un rejet ─────────
