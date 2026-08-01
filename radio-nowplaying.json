@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-08-01T15:36:12.859Z",
+  "updatedAt": "2026-08-01T16:56:59.171Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Le Ré-Show : Deuxième Service",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
-      },
+      "current": null,
       "next": {
         "title": "Radio Futura",
         "source": "schedule",
@@ -20,14 +14,14 @@
         "url": "https://chyz.ca/emission/radio-futura/"
       },
       "track": "",
-      "showTitle": "Le Ré-Show : Deuxième Service",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T15:35:47.935Z"
+      "checkedAt": "2026-08-01T16:56:32.365Z"
     },
     "cism": {
       "id": "cism",
@@ -54,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T15:35:49.782Z"
+      "checkedAt": "2026-08-01T16:56:34.537Z"
     },
     "ckut": {
       "id": "ckut",
@@ -80,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T15:35:52.136Z"
+      "checkedAt": "2026-08-01T16:56:37.620Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Gospel Unlimited",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/gospel-unlimited"
-      },
-      "next": {
         "title": "Anatomy of Caribbean Music",
         "source": "schedule",
         "start": "12:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
       },
+      "next": {
+        "title": "Caribbean Callaloo",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/caribbean-callaloo"
+      },
       "track": "",
-      "showTitle": "Gospel Unlimited",
+      "showTitle": "Anatomy of Caribbean Music",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T15:36:05.466Z"
+      "checkedAt": "2026-08-01T16:56:51.389Z"
     },
     "cfak": {
       "id": "cfak",
@@ -127,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T15:36:05.948Z"
+      "checkedAt": "2026-08-01T16:56:52.006Z"
     },
     "choq": {
       "id": "choq",
@@ -140,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Mort Rose - Je sais pas (one shop cowboy)",
+      "track": "Misa & Nicholas Craven - Civilise, Pt. III",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -151,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-01T15:36:12.509Z"
+      "checkedAt": "2026-08-01T16:56:58.821Z"
     }
   }
 }
