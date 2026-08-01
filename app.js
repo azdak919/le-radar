@@ -10338,6 +10338,22 @@ function decodeHtmlEntities(str = '') {
   return s;
 }
 
+/**
+ * Aligné sur scripts/html-entities-lib.js (fixDropCapSpacing).
+ * Recolle la lettrine WP détachée par le strip HTML (« L e 18… » → « Le 18… »),
+ * sauf quand la majuscule isolée est un mot complet (« À cette fin… ») — sinon
+ * on fabriquait « Àcette ».
+ */
+const STANDALONE_CAPITAL_WORD_RE = /^[AÀÂIÎOÔY]$/u;
+
+function fixDropCapSpacing(text = '') {
+  return String(text)
+    .replace(/^([\p{Lu}])\s+(['’])/u, '$1$2')
+    .replace(/^([\p{Lu}])\s+([\p{Ll}])/u, (match, cap, next) => (
+      STANDALONE_CAPITAL_WORD_RE.test(cap) ? match : `${cap}${next}`
+    ));
+}
+
 function cleanTitle(title = '') {
   let t = decodeHtmlEntities(stripEmbeddedCss(title));
   t = t.replace(/\s+/g, ' ').trim();
@@ -10473,7 +10489,7 @@ function sanitizeBriefBody(raw = '') {
   s = s.replace(/\.\s*\./g, '.');
   s = s.replace(/\s+/g, ' ').trim();
   // WP has-drop-cap dans le flux : « L e 18… » / « L 'identité »
-  s = s.replace(/^([\p{Lu}])\s+([''’])/u, '$1$2').replace(/^([\p{Lu}])\s+([\p{Ll}])/u, '$1$2');
+  s = fixDropCapSpacing(s);
   return s;
 }
 

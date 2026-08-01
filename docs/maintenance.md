@@ -340,6 +340,41 @@ régénéré. Si `nations`, `pomo` ou `favorites` changent, bumper aussi
 « pas de personnes reconnaissables », inscrite en tête de chaque banque, reste
 une revue humaine.
 
+### Photo vedette d'article : la photo de l'article d'abord
+
+Signalement humain du 2026-08-01 : une critique de récital de piano solo
+(The McGill Daily) affichait une photo de **Wonder Woman**. Deux défauts
+distincts, corrigés ensemble.
+
+**1. La vraie photo était là et a été rejetée.** Le motif
+`Screenshot-\d{4}-\d{2}-\d{2}` de `rejectPathPatterns` visait un doute sur le
+nom de fichier, mais chez ce journal c'est le nom d'export de leurs photos de
+concert. Les motifs de ce genre passent désormais en `demotePathPatterns`
+(`botHints.images`) : la photo est classée **après** toutes les autres de
+l'article, jamais disqualifiée. Un rejet dur n'aboutit pas à « pas de photo »,
+il aboutit à « photo de banque hors-sujet ».
+
+**2. « Review » servait d'ancrage.** Le scoring de `stock-photo-lib.js` a trois
+règles de plus :
+
+- les **étiquettes de genre** (`Review:`, `Opinion –`, `Critique :`…) sont
+  retirées du titre et des faux-amis : elles décrivent le format, pas le sujet ;
+- les majuscules de **début de phrase** ne comptent plus comme noms propres —
+  elles saturaient la liste des mots importants (« Seated », « Throughout »)
+  et y faisaient entrer « Wonder » (Stevie Wonder) pendant que « piano » en
+  était chassé ;
+- sur un titre riche (≥ 3 mots de sujet), il faut **deux mots d'ancrage
+  distincts**, pas un seul : un mot en commun est une coïncidence de
+  vocabulaire.
+
+Mesure sur le fil du jour : 21 photos libres retenues avant, 8 après. Parmi les
+13 écartées, 11 étaient absurdes (« ode to an air conditioner » pour une ode à
+l'automne, « Parking Ticket Note » pour une soirée musicale, un fort de l'OTAN
+pour un sommet à Ankara). **Deux pertes réelles** : « Calamine en concert » et
+« Katseye at Wango Tango », où le seul mot commun était justement le nom de
+l'artiste. Les distinguer demanderait un signal de rareté lexicale qu'on n'a
+pas ; en attendant, ces articles reçoivent la photo de campus curatée.
+
 ---
 
 ## Horaires « à l'antenne »

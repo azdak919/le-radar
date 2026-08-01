@@ -15,14 +15,42 @@ function imageRejectPatternsFromHints(hints = {}) {
   return Array.isArray(extra) ? extra.filter(Boolean) : [];
 }
 
+/**
+ * Motifs « au pire » (botHints.images.demotePathPatterns) : soupçon sur le nom
+ * de fichier, pas une preuve. On les classe derrière toutes les autres photos
+ * de l'article au lieu de les disqualifier — un rejet dur renvoyait l'article
+ * vers une banque libre hors-sujet alors que sa vraie photo était là.
+ */
+function imageDemotePatternsFromHints(hints = {}) {
+  const extra = hints.demotePathPatterns;
+  return Array.isArray(extra) ? extra.filter(Boolean) : [];
+}
+
+function matchesAnyPattern(path = '', patterns = []) {
+  const p = String(path).toLowerCase();
+  for (const pat of patterns) {
+    if (pat && new RegExp(pat, 'i').test(p)) return true;
+  }
+  return false;
+}
+
 function isPathRejected(path = '', extraRejectPatterns = []) {
   const p = String(path).toLowerCase();
   if (GLOBAL_IMAGE_REJECT_RE.test(p)) return true;
   if (/(?:^|\/)(?:1x1|pixel)\b/.test(p)) return true;
-  for (const pat of extraRejectPatterns) {
-    if (pat && new RegExp(pat, 'i').test(p)) return true;
+  return matchesAnyPattern(p, extraRejectPatterns);
+}
+
+/** Chemin visé par un motif « demote » de la source (jamais un rejet). */
+function isPathDemoted(rawUrl = '', demotePatterns = []) {
+  if (!demotePatterns.length) return false;
+  let path = String(rawUrl);
+  try {
+    path = decodeURIComponent(new URL(path).pathname);
+  } catch {
+    /* URL relative ou malformée : tester la chaîne brute */
   }
-  return false;
+  return matchesAnyPattern(path, demotePatterns);
 }
 
 const { decodeEntities } = require('./html-entities-lib');
@@ -420,6 +448,7 @@ function captionedFigureImageKeys(content = '') {
 function collectContentImages(content = '', extraRejectPatterns = [], options = {}, baseUrl = '') {
   const urls = [];
   const preferSizeFull = !!options.preferSizeFull;
+  const demotePatterns = Array.isArray(options.demotePathPatterns) ? options.demotePathPatterns : [];
   const captionedKeys = captionedFigureImageKeys(content);
   for (const m of content.matchAll(/<img[^>]*>/gi)) {
     const tag = m[0];
@@ -439,7 +468,8 @@ function collectContentImages(content = '', extraRejectPatterns = [], options = 
     const isCropThumb = /-\d{2,4}x\d{2,4}\./i.test(src);
     const hasCaption = captionedKeys.has(normalizeImagePath(src))
       || captionedKeys.has(normalizeImagePath(toAbsoluteImageUrl(rawSrc, baseUrl)));
-    urls.push({ url: src, tag, w, isFull, isCropThumb, hasCaption });
+    const demoted = isPathDemoted(src, demotePatterns);
+    urls.push({ url: src, tag, w, isFull, isCropThumb, hasCaption, demoted });
   }
   if (preferSizeFull) {
     const fullOnly = urls.filter((img) => img.isFull || !img.isCropThumb);
@@ -601,6 +631,7 @@ function imageFromArticleHtml(html = '', extraRejectPatterns = [], options = {},
     ? (articleBodyHtml(html) || articleImageRegions(html))
     : articleImageRegions(html);
   const contentImages = collectContentImages(imageRegion, extraRejectPatterns, options, baseUrl);
+  const demotePatterns = Array.isArray(options.demotePathPatterns) ? options.demotePathPatterns : [];
 
   const candidates = [];
   const pushMeta = (raw, scoreBase, w = 0, h = 0) => {
@@ -620,6 +651,7 @@ function imageFromArticleHtml(html = '', extraRejectPatterns = [], options = {},
           + Math.min(w, 2400) / 10,
         w: url !== seed ? 0 : w,
         h: url !== seed ? 0 : h,
+        demoted: isPathDemoted(url, demotePatterns),
       });
       break;
     }
@@ -661,11 +693,14 @@ function imageFromArticleHtml(html = '', extraRejectPatterns = [], options = {},
       score,
       w: img.w,
       h: 0,
+      demoted: !!img.demoted,
     });
   }
 
   if (!candidates.length) return { url: '', w: 0, h: 0 };
-  candidates.sort((a, b) => b.score - a.score);
+  // Les photos « demote » passent après toutes les autres, quel que soit leur
+  // score : dernier recours, jamais premier choix.
+  candidates.sort((a, b) => (a.demoted ? 1 : 0) - (b.demoted ? 1 : 0) || b.score - a.score);
   const best = candidates[0];
   return { url: best.url, w: best.w || 0, h: best.h || 0 };
 }
@@ -674,6 +709,7 @@ function imageOptionsFromHints(hints = {}) {
   return {
     preferSizeFull: !!hints.preferSizeFull,
     preferFirstContentImage: !!hints.preferFirstContentImage,
+    demotePathPatterns: imageDemotePatternsFromHints(hints),
   };
 }
 
@@ -776,8 +812,11 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
         ? (articleBodyHtml(html) || articleImageRegions(html))
         : articleImageRegions(html);
       const contentImages = collectContentImages(region, extraRejectPatterns, options, item.link);
-      // Prioriser les plus larges / non-cropped
+      // Prioriser les plus larges / non-cropped, motifs « demote » en dernier
       const ranked = [...contentImages].sort((a, b) => {
+        const aDemoted = a.demoted ? 1 : 0;
+        const bDemoted = b.demoted ? 1 : 0;
+        if (aDemoted !== bDemoted) return aDemoted - bDemoted;
         const aFull = a.isFull ? 1 : 0;
         const bFull = b.isFull ? 1 : 0;
         if (aFull !== bFull) return bFull - aFull;
@@ -816,8 +855,10 @@ module.exports = {
   upgradeCmsImageUrl,
   promoteImageUrl,
   imageRejectPatternsFromHints,
+  imageDemotePatternsFromHints,
   imageOptionsFromHints,
   isPathRejected,
+  isPathDemoted,
   LEAD_MIN_WIDTH,
   LEAD_MIN_HEIGHT,
   LEAD_MIN_PIXELS,
