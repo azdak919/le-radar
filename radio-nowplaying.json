@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-01T21:25:15.587Z",
+  "updatedAt": "2026-08-01T22:27:05.277Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T21:24:47.899Z"
+      "checkedAt": "2026-08-01T22:26:38.278Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le radar",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "17:30",
-        "url": "https://cism893.ca/emissions/le-radar-2"
-      },
-      "next": {
         "title": "Disconomique",
         "source": "schedule",
         "start": "17:30",
         "end": "19:00",
         "url": "https://cism893.ca/emissions/disconomique"
       },
+      "next": {
+        "title": "Solénoïde",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/solenoide"
+      },
       "track": "",
-      "showTitle": "Le radar",
+      "showTitle": "Disconomique",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T21:24:49.585Z"
+      "checkedAt": "2026-08-01T22:26:40.442Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T21:24:53.651Z"
+      "checkedAt": "2026-08-01T22:26:43.837Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Mo' Ritmo Radio",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/mo-ritmo-radio"
-      },
-      "next": {
         "title": "The Limelight",
         "source": "schedule",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/the-limelight"
       },
+      "next": {
+        "title": "Screamers",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/screamers"
+      },
       "track": "",
-      "showTitle": "Mo' Ritmo Radio",
+      "showTitle": "The Limelight",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T21:25:07.362Z"
+      "checkedAt": "2026-08-01T22:26:57.661Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T21:25:07.804Z"
+      "checkedAt": "2026-08-01T22:26:58.280Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Cults - Go Outside",
+      "track": "@ - Autosmile",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-01T21:25:15.236Z"
+      "checkedAt": "2026-08-01T22:27:04.927Z"
     }
   }
 }
