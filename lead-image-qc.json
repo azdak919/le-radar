@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-01T03:57:23.878Z",
+  "updated": "2026-08-01T06:48:54.109Z",
   "total": 185,
   "withPhoto": 167,
   "withStock": 39,
@@ -8,10 +8,10 @@
   "leadReadyPhotos": 148,
   "pageScraped": 23,
   "photosRecovered": 23,
-  "imagesCleared": 11,
-  "stockSearches": 32,
-  "stockFound": 26,
-  "campusBankFound": 4,
+  "imagesCleared": 12,
+  "stockSearches": 30,
+  "stockFound": 25,
+  "campusBankFound": 3,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -21,10 +21,10 @@
       "image": "https://live.staticflickr.com/4199/34273881353_56632433e1_b.jpg"
     },
     {
-      "title": "CSU terminates council’s chief election officer",
-      "link": "https://thelinknewspaper.ca/article/16334",
+      "title": "CSU fails to reach quorum at first special council meeting of new mandate",
+      "link": "https://thelinknewspaper.ca/article/16335",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
     },
     {
       "title": "Pourquoi la lecture est-elle importante?",
@@ -49,12 +49,6 @@
       "link": "https://thelinknewspaper.ca/article/16326",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/7089/7290404684_2750bb385f_b.jpg"
-    },
-    {
-      "title": "CSU approves $36,000 in funding for student-led initiatives",
-      "link": "https://thelinknewspaper.ca/article/16319",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
     },
     {
       "title": "From the rink to the links",
@@ -85,6 +79,12 @@
       "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
+    },
+    {
+      "title": "Second-Class Citizens",
+      "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/7056/6831154200_b7057b4237_b.jpg"
     }
   ]
 }
