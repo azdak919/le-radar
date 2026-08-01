@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-01T08:42:06.504Z",
+  "updatedAt": "2026-08-01T09:04:15.212Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T08:41:44.619Z"
+      "checkedAt": "2026-08-01T09:03:52.455Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Franco",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
-      },
-      "next": {
         "title": "Voix tropicale",
         "source": "schedule",
         "start": "05:00",
         "end": "09:00",
         "url": "https://cism893.ca/emissions/voix-tropicale"
       },
+      "next": {
+        "title": "Elkin Polo El Show",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "13:00",
+        "url": "https://cism893.ca/emissions/elkin-polo-el-show"
+      },
       "track": "",
-      "showTitle": "Mix Franco",
+      "showTitle": "Voix tropicale",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T08:41:46.677Z"
+      "checkedAt": "2026-08-01T09:03:54.671Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T08:41:49.267Z"
+      "checkedAt": "2026-08-01T09:03:57.617Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T08:42:02.891Z"
+      "checkedAt": "2026-08-01T09:04:11.413Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T08:42:03.434Z"
+      "checkedAt": "2026-08-01T09:04:12.047Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Après l",
+      "track": "BAIE - Croyez-moi",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-01T08:42:06.153Z"
+      "checkedAt": "2026-08-01T09:04:14.861Z"
     }
   }
 }
