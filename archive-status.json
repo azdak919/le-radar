@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-01T06:23:28.998Z",
+  "updated": "2026-08-01T11:06:29.046Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -1097,14 +1097,29 @@
       "at": "2026-07-26T00:18:18.000Z",
       "via": "existant",
       "source": "The McGill Daily"
+    },
+    "https://www.mcgilldaily.com/2026/07/review-sullivan-fortner-solo-at-gesu-concert-hall/": {
+      "at": "2026-08-01T06:35:30.000Z",
+      "via": "existant",
+      "source": "The McGill Daily"
+    },
+    "https://www.mcgilldaily.com/2026/03/review-hamnet-the-retelling-of-a-lost-figure/": {
+      "at": "2026-08-01T06:38:49.000Z",
+      "via": "existant",
+      "source": "The McGill Daily"
+    },
+    "https://lecollectif.ca/environnement/cinq-circuits-de-veloroute-pour-un-tourisme-ecoresponsable/": {
+      "at": "2026-08-01T06:43:33.000Z",
+      "via": "existant",
+      "source": "Le Collectif"
     }
   },
   "stats": {
-    "total": 199,
+    "total": 202,
     "lastRun": {
       "saved": 0,
-      "skipped": 1,
-      "failed": 4,
+      "skipped": 3,
+      "failed": 1,
       "stoppedEarly": false
     }
   },
