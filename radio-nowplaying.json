@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-01T04:00:18.337Z",
+  "updatedAt": "2026-08-01T06:37:46.005Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T03:59:49.125Z"
+      "checkedAt": "2026-08-01T06:37:16.664Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix anglo",
+        "title": "Mix Franco",
         "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
+        "start": "02:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
       },
       "next": {
-        "title": "Rythmologie (reprise)",
+        "title": "Voix tropicale",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/rythmologie"
+        "start": "05:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/voix-tropicale"
       },
       "track": "",
-      "showTitle": "Mix anglo",
+      "showTitle": "Mix Franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T03:59:51.030Z"
+      "checkedAt": "2026-08-01T06:37:18.756Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Weekend Groove",
+        "title": "Soca Sessions",
         "source": "api-live",
-        "start": "22:00",
-        "end": "00:00"
+        "start": "02:00",
+        "end": "04:00"
       },
       "next": {
-        "title": "WEFUNK",
+        "title": "The Mash Time Show",
         "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
+        "start": "04:00",
+        "end": "06:00"
       },
       "track": "",
-      "showTitle": "Weekend Groove",
+      "showTitle": "Soca Sessions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,17 +74,17 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T03:59:55.954Z"
+      "checkedAt": "2026-08-01T06:37:21.681Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Jazz Boulevard",
+        "title": "CJLO Late Night",
         "source": "schedule",
         "start": "00:00",
-        "end": "02:00",
-        "url": "http://www.cjlo.com/shows/jazz-boulevard"
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "World-Up'",
@@ -94,14 +94,14 @@
         "url": "http://www.cjlo.com/shows/world-up"
       },
       "track": "",
-      "showTitle": "Jazz Boulevard",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T04:00:09.656Z"
+      "checkedAt": "2026-08-01T06:37:35.500Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-01T04:00:10.330Z"
+      "checkedAt": "2026-08-01T06:37:36.168Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Genesis Owusu - THE WORLDWIDE SCOURGE",
+      "track": "coffret de bijoux - i look for you everywhere",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-01T04:00:17.987Z"
+      "checkedAt": "2026-08-01T06:37:45.655Z"
     }
   }
 }
