@@ -88,6 +88,21 @@ const GENERIC_GEO_TOKENS = new Set([
   'amerique', 'amérique', 'america', 'ontario', 'ottawa', 'ville', 'city', 'ouest', 'est', 'nord', 'sud',
 ]);
 
+/**
+ * Personnalités politiques québécoises citées nommément : le portrait de la
+ * personne bat toute illustration de concept, et un nom complet est une ancre
+ * sans homonyme plausible. Ajouter au fil des sujets.
+ */
+const NAMED_QC_POLITICIANS = [
+  [/fran[çc]ois\s+legault/i, 'François Legault'],
+  [/paul\s?st[- ]pierre\s+plamondon/i, 'Paul St-Pierre Plamondon'],
+  [/gabriel\s+nadeau[- ]dubois/i, 'Gabriel Nadeau-Dubois'],
+  [/pablo\s+rodriguez/i, 'Pablo Rodriguez'],
+  [/christine\s+fr[ée]chette/i, 'Christine Fréchette'],
+  [/val[ée]rie\s+plante/i, 'Valérie Plante'],
+  [/mark\s+carney/i, 'Mark Carney'],
+];
+
 const QUEBEC_REGION_RE = /montréal|montreal|québec|quebec|laval|gatineau|sherbrooke|saguenay|rimouski|trois.?rivières|trois.?rivieres|abitibi|outaouais/i;
 const QUEBEC_INSTITUTION_RE = /uqam|uqtr|udem|ulaval|mcgill|concordia|hec montréal|hec montreal|cégep|cegep|sherbrooke|bishop|polytechnique|vieux montréal|vieux montreal/i;
 const QUEBEC_POLITICS_RE = /québécois|quebecois|élection provinciale|election provinciale|monde politique québécois|monde politique quebecois|\bcaq\b|parti québécois|parti quebecois|\bpq\b|\bqs\b|\bplq\b|\bpspp\b|françois legault|francois legault|hôtel du parlement|hotel du parlement|assemblée nationale du québec|assemblee nationale du quebec|député provincial|depute provincial|\bmna\b|\bmnas\b/i;
@@ -310,9 +325,13 @@ function extractContextualQueries(item, context = detectEditorialContext(item)) 
     queries.push('élection Québec politique');
   }
 
-  if (item.institution && context.quebec && /campus|université|universite|cégep|cegep|étudiant|etudiant/i.test(combined)) {
-    const inst = String(item.institution).replace(/\b(university|université|universite)\b/gi, '').trim();
-    if (inst.length > 4) queries.push(`${inst} Québec`);
+  // Personnalité politique nommée : son portrait est le meilleur visuel
+  // possible, et son nom complet est une ancre sans homonyme plausible.
+  for (const [re, person] of NAMED_QC_POLITICIANS) {
+    if (re.test(combined)) {
+      queries.push(person);
+      queries.push(`${person} Québec`);
+    }
   }
 
   if (STUDENT_MOBILIZATION_RE.test(combined)) {
@@ -370,18 +389,9 @@ function extractContextualQueries(item, context = detectEditorialContext(item)) 
     }
   }
 
-  // Articles sans photo (McGill Daily text-only) : ancrage institutionnel
-  // pour la recherche libre avant le repli campus.
-  if (item.institution && /mcgill/i.test(String(item.institution))) {
-    const hasStrongVisual = SPORTS_TOPIC_RE.test(combined)
-      || STUDENT_MOBILIZATION_RE.test(combined)
-      || context.summerTopic
-      || context.winterTopic;
-    if (!hasStrongVisual && title.length > 8) {
-      queries.push('McGill University campus Montreal');
-      queries.push('McGill University students campus');
-    }
-  }
+  // Pas de requête « campus de l'établissement » ici : une vue de campus
+  // générique est le travail du repli curaté (campus-photo-bank.js), qui
+  // choisit des photos vérifiées au lieu du premier résultat libre venu.
 
   return [...new Set(queries.filter((q) => q && q.length > 2))];
 }
@@ -455,10 +465,15 @@ function extractArticleContent(item) {
 }
 
 /**
- * Requêtes visuelles thématiques (FR→EN) tirées du titre / contenu.
- * Openverse/Commons répondent mieux aux libellés anglais concrets.
+ * Sujets visuels reconnus (FR→EN) : chaque branche décrit une SCÈNE, pas des
+ * mots-clés — c'est ce qui fait la différence entre « pianiste au piano à
+ * queue » et une collision de vocabulaire. Openverse/Commons répondent mieux
+ * aux libellés anglais concrets.
+ *
+ * Cette liste sert aussi de garde-fou : sans branche reconnue, on ne fouille
+ * pas la banque libre du tout (voir hasNamedVisualSubject).
  */
-function extractVisualTopicQueries(item = {}) {
+function topicBranchQueries(item = {}) {
   const title = editorialTitle(item);
   const content = extractArticleContent(item);
   const full = `${title} ${content}`;
@@ -500,7 +515,10 @@ function extractVisualTopicQueries(item = {}) {
     queries.push('art photography exhibition opening');
   }
   // Relations amoureuses / téléréalité (Occupation Double, Love Is Blind…)
-  if (/\b(?:t[eé]l[eé]r[eé]alit[eé]s?|reality\s+(?:tv|show|television)|occupation\s+double|love\s+is\s+blind|dating\s+(?:show|app)|relations?\s+amoureuses?|c[eé]libataires?|s[eé]duction|couple)\b/i.test(full)) {
+  // « couple » nu est un piège : « every couple of months » (quantificateur
+  // anglais) déclenchait la branche et donnait « Couple holding hands » à une
+  // critique de cinéma gothique. Il faut un marqueur qui parle vraiment du sujet.
+  if (/\b(?:t[eé]l[eé]r[eé]alit[eé]s?|reality\s+(?:tv|show|television)|occupation\s+double|love\s+is\s+blind|dating\s+(?:show|app)|relations?\s+amoureuses?|vie\s+de\s+couple|en\s+couple|jeunes\s+couples?|c[eé]libataires?|s[eé]duction)\b/i.test(full)) {
     queries.push('couple holding hands');
     queries.push('romantic couple love');
     queries.push('couple watching television');
@@ -558,12 +576,21 @@ function extractVisualTopicQueries(item = {}) {
     queries.push('community youth program Canada');
   }
 
-  // Titre seul : 2–4 tokens forts en tête de file de recherche
-  const titleToks = tokenize(title).filter((t) => t.length >= 4 && !GENERIC_GEO_TOKENS.has(t));
+  return queries;
+}
+
+/**
+ * Requêtes visuelles = branches reconnues + tokens forts du titre.
+ * Les tokens du titre ne servent qu'à affiner une recherche déjà cadrée par
+ * une branche : seuls, ils ramènent le premier homonyme venu.
+ */
+function extractVisualTopicQueries(item = {}) {
+  const queries = topicBranchQueries(item);
+  const titleToks = tokenize(editorialTitle(item))
+    .filter((t) => t.length >= 4 && !GENERIC_GEO_TOKENS.has(t));
   if (titleToks.length >= 2) {
     queries.unshift(titleToks.slice(0, 4).join(' '));
   }
-
   return queries;
 }
 
@@ -1099,6 +1126,14 @@ function stockStillFits(item, meta = {}) {
     return true;
   }
 
+  // Mêmes garde-fous qu'à la recherche : sujet visuel nommé, puis photo qui
+  // répond bien à la scène demandée (et pas seulement à l'écho du titre).
+  if (!hasNamedVisualSubject(item)) return false;
+  if (!matchesRequestedScene(item, {
+    title: [item.imageTitle || '', item.imageCredit || ''].filter(Boolean).join(' '),
+    url: item.stockImage || '',
+  })) return false;
+
   return scoreStockFit(item, item.stockImage, {
     // Le titre original de la photo (imageTitle) est bien plus fidèle que la
     // ligne de crédit pour juger si elle colle toujours au sujet.
@@ -1193,6 +1228,50 @@ async function validateCandidate(hit) {
 const STOCK_QUERY_LIMIT = 8;
 const STOCK_STRONG_SCORE = 170;
 
+/**
+ * L'article a-t-il un sujet visuel NOMMÉ — une branche thématique reconnue
+ * (musique, cyclisme, climat, Assemblée nationale, sport, mobilisation…) ?
+ *
+ * Sans cela, la recherche libre n'a que les mots du titre pour s'orienter, et
+ * ils suffisent à faire remonter n'importe quel homonyme. Mesuré le
+ * 2026-08-01 sur le fil du jour : « Step outside… and change your life » →
+ * un parc de Virginie dont le fichier s'appelle « Step outside Grayson
+ * Highlands » ; « How can I show you I'm doing better » → « Better Together
+ * campaign tent at the Unst Show » ; « Second-Class Citizens » → un sergent
+ * de l'armée américaine (« Sgt. 1st Class »). Trois collisions de vocabulaire,
+ * zéro rapport avec le sujet.
+ *
+ * Ces articles reçoivent la photo de campus curatée. Pour qu'un sujet ait
+ * droit à la banque libre, on lui écrit une branche : une scène décrite, pas
+ * des mots-clés recyclés.
+ */
+function hasNamedVisualSubject(item = {}, context = detectEditorialContext(item)) {
+  if (topicBranchQueries(item).length) return true;
+  return extractContextualQueries(item, context).length > 0;
+}
+
+/**
+ * La photo répond-elle à la SCÈNE demandée, ou se contente-t-elle de renvoyer
+ * l'écho du titre ? On a interrogé la banque avec « women rights
+ * demonstration », « jazz pianist grand piano » : un résultat qui ne partage
+ * aucun mot avec la scène demandée, mais qui partage « class » avec
+ * « Second-Class Citizens » (photo : « Sgt. 1st Class Lindlay Johnson »),
+ * n'a pas répondu à la question posée.
+ */
+function matchesRequestedScene(item = {}, hit = {}, context = detectEditorialContext(item)) {
+  const sceneWords = new Set(
+    [...topicBranchQueries(item), ...extractContextualQueries(item, context)]
+      .flatMap((q) => tokenize(q))
+      .filter((w) => w.length > 3),
+  );
+  if (!sceneWords.size) return false;
+  const hay = normalizeText(`${hit.title || ''} ${hit.tags || ''} ${hit.url || ''}`);
+  for (const word of sceneWords) {
+    if (hayHasToken(hay, word)) return true;
+  }
+  return false;
+}
+
 function isGenericEditorialItem(item = {}) {
   const title = String(item.title || '');
   if (GENERIC_EDITORIAL_TITLE_RE.test(title)) return true;
@@ -1206,6 +1285,8 @@ async function findStockPhoto(item) {
   // Lettres des éditeurs / éditos sans sujet photo : ne pas pêcher Openverse
   // sur « summer / flowers » du corps — le campus (Dawson, McGill…) est le bon repli.
   if (isGenericEditorialItem(item)) return null;
+  // Aucun sujet visuel nommé : le repli campus, pas une collision de mots.
+  if (!hasNamedVisualSubject(item, context)) return null;
   const queries = extractSearchQueries(item, context);
   if (!queries.length) return null;
 
@@ -1234,6 +1315,7 @@ async function findStockPhoto(item) {
     // suit est plus faible — mieux vaut aucune photo qu'une photo hors-sujet
     // (qui serait de toute façon retirée à la passe suivante).
     if (cand.score < STOCK_MIN_RETAIN_SCORE) break;
+    if (!matchesRequestedScene(item, cand, context)) continue;
     const valid = await validateCandidate(cand);
     if (!valid) continue;
     // Les dimensions réelles peuvent différer de celles annoncées : re-scorer.
@@ -1262,6 +1344,9 @@ module.exports = {
   applyContextScoring,
   extractSearchQueries,
   isGenericEditorialItem,
+  hasNamedVisualSubject,
+  matchesRequestedScene,
+  topicBranchQueries,
   formatAttribution,
   cleanCreatorName,
   findStockPhoto,

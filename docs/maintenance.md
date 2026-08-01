@@ -367,13 +367,46 @@ règles de plus :
   distincts**, pas un seul : un mot en commun est une coïncidence de
   vocabulaire.
 
-Mesure sur le fil du jour : 21 photos libres retenues avant, 8 après. Parmi les
-13 écartées, 11 étaient absurdes (« ode to an air conditioner » pour une ode à
-l'automne, « Parking Ticket Note » pour une soirée musicale, un fort de l'OTAN
-pour un sommet à Ankara). **Deux pertes réelles** : « Calamine en concert » et
-« Katseye at Wango Tango », où le seul mot commun était justement le nom de
-l'artiste. Les distinguer demanderait un signal de rareté lexicale qu'on n'a
-pas ; en attendant, ces articles reçoivent la photo de campus curatée.
+**3. Le recoupement de mots ne suffit jamais à lui seul.** Première passe après
+correctif : 21 photos libres retenues → 8. Mais les 8 contenaient encore trois
+collisions de vocabulaire pures — « Step outside… and change your life » → un
+parc de Virginie nommé « Step outside Grayson Highlands » ; « How can I show
+you I'm doing better » → « Better Together campaign tent at the Unst Show » ;
+« Second-Class Citizens » → « Sgt. 1st **Class** Lindlay Johnson ». Deux mots
+d'ancrage n'y changent rien : ce sont deux coïncidences.
+
+Trois pistes ont été mesurées avant d'en retenir une :
+
+| Piste | Verdict |
+|---|---|
+| Rareté lexicale calculée sur notre propre corpus | **Non** — 185 articles, aucune séparation : `piano` et `step` ont tous deux df=1 |
+| Exiger un nom propre dans l'article | **Non** — la casse des titres anglais fait de « Gothic Cinema Rises » trois noms propres |
+| Exiger une **branche thématique** + une photo qui répond à la scène demandée | **Oui** — sépare proprement sur tout l'échantillon |
+
+D'où les deux garde-fous en place :
+
+- `hasNamedVisualSubject` — sans branche reconnue (musique, cyclisme, climat,
+  Assemblée nationale, sport, mobilisation, personnalité nommée…), **on
+  n'interroge pas la banque libre du tout**. Un essai personnel reçoit la photo
+  de campus curatée, qui est faite pour ça.
+- `matchesRequestedScene` — la photo retenue doit partager un mot avec la
+  **scène demandée** (« jazz pianist grand piano », « women rights
+  demonstration »), pas seulement avec le titre. C'est ce qui distingue une
+  réponse d'un écho.
+
+Résultat sur le même fil : **7 photos libres, toutes sur le sujet** (diagramme
+El Niño, scène de festival, Hôtel du Parlement, Masters de golf, hockey
+universitaire, atelier Wikipédia au Cégep du Vieux-Montréal, portrait de
+François Legault).
+
+**Pour donner droit à la banque libre à un nouveau sujet, on lui écrit une
+branche** : une scène décrite (`topicBranchQueries`), pas des mots-clés
+recyclés. C'est un geste éditorial, relisible en revue.
+
+**Pertes assumées**, toutes rattrapées par la banque campus : « Calamine en
+concert » et « Katseye at Wango Tango » (le seul mot commun était le nom de
+l'artiste, sans branche pour le porter) et « Purple circle » (titre et photo
+identiques, mais aucune scène demandée).
 
 ---
 
