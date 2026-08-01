@@ -1,26 +1,26 @@
 {
   "version": 1,
-  "updated": "2026-07-09T19:36:28.803Z",
-  "probedAt": "2026-07-09T19:36:28.803Z",
+  "updated": "2026-08-01T15:01:40.884Z",
+  "probedAt": "2026-08-01T15:01:40.884Z",
   "note": "Catalogue des langues autochtones du Québec pour LE-RADAR.ca (Premiers Peuples + Inuit). Le bot scripts/probe-indigenous-mt.js (cron mensuel) sonde les moteurs publics et active une langue dès qu'un code gtx/libretranslate répond de façon fiable. Labels = endonymes ; nameFr = nom en français (UI).",
   "engines": {
     "gtx": {
       "name": "Google Translate (gtx, sans clé)",
       "probeUrl": "https://translate.googleapis.com/translate_a/single",
-      "lastCheck": "2026-07-09T19:36:28.803Z",
+      "lastCheck": "2026-08-01T15:01:40.884Z",
       "ok": true
     },
     "microsoft_list": {
       "name": "Microsoft Translator — liste des langues",
       "probeUrl": "https://api.cognitive.microsofttranslator.com/languages?api-version=3.0",
-      "lastCheck": "2026-07-09T19:36:28.803Z",
+      "lastCheck": "2026-08-01T15:01:40.884Z",
       "ok": true,
       "count": 138
     },
     "libretranslate": {
       "name": "LibreTranslate public",
       "probeUrl": "https://libretranslate.com/languages",
-      "lastCheck": "2026-07-09T19:36:28.803Z",
+      "lastCheck": "2026-08-01T15:01:40.884Z",
       "ok": true,
       "count": 51
     }
@@ -34,17 +34,34 @@
       "title": "Inuktitut (syllabiques) — Inuktut, Nunavik et Inuit du Québec",
       "script": "Syllabiques",
       "hint": "Inuktitut · syllabiques",
-      "aliases": ["Inuktitut", "Inuktut", "Inuttitut", "Inuit"],
+      "aliases": [
+        "Inuktitut",
+        "Inuktut",
+        "Inuttitut",
+        "Inuit"
+      ],
       "requireScript": "syllabics",
       "probeCodes": {
-        "gtx": ["iu", "ike"],
-        "microsoft": ["iu"]
+        "gtx": [
+          "iu",
+          "ike"
+        ],
+        "microsoft": [
+          "iu"
+        ]
       },
       "enabled": true,
       "unavailable": false,
       "engine": "gtx",
       "goog": "iu",
-      "lastProbe": null
+      "lastProbe": {
+        "at": "2026-08-01T15:01:31.481Z",
+        "gtx": true,
+        "gtxCode": "iu",
+        "microsoft": true,
+        "libretranslate": false,
+        "sample": "ᕼᐊᓘ ᐃᓕᓐᓂᐊᖅᑏᑦ. ᑐᙵᓱᒋᑦ ᐃᓕᓐᓂᐊᖅᑏᑦ ᑐᓴᒐᒃᓴᖁᑎᖏᓐᓄᑦ ᑯᐸᐃᒃ ᓯᓚᑦᑐᖅᓴᕐᕕᒡᔪᐊᖏᓐᓂᑦ ᐊᒻᒪ ᓯᓚᑦᑐᖅᓴᕐᕕᖕᓂᑦ."
+      }
     },
     {
       "id": "iu-latn",
@@ -54,17 +71,34 @@
       "title": "Inuktut (alphabet latin) — Inuit du Québec",
       "script": "Latin",
       "hint": "Inuktitut · latin",
-      "aliases": ["Inuktitut", "Inuktut", "latin"],
+      "aliases": [
+        "Inuktitut",
+        "Inuktut",
+        "latin"
+      ],
       "requireScript": "latin",
       "probeCodes": {
-        "gtx": ["iu-Latn", "ike-Latn"],
-        "microsoft": ["iu-Latn", "iu"]
+        "gtx": [
+          "iu-Latn",
+          "ike-Latn"
+        ],
+        "microsoft": [
+          "iu-Latn",
+          "iu"
+        ]
       },
       "enabled": true,
       "unavailable": false,
       "engine": "gtx",
       "goog": "iu-Latn",
-      "lastProbe": null
+      "lastProbe": {
+        "at": "2026-08-01T15:01:33.737Z",
+        "gtx": true,
+        "gtxCode": "iu-Latn",
+        "microsoft": true,
+        "libretranslate": false,
+        "sample": "Haluu ilinniaqtiit. Tunngasugit ilinniaqtinut tusagaksanut kupaik silattuqsarvigjuanginnit amma silattuqsarvigjuanginnit"
+      }
     },
     {
       "id": "cr",
@@ -73,9 +107,21 @@
       "short": "CR",
       "title": "Eeyou ayimuun (Cri) — en attente d'un moteur de traduction publique fiable",
       "hint": "Cri · bientôt",
-      "aliases": ["Cree", "Eeyou", "Iiyiyiu", "Cri", "Eeyou Istchee"],
+      "aliases": [
+        "Cree",
+        "Eeyou",
+        "Iiyiyiu",
+        "Cri",
+        "Eeyou Istchee"
+      ],
       "probeCodes": {
-        "gtx": ["cr", "crk", "cwd", "crd", "csw"],
+        "gtx": [
+          "cr",
+          "crk",
+          "cwd",
+          "crd",
+          "csw"
+        ],
         "microsoft": []
       },
       "enabled": false,
@@ -83,7 +129,7 @@
       "engine": null,
       "goog": null,
       "lastProbe": {
-        "at": "2026-07-09T19:36:21.948Z",
+        "at": "2026-08-01T15:01:35.408Z",
         "gtx": false,
         "gtxCode": null,
         "microsoft": false,
@@ -97,9 +143,16 @@
       "short": "INN",
       "title": "Innu-aimun — en attente d'un moteur de traduction publique fiable",
       "hint": "Innu · bientôt",
-      "aliases": ["Innu", "Montagnais", "Innu-aimun"],
+      "aliases": [
+        "Innu",
+        "Montagnais",
+        "Innu-aimun"
+      ],
       "probeCodes": {
-        "gtx": ["moe", "crk"],
+        "gtx": [
+          "moe",
+          "crk"
+        ],
         "microsoft": []
       },
       "enabled": false,
@@ -107,7 +160,7 @@
       "engine": null,
       "goog": null,
       "lastProbe": {
-        "at": "2026-07-09T19:36:24.301Z",
+        "at": "2026-08-01T15:01:37.368Z",
         "gtx": false,
         "gtxCode": null,
         "microsoft": false,
@@ -121,9 +174,15 @@
       "short": "ATJ",
       "title": "Atikamekw nehirowimowin — en attente d'un moteur de traduction publique fiable",
       "hint": "Atikamekw · bientôt",
-      "aliases": ["Atikamekw", "Attikamek", "Attikamekw"],
+      "aliases": [
+        "Atikamekw",
+        "Attikamek",
+        "Attikamekw"
+      ],
       "probeCodes": {
-        "gtx": ["atj"],
+        "gtx": [
+          "atj"
+        ],
         "microsoft": []
       },
       "enabled": false,
@@ -131,7 +190,7 @@
       "engine": null,
       "goog": null,
       "lastProbe": {
-        "at": "2026-07-09T19:36:25.220Z",
+        "at": "2026-08-01T15:01:38.153Z",
         "gtx": false,
         "gtxCode": null,
         "microsoft": false,
@@ -145,9 +204,18 @@
       "short": "ALG",
       "title": "Anishinaabemowin (Algonquin) — en attente d'un moteur de traduction publique fiable",
       "hint": "Algonquin · bientôt",
-      "aliases": ["Algonquin", "Anishinaabe", "Anicinabemowin"],
+      "aliases": [
+        "Algonquin",
+        "Anishinaabe",
+        "Anicinabemowin"
+      ],
       "probeCodes": {
-        "gtx": ["alq", "oji", "ojg", "ojc"],
+        "gtx": [
+          "alq",
+          "oji",
+          "ojg",
+          "ojc"
+        ],
         "microsoft": []
       },
       "enabled": false,
@@ -155,7 +223,7 @@
       "engine": null,
       "goog": null,
       "lastProbe": {
-        "at": "2026-07-09T19:36:25.731Z",
+        "at": "2026-08-01T15:01:38.545Z",
         "gtx": false,
         "gtxCode": null,
         "microsoft": false,
@@ -169,9 +237,15 @@
       "short": "MOH",
       "title": "Kanienʼkéha (Mohawk) — en attente d'un moteur de traduction publique fiable",
       "hint": "Mohawk · bientôt",
-      "aliases": ["Mohawk", "Kanienkeha", "Kanien'kéha"],
+      "aliases": [
+        "Mohawk",
+        "Kanienkeha",
+        "Kanien'kéha"
+      ],
       "probeCodes": {
-        "gtx": ["moh"],
+        "gtx": [
+          "moh"
+        ],
         "microsoft": []
       },
       "enabled": false,
@@ -179,7 +253,7 @@
       "engine": null,
       "goog": null,
       "lastProbe": {
-        "at": "2026-07-09T19:36:27.779Z",
+        "at": "2026-08-01T15:01:40.104Z",
         "gtx": false,
         "gtxCode": null,
         "microsoft": false,
@@ -193,9 +267,15 @@
       "short": "MIC",
       "title": "Mi'kmawi'simk — en attente d'un moteur de traduction publique fiable",
       "hint": "Mi'kmaq · bientôt",
-      "aliases": ["Mi'kmaq", "Micmac", "Mi'gmaq"],
+      "aliases": [
+        "Mi'kmaq",
+        "Micmac",
+        "Mi'gmaq"
+      ],
       "probeCodes": {
-        "gtx": ["mic"],
+        "gtx": [
+          "mic"
+        ],
         "microsoft": []
       },
       "enabled": false,
@@ -203,7 +283,7 @@
       "engine": null,
       "goog": null,
       "lastProbe": {
-        "at": "2026-07-09T19:36:28.291Z",
+        "at": "2026-08-01T15:01:40.494Z",
         "gtx": false,
         "gtxCode": null,
         "microsoft": false,
@@ -211,5 +291,20 @@
       }
     }
   ],
-  "history": []
+  "history": [
+    {
+      "at": "2026-08-01T15:01:40.884Z",
+      "newlyEnabled": [],
+      "stillWaiting": [
+        "cr",
+        "moe",
+        "atj",
+        "alq",
+        "moh",
+        "mic"
+      ],
+      "microsoftOk": true,
+      "libreOk": true
+    }
+  ]
 }
