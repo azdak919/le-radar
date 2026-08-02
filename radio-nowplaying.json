@@ -1,78 +1,78 @@
 {
-  "updatedAt": "2026-08-02T14:27:48.741Z",
+  "updatedAt": "2026-08-02T15:39:22.601Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Palmarès CHYZ",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
-      },
-      "next": {
         "title": "Le Ré-Show : Deuxième Service",
         "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
       },
+      "next": {
+        "title": "Radio Futura",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "16:00",
+        "url": "https://chyz.ca/emission/radio-futura/"
+      },
       "track": "",
-      "showTitle": "Palmarès CHYZ",
+      "showTitle": "Le Ré-Show : Deuxième Service",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T14:27:08.859Z"
+      "checkedAt": "2026-08-02T15:38:43.224Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Ya Raï",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/ya-rai"
-      },
-      "next": {
         "title": "Yallah lâcher prise",
         "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "https://cism893.ca/emissions/yallah-lacher-prise-avec-rhabibiii"
       },
+      "next": {
+        "title": "Basses fréquences",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/basses-frequences"
+      },
       "track": "",
-      "showTitle": "Ya Raï",
+      "showTitle": "Yallah lâcher prise",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T14:27:22.375Z"
+      "checkedAt": "2026-08-02T15:38:56.641Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Latin Time",
+        "title": "Free Kick",
         "source": "api-live",
-        "start": "09:00",
-        "end": "10:30"
+        "start": "11:00",
+        "end": "13:00"
       },
       "next": {
-        "title": "International Radio Report",
+        "title": "Modular Systems/Future Classics",
         "source": "api-live",
-        "start": "10:30",
-        "end": "11:00"
+        "start": "13:00",
+        "end": "14:00"
       },
       "track": "",
-      "showTitle": "Latin Time",
+      "showTitle": "Free Kick",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -80,7 +80,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T14:27:25.163Z"
+      "checkedAt": "2026-08-02T15:39:01.181Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -107,7 +107,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T14:27:38.996Z"
+      "checkedAt": "2026-08-02T15:39:15.021Z"
     },
     "cfak": {
       "id": "cfak",
@@ -132,7 +132,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T14:27:39.782Z"
+      "checkedAt": "2026-08-02T15:39:15.873Z"
     },
     "choq": {
       "id": "choq",
@@ -145,7 +145,7 @@
         "end": "16:00",
         "slug": "pole-hip-hop"
       },
-      "track": "Chanel Beads - JBL in the Fireplace",
+      "track": "Noemi Buchi - like they said",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -156,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-02T14:27:48.391Z"
+      "checkedAt": "2026-08-02T15:39:22.252Z"
     }
   }
 }
