@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-02T18:00:17.618Z",
+  "updatedAt": "2026-08-02T19:23:09.378Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -27,52 +27,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T17:59:40.200Z"
+      "checkedAt": "2026-08-02T19:22:30.511Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Basses fréquences",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/basses-frequences"
-      },
-      "next": {
         "title": "Le char de marge",
         "source": "schedule",
         "start": "14:00",
         "end": "16:00",
         "url": "https://cism893.ca/emissions/le-char-de-marge"
       },
+      "next": {
+        "title": "Vibrance",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/vibrance"
+      },
       "track": "",
-      "showTitle": "Basses fréquences",
+      "showTitle": "Le char de marge",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T17:59:53.705Z"
+      "checkedAt": "2026-08-02T19:22:44.019Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Modular Systems/Future Classics",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "The Magic Roundabout",
         "source": "api-live",
         "start": "14:00",
         "end": "16:00"
       },
+      "next": {
+        "title": "Bhum Bhum Time",
+        "source": "api-live",
+        "start": "16:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Modular Systems/Future Classics",
+      "showTitle": "The Magic Roundabout",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -80,34 +80,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T17:59:56.988Z"
+      "checkedAt": "2026-08-02T19:22:47.376Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Cinema Smackdown",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/cinema-smackdown"
-      },
-      "next": {
         "title": "CJLO's Alternative Mega Mix",
         "source": "schedule",
         "start": "15:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
+      "next": {
+        "title": "Grade A Explosives",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/grade-a-explosives"
+      },
       "track": "",
-      "showTitle": "Cinema Smackdown",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T18:00:10.723Z"
+      "checkedAt": "2026-08-02T19:23:01.535Z"
     },
     "cfak": {
       "id": "cfak",
@@ -132,7 +132,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T18:00:11.587Z"
+      "checkedAt": "2026-08-02T19:23:02.388Z"
     },
     "choq": {
       "id": "choq",
@@ -151,7 +151,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Slippers - Who Escapes The Storm",
+      "track": "Alvvays - Saved By a Waif",
       "showTitle": "Pôle hip-hop",
       "host": "",
       "source": "api-live",
@@ -162,7 +162,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-02T18:00:17.267Z"
+      "checkedAt": "2026-08-02T19:23:09.028Z"
     }
   }
 }
