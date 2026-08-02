@@ -78,19 +78,38 @@ test('« À venir » : grille la plus tôt + pas de current recyclé (toutes sta
           && String(t).toLowerCase() === String(live.title).toLowerCase()),
       );
 
-      // CISM : régression Mix anglo 22:00–00:00 recyclé après minuit.
+      // CISM : régression Mix anglo 22:00–00:00 recyclé après minuit — quand
+      // l'émission est DÉJÀ passée. Le samedi de 20 h à 22 h, en revanche,
+      // Mix anglo est bel et bien la suite au programme : l'annoncer est le
+      // comportement attendu, pas la régression. On ne se plaint donc que si
+      // la grille désigne une autre émission comme prochaine.
       const mixAngloWhileOtherLive = Boolean(
         r.id === 'cism'
         && live?.title
         && !/mix anglo/i.test(String(live.title))
-        && upcomingTitles.some((t) => /mix anglo/i.test(String(t || ''))),
+        && upcomingTitles.some((t) => /mix anglo/i.test(String(t || '')))
+        && !/mix anglo/i.test(String(schedNext?.title || '')),
       );
 
-      // Phases : si live show, upcoming présent (sauf grille vide + bot vide).
+      // Phases : si live show, upcoming présent (sauf grille vide + bot vide,
+      // ou suite identique à l'émission en ondes — voir nextRepeatsLive).
       const hasLiveShow = phases.some((p) => p.kind === 'live' && !p.title.startsWith('♪'));
       const hasUpcomingPhase = upcomingPhases.length > 0;
+      const norm = (s) => String(s || '').toLowerCase().replace(/\s+/g, ' ').trim();
+      const nextTitles = [schedNext?.title, botNext?.title, resolved?.title]
+        .filter(Boolean)
+        .map(norm);
+      // CFAK le samedi : la grille n'a qu'une émission (« Les nuits CFAK »),
+      // donc la suivante est la même, 20 h plus tard. L'annoncer en « à venir »
+      // sous l'émission en ondes serait absurde — et interdit deux lignes plus
+      // bas par upcomingIsLiveTitle. Les deux invariants ne peuvent pas tenir
+      // ensemble : celui-ci cède.
+      const nextRepeatsLive = Boolean(live?.title)
+        && nextTitles.length > 0
+        && nextTitles.every((t) => t === norm(live.title));
       const missingUpcomingWhileLive = hasLiveShow
-        && Boolean(schedNext?.title || botNext?.title || resolved?.title)
+        && nextTitles.length > 0
+        && !nextRepeatsLive
         && !hasUpcomingPhase;
 
       // À venir avec heure quand start/end connus.
@@ -167,21 +186,34 @@ test('« À venir » reste visible pendant qu’une émission est en ondes', asy
   const perStation = await page.evaluate(async () => {
     const P = window.RadarAir._pure;
     const radios = await fetch('./radios.json').then((r) => r.json());
-    return radios.map((r) => ({
-      id: r.id,
-      mobile: P.dialPhaseLinesForRadio(r),
-      desktop: P.airRotationPhases(r, { withSlogan: false }).map((p) => p.kind),
-      // Une piste est aussi de type « live » : seule une émission mérite le
-      // libellé « À l'antenne ».
-      hasLiveShow: P.airRotationPhases(r, { withSlogan: false })
-        .some((p) => p.kind === 'live' && !p.title.startsWith('♪')),
-    }));
+    const norm = (s) => String(s || '').toLowerCase().replace(/\s+/g, ' ').trim();
+    return radios.map((r) => {
+      const live = P.botCurrentShow(r) || P.scheduleCurrentSlot(r);
+      const nextTitles = [P.scheduleNextSlot(r)?.title, P.botNextShow(r)?.title, P.resolveUpcomingShow(r)?.title]
+        .filter(Boolean)
+        .map(norm);
+      return {
+        id: r.id,
+        mobile: P.dialPhaseLinesForRadio(r),
+        desktop: P.airRotationPhases(r, { withSlogan: false }).map((p) => p.kind),
+        // Une piste est aussi de type « live » : seule une émission mérite le
+        // libellé « À l'antenne ».
+        hasLiveShow: P.airRotationPhases(r, { withSlogan: false })
+          .some((p) => p.kind === 'live' && !p.title.startsWith('♪')),
+        // Grille d'une seule émission dans la journée (CFAK le samedi) : la
+        // suite est la même émission, on ne l'annonce pas sous elle-même.
+        nextRepeatsLive: Boolean(live?.title)
+          && nextTitles.length > 0
+          && nextTitles.every((t) => t === norm(live.title)),
+      };
+    });
   });
 
   expect(perStation.length).toBeGreaterThan(0);
 
   for (const st of perStation) {
     if (!st.hasLiveShow) continue; // hors créneau : « à venir » est déjà en tête
+    if (st.nextRepeatsLive) continue; // la suite est l'émission en ondes
     expect(
       st.desktop,
       `${st.id} : « À venir » absent alors qu’une émission est en ondes — ${JSON.stringify(st.mobile)}`,

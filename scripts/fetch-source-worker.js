@@ -17,7 +17,7 @@ const { isAllowedFetchUrl } = require('./url-security-lib');
 const { isHtmlListSource, parseHtmlListPage } = require('./html-list-fetcher');
 const { isFirebaseSource, fetchFirebaseFeed } = require('./firebase-list-fetcher');
 const { pruneToFreshWindow } = require('./source-retention-lib');
-const { decodeEntities, stripHtml } = require('./html-entities-lib');
+const { decodeEntities, stripHtml, fixDropCapSpacing } = require('./html-entities-lib');
 const { expandAuthorName, extractBylineFromText, authorFromBodyCredits, normalizeAuthor, isEditorialPlaceholder } = require('./author-lib');
 const { isCandidateImageUrl, isWeakImageUrl, unwrapCdnImageUrl } = require('./article-image-lib');
 const { extractPhotoCreditFromHtml } = require('./article-photo-credit-lib');
@@ -102,13 +102,6 @@ function stripExcerptBoilerplate(text = '') {
   const li = s.search(/\sL['’]article\s/);
   if (li > 30) s = s.slice(0, li);
   return s.replace(/\s+/g, ' ').trim();
-}
-
-/** WP has-drop-cap : « L e 18… » / « L 'identité » dans content:encoded. */
-function fixDropCapSpacing(text = '') {
-  return String(text)
-    .replace(/^([\p{Lu}])\s+([''’])/u, '$1$2')
-    .replace(/^([\p{Lu}])\s+([\p{Ll}])/u, '$1$2');
 }
 
 function firstParagraphFromHtml(html = '') {

@@ -29,12 +29,40 @@ const STOP_WORDS = new Set([
   'medias', 'médias', 'sociaux', 'sera', 'etre', 'être', 'comme', 'aussi', 'tres', 'très',
 ]);
 
-/** Faux-amis à exclure des requêtes (résumé ≠ resume anglais, etc.) */
+/**
+ * Faux-amis à exclure des requêtes (résumé ≠ resume anglais, etc.) et
+ * étiquettes de genre journalistique : elles décrivent le format de l'article,
+ * pas son sujet — « Review » a ramené « Wonder Woman Review! » pour la
+ * critique d'un récital de piano solo.
+ */
 const FALSE_FRIENDS = new Set([
   'resume', 'résumé', 'opinion', 'chronique', 'entrevue', 'critique', 'reportage', 'editorial',
   'feature', 'features', 'news', 'article', 'journal', 'campus', 'etudiant', 'étudiant',
   'lancement', 'officiel', 'annoncee', 'annoncée', 'approche',
+  'review', 'reviews', 'preview', 'recap', 'interview', 'interviews', 'analysis',
+  'essay', 'column', 'commentary', 'podcast', 'dossier', 'billet',
 ]);
+
+/**
+ * Étiquette de genre en tête de titre (« Review: … », « Opinion – … ») :
+ * même raison, mais côté requêtes de recherche — « review sullivan fortner
+ * solo » part chercher des critiques de cinéma. On la retire du titre avant
+ * d'en tirer tokens et requêtes ; `isGenericEditorialItem` garde le titre brut.
+ */
+const GENRE_LABEL_PREFIX_RE = new RegExp(
+  '^\\s*(?:review|preview|recap|analysis|opinion|op-?ed|editorial|éditorial|interview|profile|'
+  + 'feature|essay|column|commentary|podcast|gallery|photo\\s+essay|live|critique|chronique|'
+  + 'entrevue|reportage|dossier|billet|portrait|point de vue|lettre ouverte)'
+  + '\\s*(?::|\\u2013|\\u2014|\\||\\s-\\s)\\s*',
+  'i',
+);
+
+/** Titre sans étiquette de genre — base des tokens et des requêtes. */
+function editorialTitle(item = {}) {
+  const raw = String(item.title || '');
+  const stripped = raw.replace(GENRE_LABEL_PREFIX_RE, '').trim();
+  return stripped.length >= 8 ? stripped : raw;
+}
 
 /**
  * Mots abstraits / polysémiques sans ancrage visuel : ils peuvent contribuer
@@ -59,6 +87,21 @@ const GENERIC_GEO_TOKENS = new Set([
   'quebec', 'québec', 'montreal', 'montréal', 'canada', 'canadien', 'canadienne', 'canadian',
   'amerique', 'amérique', 'america', 'ontario', 'ottawa', 'ville', 'city', 'ouest', 'est', 'nord', 'sud',
 ]);
+
+/**
+ * Personnalités politiques québécoises citées nommément : le portrait de la
+ * personne bat toute illustration de concept, et un nom complet est une ancre
+ * sans homonyme plausible. Ajouter au fil des sujets.
+ */
+const NAMED_QC_POLITICIANS = [
+  [/fran[çc]ois\s+legault/i, 'François Legault'],
+  [/paul\s?st[- ]pierre\s+plamondon/i, 'Paul St-Pierre Plamondon'],
+  [/gabriel\s+nadeau[- ]dubois/i, 'Gabriel Nadeau-Dubois'],
+  [/pablo\s+rodriguez/i, 'Pablo Rodriguez'],
+  [/christine\s+fr[ée]chette/i, 'Christine Fréchette'],
+  [/val[ée]rie\s+plante/i, 'Valérie Plante'],
+  [/mark\s+carney/i, 'Mark Carney'],
+];
 
 const QUEBEC_REGION_RE = /montréal|montreal|québec|quebec|laval|gatineau|sherbrooke|saguenay|rimouski|trois.?rivières|trois.?rivieres|abitibi|outaouais/i;
 const QUEBEC_INSTITUTION_RE = /uqam|uqtr|udem|ulaval|mcgill|concordia|hec montréal|hec montreal|cégep|cegep|sherbrooke|bishop|polytechnique|vieux montréal|vieux montreal/i;
@@ -162,10 +205,28 @@ function tokenize(text = '') {
     .filter((w) => w.length > 2 && !STOP_WORDS.has(w) && !FALSE_FRIENDS.has(w) && !/^\d+$/.test(w));
 }
 
+const CAPITALIZED_WORD_RE = /\b[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+(?:['’-][A-ZÀ-ÖØ-Þa-zà-öø-ÿ]+)*/g;
+/** Fin de phrase (ponctuation + guillemet/parenthèse ouvrante éventuels). */
+const SENTENCE_BOUNDARY_RE = /[.!?…:;—–]$/;
+
+/**
+ * Noms propres — hors majuscules de début de phrase, où la capitale est
+ * grammaticale et ne désigne personne. « Seated at a Kawai grand piano… » ou
+ * « Throughout the tune… » remplissaient la liste des mots importants et en
+ * chassaient les vrais mots du sujet (« piano »), pendant que « Wonder »
+ * (Stevie Wonder) y accédait au rang d'ancre.
+ */
 function extractProperNouns(text = '') {
   const raw = String(text);
   const acronyms = raw.match(/\b[A-Z0-9]{2,}\b|\bG\d+\b/g) || [];
-  const words = raw.match(/\b[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+(?:['’-][A-ZÀ-ÖØ-Þa-zà-öø-ÿ]+)*/g) || [];
+  const words = [];
+  CAPITALIZED_WORD_RE.lastIndex = 0;
+  let match = CAPITALIZED_WORD_RE.exec(raw);
+  while (match) {
+    const before = raw.slice(0, match.index).replace(/["'“«‘(\[\s]+$/u, '');
+    if (before && !SENTENCE_BOUNDARY_RE.test(before)) words.push(match[0]);
+    match = CAPITALIZED_WORD_RE.exec(raw);
+  }
   return [...new Set([...acronyms, ...words]
     .map((w) => normalizeText(w))
     .filter((w) => w.length > 1 && !STOP_WORDS.has(w) && !FALSE_FRIENDS.has(w)))];
@@ -191,7 +252,7 @@ function institutionPhrases(item = {}) {
 
 function detectEditorialContext(item = {}) {
   const content = extractArticleContent(item);
-  const title = item.title || '';
+  const title = editorialTitle(item);
   const full = `${title} ${content} ${item.institution || ''} ${item.region || ''} ${item.source || ''}`;
   const norm = normalizeText(full);
 
@@ -234,7 +295,7 @@ function detectEditorialContext(item = {}) {
 
 function extractContextualQueries(item, context = detectEditorialContext(item)) {
   const queries = [];
-  const title = item.title || '';
+  const title = editorialTitle(item);
   const content = extractArticleContent(item);
   const combined = `${title} ${content}`;
 
@@ -264,9 +325,13 @@ function extractContextualQueries(item, context = detectEditorialContext(item)) 
     queries.push('élection Québec politique');
   }
 
-  if (item.institution && context.quebec && /campus|université|universite|cégep|cegep|étudiant|etudiant/i.test(combined)) {
-    const inst = String(item.institution).replace(/\b(university|université|universite)\b/gi, '').trim();
-    if (inst.length > 4) queries.push(`${inst} Québec`);
+  // Personnalité politique nommée : son portrait est le meilleur visuel
+  // possible, et son nom complet est une ancre sans homonyme plausible.
+  for (const [re, person] of NAMED_QC_POLITICIANS) {
+    if (re.test(combined)) {
+      queries.push(person);
+      queries.push(`${person} Québec`);
+    }
   }
 
   if (STUDENT_MOBILIZATION_RE.test(combined)) {
@@ -324,18 +389,9 @@ function extractContextualQueries(item, context = detectEditorialContext(item)) 
     }
   }
 
-  // Articles sans photo (McGill Daily text-only) : ancrage institutionnel
-  // pour la recherche libre avant le repli campus.
-  if (item.institution && /mcgill/i.test(String(item.institution))) {
-    const hasStrongVisual = SPORTS_TOPIC_RE.test(combined)
-      || STUDENT_MOBILIZATION_RE.test(combined)
-      || context.summerTopic
-      || context.winterTopic;
-    if (!hasStrongVisual && title.length > 8) {
-      queries.push('McGill University campus Montreal');
-      queries.push('McGill University students campus');
-    }
-  }
+  // Pas de requête « campus de l'établissement » ici : une vue de campus
+  // générique est le travail du repli curaté (campus-photo-bank.js), qui
+  // choisit des photos vérifiées au lieu du premier résultat libre venu.
 
   return [...new Set(queries.filter((q) => q && q.length > 2))];
 }
@@ -409,11 +465,16 @@ function extractArticleContent(item) {
 }
 
 /**
- * Requêtes visuelles thématiques (FR→EN) tirées du titre / contenu.
- * Openverse/Commons répondent mieux aux libellés anglais concrets.
+ * Sujets visuels reconnus (FR→EN) : chaque branche décrit une SCÈNE, pas des
+ * mots-clés — c'est ce qui fait la différence entre « pianiste au piano à
+ * queue » et une collision de vocabulaire. Openverse/Commons répondent mieux
+ * aux libellés anglais concrets.
+ *
+ * Cette liste sert aussi de garde-fou : sans branche reconnue, on ne fouille
+ * pas la banque libre du tout (voir hasNamedVisualSubject).
  */
-function extractVisualTopicQueries(item = {}) {
-  const title = item.title || '';
+function topicBranchQueries(item = {}) {
+  const title = editorialTitle(item);
   const content = extractArticleContent(item);
   const full = `${title} ${content}`;
   const queries = [];
@@ -454,11 +515,39 @@ function extractVisualTopicQueries(item = {}) {
     queries.push('art photography exhibition opening');
   }
   // Relations amoureuses / téléréalité (Occupation Double, Love Is Blind…)
-  if (/\b(?:t[eé]l[eé]r[eé]alit[eé]s?|reality\s+(?:tv|show|television)|occupation\s+double|love\s+is\s+blind|dating\s+(?:show|app)|relations?\s+amoureuses?|c[eé]libataires?|s[eé]duction|couple)\b/i.test(full)) {
+  // « couple » nu est un piège : « every couple of months » (quantificateur
+  // anglais) déclenchait la branche et donnait « Couple holding hands » à une
+  // critique de cinéma gothique. Il faut un marqueur qui parle vraiment du sujet.
+  if (/\b(?:t[eé]l[eé]r[eé]alit[eé]s?|reality\s+(?:tv|show|television)|occupation\s+double|love\s+is\s+blind|dating\s+(?:show|app)|relations?\s+amoureuses?|vie\s+de\s+couple|en\s+couple|jeunes\s+couples?|c[eé]libataires?|s[eé]duction)\b/i.test(full)) {
     queries.push('couple holding hands');
     queries.push('romantic couple love');
     queries.push('couple watching television');
     queries.push('reality television show');
+  }
+  // Concert / récital / festival de musique. L'instrument d'abord : les
+  // requêtes génériques (« concert hall stage ») ramènent n'importe quel
+  // spectacle — les tags automatiques d'Openverse contiennent tous « concert »
+  // et « hall », ce qui suffirait à ancrer un concert de rap sur un récital
+  // de piano. On ne les lance donc qu'à défaut d'instrument identifié.
+  if (/\b(concert|r[eé]cital|orchestre|orchestra|symphoni\w*|jazz|piano|pianiste|pianist|quatuor|quartet|chorale|choir|guitare|guitar|violon|violin|saxophone|festival de musique|music festival|salle de spectacle|concert hall)\b/i.test(full)) {
+    const instrument = [];
+    if (/\b(jazz|piano|pianiste|pianist)\b/i.test(full)) {
+      instrument.push('jazz pianist grand piano concert');
+      instrument.push('pianist playing grand piano stage');
+    }
+    if (/\b(orchestre|orchestra|symphoni\w*|philharmoni\w*)\b/i.test(full)) {
+      instrument.push('symphony orchestra concert stage');
+    }
+    if (/\b(chorale|choir|chant choral)\b/i.test(full)) instrument.push('choir singing concert');
+    if (/\b(guitare|guitar|guitariste|guitarist)\b/i.test(full)) instrument.push('guitarist playing guitar stage');
+    if (/\b(violon|violin|violoniste|violinist)\b/i.test(full)) instrument.push('violinist playing violin concert');
+    if (/\bsaxophone|saxophoniste|saxophonist\b/i.test(full)) instrument.push('saxophonist playing saxophone stage');
+    if (instrument.length) {
+      queries.push(...instrument);
+    } else {
+      queries.push('musician performing concert hall stage');
+      queries.push('live music concert stage performance');
+    }
   }
   // Handicap / aidants
   if (/\b(handicap|aidants?|proche.?aidant|disability|caregiver)\b/i.test(full)) {
@@ -487,21 +576,30 @@ function extractVisualTopicQueries(item = {}) {
     queries.push('community youth program Canada');
   }
 
-  // Titre seul : 2–4 tokens forts en tête de file de recherche
-  const titleToks = tokenize(title).filter((t) => t.length >= 4 && !GENERIC_GEO_TOKENS.has(t));
+  return queries;
+}
+
+/**
+ * Requêtes visuelles = branches reconnues + tokens forts du titre.
+ * Les tokens du titre ne servent qu'à affiner une recherche déjà cadrée par
+ * une branche : seuls, ils ramènent le premier homonyme venu.
+ */
+function extractVisualTopicQueries(item = {}) {
+  const queries = topicBranchQueries(item);
+  const titleToks = tokenize(editorialTitle(item))
+    .filter((t) => t.length >= 4 && !GENERIC_GEO_TOKENS.has(t));
   if (titleToks.length >= 2) {
     queries.unshift(titleToks.slice(0, 4).join(' '));
   }
-
   return queries;
 }
 
 function buildMatchTokens(item) {
   const content = extractArticleContent(item);
-  const titleTokens = tokenize(item.title || '');
+  const titleTokens = tokenize(editorialTitle(item));
   const contentTokens = tokenize(content)
     .filter((t) => !GENERIC_GEO_TOKENS.has(t) || t.length >= 6);
-  const proper = extractProperNouns(`${item.title || ''} ${content}`)
+  const proper = extractProperNouns(`${editorialTitle(item)} ${content}`)
     .filter((t) => !GENERIC_GEO_TOKENS.has(t) && t !== 'credit' && t !== 'photo');
   const isUsefulToken = (t) => t.length >= 3
     && !/^(?:19|20)\d{2}$/.test(t)
@@ -520,8 +618,8 @@ function extractSearchQueries(item, context = detectEditorialContext(item)) {
   const content = extractArticleContent(item);
   const contentProper = extractProperNouns(content)
     .filter((t) => !GENERIC_GEO_TOKENS.has(t) && t !== 'credit' && t !== 'photo');
-  const titleProper = extractProperNouns(item.title || '');
-  const titleTokens = tokenize(item.title || '');
+  const titleProper = extractProperNouns(editorialTitle(item));
+  const titleTokens = tokenize(editorialTitle(item));
   const contentTokens = tokenize(content)
     .filter((t) => !GENERIC_GEO_TOKENS.has(t) && t.length >= 4)
     .slice(0, 12);
@@ -558,7 +656,7 @@ function extractSearchQueries(item, context = detectEditorialContext(item)) {
     if (sentToks.length >= 2) queries.push(sentToks.join(' '));
   }
 
-  if (/g7/i.test(content) || /g7/i.test(item.title || '') || match.proper.includes('g7')) {
+  if (/g7/i.test(content) || /g7/i.test(editorialTitle(item)) || match.proper.includes('g7')) {
     queries.push('G7 summit 2026 Evian leaders');
     queries.push('G7 family photo Evian France');
   }
@@ -758,6 +856,9 @@ function countSubstantiveMatches(hay, matchTokens = {}) {
   let importantMatched = 0;
   let acronymOnly = 0;
   let concreteMatched = 0;
+  /* Mots d'ancrage distincts (titre ∪ importants) : titre et importants se
+     recoupent, les compter deux fois ferait passer un match unique pour deux. */
+  const anchors = new Set();
 
   const isConcrete = (tok) => !ABSTRACT_TOKENS.has(normalizeText(tok));
 
@@ -772,7 +873,10 @@ function countSubstantiveMatches(hay, matchTokens = {}) {
     if (!isTopicToken(tok) || tok.length < 3) continue;
     if (hayHasToken(hay, tok)) {
       titleMatched += 1;
-      if (isConcrete(tok)) concreteMatched += 1;
+      if (isConcrete(tok)) {
+        concreteMatched += 1;
+        anchors.add(normalizeText(tok));
+      }
     }
   }
   for (const tok of important) {
@@ -783,10 +887,20 @@ function countSubstantiveMatches(hay, matchTokens = {}) {
       continue;
     }
     importantMatched += 1;
-    if (isConcrete(tok)) concreteMatched += 1;
+    if (isConcrete(tok)) {
+      concreteMatched += 1;
+      anchors.add(normalizeText(tok));
+    }
   }
 
-  return { contentMatched, titleMatched, importantMatched, acronymOnly, concreteMatched };
+  return {
+    contentMatched,
+    titleMatched,
+    importantMatched,
+    acronymOnly,
+    concreteMatched,
+    anchorCount: anchors.size,
+  };
 }
 
 function scoreCandidate(hit, matchTokens, context = null) {
@@ -820,7 +934,9 @@ function scoreCandidate(hit, matchTokens, context = null) {
 
   const { important = [], content = [], title = [] } = matchTokens || {};
   const matches = countSubstantiveMatches(hay, matchTokens);
-  const { contentMatched, titleMatched, importantMatched, acronymOnly, concreteMatched } = matches;
+  const {
+    contentMatched, titleMatched, importantMatched, acronymOnly, concreteMatched, anchorCount,
+  } = matches;
 
   // Établissement : bonus seulement s'il y a déjà un ancrage thématique.
   let institutionMatched = 0;
@@ -868,6 +984,12 @@ function scoreCandidate(hit, matchTokens, context = null) {
   // Titre avec ≥2 tokens : exiger au moins 1 match titre OU 2 importants.
   const titleTopicCount = title.filter((t) => isTopicToken(t) && t.length >= 3).length;
   if (titleTopicCount >= 2 && titleMatched === 0 && importantMatched < 2) {
+    return -1;
+  }
+  // Titre riche (≥3 mots de sujet) : un seul mot en commun est une coïncidence
+  // de vocabulaire, pas un ancrage — « Wonder » (Stevie Wonder) ↔ « Wonder
+  // Woman Review! ». Il en faut deux distincts, sinon mieux vaut aucune photo.
+  if (titleTopicCount >= 3 && anchorCount < 2) {
     return -1;
   }
 
@@ -1004,6 +1126,14 @@ function stockStillFits(item, meta = {}) {
     return true;
   }
 
+  // Mêmes garde-fous qu'à la recherche : sujet visuel nommé, puis photo qui
+  // répond bien à la scène demandée (et pas seulement à l'écho du titre).
+  if (!hasNamedVisualSubject(item)) return false;
+  if (!matchesRequestedScene(item, {
+    title: [item.imageTitle || '', item.imageCredit || ''].filter(Boolean).join(' '),
+    url: item.stockImage || '',
+  })) return false;
+
   return scoreStockFit(item, item.stockImage, {
     // Le titre original de la photo (imageTitle) est bien plus fidèle que la
     // ligne de crédit pour juger si elle colle toujours au sujet.
@@ -1098,6 +1228,50 @@ async function validateCandidate(hit) {
 const STOCK_QUERY_LIMIT = 8;
 const STOCK_STRONG_SCORE = 170;
 
+/**
+ * L'article a-t-il un sujet visuel NOMMÉ — une branche thématique reconnue
+ * (musique, cyclisme, climat, Assemblée nationale, sport, mobilisation…) ?
+ *
+ * Sans cela, la recherche libre n'a que les mots du titre pour s'orienter, et
+ * ils suffisent à faire remonter n'importe quel homonyme. Mesuré le
+ * 2026-08-01 sur le fil du jour : « Step outside… and change your life » →
+ * un parc de Virginie dont le fichier s'appelle « Step outside Grayson
+ * Highlands » ; « How can I show you I'm doing better » → « Better Together
+ * campaign tent at the Unst Show » ; « Second-Class Citizens » → un sergent
+ * de l'armée américaine (« Sgt. 1st Class »). Trois collisions de vocabulaire,
+ * zéro rapport avec le sujet.
+ *
+ * Ces articles reçoivent la photo de campus curatée. Pour qu'un sujet ait
+ * droit à la banque libre, on lui écrit une branche : une scène décrite, pas
+ * des mots-clés recyclés.
+ */
+function hasNamedVisualSubject(item = {}, context = detectEditorialContext(item)) {
+  if (topicBranchQueries(item).length) return true;
+  return extractContextualQueries(item, context).length > 0;
+}
+
+/**
+ * La photo répond-elle à la SCÈNE demandée, ou se contente-t-elle de renvoyer
+ * l'écho du titre ? On a interrogé la banque avec « women rights
+ * demonstration », « jazz pianist grand piano » : un résultat qui ne partage
+ * aucun mot avec la scène demandée, mais qui partage « class » avec
+ * « Second-Class Citizens » (photo : « Sgt. 1st Class Lindlay Johnson »),
+ * n'a pas répondu à la question posée.
+ */
+function matchesRequestedScene(item = {}, hit = {}, context = detectEditorialContext(item)) {
+  const sceneWords = new Set(
+    [...topicBranchQueries(item), ...extractContextualQueries(item, context)]
+      .flatMap((q) => tokenize(q))
+      .filter((w) => w.length > 3),
+  );
+  if (!sceneWords.size) return false;
+  const hay = normalizeText(`${hit.title || ''} ${hit.tags || ''} ${hit.url || ''}`);
+  for (const word of sceneWords) {
+    if (hayHasToken(hay, word)) return true;
+  }
+  return false;
+}
+
 function isGenericEditorialItem(item = {}) {
   const title = String(item.title || '');
   if (GENERIC_EDITORIAL_TITLE_RE.test(title)) return true;
@@ -1111,6 +1285,8 @@ async function findStockPhoto(item) {
   // Lettres des éditeurs / éditos sans sujet photo : ne pas pêcher Openverse
   // sur « summer / flowers » du corps — le campus (Dawson, McGill…) est le bon repli.
   if (isGenericEditorialItem(item)) return null;
+  // Aucun sujet visuel nommé : le repli campus, pas une collision de mots.
+  if (!hasNamedVisualSubject(item, context)) return null;
   const queries = extractSearchQueries(item, context);
   if (!queries.length) return null;
 
@@ -1139,6 +1315,7 @@ async function findStockPhoto(item) {
     // suit est plus faible — mieux vaut aucune photo qu'une photo hors-sujet
     // (qui serait de toute façon retirée à la passe suivante).
     if (cand.score < STOCK_MIN_RETAIN_SCORE) break;
+    if (!matchesRequestedScene(item, cand, context)) continue;
     const valid = await validateCandidate(cand);
     if (!valid) continue;
     // Les dimensions réelles peuvent différer de celles annoncées : re-scorer.
@@ -1167,6 +1344,9 @@ module.exports = {
   applyContextScoring,
   extractSearchQueries,
   isGenericEditorialItem,
+  hasNamedVisualSubject,
+  matchesRequestedScene,
+  topicBranchQueries,
   formatAttribution,
   cleanCreatorName,
   findStockPhoto,

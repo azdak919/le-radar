@@ -340,6 +340,74 @@ régénéré. Si `nations`, `pomo` ou `favorites` changent, bumper aussi
 « pas de personnes reconnaissables », inscrite en tête de chaque banque, reste
 une revue humaine.
 
+### Photo vedette d'article : la photo de l'article d'abord
+
+Signalement humain du 2026-08-01 : une critique de récital de piano solo
+(The McGill Daily) affichait une photo de **Wonder Woman**. Deux défauts
+distincts, corrigés ensemble.
+
+**1. La vraie photo était là et a été rejetée.** Le motif
+`Screenshot-\d{4}-\d{2}-\d{2}` de `rejectPathPatterns` visait un doute sur le
+nom de fichier, mais chez ce journal c'est le nom d'export de leurs photos de
+concert. Les motifs de ce genre passent désormais en `demotePathPatterns`
+(`botHints.images`) : la photo est classée **après** toutes les autres de
+l'article, jamais disqualifiée. Un rejet dur n'aboutit pas à « pas de photo »,
+il aboutit à « photo de banque hors-sujet ».
+
+**2. « Review » servait d'ancrage.** Le scoring de `stock-photo-lib.js` a trois
+règles de plus :
+
+- les **étiquettes de genre** (`Review:`, `Opinion –`, `Critique :`…) sont
+  retirées du titre et des faux-amis : elles décrivent le format, pas le sujet ;
+- les majuscules de **début de phrase** ne comptent plus comme noms propres —
+  elles saturaient la liste des mots importants (« Seated », « Throughout »)
+  et y faisaient entrer « Wonder » (Stevie Wonder) pendant que « piano » en
+  était chassé ;
+- sur un titre riche (≥ 3 mots de sujet), il faut **deux mots d'ancrage
+  distincts**, pas un seul : un mot en commun est une coïncidence de
+  vocabulaire.
+
+**3. Le recoupement de mots ne suffit jamais à lui seul.** Première passe après
+correctif : 21 photos libres retenues → 8. Mais les 8 contenaient encore trois
+collisions de vocabulaire pures — « Step outside… and change your life » → un
+parc de Virginie nommé « Step outside Grayson Highlands » ; « How can I show
+you I'm doing better » → « Better Together campaign tent at the Unst Show » ;
+« Second-Class Citizens » → « Sgt. 1st **Class** Lindlay Johnson ». Deux mots
+d'ancrage n'y changent rien : ce sont deux coïncidences.
+
+Trois pistes ont été mesurées avant d'en retenir une :
+
+| Piste | Verdict |
+|---|---|
+| Rareté lexicale calculée sur notre propre corpus | **Non** — 185 articles, aucune séparation : `piano` et `step` ont tous deux df=1 |
+| Exiger un nom propre dans l'article | **Non** — la casse des titres anglais fait de « Gothic Cinema Rises » trois noms propres |
+| Exiger une **branche thématique** + une photo qui répond à la scène demandée | **Oui** — sépare proprement sur tout l'échantillon |
+
+D'où les deux garde-fous en place :
+
+- `hasNamedVisualSubject` — sans branche reconnue (musique, cyclisme, climat,
+  Assemblée nationale, sport, mobilisation, personnalité nommée…), **on
+  n'interroge pas la banque libre du tout**. Un essai personnel reçoit la photo
+  de campus curatée, qui est faite pour ça.
+- `matchesRequestedScene` — la photo retenue doit partager un mot avec la
+  **scène demandée** (« jazz pianist grand piano », « women rights
+  demonstration »), pas seulement avec le titre. C'est ce qui distingue une
+  réponse d'un écho.
+
+Résultat sur le même fil : **7 photos libres, toutes sur le sujet** (diagramme
+El Niño, scène de festival, Hôtel du Parlement, Masters de golf, hockey
+universitaire, atelier Wikipédia au Cégep du Vieux-Montréal, portrait de
+François Legault).
+
+**Pour donner droit à la banque libre à un nouveau sujet, on lui écrit une
+branche** : une scène décrite (`topicBranchQueries`), pas des mots-clés
+recyclés. C'est un geste éditorial, relisible en revue.
+
+**Pertes assumées**, toutes rattrapées par la banque campus : « Calamine en
+concert » et « Katseye at Wango Tango » (le seul mot commun était le nom de
+l'artiste, sans branche pour le porter) et « Purple circle » (titre et photo
+identiques, mais aucune scène demandée).
+
 ---
 
 ## Horaires « à l'antenne »

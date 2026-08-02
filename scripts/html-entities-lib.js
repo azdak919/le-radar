@@ -128,9 +128,36 @@ function stripHtml(html = '') {
     .trim();
 }
 
+/**
+ * Majuscules isolées qui sont de vrais mots — « À cette fin… », « A student… »,
+ * « I would… », « O Canada », « Y a-t-il… ». Jamais recollées au mot suivant.
+ */
+const STANDALONE_CAPITAL_WORD_RE = /^[AÀÂIÎOÔY]$/u;
+
+/**
+ * WP `has-drop-cap` : la lettrine est dans son propre élément
+ * (« <span>L</span>e 18 juin… »), donc le strip HTML laisse une espace :
+ * « L e 18 juin ». On recolle la lettre au reste de son mot.
+ *
+ * Exception : une majuscule qui forme un mot à elle seule est laissée telle
+ * quelle, sinon « À cette fin » devenait « Àcette fin ». Contrepartie assumée :
+ * une vraie lettrine sur ces lettres-là (« A près de 300 personnes ») reste
+ * détachée — un espace de trop est moins grave qu’un mot fusionné, et le cas
+ * ne s’est jamais présenté alors que les phrases en « À … » sont courantes.
+ */
+function fixDropCapSpacing(text = '') {
+  return String(text)
+    .replace(/^([\p{Lu}])\s+(['’])/u, '$1$2')
+    .replace(/^([\p{Lu}])\s+([\p{Ll}])/u, (match, cap, next) => (
+      STANDALONE_CAPITAL_WORD_RE.test(cap) ? match : `${cap}${next}`
+    ));
+}
+
 module.exports = {
   NAMED_HTML_ENTITIES,
   decodeHtmlEntities,
   decodeEntities,
   stripHtml,
+  fixDropCapSpacing,
+  STANDALONE_CAPITAL_WORD_RE,
 };

@@ -2,10 +2,10 @@
   "maxDebtPerChatSession": 1,
   "maxDebtPerCalendarDay": 2,
   "targetDebtPerMaintenanceSession": 1,
-  "debtsSoldToday": 1,
-  "debtsSoldThisSession": 1,
+  "debtsSoldToday": 0,
+  "debtsSoldThisSession": 0,
   "lastDebtId": "D12",
   "lastDebtSoldAt": "2026-07-29T06:59:16.713Z",
-  "calendarDay": "2026-07-29",
+  "calendarDay": "2026-08-01",
   "note": "Mis à jour par agents:propose --record-sold <ID> après une dette soldée. Quota anti-glouton."
 }

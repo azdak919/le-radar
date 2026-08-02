@@ -4,7 +4,7 @@
  */
 
 const { fetchText, articleBodyHtml, decodeEntities } = require('./article-image-lib');
-const { normalizeArticleUrl } = require('./author-lib');
+const { normalizeArticleUrl, GENERIC_AUTHORS } = require('./author-lib');
 
 const PHOTO_CREDIT_FIELDS = [
   'sourceImageCredit',
@@ -37,7 +37,9 @@ function isPlaceholderPhotoCredit(name = '') {
   // Chaîne vide = pas de crédit cité (pas un placeholder « Journaliste »).
   if (!n) return false;
   if (n.length < 2) return true;
-  return PLACEHOLDER_CREDIT_RE.test(n);
+  // Les comptes WP partagés (« Coordinating » chez The McGill Daily) sont déjà
+  // recensés côté bylines : même liste, une seule source de vérité.
+  return PLACEHOLDER_CREDIT_RE.test(n) || GENERIC_AUTHORS.test(n);
 }
 
 function isJournalistRoleCredit(name = '') {
