@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-02T15:11:01.283Z",
+  "updated": "2026-08-02T17:08:50.845Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
@@ -7,17 +7,17 @@
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 19,
-  "updatedCount": 7,
-  "citedNew": 7,
+  "checked": 21,
+  "updatedCount": 10,
+  "citedNew": 9,
   "fallbackNew": 12,
   "samples": [
     {
-      "title": "La performance de l’homosexualité : un privilège ?",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
     },
     {
       "title": "L’épidémie de la nonchalance",
@@ -27,16 +27,23 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Ce que nous devons aux femmes",
+      "title": "La performance de l’homosexualité : un privilège ?",
       "source": "Le Délit",
-      "credit": "Photo : Alexandre Gontier",
+      "credit": "Photo : Félix Fournier",
       "cited": true,
-      "method": "media-credit-near"
+      "method": "media-credit-featured"
     },
     {
-      "title": "Les femmes MAGA au service du patriarcat",
+      "title": "Pourquoi le L est en premier dans LGBTQ+",
       "source": "Le Délit",
       "credit": "Photo : Stu Doré",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Sois belle et tais-toi",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -55,11 +62,25 @@
       "method": "figcaption-trailing"
     },
     {
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "source": "La Pige",
+      "credit": "Photo : Léa Morin-Letort",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
       "title": "Leave the Children Out of This",
       "source": "The Plant",
       "credit": "Photo: My Little Princess (2011)",
       "cited": true,
       "method": "via-attribution"
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "source": "Quartier Libre",
+      "credit": "Photo : Maryse Boyce",
+      "cited": true,
+      "method": "figcaption-copyright"
     }
   ]
 }
