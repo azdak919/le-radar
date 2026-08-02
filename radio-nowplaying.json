@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-08-02T19:23:09.378Z",
+  "updatedAt": "2026-08-02T20:28:25.081Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Radio Futura",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "16:00",
-        "url": "https://chyz.ca/emission/radio-futura/"
-      },
+      "current": null,
       "next": {
         "title": "Capitales de Québec",
         "source": "schedule",
@@ -20,59 +14,59 @@
         "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
       "track": "",
-      "showTitle": "Radio Futura",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T19:22:30.511Z"
+      "checkedAt": "2026-08-02T20:27:49.031Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le char de marge",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/le-char-de-marge"
-      },
-      "next": {
         "title": "Vibrance",
         "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "https://cism893.ca/emissions/vibrance"
       },
+      "next": {
+        "title": "L'Avenue des concerts",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "https://cism893.ca/emissions/lavenue-des-concerts"
+      },
       "track": "",
-      "showTitle": "Le char de marge",
+      "showTitle": "Vibrance",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T19:22:44.019Z"
+      "checkedAt": "2026-08-02T20:28:02.241Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Magic Roundabout",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "16:00"
-      },
-      "next": {
         "title": "Bhum Bhum Time",
         "source": "api-live",
         "start": "16:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Desi Beats",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "The Magic Roundabout",
+      "showTitle": "Bhum Bhum Time",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -80,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T19:22:47.376Z"
+      "checkedAt": "2026-08-02T20:28:05.310Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "next": {
         "title": "Grade A Explosives",
         "source": "schedule",
         "start": "16:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/grade-a-explosives"
       },
+      "next": {
+        "title": "Bills Country and Western Favourites",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
+      },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "Grade A Explosives",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T19:23:01.535Z"
+      "checkedAt": "2026-08-02T20:28:18.809Z"
     },
     "cfak": {
       "id": "cfak",
@@ -132,18 +126,12 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T19:23:02.388Z"
+      "checkedAt": "2026-08-02T20:28:19.447Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Pôle hip-hop",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "16:00",
-        "slug": "pole-hip-hop"
-      },
+      "current": null,
       "next": {
         "title": "Mutations",
         "source": "api-live",
@@ -151,8 +139,8 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Alvvays - Saved By a Waif",
-      "showTitle": "Pôle hip-hop",
+      "track": "Mon Doux Saigneur - Rodeo",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -162,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-02T19:23:09.028Z"
+      "checkedAt": "2026-08-02T20:28:24.730Z"
     }
   }
 }
