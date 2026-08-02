@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-08-01T08:56:14.221Z",
+  "updated": "2026-08-02T08:59:00.386Z",
   "sources": {
     "la-pige": {
       "strategy": "wordpress-rest",
@@ -133,6 +133,36 @@
       "error": "wordpress_http_404",
       "retryAt": "2026-08-31T08:56:13.912Z",
       "windowStart": "2023-08-01T14:56:06.582Z",
+      "windowYears": 3
+    },
+    "the-mcgill-daily": {
+      "strategy": "wordpress-rest",
+      "nextPage": 5,
+      "totalPages": 12,
+      "lastAttemptAt": "2026-08-02T08:58:50.088Z",
+      "lastSuccessAt": "2026-08-02T08:58:50.088Z",
+      "retryAt": null,
+      "error": null,
+      "windowStart": "2023-08-02T14:58:44.473Z",
+      "windowYears": 3
+    },
+    "the-plant": {
+      "strategy": "unsupported",
+      "lastAttemptAt": "2026-08-02T08:58:52.562Z",
+      "error": "wordpress_http_404",
+      "retryAt": "2026-09-01T08:58:52.562Z",
+      "windowStart": "2023-08-02T14:58:44.473Z",
+      "windowYears": 3
+    },
+    "the-tribune": {
+      "strategy": "wordpress-rest",
+      "nextPage": 5,
+      "totalPages": 40,
+      "lastAttemptAt": "2026-08-02T08:58:58.482Z",
+      "lastSuccessAt": "2026-08-02T08:58:58.482Z",
+      "retryAt": null,
+      "error": null,
+      "windowStart": "2023-08-02T14:58:44.473Z",
       "windowYears": 3
     }
   }
