@@ -1,17 +1,17 @@
 {
-  "updated": "2026-08-02T09:30:57.356Z",
+  "updated": "2026-08-02T11:10:27.935Z",
   "total": 185,
   "withPhoto": 167,
   "withStock": 39,
   "withCampusBank": 7,
   "fullyCovered": 185,
-  "leadReadyPhotos": 148,
-  "pageScraped": 23,
-  "photosRecovered": 23,
+  "leadReadyPhotos": 145,
+  "pageScraped": 21,
+  "photosRecovered": 21,
   "imagesCleared": 9,
-  "stockSearches": 32,
+  "stockSearches": 33,
   "stockFound": 27,
-  "campusBankFound": 3,
+  "campusBankFound": 4,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -21,16 +21,16 @@
       "image": "https://live.staticflickr.com/4199/34273881353_56632433e1_b.jpg"
     },
     {
+      "title": "CSU fails to reach quorum at first special council meeting of new mandate",
+      "link": "https://thelinknewspaper.ca/article/16335",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
+    },
+    {
       "title": "The Cruel Optimism of Summer",
       "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/917/28627096297_a3e0756d47_b.jpg"
-    },
-    {
-      "title": "CSU terminates council’s chief election officer",
-      "link": "https://thelinknewspaper.ca/article/16334",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
     },
     {
       "title": "Pourquoi la lecture est-elle importante?",
@@ -43,6 +43,12 @@
       "link": "https://thelinknewspaper.ca/article/16326",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/7089/7290404684_2750bb385f_b.jpg"
+    },
+    {
+      "title": "CSU approves $36,000 in funding for student-led initiatives",
+      "link": "https://thelinknewspaper.ca/article/16319",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/1a/CSU_Schuster_Student_Success_Center.JPG"
     },
     {
       "title": "From the rink to the links",
@@ -59,8 +65,8 @@
     {
       "title": "Spotlighting Powerful McGill Alumnae",
       "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e2/McGill_University_downtown_campus_12.JPG"
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
     },
     {
       "title": "National Golf tournament",
@@ -79,12 +85,6 @@
       "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/7056/6831154200_b7057b4237_b.jpg"
-    },
-    {
-      "title": "The Gentrification of Online Fandom Spaces",
-      "link": "https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/7352/11472619204_9031b1fdec_b.jpg"
     }
   ]
 }
