@@ -8,7 +8,7 @@
 
 const https = require('https');
 const { extractBylineFromText } = require('./author-lib');
-const { decodeEntities, stripHtml: stripHtmlDecoded } = require('./html-entities-lib');
+const { decodeEntities, stripHtml: stripHtmlDecoded, fixDropCapSpacing } = require('./html-entities-lib');
 
 const FETCH_TIMEOUT = 12000;
 const LEAD_EXCERPT_MAX = 1200;
@@ -178,7 +178,7 @@ function normalizeLeadParagraph(text = '') {
   s = s.replace(/([.!?»"')\]])\s+[\p{L}'’]{1,18}\s*$/u, '$1');
   s = s.replace(/\.\s*\./g, '.');
   // WP has-drop-cap : première lettre détachée (« L e 18… »)
-  s = s.replace(/^([\p{Lu}])\s+([''’])/u, '$1$2').replace(/^([\p{Lu}])\s+([\p{Ll}])/u, '$1$2');
+  s = fixDropCapSpacing(s);
   const byline = extractBylineFromText(s);
   if (byline.body.length >= SUBSTANTIVE_MIN) s = byline.body;
   return s.replace(/\s+/g, ' ').trim();
