@@ -1,54 +1,60 @@
 {
-  "updatedAt": "2026-08-02T20:28:25.081Z",
+  "updatedAt": "2026-08-02T21:26:53.988Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Capitales de Québec",
         "source": "schedule",
         "start": "16:50",
         "end": "20:30",
         "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
+      "next": {
+        "title": "Lundi Indie",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Capitales de Québec",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T20:27:49.031Z"
+      "checkedAt": "2026-08-02T21:26:16.756Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Vibrance",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/vibrance"
-      },
-      "next": {
         "title": "L'Avenue des concerts",
         "source": "schedule",
         "start": "17:00",
         "end": "18:00",
         "url": "https://cism893.ca/emissions/lavenue-des-concerts"
       },
+      "next": {
+        "title": "Symbiose",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/symbiose"
+      },
       "track": "",
-      "showTitle": "Vibrance",
+      "showTitle": "L'Avenue des concerts",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T20:28:02.241Z"
+      "checkedAt": "2026-08-02T21:26:30.151Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +80,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T20:28:05.310Z"
+      "checkedAt": "2026-08-02T21:26:32.555Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +107,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T20:28:18.809Z"
+      "checkedAt": "2026-08-02T21:26:46.016Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,21 +132,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T20:28:19.447Z"
+      "checkedAt": "2026-08-02T21:26:46.487Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Mutations",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Mon Doux Saigneur - Rodeo",
-      "showTitle": "",
+      "next": {
+        "title": "Les rois de l'arène",
+        "source": "api-live",
+        "start": "05:00",
+        "end": "07:00",
+        "slug": "les-rois-de-larene"
+      },
+      "track": "Funky 4+1 - That",
+      "showTitle": "Mutations",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -150,7 +162,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-02T20:28:24.730Z"
+      "checkedAt": "2026-08-02T21:26:53.637Z"
     }
   }
 }
