@@ -78,12 +78,17 @@ test('« À venir » : grille la plus tôt + pas de current recyclé (toutes sta
           && String(t).toLowerCase() === String(live.title).toLowerCase()),
       );
 
-      // CISM : régression Mix anglo 22:00–00:00 recyclé après minuit.
+      // CISM : régression Mix anglo 22:00–00:00 recyclé après minuit — quand
+      // l'émission est DÉJÀ passée. Le samedi de 20 h à 22 h, en revanche,
+      // Mix anglo est bel et bien la suite au programme : l'annoncer est le
+      // comportement attendu, pas la régression. On ne se plaint donc que si
+      // la grille désigne une autre émission comme prochaine.
       const mixAngloWhileOtherLive = Boolean(
         r.id === 'cism'
         && live?.title
         && !/mix anglo/i.test(String(live.title))
-        && upcomingTitles.some((t) => /mix anglo/i.test(String(t || ''))),
+        && upcomingTitles.some((t) => /mix anglo/i.test(String(t || '')))
+        && !/mix anglo/i.test(String(schedNext?.title || '')),
       );
 
       // Phases : si live show, upcoming présent (sauf grille vide + bot vide,
