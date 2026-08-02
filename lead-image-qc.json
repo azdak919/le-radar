@@ -1,24 +1,48 @@
 {
-  "updated": "2026-08-01T23:22:22.244Z",
+  "updated": "2026-08-02T00:33:10.233Z",
   "total": 185,
   "withPhoto": 168,
-  "withStock": 22,
+  "withStock": 23,
   "withCampusBank": 12,
   "fullyCovered": 185,
-  "leadReadyPhotos": 147,
-  "pageScraped": 22,
-  "photosRecovered": 22,
+  "leadReadyPhotos": 145,
+  "pageScraped": 21,
+  "photosRecovered": 21,
   "imagesCleared": 11,
-  "stockSearches": 39,
-  "stockFound": 11,
-  "campusBankFound": 4,
+  "stockSearches": 45,
+  "stockFound": 13,
+  "campusBankFound": 5,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Les avantages du transport en commun",
+      "link": "https://lecollectif.ca/a-la-une/les-avantages-du-transport-en-commun/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_Transport-en-commun_Source-IRIS-Recherche.jpeg"
+    },
     {
       "title": "Pourquoi la lecture est-elle importante?",
       "link": "https://lecollectif.ca/a-la-une/pourquoi-la-lecture-est-elle-importante/",
       "reason": "no-stock-match",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/CAMPUS_Lecture_Source-Ask-The-Scientists.jpg"
+    },
+    {
+      "title": "Les bases du plein air durable",
+      "link": "https://lecollectif.ca/a-la-une/les-bases-du-plein-air-durable/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/Capture-decran-le-2026-07-29-a-10.03.28.png"
+    },
+    {
+      "title": "Une ligue d’été pour garder le hockey vivant en Estrie",
+      "link": "https://lecollectif.ca/a-la-une/une-ligue-dete-pour-garder-le-hockey-vivant-en-estrie/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SPORTS_LBS_Source-Facebook-Ligue-de-hockey-estivale-A-Bout-de-Souffle.jpg"
+    },
+    {
+      "title": "Entre Sherbrooke et Montreux, deux façons de vivre la musique en ville",
+      "link": "https://lecollectif.ca/a-la-une/entre-sherbrooke-et-montreux-deux-facons-de-vivre-la-musique-en-ville/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/CULTURE_Montreux-Jazz-festival_Source-Site-internet-du-Montreux-Jazz-Festival.png"
     },
     {
       "title": "Sommet de l’OTAN à Ankara",
@@ -27,64 +51,40 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_Sommet-de-lOTAN-a-Ankara_Getty-Images.jpg"
     },
     {
+      "title": "Sherbrooke permet désormais des terrains plus naturels",
+      "link": "https://lecollectif.ca/a-la-une/sherbrooke-permet-desormais-des-terrains-plus-naturels/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_pelouse-gazon_Source-Blogue-AccentLocal.jpg"
+    },
+    {
+      "title": "Chirurgie esthétique au Québec : entre confiance en soi et quête de perfection",
+      "link": "https://lecollectif.ca/a-la-une/chirurgie-esthetique-au-quebec-entre-confiance-en-soi-et-quete-de-perfection/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_chirurgie-esthetique_SourceBeautifi.jpg"
+    },
+    {
+      "title": "Un pont entre l’art et le travail de rue",
+      "link": "https://lapige.atmjonquiere.com/2026/05/20/un-pont-entre-lart-et-le-travail-de-rue/?utm_source=rss&utm_medium=rss&utm_campaign=un-pont-entre-lart-et-le-travail-de-rue",
+      "reason": "stock-too-small",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/Image-16.jpg"
+    },
+    {
+      "title": "El Niño s’approche du Québec",
+      "link": "https://lapige.atmjonquiere.com/2026/05/20/el-nino-sapproche-du-quebec/?utm_source=rss&utm_medium=rss&utm_campaign=el-nino-sapproche-du-quebec",
+      "reason": "stock-too-small",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/pexels-fatih-turan-63325184-12413177.jpg"
+    },
+    {
+      "title": "Assistance technique en pharmacie : de premières portes ouvertes à Alma",
+      "link": "https://lapige.atmjonquiere.com/2026/05/20/assistance-technique-en-pharmacie-de-premieres-portes-ouvertes-a-alma/?utm_source=rss&utm_medium=rss&utm_campaign=assistance-technique-en-pharmacie-de-premieres-portes-ouvertes-a-alma",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/Image-1-6.jpg"
+    },
+    {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
       "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
       "reason": "no-stock-match",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg"
-    },
-    {
-      "title": "Recettes musicales québécoises pour l’été",
-      "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
-      "reason": "no-stock-match",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
-    },
-    {
-      "title": "CSU approves affinity group policy, club rules update and councillor pay increase at special meeting",
-      "link": "https://thelinknewspaper.ca/article/16326",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/7089/7290404684_2750bb385f_b.jpg"
-    },
-    {
-      "title": "From the rink to the links",
-      "link": "https://thebucampus.ca/2026/04/06/from-the-rink-to-the-links/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/4031/4400844746_a47c17ef6d_b.jpg"
-    },
-    {
-      "title": "National Golf tournament",
-      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/24/99099986_4195128a59_b.jpg"
-    },
-    {
-      "title": "Second-Class Citizens",
-      "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/7056/6831154200_b7057b4237_b.jpg"
-    },
-    {
-      "title": "It’s Festival Summer!",
-      "link": "https://theplantnews.com/2026/05/11/its-festival-summer/",
-      "reason": "stock-too-small",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-1-1.jpeg?w=1024"
-    },
-    {
-      "title": "Gothic Cinema Rises from the Grave",
-      "link": "https://theplantnews.com/2026/05/11/gothic-cinema-rises-from-the-grave/",
-      "reason": "no-stock-match",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-4.png"
-    },
-    {
-      "title": "On Manon from KATSEYE: How K-Pop Takes Its Roots from Black Culture",
-      "link": "https://theplantnews.com/2026/05/11/on-manon-from-katseye-how-k-pop-takes-its-roots-from-black-culture/",
-      "reason": "no-stock-match",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-5.jpeg"
-    },
-    {
-      "title": "Le beat critique : « La fuite en avant » le grand retour d’Orelsan ?",
-      "link": "https://zonecampus.ca/le-beat-critique-la-fuite-en-avant-le-grand-retour-d-orelsan/",
-      "reason": "no-stock-match",
-      "image": "https://zonecampus.ca/wp-content/uploads/2026/04/IMG_3397-1.jpeg"
     }
   ]
 }
