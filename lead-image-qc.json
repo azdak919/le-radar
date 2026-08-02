@@ -1,17 +1,17 @@
 {
-  "updated": "2026-08-02T11:10:27.935Z",
+  "updated": "2026-08-02T14:03:52.593Z",
   "total": 185,
   "withPhoto": 167,
   "withStock": 39,
   "withCampusBank": 7,
   "fullyCovered": 185,
-  "leadReadyPhotos": 145,
+  "leadReadyPhotos": 146,
   "pageScraped": 21,
   "photosRecovered": 21,
   "imagesCleared": 9,
-  "stockSearches": 33,
-  "stockFound": 27,
-  "campusBankFound": 4,
+  "stockSearches": 34,
+  "stockFound": 29,
+  "campusBankFound": 5,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -33,6 +33,12 @@
       "image": "https://live.staticflickr.com/917/28627096297_a3e0756d47_b.jpg"
     },
     {
+      "title": "CSU terminates council’s chief election officer",
+      "link": "https://thelinknewspaper.ca/article/16334",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
+    },
+    {
       "title": "Pourquoi la lecture est-elle importante?",
       "link": "https://lecollectif.ca/a-la-une/pourquoi-la-lecture-est-elle-importante/",
       "reason": "no-stock-match",
@@ -47,8 +53,8 @@
     {
       "title": "CSU approves $36,000 in funding for student-led initiatives",
       "link": "https://thelinknewspaper.ca/article/16319",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/1a/CSU_Schuster_Student_Success_Center.JPG"
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG"
     },
     {
       "title": "From the rink to the links",
@@ -65,8 +71,8 @@
     {
       "title": "Spotlighting Powerful McGill Alumnae",
       "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e2/McGill_University_downtown_campus_12.JPG"
     },
     {
       "title": "National Golf tournament",
@@ -79,12 +85,6 @@
       "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
-    },
-    {
-      "title": "Second-Class Citizens",
-      "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/7056/6831154200_b7057b4237_b.jpg"
     }
   ]
 }
