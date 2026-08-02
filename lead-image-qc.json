@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-02T04:45:21.876Z",
+  "updated": "2026-08-02T04:57:20.747Z",
   "total": 185,
   "withPhoto": 168,
-  "withStock": 24,
-  "withCampusBank": 13,
+  "withStock": 22,
+  "withCampusBank": 12,
   "fullyCovered": 185,
-  "leadReadyPhotos": 148,
-  "pageScraped": 24,
-  "photosRecovered": 24,
-  "imagesCleared": 7,
-  "stockSearches": 36,
-  "stockFound": 14,
+  "leadReadyPhotos": 146,
+  "pageScraped": 22,
+  "photosRecovered": 22,
+  "imagesCleared": 8,
+  "stockSearches": 39,
+  "stockFound": 12,
   "campusBankFound": 5,
   "mainPageLeadReady": true,
   "gaps": [
@@ -27,22 +27,16 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_Sommet-de-lOTAN-a-Ankara_Getty-Images.jpg"
     },
     {
-      "title": "Un pont entre l’art et le travail de rue",
-      "link": "https://lapige.atmjonquiere.com/2026/05/20/un-pont-entre-lart-et-le-travail-de-rue/?utm_source=rss&utm_medium=rss&utm_campaign=un-pont-entre-lart-et-le-travail-de-rue",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/Image-16.jpg"
-    },
-    {
-      "title": "Assistance technique en pharmacie : de premières portes ouvertes à Alma",
-      "link": "https://lapige.atmjonquiere.com/2026/05/20/assistance-technique-en-pharmacie-de-premieres-portes-ouvertes-a-alma/?utm_source=rss&utm_medium=rss&utm_campaign=assistance-technique-en-pharmacie-de-premieres-portes-ouvertes-a-alma",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/Image-1-6.jpg"
-    },
-    {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
       "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
       "reason": "no-stock-match",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg"
+    },
+    {
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "link": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-2-768x1024.jpeg"
     },
     {
       "title": "CSU approves affinity group policy, club rules update and councillor pay increase at special meeting",
@@ -57,22 +51,22 @@
       "image": "https://live.staticflickr.com/4031/4400844746_a47c17ef6d_b.jpg"
     },
     {
-      "title": "The Gentrification of Online Fandom Spaces",
-      "link": "https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Arts_Building%2C_McGill_University.jpg"
+      "title": "National Golf tournament",
+      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/24/99099986_4195128a59_b.jpg"
+    },
+    {
+      "title": "Second-Class Citizens",
+      "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/7056/6831154200_b7057b4237_b.jpg"
     },
     {
       "title": "Recettes musicales québécoises pour l’été",
       "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
       "reason": "no-stock-match",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
-    },
-    {
-      "title": "It’s Festival Summer!",
-      "link": "https://theplantnews.com/2026/05/11/its-festival-summer/",
-      "reason": "stock-too-small",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-1-1.jpeg?w=1024"
     },
     {
       "title": "Gothic Cinema Rises from the Grave",
@@ -85,6 +79,12 @@
       "link": "https://theplantnews.com/2026/05/11/on-manon-from-katseye-how-k-pop-takes-its-roots-from-black-culture/",
       "reason": "no-stock-match",
       "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-5.jpeg"
+    },
+    {
+      "title": "Dragon Jam: When music gives back",
+      "link": "https://thelinknewspaper.ca/article/16324",
+      "reason": "no-stock-match",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/IMG_0291-2_690_863_90.jpg"
     }
   ]
 }
