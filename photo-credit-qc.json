@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-02T07:48:38.929Z",
+  "updated": "2026-08-02T09:53:26.564Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 129,
-  "pending": 13,
+  "cited": 130,
+  "pending": 12,
   "missingHero": 0,
   "ok": false,
   "checked": 24,
-  "updatedCount": 12,
-  "citedNew": 10,
-  "fallbackNew": 14,
+  "updatedCount": 13,
+  "citedNew": 11,
+  "fallbackNew": 13,
   "samples": [
     {
       "title": "The U.S. must play its part in fighting North American—not Canadian—wildfires",
@@ -23,6 +23,20 @@
       "title": "Review: Sullivan Fortner Solo at Gesú Concert Hall",
       "source": "The McGill Daily",
       "credit": "Photo : Victor Diaz Lamich",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Sois belle et tais-toi",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -62,13 +76,6 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Les femmes MAGA au service du patriarcat",
-      "source": "Le Délit",
-      "credit": "Photo : Stu Doré",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
       "title": "Leave the Children Out of This",
       "source": "The Plant",
       "credit": "Photo: My Little Princess (2011)",
@@ -86,13 +93,6 @@
       "title": "Inside Mile End Kicks",
       "source": "The Link",
       "credit": "Photo: Courtesy of Joe Fuda",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "The apprenticeship of public voice",
-      "source": "The Link",
-      "credit": "Illustration: Halle Keays",
       "cited": true,
       "method": "figcaption-trailing"
     }
