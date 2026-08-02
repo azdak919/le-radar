@@ -1,27 +1,33 @@
 {
-  "updatedAt": "2026-08-02T16:55:52.541Z",
+  "updatedAt": "2026-08-02T18:00:17.618Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Radio Futura",
         "source": "schedule",
         "start": "13:00",
         "end": "16:00",
         "url": "https://chyz.ca/emission/radio-futura/"
       },
+      "next": {
+        "title": "Capitales de Québec",
+        "source": "schedule",
+        "start": "16:50",
+        "end": "20:30",
+        "url": "https://chyz.ca/emission/capitales-de-quebec/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Radio Futura",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T16:55:16.190Z"
+      "checkedAt": "2026-08-02T17:59:40.200Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +54,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T16:55:29.673Z"
+      "checkedAt": "2026-08-02T17:59:53.705Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Free Kick",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "13:00"
-      },
-      "next": {
         "title": "Modular Systems/Future Classics",
         "source": "api-live",
         "start": "13:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "The Magic Roundabout",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "16:00"
+      },
       "track": "",
-      "showTitle": "Free Kick",
+      "showTitle": "Modular Systems/Future Classics",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +80,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T16:55:32.980Z"
+      "checkedAt": "2026-08-02T17:59:56.988Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Brave Little Emo Girl",
+        "title": "Cinema Smackdown",
         "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/brave-little-emo-girl"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/cinema-smackdown"
       },
       "next": {
-        "title": "Northern Stagelights",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/northern-stagelights"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "track": "",
-      "showTitle": "Brave Little Emo Girl",
+      "showTitle": "Cinema Smackdown",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T16:55:46.225Z"
+      "checkedAt": "2026-08-02T18:00:10.723Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,21 +132,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-02T16:55:46.669Z"
+      "checkedAt": "2026-08-02T18:00:11.587Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Pôle hip-hop",
         "source": "api-live",
         "start": "14:00",
         "end": "16:00",
         "slug": "pole-hip-hop"
       },
-      "track": "Lennie Rayen - You Like It",
-      "showTitle": "",
+      "next": {
+        "title": "Mutations",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00",
+        "slug": "mutations"
+      },
+      "track": "Slippers - Who Escapes The Storm",
+      "showTitle": "Pôle hip-hop",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -150,7 +162,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-02T16:55:52.190Z"
+      "checkedAt": "2026-08-02T18:00:17.267Z"
     }
   }
 }
