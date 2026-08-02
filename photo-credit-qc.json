@@ -1,17 +1,24 @@
 {
-  "updated": "2026-08-02T00:33:30.028Z",
+  "updated": "2026-08-02T04:45:44.632Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 128,
+  "cited": 129,
   "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 20,
-  "updatedCount": 7,
-  "citedNew": 7,
-  "fallbackNew": 13,
+  "checked": 24,
+  "updatedCount": 12,
+  "citedNew": 10,
+  "fallbackNew": 14,
   "samples": [
+    {
+      "title": "The U.S. must play its part in fighting North American—not Canadian—wildfires",
+      "source": "The Tribune",
+      "credit": "Photo : Sophie Schuyler",
+      "cited": true,
+      "method": "figcaption-attribution"
+    },
     {
       "title": "Review: Sullivan Fortner Solo at Gesú Concert Hall",
       "source": "The McGill Daily",
@@ -20,11 +27,25 @@
       "method": "media-credit-featured"
     },
     {
+      "title": "The forgotten history of the Montreal coffeehouse",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
+    },
+    {
       "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
       "source": "La Pige",
       "credit": "Photo : Léa Morin-Letort",
       "cited": true,
       "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
     },
     {
       "title": "L’épidémie de la nonchalance",
@@ -60,6 +81,20 @@
       "credit": "Photo : Maryse Boyce",
       "cited": true,
       "method": "figcaption-copyright"
+    },
+    {
+      "title": "Inside Mile End Kicks",
+      "source": "The Link",
+      "credit": "Photo: Courtesy of Joe Fuda",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "The apprenticeship of public voice",
+      "source": "The Link",
+      "credit": "Illustration: Halle Keays",
+      "cited": true,
+      "method": "figcaption-trailing"
     }
   ]
 }
