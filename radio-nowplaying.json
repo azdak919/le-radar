@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-03T15:25:22.031Z",
+  "updatedAt": "2026-08-03T17:25:07.968Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T15:24:57.116Z"
+      "checkedAt": "2026-08-03T17:24:43.100Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "O'Keb",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/okeb"
-      },
-      "next": {
         "title": "L'Alter Ego",
         "source": "schedule",
         "start": "12:00",
         "end": "14:00",
         "url": "https://cism893.ca/emissions/lalter-ego"
       },
+      "next": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
       "track": "",
-      "showTitle": "O'Keb",
+      "showTitle": "L'Alter Ego",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T15:24:59.178Z"
+      "checkedAt": "2026-08-03T17:24:44.973Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "All Things Campus",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "World Skip The Beat",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "Radio Is Dead",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
       "track": "",
-      "showTitle": "All Things Campus",
+      "showTitle": "World Skip The Beat",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T15:25:01.636Z"
+      "checkedAt": "2026-08-03T17:24:47.745Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "2 Days and a Night",
+        "title": "The Tommy John Show",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/2-days-and-a-night"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/the-tommy-john-show"
       },
       "next": {
-        "title": "Twang City",
+        "title": "Eldest Daughter",
         "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/twang-city"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/eldest-daughter"
       },
       "track": "",
-      "showTitle": "2 Days and a Night",
+      "showTitle": "The Tommy John Show",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T15:25:14.975Z"
+      "checkedAt": "2026-08-03T17:25:01.266Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,32 +126,31 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T15:25:15.691Z"
+      "checkedAt": "2026-08-03T17:25:02.058Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Balado Populi",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "https://www.choq.ca/emissions/balado-populi"
+        "title": "Faire avec",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00",
+        "slug": "faire-avec"
       },
-      "track": "Tatyana Jane - Brutal",
+      "track": "Taupe - Open Season",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-03T15:25:21.681Z"
+      "checkedAt": "2026-08-03T17:25:07.618Z"
     }
   }
 }
