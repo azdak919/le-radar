@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-03T05:02:27.402Z",
+  "updatedAt": "2026-08-03T08:47:28.497Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T05:02:00.275Z"
+      "checkedAt": "2026-08-03T08:47:07.483Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "L'Alter Ego (reprise)",
+        "title": "Le char de marge (reprise)",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/lalter-ego"
+        "start": "03:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/le-char-de-marge"
       },
       "next": {
-        "title": "Mix Franco",
+        "title": "Le Séismix",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "05:00",
+        "end": "06:30",
+        "url": "https://cism893.ca/emissions/le-seismix"
       },
       "track": "",
-      "showTitle": "L'Alter Ego (reprise)",
+      "showTitle": "Le char de marge (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T05:02:02.779Z"
+      "checkedAt": "2026-08-03T08:47:09.299Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Roots, Rock, Reggae",
-        "source": "api-live",
-        "start": "01:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "Adventures In Music",
         "source": "api-live",
         "start": "04:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Unmuted with Svetlana and Miss Trish",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Roots, Rock, Reggae",
+      "showTitle": "Adventures In Music",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T05:02:05.708Z"
+      "checkedAt": "2026-08-03T08:47:11.630Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T05:02:19.768Z"
+      "checkedAt": "2026-08-03T08:47:24.866Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T05:02:20.373Z"
+      "checkedAt": "2026-08-03T08:47:25.455Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "18:00",
         "slug": "faire-avec"
       },
-      "track": "VERDUN - Silent Witness",
+      "track": "ID - Neimo-DJ-White-Socks",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-03T05:02:27.053Z"
+      "checkedAt": "2026-08-03T08:47:28.146Z"
     }
   }
 }
