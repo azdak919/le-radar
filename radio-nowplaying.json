@@ -1,72 +1,78 @@
 {
-  "updatedAt": "2026-08-03T10:11:38.911Z",
+  "updatedAt": "2026-08-03T12:20:01.709Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Lundi Indie",
         "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Lundi Indie",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T10:11:10.285Z"
+      "checkedAt": "2026-08-03T12:19:37.554Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
+        "title": "Ya Raï (reprise)",
         "source": "schedule",
-        "start": "05:00",
-        "end": "06:30",
-        "url": "https://cism893.ca/emissions/le-seismix"
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/ya-rai"
       },
       "next": {
-        "title": "Le terrain sportif",
+        "title": "La collation",
         "source": "schedule",
-        "start": "06:30",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/le-terrain-sportif"
+        "start": "09:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
       },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Ya Raï (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T10:11:12.321Z"
+      "checkedAt": "2026-08-03T12:19:39.875Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Adventures In Music",
+        "title": "Le Lendemain de la veille",
         "source": "api-live",
-        "start": "04:00",
-        "end": "07:00"
+        "start": "08:00",
+        "end": "09:00"
       },
       "next": {
-        "title": "Unmuted with Svetlana and Miss Trish",
+        "title": "Latin Music Mondays",
         "source": "api-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "09:00",
+        "end": "11:00"
       },
       "track": "",
-      "showTitle": "Adventures In Music",
+      "showTitle": "Le Lendemain de la veille",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +80,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T10:11:14.906Z"
+      "checkedAt": "2026-08-03T12:19:43.442Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -83,15 +89,15 @@
         "title": "Experiments",
         "source": "schedule",
         "start": "06:00",
-        "end": "08:00",
+        "end": "09:00",
         "url": "http://www.cjlo.com/shows/experiments"
       },
       "next": {
-        "title": "The Starting Rotation",
+        "title": "Death of the Midrange",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/the-starting-rotation"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/death-of-the-midrange"
       },
       "track": "",
       "showTitle": "Experiments",
@@ -101,56 +107,57 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T10:11:28.522Z"
+      "checkedAt": "2026-08-03T12:19:57.262Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
+        "title": "Palmarès CFAK",
         "source": "schedule",
-        "start": "00:01",
-        "end": "07:00"
+        "start": "08:00",
+        "end": "09:00"
       },
       "next": {
-        "title": "Folkswagen",
+        "title": "Solénoïde",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "09:00",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T10:11:29.373Z"
+      "checkedAt": "2026-08-03T12:19:58.237Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Faire avec",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00",
-        "slug": "faire-avec"
+        "title": "Balado Populi",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "https://www.choq.ca/emissions/balado-populi"
       },
-      "track": "ID - Kat-Pereira",
+      "track": "Sangam - One",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-03T10:11:38.559Z"
+      "checkedAt": "2026-08-03T12:20:01.358Z"
     }
   }
 }
