@@ -59,6 +59,7 @@ const UI_STRINGS = {
     solitaireBtn: 'Solitaire',
     radarBtn: 'Le Radar',
     coffeeBtn: 'Buy me a coffee',
+    installBtn: "Install",
     homeReload: 'Reload page',
     minimizePomo: 'Minimize timer',
     restorePomo: 'Restore timer',
@@ -87,6 +88,7 @@ const UI_STRINGS = {
     solitaireBtn: 'Solitaire',
     radarBtn: 'Le Radar',
     coffeeBtn: 'Offrir un café',
+    installBtn: "Installer",
     homeReload: 'Recharger la page',
     minimizePomo: 'Réduire le minuteur',
     restorePomo: 'Agrandir le minuteur',
@@ -112,6 +114,7 @@ const UI_STRINGS = {
     readyFocus: 'Listo para concentrarse',
     quote: 'Cita',
     coffeeBtn: 'Invítame un café',
+    installBtn: "Instalar",
   },
   de: {
     newQuote: 'Neues Zitat',
@@ -132,6 +135,7 @@ const UI_STRINGS = {
     readyFocus: 'Bereit zum Fokussieren',
     quote: 'Zitat',
     coffeeBtn: 'Kauf mir einen Kaffee',
+    installBtn: "Installieren",
   },
   it: {
     newQuote: 'Nuova citazione',
@@ -152,6 +156,7 @@ const UI_STRINGS = {
     readyFocus: 'Pronto per concentrarsi',
     quote: 'Citazione',
     coffeeBtn: 'Offrimi un caffè',
+    installBtn: "Installa",
   },
   pt: {
     newQuote: 'Nova citação',
@@ -172,6 +177,7 @@ const UI_STRINGS = {
     readyFocus: 'Pronto para focar',
     quote: 'Citação',
     coffeeBtn: 'Pague-me um café',
+    installBtn: "Instalar",
   },
   nl: {
     newQuote: 'Nieuw citaat',
@@ -192,6 +198,7 @@ const UI_STRINGS = {
     readyFocus: 'Klaar om te focussen',
     quote: 'Citaat',
     coffeeBtn: 'Koop een koffie voor mij',
+    installBtn: "Installeren",
   },
   ru: {
     newQuote: 'Новая цитата',
@@ -212,6 +219,7 @@ const UI_STRINGS = {
     readyFocus: 'Готов фокусироваться',
     quote: 'Цитата',
     coffeeBtn: 'Угостите кофе',
+    installBtn: "Установить",
   },
   ja: {
     newQuote: '新しい名言',
@@ -232,6 +240,7 @@ const UI_STRINGS = {
     readyFocus: '集中の準備完了',
     quote: '名言',
     coffeeBtn: 'コーヒーをおごる',
+    installBtn: "インストール",
   },
   ko: {
     newQuote: '새 인용구',
@@ -252,6 +261,7 @@ const UI_STRINGS = {
     readyFocus: '집중 준비 완료',
     quote: '인용',
     coffeeBtn: '커피 한 잔 사주기',
+    installBtn: "설치",
   },
   zh: {
     newQuote: '新名言',
@@ -272,6 +282,7 @@ const UI_STRINGS = {
     readyFocus: '准备专注',
     quote: '名言',
     coffeeBtn: '请我喝杯咖啡',
+    installBtn: "安装",
   },
   ar: {
     newQuote: 'اقتباس جديد',
@@ -292,6 +303,7 @@ const UI_STRINGS = {
     readyFocus: 'جاهز للتركيز',
     quote: 'اقتباس',
     coffeeBtn: 'اشترِ لي قهوة',
+    installBtn: "تثبيت",
   },
   hi: {
     newQuote: 'नया उद्धरण',
@@ -312,6 +324,7 @@ const UI_STRINGS = {
     readyFocus: 'फ़ोकस के लिए तैयार',
     quote: 'उद्धरण',
     coffeeBtn: 'मुझे कॉफ़ी दिलाएं',
+    installBtn: "इंस्टॉल करें",
   },
   tr: {
     newQuote: 'Yeni alıntı',
@@ -332,6 +345,7 @@ const UI_STRINGS = {
     readyFocus: 'Odaklanmaya hazır',
     quote: 'Alıntı',
     coffeeBtn: 'Bana bir kahve ısmarla',
+    installBtn: "Yükle",
   },
   pl: {
     newQuote: 'Nowy cytat',
@@ -352,6 +366,7 @@ const UI_STRINGS = {
     readyFocus: 'Gotowy do skupienia',
     quote: 'Cytat',
     coffeeBtn: 'Postaw mi kawę',
+    installBtn: "Zainstaluj",
   },
   uk: {
     newQuote: 'Нова цитата',
@@ -372,6 +387,7 @@ const UI_STRINGS = {
     readyFocus: 'Готовий до фокусу',
     quote: 'Цитата',
     coffeeBtn: 'Пригостіть кавою',
+    installBtn: "Встановити",
   },
   sv: {
     newQuote: 'Nytt citat',
@@ -392,6 +408,7 @@ const UI_STRINGS = {
     readyFocus: 'Redo att fokusera',
     quote: 'Citat',
     coffeeBtn: 'Bjud mig på kaffe',
+    installBtn: "Installera",
   },
   da: {
     newQuote: 'Nyt citat',
@@ -412,6 +429,7 @@ const UI_STRINGS = {
     readyFocus: 'Klar til fokus',
     quote: 'Citat',
     coffeeBtn: 'Køb mig en kaffe',
+    installBtn: "Installer",
   },
   no: {
     newQuote: 'Nytt sitat',
@@ -432,6 +450,7 @@ const UI_STRINGS = {
     readyFocus: 'Klar til fokus',
     quote: 'Sitat',
     coffeeBtn: 'Kjøp meg en kaffe',
+    installBtn: "Installer",
   },
   fi: {
     newQuote: 'Uusi lainaus',
@@ -452,6 +471,7 @@ const UI_STRINGS = {
     readyFocus: 'Valmis keskittymään',
     quote: 'Lainaus',
     coffeeBtn: 'Osta minulle kahvi',
+    installBtn: "Asenna",
   },
   el: {
     newQuote: 'Νέο απόφθεγμα',
@@ -472,6 +492,7 @@ const UI_STRINGS = {
     readyFocus: 'Έτοιμος για εστίαση',
     quote: 'Απόσπασμα',
     coffeeBtn: 'Κέρασέ μου έναν καφέ',
+    installBtn: "Εγκατάσταση",
   },
   he: {
     newQuote: 'ציטוט חדש',
@@ -492,6 +513,7 @@ const UI_STRINGS = {
     readyFocus: 'מוכן להתרכז',
     quote: 'ציטוט',
     coffeeBtn: 'קנו לי קפה',
+    installBtn: "התקנה",
   },
   th: {
     newQuote: 'คำคมใหม่',
@@ -512,6 +534,7 @@ const UI_STRINGS = {
     readyFocus: 'พร้อมโฟกัส',
     quote: 'คำคม',
     coffeeBtn: 'เลี้ยงกาแฟหน่อย',
+    installBtn: "ติดตั้ง",
   },
   vi: {
     newQuote: 'Câu trích dẫn mới',
@@ -532,6 +555,7 @@ const UI_STRINGS = {
     readyFocus: 'Sẵn sàng tập trung',
     quote: 'Trích dẫn',
     coffeeBtn: 'Mua cho tôi ly cà phê',
+    installBtn: "Cài đặt",
   },
   id: {
     newQuote: 'Kutipan baru',
@@ -552,6 +576,7 @@ const UI_STRINGS = {
     readyFocus: 'Siap fokus',
     quote: 'Kutipan',
     coffeeBtn: 'Belikan saya kopi',
+    installBtn: "Pasang",
   },
   ms: {
     newQuote: 'Petikan baharu',
@@ -572,6 +597,7 @@ const UI_STRINGS = {
     readyFocus: 'Bersedia untuk fokus',
     quote: 'Petikan',
     coffeeBtn: 'Belanja saya kopi',
+    installBtn: "Pasang",
   },
   ro: {
     newQuote: 'Citat nou',
@@ -592,6 +618,7 @@ const UI_STRINGS = {
     readyFocus: 'Gata de concentrare',
     quote: 'Citat',
     coffeeBtn: 'Cumpără-mi o cafea',
+    installBtn: "Instalează",
   },
   cs: {
     newQuote: 'Nový citát',
@@ -612,6 +639,7 @@ const UI_STRINGS = {
     readyFocus: 'Připraven se soustředit',
     quote: 'Citát',
     coffeeBtn: 'Kupte mi kávu',
+    installBtn: "Nainstalovat",
   },
   hu: {
     newQuote: 'Új idézet',
@@ -632,6 +660,7 @@ const UI_STRINGS = {
     readyFocus: 'Kész a fókuszra',
     quote: 'Idézet',
     coffeeBtn: 'Vegyél nekem egy kávét',
+    installBtn: "Telepítés",
   },
   bg: {
     newQuote: 'Нов цитат',
@@ -652,6 +681,7 @@ const UI_STRINGS = {
     readyFocus: 'Готов за фокус',
     quote: 'Цитат',
     coffeeBtn: 'Купете ми кафе',
+    installBtn: "Инсталиране",
   },
 };
 
@@ -931,6 +961,10 @@ function applyUIStrings(strings) {
     coffeeBtn.setAttribute('aria-label', coffeeLabel);
     if (coffeeLabelEl) coffeeLabelEl.textContent = coffeeLabel;
   }
+  // Le déclencheur du menu d'installation suit les autres pastilles : sans
+  // ça, il restait « Installer » en français au milieu d'une barre traduite.
+  const installLabelEl = document.getElementById('install-btn-label');
+  if (installLabelEl) installLabelEl.textContent = strings.installBtn || 'Install';
   const homeReloadBtn = document.getElementById('home-reload-btn');
   if (homeReloadBtn) homeReloadBtn.setAttribute('aria-label', strings.homeReload || 'Reload page');
 
