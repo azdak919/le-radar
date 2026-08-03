@@ -109,6 +109,30 @@
       <img class="app-emoji" src="../assets/emoji/playing-cards.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
       <span id="solitaire-btn-label">Solitaire</span>
     </a>
+    <div class="install-menu install-menu--toolbar" data-install-menu>
+      <button type="button" class="toolbar-btn install-menu__toggle" data-install-toggle aria-haspopup="menu" aria-expanded="false" aria-controls="install-menu-panel-pomo" title="Installer une app" aria-label="Installer une app — LE-RADAR, Pomodoro, Solitaire, Au tableau">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        <span id="install-btn-label">Installer</span>
+      </button>
+      <div id="install-menu-panel-pomo" class="install-menu__panel" data-install-panel role="menu" aria-label="Installer une app" hidden>
+        <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="radar">
+          <img class="app-emoji" src="../assets/emoji/satellite.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+          <span>LE-RADAR.ca</span>
+        </button>
+        <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="pomo">
+          <img class="app-emoji" src="../assets/emoji/tomato.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+          <span>Pomodoro</span>
+        </button>
+        <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="solitaire">
+          <img class="app-emoji" src="../assets/emoji/playing-cards.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+          <span>Solitaire</span>
+        </button>
+        <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="sports">
+          <img class="app-emoji" src="../assets/emoji/trophy.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+          <span>Au tableau</span>
+        </button>
+      </div>
+    </div>
     <a class="toolbar-btn toolbar-btn--coffee" id="coffee-btn" href="https://www.buymeacoffee.com/azdak"
        target="_blank" rel="noopener noreferrer" title="Buy me a coffee" aria-label="Buy me a coffee">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -358,6 +382,7 @@
 <script src="js/quotes.js"></script>
 <script src="js/weather.js"></script>
 <script src="../translate-menu.js"></script>
+<script src="../engage-prompt.js" defer></script>
 <script src="js/translate.js"></script>
 <script src="js/panels.js"></script>
 <script src="js/app.js"></script>

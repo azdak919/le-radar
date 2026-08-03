@@ -711,4 +711,104 @@ assert(
   'style : durée marquee sports alignée sur SPORTS_SCROLL_ONE_WAY_MS (8.5s)',
 );
 
+// ── /sports/ : app installable à part entière ────────────────────────────────
+//
+// Le dossier est le seul dossier généré qui contient aussi des fichiers écrits
+// à la main. Ces contrôles verrouillent les trois façons de casser
+// l'installation sans que rien d'autre ne bronche : un manifeste incohérent,
+// une icône déclarée mais absente, ou le worker racine qui reprend la portée.
+{
+  const manifestPath = join(root, 'sports', 'site.webmanifest');
+  assert(existsSync(manifestPath), 'sports/site.webmanifest requis (app installable)');
+  const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+
+  assert(manifest.id === '/sports/', 'sports : id du manifeste doit être « /sports/ »');
+  assert(manifest.scope === './', 'sports : scope du manifeste doit rester relatif');
+  assert(manifest.start_url === './', 'sports : start_url du manifeste doit rester relatif');
+  assert(manifest.display === 'standalone', 'sports : display « standalone » requis pour installer');
+
+  for (const icon of manifest.icons || []) {
+    const iconPath = join(root, 'sports', icon.src);
+    assert(existsSync(iconPath), `sports : icône déclarée introuvable — ${icon.src}`);
+  }
+  for (const purpose of ['any', 'maskable']) {
+    assert(
+      (manifest.icons || []).some((i) => (i.purpose || '').split(/\s+/).includes(purpose)),
+      `sports : icône « ${purpose} » requise`,
+    );
+  }
+
+  assert(existsSync(join(root, 'sports', 'sw.js')), 'sports/sw.js requis (hors ligne)');
+  assert(
+    existsSync(join(root, 'assets', 'emoji', 'trophy.png')),
+    'assets/emoji/trophy.png requis (pastille sports + icônes PWA)',
+  );
+
+  // Sans cette exclusion, sw.js racine et sports/sw.js se disputent /sports/.
+  const rootSw = readFileSync(join(root, 'sw.js'), 'utf8');
+  const isolated = rootSw.match(/const ISOLATED_PATH_RE = ([^;]+);/);
+  assert(isolated, 'sw.js : ISOLATED_PATH_RE introuvable');
+  assert(
+    /\bsports\b/.test(isolated[1]),
+    'sw.js : /sports/ doit être exclu du worker racine (il a le sien)',
+  );
+
+  // Le générateur efface les dossiers qu'il reconstruit : si « sports » y
+  // revenait, le manifeste, le worker et les douze icônes disparaîtraient au
+  // prochain `seo:update`.
+  const generator = readFileSync(join(root, 'scripts', 'generate-seo.js'), 'utf8');
+  const dirs = generator.match(/const GENERATED_DIRS = \[([^\]]+)\]/);
+  assert(dirs, 'generate-seo.js : GENERATED_DIRS introuvable');
+  assert(
+    !/'sports'/.test(dirs[1]),
+    'generate-seo.js : « sports » ne doit pas être effacé (fichiers PWA écrits à la main)',
+  );
+
+  const sportsHtml = readFileSync(join(root, 'sports', 'index.html'), 'utf8');
+  assert(
+    /<link rel="manifest" href="site\.webmanifest"/.test(sportsHtml),
+    'sports/index.html : doit déclarer son propre manifeste',
+  );
+  assert(
+    /app-sw-register\.js/.test(sportsHtml),
+    'sports/index.html : enregistrement du service worker requis',
+  );
+}
+
+// ── Chrome partagé : la rangée d'actions est-elle bien la même partout ? ──────
+//
+// D18 : le pied de page avait déjà divergé entre pages écrites à la main et
+// pages générées. La rangée d'actions passe maintenant par la même source ;
+// ces contrôles empêchent qu'on la recopie de nouveau à la main.
+{
+  for (const rel of ['index.html', 'feeds.html']) {
+    const html = readFileSync(join(root, rel), 'utf8');
+    assert(
+      html.includes('<!-- RADAR:CHROME:ACTIONS:START -->'),
+      `${rel}: marqueurs RADAR:CHROME:ACTIONS requis (rangée d'actions partagée)`,
+    );
+  }
+  // Les quatre apps installables, sur toute page portant le menu.
+  const withMenu = htmlFiles.filter((f) => readFileSync(f, 'utf8').includes('data-install-menu'));
+  assert(withMenu.length > 0, 'aucune page ne porte le menu d’installation');
+  for (const file of withMenu) {
+    const rel = relative(root, file);
+    const html = readFileSync(file, 'utf8');
+    for (const app of ['radar', 'pomo', 'solitaire', 'sports']) {
+      assert(
+        html.includes(`data-install-app="${app}"`),
+        `${rel}: le menu d’installation doit proposer « ${app} »`,
+      );
+    }
+    // role="menu" sans tabindex = un menu que le clavier ne peut pas parcourir.
+    const items = html.match(/class="install-menu__item"[^>]*/g) || [];
+    for (const item of items) {
+      assert(
+        /tabindex="-1"/.test(item),
+        `${rel}: chaque item du menu doit porter tabindex="-1" (roving tabindex)`,
+      );
+    }
+  }
+}
+
 console.log(`OK intégrité statique (${htmlFiles.length} pages HTML)`);

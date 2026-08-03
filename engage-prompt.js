@@ -532,18 +532,49 @@
     requestAnimationFrame(() => root.classList.add('is-visible'));
   }
 
+  function currentAppLabel(lang) {
+    // APPS is defined later; fall back safely during soft-prompt before wire.
+    try {
+      const id = (typeof currentAppId === 'function') ? currentAppId() : 'radar';
+      const app = (typeof APPS !== 'undefined' && APPS[id]) ? APPS[id] : null;
+      if (app) return app.label[lang === 'en' ? 'en' : 'fr'];
+    } catch { /* ignore */ }
+    return 'LE-RADAR.ca';
+  }
+
+  function installBodyCopy(lang, appId) {
+    if (appId === 'pomo') {
+      return lang === 'en'
+        ? 'Focus timer with quotes and Québec wallpapers — one tap away, no app store.'
+        : 'Minuteur focus, citations et fonds québécois — à un tap, sans magasin d’apps.';
+    }
+    if (appId === 'solitaire') {
+      return lang === 'en'
+        ? 'Klondike solitaire with student radio — install for offline play and a home-screen icon.'
+        : 'Solitaire Klondike avec radio étudiante — installez pour jouer hors ligne et un raccourci.';
+    }
+    if (appId === 'sports') {
+      return lang === 'en'
+        ? 'Québec college and university scores — install to check the board offline, no app store.'
+        : 'Scores collégiaux et universitaires du Québec — installez pour consulter le tableau hors ligne.';
+    }
+    return lang === 'en'
+      ? 'Student radio & news in one tap — no app store, works offline for the shell.'
+      : 'Radios étudiantes et fil d’actus en un tap — sans magasin d’apps, accès hors ligne inclus.';
+  }
+
   async function showInstallPrompt(plat) {
     const lang = uiLang();
+    const appId = (typeof currentAppId === 'function') ? currentAppId() : 'radar';
+    const appName = currentAppLabel(lang);
     const canNative = !!deferredInstall && plat.canNativeInstall && !plat.ios;
 
     if (canNative) {
       renderCard({
         kind: 'install',
         icon: '📲',
-        title: lang === 'en' ? 'Install LE-RADAR.ca' : 'Installer LE-RADAR.ca',
-        body: lang === 'en'
-          ? 'Student radio & news in one tap — no app store, works offline for the shell.'
-          : 'Radios étudiantes et fil d’actus en un tap — sans magasin d’apps, accès hors ligne inclus.',
+        title: lang === 'en' ? `Install ${appName}` : `Installer ${appName}`,
+        body: installBodyCopy(lang, appId),
         primaryLabel: lang === 'en' ? 'Install' : 'Installer',
         onPrimary: async () => {
           const ev = deferredInstall;
@@ -565,15 +596,15 @@
       kind: 'install',
       icon: '📲',
       title: lang === 'en'
-        ? (plat.ios ? 'Add to Home Screen' : 'Install LE-RADAR.ca')
-        : (plat.ios ? 'Sur l’écran d’accueil' : 'Installer LE-RADAR.ca'),
+        ? (plat.ios ? 'Add to Home Screen' : `Install ${appName}`)
+        : (plat.ios ? 'Sur l’écran d’accueil' : `Installer ${appName}`),
       body: lang === 'en'
         ? (isIosChromeLike
           ? 'On this device, install is done from Safari:'
-          : 'Keep student media one tap away. On this device:')
+          : 'Keep this app one tap away. On this device:')
         : (isIosChromeLike
           ? 'Sur cet appareil, l’installation se fait depuis Safari :'
-          : 'Gardez les médias étudiants à un doigt. Sur cet appareil :'),
+          : 'Gardez cette app à un doigt. Sur cet appareil :'),
       steps,
       primaryLabel: lang === 'en' ? 'Got it' : 'Compris',
       onPrimary: () => {
@@ -690,12 +721,516 @@
     });
   }
 
+  // ─── Install multi-apps (menu / pied de page) ─────────────────────────────
+
+  /** Racine du site (= dossier de engage-prompt.js), stable depuis /radios/… etc. */
+  const SITE_BASE = (() => {
+    try {
+      const nodes = document.querySelectorAll('script[src*="engage-prompt"]');
+      const src = nodes[nodes.length - 1]?.getAttribute('src') || nodes[nodes.length - 1]?.src;
+      if (src) return new URL('.', new URL(src, location.href));
+    } catch { /* ignore */ }
+    // Repli : remonter hors /pomo et /solitaire
+    try {
+      const u = new URL(location.href);
+      u.pathname = u.pathname.replace(/\/(?:pomo|solitaire)(?:\/.*)?$/, '/');
+      if (!u.pathname.endsWith('/')) {
+        u.pathname = u.pathname.replace(/\/[^/]*$/, '/');
+      }
+      return u;
+    } catch {
+      return new URL('.', location.href);
+    }
+  })();
+
+  const APPS = {
+    radar: {
+      id: 'radar',
+      rel: './',
+      label: { fr: 'LE-RADAR.ca', en: 'LE-RADAR.ca' },
+      short: { fr: 'Le Radar', en: 'Le Radar' },
+      emoji: 'satellite',
+    },
+    pomo: {
+      id: 'pomo',
+      rel: 'pomo/',
+      label: { fr: 'Pomodoro', en: 'Pomodoro' },
+      short: { fr: 'Pomodoro', en: 'Pomodoro' },
+      emoji: 'tomato',
+    },
+    solitaire: {
+      id: 'solitaire',
+      rel: 'solitaire/',
+      label: { fr: 'Solitaire', en: 'Solitaire' },
+      short: { fr: 'Solitaire', en: 'Solitaire' },
+      emoji: 'playing-cards',
+    },
+    sports: {
+      id: 'sports',
+      rel: 'sports/',
+      label: { fr: 'Au tableau', en: 'Scoreboard' },
+      short: { fr: 'Au tableau', en: 'Scoreboard' },
+      emoji: 'trophy',
+    },
+  };
+
+  /**
+   * Identifie l'app à laquelle appartient la page courante.
+   *
+   * Les motifs sont ancrés en début de chemin relatif : sans l'ancre,
+   * `/journaux/le-pomo/` serait pris pour Pomodoro. L'ancre importe d'autant
+   * plus pour `sports`, qui a un jumeau anglais `/en/sports/` — hors de la
+   * portée `/sports/`, et donc volontairement non reconnu ici : depuis là,
+   * « Installer » doit renvoyer vers `/sports/`, pas croire y être déjà.
+   */
+  function currentAppId() {
+    try {
+      const full = location.pathname || '/';
+      const basePath = SITE_BASE.pathname.replace(/\/+$/, '') || '';
+      let rel = full;
+      if (basePath && full.startsWith(basePath)) {
+        rel = full.slice(basePath.length) || '/';
+      }
+      if (!rel.startsWith('/')) rel = `/${rel}`;
+      for (const id of ['pomo', 'solitaire', 'sports']) {
+        if (new RegExp(`^/${id}(?:/|$)`).test(rel)) return id;
+      }
+    } catch { /* ignore */ }
+    return 'radar';
+  }
+
+  function appHref(appId) {
+    const app = APPS[appId] || APPS.radar;
+    try {
+      return new URL(app.rel, SITE_BASE).href;
+    } catch {
+      return app.rel;
+    }
+  }
+
+  function emojiSrc(name) {
+    try {
+      return new URL(`assets/emoji/${name}.png`, SITE_BASE).href;
+    } catch {
+      return `assets/emoji/${name}.png`;
+    }
+  }
+
+  /** Force l’invite d’install pour l’app courante (ignore snooze / visite). */
+  async function forceShowInstall() {
+    if (isStandalone()) {
+      toastAlreadyInstalled();
+      return;
+    }
+    shownThisPage = true;
+    await showInstallPrompt(detectPlatform());
+  }
+
+  function toastAlreadyInstalled() {
+    const lang = uiLang();
+    const msg = lang === 'en'
+      ? 'This app is already installed on this device.'
+      : 'Cette app est déjà installée sur cet appareil.';
+    try {
+      // toast léger si présent (pomo/solitaire), sinon engage card courte
+      const t = document.getElementById('toast');
+      if (t) {
+        t.textContent = msg;
+        t.classList.add('show');
+        window.setTimeout(() => t.classList.remove('show'), 2800);
+        return;
+      }
+    } catch { /* ignore */ }
+    renderCard({
+      kind: 'install',
+      icon: '✓',
+      title: lang === 'en' ? 'Already installed' : 'Déjà installée',
+      body: msg,
+      primaryLabel: lang === 'en' ? 'OK' : 'OK',
+      showPrimary: true,
+      onPrimary: () => closeCard(),
+    });
+  }
+
+  /**
+   * Installer une app : si hors scope, on ouvre la page cible avec ?install=1.
+   * Sur l’app courante, on déclenche l’invite native ou le guide manuel.
+   */
+  async function installApp(appId) {
+    const id = APPS[appId] ? appId : 'radar';
+    const current = currentAppId();
+    if (id !== current) {
+      try {
+        const url = new URL(appHref(id));
+        url.searchParams.set('install', '1');
+        location.href = url.href;
+      } catch {
+        location.href = appHref(id);
+      }
+      return;
+    }
+    await forceShowInstall();
+  }
+
+
+  /**
+   * Styles de repli pour les pages qui n'importent pas style.css.
+   *
+   * POURQUOI CE GARDE-FOU
+   * Ce bloc est ajouté au <head> à l'exécution, donc APRÈS style.css et à
+   * spécificité égale : sur le site principal il gagnerait sur les règles du
+   * dépôt. Il écraserait notamment le `bottom` de `.engage-prompt`, calculé
+   * pour dégager les FAB `.page-tools` — la carte repasserait dessous.
+   *
+   * `--radar-chrome` est déclarée par style.css. Le CSS étant analysé avant
+   * l'exécution des scripts `defer`, le test est fiable quel que soit l'ordre
+   * de chargement. Le repli ne sert donc plus qu'à Pomodoro et Solitaire.
+   *
+   * POURQUOI CETTE CHAÎNE DE JETONS
+   * Ces deux apps n'ont ni --bg, ni --ink, ni --rule, ni --sans : écrire
+   * `var(--bg, #fff)` y donnerait un panneau blanc en thème sombre. On vise
+   * donc d'abord leurs jetons --chrome-*, ceux du site ensuite, la valeur en
+   * dur en dernier recours.
+   */
+  function ensureInstallStyles() {
+    if (document.getElementById('radar-install-styles')) return;
+    try {
+      const hasSiteCss = getComputedStyle(document.documentElement)
+        .getPropertyValue('--radar-chrome').trim() !== '';
+      if (hasSiteCss) return;
+    } catch { /* ignore : on injecte, c'est le cas dégradé le plus sûr */ }
+    const css = `
+.install-menu{position:relative;display:inline-flex;align-items:center}
+.install-menu__toggle{cursor:pointer}
+.install-menu__panel{
+  position:absolute;top:calc(100% + 6px);right:0;z-index:240;
+  min-width:11.5rem;max-width:calc(100vw - 16px);padding:6px;border-radius:12px;
+  border:1px solid var(--chrome-rule, var(--rule, rgba(0,0,0,.12)));
+  background:var(--chrome-surface-bg, var(--bg, #fff));
+  color:var(--chrome-text, var(--ink, #111));
+  backdrop-filter:var(--chrome-surface-blur, none);
+  -webkit-backdrop-filter:var(--chrome-surface-blur, none);
+  box-shadow:0 12px 32px -12px rgba(0,0,0,.28);
+  display:flex;flex-direction:column;gap:2px;
+}
+.install-menu__panel[hidden]{display:none!important}
+/* Le syntoniseur (.game-toolbar-tuner, z-index 3) est frère de la rangee de
+   boutons (z-index 1) : sans ce relevement, son iframe passe par-dessus le
+   panneau, dont le z-index 240 reste enferme dans la rangee. */
+.game-toolbar-chrome.has-install-open,.app-toolbar-chrome.has-install-open{z-index:20}
+.masthead-inner.has-install-open{z-index:150}
+.install-menu__item{
+  display:flex;align-items:center;gap:8px;width:100%;
+  padding:8px 10px;border:0;border-radius:8px;background:transparent;
+  color:inherit;font-family:var(--font-body, var(--sans, system-ui, sans-serif));font-size:13px;font-weight:600;
+  text-align:left;cursor:pointer;
+}
+.install-menu__item:hover,.install-menu__item:focus-visible{
+  background:color-mix(in srgb, var(--accent, #2563eb) 12%, transparent);
+  outline:none;
+}
+.install-menu__item.is-current{box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--accent, #2563eb) 45%, transparent)}
+.install-menu__item.is-installed{opacity:.55;cursor:default}
+.install-menu__item .app-emoji{width:16px;height:16px;flex-shrink:0}
+.site-foot__install{margin:0 0 12px}
+.site-foot__install-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 14px;border-radius:999px;
+  border:1px solid var(--chrome-rule, var(--rule, rgba(0,0,0,.14)));
+  background:color-mix(in srgb, var(--accent, #2563eb) 10%, transparent);
+  color:var(--accent, #2563eb);font-family:var(--font-body, var(--sans, system-ui, sans-serif));font-size:13px;font-weight:700;
+  cursor:pointer;transition:border-color 120ms ease, background 120ms ease, color 120ms ease;
+}
+.site-foot__install-btn svg{width:16px;height:16px;flex-shrink:0}
+.site-foot__install-btn:hover{
+  border-color:var(--accent, #2563eb);
+  background:color-mix(in srgb, var(--accent, #2563eb) 16%, transparent);
+}
+.site-foot__install-btn:focus-visible{outline:2px solid var(--accent, #2563eb);outline-offset:2px}
+/* engage card fallback (pomo / solitaire n’importent pas style.css) */
+.engage-prompt{
+  position:fixed;left:0;right:0;bottom:max(16px, env(safe-area-inset-bottom,0px));
+  z-index:400;display:flex;justify-content:center;
+  padding:0 12px;pointer-events:none;opacity:0;transform:translateY(12px);
+  transition:opacity .28s ease, transform .28s ease;
+}
+.engage-prompt.is-visible{opacity:1;transform:none;pointer-events:auto}
+.engage-prompt.is-leaving{opacity:0;transform:translateY(16px);pointer-events:none}
+.engage-prompt__inner{
+  position:relative;width:min(420px,100%);padding:16px 16px 14px;border-radius:16px;
+  border:1px solid var(--chrome-rule, var(--rule, rgba(0,0,0,.12)));
+  background:var(--chrome-surface-bg, var(--bg, #fff));
+  color:var(--chrome-text, var(--ink, #111));box-shadow:0 12px 40px -12px rgba(0,0,0,.28);
+  backdrop-filter:var(--chrome-surface-blur, none);-webkit-backdrop-filter:var(--chrome-surface-blur, none);
+  font-family:var(--font-body, var(--sans, system-ui, sans-serif));
+}
+.engage-prompt__close{
+  position:absolute;top:8px;right:10px;width:32px;height:32px;border:0;border-radius:999px;
+  background:transparent;color:var(--text-muted, var(--muted, #666));font-size:22px;line-height:1;cursor:pointer;
+}
+.engage-prompt__title{margin:0 28px 6px 0;font-size:.98rem;font-weight:700}
+.engage-prompt__body{margin:0 0 8px;font-size:.84rem;line-height:1.45;color:var(--text-secondary, var(--ink-soft, #444))}
+.engage-prompt__steps{margin:0 0 12px;padding:0 0 0 1.15rem;font-size:.8rem;line-height:1.45;color:var(--text-secondary, var(--ink-soft, #444))}
+.engage-prompt__actions{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.engage-prompt__btn{
+  font-family:var(--font-body, var(--sans, system-ui, sans-serif));font-size:12.5px;font-weight:600;padding:8px 12px;border-radius:999px;
+  border:1px solid var(--chrome-rule, var(--rule, rgba(0,0,0,.14)));
+  background:var(--chrome-hover, var(--bg-soft, #f4f4f5));
+  color:var(--chrome-text, var(--ink-soft, #444));cursor:pointer;
+}
+.engage-prompt__btn--primary{background:var(--accent, #2563eb);border-color:var(--accent, #2563eb);color:#fff}
+.engage-prompt__btn--quiet{border-color:transparent;background:transparent;font-weight:500;color:var(--text-muted, var(--muted, #666))}
+`;
+    const s = document.createElement('style');
+    s.id = 'radar-install-styles';
+    s.textContent = css;
+    document.head.appendChild(s);
+  }
+
+  /**
+   * Ferme les menus ouverts. `restoreFocus` ramène le focus sur le
+   * déclencheur : sans ça, fermer avec Échap laisse le focus sur un élément
+   * masqué et la navigation clavier repart du début du document.
+   */
+  function closeAllInstallMenus(except, { restoreFocus = false } = {}) {
+    document.querySelectorAll('[data-install-menu].is-open').forEach((el) => {
+      if (except && el === except) return;
+      el.classList.remove('is-open');
+      const btn = el.querySelector('[data-install-toggle]');
+      const panel = el.querySelector('[data-install-panel]');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+      if (panel) panel.hidden = true;
+      raiseStackingRoot(el, false);
+      if (restoreFocus && btn && panel?.contains(document.activeElement)) {
+        try { btn.focus(); } catch { /* ignore */ }
+      }
+    });
+  }
+
+  /** Items actionnables d'un panneau, dans l'ordre visuel. */
+  function menuItems(panel) {
+    return [...panel.querySelectorAll('[data-install-app]')]
+      .filter((el) => el.getAttribute('aria-disabled') !== 'true');
+  }
+
+  /**
+   * Déplace le focus dans le panneau selon un décalage (roving tabindex).
+   *
+   * `role="menu"` promet aux lentilles d'écran une navigation aux flèches :
+   * la poser sans la câbler annonce un menu qui n'en est pas un. Les items
+   * portent donc `tabindex="-1"` dans le HTML, et seul l'item actif devient
+   * atteignable.
+   */
+  function focusMenuItem(panel, index) {
+    const items = menuItems(panel);
+    if (!items.length) return;
+    const i = (index + items.length) % items.length;
+    items.forEach((el, n) => { el.tabIndex = n === i ? 0 : -1; });
+    try { items[i].focus(); } catch { /* ignore */ }
+  }
+
+  /** Marge minimale entre le panneau et le bord de l'écran. */
+  const PANEL_EDGE_MARGIN = 8;
+
+  /**
+   * Ramène le panneau dans l'écran s'il en sort.
+   *
+   * Le panneau est ancré `right: 0` sur son déclencheur et mesure au moins
+   * 11,5 rem. Dans la barre de Solitaire — étroite, centrée, en position fixe
+   * — le déclencheur se retrouve assez à gauche pour que le panneau sorte de
+   * l'écran : mesuré à −21,6 px sur un écran de 320 px. Aucune règle CSS
+   * statique ne peut le savoir, puisque ça dépend de la position réelle du
+   * bouton ; on corrige donc après ouverture, par translation.
+   */
+  function clampPanelToViewport(panel) {
+    panel.style.transform = '';
+    const r = panel.getBoundingClientRect();
+    const vw = document.documentElement.clientWidth;
+    let shift = 0;
+    if (r.left < PANEL_EDGE_MARGIN) shift = PANEL_EDGE_MARGIN - r.left;
+    else if (r.right > vw - PANEL_EDGE_MARGIN) shift = (vw - PANEL_EDGE_MARGIN) - r.right;
+    if (shift) panel.style.transform = `translateX(${Math.round(shift)}px)`;
+  }
+
+  function openInstallMenu(menu, toggle, panel, { focusFirst = false } = {}) {
+    closeAllInstallMenus();
+    menu.classList.add('is-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    panel.hidden = false;
+    // Marquer l’app courante dans le panneau
+    const cur = currentAppId();
+    panel.querySelectorAll('[data-install-app]').forEach((item) => {
+      const id = item.getAttribute('data-install-app');
+      item.classList.toggle('is-current', id === cur);
+      if (id === cur && isStandalone()) {
+        item.setAttribute('aria-disabled', 'true');
+        item.classList.add('is-installed');
+      } else {
+        item.removeAttribute('aria-disabled');
+        item.classList.remove('is-installed');
+      }
+    });
+    raiseStackingRoot(menu, true);
+    clampPanelToViewport(panel);
+    if (focusFirst) focusMenuItem(panel, 0);
+  }
+
+  /**
+   * Ancêtres qui enferment le panneau dans leur contexte d'empilement.
+   * `.masthead-inner` sur le site, la rangée de boutons dans les deux apps.
+   */
+  const STACKING_ROOTS = '.masthead-inner, .game-toolbar-chrome, .app-toolbar-chrome';
+
+  /**
+   * Sort le panneau de son contexte d'empilement, le temps de l'ouverture.
+   *
+   * Le `z-index: 240` du panneau ne vaut que DANS l'ancêtre qui établit le
+   * contexte — et cet ancêtre est bien plus bas que le syntoniseur :
+   *  - site : `.masthead-inner` est à 2, `#tuner` à 100 ;
+   *  - apps : `.game-toolbar-chrome` est à 1, `.game-toolbar-tuner` à 3.
+   * Dans les deux cas le syntoniseur passe par-dessus tout le sous-arbre du
+   * panneau. Constaté à l'œil sur l'accueil (« Au tableau », le 4ᵉ item,
+   * disparaissait sous la barre) et mesuré sur Solitaire à 320 px.
+   *
+   * On relève donc l'ancêtre, et seulement pendant l'ouverture : le laisser
+   * au-dessus en permanence changerait l'ordre de peinture du syntoniseur.
+   */
+  function raiseStackingRoot(menu, on) {
+    const root = menu.closest?.(STACKING_ROOTS);
+    if (root) root.classList.toggle('has-install-open', !!on);
+  }
+
+  function wireInstallMenus() {
+    document.querySelectorAll('[data-install-menu]').forEach((menu) => {
+      if (menu.dataset.wired === '1') return;
+      menu.dataset.wired = '1';
+      const toggle = menu.querySelector('[data-install-toggle]');
+      const panel = menu.querySelector('[data-install-panel]');
+      if (!toggle || !panel) return;
+
+      toggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const open = !menu.classList.contains('is-open');
+        if (open) openInstallMenu(menu, toggle, panel);
+        else closeAllInstallMenus();
+      });
+
+      // Flèches depuis le déclencheur : ouvre et entre dans le panneau, comme
+      // le fait le sélecteur de langue du même bandeau.
+      toggle.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp' && e.key !== 'Enter' && e.key !== ' ') return;
+        if (e.key === 'Enter' || e.key === ' ') return; // le clic natif suffit
+        e.preventDefault();
+        openInstallMenu(menu, toggle, panel, { focusFirst: true });
+        if (e.key === 'ArrowUp') focusMenuItem(panel, -1);
+      });
+
+      panel.addEventListener('keydown', (e) => {
+        const items = menuItems(panel);
+        if (!items.length) return;
+        const at = items.indexOf(document.activeElement);
+        switch (e.key) {
+          case 'ArrowDown': e.preventDefault(); focusMenuItem(panel, at + 1); break;
+          case 'ArrowUp': e.preventDefault(); focusMenuItem(panel, at - 1); break;
+          case 'Home': e.preventDefault(); focusMenuItem(panel, 0); break;
+          case 'End': e.preventDefault(); focusMenuItem(panel, items.length - 1); break;
+          case 'Tab':
+            // Un menu ne se parcourt pas à la tabulation : on referme et on
+            // laisse le focus repartir normalement depuis le déclencheur.
+            closeAllInstallMenus(null, { restoreFocus: true });
+            break;
+          default: break;
+        }
+      });
+
+      panel.addEventListener('click', (e) => {
+        const item = e.target.closest?.('[data-install-app]');
+        if (!item || item.getAttribute('aria-disabled') === 'true') return;
+        e.preventDefault();
+        e.stopPropagation();
+        closeAllInstallMenus();
+        installApp(item.getAttribute('data-install-app'));
+      });
+    });
+
+    document.querySelectorAll('[data-install-app]').forEach((btn) => {
+      if (btn.dataset.wired === '1') return;
+      // Items inside a dropdown panel are handled by the panel click above.
+      if (btn.closest?.('[data-install-panel]')) return;
+      btn.dataset.wired = '1';
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        installApp(btn.getAttribute('data-install-app') || 'radar');
+      });
+    });
+
+    if (!document.documentElement.dataset.installMenusDoc) {
+      document.documentElement.dataset.installMenusDoc = '1';
+      document.addEventListener('click', (e) => {
+        if (e.target.closest?.('[data-install-menu]')) return;
+        closeAllInstallMenus();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeAllInstallMenus(null, { restoreFocus: true });
+      });
+      // Rotation de l'appareil panneau ouvert : le recadrage calculé à
+      // l'ouverture ne vaut plus rien, il faut le refaire.
+      window.addEventListener('resize', () => {
+        document.querySelectorAll('[data-install-menu].is-open [data-install-panel]')
+          .forEach(clampPanelToViewport);
+      });
+    }
+  }
+
+  /** Délai de garde avant de renoncer à l'invite native et de basculer sur le
+   *  guide manuel. Chromium n'émet `beforeinstallprompt` qu'une fois le
+   *  manifeste lu et le service worker éligible — rarement sous la seconde. */
+  const INSTALL_EVENT_WAIT_MS = 3000;
+
+  /**
+   * Attend `beforeinstallprompt`, sans dépasser le délai de garde.
+   *
+   * POURQUOI PAS UN setTimeout FIXE
+   * Arriver depuis « Installer Pomodoro » et tomber sur les instructions
+   * manuelles alors que le navigateur SAIT installer est le pire des deux
+   * mondes. On attend donc l'évènement réel, et on ne retombe sur le guide
+   * que s'il ne vient pas.
+   */
+  function waitForInstallEvent() {
+    if (deferredInstall) return Promise.resolve();
+    return new Promise((resolve) => {
+      let done = false;
+      const finish = () => {
+        if (done) return;
+        done = true;
+        window.removeEventListener('beforeinstallprompt', finish);
+        resolve();
+      };
+      window.addEventListener('beforeinstallprompt', finish);
+      window.setTimeout(finish, INSTALL_EVENT_WAIT_MS);
+    });
+  }
+
+  function consumeInstallQuery() {
+    try {
+      const url = new URL(location.href);
+      if (url.searchParams.get('install') !== '1') return;
+      url.searchParams.delete('install');
+      history.replaceState(null, '', url.pathname + url.search + url.hash);
+      waitForInstallEvent().then(forceShowInstall);
+    } catch { /* ignore */ }
+  }
+
   // ─── Init ─────────────────────────────────────────────────────────────────
 
   function init() {
     touchVisit();
     bindInstallEvents();
     bindEngagement();
+    ensureInstallStyles();
+    wireInstallMenus();
+    consumeInstallQuery();
 
     window.setTimeout(() => {
       if (engaged) maybeShow();
@@ -708,14 +1243,22 @@
     init();
   }
 
-  // Debug / QA multi-device : window.__radarEngageDebug()
+  // API publique + debug multi-device
   try {
+    window.RadarEngage = {
+      install: installApp,
+      forceInstall: forceShowInstall,
+      currentApp: currentAppId,
+      isStandalone,
+      platform: detectPlatform,
+    };
     window.__radarEngageDebug = () => ({
       platform: detectPlatform(),
       state: loadState(),
       deferredInstall: !!deferredInstall,
       engaged,
       shownThisPage,
+      currentApp: currentAppId(),
     });
   } catch { /* ignore */ }
 })();
