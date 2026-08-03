@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-08-03T22:06:34.124Z",
+  "updatedAt": "2026-08-03T23:35:11.666Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "schedule",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
+      "current": null,
       "next": {
         "title": "Mardi Champ Gauche",
         "source": "schedule",
@@ -20,59 +14,59 @@
         "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
       },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T22:06:07.845Z"
+      "checkedAt": "2026-08-03T23:34:48.043Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les criquets crinqués",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/les-criquets-crinques"
-      },
-      "next": {
         "title": "Les vinyles versatiles",
         "source": "schedule",
         "start": "19:00",
         "end": "20:00",
         "url": "https://cism893.ca/emissions/les-vinyles-versatiles"
       },
+      "next": {
+        "title": "Rock à la casbah",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "https://cism893.ca/emissions/rock-a-la-casbah"
+      },
       "track": "",
-      "showTitle": "Les criquets crinqués",
+      "showTitle": "Les vinyles versatiles",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T22:06:09.711Z"
+      "checkedAt": "2026-08-03T23:34:49.784Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Queercorps",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Dykes on Mykes",
         "source": "api-live",
         "start": "19:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Underground Sounds",
+        "source": "api-live",
+        "start": "20:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "Queercorps",
+      "showTitle": "Dykes on Mykes",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -80,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T22:06:12.036Z"
+      "checkedAt": "2026-08-03T23:34:52.027Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Voice of the Voiceless",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/voice-of-the-voiceless"
-      },
-      "next": {
         "title": "Queer Chaos",
         "source": "schedule",
         "start": "19:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/queer-chaos"
       },
+      "next": {
+        "title": "In The Garage",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/in-the-garage"
+      },
       "track": "",
-      "showTitle": "Voice of the Voiceless",
+      "showTitle": "Queer Chaos",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T22:06:25.352Z"
+      "checkedAt": "2026-08-03T23:35:05.352Z"
     },
     "cfak": {
       "id": "cfak",
@@ -132,7 +126,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T22:06:27.226Z"
+      "checkedAt": "2026-08-03T23:35:06.191Z"
     },
     "choq": {
       "id": "choq",
@@ -145,7 +139,7 @@
         "end": "07:00",
         "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "Emma Beko - Your mother from the nineties",
+      "track": "Taxi Girls - It Makes Me Think",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -157,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-03T22:06:33.773Z"
+      "checkedAt": "2026-08-03T23:35:11.316Z"
     }
   }
 }
