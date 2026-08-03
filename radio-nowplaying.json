@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-03T19:06:12.506Z",
+  "updatedAt": "2026-08-03T20:43:57.474Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T19:05:43.917Z"
+      "checkedAt": "2026-08-03T20:43:32.631Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T19:05:45.799Z"
+      "checkedAt": "2026-08-03T20:43:34.485Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T19:05:48.562Z"
+      "checkedAt": "2026-08-03T20:43:36.798Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Whip Appeal",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/whip-appeal"
-      },
-      "next": {
         "title": "Dreamscapes",
         "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/dreamscapes"
       },
+      "next": {
+        "title": "The Pressure Drop",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/the-pressure-drop"
+      },
       "track": "",
-      "showTitle": "Whip Appeal",
+      "showTitle": "Dreamscapes",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T19:06:01.923Z"
+      "checkedAt": "2026-08-03T20:43:50.204Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T19:06:02.827Z"
+      "checkedAt": "2026-08-03T20:43:50.913Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "18:00",
         "slug": "faire-avec"
       },
-      "track": "Coco GB - Here I Stand (edit)",
+      "track": "Joyce Manor - Grey Guitar",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-03T19:06:12.155Z"
+      "checkedAt": "2026-08-03T20:43:57.123Z"
     }
   }
 }
