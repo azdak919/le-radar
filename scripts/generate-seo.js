@@ -28,7 +28,7 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 const { decodeHtmlEntities } = require('./html-entities-lib');
 const { buildEntityPages } = require('./seo-pages');
-const { renderSiteFooter } = require('./seo-pages-lib');
+const { renderSiteFooter, renderMastheadActions } = require('./seo-pages-lib');
 const { buildHistoricalArchivePages } = require('./historical-seo-pages');
 
 const ROOT = path.join(__dirname, '..');
@@ -50,7 +50,17 @@ const ARCHIVE_PATH = path.join(ROOT, 'news-archive.json');
 const ARCHIVE_CONFIG_PATH = path.join(ROOT, 'historical-catalog.config.json');
 
 /** Dossiers entièrement générés : purgés puis réécrits à chaque passe. */
-const GENERATED_DIRS = ['radios', 'journaux', 'etablissements', 'medias', 'horaires', 'sports', 'en', 'archives'];
+/**
+ * Dossiers entièrement reconstruits à chaque passe : on les efface d'abord
+ * pour qu'une entité retirée des données ne laisse pas de page orpheline.
+ *
+ * `sports/` en est volontairement absent. Depuis qu'il est installable, il
+ * contient des fichiers écrits à la main que le générateur ne produit pas —
+ * `site.webmanifest`, `sw.js` et les douze icônes PWA. Les effacer à chaque
+ * `seo:update` casserait l'installation. Le dossier n'a de toute façon qu'une
+ * seule page générée (`sports/index.html`), qui est simplement réécrite.
+ */
+const GENERATED_DIRS = ['radios', 'journaux', 'etablissements', 'medias', 'horaires', 'en', 'archives'];
 
 /** Nombre de manchettes prérendues. Assez pour être substantiel, assez peu
  *  pour que le diff des bots horaires reste lisible. */
@@ -68,6 +78,7 @@ const MARKERS = {
   jsonld: ['<!-- RADAR:SEO:JSONLD:START -->', '<!-- RADAR:SEO:JSONLD:END -->'],
   feed: ['<!-- RADAR:SEO:FEED:START -->', '<!-- RADAR:SEO:FEED:END -->'],
   footer: ['<!-- RADAR:FOOTER:START -->', '<!-- RADAR:FOOTER:END -->'],
+  actions: ['<!-- RADAR:CHROME:ACTIONS:START -->', '<!-- RADAR:CHROME:ACTIONS:END -->'],
 };
 
 /**
@@ -85,6 +96,21 @@ const FOOTER_PAGES = [
   { file: 'index.html', lang: 'fr', up: './', home: true, altPath: 'en/', indent: '      ' },
   { file: 'feeds.html', lang: 'fr', up: './', altPath: 'en/', indent: '      ' },
   { file: 'offline.html', lang: 'fr', up: './', altPath: 'en/', indent: '    ', variant: 'maintenance' },
+];
+
+/**
+ * Pages écrites à la main qui reçoivent la rangée d'actions du mât.
+ *
+ * Même principe que `FOOTER_PAGES`, un cran plus haut dans la page. Les 107
+ * pages générées obtiennent la rangée par `renderPage()`; ces deux-là par les
+ * marqueurs `RADAR:CHROME:ACTIONS`. `offline.html` en est absente : la page de
+ * maintenance ne propose volontairement aucune navigation.
+ *
+ * `current` pose `aria-current="page"` sur la pastille de la page courante.
+ */
+const ACTIONS_PAGES = [
+  { file: 'index.html', lang: 'fr', up: './', current: 'home', indent: '          ' },
+  { file: 'feeds.html', lang: 'fr', up: './', current: 'rss', indent: '          ' },
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -193,6 +219,13 @@ function injectFooter(html, page) {
   const { file, indent, ...opts } = page;
   const footer = renderSiteFooter({ ...opts, indent });
   return injectBetween(html, MARKERS.footer, `\n${indent}${footer}\n${indent}`, 'FOOTER', file);
+}
+
+/** Injecte la rangée d'actions du mât entre les marqueurs d'une page statique. */
+function injectActions(html, page) {
+  const { file, indent, ...opts } = page;
+  const actions = renderMastheadActions({ ...opts, indent });
+  return injectBetween(html, MARKERS.actions, `\n${indent}${actions}\n${indent}`, 'CHROME:ACTIONS', file);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -553,6 +586,7 @@ function main() {
   html = injectBetween(html, MARKERS.jsonld, buildItemListJsonLd(prerendered), 'JSONLD');
   html = injectBetween(html, MARKERS.feed, buildFeedHtml(prerendered), 'FEED');
   html = injectFooter(html, indexPage);
+  html = injectActions(html, ACTIONS_PAGES.find((p) => p.file === 'index.html'));
 
   if (doUpdate && html !== before) fs.writeFileSync(INDEX_PATH, html, 'utf8');
   written.push({
@@ -564,11 +598,15 @@ function main() {
   for (const page of FOOTER_PAGES.filter((p) => p.file !== 'index.html')) {
     const target = path.join(ROOT, page.file);
     const original = fs.readFileSync(target, 'utf8');
-    const updatedHtml = injectFooter(original, page);
+    let updatedHtml = injectFooter(original, page);
+    // La même passe porte la rangée d'actions quand la page en déclare une :
+    // relire le fichier entre deux écritures perdrait la première injection.
+    const actionsPage = ACTIONS_PAGES.find((p) => p.file === page.file);
+    if (actionsPage) updatedHtml = injectActions(updatedHtml, actionsPage);
     if (doUpdate && updatedHtml !== original) fs.writeFileSync(target, updatedHtml, 'utf8');
     written.push({
       file: page.file,
-      note: updatedHtml === original ? 'pied de page inchangé' : 'pied de page mis à jour',
+      note: updatedHtml === original ? 'chrome partagé inchangé' : 'chrome partagé mis à jour',
     });
   }
 

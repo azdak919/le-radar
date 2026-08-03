@@ -7,6 +7,11 @@
 /* D2 — mât dans style-masthead.css, chargé via <link> avant style.css (pas @import) */
 
 :root {
+  /* Sentinelle : signale à engage-prompt.js que la feuille du site est
+     chargée, donc qu'il ne doit PAS injecter ses styles de repli. Injectés,
+     ils passeraient après celle-ci à spécificité égale et écraseraient
+     notamment le `bottom` de `.engage-prompt`. Ne pas retirer. */
+  --radar-chrome: 1;
   --bg: #ffffff;
   --bg-soft: #f6f6f4;
   --ink: #16181c;
@@ -588,6 +593,7 @@ body {
   .masthead-home:hover,
   .masthead-rss:hover,
   .masthead-solitaire:hover,
+  .masthead-sports:hover,
   .masthead-coffee:hover {
     border-color: var(--accent);
     color: var(--accent);
@@ -602,6 +608,7 @@ body {
 .masthead-rss:active,
 .masthead-pomo:active,
 .masthead-solitaire:active,
+.masthead-sports:active,
 .masthead-coffee:active {
   transform: scale(0.9);
 }
@@ -609,8 +616,11 @@ body {
 .masthead-pomo {
   border-color: var(--rule);
 }
+/* Page courante : l'indicateur valait pour l'accueil seul, alors que
+   feeds.html posait déjà `aria-current` sur sa pastille RSS sans rien voir.
+   Depuis que la rangée est partagée, la règle vaut pour toute pastille. */
 .masthead-home.is-active,
-.masthead-home[aria-current="page"] {
+.masthead-icon[aria-current="page"] {
   border-color: color-mix(in srgb, var(--accent) 55%, var(--rule));
   color: var(--accent);
   background: color-mix(in srgb, var(--accent) 8%, transparent);
@@ -3603,6 +3613,127 @@ html[data-translate-busy="1"] .translate-toggle {
 .site-foot__bot-ico {
   font-size: 14px;
   line-height: 1;
+}
+
+
+
+/* ── Installer l’app (menu masthead + pied de page) ── */
+.install-menu {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.install-menu__toggle { cursor: pointer; }
+.install-menu.is-open .install-menu__toggle {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--rule));
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+.install-menu__panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 240;
+  min-width: 11.5rem;
+  /* Filet : un panneau ne doit jamais être plus large que l'écran. Le
+     recadrage fin (translation) est fait par engage-prompt.js, qui seul
+     connaît la position réelle du déclencheur. */
+  max-width: calc(100vw - 16px);
+  padding: 6px;
+  border-radius: 12px;
+  border: 1px solid var(--rule);
+  background: var(--bg);
+  color: var(--ink);
+  box-shadow:
+    0 12px 32px -12px rgba(0, 0, 0, 0.28),
+    0 0 0 1px color-mix(in srgb, var(--rule) 60%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.install-menu__panel[hidden] { display: none !important; }
+/*
+ * `.masthead-inner` est en `position: relative; z-index: 2` : il établit un
+ * contexte d'empilement, donc le `z-index: 240` du panneau ne vaut QUE dans ce
+ * contexte — et 2 perd contre le syntoniseur, à 100. Résultat observé : le 4ᵉ
+ * item du menu passait sous la barre du lecteur.
+ * On relève le conteneur pendant l'ouverture seulement (classe posée par
+ * engage-prompt.js) : 150 passe au-dessus du syntoniseur, et reste sous la
+ * carte d'invite (200) et les outils flottants (180).
+ */
+.masthead-inner.has-install-open { z-index: 150; }
+.install-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.install-menu__item:hover,
+.install-menu__item:focus-visible {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  outline: none;
+}
+.install-menu__item.is-current {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+.install-menu__item.is-installed {
+  opacity: 0.55;
+  cursor: default;
+}
+.install-menu__item .app-emoji {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+@media (hover: hover) and (pointer: fine) {
+  .install-menu__toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+}
+.install-menu__toggle:active { transform: scale(0.9); }
+
+.site-foot__install {
+  margin: 0 0 12px;
+}
+.site-foot__install-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--accent);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 120ms ease, background 120ms ease, color 120ms ease;
+}
+.site-foot__install-btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+.site-foot__install-btn:hover {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  text-decoration: none;
+}
+.site-foot__install-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 /* ─────────────── FEEDS PAGE ─────────────── */

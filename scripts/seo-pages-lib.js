@@ -594,6 +594,137 @@ const CSP = "default-src 'self'; "
   + "object-src 'none'; base-uri 'self'; form-action 'none'";
 
 /**
+ * Rangée d'actions du mât — SOURCE DE VÉRITÉ UNIQUE.
+ *
+ * POURQUOI ICI
+ * Même raison que le pied de page, un cran plus haut dans la page. La rangée
+ * existait en trois versions : `index.html` et `feeds.html` la portaient à la
+ * main avec six pastilles, tandis que les pages d'entités n'avaient que la
+ * bascule de thème. Ajouter une icône demandait donc trois modifications, et
+ * les 107 pages générées restaient systématiquement en arrière.
+ *
+ * Les pages générées l'obtiennent par `renderPage()`; `index.html` et
+ * `feeds.html` via les marqueurs `RADAR:CHROME:ACTIONS` que `generate-seo.js`
+ * remplit — exactement le mécanisme déjà en place pour `RADAR:FOOTER`.
+ *
+ * `current` marque la page courante (`home`, `rss`, `sports`…) pour poser
+ * `aria-current="page"`. `compact` sert aux pages d'entités, dont la rangée
+ * est positionnée en absolu et n'a ni date ni météo à côté d'elle.
+ */
+const CHROME_T = {
+  fr: {
+    home: 'Accueil',
+    homeAria: 'Accueil — LE-RADAR.ca',
+    rss: 'Flux RSS',
+    rssAria: 'S’abonner au flux RSS de LE-RADAR.ca',
+    pomo: 'Pomodoro — minuteur focus',
+    solitaire: 'Solitaire',
+    sports: 'Au tableau — scores étudiants',
+    coffee: 'Offrir un café',
+    coffeeAria: 'Offrir un café — Buy me a coffee',
+    theme: 'Changer de thème',
+    themeTitle: 'Mode clair / sombre',
+    installMenu: 'Installer une app',
+    installMenuAria: 'Installer une app — LE-RADAR, Pomodoro, Solitaire, Au tableau',
+    installApp: 'Installer LE-RADAR.ca',
+    installAppAria: 'Installer l’app LE-RADAR.ca',
+    appRadar: 'LE-RADAR.ca',
+    appPomo: 'Pomodoro',
+    appSolitaire: 'Solitaire',
+    appSports: 'Au tableau',
+  },
+  en: {
+    home: 'Home',
+    homeAria: 'Home — LE-RADAR.ca',
+    rss: 'RSS feed',
+    rssAria: 'Subscribe to the LE-RADAR.ca RSS feed',
+    pomo: 'Pomodoro — focus timer',
+    solitaire: 'Solitaire',
+    sports: 'Scoreboard — student sports',
+    coffee: 'Buy me a coffee',
+    coffeeAria: 'Buy me a coffee',
+    theme: 'Change theme',
+    themeTitle: 'Light / dark mode',
+    installMenu: 'Install an app',
+    installMenuAria: 'Install an app — LE-RADAR, Pomodoro, Solitaire, Scoreboard',
+    installApp: 'Install LE-RADAR.ca',
+    installAppAria: 'Install the LE-RADAR.ca app',
+    appRadar: 'LE-RADAR.ca',
+    appPomo: 'Pomodoro',
+    appSolitaire: 'Solitaire',
+    appSports: 'Scoreboard',
+  },
+};
+
+/** Les quatre apps installables, dans l'ordre du menu. Doit rester aligné sur
+ *  `APPS` de `engage-prompt.js` : même identifiants, même ordre. */
+const INSTALL_APPS = [
+  { id: 'radar', emoji: 'satellite', key: 'appRadar' },
+  { id: 'pomo', emoji: 'tomato', key: 'appPomo' },
+  { id: 'solitaire', emoji: 'playing-cards', key: 'appSolitaire' },
+  { id: 'sports', emoji: 'trophy', key: 'appSports' },
+];
+
+const ICON_SVG = {
+  home: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg>',
+  rss: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83C19.56 12.06 12.94 5.44 4 4.44z"/><path d="M4 10.11v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.46-4.42-9.9-9.9-9.9z"/></svg>',
+  coffee: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+    + '<path fill="none" d="M18 8h1a4 4 0 0 1 0 8h-1"/><path fill="none" d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>'
+    + '<line fill="none" x1="6" y1="1" x2="6" y2="4"/><line fill="none" x1="10" y1="1" x2="10" y2="4"/><line fill="none" x1="14" y1="1" x2="14" y2="4"/></svg>',
+  install: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>',
+  theme: '<svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>'
+    + '<svg class="ico-moon hidden" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>',
+};
+
+/**
+ * Menu d'installation multi-apps (déclencheur + panneau).
+ *
+ * Le panneau est rendu en HTML statique et non construit en JavaScript : sans
+ * lui, une personne qui navigue au clavier avec JS coupé verrait un bouton
+ * inerte. `engage-prompt.js` ne fait que le câbler.
+ *
+ * `panelId` doit être unique dans la page — d'où le suffixe passé par les
+ * gabarits Pomodoro et Solitaire, qui portent déjà un menu de langue.
+ */
+function renderInstallMenu({ lang = 'fr', up = './', panelId = 'install-menu-panel', toggleClass = 'masthead-icon' } = {}) {
+  const c = CHROME_T[lang] || CHROME_T.fr;
+  const items = INSTALL_APPS.map((app) => `
+          <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="${app.id}">
+            <img class="app-emoji" src="${up}assets/emoji/${app.emoji}.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+            <span>${escapeHtml(c[app.key])}</span>
+          </button>`).join('');
+
+  return `<div class="install-menu" data-install-menu>
+        <button type="button" class="${toggleClass} install-menu__toggle" data-install-toggle aria-haspopup="menu" aria-expanded="false" aria-controls="${panelId}" title="${escapeHtml(c.installMenu)}" aria-label="${escapeHtml(c.installMenuAria)}">${ICON_SVG.install}</button>
+        <div id="${panelId}" class="install-menu__panel" data-install-panel role="menu" aria-label="${escapeHtml(c.installMenu)}" hidden>${items}
+        </div>
+      </div>`;
+}
+
+function renderMastheadActions({ lang = 'fr', up = './', current = null, indent = '          ' } = {}) {
+  const c = CHROME_T[lang] || CHROME_T.fr;
+  const p = indent;
+  // À la racine `up` vaut './' : on le retire devant un chemin relatif pour
+  // écrire « pomo/ » et non « ./pomo/ », la forme attendue par le reste du
+  // site et par tests/static-integrity.mjs. Le lien d'accueil garde './'.
+  const href = (rel) => (rel ? `${up}${rel}`.replace(/^\.\//, '') : up);
+  const cur = (id) => (current === id ? ' aria-current="page"' : '');
+  const feedsPath = 'feeds.html';
+  const sportsPath = lang === 'fr' ? 'sports/' : 'en/sports/';
+
+  return `<div class="masthead-actions">
+${p}  <a href="${href('')}" class="masthead-icon masthead-home"${cur('home')} title="${escapeHtml(c.home)}" aria-label="${escapeHtml(c.homeAria)}">${ICON_SVG.home}</a>
+${p}  <a href="${href(feedsPath)}" class="masthead-icon masthead-rss"${cur('rss')} title="${escapeHtml(c.rss)}" aria-label="${escapeHtml(c.rssAria)}">${ICON_SVG.rss}</a>
+${p}  <a href="${href('pomo/')}" class="masthead-icon masthead-pomo" title="${escapeHtml(c.pomo)}" aria-label="${escapeHtml(c.pomo)}"><img class="app-emoji" src="${up}assets/emoji/tomato.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
+${p}  <a href="${href('solitaire/')}" class="masthead-icon masthead-solitaire" title="${escapeHtml(c.solitaire)}" aria-label="${escapeHtml(c.solitaire)}"><img class="app-emoji" src="${up}assets/emoji/playing-cards.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
+${p}  <a href="${href(sportsPath)}" class="masthead-icon masthead-sports"${cur('sports')} title="${escapeHtml(c.sports)}" aria-label="${escapeHtml(c.sports)}"><img class="app-emoji" src="${up}assets/emoji/trophy.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
+${p}  <a href="${COFFEE_URL}" class="masthead-icon masthead-coffee" title="${escapeHtml(c.coffee)}" aria-label="${escapeHtml(c.coffeeAria)}" target="_blank" rel="noopener noreferrer">${ICON_SVG.coffee}</a>
+${p}  ${renderInstallMenu({ lang, up })}
+${p}  <button id="theme-toggle" class="masthead-icon theme-toggle" type="button" aria-label="${escapeHtml(c.theme)}" title="${escapeHtml(c.themeTitle)}">${ICON_SVG.theme}</button>
+${p}</div>`;
+}
+
+/**
  * Pied de page du site — SOURCE DE VÉRITÉ UNIQUE.
  *
  * POURQUOI ICI
@@ -692,11 +823,23 @@ ${p}  </details>
 ${p}</footer>`;
   }
 
+  // Libellés pris dans CHROME_T et non dans T : les deux volets de langue y
+  // sont garantis présents côté source, alors qu'une clé oubliée dans T.en
+  // rendrait ici une chaîne vide — donc un bouton sans nom accessible.
+  const c = CHROME_T[lang] || CHROME_T.fr;
+  const installBtn = `<p class="site-foot__install">
+${p}    <button type="button" class="site-foot__install-btn" data-install-app="radar" aria-label="${escapeHtml(c.installAppAria)}">
+${p}      ${ICON_SVG.install}
+${p}      <span>${escapeHtml(c.installApp)}</span>
+${p}    </button>
+${p}  </p>`;
+
   return `<footer class="site-foot">
 ${p}  <div class="site-foot__brand">
 ${p}    <p class="site-foot__wordmark notranslate" translate="no"><img class="site-foot__logo" src="${up}assets/icon.svg" width="24" height="24" alt="" aria-hidden="true">${BRAND_NAME}</p>
 ${p}    <p class="site-foot__signature" lang="fr">${escapeHtml(BRAND_SIGNATURE)}</p>
 ${p}  </div>
+${p}  ${installBtn}
 ${p}  <p>${escapeHtml(t.unofficial)}</p>
 ${p}  <nav class="site-foot__links" aria-label="${escapeHtml(t.footerNav)}">
 ${p}    ${nav}
@@ -731,6 +874,15 @@ function renderPage({
   /** Si défini : le h1 devient un lien (ex. reset filtres « Au tableau »). */
   h1Href = null,
   h1Attrs = '',
+  /** Pastille du mât à marquer `aria-current` (`home`, `rss`, `sports`…). */
+  chromeCurrent = null,
+  /**
+   * Si vrai : la page déclare son propre manifeste et son propre service
+   * worker, donc s'installe comme une app à part entière (cas de /sports/).
+   * Sinon elle reçoit le manifeste racine, sans quoi le bouton « Installer »
+   * ne pourrait jamais déclencher l'invite native et mentirait à la personne.
+   */
+  standaloneApp = false,
 }) {
   const t = T[lang];
   const depth = path.split('/').filter(Boolean).length;
@@ -738,6 +890,20 @@ function renderPage({
   const canonical = `${siteBase}/${path}`;
   const altUrl = `${siteBase}/${altPath}`;
   const frUrl = lang === 'fr' ? canonical : altUrl;
+
+  // Manifeste : le sien pour une app autonome, celui du site sinon. Sans ce
+  // lien, `beforeinstallprompt` ne se déclenche jamais et le bouton
+  // « Installer » retombe systématiquement sur le guide manuel.
+  // L'enregistrement du service worker passe par un fichier externe : la CSP
+  // de ces pages est `script-src 'self'`, sans `unsafe-inline`.
+  const appHeadHtml = standaloneApp
+    ? '    <link rel="manifest" href="site.webmanifest" />\n'
+      + '    <meta name="mobile-web-app-capable" content="yes" />\n'
+      + '    <meta name="apple-mobile-web-app-capable" content="yes" />\n'
+      + '    <meta name="apple-mobile-web-app-status-bar-style" content="default" />\n'
+      + `    <meta name="apple-mobile-web-app-title" content="${escapeHtml(CHROME_T[lang].appSports)}" />\n`
+      + `    <script src="${up}app-sw-register.js" defer></script>\n`
+    : `    <link rel="manifest" href="${up}manifest.json" />\n`;
 
   const crumbHtml = crumbs.length
     ? `<nav class="seo-crumbs" aria-label="${lang === 'fr' ? 'Fil d’Ariane' : 'Breadcrumb'}">`
@@ -779,8 +945,8 @@ ${alternate ? `    <link rel="alternate" hreflang="fr-CA" href="${escapeHtml(lan
 
     <link rel="icon" href="${up}assets/icon-32.png" type="image/png" sizes="32x32" />
     <link rel="icon" href="${up}assets/icon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="${up}assets/icon-192.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="apple-touch-icon" href="${standaloneApp ? 'apple-touch-icon-180x180.png' : `${up}assets/icon-192.png`}" />
+${appHeadHtml}    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="${up}style-masthead.css" />
@@ -793,15 +959,13 @@ ${renderTunerCriticalCss()}    <script src="${up}seo-page-theme.js"></script>
     <script src="${up}player-sync.js" defer></script>
     <script src="${up}institution-acronyms-data.js" defer></script>
     <script src="${up}app.js" defer></script>
+    <script src="${up}engage-prompt.js" defer></script>
 ${(Array.isArray(extraScripts) ? extraScripts : []).map((src) => `    <script src="${up}${escapeHtml(src)}" defer></script>`).join('\n')}${Array.isArray(extraScripts) && extraScripts.length ? '\n' : ''}${jsonLd ? `    <script type="application/ld+json">${jsonLd}</script>\n` : ''}  </head>
   <body>
     <header class="masthead">
       <div class="masthead-inner">
         <div class="seo-masthead-actions">
-          <button id="theme-toggle" class="masthead-icon theme-toggle" type="button" aria-label="Changer de thème" title="Mode clair / sombre">
-            <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-            <svg class="ico-moon hidden" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7.21 7.21 0 0 0 21 12.79z"/></svg>
-          </button>
+          ${renderMastheadActions({ lang, up, current: chromeCurrent, indent: '          ' })}
         </div>
         <div class="masthead-brand">
           <a href="${up}" class="wordmark">
@@ -1116,6 +1280,10 @@ module.exports = {
   frAt,
   renderPage,
   renderSiteFooter,
+  renderMastheadActions,
+  renderInstallMenu,
+  CHROME_T,
+  INSTALL_APPS,
   renderNativeTuner,
   factsList,
   headlineList,
