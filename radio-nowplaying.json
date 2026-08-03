@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-03T01:09:59.707Z",
+  "updatedAt": "2026-08-03T05:02:27.402Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T01:09:34.325Z"
+      "checkedAt": "2026-08-03T05:02:00.275Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "London café (reprise)",
+        "title": "L'Alter Ego (reprise)",
         "source": "schedule",
-        "start": "20:00",
-        "end": "21:30",
-        "url": "https://cism893.ca/emissions/london-cafe"
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/lalter-ego"
       },
       "next": {
-        "title": "Mix Anglo",
+        "title": "Mix Franco",
         "source": "schedule",
-        "start": "21:30",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
       },
       "track": "",
-      "showTitle": "London café (reprise)",
+      "showTitle": "L'Alter Ego (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T01:09:36.037Z"
+      "checkedAt": "2026-08-03T05:02:02.779Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Cha Cha In Blue",
+        "title": "Roots, Rock, Reggae",
         "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
+        "start": "01:00",
+        "end": "04:00"
       },
       "next": {
-        "title": "Ill Groove Garden",
+        "title": "Adventures In Music",
         "source": "api-live",
-        "start": "23:00",
-        "end": "00:00"
+        "start": "04:00",
+        "end": "07:00"
       },
       "track": "",
-      "showTitle": "Cha Cha In Blue",
+      "showTitle": "Roots, Rock, Reggae",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,72 +74,72 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T01:09:38.292Z"
+      "checkedAt": "2026-08-03T05:02:05.708Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Afro Archives",
+        "title": "CJLO Late Night",
         "source": "schedule",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/afro-archives"
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
-        "title": "On The Right Track",
+        "title": "Experiments",
         "source": "schedule",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/on-the-right-track"
+        "start": "06:00",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/experiments"
       },
       "track": "",
-      "showTitle": "Afro Archives",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T01:09:51.621Z"
+      "checkedAt": "2026-08-03T05:02:19.768Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Solénoïde",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule",
         "start": "00:01",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Solénoïde",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T01:09:52.081Z"
+      "checkedAt": "2026-08-03T05:02:20.373Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Les rois de l'arène",
+        "title": "Faire avec",
         "source": "api-live",
-        "start": "05:00",
-        "end": "07:00",
-        "slug": "les-rois-de-larene"
+        "start": "17:00",
+        "end": "18:00",
+        "slug": "faire-avec"
       },
-      "track": "Allison Russell - Good Omens",
+      "track": "VERDUN - Silent Witness",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-03T01:09:59.357Z"
+      "checkedAt": "2026-08-03T05:02:27.053Z"
     }
   }
 }
