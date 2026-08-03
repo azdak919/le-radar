@@ -1,10 +1,18 @@
 {
-  "updated": "2026-08-03T16:28:56.234Z",
+  "updated": "2026-08-03T19:08:18.025Z",
   "total": 185,
   "withAuthor": 185,
-  "mismatches": 4,
+  "mismatches": 5,
   "ok": true,
   "samples": [
+    {
+      "title": "Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods",
+      "link": "https://thelinknewspaper.ca/article/16338",
+      "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Ryan Pyke",
+      "reason": "page-byline"
+    },
     {
       "title": "Letters from the Editors May 2026",
       "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
@@ -38,5 +46,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 4
+  "fixed": 5
 }
