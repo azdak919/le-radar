@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-08-03T12:20:01.709Z",
+  "updatedAt": "2026-08-03T15:25:22.031Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Lundi Indie",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
-      },
+      "current": null,
       "next": {
         "title": "Les Arshitechs du Son",
         "source": "schedule",
@@ -20,59 +14,59 @@
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
       "track": "",
-      "showTitle": "Lundi Indie",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T12:19:37.554Z"
+      "checkedAt": "2026-08-03T15:24:57.116Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Ya Raï (reprise)",
+        "title": "O'Keb",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/ya-rai"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/okeb"
       },
       "next": {
-        "title": "La collation",
+        "title": "L'Alter Ego",
         "source": "schedule",
-        "start": "09:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/lalter-ego"
       },
       "track": "",
-      "showTitle": "Ya Raï (reprise)",
+      "showTitle": "O'Keb",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T12:19:39.875Z"
+      "checkedAt": "2026-08-03T15:24:59.178Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Le Lendemain de la veille",
+        "title": "All Things Campus",
         "source": "api-live",
-        "start": "08:00",
-        "end": "09:00"
+        "start": "11:00",
+        "end": "12:00"
       },
       "next": {
-        "title": "Latin Music Mondays",
+        "title": "World Skip The Beat",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "12:00",
+        "end": "14:00"
       },
       "track": "",
-      "showTitle": "Le Lendemain de la veille",
+      "showTitle": "All Things Campus",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -80,59 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T12:19:43.442Z"
+      "checkedAt": "2026-08-03T15:25:01.636Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Experiments",
+        "title": "2 Days and a Night",
         "source": "schedule",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/experiments"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/2-days-and-a-night"
       },
       "next": {
-        "title": "Death of the Midrange",
+        "title": "Twang City",
         "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/death-of-the-midrange"
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/twang-city"
       },
       "track": "",
-      "showTitle": "Experiments",
+      "showTitle": "2 Days and a Night",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T12:19:57.262Z"
+      "checkedAt": "2026-08-03T15:25:14.975Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Solénoïde",
         "source": "schedule",
         "start": "09:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Ma radio Académia",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "Solénoïde",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T12:19:58.237Z"
+      "checkedAt": "2026-08-03T15:25:15.691Z"
     },
     "choq": {
       "id": "choq",
@@ -145,7 +139,7 @@
         "end": "13:00",
         "url": "https://www.choq.ca/emissions/balado-populi"
       },
-      "track": "Sangam - One",
+      "track": "Tatyana Jane - Brutal",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -157,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-03T12:20:01.358Z"
+      "checkedAt": "2026-08-03T15:25:21.681Z"
     }
   }
 }
