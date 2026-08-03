@@ -1595,6 +1595,12 @@ function sportsHubPage(lang, ctx) {
       updated,
       extraScripts: ['sports-board.js'],
       wireClass: 'seo-wire--sports',
+      chromeCurrent: 'sports',
+      // Seul le volet français est une app installable : il porte le
+      // manifeste et le service worker de portée /sports/. Le volet anglais
+      // vit sous /en/sports/, hors de cette portée ; depuis là, « Installer »
+      // renvoie vers /sports/?install=1 (voir installApp() côté client).
+      standaloneApp: lang === 'fr',
     }),
     changefreq: 'daily',
     priority: '0.7',
