@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-04T15:54:39.342Z",
+  "updatedAt": "2026-08-04T17:45:05.777Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-04T15:54:12.815Z"
+      "checkedAt": "2026-08-04T17:44:43.002Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Roche aux platines",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/roche-aux-platines"
-      },
-      "next": {
         "title": "Les sentinelles de l'art",
         "source": "schedule",
         "start": "12:00",
         "end": "14:00",
         "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
       },
+      "next": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
       "track": "",
-      "showTitle": "Roche aux platines",
+      "showTitle": "Les sentinelles de l'art",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-04T15:54:14.637Z"
+      "checkedAt": "2026-08-04T17:44:44.717Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Ecolibrium/Environment in Canada",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "Universal Break",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "Voice of Korea",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
       "track": "",
-      "showTitle": "Ecolibrium/Environment in Canada",
+      "showTitle": "Universal Break",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-04T15:54:17.090Z"
+      "checkedAt": "2026-08-04T17:44:46.802Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Mirror Journal",
+        "title": "Shaking the Habitual",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/mirror-journal"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/shaking-the-habitual"
       },
       "next": {
-        "title": "World Beat News",
+        "title": "Code Switch",
         "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/world-beat-news"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/code-switch"
       },
       "track": "",
-      "showTitle": "Mirror Journal",
+      "showTitle": "Shaking the Habitual",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-04T15:54:30.121Z"
+      "checkedAt": "2026-08-04T17:45:00.216Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-04T15:54:30.668Z"
+      "checkedAt": "2026-08-04T17:45:00.764Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Beach House - Space Song",
+      "track": "Timber Timbre - Floating Cathedral",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-04T15:54:38.991Z"
+      "checkedAt": "2026-08-04T17:45:05.427Z"
     }
   }
 }
