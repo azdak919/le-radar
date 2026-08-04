@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-03T23:35:11.666Z",
+  "updatedAt": "2026-08-04T02:11:17.463Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T23:34:48.043Z"
+      "checkedAt": "2026-08-04T02:10:47.177Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les vinyles versatiles",
+        "title": "Mix anglo",
         "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/les-vinyles-versatiles"
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
       },
       "next": {
-        "title": "Rock à la casbah",
+        "title": "Les sentinelles de l'art (reprise)",
         "source": "schedule",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "https://cism893.ca/emissions/rock-a-la-casbah"
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
       },
       "track": "",
-      "showTitle": "Les vinyles versatiles",
+      "showTitle": "Mix anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T23:34:49.784Z"
+      "checkedAt": "2026-08-04T02:10:49.450Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Dykes on Mykes",
+        "title": "Drastic Plastic",
         "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
+        "start": "22:00",
+        "end": "23:00"
       },
       "next": {
-        "title": "Underground Sounds",
+        "title": "27th Hr.",
         "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
+        "start": "23:00",
+        "end": "00:00"
       },
       "track": "",
-      "showTitle": "Dykes on Mykes",
+      "showTitle": "Drastic Plastic",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T23:34:52.027Z"
+      "checkedAt": "2026-08-04T02:10:52.509Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Queer Chaos",
+        "title": "Past Tense",
         "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/queer-chaos"
+        "start": "22:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/past-tense"
       },
       "next": {
-        "title": "In The Garage",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/in-the-garage"
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "track": "",
-      "showTitle": "Queer Chaos",
+      "showTitle": "Past Tense",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T23:35:05.352Z"
+      "checkedAt": "2026-08-04T02:11:06.420Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Ma radio Académia",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Le terrain sportif",
         "source": "schedule",
         "start": "20:00",
         "end": "00:01"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Ma radio Académia",
+      "showTitle": "Le terrain sportif",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T23:35:06.191Z"
+      "checkedAt": "2026-08-04T02:11:07.317Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "07:00",
         "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "Taxi Girls - It Makes Me Think",
+      "track": "Kelsey Lu - Only The Lonely",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -151,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-03T23:35:11.316Z"
+      "checkedAt": "2026-08-04T02:11:17.113Z"
     }
   }
 }
