@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-04T17:45:05.777Z",
+  "updatedAt": "2026-08-04T19:27:55.339Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-04T17:44:43.002Z"
+      "checkedAt": "2026-08-04T19:27:29.437Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les sentinelles de l'art",
+        "title": "À la bonne heure",
         "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/a-la-bonne-heure"
       },
       "next": {
-        "title": "Le palmarès",
+        "title": "London café",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://cism893.ca/emissions/london-cafe"
       },
       "track": "",
-      "showTitle": "Les sentinelles de l'art",
+      "showTitle": "À la bonne heure",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-04T17:44:44.717Z"
+      "checkedAt": "2026-08-04T19:27:31.404Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Universal Break",
+        "title": "Montreal Sessions",
         "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
+        "start": "15:00",
+        "end": "17:00"
       },
       "next": {
-        "title": "Voice of Korea",
+        "title": "Off The Hour: Local Journalism Stories",
         "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
+        "start": "17:00",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "Universal Break",
+      "showTitle": "Montreal Sessions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-04T17:44:46.802Z"
+      "checkedAt": "2026-08-04T19:27:35.508Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Shaking the Habitual",
+        "title": "Sonic Lit: A SpokenWeb Radio Show",
         "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/shaking-the-habitual"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/sonic-lit-a-spokenweb-radio-show"
       },
       "next": {
-        "title": "Code Switch",
+        "title": "The Fluid Mosaic",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/code-switch"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
       },
       "track": "",
-      "showTitle": "Shaking the Habitual",
+      "showTitle": "Sonic Lit: A SpokenWeb Radio Show",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-04T17:45:00.216Z"
+      "checkedAt": "2026-08-04T19:27:48.904Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,21 +126,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-04T17:45:00.764Z"
+      "checkedAt": "2026-08-04T19:27:49.448Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Palmarès CHOQ.ca",
         "source": "api-live",
         "start": "15:00",
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Timber Timbre - Floating Cathedral",
-      "showTitle": "",
+      "next": {
+        "title": "Le Studio",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00",
+        "slug": "live"
+      },
+      "track": "Le Belladone - Au nom de la Mere et de la Fille",
+      "showTitle": "Palmarès CHOQ.ca",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -150,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-04T17:45:05.427Z"
+      "checkedAt": "2026-08-04T19:27:54.988Z"
     }
   }
 }
