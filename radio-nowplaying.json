@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-08-04T13:16:03.161Z",
+  "updatedAt": "2026-08-04T15:54:39.342Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Mardi Champ Gauche",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
-      },
+      "current": null,
       "next": {
         "title": "Chéri.e, j’arrive!",
         "source": "schedule",
@@ -20,59 +14,59 @@
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Mardi Champ Gauche",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-04T13:15:36.951Z"
+      "checkedAt": "2026-08-04T15:54:12.815Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Second poteau",
+        "title": "Roche aux platines",
         "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/second-poteau"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/roche-aux-platines"
       },
       "next": {
-        "title": "La collation",
+        "title": "Les sentinelles de l'art",
         "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
       },
       "track": "",
-      "showTitle": "Second poteau",
+      "showTitle": "Roche aux platines",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-04T13:15:39.441Z"
+      "checkedAt": "2026-08-04T15:54:14.637Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Basa Basa",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "Ecolibrium/Environment in Canada",
         "source": "api-live",
         "start": "11:00",
         "end": "12:00"
       },
+      "next": {
+        "title": "Universal Break",
+        "source": "api-live",
+        "start": "12:00",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "Basa Basa",
+      "showTitle": "Ecolibrium/Environment in Canada",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -80,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-04T13:15:42.929Z"
+      "checkedAt": "2026-08-04T15:54:17.090Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "At The Movies",
+        "title": "Mirror Journal",
         "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/at-the-movies"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/mirror-journal"
       },
       "next": {
-        "title": "Democracy Now",
+        "title": "World Beat News",
         "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/world-beat-news"
       },
       "track": "",
-      "showTitle": "At The Movies",
+      "showTitle": "Mirror Journal",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-04T13:15:56.850Z"
+      "checkedAt": "2026-08-04T15:54:30.121Z"
     },
     "cfak": {
       "id": "cfak",
@@ -132,7 +126,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-04T13:15:57.748Z"
+      "checkedAt": "2026-08-04T15:54:30.668Z"
     },
     "choq": {
       "id": "choq",
@@ -145,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Atamone - Morning Whispers",
+      "track": "Beach House - Space Song",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -156,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-04T13:16:02.811Z"
+      "checkedAt": "2026-08-04T15:54:38.991Z"
     }
   }
 }
