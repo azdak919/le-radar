@@ -1,17 +1,17 @@
 {
-  "updated": "2026-08-04T11:48:52.882Z",
+  "updated": "2026-08-04T13:09:54.645Z",
   "total": 185,
   "withPhoto": 168,
   "withStock": 22,
-  "withCampusBank": 12,
+  "withCampusBank": 11,
   "fullyCovered": 185,
-  "leadReadyPhotos": 145,
+  "leadReadyPhotos": 144,
   "pageScraped": 21,
   "photosRecovered": 21,
-  "imagesCleared": 10,
-  "stockSearches": 30,
-  "stockFound": 8,
-  "campusBankFound": 2,
+  "imagesCleared": 9,
+  "stockSearches": 34,
+  "stockFound": 11,
+  "campusBankFound": 3,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -19,6 +19,12 @@
       "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/917/28627096297_a3e0756d47_b.jpg"
+    },
+    {
+      "title": "CSU terminates council’s chief election officer",
+      "link": "https://thelinknewspaper.ca/article/16334",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
     },
     {
       "title": "Pourquoi la lecture est-elle importante?",
@@ -51,40 +57,34 @@
       "image": "https://live.staticflickr.com/4031/4400844746_a47c17ef6d_b.jpg"
     },
     {
+      "title": "Spotlighting Powerful McGill Alumnae",
+      "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
+    },
+    {
+      "title": "National Golf tournament",
+      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/24/99099986_4195128a59_b.jpg"
+    },
+    {
+      "title": "Gaiters wrap up hard-fought season with eyes on next year",
+      "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
+    },
+    {
       "title": "Second-Class Citizens",
       "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/7056/6831154200_b7057b4237_b.jpg"
     },
     {
       "title": "The Gentrification of Online Fandom Spaces",
       "link": "https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
-    },
-    {
-      "title": "Le pays avant tout – esquisse",
-      "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
-    },
-    {
-      "title": "Oui au budget, oui au programme FIL et non à la grève",
-      "link": "https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6c/C%C3%A9gep_du_Vieux_Montr%C3%A9al%2C_Nov_03_2022.jpg"
-    },
-    {
-      "title": "Recettes musicales québécoises pour l’été",
-      "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
-      "reason": "no-stock-match",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
-    },
-    {
-      "title": "Gothic Cinema Rises from the Grave",
-      "link": "https://theplantnews.com/2026/05/11/gothic-cinema-rises-from-the-grave/",
-      "reason": "no-stock-match",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-4.png"
     }
   ]
 }
