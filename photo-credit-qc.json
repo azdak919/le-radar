@@ -1,28 +1,35 @@
 {
-  "updated": "2026-08-03T23:25:59.152Z",
+  "updated": "2026-08-04T03:48:02.608Z",
   "total": 185,
-  "withImage": 167,
-  "withCredit": 167,
-  "cited": 129,
-  "pending": 12,
+  "withImage": 168,
+  "withCredit": 168,
+  "cited": 128,
+  "pending": 13,
   "missingHero": 0,
   "ok": false,
   "checked": 18,
-  "updatedCount": 6,
-  "citedNew": 6,
-  "fallbackNew": 12,
+  "updatedCount": 7,
+  "citedNew": 4,
+  "fallbackNew": 14,
   "samples": [
     {
-      "title": "La performance de l’homosexualité : un privilège ?",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
     },
     {
       "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
       "credit": "Photo : Elie Nguyen",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "La performance de l’homosexualité : un privilège ?",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -34,6 +41,13 @@
       "method": "media-credit-featured"
     },
     {
+      "title": "Des initiatives qui rassemblent",
+      "source": "Le Délit",
+      "credit": "Crédit photo : Le Délit",
+      "cited": false,
+      "method": null
+    },
+    {
       "title": "Inside Mile End Kicks",
       "source": "The Link",
       "credit": "Photo: Courtesy of Joe Fuda",
@@ -43,16 +57,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Illustration: Halle Keays",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }
