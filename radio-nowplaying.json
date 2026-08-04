@@ -1,72 +1,78 @@
 {
-  "updatedAt": "2026-08-04T11:03:44.062Z",
+  "updatedAt": "2026-08-04T13:16:03.161Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Mardi Champ Gauche",
         "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
       },
+      "next": {
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Mardi Champ Gauche",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-04T11:03:16.231Z"
+      "checkedAt": "2026-08-04T13:15:36.951Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Câlin collectif",
+        "title": "Second poteau",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/calins-collectifs"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://cism893.ca/emissions/second-poteau"
       },
       "next": {
-        "title": "Raconte ton quartier",
+        "title": "La collation",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/raconte-ton-quartier"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
       },
       "track": "",
-      "showTitle": "Câlin collectif",
+      "showTitle": "Second poteau",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-04T11:03:18.026Z"
+      "checkedAt": "2026-08-04T13:15:39.441Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Tuesday Morning After Pt1",
+        "title": "Basa Basa",
         "source": "api-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "09:00",
+        "end": "11:00"
       },
       "next": {
-        "title": "Tuesday Morning After Pt2",
+        "title": "Ecolibrium/Environment in Canada",
         "source": "api-live",
-        "start": "08:00",
-        "end": "09:00"
+        "start": "11:00",
+        "end": "12:00"
       },
       "track": "",
-      "showTitle": "Tuesday Morning After Pt1",
+      "showTitle": "Basa Basa",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +80,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-04T11:03:21.801Z"
+      "checkedAt": "2026-08-04T13:15:42.929Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Hip's Time to Wake Hop",
-        "source": "schedule",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
-      },
-      "next": {
         "title": "At The Movies",
         "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/at-the-movies"
       },
+      "next": {
+        "title": "Democracy Now",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
+      },
       "track": "",
-      "showTitle": "Hip's Time to Wake Hop",
+      "showTitle": "At The Movies",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-04T11:03:35.208Z"
+      "checkedAt": "2026-08-04T13:15:56.850Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Folkswagen",
-        "source": "schedule",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
         "title": "Palmarès CFAK",
         "source": "schedule",
         "start": "08:00",
         "end": "18:30"
       },
+      "next": {
+        "title": "L'Aut'Rock",
+        "source": "schedule",
+        "start": "18:30",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-04T11:03:35.637Z"
+      "checkedAt": "2026-08-04T13:15:57.748Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +145,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "PUNCHBAG - I Am Obsessed",
+      "track": "Atamone - Morning Whispers",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-04T11:03:43.711Z"
+      "checkedAt": "2026-08-04T13:16:02.811Z"
     }
   }
 }
