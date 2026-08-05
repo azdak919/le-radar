@@ -1,59 +1,14 @@
 {
-  "updated": "2026-08-05T00:06:22.473Z",
+  "updated": "2026-08-05T03:34:35.081Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 11,
+  "incomplete": 6,
   "withLeadExcerpt": 78,
-  "candidates": 11,
-  "enriched": 5,
-  "failed": 0,
+  "candidates": 6,
+  "enriched": 0,
+  "failed": 2,
   "ok": true,
   "samples": [
-    {
-      "title": "Les femmes MAGA au service du patriarcat",
-      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
-      "ok": true,
-      "score": 100,
-      "chars": 393,
-      "sample": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer ",
-      "changed": true
-    },
-    {
-      "title": "Le Canada et ses provinces face à Washington",
-      "link": "https://lecollectif.ca/a-la-une/le-canada-et-ses-provinces-face-a-washington/",
-      "ok": true,
-      "score": 100,
-      "chars": 359,
-      "sample": "Le ton monte entre Washington et Ottawa, alors que les menaces américaines pèsent de plus en plus su",
-      "changed": true
-    },
-    {
-      "title": "La 29e édition du Festival des traditions du monde de Sherbrooke",
-      "link": "https://lecollectif.ca/a-la-une/la-29e-edition-du-festival-des-traditions-du-monde-de-sherbrooke/",
-      "ok": true,
-      "score": 100,
-      "chars": 398,
-      "sample": "Du 12 au 16 août, le Festival des traditions du monde de Sherbrooke (FTMS) revient en force au parc ",
-      "changed": true
-    },
-    {
-      "title": "L’essor de l’économie collaborative",
-      "link": "https://lecollectif.ca/a-la-une/lessor-de-leconomie-collaborative/",
-      "ok": true,
-      "score": 96,
-      "chars": 370,
-      "sample": "Il y a différents types de partages qu’il est possible d’effectuer avec l’économie collaborative, co",
-      "changed": true
-    },
-    {
-      "title": "Les impacts de la construction sur les commerces",
-      "link": "https://lecollectif.ca/a-la-une/les-impacts-de-la-construction-sur-les-commerces/",
-      "ok": true,
-      "score": 100,
-      "chars": 325,
-      "sample": "Les travaux de construction qui durent plusieurs semaines autour des commerces ont un impact négatif",
-      "changed": true
-    },
     {
       "title": "Review: Sullivan Fortner Solo at Gesú Concert Hall",
       "link": "https://www.mcgilldaily.com/2026/07/review-sullivan-fortner-solo-at-gesu-concert-hall/",
@@ -73,12 +28,21 @@
       "changed": false
     },
     {
-      "title": "A conversation with Ehab Lotayef: A lifelong voyage to the conscience of humanity",
-      "link": "https://www.thetribune.ca/news/a-conversation-with-ehab-lotayef-a-lifelong-voyage-to-the-conscience-of-humanity-28072026/?utm_source=rss&utm_medium=rss&utm_campaign=a-conversation-with-ehab-lotayef-a-lifelong-voyage-to-the-conscience-of-humanity-28072026",
+      "title": "The Cruel Optimism of Summer",
+      "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
       "ok": true,
-      "score": 70,
+      "score": 66,
       "chars": 400,
-      "sample": "On May 14, 429 activists carrying more than 11,000 kilograms of humanitarian aid set sail to Gaza fr",
+      "sample": "“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt t",
+      "changed": false
+    },
+    {
+      "title": "Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods",
+      "link": "https://thelinknewspaper.ca/article/16338",
+      "ok": true,
+      "score": 90,
+      "chars": 177,
+      "sample": "This history, and much more, is featured in the exhibition. Bellemare was able to gather never-befor",
       "changed": false
     }
   ]
