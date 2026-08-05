@@ -1,61 +1,67 @@
 {
-  "updatedAt": "2026-08-05T11:00:24.531Z",
+  "updatedAt": "2026-08-05T13:00:09.644Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Mercredi Bonbon",
         "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mercredi-bonbon/"
       },
+      "next": {
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Mercredi Bonbon",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-05T10:59:57.102Z"
+      "checkedAt": "2026-08-05T12:59:46.456Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
-        "source": "schedule",
-        "start": "05:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
-      },
-      "next": {
         "title": "Club classique",
         "source": "schedule",
         "start": "07:00",
         "end": "09:00",
         "url": "https://cism893.ca/emissions/club-classique"
       },
+      "next": {
+        "title": "La collation",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
+      },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Club classique",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-05T10:59:58.926Z"
+      "checkedAt": "2026-08-05T12:59:48.861Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
         "title": "The Wednesday Morning After",
-        "source": "schedule",
+        "source": "api-live",
         "start": "07:00",
         "end": "09:00"
       },
@@ -65,69 +71,68 @@
         "start": "09:00",
         "end": "11:00"
       },
-      "track": "Full Circle",
+      "track": "",
       "showTitle": "The Wednesday Morning After",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
         "api-live",
-        "stream",
-        "schedule"
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-05T11:00:01.558Z"
+      "checkedAt": "2026-08-05T12:59:51.878Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Morning Electro-shock",
+        "title": "Are We There Yet?",
         "source": "schedule",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/morning-electro-shock"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/are-we-there-yet"
       },
       "next": {
-        "title": "Words and Culture",
+        "title": "Democracy Now",
         "source": "schedule",
-        "start": "07:30",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/words-and-culture"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
       },
       "track": "",
-      "showTitle": "Morning Electro-shock",
+      "showTitle": "Are We There Yet?",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-05T11:00:14.874Z"
+      "checkedAt": "2026-08-05T13:00:05.838Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Folkswagen",
-        "source": "schedule",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
         "title": "Palmarès CFAK",
         "source": "schedule",
         "start": "08:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "Le popcorn de l'infini",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-05T11:00:15.701Z"
+      "checkedAt": "2026-08-05T13:00:06.810Z"
     },
     "choq": {
       "id": "choq",
@@ -140,7 +145,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Bonne nuit, chérie - Les avions",
+      "track": "Cashier - Like I Do",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -151,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-05T11:00:24.181Z"
+      "checkedAt": "2026-08-05T13:00:09.294Z"
     }
   }
 }
