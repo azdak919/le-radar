@@ -808,16 +808,23 @@ function renderSiteFooter({
   // partout ailleurs. Cette variante reste générée, donc `seo:update` ne
   // peut pas la remplacer par un ancien footer complet.
   if (variant === 'maintenance') {
+    // La signature est le nom complet du projet : elle appartient au bloc de
+    // marque, visible, comme dans tous les autres pieds de page — la replier
+    // cachait l'identité même du site. L'avis « projet indépendant » prend sa
+    // place dans le dépliant, auprès de la licence et des mentions légales,
+    // qui sont de même nature. L'échange laisse la page plus courte qu'avant :
+    // le pied de page fermé doit tenir sans barre de défilement (contrôlé par
+    // `maintenance : footer compact sans défilement` dans browser-smoke).
     return `<footer class="site-foot site-foot--maintenance">
 ${p}  <div class="site-foot__brand">
 ${p}    <p class="site-foot__wordmark notranslate" translate="no"><img class="site-foot__logo" src="${up}assets/icon.svg" width="24" height="24" alt="" aria-hidden="true">${BRAND_NAME}</p>
+${p}    <p class="site-foot__signature" lang="fr">${escapeHtml(BRAND_SIGNATURE)}</p>
 ${p}  </div>
-${p}  <p class="site-foot__summary">${escapeHtml(t.unofficial)}</p>
 ${p}  <p class="site-foot__contact"><a href="${CONTACT_URL}" data-contact-channel="email" aria-label="${escapeHtml(t.contactAria)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>${escapeHtml(t.contactLabel)}</a></p>
 ${p}  <details class="site-foot__details">
 ${p}    <summary>${escapeHtml(t.footerDetails)}</summary>
 ${p}    <div class="site-foot__details-body">
-${p}      <p class="site-foot__signature" lang="fr">${escapeHtml(BRAND_SIGNATURE)}</p>
+${p}      <p class="site-foot__summary">${escapeHtml(t.unofficial)}</p>
 ${p}      <nav class="site-foot__links" aria-label="${escapeHtml(t.footerNav)}">
 ${p}        ${detailsNav}
 ${p}      </nav>
