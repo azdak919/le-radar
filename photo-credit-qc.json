@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-05T14:41:36.313Z",
+  "updated": "2026-08-05T16:09:38.324Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 130,
+  "cited": 129,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 21,
-  "updatedCount": 10,
-  "citedNew": 9,
-  "fallbackNew": 12,
+  "checked": 17,
+  "updatedCount": 6,
+  "citedNew": 4,
+  "fallbackNew": 13,
   "samples": [
     {
       "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
@@ -18,27 +18,6 @@
       "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "Ce que nous devons aux femmes",
-      "source": "Le Délit",
-      "credit": "Photo : Alexandre Gontier",
-      "cited": true,
-      "method": "media-credit-near"
-    },
-    {
-      "title": "Les femmes MAGA au service du patriarcat",
-      "source": "Le Délit",
-      "credit": "Photo : Stu Doré",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "source": "La Pige",
-      "credit": "Photo : Léa Morin-Letort",
-      "cited": true,
-      "method": "figcaption-paren-kind"
     },
     {
       "title": "La performance de l’homosexualité : un privilège ?",
@@ -55,18 +34,11 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
+      "title": "Les femmes MAGA au service du patriarcat",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré",
       "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
-      "source": "Quartier Libre",
-      "credit": "Photo : Maryse Boyce",
-      "cited": true,
-      "method": "figcaption-copyright"
+      "method": "media-credit-featured"
     },
     {
       "title": "Inside Mile End Kicks",
@@ -78,9 +50,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Illustration: Halle Keays",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }

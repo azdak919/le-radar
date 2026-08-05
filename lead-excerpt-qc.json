@@ -1,23 +1,14 @@
 {
-  "updated": "2026-08-05T14:35:47.294Z",
+  "updated": "2026-08-05T16:03:03.887Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 7,
+  "incomplete": 6,
   "withLeadExcerpt": 78,
-  "candidates": 7,
-  "enriched": 2,
+  "candidates": 6,
+  "enriched": 0,
   "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Les femmes MAGA au service du patriarcat",
-      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
-      "ok": true,
-      "score": 100,
-      "chars": 393,
-      "sample": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer ",
-      "changed": true
-    },
     {
       "title": "Review: Sullivan Fortner Solo at Gesú Concert Hall",
       "link": "https://www.mcgilldaily.com/2026/07/review-sullivan-fortner-solo-at-gesu-concert-hall/",
@@ -25,6 +16,15 @@
       "score": 74,
       "chars": 399,
       "sample": "Seated at a Kawai grand piano, he began with a crowd favourite, “Don’t You Worry ’Bout a Thing” by S",
+      "changed": false
+    },
+    {
+      "title": "Les avantages du transport en commun",
+      "link": "https://lecollectif.ca/a-la-une/les-avantages-du-transport-en-commun/",
+      "ok": true,
+      "score": 76,
+      "chars": 400,
+      "sample": "Le transport en commun représente une solution importante pour réduire la pollution causée par les d",
       "changed": false
     },
     {
@@ -62,15 +62,6 @@
       "chars": 177,
       "sample": "This history, and much more, is featured in the exhibition. Bellemare was able to gather never-befor",
       "changed": false
-    },
-    {
-      "title": "Les avantages du transport en commun",
-      "link": "https://lecollectif.ca/a-la-une/les-avantages-du-transport-en-commun/",
-      "ok": true,
-      "score": 76,
-      "chars": 400,
-      "sample": "Le transport en commun représente une solution importante pour réduire la pollution causée par les d",
-      "changed": true
     }
   ]
 }
