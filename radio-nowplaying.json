@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-08-05T13:00:09.644Z",
+  "updatedAt": "2026-08-05T15:21:56.838Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Mercredi Bonbon",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/mercredi-bonbon/"
-      },
+      "current": null,
       "next": {
         "title": "Chéri.e, j’arrive!",
         "source": "schedule",
@@ -20,94 +14,95 @@
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Mercredi Bonbon",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-05T12:59:46.456Z"
+      "checkedAt": "2026-08-05T15:21:42.452Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Club classique",
+        "title": "Genre de bleu (reprise)",
         "source": "schedule",
-        "start": "07:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/club-classique"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/genre-de-bleu"
       },
       "next": {
-        "title": "La collation",
+        "title": "La carte cadeau",
         "source": "schedule",
-        "start": "09:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/la-carte-cadeau"
       },
       "track": "",
-      "showTitle": "Club classique",
+      "showTitle": "Genre de bleu (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-05T12:59:48.861Z"
+      "checkedAt": "2026-08-05T15:21:44.348Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Wednesday Morning After",
+        "title": "Free City Radio",
         "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
+        "start": "11:00",
+        "end": "11:30"
       },
       "next": {
-        "title": "The Sleepy King/Terminal 5",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "title": "If You Got Ears",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00"
       },
       "track": "",
-      "showTitle": "The Wednesday Morning After",
+      "showTitle": "Free City Radio",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
-        "stream"
+        "stream",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-05T12:59:51.878Z"
+      "checkedAt": "2026-08-05T15:21:47.315Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Are We There Yet?",
+        "title": "Unheard Of",
         "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/are-we-there-yet"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/unheard-of"
       },
       "next": {
-        "title": "Democracy Now",
+        "title": "North-South Hockey",
         "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/north-south-hockey"
       },
       "track": "",
-      "showTitle": "Are We There Yet?",
+      "showTitle": "Unheard Of",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-05T13:00:05.838Z"
+      "checkedAt": "2026-08-05T15:21:48.505Z"
     },
     "cfak": {
       "id": "cfak",
@@ -132,7 +127,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-05T13:00:06.810Z"
+      "checkedAt": "2026-08-05T15:21:49.291Z"
     },
     "choq": {
       "id": "choq",
@@ -145,7 +140,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Cashier - Like I Do",
+      "track": "Lido Pimienta - Talento",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -156,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-05T13:00:09.294Z"
+      "checkedAt": "2026-08-05T15:21:56.486Z"
     }
   }
 }
