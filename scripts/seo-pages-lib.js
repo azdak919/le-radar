@@ -292,12 +292,12 @@ const T = {
     schedulesH1: 'Les horaires des radios étudiantes du Québec',
     schedulesLead: 'Une grille par station, mise à jour automatiquement à partir du site de chaque radio. Toutes les heures sont données à l’heure du Québec.',
     schedulesEmpty: 'Aucune grille horaire disponible au moment de la dernière mise à jour.',
-    sports: 'Au tableau',
+    sports: 'SPORTS Étudiants',
     /** Pied de page seulement (focus-group le-radar-footer-sports) — pas le H1/CTA. */
     sportsFooter: 'Sports',
-    sportsTitle: 'Au tableau — scores collégiaux et universitaires du Québec',
+    sportsTitle: 'SPORTS Étudiants — scores collégiaux et universitaires du Québec',
     sportsDesc: 'Scores et prochains matchs de {n} formations collégiales et universitaires du Québec (catalogue RSEQ) : hockey, football, soccer, basketball, volleyball, badminton, natation et plus.',
-    sportsH1: 'Au tableau',
+    sportsH1: 'SPORTS Étudiants',
     sportsLead: 'Le tableau des sports étudiants du Québec : formations collégiales et universitaires, scores et prochains matchs.',
     sportsEmpty: 'Aucun résultat sportif disponible au moment de la dernière mise à jour.',
     sportsClubPending: 'Association étudiante de voile — scores à venir.',
@@ -369,7 +369,9 @@ const T = {
     otherLang: 'English',
     footerNav: 'Liens de pied de page',
     footerDetails: 'À propos de LE-RADAR.ca',
-    footerDirectory: 'Tous les médias étudiants du Québec',
+    footerDirectory: 'Médias',
+    footerNewspapers: 'Journaux',
+    footerSchedules: 'Radios',
     archives: 'Archives',
     licenseIntro: 'Ce projet est distribué sous',
     licenseName: 'licence publique générale GNU, version 2',
@@ -443,12 +445,12 @@ const T = {
     schedulesH1: 'Québec campus radio schedules',
     schedulesLead: 'One grid per station, updated automatically from each station’s own website. All times are Québec time.',
     schedulesEmpty: 'No schedule available as of the last update.',
-    sports: 'Scoreboard',
+    sports: 'Student SPORTS',
     /** Footer only (same decision as FR sportsFooter). */
     sportsFooter: 'Sports',
-    sportsTitle: 'Scoreboard — Québec CEGEP and university sports results',
+    sportsTitle: 'Student SPORTS — Québec CEGEP and university sports results',
     sportsDesc: 'Scores and upcoming games for {n} CEGEP and university teams in Québec (RSEQ catalog): hockey, football, soccer, basketball, volleyball, badminton, swimming and more.',
-    sportsH1: 'Scoreboard',
+    sportsH1: 'Student SPORTS',
     sportsLead: 'Live board of student sports in Québec: CEGEP and university teams, scores, and what’s next.',
     sportsEmpty: 'No sports results available as of the last update.',
     sportsClubPending: 'Student sailing association — scores coming soon.',
@@ -520,7 +522,9 @@ const T = {
     otherLang: 'Français',
     footerNav: 'Footer links',
     footerDetails: 'About LE-RADAR.ca',
-    footerDirectory: 'All Québec student media',
+    footerDirectory: 'Media',
+    footerNewspapers: 'Newspapers',
+    footerSchedules: 'Radio',
     archives: 'Archives',
     licenseIntro: 'This project is distributed under the',
     licenseName: 'GNU General Public License, version 2',
@@ -619,19 +623,20 @@ const CHROME_T = {
     rssAria: 'S’abonner au flux RSS de LE-RADAR.ca',
     pomo: 'Pomodoro — minuteur focus',
     solitaire: 'Solitaire',
-    sports: 'Au tableau — scores étudiants',
+    sports: 'SPORTS Étudiants — scores collégiaux et universitaires',
     coffee: 'Offrir un café',
     coffeeAria: 'Offrir un café — Buy me a coffee',
     theme: 'Changer de thème',
     themeTitle: 'Mode clair / sombre',
     installMenu: 'Installer une app',
-    installMenuAria: 'Installer une app — LE-RADAR, Pomodoro, Solitaire, Au tableau',
+    installMenuAria: 'Installer une app — LE-RADAR, Pomodoro, Solitaire, SPORTS Étudiants',
     installApp: 'Installer LE-RADAR.ca',
     installAppAria: 'Installer l’app LE-RADAR.ca',
     appRadar: 'LE-RADAR.ca',
     appPomo: 'Pomodoro',
     appSolitaire: 'Solitaire',
-    appSports: 'Au tableau',
+    appSports: 'SPORTS Étudiants',
+    appSportsShort: 'SPORTS',
   },
   en: {
     home: 'Home',
@@ -640,19 +645,20 @@ const CHROME_T = {
     rssAria: 'Subscribe to the LE-RADAR.ca RSS feed',
     pomo: 'Pomodoro — focus timer',
     solitaire: 'Solitaire',
-    sports: 'Scoreboard — student sports',
+    sports: 'Student SPORTS — Québec college and university scores',
     coffee: 'Buy me a coffee',
     coffeeAria: 'Buy me a coffee',
     theme: 'Change theme',
     themeTitle: 'Light / dark mode',
     installMenu: 'Install an app',
-    installMenuAria: 'Install an app — LE-RADAR, Pomodoro, Solitaire, Scoreboard',
+    installMenuAria: 'Install an app — LE-RADAR, Pomodoro, Solitaire, Student SPORTS',
     installApp: 'Install LE-RADAR.ca',
     installAppAria: 'Install the LE-RADAR.ca app',
     appRadar: 'LE-RADAR.ca',
     appPomo: 'Pomodoro',
     appSolitaire: 'Solitaire',
-    appSports: 'Scoreboard',
+    appSports: 'Student SPORTS',
+    appSportsShort: 'SPORTS',
   },
 };
 
@@ -767,7 +773,14 @@ function renderSiteFooter({
   const links = [];
   if (!home) links.push(`<a href="${href('')}">${escapeHtml(t.backHome)}</a>`);
   links.push(`<a href="${href(dirPath)}">${escapeHtml(t.footerDirectory)}</a>`);
-  links.push(`<a href="${href(schedPath)}">${escapeHtml(t.schedules)}</a>`);
+  // Journaux : l'annuaire n'a pas de hub dédié, mais il porte déjà une ancre
+  // `#journaux`. On y renvoie plutôt que de créer une page qui dupliquerait
+  // la même liste.
+  links.push(`<a href="${href(dirPath)}#journaux">${escapeHtml(t.footerNewspapers)}</a>`);
+  // Libellés courts au pied de page (même décision que `sportsFooter`) : la
+  // rangée doit rester lisible sur une seule ligne en mobile. Les fils
+  // d'Ariane, eux, gardent les intitulés longs de `t.schedules`.
+  links.push(`<a href="${href(schedPath)}">${escapeHtml(t.footerSchedules || t.schedules)}</a>`);
   // data-sports-reset : depuis /sports/?sport=… recharge sans filtres.
   // Nouvel onglet hors /sports/ (radio continue) — sur le tableau, sports-board.js
   // intercepte et reste dans le même onglet pour un reset propre.
@@ -901,7 +914,7 @@ function renderPage({
       + '    <meta name="mobile-web-app-capable" content="yes" />\n'
       + '    <meta name="apple-mobile-web-app-capable" content="yes" />\n'
       + '    <meta name="apple-mobile-web-app-status-bar-style" content="default" />\n'
-      + `    <meta name="apple-mobile-web-app-title" content="${escapeHtml(CHROME_T[lang].appSports)}" />\n`
+      + `    <meta name="apple-mobile-web-app-title" content="${escapeHtml(CHROME_T[lang].appSportsShort)}" />\n`
       + `    <script src="${up}app-sw-register.js" defer></script>\n`
     : `    <link rel="manifest" href="${up}manifest.json" />\n`;
 
@@ -964,7 +977,11 @@ ${(Array.isArray(extraScripts) ? extraScripts : []).map((src) => `    <script sr
   <body>
     <header class="masthead">
       <div class="masthead-inner">
-        <div class="seo-masthead-actions">
+        <div class="masthead-top">
+          <span class="masthead-date">
+            <span id="today-date"></span>
+            <time id="today-time" class="masthead-time" aria-label="${lang === 'en' ? 'Current time' : 'Heure actuelle'}"></time>
+          </span>
           ${renderMastheadActions({ lang, up, current: chromeCurrent, indent: '          ' })}
         </div>
         <div class="masthead-brand">

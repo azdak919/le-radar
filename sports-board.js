@@ -1,5 +1,5 @@
 /**
- * LE-RADAR — page « Au tableau » (/sports/).
+ * LE-RADAR — page « SPORTS Étudiants » (/sports/).
  * Progressive enhancement : sans ce script, toute la grille reste visible.
  * Filtres : sport · catégorie · secteur · période (semaine / mois / session)
  * + loupe de recherche locale (équipe, institution, sport…)
@@ -490,7 +490,7 @@
   root.addEventListener('click', onFilterClick);
 
   /**
-   * Clic « Au tableau » (titre, fil d’Ariane, pied) : recharge la page sans
+   * Clic « SPORTS Étudiants » (titre, fil d’Ariane, pied) : recharge sans
    * filtres (sport / secteur / catégorie / équipe / hash).
    */
   function resetSportsBoard(e) {

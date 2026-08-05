@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════
-   Au tableau (Le Radar) — Service Worker
+   SPORTS Étudiants (Le Radar) — Service Worker
    Scope: /sports/ only — isolated from the root radar SW,
    which excludes this path (see ISOLATED_PATH_RE in ../sw.js).
    Strategy:
@@ -11,7 +11,7 @@
    POURQUOI CE WORKER EXISTE
    La page est entièrement prérendue : sports-board.js ne fait que filtrer du
    HTML déjà présent, sans aucun fetch. Mettre le shell en cache suffit donc
-   à rendre « Au tableau » utilisable hors ligne, scores compris — ce sont
+   à rendre « SPORTS Étudiants » utilisable hors ligne, scores compris — ce
    ceux de la dernière visite, ce que la page indique déjà par sa date de
    mise à jour.
    ═══════════════════════════════════════════════════════ */
