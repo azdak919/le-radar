@@ -106,6 +106,31 @@ for (const route of ROUTES) {
           expect(clipped, `${label} : pastilles hors du mât`).toEqual([]);
         }
 
+        // 2 bis) La rangée n'empiète pas sur la marque.
+        //
+        // C'est le contrôle qui manquait : vérifier que les pastilles restent
+        // dans .masthead-inner ne dit RIEN sur ce qu'elles recouvrent à
+        // l'intérieur. Les pages d'entités posaient leur rangée en
+        // `position: absolute` par-dessus le mot-symbole — dans le conteneur,
+        // donc invisible pour l'assertion précédente, mais illisible à l'œil.
+        if (route.kind === 'masthead') {
+          const collisions = await page.evaluate(() => {
+            const actions = document.querySelector('.masthead-actions');
+            if (!actions) return [];
+            const a = actions.getBoundingClientRect();
+            const overlaps = (b) => !(a.bottom <= b.top || a.top >= b.bottom
+              || a.right <= b.left || a.left >= b.right);
+            return ['.masthead-brand', '.wordmark-mark', '.wordmark-full']
+              .filter((sel) => {
+                const el = document.querySelector(sel);
+                if (!el) return false;
+                const b = el.getBoundingClientRect();
+                return b.width > 0 && b.height > 0 && overlaps(b);
+              });
+          });
+          expect(collisions, `${label} : la rangée recouvre la marque`).toEqual([]);
+        }
+
         // 3) Cible tactile suffisante.
         const size = await page.locator(TOGGLE).first().boundingBox();
         expect(size.width, `${label} : largeur du déclencheur`).toBeGreaterThanOrEqual(22);

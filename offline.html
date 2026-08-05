@@ -550,6 +550,15 @@
       font-weight: 700;
       color: var(--ink);
     }
+    /* Manquait à la copie : sans cette règle l'image gardait ses attributs
+       width/height (24 px), sans marge ni alignement — le seul pied de page
+       du site où le logo ne tombait pas d'aplomb sur le mot-symbole. */
+    .site-foot__logo {
+      width: 20px;
+      height: 20px;
+      margin-right: 6px;
+      vertical-align: -0.12em;
+    }
     .site-foot__signature {
       margin: 0 0 0.55rem !important;
       font-size: 0.7rem;
@@ -747,9 +756,11 @@
           <nav class="site-foot__links" aria-label="Liens de pied de page">
             <a href="./">Retour à l’accueil de LE-RADAR.ca</a>
             <span class="site-foot__sep" aria-hidden="true">·</span>
-            <a href="medias/">Tous les médias étudiants du Québec</a>
+            <a href="medias/">Médias</a>
             <span class="site-foot__sep" aria-hidden="true">·</span>
-            <a href="horaires/">Les horaires des radios étudiantes</a>
+            <a href="medias/#journaux">Journaux</a>
+            <span class="site-foot__sep" aria-hidden="true">·</span>
+            <a href="horaires/">Radios</a>
             <span class="site-foot__sep" aria-hidden="true">·</span>
             <a href="sports/" data-sports-reset target="_blank" rel="noopener noreferrer">Sports</a>
             <span class="site-foot__sep" aria-hidden="true">·</span>

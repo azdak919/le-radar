@@ -66,6 +66,36 @@ for (const file of htmlFiles) {
   }
 }
 
+// offline.html ne charge pas style.css — c'est voulu : la page doit s'afficher
+// quand le réseau est tombé. Elle redéclare donc les règles du pied de page
+// partagé en ligne. Cette copie assumée avait déjà dérivé : `.site-foot__logo`
+// y manquait, et le logo s'affichait à 24 px sans marge, seul cas du site.
+// Ce contrôle exige que toute classe `site-foot__*` posée par le générateur
+// dans offline.html soit effectivement stylée sur place.
+{
+  const offlineHtml = readFileSync(join(root, 'offline.html'), 'utf8');
+  const footerMarkup = offlineHtml.slice(
+    offlineHtml.indexOf('<!-- RADAR:FOOTER:START -->'),
+    offlineHtml.indexOf('<!-- RADAR:FOOTER:END -->'),
+  );
+  // Ces deux-là n'ont de règle nulle part sur le site : ils héritent de
+  // `.site-foot a`. Les exiger ici serait plus strict que la référence.
+  const INHERITED = new Set(['site-foot__heart', 'site-foot__author-link']);
+  const used = new Set();
+  for (const attr of footerMarkup.matchAll(/class="([^"]+)"/g)) {
+    for (const cls of attr[1].split(/\s+/)) {
+      if (cls.startsWith('site-foot__') && !INHERITED.has(cls)) used.add(cls);
+    }
+  }
+  const inlineCss = offlineHtml.slice(0, offlineHtml.indexOf('<!-- RADAR:FOOTER:START -->'));
+  for (const cls of used) {
+    assert(
+      inlineCss.includes(`.${cls}`),
+      `offline.html : « .${cls} » posée par le pied de page partagé mais non stylée sur place`,
+    );
+  }
+}
+
 function assertServiceWorkerAssets(file, arrayName) {
   const source = readFileSync(file, 'utf8');
   const array = source.match(new RegExp(`const ${arrayName} = \\[([\\s\\S]*?)\\n\\];`));
@@ -503,13 +533,13 @@ assert(
   'index.html : lien de pied de page vers /horaires/ requis (page autrement orpheline)'
 );
 
-// Hub sports « Au tableau » : scores RSEQ + filtres, lien de pied de page.
+// Hub sports « SPORTS Étudiants » : scores RSEQ + filtres, lien de pied de page.
 for (const hub of ['sports/index.html', 'en/sports/index.html']) {
   assert(existsSync(join(root, hub)), `${hub} manquant — lancer \`npm run seo:update\``);
 }
 assert(
   /<a href="sports\/" data-sports-reset[^>]*>Sports<\/a>/.test(indexHtml),
-  'index.html : footer /sports/ libellé « Sports » (focus-group footer, pas « Au tableau »)'
+  'index.html : footer /sports/ libellé « Sports » (focus-group footer, pas le nom long)'
 );
 assert(
   /href="sports\/"[^>]*target="_blank"[^>]*rel="noopener noreferrer"/.test(indexHtml)
@@ -517,8 +547,8 @@ assert(
   'index.html : lien Sports en nouvel onglet (préserve la radio)'
 );
 assert(
-  /<h1 class="seo-title"[^>]*>[\s\S]*?Au tableau/.test(readFileSync(join(root, 'sports/index.html'), 'utf8')),
-  'sports/index.html : H1 reste « Au tableau » (marque de section)'
+  /<h1 class="seo-title"[^>]*>[\s\S]*?SPORTS Étudiants/.test(readFileSync(join(root, 'sports/index.html'), 'utf8')),
+  'sports/index.html : H1 = « SPORTS Étudiants » (marque de section)'
 );
 const sportsHub = readFileSync(join(root, 'sports/index.html'), 'utf8');
 assert(sportsHub.includes('data-sports-board'), 'sports : racine filtrable requise');
@@ -669,8 +699,33 @@ assert(
 // CTA mât : pastille « Sports », crossfade superposé + dédup miroirs (focus-group D).
 assert(
   /const SPORTS_CTA_TAG\s*=\s*['"]Sports['"]/.test(appJs),
-  'app.js : pastille CTA mât = « Sports » (pas « Au tableau »)',
+  'app.js : pastille CTA mât = « Sports » (pas le nom long de la section)',
 );
+// Le texte d'information de la CTA ne pulse pas : la pulsation redémarrait à
+// 0 % dès la fin du fondu et faisait sauter l'opacité de 1 à 0,82 — le « clac »
+// que le crossfade était justement censé supprimer. Halo et badge, eux, gardent
+// leur pulsation : ce sont eux qui portent l'appel à l'attention.
+assert(
+  !/\.sports-chip__cta-label[^{]*\{[^}]*sports-cta-label-pulse/.test(styleCss.replace(/\s+/g, ' ')),
+  'style : le texte de la CTA sports ne doit pas pulser (fondu seul)',
+);
+assert(
+  !/\.sports-chip__cta-chev\s*\{[^}]*sports-cta-label-pulse/.test(styleCss.replace(/\s+/g, ' ')),
+  'style : le chevron de la CTA sports ne doit pas pulser (cohérence avec le texte)',
+);
+assert(
+  /sports-cta-ring-pulse/.test(styleCss) && /sports-cta-tag-pulse/.test(styleCss),
+  'style : halo et badge de la CTA sports gardent leur pulsation',
+);
+
+// Fraîcheur des articles : jour civil québécois, pas une fenêtre de minutes.
+// Le fil publie par à-coups ; une fenêtre de 2 h laissait la quasi-totalité des
+// parutions du jour en gris, ce qu'elle était censée signaler.
+assert(
+  /const fresh = d \? torontoDayKey\(d\) === torontoDayKey\(\) : false;/.test(appJs),
+  'app.js : la date rouge couvre toute la journée civile (torontoDayKey), pas 120 min',
+);
+
 assert(
   appJs.includes('crossfadeSportsCtaLabel')
     && appJs.includes('sports-chip__cta-stack')

@@ -768,8 +768,8 @@
     sports: {
       id: 'sports',
       rel: 'sports/',
-      label: { fr: 'Au tableau', en: 'Scoreboard' },
-      short: { fr: 'Au tableau', en: 'Scoreboard' },
+      label: { fr: 'SPORTS Étudiants', en: 'Student SPORTS' },
+      short: { fr: 'SPORTS', en: 'SPORTS' },
       emoji: 'trophy',
     },
   };
@@ -1089,7 +1089,7 @@
    *  - site : `.masthead-inner` est à 2, `#tuner` à 100 ;
    *  - apps : `.game-toolbar-chrome` est à 1, `.game-toolbar-tuner` à 3.
    * Dans les deux cas le syntoniseur passe par-dessus tout le sous-arbre du
-   * panneau. Constaté à l'œil sur l'accueil (« Au tableau », le 4ᵉ item,
+   * panneau. Constaté à l'œil sur l'accueil (« SPORTS Étudiants », le 4ᵉ item,
    * disparaissait sous la barre) et mesuré sur Solitaire à 320 px.
    *
    * On relève donc l'ancêtre, et seulement pendant l'ouverture : le laisser

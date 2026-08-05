@@ -992,16 +992,23 @@ function applyTheme(theme) {
 function renderTodayDate() {
   if (!TODAY_DATE && !TODAY_TIME) return;
   const now = new Date();
+  // La date du mât existe désormais aussi sur les pages d'entités, volet
+  // anglais compris : la locale suit donc `lang` du document. En dur sur
+  // `fr-CA`, /en/ affichait « lundi 3 août 2026 » sous un titre anglais.
+  const isEnglish = (document.documentElement.lang || 'fr').toLowerCase().startsWith('en');
+  const locale = isEnglish ? 'en-CA' : 'fr-CA';
   if (TODAY_DATE) {
-    TODAY_DATE.textContent = now.toLocaleDateString('fr-CA', {
+    TODAY_DATE.textContent = now.toLocaleDateString(locale, {
       weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
     });
   }
   if (TODAY_TIME) {
     TODAY_TIME.dateTime = now.toTimeString().slice(0, 5);
-    TODAY_TIME.textContent = now.toLocaleTimeString('fr-CA', {
-      hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
-    }).replace(/\s*h\s*/u, ':');
+    TODAY_TIME.textContent = isEnglish
+      ? now.toLocaleTimeString('en-CA', { hour: 'numeric', minute: '2-digit', hour12: true })
+      : now.toLocaleTimeString('fr-CA', {
+        hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+      }).replace(/\s*h\s*/u, ':');
   }
 }
 
@@ -1866,8 +1873,10 @@ function sportsGameMs(game) {
   return Number.isFinite(t) ? t : NaN;
 }
 
-/** Jour civil America/Toronto (YYYY-MM-DD) — frontière « hier / aujourd’hui ». */
-function sportsTorontoDayKey(msOrDate = Date.now()) {
+/** Jour civil America/Toronto (YYYY-MM-DD) — frontière « hier / aujourd’hui ».
+ *  Sert aux matchs comme aux articles : le jour de référence est celui du
+ *  Québec, pas celui du fuseau de la personne qui lit. */
+function torontoDayKey(msOrDate = Date.now()) {
   try {
     return new Intl.DateTimeFormat('en-CA', {
       timeZone: 'America/Toronto',
@@ -1886,18 +1895,18 @@ function sportsGameIsToday(game) {
   if (!Number.isFinite(ms)) {
     // Fallback date seule
     if (!game?.date) return false;
-    return game.date === sportsTorontoDayKey();
+    return game.date === torontoDayKey();
   }
-  return sportsTorontoDayKey(ms) === sportsTorontoDayKey();
+  return torontoDayKey(ms) === torontoDayKey();
 }
 
 /** true si le match est strictement avant aujourd’hui (QC) — ex. hier. */
 function sportsGameIsBeforeToday(game) {
   const day = game?.date || (Number.isFinite(sportsGameMs(game))
-    ? sportsTorontoDayKey(sportsGameMs(game))
+    ? torontoDayKey(sportsGameMs(game))
     : '');
   if (!day) return false;
-  return day < sportsTorontoDayKey();
+  return day < torontoDayKey();
 }
 
 /**
@@ -9213,7 +9222,12 @@ function createArticle(item, role = 'standard') {
   const time = d
     ? formatStampCompact(d, item.lang === 'en' ? 'en' : 'fr')
     : '';
-  const fresh = d ? (Date.now() - d) < 120 * 60000 : false;
+  /* Le rouge « frais » couvre toute la journée civile québécoise, et non les
+     120 dernières minutes : le fil des journaux étudiants publie par à-coups,
+     souvent quelques articles par jour. Une fenêtre de 2 h laissait donc la
+     quasi-totalité des parutions du jour en gris, ce que la fenêtre était
+     justement censée signaler. */
+  const fresh = d ? torontoDayKey(d) === torontoDayKey() : false;
   const { author: rawAuthor, body } = splitByline(item);
   const displayAuthor = resolveDisplayAuthor(item, rawAuthor);
   /* Vedettes : même règles de contenu que la une (leadExcerpt, longueur, minimum). */

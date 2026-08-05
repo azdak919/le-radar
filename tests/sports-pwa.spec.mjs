@@ -1,5 +1,5 @@
 /**
- * « Au tableau » (/sports/) — app installable, au même rang que Pomodoro et
+ * « SPORTS Étudiants » (/sports/) — app installable, au même rang que Pomodoro
  * Solitaire.
  *
  * Tourne dans le projet `pwa` de playwright.config.mjs : c'est le seul où les
