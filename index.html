@@ -322,6 +322,21 @@
          N cartes selon largeur — peuplé par app.js depuis sports.json. -->
     <div id="masthead-sports-strip" class="masthead-sports-strip" hidden aria-label="Résultats sportifs étudiants du Québec" aria-live="polite"></div>
 
+    <!-- Menu de sections — rempli par generate-seo.js depuis SECTIONS, la même
+         liste que le pied de page. Accueil seulement : les pages d'entités ont
+         déjà un fil d'Ariane au même endroit. -->
+    <!-- RADAR:CHROME:SECTIONS:START -->
+    <nav class="site-sections" aria-label="Sections du site">
+      <a href="medias/">Médias</a>
+      <span class="site-sections__sep" aria-hidden="true">·</span>
+      <a href="medias/#journaux">Journaux</a>
+      <span class="site-sections__sep" aria-hidden="true">·</span>
+      <a href="horaires/">Radios</a>
+      <span class="site-sections__sep" aria-hidden="true">·</span>
+      <a href="sports/" data-sports-reset target="_blank" rel="noopener noreferrer">Sports</a>
+    </nav>
+    <!-- RADAR:CHROME:SECTIONS:END -->
+
     <main class="wire">
       <!-- ══════════ SOURCE FILTERS ══════════ -->
       <div class="wire-head">

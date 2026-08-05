@@ -3744,6 +3744,53 @@ html[data-translate-busy="1"] .translate-toggle {
   outline-offset: 2px;
 }
 
+/* ── Menu de sections (accueil, sous la barre des scores) ──
+ *
+ * Repris du fil d'Ariane des pages d'entités (`.seo-crumbs`) : même famille,
+ * même corps, même gris. C'est un rappel de navigation, pas un bandeau — il ne
+ * doit pas concurrencer le mât juste au-dessus ni le fil juste en dessous.
+ */
+.site-sections {
+  max-width: var(--maxw);
+  margin: 14px auto 0;
+  padding: 0 var(--pad);
+  font-family: var(--sans);
+  font-size: 12.5px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  color: var(--muted);
+}
+.site-sections a {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 2px 0;
+}
+.site-sections a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.site-sections a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+.site-sections__sep {
+  color: var(--rule);
+  user-select: none;
+}
+@media (max-width: 599.98px) {
+  .site-sections {
+    margin-top: 10px;
+    font-size: 12px;
+    gap: 3px 7px;
+  }
+}
+
 /* ─────────────── FEEDS PAGE ─────────────── */
 .feeds-wire { padding-bottom: 56px; }
 

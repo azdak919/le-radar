@@ -707,6 +707,57 @@ function renderInstallMenu({ lang = 'fr', up = './', panelId = 'install-menu-pan
       </div>`;
 }
 
+/**
+ * Sections du site — SOURCE DE VÉRITÉ UNIQUE.
+ *
+ * Le pied de page et le menu de sections de l'accueil tiraient sinon deux
+ * listes parallèles, exactement le motif de dérive qu'on vient de corriger
+ * ailleurs. `key` pointe vers les libellés courts de `T` (ceux du pied de
+ * page) ; les fils d'Ariane gardent les intitulés longs.
+ *
+ * `archives` est marquée `footerOnly` : le catalogue historique reste
+ * expérimental (dette D19) et n'a pas sa place dans la navigation principale.
+ */
+const SECTIONS = [
+  { id: 'medias', key: 'footerDirectory', path: { fr: 'medias/', en: 'en/media/' } },
+  // L'annuaire n'a pas de hub « journaux » dédié, mais il porte déjà l'ancre.
+  { id: 'journaux', key: 'footerNewspapers', path: { fr: 'medias/#journaux', en: 'en/media/#journaux' } },
+  { id: 'radios', key: 'footerSchedules', path: { fr: 'horaires/', en: 'en/schedules/' } },
+  // data-sports-reset : depuis /sports/?sport=… recharge sans filtres. Nouvel
+  // onglet hors /sports/ pour que la radio continue — sur le tableau,
+  // sports-board.js intercepte et reste dans le même onglet.
+  {
+    id: 'sports',
+    key: 'sportsFooter',
+    path: { fr: 'sports/', en: 'en/sports/' },
+    attrs: ' data-sports-reset target="_blank" rel="noopener noreferrer"',
+  },
+  { id: 'archives', key: 'archives', path: { fr: 'archives/', en: 'archives/' }, footerOnly: true },
+];
+
+function sectionLinks({ lang, href, includeFooterOnly = false }) {
+  const t = T[lang];
+  return SECTIONS
+    .filter((s) => includeFooterOnly || !s.footerOnly)
+    .map((s) => `<a href="${href(s.path[lang] || s.path.fr)}"${s.attrs || ''}>${escapeHtml(t[s.key])}</a>`);
+}
+
+/**
+ * Menu de sections de l'accueil, sous la barre des scores.
+ *
+ * Volontairement limité à l'accueil : les pages d'entités portent déjà un fil
+ * d'Ariane au même endroit, qui dit en plus la position dans l'arborescence.
+ */
+function renderSectionNav({ lang = 'fr', up = './', indent = '    ' } = {}) {
+  const href = (rel) => (rel ? `${up}${rel}`.replace(/^\.\//, '') : up);
+  const sep = '<span class="site-sections__sep" aria-hidden="true">·</span>';
+  const items = sectionLinks({ lang, href }).join(`\n${indent}  ${sep}\n${indent}  `);
+  const label = lang === 'en' ? 'Site sections' : 'Sections du site';
+  return `<nav class="site-sections" aria-label="${label}">
+${indent}  ${items}
+${indent}</nav>`;
+}
+
 function renderMastheadActions({ lang = 'fr', up = './', current = null, indent = '          ' } = {}) {
   const c = CHROME_T[lang] || CHROME_T.fr;
   const p = indent;
@@ -758,12 +809,7 @@ function renderSiteFooter({
 } = {}) {
   const t = T[lang];
   const p = indent;
-  const dirPath = lang === 'fr' ? 'medias/' : 'en/media/';
-  const schedPath = lang === 'fr' ? 'horaires/' : 'en/schedules/';
-  const sportsPath = lang === 'fr' ? 'sports/' : 'en/sports/';
-  // Le catalogue est actuellement francophone, mais son libellé est neutre et
-  // l’archive reste utile depuis le volet anglais.
-  const archivePath = 'archives/';
+  // Les chemins des sections viennent de `SECTIONS` : plus de liste locale.
 
   // À la racine, `up` vaut './' : on le retire devant un chemin pour écrire
   // « horaires/ » et non « ./horaires/ », la forme que le reste du site et
@@ -772,20 +818,10 @@ function renderSiteFooter({
 
   const links = [];
   if (!home) links.push(`<a href="${href('')}">${escapeHtml(t.backHome)}</a>`);
-  links.push(`<a href="${href(dirPath)}">${escapeHtml(t.footerDirectory)}</a>`);
-  // Journaux : l'annuaire n'a pas de hub dédié, mais il porte déjà une ancre
-  // `#journaux`. On y renvoie plutôt que de créer une page qui dupliquerait
-  // la même liste.
-  links.push(`<a href="${href(dirPath)}#journaux">${escapeHtml(t.footerNewspapers)}</a>`);
-  // Libellés courts au pied de page (même décision que `sportsFooter`) : la
-  // rangée doit rester lisible sur une seule ligne en mobile. Les fils
-  // d'Ariane, eux, gardent les intitulés longs de `t.schedules`.
-  links.push(`<a href="${href(schedPath)}">${escapeHtml(t.footerSchedules || t.schedules)}</a>`);
-  // data-sports-reset : depuis /sports/?sport=… recharge sans filtres.
-  // Nouvel onglet hors /sports/ (radio continue) — sur le tableau, sports-board.js
-  // intercepte et reste dans le même onglet pour un reset propre.
-  links.push(`<a href="${href(sportsPath)}" data-sports-reset target="_blank" rel="noopener noreferrer">${escapeHtml(t.sportsFooter || t.sports)}</a>`);
-  links.push(`<a href="${href(archivePath)}">${escapeHtml(t.archives)}</a>`);
+  // Même liste que le menu de sections de l'accueil (`SECTIONS`), archives
+  // comprises ici : les libellés courts du pied de page ne peuvent donc plus
+  // diverger de ceux du haut de page.
+  links.push(...sectionLinks({ lang, href, includeFooterOnly: true }));
   // `altPath` vaut '' sur /en/ : la version française est la racine du site.
   // Tester la valeur et non sa véracité, sinon le volet anglais perd sa bascule.
   if (altPath !== null && altPath !== undefined) {
@@ -1305,6 +1341,8 @@ module.exports = {
   renderPage,
   renderSiteFooter,
   renderMastheadActions,
+  renderSectionNav,
+  SECTIONS,
   renderInstallMenu,
   CHROME_T,
   INSTALL_APPS,

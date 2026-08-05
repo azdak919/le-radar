@@ -66,6 +66,41 @@ for (const file of htmlFiles) {
   }
 }
 
+// Menu de sections de l'accueil : mêmes libellés et mêmes cibles que le pied
+// de page, archives exceptées. Les deux listes sortent de `SECTIONS` dans
+// seo-pages-lib ; ce contrôle vérifie que le HTML publié le reflète, pour que
+// personne ne recopie une entrée à la main d'un côté seulement.
+{
+  const home = readFileSync(join(root, 'index.html'), 'utf8');
+  const navBlock = home.slice(
+    home.indexOf('<!-- RADAR:CHROME:SECTIONS:START -->'),
+    home.indexOf('<!-- RADAR:CHROME:SECTIONS:END -->'),
+  );
+  assert(navBlock.includes('class="site-sections"'), 'index.html : menu de sections requis sous la barre des scores');
+
+  const hrefsIn = (block) => [...block.matchAll(/<a href="([^"]+)"/g)].map((m) => m[1]);
+  const navHrefs = hrefsIn(navBlock);
+  assert.deepEqual(
+    navHrefs,
+    ['medias/', 'medias/#journaux', 'horaires/', 'sports/'],
+    'index.html : sections du haut = Médias, Journaux, Radios, Sports (sans Archives)',
+  );
+
+  const footBlock = home.slice(
+    home.indexOf('<!-- RADAR:FOOTER:START -->'),
+    home.indexOf('<!-- RADAR:FOOTER:END -->'),
+  );
+  for (const href of navHrefs) {
+    assert(
+      footBlock.includes(`href="${href}"`),
+      `index.html : « ${href} » est dans le menu de sections mais absent du pied de page`,
+    );
+  }
+  // Les archives restent au pied de page seul (catalogue expérimental, D19).
+  assert(footBlock.includes('href="archives/"'), 'index.html : archives requises au pied de page');
+  assert(!navBlock.includes('archives/'), 'index.html : archives hors du menu de sections');
+}
+
 // offline.html ne charge pas style.css — c'est voulu : la page doit s'afficher
 // quand le réseau est tombé. Elle redéclare donc les règles du pied de page
 // partagé en ligne. Cette copie assumée avait déjà dérivé : `.site-foot__logo`

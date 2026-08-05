@@ -28,7 +28,7 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 const { decodeHtmlEntities } = require('./html-entities-lib');
 const { buildEntityPages } = require('./seo-pages');
-const { renderSiteFooter, renderMastheadActions } = require('./seo-pages-lib');
+const { renderSiteFooter, renderMastheadActions, renderSectionNav } = require('./seo-pages-lib');
 const { buildHistoricalArchivePages } = require('./historical-seo-pages');
 
 const ROOT = path.join(__dirname, '..');
@@ -49,7 +49,6 @@ const SPORTS_PATH = path.join(ROOT, 'sports.json');
 const ARCHIVE_PATH = path.join(ROOT, 'news-archive.json');
 const ARCHIVE_CONFIG_PATH = path.join(ROOT, 'historical-catalog.config.json');
 
-/** Dossiers entièrement générés : purgés puis réécrits à chaque passe. */
 /**
  * Dossiers entièrement reconstruits à chaque passe : on les efface d'abord
  * pour qu'une entité retirée des données ne laisse pas de page orpheline.
@@ -79,6 +78,7 @@ const MARKERS = {
   feed: ['<!-- RADAR:SEO:FEED:START -->', '<!-- RADAR:SEO:FEED:END -->'],
   footer: ['<!-- RADAR:FOOTER:START -->', '<!-- RADAR:FOOTER:END -->'],
   actions: ['<!-- RADAR:CHROME:ACTIONS:START -->', '<!-- RADAR:CHROME:ACTIONS:END -->'],
+  sections: ['<!-- RADAR:CHROME:SECTIONS:START -->', '<!-- RADAR:CHROME:SECTIONS:END -->'],
 };
 
 /**
@@ -219,6 +219,16 @@ function injectFooter(html, page) {
   const { file, indent, ...opts } = page;
   const footer = renderSiteFooter({ ...opts, indent });
   return injectBetween(html, MARKERS.footer, `\n${indent}${footer}\n${indent}`, 'FOOTER', file);
+}
+
+/**
+ * Injecte le menu de sections. L'accueil seul le porte : les pages d'entités
+ * ont déjà un fil d'Ariane au même endroit, qui situe en plus la page dans
+ * l'arborescence.
+ */
+function injectSections(html, { file, indent, ...opts }) {
+  const nav = renderSectionNav({ ...opts, indent });
+  return injectBetween(html, MARKERS.sections, `\n${indent}${nav}\n${indent}`, 'CHROME:SECTIONS', file);
 }
 
 /** Injecte la rangée d'actions du mât entre les marqueurs d'une page statique. */
@@ -587,6 +597,7 @@ function main() {
   html = injectBetween(html, MARKERS.feed, buildFeedHtml(prerendered), 'FEED');
   html = injectFooter(html, indexPage);
   html = injectActions(html, ACTIONS_PAGES.find((p) => p.file === 'index.html'));
+  html = injectSections(html, { file: 'index.html', lang: 'fr', up: './', indent: '    ' });
 
   if (doUpdate && html !== before) fs.writeFileSync(INDEX_PATH, html, 'utf8');
   written.push({
