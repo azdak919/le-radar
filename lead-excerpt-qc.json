@@ -1,14 +1,32 @@
 {
-  "updated": "2026-08-05T20:41:27.241Z",
+  "updated": "2026-08-05T21:13:53.612Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 6,
-  "withLeadExcerpt": 78,
-  "candidates": 6,
-  "enriched": 0,
-  "failed": 1,
+  "incomplete": 8,
+  "withLeadExcerpt": 79,
+  "candidates": 8,
+  "enriched": 2,
+  "failed": 0,
   "ok": true,
   "samples": [
+    {
+      "title": "Sois belle et tais-toi",
+      "link": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
+      "ok": true,
+      "score": 96,
+      "chars": 295,
+      "sample": "C’est la sécheresse totale dans le cerveau de bien des gens. Le vôtre, peut-être. Mais ne craignez r",
+      "changed": true
+    },
+    {
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "link": "https://www.delitfrancais.com/2026/03/18/qui-sont-les-agents-qui-patrouillent-notre-campus/",
+      "ok": true,
+      "score": 100,
+      "chars": 396,
+      "sample": "« L’Université McGill est à la recherche de patrouilleurs dynamiques et engagés pour assurer la sécu",
+      "changed": true
+    },
     {
       "title": "Review: Sullivan Fortner Solo at Gesú Concert Hall",
       "link": "https://www.mcgilldaily.com/2026/07/review-sullivan-fortner-solo-at-gesu-concert-hall/",
@@ -16,6 +34,15 @@
       "score": 74,
       "chars": 399,
       "sample": "Seated at a Kawai grand piano, he began with a crowd favourite, “Don’t You Worry ’Bout a Thing” by S",
+      "changed": false
+    },
+    {
+      "title": "Les avantages du transport en commun",
+      "link": "https://lecollectif.ca/a-la-une/les-avantages-du-transport-en-commun/",
+      "ok": true,
+      "score": 76,
+      "chars": 400,
+      "sample": "Le transport en commun représente une solution importante pour réduire la pollution causée par les d",
       "changed": false
     },
     {
