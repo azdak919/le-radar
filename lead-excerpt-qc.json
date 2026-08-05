@@ -1,30 +1,57 @@
 {
-  "updated": "2026-08-04T22:30:58.612Z",
+  "updated": "2026-08-05T00:06:22.473Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 8,
-  "withLeadExcerpt": 80,
-  "candidates": 8,
-  "enriched": 2,
+  "incomplete": 11,
+  "withLeadExcerpt": 78,
+  "candidates": 11,
+  "enriched": 5,
   "failed": 0,
   "ok": true,
   "samples": [
     {
-      "title": "Pourquoi le L est en premier dans LGBTQ+",
-      "link": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
+      "title": "Les femmes MAGA au service du patriarcat",
+      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
       "ok": true,
-      "score": 81,
-      "chars": 400,
-      "sample": "Cependant, l’épidémie du sida a modifié le rapport entre les deux groupes. Au cours de cette crise, ",
+      "score": 100,
+      "chars": 393,
+      "sample": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer ",
       "changed": true
     },
     {
-      "title": "Sois belle et tais-toi",
-      "link": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
+      "title": "Le Canada et ses provinces face à Washington",
+      "link": "https://lecollectif.ca/a-la-une/le-canada-et-ses-provinces-face-a-washington/",
+      "ok": true,
+      "score": 100,
+      "chars": 359,
+      "sample": "Le ton monte entre Washington et Ottawa, alors que les menaces américaines pèsent de plus en plus su",
+      "changed": true
+    },
+    {
+      "title": "La 29e édition du Festival des traditions du monde de Sherbrooke",
+      "link": "https://lecollectif.ca/a-la-une/la-29e-edition-du-festival-des-traditions-du-monde-de-sherbrooke/",
+      "ok": true,
+      "score": 100,
+      "chars": 398,
+      "sample": "Du 12 au 16 août, le Festival des traditions du monde de Sherbrooke (FTMS) revient en force au parc ",
+      "changed": true
+    },
+    {
+      "title": "L’essor de l’économie collaborative",
+      "link": "https://lecollectif.ca/a-la-une/lessor-de-leconomie-collaborative/",
       "ok": true,
       "score": 96,
-      "chars": 295,
-      "sample": "C’est la sécheresse totale dans le cerveau de bien des gens. Le vôtre, peut-être. Mais ne craignez r",
+      "chars": 370,
+      "sample": "Il y a différents types de partages qu’il est possible d’effectuer avec l’économie collaborative, co",
+      "changed": true
+    },
+    {
+      "title": "Les impacts de la construction sur les commerces",
+      "link": "https://lecollectif.ca/a-la-une/les-impacts-de-la-construction-sur-les-commerces/",
+      "ok": true,
+      "score": 100,
+      "chars": 325,
+      "sample": "Les travaux de construction qui durent plusieurs semaines autour des commerces ont un impact négatif",
       "changed": true
     },
     {
@@ -52,33 +79,6 @@
       "score": 70,
       "chars": 400,
       "sample": "On May 14, 429 activists carrying more than 11,000 kilograms of humanitarian aid set sail to Gaza fr",
-      "changed": false
-    },
-    {
-      "title": "The Cruel Optimism of Summer",
-      "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
-      "ok": true,
-      "score": 66,
-      "chars": 400,
-      "sample": "“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt t",
-      "changed": false
-    },
-    {
-      "title": "Ask the Trib: How do I survive summer in my hometown?",
-      "link": "https://www.thetribune.ca/student-life/ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026/?utm_source=rss&utm_medium=rss&utm_campaign=ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026",
-      "ok": true,
-      "score": 66,
-      "chars": 400,
-      "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
-      "changed": false
-    },
-    {
-      "title": "Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods",
-      "link": "https://thelinknewspaper.ca/article/16338",
-      "ok": true,
-      "score": 90,
-      "chars": 177,
-      "sample": "This history, and much more, is featured in the exhibition. Bellemare was able to gather never-befor",
       "changed": false
     }
   ]

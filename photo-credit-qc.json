@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-04T22:35:48.135Z",
+  "updated": "2026-08-05T00:11:42.215Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
@@ -7,11 +7,39 @@
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 21,
-  "updatedCount": 10,
-  "citedNew": 9,
+  "checked": 25,
+  "updatedCount": 14,
+  "citedNew": 13,
   "fallbackNew": 12,
   "samples": [
+    {
+      "title": "Le Canada et ses provinces face à Washington",
+      "source": "Le Collectif",
+      "credit": "Photo : Source : Getty Images",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "L’essor de l’économie collaborative",
+      "source": "Le Collectif",
+      "credit": "Photo : Revue gestion HEC",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Les impacts de la construction sur les commerces",
+      "source": "Le Collectif",
+      "credit": "Photo : Ville de Sherbrooke",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "L’importance du recyclage",
+      "source": "Le Collectif",
+      "credit": "Photo : Salma Labiede",
+      "cited": true,
+      "method": "body-tail"
+    },
     {
       "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
       "source": "Quartier Libre",
@@ -34,16 +62,16 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "title": "Ce que nous devons aux femmes",
       "source": "Le Délit",
-      "credit": "Photo : Stu Doré",
+      "credit": "Photo : Alexandre Gontier",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "media-credit-near"
     },
     {
-      "title": "Sois belle et tais-toi",
+      "title": "Les femmes MAGA au service du patriarcat",
       "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -67,20 +95,6 @@
       "credit": "Photo : Léa Morin-Letort",
       "cited": true,
       "method": "figcaption-paren-kind"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
-      "source": "Quartier Libre",
-      "credit": "Photo : Maryse Boyce",
-      "cited": true,
-      "method": "figcaption-copyright"
     }
   ]
 }
