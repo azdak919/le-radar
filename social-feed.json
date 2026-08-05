@@ -1,6 +1,6 @@
 {
-  "updated": "2026-08-05T06:51:18.812Z",
-  "count": 18,
+  "updated": "2026-08-05T09:58:36.843Z",
+  "count": 22,
   "items": [
     {
       "name": "Quartier Libre",
@@ -162,6 +162,28 @@
       ]
     },
     {
+      "name": "Zone Campus",
+      "institution": "Université du Québec à Trois-Rivières",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/zonecampus/",
+          "handle": "@zonecampus",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/zonecampus",
+          "handle": "zonecampus",
+          "stats": "2 042 mentions J'aime",
+          "label": "Facebook"
+        }
+      ]
+    },
+    {
       "name": "L'Exemplaire",
       "institution": "Université Laval",
       "type": "universite",
@@ -184,6 +206,28 @@
       ]
     },
     {
+      "name": "Le Collectif",
+      "institution": "Université de Sherbrooke",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/jlecollectif/",
+          "handle": "@jlecollectif",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/journallecollectif",
+          "handle": "journallecollectif",
+          "stats": "",
+          "label": "Facebook"
+        }
+      ]
+    },
+    {
       "name": "Exil",
       "institution": "Cégep du Vieux Montréal",
       "type": "cegep",
@@ -202,6 +246,28 @@
           "handle": "WordPresscom",
           "stats": "",
           "label": "Facebook"
+        }
+      ]
+    },
+    {
+      "name": "La Pige",
+      "institution": "Cégep de Jonquière (ATM – journalisme)",
+      "type": "cegep",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/2008",
+          "handle": "2008",
+          "stats": "",
+          "label": "Facebook"
+        },
+        {
+          "type": "youtube",
+          "url": "https://www.youtube.com/@atmlapige",
+          "handle": "@atmlapige",
+          "stats": "",
+          "label": "YouTube"
         }
       ]
     },
@@ -231,6 +297,42 @@
           "handle": "@Polyscope",
           "stats": "Journal étudiant de Polytechnique Montréal @PolyMTL − De toute façon, on est les meilleurs depuis 1967!",
           "label": "X"
+        }
+      ]
+    },
+    {
+      "name": "The Tribune",
+      "institution": "McGill University",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://instagram.com/thetribuneca/",
+          "handle": "@thetribuneca",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/thetribuneca",
+          "handle": "thetribuneca",
+          "stats": "",
+          "label": "Facebook"
+        },
+        {
+          "type": "x",
+          "url": "https://twitter.com/thetribuneca",
+          "handle": "@thetribuneca",
+          "stats": "",
+          "label": "X"
+        },
+        {
+          "type": "youtube",
+          "url": "https://www.youtube.com/channel/UCdG5a0c987HGzvWUBENoyEA",
+          "handle": "@UCdG5a0c987HGzvWUBENoyEA",
+          "stats": "",
+          "label": "YouTube"
         }
       ]
     },
