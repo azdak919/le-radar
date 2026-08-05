@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-05T05:29:48.482Z",
+  "updatedAt": "2026-08-05T08:04:35.170Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-05T05:29:21.554Z"
+      "checkedAt": "2026-08-05T08:04:14.775Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Club classique (reprise)",
+        "title": "Hors cadre",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/club-classique"
+        "start": "04:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/hors-cadre"
       },
       "next": {
-        "title": "Mix Franco",
+        "title": "Le Séismix",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
       },
       "track": "",
-      "showTitle": "Club classique (reprise)",
+      "showTitle": "Hors cadre",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-05T05:29:23.688Z"
+      "checkedAt": "2026-08-05T08:04:16.610Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Space Plane",
+        "title": "Full Circle",
         "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
+        "start": "04:00",
+        "end": "07:00"
       },
       "next": {
-        "title": "WarpCor / Out of the Void",
+        "title": "The Wednesday Morning After",
         "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
+        "start": "07:00",
+        "end": "09:00"
       },
       "track": "",
-      "showTitle": "Space Plane",
+      "showTitle": "Full Circle",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-05T05:29:26.664Z"
+      "checkedAt": "2026-08-05T08:04:18.941Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-05T05:29:40.575Z"
+      "checkedAt": "2026-08-05T08:04:32.391Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-05T05:29:41.373Z"
+      "checkedAt": "2026-08-05T08:04:32.830Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Pure Wrath - Opaque Mist",
+      "track": "Antagonik - Menjurje",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-05T05:29:48.133Z"
+      "checkedAt": "2026-08-05T08:04:34.819Z"
     }
   }
 }
