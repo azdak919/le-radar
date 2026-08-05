@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-05T15:21:56.838Z",
+  "updatedAt": "2026-08-05T17:01:40.423Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,88 +21,87 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-05T15:21:42.452Z"
+      "checkedAt": "2026-08-05T17:01:22.596Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Genre de bleu (reprise)",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/genre-de-bleu"
-      },
-      "next": {
         "title": "La carte cadeau",
         "source": "schedule",
         "start": "12:00",
         "end": "14:00",
         "url": "https://cism893.ca/emissions/la-carte-cadeau"
       },
+      "next": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
       "track": "",
-      "showTitle": "Genre de bleu (reprise)",
+      "showTitle": "La carte cadeau",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-05T15:21:44.348Z"
+      "checkedAt": "2026-08-05T17:01:25.003Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Free City Radio",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "11:30"
-      },
-      "next": {
         "title": "If You Got Ears",
-        "source": "schedule",
+        "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "Radyo Kapwa",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
       "track": "",
-      "showTitle": "Free City Radio",
+      "showTitle": "If You Got Ears",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
-        "stream",
-        "schedule"
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-05T15:21:47.315Z"
+      "checkedAt": "2026-08-05T17:01:29.458Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Unheard Of",
+        "title": "Beatnik Boy: Mixtape",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/unheard-of"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/beatnik-boy-mixtape"
       },
       "next": {
-        "title": "North-South Hockey",
+        "title": "Something for the Mood",
         "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/north-south-hockey"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/something-for-the-mood"
       },
       "track": "",
-      "showTitle": "Unheard Of",
+      "showTitle": "Beatnik Boy: Mixtape",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-05T15:21:48.505Z"
+      "checkedAt": "2026-08-05T17:01:31.554Z"
     },
     "cfak": {
       "id": "cfak",
@@ -127,7 +126,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-05T15:21:49.291Z"
+      "checkedAt": "2026-08-05T17:01:32.652Z"
     },
     "choq": {
       "id": "choq",
@@ -140,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Lido Pimienta - Talento",
+      "track": "8485 - I Feel Fantastic",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -151,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-05T15:21:56.486Z"
+      "checkedAt": "2026-08-05T17:01:40.073Z"
     }
   }
 }
