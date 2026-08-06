@@ -603,7 +603,9 @@ assert(
   'index.html : lien de pied de page vers /horaires/ requis (page autrement orpheline)'
 );
 
-// Hub sports « SPORTS Étudiants » : scores RSEQ + filtres, lien de pied de page.
+// Hub sports « Sports Étudiants » : scores RSEQ + filtres, lien de pied de page.
+// « Sports » seul en section (menu, pied, infobulle du mât), « Sports Étudiants »
+// en titre visuel et nom d'app — plus de capitales criées.
 for (const hub of ['sports/index.html', 'en/sports/index.html']) {
   assert(existsSync(join(root, hub)), `${hub} manquant — lancer \`npm run seo:update\``);
 }
@@ -617,8 +619,8 @@ assert(
   'index.html : lien Sports en nouvel onglet (préserve la radio)'
 );
 assert(
-  /<h1 class="seo-title"[^>]*>[\s\S]*?SPORTS Étudiants/.test(readFileSync(join(root, 'sports/index.html'), 'utf8')),
-  'sports/index.html : H1 = « SPORTS Étudiants » (marque de section)'
+  /<h1 class="seo-title"[^>]*>[\s\S]*?Sports Étudiants/.test(readFileSync(join(root, 'sports/index.html'), 'utf8')),
+  'sports/index.html : H1 = « Sports Étudiants » (titre visuel)'
 );
 const sportsHub = readFileSync(join(root, 'sports/index.html'), 'utf8');
 assert(sportsHub.includes('data-sports-board'), 'sports : racine filtrable requise');
