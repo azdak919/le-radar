@@ -15,11 +15,14 @@
 }
 
 .masthead-inner { position: relative; }
-.seo-masthead-actions {
-  position: absolute;
-  top: 16px;
-  right: 0;
-}
+/*
+ * `.seo-masthead-actions` (position: absolute) a été retiré : la rangée
+ * d'actions flottait hors du flux et recouvrait le mot-symbole à toutes les
+ * largeurs — invisible tant qu'elle ne portait qu'une pastille, criant dès
+ * qu'elle en a porté huit. Les pages d'entités utilisent maintenant la même
+ * grille `.masthead-top` que l'accueil et le RSS (style-masthead.css), ce qui
+ * leur donne d'office tout le responsive déjà éprouvé.
+ */
 
 /* ── Fil d'Ariane ───────────────────────────────────────────────────────── */
 

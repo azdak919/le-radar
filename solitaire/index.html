@@ -1210,6 +1210,30 @@
         <img class="app-emoji" src="../assets/emoji/tomato.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
         <span id="back-pomodoro-label">Pomodoro</span>
       </a>
+          <div class="install-menu install-menu--toolbar" data-install-menu>
+            <button type="button" class="toolbar-btn install-menu__toggle" data-install-toggle aria-haspopup="menu" aria-expanded="false" aria-controls="install-menu-panel-sol" title="Installer une app" aria-label="Installer une app — LE-RADAR, Pomodoro, Solitaire, Au tableau">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+              <span id="install-btn-label">Installer</span>
+            </button>
+            <div id="install-menu-panel-sol" class="install-menu__panel" data-install-panel role="menu" aria-label="Installer une app" hidden>
+              <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="radar">
+                <img class="app-emoji" src="../assets/emoji/satellite.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+                <span>LE-RADAR.ca</span>
+              </button>
+              <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="pomo">
+                <img class="app-emoji" src="../assets/emoji/tomato.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+                <span>Pomodoro</span>
+              </button>
+              <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="solitaire">
+                <img class="app-emoji" src="../assets/emoji/playing-cards.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+                <span>Solitaire</span>
+              </button>
+              <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="sports">
+                <img class="app-emoji" src="../assets/emoji/trophy.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+                <span>Au tableau</span>
+              </button>
+            </div>
+          </div>
       <a class="toolbar-btn toolbar-btn--coffee" id="coffee-btn"
          href="https://www.buymeacoffee.com/azdak"
          target="_blank" rel="noopener noreferrer" title="Buy me a coffee" aria-label="Buy me a coffee">
@@ -1358,6 +1382,7 @@
 </div>
 
 <script src="../translate-menu.js"></script>
+<script src="../engage-prompt.js" defer></script>
 <script src="../fullscreen-wallpaper-qc.js"></script>
 <script src="js/solitaire-rules.js"></script>
 <script nonce="ataraxia-sol">
@@ -1417,7 +1442,7 @@ const SOL_UI_EN = {
   hint: 'Hint', autoComplete: 'Auto Complete',
   played: 'Played', won: 'Won', streak: 'Streak', best: 'Best',
   shuffleBg: 'Background', restartDeal: 'Restart deal', noMoves: 'No useful move right now — try Undo, draw from the stock, or a new playable deal', playableDeal: 'Playable deal', dealing: 'Dealing a playable hand…',
-  radarBtn: 'Le Radar', coffeeBtn: 'Buy me a coffee',
+  radarBtn: 'Le Radar', coffeeBtn: 'Buy me a coffee', installBtn: 'Install',
 };
 
 // Hardcoded translations for languages where the generic API produces wrong results
@@ -1432,6 +1457,7 @@ const SOL_UI_HARDCODED = {
     played: 'Joués', won: 'Gagnés', streak: 'Série', best: 'Meilleur',
     shuffleBg: 'Arrière-plan', restartDeal: 'Rejouer la donne', noMoves: 'Aucun coup utile pour l’instant — Annuler, piocher, ou nouvelle donne jouable', playableDeal: 'Donne jouable', dealing: 'Préparation d’une donne jouable…',
     radarBtn: 'Le Radar', coffeeBtn: 'Offrir un café',
+    installBtn: "Installer",
   },
   es: {
     pomodoro: 'Pomodoro', pomodoroBack: 'Volver al Pomodoro',
@@ -1442,6 +1468,7 @@ const SOL_UI_HARDCODED = {
     played: 'Jugadas', won: 'Ganadas', streak: 'Racha', best: 'Mejor',
     shuffleBg: 'Fondo', restartDeal: 'Reiniciar mano', noMoves: 'Sin jugada útil — Deshacer, robar, o nueva mano jugable', playableDeal: 'Mano jugable', dealing: 'Preparando una mano jugable…',
     radarBtn: 'Le Radar', coffeeBtn: 'Invítame un café',
+    installBtn: "Instalar",
   },
   de: {
     pomodoro: 'Pomodoro', pomodoroBack: 'Zurück zum Pomodoro',
@@ -1452,6 +1479,7 @@ const SOL_UI_HARDCODED = {
     played: 'Gespielt', won: 'Gewonnen', streak: 'Serie', best: 'Beste',
     shuffleBg: 'Hintergrund', restartDeal: 'Gleiches Blatt', noMoves: 'Kein nützlicher Zug — Rückgängig, ziehen oder neues spielbares Blatt', playableDeal: 'Spielbares Blatt', dealing: 'Spielbares Blatt wird gemischt…',
     radarBtn: 'Le Radar', coffeeBtn: 'Kauf mir einen Kaffee',
+    installBtn: "Installieren",
   },
   it: {
     pomodoro: 'Pomodoro', pomodoroBack: 'Torna al Pomodoro',
@@ -1462,6 +1490,7 @@ const SOL_UI_HARDCODED = {
     played: 'Giocate', won: 'Vinte', streak: 'Serie', best: 'Migliore',
     shuffleBg: 'Sfondo', restartDeal: 'Ricomincia mano', noMoves: 'Nessuna mossa utile — Annulla, pesca o nuova mano giocabile', playableDeal: 'Mano giocabile', dealing: 'Preparazione mano giocabile…',
     radarBtn: 'Le Radar', coffeeBtn: 'Offrimi un caffè',
+    installBtn: "Installa",
   },
   pt: {
     pomodoro: 'Pomodoro', pomodoroBack: 'Voltar ao Pomodoro',
@@ -1472,6 +1501,7 @@ const SOL_UI_HARDCODED = {
     played: 'Jogadas', won: 'Ganhas', streak: 'Série', best: 'Melhor',
     shuffleBg: 'Fundo', restartDeal: 'Reiniciar mão', noMoves: 'Sem jogada útil — Desfazer, comprar ou nova mão jogável', playableDeal: 'Mão jogável', dealing: 'Preparando mão jogável…',
     radarBtn: 'Le Radar', coffeeBtn: 'Pague-me um café',
+    installBtn: "Instalar",
   },
 };
 
@@ -4390,6 +4420,11 @@ function applyUIStrings(strings) {
     coffeeBtn.setAttribute('aria-label', coffeeLabel);
     if (coffeeLabelEl) coffeeLabelEl.textContent = coffeeLabel;
   }
+
+  // Le déclencheur du menu d'installation suit les autres pastilles : sans
+  // ça, il restait « Installer » en français au milieu d'une barre traduite.
+  const installLabelEl = document.getElementById('install-btn-label');
+  if (installLabelEl) installLabelEl.textContent = strings.installBtn || SOL_UI_EN.installBtn;
 }
 
 function setLanguageStatus(msg) {

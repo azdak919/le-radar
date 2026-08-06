@@ -7,6 +7,11 @@
 /* D2 — mât dans style-masthead.css, chargé via <link> avant style.css (pas @import) */
 
 :root {
+  /* Sentinelle : signale à engage-prompt.js que la feuille du site est
+     chargée, donc qu'il ne doit PAS injecter ses styles de repli. Injectés,
+     ils passeraient après celle-ci à spécificité égale et écraseraient
+     notamment le `bottom` de `.engage-prompt`. Ne pas retirer. */
+  --radar-chrome: 1;
   --bg: #ffffff;
   --bg-soft: #f6f6f4;
   --ink: #16181c;
@@ -93,8 +98,12 @@ body {
   align-items: stretch;
   min-width: 0;
 }
-/* Si le bandeau sports est visible, le fil ne double pas l’air en dessous. */
-.masthead-sports-strip:not([hidden]) + .wire .wire-head {
+/* Si le bandeau sports est visible, le fil ne double pas l’air en dessous.
+   Le menu de sections s'intercale entre les deux : sans la seconde forme,
+   l'adjacence est rompue et `.wire-head` reprend ses 22 px, soit l'air que
+   cette règle existe justement pour supprimer. */
+.masthead-sports-strip:not([hidden]) + .wire .wire-head,
+.masthead-sports-strip:not([hidden]) + .site-sections + .wire .wire-head {
   margin-top: 0;
 }
 .masthead-sports-strip:not([hidden]) {
@@ -398,9 +407,16 @@ body {
   opacity: 1;
   animation: none !important;
 }
-.masthead-sports-strip .sports-chip--cta:not(.is-overflowing) .sports-chip__cta-label.is-front:not(.is-fading-out):not(.is-fading-in) {
-  animation: sports-cta-label-pulse 2.6s ease-in-out infinite;
-}
+/*
+ * Le texte d'information NE pulse PAS.
+ *
+ * Les couches en fondu portent `animation: none !important`, donc la
+ * transition elle-même était propre. Le « clac » venait d'après : à la fin du
+ * fondu, ce sélecteur redevenait vrai et relançait la pulsation à 0 %, faisant
+ * sauter l'opacité de 1 à 0,82. Le crossfade se termine désormais sur une
+ * valeur stable. L'appel à l'attention reste porté par le halo
+ * (`sports-cta-ring-pulse`) et le badge (`sports-cta-tag-pulse`).
+ */
 /* Marquee : uniquement la couche front (pas la sortante). */
 .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-front:not(.is-fading-out) {
   max-width: none;
@@ -421,7 +437,8 @@ body {
   color: color-mix(in srgb, #ff8a80 80%, #fff);
   margin-left: auto;
   padding-left: 4px;
-  animation: sports-cta-label-pulse 2.6s ease-in-out infinite;
+  /* Pas de pulsation non plus : un chevron qui clignote à côté d'un texte
+     devenu stable se lit comme un défaut d'affichage. */
 }
 /* Halo / bordure seulement — la carte ne grossit pas. */
 @keyframes sports-cta-ring-pulse {
@@ -588,6 +605,7 @@ body {
   .masthead-home:hover,
   .masthead-rss:hover,
   .masthead-solitaire:hover,
+  .masthead-sports:hover,
   .masthead-coffee:hover {
     border-color: var(--accent);
     color: var(--accent);
@@ -602,6 +620,7 @@ body {
 .masthead-rss:active,
 .masthead-pomo:active,
 .masthead-solitaire:active,
+.masthead-sports:active,
 .masthead-coffee:active {
   transform: scale(0.9);
 }
@@ -609,8 +628,11 @@ body {
 .masthead-pomo {
   border-color: var(--rule);
 }
+/* Page courante : l'indicateur valait pour l'accueil seul, alors que
+   feeds.html posait déjà `aria-current` sur sa pastille RSS sans rien voir.
+   Depuis que la rangée est partagée, la règle vaut pour toute pastille. */
 .masthead-home.is-active,
-.masthead-home[aria-current="page"] {
+.masthead-icon[aria-current="page"] {
   border-color: color-mix(in srgb, var(--accent) 55%, var(--rule));
   color: var(--accent);
   background: color-mix(in srgb, var(--accent) 8%, transparent);
@@ -3040,16 +3062,26 @@ html[data-translate-busy="1"] .translate-toggle {
   min-height: 0;
   text-align: start;
 }
+/*
+ * Le CTA reprend la position de « En bref » et des vedettes : bloc, bas-droite.
+ *
+ * Il était en ligne après le chapô (focus-group le-radar-suite-more B) pour
+ * éviter un « trou vide bas-droite ». Mais c'était la seule des trois
+ * dispositions du fil à placer « Lire la suite » à gauche, et l'écart sautait
+ * aux yeux d'une carte à l'autre : 429 px de la marge droite ici, collé à
+ * droite juste au-dessus. La cohérence de la colonne l'emporte sur le trou,
+ * d'autant que le chapô de la suite est tronqué à trois lignes — la dernière
+ * est donc rarement pleine de toute façon.
+ */
 .news-tail .article--standard .article-more {
-  display: inline;
+  display: block;
   float: none;
-  width: auto;
-  margin: 0;
-  margin-inline-start: 0.35em;
-  margin-block-start: 0.15em;
-  padding-block: 0.25rem;
-  padding-inline: 0.1rem 0.2rem;
-  text-align: start;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0.2rem 0 0;
+  padding-block: 0.25rem 0;
+  padding-inline: 0;
+  text-align: end;
   white-space: nowrap;
 }
 .news-tail .article--standard .article-more:hover {
@@ -3603,6 +3635,180 @@ html[data-translate-busy="1"] .translate-toggle {
 .site-foot__bot-ico {
   font-size: 14px;
   line-height: 1;
+}
+
+
+
+/* ── Installer l’app (menu masthead + pied de page) ── */
+.install-menu {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.install-menu__toggle { cursor: pointer; }
+.install-menu.is-open .install-menu__toggle {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--rule));
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+.install-menu__panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 240;
+  min-width: 11.5rem;
+  /* Filet : un panneau ne doit jamais être plus large que l'écran. Le
+     recadrage fin (translation) est fait par engage-prompt.js, qui seul
+     connaît la position réelle du déclencheur. */
+  max-width: calc(100vw - 16px);
+  padding: 6px;
+  border-radius: 12px;
+  border: 1px solid var(--rule);
+  background: var(--bg);
+  color: var(--ink);
+  box-shadow:
+    0 12px 32px -12px rgba(0, 0, 0, 0.28),
+    0 0 0 1px color-mix(in srgb, var(--rule) 60%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.install-menu__panel[hidden] { display: none !important; }
+/*
+ * `.masthead-inner` est en `position: relative; z-index: 2` : il établit un
+ * contexte d'empilement, donc le `z-index: 240` du panneau ne vaut QUE dans ce
+ * contexte — et 2 perd contre le syntoniseur, à 100. Résultat observé : le 4ᵉ
+ * item du menu passait sous la barre du lecteur.
+ * On relève le conteneur pendant l'ouverture seulement (classe posée par
+ * engage-prompt.js) : 150 passe au-dessus du syntoniseur, et reste sous la
+ * carte d'invite (200) et les outils flottants (180).
+ */
+.masthead-inner.has-install-open { z-index: 150; }
+.install-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.install-menu__item:hover,
+.install-menu__item:focus-visible {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  outline: none;
+}
+.install-menu__item.is-current {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+.install-menu__item.is-installed {
+  opacity: 0.55;
+  cursor: default;
+}
+.install-menu__item .app-emoji {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+@media (hover: hover) and (pointer: fine) {
+  .install-menu__toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+}
+.install-menu__toggle:active { transform: scale(0.9); }
+
+.site-foot__install {
+  margin: 0 0 12px;
+}
+.site-foot__install-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--accent);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 120ms ease, background 120ms ease, color 120ms ease;
+}
+.site-foot__install-btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+.site-foot__install-btn:hover {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  text-decoration: none;
+}
+.site-foot__install-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── Menu de sections (accueil, sous la barre des scores) ──
+ *
+ * Repris du fil d'Ariane des pages d'entités (`.seo-crumbs`) : même famille,
+ * même corps, même gris. C'est un rappel de navigation, pas un bandeau — il ne
+ * doit pas concurrencer le mât juste au-dessus ni le fil juste en dessous.
+ */
+.site-sections {
+  max-width: var(--maxw);
+  /* Le bandeau des scores a déjà 8 px de padding-bottom : 6 px suffisent
+     au-dessus. En dessous, `.wire-head` est ramené à 0 (voir la règle
+     d'adjacence plus haut), donc c'est cette marge qui donne l'air — pas les
+     deux cumulées. */
+  margin: 6px auto 8px;
+  padding: 0 var(--pad);
+  font-family: var(--sans);
+  font-size: 12.5px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  color: var(--muted);
+}
+.site-sections a {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 2px 0;
+}
+.site-sections a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.site-sections a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+.site-sections__sep {
+  color: var(--rule);
+  user-select: none;
+}
+@media (max-width: 599.98px) {
+  .site-sections {
+    /* Le padding des liens (2 px) reste : c'est la cible tactile, on gagne
+       l'espace sur les marges, pas sur ce qui se touche. */
+    margin: 4px auto 6px;
+    font-size: 12px;
+    gap: 3px 7px;
+  }
 }
 
 /* ─────────────── FEEDS PAGE ─────────────── */
@@ -4696,10 +4902,12 @@ body.external-listen-open {
     -webkit-line-clamp: 3;
     overflow: hidden;
   }
+  /* Même alignement bas-droite que « En bref » — voir la règle de base.
+     Le chapô reste tronqué à trois lignes ; seul le CTA change de place. */
   .news-tail .article--standard .article-more {
-    display: inline;
-    width: auto;
-    text-align: start;
+    display: block;
+    width: 100%;
+    text-align: end;
   }
 }
 

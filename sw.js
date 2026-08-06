@@ -2,8 +2,11 @@ const CACHE_NAME = "radar-shell-v575";
 const CACHE_PREFIX = "radar-";
 /** Cache permanent : page maintenance / hors-ligne (ne se purge pas au bump shell). */
 const OFFLINE_CACHE = "radar-offline-v22";
-// Isolated mini-apps under /pomo/ and /solitaire/ own their own SWs + caches.
-const ISOLATED_PATH_RE = /\/(pomo|solitaire)(\/|$)/;
+// Isolated apps under /pomo/, /solitaire/ and /sports/ own their own SWs +
+// caches. Sans /sports/ ici, ce worker et sports/sw.js se disputeraient les
+// mêmes requêtes : l'app installée servirait tantôt le shell racine, tantôt
+// le sien, avec deux copies divergentes de la page en cache.
+const ISOLATED_PATH_RE = /\/(pomo|solitaire|sports)(\/|$)/;
 
 const OFFLINE_ASSETS = [
   "./offline.html",

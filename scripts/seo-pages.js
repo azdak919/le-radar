@@ -1178,7 +1178,7 @@ function sportsResultRows(team, t, lang) {
 }
 
 /**
- * Outils flottants de la page Au tableau :
+ * Outils flottants de la page SPORTS Étudiants :
  * flèche haut hors contenu à gauche + loupe hors contenu à droite
  * (CSS : gutter autour de --maxw ; safe-area sur mobile).
  */
@@ -1395,7 +1395,7 @@ ${list}
 }
 
 /**
- * Hub « Au tableau » — scores RSEQ collégial + universitaire.
+ * Hub « SPORTS Étudiants » — scores RSEQ collégial + universitaire.
  * Contenu 100 % statique (sports.json) ; filtres en progressive enhancement.
  */
 function sportsHubPage(lang, ctx) {
@@ -1583,7 +1583,7 @@ function sportsHubPage(lang, ctx) {
       h1: t.sportsH1,
       // Clic sur le titre = rechargement propre sans filtres (?sport=…, ?sex=…).
       h1Href: './',
-      // Pas d’eyebrow : même libellé que le h1 (« Au tableau » / « Scoreboard »).
+      // Pas d’eyebrow : même libellé que le h1 (« SPORTS Étudiants »).
       eyebrow: null,
       crumbs: [
         { label: t.home, href: up },
@@ -1595,6 +1595,12 @@ function sportsHubPage(lang, ctx) {
       updated,
       extraScripts: ['sports-board.js'],
       wireClass: 'seo-wire--sports',
+      chromeCurrent: 'sports',
+      // Seul le volet français est une app installable : il porte le
+      // manifeste et le service worker de portée /sports/. Le volet anglais
+      // vit sous /en/sports/, hors de cette portée ; depuis là, « Installer »
+      // renvoie vers /sports/?install=1 (voir installApp() côté client).
+      standaloneApp: lang === 'fr',
     }),
     changefreq: 'daily',
     priority: '0.7',

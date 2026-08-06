@@ -66,6 +66,106 @@ for (const file of htmlFiles) {
   }
 }
 
+// Crédit photo du mât : jamais de safe-area sur son `bottom`. Il est en
+// position absolue DANS le mât, dont le bas tombe au milieu du document — pas
+// contre le bord de l'écran. Avec l'inset, un iPhone à barre d'accueil le
+// remontait de ~34 px dans le slogan, et il se déplaçait au défilement quand
+// la barre d'adresse se repliait. L'inset droit reste légitime : le mât est
+// pleine largeur.
+{
+  const mastheadCss = readFileSync(join(root, 'style-masthead.css'), 'utf8');
+  for (const block of mastheadCss.match(/\.bg-photo-credit\s*\{[^}]*\}/g) || []) {
+    const bottom = block.match(/(^|[;{])\s*bottom\s*:([^;}]*)/);
+    if (!bottom) continue;
+    assert(
+      !/env\(\s*safe-area-inset-bottom/.test(bottom[2]),
+      'style-masthead : `bottom` du crédit photo sans safe-area (il est ancré au mât, pas à l’écran)',
+    );
+  }
+}
+
+// « Lire la suite » : même position dans toute la colonne. La suite du fil le
+// posait en ligne à gauche là où « En bref » et les vedettes le mettent en
+// bas-droite ; l'écart sautait aux yeux d'une carte à l'autre.
+{
+  // `styleCss` n'est lu que plus bas dans ce fichier : on relit ici.
+  const css = readFileSync(join(root, 'style.css'), 'utf8');
+  const tailRules = css.match(/\.news-tail[^{]*\.article-more\s*\{[^}]*\}/g) || [];
+  assert(tailRules.length > 0, 'style : règle « Lire la suite » de la suite du fil introuvable');
+  for (const rule of tailRules) {
+    if (rule.includes(':hover') || rule.includes(':focus')) continue;
+    assert(
+      !/text-align\s*:\s*start/.test(rule),
+      'style : « Lire la suite » de la suite du fil aligné à droite comme « En bref »',
+    );
+  }
+}
+
+// Menu de sections de l'accueil : mêmes libellés et mêmes cibles que le pied
+// de page, archives exceptées. Les deux listes sortent de `SECTIONS` dans
+// seo-pages-lib ; ce contrôle vérifie que le HTML publié le reflète, pour que
+// personne ne recopie une entrée à la main d'un côté seulement.
+{
+  const home = readFileSync(join(root, 'index.html'), 'utf8');
+  const navBlock = home.slice(
+    home.indexOf('<!-- RADAR:CHROME:SECTIONS:START -->'),
+    home.indexOf('<!-- RADAR:CHROME:SECTIONS:END -->'),
+  );
+  assert(navBlock.includes('class="site-sections"'), 'index.html : menu de sections requis sous la barre des scores');
+
+  const hrefsIn = (block) => [...block.matchAll(/<a href="([^"]+)"/g)].map((m) => m[1]);
+  const navHrefs = hrefsIn(navBlock);
+  assert.deepEqual(
+    navHrefs,
+    ['medias/', 'medias/#journaux', 'horaires/', 'sports/'],
+    'index.html : sections du haut = Médias, Journaux, Radios, Sports (sans Archives)',
+  );
+
+  const footBlock = home.slice(
+    home.indexOf('<!-- RADAR:FOOTER:START -->'),
+    home.indexOf('<!-- RADAR:FOOTER:END -->'),
+  );
+  for (const href of navHrefs) {
+    assert(
+      footBlock.includes(`href="${href}"`),
+      `index.html : « ${href} » est dans le menu de sections mais absent du pied de page`,
+    );
+  }
+  // Les archives restent au pied de page seul (catalogue expérimental, D19).
+  assert(footBlock.includes('href="archives/"'), 'index.html : archives requises au pied de page');
+  assert(!navBlock.includes('archives/'), 'index.html : archives hors du menu de sections');
+}
+
+// offline.html ne charge pas style.css — c'est voulu : la page doit s'afficher
+// quand le réseau est tombé. Elle redéclare donc les règles du pied de page
+// partagé en ligne. Cette copie assumée avait déjà dérivé : `.site-foot__logo`
+// y manquait, et le logo s'affichait à 24 px sans marge, seul cas du site.
+// Ce contrôle exige que toute classe `site-foot__*` posée par le générateur
+// dans offline.html soit effectivement stylée sur place.
+{
+  const offlineHtml = readFileSync(join(root, 'offline.html'), 'utf8');
+  const footerMarkup = offlineHtml.slice(
+    offlineHtml.indexOf('<!-- RADAR:FOOTER:START -->'),
+    offlineHtml.indexOf('<!-- RADAR:FOOTER:END -->'),
+  );
+  // Ces deux-là n'ont de règle nulle part sur le site : ils héritent de
+  // `.site-foot a`. Les exiger ici serait plus strict que la référence.
+  const INHERITED = new Set(['site-foot__heart', 'site-foot__author-link']);
+  const used = new Set();
+  for (const attr of footerMarkup.matchAll(/class="([^"]+)"/g)) {
+    for (const cls of attr[1].split(/\s+/)) {
+      if (cls.startsWith('site-foot__') && !INHERITED.has(cls)) used.add(cls);
+    }
+  }
+  const inlineCss = offlineHtml.slice(0, offlineHtml.indexOf('<!-- RADAR:FOOTER:START -->'));
+  for (const cls of used) {
+    assert(
+      inlineCss.includes(`.${cls}`),
+      `offline.html : « .${cls} » posée par le pied de page partagé mais non stylée sur place`,
+    );
+  }
+}
+
 function assertServiceWorkerAssets(file, arrayName) {
   const source = readFileSync(file, 'utf8');
   const array = source.match(new RegExp(`const ${arrayName} = \\[([\\s\\S]*?)\\n\\];`));
@@ -503,13 +603,13 @@ assert(
   'index.html : lien de pied de page vers /horaires/ requis (page autrement orpheline)'
 );
 
-// Hub sports « Au tableau » : scores RSEQ + filtres, lien de pied de page.
+// Hub sports « SPORTS Étudiants » : scores RSEQ + filtres, lien de pied de page.
 for (const hub of ['sports/index.html', 'en/sports/index.html']) {
   assert(existsSync(join(root, hub)), `${hub} manquant — lancer \`npm run seo:update\``);
 }
 assert(
   /<a href="sports\/" data-sports-reset[^>]*>Sports<\/a>/.test(indexHtml),
-  'index.html : footer /sports/ libellé « Sports » (focus-group footer, pas « Au tableau »)'
+  'index.html : footer /sports/ libellé « Sports » (focus-group footer, pas le nom long)'
 );
 assert(
   /href="sports\/"[^>]*target="_blank"[^>]*rel="noopener noreferrer"/.test(indexHtml)
@@ -517,8 +617,8 @@ assert(
   'index.html : lien Sports en nouvel onglet (préserve la radio)'
 );
 assert(
-  /<h1 class="seo-title"[^>]*>[\s\S]*?Au tableau/.test(readFileSync(join(root, 'sports/index.html'), 'utf8')),
-  'sports/index.html : H1 reste « Au tableau » (marque de section)'
+  /<h1 class="seo-title"[^>]*>[\s\S]*?SPORTS Étudiants/.test(readFileSync(join(root, 'sports/index.html'), 'utf8')),
+  'sports/index.html : H1 = « SPORTS Étudiants » (marque de section)'
 );
 const sportsHub = readFileSync(join(root, 'sports/index.html'), 'utf8');
 assert(sportsHub.includes('data-sports-board'), 'sports : racine filtrable requise');
@@ -669,8 +769,33 @@ assert(
 // CTA mât : pastille « Sports », crossfade superposé + dédup miroirs (focus-group D).
 assert(
   /const SPORTS_CTA_TAG\s*=\s*['"]Sports['"]/.test(appJs),
-  'app.js : pastille CTA mât = « Sports » (pas « Au tableau »)',
+  'app.js : pastille CTA mât = « Sports » (pas le nom long de la section)',
 );
+// Le texte d'information de la CTA ne pulse pas : la pulsation redémarrait à
+// 0 % dès la fin du fondu et faisait sauter l'opacité de 1 à 0,82 — le « clac »
+// que le crossfade était justement censé supprimer. Halo et badge, eux, gardent
+// leur pulsation : ce sont eux qui portent l'appel à l'attention.
+assert(
+  !/\.sports-chip__cta-label[^{]*\{[^}]*sports-cta-label-pulse/.test(styleCss.replace(/\s+/g, ' ')),
+  'style : le texte de la CTA sports ne doit pas pulser (fondu seul)',
+);
+assert(
+  !/\.sports-chip__cta-chev\s*\{[^}]*sports-cta-label-pulse/.test(styleCss.replace(/\s+/g, ' ')),
+  'style : le chevron de la CTA sports ne doit pas pulser (cohérence avec le texte)',
+);
+assert(
+  /sports-cta-ring-pulse/.test(styleCss) && /sports-cta-tag-pulse/.test(styleCss),
+  'style : halo et badge de la CTA sports gardent leur pulsation',
+);
+
+// Fraîcheur des articles : jour civil québécois, pas une fenêtre de minutes.
+// Le fil publie par à-coups ; une fenêtre de 2 h laissait la quasi-totalité des
+// parutions du jour en gris, ce qu'elle était censée signaler.
+assert(
+  /const fresh = d \? torontoDayKey\(d\) === torontoDayKey\(\) : false;/.test(appJs),
+  'app.js : la date rouge couvre toute la journée civile (torontoDayKey), pas 120 min',
+);
+
 assert(
   appJs.includes('crossfadeSportsCtaLabel')
     && appJs.includes('sports-chip__cta-stack')
@@ -710,5 +835,105 @@ assert(
     || styleCss.includes('--sports-scroll-duration:8.5s'),
   'style : durée marquee sports alignée sur SPORTS_SCROLL_ONE_WAY_MS (8.5s)',
 );
+
+// ── /sports/ : app installable à part entière ────────────────────────────────
+//
+// Le dossier est le seul dossier généré qui contient aussi des fichiers écrits
+// à la main. Ces contrôles verrouillent les trois façons de casser
+// l'installation sans que rien d'autre ne bronche : un manifeste incohérent,
+// une icône déclarée mais absente, ou le worker racine qui reprend la portée.
+{
+  const manifestPath = join(root, 'sports', 'site.webmanifest');
+  assert(existsSync(manifestPath), 'sports/site.webmanifest requis (app installable)');
+  const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+
+  assert(manifest.id === '/sports/', 'sports : id du manifeste doit être « /sports/ »');
+  assert(manifest.scope === './', 'sports : scope du manifeste doit rester relatif');
+  assert(manifest.start_url === './', 'sports : start_url du manifeste doit rester relatif');
+  assert(manifest.display === 'standalone', 'sports : display « standalone » requis pour installer');
+
+  for (const icon of manifest.icons || []) {
+    const iconPath = join(root, 'sports', icon.src);
+    assert(existsSync(iconPath), `sports : icône déclarée introuvable — ${icon.src}`);
+  }
+  for (const purpose of ['any', 'maskable']) {
+    assert(
+      (manifest.icons || []).some((i) => (i.purpose || '').split(/\s+/).includes(purpose)),
+      `sports : icône « ${purpose} » requise`,
+    );
+  }
+
+  assert(existsSync(join(root, 'sports', 'sw.js')), 'sports/sw.js requis (hors ligne)');
+  assert(
+    existsSync(join(root, 'assets', 'emoji', 'trophy.png')),
+    'assets/emoji/trophy.png requis (pastille sports + icônes PWA)',
+  );
+
+  // Sans cette exclusion, sw.js racine et sports/sw.js se disputent /sports/.
+  const rootSw = readFileSync(join(root, 'sw.js'), 'utf8');
+  const isolated = rootSw.match(/const ISOLATED_PATH_RE = ([^;]+);/);
+  assert(isolated, 'sw.js : ISOLATED_PATH_RE introuvable');
+  assert(
+    /\bsports\b/.test(isolated[1]),
+    'sw.js : /sports/ doit être exclu du worker racine (il a le sien)',
+  );
+
+  // Le générateur efface les dossiers qu'il reconstruit : si « sports » y
+  // revenait, le manifeste, le worker et les douze icônes disparaîtraient au
+  // prochain `seo:update`.
+  const generator = readFileSync(join(root, 'scripts', 'generate-seo.js'), 'utf8');
+  const dirs = generator.match(/const GENERATED_DIRS = \[([^\]]+)\]/);
+  assert(dirs, 'generate-seo.js : GENERATED_DIRS introuvable');
+  assert(
+    !/'sports'/.test(dirs[1]),
+    'generate-seo.js : « sports » ne doit pas être effacé (fichiers PWA écrits à la main)',
+  );
+
+  const sportsHtml = readFileSync(join(root, 'sports', 'index.html'), 'utf8');
+  assert(
+    /<link rel="manifest" href="site\.webmanifest"/.test(sportsHtml),
+    'sports/index.html : doit déclarer son propre manifeste',
+  );
+  assert(
+    /app-sw-register\.js/.test(sportsHtml),
+    'sports/index.html : enregistrement du service worker requis',
+  );
+}
+
+// ── Chrome partagé : la rangée d'actions est-elle bien la même partout ? ──────
+//
+// D18 : le pied de page avait déjà divergé entre pages écrites à la main et
+// pages générées. La rangée d'actions passe maintenant par la même source ;
+// ces contrôles empêchent qu'on la recopie de nouveau à la main.
+{
+  for (const rel of ['index.html', 'feeds.html']) {
+    const html = readFileSync(join(root, rel), 'utf8');
+    assert(
+      html.includes('<!-- RADAR:CHROME:ACTIONS:START -->'),
+      `${rel}: marqueurs RADAR:CHROME:ACTIONS requis (rangée d'actions partagée)`,
+    );
+  }
+  // Les quatre apps installables, sur toute page portant le menu.
+  const withMenu = htmlFiles.filter((f) => readFileSync(f, 'utf8').includes('data-install-menu'));
+  assert(withMenu.length > 0, 'aucune page ne porte le menu d’installation');
+  for (const file of withMenu) {
+    const rel = relative(root, file);
+    const html = readFileSync(file, 'utf8');
+    for (const app of ['radar', 'pomo', 'solitaire', 'sports']) {
+      assert(
+        html.includes(`data-install-app="${app}"`),
+        `${rel}: le menu d’installation doit proposer « ${app} »`,
+      );
+    }
+    // role="menu" sans tabindex = un menu que le clavier ne peut pas parcourir.
+    const items = html.match(/class="install-menu__item"[^>]*/g) || [];
+    for (const item of items) {
+      assert(
+        /tabindex="-1"/.test(item),
+        `${rel}: chaque item du menu doit porter tabindex="-1" (roving tabindex)`,
+      );
+    }
+  }
+}
 
 console.log(`OK intégrité statique (${htmlFiles.length} pages HTML)`);

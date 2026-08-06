@@ -292,12 +292,12 @@ const T = {
     schedulesH1: 'Les horaires des radios étudiantes du Québec',
     schedulesLead: 'Une grille par station, mise à jour automatiquement à partir du site de chaque radio. Toutes les heures sont données à l’heure du Québec.',
     schedulesEmpty: 'Aucune grille horaire disponible au moment de la dernière mise à jour.',
-    sports: 'Au tableau',
+    sports: 'SPORTS Étudiants',
     /** Pied de page seulement (focus-group le-radar-footer-sports) — pas le H1/CTA. */
     sportsFooter: 'Sports',
-    sportsTitle: 'Au tableau — scores collégiaux et universitaires du Québec',
+    sportsTitle: 'SPORTS Étudiants — scores collégiaux et universitaires du Québec',
     sportsDesc: 'Scores et prochains matchs de {n} formations collégiales et universitaires du Québec (catalogue RSEQ) : hockey, football, soccer, basketball, volleyball, badminton, natation et plus.',
-    sportsH1: 'Au tableau',
+    sportsH1: 'SPORTS Étudiants',
     sportsLead: 'Le tableau des sports étudiants du Québec : formations collégiales et universitaires, scores et prochains matchs.',
     sportsEmpty: 'Aucun résultat sportif disponible au moment de la dernière mise à jour.',
     sportsClubPending: 'Association étudiante de voile — scores à venir.',
@@ -369,7 +369,9 @@ const T = {
     otherLang: 'English',
     footerNav: 'Liens de pied de page',
     footerDetails: 'À propos de LE-RADAR.ca',
-    footerDirectory: 'Tous les médias étudiants du Québec',
+    footerDirectory: 'Médias',
+    footerNewspapers: 'Journaux',
+    footerSchedules: 'Radios',
     archives: 'Archives',
     licenseIntro: 'Ce projet est distribué sous',
     licenseName: 'licence publique générale GNU, version 2',
@@ -443,12 +445,12 @@ const T = {
     schedulesH1: 'Québec campus radio schedules',
     schedulesLead: 'One grid per station, updated automatically from each station’s own website. All times are Québec time.',
     schedulesEmpty: 'No schedule available as of the last update.',
-    sports: 'Scoreboard',
+    sports: 'Student SPORTS',
     /** Footer only (same decision as FR sportsFooter). */
     sportsFooter: 'Sports',
-    sportsTitle: 'Scoreboard — Québec CEGEP and university sports results',
+    sportsTitle: 'Student SPORTS — Québec CEGEP and university sports results',
     sportsDesc: 'Scores and upcoming games for {n} CEGEP and university teams in Québec (RSEQ catalog): hockey, football, soccer, basketball, volleyball, badminton, swimming and more.',
-    sportsH1: 'Scoreboard',
+    sportsH1: 'Student SPORTS',
     sportsLead: 'Live board of student sports in Québec: CEGEP and university teams, scores, and what’s next.',
     sportsEmpty: 'No sports results available as of the last update.',
     sportsClubPending: 'Student sailing association — scores coming soon.',
@@ -520,7 +522,9 @@ const T = {
     otherLang: 'Français',
     footerNav: 'Footer links',
     footerDetails: 'About LE-RADAR.ca',
-    footerDirectory: 'All Québec student media',
+    footerDirectory: 'Media',
+    footerNewspapers: 'Newspapers',
+    footerSchedules: 'Radio',
     archives: 'Archives',
     licenseIntro: 'This project is distributed under the',
     licenseName: 'GNU General Public License, version 2',
@@ -594,6 +598,190 @@ const CSP = "default-src 'self'; "
   + "object-src 'none'; base-uri 'self'; form-action 'none'";
 
 /**
+ * Rangée d'actions du mât — SOURCE DE VÉRITÉ UNIQUE.
+ *
+ * POURQUOI ICI
+ * Même raison que le pied de page, un cran plus haut dans la page. La rangée
+ * existait en trois versions : `index.html` et `feeds.html` la portaient à la
+ * main avec six pastilles, tandis que les pages d'entités n'avaient que la
+ * bascule de thème. Ajouter une icône demandait donc trois modifications, et
+ * les 107 pages générées restaient systématiquement en arrière.
+ *
+ * Les pages générées l'obtiennent par `renderPage()`; `index.html` et
+ * `feeds.html` via les marqueurs `RADAR:CHROME:ACTIONS` que `generate-seo.js`
+ * remplit — exactement le mécanisme déjà en place pour `RADAR:FOOTER`.
+ *
+ * `current` marque la page courante (`home`, `rss`, `sports`…) pour poser
+ * `aria-current="page"`. `compact` sert aux pages d'entités, dont la rangée
+ * est positionnée en absolu et n'a ni date ni météo à côté d'elle.
+ */
+const CHROME_T = {
+  fr: {
+    home: 'Accueil',
+    homeAria: 'Accueil — LE-RADAR.ca',
+    rss: 'Flux RSS',
+    rssAria: 'S’abonner au flux RSS de LE-RADAR.ca',
+    pomo: 'Pomodoro — minuteur focus',
+    solitaire: 'Solitaire',
+    sports: 'SPORTS Étudiants — scores collégiaux et universitaires',
+    coffee: 'Offrir un café',
+    coffeeAria: 'Offrir un café — Buy me a coffee',
+    theme: 'Changer de thème',
+    themeTitle: 'Mode clair / sombre',
+    installMenu: 'Installer une app',
+    installMenuAria: 'Installer une app — LE-RADAR, Pomodoro, Solitaire, SPORTS Étudiants',
+    installApp: 'Installer LE-RADAR.ca',
+    installAppAria: 'Installer l’app LE-RADAR.ca',
+    appRadar: 'LE-RADAR.ca',
+    appPomo: 'Pomodoro',
+    appSolitaire: 'Solitaire',
+    appSports: 'SPORTS Étudiants',
+    appSportsShort: 'SPORTS',
+  },
+  en: {
+    home: 'Home',
+    homeAria: 'Home — LE-RADAR.ca',
+    rss: 'RSS feed',
+    rssAria: 'Subscribe to the LE-RADAR.ca RSS feed',
+    pomo: 'Pomodoro — focus timer',
+    solitaire: 'Solitaire',
+    sports: 'Student SPORTS — Québec college and university scores',
+    coffee: 'Buy me a coffee',
+    coffeeAria: 'Buy me a coffee',
+    theme: 'Change theme',
+    themeTitle: 'Light / dark mode',
+    installMenu: 'Install an app',
+    installMenuAria: 'Install an app — LE-RADAR, Pomodoro, Solitaire, Student SPORTS',
+    installApp: 'Install LE-RADAR.ca',
+    installAppAria: 'Install the LE-RADAR.ca app',
+    appRadar: 'LE-RADAR.ca',
+    appPomo: 'Pomodoro',
+    appSolitaire: 'Solitaire',
+    appSports: 'Student SPORTS',
+    appSportsShort: 'SPORTS',
+  },
+};
+
+/** Les quatre apps installables, dans l'ordre du menu. Doit rester aligné sur
+ *  `APPS` de `engage-prompt.js` : même identifiants, même ordre. */
+const INSTALL_APPS = [
+  { id: 'radar', emoji: 'satellite', key: 'appRadar' },
+  { id: 'pomo', emoji: 'tomato', key: 'appPomo' },
+  { id: 'solitaire', emoji: 'playing-cards', key: 'appSolitaire' },
+  { id: 'sports', emoji: 'trophy', key: 'appSports' },
+];
+
+const ICON_SVG = {
+  home: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg>',
+  rss: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83C19.56 12.06 12.94 5.44 4 4.44z"/><path d="M4 10.11v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.46-4.42-9.9-9.9-9.9z"/></svg>',
+  coffee: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+    + '<path fill="none" d="M18 8h1a4 4 0 0 1 0 8h-1"/><path fill="none" d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>'
+    + '<line fill="none" x1="6" y1="1" x2="6" y2="4"/><line fill="none" x1="10" y1="1" x2="10" y2="4"/><line fill="none" x1="14" y1="1" x2="14" y2="4"/></svg>',
+  install: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>',
+  theme: '<svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>'
+    + '<svg class="ico-moon hidden" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>',
+};
+
+/**
+ * Menu d'installation multi-apps (déclencheur + panneau).
+ *
+ * Le panneau est rendu en HTML statique et non construit en JavaScript : sans
+ * lui, une personne qui navigue au clavier avec JS coupé verrait un bouton
+ * inerte. `engage-prompt.js` ne fait que le câbler.
+ *
+ * `panelId` doit être unique dans la page — d'où le suffixe passé par les
+ * gabarits Pomodoro et Solitaire, qui portent déjà un menu de langue.
+ */
+function renderInstallMenu({ lang = 'fr', up = './', panelId = 'install-menu-panel', toggleClass = 'masthead-icon' } = {}) {
+  const c = CHROME_T[lang] || CHROME_T.fr;
+  const items = INSTALL_APPS.map((app) => `
+          <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="${app.id}">
+            <img class="app-emoji" src="${up}assets/emoji/${app.emoji}.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+            <span>${escapeHtml(c[app.key])}</span>
+          </button>`).join('');
+
+  return `<div class="install-menu" data-install-menu>
+        <button type="button" class="${toggleClass} install-menu__toggle" data-install-toggle aria-haspopup="menu" aria-expanded="false" aria-controls="${panelId}" title="${escapeHtml(c.installMenu)}" aria-label="${escapeHtml(c.installMenuAria)}">${ICON_SVG.install}</button>
+        <div id="${panelId}" class="install-menu__panel" data-install-panel role="menu" aria-label="${escapeHtml(c.installMenu)}" hidden>${items}
+        </div>
+      </div>`;
+}
+
+/**
+ * Sections du site — SOURCE DE VÉRITÉ UNIQUE.
+ *
+ * Le pied de page et le menu de sections de l'accueil tiraient sinon deux
+ * listes parallèles, exactement le motif de dérive qu'on vient de corriger
+ * ailleurs. `key` pointe vers les libellés courts de `T` (ceux du pied de
+ * page) ; les fils d'Ariane gardent les intitulés longs.
+ *
+ * `archives` est marquée `footerOnly` : le catalogue historique reste
+ * expérimental (dette D19) et n'a pas sa place dans la navigation principale.
+ */
+const SECTIONS = [
+  { id: 'medias', key: 'footerDirectory', path: { fr: 'medias/', en: 'en/media/' } },
+  // L'annuaire n'a pas de hub « journaux » dédié, mais il porte déjà l'ancre.
+  { id: 'journaux', key: 'footerNewspapers', path: { fr: 'medias/#journaux', en: 'en/media/#journaux' } },
+  { id: 'radios', key: 'footerSchedules', path: { fr: 'horaires/', en: 'en/schedules/' } },
+  // data-sports-reset : depuis /sports/?sport=… recharge sans filtres. Nouvel
+  // onglet hors /sports/ pour que la radio continue — sur le tableau,
+  // sports-board.js intercepte et reste dans le même onglet.
+  {
+    id: 'sports',
+    key: 'sportsFooter',
+    path: { fr: 'sports/', en: 'en/sports/' },
+    attrs: ' data-sports-reset target="_blank" rel="noopener noreferrer"',
+  },
+  { id: 'archives', key: 'archives', path: { fr: 'archives/', en: 'archives/' }, footerOnly: true },
+];
+
+function sectionLinks({ lang, href, includeFooterOnly = false }) {
+  const t = T[lang];
+  return SECTIONS
+    .filter((s) => includeFooterOnly || !s.footerOnly)
+    .map((s) => `<a href="${href(s.path[lang] || s.path.fr)}"${s.attrs || ''}>${escapeHtml(t[s.key])}</a>`);
+}
+
+/**
+ * Menu de sections de l'accueil, sous la barre des scores.
+ *
+ * Volontairement limité à l'accueil : les pages d'entités portent déjà un fil
+ * d'Ariane au même endroit, qui dit en plus la position dans l'arborescence.
+ */
+function renderSectionNav({ lang = 'fr', up = './', indent = '    ' } = {}) {
+  const href = (rel) => (rel ? `${up}${rel}`.replace(/^\.\//, '') : up);
+  const sep = '<span class="site-sections__sep" aria-hidden="true">·</span>';
+  const items = sectionLinks({ lang, href }).join(`\n${indent}  ${sep}\n${indent}  `);
+  const label = lang === 'en' ? 'Site sections' : 'Sections du site';
+  return `<nav class="site-sections" aria-label="${label}">
+${indent}  ${items}
+${indent}</nav>`;
+}
+
+function renderMastheadActions({ lang = 'fr', up = './', current = null, indent = '          ' } = {}) {
+  const c = CHROME_T[lang] || CHROME_T.fr;
+  const p = indent;
+  // À la racine `up` vaut './' : on le retire devant un chemin relatif pour
+  // écrire « pomo/ » et non « ./pomo/ », la forme attendue par le reste du
+  // site et par tests/static-integrity.mjs. Le lien d'accueil garde './'.
+  const href = (rel) => (rel ? `${up}${rel}`.replace(/^\.\//, '') : up);
+  const cur = (id) => (current === id ? ' aria-current="page"' : '');
+  const feedsPath = 'feeds.html';
+  const sportsPath = lang === 'fr' ? 'sports/' : 'en/sports/';
+
+  return `<div class="masthead-actions">
+${p}  <a href="${href('')}" class="masthead-icon masthead-home"${cur('home')} title="${escapeHtml(c.home)}" aria-label="${escapeHtml(c.homeAria)}">${ICON_SVG.home}</a>
+${p}  <a href="${href(feedsPath)}" class="masthead-icon masthead-rss"${cur('rss')} title="${escapeHtml(c.rss)}" aria-label="${escapeHtml(c.rssAria)}">${ICON_SVG.rss}</a>
+${p}  <a href="${href('pomo/')}" class="masthead-icon masthead-pomo" title="${escapeHtml(c.pomo)}" aria-label="${escapeHtml(c.pomo)}"><img class="app-emoji" src="${up}assets/emoji/tomato.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
+${p}  <a href="${href('solitaire/')}" class="masthead-icon masthead-solitaire" title="${escapeHtml(c.solitaire)}" aria-label="${escapeHtml(c.solitaire)}"><img class="app-emoji" src="${up}assets/emoji/playing-cards.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
+${p}  <a href="${href(sportsPath)}" class="masthead-icon masthead-sports"${cur('sports')} title="${escapeHtml(c.sports)}" aria-label="${escapeHtml(c.sports)}"><img class="app-emoji" src="${up}assets/emoji/trophy.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
+${p}  <a href="${COFFEE_URL}" class="masthead-icon masthead-coffee" title="${escapeHtml(c.coffee)}" aria-label="${escapeHtml(c.coffeeAria)}" target="_blank" rel="noopener noreferrer">${ICON_SVG.coffee}</a>
+${p}  ${renderInstallMenu({ lang, up })}
+${p}  <button id="theme-toggle" class="masthead-icon theme-toggle" type="button" aria-label="${escapeHtml(c.theme)}" title="${escapeHtml(c.themeTitle)}">${ICON_SVG.theme}</button>
+${p}</div>`;
+}
+
+/**
  * Pied de page du site — SOURCE DE VÉRITÉ UNIQUE.
  *
  * POURQUOI ICI
@@ -621,12 +809,7 @@ function renderSiteFooter({
 } = {}) {
   const t = T[lang];
   const p = indent;
-  const dirPath = lang === 'fr' ? 'medias/' : 'en/media/';
-  const schedPath = lang === 'fr' ? 'horaires/' : 'en/schedules/';
-  const sportsPath = lang === 'fr' ? 'sports/' : 'en/sports/';
-  // Le catalogue est actuellement francophone, mais son libellé est neutre et
-  // l’archive reste utile depuis le volet anglais.
-  const archivePath = 'archives/';
+  // Les chemins des sections viennent de `SECTIONS` : plus de liste locale.
 
   // À la racine, `up` vaut './' : on le retire devant un chemin pour écrire
   // « horaires/ » et non « ./horaires/ », la forme que le reste du site et
@@ -635,13 +818,10 @@ function renderSiteFooter({
 
   const links = [];
   if (!home) links.push(`<a href="${href('')}">${escapeHtml(t.backHome)}</a>`);
-  links.push(`<a href="${href(dirPath)}">${escapeHtml(t.footerDirectory)}</a>`);
-  links.push(`<a href="${href(schedPath)}">${escapeHtml(t.schedules)}</a>`);
-  // data-sports-reset : depuis /sports/?sport=… recharge sans filtres.
-  // Nouvel onglet hors /sports/ (radio continue) — sur le tableau, sports-board.js
-  // intercepte et reste dans le même onglet pour un reset propre.
-  links.push(`<a href="${href(sportsPath)}" data-sports-reset target="_blank" rel="noopener noreferrer">${escapeHtml(t.sportsFooter || t.sports)}</a>`);
-  links.push(`<a href="${href(archivePath)}">${escapeHtml(t.archives)}</a>`);
+  // Même liste que le menu de sections de l'accueil (`SECTIONS`), archives
+  // comprises ici : les libellés courts du pied de page ne peuvent donc plus
+  // diverger de ceux du haut de page.
+  links.push(...sectionLinks({ lang, href, includeFooterOnly: true }));
   // `altPath` vaut '' sur /en/ : la version française est la racine du site.
   // Tester la valeur et non sa véracité, sinon le volet anglais perd sa bascule.
   if (altPath !== null && altPath !== undefined) {
@@ -664,16 +844,23 @@ function renderSiteFooter({
   // partout ailleurs. Cette variante reste générée, donc `seo:update` ne
   // peut pas la remplacer par un ancien footer complet.
   if (variant === 'maintenance') {
+    // La signature est le nom complet du projet : elle appartient au bloc de
+    // marque, visible, comme dans tous les autres pieds de page — la replier
+    // cachait l'identité même du site. L'avis « projet indépendant » prend sa
+    // place dans le dépliant, auprès de la licence et des mentions légales,
+    // qui sont de même nature. L'échange laisse la page plus courte qu'avant :
+    // le pied de page fermé doit tenir sans barre de défilement (contrôlé par
+    // `maintenance : footer compact sans défilement` dans browser-smoke).
     return `<footer class="site-foot site-foot--maintenance">
 ${p}  <div class="site-foot__brand">
 ${p}    <p class="site-foot__wordmark notranslate" translate="no"><img class="site-foot__logo" src="${up}assets/icon.svg" width="24" height="24" alt="" aria-hidden="true">${BRAND_NAME}</p>
+${p}    <p class="site-foot__signature" lang="fr">${escapeHtml(BRAND_SIGNATURE)}</p>
 ${p}  </div>
-${p}  <p class="site-foot__summary">${escapeHtml(t.unofficial)}</p>
 ${p}  <p class="site-foot__contact"><a href="${CONTACT_URL}" data-contact-channel="email" aria-label="${escapeHtml(t.contactAria)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>${escapeHtml(t.contactLabel)}</a></p>
 ${p}  <details class="site-foot__details">
 ${p}    <summary>${escapeHtml(t.footerDetails)}</summary>
 ${p}    <div class="site-foot__details-body">
-${p}      <p class="site-foot__signature" lang="fr">${escapeHtml(BRAND_SIGNATURE)}</p>
+${p}      <p class="site-foot__summary">${escapeHtml(t.unofficial)}</p>
 ${p}      <nav class="site-foot__links" aria-label="${escapeHtml(t.footerNav)}">
 ${p}        ${detailsNav}
 ${p}      </nav>
@@ -692,11 +879,23 @@ ${p}  </details>
 ${p}</footer>`;
   }
 
+  // Libellés pris dans CHROME_T et non dans T : les deux volets de langue y
+  // sont garantis présents côté source, alors qu'une clé oubliée dans T.en
+  // rendrait ici une chaîne vide — donc un bouton sans nom accessible.
+  const c = CHROME_T[lang] || CHROME_T.fr;
+  const installBtn = `<p class="site-foot__install">
+${p}    <button type="button" class="site-foot__install-btn" data-install-app="radar" aria-label="${escapeHtml(c.installAppAria)}">
+${p}      ${ICON_SVG.install}
+${p}      <span>${escapeHtml(c.installApp)}</span>
+${p}    </button>
+${p}  </p>`;
+
   return `<footer class="site-foot">
 ${p}  <div class="site-foot__brand">
 ${p}    <p class="site-foot__wordmark notranslate" translate="no"><img class="site-foot__logo" src="${up}assets/icon.svg" width="24" height="24" alt="" aria-hidden="true">${BRAND_NAME}</p>
 ${p}    <p class="site-foot__signature" lang="fr">${escapeHtml(BRAND_SIGNATURE)}</p>
 ${p}  </div>
+${p}  ${installBtn}
 ${p}  <p>${escapeHtml(t.unofficial)}</p>
 ${p}  <nav class="site-foot__links" aria-label="${escapeHtml(t.footerNav)}">
 ${p}    ${nav}
@@ -731,6 +930,15 @@ function renderPage({
   /** Si défini : le h1 devient un lien (ex. reset filtres « Au tableau »). */
   h1Href = null,
   h1Attrs = '',
+  /** Pastille du mât à marquer `aria-current` (`home`, `rss`, `sports`…). */
+  chromeCurrent = null,
+  /**
+   * Si vrai : la page déclare son propre manifeste et son propre service
+   * worker, donc s'installe comme une app à part entière (cas de /sports/).
+   * Sinon elle reçoit le manifeste racine, sans quoi le bouton « Installer »
+   * ne pourrait jamais déclencher l'invite native et mentirait à la personne.
+   */
+  standaloneApp = false,
 }) {
   const t = T[lang];
   const depth = path.split('/').filter(Boolean).length;
@@ -738,6 +946,20 @@ function renderPage({
   const canonical = `${siteBase}/${path}`;
   const altUrl = `${siteBase}/${altPath}`;
   const frUrl = lang === 'fr' ? canonical : altUrl;
+
+  // Manifeste : le sien pour une app autonome, celui du site sinon. Sans ce
+  // lien, `beforeinstallprompt` ne se déclenche jamais et le bouton
+  // « Installer » retombe systématiquement sur le guide manuel.
+  // L'enregistrement du service worker passe par un fichier externe : la CSP
+  // de ces pages est `script-src 'self'`, sans `unsafe-inline`.
+  const appHeadHtml = standaloneApp
+    ? '    <link rel="manifest" href="site.webmanifest" />\n'
+      + '    <meta name="mobile-web-app-capable" content="yes" />\n'
+      + '    <meta name="apple-mobile-web-app-capable" content="yes" />\n'
+      + '    <meta name="apple-mobile-web-app-status-bar-style" content="default" />\n'
+      + `    <meta name="apple-mobile-web-app-title" content="${escapeHtml(CHROME_T[lang].appSportsShort)}" />\n`
+      + `    <script src="${up}app-sw-register.js" defer></script>\n`
+    : `    <link rel="manifest" href="${up}manifest.json" />\n`;
 
   const crumbHtml = crumbs.length
     ? `<nav class="seo-crumbs" aria-label="${lang === 'fr' ? 'Fil d’Ariane' : 'Breadcrumb'}">`
@@ -779,8 +1001,8 @@ ${alternate ? `    <link rel="alternate" hreflang="fr-CA" href="${escapeHtml(lan
 
     <link rel="icon" href="${up}assets/icon-32.png" type="image/png" sizes="32x32" />
     <link rel="icon" href="${up}assets/icon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="${up}assets/icon-192.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="apple-touch-icon" href="${standaloneApp ? 'apple-touch-icon-180x180.png' : `${up}assets/icon-192.png`}" />
+${appHeadHtml}    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="${up}style-masthead.css" />
@@ -793,15 +1015,17 @@ ${renderTunerCriticalCss()}    <script src="${up}seo-page-theme.js"></script>
     <script src="${up}player-sync.js" defer></script>
     <script src="${up}institution-acronyms-data.js" defer></script>
     <script src="${up}app.js" defer></script>
+    <script src="${up}engage-prompt.js" defer></script>
 ${(Array.isArray(extraScripts) ? extraScripts : []).map((src) => `    <script src="${up}${escapeHtml(src)}" defer></script>`).join('\n')}${Array.isArray(extraScripts) && extraScripts.length ? '\n' : ''}${jsonLd ? `    <script type="application/ld+json">${jsonLd}</script>\n` : ''}  </head>
   <body>
     <header class="masthead">
       <div class="masthead-inner">
-        <div class="seo-masthead-actions">
-          <button id="theme-toggle" class="masthead-icon theme-toggle" type="button" aria-label="Changer de thème" title="Mode clair / sombre">
-            <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-            <svg class="ico-moon hidden" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7.21 7.21 0 0 0 21 12.79z"/></svg>
-          </button>
+        <div class="masthead-top">
+          <span class="masthead-date">
+            <span id="today-date"></span>
+            <time id="today-time" class="masthead-time" aria-label="${lang === 'en' ? 'Current time' : 'Heure actuelle'}"></time>
+          </span>
+          ${renderMastheadActions({ lang, up, current: chromeCurrent, indent: '          ' })}
         </div>
         <div class="masthead-brand">
           <a href="${up}" class="wordmark">
@@ -1116,6 +1340,12 @@ module.exports = {
   frAt,
   renderPage,
   renderSiteFooter,
+  renderMastheadActions,
+  renderSectionNav,
+  SECTIONS,
+  renderInstallMenu,
+  CHROME_T,
+  INSTALL_APPS,
   renderNativeTuner,
   factsList,
   headlineList,
