@@ -1651,6 +1651,14 @@ function renderMastheadWeather(entries) {
 
 window.addEventListener('radar:translate-mode', refreshMastheadWeatherLinks);
 
+// Changer de langue redimensionne le mât : la colonne date est en max-content
+// (style-masthead.css) et « Thursday, August 6, 2026 » est plus large que
+// « jeudi 6 août 2026 ». La cellule météo perd donc ~40 px sans que personne
+// ne le recalcule — la carte primaire débordait jusqu'au prochain tick de
+// rotation, qui retirait une ville. On replanifie la mise en page comme on le
+// fait déjà au resize, pour la même raison : la largeur disponible a changé.
+window.addEventListener('radar:translate-mode', scheduleMastheadWeatherLayout);
+
 function readWeatherCache() {
   try {
     const cached = JSON.parse(localStorage.getItem(WEATHER_CACHE_KEY) || 'null');
