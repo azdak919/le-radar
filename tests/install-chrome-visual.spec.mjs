@@ -190,16 +190,49 @@ for (const route of ROUTES) {
 
     // La pastille d'installation doit être indiscernable de sa voisine :
     // c'est la définition opérationnelle de « ça se fond avec les autres ».
-    const [install, sibling] = await Promise.all([
-      page.locator(TOGGLE).first().evaluate(readBox),
-      page.locator(SIBLING).first().evaluate(readBox),
-    ]);
+    //
+    // Une lecture atomique, et les deux boîtes dans le même evaluate : l'état
+    // photo peut basculer à tout moment (quebec-backgrounds.js pose .loaded
+    // même quand aucune image n'a abouti, après ses reprises), et
+    // `.masthead-icon` transitionne sa bordure sur 140 ms. Deux lectures
+    // séparées attrapaient des valeurs intermédiaires — la source du flake.
+    await page.waitForTimeout(400);
+    const { photo, install, sibling } = await page.evaluate(
+      ({ toggleSel, siblingSel }) => {
+        const read = (el) => {
+          const cs = getComputedStyle(el);
+          const r = el.getBoundingClientRect();
+          return {
+            width: r.width,
+            height: r.height,
+            borderRadius: cs.borderRadius,
+            borderColor: cs.borderTopColor,
+            color: cs.color,
+            fontFamily: cs.fontFamily,
+            paddingBlock: `${cs.paddingTop} ${cs.paddingBottom}`,
+          };
+        };
+        return {
+          photo: !!document.querySelector('.masthead #bg-photo-layer.loaded'),
+          install: read(document.querySelector(toggleSel)),
+          sibling: read(document.querySelector(siblingSel)),
+        };
+      },
+      { toggleSel: TOGGLE, siblingSel: SIBLING },
+    );
 
     expect(install.height, `${route.name} : hauteur`).toBeCloseTo(sibling.height, 0);
     expect(install.borderRadius, `${route.name} : arrondi`).toBe(sibling.borderRadius);
-    expect(install.borderColor, `${route.name} : bordure`).toBe(sibling.borderColor);
-    expect(install.color, `${route.name} : couleur`).toBe(sibling.color);
     expect(install.fontFamily, `${route.name} : police`).toBe(sibling.fontFamily);
+
+    // Sur photo de fond, la bascule de thème reçoit une teinte soleil/lune
+    // délibérée (style-masthead.css) que la pastille d'installation n'a pas :
+    // les jetons de couleur DIVERGENT par design. Le fondu s'y juge à la
+    // géométrie seule ; la concordance chromatique se vérifie hors photo.
+    if (!photo) {
+      expect(install.borderColor, `${route.name} : bordure`).toBe(sibling.borderColor);
+      expect(install.color, `${route.name} : couleur`).toBe(sibling.color);
+    }
 
     if (route.kind === 'masthead') {
       // Les pastilles du mât sont carrées et sans libellé : même largeur.
@@ -215,20 +248,6 @@ for (const route of ROUTES) {
         .toBeGreaterThan(sibling.width);
     }
   });
-}
-
-function readBox(el) {
-  const cs = getComputedStyle(el);
-  const r = el.getBoundingClientRect();
-  return {
-    width: r.width,
-    height: r.height,
-    borderRadius: cs.borderRadius,
-    borderColor: cs.borderTopColor,
-    color: cs.color,
-    fontFamily: cs.fontFamily,
-    paddingBlock: `${cs.paddingTop} ${cs.paddingBottom}`,
-  };
 }
 
 test('nom accessible du bouton d’installation — FR et EN', async ({ page }) => {

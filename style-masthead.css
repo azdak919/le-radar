@@ -183,9 +183,17 @@
 
   /* Le crédit demeure ancré au bas du mât. On remonte le bloc logo/slogan
      plutôt que d'ajouter une bande sous lui : la radio reste donc collée au
-     bas de la photo et le crédit ne recouvre plus le slogan. */
+     bas de la photo et le crédit ne recouvre plus le slogan.
+
+     On déplace le rembourrage plutôt que la boîte. Un translateY sortait la
+     marque de son flux : sa rect remontait de 16 px alors que .masthead-top
+     ne laisse que 13 px sous la rangée d'actions (padding-bottom 12px +
+     border-bottom 1px), donc le mot-symbole passait 3 px SOUS les pastilles.
+     Transférer les 16 px du haut vers le bas donne le même déplacement à
+     l'œil, sans jamais faire remonter la boîte dans la rangée d'actions. */
   .masthead:has(#bg-photo-layer.loaded) .masthead-brand {
-    transform: translateY(-1rem);
+    padding-top: 0;
+    padding-bottom: 16px;
   }
 }
 @media (max-width: 360px) {
@@ -193,8 +201,12 @@
     font-size: 8.5px;
     max-width: calc(100% - 16px);
   }
+  /* Même principe qu'au palier 720px, décalage un peu plus court : sous
+     360px le crédit est déjà réduit (8.5px), la marque n'a pas besoin de
+     remonter autant. */
   .masthead:has(#bg-photo-layer.loaded) .masthead-brand {
-    transform: translateY(-0.8rem);
+    padding-top: 3px;
+    padding-bottom: 13px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -719,11 +731,31 @@ a { color: inherit; }
   .masthead-top {
     display: grid;
     grid-template-areas: 'date weather actions';
-    grid-template-columns: max-content minmax(0, 1fr) max-content;
+    /* La date se BORNE au lieu de pousser. En `max-content` elle était
+       intouchable : « Thursday, August 6, 2026 » réclamait 195 px, et comme la
+       colonne météo était en minmax(0, 1fr) c'est elle qui absorbait toute la
+       compression — ruban écrasé à 43 px, nom rogné à clientWidth 0. En
+       `minmax(0, max-content)` la date peut rétrécir, et le plancher porté par
+       .masthead-weather (voir plus bas) garantit qu'elle rétrécit d'abord.
+       Le format se replie alors via MASTHEAD_DATE_FORMATS (app.js). */
+    grid-template-columns: minmax(0, max-content) 1fr max-content;
     column-gap: clamp(4px, .6vw, 10px);
   }
-  .masthead-date { grid-area: date; justify-self: start; }
-  .masthead-weather { display: inline-flex; grid-area: weather; width: 100%; justify-self: stretch; }
+  /* `stretch` + min-width: 0 : la COLONNE dimensionne la case, pas le contenu.
+     Sans ça, scrollWidth == clientWidth et la cascade de formats ne part
+     jamais — exactement le piège déjà documenté pour le volet mobile. */
+  .masthead-date { grid-area: date; justify-self: stretch; min-width: 0; }
+  .masthead-date #today-date {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  /* Plancher porté par l'élément, pas par la piste : sur les pages sans ruban
+     (fiches, annuaire) la case est vide et n'impose rien, donc la date y garde
+     toute sa longueur. Quand le ruban se retire lui-même (.is-too-narrow), le
+     plancher disparaît avec lui et la date se redéploie. */
+  .masthead-weather { display: inline-flex; grid-area: weather; width: 100%; justify-self: stretch; min-width: 104px; }
   .masthead-actions { grid-area: actions; justify-self: end; }
 }
 @media (max-width: 359.98px) { .masthead-weather:not(.masthead-weather--docked) { display: none !important; } }
