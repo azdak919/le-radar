@@ -1,94 +1,46 @@
 {
-  "generatedAt": "2026-08-06T07:04:02.049Z",
+  "generatedAt": "2026-08-06T18:35:08.647Z",
   "since": "36h",
   "sinceGit": "36 hours ago",
   "intense": true,
   "intensity": {
-    "score": 956.8,
+    "score": 425.2,
     "level": "heavy",
-    "files": 664,
-    "touches": 2375,
-    "commitCount": 64
+    "files": 211,
+    "touches": 1795,
+    "commitCount": 70
   },
   "candidates": [
-    {
-      "zone": "bots-ci",
-      "title": "Bots / CI / scripts de maintenance",
-      "why": "Beaucoup de scripts touchés — opportunité de factoriser",
-      "effort": "M",
-      "related": "D1",
-      "heat": 174,
-      "files": [
-        "scripts/seo-pages-lib.js",
-        "tests/static-integrity.mjs",
-        "tests/install-chrome-visual.spec.mjs",
-        "scripts/generate-seo.js",
-        "scripts/seo-pages.js",
-        "scripts/sw-shell-lock.mjs"
-      ]
-    },
     {
       "zone": "pwa-sw",
       "title": "PWA / service worker / install",
       "why": "SW et install touchés souvent ; risque de cache oublié",
       "effort": "S",
       "related": null,
-      "heat": 98,
+      "heat": 88,
       "files": [
         "assets/news-images/manifest.json",
         "sw.js",
         "sports/sw.js",
-        "offline.html",
         "pomo/sw.js",
-        "solitaire/sw.js"
+        "solitaire/sw.js",
+        "offline.html"
       ]
     },
     {
-      "zone": "pomo",
-      "title": "Isolation / qualité mini-app Pomo",
-      "why": "Activité concentrée sur /pomo/",
-      "effort": "S",
-      "related": null,
-      "heat": 69,
-      "files": [
-        "pomo/index.html",
-        "pomo/sw.js",
-        "pomo/LICENSE",
-        "pomo/README.md",
-        "pomo/apple-touch-icon-120x120.png",
-        "pomo/apple-touch-icon-152x152.png"
-      ]
-    },
-    {
-      "zone": "banks-photo",
-      "title": "Pipeline banques photo (QC / saisons / audit)",
-      "why": "Beaucoup d’activité sur les fonds — documenter ou automatiser le reste",
+      "zone": "bots-ci",
+      "title": "Bots / CI / scripts de maintenance",
+      "why": "Beaucoup de scripts touchés — opportunité de factoriser",
       "effort": "M",
-      "related": "D3",
-      "heat": 42,
+      "related": "D1",
+      "heat": 19.2,
       "files": [
-        "data/quebec-backgrounds.json",
-        "data/quebec-favorites-backgrounds.json",
-        "data/quebec-nations-backgrounds.json",
-        "data/quebec-pomo-backgrounds.json",
-        "data/quebec-university-backgrounds.json",
-        "quebec-backgrounds-data.js"
-      ]
-    },
-    {
-      "zone": "radio-mobile",
-      "title": "Radio mobile / Media Session / reprise",
-      "why": "Zone audio mobile sensible ; regroupe les fix récurrents",
-      "effort": "M",
-      "related": null,
-      "heat": 25,
-      "files": [
-        ".github/workflows/update-radio-nowplaying.yml",
-        "cast.js",
-        "mobile-playback.js",
-        "player-sync.js",
-        "scripts/fetch-radio-nowplaying.js",
-        "scripts/radio-nowplaying-lib.js"
+        "scripts/seo-pages-lib.js",
+        "tests/static-integrity.mjs",
+        "tests/install-chrome-visual.spec.mjs",
+        "tests/seo-pages.spec.mjs",
+        "tests/pomo-first-paint.spec.mjs",
+        "tests/masthead-sports-fit.spec.mjs"
       ]
     },
     {
@@ -97,9 +49,35 @@
       "why": "style.css monolithe ; changements UI = relecture large",
       "effort": "M",
       "related": "D2",
-      "heat": 22.5,
+      "heat": 17.5,
       "files": [
         "style.css"
+      ]
+    },
+    {
+      "zone": "pomo",
+      "title": "Isolation / qualité mini-app Pomo",
+      "why": "Activité concentrée sur /pomo/",
+      "effort": "S",
+      "related": null,
+      "heat": 16.5,
+      "files": [
+        "pomo/index.html",
+        "pomo/sw.js",
+        "pomo/js/layout-boot.js",
+        "pomo/js/layout.js",
+        "pomo/styles/layout.css"
+      ]
+    },
+    {
+      "zone": "monolith-app",
+      "title": "Découper / modulariser app.js (tranche)",
+      "why": "Fichier monolithe touché souvent en vibe-code → re-lit cher en tokens",
+      "effort": "L",
+      "related": "D2",
+      "heat": 6,
+      "files": [
+        "app.js"
       ]
     }
   ],
@@ -157,11 +135,11 @@
       "n": 22
     },
     {
-      "file": "en/radios/cism/index.html",
+      "file": "journaux/lexemplaire/index.html",
       "n": 22
     },
     {
-      "file": "journaux/lexemplaire/index.html",
+      "file": "en/radios/cism/index.html",
       "n": 22
     }
   ]

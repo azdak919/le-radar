@@ -448,16 +448,15 @@ variantes de noms :
 
 > Généré par `npm run agents:harvest -- --write`. **Pas des D# ouvertes.**
 > L’humain (ou l’agent avec OK) promeut une ligne en §3 si pertinent.
-> Dernière récolte : 2026-08-06T07:04:02.049Z · intensité **heavy** (score 956.8) · fenêtre `36h`
+> Dernière récolte : 2026-08-06T18:35:08.647Z · intensité **heavy** (score 425.2) · fenêtre `36h`
 
 | Zone | Chaleur | Effort | Suggestion | Fichiers chauds |
 |------|---------|--------|------------|-----------------|
-| bots-ci | 174 | M | Bots / CI / scripts de maintenance | `scripts/seo-pages-lib.js`, `tests/static-integrity.mjs`, `tests/install-chrome-visual.spec.mjs`, `scripts/generate-seo.js`, `scripts/seo-pages.js`, `scripts/sw-shell-lock.mjs` |
-| pwa-sw | 98 | S | PWA / service worker / install | `assets/news-images/manifest.json`, `sw.js`, `sports/sw.js`, `offline.html`, `pomo/sw.js`, `solitaire/sw.js` |
-| pomo | 69 | S | Isolation / qualité mini-app Pomo | `pomo/index.html`, `pomo/sw.js`, `pomo/LICENSE`, `pomo/README.md`, `pomo/apple-touch-icon-120x120.png`, `pomo/apple-touch-icon-152x152.png` |
-| banks-photo | 42 | M | Pipeline banques photo (QC / saisons / audit) | `data/quebec-backgrounds.json`, `data/quebec-favorites-backgrounds.json`, `data/quebec-nations-backgrounds.json`, `data/quebec-pomo-backgrounds.json`, `data/quebec-university-backgrounds.json`, `quebec-backgrounds-data.js` |
-| radio-mobile | 25 | M | Radio mobile / Media Session / reprise | `.github/workflows/update-radio-nowplaying.yml`, `cast.js`, `mobile-playback.js`, `player-sync.js`, `scripts/fetch-radio-nowplaying.js`, `scripts/radio-nowplaying-lib.js` |
-| monolith-css | 22.5 | M | Extraire CSS mât / thème (tranche style.css) | `style.css` |
+| pwa-sw | 88 | S | PWA / service worker / install | `assets/news-images/manifest.json`, `sw.js`, `sports/sw.js`, `pomo/sw.js`, `solitaire/sw.js`, `offline.html` |
+| bots-ci | 19.2 | M | Bots / CI / scripts de maintenance | `scripts/seo-pages-lib.js`, `tests/static-integrity.mjs`, `tests/install-chrome-visual.spec.mjs`, `tests/seo-pages.spec.mjs`, `tests/pomo-first-paint.spec.mjs`, `tests/masthead-sports-fit.spec.mjs` |
+| monolith-css | 17.5 | M | Extraire CSS mât / thème (tranche style.css) | `style.css` |
+| pomo | 16.5 | S | Isolation / qualité mini-app Pomo | `pomo/index.html`, `pomo/sw.js`, `pomo/js/layout-boot.js`, `pomo/js/layout.js`, `pomo/styles/layout.css` |
+| monolith-app | 6 | L | Découper / modulariser app.js (tranche) | `app.js` |
 
 Pour promouvoir : ajouter une ligne D# en §3 avec effort + pourquoi, après OK humain.
 ## 4. Dettes résolues (historique)
