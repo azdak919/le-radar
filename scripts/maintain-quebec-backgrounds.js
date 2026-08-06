@@ -56,6 +56,12 @@ const {
   looksTownHallFacade: looksTownHallFacadeShared,
 } = require('./religious-facade-lib');
 const {
+  looksSpeciesMacro,
+  looksPeopleScene,
+  looksVernacularBuilding,
+  looksFaceDetected,
+} = require('./wallpaper-subject-lib');
+const {
   enrichPhotoSeasons,
   getCurrentSeason4,
   resolveItemSeason4,
@@ -595,6 +601,16 @@ function textGate(
     return { ok: false, reason: 'town_hall_facade' };
   }
   if (looksPeopleHeavy(entry)) return { ok: false, reason: 'people_subject' };
+  // Personnes décrites hors du titre : PEOPLE_RE ne lit que titre/URL/lien, et
+  // un toponyme numéroté (« Havre St Pierre 006 ») ne dit rien de la scène.
+  if (looksPeopleScene(entry)) return { ok: false, reason: 'people_scene' };
+  // Visage mesuré au pixel (detect-photo-faces) — muet si la passe n'a pas tourné.
+  if (looksFaceDetected(entry)) return { ok: false, reason: 'face_subject' };
+  // Photo de spécimen : catégorie taxon / binôme latin = plan rapproché.
+  if (looksSpeciesMacro(entry)) return { ok: false, reason: 'macro_closeup' };
+  if (looksVernacularBuilding(entry)) {
+    return { ok: false, reason: 'vernacular_building' };
+  }
   if (looksBadSceneTitle(entry)) return { ok: false, reason: 'bad_scene_title' };
   if (!isAllowedLicense(entry.license || '')) return { ok: false, reason: 'license' };
   if (requireCampus && !looksCampusSubject(entry)) {
