@@ -3808,6 +3808,9 @@ html[data-translate-busy="1"] .translate-toggle {
     margin: 4px auto 6px;
     font-size: 12px;
     gap: 3px 7px;
+    /* Centré sur mobile : la ligne est seule sur sa largeur, alors qu'au-dessus
+       de 600 px elle s'aligne sur le fil qui la suit. */
+    justify-content: center;
   }
 }
 
