@@ -768,8 +768,8 @@
     sports: {
       id: 'sports',
       rel: 'sports/',
-      label: { fr: 'SPORTS Étudiants', en: 'Student SPORTS' },
-      short: { fr: 'SPORTS', en: 'SPORTS' },
+      label: { fr: 'Sports Étudiants', en: 'Student Sports' },
+      short: { fr: 'Sports', en: 'Sports' },
       emoji: 'trophy',
     },
   };
