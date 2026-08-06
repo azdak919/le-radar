@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-06T07:15:16.661Z",
+  "updatedAt": "2026-08-06T14:53:09.212Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Jeudi Révolte",
+        "title": "Les Arshitechs du Son",
         "source": "schedule",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/jeudi-revolte/"
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-06T07:15:02.488Z"
+      "checkedAt": "2026-08-06T14:52:55.182Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Par mots et par vaux (reprise)",
+        "title": "La collation",
         "source": "schedule",
-        "start": "03:00",
-        "end": "04:00",
-        "url": "https://cism893.ca/emissions/par-mots-et-par-vaux"
+        "start": "09:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
       },
       "next": {
-        "title": "Best of des sessions live",
+        "title": "Une fenêtre sur le monde",
         "source": "schedule",
-        "start": "04:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/session-live-a-cism"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/une-fenetre-sur-le-monde"
       },
       "track": "",
-      "showTitle": "Par mots et par vaux (reprise)",
+      "showTitle": "La collation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-06T07:15:05.402Z"
+      "checkedAt": "2026-08-06T14:52:57.292Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Freeform Air",
+        "title": "Folk Directions",
         "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
+        "start": "09:00",
+        "end": "11:00"
       },
       "next": {
-        "title": "William Shatner's Whiskey Tears",
+        "title": "Under The Olive Tree",
         "source": "api-live",
-        "start": "04:00",
-        "end": "06:00"
+        "start": "11:00",
+        "end": "12:00"
       },
       "track": "",
-      "showTitle": "Freeform Air",
+      "showTitle": "Folk Directions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-06T07:15:09.768Z"
+      "checkedAt": "2026-08-06T14:53:00.693Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
+        "title": "Democracy Now",
         "source": "schedule",
-        "start": "01:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
       },
       "next": {
-        "title": "Daydream Nation",
+        "title": "Weirdo Rippers",
         "source": "schedule",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/daydream-nation"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/weirdo-rippers"
       },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Democracy Now",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-06T07:15:11.596Z"
+      "checkedAt": "2026-08-06T14:53:02.479Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
+        "title": "Palmarès CFAK",
         "source": "schedule",
-        "start": "00:00",
-        "end": "07:00"
+        "start": "08:00",
+        "end": "11:00"
       },
       "next": {
-        "title": "Folkswagen",
+        "title": "À nous le futur",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "11:00",
+        "end": "20:00"
       },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-06T07:15:12.946Z"
+      "checkedAt": "2026-08-06T14:53:03.209Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "coffret de bijoux - faint but ever so loving",
+      "track": "Joël Martel - Maxi",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-06T07:15:16.310Z"
+      "checkedAt": "2026-08-06T14:53:08.862Z"
     }
   }
 }
