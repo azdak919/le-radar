@@ -20,7 +20,10 @@ import { expect, test } from '@playwright/test';
 test('depuis l’accueil, on atteint l’annuaire puis une fiche de journal', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-  await page.getByRole('link', { name: 'Tous les médias étudiants du Québec' }).click();
+  // Le libellé du menu de sections a été raccourci (« Tous les médias
+  // étudiants du Québec » → « Médias »). On vise le menu de sections plutôt
+  // que la page entière : chaque libellé existe aussi dans le pied de page.
+  await page.locator('.site-sections').getByRole('link', { name: 'Médias', exact: true }).click();
   await expect(page).toHaveURL(/\/medias\/$/);
   await expect(page.locator('h1')).toHaveText('Les médias étudiants du Québec');
 
@@ -203,7 +206,9 @@ test('une vue source remplit En bref sans dépasser la colonne une et vedettes',
 test('depuis l’accueil, on atteint le hub des horaires puis une grille complète', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-  await page.getByRole('link', { name: 'Les horaires des radios étudiantes' }).click();
+  // Idem : « Les horaires des radios étudiantes » → « Radios » dans le menu
+  // de sections. Le libellé long ne survit que dans les fils d'Ariane.
+  await page.locator('.site-sections').getByRole('link', { name: 'Radios', exact: true }).click();
   await expect(page).toHaveURL(/\/horaires\/$/);
   await expect(page.locator('h1')).toHaveText('Les horaires des radios étudiantes du Québec');
 
