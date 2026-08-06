@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-08-05T09:24:06.258Z",
+  "updated": "2026-08-06T09:29:42.981Z",
   "sources": {
     "la-pige": {
       "strategy": "wordpress-rest",
@@ -23,13 +23,13 @@
     },
     "le-collectif": {
       "strategy": "wordpress-rest",
-      "nextPage": 5,
+      "nextPage": 9,
       "totalPages": 34,
-      "lastAttemptAt": "2026-08-04T09:28:36.643Z",
-      "lastSuccessAt": "2026-08-04T09:28:36.643Z",
+      "lastAttemptAt": "2026-08-06T09:29:32.128Z",
+      "lastSuccessAt": "2026-08-06T09:29:32.128Z",
       "retryAt": null,
       "error": null,
-      "windowStart": "2023-08-04T15:28:30.243Z",
+      "windowStart": "2023-08-06T15:29:15.276Z",
       "windowYears": 3
     },
     "exil": {
@@ -66,13 +66,13 @@
     },
     "le-delit": {
       "strategy": "wordpress-rest",
-      "nextPage": 9,
+      "nextPage": 13,
       "totalPages": 16,
-      "lastAttemptAt": "2026-08-04T09:28:45.931Z",
-      "lastSuccessAt": "2026-08-04T09:28:45.931Z",
+      "lastAttemptAt": "2026-08-06T09:29:41.006Z",
+      "lastSuccessAt": "2026-08-06T09:29:41.006Z",
       "retryAt": null,
       "error": null,
-      "windowStart": "2023-08-04T15:28:30.243Z",
+      "windowStart": "2023-08-06T15:29:15.276Z",
       "windowYears": 3
     },
     "le-polyscope": {
@@ -158,13 +158,13 @@
     },
     "the-tribune": {
       "strategy": "wordpress-rest",
-      "nextPage": 5,
+      "nextPage": 9,
       "totalPages": 40,
-      "lastAttemptAt": "2026-08-02T08:58:58.482Z",
-      "lastSuccessAt": "2026-08-02T08:58:58.482Z",
+      "lastAttemptAt": "2026-08-06T09:29:22.086Z",
+      "lastSuccessAt": "2026-08-06T09:29:22.086Z",
       "retryAt": null,
       "error": null,
-      "windowStart": "2023-08-02T14:58:44.473Z",
+      "windowStart": "2023-08-06T15:29:15.276Z",
       "windowYears": 3
     },
     "zone-campus": {
