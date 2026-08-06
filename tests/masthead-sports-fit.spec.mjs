@@ -80,3 +80,44 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
 
   expect(pageErrors).toEqual([]);
 });
+
+/**
+ * Date du mât : cascade d'ajustement, jamais sous les icônes.
+ *
+ * A capturé le chevauchement de « Thursday, August 6, 2026 » : la case,
+ * dimensionnée au contenu par un `justify-self: start` hérité du bloc ≥360 px,
+ * dépassait de 22 px et passait sous la rangée d'actions — sans jamais
+ * déclencher l'ellipse, puisque `scrollWidth` valait `clientWidth`.
+ */
+test('mât : la date longue se compacte au lieu de passer sous les icônes', async ({ page }) => {
+  const pageErrors = [];
+  page.on('pageerror', (error) => pageErrors.push(error.message));
+
+  const dateEl = page.locator('#today-date');
+  const actions = page.locator('.masthead-actions');
+
+  await page.setViewportSize({ width: 393, height: 800 });
+  // `/en/` porte la date la plus longue du site sans dépendre du moteur de
+  // traduction : « Thursday, August 6, 2026 » y est rendu par Intl.
+  await page.goto('/en/', { waitUntil: 'domcontentloaded' });
+  await expect(dateEl).not.toBeEmpty({ timeout: 15000 });
+
+  // Une seule navigation : la page est lourde, et la cascade se rejoue au
+  // redimensionnement — c'est justement ce qu'on veut vérifier.
+  for (const width of [393, 360, 320]) {
+    await page.setViewportSize({ width, height: 800 });
+    await expect
+      .poll(async () => {
+        const [date, row] = await Promise.all([dateEl.boundingBox(), actions.boundingBox()]);
+        if (!date || !row) return null;
+        return Math.round(date.x + date.width - row.x);
+      }, { timeout: 5000 })
+      .toBeLessThanOrEqual(0);
+
+    // Compactée, pas rognée : l'ellipse reste un filet, elle ne doit pas servir.
+    const clipped = await dateEl.evaluate((el) => el.scrollWidth > el.clientWidth);
+    expect(clipped, `${width}px : date tronquée par l'ellipse au lieu d'être compactée`).toBe(false);
+  }
+
+  expect(pageErrors).toEqual([]);
+});

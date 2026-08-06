@@ -91,6 +91,15 @@
     <script src="../../cast.js" defer></script>
     <script src="../../mobile-playback.js" defer></script>
     <script src="../../player-sync.js" defer></script>
+    <!-- season-lib.js avant la banque : sans lui le filtre saisonnier rend le
+         pool tel quel, et une photo d'hiver peut sortir en août. -->
+    <script src="../../scripts/season-lib.js" defer></script>
+    <script src="../../bg-rotation-lib.js" defer></script>
+    <script src="../../quebec-backgrounds-data.js" defer></script>
+    <script src="../../quebec-university-backgrounds-data.js" defer></script>
+    <script src="../../quebec-nations-backgrounds-data.js" defer></script>
+    <script src="../../quebec-favorites-backgrounds-data.js" defer></script>
+    <script src="../../quebec-backgrounds.js" defer></script>
     <script src="../../institution-acronyms-data.js" defer></script>
     <script src="../../app.js" defer></script>
     <script src="../../engage-prompt.js" defer></script>
@@ -98,9 +107,26 @@
   </head>
   <body>
     <header class="masthead">
+      <!-- Fond photo (banque du Québec) — même bloc que l'accueil : la couche,
+           le voile, le crédit et le bouton de rotation. Sans lui, ces pages
+           affichaient un mât nu alors que leur CSP whiteliste déjà le worker
+           de rotation : la chrome était prévue pour l'avoir, elle ne l'avait
+           jamais reçue. -->
+      <div id="bg-photo-layer" aria-hidden="true"></div>
+      <div class="bg-photo-scrim" aria-hidden="true"></div>
+      <div class="bg-photo-credit" id="bg-photo-credit"></div>
+      <div id="masthead-shuffle-slot" class="masthead-shuffle-slot">
+        <button id="masthead-bg-shuffle" class="masthead-icon masthead-bg-shuffle" type="button" aria-label="Changer la photo du mât" title="Changer la photo du mât">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 3 4 4-4 4"/><path d="M20 7H9a5 5 0 0 0-5 5v1"/><path d="m8 21-4-4 4-4"/><path d="M4 17h11a5 5 0 0 0 5-5v-1"/></svg>
+        </button>
+      </div>
       <div class="masthead-inner">
         <div class="masthead-top">
-          <span class="masthead-date">
+          <!-- Date et heure hors du moteur de traduction : ce sont des données,
+               formatées par Intl dans la langue active (voir mastheadLocale dans
+               app.js). Traduites mot à mot, elles revenaient en « THURSDAY
+               AUGUST 6, 20 » — mauvaise casse et longueur non mesurée. -->
+          <span class="masthead-date notranslate" translate="no">
             <span id="today-date"></span>
             <time id="today-time" class="masthead-time" aria-label="Heure actuelle"></time>
           </span>
@@ -109,11 +135,12 @@
             <a href="../../feeds.html" class="masthead-icon masthead-rss" title="Flux RSS" aria-label="S’abonner au flux RSS de LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83C19.56 12.06 12.94 5.44 4 4.44z"/><path d="M4 10.11v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.46-4.42-9.9-9.9-9.9z"/></svg></a>
             <a href="../../pomo/" class="masthead-icon masthead-pomo" title="Pomodoro — minuteur focus" aria-label="Pomodoro — minuteur focus"><img class="app-emoji" src="../../assets/emoji/tomato.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
             <a href="../../solitaire/" class="masthead-icon masthead-solitaire" title="Solitaire" aria-label="Solitaire"><img class="app-emoji" src="../../assets/emoji/playing-cards.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
-            <a href="../../sports/" class="masthead-icon masthead-sports" title="SPORTS Étudiants — scores collégiaux et universitaires" aria-label="SPORTS Étudiants — scores collégiaux et universitaires"><img class="app-emoji" src="../../assets/emoji/trophy.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
+            <a href="../../sports/" class="masthead-icon masthead-sports" title="Sports — scores collégiaux et universitaires" aria-label="Sports — scores collégiaux et universitaires"><img class="app-emoji" src="../../assets/emoji/trophy.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
             <a href="https://www.buymeacoffee.com/azdak" class="masthead-icon masthead-coffee" title="Offrir un café" aria-label="Offrir un café — Buy me a coffee" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path fill="none" d="M18 8h1a4 4 0 0 1 0 8h-1"/><path fill="none" d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line fill="none" x1="6" y1="1" x2="6" y2="4"/><line fill="none" x1="10" y1="1" x2="10" y2="4"/><line fill="none" x1="14" y1="1" x2="14" y2="4"/></svg></a>
             <div class="install-menu" data-install-menu>
-        <button type="button" class="masthead-icon install-menu__toggle" data-install-toggle aria-haspopup="menu" aria-expanded="false" aria-controls="install-menu-panel" title="Installer une app" aria-label="Installer une app — LE-RADAR, Pomodoro, Solitaire, SPORTS Étudiants"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></button>
-        <div id="install-menu-panel" class="install-menu__panel" data-install-panel role="menu" aria-label="Installer une app" hidden>
+        <button type="button" class="masthead-icon install-menu__toggle" data-install-toggle aria-haspopup="menu" aria-expanded="false" aria-controls="install-menu-panel" title="Installer une app" aria-label="Installer une app — LE-RADAR, Pomodoro, Solitaire, Sports Étudiants"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></button>
+        <div id="install-menu-panel" class="install-menu__panel" data-install-panel role="menu" aria-labelledby="install-menu-panel-title" hidden>
+          <div class="install-menu__title" id="install-menu-panel-title">Installer une app</div>
           <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="radar">
             <img class="app-emoji" src="../../assets/emoji/satellite.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
             <span>LE-RADAR.ca</span>
@@ -128,7 +155,7 @@
           </button>
           <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="sports">
             <img class="app-emoji" src="../../assets/emoji/trophy.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
-            <span>SPORTS Étudiants</span>
+            <span>Sports Étudiants</span>
           </button>
         </div>
       </div>
@@ -280,12 +307,6 @@
         <p class="site-foot__wordmark notranslate" translate="no"><img class="site-foot__logo" src="../../assets/icon.svg" width="24" height="24" alt="" aria-hidden="true">LE-RADAR.ca</p>
         <p class="site-foot__signature" lang="fr">Le Réseau Académique de Découverte et d’Agrégation de Ressources</p>
       </div>
-      <p class="site-foot__install">
-        <button type="button" class="site-foot__install-btn" data-install-app="radar" aria-label="Installer l’app LE-RADAR.ca">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
-          <span>Installer LE-RADAR.ca</span>
-        </button>
-      </p>
       <p>LE-RADAR.ca est un projet indépendant et non officiel. Il n’est affilié à aucun des médias ni des établissements recensés. Les contenus appartiennent à leurs publications d’origine.</p>
       <nav class="site-foot__links" aria-label="Liens de pied de page">
         <a href="../../">Retour à l’accueil de LE-RADAR.ca</a>
@@ -301,6 +322,8 @@
         <a href="../../archives/">Archives</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../en/newspapers/the-plant/" hreflang="en-CA">English</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <button type="button" class="site-foot__link-btn" data-install-app="radar">Installer LE-RADAR.ca</button>
       </nav>
       <p>Ce projet est distribué sous <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" rel="noopener noreferrer license">licence publique générale GNU, version 2</a>.</p>
       <div class="site-foot__credit">

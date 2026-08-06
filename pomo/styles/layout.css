@@ -852,3 +852,30 @@ html[data-layout="wide"] .quote-action-row .btn:hover {
   }
 
 }
+
+/* ── Révélation au démarrage ──────────────────────────────────────────────
+ *
+ * `data-layout` est posé avant le premier rendu par js/layout-boot.js : les
+ * proportions sont donc justes d'emblée. Restent les décalages mesurés sur le
+ * DOM (--toolbar-offset, --content-pad-*), qu'aucun script ne peut connaître
+ * avant peinture : le contenu les attend derrière un fondu de 180 ms, levé par
+ * updateChromeInsets() à la première frame mesurée.
+ *
+ * Le fond n'est PAS masqué : la photo s'installe tout de suite, seule l'UI
+ * arrive en fondu. Et seul le JS masque — un JS en panne ne peut donc pas
+ * laisser une page vide (filet de 1,5 s dans layout-boot.js).
+ */
+.page-layout,
+.top-right-actions {
+  transition: opacity 180ms ease;
+}
+html[data-booting] .page-layout,
+html[data-booting] .top-right-actions {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-layout,
+  .top-right-actions { transition: none; }
+  html[data-booting] .page-layout,
+  html[data-booting] .top-right-actions { opacity: 1; }
+}

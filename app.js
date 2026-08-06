@@ -346,6 +346,28 @@ const NEWS_SEARCH_CLEAR  = document.getElementById('news-search-clear');
 const NEWS_SEARCH_HINT   = document.getElementById('news-search-hint');
 const TODAY_DATE     = document.getElementById('today-date');
 const TODAY_TIME     = document.getElementById('today-time');
+
+/**
+ * Formats de date du mât, du plus complet au plus court.
+ *
+ * POURQUOI UNE CASCADE
+ * La case de la date partage sa ligne avec huit pastilles d'actions. Une date
+ * longue — « Thursday, August 6, 2026 » sur /en/ ou en traduction — dépassait
+ * de 22 px à 393 px et passait SOUS les icônes. L'ellipse est le filet de
+ * sécurité, pas l'objectif : « Thursday, August 6,… » n'est pas une date. On
+ * retire donc de l'information dans l'ordre où elle compte le moins — le jour
+ * de la semaine d'abord, le mois abrégé ensuite — jusqu'à ce que ça tienne.
+ *
+ * Même idiome que les noms de villes météo (`is-compact`) et que la cascade de
+ * collapse du bandeau sports : mesurer, puis compacter.
+ */
+const MASTHEAD_DATE_FORMATS = [
+  { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' },
+  { day: 'numeric', month: 'long', year: 'numeric' },
+  { day: 'numeric', month: 'short', year: 'numeric' },
+  { dateStyle: 'short' },
+];
+
 const MASTHEAD_WEATHER = document.getElementById('masthead-weather');
 const MASTHEAD_WEATHER_DOCK = document.getElementById('masthead-weather-dock');
 const MASTHEAD_SPORTS_STRIP = document.getElementById('masthead-sports-strip');
@@ -554,6 +576,22 @@ async function init() {
     renderTodayDate();
     syncSeoScheduleNow();
   }, 30_000);
+  // Changement de langue : la date se reformate elle-même (elle est hors du
+  // moteur de traduction, voir `mastheadLocale`). La cascade d'ajustement se
+  // rejoue du même coup, une langue n'ayant pas la longueur d'une autre.
+  window.addEventListener('radar:translate-mode', () => renderTodayDate());
+  // La cascade dépend de la largeur disponible : une rotation d'écran doit la
+  // rejouer tout de suite, pas au prochain tic de 30 s. Groupé en rAF comme la
+  // mise en page météo, pour ne pas mesurer à chaque pixel du redimensionnement.
+  let todayDateFitPending = false;
+  window.addEventListener('resize', () => {
+    if (todayDateFitPending) return;
+    todayDateFitPending = true;
+    window.requestAnimationFrame(() => {
+      todayDateFitPending = false;
+      renderTodayDate();
+    });
+  }, { passive: true });
   // Les constantes météo sont déclarées plus bas dans ce script : microtask
   // = après l'évaluation complète du fichier, sans retarder le reste du site.
   queueMicrotask(() => {
@@ -989,18 +1027,52 @@ function applyTheme(theme) {
 }
 
 // ─── Today date (masthead) ─────────────────────────────────────────────────────
+
+/**
+ * Locale d'affichage du mât : le mode de traduction actif s'il y en a un,
+ * sinon la langue du document.
+ *
+ * POURQUOI PAS LE MOTEUR DE TRADUCTION
+ * Une date est une donnée, pas de la prose. Passée au traducteur, « jeudi
+ * 6 août 2026 » revenait en « THURSDAY AUGUST 6, 20 » — mauvaise casse, ordre
+ * anglo-américain, et une longueur que personne n'avait mesurée. `Intl` rend
+ * l'ordre et la casse justes pour chacun des modes du sélecteur, sans appel
+ * réseau. Les balises `translate="no"` du mât tiennent le moteur à l'écart.
+ */
+function mastheadLocale() {
+  let tag = null;
+  try {
+    const mode = window.RadarTranslate?.getMode?.();
+    if (mode && mode !== 'original') tag = mode === 'fr' ? 'fr-CA' : mode === 'en' ? 'en-CA' : mode;
+  } catch { /* traduction absente : on garde la langue du document */ }
+  if (!tag) {
+    tag = (document.documentElement.lang || 'fr').toLowerCase().startsWith('en') ? 'en-CA' : 'fr-CA';
+  }
+  // `iu`, `iu-latn`… : sans données Intl, la locale par défaut du navigateur
+  // prendrait la main et sortirait une date dans une troisième langue. On
+  // préfère le français du document à cette surprise.
+  try {
+    if (!Intl.DateTimeFormat.supportedLocalesOf(tag).length) return 'fr-CA';
+  } catch { return 'fr-CA'; }
+  return tag;
+}
+
 function renderTodayDate() {
   if (!TODAY_DATE && !TODAY_TIME) return;
   const now = new Date();
   // La date du mât existe désormais aussi sur les pages d'entités, volet
   // anglais compris : la locale suit donc `lang` du document. En dur sur
   // `fr-CA`, /en/ affichait « lundi 3 août 2026 » sous un titre anglais.
-  const isEnglish = (document.documentElement.lang || 'fr').toLowerCase().startsWith('en');
-  const locale = isEnglish ? 'en-CA' : 'fr-CA';
+  const locale = mastheadLocale();
+  const isEnglish = locale.toLowerCase().startsWith('en');
   if (TODAY_DATE) {
-    TODAY_DATE.textContent = now.toLocaleDateString(locale, {
-      weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
-    });
+    for (const options of MASTHEAD_DATE_FORMATS) {
+      TODAY_DATE.textContent = now.toLocaleDateString(locale, options);
+      // Hors disposition mobile, `#today-date` reste en ligne : ses deux
+      // mesures valent 0, la comparaison est vraie, et le format complet est
+      // conservé — ce qu'on veut, la place ne manque pas là-bas.
+      if (TODAY_DATE.scrollWidth <= TODAY_DATE.clientWidth) break;
+    }
   }
   if (TODAY_TIME) {
     TODAY_TIME.dateTime = now.toTimeString().slice(0, 5);

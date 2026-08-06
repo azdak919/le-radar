@@ -6,28 +6,24 @@
 (function () {
   'use strict';
 
-  const LAYOUT_MQS = {
-    touch: '(pointer: coarse) and (max-width: 1024px), (pointer: coarse) and (max-height: 520px), (hover: none) and (max-width: 900px)',
-    portrait: '(orientation: portrait)',
-  };
+  /*
+   * Seuils et media queries : source unique dans `js/layout-boot.js`, qui les
+   * applique avant le premier rendu. En garder une copie ici rouvrirait la
+   * dérive à deux listes que le reste du dépôt vient de solder.
+   *
+   * Le `|| …` n'est pas une seconde source : c'est un défaut de dernier recours
+   * si le script de tête manquait, pour que la page reste utilisable plutôt que
+   * de tomber sur un `undefined`.
+   */
+  const BOOT = window.ATARAXIA_LAYOUT_BOOT || {};
+  const LAYOUT_MQS = BOOT.MQS || { touch: '(hover: none) and (max-width: 900px)', portrait: '(orientation: portrait)' };
+  const PHONE_LAYOUT_MAX = BOOT.PHONE_LAYOUT_MAX || 430;
+  const PHONE_UI_MAX = BOOT.PHONE_UI_MAX || 720;
+  const isTouchViewport = BOOT.isTouchViewport
+    || (() => window.matchMedia(LAYOUT_MQS.touch).matches);
 
-  /** Pilules réduites — plafond largeur (téléphone moyen). */
-  const PHONE_LAYOUT_MAX = 430;
-
-  /** UI pleine largeur chrome — pomo/citation empilés (téléphone + petit viewport). */
-  const PHONE_UI_MAX = 720;
-
-  /** Tactile (téléphone / tablette) — layout Focus Deck, pas le wide desktop. */
-  function isTouchViewport() {
-    const coarse = window.matchMedia('(pointer: coarse)').matches;
-    const noHover = window.matchMedia('(hover: none)').matches;
-    const w = window.innerWidth;
-    const h = window.innerHeight;
-    return (coarse && (w <= 1024 || h <= 520)) || (noHover && w <= 900);
-  }
-
-  const SCENE_KEY = 'ataraxia_scene';
-  const LEGACY_SCENE_KEY = 'ataraxia_focus_scene';
+  const SCENE_KEY = BOOT.SCENE_KEY || 'ataraxia_scene';
+  const LEGACY_SCENE_KEY = BOOT.LEGACY_SCENE_KEY || 'ataraxia_focus_scene';
 
   function migrateSceneStorage() {
     try {
@@ -95,6 +91,12 @@
       const bottomPad = Math.max(0, window.innerHeight - rect.top + gap);
       root.style.setProperty('--content-pad-bottom', `${bottomPad}px`);
     }
+
+    // Les décalages viennent d'une mesure du DOM : impossible de les connaître
+    // avant peinture, contrairement à `data-layout` que le script de tête pose
+    // déjà. C'est la seule part du démarrage que le fondu couvre — on révèle
+    // dès qu'elle est posée. (Filet de 1,5 s dans layout-boot.js.)
+    if (root.hasAttribute('data-booting')) root.removeAttribute('data-booting');
   }
 
   let chromeInsetsObserver = null;
