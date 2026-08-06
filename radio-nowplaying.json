@@ -1,78 +1,72 @@
 {
-  "updatedAt": "2026-08-03T12:20:01.709Z",
+  "updatedAt": "2026-08-06T04:09:22.548Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Lundi Indie",
+      "current": null,
+      "next": {
+        "title": "Jeudi Révolte",
         "source": "schedule",
         "start": "08:00",
         "end": "10:00",
-        "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
-      },
-      "next": {
-        "title": "Les Arshitechs du Son",
-        "source": "schedule",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+        "url": "https://chyz.ca/emission/jeudi-revolte/"
       },
       "track": "",
-      "showTitle": "Lundi Indie",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T12:19:37.554Z"
+      "checkedAt": "2026-08-06T04:09:07.201Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Ya Raï (reprise)",
+        "title": "La grande ludothèque (reprise)",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/ya-rai"
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
       },
       "next": {
-        "title": "La collation",
+        "title": "Mix Franco",
         "source": "schedule",
-        "start": "09:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
       },
       "track": "",
-      "showTitle": "Ya Raï (reprise)",
+      "showTitle": "La grande ludothèque (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T12:19:39.875Z"
+      "checkedAt": "2026-08-06T04:09:09.653Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Le Lendemain de la veille",
+        "title": "Off The Hook",
         "source": "api-live",
-        "start": "08:00",
-        "end": "09:00"
+        "start": "00:00",
+        "end": "02:00"
       },
       "next": {
-        "title": "Latin Music Mondays",
+        "title": "Freeform Air",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "02:00",
+        "end": "04:00"
       },
       "track": "",
-      "showTitle": "Le Lendemain de la veille",
+      "showTitle": "Off The Hook",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -80,84 +74,80 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T12:19:43.442Z"
+      "checkedAt": "2026-08-06T04:09:12.596Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Experiments",
+        "title": "The Night Watch",
         "source": "schedule",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/experiments"
+        "start": "00:00",
+        "end": "01:00",
+        "url": "http://www.cjlo.com/shows/the-night-watch"
       },
       "next": {
-        "title": "Death of the Midrange",
+        "title": "CJLO Late Night",
         "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/death-of-the-midrange"
+        "start": "01:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "track": "",
-      "showTitle": "Experiments",
+      "showTitle": "The Night Watch",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T12:19:57.262Z"
+      "checkedAt": "2026-08-06T04:09:14.405Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
+        "title": "Les nuits CFAK",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00"
+        "start": "00:00",
+        "end": "07:00"
       },
       "next": {
-        "title": "Solénoïde",
+        "title": "Folkswagen",
         "source": "schedule",
-        "start": "09:00",
-        "end": "18:00"
+        "start": "07:00",
+        "end": "08:00"
       },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-03T12:19:58.237Z"
+      "checkedAt": "2026-08-06T04:09:15.602Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Balado Populi",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "https://www.choq.ca/emissions/balado-populi"
+        "title": "Palmarès CHOQ.ca",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
       },
-      "track": "Sangam - One",
+      "track": "VERDUN - He Who Killed the Devil",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
-      "clientPoll": {
-        "type": "triton-np",
-        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
-      },
-      "checkedAt": "2026-08-03T12:20:01.358Z"
+      "clientPoll": null,
+      "checkedAt": "2026-08-06T04:09:22.197Z"
     }
   }
 }
