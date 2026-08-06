@@ -292,12 +292,12 @@ const T = {
     schedulesH1: 'Les horaires des radios étudiantes du Québec',
     schedulesLead: 'Une grille par station, mise à jour automatiquement à partir du site de chaque radio. Toutes les heures sont données à l’heure du Québec.',
     schedulesEmpty: 'Aucune grille horaire disponible au moment de la dernière mise à jour.',
-    sports: 'SPORTS Étudiants',
+    sports: 'Sports Étudiants',
     /** Pied de page seulement (focus-group le-radar-footer-sports) — pas le H1/CTA. */
     sportsFooter: 'Sports',
-    sportsTitle: 'SPORTS Étudiants — scores collégiaux et universitaires du Québec',
+    sportsTitle: 'Sports Étudiants — scores collégiaux et universitaires du Québec',
     sportsDesc: 'Scores et prochains matchs de {n} formations collégiales et universitaires du Québec (catalogue RSEQ) : hockey, football, soccer, basketball, volleyball, badminton, natation et plus.',
-    sportsH1: 'SPORTS Étudiants',
+    sportsH1: 'Sports Étudiants',
     sportsLead: 'Le tableau des sports étudiants du Québec : formations collégiales et universitaires, scores et prochains matchs.',
     sportsEmpty: 'Aucun résultat sportif disponible au moment de la dernière mise à jour.',
     sportsClubPending: 'Association étudiante de voile — scores à venir.',
@@ -445,12 +445,12 @@ const T = {
     schedulesH1: 'Québec campus radio schedules',
     schedulesLead: 'One grid per station, updated automatically from each station’s own website. All times are Québec time.',
     schedulesEmpty: 'No schedule available as of the last update.',
-    sports: 'Student SPORTS',
+    sports: 'Student Sports',
     /** Footer only (same decision as FR sportsFooter). */
     sportsFooter: 'Sports',
-    sportsTitle: 'Student SPORTS — Québec CEGEP and university sports results',
+    sportsTitle: 'Student Sports — Québec CEGEP and university sports results',
     sportsDesc: 'Scores and upcoming games for {n} CEGEP and university teams in Québec (RSEQ catalog): hockey, football, soccer, basketball, volleyball, badminton, swimming and more.',
-    sportsH1: 'Student SPORTS',
+    sportsH1: 'Student Sports',
     sportsLead: 'Live board of student sports in Québec: CEGEP and university teams, scores, and what’s next.',
     sportsEmpty: 'No sports results available as of the last update.',
     sportsClubPending: 'Student sailing association — scores coming soon.',
@@ -623,20 +623,20 @@ const CHROME_T = {
     rssAria: 'S’abonner au flux RSS de LE-RADAR.ca',
     pomo: 'Pomodoro — minuteur focus',
     solitaire: 'Solitaire',
-    sports: 'SPORTS Étudiants — scores collégiaux et universitaires',
+    sports: 'Sports — scores collégiaux et universitaires',
     coffee: 'Offrir un café',
     coffeeAria: 'Offrir un café — Buy me a coffee',
     theme: 'Changer de thème',
     themeTitle: 'Mode clair / sombre',
     installMenu: 'Installer une app',
-    installMenuAria: 'Installer une app — LE-RADAR, Pomodoro, Solitaire, SPORTS Étudiants',
+    installMenuAria: 'Installer une app — LE-RADAR, Pomodoro, Solitaire, Sports Étudiants',
     installApp: 'Installer LE-RADAR.ca',
     installAppAria: 'Installer l’app LE-RADAR.ca',
     appRadar: 'LE-RADAR.ca',
     appPomo: 'Pomodoro',
     appSolitaire: 'Solitaire',
-    appSports: 'SPORTS Étudiants',
-    appSportsShort: 'SPORTS',
+    appSports: 'Sports Étudiants',
+    appSportsShort: 'Sports',
   },
   en: {
     home: 'Home',
@@ -645,20 +645,20 @@ const CHROME_T = {
     rssAria: 'Subscribe to the LE-RADAR.ca RSS feed',
     pomo: 'Pomodoro — focus timer',
     solitaire: 'Solitaire',
-    sports: 'Student SPORTS — Québec college and university scores',
+    sports: 'Sports — Québec college and university scores',
     coffee: 'Buy me a coffee',
     coffeeAria: 'Buy me a coffee',
     theme: 'Change theme',
     themeTitle: 'Light / dark mode',
     installMenu: 'Install an app',
-    installMenuAria: 'Install an app — LE-RADAR, Pomodoro, Solitaire, Student SPORTS',
+    installMenuAria: 'Install an app — LE-RADAR, Pomodoro, Solitaire, Student Sports',
     installApp: 'Install LE-RADAR.ca',
     installAppAria: 'Install the LE-RADAR.ca app',
     appRadar: 'LE-RADAR.ca',
     appPomo: 'Pomodoro',
     appSolitaire: 'Solitaire',
-    appSports: 'Student SPORTS',
-    appSportsShort: 'SPORTS',
+    appSports: 'Student Sports',
+    appSportsShort: 'Sports',
   },
 };
 
@@ -692,6 +692,15 @@ const ICON_SVG = {
  * `panelId` doit être unique dans la page — d'où le suffixe passé par les
  * gabarits Pomodoro et Solitaire, qui portent déjà un menu de langue.
  */
+/**
+ * Menu d'installation — panneau et déclencheur.
+ *
+ * Le titre visible vient du focus-group `le-radar-install-title` (verdict B) :
+ * quatre noms d'apps alignés ne disaient pas qu'on installait. Il reprend mot
+ * pour mot l'infobulle du déclencheur — `c.installMenu`, une seule chaîne pour
+ * les deux — et sert de nom accessible au panneau via `aria-labelledby`, sinon
+ * la lentille d'écran annonce deux fois la même chose.
+ */
 function renderInstallMenu({ lang = 'fr', up = './', panelId = 'install-menu-panel', toggleClass = 'masthead-icon' } = {}) {
   const c = CHROME_T[lang] || CHROME_T.fr;
   const items = INSTALL_APPS.map((app) => `
@@ -702,7 +711,8 @@ function renderInstallMenu({ lang = 'fr', up = './', panelId = 'install-menu-pan
 
   return `<div class="install-menu" data-install-menu>
         <button type="button" class="${toggleClass} install-menu__toggle" data-install-toggle aria-haspopup="menu" aria-expanded="false" aria-controls="${panelId}" title="${escapeHtml(c.installMenu)}" aria-label="${escapeHtml(c.installMenuAria)}">${ICON_SVG.install}</button>
-        <div id="${panelId}" class="install-menu__panel" data-install-panel role="menu" aria-label="${escapeHtml(c.installMenu)}" hidden>${items}
+        <div id="${panelId}" class="install-menu__panel" data-install-panel role="menu" aria-labelledby="${panelId}-title" hidden>
+          <div class="install-menu__title" id="${panelId}-title">${escapeHtml(c.installMenu)}</div>${items}
         </div>
       </div>`;
 }
@@ -816,6 +826,11 @@ function renderSiteFooter({
   // tests/static-integrity.mjs attendent. Seul le lien d'accueil garde './'.
   const href = (rel) => (rel ? `${up}${rel}`.replace(/^\.\//, '') : up);
 
+  // Libellés pris dans CHROME_T et non dans T : les deux volets de langue y
+  // sont garantis présents côté source, alors qu'une clé oubliée dans T.en
+  // rendrait ici une chaîne vide — donc un bouton sans nom accessible.
+  const c = CHROME_T[lang] || CHROME_T.fr;
+
   const links = [];
   if (!home) links.push(`<a href="${href('')}">${escapeHtml(t.backHome)}</a>`);
   // Même liste que le menu de sections de l'accueil (`SECTIONS`), archives
@@ -828,6 +843,16 @@ function renderSiteFooter({
     const alt = lang === 'fr' ? 'en-CA' : 'fr-CA';
     links.push(`<a href="${href(altPath)}" hreflang="${alt}">${escapeHtml(t.otherLang)}</a>`);
   }
+  // Installer l'app est une destination du pied de page comme les autres, pas
+  // un appel à l'action : la pastille pesait plus lourd que les sections
+  // qu'elle surplombait. Reste un <button> — c'est une action, pas un lien —
+  // mais rendu à l'identique de ses voisins.
+  // Pas d'aria-label : le texte visible EST le nom accessible. Un aria-label
+  // qui ne contient pas le libellé lu à l'écran casse la commande vocale.
+  links.push(
+    `<button type="button" class="site-foot__link-btn" data-install-app="radar">`
+    + `${escapeHtml(c.installApp)}</button>`,
+  );
 
   const sep = `<span class="site-foot__sep" aria-hidden="true">·</span>`;
   const navFor = (baseIndent) => links.join(`\n${baseIndent}    ${sep}\n${baseIndent}    `);
@@ -879,23 +904,11 @@ ${p}  </details>
 ${p}</footer>`;
   }
 
-  // Libellés pris dans CHROME_T et non dans T : les deux volets de langue y
-  // sont garantis présents côté source, alors qu'une clé oubliée dans T.en
-  // rendrait ici une chaîne vide — donc un bouton sans nom accessible.
-  const c = CHROME_T[lang] || CHROME_T.fr;
-  const installBtn = `<p class="site-foot__install">
-${p}    <button type="button" class="site-foot__install-btn" data-install-app="radar" aria-label="${escapeHtml(c.installAppAria)}">
-${p}      ${ICON_SVG.install}
-${p}      <span>${escapeHtml(c.installApp)}</span>
-${p}    </button>
-${p}  </p>`;
-
   return `<footer class="site-foot">
 ${p}  <div class="site-foot__brand">
 ${p}    <p class="site-foot__wordmark notranslate" translate="no"><img class="site-foot__logo" src="${up}assets/icon.svg" width="24" height="24" alt="" aria-hidden="true">${BRAND_NAME}</p>
 ${p}    <p class="site-foot__signature" lang="fr">${escapeHtml(BRAND_SIGNATURE)}</p>
 ${p}  </div>
-${p}  ${installBtn}
 ${p}  <p>${escapeHtml(t.unofficial)}</p>
 ${p}  <nav class="site-foot__links" aria-label="${escapeHtml(t.footerNav)}">
 ${p}    ${nav}
@@ -1013,15 +1026,41 @@ ${renderTunerCriticalCss()}    <script src="${up}seo-page-theme.js"></script>
     <script src="${up}cast.js" defer></script>
     <script src="${up}mobile-playback.js" defer></script>
     <script src="${up}player-sync.js" defer></script>
+    <!-- season-lib.js avant la banque : sans lui le filtre saisonnier rend le
+         pool tel quel, et une photo d'hiver peut sortir en août. -->
+    <script src="${up}scripts/season-lib.js" defer></script>
+    <script src="${up}bg-rotation-lib.js" defer></script>
+    <script src="${up}quebec-backgrounds-data.js" defer></script>
+    <script src="${up}quebec-university-backgrounds-data.js" defer></script>
+    <script src="${up}quebec-nations-backgrounds-data.js" defer></script>
+    <script src="${up}quebec-favorites-backgrounds-data.js" defer></script>
+    <script src="${up}quebec-backgrounds.js" defer></script>
     <script src="${up}institution-acronyms-data.js" defer></script>
     <script src="${up}app.js" defer></script>
     <script src="${up}engage-prompt.js" defer></script>
 ${(Array.isArray(extraScripts) ? extraScripts : []).map((src) => `    <script src="${up}${escapeHtml(src)}" defer></script>`).join('\n')}${Array.isArray(extraScripts) && extraScripts.length ? '\n' : ''}${jsonLd ? `    <script type="application/ld+json">${jsonLd}</script>\n` : ''}  </head>
   <body>
     <header class="masthead">
+      <!-- Fond photo (banque du Québec) — même bloc que l'accueil : la couche,
+           le voile, le crédit et le bouton de rotation. Sans lui, ces pages
+           affichaient un mât nu alors que leur CSP whiteliste déjà le worker
+           de rotation : la chrome était prévue pour l'avoir, elle ne l'avait
+           jamais reçue. -->
+      <div id="bg-photo-layer" aria-hidden="true"></div>
+      <div class="bg-photo-scrim" aria-hidden="true"></div>
+      <div class="bg-photo-credit" id="bg-photo-credit"></div>
+      <div id="masthead-shuffle-slot" class="masthead-shuffle-slot">
+        <button id="masthead-bg-shuffle" class="masthead-icon masthead-bg-shuffle" type="button" aria-label="${lang === 'en' ? 'Change the masthead photo' : 'Changer la photo du mât'}" title="${lang === 'en' ? 'Change the masthead photo' : 'Changer la photo du mât'}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 3 4 4-4 4"/><path d="M20 7H9a5 5 0 0 0-5 5v1"/><path d="m8 21-4-4 4-4"/><path d="M4 17h11a5 5 0 0 0 5-5v-1"/></svg>
+        </button>
+      </div>
       <div class="masthead-inner">
         <div class="masthead-top">
-          <span class="masthead-date">
+          <!-- Date et heure hors du moteur de traduction : ce sont des données,
+               formatées par Intl dans la langue active (voir mastheadLocale dans
+               app.js). Traduites mot à mot, elles revenaient en « THURSDAY
+               AUGUST 6, 20 » — mauvaise casse et longueur non mesurée. -->
+          <span class="masthead-date notranslate" translate="no">
             <span id="today-date"></span>
             <time id="today-time" class="masthead-time" aria-label="${lang === 'en' ? 'Current time' : 'Heure actuelle'}"></time>
           </span>

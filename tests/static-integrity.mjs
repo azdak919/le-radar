@@ -603,7 +603,9 @@ assert(
   'index.html : lien de pied de page vers /horaires/ requis (page autrement orpheline)'
 );
 
-// Hub sports « SPORTS Étudiants » : scores RSEQ + filtres, lien de pied de page.
+// Hub sports « Sports Étudiants » : scores RSEQ + filtres, lien de pied de page.
+// « Sports » seul en section (menu, pied, infobulle du mât), « Sports Étudiants »
+// en titre visuel et nom d'app — plus de capitales criées.
 for (const hub of ['sports/index.html', 'en/sports/index.html']) {
   assert(existsSync(join(root, hub)), `${hub} manquant — lancer \`npm run seo:update\``);
 }
@@ -617,8 +619,8 @@ assert(
   'index.html : lien Sports en nouvel onglet (préserve la radio)'
 );
 assert(
-  /<h1 class="seo-title"[^>]*>[\s\S]*?SPORTS Étudiants/.test(readFileSync(join(root, 'sports/index.html'), 'utf8')),
-  'sports/index.html : H1 = « SPORTS Étudiants » (marque de section)'
+  /<h1 class="seo-title"[^>]*>[\s\S]*?Sports Étudiants/.test(readFileSync(join(root, 'sports/index.html'), 'utf8')),
+  'sports/index.html : H1 = « Sports Étudiants » (titre visuel)'
 );
 const sportsHub = readFileSync(join(root, 'sports/index.html'), 'utf8');
 assert(sportsHub.includes('data-sports-board'), 'sports : racine filtrable requise');
@@ -913,12 +915,37 @@ assert(
       `${rel}: marqueurs RADAR:CHROME:ACTIONS requis (rangée d'actions partagée)`,
     );
   }
+  // Date et heure du mât hors du moteur de traduction : ce sont des données,
+  // formatées par Intl dans la langue active. Traduites mot à mot, elles
+  // revenaient en « THURSDAY AUGUST 6, 20 » — casse fautive et longueur que
+  // personne n'avait mesurée, d'où le chevauchement des pastilles d'actions.
+  const withMasthead = htmlFiles.filter((f) => readFileSync(f, 'utf8').includes('id="today-date"'));
+  assert(withMasthead.length > 0, 'aucune page ne porte la date du mât');
+  for (const file of withMasthead) {
+    const html = readFileSync(file, 'utf8');
+    assert(
+      /class="masthead-date[^"]*notranslate[^"]*"[^>]*translate="no"/.test(html),
+      `${relative(root, file)} : la date du mât doit rester hors traduction (notranslate + translate="no")`,
+    );
+  }
+
   // Les quatre apps installables, sur toute page portant le menu.
   const withMenu = htmlFiles.filter((f) => readFileSync(f, 'utf8').includes('data-install-menu'));
   assert(withMenu.length > 0, 'aucune page ne porte le menu d’installation');
   for (const file of withMenu) {
     const rel = relative(root, file);
     const html = readFileSync(file, 'utf8');
+    // Titre du panneau — focus-group le-radar-install-title (verdict B).
+    // Quatre noms d'apps alignés ne disaient pas qu'on installait ; et le
+    // titre porte le nom accessible du panneau, d'où aria-labelledby.
+    assert(
+      /<div class="install-menu__title" id="[^"]+">(Installer une app|Install an app)<\/div>/.test(html),
+      `${rel} : titre « Installer une app » requis dans le panneau d’installation`,
+    );
+    assert(
+      /data-install-panel[^>]*aria-labelledby="[^"]+-title"/.test(html),
+      `${rel} : le panneau doit tirer son nom du titre visible (aria-labelledby)`,
+    );
     for (const app of ['radar', 'pomo', 'solitaire', 'sports']) {
       assert(
         html.includes(`data-install-app="${app}"`),
