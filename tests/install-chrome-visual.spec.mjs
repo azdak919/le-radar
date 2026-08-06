@@ -234,7 +234,7 @@ function readBox(el) {
 test('nom accessible du bouton d’installation — FR et EN', async ({ page }) => {
   for (const [path, expected] of [['/', 'Installer'], ['/en/index.html', 'Install']]) {
     await gotoStable(page, path);
-    for (const sel of [TOGGLE, '.site-foot__install-btn']) {
+    for (const sel of [TOGGLE, '.site-foot__link-btn']) {
       const name = await page.locator(sel).first().evaluate(
         (el) => el.getAttribute('aria-label') || el.textContent.trim(),
       );

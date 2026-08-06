@@ -816,6 +816,11 @@ function renderSiteFooter({
   // tests/static-integrity.mjs attendent. Seul le lien d'accueil garde './'.
   const href = (rel) => (rel ? `${up}${rel}`.replace(/^\.\//, '') : up);
 
+  // Libellés pris dans CHROME_T et non dans T : les deux volets de langue y
+  // sont garantis présents côté source, alors qu'une clé oubliée dans T.en
+  // rendrait ici une chaîne vide — donc un bouton sans nom accessible.
+  const c = CHROME_T[lang] || CHROME_T.fr;
+
   const links = [];
   if (!home) links.push(`<a href="${href('')}">${escapeHtml(t.backHome)}</a>`);
   // Même liste que le menu de sections de l'accueil (`SECTIONS`), archives
@@ -828,6 +833,16 @@ function renderSiteFooter({
     const alt = lang === 'fr' ? 'en-CA' : 'fr-CA';
     links.push(`<a href="${href(altPath)}" hreflang="${alt}">${escapeHtml(t.otherLang)}</a>`);
   }
+  // Installer l'app est une destination du pied de page comme les autres, pas
+  // un appel à l'action : la pastille pesait plus lourd que les sections
+  // qu'elle surplombait. Reste un <button> — c'est une action, pas un lien —
+  // mais rendu à l'identique de ses voisins.
+  // Pas d'aria-label : le texte visible EST le nom accessible. Un aria-label
+  // qui ne contient pas le libellé lu à l'écran casse la commande vocale.
+  links.push(
+    `<button type="button" class="site-foot__link-btn" data-install-app="radar">`
+    + `${escapeHtml(c.installApp)}</button>`,
+  );
 
   const sep = `<span class="site-foot__sep" aria-hidden="true">·</span>`;
   const navFor = (baseIndent) => links.join(`\n${baseIndent}    ${sep}\n${baseIndent}    `);
@@ -879,23 +894,11 @@ ${p}  </details>
 ${p}</footer>`;
   }
 
-  // Libellés pris dans CHROME_T et non dans T : les deux volets de langue y
-  // sont garantis présents côté source, alors qu'une clé oubliée dans T.en
-  // rendrait ici une chaîne vide — donc un bouton sans nom accessible.
-  const c = CHROME_T[lang] || CHROME_T.fr;
-  const installBtn = `<p class="site-foot__install">
-${p}    <button type="button" class="site-foot__install-btn" data-install-app="radar" aria-label="${escapeHtml(c.installAppAria)}">
-${p}      ${ICON_SVG.install}
-${p}      <span>${escapeHtml(c.installApp)}</span>
-${p}    </button>
-${p}  </p>`;
-
   return `<footer class="site-foot">
 ${p}  <div class="site-foot__brand">
 ${p}    <p class="site-foot__wordmark notranslate" translate="no"><img class="site-foot__logo" src="${up}assets/icon.svg" width="24" height="24" alt="" aria-hidden="true">${BRAND_NAME}</p>
 ${p}    <p class="site-foot__signature" lang="fr">${escapeHtml(BRAND_SIGNATURE)}</p>
 ${p}  </div>
-${p}  ${installBtn}
 ${p}  <p>${escapeHtml(t.unofficial)}</p>
 ${p}  <nav class="site-foot__links" aria-label="${escapeHtml(t.footerNav)}">
 ${p}    ${nav}
