@@ -1013,12 +1013,34 @@ ${renderTunerCriticalCss()}    <script src="${up}seo-page-theme.js"></script>
     <script src="${up}cast.js" defer></script>
     <script src="${up}mobile-playback.js" defer></script>
     <script src="${up}player-sync.js" defer></script>
+    <!-- season-lib.js avant la banque : sans lui le filtre saisonnier rend le
+         pool tel quel, et une photo d'hiver peut sortir en août. -->
+    <script src="${up}scripts/season-lib.js" defer></script>
+    <script src="${up}bg-rotation-lib.js" defer></script>
+    <script src="${up}quebec-backgrounds-data.js" defer></script>
+    <script src="${up}quebec-university-backgrounds-data.js" defer></script>
+    <script src="${up}quebec-nations-backgrounds-data.js" defer></script>
+    <script src="${up}quebec-favorites-backgrounds-data.js" defer></script>
+    <script src="${up}quebec-backgrounds.js" defer></script>
     <script src="${up}institution-acronyms-data.js" defer></script>
     <script src="${up}app.js" defer></script>
     <script src="${up}engage-prompt.js" defer></script>
 ${(Array.isArray(extraScripts) ? extraScripts : []).map((src) => `    <script src="${up}${escapeHtml(src)}" defer></script>`).join('\n')}${Array.isArray(extraScripts) && extraScripts.length ? '\n' : ''}${jsonLd ? `    <script type="application/ld+json">${jsonLd}</script>\n` : ''}  </head>
   <body>
     <header class="masthead">
+      <!-- Fond photo (banque du Québec) — même bloc que l'accueil : la couche,
+           le voile, le crédit et le bouton de rotation. Sans lui, ces pages
+           affichaient un mât nu alors que leur CSP whiteliste déjà le worker
+           de rotation : la chrome était prévue pour l'avoir, elle ne l'avait
+           jamais reçue. -->
+      <div id="bg-photo-layer" aria-hidden="true"></div>
+      <div class="bg-photo-scrim" aria-hidden="true"></div>
+      <div class="bg-photo-credit" id="bg-photo-credit"></div>
+      <div id="masthead-shuffle-slot" class="masthead-shuffle-slot">
+        <button id="masthead-bg-shuffle" class="masthead-icon masthead-bg-shuffle" type="button" aria-label="${lang === 'en' ? 'Change the masthead photo' : 'Changer la photo du mât'}" title="${lang === 'en' ? 'Change the masthead photo' : 'Changer la photo du mât'}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 3 4 4-4 4"/><path d="M20 7H9a5 5 0 0 0-5 5v1"/><path d="m8 21-4-4 4-4"/><path d="M4 17h11a5 5 0 0 0 5-5v-1"/></svg>
+        </button>
+      </div>
       <div class="masthead-inner">
         <div class="masthead-top">
           <span class="masthead-date">
