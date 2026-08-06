@@ -3,6 +3,10 @@
 Objectif : conserver GitHub Pages pour le site et éventuellement attacher des
 Workers sous `*.le-radar.ca` (au lieu de `*.azdak.workers.dev`).
 
+> Migrer la zone ici permettrait aussi de ramener le TTL de `le-radar.ca` de
+> 4 h à ~60 s, seule façon de rendre rapide la bascule vers un miroir de
+> déploiement — voir [`deploy-redondance.md`](deploy-redondance.md) §5.
+
 ## État actuel
 
 - **Site** : GitHub Pages + DNS chez le registrar (WHC) — pas de zone CF requise
