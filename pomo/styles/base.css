@@ -1747,6 +1747,28 @@
       flex-direction: row;
       align-items: center;
       gap: 0.65em;
+      /* La rangée occupe toute la largeur pour que les deux gouttières
+         ci-dessous se partagent l'espace libre à parts égales. */
+      width: 100%;
+    }
+
+    /* L'anneau sur l'axe de la fenêtre, pas le groupe anneau+boutons.
+       Centrer la rangée décalait l'anneau de la moitié de la colonne de
+       boutons (32 px mesurés à 1280×620). Une gouttière fantôme à gauche,
+       de même souplesse que la colonne d'actions, rétablit la symétrie sans
+       sortir les boutons du flux — et s'ajuste seule si leur taille change. */
+    .pomo-fullpage-timer::before {
+      content: '';
+      flex: 1 1 0;
+      align-self: stretch;
+    }
+
+    .pomo-fullpage-overlay .pomo-fullpage-actions {
+      flex: 1 1 0;
+      /* La gouttière est large : les boutons restent collés à l'anneau plutôt
+         que de flotter au milieu de l'espace libre. */
+      display: flex;
+      justify-content: flex-start;
     }
 
     .pomo-fullpage-overlay .pomo-controls {
@@ -1755,7 +1777,10 @@
     }
 
     .pomo-fullpage-overlay .pomo-ring-wrapper {
-      max-width: min(28em, calc(100vw - 8em)) !important;
+      /* 12em de réserve latérale (au lieu de 8) : chaque gouttière garde de
+         quoi loger la colonne de boutons même quand l'anneau touche sa borne,
+         sinon les actions repoussent l'anneau et le décentrage revient. */
+      max-width: min(28em, calc(100vw - 12em)) !important;
       max-height: min(28em, calc(100dvh - 2em)) !important;
     }
   }
