@@ -89,8 +89,6 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     height: 3096,
     nationId: "algonquin",
     nation: "Algonquins (Anishinaabeg)",
-    season: "ete",
-    season6: "aujaq",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/ba/Orthophotographie_2009_de_Ouj%C3%A9-Bougoumou_02.jpg",
@@ -417,7 +415,7 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     height: 3024,
     nationId: "atikamekw",
     nation: "Atikamekw",
-    season: "printemps",
-    season6: "upingaaq",
+    season: "hiver",
+    season6: "ukiuq",
   }
 ];

@@ -4,7 +4,7 @@
   "maxBank": 200,
   "lastSessionCleanup": "2026-05-01",
   "lastSessionId": "ete",
-  "updated": "2026-07-30T23:01:15.967Z",
+  "updated": "2026-08-06T20:29:13.672Z",
   "photos": [
     {
       "id": "d5015ac59ded",
@@ -148,9 +148,13 @@
       "addedAt": "2026-07-30T22:29:17.198Z",
       "sessionId": "ete",
       "bank": "pomo",
-      "season": "ete",
-      "seasonConfidence": 0.3,
-      "seasonSource": "sessionId-fallback"
+      "season": "hiver",
+      "seasonConfidence": 1,
+      "seasonSource": "manual",
+      "seasonReasons": [
+        "human_review_2026-08-06"
+      ],
+      "seasonDetectedAt": "2026-08-06T20:28:15.746Z"
     },
     {
       "id": "e4a286dcaf16",
@@ -360,31 +364,6 @@
         "date_filename:10",
         "kw_automne",
         "date_agrees",
-        "visual_agrees"
-      ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.475Z"
-    },
-    {
-      "id": "40596f653cdd",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/7/74/Fragaria_virginiana_030.jpg",
-      "link": "https://commons.wikimedia.org/wiki/File:Fragaria%20virginiana%20030.jpg",
-      "title": "Fragaria virginiana 030",
-      "credit": "Nichole Ouellette/ouellette001.com",
-      "license": "CC BY 4.0",
-      "description": "46° 36' 22.15\" N - 072° 19' 56.12\" W, Mauricie, MRC Les Chenaux, Saint-Prosper, Route Pronovost, 07:38 on Tuesday, June 2, 2009",
-      "categories": "Fragaria virginiana|Saint Lawrence River|Laurentides|Flore Laurentienne|Self-published work",
-      "width": 3456,
-      "height": 2304,
-      "aspect": 1.5,
-      "mime": "image/jpeg",
-      "addedAt": "2026-07-30T22:29:17.198Z",
-      "sessionId": "ete",
-      "bank": "pomo",
-      "season": "ete",
-      "seasonConfidence": 0.95,
-      "seasonSource": "text+visual",
-      "seasonReasons": [
-        "kw_ete",
         "visual_agrees"
       ],
       "seasonDetectedAt": "2026-07-30T22:38:03.475Z"
@@ -667,26 +646,6 @@
         "visual_agrees"
       ],
       "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
-    },
-    {
-      "id": "4dc2678b5ea6",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/7/77/Pointe-Calumet_%28QC%29-Local_des_Chevaliers_de_Colomb-2023.jpg",
-      "link": "https://commons.wikimedia.org/wiki/File:Pointe-Calumet%20(QC)-Local%20des%20Chevaliers%20de%20Colomb-2023.jpg",
-      "title": "Pointe-Calumet (QC)-Local des Chevaliers de Colomb-2023",
-      "credit": "Gaétan Veillette",
-      "license": "CC BY-SA 4.0",
-      "description": "Community hall of the Knights of Columbus, on Montée de la Baie, in Pointe-Calumet (Quebec). This room is a center for social gatherings and recreation.",
-      "categories": "Pointe-Calumet|Self-published work|Files with coordinates missing SDC location of creation",
-      "width": 11832,
-      "height": 5013,
-      "aspect": 2.36,
-      "mime": "image/jpeg",
-      "addedAt": "2026-07-30T22:23:25.330Z",
-      "sessionId": "ete",
-      "bank": "pomo",
-      "season": "ete",
-      "seasonConfidence": 0.3,
-      "seasonSource": "sessionId-fallback"
     },
     {
       "id": "90b5d7977fc0",

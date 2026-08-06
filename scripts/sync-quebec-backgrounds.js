@@ -21,6 +21,7 @@ const path = require('path');
 const crypto = require('crypto');
 const { matchHardBanned } = require('./quebec-backgrounds-blacklist');
 const { scrubBankCredits, sanitizeCommonsCredit } = require('./commons-credit-lib');
+const { seasonTagTrusted } = require('./season-lib');
 
 const ROOT = path.join(__dirname, '..');
 const args = process.argv.slice(2);
@@ -136,9 +137,17 @@ function photoToJsObject(p, bank) {
     if (p.nationId) lines.push(`    nationId: "${esc(p.nationId)}"`);
     if (p.nation) lines.push(`    nation: "${esc(p.nation)}"`);
   }
-  // Saisons pour rotation client (4 = QC ; 6 = nations/Inuit)
-  if (p.season) lines.push(`    season: "${esc(p.season)}"`);
-  if (p.season6) lines.push(`    season6: "${esc(p.season6)}"`);
+  // Saisons pour rotation client (4 = QC ; 6 = nations/Inuit).
+  // Le miroir ne transporte ni seasonSource ni seasonConfidence : une étiquette
+  // « sessionId-fallback » (photo jamais analysée, héritée de la session de
+  // moisson) y deviendrait indiscernable d'une vraie détection et entrerait dans
+  // le tier STRICT — c'est ainsi qu'une scène de neige s'affichait en août. On
+  // n'exporte donc que les étiquettes de confiance ; les autres sont traitées
+  // comme « saison inconnue » côté client.
+  if (seasonTagTrusted(p)) {
+    if (p.season) lines.push(`    season: "${esc(p.season)}"`);
+    if (p.season6) lines.push(`    season6: "${esc(p.season6)}"`);
+  }
   if (bank.kind === 'favorites' || p.permanent === true) {
     lines.push('    permanent: true');
   }

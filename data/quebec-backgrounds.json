@@ -3,7 +3,7 @@
   "maxBank": 200,
   "lastSessionCleanup": "2026-05-01",
   "lastSessionId": "ete",
-  "updated": "2026-07-30T23:01:15.954Z",
+  "updated": "2026-08-06T20:29:13.660Z",
   "photos": [
     {
       "id": "c9b4a85ebaef",
@@ -103,31 +103,6 @@
         "date_filename:07",
         "kw_ete",
         "date_agrees"
-      ],
-      "seasonDetectedAt": "2026-07-30T22:35:15.802Z"
-    },
-    {
-      "id": "a321610ec6dc",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/9/97/Havre_St_Pierre_006.jpg",
-      "link": "https://commons.wikimedia.org/wiki/File:Havre%20St%20Pierre%20006.jpg",
-      "title": "Havre St Pierre 006",
-      "credit": "Nichole Ouellette/ouellette001.com",
-      "license": "CC BY 4.0",
-      "description": "MRC Minganie, Havre-Saint-Pierre (Municipality), 1000, Promenade des Anciens, information and reservation kiosks, in front of No. 4, Westley Vigneault of Pneumatic Transport, offers excursions and visits to the islands of the Mingan Archipelago, on the right, booth No. 5, of NaturExpress, offers packages to Anticosti Island, on Sunday, August 8, 2004.",
-      "categories": "Saint Lawrence River|Côte-Nord|Mingan Archipelago National Park Reserve|Havre-Saint-Pierre|Self-published work",
-      "width": 1600,
-      "height": 1200,
-      "aspect": 1.333,
-      "mime": "image/jpeg",
-      "addedAt": "2026-07-30T22:30:31.162Z",
-      "sessionId": "ete",
-      "bank": "masthead",
-      "season": "ete",
-      "seasonConfidence": 0.85,
-      "seasonSource": "text",
-      "seasonReasons": [
-        "kw_ete",
-        "visual_disagrees_kept_text"
       ],
       "seasonDetectedAt": "2026-07-30T22:35:15.802Z"
     },
@@ -433,9 +408,13 @@
       "addedAt": "2026-07-30T22:26:10.889Z",
       "sessionId": "ete",
       "bank": "masthead",
-      "season": "ete",
-      "seasonConfidence": 0.3,
-      "seasonSource": "sessionId-fallback"
+      "season": "hiver",
+      "seasonConfidence": 1,
+      "seasonSource": "manual",
+      "seasonReasons": [
+        "human_review_2026-08-06"
+      ],
+      "seasonDetectedAt": "2026-08-06T20:28:15.734Z"
     },
     {
       "id": "e4a286dcaf16",
@@ -645,31 +624,6 @@
         "date_filename:10",
         "kw_automne",
         "date_agrees",
-        "visual_agrees"
-      ],
-      "seasonDetectedAt": "2026-07-30T22:35:15.803Z"
-    },
-    {
-      "id": "40596f653cdd",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/7/74/Fragaria_virginiana_030.jpg",
-      "link": "https://commons.wikimedia.org/wiki/File:Fragaria%20virginiana%20030.jpg",
-      "title": "Fragaria virginiana 030",
-      "credit": "Nichole Ouellette/ouellette001.com",
-      "license": "CC BY 4.0",
-      "description": "46° 36' 22.15\" N - 072° 19' 56.12\" W, Mauricie, MRC Les Chenaux, Saint-Prosper, Route Pronovost, 07:38 on Tuesday, June 2, 2009",
-      "categories": "Fragaria virginiana|Saint Lawrence River|Laurentides|Flore Laurentienne|Self-published work",
-      "width": 3456,
-      "height": 2304,
-      "aspect": 1.5,
-      "mime": "image/jpeg",
-      "addedAt": "2026-07-30T22:26:10.889Z",
-      "sessionId": "ete",
-      "bank": "masthead",
-      "season": "ete",
-      "seasonConfidence": 0.95,
-      "seasonSource": "text+visual",
-      "seasonReasons": [
-        "kw_ete",
         "visual_agrees"
       ],
       "seasonDetectedAt": "2026-07-30T22:35:15.803Z"
@@ -952,26 +906,6 @@
         "visual_agrees"
       ],
       "seasonDetectedAt": "2026-07-30T22:35:15.804Z"
-    },
-    {
-      "id": "4dc2678b5ea6",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/7/77/Pointe-Calumet_%28QC%29-Local_des_Chevaliers_de_Colomb-2023.jpg",
-      "link": "https://commons.wikimedia.org/wiki/File:Pointe-Calumet%20(QC)-Local%20des%20Chevaliers%20de%20Colomb-2023.jpg",
-      "title": "Pointe-Calumet (QC)-Local des Chevaliers de Colomb-2023",
-      "credit": "Gaétan Veillette",
-      "license": "CC BY-SA 4.0",
-      "description": "Community hall of the Knights of Columbus, on Montée de la Baie, in Pointe-Calumet (Quebec). This room is a center for social gatherings and recreation.",
-      "categories": "Pointe-Calumet|Self-published work|Files with coordinates missing SDC location of creation",
-      "width": 11832,
-      "height": 5013,
-      "aspect": 2.36,
-      "mime": "image/jpeg",
-      "addedAt": "2026-07-30T22:21:32.490Z",
-      "sessionId": "ete",
-      "bank": "masthead",
-      "season": "ete",
-      "seasonConfidence": 0.3,
-      "seasonSource": "sessionId-fallback"
     },
     {
       "id": "90b5d7977fc0",

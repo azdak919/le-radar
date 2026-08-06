@@ -72,7 +72,7 @@ const QUEBEC_POMO_BACKGROUNDS = [
     title: "Rivière Batiscan, Notre-Dame de Montauban 006",
     width: 4032,
     height: 3024,
-    season: "ete",
+    season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Rivi%C3%A8re_en_d%C3%A9gel_%284518647727%29.jpg",
@@ -155,16 +155,6 @@ const QUEBEC_POMO_BACKGROUNDS = [
     season: "automne",
   },
   {
-    url: "https://upload.wikimedia.org/wikipedia/commons/7/74/Fragaria_virginiana_030.jpg",
-    credit: "Nichole Ouellette/ouellette001.com",
-    link: "https://commons.wikimedia.org/wiki/File:Fragaria%20virginiana%20030.jpg",
-    license: "CC BY 4.0",
-    title: "Fragaria virginiana 030",
-    width: 3456,
-    height: 2304,
-    season: "ete",
-  },
-  {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b7/For%C3%AAt_Lac-Beauport_Automne_2023.jpg",
     credit: "Gabriel Picard",
     link: "https://commons.wikimedia.org/wiki/File:For%C3%AAt%20Lac-Beauport%20Automne%202023.jpg",
@@ -232,7 +222,6 @@ const QUEBEC_POMO_BACKGROUNDS = [
     title: "Riviere delisle coteau du lac",
     width: 4032,
     height: 3024,
-    season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/a/a2/C%C3%B4teau-du-Lac-Vue_du_ch._Du_Fleuve-2025-01-04%281%29.jpg",
@@ -273,16 +262,6 @@ const QUEBEC_POMO_BACKGROUNDS = [
     width: 12000,
     height: 7592,
     season: "hiver",
-  },
-  {
-    url: "https://upload.wikimedia.org/wikipedia/commons/7/77/Pointe-Calumet_%28QC%29-Local_des_Chevaliers_de_Colomb-2023.jpg",
-    credit: "Gaétan Veillette",
-    link: "https://commons.wikimedia.org/wiki/File:Pointe-Calumet%20(QC)-Local%20des%20Chevaliers%20de%20Colomb-2023.jpg",
-    license: "CC BY-SA 4.0",
-    title: "Pointe-Calumet (QC)-Local des Chevaliers de Colomb-2023",
-    width: 11832,
-    height: 5013,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/0/08/Pointe-Calumet_%28QC%29-Vue_vers_l%27ouest_du_boul._Proulx_%28coin_Mont%C3%A9e_de_la_Baie%29-2023-04-02.jpg",
@@ -372,7 +351,6 @@ const QUEBEC_POMO_BACKGROUNDS = [
     title: "Rocher Percé vu du littoral",
     width: 2048,
     height: 1371,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/8/89/Le_rocher_Perc%C3%A9_vu_de_la_mer.jpg",
@@ -422,7 +400,6 @@ const QUEBEC_POMO_BACKGROUNDS = [
     title: "Chute Montmorency panorama",
     width: 8500,
     height: 3915,
-    season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/ff/Parc_de_la_Chute-Montmorency_001.jpg",
@@ -462,7 +439,6 @@ const QUEBEC_POMO_BACKGROUNDS = [
     title: "House in the Parc de la Chute-Montmorency 009",
     width: 5699,
     height: 3438,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Chute-Montmorency%2C_Quebec_city%2C_Canada.png",
@@ -472,7 +448,6 @@ const QUEBEC_POMO_BACKGROUNDS = [
     title: "Chute-Montmorency, Quebec city, Canada",
     width: 15189,
     height: 8701,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/8/8b/Montagnais_Indians_at_Pointe_Bleue.jpg",
@@ -592,7 +567,6 @@ const QUEBEC_POMO_BACKGROUNDS = [
     title: "Adstock (Québec), paysage rural et minier 02",
     width: 4288,
     height: 3216,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/23/Adstock_%28Qu%C3%A9bec%29%2C_paysage_rural_et_minier_01.jpg",
@@ -602,7 +576,6 @@ const QUEBEC_POMO_BACKGROUNDS = [
     title: "Adstock (Québec), paysage rural et minier 01",
     width: 4288,
     height: 3216,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Montreal_Skyline_winter_panorama_Jan_2006.jpg",
@@ -622,7 +595,6 @@ const QUEBEC_POMO_BACKGROUNDS = [
     title: "Montreal Panorama II",
     width: 6847,
     height: 2298,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/16/Montreal_Skyline_from_Mont_Royal.jpg",
@@ -872,7 +844,6 @@ const QUEBEC_POMO_BACKGROUNDS = [
     title: "Lac des Deux-Montagnes, Pierrefonds",
     width: 2896,
     height: 1944,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Deux-Montagnes-Belv%C3%A9d%C3%A8re_municipal_en_bordure_du_Lac_des_Deux-Montagnes-2022-05-19.jpg",
@@ -892,7 +863,6 @@ const QUEBEC_POMO_BACKGROUNDS = [
     title: "Lac des Deux-Montagnes",
     width: 3870,
     height: 2177,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/3/3d/Montreal_panorama.jpg",
