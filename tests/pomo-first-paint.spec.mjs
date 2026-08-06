@@ -58,3 +58,51 @@ test('pomodoro : la disposition est posée avant le premier rendu, et rien ne bo
 
   expect(pageErrors).toEqual([]);
 });
+
+/**
+ * Plein écran paysage : l'anneau doit être sur l'axe de la fenêtre.
+ * Centrer la rangée [anneau | boutons] plaçait l'anneau à gauche de l'axe, de
+ * la moitié de la colonne de boutons (32 px mesurés à 1280×620).
+ */
+test('pomodoro plein écran : l’anneau reste centré malgré la colonne de boutons', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 620 });
+  await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
+
+  await page.waitForSelector('.pomo-widget .pomo-ring-wrapper', { state: 'attached' });
+  // Les écouteurs sont posés après le boot : on reclique jusqu'à l'ouverture
+  // plutôt que de parier sur un délai fixe (runner chargé).
+  const overlay = page.locator('.pomo-fullpage-overlay');
+  await expect
+    .poll(
+      async () => {
+        await page.evaluate(() => {
+          document.querySelector('.pomo-widget .pomo-ring-wrapper')?.click();
+        });
+        return overlay.evaluate((el) => el.classList.contains('open'));
+      },
+      { timeout: 15000 },
+    )
+    .toBe(true);
+  await page.waitForTimeout(600);
+
+  const geometry = await page.evaluate(() => {
+    const main = document.querySelector('.pomo-fullpage-main');
+    const ring = document.querySelector('.pomo-fullpage-overlay .pomo-ring-wrapper');
+    const btn = document.querySelector('.pomo-fullpage-actions .pomo-btn');
+    const box = (el) => el.getBoundingClientRect();
+    const M = box(main);
+    const R = box(ring);
+    const B = box(btn);
+    return {
+      dx: R.x + R.width / 2 - (M.x + M.width / 2),
+      gapRingBtn: B.left - R.right,
+      btnVisible: B.right <= window.innerWidth,
+    };
+  });
+
+  expect(Math.abs(geometry.dx), 'anneau décentré horizontalement').toBeLessThanOrEqual(2);
+  // Les boutons restent collés à l'anneau, pas perdus au fond de la gouttière.
+  expect(geometry.gapRingBtn).toBeGreaterThanOrEqual(0);
+  expect(geometry.gapRingBtn).toBeLessThanOrEqual(60);
+  expect(geometry.btnVisible, 'colonne de boutons hors écran').toBe(true);
+});
