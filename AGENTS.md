@@ -540,7 +540,7 @@ Pas de daemon qui lit le chat : la « détection pendant le vibe » = **observat
 
 - **Radio Android** : un seul `<audio>`, pas de 2ᵉ son, pas de proxy audio Worker.
 - **Banques** : mât ≠ pomo ≠ uni ; nations partagée ; favorites hors purge bots.
-- **SW** : bump `radar-shell-vN` / `pomo-shell-vN` si le shell cache change.
+- **SW** : bump `radar-shell-vN` / `pomo-shell-vN` si le shell cache change. Plus besoin d’y penser : `npm run check` refuse un `.css`/`.js` de shell modifié sans bump, et `npm run sw:bump` bumpe + resynchronise `sw-shell-lock.json`.
 - **UX** : en cas de doute, ne pas toucher — documenter dans §3.
 
 ---
