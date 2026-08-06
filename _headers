@@ -1,0 +1,21 @@
+# En-têtes des miroirs de déploiement — voir docs/deploy-redondance.md
+#
+# Ce format est compris à l'identique par Netlify et Cloudflare Pages : un seul
+# fichier couvre les deux miroirs.
+#
+# GitHub Pages ne lit pas ce fichier. Le préfixe `_` fait qu'il est ignoré par
+# Jekyll, donc il n'est même pas publié en production : la mise en place des
+# miroirs ne change rien à l'origine actuelle.
+
+# Le service worker pilote tout le cache de la PWA. S'il est lui-même mis en
+# cache par le CDN, un correctif peut rester invisible longtemps après le
+# déploiement — exactement le symptôme qu'on cherche à éviter ici.
+/sw.js
+  Cache-Control: no-cache
+
+/manifest.json
+  Cache-Control: no-cache
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

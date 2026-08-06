@@ -1,0 +1,24 @@
+# Miroir de déploiement Netlify — voir docs/deploy-redondance.md
+#
+# Le site est statique et servi tel quel depuis la racine du dépôt : aucune
+# étape de build à reproduire. Netlify publie donc le répertoire racine, comme
+# GitHub Pages, pour garantir la parité entre les deux origines.
+
+[build]
+  publish = "."
+
+  # Pas de build : la commande existe uniquement pour que Netlify ne tente pas
+  # d'auto-détecter un générateur de site statique.
+  command = "echo 'Site statique — aucune étape de build.'"
+
+[build.environment]
+  # Le site publié n'a aucune dépendance de runtime : les devDependencies
+  # (Playwright) servent uniquement aux tests en CI. Ce drapeau est l'astuce
+  # documentée par Netlify pour sauter l'installation npm — sans lui, un
+  # node_modules/ de plusieurs milliers de fichiers se retrouve dans le
+  # répertoire publié. À vérifier au premier déploiement (voir la doc).
+  NPM_FLAGS = "--version"
+
+# Les en-têtes communs aux deux miroirs vivent dans `_headers` (format partagé
+# Netlify / Cloudflare Pages), pas ici, pour éviter d'avoir deux sources de
+# vérité à garder synchronisées.
