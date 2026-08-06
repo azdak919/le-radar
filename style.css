@@ -561,6 +561,12 @@ body {
   .masthead-date {
     position: relative;
     transform: translateY(-3px);
+    /* `justify-self: start` (style-masthead.css, bloc ≥360 px) dimensionnait la
+       case au CONTENU au lieu de la colonne : une date anglaise faisait 171 px
+       dans une colonne de 143 et passait 22 px sous les icônes, sans jamais
+       déclencher l'ellipse ci-dessous (scrollWidth == clientWidth). Étirée, la
+       colonne reprend la main et le filet redevient atteignable. */
+    justify-self: stretch;
     /* Échelle fluide : 390 px reste compact, 500–600 px gagne en confort
        sans saut brutal lorsque l'appareil bascule en tablette. */
     font-size: clamp(10.5px, 2.5vw, 12px);

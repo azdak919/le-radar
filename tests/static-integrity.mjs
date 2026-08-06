@@ -915,6 +915,20 @@ assert(
       `${rel}: marqueurs RADAR:CHROME:ACTIONS requis (rangée d'actions partagée)`,
     );
   }
+  // Date et heure du mât hors du moteur de traduction : ce sont des données,
+  // formatées par Intl dans la langue active. Traduites mot à mot, elles
+  // revenaient en « THURSDAY AUGUST 6, 20 » — casse fautive et longueur que
+  // personne n'avait mesurée, d'où le chevauchement des pastilles d'actions.
+  const withMasthead = htmlFiles.filter((f) => readFileSync(f, 'utf8').includes('id="today-date"'));
+  assert(withMasthead.length > 0, 'aucune page ne porte la date du mât');
+  for (const file of withMasthead) {
+    const html = readFileSync(file, 'utf8');
+    assert(
+      /class="masthead-date[^"]*notranslate[^"]*"[^>]*translate="no"/.test(html),
+      `${relative(root, file)} : la date du mât doit rester hors traduction (notranslate + translate="no")`,
+    );
+  }
+
   // Les quatre apps installables, sur toute page portant le menu.
   const withMenu = htmlFiles.filter((f) => readFileSync(f, 'utf8').includes('data-install-menu'));
   assert(withMenu.length > 0, 'aucune page ne porte le menu d’installation');

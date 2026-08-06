@@ -1056,7 +1056,11 @@ ${(Array.isArray(extraScripts) ? extraScripts : []).map((src) => `    <script sr
       </div>
       <div class="masthead-inner">
         <div class="masthead-top">
-          <span class="masthead-date">
+          <!-- Date et heure hors du moteur de traduction : ce sont des données,
+               formatées par Intl dans la langue active (voir mastheadLocale dans
+               app.js). Traduites mot à mot, elles revenaient en « THURSDAY
+               AUGUST 6, 20 » — mauvaise casse et longueur non mesurée. -->
+          <span class="masthead-date notranslate" translate="no">
             <span id="today-date"></span>
             <time id="today-time" class="masthead-time" aria-label="${lang === 'en' ? 'Current time' : 'Heure actuelle'}"></time>
           </span>
