@@ -3062,16 +3062,26 @@ html[data-translate-busy="1"] .translate-toggle {
   min-height: 0;
   text-align: start;
 }
+/*
+ * Le CTA reprend la position de « En bref » et des vedettes : bloc, bas-droite.
+ *
+ * Il était en ligne après le chapô (focus-group le-radar-suite-more B) pour
+ * éviter un « trou vide bas-droite ». Mais c'était la seule des trois
+ * dispositions du fil à placer « Lire la suite » à gauche, et l'écart sautait
+ * aux yeux d'une carte à l'autre : 429 px de la marge droite ici, collé à
+ * droite juste au-dessus. La cohérence de la colonne l'emporte sur le trou,
+ * d'autant que le chapô de la suite est tronqué à trois lignes — la dernière
+ * est donc rarement pleine de toute façon.
+ */
 .news-tail .article--standard .article-more {
-  display: inline;
+  display: block;
   float: none;
-  width: auto;
-  margin: 0;
-  margin-inline-start: 0.35em;
-  margin-block-start: 0.15em;
-  padding-block: 0.25rem;
-  padding-inline: 0.1rem 0.2rem;
-  text-align: start;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0.2rem 0 0;
+  padding-block: 0.25rem 0;
+  padding-inline: 0;
+  text-align: end;
   white-space: nowrap;
 }
 .news-tail .article--standard .article-more:hover {
@@ -4892,10 +4902,12 @@ body.external-listen-open {
     -webkit-line-clamp: 3;
     overflow: hidden;
   }
+  /* Même alignement bas-droite que « En bref » — voir la règle de base.
+     Le chapô reste tronqué à trois lignes ; seul le CTA change de place. */
   .news-tail .article--standard .article-more {
-    display: inline;
-    width: auto;
-    text-align: start;
+    display: block;
+    width: 100%;
+    text-align: end;
   }
 }
 

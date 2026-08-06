@@ -66,6 +66,41 @@ for (const file of htmlFiles) {
   }
 }
 
+// Crédit photo du mât : jamais de safe-area sur son `bottom`. Il est en
+// position absolue DANS le mât, dont le bas tombe au milieu du document — pas
+// contre le bord de l'écran. Avec l'inset, un iPhone à barre d'accueil le
+// remontait de ~34 px dans le slogan, et il se déplaçait au défilement quand
+// la barre d'adresse se repliait. L'inset droit reste légitime : le mât est
+// pleine largeur.
+{
+  const mastheadCss = readFileSync(join(root, 'style-masthead.css'), 'utf8');
+  for (const block of mastheadCss.match(/\.bg-photo-credit\s*\{[^}]*\}/g) || []) {
+    const bottom = block.match(/(^|[;{])\s*bottom\s*:([^;}]*)/);
+    if (!bottom) continue;
+    assert(
+      !/env\(\s*safe-area-inset-bottom/.test(bottom[2]),
+      'style-masthead : `bottom` du crédit photo sans safe-area (il est ancré au mât, pas à l’écran)',
+    );
+  }
+}
+
+// « Lire la suite » : même position dans toute la colonne. La suite du fil le
+// posait en ligne à gauche là où « En bref » et les vedettes le mettent en
+// bas-droite ; l'écart sautait aux yeux d'une carte à l'autre.
+{
+  // `styleCss` n'est lu que plus bas dans ce fichier : on relit ici.
+  const css = readFileSync(join(root, 'style.css'), 'utf8');
+  const tailRules = css.match(/\.news-tail[^{]*\.article-more\s*\{[^}]*\}/g) || [];
+  assert(tailRules.length > 0, 'style : règle « Lire la suite » de la suite du fil introuvable');
+  for (const rule of tailRules) {
+    if (rule.includes(':hover') || rule.includes(':focus')) continue;
+    assert(
+      !/text-align\s*:\s*start/.test(rule),
+      'style : « Lire la suite » de la suite du fil aligné à droite comme « En bref »',
+    );
+  }
+}
+
 // Menu de sections de l'accueil : mêmes libellés et mêmes cibles que le pied
 // de page, archives exceptées. Les deux listes sortent de `SECTIONS` dans
 // seo-pages-lib ; ce contrôle vérifie que le HTML publié le reflète, pour que
