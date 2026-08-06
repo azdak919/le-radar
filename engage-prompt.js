@@ -120,6 +120,23 @@
    * Profil appareil + navigateur. Tout le copy et la priorité des prompts
    * branchent sur ce profil — un seul code path, des guides ciblés.
    */
+  /**
+   * Brave se présente comme Chrome dans l'UA : seul `navigator.brave.isBrave()`
+   * le distingue, et il rend une promesse. On mémorise le verdict à l'init ;
+   * avant sa résolution, Brave reste traité comme Chrome — ce qui n'est faux
+   * que sur le libellé du navigateur, jamais sur la capacité d'installer.
+   */
+  let braveDetected = false;
+  function detectBrave() {
+    try {
+      const probe = navigator.brave?.isBrave;
+      if (typeof probe !== 'function') return;
+      Promise.resolve(probe.call(navigator.brave))
+        .then((yes) => { braveDetected = !!yes; })
+        .catch(() => { /* ignore */ });
+    } catch { /* ignore */ }
+  }
+
   function detectPlatform() {
     const ua = navigator.userAgent || '';
     const iPadOs = navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1;
@@ -141,6 +158,7 @@
     else if (/OPR\/|Opera/i.test(ua)) browser = 'opera';
     else if (/Firefox\//.test(ua) || /FxiOS\//.test(ua)) browser = 'firefox';
     else if (/CriOS\//.test(ua)) browser = 'chrome_ios';
+    else if (braveDetected && /Chrome\//.test(ua)) browser = 'brave';
     else if (/Chrome\//.test(ua) && !/Edg\//.test(ua) && !/OPR\//.test(ua)) browser = 'chrome';
     else if (/Safari\//.test(ua) && !/Chrome\//.test(ua) && !/CriOS\//.test(ua)) browser = 'safari';
 
@@ -170,6 +188,7 @@
       browserLabel: ({
         chrome: 'Chrome',
         chrome_ios: 'Chrome',
+        brave: 'Brave',
         edge: 'Edge',
         firefox: 'Firefox',
         safari: 'Safari',
@@ -268,7 +287,13 @@
         ];
     }
 
-    if (family === 'android') {
+    /*
+     * `mobile_other` couvre les téléphones dont l'UA ne dit ni Android ni iOS
+     * (UA réduits, navigateurs alternatifs). Sans cette branche il retombait
+     * plus bas sur les consignes BUREAU — « dans la barre d'adresse, cliquez
+     * l'icône Installer » lu sur un téléphone, constaté à l'écran.
+     */
+    if (family === 'android' || family === 'mobile_other') {
       if (browser === 'samsung') {
         return en
           ? [
@@ -293,6 +318,19 @@
             'Touchez le menu <strong>⋮</strong>.',
             'Choisissez <strong>Installer</strong> ou <strong>Ajouter à l’écran d’accueil</strong>.',
             'Validez — LE-RADAR.ca est à un doigt.',
+          ];
+      }
+      if (browser === 'brave') {
+        return en
+          ? [
+            'Tap the browser menu <strong>⋮</strong>.',
+            'Choose <strong>Add to Home screen</strong> (Brave installs from there).',
+            'Confirm — offline shell + home-screen icon, no app store.',
+          ]
+          : [
+            'Touchez le menu <strong>⋮</strong> du navigateur.',
+            'Choisissez <strong>Ajouter à l’écran d’accueil</strong> (Brave installe depuis là).',
+            'Validez — une icône et un accès hors ligne, sans magasin d’apps.',
           ];
       }
       // Chrome / Edge / Opera Android (et défaut)
@@ -323,7 +361,7 @@
           'Épinglez-la à la barre des tâches ou au menu Démarrer si vous voulez.',
         ];
     }
-    if (browser === 'chrome' || browser === 'opera') {
+    if (browser === 'chrome' || browser === 'brave' || browser === 'opera') {
       return en
         ? [
           'In the address bar, click the <strong>Install</strong> icon (⊕ / computer+arrow),',
@@ -563,6 +601,27 @@
       : 'Radios étudiantes et fil d’actus en un tap — sans magasin d’apps, accès hors ligne inclus.';
   }
 
+  /** Carte « Installer » branchée sur l'invite native du navigateur. */
+  function renderNativeInstallCard(lang, appId, appName) {
+    renderCard({
+      kind: 'install',
+      icon: '📲',
+      title: lang === 'en' ? `Install ${appName}` : `Installer ${appName}`,
+      body: installBodyCopy(lang, appId),
+      primaryLabel: lang === 'en' ? 'Install' : 'Installer',
+      onPrimary: async () => {
+        const ev = deferredInstall;
+        deferredInstall = null;
+        if (!ev) return;
+        ev.prompt();
+        const choice = await ev.userChoice.catch(() => ({ outcome: 'dismissed' }));
+        if (choice?.outcome === 'accepted') markDone('install');
+        else markSnooze('install');
+        closeCard();
+      },
+    });
+  }
+
   async function showInstallPrompt(plat) {
     const lang = uiLang();
     const appId = (typeof currentAppId === 'function') ? currentAppId() : 'radar';
@@ -570,24 +629,29 @@
     const canNative = !!deferredInstall && plat.canNativeInstall && !plat.ios;
 
     if (canNative) {
-      renderCard({
-        kind: 'install',
-        icon: '📲',
-        title: lang === 'en' ? `Install ${appName}` : `Installer ${appName}`,
-        body: installBodyCopy(lang, appId),
-        primaryLabel: lang === 'en' ? 'Install' : 'Installer',
-        onPrimary: async () => {
-          const ev = deferredInstall;
-          deferredInstall = null;
-          if (!ev) return;
-          ev.prompt();
-          const choice = await ev.userChoice.catch(() => ({ outcome: 'dismissed' }));
-          if (choice?.outcome === 'accepted') markDone('install');
-          else markSnooze('install');
-          closeCard();
-        },
-      });
+      renderNativeInstallCard(lang, appId, appName);
       return;
+    }
+
+    /*
+     * Guide manuel affiché, mais le navigateur peut encore devenir capable :
+     * Chromium n'émet `beforeinstallprompt` qu'une fois le manifeste lu et le
+     * worker jugé éligible, parfois après notre délai de garde. La carte était
+     * figée — on tombait sur des consignes manuelles alors qu'un vrai bouton
+     * d'installation était à une seconde près. On surclasse donc la carte en
+     * place si l'évènement arrive pendant qu'elle est ouverte.
+     */
+    if (plat.canNativeInstall && !plat.ios) {
+      const upgrade = () => {
+        window.removeEventListener('beforeinstallprompt', upgrade);
+        if (!cardEl || !deferredInstall || isStandalone()) return;
+        renderNativeInstallCard(uiLang(), appId, appName);
+      };
+      window.addEventListener('beforeinstallprompt', upgrade);
+      // La carte fermée, l'écouteur n'a plus de raison d'être.
+      window.setTimeout(() => {
+        if (!cardEl) window.removeEventListener('beforeinstallprompt', upgrade);
+      }, CARD_UPGRADE_WINDOW_MS);
     }
 
     const steps = installSteps(plat);
@@ -677,7 +741,7 @@
     const installOk = !isSnoozed('install');
     const wantMobileInstall = plat.mobileLike && installOk;
     const wantDesktopInstall = plat.desktop && installOk
-      && (!!deferredInstall || ['chrome', 'edge', 'opera'].includes(plat.browser));
+      && (!!deferredInstall || ['chrome', 'brave', 'edge', 'opera'].includes(plat.browser));
 
     if (wantMobileInstall || wantDesktopInstall) {
       const tryInstall = () => {
@@ -860,132 +924,35 @@
     const id = APPS[appId] ? appId : 'radar';
     const current = currentAppId();
     if (id !== current) {
+      // Une app ne s'installe que depuis sa propre portée : il faut ouvrir sa
+      // page. En NOUVEL ONGLET — `location.href` faisait perdre sa place dans
+      // le fil à qui voulait juste installer Pomodoro depuis l'accueil, sans
+      // prévenir. Si le navigateur refuse l'onglet (blocage de fenêtres), on
+      // retombe sur la navigation plutôt que de ne rien faire.
+      let href;
       try {
         const url = new URL(appHref(id));
         url.searchParams.set('install', '1');
-        location.href = url.href;
+        href = url.href;
       } catch {
-        location.href = appHref(id);
+        href = appHref(id);
       }
+      // `window.open(..., 'noopener')` rend TOUJOURS null : impossible alors de
+      // distinguer un onglet ouvert d'un onglet bloqué, et le repli partait à
+      // tort — la page d'origine naviguait quand même. On ouvre donc sans le
+      // drapeau, et on coupe `opener` après coup.
+      let opened = null;
+      try { opened = window.open(href, '_blank'); } catch { /* ignore */ }
+      if (!opened) {
+        location.href = href;
+        return;
+      }
+      try { opened.opener = null; } catch { /* ignore */ }
       return;
     }
     await forceShowInstall();
   }
 
-
-  /**
-   * Styles de repli pour les pages qui n'importent pas style.css.
-   *
-   * POURQUOI CE GARDE-FOU
-   * Ce bloc est ajouté au <head> à l'exécution, donc APRÈS style.css et à
-   * spécificité égale : sur le site principal il gagnerait sur les règles du
-   * dépôt. Il écraserait notamment le `bottom` de `.engage-prompt`, calculé
-   * pour dégager les FAB `.page-tools` — la carte repasserait dessous.
-   *
-   * `--radar-chrome` est déclarée par style.css. Le CSS étant analysé avant
-   * l'exécution des scripts `defer`, le test est fiable quel que soit l'ordre
-   * de chargement. Le repli ne sert donc plus qu'à Pomodoro et Solitaire.
-   *
-   * POURQUOI CETTE CHAÎNE DE JETONS
-   * Ces deux apps n'ont ni --bg, ni --ink, ni --rule, ni --sans : écrire
-   * `var(--bg, #fff)` y donnerait un panneau blanc en thème sombre. On vise
-   * donc d'abord leurs jetons --chrome-*, ceux du site ensuite, la valeur en
-   * dur en dernier recours.
-   */
-  function ensureInstallStyles() {
-    if (document.getElementById('radar-install-styles')) return;
-    try {
-      const hasSiteCss = getComputedStyle(document.documentElement)
-        .getPropertyValue('--radar-chrome').trim() !== '';
-      if (hasSiteCss) return;
-    } catch { /* ignore : on injecte, c'est le cas dégradé le plus sûr */ }
-    const css = `
-.install-menu{position:relative;display:inline-flex;align-items:center}
-.install-menu__toggle{cursor:pointer}
-.install-menu__panel{
-  position:absolute;top:calc(100% + 6px);right:0;z-index:240;
-  min-width:11.5rem;max-width:calc(100vw - 16px);padding:6px;border-radius:12px;
-  border:1px solid var(--chrome-rule, var(--rule, rgba(0,0,0,.12)));
-  background:var(--chrome-surface-bg, var(--bg, #fff));
-  color:var(--chrome-text, var(--ink, #111));
-  backdrop-filter:var(--chrome-surface-blur, none);
-  -webkit-backdrop-filter:var(--chrome-surface-blur, none);
-  box-shadow:0 12px 32px -12px rgba(0,0,0,.28);
-  display:flex;flex-direction:column;gap:2px;
-}
-.install-menu__panel[hidden]{display:none!important}
-/* Le syntoniseur (.game-toolbar-tuner, z-index 3) est frère de la rangee de
-   boutons (z-index 1) : sans ce relevement, son iframe passe par-dessus le
-   panneau, dont le z-index 240 reste enferme dans la rangee. */
-.game-toolbar-chrome.has-install-open,.app-toolbar-chrome.has-install-open{z-index:20}
-.masthead-inner.has-install-open{z-index:150}
-.install-menu__item{
-  display:flex;align-items:center;gap:8px;width:100%;
-  padding:8px 10px;border:0;border-radius:8px;background:transparent;
-  color:inherit;font-family:var(--font-body, var(--sans, system-ui, sans-serif));font-size:13px;font-weight:600;
-  text-align:left;cursor:pointer;
-}
-.install-menu__item:hover,.install-menu__item:focus-visible{
-  background:color-mix(in srgb, var(--accent, #2563eb) 12%, transparent);
-  outline:none;
-}
-.install-menu__item.is-current{box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--accent, #2563eb) 45%, transparent)}
-.install-menu__item.is-installed{opacity:.55;cursor:default}
-.install-menu__item .app-emoji{width:16px;height:16px;flex-shrink:0}
-.site-foot__install{margin:0 0 12px}
-.site-foot__install-btn{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:9px 14px;border-radius:999px;
-  border:1px solid var(--chrome-rule, var(--rule, rgba(0,0,0,.14)));
-  background:color-mix(in srgb, var(--accent, #2563eb) 10%, transparent);
-  color:var(--accent, #2563eb);font-family:var(--font-body, var(--sans, system-ui, sans-serif));font-size:13px;font-weight:700;
-  cursor:pointer;transition:border-color 120ms ease, background 120ms ease, color 120ms ease;
-}
-.site-foot__install-btn svg{width:16px;height:16px;flex-shrink:0}
-.site-foot__install-btn:hover{
-  border-color:var(--accent, #2563eb);
-  background:color-mix(in srgb, var(--accent, #2563eb) 16%, transparent);
-}
-.site-foot__install-btn:focus-visible{outline:2px solid var(--accent, #2563eb);outline-offset:2px}
-/* engage card fallback (pomo / solitaire n’importent pas style.css) */
-.engage-prompt{
-  position:fixed;left:0;right:0;bottom:max(16px, env(safe-area-inset-bottom,0px));
-  z-index:400;display:flex;justify-content:center;
-  padding:0 12px;pointer-events:none;opacity:0;transform:translateY(12px);
-  transition:opacity .28s ease, transform .28s ease;
-}
-.engage-prompt.is-visible{opacity:1;transform:none;pointer-events:auto}
-.engage-prompt.is-leaving{opacity:0;transform:translateY(16px);pointer-events:none}
-.engage-prompt__inner{
-  position:relative;width:min(420px,100%);padding:16px 16px 14px;border-radius:16px;
-  border:1px solid var(--chrome-rule, var(--rule, rgba(0,0,0,.12)));
-  background:var(--chrome-surface-bg, var(--bg, #fff));
-  color:var(--chrome-text, var(--ink, #111));box-shadow:0 12px 40px -12px rgba(0,0,0,.28);
-  backdrop-filter:var(--chrome-surface-blur, none);-webkit-backdrop-filter:var(--chrome-surface-blur, none);
-  font-family:var(--font-body, var(--sans, system-ui, sans-serif));
-}
-.engage-prompt__close{
-  position:absolute;top:8px;right:10px;width:32px;height:32px;border:0;border-radius:999px;
-  background:transparent;color:var(--text-muted, var(--muted, #666));font-size:22px;line-height:1;cursor:pointer;
-}
-.engage-prompt__title{margin:0 28px 6px 0;font-size:.98rem;font-weight:700}
-.engage-prompt__body{margin:0 0 8px;font-size:.84rem;line-height:1.45;color:var(--text-secondary, var(--ink-soft, #444))}
-.engage-prompt__steps{margin:0 0 12px;padding:0 0 0 1.15rem;font-size:.8rem;line-height:1.45;color:var(--text-secondary, var(--ink-soft, #444))}
-.engage-prompt__actions{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.engage-prompt__btn{
-  font-family:var(--font-body, var(--sans, system-ui, sans-serif));font-size:12.5px;font-weight:600;padding:8px 12px;border-radius:999px;
-  border:1px solid var(--chrome-rule, var(--rule, rgba(0,0,0,.14)));
-  background:var(--chrome-hover, var(--bg-soft, #f4f4f5));
-  color:var(--chrome-text, var(--ink-soft, #444));cursor:pointer;
-}
-.engage-prompt__btn--primary{background:var(--accent, #2563eb);border-color:var(--accent, #2563eb);color:#fff}
-.engage-prompt__btn--quiet{border-color:transparent;background:transparent;font-weight:500;color:var(--text-muted, var(--muted, #666))}
-`;
-    const s = document.createElement('style');
-    s.id = 'radar-install-styles';
-    s.textContent = css;
-    document.head.appendChild(s);
-  }
 
   /**
    * Ferme les menus ouverts. `restoreFocus` ramène le focus sur le
@@ -999,8 +966,7 @@
       const btn = el.querySelector('[data-install-toggle]');
       const panel = el.querySelector('[data-install-panel]');
       if (btn) btn.setAttribute('aria-expanded', 'false');
-      if (panel) panel.hidden = true;
-      raiseStackingRoot(el, false);
+      if (panel) hidePanel(panel);
       if (restoreFocus && btn && panel?.contains(document.activeElement)) {
         try { btn.focus(); } catch { /* ignore */ }
       }
@@ -1031,32 +997,88 @@
 
   /** Marge minimale entre le panneau et le bord de l'écran. */
   const PANEL_EDGE_MARGIN = 8;
+  /** Air entre le déclencheur et le panneau. */
+  const PANEL_GAP = 6;
+
+  /** Le navigateur sait-il faire un vrai popover (top layer) ? */
+  const SUPPORTS_POPOVER = (() => {
+    try { return typeof HTMLElement !== 'undefined' && 'showPopover' in HTMLElement.prototype; }
+    catch { return false; }
+  })();
 
   /**
-   * Ramène le panneau dans l'écran s'il en sort.
+   * Ouvre le panneau dans le top layer quand le navigateur sait le faire.
    *
-   * Le panneau est ancré `right: 0` sur son déclencheur et mesure au moins
-   * 11,5 rem. Dans la barre de Solitaire — étroite, centrée, en position fixe
-   * — le déclencheur se retrouve assez à gauche pour que le panneau sorte de
-   * l'écran : mesuré à −21,6 px sur un écran de 320 px. Aucune règle CSS
-   * statique ne peut le savoir, puisque ça dépend de la position réelle du
-   * bouton ; on corrige donc après ouverture, par translation.
+   * POURQUOI LE TOP LAYER
+   * Le panneau vivait dans le contexte d'empilement de son ancêtre — 2 pour
+   * `.masthead-inner`, 1 pour la barre des apps — alors que le syntoniseur est
+   * à 100 (site) et 3 (apps). Son `z-index: 240` ne pesait donc rien : le 4ᵉ
+   * item passait sous la barre du lecteur sur l'accueil, et le panneau se
+   * lisait à travers les boutons du jeu sur Solitaire. On relevait l'ancêtre
+   * le temps de l'ouverture ; un popover n'a plus besoin de cette rustine.
    */
-  function clampPanelToViewport(panel) {
-    panel.style.transform = '';
-    const r = panel.getBoundingClientRect();
+  function showPanel(panel) {
+    if (SUPPORTS_POPOVER) {
+      if (!panel.hasAttribute('popover')) panel.setAttribute('popover', 'manual');
+      panel.hidden = false;
+      if (!panel.matches(':popover-open')) {
+        try { panel.showPopover(); } catch { panel.hidden = false; }
+      }
+      return;
+    }
+    panel.hidden = false;
+  }
+
+  function hidePanel(panel) {
+    if (SUPPORTS_POPOVER && panel.hasAttribute('popover')) {
+      try { if (panel.matches(':popover-open')) panel.hidePopover(); } catch { /* ignore */ }
+      return;
+    }
+    panel.hidden = true;
+  }
+
+  /**
+   * Pose le panneau sous son déclencheur, aligné à droite, et le ramène dans
+   * l'écran s'il en sort.
+   *
+   * Dans le top layer le panneau n'est plus positionné par son ancêtre : c'est
+   * ici qu'on calcule sa place, à partir du rectangle réel du bouton. Le
+   * recadrage reste nécessaire dans la barre de Solitaire — étroite, centrée —
+   * où le panneau sortait à −21,6 px sur un écran de 320 px.
+   */
+  function placePanel(toggle, panel) {
+    if (!SUPPORTS_POPOVER || !panel.hasAttribute('popover')) {
+      // Repli : le panneau est absolu dans son menu, seule la translation corrige.
+      panel.style.transform = '';
+      const box = panel.getBoundingClientRect();
+      const width = document.documentElement.clientWidth;
+      let shift = 0;
+      if (box.left < PANEL_EDGE_MARGIN) shift = PANEL_EDGE_MARGIN - box.left;
+      else if (box.right > width - PANEL_EDGE_MARGIN) shift = (width - PANEL_EDGE_MARGIN) - box.right;
+      if (shift) panel.style.transform = `translateX(${Math.round(shift)}px)`;
+      return;
+    }
+    const anchor = toggle.getBoundingClientRect();
+    const box = panel.getBoundingClientRect();
     const vw = document.documentElement.clientWidth;
-    let shift = 0;
-    if (r.left < PANEL_EDGE_MARGIN) shift = PANEL_EDGE_MARGIN - r.left;
-    else if (r.right > vw - PANEL_EDGE_MARGIN) shift = (vw - PANEL_EDGE_MARGIN) - r.right;
-    if (shift) panel.style.transform = `translateX(${Math.round(shift)}px)`;
+    const vh = document.documentElement.clientHeight;
+    let left = anchor.right - box.width;
+    left = Math.min(Math.max(left, PANEL_EDGE_MARGIN), vw - box.width - PANEL_EDGE_MARGIN);
+    // Sous le bouton, sauf s'il n'y a plus la place : alors au-dessus.
+    let top = anchor.bottom + PANEL_GAP;
+    if (top + box.height > vh - PANEL_EDGE_MARGIN) {
+      const above = anchor.top - PANEL_GAP - box.height;
+      top = above >= PANEL_EDGE_MARGIN ? above : Math.max(PANEL_EDGE_MARGIN, vh - box.height - PANEL_EDGE_MARGIN);
+    }
+    panel.style.left = `${Math.round(left)}px`;
+    panel.style.top = `${Math.round(top)}px`;
   }
 
   function openInstallMenu(menu, toggle, panel, { focusFirst = false } = {}) {
     closeAllInstallMenus();
     menu.classList.add('is-open');
     toggle.setAttribute('aria-expanded', 'true');
-    panel.hidden = false;
+    showPanel(panel);
     // Marquer l’app courante dans le panneau
     const cur = currentAppId();
     panel.querySelectorAll('[data-install-app]').forEach((item) => {
@@ -1070,34 +1092,8 @@
         item.classList.remove('is-installed');
       }
     });
-    raiseStackingRoot(menu, true);
-    clampPanelToViewport(panel);
+    placePanel(toggle, panel);
     if (focusFirst) focusMenuItem(panel, 0);
-  }
-
-  /**
-   * Ancêtres qui enferment le panneau dans leur contexte d'empilement.
-   * `.masthead-inner` sur le site, la rangée de boutons dans les deux apps.
-   */
-  const STACKING_ROOTS = '.masthead-inner, .game-toolbar-chrome, .app-toolbar-chrome';
-
-  /**
-   * Sort le panneau de son contexte d'empilement, le temps de l'ouverture.
-   *
-   * Le `z-index: 240` du panneau ne vaut que DANS l'ancêtre qui établit le
-   * contexte — et cet ancêtre est bien plus bas que le syntoniseur :
-   *  - site : `.masthead-inner` est à 2, `#tuner` à 100 ;
-   *  - apps : `.game-toolbar-chrome` est à 1, `.game-toolbar-tuner` à 3.
-   * Dans les deux cas le syntoniseur passe par-dessus tout le sous-arbre du
-   * panneau. Constaté à l'œil sur l'accueil (« SPORTS Étudiants », le 4ᵉ item,
-   * disparaissait sous la barre) et mesuré sur Solitaire à 320 px.
-   *
-   * On relève donc l'ancêtre, et seulement pendant l'ouverture : le laisser
-   * au-dessus en permanence changerait l'ordre de peinture du syntoniseur.
-   */
-  function raiseStackingRoot(menu, on) {
-    const root = menu.closest?.(STACKING_ROOTS);
-    if (root) root.classList.toggle('has-install-open', !!on);
   }
 
   function wireInstallMenus() {
@@ -1174,11 +1170,14 @@
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeAllInstallMenus(null, { restoreFocus: true });
       });
-      // Rotation de l'appareil panneau ouvert : le recadrage calculé à
-      // l'ouverture ne vaut plus rien, il faut le refaire.
+      // Rotation de l'appareil panneau ouvert : la position calculée à
+      // l'ouverture ne vaut plus rien, il faut la refaire.
       window.addEventListener('resize', () => {
-        document.querySelectorAll('[data-install-menu].is-open [data-install-panel]')
-          .forEach(clampPanelToViewport);
+        document.querySelectorAll('[data-install-menu].is-open').forEach((menu) => {
+          const toggle = menu.querySelector('[data-install-toggle]');
+          const panel = menu.querySelector('[data-install-panel]');
+          if (toggle && panel) placePanel(toggle, panel);
+        });
       });
     }
   }
@@ -1186,7 +1185,14 @@
   /** Délai de garde avant de renoncer à l'invite native et de basculer sur le
    *  guide manuel. Chromium n'émet `beforeinstallprompt` qu'une fois le
    *  manifeste lu et le service worker éligible — rarement sous la seconde. */
-  const INSTALL_EVENT_WAIT_MS = 3000;
+  const INSTALL_EVENT_WAIT_MS = 8000;
+
+  /**
+   * Au-delà, on cesse de guetter l'invite native pour une carte déjà ouverte.
+   * Une carte d'invite ne reste pas une minute à l'écran ; passé ce délai
+   * l'écouteur ne servirait plus qu'à retenir la fermeture.
+   */
+  const CARD_UPGRADE_WINDOW_MS = 60000;
 
   /**
    * Attend `beforeinstallprompt`, sans dépasser le délai de garde.
@@ -1225,10 +1231,10 @@
   // ─── Init ─────────────────────────────────────────────────────────────────
 
   function init() {
+    detectBrave();
     touchVisit();
     bindInstallEvents();
     bindEngagement();
-    ensureInstallStyles();
     wireInstallMenus();
     consumeInstallQuery();
 

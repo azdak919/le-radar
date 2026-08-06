@@ -1,13 +1,13 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v578",
+    "cache": "radar-shell-v580",
     "assets": {
       "app.js": "1d05c370c7869bbb",
       "bg-rotation-lib.js": "4ff24249767435c6",
       "cast.js": "9ac30d507e71388d",
       "embed.css": "af735e5f359427a4",
       "embed.js": "3f821677d146c6d3",
-      "engage-prompt.js": "9653416ffcc3ccd2",
+      "engage-prompt.js": "815b1c3c2ae835d6",
       "feeds-page.js": "23103d49de90f8fc",
       "mobile-playback.js": "955026530d5993b0",
       "nav-shell.js": "97c086a5c1ef5bca",
@@ -21,17 +21,18 @@
       "scripts/session-freshness-lib.js": "8864fadc8cd34ed1",
       "scripts/sports-freshness-lib.js": "fcb409c0970bf1ff",
       "style-masthead.css": "a3430095e00ceab9",
-      "style.css": "2a96d958e8ced553",
+      "style.css": "2a1794da3335364e",
       "translate-menu.css": "a5a4eb37479afb60",
       "translate-menu.js": "07802220efb342c2",
       "translate.js": "a51097dd8bb66a69"
     }
   },
   "pomo/sw.js": {
-    "cache": "pomo-shell-v82",
+    "cache": "pomo-shell-v83",
     "assets": {
       "bg-rotation-lib.js": "4ff24249767435c6",
       "fullscreen-wallpaper-qc.js": "2efff73a86189579",
+      "install-chrome.css": "9ec948cad290dcdc",
       "pomo/js/app.js": "a8138a1bc0e114d6",
       "pomo/js/backgrounds-data.js": "5d86e3c2604a8bf7",
       "pomo/js/backgrounds.js": "6fcecb0e64be56f4",
@@ -58,21 +59,22 @@
     }
   },
   "solitaire/sw.js": {
-    "cache": "solitaire-shell-v48",
+    "cache": "solitaire-shell-v49",
     "assets": {
       "fullscreen-wallpaper-qc.js": "2efff73a86189579",
+      "install-chrome.css": "9ec948cad290dcdc",
       "solitaire/js/solitaire-rules.js": "c19bd4f9a851fda6",
       "translate-menu.css": "a5a4eb37479afb60",
       "translate-menu.js": "07802220efb342c2"
     }
   },
   "sports/sw.js": {
-    "cache": "sports-shell-v3",
+    "cache": "sports-shell-v5",
     "assets": {
       "app-sw-register.js": "386e54fcec34bbb3",
       "app.js": "1d05c370c7869bbb",
       "cast.js": "9ac30d507e71388d",
-      "engage-prompt.js": "9653416ffcc3ccd2",
+      "engage-prompt.js": "815b1c3c2ae835d6",
       "institution-acronyms-data.js": "0d9e4eaa631af54c",
       "mobile-playback.js": "955026530d5993b0",
       "nav-shell.js": "97c086a5c1ef5bca",
@@ -81,7 +83,7 @@
       "seo-pages.css": "315e0694f2059bfe",
       "sports-board.js": "0222092a8ee68654",
       "style-masthead.css": "a3430095e00ceab9",
-      "style.css": "2a96d958e8ced553"
+      "style.css": "2a1794da3335364e"
     }
   }
 }

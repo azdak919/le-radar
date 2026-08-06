@@ -3651,15 +3651,24 @@ html[data-translate-busy="1"] .translate-toggle {
   color: var(--accent);
   background: color-mix(in srgb, var(--accent) 8%, transparent);
 }
+/*
+ * Le panneau est un popover : il vit dans le top layer, donc au-dessus du
+ * syntoniseur et des outils flottants sans qu'aucun z-index n'ait à le
+ * disputer. Avant ça il fallait relever `.masthead-inner` pendant l'ouverture,
+ * parce que son contexte d'empilement enfermait le z-index du panneau et que
+ * le 4ᵉ item passait sous la barre du lecteur. Plus de rustine : le top layer
+ * ignore les contextes d'empilement.
+ *
+ * Un popover est positionné par rapport à la fenêtre : c'est engage-prompt.js
+ * qui pose `top` / `left` sous le déclencheur, lui seul connaissant sa place.
+ */
 .install-menu__panel {
-  position: absolute;
-  top: calc(100% + 6px);
-  right: 0;
-  z-index: 240;
+  position: fixed;
+  margin: 0;
+  /* `width: max-content` + items insécables : « Sports Étudiants » passait sur
+     deux lignes et cassait le rythme du menu. */
+  width: max-content;
   min-width: 11.5rem;
-  /* Filet : un panneau ne doit jamais être plus large que l'écran. Le
-     recadrage fin (translation) est fait par engage-prompt.js, qui seul
-     connaît la position réelle du déclencheur. */
   max-width: calc(100vw - 16px);
   padding: 6px;
   border-radius: 12px;
@@ -3669,21 +3678,20 @@ html[data-translate-busy="1"] .translate-toggle {
   box-shadow:
     0 12px 32px -12px rgba(0, 0, 0, 0.28),
     0 0 0 1px color-mix(in srgb, var(--rule) 60%, transparent);
-  display: flex;
   flex-direction: column;
   gap: 2px;
 }
+/* `:popover-open` pour les navigateurs qui gèrent l'API, `[hidden]` pour le
+   repli où le panneau reste un simple bloc absolu dans son menu. */
+.install-menu__panel:popover-open { display: flex; }
+.install-menu__panel:not([popover]) {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 240;
+  display: flex;
+}
 .install-menu__panel[hidden] { display: none !important; }
-/*
- * `.masthead-inner` est en `position: relative; z-index: 2` : il établit un
- * contexte d'empilement, donc le `z-index: 240` du panneau ne vaut QUE dans ce
- * contexte — et 2 perd contre le syntoniseur, à 100. Résultat observé : le 4ᵉ
- * item du menu passait sous la barre du lecteur.
- * On relève le conteneur pendant l'ouverture seulement (classe posée par
- * engage-prompt.js) : 150 passe au-dessus du syntoniseur, et reste sous la
- * carte d'invite (200) et les outils flottants (180).
- */
-.masthead-inner.has-install-open { z-index: 150; }
 .install-menu__item {
   display: flex;
   align-items: center;
@@ -3698,6 +3706,7 @@ html[data-translate-busy="1"] .translate-toggle {
   font-size: 13px;
   font-weight: 600;
   text-align: left;
+  white-space: nowrap;
   cursor: pointer;
 }
 .install-menu__item:hover,
