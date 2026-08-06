@@ -448,16 +448,16 @@ variantes de noms :
 
 > Généré par `npm run agents:harvest -- --write`. **Pas des D# ouvertes.**
 > L’humain (ou l’agent avec OK) promeut une ligne en §3 si pertinent.
-> Dernière récolte : 2026-07-25T10:58:31.400Z · intensité **heavy** (score 454.4) · fenêtre `36h`
+> Dernière récolte : 2026-08-06T07:04:02.049Z · intensité **heavy** (score 956.8) · fenêtre `36h`
 
 | Zone | Chaleur | Effort | Suggestion | Fichiers chauds |
 |------|---------|--------|------------|-----------------|
-| banks-photo | 268 | M | Pipeline banques photo (QC / saisons / audit) | `scripts/maintain-quebec-backgrounds.js`, `quebec-backgrounds.js`, `data/quebec-nations-backgrounds.json`, `data/quebec-university-backgrounds.json`, `quebec-nations-backgrounds-data.js`, `data/quebec-backgrounds.json` |
-| pwa-sw | 178 | S | PWA / service worker / install | `sw.js`, `pomo/sw.js`, `offline.html`, `solitaire/sw.js`, `engage-prompt.js` |
-| pomo | 97.5 | S | Isolation / qualité mini-app Pomo | `pomo/sw.js`, `pomo/index.html`, `pomo/styles/base.css`, `pomo/js/weather.js`, `pomo/js/backgrounds.js`, `pomo/js/app.js` |
-| bots-ci | 93.6 | M | Bots / CI / scripts de maintenance | `scripts/maintain-quebec-backgrounds.js`, `scripts/quebec-backgrounds-blacklist.js`, `scripts/audit-quebec-backgrounds.py`, `tests/masthead-weather.spec.mjs`, `scripts/sync-quebec-backgrounds.js`, `tests/static-integrity.mjs` |
-| monolith-app | 93 | L | Découper / modulariser app.js (tranche) | `app.js`, `pomo/js/app.js` |
-| monolith-css | 55 | M | Extraire CSS mât / thème (tranche style.css) | `style.css` |
+| bots-ci | 174 | M | Bots / CI / scripts de maintenance | `scripts/seo-pages-lib.js`, `tests/static-integrity.mjs`, `tests/install-chrome-visual.spec.mjs`, `scripts/generate-seo.js`, `scripts/seo-pages.js`, `scripts/sw-shell-lock.mjs` |
+| pwa-sw | 98 | S | PWA / service worker / install | `assets/news-images/manifest.json`, `sw.js`, `sports/sw.js`, `offline.html`, `pomo/sw.js`, `solitaire/sw.js` |
+| pomo | 69 | S | Isolation / qualité mini-app Pomo | `pomo/index.html`, `pomo/sw.js`, `pomo/LICENSE`, `pomo/README.md`, `pomo/apple-touch-icon-120x120.png`, `pomo/apple-touch-icon-152x152.png` |
+| banks-photo | 42 | M | Pipeline banques photo (QC / saisons / audit) | `data/quebec-backgrounds.json`, `data/quebec-favorites-backgrounds.json`, `data/quebec-nations-backgrounds.json`, `data/quebec-pomo-backgrounds.json`, `data/quebec-university-backgrounds.json`, `quebec-backgrounds-data.js` |
+| radio-mobile | 25 | M | Radio mobile / Media Session / reprise | `.github/workflows/update-radio-nowplaying.yml`, `cast.js`, `mobile-playback.js`, `player-sync.js`, `scripts/fetch-radio-nowplaying.js`, `scripts/radio-nowplaying-lib.js` |
+| monolith-css | 22.5 | M | Extraire CSS mât / thème (tranche style.css) | `style.css` |
 
 Pour promouvoir : ajouter une ligne D# en §3 avec effort + pourquoi, après OK humain.
 ## 4. Dettes résolues (historique)
