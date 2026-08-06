@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-06T04:09:22.548Z",
+  "updatedAt": "2026-08-06T07:15:16.661Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-06T04:09:07.201Z"
+      "checkedAt": "2026-08-06T07:15:02.488Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La grande ludothèque (reprise)",
+        "title": "Par mots et par vaux (reprise)",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
+        "start": "03:00",
+        "end": "04:00",
+        "url": "https://cism893.ca/emissions/par-mots-et-par-vaux"
       },
       "next": {
-        "title": "Mix Franco",
+        "title": "Best of des sessions live",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "04:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/session-live-a-cism"
       },
       "track": "",
-      "showTitle": "La grande ludothèque (reprise)",
+      "showTitle": "Par mots et par vaux (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-06T04:09:09.653Z"
+      "checkedAt": "2026-08-06T07:15:05.402Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Off The Hook",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "Freeform Air",
         "source": "api-live",
         "start": "02:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "William Shatner's Whiskey Tears",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "06:00"
+      },
       "track": "",
-      "showTitle": "Off The Hook",
+      "showTitle": "Freeform Air",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-06T04:09:12.596Z"
+      "checkedAt": "2026-08-06T07:15:09.768Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Night Watch",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "01:00",
-        "url": "http://www.cjlo.com/shows/the-night-watch"
-      },
-      "next": {
         "title": "CJLO Late Night",
         "source": "schedule",
         "start": "01:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
+      "next": {
+        "title": "Daydream Nation",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/daydream-nation"
+      },
       "track": "",
-      "showTitle": "The Night Watch",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-06T04:09:14.405Z"
+      "checkedAt": "2026-08-06T07:15:11.596Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-06T04:09:15.602Z"
+      "checkedAt": "2026-08-06T07:15:12.946Z"
     },
     "choq": {
       "id": "choq",
@@ -139,15 +139,18 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "VERDUN - He Who Killed the Devil",
+      "track": "coffret de bijoux - faint but ever so loving",
       "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": null,
-      "checkedAt": "2026-08-06T04:09:22.197Z"
+      "clientPoll": {
+        "type": "triton-np",
+        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
+      },
+      "checkedAt": "2026-08-06T07:15:16.310Z"
     }
   }
 }
