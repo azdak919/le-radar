@@ -921,6 +921,17 @@ assert(
   for (const file of withMenu) {
     const rel = relative(root, file);
     const html = readFileSync(file, 'utf8');
+    // Titre du panneau — focus-group le-radar-install-title (verdict B).
+    // Quatre noms d'apps alignés ne disaient pas qu'on installait ; et le
+    // titre porte le nom accessible du panneau, d'où aria-labelledby.
+    assert(
+      /<div class="install-menu__title" id="[^"]+">(Installer une app|Install an app)<\/div>/.test(html),
+      `${rel} : titre « Installer une app » requis dans le panneau d’installation`,
+    );
+    assert(
+      /data-install-panel[^>]*aria-labelledby="[^"]+-title"/.test(html),
+      `${rel} : le panneau doit tirer son nom du titre visible (aria-labelledby)`,
+    );
     for (const app of ['radar', 'pomo', 'solitaire', 'sports']) {
       assert(
         html.includes(`data-install-app="${app}"`),
