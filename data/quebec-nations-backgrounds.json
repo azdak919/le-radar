@@ -4,7 +4,7 @@
   "maxBank": 200,
   "lastSessionCleanup": "2026-05-01",
   "lastSessionId": "ete",
-  "updated": "2026-07-30T23:01:15.972Z",
+  "updated": "2026-08-06T20:29:13.677Z",
   "photos": [
     {
       "id": "917da30c4514",
@@ -816,10 +816,14 @@
       "bank": "nations",
       "nationId": "atikamekw",
       "nation": "Atikamekw",
-      "season": "printemps",
-      "season6": "upingaaq",
-      "seasonSource": "curated-territory",
-      "seasonConfidence": 0.9
+      "season": "hiver",
+      "season6": "ukiuq",
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "seasonReasons": [
+        "human_review_2026-08-06"
+      ],
+      "seasonDetectedAt": "2026-08-06T20:28:15.748Z"
     }
   ],
   "nationCoverage": {
