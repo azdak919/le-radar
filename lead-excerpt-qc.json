@@ -1,14 +1,32 @@
 {
-  "updated": "2026-08-06T10:00:19.264Z",
+  "updated": "2026-08-06T11:42:45.604Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 6,
-  "withLeadExcerpt": 78,
-  "candidates": 6,
-  "enriched": 0,
-  "failed": 2,
+  "incomplete": 8,
+  "withLeadExcerpt": 79,
+  "candidates": 8,
+  "enriched": 2,
+  "failed": 0,
   "ok": true,
   "samples": [
+    {
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
+      "ok": true,
+      "score": 66,
+      "chars": 400,
+      "sample": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « p",
+      "changed": true
+    },
+    {
+      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "link": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
+      "ok": true,
+      "score": 81,
+      "chars": 400,
+      "sample": "Cependant, l’épidémie du sida a modifié le rapport entre les deux groupes. Au cours de cette crise, ",
+      "changed": true
+    },
     {
       "title": "Review: Sullivan Fortner Solo at Gesú Concert Hall",
       "link": "https://www.mcgilldaily.com/2026/07/review-sullivan-fortner-solo-at-gesu-concert-hall/",
@@ -28,12 +46,30 @@
       "changed": false
     },
     {
+      "title": "A conversation with Ehab Lotayef: A lifelong voyage to the conscience of humanity",
+      "link": "https://www.thetribune.ca/news/a-conversation-with-ehab-lotayef-a-lifelong-voyage-to-the-conscience-of-humanity-28072026/?utm_source=rss&utm_medium=rss&utm_campaign=a-conversation-with-ehab-lotayef-a-lifelong-voyage-to-the-conscience-of-humanity-28072026",
+      "ok": true,
+      "score": 70,
+      "chars": 400,
+      "sample": "On May 14, 429 activists carrying more than 11,000 kilograms of humanitarian aid set sail to Gaza fr",
+      "changed": false
+    },
+    {
       "title": "The Cruel Optimism of Summer",
       "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
       "ok": true,
       "score": 66,
       "chars": 400,
       "sample": "“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt t",
+      "changed": false
+    },
+    {
+      "title": "Ask the Trib: How do I survive summer in my hometown?",
+      "link": "https://www.thetribune.ca/student-life/ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026/?utm_source=rss&utm_medium=rss&utm_campaign=ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026",
+      "ok": true,
+      "score": 66,
+      "chars": 400,
+      "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
       "changed": false
     },
     {
