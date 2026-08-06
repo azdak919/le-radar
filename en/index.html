@@ -91,6 +91,15 @@
     <script src="../cast.js" defer></script>
     <script src="../mobile-playback.js" defer></script>
     <script src="../player-sync.js" defer></script>
+    <!-- season-lib.js avant la banque : sans lui le filtre saisonnier rend le
+         pool tel quel, et une photo d'hiver peut sortir en août. -->
+    <script src="../scripts/season-lib.js" defer></script>
+    <script src="../bg-rotation-lib.js" defer></script>
+    <script src="../quebec-backgrounds-data.js" defer></script>
+    <script src="../quebec-university-backgrounds-data.js" defer></script>
+    <script src="../quebec-nations-backgrounds-data.js" defer></script>
+    <script src="../quebec-favorites-backgrounds-data.js" defer></script>
+    <script src="../quebec-backgrounds.js" defer></script>
     <script src="../institution-acronyms-data.js" defer></script>
     <script src="../app.js" defer></script>
     <script src="../engage-prompt.js" defer></script>
@@ -98,6 +107,19 @@
   </head>
   <body>
     <header class="masthead">
+      <!-- Fond photo (banque du Québec) — même bloc que l'accueil : la couche,
+           le voile, le crédit et le bouton de rotation. Sans lui, ces pages
+           affichaient un mât nu alors que leur CSP whiteliste déjà le worker
+           de rotation : la chrome était prévue pour l'avoir, elle ne l'avait
+           jamais reçue. -->
+      <div id="bg-photo-layer" aria-hidden="true"></div>
+      <div class="bg-photo-scrim" aria-hidden="true"></div>
+      <div class="bg-photo-credit" id="bg-photo-credit"></div>
+      <div id="masthead-shuffle-slot" class="masthead-shuffle-slot">
+        <button id="masthead-bg-shuffle" class="masthead-icon masthead-bg-shuffle" type="button" aria-label="Change the masthead photo" title="Change the masthead photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 3 4 4-4 4"/><path d="M20 7H9a5 5 0 0 0-5 5v1"/><path d="m8 21-4-4 4-4"/><path d="M4 17h11a5 5 0 0 0 5-5v-1"/></svg>
+        </button>
+      </div>
       <div class="masthead-inner">
         <div class="masthead-top">
           <span class="masthead-date">
