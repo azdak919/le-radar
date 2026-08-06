@@ -36,6 +36,8 @@ export default defineConfig({
         '**/player-routes.spec.mjs',
         '**/shared-chrome.spec.mjs',
         '**/masthead-css-load.spec.mjs',
+        // Tourne dans le projet « pwa » : il lui faut un service worker actif.
+        '**/sports-pwa.spec.mjs',
       ],
     },
     {
@@ -50,6 +52,15 @@ export default defineConfig({
         '**/masthead-css-load.spec.mjs',
       ],
       fullyParallel: false,
+    },
+    {
+      // /sports/ est installable : prouver son hors-ligne demande un vrai
+      // service worker, que les autres projets bloquent volontairement (un SW
+      // qui survit entre tests fausse tout le reste de la suite).
+      name: 'pwa',
+      testMatch: ['**/sports-pwa.spec.mjs'],
+      fullyParallel: false,
+      use: { serviceWorkers: 'allow' },
     },
   ],
   webServer: {

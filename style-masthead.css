@@ -130,8 +130,15 @@
 @media (max-width: 720px) {
   .bg-photo-credit {
     /* Placement hérité du bloc de base (absolu, bas à droite, nowrap+ellipsis) :
-       on n’ajuste que ce qui doit l’être à cette largeur. */
-    bottom: max(5px, env(safe-area-inset-bottom, 0px));
+       on n’ajuste que ce qui doit l’être à cette largeur.
+       Le `bottom` ne prend PAS `env(safe-area-inset-bottom)` : ce crédit est
+       positionné dans le mât, dont le bas tombe au milieu du document, et non
+       contre le bord bas de l'écran. Sur un téléphone à barre d'accueil
+       l'inset vaut ~34 px et remontait le crédit dans le slogan ; il bougeait
+       en plus au défilement, la barre d'adresse qui se replie faisant varier
+       l'inset. L'inset droit, lui, reste légitime : le mât est pleine largeur,
+       donc son bord droit est bien celui de l'écran. */
+    bottom: 5px;
     font-size: 9px;
     letter-spacing: 0.02em;
     line-height: 1.3;

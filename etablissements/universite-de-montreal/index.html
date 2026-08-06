@@ -27,6 +27,7 @@
     <link rel="icon" href="../../assets/icon-32.png" type="image/png" sizes="32x32" />
     <link rel="icon" href="../../assets/icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="../../assets/icon-192.png" />
+    <link rel="manifest" href="../../manifest.json" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -92,16 +93,47 @@
     <script src="../../player-sync.js" defer></script>
     <script src="../../institution-acronyms-data.js" defer></script>
     <script src="../../app.js" defer></script>
+    <script src="../../engage-prompt.js" defer></script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollegeOrUniversity","name":"Université de Montréal","url":"https://www.umontreal.ca/","address":{"@type":"PostalAddress","addressRegion":"QC","addressCountry":"CA","addressLocality":"Montréal"},"subOrganization":[{"@type":"NewsMediaOrganization","name":"Quartier Libre","url":"https://quartierlibre.ca/"},{"@type":"RadioStation","name":"CISM 89,3 FM","url":"https://cism893.ca/"}]}</script>
   </head>
   <body>
     <header class="masthead">
       <div class="masthead-inner">
-        <div class="seo-masthead-actions">
-          <button id="theme-toggle" class="masthead-icon theme-toggle" type="button" aria-label="Changer de thème" title="Mode clair / sombre">
-            <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-            <svg class="ico-moon hidden" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7.21 7.21 0 0 0 21 12.79z"/></svg>
+        <div class="masthead-top">
+          <span class="masthead-date">
+            <span id="today-date"></span>
+            <time id="today-time" class="masthead-time" aria-label="Heure actuelle"></time>
+          </span>
+          <div class="masthead-actions">
+            <a href="../../" class="masthead-icon masthead-home" title="Accueil" aria-label="Accueil — LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg></a>
+            <a href="../../feeds.html" class="masthead-icon masthead-rss" title="Flux RSS" aria-label="S’abonner au flux RSS de LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83C19.56 12.06 12.94 5.44 4 4.44z"/><path d="M4 10.11v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.46-4.42-9.9-9.9-9.9z"/></svg></a>
+            <a href="../../pomo/" class="masthead-icon masthead-pomo" title="Pomodoro — minuteur focus" aria-label="Pomodoro — minuteur focus"><img class="app-emoji" src="../../assets/emoji/tomato.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
+            <a href="../../solitaire/" class="masthead-icon masthead-solitaire" title="Solitaire" aria-label="Solitaire"><img class="app-emoji" src="../../assets/emoji/playing-cards.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
+            <a href="../../sports/" class="masthead-icon masthead-sports" title="SPORTS Étudiants — scores collégiaux et universitaires" aria-label="SPORTS Étudiants — scores collégiaux et universitaires"><img class="app-emoji" src="../../assets/emoji/trophy.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
+            <a href="https://www.buymeacoffee.com/azdak" class="masthead-icon masthead-coffee" title="Offrir un café" aria-label="Offrir un café — Buy me a coffee" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path fill="none" d="M18 8h1a4 4 0 0 1 0 8h-1"/><path fill="none" d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line fill="none" x1="6" y1="1" x2="6" y2="4"/><line fill="none" x1="10" y1="1" x2="10" y2="4"/><line fill="none" x1="14" y1="1" x2="14" y2="4"/></svg></a>
+            <div class="install-menu" data-install-menu>
+        <button type="button" class="masthead-icon install-menu__toggle" data-install-toggle aria-haspopup="menu" aria-expanded="false" aria-controls="install-menu-panel" title="Installer une app" aria-label="Installer une app — LE-RADAR, Pomodoro, Solitaire, SPORTS Étudiants"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></button>
+        <div id="install-menu-panel" class="install-menu__panel" data-install-panel role="menu" aria-label="Installer une app" hidden>
+          <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="radar">
+            <img class="app-emoji" src="../../assets/emoji/satellite.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+            <span>LE-RADAR.ca</span>
           </button>
+          <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="pomo">
+            <img class="app-emoji" src="../../assets/emoji/tomato.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+            <span>Pomodoro</span>
+          </button>
+          <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="solitaire">
+            <img class="app-emoji" src="../../assets/emoji/playing-cards.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+            <span>Solitaire</span>
+          </button>
+          <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="sports">
+            <img class="app-emoji" src="../../assets/emoji/trophy.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+            <span>SPORTS Étudiants</span>
+          </button>
+        </div>
+      </div>
+            <button id="theme-toggle" class="masthead-icon theme-toggle" type="button" aria-label="Changer de thème" title="Mode clair / sombre"><svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><svg class="ico-moon hidden" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+          </div>
         </div>
         <div class="masthead-brand">
           <a href="../../" class="wordmark">
@@ -239,13 +271,21 @@
         <p class="site-foot__wordmark notranslate" translate="no"><img class="site-foot__logo" src="../../assets/icon.svg" width="24" height="24" alt="" aria-hidden="true">LE-RADAR.ca</p>
         <p class="site-foot__signature" lang="fr">Le Réseau Académique de Découverte et d’Agrégation de Ressources</p>
       </div>
+      <p class="site-foot__install">
+        <button type="button" class="site-foot__install-btn" data-install-app="radar" aria-label="Installer l’app LE-RADAR.ca">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          <span>Installer LE-RADAR.ca</span>
+        </button>
+      </p>
       <p>LE-RADAR.ca est un projet indépendant et non officiel. Il n’est affilié à aucun des médias ni des établissements recensés. Les contenus appartiennent à leurs publications d’origine.</p>
       <nav class="site-foot__links" aria-label="Liens de pied de page">
         <a href="../../">Retour à l’accueil de LE-RADAR.ca</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
-        <a href="../../medias/">Tous les médias étudiants du Québec</a>
+        <a href="../../medias/">Médias</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
-        <a href="../../horaires/">Les horaires des radios étudiantes</a>
+        <a href="../../medias/#journaux">Journaux</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../horaires/">Radios</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../sports/" data-sports-reset target="_blank" rel="noopener noreferrer">Sports</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
