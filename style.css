@@ -98,8 +98,12 @@ body {
   align-items: stretch;
   min-width: 0;
 }
-/* Si le bandeau sports est visible, le fil ne double pas l’air en dessous. */
-.masthead-sports-strip:not([hidden]) + .wire .wire-head {
+/* Si le bandeau sports est visible, le fil ne double pas l’air en dessous.
+   Le menu de sections s'intercale entre les deux : sans la seconde forme,
+   l'adjacence est rompue et `.wire-head` reprend ses 22 px, soit l'air que
+   cette règle existe justement pour supprimer. */
+.masthead-sports-strip:not([hidden]) + .wire .wire-head,
+.masthead-sports-strip:not([hidden]) + .site-sections + .wire .wire-head {
   margin-top: 0;
 }
 .masthead-sports-strip:not([hidden]) {
@@ -3752,7 +3756,11 @@ html[data-translate-busy="1"] .translate-toggle {
  */
 .site-sections {
   max-width: var(--maxw);
-  margin: 14px auto 0;
+  /* Le bandeau des scores a déjà 8 px de padding-bottom : 6 px suffisent
+     au-dessus. En dessous, `.wire-head` est ramené à 0 (voir la règle
+     d'adjacence plus haut), donc c'est cette marge qui donne l'air — pas les
+     deux cumulées. */
+  margin: 6px auto 8px;
   padding: 0 var(--pad);
   font-family: var(--sans);
   font-size: 12.5px;
@@ -3785,7 +3793,9 @@ html[data-translate-busy="1"] .translate-toggle {
 }
 @media (max-width: 599.98px) {
   .site-sections {
-    margin-top: 10px;
+    /* Le padding des liens (2 px) reste : c'est la cible tactile, on gagne
+       l'espace sur les marges, pas sur ce qui se touche. */
+    margin: 4px auto 6px;
     font-size: 12px;
     gap: 3px 7px;
   }
