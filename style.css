@@ -3692,6 +3692,17 @@ html[data-translate-busy="1"] .translate-toggle {
   display: flex;
 }
 .install-menu__panel[hidden] { display: none !important; }
+/* Titre du panneau — focus-group le-radar-install-title (verdict B). */
+.install-menu__title {
+  margin: 2px 4px 6px;
+  padding: 0 6px 6px;
+  border-bottom: 1px solid color-mix(in srgb, var(--rule) 70%, transparent);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
 .install-menu__item {
   display: flex;
   align-items: center;

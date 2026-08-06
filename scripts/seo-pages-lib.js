@@ -692,6 +692,15 @@ const ICON_SVG = {
  * `panelId` doit être unique dans la page — d'où le suffixe passé par les
  * gabarits Pomodoro et Solitaire, qui portent déjà un menu de langue.
  */
+/**
+ * Menu d'installation — panneau et déclencheur.
+ *
+ * Le titre visible vient du focus-group `le-radar-install-title` (verdict B) :
+ * quatre noms d'apps alignés ne disaient pas qu'on installait. Il reprend mot
+ * pour mot l'infobulle du déclencheur — `c.installMenu`, une seule chaîne pour
+ * les deux — et sert de nom accessible au panneau via `aria-labelledby`, sinon
+ * la lentille d'écran annonce deux fois la même chose.
+ */
 function renderInstallMenu({ lang = 'fr', up = './', panelId = 'install-menu-panel', toggleClass = 'masthead-icon' } = {}) {
   const c = CHROME_T[lang] || CHROME_T.fr;
   const items = INSTALL_APPS.map((app) => `
@@ -702,7 +711,8 @@ function renderInstallMenu({ lang = 'fr', up = './', panelId = 'install-menu-pan
 
   return `<div class="install-menu" data-install-menu>
         <button type="button" class="${toggleClass} install-menu__toggle" data-install-toggle aria-haspopup="menu" aria-expanded="false" aria-controls="${panelId}" title="${escapeHtml(c.installMenu)}" aria-label="${escapeHtml(c.installMenuAria)}">${ICON_SVG.install}</button>
-        <div id="${panelId}" class="install-menu__panel" data-install-panel role="menu" aria-label="${escapeHtml(c.installMenu)}" hidden>${items}
+        <div id="${panelId}" class="install-menu__panel" data-install-panel role="menu" aria-labelledby="${panelId}-title" hidden>
+          <div class="install-menu__title" id="${panelId}-title">${escapeHtml(c.installMenu)}</div>${items}
         </div>
       </div>`;
 }
