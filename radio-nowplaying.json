@@ -1,72 +1,78 @@
 {
-  "updatedAt": "2026-08-06T10:08:43.393Z",
+  "updatedAt": "2026-08-06T12:25:33.327Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Jeudi Révolte",
         "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/jeudi-revolte/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule",
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Jeudi Révolte",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-06T10:08:27.801Z"
+      "checkedAt": "2026-08-06T12:25:24.159Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
+        "title": "Jimmy et Neutron",
         "source": "schedule",
-        "start": "05:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/jimmy-et-neutron"
       },
       "next": {
-        "title": "Ici, la criminologie",
+        "title": "La collation",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/ici-la-criminologie"
+        "start": "09:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
       },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Jimmy et Neutron",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-06T10:08:29.956Z"
+      "checkedAt": "2026-08-06T12:25:26.108Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Total €clipse of The ☾harts",
-        "source": "api-live",
-        "start": "06:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "OFC Podcast Radio",
         "source": "api-live",
         "start": "07:00",
         "end": "09:00"
       },
+      "next": {
+        "title": "Folk Directions",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Total €clipse of The ☾harts",
+      "showTitle": "OFC Podcast Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +80,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-06T10:08:33.000Z"
+      "checkedAt": "2026-08-06T12:25:28.525Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Daydream Nation",
-        "source": "schedule",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/daydream-nation"
-      },
-      "next": {
         "title": "Free City Radio",
         "source": "schedule",
         "start": "08:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/free-city-radio"
       },
+      "next": {
+        "title": "Everything Everywhere",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/everything-everywhere"
+      },
       "track": "",
-      "showTitle": "Daydream Nation",
+      "showTitle": "Free City Radio",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-06T10:08:34.976Z"
+      "checkedAt": "2026-08-06T12:25:29.759Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
+        "title": "Palmarès CFAK",
         "source": "schedule",
-        "start": "00:00",
-        "end": "07:00"
+        "start": "08:00",
+        "end": "11:00"
       },
       "next": {
-        "title": "Folkswagen",
+        "title": "À nous le futur",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "11:00",
+        "end": "20:00"
       },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-06T10:08:35.634Z"
+      "checkedAt": "2026-08-06T12:25:30.457Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +145,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "aja monet — i know that i don’t know",
+      "track": "Alewya - Selah",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-06T10:08:43.043Z"
+      "checkedAt": "2026-08-06T12:25:32.976Z"
     }
   }
 }
