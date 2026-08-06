@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-08-01T05:44:19.998Z",
+  "generatedAt": "2026-08-06T07:04:02.049Z",
   "since": "36h",
   "sinceGit": "36 hours ago",
   "intense": true,
   "intensity": {
-    "score": 943.6,
+    "score": 956.8,
     "level": "heavy",
-    "files": 658,
-    "touches": 3053,
-    "commitCount": 61
+    "files": 664,
+    "touches": 2375,
+    "commitCount": 64
   },
   "candidates": [
     {
@@ -17,46 +17,14 @@
       "why": "Beaucoup de scripts touchés — opportunité de factoriser",
       "effort": "M",
       "related": "D1",
-      "heat": 471.6,
+      "heat": 174,
       "files": [
+        "scripts/seo-pages-lib.js",
         "tests/static-integrity.mjs",
-        "scripts/article-photo-credit-lib.js",
-        "scripts/maintain-quebec-backgrounds.js",
-        "scripts/article-image-lib.js",
-        "scripts/fetch-news.js",
-        "scripts/fetch-source-worker.js"
-      ]
-    },
-    {
-      "zone": "pomo",
-      "title": "Isolation / qualité mini-app Pomo",
-      "why": "Activité concentrée sur /pomo/",
-      "effort": "S",
-      "related": null,
-      "heat": 180,
-      "files": [
-        "pomo/LICENSE",
-        "pomo/README.md",
-        "pomo/apple-touch-icon-120x120.png",
-        "pomo/apple-touch-icon-152x152.png",
-        "pomo/apple-touch-icon-180x180.png",
-        "pomo/apple-touch-icon.png"
-      ]
-    },
-    {
-      "zone": "banks-photo",
-      "title": "Pipeline banques photo (QC / saisons / audit)",
-      "why": "Beaucoup d’activité sur les fonds — documenter ou automatiser le reste",
-      "effort": "M",
-      "related": "D3",
-      "heat": 164,
-      "files": [
-        "data/quebec-backgrounds.json",
-        "data/quebec-favorites-backgrounds.json",
-        "data/quebec-nations-backgrounds.json",
-        "data/quebec-pomo-backgrounds.json",
-        "data/quebec-university-backgrounds.json",
-        "quebec-nations-backgrounds-data.js"
+        "tests/install-chrome-visual.spec.mjs",
+        "scripts/generate-seo.js",
+        "scripts/seo-pages.js",
+        "scripts/sw-shell-lock.mjs"
       ]
     },
     {
@@ -65,14 +33,46 @@
       "why": "SW et install touchés souvent ; risque de cache oublié",
       "effort": "S",
       "related": null,
-      "heat": 78,
+      "heat": 98,
       "files": [
         "assets/news-images/manifest.json",
         "sw.js",
-        "engage-prompt.js",
-        "manifest.json",
+        "sports/sw.js",
         "offline.html",
-        "pomo/sw.js"
+        "pomo/sw.js",
+        "solitaire/sw.js"
+      ]
+    },
+    {
+      "zone": "pomo",
+      "title": "Isolation / qualité mini-app Pomo",
+      "why": "Activité concentrée sur /pomo/",
+      "effort": "S",
+      "related": null,
+      "heat": 69,
+      "files": [
+        "pomo/index.html",
+        "pomo/sw.js",
+        "pomo/LICENSE",
+        "pomo/README.md",
+        "pomo/apple-touch-icon-120x120.png",
+        "pomo/apple-touch-icon-152x152.png"
+      ]
+    },
+    {
+      "zone": "banks-photo",
+      "title": "Pipeline banques photo (QC / saisons / audit)",
+      "why": "Beaucoup d’activité sur les fonds — documenter ou automatiser le reste",
+      "effort": "M",
+      "related": "D3",
+      "heat": 42,
+      "files": [
+        "data/quebec-backgrounds.json",
+        "data/quebec-favorites-backgrounds.json",
+        "data/quebec-nations-backgrounds.json",
+        "data/quebec-pomo-backgrounds.json",
+        "data/quebec-university-backgrounds.json",
+        "quebec-backgrounds-data.js"
       ]
     },
     {
@@ -81,7 +81,7 @@
       "why": "Zone audio mobile sensible ; regroupe les fix récurrents",
       "effort": "M",
       "related": null,
-      "heat": 75,
+      "heat": 25,
       "files": [
         ".github/workflows/update-radio-nowplaying.yml",
         "cast.js",
@@ -92,78 +92,77 @@
       ]
     },
     {
-      "zone": "monolith-app",
-      "title": "Découper / modulariser app.js (tranche)",
-      "why": "Fichier monolithe touché souvent en vibe-code → re-lit cher en tokens",
-      "effort": "L",
+      "zone": "monolith-css",
+      "title": "Extraire CSS mât / thème (tranche style.css)",
+      "why": "style.css monolithe ; changements UI = relecture large",
+      "effort": "M",
       "related": "D2",
-      "heat": 36,
+      "heat": 22.5,
       "files": [
-        "app.js",
-        "pomo/js/app.js"
+        "style.css"
       ]
     }
   ],
   "topFiles": [
     {
-      "file": "news-sources.json",
-      "n": 20
-    },
-    {
-      "file": "llms.txt",
-      "n": 20
-    },
-    {
-      "file": "news-archive.json",
-      "n": 20
-    },
-    {
-      "file": "assets/news-images/manifest.json",
-      "n": 19
-    },
-    {
       "file": "en/newspapers/exil/index.html",
-      "n": 19
+      "n": 23
     },
     {
       "file": "en/newspapers/le-delit/index.html",
-      "n": 19
+      "n": 23
     },
     {
       "file": "en/newspapers/le-polyscope/index.html",
-      "n": 19
+      "n": 23
     },
     {
       "file": "en/newspapers/montreal-campus/index.html",
-      "n": 19
+      "n": 23
     },
     {
       "file": "en/newspapers/the-campus/index.html",
-      "n": 19
-    },
-    {
-      "file": "en/newspapers/the-link/index.html",
-      "n": 19
+      "n": 23
     },
     {
       "file": "en/newspapers/the-plant/index.html",
-      "n": 19
+      "n": 23
     },
     {
       "file": "journaux/exil/index.html",
-      "n": 19
+      "n": 23
     },
     {
       "file": "journaux/le-delit/index.html",
-      "n": 19
+      "n": 23
     },
     {
       "file": "journaux/le-polyscope/index.html",
-      "n": 19
+      "n": 23
     },
     {
       "file": "journaux/montreal-campus/index.html",
-      "n": 19
+      "n": 23
+    },
+    {
+      "file": "journaux/the-campus/index.html",
+      "n": 23
+    },
+    {
+      "file": "journaux/the-plant/index.html",
+      "n": 23
+    },
+    {
+      "file": "en/newspapers/lexemplaire/index.html",
+      "n": 22
+    },
+    {
+      "file": "en/radios/cism/index.html",
+      "n": 22
+    },
+    {
+      "file": "journaux/lexemplaire/index.html",
+      "n": 22
     }
   ]
 }
