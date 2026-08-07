@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-08-07T03:40:27.356Z",
+  "generatedAt": "2026-08-07T15:43:31.121Z",
   "since": "36h",
   "sinceGit": "36 hours ago",
   "intense": true,
   "intensity": {
-    "score": 468,
+    "score": 489.2,
     "level": "heavy",
-    "files": 240,
-    "touches": 1699,
-    "commitCount": 74
+    "files": 241,
+    "touches": 1700,
+    "commitCount": 84
   },
   "candidates": [
     {
@@ -17,7 +17,7 @@
       "why": "SW et install touchés souvent ; risque de cache oublié",
       "effort": "S",
       "related": null,
-      "heat": 102,
+      "heat": 108,
       "files": [
         "assets/news-images/manifest.json",
         "sw.js",
@@ -25,6 +25,22 @@
         "pomo/sw.js",
         "offline.html",
         "solitaire/sw.js"
+      ]
+    },
+    {
+      "zone": "bots-ci",
+      "title": "Bots / CI / scripts de maintenance",
+      "why": "Beaucoup de scripts touchés — opportunité de factoriser",
+      "effort": "M",
+      "related": "D1",
+      "heat": 38.4,
+      "files": [
+        "tests/static-integrity.mjs",
+        "scripts/seo-pages-lib.js",
+        "tests/pomo-first-paint.spec.mjs",
+        "tests/masthead-sports-fit.spec.mjs",
+        "tests/install-chrome-visual.spec.mjs",
+        "tests/scroll-anchoring.spec.mjs"
       ]
     },
     {
@@ -44,28 +60,12 @@
       ]
     },
     {
-      "zone": "bots-ci",
-      "title": "Bots / CI / scripts de maintenance",
-      "why": "Beaucoup de scripts touchés — opportunité de factoriser",
-      "effort": "M",
-      "related": "D1",
-      "heat": 37.2,
-      "files": [
-        "tests/static-integrity.mjs",
-        "scripts/seo-pages-lib.js",
-        "tests/pomo-first-paint.spec.mjs",
-        "tests/masthead-sports-fit.spec.mjs",
-        "tests/install-chrome-visual.spec.mjs",
-        "scripts/seo-pages.js"
-      ]
-    },
-    {
       "zone": "monolith-css",
       "title": "Extraire CSS mât / thème (tranche style.css)",
       "why": "style.css monolithe ; changements UI = relecture large",
       "effort": "M",
       "related": "D2",
-      "heat": 22.5,
+      "heat": 25,
       "files": [
         "style.css"
       ]
@@ -101,63 +101,63 @@
   "topFiles": [
     {
       "file": "en/newspapers/exil/index.html",
-      "n": 20
+      "n": 21
     },
     {
       "file": "en/newspapers/le-delit/index.html",
-      "n": 20
+      "n": 21
     },
     {
       "file": "en/newspapers/le-polyscope/index.html",
-      "n": 20
+      "n": 21
     },
     {
       "file": "en/newspapers/montreal-campus/index.html",
-      "n": 20
+      "n": 21
     },
     {
       "file": "en/newspapers/the-campus/index.html",
-      "n": 20
+      "n": 21
     },
     {
       "file": "en/newspapers/the-plant/index.html",
-      "n": 20
+      "n": 21
     },
     {
       "file": "journaux/exil/index.html",
-      "n": 20
+      "n": 21
     },
     {
       "file": "journaux/le-delit/index.html",
-      "n": 20
+      "n": 21
     },
     {
       "file": "journaux/le-polyscope/index.html",
-      "n": 20
+      "n": 21
     },
     {
       "file": "journaux/montreal-campus/index.html",
-      "n": 20
+      "n": 21
     },
     {
       "file": "journaux/the-campus/index.html",
-      "n": 20
+      "n": 21
     },
     {
       "file": "journaux/the-plant/index.html",
-      "n": 20
-    },
-    {
-      "file": "en/newspapers/lexemplaire/index.html",
-      "n": 19
-    },
-    {
-      "file": "journaux/lexemplaire/index.html",
-      "n": 19
+      "n": 21
     },
     {
       "file": "en/newspapers/la-pige/index.html",
-      "n": 18
+      "n": 20
+    },
+    {
+      "file": "en/newspapers/quartier-libre/index.html",
+      "n": 20
+    },
+    {
+      "file": "en/newspapers/zone-campus/index.html",
+      "n": 20
     }
   ]
 }
