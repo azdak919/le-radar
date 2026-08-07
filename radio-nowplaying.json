@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-07T18:10:47.649Z",
+  "updatedAt": "2026-08-07T19:28:47.188Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T18:10:33.053Z"
+      "checkedAt": "2026-08-07T19:28:20.655Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
-      },
-      "next": {
         "title": "Salsa & Bembê",
         "source": "schedule",
         "start": "15:00",
         "end": "16:00",
         "url": "https://cism893.ca/emissions/salsa-et-bembe"
       },
+      "next": {
+        "title": "Turbo tannant",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/turbo-tannant"
+      },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Salsa & Bembê",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T18:10:35.323Z"
+      "checkedAt": "2026-08-07T19:28:23.131Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "NNB/SQUAT FM/QPIRG/knots",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "New Shit",
         "source": "api-live",
         "start": "15:00",
         "end": "17:00"
       },
+      "next": {
+        "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "NNB/SQUAT FM/QPIRG/knots",
+      "showTitle": "New Shit",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T18:10:38.104Z"
+      "checkedAt": "2026-08-07T19:28:25.968Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Spiral Bound",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/spiral-bound"
-      },
-      "next": {
         "title": "Dead Beats",
         "source": "schedule",
         "start": "15:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/dead-beats"
       },
+      "next": {
+        "title": "Tapeworms",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/tapeworms"
+      },
       "track": "",
-      "showTitle": "Spiral Bound",
+      "showTitle": "Dead Beats",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T18:10:39.963Z"
+      "checkedAt": "2026-08-07T19:28:27.645Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Ciné-Histoire",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "Nouveautés Franco",
         "source": "schedule",
         "start": "15:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "La récréation",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Ciné-Histoire",
+      "showTitle": "Nouveautés Franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T18:10:40.558Z"
+      "checkedAt": "2026-08-07T19:28:28.376Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "17:00",
         "slug": "histoire-de-passer-le-temps"
       },
-      "track": "Shadow Wizard Money Gang, kinji00 & lb66 - Faded a mon show",
+      "track": "Jonquille — Tu prendras des detours",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-07T18:10:47.298Z"
+      "checkedAt": "2026-08-07T19:28:46.838Z"
     }
   }
 }
