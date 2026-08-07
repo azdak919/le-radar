@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-08-07T15:24:23.437Z",
+  "updatedAt": "2026-08-07T16:23:35.855Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Punk-o-rama",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/punk-o-rama/"
-      },
+      "current": null,
       "next": {
         "title": "Détour",
         "source": "schedule",
@@ -20,59 +14,59 @@
         "url": "https://chyz.ca/emission/detour/"
       },
       "track": "",
-      "showTitle": "Punk-o-rama",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T15:24:12.549Z"
+      "checkedAt": "2026-08-07T16:23:21.149Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Accents ouverts",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/accents-ouverts"
-      },
-      "next": {
         "title": "Rebelles soniques",
         "source": "schedule",
         "start": "12:00",
         "end": "14:00",
         "url": "https://cism893.ca/emissions/rebelles-soniques"
       },
+      "next": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
       "track": "",
-      "showTitle": "Accents ouverts",
+      "showTitle": "Rebelles soniques",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T15:24:14.745Z"
+      "checkedAt": "2026-08-07T16:23:23.755Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "electronic intifada/Jewish Heretics/Radio AlHara/Alright, Now What?",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "Butcher T's Noontime Cuts",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
-      "track": "",
-      "showTitle": "electronic intifada/Jewish Heretics/Radio AlHara/Alright, Now What?",
+      "next": {
+        "title": "NNB/SQUAT FM/QPIRG/knots",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
+      "track": "Butcher T",
+      "showTitle": "Butcher T's Noontime Cuts",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -80,73 +74,79 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T15:24:17.580Z"
+      "checkedAt": "2026-08-07T16:23:26.729Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Alley",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/the-alley"
-      },
-      "next": {
         "title": "Charts & Crafts",
         "source": "schedule",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/charts-and-crafts"
       },
+      "next": {
+        "title": "the castle",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/the-castle"
+      },
       "track": "",
-      "showTitle": "The Alley",
+      "showTitle": "Charts & Crafts",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T15:24:19.338Z"
+      "checkedAt": "2026-08-07T16:23:28.694Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Le Ré-Show : Deuxième service",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "Ciné-Histoire",
         "source": "schedule",
         "start": "12:00",
         "end": "15:00"
       },
+      "next": {
+        "title": "Nouveautés Franco",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Le Ré-Show : Deuxième service",
+      "showTitle": "Ciné-Histoire",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T15:24:20.327Z"
+      "checkedAt": "2026-08-07T16:23:29.379Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Opération beurre de cinoche",
         "source": "api-live",
         "start": "11:30",
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "La Fièvre - Goddess (feat. Backxwash)",
-      "showTitle": "",
+      "next": {
+        "title": "Histoire de passer le temps",
+        "source": "api-live",
+        "start": "16:00",
+        "end": "17:00",
+        "slug": "histoire-de-passer-le-temps"
+      },
+      "track": "ID - laraw",
+      "showTitle": "Opération beurre de cinoche",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -156,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-07T15:24:23.086Z"
+      "checkedAt": "2026-08-07T16:23:35.503Z"
     }
   }
 }
