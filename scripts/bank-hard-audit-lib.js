@@ -20,6 +20,12 @@ const {
   looksReligiousSubject,
   looksTownHallFacade,
 } = require('./religious-facade-lib');
+const {
+  looksSpeciesMacro,
+  looksPeopleScene,
+  looksVernacularBuilding,
+  looksFaceDetected,
+} = require('./wallpaper-subject-lib');
 
 const MIN_WIDTH = 1400;
 const MIN_HEIGHT = 700;
@@ -100,6 +106,12 @@ function auditPhotoHard(photo, profile = {}) {
     reasons.push('town_hall_facade');
   }
   if (PEOPLE_RE.test(short)) reasons.push('people_subject');
+  // Description / catégories : motif restreint (wallpaper-subject-lib), sans les
+  // mots qui collident avec le français descriptif d'un paysage.
+  if (looksPeopleScene(photo)) reasons.push('people_scene');
+  if (looksFaceDetected(photo)) reasons.push('face_subject');
+  if (looksSpeciesMacro(photo)) reasons.push('macro_closeup');
+  if (looksVernacularBuilding(photo)) reasons.push('vernacular_building');
   // bad_scene : titre/URL seulement — les descriptions Commons citent souvent
   // « museum » / « interior » pour des extérieurs (ex. Fort Listuguj).
   if (BAD_SCENE_RE.test(short)) reasons.push('bad_scene_title');

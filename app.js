@@ -1536,14 +1536,22 @@ function showMastheadWeatherBoard() {
   refreshWeatherNameScroll();
   const primary = MASTHEAD_WEATHER.querySelector('.masthead-weather__city.is-active[data-weather-city="montreal"], .masthead-weather__city.is-active[data-weather-city="quebec"]');
   const primaryViewport = primary?.querySelector('.masthead-weather__name');
-  if (!primary || !primaryViewport || primary.clientWidth < 1 || primaryViewport.clientWidth < 1) return;
+  const primaryText = primary?.querySelector('.masthead-weather__name-text');
+  if (!primary || !primaryViewport || !primaryText
+    || primary.clientWidth < 1 || primaryViewport.clientWidth < 1) return;
+  // Mesurer le TEXTE, pas la fenêtre : `.masthead-weather__name-text` porte
+  // `max-width: 100%`, donc le scrollWidth du parent peut déjà être borné et
+  // masquer le débordement (même source de vérité que refreshWeatherNameScroll).
+  // Tolérance sous-pixel seulement : à +2 px le pied du « L » de MONTRÉAL était
+  // rogné sans jamais déclencher la cascade.
+  const primaryOverflowing = () => primaryText.scrollWidth > primaryViewport.clientWidth + 0.5;
   primary.classList.remove('is-compact');
-  let primaryOverflows = primaryViewport.scrollWidth > primaryViewport.clientWidth + 2;
+  let primaryOverflows = primaryOverflowing();
   if (primaryOverflows) {
     // Le seuil dépend de l'espace réel entre date et actions, pas du viewport.
     // MTL/QC est la dernière forme compacte avant de retirer le bandeau.
     primary.classList.add('is-compact');
-    primaryOverflows = primaryViewport.scrollWidth > primaryViewport.clientWidth + 2;
+    primaryOverflows = primaryOverflowing();
   }
   if (!primaryOverflows) return;
   if (count > 1) {
@@ -2356,7 +2364,12 @@ function sportsLeftLaneState() {
   } catch { /* ignore */ }
 
   if (results.length && ctaHasHot) {
-    return { kind: 'results', pool: results };
+    // Résultats d'abord (fraîcheur desc.), puis le calendrier en appoint : avec
+    // un seul lastGame en banque (creux d'été), un pool exclusif ne remplissait
+    // qu'une puce sur trois et le bandeau s'étirait à deux cases.
+    const seen = new Set(results.map((s) => s.key));
+    const pool = results.concat(nexts.filter((s) => !seen.has(s.key)));
+    return { kind: 'results', pool };
   }
   // Hors saison / creux : calendrier à venir s’il existe, sinon vieux résultats
   // en filet. Jamais de puces « info » marketing dans la voie de gauche.

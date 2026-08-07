@@ -654,8 +654,11 @@ a { color: inherit; }
   height: 29px;
 }
 .masthead-weather__board[data-weather-count="1"] { --weather-grid: minmax(0, 1fr); }
-.masthead-weather__board[data-weather-count="2"] { --weather-grid: minmax(110px, .88fr) minmax(0, 1fr); }
-.masthead-weather__board[data-weather-count="3"] { --weather-grid: minmax(110px, .85fr) repeat(2, minmax(0, 1fr)); }
+/* Piste prioritaire à 2/3 cartes : « MONTRÉAL » réclame ~71 px de nom et il en
+   manquait 1 à 2 — assez pour rogner le pied du « L », pas assez pour valoir le
+   repli « MTL ». Les cartes secondaires, elles, ont le défilement marquee. */
+.masthead-weather__board[data-weather-count="2"] { --weather-grid: minmax(110px, .94fr) minmax(0, 1fr); }
+.masthead-weather__board[data-weather-count="3"] { --weather-grid: minmax(110px, .9fr) repeat(2, minmax(0, 1fr)); }
 .masthead-weather__board[data-weather-count="4"] { --weather-grid: minmax(112px, .72fr) repeat(3, minmax(0, 1fr)); }
 .masthead-weather__city {
   display: none;
@@ -694,6 +697,9 @@ a { color: inherit; }
   min-width: 0;
   max-width: 100%;
   overflow: hidden;
+  /* Respiration : le letter-spacing de la tuile ajoute un chasse après la
+     dernière glyphe ; sans ce pixel le « L » de MONTRÉAL touche le rognage. */
+  padding-inline-end: 1px;
   color: var(--ink);
   line-height: 1.15;
 }
