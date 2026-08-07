@@ -57,10 +57,22 @@
 * { box-sizing: border-box; }
 html {
   -webkit-text-size-adjust: 100%;
-  /* Empêche le pan horizontal (iPad portrait, textes longs, RTL).
-     overflow-x:clip seul est mal géré sur certains Safari → hidden d’abord. */
+  /*
+   * Empêche le pan horizontal (iPad portrait, textes longs, RTL).
+   *
+   * Une seule déclaration, et sur la racine uniquement : l'overflow de
+   * l'élément racine se PROPAGE au viewport, et <html> retombe alors à
+   * `visible`. Aucun conteneur de défilement imbriqué n'est créé, donc
+   * `position: sticky` (barre tuner) s'accroche bien au scrollport du
+   * viewport et `position: fixed` (FABs bas de page) reste sur le chemin
+   * rapide composité de WebKit — cf. le bloc `body` juste dessous.
+   *
+   * `hidden` et pas `clip` : c'est la valeur dont la propagation au viewport
+   * est solide partout, `clip` restant approximatif sur Safari/iOS. Le
+   * rognage `clip` reste utilisé sur les blocs internes (`.wire`, masthead),
+   * là où il n'y a pas de scroller de document en jeu.
+   */
   overflow-x: hidden;
-  overflow-x: clip;
   max-width: 100%;
   width: 100%;
 }
@@ -75,14 +87,32 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   transition: background 240ms ease, color 240ms ease;
-  overflow-x: hidden;
-  overflow-x: clip;
+  /*
+   * PAS d'`overflow-x`, de `touch-action` ni d'`overscroll-behavior` ici.
+   *
+   * L'anti-pan horizontal est déjà porté par <html> : l'overflow de l'élément
+   * racine se propage au viewport, une seule déclaration suffit. Les doublons
+   * posés ici étaient au mieux redondants, au pire nocifs sur iOS :
+   *
+   *  - `overflow-x` sur <body> fait de <body> une boîte de rognage, et les
+   *    Safari qui ne gèrent pas encore `clip` le ramènent à `hidden` — donc
+   *    `overflow-y: visible` devient `auto` et <body> devient un VRAI
+   *    conteneur de défilement imbriqué. `position: sticky` s'accroche alors
+   *    au scrollport de <body>, qui ne défile jamais : la barre tuner remonte
+   *    avec la page et disparaît au lieu de rester collée en haut.
+   *  - ce scroller imbriqué + `touch-action` / `overscroll-behavior` sortent
+   *    le défilement du document du chemin rapide composité de WebKit. Les
+   *    calques `position: fixed` ne sont plus repositionnés pendant le geste :
+   *    en web app installée (iPad, plein écran), les FABs bas de page (loupe,
+   *    flèche « haut de page ») partent flotter au milieu de l'écran tant que
+   *    le doigt bouge, et ne reviennent en bas qu'à l'arrêt du scroll.
+   *
+   * Le rognage horizontal du contenu long reste assuré côté colonnes
+   * (`.wire { overflow-x: clip }`, `.masthead-*`), pas sur le scroller.
+   */
   max-width: 100%;
   width: 100%;
   position: relative;
-  /* iPad : pas de glissement latéral du document */
-  overscroll-behavior-x: none;
-  touch-action: pan-y;
 }
 
 /* ── Scoreboard RSEQ / unis QC — sous la barre radio ──
