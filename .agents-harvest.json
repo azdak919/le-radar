@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-08-06T21:34:54.839Z",
+  "generatedAt": "2026-08-07T03:40:27.356Z",
   "since": "36h",
   "sinceGit": "36 hours ago",
   "intense": true,
   "intensity": {
-    "score": 458,
+    "score": 468,
     "level": "heavy",
-    "files": 235,
-    "touches": 1767,
-    "commitCount": 72
+    "files": 240,
+    "touches": 1699,
+    "commitCount": 74
   },
   "candidates": [
     {
@@ -17,14 +17,14 @@
       "why": "SW et install touchés souvent ; risque de cache oublié",
       "effort": "S",
       "related": null,
-      "heat": 96,
+      "heat": 102,
       "files": [
         "assets/news-images/manifest.json",
         "sw.js",
         "sports/sw.js",
         "pomo/sw.js",
-        "solitaire/sw.js",
-        "offline.html"
+        "offline.html",
+        "solitaire/sw.js"
       ]
     },
     {
@@ -49,14 +49,25 @@
       "why": "Beaucoup de scripts touchés — opportunité de factoriser",
       "effort": "M",
       "related": "D1",
-      "heat": 32.4,
+      "heat": 37.2,
       "files": [
-        "scripts/seo-pages-lib.js",
         "tests/static-integrity.mjs",
+        "scripts/seo-pages-lib.js",
         "tests/pomo-first-paint.spec.mjs",
         "tests/masthead-sports-fit.spec.mjs",
         "tests/install-chrome-visual.spec.mjs",
-        "scripts/bank-hard-audit-lib.js"
+        "scripts/seo-pages.js"
+      ]
+    },
+    {
+      "zone": "monolith-css",
+      "title": "Extraire CSS mât / thème (tranche style.css)",
+      "why": "style.css monolithe ; changements UI = relecture large",
+      "effort": "M",
+      "related": "D2",
+      "heat": 22.5,
+      "files": [
+        "style.css"
       ]
     },
     {
@@ -76,23 +87,12 @@
       ]
     },
     {
-      "zone": "monolith-css",
-      "title": "Extraire CSS mât / thème (tranche style.css)",
-      "why": "style.css monolithe ; changements UI = relecture large",
-      "effort": "M",
-      "related": "D2",
-      "heat": 17.5,
-      "files": [
-        "style.css"
-      ]
-    },
-    {
       "zone": "monolith-app",
       "title": "Découper / modulariser app.js (tranche)",
       "why": "Fichier monolithe touché souvent en vibe-code → re-lit cher en tokens",
       "effort": "L",
       "related": "D2",
-      "heat": 9,
+      "heat": 12,
       "files": [
         "app.js"
       ]
@@ -101,63 +101,63 @@
   "topFiles": [
     {
       "file": "en/newspapers/exil/index.html",
-      "n": 22
+      "n": 20
     },
     {
       "file": "en/newspapers/le-delit/index.html",
-      "n": 22
+      "n": 20
     },
     {
       "file": "en/newspapers/le-polyscope/index.html",
-      "n": 22
+      "n": 20
     },
     {
       "file": "en/newspapers/montreal-campus/index.html",
-      "n": 22
+      "n": 20
     },
     {
       "file": "en/newspapers/the-campus/index.html",
-      "n": 22
+      "n": 20
     },
     {
       "file": "en/newspapers/the-plant/index.html",
-      "n": 22
+      "n": 20
     },
     {
       "file": "journaux/exil/index.html",
-      "n": 22
+      "n": 20
     },
     {
       "file": "journaux/le-delit/index.html",
-      "n": 22
+      "n": 20
     },
     {
       "file": "journaux/le-polyscope/index.html",
-      "n": 22
+      "n": 20
     },
     {
       "file": "journaux/montreal-campus/index.html",
-      "n": 22
+      "n": 20
     },
     {
       "file": "journaux/the-campus/index.html",
-      "n": 22
+      "n": 20
     },
     {
       "file": "journaux/the-plant/index.html",
-      "n": 22
+      "n": 20
     },
     {
       "file": "en/newspapers/lexemplaire/index.html",
-      "n": 21
+      "n": 19
     },
     {
       "file": "journaux/lexemplaire/index.html",
-      "n": 21
+      "n": 19
     },
     {
-      "file": "radios/cism/index.html",
-      "n": 20
+      "file": "en/newspapers/la-pige/index.html",
+      "n": 18
     }
   ]
 }
