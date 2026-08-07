@@ -3042,6 +3042,8 @@ function paintSportsChip(slide, animate = false) {
   }
 
   const team = slide.team;
+  // Sigle RSEQ (THE, SL, OUT…) : rendu `notranslate` / translate="no" plus bas —
+  // un moteur MT y voit des mots (« THE » → « LE », « OUT » → « DEHORS »).
   const code = String(team.code || 'EQ').toUpperCase().slice(0, 4);
   const sport = slide.game.sport || team.sport || '';
   const tone = slide.tone || sportsSlideTone(slide);
@@ -3082,9 +3084,9 @@ function paintSportsChip(slide, animate = false) {
       ? `${g.scoreFor}/${g.scoreAgainst}`
       : `${g.scoreFor}–${g.scoreAgainst}`;
     const prior = g.priorSeason || team.lastGamePriorSeason;
-    inner.innerHTML = `<span class="sports-chip__code">${escapeHtml(code)}</span> `
+    inner.innerHTML = `<span class="sports-chip__code notranslate" translate="no">${escapeHtml(code)}</span> `
       + `<span class="sports-chip__score">${escapeHtml(String(scoreTxt))}</span> `
-      + `<span class="sports-chip__code sports-chip__opp">${escapeHtml(opp)}</span>`
+      + `<span class="sports-chip__code sports-chip__opp notranslate" translate="no">${escapeHtml(opp)}</span>`
       + (prior ? ` <span class="sports-chip__season-meta">Saison précédente</span>` : '');
     if (prior) a.classList.add('sports-chip--prior-season');
     a.title = sportsChipTitle(slide) + (prior ? ' · Saison précédente' : '');
@@ -3094,9 +3096,9 @@ function paintSportsChip(slide, animate = false) {
     const n = slide.game;
     const opp = String(n.opponentCode || n.opponent || 'ADV').toUpperCase().slice(0, 4);
     const when = formatSportsWhen(n.date, n.time);
-    inner.innerHTML = `<span class="sports-chip__code">${escapeHtml(code)}</span> `
+    inner.innerHTML = `<span class="sports-chip__code notranslate" translate="no">${escapeHtml(code)}</span> `
       + `<span class="sports-chip__vs">vs</span> `
-      + `<span class="sports-chip__code sports-chip__opp">${escapeHtml(opp)}</span>`
+      + `<span class="sports-chip__code sports-chip__opp notranslate" translate="no">${escapeHtml(opp)}</span>`
       + (when ? ` · <span class="sports-chip__when">${escapeHtml(when)}</span>` : '');
     a.title = sportsChipTitle(slide);
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
