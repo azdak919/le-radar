@@ -1,27 +1,33 @@
 {
-  "updatedAt": "2026-08-07T16:23:35.855Z",
+  "updatedAt": "2026-08-07T17:22:16.727Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Détour",
         "source": "schedule",
         "start": "13:00",
         "end": "14:00",
         "url": "https://chyz.ca/emission/detour/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Détour",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T16:23:21.149Z"
+      "checkedAt": "2026-08-07T17:22:01.791Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +54,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T16:23:23.755Z"
+      "checkedAt": "2026-08-07T17:22:03.987Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +80,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T16:23:26.729Z"
+      "checkedAt": "2026-08-07T17:22:06.286Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Charts & Crafts",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/charts-and-crafts"
-      },
-      "next": {
         "title": "the castle",
         "source": "schedule",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/the-castle"
       },
+      "next": {
+        "title": "Spiral Bound",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/spiral-bound"
+      },
       "track": "",
-      "showTitle": "Charts & Crafts",
+      "showTitle": "the castle",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T16:23:28.694Z"
+      "checkedAt": "2026-08-07T17:22:07.584Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,18 +132,12 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T16:23:29.379Z"
+      "checkedAt": "2026-08-07T17:22:08.072Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Opération beurre de cinoche",
-        "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "slug": "box-sophisme"
-      },
+      "current": null,
       "next": {
         "title": "Histoire de passer le temps",
         "source": "api-live",
@@ -145,8 +145,8 @@
         "end": "17:00",
         "slug": "histoire-de-passer-le-temps"
       },
-      "track": "ID - laraw",
-      "showTitle": "Opération beurre de cinoche",
+      "track": "Wheobe - Láska",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -156,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-07T16:23:35.503Z"
+      "checkedAt": "2026-08-07T17:22:16.375Z"
     }
   }
 }
