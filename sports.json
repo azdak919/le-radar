@@ -1,11 +1,11 @@
 {
-  "updated": "2026-08-06T13:08:12.068Z",
-  "fetchedAt": "2026-08-06T13:08:12.068Z",
+  "updated": "2026-08-07T00:58:51.394Z",
+  "fetchedAt": "2026-08-07T00:58:51.394Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-08-06T13:08:12.068Z"
+    "referenceDate": "2026-08-07T00:58:51.394Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 789,
@@ -13651,19 +13651,6 @@
           "opponentRegistryId": "saint-hyacinthe"
         },
         {
-          "date": "2026-11-06",
-          "time": "21:00",
-          "opponent": "Sherbrooke",
-          "opponentCode": "SHE",
-          "home": true,
-          "sport": "basketball",
-          "competition": "Basketball collégial masculin D2",
-          "gameId": "9eaf0449-dd27-4898-839d-84538d8163da",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9eaf0449-dd27-4898-839d-84538d8163da",
-          "opponentFullName": "Cégep de Sherbrooke",
-          "opponentRegistryId": "cegep-sherbrooke"
-        },
-        {
           "date": "2026-11-13",
           "time": "19:00",
           "opponent": "Séminaire de Sherbrooke",
@@ -13906,6 +13893,19 @@
           "opponentRegistryId": "granby"
         },
         {
+          "date": "2026-11-06",
+          "time": "21:00",
+          "opponent": "Sherbrooke",
+          "opponentCode": "SHE",
+          "home": true,
+          "sport": "basketball",
+          "competition": "Basketball collégial masculin D2",
+          "gameId": "9eaf0449-dd27-4898-839d-84538d8163da",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9eaf0449-dd27-4898-839d-84538d8163da",
+          "opponentFullName": "Cégep de Sherbrooke",
+          "opponentRegistryId": "cegep-sherbrooke"
+        },
+        {
           "date": "2026-11-13",
           "time": "19:00",
           "opponent": "Ch.-Lennoxville",
@@ -14030,15 +14030,15 @@
         {
           "date": "2026-11-06",
           "time": "21:00",
-          "opponent": "Ch.-Lennoxville",
-          "opponentCode": "LEN",
+          "opponent": "Séminaire de Sherbrooke",
+          "opponentCode": "SSH",
           "home": false,
           "sport": "basketball",
           "competition": "Basketball collégial masculin D2",
           "gameId": "9eaf0449-dd27-4898-839d-84538d8163da",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9eaf0449-dd27-4898-839d-84538d8163da",
-          "opponentFullName": "Champlain College Lennoxville",
-          "opponentRegistryId": "champlain-lennoxville"
+          "opponentFullName": "Séminaire de Sherbrooke",
+          "opponentRegistryId": "seminaire-de-sherbrooke"
         },
         {
           "date": "2026-11-13",
