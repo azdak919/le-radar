@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-07T09:31:06.584Z",
+  "updatedAt": "2026-08-07T10:49:56.472Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T09:30:57.444Z"
+      "checkedAt": "2026-08-07T10:49:39.861Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T09:30:59.429Z"
+      "checkedAt": "2026-08-07T10:49:42.379Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T09:31:01.983Z"
+      "checkedAt": "2026-08-07T10:49:45.369Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Wake up Folks!",
         "source": "schedule",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/wake-up-folks"
       },
+      "next": {
+        "title": "CJLO News Hour",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/cjlo-news-hour"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Wake up Folks!",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T09:31:03.371Z"
+      "checkedAt": "2026-08-07T10:49:46.926Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T09:31:03.918Z"
+      "checkedAt": "2026-08-07T10:49:47.674Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "By Storm - Grapefruit",
+      "track": "Surprise - Seule au monde",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-07T09:31:06.234Z"
+      "checkedAt": "2026-08-07T10:49:56.121Z"
     }
   }
 }
