@@ -1,23 +1,14 @@
 {
-  "updated": "2026-08-07T10:28:09.069Z",
+  "updated": "2026-08-07T11:48:47.125Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 7,
+  "incomplete": 6,
   "withLeadExcerpt": 78,
-  "candidates": 7,
+  "candidates": 6,
   "enriched": 1,
-  "failed": 1,
+  "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Les femmes MAGA au service du patriarcat",
-      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
-      "ok": true,
-      "score": 100,
-      "chars": 393,
-      "sample": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer ",
-      "changed": true
-    },
     {
       "title": "Review: Sullivan Fortner Solo at Gesú Concert Hall",
       "link": "https://www.mcgilldaily.com/2026/07/review-sullivan-fortner-solo-at-gesu-concert-hall/",
@@ -62,6 +53,15 @@
       "chars": 177,
       "sample": "This history, and much more, is featured in the exhibition. Bellemare was able to gather never-befor",
       "changed": false
+    },
+    {
+      "title": "Les avantages du transport en commun",
+      "link": "https://lecollectif.ca/a-la-une/les-avantages-du-transport-en-commun/",
+      "ok": true,
+      "score": 76,
+      "chars": 400,
+      "sample": "Le transport en commun représente une solution importante pour réduire la pollution causée par les d",
+      "changed": true
     }
   ]
 }
