@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-07T10:49:56.472Z",
+  "updatedAt": "2026-08-07T11:43:09.356Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T10:49:39.861Z"
+      "checkedAt": "2026-08-07T11:42:57.156Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
-        "source": "schedule",
-        "start": "05:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
-      },
-      "next": {
         "title": "Toute est dans toute",
         "source": "schedule",
         "start": "07:00",
         "end": "08:00",
         "url": "https://cism893.ca/emissions/tout-est-dans-toute"
       },
+      "next": {
+        "title": "As-tu vu?",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/lart-en-ondes"
+      },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Toute est dans toute",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T10:49:42.379Z"
+      "checkedAt": "2026-08-07T11:42:59.625Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "G-Flex Survivor's Corner",
-        "source": "api-live",
-        "start": "04:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Morning Detour",
         "source": "api-live",
         "start": "07:00",
         "end": "09:00"
       },
-      "track": "G-Flex Survivor",
-      "showTitle": "G-Flex Survivor's Corner",
+      "next": {
+        "title": "Jazz Amuck",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "11:00"
+      },
+      "track": "",
+      "showTitle": "Morning Detour",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T10:49:45.369Z"
+      "checkedAt": "2026-08-07T11:43:03.416Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,32 +101,32 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T10:49:46.926Z"
+      "checkedAt": "2026-08-07T11:43:05.204Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Folkswagen",
         "source": "schedule",
         "start": "07:00",
         "end": "08:00"
       },
+      "next": {
+        "title": "Palmarès CFAK",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00"
+      },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Folkswagen",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T10:49:47.674Z"
+      "checkedAt": "2026-08-07T11:43:05.868Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Surprise - Seule au monde",
+      "track": "Jules - Karma",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-07T10:49:56.121Z"
+      "checkedAt": "2026-08-07T11:43:09.005Z"
     }
   }
 }
