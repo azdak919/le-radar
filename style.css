@@ -5605,11 +5605,47 @@ body.external-listen-open {
  * d'état — on consomme les insets (env() = 0 hors PWA / sans encoche).
  * Déclaré en fin de feuille pour l'emporter sur les shorthands padding.
  */
-.masthead-inner {
-  padding-top: calc(12px + env(safe-area-inset-top, 0px));
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
 }
-.tuner {
-  padding-top: env(safe-area-inset-top, 0px);
+.masthead-inner {
+  padding-top: calc(12px + var(--safe-top));
+}
+/*
+ * Synthé collant + encoche (app installée, plein écran iOS) : la zone de la
+ * barre d'état ne doit rester réservée QUE lorsque la barre radio est épinglée
+ * en haut de l'écran. En simple `padding-top: env(safe-area-inset-top)` sur
+ * `.tuner`, elle l'était AUSSI au repos, alors que le mât vient déjà de
+ * consommer l'encoche juste au-dessus — d'où une bande noire morte de la
+ * hauteur de l'encoche (~47 px) entre la photo et les commandes, visible dès le
+ * premier écran (bug Safari iOS, 2026-08-07).
+ *
+ * À la place, deux pièces :
+ *   1. le synthé s'ancre sous l'encoche (`top`) — sans effet tant qu'il n'est
+ *      pas épinglé, donc aucune bande au repos ;
+ *   2. une coiffe collante (injectée par app.js, cf. .tuner-safe-cap) occupe la
+ *      bande de la barre d'état. Elle ne prend aucune place dans le flux (marge
+ *      négative) : au repos elle se range derrière le synthé, et pendant le
+ *      collage elle comble exactement l'espace laissé libre au-dessus de lui.
+ * Rien ne saute au collage : les commandes restent à la même ordonnée avant et
+ * après épinglage. Hors app installée / hors encoche, env() vaut 0 px : les
+ * deux règles mesurent zéro.
+ */
+html.has-tuner-safe-cap .tuner {
+  top: var(--safe-top);
+}
+.tuner-safe-cap {
+  position: sticky;
+  top: 0;
+  z-index: 99; /* juste sous le synthé (z-index 100) */
+  height: var(--safe-top);
+  /* Aucune place dans le flux : la barre reste collée au mât. */
+  margin-bottom: calc(-1 * var(--safe-top));
+  /* Inset haut non nul = téléphone en portrait, donc le fond plat mobile
+     (au-dessus de 720 px le synthé prend une teinte de session, mais l'encoche
+     y vaut toujours 0 : la coiffe n'y a pas de hauteur). */
+  background: var(--tuner-bg);
+  pointer-events: none;
 }
 .masthead-inner,
 .tuner-inner,
