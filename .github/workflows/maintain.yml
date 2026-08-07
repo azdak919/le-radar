@@ -27,6 +27,26 @@ jobs:
         with:
           node-version: '20'
 
+      # Passes visuelles des banques photo (saisons, visages). Sans elles le
+      # pipeline tourne quand même : les scripts Python sortent en 2 et les
+      # portes Node lisent les annotations déjà persistées. On les installe pour
+      # que le bot annote les NOUVELLES photos, sinon un visage n'est jamais
+      # mesuré avant d'atterrir en banque.
+      - name: Setup Python (analyse d'image des banques)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install image deps
+        # OpenCV 5 a retiré les cascades de Haar (cv2.CascadeClassifier) :
+        # la borne majeure est fonctionnelle, pas cosmétique.
+        run: pip install --quiet "opencv-python-headless<5" Pillow
+        continue-on-error: true
+
+      - name: Detect faces in photo banks
+        run: node scripts/detect-photo-faces.js --update --sync
+        continue-on-error: true
+
       - name: Run full maintenance pipeline
         id: pipeline
         run: node scripts/maintain.js --update
