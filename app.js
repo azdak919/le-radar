@@ -254,6 +254,19 @@ const IS_TUNER_EMBED = document.documentElement.dataset.embed === 'tuner';
 const APP_BASE_URL = new URL('.', document.currentScript?.src || location.href);
 const appAsset = (path) => new URL(path, APP_BASE_URL).href;
 const TUNER          = document.getElementById('tuner');
+/*
+ * Coiffe « zone sûre » du synthé (app installée iOS) — la mécanique et le
+ * pourquoi sont dans style.css (.tuner-safe-cap). Purement décorative : on
+ * l'injecte ici plutôt que de l'écrire dans le mât de chaque page générée.
+ * Sans JS, la classe reste absente : la barre garde son ancrage `top: 0`.
+ */
+if (TUNER && !IS_TUNER_EMBED && !document.querySelector('.tuner-safe-cap')) {
+  const safeCap = document.createElement('div');
+  safeCap.className = 'tuner-safe-cap';
+  safeCap.setAttribute('aria-hidden', 'true');
+  TUNER.before(safeCap);
+  document.documentElement.classList.add('has-tuner-safe-cap');
+}
 const TUNER_SELECT   = document.getElementById('tuner-select');
 const TUNER_PREV     = document.getElementById('tuner-prev');
 const TUNER_NEXT     = document.getElementById('tuner-next');
