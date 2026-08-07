@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-08-07T15:43:31.121Z",
+  "generatedAt": "2026-08-07T21:07:47.493Z",
   "since": "36h",
   "sinceGit": "36 hours ago",
   "intense": true,
   "intensity": {
-    "score": 489.2,
+    "score": 398.8,
     "level": "heavy",
-    "files": 241,
-    "touches": 1700,
-    "commitCount": 84
+    "files": 184,
+    "touches": 1146,
+    "commitCount": 73
   },
   "candidates": [
     {
@@ -17,30 +17,13 @@
       "why": "SW et install touchés souvent ; risque de cache oublié",
       "effort": "S",
       "related": null,
-      "heat": 108,
+      "heat": 64,
       "files": [
         "assets/news-images/manifest.json",
         "sw.js",
         "sports/sw.js",
         "pomo/sw.js",
-        "offline.html",
-        "solitaire/sw.js"
-      ]
-    },
-    {
-      "zone": "bots-ci",
-      "title": "Bots / CI / scripts de maintenance",
-      "why": "Beaucoup de scripts touchés — opportunité de factoriser",
-      "effort": "M",
-      "related": "D1",
-      "heat": 38.4,
-      "files": [
-        "tests/static-integrity.mjs",
-        "scripts/seo-pages-lib.js",
-        "tests/pomo-first-paint.spec.mjs",
-        "tests/masthead-sports-fit.spec.mjs",
-        "tests/install-chrome-visual.spec.mjs",
-        "tests/scroll-anchoring.spec.mjs"
+        "offline.html"
       ]
     },
     {
@@ -60,30 +43,19 @@
       ]
     },
     {
-      "zone": "monolith-css",
-      "title": "Extraire CSS mât / thème (tranche style.css)",
-      "why": "style.css monolithe ; changements UI = relecture large",
+      "zone": "bots-ci",
+      "title": "Bots / CI / scripts de maintenance",
+      "why": "Beaucoup de scripts touchés — opportunité de factoriser",
       "effort": "M",
-      "related": "D2",
-      "heat": 25,
+      "related": "D1",
+      "heat": 22.8,
       "files": [
-        "style.css"
-      ]
-    },
-    {
-      "zone": "pomo",
-      "title": "Isolation / qualité mini-app Pomo",
-      "why": "Activité concentrée sur /pomo/",
-      "effort": "S",
-      "related": null,
-      "heat": 21,
-      "files": [
-        "pomo/sw.js",
-        "pomo/index.html",
-        "pomo/styles/base.css",
-        "pomo/js/layout-boot.js",
-        "pomo/js/layout.js",
-        "pomo/styles/layout.css"
+        "tests/tuner-safe-area.spec.mjs",
+        "tests/scroll-anchoring.spec.mjs",
+        "scripts/seo-pages.js",
+        "tests/static-integrity.mjs",
+        "tests/magazine-mid.spec.mjs",
+        ".github/workflows/maintain.yml"
       ]
     },
     {
@@ -96,68 +68,92 @@
       "files": [
         "app.js"
       ]
+    },
+    {
+      "zone": "monolith-css",
+      "title": "Extraire CSS mât / thème (tranche style.css)",
+      "why": "style.css monolithe ; changements UI = relecture large",
+      "effort": "M",
+      "related": "D2",
+      "heat": 10,
+      "files": [
+        "style.css"
+      ]
+    },
+    {
+      "zone": "docs-agents",
+      "title": "Playbook / ledger agents (méta)",
+      "why": "Travail sur le système d’agents lui-même",
+      "effort": "S",
+      "related": null,
+      "heat": 4.8,
+      "files": [
+        ".agents-harvest.json",
+        "AGENTS.md",
+        "docs/agent-playbook.md"
+      ]
     }
   ],
   "topFiles": [
     {
+      "file": "news-archive.json",
+      "n": 18
+    },
+    {
+      "file": "assets/news-images/manifest.json",
+      "n": 16
+    },
+    {
       "file": "en/newspapers/exil/index.html",
-      "n": 21
+      "n": 16
     },
     {
       "file": "en/newspapers/le-delit/index.html",
-      "n": 21
+      "n": 16
     },
     {
       "file": "en/newspapers/le-polyscope/index.html",
-      "n": 21
+      "n": 16
     },
     {
       "file": "en/newspapers/montreal-campus/index.html",
-      "n": 21
+      "n": 16
     },
     {
       "file": "en/newspapers/the-campus/index.html",
-      "n": 21
+      "n": 16
     },
     {
       "file": "en/newspapers/the-plant/index.html",
-      "n": 21
+      "n": 16
     },
     {
       "file": "journaux/exil/index.html",
-      "n": 21
+      "n": 16
     },
     {
       "file": "journaux/le-delit/index.html",
-      "n": 21
+      "n": 16
     },
     {
       "file": "journaux/le-polyscope/index.html",
-      "n": 21
+      "n": 16
     },
     {
       "file": "journaux/montreal-campus/index.html",
-      "n": 21
+      "n": 16
     },
     {
       "file": "journaux/the-campus/index.html",
-      "n": 21
+      "n": 16
     },
     {
       "file": "journaux/the-plant/index.html",
-      "n": 21
+      "n": 16
     },
     {
-      "file": "en/newspapers/la-pige/index.html",
-      "n": 20
-    },
-    {
-      "file": "en/newspapers/quartier-libre/index.html",
-      "n": 20
-    },
-    {
-      "file": "en/newspapers/zone-campus/index.html",
-      "n": 20
+      "file": "llms.txt",
+      "n": 16
     }
   ]
 }
