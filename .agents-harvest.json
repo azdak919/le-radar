@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-08-07T21:07:47.493Z",
+  "generatedAt": "2026-08-07T22:32:01.286Z",
   "since": "36h",
   "sinceGit": "36 hours ago",
   "intense": true,
   "intensity": {
-    "score": 398.8,
+    "score": 416,
     "level": "heavy",
-    "files": 184,
-    "touches": 1146,
-    "commitCount": 73
+    "files": 190,
+    "touches": 1294,
+    "commitCount": 78
   },
   "candidates": [
     {
@@ -17,7 +17,7 @@
       "why": "SW et install touchés souvent ; risque de cache oublié",
       "effort": "S",
       "related": null,
-      "heat": 64,
+      "heat": 70,
       "files": [
         "assets/news-images/manifest.json",
         "sw.js",
@@ -48,14 +48,14 @@
       "why": "Beaucoup de scripts touchés — opportunité de factoriser",
       "effort": "M",
       "related": "D1",
-      "heat": 22.8,
+      "heat": 27.6,
       "files": [
+        "scripts/radio-nowplaying-lib.js",
+        "scripts/radio-schedule-lib.js",
+        "tests/now-air-lines.spec.mjs",
+        "tests/radio-nowplaying.mjs",
         "tests/tuner-safe-area.spec.mjs",
-        "tests/scroll-anchoring.spec.mjs",
-        "scripts/seo-pages.js",
-        "tests/static-integrity.mjs",
-        "tests/magazine-mid.spec.mjs",
-        ".github/workflows/maintain.yml"
+        "tests/scroll-anchoring.spec.mjs"
       ]
     },
     {
@@ -64,7 +64,7 @@
       "why": "Fichier monolithe touché souvent en vibe-code → re-lit cher en tokens",
       "effort": "L",
       "related": "D2",
-      "heat": 12,
+      "heat": 15,
       "files": [
         "app.js"
       ]
@@ -86,7 +86,7 @@
       "why": "Travail sur le système d’agents lui-même",
       "effort": "S",
       "related": null,
-      "heat": 4.8,
+      "heat": 6.4,
       "files": [
         ".agents-harvest.json",
         "AGENTS.md",
@@ -101,59 +101,59 @@
     },
     {
       "file": "assets/news-images/manifest.json",
-      "n": 16
+      "n": 17
     },
     {
       "file": "en/newspapers/exil/index.html",
-      "n": 16
+      "n": 17
     },
     {
       "file": "en/newspapers/le-delit/index.html",
-      "n": 16
+      "n": 17
     },
     {
       "file": "en/newspapers/le-polyscope/index.html",
-      "n": 16
+      "n": 17
     },
     {
       "file": "en/newspapers/montreal-campus/index.html",
-      "n": 16
+      "n": 17
     },
     {
       "file": "en/newspapers/the-campus/index.html",
-      "n": 16
+      "n": 17
     },
     {
       "file": "en/newspapers/the-plant/index.html",
-      "n": 16
+      "n": 17
     },
     {
       "file": "journaux/exil/index.html",
-      "n": 16
+      "n": 17
     },
     {
       "file": "journaux/le-delit/index.html",
-      "n": 16
+      "n": 17
     },
     {
       "file": "journaux/le-polyscope/index.html",
-      "n": 16
+      "n": 17
     },
     {
       "file": "journaux/montreal-campus/index.html",
-      "n": 16
+      "n": 17
     },
     {
       "file": "journaux/the-campus/index.html",
-      "n": 16
+      "n": 17
     },
     {
       "file": "journaux/the-plant/index.html",
-      "n": 16
+      "n": 17
     },
     {
       "file": "llms.txt",
-      "n": 16
+      "n": 17
     }
   ]
 }
