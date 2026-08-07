@@ -3879,8 +3879,12 @@ function showUpcomingDeltaMin(radio, show) {
  */
 function resolveUpcomingShow(radio) {
   if (!radio) return null;
-  const bot = botNextShow(radio);
-  const sched = scheduleNextSlot(radio);
+  // Plancher : ce qui est en ondes pour de vrai évince ce que la grille
+  // annonçait dans le même intervalle (émission spéciale / hors programmation).
+  const airLeft = authoritativeAirLeftMin(radio);
+  let bot = botNextShow(radio);
+  if (airLeft != null && bot?.title && showUpcomingDeltaMin(radio, bot) < airLeft) bot = null;
+  const sched = scheduleNextSlot(radio, airLeft || 0);
   if (!bot?.title && !sched) return null;
   if (!bot?.title && sched) {
     return { title: sched.title, start: sched.start, end: sched.end, day: sched.day, source: 'schedule' };
@@ -4025,8 +4029,14 @@ function scheduleCurrentSlot(radio) {
   return current;
 }
 
-/** Prochaine émission planifiée (utile entre deux créneaux, ex. CHYZ l'après-midi). */
-function scheduleNextSlot(radio) {
+/**
+ * Prochaine émission planifiée (utile entre deux créneaux, ex. CHYZ l'après-midi).
+ *
+ * `minDelta` écarte les créneaux qui commencent avant une échéance : de quoi
+ * sauter ceux qu'une diffusion spéciale recouvre déjà (voir
+ * `authoritativeAirLeftMin`) et proposer le premier créneau réellement libre.
+ */
+function scheduleNextSlot(radio, minDelta = 0) {
   const grid = radio?.id ? radioSchedules.stations?.[radio.id]?.grid : null;
   if (!Array.isArray(grid) || !grid.length) return null;
   const WEEK = 7 * 1440;
@@ -4040,6 +4050,7 @@ function scheduleNextSlot(radio) {
     const startAbs = slot.day * 1440 + start;
     let delta = startAbs - nowAbs;
     if (delta <= 0) delta += WEEK;
+    if (delta < minDelta) continue;
     if (delta < bestDelta) {
       bestDelta = delta;
       best = slot;
@@ -4053,6 +4064,33 @@ function isAuthoritativeLiveShow(radio) {
   const cur = botCurrentShow(radio);
   const src = String(cur?.source || nowPlayingEntry(radio)?.source || '');
   return src === 'api-live';
+}
+
+/**
+ * Minutes restantes de l'émission en ondes quand elle fait autorité, sinon null.
+ *
+ * Une diffusion hors programmation — un match dont l'heure a bougé le jour même
+ * — recouvre des créneaux que la grille hebdo, collectée aux deux semaines,
+ * continue d'annoncer. Le site montrait ainsi « À venir · Capitales de Québec ·
+ * 18:50 » pendant que CHYZ diffusait ce même match depuis 16:50. Rien ne peut
+ * commencer avant la fin de ce qui joue : cette durée sert de plancher au
+ * « à venir ».
+ *
+ * Seule une source API l'ouvre : une grille ne se corrige pas elle-même, et un
+ * `current` déjà terminé (fenêtre dépassée) ne barre plus rien.
+ */
+function authoritativeAirLeftMin(radio) {
+  if (!isAuthoritativeLiveShow(radio)) return null;
+  const cur = botCurrentShow(radio);
+  const start = scheduleTimeToMin(cur?.start);
+  const end = scheduleTimeToMin(cur?.end);
+  if (start == null || end == null) return null;
+  const wraps = end <= start;
+  const endAbs = wraps ? end + 1440 : end;
+  const { minutes } = scheduleZonedNow();
+  const nowAbs = wraps && minutes < start ? minutes + 1440 : minutes;
+  if (nowAbs < start || nowAbs >= endAbs) return null;
+  return endAbs - nowAbs;
 }
 
 /** Créneau horaire « HH:MM – HH:MM », préfixé de « Demain »/jour si ce n'est pas aujourd'hui. */
@@ -4378,6 +4416,7 @@ window.RadarAir = {
     resolveUpcomingShow,
     scheduleNextSlot,
     scheduleCurrentSlot,
+    authoritativeAirLeftMin,
     showUpcomingDeltaMin,
     airSlotIsLive,
     airSlotIsFuture,

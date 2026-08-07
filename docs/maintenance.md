@@ -422,7 +422,7 @@ deux façons, fusionnées par `fetch-radio-schedules.js` :
    | `type` | Source | Postes |
    |---|---|---|
    | `airtime` | API Airtime/LibreTime `/api/week-info` | CKUT |
-   | `chyz` | HTML `chyz.ca/horaire` (thème maison) | CHYZ |
+   | `chyz` | HTML `chyz.ca/horaire` (thème maison, marqueur « en direct ») | CHYZ |
    | `cfak` | HTML `cfak.ca/programmation` (cartes par jour) | CFAK |
    | `jsonld` | Données structurées schema.org (`BroadcastEvent`/`Event`) | générique |
    | `spinitron` | API Spinitron `/api/shows` (jeton requis) | générique |
@@ -464,6 +464,29 @@ préservées). Il tourne en CI juste **avant** `fetch-radio-schedules.js`.
 Régénérer : `node scripts/fetch-radio-schedules.js --update`. En CI, le workflow
 `update-radio-schedules.yml` tourne **aux 2 semaines** (les horaires bougent
 rarement, inutile de solliciter les sources plus souvent).
+
+### Émissions spéciales / hors programmation
+
+Une grille hebdomadaire ne peut pas décrire un soir de match. CHYZ réécrit sa
+page **le jour même** : les *Capitales de Québec* passent de 18:50 à 16:50 et
+l'émission régulière du créneau disparaît. Une collecte vieille de quinze jours
+annonçait donc « À venir · Capitales de Québec · 18:50 » pendant que le match
+jouait depuis 16:50.
+
+Deux garde-fous, tous deux dans le circuit **aux 30 min** du now-playing :
+
+- **Marqueur `en direct`** — `chyz.ca/horaire` marque le bloc réellement à
+  l'antenne. L'adaptateur `chyz-horaire` (`radio-nowplaying-lib.js`) le lit à
+  chaque passe et le publie en `api-live`, avec le reste de la grille du jour
+  tel qu'il est *maintenant*. Le marqueur n'est suivi que s'il couvre encore
+  l'instant présent (la page peut sortir d'un cache), et le bloc absent de la
+  grille publiée est marqué `"special": true` dans `radio-nowplaying.json`.
+- **Veto du direct** — rien ne peut commencer avant la fin de ce qui joue.
+  Un `current` qui fait autorité (source API) écarte tout « à venir » qu'il
+  recouvre, côté bot (`mergeOnAirResults`) comme côté site
+  (`authoritativeAirLeftMin` dans `app.js`, qui tient entre deux passes du
+  bot). Une grille, elle, n'obtient jamais ce droit de veto : elle ne peut pas
+  se corriger elle-même.
 
 ---
 

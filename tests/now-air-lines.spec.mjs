@@ -50,8 +50,16 @@ test('« À venir » : grille la plus tôt + pas de current recyclé (toutes sta
 
     const stations = radios.map((r) => {
       const live = P.botCurrentShow(r) || P.scheduleCurrentSlot(r);
-      const botNext = P.botNextShow(r);
-      const schedNext = P.scheduleNextSlot(r);
+      // Référence : la première suite que l'émission en ondes ne recouvre pas.
+      // Un soir de match, CHYZ diffuse hors programmation et la grille
+      // colligée annonce encore des créneaux déjà évincés — les comparer au
+      // « à venir » réel n'aurait aucun sens.
+      const airLeft = P.authoritativeAirLeftMin(r) || 0;
+      const rawBotNext = P.botNextShow(r);
+      const botNext = rawBotNext && P.showUpcomingDeltaMin(r, rawBotNext) < airLeft
+        ? null
+        : rawBotNext;
+      const schedNext = P.scheduleNextSlot(r, airLeft);
       const resolved = P.resolveUpcomingShow(r);
       const phases = P.airRotationPhases(r, { withSlogan: false });
       const upcomingPhases = phases.filter((p) => p.kind === 'upcoming');
@@ -189,7 +197,12 @@ test('« À venir » reste visible pendant qu’une émission est en ondes', asy
     const norm = (s) => String(s || '').toLowerCase().replace(/\s+/g, ' ').trim();
     return radios.map((r) => {
       const live = P.botCurrentShow(r) || P.scheduleCurrentSlot(r);
-      const nextTitles = [P.scheduleNextSlot(r)?.title, P.botNextShow(r)?.title, P.resolveUpcomingShow(r)?.title]
+      const airLeft = P.authoritativeAirLeftMin(r) || 0;
+      const nextTitles = [
+        P.scheduleNextSlot(r, airLeft)?.title,
+        P.botNextShow(r)?.title,
+        P.resolveUpcomingShow(r)?.title,
+      ]
         .filter(Boolean)
         .map(norm);
       return {

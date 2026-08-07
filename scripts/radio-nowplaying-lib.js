@@ -16,6 +16,7 @@
  *   - choq-episodes GraphQL épisodes du jour     → current + next (horaires QC)
  *   - triton-np    Triton Now Playing (CORS *)   → piste, re-poll navigateur
  *   - airtime-live LibreTime/Airtime live-info   → currentShow + nextShow
+ *   - chyz-horaire chyz.ca/horaire « en direct »  → current + next (spéciaux inclus)
  *   - icy          StreamTitle ICY               → piste / repli titre (CHOQ = piste only)
  *   - schedule     résolu hors adaptateur (grille colligée)
  *
@@ -27,6 +28,9 @@ const https = require('https');
 const http = require('http');
 const {
   DEFAULT_TZ,
+  WEEK_MIN,
+  fetchText,
+  parseChyzGrid,
   resolveCurrentSlot,
   resolveNextSlot,
   hhmm,
@@ -164,6 +168,7 @@ function makeShow({
   source = '',
   url = '',
   slug = '',
+  special = false,
 } = {}) {
   const t = normalizeShowTitle(title);
   if (!t || isJunkShowTitle(t)) return null;
@@ -174,6 +179,8 @@ function makeShow({
   if (end) out.end = String(end);
   if (url) out.url = String(url);
   if (slug) out.slug = String(slug);
+  // Diffusion absente de la grille publiée (match, spécial, remplacement).
+  if (special) out.special = true;
   return out;
 }
 
@@ -774,6 +781,103 @@ async function adaptIcy(src = {}, radio = {}) {
   };
 }
 
+/**
+ * Tolérance autour du bloc marqué « en direct » par CHYZ.
+ *
+ * La page peut être servie de cache : on ne suit son marqueur que s'il décrit
+ * encore l'instant présent. La grâce absorbe une transition d'émission et un
+ * cache de quelques minutes, pas une page vieille d'un jour.
+ */
+const CHYZ_LIVE_GRACE_MIN = 20;
+
+/** true si le créneau (jour + HH:MM) couvre `date`, à `graceMin` près. */
+function slotCoversDate(slot, date, timeZone = DEFAULT_TZ, graceMin = 0) {
+  const start = timeToMinutes(slot?.start);
+  const end = timeToMinutes(slot?.end);
+  const day = Number(slot?.day);
+  if (start == null || end == null || !Number.isInteger(day)) return false;
+  const { day: nowDay, minutes } = zonedNow(date, timeZone);
+  const nowAbs = nowDay * 1440 + minutes;
+  const startAbs = day * 1440 + start - graceMin;
+  const endAbs = day * 1440 + (end <= start ? end + 1440 : end) + graceMin;
+  return (nowAbs >= startAbs && nowAbs < endAbs)
+    || (nowAbs + WEEK_MIN >= startAbs && nowAbs + WEEK_MIN < endAbs);
+}
+
+/**
+ * Le créneau figure-t-il tel quel dans la grille hebdo publiée ?
+ * Sans grille connue, on ne conclut rien : mieux vaut ne pas crier au spécial.
+ */
+function scheduleHasSlot(schedules, radioId, slot) {
+  const grid = schedules?.stations?.[radioId]?.grid;
+  if (!Array.isArray(grid) || !grid.length) return true;
+  return grid.some((s) => Number(s.day) === Number(slot.day)
+    && s.start === slot.start
+    && normKey(s.title) === normKey(slot.title));
+}
+
+/**
+ * CHYZ — marqueur « en direct » de chyz.ca/horaire.
+ *
+ * Une grille hebdomadaire ne peut pas décrire un soir de match : CHYZ réécrit
+ * sa page le jour même (les Capitales de Québec passent de 18:50 à 16:50, et
+ * l'émission régulière du créneau disparaît), alors que notre collecte de
+ * grille, elle, a jusqu'à deux semaines. La page, elle, marque toujours le
+ * bloc réellement à l'antenne — c'est cette marque qu'on lit ici aux 30
+ * minutes, avec le reste de la grille du jour tel qu'il est *maintenant*.
+ *
+ * Le `next` est cherché **après la fin** du bloc en ondes, jamais après
+ * l'heure courante : rien ne commence pendant qu'un match joue, et c'est
+ * précisément ce que la grille périmée prétendait (« À venir · Capitales de
+ * Québec · 18:50 » pendant que le match était en ondes depuis 16:50).
+ */
+async function adaptChyzHoraire(src = {}, radio = {}, ctx = {}) {
+  const url = src.url || 'https://chyz.ca/horaire/';
+  const timeZone = ctx.timeZone || DEFAULT_TZ;
+  const now = ctx.now instanceof Date ? ctx.now : new Date();
+  const grid = parseChyzGrid(await fetchText(url, { timeoutMs: DEFAULT_TIMEOUT }));
+  if (!grid.length) return null;
+
+  const marked = grid.find((slot) => slot.live);
+  if (!marked || !slotCoversDate(marked, now, timeZone, CHYZ_LIVE_GRACE_MIN)) return null;
+
+  const current = makeShow({
+    title: marked.title,
+    start: marked.start,
+    end: marked.end,
+    source: 'api-live',
+    url: marked.url || '',
+    special: !scheduleHasSlot(ctx.schedules, radio.id, marked),
+  });
+  if (!current) return null;
+
+  const start = timeToMinutes(marked.start);
+  const end = timeToMinutes(marked.end);
+  const { day: nowDay, minutes } = zonedNow(now, timeZone);
+  const nowAbs = nowDay * 1440 + minutes;
+  let endAbs = marked.day * 1440 + (end <= start ? end + 1440 : end);
+  while (endAbs <= nowAbs) endAbs += WEEK_MIN;
+  // Une minute avant la fin : un créneau qui enchaîne pile à cette heure-là
+  // reste « à venir » plutôt que de retomber à la semaine suivante.
+  const afterLive = new Date(now.getTime() + (endAbs - nowAbs - 1) * 60_000);
+  const nextSlot = resolveNextSlot(grid, afterLive, timeZone);
+
+  return {
+    current,
+    next: nextSlot
+      ? makeShow({
+        title: nextSlot.title,
+        start: nextSlot.start,
+        end: nextSlot.end,
+        source: 'api-live',
+        url: nextSlot.url || '',
+      })
+      : null,
+    cors: false,
+    endpoint: url,
+  };
+}
+
 const LIVE_ADAPTERS = {
   'cism-v1': adaptCismV1,
   cism: adaptCismV1,
@@ -788,6 +892,7 @@ const LIVE_ADAPTERS = {
   triton: adaptTritonNowPlaying,
   'airtime-live': adaptAirtimeLive,
   airtime: adaptAirtimeLive,
+  'chyz-horaire': adaptChyzHoraire,
   icy: adaptIcy,
   stream: adaptIcy,
 };
@@ -833,6 +938,13 @@ function inferNowPlayingSources(radio = {}) {
     for (const s of radio._nowPlayingSources) {
       if (s && s.type) push({ ...s });
     }
+  }
+
+  // CHYZ : le marqueur « en direct » de la page horaire est la seule source qui
+  // voie les soirs de match (grille réécrite le jour même). Poussé d'office :
+  // sans lui la station n'a que l'ICY, qui annonce « No Name ».
+  if (radio.id === 'chyz' || /(^|\.)chyz\.ca/i.test(String(radio.website || ''))) {
+    push({ type: 'chyz-horaire', url: 'https://chyz.ca/horaire/' });
   }
 
   // CHOQ : toujours tenter émissions GraphQL + Triton (piste CORS) si absents
@@ -920,6 +1032,25 @@ function startDeltaFromNow(show, nowMinutes) {
   return delta;
 }
 
+/**
+ * Minutes restantes d'une émission **réellement** en ondes, sinon null.
+ *
+ * Sans jour de grille sur les payloads API, on raisonne sur l'horloge seule :
+ * une plage qui traverse minuit compte l'heure courante du bon côté. Un
+ * `current` périmé (CISM annonce encore Mix anglo 22:00–00:00 à 00:06) ne
+ * décrit plus l'antenne et ne doit donc rien empêcher.
+ */
+function liveEndDeltaMin(show, nowMinutes) {
+  const start = timeToMinutes(show?.start);
+  const end = timeToMinutes(show?.end);
+  if (start == null || end == null) return null;
+  const wraps = end <= start;
+  const endAbs = wraps ? end + 1440 : end;
+  const nowAbs = wraps && nowMinutes < start ? nowMinutes + 1440 : nowMinutes;
+  if (nowAbs < start || nowAbs >= endAbs) return null;
+  return endAbs - nowAbs;
+}
+
 /** Le « next » le plus tôt gagne ; à égalité, le rang de source (api > grille). */
 function pickSoonerNext(currentNext, candidate, nowMinutes) {
   if (!candidate?.title) return currentNext;
@@ -984,9 +1115,26 @@ function mergeOnAirResults(hits, scheduleHit, radio, { timeZone = DEFAULT_TZ, no
     }
   }
 
+  // Rien ne peut commencer avant la fin de ce qui joue. Une grille périmée,
+  // elle, l'affirme : « À venir · Capitales de Québec · 18:50 » alors que CHYZ
+  // diffusait le match depuis 16:50, l'émission régulière du créneau ayant été
+  // évincée le jour même. Seul un `current` qui fait autorité (API station)
+  // obtient ce droit de veto — une grille ne se corrige pas elle-même.
+  const liveLeft = current?.source === 'api-live' ? liveEndDeltaMin(current, nowMinutes) : null;
+  const preempted = (cand) => liveLeft != null
+    && (!cand?.title || startDeltaFromNow(cand, nowMinutes) < liveLeft);
+  if (liveLeft != null) {
+    const candidates = [next, ...hits.map((h) => h?.next), scheduleHit?.next].filter(
+      (c) => c?.title && !preempted(c),
+    );
+    next = candidates.reduce((best, c) => pickSoonerNext(best, c, nowMinutes), null);
+  }
+
   // Éviter next === current
   if (current && next && normKey(current.title) === normKey(next.title)) {
-    next = (scheduleHit?.next && normKey(scheduleHit.next.title) !== normKey(current.title))
+    next = (scheduleHit?.next
+      && normKey(scheduleHit.next.title) !== normKey(current.title)
+      && !preempted(scheduleHit.next))
       ? scheduleHit.next
       : null;
   }
@@ -1034,7 +1182,9 @@ async function probeStationOnAir(radio = {}, {
   timeZone = DEFAULT_TZ,
 } = {}) {
   const sources = inferNowPlayingSources(radio);
-  const ctx = { timeZone };
+  // `schedules` : un adaptateur qui lit la page du jour peut ainsi dire si ce
+  // qu'il voit en ondes figure ou non dans la grille publiée (émission spéciale).
+  const ctx = { timeZone, schedules };
   const hits = [];
   let clientPoll = null;
 
@@ -1161,6 +1311,10 @@ module.exports = {
   airtimeBaseFromStream,
   inferNowPlayingSources,
   runLiveAdapter,
+  adaptChyzHoraire,
+  slotCoversDate,
+  scheduleHasSlot,
+  liveEndDeltaMin,
   mergeOnAirResults,
   scheduleToHit,
   probeStationOnAir,
