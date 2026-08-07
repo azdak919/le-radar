@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-07T06:44:42.159Z",
+  "updatedAt": "2026-08-07T07:39:55.410Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T06:44:30.687Z"
+      "checkedAt": "2026-08-07T07:39:41.190Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Franco",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
-      },
-      "next": {
         "title": "La carte cadeau (reprise)",
         "source": "schedule",
         "start": "03:00",
         "end": "05:00",
         "url": "https://cism893.ca/emissions/la-carte-cadeau"
       },
+      "next": {
+        "title": "Le Séismix",
+        "source": "schedule",
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
+      },
       "track": "",
-      "showTitle": "Mix Franco",
+      "showTitle": "La carte cadeau (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T06:44:33.000Z"
+      "checkedAt": "2026-08-07T07:39:43.079Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T06:44:36.184Z"
+      "checkedAt": "2026-08-07T07:39:45.816Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T06:44:38.146Z"
+      "checkedAt": "2026-08-07T07:39:47.133Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-07T06:44:38.652Z"
+      "checkedAt": "2026-08-07T07:39:47.575Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Zao - Hopes Of Harmony",
+      "track": "LDAW (Last Dance Among Wolves) - LDAW: Shaped by Design",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-07T06:44:41.808Z"
+      "checkedAt": "2026-08-07T07:39:55.060Z"
     }
   }
 }
