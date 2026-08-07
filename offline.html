@@ -238,7 +238,12 @@
       overflow: hidden;
       touch-action: none;
       overscroll-behavior: contain;
+      /* Safari iOS/iPadOS ignore `user-select` non préfixé : sans la version
+         -webkit-, taper pour sauter sélectionne la barre de score et fait
+         surgir les poignées de sélection par-dessus le jeu. */
       user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
       position: relative;
     }
     .game-wrap::before {
@@ -371,6 +376,9 @@
       height: auto;
       cursor: pointer;
       touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
       -webkit-tap-highlight-color: transparent;
       background:
         radial-gradient(ellipse 70% 80% at 50% 100%, rgba(0, 61, 165, 0.08), transparent 55%),

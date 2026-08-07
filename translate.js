@@ -888,7 +888,24 @@
    *    seulement hors Original / FR / EN (ex. ES : Universidad…, Colegio…)
    *  - Libellés UI (« Par », « À la une », « Toutes les sources ») → traduits
    */
-  const SKIP_CLASS_RE = /\b(?:notranslate|article-source|article-author|filter-btn__name|article-media-credit(?:__creator)?)\b/;
+  const SKIP_CLASS_RE = /\b(?:notranslate|article-source|article-author|filter-btn__name|article-media-credit(?:__creator)?|sports-(?:panel|chip)__code)\b/;
+
+  /**
+   * Sigles d'équipes sportives (THE, SL, OUT, LAF, ÉTS, UQAC…) : ce sont des
+   * codes RSEQ, pas des mots. Sans garde, un moteur MT rend « THE » par « LE »
+   * et « OUT » par « DEHORS ». Le balisage les marque désormais `notranslate`,
+   * mais une page servie depuis le cache du service worker peut être antérieure
+   * au correctif : on protège aussi côté module, par zone + forme du texte.
+   */
+  const SPORTS_ZONE_SELECTOR = '.sports-panel, .sports-chip, .masthead-sports-strip, [data-sports-board]';
+  const TEAM_CODE_RE = /^[A-ZÀ-ÖØ-Þ][A-ZÀ-ÖØ-Þ'’.-]{0,5}$/u;
+
+  function isSportsTeamCode(text = '', node = null) {
+    const t = String(text || '').replace(/\s+/g, ' ').trim();
+    if (!t || !TEAM_CODE_RE.test(t)) return false;
+    const el = node && node.nodeType === 3 ? node.parentElement : node;
+    return !!el?.closest?.(SPORTS_ZONE_SELECTOR);
+  }
 
   function hasUserPreference() {
     try {
@@ -2356,6 +2373,8 @@
         if (!includeCollapsedTail && isInCollapsedTailOverflow(node)) {
           return NodeFilter.FILTER_REJECT;
         }
+        // Sigles d'équipes sportives (THE, SL, OUT…) : jamais de MT
+        if (isSportsTeamCode(val, node)) return NodeFilter.FILTER_REJECT;
         // Noms de médias (toujours) / établissements hors pastilles sources
         if (isProtectedProperName(val, node)) return NodeFilter.FILTER_REJECT;
         let p = node.parentElement;

@@ -875,14 +875,20 @@ html[data-script-dir="rtl"] .wordmark-full {
   gap: 12px;
 }
 
+/*
+ * Pas de `container-type` ici : aucune règle `@container tuner-controls` dans
+ * cette feuille (les seules vivent dans embed.css, pour le syntoniseur
+ * embarqué). Le conteneur était donc mort — mais il appliquait quand même
+ * layout/style/size containment à l'ancêtre du popover volume
+ * (`.tuner-vol-slot`, absolu, qui déborde de la barre), seul candidat de
+ * rognage sur toute la chaîne .tuner-vol → .tuner (aucun overflow caché).
+ */
 .tuner-controls {
   display: flex;
   align-items: center;
   gap: 9px;
   flex: 1;
   min-width: 0;
-  container-type: inline-size;
-  container-name: tuner-controls;
 }
 
 .tuner-label { flex-shrink: 0; }
@@ -3296,26 +3302,27 @@ html[data-translate-busy="1"] .translate-toggle {
 .brief-rail .article--compact .article-meta {
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
+  /* L'institution est une rangée de la grille (voir plus bas) : c'est ce
+     row-gap qui la sépare de la ligne source, plus celui du __lead. */
+  row-gap: 0.12em;
   column-gap: 8px;
-  row-gap: 0;
   margin-bottom: 4px;
 }
 /*
- * En bref : source ligne 1, institution toujours ligne 2
- * (une + vedettes restent source · institution en ligne).
+ * En bref : source ligne 1, institution toujours ligne 2 — et sur toute la
+ * largeur de la carte. `display: contents` remonte source et institution au
+ * rang d'éléments de la grille : sans lui, la ligne 2 restait enfermée dans la
+ * colonne 1 (la date occupe la colonne 2), et « Cégep de Jonquière » ou
+ * « Université de Montréal » se coupaient en deux alors que la ligne était
+ * vide à leur droite.
+ * (une + vedettes restent source · institution en ligne.)
  */
 .brief-rail .article--compact .article-meta__lead {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  column-gap: 0;
-  row-gap: 0.12em;
-  min-width: 0;
-  max-width: 100%;
-  overflow: visible;
+  display: contents;
 }
 .brief-rail .article--compact .article-source {
-  flex: 0 1 auto;
+  grid-row: 1;
+  grid-column: 1;
   min-width: 0;
   gap: 5px;
   overflow: visible;
@@ -3324,8 +3331,9 @@ html[data-translate-busy="1"] .translate-toggle {
   max-width: none;
 }
 .brief-rail .article--compact .article-inst {
-  flex: 1 1 100%;
-  width: 100%;
+  grid-row: 2;
+  grid-column: 1 / -1;
+  min-width: 0;
   margin: 0;
   padding: 0;
   white-space: normal;
@@ -4783,6 +4791,12 @@ body.external-listen-open {
     align-items: start;
     column-gap: 8px;
     row-gap: 0;
+  }
+
+  /* En bref : l'institution occupe sa propre rangée de grille (pleine
+     largeur) — lui garder son interligne malgré le row-gap: 0 ci-dessus. */
+  .brief-rail .article--compact .article-meta {
+    row-gap: 0.12em;
   }
 
   .news-hero .article--lead .article-meta__lead,
