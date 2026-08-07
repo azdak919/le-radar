@@ -4659,10 +4659,16 @@ body.external-listen-open {
 }
 
 /*
- * Stack 1 col sous 900 px (focus-group midwidth-fil C).
- * 900–1099 = magazine mid ; ≥1100 = magazine bureau.
+ * Stack 1 col sous 768 px (focus-group midwidth-fil C).
+ * 768–1099 = magazine mid ; ≥1100 = magazine bureau.
+ *
+ * Le seuil était à 900 px, ce qui excluait la quasi-totalité des iPad en
+ * portrait — 768 (mini / 9,7"), 820 (Air 11"), 834 (Pro 11") : seul le
+ * Pro 12,9" (1024) atteignait le magazine mid. La tablette portrait tombait
+ * donc dans la mise en page téléphone, alors que le rail « En bref » y tient
+ * (720 px de conteneur = 440 de une + 280 de rail).
  */
-@media (max-width: 899.98px) {
+@media (max-width: 767.98px) {
   /* Crédits photo : figcaption hors du cadre image (overflow/aspect-ratio) */
   .article--lead.has-image .article-media {
     aspect-ratio: auto;
@@ -4707,8 +4713,8 @@ body.external-listen-open {
   }
 }
 
-/* Densité 600–899 (stack) : un peu moins d’air vertical. */
-@media (min-width: 600px) and (max-width: 899.98px) {
+/* Densité 600–767 (stack) : un peu moins d’air vertical. */
+@media (min-width: 600px) and (max-width: 767.98px) {
   .news-hero .article--feature,
   .brief-rail .article--compact,
   .news-tail .article--standard {
@@ -5041,10 +5047,11 @@ body.external-listen-open {
 }
 
 /*
- * Magazine mid 900–1099 (focus-group midwidth-fil C) — demi-écran / tablette paysage.
+ * Magazine mid 768–1099 (focus-group midwidth-fil C) — demi-écran, tablette
+ * paysage ET tablette portrait (iPad mini/Air/Pro 11 : 768, 820, 834).
  * Rail En bref 240–280 px ; bureau ≥1100 garde les tracks larges ci-dessous.
  */
-@media (min-width: 900px) and (max-width: 1099.98px) {
+@media (min-width: 768px) and (max-width: 1099.98px) {
   .news-list {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(240px, 280px);
