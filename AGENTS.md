@@ -448,16 +448,16 @@ variantes de noms :
 
 > Généré par `npm run agents:harvest -- --write`. **Pas des D# ouvertes.**
 > L’humain (ou l’agent avec OK) promeut une ligne en §3 si pertinent.
-> Dernière récolte : 2026-08-07T03:40:27.356Z · intensité **heavy** (score 468) · fenêtre `36h`
+> Dernière récolte : 2026-08-07T21:07:47.493Z · intensité **heavy** (score 398.8) · fenêtre `36h`
 
 | Zone | Chaleur | Effort | Suggestion | Fichiers chauds |
 |------|---------|--------|------------|-----------------|
-| pwa-sw | 102 | S | PWA / service worker / install | `assets/news-images/manifest.json`, `sw.js`, `sports/sw.js`, `pomo/sw.js`, `offline.html`, `solitaire/sw.js` |
+| pwa-sw | 64 | S | PWA / service worker / install | `assets/news-images/manifest.json`, `sw.js`, `sports/sw.js`, `pomo/sw.js`, `offline.html` |
 | banks-photo | 38 | M | Pipeline banques photo (QC / saisons / audit) | `data/quebec-backgrounds.json`, `data/quebec-favorites-backgrounds.json`, `data/quebec-nations-backgrounds.json`, `data/quebec-pomo-backgrounds.json`, `data/quebec-university-backgrounds.json`, `scripts/bank-hard-audit-lib.js` |
-| bots-ci | 37.2 | M | Bots / CI / scripts de maintenance | `tests/static-integrity.mjs`, `scripts/seo-pages-lib.js`, `tests/pomo-first-paint.spec.mjs`, `tests/masthead-sports-fit.spec.mjs`, `tests/install-chrome-visual.spec.mjs`, `scripts/seo-pages.js` |
-| monolith-css | 22.5 | M | Extraire CSS mât / thème (tranche style.css) | `style.css` |
-| pomo | 21 | S | Isolation / qualité mini-app Pomo | `pomo/sw.js`, `pomo/index.html`, `pomo/styles/base.css`, `pomo/js/layout-boot.js`, `pomo/js/layout.js`, `pomo/styles/layout.css` |
+| bots-ci | 22.8 | M | Bots / CI / scripts de maintenance | `tests/tuner-safe-area.spec.mjs`, `tests/scroll-anchoring.spec.mjs`, `scripts/seo-pages.js`, `tests/static-integrity.mjs`, `tests/magazine-mid.spec.mjs`, `.github/workflows/maintain.yml` |
 | monolith-app | 12 | L | Découper / modulariser app.js (tranche) | `app.js` |
+| monolith-css | 10 | M | Extraire CSS mât / thème (tranche style.css) | `style.css` |
+| docs-agents | 4.8 | S | Playbook / ledger agents (méta) | `.agents-harvest.json`, `AGENTS.md`, `docs/agent-playbook.md` |
 
 Pour promouvoir : ajouter une ligne D# en §3 avec effort + pourquoi, après OK humain.
 ## 4. Dettes résolues (historique)
