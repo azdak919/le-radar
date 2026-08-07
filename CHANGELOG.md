@@ -17,8 +17,11 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 - Page `/horaires/` (et `/en/schedules/`) réunissant les grilles horaires de toutes les stations, liée depuis le pied de page et depuis le fil d’Ariane des fiches radio.
 - Les fiches radio affichent désormais la grille hebdomadaire **complète** avec les plages `début – fin` ; « À l’antenne » y renvoie directement via l’ancre `#horaire`.
 
+- Détection des **émissions spéciales / hors programmation** : l’adaptateur `chyz-horaire` lit le marqueur « en direct » de `chyz.ca/horaire` aux 30 min et le publie en `api-live`, avec la grille du jour telle qu’elle est à l’instant. Un bloc absent de la grille colligée est marqué `"special": true` dans `radio-nowplaying.json`.
+
 ### Corrigé
 
+- Le site annonçait « À venir · Capitales de Québec · 18:50 » alors que CHYZ diffusait ce match depuis 16:50 : la station réécrit sa page le jour du match (heure décalée, émission régulière évincée) tandis que la grille colligée, elle, a jusqu’à deux semaines. Une émission en ondes qui fait autorité écarte désormais tout « à venir » qu’elle recouvre — rien ne peut commencer avant la fin de ce qui joue —, côté bot comme côté site entre deux passes.
 - Ligne du bas du syntoniseur sur mobile : l’alternance slogan ↔ antenne et la bascule des phases CHOQ tournaient sur deux horloges concurrentes (14–18 s contre 8 s fixes), ce qui faisait changer le texte en cours de lecture. Une seule horloge pilote maintenant les deux.
 - Le titre de l’émission n’est plus répété entre les deux phases CHOQ ni entre le titre et le sous-titre d’une même ligne.
 - Les entités HTML servies par les APIs des stations sont décodées (« Utopia&#039;s Paradise » → « Utopia's Paradise »).

@@ -503,7 +503,20 @@ function pad2(n) {
   return String(n).padStart(2, '0');
 }
 
-/** CHYZ (chyz.ca/horaire) : blocs <a.article-horaire data-jour-slug> avec heures + <h3>. */
+/**
+ * Marqueur « en direct » que chyz.ca pose sur le bloc réellement à l'antenne.
+ *
+ * C'est la seule source qui dit la vérité les soirs de match : la station
+ * réécrit sa page le jour même (heure du premier lancer, émission régulière
+ * évincée), alors que notre grille hebdo, elle, date de la dernière collecte.
+ */
+const CHYZ_LIVE_RE = /<span[^>]*>\s*en\s+direct\s*<\/span>/i;
+
+/**
+ * CHYZ (chyz.ca/horaire) : blocs <a.article-horaire data-jour-slug> avec heures + <h3>.
+ * Le bloc marqué « en direct » porte `live: true` — champ transitoire, écarté
+ * par normalizeSlot() donc jamais publié dans radio-schedules.json.
+ */
 function parseChyzGrid(htmlText) {
   const grid = [];
   const re = /<a[^>]*class="[^"]*article-horaire[^"]*"[^>]*>([\s\S]*?)<\/a>/gi;
@@ -527,6 +540,7 @@ function parseChyzGrid(htmlText) {
     };
     const href = /href="([^"]+)"/i.exec(openTag)?.[1]?.trim();
     if (href) slot.url = href;
+    if (CHYZ_LIVE_RE.test(body)) slot.live = true;
     grid.push(slot);
   }
   return grid;
