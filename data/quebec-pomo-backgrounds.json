@@ -4,7 +4,7 @@
   "maxBank": 200,
   "lastSessionCleanup": "2026-05-01",
   "lastSessionId": "ete",
-  "updated": "2026-07-30T23:01:15.967Z",
+  "updated": "2026-08-06T20:50:47.987Z",
   "photos": [
     {
       "id": "d5015ac59ded",
@@ -29,7 +29,10 @@
         "kw_ete",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.475Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.475Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "124c98841ba5",
@@ -54,7 +57,10 @@
         "date_filename:07",
         "date_only"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.475Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.475Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "71eea9bd6671",
@@ -79,7 +85,10 @@
         "kw_ete",
         "visual_disagrees_kept_text"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.475Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.475Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "29fc08458149",
@@ -106,7 +115,10 @@
         "date_agrees",
         "visual_disagrees_kept_text"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.475Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.475Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "0ac4bfde9da4",
@@ -130,7 +142,10 @@
       "seasonReasons": [
         "kw_printemps"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.475Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.475Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "40ffd67a8c0f",
@@ -148,9 +163,16 @@
       "addedAt": "2026-07-30T22:29:17.198Z",
       "sessionId": "ete",
       "bank": "pomo",
-      "season": "ete",
-      "seasonConfidence": 0.3,
-      "seasonSource": "sessionId-fallback"
+      "season": "hiver",
+      "seasonConfidence": 1,
+      "seasonSource": "manual",
+      "seasonReasons": [
+        "human_review_2026-08-06"
+      ],
+      "seasonDetectedAt": "2026-08-06T20:28:15.746Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "e4a286dcaf16",
@@ -175,7 +197,10 @@
         "kw_hiver",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.475Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.475Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "f45fb4988c4f",
@@ -200,7 +225,10 @@
         "kw_printemps",
         "visual_disagrees_kept_text"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.475Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.475Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "7056a5f48cca",
@@ -227,7 +255,10 @@
         "date_agrees",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.475Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.475Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "6fc2e78f9e07",
@@ -254,7 +285,10 @@
         "date_agrees",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.475Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.475Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "0f3adff78986",
@@ -281,7 +315,10 @@
         "date_agrees",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.475Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.475Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "770dde8338de",
@@ -308,7 +345,10 @@
         "date_agrees",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.475Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.475Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "ef1a5830e924",
@@ -335,7 +375,10 @@
         "date_agrees",
         "visual_disagrees_kept_text"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.475Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.475Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "4e6ed19acff9",
@@ -362,32 +405,10 @@
         "date_agrees",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.475Z"
-    },
-    {
-      "id": "40596f653cdd",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/7/74/Fragaria_virginiana_030.jpg",
-      "link": "https://commons.wikimedia.org/wiki/File:Fragaria%20virginiana%20030.jpg",
-      "title": "Fragaria virginiana 030",
-      "credit": "Nichole Ouellette/ouellette001.com",
-      "license": "CC BY 4.0",
-      "description": "46° 36' 22.15\" N - 072° 19' 56.12\" W, Mauricie, MRC Les Chenaux, Saint-Prosper, Route Pronovost, 07:38 on Tuesday, June 2, 2009",
-      "categories": "Fragaria virginiana|Saint Lawrence River|Laurentides|Flore Laurentienne|Self-published work",
-      "width": 3456,
-      "height": 2304,
-      "aspect": 1.5,
-      "mime": "image/jpeg",
-      "addedAt": "2026-07-30T22:29:17.198Z",
-      "sessionId": "ete",
-      "bank": "pomo",
-      "season": "ete",
-      "seasonConfidence": 0.95,
-      "seasonSource": "text+visual",
-      "seasonReasons": [
-        "kw_ete",
-        "visual_agrees"
-      ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.475Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.475Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "9abcd669593c",
@@ -412,7 +433,10 @@
         "kw_automne",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.475Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.475Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "fde5db767f35",
@@ -437,7 +461,10 @@
         "kw_automne",
         "visual_disagrees_kept_text"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.475Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.475Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "dae9f44ec1c8",
@@ -462,7 +489,10 @@
         "kw_automne",
         "visual_disagrees_kept_text"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.475Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.475Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "be1756ca33f5",
@@ -487,7 +517,10 @@
         "kw_automne",
         "visual_disagrees_kept_text"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.475Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.475Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "fde3fcf7662f",
@@ -512,7 +545,10 @@
         "kw_hiver",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.475Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.475Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "10ea175cdfbb",
@@ -537,7 +573,10 @@
         "kw_ete",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.475Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.475Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "04c58485a01b",
@@ -561,7 +600,10 @@
       "seasonReasons": [
         "visual_only"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "e27492a5994e",
@@ -587,7 +629,10 @@
         "date_only",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "72db176c7d96",
@@ -613,7 +658,10 @@
         "date_only",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "0e03b35a1298",
@@ -639,7 +687,10 @@
         "date_only",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "c8457894f8d5",
@@ -666,27 +717,10 @@
         "date_disagrees",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
-    },
-    {
-      "id": "4dc2678b5ea6",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/7/77/Pointe-Calumet_%28QC%29-Local_des_Chevaliers_de_Colomb-2023.jpg",
-      "link": "https://commons.wikimedia.org/wiki/File:Pointe-Calumet%20(QC)-Local%20des%20Chevaliers%20de%20Colomb-2023.jpg",
-      "title": "Pointe-Calumet (QC)-Local des Chevaliers de Colomb-2023",
-      "credit": "Gaétan Veillette",
-      "license": "CC BY-SA 4.0",
-      "description": "Community hall of the Knights of Columbus, on Montée de la Baie, in Pointe-Calumet (Quebec). This room is a center for social gatherings and recreation.",
-      "categories": "Pointe-Calumet|Self-published work|Files with coordinates missing SDC location of creation",
-      "width": 11832,
-      "height": 5013,
-      "aspect": 2.36,
-      "mime": "image/jpeg",
-      "addedAt": "2026-07-30T22:23:25.330Z",
-      "sessionId": "ete",
-      "bank": "pomo",
-      "season": "ete",
-      "seasonConfidence": 0.3,
-      "seasonSource": "sessionId-fallback"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "90b5d7977fc0",
@@ -712,7 +746,10 @@
         "kw_ete",
         "date_disagrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "0555553cf542",
@@ -737,7 +774,10 @@
         "date_filename:08",
         "date_only"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "b41e22fcdbbf",
@@ -763,7 +803,10 @@
         "date_only",
         "visual_overrides_text"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "06efa67cb3a1",
@@ -790,7 +833,10 @@
         "date_agrees",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "6c03fb096b39",
@@ -815,7 +861,10 @@
         "kw_automne",
         "visual_disagrees_kept_text"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "b90cfdbebb06",
@@ -841,7 +890,10 @@
         "kw_ete",
         "date_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "745ffcfce92a",
@@ -867,7 +919,10 @@
         "date_only",
         "visual_disagrees_kept_text"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "5e8db66e0acc",
@@ -894,7 +949,10 @@
         "date_agrees",
         "visual_disagrees_kept_text"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "621b0e036636",
@@ -914,7 +972,10 @@
       "bank": "pomo",
       "season": "ete",
       "seasonConfidence": 0.3,
-      "seasonSource": "sessionId-fallback"
+      "seasonSource": "sessionId-fallback",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "f43fbf587212",
@@ -938,7 +999,10 @@
       "seasonReasons": [
         "visual_only"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "5c773923108b",
@@ -964,7 +1028,10 @@
         "date_only",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "0779b3714a2a",
@@ -991,7 +1058,10 @@
         "date_agrees",
         "visual_disagrees_kept_text"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "51873cf1e74b",
@@ -1016,7 +1086,10 @@
         "kw_automne",
         "visual_disagrees_kept_text"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "126e699715cc",
@@ -1040,7 +1113,10 @@
       "seasonReasons": [
         "visual_only"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "133a6fbf70e9",
@@ -1067,7 +1143,10 @@
         "date_disagrees",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "783b273e4a1c",
@@ -1092,7 +1171,10 @@
         "kw_hiver",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "d4f8de7ffd99",
@@ -1116,7 +1198,10 @@
       "seasonReasons": [
         "visual_only"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "77e14beca5e1",
@@ -1136,7 +1221,10 @@
       "bank": "pomo",
       "season": "ete",
       "seasonConfidence": 0.3,
-      "seasonSource": "sessionId-fallback"
+      "seasonSource": "sessionId-fallback",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "612b38bdb686",
@@ -1156,7 +1244,10 @@
       "bank": "pomo",
       "season": "ete",
       "seasonConfidence": 0.3,
-      "seasonSource": "sessionId-fallback"
+      "seasonSource": "sessionId-fallback",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "492f63140509",
@@ -1180,7 +1271,10 @@
       "seasonReasons": [
         "visual_only"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "22c501e6c1b2",
@@ -1205,7 +1299,10 @@
         "topo_arctique",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.476Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.476Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "926e5cfce284",
@@ -1232,7 +1329,10 @@
         "date_disagrees",
         "visual_disagrees_kept_text"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "bc3d92f46829",
@@ -1259,7 +1359,10 @@
         "date_disagrees",
         "visual_disagrees_kept_text"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "9b91ac66afb4",
@@ -1284,7 +1387,10 @@
         "topo_arctique",
         "visual_disagrees_kept_text"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "6e7b54bb7515",
@@ -1308,7 +1414,10 @@
       "seasonReasons": [
         "topo_arctique"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "5b74ec65d95d",
@@ -1332,7 +1441,10 @@
       "seasonReasons": [
         "kw_ete"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "cc172d74ac5a",
@@ -1356,7 +1468,10 @@
       "seasonReasons": [
         "kw_automne"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "ec25031b1a8f",
@@ -1383,7 +1498,10 @@
         "date_disagrees",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "3b11b749b9b5",
@@ -1408,7 +1526,10 @@
         "kw_ete",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "ec25840abf2a",
@@ -1432,7 +1553,10 @@
       "seasonReasons": [
         "kw_hiver"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "a049a54fa0f7",
@@ -1452,7 +1576,10 @@
       "bank": "pomo",
       "season": "ete",
       "seasonConfidence": 0.3,
-      "seasonSource": "sessionId-fallback"
+      "seasonSource": "sessionId-fallback",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "ec8e08266c6d",
@@ -1472,7 +1599,10 @@
       "bank": "pomo",
       "season": "ete",
       "seasonConfidence": 0.3,
-      "seasonSource": "sessionId-fallback"
+      "seasonSource": "sessionId-fallback",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "c97dfae8becf",
@@ -1497,7 +1627,10 @@
         "kw_hiver",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "223818de8355",
@@ -1517,7 +1650,10 @@
       "bank": "pomo",
       "season": "ete",
       "seasonConfidence": 0.3,
-      "seasonSource": "sessionId-fallback"
+      "seasonSource": "sessionId-fallback",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "06fbf32a655b",
@@ -1542,7 +1678,10 @@
         "kw_ete",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "8322d1362cdf",
@@ -1569,7 +1708,10 @@
         "date_agrees",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "eedd7a72cd13",
@@ -1594,7 +1736,10 @@
         "kw_hiver",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "b445b71af4dc",
@@ -1619,7 +1764,10 @@
         "kw_ete",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "7612aae9f757",
@@ -1643,7 +1791,10 @@
       "seasonReasons": [
         "kw_hiver"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "4da98161ae85",
@@ -1668,7 +1819,10 @@
         "kw_automne",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "45e57d8f154e",
@@ -1693,7 +1847,10 @@
         "kw_automne",
         "visual_disagrees_kept_text"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "7856a1377dde",
@@ -1718,7 +1875,10 @@
         "kw_automne",
         "visual_disagrees_kept_text"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "c83998967529",
@@ -1743,7 +1903,10 @@
         "kw_automne",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "07191e883447",
@@ -1769,7 +1932,10 @@
         "kw_hiver",
         "date_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "bf03b506617c",
@@ -1796,7 +1962,10 @@
         "date_disagrees",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "fb267d1e64d3",
@@ -1821,7 +1990,10 @@
         "kw_hiver",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "6e56314e0930",
@@ -1848,7 +2020,10 @@
         "date_disagrees",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "6c9327d87ad1",
@@ -1872,7 +2047,10 @@
       "seasonReasons": [
         "kw_hiver"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.477Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "url": "https://upload.wikimedia.org/wikipedia/commons/c/cd/20181012_-_01_-_Montreal_panorama_%28downtown%29.jpg",
@@ -1899,7 +2077,10 @@
       ],
       "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
       "description": "Panoramic view of the Montreal skyline, looking east from one of the upper floors of the Comfort Suites.",
-      "categories": "Downtown Montreal|Self-published work|Skylines of Montreal|Panoramics in Montreal|Files with coordinates missing SDC location of creation|Montreal, 11-14 October 2018|October 2018 in Montreal"
+      "categories": "Downtown Montreal|Self-published work|Skylines of Montreal|Panoramics in Montreal|Files with coordinates missing SDC location of creation|Montreal, 11-14 October 2018|October 2018 in Montreal",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "url": "https://upload.wikimedia.org/wikipedia/commons/d/db/2016-08_Saguenay_river_01.jpg",
@@ -1926,7 +2107,10 @@
       ],
       "seasonDetectedAt": "2026-07-30T22:38:03.477Z",
       "description": "The Saguenay River , seen from Chicoutimi , Quebec, Canada.",
-      "categories": "Saguenay River|Chicoutimi|Uploaded with VicuñaUploader|Files with coordinates missing SDC location of creation|Images taken in Quebec by 0x010C"
+      "categories": "Saguenay River|Chicoutimi|Uploaded with VicuñaUploader|Files with coordinates missing SDC location of creation|Images taken in Quebec by 0x010C",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "url": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Before-sunrise-perse-rock.jpg",
@@ -1951,7 +2135,10 @@
         "kw_ete",
         "visual_disagrees_kept_text"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.478Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.478Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "url": "https://upload.wikimedia.org/wikipedia/commons/2/25/Castle_Frontenac_Qu%C3%A9bec_City_Old_Quebec_Quebec.jpg",
@@ -1974,7 +2161,10 @@
         "kw_automne",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.478Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.478Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "e6fa85b6b652",
@@ -2001,7 +2191,10 @@
       "seasonDetectedAt": "2026-07-30T22:38:03.478Z",
       "description": "View of the St. Lawrence River and Arthur Island from the Yvon-Geoffrion Park wharf, in the village of Côteau-du-Lac (MRC Vaudreuil-Soulanges)",
       "categories": "CC-Zero|Coteau-du-Lac, Quebec|Self-published work|Files with coordinates missing SDC location of creation",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "e79be8bf8486",
@@ -2028,7 +2221,10 @@
       "seasonDetectedAt": "2026-07-30T22:38:03.478Z",
       "description": "View towards the east of the Soulanges Canal, from the jetty (rue Principale) in the village of Côteau-du-Lac (Quebec).",
       "categories": "CC-Zero|Coteau-du-Lac, Quebec|Self-published work|Files with coordinates missing SDC location of creation",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "12b5c2f3a59a",
@@ -2052,7 +2248,10 @@
       "seasonDetectedAt": "2026-07-30T22:38:03.478Z",
       "description": "Pingualuit crater in Nunavik, northern Quebec, Canada, looking west. It contains a lake named Lake Pingualuk.",
       "categories": "PD NASA|Pingualuit|Extracted images|Files uploaded by PDTillman|Aerial photographs of lakes of Canada|October 2007 in Quebec|2007 aerial photographs of Canada|Radial drainage in nature|Aerial photographs of Nord-du-Québec",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "6f61e48fec1d",
@@ -2077,7 +2276,10 @@
         "kw_ete",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.478Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.478Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "49522fc8a78c",
@@ -2104,7 +2306,10 @@
       "seasonDetectedAt": "2026-07-30T22:38:03.478Z",
       "description": "View of Lac des Deux Montagnes from the lookout on the south shore, in Hudson (Quebec) along the walking path in the Sandy Beach area.",
       "categories": "Lac des Deux Montagnes|Hudson, Quebec|Self-published work|Files with coordinates missing SDC location of creation",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "3978243a4083",
@@ -2131,7 +2336,10 @@
       "seasonDetectedAt": "2026-07-30T22:38:03.478Z",
       "description": "Lookout on the south shore of Lac des Deux-Montagnes, on the Sandy Beach sector trail in Hudson (Quebec). This belvedere gives a privileged view of the riparian forest, the lake and the north shore of the lake.",
       "categories": "Lac des Deux Montagnes|Hudson, Quebec|Self-published work|Files with coordinates missing SDC location of creation",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "e03350eab2f0",
@@ -2151,7 +2359,10 @@
       "mime": "image/jpeg",
       "season": "ete",
       "seasonConfidence": 0.3,
-      "seasonSource": "sessionId-fallback"
+      "seasonSource": "sessionId-fallback",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "d8a0c6b3c781",
@@ -2178,7 +2389,10 @@
       "seasonDetectedAt": "2026-07-30T22:38:03.479Z",
       "description": "Municipal belvedere of Deux-Montagnes giving a magnificent view of Lac des Deux-Montagnes, along chemin d'Oka (route 344).",
       "categories": "Lac des Deux Montagnes|Self-published work",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "7128480286c6",
@@ -2198,7 +2412,10 @@
       "mime": "image/jpeg",
       "season": "ete",
       "seasonConfidence": 0.3,
-      "seasonSource": "sessionId-fallback"
+      "seasonSource": "sessionId-fallback",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "4d436d167b0f",
@@ -2225,7 +2442,10 @@
         "date_agrees",
         "visual_disagrees_kept_text"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.479Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.479Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "7e273e367a08",
@@ -2250,7 +2470,10 @@
         "kw_automne",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.479Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.479Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "5943f6ecdc2b",
@@ -2275,7 +2498,10 @@
         "kw_hiver",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.479Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.479Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "82b13feedb5c",
@@ -2300,7 +2526,10 @@
       "seasonReasons": [
         "kw_hiver"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.479Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.479Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "e1de50e914e7",
@@ -2326,7 +2555,10 @@
         "kw_hiver",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.479Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.479Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "21752d1fec3c",
@@ -2352,7 +2584,10 @@
         "kw_hiver",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.479Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.479Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "5b2e21ebe06e",
@@ -2375,7 +2610,10 @@
         "kw_automne",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.479Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.479Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "0c1dcc96b3dc",
@@ -2401,7 +2639,10 @@
         "date_agrees",
         "visual_disagrees_kept_text"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.479Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.479Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     },
     {
       "id": "917da30c4514",
@@ -2424,8 +2665,12 @@
         "kw_hiver",
         "visual_agrees"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:03.479Z"
+      "seasonDetectedAt": "2026-07-30T22:38:03.479Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:03.601Z"
     }
   ],
-  "lastSeasonDetect": "2026-07-30T22:38:03.479Z"
+  "lastSeasonDetect": "2026-07-30T22:38:03.479Z",
+  "lastFaceDetect": "2026-08-06T20:50:03.601Z"
 }

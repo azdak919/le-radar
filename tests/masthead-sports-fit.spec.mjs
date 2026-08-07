@@ -30,8 +30,13 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
   };
 
   const wide = await countAt(1440);
-  expect(wide).toBeGreaterThanOrEqual(2);
+  // En desktop large la voie de gauche doit être PLEINE : 3 puces SCORE + CTA.
+  // Un `>= 2` laissait passer une voie à court de matière — hors saison, avec un
+  // seul résultat en banque, le bandeau tombait à 2 puces étirées à 50/50.
+  expect(wide).toBeGreaterThanOrEqual(3);
   expect(wide).toBeLessThanOrEqual(4);
+  // Chaque slot non-CTA est bien rempli (pas de trou avalé par le flex).
+  expect(await strip.locator('.sports-chip:not(.sports-chip--cta)').count()).toBe(wide - 1);
   // CTA toujours présente et en dernier quand ≥ 2 chips.
   await expect(strip.locator('.sports-chip').last()).toHaveClass(/sports-chip--cta/);
   await expect(strip).toHaveAttribute('data-cta-pinned', '1');

@@ -202,15 +202,37 @@
     return false;
   }
 
+  /**
+   * Étiquette saisonnière digne de confiance ?
+   *
+   * `sessionId-fallback` veut dire « jamais analysée » : la photo a hérité de la
+   * saison de la session de moisson. Une scène de neige moissonnée en juillet
+   * ressortait donc taguée « ete » avec 0,3 de confiance et entrait dans le tier
+   * STRICT — exactement ce que le commentaire de filterPoolByCurrentSeason veut
+   * éviter. Non fiable → traitée comme inconnue, donc tier `soft` seulement.
+   */
+  const SEASON_MIN_CONFIDENCE = 0.5;
+  function seasonTagTrusted(item) {
+    if (!item) return false;
+    if (item.seasonSource === 'sessionId-fallback') return false;
+    const c = item.seasonConfidence;
+    if (typeof c === 'number' && c < SEASON_MIN_CONFIDENCE) return false;
+    return true;
+  }
+
   function resolveItemSeason4(item) {
     const explicit = item && item.season;
-    if (explicit && SEASON4.includes(String(explicit))) return String(explicit);
+    if (explicit && SEASON4.includes(String(explicit)) && seasonTagTrusted(item)) {
+      return String(explicit);
+    }
     return inferSeason4(item);
   }
 
   function resolveItemSeason6(item) {
     const explicit = item && item.season6;
-    if (explicit && SEASON6.includes(String(explicit))) return String(explicit);
+    if (explicit && SEASON6.includes(String(explicit)) && seasonTagTrusted(item)) {
+      return String(explicit);
+    }
     return inferSeason6(item);
   }
 
@@ -541,6 +563,8 @@
     SEASON4,
     SEASON6,
     SEASON6_META,
+    SEASON_MIN_CONFIDENCE,
+    seasonTagTrusted,
     getCurrentSeason4,
     getCurrentSeason6,
     inferSeason4,

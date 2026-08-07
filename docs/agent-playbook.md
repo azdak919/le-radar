@@ -69,6 +69,22 @@ blacklist    →  scripts/quebec-backgrounds-blacklist.js  (ne revient jamais)
     `seasonSource: manual` n’est **jamais** écrasé.
   - **Client** : filtre saison en cours (fallback adjacent) — ne remplace pas le bot.
   - Neige arctique en juillet = hors saison — ne pas forcer le pool complet.
+  - `seasonSource: sessionId-fallback` = **jamais analysée** (saison de la session
+    de moisson). Traitée comme saison inconnue et **non exportée** vers les
+    `*-data.js` : sans ce garde-fou une scène enneigée entrait dans le tier strict
+    de juillet. La re-taguer via le bot visuel ou à la main, pas en la bannissant.
+- **Visages** (`scripts/detect-photo-faces.js` + `.py`) — la politique interdit les
+  personnes reconnaissables, mais `PEOPLE_RE` ne lit que titre/URL/lien : un
+  toponyme numéroté passait avec un visage au premier plan.
+  ```bash
+  pip install "opencv-python-headless<5" Pillow   # OpenCV 5 n’a plus les cascades Haar
+  npm run detect:faces                            # dry-run (réseau, thumbs Commons)
+  npm run detect:faces:update                     # écrit faces/faceRatio + bank:sync
+  ```
+  Champs persistés : `faces`, `faceRatio`, `faceDetectedAt`. La **porte** est en
+  Node (`wallpaper-subject-lib` → `textGate` / `auditPhotoHard`) et lit ces champs,
+  donc elle tient en CI, qui n’a pas Python. Banque non annotée → porte muette.
+  Un signalement se solde par une entrée de blacklist après revue humaine.
 
 ### Blacklist — ajouter une entrée
 

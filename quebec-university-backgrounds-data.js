@@ -56,7 +56,6 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 5152,
     height: 3864,
     campus: true,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/c/cf/Pavillon_Judith-Jasmin_UQAM_23.JPG",
@@ -123,7 +122,6 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 3072,
     height: 2304,
     campus: true,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/21/Universit%C3%A9_de_Montr%C3%A9al_%28_%C3%89cole_polytechnique_de_Montr%C3%A9al_et_Pavillon_Roger-Gaudry%29.JPG",
@@ -190,7 +188,6 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 4608,
     height: 3456,
     campus: true,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/9/90/Pavillon_Judith-Jasmin_UQAM_1.jpg",
@@ -201,7 +198,6 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 6000,
     height: 4000,
     campus: true,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg",
@@ -256,7 +252,6 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     width: 4608,
     height: 3456,
     campus: true,
-    season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg",

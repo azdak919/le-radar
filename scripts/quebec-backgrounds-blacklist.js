@@ -278,6 +278,37 @@ const HARD_BANNED = [
     reason: 'commercial_street_signage',
     note: 'Purge 2026-07-26 nations — pas un paysage ; Wendake reste éligible via une autre vue',
   },
+  {
+    // Macro de fleur (fraisier des champs) : sujet unique à faible profondeur
+    // de champ, illisible en bandeau 3,8:1. Le titre est un binôme latin
+    // numéroté, donc aucun mot-clé « macro » / « close-up » à attraper — c'est
+    // la catégorie taxon (Fragaria virginiana, Flore Laurentienne) qui trahit
+    // le plan rapproché ; gate `macro_closeup` ajouté en conséquence.
+    fragments: ['Fragaria_virginiana_030', '40596f653cdd'],
+    reason: 'macro_closeup',
+    note: 'Purge 2026-08-06 mât+pomo — décision humaine sur capture de production',
+  },
+  {
+    // Visage d'homme nettement identifiable au premier plan, devant les kiosques
+    // de la promenade. La politique de banque interdit les personnes
+    // reconnaissables ; ni le titre (toponyme numéroté) ni les catégories ne le
+    // disaient, mais la description Commons nomme l'individu.
+    fragments: ['Havre_St_Pierre_006', 'a321610ec6dc'],
+    reason: 'recognizable_people',
+    note: 'Purge 2026-08-06 mât — décision humaine sur capture de production',
+  },
+  {
+    // Salle communautaire de club-service en bord de route : bâti vernaculaire
+    // sans valeur de paysage. Ratio 2,36 et 11832 px de large, donc toutes les
+    // portes dimensionnelles passaient.
+    fragments: [
+      'Local_des_Chevaliers_de_Colomb',
+      'Local%20des%20Chevaliers%20de%20Colomb',
+      '4dc2678b5ea6',
+    ],
+    reason: 'vernacular_building',
+    note: 'Purge 2026-08-06 mât+pomo — décision humaine sur capture de production',
+  },
 ];
 
 /**

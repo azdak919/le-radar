@@ -31,7 +31,10 @@
         "date_agrees",
         "visual_disagrees_kept_text"
       ],
-      "seasonDetectedAt": "2026-07-30T22:38:30.629Z"
+      "seasonDetectedAt": "2026-07-30T22:38:30.629Z",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:47.778Z"
     },
     {
       "id": "5b2e21ebe06e",
@@ -53,7 +56,10 @@
       ],
       "permanent": true,
       "pinnedAt": "2026-07-25T07:50:11.489Z",
-      "note": "Validé manuellement — skyline lever de soleil Montréal (Quentin Schulz)"
+      "note": "Validé manuellement — skyline lever de soleil Montréal (Quentin Schulz)",
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:47.778Z"
     },
     {
       "id": "7128480286c6",
@@ -75,7 +81,10 @@
       "note": "Validé manuellement — bandeau mât lac + collines (Jeangagnon); crop focalY 0.22",
       "season": "ete",
       "seasonSource": "manual",
-      "seasonConfidence": 1
+      "seasonConfidence": 1,
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:47.778Z"
     },
     {
       "id": "0fcc6ce8753e",
@@ -98,9 +107,13 @@
       "mime": "image/jpeg",
       "season": "hiver",
       "seasonSource": "manual",
-      "seasonConfidence": 1
+      "seasonConfidence": 1,
+      "faces": 0,
+      "faceRatio": 0,
+      "faceDetectedAt": "2026-08-06T20:50:47.778Z"
     }
   ],
-  "updated": "2026-07-30T23:01:15.975Z",
-  "lastSeasonDetect": "2026-07-30T22:38:30.629Z"
+  "updated": "2026-08-06T20:50:47.995Z",
+  "lastSeasonDetect": "2026-07-30T22:38:30.629Z",
+  "lastFaceDetect": "2026-08-06T20:50:47.778Z"
 }
