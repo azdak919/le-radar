@@ -640,6 +640,27 @@ assert(sportsHub.includes('data-sports-tools'), 'sports : outils flottants (haut
 assert(sportsHub.includes('id="sports-scroll-top"'), 'sports : flèche haut de page requise');
 assert(sportsHub.includes('id="sports-search-toggle"'), 'sports : loupe de recherche requise');
 assert(sportsHub.includes('data-search='), 'sports : index data-search sur les panneaux requis');
+// Sigles d'équipes (THE, SL, OUT, LAF…) : codes RSEQ, pas des mots. Sans garde,
+// la traduction (translate.js ou celle du navigateur) rend « THE » par « LE ».
+for (const hub of ['sports/index.html', 'en/sports/index.html']) {
+  const markup = readFileSync(join(root, hub), 'utf8');
+  const codes = [...markup.matchAll(/<span class="sports-panel__code([^"]*)"([^>]*)>/g)];
+  assert(codes.length > 0, `${hub} : sigles d'équipe requis`);
+  for (const [, classes, attrs] of codes) {
+    assert(
+      /\bnotranslate\b/.test(classes) && /\btranslate="no"/.test(attrs),
+      `${hub} : sigle d'équipe à protéger de la traduction (notranslate + translate="no")`
+    );
+  }
+}
+// Puces sports du mât (app.js) : même garde sur le sigle et l'adversaire.
+const appSource = readFileSync(join(root, 'app.js'), 'utf8');
+for (const chip of appSource.match(/<span class="sports-chip__code[^>]*>/g) || []) {
+  assert(
+    /\bnotranslate\b/.test(chip) && /\btranslate="no"/.test(chip),
+    'app.js : sigle de puce sports à protéger de la traduction (notranslate + translate="no")'
+  );
+}
 
 // Les fiches station portent l'ancre visée par « À l'antenne » (app.js).
 const ckutPage = readFileSync(join(root, 'radios/ckut/index.html'), 'utf8');

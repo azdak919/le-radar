@@ -1267,8 +1267,12 @@ function sportsPanelHtml(team, t, lang) {
   const nick = isSailingClub ? '' : String(team.nickname || '').trim();
   const shortName = String(team.name || '').trim() || 'Équipe';
   const code = String(team.code || '').trim();
+  // Sigle d'équipe (THE, SL, OUT, LAF…) : jamais traduit. Ce sont des codes
+  // RSEQ, pas des mots — sans garde, un moteur MT rend « THE » par « LE »
+  // et « OUT » par « DEHORS ». `notranslate` couvre translate.js,
+  // `translate="no"` la traduction native du navigateur.
   const codeHtml = code
-    ? ` <span class="sports-panel__code">${escapeHtml(code)}</span>`
+    ? ` <span class="sports-panel__code notranslate" translate="no">${escapeHtml(code)}</span>`
     : '';
   /*
    * Hiérarchie « focus group » stats univ. :
