@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-08-06T09:29:42.981Z",
+  "updated": "2026-08-07T07:58:49.962Z",
   "sources": {
     "la-pige": {
       "strategy": "wordpress-rest",
@@ -101,24 +101,25 @@
     },
     "montreal-campus": {
       "strategy": "wordpress-rest",
-      "nextPage": 9,
+      "nextPage": null,
       "totalPages": 12,
-      "lastAttemptAt": "2026-08-05T09:23:50.695Z",
-      "lastSuccessAt": "2026-08-05T09:23:50.695Z",
+      "lastAttemptAt": "2026-08-07T07:58:42.021Z",
+      "lastSuccessAt": "2026-08-07T07:58:42.021Z",
       "retryAt": null,
       "error": null,
-      "windowStart": "2023-08-05T15:23:44.690Z",
-      "windowYears": 3
+      "windowStart": "2023-08-07T13:58:35.632Z",
+      "windowYears": 3,
+      "completedAt": "2026-08-07T07:58:42.021Z"
     },
     "quartier-libre": {
-      "strategy": "wordpress-rest",
+      "strategy": "unsupported",
       "nextPage": 9,
       "totalPages": 13,
-      "lastAttemptAt": "2026-08-05T09:23:57.087Z",
+      "lastAttemptAt": "2026-08-07T07:58:42.959Z",
       "lastSuccessAt": "2026-08-05T09:23:57.087Z",
-      "retryAt": null,
-      "error": null,
-      "windowStart": "2023-08-05T15:23:44.690Z",
+      "retryAt": "2026-09-06T07:58:42.959Z",
+      "error": "wordpress_http_403",
+      "windowStart": "2023-08-07T13:58:35.632Z",
       "windowYears": 3
     },
     "the-campus": {
@@ -139,14 +140,15 @@
     },
     "the-mcgill-daily": {
       "strategy": "wordpress-rest",
-      "nextPage": 9,
+      "nextPage": null,
       "totalPages": 12,
-      "lastAttemptAt": "2026-08-05T09:24:04.263Z",
-      "lastSuccessAt": "2026-08-05T09:24:04.263Z",
+      "lastAttemptAt": "2026-08-07T07:58:49.206Z",
+      "lastSuccessAt": "2026-08-07T07:58:49.206Z",
       "retryAt": null,
       "error": null,
-      "windowStart": "2023-08-05T15:23:44.690Z",
-      "windowYears": 3
+      "windowStart": "2023-08-07T13:58:35.632Z",
+      "windowYears": 3,
+      "completedAt": "2026-08-07T07:58:49.206Z"
     },
     "the-plant": {
       "strategy": "unsupported",
