@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import nowPlaying from '../scripts/radio-nowplaying-lib.js';
+import scheduleLib from '../scripts/radio-schedule-lib.js';
 import schedules from '../radio-schedules.json' with { type: 'json' };
 import radios from '../radios.json' with { type: 'json' };
 
@@ -8,7 +9,11 @@ const {
   timestampMs,
   mergeOnAirResults,
   scheduleToHit,
+  slotCoversDate,
+  scheduleHasSlot,
+  liveEndDeltaMin,
 } = nowPlaying;
+const { parseChyzGrid, normalizeSlot, stripTransientFlags } = scheduleLib;
 
 // ── Utilitaires ─────────────────────────────────────────────────────────────
 
@@ -322,3 +327,140 @@ mergeCase({
 }
 
 console.log('OK radio-nowplaying (next plus tôt multi-stations)');
+
+// ── Émissions spéciales / hors programmation (CHYZ, soirs de match) ─────────
+//
+// CHYZ réécrit sa page horaire le jour même : les Capitales de Québec passent
+// de 18:50 à 16:50 et l'émission régulière du créneau disparaît. La grille
+// colligée, elle, a jusqu'à deux semaines — d'où « À venir · Capitales de
+// Québec · 18:50 » affiché pendant que le match jouait déjà.
+{
+  /** Vendredi 7 août 2026, 18:00 HAE — match en ondes depuis 16:50. */
+  const TORONTO_FRI_1800 = new Date('2026-08-07T22:00:00.000Z');
+
+  // 1. Le parseur retient le marqueur « en direct » de la page.
+  const html = `
+    <a href="https://chyz.ca/emission/les-arshitechs-du-son/" class="article-horaire flex" data-jour-slug="vendredi">
+      <div class="container-heure flex"><p class="font-size-32"> 17:30 - 18:30 </p></div>
+      <div><h3 class="font-size-40">Les Arshitechs du Son</h3></div>
+    </a>
+    <a href="https://chyz.ca/emission/capitales-de-quebec/" class="article-horaire flex" data-jour-slug="vendredi">
+      <div class="container-heure flex">
+        <span class="font-size-18">en direct</span><p class="font-size-32"> 16:50 - 23:00 </p>
+      </div>
+      <div><h3 class="font-size-40">Capitales de Québec</h3></div>
+    </a>`;
+  const parsed = parseChyzGrid(html);
+  const live = parsed.filter((s) => s.live);
+  assert.equal(live.length, 1, 'un seul bloc CHYZ marqué « en direct »');
+  assert.equal(live[0].title, 'Capitales de Québec', 'le bloc en direct est le match');
+  assert.equal(live[0].start, '16:50', 'heure du bloc en direct lue sur la page');
+  assert.ok(
+    normalizeSlot(live[0]).live,
+    'le marqueur traverse la normalisation (le now-playing en a besoin)',
+  );
+  assert.ok(
+    !stripTransientFlags([normalizeSlot(live[0])])[0].live,
+    'mais il est ôté avant publication : dans un fichier relu deux semaines, '
+    + 'il désignerait une émission finie comme étant à l’antenne',
+  );
+
+  // 2. Le marqueur n'est suivi que s'il décrit bien l'instant présent
+  //    (la page peut être servie de cache).
+  assert.equal(
+    slotCoversDate(live[0], TORONTO_FRI_1800, 'America/Toronto', 20),
+    true,
+    'bloc en direct : couvre 18:00 vendredi',
+  );
+  assert.equal(
+    slotCoversDate(live[0], new Date('2026-08-07T18:00:00.000Z'), 'America/Toronto', 20),
+    false,
+    'bloc en direct : ne couvre pas 14:00 vendredi (page périmée)',
+  );
+
+  // 3. Hors programmation : le bloc n'existe pas tel quel dans la grille publiée.
+  assert.equal(
+    scheduleHasSlot(schedules, 'chyz', { day: 5, start: '16:50', title: 'Capitales de Québec' }),
+    false,
+    'le match de 16:50 est absent de la grille colligée → spécial',
+  );
+  assert.equal(
+    scheduleHasSlot(schedules, 'chyz', { day: 5, start: '10:00', title: 'Palmarès CHYZ' }),
+    true,
+    'un créneau régulier reste dans la grille colligée',
+  );
+
+  // 4. Le veto : rien ne commence avant la fin de ce qui joue.
+  const capitales = {
+    title: 'Capitales de Québec',
+    start: '16:50',
+    end: '23:00',
+    source: 'api-live',
+    special: true,
+  };
+  assert.equal(liveEndDeltaMin(capitales, 18 * 60), 300, 'minutes restantes du match à 18:00');
+  assert.equal(
+    liveEndDeltaMin(capitales, 23 * 60 + 30),
+    null,
+    'après 23:00 le match ne barre plus rien',
+  );
+
+  const merged = mergeCase({
+    id: 'chyz',
+    label: 'CHYZ (match en ondes, grille périmée)',
+    now: TORONTO_FRI_1800,
+    scheduleHit: {
+      current: null,
+      // Ce que la grille colligée croit encore : le match commence à 18:50.
+      next: { title: 'Capitales de Québec', start: '18:50', end: '23:00', source: 'schedule' },
+    },
+    hits: [{
+      current: capitales,
+      next: { title: 'Palmarès CHYZ', start: '10:00', end: '10:30', source: 'api-live' },
+      track: '',
+    }],
+    expectCurrent: 'Capitales de Québec',
+    expectNext: 'Palmarès CHYZ',
+  });
+  assert.equal(merged.current.special, true, 'le spécial reste marqué jusque dans le JSON publié');
+
+  // 5. Une émission régulière évincée ne doit pas non plus être annoncée.
+  mergeCase({
+    id: 'chyz',
+    label: 'CHYZ (créneau régulier évincé par le match)',
+    now: TORONTO_FRI_1800,
+    scheduleHit: {
+      current: null,
+      next: { title: 'Les Arshitechs du Son', start: '20:00', end: '21:00', source: 'schedule' },
+    },
+    hits: [{ current: capitales, next: null, track: '' }],
+    expectNext: null,
+  });
+
+  // 6. Le veto vaut aussi pour une grille relue à l'instant : c'est ce qui
+  //    protège les postes sans API live (CJLO, CFAK et tout poste à venir).
+  mergeCase({
+    id: 'cfak',
+    label: 'poste sans API live (grille du jour vs grille publiée)',
+    now: TORONTO_FRI_1800,
+    scheduleHit: {
+      current: { title: 'Émission régulière', start: '17:00', end: '18:00', source: 'schedule' },
+      next: { title: 'Créneau évincé', start: '18:00', end: '19:00', source: 'schedule' },
+    },
+    hits: [{
+      current: {
+        title: 'Spécial élections',
+        start: '17:00',
+        end: '21:00',
+        source: 'schedule-live',
+        special: true,
+      },
+      next: { title: 'Nuit', start: '21:00', end: '00:00', source: 'schedule-live' },
+      track: '',
+    }],
+    expectCurrent: 'Spécial élections',
+    expectNext: 'Nuit',
+  });
+
+  console.log('OK radio-nowplaying (émissions spéciales / hors programmation)');
+}

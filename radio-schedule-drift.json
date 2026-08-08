@@ -1,0 +1,81 @@
+{
+  "checkedAt": "2026-08-08T02:37:17.817Z",
+  "timezone": "America/Toronto",
+  "overhaulRatio": 0.4,
+  "summary": {
+    "checked": 6,
+    "stable": 5,
+    "drift": [
+      "chyz"
+    ],
+    "overhaul": [],
+    "unreachable": []
+  },
+  "stations": [
+    {
+      "id": "chyz",
+      "published": 25,
+      "fresh": 24,
+      "added": [
+        "ven 16:50–23:00 Capitales de Québec"
+      ],
+      "removed": [
+        "ven 17:30–18:30 Les Arshitechs du Son",
+        "ven 18:50–23:00 Capitales de Québec"
+      ],
+      "changed": 3,
+      "ratio": 0.12,
+      "status": "drift"
+    },
+    {
+      "id": "cism",
+      "published": 110,
+      "fresh": 110,
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
+    },
+    {
+      "id": "ckut",
+      "published": 101,
+      "fresh": 101,
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
+    },
+    {
+      "id": "cjlo",
+      "published": 370,
+      "fresh": 370,
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
+    },
+    {
+      "id": "cfak",
+      "published": 35,
+      "fresh": 35,
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
+    },
+    {
+      "id": "choq",
+      "published": 22,
+      "fresh": 22,
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
+    }
+  ]
+}

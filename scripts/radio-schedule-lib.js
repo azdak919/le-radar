@@ -147,7 +147,18 @@ function normalizeSlot(slot) {
   const host = decodeHtmlEntities(String(slot.host || '')).replace(/\s+/g, ' ').trim();
   if (host) out.host = host;
   if (url) out.url = url;
+  // Marqueur « à l'antenne maintenant » de la station (CHYZ). Vrai à la
+  // seconde où la page a été lue, faux dès la minute suivante : il traverse la
+  // collecte pour le now-playing, mais `stripTransientFlags` l'ôte avant
+  // publication dans radio-schedules.json.
+  if (slot.live) out.live = true;
   return out;
+}
+
+/** Grille prête à publier : sans les marqueurs valables au seul instant de lecture. */
+function stripTransientFlags(grid) {
+  if (!Array.isArray(grid)) return [];
+  return grid.map(({ live, ...slot }) => slot);
 }
 
 function slotKey(s) {
@@ -503,7 +514,20 @@ function pad2(n) {
   return String(n).padStart(2, '0');
 }
 
-/** CHYZ (chyz.ca/horaire) : blocs <a.article-horaire data-jour-slug> avec heures + <h3>. */
+/**
+ * Marqueur « en direct » que chyz.ca pose sur le bloc réellement à l'antenne.
+ *
+ * C'est la seule source qui dit la vérité les soirs de match : la station
+ * réécrit sa page le jour même (heure du premier lancer, émission régulière
+ * évincée), alors que notre grille hebdo, elle, date de la dernière collecte.
+ */
+const CHYZ_LIVE_RE = /<span[^>]*>\s*en\s+direct\s*<\/span>/i;
+
+/**
+ * CHYZ (chyz.ca/horaire) : blocs <a.article-horaire data-jour-slug> avec heures + <h3>.
+ * Le bloc marqué « en direct » porte `live: true` — champ transitoire, écarté
+ * par normalizeSlot() donc jamais publié dans radio-schedules.json.
+ */
 function parseChyzGrid(htmlText) {
   const grid = [];
   const re = /<a[^>]*class="[^"]*article-horaire[^"]*"[^>]*>([\s\S]*?)<\/a>/gi;
@@ -527,6 +551,7 @@ function parseChyzGrid(htmlText) {
     };
     const href = /href="([^"]+)"/i.exec(openTag)?.[1]?.trim();
     if (href) slot.url = href;
+    if (CHYZ_LIVE_RE.test(body)) slot.live = true;
     grid.push(slot);
   }
   return grid;
@@ -1135,6 +1160,7 @@ module.exports = {
   expandTruncatedTitle,
   gridCoverage,
   normalizeSlot,
+  stripTransientFlags,
   mergeGrids,
   zonedNow,
   resolveCurrentSlot,

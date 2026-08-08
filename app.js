@@ -680,6 +680,7 @@ async function init() {
   });
   startNowAirTick();
   initTunerPresentationLifecycle();
+  initContentFreshnessLifecycle();
   initPlayerSync();
   registerServiceWorker();
 }
@@ -992,10 +993,24 @@ function registerServiceWorker() {
     console.warn('Service worker registration failed', e);
   });
   // update() en arrière-plan — ne force pas de reload immédiat
+  checkForAppUpdate();
+  navigator.serviceWorker.addEventListener('controllerchange', reloadUnlessListening);
+}
+
+/**
+ * Demande au navigateur de revérifier le service worker.
+ *
+ * Appelé au chargement, puis à chaque retour dans l'app : une PWA installée
+ * n'est jamais « rechargée » au sens habituel, donc sans cette relance elle
+ * peut servir le shell du jour de son installation pendant des semaines.
+ * Le rechargement, lui, reste piloté par `controllerchange` — qui ne coupe
+ * jamais une écoute en cours.
+ */
+function checkForAppUpdate() {
+  if (IS_TUNER_EMBED || !('serviceWorker' in navigator)) return;
   navigator.serviceWorker.getRegistrations?.().then((regs) => {
     regs.forEach((reg) => reg.update());
   }).catch(() => {});
-  navigator.serviceWorker.addEventListener('controllerchange', reloadUnlessListening);
 }
 
 /** Évite que hover/focus laissent un bouton masthead « engagé » après un tap ou clic. */
@@ -3879,8 +3894,12 @@ function showUpcomingDeltaMin(radio, show) {
  */
 function resolveUpcomingShow(radio) {
   if (!radio) return null;
-  const bot = botNextShow(radio);
-  const sched = scheduleNextSlot(radio);
+  // Plancher : ce qui est en ondes pour de vrai évince ce que la grille
+  // annonçait dans le même intervalle (émission spéciale / hors programmation).
+  const airLeft = authoritativeAirLeftMin(radio);
+  let bot = botNextShow(radio);
+  if (airLeft != null && bot?.title && showUpcomingDeltaMin(radio, bot) < airLeft) bot = null;
+  const sched = scheduleNextSlot(radio, airLeft || 0);
   if (!bot?.title && !sched) return null;
   if (!bot?.title && sched) {
     return { title: sched.title, start: sched.start, end: sched.end, day: sched.day, source: 'schedule' };
@@ -4025,8 +4044,14 @@ function scheduleCurrentSlot(radio) {
   return current;
 }
 
-/** Prochaine émission planifiée (utile entre deux créneaux, ex. CHYZ l'après-midi). */
-function scheduleNextSlot(radio) {
+/**
+ * Prochaine émission planifiée (utile entre deux créneaux, ex. CHYZ l'après-midi).
+ *
+ * `minDelta` écarte les créneaux qui commencent avant une échéance : de quoi
+ * sauter ceux qu'une diffusion spéciale recouvre déjà (voir
+ * `authoritativeAirLeftMin`) et proposer le premier créneau réellement libre.
+ */
+function scheduleNextSlot(radio, minDelta = 0) {
   const grid = radio?.id ? radioSchedules.stations?.[radio.id]?.grid : null;
   if (!Array.isArray(grid) || !grid.length) return null;
   const WEEK = 7 * 1440;
@@ -4040,6 +4065,7 @@ function scheduleNextSlot(radio) {
     const startAbs = slot.day * 1440 + start;
     let delta = startAbs - nowAbs;
     if (delta <= 0) delta += WEEK;
+    if (delta < minDelta) continue;
     if (delta < bestDelta) {
       bestDelta = delta;
       best = slot;
@@ -4053,6 +4079,41 @@ function isAuthoritativeLiveShow(radio) {
   const cur = botCurrentShow(radio);
   const src = String(cur?.source || nowPlayingEntry(radio)?.source || '');
   return src === 'api-live';
+}
+
+/**
+ * Sources plus fraîches que la grille hebdo embarquée : l'API de la station,
+ * et sa page horaire relue à l'instant par le bot (`schedule-live`). Voir
+ * `sourceRank` dans radio-nowplaying-lib.js — garder les deux alignés.
+ */
+const FRESH_AIR_SOURCES = new Set(['api-live', 'schedule-live']);
+
+/**
+ * Minutes restantes de l'émission en ondes quand sa source bat la grille
+ * embarquée, sinon null.
+ *
+ * Une diffusion hors programmation — un match dont l'heure a bougé le jour même
+ * — recouvre des créneaux que la grille hebdo, collectée aux deux semaines,
+ * continue d'annoncer. Le site montrait ainsi « À venir · Capitales de Québec ·
+ * 18:50 » pendant que CHYZ diffusait ce même match depuis 16:50. Rien ne peut
+ * commencer avant la fin de ce qui joue : cette durée sert de plancher au
+ * « à venir ».
+ *
+ * La grille embarquée n'ouvre jamais ce veto — elle ne peut pas se corriger
+ * elle-même — et un `current` déjà terminé (fenêtre dépassée) ne barre plus rien.
+ */
+function authoritativeAirLeftMin(radio) {
+  const cur = botCurrentShow(radio);
+  if (!FRESH_AIR_SOURCES.has(String(cur?.source || ''))) return null;
+  const start = scheduleTimeToMin(cur?.start);
+  const end = scheduleTimeToMin(cur?.end);
+  if (start == null || end == null) return null;
+  const wraps = end <= start;
+  const endAbs = wraps ? end + 1440 : end;
+  const { minutes } = scheduleZonedNow();
+  const nowAbs = wraps && minutes < start ? minutes + 1440 : minutes;
+  if (nowAbs < start || nowAbs >= endAbs) return null;
+  return endAbs - nowAbs;
 }
 
 /** Créneau horaire « HH:MM – HH:MM », préfixé de « Demain »/jour si ce n'est pas aujourd'hui. */
@@ -4378,6 +4439,7 @@ window.RadarAir = {
     resolveUpcomingShow,
     scheduleNextSlot,
     scheduleCurrentSlot,
+    authoritativeAirLeftMin,
     showUpcomingDeltaMin,
     airSlotIsLive,
     airSlotIsFuture,
@@ -5314,6 +5376,103 @@ function initTunerPresentationLifecycle() {
   window.addEventListener('pagehide', pauseTunerPresentation);
   window.addEventListener('pageshow', resumeTunerPresentation);
   window.addEventListener('focus', resumeTunerPresentation);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  RETOUR DANS L'APP — fraîcheur du contenu
+// ═══════════════════════════════════════════════════════════════════════════
+/**
+ * Une PWA installée n'est jamais « rechargée » au sens d'un onglet : on la
+ * quitte, on y revient, et le même document reprend là où il en était — des
+ * jours plus tard sur iOS, qui garde l'app en mémoire. Le fil affiché est alors
+ * celui de la dernière ouverture, alors que le bot d'articles publie sept fois
+ * par jour.
+ *
+ * Trois régimes, parce qu'un rechargement dur n'est pas gratuit — il coûte la
+ * position de lecture, et couperait la radio :
+ *
+ *   < 5 min    rien. Basculer vers une autre app deux secondes ne doit rien
+ *              coûter, et c'est le cas de loin le plus fréquent.
+ *   ≥ 5 min    le fil est rechargé **sur place** : pas de clignotement, pas de
+ *              perte de position, et surtout compatible avec une écoute.
+ *   ≥ 1 h      tout le document est périmé — météo, sports, fond du mât,
+ *              horaires — et un rechargement franc est plus honnête qu'une
+ *              page à moitié fraîche. Sauf si la radio joue : cette règle-là ne
+ *              se négocie pas (un déploiement coupait l'écoute, voir
+ *              `reloadUnlessListening`).
+ *
+ * Dans tous les cas au-delà de 5 min, on redemande aussi le service worker :
+ * une version déployée pendant l'absence sera prise au prochain moment sûr.
+ */
+const CONTENT_REFRESH_AFTER_MS = 5 * 60 * 1000;
+const HARD_RELOAD_AFTER_MS = 60 * 60 * 1000;
+
+let appHiddenAt = 0;
+
+/**
+ * Que faire au retour, après `awayMs` d'absence. Logique pure : c'est la règle
+ * qu'on veut pouvoir vérifier sans simuler un cycle d'arrière-plan iOS.
+ * @returns {'none'|'refresh'|'reload'}
+ */
+function returnRefreshAction(awayMs, { playing = false } = {}) {
+  if (!(awayMs > 0)) return 'none';
+  if (awayMs < CONTENT_REFRESH_AFTER_MS) return 'none';
+  if (awayMs >= HARD_RELOAD_AFTER_MS && !playing) return 'reload';
+  return 'refresh';
+}
+
+function noteAppHidden() {
+  // Ne pas écraser un départ déjà noté : `pagehide` et `visibilitychange`
+  // arrivent ensemble, et c'est le **premier** instant d'absence qui compte.
+  if (!appHiddenAt) appHiddenAt = Date.now();
+}
+
+function refreshContentOnReturn() {
+  if (document.visibilityState === 'hidden') return;
+  const hiddenAt = appHiddenAt;
+  // Consommé une seule fois : visibilitychange, pageshow et resume arrivent
+  // souvent en rafale au retour, et trois rechargements du fil pour un seul
+  // retour ne diraient rien de plus.
+  appHiddenAt = 0;
+  if (!hiddenAt) return;
+
+  const action = returnRefreshAction(Date.now() - hiddenAt, { playing: isPlaybackActive() });
+  if (action === 'none') return;
+
+  checkForAppUpdate();
+  if (action === 'reload') {
+    window.location.reload();
+    return;
+  }
+  loadNews({ silent: true }).catch(() => { /* le fil déjà affiché reste valable */ });
+}
+
+/**
+ * Surface de test. La règle de retour est de la logique pure : l'exposer
+ * permet de vérifier les seuils et la garde « radio en écoute » sans mettre
+ * réellement une PWA en arrière-plan pendant une heure.
+ */
+window.RadarLifecycle = {
+  _pure: {
+    returnRefreshAction,
+    CONTENT_REFRESH_AFTER_MS,
+    HARD_RELOAD_AFTER_MS,
+  },
+};
+
+function initContentFreshnessLifecycle() {
+  if (IS_TUNER_EMBED) return;
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') noteAppHidden();
+    else refreshContentOnReturn();
+  });
+  window.addEventListener('pagehide', noteAppHidden);
+  // bfcache / retour d'app iOS : le document reprend sans repasser par load.
+  window.addEventListener('pageshow', refreshContentOnReturn);
+  // Cycle de vie Chrome : un onglet gelé puis réveillé n'émet pas toujours
+  // visibilitychange.
+  window.addEventListener('freeze', noteAppHidden);
+  window.addEventListener('resume', refreshContentOnReturn);
 }
 
 async function refreshNowPlayingCache({ render = true } = {}) {
@@ -7044,9 +7203,15 @@ function restoreVolume() {
 // ═══════════════════════════════════════════════════════════════════════════
 //  NEWS WIRE
 // ═══════════════════════════════════════════════════════════════════════════
-async function loadNews() {
+/**
+ * @param {{ silent?: boolean }} [opts] silent : garder le fil affiché pendant
+ *   la requête, au lieu de le remplacer par des squelettes. Sert au
+ *   rafraîchissement de retour d'arrière-plan, où un clignotement de la liste
+ *   déjà lisible serait un pur inconvénient.
+ */
+async function loadNews({ silent = false } = {}) {
   if (!NEWS_LIST) return;
-  NEWS_LIST.innerHTML = newsSkeleton(6);
+  if (!silent || !news.length) NEWS_LIST.innerHTML = newsSkeleton(6);
   try {
     const res = await fetch(appAsset('news.json'), { cache: 'no-cache' });
     const data = await res.json();
