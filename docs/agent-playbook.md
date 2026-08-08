@@ -133,6 +133,7 @@ Alias historiques : `maintain:backgrounds` = masthead ; `…:pomo` etc. inchang�
 | **Android radio** | Un seul `HTMLMediaElement` ; pas de 2ᵉ son ; **pas** de proxy audio dans un Worker CF |
 | **SW** | Bump `radar-shell-vN` si assets shell mât changent ; **aussi** `pomo-shell-vN` si pomo/nations/favorites data JS changent |
 | **Engage / PWA** | Promo déjà douce — ne pas renaguer ni spammer |
+| **Retour dans l'app** | < 5 min rien · ≥ 5 min fil rechargé sur place · ≥ 1 h rechargement dur — **jamais pendant une écoute** (`returnRefreshAction`, `app.js`) |
 | **Thèmes** | dark/light + overlays texte lisibles sur photo mât (cartes météo) |
 | **Banques** | Ne jamais coller `QUEBEC_POMO_*` dans le mât, ni l’inverse |
 | **Favorites** | `permanent: true` — immunisées purge maintain (sauf licence illégale) |
