@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-08T15:00:21.945Z",
+  "updatedAt": "2026-08-08T15:37:51.133Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,14 +7,14 @@
       "name": "CHYZ 94,3",
       "current": {
         "title": "Le Ré-Show : Deuxième Service",
-        "source": "schedule",
+        "source": "api-live",
         "start": "11:00",
         "end": "12:00",
         "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
       },
       "next": {
         "title": "Un Monde de Couleurs et de Son",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "12:00",
         "end": "12:30",
         "url": "https://chyz.ca/emission/un-monde-de-couleurs-et-de-son/"
@@ -22,12 +22,13 @@
       "track": "",
       "showTitle": "Le Ré-Show : Deuxième Service",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T15:00:12.148Z"
+      "checkedAt": "2026-08-08T15:37:37.307Z"
     },
     "cism": {
       "id": "cism",
@@ -54,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T15:00:14.443Z"
+      "checkedAt": "2026-08-08T15:37:39.241Z"
     },
     "ckut": {
       "id": "ckut",
@@ -80,21 +81,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T15:00:16.926Z"
+      "checkedAt": "2026-08-08T15:37:41.700Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Gospel Unlimited",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "10:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/gospel-unlimited"
       },
       "next": {
         "title": "Anatomy of Caribbean Music",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "12:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
@@ -102,12 +103,12 @@
       "track": "",
       "showTitle": "Gospel Unlimited",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T15:00:18.255Z"
+      "checkedAt": "2026-08-08T15:37:43.585Z"
     },
     "cfak": {
       "id": "cfak",
@@ -127,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T15:00:18.907Z"
+      "checkedAt": "2026-08-08T15:37:44.388Z"
     },
     "choq": {
       "id": "choq",
@@ -140,7 +141,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Arielle Soucy - Nid de vie",
+      "track": "Alex LeBlanc - Fais comme si tout allait ben",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -151,7 +152,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-08T15:00:21.593Z"
+      "checkedAt": "2026-08-08T15:37:50.783Z"
     }
   }
 }
