@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-08T21:35:37.222Z",
+  "updatedAt": "2026-08-08T22:25:03.138Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T21:35:23.187Z"
+      "checkedAt": "2026-08-08T22:24:52.926Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T21:35:24.829Z"
+      "checkedAt": "2026-08-08T22:24:54.697Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T21:35:27.099Z"
+      "checkedAt": "2026-08-08T22:24:57.186Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Mo' Ritmo Radio",
-        "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/mo-ritmo-radio"
-      },
-      "next": {
         "title": "The Limelight",
         "source": "schedule-live",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/the-limelight"
       },
+      "next": {
+        "title": "Screamers",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/screamers"
+      },
       "track": "",
-      "showTitle": "Mo' Ritmo Radio",
+      "showTitle": "The Limelight",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T21:35:29.781Z"
+      "checkedAt": "2026-08-08T22:24:59.300Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T21:35:30.516Z"
+      "checkedAt": "2026-08-08T22:25:00.011Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Lucy Dacus - Night Shift",
+      "track": "kerri - Here for you",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-08T21:35:36.871Z"
+      "checkedAt": "2026-08-08T22:25:02.787Z"
     }
   }
 }
