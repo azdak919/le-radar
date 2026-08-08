@@ -1,27 +1,33 @@
 {
-  "updatedAt": "2026-08-08T13:42:57.573Z",
+  "updatedAt": "2026-08-08T14:29:12.171Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Palmarès CHYZ",
         "source": "schedule",
         "start": "10:00",
         "end": "10:30",
         "url": "https://chyz.ca/emission/palmares-chyz/"
       },
+      "next": {
+        "title": "Le Ré-Show : Deuxième Service",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Palmarès CHYZ",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T13:42:42.593Z"
+      "checkedAt": "2026-08-08T14:29:01.103Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +54,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T13:42:45.052Z"
+      "checkedAt": "2026-08-08T14:29:03.756Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Quebec Acadie",
-        "source": "api-live",
-        "start": "06:00",
-        "end": "10:00"
-      },
-      "next": {
         "title": "Making Contact/Anything Goes",
         "source": "api-live",
         "start": "10:00",
         "end": "10:30"
       },
+      "next": {
+        "title": "Samedi Midi",
+        "source": "api-live",
+        "start": "10:30",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "Quebec Acadie",
+      "showTitle": "Making Contact/Anything Goes",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +80,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T13:42:47.859Z"
+      "checkedAt": "2026-08-08T14:29:06.694Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Live Wire Show",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/the-live-wire-show"
-      },
-      "next": {
         "title": "Gospel Unlimited",
         "source": "schedule",
         "start": "10:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/gospel-unlimited"
       },
+      "next": {
+        "title": "Anatomy of Caribbean Music",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
+      },
       "track": "",
-      "showTitle": "The Live Wire Show",
+      "showTitle": "Gospel Unlimited",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T13:42:49.758Z"
+      "checkedAt": "2026-08-08T14:29:08.511Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +127,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T13:42:50.197Z"
+      "checkedAt": "2026-08-08T14:29:08.931Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +140,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "The Brains - Octopi",
+      "track": "Les Louanges - Tu me coupes l",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-08T13:42:57.223Z"
+      "checkedAt": "2026-08-08T14:29:11.819Z"
     }
   }
 }
