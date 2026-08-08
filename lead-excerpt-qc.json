@@ -1,30 +1,30 @@
 {
-  "updated": "2026-08-08T14:34:48.457Z",
+  "updated": "2026-08-08T16:37:21.014Z",
   "total": 185,
   "pool": 58,
   "incomplete": 8,
-  "withLeadExcerpt": 78,
+  "withLeadExcerpt": 79,
   "candidates": 8,
-  "enriched": 2,
-  "failed": 2,
+  "enriched": 4,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
-      "title": "Élections de l’exécutif de l’AÉUM",
-      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
+      "title": "Sois belle et tais-toi",
+      "link": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
       "ok": true,
-      "score": 66,
-      "chars": 400,
-      "sample": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « p",
+      "score": 96,
+      "chars": 295,
+      "sample": "C’est la sécheresse totale dans le cerveau de bien des gens. Le vôtre, peut-être. Mais ne craignez r",
       "changed": true
     },
     {
-      "title": "Pourquoi le L est en premier dans LGBTQ+",
-      "link": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "link": "https://www.delitfrancais.com/2026/03/18/qui-sont-les-agents-qui-patrouillent-notre-campus/",
       "ok": true,
-      "score": 81,
-      "chars": 400,
-      "sample": "Cependant, l’épidémie du sida a modifié le rapport entre les deux groupes. Au cours de cette crise, ",
+      "score": 100,
+      "chars": 396,
+      "sample": "« L’Université McGill est à la recherche de patrouilleurs dynamiques et engagés pour assurer la sécu",
       "changed": true
     },
     {
@@ -55,6 +55,15 @@
       "changed": false
     },
     {
+      "title": "Ask the Trib: How do I survive summer in my hometown?",
+      "link": "https://www.thetribune.ca/student-life/ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026/?utm_source=rss&utm_medium=rss&utm_campaign=ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026",
+      "ok": true,
+      "score": 66,
+      "chars": 400,
+      "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
+      "changed": true
+    },
+    {
       "title": "Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods",
       "link": "https://thelinknewspaper.ca/article/16338",
       "ok": true,
@@ -62,6 +71,15 @@
       "chars": 177,
       "sample": "This history, and much more, is featured in the exhibition. Bellemare was able to gather never-befor",
       "changed": false
+    },
+    {
+      "title": "Les avantages du transport en commun",
+      "link": "https://lecollectif.ca/a-la-une/les-avantages-du-transport-en-commun/",
+      "ok": true,
+      "score": 76,
+      "chars": 400,
+      "sample": "Le transport en commun représente une solution importante pour réduire la pollution causée par les d",
+      "changed": true
     }
   ]
 }
