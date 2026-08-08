@@ -1,38 +1,17 @@
 {
-  "updated": "2026-08-08T10:09:27.803Z",
+  "updated": "2026-08-08T11:39:33.127Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 129,
+  "cited": 128,
   "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 21,
-  "updatedCount": 9,
-  "citedNew": 8,
-  "fallbackNew": 13,
+  "checked": 17,
+  "updatedCount": 4,
+  "citedNew": 3,
+  "fallbackNew": 14,
   "samples": [
-    {
-      "title": "Élections de l’exécutif de l’AÉUM",
-      "source": "Le Délit",
-      "credit": "Photo : Toscane Ralaimongo",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "source": "La Pige",
-      "credit": "Photo : Léa Morin-Letort",
-      "cited": true,
-      "method": "figcaption-paren-kind"
-    },
-    {
-      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
     {
       "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
@@ -48,20 +27,6 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
-      "source": "Quartier Libre",
-      "credit": "Photo : Maryse Boyce",
-      "cited": true,
-      "method": "figcaption-copyright"
-    },
-    {
       "title": "Inside Mile End Kicks",
       "source": "The Link",
       "credit": "Photo: Courtesy of Joe Fuda",
@@ -71,9 +36,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Illustration: Halle Keays",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }

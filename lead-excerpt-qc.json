@@ -1,12 +1,12 @@
 {
-  "updated": "2026-08-08T10:04:25.701Z",
+  "updated": "2026-08-08T11:31:27.583Z",
   "total": 185,
   "pool": 58,
   "incomplete": 8,
   "withLeadExcerpt": 78,
   "candidates": 8,
-  "enriched": 1,
-  "failed": 1,
+  "enriched": 0,
+  "failed": 2,
   "ok": true,
   "samples": [
     {
@@ -16,7 +16,7 @@
       "score": 66,
       "chars": 400,
       "sample": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « p",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Review: Sullivan Fortner Solo at Gesú Concert Hall",
@@ -25,15 +25,6 @@
       "score": 74,
       "chars": 399,
       "sample": "Seated at a Kawai grand piano, he began with a crowd favourite, “Don’t You Worry ’Bout a Thing” by S",
-      "changed": false
-    },
-    {
-      "title": "Les avantages du transport en commun",
-      "link": "https://lecollectif.ca/a-la-une/les-avantages-du-transport-en-commun/",
-      "ok": true,
-      "score": 76,
-      "chars": 400,
-      "sample": "Le transport en commun représente une solution importante pour réduire la pollution causée par les d",
       "changed": false
     },
     {
