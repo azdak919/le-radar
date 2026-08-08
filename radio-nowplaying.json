@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-08T17:04:32.879Z",
+  "updatedAt": "2026-08-08T17:56:45.077Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,17 +28,17 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T17:04:12.133Z"
+      "checkedAt": "2026-08-08T17:56:31.008Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Elkin Polo El Show",
-        "source": "api-live",
-        "start": "09:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "elkin-polo-el-show"
+        "title": "Change le beat",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/change-le-beat"
       },
       "next": {
         "title": "Faites entrer un DJ",
@@ -48,18 +48,14 @@
         "url": "https://cism893.ca/emissions/faites-entrer-un-dj"
       },
       "track": "",
-      "showTitle": "Elkin Polo El Show",
+      "showTitle": "Change le beat",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
         "schedule"
       ],
-      "clientPoll": {
-        "type": "cism-v1",
-        "url": "https://admin.cism893.ca/api/v1/live"
-      },
-      "checkedAt": "2026-08-08T17:04:14.189Z"
+      "clientPoll": null,
+      "checkedAt": "2026-08-08T17:56:32.838Z"
     },
     "ckut": {
       "id": "ckut",
@@ -85,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T17:04:21.203Z"
+      "checkedAt": "2026-08-08T17:56:35.122Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -112,7 +108,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T17:04:23.236Z"
+      "checkedAt": "2026-08-08T17:56:37.873Z"
     },
     "cfak": {
       "id": "cfak",
@@ -132,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T17:04:23.958Z"
+      "checkedAt": "2026-08-08T17:56:38.730Z"
     },
     "choq": {
       "id": "choq",
@@ -145,7 +141,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Coolman Logan - Skate Wing",
+      "track": "GabNo - south durham",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -156,7 +152,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-08T17:04:32.529Z"
+      "checkedAt": "2026-08-08T17:56:44.727Z"
     }
   }
 }
