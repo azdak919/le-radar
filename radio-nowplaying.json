@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-08T20:58:49.015Z",
+  "updatedAt": "2026-08-08T21:35:37.222Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T20:58:35.316Z"
+      "checkedAt": "2026-08-08T21:35:23.187Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Contenu explicite",
+        "title": "Disconomique",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/contenu-explicite"
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/disconomique"
       },
       "next": {
-        "title": "Le radar",
+        "title": "Solénoïde",
         "source": "schedule",
-        "start": "17:00",
-        "end": "17:30",
-        "url": "https://cism893.ca/emissions/le-radar-2"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/solenoide"
       },
       "track": "",
-      "showTitle": "Contenu explicite",
+      "showTitle": "Disconomique",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T20:58:36.838Z"
+      "checkedAt": "2026-08-08T21:35:24.829Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T20:58:40.086Z"
+      "checkedAt": "2026-08-08T21:35:27.099Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Mi Dun Talk",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/mi-dun-talk"
-      },
-      "next": {
         "title": "Mo' Ritmo Radio",
         "source": "schedule-live",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/mo-ritmo-radio"
       },
+      "next": {
+        "title": "The Limelight",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/the-limelight"
+      },
       "track": "",
-      "showTitle": "Mi Dun Talk",
+      "showTitle": "Mo' Ritmo Radio",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T20:58:41.690Z"
+      "checkedAt": "2026-08-08T21:35:29.781Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T20:58:42.420Z"
+      "checkedAt": "2026-08-08T21:35:30.516Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Yocto - Station 01011",
+      "track": "Lucy Dacus - Night Shift",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-08T20:58:48.665Z"
+      "checkedAt": "2026-08-08T21:35:36.871Z"
     }
   }
 }
