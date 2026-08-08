@@ -1,33 +1,33 @@
 {
-  "updatedAt": "2026-08-08T14:29:12.171Z",
+  "updatedAt": "2026-08-08T15:00:21.945Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Palmarès CHYZ",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
-      },
-      "next": {
         "title": "Le Ré-Show : Deuxième Service",
         "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
       },
+      "next": {
+        "title": "Un Monde de Couleurs et de Son",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "12:30",
+        "url": "https://chyz.ca/emission/un-monde-de-couleurs-et-de-son/"
+      },
       "track": "",
-      "showTitle": "Palmarès CHYZ",
+      "showTitle": "Le Ré-Show : Deuxième Service",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T14:29:01.103Z"
+      "checkedAt": "2026-08-08T15:00:12.148Z"
     },
     "cism": {
       "id": "cism",
@@ -54,25 +54,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T14:29:03.756Z"
+      "checkedAt": "2026-08-08T15:00:14.443Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Making Contact/Anything Goes",
-        "source": "api-live",
-        "start": "10:00",
-        "end": "10:30"
-      },
-      "next": {
         "title": "Samedi Midi",
         "source": "api-live",
         "start": "10:30",
         "end": "14:00"
       },
+      "next": {
+        "title": "Funky Revolutions",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "16:00"
+      },
       "track": "",
-      "showTitle": "Making Contact/Anything Goes",
+      "showTitle": "Samedi Midi",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -80,7 +80,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T14:29:06.694Z"
+      "checkedAt": "2026-08-08T15:00:16.926Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -107,7 +107,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T14:29:08.511Z"
+      "checkedAt": "2026-08-08T15:00:18.255Z"
     },
     "cfak": {
       "id": "cfak",
@@ -127,7 +127,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T14:29:08.931Z"
+      "checkedAt": "2026-08-08T15:00:18.907Z"
     },
     "choq": {
       "id": "choq",
@@ -140,7 +140,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Les Louanges - Tu me coupes l",
+      "track": "Arielle Soucy - Nid de vie",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -151,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-08T14:29:11.819Z"
+      "checkedAt": "2026-08-08T15:00:21.593Z"
     }
   }
 }
