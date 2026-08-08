@@ -16,8 +16,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 - Garde-fou anti-effondrement : une grille qui perd plus de 40 % de ses créneaux est refusée au profit de la précédente (`--force` pour outrepasser).
 - Page `/horaires/` (et `/en/schedules/`) réunissant les grilles horaires de toutes les stations, liée depuis le pied de page et depuis le fil d’Ariane des fiches radio.
 - Les fiches radio affichent désormais la grille hebdomadaire **complète** avec les plages `début – fin` ; « À l’antenne » y renvoie directement via l’ancre `#horaire`.
-
-- Détection des **émissions spéciales / hors programmation** : l’adaptateur `chyz-horaire` lit le marqueur « en direct » de `chyz.ca/horaire` aux 30 min et le publie en `api-live`, avec la grille du jour telle qu’elle est à l’instant. Un bloc absent de la grille colligée est marqué `"special": true` dans `radio-nowplaying.json`.
+- Détection des **émissions spéciales / hors programmation**, générique à toutes les stations. L’adaptateur `schedule-live` relit la page horaire de tout poste sans API live (CHYZ, CJLO, CFAK — et tout poste à venir, sans code dédié) à chaque passe du bot, aux 30 min. Quand la station désigne elle-même le bloc à l’antenne — CHYZ marque « en direct » — sa réponse passe en `api-live` ; sinon la résolution horaire sur la grille du jour sort en `schedule-live`, un rang au-dessus de l’instantané colligé. Un bloc absent de la grille publiée est marqué `"special": true` dans `radio-nowplaying.json`.
+- Bot `detect-schedule-drift.js` (quotidien) : compare la grille publiée à la page relue à l’instant et écrit `radio-schedule-drift.json`. Il distingue le **hors-programmation** d’un soir de la **grille refaite** à la rentrée, en exigeant deux signaux (≥ 40 % de la grille **et** ≥ 8 créneaux) — une proportion seule ment sur les petites grilles, où un unique match pèse déjà plus de 40 %. Les écarts remontent dans `bot-status.json`.
 
 ### Corrigé
 

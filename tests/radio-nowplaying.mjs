@@ -13,7 +13,7 @@ const {
   scheduleHasSlot,
   liveEndDeltaMin,
 } = nowPlaying;
-const { parseChyzGrid, normalizeSlot } = scheduleLib;
+const { parseChyzGrid, normalizeSlot, stripTransientFlags } = scheduleLib;
 
 // ── Utilitaires ─────────────────────────────────────────────────────────────
 
@@ -356,8 +356,13 @@ console.log('OK radio-nowplaying (next plus tôt multi-stations)');
   assert.equal(live[0].title, 'Capitales de Québec', 'le bloc en direct est le match');
   assert.equal(live[0].start, '16:50', 'heure du bloc en direct lue sur la page');
   assert.ok(
-    !normalizeSlot(live[0]).live,
-    'le marqueur reste transitoire : jamais publié dans radio-schedules.json',
+    normalizeSlot(live[0]).live,
+    'le marqueur traverse la normalisation (le now-playing en a besoin)',
+  );
+  assert.ok(
+    !stripTransientFlags([normalizeSlot(live[0])])[0].live,
+    'mais il est ôté avant publication : dans un fichier relu deux semaines, '
+    + 'il désignerait une émission finie comme étant à l’antenne',
   );
 
   // 2. Le marqueur n'est suivi que s'il décrit bien l'instant présent
@@ -430,6 +435,31 @@ console.log('OK radio-nowplaying (next plus tôt multi-stations)');
     },
     hits: [{ current: capitales, next: null, track: '' }],
     expectNext: null,
+  });
+
+  // 6. Le veto vaut aussi pour une grille relue à l'instant : c'est ce qui
+  //    protège les postes sans API live (CJLO, CFAK et tout poste à venir).
+  mergeCase({
+    id: 'cfak',
+    label: 'poste sans API live (grille du jour vs grille publiée)',
+    now: TORONTO_FRI_1800,
+    scheduleHit: {
+      current: { title: 'Émission régulière', start: '17:00', end: '18:00', source: 'schedule' },
+      next: { title: 'Créneau évincé', start: '18:00', end: '19:00', source: 'schedule' },
+    },
+    hits: [{
+      current: {
+        title: 'Spécial élections',
+        start: '17:00',
+        end: '21:00',
+        source: 'schedule-live',
+        special: true,
+      },
+      next: { title: 'Nuit', start: '21:00', end: '00:00', source: 'schedule-live' },
+      track: '',
+    }],
+    expectCurrent: 'Spécial élections',
+    expectNext: 'Nuit',
   });
 
   console.log('OK radio-nowplaying (émissions spéciales / hors programmation)');
