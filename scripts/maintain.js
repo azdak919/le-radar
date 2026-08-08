@@ -170,6 +170,42 @@ function buildStatus(steps) {
     });
   }
 
+  // Horaires : la grille publiée décrit-elle encore ce que les stations
+  // diffusent ? Le hors-programmation est déjà rattrapé à l'antenne par
+  // l'adaptateur `schedule-live` ; ces alertes le rendent simplement visible,
+  // et distinguent la spéciale d'un soir d'une grille refaite à la rentrée.
+  const drift = readJson('radio-schedule-drift.json', {});
+  const driftSummary = drift.summary || {};
+  const driftDetail = (ids) => (ids || [])
+    .map((id) => {
+      const st = (drift.stations || []).find((s) => s.id === id);
+      return st ? `${id} (+${st.added.length} −${st.removed.length})` : id;
+    })
+    .join(', ');
+
+  if ((driftSummary.drift || []).length) {
+    alerts.push({
+      level: 'info',
+      code: 'schedule_drift',
+      message: `Hors programmation : ${driftDetail(driftSummary.drift)}`,
+    });
+  }
+  if ((driftSummary.overhaul || []).length) {
+    alerts.push({
+      level: 'warn',
+      code: 'schedule_overhaul',
+      message: `Grille refaite : ${driftDetail(driftSummary.overhaul)}`
+        + ' — relancer fetch-radio-schedules.js --update',
+    });
+  }
+  if ((driftSummary.unreachable || []).length) {
+    alerts.push({
+      level: 'warn',
+      code: 'schedule_source_down',
+      message: `Source horaire muette : ${(driftSummary.unreachable || []).join(', ')}`,
+    });
+  }
+
   const healthy = failedSteps.length === 0 && deadNews.length < (newsSources.active || []).length;
 
   return {
@@ -272,6 +308,9 @@ async function main() {
     ['News source maintainer', `node scripts/discover-news-sources.js ${flag}`.trim()],
     ['Stream tracker + radio promotion', `node scripts/discover-streams.js ${flag}`.trim()],
     ['Radio now-playing metadata', `node scripts/fetch-radio-nowplaying.js ${flag}`.trim()],
+    // Après le now-playing : le rapport de dérive est lu par buildStatus() plus
+    // bas, il doit donc être écrit dans la même passe.
+    ['Radio schedule drift', `node scripts/detect-schedule-drift.js ${flag}`.trim()],
     ['News sources verify', 'node scripts/verify-news-sources.js'],
     ['News aggregator', `node scripts/fetch-news.js ${flag}`.trim()],
     ['Author QC', `node scripts/verify-authors.js ${flag}`.trim()],

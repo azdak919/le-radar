@@ -12,7 +12,12 @@
 
 const fs = require('fs');
 const path = require('path');
-const { collateStationGrid, gridCoverage, DEFAULT_TZ } = require('./radio-schedule-lib');
+const {
+  collateStationGrid,
+  gridCoverage,
+  stripTransientFlags,
+  DEFAULT_TZ,
+} = require('./radio-schedule-lib');
 
 const ROOT = path.join(__dirname, '..');
 const RADIOS_PATH = path.join(ROOT, 'radios.json');
@@ -128,7 +133,10 @@ async function main() {
       sources: finalSources,
       checkedAt,
       ...(verifiedWeekOf ? { verifiedWeekOf } : {}),
-      grid: finalGrid,
+      // `live` vaut pour la seconde où la page a été lue : publié dans un
+      // fichier relu pendant deux semaines, il désignerait une émission finie
+      // depuis longtemps comme étant à l'antenne.
+      grid: stripTransientFlags(finalGrid),
     };
     totalSlots += finalGrid.length;
     const cov = gridCoverage(finalGrid);
