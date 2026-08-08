@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-08-08T16:29:36.410Z",
+  "updatedAt": "2026-08-08T17:04:32.879Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Un Monde de Couleurs et de Son",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "12:30",
-        "url": "https://chyz.ca/emission/un-monde-de-couleurs-et-de-son/"
-      },
-      "next": {
         "title": "Radio Futura",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "13:00",
         "end": "16:00",
         "url": "https://chyz.ca/emission/radio-futura/"
       },
+      "next": {
+        "title": "Capitales de Québec",
+        "source": "schedule-live",
+        "start": "18:50",
+        "end": "23:00",
+        "url": "https://chyz.ca/emission/capitales-de-quebec/"
+      },
       "track": "",
-      "showTitle": "Un Monde de Couleurs et de Son",
+      "showTitle": "Radio Futura",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,34 +28,38 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T16:29:21.555Z"
+      "checkedAt": "2026-08-08T17:04:12.133Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
         "title": "Elkin Polo El Show",
-        "source": "schedule",
+        "source": "api-live",
         "start": "09:00",
-        "end": "13:00",
-        "url": "https://cism893.ca/emissions/elkin-polo-el-show"
+        "url": "https://stream03.ustream.ca/cism128.mp3",
+        "slug": "elkin-polo-el-show"
       },
       "next": {
-        "title": "Change le beat",
+        "title": "Faites entrer un DJ",
         "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/change-le-beat"
+        "start": "14:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/faites-entrer-un-dj"
       },
       "track": "",
       "showTitle": "Elkin Polo El Show",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
+        "api-live",
         "schedule"
       ],
-      "clientPoll": null,
-      "checkedAt": "2026-08-08T16:29:23.609Z"
+      "clientPoll": {
+        "type": "cism-v1",
+        "url": "https://admin.cism893.ca/api/v1/live"
+      },
+      "checkedAt": "2026-08-08T17:04:14.189Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,7 +85,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T16:29:26.363Z"
+      "checkedAt": "2026-08-08T17:04:21.203Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +112,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T16:29:28.972Z"
+      "checkedAt": "2026-08-08T17:04:23.236Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +132,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T16:29:29.856Z"
+      "checkedAt": "2026-08-08T17:04:23.958Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +145,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Misa & Nicholas Craven - Berets",
+      "track": "Coolman Logan - Skate Wing",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -152,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-08T16:29:36.059Z"
+      "checkedAt": "2026-08-08T17:04:32.529Z"
     }
   }
 }
