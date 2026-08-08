@@ -147,7 +147,18 @@ function normalizeSlot(slot) {
   const host = decodeHtmlEntities(String(slot.host || '')).replace(/\s+/g, ' ').trim();
   if (host) out.host = host;
   if (url) out.url = url;
+  // Marqueur « à l'antenne maintenant » de la station (CHYZ). Vrai à la
+  // seconde où la page a été lue, faux dès la minute suivante : il traverse la
+  // collecte pour le now-playing, mais `stripTransientFlags` l'ôte avant
+  // publication dans radio-schedules.json.
+  if (slot.live) out.live = true;
   return out;
+}
+
+/** Grille prête à publier : sans les marqueurs valables au seul instant de lecture. */
+function stripTransientFlags(grid) {
+  if (!Array.isArray(grid)) return [];
+  return grid.map(({ live, ...slot }) => slot);
 }
 
 function slotKey(s) {
@@ -1149,6 +1160,7 @@ module.exports = {
   expandTruncatedTitle,
   gridCoverage,
   normalizeSlot,
+  stripTransientFlags,
   mergeGrids,
   zonedNow,
   resolveCurrentSlot,

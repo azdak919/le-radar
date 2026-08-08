@@ -99,6 +99,7 @@ porte jamais la barre radio.
 | `radio-schedules.seed.json` | Config sources + grilles manuelles | humain + `discover-schedule-sources.js` |
 | `radio-schedules.json` | Grilles colligées « à l'antenne » (lu par le site) | `fetch-radio-schedules.js` |
 | `radio-nowplaying.json` | En cours + à venir (API live / grille / ICY) | `fetch-radio-nowplaying.js` (+ re-poll navigateur si `clientPoll`) |
+| `radio-schedule-drift.json` | Écart grille publiée ↔ page relue à l'instant | `detect-schedule-drift.js` |
 | Photos vedette | Source → scrape page → banque libre thématique (+ QC visuelle soft mât) → **campus curaté** (+ merge banque universities) | `ensure-lead-images.js` + `stock-photo-lib.js` + `photo-visual-qc-lib.js` + `campus-photo-bank.js` |
 | `data/quebec-backgrounds.json` | Banque **mât** paysages QC (max 50) — jamais le pomo | `maintain-quebec-backgrounds.js --profile masthead` |
 | `quebec-backgrounds-data.js` | Export mât paysages (`QUEBEC_BACKGROUNDS`) | idem |
@@ -133,6 +134,7 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 | Résultats sportifs RSEQ | `fetch-sports.js` | **6×/jour + sam/dim 14 h** (`update-sports.yml`) — heures de consultation QC (matin, midi, fin de cours, soirée matchs, post-match, rattrapage) ; source en panne → snapshot précédent conservé |
 | Extrait « à la une » | `enrich-lead-excerpts.js` | 7×/jour (après `fetch-news`) |
 | En cours + à venir (API / grille / ICY) | `fetch-radio-nowplaying.js` | Aux 30 min |
+| Dérive des grilles (rapport) | `detect-schedule-drift.js` | **Quotidien** (23:10 UTC ≈ 19:10 HAE) |
 | Découverte sources horaires | `discover-schedule-sources.js` | **Aux 2 semaines** (avant les horaires) |
 | Horaires « à l'antenne » | `fetch-radio-schedules.js` | **Aux 2 semaines** |
 | Wallpaper mât paysages | `maintain-quebec-backgrounds.js --profile masthead` | Hebdo ; plafond 50 ; **mât seulement** |
@@ -153,6 +155,7 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 - Playwright CI : **2 retries** + specs mât (météo/sports) en projet serial.
 - `update-radio-nowplaying.yml` — titre en ondes via API station / ICY (aux 30 min)
 - `update-radio-schedules.yml` — horaires colligés « à l'antenne » (aux 2 semaines)
+- `detect-schedule-drift.yml` — écart grille publiée ↔ page du jour (quotidien, en soirée QC)
 - `discover-news-sources.yml` — santé des flux RSS (hebdo)
 - `update-institutions.yml` — catalogue établissements (3×/an)
 
@@ -473,20 +476,61 @@ l'émission régulière du créneau disparaît. Une collecte vieille de quinze j
 annonçait donc « À venir · Capitales de Québec · 18:50 » pendant que le match
 jouait depuis 16:50.
 
-Deux garde-fous, tous deux dans le circuit **aux 30 min** du now-playing :
+#### Corriger — adaptateur `schedule-live` (aux 30 min)
 
-- **Marqueur `en direct`** — `chyz.ca/horaire` marque le bloc réellement à
-  l'antenne. L'adaptateur `chyz-horaire` (`radio-nowplaying-lib.js`) le lit à
-  chaque passe et le publie en `api-live`, avec le reste de la grille du jour
-  tel qu'il est *maintenant*. Le marqueur n'est suivi que s'il couvre encore
-  l'instant présent (la page peut sortir d'un cache), et le bloc absent de la
-  grille publiée est marqué `"special": true` dans `radio-nowplaying.json`.
-- **Veto du direct** — rien ne peut commencer avant la fin de ce qui joue.
-  Un `current` qui fait autorité (source API) écarte tout « à venir » qu'il
-  recouvre, côté bot (`mergeOnAirResults`) comme côté site
-  (`authoritativeAirLeftMin` dans `app.js`, qui tient entre deux passes du
-  bot). Une grille, elle, n'obtient jamais ce droit de veto : elle ne peut pas
-  se corriger elle-même.
+Tout poste **sans API live** relit sa page horaire à chaque passe du bot
+now-playing et en tire l'antenne du moment. Aucun code par station : le poste
+en bénéficie dès qu'il a une source dans le seed, **ceux à venir compris**.
+Aujourd'hui : CHYZ, CJLO, CFAK.
+
+Deux qualités de réponse, distinguées par leur `source` :
+
+| `source` | Ce que c'est | Rang |
+|---|---|---|
+| `api-live` | la station **désigne** le bloc à l'antenne (CHYZ marque « en direct ») | 4 |
+| `schedule-live` | résolution horaire sur la grille **du jour** | 3 |
+| `schedule` | notre instantané colligé, jusqu'à deux semaines d'âge | 2 |
+| `stream` | métadonnées ICY (souvent le morceau) | 1 |
+
+Le marqueur `en direct` n'est suivi que s'il couvre encore l'instant présent
+(la page peut sortir d'un cache). Un bloc absent de la grille publiée ressort
+`"special": true` dans `radio-nowplaying.json`.
+
+Le marqueur `live` traverse `normalizeSlot` — le now-playing en a besoin — mais
+`stripTransientFlags` l'ôte avant écriture dans `radio-schedules.json` : publié
+dans un fichier relu pendant deux semaines, il désignerait une émission finie
+depuis longtemps comme étant à l'antenne.
+
+**Veto du direct** : rien ne peut commencer avant la fin de ce qui joue. Un
+`current` de rang ≥ 3 écarte tout « à venir » qu'il recouvre, côté bot
+(`mergeOnAirResults`) comme côté site (`authoritativeAirLeftMin` dans `app.js`,
+qui tient entre deux passes du bot). La grille embarquée n'obtient jamais ce
+veto — elle ne peut pas se corriger elle-même ; la même page relue à l'instant,
+si.
+
+#### Surveiller — `detect-schedule-drift.js` (quotidien)
+
+Compare la grille publiée à la grille relue à l'instant, pour chaque poste du
+seed, et écrit `radio-schedule-drift.json`. Il **ne corrige rien** — l'affichage
+est déjà rattrapé par `schedule-live` — il rend le phénomène visible : sans lui,
+une station qui sort de sa grille reste un angle mort, et c'est exactement ainsi
+que le cas CHYZ a été découvert, sur une capture d'écran.
+
+| Statut | Sens | Geste |
+|---|---|---|
+| `stable` | grille identique | — |
+| `drift` | quelques créneaux bougent → hors programmation | rien, `schedule-live` rattrape |
+| `overhaul` | grille refaite (rentrée) | `fetch-radio-schedules.js --update` |
+| `unreachable` | source muette | vérifier le parseur / le site |
+
+Le partage `drift` / `overhaul` exige **deux** signaux : au moins 40 % de la
+grille **et** au moins 8 créneaux. La proportion seule ment sur les petites
+grilles — CHYZ publie 25 créneaux, CHOQ 22, et un seul soir de match y pèse
+déjà plus de 40 %. Les écarts remontent dans `bot-status.json`
+(`schedule_drift` info, `schedule_overhaul` et `schedule_source_down` warn).
+
+Une grille fraîche **vide** n'est jamais lue comme « la station a tout
+changé » : c'est `unreachable`, et rien n'est imputé à la station.
 
 ---
 

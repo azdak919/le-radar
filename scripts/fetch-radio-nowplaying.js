@@ -31,6 +31,7 @@ const {
 const ROOT = path.join(__dirname, '..');
 const RADIOS_PATH = path.join(ROOT, 'radios.json');
 const SCHEDULES_PATH = path.join(ROOT, 'radio-schedules.json');
+const SEED_PATH = path.join(ROOT, 'radio-schedules.seed.json');
 const OUT_PATH = path.join(ROOT, 'radio-nowplaying.json');
 const doUpdate = process.argv.includes('--update');
 
@@ -51,6 +52,9 @@ function formatShow(show) {
 async function main() {
   const radios = readJson(RADIOS_PATH, []);
   const schedules = readJson(SCHEDULES_PATH, { stations: {}, timezone: DEFAULT_TZ });
+  // Les postes sans API live relisent leur page horaire à chaque passe
+  // (adaptateur `schedule-live`) : c'est le seed qui dit où la chercher.
+  const seed = readJson(SEED_PATH, { stations: {} });
   const timeZone = schedules.timezone || DEFAULT_TZ;
   const playable = radios.filter((r) => r.stream);
   const stations = {};
@@ -63,7 +67,7 @@ async function main() {
     const inferred = inferNowPlayingSources(radio)
       .map((s) => s.type + (s.base || s.url ? `:${s.base || s.url}` : ''))
       .join(', ');
-    const hit = await probeStationOnAir(radio, { schedules, timeZone });
+    const hit = await probeStationOnAir(radio, { schedules, seed, timeZone });
 
     stations[radio.id] = {
       id: hit.id,

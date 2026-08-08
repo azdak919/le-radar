@@ -4067,7 +4067,15 @@ function isAuthoritativeLiveShow(radio) {
 }
 
 /**
- * Minutes restantes de l'émission en ondes quand elle fait autorité, sinon null.
+ * Sources plus fraîches que la grille hebdo embarquée : l'API de la station,
+ * et sa page horaire relue à l'instant par le bot (`schedule-live`). Voir
+ * `sourceRank` dans radio-nowplaying-lib.js — garder les deux alignés.
+ */
+const FRESH_AIR_SOURCES = new Set(['api-live', 'schedule-live']);
+
+/**
+ * Minutes restantes de l'émission en ondes quand sa source bat la grille
+ * embarquée, sinon null.
  *
  * Une diffusion hors programmation — un match dont l'heure a bougé le jour même
  * — recouvre des créneaux que la grille hebdo, collectée aux deux semaines,
@@ -4076,12 +4084,12 @@ function isAuthoritativeLiveShow(radio) {
  * commencer avant la fin de ce qui joue : cette durée sert de plancher au
  * « à venir ».
  *
- * Seule une source API l'ouvre : une grille ne se corrige pas elle-même, et un
- * `current` déjà terminé (fenêtre dépassée) ne barre plus rien.
+ * La grille embarquée n'ouvre jamais ce veto — elle ne peut pas se corriger
+ * elle-même — et un `current` déjà terminé (fenêtre dépassée) ne barre plus rien.
  */
 function authoritativeAirLeftMin(radio) {
-  if (!isAuthoritativeLiveShow(radio)) return null;
   const cur = botCurrentShow(radio);
+  if (!FRESH_AIR_SOURCES.has(String(cur?.source || ''))) return null;
   const start = scheduleTimeToMin(cur?.start);
   const end = scheduleTimeToMin(cur?.end);
   if (start == null || end == null) return null;
