@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-08-08T15:37:51.133Z",
+  "updatedAt": "2026-08-08T16:29:36.410Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Le Ré-Show : Deuxième Service",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
-      },
-      "next": {
         "title": "Un Monde de Couleurs et de Son",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "12:00",
         "end": "12:30",
         "url": "https://chyz.ca/emission/un-monde-de-couleurs-et-de-son/"
       },
+      "next": {
+        "title": "Radio Futura",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "16:00",
+        "url": "https://chyz.ca/emission/radio-futura/"
+      },
       "track": "",
-      "showTitle": "Le Ré-Show : Deuxième Service",
+      "showTitle": "Un Monde de Couleurs et de Son",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T15:37:37.307Z"
+      "checkedAt": "2026-08-08T16:29:21.555Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T15:37:39.241Z"
+      "checkedAt": "2026-08-08T16:29:23.609Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T15:37:41.700Z"
+      "checkedAt": "2026-08-08T16:29:26.363Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Gospel Unlimited",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/gospel-unlimited"
-      },
-      "next": {
         "title": "Anatomy of Caribbean Music",
         "source": "schedule-live",
         "start": "12:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
       },
+      "next": {
+        "title": "Caribbean Callaloo",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/caribbean-callaloo"
+      },
       "track": "",
-      "showTitle": "Gospel Unlimited",
+      "showTitle": "Anatomy of Caribbean Music",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T15:37:43.585Z"
+      "checkedAt": "2026-08-08T16:29:28.972Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-08T15:37:44.388Z"
+      "checkedAt": "2026-08-08T16:29:29.856Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +141,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Alex LeBlanc - Fais comme si tout allait ben",
+      "track": "Misa & Nicholas Craven - Berets",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -152,7 +152,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-08T15:37:50.783Z"
+      "checkedAt": "2026-08-08T16:29:36.059Z"
     }
   }
 }
