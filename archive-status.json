@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-09T04:54:38.793Z",
+  "updated": "2026-08-09T10:08:44.313Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -1182,14 +1182,30 @@
       "via": "save-page-now",
       "source": "Le Collectif",
       "snapshot": "https://web.archive.org/web/20260805170842/https://lecollectif.ca/a-la-une/le-canada-et-ses-provinces-face-a-washington/"
+    },
+    "https://lecollectif.ca/a-la-une/raid-marocain-en-espagne/": {
+      "at": "2026-08-09T04:52:00.000Z",
+      "via": "existant",
+      "source": "Le Collectif"
+    },
+    "https://lecollectif.ca/a-la-une/philippe-lacasse-une-performance-exceptionnelle/": {
+      "at": "2026-08-09T10:08:27.480Z",
+      "via": "save-page-now",
+      "source": "Le Collectif",
+      "snapshot": "https://web.archive.org/web/20260809100812/https://lecollectif.ca/a-la-une/philippe-lacasse-une-performance-exceptionnelle/"
+    },
+    "https://lecollectif.ca/a-la-une/un-ete-parseme-dexpositions/": {
+      "at": "2026-08-09T05:55:39.000Z",
+      "via": "existant",
+      "source": "Le Collectif"
     }
   },
   "stats": {
-    "total": 214,
+    "total": 217,
     "lastRun": {
-      "saved": 0,
-      "skipped": 0,
-      "failed": 3,
+      "saved": 1,
+      "skipped": 2,
+      "failed": 0,
       "stoppedEarly": false
     }
   },
@@ -1197,17 +1213,17 @@
     "Le Collectif": {
       "host": "lecollectif.ca",
       "pages": 25,
-      "checkedAt": "2026-08-02T06:19:47.106Z"
+      "checkedAt": "2026-08-09T10:07:36.908Z"
     },
     "The Tribune": {
       "host": "www.thetribune.ca",
       "pages": 33,
-      "checkedAt": "2026-08-02T06:19:56.663Z"
+      "checkedAt": "2026-08-09T10:07:40.291Z"
     },
     "The Link": {
       "host": "thelinknewspaper.ca",
       "pages": 128,
-      "checkedAt": "2026-08-02T06:20:04.154Z"
+      "checkedAt": "2026-08-09T10:07:42.751Z"
     },
     "The McGill Daily": {
       "host": "www.mcgilldaily.com",
