@@ -789,26 +789,70 @@ assert(
   /\.news-tail-toggle\s*\{[^}]*padding:\s*8px 12px/.test(styleCss.replace(/\s+/g, ' ')),
   'style : .news-tail-toggle padding 8px 12px (parité Plus de sources)',
 );
-// CTA mât : pastille « Sports », crossfade superposé + dédup miroirs (focus-group D).
+// CTA mât — focus-group le-radar-sports-first-glance / -cta-sports-motion /
+// -cta-sports-rhythm / -cta-sports-badge. Registre d'alerte réservé au direct,
+// roulement vertical, rotation seulement là où on peut l'arrêter.
+const appFlat = appJs.replace(/\s+/g, ' ');
+const cssFlat = styleCss.replace(/\s+/g, ' ');
+
 assert(
   /const SPORTS_CTA_TAG\s*=\s*['"]Sports['"]/.test(appJs),
-  'app.js : pastille CTA mât = « Sports » (pas le nom long de la section)',
-);
-// Le texte d'information de la CTA ne pulse pas : la pulsation redémarrait à
-// 0 % dès la fin du fondu et faisait sauter l'opacité de 1 à 0,82 — le « clac »
-// que le crossfade était justement censé supprimer. Halo et badge, eux, gardent
-// leur pulsation : ce sont eux qui portent l'appel à l'attention.
-assert(
-  !/\.sports-chip__cta-label[^{]*\{[^}]*sports-cta-label-pulse/.test(styleCss.replace(/\s+/g, ' ')),
-  'style : le texte de la CTA sports ne doit pas pulser (fondu seul)',
+  'app.js : pastille CTA mât = « Sports » au repos (pas le nom long de la section)',
 );
 assert(
-  !/\.sports-chip__cta-chev\s*\{[^}]*sports-cta-label-pulse/.test(styleCss.replace(/\s+/g, ' ')),
-  'style : le chevron de la CTA sports ne doit pas pulser (cohérence avec le texte)',
+  /const SPORTS_CTA_TAG_LIVE\s*=\s*['"]En cours['"]/.test(appJs),
+  'app.js : le direct est le seul cas qui remplace « Sports » (override mainteneur)',
+);
+// Le point live était créé sans condition et pulsait toute l'année, y compris
+// pour un match à quinze jours. Il ne doit plus exister hors direct.
+assert(
+  /if \(live\) \{ const dot = document\.createElement\('span'\); dot\.className = 'sports-chip__cta-live';/
+    .test(appFlat),
+  'app.js : le point live n\'est rendu que pendant un match en cours',
+);
+assert(
+  appJs.includes('function sportsGameIsLive')
+    && appJs.includes('function sportsCtaState')
+    && appJs.includes('SPORTS_LIVE_VISUAL_LEAD_MS')
+    && appJs.includes('SPORTS_LIVE_VISUAL_TAIL_MS'),
+  'app.js : prédicat « en cours » dédié au registre visuel (pas le tri)',
+);
+assert(
+  /\[data-cta-state="live"\][^{]*\{[^}]*sports-cta-ring-pulse/.test(cssFlat),
+  'style : le halo de la CTA ne pulse que pendant un match en cours',
+);
+assert(
+  /\[data-cta-state="live"\][^{]*\.sports-chip__cta-tag[^{]*\{[^}]*sports-cta-tag-pulse/.test(cssFlat),
+  'style : la pastille ne pulse que pendant un match en cours',
 );
 assert(
   /sports-cta-ring-pulse/.test(styleCss) && /sports-cta-tag-pulse/.test(styleCss),
-  'style : halo et badge de la CTA sports gardent leur pulsation',
+  'style : halo et badge de la CTA sports gardent leur pulsation (en direct)',
+);
+// Le fondu croisé superposait deux textes de longueurs différentes à mi-opacité :
+// illisible pendant ~250 ms. Le roulement ne montre jamais qu'une accroche.
+assert(
+  !appJs.includes('crossfadeSportsCtaLabel') && !appJs.includes('SPORTS_CTA_CROSSFADE_MS'),
+  'app.js : plus de fondu croisé sur l\'accroche CTA (verdict le-radar-cta-sports-motion)',
+);
+assert(
+  appJs.includes('function sportsCtaMayRotate')
+    && appJs.includes('SPORTS_CTA_ROTATE_MEDIA')
+    && /const SPORTS_CTA_DWELL_MS\s*=\s*24000/.test(appJs)
+    && appJs.includes('sportsCtaPaused'),
+  'app.js : rotation CTA lente, au pointeur fin seulement, en pause au survol',
+);
+// Le marqueur temporel et la fraîcheur sont rendus dans la carte : title seul
+// est invisible au doigt (garde-fous marqueur-non-tronque et fraicheur-visible).
+assert(
+  appJs.includes('sports-chip__cta-eyebrow')
+    && appJs.includes('sports-chip__cta-sub')
+    && appJs.includes('function sportsUpdatedShort'),
+  'app.js : marqueur temporel + horodatage rendus dans la carte CTA',
+);
+assert(
+  /const SPORTS_CTA_FRESH_RESULT_MS\s*=\s*48 \* 3600 \* 1000/.test(appJs),
+  'app.js : un résultat passe devant le calendrier pendant 48 h',
 );
 
 // Fraîcheur des articles : jour civil québécois, pas une fenêtre de minutes.
@@ -820,20 +864,29 @@ assert(
 );
 
 assert(
-  appJs.includes('crossfadeSportsCtaLabel')
+  appJs.includes('rollSportsCtaLabel')
     && appJs.includes('sports-chip__cta-stack')
-    && appJs.includes('is-fading-out')
-    && appJs.includes('is-fading-in')
+    && appJs.includes('is-rolling-out')
+    && appJs.includes('is-rolling-in')
+    && /const SPORTS_CTA_ROLL_MS\s*=\s*280/.test(appJs)
     && appJs.includes('sportsDedupeMatchSlides')
     && appJs.includes('sportsMatchDedupeKey')
     && appJs.includes('sportsSoftSportDiversity'),
-  'app.js : CTA = dédup matchs + crossfade superposé 2 couches (pas de trou)',
+  'app.js : CTA = dédup matchs + roulement vertical 2 couches (pas de trou)',
 );
 assert(
   styleCss.includes('sports-chip__cta-stack')
-    && styleCss.includes('is-fading-out')
-    && styleCss.includes('is-fading-in'),
-  'style : stack CTA 2 couches pour crossfade superposé',
+    && styleCss.includes('is-rolling-out')
+    && styleCss.includes('is-rolling-in')
+    && styleCss.includes('@keyframes sports-cta-roll-in')
+    && styleCss.includes('@keyframes sports-cta-roll-out'),
+  'style : stack CTA 2 couches + keyframes du roulement vertical',
+);
+// Roulement et marquee vivent sur deux nœuds : translateY sur la couche,
+// translateX sur le texte. Sur le même nœud, ils se marchaient dessus.
+assert(
+  /\.sports-chip__cta-label\.is-front:not\(\.is-rolling-out\) \.sports-chip__cta-text/.test(cssFlat),
+  'style : le marquee CTA porte sur le texte, pas sur la couche qui roule',
 );
 // Puces scores : indépendantes + dwell lecture + marquee aller-retour complet.
 assert(
