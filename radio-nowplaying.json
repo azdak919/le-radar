@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-09T22:39:27.083Z",
+  "updatedAt": "2026-08-09T23:28:15.338Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T22:39:12.466Z"
+      "checkedAt": "2026-08-09T23:28:01.048Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T22:39:14.989Z"
+      "checkedAt": "2026-08-09T23:28:03.589Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Desi Beats",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Bluegrass Rambling",
         "source": "api-live",
         "start": "19:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Country Classics",
+        "source": "api-live",
+        "start": "20:00",
+        "end": "21:00"
+      },
       "track": "",
-      "showTitle": "Desi Beats",
+      "showTitle": "Bluegrass Rambling",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T22:39:18.024Z"
+      "checkedAt": "2026-08-09T23:28:06.640Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Bills Country and Western Favourites",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
-      },
-      "next": {
         "title": "No Boundaries",
         "source": "schedule",
         "start": "19:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/no-boundaries"
       },
+      "next": {
+        "title": "Eastern Promises",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "20:30",
+        "url": "http://www.cjlo.com/shows/eastern-promises"
+      },
       "track": "",
-      "showTitle": "Bills Country and Western Favourites",
+      "showTitle": "No Boundaries",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T22:39:19.911Z"
+      "checkedAt": "2026-08-09T23:28:08.152Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T22:39:20.517Z"
+      "checkedAt": "2026-08-09T23:28:08.629Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "ID — Velours-Velours",
+      "track": "ID - Raccoon",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-09T22:39:26.732Z"
+      "checkedAt": "2026-08-09T23:28:14.988Z"
     }
   }
 }
