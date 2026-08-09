@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-09T18:01:10.127Z",
+  "updatedAt": "2026-08-09T19:11:19.483Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T18:00:55.345Z"
+      "checkedAt": "2026-08-09T19:11:04.478Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T18:00:57.920Z"
+      "checkedAt": "2026-08-09T19:11:06.891Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T18:01:00.861Z"
+      "checkedAt": "2026-08-09T19:11:10.007Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Cinema Smackdown",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/cinema-smackdown"
-      },
-      "next": {
         "title": "CJLO's Alternative Mega Mix",
         "source": "schedule",
         "start": "15:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
+      "next": {
+        "title": "Grade A Explosives",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/grade-a-explosives"
+      },
       "track": "",
-      "showTitle": "Cinema Smackdown",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T18:01:02.922Z"
+      "checkedAt": "2026-08-09T19:11:12.018Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T18:01:03.432Z"
+      "checkedAt": "2026-08-09T19:11:12.816Z"
     },
     "choq": {
       "id": "choq",
@@ -152,7 +152,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "ID - Alix-Fernz",
+      "track": "ID - Kat-Pereira",
       "showTitle": "Pôle hip-hop",
       "host": "",
       "source": "api-live",
@@ -163,7 +163,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-09T18:01:09.775Z"
+      "checkedAt": "2026-08-09T19:11:19.133Z"
     }
   }
 }
