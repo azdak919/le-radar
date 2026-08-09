@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-09T10:08:44.313Z",
+  "updated": "2026-08-09T16:02:19.360Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -1203,8 +1203,8 @@
   "stats": {
     "total": 217,
     "lastRun": {
-      "saved": 1,
-      "skipped": 2,
+      "saved": 0,
+      "skipped": 0,
       "failed": 0,
       "stoppedEarly": false
     }
@@ -1228,17 +1228,18 @@
     "The McGill Daily": {
       "host": "www.mcgilldaily.com",
       "pages": 229,
-      "checkedAt": "2026-08-02T11:05:07.905Z"
+      "checkedAt": "2026-08-02T11:05:07.905Z",
+      "stale": true
     },
     "La Pige": {
       "host": "lapige.atmjonquiere.com",
       "pages": 8,
-      "checkedAt": "2026-08-02T11:05:13.986Z"
+      "checkedAt": "2026-08-09T16:02:12.222Z"
     },
     "L'Exemplaire": {
       "host": "www.exemplaire.com.ulaval.ca",
       "pages": 9,
-      "checkedAt": "2026-08-02T11:05:20.614Z"
+      "checkedAt": "2026-08-09T16:02:18.652Z"
     },
     "Quartier Libre": {
       "host": "quartierlibre.ca",
