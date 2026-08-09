@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-09T10:30:52.861Z",
+  "updatedAt": "2026-08-09T11:25:34.931Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,38 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T10:30:37.360Z"
+      "checkedAt": "2026-08-09T11:25:17.657Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Franco",
-        "source": "api-live",
-        "start": "02:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-franco"
-      },
-      "next": {
         "title": "Genre de bleu",
         "source": "schedule",
         "start": "07:00",
         "end": "08:00",
         "url": "https://cism893.ca/emissions/genre-de-bleu"
       },
+      "next": {
+        "title": "Par mots et par vaux",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/par-mots-et-par-vaux"
+      },
       "track": "",
-      "showTitle": "Mix Franco",
+      "showTitle": "Genre de bleu",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
         "schedule"
       ],
-      "clientPoll": {
-        "type": "cism-v1",
-        "url": "https://admin.cism893.ca/api/v1/live"
-      },
-      "checkedAt": "2026-08-09T10:30:39.686Z"
+      "clientPoll": null,
+      "checkedAt": "2026-08-09T11:25:19.689Z"
     },
     "ckut": {
       "id": "ckut",
@@ -78,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T10:30:42.649Z"
+      "checkedAt": "2026-08-09T11:25:22.119Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -105,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T10:30:44.536Z"
+      "checkedAt": "2026-08-09T11:25:31.535Z"
     },
     "cfak": {
       "id": "cfak",
@@ -130,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T10:30:45.260Z"
+      "checkedAt": "2026-08-09T11:25:32.303Z"
     },
     "choq": {
       "id": "choq",
@@ -143,7 +139,7 @@
         "end": "16:00",
         "slug": "pole-hip-hop"
       },
-      "track": "Wesley Joseph - Pluto Baby",
+      "track": "oui merci - Sans moi",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-09T10:30:52.510Z"
+      "checkedAt": "2026-08-09T11:25:34.580Z"
     }
   }
 }
