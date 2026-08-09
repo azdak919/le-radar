@@ -1,17 +1,17 @@
 {
-  "updated": "2026-08-09T02:39:02.056Z",
+  "updated": "2026-08-09T03:07:41.343Z",
   "total": 185,
   "withPhoto": 168,
   "withStock": 22,
-  "withCampusBank": 13,
+  "withCampusBank": 12,
   "fullyCovered": 185,
-  "leadReadyPhotos": 144,
+  "leadReadyPhotos": 148,
   "pageScraped": 21,
   "photosRecovered": 21,
   "imagesCleared": 9,
   "stockSearches": 33,
-  "stockFound": 10,
-  "campusBankFound": 4,
+  "stockFound": 9,
+  "campusBankFound": 3,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -33,16 +33,10 @@
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg"
     },
     {
-      "title": "CSU approves affinity group policy, club rules update and councillor pay increase at special meeting",
-      "link": "https://thelinknewspaper.ca/article/16326",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/7089/7290404684_2750bb385f_b.jpg"
-    },
-    {
-      "title": "From the rink to the links",
-      "link": "https://thebucampus.ca/2026/04/06/from-the-rink-to-the-links/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/4031/4400844746_a47c17ef6d_b.jpg"
+      "title": "Mars enters Aries",
+      "link": "https://thebucampus.ca/2026/04/06/mars-enters-aries/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
     },
     {
       "title": "Spotlighting Powerful McGill Alumnae",
@@ -54,7 +48,7 @@
       "title": "National Golf tournament",
       "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
       "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288688532695%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/5/58/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288688531487%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Gaiters wrap up hard-fought season with eyes on next year",
@@ -63,16 +57,10 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
     },
     {
-      "title": "Second-Class Citizens",
-      "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
-    },
-    {
       "title": "The Gentrification of Online Fandom Spaces",
       "link": "https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/2/2d/McGill_University_Montr%C3%A9al.jpeg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Arts_Building%2C_McGill_University.jpg"
     },
     {
       "title": "Le pays avant tout – esquisse",
@@ -85,6 +73,18 @@
       "link": "https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/6c/C%C3%A9gep_du_Vieux_Montr%C3%A9al%2C_Nov_03_2022.jpg"
+    },
+    {
+      "title": "Recettes musicales québécoises pour l’été",
+      "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
+    },
+    {
+      "title": "Gothic Cinema Rises from the Grave",
+      "link": "https://theplantnews.com/2026/05/11/gothic-cinema-rises-from-the-grave/",
+      "reason": "no-stock-match",
+      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-4.png"
     }
   ]
 }
