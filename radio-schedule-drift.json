@@ -1,15 +1,17 @@
 {
-  "checkedAt": "2026-08-08T23:40:44.734Z",
+  "checkedAt": "2026-08-09T23:42:39.756Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 5,
+    "stable": 4,
     "drift": [
       "chyz"
     ],
     "overhaul": [],
-    "unreachable": []
+    "unreachable": [
+      "cjlo"
+    ]
   },
   "stations": [
     {
@@ -50,12 +52,12 @@
     {
       "id": "cjlo",
       "published": 370,
-      "fresh": 370,
+      "fresh": 0,
       "added": [],
       "removed": [],
       "changed": 0,
       "ratio": 0,
-      "status": "stable"
+      "status": "unreachable"
     },
     {
       "id": "cfak",
