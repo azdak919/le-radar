@@ -1,25 +1,19 @@
 {
-  "updated": "2026-08-08T23:36:45.305Z",
+  "updated": "2026-08-09T02:39:02.056Z",
   "total": 185,
   "withPhoto": 168,
-  "withStock": 30,
+  "withStock": 22,
   "withCampusBank": 13,
   "fullyCovered": 185,
-  "leadReadyPhotos": 119,
-  "pageScraped": 17,
-  "photosRecovered": 17,
-  "imagesCleared": 8,
-  "stockSearches": 73,
-  "stockFound": 21,
-  "campusBankFound": 6,
+  "leadReadyPhotos": 144,
+  "pageScraped": 21,
+  "photosRecovered": 21,
+  "imagesCleared": 9,
+  "stockSearches": 33,
+  "stockFound": 10,
+  "campusBankFound": 4,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "The Cruel Optimism of Summer",
-      "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
-    },
     {
       "title": "CSU terminates council’s chief election officer",
       "link": "https://thelinknewspaper.ca/article/16334",
@@ -27,64 +21,70 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
     },
     {
-      "title": "La 29e édition du Festival des traditions du monde de Sherbrooke",
-      "link": "https://lecollectif.ca/a-la-une/la-29e-edition-du-festival-des-traditions-du-monde-de-sherbrooke/",
+      "title": "Raid marocain en Espagne",
+      "link": "https://lecollectif.ca/a-la-une/raid-marocain-en-espagne/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Raid-marocain-enEspagne_Getty-Images.jpg"
+    },
+    {
+      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
+      "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg"
+    },
+    {
+      "title": "CSU approves affinity group policy, club rules update and councillor pay increase at special meeting",
+      "link": "https://thelinknewspaper.ca/article/16326",
       "reason": "stock-too-small",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/EXCLUWEB_CULTURE_FTMS_CreditSimonRancourt.jpg"
+      "image": "https://live.staticflickr.com/7089/7290404684_2750bb385f_b.jpg"
     },
     {
-      "title": "L’essor de l’économie collaborative",
-      "link": "https://lecollectif.ca/a-la-une/lessor-de-leconomie-collaborative/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_economie-collaborative_Source-Revue-Gestion-HEC.jpg"
+      "title": "From the rink to the links",
+      "link": "https://thebucampus.ca/2026/04/06/from-the-rink-to-the-links/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/4031/4400844746_a47c17ef6d_b.jpg"
     },
     {
-      "title": "Les impacts de la construction sur les commerces",
-      "link": "https://lecollectif.ca/a-la-une/les-impacts-de-la-construction-sur-les-commerces/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_travaux-de-construction-des-chantiers-sur-portland-et-king-ouest_Source-Ville-de-Sherbrooke-1.jpg"
+      "title": "Spotlighting Powerful McGill Alumnae",
+      "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
     },
     {
-      "title": "L’importance du recyclage",
-      "link": "https://lecollectif.ca/a-la-une/limportance-du-recyclage/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/ENVIRONNEMENT_Recyclage_.jpg"
+      "title": "National Golf tournament",
+      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288688532695%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Cinq circuits de véloroute pour un tourisme écoresponsable",
-      "link": "https://lecollectif.ca/environnement/cinq-circuits-de-veloroute-pour-un-tourisme-ecoresponsable/",
+      "title": "Gaiters wrap up hard-fought season with eyes on next year",
+      "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
       "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/ENVIRO_circuitsvelotourisme_CreditFrancoisPoirier.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
     },
     {
-      "title": "L’écotourisme comme nouvelle façon de voyager",
-      "link": "https://lecollectif.ca/environnement/lecotourisme-comme-nouvelle-facon-de-voyager/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/ENVIRO_Ecotourisme_RebeccaGagne.png"
+      "title": "Second-Class Citizens",
+      "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
-      "title": "Les avantages du transport en commun",
-      "link": "https://lecollectif.ca/a-la-une/les-avantages-du-transport-en-commun/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/SOCIETE_Transport-en-commun_Source-IRIS-Recherche.jpeg"
+      "title": "The Gentrification of Online Fandom Spaces",
+      "link": "https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/2/2d/McGill_University_Montr%C3%A9al.jpeg"
     },
     {
-      "title": "Pourquoi la lecture est-elle importante?",
-      "link": "https://lecollectif.ca/a-la-une/pourquoi-la-lecture-est-elle-importante/",
+      "title": "Le pays avant tout – esquisse",
+      "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
       "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/CAMPUS_Lecture_Source-Ask-The-Scientists.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
     },
     {
-      "title": "Les bases du plein air durable",
-      "link": "https://lecollectif.ca/a-la-une/les-bases-du-plein-air-durable/",
+      "title": "Oui au budget, oui au programme FIL et non à la grève",
+      "link": "https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/",
       "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/07/Capture-decran-le-2026-07-29-a-10.03.28.png"
-    },
-    {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "link": "https://lapige.atmjonquiere.com/2026/06/22/se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille/?utm_source=rss&utm_medium=rss&utm_campaign=se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/06/Joanne-Normandin_retraite-benevole-scaled.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6c/C%C3%A9gep_du_Vieux_Montr%C3%A9al%2C_Nov_03_2022.jpg"
     }
   ]
 }

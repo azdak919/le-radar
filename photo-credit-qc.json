@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-08T23:36:59.112Z",
+  "updated": "2026-08-09T02:38:22.315Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
@@ -7,11 +7,39 @@
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 19,
-  "updatedCount": 7,
-  "citedNew": 7,
-  "fallbackNew": 12,
+  "checked": 21,
+  "updatedCount": 10,
+  "citedNew": 8,
+  "fallbackNew": 13,
   "samples": [
+    {
+      "title": "Raid marocain en Espagne",
+      "source": "Le Collectif",
+      "credit": "Photo : Marcos Moreno/Europa Press via Getty Images",
+      "cited": true,
+      "method": "json-ld"
+    },
+    {
+      "title": "Philippe Lacasse : une performance exceptionnelle",
+      "source": "Le Collectif",
+      "credit": "Photo : SwimSport",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Un été parsemé d’expositions",
+      "source": "Le Collectif",
+      "credit": "Photo : Tourisme Cantons-de-l’Est.",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
@@ -27,16 +55,16 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Sois belle et tais-toi",
+      "title": "Ce que nous devons aux femmes",
       "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "credit": "Photo : Alexandre Gontier",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "media-credit-near"
     },
     {
-      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "title": "Les femmes MAGA au service du patriarcat",
       "source": "Le Délit",
-      "credit": "Photo : Stu Doré/Félix Fournier",
+      "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -50,16 +78,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Illustration: Halle Keays",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }
