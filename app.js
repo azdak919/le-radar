@@ -1768,13 +1768,35 @@ const SPORTS_SPORT_TONES = {
   ultimate: '#7c3aed',
   default: '#66839e',
 };
-/** Fenêtres d’urgence (ms) — parité scoreboards ESPN / apps scores. */
-const SPORTS_LIVE_BEFORE_MS = 2 * 3600 * 1000; /* coup d’envoi −2 h → proxy « en cours » */
-const SPORTS_LIVE_AFTER_MS = 3 * 3600 * 1000; /* +3 h après le coup d’envoi */
+/*
+ * Fenêtres d’urgence (ms) — parité scoreboards ESPN / apps scores.
+ *
+ * Attention aux noms : ils se lisent à l’envers du code qu’ils servent. Le test
+ * de `sportsUrgency` est `t >= now - SPORTS_LIVE_BEFORE_MS`, ce qui retient un
+ * match dont le coup d’envoi date de **moins de 2 h**, et
+ * `t <= now + SPORTS_LIVE_AFTER_MS`, un coup d’envoi dans **moins de 3 h**.
+ * La fenêtre réelle est donc [coup d’envoi − 3 h ; coup d’envoi + 2 h].
+ * On ne renomme pas : ces bornes pilotent le tri, pas l’affichage. Le registre
+ * visuel « en direct » a ses propres bornes, plus serrées (SPORTS_LIVE_VISUAL_*).
+ */
+const SPORTS_LIVE_BEFORE_MS = 2 * 3600 * 1000;
+const SPORTS_LIVE_AFTER_MS = 3 * 3600 * 1000;
 const SPORTS_IMMINENT_MS = 7 * 24 * 3600 * 1000; /* 7 jours */
 const SPORTS_RECENT_RESULT_MS = 4 * 24 * 3600 * 1000; /* résultats < 4 j — cartes de gauche */
 /** CTA : à venir dans cette fenêtre seulement (sinon hors saison / calendrier lointain). */
 const SPORTS_CTA_UPCOMING_MS = 14 * 24 * 3600 * 1000;
+/*
+ * Registre d’alerte de la carte CTA — focus-group le-radar-sports-first-glance
+ * (garde-fou `registre-alerte-reserve`) et le-radar-cta-sports-badge.
+ *
+ * La pastille rouge et le point live sont **gagnés** par un match en cours, pas
+ * allumés par défaut : un point qui pulse pour un match dans douze jours est une
+ * promesse fausse. Bornes serrées, indépendantes de celles du tri.
+ */
+const SPORTS_LIVE_VISUAL_LEAD_MS = 15 * 60 * 1000; /* 15 min avant le coup d’envoi */
+const SPORTS_LIVE_VISUAL_TAIL_MS = 3 * 3600 * 1000; /* 3 h après le coup d’envoi */
+/** Lead piloté par la fraîcheur : un résultat passe devant le calendrier pendant 48 h. */
+const SPORTS_CTA_FRESH_RESULT_MS = 48 * 3600 * 1000;
 /**
  * Accroches CTA **uniquement** quand il n’y a ni match chaud (≤14 j)
  * ni aucun match à venir en grille. Pas de puces grises à gauche pour
@@ -1791,10 +1813,17 @@ let sportsSlides = [];
 let sportsVisible = [];
 /** @deprecated remplacé par des timers par slot (indépendants). */
 let sportsNextSlot = 0;
-/** @deprecated interval global — voir sportsSlotTimers. */
-let sportsTimer = null;
 /** Un timeout par slot : chaque puce tourne à son rythme (marquee inclus). */
 let sportsSlotTimers = [];
+/** Rotation de la CTA suspendue (survol ou focus) — garde-fou `pause-survol-focus`. */
+let sportsCtaPaused = false;
+/** Surfaces où un mécanisme de pause existe réellement (souris, pas doigt). */
+let sportsCtaRotateMq = null;
+try {
+  sportsCtaRotateMq = window.matchMedia
+    ? window.matchMedia(SPORTS_CTA_ROTATE_MEDIA)
+    : null;
+} catch { /* ignore */ }
 /**
  * Plafond mesuré après paint (parité météo `mastheadWeatherFitCount`).
  * null = pas encore contraint ; sinon min(base largeur, fit).
@@ -1821,8 +1850,6 @@ try {
 const SPORTS_READ_MIN_MS = 7800;
 const SPORTS_READ_PER_CHAR_MS = 42;
 const SPORTS_READ_MAX_MS = 11000;
-/** Alias historique / repli. */
-const SPORTS_ROTATE_MS = SPORTS_READ_MIN_MS;
 /**
  * Une voie du marquee CSS `sports-chip-scroll` (style.css) — tenir synchro
  * avec `--sports-scroll-duration`. `alternate` → aller-retour = 2 ×.
@@ -1837,15 +1864,36 @@ const SPORTS_SLOT_STAGGER_MS = 1100;
 /** Entrée d’une puce score (CSS sports-chip-arrive) — plus long = moins brutal. */
 const SPORTS_ARRIVE_MS = 640;
 /**
- * CTA type alerte bandeau : pastille fixe « SPORTS » (toujours à droite)
- * + accroche = score / prochain match le plus frais de chaque sport
- *   (ordre de popularité campus QC — pas de libellés marketing).
- * Rotation d’accroche = crossfade *superposé* deux couches (focus-group
- * le-radar-cta-sports-transition D) — jamais de trou vide.
+ * CTA du mât : pastille « SPORTS » + accroche datée + sous-ligne.
+ *
+ * Trois verdicts focus-group se superposent ici :
+ * · `le-radar-sports-first-glance` — le lead suit la fraîcheur (résultat < 48 h,
+ *   sinon prochain match), registre ardoise au repos, alerte réservée au direct.
+ * · `le-radar-cta-sports-motion` — le changement d’accroche est un **roulement
+ *   vertical** d’une seule phase, jamais un fondu croisé : deux textes de
+ *   longueurs différentes superposés à mi-opacité sont illisibles.
+ * · `le-radar-cta-sports-badge` — le mot de la pastille reste « Sports » au
+ *   repos ; seul le direct le remplace (override mainteneur 2026-08-09).
  */
 const SPORTS_CTA_TAG = 'Sports';
-/** Durée du crossfade superposé A∥B (une seule phase, pas sortie+entrée). */
-const SPORTS_CTA_CROSSFADE_MS = 500;
+/** Pastille pendant un match en cours — le seul cas qui remplace la rubrique. */
+const SPORTS_CTA_TAG_LIVE = 'En cours';
+/** Ardoise au repos, comme les puces météo ; rouge réservé au direct. */
+const SPORTS_CTA_REST_TONE = '#6a7580';
+const SPORTS_CTA_LIVE_TONE = '#c8102e';
+/** Durée du roulement vertical A↑B (une seule phase, jamais de trou vide). */
+const SPORTS_CTA_ROLL_MS = 280;
+/**
+ * Rythme lent de la carte CTA — focus-group `le-radar-cta-sports-rhythm` D,
+ * garde-fou `rythme-lent`. Trois fois moins de changements qu’une puce de score.
+ */
+const SPORTS_CTA_DWELL_MS = 24000;
+/**
+ * La rotation n’existe que là où un mécanisme de pause existe (garde-fou
+ * `rotation-pointeur-fin`). Sur tactile il n’y a ni survol ni focus : WCAG 2.2.2
+ * ne serait pas satisfait, donc l’accroche s’y fige au chargement.
+ */
+const SPORTS_CTA_ROTATE_MEDIA = '(hover: hover) and (pointer: fine)';
 /** Sortie douce d’une puce score avant replaceWith (synchro CSS is-leaving). */
 const SPORTS_CHIP_LEAVE_MS = 420;
 /** Popularité sports étudiants QC (aligné page /sports/). */
@@ -1872,22 +1920,8 @@ const SPORTS_POPULARITY = [
 const SPORTS_CTA_KEY = 'cta:board';
 /** Curseur d’accroche CTA (un sport à la fois, par popularité). */
 let sportsCtaLabelIndex = 0;
-/** Curseur de diversité sport pour la rotation des chips de scores. */
-let sportsSportCursor = 0;
 /** Curseur circulaire dans le pool de gauche (résultats ou next). */
 let sportsLeftCursor = 0;
-/** Curseur des accroches « info » hors saison. */
-let sportsInfoCursor = 0;
-/**
- * Hors saison : true → prochaine puce de gauche = info ;
- * false → prochaine = match à venir. Alterne à chaque tirage.
- */
-let sportsLeftWantInfo = true;
-/**
- * Mobile (1 chip) seulement : alterne score ↔ CTA.
- * Desktop/tablette (≥ 2 chips) : CTA toujours épinglée à droite.
- */
-let sportsCtaOnRightMobile = true;
 
 /**
  * Glyphes — d’abord reconnaissables par les pratiquants.
@@ -2016,13 +2050,24 @@ function sportsGameIsToday(game) {
   return torontoDayKey(ms) === torontoDayKey();
 }
 
-/** true si le match est strictement avant aujourd’hui (QC) — ex. hier. */
-function sportsGameIsBeforeToday(game) {
-  const day = game?.date || (Number.isFinite(sportsGameMs(game))
-    ? torontoDayKey(sportsGameMs(game))
-    : '');
-  if (!day) return false;
-  return day < torontoDayKey();
+/**
+ * Match réellement en cours *maintenant* — prédicat visuel, recalculé à chaque
+ * rendu (contrairement à `slide.urgency`, figé à la construction des slides).
+ *
+ * C’est lui, et lui seul, qui autorise le registre d’alerte de la carte CTA :
+ * pastille rouge et point live. Fenêtre serrée autour du coup d’envoi, pas la
+ * fenêtre large du tri.
+ */
+function sportsGameIsLive(game, now = Date.now()) {
+  const t = sportsGameMs(game);
+  if (!Number.isFinite(t)) return false;
+  return t <= now + SPORTS_LIVE_VISUAL_LEAD_MS && t >= now - SPORTS_LIVE_VISUAL_TAIL_MS;
+}
+
+/** Âge d’un résultat en ms (négatif si le match est à venir). */
+function sportsResultAgeMs(game, now = Date.now()) {
+  const t = sportsGameMs(game);
+  return Number.isFinite(t) ? now - t : Number.POSITIVE_INFINITY;
 }
 
 /**
@@ -2519,30 +2564,143 @@ function sportsOrderedKeys(bestMap) {
  * Accroche CTA = même info qu’une chip score (codes + score/date).
  * Ex. « GAR vs LEN · 28 août · 19 h 30 » ou « MCG 1/9 MID ».
  */
+/**
+ * Nom d’établissement en clair — garde-fou `noms-lisibles`
+ * (focus-group le-radar-sports-first-glance). Un sigle seul (« LÉV vs THE »)
+ * n’est décodable que par ceux qui suivent déjà la ligue ; le corpus porte les
+ * noms, il n’y a aucune raison de les jeter.
+ */
+function sportsPlainTeamName(team) {
+  const name = String(team?.name || '').trim();
+  if (name) return name;
+  const full = String(team?.fullName || '').trim();
+  if (full) return full;
+  return String(team?.code || 'Équipe').trim();
+}
+
+function sportsPlainOpponentName(game) {
+  const name = String(game?.opponent || '').trim();
+  if (name) return name;
+  const full = String(game?.opponentFullName || '').trim();
+  if (full) return full;
+  return String(game?.opponentCode || 'adversaire').trim();
+}
+
+/** Jour + date + heure, écrits pour être situés sans compter : « jeu. 20 août, 20 h 30 ». */
+function sportsWhenLong(iso, time) {
+  if (!iso) return '';
+  let label = iso;
+  try {
+    label = new Intl.DateTimeFormat('fr-CA', {
+      weekday: 'short', day: 'numeric', month: 'long',
+    }).format(new Date(`${iso}T12:00:00`));
+  } catch { /* keep iso */ }
+  if (time) label += `, ${String(time).replace(':', ' h ')}`;
+  return label;
+}
+
+/** Âge lisible d’un fait daté — « il y a 14 h », « hier », « il y a 3 j ». */
+function sportsRelativeAge(ms, now = Date.now()) {
+  if (!Number.isFinite(ms)) return '';
+  const delta = Math.max(0, now - ms);
+  const min = Math.round(delta / 60000);
+  if (min < 2) return 'à l’instant';
+  if (min < 60) return `il y a ${min} min`;
+  const hours = Math.round(delta / 3600000);
+  if (hours < 24) return `il y a ${hours} h`;
+  const days = Math.round(delta / 86400000);
+  return days <= 1 ? 'hier' : `il y a ${days} j`;
+}
+
+/**
+ * Horodatage de la banque, **rendu dans la carte** — garde-fou
+ * `fraicheur-visible`. Il n’existait que dans `title`/`aria-label` : au doigt il
+ * n’y a pas de survol, donc sur téléphone personne ne l’a jamais vu.
+ */
+function sportsUpdatedShort() {
+  const raw = sportsData?.updated;
+  if (!raw) return '';
+  try {
+    const when = new Intl.DateTimeFormat('fr-CA', {
+      hour: 'numeric', minute: '2-digit', timeZone: 'America/Toronto',
+    }).format(new Date(raw));
+    return `mis à jour à ${when.replace(':', ' h ')}`;
+  } catch {
+    return '';
+  }
+}
+
+/** Libellé de compétition, ou repli sport + secteur. */
+function sportsCompetitionLabel(slide) {
+  const comp = String(slide?.game?.competition || '').trim();
+  if (comp) return comp;
+  const sport = sportsSportLabelFr(slide?.team?.sport || slide?.game?.sport || '');
+  const sector = slide?.team?.sector === 'universitaire' ? 'universitaire' : 'collégial';
+  return sport ? `${sport} ${sector}` : '';
+}
+
+/** Existe-t-il un résultat exploitable à la banque ? Sinon : hors saison. */
+function sportsHasAnyResult() {
+  return sportsSlides.some((s) => s?.mode === 'result');
+}
+
+/**
+ * Accroche principale de la CTA — noms en clair, score lisible, sans sigle.
+ * Le marqueur temporel vit à part (`sportsCtaEyebrow`) pour rester hors de la
+ * zone qui défile (garde-fou `marqueur-non-tronque`).
+ */
 function sportsCtaLabelFromSlide(slide) {
   if (!slide?.team || !slide.game) return '';
-  const code = String(slide.team.code || slide.team.name || 'EQ').toUpperCase().slice(0, 4);
   const g = slide.game;
-  const opp = String(g.opponentCode || g.opponent || 'ADV').toUpperCase().slice(0, 4);
   const glyph = sportsGlyph(slide.team.sport || g.sport);
+  const home = sportsPlainTeamName(slide.team);
+  const opp = sportsPlainOpponentName(g);
+
   if (slide.mode === 'next') {
-    const when = formatSportsWhen(g.date, g.time);
-    return when
-      ? `${glyph} ${code} vs ${opp} · ${when}`
-      : `${glyph} ${code} vs ${opp}`;
+    return `${glyph} ${home} ${g.home === false ? 'à' : 'reçoit'} ${opp}`;
   }
   if (slide.mode === 'result') {
     const placeKind = g.scoreKind === 'place' || slide.team.sport === 'sailing';
     const score = placeKind
       ? `${g.scoreFor}/${g.scoreAgainst}`
       : `${g.scoreFor}–${g.scoreAgainst}`;
-    const badge = g.result === 'W' ? 'V' : g.result === 'L' ? 'D' : 'N';
-    const when = formatSportsWhen(g.date, g.time);
-    return when
-      ? `${glyph} ${code} ${score} ${opp} · ${badge} · ${when}`
-      : `${glyph} ${code} ${score} ${opp} · ${badge}`;
+    return `${glyph} ${home} ${score} ${opp}`;
   }
-  return `${glyph} ${code}`;
+  return `${glyph} ${home}`;
+}
+
+/**
+ * Marqueur temporel en tête d’accroche — focus-group `le-radar-cta-sports-badge`.
+ * Vide en direct : la pastille porte déjà « En cours » (override mainteneur).
+ */
+function sportsCtaEyebrow(slide, state) {
+  if (state === 'live') return '';
+  const g = slide?.game;
+  if (state === 'result') {
+    const ms = sportsGameMs(g);
+    if (!Number.isFinite(ms)) return 'Résultat';
+    const day = torontoDayKey(ms);
+    if (day === torontoDayKey()) return 'Aujourd’hui';
+    if (day === torontoDayKey(Date.now() - 86400000)) return 'Hier';
+    return 'Avant-hier';
+  }
+  if (state === 'next') return sportsHasAnyResult() ? 'Prochain' : 'Reprise';
+  return '';
+}
+
+/** Sous-ligne : compétition + fraîcheur. Toujours datée, toujours visible. */
+function sportsCtaSubLine(slide, state) {
+  const comp = sportsCompetitionLabel(slide);
+  const g = slide?.game;
+  const age = sportsResultAgeMs(g);
+  // Pour un fait du jour, l’âge précis vaut mieux que le marqueur (« il y a
+  // 3 h » plutôt que « Aujourd’hui »). Passé 24 h, le marqueur dit déjà « Hier »
+  // et le répéter ici ne sert à rien : on montre plutôt la fraîcheur de la banque.
+  const freshness = (state === 'result' || state === 'live') && age < 86400000
+    ? sportsRelativeAge(sportsGameMs(g))
+    : sportsUpdatedShort();
+  const when = state === 'next' ? sportsWhenLong(g?.date, g?.time) : '';
+  return [when, comp, freshness].filter(Boolean).join(' · ');
 }
 
 /**
@@ -2654,10 +2812,14 @@ function sportsCtaCandidateSlides() {
     seen.add(s.key);
 
     if (s.mode === 'result') {
-      // Hier et avant : hors CTA (restent disponibles pour les chips de gauche).
-      if (sportsGameIsBeforeToday(s.game)) continue;
-      // Uniquement les scores du jour civil QC.
-      if (sportsGameIsToday(s.game)) todayResults.push(s);
+      // Lead piloté par la fraîcheur (focus-group le-radar-sports-first-glance) :
+      // un résultat passe devant le calendrier tant qu'il a moins de 48 h. Le
+      // jour civil était trop court — le score du mercredi soir disparaissait
+      // du mât à minuit, alors qu'il est encore l'information la plus fraîche
+      // le jeudi matin.
+      const age = sportsResultAgeMs(s.game, now);
+      if (age < 0 || age > SPORTS_CTA_FRESH_RESULT_MS) continue;
+      todayResults.push(s);
       continue;
     }
 
@@ -2678,7 +2840,7 @@ function sportsCtaCandidateSlides() {
     return i < 0 ? 99 : i;
   };
 
-  // Scores d’aujourd’hui : plus récent d’abord (plusieurs matchs le même jour OK).
+  // Résultats frais : plus récent d’abord (plusieurs matchs le même jour OK).
   todayResults.sort((a, b) => {
     const fa = sportsGameMs(a.game) || 0;
     const fb = sportsGameMs(b.game) || 0;
@@ -2696,8 +2858,8 @@ function sportsCtaCandidateSlides() {
   upcomingHot.sort(bySoonest);
   upcomingLater.sort(bySoonest);
 
-  // CTA : vif du jour → calendrier ≤14 j → sinon prochain match lointain (évite
-  // les slogans idle alors que des matchs d’août sont déjà en grille).
+  // CTA : résultat frais (< 48 h) → calendrier ≤14 j → sinon prochain match
+  // lointain (évite les slogans idle alors que des matchs sont déjà en grille).
   // Puis : 1 accroche par match (anti-miroir) + diversité sport souple.
   const raw = todayResults.concat(upcomingHot, upcomingLater);
   const deduped = sportsDedupeMatchSlides(raw);
@@ -2723,6 +2885,19 @@ function sportsCtaLabelPool() {
 }
 
 /**
+ * État visuel de la carte CTA. La slide CTA ne porte pas d’`urgency` à sa
+ * racine : le match vit dans `ctaFrom`, il faut y descendre.
+ */
+function sportsCtaState(slide) {
+  const src = slide?.ctaFrom || slide;
+  if (!src?.game || src.mode === 'cta' || src.game.sport === 'board') return 'idle';
+  if (sportsGameIsLive(src.game)) return 'live';
+  if (src.mode === 'result') return 'result';
+  if (src.mode === 'next') return 'next';
+  return 'idle';
+}
+
+/**
  * Slide CTA — slot de droite.
  * Match « chaud » (aujourd’hui / ≤14 j) ou accroche idle hors saison.
  */
@@ -2736,25 +2911,32 @@ function sportsCtaSlide(labelIndex = sportsCtaLabelIndex) {
       key: SPORTS_CTA_KEY,
       label: idle[idx],
       labelIndex: idx,
-      tone: '#c8102e',
+      tone: SPORTS_CTA_REST_TONE,
       team: { sport: 'board', name: 'Sports', code: 'RSEQ' },
       game: { sport: 'board' },
       ctaIdle: true,
+      ctaState: 'idle',
+      ctaEyebrow: '',
+      ctaSub: sportsUpdatedShort(),
       titleExtra: idle[idx],
     };
   }
   const idx = ((labelIndex % candidates.length) + candidates.length) % candidates.length;
   const src = candidates[idx];
   const label = sportsCtaLabelFromSlide(src);
+  const state = sportsCtaState({ ctaFrom: src });
   return {
     mode: 'cta',
     key: SPORTS_CTA_KEY,
     label: label || SPORTS_CTA_IDLE_LABELS[0],
     labelIndex: idx,
-    tone: '#c8102e',
+    tone: state === 'live' ? SPORTS_CTA_LIVE_TONE : SPORTS_CTA_REST_TONE,
     team: { sport: 'board', name: 'Sports', code: 'RSEQ' },
     game: { sport: 'board' },
     ctaFrom: src,
+    ctaState: state,
+    ctaEyebrow: sportsCtaEyebrow(src, state),
+    ctaSub: sportsCtaSubLine(src, state),
     titleExtra: src
       ? `${src.team?.fullName || src.team?.name || ''} · ${label}`
       : '',
@@ -2798,71 +2980,190 @@ function sportsCtaActiveLabel(chip) {
 }
 
 /**
- * Crossfade superposé de l’accroche CTA (focus-group le-radar-cta-sports-transition D).
- * Deux couches : A fade-out pendant que B fade-in — jamais de trou vide.
- * Pastille + chevron stables ; carte non remplacée.
+ * Construit le contenu d’une couche d’accroche : marqueur temporel, texte
+ * principal, sous-ligne. Le marqueur et la sous-ligne restent **hors** du
+ * conteneur qui défile (garde-fou `marqueur-non-tronque`) ; seul
+ * `.sports-chip__cta-text` porte le marquee.
  */
-function crossfadeSportsCtaLabel(chip, slide) {
+function fillSportsCtaLayer(layer, slide) {
+  layer.replaceChildren();
+  // Ligne 1 : marqueur + accroche côte à côte. Le marqueur est un frère de la
+  // fenêtre de défilement, jamais son contenu — il ne peut donc ni être rogné
+  // par l’ellipse ni partir avec le marquee.
+  const head = document.createElement('span');
+  head.className = 'sports-chip__cta-head';
+  const eyebrow = slide.ctaEyebrow || '';
+  if (eyebrow) {
+    const el = document.createElement('span');
+    el.className = 'sports-chip__cta-eyebrow';
+    el.textContent = eyebrow;
+    head.append(el);
+  }
+  const line = document.createElement('span');
+  line.className = 'sports-chip__cta-line';
+  const text = document.createElement('span');
+  text.className = 'sports-chip__cta-text';
+  text.textContent = slide.label || 'Scores étudiants QC';
+  line.append(text);
+  head.append(line);
+  layer.append(head);
+
+  const sub = slide.ctaSub || '';
+  if (sub) {
+    const el = document.createElement('span');
+    el.className = 'sports-chip__cta-sub';
+    el.textContent = sub;
+    layer.append(el);
+  }
+  return layer;
+}
+
+/**
+ * La carte CTA a-t-elle le droit de tourner ? — focus-group
+ * `le-radar-cta-sports-rhythm` D, garde-fou `rotation-pointeur-fin`.
+ *
+ * WCAG 2.2.2 réclame un mécanisme de pause pour tout contenu qui se met à jour
+ * seul au-delà de 5 s. Le survol et le focus en sont un — sur une souris. Sur
+ * tactile il n’y en a aucun, donc l’accroche s’y fige au chargement : elle
+ * change d’une visite à l’autre (le tirage initial est aléatoire), pas sous les
+ * yeux du lecteur.
+ */
+function sportsCtaMayRotate() {
+  if (sportsReducedMotion) return false;
+  if (!sportsCtaRotateMq?.matches) return false;
+  return sportsCtaLabelPool().length > 1;
+}
+
+/** Texte qui défile dans une couche (ou la couche elle-même en repli). */
+function sportsCtaScrollTarget(layer) {
+  return layer?.querySelector('.sports-chip__cta-text') || layer;
+}
+
+/** Signature d’une accroche — évite de rouler pour un contenu identique. */
+function sportsCtaSignature(slide) {
+  return [slide?.ctaEyebrow || '', slide?.label || '', slide?.ctaSub || ''].join('\u0001');
+}
+
+/**
+ * Roulement vertical de l’accroche CTA — focus-group `le-radar-cta-sports-motion`
+ * (verdict C), rythme fixé par `le-radar-cta-sports-rhythm`.
+ *
+ * Le fondu croisé qu’il remplace était un idiome d’image : sur du texte de
+ * 11 px, deux chaînes de longueurs différentes coexistaient à mi-opacité
+ * pendant ~250 ms — illisible, et sans direction. Ici l’ancienne couche monte
+ * et sort pendant que la nouvelle entre par le bas : une seule phase, jamais de
+ * trou vide, et **jamais deux textes lisibles à la fois** (c’est le cadre qui
+ * coupe, pas l’alpha).
+ */
+function rollSportsCtaLabel(chip, slide) {
   if (!chip || !slide) return;
-  const href = sportsBoardHref(slide);
-  chip.href = href;
+  chip.href = sportsBoardHref(slide);
   const { title, aria } = sportsCtaA11y(slide);
   chip.title = title;
   chip.setAttribute('aria-label', aria);
-  const nextText = slide.label || 'Scores étudiants QC';
+  applySportsCtaState(chip, slide);
+
   const stack = chip.querySelector('.sports-chip__cta-stack');
   const front = sportsCtaActiveLabel(chip);
-  if (!front) return;
-  if (front.textContent === nextText) return;
+  if (!front || !stack) return;
+  if (front.dataset.ctaSig === sportsCtaSignature(slide)) return;
 
-  // Annuler un crossfade en cours.
-  if (chip._ctaFadeTimer) {
-    clearTimeout(chip._ctaFadeTimer);
-    chip._ctaFadeTimer = null;
+  if (chip._ctaRollTimer) {
+    clearTimeout(chip._ctaRollTimer);
+    chip._ctaRollTimer = null;
   }
-  // Nettoyer une couche fantôme éventuelle.
-  chip.querySelectorAll('.sports-chip__cta-label.is-back, .sports-chip__cta-label.is-fading-out')
-    .forEach((el) => {
-      if (el !== front) el.remove();
-    });
-  front.classList.remove('is-fading-out', 'is-fading-in', 'is-back');
+  // Nettoyer une couche fantôme d’un roulement interrompu.
+  chip.querySelectorAll('.sports-chip__cta-label.is-rolling-out')
+    .forEach((el) => { if (el !== front) el.remove(); });
+  front.classList.remove('is-rolling-in', 'is-rolling-out');
   front.classList.add('is-front');
 
   if (sportsReducedMotion) {
-    front.textContent = nextText;
-    front.classList.remove('is-fading-out', 'is-fading-in');
+    fillSportsCtaLayer(front, slide);
+    front.dataset.ctaSig = sportsCtaSignature(slide);
     chip.classList.remove('is-overflowing');
     chip.style.removeProperty('--sports-scroll');
     refreshSportsChipScroll(chip);
     return;
   }
 
-  // Couper marquee pendant le fondu (transform + opacity croisées = à-coup).
+  // Couper le marquee pendant le roulement : les deux transforms vivent sur des
+  // nœuds différents, mais mesurer une couche en mouvement n’a pas de sens.
   chip.classList.remove('is-overflowing');
   chip.style.removeProperty('--sports-scroll');
 
   const back = document.createElement('span');
-  back.className = 'sports-chip__line-inner sports-chip__cta-label is-back is-fading-in';
-  back.textContent = nextText;
+  back.className = 'sports-chip__cta-label is-rolling-in';
   back.setAttribute('aria-hidden', 'true');
-  (stack || front.parentElement || chip).append(back);
+  fillSportsCtaLayer(back, slide);
+  back.dataset.ctaSig = sportsCtaSignature(slide);
+  stack.append(back);
 
-  // Force reflow avant d’animer l’opacity croisée.
+  // Reflow avant d’animer, sinon les deux couches démarrent au même endroit.
   void back.offsetWidth;
-  front.classList.add('is-fading-out');
+  front.classList.add('is-rolling-out');
   front.classList.remove('is-front');
   front.setAttribute('aria-hidden', 'true');
   back.classList.add('is-front');
-  back.classList.remove('is-back');
 
-  chip._ctaFadeTimer = window.setTimeout(() => {
-    chip._ctaFadeTimer = null;
+  chip._ctaRollTimer = window.setTimeout(() => {
+    chip._ctaRollTimer = null;
     if (front.isConnected) front.remove();
-    back.classList.remove('is-fading-in', 'is-back');
+    back.classList.remove('is-rolling-in');
     back.classList.add('is-front');
     back.removeAttribute('aria-hidden');
     refreshSportsChipScroll(chip);
-  }, SPORTS_CTA_CROSSFADE_MS);
+  }, SPORTS_CTA_ROLL_MS);
+}
+
+/**
+ * Registre visuel de la carte CTA — focus-group `le-radar-sports-first-glance`
+ * (garde-fou `registre-alerte-reserve`) et `le-radar-cta-sports-badge`.
+ *
+ * Ardoise au repos ; rouge, pastille « En cours » et point live **uniquement**
+ * pendant un match. Le point était créé sans condition et pulsait toute l’année,
+ * y compris pour un match à quinze jours : une promesse fausse.
+ */
+function applySportsCtaState(chip, slide) {
+  if (!chip) return;
+  const state = slide?.ctaState || sportsCtaState(slide);
+  const live = state === 'live';
+  chip.dataset.ctaState = state;
+  chip.style.setProperty('--sports-tone', live ? SPORTS_CTA_LIVE_TONE : SPORTS_CTA_REST_TONE);
+
+  const tag = chip.querySelector('.sports-chip__cta-tag');
+  if (!tag) return;
+  const wanted = live ? SPORTS_CTA_TAG_LIVE : SPORTS_CTA_TAG;
+  if (tag.dataset.ctaTag === wanted) return;
+  tag.dataset.ctaTag = wanted;
+  tag.replaceChildren();
+  if (live) {
+    const dot = document.createElement('span');
+    dot.className = 'sports-chip__cta-live';
+    tag.append(dot);
+  }
+  tag.append(document.createTextNode(wanted));
+}
+
+/**
+ * Pause de la rotation au survol et au focus — garde-fou `pause-survol-focus`
+ * (WCAG 2.2.2). N’est posée que sur les surfaces où la rotation existe : sur
+ * tactile, l’accroche est figée et il n’y a rien à mettre en pause.
+ */
+function bindSportsCtaPause(chip) {
+  if (!chip || chip._ctaPauseBound) return;
+  chip._ctaPauseBound = true;
+  const hold = () => { sportsCtaPaused = true; };
+  const release = () => {
+    sportsCtaPaused = false;
+    // Reprendre l’horloge du slot CTA sans attendre un cycle complet.
+    const slot = sportsVisible.findIndex((s) => s?.mode === 'cta');
+    if (slot >= 0) scheduleSportsSlot(slot);
+  };
+  chip.addEventListener('pointerenter', hold, { passive: true });
+  chip.addEventListener('pointerleave', release, { passive: true });
+  chip.addEventListener('focusin', hold);
+  chip.addEventListener('focusout', release);
 }
 
 /**
@@ -2879,22 +3180,28 @@ function refreshSportsChipScroll(chipOrRoot = null) {
     ? [root]
     : Array.from(root.querySelectorAll?.('.sports-chip') || []);
   chips.forEach((chip) => {
-    const viewport = chip.querySelector('.sports-chip__line');
-    // CTA : mesurer la couche front uniquement (pas la couche sortante).
-    const inner = chip.classList.contains('sports-chip--cta')
-      ? sportsCtaActiveLabel(chip)
+    const isCta = chip.classList.contains('sports-chip--cta');
+    // CTA : le roulement déplace la couche (translateY), le marquee déplace le
+    // texte (translateX). Deux nœuds distincts, sinon les transforms se
+    // marchent dessus — c’est ce qui rendait l’ancien fondu saccadé.
+    const layer = isCta ? sportsCtaActiveLabel(chip) : null;
+    const viewport = isCta
+      ? layer?.querySelector('.sports-chip__cta-line')
+      : chip.querySelector('.sports-chip__line');
+    const inner = isCta
+      ? sportsCtaScrollTarget(layer)
       : chip.querySelector('.sports-chip__line-inner');
     if (!viewport || !inner) {
       chip.classList.remove('is-overflowing');
       chip.style.removeProperty('--sports-scroll');
       return;
     }
-    // Pendant un crossfade superposé : ne pas lancer le marquee (couches en fondu).
+    // Pendant un roulement : ne pas mesurer une couche en mouvement.
     if (
-      chip.classList.contains('sports-chip--cta')
+      isCta
       && (
-        inner.classList.contains('is-fading-in')
-        || chip.querySelector('.sports-chip__cta-label.is-fading-out')
+        layer.classList.contains('is-rolling-in')
+        || chip.querySelector('.sports-chip__cta-label.is-rolling-out')
       )
     ) {
       return;
@@ -3027,37 +3334,33 @@ function paintSportsChip(slide, animate = false) {
 
   /* ── CTA « SPORTS » — pastille fixe + accroche (crossfade, jamais is-arriving) ── */
   if (slide.mode === 'cta') {
-    const href = sportsBoardHref(slide);
     const a = document.createElement('a');
     a.className = 'sports-chip sports-chip--cta';
-    a.href = href;
+    a.href = sportsBoardHref(slide);
     markSportsBoardLink(a);
-    // Pas d’animation « arrivée carte » : la rotation crossfade le label seul.
+    // Pas d’animation « arrivée carte » : la rotation fait rouler le label seul.
     a.dataset.sportsKey = SPORTS_CTA_KEY;
     a.dataset.sportsMode = 'cta';
     a.dataset.sportsSport = 'board';
-    a.style.setProperty('--sports-tone', '#c8102e');
     const { title, aria } = sportsCtaA11y(slide);
     a.title = title;
     a.setAttribute('aria-label', aria);
 
-    // Pastille type BREAKING : point live + libellé fixe « SPORTS ».
+    // Pastille : rubrique stable au repos, « En cours » pendant un match.
     const tag = document.createElement('span');
     tag.className = 'sports-chip__cta-tag';
     tag.setAttribute('aria-hidden', 'true');
-    const live = document.createElement('span');
-    live.className = 'sports-chip__cta-live';
-    tag.append(live, document.createTextNode(SPORTS_CTA_TAG));
 
     const line = document.createElement('span');
     line.className = 'sports-chip__line';
-    // Stack 2 couches : crossfade superposé (jamais de trou vide).
+    // Deux couches empilées : le roulement en fait vivre deux le temps d’une phase.
     const stack = document.createElement('span');
     stack.className = 'sports-chip__cta-stack';
-    const inner = document.createElement('span');
-    inner.className = 'sports-chip__line-inner sports-chip__cta-label is-front';
-    inner.textContent = slide.label || 'Scores étudiants QC';
-    stack.append(inner);
+    const layer = document.createElement('span');
+    layer.className = 'sports-chip__cta-label is-front';
+    fillSportsCtaLayer(layer, slide);
+    layer.dataset.ctaSig = sportsCtaSignature(slide);
+    stack.append(layer);
     line.append(stack);
 
     const chev = document.createElement('span');
@@ -3066,6 +3369,8 @@ function paintSportsChip(slide, animate = false) {
     chev.textContent = '→';
 
     a.append(tag, line, chev);
+    applySportsCtaState(a, slide);
+    bindSportsCtaPause(a);
     return a;
   }
 
@@ -3164,7 +3469,6 @@ function nextSportsSlide(usedKeys, opts = {}) {
     // forceMode 'info' ignoré : les slogans ne vont plus à gauche.
     if (!lane.pool.length) return null;
     const pool = lane.pool;
-    sportsLeftWantInfo = false;
     // Diversité sport puis curseur.
     for (let i = 0; i < pool.length; i += 1) {
       const s = pool[(sportsLeftCursor + i) % pool.length];
@@ -3241,16 +3545,10 @@ function pickInitialSportsVisible(count) {
   sportsCtaLabelIndex = pool.length
     ? Math.floor(Math.random() * pool.length)
     : 0;
-  sportsSportCursor = 0;
   sportsLeftCursor = 0;
-  sportsInfoCursor = 0;
-  sportsLeftWantInfo = false;
 
   // Dernier cran de largeur / fit : uniquement l’ancre « Au tableau ».
-  if (count <= 1) {
-    sportsCtaOnRightMobile = true;
-    return [sportsCtaSlide(sportsCtaLabelIndex)];
-  }
+  if (count <= 1) return [sportsCtaSlide(sportsCtaLabelIndex)];
 
   const contentCount = Math.max(0, count - 1);
   const picked = [];
@@ -3268,7 +3566,6 @@ function pickInitialSportsVisible(count) {
   }
 
   picked.push(sportsCtaSlide(sportsCtaLabelIndex));
-  sportsCtaOnRightMobile = true;
   return picked;
 }
 
@@ -3402,26 +3699,30 @@ function sportsChipNeedsMarquee(chip) {
  */
 function sportsSlotDwellMs(slot) {
   const chip = MASTHEAD_SPORTS_STRIP?.querySelectorAll('.sports-chip')?.[slot];
-  const labelEl = chip?.classList?.contains('sports-chip--cta')
-    ? sportsCtaActiveLabel(chip)
+  const isCta = !!chip?.classList?.contains('sports-chip--cta');
+  const labelEl = isCta
+    ? sportsCtaScrollTarget(sportsCtaActiveLabel(chip))
     : chip?.querySelector('.sports-chip__line-inner');
   const label = labelEl?.textContent || '';
   const readMs = sportsLabelReadingMs(label);
   if (sportsReducedMotion) return readMs;
   if (!chip) return SPORTS_READ_MIN_MS;
+  // La carte CTA tient un rythme lent à elle : trois fois moins de changements
+  // qu’une puce de score (garde-fou `rythme-lent`).
+  const floor = isCta ? SPORTS_CTA_DWELL_MS : readMs;
   if (sportsChipNeedsMarquee(chip)) {
     // Aller (8,5 s) + retour (8,5 s) + pause au début — synchro CSS.
-    return Math.max(readMs, SPORTS_SCROLL_ROUND_TRIP_MS + SPORTS_SCROLL_POST_PAUSE_MS);
+    return Math.max(floor, SPORTS_SCROLL_ROUND_TRIP_MS + SPORTS_SCROLL_POST_PAUSE_MS);
   }
-  return readMs;
+  return floor;
 }
 
 /** Délai après rotateSportsSlot avant de re-mesurer / re-planifier le dwell. */
 function sportsSlotSettleMs(slot, replacement) {
   if (sportsReducedMotion) return 80;
   if (replacement?.mode === 'cta') {
-    // Crossfade superposé = une seule phase (plus de ×2).
-    return SPORTS_CTA_CROSSFADE_MS + 80;
+    // Roulement = une seule phase, et plus courte que l’ancien fondu.
+    return SPORTS_CTA_ROLL_MS + 80;
   }
   // Sortie is-leaving + entrée is-arriving + layout marquee.
   return SPORTS_CHIP_LEAVE_MS + SPORTS_ARRIVE_MS + 100;
@@ -3432,10 +3733,6 @@ function clearSportsSlotTimers() {
     if (sportsSlotTimers[i]) clearTimeout(sportsSlotTimers[i]);
   }
   sportsSlotTimers = [];
-  if (sportsTimer) {
-    clearInterval(sportsTimer);
-    sportsTimer = null;
-  }
 }
 
 /**
@@ -3496,13 +3793,13 @@ function rotateSportsSlot(slot) {
   const chips = MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip');
   const oldChip = chips[slot];
 
-  // CTA : carte stable — crossfade du texte d’info seulement (pas de gare / is-arriving).
+  // CTA : carte stable — roulement du texte d’info seulement (pas de gare / is-arriving).
   if (
     replacement.mode === 'cta'
     && oldChip
     && oldChip.classList.contains('sports-chip--cta')
   ) {
-    crossfadeSportsCtaLabel(oldChip, replacement);
+    rollSportsCtaLabel(oldChip, replacement);
     return sportsSlotSettleMs(slot, replacement);
   }
 
@@ -3556,6 +3853,10 @@ function scheduleSportsSlot(slot, { initialStagger = 0 } = {}) {
   }
   const n = sportsVisible.length;
   if (slot < 0 || slot >= n) return;
+  // La carte CTA ne tourne que là où on peut l’arrêter, et pas pendant qu’on la
+  // survole ou qu’elle a le focus (garde-fous `rotation-pointeur-fin` et
+  // `pause-survol-focus`). Ailleurs, l’accroche reste celle du chargement.
+  if (sportsVisible[slot]?.mode === 'cta' && (!sportsCtaMayRotate() || sportsCtaPaused)) return;
   // Mesurer le marquee avant de fixer le dwell (classe peut être absente un instant).
   const chipNow = MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip')?.[slot];
   if (chipNow) refreshSportsChipScroll(chipNow);
@@ -3583,11 +3884,11 @@ function scheduleSportsRotate() {
   const n = sportsVisible.length;
   if (n < 1) return;
   const lane = sportsLeftLaneState();
-  // Tourner s’il y a de la matière (pool résultats/next, infos hors saison, ou CTA multi-accroches).
+  // Tourner s’il y a de la matière : pool de gauche, ou CTA autorisée à tourner.
   const canSpin = lane.pool.length > 1
     || lane.kind === 'offseason'
-    || sportsCtaLabelPool().length > 1
-    || sportsVisible.length > 1;
+    || sportsVisible.length > 1
+    || sportsCtaMayRotate();
   if (!canSpin) return;
   // Chaque slot a son horloge ; stagger initial pour ne pas tout basculer d’un coup.
   for (let i = 0; i < n; i += 1) {
