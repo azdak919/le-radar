@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-08-09T14:31:16.407Z",
+  "updatedAt": "2026-08-09T15:28:12.907Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Le Ré-Show : Deuxième Service",
-        "source": "schedule",
+        "source": "api-live",
         "start": "11:00",
         "end": "12:00",
         "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
       },
+      "next": {
+        "title": "Radio Futura",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "16:00",
+        "url": "https://chyz.ca/emission/radio-futura/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Le Ré-Show : Deuxième Service",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T14:31:05.783Z"
+      "checkedAt": "2026-08-09T15:28:01.789Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Ya Raï",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/ya-rai"
-      },
-      "next": {
         "title": "Yallah lâcher prise",
         "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "https://cism893.ca/emissions/yallah-lacher-prise-avec-rhabibiii"
       },
+      "next": {
+        "title": "Basses fréquences",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/basses-frequences"
+      },
       "track": "",
-      "showTitle": "Ya Raï",
+      "showTitle": "Yallah lâcher prise",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T14:31:08.127Z"
+      "checkedAt": "2026-08-09T15:28:03.922Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "International Radio Report",
-        "source": "api-live",
-        "start": "10:30",
-        "end": "11:00"
-      },
-      "next": {
         "title": "Free Kick",
         "source": "api-live",
         "start": "11:00",
         "end": "13:00"
       },
+      "next": {
+        "title": "Modular Systems/Future Classics",
+        "source": "api-live",
+        "start": "13:00",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "International Radio Report",
+      "showTitle": "Free Kick",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T14:31:10.992Z"
+      "checkedAt": "2026-08-09T15:28:06.725Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +108,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T14:31:12.735Z"
+      "checkedAt": "2026-08-09T15:28:08.854Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T14:31:13.220Z"
+      "checkedAt": "2026-08-09T15:28:09.605Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +146,7 @@
         "end": "16:00",
         "slug": "pole-hip-hop"
       },
-      "track": "ID - Raccoon",
+      "track": "ID - lou-Adriane",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-09T14:31:16.056Z"
+      "checkedAt": "2026-08-09T15:28:12.555Z"
     }
   }
 }
