@@ -1,27 +1,34 @@
 {
-  "updatedAt": "2026-08-09T16:42:12.445Z",
+  "updatedAt": "2026-08-09T17:29:06.144Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Radio Futura",
-        "source": "schedule",
+        "source": "api-live",
         "start": "13:00",
         "end": "16:00",
         "url": "https://chyz.ca/emission/radio-futura/"
       },
+      "next": {
+        "title": "Capitales de Québec",
+        "source": "schedule-live",
+        "start": "16:50",
+        "end": "20:30",
+        "url": "https://chyz.ca/emission/capitales-de-quebec/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Radio Futura",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T16:41:56.917Z"
+      "checkedAt": "2026-08-09T17:28:55.086Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T16:41:59.473Z"
+      "checkedAt": "2026-08-09T17:28:57.278Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Free Kick",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "13:00"
-      },
-      "next": {
         "title": "Modular Systems/Future Classics",
         "source": "api-live",
         "start": "13:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "The Magic Roundabout",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "16:00"
+      },
       "track": "",
-      "showTitle": "Free Kick",
+      "showTitle": "Modular Systems/Future Classics",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T16:42:02.254Z"
+      "checkedAt": "2026-08-09T17:29:00.046Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Brave Little Emo Girl",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/brave-little-emo-girl"
-      },
-      "next": {
         "title": "Northern Stagelights",
         "source": "schedule",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/northern-stagelights"
       },
+      "next": {
+        "title": "Cinema Smackdown",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/cinema-smackdown"
+      },
       "track": "",
-      "showTitle": "Brave Little Emo Girl",
+      "showTitle": "Northern Stagelights",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T16:42:04.465Z"
+      "checkedAt": "2026-08-09T17:29:02.054Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T16:42:05.122Z"
+      "checkedAt": "2026-08-09T17:29:02.542Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +146,7 @@
         "end": "16:00",
         "slug": "pole-hip-hop"
       },
-      "track": "ID - laraw",
+      "track": "ID - Neimo-DJ-White-Socks",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-09T16:42:12.095Z"
+      "checkedAt": "2026-08-09T17:29:05.794Z"
     }
   }
 }
