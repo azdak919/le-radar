@@ -448,16 +448,16 @@ variantes de noms :
 
 > Généré par `npm run agents:harvest -- --write`. **Pas des D# ouvertes.**
 > L’humain (ou l’agent avec OK) promeut une ligne en §3 si pertinent.
-> Dernière récolte : 2026-08-07T21:07:47.493Z · intensité **heavy** (score 398.8) · fenêtre `36h`
+> Dernière récolte : 2026-08-09T03:33:39.220Z · intensité **heavy** (score 1011.6) · fenêtre `36h`
 
 | Zone | Chaleur | Effort | Suggestion | Fichiers chauds |
 |------|---------|--------|------------|-----------------|
-| pwa-sw | 64 | S | PWA / service worker / install | `assets/news-images/manifest.json`, `sw.js`, `sports/sw.js`, `pomo/sw.js`, `offline.html` |
-| banks-photo | 38 | M | Pipeline banques photo (QC / saisons / audit) | `data/quebec-backgrounds.json`, `data/quebec-favorites-backgrounds.json`, `data/quebec-nations-backgrounds.json`, `data/quebec-pomo-backgrounds.json`, `data/quebec-university-backgrounds.json`, `scripts/bank-hard-audit-lib.js` |
-| bots-ci | 22.8 | M | Bots / CI / scripts de maintenance | `tests/tuner-safe-area.spec.mjs`, `tests/scroll-anchoring.spec.mjs`, `scripts/seo-pages.js`, `tests/static-integrity.mjs`, `tests/magazine-mid.spec.mjs`, `.github/workflows/maintain.yml` |
-| monolith-app | 12 | L | Découper / modulariser app.js (tranche) | `app.js` |
-| monolith-css | 10 | M | Extraire CSS mât / thème (tranche style.css) | `style.css` |
-| docs-agents | 4.8 | S | Playbook / ledger agents (méta) | `.agents-harvest.json`, `AGENTS.md`, `docs/agent-playbook.md` |
+| bots-ci | 188.4 | M | Bots / CI / scripts de maintenance | `scripts/radio-nowplaying-lib.js`, `scripts/radio-schedule-lib.js`, `tests/radio-nowplaying.mjs`, `tests/masthead-sports-fit.spec.mjs`, `tests/static-integrity.mjs`, `scripts/fetch-radio-nowplaying.js` |
+| pwa-sw | 76 | S | PWA / service worker / install | `assets/news-images/manifest.json`, `sports/sw.js`, `sw.js`, `engage-prompt.js`, `manifest.json`, `offline.html` |
+| pomo | 61.5 | S | Isolation / qualité mini-app Pomo | `pomo/LICENSE`, `pomo/README.md`, `pomo/apple-touch-icon-120x120.png`, `pomo/apple-touch-icon-152x152.png`, `pomo/apple-touch-icon-180x180.png`, `pomo/apple-touch-icon.png` |
+| banks-photo | 42 | M | Pipeline banques photo (QC / saisons / audit) | `data/quebec-backgrounds.json`, `data/quebec-favorites-backgrounds.json`, `data/quebec-nations-backgrounds.json`, `data/quebec-pomo-backgrounds.json`, `data/quebec-university-backgrounds.json`, `quebec-backgrounds-data.js` |
+| radio-mobile | 37.5 | M | Radio mobile / Media Session / reprise | `scripts/radio-nowplaying-lib.js`, `tests/radio-nowplaying.mjs`, `scripts/fetch-radio-nowplaying.js`, `.github/workflows/update-radio-nowplaying.yml`, `cast.js`, `mobile-playback.js` |
+| monolith-app | 21 | L | Découper / modulariser app.js (tranche) | `app.js`, `pomo/js/app.js` |
 
 Pour promouvoir : ajouter une ligne D# en §3 avec effort + pourquoi, après OK humain.
 ## 4. Dettes résolues (historique)
