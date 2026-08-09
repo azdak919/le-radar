@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-09T09:36:11.516Z",
+  "updatedAt": "2026-08-09T10:30:52.861Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,86 +21,91 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T09:35:58.381Z"
+      "checkedAt": "2026-08-09T10:30:37.360Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
         "title": "Mix Franco",
-        "source": "schedule",
+        "source": "api-live",
         "start": "02:00",
-        "end": "06:30",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "url": "https://stream03.ustream.ca/cism128.mp3",
+        "slug": "mix-franco"
       },
       "next": {
-        "title": "Les mignardises littéraires",
+        "title": "Genre de bleu",
         "source": "schedule",
-        "start": "06:30",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/les-mignardises-litteraires"
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/genre-de-bleu"
       },
       "track": "",
       "showTitle": "Mix Franco",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
+        "api-live",
         "schedule"
       ],
-      "clientPoll": null,
-      "checkedAt": "2026-08-09T09:36:00.639Z"
+      "clientPoll": {
+        "type": "cism-v1",
+        "url": "https://admin.cism893.ca/api/v1/live"
+      },
+      "checkedAt": "2026-08-09T10:30:39.686Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Utopia's Paradise",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "06:00"
-      },
-      "next": {
         "title": "Mind, Soul, & Spirit",
         "source": "api-live",
         "start": "06:00",
         "end": "09:00"
       },
-      "track": "Utopia",
-      "showTitle": "Utopia's Paradise",
+      "next": {
+        "title": "Latin Time",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "10:30"
+      },
+      "track": "Airtime - offline",
+      "showTitle": "Mind, Soul, & Spirit",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T09:36:03.521Z"
+      "checkedAt": "2026-08-09T10:30:42.649Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "01:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Sun Ra, Sun Rise",
         "source": "schedule-live",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
       },
+      "next": {
+        "title": "The Gigi Brown Experience",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/the-gigi-brown-experience"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Sun Ra, Sun Rise",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T09:36:07.131Z"
+      "checkedAt": "2026-08-09T10:30:44.536Z"
     },
     "cfak": {
       "id": "cfak",
@@ -125,7 +130,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T09:36:08.019Z"
+      "checkedAt": "2026-08-09T10:30:45.260Z"
     },
     "choq": {
       "id": "choq",
@@ -138,7 +143,7 @@
         "end": "16:00",
         "slug": "pole-hip-hop"
       },
-      "track": "aja monet - melting clocks (feat. Mick Jenkins & Vic Mensa)",
+      "track": "Wesley Joseph - Pluto Baby",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +154,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-09T09:36:11.165Z"
+      "checkedAt": "2026-08-09T10:30:52.510Z"
     }
   }
 }
