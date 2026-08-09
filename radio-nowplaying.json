@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-09T05:44:25.002Z",
+  "updatedAt": "2026-08-09T06:51:28.488Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,60 +21,59 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T05:44:12.447Z"
+      "checkedAt": "2026-08-09T06:51:15.668Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Basses fréquences (reprise)",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/basses-frequences"
-      },
-      "next": {
         "title": "Mix Franco",
         "source": "schedule",
         "start": "02:00",
         "end": "06:30",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "Les mignardises littéraires",
+        "source": "schedule",
+        "start": "06:30",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/les-mignardises-litteraires"
+      },
       "track": "",
-      "showTitle": "Basses fréquences (reprise)",
+      "showTitle": "Mix Franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T05:44:14.818Z"
+      "checkedAt": "2026-08-09T06:51:17.661Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "stereOphobic",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "Utopia's Paradise",
         "source": "api-live",
         "start": "02:00",
         "end": "06:00"
       },
-      "track": "",
-      "showTitle": "stereOphobic",
+      "next": {
+        "title": "Mind, Soul, & Spirit",
+        "source": "api-live",
+        "start": "06:00",
+        "end": "09:00"
+      },
+      "track": "Utopia",
+      "showTitle": "Utopia's Paradise",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T05:44:18.052Z"
+      "checkedAt": "2026-08-09T06:51:22.359Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +100,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T05:44:20.299Z"
+      "checkedAt": "2026-08-09T06:51:24.563Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +125,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T05:44:21.139Z"
+      "checkedAt": "2026-08-09T06:51:25.437Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +138,7 @@
         "end": "16:00",
         "slug": "pole-hip-hop"
       },
-      "track": "MIRAR - Sonia",
+      "track": "Carences - Monologue",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +149,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-09T05:44:24.652Z"
+      "checkedAt": "2026-08-09T06:51:28.138Z"
     }
   }
 }
