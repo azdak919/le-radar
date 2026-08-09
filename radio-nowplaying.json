@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-09T11:55:18.978Z",
+  "updatedAt": "2026-08-09T12:42:41.434Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T11:55:06.586Z"
+      "checkedAt": "2026-08-09T12:42:29.187Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Genre de bleu",
-        "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/genre-de-bleu"
-      },
-      "next": {
         "title": "Par mots et par vaux",
         "source": "schedule",
         "start": "08:00",
         "end": "09:00",
         "url": "https://cism893.ca/emissions/par-mots-et-par-vaux"
       },
+      "next": {
+        "title": "Le 120e parallèle",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://cism893.ca/emissions/le-120e-parallele"
+      },
       "track": "",
-      "showTitle": "Genre de bleu",
+      "showTitle": "Par mots et par vaux",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T11:55:09.127Z"
+      "checkedAt": "2026-08-09T12:42:31.551Z"
     },
     "ckut": {
       "id": "ckut",
@@ -65,7 +65,7 @@
         "start": "09:00",
         "end": "10:30"
       },
-      "track": "Airtime - offline",
+      "track": "",
       "showTitle": "Mind, Soul, & Spirit",
       "host": "",
       "source": "api-live",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T11:55:12.051Z"
+      "checkedAt": "2026-08-09T12:42:34.269Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Sun Ra, Sun Rise",
-        "source": "schedule-live",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
-      },
-      "next": {
         "title": "The Gigi Brown Experience",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/the-gigi-brown-experience"
       },
+      "next": {
+        "title": "REVC",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/revc"
+      },
       "track": "",
-      "showTitle": "Sun Ra, Sun Rise",
+      "showTitle": "The Gigi Brown Experience",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T11:55:14.490Z"
+      "checkedAt": "2026-08-09T12:42:36.478Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T11:55:15.329Z"
+      "checkedAt": "2026-08-09T12:42:36.967Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "slug": "pole-hip-hop"
       },
-      "track": "Élégie - Demain minuit",
+      "track": "Mike Paul Kuekuatsheu - Shine bright",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-09T11:55:18.627Z"
+      "checkedAt": "2026-08-09T12:42:41.083Z"
     }
   }
 }
