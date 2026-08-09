@@ -1,61 +1,54 @@
 {
-  "updatedAt": "2026-08-09T15:58:53.979Z",
+  "updatedAt": "2026-08-09T16:42:12.445Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Le Ré-Show : Deuxième Service",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
-      },
+      "current": null,
       "next": {
         "title": "Radio Futura",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "13:00",
         "end": "16:00",
         "url": "https://chyz.ca/emission/radio-futura/"
       },
       "track": "",
-      "showTitle": "Le Ré-Show : Deuxième Service",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-08-09T15:58:38.716Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Yallah lâcher prise",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/yallah-lacher-prise-avec-rhabibiii"
-      },
-      "next": {
-        "title": "Basses fréquences",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/basses-frequences"
-      },
-      "track": "",
-      "showTitle": "Yallah lâcher prise",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T15:58:41.113Z"
+      "checkedAt": "2026-08-09T16:41:56.917Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Basses fréquences",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/basses-frequences"
+      },
+      "next": {
+        "title": "Le char de marge",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/le-char-de-marge"
+      },
+      "track": "",
+      "showTitle": "Basses fréquences",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-08-09T16:41:59.473Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T15:58:44.029Z"
+      "checkedAt": "2026-08-09T16:42:02.254Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Rigged Sessions",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/rigged-sessions"
-      },
-      "next": {
         "title": "Brave Little Emo Girl",
         "source": "schedule",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/brave-little-emo-girl"
       },
+      "next": {
+        "title": "Northern Stagelights",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/northern-stagelights"
+      },
       "track": "",
-      "showTitle": "Rigged Sessions",
+      "showTitle": "Brave Little Emo Girl",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T15:58:46.509Z"
+      "checkedAt": "2026-08-09T16:42:04.465Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T15:58:47.120Z"
+      "checkedAt": "2026-08-09T16:42:05.122Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +139,7 @@
         "end": "16:00",
         "slug": "pole-hip-hop"
       },
-      "track": "ID - lou-Adriane",
+      "track": "ID - laraw",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-09T15:58:53.629Z"
+      "checkedAt": "2026-08-09T16:42:12.095Z"
     }
   }
 }
