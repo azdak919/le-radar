@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-10T12:11:28.279Z",
+  "updatedAt": "2026-08-10T13:55:00.428Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T12:11:18.216Z"
+      "checkedAt": "2026-08-10T13:54:44.679Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Ya Raï (reprise)",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/ya-rai"
-      },
-      "next": {
         "title": "La collation",
         "source": "schedule",
         "start": "09:00",
         "end": "11:00",
         "url": "https://cism893.ca/emissions/mix-collation"
       },
+      "next": {
+        "title": "O'Keb",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/okeb"
+      },
       "track": "",
-      "showTitle": "Ya Raï (reprise)",
+      "showTitle": "La collation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T12:11:19.961Z"
+      "checkedAt": "2026-08-10T13:54:47.035Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Le Lendemain de la veille",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Latin Music Mondays",
         "source": "api-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "All Things Campus",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00"
+      },
       "track": "",
-      "showTitle": "Le Lendemain de la veille",
+      "showTitle": "Latin Music Mondays",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,59 +81,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T12:11:22.651Z"
+      "checkedAt": "2026-08-10T13:54:49.988Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Experiments",
-        "source": "schedule",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/experiments"
-      },
-      "next": {
         "title": "Death of the Midrange",
         "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/death-of-the-midrange"
       },
+      "next": {
+        "title": "Democracy Now",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
+      },
       "track": "",
-      "showTitle": "Experiments",
+      "showTitle": "Death of the Midrange",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T12:11:24.509Z"
+      "checkedAt": "2026-08-10T13:54:52.054Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Solénoïde",
         "source": "schedule-live",
         "start": "09:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Ma radio Académia",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "Solénoïde",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T12:11:25.451Z"
+      "checkedAt": "2026-08-10T13:54:52.665Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "end": "13:00",
         "slug": "balado-populi"
       },
-      "track": "Bloc Pub 21 juillet.mp3",
+      "track": "Francouvertes 2026 - Dauphins",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T12:11:27.928Z"
+      "checkedAt": "2026-08-10T13:55:00.077Z"
     }
   }
 }
