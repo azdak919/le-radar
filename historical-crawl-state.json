@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-08-09T07:39:52.625Z",
+  "updated": "2026-08-10T08:16:25.165Z",
   "sources": {
     "la-pige": {
       "strategy": "wordpress-rest",
@@ -23,13 +23,13 @@
     },
     "le-collectif": {
       "strategy": "wordpress-rest",
-      "nextPage": 17,
+      "nextPage": 21,
       "totalPages": 34,
-      "lastAttemptAt": "2026-08-09T07:39:50.746Z",
-      "lastSuccessAt": "2026-08-09T07:39:50.746Z",
+      "lastAttemptAt": "2026-08-10T08:16:23.253Z",
+      "lastSuccessAt": "2026-08-10T08:16:23.253Z",
       "retryAt": null,
       "error": null,
-      "windowStart": "2023-08-09T13:39:36.019Z",
+      "windowStart": "2023-08-10T14:16:08.025Z",
       "windowYears": 3
     },
     "exil": {
@@ -161,13 +161,13 @@
     },
     "the-tribune": {
       "strategy": "wordpress-rest",
-      "nextPage": 17,
+      "nextPage": 21,
       "totalPages": 40,
-      "lastAttemptAt": "2026-08-09T07:39:42.140Z",
-      "lastSuccessAt": "2026-08-09T07:39:42.140Z",
+      "lastAttemptAt": "2026-08-10T08:16:14.820Z",
+      "lastSuccessAt": "2026-08-10T08:16:14.820Z",
       "retryAt": null,
       "error": null,
-      "windowStart": "2023-08-09T13:39:36.019Z",
+      "windowStart": "2023-08-10T14:16:08.025Z",
       "windowYears": 3
     },
     "zone-campus": {
