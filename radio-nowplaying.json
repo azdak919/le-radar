@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-10T05:54:59.065Z",
+  "updatedAt": "2026-08-10T07:26:20.120Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T05:54:49.343Z"
+      "checkedAt": "2026-08-10T07:26:08.650Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "L'Alter Ego (reprise)",
+        "title": "Le char de marge (reprise)",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/lalter-ego"
+        "start": "03:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/le-char-de-marge"
       },
       "next": {
-        "title": "Mix Franco",
+        "title": "Le Séismix",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "05:00",
+        "end": "06:30",
+        "url": "https://cism893.ca/emissions/le-seismix"
       },
       "track": "",
-      "showTitle": "L'Alter Ego (reprise)",
+      "showTitle": "Le char de marge (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T05:54:51.172Z"
+      "checkedAt": "2026-08-10T07:26:11.026Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T05:54:53.505Z"
+      "checkedAt": "2026-08-10T07:26:13.903Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T05:54:55.251Z"
+      "checkedAt": "2026-08-10T07:26:15.896Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T05:54:55.998Z"
+      "checkedAt": "2026-08-10T07:26:16.421Z"
     },
     "choq": {
       "id": "choq",
@@ -139,15 +139,18 @@
         "end": "13:00",
         "slug": "balado-populi"
       },
-      "track": "Bloc Pub 21 juillet.mp3",
+      "track": "ID - laraw",
       "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": null,
-      "checkedAt": "2026-08-10T05:54:58.714Z"
+      "clientPoll": {
+        "type": "triton-np",
+        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
+      },
+      "checkedAt": "2026-08-10T07:26:19.770Z"
     }
   }
 }
