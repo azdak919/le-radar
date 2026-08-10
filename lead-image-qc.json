@@ -1,24 +1,24 @@
 {
-  "updated": "2026-08-10T06:47:52.955Z",
+  "updated": "2026-08-10T10:49:29.599Z",
   "total": 185,
   "withPhoto": 168,
   "withStock": 22,
-  "withCampusBank": 11,
+  "withCampusBank": 12,
   "fullyCovered": 185,
-  "leadReadyPhotos": 146,
+  "leadReadyPhotos": 147,
   "pageScraped": 21,
   "photosRecovered": 21,
-  "imagesCleared": 9,
-  "stockSearches": 32,
-  "stockFound": 9,
-  "campusBankFound": 1,
+  "imagesCleared": 10,
+  "stockSearches": 31,
+  "stockFound": 8,
+  "campusBankFound": 2,
   "mainPageLeadReady": true,
   "gaps": [
     {
       "title": "The Cruel Optimism of Summer",
       "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/917/28627096297_a3e0756d47_b.jpg"
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
     },
     {
       "title": "Raid marocain en Espagne",
@@ -33,12 +33,6 @@
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg"
     },
     {
-      "title": "From the rink to the links",
-      "link": "https://thebucampus.ca/2026/04/06/from-the-rink-to-the-links/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/4031/4400844746_a47c17ef6d_b.jpg"
-    },
-    {
       "title": "National Golf tournament",
       "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
       "reason": "stock-too-small",
@@ -51,10 +45,16 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
     },
     {
+      "title": "Second-Class Citizens",
+      "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/7/78/Women%27s_March_in_Calgary_%2832453883945%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
       "title": "The Gentrification of Online Fandom Spaces",
       "link": "https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
     },
     {
       "title": "Le pays avant tout – esquisse",
