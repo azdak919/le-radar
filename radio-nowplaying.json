@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-08-10T11:30:19.777Z",
+  "updatedAt": "2026-08-10T12:11:28.279Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Lundi Indie",
-        "source": "schedule",
+        "source": "api-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Lundi Indie",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T11:30:09.030Z"
+      "checkedAt": "2026-08-10T12:11:18.216Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le terrain sportif",
-        "source": "schedule",
-        "start": "06:30",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/le-terrain-sportif"
-      },
-      "next": {
         "title": "Ya Raï (reprise)",
         "source": "schedule",
         "start": "08:00",
         "end": "09:00",
         "url": "https://cism893.ca/emissions/ya-rai"
       },
+      "next": {
+        "title": "La collation",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
+      },
       "track": "",
-      "showTitle": "Le terrain sportif",
+      "showTitle": "Ya Raï (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T11:30:11.608Z"
+      "checkedAt": "2026-08-10T12:11:19.961Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Unmuted with Svetlana and Miss Trish",
-        "source": "api-live",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
         "title": "Le Lendemain de la veille",
         "source": "api-live",
         "start": "08:00",
         "end": "09:00"
       },
+      "next": {
+        "title": "Latin Music Mondays",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Unmuted with Svetlana and Miss Trish",
+      "showTitle": "Le Lendemain de la veille",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T11:30:13.946Z"
+      "checkedAt": "2026-08-10T12:11:22.651Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,32 +108,32 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T11:30:15.890Z"
+      "checkedAt": "2026-08-10T12:11:24.509Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Folkswagen",
-        "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
         "title": "Palmarès CFAK",
         "source": "schedule-live",
         "start": "08:00",
         "end": "09:00"
       },
+      "next": {
+        "title": "Solénoïde",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T11:30:16.710Z"
+      "checkedAt": "2026-08-10T12:11:25.451Z"
     },
     "choq": {
       "id": "choq",
@@ -139,18 +146,15 @@
         "end": "13:00",
         "slug": "balado-populi"
       },
-      "track": "ID - Naima-Frank",
+      "track": "Bloc Pub 21 juillet.mp3",
       "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": {
-        "type": "triton-np",
-        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
-      },
-      "checkedAt": "2026-08-10T11:30:19.425Z"
+      "clientPoll": null,
+      "checkedAt": "2026-08-10T12:11:27.928Z"
     }
   }
 }
