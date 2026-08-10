@@ -1,16 +1,32 @@
 {
-  "updated": "2026-08-10T22:57:13.437Z",
+  "updated": "2026-08-10T23:37:41.647Z",
   "total": 185,
   "withAuthor": 185,
-  "mismatches": 7,
+  "mismatches": 8,
   "ok": true,
   "samples": [
     {
-      "title": "Meet Your Prof: Ivan Topisirovic",
-      "link": "https://www.thetribune.ca/sci-tech/meet-your-prof-ivan-topisirovic-10082026/?utm_source=rss&utm_medium=rss&utm_campaign=meet-your-prof-ivan-topisirovic-10082026",
-      "source": "The Tribune",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "Abraham Labban",
+      "title": "L’inusité s’invite dans la politique",
+      "link": "https://lecollectif.ca/a-la-une/linusite-sinvite-dans-la-politique/",
+      "source": "Le Collectif",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Médéric Dens",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Un autre détroit commercial en péril",
+      "link": "https://lecollectif.ca/societe/politique-internationale/un-autre-detroit-commercial-en-peril/",
+      "source": "Le Collectif",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Médéric Dens",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Recul d’Ottawa sur la « taxe Netflix »",
+      "link": "https://lecollectif.ca/a-la-une/recul-dottawa-sur-la-taxe-netflix/",
+      "source": "Le Collectif",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Médéric Dens",
       "reason": "page-byline"
     },
     {
@@ -38,19 +54,11 @@
       "reason": "no-author-source"
     },
     {
-      "title": "Ce que nous devons aux femmes",
-      "link": "https://www.delitfrancais.com/2026/03/18/ce-que-nous-devons-aux-femmes/",
+      "title": "Des initiatives qui rassemblent",
+      "link": "https://www.delitfrancais.com/2026/03/18/des-initiatives-qui-rassemblent/",
       "source": "Le Délit",
       "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Eugénie St-Pierre",
-      "reason": "page-byline"
-    },
-    {
-      "title": "Les femmes MAGA au service du patriarcat",
-      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
-      "source": "Le Délit",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Anonyme",
+      "canonicalAuthor": "Héloïse Durning et Elie Nguyen",
       "reason": "page-byline"
     },
     {
@@ -62,5 +70,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 7
+  "fixed": 8
 }
