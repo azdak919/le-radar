@@ -1,32 +1,35 @@
 {
-  "checkedAt": "2026-08-09T23:42:39.756Z",
+  "checkedAt": "2026-08-10T23:47:40.159Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 4,
+    "stable": 3,
     "drift": [
-      "chyz"
+      "chyz",
+      "ckut",
+      "choq"
     ],
     "overhaul": [],
-    "unreachable": [
-      "cjlo"
-    ]
+    "unreachable": []
   },
   "stations": [
     {
       "id": "chyz",
       "published": 25,
-      "fresh": 24,
+      "fresh": 25,
       "added": [
-        "ven 16:50–23:00 Capitales de Québec"
+        "mar 18:50–23:00 Capitales de Québec",
+        "mer 18:50–23:00 Capitales de Québec",
+        "jeu 18:50–23:00 Capitales de Québec"
       ],
       "removed": [
+        "lun 20:30–21:30 La Voie des Droits",
         "ven 17:30–18:30 Les Arshitechs du Son",
-        "ven 18:50–23:00 Capitales de Québec"
+        "sam 12:00–12:30 Un Monde de Couleurs et de Son"
       ],
-      "changed": 3,
-      "ratio": 0.12,
+      "changed": 6,
+      "ratio": 0.24,
       "status": "drift"
     },
     {
@@ -43,21 +46,35 @@
       "id": "ckut",
       "published": 101,
       "fresh": 101,
+      "added": [
+        "mar 18:00–19:00 Prison Radio",
+        "mer 22:00–23:00 Rhizomatic Hour 1",
+        "mer 23:00–00:00 Rhizomatic Hour 2",
+        "jeu 17:00–18:00 Off The Hour: La Voix des Immigrants",
+        "jeu 23:00–01:00 L'aire du Diable",
+        "ven 19:00–22:00 LLA/Macondo"
+      ],
+      "removed": [
+        "mar 18:00–19:00 Rez Rock Radio",
+        "mer 22:00–00:00 Lo Signal / Meanwhile/ Rhizomatic",
+        "jeu 17:00–18:00 Off the Hour: Trib Talks",
+        "jeu 23:00–01:00 You Need A Heart To Live 2",
+        "ven 19:00–20:00 Listening to Latin America: Blanca-Victoria",
+        "ven 20:00–22:00 Macondo"
+      ],
+      "changed": 12,
+      "ratio": 0.119,
+      "status": "drift"
+    },
+    {
+      "id": "cjlo",
+      "published": 370,
+      "fresh": 370,
       "added": [],
       "removed": [],
       "changed": 0,
       "ratio": 0,
       "status": "stable"
-    },
-    {
-      "id": "cjlo",
-      "published": 370,
-      "fresh": 0,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "unreachable"
     },
     {
       "id": "cfak",
@@ -72,12 +89,14 @@
     {
       "id": "choq",
       "published": 22,
-      "fresh": 22,
+      "fresh": 21,
       "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "removed": [
+        "dim 14:00–16:00 Pôle hip-hop"
+      ],
+      "changed": 1,
+      "ratio": 0.045,
+      "status": "drift"
     }
   ]
 }
