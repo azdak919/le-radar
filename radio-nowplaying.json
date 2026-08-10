@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-08-10T22:34:13.745Z",
+  "updatedAt": "2026-08-10T23:32:10.104Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "La Lanterne",
-        "source": "api-live",
-        "start": "18:30",
-        "end": "19:30",
-        "url": "https://chyz.ca/emission/la-lanterne/"
-      },
+      "current": null,
       "next": {
         "title": "La Voie des Droits",
         "source": "schedule",
@@ -20,61 +14,59 @@
         "url": "https://chyz.ca/emission/la-voie-des-droits/"
       },
       "track": "",
-      "showTitle": "La Lanterne",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live",
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-08-10T22:33:58.320Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Les criquets crinqués",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/les-criquets-crinques"
-      },
-      "next": {
-        "title": "Les vinyles versatiles",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/les-vinyles-versatiles"
-      },
-      "track": "",
-      "showTitle": "Les criquets crinqués",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T22:34:00.501Z"
+      "checkedAt": "2026-08-10T23:31:54.493Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Les vinyles versatiles",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/les-vinyles-versatiles"
+      },
+      "next": {
+        "title": "Rock à la casbah",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "https://cism893.ca/emissions/rock-a-la-casbah"
+      },
+      "track": "",
+      "showTitle": "Les vinyles versatiles",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-08-10T23:31:56.959Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Queercorps",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Dykes on Mykes",
         "source": "api-live",
         "start": "19:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Underground Sounds",
+        "source": "api-live",
+        "start": "20:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "Queercorps",
+      "showTitle": "Dykes on Mykes",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -82,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T22:34:03.623Z"
+      "checkedAt": "2026-08-10T23:32:00.003Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Voice of the Voiceless",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/voice-of-the-voiceless"
-      },
-      "next": {
         "title": "Queer Chaos",
         "source": "schedule-live",
         "start": "19:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/queer-chaos"
       },
+      "next": {
+        "title": "In The Garage",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/in-the-garage"
+      },
       "track": "",
-      "showTitle": "Voice of the Voiceless",
+      "showTitle": "Queer Chaos",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T22:34:06.612Z"
+      "checkedAt": "2026-08-10T23:32:02.440Z"
     },
     "cfak": {
       "id": "cfak",
@@ -134,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T22:34:07.442Z"
+      "checkedAt": "2026-08-10T23:32:03.176Z"
     },
     "choq": {
       "id": "choq",
@@ -147,7 +139,7 @@
         "end": "07:00",
         "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "Love Spells - Crutch",
+      "track": "Mantisse - Almiri",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -159,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-10T22:34:13.394Z"
+      "checkedAt": "2026-08-10T23:32:09.754Z"
     }
   }
 }
