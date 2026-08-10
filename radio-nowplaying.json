@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-10T15:58:16.326Z",
+  "updatedAt": "2026-08-10T16:56:45.019Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T15:57:49.326Z"
+      "checkedAt": "2026-08-10T16:56:15.942Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "O'Keb",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/okeb"
-      },
-      "next": {
         "title": "L'Alter Ego",
         "source": "schedule",
         "start": "12:00",
         "end": "14:00",
         "url": "https://cism893.ca/emissions/lalter-ego"
       },
+      "next": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
       "track": "",
-      "showTitle": "O'Keb",
+      "showTitle": "L'Alter Ego",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T15:57:51.740Z"
+      "checkedAt": "2026-08-10T16:56:18.291Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "All Things Campus",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "World Skip The Beat",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "Radio Is Dead",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
       "track": "",
-      "showTitle": "All Things Campus",
+      "showTitle": "World Skip The Beat",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T15:57:54.587Z"
+      "checkedAt": "2026-08-10T16:56:21.193Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "2 Days and a Night",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/2-days-and-a-night"
-      },
-      "next": {
         "title": "Twang City",
         "source": "schedule",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/twang-city"
       },
+      "next": {
+        "title": "The Tommy John Show",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/the-tommy-john-show"
+      },
       "track": "",
-      "showTitle": "2 Days and a Night",
+      "showTitle": "Twang City",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T15:58:08.267Z"
+      "checkedAt": "2026-08-10T16:56:34.962Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,21 +126,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T15:58:09.134Z"
+      "checkedAt": "2026-08-10T16:56:35.478Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Balado Populi",
         "source": "api-live",
         "start": "12:00",
         "end": "13:00",
         "slug": "balado-populi"
       },
-      "track": "Tele Novella - Ring of Stones",
-      "showTitle": "",
+      "next": {
+        "title": "Bitume",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00",
+        "slug": "bitume"
+      },
+      "track": "Nana Quinn - Ce qu",
+      "showTitle": "Balado Populi",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -150,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-10T15:58:15.975Z"
+      "checkedAt": "2026-08-10T16:56:44.667Z"
     }
   }
 }
