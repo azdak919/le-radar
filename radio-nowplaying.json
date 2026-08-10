@@ -1,34 +1,35 @@
 {
-  "updatedAt": "2026-08-10T21:38:41.759Z",
+  "updatedAt": "2026-08-10T22:34:13.745Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "api-live",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
-      "next": {
         "title": "La Lanterne",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "18:30",
         "end": "19:30",
         "url": "https://chyz.ca/emission/la-lanterne/"
       },
+      "next": {
+        "title": "La Voie des Droits",
+        "source": "schedule",
+        "start": "20:30",
+        "end": "21:30",
+        "url": "https://chyz.ca/emission/la-voie-des-droits/"
+      },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
+      "showTitle": "La Lanterne",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T21:38:03.193Z"
+      "checkedAt": "2026-08-10T22:33:58.320Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +56,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T21:38:06.300Z"
+      "checkedAt": "2026-08-10T22:34:00.501Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "En Profondeur",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Queercorps",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Dykes on Mykes",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "En Profondeur",
+      "showTitle": "Queercorps",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,70 +82,64 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T21:38:30.804Z"
+      "checkedAt": "2026-08-10T22:34:03.623Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Pressure Drop",
-        "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/the-pressure-drop"
-      },
-      "next": {
         "title": "Voice of the Voiceless",
         "source": "schedule-live",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/voice-of-the-voiceless"
       },
+      "next": {
+        "title": "Queer Chaos",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/queer-chaos"
+      },
       "track": "",
-      "showTitle": "The Pressure Drop",
+      "showTitle": "Voice of the Voiceless",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T21:38:33.883Z"
+      "checkedAt": "2026-08-10T22:34:06.612Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Solénoïde",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Ma radio Académia",
         "source": "schedule-live",
         "start": "18:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Le terrain sportif",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "00:01"
+      },
       "track": "",
-      "showTitle": "Solénoïde",
+      "showTitle": "Ma radio Académia",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T21:38:34.549Z"
+      "checkedAt": "2026-08-10T22:34:07.442Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Bitume",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00",
-        "slug": "bitume"
-      },
+      "current": null,
       "next": {
         "title": "Les rois de l'arène",
         "source": "schedule",
@@ -152,10 +147,10 @@
         "end": "07:00",
         "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "+250 - Ndagushimira",
-      "showTitle": "Bitume",
+      "track": "Love Spells - Crutch",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
         "api-live",
         "schedule"
@@ -164,7 +159,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-10T21:38:41.408Z"
+      "checkedAt": "2026-08-10T22:34:13.394Z"
     }
   }
 }
