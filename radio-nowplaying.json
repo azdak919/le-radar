@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-09T23:28:15.338Z",
+  "updatedAt": "2026-08-10T00:00:30.151Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T23:28:01.048Z"
+      "checkedAt": "2026-08-10T00:00:05.547Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Symbiose",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/symbiose"
-      },
-      "next": {
         "title": "London café (reprise)",
         "source": "schedule",
         "start": "20:00",
         "end": "21:30",
         "url": "https://cism893.ca/emissions/london-cafe"
       },
+      "next": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "21:30",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
       "track": "",
-      "showTitle": "Symbiose",
+      "showTitle": "London café (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T23:28:03.589Z"
+      "checkedAt": "2026-08-10T00:00:11.017Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Bluegrass Rambling",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Country Classics",
         "source": "api-live",
         "start": "20:00",
         "end": "21:00"
       },
+      "next": {
+        "title": "Cha Cha In Blue",
+        "source": "api-live",
+        "start": "21:00",
+        "end": "23:00"
+      },
       "track": "",
-      "showTitle": "Bluegrass Rambling",
+      "showTitle": "Country Classics",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T23:28:06.640Z"
+      "checkedAt": "2026-08-10T00:00:14.796Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "No Boundaries",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/no-boundaries"
-      },
-      "next": {
         "title": "Eastern Promises",
         "source": "schedule",
         "start": "20:00",
         "end": "20:30",
         "url": "http://www.cjlo.com/shows/eastern-promises"
       },
+      "next": {
+        "title": "Afro Archives",
+        "source": "schedule",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/afro-archives"
+      },
       "track": "",
-      "showTitle": "No Boundaries",
+      "showTitle": "Eastern Promises",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T23:28:08.152Z"
+      "checkedAt": "2026-08-10T00:00:18.857Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-09T23:28:08.629Z"
+      "checkedAt": "2026-08-10T00:00:20.320Z"
     },
     "choq": {
       "id": "choq",
@@ -146,18 +146,15 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "ID - Raccoon",
+      "track": "knitting — I Want to Remember Everything",
       "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": {
-        "type": "triton-np",
-        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
-      },
-      "checkedAt": "2026-08-09T23:28:14.988Z"
+      "clientPoll": null,
+      "checkedAt": "2026-08-10T00:00:29.800Z"
     }
   }
 }
