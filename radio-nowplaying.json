@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-10T02:26:31.115Z",
+  "updatedAt": "2026-08-10T04:13:12.604Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T02:26:16.708Z"
+      "checkedAt": "2026-08-10T04:12:56.910Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "21:30",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "next": {
         "title": "L'Alter Ego (reprise)",
         "source": "schedule",
         "start": "00:00",
         "end": "02:00",
         "url": "https://cism893.ca/emissions/lalter-ego"
       },
+      "next": {
+        "title": "Mix Franco",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "L'Alter Ego (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T02:26:18.894Z"
+      "checkedAt": "2026-08-10T04:12:59.373Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Cha Cha In Blue",
+        "title": "Sound Of Soul",
         "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
+        "start": "00:00",
+        "end": "01:00"
       },
       "next": {
-        "title": "Ill Groove Garden",
+        "title": "Roots, Rock, Reggae",
         "source": "api-live",
-        "start": "23:00",
-        "end": "00:00"
+        "start": "01:00",
+        "end": "04:00"
       },
       "track": "",
-      "showTitle": "Cha Cha In Blue",
+      "showTitle": "Sound Of Soul",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,72 +74,72 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T02:26:21.665Z"
+      "checkedAt": "2026-08-10T04:13:02.409Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "On The Right Track",
+        "title": "Raving Record Reviews",
         "source": "schedule",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/on-the-right-track"
+        "start": "00:00",
+        "end": "00:30",
+        "url": "http://www.cjlo.com/shows/raving-record-reviews"
       },
       "next": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "Experiments",
         "source": "schedule",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/experiments"
       },
       "track": "",
-      "showTitle": "On The Right Track",
+      "showTitle": "Raving Record Reviews",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T02:26:23.648Z"
+      "checkedAt": "2026-08-10T04:13:04.594Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Solénoïde",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule-live",
         "start": "00:01",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Solénoïde",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T02:26:24.521Z"
+      "checkedAt": "2026-08-10T04:13:05.405Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Les rois de l'arène",
+        "title": "Balado Populi",
         "source": "api-live",
-        "start": "05:00",
-        "end": "07:00",
-        "slug": "les-rois-de-larene"
+        "start": "12:00",
+        "end": "13:00",
+        "slug": "balado-populi"
       },
-      "track": "ID - Neimo-DJ-White-Socks",
+      "track": "LØLØ - the punisher",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-10T02:26:30.765Z"
+      "checkedAt": "2026-08-10T04:13:12.254Z"
     }
   }
 }
