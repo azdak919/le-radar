@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-10T04:13:12.604Z",
+  "updatedAt": "2026-08-10T05:54:59.065Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T04:12:56.910Z"
+      "checkedAt": "2026-08-10T05:54:49.343Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T04:12:59.373Z"
+      "checkedAt": "2026-08-10T05:54:51.172Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Sound Of Soul",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "01:00"
-      },
-      "next": {
         "title": "Roots, Rock, Reggae",
         "source": "api-live",
         "start": "01:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "Adventures In Music",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Sound Of Soul",
+      "showTitle": "Roots, Rock, Reggae",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,17 +74,17 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T04:13:02.409Z"
+      "checkedAt": "2026-08-10T05:54:53.505Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Raving Record Reviews",
+        "title": "CJLO Late Night",
         "source": "schedule",
         "start": "00:00",
-        "end": "00:30",
-        "url": "http://www.cjlo.com/shows/raving-record-reviews"
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "Experiments",
@@ -94,14 +94,14 @@
         "url": "http://www.cjlo.com/shows/experiments"
       },
       "track": "",
-      "showTitle": "Raving Record Reviews",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T04:13:04.594Z"
+      "checkedAt": "2026-08-10T05:54:55.251Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T04:13:05.405Z"
+      "checkedAt": "2026-08-10T05:54:55.998Z"
     },
     "choq": {
       "id": "choq",
@@ -139,18 +139,15 @@
         "end": "13:00",
         "slug": "balado-populi"
       },
-      "track": "LØLØ - the punisher",
+      "track": "Bloc Pub 21 juillet.mp3",
       "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": {
-        "type": "triton-np",
-        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
-      },
-      "checkedAt": "2026-08-10T04:13:12.254Z"
+      "clientPoll": null,
+      "checkedAt": "2026-08-10T05:54:58.714Z"
     }
   }
 }
