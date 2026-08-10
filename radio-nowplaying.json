@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-10T10:19:17.830Z",
+  "updatedAt": "2026-08-10T11:30:19.777Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T10:19:03.021Z"
+      "checkedAt": "2026-08-10T11:30:09.030Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
-        "source": "schedule",
-        "start": "05:00",
-        "end": "06:30",
-        "url": "https://cism893.ca/emissions/le-seismix"
-      },
-      "next": {
         "title": "Le terrain sportif",
         "source": "schedule",
         "start": "06:30",
         "end": "08:00",
         "url": "https://cism893.ca/emissions/le-terrain-sportif"
       },
+      "next": {
+        "title": "Ya Raï (reprise)",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/ya-rai"
+      },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Le terrain sportif",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T10:19:05.169Z"
+      "checkedAt": "2026-08-10T11:30:11.608Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Adventures In Music",
-        "source": "api-live",
-        "start": "04:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Unmuted with Svetlana and Miss Trish",
         "source": "api-live",
         "start": "07:00",
         "end": "08:00"
       },
+      "next": {
+        "title": "Le Lendemain de la veille",
+        "source": "api-live",
+        "start": "08:00",
+        "end": "09:00"
+      },
       "track": "",
-      "showTitle": "Adventures In Music",
+      "showTitle": "Unmuted with Svetlana and Miss Trish",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T10:19:08.503Z"
+      "checkedAt": "2026-08-10T11:30:13.946Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,32 +101,32 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T10:19:10.306Z"
+      "checkedAt": "2026-08-10T11:30:15.890Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:01",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Folkswagen",
         "source": "schedule-live",
         "start": "07:00",
         "end": "08:00"
       },
+      "next": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "09:00"
+      },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Folkswagen",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T10:19:11.220Z"
+      "checkedAt": "2026-08-10T11:30:16.710Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "13:00",
         "slug": "balado-populi"
       },
-      "track": "ID - Kat-Pereira",
+      "track": "ID - Naima-Frank",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-10T10:19:17.480Z"
+      "checkedAt": "2026-08-10T11:30:19.425Z"
     }
   }
 }
