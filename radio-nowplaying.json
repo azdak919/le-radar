@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-10T08:05:37.784Z",
+  "updatedAt": "2026-08-10T08:57:49.320Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T08:05:09.862Z"
+      "checkedAt": "2026-08-10T08:57:36.681Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T08:05:12.300Z"
+      "checkedAt": "2026-08-10T08:57:39.032Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T08:05:15.112Z"
+      "checkedAt": "2026-08-10T08:57:43.095Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T08:05:17.225Z"
+      "checkedAt": "2026-08-10T08:57:45.196Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T08:05:17.691Z"
+      "checkedAt": "2026-08-10T08:57:45.803Z"
     },
     "choq": {
       "id": "choq",
@@ -134,23 +134,23 @@
       "current": null,
       "next": {
         "title": "Balado Populi",
-        "source": "schedule",
+        "source": "api-live",
         "start": "12:00",
         "end": "13:00",
-        "url": "https://www.choq.ca/emissions/balado-populi"
+        "slug": "balado-populi"
       },
       "track": "ID - Neimo-DJ-White-Socks",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-10T08:05:37.433Z"
+      "checkedAt": "2026-08-10T08:57:48.970Z"
     }
   }
 }
