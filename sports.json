@@ -1,11 +1,11 @@
 {
-  "updated": "2026-08-10T17:07:19.955Z",
-  "fetchedAt": "2026-08-10T17:07:19.955Z",
+  "updated": "2026-08-10T21:26:18.960Z",
+  "fetchedAt": "2026-08-10T21:26:18.960Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-08-10T17:07:19.955Z"
+    "referenceDate": "2026-08-10T21:26:18.960Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 789,
@@ -8319,8 +8319,8 @@
           "opponentRegistryId": "garneau"
         },
         {
-          "date": "2026-10-31",
-          "time": "11:00",
+          "date": "2026-11-01",
+          "time": "14:00",
           "opponent": "Limoilou",
           "opponentCode": "LIM",
           "home": false,
@@ -8758,8 +8758,8 @@
           "opponentRegistryId": "thetford"
         },
         {
-          "date": "2026-10-31",
-          "time": "11:00",
+          "date": "2026-11-01",
+          "time": "14:00",
           "opponent": "Chicoutimi",
           "opponentCode": "CHI",
           "home": true,
@@ -53163,7 +53163,7 @@
         },
         {
           "date": "2026-10-18",
-          "time": "14:00",
+          "time": "16:00",
           "opponent": "Saint-Jean",
           "opponentCode": "SJR",
           "home": false,
@@ -53313,7 +53313,7 @@
         },
         {
           "date": "2026-10-18",
-          "time": "14:00",
+          "time": "16:00",
           "opponent": "L'Assomption",
           "opponentCode": "LAS",
           "home": true,
