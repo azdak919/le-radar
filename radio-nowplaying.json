@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-10T07:26:20.120Z",
+  "updatedAt": "2026-08-10T08:05:37.784Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T07:26:08.650Z"
+      "checkedAt": "2026-08-10T08:05:09.862Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T07:26:11.026Z"
+      "checkedAt": "2026-08-10T08:05:12.300Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Roots, Rock, Reggae",
-        "source": "api-live",
-        "start": "01:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "Adventures In Music",
         "source": "api-live",
         "start": "04:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Unmuted with Svetlana and Miss Trish",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Roots, Rock, Reggae",
+      "showTitle": "Adventures In Music",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T07:26:13.903Z"
+      "checkedAt": "2026-08-10T08:05:15.112Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T07:26:15.896Z"
+      "checkedAt": "2026-08-10T08:05:17.225Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T07:26:16.421Z"
+      "checkedAt": "2026-08-10T08:05:17.691Z"
     },
     "choq": {
       "id": "choq",
@@ -134,23 +134,23 @@
       "current": null,
       "next": {
         "title": "Balado Populi",
-        "source": "api-live",
+        "source": "schedule",
         "start": "12:00",
         "end": "13:00",
-        "slug": "balado-populi"
+        "url": "https://www.choq.ca/emissions/balado-populi"
       },
-      "track": "ID - laraw",
+      "track": "ID - Neimo-DJ-White-Socks",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-10T07:26:19.770Z"
+      "checkedAt": "2026-08-10T08:05:37.433Z"
     }
   }
 }
