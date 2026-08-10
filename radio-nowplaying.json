@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-10T08:57:49.320Z",
+  "updatedAt": "2026-08-10T10:19:17.830Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T08:57:36.681Z"
+      "checkedAt": "2026-08-10T10:19:03.021Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le char de marge (reprise)",
-        "source": "schedule",
-        "start": "03:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/le-char-de-marge"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "05:00",
         "end": "06:30",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "Le terrain sportif",
+        "source": "schedule",
+        "start": "06:30",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/le-terrain-sportif"
+      },
       "track": "",
-      "showTitle": "Le char de marge (reprise)",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T08:57:39.032Z"
+      "checkedAt": "2026-08-10T10:19:05.169Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T08:57:43.095Z"
+      "checkedAt": "2026-08-10T10:19:08.503Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Experiments",
         "source": "schedule",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/experiments"
       },
+      "next": {
+        "title": "Death of the Midrange",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/death-of-the-midrange"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Experiments",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T08:57:45.196Z"
+      "checkedAt": "2026-08-10T10:19:10.306Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T08:57:45.803Z"
+      "checkedAt": "2026-08-10T10:19:11.220Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "13:00",
         "slug": "balado-populi"
       },
-      "track": "ID - Neimo-DJ-White-Socks",
+      "track": "ID - Kat-Pereira",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-10T08:57:48.970Z"
+      "checkedAt": "2026-08-10T10:19:17.480Z"
     }
   }
 }
