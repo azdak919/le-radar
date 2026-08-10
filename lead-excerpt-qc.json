@@ -1,14 +1,23 @@
 {
-  "updated": "2026-08-10T06:43:09.535Z",
+  "updated": "2026-08-10T10:45:25.770Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 5,
+  "incomplete": 7,
   "withLeadExcerpt": 78,
-  "candidates": 5,
-  "enriched": 0,
-  "failed": 0,
+  "candidates": 7,
+  "enriched": 1,
+  "failed": 1,
   "ok": true,
   "samples": [
+    {
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
+      "ok": true,
+      "score": 66,
+      "chars": 400,
+      "sample": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « p",
+      "changed": true
+    },
     {
       "title": "Review: Sullivan Fortner Solo at Gesú Concert Hall",
       "link": "https://www.mcgilldaily.com/2026/07/review-sullivan-fortner-solo-at-gesu-concert-hall/",
