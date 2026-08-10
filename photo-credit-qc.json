@@ -1,56 +1,49 @@
 {
-  "updated": "2026-08-10T23:04:08.352Z",
+  "updated": "2026-08-10T23:44:40.417Z",
   "total": 185,
   "withImage": 167,
   "withCredit": 167,
-  "cited": 130,
-  "pending": 12,
+  "cited": 129,
+  "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 18,
-  "updatedCount": 6,
-  "citedNew": 5,
+  "checked": 16,
+  "updatedCount": 5,
+  "citedNew": 3,
   "fallbackNew": 13,
   "samples": [
     {
-      "title": "La performance de l’homosexualité : un privilège ?",
+      "title": "L’inusité s’invite dans la politique",
+      "source": "Le Collectif",
+      "credit": "Photo : Oli SCARFF / AFP via Getty Images",
+      "cited": true,
+      "method": "json-ld"
+    },
+    {
+      "title": "Un autre détroit commercial en péril",
+      "source": "Le Collectif",
+      "credit": "Photo : Khaled ZIAD / AFP via Getty Images",
+      "cited": true,
+      "method": "json-ld"
+    },
+    {
+      "title": "Recul d’Ottawa sur la « taxe Netflix »",
+      "source": "Le Collectif",
+      "credit": "Photo : Getty Images",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Des initiatives qui rassemblent",
       "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "L’épidémie de la nonchalance",
-      "source": "Le Délit",
-      "credit": "Photo : Elie Nguyen",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Ce que nous devons aux femmes",
-      "source": "Le Délit",
-      "credit": "Photo : Alexandre Gontier",
-      "cited": true,
-      "method": "media-credit-near"
-    },
-    {
-      "title": "Les femmes MAGA au service du patriarcat",
-      "source": "Le Délit",
-      "credit": "Photo : Stu Doré",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Inside Mile End Kicks",
-      "source": "The Link",
-      "credit": "Photo: Courtesy of Joe Fuda",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "The apprenticeship of public voice",
-      "source": "The Link",
-      "credit": "Photo credit: The Link",
+      "credit": "Crédit photo : Le Délit",
       "cited": false,
       "method": null
     }
