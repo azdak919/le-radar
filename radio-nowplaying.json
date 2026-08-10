@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-10T16:56:45.019Z",
+  "updatedAt": "2026-08-10T17:50:54.716Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T16:56:15.942Z"
+      "checkedAt": "2026-08-10T17:50:38.514Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T16:56:18.291Z"
+      "checkedAt": "2026-08-10T17:50:40.811Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T16:56:21.193Z"
+      "checkedAt": "2026-08-10T17:50:43.817Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Twang City",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/twang-city"
-      },
-      "next": {
         "title": "The Tommy John Show",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/the-tommy-john-show"
       },
+      "next": {
+        "title": "Eldest Daughter",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/eldest-daughter"
+      },
       "track": "",
-      "showTitle": "Twang City",
+      "showTitle": "The Tommy John Show",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T16:56:34.962Z"
+      "checkedAt": "2026-08-10T17:50:46.970Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,18 +126,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T16:56:35.478Z"
+      "checkedAt": "2026-08-10T17:50:47.615Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Balado Populi",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "13:00",
-        "slug": "balado-populi"
-      },
+      "current": null,
       "next": {
         "title": "Bitume",
         "source": "api-live",
@@ -145,8 +139,8 @@
         "end": "18:00",
         "slug": "bitume"
       },
-      "track": "Nana Quinn - Ce qu",
-      "showTitle": "Balado Populi",
+      "track": "Virginie Reid - Eaux libres",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -156,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-10T16:56:44.667Z"
+      "checkedAt": "2026-08-10T17:50:54.366Z"
     }
   }
 }
