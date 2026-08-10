@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-10T19:54:02.314Z",
+  "updatedAt": "2026-08-10T20:39:04.974Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T19:53:38.111Z"
+      "checkedAt": "2026-08-10T20:38:51.065Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T19:53:39.974Z"
+      "checkedAt": "2026-08-10T20:38:52.928Z"
     },
     "ckut": {
       "id": "ckut",
@@ -65,7 +65,7 @@
         "start": "17:00",
         "end": "18:00"
       },
-      "track": "",
+      "track": "Airtime - offline",
       "showTitle": "Whose Vibe Is It Anyway",
       "host": "",
       "source": "api-live",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T19:53:43.008Z"
+      "checkedAt": "2026-08-10T20:38:55.168Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Whip Appeal",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/whip-appeal"
-      },
-      "next": {
         "title": "Dreamscapes",
         "source": "schedule-live",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/dreamscapes"
       },
+      "next": {
+        "title": "The Pressure Drop",
+        "source": "schedule-live",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/the-pressure-drop"
+      },
       "track": "",
-      "showTitle": "Whip Appeal",
+      "showTitle": "Dreamscapes",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T19:53:55.595Z"
+      "checkedAt": "2026-08-10T20:38:57.443Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-10T19:53:56.428Z"
+      "checkedAt": "2026-08-10T20:38:58.344Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "18:00",
         "slug": "bitume"
       },
-      "track": "Tiffany Day - DOIT4ME",
+      "track": "Boards of Canada - All Reason Departs",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-10T19:54:01.964Z"
+      "checkedAt": "2026-08-10T20:39:04.624Z"
     }
   }
 }
