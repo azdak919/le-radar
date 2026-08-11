@@ -2586,19 +2586,74 @@ function sportsOrderedKeys(bestMap) {
 const SPORTS_TEAM_COLOR_SUFFIX_RE = /\s+(Bleu(?:e)?|Jaune|Noir(?:e)?|Blanc(?:he)?|Rouge|Vert(?:e)?|Or)\s*$/i;
 
 /**
+ * Accronymes univ. (ULaval, UdeM…) — table `institution-acronyms-data.js`
+ * déjà chargée sur l’accueil. Repli codes RSEQ si la table manque.
+ */
+const SPORTS_UNI_CODE_ACRONYM = {
+  LAV: 'ULaval',
+  MTL: 'UdeM',
+  MCG: 'McGill',
+  UCON: 'Concordia',
+  CON: 'Concordia',
+  USHE: 'UdeS',
+  SHE: 'UdeS',
+  UQAM: 'UQAM',
+  UQTR: 'UQTR',
+  UQAC: 'UQAC',
+  UQO: 'UQO',
+  UQAR: 'UQAR',
+  UQAT: 'UQAT',
+  ETS: 'ÉTS',
+  ÉTS: 'ÉTS',
+  BIS: "Bishop's",
+  OTT: 'uOttawa',
+  POLY: 'Poly',
+  HEC: 'HEC',
+};
+
+function sportsInstitutionAcronymMap() {
+  try {
+    return (typeof window !== 'undefined' && window.RadarInstitutionAcronyms) || {};
+  } catch {
+    return {};
+  }
+}
+
+function sportsLookupInstitutionAcronym(...candidates) {
+  const map = sportsInstitutionAcronymMap();
+  for (const raw of candidates) {
+    const k = String(raw || '').trim();
+    if (!k) continue;
+    if (map[k]) return String(map[k]);
+    const bare = k.replace(/\s*\([^)]*\)\s*$/u, '').trim();
+    if (bare && bare !== k && map[bare]) return String(map[bare]);
+  }
+  return '';
+}
+
+function sportsLooksUniversity({ fullName, shortName, sector, code } = {}) {
+  if (String(sector || '').toLowerCase() === 'universitaire') return true;
+  const f = String(fullName || '');
+  if (/Universit[eé]|University/i.test(f)) return true;
+  const c = String(code || '').toUpperCase();
+  if (SPORTS_UNI_CODE_ACRONYM[c]) return true;
+  const ac = sportsLookupInstitutionAcronym(fullName, shortName);
+  return !!(ac && /^(U|ÉTS|ETS|HEC|McGill|Concordia|Bishop|Poly|uOttawa)/i.test(ac));
+}
+
+/**
  * Nom d’établissement en clair — garde-fou `noms-lisibles`
- * (focus-group le-radar-sports-first-glance). Un sigle seul (« LÉV vs THE »)
- * n’est décodable que par ceux qui suivent déjà la ligue ; le corpus porte les
- * noms, il n’y a aucune raison de les jeter. Puces scores (gauche) et CTA
- * partagent cette face lisible (2 lignes : noms / date).
- * **Jamais** de troncature `…` ici — marquee L→R si trop long.
+ * (focus-group le-radar-sports-first-glance). CTA / tooltips : forme lisible.
+ * **Jamais** de troncature `…` — marquee L→R si trop long.
  */
 function sportsPlainTeamName(team) {
   return sportsDisplaySideName({
     shortName: team?.name,
     fullName: team?.fullName,
     code: team?.code,
+    sector: team?.sector,
     fallback: 'Équipe',
+    preferAcronym: false,
   });
 }
 
@@ -2608,41 +2663,76 @@ function sportsPlainOpponentName(game) {
     fullName: game?.opponentFullName,
     code: game?.opponentCode,
     fallback: 'adversaire',
+    preferAcronym: false,
   });
 }
 
 /**
- * Libellé d’une face (équipe ou adversaire) pour le bandeau.
- * - Garde « Notre-Dame Bleu / Jaune » (couleur = 2e formation CNDF).
- * - Mono-token ambigu (« Laval », « Montréal ») → fullName d’établissement
- *   complet (marquee si besoin), pas une coupe à 22 car. avec « … ».
+ * Libellé d’une face (équipe ou adversaire).
+ * - Garde « Notre-Dame Bleu / Jaune ».
+ * - `preferAcronym` (puces gauche) : univ → ULaval / UdeM / McGill…
+ * - Sinon mono-token → fullName établissement (CTA plus aérée).
  */
-function sportsDisplaySideName({ shortName, fullName, code, fallback = 'Équipe' } = {}) {
+function sportsDisplaySideName({
+  shortName, fullName, code, sector, fallback = 'Équipe', preferAcronym = false,
+} = {}) {
   const short = String(shortName || '').trim();
   const full = String(fullName || '').trim();
+  const codeU = String(code || '').toUpperCase();
+
   if (short && SPORTS_TEAM_COLOR_SUFFIX_RE.test(short)) return short;
-  // Multi-parties déjà distinctives (Lionel-Groulx, Vieux Montréal, Bishop's…)
+
+  if (preferAcronym && sportsLooksUniversity({ fullName: full, shortName: short, sector, code: codeU })) {
+    const ac = sportsLookupInstitutionAcronym(full, short)
+      || SPORTS_UNI_CODE_ACRONYM[codeU]
+      || '';
+    if (ac) return ac;
+    // Déjà un sigle court (UQAM, ÉTS) : le garder
+    if (short && short.length <= 6 && /^[A-ZÉÙÛÂÊÎÔ0-9]{2,6}$/i.test(short)) return short;
+  }
+
+  // Multi-parties déjà distinctives (Lionel-Groulx, Vieux Montréal…)
   if (short && /[\s-]/.test(short) && short.replace(/-/g, '').length >= 5) return short;
-  // Mono-token + établissement plus précis → établissement **entier** (marquee, jamais « … »)
-  if (full && short && !/[\s-]/.test(short) && full.length > short.length) return full;
+
+  // Mono-token : fullName si CTA ; sur puce étroite sans acronyme → short
+  if (full && short && !/[\s-]/.test(short) && full.length > short.length) {
+    if (preferAcronym) return short;
+    return full;
+  }
   if (short) return short;
   if (full) return full;
   return String(code || fallback).trim() || fallback;
 }
 
 /**
- * Nom d’équipe pour puce — enlève seulement le suffixe sport redondant
- * (« McGill Sailing » → « McGill » quand le glyphe voile est déjà là).
- * Ne touche **jamais** aux couleurs Bleu/Jaune ni aux fullName.
+ * Nom d’équipe pour **puce gauche** (largeur restreinte) :
+ * univ → acronyme ; collégial → short ; voile → sans suffixe « Sailing ».
  */
 function sportsChipTeamShort(team) {
-  let name = sportsPlainTeamName(team);
+  let name = sportsDisplaySideName({
+    shortName: team?.name,
+    fullName: team?.fullName,
+    code: team?.code,
+    sector: team?.sector,
+    preferAcronym: true,
+    fallback: 'Équipe',
+  });
   const sport = String(team?.sport || '').toLowerCase();
   if (sport === 'sailing' || sport === 'voile') {
-    // Seulement le mot sport en anglais/FR collé en fin — pas « Bleu ».
     name = name.replace(/\s+(sailing|voile)\s*$/i, '').trim() || name;
   }
   return name;
+}
+
+/** Adversaire sur puce gauche — acronyme si université. */
+function sportsChipOpponentLabel(game) {
+  return sportsDisplaySideName({
+    shortName: game?.opponent,
+    fullName: game?.opponentFullName,
+    code: game?.opponentCode,
+    preferAcronym: true,
+    fallback: 'adversaire',
+  });
 }
 
 /** Événement / compétition pour place (régates) — texte entier, marquee si long. */
@@ -3648,7 +3738,8 @@ function paintSportsChip(slide, animate = false) {
   subText.className = 'sports-chip__sub-text';
 
   const home = sportsChipTeamShort(team);
-  const opp = sportsPlainOpponentName(g);
+  // Puce étroite : acronymes univ. (ULaval, UdeM…) — CTA garde les formes longues.
+  const opp = sportsChipOpponentLabel(g);
   const when = formatSportsWhen(g.date, g.time);
 
   if (slide.mode === 'result') {
