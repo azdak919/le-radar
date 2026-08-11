@@ -117,8 +117,12 @@ for (const file of htmlFiles) {
   const navHrefs = hrefsIn(navBlock);
   assert.deepEqual(
     navHrefs,
-    ['medias/', 'medias/#journaux', 'horaires/', 'sports/'],
-    'index.html : sections du haut = Médias, Journaux, Radios, Sports (sans Archives)',
+    ['./', 'medias/', 'medias/#journaux', 'horaires/', 'sports/'],
+    'index.html : sections du haut = Accueil, Médias, Journaux, Radios, Sports (sans Archives)',
+  );
+  assert(
+    /data-home-nav[^>]*>Accueil</.test(navBlock) || /data-home-nav[\s\S]*?>Accueil</.test(navBlock),
+    'index.html : lien Accueil avec data-home-nav (scroll + refresh soft)',
   );
 
   const footBlock = home.slice(
@@ -131,9 +135,33 @@ for (const file of htmlFiles) {
       `index.html : « ${href} » est dans le menu de sections mais absent du pied de page`,
     );
   }
+  // Accueil en tête du pied de page, avant Médias.
+  const footAccueil = footBlock.indexOf('>Accueil<');
+  const footMedias = footBlock.indexOf('>Médias<');
+  assert(footAccueil !== -1 && footMedias !== -1 && footAccueil < footMedias,
+    'index.html : Accueil à gauche de Médias dans le pied de page');
+  assert(
+    footBlock.includes('data-home-nav'),
+    'index.html : pied de page Accueil avec data-home-nav',
+  );
   // Les archives restent au pied de page seul (catalogue expérimental, D19).
   assert(footBlock.includes('href="archives/"'), 'index.html : archives requises au pied de page');
   assert(!navBlock.includes('archives/'), 'index.html : archives hors du menu de sections');
+}
+
+// Accueil : pas de reload plein écran (préserve la radio) — refresh soft.
+{
+  const appJs = readFileSync(join(root, 'app.js'), 'utf8');
+  assert(
+    appJs.includes('function initHomeNavRefresh')
+      && appJs.includes('data-home-nav')
+      && appJs.includes("loadNews({ silent: true })"),
+    'app.js : Accueil → scroll + loadNews silent (sans couper la radio)',
+  );
+  assert(
+    appJs.includes('initHomeNavRefresh()'),
+    'app.js : initHomeNavRefresh branché au démarrage',
+  );
 }
 
 // offline.html ne charge pas style.css — c'est voulu : la page doit s'afficher
