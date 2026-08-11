@@ -128,8 +128,10 @@ for (const file of htmlFiles) {
     home.indexOf('<!-- RADAR:FOOTER:START -->'),
     home.indexOf('<!-- RADAR:FOOTER:END -->'),
   );
-  // Accueil (./) est navOnly : sur la home le pied n’a pas de second lien Accueil.
-  for (const href of navHrefs.filter((h) => h !== './')) {
+  // Accueil (./) est aussi dans le pied : même liste que le menu de sections
+  // (sauf archives, footerOnly). Les bots seo:update réinjectent ce pied —
+  // le générateur doit donc garder Accueil, sinon le prepush des agrégats casse.
+  for (const href of navHrefs) {
     assert(
       footBlock.includes(`href="${href}"`),
       `index.html : « ${href} » est dans le menu de sections mais absent du pied de page`,
