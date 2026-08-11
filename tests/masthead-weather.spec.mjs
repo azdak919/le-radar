@@ -81,16 +81,34 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   ]);
   expect(actionsBox.x).toBeGreaterThan(weatherBox.x + weatherBox.width);
 
-  // Rotation forcée : slot 0 alterne MTL↔QC ; secondaires aussi.
+  // Rotation forcée : leave (~280ms) + arrive — slot 0 alterne MTL↔QC.
   const beforeRotation = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities.map((city) => city.dataset.weatherCity));
-  await page.evaluate(() => {
-    if (typeof rotateOneMastheadWeatherCard === 'function') rotateOneMastheadWeatherCard();
+  const leaveAnimOk = await page.evaluate(() => {
+    if (typeof rotateOneMastheadWeatherCard !== 'function') return false;
+    rotateOneMastheadWeatherCard();
+    const leaving = document.querySelector('.masthead-weather__city.is-leaving');
+    if (!leaving) return false;
+    return /weather-tile-leave/i.test(getComputedStyle(leaving).animationName || '');
   });
-  await page.waitForTimeout(100);
+  expect(leaveAnimOk, 'is-leaving + weather-tile-leave au départ du swap').toBe(true);
+  await expect
+    .poll(async () => ribbon.locator('.masthead-weather__city.is-active').evaluateAll(
+      (cities) => cities.map((city) => city.dataset.weatherCity),
+    ), { timeout: 1200 })
+    .not.toEqual(beforeRotation);
   const afterRotation = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities.map((city) => city.dataset.weatherCity));
   expect(afterRotation).toHaveLength(beforeRotation.length);
-  expect(afterRotation).not.toEqual(beforeRotation);
   expect(['montreal', 'quebec']).toContain(afterRotation[0]);
+  // 2ᵉ tick : vérifier is-arriving après la leave (swap DOM déjà fait).
+  const arriveAnimOk = await page.evaluate(async () => {
+    if (typeof rotateOneMastheadWeatherCard !== 'function') return false;
+    rotateOneMastheadWeatherCard();
+    await new Promise((r) => setTimeout(r, 320));
+    const arriving = document.querySelector('.masthead-weather__city.is-arriving');
+    if (!arriving) return false;
+    return /weather-tile-arrive/i.test(getComputedStyle(arriving).animationName || '');
+  });
+  expect(arriveAnimOk, 'is-arriving + weather-tile-arrive après leave').toBe(true);
 
   // Bureau large : multi-cartes dans le mât.
   await page.setViewportSize({ width: 1280, height: 900 });

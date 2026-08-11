@@ -864,6 +864,8 @@ a { color: inherit; }
   gap: 4px;
   width: 100%;
   height: 29px;
+  /* Laisser voir translateY des anims leave/arrive (sinon clip parent). */
+  overflow: visible;
 }
 /* Carte 0 = ancre spéciale MTL/QC (colonne un cran plus large). Secondaires à droite. */
 .masthead-weather__board[data-weather-count="1"] { --weather-grid: minmax(0, 1fr); }
@@ -896,7 +898,15 @@ a { color: inherit; }
   text-shadow: none;
 }
 .masthead-weather__city.is-active { display: flex; }
-.masthead-weather__city.is-arriving { animation: weather-tile-arrive 460ms cubic-bezier(.22,.8,.28,1); }
+/* Rotation gare : sortie puis entrée (synchro WEATHER_LEAVE_MS / ARRIVE_MS). */
+.masthead-weather__city.is-leaving {
+  display: flex;
+  animation: weather-tile-leave 280ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: none;
+}
+.masthead-weather__city.is-arriving {
+  animation: weather-tile-arrive 460ms cubic-bezier(0.22, 0.8, 0.28, 1) both;
+}
 .masthead-weather__city:hover { border-color: color-mix(in srgb, var(--weather-tone, var(--accent)) 68%, var(--rule)); background-color: color-mix(in srgb, var(--bg-soft) 76%, var(--weather-tone, var(--accent)) 24%); }
 .masthead-weather__icon { flex: 0 0 15px; width: 15px; color: var(--weather-tone, var(--accent)); line-height: 1; text-align: center; }
 .masthead-weather__icon .weather-icon-meteocon { display: block; width: 15px; height: 15px; object-fit: contain; }
@@ -1069,9 +1079,19 @@ a { color: inherit; }
   filter: brightness(1.12) saturate(1.05);
   opacity: 1;
 }
+@keyframes weather-tile-leave {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-55%); }
+}
 @keyframes weather-tile-arrive {
-  from { opacity: 0; transform: translateY(75%); }
+  from { opacity: 0; transform: translateY(70%); }
   to { opacity: 1; transform: translateY(0); }
 }
-@media (prefers-reduced-motion: reduce) { .masthead-weather__city.is-overflowing .masthead-weather__name-text { animation: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .masthead-weather__city.is-overflowing .masthead-weather__name-text { animation: none; }
+  .masthead-weather__city.is-arriving,
+  .masthead-weather__city.is-leaving {
+    animation: none;
+  }
+}
 
