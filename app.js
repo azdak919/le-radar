@@ -10253,19 +10253,33 @@ function estimateHeroSeedHeight(heroCount) {
 function briefSeedCountForHero(heroCount, opts = {}) {
   const sourceMode = !!opts.sourceMode;
   const mid = !sourceMode && isMidwidthMagazinePreview();
+  const wideE = !sourceMode && typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode();
   // Mid : rail 240–280 px → chaque carte En bref est plus haute (titres wrap).
-  const cardH = mid ? Math.round(AVG_BRIEF_CARD_H * 1.35) : AVG_BRIEF_CARD_H;
+  // Wide multi-col : hauteur visuelle ≈ total cartes / nCols
+  let cardH = mid ? Math.round(AVG_BRIEF_CARD_H * 1.35) : AVG_BRIEF_CARD_H;
+  let cols = 1;
+  if (wideE) {
+    try {
+      const w = window.innerWidth || 0;
+      if (w >= 3840) cols = 4;
+      else if (w >= 2560) cols = 3;
+      else if (w >= 1920) cols = 2;
+    } catch { /* ignore */ }
+    // hauteur effective par carte dans une grille à N colonnes
+    cardH = Math.max(72, Math.round(AVG_BRIEF_CARD_H / cols));
+  }
   const target = Math.max(0, estimateHeroSeedHeight(heroCount) - AVG_BRIEF_TITLE_H);
   // Source : un peu au-dessus de l’estimé (images), sans graine trop haute
   // (sinon 1 carte de trop en En bref après paint).
-  const mult = sourceMode ? 1.45 : (mid ? 0.85 : 1);
+  const mult = sourceMode ? 1.45 : (mid ? 0.85 : (wideE ? 1.15 : 1));
   const n = Math.round((target * mult) / cardH);
   const min = sourceMode
     ? Math.max(BRIEF_SIDEBAR_SEED_MIN, 5)
-    : (mid ? 3 : BRIEF_SIDEBAR_SEED_MIN);
+    : (mid ? 3 : (wideE ? Math.max(BRIEF_SIDEBAR_SEED_MIN, 8) : BRIEF_SIDEBAR_SEED_MIN));
   const max = sourceMode
     ? Math.min(BRIEF_SIDEBAR_MAX, BRIEF_SIDEBAR_SEED_MAX + 2)
-    : (mid ? Math.min(8, BRIEF_SIDEBAR_SEED_MAX) : BRIEF_SIDEBAR_SEED_MAX);
+    : (mid ? Math.min(8, BRIEF_SIDEBAR_SEED_MAX)
+      : (wideE ? briefSidebarMaxSlots() : BRIEF_SIDEBAR_SEED_MAX));
   return Math.min(max, Math.max(min, n));
 }
 
@@ -10497,22 +10511,45 @@ function pickBriefSidebar(allItems, heroItems = [], _referenceDate = new Date(),
     1,
     maxSlots == null ? briefSeedCountForHero(heroItems.length) : maxSlots,
   );
+  // Wide E : jusqu’à 2 articles par institution (fraîcheur) pour remplir
+  // multi-col sans vide ; viser toutes les sources présentes dans le pool.
+  const wideE = typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode();
+  const perInstMax = wideE ? 2 : 1;
   // Candidats = haut du reste du fil seulement (pas tout l’historique frais).
-  // Cap un peu plus large : l’exclusion d’institutions hero réduit le pool utile.
-  const poolCap = Math.max(limit * 10, 48);
+  // Cap plus large en wide pour couvrir toutes les sources.
+  const poolCap = Math.max(limit * 10, wideE ? 120 : 48);
   const pool = remaining.slice(0, poolCap);
 
   const picks = [];
-  const usedInsts = new Set();
+  const usedInsts = new Map(); // inst → count
 
+  // Passe 1 : 1er article le plus frais par institution (couverture sources)
   for (const item of pool) {
     if (picks.length >= limit) break;
     const inst = institutionKey(item);
     if (!inst) continue;
     if (heroInsts.has(inst)) continue;
-    if (usedInsts.has(inst)) continue;
+    const n = usedInsts.get(inst) || 0;
+    if (n >= 1) continue;
     picks.push(item);
-    usedInsts.add(inst);
+    usedInsts.set(inst, 1);
+  }
+
+  // Passe 2 (wide) : 2e article par institution, toujours fraîcheur desc
+  if (wideE && perInstMax > 1 && picks.length < limit) {
+    for (const item of pool) {
+      if (picks.length >= limit) break;
+      const inst = institutionKey(item);
+      if (!inst) continue;
+      if (heroInsts.has(inst)) continue;
+      const n = usedInsts.get(inst) || 0;
+      if (n >= perInstMax) continue;
+      if (n < 1) continue; // déjà couvert en passe 1 ; ici seulement le 2e
+      // éviter doublon article
+      if (picks.some((p) => articleKey(p) === articleKey(item))) continue;
+      picks.push(item);
+      usedInsts.set(inst, n + 1);
+    }
   }
 
   // Fraîcheur : re-trier les picks retenus (le parcours pool est déjà date desc,
@@ -10802,17 +10839,17 @@ function magazineColumnContentHeight(col) {
   return sumFallback + (parseFloat(cs.paddingTop) || 0) + padB;
 }
 
-/** Plafond En bref : plus haut en wide E pour remplir le bas sans vide. */
+/** Plafond En bref : plus haut en wide E (2/média + multi-col) pour coller le bas. */
 function briefSidebarMaxSlots() {
   if (typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode()) {
     try {
       const w = window.innerWidth || 0;
+      if (w >= 3840) return 48; // 4 col × plus de lignes
       if (w >= 2560) return 40;
       if (w >= 1920) return 32;
-      // 1440–1600 : 1 col mais on empile davantage pour coller la hauteur hero
-      return 24;
+      return 26; // 1440–1600 1 col
     } catch { /* ignore */ }
-    return 24;
+    return 26;
   }
   return BRIEF_SIDEBAR_MAX;
 }
