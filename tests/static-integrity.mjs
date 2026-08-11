@@ -830,6 +830,15 @@ assert(
   'pull-to-refresh PWA soft news requis',
 );
 assert(styleCss.includes('sports-chip-rim-glow'), 'contour accent puces scores requis');
+// CTA au repos : même famille visuelle que les scores (plus d’ardoise grise orpheline).
+assert(
+  styleCss.includes('.sports-chip--cta:not([data-cta-state="live"])'),
+  'style : pulse rim-glow aussi sur la CTA hors direct',
+);
+assert(
+  appJs.includes('function sportsCtaTone'),
+  'app.js : teinte CTA = sport du match (pas ardoise fixe hors idle)',
+);
 assert(
   /\.engage-prompt\s*\{[^}]*z-index:\s*200/.test(styleCss.replace(/\s+/g, ' ')),
   'style : .engage-prompt z-index au-dessus de .page-tools (180)',
