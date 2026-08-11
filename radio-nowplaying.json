@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-11T05:52:02.274Z",
+  "updatedAt": "2026-08-11T07:01:32.395Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T05:51:50.076Z"
+      "checkedAt": "2026-08-11T07:01:23.077Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les sentinelles de l'art (reprise)",
+        "title": "À l'horizon",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+        "start": "03:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/a-lhorizon"
       },
       "next": {
-        "title": "Mix Franco",
+        "title": "Le Séismix",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
       },
       "track": "",
-      "showTitle": "Les sentinelles de l'art (reprise)",
+      "showTitle": "À l'horizon",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T05:51:52.538Z"
+      "checkedAt": "2026-08-11T07:01:25.047Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Harmony Express",
+        "title": "Attik / Show For Children",
         "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
+        "start": "03:00",
+        "end": "05:00"
       },
       "next": {
-        "title": "Pirate et Libres",
+        "title": "The Beat Power Hour",
         "source": "api-live",
-        "start": "02:00",
-        "end": "03:00"
+        "start": "05:00",
+        "end": "07:00"
       },
       "track": "",
-      "showTitle": "Harmony Express",
+      "showTitle": "Attik / Show For Children",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T05:51:55.666Z"
+      "checkedAt": "2026-08-11T07:01:27.500Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T05:51:58.162Z"
+      "checkedAt": "2026-08-11T07:01:29.307Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T05:51:59.098Z"
+      "checkedAt": "2026-08-11T07:01:29.997Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Valery Vaughn - Quatre Cloches",
+      "track": "Bloc Pub 21 juillet.mp3",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-11T05:52:01.923Z"
+      "checkedAt": "2026-08-11T07:01:32.044Z"
     }
   }
 }
