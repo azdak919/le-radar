@@ -10698,8 +10698,26 @@ function enforceHeroDateOrder(heroItems, allSorted) {
     && (window.innerWidth || 0) >= 1600;
   const floor = wideDual ? HERO_WIDE_SPOTLIGHT_MAX : HERO_SPOTLIGHT_MAX;
   const n = Math.min(Math.max(heroItems.length, floor), allSorted.length);
-  // Toujours les n plus frais du fil pour le bloc une+vedettes.
-  return allSorted.slice(0, n);
+  // Base : n plus frais. Wide dual : 2e une d’une autre institution si possible
+  // (sinon les deux unes se retrouvent toujours au même média).
+  let picked = allSorted.slice(0, n);
+  if (wideDual && picked.length >= 2) {
+    const lead0 = picked[0];
+    const inst0 = institutionKey(lead0);
+    if (inst0 && institutionKey(picked[1]) === inst0) {
+      const alt = allSorted.find((it, i) => {
+        if (i === 0) return false;
+        const inst = institutionKey(it);
+        return !!inst && inst !== inst0;
+      });
+      if (alt) {
+        const keys = new Set([articleKey(lead0), articleKey(alt)]);
+        const rest = allSorted.filter((it) => !keys.has(articleKey(it)));
+        picked = [lead0, alt, ...rest].slice(0, n);
+      }
+    }
+  }
+  return picked;
 }
 
 function resetMagazineMeta(heroItems = [], briefItems = []) {
