@@ -2636,6 +2636,10 @@ const SPORTS_CRYPTIC_SHORT_EXPAND = {
  * Accronymes univ. (ULaval, UdeM…) — table `institution-acronyms-data.js`
  * déjà chargée sur l’accueil. Repli codes RSEQ si la table manque.
  */
+/**
+ * Codes RSEQ **universitaires** seulement → acronyme.
+ * SHE = Cégep de Sherbrooke (collégial) — **jamais** UdeS (c’est USHE).
+ */
 const SPORTS_UNI_CODE_ACRONYM = {
   LAV: 'ULaval',
   MTL: 'UdeM',
@@ -2643,7 +2647,6 @@ const SPORTS_UNI_CODE_ACRONYM = {
   UCON: 'Concordia',
   CON: 'Concordia',
   USHE: 'UdeS',
-  SHE: 'UdeS',
   UQAM: 'UQAM',
   UQTR: 'UQTR',
   UQAC: 'UQAC',
@@ -2656,7 +2659,18 @@ const SPORTS_UNI_CODE_ACRONYM = {
   OTT: 'uOttawa',
   POLY: 'Poly',
   HEC: 'HEC',
+  CAR: 'Carleton',
+  DAL: 'Dalhousie',
+  UNB: 'UNB',
+  CMR: 'CMR',
 };
+
+/** Codes collégiaux qui ne doivent **jamais** recevoir un acronyme univ. */
+const SPORTS_COLLEGIAL_CODES = new Set([
+  'SHE', // Cégep de Sherbrooke — pas USHE / UdeS
+  'SLA', 'LEN', 'SLC', 'LAF', 'NDF', 'NDFB', 'NDFJ', 'CLG', 'GAR', 'LIM',
+  'VAN', 'DAW', 'JAC', 'CVM', 'AHU', 'OUT', 'CSF', 'TRV', 'VIC', 'STH',
+]);
 
 function sportsInstitutionAcronymMap() {
   try {
@@ -2678,14 +2692,38 @@ function sportsLookupInstitutionAcronym(...candidates) {
   return '';
 }
 
+/** true si le fullName / code indique clairement le collégial. */
+function sportsLooksCollegial({ fullName, shortName, sector, code } = {}) {
+  if (String(sector || '').toLowerCase() === 'collegial') return true;
+  const c = String(code || '').toUpperCase();
+  if (SPORTS_COLLEGIAL_CODES.has(c)) return true;
+  const f = `${fullName || ''} ${shortName || ''}`;
+  // Cégep / Collège / Campus / Champlain College — pas « Université … »
+  if (/C[eé]gep|Coll[eè]ge(?!\s+militaire)|Campus\s|Champlain\s+College/i.test(f)
+    && !/Universit[eé]|University/i.test(f)) {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Université seulement si collégial exclu.
+ * Ne pas déduire UdeS depuis le short « Sherbrooke » seul (ambigu SHE/USHE).
+ */
 function sportsLooksUniversity({ fullName, shortName, sector, code } = {}) {
+  if (sportsLooksCollegial({ fullName, shortName, sector, code })) return false;
   if (String(sector || '').toLowerCase() === 'universitaire') return true;
   const f = String(fullName || '');
   if (/Universit[eé]|University/i.test(f)) return true;
   const c = String(code || '').toUpperCase();
+  // Code univ. explicite seulement (USHE oui, SHE non)
   if (SPORTS_UNI_CODE_ACRONYM[c]) return true;
-  const ac = sportsLookupInstitutionAcronym(fullName, shortName);
-  return !!(ac && /^(U|ÉTS|ETS|HEC|McGill|Concordia|Bishop|Poly|uOttawa)/i.test(ac));
+  // Acronyme table **seulement** si fullName d’université (pas short seul)
+  if (f) {
+    const ac = sportsLookupInstitutionAcronym(f);
+    return !!(ac && /^(U|ÉTS|ETS|HEC|McGill|Concordia|Bishop|Poly|uOttawa)/i.test(ac));
+  }
+  return false;
 }
 
 /**
@@ -2745,12 +2783,18 @@ function sportsDisplaySideName({
 
   if (short && SPORTS_TEAM_COLOR_SUFFIX_RE.test(short)) return short;
 
-  if (preferAcronym && sportsLooksUniversity({ fullName: full, shortName: short, sector, code: codeU })) {
-    const ac = sportsLookupInstitutionAcronym(full, short)
+  // Acronyme univ. **uniquement** si ce n’est pas du collégial (bloque UdeS pour SHE).
+  if (
+    preferAcronym
+    && !sportsLooksCollegial({ fullName: full, shortName: short, sector, code: codeU })
+    && sportsLooksUniversity({ fullName: full, shortName: short, sector, code: codeU })
+  ) {
+    // Préférer fullName pour la table d’acronymes ; code USHE en repli.
+    // Ne pas passer le short « Sherbrooke » seul (collision cégep / univ).
+    const ac = sportsLookupInstitutionAcronym(full)
       || SPORTS_UNI_CODE_ACRONYM[codeU]
       || '';
     if (ac) return ac;
-    // Déjà un sigle court (UQAM, ÉTS) : le garder
     if (short && short.length <= 6 && /^[A-ZÉÙÛÂÊÎÔ0-9]{2,6}$/i.test(short)) return short;
   }
 
@@ -2787,13 +2831,23 @@ function sportsChipTeamShort(team) {
   return name;
 }
 
-/** Adversaire sur puce gauche — acronyme si université. */
+/** Adversaire sur puce gauche — acronyme si université (jamais si cégep). */
 function sportsChipOpponentLabel(game) {
+  const full = String(game?.opponentFullName || '');
+  const code = String(game?.opponentCode || '').toUpperCase();
+  // Secteur implicite depuis fullName / code collégial connu
+  let sector = '';
+  if (sportsLooksCollegial({ fullName: full, shortName: game?.opponent, code })) {
+    sector = 'collegial';
+  } else if (sportsLooksUniversity({ fullName: full, shortName: game?.opponent, code })) {
+    sector = 'universitaire';
+  }
   return sportsDisplaySideName({
     shortName: game?.opponent,
     fullName: game?.opponentFullName,
     code: game?.opponentCode,
-    preferAcronym: true,
+    sector,
+    preferAcronym: sector === 'universitaire',
     fallback: 'adversaire',
   });
 }
