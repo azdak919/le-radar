@@ -599,8 +599,8 @@ async function init() {
   renderTodayDate();
   syncSeoScheduleNow();
   initSeoScheduleHashScroll();
-  // Photo mât : quand `.loaded` arrive, date+heure passent en 1 ligne (CSS).
-  // Rejouer la cascade — sinon le format long choisi hors photo reste et ellipse.
+  // Date déjà visible sans attendre la photo. Rejouer la cascade au .loaded
+  // (chrome 1-ligne / largeur) — sinon un format long hors photo peut ellipser.
   const bgPhotoLayer = document.getElementById('bg-photo-layer');
   if (bgPhotoLayer && typeof MutationObserver !== 'undefined') {
     const photoDateMo = new MutationObserver(() => {

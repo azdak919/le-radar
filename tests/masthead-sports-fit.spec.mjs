@@ -245,9 +245,10 @@ test('mât mobile 390/430 : date et heure non clipées', async ({ page }) => {
   page.on('pageerror', (error) => pageErrors.push(error.message));
 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  // Photo → chrome date+heure (stack / 1 ligne).
+  // Date+heure visibles sans attendre la photo (.loaded) ; on force quand
+  // même le rendu pour la mesure de largeur (stack ≤449).
   await page.evaluate(() => {
-    document.querySelector('#bg-photo-layer')?.classList.add('loaded');
+    if (typeof renderTodayDate === 'function') renderTodayDate();
   });
 
   for (const width of [390, 430]) {
@@ -271,7 +272,7 @@ test('mât mobile 390/430 : date et heure non clipées', async ({ page }) => {
         const timeOk = /^\d{1,2}(?:\s*h\s*|:)\d{2}$/i.test((time.textContent || '').trim())
           && tb.right <= hb.right + 1.5;
         const chipOk = hb.right <= ab.left + 1;
-        // Date visible (opacity) une fois photo .loaded
+        // Visible dès qu’il y a #bg-photo-layer (plus d’attente .loaded)
         const visible = parseFloat(getComputedStyle(host).opacity || '1') > 0.5;
         return dateOk && timeOk && chipOk && visible;
       }), { timeout: 5000 })
@@ -279,6 +280,73 @@ test('mât mobile 390/430 : date et heure non clipées', async ({ page }) => {
   }
 
   expect(pageErrors).toEqual([]);
+});
+
+/** Date visible avant .loaded sur #bg-photo-layer (retour mainteneur). */
+test('mât : date visible avant chargement photo', async ({ page }) => {
+  await page.setViewportSize({ width: 900, height: 700 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => {
+    const layer = document.querySelector('#bg-photo-layer');
+    if (layer) layer.classList.remove('loaded');
+    if (typeof renderTodayDate === 'function') renderTodayDate();
+  });
+  await expect
+    .poll(async () => page.evaluate(() => {
+      const host = document.querySelector('.masthead-date');
+      const layer = document.querySelector('#bg-photo-layer');
+      if (!host || !layer) return null;
+      return {
+        loaded: layer.classList.contains('loaded'),
+        opacity: parseFloat(getComputedStyle(host).opacity || '0'),
+        hasText: !!(document.querySelector('#today-date')?.textContent?.trim()),
+      };
+    }), { timeout: 5000 })
+    .toMatchObject({ loaded: false, hasText: true });
+  const opacity = await page.evaluate(() =>
+    parseFloat(getComputedStyle(document.querySelector('.masthead-date')).opacity || '0'));
+  expect(opacity).toBeGreaterThan(0.5);
+});
+
+/** Point médian : boîte symétrique entre date et heure (pas gap+margin asymétriques). */
+test('mât : point médian centré entre date et heure', async ({ page }) => {
+  await page.setViewportSize({ width: 900, height: 700 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => {
+    if (typeof renderTodayDate === 'function') renderTodayDate();
+  });
+  const geom = await page.evaluate(() => {
+    const date = document.querySelector('#today-date');
+    const time = document.querySelector('.masthead-time');
+    if (!date || !time) return null;
+    const db = date.getBoundingClientRect();
+    const tb = time.getBoundingClientRect();
+    // Mesurer le · via un range sur le pseudo : on approxime par le gap
+    // entre fin date et début du contenu temps (chiffres).
+    // Avec ::before en inline-flex width 1.1em, le centre du · ≈ milieu
+    // entre db.right et le début des chiffres (tb.left + width/2 du before).
+    const style = getComputedStyle(time, '::before');
+    const beforeW = parseFloat(style.width) || 0;
+    // Position du · : juste après date dans le flex (gap 0)
+    const midCenter = db.right + beforeW / 2;
+    const span = tb.left + beforeW - db.right; // total · box if time starts after before
+    // Plus robuste : centre entre date.right et time content left
+    // (time box includes ::before at start)
+    const contentStart = tb.left + beforeW;
+    const gapMid = (db.right + contentStart) / 2;
+    const dotCenter = tb.left + beforeW / 2;
+    return {
+      beforeW,
+      err: Math.abs(dotCenter - gapMid),
+      leftGap: dotCenter - db.right,
+      rightGap: contentStart - dotCenter,
+    };
+  });
+  expect(geom).toBeTruthy();
+  expect(geom.beforeW, '::before doit avoir une largeur fixe').toBeGreaterThan(4);
+  // Espaces gauche/droite du · quasi égaux (tolérance subpixel + letter-spacing)
+  expect(Math.abs(geom.leftGap - geom.rightGap)).toBeLessThanOrEqual(2.5);
+  expect(geom.err).toBeLessThanOrEqual(2.5);
 });
 
 /**
