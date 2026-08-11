@@ -2653,7 +2653,13 @@ function sportsPlaceEventShort(game) {
   return opp;
 }
 
-/** Domicile / extérieur — plus clair que « reçoit » / « à » entre institutions. */
+/** Verbe de rencontre — domicile « reçoit », extérieur « à » (ton presse). */
+function sportsMatchVerb(game, lang = 'fr') {
+  if (game?.home === false) return lang === 'en' ? 'at' : 'à';
+  return lang === 'en' ? 'hosts' : 'reçoit';
+}
+
+/** Domicile / extérieur — tooltip / sous-ligne optionnelle. */
 function sportsVenueLabel(game, lang = 'fr') {
   if (game?.home === false) return lang === 'en' ? 'away' : 'extérieur';
   if (game?.home === true) return lang === 'en' ? 'home' : 'domicile';
@@ -2737,8 +2743,7 @@ function sportsCtaLabelFromSlide(slide) {
   const opp = sportsPlainOpponentName(g);
 
   if (slide.mode === 'next') {
-    // vs + lieu en sous-ligne (pas « reçoit/à » — ambigu entre institutions)
-    return `${glyph} ${home} vs ${opp}`;
+    return `${glyph} ${home} ${sportsMatchVerb(g)} ${opp}`;
   }
   if (slide.mode === 'result') {
     const placeKind = sportsIsPlaceResult(g, slide.team.sport);
@@ -2787,8 +2792,7 @@ function sportsCtaSubLine(slide, state) {
   const age = sportsResultAgeMs(g);
   const when = state === 'next' ? sportsWhenLong(g?.date, g?.time) : '';
   if (state === 'next') {
-    const venue = sportsVenueLabel(g, 'fr');
-    return [when, venue, comp].filter(Boolean).join(' · ');
+    return [when, comp].filter(Boolean).join(' · ');
   }
   // Pour un fait du jour, l’âge précis vaut mieux que le marqueur (« il y a
   // 3 h » plutôt que « Aujourd’hui »). Passé 24 h, le marqueur dit déjà « Hier »
@@ -3138,7 +3142,21 @@ function fillSportsCtaLayer(layer, slide) {
   line.className = 'sports-chip__cta-line';
   const text = document.createElement('span');
   text.className = 'sports-chip__cta-text';
-  text.textContent = slide.label || 'Scores étudiants QC';
+  // Next : glyphe + noms + verbe « reçoit/à » en .sports-chip__vs (même gris que gauche).
+  const src = slide?.ctaFrom;
+  if (src?.mode === 'next' && src.team && src.game) {
+    const g = src.game;
+    const glyph = sportsGlyph(src.team.sport || g.sport);
+    const home = sportsChipTeamShort(src.team);
+    const opp = sportsPlainOpponentName(g);
+    const verb = sportsMatchVerb(g);
+    text.innerHTML = `${escapeHtml(glyph)} `
+      + `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+      + `<span class="sports-chip__vs">${escapeHtml(verb)}</span> `
+      + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
+  } else {
+    text.textContent = slide.label || 'Scores étudiants QC';
+  }
   line.append(text);
   head.append(line);
   layer.append(head);
@@ -3516,8 +3534,8 @@ function sportsChipTitle(slide) {
 
   // next / live proxy (urgency.tier 0 = fenêtre « en cours »)
   const status = slide.urgency?.tier === 0 ? 'En cours' : 'Prochain match';
-  const venue = sportsVenueLabel(g, 'fr');
-  return [status, sport, `${home} vs ${opp}`, when, venue, host].filter(Boolean).join(' · ');
+  const verb = sportsMatchVerb(g);
+  return [status, sport, `${home} ${verb} ${opp}`, when, host].filter(Boolean).join(' · ');
 }
 
 function paintSportsChip(slide, animate = false) {
@@ -3665,12 +3683,12 @@ function paintSportsChip(slide, animate = false) {
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
   } else {
     a.append(glyph);
-    // vs neutre + lieu en sous-ligne (évite « Laval reçoit / Montréal à » confus).
+    // « reçoit » / « à » — même ton presse que la CTA ; verbe en .sports-chip__vs (gris).
+    const verb = sportsMatchVerb(g);
     inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
-      + `<span class="sports-chip__vs">vs</span> `
+      + `<span class="sports-chip__vs">${escapeHtml(verb)}</span> `
       + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
-    const venue = sportsVenueLabel(g, 'fr');
-    subText.textContent = [when, venue].filter(Boolean).join(' · ');
+    subText.textContent = when || '';
     a.title = sportsChipTitle(slide);
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
   }
