@@ -600,9 +600,11 @@
         ? 'Québec college and university scores — one tap away.'
         : 'Scores collégiaux et universitaires du Québec — en un geste.';
     }
+    // Triade marque (identite-visuelle) : journaux + radios + sports — pas le
+    // slogan long « réunis au même endroit », mais le même périmètre.
     return lang === 'en'
-      ? 'Québec student radio and newspapers, one tap away.'
-      : 'Radios et journaux étudiants du Québec, en un geste.';
+      ? 'Québec student newspapers, radio and sports — one tap away.'
+      : 'Journaux, radios et sports étudiants du Québec — en un geste.';
   }
 
   /** Carte install native — titre spatial + primary « Ajouter » (focus-group B). */
