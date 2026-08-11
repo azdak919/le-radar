@@ -1077,6 +1077,17 @@ assert(
     && styleCss.includes('@keyframes sports-chip-scroll-sub'),
   'puces scores : 2 lignes ; date·compétition (parité CTA) ; pool <7 j ; marquee 8s ; 0 ellipsis',
 );
+// Jambages (j, g, y, p, q) : line-height ≥ 1.35 sous overflow:hidden
+// (régression « Collège » / « jeu. » / « collégial » — même leçon que Original).
+assert(
+  /\.sports-chip--match \.sports-chip__line-inner\s*\{[^}]*line-height:\s*1\.35/.test(cssFlat)
+    && /\.sports-chip--match \.sports-chip__sub\s*\{[^}]*line-height:\s*1\.35/.test(cssFlat)
+    && /\.sports-chip__cta-eyebrow\s*\{[^}]*line-height:\s*1\.35/.test(cssFlat)
+    && /\.sports-chip__cta-text\s*\{[^}]*line-height:\s*1\.35/.test(cssFlat)
+    && /\.sports-chip__cta-sub\s*\{[^}]*line-height:\s*1\.35/.test(cssFlat)
+    && /\.sports-chip__cta-stack\s*\{[^}]*height:\s*3\.15em/.test(cssFlat),
+  'style sports : line-height 1.35 (jambages) + stack CTA 3.15em sous overflow:hidden',
+);
 // Puces scores : indépendantes + dwell lecture + marquee aller-retour complet.
 assert(
   appJs.includes('scheduleSportsSlot')

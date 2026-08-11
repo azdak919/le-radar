@@ -198,7 +198,8 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1px;
+  /* 2px : air entre les 2 lignes pour les jambages (g, j, y, p, q). */
+  gap: 2px;
   overflow: hidden;
 }
 /* Pulse de bordure pourpre : puces scores + CTA au repos (pas en direct —
@@ -338,7 +339,8 @@ body {
   font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.01em;
-  line-height: 1.15;
+  /* 1.15 + overflow:hidden coupait j/g (ex. « jeu. », « collégial »). */
+  line-height: 1.35;
   color: rgba(255, 255, 255, 0.72);
 }
 .masthead-sports-strip .sports-chip--match .sports-chip__sub-text {
@@ -359,7 +361,10 @@ body {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.01em;
-  line-height: 1.25;
+  /* Même leçon que .translate-toggle__label : line-height trop bas +
+   * overflow:hidden coupe les jambages (g de « Collège », j, y, p, q).
+   * overflow-x/y mixtes sont ramenés à auto en CSS — on élargit la ligne. */
+  line-height: 1.35;
 }
 /* Défilement L→R du texte trop long (scores ET accroche CTA SPORTS).
  * La pastille « SPORTS » reste fixe ; seul le texte d’info défile.
@@ -554,12 +559,13 @@ body {
  * Stack 2 couches pour le roulement vertical (focus-group le-radar-cta-sports-motion).
  * Hauteur fixe : deux lignes, marqueur + accroche puis sous-ligne. Le cadre coupe
  * — c’est lui qui garantit qu’on ne lit jamais deux accroches à la fois — mais il
- * doit laisser passer accents hauts et jambages, d’où 2.65em et non 2 × 1.25em.
+ * doit laisser passer accents hauts et jambages. Avec line-height 1.35 sur les
+ * deux lignes + gap 2px : ~3.15em (pas 2 × 1.35em collés).
  */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-stack {
   position: relative;
   display: block;
-  height: 2.7em;
+  height: 3.15em;
   width: 100%;
   overflow: hidden;
 }
@@ -569,7 +575,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1px;
+  gap: 2px;
   min-width: 0;
   color: #fff;
   pointer-events: none;
@@ -593,7 +599,8 @@ body {
   letter-spacing: 0.09em;
   text-transform: uppercase;
   color: color-mix(in srgb, var(--accent, #cf7ec1) 55%, rgba(255, 255, 255, 0.88));
-  line-height: 1.1;
+  /* 1.1 coupait le bas des glyphes dans le stack overflow:hidden. */
+  line-height: 1.35;
   white-space: nowrap;
 }
 .masthead-sports-strip .sports-chip--cta[data-cta-state="live"] .sports-chip__cta-eyebrow {
@@ -623,7 +630,8 @@ body {
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.03em;
-  line-height: 1.25;
+  /* Jambages (g de Collège / collégial) : voir .sports-chip__line-inner. */
+  line-height: 1.35;
   vertical-align: middle;
 }
 /* Sous-ligne : compétition + fraîcheur. Fenêtre de défilement (comme le titre) :
@@ -637,7 +645,8 @@ body {
   font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.01em;
-  line-height: 1.15;
+  /* 1.15 coupait j/g (« jeu. », « collégial ») sous overflow:hidden. */
+  line-height: 1.35;
   color: rgba(255, 255, 255, 0.7);
 }
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-sub-text {
