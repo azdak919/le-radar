@@ -2346,11 +2346,13 @@
       "code": "NDFB",
       "sector": "collegial",
       "shortName": "Notre-Dame Bleu",
-      "fullName": "Cégep de Notre-Dame Bleu",
+      "fullName": "Campus Notre-Dame-de-Foy",
       "nickname": null,
       "aliases": [
         "Notre-Dame Bleu",
-        "NDFB"
+        "NDFB",
+        "CNDF Bleu",
+        "Campus Notre-Dame-de-Foy Bleu"
       ],
       "priority": 80,
       "sports": [
@@ -2358,18 +2360,21 @@
       ],
       "rseqTeamIds": [
         "ba51f1e5-39cc-4335-8616-a62ed6793387"
-      ]
+      ],
+      "note": "Deuxième formation rugby F du CNDF (Saint-Augustin) — Bleu ≠ établissement séparé"
     },
     {
       "id": "notre-dame-jaune",
       "code": "NDFJ",
       "sector": "collegial",
       "shortName": "Notre-Dame Jaune",
-      "fullName": "Cégep de Notre-Dame Jaune",
+      "fullName": "Campus Notre-Dame-de-Foy",
       "nickname": null,
       "aliases": [
         "Notre-Dame Jaune",
-        "NDFJ"
+        "NDFJ",
+        "CNDF Jaune",
+        "Campus Notre-Dame-de-Foy Jaune"
       ],
       "priority": 80,
       "sports": [
@@ -2377,7 +2382,8 @@
       ],
       "rseqTeamIds": [
         "46e24feb-0394-4ecc-8ceb-cccf513cad17"
-      ]
+      ],
+      "note": "Deuxième formation rugby F du CNDF — Jaune différencie de Notre-Dame Bleu"
     },
     {
       "id": "ottawa",

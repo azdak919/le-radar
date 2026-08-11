@@ -2580,49 +2580,84 @@ function sportsOrderedKeys(bestMap) {
 }
 
 /**
+ * Suffixes de couleur d’équipe (CNDF rugby F Bleu/Jaune, etc.) — **ne jamais
+ * retirer** : ce n’est pas un ornement, c’est l’identité de la formation.
+ */
+const SPORTS_TEAM_COLOR_SUFFIX_RE = /\s+(Bleu(?:e)?|Jaune|Noir(?:e)?|Blanc(?:he)?|Rouge|Vert(?:e)?|Or)\s*$/i;
+
+/**
  * Nom d’établissement en clair — garde-fou `noms-lisibles`
  * (focus-group le-radar-sports-first-glance). Un sigle seul (« LÉV vs THE »)
  * n’est décodable que par ceux qui suivent déjà la ligue ; le corpus porte les
  * noms, il n’y a aucune raison de les jeter. Puces scores (gauche) et CTA
  * partagent cette face lisible (2 lignes : noms / date).
+ * **Jamais** de troncature `…` ici — marquee L→R si trop long.
  */
 function sportsPlainTeamName(team) {
-  const name = String(team?.name || '').trim();
-  if (name) return name;
-  const full = String(team?.fullName || '').trim();
-  if (full) return full;
-  return String(team?.code || 'Équipe').trim();
+  return sportsDisplaySideName({
+    shortName: team?.name,
+    fullName: team?.fullName,
+    code: team?.code,
+    fallback: 'Équipe',
+  });
 }
 
 function sportsPlainOpponentName(game) {
-  const name = String(game?.opponent || '').trim();
-  if (name) return name;
-  const full = String(game?.opponentFullName || '').trim();
-  if (full) return full;
-  return String(game?.opponentCode || 'adversaire').trim();
+  return sportsDisplaySideName({
+    shortName: game?.opponent,
+    fullName: game?.opponentFullName,
+    code: game?.opponentCode,
+    fallback: 'adversaire',
+  });
 }
 
 /**
- * Nom d’équipe pour puce étroite — enlève le suffixe sport redondant
+ * Libellé d’une face (équipe ou adversaire) pour le bandeau.
+ * - Garde « Notre-Dame Bleu / Jaune » (couleur = 2e formation CNDF).
+ * - Mono-token ambigu (« Laval », « Montréal ») → fullName d’établissement
+ *   complet (marquee si besoin), pas une coupe à 22 car. avec « … ».
+ */
+function sportsDisplaySideName({ shortName, fullName, code, fallback = 'Équipe' } = {}) {
+  const short = String(shortName || '').trim();
+  const full = String(fullName || '').trim();
+  if (short && SPORTS_TEAM_COLOR_SUFFIX_RE.test(short)) return short;
+  // Multi-parties déjà distinctives (Lionel-Groulx, Vieux Montréal, Bishop's…)
+  if (short && /[\s-]/.test(short) && short.replace(/-/g, '').length >= 5) return short;
+  // Mono-token + établissement plus précis → établissement **entier** (marquee, jamais « … »)
+  if (full && short && !/[\s-]/.test(short) && full.length > short.length) return full;
+  if (short) return short;
+  if (full) return full;
+  return String(code || fallback).trim() || fallback;
+}
+
+/**
+ * Nom d’équipe pour puce — enlève seulement le suffixe sport redondant
  * (« McGill Sailing » → « McGill » quand le glyphe voile est déjà là).
+ * Ne touche **jamais** aux couleurs Bleu/Jaune ni aux fullName.
  */
 function sportsChipTeamShort(team) {
   let name = sportsPlainTeamName(team);
   const sport = String(team?.sport || '').toLowerCase();
   if (sport === 'sailing' || sport === 'voile') {
+    // Seulement le mot sport en anglais/FR collé en fin — pas « Bleu ».
     name = name.replace(/\s+(sailing|voile)\s*$/i, '').trim() || name;
   }
   return name;
 }
 
-/** Événement / compétition courte pour place (régates) — pas le pavé adversaire. */
+/** Événement / compétition pour place (régates) — texte entier, marquee si long. */
 function sportsPlaceEventShort(game) {
   const comp = String(game?.competition || '').trim();
   if (comp) return comp;
   const opp = sportsPlainOpponentName(game);
-  // « ICSA Regional Teams National Invitational · Columbia » → avant le ·
-  const head = opp.split(/\s*[·|]\s*/)[0].trim();
-  return head || opp;
+  return opp;
+}
+
+/** Domicile / extérieur — plus clair que « reçoit » / « à » entre institutions. */
+function sportsVenueLabel(game, lang = 'fr') {
+  if (game?.home === false) return lang === 'en' ? 'away' : 'extérieur';
+  if (game?.home === true) return lang === 'en' ? 'home' : 'domicile';
+  return '';
 }
 
 function sportsIsPlaceResult(game, sport) {
@@ -2698,18 +2733,21 @@ function sportsCtaLabelFromSlide(slide) {
   if (!slide?.team || !slide.game) return '';
   const g = slide.game;
   const glyph = sportsGlyph(slide.team.sport || g.sport);
-  const home = sportsPlainTeamName(slide.team);
+  const home = sportsChipTeamShort(slide.team);
   const opp = sportsPlainOpponentName(g);
 
   if (slide.mode === 'next') {
-    return `${glyph} ${home} ${g.home === false ? 'à' : 'reçoit'} ${opp}`;
+    // vs + lieu en sous-ligne (pas « reçoit/à » — ambigu entre institutions)
+    return `${glyph} ${home} vs ${opp}`;
   }
   if (slide.mode === 'result') {
-    const placeKind = g.scoreKind === 'place' || slide.team.sport === 'sailing';
+    const placeKind = sportsIsPlaceResult(g, slide.team.sport);
     const score = placeKind
-      ? `${g.scoreFor}/${g.scoreAgainst}`
+      ? `${g.scoreFor}e/${g.scoreAgainst}`
       : `${g.scoreFor}–${g.scoreAgainst}`;
-    return `${glyph} ${home} ${score} ${opp}`;
+    return placeKind
+      ? `${glyph} ${home} ${score}`
+      : `${glyph} ${home} ${score} ${opp}`;
   }
   return `${glyph} ${home}`;
 }
@@ -2749,7 +2787,8 @@ function sportsCtaSubLine(slide, state) {
   const age = sportsResultAgeMs(g);
   const when = state === 'next' ? sportsWhenLong(g?.date, g?.time) : '';
   if (state === 'next') {
-    return [when, comp].filter(Boolean).join(' · ');
+    const venue = sportsVenueLabel(g, 'fr');
+    return [when, venue, comp].filter(Boolean).join(' · ');
   }
   // Pour un fait du jour, l’âge précis vaut mieux que le marqueur (« il y a
   // 3 h » plutôt que « Aujourd’hui »). Passé 24 h, le marqueur dit déjà « Hier »
@@ -3459,27 +3498,26 @@ function sportsChipTitle(slide) {
   const team = slide.team;
   const g = slide.game;
   const sport = sportsSportLabelFr(g.sport || team.sport);
-  const home = sportsTooltipTeamLabel(team);
-  const opp = sportsTooltipTeamLabel({
-    name: g.opponent,
-    nickname: g.opponentNickname,
-    fullName: g.opponentFullName,
-    code: g.opponentCode,
-  });
+  // Mêmes libellés que les puces (Bleu/Jaune, fullName si mono-token).
+  const home = sportsChipTeamShort(team);
+  const opp = sportsPlainOpponentName(g);
   const when = formatSportsWhen(g.date, g.time);
+  const host = String(team.fullName || '').trim();
 
   if (slide.mode === 'result') {
     const issue = g.result === 'W' ? 'Victoire' : g.result === 'L' ? 'Défaite' : 'Match nul';
-    const placeKind = g.scoreKind === 'place' || team.sport === 'sailing' || g.sport === 'sailing';
+    const placeKind = sportsIsPlaceResult(g, team.sport);
     const score = placeKind
       ? `place ${g.scoreFor}/${g.scoreAgainst}`
       : `${g.scoreFor}–${g.scoreAgainst}`;
-    return [issue, sport, `${home} ${score} ${opp}`, when].filter(Boolean).join(' · ');
+    const line = placeKind ? `${home} ${score}` : `${home} ${score} ${opp}`;
+    return [issue, sport, line, when, host].filter(Boolean).join(' · ');
   }
 
   // next / live proxy (urgency.tier 0 = fenêtre « en cours »)
   const status = slide.urgency?.tier === 0 ? 'En cours' : 'Prochain match';
-  return [status, sport, `${home} vs ${opp}`, when].filter(Boolean).join(' · ');
+  const venue = sportsVenueLabel(g, 'fr');
+  return [status, sport, `${home} vs ${opp}`, when, venue, host].filter(Boolean).join(' · ');
 }
 
 function paintSportsChip(slide, animate = false) {
@@ -3575,10 +3613,10 @@ function paintSportsChip(slide, animate = false) {
   glyph.textContent = sportsGlyph(sport);
 
   /*
-   * Deux lignes comme la CTA, dans la largeur plus étroite des puces scores :
-   *   haut  — noms en clair (même verbe « reçoit / à » que l’accroche SPORTS)
-   *   bas   — date · heure (plus le méta « Saison précédente » si besoin)
-   * Marquee L→R par ligne si overflow — jamais de sigles RSEQ seuls.
+   * Deux lignes comme la CTA, largeur chip :
+   *   haut  — noms complets (Bleu/Jaune gardés) + vs / score
+   *   bas   — date · domicile|extérieur · (compétition / méta)
+   * Marquee L→R si overflow — **jamais** de troncature « … ».
    */
   const body = document.createElement('span');
   body.className = 'sports-chip__body';
@@ -3627,12 +3665,12 @@ function paintSportsChip(slide, animate = false) {
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
   } else {
     a.append(glyph);
-    // Même face éditoriale que la CTA : domicile « reçoit », extérieur « à ».
-    const verb = g.home === false ? 'à' : 'reçoit';
+    // vs neutre + lieu en sous-ligne (évite « Laval reçoit / Montréal à » confus).
     inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
-      + `<span class="sports-chip__vs">${escapeHtml(verb)}</span> `
+      + `<span class="sports-chip__vs">vs</span> `
       + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
-    subText.textContent = when || '';
+    const venue = sportsVenueLabel(g, 'fr');
+    subText.textContent = [when, venue].filter(Boolean).join(' · ');
     a.title = sportsChipTitle(slide);
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
   }
