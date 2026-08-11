@@ -1,72 +1,80 @@
 {
-  "updatedAt": "2026-08-11T22:38:32.362Z",
+  "updatedAt": "2026-08-11T23:36:40.876Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Capitales de Québec",
+        "source": "api-live",
+        "start": "18:50",
+        "end": "23:00",
+        "url": "https://chyz.ca/emission/capitales-de-quebec/",
+        "special": true
+      },
       "next": {
         "title": "Mercredi Bonbon",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mercredi-bonbon/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Capitales de Québec",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T22:38:17.012Z"
+      "checkedAt": "2026-08-11T23:36:17.980Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les Pénibles",
-        "source": "schedule",
-        "start": "17:30",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/les-penibles"
-      },
-      "next": {
         "title": "Ailleurs: escales en musique",
         "source": "schedule",
         "start": "19:00",
         "end": "20:00",
         "url": "https://cism893.ca/emissions/ailleurs-en-musique"
       },
+      "next": {
+        "title": "Les garçons pleurent aussi (reprise)",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
+      },
       "track": "",
-      "showTitle": "Les Pénibles",
+      "showTitle": "Ailleurs: escales en musique",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T22:38:18.939Z"
+      "checkedAt": "2026-08-11T23:36:20.421Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Prison Radio",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Soul Perspectives",
         "source": "api-live",
         "start": "19:00",
         "end": "20:30"
       },
+      "next": {
+        "title": "Marca-RO",
+        "source": "api-live",
+        "start": "20:30",
+        "end": "21:00"
+      },
       "track": "",
-      "showTitle": "Prison Radio",
+      "showTitle": "Soul Perspectives",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +82,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T22:38:21.515Z"
+      "checkedAt": "2026-08-11T23:36:29.926Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Bikini Brrroadcast",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
-      },
-      "next": {
         "title": "Ashes to Ashes",
         "source": "schedule-live",
         "start": "19:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/ashes-to-ashes"
       },
+      "next": {
+        "title": "Hittin' All The Bases",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/hittin-all-the-bases"
+      },
       "track": "",
-      "showTitle": "Bikini Brrroadcast",
+      "showTitle": "Ashes to Ashes",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T22:38:25.824Z"
+      "checkedAt": "2026-08-11T23:36:33.927Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,29 +134,29 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T22:38:26.552Z"
+      "checkedAt": "2026-08-11T23:36:34.556Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Le Studio",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00",
-        "slug": "live"
-      },
-      "next": {
         "title": "Les Amazones",
         "source": "schedule",
         "start": "19:30",
         "end": "20:30",
         "url": "https://www.choq.ca/emissions/les-amazones"
       },
-      "track": "Iceage - 1835",
-      "showTitle": "Le Studio",
+      "next": {
+        "title": "10 sur 10 : un podcast 100% rap",
+        "source": "schedule",
+        "start": "20:30",
+        "end": "22:30",
+        "url": "https://www.choq.ca/emissions/10-sur-10-un-podcast-100-rap"
+      },
+      "track": "Wesley Joseph - July (ft. Jorja Smith)",
+      "showTitle": "Les Amazones",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
         "api-live",
         "schedule"
@@ -157,7 +165,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-11T22:38:32.012Z"
+      "checkedAt": "2026-08-11T23:36:40.525Z"
     }
   }
 }
