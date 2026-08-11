@@ -1090,6 +1090,25 @@ assert(
     && appJs.includes('weatherN + 1'),
   'app.js : plafond scores sports ≤ cartes météo (CTA hors compte)',
 );
+// Lab local : météo ne doit pas rester absente (CORS Worker / offline).
+assert(
+  appJs.includes('function isLocalWeatherLabHost')
+    && appJs.includes('function weatherLabFixtureEntries')
+    && appJs.includes('le-radar-weather.azdak.workers.dev'),
+  'app.js : météo lab local (fixture) + Worker weather-cache',
+);
+// Worker weather : CORS localhost (parité nowplaying / bg-rotation).
+{
+  const wxWorker = existsSync(join(root, 'workers/weather-cache/src/index.js'))
+    ? readFileSync(join(root, 'workers/weather-cache/src/index.js'), 'utf8')
+    : '';
+  assert(
+    wxWorker.includes('localhost|127\\.0\\.0\\.1')
+      || /localhost.*127\\.0\\.0\\.1/.test(wxWorker)
+      || wxWorker.includes('127\\.0\\.0\\.1'),
+    'workers/weather-cache : CORS autorise localhost / 127.0.0.1 pour le lab',
+  );
+}
 assert(
   styleCss.includes('--sports-scroll-duration: 5.5s')
     || styleCss.includes('--sports-scroll-duration:5.5s'),
