@@ -368,27 +368,30 @@ body {
  * attend ce cycle + pause repos avant de changer le match (lecture confortable). */
 .masthead-sports-strip {
   /* Holds aux extrémités = moins d’à-coups aux virages. Titre et sous-ligne
-   * partagent la même durée ; les holds (18/82 vs 32/68) restent distincts. */
+   * partagent la même durée ; les holds (18/82 vs 32/68) restent distincts.
+   * 2 alternate (pas infinite) + delay lecture — 1 aller-retour puis repos. */
   --sports-scroll-duration: 5.5s;
+  --sports-scroll-delay: 1.6s;
 }
 /*
  * Marquee scores (gauche) — **mêmes règles que la CTA** :
  * overflow mesuré → is-overflowing / is-sub-overflowing → animation L→R
- * (sports-chip-scroll / sports-chip-scroll-sub, 5.5s alternate).
+ * (sports-chip-scroll / sports-chip-scroll-sub, 5.5s × 2 alternate).
  * Jamais text-overflow:ellipsis. Au repos : clip net, pas de « … ».
+ * Pas de 2ᵉ cycle : le dwell JS change la carte après le retour.
  */
 .masthead-sports-strip .sports-chip:not(.sports-chip--cta).is-overflowing .sports-chip__line-inner {
   max-width: none;
   overflow: visible;
   text-overflow: clip;
-  animation: sports-chip-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  animation: sports-chip-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) 2 alternate both;
   will-change: transform;
 }
 .masthead-sports-strip .sports-chip:not(.sports-chip--cta).is-sub-overflowing .sports-chip__sub-text {
   max-width: none;
   overflow: visible;
   text-overflow: clip;
-  animation: sports-chip-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  animation: sports-chip-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) 2 alternate both;
   will-change: transform;
 }
 @keyframes sports-chip-scroll {
@@ -669,7 +672,7 @@ body {
   max-width: none;
   overflow: visible;
   text-overflow: clip;
-  animation: sports-chip-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  animation: sports-chip-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) 2 alternate both;
   will-change: transform;
 }
 .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text {
@@ -677,7 +680,7 @@ body {
   overflow: visible;
   text-overflow: clip;
   /* Fallback 5.5s (pas 8.5s) : --sports-scroll-duration hérite déjà du strip. */
-  animation: sports-chip-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  animation: sports-chip-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) 2 alternate both;
   will-change: transform;
 }
 @keyframes sports-chip-scroll-sub {
@@ -1379,8 +1382,9 @@ html[data-script-dir="rtl"] .wordmark-full {
  * (`measureMarquee`) pour que les deux positions de repos, celles qu'on lit
  * réellement, tombent sur la grille de pixels. */
 .is-marquee { text-overflow: clip; }
+/* 1 cycle (delay lecture + aller-retour), puis repos — pas infinite. */
 .is-marquee > .tuner-now-sub-text {
-  animation: tunerMarquee var(--marquee-duration, 12s) linear infinite alternate;
+  animation: tunerMarquee var(--marquee-duration, 12s) linear var(--marquee-delay, 1.6s) 2 alternate both;
   will-change: transform;
 }
 /* L'audio reste actif en arrière-plan; seules les animations de lecture sont

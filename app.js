@@ -521,10 +521,18 @@ const TUNER_SUB_ROTATE_MS = IS_TUNER_EMBED ? 14000 : 8000;
 const TUNER_SUB_ROTATE_NARROW_MS = 14000;
 const TUNER_SUB_ROTATE_VERY_NARROW_MS = 18000;
 const AIR_PANEL_ROTATE_MS = 8000;
-/** Aller + retour : l'animation marquee est `alternate`. */
+/**
+ * Marquee site-wide (dial, à l’antenne, sports, météo, embed) :
+ * 1) délai de lecture au repos  2) **un** aller-retour (`alternate` × 2)
+ * 3) pause au repos  4) seulement alors changer le texte.
+ * Jamais `infinite` : un 2ᵉ cycle pendant l’attente de rotation est illisible.
+ */
+/** Pause initiale avant le 1er pixel de scroll (CSS animation-delay). */
+const MARQUEE_READ_DELAY_MS = 1600;
+/** Aller + retour : l'animation marquee est `alternate` (2 itérations, pas infinite). */
 const MARQUEE_ROUND_TRIPS = 2;
-/** Pause de lecture ajoutée à l'aller-retour avant de changer de texte. */
-const MARQUEE_REST_MS = 2500;
+/** Pause de lecture après le retour, avant de changer de texte. */
+const MARQUEE_REST_MS = 2000;
 /** L'émission en ondes reste plus longtemps que les autres phases. */
 const AIR_LIVE_DWELL_FACTOR = 2;
 const NOW_AIR_CROSSFADE_MS = 700;
@@ -1606,17 +1614,72 @@ function showMastheadWeatherBoard() {
   MASTHEAD_WEATHER.classList.add('is-too-narrow');
 }
 
+/** Synchro style-masthead.css `weather-name-scroll` (6.2s × alternate × 2). */
+const WEATHER_SCROLL_ONE_WAY_MS = 6200;
+/** Rotation météo sans défilement — assez pour lire ville + °. */
+const WEATHER_ROTATE_BASE_MS = 7000;
+
 function refreshWeatherNameScroll() {
   MASTHEAD_WEATHER?.querySelectorAll('.masthead-weather__city.is-active').forEach((el) => {
     const viewport = el.querySelector('.masthead-weather__name');
     const name = el.querySelector('.masthead-weather__name-text');
+    if (!viewport || !name) return;
     const overflow = Math.max(0, name.scrollWidth - viewport.clientWidth);
     const isPrimary = MASTHEAD_WEATHER_PRIMARY_IDS.has(el.dataset.weatherCity);
     // Montréal et Québec ne défilent jamais : la grille réduit plutôt le nombre
     // de cartes quand l'espace devient insuffisant.
-    el.classList.toggle('is-overflowing', !isPrimary && overflow > 2);
-    el.style.setProperty('--weather-scroll', `${overflow}px`);
+    const needs = !isPrimary && overflow > 2;
+    const had = el.classList.contains('is-overflowing');
+    const prev = (el.style.getPropertyValue('--weather-scroll') || '').trim();
+    const next = `${overflow}px`;
+    if (!needs) {
+      if (had) {
+        el.classList.remove('is-overflowing');
+        el.style.removeProperty('--weather-scroll');
+      }
+      return;
+    }
+    el.style.setProperty('--weather-scroll', next);
+    // Relancer **un** cycle seulement si nouveau overflow / nouvelle carte
+    // (sinon on ne touche pas la classe → pas de 2ᵉ aller-retour parasite).
+    if (!had || prev !== next) {
+      el.classList.remove('is-overflowing');
+      // Force reflow pour redémarrer l’animation CSS (1 cycle, pas infinite).
+      void el.offsetWidth;
+      el.classList.add('is-overflowing');
+    }
   });
+}
+
+/** Dwell météo : lire → 1 aller-retour si overflow → repos → changer. */
+function weatherBoardDwellMs() {
+  if (sportsReducedMotion || PREFERS_REDUCED_MOTION?.matches) {
+    return WEATHER_ROTATE_BASE_MS;
+  }
+  const anyOverflow = !!MASTHEAD_WEATHER?.querySelector(
+    '.masthead-weather__city.is-active.is-overflowing',
+  );
+  if (!anyOverflow) return WEATHER_ROTATE_BASE_MS;
+  return MARQUEE_READ_DELAY_MS
+    + WEATHER_SCROLL_ONE_WAY_MS * MARQUEE_ROUND_TRIPS
+    + MARQUEE_REST_MS;
+}
+
+function clearMastheadWeatherTimer() {
+  if (!mastheadWeatherTimer) return;
+  clearTimeout(mastheadWeatherTimer);
+  clearInterval(mastheadWeatherTimer);
+  mastheadWeatherTimer = null;
+}
+
+function scheduleMastheadWeatherRotate() {
+  clearMastheadWeatherTimer();
+  if (!MASTHEAD_WEATHER || MASTHEAD_WEATHER.classList.contains('hidden')) return;
+  mastheadWeatherTimer = window.setTimeout(() => {
+    mastheadWeatherTimer = null;
+    rotateOneMastheadWeatherCard();
+    scheduleMastheadWeatherRotate();
+  }, weatherBoardDwellMs());
 }
 
 function rotateOneMastheadWeatherCard() {
@@ -1659,11 +1722,10 @@ function scheduleMastheadWeatherLayout() {
 }
 
 function startMastheadWeatherBoard() {
-  if (!MASTHEAD_WEATHER || mastheadWeatherTimer) return;
+  if (!MASTHEAD_WEATHER) return;
   showMastheadWeatherBoard();
-  mastheadWeatherTimer = window.setInterval(() => {
-    rotateOneMastheadWeatherCard();
-  }, 5200);
+  // Chaîne setTimeout (pas interval fixe) : le dwell suit le marquee réel.
+  if (!mastheadWeatherTimer) scheduleMastheadWeatherRotate();
   window.addEventListener('resize', scheduleMastheadWeatherLayout, { passive: true });
 }
 
@@ -1927,8 +1989,10 @@ const SPORTS_READ_MAX_MS = 14000;
 /** Synchro style.css `--sports-scroll-duration` (marquee L→R). */
 const SPORTS_SCROLL_ONE_WAY_MS = 5500;
 const SPORTS_SCROLL_ROUND_TRIP_MS = SPORTS_SCROLL_ONE_WAY_MS * 2;
+/** Délai lecture avant scroll — aligné MARQUEE_READ_DELAY_MS / CSS --sports-scroll-delay. */
+const SPORTS_SCROLL_READ_DELAY_MS = MARQUEE_READ_DELAY_MS;
 /** Pause au repos après le retour (re-ack du début de ligne). */
-const SPORTS_SCROLL_POST_PAUSE_MS = 1200;
+const SPORTS_SCROLL_POST_PAUSE_MS = MARQUEE_REST_MS;
 /** Décalage initial entre slots pour éviter un flip simultané au 1er paint. */
 const SPORTS_SLOT_STAGGER_MS = 1100;
 /** Entrée d’une puce score (CSS sports-chip-arrive) — plus long = moins brutal. */
@@ -4360,11 +4424,14 @@ function sportsSlotDwellMs(slot) {
   // CTA : plancher propre (un cran plus posé que les scores, sans 24 s collants).
   const floor = isCta ? SPORTS_CTA_DWELL_MS : readMs;
   if (sportsChipNeedsMarquee(chip)) {
-    // Aller + retour + pause — durée CSS alignée (match chips plus lentes).
+    // Lecture → 1 aller-retour (pas infinite) → pause repos — synchro CSS.
     const oneWay = chip.classList.contains('sports-chip--match')
       ? SPORTS_MATCH_SCROLL_ONE_WAY_MS
       : SPORTS_SCROLL_ONE_WAY_MS;
-    return Math.max(floor, oneWay * 2 + SPORTS_SCROLL_POST_PAUSE_MS);
+    return Math.max(
+      floor,
+      SPORTS_SCROLL_READ_DELAY_MS + oneWay * 2 + SPORTS_SCROLL_POST_PAUSE_MS,
+    );
   }
   return floor;
 }
@@ -5666,21 +5733,21 @@ function stopNowAirPreview() {
 }
 
 /**
- * Temps qu'il faut à un texte qui défile pour partir **et revenir**.
+ * Temps qu'il faut à un texte qui défile pour : lire → partir → revenir → reposer.
  *
- * L'animation est `alternate` : une itération fait l'aller, la suivante le
- * retour. Un cycle complet vaut donc 2 × `--marquee-duration`. On ajoute une
- * marge pour la pause de lecture aux deux extrémités (14 % de la durée de
- * chaque côté, cf. les keyframes `tunerMarquee`).
+ * L'animation est `alternate` × 2 (pas infinite) + `animation-delay` lecture.
+ * Un cycle complet = delay + 2 × `--marquee-duration` + pause repos.
  *
  * Règle générale du site : **on ne change jamais un texte avant la fin de son
- * aller-retour.** Toute surface qui alterne doit passer par ici.
+ * aller-retour**, et on ne relance pas un 2ᵉ cycle pendant l’attente.
  */
 function marqueeRoundTripMs(el) {
   if (!el?.classList.contains('is-marquee')) return 0;
   const sec = parseFloat(el.style.getPropertyValue('--marquee-duration'));
   if (!Number.isFinite(sec) || sec <= 0) return 0;
-  return Math.ceil(sec * 1000 * MARQUEE_ROUND_TRIPS) + MARQUEE_REST_MS;
+  return Math.ceil(sec * 1000 * MARQUEE_ROUND_TRIPS)
+    + MARQUEE_READ_DELAY_MS
+    + MARQUEE_REST_MS;
 }
 
 /**
@@ -7051,6 +7118,7 @@ function measureMarquee(el) {
     el.classList.remove('is-marquee');
     el.style.removeProperty('--marquee-shift');
     el.style.removeProperty('--marquee-duration');
+    el.style.removeProperty('--marquee-delay');
     return;
   }
 
@@ -7062,6 +7130,7 @@ function measureMarquee(el) {
   const duration = Math.max(7, distance / 16);
   el.style.setProperty('--marquee-shift', `-${distance}px`);
   el.style.setProperty('--marquee-duration', `${duration.toFixed(1)}s`);
+  el.style.setProperty('--marquee-delay', `${(MARQUEE_READ_DELAY_MS / 1000).toFixed(1)}s`);
   el.classList.add('is-marquee');
 }
 
@@ -7162,6 +7231,7 @@ function applyMarquee(el, text) {
   el.classList.remove('is-marquee');
   el.style.removeProperty('--marquee-shift');
   el.style.removeProperty('--marquee-duration');
+  el.style.removeProperty('--marquee-delay');
 
   if (!value) {
     marqueeTextByEl.delete(el);
