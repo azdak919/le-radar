@@ -1788,7 +1788,7 @@ const SPORTS_IMMINENT_MS = 7 * 24 * 3600 * 1000; /* 7 jours */
 const SPORTS_RECENT_RESULT_MS = 7 * 24 * 3600 * 1000; /* résultats < 7 j — cartes de gauche */
 /**
  * « Chaud » pour la *voie de gauche* / détection saison (pas le pool CTA).
- * La CTA suit le-radar-cta-sports-window : journée lead + filet fraîcheur 48 h.
+ * La CTA suit le-radar-cta-sports-window : journée lead + résultats aujourd’hui/hier.
  */
 const SPORTS_CTA_UPCOMING_MS = 14 * 24 * 3600 * 1000;
 /**
@@ -1796,7 +1796,7 @@ const SPORTS_CTA_UPCOMING_MS = 14 * 24 * 3600 * 1000;
  * Un overflow dense (voile / place / événement) à 5,5 s se lisait en zapping.
  */
 const SPORTS_MATCH_SCROLL_ONE_WAY_MS = 8000;
-/** Plafond faces CTA (jour lead + filet 48 h) — focus-group le-radar-cta-sports-window F. */
+/** Plafond faces CTA (jour lead + filet aujourd’hui/hier) — le-radar-cta-sports-window F. */
 const SPORTS_CTA_MAX_POOL = 16;
 /*
  * Registre d’alerte de la carte CTA — focus-group le-radar-sports-first-glance
@@ -1808,8 +1808,11 @@ const SPORTS_CTA_MAX_POOL = 16;
  */
 const SPORTS_LIVE_VISUAL_LEAD_MS = 15 * 60 * 1000; /* 15 min avant le coup d’envoi */
 const SPORTS_LIVE_VISUAL_TAIL_MS = 3 * 3600 * 1000; /* 3 h après le coup d’envoi */
-/** Lead piloté par la fraîcheur : un résultat passe devant le calendrier pendant 48 h. */
-const SPORTS_CTA_FRESH_RESULT_MS = 48 * 3600 * 1000;
+/**
+ * Filet résultats CTA : **jours civils Toronto** « aujourd’hui » + « hier »
+ * (plus de fenêtre 48 h glissante — gate mainteneur 2026-08-11).
+ * Les prochains du **jour lead** restent en appoint (le-radar-cta-sports-window F).
+ */
 /**
  * Accroches CTA **uniquement** quand il n’y a ni match chaud (≤14 j)
  * ni aucun match à venir en grille. Pas de puces grises à gauche pour
@@ -1881,8 +1884,8 @@ const SPORTS_ARRIVE_MS = 640;
  * CTA du mât : pastille « SPORTS » + accroche datée + sous-ligne.
  *
  * Trois verdicts focus-group se superposent ici :
- * · `le-radar-sports-first-glance` — le lead suit la fraîcheur (résultat < 48 h,
- *   sinon prochain match), registre ardoise au repos, alerte réservée au direct.
+ * · `le-radar-sports-first-glance` — lead = résultat aujourd’hui/hier (civil QC)
+ *   sinon prochain du jour lead ; alerte réservée au direct.
  * · `le-radar-cta-sports-motion` — le changement d’accroche est un **roulement
  *   vertical** d’une seule phase, jamais un fondu croisé : deux textes de
  *   longueurs différentes superposés à mi-opacité sont illisibles.
@@ -2064,6 +2067,29 @@ function sportsGameIsToday(game) {
     return game.date === torontoDayKey();
   }
   return torontoDayKey(ms) === torontoDayKey();
+}
+
+/** YYYY-MM-DD ± n jours civils (arithmétique UTC sur la date seule). */
+function sportsCivilDayShift(yyyyMmDd, deltaDays) {
+  const m = String(yyyyMmDd || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!m) return '';
+  const utc = Date.UTC(+m[1], +m[2] - 1, +m[3] + deltaDays);
+  return new Date(utc).toISOString().slice(0, 10);
+}
+
+/**
+ * Résultat admissible sur la CTA : jour civil Toronto = aujourd’hui **ou** hier.
+ * (Remplace l’ancien filet glissant 48 h.)
+ */
+function sportsCtaResultIsTodayOrYesterday(game, now = Date.now()) {
+  let day = '';
+  const ms = sportsGameMs(game);
+  if (Number.isFinite(ms)) day = torontoDayKey(ms);
+  else if (game?.date && /^\d{4}-\d{2}-\d{2}$/.test(game.date)) day = game.date;
+  if (!day) return false;
+  const today = torontoDayKey(now);
+  const yesterday = sportsCivilDayShift(today, -1);
+  return day === today || day === yesterday;
 }
 
 /**
@@ -2988,19 +3014,17 @@ function sportsSoftSportDiversity(slides) {
 }
 
 /**
- * Partage des rôles bandeau — focus-group `le-radar-cta-sports-window` (F + filet 48 h) :
+ * Partage des rôles bandeau — focus-group `le-radar-cta-sports-window` F
+ * + gate mainteneur filet **aujourd’hui + hier** (civil Toronto) :
  *
  *  CTA (droite) = « le jour qui compte »
- *   • **filet fraîcheur** : résultats age &lt; 48 h (first-glance, même hors jour lead)
- *   • **journée lead** : matchs `next` du prochain jour civil Toronto qui a ≥1 coup d’envoi
- *     (souvent aujourd’hui en saison ; un jour lointain hors saison)
+ *   • **résultats** : jour civil = aujourd’hui ou hier (QC)
+ *   • **journée lead** : matchs `next` du prochain jour civil avec ≥1 coup d’envoi
  *   • pas de file multi-jours 14 j / max 36
  *   • dédup miroir + diversité sport souple ; plafond SPORTS_CTA_MAX_POOL
- *   • creux total : accroches idle
  *
- *  CARTES GAUCHE (indépendantes)
- *   • Saison : résultats passés, ordre fraîcheur
- *   • Hors saison : matchs à venir multi-jours (proximité)
+ *  CARTES GAUCHE (indépendantes) — le-radar-sports-left-pool D
+ *   • Résultats &lt; 7 j + next appoint ; hors saison : prochains
  */
 /** Jour civil America/Toronto d’une slide match (YYYY-MM-DD). */
 function sportsSlideDayKey(slide) {
@@ -3040,10 +3064,8 @@ function sportsCtaCandidateSlides() {
     seen.add(s.key);
 
     if (s.mode === 'result') {
-      // Filet fraîcheur 48 h — gate mainteneur sur le-radar-cta-sports-window F.
-      // Un score du mercredi soir reste lead le jeudi matin (first-glance).
-      const age = sportsResultAgeMs(s.game, now);
-      if (age < 0 || age > SPORTS_CTA_FRESH_RESULT_MS) continue;
+      // Filet civil aujourd’hui + hier (Toronto) — plus de 48 h glissantes.
+      if (!sportsCtaResultIsTodayOrYesterday(s.game, now)) continue;
       freshResults.push(s);
       continue;
     }
@@ -3086,7 +3108,7 @@ function sportsCtaCandidateSlides() {
     ? nexts.filter((s) => sportsSlideDayKey(s) === leadDay)
     : [];
 
-  // Pool : filet 48 h d’abord, puis tous les matchs uniques du jour lead.
+  // Pool : résultats aujourd’hui/hier d’abord, puis matchs du jour lead.
   // includeLaterFilet=false : pas de prochains hors jour lead.
   const raw = freshResults.concat(leadDayNexts);
   const deduped = sportsDedupeMatchSlides(raw);
