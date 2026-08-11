@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-11T09:33:53.153Z",
+  "updatedAt": "2026-08-11T10:48:21.844Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T09:33:42.540Z"
+      "checkedAt": "2026-08-11T10:48:04.888Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T09:33:44.527Z"
+      "checkedAt": "2026-08-11T10:48:07.226Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T09:33:47.409Z"
+      "checkedAt": "2026-08-11T10:48:10.150Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Hip's Time to Wake Hop",
         "source": "schedule",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
       },
+      "next": {
+        "title": "At The Movies",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/at-the-movies"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Hip's Time to Wake Hop",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T09:33:49.537Z"
+      "checkedAt": "2026-08-11T10:48:12.136Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T09:33:50.354Z"
+      "checkedAt": "2026-08-11T10:48:12.656Z"
     },
     "choq": {
       "id": "choq",
@@ -145,7 +145,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Shadow Wizard Money Gang, kinji00 & lb66 - Faded a mon show",
+      "track": "The Lemon Twigs - Your True Enemy",
       "showTitle": "Les rois de l'arène",
       "host": "",
       "source": "api-live",
@@ -156,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-11T09:33:52.803Z"
+      "checkedAt": "2026-08-11T10:48:21.493Z"
     }
   }
 }
