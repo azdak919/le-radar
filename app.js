@@ -696,6 +696,17 @@ async function init() {
   tunerSubMeta = TUNER_SUB?.textContent?.trim() || 'Radios étudiantes en direct';
   initTunerSubRotateListeners();
   initMarqueeResizeListeners();
+  // Pré-semer l’aperçu compact (B) avant le 1er render — évite une frame
+  // « Syntoniser un poste » après le chargement de radios.json.
+  if (!currentStation && isNowAirPanelPreviewMode()) {
+    pickNowAirPreviewRadio();
+    if (nowAirPreviewRadio && (isDialCompactLayout() || isMobileIdleDialPreview())) {
+      setTunerNameText(compactDialTitleLine(nowAirPreviewRadio));
+      const story = idleDialStoryLine(nowAirPreviewRadio);
+      if (story && TUNER_SUB) applyMarquee(TUNER_SUB, story);
+      markTunerDialReady();
+    }
+  }
   // Antenne tout de suite (grilles + nowplaying déjà là) pour stabiliser le
   // layout du synthé — pas d'attente des APIs live, qui ne font qu'affiner.
   renderTunerNowAir();
@@ -6069,19 +6080,28 @@ function isNowAirPanelPreviewMode() {
   return !currentStation && !PREFERS_REDUCED_MOTION?.matches && radios.length > 0;
 }
 
-/** Mobile sans poste : le sous-titre du dial affiche uniquement l'aperçu à l'antenne. */
+/**
+ * Compact sans poste : composition B dans le carré dial
+ * (L1 identité carrousel, L2 une face). Site &lt;1100 + embed étroit
+ * (panneau « À l'antenne » masqué). Embed large : panneau latéral, pas ici.
+ */
 function isMobileIdleDialPreview() {
-  // Embed : l’aperçu va dans le module « À l'antenne » (colonne droite), pas dans le dial.
-  if (IS_TUNER_EMBED) return false;
-  return isNowAirPanelPreviewMode() && !!TUNER_SUB_ROTATE_MQ?.matches;
+  if (!isNowAirPanelPreviewMode()) return false;
+  if (IS_TUNER_EMBED) return isEmbedNowAirInDial();
+  return !!TUNER_SUB_ROTATE_MQ?.matches;
 }
 
 /** Bureau sans poste : faire défiler les radios disponibles dans le sous-titre du dial. */
 function isDesktopIdleDialCarousel() {
   return !currentStation
     && !PREFERS_REDUCED_MOTION?.matches
-    && (IS_TUNER_EMBED || !TUNER_SUB_ROTATE_MQ?.matches)
+    && (IS_TUNER_EMBED ? !isEmbedNowAirInDial() : !TUNER_SUB_ROTATE_MQ?.matches)
     && radios.length > 0;
+}
+
+/** Première composition L1/L2 posée — évite le flash HTML « Syntoniser un poste ». */
+function markTunerDialReady() {
+  TUNER?.classList.add('is-dial-ready');
 }
 
 function applyDialTextCrossfade(el, text, crossfade = false) {
@@ -6099,14 +6119,23 @@ function applyDialTextCrossfade(el, text, crossfade = false) {
 
 /** Bureau sans poste : titre fixe + postes qui défilent en bas ; « À l'antenne » reste à part. */
 function syncDesktopDialPreview(_airTitle, crossfade = false) {
+  // Mode B (site compact / embed étroit) : L1 géré dans syncTunerSubRotate.
+  // Ne jamais écrire « Syntoniser un poste » ici — c’était le flash d’une frame.
+  if (isMobileIdleDialPreview()) return;
+
   if (!isDesktopIdleDialCarousel()) {
-    if (!currentStation) setTunerNameText('Syntoniser un poste');
+    // Vrai vide seulement (pas de carrousel d’aperçu).
+    if (!currentStation && !isNowAirPanelPreviewMode()) {
+      setTunerNameText('Syntoniser un poste');
+      markTunerDialReady();
+    }
     return;
   }
 
   if (!nowAirPreviewRadio) {
     setTunerNameText('Syntoniser un poste');
     if (tunerSubMeta) applyMarquee(TUNER_SUB, tunerSubMeta);
+    markTunerDialReady();
     return;
   }
 
@@ -6115,12 +6144,14 @@ function syncDesktopDialPreview(_airTitle, crossfade = false) {
   const subText = TUNER_SUB?.querySelector('.tuner-now-sub-text')?.textContent;
   if (!crossfade && stationLine === lastDialCarouselText && subText === stationLine) {
     setTunerNameText('Syntoniser un poste');
+    markTunerDialReady();
     return;
   }
   lastDialCarouselText = stationLine;
 
   setTunerNameText('Syntoniser un poste');
   applyDialTextCrossfade(TUNER_SUB, stationLine, crossfade);
+  markTunerDialReady();
 }
 
 function scheduleNowAirPreviewTick() {
@@ -6361,6 +6392,7 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false, kind = 'idle')
     }
     TUNER_SUB?.parentElement?.classList.toggle('is-empty', !tunerSubAirText);
     applyDialTextCrossfade(TUNER_SUB, tunerSubAirText, crossfade);
+    markTunerDialReady();
     return;
   }
 
@@ -6386,6 +6418,7 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false, kind = 'idle')
       if (crossfade) applyDialTextCrossfade(TUNER_SUB, line, true);
       else applyMarquee(TUNER_SUB, line);
       scheduleMarqueeRefresh();
+      markTunerDialReady();
       return;
     }
 
@@ -6406,6 +6439,7 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false, kind = 'idle')
       applyMarquee(activeEl, lines[airPhaseIndex]);
     }
     scheduleMarqueeRefresh();
+    markTunerDialReady();
     return;
   }
 
@@ -6573,13 +6607,19 @@ function renderTunerNowAir() {
         : tunerDesktopTitleLine(currentStation),
     );
     syncAirPanelRotate(currentStation);
+    markTunerDialReady();
   } else if (previewing) {
+    // Garantir un poste d’aperçu avant le 1er paint B (sinon L1 reste le placeholder HTML).
+    if (!nowAirPreviewRadio) pickNowAirPreviewRadio();
     startNowAirPreview();
     syncAirPanelRotate(nowAirPreviewRadio);
+    // syncTunerSubRotate (mode B) a déjà posé L1/L2 + is-dial-ready.
+    if (!isMobileIdleDialPreview()) markTunerDialReady();
   } else {
     stopNowAirPreview();
     stopAirPanelRotate();
     setTunerNameText('Syntoniser un poste');
+    markTunerDialReady();
   }
 }
 
