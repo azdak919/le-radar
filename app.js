@@ -1574,26 +1574,27 @@ function showMastheadWeatherBoard() {
   // Tolérance sous-pixel seulement : à +2 px le pied du « L » de MONTRÉAL était
   // rogné sans jamais déclencher la cascade.
   const primaryOverflowing = () => primaryText.scrollWidth > primaryViewport.clientWidth + 0.5;
+  // Priorité : nom complet (Montréal / Québec). On réduit d'abord le nombre
+  // de cartes secondaires ; MTL/QC n'intervient qu'en dernier recours quand
+  // une seule carte reste et que le nom complet déborde encore.
   primary.classList.remove('is-compact');
   let primaryOverflows = primaryOverflowing();
-  if (primaryOverflows) {
-    // Le seuil dépend de l'espace réel entre date et actions, pas du viewport.
-    // MTL/QC est la dernière forme compacte avant de retirer le bandeau.
-    primary.classList.add('is-compact');
-    primaryOverflows = primaryOverflowing();
-  }
-  if (!primaryOverflows) return;
-  if (count > 1) {
-    // Retirer une carte secondaire et réévaluer la carte prioritaire à sa taille réelle.
+  if (primaryOverflows && count > 1) {
+    // Retirer une carte secondaire et réévaluer à la taille réelle.
     mastheadWeatherFitCount = count - 1;
     mastheadWeatherLastBoardCount = 0;
     mastheadWeatherSlots = [];
     showMastheadWeatherBoard();
     return;
   }
-  // Même seule, la carte ne peut pas afficher ville, icône et température
-  // proprement dans le masthead : on la déplace sous le syntoniseur plutôt
-  // que de la masquer.
+  if (primaryOverflows) {
+    // Une seule carte : forme compacte MTL/QC avant dock / masquage.
+    primary.classList.add('is-compact');
+    primaryOverflows = primaryOverflowing();
+  }
+  if (!primaryOverflows) return;
+  // Même seule en MTL/QC, la carte ne rentre pas dans le masthead : on la
+  // déplace sous le syntoniseur plutôt que de la masquer.
   if (!mastheadWeatherDocked) {
     setMastheadWeatherDocked(true);
     showMastheadWeatherBoard();
