@@ -791,8 +791,13 @@ body {
   gap: 8px;
   flex-shrink: 0;
 }
-@media (min-width: 600px) {
-  .masthead-actions { padding-right: 36px; }
+/*
+ * Bureau ≥1024 : le shuffle flotte dans le slot, calé sur la même gouttière
+ * que le contenu. On réserve ~1 icône dans la rangée pour éviter le chevauchement.
+ * ≤1023 : shuffle est dans .masthead-actions (pas de padding fantôme).
+ */
+@media (min-width: 1024px) {
+  .masthead-actions { padding-right: calc(28px + 8px); }
 }
 
 .masthead-icon {
