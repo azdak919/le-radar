@@ -309,6 +309,37 @@ const HARD_BANNED = [
     reason: 'vernacular_building',
     note: 'Purge 2026-08-06 mât+pomo — décision humaine sur capture de production',
   },
+  {
+    // Balai 2026-08-11 (signalement mât prod) : scènes de rue / bungalow /
+    // stationnement / façade — pas des paysages de bandeau. Sœur Pointe-Calumet
+    // (Vue de Montée de la Baie) déjà ban ; celle du boul. Proulx avait passé
+    // (mal taguée « ete » alors qu’elle est fin d’hiver).
+    // Gardé : Vue du lac en hiver Montée de la Baie (c8457894f8d5) — paysage lacustre.
+    // Gardé : Canal / fleuve Côteau-du-Lac (e79be8bf8486, e6fa85b6b652).
+    fragments: [
+      // Rue résidentielle Pointe-Calumet (capture mât 2026-08-11)
+      'Pointe-Calumet_%28QC%29-Vue_vers_l%27ouest_du_boul._Proulx',
+      'Pointe-Calumet_(QC)-Vue_vers_l\'ouest_du_boul._Proulx',
+      '90b5d7977fc0',
+      // Village Côteau-du-Lac : artère / arrière de clinique / stationnement
+      'C%C3%B4teau-du-Lac-Vue_du_ch._Du_Fleuve-2025-01-04',
+      'Côteau-du-Lac-Vue_du_ch._Du_Fleuve-2025-01-04',
+      'e27492a5994e',
+      'C%C3%B4teau-du-Lac-Vue_arri%C3%A8re_d%27une_vieille_2025-01-04',
+      'Côteau-du-Lac-Vue_arrière_d\'une_vieille_2025-01-04',
+      '72db176c7d96',
+      'C%C3%B4teau-du-Lac-Immeuble_du_chemin_du_fleuve-2025-01-04',
+      'Côteau-du-Lac-Immeuble_du_chemin_du_fleuve-2025-01-04',
+      '0e03b35a1298',
+      // Maisons Montmorency : bac à ordures / macro mur lierre — pas un paysage
+      'House_close_to_Parc_de_la_Chute-Montmorency_007',
+      'd4f8de7ffd99',
+      'House_in_the_Parc_de_la_Chute-Montmorency_009',
+      '77e14beca5e1',
+    ],
+    reason: 'user_curated_photo_rejected',
+    note: 'Purge 2026-08-11 mât+pomo — rue résidentielle / bâti / parking (signalement humain)',
+  },
 ];
 
 /**
