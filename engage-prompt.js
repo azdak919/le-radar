@@ -388,99 +388,106 @@
   }
 
   /**
-   * Page d’accueil + démarrage + nouvel onglet — un seul guide par navigateur
-   * pour ne pas enchaîner deux bandeaux (anti-irritation).
+   * Guide « au démarrage » — focus-group le-radar-engage-home-guide (C) :
+   * un seul job, **max 2 steps**, coller l’adresse (primary = Copier).
+   * Pas de tip glisser-déposer, pas de monologue nouvel onglet.
    */
   function homeAndNewTabSteps(plat) {
     const en = uiLang() === 'en';
-    const url = SITE_URL;
     const { browser } = plat;
 
     if (browser === 'chrome') {
       return en
         ? [
-          `<strong>Homepage / startup</strong> — Settings (⋮) → <strong>On startup</strong> → “Open a specific page…” → add <code>${url}</code>.`,
-          `<strong>Home button</strong> — Settings → <strong>Appearance</strong> → show Home button → set to <code>${url}</code>.`,
-          '<strong>New tab</strong> — Chrome locks the new-tab page (no site override without an extension). Startup + Home button is the reliable path.',
+          'Settings (⋮) → <strong>On startup</strong> → open a specific page',
+          'Add the address (paste)',
         ]
         : [
-          `<strong>Démarrage</strong> — Paramètres (⋮) → <strong>Au démarrage</strong> → « Ouvrir une page spécifique… » → ajoutez <code>${url}</code>.`,
-          `<strong>Bouton Accueil</strong> — Paramètres → <strong>Apparence</strong> → afficher le bouton Accueil → <code>${url}</code>.`,
-          '<strong>Nouvel onglet</strong> — Chrome ne permet pas de le changer sans extension. Démarrage + bouton Accueil restent le chemin fiable.',
+          'Paramètres (⋮) → <strong>Au démarrage</strong> → ouvrir une page précise',
+          'Ajoutez l’adresse (collez)',
         ];
     }
 
     if (browser === 'edge') {
       return en
         ? [
-          `Settings (…) → <strong>Start, home, and new tabs</strong>.`,
-          `<strong>When Edge starts</strong> → “Open these pages” → <code>${url}</code>.`,
-          `<strong>Home button</strong> → set to <code>${url}</code>.`,
-          `<strong>New tab page</strong> → Custom / set your page to <code>${url}</code> when the option is available.`,
+          'Settings (…) → <strong>Start, home, and new tabs</strong>',
+          '<strong>When Edge starts</strong> → open these pages → paste the address',
         ]
         : [
-          `Paramètres (…) → <strong>Démarrage, accueil et nouveaux onglets</strong>.`,
-          `<strong>Au démarrage d’Edge</strong> → « Ouvrir ces pages » → <code>${url}</code>.`,
-          `<strong>Bouton Accueil</strong> → <code>${url}</code>.`,
-          `<strong>Page de nouvel onglet</strong> → personnalisée / <code>${url}</code> si l’option est proposée.`,
+          'Paramètres (…) → <strong>Démarrage, accueil et nouveaux onglets</strong>',
+          '<strong>Au démarrage d’Edge</strong> → ouvrir ces pages → collez l’adresse',
         ];
     }
 
     if (browser === 'firefox') {
       return en
         ? [
-          'Menu ☰ → <strong>Settings</strong> → <strong>Home</strong>.',
-          `Homepage and new windows → <strong>Custom URLs</strong> → <code>${url}</code>.`,
-          'New tabs → choose Homepage (or Custom) so a new tab opens LE-RADAR.ca.',
-          'Tip: drag this tab onto the 🏠 toolbar button.',
+          'Menu ☰ → <strong>Settings</strong> → <strong>Home</strong>',
+          '<strong>Homepage</strong> → Custom URLs → paste the address',
         ]
         : [
-          'Menu ☰ → <strong>Paramètres</strong> → <strong>Accueil</strong>.',
-          `Page d’accueil et nouvelles fenêtres → <strong>Adresses web personnalisées</strong> → <code>${url}</code>.`,
-          'Nouveaux onglets → Page d’accueil (ou personnalisée) pour ouvrir LE-RADAR.ca.',
-          'Astuce : glissez cet onglet sur l’icône 🏠 de la barre d’outils.',
+          'Menu ☰ → <strong>Paramètres</strong> → <strong>Accueil</strong>',
+          '<strong>Page d’accueil</strong> → adresses personnalisées → collez l’adresse',
         ];
     }
 
     if (browser === 'safari') {
       return en
         ? [
-          'Safari → <strong>Settings…</strong> (or Preferences) → <strong>General</strong>.',
-          `Set <strong>Homepage</strong> to <code>${url}</code>.`,
-          '“New windows open with” / “New tabs open with” → Homepage.',
+          'Safari → <strong>Settings…</strong> → <strong>General</strong>',
+          'Set <strong>Homepage</strong> → paste the address',
         ]
         : [
-          'Safari → <strong>Réglages…</strong> (ou Préférences) → <strong>Général</strong>.',
-          `Champ <strong>Page d’accueil</strong> → <code>${url}</code>.`,
-          '« Les nouvelles fenêtres / onglets s’ouvrent avec » → Page d’accueil.',
+          'Safari → <strong>Réglages…</strong> → <strong>Général</strong>',
+          'Champ <strong>Page d’accueil</strong> → collez l’adresse',
         ];
     }
 
     if (browser === 'opera') {
       return en
         ? [
-          'Settings → <strong>On startup</strong> → open a specific page → <code>' + url + '</code>.',
-          'Appearance / sidebar → enable Home if available.',
-          'Opera’s new-tab (Speed Dial) is separate; startup pages are the reliable shortcut.',
+          'Settings → <strong>On startup</strong> → open a specific page',
+          'Paste the address',
         ]
         : [
-          'Paramètres → <strong>Au démarrage</strong> → page spécifique → <code>' + url + '</code>.',
-          'Apparence / barre latérale → activer Accueil si disponible.',
-          'Le nouvel onglet Opera (Speed Dial) est séparé ; le démarrage reste le raccourci fiable.',
+          'Paramètres → <strong>Au démarrage</strong> → page spécifique',
+          'Collez l’adresse',
         ];
     }
 
     return en
       ? [
-        'Open your browser settings.',
-        'Look for “homepage”, “on startup”, or “new tab”.',
-        `Set the value to <code>${url}</code> wherever the browser allows it.`,
+        'Open browser settings → homepage or on startup',
+        'Paste the address',
       ]
       : [
-        'Ouvrez les paramètres de votre navigateur.',
-        'Cherchez « page d’accueil », « au démarrage » ou « nouvel onglet ».',
-        `Indiquez <code>${url}</code> partout où le navigateur le permet.`,
+        'Paramètres du navigateur → page d’accueil ou au démarrage',
+        'Collez l’adresse',
       ];
+  }
+
+  async function copySiteUrl() {
+    const url = SITE_URL;
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(url);
+        return true;
+      }
+    } catch { /* fall through */ }
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = url;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;left:-9999px;top:0';
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand('copy');
+      ta.remove();
+      return ok;
+    } catch {
+      return false;
+    }
   }
 
   // ─── Rendu ────────────────────────────────────────────────────────────────
@@ -493,7 +500,10 @@
     window.setTimeout(() => el.remove(), 280);
   }
 
-  function renderCard({ kind, title, body, steps, primaryLabel, onPrimary, showPrimary, icon }) {
+  function renderCard({
+    kind, title, body, steps, primaryLabel, onPrimary, showPrimary, icon,
+    confirmLabel, onConfirm,
+  }) {
     closeCard();
     const lang = uiLang();
     const root = document.createElement('div');
@@ -509,6 +519,10 @@
     const glyph = icon
       || (kind === 'install' ? '📲' : kind === 'home' ? '🏠' : '✨');
 
+    const confirmHtml = confirmLabel
+      ? `<button type="button" class="engage-prompt__btn" data-act="confirm">${confirmLabel}</button>`
+      : '';
+
     root.innerHTML = `
       <div class="engage-prompt__inner">
         <button type="button" class="engage-prompt__close" aria-label="${lang === 'en' ? 'Dismiss' : 'Fermer'}">×</button>
@@ -522,6 +536,7 @@
           ${showPrimary !== false
             ? `<button type="button" class="engage-prompt__btn engage-prompt__btn--primary" data-act="primary">${primaryLabel}</button>`
             : ''}
+          ${confirmHtml}
           <button type="button" class="engage-prompt__btn" data-act="later">${lang === 'en' ? 'Later' : 'Plus tard'}</button>
           <button type="button" class="engage-prompt__btn engage-prompt__btn--quiet" data-act="never">${lang === 'en' ? 'No thanks' : 'Non merci'}</button>
         </div>
@@ -562,6 +577,11 @@
     root.querySelector('[data-act="primary"]')?.addEventListener('click', async () => {
       try {
         await onPrimary?.();
+      } catch { /* ignore */ }
+    });
+    root.querySelector('[data-act="confirm"]')?.addEventListener('click', async () => {
+      try {
+        await onConfirm?.();
       } catch { /* ignore */ }
     });
 
@@ -687,7 +707,8 @@
   function showHomePrompt(plat) {
     const lang = uiLang();
     const label = plat.browserLabel;
-    // Focus-group le-radar-engage-copy option B
+    // Focus-group le-radar-engage-home-guide (C) + titres le-radar-engage-copy (B)
+    const browserName = label || (lang === 'en' ? 'your browser' : 'votre navigateur');
     renderCard({
       kind: 'home',
       icon: '🏠',
@@ -695,17 +716,29 @@
         ? 'LE-RADAR on startup?'
         : 'LE-RADAR au démarrage ?',
       body: lang === 'en'
-        ? (label
-          ? `Your browser controls this setting (not the site). In ${label}:`
-          : 'Your browser controls this setting (not the site). In your browser:')
-        : (label
-          ? `Votre navigateur gère ce réglage (pas le site). Sous ${label} :`
-          : 'Votre navigateur gère ce réglage (pas le site). Dans votre navigateur :'),
+        ? `Your browser controls this — in ${browserName}, 2 steps.`
+        : `Réglage navigateur uniquement — sous ${browserName}, 2 étapes.`,
       steps: homeAndNewTabSteps(plat),
-      primaryLabel: lang === 'en' ? 'Done' : 'C’est fait',
-      onPrimary: () => {
+      primaryLabel: lang === 'en' ? 'Copy address' : 'Copier l’adresse',
+      onPrimary: async () => {
+        const btn = cardEl?.querySelector('[data-act="primary"]');
+        const ok = await copySiteUrl();
+        if (btn) {
+          const prev = btn.textContent;
+          btn.textContent = ok
+            ? (lang === 'en' ? 'Copied' : 'Copié')
+            : (lang === 'en' ? 'Copy failed' : 'Échec');
+          btn.disabled = true;
+          window.setTimeout(() => {
+            if (!btn.isConnected) return;
+            btn.textContent = prev;
+            btn.disabled = false;
+          }, 1800);
+        }
+      },
+      confirmLabel: lang === 'en' ? 'Done' : 'C’est fait',
+      onConfirm: () => {
         markDone('home');
-        // Compat snooze ancien bucket « homepage »
         markDone('homepage');
         closeCard();
       },

@@ -48,20 +48,48 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
     await expect(strip.locator('.sports-chip').last()).toHaveClass(/sports-chip--cta/);
   }
 
-  // Parité météo : puces SCORE ≤ cartes météo (CTA hors plafond).
-  // ~420–480 px : météo souvent à 2 cartes → max 2 scores + CTA = 3 chips.
-  const parity = await countAt(480);
-  const weatherActive = await page.locator('.masthead-weather__city.is-active').count();
-  if (weatherActive > 0) {
-    const scoreChips = await strip.locator('.sports-chip:not(.sports-chip--cta)').count();
-    expect(scoreChips).toBeLessThanOrEqual(weatherActive);
-    // total = scores + (CTA si ≥ 1)
-    expect(parity).toBeLessThanOrEqual(weatherActive + 1);
+  // Focus-group A : météo ⊥ sports — pas de plafond weatherN.
+  // ~480–520 px : largeur seule réduit le nombre de puces (≤ mid, ≥ 1).
+  const midNarrow = await countAt(480);
+  expect(midNarrow).toBeLessThanOrEqual(mid);
+  expect(midNarrow).toBeGreaterThanOrEqual(1);
+  // Puces scores : titre + sous-ligne entiers (pas de marquee is-overflowing).
+  const matchChips = strip.locator('.sports-chip:not(.sports-chip--cta)');
+  const matchCount = await matchChips.count();
+  for (let i = 0; i < matchCount; i += 1) {
+    const chip = matchChips.nth(i);
+    await expect(chip).not.toHaveClass(/is-overflowing/);
+    await expect(chip).not.toHaveClass(/is-sub-overflowing/);
   }
 
   const narrow = await countAt(520);
-  expect(narrow).toBeLessThanOrEqual(Math.max(mid, parity));
+  expect(narrow).toBeLessThanOrEqual(Math.max(mid, midNarrow));
   expect(narrow).toBeGreaterThanOrEqual(1);
+
+  // Tablette 768 / 900 : au moins 1 score à gauche de la CTA.
+  // data-count=2 → boîtes strictement 50/50 (pas flex 1.2 CTA).
+  const equalWhenTwo = async () => {
+    const n = Number(await strip.getAttribute('data-count') || 0);
+    if (n !== 2) return;
+    const widths = await strip.locator('.sports-chip').evaluateAll((chips) =>
+      chips.map((c) => Math.round(c.getBoundingClientRect().width)),
+    );
+    expect(widths).toHaveLength(2);
+    expect(Math.abs(widths[0] - widths[1]), `50/50 attendu, got ${widths}`).toBeLessThanOrEqual(1);
+    const flexes = await strip.locator('.sports-chip').evaluateAll((chips) =>
+      chips.map((c) => getComputedStyle(c).flexGrow),
+    );
+    expect(flexes[0]).toBe('1');
+    expect(flexes[1]).toBe('1');
+  };
+  const tab768 = await countAt(768);
+  expect(tab768).toBeGreaterThanOrEqual(2);
+  await expect(strip.locator('.sports-chip').last()).toHaveClass(/sports-chip--cta/);
+  await expect(strip.locator('.sports-chip:not(.sports-chip--cta)').first()).toBeVisible();
+  await equalWhenTwo();
+  const tab900 = await countAt(900);
+  expect(tab900).toBeGreaterThanOrEqual(2);
+  await equalWhenTwo();
 
   // Téléphone / très étroit : il ne reste que l’ancre « SPORTS ».
   const phone = await countAt(360);
@@ -122,9 +150,132 @@ test('mât : la date longue se compacte au lieu de passer sous les icônes', asy
       }, { timeout: 5000 })
       .toBeLessThanOrEqual(0);
 
-    // Compactée, pas rognée : l'ellipse reste un filet, elle ne doit pas servir.
-    const clipped = await dateEl.evaluate((el) => el.scrollWidth > el.clientWidth);
-    expect(clipped, `${width}px : date tronquée par l'ellipse au lieu d'être compactée`).toBe(false);
+    // Compactée, pas rognée : attendre la cascade (resize + photo loaded + rAF).
+    await expect
+      .poll(async () => dateEl.evaluate((el) => el.scrollWidth > el.clientWidth + 0.5), {
+        timeout: 4000,
+      })
+      .toBe(false);
+  }
+
+  expect(pageErrors).toEqual([]);
+});
+
+/**
+ * Icônes mât (dernière) = même gouttière droite que crédit photo / météo / sports.
+ * Régression : padding-right 36px (réserve shuffle) appliqué ≤1023 → trou à droite.
+ */
+test('mât : icônes alignées à droite comme crédits (390–1280)', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => {
+    document.querySelector('#bg-photo-layer')?.classList.add('loaded');
+  });
+
+  for (const width of [390, 430, 768, 900, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.waitForTimeout(120);
+    const delta = await page.evaluate(() => {
+      const icons = [...document.querySelectorAll('.masthead-actions .masthead-icon')]
+        .filter((el) => el.offsetWidth > 0 && getComputedStyle(el).display !== 'none');
+      const lastIcon = icons[icons.length - 1];
+      const credit = document.querySelector('.bg-photo-credit');
+      const weatherCities = [...document.querySelectorAll(
+        '#masthead-weather .masthead-weather__city.is-active',
+      )].filter((el) => el.offsetWidth > 0);
+      const weather = weatherCities.sort(
+        (a, b) => b.getBoundingClientRect().right - a.getBoundingClientRect().right,
+      )[0] || document.querySelector('#masthead-weather');
+      // Chip sports la plus à droite (contenu, pas le padding du strip).
+      const chips = [...document.querySelectorAll('#masthead-sports-strip .sports-chip')]
+        .filter((el) => el.offsetWidth > 0);
+      const lastChip = chips.sort(
+        (a, b) => b.getBoundingClientRect().right - a.getBoundingClientRect().right,
+      )[0];
+      // Bureau : shuffle flottant est le vrai bord droit (hors padding-right des actions).
+      const floatShuffle = document.querySelector(
+        '.masthead-shuffle-slot .masthead-bg-shuffle:not([hidden])',
+      );
+      const rightRef = floatShuffle && floatShuffle.offsetParent
+        ? floatShuffle
+        : lastIcon;
+      if (!rightRef) return { ok: false, reason: 'no-icon' };
+      const r = (el) => (el ? el.getBoundingClientRect().right : null);
+      const iconR = r(rightRef);
+      const creditR = r(credit);
+      const weatherR = weather ? r(weather) : null;
+      const chipR = lastChip ? r(lastChip) : null;
+      const docked = !!document.querySelector('#masthead-weather.masthead-weather--docked');
+      const tol = 3;
+      const near = (a, b) => a != null && b != null && Math.abs(a - b) <= tol;
+      return {
+        ok: true,
+        width: window.innerWidth,
+        iconR,
+        creditR,
+        weatherR,
+        chipR,
+        docked,
+        padActions: getComputedStyle(document.querySelector('.masthead-actions')).paddingRight,
+        alignCredit: creditR == null || credit.getBoundingClientRect().width < 2
+          ? true
+          : near(iconR, creditR),
+        // Météo dans le mât (bureau) : colonne centrale — pas le bord droit.
+        alignWeather: !docked || weatherR == null || weatherR < 1
+          ? true
+          : near(iconR, weatherR),
+        alignSports: chipR == null ? true : near(iconR, chipR),
+      };
+    });
+    expect(delta.ok, `width ${width}: ${delta.reason || ''}`).toBe(true);
+    expect(delta.alignCredit, `width ${width}: icône vs crédit (${delta.iconR} vs ${delta.creditR})`).toBe(true);
+    expect(delta.alignWeather, `width ${width}: icône vs météo dockée (${delta.iconR} vs ${delta.weatherR})`).toBe(true);
+    expect(delta.alignSports, `width ${width}: icône vs sports (${delta.iconR} vs ${delta.chipR})`).toBe(true);
+    if (width <= 1023) {
+      expect(delta.padActions === '0px' || parseFloat(delta.padActions) === 0).toBe(true);
+    }
+  }
+});
+
+/**
+ * Mobile 390/430 (lab) : date + heure entières — pas d’année « 202 » ni d’heure « 14 ».
+ * Stack ≤449 + cascade mastheadDateChipFits (chip + time, pas scrollWidth date seul).
+ */
+test('mât mobile 390/430 : date et heure non clipées', async ({ page }) => {
+  const pageErrors = [];
+  page.on('pageerror', (error) => pageErrors.push(error.message));
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  // Photo → chrome date+heure (stack / 1 ligne).
+  await page.evaluate(() => {
+    document.querySelector('#bg-photo-layer')?.classList.add('loaded');
+  });
+
+  for (const width of [390, 430]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.evaluate(() => {
+      if (typeof renderTodayDate === 'function') renderTodayDate();
+    });
+    await expect
+      .poll(async () => page.evaluate(() => {
+        const today = document.querySelector('#today-date');
+        const time = document.querySelector('.masthead-time');
+        const host = document.querySelector('.masthead-date');
+        const actions = document.querySelector('.masthead-actions');
+        if (!today || !time || !host || !actions) return null;
+        const hb = host.getBoundingClientRect();
+        const tb = time.getBoundingClientRect();
+        const ab = actions.getBoundingClientRect();
+        const dateOk = today.scrollWidth <= today.clientWidth + 0.5
+          && /20\d{2}|\d{1,2}[./]\d{1,2}/.test((today.textContent || '').trim());
+        // FR « 15 h 03 » ou EN « 15:03 »
+        const timeOk = /^\d{1,2}(?:\s*h\s*|:)\d{2}$/i.test((time.textContent || '').trim())
+          && tb.right <= hb.right + 1.5;
+        const chipOk = hb.right <= ab.left + 1;
+        // Date visible (opacity) une fois photo .loaded
+        const visible = parseFloat(getComputedStyle(host).opacity || '1') > 0.5;
+        return dateOk && timeOk && chipOk && visible;
+      }), { timeout: 5000 })
+      .toBe(true);
   }
 
   expect(pageErrors).toEqual([]);
@@ -196,11 +347,15 @@ test('CTA sports : sous-ligne longue défile au lieu d’une ellipse figée', as
   const anim = await subText.evaluate((el) => getComputedStyle(el).animationName);
   expect(anim, 'sous-ligne doit animer sports-chip-scroll-sub').toMatch(/sports-chip-scroll-sub/);
 
-  // Hold initial ~32 % de 5,5 s ≈ 1,8 s ; on attend 3,2 s pour être hors hold.
+  // Hold initial ~32 % de 5,5 s ≈ 1,8 s ; poll jusqu’au glissement (lab flaky si
+  // on ne prend qu’un seul échantillon à 3,2 s).
   const left0 = await subText.evaluate((el) => el.getBoundingClientRect().left);
-  await page.waitForTimeout(3200);
-  const left1 = await subText.evaluate((el) => el.getBoundingClientRect().left);
-  expect(left1, 'le texte doit avoir glissé vers la gauche (L→R de lecture)').toBeLessThan(left0 - 1);
+  await expect
+    .poll(async () => {
+      const left = await subText.evaluate((el) => el.getBoundingClientRect().left);
+      return left0 - left;
+    }, { timeout: 7000 })
+    .toBeGreaterThan(1);
 
   // Pas d’ellipse figée sur le texte qui défile.
   const textOverflow = await subText.evaluate((el) => getComputedStyle(el).textOverflow);
@@ -226,13 +381,19 @@ test('CTA sports : titre long défile, jamais d’ellipsis …', async ({ page }
   const cta = strip.locator('.sports-chip--cta');
   await expect(cta).toBeVisible({ timeout: 8000 });
 
-  const longTitle = '⚽ Montmorency reçoit Bois-de-Boulogne';
+  // Titre volontairement long + largeur CTA bornée (FG A : moins de scores
+  // élargit la CTA — sans force flex, le libellé tenait parfois sans marquee).
+  const longTitle = '⚽ Collège Montmorency reçoit Bois-de-Boulogne Collégial';
   const ready = await page.evaluate((title) => {
     const chip = document.querySelector('.sports-chip--cta');
     const layer = chip?.querySelector('.sports-chip__cta-label.is-front')
       || chip?.querySelector('.sports-chip__cta-label');
     const text = layer?.querySelector('.sports-chip__cta-text');
     if (!chip || !text) return { ok: false, reason: 'no-cta-text' };
+    // Borne la fenêtre de titre pour forcer un overflow mesurable.
+    chip.style.flex = '0 0 220px';
+    chip.style.maxWidth = '220px';
+    chip.style.width = '220px';
     text.textContent = title;
     if (typeof refreshSportsChipScroll !== 'function') {
       return { ok: false, reason: 'no-refresh' };
@@ -263,9 +424,10 @@ test('CTA sports : titre long défile, jamais d’ellipsis …', async ({ page }
   const computedOverflow = await titleEl.evaluate((el) => getComputedStyle(el).textOverflow);
   expect(computedOverflow).toBe('clip');
 
-  // Le transform doit bouger (hold initial ~18 % de 5,5 s ≈ 1 s).
+  // Delay CSS 1.6 s + hold 18 % de 5,5 s ≈ 1 s → mouvement après ~2,6 s.
+  // (Un wait 2,2 s tombait encore dans le hold : flocon ~0,7 px.)
   const left0 = await titleEl.evaluate((el) => el.getBoundingClientRect().left);
-  await page.waitForTimeout(2200);
+  await page.waitForTimeout(3400);
   const left1 = await titleEl.evaluate((el) => el.getBoundingClientRect().left);
   expect(left1, 'le titre doit glisser (marquee L→R)').toBeLessThan(left0 - 1);
 

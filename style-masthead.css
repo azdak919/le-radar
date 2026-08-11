@@ -69,13 +69,25 @@
 #bg-photo-layer.loaded + .bg-photo-scrim { opacity: 1; }
 
 .masthead-inner { position: relative; z-index: 2; }
+/*
+ * Gouttière droite = même que le contenu (.masthead-inner, .tuner-inner, .wire)
+ * et que la dernière icône du mât (padding --pad dans .masthead-inner).
+ * 100% du .masthead (pas 100vw) : évite le décalage scrollbar vs boîte contenu.
+ * Plus de right:10px collé au bord écran.
+ */
+.masthead-shuffle-slot,
+.bg-photo-credit {
+  --masthead-edge-right: max(
+    env(safe-area-inset-right, 0px),
+    calc((100% - min(100%, var(--maxw, 100%))) / 2 + var(--pad, 24px))
+  );
+}
 .masthead-shuffle-slot {
   position: absolute;
   z-index: 4;
-  /* Même origine verticale que .masthead-inner : le shuffle reste calé sur
-     les icônes lors d'un redimensionnement, y compris en zone sûre PWA. */
+  /* Même origine verticale que .masthead-inner (+ safe-area PWA). */
   top: calc(12px + env(safe-area-inset-top, 0px));
-  right: max(10px, env(safe-area-inset-right, 0px));
+  right: var(--masthead-edge-right);
 }
 .masthead-bg-shuffle { cursor: pointer; }
 .masthead-bg-shuffle svg { width: 15px; height: 15px; }
@@ -83,13 +95,13 @@
 .bg-photo-credit {
   position: absolute;
   z-index: 3;
-  right: max(10px, env(safe-area-inset-right, 0px));
+  right: var(--masthead-edge-right);
   left: auto;
   bottom: 5px;
-  /* Largeur = contenu, plafonnée à l’espace dispo (aligné à droite). */
+  /* Largeur = contenu, plafonnée à la colonne contenu. */
   width: max-content;
   max-width: calc(
-    100% - 20px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)
+    min(100vw, var(--maxw, 100vw)) - 2 * var(--pad, 24px)
   );
   font-size: 9.5px;
   line-height: 1.35;
@@ -103,94 +115,76 @@
   transition: opacity 900ms ease-out, color 180ms ease;
   pointer-events: none;
 }
-/* Deux formats : complet (bureau) / compact (mobile). */
-.bg-photo-credit__full { display: inline; }
-.bg-photo-credit__short { display: none; }
+/*
+ * Crédit : format court partout (ex-mobile) — © + auteur.
+ * Titre / licence dans title= (quebec-backgrounds.js). Pas de ligne bureau
+ * monstrueuse « titre (id) —auteur… » collée.
+ */
+.bg-photo-credit__full { display: none !important; }
+.bg-photo-credit__short {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  /* Compromis : ni collé (0.12em) ni trop aéré (0.35rem) */
+  gap: 0.28em;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bg-photo-credit__copyleft {
+  display: inline-block;
+  align-self: baseline;
+  flex: 0 0 auto;
+  font-size: 0.88em;
+  line-height: 1;
+  transform: scaleX(-1);
+  opacity: 0.78;
+}
 #bg-photo-layer.loaded ~ .bg-photo-credit { opacity: 1; }
+.bg-photo-credit {
+  font-size: 8px;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
 .bg-photo-credit a {
   color: inherit;
-  text-decoration: underline;
-  text-decoration-color: rgba(255, 255, 255, 0.35);
+  text-decoration: none;
+  text-decoration-color: transparent;
   text-underline-offset: 2px;
   pointer-events: auto;
+  padding: 0;
   transition: color 180ms ease, text-decoration-color 180ms ease;
 }
 .bg-photo-credit:hover,
 .bg-photo-credit:focus-within { color: rgba(255, 255, 255, 0.95); }
-.bg-photo-credit:hover a,
-.bg-photo-credit:focus-within a {
-  text-decoration-color: rgba(255, 255, 255, 0.55);
+.bg-photo-credit a:hover,
+.bg-photo-credit a:focus-visible {
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.5);
+}
+.bg-photo-credit a:active {
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.45);
 }
 
 /*
- * Mobile : même ligne discrète qu’en bureau — bas à droite, une seule ligne.
- * Format court : « Auteur » seul (titre + licence restent en title=), faute de
- * place pour davantage à cette largeur.
+ * Mobile + tablette (≤1023, météo dockée) : crédit bas-droit comme en 390 —
+ * lisibilité + air sous le slogan. Bureau ≥1024 : slot shuffle flottant.
  */
-@media (max-width: 720px) {
+@media (max-width: 1023.98px) {
   .bg-photo-credit {
-    /* Placement hérité du bloc de base (absolu, bas à droite, nowrap+ellipsis) :
-       on n’ajuste que ce qui doit l’être à cette largeur.
-       Le `bottom` ne prend PAS `env(safe-area-inset-bottom)` : ce crédit est
-       positionné dans le mât, dont le bas tombe au milieu du document, et non
-       contre le bord bas de l'écran. Sur un téléphone à barre d'accueil
-       l'inset vaut ~34 px et remontait le crédit dans le slogan ; il bougeait
-       en plus au défilement, la barre d'adresse qui se replie faisant varier
-       l'inset. L'inset droit, lui, reste légitime : le mât est pleine largeur,
-       donc son bord droit est bien celui de l'écran. */
     bottom: 5px;
-    font-size: 9px;
-    letter-spacing: 0.02em;
-    line-height: 1.3;
+    /* right : --masthead-edge-right (gouttière contenu), pas 10px. */
+    left: auto;
     color: rgba(255, 255, 255, 0.74);
     text-shadow:
       0 1px 2px rgba(0, 0, 0, 0.7),
       0 0 8px rgba(0, 0, 0, 0.3);
   }
-  .bg-photo-credit__full { display: none; }
-  .bg-photo-credit__short {
-    display: inline-flex;
-    /* L'icône copyleft suit la ligne de base du nom, pas le centre de la
-       zone de tap du lien (qui possède 2 px de padding vertical). */
-    align-items: baseline;
-    justify-content: flex-end;
-    gap: 0.28rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .bg-photo-credit a {
-    text-decoration: none;
-    text-decoration-color: transparent;
-    /* Un peu de surface de tap sans agrandir la ligne. */
-    padding: 2px 0;
-  }
-  .bg-photo-credit__copyleft {
-    display: inline-block;
-    align-self: baseline;
-    flex: 0 0 auto;
-    font-size: 0.95em;
-    line-height: inherit;
-    transform: scaleX(-1);
-  }
-  .bg-photo-credit a:active,
-  .bg-photo-credit a:focus-visible {
-    text-decoration: underline;
-    text-decoration-color: rgba(255, 255, 255, 0.45);
-  }
-  /* Quand la photo n’est pas chargée, rester invisible (opacity 0). */
   #bg-photo-layer.loaded ~ .bg-photo-credit { opacity: 0.9; }
 
-  /* Le crédit demeure ancré au bas du mât. On remonte le bloc logo/slogan
-     plutôt que d'ajouter une bande sous lui : la radio reste donc collée au
-     bas de la photo et le crédit ne recouvre plus le slogan.
-
-     On déplace le rembourrage plutôt que la boîte. Un translateY sortait la
-     marque de son flux : sa rect remontait de 16 px alors que .masthead-top
-     ne laisse que 13 px sous la rangée d'actions (padding-bottom 12px +
-     border-bottom 1px), donc le mot-symbole passait 3 px SOUS les pastilles.
-     Transférer les 16 px du haut vers le bas donne le même déplacement à
-     l'œil, sans jamais faire remonter la boîte dans la rangée d'actions. */
+  /* Crédit ancré bas ; brand rembourré bas pour ne pas chevaucher le slogan. */
   .masthead:has(#bg-photo-layer.loaded) .masthead-brand {
     padding-top: 0;
     padding-bottom: 16px;
@@ -217,29 +211,197 @@
 }
 
 /*
- * Mât sur photo — lisibilité par ombres de texte (pas de film sombre derrière
- * le logo). Sur neige / ciel clair, un halo local trop fort faisait « plaque ».
- * On garde un halo quasi nul ; date + slogan ont un contour doux un peu plus
- * marqué pour rester lisibles sans assombrir l’image.
+ * Accueil avec #bg-photo-layer : ne pas montrer la date « plate » avant la
+ * photo (évite le flash ancien style → puce glass). Invisible jusqu’à .loaded ;
+ * les pages sans couche photo (feeds, SEO) ne matchent pas et gardent la date.
+ */
+.masthead:has(#bg-photo-layer):not(:has(#bg-photo-layer.loaded)) .masthead-date {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/*
+ * Mât sur photo — focus-group le-radar-masthead-photo-chrome C.
+ * Slogan / crédit : soft glass. Date : **sœur des cartes météo**
+ * (même hauteur 29px, radius 5px, verre, ombre, typo) — une ligne
+ * « MARDI 11 AOÛT 2026 · 14 h 00 » entière (météo plafonnée à 3 cartes).
+ * Chrome = copie de .masthead-weather__city (photo dark / light).
  */
 .masthead:has(#bg-photo-layer.loaded) .masthead-date {
-  color: rgba(255, 255, 255, 0.98);
+  opacity: 1;
+  transition: opacity 220ms ease-out;
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 5px;
+  box-sizing: border-box;
+  height: 29px;
+  /* Hug le texte (pas stretch 1fr → plaque vide). max-width:100 % = jamais
+   * hors de la cellule grille (sinon EN long chevauche les icônes et la
+   * cascade MASTHEAD_DATE_FORMATS ne part jamais : scrollW == clientW). */
+  width: max-content;
+  max-width: 100%;
+  min-width: 0;
+  justify-self: start;
+  padding: 0 8px;
+  border-radius: 5px;
+  /* Identique à .masthead-weather__city sur photo (dark default) */
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background:
+    linear-gradient(90deg, rgba(200, 180, 120, 0.22) 0%, transparent 55%),
+    rgba(22, 24, 30, 0.82);
+  backdrop-filter: blur(10px) saturate(1.1);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.35),
+    0 3px 12px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  color: rgba(236, 238, 242, 0.92);
   -webkit-text-stroke: 0;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  /* Contour doux multi-couches : lisible sur neige sans voile global */
-  text-shadow:
-    0 0 1px rgba(0, 0, 0, 0.45),
-    0 1px 2px rgba(0, 0, 0, 0.55),
-    0 2px 8px rgba(0, 0, 0, 0.35),
-    0 0 14px rgba(0, 0, 0, 0.22);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.03em;
+  line-height: 1.15;
+  text-shadow: none;
+  text-transform: uppercase;
+  overflow: hidden;
 }
+.masthead:has(#bg-photo-layer.loaded) .masthead-date #today-date {
+  display: block;
+  /* Ne pas flex-grow : sinon le chip s’étire au max-width pour rien. */
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  /* Rôle « name » météo */
+  color: rgba(245, 246, 248, 0.96);
+  line-height: 1.15;
+}
+/* Heure = même ligne, rôle « temp » météo (blanc dense, tabular) */
+.masthead:has(#bg-photo-layer.loaded) .masthead-date .masthead-time {
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  opacity: 1;
+  line-height: 1.15;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  color: #ffffff;
+  text-transform: none;
+}
+/* Point médian : marges égales + léger décalage optique (caps date vs chiffres). */
+.masthead:has(#bg-photo-layer.loaded) .masthead-date .masthead-time::before {
+  content: "·";
+  display: inline-block;
+  margin: 0 0.42em;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1;
+  transform: translateY(-0.04em);
+  color: rgba(245, 246, 248, 0.55);
+  opacity: 1;
+}
+/* Clair : même verre ardoise que les cartes météo en light */
+[data-theme="light"] .masthead:has(#bg-photo-layer.loaded) .masthead-date {
+  background:
+    linear-gradient(90deg, rgba(200, 180, 120, 0.16) 0%, transparent 55%),
+    rgba(54, 59, 68, 0.68);
+  border-color: rgba(255, 255, 255, 0.24);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.24),
+    0 3px 10px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px) saturate(1.06);
+  -webkit-backdrop-filter: blur(10px) saturate(1.06);
+}
+/* Dark explicite : même base que weather city photo (pas plus opaque) */
 [data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-date {
-  text-shadow:
-    0 0 1px rgba(0, 0, 0, 0.5),
-    0 1px 2px rgba(0, 0, 0, 0.6),
-    0 2px 8px rgba(0, 0, 0, 0.38),
-    0 0 14px rgba(0, 0, 0, 0.24);
+  background:
+    linear-gradient(90deg, rgba(200, 180, 120, 0.22) 0%, transparent 55%),
+    rgba(22, 24, 30, 0.82);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+/*
+ * Tablette (météo dockée, colonne date = 1fr) : hug content, borné à la
+ * cellule — évite plaque vide ET chevauchement des actions.
+ */
+@media (max-width: 1023.98px) {
+  .masthead:has(#bg-photo-layer.loaded) .masthead-date {
+    justify-self: start !important;
+    width: max-content;
+    max-width: 100%;
+  }
+}
+/*
+ * Mobile photo ≤600 : alignement vs icônes (pas de translateY).
+ */
+@media (max-width: 599.98px) {
+  .masthead:has(#bg-photo-layer.loaded) .masthead-date {
+    transform: none;
+    align-self: center;
+    max-width: 100%;
+  }
+}
+/*
+ * Stack date puis heure ≤449 — 390 + 430 lab. En 1 ligne la date longue
+ * « tient » et l’heure est clipée (overflow:hidden → « · 14 »). Empiler
+ * libère la largeur pour l’année complète ; la cascade JS raccourcit si
+ * besoin (MARDI… trop long pour ~130 px).
+ */
+@media (max-width: 449.98px) {
+  .masthead:has(#bg-photo-layer.loaded) .masthead-date {
+    height: auto;
+    min-height: 29px;
+    max-width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1px;
+    padding: 4px 8px;
+  }
+  .masthead:has(#bg-photo-layer.loaded) .masthead-date #today-date {
+    flex: 0 1 auto;
+    max-width: 100%;
+    /* Pas d’ellipse figée : la cascade MASTHEAD_DATE_FORMATS raccourcit. */
+    text-overflow: clip;
+  }
+  .masthead:has(#bg-photo-layer.loaded) .masthead-date .masthead-time {
+    margin-left: 0;
+    font-size: 10px;
+    line-height: 1.2;
+    font-weight: 800;
+  }
+  .masthead:has(#bg-photo-layer.loaded) .masthead-date .masthead-time::before {
+    content: none;
+  }
+}
+/* Slogan : glass un cran plus compact en mobile (évite collision crédit / mât bas). */
+@media (max-width: 430px) {
+  .masthead:has(#bg-photo-layer.loaded) .wordmark-full {
+    max-width: min(92vw, 22rem);
+    padding: 0.28rem 0.55rem;
+    margin-top: 0.25rem;
+    letter-spacing: 0.08em;
+    gap: 0.08em;
+  }
+  .masthead:has(#bg-photo-layer.loaded) .wordmark-full__lead,
+  .masthead:has(#bg-photo-layer.loaded) .wordmark-full__tag {
+    letter-spacing: 0.08em;
+  }
+  .masthead:has(#bg-photo-layer.loaded) .masthead-brand {
+    padding-bottom: 18px;
+  }
 }
 .masthead:has(#bg-photo-layer.loaded) .wordmark {
   position: relative;
@@ -298,27 +460,50 @@
   border: 0;
   outline: none;
 }
-/* Slogan : plus de contraste local (petites capitales sur photo claire) */
+/* Slogan : soft glass — 2 lignes fixes (lead nowrap + tag), pas 3. */
 .masthead:has(#bg-photo-layer.loaded) .wordmark-full {
-  color: rgba(255, 255, 255, 0.96);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.12em;
+  /* Assez large pour « … DU QUÉBEC, » en nowrap + letter-spacing */
+  max-width: min(94vw, 36rem);
+  width: max-content;
+  margin-top: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(12, 14, 18, 0.48);
+  backdrop-filter: blur(8px) saturate(1.05);
+  -webkit-backdrop-filter: blur(8px) saturate(1.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.97);
   -webkit-text-stroke: 0;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-shadow:
-    0 0 1px rgba(0, 0, 0, 0.5),
-    0 1px 2px rgba(0, 0, 0, 0.55),
-    0 2px 8px rgba(0, 0, 0, 0.32),
-    0 0 12px rgba(0, 0, 0, 0.2);
+    0 0 1px rgba(0, 0, 0, 0.4),
+    0 1px 2px rgba(0, 0, 0, 0.45);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  white-space: normal;
+  text-align: center;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+.masthead:has(#bg-photo-layer.loaded) .wordmark-full__lead {
+  display: block;
+  white-space: nowrap;
+  max-width: none;
+}
+.masthead:has(#bg-photo-layer.loaded) .wordmark-full__tag {
+  display: block;
+  white-space: nowrap;
+  letter-spacing: 0.14em;
 }
 [data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full {
+  background: rgba(8, 10, 14, 0.52);
   color: rgba(255, 255, 255, 0.97);
-  text-shadow:
-    0 0 1px rgba(0, 0, 0, 0.55),
-    0 1px 2px rgba(0, 0, 0, 0.6),
-    0 2px 8px rgba(0, 0, 0, 0.36),
-    0 0 12px rgba(0, 0, 0, 0.22);
 }
 .masthead:has(#bg-photo-layer.loaded) .wordmark-logo {
   filter:
@@ -330,9 +515,45 @@
     drop-shadow(0 1px 2px rgba(0, 0, 0, 0.48))
     drop-shadow(0 3px 10px rgba(0, 0, 0, 0.26));
 }
+/* Crédit photo : soft glass plus compact que date/slogan (légende discrète) */
 .masthead:has(#bg-photo-layer.loaded) .bg-photo-credit {
-  color: rgba(255, 255, 255, 0.78);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
+  padding: 0.12rem 0.38rem;
+  border-radius: 0.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(12, 14, 18, 0.45);
+  backdrop-filter: blur(6px) saturate(1.05);
+  -webkit-backdrop-filter: blur(6px) saturate(1.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.82);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
+  width: max-content;
+  max-width: min(70vw, 14rem);
+  font-size: 8px;
+  letter-spacing: 0.01em;
+}
+.masthead:has(#bg-photo-layer.loaded) .bg-photo-credit__short {
+  gap: 0.28em;
+}
+.masthead:has(#bg-photo-layer.loaded) .bg-photo-credit__copyleft {
+  font-size: 0.88em;
+  opacity: 0.78;
+}
+[data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .bg-photo-credit {
+  background: rgba(8, 10, 14, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .masthead:has(#bg-photo-layer.loaded) .masthead-date {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(22, 24, 30, 0.92);
+  }
+  .masthead:has(#bg-photo-layer.loaded) .wordmark-full,
+  .masthead:has(#bg-photo-layer.loaded) .bg-photo-credit {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(12, 14, 18, 0.72);
+  }
 }
 
 /*
@@ -435,9 +656,9 @@
   filter: brightness(1.12) saturate(1.05);
 }
 
-/* Filet sous la rangée date/actions — voile, pas trait blanc. */
+/* Plus de filet sous date / météo / boutons — la photo continue sans trait. */
 .masthead:has(#bg-photo-layer.loaded) .masthead-top {
-  border-bottom-color: rgba(255, 255, 255, 0.12);
+  border-bottom: none;
 }
 
 /* Boutons ronds : verre dépoli, bordure et ombre douces. */
@@ -479,15 +700,24 @@
   border-color: rgba(155, 215, 255, 0.72);
   background: rgba(15, 61, 92, 0.54);
 }
+/*
+ * Accueil courant sur photo : pourpre de marque STABLE.
+ * Ne pas utiliser var(--accent) ici — il s’inverse (clair #cf7ec1 en dark,
+ * sombre #6c2163 en light) alors que la rangée d’icônes reste en pastilles
+ * sombres fixes. Résultat : home « pastille jour » en mode nuit et l’inverse.
+ * Même logique que RSS (orange fixe) / café (ambre) sur le mât photo.
+ */
 .masthead:has(#bg-photo-layer.loaded) .masthead-home.is-active,
 .masthead:has(#bg-photo-layer.loaded) .masthead-home[aria-current="page"] {
   color: #fff;
-  background: color-mix(in srgb, var(--accent) 38%, rgba(0, 0, 0, 0.2));
-  border-color: color-mix(in srgb, var(--accent) 45%, rgba(255, 255, 255, 0.25));
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, transparent 55%),
+    color-mix(in srgb, #6c2163 58%, rgba(9, 14, 21, 0.5));
+  border-color: color-mix(in srgb, #cf7ec1 48%, rgba(255, 255, 255, 0.28));
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.2),
-    0 0 0 1px color-mix(in srgb, var(--accent) 25%, transparent),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    0 1px 2px rgba(0, 0, 0, 0.28),
+    0 0 0 1px color-mix(in srgb, #6c2163 32%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 /* Survols sur photo : rester dans le registre glass (pas d’accent plat). */
@@ -609,7 +839,8 @@ a { color: inherit; }
   text-transform: uppercase;
   color: var(--muted);
   padding-bottom: 12px;
-  border-bottom: 1px solid var(--rule);
+  /* Filet retiré : rangée date/météo/actions sans trait (photo et hors photo). */
+  border-bottom: none;
 }
 
 .masthead-date {
@@ -652,15 +883,14 @@ a { color: inherit; }
   gap: 4px;
   width: 100%;
   height: 29px;
+  /* Laisser voir translateY des anims leave/arrive (sinon clip parent). */
+  overflow: visible;
 }
+/* Carte 0 = ancre spéciale MTL/QC (colonne un cran plus large). Secondaires à droite. */
 .masthead-weather__board[data-weather-count="1"] { --weather-grid: minmax(0, 1fr); }
-/* Colonne primaire assez large pour « MONTRÉAL » / « QUÉBEC » en entier
-   (icône + nom ~71 px + temp + padding). Les secondaires absorbent la
-   compression (marquee si besoin). MTL/QC n’apparaît qu’en dernier recours
-   via .is-compact (JS), pas pour « sauver » une 4ᵉ carte sur bureau. */
-.masthead-weather__board[data-weather-count="2"] { --weather-grid: minmax(138px, 1fr) minmax(0, 1fr); }
-.masthead-weather__board[data-weather-count="3"] { --weather-grid: minmax(138px, .95fr) repeat(2, minmax(0, 1fr)); }
-.masthead-weather__board[data-weather-count="4"] { --weather-grid: minmax(138px, .9fr) repeat(3, minmax(0, 1fr)); }
+.masthead-weather__board[data-weather-count="2"] { --weather-grid: minmax(120px, 1fr) minmax(0, 1fr); }
+.masthead-weather__board[data-weather-count="3"] { --weather-grid: minmax(120px, .95fr) repeat(2, minmax(0, 1fr)); }
+.masthead-weather__board[data-weather-count="4"] { --weather-grid: minmax(118px, .9fr) repeat(3, minmax(0, 1fr)); }
 .masthead-weather__city {
   display: none;
   align-items: center;
@@ -671,11 +901,13 @@ a { color: inherit; }
   font-weight: 650;
   letter-spacing: 0.03em;
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--rule));
+  /* Lavis + bordure suivent la condition (sun/rain/…) via --weather-tone,
+   * pas seulement l’accent de marque — parité cartes sports / mât photo. */
+  border: 1px solid color-mix(in srgb, var(--weather-tone, var(--accent)) 28%, var(--rule));
   border-radius: 5px;
   background:
-    linear-gradient(90deg, color-mix(in srgb, var(--accent) 11%, transparent), transparent 48%),
-    color-mix(in srgb, var(--bg-soft) 91%, var(--accent) 9%);
+    linear-gradient(90deg, color-mix(in srgb, var(--weather-tone, var(--accent)) 22%, transparent) 0%, transparent 55%),
+    color-mix(in srgb, var(--bg-soft) 88%, var(--weather-tone, var(--accent)) 12%);
   box-shadow: inset 0 1px 0 color-mix(in srgb, var(--bg) 72%, transparent);
   cursor: pointer;
   text-decoration: none;
@@ -685,7 +917,15 @@ a { color: inherit; }
   text-shadow: none;
 }
 .masthead-weather__city.is-active { display: flex; }
-.masthead-weather__city.is-arriving { animation: weather-tile-arrive 460ms cubic-bezier(.22,.8,.28,1); }
+/* Rotation gare : sortie puis entrée (synchro WEATHER_LEAVE_MS / ARRIVE_MS). */
+.masthead-weather__city.is-leaving {
+  display: flex;
+  animation: weather-tile-leave 280ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: none;
+}
+.masthead-weather__city.is-arriving {
+  animation: weather-tile-arrive 460ms cubic-bezier(0.22, 0.8, 0.28, 1) both;
+}
 .masthead-weather__city:hover { border-color: color-mix(in srgb, var(--weather-tone, var(--accent)) 68%, var(--rule)); background-color: color-mix(in srgb, var(--bg-soft) 76%, var(--weather-tone, var(--accent)) 24%); }
 .masthead-weather__icon { flex: 0 0 15px; width: 15px; color: var(--weather-tone, var(--accent)); line-height: 1; text-align: center; }
 .masthead-weather__icon .weather-icon-meteocon { display: block; width: 15px; height: 15px; object-fit: contain; }
@@ -706,6 +946,8 @@ a { color: inherit; }
 }
 .masthead-weather__name-text {
   display: inline-block;
+  /* Au repos / sans marquee : borne au viewport (clip). En overflow JS lève
+   * max-width pour mesurer puis anime (sinon scrollWidth == clientWidth). */
   max-width: 100%;
   white-space: nowrap;
   color: inherit;
@@ -716,8 +958,20 @@ a { color: inherit; }
   color: inherit;
 }
 .masthead-weather__name-compact { display: none; }
+/*
+ * Marquee météo : max-width none obligatoire (sinon le texte ne dépasse pas
+ * et l’animation est invisible — bug « SAINT-IGNACE-D » figé).
+ * Pause lecture ~0.8 s (plus court que sports 1.6 s : un seul toponyme).
+ * 1 aller-retour (2 × alternate), pas infinite.
+ */
 .masthead-weather__city.is-overflowing .masthead-weather__name-text {
-  animation: weather-name-scroll 6.2s ease-in-out infinite alternate;
+  max-width: none;
+  animation: weather-name-scroll 5.5s ease-in-out 0.8s 2 alternate both;
+}
+@keyframes weather-name-scroll {
+  /* Hold court au début/fin pour lire, sans 28 % trop long */
+  0%, 18% { transform: translateX(0); }
+  82%, 100% { transform: translateX(calc(var(--weather-scroll, 0) * -1)); }
 }
 .masthead-weather__temp {
   flex: 0 0 auto;
@@ -752,6 +1006,11 @@ a { color: inherit; }
      Sans ça, scrollWidth == clientWidth et la cascade de formats ne part
      jamais — exactement le piège déjà documenté pour le volet mobile. */
   .masthead-date { grid-area: date; justify-self: stretch; min-width: 0; }
+  /* Photo : chip date = max-content (voir .masthead:has(...).masthead-date). */
+  .masthead:has(#bg-photo-layer.loaded) .masthead-date {
+    justify-self: start;
+    min-width: 0;
+  }
   .masthead-date #today-date {
     display: block;
     overflow: hidden;
@@ -764,6 +1023,11 @@ a { color: inherit; }
      plancher disparaît avec lui et la date se redéploie. */
   .masthead-weather { display: inline-flex; grid-area: weather; width: 100%; justify-self: stretch; min-width: 104px; }
   .masthead-actions { grid-area: actions; justify-self: end; }
+  /* Météo absente du mât (dockée) : pas de colonne weather vide. */
+  .masthead-top:not(:has(#masthead-weather)) {
+    grid-template-areas: 'date actions';
+    grid-template-columns: minmax(0, 1fr) max-content;
+  }
 }
 @media (max-width: 359.98px) { .masthead-weather:not(.masthead-weather--docked) { display: none !important; } }
 .masthead-weather__city.is-compact .masthead-weather__name-full { display: none; }
@@ -781,17 +1045,72 @@ a { color: inherit; }
   padding: 8px var(--pad) 0;
 }
 .masthead-weather--docked {
-  display: inline-flex !important;
+  /* flex (pas inline-flex) : board 100 % de la gouttière, multi-cartes visibles. */
+  display: flex !important;
   width: 100%;
-  justify-content: flex-start;
+  max-width: 100%;
+  justify-content: stretch;
+  box-sizing: border-box;
 }
-@keyframes weather-name-scroll {
-  0%, 28% { transform: translateX(0); }
-  72%, 100% { transform: translateX(calc(var(--weather-scroll, 0) * -1)); }
+.masthead-weather--docked .masthead-weather__board {
+  width: 100%;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+/*
+ * ≤1023.98 px : météo hors .masthead (#masthead-weather-dock) — tablette 768/900
+ * comme mobile 390/430. Les styles « photo mât » ne matchent plus → rejouer
+ * le verre ardoise + --weather-tone (parité bureau photo et puces sports).
+ */
+.masthead-weather--docked .masthead-weather__city {
+  color: rgba(236, 238, 242, 0.92);
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--weather-tone, #c8102e) 28%, transparent) 0%, transparent 55%),
+    rgba(42, 46, 54, 0.92);
+  border-color: color-mix(in srgb, var(--weather-tone, var(--accent)) 42%, rgba(255, 255, 255, 0.16));
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+.masthead-weather--docked .masthead-weather__city:hover {
+  border-color: color-mix(in srgb, var(--weather-tone, var(--accent)) 62%, rgba(255, 255, 255, 0.22));
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--weather-tone, #c8102e) 36%, transparent) 0%, transparent 55%),
+    rgba(48, 52, 62, 0.96);
+  background-color: transparent;
+}
+.masthead-weather--docked .masthead-weather__name,
+.masthead-weather--docked .masthead-weather__name-text,
+.masthead-weather--docked .masthead-weather__name-full,
+.masthead-weather--docked .masthead-weather__name-compact {
+  color: rgba(245, 246, 248, 0.96);
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+}
+.masthead-weather--docked .masthead-weather__temp {
+  color: #ffffff;
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+}
+.masthead-weather--docked .masthead-weather__icon {
+  filter: brightness(1.12) saturate(1.05);
+  opacity: 1;
+}
+@keyframes weather-tile-leave {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-55%); }
 }
 @keyframes weather-tile-arrive {
-  from { opacity: 0; transform: translateY(75%); }
+  from { opacity: 0; transform: translateY(70%); }
   to { opacity: 1; transform: translateY(0); }
 }
-@media (prefers-reduced-motion: reduce) { .masthead-weather__city.is-overflowing .masthead-weather__name-text { animation: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .masthead-weather__city.is-overflowing .masthead-weather__name-text { animation: none; }
+  .masthead-weather__city.is-arriving,
+  .masthead-weather__city.is-leaving {
+    animation: none;
+  }
+}
 
