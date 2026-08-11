@@ -418,6 +418,76 @@ html[data-wide-preview="e"] {
   }
 }
 
+/* ═══════════════════════════════════════════════════
+   Wide / super-wide — AUCUN marquee texte
+   (radio, météo, sports CTA, filtres sources)
+   ═══════════════════════════════════════════════════ */
+@media (min-width: 1280px) {
+  html[data-wide-preview="b"] .is-marquee > .tuner-now-sub-text,
+  html[data-wide-preview="c"] .is-marquee > .tuner-now-sub-text,
+  html[data-wide-preview="d"] .is-marquee > .tuner-now-sub-text,
+  html[data-wide-preview="e"] .is-marquee > .tuner-now-sub-text,
+  html[data-wide-preview="b"] .tuner-nowair-title.is-marquee > .tuner-now-sub-text,
+  html[data-wide-preview="c"] .tuner-nowair-title.is-marquee > .tuner-now-sub-text,
+  html[data-wide-preview="d"] .tuner-nowair-title.is-marquee > .tuner-now-sub-text,
+  html[data-wide-preview="e"] .tuner-nowair-title.is-marquee > .tuner-now-sub-text,
+  html[data-wide-preview="b"] .tuner-nowair-sub.is-marquee > .tuner-now-sub-text,
+  html[data-wide-preview="c"] .tuner-nowair-sub.is-marquee > .tuner-now-sub-text,
+  html[data-wide-preview="d"] .tuner-nowair-sub.is-marquee > .tuner-now-sub-text,
+  html[data-wide-preview="e"] .tuner-nowair-sub.is-marquee > .tuner-now-sub-text {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  html[data-wide-preview="b"] .masthead-weather__city.is-overflowing .masthead-weather__name-text,
+  html[data-wide-preview="c"] .masthead-weather__city.is-overflowing .masthead-weather__name-text,
+  html[data-wide-preview="d"] .masthead-weather__city.is-overflowing .masthead-weather__name-text,
+  html[data-wide-preview="e"] .masthead-weather__city.is-overflowing .masthead-weather__name-text {
+    animation: none !important;
+    transform: none !important;
+    max-width: 100% !important;
+  }
+
+  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner,
+  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner,
+  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner,
+  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__cta-text,
+  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__cta-text,
+  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__cta-text,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__cta-text,
+  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub-text,
+  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub-text,
+  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub-text,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub-text,
+  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-text,
+  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-text,
+  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-text,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-text {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  /* 5 cartes météo en wide (grille) */
+  html[data-wide-preview="b"] .masthead-weather__board[data-weather-count="5"],
+  html[data-wide-preview="c"] .masthead-weather__board[data-weather-count="5"],
+  html[data-wide-preview="d"] .masthead-weather__board[data-weather-count="5"],
+  html[data-wide-preview="e"] .masthead-weather__board[data-weather-count="5"] {
+    --weather-grid: minmax(112px, 0.88fr) repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Super-wide : un cran de plus d’air sur les tuiles météo */
+@media (min-width: 1680px) {
+  html[data-wide-preview="e"] .masthead-weather__board[data-weather-count="5"] {
+    --weather-grid: minmax(120px, 0.9fr) repeat(4, minmax(0, 1fr));
+    gap: 5px;
+  }
+  html[data-wide-preview="e"] .masthead-weather__city {
+    padding-inline: 8px;
+  }
+}
+
 /* ── Badge lab ───────────────────────────────────── */
 #wide-desktop-badge {
   position: fixed;
