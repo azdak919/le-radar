@@ -925,16 +925,18 @@ assert(
   'app.js : marqueur temporel + horodatage rendus dans la carte CTA',
 );
 assert(
-  /const SPORTS_CTA_FRESH_RESULT_MS\s*=\s*48 \* 3600 \* 1000/.test(appJs),
-  'app.js : filet fraîcheur CTA 48 h (first-glance + le-radar-cta-sports-window)',
+  appJs.includes('function sportsCtaResultIsTodayOrYesterday')
+    && appJs.includes('function sportsCivilDayShift')
+    && !/SPORTS_CTA_FRESH_RESULT_MS\s*=\s*48/.test(appJs),
+  'app.js : filet CTA = jours civils aujourd’hui+hier (plus de 48 h glissantes)',
 );
-// CTA pool = journée lead civile + filet 48 h — pas la file multi-jours max 36.
+// CTA pool = journée lead civile + résultats aujourd’hui/hier — pas multi-jours 14 j.
 assert(
   appJs.includes('function sportsCtaLeadDayKey')
     && appJs.includes('function sportsSlideDayKey')
     && /const SPORTS_CTA_MAX_POOL\s*=\s*16/.test(appJs)
     && appJs.includes('le-radar-cta-sports-window'),
-  'app.js : CTA sports = leadCivilDay + maxPool 16 (focus-group window F)',
+  'app.js : CTA sports = leadCivilDay + today/yesterday + maxPool 16',
 );
 assert(
   !appJs.includes('upcomingLater'),
