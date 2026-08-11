@@ -1495,17 +1495,14 @@ function buildMastheadWeatherBoard() {
 
 function weatherBoardCount() {
   const width = MASTHEAD_WEATHER?.querySelector('.masthead-weather__board')?.clientWidth || 0;
-  // Uniquement Montréal + Québec (pas de secondaires régionaux / nations).
-  // 2 si la colonne le permet, sinon 1 (alterne MTL↔QC à la rotation).
-  let count = width >= 240 ? 2 : 1;
+  let count = 1;
+  // Modèle longuement établi : 1 carte ancre MTL/QC + secondaires à droite.
+  // Seuils assouplis (date 1 ligne) pour préférer marquee secondaire vs amputer tôt.
+  if (width >= 520) count = 4;
+  else if (width >= 400) count = 3;
+  // Colonne étroite : ancre + 1 secondaire (ancre exclusive MTL/QC).
+  else if (width >= 240) count = 2;
   return mastheadWeatherFitCount === null ? count : Math.min(count, mastheadWeatherFitCount);
-}
-
-/** Les deux pôles du mât météo — seuls villes affichées (plus de secondaires). */
-function weatherPrimaryCities() {
-  return MASTHEAD_WEATHER_PRIMARY_SEQUENCE
-    .map((id) => WEATHER_CITIES.find((city) => city.id === id))
-    .filter(Boolean);
 }
 
 function nextWeatherCity(group, usedIds) {
@@ -1569,25 +1566,29 @@ function showMastheadWeatherBoard() {
   MASTHEAD_WEATHER.classList.remove('is-too-narrow');
   const cities = [...MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city')];
   if (!cities.length) return;
-  const primaries = weatherPrimaryCities();
-  const count = Math.min(weatherBoardCount(), primaries.length || 1);
+  const count = Math.min(weatherBoardCount(), cities.length);
   if (count !== mastheadWeatherLastBoardCount) {
-    mastheadWeatherSlots = [];
+    mastheadWeatherNationSlot = count > 2 ? 1 + Math.floor(Math.random() * (count - 1)) : 1;
+    // Largeur change : garder l’ancre MTL/QC, regénérer les secondaires.
+    mastheadWeatherSlots = mastheadWeatherSlots.slice(0, 1);
     mastheadWeatherLastBoardCount = count;
   }
   MASTHEAD_WEATHER.querySelector('.masthead-weather__board')?.setAttribute('data-weather-count', String(count));
-  // Toujours MTL + QC uniquement. count=2 : les deux (ordre préservé pour
-  // l’anim d’échange). count=1 : ancre qui alterne à la rotation.
-  if (count >= 2) {
-    const primaryIds = new Set(primaries.map((p) => p.id));
-    const kept = mastheadWeatherSlots.filter((s) => s && primaryIds.has(s.id));
-    mastheadWeatherSlots = kept.length === 2
-      ? kept
-      : primaries.slice(0, 2);
-  } else {
-    const anchor = primaries[mastheadWeatherPrimaryIndex % primaries.length]
-      || primaries[0];
-    mastheadWeatherSlots = anchor ? [anchor] : [];
+  mastheadWeatherSlots = mastheadWeatherSlots.slice(0, count);
+  // Slot 0 = carte spéciale ancre : exclusivement Montréal ↔ Québec (rotation).
+  const anchor = WEATHER_CITIES.find(
+    (city) => city.id === MASTHEAD_WEATHER_PRIMARY_SEQUENCE[mastheadWeatherPrimaryIndex],
+  );
+  if (anchor && mastheadWeatherSlots[0]?.id !== anchor.id) mastheadWeatherSlots[0] = anchor;
+  const usedIds = new Set(mastheadWeatherSlots.map((city) => city.id));
+  while (mastheadWeatherSlots.length < count) {
+    const slot = mastheadWeatherSlots.length;
+    const city = slot === 0
+      ? anchor
+      : nextWeatherCity(weatherSecondaryGroup(slot, count), usedIds);
+    if (!city) break;
+    usedIds.add(city.id);
+    mastheadWeatherSlots.push(city);
   }
   cities.forEach((city) => {
     city.classList.remove('is-active');
@@ -1599,7 +1600,7 @@ function showMastheadWeatherBoard() {
     if (city) city.style.order = String(slot);
     city?.setAttribute('aria-hidden', 'false');
   });
-  // Focus-group A : sports indépendants — pas de resync parité ici.
+  // Sports indépendants (FG weather-fit A) — pas de resync parité ici.
   refreshWeatherNameScroll();
   const primary = MASTHEAD_WEATHER.querySelector('.masthead-weather__city.is-active[data-weather-city="montreal"], .masthead-weather__city.is-active[data-weather-city="quebec"]');
   const primaryViewport = primary?.querySelector('.masthead-weather__name');
@@ -1609,36 +1610,28 @@ function showMastheadWeatherBoard() {
   // Mesurer le TEXTE, pas la fenêtre : `.masthead-weather__name-text` porte
   // `max-width: 100%`, donc le scrollWidth du parent peut déjà être borné et
   // masquer le débordement (même source de vérité que refreshWeatherNameScroll).
-  // Tolérance sous-pixel seulement : à +2 px le pied du « L » de MONTRÉAL était
-  // rogné sans jamais déclencher la cascade.
   const primaryOverflowing = () => primaryText.scrollWidth > primaryViewport.clientWidth + 0.5;
-  // Noms complets d’abord. Compact (MTL/QC) avant d’amputer la 2ᵉ carte
-  // (les deux sont primaires — pas de secondaire à retirer).
-  const actives = [...MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city.is-active')];
-  actives.forEach((el) => el.classList.remove('is-compact'));
+  // Ancre MTL/QC : nom complet d’abord. On ampute les secondaires avant compact.
+  primary.classList.remove('is-compact');
   let primaryOverflows = primaryOverflowing();
-  if (primaryOverflows) {
-    actives.forEach((el) => el.classList.add('is-compact'));
-    primaryOverflows = primaryOverflowing();
-  }
   if (primaryOverflows && count > 1) {
-    // Encore trop étroit même en compact : une seule carte.
-    mastheadWeatherFitCount = 1;
+    mastheadWeatherFitCount = count - 1;
     mastheadWeatherLastBoardCount = 0;
     mastheadWeatherSlots = [];
     showMastheadWeatherBoard();
     return;
   }
+  if (primaryOverflows) {
+    primary.classList.add('is-compact');
+    primaryOverflows = primaryOverflowing();
+  }
   if (!primaryOverflows) return;
-  // Même seule en MTL/QC, la carte ne rentre pas dans le masthead : on la
-  // déplace sous le syntoniseur plutôt que de la masquer.
+  // Seule en MTL/QC et trop étroit dans le mât → dock sous le syntoniseur.
   if (!mastheadWeatherDocked) {
     setMastheadWeatherDocked(true);
     showMastheadWeatherBoard();
     return;
   }
-  // Même docké (pleine largeur de page), une carte ne rentre pas : cas
-  // extrême, on masque.
   mastheadWeatherTooNarrow = true;
   MASTHEAD_WEATHER.classList.add('is-too-narrow');
 }
@@ -1724,26 +1717,32 @@ function scheduleMastheadWeatherRotate() {
 
 function rotateOneMastheadWeatherCard() {
   if (!mastheadWeatherSlots.length) return;
-  const primaries = weatherPrimaryCities();
-  if (!primaries.length) return;
-
-  let arrivingId = null;
-  if (mastheadWeatherSlots.length >= 2) {
-    // 2 cartes : échange d’ordre MTL↔QC + anim is-arriving (vie visuelle).
-    mastheadWeatherSlots = [mastheadWeatherSlots[1], mastheadWeatherSlots[0]];
-    arrivingId = mastheadWeatherSlots[0]?.id || null;
+  const slot = mastheadWeatherNextSlot % mastheadWeatherSlots.length;
+  const usedIds = new Set(
+    mastheadWeatherSlots.filter((_, index) => index !== slot).map((city) => city.id),
+  );
+  let replacement;
+  if (slot === 0) {
+    // Carte spéciale : alterne exclusivement Montréal ↔ Québec.
+    mastheadWeatherPrimaryIndex = (mastheadWeatherPrimaryIndex + 1)
+      % MASTHEAD_WEATHER_PRIMARY_SEQUENCE.length;
+    replacement = WEATHER_CITIES.find(
+      (city) => city.id === MASTHEAD_WEATHER_PRIMARY_SEQUENCE[mastheadWeatherPrimaryIndex],
+    );
   } else {
-    // 1 carte : alterne Montréal ↔ Québec.
-    mastheadWeatherPrimaryIndex = (mastheadWeatherPrimaryIndex + 1) % primaries.length;
-    const replacement = primaries[mastheadWeatherPrimaryIndex];
-    if (!replacement) return;
-    mastheadWeatherSlots[0] = replacement;
-    arrivingId = replacement.id;
+    if (slot === 1 && mastheadWeatherSlots.length <= 2) {
+      mastheadWeatherCompactSecondaryIndex = (mastheadWeatherCompactSecondaryIndex + 1) % 3;
+    }
+    replacement = nextWeatherCity(
+      weatherSecondaryGroup(slot, mastheadWeatherSlots.length),
+      usedIds,
+    );
   }
-
+  if (!replacement) return;
+  mastheadWeatherSlots[slot] = replacement;
+  mastheadWeatherNextSlot = (slot + 1) % mastheadWeatherSlots.length;
   showMastheadWeatherBoard();
-  if (!arrivingId) return;
-  const arriving = MASTHEAD_WEATHER?.querySelector(`[data-weather-city="${arrivingId}"]`);
+  const arriving = MASTHEAD_WEATHER?.querySelector(`[data-weather-city="${replacement.id}"]`);
   arriving?.classList.add('is-arriving');
   if (arriving) {
     arriving.classList.remove('is-overflowing');

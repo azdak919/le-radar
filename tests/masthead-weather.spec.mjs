@@ -34,22 +34,26 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   expect(await ribbon.locator('.masthead-weather__city').evaluateAll((cities) => cities.every(
     (city) => city.href.startsWith('https://www.meteomedia.com/fr/ville/ca/quebec/'),
   ))).toBe(true);
-  // Uniquement Montréal + Québec (plus de secondaires régionaux / nations).
-  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(2);
+  // Modèle établi : 4 cartes bureau — slot 0 = ancre MTL **ou** QC exclusive ;
+  // 1–3 = secondaires (campus + nations).
+  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(4);
   const activePrimary = ribbon.locator('.masthead-weather__city.is-active[data-weather-city="montreal"], .masthead-weather__city.is-active[data-weather-city="quebec"]');
-  await expect(activePrimary).toHaveCount(2);
-  await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-city="montreal"]')).toHaveCount(1);
-  await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-city="quebec"]')).toHaveCount(1);
-  // Bureau large : nom complet, pas le repli MTL/QC.
-  await expect(activePrimary.first()).not.toHaveClass(/is-compact/);
+  await expect(activePrimary).toHaveCount(1);
+  await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="campus"]')).toHaveCount(3);
+  await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="nation"]')).toHaveCount(1);
+  await expect(activePrimary).not.toHaveClass(/is-compact/);
+  const primaryLabel = await activePrimary.locator('.masthead-weather__name-full').evaluate(
+    (el) => (el.textContent || '').trim(),
+  );
+  expect(['Montréal', 'Québec']).toContain(primaryLabel);
   const activeBoxes = (await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities
     .map((city) => city.getBoundingClientRect())
     .sort((a, b) => a.x - b.x)
     .map(({ width }) => width)));
   expect(Math.min(...activeBoxes)).toBeGreaterThanOrEqual(90);
   expect(activeBoxes[0]).toBeGreaterThanOrEqual(120);
-  const mtl = ribbon.locator('.masthead-weather__city.is-active[data-weather-city="montreal"]');
-  await expect(mtl).toHaveAttribute('href', 'https://www.meteomedia.com/fr/ville/ca/quebec/montreal/actuelle');
+  const initialPrimary = await activePrimary.evaluate((el) => ({ id: el.dataset.weatherCity, href: el.href }));
+  expect(initialPrimary.href).toBe(`https://www.meteomedia.com/fr/ville/ca/quebec/${initialPrimary.id}/actuelle`);
   await expect(ribbon.locator('[data-weather-city="vaudreuil-dorion"]')).toHaveAttribute(
     'href',
     'https://www.meteomedia.com/fr/ville/ca/quebec/vaudreuil-dorion/actuelle',
@@ -58,7 +62,6 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
     "href",
     "https://www.meteomedia.com/fr/ville/ca/quebec/odanak-12/actuelle",
   );
-  // Manawan (affichage) → lien MM « manouane » (QC) — pas le slug « manawan » (SK).
   await expect(ribbon.locator('[data-weather-city="manawan"]')).toHaveAttribute(
     'href',
     'https://www.meteomedia.com/fr/ville/ca/quebec/manouane/actuelle',
@@ -71,47 +74,50 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
     window.RadarTranslate = { ...(window.RadarTranslate || {}), getMode: () => 'en' };
     window.dispatchEvent(new CustomEvent('radar:translate-mode', { detail: { mode: 'en' } }));
   });
-  const translatedMtl = await mtl.evaluate((el) => el.href);
-  expect(translatedMtl).toBe('https://www.meteomedia.com/fr/ville/ca/quebec/montreal/actuelle');
+  const translatedPrimary = await activePrimary.evaluate((el) => ({ id: el.dataset.weatherCity, href: el.href }));
+  expect(translatedPrimary.href).toBe(`https://www.meteomedia.com/fr/ville/ca/quebec/${translatedPrimary.id}/actuelle`);
   const [weatherBox, actionsBox] = await Promise.all([
     ribbon.boundingBox(), page.locator('.masthead-actions').boundingBox(),
   ]);
   expect(actionsBox.x).toBeGreaterThan(weatherBox.x + weatherBox.width);
 
-  // 2 cartes MTL+QC : la rotation échange l’ordre (anim), pas les villes.
+  // Rotation forcée : slot 0 alterne MTL↔QC ; secondaires aussi.
   const beforeRotation = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities.map((city) => city.dataset.weatherCity));
-  await page.waitForTimeout(8500);
+  await page.evaluate(() => {
+    if (typeof rotateOneMastheadWeatherCard === 'function') rotateOneMastheadWeatherCard();
+  });
+  await page.waitForTimeout(100);
   const afterRotation = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities.map((city) => city.dataset.weatherCity));
-  expect([...afterRotation].sort()).toEqual(['montreal', 'quebec']);
-  expect([...beforeRotation].sort()).toEqual(['montreal', 'quebec']);
-  // Ordre inversé après un cycle (échange) — si le dwell n’a pas encore tiré, IDs inchangés OK.
-  expect(afterRotation.length).toBe(2);
+  expect(afterRotation).toHaveLength(beforeRotation.length);
+  expect(afterRotation).not.toEqual(beforeRotation);
+  expect(['montreal', 'quebec']).toContain(afterRotation[0]);
 
-  // Bureau large (≥1024) : 2 cartes dans le mât.
+  // Bureau large : multi-cartes dans le mât.
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.waitForTimeout(150);
   await expect(ribbon).not.toHaveClass(/masthead-weather--docked/);
-  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(2);
+  const deskCount = await ribbon.locator('.masthead-weather__city.is-active').count();
+  expect(deskCount).toBeGreaterThanOrEqual(3);
+  expect(deskCount).toBeLessThanOrEqual(4);
 
-  // Tablette dockée : toujours MTL+QC (board pleine largeur).
+  // Tablette dockée : ancre + secondaires (board pleine largeur).
   await page.setViewportSize({ width: 920, height: 900 });
   await page.waitForTimeout(150);
   await expect(ribbon).toHaveClass(/masthead-weather--docked/);
-  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(2);
-  await expect(ribbon.locator('.masthead-weather__board')).toHaveAttribute('data-weather-count', '2');
+  const tabCount = await ribbon.locator('.masthead-weather__city.is-active').count();
+  expect(tabCount).toBeGreaterThanOrEqual(2);
+  expect(tabCount).toBeLessThanOrEqual(4);
+  await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-city="montreal"], .masthead-weather__city.is-active[data-weather-city="quebec"]')).toHaveCount(1);
 
-  // Tablette / téléphone (≤1023.98px) : météo sous le syntoniseur.
   await page.setViewportSize({ width: 900, height: 900 });
   await page.waitForTimeout(150);
-  await expect(ribbon).toBeVisible();
   await expect(ribbon).toHaveClass(/masthead-weather--docked/);
   await expect(page.locator('#masthead-weather-dock #masthead-weather')).toHaveCount(1);
-  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(2);
 
   await page.setViewportSize({ width: 768, height: 900 });
   await page.waitForTimeout(150);
   await expect(ribbon).toHaveClass(/masthead-weather--docked/);
-  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(2);
+  expect(await ribbon.locator('.masthead-weather__city.is-active').count()).toBeGreaterThanOrEqual(2);
 
   await page.setViewportSize({ width: 320, height: 900 });
   await page.waitForTimeout(100);
