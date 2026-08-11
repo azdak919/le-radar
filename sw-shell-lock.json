@@ -1,13 +1,13 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v611",
+    "cache": "radar-shell-v612",
     "assets": {
-      "app.js": "fbad9e64ca7dc110",
+      "app.js": "bdbdf3adffe4b2fd",
       "bg-rotation-lib.js": "4ff24249767435c6",
       "cast.js": "9ac30d507e71388d",
-      "embed.css": "af735e5f359427a4",
+      "embed.css": "92fcb8e8a0cc8dc1",
       "embed.js": "3f821677d146c6d3",
-      "engage-prompt.js": "25a9c8082c4f2dec",
+      "engage-prompt.js": "1d7c46b74e042774",
       "feeds-page.js": "23103d49de90f8fc",
       "mobile-playback.js": "955026530d5993b0",
       "nav-shell.js": "97c086a5c1ef5bca",
@@ -20,15 +20,15 @@
       "scripts/season-lib.js": "f3330cfcec5029c3",
       "scripts/session-freshness-lib.js": "8864fadc8cd34ed1",
       "scripts/sports-freshness-lib.js": "fcb409c0970bf1ff",
-      "style-masthead.css": "621823685d168e58",
-      "style.css": "7c81db602516f1ea",
+      "style-masthead.css": "d17839c355719191",
+      "style.css": "3f2c284864ba518a",
       "translate-menu.css": "a5a4eb37479afb60",
       "translate-menu.js": "07802220efb342c2",
       "translate.js": "f8da43a4f07435ad"
     }
   },
   "pomo/sw.js": {
-    "cache": "pomo-shell-v94",
+    "cache": "pomo-shell-v96",
     "assets": {
       "bg-rotation-lib.js": "4ff24249767435c6",
       "fullscreen-wallpaper-qc.js": "2efff73a86189579",
@@ -48,7 +48,7 @@
       "pomo/js/storage.js": "7513ec5ed55e96ff",
       "pomo/js/toast.js": "b4eececf730afb98",
       "pomo/js/translate.js": "0f99513ded207d14",
-      "pomo/js/weather.js": "11df50aca612b838",
+      "pomo/js/weather.js": "871a3b7bb74a0db3",
       "pomo/styles/base.css": "022159b7f0b253ca",
       "pomo/styles/layout.css": "6022df23e477bc37",
       "quebec-favorites-backgrounds-data.js": "3b44d0c1227e60bd",
@@ -70,12 +70,12 @@
     }
   },
   "sports/sw.js": {
-    "cache": "sports-shell-v34",
+    "cache": "sports-shell-v35",
     "assets": {
       "app-sw-register.js": "386e54fcec34bbb3",
-      "app.js": "fbad9e64ca7dc110",
+      "app.js": "bdbdf3adffe4b2fd",
       "cast.js": "9ac30d507e71388d",
-      "engage-prompt.js": "25a9c8082c4f2dec",
+      "engage-prompt.js": "1d7c46b74e042774",
       "institution-acronyms-data.js": "0d9e4eaa631af54c",
       "mobile-playback.js": "955026530d5993b0",
       "nav-shell.js": "97c086a5c1ef5bca",
@@ -83,8 +83,8 @@
       "seo-page-theme.js": "06a19179fa91c396",
       "seo-pages.css": "9f6f632736c9aab0",
       "sports-board.js": "0222092a8ee68654",
-      "style-masthead.css": "621823685d168e58",
-      "style.css": "7c81db602516f1ea"
+      "style-masthead.css": "d17839c355719191",
+      "style.css": "3f2c284864ba518a"
     }
   }
 }

@@ -482,6 +482,17 @@ const indexHtml = readFileSync(join(root, 'index.html'), 'utf8');
 const engagePrompt = readFileSync(join(root, 'engage-prompt.js'), 'utf8');
 assert(!/coque hors-ligne/i.test(engagePrompt), 'invitation PWA : jargon « coque » interdit');
 assert(engagePrompt.includes('LE-RADAR au démarrage ?'), 'invitation accueil : titre orienté résultat requis (focus-group engage-copy B)');
+// Focus-group le-radar-engage-home-guide (C) : copier + 2 steps, pas de mur de flèches.
+assert(
+  engagePrompt.includes('Copier l’adresse')
+    && engagePrompt.includes('Copy address')
+    && engagePrompt.includes('copySiteUrl')
+    && engagePrompt.includes('le-radar-engage-home-guide')
+    && engagePrompt.includes('Réglage navigateur uniquement')
+    && !/Astuce : glissez cet onglet/i.test(engagePrompt)
+    && !/Tip: drag this tab/i.test(engagePrompt),
+  'invitation accueil : guide C (copier + 2 steps, sans tip glisser)',
+);
 assert(engagePrompt.includes('Sur l’écran d’accueil'), 'invitation install : titre spatial focus-group B');
 assert(
   engagePrompt.includes('Journaux, radios et sports étudiants du Québec — en un geste.'),
@@ -914,6 +925,18 @@ assert(
     && appJs.includes('sportsCtaPaused'),
   'app.js : rotation CTA (~12 s), au pointeur fin seulement, en pause au survol',
 );
+// Régression 2026-08-11 : SPORTS_CTA_ROTATE_MEDIA était déclaré *après* le
+// matchMedia(…) top-level → TDZ avalée par try/catch → mq null → CTA figée.
+{
+  const rotMediaIdx = appJs.indexOf("const SPORTS_CTA_ROTATE_MEDIA");
+  const mqInitIdx = appJs.indexOf('matchMedia(SPORTS_CTA_ROTATE_MEDIA)');
+  assert(
+    rotMediaIdx >= 0
+      && mqInitIdx >= 0
+      && rotMediaIdx < mqInitIdx,
+    'app.js : SPORTS_CTA_ROTATE_MEDIA déclaré avant matchMedia (pas de TDZ → CTA figée)',
+  );
+}
 // Le marqueur temporel et la fraîcheur sont rendus dans la carte : title seul
 // est invisible au doigt (garde-fous marqueur-non-tronque et fraicheur-visible).
 assert(
@@ -923,16 +946,20 @@ assert(
   'app.js : marqueur temporel + horodatage rendus dans la carte CTA',
 );
 assert(
-  /const SPORTS_CTA_FRESH_RESULT_MS\s*=\s*48 \* 3600 \* 1000/.test(appJs),
-  'app.js : filet fraîcheur CTA 48 h (first-glance + le-radar-cta-sports-window)',
+  appJs.includes('function sportsCtaResultIsTodayOrYesterday')
+    && appJs.includes('function sportsCivilDayShift')
+    && !/SPORTS_CTA_FRESH_RESULT_MS\s*=\s*48/.test(appJs),
+  'app.js : filet CTA = jours civils aujourd’hui+hier (plus de 48 h glissantes)',
 );
-// CTA pool = journée lead civile + filet 48 h — pas la file multi-jours max 36.
+// CTA pool = aujourd’hui/hier + (en saison jour lead | hors saison 1er match × 7 j).
 assert(
   appJs.includes('function sportsCtaLeadDayKey')
     && appJs.includes('function sportsSlideDayKey')
     && /const SPORTS_CTA_MAX_POOL\s*=\s*16/.test(appJs)
+    && /const SPORTS_CTA_OFFSEASON_LEAD_DAYS\s*=\s*7/.test(appJs)
+    && appJs.includes('firstByDay')
     && appJs.includes('le-radar-cta-sports-window'),
-  'app.js : CTA sports = leadCivilDay + maxPool 16 (focus-group window F)',
+  'app.js : CTA = today/yesterday + hors saison 7 j (1er match/jour) en alternance',
 );
 assert(
   !appJs.includes('upcomingLater'),
@@ -1007,15 +1034,69 @@ assert(
     .replace(/\/\/[^\n]*/g, ' ');
   const sportsTextBlocks = [
     ...styleCss.matchAll(/\.sports-chip__line-inner\s*\{[^}]*\}/g),
+    ...styleCss.matchAll(/\.sports-chip__sub-text\s*\{[^}]*\}/g),
     ...styleCss.matchAll(/\.sports-chip__cta-text\s*\{[^}]*\}/g),
     ...styleCss.matchAll(/\.sports-chip__cta-sub-text\s*\{[^}]*\}/g),
   ].map((m) => stripCssComments(m[0]));
   assert(
     sportsTextBlocks.length >= 3
       && sportsTextBlocks.every((block) => !/text-overflow\s*:\s*ellipsis/.test(block)),
-    'style : aucun text-overflow:ellipsis sur line-inner / cta-text / cta-sub-text',
+    'style : aucun text-overflow:ellipsis sur line-inner / sub-text / cta-text / cta-sub-text',
   );
 }
+// Puces scores 2 lignes : noms en clair + date ; overflow → marquee L→R,
+// jamais d’ellipsis « … ». Match chips : marquee 8 s (plus lent que CTA 5,5 s).
+assert(
+  appJs.includes('sports-chip--match')
+    && appJs.includes('sports-chip__body')
+    && appJs.includes('sports-chip__sub-text')
+    && appJs.includes('sportsPlainTeamName')
+    && appJs.includes('sportsChipTeamShort')
+    && appJs.includes('sportsPlaceEventShort')
+    && appJs.includes('function sportsMatchVerb')
+    && appJs.includes('function sportsMatchSubLine')
+    && appJs.includes('function sportsCompetitionLabel')
+    && appJs.includes('function sportsCollegialCityDisambig')
+    && appJs.includes('SPORTS_COLLEGIAL_CITY_DISAMBIG')
+    && appJs.includes('Cégep Trois-Rivières')
+    && appJs.includes('Cégep Rimouski')
+    && appJs.includes("'reçoit'")
+    && appJs.includes('sportsDisplaySideName')
+    && appJs.includes('sportsChipOpponentLabel')
+    && appJs.includes('sportsLookupInstitutionAcronym')
+    && appJs.includes('SPORTS_UNI_CODE_ACRONYM')
+    && appJs.includes('preferAcronym')
+    && appJs.includes('SPORTS_TEAM_COLOR_SUFFIX_RE')
+    && styleCss.includes('.sports-chip__vs')
+    && styleCss.includes('.sports-chip--cta .sports-chip__cta-text .sports-chip__vs')
+    && styleCss.includes('.sports-chip__cta-glyph')
+    && appJs.includes('sports-chip__cta-glyph')
+    && /SPORTS_MATCH_SCROLL_ONE_WAY_MS\s*=\s*8000/.test(appJs)
+    && indexHtml.includes('institution-acronyms-data.js')
+    && /SPORTS_RECENT_RESULT_MS\s*=\s*7 \* 24 \* 3600 \* 1000/.test(appJs)
+    && appJs.includes('recentResults')
+    && appJs.includes('le-radar-sports-left-pool')
+    && styleCss.includes('sports-chip--match')
+    && styleCss.includes('sports-chip__body')
+    && styleCss.includes('.sports-chip--match .sports-chip__sub')
+    && /sports-chip--match[^{]*\{[^}]*--sports-scroll-duration:\s*8s/.test(cssFlat)
+    && /:not\(\.sports-chip--cta\)\.is-overflowing \.sports-chip__line-inner/.test(cssFlat)
+    && /:not\(\.sports-chip--cta\)\.is-sub-overflowing \.sports-chip__sub-text/.test(cssFlat)
+    && styleCss.includes('@keyframes sports-chip-scroll')
+    && styleCss.includes('@keyframes sports-chip-scroll-sub'),
+  'puces scores : 2 lignes ; date·compétition (parité CTA) ; pool <7 j ; marquee 8s ; 0 ellipsis',
+);
+// Jambages (j, g, y, p, q) : line-height ≥ 1.35 sous overflow:hidden
+// (régression « Collège » / « jeu. » / « collégial » — même leçon que Original).
+assert(
+  /\.sports-chip--match \.sports-chip__line-inner\s*\{[^}]*line-height:\s*1\.35/.test(cssFlat)
+    && /\.sports-chip--match \.sports-chip__sub\s*\{[^}]*line-height:\s*1\.35/.test(cssFlat)
+    && /\.sports-chip__cta-eyebrow\s*\{[^}]*line-height:\s*1\.35/.test(cssFlat)
+    && /\.sports-chip__cta-text\s*\{[^}]*line-height:\s*1\.35/.test(cssFlat)
+    && /\.sports-chip__cta-sub\s*\{[^}]*line-height:\s*1\.35/.test(cssFlat)
+    && /\.sports-chip__cta-stack\s*\{[^}]*height:\s*3\.15em/.test(cssFlat),
+  'style sports : line-height 1.35 (jambages) + stack CTA 3.15em sous overflow:hidden',
+);
 // Puces scores : indépendantes + dwell lecture + marquee aller-retour complet.
 assert(
   appJs.includes('scheduleSportsSlot')
@@ -1026,8 +1107,21 @@ assert(
     && /SPORTS_READ_MAX_MS\s*=\s*14000/.test(appJs)
     && /SPORTS_SCROLL_ONE_WAY_MS\s*=\s*5500/.test(appJs)
     && appJs.includes('SPORTS_SCROLL_ROUND_TRIP_MS')
+    && appJs.includes('SPORTS_SCROLL_READ_DELAY_MS')
+    && appJs.includes('MARQUEE_READ_DELAY_MS')
+    && appJs.includes('function weatherBoardDwellMs')
     && appJs.includes('SPORTS_CHIP_LEAVE_MS'),
-  'app.js : rotation sports par slot + dwell lecture + marquee aller-retour',
+  'app.js : rotation sports/météo + marquee 1 cycle (delay + aller-retour + repos)',
+);
+// Marquee site : 2 alternate both + delay — jamais infinite sur surfaces qui tournent.
+assert(
+  !/sports-chip-scroll[^;]*infinite/.test(cssFlat)
+    && !/sports-chip-scroll-sub[^;]*infinite/.test(cssFlat)
+    && /sports-chip-scroll[^;]*\s2\s+alternate\s+both/.test(cssFlat)
+    && /--sports-scroll-delay:\s*1\.6s/.test(cssFlat)
+    && /tunerMarquee[^;]*\s2\s+alternate\s+both/.test(cssFlat)
+    && /MARQUEE_ROUND_TRIPS\s*=\s*2/.test(appJs),
+  'CSS/JS : marquees sports + dial = 1 cycle (2 alternate), delay 1.6s, pas infinite',
 );
 assert(
   appJs.includes('sportsWeatherCardCount')
@@ -1035,6 +1129,40 @@ assert(
     && appJs.includes('weatherN + 1'),
   'app.js : plafond scores sports ≤ cartes météo (CTA hors compte)',
 );
+// Lab local : météo ne doit pas rester absente (CORS Worker / offline).
+assert(
+  appJs.includes('function isLocalWeatherLabHost')
+    && appJs.includes('function weatherLabFixtureEntries')
+    && appJs.includes('le-radar-weather.azdak.workers.dev'),
+  'app.js : météo lab local (fixture) + Worker weather-cache',
+);
+// Toponymes météo : ville centre Vaudreuil-Dorion ; Manawan ≠ slug MM manawan (SK).
+assert(
+  appJs.includes("id: 'vaudreuil-dorion'")
+    && appJs.includes("name: 'Vaudreuil-Dorion'")
+    && !appJs.includes("id: 'vaudreuil-soulanges'")
+    && appJs.includes("name: 'Manawan'")
+    && appJs.includes("manouane/actuelle")
+    && !/weatherUrl:[^,\n]*manawan\/actuelle/.test(appJs)
+    && appJs.includes("name: 'Kahnawà:ke'")
+    && appJs.includes('kahnawake-14/actuelle')
+    && appJs.includes("nation: 'Anishinabeg'")
+    && appJs.includes("nation: 'Huron-Wendat'")
+    && appJs.includes("nation: 'Wolastoqiyik Wahsipekuk'"),
+  'app.js : météo — Vaudreuil-Dorion + noms/liens nations (Manawan→manouane)',
+);
+// Worker weather : CORS localhost (parité nowplaying / bg-rotation).
+{
+  const wxWorker = existsSync(join(root, 'workers/weather-cache/src/index.js'))
+    ? readFileSync(join(root, 'workers/weather-cache/src/index.js'), 'utf8')
+    : '';
+  assert(
+    wxWorker.includes('localhost|127\\.0\\.0\\.1')
+      || /localhost.*127\\.0\\.0\\.1/.test(wxWorker)
+      || wxWorker.includes('127\\.0\\.0\\.1'),
+    'workers/weather-cache : CORS autorise localhost / 127.0.0.1 pour le lab',
+  );
+}
 assert(
   styleCss.includes('--sports-scroll-duration: 5.5s')
     || styleCss.includes('--sports-scroll-duration:5.5s'),
