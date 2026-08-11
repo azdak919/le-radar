@@ -1846,17 +1846,18 @@ try {
     && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 } catch { /* ignore */ }
 /**
- * Temps d’affichage des puces sports — calibré pour *lire* l’info
- * (glyphe + équipes + date + heure), pas seulement un tick météo.
+ * Temps d’affichage des puces sports (gauche) — calibré pour *lire* l’info
+ * (glyphe + équipes + date + heure), pas un flip nerveux type gare météo.
  *
- * Sans défilement : ~7,8–11 s selon la longueur du libellé
- *   (scan UI ~40 ms/car. + plancher pour acknowledgement).
+ * Feedback prod 2026-08-11 : 4,8–8 s faisait « trop vide » (3 slots qui
+ * tournent en parallèle → sensation de bandeau qui se vide sans cesse).
+ * Sans défilement : ~9–14 s selon la longueur du libellé.
  * Avec marquee : ≥ 1 aller-retour CSS + pause au repos pour relire le début
  *   (même esprit que MARQUEE_REST_MS du dial radio).
  */
-const SPORTS_READ_MIN_MS = 4800;
-const SPORTS_READ_PER_CHAR_MS = 36;
-const SPORTS_READ_MAX_MS = 8000;
+const SPORTS_READ_MIN_MS = 9000;
+const SPORTS_READ_PER_CHAR_MS = 42;
+const SPORTS_READ_MAX_MS = 14000;
 /**
  * Une voie du marquee CSS `sports-chip-scroll` (style.css) — tenir synchro
  * avec `--sports-scroll-duration`. `alternate` → aller-retour = 2 ×.
@@ -1891,10 +1892,12 @@ const SPORTS_CTA_LIVE_TONE = '#c8102e';
 /** Durée du roulement vertical A↑B (une seule phase, jamais de trou vide). */
 const SPORTS_CTA_ROLL_MS = 280;
 /**
- * Rythme lent de la carte CTA — focus-group `le-radar-cta-sports-rhythm` D,
- * garde-fou `rythme-lent`. Trois fois moins de changements qu’une puce de score.
+ * Rythme de la carte CTA — un peu plus lent que les puces scores, mais pas
+ * figé. Feedback prod 2026-08-11 : 24 s laissait l’accroche « collée » alors
+ * que la gauche tournait trop vite. Cible ~12 s (proche des scores stables,
+ * toujours un cran plus posé). Survol = pause (garde-fou rotation-pointeur-fin).
  */
-const SPORTS_CTA_DWELL_MS = 24000;
+const SPORTS_CTA_DWELL_MS = 12000;
 /**
  * La rotation n’existe que là où un mécanisme de pause existe (garde-fou
  * `rotation-pointeur-fin`). Sur tactile il n’y a ni survol ni focus : WCAG 2.2.2
@@ -3799,14 +3802,14 @@ function renderSportsStrip() {
 
 /**
  * Temps de lecture estimé d’un libellé de puce (scan compact FR).
- * Ex. « CLG vs OUT · 19 août · 23 h 40 » ≈ 8 s ; accroche plus longue → plus.
+ * Ex. « CLG vs OUT · 19 août · 23 h 40 » ≈ 9–11 s ; accroche plus longue → plus.
  */
 function sportsLabelReadingMs(text) {
   const len = String(text || '').replace(/\s+/g, ' ').trim().length;
   if (!len) return SPORTS_READ_MIN_MS;
   return Math.min(
     SPORTS_READ_MAX_MS,
-    Math.max(SPORTS_READ_MIN_MS, 2600 + len * SPORTS_READ_PER_CHAR_MS),
+    Math.max(SPORTS_READ_MIN_MS, 4200 + len * SPORTS_READ_PER_CHAR_MS),
   );
 }
 
@@ -3849,7 +3852,7 @@ function sportsChipNeedsMarquee(chip) {
 /**
  * Temps d’affichage d’un slot avant rotation — assez long pour *apprécier*
  * la carte et enregistrer l’info.
- * · Texte entier visible : dwell = lecture estimée (7,8–11 s).
+ * · Texte entier visible : dwell = lecture estimée (puces ~9–14 s ; CTA ~12 s).
  * · Texte qui défile : **toujours** 1 aller-retour marquee + pause repos
  *   (ne jamais changer la carte au milieu du scroll).
  */
@@ -3868,8 +3871,7 @@ function sportsSlotDwellMs(slot) {
   const readMs = sportsLabelReadingMs(label);
   if (sportsReducedMotion) return readMs;
   if (!chip) return SPORTS_READ_MIN_MS;
-  // La carte CTA tient un rythme lent à elle : trois fois moins de changements
-  // qu’une puce de score (garde-fou `rythme-lent`).
+  // CTA : plancher propre (un cran plus posé que les scores, sans 24 s collants).
   const floor = isCta ? SPORTS_CTA_DWELL_MS : readMs;
   if (sportsChipNeedsMarquee(chip)) {
     // Aller (8,5 s) + retour (8,5 s) + pause au début — synchro CSS.
