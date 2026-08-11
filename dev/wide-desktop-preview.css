@@ -379,12 +379,6 @@ html[data-wide-preview="e"] {
     --filters-peek: 0px;
   }
 
-  /* « Le Radar » reste en tête du rail scrollable (sous le synthé, pas dessous) */
-  html[data-wide-preview="e"] .filters .filter-btn--all {
-    top: 0;
-    z-index: 3;
-  }
-
   html[data-wide-preview="e"] .filters-panel:not(.is-expanded):not(.is-compact) .filters,
   html[data-wide-preview="e"] .filters-panel.is-expanded .filters,
   html[data-wide-preview="e"] .filters-panel .filters {
