@@ -153,7 +153,8 @@ test('RSS : lecteur natif, sans iframe', async ({ page }) => {
 test('RSS : l’heure locale est lisible', async ({ page }) => {
   await page.goto('/feeds.html', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('#today-time')).toBeVisible();
-  await expect(page.locator('#today-time')).toHaveText(/^\d{2}:\d{2}$/);
+  // FR : « 15 h 03 » ; EN : « 15:03 ».
+  await expect(page.locator('#today-time')).toHaveText(/^\d{1,2}(?:\s*h\s*|:)\d{2}$/i);
 });
 
 test('mât : aucune couture au-dessus du synthétiseur', async ({ page }) => {

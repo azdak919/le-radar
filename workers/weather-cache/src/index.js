@@ -21,11 +21,21 @@ const ALLOWED_ORIGINS = new Set([
 const CACHE_MAX_AGE = 900; // 15 min — aligné sur WEATHER_CACHE_MS (app.js / pomo)
 const MET_NORWAY_USER_AGENT = 'le-radar.ca weather-cache/1.0 (https://le-radar.ca)';
 
+/**
+ * CORS — parité nowplaying-cache / bg-rotation :
+ * prod le-radar.ca + pages GH + lab local (python http.server / vite).
+ * Sans localhost, le bandeau météo reste `hidden` en preview locale
+ * (fetch CORS bloqué → impossible de juger météo ∥ sports).
+ */
 function corsHeaders(request) {
   const origin = request.headers.get('Origin');
-  const allowOrigin = ALLOWED_ORIGINS.has(origin) ? origin : 'https://le-radar.ca';
+  let allow = 'https://le-radar.ca';
+  if (ALLOWED_ORIGINS.has(origin)) allow = origin;
+  else if (origin && /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin)) {
+    allow = origin;
+  }
   return {
-    'Access-Control-Allow-Origin': allowOrigin,
+    'Access-Control-Allow-Origin': allow,
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Access-Control-Max-Age': '86400',
     Vary: 'Origin',

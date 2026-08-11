@@ -40,6 +40,17 @@ Cloudflare, on pourra repasser à un domaine personnalisé (`workers_dev = false
   coordonnée, dans le même ordre). Les deux vitrines (masthead + Pomo)
   envoient toujours la même liste de 47 villes, donc la même clé de cache.
 
+## CORS
+
+Origines acceptées (parité `nowplaying-cache` / `bg-rotation`) :
+
+- `https://le-radar.ca`, `https://www.le-radar.ca`
+- `https://azdak919.github.io`
+- lab local : `http://localhost:PORT` et `http://127.0.0.1:PORT`
+
+Sans localhost, le navigateur bloque le fetch en preview → bandeau météo
+resté `hidden`, impossible de juger les triggers météo ∥ sports.
+
 ## Vérification
 
 ```bash
@@ -48,3 +59,12 @@ curl -fsS "https://le-radar-weather.azdak.workers.dev/v1/forecast?latitude=45.5,
 
 La réponse doit être un tableau de deux objets `{"current":{...}}` avec des
 températures plausibles.
+
+CORS lab :
+
+```bash
+curl -sSI -H "Origin: http://127.0.0.1:8765" \
+  "https://le-radar-weather.azdak.workers.dev/v1/forecast?latitude=45.5&longitude=-73.6&current=temperature_2m" \
+  | grep -i access-control-allow-origin
+# → Access-Control-Allow-Origin: http://127.0.0.1:8765
+```

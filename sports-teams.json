@@ -754,13 +754,13 @@
       "id": "champlain-lennoxville",
       "code": "LEN",
       "sector": "collegial",
-      "shortName": "Ch.-Lennoxville",
+      "shortName": "Champlain Lennoxville",
       "fullName": "Champlain College Lennoxville",
       "nickname": null,
       "aliases": [
+        "Champlain Lennoxville",
         "Ch.-Lennoxville",
         "LEN",
-        "Champlain Lennoxville",
         "Lennoxville",
         "Champlain-Lennoxville"
       ],
@@ -785,13 +785,13 @@
       "id": "champlain-st-lambert",
       "code": "SLA",
       "sector": "collegial",
-      "shortName": "Ch.-St-Lambert",
+      "shortName": "Champlain St-Lambert",
       "fullName": "Champlain College Saint-Lambert",
       "nickname": "Barons",
       "aliases": [
+        "Champlain St-Lambert",
         "Ch.-St-Lambert",
         "SLA",
-        "Champlain St-Lambert",
         "Saint-Lambert",
         "St-Lambert",
         "Champlain Saint-Lambert"
@@ -1095,7 +1095,7 @@
       "id": "outaouais",
       "code": "OUT",
       "sector": "collegial",
-      "shortName": "Outaouais",
+      "shortName": "Cégep Outaouais",
       "fullName": "Cégep de l'Outaouais",
       "nickname": null,
       "aliases": [
@@ -1289,10 +1289,12 @@
       "id": "cegep-sherbrooke",
       "code": "SHE",
       "sector": "collegial",
-      "shortName": "Sherbrooke",
+      "shortName": "Cégep Sherbrooke",
       "fullName": "Cégep de Sherbrooke",
       "nickname": null,
       "aliases": [
+        "Cégep Sherbrooke",
+        "Cégep de Sherbrooke",
         "Sherbrooke",
         "SHE"
       ],
@@ -1371,7 +1373,7 @@
       "id": "trois-rivieres",
       "code": "TRV",
       "sector": "collegial",
-      "shortName": "Trois-Rivières",
+      "shortName": "Cégep Trois-Rivières",
       "fullName": "Cégep de Trois-Rivières",
       "nickname": "Diablos",
       "aliases": [
@@ -1622,12 +1624,14 @@
       "id": "abitibi-temisc",
       "code": "CAT",
       "sector": "collegial",
-      "shortName": "Abitibi-Témisc.",
-      "fullName": "Cégep de Abitibi-Témisc.",
+      "shortName": "Abitibi-Témiscamingue",
+      "fullName": "Cégep de l'Abitibi-Témiscamingue",
       "nickname": null,
       "aliases": [
+        "Abitibi-Témiscamingue",
         "Abitibi-Témisc.",
-        "CAT"
+        "CAT",
+        "Abitibi"
       ],
       "priority": 80,
       "sports": [
@@ -1776,12 +1780,16 @@
       "id": "ch-st-lawrence",
       "code": "SLC",
       "sector": "collegial",
-      "shortName": "Ch.-St-Lawrence",
-      "fullName": "Cégep de Ch.-St-Lawrence",
+      "shortName": "Champlain St-Lawrence",
+      "fullName": "Champlain College St. Lawrence",
       "nickname": null,
       "aliases": [
+        "Champlain St-Lawrence",
         "Ch.-St-Lawrence",
-        "SLC"
+        "SLC",
+        "St. Lawrence",
+        "Saint-Lawrence",
+        "Champlain St. Lawrence"
       ],
       "priority": 80,
       "sports": [
@@ -1825,7 +1833,7 @@
       "id": "chicoutimi",
       "code": "CHI",
       "sector": "collegial",
-      "shortName": "Chicoutimi",
+      "shortName": "Cégep Chicoutimi",
       "fullName": "Cégep de Chicoutimi",
       "nickname": null,
       "aliases": [
@@ -2346,11 +2354,13 @@
       "code": "NDFB",
       "sector": "collegial",
       "shortName": "Notre-Dame Bleu",
-      "fullName": "Cégep de Notre-Dame Bleu",
+      "fullName": "Campus Notre-Dame-de-Foy",
       "nickname": null,
       "aliases": [
         "Notre-Dame Bleu",
-        "NDFB"
+        "NDFB",
+        "CNDF Bleu",
+        "Campus Notre-Dame-de-Foy Bleu"
       ],
       "priority": 80,
       "sports": [
@@ -2358,18 +2368,21 @@
       ],
       "rseqTeamIds": [
         "ba51f1e5-39cc-4335-8616-a62ed6793387"
-      ]
+      ],
+      "note": "Deuxième formation rugby F du CNDF (Saint-Augustin) — Bleu ≠ établissement séparé"
     },
     {
       "id": "notre-dame-jaune",
       "code": "NDFJ",
       "sector": "collegial",
       "shortName": "Notre-Dame Jaune",
-      "fullName": "Cégep de Notre-Dame Jaune",
+      "fullName": "Campus Notre-Dame-de-Foy",
       "nickname": null,
       "aliases": [
         "Notre-Dame Jaune",
-        "NDFJ"
+        "NDFJ",
+        "CNDF Jaune",
+        "Campus Notre-Dame-de-Foy Jaune"
       ],
       "priority": 80,
       "sports": [
@@ -2377,7 +2390,8 @@
       ],
       "rseqTeamIds": [
         "46e24feb-0394-4ecc-8ceb-cccf513cad17"
-      ]
+      ],
+      "note": "Deuxième formation rugby F du CNDF — Jaune différencie de Notre-Dame Bleu"
     },
     {
       "id": "ottawa",
@@ -2406,7 +2420,7 @@
       "id": "rimouski",
       "code": "RIM",
       "sector": "collegial",
-      "shortName": "Rimouski",
+      "shortName": "Cégep Rimouski",
       "fullName": "Cégep de Rimouski",
       "nickname": null,
       "aliases": [
@@ -2717,7 +2731,7 @@
       "code": "UQAR",
       "sector": "universitaire",
       "shortName": "UQAR",
-      "fullName": "UQAR",
+      "fullName": "Université du Québec à Rimouski",
       "nickname": null,
       "aliases": [
         "UQAR",

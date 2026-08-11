@@ -39,15 +39,29 @@
     else if ([95, 96, 99].includes(code)) name = isDay ? 'thunderstorms-day' : 'thunderstorms-night';
     return `<img class="weather-icon-meteocon" src="/assets/meteocons/${name}.svg" alt="" aria-hidden="true">`;
   };
+  // Slugs MétéoMédia QC vérifiés — ne pas utiliser « manawan » (réserve SK).
   const weatherSlugs = {
-    odanak: 'odanak-12', 'kitigan-zibi': 'kitigan-zibi', manawan: 'manouane', nemaska: 'nemaska',
-    wendake: 'wendake', uashat: 'uashat', kuujjuaq: 'kuujjuaq', cacouna: 'cacouna',
-    gesgapegiag: 'gesgapegiag-2', kahnawake: 'kahnawake-14', kawawachikamach: 'kawawachikamach',
-    'vaudreuil-soulanges': 'vaudreuil-dorion',
+    odanak: 'odanak-12',
+    'kitigan-zibi': 'kitigan-zibi',
+    manawan: 'manouane',
+    nemaska: 'nemaska',
+    wendake: 'wendake',
+    uashat: 'uashat',
+    kuujjuaq: 'kuujjuaq',
+    cacouna: 'cacouna',
+    gesgapegiag: 'gesgapegiag-2',
+    kahnawake: 'kahnawake-14',
+    kawawachikamach: 'kawawachikamach',
+    'vaudreuil-dorion': 'vaudreuil-dorion',
+    'val-dor': 'val-dor',
   };
   const weatherUrl = (city) => {
-    const slug = weatherSlugs[city.id] || city.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      .replace(/[’'`]/g, '').replace(/[–—]/g, '-').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    if (city.weatherUrl) return city.weatherUrl;
+    const slug = city.weatherSlug
+      || weatherSlugs[city.id]
+      || city.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[’'`]/g, '').replace(/[–—]/g, '-').toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     return `https://www.meteomedia.com/fr/ville/ca/quebec/${slug}/actuelle`;
   };
   const render = (data) => {

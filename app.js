@@ -359,6 +359,10 @@ const NEWS_SEARCH_CLEAR  = document.getElementById('news-search-clear');
 const NEWS_SEARCH_HINT   = document.getElementById('news-search-hint');
 const TODAY_DATE     = document.getElementById('today-date');
 const TODAY_TIME     = document.getElementById('today-time');
+/** Dernier libellé date (sans heure) — pour ne re-fit météo que si le texte change.
+ *  DOIT être avant `init()` : renderTodayDate lit/écrit cette clé au bootstrap
+ *  (sinon TDZ → init failed → météo/sports morts). */
+let mastheadDateLabelKey = '';
 
 /**
  * Formats de date du mât, du plus complet au plus court.
@@ -379,6 +383,9 @@ const MASTHEAD_DATE_FORMATS = [
   { day: 'numeric', month: 'long', year: 'numeric' },
   { day: 'numeric', month: 'short', year: 'numeric' },
   { dateStyle: 'short' },
+  // Repli mobile étroit (date+heure 1 ligne + icônes) : encore plus court.
+  { month: 'short', day: 'numeric', year: '2-digit' },
+  { month: 'numeric', day: 'numeric', year: '2-digit' },
 ];
 
 const MASTHEAD_WEATHER = document.getElementById('masthead-weather');
@@ -521,10 +528,18 @@ const TUNER_SUB_ROTATE_MS = IS_TUNER_EMBED ? 14000 : 8000;
 const TUNER_SUB_ROTATE_NARROW_MS = 14000;
 const TUNER_SUB_ROTATE_VERY_NARROW_MS = 18000;
 const AIR_PANEL_ROTATE_MS = 8000;
-/** Aller + retour : l'animation marquee est `alternate`. */
+/**
+ * Marquee site-wide (dial, à l’antenne, sports, météo, embed) :
+ * 1) délai de lecture au repos  2) **un** aller-retour (`alternate` × 2)
+ * 3) pause au repos  4) seulement alors changer le texte.
+ * Jamais `infinite` : un 2ᵉ cycle pendant l’attente de rotation est illisible.
+ */
+/** Pause initiale avant le 1er pixel de scroll (CSS animation-delay). */
+const MARQUEE_READ_DELAY_MS = 1600;
+/** Aller + retour : l'animation marquee est `alternate` (2 itérations, pas infinite). */
 const MARQUEE_ROUND_TRIPS = 2;
-/** Pause de lecture ajoutée à l'aller-retour avant de changer de texte. */
-const MARQUEE_REST_MS = 2500;
+/** Pause de lecture après le retour, avant de changer de texte. */
+const MARQUEE_REST_MS = 2000;
 /** L'émission en ondes reste plus longtemps que les autres phases. */
 const AIR_LIVE_DWELL_FACTOR = 2;
 const NOW_AIR_CROSSFADE_MS = 700;
@@ -584,6 +599,15 @@ async function init() {
   renderTodayDate();
   syncSeoScheduleNow();
   initSeoScheduleHashScroll();
+  // Photo mât : quand `.loaded` arrive, date+heure passent en 1 ligne (CSS).
+  // Rejouer la cascade — sinon le format long choisi hors photo reste et ellipse.
+  const bgPhotoLayer = document.getElementById('bg-photo-layer');
+  if (bgPhotoLayer && typeof MutationObserver !== 'undefined') {
+    const photoDateMo = new MutationObserver(() => {
+      if (bgPhotoLayer.classList.contains('loaded')) renderTodayDate();
+    });
+    photoDateMo.observe(bgPhotoLayer, { attributes: true, attributeFilter: ['class'] });
+  }
   // L'heure du mât est décorative, mais doit rester juste sans recharger la page.
   window.setInterval(() => {
     renderTodayDate();
@@ -1086,6 +1110,30 @@ function mastheadLocale() {
   return tag;
 }
 
+/**
+ * True si la puce date est lisible : pas d’ellipse sur #today-date, heure
+ * entière, puce à gauche des icônes. Le test scrollWidth seul rate le cas
+ * mobile 430 : date longue « tient », l’heure est clipée par overflow:hidden.
+ */
+function mastheadDateChipFits() {
+  if (!TODAY_DATE) return true;
+  if (TODAY_DATE.scrollWidth > TODAY_DATE.clientWidth + 0.5) return false;
+  const host = TODAY_DATE.closest('.masthead-date');
+  if (!host) return true;
+  const hostBox = host.getBoundingClientRect();
+  if (hostBox.width < 1) return true;
+  if (MASTHEAD_ACTIONS) {
+    const actionsBox = MASTHEAD_ACTIONS.getBoundingClientRect();
+    if (actionsBox.width > 0 && hostBox.right > actionsBox.left + 1) return false;
+  }
+  if (TODAY_TIME) {
+    const timeBox = TODAY_TIME.getBoundingClientRect();
+    if (timeBox.width > 1 && timeBox.right > hostBox.right + 1) return false;
+    if (TODAY_TIME.scrollWidth > TODAY_TIME.clientWidth + 0.5) return false;
+  }
+  return true;
+}
+
 function renderTodayDate() {
   if (!TODAY_DATE && !TODAY_TIME) return;
   const now = new Date();
@@ -1094,22 +1142,48 @@ function renderTodayDate() {
   // `fr-CA`, /en/ affichait « lundi 3 août 2026 » sous un titre anglais.
   const locale = mastheadLocale();
   const isEnglish = locale.toLowerCase().startsWith('en');
+  // Heure d’abord : sur photo date+heure partagent une puce flex. Si la
+  // cascade date tourne avant l’heure, #today-date prend toute la largeur,
+  // le format long « tient », puis l’heure arrive et l’ellipse coupe la date.
+  // FR : « 15 h 03 » (typographie QC). EN : « 15:03 » (évite « 3:03 p.m. » large).
+  if (TODAY_TIME) {
+    TODAY_TIME.dateTime = now.toTimeString().slice(0, 5);
+    const rawClock = now.toLocaleTimeString(isEnglish ? 'en-CA' : 'fr-CA', {
+      hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+    });
+    if (isEnglish) {
+      TODAY_TIME.textContent = rawClock
+        .replace(/\s*h\s*/iu, ':')
+        .replace(/(\d{1,2})\s*[:.]\s*(\d{2})/, '$1:$2')
+        .trim();
+    } else {
+      // Normaliser colon / « h » navigateur → « 15 h 03 ».
+      TODAY_TIME.textContent = rawClock
+        .replace(/(\d{1,2})\s*[:.]\s*(\d{2})/, '$1 h $2')
+        .replace(/\s*h\s*/iu, ' h ')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+  }
   if (TODAY_DATE) {
     for (const options of MASTHEAD_DATE_FORMATS) {
       TODAY_DATE.textContent = now.toLocaleDateString(locale, options);
-      // Hors disposition mobile, `#today-date` reste en ligne : ses deux
-      // mesures valent 0, la comparaison est vraie, et le format complet est
-      // conservé — ce qu'on veut, la place ne manque pas là-bas.
-      if (TODAY_DATE.scrollWidth <= TODAY_DATE.clientWidth) break;
+      // Forcer reflow avant mesure (sinon clientWidth encore au format précédent).
+      void TODAY_DATE.offsetWidth;
+      if (mastheadDateChipFits()) break;
     }
   }
-  if (TODAY_TIME) {
-    TODAY_TIME.dateTime = now.toTimeString().slice(0, 5);
-    TODAY_TIME.textContent = isEnglish
-      ? now.toLocaleTimeString('en-CA', { hour: 'numeric', minute: '2-digit', hour12: true })
-      : now.toLocaleTimeString('fr-CA', {
-        hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
-      }).replace(/\s*h\s*/u, ':');
+  // Si le libellé date change (format / jour), largeur météo peut bouger.
+  // Focus-group le-radar-sports-weather-fit A : sports indépendants de la météo
+  // (plus de resync parité). On ne re-fit que le bandeau météo.
+  const dateKey = TODAY_DATE?.textContent || '';
+  const dateChanged = dateKey !== mastheadDateLabelKey;
+  mastheadDateLabelKey = dateKey;
+  // Différé : `init()` appelle renderTodayDate() au milieu du fichier, avant
+  // les `let` météo (mastheadWeatherResizeFrame…). setTimeout(0) laisse finir
+  // le top-level pour éviter un TDZ.
+  if (dateChanged) {
+    window.setTimeout(() => scheduleMastheadWeatherLayout(), 0);
   }
 }
 
@@ -1289,27 +1363,30 @@ const WEATHER_CITIES = [
   { id: 'gatineau', name: 'Gatineau', lat: 45.4765, lon: -75.7013 },
   { id: 'rouyn-noranda', name: 'Rouyn-Noranda', lat: 48.2366, lon: -79.0231 },
   // Abitibi–Témiscamingue : plusieurs pôles distincts plutôt qu'une seule ville.
-  { id: 'val-dor', name: 'Val-d’Or', region: 'Abitibi–Témiscamingue', lat: 48.1000, lon: -77.7800 },
+  // Slug MM = val-dor (pas val-d-or) — apostrophe typographique sinon mauvaise URL.
+  { id: 'val-dor', name: 'Val-d’Or', region: 'Abitibi–Témiscamingue', lat: 48.1000, lon: -77.7800, weatherSlug: 'val-dor' },
   { id: 'amos', name: 'Amos', region: 'Abitibi–Témiscamingue', lat: 48.5700, lon: -78.1200 },
   { id: 'la-sarre', name: 'La Sarre', region: 'Abitibi–Témiscamingue', lat: 48.8000, lon: -79.2000 },
   { id: 'ville-marie', name: 'Ville-Marie', region: 'Abitibi–Témiscamingue', lat: 47.3300, lon: -79.4300 },
   { id: 'levis', name: 'Lévis', lat: 46.8033, lon: -71.1779 },
-  // Vaudreuil–Soulanges est représentée par la ville centre sur MétéoMédia.
-  { id: 'vaudreuil-soulanges', name: 'Vaudreuil–Soulanges', region: 'Vaudreuil–Soulanges', lat: 45.4000, lon: -74.0300, weatherSlug: 'vaudreuil-dorion' },
+  // Ville centre (pas le MRC Vaudreuil–Soulanges) — slug MM = vaudreuil-dorion.
+  { id: 'vaudreuil-dorion', name: 'Vaudreuil-Dorion', compactName: 'V-Dorion', region: 'Vaudreuil–Soulanges', lat: 45.4000, lon: -74.0300, weatherSlug: 'vaudreuil-dorion' },
   { id: 'saint-ignace-de-loyola', name: 'Saint-Ignace-de-Loyola', region: 'Lanaudière', lat: 46.0800, lon: -73.0200 },
-  // Une collectivité représentative par nation : il n'existe pas de capitale
-  // unique pour les nations composées de plusieurs communautés.
-  { id: 'odanak', name: 'Odanak', nation: 'Abénakis', lat: 46.0723, lon: -72.8181, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/odanak-12/actuelle' },
-  { id: 'kitigan-zibi', name: 'Kitigan Zibi', nation: 'Anicinabeg', lat: 46.3825, lon: -75.9879, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/kitigan-zibi/actuelle' },
-  { id: 'manawan', name: 'Manawan', nation: 'Atikamekw', lat: 47.2203, lon: -74.3822, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/manouane/actuelle' },
-  { id: 'nemaska', name: 'Nemaska', nation: 'Eeyou', lat: 51.2022, lon: -76.1906, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/nemaska/actuelle' },
-  { id: 'wendake', name: 'Wendake', nation: 'Wendat', lat: 46.8550, lon: -71.3567, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/wendake/actuelle' },
-  { id: 'uashat', name: 'Uashat mak Mani-Utenam', nation: 'Innu', lat: 50.2300, lon: -66.3800, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/uashat/actuelle' },
+  // Collectivités (1 / nation) — noms d’usage préférés ; URL MM QC vérifiées.
+  // « manawan » sur MétéoMédia → réserve en Saskatchewan : lien = manouane.
+  { id: 'odanak', name: 'Odanak', nation: 'W8banaki · Abénakis', lat: 46.0723, lon: -72.8181, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/odanak-12/actuelle' },
+  { id: 'kitigan-zibi', name: 'Kitigan Zibi', nation: 'Anishinabeg', lat: 46.3825, lon: -75.9879, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/kitigan-zibi/actuelle' },
+  { id: 'manawan', name: 'Manawan', nation: 'Atikamekw', lat: 47.2203, lon: -74.3822, weatherSlug: 'manouane', weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/manouane/actuelle' },
+  { id: 'nemaska', name: 'Nemaska', nation: 'Eeyou Istchee', lat: 51.2022, lon: -76.1906, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/nemaska/actuelle' },
+  { id: 'wendake', name: 'Wendake', nation: 'Huron-Wendat', lat: 46.8550, lon: -71.3567, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/wendake/actuelle' },
+  // ITUM — Uashat 27 + Mani-Utenam (Maliotenam).
+  { id: 'uashat', name: 'Uashat mak Mani-Utenam', compactName: 'Uashat', nation: 'Innu', lat: 50.2300, lon: -66.3800, weatherSlug: 'uashat', weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/uashat/actuelle' },
   { id: 'kuujjuaq', name: 'Kuujjuaq', nation: 'Inuit · Nunavik', lat: 58.1000, lon: -68.4200, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/kuujjuaq/actuelle' },
-  { id: 'cacouna', name: 'Cacouna', nation: 'Wolastoqiyik', lat: 47.9204, lon: -69.5147, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/cacouna/actuelle' },
+  { id: 'cacouna', name: 'Cacouna', nation: 'Wolastoqiyik Wahsipekuk', lat: 47.9204, lon: -69.5147, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/cacouna/actuelle' },
   { id: 'gesgapegiag', name: 'Gesgapegiag', nation: 'Mi’gmaq', lat: 48.2125, lon: -65.9961, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/gesgapegiag-2/actuelle' },
-  { id: 'kahnawake', name: 'Kahnawà:ke', nation: 'Kanien’kehà:ka', lat: 45.4000, lon: -73.7500, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/kahnawake-14/actuelle' },
-  { id: 'kawawachikamach', name: 'Kawawachikamach', nation: 'Naskapi', lat: 55.3400, lon: -66.8500, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/kawawachikamach/actuelle' },
+  // Orthographe Kanien’kéha ; page MM = Kahnawake 14.
+  { id: 'kahnawake', name: 'Kahnawà:ke', nation: 'Kanien’kehá:ka', lat: 45.4000, lon: -73.7500, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/kahnawake-14/actuelle' },
+  { id: 'kawawachikamach', name: 'Kawawachikamach', compactName: 'Kawawa', nation: 'Naskapi', lat: 55.3400, lon: -66.8500, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/kawawachikamach/actuelle' },
 ];
 
 // Radar principal : variante remplie et animée. Le Pomo pointe explicitement
@@ -1363,10 +1440,9 @@ let mastheadWeatherDocked = false;
 // bandeau à sa place quand la largeur redevient suffisante.
 const mastheadWeatherHomeParent = MASTHEAD_WEATHER?.parentNode || null;
 const mastheadWeatherHomeNextSibling = MASTHEAD_WEATHER?.nextSibling || null;
-// Sous ce seuil, style.css retire carrément la zone météo du masthead (la
-// date longue a besoin de toute la place) : inutile d'attendre la mesure
-// dynamique, on docke directement sous le syntoniseur.
-const MASTHEAD_WEATHER_PHONE_MQ = window.matchMedia('(max-width: 599.98px)');
+// Tablette + mobile (≤1023) : météo sous le syntoniseur — libère le mât pour
+// date + icônes (lab 768 / 900). Bureau ≥1024 : météo dans le mât.
+const MASTHEAD_WEATHER_PHONE_MQ = window.matchMedia('(max-width: 1023.98px)');
 
 function syncMastheadShuffleButton() {
   if (!MASTHEAD_BG_SHUFFLE || !MASTHEAD_BG_SHUFFLE_HOME) return;
@@ -1454,14 +1530,33 @@ function buildMastheadWeatherBoard() {
   board.append(fragment);
 }
 
+/** Largeur utile du ruban météo (board, sinon conteneur / dock). */
+function weatherBoardAvailWidth() {
+  const board = MASTHEAD_WEATHER?.querySelector('.masthead-weather__board');
+  let width = board?.clientWidth || 0;
+  // Docké (430/768/900) : au 1er paint le board peut encore être à 0 px
+  // → count=1 figé (une seule carte « Québec » flottante). Repli conteneur.
+  if (width < 40) {
+    width = MASTHEAD_WEATHER?.clientWidth
+      || MASTHEAD_WEATHER_DOCK?.clientWidth
+      || 0;
+  }
+  if (width < 40 && mastheadWeatherDocked) {
+    width = document.documentElement.clientWidth || 0;
+  }
+  return width;
+}
+
 function weatherBoardCount() {
-  const width = MASTHEAD_WEATHER?.querySelector('.masthead-weather__board')?.clientWidth || 0;
+  const width = weatherBoardAvailWidth();
   let count = 1;
-  if (width >= 600) count = 4;
-  else if (width >= 500) count = 3;
-  // Sur téléphone, la première carte reste exclusivement Montréal/Québec.
-  // La seconde disparaît avant que cette carte principale doive défiler.
-  else if (width >= 280) count = 2;
+  // Modèle : 1 ancre MTL/QC + secondaires. Bureau 1280 board ~650 px → 3 cartes
+  // (4 serraient les secondaires → marquee). 4 seulement si board vraiment large.
+  if (width >= 780) count = 4;
+  else if (width >= 400) count = 3;
+  else if (width >= 240) count = 2;
+  // Docké (768/900) : même plafond 3 pour lisibilité.
+  if (mastheadWeatherDocked && count > 3) count = 3;
   return mastheadWeatherFitCount === null ? count : Math.min(count, mastheadWeatherFitCount);
 }
 
@@ -1511,12 +1606,19 @@ function showMastheadWeatherBoard() {
   if (MASTHEAD_WEATHER_PHONE_MQ.matches) {
     if (!mastheadWeatherDocked) {
       setMastheadWeatherDocked(true);
-      showMastheadWeatherBoard();
+      // Après move DOM → attendre le layout pour mesurer le board (sinon count=1).
+      window.requestAnimationFrame(() => {
+        mastheadWeatherFitCount = null;
+        showMastheadWeatherBoard();
+      });
       return;
     }
   } else if (mastheadWeatherDocked) {
     setMastheadWeatherDocked(false);
-    showMastheadWeatherBoard();
+    window.requestAnimationFrame(() => {
+      mastheadWeatherFitCount = null;
+      showMastheadWeatherBoard();
+    });
     return;
   }
   if (mastheadWeatherTooNarrow) {
@@ -1529,13 +1631,13 @@ function showMastheadWeatherBoard() {
   const count = Math.min(weatherBoardCount(), cities.length);
   if (count !== mastheadWeatherLastBoardCount) {
     mastheadWeatherNationSlot = count > 2 ? 1 + Math.floor(Math.random() * (count - 1)) : 1;
-    // Les groupes de cartes changent avec la largeur : on conserve l'ancre
-    // Montréal/Québec, puis on remplit les autres positions selon la nouvelle règle.
+    // Largeur change : garder l’ancre MTL/QC, regénérer les secondaires.
     mastheadWeatherSlots = mastheadWeatherSlots.slice(0, 1);
     mastheadWeatherLastBoardCount = count;
   }
   MASTHEAD_WEATHER.querySelector('.masthead-weather__board')?.setAttribute('data-weather-count', String(count));
   mastheadWeatherSlots = mastheadWeatherSlots.slice(0, count);
+  // Slot 0 = carte spéciale ancre : exclusivement Montréal ↔ Québec (rotation).
   const anchor = WEATHER_CITIES.find(
     (city) => city.id === MASTHEAD_WEATHER_PRIMARY_SEQUENCE[mastheadWeatherPrimaryIndex],
   );
@@ -1551,8 +1653,9 @@ function showMastheadWeatherBoard() {
     mastheadWeatherSlots.push(city);
   }
   cities.forEach((city) => {
-    city.classList.remove('is-active');
+    city.classList.remove('is-active', 'is-leaving', 'is-arriving');
     city.setAttribute('aria-hidden', 'true');
+    city.style.pointerEvents = '';
   });
   mastheadWeatherSlots.forEach((selectedCity, slot) => {
     const city = MASTHEAD_WEATHER.querySelector(`[data-weather-city="${selectedCity.id}"]`);
@@ -1560,8 +1663,7 @@ function showMastheadWeatherBoard() {
     if (city) city.style.order = String(slot);
     city?.setAttribute('aria-hidden', 'false');
   });
-  // Plafond sports = cartes météo (CTA hors compte) : resync si le nombre a changé.
-  queueSportsWeatherParitySync();
+  // Sports indépendants (FG weather-fit A) — pas de resync parité ici.
   refreshWeatherNameScroll();
   const primary = MASTHEAD_WEATHER.querySelector('.masthead-weather__city.is-active[data-weather-city="montreal"], .masthead-weather__city.is-active[data-weather-city="quebec"]');
   const primaryViewport = primary?.querySelector('.masthead-weather__name');
@@ -1571,16 +1673,11 @@ function showMastheadWeatherBoard() {
   // Mesurer le TEXTE, pas la fenêtre : `.masthead-weather__name-text` porte
   // `max-width: 100%`, donc le scrollWidth du parent peut déjà être borné et
   // masquer le débordement (même source de vérité que refreshWeatherNameScroll).
-  // Tolérance sous-pixel seulement : à +2 px le pied du « L » de MONTRÉAL était
-  // rogné sans jamais déclencher la cascade.
   const primaryOverflowing = () => primaryText.scrollWidth > primaryViewport.clientWidth + 0.5;
-  // Priorité : nom complet (Montréal / Québec). On réduit d'abord le nombre
-  // de cartes secondaires ; MTL/QC n'intervient qu'en dernier recours quand
-  // une seule carte reste et que le nom complet déborde encore.
+  // Ancre MTL/QC : nom complet d’abord. On ampute les secondaires avant compact.
   primary.classList.remove('is-compact');
   let primaryOverflows = primaryOverflowing();
   if (primaryOverflows && count > 1) {
-    // Retirer une carte secondaire et réévaluer à la taille réelle.
     mastheadWeatherFitCount = count - 1;
     mastheadWeatherLastBoardCount = 0;
     mastheadWeatherSlots = [];
@@ -1588,44 +1685,138 @@ function showMastheadWeatherBoard() {
     return;
   }
   if (primaryOverflows) {
-    // Une seule carte : forme compacte MTL/QC avant dock / masquage.
     primary.classList.add('is-compact');
     primaryOverflows = primaryOverflowing();
   }
   if (!primaryOverflows) return;
-  // Même seule en MTL/QC, la carte ne rentre pas dans le masthead : on la
-  // déplace sous le syntoniseur plutôt que de la masquer.
+  // Seule en MTL/QC et trop étroit dans le mât → dock sous le syntoniseur.
   if (!mastheadWeatherDocked) {
     setMastheadWeatherDocked(true);
     showMastheadWeatherBoard();
     return;
   }
-  // Même docké (pleine largeur de page), une carte ne rentre pas : cas
-  // extrême, on masque.
   mastheadWeatherTooNarrow = true;
   MASTHEAD_WEATHER.classList.add('is-too-narrow');
+}
+
+/** Synchro style-masthead.css `weather-name-scroll` (5.5s × alternate × 2). */
+const WEATHER_SCROLL_ONE_WAY_MS = 5500;
+/** Pause lecture avant le 1er pixel (CSS animation-delay 0.8s). */
+const WEATHER_SCROLL_READ_DELAY_MS = 800;
+/** Rotation météo sans défilement — assez pour lire ville + °. */
+const WEATHER_ROTATE_BASE_MS = 7000;
+/**
+ * Pause au repos **après** le retour du marquee, avant de changer de carte.
+ * Plus courte que MARQUEE_REST_MS (dial/sports) : le bandeau météo n’a qu’un
+ * toponyme à relire ; 2 s laissait un « trou » trop long (feedback 2026-08-11).
+ */
+const WEATHER_SCROLL_POST_PAUSE_MS = 700;
+/** Synchro style-masthead.css `weather-tile-arrive` / `weather-tile-leave`. */
+const WEATHER_ARRIVE_MS = 460;
+const WEATHER_LEAVE_MS = 280;
+
+function weatherMotionOk() {
+  return !(sportsReducedMotion || PREFERS_REDUCED_MOTION?.matches);
+}
+
+/**
+ * Entrée gare météo : rejoue l’anim (reflow) et ne retire `is-arriving` qu’à la fin.
+ * Bug historique : un rAF retirait la classe à ~16 ms → anim invisible sur tous formats.
+ */
+function playWeatherCityArrive(el) {
+  if (!el || !weatherMotionOk()) return;
+  el.classList.remove('is-arriving', 'is-leaving');
+  void el.offsetWidth;
+  el.classList.add('is-arriving');
+  const clear = () => {
+    el.classList.remove('is-arriving');
+    el.removeEventListener('animationend', onEnd);
+  };
+  const onEnd = (event) => {
+    const name = String(event.animationName || '');
+    if (name && !name.includes('weather-tile-arrive')) return;
+    clear();
+  };
+  el.addEventListener('animationend', onEnd);
+  window.setTimeout(clear, WEATHER_ARRIVE_MS + 80);
 }
 
 function refreshWeatherNameScroll() {
   MASTHEAD_WEATHER?.querySelectorAll('.masthead-weather__city.is-active').forEach((el) => {
     const viewport = el.querySelector('.masthead-weather__name');
     const name = el.querySelector('.masthead-weather__name-text');
+    if (!viewport || !name) return;
+    // Lever max-width le temps de la mesure (sinon max-width:100% → overflow 0
+    // et le marquee ne part jamais — « SAINT-IGNACE-D » figé).
+    const prevMax = name.style.maxWidth;
+    name.style.maxWidth = 'none';
     const overflow = Math.max(0, name.scrollWidth - viewport.clientWidth);
+    name.style.maxWidth = prevMax;
     const isPrimary = MASTHEAD_WEATHER_PRIMARY_IDS.has(el.dataset.weatherCity);
     // Montréal et Québec ne défilent jamais : la grille réduit plutôt le nombre
     // de cartes quand l'espace devient insuffisant.
-    el.classList.toggle('is-overflowing', !isPrimary && overflow > 2);
-    el.style.setProperty('--weather-scroll', `${overflow}px`);
+    const needs = !isPrimary && overflow > 2;
+    const had = el.classList.contains('is-overflowing');
+    const prev = (el.style.getPropertyValue('--weather-scroll') || '').trim();
+    const next = `${overflow}px`;
+    if (!needs) {
+      if (had) {
+        el.classList.remove('is-overflowing');
+        el.style.removeProperty('--weather-scroll');
+      }
+      return;
+    }
+    el.style.setProperty('--weather-scroll', next);
+    // Relancer le cycle si nouveau overflow, nouvelle carte, ou 1ʳᵉ pose.
+    if (!had || prev !== next) {
+      el.classList.remove('is-overflowing');
+      void name.offsetWidth;
+      el.classList.add('is-overflowing');
+    }
   });
 }
 
+/** Dwell météo : lire → 1 aller-retour si overflow → repos → changer. */
+function weatherBoardDwellMs() {
+  if (sportsReducedMotion || PREFERS_REDUCED_MOTION?.matches) {
+    return WEATHER_ROTATE_BASE_MS;
+  }
+  const anyOverflow = !!MASTHEAD_WEATHER?.querySelector(
+    '.masthead-weather__city.is-active.is-overflowing',
+  );
+  if (!anyOverflow) return WEATHER_ROTATE_BASE_MS;
+  return WEATHER_SCROLL_READ_DELAY_MS
+    + WEATHER_SCROLL_ONE_WAY_MS * MARQUEE_ROUND_TRIPS
+    + WEATHER_SCROLL_POST_PAUSE_MS;
+}
+
+function clearMastheadWeatherTimer() {
+  if (!mastheadWeatherTimer) return;
+  clearTimeout(mastheadWeatherTimer);
+  clearInterval(mastheadWeatherTimer);
+  mastheadWeatherTimer = null;
+}
+
+function scheduleMastheadWeatherRotate() {
+  clearMastheadWeatherTimer();
+  if (!MASTHEAD_WEATHER || MASTHEAD_WEATHER.classList.contains('hidden')) return;
+  mastheadWeatherTimer = window.setTimeout(() => {
+    mastheadWeatherTimer = null;
+    rotateOneMastheadWeatherCard();
+    scheduleMastheadWeatherRotate();
+  }, weatherBoardDwellMs());
+}
+
 function rotateOneMastheadWeatherCard() {
-  if (!mastheadWeatherSlots.length) return;
+  if (!mastheadWeatherSlots.length || !MASTHEAD_WEATHER) return;
   const slot = mastheadWeatherNextSlot % mastheadWeatherSlots.length;
   const previous = mastheadWeatherSlots[slot];
-  const usedIds = new Set(mastheadWeatherSlots.filter((_, index) => index !== slot).map((city) => city.id));
+  const usedIds = new Set(
+    mastheadWeatherSlots.filter((_, index) => index !== slot).map((city) => city.id),
+  );
   let replacement;
   if (slot === 0) {
+    // Carte spéciale : alterne exclusivement Montréal ↔ Québec.
     mastheadWeatherPrimaryIndex = (mastheadWeatherPrimaryIndex + 1)
       % MASTHEAD_WEATHER_PRIMARY_SEQUENCE.length;
     replacement = WEATHER_CITIES.find(
@@ -1635,15 +1826,59 @@ function rotateOneMastheadWeatherCard() {
     if (slot === 1 && mastheadWeatherSlots.length <= 2) {
       mastheadWeatherCompactSecondaryIndex = (mastheadWeatherCompactSecondaryIndex + 1) % 3;
     }
-    replacement = nextWeatherCity(weatherSecondaryGroup(slot, mastheadWeatherSlots.length), usedIds);
+    replacement = nextWeatherCity(
+      weatherSecondaryGroup(slot, mastheadWeatherSlots.length),
+      usedIds,
+    );
   }
   if (!replacement) return;
-  mastheadWeatherSlots[slot] = replacement;
-  mastheadWeatherNextSlot = (slot + 1) % mastheadWeatherSlots.length;
-  showMastheadWeatherBoard();
-  const arriving = MASTHEAD_WEATHER?.querySelector(`[data-weather-city="${replacement.id}"]`);
-  arriving?.classList.add('is-arriving');
-  window.setTimeout(() => arriving?.classList.remove('is-arriving'), 500);
+  // Même ville (deck vide / un seul candidat) : avancer le curseur sans anim fantôme.
+  if (previous?.id === replacement.id) {
+    mastheadWeatherNextSlot = (slot + 1) % mastheadWeatherSlots.length;
+    return;
+  }
+
+  const applyBoardWithArrive = () => {
+    mastheadWeatherSlots[slot] = replacement;
+    mastheadWeatherNextSlot = (slot + 1) % mastheadWeatherSlots.length;
+    showMastheadWeatherBoard();
+    const arriving = MASTHEAD_WEATHER.querySelector(
+      `.masthead-weather__city.is-active[data-weather-city="${replacement.id}"]`,
+    );
+    if (!arriving) return;
+    arriving.classList.remove('is-overflowing');
+    playWeatherCityArrive(arriving);
+    // Mesure marquee après paint (double rAF : grille + fontes).
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => refreshWeatherNameScroll());
+    });
+  };
+
+  const oldEl = previous
+    ? MASTHEAD_WEATHER.querySelector(
+      `.masthead-weather__city.is-active[data-weather-city="${previous.id}"]`,
+    )
+    : null;
+
+  // Sortie → entrée (tous formats : mât bureau + dock 390–900).
+  if (oldEl && weatherMotionOk()) {
+    if (oldEl._weatherLeaveTimer) {
+      clearTimeout(oldEl._weatherLeaveTimer);
+      oldEl._weatherLeaveTimer = null;
+    }
+    oldEl.classList.remove('is-arriving');
+    oldEl.classList.add('is-leaving');
+    oldEl.style.pointerEvents = 'none';
+    oldEl._weatherLeaveTimer = window.setTimeout(() => {
+      oldEl._weatherLeaveTimer = null;
+      oldEl.classList.remove('is-leaving');
+      oldEl.style.pointerEvents = '';
+      applyBoardWithArrive();
+    }, WEATHER_LEAVE_MS);
+    return;
+  }
+
+  applyBoardWithArrive();
 }
 
 function scheduleMastheadWeatherLayout() {
@@ -1659,11 +1894,19 @@ function scheduleMastheadWeatherLayout() {
 }
 
 function startMastheadWeatherBoard() {
-  if (!MASTHEAD_WEATHER || mastheadWeatherTimer) return;
+  if (!MASTHEAD_WEATHER) return;
   showMastheadWeatherBoard();
-  mastheadWeatherTimer = window.setInterval(() => {
-    rotateOneMastheadWeatherCard();
-  }, 5200);
+  // Re-fit après fontes : 1ʳᵉ mesure trop tôt → fitCount=1 figé (1 carte au lieu de 2).
+  const fonts = document.fonts;
+  if (fonts?.ready && typeof fonts.ready.then === 'function') {
+    fonts.ready.then(() => {
+      if (!MASTHEAD_WEATHER?.isConnected) return;
+      mastheadWeatherFitCount = null;
+      scheduleMastheadWeatherLayout();
+    }).catch(() => { /* ignore */ });
+  }
+  // Chaîne setTimeout (pas interval fixe) : le dwell suit le marquee réel.
+  if (!mastheadWeatherTimer) scheduleMastheadWeatherRotate();
   window.addEventListener('resize', scheduleMastheadWeatherLayout, { passive: true });
 }
 
@@ -1681,10 +1924,6 @@ function renderMastheadWeather(entries) {
   MASTHEAD_WEATHER.classList.remove('hidden');
   syncMastheadShuffleButton();
   startMastheadWeatherBoard();
-  // Sports peut s’être peint avant la météo (cap scores = 0) : resync parité.
-  queueSportsWeatherParitySync();
-  window.setTimeout(() => queueSportsWeatherParitySync(), 400);
-  window.setTimeout(() => queueSportsWeatherParitySync(), 1200);
 }
 
 window.addEventListener('radar:translate-mode', refreshMastheadWeatherLinks);
@@ -1703,6 +1942,37 @@ function readWeatherCache() {
     if (cached?.at && Date.now() - cached.at < WEATHER_CACHE_MS && Array.isArray(cached.entries)) return cached.entries;
   } catch { /* cache absent ou invalide */ }
   return null;
+}
+
+/** Lab local (python http.server / vite) — pas de météo en prod sans API. */
+function isLocalWeatherLabHost() {
+  try {
+    const h = String(location.hostname || '');
+    return h === 'localhost' || h === '127.0.0.1' || h === '[::1]';
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Repli lab : temps plausibles QC pour juger layout / parité sports sans
+ * dépendre du Worker (CORS non déployé, offline, timeout). Jamais en prod.
+ */
+function weatherLabFixtureEntries() {
+  const hour = new Date().getHours();
+  const isDay = hour >= 6 && hour < 21 ? 1 : 0;
+  return WEATHER_CITIES.map((city, i) => {
+    // Légère variation nord/sud + index pour que la rotation change de ton.
+    const base = 16 + ((i * 3) % 11);
+    const latNudge = Number.isFinite(city.lat) ? (48 - city.lat) * 0.35 : 0;
+    return {
+      current: {
+        temperature_2m: Math.round((base - latNudge) * 10) / 10,
+        weather_code: [0, 1, 2, 3, 61, 0, 1, 80][i % 8],
+        is_day: isDay,
+      },
+    };
+  });
 }
 
 async function initMastheadWeather() {
@@ -1730,12 +2000,20 @@ async function initMastheadWeather() {
       cache: 'no-store',
     });
     clearTimeout(timer);
+    if (!response.ok) throw new Error(`weather ${response.status}`);
     const data = await response.json();
     const entries = Array.isArray(data) ? data : [data];
-    if (entries.length !== WEATHER_CITIES.length) return;
+    if (entries.length !== WEATHER_CITIES.length) throw new Error('weather length');
     try { localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({ at: Date.now(), entries })); } catch { /* quota */ }
     renderMastheadWeather(entries);
-  } catch { /* module discret : absent si la météo est indisponible */ }
+  } catch {
+    // Lab local : afficher un bandeau même si le Worker refuse localhost
+    // (CORS) ou est offline — nécessaire pour juger météo ∥ sports.
+    if (!cached && isLocalWeatherLabHost()) {
+      renderMastheadWeather(weatherLabFixtureEntries());
+    }
+    /* prod : module discret — absent si la météo est indisponible */
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -1784,14 +2062,26 @@ const SPORTS_SPORT_TONES = {
 const SPORTS_LIVE_BEFORE_MS = 2 * 3600 * 1000;
 const SPORTS_LIVE_AFTER_MS = 3 * 3600 * 1000;
 const SPORTS_IMMINENT_MS = 7 * 24 * 3600 * 1000; /* 7 jours */
-const SPORTS_RECENT_RESULT_MS = 4 * 24 * 3600 * 1000; /* résultats < 4 j — cartes de gauche */
+/** Focus-group le-radar-sports-left-pool : gate D (7 j) + exclude priorSeason. */
+const SPORTS_RECENT_RESULT_MS = 7 * 24 * 3600 * 1000; /* résultats < 7 j — cartes de gauche */
 /**
  * « Chaud » pour la *voie de gauche* / détection saison (pas le pool CTA).
- * La CTA suit le-radar-cta-sports-window : journée lead + filet fraîcheur 48 h.
+ * La CTA suit le-radar-cta-sports-window : journée lead + résultats aujourd’hui/hier.
  */
 const SPORTS_CTA_UPCOMING_MS = 14 * 24 * 3600 * 1000;
-/** Plafond faces CTA (jour lead + filet 48 h) — focus-group le-radar-cta-sports-window F. */
+/**
+ * Marquee puces match (2 lignes, noms longs) — plus lent que la CTA (5,5 s).
+ * Un overflow dense (voile / place / événement) à 5,5 s se lisait en zapping.
+ */
+const SPORTS_MATCH_SCROLL_ONE_WAY_MS = 8000;
+/** Plafond faces CTA (jour lead + filet aujourd’hui/hier) — le-radar-cta-sports-window F. */
 const SPORTS_CTA_MAX_POOL = 16;
+/**
+ * Hors saison (aucun résultat aujourd’hui/hier) : alterner le **premier match**
+ * de chacun des **7 premiers jours civils** d’action à partir du jour lead
+ * (ex. 19→25 août), pas un seul match collé toute la semaine.
+ */
+const SPORTS_CTA_OFFSEASON_LEAD_DAYS = 7;
 /*
  * Registre d’alerte de la carte CTA — focus-group le-radar-sports-first-glance
  * (garde-fou `registre-alerte-reserve`) et le-radar-cta-sports-badge.
@@ -1802,8 +2092,11 @@ const SPORTS_CTA_MAX_POOL = 16;
  */
 const SPORTS_LIVE_VISUAL_LEAD_MS = 15 * 60 * 1000; /* 15 min avant le coup d’envoi */
 const SPORTS_LIVE_VISUAL_TAIL_MS = 3 * 3600 * 1000; /* 3 h après le coup d’envoi */
-/** Lead piloté par la fraîcheur : un résultat passe devant le calendrier pendant 48 h. */
-const SPORTS_CTA_FRESH_RESULT_MS = 48 * 3600 * 1000;
+/**
+ * Filet résultats CTA : **jours civils Toronto** « aujourd’hui » + « hier »
+ * (plus de fenêtre 48 h glissante — gate mainteneur 2026-08-11).
+ * Les prochains du **jour lead** restent en appoint (le-radar-cta-sports-window F).
+ */
 /**
  * Accroches CTA **uniquement** quand il n’y a ni match chaud (≤14 j)
  * ni aucun match à venir en grille. Pas de puces grises à gauche pour
@@ -1824,6 +2117,14 @@ let sportsNextSlot = 0;
 let sportsSlotTimers = [];
 /** Rotation de la CTA suspendue (survol ou focus) — garde-fou `pause-survol-focus`. */
 let sportsCtaPaused = false;
+/**
+ * La rotation n’existe que là où un mécanisme de pause existe (garde-fou
+ * `rotation-pointeur-fin`). Sur tactile il n’y a ni survol ni focus : WCAG 2.2.2
+ * ne serait pas satisfait, donc l’accroche s’y fige au chargement.
+ * ⚠️ Doit être déclaré **avant** l’init de `sportsCtaRotateMq` (sinon TDZ →
+ * matchMedia avalé par try/catch → mq null → CTA jamais en rotation).
+ */
+const SPORTS_CTA_ROTATE_MEDIA = '(hover: hover) and (pointer: fine)';
 /** Surfaces où un mécanisme de pause existe réellement (souris, pas doigt). */
 let sportsCtaRotateMq = null;
 try {
@@ -1865,8 +2166,10 @@ const SPORTS_READ_MAX_MS = 14000;
 /** Synchro style.css `--sports-scroll-duration` (marquee L→R). */
 const SPORTS_SCROLL_ONE_WAY_MS = 5500;
 const SPORTS_SCROLL_ROUND_TRIP_MS = SPORTS_SCROLL_ONE_WAY_MS * 2;
+/** Délai lecture avant scroll — aligné MARQUEE_READ_DELAY_MS / CSS --sports-scroll-delay. */
+const SPORTS_SCROLL_READ_DELAY_MS = MARQUEE_READ_DELAY_MS;
 /** Pause au repos après le retour (re-ack du début de ligne). */
-const SPORTS_SCROLL_POST_PAUSE_MS = 1200;
+const SPORTS_SCROLL_POST_PAUSE_MS = MARQUEE_REST_MS;
 /** Décalage initial entre slots pour éviter un flip simultané au 1er paint. */
 const SPORTS_SLOT_STAGGER_MS = 1100;
 /** Entrée d’une puce score (CSS sports-chip-arrive) — plus long = moins brutal. */
@@ -1875,8 +2178,8 @@ const SPORTS_ARRIVE_MS = 640;
  * CTA du mât : pastille « SPORTS » + accroche datée + sous-ligne.
  *
  * Trois verdicts focus-group se superposent ici :
- * · `le-radar-sports-first-glance` — le lead suit la fraîcheur (résultat < 48 h,
- *   sinon prochain match), registre ardoise au repos, alerte réservée au direct.
+ * · `le-radar-sports-first-glance` — lead = résultat aujourd’hui/hier (civil QC)
+ *   sinon prochain du jour lead ; alerte réservée au direct.
  * · `le-radar-cta-sports-motion` — le changement d’accroche est un **roulement
  *   vertical** d’une seule phase, jamais un fondu croisé : deux textes de
  *   longueurs différentes superposés à mi-opacité sont illisibles.
@@ -1898,12 +2201,6 @@ const SPORTS_CTA_ROLL_MS = 280;
  * toujours un cran plus posé). Survol = pause (garde-fou rotation-pointeur-fin).
  */
 const SPORTS_CTA_DWELL_MS = 12000;
-/**
- * La rotation n’existe que là où un mécanisme de pause existe (garde-fou
- * `rotation-pointeur-fin`). Sur tactile il n’y a ni survol ni focus : WCAG 2.2.2
- * ne serait pas satisfait, donc l’accroche s’y fige au chargement.
- */
-const SPORTS_CTA_ROTATE_MEDIA = '(hover: hover) and (pointer: fine)';
 /** Sortie douce d’une puce score avant replaceWith (synchro CSS is-leaving). */
 const SPORTS_CHIP_LEAVE_MS = 420;
 /** Popularité sports étudiants QC (aligné page /sports/). */
@@ -2060,6 +2357,29 @@ function sportsGameIsToday(game) {
   return torontoDayKey(ms) === torontoDayKey();
 }
 
+/** YYYY-MM-DD ± n jours civils (arithmétique UTC sur la date seule). */
+function sportsCivilDayShift(yyyyMmDd, deltaDays) {
+  const m = String(yyyyMmDd || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!m) return '';
+  const utc = Date.UTC(+m[1], +m[2] - 1, +m[3] + deltaDays);
+  return new Date(utc).toISOString().slice(0, 10);
+}
+
+/**
+ * Résultat admissible sur la CTA : jour civil Toronto = aujourd’hui **ou** hier.
+ * (Remplace l’ancien filet glissant 48 h.)
+ */
+function sportsCtaResultIsTodayOrYesterday(game, now = Date.now()) {
+  let day = '';
+  const ms = sportsGameMs(game);
+  if (Number.isFinite(ms)) day = torontoDayKey(ms);
+  else if (game?.date && /^\d{4}-\d{2}-\d{2}$/.test(game.date)) day = game.date;
+  if (!day) return false;
+  const today = torontoDayKey(now);
+  const yesterday = sportsCivilDayShift(today, -1);
+  return day === today || day === yesterday;
+}
+
 /**
  * Match réellement en cours *maintenant* — prédicat visuel, recalculé à chaque
  * rendu (contrairement à `slide.urgency`, figé à la construction des slides).
@@ -2151,8 +2471,8 @@ function sportsNextSlide(team, now = Date.now()) {
 
 /**
  * Ancien « meilleur signal » par équipe — conservé pour la CTA (urgence).
- * Un résultat < 4 j prime sur un prochain lointain ; un prochain imminent
- * prime sur un vieux score.
+ * Un résultat récent (SPORTS_RECENT_RESULT_MS) prime sur un prochain lointain ;
+ * un prochain imminent prime sur un vieux score.
  */
 function sportsPickTeamSlide(team, now = Date.now()) {
   const candidates = [sportsResultSlide(team, now), sportsNextSlide(team, now)].filter(Boolean);
@@ -2178,46 +2498,19 @@ function sportsStripAvailWidth() {
 }
 
 /**
- * Cartes météo pour plafonner les puces SCORE (CTA hors compte).
- * Priorité : villes `.is-active` peintes → slots → lastBoardCount →
- * estimé weatherBoardCount si le bandeau est déjà visible.
- */
-function sportsWeatherCardCount() {
-  if (!MASTHEAD_WEATHER) return 0;
-  if (MASTHEAD_WEATHER.classList.contains('is-too-narrow')) return 0;
-  const active = MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city.is-active').length;
-  if (active > 0) return active;
-  if (mastheadWeatherSlots.length > 0) return mastheadWeatherSlots.length;
-  if (mastheadWeatherLastBoardCount > 0) return mastheadWeatherLastBoardCount;
-  // Bandeau déjà affiché mais slots vides : même barème de largeur.
-  if (!MASTHEAD_WEATHER.classList.contains('hidden')) {
-    try {
-      if (typeof weatherBoardCount === 'function') {
-        const est = weatherBoardCount();
-        if (est > 0) return est;
-      }
-    } catch { /* ignore */ }
-  }
-  return 0;
-}
-
-/**
- * Plafond depuis la largeur + parité météo (avant mesure post-paint).
- * Max desktop : 3 scores + CTA = 4. Minimum : 1 (CTA seule).
- * Les puces SCORE ne dépassent jamais le nombre de cartes météo ;
- * la CTA « SPORTS » (tout à droite) est hors de ce plafond.
- * Ex. météo 2 → max 2 scores + CTA (= 3 chips), jamais 3 scores.
+ * Focus-group le-radar-sports-weather-fit A :
+ * Plafond sports = largeur seule (max 3 scores + CTA). Météo indépendante.
+ * 4 = 3 scores + CTA ; 3 = 2+CTA ; 2 = 1+CTA ; 1 = CTA seule.
  */
 function sportsBoardCountBase() {
   const avail = sportsStripAvailWidth();
   const gap = 6;
-  // Un peu plus généreux que le min CSS : on préfère retirer une carte
-  // (cascade type météo) plutôt que d’écraser scores + CTA.
-  // Téléphone (~360 CSS px) → 1 = CTA « SPORTS » seule.
-  const minScore = 152;
-  const minCta = 172;
+  // Un cran plus souple : tablette 768 doit garder ≥1 score + CTA (pas CTA seule).
+  // FG A : overflow texte → −1 puce, mais le plafond largeur ne doit pas
+  // refuser 2 chips dès qu’on a ~320 px utiles.
+  const minScore = 128;
+  const minCta = 152;
 
-  // 4 = 3 scores + CTA ; 3 = 2+CTA ; 2 = 1+CTA ; 1 = CTA seule
   let n = 1;
   for (let tryN = 4; tryN >= 2; tryN -= 1) {
     const scores = tryN - 1;
@@ -2227,55 +2520,16 @@ function sportsBoardCountBase() {
       break;
     }
   }
-
-  // Parité météo : scores ≤ cartes météo (CTA exclue).
-  const weatherN = sportsWeatherCardCount();
-  if (weatherN > 0 && n >= 2) {
-    const maxScores = weatherN;
-    const maxTotal = maxScores + 1; // + CTA
-    n = Math.min(n, maxTotal);
-  }
   return n;
 }
 
 /**
- * Nombre de chips cible : largeur × parité météo × contrainte de fit mesurée.
- * On retire une carte à la fois en rétrécissant (4 → 3 → 2 → 1 = SPORTS).
+ * Nombre de chips cible : largeur × fit post-paint (overflow texte = −1).
+ * Jamais de plafond météo (A). On descend 4 → 3 → 2 → 1 (CTA seule).
  */
 function sportsBoardCount() {
   const base = sportsBoardCountBase();
-  // Le fit mesuré ne doit pas *outrepasser* le plafond météo (scores ≤ weather).
-  let n = sportsFitCount === null ? base : Math.min(base, sportsFitCount);
-  const weatherN = sportsWeatherCardCount();
-  if (weatherN > 0 && n >= 2) {
-    n = Math.min(n, weatherN + 1);
-  }
-  return n;
-}
-
-/**
- * Quand la météo change de nombre de cartes, resynchroniser le bandeau scores
- * (même largeur de page, mais le cap parité a bougé).
- */
-let sportsWeatherParityRaf = 0;
-function queueSportsWeatherParitySync() {
-  if (typeof cancelAnimationFrame === 'function' && sportsWeatherParityRaf) {
-    cancelAnimationFrame(sportsWeatherParityRaf);
-  }
-  sportsWeatherParityRaf = requestAnimationFrame(() => {
-    sportsWeatherParityRaf = 0;
-    if (!MASTHEAD_SPORTS_STRIP || !sportsSlides.length) return;
-    const weatherN = sportsWeatherCardCount();
-    const scoreCount = sportsVisible.filter((s) => s && s.mode !== 'cta').length;
-    const target = sportsBoardCount();
-    // Resync si le total change OU si trop de scores vs météo.
-    const overWeather = weatherN > 0 && scoreCount > weatherN;
-    if (sportsVisible.length === target && !overWeather) return;
-    sportsFitCount = null;
-    sportsFitDepth = 0;
-    renderSportsStrip();
-    scheduleSportsRotate();
-  });
+  return sportsFitCount === null ? base : Math.min(base, sportsFitCount);
 }
 
 /**
@@ -2287,12 +2541,26 @@ function sportsCtaPinned() {
 }
 
 /**
- * Le bandeau est-il trop étroit pour les chips peints ?
- * Parité météo : on ne se fie pas seulement au bucket largeur — on mesure
- * après paint. La CTA « Au tableau » est l’ancre protégée (comme MTL/QC) :
- * si elle est écrasée, on retire une carte score. Les libellés CTA défilent
- * (marquee, jamais d’ellipsis) : on ne compare pas leur largeur « naturelle »
- * (trop agressif — ce n’est pas un motif pour retirer une carte score).
+ * True si une puce **score** a titre ou sous-ligne qui déborde
+ * (focus-group A : overflow → retirer une puce, jamais marquee scores).
+ */
+function sportsMatchChipTextOverflows(chip) {
+  if (!chip || chip.classList.contains('sports-chip--cta')) return false;
+  const viewport = chip.querySelector('.sports-chip__line');
+  const inner = chip.querySelector('.sports-chip__line-inner');
+  if (viewport && inner && sportsMeasureOverflow(viewport, inner, false) > 1) {
+    return true;
+  }
+  const subView = chip.querySelector('.sports-chip__sub');
+  const subInner = chip.querySelector('.sports-chip__sub-text');
+  return !!(subView && subInner && sportsMeasureOverflow(subView, subInner, false) > 1);
+}
+
+/**
+ * Le bandeau est-il trop étroit / texte illisible pour les chips peints ?
+ * - CTA écrasée (tag AU TABLEAU) → −1 score
+ * - Puce score trop étroite OU titre/sous-ligne overflow → −1 score
+ * CTA : marquee encore toléré — on ne la compare pas en largeur « naturelle ».
  */
 function sportsStripCramped() {
   const strip = MASTHEAD_SPORTS_STRIP;
@@ -2304,30 +2572,29 @@ function sportsStripCramped() {
   const minCta = 148;
 
   const cta = strip.querySelector('.sports-chip--cta');
-  // CTA manquante alors qu’on affiche plusieurs chips → forcer un re-fit.
   if (!cta) return true;
   if (cta.clientWidth + 0.5 < minCta) return true;
-  // Pastille « AU TABLEAU » coupée = illisible.
   const tag = cta.querySelector('.sports-chip__cta-tag');
   if (tag && tag.scrollWidth > tag.clientWidth + 1) return true;
 
   for (const chip of chips) {
     if (chip.classList.contains('sports-chip--cta')) continue;
     if (chip.clientWidth + 0.5 < minScore) return true;
+    if (sportsMatchChipTextOverflows(chip)) return true;
   }
   return false;
 }
 
 /**
- * Après paint : retirer une carte score si le bandeau est à l’étroit,
- * jusqu’à ce qu’il ne reste que la CTA « Au tableau » (parité météo).
+ * Après paint : retirer une carte score si étroit ou texte overflow,
+ * jusqu’à CTA seule. Max 3 passes (focus-group A).
  */
 function fitSportsStripAfterPaint() {
   if (!MASTHEAD_SPORTS_STRIP || MASTHEAD_SPORTS_STRIP.hidden) return;
   const count = sportsVisible.length;
   if (count <= 1) return;
   if (!sportsStripCramped()) return;
-  if (sportsFitDepth >= 4) return;
+  if (sportsFitDepth >= 3) return;
   sportsFitDepth += 1;
   sportsFitCount = count - 1;
   try {
@@ -2343,6 +2610,35 @@ function sportsRandomResultSlide(usedKeys) {
 }
 
 /**
+ * Codes / écoles hors focus LE-RADAR (RSEQ invitees hors Québec, etc.).
+ * On garde les matchs QC ↔ Ottawa vus **depuis** l’équipe québécoise
+ * (« UdeM reçoit uOttawa »), pas le point de vue « uOttawa à UdeM ».
+ */
+const SPORTS_OUT_OF_PROVINCE_CODES = new Set([
+  'OTT', // University of Ottawa
+  'CAR', // Carleton
+  'DAL', // Dalhousie
+  'UNB', // New Brunswick
+  'CMR', // Collège militaire royal (Kingston)
+]);
+
+/**
+ * Équipe « nôtre » pour le mât : campus / cégep du Québec seulement.
+ * province=QC si présent ; sinon denylist codes + heuristique de nom.
+ */
+function sportsTeamIsQuebecFocus(team) {
+  if (!team) return false;
+  if (team.province) return team.province === 'QC';
+  const code = String(team.code || '').toUpperCase();
+  if (SPORTS_OUT_OF_PROVINCE_CODES.has(code)) return false;
+  const blob = `${team.fullName || ''} ${team.name || ''} ${team.school || ''} ${team.institution || ''}`;
+  if (/University of Ottawa|Carleton University|Dalhousie|University of New Brunswick|Royal Military College/i.test(blob)) {
+    return false;
+  }
+  return true;
+}
+
+/**
  * Construit le pool de slides mât :
  *  - tous les résultats passés (lastGame)
  *  - tous les matchs à venir (nextGame)
@@ -2355,12 +2651,15 @@ function buildSportsSlides(data) {
   if (!teams.length) return [];
   const now = Date.now();
 
-  // Voile : Québec seulement. Clubs watchlist sans match : hors strip.
+  // Focus Québec : pas de puces « uOttawa reçoit… » ; l’inverse (QC vs OTT)
+  // reste via l’équipe québécoise. Voile : hors QC. Clubs watchlist : hors strip.
   const eligible = teams.filter((team) => {
-    if (team.sport !== 'sailing') return true;
-    if (team.province && team.province !== 'QC') return false;
-    if (team.status === 'club' || team.status === 'upcoming') return false;
-    if (team.source === 'sailing-watchlist') return false;
+    if (!sportsTeamIsQuebecFocus(team)) return false;
+    if (team.sport === 'sailing') {
+      if (team.province && team.province !== 'QC') return false;
+      if (team.status === 'club' || team.status === 'upcoming') return false;
+      if (team.source === 'sailing-watchlist') return false;
+    }
     return true;
   });
 
@@ -2426,38 +2725,40 @@ function sportsNextSlidesSorted() {
 function sportsLeftLaneState() {
   const results = sportsResultSlidesSorted();
   const nexts = sportsNextSlidesSorted();
-  // « Chaud » pour la CTA = scores du jour ou prochains ≤ 14 j.
-  // Si la CTA est en idle, on considère le bandeau gauche en mode hors saison
-  // même s’il reste un vieux lastGame isolé (ex. voile d’avril en plein été).
-  let ctaHasHot = false;
-  try {
-    const now = Date.now();
-    for (const s of results) {
-      if (sportsGameIsToday(s.game)) { ctaHasHot = true; break; }
-    }
-    if (!ctaHasHot) {
+  const now = Date.now();
+  // Focus-group le-radar-sports-left-pool (gate D + exclude priorSeason) :
+  // résultats < 7 j seulement ; jamais le musée lastGame via « CTA chaude ».
+  const recentResults = results.filter((s) => {
+    if (s?.game?.priorSeason || s?.team?.lastGamePriorSeason) return false;
+    const age = sportsResultAgeMs(s.game, now);
+    return Number.isFinite(age) && age >= 0 && age <= SPORTS_RECENT_RESULT_MS;
+  });
+  // « Chaud » = score récent ou prochain ≤ 14 j (détection saison / appoint).
+  let hasHot = recentResults.length > 0;
+  if (!hasHot) {
+    try {
       for (const s of nexts) {
         const ms = sportsGameMs(s.game);
         if (Number.isFinite(ms) && ms >= now - SPORTS_LIVE_AFTER_MS
           && ms <= now + SPORTS_CTA_UPCOMING_MS) {
-          ctaHasHot = true;
+          hasHot = true;
           break;
         }
       }
-    }
-  } catch { /* ignore */ }
+    } catch { /* ignore */ }
+  }
 
-  if (results.length && ctaHasHot) {
-    // Résultats d'abord (fraîcheur desc.), puis le calendrier en appoint : avec
-    // un seul lastGame en banque (creux d'été), un pool exclusif ne remplissait
-    // qu'une puce sur trois et le bandeau s'étirait à deux cases.
-    const seen = new Set(results.map((s) => s.key));
-    const pool = results.concat(nexts.filter((s) => !seen.has(s.key)));
+  if (recentResults.length) {
+    // Résultats chauds d’abord, calendrier en appoint pour remplir 3 puces.
+    const seen = new Set(recentResults.map((s) => s.key));
+    const pool = recentResults.concat(nexts.filter((s) => !seen.has(s.key)));
     return { kind: 'results', pool };
   }
-  // Hors saison / creux : calendrier à venir s’il existe, sinon vieux résultats
-  // en filet. Jamais de puces « info » marketing dans la voie de gauche.
-  return { kind: 'offseason', pool: nexts.length ? nexts : results };
+  // Hors saison / creux : calendrier à venir seulement (pas de musée d’avril).
+  // Filet ultime : un seul plus récent lastGame si vraiment zéro next.
+  if (nexts.length) return { kind: 'offseason', pool: nexts };
+  const staleFilet = results.slice(0, 1);
+  return { kind: 'offseason', pool: staleFilet };
 }
 
 /**
@@ -2572,29 +2873,339 @@ function sportsOrderedKeys(bestMap) {
 }
 
 /**
- * Accroche CTA = même info qu’une chip score (codes + score/date).
- * Ex. « GAR vs LEN · 28 août · 19 h 30 » ou « MCG 1/9 MID ».
+ * Suffixes de couleur d’équipe (CNDF rugby F Bleu/Jaune, etc.) — **ne jamais
+ * retirer** : ce n’est pas un ornement, c’est l’identité de la formation.
+ */
+const SPORTS_TEAM_COLOR_SUFFIX_RE = /\s+(Bleu(?:e)?|Jaune|Noir(?:e)?|Blanc(?:he)?|Rouge|Vert(?:e)?|Or)\s*$/i;
+
+/**
+ * Abréviations cryptiques issues du flux RSEQ / vieux registre — élargies à
+ * l’affichage même si sports.json n’a pas encore été re-sync.
+ */
+const SPORTS_CRYPTIC_SHORT_EXPAND = {
+  'Ch.-St-Lambert': 'Champlain St-Lambert',
+  'Ch.-Lennoxville': 'Champlain Lennoxville',
+  'Ch.-St-Lawrence': 'Champlain St-Lawrence',
+  'Abitibi-Témisc.': 'Abitibi-Témiscamingue',
+  'Ch. Saint-Lambert': 'Champlain St-Lambert',
+  'Ch. St-Lambert': 'Champlain St-Lambert',
+  'Ch. Lennoxville': 'Champlain Lennoxville',
+  'Ch. St-Lawrence': 'Champlain St-Lawrence',
+};
+
+/**
+ * Accronymes univ. (ULaval, UdeM…) — table `institution-acronyms-data.js`
+ * déjà chargée sur l’accueil. Repli codes RSEQ si la table manque.
  */
 /**
+ * Codes RSEQ **universitaires** seulement → acronyme.
+ * SHE = Cégep de Sherbrooke (collégial) — **jamais** UdeS (c’est USHE).
+ */
+const SPORTS_UNI_CODE_ACRONYM = {
+  LAV: 'ULaval',
+  MTL: 'UdeM',
+  MCG: 'McGill',
+  UCON: 'Concordia',
+  CON: 'Concordia',
+  USHE: 'UdeS',
+  UQAM: 'UQAM',
+  UQTR: 'UQTR',
+  UQAC: 'UQAC',
+  UQO: 'UQO',
+  UQAR: 'UQAR',
+  UQAT: 'UQAT',
+  ETS: 'ÉTS',
+  ÉTS: 'ÉTS',
+  BIS: "Bishop's",
+  OTT: 'uOttawa',
+  POLY: 'Poly',
+  HEC: 'HEC',
+  CAR: 'Carleton',
+  DAL: 'Dalhousie',
+  UNB: 'UNB',
+  CMR: 'CMR',
+};
+
+/** Codes collégiaux qui ne doivent **jamais** recevoir un acronyme univ. */
+const SPORTS_COLLEGIAL_CODES = new Set([
+  'SHE', // Cégep de Sherbrooke — pas USHE / UdeS
+  'SLA', 'LEN', 'SLC', 'LAF', 'NDF', 'NDFB', 'NDFJ', 'CLG', 'GAR', 'LIM',
+  'VAN', 'DAW', 'JAC', 'CVM', 'AHU', 'OUT', 'CSF', 'TRV', 'VIC', 'STH',
+  'RIM', 'CHI', 'CAT', // Rimouski / Chicoutimi / Abitibi — pas UQAR / UQAC / UQAT
+]);
+
+/**
+ * Toponymes collégiaux **ambigus** avec une univ. (réseau UQ / UdeS).
+ * Short = nom de ville seul → le lecteur croit à l’université (ex. « Trois-Rivières »
+ * pour UQTR). Puces + CTA : préfixe « Cégep … » compact (marquee si long).
+ * Clé = code RSEQ collégial.
+ */
+const SPORTS_COLLEGIAL_CITY_DISAMBIG = {
+  TRV: 'Cégep Trois-Rivières', // ≠ UQTR
+  RIM: 'Cégep Rimouski', // ≠ UQAR
+  CHI: 'Cégep Chicoutimi', // ≠ UQAC
+  OUT: 'Cégep Outaouais', // ≠ UQO
+  SHE: 'Cégep Sherbrooke', // ≠ UdeS (USHE)
+  CAT: "Cégep Abitibi-Témiscamingue", // ≠ UQAT
+};
+
+/** Shorts collégiaux (sans code) qui collident avec une ville d’université. */
+const SPORTS_COLLEGIAL_CITY_SHORT_DISAMBIG = {
+  'trois-rivieres': 'Cégep Trois-Rivières',
+  'trois-rivières': 'Cégep Trois-Rivières',
+  rimouski: 'Cégep Rimouski',
+  chicoutimi: 'Cégep Chicoutimi',
+  outaouais: 'Cégep Outaouais',
+  sherbrooke: 'Cégep Sherbrooke', // seulement si collégial déjà établi
+  'abitibi-temiscamingue': "Cégep Abitibi-Témiscamingue",
+  'abitibi-témiscamingue': "Cégep Abitibi-Témiscamingue",
+};
+
+/**
+ * Libellé collégial désambiguïsé, ou '' si non applicable.
+ * Ne s’applique **jamais** au secteur universitaire (UQTR reste UQTR).
+ */
+function sportsCollegialCityDisambig({ shortName, fullName, code, sector } = {}) {
+  if (!sportsLooksCollegial({ fullName, shortName, sector, code })) return '';
+  const c = String(code || '').toUpperCase();
+  if (SPORTS_COLLEGIAL_CITY_DISAMBIG[c]) return SPORTS_COLLEGIAL_CITY_DISAMBIG[c];
+  const short = String(shortName || '').trim();
+  if (!short || /^C[eé]gep\b/i.test(short)) return '';
+  const key = short
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/['’]/g, '')
+    .replace(/\s+/g, '-');
+  if (SPORTS_COLLEGIAL_CITY_SHORT_DISAMBIG[key]) {
+    return SPORTS_COLLEGIAL_CITY_SHORT_DISAMBIG[key];
+  }
+  // fullName « Cégep de X » + short = X (ou proche) pour villes UQ.
+  const full = String(fullName || '');
+  const m = full.match(/^C[eé]gep\s+(?:de\s+(?:l['’]\s*)?)?(.+)$/i);
+  if (m && /Trois-Rivi|Rimouski|Chicoutimi|Outaouais|Sherbrooke|Abitibi/i.test(m[1])) {
+    const place = m[1].replace(/^l['’]\s*/i, '').trim();
+    return place ? `Cégep ${place}` : '';
+  }
+  return '';
+}
+
+function sportsInstitutionAcronymMap() {
+  try {
+    return (typeof window !== 'undefined' && window.RadarInstitutionAcronyms) || {};
+  } catch {
+    return {};
+  }
+}
+
+function sportsLookupInstitutionAcronym(...candidates) {
+  const map = sportsInstitutionAcronymMap();
+  for (const raw of candidates) {
+    const k = String(raw || '').trim();
+    if (!k) continue;
+    if (map[k]) return String(map[k]);
+    const bare = k.replace(/\s*\([^)]*\)\s*$/u, '').trim();
+    if (bare && bare !== k && map[bare]) return String(map[bare]);
+  }
+  return '';
+}
+
+/** true si le fullName / code indique clairement le collégial. */
+function sportsLooksCollegial({ fullName, shortName, sector, code } = {}) {
+  if (String(sector || '').toLowerCase() === 'collegial') return true;
+  const c = String(code || '').toUpperCase();
+  if (SPORTS_COLLEGIAL_CODES.has(c)) return true;
+  const f = `${fullName || ''} ${shortName || ''}`;
+  // Cégep / Collège / Campus / Champlain College — pas « Université … »
+  if (/C[eé]gep|Coll[eè]ge(?!\s+militaire)|Campus\s|Champlain\s+College/i.test(f)
+    && !/Universit[eé]|University/i.test(f)) {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Université seulement si collégial exclu.
+ * Ne pas déduire UdeS depuis le short « Sherbrooke » seul (ambigu SHE/USHE).
+ */
+function sportsLooksUniversity({ fullName, shortName, sector, code } = {}) {
+  if (sportsLooksCollegial({ fullName, shortName, sector, code })) return false;
+  if (String(sector || '').toLowerCase() === 'universitaire') return true;
+  const f = String(fullName || '');
+  if (/Universit[eé]|University/i.test(f)) return true;
+  const c = String(code || '').toUpperCase();
+  // Code univ. explicite seulement (USHE oui, SHE non)
+  if (SPORTS_UNI_CODE_ACRONYM[c]) return true;
+  // Acronyme table **seulement** si fullName d’université (pas short seul)
+  if (f) {
+    const ac = sportsLookupInstitutionAcronym(f);
+    return !!(ac && /^(U|ÉTS|ETS|HEC|McGill|Concordia|Bishop|Poly|uOttawa)/i.test(ac));
+  }
+  return false;
+}
+
+/**
  * Nom d’établissement en clair — garde-fou `noms-lisibles`
- * (focus-group le-radar-sports-first-glance). Un sigle seul (« LÉV vs THE »)
- * n’est décodable que par ceux qui suivent déjà la ligue ; le corpus porte les
- * noms, il n’y a aucune raison de les jeter.
+ * (focus-group le-radar-sports-first-glance). CTA / tooltips : forme lisible.
+ * **Jamais** de troncature `…` — marquee L→R si trop long.
  */
 function sportsPlainTeamName(team) {
-  const name = String(team?.name || '').trim();
-  if (name) return name;
-  const full = String(team?.fullName || '').trim();
-  if (full) return full;
-  return String(team?.code || 'Équipe').trim();
+  return sportsDisplaySideName({
+    shortName: team?.name,
+    fullName: team?.fullName,
+    code: team?.code,
+    sector: team?.sector,
+    fallback: 'Équipe',
+    preferAcronym: false,
+  });
 }
 
 function sportsPlainOpponentName(game) {
-  const name = String(game?.opponent || '').trim();
-  if (name) return name;
-  const full = String(game?.opponentFullName || '').trim();
+  return sportsDisplaySideName({
+    shortName: game?.opponent,
+    fullName: game?.opponentFullName,
+    code: game?.opponentCode,
+    fallback: 'adversaire',
+    preferAcronym: false,
+  });
+}
+
+/**
+ * Libellé d’une face (équipe ou adversaire).
+ * - Garde « Notre-Dame Bleu / Jaune ».
+ * - `preferAcronym` (puces gauche) : univ → ULaval / UdeM / McGill…
+ * - Sinon mono-token → fullName établissement (CTA plus aérée).
+ */
+function sportsDisplaySideName({
+  shortName, fullName, code, sector, fallback = 'Équipe', preferAcronym = false,
+} = {}) {
+  let short = String(shortName || '').trim();
+  let full = String(fullName || '').trim();
+  const codeU = String(code || '').toUpperCase();
+
+  // Déplier « Ch.-St-Lambert » → « Champlain St-Lambert » (etc.)
+  if (short && SPORTS_CRYPTIC_SHORT_EXPAND[short]) {
+    short = SPORTS_CRYPTIC_SHORT_EXPAND[short];
+  }
+  if (full && (full.startsWith('Cégep de Ch.') || full.includes('Témisc.') || full.includes('Ch.-'))) {
+    if (codeU === 'SLC' || /St-?Lawrence/i.test(full) || /St-?Lawrence/i.test(short)) {
+      full = 'Champlain College St. Lawrence';
+    } else if (codeU === 'SLA' || /St-?Lambert/i.test(full) || /St-?Lambert/i.test(short)) {
+      full = 'Champlain College Saint-Lambert';
+    } else if (codeU === 'LEN' || /Lennoxville/i.test(full) || /Lennoxville/i.test(short)) {
+      full = 'Champlain College Lennoxville';
+    } else if (codeU === 'CAT' || /Abitibi/i.test(full)) {
+      full = "Cégep de l'Abitibi-Témiscamingue";
+    }
+  }
+
+  if (short && SPORTS_TEAM_COLOR_SUFFIX_RE.test(short)) return short;
+
+  // Acronyme univ. **uniquement** si ce n’est pas du collégial (bloque UdeS pour SHE).
+  if (
+    preferAcronym
+    && !sportsLooksCollegial({ fullName: full, shortName: short, sector, code: codeU })
+    && sportsLooksUniversity({ fullName: full, shortName: short, sector, code: codeU })
+  ) {
+    // Préférer fullName pour la table d’acronymes ; code USHE en repli.
+    // Ne pas passer le short « Sherbrooke » seul (collision cégep / univ).
+    const ac = sportsLookupInstitutionAcronym(full)
+      || SPORTS_UNI_CODE_ACRONYM[codeU]
+      || '';
+    if (ac) return ac;
+    if (short && short.length <= 6 && /^[A-ZÉÙÛÂÊÎÔ0-9]{2,6}$/i.test(short)) return short;
+  }
+
+  // Ville seule = ambigu cégep vs univ (Trois-Rivières / UQTR, Rimouski / UQAR…).
+  // Avant le return multi-parties « Trois-Rivières » (hyphen) qui court-circuitait le fullName.
+  const cityDis = sportsCollegialCityDisambig({
+    shortName: short, fullName: full, code: codeU, sector,
+  });
+  if (cityDis) {
+    // CTA / tooltip : fullName officiel si déjà « Cégep … »
+    if (!preferAcronym && full && /^C[eé]gep\b/i.test(full)) return full;
+    return cityDis;
+  }
+
+  // Multi-parties déjà distinctives (Lionel-Groulx, Vieux Montréal…)
+  if (short && /[\s-]/.test(short) && short.replace(/-/g, '').length >= 5) return short;
+
+  // Mono-token : fullName si CTA ; sur puce étroite sans acronyme → short
+  if (full && short && !/[\s-]/.test(short) && full.length > short.length) {
+    if (preferAcronym) return short;
+    return full;
+  }
+  if (short) return short;
   if (full) return full;
-  return String(game?.opponentCode || 'adversaire').trim();
+  return String(code || fallback).trim() || fallback;
+}
+
+/**
+ * Nom d’équipe pour **puce gauche** (largeur restreinte) :
+ * univ → acronyme ; collégial → short ; voile → sans suffixe « Sailing ».
+ */
+function sportsChipTeamShort(team) {
+  let name = sportsDisplaySideName({
+    shortName: team?.name,
+    fullName: team?.fullName,
+    code: team?.code,
+    sector: team?.sector,
+    preferAcronym: true,
+    fallback: 'Équipe',
+  });
+  const sport = String(team?.sport || '').toLowerCase();
+  if (sport === 'sailing' || sport === 'voile') {
+    name = name.replace(/\s+(sailing|voile)\s*$/i, '').trim() || name;
+  }
+  return name;
+}
+
+/** Adversaire sur puce gauche — acronyme si université (jamais si cégep). */
+function sportsChipOpponentLabel(game) {
+  const full = String(game?.opponentFullName || '');
+  const code = String(game?.opponentCode || '').toUpperCase();
+  // Secteur implicite depuis fullName / code collégial connu
+  let sector = '';
+  if (sportsLooksCollegial({ fullName: full, shortName: game?.opponent, code })) {
+    sector = 'collegial';
+  } else if (sportsLooksUniversity({ fullName: full, shortName: game?.opponent, code })) {
+    sector = 'universitaire';
+  }
+  return sportsDisplaySideName({
+    shortName: game?.opponent,
+    fullName: game?.opponentFullName,
+    code: game?.opponentCode,
+    sector,
+    preferAcronym: sector === 'universitaire',
+    fallback: 'adversaire',
+  });
+}
+
+/** Événement / compétition pour place (régates) — texte entier, marquee si long. */
+function sportsPlaceEventShort(game) {
+  const comp = String(game?.competition || '').trim();
+  if (comp) return comp;
+  const opp = sportsPlainOpponentName(game);
+  return opp;
+}
+
+/** Verbe de rencontre — domicile « reçoit », extérieur « à » (ton presse). */
+function sportsMatchVerb(game, lang = 'fr') {
+  if (game?.home === false) return lang === 'en' ? 'at' : 'à';
+  return lang === 'en' ? 'hosts' : 'reçoit';
+}
+
+/** Domicile / extérieur — tooltip / sous-ligne optionnelle. */
+function sportsVenueLabel(game, lang = 'fr') {
+  if (game?.home === false) return lang === 'en' ? 'away' : 'extérieur';
+  if (game?.home === true) return lang === 'en' ? 'home' : 'domicile';
+  return '';
+}
+
+function sportsIsPlaceResult(game, sport) {
+  return game?.scoreKind === 'place'
+    || sport === 'sailing'
+    || game?.sport === 'sailing';
 }
 
 /** Jour + date + heure, écrits pour être situés sans compter : « jeu. 20 août, 20 h 30 ». */
@@ -2650,6 +3261,24 @@ function sportsCompetitionLabel(slide) {
   return sport ? `${sport} ${sector}` : '';
 }
 
+/**
+ * Sous-ligne des puces scores (gauche) — parité CTA :
+ * date/heure · compétition · [saison précédente].
+ * La compétition (ex. « Hockey collégial masculin D2 ») est la même info
+ * qu’à droite de la date sur la carte CTA (`sportsCtaSubLine`).
+ */
+function sportsMatchSubLine(slide) {
+  const g = slide?.game || {};
+  const when = formatSportsWhen(g.date, g.time);
+  const prior = !!(g.priorSeason || slide?.team?.lastGamePriorSeason);
+  const placeKind = sportsIsPlaceResult(g, slide?.team?.sport || g.sport);
+  // Régate / place : l’événement de place prime (souvent = competition).
+  const meta = placeKind
+    ? (sportsPlaceEventShort(g) || sportsCompetitionLabel(slide))
+    : sportsCompetitionLabel(slide);
+  return [when, meta, prior ? 'Saison précédente' : ''].filter(Boolean).join(' · ');
+}
+
 /** Existe-t-il un résultat exploitable à la banque ? Sinon : hors saison. */
 function sportsHasAnyResult() {
   return sportsSlides.some((s) => s?.mode === 'result');
@@ -2664,18 +3293,20 @@ function sportsCtaLabelFromSlide(slide) {
   if (!slide?.team || !slide.game) return '';
   const g = slide.game;
   const glyph = sportsGlyph(slide.team.sport || g.sport);
-  const home = sportsPlainTeamName(slide.team);
+  const home = sportsChipTeamShort(slide.team);
   const opp = sportsPlainOpponentName(g);
 
   if (slide.mode === 'next') {
-    return `${glyph} ${home} ${g.home === false ? 'à' : 'reçoit'} ${opp}`;
+    return `${glyph} ${home} ${sportsMatchVerb(g)} ${opp}`;
   }
   if (slide.mode === 'result') {
-    const placeKind = g.scoreKind === 'place' || slide.team.sport === 'sailing';
+    const placeKind = sportsIsPlaceResult(g, slide.team.sport);
     const score = placeKind
-      ? `${g.scoreFor}/${g.scoreAgainst}`
+      ? `${g.scoreFor}e/${g.scoreAgainst}`
       : `${g.scoreFor}–${g.scoreAgainst}`;
-    return `${glyph} ${home} ${score} ${opp}`;
+    return placeKind
+      ? `${glyph} ${home} ${score}`
+      : `${glyph} ${home} ${score} ${opp}`;
   }
   return `${glyph} ${home}`;
 }
@@ -2794,6 +3425,44 @@ function sportsDedupeMatchSlides(slides) {
 }
 
 /**
+ * Clés d’occupation d’une slide (clé face + dédup match miroir).
+ * Empêche « même match » à gauche et dans la CTA (faces QC opposées).
+ */
+function sportsSlideOccupyKeys(slide) {
+  const keys = new Set();
+  if (!slide) return keys;
+  if (slide.mode === 'cta' && slide.ctaFrom) {
+    if (slide.ctaFrom.key) keys.add(slide.ctaFrom.key);
+    const dk = sportsMatchDedupeKey(slide.ctaFrom);
+    if (dk && dk !== 'pair:|||') keys.add(dk);
+    return keys;
+  }
+  if (slide.key) keys.add(slide.key);
+  const dk = sportsMatchDedupeKey(slide);
+  if (dk && dk !== 'pair:|||') keys.add(dk);
+  return keys;
+}
+
+/** true si la slide est déjà représentée (même face ou miroir) dans `used`. */
+function sportsSlideIsUsed(slide, used) {
+  if (!slide || !used?.size) return false;
+  for (const k of sportsSlideOccupyKeys(slide)) {
+    if (used.has(k)) return true;
+  }
+  return false;
+}
+
+/** Union des clés occupées par les slots visibles (sauf exceptSlot). */
+function sportsVisibleOccupyKeys(exceptSlot = null) {
+  const used = new Set();
+  sportsVisible.forEach((s, i) => {
+    if (exceptSlot != null && i === exceptSlot) return;
+    for (const k of sportsSlideOccupyKeys(s)) used.add(k);
+  });
+  return used;
+}
+
+/**
  * Diversité sport souple après ordre chrono : évite 2× le même sport d’affilée
  * si une alternative existe dans les ~4 prochains slots — sans enterrer le
  * match le plus proche (verdict D, soft vs pure round-robin).
@@ -2821,19 +3490,19 @@ function sportsSoftSportDiversity(slides) {
 }
 
 /**
- * Partage des rôles bandeau — focus-group `le-radar-cta-sports-window` (F + filet 48 h) :
+ * Partage des rôles bandeau — focus-group `le-radar-cta-sports-window` F
+ * + gates mainteneur (civil aujourd’hui/hier ; hors saison 7 j) :
  *
- *  CTA (droite) = « le jour qui compte »
- *   • **filet fraîcheur** : résultats age &lt; 48 h (first-glance, même hors jour lead)
- *   • **journée lead** : matchs `next` du prochain jour civil Toronto qui a ≥1 coup d’envoi
- *     (souvent aujourd’hui en saison ; un jour lointain hors saison)
- *   • pas de file multi-jours 14 j / max 36
+ *  CTA (droite)
+ *   • **résultats** : jour civil = aujourd’hui ou hier (QC)
+ *   • **en saison** (il y a des résultats frais) : prochains du **jour lead** seul
+ *   • **hors saison** (pas de résultat aujourd’hui/hier) : **1er match** de
+ *     chacun des **7 premiers jours** d’action à partir du jour lead, en
+ *     alternance (rotation CTA) — pas un seul match pendant des jours
  *   • dédup miroir + diversité sport souple ; plafond SPORTS_CTA_MAX_POOL
- *   • creux total : accroches idle
  *
- *  CARTES GAUCHE (indépendantes)
- *   • Saison : résultats passés, ordre fraîcheur
- *   • Hors saison : matchs à venir multi-jours (proximité)
+ *  CARTES GAUCHE — le-radar-sports-left-pool D
+ *   • Résultats &lt; 7 j + next appoint ; hors saison : prochains
  */
 /** Jour civil America/Toronto d’une slide match (YYYY-MM-DD). */
 function sportsSlideDayKey(slide) {
@@ -2873,10 +3542,8 @@ function sportsCtaCandidateSlides() {
     seen.add(s.key);
 
     if (s.mode === 'result') {
-      // Filet fraîcheur 48 h — gate mainteneur sur le-radar-cta-sports-window F.
-      // Un score du mercredi soir reste lead le jeudi matin (first-glance).
-      const age = sportsResultAgeMs(s.game, now);
-      if (age < 0 || age > SPORTS_CTA_FRESH_RESULT_MS) continue;
+      // Filet civil aujourd’hui + hier (Toronto) — plus de 48 h glissantes.
+      if (!sportsCtaResultIsTodayOrYesterday(s.game, now)) continue;
       freshResults.push(s);
       continue;
     }
@@ -2919,9 +3586,31 @@ function sportsCtaCandidateSlides() {
     ? nexts.filter((s) => sportsSlideDayKey(s) === leadDay)
     : [];
 
-  // Pool : filet 48 h d’abord, puis tous les matchs uniques du jour lead.
-  // includeLaterFilet=false : pas de prochains hors jour lead.
-  const raw = freshResults.concat(leadDayNexts);
+  /**
+   * Prochains dans le pool CTA :
+   * · Avec résultats frais (aujourd’hui/hier) → jour lead seulement.
+   * · Hors saison → 1er match de chaque jour sur 7 jours civils dès le lead,
+   *   pour que la carte alterne (ex. 19→25 août) au lieu d’un seul « Prochain ».
+   */
+  let nextPool = leadDayNexts;
+  if (!freshResults.length && leadDay) {
+    const endDay = sportsCivilDayShift(leadDay, SPORTS_CTA_OFFSEASON_LEAD_DAYS - 1);
+    const windowNexts = nexts.filter((s) => {
+      const day = sportsSlideDayKey(s);
+      return day && day >= leadDay && day <= endDay;
+    });
+    // nexts déjà triés bientôt-d’abord → premier vu par jour = premier match du jour
+    const firstByDay = new Map();
+    for (const s of windowNexts) {
+      const day = sportsSlideDayKey(s);
+      if (day && !firstByDay.has(day)) firstByDay.set(day, s);
+    }
+    const weekFirsts = [...firstByDay.values()];
+    if (weekFirsts.length) nextPool = weekFirsts;
+  }
+
+  // Pool : résultats aujourd’hui/hier d’abord, puis prochains (jour lead ou semaine hors saison).
+  const raw = freshResults.concat(nextPool);
   const deduped = sportsDedupeMatchSlides(raw);
   deduped.sort((a, b) => {
     const modeRank = (s) => (s.mode === 'result' ? 0 : 1);
@@ -3040,18 +3729,17 @@ function sportsCtaActiveLabel(chip) {
 }
 
 /**
- * Construit le contenu d’une couche d’accroche : marqueur temporel, texte
- * principal, sous-ligne.
+ * Construit le contenu d’une couche d’accroche : marqueur, glyphe, texte, sous-ligne.
  * · Marqueur (PROCHAIN / Aujourd’hui…) : fixe, hors marquee
  *   (garde-fou `marqueur-non-tronque`).
+ * · Glyphe sport (⚽…) : fixe, frère de la fenêtre de défilement — **ne défile pas**.
  * · Titre (`.sports-chip__cta-text`) et sous-ligne (`.sports-chip__cta-sub-text`)
  *   défilent L→R s’ils débordent — **jamais** d’ellipsis « … » (clip + marquee).
  */
 function fillSportsCtaLayer(layer, slide) {
   layer.replaceChildren();
-  // Ligne 1 : marqueur + accroche côte à côte. Le marqueur est un frère de la
-  // fenêtre de défilement, jamais son contenu — il ne peut donc ni être rogné
-  // ni partir avec le marquee.
+  // Ligne 1 : marqueur + glyphe (fixes) + fenêtre de défilement des noms.
+  // Même structure que les puces gauche (glyphe hors `.sports-chip__body`).
   const head = document.createElement('span');
   head.className = 'sports-chip__cta-head';
   const eyebrow = slide.ctaEyebrow || '';
@@ -3061,11 +3749,50 @@ function fillSportsCtaLayer(layer, slide) {
     el.textContent = eyebrow;
     head.append(el);
   }
+  const src = slide?.ctaFrom;
+  const sportKey = src?.team?.sport || src?.game?.sport || '';
+  const glyph = (src?.team || src?.game) && sportKey && sportKey !== 'board'
+    ? sportsGlyph(sportKey)
+    : '';
+  if (glyph) {
+    const gEl = document.createElement('span');
+    gEl.className = 'sports-chip__cta-glyph';
+    gEl.setAttribute('aria-hidden', 'true');
+    gEl.textContent = glyph;
+    head.append(gEl);
+  }
   const line = document.createElement('span');
   line.className = 'sports-chip__cta-line';
   const text = document.createElement('span');
   text.className = 'sports-chip__cta-text';
-  text.textContent = slide.label || 'Scores étudiants QC';
+  // Noms / score seulement dans la zone qui défile (pas le glyphe).
+  if (src?.mode === 'next' && src.team && src.game) {
+    const g = src.game;
+    const home = sportsChipTeamShort(src.team);
+    const opp = sportsPlainOpponentName(g);
+    const verb = sportsMatchVerb(g);
+    text.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+      + `<span class="sports-chip__vs">${escapeHtml(verb)}</span> `
+      + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
+  } else if (src?.mode === 'result' && src.team && src.game) {
+    const g = src.game;
+    const home = sportsChipTeamShort(src.team);
+    const opp = sportsPlainOpponentName(g);
+    const placeKind = sportsIsPlaceResult(g, src.team.sport);
+    if (placeKind) {
+      const placeTxt = `${g.scoreFor}e/${g.scoreAgainst}`;
+      text.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+        + `<span class="sports-chip__score">${escapeHtml(placeTxt)}</span>`;
+    } else {
+      const scoreTxt = `${g.scoreFor}–${g.scoreAgainst}`;
+      text.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+        + `<span class="sports-chip__score">${escapeHtml(scoreTxt)}</span> `
+        + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
+    }
+  } else {
+    // Idle / repli : pas de glyphe sport — libellé entier dans la fenêtre.
+    text.textContent = slide.label || 'Scores étudiants QC';
+  }
   line.append(text);
   head.append(line);
   layer.append(head);
@@ -3095,6 +3822,12 @@ function fillSportsCtaLayer(layer, slide) {
  */
 function sportsCtaMayRotate() {
   if (sportsReducedMotion) return false;
+  // Lazy re-init : si l’init top-level a raté (TDZ, iframe, etc.), retenter.
+  if (!sportsCtaRotateMq && typeof window !== 'undefined' && window.matchMedia) {
+    try {
+      sportsCtaRotateMq = window.matchMedia(SPORTS_CTA_ROTATE_MEDIA);
+    } catch { /* ignore */ }
+  }
   if (!sportsCtaRotateMq?.matches) return false;
   return sportsCtaLabelPool().length > 1;
 }
@@ -3309,21 +4042,11 @@ function refreshSportsChipScroll(chipOrRoot = null) {
     }
 
     if (!isCta) {
-      const viewport = chip.querySelector('.sports-chip__line');
-      const inner = chip.querySelector('.sports-chip__line-inner');
-      if (!viewport || !inner) {
-        chip.classList.remove('is-overflowing', 'is-sub-overflowing');
-        chip.style.removeProperty('--sports-scroll');
-        chip.style.removeProperty('--sports-scroll-sub');
-        return;
-      }
-      const hadOverflow = chip.classList.contains('is-overflowing');
-      const overflow = sportsMeasureOverflow(viewport, inner, hadOverflow);
-      sportsApplyScrollState(chip, {
-        flag: 'is-overflowing',
-        prop: '--sports-scroll',
-        overflow,
-      });
+      // Focus-group A : puces scores = jamais marquee. Clear flags ; le fit
+      // post-paint (sportsStripCramped → −1 puce) gère l’overflow texte.
+      chip.classList.remove('is-overflowing', 'is-sub-overflowing');
+      chip.style.removeProperty('--sports-scroll');
+      chip.style.removeProperty('--sports-scroll-sub');
       return;
     }
 
@@ -3413,27 +4136,26 @@ function sportsChipTitle(slide) {
   const team = slide.team;
   const g = slide.game;
   const sport = sportsSportLabelFr(g.sport || team.sport);
-  const home = sportsTooltipTeamLabel(team);
-  const opp = sportsTooltipTeamLabel({
-    name: g.opponent,
-    nickname: g.opponentNickname,
-    fullName: g.opponentFullName,
-    code: g.opponentCode,
-  });
+  // Mêmes libellés que les puces (Bleu/Jaune, fullName si mono-token).
+  const home = sportsChipTeamShort(team);
+  const opp = sportsPlainOpponentName(g);
   const when = formatSportsWhen(g.date, g.time);
+  const host = String(team.fullName || '').trim();
 
   if (slide.mode === 'result') {
     const issue = g.result === 'W' ? 'Victoire' : g.result === 'L' ? 'Défaite' : 'Match nul';
-    const placeKind = g.scoreKind === 'place' || team.sport === 'sailing' || g.sport === 'sailing';
+    const placeKind = sportsIsPlaceResult(g, team.sport);
     const score = placeKind
       ? `place ${g.scoreFor}/${g.scoreAgainst}`
       : `${g.scoreFor}–${g.scoreAgainst}`;
-    return [issue, sport, `${home} ${score} ${opp}`, when].filter(Boolean).join(' · ');
+    const line = placeKind ? `${home} ${score}` : `${home} ${score} ${opp}`;
+    return [issue, sport, line, when, host].filter(Boolean).join(' · ');
   }
 
   // next / live proxy (urgency.tier 0 = fenêtre « en cours »)
   const status = slide.urgency?.tier === 0 ? 'En cours' : 'Prochain match';
-  return [status, sport, `${home} vs ${opp}`, when].filter(Boolean).join(' · ');
+  const verb = sportsMatchVerb(g);
+  return [status, sport, `${home} ${verb} ${opp}`, when, host].filter(Boolean).join(' · ');
 }
 
 function paintSportsChip(slide, animate = false) {
@@ -3508,15 +4230,13 @@ function paintSportsChip(slide, animate = false) {
   }
 
   const team = slide.team;
-  // Sigle RSEQ (THE, SL, OUT…) : rendu `notranslate` / translate="no" plus bas —
-  // un moteur MT y voit des mots (« THE » → « LE », « OUT » → « DEHORS »).
-  const code = String(team.code || 'EQ').toUpperCase().slice(0, 4);
-  const sport = slide.game.sport || team.sport || '';
+  const g = slide.game || {};
+  const sport = g.sport || team.sport || '';
   const tone = slide.tone || sportsSlideTone(slide);
   // Clic principal → page SEO locale (nouvel onglet, radio intacte).
   const href = sportsBoardHref(slide);
   const a = document.createElement('a');
-  a.className = 'sports-chip';
+  a.className = 'sports-chip sports-chip--match';
   a.href = href;
   markSportsBoardLink(a);
   if (animate && !sportsReducedMotion) a.classList.add('is-arriving');
@@ -3530,13 +4250,29 @@ function paintSportsChip(slide, animate = false) {
   glyph.setAttribute('aria-hidden', 'true');
   glyph.textContent = sportsGlyph(sport);
 
+  /*
+   * Deux lignes comme la CTA, largeur chip :
+   *   haut  — noms (acronymes univ. à gauche) + vs / score
+   *   bas   — date · compétition (même méta que sous-ligne CTA)
+   * Marquee L→R si overflow — **jamais** de troncature « … ».
+   */
+  const body = document.createElement('span');
+  body.className = 'sports-chip__body';
   const line = document.createElement('span');
   line.className = 'sports-chip__line';
   const inner = document.createElement('span');
   inner.className = 'sports-chip__line-inner';
+  const sub = document.createElement('span');
+  sub.className = 'sports-chip__sub';
+  const subText = document.createElement('span');
+  subText.className = 'sports-chip__sub-text';
+
+  const home = sportsChipTeamShort(team);
+  // Puce étroite : acronymes univ. (ULaval, UdeM…) — CTA garde les formes longues.
+  const opp = sportsChipOpponentLabel(g);
+  const subLine = sportsMatchSubLine(slide);
 
   if (slide.mode === 'result') {
-    const g = slide.game;
     const badge = g.result === 'W' ? 'V' : g.result === 'L' ? 'D' : 'N';
     const badgeMod = g.result === 'W' ? 'w' : g.result === 'L' ? 'l' : 'd';
     const badgeEl = document.createElement('span');
@@ -3544,33 +4280,39 @@ function paintSportsChip(slide, animate = false) {
     badgeEl.textContent = badge;
     badgeEl.setAttribute('aria-hidden', 'true');
     a.append(glyph, badgeEl);
-    const opp = String(g.opponentCode || g.opponent || 'ADV').toUpperCase().slice(0, 4);
-    const placeKind = g.scoreKind === 'place' || sport === 'sailing';
-    const scoreTxt = placeKind
-      ? `${g.scoreFor}/${g.scoreAgainst}`
-      : `${g.scoreFor}–${g.scoreAgainst}`;
+    const placeKind = sportsIsPlaceResult(g, sport);
     const prior = g.priorSeason || team.lastGamePriorSeason;
-    inner.innerHTML = `<span class="sports-chip__code notranslate" translate="no">${escapeHtml(code)}</span> `
-      + `<span class="sports-chip__score">${escapeHtml(String(scoreTxt))}</span> `
-      + `<span class="sports-chip__code sports-chip__opp notranslate" translate="no">${escapeHtml(opp)}</span>`
-      + (prior ? ` <span class="sports-chip__season-meta">Saison précédente</span>` : '');
+    if (placeKind) {
+      // Régate / place : ne pas coller « McGill Sailing 7/12 ICSA Regional… »
+      // en une ligne. Haut = équipe + place ; bas = date · compétition.
+      const placeTxt = `${g.scoreFor}e/${g.scoreAgainst}`;
+      inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+        + `<span class="sports-chip__score">${escapeHtml(placeTxt)}</span>`;
+    } else {
+      const scoreTxt = `${g.scoreFor}–${g.scoreAgainst}`;
+      inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+        + `<span class="sports-chip__score">${escapeHtml(String(scoreTxt))}</span> `
+        + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
+    }
+    subText.textContent = subLine;
     if (prior) a.classList.add('sports-chip--prior-season');
     a.title = sportsChipTitle(slide) + (prior ? ' · Saison précédente' : '');
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
   } else {
     a.append(glyph);
-    const n = slide.game;
-    const opp = String(n.opponentCode || n.opponent || 'ADV').toUpperCase().slice(0, 4);
-    const when = formatSportsWhen(n.date, n.time);
-    inner.innerHTML = `<span class="sports-chip__code notranslate" translate="no">${escapeHtml(code)}</span> `
-      + `<span class="sports-chip__vs">vs</span> `
-      + `<span class="sports-chip__code sports-chip__opp notranslate" translate="no">${escapeHtml(opp)}</span>`
-      + (when ? ` · <span class="sports-chip__when">${escapeHtml(when)}</span>` : '');
+    // « reçoit » / « à » — même ton presse que la CTA ; verbe en .sports-chip__vs (gris).
+    const verb = sportsMatchVerb(g);
+    inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+      + `<span class="sports-chip__vs">${escapeHtml(verb)}</span> `
+      + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
+    subText.textContent = subLine;
     a.title = sportsChipTitle(slide);
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
   }
   line.append(inner);
-  a.append(line);
+  sub.append(subText);
+  body.append(line, sub);
+  a.append(body);
   if (animate && !sportsReducedMotion) {
     window.setTimeout(() => a.classList.remove('is-arriving'), SPORTS_ARRIVE_MS);
   }
@@ -3586,6 +4328,11 @@ function paintSportsChip(slide, animate = false) {
  */
 function nextSportsSlide(usedKeys, opts = {}) {
   const used = usedKeys instanceof Set ? usedKeys : new Set(usedKeys || []);
+  // Toujours exclure le match actuellement en CTA (et son miroir).
+  const ctaSlot = sportsVisible.find((s) => s?.mode === 'cta');
+  if (ctaSlot) {
+    for (const k of sportsSlideOccupyKeys(ctaSlot)) used.add(k);
+  }
   const lane = sportsLeftLaneState();
   const avoidSport = String(opts.avoidSport || '').toLowerCase();
   const usedSports = opts.usedSports instanceof Set
@@ -3602,10 +4349,10 @@ function nextSportsSlide(usedKeys, opts = {}) {
     // forceMode 'info' ignoré : les slogans ne vont plus à gauche.
     if (!lane.pool.length) return null;
     const pool = lane.pool;
-    // Diversité sport puis curseur.
+    // Diversité sport puis curseur (pool déjà trié plus proche → plus loin).
     for (let i = 0; i < pool.length; i += 1) {
       const s = pool[(sportsLeftCursor + i) % pool.length];
-      if (used.has(s.key)) continue;
+      if (sportsSlideIsUsed(s, used)) continue;
       const sp = String(s.team?.sport || '').toLowerCase();
       if (sp && usedSports.has(sp) && usedSports.size < pool.length) continue;
       if (avoidSport && sp === avoidSport) continue;
@@ -3614,15 +4361,16 @@ function nextSportsSlide(usedKeys, opts = {}) {
     }
     for (let i = 0; i < pool.length; i += 1) {
       const s = pool[(sportsLeftCursor + i) % pool.length];
-      if (!used.has(s.key)) {
+      if (!sportsSlideIsUsed(s, used)) {
         sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
         return s;
       }
     }
-    // Tout déjà affiché : avancer quand même (rotation).
-    if (pool.length) {
-      const s = pool[sportsLeftCursor % pool.length];
-      sportsLeftCursor = (sportsLeftCursor + 1) % pool.length;
+    // Tout déjà affiché (hors CTA) : ne pas recycler le match CTA.
+    for (let i = 0; i < pool.length; i += 1) {
+      const s = pool[(sportsLeftCursor + i) % pool.length];
+      if (sportsSlideIsUsed(s, used)) continue;
+      sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
       return s;
     }
     return null;
@@ -3635,7 +4383,7 @@ function nextSportsSlide(usedKeys, opts = {}) {
   // 1) Sport pas encore dans le bandeau
   for (let i = 0; i < pool.length; i += 1) {
     const s = pool[(sportsLeftCursor + i) % pool.length];
-    if (used.has(s.key)) continue;
+    if (sportsSlideIsUsed(s, used)) continue;
     const sp = String(s.team?.sport || '').toLowerCase();
     if (sp && !usedSports.has(sp)) {
       sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
@@ -3646,7 +4394,7 @@ function nextSportsSlide(usedKeys, opts = {}) {
   if (avoidSport) {
     for (let i = 0; i < pool.length; i += 1) {
       const s = pool[(sportsLeftCursor + i) % pool.length];
-      if (used.has(s.key)) continue;
+      if (sportsSlideIsUsed(s, used)) continue;
       if (String(s.team?.sport || '').toLowerCase() !== avoidSport) {
         sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
         return s;
@@ -3656,15 +4404,13 @@ function nextSportsSlide(usedKeys, opts = {}) {
   // 3) Suivant non utilisé dans l’ordre de fraîcheur
   for (let i = 0; i < pool.length; i += 1) {
     const s = pool[(sportsLeftCursor + i) % pool.length];
-    if (!used.has(s.key)) {
+    if (!sportsSlideIsUsed(s, used)) {
       sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
       return s;
     }
   }
-  // 4) Rotation forcée (tous les slots déjà dans le bandeau)
-  const s = pool[sportsLeftCursor % pool.length];
-  sportsLeftCursor = (sportsLeftCursor + 1) % pool.length;
-  return s;
+  // 4) Plus de candidats hors CTA
+  return null;
 }
 
 /**
@@ -3674,31 +4420,38 @@ function nextSportsSlide(usedKeys, opts = {}) {
  * Saison → résultats ; hors saison → prochains matchs (pas de puces info).
  */
 function pickInitialSportsVisible(count) {
-  const pool = sportsCtaLabelPool();
-  sportsCtaLabelIndex = pool.length
-    ? Math.floor(Math.random() * pool.length)
-    : 0;
+  // CTA : toujours démarrer au plus récent / plus proche (pool déjà trié),
+  // puis cycle 0→1→2… — plus de Math.random() qui donnait un air aléatoire.
+  sportsCtaLabelIndex = 0;
   sportsLeftCursor = 0;
 
   // Dernier cran de largeur / fit : uniquement l’ancre « Au tableau ».
-  if (count <= 1) return [sportsCtaSlide(sportsCtaLabelIndex)];
+  if (count <= 1) return [sportsCtaSlide(0)];
 
+  // CTA d’abord (occupe le match lead), puis gauche sans ce match ni son miroir.
+  const cta = sportsCtaSlide(0);
   const contentCount = Math.max(0, count - 1);
   const picked = [];
-  const usedKeys = new Set();
+  const usedKeys = new Set(sportsSlideOccupyKeys(cta));
   const usedSports = new Set();
 
-  // Remplir la gauche avec le pool de la voie (résultats ou next) uniquement.
-  while (picked.length < contentCount) {
-    const slide = nextSportsSlide(usedKeys, { usedSports, avoidSport: '' });
-    if (!slide || slide.mode === 'info') break;
-    if (usedKeys.has(slide.key)) break;
-    picked.push(slide);
-    usedKeys.add(slide.key);
-    if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
+  // sportsVisible temporaire pour que nextSportsSlide voie la CTA.
+  const prevVisible = sportsVisible;
+  sportsVisible = [cta];
+  try {
+    while (picked.length < contentCount) {
+      const slide = nextSportsSlide(usedKeys, { usedSports, avoidSport: '' });
+      if (!slide || slide.mode === 'info') break;
+      if (sportsSlideIsUsed(slide, usedKeys)) break;
+      picked.push(slide);
+      for (const k of sportsSlideOccupyKeys(slide)) usedKeys.add(k);
+      if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
+    }
+  } finally {
+    sportsVisible = prevVisible;
   }
 
-  picked.push(sportsCtaSlide(sportsCtaLabelIndex));
+  picked.push(cta);
   return picked;
 }
 
@@ -3738,7 +4491,8 @@ function renderSportsStrip() {
   ) {
     sportsVisible = pickInitialSportsVisible(count);
   } else {
-    const used = new Set();
+    const ctaKeep = sportsCtaSlide(sportsCtaLabelIndex);
+    const used = new Set(sportsSlideOccupyKeys(ctaKeep));
     const nextVisible = [];
     for (let i = 0; i < contentSlots; i += 1) {
       const prev = sportsVisible[i];
@@ -3746,11 +4500,11 @@ function renderSportsStrip() {
         prev
         && prev.mode !== 'cta'
         && prev.mode !== 'info'
-        && !used.has(prev.key)
+        && !sportsSlideIsUsed(prev, used)
         && slideStillValid(prev)
       ) {
         nextVisible.push(prev);
-        used.add(prev.key);
+        for (const k of sportsSlideOccupyKeys(prev)) used.add(k);
       }
     }
     const usedSports = new Set(
@@ -3758,17 +4512,23 @@ function renderSportsStrip() {
         .map((s) => String(s.team?.sport || '').toLowerCase())
         .filter(Boolean),
     );
-    // Compléter avec scores / prochains matchs uniquement.
-    while (nextVisible.length < contentSlots) {
-      const slide = nextSportsSlide(used, { usedSports });
-      if (!slide || slide.mode === 'info') break;
-      if (used.has(slide.key)) break;
-      nextVisible.push(slide);
-      used.add(slide.key);
-      if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
+    // Compléter avec scores / prochains (hors match CTA).
+    const prevVis = sportsVisible;
+    sportsVisible = [ctaKeep, ...nextVisible];
+    try {
+      while (nextVisible.length < contentSlots) {
+        const slide = nextSportsSlide(used, { usedSports });
+        if (!slide || slide.mode === 'info') break;
+        if (sportsSlideIsUsed(slide, used)) break;
+        nextVisible.push(slide);
+        for (const k of sportsSlideOccupyKeys(slide)) used.add(k);
+        if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
+      }
+    } finally {
+      sportsVisible = prevVis;
     }
     // CTA toujours à droite (ou seule si contentSlots = 0).
-    nextVisible.push(sportsCtaSlide(sportsCtaLabelIndex));
+    nextVisible.push(ctaKeep);
     sportsVisible = nextVisible;
   }
 
@@ -3780,19 +4540,17 @@ function renderSportsStrip() {
   MASTHEAD_SPORTS_STRIP.hidden = false;
   MASTHEAD_SPORTS_STRIP.dataset.count = String(sportsVisible.length);
   MASTHEAD_SPORTS_STRIP.dataset.ctaPinned = pinned ? '1' : '0';
-  // Défilement texte + cascade de fit (parité météo) après layout.
+  // Fit anti-marquee (A) + marquee CTA seulement, après layout stable.
   window.requestAnimationFrame(() => {
     refreshSportsChipScroll();
-    // Un second frame : les largeurs flex sont stables avant de mesurer.
     window.requestAnimationFrame(() => {
       fitSportsStripAfterPaint();
-      // Polices webfont : une mesure trop tôt sous-estime la largeur → pas de
-      // marquee et texte clipé (ou, avant, ellipsis « … »). Remesurer une fois
-      // les polices prêtes pour garantir le défilement L→R du texte entier.
+      // Polices webfont : re-fit une fois prêtes (mesure titre/sous-ligne juste).
       const fonts = document.fonts;
       if (fonts?.ready && typeof fonts.ready.then === 'function') {
         fonts.ready.then(() => {
           if (!MASTHEAD_SPORTS_STRIP?.isConnected) return;
+          fitSportsStripAfterPaint();
           refreshSportsChipScroll();
         }).catch(() => { /* ignore */ });
       }
@@ -3814,25 +4572,19 @@ function sportsLabelReadingMs(text) {
 }
 
 /**
- * True si le libellé de la puce déborde (marquee nécessaire).
- * Mesure réelle scrollWidth — ne dépend pas seulement de la classe
- * (qui peut arriver un frame après le schedule).
- * CTA : titre **ou** sous-ligne (date · compétition · MAJ).
+ * True si la puce a besoin d’un marquee (dwell allongé).
+ * Focus-group A : puces **scores** → toujours false (pas de marquee).
+ * CTA : titre ou sous-ligne overflow (marquee encore toléré).
  */
 function sportsChipNeedsMarquee(chip) {
   if (!chip || sportsReducedMotion) return false;
+  // Scores : anti-marquee — overflow géré par −1 puce, pas par scroll.
+  if (!chip.classList.contains('sports-chip--cta')) return false;
   if (
     chip.classList.contains('is-overflowing')
     || chip.classList.contains('is-sub-overflowing')
   ) {
     return true;
-  }
-  const isCta = chip.classList.contains('sports-chip--cta');
-  if (!isCta) {
-    const viewport = chip.querySelector('.sports-chip__line');
-    const inner = chip.querySelector('.sports-chip__line-inner');
-    if (!viewport || !inner) return false;
-    return sportsMeasureOverflow(viewport, inner, false) > 2;
   }
   const layer = sportsCtaActiveLabel(chip);
   if (!layer) return false;
@@ -3864,7 +4616,7 @@ function sportsSlotDwellMs(slot) {
     : chip?.querySelector('.sports-chip__line-inner');
   const subEl = isCta
     ? sportsCtaActiveLabel(chip)?.querySelector('.sports-chip__cta-sub-text')
-    : null;
+    : chip?.querySelector('.sports-chip__sub-text');
   const label = [labelEl?.textContent || '', subEl?.textContent || '']
     .filter(Boolean)
     .join(' · ');
@@ -3874,8 +4626,14 @@ function sportsSlotDwellMs(slot) {
   // CTA : plancher propre (un cran plus posé que les scores, sans 24 s collants).
   const floor = isCta ? SPORTS_CTA_DWELL_MS : readMs;
   if (sportsChipNeedsMarquee(chip)) {
-    // Aller (8,5 s) + retour (8,5 s) + pause au début — synchro CSS.
-    return Math.max(floor, SPORTS_SCROLL_ROUND_TRIP_MS + SPORTS_SCROLL_POST_PAUSE_MS);
+    // Lecture → 1 aller-retour (pas infinite) → pause repos — synchro CSS.
+    const oneWay = chip.classList.contains('sports-chip--match')
+      ? SPORTS_MATCH_SCROLL_ONE_WAY_MS
+      : SPORTS_SCROLL_ONE_WAY_MS;
+    return Math.max(
+      floor,
+      SPORTS_SCROLL_READ_DELAY_MS + oneWay * 2 + SPORTS_SCROLL_POST_PAUSE_MS,
+    );
   }
   return floor;
 }
@@ -3909,12 +4667,8 @@ function rotateSportsSlot(slot) {
   if (slot < 0 || slot >= n) return;
   const pinned = n >= 2;
   const rightSlot = n - 1;
-  const used = new Set(
-    sportsVisible
-      .filter((_, i) => i !== slot)
-      .map((s) => s.key)
-      .filter(Boolean),
-  );
+  // Occupation = clés faces + dédup match (miroir CTA ↔ gauche).
+  const used = sportsVisibleOccupyKeys(slot);
   const usedSports = new Set(
     sportsVisible
       .filter((_, i) => i !== slot && sportsVisible[i]?.mode !== 'cta')
@@ -3924,10 +4678,11 @@ function rotateSportsSlot(slot) {
 
   let replacement = null;
   if (!pinned || slot === rightSlot) {
-    // CTA fixe (seule ou à droite) : on ne fait tourner que le sous-texte.
+    // CTA fixe (seule ou à droite) : cycle séquentiel du pool (plus récent → suite).
     const poolLen = Math.max(1, sportsCtaLabelPool().length);
     sportsCtaLabelIndex = (sportsCtaLabelIndex + 1) % poolLen;
     replacement = sportsCtaSlide(sportsCtaLabelIndex);
+    // Si le nouveau match CTA était à gauche, purger ce slot gauche au prochain tick.
   } else {
     // Voie de gauche : résultats (saison) ou prochains matchs (hors saison).
     const cur = sportsVisible[slot];
@@ -3943,15 +4698,39 @@ function rotateSportsSlot(slot) {
   if (
     replacement.mode !== 'cta'
     && replacement.mode !== 'info'
-    && replacement.key === sportsVisible[slot]?.key
+    && sportsSlideIsUsed(replacement, used)
   ) {
     const avoid = String(sportsVisible[slot]?.team?.sport || '').toLowerCase();
     sportsLeftCursor = (sportsLeftCursor + 1) % Math.max(1, sportsLeftLaneState().pool.length || 1);
     replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid });
-    if (!replacement || replacement.key === sportsVisible[slot]?.key) return;
+    if (!replacement || sportsSlideIsUsed(replacement, used)) return;
   }
 
   sportsVisible[slot] = replacement;
+
+  // Après rotation CTA : si une puce gauche montre le même match, la remplacer.
+  if (replacement.mode === 'cta' && replacement.ctaFrom) {
+    const ctaKeys = sportsSlideOccupyKeys(replacement);
+    for (let i = 0; i < n; i += 1) {
+      if (i === slot) continue;
+      const left = sportsVisible[i];
+      if (!left || left.mode === 'cta') continue;
+      if (!sportsSlideIsUsed(left, ctaKeys)) continue;
+      const avoid = String(left.team?.sport || '').toLowerCase();
+      const leftUsed = sportsVisibleOccupyKeys(i);
+      const alt = nextSportsSlide(leftUsed, { usedSports, avoidSport: avoid });
+      if (alt && alt.mode !== 'cta' && !sportsSlideIsUsed(alt, leftUsed)) {
+        sportsVisible[i] = alt;
+        const chips = MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip');
+        const oldLeft = chips[i];
+        if (oldLeft) {
+          const painted = paintSportsChip(alt, !sportsReducedMotion);
+          oldLeft.replaceWith(painted);
+          window.requestAnimationFrame(() => refreshSportsChipScroll(painted));
+        }
+      }
+    }
+  }
   sportsNextSlot = (slot + 1) % n;
   const chips = MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip');
   const oldChip = chips[slot];
@@ -4077,9 +4856,6 @@ async function initMastheadSports() {
     sportsFitDepth = 0;
     renderSportsStrip();
     scheduleSportsRotate();
-    // Parité météo : resync si la météo s’est peinte juste avant/après.
-    queueSportsWeatherParitySync();
-    window.setTimeout(() => queueSportsWeatherParitySync(), 600);
     if (!initMastheadSports._resizeBound) {
       initMastheadSports._resizeBound = true;
       initMastheadSports._lastWidth = MASTHEAD_SPORTS_STRIP.clientWidth || 0;
@@ -4948,20 +5724,24 @@ function formatStationNowAirLabel(radio) {
 
 /**
  * Téléphone (< 600 px) ou embed étroit (pomo/solitaire mobile) :
- * acronyme d’institution dans le titre du syntoniseur.
+ * layout dial compact (ligne antenne dans le sous-titre).
  */
 function isTunerDialPhoneLayout() {
   if (IS_TUNER_EMBED) return isEmbedNowAirInDial();
   return !!TUNER_DIAL_PHONE_MQ?.matches;
 }
 
-/** Institution affichée dans le syntoniseur : abrégée au téléphone / embed étroit. */
+/**
+ * Institution dans le syntoniseur : **toujours l’acronyme** (UQAM, UdeM, ULaval…).
+ * Évite le marquee inutile en veille (« CHOQ.ca · Université du Québec à Montréal »)
+ * et aligne bureau / tablette / téléphone.
+ */
 function tunerDialInstitutionLabel(radio) {
   if (!radio) return '';
-  const raw = isTunerDialPhoneLayout()
-    ? shortInstitution(radio.institution, radio.type)
-    : tunerInstitutionLabel(radio.institution);
-  // Forme longue localisable (EN/ES…) ; acronymes restent neutres.
+  const raw = shortInstitution(radio.institution, radio.type)
+    || resolveInstitutionAcronym(radio.institution)
+    || adaptRadarInstitutionLabel(tunerInstitutionLabel(radio.institution));
+  // Acronymes neutres (pas de MT) ; forme longue seulement si aucun acronyme.
   return adaptRadarInstitutionLabel(raw);
 }
 
@@ -5049,17 +5829,12 @@ function isDialCompactLayout() {
 }
 
 /**
- * Titre ligne 1 en layout compact.
- * Mobile / embed étroit : toujours acronyme (ULaval, UdeM…), jamais le nom long.
+ * Titre ligne 1 en layout compact : poste · acronyme (jamais le nom long d’univ.).
  */
 function compactDialTitleLine(radio) {
   if (!radio) return tunerSubMeta || 'Radios étudiantes en direct';
   const name = stationDisplayName(radio) || radio.name || '';
-  // Acronyme sur téléphone + embed étroit ; tablette site peut garder le long.
-  const inst = isTunerDialPhoneLayout() || isEmbedNowAirInDial()
-    ? (shortInstitution(radio.institution, radio.type)
-      || adaptRadarInstitutionLabel(tunerInstitutionLabel(radio.institution)))
-    : tunerDialInstitutionLabel(radio);
+  const inst = tunerDialInstitutionLabel(radio);
   if (!name) return inst || '';
   return inst ? `${name} · ${inst}` : name;
 }
@@ -5177,21 +5952,21 @@ function stopNowAirPreview() {
 }
 
 /**
- * Temps qu'il faut à un texte qui défile pour partir **et revenir**.
+ * Temps qu'il faut à un texte qui défile pour : lire → partir → revenir → reposer.
  *
- * L'animation est `alternate` : une itération fait l'aller, la suivante le
- * retour. Un cycle complet vaut donc 2 × `--marquee-duration`. On ajoute une
- * marge pour la pause de lecture aux deux extrémités (14 % de la durée de
- * chaque côté, cf. les keyframes `tunerMarquee`).
+ * L'animation est `alternate` × 2 (pas infinite) + `animation-delay` lecture.
+ * Un cycle complet = delay + 2 × `--marquee-duration` + pause repos.
  *
  * Règle générale du site : **on ne change jamais un texte avant la fin de son
- * aller-retour.** Toute surface qui alterne doit passer par ici.
+ * aller-retour**, et on ne relance pas un 2ᵉ cycle pendant l’attente.
  */
 function marqueeRoundTripMs(el) {
   if (!el?.classList.contains('is-marquee')) return 0;
   const sec = parseFloat(el.style.getPropertyValue('--marquee-duration'));
   if (!Number.isFinite(sec) || sec <= 0) return 0;
-  return Math.ceil(sec * 1000 * MARQUEE_ROUND_TRIPS) + MARQUEE_REST_MS;
+  return Math.ceil(sec * 1000 * MARQUEE_ROUND_TRIPS)
+    + MARQUEE_READ_DELAY_MS
+    + MARQUEE_REST_MS;
 }
 
 /**
@@ -5304,6 +6079,7 @@ function syncDesktopDialPreview(_airTitle, crossfade = false) {
     return;
   }
 
+  // Acronyme d’établissement (CHOQ.ca · UQAM) — pas le nom long qui force un marquee en veille.
   const stationLine = tunerDialTitleLine(nowAirPreviewRadio);
   const subText = TUNER_SUB?.querySelector('.tuner-now-sub-text')?.textContent;
   if (!crossfade && stationLine === lastDialCarouselText && subText === stationLine) {
@@ -6562,6 +7338,7 @@ function measureMarquee(el) {
     el.classList.remove('is-marquee');
     el.style.removeProperty('--marquee-shift');
     el.style.removeProperty('--marquee-duration');
+    el.style.removeProperty('--marquee-delay');
     return;
   }
 
@@ -6573,6 +7350,7 @@ function measureMarquee(el) {
   const duration = Math.max(7, distance / 16);
   el.style.setProperty('--marquee-shift', `-${distance}px`);
   el.style.setProperty('--marquee-duration', `${duration.toFixed(1)}s`);
+  el.style.setProperty('--marquee-delay', `${(MARQUEE_READ_DELAY_MS / 1000).toFixed(1)}s`);
   el.classList.add('is-marquee');
 }
 
@@ -6673,6 +7451,7 @@ function applyMarquee(el, text) {
   el.classList.remove('is-marquee');
   el.style.removeProperty('--marquee-shift');
   el.style.removeProperty('--marquee-duration');
+  el.style.removeProperty('--marquee-delay');
 
   if (!value) {
     marqueeTextByEl.delete(el);
@@ -9387,30 +10166,26 @@ function partitionNewsFeed(items, referenceDate = new Date()) {
 }
 
 /**
- * Magazine 2 col dès 900 px (focus-group midwidth-fil C — hybride).
+ * Magazine 2 col dès 900 px (focus-group midwidth-fil C — hybride, livré).
  * · 900–1099 : magazine mid (rail étroit)
  * · ≥1100 : magazine bureau
  * Recherche = liste plate — pas d’équilibre colonnes.
+ * (Lab local : plus d’overrides A/C — barre = formats d’écran seulement.)
  */
 function canBalanceMagazineColumns() {
   if (!NEWS_LIST) return false;
   if (NEWS_LIST.dataset.mode === 'search') return false;
-  // Override local preview A (densify seul) : pas de magazine mid.
-  if (document.documentElement.dataset.midwidthPreview === 'A') return false;
-  const minPx = (typeof window.__radarMidwidthPreview?.magazineMinPx === 'function'
-    && document.documentElement.dataset.midwidthPreview)
+  const minPx = (typeof window.__radarMidwidthPreview?.magazineMinPx === 'function')
     ? window.__radarMidwidthPreview.magazineMinPx()
     : 900;
   return window.matchMedia(`(min-width: ${minPx}px)`).matches;
 }
 
 /**
- * Magazine mid 900–1099 (prod) — ou preview C forcée.
+ * Magazine mid 900–1099 (prod).
  * Rail étroit → cartes En bref plus hautes ; budgets d’extrait MID.
  */
 function isMidwidthMagazinePreview() {
-  // Preview A = densify 1 col seulement.
-  if (document.documentElement.dataset.midwidthPreview === 'A') return false;
   try {
     return window.matchMedia('(min-width: 900px) and (max-width: 1099.98px)').matches;
   } catch {

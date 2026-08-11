@@ -50,6 +50,7 @@ function loadSportsTeamsRegistry(registryPath = DEFAULT_PATH) {
   const byId = new Map();
   const byRseqId = new Map();
   const byCodeSector = new Map();
+  /** @type {Map<string, object[]>} alias → toutes les formations (ex. Sherbrooke SHE+USHE) */
   const byAlias = new Map();
 
   for (const t of teams) {
@@ -64,7 +65,10 @@ function loadSportsTeamsRegistry(registryPath = DEFAULT_PATH) {
     const aliasList = [t.shortName, t.fullName, t.nickname, t.code, ...(t.aliases || [])];
     for (const a of aliasList) {
       const k = normKey(a);
-      if (k && !byAlias.has(k)) byAlias.set(k, t);
+      if (!k) continue;
+      const list = byAlias.get(k) || [];
+      if (!list.some((x) => x.id === t.id)) list.push(t);
+      byAlias.set(k, list);
     }
   }
 
@@ -82,6 +86,40 @@ function loadSportsTeamsRegistry(registryPath = DEFAULT_PATH) {
  * @param {ReturnType<typeof loadSportsTeamsRegistry>} reg
  * @param {{ name?: string, code?: string, sector?: string, rseqTeamId?: string }} query
  */
+/**
+ * Choisit parmi plusieurs hits d’alias (ex. « Sherbrooke » = cégep SHE + univ USHE).
+ * Préfère le secteur demandé, puis fullName le plus aligné au query.name.
+ */
+function pickAliasHit(list, query = {}) {
+  if (!list || !list.length) return null;
+  if (list.length === 1) return list[0];
+  const sector = query.sector || '';
+  if (sector) {
+    const same = list.filter((t) => t.sector === sector);
+    if (same.length === 1) return same[0];
+    if (same.length > 1) list = same;
+  }
+  // fullName explicite dans le query
+  const qFull = normKey(query.fullName || '');
+  if (qFull) {
+    const byFull = list.find((t) => normKey(t.fullName) === qFull);
+    if (byFull) return byFull;
+  }
+  // Indices collégiaux dans le nom fourni
+  const qName = `${query.name || ''} ${query.fullName || ''}`;
+  if (/c[eé]gep|coll[eè]ge|campus|champlain/i.test(qName)) {
+    const col = list.find((t) => t.sector === 'collegial');
+    if (col) return col;
+  }
+  if (/universit[eé]|university/i.test(qName)) {
+    const uni = list.find((t) => t.sector === 'universitaire');
+    if (uni) return uni;
+  }
+  // Défaut : collégial si les deux (plus fréquent en calendrier RSEQ mixte mal tagué)
+  // Non — préfère priorité éditoriale basse (univ souvent priority < 20)
+  return list.slice().sort((a, b) => (a.priority || 99) - (b.priority || 99))[0];
+}
+
 function resolveSportsTeam(reg, query = {}) {
   if (!reg) {
     return emptyResolved(query);
@@ -95,11 +133,22 @@ function resolveSportsTeam(reg, query = {}) {
   if (code && sector && reg.byCodeSector.has(`${sector}:${code}`)) {
     return toResolved(reg.byCodeSector.get(`${sector}:${code}`), query);
   }
+  // Code seul **avec** secteur déjà tenté ; code sans secteur : exact code unique
+  if (code && !sector) {
+    const codeHits = reg.teams.filter((t) => String(t.code || '').toUpperCase() === code);
+    if (codeHits.length === 1) return toResolved(codeHits[0], query);
+    if (codeHits.length > 1) {
+      const picked = pickAliasHit(codeHits, query);
+      if (picked) return toResolved(picked, query);
+    }
+  }
   const nameKey = normKey(query.name);
   if (nameKey && reg.byAlias.has(nameKey)) {
-    return toResolved(reg.byAlias.get(nameKey), query);
+    const list = reg.byAlias.get(nameKey);
+    const hit = pickAliasHit(Array.isArray(list) ? list : [list], query);
+    if (hit) return toResolved(hit, query);
   }
-  // Code seul (adversaire hors secteur fiable).
+  // Code + secteur manquant déjà couvert ; repli code seul
   if (code) {
     const hit = reg.teams.find((t) => String(t.code || '').toUpperCase() === code);
     if (hit) return toResolved(hit, query);
@@ -191,16 +240,28 @@ function applyRegistryToTeam(team, reg) {
 
 function applyRegistryToGameSide(game, reg, sector) {
   if (!game) return;
+  // Indices collégiaux dans fullName adversaire priment sur le secteur de l’équipe
+  // (évite UdeS quand le flux dit « Cégep de Sherbrooke »).
+  let oppSector = sector;
+  const hint = `${game.opponent || ''} ${game.opponentFullName || ''}`;
+  if (/c[eé]gep|coll[eè]ge(?!\s+militaire)|campus\s|champlain\s+college/i.test(hint)
+    && !/universit[eé]|university/i.test(hint)) {
+    oppSector = 'collegial';
+  } else if (/universit[eé]|university/i.test(hint)) {
+    oppSector = 'universitaire';
+  }
   const opp = resolveSportsTeam(reg, {
     name: game.opponent,
+    fullName: game.opponentFullName,
     code: game.opponentCode,
-    sector, // même secteur de ligue en général
+    sector: oppSector,
   });
   game.opponent = opp.shortName;
   game.opponentCode = opp.code;
   if (opp.fullName) game.opponentFullName = opp.fullName;
   if (opp.nickname) game.opponentNickname = opp.nickname;
   if (opp.registryId) game.opponentRegistryId = opp.registryId;
+  if (opp.sector) game.opponentSector = opp.sector;
 }
 
 module.exports = {

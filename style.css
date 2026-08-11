@@ -138,9 +138,8 @@ body {
 }
 /*
  * Hauteur réservée — garde-fou `hauteur-stable` (focus-group
- * le-radar-sports-first-glance). La carte CTA fait deux lignes, les puces de
- * score une seule : sans plancher, la bande changeait de hauteur au premier
- * rendu et poussait le fil. Zéro décalage de mise en page.
+ * le-radar-sports-first-glance). CTA et puces scores sont en 2 lignes
+ * (noms + date) : plancher stable pour ne pas pousser le fil au 1er paint.
  */
 .masthead-sports-strip:not([hidden]) {
   min-height: 60px;
@@ -149,11 +148,32 @@ body {
   flex-wrap: nowrap;
   overflow: hidden;
 }
-/* Dernier cran de fit : CTA « SPORTS » seule (parité météo → 1 carte). */
+/* Dernier cran de fit : CTA « SPORTS » seule. */
 .masthead-sports-strip[data-count="1"] .sports-chip--cta {
   flex: 1 1 auto;
   min-width: 0;
   max-width: 100%;
+}
+/*
+ * 1 score + CTA : largeurs strictement égales (50/50).
+ * Doit gagner sur `.sports-chip--cta { flex: 1.2 1 9.5rem; min-width: 9.5rem }`
+ * (sinon la CTA mange ~55–60 % et le score paraît « trop étroit »).
+ */
+.masthead-sports-strip[data-count="2"] > .sports-chip,
+.masthead-sports-strip[data-count="2"] > .sports-chip--match,
+.masthead-sports-strip[data-count="2"] > .sports-chip--cta {
+  flex: 1 1 0 !important;
+  flex-grow: 1 !important;
+  flex-shrink: 1 !important;
+  flex-basis: 0 !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  width: 0 !important; /* base flex égale, le grow partage le reste 50/50 */
+}
+/* 2 scores + CTA : CTA un peu plus étroite pour laisser lire les matchs. */
+.masthead-sports-strip[data-count="3"] .sports-chip--cta {
+  flex: 1 1 28%;
+  max-width: 38%;
 }
 .masthead-sports-strip .sports-chip {
   flex: 1 1 0;
@@ -182,6 +202,26 @@ body {
     0 1px 2px rgba(0, 0, 0, 0.28),
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
     0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 22%, transparent);
+}
+/* Puces scores 2 lignes : noms (haut) + date/compétition (bas).
+ * Focus-group le-radar-sports-weather-fit A : jamais de marquee sur les scores
+ * — si le texte déborde, le JS retire une puce (fit). CTA garde le marquee. */
+.masthead-sports-strip .sports-chip--match {
+  white-space: normal;
+  align-items: center;
+  min-height: 44px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.masthead-sports-strip .sports-chip__body {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* 2px : air entre les 2 lignes pour les jambages (g, j, y, p, q). */
+  gap: 2px;
+  overflow: hidden;
 }
 /* Pulse de bordure pourpre : puces scores + CTA au repos (pas en direct —
  * le live a son propre halo rouge). Même famille visuelle sur toute la bande. */
@@ -295,15 +335,57 @@ body {
   min-width: 0;
   overflow: hidden;
 }
+.masthead-sports-strip .sports-chip--match .sports-chip__line {
+  flex: 0 0 auto;
+  display: block;
+  max-width: 100%;
+}
 .masthead-sports-strip .sports-chip__line-inner {
   display: inline-block;
   white-space: nowrap;
   max-width: 100%;
   overflow: hidden;
-  /* Jamais d’ellipsis (…) sur le bandeau sports : le marquee L→R lit le
-   * texte entier. Au repos / avant mesure : clip net, pas trois points. */
+  /* Jamais d’ellipsis (…) : scores tiennent entiers (fit −1 puce) ;
+   * CTA peut marquee. Au repos : clip net, pas trois points. */
   text-overflow: clip;
   vertical-align: middle;
+}
+/* Sous-ligne date des puces scores (parité visuelle cta-sub, largeur chip). */
+.masthead-sports-strip .sports-chip--match .sports-chip__sub {
+  display: block;
+  flex: 0 0 auto;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  /* 1.15 + overflow:hidden coupait j/g (ex. « jeu. », « collégial »). */
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.72);
+}
+.masthead-sports-strip .sports-chip--match .sports-chip__sub-text {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+  vertical-align: middle;
+  font-variant-numeric: tabular-nums;
+}
+.masthead-sports-strip .sports-chip--match .sports-chip__name {
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: rgba(245, 246, 248, 0.96);
+}
+.masthead-sports-strip .sports-chip--match .sports-chip__line-inner {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  /* Même leçon que .translate-toggle__label : line-height trop bas +
+   * overflow:hidden coupe les jambages (g de « Collège », j, y, p, q).
+   * overflow-x/y mixtes sont ramenés à auto en CSS — on élargit la ligne. */
+  line-height: 1.35;
 }
 /* Défilement L→R du texte trop long (scores ET accroche CTA SPORTS).
  * La pastille « SPORTS » reste fixe ; seul le texte d’info défile.
@@ -312,18 +394,16 @@ body {
  * attend ce cycle + pause repos avant de changer le match (lecture confortable). */
 .masthead-sports-strip {
   /* Holds aux extrémités = moins d’à-coups aux virages. Titre et sous-ligne
-   * partagent la même durée ; les holds (18/82 vs 32/68) restent distincts. */
+   * partagent la même durée ; les holds (18/82 vs 32/68) restent distincts.
+   * 2 alternate (pas infinite) + delay lecture — 1 aller-retour puis repos. */
   --sports-scroll-duration: 5.5s;
+  --sports-scroll-delay: 1.6s;
 }
-/* Marquee scores (gauche) — CTA a sa propre règle sur .is-front uniquement. */
-.masthead-sports-strip .sports-chip:not(.sports-chip--cta).is-overflowing .sports-chip__line-inner {
-  max-width: none;
-  overflow: visible;
-  text-overflow: clip;
-  /* Marquee L→R : le texte complet défile, jamais d’ellipsis figée. */
-  animation: sports-chip-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
-  will-change: transform;
-}
+/*
+ * Focus-group A : marquee **interdit** sur puces scores (.sports-chip--match).
+ * Les sélecteurs is-overflowing / is-sub-overflowing + keyframes restent pour
+ * la CTA seule (ci-dessous). Scores : fit JS (−1 puce) si overflow texte.
+ */
 @keyframes sports-chip-scroll {
   /* Holds plus longs au début / fin pour lire l’info au calme. */
   0%, 18% { transform: translateX(0); }
@@ -342,6 +422,7 @@ body {
  * complet ; le cadre clippe sans « … ». */
 @media (prefers-reduced-motion: reduce) {
   .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner,
+  .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub-text,
   .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__cta-text,
   .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__cta-sub-text {
     animation: none;
@@ -350,23 +431,36 @@ body {
     text-overflow: clip;
   }
 }
+/* Ancienne classe sigle : gardée si un autre surface la réutilise. */
 .masthead-sports-strip .sports-chip__code { font-weight: 800; letter-spacing: 0.03em; }
 .masthead-sports-strip .sports-chip__score {
   font-variant-numeric: tabular-nums;
   font-weight: 800;
   color: #fff;
-  margin: 0 1px;
+  margin: 0 2px;
 }
 .masthead-sports-strip .sports-chip__code,
 .masthead-sports-strip .sports-chip__opp,
-.masthead-sports-strip .sports-chip__when {
+.masthead-sports-strip .sports-chip__when,
+.masthead-sports-strip .sports-chip__name {
   color: rgba(245, 246, 248, 0.96);
 }
+/* Verbe « reçoit / à » — gris doux, gauche **et** CTA (même classe). */
 .masthead-sports-strip .sports-chip__vs {
   opacity: 0.72;
   font-weight: 650;
   font-size: 0.92em;
-  text-transform: lowercase;
+  margin: 0 0.12em;
+  /* pas de forced lowercase — verbe FR lisible */
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-text .sports-chip__name {
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-text .sports-chip__vs {
+  opacity: 0.72;
+  font-weight: 650;
+  font-size: 0.92em;
 }
 .masthead-sports-strip .sports-chip__when {
   opacity: 0.88;
@@ -396,7 +490,7 @@ body {
  * alerte pour un match à quinze jours).
  * L’accroche roule verticalement en place (jamais de carte type gare). ── */
 .masthead-sports-strip .sports-chip--cta {
-  /* Un peu plus de place pour pastille + accroche sur deux lignes. */
+  /* Un peu plus de place pour pastille + accroche — sauf data-count=2 (50/50). */
   flex: 1.2 1 9.5rem;
   min-width: 9.5rem;
   justify-content: flex-start;
@@ -410,6 +504,14 @@ body {
     0 1px 2px rgba(0, 0, 0, 0.28),
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
     0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 22%, transparent);
+}
+/* Après la règle CTA flex 1.2 : forcer 50/50 quand 1 score + CTA. */
+.masthead-sports-strip[data-count="2"] > .sports-chip {
+  flex: 1 1 0 !important;
+  flex-basis: 0 !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  width: 0 !important;
 }
 /* Direct : le registre d’alerte, gagné par un match en cours. */
 .masthead-sports-strip .sports-chip--cta[data-cta-state="live"] {
@@ -470,12 +572,13 @@ body {
  * Stack 2 couches pour le roulement vertical (focus-group le-radar-cta-sports-motion).
  * Hauteur fixe : deux lignes, marqueur + accroche puis sous-ligne. Le cadre coupe
  * — c’est lui qui garantit qu’on ne lit jamais deux accroches à la fois — mais il
- * doit laisser passer accents hauts et jambages, d’où 2.65em et non 2 × 1.25em.
+ * doit laisser passer accents hauts et jambages. Avec line-height 1.35 sur les
+ * deux lignes + gap 2px : ~3.15em (pas 2 × 1.35em collés).
  */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-stack {
   position: relative;
   display: block;
-  height: 2.7em;
+  height: 3.15em;
   width: 100%;
   overflow: hidden;
 }
@@ -485,7 +588,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1px;
+  gap: 2px;
   min-width: 0;
   color: #fff;
   pointer-events: none;
@@ -494,8 +597,7 @@ body {
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-front {
   z-index: 1;
 }
-/* Ligne 1 : marqueur + accroche. Deux lignes en tout, pas trois — le cadre est
-   dimensionné pour ça. */
+/* Ligne 1 : marqueur + glyphe (fixes) + accroche. Deux lignes en tout. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-head {
   display: flex;
   align-items: baseline;
@@ -510,13 +612,21 @@ body {
   letter-spacing: 0.09em;
   text-transform: uppercase;
   color: color-mix(in srgb, var(--accent, #cf7ec1) 55%, rgba(255, 255, 255, 0.88));
-  line-height: 1.1;
+  /* 1.1 coupait le bas des glyphes dans le stack overflow:hidden. */
+  line-height: 1.35;
   white-space: nowrap;
 }
 .masthead-sports-strip .sports-chip--cta[data-cta-state="live"] .sports-chip__cta-eyebrow {
   color: color-mix(in srgb, #ff8a80 70%, #fff);
 }
-/* Fenêtre de défilement : elle borne le texte, jamais le marqueur. */
+/* Glyphe sport — fixe comme PROCHAIN ; seul le texte des noms défile. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-glyph {
+  flex: 0 0 auto;
+  font-size: 12px;
+  line-height: 1;
+  align-self: center;
+}
+/* Fenêtre de défilement : borne les noms, jamais le marqueur ni le glyphe. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-line {
   display: block;
   flex: 1 1 auto;
@@ -533,7 +643,8 @@ body {
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.03em;
-  line-height: 1.25;
+  /* Jambages (g de Collège / collégial) : voir .sports-chip__line-inner. */
+  line-height: 1.35;
   vertical-align: middle;
 }
 /* Sous-ligne : compétition + fraîcheur. Fenêtre de défilement (comme le titre) :
@@ -547,7 +658,8 @@ body {
   font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.01em;
-  line-height: 1.15;
+  /* 1.15 coupait j/g (« jeu. », « collégial ») sous overflow:hidden. */
+  line-height: 1.35;
   color: rgba(255, 255, 255, 0.7);
 }
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-sub-text {
@@ -588,7 +700,7 @@ body {
   max-width: none;
   overflow: visible;
   text-overflow: clip;
-  animation: sports-chip-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  animation: sports-chip-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) 2 alternate both;
   will-change: transform;
 }
 .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text {
@@ -596,7 +708,7 @@ body {
   overflow: visible;
   text-overflow: clip;
   /* Fallback 5.5s (pas 8.5s) : --sports-scroll-duration hérite déjà du strip. */
-  animation: sports-chip-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  animation: sports-chip-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) 2 alternate both;
   will-change: transform;
 }
 @keyframes sports-chip-scroll-sub {
@@ -688,11 +800,27 @@ body {
 .masthead-actions {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 8px;
   flex-shrink: 0;
+  /* Jamais de réserve shuffle ici par défaut — le padding bureau est en ≥1024. */
+  padding-right: 0;
+  margin-right: 0;
 }
-@media (min-width: 600px) {
-  .masthead-actions { padding-right: 36px; }
+/*
+ * Bureau ≥1024 : le shuffle flotte dans le slot, calé sur la même gouttière
+ * que le contenu / crédit photo. On réserve ~1 icône dans la rangée.
+ * ≤1023 : shuffle est DANS .masthead-actions — padding 0 (sinon trou 36 px
+ * à droite des icônes, décalage vs crédits / météo / sports).
+ */
+@media (min-width: 1024px) {
+  .masthead-actions { padding-right: calc(28px + 8px); }
+}
+@media (max-width: 1023.98px) {
+  .masthead-actions {
+    padding-right: 0 !important;
+    margin-right: 0;
+  }
 }
 
 .masthead-icon {
@@ -731,15 +859,21 @@ body {
    la place et la rangée (date + 6 icônes) débordait de ~33 px sur iPhone /
    Pixel. Icônes et typo compactées ; l'ellipse est un filet de sécurité pour
    les dates les plus longues sur les écrans les plus étroits. */
-@media (max-width: 599.98px) {
+/* Tablette + mobile : météo dockée sous le tuner (JS ≤1023.98) — mât = date + actions. */
+@media (max-width: 1023.98px) {
   .masthead-top {
     grid-template-areas: 'date actions';
     grid-template-columns: minmax(0, 1fr) max-content;
     column-gap: 6px;
-    /* Récupère quelques px du padding page pour la date. */
-    margin-inline: -6px;
   }
   .masthead-weather:not(.masthead-weather--docked) { display: none !important; }
+}
+@media (max-width: 599.98px) {
+  .masthead-top {
+    /* Récupère quelques px à GAUCHE pour la date — pas à droite, sinon les
+       icônes dépassent la gouttière des crédits (pad) de 6 px. */
+    margin-inline: -6px 0;
+  }
   .masthead-date {
     position: relative;
     transform: translateY(-3px);
@@ -775,10 +909,14 @@ body {
     opacity: 0.9;
   }
   .masthead-actions { gap: clamp(4px, .8vw, 6px); }
-  .masthead-shuffle-slot { display: none; }
   .masthead-icon { width: clamp(24px, 5.5vw, 28px); height: clamp(24px, 5.5vw, 28px); }
   .masthead-icon svg { width: clamp(13px, 3vw, 15px); height: clamp(13px, 3vw, 15px); }
   .masthead-icon .app-emoji { width: clamp(13px, 3vw, 15px); height: clamp(13px, 3vw, 15px); }
+}
+/* Tablette + mobile (météo dockée ≤1023) : shuffle dans la rangée d’icônes
+   (JS syncMastheadShuffleButton), pas en pastille flottante sur la photo. */
+@media (max-width: 1023.98px) {
+  .masthead-shuffle-slot { display: none; }
 }
 @media (max-width: 374.98px) {
   .masthead-date { font-size: 10px; letter-spacing: 0.01em; }
@@ -916,6 +1054,33 @@ body {
   overflow-wrap: anywhere;
   word-break: break-word;
   hyphens: none;
+}
+/*
+ * Bureau : exactement 2 lignes —
+ *   1) … du Québec,
+ *   2) réunis au même endroit
+ * Le lead ne doit PAS se re-couper (sinon « QUÉBEC, » seul au milieu).
+ */
+@media (min-width: 721px) {
+  .wordmark-full {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.12em;
+    max-width: min(44rem, 100%);
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+  .wordmark-full__lead {
+    display: block;
+    white-space: nowrap;
+    max-width: none;
+  }
+  .wordmark-full__tag {
+    display: block;
+    letter-spacing: 0.14em;
+    white-space: nowrap;
+  }
 }
 @media (max-width: 480px) {
   .wordmark-logo { width: .72em; height: .72em; margin-right: .1em; }
@@ -1298,8 +1463,9 @@ html[data-script-dir="rtl"] .wordmark-full {
  * (`measureMarquee`) pour que les deux positions de repos, celles qu'on lit
  * réellement, tombent sur la grille de pixels. */
 .is-marquee { text-overflow: clip; }
+/* 1 cycle (delay lecture + aller-retour), puis repos — pas infinite. */
 .is-marquee > .tuner-now-sub-text {
-  animation: tunerMarquee var(--marquee-duration, 12s) linear infinite alternate;
+  animation: tunerMarquee var(--marquee-duration, 12s) linear var(--marquee-delay, 1.6s) 2 alternate both;
   will-change: transform;
 }
 /* L'audio reste actif en arrière-plan; seules les animations de lecture sont
