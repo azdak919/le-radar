@@ -396,57 +396,118 @@ html[data-wide-preview="e"] {
     padding-left: max(var(--pad), 20px);
     padding-right: max(var(--pad), 20px);
     /*
-     * areas :
-     *  rail | head     ← Le fil + traduction + compteur
-     *  rail | list     ← magazine + suite
+     * areas (Wide E) :
+     *  rail | list     ← stack (nav + fil + trad + sources) | magazine
      *  rail | empty
      *  .    | foot     ← crédits alignés sur les articles (pas sous le rail)
      */
     grid-template-areas:
-      "rail head"
       "rail list"
       "rail empty"
       ".    foot";
   }
 
-  /* ── En-tête du fil : visible au-dessus des articles (pas perdu) ── */
-  html[data-wide-preview="e"] .wire-head {
-    grid-area: head;
-    margin-top: 0;
-    margin-bottom: 10px;
-    min-width: 0;
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px 16px;
-  }
-
-  /* ── Rail sources sticky ── */
-  html[data-wide-preview="e"] .filters-panel {
+  /*
+   * Stack rail sticky : menu pages + Le fil + traduction + sources
+   * (DOM assemblé par wide-desktop-preview.js)
+   */
+  html[data-wide-preview="e"] .wide-rail-stack {
     grid-area: rail;
     position: sticky;
-    /*
-     * Sous la barre radio sticky (z-index 100), pas top:12 — sinon « Le Radar »
-     * disparaît derrière le synthé au scroll. --wide-sticky-top mesuré en JS
-     * (hauteur réelle du #tuner) ; repli ~76 px (barre wide + padding).
-     */
     top: var(--wide-sticky-top, 76px);
-    z-index: 50; /* sous le synthé (100), au-dessus du fil */
+    z-index: 50;
     align-self: start;
     width: 100%;
     min-width: 0;
     max-width: var(--wide-rail);
     justify-self: stretch;
     box-sizing: border-box;
-    /* Hauteur utile : viewport − offset sticky − marge bas (lab bar / dock) */
     max-height: calc(100dvh - var(--wide-sticky-top, 76px) - 88px);
     overflow-x: hidden;
     overflow-y: auto;
-    margin: 0;
-    padding: 0 2px 8px 0;
     overscroll-behavior: contain;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0 2px 10px 0;
+  }
+
+  /* Menu pages — dans le rail, compact, wrap si besoin */
+  html[data-wide-preview="e"] .wide-rail-stack .site-sections {
+    position: static;
+    max-width: none;
+    width: 100%;
+    margin: 0;
+    padding: 0 0 6px;
+    justify-content: flex-start;
+    text-align: left;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--rule, #333) 70%, transparent);
+    gap: 3px 6px;
+    font-size: 12px;
+    line-height: 1.35;
+    flex: 0 0 auto;
+  }
+  html[data-wide-preview="e"] .wide-rail-stack .site-sections a {
+    white-space: nowrap;
+  }
+
+  /* « Le fil étudiant » + traduction — colonne étroite, empilés */
+  html[data-wide-preview="e"] .wide-rail-stack .wire-head {
+    grid-area: unset;
+    margin: 0;
+    padding: 0 0 4px;
+    min-width: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 8px;
+    flex: 0 0 auto;
+  }
+  html[data-wide-preview="e"] .wide-rail-stack .wire-title-group {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    min-width: 0;
+  }
+  html[data-wide-preview="e"] .wide-rail-stack .wire-title {
+    margin: 0;
+    font-size: clamp(1.05rem, 0.4vw + 0.95rem, 1.25rem);
+    line-height: 1.2;
+  }
+  html[data-wide-preview="e"] .wide-rail-stack .translate-control {
+    align-self: flex-start;
+    max-width: 100%;
+  }
+  html[data-wide-preview="e"] .wide-rail-stack .wire-status {
+    margin: 0;
+    font-size: 11.5px;
+    opacity: 0.85;
+  }
+
+  /* Sources — suite du stack (plus sticky seul : le parent l’est) */
+  html[data-wide-preview="e"] .wide-rail-stack .filters-panel,
+  html[data-wide-preview="e"] .filters-panel {
+    grid-area: unset;
+    position: static;
+    top: auto;
+    z-index: auto;
+    align-self: stretch;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    max-height: none;
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+    flex: 1 1 auto;
     /* Force 1 col + toutes les rangées (priorité sur inline app.js) */
     --filters-cols: 1 !important;
     --filters-collapsed-rows: 99 !important;
@@ -510,31 +571,6 @@ html[data-wide-preview="e"] {
     text-overflow: ellipsis;
     white-space: nowrap;
     max-width: 100%;
-  }
-
-  /*
-   * Sections : alignées au début des articles (après rail sources), sticky
-   * sous le synthé — visibles en même temps que la colonne sources.
-   */
-  html[data-wide-preview="e"] .site-sections {
-    max-width: var(--maxw);
-    margin-left: auto;
-    margin-right: auto;
-    justify-content: flex-start;
-    text-align: left;
-    /* décale sous le rail sources pour coller à la une */
-    padding-left: calc(var(--wide-rail) + var(--wide-gap) + max(var(--pad), 20px));
-    padding-right: max(var(--pad), 20px);
-    box-sizing: border-box;
-    position: sticky;
-    top: var(--wide-sticky-top, 76px);
-    z-index: 55;
-    background: color-mix(in srgb, var(--bg) 92%, transparent);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    margin-bottom: 0;
-    padding-top: 6px;
-    padding-bottom: 6px;
   }
 
   /* ── Magazine (à la une + en bref) ── */
