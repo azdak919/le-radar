@@ -213,10 +213,11 @@
   gap: 5px;
   box-sizing: border-box;
   height: 29px;
-  /* Assez large pour le format long FR + heure ; météo max 3 libère la place.
-   * Ellipse = filet de secours seulement (cascade MASTHEAD_DATE_FORMATS d’abord). */
-  max-width: min(48vw, 16.5rem);
-  padding: 0 7px;
+  /* Hug le texte (pas stretch dans une colonne 1fr tablette → plaque vide). */
+  width: max-content;
+  max-width: min(46vw, 14rem);
+  justify-self: start;
+  padding: 0 8px;
   border-radius: 5px;
   /* Identique à .masthead-weather__city sur photo (dark default) */
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -241,7 +242,8 @@
 }
 .masthead:has(#bg-photo-layer.loaded) .masthead-date #today-date {
   display: block;
-  flex: 1 1 auto;
+  /* Ne pas flex-grow : sinon le chip s’étire au max-width pour rien. */
+  flex: 0 1 auto;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -299,15 +301,24 @@
   border-color: rgba(255, 255, 255, 0.14);
 }
 /*
- * Mobile photo ≤430 : date+heure alignées comme les pastilles (pas de
- * translateY mobile générique). Stack date/heure sous 400 pour éviter
- * « MARD… · 14:16 » ; une ligne propre dès qu’il y a la place.
+ * Tablette (météo dockée, colonne date = 1fr) : forcer hug content.
+ * Sans ça justify-self:stretch + max-width 14rem = plaque large vide (768/900).
+ */
+@media (max-width: 1023.98px) {
+  .masthead:has(#bg-photo-layer.loaded) .masthead-date {
+    justify-self: start !important;
+    width: max-content;
+    max-width: min(52vw, 13rem);
+  }
+}
+/*
+ * Mobile photo ≤600 : alignement vs icônes (pas de translateY).
  */
 @media (max-width: 599.98px) {
   .masthead:has(#bg-photo-layer.loaded) .masthead-date {
-    transform: none; /* annule style.css translateY(-3px) — désalignait vs icônes */
+    transform: none;
     align-self: center;
-    max-width: min(48vw, 12.5rem);
+    max-width: min(48vw, 12rem);
   }
 }
 /* Stack lisible (date puis heure) sous ~400 px — 390 lab / iPhone. */
@@ -946,6 +957,11 @@ a { color: inherit; }
      Sans ça, scrollWidth == clientWidth et la cascade de formats ne part
      jamais — exactement le piège déjà documenté pour le volet mobile. */
   .masthead-date { grid-area: date; justify-self: stretch; min-width: 0; }
+  /* Photo : chip date = max-content (voir .masthead:has(...).masthead-date). */
+  .masthead:has(#bg-photo-layer.loaded) .masthead-date {
+    justify-self: start;
+    min-width: 0;
+  }
   .masthead-date #today-date {
     display: block;
     overflow: hidden;
