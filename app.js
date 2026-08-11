@@ -2934,6 +2934,24 @@ function sportsCompetitionLabel(slide) {
   return sport ? `${sport} ${sector}` : '';
 }
 
+/**
+ * Sous-ligne des puces scores (gauche) — parité CTA :
+ * date/heure · compétition · [saison précédente].
+ * La compétition (ex. « Hockey collégial masculin D2 ») est la même info
+ * qu’à droite de la date sur la carte CTA (`sportsCtaSubLine`).
+ */
+function sportsMatchSubLine(slide) {
+  const g = slide?.game || {};
+  const when = formatSportsWhen(g.date, g.time);
+  const prior = !!(g.priorSeason || slide?.team?.lastGamePriorSeason);
+  const placeKind = sportsIsPlaceResult(g, slide?.team?.sport || g.sport);
+  // Régate / place : l’événement de place prime (souvent = competition).
+  const meta = placeKind
+    ? (sportsPlaceEventShort(g) || sportsCompetitionLabel(slide))
+    : sportsCompetitionLabel(slide);
+  return [when, meta, prior ? 'Saison précédente' : ''].filter(Boolean).join(' · ');
+}
+
 /** Existe-t-il un résultat exploitable à la banque ? Sinon : hors saison. */
 function sportsHasAnyResult() {
   return sportsSlides.some((s) => s?.mode === 'result');
@@ -3867,8 +3885,8 @@ function paintSportsChip(slide, animate = false) {
 
   /*
    * Deux lignes comme la CTA, largeur chip :
-   *   haut  — noms complets (Bleu/Jaune gardés) + vs / score
-   *   bas   — date · domicile|extérieur · (compétition / méta)
+   *   haut  — noms (acronymes univ. à gauche) + vs / score
+   *   bas   — date · compétition (même méta que sous-ligne CTA)
    * Marquee L→R si overflow — **jamais** de troncature « … ».
    */
   const body = document.createElement('span');
@@ -3885,7 +3903,7 @@ function paintSportsChip(slide, animate = false) {
   const home = sportsChipTeamShort(team);
   // Puce étroite : acronymes univ. (ULaval, UdeM…) — CTA garde les formes longues.
   const opp = sportsChipOpponentLabel(g);
-  const when = formatSportsWhen(g.date, g.time);
+  const subLine = sportsMatchSubLine(slide);
 
   if (slide.mode === 'result') {
     const badge = g.result === 'W' ? 'V' : g.result === 'L' ? 'D' : 'N';
@@ -3901,19 +3919,15 @@ function paintSportsChip(slide, animate = false) {
       // Régate / place : ne pas coller « McGill Sailing 7/12 ICSA Regional… »
       // en une ligne. Haut = équipe + place ; bas = date · compétition.
       const placeTxt = `${g.scoreFor}e/${g.scoreAgainst}`;
-      const event = sportsPlaceEventShort(g);
       inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
         + `<span class="sports-chip__score">${escapeHtml(placeTxt)}</span>`;
-      const subParts = [when, event, prior ? 'Saison précédente' : ''].filter(Boolean);
-      subText.textContent = subParts.join(' · ');
     } else {
       const scoreTxt = `${g.scoreFor}–${g.scoreAgainst}`;
       inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
         + `<span class="sports-chip__score">${escapeHtml(String(scoreTxt))}</span> `
         + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
-      const subParts = [when, prior ? 'Saison précédente' : ''].filter(Boolean);
-      subText.textContent = subParts.join(' · ');
     }
+    subText.textContent = subLine;
     if (prior) a.classList.add('sports-chip--prior-season');
     a.title = sportsChipTitle(slide) + (prior ? ' · Saison précédente' : '');
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
@@ -3924,7 +3938,7 @@ function paintSportsChip(slide, animate = false) {
     inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
       + `<span class="sports-chip__vs">${escapeHtml(verb)}</span> `
       + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
-    subText.textContent = when || '';
+    subText.textContent = subLine;
     a.title = sportsChipTitle(slide);
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
   }

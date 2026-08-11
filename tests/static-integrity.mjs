@@ -1045,6 +1045,8 @@ assert(
     && appJs.includes('sportsChipTeamShort')
     && appJs.includes('sportsPlaceEventShort')
     && appJs.includes('function sportsMatchVerb')
+    && appJs.includes('function sportsMatchSubLine')
+    && appJs.includes('function sportsCompetitionLabel')
     && appJs.includes("'reçoit'")
     && appJs.includes('sportsDisplaySideName')
     && appJs.includes('sportsChipOpponentLabel')
@@ -1067,7 +1069,7 @@ assert(
     && /:not\(\.sports-chip--cta\)\.is-sub-overflowing \.sports-chip__sub-text/.test(cssFlat)
     && styleCss.includes('@keyframes sports-chip-scroll')
     && styleCss.includes('@keyframes sports-chip-scroll-sub'),
-  'puces scores : 2 lignes ; place/voile ; pool <7 j (left-pool D) ; marquee 8s L→R ; 0 ellipsis',
+  'puces scores : 2 lignes ; date·compétition (parité CTA) ; pool <7 j ; marquee 8s ; 0 ellipsis',
 );
 // Puces scores : indépendantes + dwell lecture + marquee aller-retour complet.
 assert(
