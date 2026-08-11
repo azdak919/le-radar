@@ -155,12 +155,27 @@ body {
   max-width: 100%;
 }
 /*
- * 1 score + CTA : largeurs strictement égales (50/50).
- * Doit gagner sur `.sports-chip--cta { flex: 1.2 1 9.5rem; min-width: 9.5rem }`
- * (sinon la CTA mange ~55–60 % et le score paraît « trop étroit »).
+ * 1 score + CTA : ratio fixe ~42 / 58 (pas 50/50, pas de re-mesure par slide).
+ *
+ * La CTA porte un chrome que la puce score n’a pas : pastille « Sports » (~4.5rem)
+ * + marqueur PROCHAIN + glyphe avant les noms. À largeurs égales, la zone utile
+ * des noms est donc plus étroite à droite → marquee CTA alors que la gauche a
+ * de l’air mort (768 / 900 typiques).
+ *
+ * On compense par un partage **fixe** du strip : tailles stables à chaque
+ * rotation, zone de texte plus proche → moins de défilement d’un côté ou de
+ * l’autre. Doit gagner sur `.sports-chip--cta { flex: 1.2 1 9.5rem; … }`.
  */
-.masthead-sports-strip[data-count="2"] > .sports-chip,
 .masthead-sports-strip[data-count="2"] > .sports-chip--match,
+.masthead-sports-strip[data-count="2"] > .sports-chip:not(.sports-chip--cta) {
+  flex: 0.72 1 0 !important;
+  flex-grow: 0.72 !important;
+  flex-shrink: 1 !important;
+  flex-basis: 0 !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  width: 0 !important;
+}
 .masthead-sports-strip[data-count="2"] > .sports-chip--cta {
   flex: 1 1 0 !important;
   flex-grow: 1 !important;
@@ -168,7 +183,7 @@ body {
   flex-basis: 0 !important;
   min-width: 0 !important;
   max-width: none !important;
-  width: 0 !important; /* base flex égale, le grow partage le reste 50/50 */
+  width: 0 !important;
 }
 /* 2 scores + CTA : CTA un peu plus étroite pour laisser lire les matchs. */
 .masthead-sports-strip[data-count="3"] .sports-chip--cta {
@@ -490,7 +505,7 @@ body {
  * alerte pour un match à quinze jours).
  * L’accroche roule verticalement en place (jamais de carte type gare). ── */
 .masthead-sports-strip .sports-chip--cta {
-  /* Un peu plus de place pour pastille + accroche — sauf data-count=2 (50/50). */
+  /* Un peu plus de place pour pastille + accroche — sauf data-count=2 (ratio fixe). */
   flex: 1.2 1 9.5rem;
   min-width: 9.5rem;
   justify-content: flex-start;
@@ -505,9 +520,19 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
     0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 22%, transparent);
 }
-/* Après la règle CTA flex 1.2 : forcer 50/50 quand 1 score + CTA. */
-.masthead-sports-strip[data-count="2"] > .sports-chip {
+/* Après la règle CTA flex 1.2 : re-affirmer le ratio fixe 1 score + CTA. */
+.masthead-sports-strip[data-count="2"] > .sports-chip--match,
+.masthead-sports-strip[data-count="2"] > .sports-chip:not(.sports-chip--cta) {
+  flex: 0.72 1 0 !important;
+  flex-grow: 0.72 !important;
+  flex-basis: 0 !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  width: 0 !important;
+}
+.masthead-sports-strip[data-count="2"] > .sports-chip--cta {
   flex: 1 1 0 !important;
+  flex-grow: 1 !important;
   flex-basis: 0 !important;
   min-width: 0 !important;
   max-width: none !important;
@@ -1407,6 +1432,22 @@ html[data-script-dir="rtl"] .wordmark-full {
 .tuner-now-name.is-crossfading {
   opacity: 0;
 }
+/*
+ * Tant que app.js n’a pas posé L1/L2 (B idle / station), masquer le placeholder
+ * HTML « Syntoniser un poste » pour éviter un flash d’une frame après load.
+ * La boîte .tuner-now garde sa hauteur (min-height).
+ */
+.tuner:not(.is-dial-ready) .tuner-now-name,
+.tuner:not(.is-dial-ready) .tuner-now-sub-rotate {
+  opacity: 0;
+}
+.tuner.is-dial-ready .tuner-now-name,
+.tuner.is-dial-ready .tuner-now-sub-rotate {
+  opacity: 1;
+}
+.tuner.is-dial-ready .tuner-now-name.is-crossfading {
+  opacity: 0;
+}
 .tuner-now-sub-rotate {
   display: grid;
   min-width: 0;
@@ -2184,6 +2225,39 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   html.is-firefox .tuner-cast--mobile,
   html.is-firefox .tuner-cast--mobile.hidden,
   html.is-firefox .tuner-cast--mobile[hidden] { display: flex !important; }
+}
+
+/*
+ * Mid (≈600–1099, ex. 768 / 900) : le carré dial a de la place — typo un peu
+ * plus grande + padding pour remplir la boîte (B/E : 2 lignes scannables).
+ * Téléphone étroit reste sur les tailles de base.
+ */
+@media (min-width: 600px) and (max-width: 1099.98px) {
+  .tuner-inner {
+    gap: 10px;
+  }
+  .tuner-controls {
+    gap: 8px;
+  }
+  .tuner-dial {
+    flex: 1 1 auto;
+    min-width: 14rem;
+  }
+  .tuner-now {
+    min-height: 48px;
+    padding: 6px 28px 6px 14px;
+  }
+  .tuner-now-name {
+    font-size: 15.5px;
+    line-height: 1.2;
+  }
+  .tuner-now-sub {
+    font-size: 12px;
+    line-height: 1.25;
+  }
+  .tuner-now-sub-rotate {
+    min-height: 1.25em;
+  }
 }
 
 /* Téléphone étroit : pastille EN ONDES masquée (le synthétiseur rouge global
