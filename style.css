@@ -309,16 +309,18 @@ body {
   0%, 18% { transform: translateX(0); }
   82%, 100% { transform: translateX(calc(var(--sports-scroll, 0) * -1)); }
 }
-/* CTA au repos (pas d’overflow) : ellipsis + pulse d’opacité inchangé. */
-.masthead-sports-strip .sports-chip--cta:not(.is-overflowing) .sports-chip__line-inner,
-.masthead-sports-strip .sports-chip--cta:not(.is-overflowing) .sports-chip__cta-label {
+/* CTA au repos : ellipsis sur le texte seul — jamais sur toute la couche
+ * (sinon head+sub se collapsaient en une ligne tronquée sans marquee). */
+.masthead-sports-strip .sports-chip--cta:not(.is-overflowing) .sports-chip__line-inner {
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 @media (prefers-reduced-motion: reduce) {
-  .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner {
+  .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner,
+  .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__cta-text,
+  .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__cta-sub-text {
     animation: none;
     max-width: 100%;
     overflow: hidden;
@@ -504,17 +506,27 @@ body {
   line-height: 1.25;
   vertical-align: middle;
 }
-/* Sous-ligne : compétition + fraîcheur. Toujours datée, toujours visible. */
+/* Sous-ligne : compétition + fraîcheur. Fenêtre de défilement (comme le titre) :
+ * date + compétition + MAJ restent lisibles via marquee, pas d’ellipse figée. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-sub {
+  display: block;
   flex: 0 0 auto;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
   font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.01em;
   line-height: 1.15;
   color: rgba(255, 255, 255, 0.7);
-  white-space: nowrap;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-sub-text {
+  display: inline-block;
+  max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
 }
 /*
  * Roulement : une seule phase, 280 ms (SPORTS_CTA_ROLL_MS). L’opacité ne joue
@@ -540,7 +552,8 @@ body {
   45% { opacity: 1; }
   100% { transform: translateY(0); opacity: 1; }
 }
-/* Marquee : le texte de la couche visible seulement, jamais la couche sortante. */
+/* Marquee : le texte de la couche visible seulement, jamais la couche sortante.
+ * Titre → --sports-scroll ; sous-ligne → --sports-scroll-sub (décalages distincts). */
 .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-text {
   max-width: none;
   overflow: visible;
@@ -548,7 +561,19 @@ body {
   animation: sports-chip-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
   will-change: transform;
 }
-.masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-rolling-out .sports-chip__cta-text {
+.masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text {
+  max-width: none;
+  overflow: visible;
+  text-overflow: clip;
+  animation: sports-chip-scroll-sub var(--sports-scroll-duration, 8.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  will-change: transform;
+}
+@keyframes sports-chip-scroll-sub {
+  0%, 32% { transform: translateX(0); }
+  68%, 100% { transform: translateX(calc(var(--sports-scroll-sub, 0) * -1)); }
+}
+.masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-rolling-out .sports-chip__cta-text,
+.masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-rolling-out .sports-chip__cta-sub-text {
   animation: none !important;
   transform: none;
 }
