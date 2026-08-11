@@ -631,38 +631,71 @@ html[data-wide-preview="e"] {
 
 /*
  * À la une en 2 col (wide) :
- *  - lead pleine largeur (hiérarchie presse)
- *  - vedettes en 2 colonnes → moins de « tour » verticale vs En bref multi-col
+ *  - 2 unes côte à côte (data-leads="2") dès ≥1600
+ *  - vedettes en 2 colonnes
  *  - spacer pleine largeur pour l’équilibre magazine
  */
 html[data-wide-preview="e"] .news-hero-spacer {
   grid-column: 1 / -1;
 }
 
-/* ── E ≥1920 : une 2 col (vedettes) ; En bref 2 col ── */
-@media (min-width: 1920px) {
+/* ── E ≥1600 : 2 unes + vedettes 2 col ; En bref 1–2 col ── */
+@media (min-width: 1600px) {
   html[data-wide-preview="e"] .news-list {
-    /* une un peu plus large qu’avant pour accueillir 2 vedettes côte à côte */
-    grid-template-columns: minmax(0, 1.2fr) minmax(380px, 0.95fr);
+    grid-template-columns: minmax(0, 1.2fr) minmax(340px, 0.9fr);
   }
 
   html[data-wide-preview="e"] .news-hero {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: 20px;
+    column-gap: 18px;
     row-gap: 0;
     align-content: start;
     height: auto;
-    padding-right: 24px;
+    padding-right: 20px;
   }
 
-  html[data-wide-preview="e"] .news-hero .article--lead {
+  /* Deux unes côte à côte — plus de lead full-bleed */
+  html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead {
+    grid-column: auto;
+    min-width: 0;
+  }
+  /* Une seule une (fallback) : pleine largeur */
+  html[data-wide-preview="e"] .news-hero:not([data-leads="2"]) .article--lead {
     grid-column: 1 / -1;
+  }
+
+  /* Unes duales : image un cran plus compacte pour tenir en 2 col */
+  html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead.has-image .article-media {
+    max-height: min(280px, 32vh);
+  }
+  html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead .article-title {
+    font-size: clamp(1.25rem, 1.1vw + 0.55rem, 1.65rem);
+  }
+  html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead .article-brief {
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
   }
 
   html[data-wide-preview="e"] .news-hero .article--feature {
     min-width: 0;
     padding-right: 0;
+  }
+}
+
+/* ── E ≥1920 : En bref 2 col + unes duales confortables ── */
+@media (min-width: 1920px) {
+  html[data-wide-preview="e"] .news-list {
+    grid-template-columns: minmax(0, 1.2fr) minmax(380px, 0.95fr);
+  }
+
+  html[data-wide-preview="e"] .news-hero {
+    column-gap: 20px;
+    padding-right: 24px;
+  }
+
+  html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead.has-image .article-media {
+    max-height: min(320px, 34vh);
   }
 
   html[data-wide-preview="e"] .brief-rail {
