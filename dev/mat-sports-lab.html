@@ -1,0 +1,1879 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LE-RADAR — Labo mât, bandeau sports et page /sports/</title>
+<style>
+/* ═══════════════════════════════════════════════════════════════════════
+   LABO DE REVUE — chrome de la page.
+   Volontairement distinct de LE-RADAR : les spécimens doivent se détacher
+   de la page qui les présente. Aucune de ces règles ne va en production.
+   ═══════════════════════════════════════════════════════════════════════ */
+:root {
+  --lab-bg: #f7f6f9;
+  --lab-surface: #ffffff;
+  --lab-sunk: #f0eef4;
+  --lab-ink: #191721;
+  --lab-ink-soft: #46414f;
+  --lab-muted: #6b6676;
+  --lab-line: #e2dfe8;
+  --lab-line-soft: #eeecf2;
+  --lab-accent: #6c2163;
+  --lab-accent-soft: #f3e9f1;
+  --lab-warn: #9a6900;
+  --lab-warn-soft: #fbf2df;
+  --lab-stop: #a3252f;
+  --lab-stop-soft: #fbeaea;
+  /* Verdict expédié en production (P3) */
+  --lab-ok: #2f7a54;
+  --lab-ok-soft: #e7f3ec;
+
+  --lab-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --lab-serif: Georgia, "Times New Roman", serif;
+  --lab-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --stage-w: 100%;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --lab-bg: #131218;
+    --lab-surface: #1b1a22;
+    --lab-sunk: #222029;
+    --lab-ink: #edebf2;
+    --lab-ink-soft: #c3bfcd;
+    --lab-muted: #8d8899;
+    --lab-line: #302e3a;
+    --lab-line-soft: #26242e;
+    --lab-accent: #cf7ec1;
+    --lab-accent-soft: #2c1f2c;
+    --lab-warn: #e8c07a;
+    --lab-warn-soft: #2c2519;
+    --lab-stop: #e89090;
+    --lab-stop-soft: #2e1c1c;
+    --lab-ok: #7fc79f;
+    --lab-ok-soft: #17291f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --lab-bg: #131218;
+  --lab-surface: #1b1a22;
+  --lab-sunk: #222029;
+  --lab-ink: #edebf2;
+  --lab-ink-soft: #c3bfcd;
+  --lab-muted: #8d8899;
+  --lab-line: #302e3a;
+  --lab-line-soft: #26242e;
+  --lab-accent: #cf7ec1;
+  --lab-accent-soft: #2c1f2c;
+  --lab-warn: #e8c07a;
+  --lab-warn-soft: #2c2519;
+  --lab-stop: #e89090;
+  --lab-stop-soft: #2e1c1c;
+  --lab-ok: #7fc79f;
+  --lab-ok-soft: #17291f;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--lab-bg);
+  color: var(--lab-ink);
+  font-family: var(--lab-sans);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px 96px; }
+
+/* ── En-tête ─────────────────────────────────────────────────────── */
+.masthead-lab {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 44px 0 28px;
+  border-bottom: 1px solid var(--lab-line);
+}
+.eyebrow {
+  font-family: var(--lab-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lab-muted);
+  margin: 0;
+}
+h1 {
+  font-family: var(--lab-serif);
+  font-size: clamp(28px, 4.4vw, 44px);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  margin: 0;
+  text-wrap: balance;
+  max-width: 20ch;
+}
+.lede { margin: 0; max-width: 62ch; color: var(--lab-ink-soft); }
+.notice {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px 16px;
+  border-left: 3px solid var(--lab-accent);
+  background: var(--lab-accent-soft);
+  color: var(--lab-ink);
+  font-size: 14px;
+  max-width: 72ch;
+}
+.notice b { font-weight: 700; }
+
+/* ── Barre de contrôles ──────────────────────────────────────────── */
+.controls {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+  margin: 0 -20px;
+  padding: 12px 20px;
+  background: color-mix(in srgb, var(--lab-bg) 92%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--lab-line);
+}
+.ctl { display: flex; align-items: center; gap: 6px; }
+.ctl__label {
+  font-family: var(--lab-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lab-muted);
+}
+.btn {
+  appearance: none;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 8px 11px;
+  min-height: 32px;
+  border: 1px solid var(--lab-line);
+  border-radius: 4px;
+  background: var(--lab-surface);
+  color: var(--lab-ink-soft);
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+}
+.btn:hover { border-color: color-mix(in srgb, var(--lab-accent) 45%, var(--lab-line)); color: var(--lab-ink); }
+.btn[aria-pressed="true"] {
+  border-color: var(--lab-accent);
+  background: var(--lab-accent-soft);
+  color: var(--lab-accent);
+}
+.btn:focus-visible { outline: 2px solid var(--lab-accent); outline-offset: 2px; }
+
+/* ── Sections et verdicts ────────────────────────────────────────── */
+.zone { margin-top: 64px; }
+.zone__head { border-bottom: 2px solid var(--lab-ink); padding-bottom: 10px; margin-bottom: 8px; }
+.zone__head h2 {
+  font-family: var(--lab-serif);
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.zone__sub { margin: 6px 0 0; color: var(--lab-muted); font-size: 14px; max-width: 68ch; }
+
+.verdict {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  gap: 28px;
+  padding: 34px 0;
+  border-bottom: 1px solid var(--lab-line-soft);
+}
+@media (max-width: 860px) {
+  .verdict { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+}
+.verdict__rail { position: relative; }
+@media (min-width: 861px) {
+  .verdict__rail { position: sticky; top: 68px; align-self: start; }
+}
+.code {
+  display: inline-block;
+  font-family: var(--lab-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 3px;
+  background: var(--lab-ink);
+  color: var(--lab-bg);
+}
+.slug {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--lab-mono);
+  font-size: 11.5px;
+  color: var(--lab-accent);
+  overflow-wrap: anywhere;
+}
+.claim { margin: 10px 0 0; font-size: 14px; color: var(--lab-ink-soft); }
+.tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px; }
+.tag {
+  font-family: var(--lab-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 6px;
+  border: 1px solid var(--lab-line);
+  border-radius: 3px;
+  color: var(--lab-muted);
+}
+.tag--risk-hi { border-color: var(--lab-stop); color: var(--lab-stop); background: var(--lab-stop-soft); }
+.tag--risk-mid { border-color: var(--lab-warn); color: var(--lab-warn); background: var(--lab-warn-soft); }
+/* Verdict qui porte sur un choix déjà expédié (B4 · halo) — pas un niveau de risque. */
+.tag--warn { border-color: var(--lab-stop); color: var(--lab-stop); background: var(--lab-stop-soft); font-weight: 700; }
+
+.verdict__body { min-width: 0; display: flex; flex-direction: column; gap: 18px; }
+
+/* ── Le plateau : un spécimen, sa légende ────────────────────────── */
+.pair { display: grid; gap: 16px; min-width: 0; }
+.pair--2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr)); }
+.pair--3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); }
+
+.stage { min-width: 0; border: 1px solid var(--lab-line); border-radius: 6px; overflow: hidden; background: var(--lab-surface); }
+.stage__cap {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--lab-line);
+  background: var(--lab-sunk);
+  font-family: var(--lab-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lab-muted);
+}
+.stage__cap b { font-weight: 700; letter-spacing: 0.1em; }
+.stage--now .stage__cap b { color: var(--lab-ink-soft); }
+.stage--state { border-color: color-mix(in srgb, var(--lab-warn) 45%, var(--lab-line)); }
+.stage--state .stage__cap { background: var(--lab-warn-soft); }
+.stage--state .stage__cap b { color: var(--lab-warn); }
+.code--state { background: var(--lab-warn); color: var(--lab-bg); }
+/* Verdict déjà appliqué en production (P3) */
+.code--done { background: var(--lab-ok); color: var(--lab-bg); }
+.tag--done { border-color: var(--lab-ok); color: var(--lab-ok); background: var(--lab-ok-soft); font-weight: 700; }
+.stage--done { border-color: color-mix(in srgb, var(--lab-ok) 45%, var(--lab-line)); }
+.stage--done .stage__cap { background: var(--lab-ok-soft); }
+.stage--done .stage__cap b { color: var(--lab-ok); }
+.stage--reco .stage__cap b { color: var(--lab-accent); }
+.stage--diss .stage__cap b { color: var(--lab-warn); }
+.stage--out .stage__cap b { color: var(--lab-stop); }
+.stage__cap small { font-family: var(--lab-sans); font-size: 11px; letter-spacing: 0; text-transform: none; }
+.stage__body { overflow-x: auto; }
+.stage__inner { width: min(100%, var(--stage-w)); }
+
+.foot { margin: 0; font-size: 13.5px; color: var(--lab-ink-soft); max-width: 74ch; }
+.foot b { color: var(--lab-ink); }
+.foot code, .inline-code {
+  font-family: var(--lab-mono);
+  font-size: 0.88em;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: var(--lab-sunk);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   SPÉCIMENS — reproduction des règles de production, valeurs réelles.
+   Préfixe `.s-` pour qu'aucune règle du labo ne les contamine.
+   ═══════════════════════════════════════════════════════════════════════ */
+.s {
+  /* Jetons LE-RADAR — copie de style.css:9-55 */
+  --bg: #ffffff;
+  --bg-soft: #f6f6f4;
+  --ink: #16181c;
+  --ink-soft: #44474d;
+  --muted: #5f646c;
+  --rule: #e7e7e3;
+  --accent: #6c2163;
+  --live: #c8102e;
+  --status-upcoming: #9a6900;
+  --status-upcoming-soft: #e8c07a;
+  --status-upcoming-mid: #bd8a18;
+  --tuner-bg: #111317;
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --pad: 24px;
+
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.5;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .s {
+    --bg: #0e0f12;
+    --bg-soft: #181a1e;
+    --ink: #f1f2f4;
+    --ink-soft: #c2c6cd;
+    --muted: #888d96;
+    --rule: #26282d;
+    --accent: #cf7ec1;
+    --tuner-bg: #1a1c21;
+  }
+}
+:root[data-theme="dark"] .s {
+  --bg: #0e0f12;
+  --bg-soft: #181a1e;
+  --ink: #f1f2f4;
+  --ink-soft: #c2c6cd;
+  --muted: #888d96;
+  --rule: #26282d;
+  --accent: #cf7ec1;
+  --tuner-bg: #1a1c21;
+}
+
+/* ── Mât : photo simulée ─────────────────────────────────────────── */
+.s-mast { position: relative; overflow: hidden; }
+.s-mast__photo { position: absolute; inset: 0; z-index: 0; }
+.s-mast--snow .s-mast__photo {
+  background:
+    radial-gradient(ellipse 60% 40% at 22% 18%, rgba(255,255,255,.95), transparent 70%),
+    repeating-linear-gradient(112deg, rgba(255,255,255,.5) 0 3px, rgba(206,220,232,.5) 3px 7px),
+    linear-gradient(168deg, #eef4f9 0%, #dbe6ef 46%, #c3d3e1 100%);
+}
+.s-mast--dusk .s-mast__photo {
+  background:
+    radial-gradient(ellipse 52% 36% at 74% 22%, rgba(255,196,120,.42), transparent 68%),
+    repeating-linear-gradient(112deg, rgba(255,255,255,.045) 0 3px, rgba(0,0,0,.05) 3px 7px),
+    linear-gradient(168deg, #34465a 0%, #1d2b3a 52%, #0d151f 100%);
+}
+.s-mast__scrim { position: absolute; inset: 0; z-index: 1; }
+/* ACTUEL — style-masthead.css:43-58 : à peine un dégradé de bords. */
+.s-scrim-now {
+  background: linear-gradient(180deg, rgba(10,12,16,.07) 0%, transparent 28%, transparent 72%, rgba(10,12,16,.06) 100%);
+}
+/* RECO M1 — deux bandes calées sur les zones de texte. */
+.s-scrim-reco {
+  background: linear-gradient(180deg, rgba(8,10,14,.46) 0%, rgba(8,10,14,.20) 24%, rgba(8,10,14,.06) 42%, rgba(8,10,14,.34) 74%, rgba(8,10,14,.52) 100%);
+}
+.s-mast__inner { position: relative; z-index: 2; padding: 12px 16px 16px; }
+
+.s-mast__top {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) 1fr max-content;
+  align-items: center;
+  column-gap: 8px;
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+.s-date { font-weight: 600; color: rgba(255,255,255,.98); }
+.s-date span { display: block; font-size: .82em; opacity: .9; font-variant-numeric: tabular-nums; }
+/* ACTUEL — pile de 4 couches, style-masthead.css:225-236 */
+.s-shadow-now {
+  text-shadow: 0 0 1px rgba(0,0,0,.45), 0 1px 2px rgba(0,0,0,.55), 0 2px 8px rgba(0,0,0,.35), 0 0 14px rgba(0,0,0,.22);
+}
+.s-shadow-reco { text-shadow: 0 1px 2px rgba(0,0,0,.5); }
+.s-shadow-diss { text-shadow: 0 1px 2px rgba(0,0,0,.55), 0 0 10px rgba(0,0,0,.3); }
+
+.s-acts { display: flex; align-items: center; gap: 8px; justify-self: end; }
+.s-acts--grouped { gap: 14px; }
+.s-acts__grp { display: flex; align-items: center; gap: 6px; }
+.s-ico {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; flex: 0 0 28px;
+  border-radius: 999px;
+  font-size: 12px; line-height: 1;
+  color: #f7fbff;
+  border: 1px solid rgba(255,255,255,.46);
+  background: rgba(9,14,21,.62);
+  box-shadow: 0 2px 5px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.2);
+}
+.s-ico--plain { color: var(--ink-soft); border-color: var(--rule); background: transparent; box-shadow: none; }
+/* M7 — marque les deux exemplaires du même contrôle « Accueil ». */
+.s-ico--dup { outline: 2px dashed var(--lab-warn); outline-offset: 2px; }
+
+/* nav.site-sections — index.html:334, « Accueil » en tête depuis la PR #52. */
+.s-sections {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px;
+  padding: 10px 16px 14px;
+  font-size: 13px; font-weight: 600;
+}
+.s-sections a { color: var(--ink-soft); text-decoration: none; }
+.s-sections a:hover { color: var(--accent); }
+.s-sections__cur { color: var(--accent) !important; }
+.s-sections__sep { color: var(--muted); opacity: .6; }
+
+.s-mast__brand { display: flex; flex-direction: column; align-items: center; gap: 8px; padding-top: 14px; position: relative; }
+/* ACTUEL — halo radial, style-masthead.css:249-265 */
+.s-halo::before {
+  content: ""; position: absolute; left: 50%; top: 48%; z-index: -1;
+  width: min(40rem, 90%); height: min(7.2rem, 32%);
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse 48% 38% at 50% 48%, rgba(0,0,0,.06) 0%, rgba(0,0,0,.02) 50%, transparent 74%);
+}
+.s-wordmark {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(1.7rem, 7vw, 2.6rem);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  text-align: center;
+  color: #fff;
+}
+.s-wordmark .s-lys {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: .82em; height: .82em; margin: 0 .14em;
+  vertical-align: -.08em;
+  border-radius: .18em;
+  background: #6c2163; color: #fff;
+  font-size: .62em; line-height: 1;
+}
+.s-tagline {
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: center;
+  color: rgba(255,255,255,.96);
+  margin: 0;
+}
+.s-tagline--detrack { letter-spacing: .06em; font-size: 10.5px; }
+.s-tagline--lower { text-transform: none; letter-spacing: .01em; font-size: 12px; font-weight: 500; }
+
+/* ── Barre radio (repère de voisinage, jamais modifiée ici) ──────── */
+.s-tuner {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 16px;
+  background: var(--tuner-bg);
+  color: #fff;
+  font-size: 12px;
+  box-shadow: 0 1px 0 rgba(0,0,0,.3);
+}
+.s-tuner__onair {
+  font-size: 9px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+  color: #ff6b6b;
+}
+.s-tuner__name { font-family: var(--serif); font-weight: 700; font-size: 14px; }
+.s-tuner__sub { font-size: 10.5px; color: rgba(255,255,255,.62); }
+.s-tuner__play {
+  margin-left: auto;
+  width: 30px; height: 30px; border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #c8102e; color: #fff; font-size: 11px;
+}
+
+/* ── Rangée météo (parité — voir B1) ─────────────────────────────── */
+.s-weather { display: grid; grid-template-columns: minmax(110px,.9fr) repeat(2, minmax(0,1fr)); gap: 4px; padding: 8px 16px 0; }
+.s-wcity {
+  display: flex; align-items: center; gap: 5px;
+  height: 29px; padding: 0 7px;
+  font-size: 11px; font-weight: 650; letter-spacing: .03em;
+  border-radius: 5px;
+  overflow: hidden; white-space: nowrap;
+}
+/* ACTUEL / A — ardoise, style-masthead.css:409-424 */
+.s-wcity--slate {
+  color: rgba(245,246,248,.96);
+  border: 1px solid rgba(255,255,255,.24);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--wt, #66839e) 16%, transparent) 0%, transparent 55%), rgba(54,59,68,.68);
+  box-shadow: 0 1px 2px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.14);
+}
+.s-wcity--anchored {
+  color: rgba(246,247,250,.97);
+  border: 1px solid color-mix(in srgb, var(--wt, #66839e) 34%, rgba(255,255,255,.16));
+  background: linear-gradient(90deg, color-mix(in srgb, var(--wt, #66839e) 20%, transparent) 0%, transparent 58%), var(--tuner-bg);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+}
+/* B — registre clair */
+.s-wcity--paper {
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  background: var(--bg-soft);
+  box-shadow: none;
+}
+.s-wcity--paper .s-wtemp { color: var(--ink); }
+.s-wico { color: var(--wt, #66839e); flex: 0 0 15px; text-align: center; }
+.s-wname { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; color: inherit; }
+.s-wtemp { font-weight: 800; font-variant-numeric: tabular-nums; color: #fff; }
+
+/* ── Bandeau sports ──────────────────────────────────────────────── */
+.s-strip {
+  display: flex; flex-wrap: nowrap; align-items: stretch;
+  gap: 6px; padding: 8px 16px;
+  min-height: 60px;
+  overflow: hidden;
+}
+.s-strip--gap8 { gap: 8px; }
+.s-chip {
+  flex: 1 1 0; min-width: 0; max-width: 100%;
+  display: inline-flex; align-items: center; gap: 6px;
+  min-height: 32px;
+  padding: 4px 10px 4px 7px;
+  border-radius: 6px;
+  font-size: 11px; font-weight: 700;
+  white-space: nowrap; overflow: hidden;
+  text-decoration: none;
+}
+/* ACTUEL — style.css:164-190, repeint par la PR #51 (le-radar-sports-chip-look C).
+ * Liseré pourpre --accent, fond plus dense, lavis du ton poussé à 34 %,
+ * plus un halo permanent (voir .s-chip--now:not(.s-chip--noglow) ci-dessous). */
+.s-chip--now {
+  color: rgba(245,246,248,.96);
+  border: 1.5px solid color-mix(in srgb, var(--accent, #6c2163) 58%, rgba(255,255,255,.22));
+  background: linear-gradient(90deg, color-mix(in srgb, var(--st, #66839e) 34%, transparent) 0%, transparent 55%), rgba(42,46,54,.92);
+  box-shadow:
+    0 1px 2px rgba(0,0,0,.28),
+    inset 0 1px 0 rgba(255,255,255,.12),
+    0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 22%, transparent);
+}
+/* B4 · le halo permanent — style.css:186-188, 203-212.
+ * 3,2 s en boucle sur CHAQUE puce non-CTA, sans condition ni pause.
+ * `.s-chip--noglow` le coupe : c'est la reco du panel, à comparer côte à côte. */
+html:not(.no-motion) .s-chip--now:not(.s-cta):not(.s-chip--noglow) {
+  animation: s-rim-glow 3.2s ease-in-out infinite;
+}
+@keyframes s-rim-glow {
+  0%, 100% {
+    border-color: color-mix(in srgb, var(--accent, #6c2163) 52%, rgba(255,255,255,.2));
+    box-shadow: 0 1px 2px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.12), 0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 18%, transparent);
+  }
+  50% {
+    border-color: color-mix(in srgb, var(--accent, #6c2163) 78%, rgba(255,255,255,.3));
+    box-shadow: 0 1px 2px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.14), 0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 36%, transparent), 0 0 10px 0 color-mix(in srgb, var(--accent, #6c2163) 22%, transparent);
+  }
+}
+/* Dissidence `designer` : ralenti à 6 s, amplitude de moitié. */
+html:not(.no-motion) .s-chip--now.s-chip--glow-soft:not(.s-cta) {
+  animation: s-rim-glow-soft 6s ease-in-out infinite;
+}
+@keyframes s-rim-glow-soft {
+  0%, 100% { border-color: color-mix(in srgb, var(--accent, #6c2163) 55%, rgba(255,255,255,.2)); }
+  50% { border-color: color-mix(in srgb, var(--accent, #6c2163) 66%, rgba(255,255,255,.24)); }
+}
+/* A — ancrée sur --tuner-bg, filet gauche porteur du résultat (B2), rayon 8 (B5) */
+.s-chip--a {
+  border-radius: 8px;
+  color: rgba(246,247,250,.97);
+  border: 1px solid rgba(255,255,255,.13);
+  border-left: 3px solid var(--st, #8fa3b0);
+  background: var(--tuner-bg);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+  padding-left: 8px;
+}
+/* B — registre clair */
+.s-chip--b {
+  border-radius: 8px;
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--st, #8fa3b0);
+  background: var(--bg-soft);
+  padding-left: 8px;
+}
+/* C — couleur d'établissement (écartée) */
+.s-chip--c {
+  border-radius: 8px;
+  color: #fff;
+  border: 1px solid color-mix(in srgb, var(--st, #66839e) 60%, transparent);
+  background: linear-gradient(90deg, var(--st, #66839e) 0%, color-mix(in srgb, var(--st, #66839e) 55%, #1a1d22) 100%);
+}
+.s-chip__glyph { flex: 0 0 auto; font-size: 13px; line-height: 1; }
+.s-chip__line { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.s-chip__code { font-weight: 800; letter-spacing: .03em; }
+.s-chip__score { font-weight: 800; font-variant-numeric: tabular-nums; color: #fff; margin: 0 1px; }
+.s-chip--b .s-chip__score { color: var(--ink); }
+.s-chip__vs { opacity: .72; font-weight: 650; font-size: .92em; text-transform: lowercase; }
+/* style.css:327-331 — l'unique information d'une puce à venir, et la plus faible. */
+.s-chip__when { opacity: .88; font-weight: 650; font-variant-numeric: tabular-nums; }
+.s-chip__badge {
+  flex: 0 0 auto;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 1.1rem; height: 1.1rem; padding: 0 3px;
+  border-radius: 3px;
+  font-size: 9px; font-weight: 800; color: #fff;
+  background: #2f8f5b;
+}
+.s-chip__badge--l { background: #b84848; }
+.s-chip__badge--d { background: #6b7c8c; }
+/* B6 — deux graisses, le score est le point focal */
+.s-chip--w2 .s-chip__code,
+.s-chip--w2 .s-chip__opp,
+.s-chip--w2 .s-chip__when { font-weight: 600; }
+.s-chip--w2 .s-chip__vs { font-weight: 600; }
+.s-chip--w2 .s-chip__score { font-weight: 800; font-size: 12px; }
+.s-chip--w2 .s-chip__badge { font-weight: 700; }
+.s-chip--w2 .s-chip__badge,
+.s-chip--r4 .s-chip__badge { border-radius: 4px; }
+/* B6, état « à venir » : la date est la seule nouvelle, donc le point focal. */
+.s-chip--soon .s-chip__when { font-weight: 800; opacity: 1; color: #fff; }
+.s-chip--soon.s-chip--b .s-chip__when { color: var(--ink); }
+
+/* Puce hors saison */
+.s-chip--info-now {
+  justify-content: center;
+  color: rgba(240,242,245,.94);
+  font-weight: 650;
+  border: 1px solid color-mix(in srgb, #8a95a0 35%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, #6a7580 88%, #1a1d22) 0%, color-mix(in srgb, #4a545e 92%, #12151a) 100%);
+}
+.s-chip__eyebrow {
+  flex: 0 0 auto;
+  font-size: 9px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase;
+  color: rgba(255,255,255,.6);
+}
+.s-chip--b .s-chip__eyebrow { color: var(--muted); }
+
+/* Carte CTA */
+.s-cta { flex: 1.2 1 9.5rem; min-width: 9.5rem; justify-content: flex-start; gap: 8px; }
+.s-cta__tag {
+  flex: 0 0 auto; align-self: center;
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 2px 7px 2px 6px;
+  border-radius: 3px;
+  background: rgba(255,255,255,.16);
+  color: rgba(255,255,255,.94);
+  font-size: 9.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; line-height: 1.2;
+}
+.s-chip--b .s-cta__tag { background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); }
+.s-cta__tag--live { background: #c8102e; color: #fff; font-weight: 900; }
+.s-cta__dot { width: 6px; height: 6px; border-radius: 50%; background: #fff; }
+.s-cta__stack { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1 1 auto; }
+.s-cta__head { display: flex; align-items: baseline; gap: 5px; min-width: 0; }
+.s-cta__eyebrow {
+  flex: 0 0 auto;
+  font-size: 9px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase;
+  color: rgba(255,255,255,.72); line-height: 1.1;
+}
+.s-chip--b .s-cta__eyebrow { color: var(--muted); }
+.s-cta__text {
+  min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-size: 11px; font-weight: 800; letter-spacing: .03em; line-height: 1.25;
+}
+.s-cta__sub {
+  font-size: 9px; font-weight: 600; line-height: 1.15;
+  color: rgba(255,255,255,.7);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.s-chip--b .s-cta__sub { color: var(--muted); }
+.s-cta__chev { flex: 0 0 auto; font-size: 13px; font-weight: 800; color: rgba(255,255,255,.78); margin-left: auto; padding-left: 4px; }
+.s-chip--b .s-cta__chev { color: var(--muted); }
+.s-cta--live { border-color: color-mix(in srgb, #c8102e 62%, rgba(255,255,255,.2)); }
+.s-cta--live.s-chip--now {
+  background: linear-gradient(90deg, color-mix(in srgb, #c8102e 38%, transparent) 0%, transparent 58%), rgba(42,46,54,.92);
+}
+.s-cta--live.s-chip--a { border-left-color: #c8102e; }
+
+/* Mouvements — B4 */
+@keyframes s-ring {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(200,16,46,0), 0 0 10px 0 rgba(200,16,46,.12); }
+  50% { box-shadow: 0 0 0 2px rgba(200,16,46,.38), 0 0 14px 1px rgba(200,16,46,.32); }
+}
+@keyframes s-tagpulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(200,16,46,.35); filter: brightness(1); }
+  50% { box-shadow: 0 0 0 3px rgba(200,16,46,.28); filter: brightness(1.12); }
+}
+@keyframes s-dot {
+  0% { box-shadow: 0 0 0 0 rgba(255,255,255,.65); opacity: 1; }
+  70% { box-shadow: 0 0 0 5px rgba(255,255,255,0); opacity: .85; }
+  100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); opacity: 1; }
+}
+/* Titre : holds 18/82 depuis la PR #54 (étaient 32/68). */
+@keyframes s-marquee {
+  0%, 18% { transform: translateX(0); }
+  82%, 100% { transform: translateX(-38px); }
+}
+/* Sous-ligne CTA : keyframes distinctes (holds 32/68) mais MÊME durée —
+ * le repli `8.5s` de style.css:568 est mort, --sports-scroll-duration vaut 5.5s
+ * et hérite jusqu'ici. Reproduit tel quel pour montrer le rythme réel. */
+@keyframes s-marquee-sub {
+  0%, 32% { transform: translateX(0); }
+  68%, 100% { transform: translateX(-38px); }
+}
+html:not(.no-motion) .is-ring { animation: s-ring 2.6s ease-in-out infinite; }
+html:not(.no-motion) .is-tagpulse { animation: s-tagpulse 2.6s ease-in-out infinite; }
+html:not(.no-motion) .is-dot { animation: s-dot 1.4s ease-out infinite; }
+html:not(.no-motion) .is-marquee { display: inline-block; animation: s-marquee 5.5s cubic-bezier(.45,.05,.55,.95) infinite alternate; }
+html:not(.no-motion) .is-marquee-sub { display: inline-block; animation: s-marquee-sub 5.5s cubic-bezier(.45,.05,.55,.95) infinite alternate; }
+@media (prefers-reduced-motion: reduce) {
+  .is-ring, .is-tagpulse, .is-dot, .is-marquee, .is-marquee-sub { animation: none !important; }
+  .s-chip--now { animation: none !important; }
+}
+
+/* ── Page /sports/ : cartes ──────────────────────────────────────── */
+.s-board { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 288px), 1fr)); gap: 14px; align-items: start; padding: 16px; }
+.s-board--gap16 { gap: 16px; }
+.s-panel {
+  container-type: inline-size;
+  min-width: 0;
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--pc, var(--accent));
+  border-radius: 10px;
+  background: var(--bg-soft);
+  padding: 14px 14px 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+/* P1 + P7 — un délimiteur de moins, échelle 4/8 */
+.s-panel--clean {
+  border: 0;
+  border-top: 3px solid var(--pc, var(--accent));
+  box-shadow: none;
+  padding: 16px 16px 12px;
+}
+.s-panel__head { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+.s-panel--clean .s-panel__head { margin-bottom: 12px; }
+.s-panel__glyph { font-size: 1.1rem; line-height: 1.3; flex: 0 0 auto; }
+.s-panel__id { min-width: 0; flex: 1 1 auto; }
+.s-panel__name {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 5px 8px;
+  margin: 0 0 3px;
+  font-family: var(--serif); font-size: 1.22rem; font-weight: 700; line-height: 1.2;
+  letter-spacing: -.01em; color: var(--ink);
+}
+.s-panel--focus .s-panel__name { font-size: 1.05rem; font-weight: 600; }
+.s-panel__brand { color: color-mix(in srgb, var(--pc, var(--accent)) 42%, var(--ink)); overflow-wrap: anywhere; }
+.s-panel__sex {
+  font-family: var(--sans); font-size: 10px; font-weight: 800; letter-spacing: .04em;
+  text-transform: uppercase; line-height: 1.2; border-radius: 999px; padding: 2px 7px; flex: 0 0 auto;
+  color: #9d174d; background: color-mix(in srgb, #db2777 16%, transparent); border: 1px solid color-mix(in srgb, #db2777 36%, transparent);
+}
+.s-panel__program { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 6px; margin: 0 0 3px; font-size: 13px; font-weight: 700; color: var(--ink); }
+.s-panel--clean .s-panel__name { margin-bottom: 4px; }
+.s-panel__code { font-size: .72em; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); opacity: .85; }
+.s-panel__school { margin: 0 0 3px; font-size: 12px; font-weight: 600; color: var(--ink-soft); }
+.s-panel__meta { margin: 0; font-size: 11.5px; color: var(--muted); line-height: 1.4; }
+/* seo-pages.css:1033-1039 — 281 cartes sur 813 s'arrêtent là. */
+.s-panel__empty { margin: 0; font-family: var(--sans); font-size: 13px; font-style: italic; color: var(--muted); }
+/* P6 — le vide prend l'empreinte d'une ligne, l'identité reçoit un plancher. */
+.s-panel--even .s-panel__empty {
+  display: flex;
+  align-items: center;
+  min-height: 2.6rem;
+  padding-top: 8px;
+  border-top: 1px solid color-mix(in srgb, var(--rule) 78%, transparent);
+}
+.s-panel--even .s-panel__id { min-height: 4.3rem; }
+
+.s-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 4.5rem 4.25rem minmax(0,1fr) 1.25rem; column-gap: 8px; }
+.s-res {
+  display: grid; grid-template-columns: subgrid; grid-column: 1 / -1;
+  align-items: start;
+  font-size: 13px; line-height: 1.4; color: var(--ink-soft);
+  padding: 8px 0;
+  border-top: 1px solid color-mix(in srgb, var(--rule) 78%, transparent);
+}
+.s-res:first-child { border-top: 0; padding-top: 0; }
+.s-res--W { border-left: 3px solid #3d9a6a; margin-inline: -6px; padding-inline: 6px; border-radius: 4px; background: color-mix(in srgb, #3d9a6a 9%, transparent); }
+.s-res--L { border-left: 3px solid #c45c5c; margin-inline: -6px; padding-inline: 6px; border-radius: 4px; background: color-mix(in srgb, #c45c5c 9%, transparent); }
+.s-res--next { border-left: 3px solid var(--status-upcoming-mid); margin-inline: -6px; padding-inline: 6px; border-radius: 4px; background: color-mix(in srgb, var(--status-upcoming-soft) 16%, transparent); }
+.s-res__time { display: flex; flex-direction: column; gap: 1px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--ink); font-size: 12px; line-height: 1.3; }
+.s-res__clock { font-weight: 600; font-size: 11px; color: var(--muted); }
+.s-res__score { font-weight: 800; font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+.s-res__score--next { font-size: 11.5px; font-weight: 700; color: var(--status-upcoming); white-space: normal; line-height: 1.25; }
+/* P2 point 1 — l'heure occupe la colonne forte à la place du mot « À venir ». */
+.s-res__score--hour { font-size: 1.05rem; font-weight: 800; color: var(--ink); white-space: nowrap; line-height: 1.2; }
+.s-res__title { min-width: 0; overflow-wrap: break-word; }
+.s-res__vs { opacity: .65; margin-right: 3px; font-weight: 600; }
+.s-res__opp { font-weight: 700; color: var(--ink); }
+.s-res__opp-full { display: block; margin-top: 1px; font-size: 11px; font-weight: 500; line-height: 1.35; color: var(--muted); overflow-wrap: anywhere; }
+.s-res__badge { justify-self: end; font-size: 11px; font-weight: 800; letter-spacing: .04em; color: var(--muted); }
+.s-res--W .s-res__badge { color: #2f7a54; }
+.s-res--L .s-res__badge { color: #a04545; }
+/* P2 — le résultat devient le point focal */
+.s-panel--focus .s-res--lead .s-res__score { font-size: 1.15rem; font-weight: 800; }
+.s-panel--focus .s-res--lead .s-res__opp { font-size: 13px; font-weight: 600; }
+/* P4 — le badge porte le sens, il cesse d'être le plus faible */
+.s-panel--p4 .s-res__badge { font-size: 12px; color: var(--ink-soft); }
+.s-panel--p4 .s-res--W { background: color-mix(in srgb, #3d9a6a 6%, transparent); }
+.s-panel--p4 .s-res--L { background: color-mix(in srgb, #c45c5c 6%, transparent); }
+/* P3 — APPLIQUÉ (PR #51). Deux variantes montrées côte à côte :
+ *   .s-panel--p3   = ce qui a été EXPÉDIÉ — trois rangées (time+badge / score / title),
+ *                    transcrit de seo-pages.css:1451-1463 ;
+ *   .s-panel--p3b  = ce que le verdict RECOMMANDAIT — deux rangées, score et adversaire
+ *                    appariés sur la seconde. */
+@container (max-width: 340px) {
+  .s-panel--p3 .s-list { grid-template-columns: minmax(0, 1fr) 1.25rem; row-gap: 0; }
+  .s-panel--p3 .s-res { grid-template-columns: subgrid; }
+  .s-panel--p3 .s-res__time { grid-column: 1; }
+  .s-panel--p3 .s-res__badge { grid-column: 2; grid-row: 1; }
+  .s-panel--p3 .s-res__score { grid-column: 1 / -1; }
+  .s-panel--p3 .s-res__title { grid-column: 1 / -1; }
+
+  .s-panel--p3b .s-list { grid-template-columns: minmax(0, 1fr) 1.25rem; row-gap: 0; }
+  .s-panel--p3b .s-res {
+    grid-template-columns: auto minmax(0, 1fr) 1.25rem;
+    column-gap: 8px;
+  }
+  .s-panel--p3b .s-res__time { grid-column: 1 / 3; grid-row: 1; }
+  .s-panel--p3b .s-res__badge { grid-column: 3; grid-row: 1; justify-self: end; }
+  .s-panel--p3b .s-res__score { grid-column: 1; grid-row: 2; }
+  .s-panel--p3b .s-res__title { grid-column: 2 / -1; grid-row: 2; }
+  .s-panel--p3b .s-res__opp,
+  .s-panel--p3b .s-res__opp-full { white-space: normal; overflow-wrap: anywhere; }
+}
+
+/* ── Petits utilitaires de spécimen ──────────────────────────────── */
+.s-pad { padding: 16px; }
+.s-note {
+  margin: 0; padding: 8px 12px;
+  font-family: var(--lab-mono); font-size: 10.5px; letter-spacing: .04em;
+  color: var(--lab-muted); background: var(--lab-sunk);
+  border-top: 1px solid var(--lab-line);
+}
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 0; padding: 0; list-style: none; font-size: 12.5px; color: var(--lab-muted); }
+.legend b { font-family: var(--lab-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; }
+.legend .k-now b { color: var(--lab-ink-soft); }
+.legend .k-reco b { color: var(--lab-accent); }
+.legend .k-diss b { color: var(--lab-warn); }
+.legend .k-done b { color: var(--lab-ok); }
+.legend .k-out b { color: var(--lab-stop); }
+
+.approve {
+  margin-top: 56px;
+  padding: 24px;
+  border: 1px solid var(--lab-line);
+  border-radius: 6px;
+  background: var(--lab-surface);
+}
+.approve h2 { font-family: var(--lab-serif); font-size: 22px; margin: 0 0 10px; }
+.approve p { margin: 0 0 14px; max-width: 70ch; color: var(--lab-ink-soft); font-size: 14px; }
+.approve ul { margin: 0; padding-left: 20px; color: var(--lab-ink-soft); font-size: 14px; }
+.approve li { margin-bottom: 6px; }
+.approve code { font-family: var(--lab-mono); font-size: .88em; padding: 1px 4px; border-radius: 3px; background: var(--lab-sunk); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead-lab">
+    <p class="eyebrow">Focus group · LE-RADAR · trois surfaces</p>
+    <h1>Labo de revue — mât, bandeau sports, page sports</h1>
+    <p class="lede">Chaque verdict du document est rendu ici : l'état actuel, la recommandation du panel, et la dissidence quand il y en a une. Rien de ce qui suit n'est en production.</p>
+    <div class="notice">
+      <span aria-hidden="true">⚠</span>
+      <span><b>Aucun changement n'est appliqué.</b> Ce labo est une maquette autonome : les polices sont les substituts système de Source Serif 4 / Inter, les photos du mât sont simulées par des dégradés, et la logique JS du site (cascade de fit, rotation, chargement de <code class="inline-code">sports.json</code>) n'est pas rejouée. Les valeurs de couleur, d'espacement et de graisse, elles, sont celles de la production.<br><br><b>Révision du 11 août 2026.</b> Les verdicts ont été confrontés aux données réelles : 813 formations, <b>0 résultat en banque</b>, 531 avec des matchs à venir, reprise le 19 août. <code class="inline-code">P6</code> a été récrit — sa prémisse était fausse — et <code class="inline-code">B2</code>, <code class="inline-code">B6</code>, <code class="inline-code">P2</code> complétés d'une règle hors saison. Un spécimen « état réel » ouvre désormais le §2.<br><br><b>Puis le code a bougé</b> — PR #49, #50, #52, #53. Deux touchent le mât : le plancher de la colonne météo primaire passe de <code class="inline-code">110 px</code> à <code class="inline-code">138 px</code>, et l'accueil devient un rafraîchissement doux. <code class="inline-code">M2</code> est reformulé, <code class="inline-code">M3</code> voit son risque monter, <code class="inline-code">M7</code> est ajouté. Le bandeau sports et la page <code class="inline-code">/sports/</code> ne sont pas touchés.<br><br><b>Et il a rebougé — PR #51, #54, #55, cette fois sur nos surfaces.</b> Recalé sur <code class="inline-code">main</code> à <code class="inline-code">9e8af0e</code>. Trois choses : <code class="inline-code">P3</code> <b>a été expédié</b> (le spécimen montre l'écart avec ce que le verdict demandait) ; la puce a été <b>repeinte</b> — liseré pourpre <code class="inline-code">--accent</code>, fond <code class="inline-code">rgba(42,46,54,.92)</code>, plus un <b>halo permanent</b> — donc <code class="inline-code">B1</code> est rejugé, <code class="inline-code">B2</code> se renforce et <code class="inline-code">B4</code> passe de <b>cinq à sept mouvements</b> ; enfin <code class="inline-code">M7</code> perd un tiers de son objet, Accueil ayant quitté le pied de page. <b>Tous les spécimens ci-dessous rendent les valeurs expédiées</b>, halo compris.</span>
+    </div>
+    <ul class="legend">
+      <li class="k-diss"><b>État réel</b> — ce que le site affiche vraiment le 11 août 2026</li>
+      <li class="k-now"><b>Actuel</b> — le registre en place, illustré en saison</li>
+      <li class="k-done"><b>Expédié</b> — déjà en production (<code class="inline-code">P3</code>)</li>
+      <li class="k-reco"><b>Proposé</b> — recommandation du panel</li>
+      <li class="k-diss"><b>Dissidence</b> — la minorité, à trancher</li>
+      <li class="k-out"><b>Écarté</b> — montré pour justifier le refus</li>
+    </ul>
+  </header>
+
+  <div class="controls">
+    <div class="ctl">
+      <span class="ctl__label">Thème</span>
+      <button class="btn" type="button" data-theme-btn="light" aria-pressed="false">Clair</button>
+      <button class="btn" type="button" data-theme-btn="dark" aria-pressed="false">Sombre</button>
+      <button class="btn" type="button" data-theme-btn="auto" aria-pressed="true">Auto</button>
+    </div>
+    <div class="ctl">
+      <span class="ctl__label">Largeur</span>
+      <button class="btn" type="button" data-width="360" aria-pressed="false">360</button>
+      <button class="btn" type="button" data-width="480" aria-pressed="false">480</button>
+      <button class="btn" type="button" data-width="900" aria-pressed="false">900</button>
+      <button class="btn" type="button" data-width="0" aria-pressed="true">Pleine</button>
+    </div>
+    <div class="ctl">
+      <span class="ctl__label">Mouvement</span>
+      <button class="btn" type="button" id="motion-btn" aria-pressed="true">Animations actives</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ §1 — LE MÂT ═══════════════════ -->
+  <section class="zone" id="mat">
+    <div class="zone__head"><h2>§1 — Le mât</h2></div>
+    <p class="zone__sub">Tout ce qui est au-dessus de la barre radio : rangée date / météo / actions, puis le mot-symbole et le slogan, sur une photo de la banque du Québec.</p>
+
+    <!-- M1 -->
+    <article class="verdict">
+      <div class="verdict__rail">
+        <span class="code">M1</span>
+        <span class="slug">voile-unique</span>
+        <p class="claim">Cinq dispositifs empilés pour un seul problème : rendre le texte lisible sur la photo.</p>
+        <div class="tags"><span class="tag">CSS seul</span><span class="tag tag--risk-mid">Risque moyen</span><span class="tag">À trancher</span></div>
+      </div>
+      <div class="verdict__body">
+        <div class="pair pair--3">
+          <div class="stage stage--now">
+            <div class="stage__cap"><b>Actuel</b> <small>photo claire</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s s-mast s-mast--snow">
+                <div class="s-mast__photo"></div><div class="s-mast__scrim s-scrim-now"></div>
+                <div class="s-mast__inner">
+                  <div class="s-mast__top">
+                    <span class="s-date s-shadow-now">Dimanche 9 août<span>14 h 32</span></span>
+                    <span></span>
+                    <span class="s-acts"><span class="s-ico">⌂</span><span class="s-ico">◔</span><span class="s-ico">☾</span></span>
+                  </div>
+                  <div class="s-mast__brand s-halo">
+                    <p class="s-wordmark s-shadow-now">LE<span class="s-lys">⚜</span>RADAR.ca</p>
+                    <p class="s-tagline s-shadow-now">Journaux, radios et sports étudiants du Québec</p>
+                  </div>
+                </div>
+              </div>
+            </div></div>
+            <p class="s-note">scrim .07 · halo radial · text-shadow ×4</p>
+          </div>
+          <div class="stage stage--reco">
+            <div class="stage__cap"><b>Proposé</b> <small>voile en deux bandes</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s s-mast s-mast--snow">
+                <div class="s-mast__photo"></div><div class="s-mast__scrim s-scrim-reco"></div>
+                <div class="s-mast__inner">
+                  <div class="s-mast__top">
+                    <span class="s-date s-shadow-reco">Dimanche 9 août<span>14 h 32</span></span>
+                    <span></span>
+                    <span class="s-acts"><span class="s-ico">⌂</span><span class="s-ico">◔</span><span class="s-ico">☾</span></span>
+                  </div>
+                  <div class="s-mast__brand">
+                    <p class="s-wordmark s-shadow-reco">LE<span class="s-lys">⚜</span>RADAR.ca</p>
+                    <p class="s-tagline s-shadow-reco">Journaux, radios et sports étudiants du Québec</p>
+                  </div>
+                </div>
+              </div>
+            </div></div>
+            <p class="s-note">scrim deux bandes · pas de halo · text-shadow ×1</p>
+          </div>
+          <div class="stage stage--diss">
+            <div class="stage__cap"><b>Dissidence</b> <small>dev — ombres allégées seules</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s s-mast s-mast--snow">
+                <div class="s-mast__photo"></div><div class="s-mast__scrim s-scrim-now"></div>
+                <div class="s-mast__inner">
+                  <div class="s-mast__top">
+                    <span class="s-date s-shadow-diss">Dimanche 9 août<span>14 h 32</span></span>
+                    <span></span>
+                    <span class="s-acts"><span class="s-ico">⌂</span><span class="s-ico">◔</span><span class="s-ico">☾</span></span>
+                  </div>
+                  <div class="s-mast__brand">
+                    <p class="s-wordmark s-shadow-diss">LE<span class="s-lys">⚜</span>RADAR.ca</p>
+                    <p class="s-tagline s-shadow-diss">Journaux, radios et sports étudiants du Québec</p>
+                  </div>
+                </div>
+              </div>
+            </div></div>
+            <p class="s-note">scrim inchangé · text-shadow ×2 · photo intacte</p>
+          </div>
+        </div>
+        <div class="pair pair--3">
+          <div class="stage stage--now">
+            <div class="stage__cap"><b>Actuel</b> <small>photo sombre</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s s-mast s-mast--dusk">
+                <div class="s-mast__photo"></div><div class="s-mast__scrim s-scrim-now"></div>
+                <div class="s-mast__inner">
+                  <div class="s-mast__top">
+                    <span class="s-date s-shadow-now">Dimanche 9 août<span>14 h 32</span></span>
+                    <span></span>
+                    <span class="s-acts"><span class="s-ico">⌂</span><span class="s-ico">◔</span><span class="s-ico">☾</span></span>
+                  </div>
+                  <div class="s-mast__brand s-halo">
+                    <p class="s-wordmark s-shadow-now">LE<span class="s-lys">⚜</span>RADAR.ca</p>
+                    <p class="s-tagline s-shadow-now">Journaux, radios et sports étudiants du Québec</p>
+                  </div>
+                </div>
+              </div>
+            </div></div>
+          </div>
+          <div class="stage stage--reco">
+            <div class="stage__cap"><b>Proposé</b> <small>photo sombre</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s s-mast s-mast--dusk">
+                <div class="s-mast__photo"></div><div class="s-mast__scrim s-scrim-reco"></div>
+                <div class="s-mast__inner">
+                  <div class="s-mast__top">
+                    <span class="s-date s-shadow-reco">Dimanche 9 août<span>14 h 32</span></span>
+                    <span></span>
+                    <span class="s-acts"><span class="s-ico">⌂</span><span class="s-ico">◔</span><span class="s-ico">☾</span></span>
+                  </div>
+                  <div class="s-mast__brand">
+                    <p class="s-wordmark s-shadow-reco">LE<span class="s-lys">⚜</span>RADAR.ca</p>
+                    <p class="s-tagline s-shadow-reco">Journaux, radios et sports étudiants du Québec</p>
+                  </div>
+                </div>
+              </div>
+            </div></div>
+          </div>
+          <div class="stage stage--diss">
+            <div class="stage__cap"><b>Dissidence</b> <small>photo sombre</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s s-mast s-mast--dusk">
+                <div class="s-mast__photo"></div><div class="s-mast__scrim s-scrim-now"></div>
+                <div class="s-mast__inner">
+                  <div class="s-mast__top">
+                    <span class="s-date s-shadow-diss">Dimanche 9 août<span>14 h 32</span></span>
+                    <span></span>
+                    <span class="s-acts"><span class="s-ico">⌂</span><span class="s-ico">◔</span><span class="s-ico">☾</span></span>
+                  </div>
+                  <div class="s-mast__brand">
+                    <p class="s-wordmark s-shadow-diss">LE<span class="s-lys">⚜</span>RADAR.ca</p>
+                    <p class="s-tagline s-shadow-diss">Journaux, radios et sports étudiants du Québec</p>
+                  </div>
+                </div>
+              </div>
+            </div></div>
+          </div>
+        </div>
+        <p class="foot">La question à trancher est visible sur la <b>photo claire</b> : le voile en deux bandes garantit le contraste quelle que soit l'image, mais assombrit la photo — ce que le commentaire de <code>style-masthead.css</code> refuse explicitement. La dissidence garde la photo intacte et se contente de retirer deux couches d'ombre.</p>
+      </div>
+    </article>
+
+    <!-- M2 -->
+    <article class="verdict">
+      <div class="verdict__rail">
+        <span class="code">M2</span>
+        <span class="slug">groupes-par-proximite</span>
+        <p class="claim">Huit icônes au même écart disent « ces huit choses sont équivalentes ». C'est faux.</p>
+        <div class="tags"><span class="tag">CSS seul</span><span class="tag">Risque faible</span></div>
+      </div>
+      <div class="verdict__body">
+        <div class="pair pair--2">
+          <div class="stage stage--now">
+            <div class="stage__cap"><b>Actuel</b> <small>gap 8 px uniforme</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s s-pad">
+                <div class="s-acts" style="justify-content:flex-end">
+                  <span class="s-ico s-ico--plain">⌂</span><span class="s-ico s-ico--plain">≈</span>
+                  <span class="s-ico s-ico--plain">🍅</span><span class="s-ico s-ico--plain">🂡</span><span class="s-ico s-ico--plain">🏆</span>
+                  <span class="s-ico s-ico--plain">☕</span><span class="s-ico s-ico--plain">↓</span><span class="s-ico s-ico--plain">☾</span>
+                </div>
+              </div>
+            </div></div>
+          </div>
+          <div class="stage stage--reco">
+            <div class="stage__cap"><b>Proposé</b> <small>6 px dedans, 14 px entre</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s s-pad">
+                <div class="s-acts s-acts--grouped" style="justify-content:flex-end">
+                  <span class="s-acts__grp"><span class="s-ico s-ico--plain">⌂</span><span class="s-ico s-ico--plain">≈</span></span>
+                  <span class="s-acts__grp"><span class="s-ico s-ico--plain">🍅</span><span class="s-ico s-ico--plain">🂡</span><span class="s-ico s-ico--plain">🏆</span></span>
+                  <span class="s-acts__grp"><span class="s-ico s-ico--plain">☕</span><span class="s-ico s-ico--plain">↓</span><span class="s-ico s-ico--plain">☾</span></span>
+                </div>
+              </div>
+            </div></div>
+            <p class="s-note">navigation · applications · réglages</p>
+          </div>
+        </div>
+        <p class="foot">Rien n'est ajouté ni retiré : seul l'écart change. La largeur totale de la grappe est <b>identique à 2 px près</b>, donc la cascade de la rangée date / météo n'est pas affectée.</p>
+      </div>
+    </article>
+
+    <!-- M4 -->
+    <article class="verdict">
+      <div class="verdict__rail">
+        <span class="code">M4</span>
+        <span class="slug">slogan-lisible-mobile</span>
+        <p class="claim">10 px en capitales interlettrées sur trois lignes : le texte le moins lisible de la page.</p>
+        <div class="tags"><span class="tag">CSS seul</span><span class="tag">Risque faible</span><span class="tag">À trancher</span></div>
+      </div>
+      <div class="verdict__body">
+        <div class="pair pair--3">
+          <div class="stage stage--now">
+            <div class="stage__cap"><b>Actuel</b> <small>10 px · .12em · capitales</small></div>
+            <div class="stage__body"><div class="stage__inner" style="max-width:330px">
+              <div class="s s-pad" style="text-align:center">
+                <p class="s-tagline" style="color:var(--muted);font-size:10px">Journaux, radios et sports étudiants du Québec, réunis au même endroit</p>
+              </div>
+            </div></div>
+          </div>
+          <div class="stage stage--reco">
+            <div class="stage__cap"><b>Proposé</b> <small>10,5 px · .06em</small></div>
+            <div class="stage__body"><div class="stage__inner" style="max-width:330px">
+              <div class="s s-pad" style="text-align:center">
+                <p class="s-tagline s-tagline--detrack" style="color:var(--muted)">Journaux, radios et sports étudiants du Québec, réunis au même endroit</p>
+              </div>
+            </div></div>
+          </div>
+          <div class="stage stage--diss">
+            <div class="stage__cap"><b>Dissidence</b> <small>designer — bas de casse 12 px</small></div>
+            <div class="stage__body"><div class="stage__inner" style="max-width:330px">
+              <div class="s s-pad" style="text-align:center">
+                <p class="s-tagline s-tagline--lower" style="color:var(--muted)">Journaux, radios et sports étudiants du Québec, réunis au même endroit</p>
+              </div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- M6 -->
+    <article class="verdict">
+      <div class="verdict__rail">
+        <span class="code">M6</span>
+        <span class="slug">credit-photo-cible</span>
+        <p class="claim">Le lien de licence Commons fait 9 px de haut. Sous le minimum WCAG 2.5.8.</p>
+        <div class="tags"><span class="tag">CSS seul</span><span class="tag">Risque faible</span></div>
+      </div>
+      <div class="verdict__body">
+        <p class="foot">Correction purement mécanique : <code>padding: 6px 4px</code> + <code>margin: -6px -4px</code> sur le <code>&lt;a&gt;</code> — la cible passe de 9 à 21 px de haut, la mise en page ne bouge pas d'un pixel. Couleur remontée de <code>rgba(255,255,255,.68)</code> à <code>.82</code>. Rien à comparer visuellement : le rendu au repos est identique.</p>
+      </div>
+    </article>
+
+    <!-- M7 -->
+    <article class="verdict">
+      <div class="verdict__rail">
+        <span class="code">M7</span>
+        <span class="slug">accueil-en-double</span>
+        <p class="claim">Ajouté après la PR #52 — « Accueil » était <b>trois</b> fois sur la page. La PR #51 en a retiré une : le pied de page n'a plus son lien (<code>navOnly</code>). Il en reste <b>deux</b>, et ce sont le même contrôle.</p>
+        <div class="tags"><span class="tag">markup</span><span class="tag">Risque faible</span><span class="tag">Portée réduite de moitié</span><span class="tag">À trancher</span></div>
+      </div>
+      <div class="verdict__body">
+        <div class="stage stage--state">
+          <div class="stage__cap"><b>Actuel</b> <small>deux commandes identiques à ~150 px d'écart</small></div>
+          <div class="stage__body"><div class="stage__inner">
+            <div class="s">
+              <div class="s-pad" style="padding-bottom:8px">
+                <div class="s-acts" style="justify-content:flex-end">
+                  <span class="s-ico s-ico--plain s-ico--dup" title="data-home-nav aria-current=page">⌂</span>
+                  <span class="s-ico s-ico--plain">≈</span><span class="s-ico s-ico--plain">🍅</span><span class="s-ico s-ico--plain">🂡</span><span class="s-ico s-ico--plain">🏆</span><span class="s-ico s-ico--plain">☕</span><span class="s-ico s-ico--plain">↓</span><span class="s-ico s-ico--plain">☾</span>
+                </div>
+              </div>
+              <div class="s-tuner">
+                <span class="s-tuner__onair">En ondes</span>
+                <span><span class="s-tuner__name">CISM 89,3</span></span>
+                <span class="s-tuner__play">▶</span>
+              </div>
+              <div class="s-strip" style="min-height:0">
+                <span class="s-chip s-chip--now" style="--st:#66839e"><span class="s-chip__glyph">🏸</span><span class="s-chip__line"><span class="s-chip__code">CAT</span> <span class="s-chip__vs">vs</span> <span class="s-chip__opp">CEM</span> · <span class="s-chip__when">19 août</span></span></span>
+              </div>
+              <nav class="s-sections">
+                <a class="s-sections__cur s-ico--dup" href="#" onclick="return false">Accueil</a>
+                <span class="s-sections__sep">·</span><a href="#" onclick="return false">Médias</a>
+                <span class="s-sections__sep">·</span><a href="#" onclick="return false">Journaux</a>
+                <span class="s-sections__sep">·</span><a href="#" onclick="return false">Radios</a>
+                <span class="s-sections__sep">·</span><a href="#" onclick="return false">Sports</a>
+              </nav>
+            </div>
+          </div></div>
+          <p class="s-note">les deux repères pointillés portent <code>data-home-nav</code> <b>et</b> <code>aria-current="page"</code> — même action, même « vous êtes ici »</p>
+        </div>
+        <p class="foot"><b>Reco (3 / 5 — majorité affaiblie).</b> Garder le lien texte du menu de sections — explicite, libellé, cohérent avec les quatre autres. Sur l'accueil <b>uniquement</b>, l'icône ronde du mât cesse d'être une commande : elle garde son <code>aria-current</code> comme repère, perd son <code>data-home-nav</code>, et devient non focalisable. Ailleurs, elle reste le lien de retour qu'elle a toujours été.</p>
+        <p class="foot"><b>Dissidence (dev + reader, 2 voix — renforcée depuis la PR #51).</b> La redondance ayant déjà été réduite d'un tiers, retirer la seconde commande se défend beaucoup moins. Sur mobile, l'icône du mât est la cible la plus rapide — le menu de sections passe sous la barre radio <i>et</i> sous le bandeau sports. Contre-proposition, désormais la plus économique : <b>ne rien retirer</b>, et n'enlever que l'un des deux <code>aria-current</code>. Deux commandes identiques ne gênent personne ; deux « vous êtes ici » se contredisent.</p>
+        <p class="foot"><b>Attention aux tests.</b> <code>static-integrity.mjs</code> verrouille ce markup et ses assertions ont changé de forme avec la PR #51 : le menu doit commencer par <code>&lt;a href="./"&gt;Accueil&lt;/a&gt;</code>, l'ordre des cinq cibles est figé, <code>data-home-nav</code> doit être présent, et le contrôle « tout ce qui est dans le nav est dans le pied » <b>exclut désormais <code>./</code></b>.</p>
+      </div>
+    </article>
+  </section>
+
+  <!-- ═══════════════════ §2 — BANDEAU SPORTS ═══════════════════ -->
+  <section class="zone" id="bandeau">
+    <div class="zone__head"><h2>§2 — Le bandeau sports</h2></div>
+    <p class="zone__sub">Sous la barre radio, pas dans le mât. Toute la bande : puces de score, puce hors-saison, et la carte CTA — la seule pièce déjà passée au focus group.</p>
+
+    <!-- État réel — mesuré le 11 août 2026 -->
+    <article class="verdict">
+      <div class="verdict__rail">
+        <span class="code code--state">État réel</span>
+        <span class="slug">11 août 2026</span>
+        <p class="claim">Ce que tu vois en ouvrant le site aujourd'hui. C'est contre <b>ceci</b> qu'il faut juger les options ci-dessous — pas contre les spécimens à scores.</p>
+        <div class="tags"><span class="tag">Inter-saison</span><span class="tag">Reprise le 19 août</span></div>
+      </div>
+      <div class="verdict__body">
+        <div class="stage stage--state">
+          <div class="stage__cap"><b>Aujourd'hui</b> <small>mode « next » — 0 résultat en banque, 531 formations avec des matchs à venir</small></div>
+          <div class="stage__body"><div class="stage__inner">
+            <div class="s">
+              <div class="s-tuner">
+                <span class="s-tuner__onair">En ondes</span>
+                <span><span class="s-tuner__name">CISM 89,3</span> <span class="s-tuner__sub">· Montréal</span></span>
+                <span class="s-tuner__play">▶</span>
+              </div>
+              <div class="s-weather">
+                <span class="s-wcity s-wcity--slate" style="--wt:#d88a0a"><span class="s-wico">☀</span><span class="s-wname">Montréal</span><span class="s-wtemp">24°</span></span>
+                <span class="s-wcity s-wcity--slate" style="--wt:#287bb9"><span class="s-wico">☂</span><span class="s-wname">Québec</span><span class="s-wtemp">18°</span></span>
+                <span class="s-wcity s-wcity--slate" style="--wt:#66839e"><span class="s-wico">☁</span><span class="s-wname">Sherbrooke</span><span class="s-wtemp">21°</span></span>
+              </div>
+              <div class="s-strip">
+                <span class="s-chip s-chip--now" style="--st:#66839e"><span class="s-chip__glyph">🏸</span><span class="s-chip__line"><span class="s-chip__code">CAT</span> <span class="s-chip__vs">vs</span> <span class="s-chip__opp">CEM</span> · <span class="s-chip__when">19 août</span></span></span>
+                <span class="s-chip s-chip--now" style="--st:#66839e"><span class="s-chip__glyph">⚽</span><span class="s-chip__line"><span class="s-chip__code">LGR</span> <span class="s-chip__vs">vs</span> <span class="s-chip__opp">SJSR</span> · <span class="s-chip__when">22 août</span></span></span>
+                <a class="s-chip s-chip--now s-cta" style="--st:#66839e">
+                  <span class="s-cta__tag">Sports</span>
+                  <span class="s-cta__stack">
+                    <span class="s-cta__head"><span class="s-cta__eyebrow">Prochain</span><span class="s-cta__text">Citadins vs Cougars</span></span>
+                    <span class="s-cta__sub">Volleyball féminin · RSEQ · 19 août</span>
+                  </span>
+                  <span class="s-cta__chev">→</span>
+                </a>
+              </div>
+            </div>
+          </div></div>
+          <p class="s-note">aucune pastille V/D · aucun score · le ton #66839e est celui du sport, identique sur les trois puces</p>
+        </div>
+        <p class="foot">C'est l'angle mort de la première version de ce labo : tous les spécimens montraient des scores et un match en direct, un état invisible avant la reprise. <b>Hors saison, la seule information d'une puce est la date</b> — et c'est aujourd'hui son élément le plus faible (graisse 650, opacité .88). Les verdicts <code>B2</code> et <code>B6</code> ont été complétés pour cet état ; sans quoi, appliqués tels quels, ils rendraient la bande <b>plus</b> grise, pas moins.</p>
+      </div>
+    </article>
+
+    <!-- B1 -->
+    <article class="verdict">
+      <div class="verdict__rail">
+        <span class="code">B1</span>
+        <span class="slug">parite-ardoise</span>
+        <p class="claim">Le gris n'est pas un accident du bandeau sports : c'est la même ardoise que les cartes météo, y compris en thème clair.</p>
+        <div class="tags"><span class="tag">CSS seul</span><span class="tag tag--risk-mid">Risque moyen</span><span class="tag">À trancher</span></div>
+      </div>
+      <div class="verdict__body">
+        <div class="pair">
+          <div class="stage stage--now">
+            <div class="stage__cap"><b>Actuel</b> <small>barre radio + météo + sports, tels quels</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s">
+                <div class="s-tuner">
+                  <span class="s-tuner__onair">En ondes</span>
+                  <span><span class="s-tuner__name">CISM 89,3</span> <span class="s-tuner__sub">· Montréal</span></span>
+                  <span class="s-tuner__play">▶</span>
+                </div>
+                <div class="s-weather">
+                  <span class="s-wcity s-wcity--slate" style="--wt:#d88a0a"><span class="s-wico">☀</span><span class="s-wname">Montréal</span><span class="s-wtemp">24°</span></span>
+                  <span class="s-wcity s-wcity--slate" style="--wt:#287bb9"><span class="s-wico">☂</span><span class="s-wname">Québec</span><span class="s-wtemp">18°</span></span>
+                  <span class="s-wcity s-wcity--slate" style="--wt:#66839e"><span class="s-wico">☁</span><span class="s-wname">Sherbrooke</span><span class="s-wtemp">21°</span></span>
+                </div>
+                <div class="s-strip">
+                  <span class="s-chip s-chip--now" style="--st:#3d9a6a"><span class="s-chip__glyph">🏒</span><span class="s-chip__line"><span class="s-chip__code">CAR</span> <span class="s-chip__score">4–2</span> <span class="s-chip__vs">c.</span> <span class="s-chip__opp">RVE</span></span><span class="s-chip__badge">V</span></span>
+                  <span class="s-chip s-chip--now" style="--st:#b84848"><span class="s-chip__glyph">🏐</span><span class="s-chip__line"><span class="s-chip__code">THE</span> <span class="s-chip__score">1–3</span> <span class="s-chip__vs">c.</span> <span class="s-chip__opp">LAV</span></span><span class="s-chip__badge s-chip__badge--l">D</span></span>
+                  <a class="s-chip s-chip--now s-cta s-cta--live is-ring" style="--st:#66839e">
+                    <span class="s-cta__tag s-cta__tag--live is-tagpulse"><span class="s-cta__dot is-dot"></span>En cours</span>
+                    <span class="s-cta__stack">
+                      <span class="s-cta__head"><span class="s-cta__eyebrow">Aujourd'hui</span><span class="s-cta__text"><span class="is-marquee">Carabins 2 — Rouge et Or 1, 3ᵉ période</span></span></span>
+                      <span class="s-cta__sub">Hockey masculin · RSEQ</span>
+                    </span>
+                    <span class="s-cta__chev">→</span>
+                  </a>
+                </div>
+              </div>
+            </div></div>
+            <p class="s-note"><b>La parité a été rompue par la PR #51.</b> puce sports <b>rgba(42,46,54,.92)</b> + liseré --accent · carte météo rgba(54,59,68,.68), <b>inchangée</b>. Les deux surfaces sont à 8 px l'une de l'autre et ont divergé sans que rien ne le décide — et le fond de la puce ne correspond toujours à aucun token.</p>
+          </div>
+
+          <div class="stage stage--reco">
+            <div class="stage__cap"><b>Option A — proposée</b> <small>ardoise ancrée sur --tuner-bg, ton porteur du résultat</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s">
+                <div class="s-tuner">
+                  <span class="s-tuner__onair">En ondes</span>
+                  <span><span class="s-tuner__name">CISM 89,3</span> <span class="s-tuner__sub">· Montréal</span></span>
+                  <span class="s-tuner__play">▶</span>
+                </div>
+                <div class="s-weather">
+                  <span class="s-wcity s-wcity--anchored" style="--wt:#d88a0a"><span class="s-wico">☀</span><span class="s-wname">Montréal</span><span class="s-wtemp">24°</span></span>
+                  <span class="s-wcity s-wcity--anchored" style="--wt:#287bb9"><span class="s-wico">☂</span><span class="s-wname">Québec</span><span class="s-wtemp">18°</span></span>
+                  <span class="s-wcity s-wcity--anchored" style="--wt:#66839e"><span class="s-wico">☁</span><span class="s-wname">Sherbrooke</span><span class="s-wtemp">21°</span></span>
+                </div>
+                <div class="s-strip s-strip--gap8">
+                  <span class="s-chip s-chip--a s-chip--w2" style="--st:#3d9a6a"><span class="s-chip__glyph">🏒</span><span class="s-chip__line"><span class="s-chip__code">CAR</span> <span class="s-chip__score">4–2</span> <span class="s-chip__vs">c.</span> <span class="s-chip__opp">RVE</span></span><span class="s-chip__badge">V</span></span>
+                  <span class="s-chip s-chip--a s-chip--w2" style="--st:#c45c5c"><span class="s-chip__glyph">🏐</span><span class="s-chip__line"><span class="s-chip__code">THE</span> <span class="s-chip__score">1–3</span> <span class="s-chip__vs">c.</span> <span class="s-chip__opp">LAV</span></span><span class="s-chip__badge s-chip__badge--l">D</span></span>
+                  <a class="s-chip s-chip--a s-chip--w2 s-cta s-cta--live is-ring" style="--st:#c8102e">
+                    <span class="s-cta__tag s-cta__tag--live"><span class="s-cta__dot is-dot"></span>En cours</span>
+                    <span class="s-cta__stack">
+                      <span class="s-cta__head"><span class="s-cta__eyebrow">Aujourd'hui</span><span class="s-cta__text">Carabins 2 — Rouge et Or 1</span></span>
+                      <span class="s-cta__sub">Hockey masculin · RSEQ · 3ᵉ période</span>
+                    </span>
+                    <span class="s-cta__chev">→</span>
+                  </a>
+                </div>
+              </div>
+            </div></div>
+            <p class="s-note">tuner → météo → sports : un seul fond · filet gauche = résultat · gap 8 · rayon 8 · deux graisses · pastille figée (B4)</p>
+          </div>
+
+          <div class="stage stage--diss">
+            <div class="stage__cap"><b>Option B — dissidence</b> <small>registre clair, météo comprise — chantier ×2</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s">
+                <div class="s-tuner">
+                  <span class="s-tuner__onair">En ondes</span>
+                  <span><span class="s-tuner__name">CISM 89,3</span> <span class="s-tuner__sub">· Montréal</span></span>
+                  <span class="s-tuner__play">▶</span>
+                </div>
+                <div class="s-weather">
+                  <span class="s-wcity s-wcity--paper" style="--wt:#d88a0a"><span class="s-wico">☀</span><span class="s-wname">Montréal</span><span class="s-wtemp">24°</span></span>
+                  <span class="s-wcity s-wcity--paper" style="--wt:#287bb9"><span class="s-wico">☂</span><span class="s-wname">Québec</span><span class="s-wtemp">18°</span></span>
+                  <span class="s-wcity s-wcity--paper" style="--wt:#66839e"><span class="s-wico">☁</span><span class="s-wname">Sherbrooke</span><span class="s-wtemp">21°</span></span>
+                </div>
+                <div class="s-strip s-strip--gap8">
+                  <span class="s-chip s-chip--b s-chip--w2" style="--st:#3d9a6a"><span class="s-chip__glyph">🏒</span><span class="s-chip__line"><span class="s-chip__code">CAR</span> <span class="s-chip__score">4–2</span> <span class="s-chip__vs">c.</span> <span class="s-chip__opp">RVE</span></span><span class="s-chip__badge">V</span></span>
+                  <span class="s-chip s-chip--b s-chip--w2" style="--st:#c45c5c"><span class="s-chip__glyph">🏐</span><span class="s-chip__line"><span class="s-chip__code">THE</span> <span class="s-chip__score">1–3</span> <span class="s-chip__vs">c.</span> <span class="s-chip__opp">LAV</span></span><span class="s-chip__badge s-chip__badge--l">D</span></span>
+                  <a class="s-chip s-chip--b s-chip--w2 s-cta s-cta--live is-ring" style="--st:#c8102e">
+                    <span class="s-cta__tag s-cta__tag--live"><span class="s-cta__dot is-dot"></span>En cours</span>
+                    <span class="s-cta__stack">
+                      <span class="s-cta__head"><span class="s-cta__eyebrow">Aujourd'hui</span><span class="s-cta__text">Carabins 2 — Rouge et Or 1</span></span>
+                      <span class="s-cta__sub">Hockey masculin · RSEQ · 3ᵉ période</span>
+                    </span>
+                    <span class="s-cta__chev">→</span>
+                  </a>
+                </div>
+              </div>
+            </div></div>
+            <p class="s-note">rupture nette avec le tuner · cohérent avec les cartes /sports/ · impose de repeindre la météo en même temps</p>
+          </div>
+
+          <div class="stage stage--out">
+            <div class="stage__cap"><b>Option C — écartée</b> <small>couleur d'établissement</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s">
+                <div class="s-strip s-strip--gap8">
+                  <span class="s-chip s-chip--c" style="--st:#0057AC"><span class="s-chip__glyph">🏒</span><span class="s-chip__line"><span class="s-chip__code">UDEM</span> <span class="s-chip__score">4–2</span></span><span class="s-chip__badge">V</span></span>
+                  <span class="s-chip s-chip--c" style="--st:#ED1B2F"><span class="s-chip__glyph">🏐</span><span class="s-chip__line"><span class="s-chip__code">MCG</span> <span class="s-chip__score">1–3</span></span><span class="s-chip__badge s-chip__badge--l">D</span></span>
+                  <span class="s-chip s-chip--c" style="--st:#E30513"><span class="s-chip__glyph">🏀</span><span class="s-chip__line"><span class="s-chip__code">ULAV</span> <span class="s-chip__score">88–71</span></span><span class="s-chip__badge">V</span></span>
+                  <span class="s-chip s-chip--c" style="--st:#FF8B00"><span class="s-chip__glyph">⚽</span><span class="s-chip__line"><span class="s-chip__code">JON</span> <span class="s-chip__score">2–2</span></span><span class="s-chip__badge s-chip__badge--d">N</span></span>
+                </div>
+              </div>
+            </div></div>
+            <p class="s-note">arlequin · et le rouge McGill #ED1B2F / Laval #E30513 entre en collision avec --live #C8102E</p>
+          </div>
+        </div>
+        <p class="foot"><b>C'est le choix principal du document.</b> A garde le sombre mais lui donne une raison d'être ; B est la réponse littérale à « poche gris » mais oblige à repeindre la barre météo dans le même mouvement. Compare-les surtout en <b>thème clair</b> — c'est là que l'ardoise actuelle détonne le plus.</p>
+      </div>
+    </article>
+
+    <!-- B2/B5/B6 -->
+    <article class="verdict">
+      <div class="verdict__rail">
+        <span class="code">B2 · B5 · B6</span>
+        <span class="slug">ton-un-seul-sens · rayons-imbriques · deux-graisses</span>
+        <p class="claim">La puce, de près : un lavis qui ne veut rien dire, un rayon imbriqué faux, quatre graisses entre 650 et 800.</p>
+        <div class="tags"><span class="tag">CSS + 1 ligne JS</span><span class="tag">Risque faible</span><span class="tag">Deux états</span></div>
+      </div>
+      <div class="verdict__body">
+        <div class="pair pair--2">
+          <div class="stage stage--now">
+            <div class="stage__cap"><b>Actuel</b> <small>puce de score — en saison</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s s-pad" style="background:var(--tuner-bg)">
+                <div class="s-strip" style="padding:0">
+                  <span class="s-chip s-chip--now" style="--st:#3d9a6a"><span class="s-chip__glyph">🏒</span><span class="s-chip__line"><span class="s-chip__code">CAR</span> <span class="s-chip__score">4–2</span> <span class="s-chip__vs">c.</span> <span class="s-chip__opp">RVE</span></span><span class="s-chip__badge">V</span></span>
+                </div>
+              </div>
+            </div></div>
+            <p class="s-note">lavis du sport à 28 % · rayon 6 / badge 3 · graisses 800 · 800 · 700 · 650</p>
+          </div>
+          <div class="stage stage--reco">
+            <div class="stage__cap"><b>Proposé</b> <small>puce de score — en saison</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s s-pad" style="background:var(--tuner-bg)">
+                <div class="s-strip" style="padding:0">
+                  <span class="s-chip s-chip--a s-chip--w2" style="--st:#3d9a6a"><span class="s-chip__glyph">🏒</span><span class="s-chip__line"><span class="s-chip__code">CAR</span> <span class="s-chip__score">4–2</span> <span class="s-chip__vs">c.</span> <span class="s-chip__opp">RVE</span></span><span class="s-chip__badge">V</span></span>
+                </div>
+              </div>
+            </div></div>
+            <p class="s-note">filet gauche = résultat · rayon 8 / badge 4 · deux graisses, le score domine</p>
+          </div>
+        </div>
+        <div class="pair pair--2">
+          <div class="stage stage--state">
+            <div class="stage__cap"><b>Actuel</b> <small>puce à venir — l'état d'aujourd'hui</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s s-pad" style="background:var(--tuner-bg)">
+                <div class="s-strip" style="padding:0">
+                  <span class="s-chip s-chip--now" style="--st:#66839e"><span class="s-chip__glyph">🏸</span><span class="s-chip__line"><span class="s-chip__code">CAT</span> <span class="s-chip__vs">vs</span> <span class="s-chip__opp">CEM</span> · <span class="s-chip__when">19 août</span></span></span>
+                </div>
+              </div>
+            </div></div>
+            <p class="s-note">la date — seule information de la puce — est son élément le plus faible : graisse 650, opacité .88</p>
+          </div>
+          <div class="stage stage--reco">
+            <div class="stage__cap"><b>Proposé</b> <small>puce à venir — le ton porte l'imminence</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s s-pad" style="background:var(--tuner-bg)">
+                <div class="s-strip s-strip--gap8" style="padding:0;flex-direction:column;gap:8px">
+                  <span class="s-chip s-chip--a s-chip--w2 s-chip--soon" style="--st:#bd8a18"><span class="s-chip__glyph">🏸</span><span class="s-chip__line"><span class="s-chip__code">CAT</span> <span class="s-chip__vs">vs</span> <span class="s-chip__opp">CEM</span> · <span class="s-chip__when">Aujourd'hui 19 h 30</span></span></span>
+                  <span class="s-chip s-chip--a s-chip--w2 s-chip--soon" style="--st:#a08442"><span class="s-chip__glyph">⚽</span><span class="s-chip__line"><span class="s-chip__code">LGR</span> <span class="s-chip__vs">vs</span> <span class="s-chip__opp">SJSR</span> · <span class="s-chip__when">Vendredi</span></span></span>
+                  <span class="s-chip s-chip--a s-chip--w2 s-chip--soon" style="--st:#8fa3b0"><span class="s-chip__glyph">🏐</span><span class="s-chip__line"><span class="s-chip__code">UQAM</span> <span class="s-chip__vs">vs</span> <span class="s-chip__opp">SHER</span> · <span class="s-chip__when">14 sept.</span></span></span>
+                </div>
+              </div>
+            </div></div>
+            <p class="s-note">filet gauche = imminence : aujourd'hui #bd8a18 · cette semaine 55 % · plus tard ardoise — et la date passe en graisse 800</p>
+          </div>
+        </div>
+        <p class="foot">Le sport reste porté par le glyphe, qui était déjà là et déjà lisible. Le filet gauche de 3 px est <b>le motif déjà en place sur la page /sports/</b> (<code>.sports-result--W/--L/--D</code> et <code>--next</code>) : le bandeau et la page partagent enfin une grammaire. <b>La rangée du bas est la correction de la première version</b> — sans elle, le verdict laissait la puce à venir sans couleur du tout, donc plus grise qu'aujourd'hui.</p>
+      </div>
+    </article>
+
+    <!-- B4 -->
+    <article class="verdict">
+      <div class="verdict__rail">
+        <span class="code">B4</span>
+        <span class="slug">un-mouvement-a-la-fois</span>
+        <p class="claim"><b>De cinq à sept</b> animations simultanées dans une bande de 60 px — et le rythme accéléré partout. Le verdict le plus dégradé par les PR #51 et #54.</p>
+        <div class="tags"><span class="tag">CSS + JS</span><span class="tag">Risque faible</span><span class="tag tag--warn">Défait un choix expédié</span></div>
+      </div>
+      <div class="verdict__body">
+        <p class="foot" style="margin-top:0">Les deux nouveaux : le <b>halo pourpre</b> (3,2 s, sur <i>chaque</i> puce, sans condition — PR #51) et le <b>marquee de la sous-ligne CTA</b> (PR #54). Le marquee des puces est passé de 8,5 s à 5,5 s, et la pause de relecture de 2,2 s à 1,2 s.</p>
+        <div class="pair pair--3">
+          <div class="stage stage--now">
+            <div class="stage__cap"><b>Actuel</b> <small>7 mouvements — halo pourpre + halo rouge + pastille + point + 3 marquees</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s"><div class="s-strip">
+                <span class="s-chip s-chip--now" style="--st:#3d9a6a"><span class="s-chip__glyph">🏒</span><span class="s-chip__line"><span class="is-marquee">CAR 4–2 c. Rouge et Or</span></span></span>
+                <a class="s-chip s-chip--now s-cta s-cta--live is-ring" style="--st:#66839e">
+                  <span class="s-cta__tag s-cta__tag--live is-tagpulse"><span class="s-cta__dot is-dot"></span>En cours</span>
+                  <span class="s-cta__stack">
+                    <span class="s-cta__head"><span class="s-cta__eyebrow">Aujourd'hui</span><span class="s-cta__text"><span class="is-marquee">Carabins 2 — Rouge et Or 1</span></span></span>
+                    <span class="s-cta__sub"><span class="is-marquee-sub">Hockey masculin · RSEQ · mis à jour à 21 h 56</span></span>
+                  </span>
+                  <span class="s-cta__chev">→</span>
+                </a>
+              </div></div>
+            </div></div>
+            <p class="s-note">Deux pulsations déphasées cohabitent : pourpre à 3,2 s sur la puce score, rouge à 2,6 s sur la CTA.</p>
+          </div>
+          <div class="stage stage--diss">
+            <div class="stage__cap"><b>Dissidence <code>designer</code></b> <small>halo ralenti à 6 s, amplitude de moitié — on ne défait pas la PR #51</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s"><div class="s-strip">
+                <span class="s-chip s-chip--now s-chip--glow-soft" style="--st:#3d9a6a"><span class="s-chip__glyph">🏒</span><span class="s-chip__line"><span class="is-marquee">CAR 4–2 c. Rouge et Or</span></span></span>
+                <a class="s-chip s-chip--now s-chip--noglow s-cta s-cta--live is-ring" style="--st:#66839e">
+                  <span class="s-cta__tag s-cta__tag--live"><span class="s-cta__dot is-dot"></span>En cours</span>
+                  <span class="s-cta__stack">
+                    <span class="s-cta__head"><span class="s-cta__eyebrow">Aujourd'hui</span><span class="s-cta__text">Carabins 2 — Rouge et Or 1</span></span>
+                    <span class="s-cta__sub">Hockey masculin · RSEQ</span>
+                  </span>
+                  <span class="s-cta__chev">→</span>
+                </a>
+              </div></div>
+            </div></div>
+          </div>
+          <div class="stage stage--reco">
+            <div class="stage__cap"><b>Proposé</b> <small>halo pourpre retiré ; halo rouge + point conservés, pastille figée</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s"><div class="s-strip s-strip--gap8">
+                <span class="s-chip s-chip--a s-chip--w2" style="--st:#3d9a6a"><span class="s-chip__glyph">🏒</span><span class="s-chip__line"><span class="is-marquee">CAR 4–2 c. Rouge et Or</span></span></span>
+                <a class="s-chip s-chip--a s-chip--w2 s-cta s-cta--live is-ring" style="--st:#c8102e">
+                  <span class="s-cta__tag s-cta__tag--live"><span class="s-cta__dot is-dot"></span>En cours</span>
+                  <span class="s-cta__stack">
+                    <span class="s-cta__head"><span class="s-cta__eyebrow">Aujourd'hui</span><span class="s-cta__text">Carabins 2 — Rouge et Or 1</span></span>
+                    <span class="s-cta__sub">Hockey masculin · RSEQ</span>
+                  </span>
+                  <span class="s-cta__chev">→</span>
+                </a>
+              </div></div>
+            </div></div>
+          </div>
+        </div>
+        <p class="foot">Le bouton <b>Mouvement</b> en haut de page fige tout, comme <code>prefers-reduced-motion</code> — que le halo respecte bien (<code>style.css:237</code>). Mais pour tous les autres, c'est un mouvement décoratif <b>en boucle, de plus de 5 s, sans mécanisme de pause</b> : le cas visé par <b>WCAG 2.2.2</b>. Le garde-fou maison impose déjà <code>(hover: hover) and (pointer: fine)</code> + pause à la rotation CTA pour cette raison ; le halo a été ajouté sans. Aucun verdict antérieur n'est défait — mais <b>celui-ci touche un choix expédié</b>, et la décision t'appartient.</p>
+      </div>
+    </article>
+
+    <!-- B7 -->
+    <article class="verdict">
+      <div class="verdict__rail">
+        <span class="code">B7</span>
+        <span class="slug">hors-saison-meme-registre</span>
+        <p class="claim">La seule puce de la bande dont le texte est centré, et le seul dégradé vertical. Mais c'est un repli profond : pas ce qui est à l'écran aujourd'hui.</p>
+        <div class="tags"><span class="tag">CSS + JS</span><span class="tag">Risque faible</span><span class="tag tag--risk-mid">Non visible</span></div>
+      </div>
+      <div class="verdict__body">
+        <div class="pair pair--2">
+          <div class="stage stage--now">
+            <div class="stage__cap"><b>Actuel</b></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s"><div class="s-strip">
+                <span class="s-chip s-chip--info-now"><span class="s-chip__line" style="text-align:center">Saison terminée — voir le calendrier</span></span>
+                <span class="s-chip s-chip--info-now"><span class="s-chip__line" style="text-align:center">Au tableau</span></span>
+              </div></div>
+            </div></div>
+          </div>
+          <div class="stage stage--reco">
+            <div class="stage__cap"><b>Proposé</b> <small>même fond, texte à gauche, eyebrow</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s"><div class="s-strip s-strip--gap8">
+                <span class="s-chip s-chip--a s-chip--w2" style="--st:#8fa3b0"><span class="s-chip__eyebrow">Hors saison</span><span class="s-chip__line">Voir le calendrier</span></span>
+                <span class="s-chip s-chip--a s-chip--w2" style="--st:#8fa3b0"><span class="s-chip__eyebrow">Hors saison</span><span class="s-chip__line">Au tableau</span></span>
+              </div></div>
+            </div></div>
+          </div>
+        </div>
+        <p class="foot"><b>Portée à connaître.</b> Le mode <code>info</code> (<code>app.js:3311</code>) n'est atteint que lorsqu'il n'y a <b>rien</b> en banque. Avec 531 formations qui ont des matchs à venir, ce n'est pas l'état courant — l'inter-saison d'aujourd'hui est rendue par des puces <code>next</code>, pas par des puces <code>info</code>. Le verdict tient, mais il traite un cas rare : ce sont <code>B2</code> et <code>B6</code> qui portent l'état réellement visible.</p>
+      </div>
+    </article>
+  </section>
+
+  <!-- ═══════════════════ §3 — PAGE /sports/ ═══════════════════ -->
+  <section class="zone" id="page">
+    <div class="zone__head"><h2>§3 — La page /sports/</h2></div>
+    <p class="zone__sub">813 formations collégiales et universitaires. Cartes en grille <code class="inline-code">auto-fill minmax(288px, 1fr)</code>, résultats en subgrid à quatre colonnes.</p>
+
+    <!-- P1 + P7 -->
+    <article class="verdict">
+      <div class="verdict__rail">
+        <span class="code">P1 · P7</span>
+        <span class="slug">une-seule-delimitation · echelle-4-8</span>
+        <p class="claim">Quatre signaux pour dire « ceci est une carte », et un padding hors échelle.</p>
+        <div class="tags"><span class="tag">CSS seul</span><span class="tag">Risque nul</span></div>
+      </div>
+      <div class="verdict__body">
+        <div class="pair pair--2">
+          <div class="stage stage--now">
+            <div class="stage__cap"><b>Actuel</b> <small>bordure + filet + fond + ombre</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s"><div class="s-board">
+                <section class="s-panel" style="--pc:#2f6fb5">
+                  <header class="s-panel__head">
+                    <span class="s-panel__glyph">🏐</span>
+                    <div class="s-panel__id">
+                      <h3 class="s-panel__name"><span class="s-panel__brand">Citadins</span><span class="s-panel__sex">F</span></h3>
+                      <p class="s-panel__program">UQAM <span class="s-panel__code">UQAM</span></p>
+                      <p class="s-panel__school">Université du Québec à Montréal</p>
+                      <p class="s-panel__meta">Volleyball · D1 · Universitaire · Fiche 7-3</p>
+                    </div>
+                  </header>
+                  <ul class="s-list">
+                    <li class="s-res s-res--W"><span class="s-res__time">7 août<span class="s-res__clock">19 h</span></span><span class="s-res__score">3–1</span><span class="s-res__title"><span class="s-res__vs">c.</span><span class="s-res__opp">Cougars</span><span class="s-res__opp-full">Université de Sherbrooke</span></span><span class="s-res__badge">V</span></li>
+                    <li class="s-res s-res--next"><span class="s-res__time">14 août<span class="s-res__clock">18 h 30</span></span><span class="s-res__score s-res__score--next">À venir</span><span class="s-res__title"><span class="s-res__vs">c.</span><span class="s-res__opp">Carabins</span><span class="s-res__opp-full">Université de Montréal</span></span><span class="s-res__badge">→</span></li>
+                  </ul>
+                </section>
+              </div></div>
+            </div></div>
+            <p class="s-note">padding 14/14/12 · gap 14 · ombre à 4 % d'alpha</p>
+          </div>
+          <div class="stage stage--reco">
+            <div class="stage__cap"><b>Proposé</b> <small>fond + filet coloré, rien d'autre</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s"><div class="s-board s-board--gap16">
+                <section class="s-panel s-panel--clean s-panel--p4" style="--pc:#2f6fb5">
+                  <header class="s-panel__head">
+                    <span class="s-panel__glyph">🏐</span>
+                    <div class="s-panel__id">
+                      <h3 class="s-panel__name"><span class="s-panel__brand">Citadins</span><span class="s-panel__sex">F</span></h3>
+                      <p class="s-panel__program">UQAM <span class="s-panel__code">UQAM</span></p>
+                      <p class="s-panel__school">Université du Québec à Montréal</p>
+                      <p class="s-panel__meta">Volleyball · D1 · Universitaire · Fiche 7-3</p>
+                    </div>
+                  </header>
+                  <ul class="s-list">
+                    <li class="s-res s-res--W"><span class="s-res__time">7 août<span class="s-res__clock">19 h</span></span><span class="s-res__score">3–1</span><span class="s-res__title"><span class="s-res__vs">c.</span><span class="s-res__opp">Cougars</span><span class="s-res__opp-full">Université de Sherbrooke</span></span><span class="s-res__badge">V</span></li>
+                    <li class="s-res s-res--next"><span class="s-res__time">14 août<span class="s-res__clock">18 h 30</span></span><span class="s-res__score s-res__score--next">À venir</span><span class="s-res__title"><span class="s-res__vs">c.</span><span class="s-res__opp">Carabins</span><span class="s-res__opp-full">Université de Montréal</span></span><span class="s-res__badge">→</span></li>
+                  </ul>
+                </section>
+              </div></div>
+            </div></div>
+            <p class="s-note">padding 16/16/12 · gap 16 · P4 inclus : badge à 12 px, fond teinté à 6 %</p>
+          </div>
+        </div>
+        <p class="foot">Combiné à P4 (le badge V / D cesse d'être l'élément le plus faible alors qu'il porte le sens), c'est le lot au risque le plus bas du document — et celui qui rapproche le plus la carte de la grille de lecture.</p>
+        <p class="foot"><b>Deux lignes, c'est le maximum réel.</b> <code>sportsResultRows()</code> pousse au plus un dernier résultat et un prochain match — jamais davantage. Les spécimens de ce labo respectent désormais cette contrainte ; la première version en montrait trois.</p>
+      </div>
+    </article>
+
+    <!-- P2 -->
+    <article class="verdict">
+      <div class="verdict__rail">
+        <span class="code">P2</span>
+        <span class="slug">point-focal-la-nouvelle</span>
+        <p class="claim">La colonne forte de la carte est occupée par le mot « À venir ». Sur 531 lignes de la page sur 532.</p>
+        <div class="tags"><span class="tag">markup + regen (pt 1)</span><span class="tag">CSS (pt 2)</span><span class="tag">Risque faible</span><span class="tag">À trancher (pt 2)</span></div>
+      </div>
+      <div class="verdict__body">
+        <div class="pair pair--2">
+          <div class="stage stage--state">
+            <div class="stage__cap"><b>Actuel</b> <small>ligne « à venir » — 65 % de la page aujourd'hui</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s"><div class="s-board">
+                <section class="s-panel" style="--pc:#3d9a6a">
+                  <header class="s-panel__head"><span class="s-panel__glyph">🏐</span><div class="s-panel__id">
+                    <h3 class="s-panel__name"><span class="s-panel__brand">Citadins</span><span class="s-panel__sex">F</span></h3>
+                    <p class="s-panel__program">UQAM <span class="s-panel__code">UQAM</span></p>
+                    <p class="s-panel__meta">Volleyball · D1 · Universitaire</p>
+                  </div></header>
+                  <ul class="s-list">
+                    <li class="s-res s-res--next"><span class="s-res__time">19 août<span class="s-res__clock">19 h 30</span></span><span class="s-res__score s-res__score--next">À venir</span><span class="s-res__title"><span class="s-res__vs">c.</span><span class="s-res__opp">Cougars</span><span class="s-res__opp-full">Université de Sherbrooke</span></span><span class="s-res__badge">→</span></li>
+                  </ul>
+                </section>
+              </div></div>
+            </div></div>
+            <p class="s-note">la colonne forte dit « À venir » — ce que le filet jaune et la flèche disent déjà</p>
+          </div>
+          <div class="stage stage--reco">
+            <div class="stage__cap"><b>Proposé — point 1</b> <small>l'heure prend la colonne forte, le mot disparaît</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s"><div class="s-board s-board--gap16">
+                <section class="s-panel s-panel--clean s-panel--p4" style="--pc:#3d9a6a">
+                  <header class="s-panel__head"><span class="s-panel__glyph">🏐</span><div class="s-panel__id">
+                    <h3 class="s-panel__name"><span class="s-panel__brand">Citadins</span><span class="s-panel__sex">F</span></h3>
+                    <p class="s-panel__program">UQAM <span class="s-panel__code">UQAM</span></p>
+                    <p class="s-panel__meta">Volleyball · D1 · Universitaire</p>
+                  </div></header>
+                  <ul class="s-list">
+                    <li class="s-res s-res--next"><span class="s-res__time">mar. 19 août</span><span class="s-res__score s-res__score--hour">19 h 30</span><span class="s-res__title"><span class="s-res__vs">c.</span><span class="s-res__opp">Cougars</span><span class="s-res__opp-full">Université de Sherbrooke</span></span><span class="s-res__badge">→</span></li>
+                  </ul>
+                </section>
+              </div></div>
+            </div></div>
+            <p class="s-note">aucune donnée inventée : la date et l'heure existent déjà, elles se répartissent sur deux colonnes</p>
+          </div>
+        </div>
+        <div class="pair pair--3">
+          <div class="stage stage--now">
+            <div class="stage__cap"><b>Actuel</b> <small>en saison — surnom 1,22 rem serif · score 13 px</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s"><div class="s-board">
+                <section class="s-panel" style="--pc:#8a4fbf">
+                  <header class="s-panel__head"><span class="s-panel__glyph">🏀</span><div class="s-panel__id">
+                    <h3 class="s-panel__name"><span class="s-panel__brand">Carabins</span></h3>
+                    <p class="s-panel__program">U. de Montréal <span class="s-panel__code">UDEM</span></p>
+                    <p class="s-panel__meta">Basketball · D1 · Universitaire</p>
+                  </div></header>
+                  <ul class="s-list">
+                    <li class="s-res s-res--W s-res--lead"><span class="s-res__time">8 août<span class="s-res__clock">20 h</span></span><span class="s-res__score">88–71</span><span class="s-res__title"><span class="s-res__vs">c.</span><span class="s-res__opp">Redbirds</span></span><span class="s-res__badge">V</span></li>
+                    <li class="s-res s-res--next"><span class="s-res__time">14 août<span class="s-res__clock">19 h</span></span><span class="s-res__score s-res__score--next">À venir</span><span class="s-res__title"><span class="s-res__vs">c.</span><span class="s-res__opp">Stingers</span></span><span class="s-res__badge">→</span></li>
+                  </ul>
+                </section>
+              </div></div>
+            </div></div>
+          </div>
+          <div class="stage stage--reco">
+            <div class="stage__cap"><b>Proposé — point 2</b> <small>surnom 1,05 rem · score de tête 1,15 rem</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s"><div class="s-board">
+                <section class="s-panel s-panel--clean s-panel--focus" style="--pc:#8a4fbf">
+                  <header class="s-panel__head"><span class="s-panel__glyph">🏀</span><div class="s-panel__id">
+                    <h3 class="s-panel__name"><span class="s-panel__brand">Carabins</span></h3>
+                    <p class="s-panel__program">U. de Montréal <span class="s-panel__code">UDEM</span></p>
+                    <p class="s-panel__meta">Basketball · D1 · Universitaire</p>
+                  </div></header>
+                  <ul class="s-list">
+                    <li class="s-res s-res--W s-res--lead"><span class="s-res__time">8 août<span class="s-res__clock">20 h</span></span><span class="s-res__score">88–71</span><span class="s-res__title"><span class="s-res__vs">c.</span><span class="s-res__opp">Redbirds</span></span><span class="s-res__badge">V</span></li>
+                    <li class="s-res s-res--next"><span class="s-res__time">14 août<span class="s-res__clock">19 h</span></span><span class="s-res__score s-res__score--next">À venir</span><span class="s-res__title"><span class="s-res__vs">c.</span><span class="s-res__opp">Stingers</span></span><span class="s-res__badge">→</span></li>
+                  </ul>
+                </section>
+              </div></div>
+            </div></div>
+          </div>
+          <div class="stage stage--diss">
+            <div class="stage__cap"><b>Dissidence</b> <small>editor — surnom intact, score remonté</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s"><div class="s-board">
+                <section class="s-panel s-panel--clean" style="--pc:#8a4fbf">
+                  <header class="s-panel__head"><span class="s-panel__glyph">🏀</span><div class="s-panel__id">
+                    <h3 class="s-panel__name"><span class="s-panel__brand">Carabins</span></h3>
+                    <p class="s-panel__program">U. de Montréal <span class="s-panel__code">UDEM</span></p>
+                    <p class="s-panel__meta">Basketball · D1 · Universitaire</p>
+                  </div></header>
+                  <ul class="s-list">
+                    <li class="s-res s-res--W s-res--lead"><span class="s-res__time">8 août<span class="s-res__clock">20 h</span></span><span class="s-res__score" style="font-size:1.15rem">88–71</span><span class="s-res__title"><span class="s-res__vs">c.</span><span class="s-res__opp">Redbirds</span></span><span class="s-res__badge">V</span></li>
+                    <li class="s-res s-res--next"><span class="s-res__time">14 août<span class="s-res__clock">19 h</span></span><span class="s-res__score s-res__score--next">À venir</span><span class="s-res__title"><span class="s-res__vs">c.</span><span class="s-res__opp">Stingers</span></span><span class="s-res__badge">→</span></li>
+                  </ul>
+                </section>
+              </div></div>
+            </div></div>
+            <p class="s-note">deux éléments forts assumés — la page sert aussi d'annuaire de 813 formations</p>
+          </div>
+        </div>
+        <p class="foot">L'ordre du DOM ne change pas : le surnom reste le <code>&lt;h3&gt;</code>, donc le plan du document et le référencement sont intacts. Seule la taille change.</p>
+        <p class="foot"><b>Ce qui est à trancher, c'est le point 2 seulement.</b> Le point 1 — libérer la colonne forte — fait l'unanimité et touche 65 % de la page. Sur le point 2, l'<code>editor</code> refuse de rétrograder le surnom : c'est l'identité du club, et la page sert aussi d'annuaire de 813 formations.</p>
+      </div>
+    </article>
+
+    <!-- P3 -->
+    <article class="verdict">
+      <div class="verdict__rail">
+        <span class="code code--done">P3 ✅</span>
+        <span class="slug">noms-longs-deux-lignes</span>
+        <p class="claim"><b>Appliqué en production</b> (PR #51, <code>seo-pages.css:1451</code>). 156 px de colonnes fixes dans une carte de 288 px : il restait 110 px pour un nom d'adversaire, sur 65 % des cartes.</p>
+        <div class="tags"><span class="tag tag--done">Expédié</span><span class="tag">Delta : 3 rangées au lieu de 2</span></div>
+      </div>
+      <div class="verdict__body">
+        <p class="foot" style="margin-top:0">L'expédié sépare le score de l'adversaire au lieu de les apparier : <b>trois rangées</b> là où le verdict en visait deux. Chaque résultat coûte donc une hauteur de ligne de plus sous 340 px — et <b>creuse la dent de scie que <code>P6</code> cherche à réduire</b>.</p>
+        <div class="pair pair--3">
+          <div class="stage stage--now">
+            <div class="stage__cap"><b>Avant</b> <small>carte à 288 px, nom long</small></div>
+            <div class="stage__body"><div class="stage__inner" style="max-width:320px">
+              <div class="s"><div class="s-board">
+                <section class="s-panel" style="--pc:#3d9a6a">
+                  <header class="s-panel__head"><span class="s-panel__glyph">⚽</span><div class="s-panel__id">
+                    <h3 class="s-panel__name"><span class="s-panel__brand">Nordiques</span></h3>
+                    <p class="s-panel__program">Cégep Lionel-Groulx <span class="s-panel__code">LGR</span></p>
+                  </div></header>
+                  <ul class="s-list">
+                    <li class="s-res s-res--W"><span class="s-res__time">7 août<span class="s-res__clock">19 h</span></span><span class="s-res__score">2–0</span><span class="s-res__title"><span class="s-res__vs">c.</span><span class="s-res__opp">Élans</span><span class="s-res__opp-full">Cégep de Saint-Jean-sur-Richelieu</span></span><span class="s-res__badge">V</span></li>
+                    <li class="s-res s-res--L"><span class="s-res__time">1 août<span class="s-res__clock">15 h</span></span><span class="s-res__score">1–4</span><span class="s-res__title"><span class="s-res__vs">c.</span><span class="s-res__opp">Titans</span><span class="s-res__opp-full">Collège François-Xavier-Garneau</span></span><span class="s-res__badge">D</span></li>
+                  </ul>
+                </section>
+              </div></div>
+            </div></div>
+          </div>
+          <div class="stage stage--done">
+            <div class="stage__cap"><b>Expédié — en production</b> <small>trois rangées : date+badge / score / adversaire</small></div>
+            <div class="stage__body"><div class="stage__inner" style="max-width:320px">
+              <div class="s"><div class="s-board s-board--gap16">
+                <section class="s-panel s-panel--p3" style="--pc:#3d9a6a">
+                  <header class="s-panel__head"><span class="s-panel__glyph">⚽</span><div class="s-panel__id">
+                    <h3 class="s-panel__name"><span class="s-panel__brand">Nordiques</span></h3>
+                    <p class="s-panel__program">Cégep Lionel-Groulx <span class="s-panel__code">LGR</span></p>
+                  </div></header>
+                  <ul class="s-list">
+                    <li class="s-res s-res--W"><span class="s-res__time">7 août<span class="s-res__clock">19 h</span></span><span class="s-res__score">2–0</span><span class="s-res__title"><span class="s-res__vs">c.</span><span class="s-res__opp">Élans</span><span class="s-res__opp-full">Cégep de Saint-Jean-sur-Richelieu</span></span><span class="s-res__badge">V</span></li>
+                    <li class="s-res s-res--L"><span class="s-res__time">1 août<span class="s-res__clock">15 h</span></span><span class="s-res__score">1–4</span><span class="s-res__title"><span class="s-res__vs">c.</span><span class="s-res__opp">Titans</span><span class="s-res__opp-full">Collège François-Xavier-Garneau</span></span><span class="s-res__badge">D</span></li>
+                  </ul>
+                </section>
+              </div></div>
+            </div></div>
+            <p class="s-note">seo-pages.css:1451-1463 — grid-template-rows déclare 2 rangées, le titre est posé sur grid-row 3 (rangée implicite)</p>
+          </div>
+          <div class="stage stage--reco">
+            <div class="stage__cap"><b>Ce que le verdict demandait</b> <small>deux rangées : score et adversaire appariés</small></div>
+            <div class="stage__body"><div class="stage__inner" style="max-width:320px">
+              <div class="s"><div class="s-board s-board--gap16">
+                <section class="s-panel s-panel--clean s-panel--p3b s-panel--p4" style="--pc:#3d9a6a">
+                  <header class="s-panel__head"><span class="s-panel__glyph">⚽</span><div class="s-panel__id">
+                    <h3 class="s-panel__name"><span class="s-panel__brand">Nordiques</span></h3>
+                    <p class="s-panel__program">Cégep Lionel-Groulx <span class="s-panel__code">LGR</span></p>
+                  </div></header>
+                  <ul class="s-list">
+                    <li class="s-res s-res--W"><span class="s-res__time">7 août<span class="s-res__clock">19 h</span></span><span class="s-res__score">2–0</span><span class="s-res__title"><span class="s-res__vs">c.</span><span class="s-res__opp">Élans</span><span class="s-res__opp-full">Cégep de Saint-Jean-sur-Richelieu</span></span><span class="s-res__badge">V</span></li>
+                    <li class="s-res s-res--L"><span class="s-res__time">1 août<span class="s-res__clock">15 h</span></span><span class="s-res__score">1–4</span><span class="s-res__title"><span class="s-res__vs">c.</span><span class="s-res__opp">Titans</span><span class="s-res__opp-full">Collège François-Xavier-Garneau</span></span><span class="s-res__badge">D</span></li>
+                  </ul>
+                </section>
+              </div></div>
+            </div></div>
+            <p class="s-note">une rangée de moins par résultat — deux retouches d'une ligne dans le bloc @container</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- P6 -->
+    <article class="verdict">
+      <div class="verdict__rail">
+        <span class="code">P6</span>
+        <span class="slug">hauteur-convergente</span>
+        <p class="claim">La grille est bien en dents de scie — mais pas pour la raison que j'avais écrite.</p>
+        <div class="tags"><span class="tag">CSS seul</span><span class="tag">Risque nul</span><span class="tag">Verdict récrit</span></div>
+      </div>
+      <div class="verdict__body">
+        <p class="foot"><b>Correction.</b> La première version affirmait que le nombre de lignes n'était pas plafonné — « une carte à un match et une carte à douze » — et recommandait un <code>&lt;details&gt;</code> « + 9 autres matchs ». C'est faux : <code>sportsResultRows()</code> pousse <b>au plus deux lignes</b>, un dernier résultat et un prochain match. La mesure sur la page générée donne 0 ou 1. Il n'y avait rien à replier. Le verdict passe de <code>markup + regen</code> / risque moyen / contenu indexé à <b><code>CSS seul</code> / risque nul</b>, et sort des arbitrages.</p>
+        <div class="pair pair--2">
+          <div class="stage stage--state">
+            <div class="stage__cap"><b>Actuel</b> <small>la vraie cause : 281 cartes vides sur 813</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s"><div class="s-board">
+                <section class="s-panel" style="--pc:#3d9a6a">
+                  <header class="s-panel__head"><span class="s-panel__glyph">⚽</span><div class="s-panel__id">
+                    <h3 class="s-panel__name"><span class="s-panel__brand">Nordiques</span></h3>
+                    <p class="s-panel__program">Cégep Lionel-Groulx <span class="s-panel__code">LGR</span></p>
+                    <p class="s-panel__meta">Soccer · D2 · Collégial</p>
+                  </div></header>
+                  <ul class="s-list">
+                    <li class="s-res s-res--next"><span class="s-res__time">19 août<span class="s-res__clock">19 h</span></span><span class="s-res__score s-res__score--next">À venir</span><span class="s-res__title"><span class="s-res__vs">c.</span><span class="s-res__opp">Élans</span><span class="s-res__opp-full">Cégep de Saint-Jean-sur-Richelieu</span></span><span class="s-res__badge">→</span></li>
+                  </ul>
+                </section>
+                <section class="s-panel" style="--pc:#2f6fb5">
+                  <header class="s-panel__head"><span class="s-panel__glyph">🏸</span><div class="s-panel__id">
+                    <h3 class="s-panel__name"><span class="s-panel__brand">Abitibi-Témisc.</span></h3>
+                    <p class="s-panel__meta">Badminton · D2 · Collégial</p>
+                  </div></header>
+                  <p class="s-panel__empty">Aucun match à l'horaire.</p>
+                </section>
+              </div></div>
+            </div></div>
+            <p class="s-note">carte vide contre carte remplie · bloc identité à 2 lignes contre 3 · align-items: start</p>
+          </div>
+          <div class="stage stage--reco">
+            <div class="stage__cap"><b>Proposé</b> <small>même empreinte pour le vide, plancher de 3 lignes sur l'identité</small></div>
+            <div class="stage__body"><div class="stage__inner">
+              <div class="s"><div class="s-board s-board--gap16">
+                <section class="s-panel s-panel--clean s-panel--even" style="--pc:#3d9a6a">
+                  <header class="s-panel__head"><span class="s-panel__glyph">⚽</span><div class="s-panel__id">
+                    <h3 class="s-panel__name"><span class="s-panel__brand">Nordiques</span></h3>
+                    <p class="s-panel__program">Cégep Lionel-Groulx <span class="s-panel__code">LGR</span></p>
+                    <p class="s-panel__meta">Soccer · D2 · Collégial</p>
+                  </div></header>
+                  <ul class="s-list">
+                    <li class="s-res s-res--next"><span class="s-res__time">mar. 19 août</span><span class="s-res__score s-res__score--hour">19 h 00</span><span class="s-res__title"><span class="s-res__vs">c.</span><span class="s-res__opp">Élans</span><span class="s-res__opp-full">Cégep de Saint-Jean-sur-Richelieu</span></span><span class="s-res__badge">→</span></li>
+                  </ul>
+                </section>
+                <section class="s-panel s-panel--clean s-panel--even" style="--pc:#2f6fb5">
+                  <header class="s-panel__head"><span class="s-panel__glyph">🏸</span><div class="s-panel__id">
+                    <h3 class="s-panel__name"><span class="s-panel__brand">Abitibi-Témisc.</span></h3>
+                    <p class="s-panel__meta">Badminton · D2 · Collégial</p>
+                  </div></header>
+                  <p class="s-panel__empty">Aucun match à l'horaire.</p>
+                </section>
+              </div></div>
+            </div></div>
+            <p class="s-note">.sports-panel__empty prend la hauteur d'une ligne · .sports-panel__identity a un plancher</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- P5 -->
+    <article class="verdict">
+      <div class="verdict__rail">
+        <span class="code">P5</span>
+        <span class="slug">pas-de-carte-cliquable-multi-cible</span>
+        <p class="claim">Un verdict négatif assumé : ne pas appliquer mécaniquement « la carte entière est cliquable ».</p>
+        <div class="tags"><span class="tag">Aucun changement</span></div>
+      </div>
+      <div class="verdict__body">
+        <p class="foot">Une carte de formation contient N liens de match et n'a pas de destination unique : la rendre cliquable obligerait à imbriquer des liens dans un lien — invalide, et un piège au clavier. Le deep-link <code>?team=</code> et le <code>is-spotlight</code> couvrent déjà le besoin « pointer une carte ». Le verdict est consigné pour que le principe ne soit pas ré-appliqué à la prochaine passe.</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="approve">
+    <h2>Ce qu'il reste à trancher</h2>
+    <p>Le reste des verdicts est unanime et à risque faible ou nul — ils s'appliquent tels quels une fois approuvés. <b>Quatre</b> choix t'appartiennent :</p>
+    <ul>
+      <li><code>B4</code> — <b>le halo pourpre</b>. Le <b>retirer</b> (recommandation : mouvement permanent, décoratif, non pausable, sur chaque puce — WCAG 2.2.2), le réserver à <code>:hover</code>, ou le <b>ralentir à 6 s</b> (dissidence designer). <b>Seul arbitrage qui porte sur un choix déjà expédié</b> — il vient du focus group <code>le-radar-sports-chip-look (C)</code>, en production.</li>
+      <li><code>B1</code> — <b>option A</b> (ardoise ancrée, recommandation du panel, qui <b>absorbe</b> la PR #51) ou <b>option B</b> (registre clair, météo comprise, chantier ×2 — et défait la PR #51).</li>
+      <li><code>M1</code> — <b>voile en deux bandes</b> (recommandation) ou <b>allègement des ombres seul</b> (dissidence dev, photo intacte).</li>
+      <li><code>M7</code> — <b>désarmer l'icône du mât</b> sur l'accueil (recommandation) ou <b>garder les deux commandes</b> et ne retirer qu'un <code>aria-current</code> (dissidence dev + reader, <b>renforcée</b> : la PR #51 a déjà retiré la troisième occurrence du pied de page).</li>
+    </ul>
+    <p style="margin-top:14px">Une dissidence de moindre portée reste ouverte : sur <code>P2</code>, l'<code>editor</code> accepte de libérer la colonne forte (point 1, unanime) mais refuse de rétrograder le surnom (point 2).</p>
+    <p><b><code>P6</code> ne fait plus partie des arbitrages</b> : sa première version reposait sur une prémisse fausse, et le verdict récrit est unanime, <code>CSS seul</code> et sans risque. <b><code>P3</code> non plus — il est appliqué</b> (PR #51), avec deux retouches d'une ligne encore ouvertes.</p>
+    <p style="margin-top:14px">Par quoi commencer : <code>B4</code> en premier — c'est le seul verdict dont le problème a <b>empiré</b> depuis la rédaction, et il est visible en permanence. Puis les trois sans risque et visibles aujourd'hui : <code>P7</code>, <code>P1</code>, <code>P6</code> (35 % de cartes vides, aggravé sous 340 px par le <code>P3</code> expédié). Approuve par numéro ; l'application se fera par lots de risque croissant, chaque lot avec son commit et sa passe de tests.</p>
+    <p style="margin-top:14px">Deux corrections sans arbitrage, à faire au passage : le repli <code>8.5s</code> mort de la sous-ligne CTA (<code>style.css:568</code>) et le <code>grid-template-rows: auto auto</code> face à <code>grid-row: 3</code> du bloc <code>@container</code> (<code>seo-pages.css:1454-1460</code>).</p>
+  </section>
+
+</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+
+  function press(list, match) {
+    list.forEach(function (b) { b.setAttribute('aria-pressed', String(match(b))); });
+  }
+
+  var themeBtns = Array.prototype.slice.call(document.querySelectorAll('[data-theme-btn]'));
+  themeBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var mode = btn.getAttribute('data-theme-btn');
+      if (mode === 'auto') root.removeAttribute('data-theme');
+      else root.setAttribute('data-theme', mode);
+      press(themeBtns, function (b) { return b === btn; });
+    });
+  });
+
+  var widthBtns = Array.prototype.slice.call(document.querySelectorAll('[data-width]'));
+  widthBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var w = parseInt(btn.getAttribute('data-width'), 10);
+      root.style.setProperty('--stage-w', w > 0 ? w + 'px' : '100%');
+      press(widthBtns, function (b) { return b === btn; });
+    });
+  });
+
+  var motionBtn = document.getElementById('motion-btn');
+  motionBtn.addEventListener('click', function () {
+    var off = root.classList.toggle('no-motion');
+    motionBtn.setAttribute('aria-pressed', String(!off));
+    motionBtn.textContent = off ? 'Animations figées' : 'Animations actives';
+  });
+})();
+</script>
+</body>
+</html>
