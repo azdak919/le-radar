@@ -941,6 +941,19 @@ assert(
   /\.sports-chip__cta-label\.is-front:not\(\.is-rolling-out\) \.sports-chip__cta-text/.test(cssFlat),
   'style : le marquee CTA porte sur le texte, pas sur la couche qui roule',
 );
+// Sous-ligne CTA (date · compétition · MAJ) : viewport + texte, marquee si overflow.
+// Ancien bug : white-space:nowrap sur toute la .cta-label → une ligne ellipsée
+// figée sans is-overflowing dès que le titre tenait.
+assert(
+  appJs.includes('sports-chip__cta-sub-text')
+    && appJs.includes('is-sub-overflowing')
+    && appJs.includes('--sports-scroll-sub')
+    && styleCss.includes('sports-chip__cta-sub-text')
+    && styleCss.includes('@keyframes sports-chip-scroll-sub')
+    && styleCss.includes('is-sub-overflowing')
+    && !/\.sports-chip--cta:not\(\.is-overflowing\)[^{]*\.sports-chip__cta-label\s*\{[^}]*white-space:\s*nowrap/.test(cssFlat),
+  'CTA : sous-ligne marqueable ; pas d’ellipse nowrap sur toute la couche label',
+);
 // Puces scores : indépendantes + dwell lecture + marquee aller-retour complet.
 assert(
   appJs.includes('scheduleSportsSlot')
