@@ -1642,8 +1642,9 @@ function showMastheadWeatherBoard() {
     mastheadWeatherSlots.push(city);
   }
   cities.forEach((city) => {
-    city.classList.remove('is-active');
+    city.classList.remove('is-active', 'is-leaving', 'is-arriving');
     city.setAttribute('aria-hidden', 'true');
+    city.style.pointerEvents = '';
   });
   mastheadWeatherSlots.forEach((selectedCity, slot) => {
     const city = MASTHEAD_WEATHER.querySelector(`[data-weather-city="${selectedCity.id}"]`);
@@ -1699,6 +1700,35 @@ const WEATHER_ROTATE_BASE_MS = 7000;
  * toponyme à relire ; 2 s laissait un « trou » trop long (feedback 2026-08-11).
  */
 const WEATHER_SCROLL_POST_PAUSE_MS = 700;
+/** Synchro style-masthead.css `weather-tile-arrive` / `weather-tile-leave`. */
+const WEATHER_ARRIVE_MS = 460;
+const WEATHER_LEAVE_MS = 280;
+
+function weatherMotionOk() {
+  return !(sportsReducedMotion || PREFERS_REDUCED_MOTION?.matches);
+}
+
+/**
+ * Entrée gare météo : rejoue l’anim (reflow) et ne retire `is-arriving` qu’à la fin.
+ * Bug historique : un rAF retirait la classe à ~16 ms → anim invisible sur tous formats.
+ */
+function playWeatherCityArrive(el) {
+  if (!el || !weatherMotionOk()) return;
+  el.classList.remove('is-arriving', 'is-leaving');
+  void el.offsetWidth;
+  el.classList.add('is-arriving');
+  const clear = () => {
+    el.classList.remove('is-arriving');
+    el.removeEventListener('animationend', onEnd);
+  };
+  const onEnd = (event) => {
+    const name = String(event.animationName || '');
+    if (name && !name.includes('weather-tile-arrive')) return;
+    clear();
+  };
+  el.addEventListener('animationend', onEnd);
+  window.setTimeout(clear, WEATHER_ARRIVE_MS + 80);
+}
 
 function refreshWeatherNameScroll() {
   MASTHEAD_WEATHER?.querySelectorAll('.masthead-weather__city.is-active').forEach((el) => {
@@ -1767,8 +1797,9 @@ function scheduleMastheadWeatherRotate() {
 }
 
 function rotateOneMastheadWeatherCard() {
-  if (!mastheadWeatherSlots.length) return;
+  if (!mastheadWeatherSlots.length || !MASTHEAD_WEATHER) return;
   const slot = mastheadWeatherNextSlot % mastheadWeatherSlots.length;
+  const previous = mastheadWeatherSlots[slot];
   const usedIds = new Set(
     mastheadWeatherSlots.filter((_, index) => index !== slot).map((city) => city.id),
   );
@@ -1790,19 +1821,53 @@ function rotateOneMastheadWeatherCard() {
     );
   }
   if (!replacement) return;
-  mastheadWeatherSlots[slot] = replacement;
-  mastheadWeatherNextSlot = (slot + 1) % mastheadWeatherSlots.length;
-  showMastheadWeatherBoard();
-  const arriving = MASTHEAD_WEATHER?.querySelector(`[data-weather-city="${replacement.id}"]`);
-  arriving?.classList.add('is-arriving');
-  if (arriving) {
-    arriving.classList.remove('is-overflowing');
-    window.requestAnimationFrame(() => {
-      refreshWeatherNameScroll();
-      arriving.classList.remove('is-arriving');
-    });
+  // Même ville (deck vide / un seul candidat) : avancer le curseur sans anim fantôme.
+  if (previous?.id === replacement.id) {
+    mastheadWeatherNextSlot = (slot + 1) % mastheadWeatherSlots.length;
+    return;
   }
-  window.setTimeout(() => arriving?.classList.remove('is-arriving'), 500);
+
+  const applyBoardWithArrive = () => {
+    mastheadWeatherSlots[slot] = replacement;
+    mastheadWeatherNextSlot = (slot + 1) % mastheadWeatherSlots.length;
+    showMastheadWeatherBoard();
+    const arriving = MASTHEAD_WEATHER.querySelector(
+      `.masthead-weather__city.is-active[data-weather-city="${replacement.id}"]`,
+    );
+    if (!arriving) return;
+    arriving.classList.remove('is-overflowing');
+    playWeatherCityArrive(arriving);
+    // Mesure marquee après paint (double rAF : grille + fontes).
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => refreshWeatherNameScroll());
+    });
+  };
+
+  const oldEl = previous
+    ? MASTHEAD_WEATHER.querySelector(
+      `.masthead-weather__city.is-active[data-weather-city="${previous.id}"]`,
+    )
+    : null;
+
+  // Sortie → entrée (tous formats : mât bureau + dock 390–900).
+  if (oldEl && weatherMotionOk()) {
+    if (oldEl._weatherLeaveTimer) {
+      clearTimeout(oldEl._weatherLeaveTimer);
+      oldEl._weatherLeaveTimer = null;
+    }
+    oldEl.classList.remove('is-arriving');
+    oldEl.classList.add('is-leaving');
+    oldEl.style.pointerEvents = 'none';
+    oldEl._weatherLeaveTimer = window.setTimeout(() => {
+      oldEl._weatherLeaveTimer = null;
+      oldEl.classList.remove('is-leaving');
+      oldEl.style.pointerEvents = '';
+      applyBoardWithArrive();
+    }, WEATHER_LEAVE_MS);
+    return;
+  }
+
+  applyBoardWithArrive();
 }
 
 function scheduleMastheadWeatherLayout() {
