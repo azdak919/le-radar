@@ -1785,8 +1785,13 @@ const SPORTS_LIVE_BEFORE_MS = 2 * 3600 * 1000;
 const SPORTS_LIVE_AFTER_MS = 3 * 3600 * 1000;
 const SPORTS_IMMINENT_MS = 7 * 24 * 3600 * 1000; /* 7 jours */
 const SPORTS_RECENT_RESULT_MS = 4 * 24 * 3600 * 1000; /* résultats < 4 j — cartes de gauche */
-/** CTA : à venir dans cette fenêtre seulement (sinon hors saison / calendrier lointain). */
+/**
+ * « Chaud » pour la *voie de gauche* / détection saison (pas le pool CTA).
+ * La CTA suit le-radar-cta-sports-window : journée lead + filet fraîcheur 48 h.
+ */
 const SPORTS_CTA_UPCOMING_MS = 14 * 24 * 3600 * 1000;
+/** Plafond faces CTA (jour lead + filet 48 h) — focus-group le-radar-cta-sports-window F. */
+const SPORTS_CTA_MAX_POOL = 16;
 /*
  * Registre d’alerte de la carte CTA — focus-group le-radar-sports-first-glance
  * (garde-fou `registre-alerte-reserve`) et le-radar-cta-sports-badge.
@@ -2813,26 +2818,51 @@ function sportsSoftSportDiversity(slides) {
 }
 
 /**
- * Partage des rôles bandeau (mise à jour 2026-07-30) :
+ * Partage des rôles bandeau — focus-group `le-radar-cta-sports-window` (F + filet 48 h) :
  *
- *  CARTE ROUGE (CTA) = « maintenant / bientôt »
- *   • live / proxy live
- *   • résultats d’**aujourd’hui** seulement
- *   • prochains matchs ≤ 14 j, sinon **le prochain en grille** (pas de slogan
- *     « Hors saison » tant qu’un match est planifié)
+ *  CTA (droite) = « le jour qui compte »
+ *   • **filet fraîcheur** : résultats age &lt; 48 h (first-glance, même hors jour lead)
+ *   • **journée lead** : matchs `next` du prochain jour civil Toronto qui a ≥1 coup d’envoi
+ *     (souvent aujourd’hui en saison ; un jour lointain hors saison)
+ *   • pas de file multi-jours 14 j / max 36
+ *   • dédup miroir + diversité sport souple ; plafond SPORTS_CTA_MAX_POOL
  *   • creux total : accroches idle
- *   • **dédup miroir** + diversité sport souple (focus-group 2026-07-30)
  *
- *  CARTES GAUCHE
- *   • Saison : **uniquement résultats passés**, ordre fraîcheur
- *   • Hors saison : **uniquement matchs à venir** (proximité) — jamais de
- *     puces grises « Calendrier / Hors saison / Voir le tableau »
+ *  CARTES GAUCHE (indépendantes)
+ *   • Saison : résultats passés, ordre fraîcheur
+ *   • Hors saison : matchs à venir multi-jours (proximité)
  */
+/** Jour civil America/Toronto d’une slide match (YYYY-MM-DD). */
+function sportsSlideDayKey(slide) {
+  const ms = sportsGameMs(slide?.game);
+  if (Number.isFinite(ms)) return torontoDayKey(ms);
+  const d = String(slide?.game?.date || '').trim();
+  return /^\d{4}-\d{2}-\d{2}$/.test(d) ? d : '';
+}
+
+/**
+ * Jour lead CTA : premier jour civil (Toronto) qui a encore un match à venir
+ * (ou en fenêtre live). Vide s’il n’y a aucun prochain en grille.
+ */
+function sportsCtaLeadDayKey(nextSlides = []) {
+  if (!nextSlides.length) return '';
+  let bestMs = Number.POSITIVE_INFINITY;
+  let bestDay = '';
+  for (const s of nextSlides) {
+    const ms = sportsGameMs(s.game);
+    if (!Number.isFinite(ms) || ms >= bestMs) continue;
+    const day = sportsSlideDayKey(s);
+    if (!day) continue;
+    bestMs = ms;
+    bestDay = day;
+  }
+  return bestDay;
+}
+
 function sportsCtaCandidateSlides() {
   const now = Date.now();
-  const todayResults = [];
-  const upcomingHot = [];
-  const upcomingLater = [];
+  const freshResults = [];
+  const nexts = [];
   const seen = new Set();
 
   for (const s of sportsSlides) {
@@ -2840,25 +2870,20 @@ function sportsCtaCandidateSlides() {
     seen.add(s.key);
 
     if (s.mode === 'result') {
-      // Lead piloté par la fraîcheur (focus-group le-radar-sports-first-glance) :
-      // un résultat passe devant le calendrier tant qu'il a moins de 48 h. Le
-      // jour civil était trop court — le score du mercredi soir disparaissait
-      // du mât à minuit, alors qu'il est encore l'information la plus fraîche
-      // le jeudi matin.
+      // Filet fraîcheur 48 h — gate mainteneur sur le-radar-cta-sports-window F.
+      // Un score du mercredi soir reste lead le jeudi matin (first-glance).
       const age = sportsResultAgeMs(s.game, now);
       if (age < 0 || age > SPORTS_CTA_FRESH_RESULT_MS) continue;
-      todayResults.push(s);
+      freshResults.push(s);
       continue;
     }
 
     if (s.mode === 'next') {
       const ms = sportsGameMs(s.game);
       if (!Number.isFinite(ms)) continue;
-      // Prochains passés mal classés → ignorer ici.
+      // Prochains passés mal classés → ignorer (sauf fenêtre live encore ouverte).
       if (ms < now - SPORTS_LIVE_AFTER_MS) continue;
-      // Fenêtre CTA chaude : ≤ 14 jours ; au-delà : filet calendrier (pas idle).
-      if (ms <= now + SPORTS_CTA_UPCOMING_MS) upcomingHot.push(s);
-      else upcomingLater.push(s);
+      nexts.push(s);
     }
   }
 
@@ -2868,8 +2893,8 @@ function sportsCtaCandidateSlides() {
     return i < 0 ? 99 : i;
   };
 
-  // Résultats frais : plus récent d’abord (plusieurs matchs le même jour OK).
-  todayResults.sort((a, b) => {
+  // Résultats frais : plus récent d’abord.
+  freshResults.sort((a, b) => {
     const fa = sportsGameMs(a.game) || 0;
     const fb = sportsGameMs(b.game) || 0;
     if (fb !== fa) return fb - fa;
@@ -2883,15 +2908,18 @@ function sportsCtaCandidateSlides() {
     if (fa !== fb) return fa - fb;
     return sportRank(a) - sportRank(b);
   };
-  upcomingHot.sort(bySoonest);
-  upcomingLater.sort(bySoonest);
+  nexts.sort(bySoonest);
 
-  // CTA : résultat frais (< 48 h) → calendrier ≤14 j → sinon prochain match
-  // lointain (évite les slogans idle alors que des matchs sont déjà en grille).
-  // Puis : 1 accroche par match (anti-miroir) + diversité sport souple.
-  const raw = todayResults.concat(upcomingHot, upcomingLater);
+  // Journée lead = jour civil du prochain match encore à venir (ou live).
+  const leadDay = sportsCtaLeadDayKey(nexts);
+  const leadDayNexts = leadDay
+    ? nexts.filter((s) => sportsSlideDayKey(s) === leadDay)
+    : [];
+
+  // Pool : filet 48 h d’abord, puis tous les matchs uniques du jour lead.
+  // includeLaterFilet=false : pas de prochains hors jour lead.
+  const raw = freshResults.concat(leadDayNexts);
   const deduped = sportsDedupeMatchSlides(raw);
-  // Re-trier après dédup (la face gardée peut changer l’ordre relatif).
   deduped.sort((a, b) => {
     const modeRank = (s) => (s.mode === 'result' ? 0 : 1);
     if (modeRank(a) !== modeRank(b)) return modeRank(a) - modeRank(b);
@@ -2900,7 +2928,7 @@ function sportsCtaCandidateSlides() {
     }
     return bySoonest(a, b);
   });
-  return sportsSoftSportDiversity(deduped).slice(0, 36);
+  return sportsSoftSportDiversity(deduped).slice(0, SPORTS_CTA_MAX_POOL);
 }
 
 /** Libellés CTA : matchs chauds, sinon messages hors saison / creux. */
