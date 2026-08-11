@@ -2604,6 +2604,8 @@ function sportsMatchChipTextOverflows(chip) {
  * - CTA écrasée (tag AU TABLEAU) → −1 score
  * - Puce score trop étroite OU titre/sous-ligne overflow → −1 score
  * CTA : marquee encore toléré — on ne la compare pas en largeur « naturelle ».
+ * Wide / super-wide : pas de marquee → overflow texte = clip, pas −1 carte ;
+ *   on ne descend que si la puce est vraiment trop étroite.
  */
 function sportsStripCramped() {
   const strip = MASTHEAD_SPORTS_STRIP;
@@ -2611,33 +2613,37 @@ function sportsStripCramped() {
   const chips = [...strip.querySelectorAll('.sports-chip')];
   if (chips.length <= 1) return false;
 
-  const minScore = 118;
-  const minCta = 148;
+  const wide = isWideNoMarqueeMode();
+  const minScore = wide ? 92 : 118;
+  const minCta = wide ? 118 : 148;
 
   const cta = strip.querySelector('.sports-chip--cta');
   if (!cta) return true;
   if (cta.clientWidth + 0.5 < minCta) return true;
-  const tag = cta.querySelector('.sports-chip__cta-tag');
-  if (tag && tag.scrollWidth > tag.clientWidth + 1) return true;
+  if (!wide) {
+    const tag = cta.querySelector('.sports-chip__cta-tag');
+    if (tag && tag.scrollWidth > tag.clientWidth + 1) return true;
+  }
 
   for (const chip of chips) {
     if (chip.classList.contains('sports-chip--cta')) continue;
     if (chip.clientWidth + 0.5 < minScore) return true;
-    if (sportsMatchChipTextOverflows(chip)) return true;
+    if (!wide && sportsMatchChipTextOverflows(chip)) return true;
   }
   return false;
 }
 
 /**
  * Après paint : retirer une carte score si étroit ou texte overflow,
- * jusqu’à CTA seule. Max 3 passes (focus-group A).
+ * jusqu’à CTA seule. Max 3 passes (focus-group A) ; 5 en wide (plafond plus haut).
  */
 function fitSportsStripAfterPaint() {
   if (!MASTHEAD_SPORTS_STRIP || MASTHEAD_SPORTS_STRIP.hidden) return;
   const count = sportsVisible.length;
   if (count <= 1) return;
   if (!sportsStripCramped()) return;
-  if (sportsFitDepth >= 3) return;
+  const maxPasses = isWideNoMarqueeMode() ? 5 : 3;
+  if (sportsFitDepth >= maxPasses) return;
   sportsFitDepth += 1;
   sportsFitCount = count - 1;
   try {
