@@ -207,9 +207,10 @@
 
 /*
  * Mât sur photo — focus-group le-radar-masthead-photo-chrome C.
- * Slogan / crédit : soft glass. Date : **même langage que les cartes météo**
- * (hauteur 29px, radius 5px, lavis sombre, bordure claire) — une ligne
+ * Slogan / crédit : soft glass. Date : **sœur des cartes météo**
+ * (même hauteur 29px, radius 5px, verre, ombre, typo) — une ligne
  * « MARDI … · 13:43 ». max-width plafonné pour laisser l’air à la météo.
+ * Chrome = copie de .masthead-weather__city (photo dark / light).
  */
 .masthead:has(#bg-photo-layer.loaded) .masthead-date {
   display: inline-flex;
@@ -222,10 +223,10 @@
   max-width: min(34vw, 11.25rem);
   padding: 0 7px;
   border-radius: 5px;
+  /* Identique à .masthead-weather__city sur photo (dark default) */
   border: 1px solid rgba(255, 255, 255, 0.14);
-  /* Même recette que .masthead-weather__city sur photo */
   background:
-    linear-gradient(90deg, rgba(200, 180, 120, 0.14) 0%, transparent 55%),
+    linear-gradient(90deg, rgba(200, 180, 120, 0.22) 0%, transparent 55%),
     rgba(22, 24, 30, 0.82);
   backdrop-filter: blur(10px) saturate(1.1);
   -webkit-backdrop-filter: blur(10px) saturate(1.1);
@@ -233,7 +234,7 @@
     0 1px 2px rgba(0, 0, 0, 0.35),
     0 3px 12px rgba(0, 0, 0, 0.28),
     inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  color: rgba(236, 238, 242, 0.96);
+  color: rgba(236, 238, 242, 0.92);
   -webkit-text-stroke: 0;
   font-size: 11px;
   font-weight: 650;
@@ -241,6 +242,7 @@
   line-height: 1.15;
   text-shadow: none;
   text-transform: uppercase;
+  overflow: hidden;
 }
 .masthead:has(#bg-photo-layer.loaded) .masthead-date #today-date {
   display: block;
@@ -249,10 +251,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: inherit;
+  /* Rôle « name » météo */
+  color: rgba(245, 246, 248, 0.96);
   line-height: 1.15;
 }
-/* Heure = même ligne, rôle « temp » (plus dense, tabular) */
+/* Heure = même ligne, rôle « temp » météo (blanc dense, tabular) */
 .masthead:has(#bg-photo-layer.loaded) .masthead-date .masthead-time {
   position: static !important;
   top: auto !important;
@@ -270,19 +273,34 @@
   line-height: 1.15;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
-  color: inherit;
+  color: #ffffff;
   text-transform: none;
 }
 .masthead:has(#bg-photo-layer.loaded) .masthead-date .masthead-time::before {
   content: "·";
   margin-right: 0.3em;
   font-weight: 650;
-  opacity: 0.55;
+  color: rgba(245, 246, 248, 0.55);
+  opacity: 1;
 }
+/* Clair : même verre ardoise que les cartes météo en light */
+[data-theme="light"] .masthead:has(#bg-photo-layer.loaded) .masthead-date {
+  background:
+    linear-gradient(90deg, rgba(200, 180, 120, 0.16) 0%, transparent 55%),
+    rgba(54, 59, 68, 0.68);
+  border-color: rgba(255, 255, 255, 0.24);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.24),
+    0 3px 10px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px) saturate(1.06);
+  -webkit-backdrop-filter: blur(10px) saturate(1.06);
+}
+/* Dark explicite : même base que weather city photo (pas plus opaque) */
 [data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-date {
   background:
-    linear-gradient(90deg, rgba(200, 180, 120, 0.12) 0%, transparent 55%),
-    rgba(22, 24, 30, 0.86);
+    linear-gradient(90deg, rgba(200, 180, 120, 0.22) 0%, transparent 55%),
+    rgba(22, 24, 30, 0.82);
   border-color: rgba(255, 255, 255, 0.14);
 }
 .masthead:has(#bg-photo-layer.loaded) .wordmark {
