@@ -725,13 +725,18 @@ function renderInstallMenu({ lang = 'fr', up = './', panelId = 'install-menu-pan
  * ailleurs. `key` pointe vers les libellés courts de `T` (ceux du pied de
  * page) ; les fils d'Ariane gardent les intitulés longs.
  *
+ * Accueil figure **à la fois** dans le menu de sections et le pied de page
+ * (data-home-nav → scroll + refresh soft sans couper la radio). Ne pas
+ * marquer `navOnly` : les bots `seo:update` / prepush réinjectent le pied
+ * depuis cette liste — un Accueil nav-only disparaissait à chaque agrégat.
+ *
  * `archives` est marquée `footerOnly` : le catalogue historique reste
  * expérimental (dette D19) et n'a pas sa place dans la navigation principale.
  */
 const SECTIONS = [
   // Accueil en tête : data-home-nav → app.js scroll + refresh soft du fil
   // sans recharger la page (la radio continue si elle joue).
-  { id: 'home', key: 'home', path: { fr: '', en: 'en/' }, attrs: ' data-home-nav', navOnly: true },
+  { id: 'home', key: 'home', path: { fr: '', en: 'en/' }, attrs: ' data-home-nav' },
   { id: 'medias', key: 'footerDirectory', path: { fr: 'medias/', en: 'en/media/' } },
   // L'annuaire n'a pas de hub « journaux » dédié, mais il porte déjà l'ancre.
   { id: 'journaux', key: 'footerNewspapers', path: { fr: 'medias/#journaux', en: 'en/media/#journaux' } },
