@@ -1417,17 +1417,17 @@ html[data-script-dir="rtl"] .wordmark-full {
   pointer-events: none;
 }
 /*
- * Focus-group le-radar-tuner-sports-type-align (B) : stack UI sports (Inter)
- * sur l’info live du synthé — pas de serif éditorial ici. Hauteur barre inchangée.
+ * Focus-group le-radar-tuner-sports-type-align override C :
+ * titres serif (réconfort / différence radio) ; secondaires rythme sports.
+ * Hauteur barre inchangée.
  */
 .tuner-now-name {
   display: block;
   min-width: 0;
-  font-family: var(--sans);
-  font-weight: 700;
+  font-family: var(--serif);
+  font-weight: 600;
   font-size: 14px;
-  letter-spacing: 0.01em;
-  line-height: 1.35;
+  line-height: 1.2;
   color: var(--radio-bright);
   white-space: nowrap;
   overflow: hidden;
@@ -2308,14 +2308,13 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   .tuner-nowair.is-swapping { opacity: 1; }
 }
 
-/* le-radar-tuner-sports-type-align (B) : même stack Inter que puces sports */
+/* Override C : titre émission serif ; sub = rythme sports (Inter dense) */
 .tuner-nowair-title {
   margin: 0;
-  font-family: var(--sans);
+  font-family: var(--serif);
   font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  line-height: 1.35;
+  font-weight: 600;
+  line-height: 1.2;
   color: var(--radio-bright);
   white-space: nowrap;
   overflow: hidden;
@@ -2342,7 +2341,7 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
 
 .tuner-nowair.is-empty .tuner-nowair-title {
   font-style: italic;
-  font-weight: 600;
+  font-weight: 500;
   color: rgba(255, 255, 255, 0.55);
 }
 

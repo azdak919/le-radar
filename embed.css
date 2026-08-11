@@ -359,12 +359,11 @@ html[data-embed="tuner"] .tuner-dial:hover .tuner-now {
 }
 
 html[data-embed="tuner"] .tuner-now-name {
-  /* focus-group le-radar-tuner-sports-type-align (B) : stack UI sports (Inter). */
-  font-family: var(--sans);
+  /* focus-group le-radar-tuner-sports-type-align override C : titre serif. */
+  font-family: var(--serif);
   font-size: 13px;
-  line-height: 1.35;
-  font-weight: 700;
-  letter-spacing: 0.01em;
+  line-height: 1.2;
+  font-weight: 600;
   min-width: 0;
   max-width: 100%;
   overflow: hidden;
@@ -808,12 +807,11 @@ html[data-embed="tuner"] .tuner-nowair-body {
 
 html[data-embed="tuner"] .tuner-nowair-title {
   margin: 0;
-  /* le-radar-tuner-sports-type-align (B) : Inter / rythme sports, pas serif. */
-  font-family: var(--sans);
+  /* override C : titre émission serif (confort radio). */
+  font-family: var(--serif);
   font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  line-height: 1.35;
+  font-weight: 600;
+  line-height: 1.2;
   color: var(--embed-radio);
   white-space: nowrap;
   overflow: hidden;
@@ -1093,10 +1091,11 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
   }
 }
 
-/* Info live dial + nowair : Inter (focus-group le-radar-tuner-sports-type-align B).
-   Plus de serif sur titres poste/émission — parité site + puces sports. */
+/* Override C : titres poste/émission serif ; libellés UI Inter (rythme sports). */
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-now-name,
-html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair-title,
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair-title {
+  font-family: var(--serif);
+}
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-onair,
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair-label,
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair-sub,
