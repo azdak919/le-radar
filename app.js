@@ -1768,29 +1768,35 @@ function playWeatherCityArrive(el) {
 }
 
 function refreshWeatherNameScroll() {
+  // Wide / super-wide : noms complets, conteneurs proportionnels (CSS flex
+  // max-content). Si le ruban déborde encore → −1 carte, jamais compact/marquee.
+  if (isWideNoMarqueeMode() && MASTHEAD_WEATHER) {
+    const actives = [...MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city.is-active')];
+    actives.forEach((el) => {
+      el.classList.remove('is-overflowing', 'is-compact');
+      el.style.removeProperty('--weather-scroll');
+      const name = el.querySelector('.masthead-weather__name-text');
+      if (name) name.style.maxWidth = 'none';
+    });
+    const board = MASTHEAD_WEATHER.querySelector('.masthead-weather__board');
+    if (
+      board
+      && actives.length > 1
+      && mastheadWeatherFitCount === null
+      && board.scrollWidth > board.clientWidth + 2
+    ) {
+      mastheadWeatherFitCount = actives.length - 1;
+      mastheadWeatherLastBoardCount = 0;
+      mastheadWeatherSlots = [];
+      showMastheadWeatherBoard();
+    }
+    return;
+  }
+
   MASTHEAD_WEATHER?.querySelectorAll('.masthead-weather__city.is-active').forEach((el) => {
     const viewport = el.querySelector('.masthead-weather__name');
     const name = el.querySelector('.masthead-weather__name-text');
     if (!viewport || !name) return;
-
-    // Wide / super-wide : jamais de marquee — compact si le nom déborde.
-    if (isWideNoMarqueeMode()) {
-      el.classList.remove('is-overflowing');
-      el.style.removeProperty('--weather-scroll');
-      const isPrimary = MASTHEAD_WEATHER_PRIMARY_IDS.has(el.dataset.weatherCity);
-      if (isPrimary) {
-        el.classList.remove('is-compact');
-        return;
-      }
-      const prevMax = name.style.maxWidth;
-      name.style.maxWidth = 'none';
-      el.classList.remove('is-compact');
-      const overflow = Math.max(0, name.scrollWidth - viewport.clientWidth);
-      name.style.maxWidth = prevMax;
-      if (overflow > 2) el.classList.add('is-compact');
-      else el.classList.remove('is-compact');
-      return;
-    }
 
     // Lever max-width le temps de la mesure (sinon max-width:100% → overflow 0
     // et le marquee ne part jamais — « SAINT-IGNACE-D » figé).
@@ -2620,22 +2626,22 @@ function sportsStripCramped() {
   const chips = [...strip.querySelectorAll('.sports-chip')];
   if (chips.length <= 1) return false;
 
+  // Wide : planchers un peu plus bas (bandeau large) mais overflow texte
+  // → −1 carte (on n’ampute jamais le libellé : pas de clip/marquee).
   const wide = isWideNoMarqueeMode();
-  const minScore = wide ? 92 : 118;
-  const minCta = wide ? 118 : 148;
+  const minScore = wide ? 110 : 118;
+  const minCta = wide ? 136 : 148;
 
   const cta = strip.querySelector('.sports-chip--cta');
   if (!cta) return true;
   if (cta.clientWidth + 0.5 < minCta) return true;
-  if (!wide) {
-    const tag = cta.querySelector('.sports-chip__cta-tag');
-    if (tag && tag.scrollWidth > tag.clientWidth + 1) return true;
-  }
+  const tag = cta.querySelector('.sports-chip__cta-tag');
+  if (tag && tag.scrollWidth > tag.clientWidth + 1) return true;
 
   for (const chip of chips) {
     if (chip.classList.contains('sports-chip--cta')) continue;
     if (chip.clientWidth + 0.5 < minScore) return true;
-    if (!wide && sportsMatchChipTextOverflows(chip)) return true;
+    if (sportsMatchChipTextOverflows(chip)) return true;
   }
   return false;
 }
