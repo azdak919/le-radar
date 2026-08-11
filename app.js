@@ -10047,8 +10047,16 @@ function renderNews() {
     NEWS_LIST.removeAttribute('data-autumn-grace');
   }
 
+  // Wide E : deux unes (lead) côte à côte ; prod : 1 une + vedettes.
+  const wideDualLead = !isSourceView
+    && typeof isWideNoMarqueeMode === 'function'
+    && isWideNoMarqueeMode()
+    && (window.innerWidth || 0) >= 1600;
+  const leadCount = wideDualLead ? Math.min(HERO_WIDE_LEAD_COUNT, heroItems.length) : 1;
+  if (wideDualLead) hero.dataset.leads = String(leadCount);
+  else hero.removeAttribute('data-leads');
   heroItems.forEach((item, i) => {
-    const role = i === 0 ? 'lead' : 'feature';
+    const role = i < leadCount ? 'lead' : 'feature';
     const article = safeCreateArticle(item, role);
     if (article) hero.appendChild(article);
   });
@@ -10280,9 +10288,13 @@ function updateNewsLayout() {
  *     Le spacer absorbe le reste (tolérance large). Pas de promote vedette,
  *     pas d’allers-retours entre colonnes.
  */
-const HERO_FEATURE_MIN = 4; /* 4 vedettes + 1 une = 5 */
+const HERO_FEATURE_MIN = 4; /* 4 vedettes + 1 une = 5 (prod) */
 const HERO_FEATURE_MAX = 4;
-const HERO_SPOTLIGHT_MAX = 1 + HERO_FEATURE_MIN; /* 5 au total */
+const HERO_SPOTLIGHT_MAX = 1 + HERO_FEATURE_MIN; /* 5 au total prod */
+/* Wide E : 2 unes côte à côte + vedettes en dessous */
+const HERO_WIDE_LEAD_COUNT = 2;
+const HERO_WIDE_FEATURE_MIN = 4;
+const HERO_WIDE_SPOTLIGHT_MAX = HERO_WIDE_LEAD_COUNT + HERO_WIDE_FEATURE_MIN;
 const BRIEF_SIDEBAR_SEED_MIN = 4;
 const BRIEF_SIDEBAR_SEED_MAX = 12;
 const BRIEF_SIDEBAR_MAX = 18;
@@ -10304,7 +10316,31 @@ const SOURCE_HERO_SPOTLIGHT_MAX = 1 + SOURCE_FEATURE_MAX;
 
 function estimateHeroSeedHeight(heroCount) {
   if (heroCount <= 0) return 0;
+  const wideDual = typeof isWideNoMarqueeMode === 'function'
+    && isWideNoMarqueeMode()
+    && (window.innerWidth || 0) >= 1600
+    && heroCount >= 2;
+  if (wideDual) {
+    // 2 unes en parallèle (hauteur ≈ 1 une un peu plus basse) + vedettes en grille 2 col
+    const leads = Math.min(HERO_WIDE_LEAD_COUNT, heroCount);
+    const feats = Math.max(0, heroCount - leads);
+    const leadH = Math.round(AVG_LEAD_CARD_H * 0.88);
+    const featRows = Math.ceil(feats / 2);
+    return leadH + featRows * AVG_FEATURE_CARD_H;
+  }
   return AVG_LEAD_CARD_H + Math.max(0, heroCount - 1) * AVG_FEATURE_CARD_H;
+}
+
+/** Nombre de colonnes CSS En bref (wide E). */
+function briefWideColumnCount() {
+  if (typeof isWideNoMarqueeMode !== 'function' || !isWideNoMarqueeMode()) return 1;
+  try {
+    const w = window.innerWidth || 0;
+    if (w >= 3840) return 4;
+    if (w >= 2560) return 3;
+    if (w >= 1920) return 2;
+  } catch { /* ignore */ }
+  return 1;
 }
 
 /**
@@ -10318,27 +10354,27 @@ function briefSeedCountForHero(heroCount, opts = {}) {
   const mid = !sourceMode && isMidwidthMagazinePreview();
   const wideE = !sourceMode && typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode();
   // Mid : rail 240–280 px → chaque carte En bref est plus haute (titres wrap).
-  // Wide multi-col : hauteur visuelle ≈ total cartes / nCols
+  // Wide multi-col : graine = lignes × colonnes (pas hauteur/cardH qui sous-estime).
   let cardH = mid ? Math.round(AVG_BRIEF_CARD_H * 1.35) : AVG_BRIEF_CARD_H;
   let cols = 1;
   if (wideE) {
-    try {
-      const w = window.innerWidth || 0;
-      if (w >= 3840) cols = 4;
-      else if (w >= 2560) cols = 3;
-      else if (w >= 1920) cols = 2;
-    } catch { /* ignore */ }
-    // hauteur effective par carte dans une grille à N colonnes
-    cardH = Math.max(72, Math.round(AVG_BRIEF_CARD_H / cols));
+    cols = briefWideColumnCount();
+    // Hauteur de ligne réelle compact (souvent 160–220 avec image) — graine large.
+    cardH = Math.max(140, AVG_BRIEF_CARD_H + 40);
   }
   const target = Math.max(0, estimateHeroSeedHeight(heroCount) - AVG_BRIEF_TITLE_H);
   // Source : un peu au-dessus de l’estimé (images), sans graine trop haute
   // (sinon 1 carte de trop en En bref après paint).
-  const mult = sourceMode ? 1.45 : (mid ? 0.85 : (wideE ? 1.15 : 1));
-  const n = Math.round((target * mult) / cardH);
+  const mult = sourceMode ? 1.45 : (mid ? 0.85 : (wideE ? 1.35 : 1));
+  let n = Math.round((target * mult) / cardH);
+  if (wideE && cols > 1) {
+    // Remplir des rangées complètes : rows × cols
+    const rows = Math.max(3, Math.ceil(n / cols));
+    n = rows * cols;
+  }
   const min = sourceMode
     ? Math.max(BRIEF_SIDEBAR_SEED_MIN, 5)
-    : (mid ? 3 : (wideE ? Math.max(BRIEF_SIDEBAR_SEED_MIN, 8) : BRIEF_SIDEBAR_SEED_MIN));
+    : (mid ? 3 : (wideE ? Math.max(BRIEF_SIDEBAR_SEED_MIN, cols * 4) : BRIEF_SIDEBAR_SEED_MIN));
   const max = sourceMode
     ? Math.min(BRIEF_SIDEBAR_MAX, BRIEF_SIDEBAR_SEED_MAX + 2)
     : (mid ? Math.min(8, BRIEF_SIDEBAR_SEED_MAX)
@@ -10543,10 +10579,35 @@ function pickHeroSpotlight(items, _referenceDate = new Date()) {
   if (!sorted.length) {
     return { items: [], contingencyBand: 0 };
   }
-  const n = Math.min(HERO_SPOTLIGHT_MAX, sorted.length);
+  const wideDual = typeof isWideNoMarqueeMode === 'function'
+    && isWideNoMarqueeMode()
+    && (window.innerWidth || 0) >= 1600;
+  const maxN = wideDual ? HERO_WIDE_SPOTLIGHT_MAX : HERO_SPOTLIGHT_MAX;
+  const n = Math.min(maxN, sorted.length);
   // Tranche contiguë des n plus frais — pas de saut d'institution.
+  let picked = sorted.slice(0, n);
+  // Wide dual-une : si les 2 têtes sont la même institution, glisser la 2e une
+  // vers le prochain article d’une autre institution (toujours dans le top frais).
+  if (wideDual && picked.length >= 2) {
+    const lead0 = picked[0];
+    const inst0 = institutionKey(lead0);
+    if (inst0 && institutionKey(picked[1]) === inst0) {
+      const altIdx = sorted.findIndex((it, i) => {
+        if (i === 0) return false;
+        const inst = institutionKey(it);
+        return inst && inst !== inst0;
+      });
+      if (altIdx > 0) {
+        const alt = sorted[altIdx];
+        // Recomposer : une1, une2(alt), puis suite fraîche sans doublon.
+        const keys = new Set([articleKey(lead0), articleKey(alt)]);
+        const rest = sorted.filter((it) => !keys.has(articleKey(it)));
+        picked = [lead0, alt, ...rest].slice(0, n);
+      }
+    }
+  }
   return {
-    items: sorted.slice(0, n),
+    items: picked,
     contingencyBand: 0,
   };
 }
@@ -10632,7 +10693,11 @@ function pickBriefSidebar(allItems, heroItems = [], _referenceDate = new Date(),
  */
 function enforceHeroDateOrder(heroItems, allSorted) {
   if (!heroItems?.length || !allSorted?.length) return heroItems || [];
-  const n = Math.min(Math.max(heroItems.length, HERO_SPOTLIGHT_MAX), allSorted.length);
+  const wideDual = typeof isWideNoMarqueeMode === 'function'
+    && isWideNoMarqueeMode()
+    && (window.innerWidth || 0) >= 1600;
+  const floor = wideDual ? HERO_WIDE_SPOTLIGHT_MAX : HERO_SPOTLIGHT_MAX;
+  const n = Math.min(Math.max(heroItems.length, floor), allSorted.length);
   // Toujours les n plus frais du fil pour le bloc une+vedettes.
   return allSorted.slice(0, n);
 }
@@ -11050,13 +11115,28 @@ function balanceMagazineColumns() {
   // Filet immédiat : jamais d’institution hero en En bref (hors vue source).
   purgeBriefCardsFromHeroInstitutions(brief);
 
+  const wideE = !isSourceMode
+    && typeof isWideNoMarqueeMode === 'function'
+    && isWideNoMarqueeMode();
+  // Multi-col : une carte de trop (nouvelle rangée) vaut mieux qu’un grand vide.
+  // Overshoot toléré ≈ hauteur réelle d’une rangée (cartes compactes ~180–230).
+  const sampleBriefH = (() => {
+    const c = brief.querySelector('.article--compact');
+    const h = c?.getBoundingClientRect?.().height;
+    return Number.isFinite(h) && h > 40 ? h : AVG_BRIEF_CARD_H + 60;
+  })();
+  const wideOvershootTol = wideE
+    ? Math.max(tol, Math.round(sampleBriefH * 0.95))
+    : tol;
+
   const trimBriefIfTaller = () => {
     let guard = 0;
     while (guard < 28) {
       guard += 1;
       const hH = magazineColumnContentHeight(hero);
       const bH = magazineColumnContentHeight(brief);
-      if (bH <= hH + tol) break;
+      // Wide : tolérer un léger dépassement (évite re-trim qui recrée le vide).
+      if (bH <= hH + (wideE ? wideOvershootTol : tol)) break;
       // Vue source : si retirer une carte laisserait un trou > GOOD_GAP_MAX
       // alors que le dépassement actuel est plus petit, s’arrêter (granularité
       // d’une fiche). Impossible de satisfaire brief≤hero et gap≤96 autrement
@@ -11079,28 +11159,10 @@ function balanceMagazineColumns() {
     }
   };
 
-  try {
-    clearMagazineSpacers(hero);
-    clearMagazineSpacers(brief);
-
-    // Déjà bien collé : ne pas re-fill/re-trim destructif (passes image).
-    {
-      const hH = magazineColumnContentHeight(hero);
-      const bH = magazineColumnContentHeight(brief);
-      if (bH <= hH + tol && (hH - bH) <= GOOD_GAP_MAX && brief.querySelectorAll('.article--compact').length >= hardMin) {
-        ensureMagazineColumnSpacers(hero, brief);
-        return;
-      }
-    }
-
-    // --- 1) TRIM : En bref trop haute → retirer la dernière carte ---
-    trimBriefIfTaller();
-
-    // --- 2) FILL : En bref trop basse → ajouter (sans dépasser) ---
-    // Vue source : la réserve contient nécessairement le même média.
+  /** Fill En bref jusqu’à coller le bas du hero (multi-col wide inclus). */
+  const fillBriefToHero = (maxSteps, overshootMax) => {
     let fillGuard = 0;
-    const maxFill = isSourceMode ? 40 : 24;
-    while (fillGuard < maxFill) {
+    while (fillGuard < maxSteps) {
       fillGuard += 1;
       const hH = magazineColumnContentHeight(hero);
       const bH = magazineColumnContentHeight(brief);
@@ -11111,8 +11173,6 @@ function balanceMagazineColumns() {
       const briefCap = briefSidebarMaxSlots();
       if (briefCount >= briefCap || !magazineReserve.length) break;
 
-      // Wide E : fill agressif multi-sources (allowExtra) pour coller le bas du hero.
-      const wideE = typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode();
       const reserveOptions = {
         allowExtra: isSourceMode || wideE,
         allowHeroInstitution: isSourceMode,
@@ -11129,13 +11189,13 @@ function balanceMagazineColumns() {
       const afterHero = magazineColumnContentHeight(hero);
       const overshoot = afterBrief - afterHero;
 
-      if (overshoot > tol) {
-        // Net gain : garder si le dépassement est plus petit que le trou
-        // comblé (y compris en vue source). Refuser tout overshoot laissait
-        // des vides de ~150 px sous la une dès que la prochaine carte compacte
-        // dépassait d’un pouce le gap restant (photos miroir plus hautes).
-        // Sinon → suite du fil (évite 1 carte de trop).
-        if (gap > overshoot) {
+      if (overshoot > overshootMax) {
+        // Garder si net gain, ou (wide) overshoot modéré pour combler un vrai vide
+        // multi-col (sinon la nouvelle rangée est toujours refusée → vide permanent).
+        const mildWideKeep = wideE
+          && gap >= Math.max(tol, 40)
+          && overshoot <= overshootMax * 1.4;
+        if (gap > overshoot || mildWideKeep) {
           markPromotedToBrief(item);
           removeTailArticleForItem(item);
         } else {
@@ -11146,6 +11206,30 @@ function balanceMagazineColumns() {
       markPromotedToBrief(item);
       removeTailArticleForItem(item);
     }
+  };
+
+  try {
+    clearMagazineSpacers(hero);
+    clearMagazineSpacers(brief);
+
+    // Déjà bien collé : ne pas re-fill/re-trim destructif (passes image).
+    // Wide : n’accepter « déjà bon » que si le trou est vraiment petit.
+    {
+      const hH = magazineColumnContentHeight(hero);
+      const bH = magazineColumnContentHeight(brief);
+      const goodMax = wideE ? Math.min(GOOD_GAP_MAX, 56) : GOOD_GAP_MAX;
+      if (bH <= hH + tol && (hH - bH) <= goodMax && brief.querySelectorAll('.article--compact').length >= hardMin) {
+        ensureMagazineColumnSpacers(hero, brief);
+        return;
+      }
+    }
+
+    // --- 1) TRIM : En bref trop haute → retirer la dernière carte ---
+    trimBriefIfTaller();
+
+    // --- 2) FILL : En bref trop basse → ajouter (sans trop dépasser) ---
+    const maxFill = isSourceMode ? 40 : (wideE ? 48 : 24);
+    fillBriefToHero(maxFill, wideE ? wideOvershootTol : tol);
 
     // --- 3) TRIM final (images / fill ont pu dépasser d’une carte) ---
     trimBriefIfTaller();
@@ -11211,39 +11295,18 @@ function balanceMagazineColumns() {
         ensureMagazineColumnSpacers(hero, brief);
       }
     } else {
-      ensureMagazineColumnSpacers(hero, brief);
-      // Wide E : 2e passe fill si encore un grand spacer sous le hero (1 col En bref
-      // empile plus bas ; multi-col doit aussi coller la hauteur mesurée réelle).
-      if (typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode()) {
-        const hSp2 = hero.querySelector('.news-hero-spacer')?.offsetHeight || 0;
-        if (hSp2 > AVG_BRIEF_CARD_H * 0.6 && magazineReserve.length) {
-          clearMagazineSpacers(hero);
-          clearMagazineSpacers(brief);
-          let g = 0;
-          while (g < 16) {
-            g += 1;
-            const hH = magazineColumnContentHeight(hero);
-            const bH = magazineColumnContentHeight(brief);
-            if (hH - bH <= tol) break;
-            if (brief.querySelectorAll('.article--compact').length >= briefSidebarMaxSlots()) break;
-            const item = takeNextBriefFromReserve({
-              allowExtra: true,
-              allowHeroInstitution: false,
-            });
-            if (!item) break;
-            const el = safeCreateArticle(item, 'compact');
-            if (!el) break;
-            appendBeforeMagazineSpacer(brief, el);
-            if (magazineColumnContentHeight(brief) - magazineColumnContentHeight(hero) > tol) {
-              demoteBriefCardToTail(brief, el);
-              break;
-            }
-            markPromotedToBrief(item);
-            removeTailArticleForItem(item);
-          }
-          ensureMagazineColumnSpacers(hero, brief);
+      // Wide E : 2e passe sur le *contenu* (pas le spacer flex) — multi-col
+      // laissait souvent 100–200 px de vide sous la dernière rangée.
+      if (wideE) {
+        clearMagazineSpacers(hero);
+        clearMagazineSpacers(brief);
+        const gap2 = magazineColumnContentHeight(hero) - magazineColumnContentHeight(brief);
+        if (gap2 > 48 && magazineReserve.length) {
+          fillBriefToHero(24, wideOvershootTol);
+          trimBriefIfTaller();
         }
       }
+      ensureMagazineColumnSpacers(hero, brief);
     }
   } finally {
     window.setTimeout(() => {
