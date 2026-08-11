@@ -5627,14 +5627,10 @@ function formatNowAirSubLine(title, sub, empty, kind = 'idle', { liveLabel = fal
   const core = s && !redundant ? `${t} · ${s}` : (t || s);
   if (!core) return '';
   if (kind === 'upcoming') return `À venir · ${core}`;
-  // « À l'antenne » n'est posé que pour le poste syntonisé, sous 1100 px, là
-  // où le panneau latéral est masqué : sans lui, rien ne distingue l'émission
-  // en cours de la suivante une fois la ligne « À venir » passée.
-  //
-  // Au repos, la ligne nomme déjà la station et le carrousel enchaîne les
-  // postes : ce préfixe n'y apporterait rien, allongerait le texte, donc le
-  // défilement, donc l'attente avant le poste suivant. L'absence de « À venir »
-  // y suffit à dire « en ondes ». Le ♪ d'une piste se suffit aussi à lui-même.
+  // « À l'antenne » sous 1100 px (panneau latéral masqué) : distingue l'émission
+  // en cours de « À venir ». Aussi en aperçu idle mode B : L1 porte le poste,
+  // L2 doit porter le statut (focus-group le-radar-tuner-dial-info-900).
+  // Le ♪ d'une piste se suffit à lui-même.
   if (liveLabel && kind === 'live' && !t.startsWith('♪')) return `À l'antenne · ${core}`;
   return core;
 }
@@ -5667,7 +5663,10 @@ window.RadarAir = {
     isRedundantAirLine,
     airRotationPhases,
     dialPhaseLinesForRadio,
+    dialPhasesForRadio,
+    idleDialStoryLine,
     previewDialLine,
+    compactDialTitleLine,
     stationBandedName,
     airPhaseDwellMs,
     marqueeRoundTripMs,
@@ -5854,22 +5853,63 @@ function dialCompactMetaLineForRadio(radio) {
 }
 
 /**
- * Les lignes qui défilent en bas du dial compact, dans l'ordre :
- * émission en cours → à venir → piste → slogan.
+ * Phases L2 du dial compact **en écoute** (focus-group
+ * `le-radar-tuner-dial-info-900` — mode **E**).
  *
- * Le slogan n'est qu'une phase parmi d'autres et ferme le cycle ; il
- * n'apparaît plus une fois sur deux comme du temps de l'alternance binaire.
+ * Ordre : émission live (titre seul, préfixe « À l'antenne ») → piste → à venir
+ * → horaire court optionnel. Pas de soupe multi-champs, pas de slogan en cycle
+ * (le slogan reste la méta bureau / hors compact). L'identité poste est en L1.
  */
 function dialPhasesForRadio(radio) {
   if (!radio) return [];
+  const raw = airRotationPhases(radio, { withSlogan: false });
+  const liveShows = [];
+  const tracks = [];
+  const upcomings = [];
+  /** @type {{ title: string, sub: string, kind: string }[]} */
+  const timeFilet = [];
+
+  for (const phase of raw) {
+    const title = String(phase.title || '').trim();
+    if (!title) continue;
+    const isTrack = title.startsWith('♪');
+    if (phase.kind === 'upcoming') {
+      upcomings.push(phase);
+      continue;
+    }
+    if (isTrack) {
+      tracks.push(phase);
+      continue;
+    }
+    if (phase.kind === 'live') {
+      liveShows.push(phase);
+      // Filet horaire optionnel (court) — jamais collé au titre d'émission.
+      const time = String(phase.sub || '').trim();
+      if (time && /^\d{1,2}:\d{2}/.test(time)) {
+        timeFilet.push({ title: time, sub: '', kind: 'idle' });
+      }
+      continue;
+    }
+    // Repli idle (slogan seul si aucune grille) : une face utile.
+    liveShows.push(phase);
+  }
+
+  const ordered = [...liveShows, ...tracks, ...upcomings, ...timeFilet];
   const seen = new Set();
   const out = [];
-  for (const phase of airRotationPhases(radio, { withSlogan: true })) {
-    const line = formatNowAirSubLine(phase.title, phase.sub, false, phase.kind, { liveLabel: true });
+  for (const phase of ordered) {
+    const title = String(phase.title || '').trim();
+    const isTrack = title.startsWith('♪');
+    const isTimeOnly = phase.kind === 'idle' && /^\d{1,2}:\d{2}/.test(title);
+    // Primaire live : titre sans horaire (l'horaire est en filet séparé).
+    const sub = (phase.kind === 'live' && !isTrack) ? '' : String(phase.sub || '').trim();
+    const line = isTimeOnly
+      ? title
+      : formatNowAirSubLine(title, sub, false, phase.kind, { liveLabel: true });
     const key = normLoose(line);
     if (!line || seen.has(key)) continue;
     seen.add(key);
-    out.push({ ...phase, line });
+    out.push({ ...phase, sub, line });
   }
   return out;
 }
@@ -5880,34 +5920,25 @@ function dialPhaseLinesForRadio(radio) {
 }
 
 /**
- * Ligne d'aperçu du dial au repos (« Syntoniser un poste », téléphone).
- *
- * Ordre : **poste + bande → à l'antenne / à venir → émission → horaire →
- * établissement**. On commence par identifier la station, puisque le
- * carrousel en change ; le libellé vient ensuite dire si l'émission passe
- * maintenant ou plus tard ; l'établissement ferme la ligne, en acronyme, sa
- * forme longue doublerait presque le temps de défilement sur téléphone.
- *
- * Le panneau bureau n'utilise pas cette composition : il porte son libellé à
- * part et affiche titre et sous-titre sur deux lignes.
+ * L2 du carré dial **hors écoute** (mode **B** — panel élargi).
+ * Une seule face antenne : préfixe + titre. Pas d'identité poste (c'est L1),
+ * pas d'horaire collé, pas de soupe `previewDialLine` historique.
  */
-function previewDialLine(radio) {
+function idleDialStoryLine(radio) {
   if (!radio) return '';
   const phase = airRotationPhases(radio, { withSlogan: false })[0];
-  if (!phase) return stationBandedName(radio);
+  if (!phase) return '';
+  // B : une face scannable — titre seul (+ préfixe live/upcoming). L'horaire
+  // et le campus ne rentrent pas dans L2 hors écoute.
+  return formatNowAirSubLine(phase.title, '', false, phase.kind, { liveLabel: true });
+}
 
-  const isTrack = String(phase.title || '').startsWith('♪');
-  const label = phase.kind === 'upcoming'
-    ? 'À venir'
-    : (phase.kind === 'live' && !isTrack ? "À l'antenne" : '');
-
-  return [
-    stationBandedName(radio),
-    label,
-    phase.title,
-    phase.sub,
-    shortInstitution(radio.institution, radio.type),
-  ].map((part) => String(part || '').trim()).filter(Boolean).join(' · ');
+/**
+ * @deprecated Nom historique — désormais l'histoire L2 idle (B), sans poste.
+ * Conservé pour `RadarAir._pure` / tests ; préférer `idleDialStoryLine`.
+ */
+function previewDialLine(radio) {
+  return idleDialStoryLine(radio);
 }
 
 function formatPreviewNowAir(radio, { omitStation = false } = {}) {
@@ -6316,20 +6347,27 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false, kind = 'idle')
     TUNER_SUB_AIR.classList.remove('is-active');
     TUNER_SUB.setAttribute('aria-hidden', 'false');
     TUNER_SUB_AIR.setAttribute('aria-hidden', 'true');
-    // Composition dédiée : poste + bande, libellé, émission, horaire,
-    // établissement. Le panneau latéral étant masqué, cette ligne est le seul
-    // endroit qui dise de quelle station il s'agit.
-    tunerSubAirText = previewDialLine(nowAirPreviewRadio)
-      || formatNowAirSubLine(title, sub, empty, kind);
+    // Mode B (panel élargi) : L1 = identité poste du carrousel ; L2 = une seule
+    // face antenne (pas de soupe poste·label·émission·horaire·campus).
+    const preview = nowAirPreviewRadio;
+    if (preview) {
+      setTunerNameText(compactDialTitleLine(preview), crossfade);
+      tunerSubAirText = idleDialStoryLine(preview)
+        || formatNowAirSubLine(title, '', empty, kind, { liveLabel: true })
+        || 'Radios étudiantes en direct';
+    } else {
+      setTunerNameText('Syntoniser un poste', crossfade);
+      tunerSubAirText = 'Radios étudiantes en direct';
+    }
+    TUNER_SUB?.parentElement?.classList.toggle('is-empty', !tunerSubAirText);
     applyDialTextCrossfade(TUNER_SUB, tunerSubAirText, crossfade);
     return;
   }
 
   /*
-   * Compact mobile / embed étroit + poste sélectionné :
-   *  ligne 1 = poste · acronyme (ULaval, UdeM…)
-   *  ligne 2 = alternance slogan (langue principale) ↔ à l'antenne / à venir
-   *            (+ marquee si overflow)
+   * Compact + poste sélectionné — mode E (écoute) :
+   *  L1 = poste · acronyme
+   *  L2 = face primaire (émission) puis filet piste → à venir → horaire
    */
   if (currentStation && isDialCompactLayout()) {
     setTunerNameText(compactDialTitleLine(currentStation), crossfade);
