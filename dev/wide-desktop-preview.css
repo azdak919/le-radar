@@ -72,14 +72,16 @@ html[data-wide-preview="e"] {
   }
 
   /*
-   * E : plus de largeur (côtés), PAS plus d’épaisseur.
-   * Padding / min-height = mêmes valeurs bureau prod (11 px / 42 px).
+   * E radio : largeur utile seulement (dial + dual antenne), pas full shell.
+   * Épaisseur = prod. Pas de troncage forcé si place suffisante (~1320–1480).
    */
   html[data-wide-preview="e"] .tuner-inner {
-    max-width: var(--maxw) !important;
+    max-width: min(1480px, 100%) !important;
     width: 100%;
-    grid-template-columns: minmax(0, 1.25fr) minmax(420px, 1.1fr) !important;
-    column-gap: 12px !important;
+    margin-left: auto;
+    margin-right: auto;
+    grid-template-columns: minmax(300px, 1.1fr) minmax(380px, 1fr) !important;
+    column-gap: 16px !important;
     align-items: center !important;
     padding-top: 11px !important;
     padding-bottom: 11px !important;
@@ -242,9 +244,9 @@ html[data-wide-preview="e"] {
 
 @media (min-width: 1680px) {
   html[data-wide-preview="e"] .tuner-inner {
-    grid-template-columns: minmax(0, 1.2fr) minmax(520px, 1.15fr) !important;
+    max-width: min(1520px, 100%) !important;
+    grid-template-columns: minmax(320px, 1.1fr) minmax(400px, 1fr) !important;
   }
-  /* Toujours pas d’épaississement */
   html[data-wide-preview="e"] .tuner-now {
     min-height: 42px !important;
     max-height: 42px;
@@ -278,11 +280,10 @@ html[data-wide-preview="e"] {
     max-width: var(--maxw);
   }
 
-  /* Menu sections : centré comme en mobile (pas collé à gauche du shell large). */
+  /* Menu sections : centré (B–D lab) ; E = gauche sous le fil (voir plus bas). */
   html[data-wide-preview="b"] .site-sections,
   html[data-wide-preview="c"] .site-sections,
-  html[data-wide-preview="d"] .site-sections,
-  html[data-wide-preview="e"] .site-sections {
+  html[data-wide-preview="d"] .site-sections {
     max-width: var(--maxw);
     justify-content: center;
     text-align: center;
@@ -498,28 +499,52 @@ html[data-wide-preview="e"] {
     max-width: 100%;
   }
 
+  /*
+   * Sections : alignées au début des articles (après rail sources), sticky
+   * sous le synthé — visibles en même temps que la colonne sources.
+   */
+  html[data-wide-preview="e"] .site-sections {
+    max-width: var(--maxw);
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: flex-start;
+    text-align: left;
+    /* décale sous le rail sources pour coller à la une */
+    padding-left: calc(var(--wide-rail) + var(--wide-gap) + max(var(--pad), 20px));
+    padding-right: max(var(--pad), 20px);
+    box-sizing: border-box;
+    position: sticky;
+    top: var(--wide-sticky-top, 76px);
+    z-index: 55;
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    margin-bottom: 0;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
   /* ── Magazine (à la une + en bref) ── */
   html[data-wide-preview="e"] .news-list {
     grid-area: list;
     min-width: 0;
     width: 100%;
-    /* 1440–1600 : une large ; En bref 1 col mais rail assez large */
-    grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.72fr);
+    /* Une un peu moins étirée ; En bref prend sa place */
+    grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
   }
 
   html[data-wide-preview="e"] .news-hero {
     min-width: 0;
-    padding-right: 24px;
+    padding-right: 20px;
   }
 
-  /* En bref — par défaut 1 colonne (≤1919) ; plus de cols aux breakpoints plus bas */
+  /* En bref — 1 col ≤1919 */
   html[data-wide-preview="e"] .brief-rail {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     column-gap: 14px;
     row-gap: 0;
     align-content: start;
-    /* stretch pour coller la hauteur hero + fill JS */
     height: 100%;
     min-width: 0;
   }
@@ -587,10 +612,10 @@ html[data-wide-preview="e"] {
   }
 }
 
-/* ── E ≥1920 : En bref 2 colonnes ── */
+/* ── E ≥1920 : En bref 2 colonnes ; une un peu moins large ── */
 @media (min-width: 1920px) {
   html[data-wide-preview="e"] .news-list {
-    grid-template-columns: minmax(0, 1.15fr) minmax(380px, 0.95fr);
+    grid-template-columns: minmax(0, 1.05fr) minmax(400px, 1fr);
   }
 
   html[data-wide-preview="e"] .brief-rail {
@@ -604,10 +629,10 @@ html[data-wide-preview="e"] {
   }
 }
 
-/* ── E ≥2560 (QHD+) : En bref 3 colonnes ── */
+/* ── E ≥2560 : En bref 3 colonnes ── */
 @media (min-width: 2560px) {
   html[data-wide-preview="e"] .news-list {
-    grid-template-columns: minmax(0, 1.1fr) minmax(480px, 1fr);
+    grid-template-columns: minmax(0, 0.95fr) minmax(520px, 1.1fr);
   }
 
   html[data-wide-preview="e"] .brief-rail {
@@ -622,6 +647,23 @@ html[data-wide-preview="e"] {
 
   html[data-wide-preview="e"] .wire {
     grid-template-columns: minmax(240px, var(--wide-rail)) minmax(0, 1fr);
+  }
+}
+
+/* ── E ≥3840 : En bref 4 colonnes ; une encore moins stretch ── */
+@media (min-width: 3840px) {
+  html[data-wide-preview="e"] .news-list {
+    grid-template-columns: minmax(0, 0.85fr) minmax(720px, 1.25fr);
+  }
+
+  html[data-wide-preview="e"] .brief-rail {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: 18px;
+  }
+
+  html[data-wide-preview="e"] .news-tail-body {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    column-gap: 24px;
   }
 }
 
