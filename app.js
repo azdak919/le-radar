@@ -10728,10 +10728,14 @@ function appendBeforeMagazineSpacer(column, el) {
 
 /**
  * Hauteur du *contenu* (hors spacer). Pas offsetHeight de la cellule stretchée.
+ * Utilise le bas réel du dernier enfant (max offsetTop+height) pour les grilles
+ * multi-colonnes d’En bref : sommer les hauteurs comptait 2–3× le visuel et
+ * forçait un trim excessif (vide en bas).
  */
 function magazineColumnContentHeight(col) {
   if (!col) return 0;
-  let h = 0;
+  let maxBottom = 0;
+  let sumFallback = 0;
   for (const child of col.children) {
     if (
       child.classList?.contains('news-hero-spacer')
@@ -10742,11 +10746,32 @@ function magazineColumnContentHeight(col) {
     const style = getComputedStyle(child);
     const mt = parseFloat(style.marginTop) || 0;
     const mb = parseFloat(style.marginBottom) || 0;
-    h += child.offsetHeight + mt + mb;
+    const h = child.offsetHeight + mt + mb;
+    sumFallback += h;
+    // offsetTop est relatif au padding edge de l’offsetParent (souvent la col).
+    const bottom = child.offsetTop + child.offsetHeight + mb;
+    if (bottom > maxBottom) maxBottom = bottom;
   }
   const cs = getComputedStyle(col);
-  h += (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0);
-  return h;
+  const padB = parseFloat(cs.paddingBottom) || 0;
+  // maxBottom déjà depuis le haut du contenu ; + pad bas si besoin
+  if (maxBottom > 0) return maxBottom + padB;
+  return sumFallback + (parseFloat(cs.paddingTop) || 0) + padB;
+}
+
+/** Plafond En bref : plus haut en wide E pour remplir le bas sans vide. */
+function briefSidebarMaxSlots() {
+  if (typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode()) {
+    try {
+      const w = window.innerWidth || 0;
+      if (w >= 2560) return 40;
+      if (w >= 1920) return 32;
+      // 1440–1600 : 1 col mais on empile davantage pour coller la hauteur hero
+      return 24;
+    } catch { /* ignore */ }
+    return 24;
+  }
+  return BRIEF_SIDEBAR_MAX;
 }
 
 /** Retrouve un item news depuis une carte DOM (href / titre). */
@@ -10940,10 +10965,13 @@ function balanceMagazineColumns() {
       if (gap <= tol) break;
 
       const briefCount = brief.querySelectorAll('.article--compact').length;
-      if (briefCount >= BRIEF_SIDEBAR_MAX || !magazineReserve.length) break;
+      const briefCap = briefSidebarMaxSlots();
+      if (briefCount >= briefCap || !magazineReserve.length) break;
 
+      // Wide E : fill agressif multi-sources (allowExtra) pour coller le bas du hero.
+      const wideE = typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode();
       const reserveOptions = {
-        allowExtra: isSourceMode,
+        allowExtra: isSourceMode || wideE,
         allowHeroInstitution: isSourceMode,
       };
       let item = takeNextBriefFromReserve(reserveOptions);
@@ -11007,7 +11035,7 @@ function balanceMagazineColumns() {
           const voidUnderBrief = hH - bH;
           if (voidUnderBrief <= GOOD_GAP_MAX) break;
           if (!magazineReserve.length) break;
-          if (brief.querySelectorAll('.article--compact').length >= BRIEF_SIDEBAR_MAX) break;
+          if (brief.querySelectorAll('.article--compact').length >= briefSidebarMaxSlots()) break;
           // Fil général : jamais d’institution déjà en une/vedette, même en fill mid.
           // (allowHeroInstitution réservé à la vue source.)
           const item = takeNextBriefFromReserve({
@@ -11041,6 +11069,38 @@ function balanceMagazineColumns() {
       }
     } else {
       ensureMagazineColumnSpacers(hero, brief);
+      // Wide E : 2e passe fill si encore un grand spacer sous le hero (1 col En bref
+      // empile plus bas ; multi-col doit aussi coller la hauteur mesurée réelle).
+      if (typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode()) {
+        const hSp2 = hero.querySelector('.news-hero-spacer')?.offsetHeight || 0;
+        if (hSp2 > AVG_BRIEF_CARD_H * 0.6 && magazineReserve.length) {
+          clearMagazineSpacers(hero);
+          clearMagazineSpacers(brief);
+          let g = 0;
+          while (g < 16) {
+            g += 1;
+            const hH = magazineColumnContentHeight(hero);
+            const bH = magazineColumnContentHeight(brief);
+            if (hH - bH <= tol) break;
+            if (brief.querySelectorAll('.article--compact').length >= briefSidebarMaxSlots()) break;
+            const item = takeNextBriefFromReserve({
+              allowExtra: true,
+              allowHeroInstitution: false,
+            });
+            if (!item) break;
+            const el = safeCreateArticle(item, 'compact');
+            if (!el) break;
+            appendBeforeMagazineSpacer(brief, el);
+            if (magazineColumnContentHeight(brief) - magazineColumnContentHeight(hero) > tol) {
+              demoteBriefCardToTail(brief, el);
+              break;
+            }
+            markPromotedToBrief(item);
+            removeTailArticleForItem(item);
+          }
+          ensureMagazineColumnSpacers(hero, brief);
+        }
+      }
     }
   } finally {
     window.setTimeout(() => {

@@ -442,8 +442,8 @@ html[data-wide-preview="e"] {
     grid-area: list;
     min-width: 0;
     width: 100%;
-    /* Une un peu plus large ; En bref assez large pour 2 col de cartes */
-    grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.95fr);
+    /* 1440–1600 : une large ; En bref 1 col mais rail assez large */
+    grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.72fr);
   }
 
   html[data-wide-preview="e"] .news-hero {
@@ -451,19 +451,15 @@ html[data-wide-preview="e"] {
     padding-right: 24px;
   }
 
-  html[data-wide-preview="e"] .news-hero-spacer,
-  html[data-wide-preview="e"] .brief-rail-spacer {
-    /* garde l’équilibre magazine si JS le pose ; pas d’obligation */
-  }
-
-  /* En bref : 2 colonnes côte à côte */
+  /* En bref — par défaut 1 colonne (≤1919) ; plus de cols aux breakpoints plus bas */
   html[data-wide-preview="e"] .brief-rail {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     column-gap: 14px;
     row-gap: 0;
     align-content: start;
-    height: auto;
+    /* stretch pour coller la hauteur hero + fill JS */
+    height: 100%;
     min-width: 0;
   }
 
@@ -477,13 +473,21 @@ html[data-wide-preview="e"] {
     padding-right: 0;
   }
 
+  /* Spacer d’équilibre (ne plus masquer — sinon vide bas + fill cassé) */
   html[data-wide-preview="e"] .brief-rail-spacer {
-    display: none !important;
+    display: block !important;
+    grid-column: 1 / -1;
+    min-height: 0;
   }
 
-  /* Suite du fil : 3 col (validé) */
+  html[data-wide-preview="e"] .news-hero-spacer {
+    display: block !important;
+    min-height: 0;
+  }
+
+  /* Suite du fil : 2–3 col selon largeur (voir breakpoints) */
   html[data-wide-preview="e"] .news-tail-body {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 24px;
   }
 
@@ -518,21 +522,34 @@ html[data-wide-preview="e"] {
   }
 }
 
-/* ═══════════════════════════════════════════════════
-   E super-wide (≥1680) — densités en bref / suite
-   ═══════════════════════════════════════════════════ */
-@media (min-width: 1680px) {
+/* ── E ≥1920 : En bref 2 colonnes ── */
+@media (min-width: 1920px) {
+  html[data-wide-preview="e"] .news-list {
+    grid-template-columns: minmax(0, 1.15fr) minmax(380px, 0.95fr);
+  }
+
+  html[data-wide-preview="e"] .brief-rail {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 16px;
+  }
+
+  html[data-wide-preview="e"] .news-tail-body {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 22px;
+  }
+}
+
+/* ── E ≥2560 (QHD+) : En bref 3 colonnes ── */
+@media (min-width: 2560px) {
   html[data-wide-preview="e"] .news-list {
     grid-template-columns: minmax(0, 1.1fr) minmax(480px, 1fr);
   }
 
-  /* En bref : 3 colonnes */
   html[data-wide-preview="e"] .brief-rail {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     column-gap: 16px;
   }
 
-  /* Suite : 4 colonnes */
   html[data-wide-preview="e"] .news-tail-body {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     column-gap: 22px;
