@@ -183,10 +183,24 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
     0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 22%, transparent);
 }
-.masthead-sports-strip .sports-chip:not(.sports-chip--cta) {
+/* Pulse de bordure pourpre : puces scores + CTA au repos (pas en direct —
+ * le live a son propre halo rouge). Même famille visuelle sur toute la bande. */
+.masthead-sports-strip .sports-chip:not(.sports-chip--cta),
+.masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]) {
   animation: sports-chip-rim-glow 3.2s ease-in-out infinite;
 }
 .masthead-sports-strip .sports-chip:hover {
+  border-color: color-mix(in srgb, var(--accent, #6c2163) 72%, rgba(255, 255, 255, 0.28));
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--sports-tone, #66839e) 40%, transparent) 0%, transparent 55%),
+    rgba(48, 52, 62, 0.96);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 34%, transparent);
+}
+/* Hover CTA hors direct : même élévation pourpre que les scores (le live garde son rouge). */
+.masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]):hover {
   border-color: color-mix(in srgb, var(--accent, #6c2163) 72%, rgba(255, 255, 255, 0.28));
   background:
     linear-gradient(90deg, color-mix(in srgb, var(--sports-tone, #66839e) 40%, transparent) 0%, transparent 55%),
@@ -234,7 +248,10 @@ body {
     animation: none;
     filter: none;
   }
-  .masthead-sports-strip .sports-chip:not(.sports-chip--cta) { animation: none; }
+  .masthead-sports-strip .sports-chip:not(.sports-chip--cta),
+  .masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]) {
+    animation: none;
+  }
 }
 .masthead-sports-strip .sports-chip__glyph {
   flex: 0 0 auto;
@@ -369,12 +386,14 @@ body {
   opacity: 0.92;
 }
 
-/* ── CTA « SPORTS » — focus-group le-radar-sports-first-glance / -motion / -badge.
+/* ── CTA « SPORTS » — focus-group first-glance / motion / badge + chip-look.
  *
- * Registre ardoise **par défaut**, comme les puces météo. Le rouge, le halo qui
- * pulse et le point live sont réservés à `[data-cta-state="live"]` : un match
- * réellement en cours. Une pastille d’alerte allumée en permanence pour un match
- * à quinze jours est une promesse fausse, pas un appel à l’attention.
+ * Au repos : **même famille** que les puces scores (contour pourpre de marque
+ * + lavis `--sports-tone` du match + pulse de bordure lent). Plus d’ardoise
+ * grise qui faisait « orpheline » à droite des trois cartes colorées.
+ * Le rouge, le halo qui pulse et le point live restent réservés à
+ * `[data-cta-state="live"]` : un match réellement en cours (pas une fausse
+ * alerte pour un match à quinze jours).
  * L’accroche roule verticalement en place (jamais de carte type gare). ── */
 .masthead-sports-strip .sports-chip--cta {
   /* Un peu plus de place pour pastille + accroche sur deux lignes. */
@@ -382,19 +401,15 @@ body {
   min-width: 9.5rem;
   justify-content: flex-start;
   gap: 8px;
-  border-color: color-mix(in srgb, var(--sports-tone, #6a7580) 46%, rgba(255, 255, 255, 0.2));
+  /* Parité puces scores (le-radar-sports-chip-look C étendu à la CTA). */
+  border-color: color-mix(in srgb, var(--accent, #6c2163) 58%, rgba(255, 255, 255, 0.22));
   background:
-    linear-gradient(90deg, color-mix(in srgb, var(--sports-tone, #6a7580) 26%, transparent) 0%, transparent 58%),
-    rgba(54, 59, 68, 0.9);
+    linear-gradient(90deg, color-mix(in srgb, var(--sports-tone, #66839e) 34%, transparent) 0%, transparent 55%),
+    rgba(42, 46, 54, 0.92);
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-.masthead-sports-strip .sports-chip--cta:hover {
-  border-color: color-mix(in srgb, var(--sports-tone, #6a7580) 66%, rgba(255, 255, 255, 0.28));
-  background:
-    linear-gradient(90deg, color-mix(in srgb, var(--sports-tone, #6a7580) 36%, transparent) 0%, transparent 58%),
-    rgba(66, 72, 82, 0.94);
+    0 1px 2px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 22%, transparent);
 }
 /* Direct : le registre d’alerte, gagné par un match en cours. */
 .masthead-sports-strip .sports-chip--cta[data-cta-state="live"] {
@@ -408,6 +423,12 @@ body {
     0 0 0 0 rgba(200, 16, 46, 0);
   animation: sports-cta-ring-pulse 2.6s ease-in-out infinite;
 }
+.masthead-sports-strip .sports-chip--cta[data-cta-state="live"]:hover {
+  border-color: color-mix(in srgb, #c8102e 72%, rgba(255, 255, 255, 0.28));
+  background:
+    linear-gradient(90deg, color-mix(in srgb, #c8102e 44%, transparent) 0%, transparent 58%),
+    rgba(60, 48, 52, 0.94);
+}
 /* Pastille : rubrique stable au repos, « En cours » pendant un match. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag {
   flex: 0 0 auto;
@@ -417,14 +438,16 @@ body {
   gap: 5px;
   padding: 2px 7px 2px 6px;
   border-radius: 3px;
-  background: rgba(255, 255, 255, 0.16);
-  color: rgba(255, 255, 255, 0.94);
+  /* Légère teinte pourpre de marque — plus de pastille gris-blanc fade. */
+  background: color-mix(in srgb, var(--accent, #6c2163) 42%, rgba(255, 255, 255, 0.14));
+  color: rgba(255, 255, 255, 0.96);
   font-size: 9.5px;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   line-height: 1.2;
   white-space: nowrap;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 28%, transparent);
 }
 .masthead-sports-strip .sports-chip--cta[data-cta-state="live"] .sports-chip__cta-tag {
   background: #c8102e;
@@ -486,7 +509,7 @@ body {
   font-weight: 800;
   letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.72);
+  color: color-mix(in srgb, var(--accent, #cf7ec1) 55%, rgba(255, 255, 255, 0.88));
   line-height: 1.1;
   white-space: nowrap;
 }

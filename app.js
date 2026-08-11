@@ -1880,7 +1880,7 @@ const SPORTS_ARRIVE_MS = 640;
 const SPORTS_CTA_TAG = 'Sports';
 /** Pastille pendant un match en cours — le seul cas qui remplace la rubrique. */
 const SPORTS_CTA_TAG_LIVE = 'En cours';
-/** Ardoise au repos, comme les puces météo ; rouge réservé au direct. */
+/** Repli idle (creux total, pas de match) ; sinon ton du sport via sportsCtaTone. Rouge = direct. */
 const SPORTS_CTA_REST_TONE = '#6a7580';
 const SPORTS_CTA_LIVE_TONE = '#c8102e';
 /** Durée du roulement vertical A↑B (une seule phase, jamais de trou vide). */
@@ -2691,19 +2691,44 @@ function sportsCtaEyebrow(slide, state) {
   return '';
 }
 
-/** Sous-ligne : compétition + fraîcheur. Toujours datée, toujours visible. */
+/**
+ * Sous-ligne : date match / compétition / fraîcheur.
+ *
+ * Next : date + compétition seulement. L’horodatage banque (« mis à jour à… »)
+ * n’est plus inscrit ici — la carte CTA animée (rim-glow + roulement) signale
+ * déjà qu’elle porte l’info éditoriale la plus fraîche ; le `title` garde MAJ
+ * pour le survol / a11y (garde-fou fraicheur-visible assoupli pour next).
+ * Résultat / live du jour : âge relatif (« il y a 3 h »).
+ * Idle / plus vieux : horodatage banque via sportsUpdatedShort().
+ */
 function sportsCtaSubLine(slide, state) {
   const comp = sportsCompetitionLabel(slide);
   const g = slide?.game;
   const age = sportsResultAgeMs(g);
+  const when = state === 'next' ? sportsWhenLong(g?.date, g?.time) : '';
+  if (state === 'next') {
+    return [when, comp].filter(Boolean).join(' · ');
+  }
   // Pour un fait du jour, l’âge précis vaut mieux que le marqueur (« il y a
   // 3 h » plutôt que « Aujourd’hui »). Passé 24 h, le marqueur dit déjà « Hier »
   // et le répéter ici ne sert à rien : on montre plutôt la fraîcheur de la banque.
   const freshness = (state === 'result' || state === 'live') && age < 86400000
     ? sportsRelativeAge(sportsGameMs(g))
     : sportsUpdatedShort();
-  const when = state === 'next' ? sportsWhenLong(g?.date, g?.time) : '';
-  return [when, comp, freshness].filter(Boolean).join(' · ');
+  return [comp, freshness].filter(Boolean).join(' · ');
+}
+
+/**
+ * Teinte lavis de la CTA : sport du match (ou résultat W/L), rouge live,
+ * ardoise seulement en creux idle (pas de match à montrer).
+ */
+function sportsCtaTone(slide) {
+  const state = slide?.ctaState || sportsCtaState(slide);
+  if (state === 'live') return SPORTS_CTA_LIVE_TONE;
+  const src = slide?.ctaFrom;
+  if (src?.game || src?.team) return sportsSlideTone(src);
+  if (slide?.tone && slide.tone !== SPORTS_CTA_REST_TONE) return slide.tone;
+  return SPORTS_CTA_REST_TONE;
 }
 
 /**
@@ -2928,12 +2953,11 @@ function sportsCtaSlide(labelIndex = sportsCtaLabelIndex) {
   const src = candidates[idx];
   const label = sportsCtaLabelFromSlide(src);
   const state = sportsCtaState({ ctaFrom: src });
-  return {
+  const draft = {
     mode: 'cta',
     key: SPORTS_CTA_KEY,
     label: label || SPORTS_CTA_IDLE_LABELS[0],
     labelIndex: idx,
-    tone: state === 'live' ? SPORTS_CTA_LIVE_TONE : SPORTS_CTA_REST_TONE,
     team: { sport: 'board', name: 'Sports', code: 'RSEQ' },
     game: { sport: 'board' },
     ctaFrom: src,
@@ -2944,6 +2968,8 @@ function sportsCtaSlide(labelIndex = sportsCtaLabelIndex) {
       ? `${src.team?.fullName || src.team?.name || ''} · ${label}`
       : '',
   };
+  draft.tone = sportsCtaTone(draft);
+  return draft;
 }
 
 /** Tooltip + aria de la CTA SPORTS (sans reconstruire le DOM). */
@@ -3130,16 +3156,17 @@ function rollSportsCtaLabel(chip, slide) {
  * Registre visuel de la carte CTA — focus-group `le-radar-sports-first-glance`
  * (garde-fou `registre-alerte-reserve`) et `le-radar-cta-sports-badge`.
  *
- * Ardoise au repos ; rouge, pastille « En cours » et point live **uniquement**
- * pendant un match. Le point était créé sans condition et pulsait toute l’année,
- * y compris pour un match à quinze jours : une promesse fausse.
+ * Au repos : lavis du sport du match + contour pourpre (parité chip-look).
+ * Rouge, pastille « En cours » et point live **uniquement** pendant un match.
+ * Le point était créé sans condition et pulsait toute l’année, y compris pour
+ * un match à quinze jours : une promesse fausse.
  */
 function applySportsCtaState(chip, slide) {
   if (!chip) return;
   const state = slide?.ctaState || sportsCtaState(slide);
   const live = state === 'live';
   chip.dataset.ctaState = state;
-  chip.style.setProperty('--sports-tone', live ? SPORTS_CTA_LIVE_TONE : SPORTS_CTA_REST_TONE);
+  chip.style.setProperty('--sports-tone', sportsCtaTone({ ...slide, ctaState: state }));
 
   const tag = chip.querySelector('.sports-chip__cta-tag');
   if (!tag) return;
