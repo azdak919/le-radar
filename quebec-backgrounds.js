@@ -2034,8 +2034,7 @@
       copyleft.textContent = "©";
       copyleft.setAttribute("aria-label", "Copyleft");
       short.appendChild(copyleft);
-      // Espace insécable visuelle : gap CSS + nœud texte de secours
-      short.appendChild(document.createTextNode("\u00a0"));
+      /* Espacement : gap CSS sur .bg-photo-credit__short (pas de nbsp en plus). */
     }
     if (link) {
       const a = document.createElement("a");
