@@ -223,9 +223,12 @@
   gap: 5px;
   box-sizing: border-box;
   height: 29px;
-  /* Hug le texte (pas stretch dans une colonne 1fr tablette → plaque vide). */
+  /* Hug le texte (pas stretch 1fr → plaque vide). max-width:100 % = jamais
+   * hors de la cellule grille (sinon EN long chevauche les icônes et la
+   * cascade MASTHEAD_DATE_FORMATS ne part jamais : scrollW == clientW). */
   width: max-content;
-  max-width: min(46vw, 14rem);
+  max-width: 100%;
+  min-width: 0;
   justify-self: start;
   padding: 0 8px;
   border-radius: 5px;
@@ -311,14 +314,14 @@
   border-color: rgba(255, 255, 255, 0.14);
 }
 /*
- * Tablette (météo dockée, colonne date = 1fr) : forcer hug content.
- * Sans ça justify-self:stretch + max-width 14rem = plaque large vide (768/900).
+ * Tablette (météo dockée, colonne date = 1fr) : hug content, borné à la
+ * cellule — évite plaque vide ET chevauchement des actions.
  */
 @media (max-width: 1023.98px) {
   .masthead:has(#bg-photo-layer.loaded) .masthead-date {
     justify-self: start !important;
     width: max-content;
-    max-width: min(52vw, 13rem);
+    max-width: 100%;
   }
 }
 /*
@@ -328,7 +331,7 @@
   .masthead:has(#bg-photo-layer.loaded) .masthead-date {
     transform: none;
     align-self: center;
-    max-width: min(48vw, 12rem);
+    max-width: 100%;
   }
 }
 /* Stack lisible (date puis heure) sous ~400 px — 390 lab / iPhone. */
@@ -336,7 +339,7 @@
   .masthead:has(#bg-photo-layer.loaded) .masthead-date {
     height: auto;
     min-height: 29px;
-    max-width: min(54vw, 11.75rem);
+    max-width: 100%;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
@@ -1006,9 +1009,17 @@ a { color: inherit; }
   padding: 8px var(--pad) 0;
 }
 .masthead-weather--docked {
-  display: inline-flex !important;
+  /* flex (pas inline-flex) : board 100 % de la gouttière, multi-cartes visibles. */
+  display: flex !important;
   width: 100%;
-  justify-content: flex-start;
+  max-width: 100%;
+  justify-content: stretch;
+  box-sizing: border-box;
+}
+.masthead-weather--docked .masthead-weather__board {
+  width: 100%;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 /*
  * ≤1023.98 px : météo hors .masthead (#masthead-weather-dock) — tablette 768/900

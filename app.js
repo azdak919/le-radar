@@ -1493,14 +1493,30 @@ function buildMastheadWeatherBoard() {
   board.append(fragment);
 }
 
+/** Largeur utile du ruban météo (board, sinon conteneur / dock). */
+function weatherBoardAvailWidth() {
+  const board = MASTHEAD_WEATHER?.querySelector('.masthead-weather__board');
+  let width = board?.clientWidth || 0;
+  // Docké (430/768/900) : au 1er paint le board peut encore être à 0 px
+  // → count=1 figé (une seule carte « Québec » flottante). Repli conteneur.
+  if (width < 40) {
+    width = MASTHEAD_WEATHER?.clientWidth
+      || MASTHEAD_WEATHER_DOCK?.clientWidth
+      || 0;
+  }
+  if (width < 40 && mastheadWeatherDocked) {
+    width = document.documentElement.clientWidth || 0;
+  }
+  return width;
+}
+
 function weatherBoardCount() {
-  const width = MASTHEAD_WEATHER?.querySelector('.masthead-weather__board')?.clientWidth || 0;
+  const width = weatherBoardAvailWidth();
   let count = 1;
-  // Modèle longuement établi : 1 carte ancre MTL/QC + secondaires à droite.
-  // Seuils assouplis (date 1 ligne) pour préférer marquee secondaire vs amputer tôt.
+  // Modèle établi : 1 ancre MTL/QC + secondaires à droite.
+  // Seuils assouplis pour le dock tablette (board pleine largeur ~720–800).
   if (width >= 520) count = 4;
   else if (width >= 400) count = 3;
-  // Colonne étroite : ancre + 1 secondaire (ancre exclusive MTL/QC).
   else if (width >= 240) count = 2;
   return mastheadWeatherFitCount === null ? count : Math.min(count, mastheadWeatherFitCount);
 }
@@ -1551,12 +1567,19 @@ function showMastheadWeatherBoard() {
   if (MASTHEAD_WEATHER_PHONE_MQ.matches) {
     if (!mastheadWeatherDocked) {
       setMastheadWeatherDocked(true);
-      showMastheadWeatherBoard();
+      // Après move DOM → attendre le layout pour mesurer le board (sinon count=1).
+      window.requestAnimationFrame(() => {
+        mastheadWeatherFitCount = null;
+        showMastheadWeatherBoard();
+      });
       return;
     }
   } else if (mastheadWeatherDocked) {
     setMastheadWeatherDocked(false);
-    showMastheadWeatherBoard();
+    window.requestAnimationFrame(() => {
+      mastheadWeatherFitCount = null;
+      showMastheadWeatherBoard();
+    });
     return;
   }
   if (mastheadWeatherTooNarrow) {

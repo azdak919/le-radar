@@ -67,12 +67,24 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
   expect(narrow).toBeGreaterThanOrEqual(1);
 
   // Tablette 768 / 900 : au moins 1 score à gauche de la CTA.
+  // Si data-count=2 (1 score + CTA) → largeurs égales (50/50).
+  const equalWhenTwo = async () => {
+    const n = Number(await strip.getAttribute('data-count') || 0);
+    if (n !== 2) return;
+    const widths = await strip.locator('.sports-chip').evaluateAll((chips) =>
+      chips.map((c) => Math.round(c.getBoundingClientRect().width)),
+    );
+    expect(widths).toHaveLength(2);
+    expect(Math.abs(widths[0] - widths[1])).toBeLessThanOrEqual(2);
+  };
   const tab768 = await countAt(768);
   expect(tab768).toBeGreaterThanOrEqual(2);
   await expect(strip.locator('.sports-chip').last()).toHaveClass(/sports-chip--cta/);
   await expect(strip.locator('.sports-chip:not(.sports-chip--cta)').first()).toBeVisible();
+  await equalWhenTwo();
   const tab900 = await countAt(900);
   expect(tab900).toBeGreaterThanOrEqual(2);
+  await equalWhenTwo();
 
   // Téléphone / très étroit : il ne reste que l’ancre « SPORTS ».
   const phone = await countAt(360);
@@ -210,11 +222,15 @@ test('CTA sports : sous-ligne longue défile au lieu d’une ellipse figée', as
   const anim = await subText.evaluate((el) => getComputedStyle(el).animationName);
   expect(anim, 'sous-ligne doit animer sports-chip-scroll-sub').toMatch(/sports-chip-scroll-sub/);
 
-  // Hold initial ~32 % de 5,5 s ≈ 1,8 s ; on attend 3,2 s pour être hors hold.
+  // Hold initial ~32 % de 5,5 s ≈ 1,8 s ; poll jusqu’au glissement (lab flaky si
+  // on ne prend qu’un seul échantillon à 3,2 s).
   const left0 = await subText.evaluate((el) => el.getBoundingClientRect().left);
-  await page.waitForTimeout(3200);
-  const left1 = await subText.evaluate((el) => el.getBoundingClientRect().left);
-  expect(left1, 'le texte doit avoir glissé vers la gauche (L→R de lecture)').toBeLessThan(left0 - 1);
+  await expect
+    .poll(async () => {
+      const left = await subText.evaluate((el) => el.getBoundingClientRect().left);
+      return left0 - left;
+    }, { timeout: 7000 })
+    .toBeGreaterThan(1);
 
   // Pas d’ellipse figée sur le texte qui défile.
   const textOverflow = await subText.evaluate((el) => getComputedStyle(el).textOverflow);
