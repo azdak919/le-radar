@@ -1044,8 +1044,8 @@ assert(
     'style : aucun text-overflow:ellipsis sur line-inner / sub-text / cta-text / cta-sub-text',
   );
 }
-// Puces scores 2 lignes : noms en clair + date ; overflow → marquee L→R,
-// jamais d’ellipsis « … ». Match chips : marquee 8 s (plus lent que CTA 5,5 s).
+// Puces scores 2 lignes : noms + date·compétition ; focus-group A :
+// jamais marquee scores (fit −1 puce) ; CTA garde marquee ; 0 ellipsis.
 assert(
   appJs.includes('sports-chip--match')
     && appJs.includes('sports-chip__body')
@@ -1071,7 +1071,8 @@ assert(
     && styleCss.includes('.sports-chip--cta .sports-chip__cta-text .sports-chip__vs')
     && styleCss.includes('.sports-chip__cta-glyph')
     && appJs.includes('sports-chip__cta-glyph')
-    && /SPORTS_MATCH_SCROLL_ONE_WAY_MS\s*=\s*8000/.test(appJs)
+    && appJs.includes('function sportsMatchChipTextOverflows')
+    && appJs.includes('le-radar-sports-weather-fit')
     && indexHtml.includes('institution-acronyms-data.js')
     && /SPORTS_RECENT_RESULT_MS\s*=\s*7 \* 24 \* 3600 \* 1000/.test(appJs)
     && appJs.includes('recentResults')
@@ -1079,12 +1080,12 @@ assert(
     && styleCss.includes('sports-chip--match')
     && styleCss.includes('sports-chip__body')
     && styleCss.includes('.sports-chip--match .sports-chip__sub')
-    && /sports-chip--match[^{]*\{[^}]*--sports-scroll-duration:\s*8s/.test(cssFlat)
-    && /:not\(\.sports-chip--cta\)\.is-overflowing \.sports-chip__line-inner/.test(cssFlat)
-    && /:not\(\.sports-chip--cta\)\.is-sub-overflowing \.sports-chip__sub-text/.test(cssFlat)
+    // Plus de marquee CSS sur scores (seul CTA anime is-overflowing).
+    && !/:not\(\.sports-chip--cta\)\.is-overflowing \.sports-chip__line-inner/.test(cssFlat)
+    && !/:not\(\.sports-chip--cta\)\.is-sub-overflowing \.sports-chip__sub-text/.test(cssFlat)
     && styleCss.includes('@keyframes sports-chip-scroll')
     && styleCss.includes('@keyframes sports-chip-scroll-sub'),
-  'puces scores : 2 lignes ; date·compétition (parité CTA) ; pool <7 j ; marquee 8s ; 0 ellipsis',
+  'puces scores : 2 lignes ; anti-marquee scores (FG A) ; CTA marquee ; 0 ellipsis',
 );
 // Jambages (j, g, y, p, q) : line-height ≥ 1.35 sous overflow:hidden
 // (régression « Collège » / « jeu. » / « collégial » — même leçon que Original).
@@ -1123,13 +1124,16 @@ assert(
     && /MARQUEE_ROUND_TRIPS\s*=\s*2/.test(appJs),
   'CSS/JS : marquees sports + dial = 1 cycle (2 alternate), delay 1.6s, pas infinite',
 );
+// Focus-group le-radar-sports-weather-fit A : météo ⊥ sports ; fit largeur + overflow.
 assert(
-  appJs.includes('sportsWeatherCardCount')
-    && appJs.includes('queueSportsWeatherParitySync')
-    && appJs.includes('weatherN + 1')
-    && appJs.includes('underFilled')
-    && appJs.includes('scheduleMastheadWeatherLayout'),
-  'app.js : scores gauche ≤ météo ; resync après date ; CTA hors compte',
+  !appJs.includes('function sportsWeatherCardCount')
+    && !appJs.includes('function queueSportsWeatherParitySync')
+    && appJs.includes('function sportsMatchChipTextOverflows')
+    && appJs.includes('function fitSportsStripAfterPaint')
+    && appJs.includes('function sportsStripCramped')
+    && appJs.includes('scheduleMastheadWeatherLayout')
+    && appJs.includes('le-radar-sports-weather-fit'),
+  'app.js : FG A — sports indépendants météo ; fit overflow −1 puce ; date re-fit météo',
 );
 // Lab local : météo ne doit pas rester absente (CORS Worker / offline).
 assert(

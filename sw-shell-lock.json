@@ -1,8 +1,8 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v622",
+    "cache": "radar-shell-v624",
     "assets": {
-      "app.js": "04dbbb083df381ae",
+      "app.js": "6ad005ad022b71b9",
       "bg-rotation-lib.js": "4ff24249767435c6",
       "cast.js": "9ac30d507e71388d",
       "embed.css": "92fcb8e8a0cc8dc1",
@@ -20,8 +20,8 @@
       "scripts/season-lib.js": "f3330cfcec5029c3",
       "scripts/session-freshness-lib.js": "8864fadc8cd34ed1",
       "scripts/sports-freshness-lib.js": "fcb409c0970bf1ff",
-      "style-masthead.css": "5ba3d7d39f9beaa3",
-      "style.css": "b2de5ad6650ecf89",
+      "style-masthead.css": "617ee0de5493c1f4",
+      "style.css": "b2073aaf083b67c5",
       "translate-menu.css": "a5a4eb37479afb60",
       "translate-menu.js": "07802220efb342c2",
       "translate.js": "f8da43a4f07435ad"
@@ -70,10 +70,10 @@
     }
   },
   "sports/sw.js": {
-    "cache": "sports-shell-v45",
+    "cache": "sports-shell-v47",
     "assets": {
       "app-sw-register.js": "386e54fcec34bbb3",
-      "app.js": "04dbbb083df381ae",
+      "app.js": "6ad005ad022b71b9",
       "cast.js": "9ac30d507e71388d",
       "engage-prompt.js": "1d7c46b74e042774",
       "institution-acronyms-data.js": "0d9e4eaa631af54c",
@@ -83,8 +83,8 @@
       "seo-page-theme.js": "06a19179fa91c396",
       "seo-pages.css": "9f6f632736c9aab0",
       "sports-board.js": "0222092a8ee68654",
-      "style-masthead.css": "5ba3d7d39f9beaa3",
-      "style.css": "b2de5ad6650ecf89"
+      "style-masthead.css": "617ee0de5493c1f4",
+      "style.css": "b2073aaf083b67c5"
     }
   }
 }
