@@ -29,7 +29,7 @@ html[data-wide-preview="e"] {
   }
 }
 
-/* ── Radio : B–D encore centrés 1180 ; E élargi + dual antenne ── */
+/* ── Radio : B–D 1180 ; E élargi EN LARGEUR seulement (épaisseur = prod) ── */
 @media (min-width: 1280px) {
   html[data-wide-preview="b"] .tuner-inner,
   html[data-wide-preview="c"] .tuner-inner,
@@ -38,48 +38,42 @@ html[data-wide-preview="e"] {
   }
 
   /*
-   * E wide : shell large.
-   * Col 1 = dial info (institution + poste + slogan).
-   * Col 2 = paire « À l'antenne » | « À venir ».
+   * E : plus de largeur (côtés), PAS plus d’épaisseur.
+   * Padding / min-height = mêmes valeurs bureau prod (11 px / 42 px).
    */
   html[data-wide-preview="e"] .tuner-inner {
     max-width: var(--maxw) !important;
     width: 100%;
-    grid-template-columns: minmax(320px, 1.2fr) minmax(480px, 1.15fr) !important;
-    column-gap: 8px !important;
+    grid-template-columns: minmax(0, 1.25fr) minmax(420px, 1.1fr) !important;
+    column-gap: 12px !important;
     align-items: center !important;
+    padding-top: 11px !important;
+    padding-bottom: 11px !important;
   }
 
   html[data-wide-preview="e"] .tuner-controls {
     min-width: 0;
   }
 
-  /* Carré d'info dial — plus haut pour 3 lignes */
+  /* Carré dial : hauteur prod, 2 lignes (institution / poste · slogan) */
   html[data-wide-preview="e"] .tuner-now {
-    min-height: 56px;
-    padding: 7px 28px 7px 12px;
-    gap: 2px;
+    min-height: 42px !important;
+    max-height: 42px;
+    padding: 3px 24px 3px 11px !important;
+    gap: 0 !important;
     justify-content: center;
+    box-sizing: border-box;
   }
 
+  /* 3e ligne interdite — l’institution va dans .tuner-now-name (JS) */
   html[data-wide-preview="e"] .tuner-now-inst {
-    display: block;
-    font-family: var(--sans);
-    font-size: 10.5px;
-    font-weight: 650;
-    letter-spacing: 0.04em;
-    line-height: 1.25;
-    color: rgba(255, 255, 255, 0.72);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
+    display: none !important;
   }
 
   html[data-wide-preview="e"] .tuner-now-name {
-    font-size: 13.5px;
+    font-size: 12.5px;
     font-weight: 700;
-    letter-spacing: 0.01em;
+    line-height: 1.2;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -88,46 +82,44 @@ html[data-wide-preview="e"] {
 
   html[data-wide-preview="e"] .tuner-now-sub,
   html[data-wide-preview="e"] .tuner-now-sub .tuner-now-sub-text {
-    font-size: 11.5px;
+    font-size: 11px;
     font-weight: 500;
-    line-height: 1.3;
-    white-space: normal !important;
-    overflow: visible !important;
-    text-overflow: unset !important;
+    line-height: 1.2;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
     max-width: 100% !important;
     color: rgba(255, 255, 255, 0.78);
   }
 
-  html[data-wide-preview="e"] .tuner-now-sub.is-marquee,
-  html[data-wide-preview="e"] .tuner-now-name.is-marquee {
-    /* pas de marquee : slogan / noms complets */
-  }
-
-  /* Masquer le panneau single legacy quand la paire wide est active */
   html[data-wide-preview="e"] .tuner-nowair.tuner-nowair--legacy-slot {
     display: none !important;
   }
 
+  /* Dual antenne : même hauteur qu’un seul panneau prod (row, pas stack) */
   html[data-wide-preview="e"] #tuner-nowair-wide {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 12px 16px;
+    gap: 0 18px;
     grid-column: 2;
     width: 100%;
     min-width: 0;
+    max-height: 42px;
     align-self: center;
-    padding-left: 12px;
+    align-items: center;
+    padding-left: 8px;
     box-sizing: border-box;
   }
 
   html[data-wide-preview="e"] #tuner-nowair-wide .tuner-nowair {
     display: flex !important;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
     width: 100%;
     min-width: 0;
     max-width: none;
+    max-height: 42px;
     margin: 0;
     padding: 0;
     border: 0;
@@ -135,11 +127,24 @@ html[data-wide-preview="e"] {
   }
 
   html[data-wide-preview="e"] #tuner-nowair-wide .tuner-nowair-label {
-    font-size: 10px;
-    letter-spacing: 0.1em;
+    flex: 0 0 auto;
+    font-size: 9px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     font-weight: 800;
-    opacity: 0.85;
+    line-height: 1.2;
+    padding-top: 2px;
+    opacity: 0.9;
+    white-space: nowrap;
+  }
+
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-nowair-body {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    justify-content: center;
   }
 
   html[data-wide-preview="e"] #tuner-nowair-wide .tuner-nowair--live-slot .tuner-nowair-label,
@@ -153,20 +158,22 @@ html[data-wide-preview="e"] {
   }
 
   html[data-wide-preview="e"] #tuner-nowair-wide .tuner-nowair-title {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
-    line-height: 1.3;
-    white-space: normal;
-    overflow: visible;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     max-width: 100%;
     margin: 0;
   }
 
   html[data-wide-preview="e"] #tuner-nowair-wide .tuner-nowair-sub {
-    font-size: 11.5px;
-    line-height: 1.3;
-    white-space: normal;
-    overflow: visible;
+    font-size: 10.5px;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     max-width: 100%;
     margin: 0;
     opacity: 0.8;
@@ -179,17 +186,13 @@ html[data-wide-preview="e"] {
 
 @media (min-width: 1680px) {
   html[data-wide-preview="e"] .tuner-inner {
-    grid-template-columns: minmax(360px, 1.15fr) minmax(560px, 1.2fr) !important;
+    grid-template-columns: minmax(0, 1.2fr) minmax(520px, 1.15fr) !important;
   }
+  /* Toujours pas d’épaississement */
   html[data-wide-preview="e"] .tuner-now {
-    min-height: 60px;
-    padding: 8px 30px 8px 14px;
-  }
-  html[data-wide-preview="e"] .tuner-now-inst {
-    font-size: 11px;
-  }
-  html[data-wide-preview="e"] .tuner-now-name {
-    font-size: 14px;
+    min-height: 42px !important;
+    max-height: 42px;
+    padding: 3px 24px 3px 11px !important;
   }
 }
 

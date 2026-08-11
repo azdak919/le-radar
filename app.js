@@ -1612,38 +1612,32 @@ function ensureWideDialInstEl() {
 }
 
 /**
- * Dial wide : institution complète (haut) + nom de poste + slogan complet.
- * Plus de « Syntoniser un poste » tant qu’un poste (écoute ou aperçu) existe.
+ * Dial wide : **2 lignes seulement** (même épaisseur barre que prod).
+ * L1 = institution au complet
+ * L2 = poste + slogan complet (espace horizontal, pas de 3e ligne)
+ * Plus de « Syntoniser un poste » tant qu’un poste existe.
  * @returns {boolean} true si le rendu wide a été appliqué
  */
 function paintWideDial(radio) {
   const instEl = ensureWideDialInstEl();
-  if (!isWideTunerLayout()) {
-    if (instEl) {
-      instEl.hidden = true;
-      instEl.textContent = '';
-    }
-    return false;
+  // Jamais de 3e ligne dans le carré (épaissit la barre).
+  if (instEl) {
+    instEl.hidden = true;
+    instEl.textContent = '';
   }
+  if (!isWideTunerLayout()) return false;
   if (!radio) {
-    if (instEl) {
-      instEl.hidden = true;
-      instEl.textContent = '';
-    }
-    return false;
+    setTunerNameText('Radios étudiantes');
+    setTunerSubText('Choisissez un poste pour écouter');
+    return true;
   }
   const inst = tunerFullInstitutionLabel(radio);
-  if (instEl) {
-    instEl.hidden = !inst;
-    instEl.textContent = inst;
-    if (inst) instEl.title = inst;
-  }
   const station = stationDisplayName(radio) || String(radio.name || '').trim() || '';
-  setTunerNameText(station);
-  const slogan = radioSlogan(radio)
-    || String(radio.frequency || '').trim()
-    || '';
-  setTunerSubText(slogan);
+  const slogan = radioSlogan(radio) || String(radio.frequency || '').trim() || '';
+  // L1 institution ; L2 « CHOQ.ca · slogan… » — largeur du dial élargi, hauteur fixe.
+  setTunerNameText(inst || station || 'Radios étudiantes');
+  const line2 = [station, slogan].filter(Boolean).join(' · ');
+  setTunerSubText(line2 || slogan || station);
   return true;
 }
 
