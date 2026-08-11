@@ -8873,6 +8873,10 @@ function sourceInfo(src) {
 }
 
 function filtersColumnCount() {
+  const wideCols = (typeof window.__radarWidePreview?.filtersColumnCount === 'function')
+    ? window.__radarWidePreview.filtersColumnCount()
+    : null;
+  if (typeof wideCols === 'number' && wideCols > 0) return wideCols;
   if (!NEWS_FILTERS) {
     return FILTERS_MOBILE.matches ? FILTERS_ROW_CAPACITY : FILTERS_DESKTOP_DEFAULT_COLS;
   }
@@ -8886,8 +8890,13 @@ function filtersColumnCount() {
   return FILTERS_DESKTOP_MAX_COLS;
 }
 
-/** Aligné sur style.css --filters-collapsed-rows (1 rangée partout). */
+/** Aligné sur style.css --filters-collapsed-rows (1 rangée partout).
+ *  Lab grand écran : __radarWidePreview peut forcer 2 rangées (C/D) ou rail (E). */
 function filtersCollapsedRows() {
+  const wideRows = (typeof window.__radarWidePreview?.filtersCollapsedRows === 'function')
+    ? window.__radarWidePreview.filtersCollapsedRows()
+    : null;
+  if (typeof wideRows === 'number' && wideRows > 0) return wideRows;
   return FILTERS_COMPACT_MQ.matches
     ? FILTERS_COLLAPSED_ROWS_COMPACT
     : FILTERS_COLLAPSED_ROWS_DESKTOP;
