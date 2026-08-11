@@ -56,12 +56,9 @@
     3840: 'uhd',
   };
 
+  /* Verdict mainteneur : E seulement (A–D retirés de la barre lab). */
   const WIDE_OPTIONS = {
-    off: { id: 'off', label: 'Off', hint: 'Prod actuelle (~1180, magazine 2 pistes)' },
-    a: { id: 'a', label: 'A', hint: 'Status quo — aucune règle wide (réf.)' },
-    b: { id: 'b', label: 'B', hint: 'Shell ~1480 — magazine inchangé' },
-    c: { id: 'c', label: 'C', hint: 'Shell ~1560 — sources 2 rangées, suite 3 col' },
-    d: { id: 'd', label: 'D', hint: 'Shell ~1680 — une 2col, en bref 2col, suite 4col' },
+    off: { id: 'off', label: 'Prod', hint: 'Prod actuelle (~1180) — témoin' },
     e: { id: 'e', label: 'E', hint: 'Rail sources + en bref 2–3 col · super-wide ≥1680' },
   };
 
@@ -115,7 +112,11 @@
       const raw = (new URL(location.href).searchParams.get(WIDE_PARAM) || 'off')
         .toLowerCase()
         .trim();
-      if (!raw || raw === '0' || raw === 'false') return 'off';
+      if (!raw || raw === '0' || raw === 'false' || raw === 'off' || raw === 'prod') return 'off';
+      // A–D historiques → basculer sur E (décision mainteneur)
+      if (raw === 'e' || raw === 'a' || raw === 'b' || raw === 'c' || raw === 'd' || raw === '1' || raw === 'true') {
+        return 'e';
+      }
       if (WIDE_OPTIONS[raw]) return raw;
       return 'off';
     } catch {
