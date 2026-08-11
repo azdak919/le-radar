@@ -778,6 +778,8 @@ a { color: inherit; }
 }
 .masthead-weather__name-text {
   display: inline-block;
+  /* Au repos / sans marquee : borne au viewport (clip). En overflow JS lève
+   * max-width pour mesurer puis anime (sinon scrollWidth == clientWidth). */
   max-width: 100%;
   white-space: nowrap;
   color: inherit;
@@ -788,9 +790,20 @@ a { color: inherit; }
   color: inherit;
 }
 .masthead-weather__name-compact { display: none; }
-/* Lecture 1.6s → 1 aller-retour (2 × alternate) → repos ; dwell JS ≥ cycle. */
+/*
+ * Marquee météo : max-width none obligatoire (sinon le texte ne dépasse pas
+ * et l’animation est invisible — bug « SAINT-IGNACE-D » figé).
+ * Pause lecture ~0.8 s (plus court que sports 1.6 s : un seul toponyme).
+ * 1 aller-retour (2 × alternate), pas infinite.
+ */
 .masthead-weather__city.is-overflowing .masthead-weather__name-text {
-  animation: weather-name-scroll 6.2s ease-in-out 1.6s 2 alternate both;
+  max-width: none;
+  animation: weather-name-scroll 5.5s ease-in-out 0.8s 2 alternate both;
+}
+@keyframes weather-name-scroll {
+  /* Hold court au début/fin pour lire, sans 28 % trop long */
+  0%, 18% { transform: translateX(0); }
+  82%, 100% { transform: translateX(calc(var(--weather-scroll, 0) * -1)); }
 }
 .masthead-weather__temp {
   flex: 0 0 auto;
@@ -900,10 +913,6 @@ a { color: inherit; }
 .masthead-weather--docked .masthead-weather__icon {
   filter: brightness(1.12) saturate(1.05);
   opacity: 1;
-}
-@keyframes weather-name-scroll {
-  0%, 28% { transform: translateX(0); }
-  72%, 100% { transform: translateX(calc(var(--weather-scroll, 0) * -1)); }
 }
 @keyframes weather-tile-arrive {
   from { opacity: 0; transform: translateY(75%); }

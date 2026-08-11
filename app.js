@@ -1617,8 +1617,10 @@ function showMastheadWeatherBoard() {
   MASTHEAD_WEATHER.classList.add('is-too-narrow');
 }
 
-/** Synchro style-masthead.css `weather-name-scroll` (6.2s × alternate × 2). */
-const WEATHER_SCROLL_ONE_WAY_MS = 6200;
+/** Synchro style-masthead.css `weather-name-scroll` (5.5s × alternate × 2). */
+const WEATHER_SCROLL_ONE_WAY_MS = 5500;
+/** Pause lecture avant le 1er pixel (CSS animation-delay 0.8s). */
+const WEATHER_SCROLL_READ_DELAY_MS = 800;
 /** Rotation météo sans défilement — assez pour lire ville + °. */
 const WEATHER_ROTATE_BASE_MS = 7000;
 /**
@@ -1633,7 +1635,12 @@ function refreshWeatherNameScroll() {
     const viewport = el.querySelector('.masthead-weather__name');
     const name = el.querySelector('.masthead-weather__name-text');
     if (!viewport || !name) return;
+    // Lever max-width le temps de la mesure (sinon max-width:100% → overflow 0
+    // et le marquee ne part jamais — « SAINT-IGNACE-D » figé).
+    const prevMax = name.style.maxWidth;
+    name.style.maxWidth = 'none';
     const overflow = Math.max(0, name.scrollWidth - viewport.clientWidth);
+    name.style.maxWidth = prevMax;
     const isPrimary = MASTHEAD_WEATHER_PRIMARY_IDS.has(el.dataset.weatherCity);
     // Montréal et Québec ne défilent jamais : la grille réduit plutôt le nombre
     // de cartes quand l'espace devient insuffisant.
@@ -1649,12 +1656,10 @@ function refreshWeatherNameScroll() {
       return;
     }
     el.style.setProperty('--weather-scroll', next);
-    // Relancer **un** cycle seulement si nouveau overflow / nouvelle carte
-    // (sinon on ne touche pas la classe → pas de 2ᵉ aller-retour parasite).
+    // Relancer le cycle si nouveau overflow, nouvelle carte, ou 1ʳᵉ pose.
     if (!had || prev !== next) {
       el.classList.remove('is-overflowing');
-      // Force reflow pour redémarrer l’animation CSS (1 cycle, pas infinite).
-      void el.offsetWidth;
+      void name.offsetWidth;
       el.classList.add('is-overflowing');
     }
   });
@@ -1669,7 +1674,7 @@ function weatherBoardDwellMs() {
     '.masthead-weather__city.is-active.is-overflowing',
   );
   if (!anyOverflow) return WEATHER_ROTATE_BASE_MS;
-  return MARQUEE_READ_DELAY_MS
+  return WEATHER_SCROLL_READ_DELAY_MS
     + WEATHER_SCROLL_ONE_WAY_MS * MARQUEE_ROUND_TRIPS
     + WEATHER_SCROLL_POST_PAUSE_MS;
 }
@@ -1715,6 +1720,15 @@ function rotateOneMastheadWeatherCard() {
   showMastheadWeatherBoard();
   const arriving = MASTHEAD_WEATHER?.querySelector(`[data-weather-city="${replacement.id}"]`);
   arriving?.classList.add('is-arriving');
+  // Forcer un nouveau cycle marquee sur la carte qui arrive (sinon is-overflowing
+  // déjà posé + même overflow → pas de re-start, texte figé à mi-coupe).
+  if (arriving) {
+    arriving.classList.remove('is-overflowing');
+    window.requestAnimationFrame(() => {
+      refreshWeatherNameScroll();
+      arriving.classList.remove('is-arriving');
+    });
+  }
   window.setTimeout(() => arriving?.classList.remove('is-arriving'), 500);
 }
 
