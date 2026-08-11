@@ -35,7 +35,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/fe/Lac_des_Deux_Montagnes_07.JPG",
-    credit: "Jeangagnon",
+    credit: "Jean Gagnon",
     link: "https://commons.wikimedia.org/wiki/File:Lac_des_Deux_Montagnes_07.JPG",
     license: "CC BY-SA 3.0",
     title: "Lac des Deux-Montagnes",

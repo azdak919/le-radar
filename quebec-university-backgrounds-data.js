@@ -49,7 +49,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/0/05/Pavillon_Judith-Jasmin_UQAM_17.JPG",
-    credit: "Jeangagnon",
+    credit: "Jean Gagnon",
     link: "https://commons.wikimedia.org/wiki/File:Pavillon%20Judith-Jasmin%20UQAM%2017.JPG",
     license: "CC BY-SA 4.0",
     title: "Pavillon Judith-Jasmin UQAM 17",
@@ -59,7 +59,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/c/cf/Pavillon_Judith-Jasmin_UQAM_23.JPG",
-    credit: "Jeangagnon",
+    credit: "Jean Gagnon",
     link: "https://commons.wikimedia.org/wiki/File:Pavillon%20Judith-Jasmin%20UQAM%2023.JPG",
     license: "CC BY-SA 4.0",
     title: "Pavillon Judith-Jasmin UQAM 23",
@@ -92,7 +92,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg",
-    credit: "Jeangagnon",
+    credit: "Jean Gagnon",
     link: "https://commons.wikimedia.org/wiki/File:Henry_F._Hall_Building_10.jpg",
     license: "CC BY-SA 4.0",
     title: "Henry F. Hall Building 10, Concordia University",
@@ -104,7 +104,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/f3/Avenue_McGill_College_07.JPG",
-    credit: "Jeangagnon",
+    credit: "Jean Gagnon",
     link: "https://commons.wikimedia.org/wiki/File:Avenue%20McGill%20College%2007.JPG",
     license: "CC BY-SA 3.0",
     title: "Avenue McGill College 07",
@@ -147,7 +147,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/8/82/Pavillon_Judith-Jasmin_UQAM_08.JPG",
-    credit: "Jeangagnon",
+    credit: "Jean Gagnon",
     link: "https://commons.wikimedia.org/wiki/File:Pavillon%20Judith-Jasmin%20UQAM%2008.JPG",
     license: "CC BY-SA 3.0",
     title: "Pavillon Judith-Jasmin UQAM 08",
@@ -158,7 +158,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/f5/Pavillon_Judith-Jasmin_UQAM_15.JPG",
-    credit: "Jeangagnon",
+    credit: "Jean Gagnon",
     link: "https://commons.wikimedia.org/wiki/File:Pavillon%20Judith-Jasmin%20UQAM%2015.JPG",
     license: "CC BY-SA 3.0",
     title: "Pavillon Judith-Jasmin UQAM 15",
@@ -169,7 +169,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/8/80/Pavillon_Judith-Jasmin_UQAM_24.JPG",
-    credit: "Jeangagnon",
+    credit: "Jean Gagnon",
     link: "https://commons.wikimedia.org/wiki/File:Pavillon%20Judith-Jasmin%20UQAM%2024.JPG",
     license: "CC BY-SA 4.0",
     title: "Pavillon Judith-Jasmin UQAM 24",
@@ -181,7 +181,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/0/00/Pavillon_Judith-Jasmin_UQAM_37.jpg",
-    credit: "Jeangagnon",
+    credit: "Jean Gagnon",
     link: "https://commons.wikimedia.org/wiki/File:Pavillon%20Judith-Jasmin%20UQAM%2037.jpg",
     license: "CC BY-SA 4.0",
     title: "Pavillon Judith-Jasmin UQAM 37",
@@ -234,7 +234,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG",
-    credit: "Jeangagnon",
+    credit: "Jean Gagnon",
     link: "https://commons.wikimedia.org/wiki/File:McGill_University_downtown_campus_31.JPG",
     license: "CC BY-SA 3.0",
     title: "McGill University downtown campus 31",
@@ -245,7 +245,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b9/View_from_McGill_University_downtown_campus_01.JPG",
-    credit: "Jeangagnon",
+    credit: "Jean Gagnon",
     link: "https://commons.wikimedia.org/wiki/File:View_from_McGill_University_downtown_campus_01.JPG",
     license: "CC BY-SA 3.0",
     title: "View from McGill University downtown campus 01",
@@ -255,7 +255,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg",
-    credit: "XeresNelro",
+    credit: "Xeres Nelro",
     link: "https://commons.wikimedia.org/wiki/File:4_McGill_University,_Montreal,Quebec_2009.jpg",
     license: "CC BY-SA 4.0",
     title: "McGill University, Montreal, Quebec 2009",
@@ -266,7 +266,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG",
-    credit: "Jeangagnon",
+    credit: "Jean Gagnon",
     link: "https://commons.wikimedia.org/wiki/File:Henry_F._Hall_Building_07.JPG",
     license: "CC BY-SA 3.0",
     title: "Henry F. Hall Building, Concordia University",
@@ -277,7 +277,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG",
-    credit: "Jeangagnon",
+    credit: "Jean Gagnon",
     link: "https://commons.wikimedia.org/wiki/File:Henry_F._Hall_Building_01.JPG",
     license: "CC BY-SA 3.0",
     title: "Henry F. Hall Building 01, Concordia University",
@@ -300,7 +300,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/a/af/Campus_de_Longueuil_-_Universite_de_Sherbrooke_09.jpg",
-    credit: "Jeangagnon",
+    credit: "Jean Gagnon",
     link: "https://commons.wikimedia.org/wiki/File:Campus_de_Longueuil_-_Universite_de_Sherbrooke_09.jpg",
     license: "CC BY-SA 3.0",
     title: "Campus de Longueuil — Université de Sherbrooke",

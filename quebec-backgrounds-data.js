@@ -66,7 +66,7 @@ const QUEBEC_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/1c/Deer_in_Gatineau.JPG",
-    credit: "You may select the license of your choice.",
+    credit: "Wikimedia Commons",
     link: "https://commons.wikimedia.org/wiki/File:Deer%20in%20Gatineau.JPG",
     license: "CC BY-SA 3.0",
     title: "Deer in Gatineau",
@@ -76,7 +76,7 @@ const QUEBEC_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/d/d7/Cap_Bon-Ami%2C_Forillon_National_Park_%287612987688%29.jpg",
-    credit: "Andrea Schaffer from Sydney, Australia",
+    credit: "Andrea Schaffer",
     link: "https://commons.wikimedia.org/wiki/File:Cap%20Bon-Ami%2C%20Forillon%20National%20Park%20(7612987688).jpg",
     license: "CC BY 2.0",
     title: "Cap Bon-Ami, Forillon National Park (7612987688)",
@@ -86,7 +86,7 @@ const QUEBEC_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/2e/Cap_Bon-Ami%2C_Forillon_National_Park_%287612992284%29.jpg",
-    credit: "Andrea Schaffer from Sydney, Australia",
+    credit: "Andrea Schaffer",
     link: "https://commons.wikimedia.org/wiki/File:Cap%20Bon-Ami%2C%20Forillon%20National%20Park%20(7612992284).jpg",
     license: "CC BY 2.0",
     title: "Cap Bon-Ami, Forillon National Park (7612992284)",
@@ -96,7 +96,7 @@ const QUEBEC_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Cap_Bon-Ami%2C_Forillon_National_Park_%287613000550%29.jpg",
-    credit: "Andrea Schaffer from Sydney, Australia",
+    credit: "Andrea Schaffer",
     link: "https://commons.wikimedia.org/wiki/File:Cap%20Bon-Ami%2C%20Forillon%20National%20Park%20(7613000550).jpg",
     license: "CC BY 2.0",
     title: "Cap Bon-Ami, Forillon National Park (7613000550)",
@@ -106,7 +106,7 @@ const QUEBEC_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/8/80/Cap_Bon-Ami%2C_Forillon_National_Park_%287613006968%29.jpg",
-    credit: "Andrea Schaffer from Sydney, Australia",
+    credit: "Andrea Schaffer",
     link: "https://commons.wikimedia.org/wiki/File:Cap%20Bon-Ami%2C%20Forillon%20National%20Park%20(7613006968).jpg",
     license: "CC BY 2.0",
     title: "Cap Bon-Ami, Forillon National Park (7613006968)",
@@ -116,7 +116,7 @@ const QUEBEC_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/e/e1/Cap_Bon-Ami%2C_Forillon_National_Park_%287613010484%29.jpg",
-    credit: "Andrea Schaffer from Sydney, Australia",
+    credit: "Andrea Schaffer",
     link: "https://commons.wikimedia.org/wiki/File:Cap%20Bon-Ami%2C%20Forillon%20National%20Park%20(7613010484).jpg",
     license: "CC BY 2.0",
     title: "Cap Bon-Ami, Forillon National Park (7613010484)",
@@ -136,7 +136,7 @@ const QUEBEC_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/d/dd/Une_plage_du_Bic.jpg",
-    credit: "Danielhbordeleau",
+    credit: "Daniel H. Bordeleau",
     link: "https://commons.wikimedia.org/wiki/File:Une%20plage%20du%20Bic.jpg",
     license: "CC BY-SA 4.0",
     title: "Une plage du Bic",
@@ -296,7 +296,7 @@ const QUEBEC_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/d/dd/Montreal_NASA_cropped.jpg",
-    credit: "MontrealNasa.jpg : NASA derivative work: MTLskyline ( talk )",
+    credit: "MTLskyline",
     link: "https://commons.wikimedia.org/wiki/File:Montreal%20NASA%20cropped.jpg",
     license: "Public domain",
     title: "Montreal NASA cropped",
@@ -434,7 +434,7 @@ const QUEBEC_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/6/6f/Perce_20020916_11.jpg",
-    credit: "Nichole Ouellette/ouellette001.com",
+    credit: "Nichole Ouellette",
     link: "https://commons.wikimedia.org/wiki/File:Perce%2020020916%2011.jpg",
     license: "CC BY 4.0",
     title: "Perce 20020916 11",
@@ -562,7 +562,7 @@ const QUEBEC_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/5/5b/Pingualuit_aerial_2007.jpg",
-    credit: "NASA. Courtesy of Denis Sarrazin.",
+    credit: "NASA. Courtesy of Denis Sarrazin",
     link: "https://commons.wikimedia.org/wiki/File:Pingualuit%20aerial%202007.jpg",
     license: "Public domain",
     title: "Pingualuit aerial 2007",
@@ -662,7 +662,7 @@ const QUEBEC_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Les_collines_escarp%C3%A9es_du_parc_du_Saguenay.jpg",
-    credit: "Danielhbordeleau",
+    credit: "Daniel H. Bordeleau",
     link: "https://commons.wikimedia.org/wiki/File:Les_collines_escarp%C3%A9es_du_parc_du_Saguenay.jpg",
     license: "CC BY-SA 4.0",
     title: "Collines escarpées du parc du Saguenay",
@@ -879,7 +879,7 @@ const QUEBEC_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Before-sunrise-perse-rock.jpg",
-    credit: "Sam311 ( talk ) ( Uploads )",
+    credit: "Sam311",
     link: "https://commons.wikimedia.org/wiki/File:Before-sunrise-perse-rock.jpg",
     license: "CC BY 3.0",
     title: "Rocher Percé, Gaspésie",
@@ -919,7 +919,7 @@ const QUEBEC_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Pingualuit_aerial_2007_%28cropped%29.jpg",
-    credit: "NASA. Courtesy of Denis Sarrazin.",
+    credit: "NASA. Courtesy of Denis Sarrazin",
     link: "https://commons.wikimedia.org/wiki/File:Pingualuit_aerial_2007_(cropped).jpg",
     license: "Public domain",
     title: "Cratère Pingualuit, Nunavik",
@@ -959,7 +959,7 @@ const QUEBEC_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Lac_des_Deux-Montagnes_%28Pierrefonds%29_%288514398500%29.jpg",
-    credit: "Parcours riverain - Ville de Montréal from Canada",
+    credit: "Parcours riverain - Ville de Montréal",
     link: "https://commons.wikimedia.org/wiki/File:Lac_des_Deux-Montagnes_(Pierrefonds)_(8514398500).jpg",
     license: "CC BY 2.0",
     title: "Lac des Deux-Montagnes, Pierrefonds",
@@ -978,7 +978,7 @@ const QUEBEC_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/fe/Lac_des_Deux_Montagnes_07.JPG",
-    credit: "Jeangagnon",
+    credit: "Jean Gagnon",
     link: "https://commons.wikimedia.org/wiki/File:Lac_des_Deux_Montagnes_07.JPG",
     license: "CC BY-SA 3.0",
     title: "Lac des Deux-Montagnes",
@@ -988,7 +988,7 @@ const QUEBEC_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/3/3d/Montreal_panorama.jpg",
-    credit: "Jazmin Million from North Amarica",
+    credit: "Jazmin Million",
     link: "https://commons.wikimedia.org/wiki/File:Montreal_panorama.jpg",
     license: "CC BY-SA 2.0",
     title: "Panorama de Montréal",
@@ -998,7 +998,7 @@ const QUEBEC_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/15/Montreal_skyline_2011.jpg",
-    credit: "abdallahh from Montréal, Canada",
+    credit: "abdallahh",
     link: "https://commons.wikimedia.org/wiki/File:Montreal_skyline_2011.jpg",
     license: "CC BY 2.0",
     title: "Skyline de Montréal, 2011",
