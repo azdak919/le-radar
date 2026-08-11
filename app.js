@@ -1641,16 +1641,27 @@ function paintWideDial(radio) {
   return true;
 }
 
-/** Paire « À l'antenne » | « À venir » (wide E uniquement). */
+/**
+ * Paire « À l'antenne » | « À venir » (wide E).
+ * Classes `tuner-wide-slot` (pas `.tuner-nowair`) : le CSS critique index.html
+ * force display/grid-column sur tout `.tuner-nowair` et doublait le panneau.
+ */
 function ensureWideNowAirPair() {
   const host = TUNER_NOWAIR?.parentElement;
   if (!host || !TUNER_NOWAIR) return null;
+
+  // Nettoyer d’anciens doublons (bug précédent)
+  const extras = host.querySelectorAll('#tuner-nowair-wide');
+  if (extras.length > 1) {
+    extras.forEach((el, i) => { if (i > 0) el.remove(); });
+  }
 
   let wrap = document.getElementById('tuner-nowair-wide');
   if (!isWideTunerLayout()) {
     if (wrap) wrap.hidden = true;
     TUNER_NOWAIR.classList.remove('tuner-nowair--legacy-slot');
     TUNER_NOWAIR.hidden = false;
+    TUNER_NOWAIR.removeAttribute('aria-hidden');
     return null;
   }
 
@@ -1660,28 +1671,30 @@ function ensureWideNowAirPair() {
     wrap.className = 'tuner-nowair-wide';
     wrap.setAttribute('aria-label', 'Antenne et à venir');
     wrap.innerHTML = [
-      '<aside class="tuner-nowair tuner-nowair--live-slot" aria-live="polite">',
-      '  <span class="tuner-nowair-label">À l\'antenne</span>',
-      '  <div class="tuner-nowair-body">',
-      '    <p class="tuner-nowair-title" data-wide-live-title></p>',
-      '    <p class="tuner-nowair-sub" data-wide-live-sub></p>',
+      '<div class="tuner-wide-slot tuner-wide-slot--live" aria-live="polite">',
+      '  <span class="tuner-wide-slot__label">À l\'antenne</span>',
+      '  <div class="tuner-wide-slot__body">',
+      '    <p class="tuner-wide-slot__title" data-wide-live-title></p>',
+      '    <p class="tuner-wide-slot__sub" data-wide-live-sub></p>',
       '  </div>',
-      '</aside>',
-      '<aside class="tuner-nowair tuner-nowair--next-slot" aria-live="polite">',
-      '  <span class="tuner-nowair-label">À venir</span>',
-      '  <div class="tuner-nowair-body">',
-      '    <p class="tuner-nowair-title" data-wide-next-title></p>',
-      '    <p class="tuner-nowair-sub" data-wide-next-sub></p>',
+      '</div>',
+      '<div class="tuner-wide-slot tuner-wide-slot--next" aria-live="polite">',
+      '  <span class="tuner-wide-slot__label">À venir</span>',
+      '  <div class="tuner-wide-slot__body">',
+      '    <p class="tuner-wide-slot__title" data-wide-next-title></p>',
+      '    <p class="tuner-wide-slot__sub" data-wide-next-sub></p>',
       '  </div>',
-      '</aside>',
+      '</div>',
     ].join('');
     host.insertBefore(wrap, TUNER_NOWAIR.nextSibling);
-    // Clic → même horaire que le panneau legacy
     wrap.addEventListener('click', openNowAirSchedule);
   }
 
   wrap.hidden = false;
+  // Masquer le panneau single (legacy) — classes + attributs (CSS critique).
   TUNER_NOWAIR.classList.add('tuner-nowair--legacy-slot');
+  TUNER_NOWAIR.hidden = true;
+  TUNER_NOWAIR.setAttribute('aria-hidden', 'true');
   return wrap;
 }
 
@@ -1697,14 +1710,20 @@ function paintWideNowAirPair(radio) {
   const liveSub = wrap.querySelector('[data-wide-live-sub]');
   const nextTitle = wrap.querySelector('[data-wide-next-title]');
   const nextSub = wrap.querySelector('[data-wide-next-sub]');
-  const liveSlot = wrap.querySelector('.tuner-nowair--live-slot');
-  const nextSlot = wrap.querySelector('.tuner-nowair--next-slot');
+  const liveSlot = wrap.querySelector('.tuner-wide-slot--live');
+  const nextSlot = wrap.querySelector('.tuner-wide-slot--next');
 
   if (!radio) {
     if (liveTitle) liveTitle.textContent = 'Choisissez un poste';
-    if (liveSub) liveSub.textContent = 'Les radios étudiantes jouent en direct, 24/7';
+    if (liveSub) {
+      liveSub.textContent = 'Les radios étudiantes jouent en direct, 24/7';
+      liveSub.hidden = false;
+    }
     if (nextTitle) nextTitle.textContent = '—';
-    if (nextSub) nextSub.textContent = '';
+    if (nextSub) {
+      nextSub.textContent = '';
+      nextSub.hidden = true;
+    }
     liveSlot?.classList.add('is-empty-slot');
     nextSlot?.classList.add('is-empty-slot');
     return true;
@@ -6749,6 +6768,8 @@ function renderTunerNowAir() {
   const wideWrap = document.getElementById('tuner-nowair-wide');
   if (wideWrap) wideWrap.hidden = true;
   TUNER_NOWAIR.classList.remove('tuner-nowair--legacy-slot');
+  TUNER_NOWAIR.hidden = false;
+  TUNER_NOWAIR.removeAttribute('aria-hidden');
   const instEl = document.getElementById('tuner-now-inst');
   if (instEl) {
     instEl.hidden = true;
