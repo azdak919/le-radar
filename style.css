@@ -154,17 +154,13 @@ body {
   min-width: 0;
   max-width: 100%;
 }
-/* 1 score + CTA (768 / 900) : la CTA ne mange pas toute la rangée — le score
-   garde assez de largeur pour le titre complet (FG A anti-marquee). */
-.masthead-sports-strip[data-count="2"] .sports-chip--match {
-  flex: 1 1 48%;
-  min-width: min(12rem, 42%);
-  max-width: 58%;
-}
+/* 1 score + CTA : largeurs égales (50/50) — tablette 768/900, lab. */
+.masthead-sports-strip[data-count="2"] .sports-chip--match,
 .masthead-sports-strip[data-count="2"] .sports-chip--cta {
-  flex: 1 1 40%;
+  flex: 1 1 0;
   min-width: 0;
-  max-width: 52%;
+  max-width: none;
+  width: 0; /* force equal flex basis */
 }
 /* 2 scores + CTA : CTA un peu plus étroite pour laisser lire les matchs. */
 .masthead-sports-strip[data-count="3"] .sports-chip--cta {

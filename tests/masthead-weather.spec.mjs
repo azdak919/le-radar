@@ -119,6 +119,14 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   await expect(ribbon).toHaveClass(/masthead-weather--docked/);
   expect(await ribbon.locator('.masthead-weather__city.is-active').count()).toBeGreaterThanOrEqual(2);
 
+  // 430 docké : board pleine largeur → multi-cartes (pas 1 carte flottante).
+  await page.setViewportSize({ width: 430, height: 900 });
+  await page.waitForTimeout(200);
+  await expect(ribbon).toHaveClass(/masthead-weather--docked/);
+  expect(await ribbon.locator('.masthead-weather__city.is-active').count()).toBeGreaterThanOrEqual(2);
+  const boardW430 = await ribbon.locator('.masthead-weather__board').evaluate((el) => el.clientWidth);
+  expect(boardW430).toBeGreaterThanOrEqual(300);
+
   await page.setViewportSize({ width: 320, height: 900 });
   await page.waitForTimeout(100);
   await expect(ribbon).toHaveClass(/masthead-weather--docked/);
