@@ -72,16 +72,16 @@ html[data-wide-preview="e"] {
   }
 
   /*
-   * E radio : largeur utile seulement (dial + dual antenne), pas full shell.
-   * Épaisseur = prod. Pas de troncage forcé si place suffisante (~1320–1480).
+   * E radio : largeur utile (dial + dual antenne), pas full shell.
+   * Col. 1 plus large pour institution/slogan complets ; dual packé (pas 1fr|1fr).
    */
   html[data-wide-preview="e"] .tuner-inner {
-    max-width: min(1480px, 100%) !important;
+    max-width: min(1600px, 100%) !important;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    grid-template-columns: minmax(300px, 1.1fr) minmax(380px, 1fr) !important;
-    column-gap: 16px !important;
+    grid-template-columns: minmax(520px, 1.35fr) minmax(260px, 0.85fr) !important;
+    column-gap: 14px !important;
     align-items: center !important;
     padding-top: 11px !important;
     padding-bottom: 11px !important;
@@ -89,16 +89,28 @@ html[data-wide-preview="e"] {
 
   html[data-wide-preview="e"] .tuner-controls {
     min-width: 0;
+    gap: 8px !important;
   }
 
-  /* Carré dial : hauteur prod, 2 lignes (institution / poste · slogan) */
+  /* Dial : prend l’espace restant des contrôles (pas width:0 prod qui clip) */
+  html[data-wide-preview="e"] .tuner-dial {
+    flex: 1 1 auto !important;
+    min-width: 280px !important;
+    width: auto !important;
+    max-width: none !important;
+  }
+
+  /* Carré dial : hauteur prod, largeur = contenu (JS minWidth) jusqu’au plafond */
   html[data-wide-preview="e"] .tuner-now {
     min-height: 42px !important;
     max-height: 42px;
-    padding: 3px 24px 3px 11px !important;
+    padding: 3px 22px 3px 11px !important;
     gap: 0 !important;
     justify-content: center;
     box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden; /* radius ; le min-width JS évite le clip texte */
   }
 
   /* 3e ligne interdite — l’institution va dans .tuner-now-name (JS) */
@@ -111,9 +123,15 @@ html[data-wide-preview="e"] {
     font-weight: 700;
     line-height: 1.2;
     white-space: nowrap;
-    overflow: visible;
-    text-overflow: unset;
-    max-width: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  html[data-wide-preview="e"] .tuner-now-sub-rotate {
+    overflow: hidden !important;
+    max-width: 100% !important;
+    width: 100%;
   }
 
   html[data-wide-preview="e"] .tuner-now-sub,
@@ -122,23 +140,10 @@ html[data-wide-preview="e"] {
     font-weight: 500;
     line-height: 1.2;
     white-space: nowrap !important;
-    overflow: visible !important;
-    text-overflow: unset !important;
-    max-width: none !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 100% !important;
     color: rgba(255, 255, 255, 0.78);
-  }
-
-  html[data-wide-preview="e"] .tuner-dial {
-    min-width: 220px;
-    flex: 1 1 auto;
-    max-width: none;
-  }
-
-  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot__title,
-  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot__sub {
-    overflow: visible;
-    text-overflow: unset;
-    white-space: nowrap;
   }
 
   /*
@@ -164,19 +169,24 @@ html[data-wide-preview="e"] {
     grid-row: auto !important;
   }
 
-  /* Dual antenne — classes hors .tuner-nowair (évite le CSS critique) */
+  /*
+   * Dual antenne : packé au contenu (pas 1fr|1fr qui étire le vide).
+   * Largeur s’ajuste au texte ; pendant fade le JS peut figer min-width.
+   */
   html[data-wide-preview="e"] #tuner-nowair-wide {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 0 20px;
+    display: flex !important;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 6px 12px;
     grid-column: 2 !important;
     grid-row: 1 !important;
     width: 100%;
     min-width: 0;
     max-height: 42px;
     align-self: center;
-    align-items: center;
-    padding-left: 8px;
+    padding-left: 4px;
     box-sizing: border-box;
   }
 
@@ -184,10 +194,11 @@ html[data-wide-preview="e"] {
     display: flex !important;
     flex-direction: row !important;
     align-items: flex-start !important;
-    gap: 8px !important;
-    width: 100%;
+    gap: 6px !important;
+    flex: 0 1 auto;
+    width: auto;
     min-width: 0;
-    max-width: none;
+    max-width: min(340px, 52%);
     max-height: 42px;
     margin: 0;
     padding: 0;
@@ -195,6 +206,13 @@ html[data-wide-preview="e"] {
     opacity: 1 !important;
     grid-column: auto !important;
     grid-row: auto !important;
+    /* largeur suit le texte ; transition douce hors fade (évite saut sec) */
+    transition: opacity 220ms ease, min-width 280ms ease;
+  }
+
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot.is-wide-fading {
+    opacity: 0 !important;
+    transition: opacity 160ms ease;
   }
 
   html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot__label {
@@ -210,12 +228,14 @@ html[data-wide-preview="e"] {
   }
 
   html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot__body {
-    flex: 1 1 auto;
+    flex: 0 1 auto;
     min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 0;
     justify-content: center;
+    width: max-content;
+    max-width: 100%;
   }
 
   html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot--live .tuner-wide-slot__label,
@@ -237,6 +257,7 @@ html[data-wide-preview="e"] {
     text-overflow: ellipsis;
     max-width: 100%;
     margin: 0;
+    width: max-content;
   }
 
   html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot__sub {
@@ -248,6 +269,7 @@ html[data-wide-preview="e"] {
     max-width: 100%;
     margin: 0;
     opacity: 0.8;
+    width: max-content;
   }
 
   html[data-wide-preview="e"] #tuner-nowair-wide .is-empty-slot {
@@ -257,13 +279,24 @@ html[data-wide-preview="e"] {
 
 @media (min-width: 1680px) {
   html[data-wide-preview="e"] .tuner-inner {
-    max-width: min(1520px, 100%) !important;
-    grid-template-columns: minmax(320px, 1.1fr) minmax(400px, 1fr) !important;
+    max-width: min(1680px, 100%) !important;
+    grid-template-columns: minmax(560px, 1.4fr) minmax(280px, 0.9fr) !important;
   }
-  html[data-wide-preview="e"] .tuner-now {
-    min-height: 42px !important;
-    max-height: 42px;
-    padding: 3px 24px 3px 11px !important;
+  html[data-wide-preview="e"] .tuner-dial {
+    min-width: 320px !important;
+  }
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot {
+    max-width: min(380px, 54%);
+  }
+}
+
+@media (min-width: 1920px) {
+  html[data-wide-preview="e"] .tuner-inner {
+    max-width: min(1760px, 100%) !important;
+    grid-template-columns: minmax(600px, 1.45fr) minmax(300px, 0.9fr) !important;
+  }
+  html[data-wide-preview="e"] .tuner-dial {
+    min-width: 360px !important;
   }
 }
 
