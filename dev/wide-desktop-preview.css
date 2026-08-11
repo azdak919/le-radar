@@ -219,25 +219,16 @@
   display: none;
 }
 
-/* Barre lab un peu plus large quand on ajoute la rangée Wide */
-#local-lab-format-bar.wide-lab-bar {
-  max-width: min(98vw, 720px) !important;
-  flex-direction: column !important;
-  align-items: stretch !important;
-  gap: 6px !important;
+/* Barre lab (structure dans midwidth-preview.js) — 2 rangées stables */
+#local-lab-format-bar.local-lab-bar,
+#local-lab-format-bar {
+  /* styles principaux en inline ; filet de sécu dock / overflow */
+  max-width: min(98vw, 760px);
 }
 
-#local-lab-format-bar .wide-lab-row {
+#local-lab-format-bar .local-lab-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 5px;
-}
-
-#local-lab-format-bar .wide-lab-hint {
-  opacity: 0.48;
-  font-size: 10px;
-  margin-left: 2px;
-  font-weight: 500;
-  max-width: 42ch;
 }

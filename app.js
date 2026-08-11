@@ -9057,6 +9057,12 @@ function bindFiltersPanel() {
     });
     filtersResize.observe(NEWS_FILTERS);
   }
+
+  // Lab grand écran : bascule ?wide= sans reload → re-sync colonnes / rangées.
+  window.addEventListener('radar-wide-preview-change', () => {
+    syncFiltersPanel();
+    scheduleFilterMarqueeRefresh();
+  });
 }
 
 function selectNewsSource(source) {
