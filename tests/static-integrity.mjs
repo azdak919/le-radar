@@ -1085,8 +1085,21 @@ assert(
     && /SPORTS_READ_MAX_MS\s*=\s*14000/.test(appJs)
     && /SPORTS_SCROLL_ONE_WAY_MS\s*=\s*5500/.test(appJs)
     && appJs.includes('SPORTS_SCROLL_ROUND_TRIP_MS')
+    && appJs.includes('SPORTS_SCROLL_READ_DELAY_MS')
+    && appJs.includes('MARQUEE_READ_DELAY_MS')
+    && appJs.includes('function weatherBoardDwellMs')
     && appJs.includes('SPORTS_CHIP_LEAVE_MS'),
-  'app.js : rotation sports par slot + dwell lecture + marquee aller-retour',
+  'app.js : rotation sports/météo + marquee 1 cycle (delay + aller-retour + repos)',
+);
+// Marquee site : 2 alternate both + delay — jamais infinite sur surfaces qui tournent.
+assert(
+  !/sports-chip-scroll[^;]*infinite/.test(cssFlat)
+    && !/sports-chip-scroll-sub[^;]*infinite/.test(cssFlat)
+    && /sports-chip-scroll[^;]*\s2\s+alternate\s+both/.test(cssFlat)
+    && /--sports-scroll-delay:\s*1\.6s/.test(cssFlat)
+    && /tunerMarquee[^;]*\s2\s+alternate\s+both/.test(cssFlat)
+    && /MARQUEE_ROUND_TRIPS\s*=\s*2/.test(appJs),
+  'CSS/JS : marquees sports + dial = 1 cycle (2 alternate), delay 1.6s, pas infinite',
 );
 assert(
   appJs.includes('sportsWeatherCardCount')

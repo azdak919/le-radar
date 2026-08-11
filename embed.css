@@ -405,7 +405,8 @@ html[data-embed="tuner"] .tuner-now .is-marquee {
 html[data-embed="tuner"] .tuner-now .is-marquee > .tuner-now-sub-text {
   display: inline-block;
   white-space: nowrap;
-  animation: tunerMarquee var(--marquee-duration, 12s) linear infinite alternate;
+  /* Parité app : 1 cycle (delay + aller-retour), pas infinite. */
+  animation: tunerMarquee var(--marquee-duration, 12s) linear var(--marquee-delay, 1.6s) 2 alternate both;
   will-change: transform;
   backface-visibility: hidden;
   transform: translateZ(0);
