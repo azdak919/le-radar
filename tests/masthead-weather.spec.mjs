@@ -40,11 +40,21 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="nation"]')).toHaveCount(1);
   const activePrimary = ribbon.locator('.masthead-weather__city.is-active[data-weather-city="montreal"], .masthead-weather__city.is-active[data-weather-city="quebec"]');
   await expect(activePrimary).toHaveCount(1);
+  // Bureau large : nom complet (Montréal / Québec), pas le repli MTL/QC.
+  // textContent (pas innerText) : le mât applique text-transform: uppercase.
+  await expect(activePrimary).not.toHaveClass(/is-compact/);
+  const primaryLabel = await activePrimary.locator('.masthead-weather__name-full').evaluate(
+    (el) => (el.textContent || '').trim(),
+  );
+  expect(['Montréal', 'Québec']).toContain(primaryLabel);
   const activeBoxes = (await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities
     .map((city) => city.getBoundingClientRect())
     .sort((a, b) => a.x - b.x)
     .map(({ width }) => width)));
-  expect(activeBoxes[0]).toBeLessThan(activeBoxes[1]);
+  // Toutes les cartes restent utilisables ; la primaire ne s’effondre pas
+  // sous ~90 px (icône + nom + temp).
+  expect(Math.min(...activeBoxes)).toBeGreaterThanOrEqual(90);
+  expect(activeBoxes[0]).toBeGreaterThanOrEqual(120);
   const initialPrimary = await activePrimary.evaluate((el) => ({ id: el.dataset.weatherCity, href: el.href }));
   expect(initialPrimary.href).toBe(`https://www.meteomedia.com/fr/ville/ca/quebec/${initialPrimary.id}/actuelle`);
   await expect(ribbon.locator('[data-weather-city="vaudreuil-soulanges"]')).toHaveAttribute(
@@ -109,6 +119,20 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
     const name = city.querySelector('.masthead-weather__name');
     return !city.classList.contains('is-overflowing') && name.scrollWidth <= name.clientWidth + 2;
   }))).toBe(true);
+  // 1 carte seule : le repli MTL/QC est autorisé si le nom complet déborde.
+  const narrowPrimary = ribbon.locator('.masthead-weather__city.is-active[data-weather-city="montreal"], .masthead-weather__city.is-active[data-weather-city="quebec"]');
+  await expect(narrowPrimary).toHaveCount(1);
+  const narrowState = await narrowPrimary.evaluate((el) => {
+    const compact = el.classList.contains('is-compact');
+    const full = el.querySelector('.masthead-weather__name-full')?.textContent?.trim() || '';
+    const short = el.querySelector('.masthead-weather__name-compact')?.textContent?.trim() || '';
+    return { compact, full, short };
+  });
+  if (narrowState.compact) {
+    expect(['MTL', 'QC']).toContain(narrowState.short);
+  } else {
+    expect(['Montréal', 'Québec']).toContain(narrowState.full);
+  }
 
   // Téléphone (≤599.98px) : le masthead réserve toute la place à la date
   // longue ; la météo se déplace sous le syntoniseur plutôt que de disparaître.
