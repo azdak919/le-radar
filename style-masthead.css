@@ -70,14 +70,16 @@
 
 .masthead-inner { position: relative; z-index: 2; }
 /*
- * Gouttière droite = même que le contenu (.masthead-inner, .tuner-inner, .wire) :
- * (viewport − maxw) / 2 + --pad. Plus de right:10px collé au bord écran.
+ * Gouttière droite = même que le contenu (.masthead-inner, .tuner-inner, .wire)
+ * et que la dernière icône du mât (padding --pad dans .masthead-inner).
+ * 100% du .masthead (pas 100vw) : évite le décalage scrollbar vs boîte contenu.
+ * Plus de right:10px collé au bord écran.
  */
 .masthead-shuffle-slot,
 .bg-photo-credit {
   --masthead-edge-right: max(
     env(safe-area-inset-right, 0px),
-    calc((100vw - min(100vw, var(--maxw, 100vw))) / 2 + var(--pad, 24px))
+    calc((100% - min(100%, var(--maxw, 100%))) / 2 + var(--pad, 24px))
   );
 }
 .masthead-shuffle-slot {

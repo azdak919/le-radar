@@ -157,6 +157,81 @@ test('mât : la date longue se compacte au lieu de passer sous les icônes', asy
 });
 
 /**
+ * Icônes mât (dernière) = même gouttière droite que crédit photo / météo / sports.
+ * Régression : padding-right 36px (réserve shuffle) appliqué ≤1023 → trou à droite.
+ */
+test('mât : icônes alignées à droite comme crédits (390–1280)', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => {
+    document.querySelector('#bg-photo-layer')?.classList.add('loaded');
+  });
+
+  for (const width of [390, 430, 768, 900, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.waitForTimeout(120);
+    const delta = await page.evaluate(() => {
+      const icons = [...document.querySelectorAll('.masthead-actions .masthead-icon')]
+        .filter((el) => el.offsetWidth > 0 && getComputedStyle(el).display !== 'none');
+      const lastIcon = icons[icons.length - 1];
+      const credit = document.querySelector('.bg-photo-credit');
+      const weatherCities = [...document.querySelectorAll(
+        '#masthead-weather .masthead-weather__city.is-active',
+      )].filter((el) => el.offsetWidth > 0);
+      const weather = weatherCities.sort(
+        (a, b) => b.getBoundingClientRect().right - a.getBoundingClientRect().right,
+      )[0] || document.querySelector('#masthead-weather');
+      // Chip sports la plus à droite (contenu, pas le padding du strip).
+      const chips = [...document.querySelectorAll('#masthead-sports-strip .sports-chip')]
+        .filter((el) => el.offsetWidth > 0);
+      const lastChip = chips.sort(
+        (a, b) => b.getBoundingClientRect().right - a.getBoundingClientRect().right,
+      )[0];
+      // Bureau : shuffle flottant est le vrai bord droit (hors padding-right des actions).
+      const floatShuffle = document.querySelector(
+        '.masthead-shuffle-slot .masthead-bg-shuffle:not([hidden])',
+      );
+      const rightRef = floatShuffle && floatShuffle.offsetParent
+        ? floatShuffle
+        : lastIcon;
+      if (!rightRef) return { ok: false, reason: 'no-icon' };
+      const r = (el) => (el ? el.getBoundingClientRect().right : null);
+      const iconR = r(rightRef);
+      const creditR = r(credit);
+      const weatherR = weather ? r(weather) : null;
+      const chipR = lastChip ? r(lastChip) : null;
+      const docked = !!document.querySelector('#masthead-weather.masthead-weather--docked');
+      const tol = 3;
+      const near = (a, b) => a != null && b != null && Math.abs(a - b) <= tol;
+      return {
+        ok: true,
+        width: window.innerWidth,
+        iconR,
+        creditR,
+        weatherR,
+        chipR,
+        docked,
+        padActions: getComputedStyle(document.querySelector('.masthead-actions')).paddingRight,
+        alignCredit: creditR == null || credit.getBoundingClientRect().width < 2
+          ? true
+          : near(iconR, creditR),
+        // Météo dans le mât (bureau) : colonne centrale — pas le bord droit.
+        alignWeather: !docked || weatherR == null || weatherR < 1
+          ? true
+          : near(iconR, weatherR),
+        alignSports: chipR == null ? true : near(iconR, chipR),
+      };
+    });
+    expect(delta.ok, `width ${width}: ${delta.reason || ''}`).toBe(true);
+    expect(delta.alignCredit, `width ${width}: icône vs crédit (${delta.iconR} vs ${delta.creditR})`).toBe(true);
+    expect(delta.alignWeather, `width ${width}: icône vs météo dockée (${delta.iconR} vs ${delta.weatherR})`).toBe(true);
+    expect(delta.alignSports, `width ${width}: icône vs sports (${delta.iconR} vs ${delta.chipR})`).toBe(true);
+    if (width <= 1023) {
+      expect(delta.padActions === '0px' || parseFloat(delta.padActions) === 0).toBe(true);
+    }
+  }
+});
+
+/**
  * Mobile 390/430 (lab) : date + heure entières — pas d’année « 202 » ni d’heure « 14 ».
  * Stack ≤449 + cascade mastheadDateChipFits (chip + time, pas scrollWidth date seul).
  */
