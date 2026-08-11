@@ -157,12 +157,14 @@
 }
 
 /*
- * Mobile : crédit ancré bas du mât ; rembourrage brand pour ne pas
- * recouvrir le slogan (inchangé).
+ * Mobile + tablette (≤1023, météo dockée) : crédit bas-droit comme en 390 —
+ * lisibilité + air sous le slogan. Bureau ≥1024 : slot shuffle flottant.
  */
-@media (max-width: 720px) {
+@media (max-width: 1023.98px) {
   .bg-photo-credit {
     bottom: 5px;
+    right: max(10px, env(safe-area-inset-right, 0px));
+    left: auto;
     color: rgba(255, 255, 255, 0.74);
     text-shadow:
       0 1px 2px rgba(0, 0, 0, 0.7),
@@ -170,16 +172,7 @@
   }
   #bg-photo-layer.loaded ~ .bg-photo-credit { opacity: 0.9; }
 
-  /* Le crédit demeure ancré au bas du mât. On remonte le bloc logo/slogan
-     plutôt que d'ajouter une bande sous lui : la radio reste donc collée au
-     bas de la photo et le crédit ne recouvre plus le slogan.
-
-     On déplace le rembourrage plutôt que la boîte. Un translateY sortait la
-     marque de son flux : sa rect remontait de 16 px alors que .masthead-top
-     ne laisse que 13 px sous la rangée d'actions (padding-bottom 12px +
-     border-bottom 1px), donc le mot-symbole passait 3 px SOUS les pastilles.
-     Transférer les 16 px du haut vers le bas donne le même déplacement à
-     l'œil, sans jamais faire remonter la boîte dans la rangée d'actions. */
+  /* Crédit ancré bas ; brand rembourré bas pour ne pas chevaucher le slogan. */
   .masthead:has(#bg-photo-layer.loaded) .masthead-brand {
     padding-top: 0;
     padding-bottom: 16px;

@@ -880,10 +880,14 @@ body {
     opacity: 0.9;
   }
   .masthead-actions { gap: clamp(4px, .8vw, 6px); }
-  .masthead-shuffle-slot { display: none; }
   .masthead-icon { width: clamp(24px, 5.5vw, 28px); height: clamp(24px, 5.5vw, 28px); }
   .masthead-icon svg { width: clamp(13px, 3vw, 15px); height: clamp(13px, 3vw, 15px); }
   .masthead-icon .app-emoji { width: clamp(13px, 3vw, 15px); height: clamp(13px, 3vw, 15px); }
+}
+/* Tablette + mobile (météo dockée ≤1023) : shuffle dans la rangée d’icônes
+   (JS syncMastheadShuffleButton), pas en pastille flottante sur la photo. */
+@media (max-width: 1023.98px) {
+  .masthead-shuffle-slot { display: none; }
 }
 @media (max-width: 374.98px) {
   .masthead-date { font-size: 10px; letter-spacing: 0.01em; }
