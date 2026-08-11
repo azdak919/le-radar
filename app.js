@@ -1612,6 +1612,41 @@ function ensureWideDialInstEl() {
 }
 
 /**
+ * Largeur utile du dial wide = max(L1, L2) + padding caret.
+ * Utilise l’espace dispo des contrôles (évite clip « Université… / CHOQ… »).
+ */
+function fitWideDialWidth() {
+  if (!isWideTunerLayout()) return;
+  const dial = document.querySelector('.tuner-dial');
+  const now = document.querySelector('.tuner-now');
+  const name = document.getElementById('tuner-now-name');
+  const sub = document.getElementById('tuner-now-sub');
+  const controls = document.querySelector('.tuner-controls');
+  if (!dial || !now) return;
+
+  // Mesure naturelle (lever min-width le temps du scrollWidth)
+  dial.style.minWidth = '';
+  const padX = 11 + 22 + 6; // padding L + caret + marge
+  const nameW = name?.scrollWidth || 0;
+  const subSpan = sub?.querySelector?.('.tuner-now-sub-text') || sub;
+  const subW = subSpan?.scrollWidth || 0;
+  const need = Math.ceil(Math.max(nameW, subW, 160) + padX);
+
+  // Place restante dans .tuner-controls (boutons prev/play/vol ~ 42*3 + gaps + EN ONDES)
+  let maxAvail = need;
+  if (controls) {
+    const fixed = [...controls.children].reduce((sum, el) => {
+      if (el === dial || el.classList?.contains('tuner-dial')) return sum;
+      return sum + (el.getBoundingClientRect?.().width || 0);
+    }, 0);
+    const gap = 8 * Math.max(0, controls.children.length - 1);
+    maxAvail = Math.max(200, Math.floor(controls.clientWidth - fixed - gap - 4));
+  }
+  const w = Math.max(200, Math.min(need, maxAvail));
+  dial.style.minWidth = `${w}px`;
+}
+
+/**
  * Dial wide : **2 lignes seulement** (même épaisseur barre que prod).
  * L1 = institution au complet
  * L2 = poste + slogan complet (espace horizontal, pas de 3e ligne)
@@ -1625,19 +1660,29 @@ function paintWideDial(radio) {
     instEl.hidden = true;
     instEl.textContent = '';
   }
-  if (!isWideTunerLayout()) return false;
+  if (!isWideTunerLayout()) {
+    const dial = document.querySelector('.tuner-dial');
+    if (dial) dial.style.minWidth = '';
+    return false;
+  }
   if (!radio) {
     setTunerNameText('Radios étudiantes');
     setTunerSubText('Choisissez un poste pour écouter');
+    requestAnimationFrame(() => fitWideDialWidth());
     return true;
   }
   const inst = tunerFullInstitutionLabel(radio);
   const station = stationDisplayName(radio) || String(radio.name || '').trim() || '';
   const slogan = radioSlogan(radio) || String(radio.frequency || '').trim() || '';
-  // L1 institution ; L2 « CHOQ.ca · slogan… » — largeur du dial élargi, hauteur fixe.
+  // L1 institution ; L2 « CHOQ.ca · slogan… » — largeur mesurée après paint.
   setTunerNameText(inst || station || 'Radios étudiantes');
   const line2 = [station, slogan].filter(Boolean).join(' · ');
   setTunerSubText(line2 || slogan || station);
+  requestAnimationFrame(() => {
+    fitWideDialWidth();
+    // 2e passe (polices / layout contrôles stabilisés)
+    requestAnimationFrame(fitWideDialWidth);
+  });
   return true;
 }
 
@@ -1700,6 +1745,8 @@ function ensureWideNowAirPair() {
 
 /**
  * Remplit live + upcoming à partir des phases d’un poste.
+ * Largeur des slots = contenu (CSS flex packé). Si le texte change : fade out
+ * → swap → fade in pour que le resserrement/élargissement se fasse hors vue.
  * @returns {boolean} true si la paire wide a été peinte
  */
 function paintWideNowAirPair(radio) {
@@ -1713,7 +1760,7 @@ function paintWideNowAirPair(radio) {
   const liveSlot = wrap.querySelector('.tuner-wide-slot--live');
   const nextSlot = wrap.querySelector('.tuner-wide-slot--next');
 
-  if (!radio) {
+  const applyEmpty = () => {
     if (liveTitle) liveTitle.textContent = 'Choisissez un poste';
     if (liveSub) {
       liveSub.textContent = 'Les radios étudiantes jouent en direct, 24/7';
@@ -1726,32 +1773,71 @@ function paintWideNowAirPair(radio) {
     }
     liveSlot?.classList.add('is-empty-slot');
     nextSlot?.classList.add('is-empty-slot');
-    return true;
-  }
+  };
 
-  const phases = airRotationPhases(radio, { withSlogan: false });
-  const live = phases.find((p) => p.kind === 'live')
-    || phases.find((p) => p.kind === 'idle')
-    || null;
-  const upcoming = phases.find((p) => p.kind === 'upcoming') || null;
+  const applyRadio = () => {
+    const phases = airRotationPhases(radio, { withSlogan: false });
+    const live = phases.find((p) => p.kind === 'live')
+      || phases.find((p) => p.kind === 'idle')
+      || null;
+    const upcoming = phases.find((p) => p.kind === 'upcoming') || null;
 
-  if (liveTitle) {
-    liveTitle.textContent = live?.title || radioSlogan(radio) || stationDisplayName(radio) || radio.name || '—';
-  }
-  if (liveSub) {
-    liveSub.textContent = live?.sub || '';
-    liveSub.hidden = !live?.sub;
-  }
-  liveSlot?.classList.toggle('is-empty-slot', !live);
+    if (liveTitle) {
+      liveTitle.textContent = live?.title || radioSlogan(radio) || stationDisplayName(radio) || radio.name || '—';
+    }
+    if (liveSub) {
+      liveSub.textContent = live?.sub || '';
+      liveSub.hidden = !live?.sub;
+    }
+    liveSlot?.classList.toggle('is-empty-slot', !live);
 
-  if (nextTitle) {
-    nextTitle.textContent = upcoming?.title || 'Rien de programmé';
+    if (nextTitle) {
+      nextTitle.textContent = upcoming?.title || 'Rien de programmé';
+    }
+    if (nextSub) {
+      nextSub.textContent = upcoming?.sub || '';
+      nextSub.hidden = !upcoming?.sub;
+    }
+    nextSlot?.classList.toggle('is-empty-slot', !upcoming);
+  };
+
+  // Texte cible (pour détecter un vrai changement)
+  let nextLiveT = 'Choisissez un poste';
+  let nextNextT = '—';
+  if (radio) {
+    const phases = airRotationPhases(radio, { withSlogan: false });
+    const live = phases.find((p) => p.kind === 'live')
+      || phases.find((p) => p.kind === 'idle')
+      || null;
+    const upcoming = phases.find((p) => p.kind === 'upcoming') || null;
+    nextLiveT = live?.title || radioSlogan(radio) || stationDisplayName(radio) || radio.name || '—';
+    nextNextT = upcoming?.title || 'Rien de programmé';
   }
-  if (nextSub) {
-    nextSub.textContent = upcoming?.sub || '';
-    nextSub.hidden = !upcoming?.sub;
+  const changing = (liveTitle?.textContent || '') !== nextLiveT
+    || (nextTitle?.textContent || '') !== nextNextT;
+
+  const paint = () => {
+    if (!radio) applyEmpty();
+    else applyRadio();
+  };
+
+  // Fade out → swap (largeur se recalcule hors vue) → fade in
+  if (
+    changing
+    && wrap.isConnected
+    && !PREFERS_REDUCED_MOTION?.matches
+    && (liveTitle?.textContent || nextTitle?.textContent)
+  ) {
+    liveSlot?.classList.add('is-wide-fading');
+    nextSlot?.classList.add('is-wide-fading');
+    window.setTimeout(() => {
+      paint();
+      liveSlot?.classList.remove('is-wide-fading');
+      nextSlot?.classList.remove('is-wide-fading');
+    }, 150);
+  } else {
+    paint();
   }
-  nextSlot?.classList.toggle('is-empty-slot', !upcoming);
 
   return true;
 }
@@ -9520,7 +9606,10 @@ function bindFiltersPanel() {
     } catch { /* ignore */ }
   });
   window.addEventListener('resize', () => {
-    if (isWideTunerLayout()) syncWideStickyTop();
+    if (isWideTunerLayout()) {
+      syncWideStickyTop();
+      fitWideDialWidth();
+    }
   }, { passive: true });
 }
 
