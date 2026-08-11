@@ -101,10 +101,8 @@ for (const file of htmlFiles) {
   }
 }
 
-// Menu de sections de l'accueil : mêmes libellés et mêmes cibles que le pied
-// de page, archives exceptées. Les deux listes sortent de `SECTIONS` dans
-// seo-pages-lib ; ce contrôle vérifie que le HTML publié le reflète, pour que
-// personne ne recopie une entrée à la main d'un côté seulement.
+// Menu de sections de l'accueil : Accueil en tête, puis mêmes cibles que le
+// pied (archives exceptées). Listes issues de `SECTIONS` dans seo-pages-lib.
 {
   const home = readFileSync(join(root, 'index.html'), 'utf8');
   const navBlock = home.slice(
@@ -118,18 +116,20 @@ for (const file of htmlFiles) {
   assert.deepEqual(
     navHrefs,
     ['./', 'medias/', 'medias/#journaux', 'horaires/', 'sports/'],
-    'index.html : sections du haut = Accueil, Médias, Journaux, Radios, Sports (sans Archives)',
+    'index.html : sections = Accueil, Médias, Journaux, Radios, Sports (sans Archives)',
   );
   assert(
     /data-home-nav[^>]*>Accueil</.test(navBlock) || /data-home-nav[\s\S]*?>Accueil</.test(navBlock),
     'index.html : lien Accueil avec data-home-nav (scroll + refresh soft)',
   );
+  assert(navBlock.includes('>Accueil</a>'), 'index.html : libellé Accueil dans le menu de sections');
 
   const footBlock = home.slice(
     home.indexOf('<!-- RADAR:FOOTER:START -->'),
     home.indexOf('<!-- RADAR:FOOTER:END -->'),
   );
-  for (const href of navHrefs) {
+  // Accueil (./) est navOnly : sur la home le pied n’a pas de second lien Accueil.
+  for (const href of navHrefs.filter((h) => h !== './')) {
     assert(
       footBlock.includes(`href="${href}"`),
       `index.html : « ${href} » est dans le menu de sections mais absent du pied de page`,
@@ -647,8 +647,16 @@ assert(
   'index.html : lien Sports en nouvel onglet (préserve la radio)'
 );
 assert(
-  /<h1 class="seo-title"[^>]*>[\s\S]*?Sports Étudiants/.test(readFileSync(join(root, 'sports/index.html'), 'utf8')),
-  'sports/index.html : H1 = « Sports Étudiants » (titre visuel)'
+  /<h1 class="seo-title"[^>]*>[\s\S]*?Sports collégiaux et universitaires du Québec/.test(readFileSync(join(root, 'sports/index.html'), 'utf8')),
+  'sports/index.html : H1 = « Sports collégiaux et universitaires du Québec »'
+);
+assert(
+  !/<p class="seo-lead">/.test(readFileSync(join(root, 'sports/index.html'), 'utf8')),
+  'sports/index.html : pas de seo-lead'
+);
+assert(
+  /class="site-sections"[\s\S]*?<a href="\.\/"[^>]*>Accueil<\/a>/.test(indexHtml),
+  'index.html : menu de sections commence par Accueil'
 );
 const sportsHub = readFileSync(join(root, 'sports/index.html'), 'utf8');
 assert(sportsHub.includes('data-sports-board'), 'sports : racine filtrable requise');
@@ -801,9 +809,14 @@ assert(
 );
 // Invitation PWA : carte au-dessus des FABs bas (loupe + flèche), pas collée à bottom:0.
 assert(
-  /\.engage-prompt\s*\{[^}]*var\(--tools-fab/.test(styleCss.replace(/\s+/g, ' ')),
-  'style : .engage-prompt doit réserver la bande des FABs (--tools-fab)',
+  /\.engage-prompt\s*\{[^}]*top:\s*max\(12px/.test(styleCss.replace(/\s+/g, ' ')),
+  'style : .engage-prompt ancré en haut (focus-group engage-position A)',
 );
+assert(
+  appJs.includes('initPullToRefresh') && styleCss.includes('radar-pull-refresh'),
+  'pull-to-refresh PWA soft news requis',
+);
+assert(styleCss.includes('sports-chip-rim-glow'), 'contour accent puces scores requis');
 assert(
   /\.engage-prompt\s*\{[^}]*z-index:\s*200/.test(styleCss.replace(/\s+/g, ' ')),
   'style : .engage-prompt z-index au-dessus de .page-tools (180)',
@@ -947,8 +960,8 @@ assert(
     && appJs.includes('sportsSlotDwellMs')
     && appJs.includes('sportsLabelReadingMs')
     && appJs.includes('sportsChipNeedsMarquee')
-    && /SPORTS_READ_MIN_MS\s*=\s*7800/.test(appJs)
-    && /SPORTS_SCROLL_ONE_WAY_MS\s*=\s*8500/.test(appJs)
+    && /SPORTS_READ_MIN_MS\s*=\s*4800/.test(appJs)
+    && /SPORTS_SCROLL_ONE_WAY_MS\s*=\s*5500/.test(appJs)
     && appJs.includes('SPORTS_SCROLL_ROUND_TRIP_MS')
     && appJs.includes('SPORTS_CHIP_LEAVE_MS'),
   'app.js : rotation sports par slot + dwell lecture + marquee aller-retour',
@@ -960,9 +973,9 @@ assert(
   'app.js : plafond scores sports ≤ cartes météo (CTA hors compte)',
 );
 assert(
-  styleCss.includes('--sports-scroll-duration: 8.5s')
-    || styleCss.includes('--sports-scroll-duration:8.5s'),
-  'style : durée marquee sports alignée sur SPORTS_SCROLL_ONE_WAY_MS (8.5s)',
+  styleCss.includes('--sports-scroll-duration: 5.5s')
+    || styleCss.includes('--sports-scroll-duration:5.5s'),
+  'style : durée marquee sports alignée sur SPORTS_SCROLL_ONE_WAY_MS (5.5s)',
 );
 
 // ── /sports/ : app installable à part entière ────────────────────────────────

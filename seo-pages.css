@@ -833,6 +833,8 @@
 }
 
 .sports-panel {
+  container-type: inline-size;
+  container-name: sports-panel;
   border: 1px solid var(--rule);
   border-radius: 10px;
   background: var(--bg-soft);
@@ -1443,4 +1445,19 @@
     }
   }
   .sports-panel { padding: 12px 12px 10px; }
+}
+
+/* Focus-group P3 : noms longs — repli 2 lignes sous ~340px de carte */
+@container sports-panel (max-width: 340px) {
+  .sports-panel__list > .sports-result {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 4px 8px;
+  }
+  .sports-result__time { grid-column: 1; grid-row: 1; }
+  .sports-result__badge { grid-column: 2; grid-row: 1; justify-self: end; }
+  .sports-result__score { grid-column: 1; grid-row: 2; }
+  .sports-result__title { grid-column: 1 / -1; grid-row: 3; white-space: normal; overflow: visible; text-overflow: unset; }
+  .sports-result__opp, .sports-result__opp-full { white-space: normal; overflow-wrap: anywhere; }
 }
