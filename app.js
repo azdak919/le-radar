@@ -1145,13 +1145,25 @@ function renderTodayDate() {
   // Heure d’abord : sur photo date+heure partagent une puce flex. Si la
   // cascade date tourne avant l’heure, #today-date prend toute la largeur,
   // le format long « tient », puis l’heure arrive et l’ellipse coupe la date.
-  // 24 h compacte (FR et EN) : « 2:15 p.m. » volait trop de place à la date
-  // sur mobile (ellipse même sur le format court).
+  // FR : « 15 h 03 » (typographie QC). EN : « 15:03 » (évite « 3:03 p.m. » large).
   if (TODAY_TIME) {
     TODAY_TIME.dateTime = now.toTimeString().slice(0, 5);
-    TODAY_TIME.textContent = now.toLocaleTimeString(isEnglish ? 'en-CA' : 'fr-CA', {
+    const rawClock = now.toLocaleTimeString(isEnglish ? 'en-CA' : 'fr-CA', {
       hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
-    }).replace(/\s*h\s*/u, ':');
+    });
+    if (isEnglish) {
+      TODAY_TIME.textContent = rawClock
+        .replace(/\s*h\s*/iu, ':')
+        .replace(/(\d{1,2})\s*[:.]\s*(\d{2})/, '$1:$2')
+        .trim();
+    } else {
+      // Normaliser colon / « h » navigateur → « 15 h 03 ».
+      TODAY_TIME.textContent = rawClock
+        .replace(/(\d{1,2})\s*[:.]\s*(\d{2})/, '$1 h $2')
+        .replace(/\s*h\s*/iu, ' h ')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
   }
   if (TODAY_DATE) {
     for (const options of MASTHEAD_DATE_FORMATS) {
