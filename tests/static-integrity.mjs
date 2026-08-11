@@ -267,11 +267,36 @@ assert(solitaireSw.includes('fullscreen-wallpaper-qc.js'), 'solitaire SW pré-ca
 // Crédits Commons : pas de gabarit « machine-readable author » en banque
 const commonsCredit = require('../scripts/commons-credit-lib.js');
 assert(commonsCredit?.sanitizeCommonsCredit, 'commons-credit-lib requis');
+const sc = commonsCredit.sanitizeCommonsCredit;
 assert(
-  commonsCredit.sanitizeCommonsCredit(
+  sc(
     'No machine-readable author provided. Miguel Andrade assumed (based on copyright claims).'
   ) === 'Miguel Andrade',
   'sanitize Commons credit → nom court'
+);
+assert(sc('Sam311 ( talk ) ( Uploads )') === 'Sam311', 'strip ( talk ) ( Uploads )');
+assert(
+  sc('Andrea Schaffer from Sydney, Australia') === 'Andrea Schaffer',
+  'strip from Place'
+);
+assert(sc('DannysFlamand') === 'Dannys Flamand', 'camelCase collé');
+assert(sc('Jeangagnon') === 'Jean Gagnon', 'alias Jeangagnon');
+assert(sc('Danielhbordeleau') === 'Daniel H. Bordeleau', 'alias Danielhbordeleau');
+assert(
+  sc('Nichole Ouellette/ouellette001.com') === 'Nichole Ouellette',
+  'strip /site.tld'
+);
+assert(
+  sc('MontrealNasa.jpg : NASA derivative work: MTLskyline ( talk )') === 'MTLskyline',
+  'derivative work + talk'
+);
+assert(
+  sc('You may select the license of your choice.') === 'Wikimedia Commons',
+  'placeholder licence → Commons'
+);
+assert(
+  sc('Blanchardb- Me • MyEars • MyMouth -timed') === 'Blanchardb',
+  'signature spam → tête'
 );
 for (const rel of [
   'quebec-backgrounds-data.js',
@@ -284,9 +309,12 @@ for (const rel of [
     !/No machine-readable author provided/i.test(txt),
     `${rel}: crédit Commons machine-readable interdit`
   );
+  assert(!/\(\s*talk\s*\)/i.test(txt), `${rel}: ( talk ) interdit en crédit stocké`);
+  assert(!/\(\s*Uploads\s*\)/i.test(txt), `${rel}: ( Uploads ) interdit en crédit stocké`);
 }
 const bgJs = readFileSync(join(root, 'quebec-backgrounds.js'), 'utf8');
 assert(bgJs.includes('sanitizeBgCredit'), 'mât : sanitize crédit runtime requis');
+assert(/talk\|discussion\|uploads/i.test(bgJs), 'mât : strip talk/uploads runtime requis');
 
 for (const app of ['pomo', 'solitaire']) {
   const html = readFileSync(join(root, app, 'index.html'), 'utf8');
