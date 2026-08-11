@@ -1942,20 +1942,43 @@
    * → afficher seulement NAME (évite la ligne monstrueuse + auto-traduction).
    * Aligné sur scripts/commons-credit-lib.js
    */
+  /**
+   * Espaces corrects autour tirets / virgules — évite « —Andrea » ou
+   * « Park—Name » collés (Commons + soft glass ellipsis).
+   */
+  function normalizeCreditSpacing(raw) {
+    return String(raw || "")
+      .replace(/\u00a0/g, " ")
+      .replace(/\s+/g, " ")
+      .replace(/\s*([—–])\s*/g, " $1 ")
+      .replace(/\s*,\s*/g, ", ")
+      .replace(/\s{2,}/g, " ")
+      .trim();
+  }
+
   function sanitizeBgCredit(raw) {
     if (raw == null) return "";
-    let s = String(raw).replace(/\s+/g, " ").trim();
+    let s = normalizeCreditSpacing(raw);
     if (!s) return "";
     let m = s.match(
       /no machine-readable author provided\.?\s*(.+?)\s+assumed\s*\(\s*based on copyright claims\s*\)\.?/i
     );
-    if (m) return m[1].replace(/^[\s,;:.-]+|[\s,;:.-]+$/g, "").trim().slice(0, 80);
+    if (m) {
+      return normalizeCreditSpacing(m[1].replace(/^[\s,;:.-]+|[\s,;:.-]+$/g, "")).slice(0, 80);
+    }
     m = s.match(
       /aucun auteur lisible par machine n['’]est fourni[.,]?\s*(.+?)\s+l['’]a\s+suppos[ée]/i
     );
-    if (m) return m[1].replace(/^[\s,;:.-]+|[\s,;:.-]+$/g, "").trim().slice(0, 80);
+    if (m) {
+      return normalizeCreditSpacing(m[1].replace(/^[\s,;:.-]+|[\s,;:.-]+$/g, "")).slice(0, 80);
+    }
     if (/^no machine-readable author provided\.?$/i.test(s)) return "Wikimedia Commons";
     if (/^aucun auteur lisible par machine/i.test(s)) return "Wikimedia Commons";
+    // Pseudo collé type « Jeangagnon » déjà géré plus bas ; scinder camelCase léger
+    // seulement si tout collé sans espace et long (ex. AndreaSchaffer → Andrea Schaffer).
+    if (!/\s/.test(s) && s.length >= 8 && s.length <= 40 && /[a-z][A-Z]/.test(s)) {
+      s = s.replace(/([a-z])([A-Z])/g, "$1 $2");
+    }
     if (s.length > 72) {
       const head = s.split(/\s*[—–|]\s*|\s*\(/)[0].trim();
       if (head.length >= 2 && head.length <= 60) return head;
@@ -1970,17 +1993,19 @@
     el.textContent = "";
     el.removeAttribute("hidden");
     const link = safeHttpsUrl(bg.link);
-    const title = String(bg.title || "").trim();
+    const title = normalizeCreditSpacing(bg.title || "");
     const rawCredit = sanitizeBgCredit(bg.credit || "");
     // Commons emploie le pseudo « Jeangagnon » : le crédit éditorial affiche
     // le vrai nom tout en gardant le lien de la photo comme source.
-    const credit = /^jeangagnon$/i.test(rawCredit) ? "Jean Gagnon" : rawCredit;
-    const license = String(bg.license || "").trim();
+    const credit = /^jeangagnon$/i.test(rawCredit)
+      ? "Jean Gagnon"
+      : normalizeCreditSpacing(rawCredit);
+    const license = normalizeCreditSpacing(bg.license || "");
 
-    // Bureau : titre — auteur (licence)
+    // Format court partout (ex-mobile) : © + auteur. Détail dans title=.
+    // full conservé en DOM (display:none) pour a11y / copier-coller éventuel.
     const full = document.createElement("span");
     full.className = "bg-photo-credit__full";
-    // notranslate : éviter que le navigateur traduise le crédit Commons en pavé
     full.setAttribute("translate", "no");
     full.classList.add("notranslate");
     if (title) full.appendChild(document.createTextNode(`${title} — `));
@@ -1998,8 +2023,6 @@
     }
     if (license) full.appendChild(document.createTextNode(` (${license})`));
 
-    // Mobile : ligne minimale — auteur seul (lien si possible).
-    // Titre et licence restent dans le title= faute de place à cette largeur.
     const short = document.createElement("span");
     short.className = "bg-photo-credit__short";
     short.setAttribute("translate", "no");
@@ -2011,6 +2034,8 @@
       copyleft.textContent = "©";
       copyleft.setAttribute("aria-label", "Copyleft");
       short.appendChild(copyleft);
+      // Espace insécable visuelle : gap CSS + nœud texte de secours
+      short.appendChild(document.createTextNode("\u00a0"));
     }
     if (link) {
       const a = document.createElement("a");
