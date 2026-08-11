@@ -182,13 +182,15 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
     0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 22%, transparent);
 }
-/* Puces scores 2 lignes : noms en clair (haut) + date (bas), largeur flex. */
+/* Puces scores 2 lignes : noms en clair (haut) + date (bas), largeur flex.
+ * Marquee plus lent (8 s) : noms + événements longs (voile/place). */
 .masthead-sports-strip .sports-chip--match {
   white-space: normal;
   align-items: center;
   min-height: 44px;
   padding-top: 5px;
   padding-bottom: 5px;
+  --sports-scroll-duration: 8s;
 }
 .masthead-sports-strip .sports-chip__body {
   flex: 1 1 auto;

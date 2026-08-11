@@ -1790,6 +1790,11 @@ const SPORTS_RECENT_RESULT_MS = 4 * 24 * 3600 * 1000; /* résultats < 4 j — ca
  * La CTA suit le-radar-cta-sports-window : journée lead + filet fraîcheur 48 h.
  */
 const SPORTS_CTA_UPCOMING_MS = 14 * 24 * 3600 * 1000;
+/**
+ * Marquee puces match (2 lignes, noms longs) — plus lent que la CTA (5,5 s).
+ * Un overflow dense (voile / place / événement) à 5,5 s se lisait en zapping.
+ */
+const SPORTS_MATCH_SCROLL_ONE_WAY_MS = 8000;
 /** Plafond faces CTA (jour lead + filet 48 h) — focus-group le-radar-cta-sports-window F. */
 const SPORTS_CTA_MAX_POOL = 16;
 /*
@@ -2426,38 +2431,41 @@ function sportsNextSlidesSorted() {
 function sportsLeftLaneState() {
   const results = sportsResultSlidesSorted();
   const nexts = sportsNextSlidesSorted();
-  // « Chaud » pour la CTA = scores du jour ou prochains ≤ 14 j.
-  // Si la CTA est en idle, on considère le bandeau gauche en mode hors saison
-  // même s’il reste un vieux lastGame isolé (ex. voile d’avril en plein été).
-  let ctaHasHot = false;
-  try {
-    const now = Date.now();
-    for (const s of results) {
-      if (sportsGameIsToday(s.game)) { ctaHasHot = true; break; }
-    }
-    if (!ctaHasHot) {
+  const now = Date.now();
+  // Gauche = **fraîcheur réelle** (SPORTS_RECENT_RESULT_MS). Sans ce filtre, un
+  // lastGame d’avril (voile) tournait en août dès qu’un prochain ≤14 j rendait
+  // la CTA « chaude » — McGill 7/12 ICSA en pleine rentrée.
+  const recentResults = results.filter((s) => {
+    if (s?.game?.priorSeason || s?.team?.lastGamePriorSeason) return false;
+    const age = sportsResultAgeMs(s.game, now);
+    return Number.isFinite(age) && age >= 0 && age <= SPORTS_RECENT_RESULT_MS;
+  });
+  // « Chaud » = score récent ou prochain ≤ 14 j (détection saison / appoint).
+  let hasHot = recentResults.length > 0;
+  if (!hasHot) {
+    try {
       for (const s of nexts) {
         const ms = sportsGameMs(s.game);
         if (Number.isFinite(ms) && ms >= now - SPORTS_LIVE_AFTER_MS
           && ms <= now + SPORTS_CTA_UPCOMING_MS) {
-          ctaHasHot = true;
+          hasHot = true;
           break;
         }
       }
-    }
-  } catch { /* ignore */ }
+    } catch { /* ignore */ }
+  }
 
-  if (results.length && ctaHasHot) {
-    // Résultats d'abord (fraîcheur desc.), puis le calendrier en appoint : avec
-    // un seul lastGame en banque (creux d'été), un pool exclusif ne remplissait
-    // qu'une puce sur trois et le bandeau s'étirait à deux cases.
-    const seen = new Set(results.map((s) => s.key));
-    const pool = results.concat(nexts.filter((s) => !seen.has(s.key)));
+  if (recentResults.length) {
+    // Résultats chauds d’abord, calendrier en appoint pour remplir 3 puces.
+    const seen = new Set(recentResults.map((s) => s.key));
+    const pool = recentResults.concat(nexts.filter((s) => !seen.has(s.key)));
     return { kind: 'results', pool };
   }
-  // Hors saison / creux : calendrier à venir s’il existe, sinon vieux résultats
-  // en filet. Jamais de puces « info » marketing dans la voie de gauche.
-  return { kind: 'offseason', pool: nexts.length ? nexts : results };
+  // Hors saison / creux : calendrier à venir seulement (pas de musée d’avril).
+  // Filet ultime : un seul plus récent lastGame si vraiment zéro next.
+  if (nexts.length) return { kind: 'offseason', pool: nexts };
+  const staleFilet = results.slice(0, 1);
+  return { kind: 'offseason', pool: staleFilet };
 }
 
 /**
@@ -2592,6 +2600,35 @@ function sportsPlainOpponentName(game) {
   const full = String(game?.opponentFullName || '').trim();
   if (full) return full;
   return String(game?.opponentCode || 'adversaire').trim();
+}
+
+/**
+ * Nom d’équipe pour puce étroite — enlève le suffixe sport redondant
+ * (« McGill Sailing » → « McGill » quand le glyphe voile est déjà là).
+ */
+function sportsChipTeamShort(team) {
+  let name = sportsPlainTeamName(team);
+  const sport = String(team?.sport || '').toLowerCase();
+  if (sport === 'sailing' || sport === 'voile') {
+    name = name.replace(/\s+(sailing|voile)\s*$/i, '').trim() || name;
+  }
+  return name;
+}
+
+/** Événement / compétition courte pour place (régates) — pas le pavé adversaire. */
+function sportsPlaceEventShort(game) {
+  const comp = String(game?.competition || '').trim();
+  if (comp) return comp;
+  const opp = sportsPlainOpponentName(game);
+  // « ICSA Regional Teams National Invitational · Columbia » → avant le ·
+  const head = opp.split(/\s*[·|]\s*/)[0].trim();
+  return head || opp;
+}
+
+function sportsIsPlaceResult(game, sport) {
+  return game?.scoreKind === 'place'
+    || sport === 'sailing'
+    || game?.sport === 'sailing';
 }
 
 /** Jour + date + heure, écrits pour être situés sans compter : « jeu. 20 août, 20 h 30 ». */
@@ -3554,7 +3591,7 @@ function paintSportsChip(slide, animate = false) {
   const subText = document.createElement('span');
   subText.className = 'sports-chip__sub-text';
 
-  const home = sportsPlainTeamName(team);
+  const home = sportsChipTeamShort(team);
   const opp = sportsPlainOpponentName(g);
   const when = formatSportsWhen(g.date, g.time);
 
@@ -3566,16 +3603,25 @@ function paintSportsChip(slide, animate = false) {
     badgeEl.textContent = badge;
     badgeEl.setAttribute('aria-hidden', 'true');
     a.append(glyph, badgeEl);
-    const placeKind = g.scoreKind === 'place' || sport === 'sailing';
-    const scoreTxt = placeKind
-      ? `${g.scoreFor}/${g.scoreAgainst}`
-      : `${g.scoreFor}–${g.scoreAgainst}`;
+    const placeKind = sportsIsPlaceResult(g, sport);
     const prior = g.priorSeason || team.lastGamePriorSeason;
-    inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
-      + `<span class="sports-chip__score">${escapeHtml(String(scoreTxt))}</span> `
-      + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
-    const subParts = [when, prior ? 'Saison précédente' : ''].filter(Boolean);
-    subText.textContent = subParts.join(' · ');
+    if (placeKind) {
+      // Régate / place : ne pas coller « McGill Sailing 7/12 ICSA Regional… »
+      // en une ligne. Haut = équipe + place ; bas = date · compétition.
+      const placeTxt = `${g.scoreFor}e/${g.scoreAgainst}`;
+      const event = sportsPlaceEventShort(g);
+      inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+        + `<span class="sports-chip__score">${escapeHtml(placeTxt)}</span>`;
+      const subParts = [when, event, prior ? 'Saison précédente' : ''].filter(Boolean);
+      subText.textContent = subParts.join(' · ');
+    } else {
+      const scoreTxt = `${g.scoreFor}–${g.scoreAgainst}`;
+      inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+        + `<span class="sports-chip__score">${escapeHtml(String(scoreTxt))}</span> `
+        + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
+      const subParts = [when, prior ? 'Saison précédente' : ''].filter(Boolean);
+      subText.textContent = subParts.join(' · ');
+    }
     if (prior) a.classList.add('sports-chip--prior-season');
     a.title = sportsChipTitle(slide) + (prior ? ' · Saison précédente' : '');
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
@@ -3901,8 +3947,11 @@ function sportsSlotDwellMs(slot) {
   // CTA : plancher propre (un cran plus posé que les scores, sans 24 s collants).
   const floor = isCta ? SPORTS_CTA_DWELL_MS : readMs;
   if (sportsChipNeedsMarquee(chip)) {
-    // Aller (8,5 s) + retour (8,5 s) + pause au début — synchro CSS.
-    return Math.max(floor, SPORTS_SCROLL_ROUND_TRIP_MS + SPORTS_SCROLL_POST_PAUSE_MS);
+    // Aller + retour + pause — durée CSS alignée (match chips plus lentes).
+    const oneWay = chip.classList.contains('sports-chip--match')
+      ? SPORTS_MATCH_SCROLL_ONE_WAY_MS
+      : SPORTS_SCROLL_ONE_WAY_MS;
+    return Math.max(floor, oneWay * 2 + SPORTS_SCROLL_POST_PAUSE_MS);
   }
   return floor;
 }
