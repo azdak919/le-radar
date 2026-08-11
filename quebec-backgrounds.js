@@ -267,7 +267,11 @@
    *
    * minStrict élevé : avec peu de photos taguées « ete » en juillet, le tier
    * strict seul (~5 images) épuisait le mât après rejets QC → fond noir mobile.
-   * Les non-taguées passent en adjacent ; favorites permanent toujours incluses.
+   * Les non-taguées passent en adjacent.
+   *
+   * `permanent: true` = collection hors purge bots, **pas** affichage hors saison.
+   * Une favorite d’hiver reste épinglée mais n’entre dans le pool qu’en hiver
+   * (ou tiers adjacent/soft si le filtre élargit).
    */
   function _seasonFilteredPool(items) {
     if (!items || !items.length) return items || [];
@@ -278,24 +282,14 @@
       minStrict: 12,
       minAdjacent: 16,
     });
-    // Favorites permanentes : toujours dans le pool (hors purge saison)
-    const permanent = items.filter((p) => p && p.permanent === true && p.url);
-    let out = r.items && r.items.length ? r.items.slice() : items.slice();
-    if (permanent.length) {
-      const seen = new Set(out.map((p) => p.url));
-      for (const p of permanent) {
-        if (!seen.has(p.url)) {
-          out.push(p);
-          seen.add(p.url);
-        }
-      }
-    }
+    const out = r.items && r.items.length ? r.items.slice() : items.slice();
     if (typeof console !== "undefined" && console.info) {
+      const nPerm = out.filter((p) => p && p.permanent === true).length;
       console.info(
         `[bg] saison 4=${r.season4} · 6=${r.season6} · tier=${r.tier}` +
           ` · pool ${out.length}/${r.stats.total}` +
           ` (strict ${r.stats.strict}, adj ${r.stats.adjacent}` +
-          (permanent.length ? `, +perm ${permanent.length}` : "") +
+          (nPerm ? `, perm in-season ${nPerm}` : "") +
           `)`
       );
     }
@@ -2059,12 +2053,17 @@
         _applyBackground(next, pool);
         return;
       }
-      // Ultime secours : peindre n’importe quelle favorite/perm sans QC canvas
+      // Ultime secours : peindre sans QC canvas, en restant dans le pool
+      // saisonnier quand possible (pas de favorite d’hiver forcée en été).
+      const idOf = (p) =>
+        _rotator && _rotator.photoId ? _rotator.photoId(p) : p && p.url;
+      const notFailed = (p) => p && p.url && !_failedIds.has(idOf(p));
+      const seasonal = _seasonFilteredPool(pool);
       const emergency =
-        pool.find((p) => p && p.permanent && p.url && !_failedIds.has(p.url)) ||
-        pool.find((p) => p && p.url && !_failedIds.has(
-          _rotator && _rotator.photoId ? _rotator.photoId(p) : p.url
-        ));
+        seasonal.find((p) => p.permanent && notFailed(p)) ||
+        seasonal.find(notFailed) ||
+        pool.find((p) => p.permanent && notFailed(p)) ||
+        pool.find(notFailed);
       if (emergency) {
         const url = _optimizedUrl(emergency);
         _paintBackground(emergency, url, null);
