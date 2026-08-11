@@ -4,7 +4,8 @@
  * Visible uniquement sur localhost / 127.0.0.1 (ou ?lab=1).
  * Ne s’injecte pas dans l’iframe lab (`?labFrame=1`) ni en prod le-radar.ca.
  *
- * Formats : largeur d’iframe (media queries réelles) — 390 / 768 / 900 / 1280 / plein.
+ * Formats : largeur d’iframe — 390 / 430 / 768 / 900 / 1280 / 1600 / 1920 / plein.
+ * Options grand écran : voir wide-desktop-preview.js (?wide=a…e).
  * URL : ?lab=390
  *
  * Note : les variants « Fil mid » A/C/D (focus-group midwidth-fil) sont
@@ -26,7 +27,9 @@
     phablet: { id: 'phablet', label: '430', w: 430, hint: 'Grand téléphone' },
     tablet: { id: 'tablet', label: '768', w: 768, hint: 'Tablette portrait' },
     mid: { id: 'mid', label: '900', w: 900, hint: 'Demi-écran / mid' },
-    desktop: { id: 'desktop', label: '1280', w: 1280, hint: 'Bureau compact' },
+    desktop: { id: 'desktop', label: '1280', w: 1280, hint: 'Bureau compact (réf. actuelle)' },
+    wide1600: { id: 'wide1600', label: '1600', w: 1600, hint: 'Grand bureau' },
+    wide1920: { id: 'wide1920', label: '1920', w: 1920, hint: 'Full HD' },
   };
 
   function isLabFrame() {
@@ -64,6 +67,8 @@
       if (n === 768) return 'tablet';
       if (n === 900) return 'mid';
       if (n === 1280) return 'desktop';
+      if (n === 1600) return 'wide1600';
+      if (n === 1920) return 'wide1920';
       return 'full';
     } catch {
       return 'full';
@@ -175,7 +180,7 @@
       'box-shadow:0 10px 40px -12px rgba(0,0,0,0.55)',
       'font:600 12px/1.2 system-ui,sans-serif',
       'color:#e8eaed',
-      'max-width:min(98vw,520px)',
+      'max-width:min(98vw,720px)',
       'pointer-events:auto',
     ].join(';');
 

@@ -1,0 +1,243 @@
+/**
+ * Lab local — options grand écran (focus-group à venir)
+ * ─────────────────────────────────────────────────────
+ * Activé via ?wide=a|b|c|d|e (data-wide-preview sur <html>).
+ * Ne s’applique qu’à ≥1280 px (ou ≥1400 pour D/E) pour ne pas polluer
+ * tablette / mid. Barre radio volontairement gelée à 1180 px.
+ *
+ * A = status quo (aucune règle layout)
+ * B = shell large, magazine inchangé
+ * C = shell + densité mât/sources + suite 3 col
+ * D = grille presse (une 2col, en bref 2col, suite 4col)
+ * E = sources en rail gauche sticky + shell large
+ */
+
+/* ── Radio gelée (toutes options sauf A/off) ─────────────────────── */
+@media (min-width: 1280px) {
+  html[data-wide-preview="b"] .tuner-inner,
+  html[data-wide-preview="c"] .tuner-inner,
+  html[data-wide-preview="d"] .tuner-inner,
+  html[data-wide-preview="e"] .tuner-inner {
+    max-width: 1180px !important;
+  }
+}
+
+/* ── B — Conteneur large, magazine inchangé ──────────────────────── */
+@media (min-width: 1280px) {
+  html[data-wide-preview="b"] {
+    --maxw: 1480px;
+  }
+
+  html[data-wide-preview="b"] .masthead-inner {
+    max-width: 1480px;
+  }
+}
+
+/* ── C — Shell large + densité mât / sources / suite ─────────────── */
+@media (min-width: 1280px) {
+  html[data-wide-preview="c"] {
+    --maxw: 1560px;
+  }
+
+  html[data-wide-preview="c"] .masthead-inner {
+    max-width: 1560px;
+  }
+
+  html[data-wide-preview="c"] .filters {
+    justify-content: flex-start;
+  }
+
+  html[data-wide-preview="c"] .news-list {
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 400px);
+  }
+
+  html[data-wide-preview="c"] .news-tail-body {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 28px;
+  }
+}
+
+/* ── D — Grille presse grand format ──────────────────────────────── */
+@media (min-width: 1400px) {
+  html[data-wide-preview="d"] {
+    --maxw: 1680px;
+  }
+
+  html[data-wide-preview="d"] .masthead-inner {
+    max-width: 1680px;
+  }
+
+  html[data-wide-preview="d"] .filters {
+    justify-content: flex-start;
+  }
+
+  html[data-wide-preview="d"] .news-list {
+    grid-template-columns: minmax(0, 1.35fr) minmax(400px, 540px);
+  }
+
+  /* À la une : lead pleine largeur, vedettes en 2 colonnes */
+  html[data-wide-preview="d"] .news-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 28px;
+    row-gap: 0;
+    padding-right: 28px;
+    height: auto;
+  }
+
+  html[data-wide-preview="d"] .news-hero .article--lead {
+    grid-column: 1 / -1;
+  }
+
+  html[data-wide-preview="d"] .news-hero .article--feature {
+    padding-right: 0;
+    min-width: 0;
+  }
+
+  html[data-wide-preview="d"] .news-hero-spacer {
+    display: none !important;
+  }
+
+  /* En bref : 2 colonnes */
+  html[data-wide-preview="d"] .brief-rail {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 16px;
+    align-content: start;
+    height: auto;
+  }
+
+  html[data-wide-preview="d"] .brief-rail-title {
+    grid-column: 1 / -1;
+  }
+
+  html[data-wide-preview="d"] .brief-rail .article--compact {
+    min-width: 0;
+  }
+
+  html[data-wide-preview="d"] .brief-rail-spacer {
+    display: none !important;
+  }
+
+  /* Suite du fil : 4 colonnes */
+  html[data-wide-preview="d"] .news-tail-body {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: 22px;
+  }
+}
+
+/* ── E — Sources rail gauche sticky ──────────────────────────────── */
+@media (min-width: 1400px) {
+  html[data-wide-preview="e"] {
+    --maxw: min(1760px, calc(100vw - 40px));
+  }
+
+  html[data-wide-preview="e"] .masthead-inner {
+    max-width: var(--maxw);
+  }
+
+  html[data-wide-preview="e"] .wire {
+    max-width: var(--maxw);
+    display: grid;
+    grid-template-columns: minmax(210px, 270px) minmax(0, 1fr);
+    column-gap: 28px;
+    align-items: start;
+  }
+
+  html[data-wide-preview="e"] .wire-head {
+    grid-column: 1 / -1;
+  }
+
+  html[data-wide-preview="e"] .filters-panel {
+    grid-column: 1;
+    grid-row: 2;
+    position: sticky;
+    top: 12px;
+    max-height: calc(100dvh - 24px);
+    overflow: auto;
+    margin-bottom: 0;
+    padding-right: 4px;
+    /* Toutes les sources visibles dans le rail */
+    --filters-collapsed-rows: 99;
+  }
+
+  html[data-wide-preview="e"] .filters-panel:not(.is-expanded):not(.is-compact) .filters {
+    max-height: none;
+    overflow: visible;
+  }
+
+  html[data-wide-preview="e"] .filters-panel.has-overflow::after,
+  html[data-wide-preview="e"] .filters-toggle,
+  html[data-wide-preview="e"] .filters-panel.has-overflow:not(.is-expanded) .filters-toggle {
+    display: none !important;
+  }
+
+  html[data-wide-preview="e"] .filters {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  html[data-wide-preview="e"] .filters .filter-btn {
+    width: 100% !important;
+    max-width: none;
+    flex: 0 0 auto;
+  }
+
+  html[data-wide-preview="e"] .news-list {
+    grid-column: 2;
+    grid-row: 2;
+    grid-template-columns: minmax(0, 1.2fr) minmax(300px, 380px);
+  }
+
+  html[data-wide-preview="e"] .news-tail-body {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 24px;
+  }
+}
+
+/* ── Badge discret (quelle option est active) ────────────────────── */
+#wide-desktop-badge {
+  position: fixed;
+  z-index: 9999;
+  top: max(10px, env(safe-area-inset-top));
+  right: max(10px, env(safe-area-inset-right));
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(18, 20, 24, 0.92);
+  color: #e8eaed;
+  font: 600 11px/1.2 system-ui, sans-serif;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+  box-shadow: 0 8px 28px -10px rgba(0, 0, 0, 0.5);
+}
+
+#wide-desktop-badge[data-wide="off"],
+#wide-desktop-badge:not([data-wide]) {
+  display: none;
+}
+
+/* Barre lab un peu plus large quand on ajoute la rangée Wide */
+#local-lab-format-bar.wide-lab-bar {
+  max-width: min(98vw, 720px) !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 6px !important;
+}
+
+#local-lab-format-bar .wide-lab-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+}
+
+#local-lab-format-bar .wide-lab-hint {
+  opacity: 0.48;
+  font-size: 10px;
+  margin-left: 2px;
+  font-weight: 500;
+  max-width: 42ch;
+}
