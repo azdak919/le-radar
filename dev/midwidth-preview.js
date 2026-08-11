@@ -1,26 +1,23 @@
 /**
- * Lab local LE-RADAR — formats d’écran + variants midwidth fil
- * ─────────────────────────────────────────────────────────────
- * Visible uniquement sur localhost / 127.0.0.1 (ou ?midwidth= / ?lab=1).
+ * Lab local LE-RADAR — formats d’écran seulement
+ * ─────────────────────────────────────────────
+ * Visible uniquement sur localhost / 127.0.0.1 (ou ?lab=1).
  * Ne s’injecte pas dans l’iframe lab (`?labFrame=1`) ni en prod le-radar.ca.
  *
  * Formats : largeur d’iframe (media queries réelles) — 390 / 768 / 900 / 1280 / plein.
- * Midwidth : focus-group midwidth-fil — D actuel · A densifié · C hybride.
+ * URL : ?lab=390
  *
- * URL : ?lab=390&midwidth=C
+ * Note : les variants « Fil mid » A/C/D (focus-group midwidth-fil) sont
+ * retirés de la barre — le verdict C est le comportement prod ; plus besoin
+ * de les comparer en lecture quotidienne.
  */
 (function () {
   'use strict';
 
-  const MID_PARAM = 'midwidth';
   const LAB_PARAM = 'lab';
   const FRAME_PARAM = 'labFrame';
-
-  const MID_MODES = {
-    D: { id: 'D', label: 'D · Actuel', hint: 'Status quo · magazine ≥1100' },
-    A: { id: 'A', label: 'A · Densité', hint: '1 col densifiée ≤1099' },
-    C: { id: 'C', label: 'C · Hybride', hint: 'Verdict · densify + magazine mid ≥900' },
-  };
+  /** Ancien param focus-group — purgé des URL pour ne plus polluer. */
+  const LEGACY_MID_PARAM = 'midwidth';
 
   /** Formats d’écran (largeur iframe en px). null = page pleine fenêtre. */
   const FORMATS = {
@@ -50,21 +47,9 @@
     if (isLabFrame()) return false;
     if (isLocalHost()) return true;
     try {
-      const u = new URL(location.href);
-      return u.searchParams.has(MID_PARAM) || u.searchParams.has(LAB_PARAM);
+      return new URL(location.href).searchParams.has(LAB_PARAM);
     } catch {
       return false;
-    }
-  }
-
-  function currentMid() {
-    try {
-      const raw = new URL(location.href).searchParams.get(MID_PARAM);
-      if (!raw) return 'D';
-      const m = String(raw).toUpperCase();
-      return MID_MODES[m] ? m : 'D';
-    } catch {
-      return 'D';
     }
   }
 
@@ -72,7 +57,6 @@
     try {
       const raw = new URL(location.href).searchParams.get(LAB_PARAM);
       if (!raw || raw === '1' || raw === 'full') return 'full';
-      // allow ?lab=390 or ?lab=phone
       if (FORMATS[raw]) return raw;
       const n = parseInt(raw, 10);
       if (n === 390) return 'phone';
@@ -86,28 +70,19 @@
     }
   }
 
-  function applyMidMode(mode) {
-    const m = MID_MODES[mode] ? mode : 'D';
-    if (m === 'D') delete document.documentElement.dataset.midwidthPreview;
-    else document.documentElement.dataset.midwidthPreview = m;
-    return m;
-  }
-
-  function buildUrl({ format, mid }) {
+  function buildUrl({ format }) {
     const u = new URL(location.href);
     u.searchParams.delete(FRAME_PARAM);
-    if (!mid || mid === 'D') u.searchParams.delete(MID_PARAM);
-    else u.searchParams.set(MID_PARAM, mid);
+    u.searchParams.delete(LEGACY_MID_PARAM);
     if (!format || format === 'full') u.searchParams.delete(LAB_PARAM);
     else u.searchParams.set(LAB_PARAM, String(FORMATS[format]?.w || format));
     return u.pathname + u.search + u.hash;
   }
 
-  function frameSrc({ format, mid }) {
+  function frameSrc() {
     const u = new URL(location.href);
     u.searchParams.set(FRAME_PARAM, '1');
-    if (!mid || mid === 'D') u.searchParams.delete(MID_PARAM);
-    else u.searchParams.set(MID_PARAM, mid);
+    u.searchParams.delete(LEGACY_MID_PARAM);
     // L’iframe a sa propre largeur : pas besoin de ?lab= dans le frame
     u.searchParams.delete(LAB_PARAM);
     return u.pathname + u.search + u.hash;
@@ -117,21 +92,30 @@
     location.assign(buildUrl(opts));
   }
 
-  // Appliquer le mode midwidth sur la page courante (plein écran ou frame).
-  const mid = applyMidMode(currentMid());
+  // Ne plus activer data-midwidth-preview (A/C) — prod = verdict C.
+  try {
+    delete document.documentElement.dataset.midwidthPreview;
+  } catch { /* ignore */ }
+
+  // Purger ?midwidth= des signets / liens collés (une fois).
+  try {
+    const u = new URL(location.href);
+    if (u.searchParams.has(LEGACY_MID_PARAM) && !isLabFrame()) {
+      u.searchParams.delete(LEGACY_MID_PARAM);
+      history.replaceState(null, '', u.pathname + u.search + u.hash);
+    }
+  } catch { /* ignore */ }
+
   const format = currentFormat();
 
-  function btnStyle(active, accent) {
-    if (active && accent === 'red') {
-      return 'appearance:none;cursor:pointer;border-radius:999px;padding:6px 10px;font:600 11px/1 system-ui,sans-serif;border:1px solid #c8102e;background:#c8102e;color:#fff';
-    }
+  function btnStyle(active) {
     if (active) {
       return 'appearance:none;cursor:pointer;border-radius:999px;padding:6px 10px;font:600 11px/1 system-ui,sans-serif;border:1px solid #6c2163;background:#6c2163;color:#fff';
     }
     return 'appearance:none;cursor:pointer;border-radius:999px;padding:6px 10px;font:600 11px/1 system-ui,sans-serif;border:1px solid rgba(255,255,255,0.16);background:rgba(255,255,255,0.06);color:#e8eaed';
   }
 
-  function ensureFrameShell(fmtKey, midKey) {
+  function ensureFrameShell(fmtKey) {
     const fmt = FORMATS[fmtKey] || FORMATS.full;
     let shell = document.getElementById('local-lab-shell');
     let frame = document.getElementById('local-lab-frame');
@@ -160,17 +144,19 @@
 
     shell.dataset.width = String(fmt.w);
     shell.style.width = `${fmt.w}px`;
-    frame.src = frameSrc({ format: fmtKey, mid: midKey });
+    frame.src = frameSrc();
   }
 
   function injectBar() {
     if (!shouldShowBar()) return;
-    if (document.getElementById('midwidth-preview-bar')) return;
+    if (document.getElementById('local-lab-format-bar')) return;
 
     const bar = document.createElement('div');
-    bar.id = 'midwidth-preview-bar';
+    bar.id = 'local-lab-format-bar';
+    // Ancien id gardé en alias pour CSS éventuel / signets CSS.
+    bar.className = 'midwidth-preview-bar';
     bar.setAttribute('role', 'region');
-    bar.setAttribute('aria-label', 'Lab local — formats et midwidth');
+    bar.setAttribute('aria-label', 'Lab local — formats d’écran');
     bar.style.cssText = [
       'position:fixed',
       'z-index:10000',
@@ -178,8 +164,9 @@
       'bottom:max(12px, env(safe-area-inset-bottom))',
       'transform:translateX(-50%)',
       'display:flex',
-      'flex-direction:column',
-      'gap:6px',
+      'flex-wrap:wrap',
+      'align-items:center',
+      'gap:5px',
       'padding:8px 10px',
       'border-radius:14px',
       'border:1px solid rgba(255,255,255,0.14)',
@@ -188,33 +175,30 @@
       'box-shadow:0 10px 40px -12px rgba(0,0,0,0.55)',
       'font:600 12px/1.2 system-ui,sans-serif',
       'color:#e8eaed',
-      'max-width:min(98vw,640px)',
+      'max-width:min(98vw,520px)',
       'pointer-events:auto',
     ].join(';');
 
-    // ── Ligne formats ──────────────────────────────────────────────
-    const rowFmt = document.createElement('div');
-    rowFmt.style.cssText = 'display:flex;flex-wrap:wrap;align-items:center;gap:5px';
     const tagF = document.createElement('span');
     tagF.textContent = 'Format';
     tagF.style.cssText = 'opacity:0.55;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;margin-right:2px';
-    rowFmt.appendChild(tagF);
+    bar.appendChild(tagF);
 
     Object.keys(FORMATS).forEach((key) => {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.textContent = FORMATS[key].label;
       btn.title = FORMATS[key].hint;
-      btn.style.cssText = btnStyle(key === format, 'purple');
+      btn.style.cssText = btnStyle(key === format);
       btn.addEventListener('click', () => {
         if (key === format) return;
-        navigateTo({ format: key, mid });
+        navigateTo({ format: key });
       });
-      rowFmt.appendChild(btn);
+      bar.appendChild(btn);
     });
 
     const w = document.createElement('span');
-    w.id = 'midwidth-preview-w';
+    w.id = 'local-lab-format-w';
     w.style.cssText = 'opacity:0.5;font-size:10px;margin-left:4px;font-variant-numeric:tabular-nums';
     const paintW = () => {
       const fw = FORMATS[format]?.w;
@@ -222,36 +206,12 @@
     };
     paintW();
     window.addEventListener('resize', paintW, { passive: true });
-    rowFmt.appendChild(w);
-    bar.appendChild(rowFmt);
-
-    // ── Ligne midwidth fil ─────────────────────────────────────────
-    const rowMid = document.createElement('div');
-    rowMid.style.cssText = 'display:flex;flex-wrap:wrap;align-items:center;gap:5px';
-    const tagM = document.createElement('span');
-    tagM.textContent = 'Fil mid';
-    tagM.style.cssText = 'opacity:0.55;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;margin-right:2px';
-    rowMid.appendChild(tagM);
-
-    Object.keys(MID_MODES).forEach((key) => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.textContent = MID_MODES[key].label;
-      btn.title = MID_MODES[key].hint;
-      btn.style.cssText = btnStyle(key === mid, 'red');
-      btn.addEventListener('click', () => {
-        if (key === mid) return;
-        navigateTo({ format, mid: key });
-      });
-      rowMid.appendChild(btn);
-    });
-    bar.appendChild(rowMid);
+    bar.appendChild(w);
 
     document.body.appendChild(bar);
 
-    // Shell iframe si format ≠ plein
     if (format !== 'full') {
-      ensureFrameShell(format, mid);
+      ensureFrameShell(format);
     }
   }
 
@@ -261,10 +221,9 @@
     injectBar();
   }
 
-  // Hook pour app.js (balance magazine dès 900 en mode C).
+  // Hook minimal pour app.js (magazine mid prod dès 900 px).
   window.__radarMidwidthPreview = {
-    mode: () => currentMid(),
     format: () => currentFormat(),
-    magazineMinPx: () => (currentMid() === 'A' ? 1100 : 900),
+    magazineMinPx: () => 900,
   };
 })();

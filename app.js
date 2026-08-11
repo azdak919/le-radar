@@ -9876,30 +9876,26 @@ function partitionNewsFeed(items, referenceDate = new Date()) {
 }
 
 /**
- * Magazine 2 col dès 900 px (focus-group midwidth-fil C — hybride).
+ * Magazine 2 col dès 900 px (focus-group midwidth-fil C — hybride, livré).
  * · 900–1099 : magazine mid (rail étroit)
  * · ≥1100 : magazine bureau
  * Recherche = liste plate — pas d’équilibre colonnes.
+ * (Lab local : plus d’overrides A/C — barre = formats d’écran seulement.)
  */
 function canBalanceMagazineColumns() {
   if (!NEWS_LIST) return false;
   if (NEWS_LIST.dataset.mode === 'search') return false;
-  // Override local preview A (densify seul) : pas de magazine mid.
-  if (document.documentElement.dataset.midwidthPreview === 'A') return false;
-  const minPx = (typeof window.__radarMidwidthPreview?.magazineMinPx === 'function'
-    && document.documentElement.dataset.midwidthPreview)
+  const minPx = (typeof window.__radarMidwidthPreview?.magazineMinPx === 'function')
     ? window.__radarMidwidthPreview.magazineMinPx()
     : 900;
   return window.matchMedia(`(min-width: ${minPx}px)`).matches;
 }
 
 /**
- * Magazine mid 900–1099 (prod) — ou preview C forcée.
+ * Magazine mid 900–1099 (prod).
  * Rail étroit → cartes En bref plus hautes ; budgets d’extrait MID.
  */
 function isMidwidthMagazinePreview() {
-  // Preview A = densify 1 col seulement.
-  if (document.documentElement.dataset.midwidthPreview === 'A') return false;
   try {
     return window.matchMedia('(min-width: 900px) and (max-width: 1099.98px)').matches;
   } catch {
