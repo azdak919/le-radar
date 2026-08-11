@@ -998,15 +998,34 @@ assert(
     .replace(/\/\/[^\n]*/g, ' ');
   const sportsTextBlocks = [
     ...styleCss.matchAll(/\.sports-chip__line-inner\s*\{[^}]*\}/g),
+    ...styleCss.matchAll(/\.sports-chip__sub-text\s*\{[^}]*\}/g),
     ...styleCss.matchAll(/\.sports-chip__cta-text\s*\{[^}]*\}/g),
     ...styleCss.matchAll(/\.sports-chip__cta-sub-text\s*\{[^}]*\}/g),
   ].map((m) => stripCssComments(m[0]));
   assert(
     sportsTextBlocks.length >= 3
       && sportsTextBlocks.every((block) => !/text-overflow\s*:\s*ellipsis/.test(block)),
-    'style : aucun text-overflow:ellipsis sur line-inner / cta-text / cta-sub-text',
+    'style : aucun text-overflow:ellipsis sur line-inner / sub-text / cta-text / cta-sub-text',
   );
 }
+// Puces scores 2 lignes : noms en clair + date ; overflow → marquee L→R (mêmes
+// keyframes / durée que la CTA), jamais d’ellipsis « … ».
+assert(
+  appJs.includes('sports-chip--match')
+    && appJs.includes('sports-chip__body')
+    && appJs.includes('sports-chip__sub-text')
+    && appJs.includes('sportsPlainTeamName')
+    && appJs.includes("g.home === false ? 'à' : 'reçoit'")
+    && styleCss.includes('sports-chip--match')
+    && styleCss.includes('sports-chip__body')
+    && styleCss.includes('.sports-chip--match .sports-chip__sub')
+    && /:not\(\.sports-chip--cta\)\.is-overflowing \.sports-chip__line-inner/.test(cssFlat)
+    && /:not\(\.sports-chip--cta\)\.is-sub-overflowing \.sports-chip__sub-text/.test(cssFlat)
+    && styleCss.includes('@keyframes sports-chip-scroll')
+    && styleCss.includes('@keyframes sports-chip-scroll-sub')
+    && styleCss.includes('--sports-scroll-duration: 5.5s'),
+  'puces scores : 2 lignes noms+date ; marquee L→R titre+sous-ligne (parité CTA, 0 ellipsis)',
+);
 // Puces scores : indépendantes + dwell lecture + marquee aller-retour complet.
 assert(
   appJs.includes('scheduleSportsSlot')

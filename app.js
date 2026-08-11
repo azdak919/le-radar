@@ -2572,14 +2572,11 @@ function sportsOrderedKeys(bestMap) {
 }
 
 /**
- * Accroche CTA = même info qu’une chip score (codes + score/date).
- * Ex. « GAR vs LEN · 28 août · 19 h 30 » ou « MCG 1/9 MID ».
- */
-/**
  * Nom d’établissement en clair — garde-fou `noms-lisibles`
  * (focus-group le-radar-sports-first-glance). Un sigle seul (« LÉV vs THE »)
  * n’est décodable que par ceux qui suivent déjà la ligue ; le corpus porte les
- * noms, il n’y a aucune raison de les jeter.
+ * noms, il n’y a aucune raison de les jeter. Puces scores (gauche) et CTA
+ * partagent cette face lisible (2 lignes : noms / date).
  */
 function sportsPlainTeamName(team) {
   const name = String(team?.name || '').trim();
@@ -3309,8 +3306,11 @@ function refreshSportsChipScroll(chipOrRoot = null) {
     }
 
     if (!isCta) {
+      // Puces scores 2 lignes : titre (noms) + sous-ligne (date) mesurés à part.
       const viewport = chip.querySelector('.sports-chip__line');
       const inner = chip.querySelector('.sports-chip__line-inner');
+      const subView = chip.querySelector('.sports-chip__sub');
+      const subInner = chip.querySelector('.sports-chip__sub-text');
       if (!viewport || !inner) {
         chip.classList.remove('is-overflowing', 'is-sub-overflowing');
         chip.style.removeProperty('--sports-scroll');
@@ -3318,11 +3318,20 @@ function refreshSportsChipScroll(chipOrRoot = null) {
         return;
       }
       const hadOverflow = chip.classList.contains('is-overflowing');
+      const hadSub = chip.classList.contains('is-sub-overflowing');
       const overflow = sportsMeasureOverflow(viewport, inner, hadOverflow);
+      const subOverflow = (subView && subInner)
+        ? sportsMeasureOverflow(subView, subInner, hadSub)
+        : 0;
       sportsApplyScrollState(chip, {
         flag: 'is-overflowing',
         prop: '--sports-scroll',
         overflow,
+      });
+      sportsApplyScrollState(chip, {
+        flag: 'is-sub-overflowing',
+        prop: '--sports-scroll-sub',
+        overflow: subOverflow,
       });
       return;
     }
@@ -3508,15 +3517,13 @@ function paintSportsChip(slide, animate = false) {
   }
 
   const team = slide.team;
-  // Sigle RSEQ (THE, SL, OUT…) : rendu `notranslate` / translate="no" plus bas —
-  // un moteur MT y voit des mots (« THE » → « LE », « OUT » → « DEHORS »).
-  const code = String(team.code || 'EQ').toUpperCase().slice(0, 4);
-  const sport = slide.game.sport || team.sport || '';
+  const g = slide.game || {};
+  const sport = g.sport || team.sport || '';
   const tone = slide.tone || sportsSlideTone(slide);
   // Clic principal → page SEO locale (nouvel onglet, radio intacte).
   const href = sportsBoardHref(slide);
   const a = document.createElement('a');
-  a.className = 'sports-chip';
+  a.className = 'sports-chip sports-chip--match';
   a.href = href;
   markSportsBoardLink(a);
   if (animate && !sportsReducedMotion) a.classList.add('is-arriving');
@@ -3530,13 +3537,28 @@ function paintSportsChip(slide, animate = false) {
   glyph.setAttribute('aria-hidden', 'true');
   glyph.textContent = sportsGlyph(sport);
 
+  /*
+   * Deux lignes comme la CTA, dans la largeur plus étroite des puces scores :
+   *   haut  — noms en clair (même verbe « reçoit / à » que l’accroche SPORTS)
+   *   bas   — date · heure (plus le méta « Saison précédente » si besoin)
+   * Marquee L→R par ligne si overflow — jamais de sigles RSEQ seuls.
+   */
+  const body = document.createElement('span');
+  body.className = 'sports-chip__body';
   const line = document.createElement('span');
   line.className = 'sports-chip__line';
   const inner = document.createElement('span');
   inner.className = 'sports-chip__line-inner';
+  const sub = document.createElement('span');
+  sub.className = 'sports-chip__sub';
+  const subText = document.createElement('span');
+  subText.className = 'sports-chip__sub-text';
+
+  const home = sportsPlainTeamName(team);
+  const opp = sportsPlainOpponentName(g);
+  const when = formatSportsWhen(g.date, g.time);
 
   if (slide.mode === 'result') {
-    const g = slide.game;
     const badge = g.result === 'W' ? 'V' : g.result === 'L' ? 'D' : 'N';
     const badgeMod = g.result === 'W' ? 'w' : g.result === 'L' ? 'l' : 'd';
     const badgeEl = document.createElement('span');
@@ -3544,33 +3566,34 @@ function paintSportsChip(slide, animate = false) {
     badgeEl.textContent = badge;
     badgeEl.setAttribute('aria-hidden', 'true');
     a.append(glyph, badgeEl);
-    const opp = String(g.opponentCode || g.opponent || 'ADV').toUpperCase().slice(0, 4);
     const placeKind = g.scoreKind === 'place' || sport === 'sailing';
     const scoreTxt = placeKind
       ? `${g.scoreFor}/${g.scoreAgainst}`
       : `${g.scoreFor}–${g.scoreAgainst}`;
     const prior = g.priorSeason || team.lastGamePriorSeason;
-    inner.innerHTML = `<span class="sports-chip__code notranslate" translate="no">${escapeHtml(code)}</span> `
+    inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
       + `<span class="sports-chip__score">${escapeHtml(String(scoreTxt))}</span> `
-      + `<span class="sports-chip__code sports-chip__opp notranslate" translate="no">${escapeHtml(opp)}</span>`
-      + (prior ? ` <span class="sports-chip__season-meta">Saison précédente</span>` : '');
+      + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
+    const subParts = [when, prior ? 'Saison précédente' : ''].filter(Boolean);
+    subText.textContent = subParts.join(' · ');
     if (prior) a.classList.add('sports-chip--prior-season');
     a.title = sportsChipTitle(slide) + (prior ? ' · Saison précédente' : '');
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
   } else {
     a.append(glyph);
-    const n = slide.game;
-    const opp = String(n.opponentCode || n.opponent || 'ADV').toUpperCase().slice(0, 4);
-    const when = formatSportsWhen(n.date, n.time);
-    inner.innerHTML = `<span class="sports-chip__code notranslate" translate="no">${escapeHtml(code)}</span> `
-      + `<span class="sports-chip__vs">vs</span> `
-      + `<span class="sports-chip__code sports-chip__opp notranslate" translate="no">${escapeHtml(opp)}</span>`
-      + (when ? ` · <span class="sports-chip__when">${escapeHtml(when)}</span>` : '');
+    // Même face éditoriale que la CTA : domicile « reçoit », extérieur « à ».
+    const verb = g.home === false ? 'à' : 'reçoit';
+    inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+      + `<span class="sports-chip__vs">${escapeHtml(verb)}</span> `
+      + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
+    subText.textContent = when || '';
     a.title = sportsChipTitle(slide);
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
   }
   line.append(inner);
-  a.append(line);
+  sub.append(subText);
+  body.append(line, sub);
+  a.append(body);
   if (animate && !sportsReducedMotion) {
     window.setTimeout(() => a.classList.remove('is-arriving'), SPORTS_ARRIVE_MS);
   }
@@ -3831,8 +3854,12 @@ function sportsChipNeedsMarquee(chip) {
   if (!isCta) {
     const viewport = chip.querySelector('.sports-chip__line');
     const inner = chip.querySelector('.sports-chip__line-inner');
-    if (!viewport || !inner) return false;
-    return sportsMeasureOverflow(viewport, inner, false) > 2;
+    if (viewport && inner && sportsMeasureOverflow(viewport, inner, false) > 2) {
+      return true;
+    }
+    const subView = chip.querySelector('.sports-chip__sub');
+    const subInner = chip.querySelector('.sports-chip__sub-text');
+    return !!(subView && subInner && sportsMeasureOverflow(subView, subInner, false) > 2);
   }
   const layer = sportsCtaActiveLabel(chip);
   if (!layer) return false;
@@ -3864,7 +3891,7 @@ function sportsSlotDwellMs(slot) {
     : chip?.querySelector('.sports-chip__line-inner');
   const subEl = isCta
     ? sportsCtaActiveLabel(chip)?.querySelector('.sports-chip__cta-sub-text')
-    : null;
+    : chip?.querySelector('.sports-chip__sub-text');
   const label = [labelEl?.textContent || '', subEl?.textContent || '']
     .filter(Boolean)
     .join(' · ');
