@@ -36,7 +36,7 @@
     b: { id: 'b', label: 'B', hint: 'Shell ~1480 — magazine inchangé' },
     c: { id: 'c', label: 'C', hint: 'Shell ~1560 — sources 2 rangées, suite 3 col' },
     d: { id: 'd', label: 'D', hint: 'Shell ~1680 — une 2col, en bref 2col, suite 4col' },
-    e: { id: 'e', label: 'E', hint: 'Shell ~1760 — sources rail gauche sticky' },
+    e: { id: 'e', label: 'E', hint: 'Rail sources + en bref 2–3 col · super-wide ≥1680' },
   };
 
   function isLabFrame() {
