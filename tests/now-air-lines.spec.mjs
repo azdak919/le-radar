@@ -345,6 +345,8 @@ test('une ligne d’antenne qui ne dit que le slogan ne déclenche pas d’alter
 });
 
 test('hors écoute (B) : L1 identité poste, L2 une seule face antenne (pas de soupe)', async ({ page }) => {
+  // Téléphone : acronyme + L2 sans horaire (mid 768/900 a sa propre règle).
+  await page.setViewportSize({ width: 390, height: 844 });
   await pure(page);
 
   // focus-group le-radar-tuner-dial-info-900 — B idle :
@@ -394,6 +396,7 @@ test('hors écoute (B) : L1 identité poste, L2 une seule face antenne (pas de s
 });
 
 test('en écoute (E) : ordre primaire émission → piste → à venir (filet, pas soupe)', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
   await pure(page);
 
   const perStation = await page.evaluate(async () => {
@@ -425,13 +428,81 @@ test('en écoute (E) : ordre primaire émission → piste → à venir (filet, p
       expect(liveIdx, `${st.id} : émission avant à venir — ${JSON.stringify(st.kinds)}`)
         .toBeLessThan(upIdx);
     }
-    // Primaire live : pas d’horaire collé dans la même ligne que le titre
+    // Primaire live (téléphone) : pas d’horaire collé dans la même ligne que le titre
     if (liveIdx >= 0) {
       const liveLine = st.lines[liveIdx];
       expect(
         liveLine,
         `${st.id} : horaire collé à l’émission — ${liveLine}`,
       ).not.toMatch(/À l['’]antenne · .+ · \d{1,2}:\d{2}/);
+    }
+  }
+});
+
+test('mid 768/900 : institution complète + heures pour combler le vide', async ({ page }) => {
+  // Formats midwidth-preview 768 et 900 uniquement (pas 390, pas ≥1100).
+  for (const width of [768, 900]) {
+    await page.setViewportSize({ width, height: 900 });
+    await pure(page);
+
+    const report = await page.evaluate(async () => {
+      const P = window.RadarAir._pure;
+      const mid = P.isTunerDialMidLayout();
+      const radios = await fetch('./radios.json').then((r) => r.json());
+      return {
+        mid,
+        rows: radios.map((r) => {
+          const phases = P.airRotationPhases(r, { withSlogan: false });
+          const live = phases.find((p) => p.kind === 'live' && !String(p.title || '').startsWith('♪'));
+          const time = live ? String(live.sub || '').trim() : '';
+          const hasTime = /^\d{1,2}:\d{2}/.test(time);
+          const l1 = P.compactDialTitleLine(r);
+          const l2 = P.idleDialStoryLine(r);
+          const liveLine = P.dialPhaseLinesForRadio(r).find((line) =>
+            /À l['’]antenne/.test(line));
+          return {
+            id: r.id,
+            inst: r.institution,
+            l1,
+            l2,
+            liveLine: liveLine || '',
+            hasTime,
+            time,
+          };
+        }),
+      };
+    });
+
+    expect(report.mid, `isTunerDialMidLayout @ ${width}`).toBe(true);
+
+    for (const st of report.rows) {
+      if (st.inst) {
+        // L1 porte le nom complet (ou une forme longue), pas seulement l’acronyme court.
+        const acrOnly = /^(ULaval|UdeM|UdeS|UQAM|McGill|Concordia)$/;
+        const tail = st.l1.split('·').map((s) => s.trim()).pop();
+        expect(
+          tail && !acrOnly.test(tail),
+          `${st.id} @ ${width} : institution complète attendue en L1 — ${st.l1}`,
+        ).toBeTruthy();
+        // Le nom source (souvent déjà long) doit apparaître ou une forme élargie.
+        const instNorm = String(st.inst).toLowerCase();
+        const l1Norm = st.l1.toLowerCase();
+        const looksFull = l1Norm.includes(instNorm)
+          || /université|university|cégep|college|collège|polytechnique/.test(l1Norm);
+        expect(looksFull, `${st.id} @ ${width} : L1 pas assez long — ${st.l1}`).toBe(true);
+      }
+      if (st.hasTime) {
+        expect(
+          st.l2,
+          `${st.id} @ ${width} : horaire manquant en L2 idle — ${st.l2}`,
+        ).toMatch(/\d{1,2}:\d{2}/);
+        if (st.liveLine) {
+          expect(
+            st.liveLine,
+            `${st.id} @ ${width} : horaire manquant en face live — ${st.liveLine}`,
+          ).toMatch(/\d{1,2}:\d{2}/);
+        }
+      }
     }
   }
 });
