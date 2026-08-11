@@ -1569,6 +1569,23 @@ function isWideTunerLayout() {
   return isWideNoMarqueeMode();
 }
 
+
+/** Offset sticky du rail sources = hauteur réelle du synthé (+ petit entrefer). */
+function syncWideStickyTop() {
+  try {
+    if (!isWideTunerLayout()) {
+      document.documentElement.style.removeProperty('--wide-sticky-top');
+      return;
+    }
+    const tuner = document.getElementById('tuner');
+    const h = tuner ? Math.ceil(tuner.getBoundingClientRect().height) : 0;
+    // 8 px d’air entre le bas du synthé et « Le Radar »
+    const top = Math.max(64, h + 8);
+    document.documentElement.style.setProperty('--wide-sticky-top', `${top}px`);
+  } catch { /* ignore */ }
+}
+
+
 /** Institution en toutes lettres pour le dial wide (pas d’acronyme forcé). */
 function tunerFullInstitutionLabel(radio) {
   if (!radio) return '';
@@ -6678,6 +6695,7 @@ function renderTunerNowAir() {
     const radio = currentStation || (previewing ? nowAirPreviewRadio : null);
     paintWideNowAirPair(radio);
     paintWideDial(radio);
+    syncWideStickyTop();
     if (currentStation) {
       stopNowAirPreview();
       syncAirPanelRotate(currentStation);
@@ -9390,7 +9408,14 @@ function bindFiltersPanel() {
     try {
       renderTunerNowAir();
     } catch { /* ignore */ }
+    try {
+      syncWideStickyTop();
+      requestAnimationFrame(() => syncWideStickyTop());
+    } catch { /* ignore */ }
   });
+  window.addEventListener('resize', () => {
+    if (isWideTunerLayout()) syncWideStickyTop();
+  }, { passive: true });
 }
 
 function selectNewsSource(source) {

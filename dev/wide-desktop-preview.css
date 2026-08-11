@@ -352,14 +352,21 @@ html[data-wide-preview="e"] {
   html[data-wide-preview="e"] .filters-panel {
     grid-area: rail;
     position: sticky;
-    top: 12px;
+    /*
+     * Sous la barre radio sticky (z-index 100), pas top:12 — sinon « Le Radar »
+     * disparaît derrière le synthé au scroll. --wide-sticky-top mesuré en JS
+     * (hauteur réelle du #tuner) ; repli ~76 px (barre wide + padding).
+     */
+    top: var(--wide-sticky-top, 76px);
+    z-index: 50; /* sous le synthé (100), au-dessus du fil */
     align-self: start;
     width: 100%;
     min-width: 0;
     max-width: var(--wide-rail);
     justify-self: stretch;
     box-sizing: border-box;
-    max-height: calc(100dvh - 96px);
+    /* Hauteur utile : viewport − offset sticky − marge bas (lab bar / dock) */
+    max-height: calc(100dvh - var(--wide-sticky-top, 76px) - 88px);
     overflow-x: hidden;
     overflow-y: auto;
     margin: 0;
@@ -370,6 +377,12 @@ html[data-wide-preview="e"] {
     --filters-collapsed-rows: 99 !important;
     --filters-collapsed-h: none;
     --filters-peek: 0px;
+  }
+
+  /* « Le Radar » reste en tête du rail scrollable (sous le synthé, pas dessous) */
+  html[data-wide-preview="e"] .filters .filter-btn--all {
+    top: 0;
+    z-index: 3;
   }
 
   html[data-wide-preview="e"] .filters-panel:not(.is-expanded):not(.is-compact) .filters,
