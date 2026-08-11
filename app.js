@@ -2484,6 +2484,35 @@ function sportsRandomResultSlide(usedKeys) {
 }
 
 /**
+ * Codes / écoles hors focus LE-RADAR (RSEQ invitees hors Québec, etc.).
+ * On garde les matchs QC ↔ Ottawa vus **depuis** l’équipe québécoise
+ * (« UdeM reçoit uOttawa »), pas le point de vue « uOttawa à UdeM ».
+ */
+const SPORTS_OUT_OF_PROVINCE_CODES = new Set([
+  'OTT', // University of Ottawa
+  'CAR', // Carleton
+  'DAL', // Dalhousie
+  'UNB', // New Brunswick
+  'CMR', // Collège militaire royal (Kingston)
+]);
+
+/**
+ * Équipe « nôtre » pour le mât : campus / cégep du Québec seulement.
+ * province=QC si présent ; sinon denylist codes + heuristique de nom.
+ */
+function sportsTeamIsQuebecFocus(team) {
+  if (!team) return false;
+  if (team.province) return team.province === 'QC';
+  const code = String(team.code || '').toUpperCase();
+  if (SPORTS_OUT_OF_PROVINCE_CODES.has(code)) return false;
+  const blob = `${team.fullName || ''} ${team.name || ''} ${team.school || ''} ${team.institution || ''}`;
+  if (/University of Ottawa|Carleton University|Dalhousie|University of New Brunswick|Royal Military College/i.test(blob)) {
+    return false;
+  }
+  return true;
+}
+
+/**
  * Construit le pool de slides mât :
  *  - tous les résultats passés (lastGame)
  *  - tous les matchs à venir (nextGame)
@@ -2496,12 +2525,15 @@ function buildSportsSlides(data) {
   if (!teams.length) return [];
   const now = Date.now();
 
-  // Voile : Québec seulement. Clubs watchlist sans match : hors strip.
+  // Focus Québec : pas de puces « uOttawa reçoit… » ; l’inverse (QC vs OTT)
+  // reste via l’équipe québécoise. Voile : hors QC. Clubs watchlist : hors strip.
   const eligible = teams.filter((team) => {
-    if (team.sport !== 'sailing') return true;
-    if (team.province && team.province !== 'QC') return false;
-    if (team.status === 'club' || team.status === 'upcoming') return false;
-    if (team.source === 'sailing-watchlist') return false;
+    if (!sportsTeamIsQuebecFocus(team)) return false;
+    if (team.sport === 'sailing') {
+      if (team.province && team.province !== 'QC') return false;
+      if (team.status === 'club' || team.status === 'upcoming') return false;
+      if (team.source === 'sailing-watchlist') return false;
+    }
     return true;
   });
 
