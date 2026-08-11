@@ -1798,6 +1798,12 @@ const SPORTS_CTA_UPCOMING_MS = 14 * 24 * 3600 * 1000;
 const SPORTS_MATCH_SCROLL_ONE_WAY_MS = 8000;
 /** Plafond faces CTA (jour lead + filet aujourd’hui/hier) — le-radar-cta-sports-window F. */
 const SPORTS_CTA_MAX_POOL = 16;
+/**
+ * Hors saison (aucun résultat aujourd’hui/hier) : alterner le **premier match**
+ * de chacun des **7 premiers jours civils** d’action à partir du jour lead
+ * (ex. 19→25 août), pas un seul match collé toute la semaine.
+ */
+const SPORTS_CTA_OFFSEASON_LEAD_DAYS = 7;
 /*
  * Registre d’alerte de la carte CTA — focus-group le-radar-sports-first-glance
  * (garde-fou `registre-alerte-reserve`) et le-radar-cta-sports-badge.
@@ -3046,15 +3052,17 @@ function sportsSoftSportDiversity(slides) {
 
 /**
  * Partage des rôles bandeau — focus-group `le-radar-cta-sports-window` F
- * + gate mainteneur filet **aujourd’hui + hier** (civil Toronto) :
+ * + gates mainteneur (civil aujourd’hui/hier ; hors saison 7 j) :
  *
- *  CTA (droite) = « le jour qui compte »
+ *  CTA (droite)
  *   • **résultats** : jour civil = aujourd’hui ou hier (QC)
- *   • **journée lead** : matchs `next` du prochain jour civil avec ≥1 coup d’envoi
- *   • pas de file multi-jours 14 j / max 36
+ *   • **en saison** (il y a des résultats frais) : prochains du **jour lead** seul
+ *   • **hors saison** (pas de résultat aujourd’hui/hier) : **1er match** de
+ *     chacun des **7 premiers jours** d’action à partir du jour lead, en
+ *     alternance (rotation CTA) — pas un seul match pendant des jours
  *   • dédup miroir + diversité sport souple ; plafond SPORTS_CTA_MAX_POOL
  *
- *  CARTES GAUCHE (indépendantes) — le-radar-sports-left-pool D
+ *  CARTES GAUCHE — le-radar-sports-left-pool D
  *   • Résultats &lt; 7 j + next appoint ; hors saison : prochains
  */
 /** Jour civil America/Toronto d’une slide match (YYYY-MM-DD). */
@@ -3139,9 +3147,31 @@ function sportsCtaCandidateSlides() {
     ? nexts.filter((s) => sportsSlideDayKey(s) === leadDay)
     : [];
 
-  // Pool : résultats aujourd’hui/hier d’abord, puis matchs du jour lead.
-  // includeLaterFilet=false : pas de prochains hors jour lead.
-  const raw = freshResults.concat(leadDayNexts);
+  /**
+   * Prochains dans le pool CTA :
+   * · Avec résultats frais (aujourd’hui/hier) → jour lead seulement.
+   * · Hors saison → 1er match de chaque jour sur 7 jours civils dès le lead,
+   *   pour que la carte alterne (ex. 19→25 août) au lieu d’un seul « Prochain ».
+   */
+  let nextPool = leadDayNexts;
+  if (!freshResults.length && leadDay) {
+    const endDay = sportsCivilDayShift(leadDay, SPORTS_CTA_OFFSEASON_LEAD_DAYS - 1);
+    const windowNexts = nexts.filter((s) => {
+      const day = sportsSlideDayKey(s);
+      return day && day >= leadDay && day <= endDay;
+    });
+    // nexts déjà triés bientôt-d’abord → premier vu par jour = premier match du jour
+    const firstByDay = new Map();
+    for (const s of windowNexts) {
+      const day = sportsSlideDayKey(s);
+      if (day && !firstByDay.has(day)) firstByDay.set(day, s);
+    }
+    const weekFirsts = [...firstByDay.values()];
+    if (weekFirsts.length) nextPool = weekFirsts;
+  }
+
+  // Pool : résultats aujourd’hui/hier d’abord, puis prochains (jour lead ou semaine hors saison).
+  const raw = freshResults.concat(nextPool);
   const deduped = sportsDedupeMatchSlides(raw);
   deduped.sort((a, b) => {
     const modeRank = (s) => (s.mode === 'result' ? 0 : 1);
