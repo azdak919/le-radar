@@ -138,9 +138,8 @@ body {
 }
 /*
  * Hauteur réservée — garde-fou `hauteur-stable` (focus-group
- * le-radar-sports-first-glance). La carte CTA fait deux lignes, les puces de
- * score une seule : sans plancher, la bande changeait de hauteur au premier
- * rendu et poussait le fil. Zéro décalage de mise en page.
+ * le-radar-sports-first-glance). CTA et puces scores sont en 2 lignes
+ * (noms + date) : plancher stable pour ne pas pousser le fil au 1er paint.
  */
 .masthead-sports-strip:not([hidden]) {
   min-height: 60px;
@@ -182,6 +181,23 @@ body {
     0 1px 2px rgba(0, 0, 0, 0.28),
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
     0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 22%, transparent);
+}
+/* Puces scores 2 lignes : noms en clair (haut) + date (bas), largeur flex. */
+.masthead-sports-strip .sports-chip--match {
+  white-space: normal;
+  align-items: center;
+  min-height: 44px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.masthead-sports-strip .sports-chip__body {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1px;
+  overflow: hidden;
 }
 /* Pulse de bordure pourpre : puces scores + CTA au repos (pas en direct —
  * le live a son propre halo rouge). Même famille visuelle sur toute la bande. */
@@ -295,6 +311,11 @@ body {
   min-width: 0;
   overflow: hidden;
 }
+.masthead-sports-strip .sports-chip--match .sports-chip__line {
+  flex: 0 0 auto;
+  display: block;
+  max-width: 100%;
+}
 .masthead-sports-strip .sports-chip__line-inner {
   display: inline-block;
   white-space: nowrap;
@@ -304,6 +325,39 @@ body {
    * texte entier. Au repos / avant mesure : clip net, pas trois points. */
   text-overflow: clip;
   vertical-align: middle;
+}
+/* Sous-ligne date des puces scores (parité visuelle cta-sub, largeur chip). */
+.masthead-sports-strip .sports-chip--match .sports-chip__sub {
+  display: block;
+  flex: 0 0 auto;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+  color: rgba(255, 255, 255, 0.72);
+}
+.masthead-sports-strip .sports-chip--match .sports-chip__sub-text {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+  vertical-align: middle;
+  font-variant-numeric: tabular-nums;
+}
+.masthead-sports-strip .sports-chip--match .sports-chip__name {
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: rgba(245, 246, 248, 0.96);
+}
+.masthead-sports-strip .sports-chip--match .sports-chip__line-inner {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.25;
 }
 /* Défilement L→R du texte trop long (scores ET accroche CTA SPORTS).
  * La pastille « SPORTS » reste fixe ; seul le texte d’info défile.
@@ -315,13 +369,24 @@ body {
    * partagent la même durée ; les holds (18/82 vs 32/68) restent distincts. */
   --sports-scroll-duration: 5.5s;
 }
-/* Marquee scores (gauche) — CTA a sa propre règle sur .is-front uniquement. */
+/*
+ * Marquee scores (gauche) — **mêmes règles que la CTA** :
+ * overflow mesuré → is-overflowing / is-sub-overflowing → animation L→R
+ * (sports-chip-scroll / sports-chip-scroll-sub, 5.5s alternate).
+ * Jamais text-overflow:ellipsis. Au repos : clip net, pas de « … ».
+ */
 .masthead-sports-strip .sports-chip:not(.sports-chip--cta).is-overflowing .sports-chip__line-inner {
   max-width: none;
   overflow: visible;
   text-overflow: clip;
-  /* Marquee L→R : le texte complet défile, jamais d’ellipsis figée. */
   animation: sports-chip-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  will-change: transform;
+}
+.masthead-sports-strip .sports-chip:not(.sports-chip--cta).is-sub-overflowing .sports-chip__sub-text {
+  max-width: none;
+  overflow: visible;
+  text-overflow: clip;
+  animation: sports-chip-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
   will-change: transform;
 }
 @keyframes sports-chip-scroll {
@@ -342,6 +407,7 @@ body {
  * complet ; le cadre clippe sans « … ». */
 @media (prefers-reduced-motion: reduce) {
   .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner,
+  .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub-text,
   .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__cta-text,
   .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__cta-sub-text {
     animation: none;
@@ -350,23 +416,25 @@ body {
     text-overflow: clip;
   }
 }
+/* Ancienne classe sigle : gardée si un autre surface la réutilise. */
 .masthead-sports-strip .sports-chip__code { font-weight: 800; letter-spacing: 0.03em; }
 .masthead-sports-strip .sports-chip__score {
   font-variant-numeric: tabular-nums;
   font-weight: 800;
   color: #fff;
-  margin: 0 1px;
+  margin: 0 2px;
 }
 .masthead-sports-strip .sports-chip__code,
 .masthead-sports-strip .sports-chip__opp,
-.masthead-sports-strip .sports-chip__when {
+.masthead-sports-strip .sports-chip__when,
+.masthead-sports-strip .sports-chip__name {
   color: rgba(245, 246, 248, 0.96);
 }
 .masthead-sports-strip .sports-chip__vs {
   opacity: 0.72;
   font-weight: 650;
   font-size: 0.92em;
-  text-transform: lowercase;
+  /* « reçoit / à » : pas de forced lowercase (verbe FR lisible). */
 }
 .masthead-sports-strip .sports-chip__when {
   opacity: 0.88;
