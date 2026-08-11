@@ -2508,7 +2508,8 @@ html[data-translate-busy="1"] .translate-toggle {
 .article-meta--time-only .article-time {
   margin-left: 0;
 }
-.article-meta--time-only .article-time::before {
+/* Point gris masqué (méta date seule) — la pastille rouge « frais » reste. */
+.article-meta--time-only .article-time:not(.is-fresh)::before {
   display: none;
 }
 /* Eyebrow / méta une : une seule source de vérité (voir .article-eyebrow plus bas). */
@@ -3072,10 +3073,14 @@ html[data-translate-busy="1"] .translate-toggle {
   background: var(--rule);
 }
 .article-time.is-fresh { color: var(--live); font-weight: 600; }
+/* Pastille pulse : toujours visible sur le jour civil (lead, vedette, En bref,
+   Suite du fil, mobile). Les règles plus bas masquent seulement le point gris. */
 .article-time.is-fresh::before {
+  display: inline-block;
   width: 6px; height: 6px;
   background: var(--live);
   animation: onairPulse 1.6s ease-out infinite;
+  flex-shrink: 0;
 }
 
 .article-title {
@@ -3455,7 +3460,8 @@ html[data-translate-busy="1"] .translate-toggle {
   align-self: center;
   white-space: nowrap;
 }
-.brief-rail .article--compact .article-time::before {
+/* Point gris masqué en En bref (place) — pas la pastille rouge is-fresh. */
+.brief-rail .article--compact .article-time:not(.is-fresh)::before {
   display: none;
 }
 
@@ -3535,7 +3541,8 @@ html[data-translate-busy="1"] .translate-toggle {
   align-self: start;
   white-space: nowrap;
 }
-.news-hero .article--feature.article--thumb.has-image > .article-meta .article-time::before {
+/* Point gris masqué sur vedette photo — pas la pastille rouge is-fresh. */
+.news-hero .article--feature.article--thumb.has-image > .article-meta .article-time:not(.is-fresh)::before {
   display: none;
 }
 .news-hero .article--feature.article--thumb.has-image > .article-media {
@@ -4973,10 +4980,11 @@ body.external-listen-open {
     white-space: nowrap;
   }
 
-  .news-hero .article--lead .article-time::before,
-  .news-hero .article--feature .article-time::before,
-  .brief-rail .article--compact .article-time::before,
-  .news-tail .article--standard .article-time::before {
+  /* Mobile : point gris masqué partout — pastille rouge is-fresh conservée. */
+  .news-hero .article--lead .article-time:not(.is-fresh)::before,
+  .news-hero .article--feature .article-time:not(.is-fresh)::before,
+  .brief-rail .article--compact .article-time:not(.is-fresh)::before,
+  .news-tail .article--standard .article-time:not(.is-fresh)::before {
     display: none;
   }
 
