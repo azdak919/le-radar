@@ -62,11 +62,14 @@ html[data-wide-preview="e"] {
   html[data-wide-preview="c"] .masthead-sports-strip,
   html[data-wide-preview="d"] .masthead-sports-strip,
   html[data-wide-preview="e"] .masthead-sports-strip,
+  /* Menu sections : centré comme en mobile (pas collé à gauche du shell large). */
   html[data-wide-preview="b"] .site-sections,
   html[data-wide-preview="c"] .site-sections,
   html[data-wide-preview="d"] .site-sections,
   html[data-wide-preview="e"] .site-sections {
     max-width: var(--maxw);
+    justify-content: center;
+    text-align: center;
   }
 
   /* Pages SEO / hub : tout ce qui suit --maxw s’élargit */
