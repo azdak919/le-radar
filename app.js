@@ -3535,18 +3535,17 @@ function sportsCtaActiveLabel(chip) {
 }
 
 /**
- * Construit le contenu d’une couche d’accroche : marqueur temporel, texte
- * principal, sous-ligne.
+ * Construit le contenu d’une couche d’accroche : marqueur, glyphe, texte, sous-ligne.
  * · Marqueur (PROCHAIN / Aujourd’hui…) : fixe, hors marquee
  *   (garde-fou `marqueur-non-tronque`).
+ * · Glyphe sport (⚽…) : fixe, frère de la fenêtre de défilement — **ne défile pas**.
  * · Titre (`.sports-chip__cta-text`) et sous-ligne (`.sports-chip__cta-sub-text`)
  *   défilent L→R s’ils débordent — **jamais** d’ellipsis « … » (clip + marquee).
  */
 function fillSportsCtaLayer(layer, slide) {
   layer.replaceChildren();
-  // Ligne 1 : marqueur + accroche côte à côte. Le marqueur est un frère de la
-  // fenêtre de défilement, jamais son contenu — il ne peut donc ni être rogné
-  // ni partir avec le marquee.
+  // Ligne 1 : marqueur + glyphe (fixes) + fenêtre de défilement des noms.
+  // Même structure que les puces gauche (glyphe hors `.sports-chip__body`).
   const head = document.createElement('span');
   head.className = 'sports-chip__cta-head';
   const eyebrow = slide.ctaEyebrow || '';
@@ -3556,23 +3555,48 @@ function fillSportsCtaLayer(layer, slide) {
     el.textContent = eyebrow;
     head.append(el);
   }
+  const src = slide?.ctaFrom;
+  const sportKey = src?.team?.sport || src?.game?.sport || '';
+  const glyph = (src?.team || src?.game) && sportKey && sportKey !== 'board'
+    ? sportsGlyph(sportKey)
+    : '';
+  if (glyph) {
+    const gEl = document.createElement('span');
+    gEl.className = 'sports-chip__cta-glyph';
+    gEl.setAttribute('aria-hidden', 'true');
+    gEl.textContent = glyph;
+    head.append(gEl);
+  }
   const line = document.createElement('span');
   line.className = 'sports-chip__cta-line';
   const text = document.createElement('span');
   text.className = 'sports-chip__cta-text';
-  // Next : glyphe + noms + verbe « reçoit/à » en .sports-chip__vs (même gris que gauche).
-  const src = slide?.ctaFrom;
+  // Noms / score seulement dans la zone qui défile (pas le glyphe).
   if (src?.mode === 'next' && src.team && src.game) {
     const g = src.game;
-    const glyph = sportsGlyph(src.team.sport || g.sport);
     const home = sportsChipTeamShort(src.team);
     const opp = sportsPlainOpponentName(g);
     const verb = sportsMatchVerb(g);
-    text.innerHTML = `${escapeHtml(glyph)} `
-      + `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+    text.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
       + `<span class="sports-chip__vs">${escapeHtml(verb)}</span> `
       + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
+  } else if (src?.mode === 'result' && src.team && src.game) {
+    const g = src.game;
+    const home = sportsChipTeamShort(src.team);
+    const opp = sportsPlainOpponentName(g);
+    const placeKind = sportsIsPlaceResult(g, src.team.sport);
+    if (placeKind) {
+      const placeTxt = `${g.scoreFor}e/${g.scoreAgainst}`;
+      text.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+        + `<span class="sports-chip__score">${escapeHtml(placeTxt)}</span>`;
+    } else {
+      const scoreTxt = `${g.scoreFor}–${g.scoreAgainst}`;
+      text.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+        + `<span class="sports-chip__score">${escapeHtml(scoreTxt)}</span> `
+        + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
+    }
   } else {
+    // Idle / repli : pas de glyphe sport — libellé entier dans la fenêtre.
     text.textContent = slide.label || 'Scores étudiants QC';
   }
   line.append(text);

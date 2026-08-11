@@ -1060,6 +1060,8 @@ assert(
     && appJs.includes('SPORTS_TEAM_COLOR_SUFFIX_RE')
     && styleCss.includes('.sports-chip__vs')
     && styleCss.includes('.sports-chip--cta .sports-chip__cta-text .sports-chip__vs')
+    && styleCss.includes('.sports-chip__cta-glyph')
+    && appJs.includes('sports-chip__cta-glyph')
     && /SPORTS_MATCH_SCROLL_ONE_WAY_MS\s*=\s*8000/.test(appJs)
     && indexHtml.includes('institution-acronyms-data.js')
     && /SPORTS_RECENT_RESULT_MS\s*=\s*7 \* 24 \* 3600 \* 1000/.test(appJs)

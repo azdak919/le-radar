@@ -578,8 +578,7 @@ body {
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-front {
   z-index: 1;
 }
-/* Ligne 1 : marqueur + accroche. Deux lignes en tout, pas trois — le cadre est
-   dimensionné pour ça. */
+/* Ligne 1 : marqueur + glyphe (fixes) + accroche. Deux lignes en tout. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-head {
   display: flex;
   align-items: baseline;
@@ -600,7 +599,14 @@ body {
 .masthead-sports-strip .sports-chip--cta[data-cta-state="live"] .sports-chip__cta-eyebrow {
   color: color-mix(in srgb, #ff8a80 70%, #fff);
 }
-/* Fenêtre de défilement : elle borne le texte, jamais le marqueur. */
+/* Glyphe sport — fixe comme PROCHAIN ; seul le texte des noms défile. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-glyph {
+  flex: 0 0 auto;
+  font-size: 12px;
+  line-height: 1;
+  align-self: center;
+}
+/* Fenêtre de défilement : borne les noms, jamais le marqueur ni le glyphe. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-line {
   display: block;
   flex: 1 1 auto;
