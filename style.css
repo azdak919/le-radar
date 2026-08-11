@@ -164,12 +164,12 @@ body {
   gap: 6px;
   min-height: 32px;
   padding: 4px 10px 4px 7px;
-  border: 1px solid color-mix(in srgb, var(--sports-tone, #66839e) 42%, rgba(255, 255, 255, 0.18));
+  border: 1.5px solid color-mix(in srgb, var(--accent, #6c2163) 58%, rgba(255, 255, 255, 0.22));
   border-radius: 6px;
-  /* Ardoise + bandeau teinté par sport / résultat (pas tout rouge). */
+  /* Focus-group le-radar-sports-chip-look (C). */
   background:
-    linear-gradient(90deg, color-mix(in srgb, var(--sports-tone, #66839e) 28%, transparent) 0%, transparent 55%),
-    rgba(54, 59, 68, 0.78);
+    linear-gradient(90deg, color-mix(in srgb, var(--sports-tone, #66839e) 34%, transparent) 0%, transparent 55%),
+    rgba(42, 46, 54, 0.92);
   color: rgba(245, 246, 248, 0.96);
   font-size: 11px;
   font-weight: 700;
@@ -179,18 +179,36 @@ body {
   overflow: hidden;
   cursor: pointer;
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 1px 2px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 22%, transparent);
+}
+.masthead-sports-strip .sports-chip:not(.sports-chip--cta) {
+  animation: sports-chip-rim-glow 3.2s ease-in-out infinite;
 }
 .masthead-sports-strip .sports-chip:hover {
-  border-color: color-mix(in srgb, var(--sports-tone, #66839e) 58%, rgba(255, 255, 255, 0.22));
+  border-color: color-mix(in srgb, var(--accent, #6c2163) 72%, rgba(255, 255, 255, 0.28));
   background:
-    linear-gradient(90deg, color-mix(in srgb, var(--sports-tone, #66839e) 34%, transparent) 0%, transparent 55%),
-    rgba(62, 68, 78, 0.88);
+    linear-gradient(90deg, color-mix(in srgb, var(--sports-tone, #66839e) 40%, transparent) 0%, transparent 55%),
+    rgba(48, 52, 62, 0.96);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 34%, transparent);
 }
 .masthead-sports-strip .sports-chip:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--sports-tone, #66839e) 70%, #fff);
+  outline: 2px solid color-mix(in srgb, var(--accent, #6c2163) 70%, #fff);
   outline-offset: 2px;
+}
+@keyframes sports-chip-rim-glow {
+  0%, 100% {
+    border-color: color-mix(in srgb, var(--accent, #6c2163) 52%, rgba(255, 255, 255, 0.2));
+    box-shadow: 0 1px 2px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.12), 0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 18%, transparent);
+  }
+  50% {
+    border-color: color-mix(in srgb, var(--accent, #6c2163) 78%, rgba(255, 255, 255, 0.3));
+    box-shadow: 0 1px 2px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.14), 0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 36%, transparent), 0 0 10px 0 color-mix(in srgb, var(--accent, #6c2163) 22%, transparent);
+  }
 }
 /*
  * Rotation scores / prochains : fondu croisé doux (pas le « clac » gare météo).
@@ -216,6 +234,7 @@ body {
     animation: none;
     filter: none;
   }
+  .masthead-sports-strip .sports-chip:not(.sports-chip--cta) { animation: none; }
 }
 .masthead-sports-strip .sports-chip__glyph {
   flex: 0 0 auto;
@@ -274,7 +293,7 @@ body {
  * attend ce cycle + pause repos avant de changer le match (lecture confortable). */
 .masthead-sports-strip {
   /* Un peu plus lent + holds aux extrémités = moins d’à-coups aux virages. */
-  --sports-scroll-duration: 8.5s;
+  --sports-scroll-duration: 5.5s;
 }
 /* Marquee scores (gauche) — CTA a sa propre règle sur .is-front uniquement. */
 .masthead-sports-strip .sports-chip:not(.sports-chip--cta).is-overflowing .sports-chip__line-inner {
@@ -282,13 +301,13 @@ body {
   overflow: visible;
   text-overflow: clip;
   /* Remplace le pulse CTA : transform pour le marquee, pas d’ellipsis. */
-  animation: sports-chip-scroll var(--sports-scroll-duration, 8.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  animation: sports-chip-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
   will-change: transform;
 }
 @keyframes sports-chip-scroll {
   /* Holds plus longs au début / fin pour lire l’info au calme. */
-  0%, 32% { transform: translateX(0); }
-  68%, 100% { transform: translateX(calc(var(--sports-scroll, 0) * -1)); }
+  0%, 18% { transform: translateX(0); }
+  82%, 100% { transform: translateX(calc(var(--sports-scroll, 0) * -1)); }
 }
 /* CTA au repos : ellipsis sur le texte seul — jamais sur toute la couche
  * (sinon head+sub se collapsaient en une ligne tronquée sans marquee). */
@@ -539,7 +558,7 @@ body {
   max-width: none;
   overflow: visible;
   text-overflow: clip;
-  animation: sports-chip-scroll var(--sports-scroll-duration, 8.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  animation: sports-chip-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
   will-change: transform;
 }
 .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text {
@@ -5775,14 +5794,12 @@ html.has-tuner-safe-cap .tuner {
  * le dialogue reste entièrement cliquable s’il y a encore un chevauchement.
  */
 .engage-prompt {
+  /* Focus-group le-radar-engage-position (A) */
   position: fixed;
   left: 0;
   right: 0;
-  bottom: calc(
-    var(--tools-fab, 48px)
-    + max(16px, env(safe-area-inset-bottom, 0px))
-    + 12px
-  );
+  top: max(12px, env(safe-area-inset-top, 0px));
+  bottom: auto;
   z-index: 200;
   display: flex;
   justify-content: center;
@@ -5791,7 +5808,7 @@ html.has-tuner-safe-cap .tuner {
     max(12px, env(safe-area-inset-right, 0px));
   pointer-events: none;
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(-12px);
   transition: opacity 0.28s ease, transform 0.28s ease;
 }
 .engage-prompt.is-visible {
@@ -5801,7 +5818,7 @@ html.has-tuner-safe-cap .tuner {
 }
 .engage-prompt.is-leaving {
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(-16px);
   pointer-events: none;
 }
 .engage-prompt__inner {
@@ -5930,6 +5947,24 @@ html.has-tuner-safe-cap .tuner {
   background: transparent;
   border-color: transparent;
 }
+
+/* Pull-to-refresh PWA */
+.radar-pull-refresh {
+  position: fixed; top: 0; left: 50%; z-index: 190; width: 36px; height: 36px;
+  margin-left: -18px; display: flex; align-items: center; justify-content: center;
+  pointer-events: none; opacity: 0;
+  transform: translate3d(0, calc(var(--pull, 0px) - 40px), 0);
+  transition: opacity 0.18s ease;
+}
+.radar-pull-refresh.is-visible { opacity: 1; }
+.radar-pull-refresh__dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: color-mix(in srgb, var(--accent, #6c2163) 78%, #fff);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent, #6c2163) 28%, transparent);
+}
+.radar-pull-refresh.is-armed .radar-pull-refresh__dot { transform: scale(1.25); background: var(--accent, #6c2163); }
+.radar-pull-refresh.is-refreshing .radar-pull-refresh__dot { animation: radar-pull-spin 0.7s linear infinite; }
+@keyframes radar-pull-spin { to { box-shadow: 0 0 0 6px transparent; } }
 
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
