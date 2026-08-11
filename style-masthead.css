@@ -834,11 +834,21 @@ a { color: inherit; }
   width: 100%;
   height: 29px;
 }
-.masthead-weather__board[data-weather-count="1"] { --weather-grid: minmax(0, 1fr); }
-/* Colonne primaire un cran plus souple (ex. 120px) : date 1 ligne réduit la
-   zone météo — secondaires en marquee plutôt qu’amputer tôt. MTL/QC n’apparaît
-   en .is-compact qu’en dernier recours (JS). */
-.masthead-weather__board[data-weather-count="2"] { --weather-grid: minmax(120px, 1fr) minmax(0, 1fr); }
+/*
+ * MTL + QC seulement : ne pas étirer en 1fr (sinon grand trou entre les 2
+ * cartes en plein écran). Cluster compact, centré dans la colonne météo.
+ */
+.masthead-weather__board[data-weather-count="1"],
+.masthead-weather__board[data-weather-count="2"] {
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
+}
+.masthead-weather__board[data-weather-count="1"] { --weather-grid: max-content; }
+.masthead-weather__board[data-weather-count="2"] {
+  --weather-grid: max-content max-content;
+}
+/* Anciens barèmes multi-villes (si un jour on rouvre les secondaires). */
 .masthead-weather__board[data-weather-count="3"] { --weather-grid: minmax(120px, .95fr) repeat(2, minmax(0, 1fr)); }
 .masthead-weather__board[data-weather-count="4"] { --weather-grid: minmax(118px, .9fr) repeat(3, minmax(0, 1fr)); }
 .masthead-weather__city {
@@ -866,7 +876,13 @@ a { color: inherit; }
   -webkit-text-stroke: 0;
   text-shadow: none;
 }
-.masthead-weather__city.is-active { display: flex; }
+/* Active : flex + largeur contenu (évite l’étirement 1fr plein écran). */
+.masthead-weather__city.is-active {
+  display: flex;
+  flex: 0 1 auto;
+  width: max-content;
+  max-width: min(11.5rem, 42vw);
+}
 .masthead-weather__city.is-arriving { animation: weather-tile-arrive 460ms cubic-bezier(.22,.8,.28,1); }
 .masthead-weather__city:hover { border-color: color-mix(in srgb, var(--weather-tone, var(--accent)) 68%, var(--rule)); background-color: color-mix(in srgb, var(--bg-soft) 76%, var(--weather-tone, var(--accent)) 24%); }
 .masthead-weather__icon { flex: 0 0 15px; width: 15px; color: var(--weather-tone, var(--accent)); line-height: 1; text-align: center; }
