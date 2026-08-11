@@ -2711,7 +2711,64 @@ const SPORTS_COLLEGIAL_CODES = new Set([
   'SHE', // Cégep de Sherbrooke — pas USHE / UdeS
   'SLA', 'LEN', 'SLC', 'LAF', 'NDF', 'NDFB', 'NDFJ', 'CLG', 'GAR', 'LIM',
   'VAN', 'DAW', 'JAC', 'CVM', 'AHU', 'OUT', 'CSF', 'TRV', 'VIC', 'STH',
+  'RIM', 'CHI', 'CAT', // Rimouski / Chicoutimi / Abitibi — pas UQAR / UQAC / UQAT
 ]);
+
+/**
+ * Toponymes collégiaux **ambigus** avec une univ. (réseau UQ / UdeS).
+ * Short = nom de ville seul → le lecteur croit à l’université (ex. « Trois-Rivières »
+ * pour UQTR). Puces + CTA : préfixe « Cégep … » compact (marquee si long).
+ * Clé = code RSEQ collégial.
+ */
+const SPORTS_COLLEGIAL_CITY_DISAMBIG = {
+  TRV: 'Cégep Trois-Rivières', // ≠ UQTR
+  RIM: 'Cégep Rimouski', // ≠ UQAR
+  CHI: 'Cégep Chicoutimi', // ≠ UQAC
+  OUT: 'Cégep Outaouais', // ≠ UQO
+  SHE: 'Cégep Sherbrooke', // ≠ UdeS (USHE)
+  CAT: "Cégep Abitibi-Témiscamingue", // ≠ UQAT
+};
+
+/** Shorts collégiaux (sans code) qui collident avec une ville d’université. */
+const SPORTS_COLLEGIAL_CITY_SHORT_DISAMBIG = {
+  'trois-rivieres': 'Cégep Trois-Rivières',
+  'trois-rivières': 'Cégep Trois-Rivières',
+  rimouski: 'Cégep Rimouski',
+  chicoutimi: 'Cégep Chicoutimi',
+  outaouais: 'Cégep Outaouais',
+  sherbrooke: 'Cégep Sherbrooke', // seulement si collégial déjà établi
+  'abitibi-temiscamingue': "Cégep Abitibi-Témiscamingue",
+  'abitibi-témiscamingue': "Cégep Abitibi-Témiscamingue",
+};
+
+/**
+ * Libellé collégial désambiguïsé, ou '' si non applicable.
+ * Ne s’applique **jamais** au secteur universitaire (UQTR reste UQTR).
+ */
+function sportsCollegialCityDisambig({ shortName, fullName, code, sector } = {}) {
+  if (!sportsLooksCollegial({ fullName, shortName, sector, code })) return '';
+  const c = String(code || '').toUpperCase();
+  if (SPORTS_COLLEGIAL_CITY_DISAMBIG[c]) return SPORTS_COLLEGIAL_CITY_DISAMBIG[c];
+  const short = String(shortName || '').trim();
+  if (!short || /^C[eé]gep\b/i.test(short)) return '';
+  const key = short
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/['’]/g, '')
+    .replace(/\s+/g, '-');
+  if (SPORTS_COLLEGIAL_CITY_SHORT_DISAMBIG[key]) {
+    return SPORTS_COLLEGIAL_CITY_SHORT_DISAMBIG[key];
+  }
+  // fullName « Cégep de X » + short = X (ou proche) pour villes UQ.
+  const full = String(fullName || '');
+  const m = full.match(/^C[eé]gep\s+(?:de\s+(?:l['’]\s*)?)?(.+)$/i);
+  if (m && /Trois-Rivi|Rimouski|Chicoutimi|Outaouais|Sherbrooke|Abitibi/i.test(m[1])) {
+    const place = m[1].replace(/^l['’]\s*/i, '').trim();
+    return place ? `Cégep ${place}` : '';
+  }
+  return '';
+}
 
 function sportsInstitutionAcronymMap() {
   try {
@@ -2837,6 +2894,17 @@ function sportsDisplaySideName({
       || '';
     if (ac) return ac;
     if (short && short.length <= 6 && /^[A-ZÉÙÛÂÊÎÔ0-9]{2,6}$/i.test(short)) return short;
+  }
+
+  // Ville seule = ambigu cégep vs univ (Trois-Rivières / UQTR, Rimouski / UQAR…).
+  // Avant le return multi-parties « Trois-Rivières » (hyphen) qui court-circuitait le fullName.
+  const cityDis = sportsCollegialCityDisambig({
+    shortName: short, fullName: full, code: codeU, sector,
+  });
+  if (cityDis) {
+    // CTA / tooltip : fullName officiel si déjà « Cégep … »
+    if (!preferAcronym && full && /^C[eé]gep\b/i.test(full)) return full;
+    return cityDis;
   }
 
   // Multi-parties déjà distinctives (Lionel-Groulx, Vieux Montréal…)

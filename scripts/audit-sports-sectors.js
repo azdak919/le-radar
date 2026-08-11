@@ -5,6 +5,7 @@
  * Échoue (exit 1) si :
  *  - SHE (cégep) résolu ou libellé comme UdeS / Université de Sherbrooke
  *  - USHE (univ) résolu comme Cégep
+ *  - toponymes collégiaux seuls (Trois-Rivières, Rimouski…) collidant avec UQ*
  *  - noms cryptiques Ch.-* / Témisc. encore en banque
  *  - re-apply registre flip cégep↔univ
  *  - resolve « Sherbrooke » + secteur incorrect
@@ -40,10 +41,27 @@ const resolveCases = [
   { q: { name: 'Sherbrooke', fullName: 'Université de Sherbrooke' }, code: 'USHE' },
   { q: { code: 'SHE', sector: 'collegial' }, code: 'SHE' },
   { q: { code: 'USHE', sector: 'universitaire' }, code: 'USHE' },
+  { q: { name: 'Trois-Rivières', sector: 'collegial' }, code: 'TRV', fullRe: /Cégep/i },
+  { q: { name: 'UQTR', sector: 'universitaire' }, code: 'UQTR', fullRe: /Universit|UQTR/i },
+  { q: { name: 'Rimouski', sector: 'collegial' }, code: 'RIM', fullRe: /Cégep/i },
+  { q: { name: 'UQAR', sector: 'universitaire' }, code: 'UQAR', fullRe: /Universit|UQAR/i },
+  { q: { name: 'Chicoutimi', sector: 'collegial' }, code: 'CHI', fullRe: /Cégep/i },
+  { q: { name: 'UQAC', sector: 'universitaire' }, code: 'UQAC' },
+  { q: { name: 'Outaouais', sector: 'collegial' }, code: 'OUT', fullRe: /Cégep/i },
+  { q: { name: 'UQO', sector: 'universitaire' }, code: 'UQO' },
   { q: { name: 'Laval', sector: 'universitaire' }, code: 'LAV' },
   { q: { name: 'Laflèche', sector: 'collegial' }, code: 'LAF' },
   { q: { name: 'Notre-Dame Bleu', sector: 'collegial' }, code: 'NDFB' },
 ];
+
+/** Shorts collégiaux qui ne doivent plus être un toponyme nu (≠ UQ*). */
+const BARE_CITY_COLLEGIAL = {
+  TRV: /Trois-Rivi[eè]res/i,
+  RIM: /^Rimouski$/i,
+  CHI: /^Chicoutimi$/i,
+  OUT: /^Outaouais$/i,
+  SHE: /^Sherbrooke$/i,
+};
 for (const c of resolveCases) {
   const r = resolveSportsTeam(reg, c.q);
   if (c.code && r.code !== c.code) {
@@ -68,6 +86,15 @@ for (const t of teams) {
   if (t.code === 'USHE') {
     if (t.sector !== 'universitaire') fail('ushe-sector', String(t.sector));
     if (/C[eé]gep/i.test(t.fullName || '')) fail('ushe-as-cegep', t.fullName);
+  }
+  // Toponyme nu collégial = collision avec UQTR / UQAR / UQAC / UQO / UdeS
+  if (BARE_CITY_COLLEGIAL[t.code] && BARE_CITY_COLLEGIAL[t.code].test(String(t.name || '').trim())) {
+    if (!/^C[eé]gep\b/i.test(t.name || '')) {
+      fail('bare-city-collegial', `${t.code} short « ${t.name} » doit préfixer Cégep`);
+    }
+  }
+  if (t.code === 'UQAR' && t.fullName && !/Universit|Québec|Rimouski/i.test(t.fullName)) {
+    fail('uqar-full', t.fullName);
   }
   if ((t.code === 'NDFB' || t.code === 'NDFJ') && !/Bleu|Jaune/i.test(t.name || '')) {
     fail('ndf-color', `${t.code} ${t.name}`);
