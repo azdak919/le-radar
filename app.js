@@ -1552,13 +1552,16 @@ function weatherBoardAvailWidth() {
  * - pas de marquee
  * - pas de clip / nom compact : les conteneurs s’ajustent ; si ça ne rentre
  *   pas, on retire une carte (fit), on n’ampute pas le texte.
+ * ⛔ Actif **uniquement si viewport > 1280** (min-width: 1281px).
+ *    ≤1280 (ref. bureau lab « 1280 », mobile, mid) = prod inchangée,
+ *    même si `?wide=e` / data-wide-preview est posé.
  * Voir data-wide-preview.
  */
 function isWideNoMarqueeMode() {
   try {
     const id = document.documentElement.dataset.widePreview;
     if (!id || id === 'off' || id === 'a') return false;
-    return window.matchMedia('(min-width: 1280px)').matches;
+    return window.matchMedia('(min-width: 1281px)').matches;
   } catch {
     return false;
   }

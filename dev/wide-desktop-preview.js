@@ -13,10 +13,20 @@
 
   const WIDE_PARAM = 'wide';
   const STACK_ID = 'wide-rail-stack';
+  /** E / rail chrome : strictement au-delà de la ref. bureau 1280. */
+  const WIDE_E_MQ = '(min-width: 1281px)';
 
   /** Placeholders pour restaurer l’ordre DOM en quittant E. */
   let sectionsHome = null;
   let headHome = null;
+
+  function isWideEViewport() {
+    try {
+      return window.matchMedia(WIDE_E_MQ).matches;
+    } catch {
+      return false;
+    }
+  }
 
   function currentWide() {
     try {
@@ -38,10 +48,16 @@
   }
 
   // Dataset immédiat (double avec midwidth — idempotent)
+  // ⛔ ≤1280 : ne pas poser data-wide-preview (prod pure, même avec ?wide=e).
   try {
     const id = currentWide();
-    if (id && id !== 'off') document.documentElement.dataset.widePreview = id;
-    else delete document.documentElement.dataset.widePreview;
+    if (id && id !== 'off' && isWideEViewport()) {
+      document.documentElement.dataset.widePreview = id;
+    } else if (!isWideEViewport()) {
+      delete document.documentElement.dataset.widePreview;
+    } else {
+      delete document.documentElement.dataset.widePreview;
+    }
   } catch { /* ignore */ }
 
   function resyncFilters() {
@@ -60,7 +76,7 @@
       if (typeof rows === 'number' && rows > 0) {
         panel.style.setProperty('--filters-collapsed-rows', String(rows));
       }
-      window.dispatchEvent(new Event('resize'));
+      // Ne PAS dispatcher 'resize' ici : boucle avec le listener wide-e viewport.
     } catch { /* ignore */ }
   }
 
@@ -73,7 +89,8 @@
    */
   function applyWideRailChrome() {
     const id = currentWide();
-    if (id !== 'e') {
+    // ≤1280 : jamais de reparent rail (prod inchangée)
+    if (id !== 'e' || !isWideEViewport()) {
       restoreWideRailChrome();
       return;
     }
@@ -150,18 +167,47 @@
     delete document.documentElement.dataset.wideRailChrome;
   }
 
+  let wideSyncBusy = false;
   function onWideChange() {
+    if (wideSyncBusy) return;
+    wideSyncBusy = true;
     requestAnimationFrame(() => {
-      applyWideRailChrome();
-      resyncFilters();
-      // Recalcule sticky sous le synthé (app.js)
       try {
-        window.dispatchEvent(new Event('resize'));
-      } catch { /* ignore */ }
+        applyWideRailChrome();
+        resyncFilters();
+      } finally {
+        wideSyncBusy = false;
+      }
     });
   }
 
   window.addEventListener('radar-wide-preview-change', onWideChange);
+
+  // MediaQuery only (pas resize→resize) : bascule E ↔ prod pure selon largeur
+  try {
+    const mq = window.matchMedia(WIDE_E_MQ);
+    let lastOn = isWideEViewport();
+    const onMq = () => {
+      const on = isWideEViewport();
+      if (on === lastOn && document.documentElement.dataset.widePreview) {
+        // Même côté du seuil : rien à faire (évite churn)
+        if (on) return;
+      }
+      lastOn = on;
+      try {
+        const want = currentWide();
+        if (want && want !== 'off' && on) {
+          document.documentElement.dataset.widePreview = want;
+        } else if (!on) {
+          // Préférence URL conservée, dataset retiré → CSS/JS prod
+          delete document.documentElement.dataset.widePreview;
+        }
+      } catch { /* ignore */ }
+      onWideChange();
+    };
+    if (typeof mq.addEventListener === 'function') mq.addEventListener('change', onMq);
+    else if (typeof mq.addListener === 'function') mq.addListener(onMq);
+  } catch { /* ignore */ }
 
   function boot() {
     applyWideRailChrome();
@@ -182,14 +228,16 @@
   // Si midwidth n’a pas encore installé le hook, compléter filters helpers
   if (!window.__radarWidePreview) {
     window.__radarWidePreview = {
-      id: () => currentWide(),
+      id: () => (isWideEViewport() ? currentWide() : 'off'),
       filtersCollapsedRows: () => {
+        if (!isWideEViewport()) return null;
         const id = currentWide();
         if (id === 'e') return 99;
         if (id === 'c' || id === 'd') return 2;
         return null;
       },
       filtersColumnCount: () => {
+        if (!isWideEViewport()) return null;
         const id = currentWide();
         if (id === 'e') return 1;
         return null;
