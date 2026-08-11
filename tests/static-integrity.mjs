@@ -82,7 +82,7 @@ for (const file of htmlFiles) {
       'style-masthead : `bottom` du crédit photo sans safe-area (il est ancré au mât, pas à l’écran)',
     );
   }
-  // Météo dockée (≤599.98 px) : hors de .masthead, le lavis --weather-tone
+  // Météo dockée (≤1023.98 px) : hors de .masthead, le lavis --weather-tone
   // doit rester (sinon cartes grises neutres sans teinte soleil/pluie).
   const mastFlat = mastheadCss.replace(/\s+/g, ' ');
   assert(

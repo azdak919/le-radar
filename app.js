@@ -1403,10 +1403,9 @@ let mastheadWeatherDocked = false;
 // bandeau à sa place quand la largeur redevient suffisante.
 const mastheadWeatherHomeParent = MASTHEAD_WEATHER?.parentNode || null;
 const mastheadWeatherHomeNextSibling = MASTHEAD_WEATHER?.nextSibling || null;
-// Sous ce seuil, style.css retire carrément la zone météo du masthead (la
-// date longue a besoin de toute la place) : inutile d'attendre la mesure
-// dynamique, on docke directement sous le syntoniseur.
-const MASTHEAD_WEATHER_PHONE_MQ = window.matchMedia('(max-width: 599.98px)');
+// Tablette + mobile (≤1023) : météo sous le syntoniseur — libère le mât pour
+// date + icônes (lab 768 / 900). Bureau ≥1024 : météo dans le mât.
+const MASTHEAD_WEATHER_PHONE_MQ = window.matchMedia('(max-width: 1023.98px)');
 
 function syncMastheadShuffleButton() {
   if (!MASTHEAD_BG_SHUFFLE || !MASTHEAD_BG_SHUFFLE_HOME) return;
@@ -2380,9 +2379,11 @@ function sportsStripAvailWidth() {
 function sportsBoardCountBase() {
   const avail = sportsStripAvailWidth();
   const gap = 6;
-  // ~11–14 rem utiles / puce score + CTA ~9–11 rem (guidance FG A).
-  const minScore = 150;
-  const minCta = 168;
+  // Un cran plus souple : tablette 768 doit garder ≥1 score + CTA (pas CTA seule).
+  // FG A : overflow texte → −1 puce, mais le plafond largeur ne doit pas
+  // refuser 2 chips dès qu’on a ~320 px utiles.
+  const minScore = 128;
+  const minCta = 152;
 
   let n = 1;
   for (let tryN = 4; tryN >= 2; tryN -= 1) {

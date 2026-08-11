@@ -87,61 +87,40 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   // Ordre inversé après un cycle (échange) — si le dwell n’a pas encore tiré, IDs inchangés OK.
   expect(afterRotation.length).toBe(2);
 
-  await page.setViewportSize({ width: 1200, height: 900 });
-  await page.waitForTimeout(100);
-  const countAt1200 = await ribbon.locator('.masthead-weather__city.is-active').count();
-  await expect(ribbon.locator('.masthead-weather__board')).toHaveAttribute('data-weather-count', String(countAt1200));
+  // Bureau large (≥1024) : 2 cartes dans le mât.
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.waitForTimeout(150);
+  await expect(ribbon).not.toHaveClass(/masthead-weather--docked/);
+  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(2);
 
-  await page.setViewportSize({ width: 1050, height: 900 });
-  await page.waitForTimeout(100);
-  const countAt1050 = await ribbon.locator('.masthead-weather__city.is-active').count();
-  expect(countAt1050).toBeLessThanOrEqual(countAt1200);
-  await expect(ribbon.locator('.masthead-weather__board')).toHaveAttribute('data-weather-count', String(countAt1050));
-
+  // Tablette dockée : toujours MTL+QC (board pleine largeur).
   await page.setViewportSize({ width: 920, height: 900 });
-  await page.waitForTimeout(100);
-  const countAt920 = await ribbon.locator('.masthead-weather__city.is-active').count();
-  expect(countAt920).toBeLessThanOrEqual(countAt1050);
-  expect(countAt920).toBeGreaterThanOrEqual(1);
-  await expect(ribbon.locator('.masthead-weather__board')).toHaveAttribute('data-weather-count', String(countAt920));
+  await page.waitForTimeout(150);
+  await expect(ribbon).toHaveClass(/masthead-weather--docked/);
+  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(2);
+  await expect(ribbon.locator('.masthead-weather__board')).toHaveAttribute('data-weather-count', '2');
 
-  await page.setViewportSize({ width: 610, height: 900 });
-  await page.waitForTimeout(100);
+  // Tablette / téléphone (≤1023.98px) : météo sous le syntoniseur.
+  await page.setViewportSize({ width: 900, height: 900 });
+  await page.waitForTimeout(150);
   await expect(ribbon).toBeVisible();
-  // Toujours MTL+QC si largeur board ≥ 240 (fit peut descendre à 1 si overflow).
-  const narrowCount = await ribbon.locator('.masthead-weather__city.is-active').count();
-  expect(narrowCount).toBeGreaterThanOrEqual(1);
-  expect(narrowCount).toBeLessThanOrEqual(2);
-  expect(await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities.every((city) => {
-    const name = city.querySelector('.masthead-weather__name');
-    return !city.classList.contains('is-overflowing') && name.scrollWidth <= name.clientWidth + 2;
-  }))).toBe(true);
-  const narrowPrimary = ribbon.locator('.masthead-weather__city.is-active[data-weather-city="montreal"], .masthead-weather__city.is-active[data-weather-city="quebec"]');
-  await expect(narrowPrimary).toHaveCount(narrowCount);
-  const narrowState = await narrowPrimary.evaluate((el) => {
-    const compact = el.classList.contains('is-compact');
-    const full = el.querySelector('.masthead-weather__name-full')?.textContent?.trim() || '';
-    const short = el.querySelector('.masthead-weather__name-compact')?.textContent?.trim() || '';
-    return { compact, full, short };
-  });
-  if (narrowState.compact) {
-    expect(['MTL', 'QC']).toContain(narrowState.short);
-  } else {
-    expect(['Montréal', 'Québec']).toContain(narrowState.full);
-  }
+  await expect(ribbon).toHaveClass(/masthead-weather--docked/);
+  await expect(page.locator('#masthead-weather-dock #masthead-weather')).toHaveCount(1);
+  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(2);
 
-  // Téléphone (≤599.98px) : le masthead réserve toute la place à la date
-  // longue ; la météo se déplace sous le syntoniseur plutôt que de disparaître.
+  await page.setViewportSize({ width: 768, height: 900 });
+  await page.waitForTimeout(150);
+  await expect(ribbon).toHaveClass(/masthead-weather--docked/);
+  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(2);
+
   await page.setViewportSize({ width: 320, height: 900 });
   await page.waitForTimeout(100);
-  await expect(ribbon).toBeVisible();
   await expect(ribbon).toHaveClass(/masthead-weather--docked/);
   const dock = page.locator('#masthead-weather-dock');
   await expect(dock.locator('#masthead-weather')).toHaveCount(1);
   await expect(ribbon.locator('.masthead-weather__city.is-active')).not.toHaveCount(0);
 
-  // Dock hors .masthead : le lavis suit encore --weather-tone (soleil doré…),
-  // pas un fond accent neutre (régression ≤430 / ≤599).
+  // Dock hors .masthead : le lavis suit encore --weather-tone.
   const tonePaint = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities.map((city) => {
     const cs = getComputedStyle(city);
     const tone = (cs.getPropertyValue('--weather-tone') || '').trim();
@@ -150,7 +129,6 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
       toneAttr: city.getAttribute('data-weather-tone') || '',
       toneVar: tone,
       hasGradient: /linear-gradient/i.test(bg),
-      // color-mix résolu : le gradient ne doit pas être « none ».
       bgLen: bg.length,
     };
   }));
@@ -161,15 +139,15 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
     expect(card.hasGradient, 'lavis condition météo sur carte dockée').toBe(true);
     expect(card.bgLen).toBeGreaterThan(20);
   }
-  // Contrôle ciblé soleil : forcer sun et vérifier la variable CSS.
   const sunTone = await ribbon.locator('.masthead-weather__city.is-active').first().evaluate((el) => {
     el.dataset.weatherTone = 'sun';
     return getComputedStyle(el).getPropertyValue('--weather-tone').trim();
   });
   expect(sunTone.toLowerCase()).toBe('#d88a0a');
 
-  await page.setViewportSize({ width: 900, height: 900 });
-  await page.waitForTimeout(100);
+  // Bureau large : météo de retour dans le mât.
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.waitForTimeout(150);
   await expect(ribbon).not.toHaveClass(/masthead-weather--docked/);
   await expect(page.locator('.masthead-top #masthead-weather')).toHaveCount(1);
 });
