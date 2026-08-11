@@ -69,13 +69,23 @@
 #bg-photo-layer.loaded + .bg-photo-scrim { opacity: 1; }
 
 .masthead-inner { position: relative; z-index: 2; }
+/*
+ * Gouttière droite = même que le contenu (.masthead-inner, .tuner-inner, .wire) :
+ * (viewport − maxw) / 2 + --pad. Plus de right:10px collé au bord écran.
+ */
+.masthead-shuffle-slot,
+.bg-photo-credit {
+  --masthead-edge-right: max(
+    env(safe-area-inset-right, 0px),
+    calc((100vw - min(100vw, var(--maxw, 100vw))) / 2 + var(--pad, 24px))
+  );
+}
 .masthead-shuffle-slot {
   position: absolute;
   z-index: 4;
-  /* Même origine verticale que .masthead-inner : le shuffle reste calé sur
-     les icônes lors d'un redimensionnement, y compris en zone sûre PWA. */
+  /* Même origine verticale que .masthead-inner (+ safe-area PWA). */
   top: calc(12px + env(safe-area-inset-top, 0px));
-  right: max(10px, env(safe-area-inset-right, 0px));
+  right: var(--masthead-edge-right);
 }
 .masthead-bg-shuffle { cursor: pointer; }
 .masthead-bg-shuffle svg { width: 15px; height: 15px; }
@@ -83,13 +93,13 @@
 .bg-photo-credit {
   position: absolute;
   z-index: 3;
-  right: max(10px, env(safe-area-inset-right, 0px));
+  right: var(--masthead-edge-right);
   left: auto;
   bottom: 5px;
-  /* Largeur = contenu, plafonnée à l’espace dispo (aligné à droite). */
+  /* Largeur = contenu, plafonnée à la colonne contenu. */
   width: max-content;
   max-width: calc(
-    100% - 20px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)
+    min(100vw, var(--maxw, 100vw)) - 2 * var(--pad, 24px)
   );
   font-size: 9.5px;
   line-height: 1.35;
@@ -163,7 +173,7 @@
 @media (max-width: 1023.98px) {
   .bg-photo-credit {
     bottom: 5px;
-    right: max(10px, env(safe-area-inset-right, 0px));
+    /* right : --masthead-edge-right (gouttière contenu), pas 10px. */
     left: auto;
     color: rgba(255, 255, 255, 0.74);
     text-shadow:
