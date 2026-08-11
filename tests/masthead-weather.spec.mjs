@@ -144,6 +144,34 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   await expect(dock.locator('#masthead-weather')).toHaveCount(1);
   await expect(ribbon.locator('.masthead-weather__city.is-active')).not.toHaveCount(0);
 
+  // Dock hors .masthead : le lavis suit encore --weather-tone (soleil doré…),
+  // pas un fond accent neutre (régression ≤430 / ≤599).
+  const tonePaint = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities.map((city) => {
+    const cs = getComputedStyle(city);
+    const tone = (cs.getPropertyValue('--weather-tone') || '').trim();
+    const bg = cs.backgroundImage || '';
+    return {
+      toneAttr: city.getAttribute('data-weather-tone') || '',
+      toneVar: tone,
+      hasGradient: /linear-gradient/i.test(bg),
+      // color-mix résolu : le gradient ne doit pas être « none ».
+      bgLen: bg.length,
+    };
+  }));
+  expect(tonePaint.length).toBeGreaterThan(0);
+  for (const card of tonePaint) {
+    expect(card.toneAttr, 'data-weather-tone posé par weatherTone()').toMatch(/^(sun|cloud|rain|snow|storm)$/);
+    expect(card.toneVar, '--weather-tone résolu (ex. #d88a0a soleil)').toMatch(/^#|rgb/i);
+    expect(card.hasGradient, 'lavis condition météo sur carte dockée').toBe(true);
+    expect(card.bgLen).toBeGreaterThan(20);
+  }
+  // Contrôle ciblé soleil : forcer sun et vérifier la variable CSS.
+  const sunTone = await ribbon.locator('.masthead-weather__city.is-active').first().evaluate((el) => {
+    el.dataset.weatherTone = 'sun';
+    return getComputedStyle(el).getPropertyValue('--weather-tone').trim();
+  });
+  expect(sunTone.toLowerCase()).toBe('#d88a0a');
+
   await page.setViewportSize({ width: 900, height: 900 });
   await page.waitForTimeout(100);
   await expect(ribbon).not.toHaveClass(/masthead-weather--docked/);

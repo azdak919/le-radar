@@ -671,11 +671,13 @@ a { color: inherit; }
   font-weight: 650;
   letter-spacing: 0.03em;
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--rule));
+  /* Lavis + bordure suivent la condition (sun/rain/…) via --weather-tone,
+   * pas seulement l’accent de marque — parité cartes sports / mât photo. */
+  border: 1px solid color-mix(in srgb, var(--weather-tone, var(--accent)) 28%, var(--rule));
   border-radius: 5px;
   background:
-    linear-gradient(90deg, color-mix(in srgb, var(--accent) 11%, transparent), transparent 48%),
-    color-mix(in srgb, var(--bg-soft) 91%, var(--accent) 9%);
+    linear-gradient(90deg, color-mix(in srgb, var(--weather-tone, var(--accent)) 22%, transparent) 0%, transparent 55%),
+    color-mix(in srgb, var(--bg-soft) 88%, var(--weather-tone, var(--accent)) 12%);
   box-shadow: inset 0 1px 0 color-mix(in srgb, var(--bg) 72%, transparent);
   cursor: pointer;
   text-decoration: none;
@@ -784,6 +786,49 @@ a { color: inherit; }
   display: inline-flex !important;
   width: 100%;
   justify-content: flex-start;
+}
+/*
+ * ≤599.98 px : le bandeau est déplacé hors de .masthead (#masthead-weather-dock).
+ * Les styles « photo mât » (`.masthead:has(#bg-photo-layer.loaded) …`) ne
+ * matchent plus → les cartes retombaient sur un lavis accent neutre, sans
+ * teinte soleil/pluie/orage. On rejoue le verre ardoise + --weather-tone
+ * (parité bureau photo et puces sports).
+ */
+.masthead-weather--docked .masthead-weather__city {
+  color: rgba(236, 238, 242, 0.92);
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--weather-tone, #c8102e) 28%, transparent) 0%, transparent 55%),
+    rgba(42, 46, 54, 0.92);
+  border-color: color-mix(in srgb, var(--weather-tone, var(--accent)) 42%, rgba(255, 255, 255, 0.16));
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+.masthead-weather--docked .masthead-weather__city:hover {
+  border-color: color-mix(in srgb, var(--weather-tone, var(--accent)) 62%, rgba(255, 255, 255, 0.22));
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--weather-tone, #c8102e) 36%, transparent) 0%, transparent 55%),
+    rgba(48, 52, 62, 0.96);
+  background-color: transparent;
+}
+.masthead-weather--docked .masthead-weather__name,
+.masthead-weather--docked .masthead-weather__name-text,
+.masthead-weather--docked .masthead-weather__name-full,
+.masthead-weather--docked .masthead-weather__name-compact {
+  color: rgba(245, 246, 248, 0.96);
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+}
+.masthead-weather--docked .masthead-weather__temp {
+  color: #ffffff;
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+}
+.masthead-weather--docked .masthead-weather__icon {
+  filter: brightness(1.12) saturate(1.05);
+  opacity: 1;
 }
 @keyframes weather-name-scroll {
   0%, 28% { transform: translateX(0); }
