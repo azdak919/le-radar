@@ -1842,21 +1842,33 @@ function paintWideNowAirPair(radio) {
   return true;
 }
 
+/**
+ * Wide / super-wide : MTL et QC sont deux ancres **indépendantes et persistantes**
+ * (pas d’alternance sur un seul slot). Les autres cartes tournent à côté.
+ */
+function weatherWideDualPrimary() {
+  return typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode();
+}
+
+function weatherPrimaryCityById(id) {
+  return WEATHER_CITIES.find((city) => city.id === id) || null;
+}
+
 function weatherBoardCount() {
   const width = weatherBoardAvailWidth();
   let count = 1;
   // Lab wide E : plus de slots quand le ruban grossit (largeur réelle masthead).
   // Slots CSS à parts égales → rotation sans reflow des voisins.
   // Seuils bas : remplir le vide (user : « ajouter des cartes météos »).
-  if (isWideNoMarqueeMode()) {
-    // Board météo ~ part du mât (pas full viewport) : seuils bas pour densifier.
+  if (weatherWideDualPrimary()) {
+    // Plancher 2 = MTL + QC toujours visibles ; au-delà = secondaires rotatives.
     if (width >= 1800) count = 8;
     else if (width >= 1200) count = 7;
     else if (width >= 900) count = 6;
     else if (width >= 700) count = 5;
     else if (width >= 520) count = 4;
     else if (width >= 360) count = 3;
-    else if (width >= 240) count = 2;
+    else count = 2;
   } else {
     // Modèle : 1 ancre MTL/QC + secondaires. Bureau 1280 board ~650 px → 3 cartes
     // (4 serraient les secondaires → marquee). 4 seulement si board vraiment large.
@@ -1866,6 +1878,12 @@ function weatherBoardCount() {
   }
   // Docké (768/900) : même plafond 3 pour lisibilité.
   if (mastheadWeatherDocked && count > 3) count = 3;
+  // Wide dual : ne jamais descendre sous MTL+QC (fit inclus).
+  if (weatherWideDualPrimary()) {
+    const floor = 2;
+    if (mastheadWeatherFitCount === null) return Math.max(floor, count);
+    return Math.max(floor, Math.min(count, mastheadWeatherFitCount));
+  }
   return mastheadWeatherFitCount === null ? count : Math.min(count, mastheadWeatherFitCount);
 }
 
@@ -1905,6 +1923,13 @@ function shuffleWeatherCities(cities) {
 }
 
 function weatherSecondaryGroup(slot, count) {
+  // Wide dual : slots 0–1 = MTL/QC fixes ; nation parmi les secondaires (2+).
+  if (weatherWideDualPrimary() && count > 2) {
+    const nationSlot = mastheadWeatherNationSlot < 2
+      ? 2
+      : mastheadWeatherNationSlot;
+    return slot === nationSlot ? 'nation' : 'campus';
+  }
   if (count > 2) return slot === mastheadWeatherNationSlot ? 'nation' : 'campus';
   if (slot !== 1) return 'campus';
   return mastheadWeatherCompactSecondaryIndex % 3 === 2 ? 'nation' : 'campus';
@@ -1938,28 +1963,72 @@ function showMastheadWeatherBoard() {
   const cities = [...MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city')];
   if (!cities.length) return;
   const count = Math.min(weatherBoardCount(), cities.length);
+  const dualPrimary = weatherWideDualPrimary() && count >= 2;
   if (count !== mastheadWeatherLastBoardCount) {
-    mastheadWeatherNationSlot = count > 2 ? 1 + Math.floor(Math.random() * (count - 1)) : 1;
-    // Largeur change : garder l’ancre MTL/QC, regénérer les secondaires.
-    mastheadWeatherSlots = mastheadWeatherSlots.slice(0, 1);
+    // Nation slot parmi les secondaires uniquement en dual (pas sur MTL/QC).
+    if (dualPrimary && count > 2) {
+      mastheadWeatherNationSlot = 2 + Math.floor(Math.random() * (count - 2));
+    } else {
+      mastheadWeatherNationSlot = count > 2 ? 1 + Math.floor(Math.random() * (count - 1)) : 1;
+    }
+    // Largeur change : garder les ancres, regénérer les secondaires.
+    mastheadWeatherSlots = mastheadWeatherSlots.slice(0, dualPrimary ? 2 : 1);
     mastheadWeatherLastBoardCount = count;
   }
   MASTHEAD_WEATHER.querySelector('.masthead-weather__board')?.setAttribute('data-weather-count', String(count));
-  mastheadWeatherSlots = mastheadWeatherSlots.slice(0, count);
-  // Slot 0 = carte spéciale ancre : exclusivement Montréal ↔ Québec (rotation).
-  const anchor = WEATHER_CITIES.find(
-    (city) => city.id === MASTHEAD_WEATHER_PRIMARY_SEQUENCE[mastheadWeatherPrimaryIndex],
+  if (dualPrimary) {
+    MASTHEAD_WEATHER.querySelector('.masthead-weather__board')?.setAttribute('data-weather-dual-primary', '1');
+  } else {
+    MASTHEAD_WEATHER.querySelector('.masthead-weather__board')?.removeAttribute('data-weather-dual-primary');
+  }
+  if (dualPrimary) {
+    // Deux ancres persistantes en tête : Montréal + Québec (jamais rotées).
+    const mtl = weatherPrimaryCityById('montreal');
+    const qc = weatherPrimaryCityById('quebec');
+    const secondaries = mastheadWeatherSlots
+      .filter((c) => c && !MASTHEAD_WEATHER_PRIMARY_IDS.has(c.id));
+    mastheadWeatherSlots = [mtl, qc].filter(Boolean).concat(secondaries).slice(0, count);
+  } else {
+    // Prod : slot 0 = ancre unique MTL ↔ QC (rotation).
+    mastheadWeatherSlots = mastheadWeatherSlots.slice(0, count);
+    const anchor = WEATHER_CITIES.find(
+      (city) => city.id === MASTHEAD_WEATHER_PRIMARY_SEQUENCE[mastheadWeatherPrimaryIndex],
+    );
+    if (anchor && mastheadWeatherSlots[0]?.id !== anchor.id) mastheadWeatherSlots[0] = anchor;
+  }
+
+  const usedIds = new Set(
+    mastheadWeatherSlots.filter(Boolean).map((city) => city.id),
   );
-  if (anchor && mastheadWeatherSlots[0]?.id !== anchor.id) mastheadWeatherSlots[0] = anchor;
-  const usedIds = new Set(mastheadWeatherSlots.map((city) => city.id));
+  // Dual : primaires toujours réservées
+  if (dualPrimary) {
+    usedIds.add('montreal');
+    usedIds.add('quebec');
+  }
   while (mastheadWeatherSlots.length < count) {
     const slot = mastheadWeatherSlots.length;
-    const city = slot === 0
-      ? anchor
-      : nextWeatherCity(weatherSecondaryGroup(slot, count), usedIds);
+    let city = null;
+    if (dualPrimary) {
+      if (slot === 0) city = weatherPrimaryCityById('montreal');
+      else if (slot === 1) city = weatherPrimaryCityById('quebec');
+      else city = nextWeatherCity(weatherSecondaryGroup(slot, count), usedIds);
+    } else {
+      city = slot === 0
+        ? WEATHER_CITIES.find(
+          (c) => c.id === MASTHEAD_WEATHER_PRIMARY_SEQUENCE[mastheadWeatherPrimaryIndex],
+        )
+        : nextWeatherCity(weatherSecondaryGroup(slot, count), usedIds);
+    }
     if (!city) break;
     usedIds.add(city.id);
     mastheadWeatherSlots.push(city);
+  }
+  // Filet dual : forcer MTL/QC même si le while a mal rempli
+  if (dualPrimary) {
+    const mtl = weatherPrimaryCityById('montreal');
+    const qc = weatherPrimaryCityById('quebec');
+    if (mtl) mastheadWeatherSlots[0] = mtl;
+    if (qc) mastheadWeatherSlots[1] = qc;
   }
   cities.forEach((city) => {
     city.classList.remove('is-active', 'is-leaving', 'is-arriving');
@@ -2138,32 +2207,52 @@ function scheduleMastheadWeatherRotate() {
 
 function rotateOneMastheadWeatherCard() {
   if (!mastheadWeatherSlots.length || !MASTHEAD_WEATHER) return;
-  const slot = mastheadWeatherNextSlot % mastheadWeatherSlots.length;
+  const n = mastheadWeatherSlots.length;
+  const dualPrimary = weatherWideDualPrimary() && n >= 2;
+  // Wide dual : ne jamais tourner les slots 0–1 (MTL + QC persistants).
+  // S’il n’y a que les 2 ancres, pas de rotation.
+  if (dualPrimary && n <= 2) return;
+  let slot = mastheadWeatherNextSlot % n;
+  if (dualPrimary) {
+    // Avancer jusqu’à un slot secondaire
+    let guard = 0;
+    while (slot < 2 && guard < n) {
+      mastheadWeatherNextSlot = (mastheadWeatherNextSlot + 1) % n;
+      slot = mastheadWeatherNextSlot % n;
+      guard += 1;
+    }
+    if (slot < 2) return;
+  }
   const previous = mastheadWeatherSlots[slot];
   const usedIds = new Set(
     mastheadWeatherSlots.filter((_, index) => index !== slot).map((city) => city.id),
   );
+  // Primaires toujours « utilisées » pour ne pas les réinjecter en secondaire
+  if (dualPrimary) {
+    usedIds.add('montreal');
+    usedIds.add('quebec');
+  }
   let replacement;
-  if (slot === 0) {
-    // Carte spéciale : alterne exclusivement Montréal ↔ Québec.
+  if (!dualPrimary && slot === 0) {
+    // Prod : carte spéciale alterne exclusivement Montréal ↔ Québec.
     mastheadWeatherPrimaryIndex = (mastheadWeatherPrimaryIndex + 1)
       % MASTHEAD_WEATHER_PRIMARY_SEQUENCE.length;
     replacement = WEATHER_CITIES.find(
       (city) => city.id === MASTHEAD_WEATHER_PRIMARY_SEQUENCE[mastheadWeatherPrimaryIndex],
     );
   } else {
-    if (slot === 1 && mastheadWeatherSlots.length <= 2) {
+    if (!dualPrimary && slot === 1 && n <= 2) {
       mastheadWeatherCompactSecondaryIndex = (mastheadWeatherCompactSecondaryIndex + 1) % 3;
     }
     replacement = nextWeatherCity(
-      weatherSecondaryGroup(slot, mastheadWeatherSlots.length),
+      weatherSecondaryGroup(slot, n),
       usedIds,
     );
   }
   if (!replacement) return;
   // Même ville (deck vide / un seul candidat) : avancer le curseur sans anim fantôme.
   if (previous?.id === replacement.id) {
-    mastheadWeatherNextSlot = (slot + 1) % mastheadWeatherSlots.length;
+    mastheadWeatherNextSlot = (slot + 1) % n;
     return;
   }
 
