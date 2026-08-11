@@ -862,6 +862,18 @@ assert(
   /const fresh = d \? torontoDayKey\(d\) === torontoDayKey\(\) : false;/.test(appJs),
   'app.js : la date rouge couvre toute la journée civile (torontoDayKey), pas 120 min',
 );
+// La pastille pulse ne doit pas être masquée sur En bref / vedettes / mobile :
+// seules les dates non-fraîches perdent le point gris (::before).
+assert(
+  styleCss.includes('.article-time.is-fresh::before')
+    && /display:\s*inline-block/.test(
+      (styleCss.match(/\.article-time\.is-fresh::before\s*\{[^}]+\}/) || [''])[0],
+    )
+    && styleCss.includes('.article-time:not(.is-fresh)::before')
+    && !/\.article-time::before\s*\{\s*display:\s*none/.test(styleCss)
+    && !/\.article--compact \.article-time::before\s*\{\s*display:\s*none/.test(styleCss),
+  'style : pastille rouge is-fresh visible partout ; display:none seulement sur :not(.is-fresh)',
+);
 
 assert(
   appJs.includes('rollSportsCtaLabel')
