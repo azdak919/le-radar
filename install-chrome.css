@@ -116,18 +116,19 @@
   position: fixed;
   left: 0;
   right: 0;
-  bottom: max(16px, env(safe-area-inset-bottom, 0px));
+  top: max(12px, env(safe-area-inset-top, 0px));
+  bottom: auto;
   z-index: 400;
   display: flex;
   justify-content: center;
   padding: 0 12px;
   pointer-events: none;
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(-12px);
   transition: opacity 0.28s ease, transform 0.28s ease;
 }
 .engage-prompt.is-visible { opacity: 1; transform: none; pointer-events: auto; }
-.engage-prompt.is-leaving { opacity: 0; transform: translateY(16px); pointer-events: none; }
+.engage-prompt.is-leaving { opacity: 0; transform: translateY(-16px); pointer-events: none; }
 .engage-prompt__inner {
   position: relative;
   width: min(420px, 100%);

@@ -1454,12 +1454,19 @@ function sportsHubPage(lang, ctx) {
   const updated = stamp?.label || null;
   const hasContent = teams.length > 0;
 
-  let body = `      <p class="seo-lead">${escapeHtml(t.sportsLead)}</p>\n`;
-  body += `      <p class="sports-board-meta">${escapeHtml(t.sportsMeta)}${
-    stamp
-      ? ` · ${escapeHtml(t.updated)} <time class="sports-board-meta__time" datetime="${escapeHtml(stamp.machine)}">${escapeHtml(stamp.label)}</time>`
-      : ''
-  }</p>\n`;
+  // Focus-group le-radar-sports-page-title : pas de lead ; meta = Mise à jour seule.
+  let body = '';
+  if (t.sportsLead) {
+    body += `      <p class="seo-lead">${escapeHtml(t.sportsLead)}</p>\n`;
+  }
+  if (stamp) {
+    const prefix = t.sportsMeta
+      ? `${escapeHtml(t.sportsMeta)} · ${escapeHtml(t.updated)} `
+      : `${escapeHtml(t.updated)} `;
+    body += `      <p class="sports-board-meta">${prefix}<time class="sports-board-meta__time" datetime="${escapeHtml(stamp.machine)}">${escapeHtml(stamp.label)}</time></p>\n`;
+  } else if (t.sportsMeta) {
+    body += `      <p class="sports-board-meta">${escapeHtml(t.sportsMeta)}</p>\n`;
+  }
 
   if (!hasContent) {
     body += `      <p class="seo-empty">${escapeHtml(t.sportsEmpty)}</p>\n`;
@@ -1591,7 +1598,7 @@ function sportsHubPage(lang, ctx) {
       eyebrow: null,
       crumbs: [
         { label: t.home, href: up },
-        { label: t.sports, href: './', reset: true },
+        { label: t.sportsFooter || t.sports, href: './', reset: true },
       ],
       bodyHtml: body,
       jsonLd,

@@ -1847,18 +1847,18 @@ try {
  * Avec marquee : ≥ 1 aller-retour CSS + pause au repos pour relire le début
  *   (même esprit que MARQUEE_REST_MS du dial radio).
  */
-const SPORTS_READ_MIN_MS = 7800;
-const SPORTS_READ_PER_CHAR_MS = 42;
-const SPORTS_READ_MAX_MS = 11000;
+const SPORTS_READ_MIN_MS = 4800;
+const SPORTS_READ_PER_CHAR_MS = 36;
+const SPORTS_READ_MAX_MS = 8000;
 /**
  * Une voie du marquee CSS `sports-chip-scroll` (style.css) — tenir synchro
  * avec `--sports-scroll-duration`. `alternate` → aller-retour = 2 ×.
  */
 /** Synchro style.css `--sports-scroll-duration` (marquee L→R). */
-const SPORTS_SCROLL_ONE_WAY_MS = 8500;
+const SPORTS_SCROLL_ONE_WAY_MS = 5500;
 const SPORTS_SCROLL_ROUND_TRIP_MS = SPORTS_SCROLL_ONE_WAY_MS * 2;
 /** Pause au repos après le retour (re-ack du début de ligne). */
-const SPORTS_SCROLL_POST_PAUSE_MS = 2200;
+const SPORTS_SCROLL_POST_PAUSE_MS = 1200;
 /** Décalage initial entre slots pour éviter un flip simultané au 1er paint. */
 const SPORTS_SLOT_STAGGER_MS = 1100;
 /** Entrée d’une puce score (CSS sports-chip-arrive) — plus long = moins brutal. */
@@ -5774,6 +5774,81 @@ function initContentFreshnessLifecycle() {
   // visibilitychange.
   window.addEventListener('freeze', noteAppHidden);
   window.addEventListener('resume', refreshContentOnReturn);
+  initPullToRefresh();
+}
+
+
+function isStandaloneDisplay() {
+  try {
+    if (window.matchMedia('(display-mode: standalone)').matches) return true;
+    if (window.matchMedia('(display-mode: minimal-ui)').matches) return true;
+    if (window.matchMedia('(display-mode: window-controls-overlay)').matches) return true;
+    if (navigator.standalone === true) return true;
+  } catch { /* ignore */ }
+  return false;
+}
+
+/** Pull-to-refresh PWA : fil d’actus le plus récent (soft). */
+function initPullToRefresh() {
+  if (typeof IS_TUNER_EMBED !== 'undefined' && IS_TUNER_EMBED) return;
+  if (!isStandaloneDisplay()) return;
+  if (document.documentElement.dataset.pullRefresh === '1') return;
+  document.documentElement.dataset.pullRefresh = '1';
+  const THRESHOLD = 72;
+  const MAX_PULL = 110;
+  let startY = 0, pulling = false, armed = false, indicator = null;
+  let reducedMotion = false;
+  try { reducedMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); } catch {}
+  function ensureIndicator() {
+    if (indicator) return indicator;
+    indicator = document.createElement('div');
+    indicator.className = 'radar-pull-refresh';
+    indicator.setAttribute('aria-hidden', 'true');
+    indicator.innerHTML = '<span class="radar-pull-refresh__dot"></span>';
+    document.body.appendChild(indicator);
+    return indicator;
+  }
+  function setPull(px) {
+    const el = ensureIndicator();
+    const p = Math.min(MAX_PULL, Math.max(0, px));
+    el.style.setProperty('--pull', p + 'px');
+    el.classList.toggle('is-armed', p >= THRESHOLD);
+    el.classList.toggle('is-visible', p > 8);
+  }
+  function releasePull(trigger) {
+    const el = indicator;
+    if (!el) return;
+    if (trigger) {
+      el.classList.add('is-refreshing');
+      el.classList.remove('is-armed');
+      try { checkForAppUpdate(); } catch {}
+      loadNews({ silent: true }).catch(() => {}).finally(() => {
+        window.setTimeout(() => {
+          el.classList.remove('is-refreshing', 'is-visible');
+          el.style.setProperty('--pull', '0px');
+        }, reducedMotion ? 120 : 420);
+      });
+      return;
+    }
+    el.classList.remove('is-armed', 'is-visible', 'is-refreshing');
+    el.style.setProperty('--pull', '0px');
+  }
+  document.addEventListener('touchstart', (e) => {
+    if (e.touches.length !== 1) return;
+    if ((window.scrollY || document.documentElement.scrollTop || 0) > 2) return;
+    startY = e.touches[0].clientY; pulling = true; armed = false;
+  }, { passive: true });
+  document.addEventListener('touchmove', (e) => {
+    if (!pulling || e.touches.length !== 1) return;
+    if ((window.scrollY || document.documentElement.scrollTop || 0) > 2) { pulling = false; releasePull(false); return; }
+    const dy = e.touches[0].clientY - startY;
+    if (dy < 4) return;
+    if (dy > 12 && e.cancelable) e.preventDefault();
+    setPull(dy * 0.55);
+    armed = dy * 0.55 >= THRESHOLD;
+  }, { passive: false });
+  document.addEventListener('touchend', () => { if (!pulling) return; pulling = false; const go = armed; armed = false; releasePull(go); }, { passive: true });
+  document.addEventListener('touchcancel', () => { pulling = false; armed = false; releasePull(false); }, { passive: true });
 }
 
 async function refreshNowPlayingCache({ render = true } = {}) {

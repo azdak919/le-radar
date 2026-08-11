@@ -292,16 +292,16 @@ const T = {
     schedulesH1: 'Les horaires des radios étudiantes du Québec',
     schedulesLead: 'Une grille par station, mise à jour automatiquement à partir du site de chaque radio. Toutes les heures sont données à l’heure du Québec.',
     schedulesEmpty: 'Aucune grille horaire disponible au moment de la dernière mise à jour.',
-    sports: 'Sports Étudiants',
+    sports: 'Sports',
     /** Pied de page seulement (focus-group le-radar-footer-sports) — pas le H1/CTA. */
     sportsFooter: 'Sports',
-    sportsTitle: 'Sports Étudiants — scores collégiaux et universitaires du Québec',
+    sportsTitle: 'Sports collégiaux et universitaires du Québec',
     sportsDesc: 'Scores et prochains matchs de {n} formations collégiales et universitaires du Québec (catalogue RSEQ) : hockey, football, soccer, basketball, volleyball, badminton, natation et plus.',
-    sportsH1: 'Sports Étudiants',
-    sportsLead: 'Le tableau des sports étudiants du Québec : formations collégiales et universitaires, scores et prochains matchs.',
+    sportsH1: 'Sports collégiaux et universitaires du Québec',
+    sportsLead: '',
     sportsEmpty: 'Aucun résultat sportif disponible au moment de la dernière mise à jour.',
     sportsClubPending: 'Association étudiante de voile — scores à venir.',
-    sportsMeta: 'Sports collégiaux et universitaires du Québec',
+    sportsMeta: '',
     sportsScrollTop: 'Haut de page',
     sportsPriorSeason: 'Saison précédente',
     sportsSearchLabel: 'Rechercher une équipe, un établissement, un sport…',
@@ -445,16 +445,16 @@ const T = {
     schedulesH1: 'Québec campus radio schedules',
     schedulesLead: 'One grid per station, updated automatically from each station’s own website. All times are Québec time.',
     schedulesEmpty: 'No schedule available as of the last update.',
-    sports: 'Student Sports',
+    sports: 'Sports',
     /** Footer only (same decision as FR sportsFooter). */
     sportsFooter: 'Sports',
-    sportsTitle: 'Student Sports — Québec CEGEP and university sports results',
+    sportsTitle: 'Québec CEGEP and university sports',
     sportsDesc: 'Scores and upcoming games for {n} CEGEP and university teams in Québec (RSEQ catalog): hockey, football, soccer, basketball, volleyball, badminton, swimming and more.',
-    sportsH1: 'Student Sports',
-    sportsLead: 'Live board of student sports in Québec: CEGEP and university teams, scores, and what’s next.',
+    sportsH1: 'Québec CEGEP and university sports',
+    sportsLead: '',
     sportsEmpty: 'No sports results available as of the last update.',
     sportsClubPending: 'Student sailing association — scores coming soon.',
-    sportsMeta: 'Québec CEGEP & university sports',
+    sportsMeta: '',
     sportsScrollTop: 'Back to top',
     sportsPriorSeason: 'Previous season',
     sportsSearchLabel: 'Search teams, institutions, sports…',
@@ -729,6 +729,7 @@ function renderInstallMenu({ lang = 'fr', up = './', panelId = 'install-menu-pan
  * expérimental (dette D19) et n'a pas sa place dans la navigation principale.
  */
 const SECTIONS = [
+  { id: 'home', key: 'home', path: { fr: '', en: 'en/' }, navOnly: true },
   { id: 'medias', key: 'footerDirectory', path: { fr: 'medias/', en: 'en/media/' } },
   // L'annuaire n'a pas de hub « journaux » dédié, mais il porte déjà l'ancre.
   { id: 'journaux', key: 'footerNewspapers', path: { fr: 'medias/#journaux', en: 'en/media/#journaux' } },
@@ -745,11 +746,20 @@ const SECTIONS = [
   { id: 'archives', key: 'archives', path: { fr: 'archives/', en: 'archives/' }, footerOnly: true },
 ];
 
-function sectionLinks({ lang, href, includeFooterOnly = false }) {
+function sectionLinks({ lang, href, includeFooterOnly = false, includeNavOnly = false } = {}) {
   const t = T[lang];
   return SECTIONS
-    .filter((s) => includeFooterOnly || !s.footerOnly)
-    .map((s) => `<a href="${href(s.path[lang] || s.path.fr)}"${s.attrs || ''}>${escapeHtml(t[s.key])}</a>`);
+    .filter((s) => {
+      if (s.footerOnly && !includeFooterOnly) return false;
+      if (s.navOnly && !includeNavOnly) return false;
+      return true;
+    })
+    .map((s) => {
+      const path = s.path[lang] || s.path.fr || '';
+      const cur = s.id === 'home' ? ' aria-current="page"' : '';
+      const url = path === '' ? (href('') || './') : href(path);
+      return `<a href="${url}"${s.attrs || ''}${cur}>${escapeHtml(t[s.key])}</a>`;
+    });
 }
 
 /**
@@ -761,7 +771,7 @@ function sectionLinks({ lang, href, includeFooterOnly = false }) {
 function renderSectionNav({ lang = 'fr', up = './', indent = '    ' } = {}) {
   const href = (rel) => (rel ? `${up}${rel}`.replace(/^\.\//, '') : up);
   const sep = '<span class="site-sections__sep" aria-hidden="true">·</span>';
-  const items = sectionLinks({ lang, href }).join(`\n${indent}  ${sep}\n${indent}  `);
+  const items = sectionLinks({ lang, href, includeNavOnly: true }).join(`\n${indent}  ${sep}\n${indent}  `);
   const label = lang === 'en' ? 'Site sections' : 'Sections du site';
   return `<nav class="site-sections" aria-label="${label}">
 ${indent}  ${items}
