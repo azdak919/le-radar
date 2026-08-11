@@ -2612,6 +2612,21 @@ function sportsOrderedKeys(bestMap) {
 const SPORTS_TEAM_COLOR_SUFFIX_RE = /\s+(Bleu(?:e)?|Jaune|Noir(?:e)?|Blanc(?:he)?|Rouge|Vert(?:e)?|Or)\s*$/i;
 
 /**
+ * Abréviations cryptiques issues du flux RSEQ / vieux registre — élargies à
+ * l’affichage même si sports.json n’a pas encore été re-sync.
+ */
+const SPORTS_CRYPTIC_SHORT_EXPAND = {
+  'Ch.-St-Lambert': 'Champlain St-Lambert',
+  'Ch.-Lennoxville': 'Champlain Lennoxville',
+  'Ch.-St-Lawrence': 'Champlain St-Lawrence',
+  'Abitibi-Témisc.': 'Abitibi-Témiscamingue',
+  'Ch. Saint-Lambert': 'Champlain St-Lambert',
+  'Ch. St-Lambert': 'Champlain St-Lambert',
+  'Ch. Lennoxville': 'Champlain Lennoxville',
+  'Ch. St-Lawrence': 'Champlain St-Lawrence',
+};
+
+/**
  * Accronymes univ. (ULaval, UdeM…) — table `institution-acronyms-data.js`
  * déjà chargée sur l’accueil. Repli codes RSEQ si la table manque.
  */
@@ -2702,9 +2717,25 @@ function sportsPlainOpponentName(game) {
 function sportsDisplaySideName({
   shortName, fullName, code, sector, fallback = 'Équipe', preferAcronym = false,
 } = {}) {
-  const short = String(shortName || '').trim();
-  const full = String(fullName || '').trim();
+  let short = String(shortName || '').trim();
+  let full = String(fullName || '').trim();
   const codeU = String(code || '').toUpperCase();
+
+  // Déplier « Ch.-St-Lambert » → « Champlain St-Lambert » (etc.)
+  if (short && SPORTS_CRYPTIC_SHORT_EXPAND[short]) {
+    short = SPORTS_CRYPTIC_SHORT_EXPAND[short];
+  }
+  if (full && (full.startsWith('Cégep de Ch.') || full.includes('Témisc.') || full.includes('Ch.-'))) {
+    if (codeU === 'SLC' || /St-?Lawrence/i.test(full) || /St-?Lawrence/i.test(short)) {
+      full = 'Champlain College St. Lawrence';
+    } else if (codeU === 'SLA' || /St-?Lambert/i.test(full) || /St-?Lambert/i.test(short)) {
+      full = 'Champlain College Saint-Lambert';
+    } else if (codeU === 'LEN' || /Lennoxville/i.test(full) || /Lennoxville/i.test(short)) {
+      full = 'Champlain College Lennoxville';
+    } else if (codeU === 'CAT' || /Abitibi/i.test(full)) {
+      full = "Cégep de l'Abitibi-Témiscamingue";
+    }
+  }
 
   if (short && SPORTS_TEAM_COLOR_SUFFIX_RE.test(short)) return short;
 
