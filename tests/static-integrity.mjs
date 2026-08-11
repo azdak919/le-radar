@@ -499,8 +499,20 @@ assert(
   'invitation install : body triade marque (journaux + radios + sports)',
 );
 assert(
+  engagePrompt.includes('Québec student newspapers, radio and sports — one tap away.'),
+  'invitation install EN : body triade marque',
+);
+assert(
   /sports étudiants/i.test(engagePrompt) && /journaux/i.test(engagePrompt) && /radios/i.test(engagePrompt),
   'invitation install radar : ne pas omettre un volet de la triade',
+);
+// Guide manuel (non-natif) doit aussi porter la triade via installBodyCopy — pas un
+// corps générique « En un geste. Sur cet appareil » qui omettait les sports.
+assert(
+  engagePrompt.includes('installBodyCopy(lang, appId)')
+    || (engagePrompt.includes('function installBodyCopy')
+      && engagePrompt.includes('const benefit = installBodyCopy')),
+  'invitation install : body manuel = installBodyCopy (triade)',
 );
 assert(!/accès hors ligne inclus/i.test(engagePrompt), 'invitation PWA : promesse offline gonflée interdite');
 assert(!/magasin d[’']apps/i.test(engagePrompt), 'invitation PWA : jargon magasin d’apps interdit');
