@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-11T16:13:42.441Z",
+  "updated": "2026-08-11T16:27:04.310Z",
   "fetchedAt": "2026-08-11T12:04:16.776Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
@@ -946,7 +946,7 @@
       "id": "collegial:badminton:2649fbf2-7d0e-42e8-bcfe-e76125a1798c:39c4e62e-c5d5-44d5-afcc-3553aa07aaa3",
       "rseqTeamId": "39c4e62e-c5d5-44d5-afcc-3553aa07aaa3",
       "leagueId": "2649fbf2-7d0e-42e8-bcfe-e76125a1798c",
-      "name": "Abitibi-Témisc.",
+      "name": "Abitibi-Témiscamingue",
       "code": "CAT",
       "sector": "collegial",
       "sport": "badminton",
@@ -1141,7 +1141,7 @@
       },
       "source": "rseq-s1",
       "priority": 80,
-      "fullName": "Cégep de Abitibi-Témisc.",
+      "fullName": "Cégep de l'Abitibi-Témiscamingue",
       "registryId": "abitibi-temisc"
     },
     "collegial:badminton:2649fbf2-7d0e-42e8-bcfe-e76125a1798c:e40a772f-04fe-4286-874d-ff7e9a2cd49c": {
@@ -1190,14 +1190,14 @@
         {
           "date": "2026-10-03",
           "time": "13:15",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "badminton",
           "competition": "Badminton collégial mixte D2",
           "gameId": "f1dffb0b-f003-4a64-807f-4838fded47b1",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f1dffb0b-f003-4a64-807f-4838fded47b1",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -1216,14 +1216,14 @@
         {
           "date": "2026-10-25",
           "time": "9:30",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "badminton",
           "competition": "Badminton collégial mixte D2",
           "gameId": "ee53d00e-b75a-43e0-be0c-10d2501a55af",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ee53d00e-b75a-43e0-be0c-10d2501a55af",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -1269,14 +1269,14 @@
         {
           "date": "2026-11-22",
           "time": "9:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "badminton",
           "competition": "Badminton collégial mixte D2",
           "gameId": "e9d2eed8-bf62-40f4-a98e-6d77da6e582e",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e9d2eed8-bf62-40f4-a98e-6d77da6e582e",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -1364,14 +1364,14 @@
         {
           "date": "2026-10-03",
           "time": "9:30",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "badminton",
           "competition": "Badminton collégial mixte D2",
           "gameId": "daa38d47-efdb-4903-b8f0-61d57d4920a5",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=daa38d47-efdb-4903-b8f0-61d57d4920a5",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -1442,14 +1442,14 @@
         {
           "date": "2026-10-25",
           "time": "13:15",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "badminton",
           "competition": "Badminton collégial mixte D2",
           "gameId": "2bb906fa-b4af-427a-bc15-79b0b143bae3",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2bb906fa-b4af-427a-bc15-79b0b143bae3",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -1507,28 +1507,28 @@
         {
           "date": "2026-11-22",
           "time": "14:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "badminton",
           "competition": "Badminton collégial mixte D2",
           "gameId": "8d39ade7-e2bd-4600-9b90-57420d36f6e2",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=8d39ade7-e2bd-4600-9b90-57420d36f6e2",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         }
       ],
       "nextGame": {
         "date": "2026-10-03",
         "time": "9:30",
-        "opponent": "Abitibi-Témisc.",
+        "opponent": "Abitibi-Témiscamingue",
         "opponentCode": "CAT",
         "home": false,
         "sport": "badminton",
         "competition": "Badminton collégial mixte D2",
         "gameId": "daa38d47-efdb-4903-b8f0-61d57d4920a5",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=daa38d47-efdb-4903-b8f0-61d57d4920a5",
-        "opponentFullName": "Cégep de Abitibi-Témisc.",
+        "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
         "opponentRegistryId": "abitibi-temisc"
       },
       "record": {
@@ -1577,14 +1577,14 @@
         {
           "date": "2026-10-25",
           "time": "12:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "badminton",
           "competition": "Badminton collégial mixte D2",
           "gameId": "10e36ff8-0e27-4228-aa80-e97e3323d466",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=10e36ff8-0e27-4228-aa80-e97e3323d466",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -1643,14 +1643,14 @@
         {
           "date": "2026-11-22",
           "time": "11:30",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "badminton",
           "competition": "Badminton collégial mixte D2",
           "gameId": "79cc2df8-ca87-4aa4-8d35-693382a2d65e",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=79cc2df8-ca87-4aa4-8d35-693382a2d65e",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -1725,14 +1725,14 @@
         {
           "date": "2026-10-03",
           "time": "12:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "badminton",
           "competition": "Badminton collégial mixte D2",
           "gameId": "e6c42ec7-8d20-4187-a59c-3eab7b334e8f",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e6c42ec7-8d20-4187-a59c-3eab7b334e8f",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -1765,14 +1765,14 @@
         {
           "date": "2026-11-22",
           "time": "10:15",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "badminton",
           "competition": "Badminton collégial mixte D2",
           "gameId": "9133d53a-a3be-41ec-9eee-9ae1dabaf5fa",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9133d53a-a3be-41ec-9eee-9ae1dabaf5fa",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -1860,14 +1860,14 @@
         {
           "date": "2026-10-03",
           "time": "10:45",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "badminton",
           "competition": "Badminton collégial mixte D2",
           "gameId": "8c9ba893-fd14-4234-9f48-ec1b6b109964",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=8c9ba893-fd14-4234-9f48-ec1b6b109964",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -1913,14 +1913,14 @@
         {
           "date": "2026-10-25",
           "time": "10:45",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "badminton",
           "competition": "Badminton collégial mixte D2",
           "gameId": "5e6bc2a4-b477-4056-9d1a-c29090db0569",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5e6bc2a4-b477-4056-9d1a-c29090db0569",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -1967,14 +1967,14 @@
       "nextGame": {
         "date": "2026-10-03",
         "time": "10:45",
-        "opponent": "Abitibi-Témisc.",
+        "opponent": "Abitibi-Témiscamingue",
         "opponentCode": "CAT",
         "home": false,
         "sport": "badminton",
         "competition": "Badminton collégial mixte D2",
         "gameId": "8c9ba893-fd14-4234-9f48-ec1b6b109964",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=8c9ba893-fd14-4234-9f48-ec1b6b109964",
-        "opponentFullName": "Cégep de Abitibi-Témisc.",
+        "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
         "opponentRegistryId": "abitibi-temisc"
       },
       "record": {
@@ -1993,7 +1993,7 @@
       "id": "collegial:badminton:eb5ee4f9-3860-4efd-b535-2024284dec68:ad986bf1-3ed5-43fa-8398-424e0254cfa2",
       "rseqTeamId": "ad986bf1-3ed5-43fa-8398-424e0254cfa2",
       "leagueId": "eb5ee4f9-3860-4efd-b535-2024284dec68",
-      "name": "Ch.-St-Lambert",
+      "name": "Champlain St-Lambert",
       "code": "SLA",
       "sector": "collegial",
       "sport": "badminton",
@@ -2289,7 +2289,7 @@
         {
           "date": "2026-11-08",
           "time": "14:15",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "badminton",
@@ -2316,7 +2316,7 @@
         {
           "date": "2026-11-21",
           "time": "11:15",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "badminton",
@@ -2440,7 +2440,7 @@
         {
           "date": "2026-10-17",
           "time": "10:15",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "badminton",
@@ -2562,7 +2562,7 @@
         {
           "date": "2026-12-06",
           "time": "11:15",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "badminton",
@@ -2672,7 +2672,7 @@
         {
           "date": "2026-10-17",
           "time": "12:45",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "badminton",
@@ -2738,7 +2738,7 @@
         {
           "date": "2026-11-21",
           "time": "12:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "badminton",
@@ -2834,7 +2834,7 @@
         {
           "date": "2026-10-03",
           "time": "14:15",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "badminton",
@@ -3063,7 +3063,7 @@
         {
           "date": "2026-10-17",
           "time": "11:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "badminton",
@@ -3226,7 +3226,7 @@
         {
           "date": "2026-10-03",
           "time": "13:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "badminton",
@@ -3361,7 +3361,7 @@
         {
           "date": "2026-12-06",
           "time": "10:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "badminton",
@@ -3389,7 +3389,7 @@
       "nextGame": {
         "date": "2026-10-03",
         "time": "13:00",
-        "opponent": "Ch.-St-Lambert",
+        "opponent": "Champlain St-Lambert",
         "opponentCode": "SLA",
         "home": true,
         "sport": "badminton",
@@ -3498,7 +3498,7 @@
         {
           "date": "2026-11-08",
           "time": "13:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "badminton",
@@ -3525,7 +3525,7 @@
         {
           "date": "2026-11-21",
           "time": "10:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "badminton",
@@ -5447,7 +5447,7 @@
         {
           "date": "2026-10-22",
           "time": "18:30",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": false,
           "sport": "basketball",
@@ -5474,7 +5474,7 @@
         {
           "date": "2026-11-13",
           "time": "19:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "basketball",
@@ -5572,7 +5572,7 @@
       "id": "collegial:basketball:501c476d-a72e-4bef-afb8-0501680559c3:33c8aa74-14c1-4b67-bf19-63784cb94bb7",
       "rseqTeamId": "33c8aa74-14c1-4b67-bf19-63784cb94bb7",
       "leagueId": "501c476d-a72e-4bef-afb8-0501680559c3",
-      "name": "Ch.-Lennoxville",
+      "name": "Champlain Lennoxville",
       "code": "LEN",
       "sector": "collegial",
       "sport": "basketball",
@@ -5684,7 +5684,7 @@
         {
           "date": "2026-11-27",
           "time": "18:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "basketball",
@@ -5726,7 +5726,7 @@
       "id": "collegial:basketball:501c476d-a72e-4bef-afb8-0501680559c3:23c214a6-fac5-44ba-a985-cb84d3d11ee0",
       "rseqTeamId": "23c214a6-fac5-44ba-a985-cb84d3d11ee0",
       "leagueId": "501c476d-a72e-4bef-afb8-0501680559c3",
-      "name": "Ch.-St-Lambert",
+      "name": "Champlain St-Lambert",
       "code": "SLA",
       "sector": "collegial",
       "sport": "basketball",
@@ -5824,7 +5824,7 @@
         {
           "date": "2026-11-27",
           "time": "18:30",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "basketball",
@@ -5950,7 +5950,7 @@
         {
           "date": "2026-11-20",
           "time": "19:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "basketball",
@@ -5964,7 +5964,7 @@
         {
           "date": "2026-11-22",
           "time": "13:00",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": false,
           "sport": "basketball",
@@ -6049,7 +6049,7 @@
         {
           "date": "2026-10-17",
           "time": "16:30",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "basketball",
@@ -6090,7 +6090,7 @@
         {
           "date": "2026-11-06",
           "time": "18:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "basketball",
@@ -6160,7 +6160,7 @@
       "nextGame": {
         "date": "2026-10-17",
         "time": "16:30",
-        "opponent": "Ch.-Lennoxville",
+        "opponent": "Champlain Lennoxville",
         "opponentCode": "LEN",
         "home": true,
         "sport": "basketball",
@@ -6216,7 +6216,7 @@
         {
           "date": "2026-10-23",
           "time": "19:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "basketball",
@@ -6258,7 +6258,7 @@
         {
           "date": "2026-11-20",
           "time": "19:00",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "basketball",
@@ -6356,7 +6356,7 @@
         {
           "date": "2026-10-16",
           "time": "20:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "basketball",
@@ -6384,7 +6384,7 @@
         {
           "date": "2026-11-06",
           "time": "18:30",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": false,
           "sport": "basketball",
@@ -6467,7 +6467,7 @@
       "nextGame": {
         "date": "2026-10-16",
         "time": "20:00",
-        "opponent": "Ch.-St-Lambert",
+        "opponent": "Champlain St-Lambert",
         "opponentCode": "SLA",
         "home": false,
         "sport": "basketball",
@@ -6551,7 +6551,7 @@
         {
           "date": "2026-11-13",
           "time": "19:00",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "basketball",
@@ -6606,7 +6606,7 @@
         {
           "date": "2026-12-04",
           "time": "18:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "basketball",
@@ -6663,7 +6663,7 @@
         {
           "date": "2026-10-17",
           "time": "18:45",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "basketball",
@@ -6691,7 +6691,7 @@
         {
           "date": "2026-10-25",
           "time": "13:00",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "basketball",
@@ -6774,7 +6774,7 @@
       "nextGame": {
         "date": "2026-10-17",
         "time": "18:45",
-        "opponent": "Ch.-St-Lambert",
+        "opponent": "Champlain St-Lambert",
         "opponentCode": "SLA",
         "home": true,
         "sport": "basketball",
@@ -8168,7 +8168,7 @@
       "id": "collegial:basketball:112f19a5-e775-4ea7-8a4d-d290e89be80f:c2cdf3d0-3232-4038-9ac1-fc039a6c7f4e",
       "rseqTeamId": "c2cdf3d0-3232-4038-9ac1-fc039a6c7f4e",
       "leagueId": "112f19a5-e775-4ea7-8a4d-d290e89be80f",
-      "name": "Ch.-St-Lawrence",
+      "name": "Champlain St-Lawrence",
       "code": "SLC",
       "sector": "collegial",
       "sport": "basketball",
@@ -8285,7 +8285,7 @@
       },
       "source": "rseq-s1",
       "priority": 80,
-      "fullName": "Cégep de Ch.-St-Lawrence",
+      "fullName": "Champlain College St. Lawrence",
       "registryId": "ch-st-lawrence"
     },
     "collegial:basketball:112f19a5-e775-4ea7-8a4d-d290e89be80f:4a44babc-a1e9-4665-a832-0eced706e4cf": {
@@ -8362,14 +8362,14 @@
         {
           "date": "2026-11-21",
           "time": "13:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": false,
           "sport": "basketball",
           "competition": "Basketball collégial féminin D2",
           "gameId": "89a2658d-7314-47d3-a7b4-ff53065072f4",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=89a2658d-7314-47d3-a7b4-ff53065072f4",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -8525,14 +8525,14 @@
         {
           "date": "2026-11-29",
           "time": "12:30",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": true,
           "sport": "basketball",
           "competition": "Basketball collégial féminin D2",
           "gameId": "569df04d-cc6e-4074-b509-112d17af6237",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=569df04d-cc6e-4074-b509-112d17af6237",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -8610,14 +8610,14 @@
         {
           "date": "2026-10-30",
           "time": "19:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": true,
           "sport": "basketball",
           "competition": "Basketball collégial féminin D2",
           "gameId": "6915b04e-a625-47cc-bc6d-3bf20947f9a6",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6915b04e-a625-47cc-bc6d-3bf20947f9a6",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -8773,14 +8773,14 @@
         {
           "date": "2026-11-06",
           "time": "19:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": true,
           "sport": "basketball",
           "competition": "Basketball collégial féminin D2",
           "gameId": "da7de1d6-a38a-45da-a892-1e13e0d724ac",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=da7de1d6-a38a-45da-a892-1e13e0d724ac",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -8871,14 +8871,14 @@
         {
           "date": "2026-10-16",
           "time": "19:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": false,
           "sport": "basketball",
           "competition": "Basketball collégial féminin D2",
           "gameId": "20c7c187-b933-4a8b-b27f-436a553a4dbc",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=20c7c187-b933-4a8b-b27f-436a553a4dbc",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -8965,14 +8965,14 @@
       "nextGame": {
         "date": "2026-10-16",
         "time": "19:00",
-        "opponent": "Ch.-St-Lawrence",
+        "opponent": "Champlain St-Lawrence",
         "opponentCode": "SLC",
         "home": false,
         "sport": "basketball",
         "competition": "Basketball collégial féminin D2",
         "gameId": "20c7c187-b933-4a8b-b27f-436a553a4dbc",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=20c7c187-b933-4a8b-b27f-436a553a4dbc",
-        "opponentFullName": "Cégep de Ch.-St-Lawrence",
+        "opponentFullName": "Champlain College St. Lawrence",
         "opponentRegistryId": "ch-st-lawrence"
       },
       "record": {
@@ -9048,14 +9048,14 @@
         {
           "date": "2026-11-13",
           "time": "19:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": false,
           "sport": "basketball",
           "competition": "Basketball collégial féminin D2",
           "gameId": "1c5b178a-12c0-4a65-8958-a36332588e3e",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1c5b178a-12c0-4a65-8958-a36332588e3e",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -10032,7 +10032,7 @@
       "id": "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:f46280e1-cf49-4e5a-abeb-9509da162db2",
       "rseqTeamId": "f46280e1-cf49-4e5a-abeb-9509da162db2",
       "leagueId": "fa4cdca6-cd02-4808-96b3-2ff546cb4ac5",
-      "name": "Abitibi-Témisc.",
+      "name": "Abitibi-Témiscamingue",
       "code": "CAT",
       "sector": "collegial",
       "sport": "basketball",
@@ -10171,7 +10171,7 @@
       },
       "source": "rseq-s1",
       "priority": 80,
-      "fullName": "Cégep de Abitibi-Témisc.",
+      "fullName": "Cégep de l'Abitibi-Témiscamingue",
       "registryId": "abitibi-temisc"
     },
     "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:47dfe02a-e63f-4c3b-8be7-1196a7ff35d4": {
@@ -10541,27 +10541,27 @@
         {
           "date": "2026-10-31",
           "time": "19:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "basketball",
           "competition": "Basketball collégial féminin D3",
           "gameId": "9e43017a-6c12-4c9a-9cca-960896169a9a",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9e43017a-6c12-4c9a-9cca-960896169a9a",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
           "date": "2026-11-01",
           "time": "11:30",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "basketball",
           "competition": "Basketball collégial féminin D3",
           "gameId": "66a32365-bd3a-4130-8de5-7359b06829de",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=66a32365-bd3a-4130-8de5-7359b06829de",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -10837,27 +10837,27 @@
         {
           "date": "2026-10-17",
           "time": "19:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "basketball",
           "competition": "Basketball collégial féminin D3",
           "gameId": "e61a9d55-4cdf-46a1-8c42-39fc3778f06d",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e61a9d55-4cdf-46a1-8c42-39fc3778f06d",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
           "date": "2026-10-18",
           "time": "11:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "basketball",
           "competition": "Basketball collégial féminin D3",
           "gameId": "a52654ca-755d-4503-a7c6-1f22cc07e98d",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a52654ca-755d-4503-a7c6-1f22cc07e98d",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -11226,14 +11226,14 @@
         {
           "date": "2026-11-29",
           "time": "13:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "basketball",
           "competition": "Basketball collégial féminin D3",
           "gameId": "e49d8dcc-8e20-4f80-abe4-97e9765eaeab",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e49d8dcc-8e20-4f80-abe4-97e9765eaeab",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -11360,27 +11360,27 @@
         {
           "date": "2026-11-14",
           "time": "19:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "basketball",
           "competition": "Basketball collégial féminin D3",
           "gameId": "0f86da24-a16d-4e42-8455-89390c50fb00",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0f86da24-a16d-4e42-8455-89390c50fb00",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
           "date": "2026-11-15",
           "time": "11:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "basketball",
           "competition": "Basketball collégial féminin D3",
           "gameId": "3c927142-593c-4a8d-8197-75314a576778",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3c927142-593c-4a8d-8197-75314a576778",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -11548,14 +11548,14 @@
         {
           "date": "2026-11-28",
           "time": "19:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "basketball",
           "competition": "Basketball collégial féminin D3",
           "gameId": "1bae4518-ecac-481e-9767-d095ae44ed26",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1bae4518-ecac-481e-9767-d095ae44ed26",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -11914,7 +11914,7 @@
       "id": "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:2af2518f-9369-4ffc-a700-b3ac6b5938f3",
       "rseqTeamId": "2af2518f-9369-4ffc-a700-b3ac6b5938f3",
       "leagueId": "03379141-30ad-4961-aa29-0d9c0e1692f9",
-      "name": "Ch.-St-Lambert",
+      "name": "Champlain St-Lambert",
       "code": "SLA",
       "sector": "collegial",
       "sport": "basketball",
@@ -12133,7 +12133,7 @@
         {
           "date": "2026-11-20",
           "time": "21:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "basketball",
@@ -12385,7 +12385,7 @@
         {
           "date": "2026-10-17",
           "time": "17:15",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "basketball",
@@ -12496,7 +12496,7 @@
       "nextGame": {
         "date": "2026-10-17",
         "time": "17:15",
-        "opponent": "Ch.-St-Lambert",
+        "opponent": "Champlain St-Lambert",
         "opponentCode": "SLA",
         "home": false,
         "sport": "basketball",
@@ -12771,7 +12771,7 @@
         {
           "date": "2026-12-04",
           "time": "20:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "basketball",
@@ -12869,7 +12869,7 @@
         {
           "date": "2026-10-30",
           "time": "21:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "basketball",
@@ -13006,7 +13006,7 @@
         {
           "date": "2026-10-23",
           "time": "21:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "basketball",
@@ -13227,7 +13227,7 @@
         {
           "date": "2026-11-27",
           "time": "20:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "basketball",
@@ -13336,7 +13336,7 @@
         {
           "date": "2026-11-06",
           "time": "19:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "basketball",
@@ -13542,7 +13542,7 @@
         {
           "date": "2026-12-06",
           "time": "13:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "basketball",
@@ -13585,7 +13585,7 @@
       "id": "collegial:basketball:e7a44a26-71f6-4d1b-a0d8-3205f0e816d5:73e3a35a-e00a-41d9-828a-ac7ef5ac7214",
       "rseqTeamId": "73e3a35a-e00a-41d9-828a-ac7ef5ac7214",
       "leagueId": "e7a44a26-71f6-4d1b-a0d8-3205f0e816d5",
-      "name": "Ch.-Lennoxville",
+      "name": "Champlain Lennoxville",
       "code": "LEN",
       "sector": "collegial",
       "sport": "basketball",
@@ -13773,7 +13773,7 @@
         {
           "date": "2026-11-06",
           "time": "21:00",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "basketball",
@@ -13908,7 +13908,7 @@
         {
           "date": "2026-11-13",
           "time": "19:00",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": false,
           "sport": "basketball",
@@ -14082,7 +14082,7 @@
         {
           "date": "2026-12-06",
           "time": "16:00",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "basketball",
@@ -14150,7 +14150,7 @@
         {
           "date": "2026-10-23",
           "time": "21:00",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "basketball",
@@ -14470,7 +14470,7 @@
         {
           "date": "2026-11-20",
           "time": "21:00",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "basketball",
@@ -14698,7 +14698,7 @@
         {
           "date": "2026-10-30",
           "time": "19:30",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": false,
           "sport": "basketball",
@@ -14805,7 +14805,7 @@
         {
           "date": "2026-10-09",
           "time": "19:30",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "basketball",
@@ -14898,7 +14898,7 @@
       "nextGame": {
         "date": "2026-10-09",
         "time": "19:30",
-        "opponent": "Ch.-Lennoxville",
+        "opponent": "Champlain Lennoxville",
         "opponentCode": "LEN",
         "home": true,
         "sport": "basketball",
@@ -14981,14 +14981,14 @@
         {
           "date": "2026-11-21",
           "time": "15:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": false,
           "sport": "basketball",
           "competition": "Basketball collégial masculin D2",
           "gameId": "6837b06f-7f16-4fa6-9c35-2174a7633a45",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6837b06f-7f16-4fa6-9c35-2174a7633a45",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -15061,7 +15061,7 @@
       "id": "collegial:basketball:3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9:be8463de-e00e-4c62-a64c-153ba9720ba7",
       "rseqTeamId": "be8463de-e00e-4c62-a64c-153ba9720ba7",
       "leagueId": "3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9",
-      "name": "Ch.-St-Lawrence",
+      "name": "Champlain St-Lawrence",
       "code": "SLC",
       "sector": "collegial",
       "sport": "basketball",
@@ -15191,7 +15191,7 @@
       },
       "source": "rseq-s1",
       "priority": 80,
-      "fullName": "Cégep de Ch.-St-Lawrence",
+      "fullName": "Champlain College St. Lawrence",
       "registryId": "ch-st-lawrence"
     },
     "collegial:basketball:3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9:cda9b085-2c0d-4b2d-8620-c25eb1d9f226": {
@@ -15279,14 +15279,14 @@
         {
           "date": "2026-11-29",
           "time": "14:30",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": true,
           "sport": "basketball",
           "competition": "Basketball collégial masculin D2",
           "gameId": "83a996b3-0641-4f45-853b-30fd7909e50c",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=83a996b3-0641-4f45-853b-30fd7909e50c",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -15376,14 +15376,14 @@
         {
           "date": "2026-10-30",
           "time": "21:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": true,
           "sport": "basketball",
           "competition": "Basketball collégial masculin D2",
           "gameId": "1c7a6aa4-3e21-4dd2-a264-6ad497daf3c3",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1c7a6aa4-3e21-4dd2-a264-6ad497daf3c3",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -15511,14 +15511,14 @@
         {
           "date": "2026-11-06",
           "time": "21:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": true,
           "sport": "basketball",
           "competition": "Basketball collégial masculin D2",
           "gameId": "1cf09a38-0f64-4d8b-bb74-55743d8881fa",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1cf09a38-0f64-4d8b-bb74-55743d8881fa",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -15689,14 +15689,14 @@
         {
           "date": "2026-12-06",
           "time": "12:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": false,
           "sport": "basketball",
           "competition": "Basketball collégial masculin D2",
           "gameId": "66ded6a3-2256-46fc-9606-beff87859ae3",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=66ded6a3-2256-46fc-9606-beff87859ae3",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         }
       ],
@@ -15744,14 +15744,14 @@
         {
           "date": "2026-10-16",
           "time": "21:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": false,
           "sport": "basketball",
           "competition": "Basketball collégial masculin D2",
           "gameId": "56e6c2e4-7878-4686-8fab-2eaca6897cab",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=56e6c2e4-7878-4686-8fab-2eaca6897cab",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -15838,14 +15838,14 @@
       "nextGame": {
         "date": "2026-10-16",
         "time": "21:00",
-        "opponent": "Ch.-St-Lawrence",
+        "opponent": "Champlain St-Lawrence",
         "opponentCode": "SLC",
         "home": false,
         "sport": "basketball",
         "competition": "Basketball collégial masculin D2",
         "gameId": "56e6c2e4-7878-4686-8fab-2eaca6897cab",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=56e6c2e4-7878-4686-8fab-2eaca6897cab",
-        "opponentFullName": "Cégep de Ch.-St-Lawrence",
+        "opponentFullName": "Champlain College St. Lawrence",
         "opponentRegistryId": "ch-st-lawrence"
       },
       "record": {
@@ -15921,14 +15921,14 @@
         {
           "date": "2026-11-13",
           "time": "21:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": false,
           "sport": "basketball",
           "competition": "Basketball collégial masculin D2",
           "gameId": "4485198a-e010-41c3-811f-21ec0f278d13",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4485198a-e010-41c3-811f-21ec0f278d13",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -17526,7 +17526,7 @@
       "id": "collegial:basketball:60f78173-5961-4507-8726-0c1fc362af91:4c16001a-c1e5-4124-8575-54b9fb31d0d1",
       "rseqTeamId": "4c16001a-c1e5-4124-8575-54b9fb31d0d1",
       "leagueId": "60f78173-5961-4507-8726-0c1fc362af91",
-      "name": "Abitibi-Témisc.",
+      "name": "Abitibi-Témiscamingue",
       "code": "CAT",
       "sector": "collegial",
       "sport": "basketball",
@@ -17667,7 +17667,7 @@
       },
       "source": "rseq-s1",
       "priority": 80,
-      "fullName": "Cégep de Abitibi-Témisc.",
+      "fullName": "Cégep de l'Abitibi-Témiscamingue",
       "registryId": "abitibi-temisc"
     },
     "collegial:basketball:60f78173-5961-4507-8726-0c1fc362af91:79582975-2ed8-419c-8ae8-097299e4ffe9": {
@@ -17702,27 +17702,27 @@
         {
           "date": "2026-10-17",
           "time": "21:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "basketball",
           "competition": "Basketball collégial masculin D3",
           "gameId": "21adfd17-42ba-4022-a285-1d464d127b3e",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=21adfd17-42ba-4022-a285-1d464d127b3e",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
           "date": "2026-10-18",
           "time": "13:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "basketball",
           "competition": "Basketball collégial masculin D3",
           "gameId": "362113b4-2fd1-4765-8a64-06fdafef3290",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=362113b4-2fd1-4765-8a64-06fdafef3290",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -18092,27 +18092,27 @@
         {
           "date": "2026-11-28",
           "time": "18:30",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "basketball",
           "competition": "Basketball collégial masculin D3",
           "gameId": "4c21653c-89af-47f7-ad5b-0284affd500e",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4c21653c-89af-47f7-ad5b-0284affd500e",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
           "date": "2026-11-29",
           "time": "12:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "basketball",
           "competition": "Basketball collégial masculin D3",
           "gameId": "d149b7ab-44d2-423e-9e0f-7922fb8c18ad",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d149b7ab-44d2-423e-9e0f-7922fb8c18ad",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         }
       ],
@@ -18186,27 +18186,27 @@
         {
           "date": "2026-10-31",
           "time": "18:30",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "basketball",
           "competition": "Basketball collégial masculin D3",
           "gameId": "c88e71a4-c41e-4694-b3f3-41b66cc22fd4",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c88e71a4-c41e-4694-b3f3-41b66cc22fd4",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
           "date": "2026-11-01",
           "time": "12:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "basketball",
           "competition": "Basketball collégial masculin D3",
           "gameId": "fa0c4ace-5b35-4b30-845e-a891d8b2ca75",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=fa0c4ace-5b35-4b30-845e-a891d8b2ca75",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -18387,27 +18387,27 @@
         {
           "date": "2026-11-14",
           "time": "21:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "basketball",
           "competition": "Basketball collégial masculin D3",
           "gameId": "5dbd4eaa-0269-4084-97de-85e6764d386b",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5dbd4eaa-0269-4084-97de-85e6764d386b",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
           "date": "2026-11-15",
           "time": "13:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "basketball",
           "competition": "Basketball collégial masculin D3",
           "gameId": "8f7fbb57-11f5-4b3f-80a7-e9e99ed73ede",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=8f7fbb57-11f5-4b3f-80a7-e9e99ed73ede",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -21513,7 +21513,7 @@
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:28867f3b-a0c7-457e-87fc-745bb879a634",
       "rseqTeamId": "28867f3b-a0c7-457e-87fc-745bb879a634",
       "leagueId": "bcb2a117-9b55-4781-9d1d-e86e799c1d9d",
-      "name": "Ch.-Lennoxville",
+      "name": "Champlain Lennoxville",
       "code": "LEN",
       "sector": "collegial",
       "sport": "cross-country",
@@ -21536,7 +21536,7 @@
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:05cf481a-7441-444d-98b1-17a13d59c1a0",
       "rseqTeamId": "05cf481a-7441-444d-98b1-17a13d59c1a0",
       "leagueId": "bcb2a117-9b55-4781-9d1d-e86e799c1d9d",
-      "name": "Ch.-St-Lawrence",
+      "name": "Champlain St-Lawrence",
       "code": "SLC",
       "sector": "collegial",
       "sport": "cross-country",
@@ -21552,7 +21552,7 @@
       "record": null,
       "source": "rseq-s1",
       "priority": 80,
-      "fullName": "Cégep de Ch.-St-Lawrence",
+      "fullName": "Champlain College St. Lawrence",
       "registryId": "ch-st-lawrence"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:0a9c9922-e0fb-4561-a4a7-e1d8f2603798": {
@@ -21999,7 +21999,7 @@
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:53e0ff8e-bce3-4c1c-a7d6-2604bbd609c7",
       "rseqTeamId": "53e0ff8e-bce3-4c1c-a7d6-2604bbd609c7",
       "leagueId": "5973efde-0184-4bdc-baa5-57d460b756d0",
-      "name": "Abitibi-Témisc.",
+      "name": "Abitibi-Témiscamingue",
       "code": "CAT",
       "sector": "collegial",
       "sport": "cross-country",
@@ -22015,7 +22015,7 @@
       "record": null,
       "source": "rseq-s1",
       "priority": 80,
-      "fullName": "Cégep de Abitibi-Témisc.",
+      "fullName": "Cégep de l'Abitibi-Témiscamingue",
       "registryId": "abitibi-temisc"
     },
     "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:1bf13ddc-5eb1-4c0f-8e55-24fd9bd7809c": {
@@ -22068,7 +22068,7 @@
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:7688632c-3fbd-4522-b21b-918cbcc2ff83",
       "rseqTeamId": "7688632c-3fbd-4522-b21b-918cbcc2ff83",
       "leagueId": "5973efde-0184-4bdc-baa5-57d460b756d0",
-      "name": "Ch.-St-Lambert",
+      "name": "Champlain St-Lambert",
       "code": "SLA",
       "sector": "collegial",
       "sport": "cross-country",
@@ -23836,7 +23836,7 @@
       "id": "collegial:flag-football:bb172f86-5983-4fab-9cdc-5be7f33cadca:449c7245-ec36-43cb-ac6b-134e8b6809ec",
       "rseqTeamId": "449c7245-ec36-43cb-ac6b-134e8b6809ec",
       "leagueId": "bb172f86-5983-4fab-9cdc-5be7f33cadca",
-      "name": "Ch.-Lennoxville",
+      "name": "Champlain Lennoxville",
       "code": "LEN",
       "sector": "collegial",
       "sport": "flag-football",
@@ -24023,7 +24023,7 @@
         {
           "date": "2026-09-06",
           "time": "9:00",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": false,
           "sport": "flag-football",
@@ -24140,7 +24140,7 @@
         {
           "date": "2026-10-16",
           "time": "20:30",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "flag-football",
@@ -24154,7 +24154,7 @@
       "nextGame": {
         "date": "2026-09-06",
         "time": "9:00",
-        "opponent": "Ch.-Lennoxville",
+        "opponent": "Champlain Lennoxville",
         "opponentCode": "LEN",
         "home": false,
         "sport": "flag-football",
@@ -24221,7 +24221,7 @@
         {
           "date": "2026-09-13",
           "time": "10:00",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "flag-football",
@@ -24260,7 +24260,7 @@
         {
           "date": "2026-09-27",
           "time": "13:30",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": false,
           "sport": "flag-football",
@@ -24380,7 +24380,7 @@
         {
           "date": "2026-09-06",
           "time": "16:30",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "flag-football",
@@ -24445,7 +24445,7 @@
         {
           "date": "2026-10-03",
           "time": "10:30",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": false,
           "sport": "flag-football",
@@ -24565,7 +24565,7 @@
         {
           "date": "2026-09-13",
           "time": "11:30",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": false,
           "sport": "flag-football",
@@ -24643,7 +24643,7 @@
         {
           "date": "2026-10-16",
           "time": "17:30",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "flag-football",
@@ -24763,7 +24763,7 @@
         {
           "date": "2026-09-27",
           "time": "10:30",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": false,
           "sport": "flag-football",
@@ -24802,7 +24802,7 @@
         {
           "date": "2026-10-03",
           "time": "15:00",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "flag-football",
@@ -28101,7 +28101,7 @@
         {
           "date": "2026-09-06",
           "time": "15:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "flag-football",
@@ -28223,7 +28223,7 @@
       "nextGame": {
         "date": "2026-09-06",
         "time": "15:00",
-        "opponent": "Ch.-St-Lambert",
+        "opponent": "Champlain St-Lambert",
         "opponentCode": "SLA",
         "home": true,
         "sport": "flag-football",
@@ -28331,7 +28331,7 @@
         {
           "date": "2026-10-03",
           "time": "16:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "flag-football",
@@ -28426,7 +28426,7 @@
       "id": "collegial:flag-football:42502722-0306-48e4-a178-00ed129c282d:315574d3-5c0d-4d53-a59d-d6e9a9738a80",
       "rseqTeamId": "315574d3-5c0d-4d53-a59d-d6e9a9738a80",
       "leagueId": "42502722-0306-48e4-a178-00ed129c282d",
-      "name": "Ch.-St-Lambert",
+      "name": "Champlain St-Lambert",
       "code": "SLA",
       "sector": "collegial",
       "sport": "flag-football",
@@ -28710,7 +28710,7 @@
         {
           "date": "2026-10-08",
           "time": "20:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "flag-football",
@@ -28834,7 +28834,7 @@
         {
           "date": "2026-09-20",
           "time": "10:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "flag-football",
@@ -29023,7 +29023,7 @@
         {
           "date": "2026-09-27",
           "time": "11:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "flag-football",
@@ -29253,7 +29253,7 @@
         {
           "date": "2026-10-18",
           "time": "12:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "flag-football",
@@ -29336,7 +29336,7 @@
         {
           "date": "2026-09-19",
           "time": "11:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "flag-football",
@@ -29553,7 +29553,7 @@
         {
           "date": "2026-09-27",
           "time": "15:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "flag-football",
@@ -29688,7 +29688,7 @@
         {
           "date": "2026-09-13",
           "time": "12:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "flag-football",
@@ -29943,7 +29943,7 @@
         {
           "date": "2026-10-10",
           "time": "9:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "flag-football",
@@ -34470,7 +34470,7 @@
         {
           "date": "2026-09-04",
           "time": "19:30",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "football",
@@ -34593,7 +34593,7 @@
       "id": "collegial:football:357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f:b11e5431-4bc6-44a1-aa63-61f65bf7b1bf",
       "rseqTeamId": "b11e5431-4bc6-44a1-aa63-61f65bf7b1bf",
       "leagueId": "357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f",
-      "name": "Ch.-Lennoxville",
+      "name": "Champlain Lennoxville",
       "code": "LEN",
       "sector": "collegial",
       "sport": "football",
@@ -34760,7 +34760,7 @@
         {
           "date": "2026-08-28",
           "time": "19:30",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": false,
           "sport": "football",
@@ -34854,7 +34854,7 @@
         {
           "date": "2026-10-31",
           "time": "13:00",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "football",
@@ -34868,7 +34868,7 @@
       "nextGame": {
         "date": "2026-08-28",
         "time": "19:30",
-        "opponent": "Ch.-Lennoxville",
+        "opponent": "Champlain Lennoxville",
         "opponentCode": "LEN",
         "home": false,
         "sport": "football",
@@ -34977,7 +34977,7 @@
         {
           "date": "2026-10-17",
           "time": "13:00",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": false,
           "sport": "football",
@@ -35088,7 +35088,7 @@
         {
           "date": "2026-09-11",
           "time": "19:30",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "football",
@@ -35253,7 +35253,7 @@
         {
           "date": "2026-09-26",
           "time": "19:30",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "football",
@@ -35442,7 +35442,7 @@
         {
           "date": "2026-10-23",
           "time": "19:30",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": false,
           "sport": "football",
@@ -35567,7 +35567,7 @@
         {
           "date": "2026-10-03",
           "time": "13:00",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": false,
           "sport": "football",
@@ -38213,7 +38213,7 @@
         {
           "date": "2026-09-19",
           "time": "13:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "football",
@@ -38306,7 +38306,7 @@
       "id": "collegial:football:be17a08f-052f-4337-8936-013aeef9718c:0bc306a7-5cbf-4fff-8d3e-065a0e399954",
       "rseqTeamId": "0bc306a7-5cbf-4fff-8d3e-065a0e399954",
       "leagueId": "be17a08f-052f-4337-8936-013aeef9718c",
-      "name": "Ch.-St-Lambert",
+      "name": "Champlain St-Lambert",
       "code": "SLA",
       "sector": "collegial",
       "sport": "football",
@@ -38507,7 +38507,7 @@
         {
           "date": "2026-10-04",
           "time": "13:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "football",
@@ -38680,7 +38680,7 @@
         {
           "date": "2026-10-17",
           "time": "13:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "football",
@@ -38775,7 +38775,7 @@
         {
           "date": "2026-09-12",
           "time": "19:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "football",
@@ -38909,7 +38909,7 @@
         {
           "date": "2026-09-05",
           "time": "19:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "football",
@@ -39001,7 +39001,7 @@
         {
           "date": "2026-10-31",
           "time": "19:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "football",
@@ -39016,7 +39016,7 @@
       "nextGame": {
         "date": "2026-09-05",
         "time": "19:30",
-        "opponent": "Ch.-St-Lambert",
+        "opponent": "Champlain St-Lambert",
         "opponentCode": "SLA",
         "home": false,
         "sport": "football",
@@ -39058,7 +39058,7 @@
         {
           "date": "2026-08-29",
           "time": "19:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "football",
@@ -39111,7 +39111,7 @@
         {
           "date": "2026-10-10",
           "time": "13:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "football",
@@ -39165,7 +39165,7 @@
       "nextGame": {
         "date": "2026-08-29",
         "time": "19:30",
-        "opponent": "Ch.-St-Lambert",
+        "opponent": "Champlain St-Lambert",
         "opponentCode": "SLA",
         "home": false,
         "sport": "football",
@@ -40721,7 +40721,7 @@
       "id": "collegial:golf:7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab:a58bb01b-17a8-4c40-a3e4-93f76042a6c3",
       "rseqTeamId": "a58bb01b-17a8-4c40-a3e4-93f76042a6c3",
       "leagueId": "7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab",
-      "name": "Ch.-St-Lambert",
+      "name": "Champlain St-Lambert",
       "code": "SLA",
       "sector": "collegial",
       "sport": "golf",
@@ -40745,7 +40745,7 @@
       "id": "collegial:golf:7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab:ed70b88e-aef4-48ba-a97d-7fc454312bae",
       "rseqTeamId": "ed70b88e-aef4-48ba-a97d-7fc454312bae",
       "leagueId": "7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab",
-      "name": "Ch.-St-Lawrence",
+      "name": "Champlain St-Lawrence",
       "code": "SLC",
       "sector": "collegial",
       "sport": "golf",
@@ -40761,7 +40761,7 @@
       "record": null,
       "source": "rseq-s1",
       "priority": 80,
-      "fullName": "Cégep de Ch.-St-Lawrence",
+      "fullName": "Champlain College St. Lawrence",
       "registryId": "ch-st-lawrence"
     },
     "collegial:golf:7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab:5453cdbf-e978-4b65-b3e2-bb1b25204879": {
@@ -41451,7 +41451,7 @@
       "id": "collegial:hockey:e7c3c5fe-1a92-4ed3-b1db-83fa54431c0e:fbb1c43a-bfb3-4551-8b16-996fd92605b8",
       "rseqTeamId": "fbb1c43a-bfb3-4551-8b16-996fd92605b8",
       "leagueId": "e7c3c5fe-1a92-4ed3-b1db-83fa54431c0e",
-      "name": "Ch.-Lennoxville",
+      "name": "Champlain Lennoxville",
       "code": "LEN",
       "sector": "collegial",
       "sport": "hockey",
@@ -41757,7 +41757,7 @@
       "id": "collegial:hockey:0eb377a9-a360-45a3-be85-795cf9cc1821:b617b816-682a-4eb7-b659-d2782750c4bb",
       "rseqTeamId": "b617b816-682a-4eb7-b659-d2782750c4bb",
       "leagueId": "0eb377a9-a360-45a3-be85-795cf9cc1821",
-      "name": "Ch.-Lennoxville",
+      "name": "Champlain Lennoxville",
       "code": "LEN",
       "sector": "collegial",
       "sport": "hockey",
@@ -41780,7 +41780,7 @@
       "id": "collegial:hockey:0eb377a9-a360-45a3-be85-795cf9cc1821:3a5c51cc-d0cd-4759-83cc-53587729a3bd",
       "rseqTeamId": "3a5c51cc-d0cd-4759-83cc-53587729a3bd",
       "leagueId": "0eb377a9-a360-45a3-be85-795cf9cc1821",
-      "name": "Ch.-St-Lawrence",
+      "name": "Champlain St-Lawrence",
       "code": "SLC",
       "sector": "collegial",
       "sport": "hockey",
@@ -41796,7 +41796,7 @@
       "record": null,
       "source": "rseq-s1",
       "priority": 80,
-      "fullName": "Cégep de Ch.-St-Lawrence",
+      "fullName": "Champlain College St. Lawrence",
       "registryId": "ch-st-lawrence"
     },
     "collegial:hockey:0eb377a9-a360-45a3-be85-795cf9cc1821:01f8b8b1-dfac-4538-ab76-304a4f68c3e2": {
@@ -42198,7 +42198,7 @@
       "id": "collegial:hockey:a21361ab-0928-4796-a8e5-7a97d6d8bd5f:d3272a87-4c21-4926-9ffa-caf0b5f2ca0f",
       "rseqTeamId": "d3272a87-4c21-4926-9ffa-caf0b5f2ca0f",
       "leagueId": "a21361ab-0928-4796-a8e5-7a97d6d8bd5f",
-      "name": "Abitibi-Témisc.",
+      "name": "Abitibi-Témiscamingue",
       "code": "CAT",
       "sector": "collegial",
       "sport": "hockey",
@@ -42214,7 +42214,7 @@
       "record": null,
       "source": "rseq-s1",
       "priority": 80,
-      "fullName": "Cégep de Abitibi-Témisc.",
+      "fullName": "Cégep de l'Abitibi-Témiscamingue",
       "registryId": "abitibi-temisc"
     },
     "collegial:hockey:a21361ab-0928-4796-a8e5-7a97d6d8bd5f:26279b5e-ca6e-4273-834f-86989d80e815": {
@@ -42823,7 +42823,7 @@
       "id": "collegial:natation:724883dd-1d7c-4002-89f6-0c28fd199a71:940f1dad-c15a-4d75-8907-4a6237554934",
       "rseqTeamId": "940f1dad-c15a-4d75-8907-4a6237554934",
       "leagueId": "724883dd-1d7c-4002-89f6-0c28fd199a71",
-      "name": "Abitibi-Témisc.",
+      "name": "Abitibi-Témiscamingue",
       "code": "CAT",
       "sector": "collegial",
       "sport": "natation",
@@ -42839,7 +42839,7 @@
       "record": null,
       "source": "rseq-s1",
       "priority": 80,
-      "fullName": "Cégep de Abitibi-Témisc.",
+      "fullName": "Cégep de l'Abitibi-Témiscamingue",
       "registryId": "abitibi-temisc"
     },
     "collegial:natation:724883dd-1d7c-4002-89f6-0c28fd199a71:efe570c3-1f6b-4337-9d91-4dde5aa479ff": {
@@ -43763,7 +43763,7 @@
         "competition": "Rugby collégial féminin",
         "gameId": "18857bc7-45ba-42a7-ad37-743707a12bc8",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=18857bc7-45ba-42a7-ad37-743707a12bc8",
-        "opponentFullName": "Cégep de Notre-Dame Jaune",
+        "opponentFullName": "Campus Notre-Dame-de-Foy",
         "opponentRegistryId": "notre-dame-jaune"
       },
       "record": {
@@ -44008,7 +44008,7 @@
         "competition": "Rugby collégial féminin",
         "gameId": "d99805a3-055b-438e-be35-4a1dd0046d2a",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d99805a3-055b-438e-be35-4a1dd0046d2a",
-        "opponentFullName": "Cégep de Notre-Dame Bleu",
+        "opponentFullName": "Campus Notre-Dame-de-Foy",
         "opponentRegistryId": "notre-dame-bleu"
       },
       "record": {
@@ -47718,7 +47718,7 @@
         {
           "date": "2026-10-16",
           "time": "19:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "soccer",
@@ -47760,7 +47760,7 @@
       "id": "collegial:soccer:d774ba9e-7528-45fc-82e6-f71151013f01:229b5684-2d84-4915-b3e8-f863766d91e2",
       "rseqTeamId": "229b5684-2d84-4915-b3e8-f863766d91e2",
       "leagueId": "d774ba9e-7528-45fc-82e6-f71151013f01",
-      "name": "Ch.-St-Lambert",
+      "name": "Champlain St-Lambert",
       "code": "SLA",
       "sector": "collegial",
       "sport": "soccer",
@@ -48055,7 +48055,7 @@
         {
           "date": "2026-10-09",
           "time": "18:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "soccer",
@@ -48181,7 +48181,7 @@
         {
           "date": "2026-09-13",
           "time": "13:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "soccer",
@@ -48336,7 +48336,7 @@
         {
           "date": "2026-08-30",
           "time": "12:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "soccer",
@@ -48391,7 +48391,7 @@
         {
           "date": "2026-09-27",
           "time": "13:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "soccer",
@@ -48561,7 +48561,7 @@
         {
           "date": "2026-09-18",
           "time": "19:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "soccer",
@@ -48715,7 +48715,7 @@
         {
           "date": "2026-09-04",
           "time": "19:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "soccer",
@@ -48770,7 +48770,7 @@
         {
           "date": "2026-10-02",
           "time": "18:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "soccer",
@@ -48940,7 +48940,7 @@
         {
           "date": "2026-09-25",
           "time": "19:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "soccer",
@@ -48995,7 +48995,7 @@
         {
           "date": "2026-10-18",
           "time": "12:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "soccer",
@@ -49038,7 +49038,7 @@
       "id": "collegial:soccer:48a59be5-0904-4b5c-b52b-1ef4cf1e8d8c:4f4983e8-5e8b-48b0-a3ff-491bbda96b03",
       "rseqTeamId": "4f4983e8-5e8b-48b0-a3ff-491bbda96b03",
       "leagueId": "48a59be5-0904-4b5c-b52b-1ef4cf1e8d8c",
-      "name": "Ch.-Lennoxville",
+      "name": "Champlain Lennoxville",
       "code": "LEN",
       "sector": "collegial",
       "sport": "soccer",
@@ -49227,7 +49227,7 @@
         {
           "date": "2026-09-13",
           "time": "13:00",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": false,
           "sport": "soccer",
@@ -49349,7 +49349,7 @@
         {
           "date": "2026-08-28",
           "time": "19:00",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "soccer",
@@ -49415,7 +49415,7 @@
         {
           "date": "2026-10-02",
           "time": "19:00",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": false,
           "sport": "soccer",
@@ -49455,7 +49455,7 @@
       "nextGame": {
         "date": "2026-08-28",
         "time": "19:00",
-        "opponent": "Ch.-Lennoxville",
+        "opponent": "Champlain Lennoxville",
         "opponentCode": "LEN",
         "home": true,
         "sport": "soccer",
@@ -49549,7 +49549,7 @@
         {
           "date": "2026-09-25",
           "time": "20:30",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "soccer",
@@ -49656,7 +49656,7 @@
         {
           "date": "2026-09-04",
           "time": "21:00",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "soccer",
@@ -49721,7 +49721,7 @@
         {
           "date": "2026-10-10",
           "time": "13:00",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": false,
           "sport": "soccer",
@@ -49830,7 +49830,7 @@
         {
           "date": "2026-09-20",
           "time": "13:00",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": true,
           "sport": "soccer",
@@ -49883,7 +49883,7 @@
         {
           "date": "2026-10-17",
           "time": "19:00",
-          "opponent": "Ch.-Lennoxville",
+          "opponent": "Champlain Lennoxville",
           "opponentCode": "LEN",
           "home": false,
           "sport": "soccer",
@@ -50725,14 +50725,14 @@
         {
           "date": "2026-09-12",
           "time": "14:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": false,
           "sport": "soccer",
           "competition": "Soccer collégial féminin D2",
           "gameId": "6dde0e95-6759-47d9-96d5-236c3097fffe",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6dde0e95-6759-47d9-96d5-236c3097fffe",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -50777,14 +50777,14 @@
         {
           "date": "2026-10-09",
           "time": "19:30",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": true,
           "sport": "soccer",
           "competition": "Soccer collégial féminin D2",
           "gameId": "e8bc6d04-4ac3-4207-b5d3-c35634833b39",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e8bc6d04-4ac3-4207-b5d3-c35634833b39",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -50845,14 +50845,14 @@
         {
           "date": "2026-08-30",
           "time": "14:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": false,
           "sport": "soccer",
           "competition": "Soccer collégial féminin D2",
           "gameId": "4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -50910,14 +50910,14 @@
         {
           "date": "2026-10-03",
           "time": "13:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": true,
           "sport": "soccer",
           "competition": "Soccer collégial féminin D2",
           "gameId": "f3d5cec0-585c-4f48-bb81-055fd7abc93f",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f3d5cec0-585c-4f48-bb81-055fd7abc93f",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -50950,14 +50950,14 @@
       "nextGame": {
         "date": "2026-08-30",
         "time": "14:00",
-        "opponent": "Ch.-St-Lawrence",
+        "opponent": "Champlain St-Lawrence",
         "opponentCode": "SLC",
         "home": false,
         "sport": "soccer",
         "competition": "Soccer collégial féminin D2",
         "gameId": "4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
-        "opponentFullName": "Cégep de Ch.-St-Lawrence",
+        "opponentFullName": "Champlain College St. Lawrence",
         "opponentRegistryId": "ch-st-lawrence"
       },
       "record": {
@@ -50976,7 +50976,7 @@
       "id": "collegial:soccer:09897279-c580-4cad-a924-1831c67ce2c1:04a285f6-2cf0-4724-a1af-23ebb3595127",
       "rseqTeamId": "04a285f6-2cf0-4724-a1af-23ebb3595127",
       "leagueId": "09897279-c580-4cad-a924-1831c67ce2c1",
-      "name": "Ch.-St-Lawrence",
+      "name": "Champlain St-Lawrence",
       "code": "SLC",
       "sector": "collegial",
       "sport": "soccer",
@@ -51115,7 +51115,7 @@
       },
       "source": "rseq-s1",
       "priority": 80,
-      "fullName": "Cégep de Ch.-St-Lawrence",
+      "fullName": "Champlain College St. Lawrence",
       "registryId": "ch-st-lawrence"
     },
     "collegial:soccer:09897279-c580-4cad-a924-1831c67ce2c1:ad6b3368-7dbf-4163-a90e-8fb7d2026546": {
@@ -51176,14 +51176,14 @@
         {
           "date": "2026-09-19",
           "time": "13:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": true,
           "sport": "soccer",
           "competition": "Soccer collégial féminin D2",
           "gameId": "bddd1f02-c8f7-49ee-93e3-e37b0789dc2a",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=bddd1f02-c8f7-49ee-93e3-e37b0789dc2a",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -51215,14 +51215,14 @@
         {
           "date": "2026-10-11",
           "time": "14:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": false,
           "sport": "soccer",
           "competition": "Soccer collégial féminin D2",
           "gameId": "b8289023-693f-4bc6-9202-caa6b7551e90",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b8289023-693f-4bc6-9202-caa6b7551e90",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -51322,14 +51322,14 @@
         {
           "date": "2026-09-27",
           "time": "12:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": true,
           "sport": "soccer",
           "competition": "Soccer collégial féminin D2",
           "gameId": "76ac9718-a7e7-44a6-8d97-24ac9f00a668",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=76ac9718-a7e7-44a6-8d97-24ac9f00a668",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -51361,14 +51361,14 @@
         {
           "date": "2026-10-17",
           "time": "14:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": false,
           "sport": "soccer",
           "competition": "Soccer collégial féminin D2",
           "gameId": "7b0c2efc-ad8b-4b3c-89ca-41d494cb96b4",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7b0c2efc-ad8b-4b3c-89ca-41d494cb96b4",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -53632,7 +53632,7 @@
         {
           "date": "2026-10-16",
           "time": "21:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "soccer",
@@ -53772,7 +53772,7 @@
         {
           "date": "2026-09-25",
           "time": "19:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "soccer",
@@ -53814,7 +53814,7 @@
         {
           "date": "2026-10-09",
           "time": "20:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "soccer",
@@ -53869,7 +53869,7 @@
       "id": "collegial:soccer:3f4585ce-0bbf-41b0-a726-7a294098a074:9c8c9a30-5711-41f4-84bd-c5951b65a90e",
       "rseqTeamId": "9c8c9a30-5711-41f4-84bd-c5951b65a90e",
       "leagueId": "3f4585ce-0bbf-41b0-a726-7a294098a074",
-      "name": "Ch.-St-Lambert",
+      "name": "Champlain St-Lambert",
       "code": "SLA",
       "sector": "collegial",
       "sport": "soccer",
@@ -54105,7 +54105,7 @@
         {
           "date": "2026-09-13",
           "time": "15:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "soccer",
@@ -54257,7 +54257,7 @@
         {
           "date": "2026-08-30",
           "time": "14:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "soccer",
@@ -54324,7 +54324,7 @@
         {
           "date": "2026-09-27",
           "time": "15:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "soccer",
@@ -54465,7 +54465,7 @@
         {
           "date": "2026-09-18",
           "time": "21:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "soccer",
@@ -54630,7 +54630,7 @@
         {
           "date": "2026-09-04",
           "time": "19:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "soccer",
@@ -54865,7 +54865,7 @@
         {
           "date": "2026-10-02",
           "time": "20:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "soccer",
@@ -55086,7 +55086,7 @@
         {
           "date": "2026-10-18",
           "time": "14:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "soccer",
@@ -59016,7 +59016,7 @@
       "id": "collegial:soccer:05798bd7-130d-4b88-ae8d-8f934e7963ed:10dc9a71-0524-4820-9c53-649a4e5feb34",
       "rseqTeamId": "10dc9a71-0524-4820-9c53-649a4e5feb34",
       "leagueId": "05798bd7-130d-4b88-ae8d-8f934e7963ed",
-      "name": "Abitibi-Témisc.",
+      "name": "Abitibi-Témiscamingue",
       "code": "CAT",
       "sector": "collegial",
       "sport": "soccer",
@@ -59155,7 +59155,7 @@
       },
       "source": "rseq-s1",
       "priority": 80,
-      "fullName": "Cégep de Abitibi-Témisc.",
+      "fullName": "Cégep de l'Abitibi-Témiscamingue",
       "registryId": "abitibi-temisc"
     },
     "collegial:soccer:05798bd7-130d-4b88-ae8d-8f934e7963ed:101ca532-2b93-4785-ab87-0d329c40a552": {
@@ -59229,14 +59229,14 @@
         {
           "date": "2026-10-04",
           "time": "13:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "soccer",
           "competition": "Soccer collégial masculin D3",
           "gameId": "c1c0ccc5-5e25-4b80-a489-67e0f8f803a8",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c1c0ccc5-5e25-4b80-a489-67e0f8f803a8",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -59414,14 +59414,14 @@
         {
           "date": "2026-10-18",
           "time": "12:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "soccer",
           "competition": "Soccer collégial masculin D3",
           "gameId": "cf68484f-3aae-451b-ba32-a752ea92a398",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cf68484f-3aae-451b-ba32-a752ea92a398",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         }
       ],
@@ -59482,14 +59482,14 @@
         {
           "date": "2026-09-12",
           "time": "18:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "soccer",
           "competition": "Soccer collégial masculin D3",
           "gameId": "0cbd684f-0706-447e-99c7-5a23c8005f1a",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0cbd684f-0706-447e-99c7-5a23c8005f1a",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -59667,14 +59667,14 @@
         {
           "date": "2026-10-03",
           "time": "13:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "soccer",
           "competition": "Soccer collégial masculin D3",
           "gameId": "6a0c5e46-b83d-4d7d-899a-a64505c6cea1",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6a0c5e46-b83d-4d7d-899a-a64505c6cea1",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -59787,14 +59787,14 @@
         {
           "date": "2026-09-19",
           "time": "18:30",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "soccer",
           "competition": "Soccer collégial masculin D3",
           "gameId": "078fdcea-3f0a-4ae2-b0a7-da5f3deaf6f6",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=078fdcea-3f0a-4ae2-b0a7-da5f3deaf6f6",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -59933,14 +59933,14 @@
         {
           "date": "2026-09-13",
           "time": "13:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "soccer",
           "competition": "Soccer collégial masculin D3",
           "gameId": "3e08694a-d076-46b4-a0d7-cc3019df5f8f",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3e08694a-d076-46b4-a0d7-cc3019df5f8f",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -60079,14 +60079,14 @@
         {
           "date": "2026-09-20",
           "time": "12:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "soccer",
           "competition": "Soccer collégial masculin D3",
           "gameId": "716674a0-5aaf-4b48-86f8-9a1c56d9396f",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=716674a0-5aaf-4b48-86f8-9a1c56d9396f",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -60290,14 +60290,14 @@
         {
           "date": "2026-10-17",
           "time": "18:30",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "soccer",
           "competition": "Soccer collégial masculin D3",
           "gameId": "e8dee62f-4f46-4861-99c2-1cc09490f178",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e8dee62f-4f46-4861-99c2-1cc09490f178",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         }
       ],
@@ -63510,7 +63510,7 @@
       "id": "collegial:soccer-interieur:1160bdb7-7fe8-442c-a06e-ad8078ef66c1:2c022f86-04be-4e29-906a-b58a742223c4",
       "rseqTeamId": "2c022f86-04be-4e29-906a-b58a742223c4",
       "leagueId": "1160bdb7-7fe8-442c-a06e-ad8078ef66c1",
-      "name": "Abitibi-Témisc.",
+      "name": "Abitibi-Témiscamingue",
       "code": "CAT",
       "sector": "collegial",
       "sport": "soccer-interieur",
@@ -63526,7 +63526,7 @@
       "record": null,
       "source": "rseq-s1",
       "priority": 80,
-      "fullName": "Cégep de Abitibi-Témisc.",
+      "fullName": "Cégep de l'Abitibi-Témiscamingue",
       "registryId": "abitibi-temisc"
     },
     "collegial:soccer-interieur:1160bdb7-7fe8-442c-a06e-ad8078ef66c1:b6fc1bf3-48a1-4a77-abc3-00b18ad98457": {
@@ -63740,7 +63740,7 @@
       "id": "collegial:soccer-interieur:1545a853-8f2b-483c-a3f3-785a014d5228:e533ce93-b10f-4690-b1ff-a648a2b91538",
       "rseqTeamId": "e533ce93-b10f-4690-b1ff-a648a2b91538",
       "leagueId": "1545a853-8f2b-483c-a3f3-785a014d5228",
-      "name": "Abitibi-Témisc.",
+      "name": "Abitibi-Témiscamingue",
       "code": "CAT",
       "sector": "collegial",
       "sport": "soccer-interieur",
@@ -63756,7 +63756,7 @@
       "record": null,
       "source": "rseq-s1",
       "priority": 80,
-      "fullName": "Cégep de Abitibi-Témisc.",
+      "fullName": "Cégep de l'Abitibi-Témiscamingue",
       "registryId": "abitibi-temisc"
     },
     "collegial:soccer-interieur:1545a853-8f2b-483c-a3f3-785a014d5228:2c30cbf4-5246-4a03-920b-a7248ab9bc9b": {
@@ -69169,14 +69169,14 @@
         {
           "date": "2026-10-17",
           "time": "12:45",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": true,
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D2",
           "gameId": "50cc5c69-cd28-4eb7-a6bb-39c887889d52",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=50cc5c69-cd28-4eb7-a6bb-39c887889d52",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -69328,7 +69328,7 @@
       "id": "collegial:volleyball:fda0f61c-4599-4e59-82e2-b1966fbe382e:a0467cbb-70d3-46cc-8faf-fdaded90c77c",
       "rseqTeamId": "a0467cbb-70d3-46cc-8faf-fdaded90c77c",
       "leagueId": "fda0f61c-4599-4e59-82e2-b1966fbe382e",
-      "name": "Ch.-St-Lawrence",
+      "name": "Champlain St-Lawrence",
       "code": "SLC",
       "sector": "collegial",
       "sport": "volleyball",
@@ -69522,7 +69522,7 @@
       },
       "source": "rseq-s1",
       "priority": 80,
-      "fullName": "Cégep de Ch.-St-Lawrence",
+      "fullName": "Champlain College St. Lawrence",
       "registryId": "ch-st-lawrence"
     },
     "collegial:volleyball:fda0f61c-4599-4e59-82e2-b1966fbe382e:7bafe947-da99-4c1e-be95-75d1d3e4cd0c": {
@@ -69544,14 +69544,14 @@
         {
           "date": "2026-10-17",
           "time": "9:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": false,
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D2",
           "gameId": "f924df0f-9d95-4225-9765-44a256ab0e2e",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f924df0f-9d95-4225-9765-44a256ab0e2e",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -69704,14 +69704,14 @@
       "nextGame": {
         "date": "2026-10-17",
         "time": "9:00",
-        "opponent": "Ch.-St-Lawrence",
+        "opponent": "Champlain St-Lawrence",
         "opponentCode": "SLC",
         "home": false,
         "sport": "volleyball",
         "competition": "Volleyball collégial féminin D2",
         "gameId": "f924df0f-9d95-4225-9765-44a256ab0e2e",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f924df0f-9d95-4225-9765-44a256ab0e2e",
-        "opponentFullName": "Cégep de Ch.-St-Lawrence",
+        "opponentFullName": "Champlain College St. Lawrence",
         "opponentRegistryId": "ch-st-lawrence"
       },
       "record": {
@@ -69864,14 +69864,14 @@
         {
           "date": "2026-11-22",
           "time": "10:15",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": true,
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D2",
           "gameId": "62c3dd78-a4a9-4748-97c5-77862dffb64b",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=62c3dd78-a4a9-4748-97c5-77862dffb64b",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -70079,14 +70079,14 @@
         {
           "date": "2026-11-22",
           "time": "12:45",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": true,
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D2",
           "gameId": "1cff0505-9cca-4fca-8ab5-1756572c2cca",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1cff0505-9cca-4fca-8ab5-1756572c2cca",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -70202,14 +70202,14 @@
         {
           "date": "2026-11-01",
           "time": "9:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": false,
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D2",
           "gameId": "167c06a5-941f-4828-a45c-679580b6220a",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=167c06a5-941f-4828-a45c-679580b6220a",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -70255,14 +70255,14 @@
         {
           "date": "2026-11-22",
           "time": "9:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": true,
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D2",
           "gameId": "c9998707-9f35-47a9-bcab-67b57b17aaf7",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c9998707-9f35-47a9-bcab-67b57b17aaf7",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -70376,14 +70376,14 @@
         {
           "date": "2026-10-17",
           "time": "14:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": true,
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D2",
           "gameId": "d21f0642-a0c2-476d-a912-7948bf3d9daf",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d21f0642-a0c2-476d-a912-7948bf3d9daf",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -70619,14 +70619,14 @@
         {
           "date": "2026-11-01",
           "time": "10:15",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": true,
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D2",
           "gameId": "d98e77ce-dc7c-477d-9834-982158c277b2",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d98e77ce-dc7c-477d-9834-982158c277b2",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -70687,14 +70687,14 @@
         {
           "date": "2026-11-22",
           "time": "14:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": false,
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D2",
           "gameId": "060a7879-55a0-447d-8c22-49d59d58cc82",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=060a7879-55a0-447d-8c22-49d59d58cc82",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -70834,14 +70834,14 @@
         {
           "date": "2026-11-01",
           "time": "12:45",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": false,
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D2",
           "gameId": "9a7af600-6e5d-4b04-8f80-41a78887ad87",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9a7af600-6e5d-4b04-8f80-41a78887ad87",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -71036,14 +71036,14 @@
         {
           "date": "2026-11-01",
           "time": "14:00",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": true,
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D2",
           "gameId": "13084c31-0e1c-4336-9ab3-723614b655ad",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=13084c31-0e1c-4336-9ab3-723614b655ad",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -71360,14 +71360,14 @@
         {
           "date": "2026-10-17",
           "time": "10:15",
-          "opponent": "Ch.-St-Lawrence",
+          "opponent": "Champlain St-Lawrence",
           "opponentCode": "SLC",
           "home": false,
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D2",
           "gameId": "e2a42ab3-ec07-49ab-957f-4fe14dff4d9e",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e2a42ab3-ec07-49ab-957f-4fe14dff4d9e",
-          "opponentFullName": "Cégep de Ch.-St-Lawrence",
+          "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
@@ -71520,14 +71520,14 @@
       "nextGame": {
         "date": "2026-10-17",
         "time": "10:15",
-        "opponent": "Ch.-St-Lawrence",
+        "opponent": "Champlain St-Lawrence",
         "opponentCode": "SLC",
         "home": false,
         "sport": "volleyball",
         "competition": "Volleyball collégial féminin D2",
         "gameId": "e2a42ab3-ec07-49ab-957f-4fe14dff4d9e",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e2a42ab3-ec07-49ab-957f-4fe14dff4d9e",
-        "opponentFullName": "Cégep de Ch.-St-Lawrence",
+        "opponentFullName": "Champlain College St. Lawrence",
         "opponentRegistryId": "ch-st-lawrence"
       },
       "record": {
@@ -72762,7 +72762,7 @@
         {
           "date": "2026-09-25",
           "time": "21:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "volleyball",
@@ -72953,7 +72953,7 @@
         {
           "date": "2026-09-25",
           "time": "18:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "volleyball",
@@ -73102,7 +73102,7 @@
       "nextGame": {
         "date": "2026-09-25",
         "time": "18:30",
-        "opponent": "Ch.-St-Lambert",
+        "opponent": "Champlain St-Lambert",
         "opponentCode": "SLA",
         "home": false,
         "sport": "volleyball",
@@ -73129,7 +73129,7 @@
       "id": "collegial:volleyball:beb8b2c0-e453-4553-a003-62e120e6e9db:164d052a-05a4-43c8-b6ad-d997adb5ab7f",
       "rseqTeamId": "164d052a-05a4-43c8-b6ad-d997adb5ab7f",
       "leagueId": "beb8b2c0-e453-4553-a003-62e120e6e9db",
-      "name": "Ch.-St-Lambert",
+      "name": "Champlain St-Lambert",
       "code": "SLA",
       "sector": "collegial",
       "sport": "volleyball",
@@ -73427,7 +73427,7 @@
         {
           "date": "2026-11-13",
           "time": "19:45",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "volleyball",
@@ -73564,7 +73564,7 @@
         {
           "date": "2026-10-18",
           "time": "14:15",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "volleyball",
@@ -73849,7 +73849,7 @@
         {
           "date": "2026-12-05",
           "time": "12:45",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "volleyball",
@@ -73974,7 +73974,7 @@
         {
           "date": "2026-10-30",
           "time": "21:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "volleyball",
@@ -74190,7 +74190,7 @@
         {
           "date": "2026-11-13",
           "time": "21:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "volleyball",
@@ -74328,7 +74328,7 @@
         {
           "date": "2026-10-18",
           "time": "15:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "volleyball",
@@ -74543,7 +74543,7 @@
         {
           "date": "2026-10-30",
           "time": "18:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "volleyball",
@@ -74801,7 +74801,7 @@
         {
           "date": "2026-12-05",
           "time": "16:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "volleyball",
@@ -75020,7 +75020,7 @@
       "id": "collegial:volleyball:d004d42a-8c7d-4c4e-8188-a598adfd0235:ce37611a-5f49-4359-be79-06e420470d8a",
       "rseqTeamId": "ce37611a-5f49-4359-be79-06e420470d8a",
       "leagueId": "d004d42a-8c7d-4c4e-8188-a598adfd0235",
-      "name": "Abitibi-Témisc.",
+      "name": "Abitibi-Témiscamingue",
       "code": "CAT",
       "sector": "collegial",
       "sport": "volleyball",
@@ -75188,7 +75188,7 @@
       },
       "source": "rseq-s1",
       "priority": 80,
-      "fullName": "Cégep de Abitibi-Témisc.",
+      "fullName": "Cégep de l'Abitibi-Témiscamingue",
       "registryId": "abitibi-temisc"
     },
     "collegial:volleyball:d004d42a-8c7d-4c4e-8188-a598adfd0235:e0573c05-91d2-47b5-bb3c-42ec5622812a": {
@@ -75210,14 +75210,14 @@
         {
           "date": "2026-10-04",
           "time": "10:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D3",
           "gameId": "f1b3af5c-d6d4-4c74-9022-2bf42e47f71a",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f1b3af5c-d6d4-4c74-9022-2bf42e47f71a",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -75344,14 +75344,14 @@
       "nextGame": {
         "date": "2026-10-04",
         "time": "10:00",
-        "opponent": "Abitibi-Témisc.",
+        "opponent": "Abitibi-Témiscamingue",
         "opponentCode": "CAT",
         "home": false,
         "sport": "volleyball",
         "competition": "Volleyball collégial féminin D3",
         "gameId": "f1b3af5c-d6d4-4c74-9022-2bf42e47f71a",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f1b3af5c-d6d4-4c74-9022-2bf42e47f71a",
-        "opponentFullName": "Cégep de Abitibi-Témisc.",
+        "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
         "opponentRegistryId": "abitibi-temisc"
       },
       "record": {
@@ -75490,14 +75490,14 @@
         {
           "date": "2026-11-29",
           "time": "12:30",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D3",
           "gameId": "e283f5f1-586e-4f6c-8906-46e886d504cb",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e283f5f1-586e-4f6c-8906-46e886d504cb",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -75573,14 +75573,14 @@
         {
           "date": "2026-10-04",
           "time": "11:15",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D3",
           "gameId": "f8c30055-4e7e-46dc-80c4-b7af752a4582",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f8c30055-4e7e-46dc-80c4-b7af752a4582",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -75773,14 +75773,14 @@
         {
           "date": "2026-11-01",
           "time": "10:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D3",
           "gameId": "7aae9635-cd22-4e38-a593-3d04e6665b6e",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7aae9635-cd22-4e38-a593-3d04e6665b6e",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -76000,14 +76000,14 @@
         {
           "date": "2026-11-29",
           "time": "10:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D3",
           "gameId": "84cb3936-73fa-4846-b13a-e9114c734fe1",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=84cb3936-73fa-4846-b13a-e9114c734fe1",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -76148,14 +76148,14 @@
         {
           "date": "2026-11-01",
           "time": "13:30",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D3",
           "gameId": "6a089f70-70e4-4c73-9d63-472d14f906e5",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6a089f70-70e4-4c73-9d63-472d14f906e5",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -76283,14 +76283,14 @@
         {
           "date": "2026-10-04",
           "time": "13:30",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D3",
           "gameId": "af95ca87-3c17-4789-afa3-47f455638c2b",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=af95ca87-3c17-4789-afa3-47f455638c2b",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -76550,14 +76550,14 @@
         {
           "date": "2026-11-29",
           "time": "13:45",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D3",
           "gameId": "5d629e01-b208-43f1-b8c0-83bc603dc826",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5d629e01-b208-43f1-b8c0-83bc603dc826",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         }
       ],
@@ -76658,14 +76658,14 @@
         {
           "date": "2026-11-01",
           "time": "11:15",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D3",
           "gameId": "358e04f3-9351-4950-aa3f-0382576878aa",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=358e04f3-9351-4950-aa3f-0382576878aa",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -76685,14 +76685,14 @@
         {
           "date": "2026-11-01",
           "time": "14:45",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D3",
           "gameId": "66eebec4-b0a6-412a-8633-797df3df5fa4",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=66eebec4-b0a6-412a-8633-797df3df5fa4",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -85123,7 +85123,7 @@
       "id": "collegial:volleyball:511ebd90-0670-47d7-bf8a-603e5ecd2c99:53ea6a90-6977-4450-999c-fc8b9d36244d",
       "rseqTeamId": "53ea6a90-6977-4450-999c-fc8b9d36244d",
       "leagueId": "511ebd90-0670-47d7-bf8a-603e5ecd2c99",
-      "name": "Abitibi-Témisc.",
+      "name": "Abitibi-Témiscamingue",
       "code": "CAT",
       "sector": "collegial",
       "sport": "volleyball",
@@ -85203,7 +85203,7 @@
         {
           "date": "2026-11-07",
           "time": "13:45",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "volleyball",
@@ -85289,7 +85289,7 @@
       },
       "source": "rseq-s1",
       "priority": 80,
-      "fullName": "Cégep de Abitibi-Témisc.",
+      "fullName": "Cégep de l'Abitibi-Témiscamingue",
       "registryId": "abitibi-temisc"
     },
     "collegial:volleyball:511ebd90-0670-47d7-bf8a-603e5ecd2c99:e47952cf-2e9f-4236-9710-5350100ea09e": {
@@ -85324,7 +85324,7 @@
         {
           "date": "2026-10-10",
           "time": "11:45",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "volleyball",
@@ -85351,14 +85351,14 @@
         {
           "date": "2026-11-07",
           "time": "10:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "volleyball",
           "competition": "Volleyball collégial masculin D3",
           "gameId": "3cc5e96f-dc50-441f-b415-35ea82eace4d",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3cc5e96f-dc50-441f-b415-35ea82eace4d",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -85416,14 +85416,14 @@
         {
           "date": "2026-12-06",
           "time": "10:15",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "volleyball",
           "competition": "Volleyball collégial masculin D3",
           "gameId": "bdf2fc9a-8c51-4ab3-8e65-f0fa2794f188",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=bdf2fc9a-8c51-4ab3-8e65-f0fa2794f188",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -85484,7 +85484,7 @@
         {
           "date": "2026-10-10",
           "time": "10:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "volleyball",
@@ -85550,14 +85550,14 @@
         {
           "date": "2026-11-07",
           "time": "15:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "volleyball",
           "competition": "Volleyball collégial masculin D3",
           "gameId": "6a9b7ec8-6031-4494-96a6-bf568fe734eb",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6a9b7ec8-6031-4494-96a6-bf568fe734eb",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -85576,14 +85576,14 @@
         {
           "date": "2026-12-06",
           "time": "9:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "volleyball",
           "competition": "Volleyball collégial masculin D3",
           "gameId": "71c7fdbb-33df-484e-9248-6a1e199518c0",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=71c7fdbb-33df-484e-9248-6a1e199518c0",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -85616,7 +85616,7 @@
       "nextGame": {
         "date": "2026-10-10",
         "time": "10:30",
-        "opponent": "Ch.-St-Lambert",
+        "opponent": "Champlain St-Lambert",
         "opponentCode": "SLA",
         "home": false,
         "sport": "volleyball",
@@ -85643,7 +85643,7 @@
       "id": "collegial:volleyball:511ebd90-0670-47d7-bf8a-603e5ecd2c99:e3bfc16b-b695-43eb-a25f-71282f2aa9ec",
       "rseqTeamId": "e3bfc16b-b695-43eb-a25f-71282f2aa9ec",
       "leagueId": "511ebd90-0670-47d7-bf8a-603e5ecd2c99",
-      "name": "Ch.-St-Lambert",
+      "name": "Champlain St-Lambert",
       "code": "SLA",
       "sector": "collegial",
       "sport": "volleyball",
@@ -85723,14 +85723,14 @@
         {
           "date": "2026-11-07",
           "time": "13:45",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "volleyball",
           "competition": "Volleyball collégial masculin D3",
           "gameId": "54c761ce-c400-4936-b1f3-90d992ce0baa",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=54c761ce-c400-4936-b1f3-90d992ce0baa",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -85844,14 +85844,14 @@
         {
           "date": "2026-10-11",
           "time": "11:15",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "volleyball",
           "competition": "Volleyball collégial masculin D3",
           "gameId": "cbe3ec7c-a430-422a-9d03-ea3aec82d8db",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cbe3ec7c-a430-422a-9d03-ea3aec82d8db",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -85909,7 +85909,7 @@
         {
           "date": "2026-11-07",
           "time": "16:15",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "volleyball",
@@ -85949,7 +85949,7 @@
         {
           "date": "2026-11-29",
           "time": "13:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "volleyball",
@@ -86005,14 +86005,14 @@
         {
           "date": "2026-10-11",
           "time": "10:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "volleyball",
           "competition": "Volleyball collégial masculin D3",
           "gameId": "3ca754a5-e8db-4fc2-a6d2-a95d573ea1de",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3ca754a5-e8db-4fc2-a6d2-a95d573ea1de",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -86057,7 +86057,7 @@
         {
           "date": "2026-11-07",
           "time": "12:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "volleyball",
@@ -86110,7 +86110,7 @@
         {
           "date": "2026-11-29",
           "time": "11:15",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "volleyball",
@@ -86138,14 +86138,14 @@
       "nextGame": {
         "date": "2026-10-11",
         "time": "10:00",
-        "opponent": "Abitibi-Témisc.",
+        "opponent": "Abitibi-Témiscamingue",
         "opponentCode": "CAT",
         "home": false,
         "sport": "volleyball",
         "competition": "Volleyball collégial masculin D3",
         "gameId": "3ca754a5-e8db-4fc2-a6d2-a95d573ea1de",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3ca754a5-e8db-4fc2-a6d2-a95d573ea1de",
-        "opponentFullName": "Cégep de Abitibi-Témisc.",
+        "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
         "opponentRegistryId": "abitibi-temisc"
       },
       "record": {
@@ -86205,7 +86205,7 @@
         {
           "date": "2026-10-10",
           "time": "13:30",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "volleyball",
@@ -86232,14 +86232,14 @@
         {
           "date": "2026-11-07",
           "time": "11:15",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": false,
           "sport": "volleyball",
           "competition": "Volleyball collégial masculin D3",
           "gameId": "97bb270d-abc3-4fd4-a325-63b290ed2c11",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=97bb270d-abc3-4fd4-a325-63b290ed2c11",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
@@ -86297,14 +86297,14 @@
         {
           "date": "2026-12-06",
           "time": "12:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "volleyball",
           "competition": "Volleyball collégial masculin D3",
           "gameId": "5abe4a48-1d1c-4fb1-9bf0-66f3dd03be27",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5abe4a48-1d1c-4fb1-9bf0-66f3dd03be27",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         }
       ],
@@ -86378,20 +86378,20 @@
         {
           "date": "2026-10-11",
           "time": "13:00",
-          "opponent": "Abitibi-Témisc.",
+          "opponent": "Abitibi-Témiscamingue",
           "opponentCode": "CAT",
           "home": true,
           "sport": "volleyball",
           "competition": "Volleyball collégial masculin D3",
           "gameId": "14cd9f63-9c24-4bce-a026-13cc3492483a",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=14cd9f63-9c24-4bce-a026-13cc3492483a",
-          "opponentFullName": "Cégep de Abitibi-Témisc.",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
         },
         {
           "date": "2026-11-07",
           "time": "10:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
           "sport": "volleyball",
@@ -86444,7 +86444,7 @@
         {
           "date": "2026-11-29",
           "time": "10:00",
-          "opponent": "Ch.-St-Lambert",
+          "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": true,
           "sport": "volleyball",
@@ -91381,7 +91381,7 @@
       "id": "sailing:universitaire:mcgill",
       "rseqTeamId": "MCG",
       "leagueId": "icsa-collegesailing",
-      "name": "McGill Sailing",
+      "name": "McGill",
       "code": "MCG",
       "sector": "universitaire",
       "sport": "sailing",
@@ -91428,7 +91428,7 @@
       "id": "sailing:universitaire:watch:polytechnique",
       "rseqTeamId": "POLY",
       "leagueId": "sailing-qc-watchlist",
-      "name": "PolyVoile",
+      "name": "Polytechnique",
       "code": "POLY",
       "sector": "universitaire",
       "sport": "sailing",
@@ -91454,7 +91454,7 @@
       "id": "sailing:universitaire:watch:ulaval",
       "rseqTeamId": "LAV",
       "leagueId": "sailing-qc-watchlist",
-      "name": "ULaVoile",
+      "name": "Laval",
       "code": "LAV",
       "sector": "universitaire",
       "sport": "sailing",

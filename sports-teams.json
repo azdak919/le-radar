@@ -754,13 +754,13 @@
       "id": "champlain-lennoxville",
       "code": "LEN",
       "sector": "collegial",
-      "shortName": "Ch.-Lennoxville",
+      "shortName": "Champlain Lennoxville",
       "fullName": "Champlain College Lennoxville",
       "nickname": null,
       "aliases": [
+        "Champlain Lennoxville",
         "Ch.-Lennoxville",
         "LEN",
-        "Champlain Lennoxville",
         "Lennoxville",
         "Champlain-Lennoxville"
       ],
@@ -785,13 +785,13 @@
       "id": "champlain-st-lambert",
       "code": "SLA",
       "sector": "collegial",
-      "shortName": "Ch.-St-Lambert",
+      "shortName": "Champlain St-Lambert",
       "fullName": "Champlain College Saint-Lambert",
       "nickname": "Barons",
       "aliases": [
+        "Champlain St-Lambert",
         "Ch.-St-Lambert",
         "SLA",
-        "Champlain St-Lambert",
         "Saint-Lambert",
         "St-Lambert",
         "Champlain Saint-Lambert"
@@ -1622,12 +1622,14 @@
       "id": "abitibi-temisc",
       "code": "CAT",
       "sector": "collegial",
-      "shortName": "Abitibi-Témisc.",
-      "fullName": "Cégep de Abitibi-Témisc.",
+      "shortName": "Abitibi-Témiscamingue",
+      "fullName": "Cégep de l'Abitibi-Témiscamingue",
       "nickname": null,
       "aliases": [
+        "Abitibi-Témiscamingue",
         "Abitibi-Témisc.",
-        "CAT"
+        "CAT",
+        "Abitibi"
       ],
       "priority": 80,
       "sports": [
@@ -1776,12 +1778,16 @@
       "id": "ch-st-lawrence",
       "code": "SLC",
       "sector": "collegial",
-      "shortName": "Ch.-St-Lawrence",
-      "fullName": "Cégep de Ch.-St-Lawrence",
+      "shortName": "Champlain St-Lawrence",
+      "fullName": "Champlain College St. Lawrence",
       "nickname": null,
       "aliases": [
+        "Champlain St-Lawrence",
         "Ch.-St-Lawrence",
-        "SLC"
+        "SLC",
+        "St. Lawrence",
+        "Saint-Lawrence",
+        "Champlain St. Lawrence"
       ],
       "priority": 80,
       "sports": [
