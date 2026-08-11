@@ -2227,39 +2227,6 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   html.is-firefox .tuner-cast--mobile[hidden] { display: flex !important; }
 }
 
-/*
- * Mid (≈600–1099, ex. 768 / 900) : le carré dial a de la place — typo un peu
- * plus grande + padding pour remplir la boîte (B/E : 2 lignes scannables).
- * Téléphone étroit reste sur les tailles de base.
- */
-@media (min-width: 600px) and (max-width: 1099.98px) {
-  .tuner-inner {
-    gap: 10px;
-  }
-  .tuner-controls {
-    gap: 8px;
-  }
-  .tuner-dial {
-    flex: 1 1 auto;
-    min-width: 14rem;
-  }
-  .tuner-now {
-    min-height: 48px;
-    padding: 6px 28px 6px 14px;
-  }
-  .tuner-now-name {
-    font-size: 15.5px;
-    line-height: 1.2;
-  }
-  .tuner-now-sub {
-    font-size: 12px;
-    line-height: 1.25;
-  }
-  .tuner-now-sub-rotate {
-    min-height: 1.25em;
-  }
-}
-
 /* Téléphone étroit : pastille EN ONDES masquée (le synthétiseur rouge global
    signale déjà le live). Seuil bas pour ne pas traiter une demi-fenêtre laptop
    comme un téléphone. */
