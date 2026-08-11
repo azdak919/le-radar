@@ -1,8 +1,8 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v625",
+    "cache": "radar-shell-v626",
     "assets": {
-      "app.js": "7763233ecac08e05",
+      "app.js": "e9a4834fff1f63cf",
       "bg-rotation-lib.js": "4ff24249767435c6",
       "cast.js": "9ac30d507e71388d",
       "embed.css": "92fcb8e8a0cc8dc1",
@@ -20,7 +20,7 @@
       "scripts/season-lib.js": "f3330cfcec5029c3",
       "scripts/session-freshness-lib.js": "8864fadc8cd34ed1",
       "scripts/sports-freshness-lib.js": "fcb409c0970bf1ff",
-      "style-masthead.css": "617ee0de5493c1f4",
+      "style-masthead.css": "dba50e1e5372816f",
       "style.css": "b2073aaf083b67c5",
       "translate-menu.css": "a5a4eb37479afb60",
       "translate-menu.js": "07802220efb342c2",
@@ -70,10 +70,10 @@
     }
   },
   "sports/sw.js": {
-    "cache": "sports-shell-v48",
+    "cache": "sports-shell-v49",
     "assets": {
       "app-sw-register.js": "386e54fcec34bbb3",
-      "app.js": "7763233ecac08e05",
+      "app.js": "e9a4834fff1f63cf",
       "cast.js": "9ac30d507e71388d",
       "engage-prompt.js": "1d7c46b74e042774",
       "institution-acronyms-data.js": "0d9e4eaa631af54c",
@@ -83,7 +83,7 @@
       "seo-page-theme.js": "06a19179fa91c396",
       "seo-pages.css": "9f6f632736c9aab0",
       "sports-board.js": "0222092a8ee68654",
-      "style-masthead.css": "617ee0de5493c1f4",
+      "style-masthead.css": "dba50e1e5372816f",
       "style.css": "b2073aaf083b67c5"
     }
   }

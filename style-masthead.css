@@ -305,17 +305,29 @@
     rgba(22, 24, 30, 0.82);
   border-color: rgba(255, 255, 255, 0.14);
 }
-/* Très étroit : date et heure empilées (sinon ~23 px pour la date + ellipse). */
-@media (max-width: 374.98px) {
+/*
+ * Mobile photo ≤430 : date+heure alignées comme les pastilles (pas de
+ * translateY mobile générique). Stack date/heure sous 400 pour éviter
+ * « MARD… · 14:16 » ; une ligne propre dès qu’il y a la place.
+ */
+@media (max-width: 599.98px) {
+  .masthead:has(#bg-photo-layer.loaded) .masthead-date {
+    transform: none; /* annule style.css translateY(-3px) — désalignait vs icônes */
+    align-self: center;
+    max-width: min(48vw, 12.5rem);
+  }
+}
+/* Stack lisible (date puis heure) sous ~400 px — 390 lab / iPhone. */
+@media (max-width: 399.98px) {
   .masthead:has(#bg-photo-layer.loaded) .masthead-date {
     height: auto;
     min-height: 29px;
-    max-width: min(52vw, 11.5rem);
+    max-width: min(54vw, 11.75rem);
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    gap: 0;
-    padding: 3px 7px 4px;
+    gap: 1px;
+    padding: 4px 8px;
   }
   .masthead:has(#bg-photo-layer.loaded) .masthead-date #today-date {
     flex: 0 1 auto;
@@ -325,9 +337,27 @@
     margin-left: 0;
     font-size: 10px;
     line-height: 1.2;
+    font-weight: 800;
   }
   .masthead:has(#bg-photo-layer.loaded) .masthead-date .masthead-time::before {
     content: none;
+  }
+}
+/* Slogan : glass un cran plus compact en mobile (évite collision crédit / mât bas). */
+@media (max-width: 430px) {
+  .masthead:has(#bg-photo-layer.loaded) .wordmark-full {
+    max-width: min(92vw, 22rem);
+    padding: 0.28rem 0.55rem;
+    margin-top: 0.25rem;
+    letter-spacing: 0.08em;
+    gap: 0.08em;
+  }
+  .masthead:has(#bg-photo-layer.loaded) .wordmark-full__lead,
+  .masthead:has(#bg-photo-layer.loaded) .wordmark-full__tag {
+    letter-spacing: 0.08em;
+  }
+  .masthead:has(#bg-photo-layer.loaded) .masthead-brand {
+    padding-bottom: 18px;
   }
 }
 .masthead:has(#bg-photo-layer.loaded) .wordmark {

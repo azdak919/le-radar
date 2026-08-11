@@ -78,12 +78,14 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   ]);
   expect(actionsBox.x).toBeGreaterThan(weatherBox.x + weatherBox.width);
 
-  // 2 cartes fixes MTL+QC : la « rotation » ne change plus les villes.
-  const beforeRotation = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities.map((city) => city.dataset.weatherCity).sort());
+  // 2 cartes MTL+QC : la rotation échange l’ordre (anim), pas les villes.
+  const beforeRotation = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities.map((city) => city.dataset.weatherCity));
   await page.waitForTimeout(8500);
-  const afterRotation = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities.map((city) => city.dataset.weatherCity).sort());
-  expect(afterRotation).toEqual(beforeRotation);
-  expect(afterRotation).toEqual(['montreal', 'quebec']);
+  const afterRotation = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities.map((city) => city.dataset.weatherCity));
+  expect([...afterRotation].sort()).toEqual(['montreal', 'quebec']);
+  expect([...beforeRotation].sort()).toEqual(['montreal', 'quebec']);
+  // Ordre inversé après un cycle (échange) — si le dwell n’a pas encore tiré, IDs inchangés OK.
+  expect(afterRotation.length).toBe(2);
 
   await page.setViewportSize({ width: 1200, height: 900 });
   await page.waitForTimeout(100);

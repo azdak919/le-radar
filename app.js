@@ -1577,10 +1577,14 @@ function showMastheadWeatherBoard() {
     mastheadWeatherLastBoardCount = count;
   }
   MASTHEAD_WEATHER.querySelector('.masthead-weather__board')?.setAttribute('data-weather-count', String(count));
-  // Toujours MTL + QC uniquement (ordre de MASTHEAD_WEATHER_PRIMARY_SEQUENCE).
-  // count=1 : une seule ancre (alterne à la rotation via primaryIndex).
+  // Toujours MTL + QC uniquement. count=2 : les deux (ordre préservé pour
+  // l’anim d’échange). count=1 : ancre qui alterne à la rotation.
   if (count >= 2) {
-    mastheadWeatherSlots = primaries.slice(0, 2);
+    const primaryIds = new Set(primaries.map((p) => p.id));
+    const kept = mastheadWeatherSlots.filter((s) => s && primaryIds.has(s.id));
+    mastheadWeatherSlots = kept.length === 2
+      ? kept
+      : primaries.slice(0, 2);
   } else {
     const anchor = primaries[mastheadWeatherPrimaryIndex % primaries.length]
       || primaries[0];
@@ -1609,23 +1613,22 @@ function showMastheadWeatherBoard() {
   // Tolérance sous-pixel seulement : à +2 px le pied du « L » de MONTRÉAL était
   // rogné sans jamais déclencher la cascade.
   const primaryOverflowing = () => primaryText.scrollWidth > primaryViewport.clientWidth + 0.5;
-  // Priorité : nom complet (Montréal / Québec). On réduit d'abord le nombre
-  // de cartes secondaires ; MTL/QC n'intervient qu'en dernier recours quand
-  // une seule carte reste et que le nom complet déborde encore.
-  primary.classList.remove('is-compact');
+  // Noms complets d’abord. Compact (MTL/QC) avant d’amputer la 2ᵉ carte
+  // (les deux sont primaires — pas de secondaire à retirer).
+  const actives = [...MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city.is-active')];
+  actives.forEach((el) => el.classList.remove('is-compact'));
   let primaryOverflows = primaryOverflowing();
+  if (primaryOverflows) {
+    actives.forEach((el) => el.classList.add('is-compact'));
+    primaryOverflows = primaryOverflowing();
+  }
   if (primaryOverflows && count > 1) {
-    // Retirer une carte secondaire et réévaluer à la taille réelle.
-    mastheadWeatherFitCount = count - 1;
+    // Encore trop étroit même en compact : une seule carte.
+    mastheadWeatherFitCount = 1;
     mastheadWeatherLastBoardCount = 0;
     mastheadWeatherSlots = [];
     showMastheadWeatherBoard();
     return;
-  }
-  if (primaryOverflows) {
-    // Une seule carte : forme compacte MTL/QC avant dock / masquage.
-    primary.classList.add('is-compact');
-    primaryOverflows = primaryOverflowing();
   }
   if (!primaryOverflows) return;
   // Même seule en MTL/QC, la carte ne rentre pas dans le masthead : on la
@@ -1724,18 +1727,24 @@ function rotateOneMastheadWeatherCard() {
   if (!mastheadWeatherSlots.length) return;
   const primaries = weatherPrimaryCities();
   if (!primaries.length) return;
-  // 2 cartes (MTL+QC) : rien à tourner — les deux restent affichées.
+
+  let arrivingId = null;
   if (mastheadWeatherSlots.length >= 2) {
-    showMastheadWeatherBoard();
-    return;
+    // 2 cartes : échange d’ordre MTL↔QC + anim is-arriving (vie visuelle).
+    mastheadWeatherSlots = [mastheadWeatherSlots[1], mastheadWeatherSlots[0]];
+    arrivingId = mastheadWeatherSlots[0]?.id || null;
+  } else {
+    // 1 carte : alterne Montréal ↔ Québec.
+    mastheadWeatherPrimaryIndex = (mastheadWeatherPrimaryIndex + 1) % primaries.length;
+    const replacement = primaries[mastheadWeatherPrimaryIndex];
+    if (!replacement) return;
+    mastheadWeatherSlots[0] = replacement;
+    arrivingId = replacement.id;
   }
-  // 1 carte : alterne Montréal ↔ Québec.
-  mastheadWeatherPrimaryIndex = (mastheadWeatherPrimaryIndex + 1) % primaries.length;
-  const replacement = primaries[mastheadWeatherPrimaryIndex];
-  if (!replacement) return;
-  mastheadWeatherSlots[0] = replacement;
+
   showMastheadWeatherBoard();
-  const arriving = MASTHEAD_WEATHER?.querySelector(`[data-weather-city="${replacement.id}"]`);
+  if (!arrivingId) return;
+  const arriving = MASTHEAD_WEATHER?.querySelector(`[data-weather-city="${arrivingId}"]`);
   arriving?.classList.add('is-arriving');
   if (arriving) {
     arriving.classList.remove('is-overflowing');
@@ -1762,6 +1771,15 @@ function scheduleMastheadWeatherLayout() {
 function startMastheadWeatherBoard() {
   if (!MASTHEAD_WEATHER) return;
   showMastheadWeatherBoard();
+  // Re-fit après fontes : 1ʳᵉ mesure trop tôt → fitCount=1 figé (1 carte au lieu de 2).
+  const fonts = document.fonts;
+  if (fonts?.ready && typeof fonts.ready.then === 'function') {
+    fonts.ready.then(() => {
+      if (!MASTHEAD_WEATHER?.isConnected) return;
+      mastheadWeatherFitCount = null;
+      scheduleMastheadWeatherLayout();
+    }).catch(() => { /* ignore */ });
+  }
   // Chaîne setTimeout (pas interval fixe) : le dwell suit le marquee réel.
   if (!mastheadWeatherTimer) scheduleMastheadWeatherRotate();
   window.addEventListener('resize', scheduleMastheadWeatherLayout, { passive: true });
