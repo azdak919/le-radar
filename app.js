@@ -1538,13 +1538,12 @@ function weatherBoardAvailWidth() {
 function weatherBoardCount() {
   const width = weatherBoardAvailWidth();
   let count = 1;
-  // Modèle établi : 1 ancre MTL/QC + secondaires à droite.
-  // Seuils assouplis pour le dock tablette (board pleine largeur ~720–800).
-  if (width >= 520) count = 4;
+  // Modèle : 1 ancre MTL/QC + secondaires. Bureau 1280 board ~650 px → 3 cartes
+  // (4 serraient les secondaires → marquee). 4 seulement si board vraiment large.
+  if (width >= 780) count = 4;
   else if (width >= 400) count = 3;
   else if (width >= 240) count = 2;
-  // Docké (768 lab, board ~720) : 4 cartes trop étroites → marquee sur noms
-  // longs (ex. Uashat mak Mani-Utenam). Plafond 3 pour lire sans défilement.
+  // Docké (768/900) : même plafond 3 pour lisibilité.
   if (mastheadWeatherDocked && count > 3) count = 3;
   return mastheadWeatherFitCount === null ? count : Math.min(count, mastheadWeatherFitCount);
 }
