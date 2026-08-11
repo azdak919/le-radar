@@ -219,8 +219,8 @@
   flex-wrap: nowrap;
   align-items: baseline;
   gap: 0.4em;
-  /* Laisse de la place à météo (min 104px) + actions */
-  max-width: min(38vw, 12.5rem);
+  /* Plafond largeur date : laisse la météo garder ≥2–3 cartes si possible */
+  max-width: min(34vw, 11.25rem);
   padding: 0.28rem 0.55rem;
   border-radius: 0.55rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -740,13 +740,12 @@ a { color: inherit; }
   height: 29px;
 }
 .masthead-weather__board[data-weather-count="1"] { --weather-grid: minmax(0, 1fr); }
-/* Colonne primaire assez large pour « MONTRÉAL » / « QUÉBEC » en entier
-   (icône + nom ~71 px + temp + padding). Les secondaires absorbent la
-   compression (marquee si besoin). MTL/QC n’apparaît qu’en dernier recours
-   via .is-compact (JS), pas pour « sauver » une 4ᵉ carte sur bureau. */
-.masthead-weather__board[data-weather-count="2"] { --weather-grid: minmax(138px, 1fr) minmax(0, 1fr); }
-.masthead-weather__board[data-weather-count="3"] { --weather-grid: minmax(138px, .95fr) repeat(2, minmax(0, 1fr)); }
-.masthead-weather__board[data-weather-count="4"] { --weather-grid: minmax(138px, .9fr) repeat(3, minmax(0, 1fr)); }
+/* Colonne primaire un cran plus souple (ex. 120px) : date 1 ligne réduit la
+   zone météo — secondaires en marquee plutôt qu’amputer tôt. MTL/QC n’apparaît
+   en .is-compact qu’en dernier recours (JS). */
+.masthead-weather__board[data-weather-count="2"] { --weather-grid: minmax(120px, 1fr) minmax(0, 1fr); }
+.masthead-weather__board[data-weather-count="3"] { --weather-grid: minmax(120px, .95fr) repeat(2, minmax(0, 1fr)); }
+.masthead-weather__board[data-weather-count="4"] { --weather-grid: minmax(118px, .9fr) repeat(3, minmax(0, 1fr)); }
 .masthead-weather__city {
   display: none;
   align-items: center;

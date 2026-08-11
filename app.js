@@ -1094,6 +1094,9 @@ function mastheadLocale() {
   return tag;
 }
 
+/** Dernier libellé date (sans heure) — pour ne re-fit météo que si le texte change. */
+let mastheadDateLabelKey = '';
+
 function renderTodayDate() {
   if (!TODAY_DATE && !TODAY_TIME) return;
   const now = new Date();
@@ -1105,9 +1108,8 @@ function renderTodayDate() {
   if (TODAY_DATE) {
     for (const options of MASTHEAD_DATE_FORMATS) {
       TODAY_DATE.textContent = now.toLocaleDateString(locale, options);
-      // Hors disposition mobile, `#today-date` reste en ligne : ses deux
-      // mesures valent 0, la comparaison est vraie, et le format complet est
-      // conservé — ce qu'on veut, la place ne manque pas là-bas.
+      // Soft glass date+heure 1 ligne : #today-date a un max-width — la cascade
+      // raccourcit le libellé pour laisser de l’air à la météo.
       if (TODAY_DATE.scrollWidth <= TODAY_DATE.clientWidth) break;
     }
   }
@@ -1118,6 +1120,21 @@ function renderTodayDate() {
       : now.toLocaleTimeString('fr-CA', {
         hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
       }).replace(/\s*h\s*/u, ':');
+  }
+  // Si le libellé date change (format / jour), largeur météo peut bouger →
+  // re-fit météo + resync scores à gauche de la CTA (parité weatherN).
+  const dateKey = TODAY_DATE?.textContent || '';
+  const dateChanged = dateKey !== mastheadDateLabelKey;
+  mastheadDateLabelKey = dateKey;
+  if (dateChanged && typeof scheduleMastheadWeatherLayout === 'function') {
+    scheduleMastheadWeatherLayout();
+  }
+  if (typeof queueSportsWeatherParitySync === 'function') {
+    queueSportsWeatherParitySync();
+    if (dateChanged) {
+      window.setTimeout(() => queueSportsWeatherParitySync(), 200);
+      window.setTimeout(() => queueSportsWeatherParitySync(), 500);
+    }
   }
 }
 
@@ -1468,11 +1485,13 @@ function buildMastheadWeatherBoard() {
 function weatherBoardCount() {
   const width = MASTHEAD_WEATHER?.querySelector('.masthead-weather__board')?.clientWidth || 0;
   let count = 1;
-  if (width >= 600) count = 4;
-  else if (width >= 500) count = 3;
+  // Seuils un cran plus bas : date+heure 1 ligne réduit la zone météo ;
+  // on préfère garder 3 cartes (marquee sur secondaires) plutôt qu’amputer tôt.
+  if (width >= 520) count = 4;
+  else if (width >= 400) count = 3;
   // Sur téléphone, la première carte reste exclusivement Montréal/Québec.
   // La seconde disparaît avant que cette carte principale doive défiler.
-  else if (width >= 280) count = 2;
+  else if (width >= 240) count = 2;
   return mastheadWeatherFitCount === null ? count : Math.min(count, mastheadWeatherFitCount);
 }
 
@@ -2344,13 +2363,17 @@ function sportsStripAvailWidth() {
 }
 
 /**
- * Cartes météo pour plafonner les puces SCORE (CTA hors compte).
+ * Cartes météo pour plafonner les puces SCORE à **gauche** de la CTA.
  * Priorité : villes `.is-active` peintes → slots → lastBoardCount →
  * estimé weatherBoardCount si le bandeau est déjà visible.
+ * (Date+heure 1 ligne peut réduire weatherN : les scores de gauche suivent.)
  */
 function sportsWeatherCardCount() {
   if (!MASTHEAD_WEATHER) return 0;
-  if (MASTHEAD_WEATHER.classList.contains('is-too-narrow')) return 0;
+  if (MASTHEAD_WEATHER.classList.contains('is-too-narrow')
+    && !MASTHEAD_WEATHER.classList.contains('masthead-weather--docked')) {
+    return 0;
+  }
   const active = MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city.is-active').length;
   if (active > 0) return active;
   if (mastheadWeatherSlots.length > 0) return mastheadWeatherSlots.length;
@@ -2370,18 +2393,18 @@ function sportsWeatherCardCount() {
 /**
  * Plafond depuis la largeur + parité météo (avant mesure post-paint).
  * Max desktop : 3 scores + CTA = 4. Minimum : 1 (CTA seule).
- * Les puces SCORE ne dépassent jamais le nombre de cartes météo ;
- * la CTA « SPORTS » (tout à droite) est hors de ce plafond.
- * Ex. météo 2 → max 2 scores + CTA (= 3 chips), jamais 3 scores.
+ *
+ * Parité **gauche** : nombre de puces SCORE = min(cap largeur, cartes météo).
+ * La CTA « SPORTS » (droite) est hors plafond météo.
+ * Ex. météo amputée à 2 (date 1 ligne) → max 2 scores + CTA, pas 3 scores.
  */
 function sportsBoardCountBase() {
   const avail = sportsStripAvailWidth();
   const gap = 6;
-  // Un peu plus généreux que le min CSS : on préfère retirer une carte
-  // (cascade type météo) plutôt que d’écraser scores + CTA.
-  // Téléphone (~360 CSS px) → 1 = CTA « SPORTS » seule.
-  const minScore = 152;
-  const minCta = 172;
+  // Légèrement plus compact : caler le même nombre de scores que de météo
+  // quand la zone météo a été réduite par la date 1 ligne.
+  const minScore = 140;
+  const minCta = 168;
 
   // 4 = 3 scores + CTA ; 3 = 2+CTA ; 2 = 1+CTA ; 1 = CTA seule
   let n = 1;
@@ -2394,11 +2417,10 @@ function sportsBoardCountBase() {
     }
   }
 
-  // Parité météo : scores ≤ cartes météo (CTA exclue).
+  // Parité météo : scores de gauche ≤ cartes météo (CTA exclue).
   const weatherN = sportsWeatherCardCount();
   if (weatherN > 0 && n >= 2) {
-    const maxScores = weatherN;
-    const maxTotal = maxScores + 1; // + CTA
+    const maxTotal = weatherN + 1; // scores + CTA
     n = Math.min(n, maxTotal);
   }
   return n;
@@ -2407,6 +2429,7 @@ function sportsBoardCountBase() {
 /**
  * Nombre de chips cible : largeur × parité météo × contrainte de fit mesurée.
  * On retire une carte à la fois en rétrécissant (4 → 3 → 2 → 1 = SPORTS).
+ * Cible visuelle : #scores gauche ≈ #cartes météo ; CTA toujours à droite.
  */
 function sportsBoardCount() {
   const base = sportsBoardCountBase();
@@ -2420,8 +2443,9 @@ function sportsBoardCount() {
 }
 
 /**
- * Quand la météo change de nombre de cartes, resynchroniser le bandeau scores
- * (même largeur de page, mais le cap parité a bougé).
+ * Quand la météo change de nombre de cartes (ex. date 1 ligne ampute une
+ * carte), resynchroniser le bandeau scores : même nombre de puces à gauche
+ * de la CTA que de cartes météo actives.
  */
 let sportsWeatherParityRaf = 0;
 function queueSportsWeatherParitySync() {
@@ -2434,9 +2458,13 @@ function queueSportsWeatherParitySync() {
     const weatherN = sportsWeatherCardCount();
     const scoreCount = sportsVisible.filter((s) => s && s.mode !== 'cta').length;
     const target = sportsBoardCount();
-    // Resync si le total change OU si trop de scores vs météo.
+    // Resync si total change, trop de scores vs météo, ou trop peu de scores
+    // alors que largeur + météo permettent plus (remplir la gauche).
     const overWeather = weatherN > 0 && scoreCount > weatherN;
-    if (sportsVisible.length === target && !overWeather) return;
+    const underFilled = weatherN > 0
+      && scoreCount < Math.min(weatherN, Math.max(0, target - 1))
+      && sportsVisible.length < target;
+    if (sportsVisible.length === target && !overWeather && !underFilled) return;
     sportsFitCount = null;
     sportsFitDepth = 0;
     renderSportsStrip();

@@ -1126,8 +1126,10 @@ assert(
 assert(
   appJs.includes('sportsWeatherCardCount')
     && appJs.includes('queueSportsWeatherParitySync')
-    && appJs.includes('weatherN + 1'),
-  'app.js : plafond scores sports ≤ cartes météo (CTA hors compte)',
+    && appJs.includes('weatherN + 1')
+    && appJs.includes('underFilled')
+    && appJs.includes('scheduleMastheadWeatherLayout'),
+  'app.js : scores gauche ≤ météo ; resync après date ; CTA hors compte',
 );
 // Lab local : météo ne doit pas rester absente (CORS Worker / offline).
 assert(
