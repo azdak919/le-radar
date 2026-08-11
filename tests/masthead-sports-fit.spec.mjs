@@ -67,7 +67,7 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
   expect(narrow).toBeGreaterThanOrEqual(1);
 
   // Tablette 768 / 900 : au moins 1 score à gauche de la CTA.
-  // Si data-count=2 (1 score + CTA) → largeurs égales (50/50).
+  // data-count=2 → boîtes strictement 50/50 (pas flex 1.2 CTA).
   const equalWhenTwo = async () => {
     const n = Number(await strip.getAttribute('data-count') || 0);
     if (n !== 2) return;
@@ -75,7 +75,12 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
       chips.map((c) => Math.round(c.getBoundingClientRect().width)),
     );
     expect(widths).toHaveLength(2);
-    expect(Math.abs(widths[0] - widths[1])).toBeLessThanOrEqual(2);
+    expect(Math.abs(widths[0] - widths[1]), `50/50 attendu, got ${widths}`).toBeLessThanOrEqual(1);
+    const flexes = await strip.locator('.sports-chip').evaluateAll((chips) =>
+      chips.map((c) => getComputedStyle(c).flexGrow),
+    );
+    expect(flexes[0]).toBe('1');
+    expect(flexes[1]).toBe('1');
   };
   const tab768 = await countAt(768);
   expect(tab768).toBeGreaterThanOrEqual(2);
