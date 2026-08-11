@@ -117,7 +117,10 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   await page.setViewportSize({ width: 768, height: 900 });
   await page.waitForTimeout(150);
   await expect(ribbon).toHaveClass(/masthead-weather--docked/);
-  expect(await ribbon.locator('.masthead-weather__city.is-active').count()).toBeGreaterThanOrEqual(2);
+  // Docké : plafond 3 (pas 4) pour limiter le marquee des secondaires.
+  const tab768 = await ribbon.locator('.masthead-weather__city.is-active').count();
+  expect(tab768).toBeGreaterThanOrEqual(2);
+  expect(tab768).toBeLessThanOrEqual(3);
 
   // 430 docké : board pleine largeur → multi-cartes (pas 1 carte flottante).
   await page.setViewportSize({ width: 430, height: 900 });
