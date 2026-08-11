@@ -5489,20 +5489,24 @@ function formatStationNowAirLabel(radio) {
 
 /**
  * Téléphone (< 600 px) ou embed étroit (pomo/solitaire mobile) :
- * acronyme d’institution dans le titre du syntoniseur.
+ * layout dial compact (ligne antenne dans le sous-titre).
  */
 function isTunerDialPhoneLayout() {
   if (IS_TUNER_EMBED) return isEmbedNowAirInDial();
   return !!TUNER_DIAL_PHONE_MQ?.matches;
 }
 
-/** Institution affichée dans le syntoniseur : abrégée au téléphone / embed étroit. */
+/**
+ * Institution dans le syntoniseur : **toujours l’acronyme** (UQAM, UdeM, ULaval…).
+ * Évite le marquee inutile en veille (« CHOQ.ca · Université du Québec à Montréal »)
+ * et aligne bureau / tablette / téléphone.
+ */
 function tunerDialInstitutionLabel(radio) {
   if (!radio) return '';
-  const raw = isTunerDialPhoneLayout()
-    ? shortInstitution(radio.institution, radio.type)
-    : tunerInstitutionLabel(radio.institution);
-  // Forme longue localisable (EN/ES…) ; acronymes restent neutres.
+  const raw = shortInstitution(radio.institution, radio.type)
+    || resolveInstitutionAcronym(radio.institution)
+    || adaptRadarInstitutionLabel(tunerInstitutionLabel(radio.institution));
+  // Acronymes neutres (pas de MT) ; forme longue seulement si aucun acronyme.
   return adaptRadarInstitutionLabel(raw);
 }
 
@@ -5590,17 +5594,12 @@ function isDialCompactLayout() {
 }
 
 /**
- * Titre ligne 1 en layout compact.
- * Mobile / embed étroit : toujours acronyme (ULaval, UdeM…), jamais le nom long.
+ * Titre ligne 1 en layout compact : poste · acronyme (jamais le nom long d’univ.).
  */
 function compactDialTitleLine(radio) {
   if (!radio) return tunerSubMeta || 'Radios étudiantes en direct';
   const name = stationDisplayName(radio) || radio.name || '';
-  // Acronyme sur téléphone + embed étroit ; tablette site peut garder le long.
-  const inst = isTunerDialPhoneLayout() || isEmbedNowAirInDial()
-    ? (shortInstitution(radio.institution, radio.type)
-      || adaptRadarInstitutionLabel(tunerInstitutionLabel(radio.institution)))
-    : tunerDialInstitutionLabel(radio);
+  const inst = tunerDialInstitutionLabel(radio);
   if (!name) return inst || '';
   return inst ? `${name} · ${inst}` : name;
 }
@@ -5845,6 +5844,7 @@ function syncDesktopDialPreview(_airTitle, crossfade = false) {
     return;
   }
 
+  // Acronyme d’établissement (CHOQ.ca · UQAM) — pas le nom long qui force un marquee en veille.
   const stationLine = tunerDialTitleLine(nowAirPreviewRadio);
   const subText = TUNER_SUB?.querySelector('.tuner-now-sub-text')?.textContent;
   if (!crossfade && stationLine === lastDialCarouselText && subText === stationLine) {
