@@ -291,10 +291,11 @@ body {
 /* Défilement L→R du texte trop long (scores ET accroche CTA SPORTS).
  * La pastille « SPORTS » reste fixe ; seul le texte d’info défile.
  * Rotation de match = crossfade (app.js), pas de carte type gare.
- * Durée 7 s × alternate = 14 s aller-retour — app.js (SPORTS_SCROLL_*)
+ * Durée 5,5 s × alternate = 11 s aller-retour — app.js (SPORTS_SCROLL_*)
  * attend ce cycle + pause repos avant de changer le match (lecture confortable). */
 .masthead-sports-strip {
-  /* Un peu plus lent + holds aux extrémités = moins d’à-coups aux virages. */
+  /* Holds aux extrémités = moins d’à-coups aux virages. Titre et sous-ligne
+   * partagent la même durée ; les holds (18/82 vs 32/68) restent distincts. */
   --sports-scroll-duration: 5.5s;
 }
 /* Marquee scores (gauche) — CTA a sa propre règle sur .is-front uniquement. */
@@ -571,7 +572,8 @@ body {
   max-width: none;
   overflow: visible;
   text-overflow: clip;
-  animation: sports-chip-scroll-sub var(--sports-scroll-duration, 8.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  /* Fallback 5.5s (pas 8.5s) : --sports-scroll-duration hérite déjà du strip. */
+  animation: sports-chip-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
   will-change: transform;
 }
 @keyframes sports-chip-scroll-sub {
