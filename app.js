@@ -1621,6 +1621,12 @@ function showMastheadWeatherBoard() {
 const WEATHER_SCROLL_ONE_WAY_MS = 6200;
 /** Rotation météo sans défilement — assez pour lire ville + °. */
 const WEATHER_ROTATE_BASE_MS = 7000;
+/**
+ * Pause au repos **après** le retour du marquee, avant de changer de carte.
+ * Plus courte que MARQUEE_REST_MS (dial/sports) : le bandeau météo n’a qu’un
+ * toponyme à relire ; 2 s laissait un « trou » trop long (feedback 2026-08-11).
+ */
+const WEATHER_SCROLL_POST_PAUSE_MS = 700;
 
 function refreshWeatherNameScroll() {
   MASTHEAD_WEATHER?.querySelectorAll('.masthead-weather__city.is-active').forEach((el) => {
@@ -1665,7 +1671,7 @@ function weatherBoardDwellMs() {
   if (!anyOverflow) return WEATHER_ROTATE_BASE_MS;
   return MARQUEE_READ_DELAY_MS
     + WEATHER_SCROLL_ONE_WAY_MS * MARQUEE_ROUND_TRIPS
-    + MARQUEE_REST_MS;
+    + WEATHER_SCROLL_POST_PAUSE_MS;
 }
 
 function clearMastheadWeatherTimer() {
