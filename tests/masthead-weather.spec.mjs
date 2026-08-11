@@ -34,12 +34,12 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   expect(await ribbon.locator('.masthead-weather__city').evaluateAll((cities) => cities.every(
     (city) => city.href.startsWith('https://www.meteomedia.com/fr/ville/ca/quebec/'),
   ))).toBe(true);
-  // Modèle établi : 4 cartes bureau — slot 0 = ancre MTL **ou** QC exclusive ;
-  // 1–3 = secondaires (campus + nations).
-  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(4);
+  // Bureau : 3 cartes — slot 0 = ancre MTL **ou** QC exclusive ; 1–2 = secondaires.
+  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(3);
   const activePrimary = ribbon.locator('.masthead-weather__city.is-active[data-weather-city="montreal"], .masthead-weather__city.is-active[data-weather-city="quebec"]');
   await expect(activePrimary).toHaveCount(1);
-  await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="campus"]')).toHaveCount(3);
+  // Ancre = campus + 1 secondaire campus + 1 nation (ou 2 campus si nation absente).
+  await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="campus"]')).toHaveCount(2);
   await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="nation"]')).toHaveCount(1);
   await expect(activePrimary).not.toHaveClass(/is-compact/);
   const primaryLabel = await activePrimary.locator('.masthead-weather__name-full').evaluate(
@@ -115,8 +115,8 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   await page.waitForTimeout(150);
   await expect(ribbon).not.toHaveClass(/masthead-weather--docked/);
   const deskCount = await ribbon.locator('.masthead-weather__city.is-active').count();
-  expect(deskCount).toBeGreaterThanOrEqual(3);
-  expect(deskCount).toBeLessThanOrEqual(4);
+  expect(deskCount).toBe(3);
+  await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-city="montreal"], .masthead-weather__city.is-active[data-weather-city="quebec"]')).toHaveCount(1);
 
   // Tablette dockée : ancre + secondaires (board pleine largeur).
   await page.setViewportSize({ width: 920, height: 900 });
