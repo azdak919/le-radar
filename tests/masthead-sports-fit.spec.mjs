@@ -267,10 +267,13 @@ test('mât mobile 390/430 : date et heure non clipées', async ({ page }) => {
         const ab = actions.getBoundingClientRect();
         const dateOk = today.scrollWidth <= today.clientWidth + 0.5
           && /20\d{2}|\d{1,2}[./]\d{1,2}/.test((today.textContent || '').trim());
-        const timeOk = /^\d{1,2}:\d{2}$/.test((time.textContent || '').trim())
+        // FR « 15 h 03 » ou EN « 15:03 »
+        const timeOk = /^\d{1,2}(?:\s*h\s*|:)\d{2}$/i.test((time.textContent || '').trim())
           && tb.right <= hb.right + 1.5;
         const chipOk = hb.right <= ab.left + 1;
-        return dateOk && timeOk && chipOk;
+        // Date visible (opacity) une fois photo .loaded
+        const visible = parseFloat(getComputedStyle(host).opacity || '1') > 0.5;
+        return dateOk && timeOk && chipOk && visible;
       }), { timeout: 5000 })
       .toBe(true);
   }

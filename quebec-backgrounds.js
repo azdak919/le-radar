@@ -2099,6 +2099,9 @@
       if (typeof console !== "undefined" && console.warn) {
         console.warn("[bg] aucune photo mât affichable (pool épuisé)");
       }
+      // Dévoiler la date (CSS : opacity 0 tant que .loaded absent).
+      const layer = document.getElementById("bg-photo-layer");
+      if (layer) layer.classList.add("loaded");
     };
     window.setTimeout(attempt, 40);
   }
