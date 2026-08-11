@@ -1543,6 +1543,9 @@ function weatherBoardCount() {
   if (width >= 520) count = 4;
   else if (width >= 400) count = 3;
   else if (width >= 240) count = 2;
+  // Docké (768 lab, board ~720) : 4 cartes trop étroites → marquee sur noms
+  // longs (ex. Uashat mak Mani-Utenam). Plafond 3 pour lire sans défilement.
+  if (mastheadWeatherDocked && count > 3) count = 3;
   return mastheadWeatherFitCount === null ? count : Math.min(count, mastheadWeatherFitCount);
 }
 
