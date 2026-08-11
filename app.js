@@ -1784,7 +1784,8 @@ const SPORTS_SPORT_TONES = {
 const SPORTS_LIVE_BEFORE_MS = 2 * 3600 * 1000;
 const SPORTS_LIVE_AFTER_MS = 3 * 3600 * 1000;
 const SPORTS_IMMINENT_MS = 7 * 24 * 3600 * 1000; /* 7 jours */
-const SPORTS_RECENT_RESULT_MS = 4 * 24 * 3600 * 1000; /* résultats < 4 j — cartes de gauche */
+/** Focus-group le-radar-sports-left-pool : gate D (7 j) + exclude priorSeason. */
+const SPORTS_RECENT_RESULT_MS = 7 * 24 * 3600 * 1000; /* résultats < 7 j — cartes de gauche */
 /**
  * « Chaud » pour la *voie de gauche* / détection saison (pas le pool CTA).
  * La CTA suit le-radar-cta-sports-window : journée lead + filet fraîcheur 48 h.
@@ -2156,8 +2157,8 @@ function sportsNextSlide(team, now = Date.now()) {
 
 /**
  * Ancien « meilleur signal » par équipe — conservé pour la CTA (urgence).
- * Un résultat < 4 j prime sur un prochain lointain ; un prochain imminent
- * prime sur un vieux score.
+ * Un résultat récent (SPORTS_RECENT_RESULT_MS) prime sur un prochain lointain ;
+ * un prochain imminent prime sur un vieux score.
  */
 function sportsPickTeamSlide(team, now = Date.now()) {
   const candidates = [sportsResultSlide(team, now), sportsNextSlide(team, now)].filter(Boolean);
@@ -2432,9 +2433,8 @@ function sportsLeftLaneState() {
   const results = sportsResultSlidesSorted();
   const nexts = sportsNextSlidesSorted();
   const now = Date.now();
-  // Gauche = **fraîcheur réelle** (SPORTS_RECENT_RESULT_MS). Sans ce filtre, un
-  // lastGame d’avril (voile) tournait en août dès qu’un prochain ≤14 j rendait
-  // la CTA « chaude » — McGill 7/12 ICSA en pleine rentrée.
+  // Focus-group le-radar-sports-left-pool (gate D + exclude priorSeason) :
+  // résultats < 7 j seulement ; jamais le musée lastGame via « CTA chaude ».
   const recentResults = results.filter((s) => {
     if (s?.game?.priorSeason || s?.team?.lastGamePriorSeason) return false;
     const age = sportsResultAgeMs(s.game, now);
