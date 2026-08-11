@@ -1297,27 +1297,30 @@ const WEATHER_CITIES = [
   { id: 'gatineau', name: 'Gatineau', lat: 45.4765, lon: -75.7013 },
   { id: 'rouyn-noranda', name: 'Rouyn-Noranda', lat: 48.2366, lon: -79.0231 },
   // Abitibi–Témiscamingue : plusieurs pôles distincts plutôt qu'une seule ville.
-  { id: 'val-dor', name: 'Val-d’Or', region: 'Abitibi–Témiscamingue', lat: 48.1000, lon: -77.7800 },
+  // Slug MM = val-dor (pas val-d-or) — apostrophe typographique sinon mauvaise URL.
+  { id: 'val-dor', name: 'Val-d’Or', region: 'Abitibi–Témiscamingue', lat: 48.1000, lon: -77.7800, weatherSlug: 'val-dor' },
   { id: 'amos', name: 'Amos', region: 'Abitibi–Témiscamingue', lat: 48.5700, lon: -78.1200 },
   { id: 'la-sarre', name: 'La Sarre', region: 'Abitibi–Témiscamingue', lat: 48.8000, lon: -79.2000 },
   { id: 'ville-marie', name: 'Ville-Marie', region: 'Abitibi–Témiscamingue', lat: 47.3300, lon: -79.4300 },
   { id: 'levis', name: 'Lévis', lat: 46.8033, lon: -71.1779 },
-  // Vaudreuil–Soulanges est représentée par la ville centre sur MétéoMédia.
-  { id: 'vaudreuil-soulanges', name: 'Vaudreuil–Soulanges', region: 'Vaudreuil–Soulanges', lat: 45.4000, lon: -74.0300, weatherSlug: 'vaudreuil-dorion' },
+  // Ville centre (pas le MRC Vaudreuil–Soulanges) — slug MM = vaudreuil-dorion.
+  { id: 'vaudreuil-dorion', name: 'Vaudreuil-Dorion', compactName: 'V-Dorion', region: 'Vaudreuil–Soulanges', lat: 45.4000, lon: -74.0300, weatherSlug: 'vaudreuil-dorion' },
   { id: 'saint-ignace-de-loyola', name: 'Saint-Ignace-de-Loyola', region: 'Lanaudière', lat: 46.0800, lon: -73.0200 },
-  // Une collectivité représentative par nation : il n'existe pas de capitale
-  // unique pour les nations composées de plusieurs communautés.
-  { id: 'odanak', name: 'Odanak', nation: 'Abénakis', lat: 46.0723, lon: -72.8181, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/odanak-12/actuelle' },
-  { id: 'kitigan-zibi', name: 'Kitigan Zibi', nation: 'Anicinabeg', lat: 46.3825, lon: -75.9879, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/kitigan-zibi/actuelle' },
-  { id: 'manawan', name: 'Manawan', nation: 'Atikamekw', lat: 47.2203, lon: -74.3822, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/manouane/actuelle' },
-  { id: 'nemaska', name: 'Nemaska', nation: 'Eeyou', lat: 51.2022, lon: -76.1906, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/nemaska/actuelle' },
-  { id: 'wendake', name: 'Wendake', nation: 'Wendat', lat: 46.8550, lon: -71.3567, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/wendake/actuelle' },
-  { id: 'uashat', name: 'Uashat mak Mani-Utenam', nation: 'Innu', lat: 50.2300, lon: -66.3800, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/uashat/actuelle' },
+  // Collectivités (1 / nation) — noms d’usage préférés ; URL MM QC vérifiées.
+  // « manawan » sur MétéoMédia → réserve en Saskatchewan : lien = manouane.
+  { id: 'odanak', name: 'Odanak', nation: 'W8banaki · Abénakis', lat: 46.0723, lon: -72.8181, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/odanak-12/actuelle' },
+  { id: 'kitigan-zibi', name: 'Kitigan Zibi', nation: 'Anishinabeg', lat: 46.3825, lon: -75.9879, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/kitigan-zibi/actuelle' },
+  { id: 'manawan', name: 'Manawan', nation: 'Atikamekw', lat: 47.2203, lon: -74.3822, weatherSlug: 'manouane', weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/manouane/actuelle' },
+  { id: 'nemaska', name: 'Nemaska', nation: 'Eeyou Istchee', lat: 51.2022, lon: -76.1906, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/nemaska/actuelle' },
+  { id: 'wendake', name: 'Wendake', nation: 'Huron-Wendat', lat: 46.8550, lon: -71.3567, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/wendake/actuelle' },
+  // ITUM — Uashat 27 + Mani-Utenam (Maliotenam).
+  { id: 'uashat', name: 'Uashat mak Mani-Utenam', compactName: 'Uashat', nation: 'Innu', lat: 50.2300, lon: -66.3800, weatherSlug: 'uashat', weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/uashat/actuelle' },
   { id: 'kuujjuaq', name: 'Kuujjuaq', nation: 'Inuit · Nunavik', lat: 58.1000, lon: -68.4200, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/kuujjuaq/actuelle' },
-  { id: 'cacouna', name: 'Cacouna', nation: 'Wolastoqiyik', lat: 47.9204, lon: -69.5147, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/cacouna/actuelle' },
+  { id: 'cacouna', name: 'Cacouna', nation: 'Wolastoqiyik Wahsipekuk', lat: 47.9204, lon: -69.5147, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/cacouna/actuelle' },
   { id: 'gesgapegiag', name: 'Gesgapegiag', nation: 'Mi’gmaq', lat: 48.2125, lon: -65.9961, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/gesgapegiag-2/actuelle' },
-  { id: 'kahnawake', name: 'Kahnawà:ke', nation: 'Kanien’kehà:ka', lat: 45.4000, lon: -73.7500, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/kahnawake-14/actuelle' },
-  { id: 'kawawachikamach', name: 'Kawawachikamach', nation: 'Naskapi', lat: 55.3400, lon: -66.8500, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/kawawachikamach/actuelle' },
+  // Orthographe Kanien’kéha ; page MM = Kahnawake 14.
+  { id: 'kahnawake', name: 'Kahnawà:ke', nation: 'Kanien’kehá:ka', lat: 45.4000, lon: -73.7500, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/kahnawake-14/actuelle' },
+  { id: 'kawawachikamach', name: 'Kawawachikamach', compactName: 'Kawawa', nation: 'Naskapi', lat: 55.3400, lon: -66.8500, weatherUrl: 'https://www.meteomedia.com/fr/ville/ca/quebec/kawawachikamach/actuelle' },
 ];
 
 // Radar principal : variante remplie et animée. Le Pomo pointe explicitement
