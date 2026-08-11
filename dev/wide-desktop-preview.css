@@ -422,6 +422,54 @@ html[data-wide-preview="e"] {
 }
 
 /* ═══════════════════════════════════════════════════
+   Wide / super-wide — slogan wordmark sur UNE ligne
+   (prod bureau = 2 lignes lead / tag ; large écran = une seule)
+   ═══════════════════════════════════════════════════ */
+@media (min-width: 1280px) {
+  html[data-wide-preview="b"] .wordmark-full,
+  html[data-wide-preview="c"] .wordmark-full,
+  html[data-wide-preview="d"] .wordmark-full,
+  html[data-wide-preview="e"] .wordmark-full,
+  html[data-wide-preview="b"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full,
+  html[data-wide-preview="c"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full,
+  html[data-wide-preview="d"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full,
+  html[data-wide-preview="e"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35em;
+    max-width: none;
+    width: max-content;
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+
+  html[data-wide-preview="b"] .wordmark-full__lead,
+  html[data-wide-preview="c"] .wordmark-full__lead,
+  html[data-wide-preview="d"] .wordmark-full__lead,
+  html[data-wide-preview="e"] .wordmark-full__lead,
+  html[data-wide-preview="b"] .wordmark-full__tag,
+  html[data-wide-preview="c"] .wordmark-full__tag,
+  html[data-wide-preview="d"] .wordmark-full__tag,
+  html[data-wide-preview="e"] .wordmark-full__tag,
+  html[data-wide-preview="b"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full__lead,
+  html[data-wide-preview="c"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full__lead,
+  html[data-wide-preview="d"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full__lead,
+  html[data-wide-preview="e"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full__lead,
+  html[data-wide-preview="b"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full__tag,
+  html[data-wide-preview="c"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full__tag,
+  html[data-wide-preview="d"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full__tag,
+  html[data-wide-preview="e"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full__tag {
+    display: inline;
+    white-space: nowrap;
+    max-width: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════
    Wide / super-wide — AUCUN marquee texte
    (radio, météo, sports CTA, filtres sources)
    ═══════════════════════════════════════════════════ */
