@@ -3425,6 +3425,44 @@ function sportsDedupeMatchSlides(slides) {
 }
 
 /**
+ * Clés d’occupation d’une slide (clé face + dédup match miroir).
+ * Empêche « même match » à gauche et dans la CTA (faces QC opposées).
+ */
+function sportsSlideOccupyKeys(slide) {
+  const keys = new Set();
+  if (!slide) return keys;
+  if (slide.mode === 'cta' && slide.ctaFrom) {
+    if (slide.ctaFrom.key) keys.add(slide.ctaFrom.key);
+    const dk = sportsMatchDedupeKey(slide.ctaFrom);
+    if (dk && dk !== 'pair:|||') keys.add(dk);
+    return keys;
+  }
+  if (slide.key) keys.add(slide.key);
+  const dk = sportsMatchDedupeKey(slide);
+  if (dk && dk !== 'pair:|||') keys.add(dk);
+  return keys;
+}
+
+/** true si la slide est déjà représentée (même face ou miroir) dans `used`. */
+function sportsSlideIsUsed(slide, used) {
+  if (!slide || !used?.size) return false;
+  for (const k of sportsSlideOccupyKeys(slide)) {
+    if (used.has(k)) return true;
+  }
+  return false;
+}
+
+/** Union des clés occupées par les slots visibles (sauf exceptSlot). */
+function sportsVisibleOccupyKeys(exceptSlot = null) {
+  const used = new Set();
+  sportsVisible.forEach((s, i) => {
+    if (exceptSlot != null && i === exceptSlot) return;
+    for (const k of sportsSlideOccupyKeys(s)) used.add(k);
+  });
+  return used;
+}
+
+/**
  * Diversité sport souple après ordre chrono : évite 2× le même sport d’affilée
  * si une alternative existe dans les ~4 prochains slots — sans enterrer le
  * match le plus proche (verdict D, soft vs pure round-robin).
@@ -4290,6 +4328,11 @@ function paintSportsChip(slide, animate = false) {
  */
 function nextSportsSlide(usedKeys, opts = {}) {
   const used = usedKeys instanceof Set ? usedKeys : new Set(usedKeys || []);
+  // Toujours exclure le match actuellement en CTA (et son miroir).
+  const ctaSlot = sportsVisible.find((s) => s?.mode === 'cta');
+  if (ctaSlot) {
+    for (const k of sportsSlideOccupyKeys(ctaSlot)) used.add(k);
+  }
   const lane = sportsLeftLaneState();
   const avoidSport = String(opts.avoidSport || '').toLowerCase();
   const usedSports = opts.usedSports instanceof Set
@@ -4306,10 +4349,10 @@ function nextSportsSlide(usedKeys, opts = {}) {
     // forceMode 'info' ignoré : les slogans ne vont plus à gauche.
     if (!lane.pool.length) return null;
     const pool = lane.pool;
-    // Diversité sport puis curseur.
+    // Diversité sport puis curseur (pool déjà trié plus proche → plus loin).
     for (let i = 0; i < pool.length; i += 1) {
       const s = pool[(sportsLeftCursor + i) % pool.length];
-      if (used.has(s.key)) continue;
+      if (sportsSlideIsUsed(s, used)) continue;
       const sp = String(s.team?.sport || '').toLowerCase();
       if (sp && usedSports.has(sp) && usedSports.size < pool.length) continue;
       if (avoidSport && sp === avoidSport) continue;
@@ -4318,15 +4361,16 @@ function nextSportsSlide(usedKeys, opts = {}) {
     }
     for (let i = 0; i < pool.length; i += 1) {
       const s = pool[(sportsLeftCursor + i) % pool.length];
-      if (!used.has(s.key)) {
+      if (!sportsSlideIsUsed(s, used)) {
         sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
         return s;
       }
     }
-    // Tout déjà affiché : avancer quand même (rotation).
-    if (pool.length) {
-      const s = pool[sportsLeftCursor % pool.length];
-      sportsLeftCursor = (sportsLeftCursor + 1) % pool.length;
+    // Tout déjà affiché (hors CTA) : ne pas recycler le match CTA.
+    for (let i = 0; i < pool.length; i += 1) {
+      const s = pool[(sportsLeftCursor + i) % pool.length];
+      if (sportsSlideIsUsed(s, used)) continue;
+      sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
       return s;
     }
     return null;
@@ -4339,7 +4383,7 @@ function nextSportsSlide(usedKeys, opts = {}) {
   // 1) Sport pas encore dans le bandeau
   for (let i = 0; i < pool.length; i += 1) {
     const s = pool[(sportsLeftCursor + i) % pool.length];
-    if (used.has(s.key)) continue;
+    if (sportsSlideIsUsed(s, used)) continue;
     const sp = String(s.team?.sport || '').toLowerCase();
     if (sp && !usedSports.has(sp)) {
       sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
@@ -4350,7 +4394,7 @@ function nextSportsSlide(usedKeys, opts = {}) {
   if (avoidSport) {
     for (let i = 0; i < pool.length; i += 1) {
       const s = pool[(sportsLeftCursor + i) % pool.length];
-      if (used.has(s.key)) continue;
+      if (sportsSlideIsUsed(s, used)) continue;
       if (String(s.team?.sport || '').toLowerCase() !== avoidSport) {
         sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
         return s;
@@ -4360,15 +4404,13 @@ function nextSportsSlide(usedKeys, opts = {}) {
   // 3) Suivant non utilisé dans l’ordre de fraîcheur
   for (let i = 0; i < pool.length; i += 1) {
     const s = pool[(sportsLeftCursor + i) % pool.length];
-    if (!used.has(s.key)) {
+    if (!sportsSlideIsUsed(s, used)) {
       sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
       return s;
     }
   }
-  // 4) Rotation forcée (tous les slots déjà dans le bandeau)
-  const s = pool[sportsLeftCursor % pool.length];
-  sportsLeftCursor = (sportsLeftCursor + 1) % pool.length;
-  return s;
+  // 4) Plus de candidats hors CTA
+  return null;
 }
 
 /**
@@ -4378,31 +4420,38 @@ function nextSportsSlide(usedKeys, opts = {}) {
  * Saison → résultats ; hors saison → prochains matchs (pas de puces info).
  */
 function pickInitialSportsVisible(count) {
-  const pool = sportsCtaLabelPool();
-  sportsCtaLabelIndex = pool.length
-    ? Math.floor(Math.random() * pool.length)
-    : 0;
+  // CTA : toujours démarrer au plus récent / plus proche (pool déjà trié),
+  // puis cycle 0→1→2… — plus de Math.random() qui donnait un air aléatoire.
+  sportsCtaLabelIndex = 0;
   sportsLeftCursor = 0;
 
   // Dernier cran de largeur / fit : uniquement l’ancre « Au tableau ».
-  if (count <= 1) return [sportsCtaSlide(sportsCtaLabelIndex)];
+  if (count <= 1) return [sportsCtaSlide(0)];
 
+  // CTA d’abord (occupe le match lead), puis gauche sans ce match ni son miroir.
+  const cta = sportsCtaSlide(0);
   const contentCount = Math.max(0, count - 1);
   const picked = [];
-  const usedKeys = new Set();
+  const usedKeys = new Set(sportsSlideOccupyKeys(cta));
   const usedSports = new Set();
 
-  // Remplir la gauche avec le pool de la voie (résultats ou next) uniquement.
-  while (picked.length < contentCount) {
-    const slide = nextSportsSlide(usedKeys, { usedSports, avoidSport: '' });
-    if (!slide || slide.mode === 'info') break;
-    if (usedKeys.has(slide.key)) break;
-    picked.push(slide);
-    usedKeys.add(slide.key);
-    if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
+  // sportsVisible temporaire pour que nextSportsSlide voie la CTA.
+  const prevVisible = sportsVisible;
+  sportsVisible = [cta];
+  try {
+    while (picked.length < contentCount) {
+      const slide = nextSportsSlide(usedKeys, { usedSports, avoidSport: '' });
+      if (!slide || slide.mode === 'info') break;
+      if (sportsSlideIsUsed(slide, usedKeys)) break;
+      picked.push(slide);
+      for (const k of sportsSlideOccupyKeys(slide)) usedKeys.add(k);
+      if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
+    }
+  } finally {
+    sportsVisible = prevVisible;
   }
 
-  picked.push(sportsCtaSlide(sportsCtaLabelIndex));
+  picked.push(cta);
   return picked;
 }
 
@@ -4442,7 +4491,8 @@ function renderSportsStrip() {
   ) {
     sportsVisible = pickInitialSportsVisible(count);
   } else {
-    const used = new Set();
+    const ctaKeep = sportsCtaSlide(sportsCtaLabelIndex);
+    const used = new Set(sportsSlideOccupyKeys(ctaKeep));
     const nextVisible = [];
     for (let i = 0; i < contentSlots; i += 1) {
       const prev = sportsVisible[i];
@@ -4450,11 +4500,11 @@ function renderSportsStrip() {
         prev
         && prev.mode !== 'cta'
         && prev.mode !== 'info'
-        && !used.has(prev.key)
+        && !sportsSlideIsUsed(prev, used)
         && slideStillValid(prev)
       ) {
         nextVisible.push(prev);
-        used.add(prev.key);
+        for (const k of sportsSlideOccupyKeys(prev)) used.add(k);
       }
     }
     const usedSports = new Set(
@@ -4462,17 +4512,23 @@ function renderSportsStrip() {
         .map((s) => String(s.team?.sport || '').toLowerCase())
         .filter(Boolean),
     );
-    // Compléter avec scores / prochains matchs uniquement.
-    while (nextVisible.length < contentSlots) {
-      const slide = nextSportsSlide(used, { usedSports });
-      if (!slide || slide.mode === 'info') break;
-      if (used.has(slide.key)) break;
-      nextVisible.push(slide);
-      used.add(slide.key);
-      if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
+    // Compléter avec scores / prochains (hors match CTA).
+    const prevVis = sportsVisible;
+    sportsVisible = [ctaKeep, ...nextVisible];
+    try {
+      while (nextVisible.length < contentSlots) {
+        const slide = nextSportsSlide(used, { usedSports });
+        if (!slide || slide.mode === 'info') break;
+        if (sportsSlideIsUsed(slide, used)) break;
+        nextVisible.push(slide);
+        for (const k of sportsSlideOccupyKeys(slide)) used.add(k);
+        if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
+      }
+    } finally {
+      sportsVisible = prevVis;
     }
     // CTA toujours à droite (ou seule si contentSlots = 0).
-    nextVisible.push(sportsCtaSlide(sportsCtaLabelIndex));
+    nextVisible.push(ctaKeep);
     sportsVisible = nextVisible;
   }
 
@@ -4611,12 +4667,8 @@ function rotateSportsSlot(slot) {
   if (slot < 0 || slot >= n) return;
   const pinned = n >= 2;
   const rightSlot = n - 1;
-  const used = new Set(
-    sportsVisible
-      .filter((_, i) => i !== slot)
-      .map((s) => s.key)
-      .filter(Boolean),
-  );
+  // Occupation = clés faces + dédup match (miroir CTA ↔ gauche).
+  const used = sportsVisibleOccupyKeys(slot);
   const usedSports = new Set(
     sportsVisible
       .filter((_, i) => i !== slot && sportsVisible[i]?.mode !== 'cta')
@@ -4626,10 +4678,11 @@ function rotateSportsSlot(slot) {
 
   let replacement = null;
   if (!pinned || slot === rightSlot) {
-    // CTA fixe (seule ou à droite) : on ne fait tourner que le sous-texte.
+    // CTA fixe (seule ou à droite) : cycle séquentiel du pool (plus récent → suite).
     const poolLen = Math.max(1, sportsCtaLabelPool().length);
     sportsCtaLabelIndex = (sportsCtaLabelIndex + 1) % poolLen;
     replacement = sportsCtaSlide(sportsCtaLabelIndex);
+    // Si le nouveau match CTA était à gauche, purger ce slot gauche au prochain tick.
   } else {
     // Voie de gauche : résultats (saison) ou prochains matchs (hors saison).
     const cur = sportsVisible[slot];
@@ -4645,15 +4698,39 @@ function rotateSportsSlot(slot) {
   if (
     replacement.mode !== 'cta'
     && replacement.mode !== 'info'
-    && replacement.key === sportsVisible[slot]?.key
+    && sportsSlideIsUsed(replacement, used)
   ) {
     const avoid = String(sportsVisible[slot]?.team?.sport || '').toLowerCase();
     sportsLeftCursor = (sportsLeftCursor + 1) % Math.max(1, sportsLeftLaneState().pool.length || 1);
     replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid });
-    if (!replacement || replacement.key === sportsVisible[slot]?.key) return;
+    if (!replacement || sportsSlideIsUsed(replacement, used)) return;
   }
 
   sportsVisible[slot] = replacement;
+
+  // Après rotation CTA : si une puce gauche montre le même match, la remplacer.
+  if (replacement.mode === 'cta' && replacement.ctaFrom) {
+    const ctaKeys = sportsSlideOccupyKeys(replacement);
+    for (let i = 0; i < n; i += 1) {
+      if (i === slot) continue;
+      const left = sportsVisible[i];
+      if (!left || left.mode === 'cta') continue;
+      if (!sportsSlideIsUsed(left, ctaKeys)) continue;
+      const avoid = String(left.team?.sport || '').toLowerCase();
+      const leftUsed = sportsVisibleOccupyKeys(i);
+      const alt = nextSportsSlide(leftUsed, { usedSports, avoidSport: avoid });
+      if (alt && alt.mode !== 'cta' && !sportsSlideIsUsed(alt, leftUsed)) {
+        sportsVisible[i] = alt;
+        const chips = MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip');
+        const oldLeft = chips[i];
+        if (oldLeft) {
+          const painted = paintSportsChip(alt, !sportsReducedMotion);
+          oldLeft.replaceWith(painted);
+          window.requestAnimationFrame(() => refreshSportsChipScroll(painted));
+        }
+      }
+    }
+  }
   sportsNextSlot = (slot + 1) % n;
   const chips = MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip');
   const oldChip = chips[slot];
