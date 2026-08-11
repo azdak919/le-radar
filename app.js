@@ -1548,8 +1548,11 @@ function weatherBoardAvailWidth() {
 }
 
 /**
- * Lab grand écran (wide / super-wide) : assez de place pour lire le texte
- * sans marquee (radio, météo, sports CTA, filtres). Voir data-wide-preview.
+ * Lab grand écran (wide / super-wide) :
+ * - pas de marquee
+ * - pas de clip / nom compact : les conteneurs s’ajustent ; si ça ne rentre
+ *   pas, on retire une carte (fit), on n’ampute pas le texte.
+ * Voir data-wide-preview.
  */
 function isWideNoMarqueeMode() {
   try {
@@ -1564,11 +1567,11 @@ function isWideNoMarqueeMode() {
 function weatherBoardCount() {
   const width = weatherBoardAvailWidth();
   let count = 1;
-  // Lab wide / super-wide : plus de cartes, sans marquee sur les toponymes
-  // (compact si trop long). Super-wide (~shell 1760+) → 5 cartes.
+  // Lab wide : plus de cartes si le ruban est large ; le fit post-paint
+  // descend si les noms complets ne tiennent pas (pas de compact/marquee).
   if (isWideNoMarqueeMode()) {
-    if (width >= 980) count = 5;
-    else if (width >= 720) count = 4;
+    if (width >= 1100) count = 5;
+    else if (width >= 820) count = 4;
     else if (width >= 400) count = 3;
     else if (width >= 240) count = 2;
   } else {
