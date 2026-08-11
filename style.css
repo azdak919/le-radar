@@ -1016,6 +1016,28 @@ body {
   word-break: break-word;
   hyphens: none;
 }
+/*
+ * Bureau : 2ᵉ ligne volontaire — « réunis au même endroit » / « all in one place »
+ * seul (évite la coupure au milieu de « QUÉBEC, RÉUNIS… »).
+ */
+@media (min-width: 721px) {
+  .wordmark-full {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.12em;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+  .wordmark-full__lead,
+  .wordmark-full__tag {
+    display: block;
+    max-width: 100%;
+  }
+  .wordmark-full__tag {
+    letter-spacing: 0.14em;
+  }
+}
 @media (max-width: 480px) {
   .wordmark-logo { width: .72em; height: .72em; margin-right: .1em; }
 }
