@@ -210,16 +210,18 @@
  * Date / slogan / crédit : plaque locale semi-transparente (pas pill bouton).
  * Wordmark LE-RADAR hors plaque. Ombres légères en renfort.
  *
- * Date : largeur = date seule (heure en absolute dessous, comme hors photo).
- * Mettre date+heure en ligne élargissait la colonne et écrasait la météo
- * (is-too-narrow → display:none). Padding-bas réserve la ligne d’heure.
+ * Date : colonne (date puis heure) — largeur ≈ date seule (pas date+heure côte
+ * à côte, qui écrasait la météo). Heure en flux dans la plaque (pas absolute :
+ * l’absolute sortait souvent sous le fond arrondi).
  */
 .masthead:has(#bg-photo-layer.loaded) .masthead-date {
-  display: inline-block;
-  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.08em;
   max-width: 100%;
-  /* bas : place pour .masthead-time (top: 1.35em) dans la plaque */
-  padding: 0.28rem 0.55rem 1.45em;
+  padding: 0.26rem 0.55rem 0.3rem;
   border-radius: 0.55rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(12, 14, 18, 0.48);
@@ -235,19 +237,27 @@
     0 0 1px rgba(0, 0, 0, 0.4),
     0 1px 2px rgba(0, 0, 0, 0.45);
 }
-/* Heure sous la date, dans la plaque — ne compte pas dans la largeur colonne. */
+.masthead:has(#bg-photo-layer.loaded) .masthead-date #today-date {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* Heure dans la plaque, 2ᵉ ligne — static pour rester dans le fond soft glass. */
 .masthead:has(#bg-photo-layer.loaded) .masthead-date .masthead-time {
-  position: absolute;
-  top: 1.45em;
-  left: 0.55rem;
-  right: 0.55rem;
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
   display: block;
   margin: 0;
-  font-size: 0.8em;
+  padding: 0;
+  font-size: 0.78em;
   font-weight: 600;
   letter-spacing: 0.03em;
   opacity: 0.88;
-  line-height: 1.1;
+  line-height: 1.15;
 }
 [data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-date {
   background: rgba(8, 10, 14, 0.52);
