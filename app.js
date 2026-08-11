@@ -2983,9 +2983,11 @@ function sportsCtaActiveLabel(chip) {
 
 /**
  * Construit le contenu d’une couche d’accroche : marqueur temporel, texte
- * principal, sous-ligne. Le marqueur et la sous-ligne restent **hors** du
- * conteneur qui défile (garde-fou `marqueur-non-tronque`) ; seul
- * `.sports-chip__cta-text` porte le marquee.
+ * principal, sous-ligne.
+ * · Marqueur (PROCHAIN / Aujourd’hui…) : fixe, hors marquee
+ *   (garde-fou `marqueur-non-tronque`).
+ * · Titre (`.sports-chip__cta-text`) et sous-ligne (`.sports-chip__cta-sub-text`)
+ *   défilent L→R s’ils débordent — jamais d’ellipse figée sur l’info.
  */
 function fillSportsCtaLayer(layer, slide) {
   layer.replaceChildren();
@@ -3014,7 +3016,10 @@ function fillSportsCtaLayer(layer, slide) {
   if (sub) {
     const el = document.createElement('span');
     el.className = 'sports-chip__cta-sub';
-    el.textContent = sub;
+    const subText = document.createElement('span');
+    subText.className = 'sports-chip__cta-sub-text';
+    subText.textContent = sub;
+    el.append(subText);
     layer.append(el);
   }
   return layer;
@@ -3083,16 +3088,18 @@ function rollSportsCtaLabel(chip, slide) {
   if (sportsReducedMotion) {
     fillSportsCtaLayer(front, slide);
     front.dataset.ctaSig = sportsCtaSignature(slide);
-    chip.classList.remove('is-overflowing');
+    chip.classList.remove('is-overflowing', 'is-sub-overflowing');
     chip.style.removeProperty('--sports-scroll');
+    chip.style.removeProperty('--sports-scroll-sub');
     refreshSportsChipScroll(chip);
     return;
   }
 
   // Couper le marquee pendant le roulement : les deux transforms vivent sur des
   // nœuds différents, mais mesurer une couche en mouvement n’a pas de sens.
-  chip.classList.remove('is-overflowing');
+  chip.classList.remove('is-overflowing', 'is-sub-overflowing');
   chip.style.removeProperty('--sports-scroll');
+  chip.style.removeProperty('--sports-scroll-sub');
 
   const back = document.createElement('span');
   back.className = 'sports-chip__cta-label is-rolling-in';
@@ -3169,7 +3176,45 @@ function bindSportsCtaPause(chip) {
 }
 
 /**
- * Défilement L→R du texte trop long (scores + accroche CTA).
+ * Mesure un couple viewport/inner : overflow en px (0 si tout tient).
+ * Sans retirer les classes d’animation (évite de relancer le marquee).
+ */
+function sportsMeasureOverflow(viewport, inner, hadOverflow) {
+  if (!viewport || !inner) return 0;
+  if (!hadOverflow) inner.style.maxWidth = 'none';
+  const overflow = Math.max(0, inner.scrollWidth - viewport.clientWidth);
+  if (!hadOverflow) inner.style.maxWidth = '';
+  return overflow;
+}
+
+/**
+ * Applique / retire un marquee sur une puce (classe + --sports-scroll*).
+ * Ne relance PAS l’animation si le décalage est inchangé.
+ */
+function sportsApplyScrollState(chip, {
+  flag,
+  prop,
+  overflow,
+} = {}) {
+  if (!chip || !flag || !prop) return;
+  const had = chip.classList.contains(flag);
+  const needs = overflow > 2;
+  if (!needs) {
+    if (had) {
+      chip.classList.remove(flag);
+      chip.style.removeProperty(prop);
+    }
+    return;
+  }
+  const next = `${overflow}px`;
+  const prev = (chip.style.getPropertyValue(prop) || '').trim();
+  if (had && prev === next) return;
+  chip.style.setProperty(prop, next);
+  if (!had) chip.classList.add(flag);
+}
+
+/**
+ * Défilement L→R du texte trop long (scores + accroche CTA titre + sous-ligne).
  * @param {Element|null} [chipOrRoot] une puce, le bandeau, ou null (= tout le bandeau).
  * Ne relance PAS l’animation CSS des puces déjà stables (évite le « tous
  * se rafraîchissent » quand une seule change).
@@ -3187,20 +3232,10 @@ function refreshSportsChipScroll(chipOrRoot = null) {
     // texte (translateX). Deux nœuds distincts, sinon les transforms se
     // marchent dessus — c’est ce qui rendait l’ancien fondu saccadé.
     const layer = isCta ? sportsCtaActiveLabel(chip) : null;
-    const viewport = isCta
-      ? layer?.querySelector('.sports-chip__cta-line')
-      : chip.querySelector('.sports-chip__line');
-    const inner = isCta
-      ? sportsCtaScrollTarget(layer)
-      : chip.querySelector('.sports-chip__line-inner');
-    if (!viewport || !inner) {
-      chip.classList.remove('is-overflowing');
-      chip.style.removeProperty('--sports-scroll');
-      return;
-    }
     // Pendant un roulement : ne pas mesurer une couche en mouvement.
     if (
       isCta
+      && layer
       && (
         layer.classList.contains('is-rolling-in')
         || chip.querySelector('.sports-chip__cta-label.is-rolling-out')
@@ -3208,25 +3243,57 @@ function refreshSportsChipScroll(chipOrRoot = null) {
     ) {
       return;
     }
-    // Mesure sans retirer is-overflowing (sinon l’animation CSS redémarre).
-    const hadOverflow = chip.classList.contains('is-overflowing');
-    if (!hadOverflow) inner.style.maxWidth = 'none';
-    const overflow = Math.max(0, inner.scrollWidth - viewport.clientWidth);
-    if (!hadOverflow) inner.style.maxWidth = '';
-    const needsScroll = overflow > 2;
-    if (!needsScroll) {
-      if (hadOverflow) {
-        chip.classList.remove('is-overflowing');
+
+    if (!isCta) {
+      const viewport = chip.querySelector('.sports-chip__line');
+      const inner = chip.querySelector('.sports-chip__line-inner');
+      if (!viewport || !inner) {
+        chip.classList.remove('is-overflowing', 'is-sub-overflowing');
         chip.style.removeProperty('--sports-scroll');
+        chip.style.removeProperty('--sports-scroll-sub');
+        return;
       }
+      const hadOverflow = chip.classList.contains('is-overflowing');
+      const overflow = sportsMeasureOverflow(viewport, inner, hadOverflow);
+      sportsApplyScrollState(chip, {
+        flag: 'is-overflowing',
+        prop: '--sports-scroll',
+        overflow,
+      });
       return;
     }
-    const next = `${overflow}px`;
-    const prev = (chip.style.getPropertyValue('--sports-scroll') || '').trim();
-    // Même décalage déjà en cours : laisser l’aller-retour continuer.
-    if (hadOverflow && prev === next) return;
-    chip.style.setProperty('--sports-scroll', next);
-    if (!hadOverflow) chip.classList.add('is-overflowing');
+
+    // ── CTA : titre + sous-ligne mesurés séparément ──
+    const titleView = layer?.querySelector('.sports-chip__cta-line');
+    const titleInner = sportsCtaScrollTarget(layer);
+    const subView = layer?.querySelector('.sports-chip__cta-sub');
+    const subInner = layer?.querySelector('.sports-chip__cta-sub-text');
+
+    if (!titleView || !titleInner) {
+      chip.classList.remove('is-overflowing', 'is-sub-overflowing');
+      chip.style.removeProperty('--sports-scroll');
+      chip.style.removeProperty('--sports-scroll-sub');
+      return;
+    }
+
+    const hadTitle = chip.classList.contains('is-overflowing');
+    const hadSub = chip.classList.contains('is-sub-overflowing');
+    const titleOverflow = sportsMeasureOverflow(titleView, titleInner, hadTitle);
+    // Sous-ligne : viewport = .cta-sub, contenu = .cta-sub-text
+    const subOverflow = (subView && subInner)
+      ? sportsMeasureOverflow(subView, subInner, hadSub)
+      : 0;
+
+    sportsApplyScrollState(chip, {
+      flag: 'is-overflowing',
+      prop: '--sports-scroll',
+      overflow: titleOverflow,
+    });
+    sportsApplyScrollState(chip, {
+      flag: 'is-sub-overflowing',
+      prop: '--sports-scroll-sub',
+      overflow: subOverflow,
+    });
   });
 }
 
@@ -3676,20 +3743,36 @@ function sportsLabelReadingMs(text) {
  * True si le libellé de la puce déborde (marquee nécessaire).
  * Mesure réelle scrollWidth — ne dépend pas seulement de la classe
  * (qui peut arriver un frame après le schedule).
+ * CTA : titre **ou** sous-ligne (date · compétition · MAJ).
  */
 function sportsChipNeedsMarquee(chip) {
   if (!chip || sportsReducedMotion) return false;
-  const viewport = chip.querySelector('.sports-chip__line');
-  const inner = chip.classList.contains('sports-chip--cta')
-    ? sportsCtaActiveLabel(chip)
-    : chip.querySelector('.sports-chip__line-inner');
-  if (!viewport || !inner) return false;
-  if (chip.classList.contains('is-overflowing')) return true;
-  const prev = inner.style.maxWidth;
-  inner.style.maxWidth = 'none';
-  const overflow = Math.max(0, inner.scrollWidth - viewport.clientWidth);
-  inner.style.maxWidth = prev;
-  return overflow > 2;
+  if (
+    chip.classList.contains('is-overflowing')
+    || chip.classList.contains('is-sub-overflowing')
+  ) {
+    return true;
+  }
+  const isCta = chip.classList.contains('sports-chip--cta');
+  if (!isCta) {
+    const viewport = chip.querySelector('.sports-chip__line');
+    const inner = chip.querySelector('.sports-chip__line-inner');
+    if (!viewport || !inner) return false;
+    return sportsMeasureOverflow(viewport, inner, false) > 2;
+  }
+  const layer = sportsCtaActiveLabel(chip);
+  if (!layer) return false;
+  const titleView = layer.querySelector('.sports-chip__cta-line');
+  const titleInner = sportsCtaScrollTarget(layer);
+  if (titleView && titleInner && sportsMeasureOverflow(titleView, titleInner, false) > 2) {
+    return true;
+  }
+  const subView = layer.querySelector('.sports-chip__cta-sub');
+  const subInner = layer.querySelector('.sports-chip__cta-sub-text');
+  if (subView && subInner && sportsMeasureOverflow(subView, subInner, false) > 2) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -3705,7 +3788,12 @@ function sportsSlotDwellMs(slot) {
   const labelEl = isCta
     ? sportsCtaScrollTarget(sportsCtaActiveLabel(chip))
     : chip?.querySelector('.sports-chip__line-inner');
-  const label = labelEl?.textContent || '';
+  const subEl = isCta
+    ? sportsCtaActiveLabel(chip)?.querySelector('.sports-chip__cta-sub-text')
+    : null;
+  const label = [labelEl?.textContent || '', subEl?.textContent || '']
+    .filter(Boolean)
+    .join(' · ');
   const readMs = sportsLabelReadingMs(label);
   if (sportsReducedMotion) return readMs;
   if (!chip) return SPORTS_READ_MIN_MS;
