@@ -129,3 +129,82 @@ test('mât : la date longue se compacte au lieu de passer sous les icônes', asy
 
   expect(pageErrors).toEqual([]);
 });
+
+/**
+ * CTA SPORTS : texte trop long → marquee L→R (aller-retour), pas d’ellipse figée.
+ *
+ * Cas réel signalé : titre court (« Sherbrooke reçoit Granby ») + sous-ligne
+ * longue (date · compétition · mis à jour…) → l’ancienne règle nowrap sur
+ * toute la .cta-label collapsait head+sub en une ligne « mis à j… » sans
+ * jamais activer is-overflowing / is-sub-overflowing.
+ */
+test('CTA sports : sous-ligne longue défile au lieu d’une ellipse figée', async ({ page }) => {
+  const pageErrors = [];
+  page.on('pageerror', (error) => pageErrors.push(error.message));
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const strip = page.locator('#masthead-sports-strip');
+  await expect(strip).toBeVisible({ timeout: 8000 });
+  const cta = strip.locator('.sports-chip--cta');
+  await expect(cta).toBeVisible({ timeout: 8000 });
+
+  // Forcer une sous-ligne qui déborde clairement, titre court (cas du bug).
+  const ready = await page.evaluate(() => {
+    const chip = document.querySelector('.sports-chip--cta');
+    const layer = chip?.querySelector('.sports-chip__cta-label.is-front')
+      || chip?.querySelector('.sports-chip__cta-label');
+    if (!chip || !layer) return { ok: false, reason: 'no-cta' };
+    const text = layer.querySelector('.sports-chip__cta-text');
+    let subView = layer.querySelector('.sports-chip__cta-sub');
+    let subInner = layer.querySelector('.sports-chip__cta-sub-text');
+    if (text) text.textContent = '⚽ Sherbrooke reçoit Granby';
+    if (!subView) {
+      subView = document.createElement('span');
+      subView.className = 'sports-chip__cta-sub';
+      layer.append(subView);
+    }
+    if (!subInner) {
+      subView.replaceChildren();
+      subInner = document.createElement('span');
+      subInner.className = 'sports-chip__cta-sub-text';
+      subView.append(subInner);
+    }
+    subInner.textContent = 'ven. 28 août, 20 h 30 · Soccer collégial masculin D2 · mis à jour à 21 h 56';
+    // Mesure via le chemin app (script global, non module).
+    if (typeof refreshSportsChipScroll !== 'function') {
+      return { ok: false, reason: 'no-refresh' };
+    }
+    refreshSportsChipScroll(chip);
+    return {
+      ok: true,
+      isSub: chip.classList.contains('is-sub-overflowing'),
+      scrollSub: chip.style.getPropertyValue('--sports-scroll-sub'),
+      hasSubText: !!layer.querySelector('.sports-chip__cta-sub-text'),
+    };
+  });
+  expect(ready.ok, `préparation CTA : ${ready.reason || 'ok'}`).toBe(true);
+  expect(ready.hasSubText, 'markup .sports-chip__cta-sub-text requis').toBe(true);
+  expect(ready.isSub, 'refreshSportsChipScroll doit activer is-sub-overflowing').toBe(true);
+  expect(parseFloat(ready.scrollSub), 'décalage marquee sous-ligne').toBeGreaterThan(2);
+
+  await expect(cta).toHaveClass(/is-sub-overflowing/);
+  const subText = cta.locator('.sports-chip__cta-sub-text');
+  await expect(subText).toBeVisible();
+
+  const anim = await subText.evaluate((el) => getComputedStyle(el).animationName);
+  expect(anim, 'sous-ligne doit animer sports-chip-scroll-sub').toMatch(/sports-chip-scroll-sub/);
+
+  // Le transform doit bouger (hold initial ~32 % de 8,5 s ≈ 2,7 s — on attend assez).
+  const left0 = await subText.evaluate((el) => el.getBoundingClientRect().left);
+  await page.waitForTimeout(3200);
+  const left1 = await subText.evaluate((el) => el.getBoundingClientRect().left);
+  expect(left1, 'le texte doit avoir glissé vers la gauche (L→R de lecture)').toBeLessThan(left0 - 1);
+
+  // Pas d’ellipse figée sur le texte qui défile.
+  const textOverflow = await subText.evaluate((el) => getComputedStyle(el).textOverflow);
+  expect(textOverflow).toBe('clip');
+
+  expect(pageErrors).toEqual([]);
+});
