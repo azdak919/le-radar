@@ -182,15 +182,15 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
     0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 22%, transparent);
 }
-/* Puces scores 2 lignes : noms en clair (haut) + date (bas), largeur flex.
- * Marquee plus lent (8 s) : noms + événements longs (voile/place). */
+/* Puces scores 2 lignes : noms (haut) + date/compétition (bas).
+ * Focus-group le-radar-sports-weather-fit A : jamais de marquee sur les scores
+ * — si le texte déborde, le JS retire une puce (fit). CTA garde le marquee. */
 .masthead-sports-strip .sports-chip--match {
   white-space: normal;
   align-items: center;
   min-height: 44px;
   padding-top: 5px;
   padding-bottom: 5px;
-  --sports-scroll-duration: 8s;
 }
 .masthead-sports-strip .sports-chip__body {
   flex: 1 1 auto;
@@ -324,8 +324,8 @@ body {
   white-space: nowrap;
   max-width: 100%;
   overflow: hidden;
-  /* Jamais d’ellipsis (…) sur le bandeau sports : le marquee L→R lit le
-   * texte entier. Au repos / avant mesure : clip net, pas trois points. */
+  /* Jamais d’ellipsis (…) : scores tiennent entiers (fit −1 puce) ;
+   * CTA peut marquee. Au repos : clip net, pas trois points. */
   text-overflow: clip;
   vertical-align: middle;
 }
@@ -379,26 +379,10 @@ body {
   --sports-scroll-delay: 1.6s;
 }
 /*
- * Marquee scores (gauche) — **mêmes règles que la CTA** :
- * overflow mesuré → is-overflowing / is-sub-overflowing → animation L→R
- * (sports-chip-scroll / sports-chip-scroll-sub, 5.5s × 2 alternate).
- * Jamais text-overflow:ellipsis. Au repos : clip net, pas de « … ».
- * Pas de 2ᵉ cycle : le dwell JS change la carte après le retour.
+ * Focus-group A : marquee **interdit** sur puces scores (.sports-chip--match).
+ * Les sélecteurs is-overflowing / is-sub-overflowing + keyframes restent pour
+ * la CTA seule (ci-dessous). Scores : fit JS (−1 puce) si overflow texte.
  */
-.masthead-sports-strip .sports-chip:not(.sports-chip--cta).is-overflowing .sports-chip__line-inner {
-  max-width: none;
-  overflow: visible;
-  text-overflow: clip;
-  animation: sports-chip-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) 2 alternate both;
-  will-change: transform;
-}
-.masthead-sports-strip .sports-chip:not(.sports-chip--cta).is-sub-overflowing .sports-chip__sub-text {
-  max-width: none;
-  overflow: visible;
-  text-overflow: clip;
-  animation: sports-chip-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) 2 alternate both;
-  will-change: transform;
-}
 @keyframes sports-chip-scroll {
   /* Holds plus longs au début / fin pour lire l’info au calme. */
   0%, 18% { transform: translateX(0); }

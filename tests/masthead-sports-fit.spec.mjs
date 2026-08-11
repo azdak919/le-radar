@@ -48,19 +48,22 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
     await expect(strip.locator('.sports-chip').last()).toHaveClass(/sports-chip--cta/);
   }
 
-  // Parité météo : puces SCORE ≤ cartes météo (CTA hors plafond).
-  // ~420–480 px : météo souvent à 2 cartes → max 2 scores + CTA = 3 chips.
-  const parity = await countAt(480);
-  const weatherActive = await page.locator('.masthead-weather__city.is-active').count();
-  if (weatherActive > 0) {
-    const scoreChips = await strip.locator('.sports-chip:not(.sports-chip--cta)').count();
-    expect(scoreChips).toBeLessThanOrEqual(weatherActive);
-    // total = scores + (CTA si ≥ 1)
-    expect(parity).toBeLessThanOrEqual(weatherActive + 1);
+  // Focus-group A : météo ⊥ sports — pas de plafond weatherN.
+  // ~480–520 px : largeur seule réduit le nombre de puces (≤ mid, ≥ 1).
+  const midNarrow = await countAt(480);
+  expect(midNarrow).toBeLessThanOrEqual(mid);
+  expect(midNarrow).toBeGreaterThanOrEqual(1);
+  // Puces scores : titre + sous-ligne entiers (pas de marquee is-overflowing).
+  const matchChips = strip.locator('.sports-chip:not(.sports-chip--cta)');
+  const matchCount = await matchChips.count();
+  for (let i = 0; i < matchCount; i += 1) {
+    const chip = matchChips.nth(i);
+    await expect(chip).not.toHaveClass(/is-overflowing/);
+    await expect(chip).not.toHaveClass(/is-sub-overflowing/);
   }
 
   const narrow = await countAt(520);
-  expect(narrow).toBeLessThanOrEqual(Math.max(mid, parity));
+  expect(narrow).toBeLessThanOrEqual(Math.max(mid, midNarrow));
   expect(narrow).toBeGreaterThanOrEqual(1);
 
   // Téléphone / très étroit : il ne reste que l’ancre « SPORTS ».
@@ -226,13 +229,19 @@ test('CTA sports : titre long défile, jamais d’ellipsis …', async ({ page }
   const cta = strip.locator('.sports-chip--cta');
   await expect(cta).toBeVisible({ timeout: 8000 });
 
-  const longTitle = '⚽ Montmorency reçoit Bois-de-Boulogne';
+  // Titre volontairement long + largeur CTA bornée (FG A : moins de scores
+  // élargit la CTA — sans force flex, le libellé tenait parfois sans marquee).
+  const longTitle = '⚽ Collège Montmorency reçoit Bois-de-Boulogne Collégial';
   const ready = await page.evaluate((title) => {
     const chip = document.querySelector('.sports-chip--cta');
     const layer = chip?.querySelector('.sports-chip__cta-label.is-front')
       || chip?.querySelector('.sports-chip__cta-label');
     const text = layer?.querySelector('.sports-chip__cta-text');
     if (!chip || !text) return { ok: false, reason: 'no-cta-text' };
+    // Borne la fenêtre de titre pour forcer un overflow mesurable.
+    chip.style.flex = '0 0 220px';
+    chip.style.maxWidth = '220px';
+    chip.style.width = '220px';
     text.textContent = title;
     if (typeof refreshSportsChipScroll !== 'function') {
       return { ok: false, reason: 'no-refresh' };

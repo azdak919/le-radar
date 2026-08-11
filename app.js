@@ -383,6 +383,9 @@ const MASTHEAD_DATE_FORMATS = [
   { day: 'numeric', month: 'long', year: 'numeric' },
   { day: 'numeric', month: 'short', year: 'numeric' },
   { dateStyle: 'short' },
+  // Repli mobile étroit (date+heure 1 ligne + icônes) : encore plus court.
+  { month: 'short', day: 'numeric', year: '2-digit' },
+  { month: 'numeric', day: 'numeric', year: '2-digit' },
 ];
 
 const MASTHEAD_WEATHER = document.getElementById('masthead-weather');
@@ -596,6 +599,15 @@ async function init() {
   renderTodayDate();
   syncSeoScheduleNow();
   initSeoScheduleHashScroll();
+  // Photo mât : quand `.loaded` arrive, date+heure passent en 1 ligne (CSS).
+  // Rejouer la cascade — sinon le format long choisi hors photo reste et ellipse.
+  const bgPhotoLayer = document.getElementById('bg-photo-layer');
+  if (bgPhotoLayer && typeof MutationObserver !== 'undefined') {
+    const photoDateMo = new MutationObserver(() => {
+      if (bgPhotoLayer.classList.contains('loaded')) renderTodayDate();
+    });
+    photoDateMo.observe(bgPhotoLayer, { attributes: true, attributeFilter: ['class'] });
+  }
   // L'heure du mât est décorative, mais doit rester juste sans recharger la page.
   window.setInterval(() => {
     renderTodayDate();
@@ -1106,39 +1118,36 @@ function renderTodayDate() {
   // `fr-CA`, /en/ affichait « lundi 3 août 2026 » sous un titre anglais.
   const locale = mastheadLocale();
   const isEnglish = locale.toLowerCase().startsWith('en');
+  // Heure d’abord : sur photo date+heure partagent une puce flex. Si la
+  // cascade date tourne avant l’heure, #today-date prend toute la largeur,
+  // le format long « tient », puis l’heure arrive et l’ellipse coupe la date.
+  // 24 h compacte (FR et EN) : « 2:15 p.m. » volait trop de place à la date
+  // sur mobile (ellipse même sur le format court).
+  if (TODAY_TIME) {
+    TODAY_TIME.dateTime = now.toTimeString().slice(0, 5);
+    TODAY_TIME.textContent = now.toLocaleTimeString(isEnglish ? 'en-CA' : 'fr-CA', {
+      hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+    }).replace(/\s*h\s*/u, ':');
+  }
   if (TODAY_DATE) {
     for (const options of MASTHEAD_DATE_FORMATS) {
       TODAY_DATE.textContent = now.toLocaleDateString(locale, options);
-      // Soft glass date+heure 1 ligne : #today-date a un max-width — la cascade
-      // raccourcit le libellé pour laisser de l’air à la météo.
-      if (TODAY_DATE.scrollWidth <= TODAY_DATE.clientWidth) break;
+      // Date+heure 1 ligne : raccourcir tant que #today-date déborde (pas d’ellipse).
+      if (TODAY_DATE.scrollWidth <= TODAY_DATE.clientWidth + 0.5) break;
     }
   }
-  if (TODAY_TIME) {
-    TODAY_TIME.dateTime = now.toTimeString().slice(0, 5);
-    TODAY_TIME.textContent = isEnglish
-      ? now.toLocaleTimeString('en-CA', { hour: 'numeric', minute: '2-digit', hour12: true })
-      : now.toLocaleTimeString('fr-CA', {
-        hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
-      }).replace(/\s*h\s*/u, ':');
-  }
-  // Si le libellé date change (format / jour), largeur météo peut bouger →
-  // re-fit météo + resync scores à gauche de la CTA (parité weatherN).
+  // Si le libellé date change (format / jour), largeur météo peut bouger.
+  // Focus-group le-radar-sports-weather-fit A : sports indépendants de la météo
+  // (plus de resync parité). On ne re-fit que le bandeau météo.
   const dateKey = TODAY_DATE?.textContent || '';
   const dateChanged = dateKey !== mastheadDateLabelKey;
   mastheadDateLabelKey = dateKey;
   // Différé : `init()` appelle renderTodayDate() au milieu du fichier, avant
-  // les `let` météo/sports (mastheadWeatherResizeFrame, sportsWeatherParityRaf…).
-  // Un appel synchrone → TDZ → « init failed » et météo/sports morts. setTimeout(0)
-  // laisse finir le top-level, puis les fonctions (hoistées) touchent un état vivant.
-  window.setTimeout(() => {
-    if (dateChanged) scheduleMastheadWeatherLayout();
-    queueSportsWeatherParitySync();
-    if (dateChanged) {
-      window.setTimeout(() => queueSportsWeatherParitySync(), 200);
-      window.setTimeout(() => queueSportsWeatherParitySync(), 500);
-    }
-  }, 0);
+  // les `let` météo (mastheadWeatherResizeFrame…). setTimeout(0) laisse finir
+  // le top-level pour éviter un TDZ.
+  if (dateChanged) {
+    window.setTimeout(() => scheduleMastheadWeatherLayout(), 0);
+  }
 }
 
 /** Heure et jour à Québec, même si la personne consulte le site ailleurs. */
@@ -1488,12 +1497,11 @@ function buildMastheadWeatherBoard() {
 function weatherBoardCount() {
   const width = MASTHEAD_WEATHER?.querySelector('.masthead-weather__board')?.clientWidth || 0;
   let count = 1;
-  // Seuils un cran plus bas : date+heure 1 ligne réduit la zone météo ;
-  // on préfère garder 3 cartes (marquee sur secondaires) plutôt qu’amputer tôt.
-  if (width >= 520) count = 4;
-  else if (width >= 400) count = 3;
-  // Sur téléphone, la première carte reste exclusivement Montréal/Québec.
-  // La seconde disparaît avant que cette carte principale doive défiler.
+  // Max 3 : ancre MTL/QC + 2 secondaires (plus de 4e carte à droite).
+  // Place libérée → date complète. Sports indépendants (FG weather-fit A).
+  if (width >= 360) count = 3;
+  // Sur téléphone / colonne étroite : 2 cartes (ancre + 1 secondaire).
+  // La seconde disparaît avant que la carte principale doive défiler.
   else if (width >= 240) count = 2;
   return mastheadWeatherFitCount === null ? count : Math.min(count, mastheadWeatherFitCount);
 }
@@ -1593,8 +1601,7 @@ function showMastheadWeatherBoard() {
     if (city) city.style.order = String(slot);
     city?.setAttribute('aria-hidden', 'false');
   });
-  // Plafond sports = cartes météo (CTA hors compte) : resync si le nombre a changé.
-  queueSportsWeatherParitySync();
+  // Focus-group A : sports indépendants — pas de resync parité ici.
   refreshWeatherNameScroll();
   const primary = MASTHEAD_WEATHER.querySelector('.masthead-weather__city.is-active[data-weather-city="montreal"], .masthead-weather__city.is-active[data-weather-city="quebec"]');
   const primaryViewport = primary?.querySelector('.masthead-weather__name');
@@ -1788,10 +1795,6 @@ function renderMastheadWeather(entries) {
   MASTHEAD_WEATHER.classList.remove('hidden');
   syncMastheadShuffleButton();
   startMastheadWeatherBoard();
-  // Sports peut s’être peint avant la météo (cap scores = 0) : resync parité.
-  queueSportsWeatherParitySync();
-  window.setTimeout(() => queueSportsWeatherParitySync(), 400);
-  window.setTimeout(() => queueSportsWeatherParitySync(), 1200);
 }
 
 window.addEventListener('radar:translate-mode', refreshMastheadWeatherLinks);
@@ -2366,50 +2369,17 @@ function sportsStripAvailWidth() {
 }
 
 /**
- * Cartes météo pour plafonner les puces SCORE à **gauche** de la CTA.
- * Priorité : villes `.is-active` peintes → slots → lastBoardCount →
- * estimé weatherBoardCount si le bandeau est déjà visible.
- * (Date+heure 1 ligne peut réduire weatherN : les scores de gauche suivent.)
- */
-function sportsWeatherCardCount() {
-  if (!MASTHEAD_WEATHER) return 0;
-  if (MASTHEAD_WEATHER.classList.contains('is-too-narrow')
-    && !MASTHEAD_WEATHER.classList.contains('masthead-weather--docked')) {
-    return 0;
-  }
-  const active = MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city.is-active').length;
-  if (active > 0) return active;
-  if (mastheadWeatherSlots.length > 0) return mastheadWeatherSlots.length;
-  if (mastheadWeatherLastBoardCount > 0) return mastheadWeatherLastBoardCount;
-  // Bandeau déjà affiché mais slots vides : même barème de largeur.
-  if (!MASTHEAD_WEATHER.classList.contains('hidden')) {
-    try {
-      if (typeof weatherBoardCount === 'function') {
-        const est = weatherBoardCount();
-        if (est > 0) return est;
-      }
-    } catch { /* ignore */ }
-  }
-  return 0;
-}
-
-/**
- * Plafond depuis la largeur + parité météo (avant mesure post-paint).
- * Max desktop : 3 scores + CTA = 4. Minimum : 1 (CTA seule).
- *
- * Parité **gauche** : nombre de puces SCORE = min(cap largeur, cartes météo).
- * La CTA « SPORTS » (droite) est hors plafond météo.
- * Ex. météo amputée à 2 (date 1 ligne) → max 2 scores + CTA, pas 3 scores.
+ * Focus-group le-radar-sports-weather-fit A :
+ * Plafond sports = largeur seule (max 3 scores + CTA). Météo indépendante.
+ * 4 = 3 scores + CTA ; 3 = 2+CTA ; 2 = 1+CTA ; 1 = CTA seule.
  */
 function sportsBoardCountBase() {
   const avail = sportsStripAvailWidth();
   const gap = 6;
-  // Légèrement plus compact : caler le même nombre de scores que de météo
-  // quand la zone météo a été réduite par la date 1 ligne.
-  const minScore = 140;
+  // ~11–14 rem utiles / puce score + CTA ~9–11 rem (guidance FG A).
+  const minScore = 150;
   const minCta = 168;
 
-  // 4 = 3 scores + CTA ; 3 = 2+CTA ; 2 = 1+CTA ; 1 = CTA seule
   let n = 1;
   for (let tryN = 4; tryN >= 2; tryN -= 1) {
     const scores = tryN - 1;
@@ -2419,60 +2389,16 @@ function sportsBoardCountBase() {
       break;
     }
   }
-
-  // Parité météo : scores de gauche ≤ cartes météo (CTA exclue).
-  const weatherN = sportsWeatherCardCount();
-  if (weatherN > 0 && n >= 2) {
-    const maxTotal = weatherN + 1; // scores + CTA
-    n = Math.min(n, maxTotal);
-  }
   return n;
 }
 
 /**
- * Nombre de chips cible : largeur × parité météo × contrainte de fit mesurée.
- * On retire une carte à la fois en rétrécissant (4 → 3 → 2 → 1 = SPORTS).
- * Cible visuelle : #scores gauche ≈ #cartes météo ; CTA toujours à droite.
+ * Nombre de chips cible : largeur × fit post-paint (overflow texte = −1).
+ * Jamais de plafond météo (A). On descend 4 → 3 → 2 → 1 (CTA seule).
  */
 function sportsBoardCount() {
   const base = sportsBoardCountBase();
-  // Le fit mesuré ne doit pas *outrepasser* le plafond météo (scores ≤ weather).
-  let n = sportsFitCount === null ? base : Math.min(base, sportsFitCount);
-  const weatherN = sportsWeatherCardCount();
-  if (weatherN > 0 && n >= 2) {
-    n = Math.min(n, weatherN + 1);
-  }
-  return n;
-}
-
-/**
- * Quand la météo change de nombre de cartes (ex. date 1 ligne ampute une
- * carte), resynchroniser le bandeau scores : même nombre de puces à gauche
- * de la CTA que de cartes météo actives.
- */
-let sportsWeatherParityRaf = 0;
-function queueSportsWeatherParitySync() {
-  if (typeof cancelAnimationFrame === 'function' && sportsWeatherParityRaf) {
-    cancelAnimationFrame(sportsWeatherParityRaf);
-  }
-  sportsWeatherParityRaf = requestAnimationFrame(() => {
-    sportsWeatherParityRaf = 0;
-    if (!MASTHEAD_SPORTS_STRIP || !sportsSlides.length) return;
-    const weatherN = sportsWeatherCardCount();
-    const scoreCount = sportsVisible.filter((s) => s && s.mode !== 'cta').length;
-    const target = sportsBoardCount();
-    // Resync si total change, trop de scores vs météo, ou trop peu de scores
-    // alors que largeur + météo permettent plus (remplir la gauche).
-    const overWeather = weatherN > 0 && scoreCount > weatherN;
-    const underFilled = weatherN > 0
-      && scoreCount < Math.min(weatherN, Math.max(0, target - 1))
-      && sportsVisible.length < target;
-    if (sportsVisible.length === target && !overWeather && !underFilled) return;
-    sportsFitCount = null;
-    sportsFitDepth = 0;
-    renderSportsStrip();
-    scheduleSportsRotate();
-  });
+  return sportsFitCount === null ? base : Math.min(base, sportsFitCount);
 }
 
 /**
@@ -2484,12 +2410,26 @@ function sportsCtaPinned() {
 }
 
 /**
- * Le bandeau est-il trop étroit pour les chips peints ?
- * Parité météo : on ne se fie pas seulement au bucket largeur — on mesure
- * après paint. La CTA « Au tableau » est l’ancre protégée (comme MTL/QC) :
- * si elle est écrasée, on retire une carte score. Les libellés CTA défilent
- * (marquee, jamais d’ellipsis) : on ne compare pas leur largeur « naturelle »
- * (trop agressif — ce n’est pas un motif pour retirer une carte score).
+ * True si une puce **score** a titre ou sous-ligne qui déborde
+ * (focus-group A : overflow → retirer une puce, jamais marquee scores).
+ */
+function sportsMatchChipTextOverflows(chip) {
+  if (!chip || chip.classList.contains('sports-chip--cta')) return false;
+  const viewport = chip.querySelector('.sports-chip__line');
+  const inner = chip.querySelector('.sports-chip__line-inner');
+  if (viewport && inner && sportsMeasureOverflow(viewport, inner, false) > 1) {
+    return true;
+  }
+  const subView = chip.querySelector('.sports-chip__sub');
+  const subInner = chip.querySelector('.sports-chip__sub-text');
+  return !!(subView && subInner && sportsMeasureOverflow(subView, subInner, false) > 1);
+}
+
+/**
+ * Le bandeau est-il trop étroit / texte illisible pour les chips peints ?
+ * - CTA écrasée (tag AU TABLEAU) → −1 score
+ * - Puce score trop étroite OU titre/sous-ligne overflow → −1 score
+ * CTA : marquee encore toléré — on ne la compare pas en largeur « naturelle ».
  */
 function sportsStripCramped() {
   const strip = MASTHEAD_SPORTS_STRIP;
@@ -2501,30 +2441,29 @@ function sportsStripCramped() {
   const minCta = 148;
 
   const cta = strip.querySelector('.sports-chip--cta');
-  // CTA manquante alors qu’on affiche plusieurs chips → forcer un re-fit.
   if (!cta) return true;
   if (cta.clientWidth + 0.5 < minCta) return true;
-  // Pastille « AU TABLEAU » coupée = illisible.
   const tag = cta.querySelector('.sports-chip__cta-tag');
   if (tag && tag.scrollWidth > tag.clientWidth + 1) return true;
 
   for (const chip of chips) {
     if (chip.classList.contains('sports-chip--cta')) continue;
     if (chip.clientWidth + 0.5 < minScore) return true;
+    if (sportsMatchChipTextOverflows(chip)) return true;
   }
   return false;
 }
 
 /**
- * Après paint : retirer une carte score si le bandeau est à l’étroit,
- * jusqu’à ce qu’il ne reste que la CTA « Au tableau » (parité météo).
+ * Après paint : retirer une carte score si étroit ou texte overflow,
+ * jusqu’à CTA seule. Max 3 passes (focus-group A).
  */
 function fitSportsStripAfterPaint() {
   if (!MASTHEAD_SPORTS_STRIP || MASTHEAD_SPORTS_STRIP.hidden) return;
   const count = sportsVisible.length;
   if (count <= 1) return;
   if (!sportsStripCramped()) return;
-  if (sportsFitDepth >= 4) return;
+  if (sportsFitDepth >= 3) return;
   sportsFitDepth += 1;
   sportsFitCount = count - 1;
   try {
@@ -3902,33 +3841,11 @@ function refreshSportsChipScroll(chipOrRoot = null) {
     }
 
     if (!isCta) {
-      // Puces scores 2 lignes : titre (noms) + sous-ligne (date) mesurés à part.
-      const viewport = chip.querySelector('.sports-chip__line');
-      const inner = chip.querySelector('.sports-chip__line-inner');
-      const subView = chip.querySelector('.sports-chip__sub');
-      const subInner = chip.querySelector('.sports-chip__sub-text');
-      if (!viewport || !inner) {
-        chip.classList.remove('is-overflowing', 'is-sub-overflowing');
-        chip.style.removeProperty('--sports-scroll');
-        chip.style.removeProperty('--sports-scroll-sub');
-        return;
-      }
-      const hadOverflow = chip.classList.contains('is-overflowing');
-      const hadSub = chip.classList.contains('is-sub-overflowing');
-      const overflow = sportsMeasureOverflow(viewport, inner, hadOverflow);
-      const subOverflow = (subView && subInner)
-        ? sportsMeasureOverflow(subView, subInner, hadSub)
-        : 0;
-      sportsApplyScrollState(chip, {
-        flag: 'is-overflowing',
-        prop: '--sports-scroll',
-        overflow,
-      });
-      sportsApplyScrollState(chip, {
-        flag: 'is-sub-overflowing',
-        prop: '--sports-scroll-sub',
-        overflow: subOverflow,
-      });
+      // Focus-group A : puces scores = jamais marquee. Clear flags ; le fit
+      // post-paint (sportsStripCramped → −1 puce) gère l’overflow texte.
+      chip.classList.remove('is-overflowing', 'is-sub-overflowing');
+      chip.style.removeProperty('--sports-scroll');
+      chip.style.removeProperty('--sports-scroll-sub');
       return;
     }
 
@@ -4404,19 +4321,17 @@ function renderSportsStrip() {
   MASTHEAD_SPORTS_STRIP.hidden = false;
   MASTHEAD_SPORTS_STRIP.dataset.count = String(sportsVisible.length);
   MASTHEAD_SPORTS_STRIP.dataset.ctaPinned = pinned ? '1' : '0';
-  // Défilement texte + cascade de fit (parité météo) après layout.
+  // Fit anti-marquee (A) + marquee CTA seulement, après layout stable.
   window.requestAnimationFrame(() => {
     refreshSportsChipScroll();
-    // Un second frame : les largeurs flex sont stables avant de mesurer.
     window.requestAnimationFrame(() => {
       fitSportsStripAfterPaint();
-      // Polices webfont : une mesure trop tôt sous-estime la largeur → pas de
-      // marquee et texte clipé (ou, avant, ellipsis « … »). Remesurer une fois
-      // les polices prêtes pour garantir le défilement L→R du texte entier.
+      // Polices webfont : re-fit une fois prêtes (mesure titre/sous-ligne juste).
       const fonts = document.fonts;
       if (fonts?.ready && typeof fonts.ready.then === 'function') {
         fonts.ready.then(() => {
           if (!MASTHEAD_SPORTS_STRIP?.isConnected) return;
+          fitSportsStripAfterPaint();
           refreshSportsChipScroll();
         }).catch(() => { /* ignore */ });
       }
@@ -4438,29 +4353,19 @@ function sportsLabelReadingMs(text) {
 }
 
 /**
- * True si le libellé de la puce déborde (marquee nécessaire).
- * Mesure réelle scrollWidth — ne dépend pas seulement de la classe
- * (qui peut arriver un frame après le schedule).
- * CTA : titre **ou** sous-ligne (date · compétition · MAJ).
+ * True si la puce a besoin d’un marquee (dwell allongé).
+ * Focus-group A : puces **scores** → toujours false (pas de marquee).
+ * CTA : titre ou sous-ligne overflow (marquee encore toléré).
  */
 function sportsChipNeedsMarquee(chip) {
   if (!chip || sportsReducedMotion) return false;
+  // Scores : anti-marquee — overflow géré par −1 puce, pas par scroll.
+  if (!chip.classList.contains('sports-chip--cta')) return false;
   if (
     chip.classList.contains('is-overflowing')
     || chip.classList.contains('is-sub-overflowing')
   ) {
     return true;
-  }
-  const isCta = chip.classList.contains('sports-chip--cta');
-  if (!isCta) {
-    const viewport = chip.querySelector('.sports-chip__line');
-    const inner = chip.querySelector('.sports-chip__line-inner');
-    if (viewport && inner && sportsMeasureOverflow(viewport, inner, false) > 2) {
-      return true;
-    }
-    const subView = chip.querySelector('.sports-chip__sub');
-    const subInner = chip.querySelector('.sports-chip__sub-text');
-    return !!(subView && subInner && sportsMeasureOverflow(subView, subInner, false) > 2);
   }
   const layer = sportsCtaActiveLabel(chip);
   if (!layer) return false;
@@ -4711,9 +4616,6 @@ async function initMastheadSports() {
     sportsFitDepth = 0;
     renderSportsStrip();
     scheduleSportsRotate();
-    // Parité météo : resync si la météo s’est peinte juste avant/après.
-    queueSportsWeatherParitySync();
-    window.setTimeout(() => queueSportsWeatherParitySync(), 600);
     if (!initMastheadSports._resizeBound) {
       initMastheadSports._resizeBound = true;
       initMastheadSports._lastWidth = MASTHEAD_SPORTS_STRIP.clientWidth || 0;

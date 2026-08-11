@@ -209,7 +209,7 @@
  * Mât sur photo — focus-group le-radar-masthead-photo-chrome C.
  * Slogan / crédit : soft glass. Date : **sœur des cartes météo**
  * (même hauteur 29px, radius 5px, verre, ombre, typo) — une ligne
- * « MARDI … · 13:43 ». max-width plafonné pour laisser l’air à la météo.
+ * « MARDI 11 AOÛT 2026 · 14:00 » entière (météo plafonnée à 3 cartes).
  * Chrome = copie de .masthead-weather__city (photo dark / light).
  */
 .masthead:has(#bg-photo-layer.loaded) .masthead-date {
@@ -220,7 +220,9 @@
   gap: 5px;
   box-sizing: border-box;
   height: 29px;
-  max-width: min(34vw, 11.25rem);
+  /* Assez large pour le format long FR + heure ; météo max 3 libère la place.
+   * Ellipse = filet de secours seulement (cascade MASTHEAD_DATE_FORMATS d’abord). */
+  max-width: min(48vw, 16.5rem);
   padding: 0 7px;
   border-radius: 5px;
   /* Identique à .masthead-weather__city sur photo (dark default) */
@@ -302,6 +304,31 @@
     linear-gradient(90deg, rgba(200, 180, 120, 0.22) 0%, transparent 55%),
     rgba(22, 24, 30, 0.82);
   border-color: rgba(255, 255, 255, 0.14);
+}
+/* Très étroit : date et heure empilées (sinon ~23 px pour la date + ellipse). */
+@media (max-width: 374.98px) {
+  .masthead:has(#bg-photo-layer.loaded) .masthead-date {
+    height: auto;
+    min-height: 29px;
+    max-width: min(52vw, 11.5rem);
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    padding: 3px 7px 4px;
+  }
+  .masthead:has(#bg-photo-layer.loaded) .masthead-date #today-date {
+    flex: 0 1 auto;
+    max-width: 100%;
+  }
+  .masthead:has(#bg-photo-layer.loaded) .masthead-date .masthead-time {
+    margin-left: 0;
+    font-size: 10px;
+    line-height: 1.2;
+  }
+  .masthead:has(#bg-photo-layer.loaded) .masthead-date .masthead-time::before {
+    content: none;
+  }
 }
 .masthead:has(#bg-photo-layer.loaded) .wordmark {
   position: relative;
@@ -556,9 +583,9 @@
   filter: brightness(1.12) saturate(1.05);
 }
 
-/* Filet sous la rangée date/actions — voile, pas trait blanc. */
+/* Plus de filet sous date / météo / boutons — la photo continue sans trait. */
 .masthead:has(#bg-photo-layer.loaded) .masthead-top {
-  border-bottom-color: rgba(255, 255, 255, 0.12);
+  border-bottom: none;
 }
 
 /* Boutons ronds : verre dépoli, bordure et ombre douces. */
@@ -739,7 +766,8 @@ a { color: inherit; }
   text-transform: uppercase;
   color: var(--muted);
   padding-bottom: 12px;
-  border-bottom: 1px solid var(--rule);
+  /* Filet retiré : rangée date/météo/actions sans trait (photo et hors photo). */
+  border-bottom: none;
 }
 
 .masthead-date {
