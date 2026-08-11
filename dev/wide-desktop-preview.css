@@ -92,16 +92,36 @@ html[data-wide-preview="e"] {
     color: rgba(255, 255, 255, 0.78);
   }
 
-  html[data-wide-preview="e"] .tuner-nowair.tuner-nowair--legacy-slot {
+  /*
+   * Masquer le panneau single #tuner-nowair (CSS critique force display:flex
+   * !important sur .tuner-nowair — on gagne par id + plusieurs propriétés).
+   */
+  html[data-wide-preview="e"] #tuner-nowair,
+  html[data-wide-preview="e"] #tuner-nowair.tuner-nowair--legacy-slot {
     display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    width: 0 !important;
+    height: 0 !important;
+    max-width: 0 !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
   }
 
-  /* Dual antenne : même hauteur qu’un seul panneau prod (row, pas stack) */
+  /* Dual antenne — classes hors .tuner-nowair (évite le CSS critique) */
   html[data-wide-preview="e"] #tuner-nowair-wide {
-    display: grid;
+    display: grid !important;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 0 18px;
-    grid-column: 2;
+    gap: 0 20px;
+    grid-column: 2 !important;
+    grid-row: 1 !important;
     width: 100%;
     min-width: 0;
     max-height: 42px;
@@ -111,7 +131,7 @@ html[data-wide-preview="e"] {
     box-sizing: border-box;
   }
 
-  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-nowair {
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot {
     display: flex !important;
     flex-direction: row !important;
     align-items: flex-start !important;
@@ -124,9 +144,11 @@ html[data-wide-preview="e"] {
     padding: 0;
     border: 0;
     opacity: 1 !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
   }
 
-  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-nowair-label {
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot__label {
     flex: 0 0 auto;
     font-size: 9px;
     letter-spacing: 0.08em;
@@ -138,7 +160,7 @@ html[data-wide-preview="e"] {
     white-space: nowrap;
   }
 
-  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-nowair-body {
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot__body {
     flex: 1 1 auto;
     min-width: 0;
     display: flex;
@@ -147,17 +169,17 @@ html[data-wide-preview="e"] {
     justify-content: center;
   }
 
-  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-nowair--live-slot .tuner-nowair-label,
-  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-nowair--live-slot .tuner-nowair-title {
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot--live .tuner-wide-slot__label,
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot--live .tuner-wide-slot__title {
     color: var(--tuner-onair-live, #ff8a80);
   }
 
-  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-nowair--next-slot .tuner-nowair-label,
-  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-nowair--next-slot .tuner-nowair-title {
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot--next .tuner-wide-slot__label,
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot--next .tuner-wide-slot__title {
     color: var(--tuner-upcoming, #e8b86a);
   }
 
-  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-nowair-title {
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot__title {
     font-size: 12px;
     font-weight: 700;
     line-height: 1.2;
@@ -168,7 +190,7 @@ html[data-wide-preview="e"] {
     margin: 0;
   }
 
-  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-nowair-sub {
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot__sub {
     font-size: 10.5px;
     line-height: 1.2;
     white-space: nowrap;
