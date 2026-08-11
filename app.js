@@ -1564,6 +1564,168 @@ function isWideNoMarqueeMode() {
   }
 }
 
+/** Alias sémantique : layout synthé grand écran (E). */
+function isWideTunerLayout() {
+  return isWideNoMarqueeMode();
+}
+
+/** Institution en toutes lettres pour le dial wide (pas d’acronyme forcé). */
+function tunerFullInstitutionLabel(radio) {
+  if (!radio) return '';
+  const full = String(radio.institution || '').trim();
+  if (full) return full;
+  return tunerDialInstitutionLabel(radio) || '';
+}
+
+/** Ligne institution au-dessus du nom de poste (créée une fois). */
+function ensureWideDialInstEl() {
+  const box = document.querySelector('.tuner-now');
+  if (!box) return null;
+  let el = document.getElementById('tuner-now-inst');
+  if (!el) {
+    el = document.createElement('span');
+    el.id = 'tuner-now-inst';
+    el.className = 'tuner-now-inst';
+    el.hidden = true;
+    const name = document.getElementById('tuner-now-name');
+    if (name) box.insertBefore(el, name);
+    else box.prepend(el);
+  }
+  return el;
+}
+
+/**
+ * Dial wide : institution complète (haut) + nom de poste + slogan complet.
+ * Plus de « Syntoniser un poste » tant qu’un poste (écoute ou aperçu) existe.
+ * @returns {boolean} true si le rendu wide a été appliqué
+ */
+function paintWideDial(radio) {
+  const instEl = ensureWideDialInstEl();
+  if (!isWideTunerLayout()) {
+    if (instEl) {
+      instEl.hidden = true;
+      instEl.textContent = '';
+    }
+    return false;
+  }
+  if (!radio) {
+    if (instEl) {
+      instEl.hidden = true;
+      instEl.textContent = '';
+    }
+    return false;
+  }
+  const inst = tunerFullInstitutionLabel(radio);
+  if (instEl) {
+    instEl.hidden = !inst;
+    instEl.textContent = inst;
+    if (inst) instEl.title = inst;
+  }
+  const station = stationDisplayName(radio) || String(radio.name || '').trim() || '';
+  setTunerNameText(station);
+  const slogan = radioSlogan(radio)
+    || String(radio.frequency || '').trim()
+    || '';
+  setTunerSubText(slogan);
+  return true;
+}
+
+/** Paire « À l'antenne » | « À venir » (wide E uniquement). */
+function ensureWideNowAirPair() {
+  const host = TUNER_NOWAIR?.parentElement;
+  if (!host || !TUNER_NOWAIR) return null;
+
+  let wrap = document.getElementById('tuner-nowair-wide');
+  if (!isWideTunerLayout()) {
+    if (wrap) wrap.hidden = true;
+    TUNER_NOWAIR.classList.remove('tuner-nowair--legacy-slot');
+    TUNER_NOWAIR.hidden = false;
+    return null;
+  }
+
+  if (!wrap) {
+    wrap = document.createElement('div');
+    wrap.id = 'tuner-nowair-wide';
+    wrap.className = 'tuner-nowair-wide';
+    wrap.setAttribute('aria-label', 'Antenne et à venir');
+    wrap.innerHTML = [
+      '<aside class="tuner-nowair tuner-nowair--live-slot" aria-live="polite">',
+      '  <span class="tuner-nowair-label">À l\'antenne</span>',
+      '  <div class="tuner-nowair-body">',
+      '    <p class="tuner-nowair-title" data-wide-live-title></p>',
+      '    <p class="tuner-nowair-sub" data-wide-live-sub></p>',
+      '  </div>',
+      '</aside>',
+      '<aside class="tuner-nowair tuner-nowair--next-slot" aria-live="polite">',
+      '  <span class="tuner-nowair-label">À venir</span>',
+      '  <div class="tuner-nowair-body">',
+      '    <p class="tuner-nowair-title" data-wide-next-title></p>',
+      '    <p class="tuner-nowair-sub" data-wide-next-sub></p>',
+      '  </div>',
+      '</aside>',
+    ].join('');
+    host.insertBefore(wrap, TUNER_NOWAIR.nextSibling);
+    // Clic → même horaire que le panneau legacy
+    wrap.addEventListener('click', openNowAirSchedule);
+  }
+
+  wrap.hidden = false;
+  TUNER_NOWAIR.classList.add('tuner-nowair--legacy-slot');
+  return wrap;
+}
+
+/**
+ * Remplit live + upcoming à partir des phases d’un poste.
+ * @returns {boolean} true si la paire wide a été peinte
+ */
+function paintWideNowAirPair(radio) {
+  const wrap = ensureWideNowAirPair();
+  if (!wrap || !isWideTunerLayout()) return false;
+
+  const liveTitle = wrap.querySelector('[data-wide-live-title]');
+  const liveSub = wrap.querySelector('[data-wide-live-sub]');
+  const nextTitle = wrap.querySelector('[data-wide-next-title]');
+  const nextSub = wrap.querySelector('[data-wide-next-sub]');
+  const liveSlot = wrap.querySelector('.tuner-nowair--live-slot');
+  const nextSlot = wrap.querySelector('.tuner-nowair--next-slot');
+
+  if (!radio) {
+    if (liveTitle) liveTitle.textContent = 'Choisissez un poste';
+    if (liveSub) liveSub.textContent = 'Les radios étudiantes jouent en direct, 24/7';
+    if (nextTitle) nextTitle.textContent = '—';
+    if (nextSub) nextSub.textContent = '';
+    liveSlot?.classList.add('is-empty-slot');
+    nextSlot?.classList.add('is-empty-slot');
+    return true;
+  }
+
+  const phases = airRotationPhases(radio, { withSlogan: false });
+  const live = phases.find((p) => p.kind === 'live')
+    || phases.find((p) => p.kind === 'idle')
+    || null;
+  const upcoming = phases.find((p) => p.kind === 'upcoming') || null;
+
+  if (liveTitle) {
+    liveTitle.textContent = live?.title || radioSlogan(radio) || stationDisplayName(radio) || radio.name || '—';
+  }
+  if (liveSub) {
+    liveSub.textContent = live?.sub || '';
+    liveSub.hidden = !live?.sub;
+  }
+  liveSlot?.classList.toggle('is-empty-slot', !live);
+
+  if (nextTitle) {
+    nextTitle.textContent = upcoming?.title || 'Rien de programmé';
+  }
+  if (nextSub) {
+    nextSub.textContent = upcoming?.sub || '';
+    nextSub.hidden = !upcoming?.sub;
+  }
+  nextSlot?.classList.toggle('is-empty-slot', !upcoming);
+
+  return true;
+}
+
 function weatherBoardCount() {
   const width = weatherBoardAvailWidth();
   let count = 1;
@@ -6136,6 +6298,25 @@ function applyDialTextCrossfade(el, text, crossfade = false) {
 
 /** Bureau sans poste : titre fixe + postes qui défilent en bas ; « À l'antenne » reste à part. */
 function syncDesktopDialPreview(_airTitle, crossfade = false) {
+  // Wide E : institution + poste + slogan complets (aperçu ou écoute).
+  if (isWideTunerLayout()) {
+    const radio = currentStation || nowAirPreviewRadio;
+    if (radio) {
+      paintWideDial(radio);
+      lastDialCarouselText = stationDisplayName(radio) || radio.name || '';
+      return;
+    }
+    ensureWideDialInstEl();
+    const instEl = document.getElementById('tuner-now-inst');
+    if (instEl) {
+      instEl.hidden = true;
+      instEl.textContent = '';
+    }
+    setTunerNameText('Radios étudiantes');
+    setTunerSubText('Choisissez un poste pour écouter');
+    return;
+  }
+
   if (!isDesktopIdleDialCarousel()) {
     if (!currentStation) setTunerNameText('Syntoniser un poste');
     return;
@@ -6490,6 +6671,40 @@ function initTunerSubRotateListeners() {
 function renderTunerNowAir() {
   if (!TUNER_NOWAIR || isTunerPresentationPaused()) return;
 
+  // Wide E : dual « À l'antenne » + « À venir », dial institution/slogan complets.
+  if (isWideTunerLayout()) {
+    const previewing = isNowAirPanelPreviewMode();
+    if (!currentStation && previewing && !nowAirPreviewRadio) pickNowAirPreviewRadio();
+    const radio = currentStation || (previewing ? nowAirPreviewRadio : null);
+    paintWideNowAirPair(radio);
+    paintWideDial(radio);
+    if (currentStation) {
+      stopNowAirPreview();
+      syncAirPanelRotate(currentStation);
+    } else if (previewing) {
+      startNowAirPreview();
+      if (radio) syncAirPanelRotate(radio);
+    } else {
+      stopNowAirPreview();
+      stopAirPanelRotate();
+    }
+    if (currentStation && isPlaybackActive()) {
+      const { title, sub } = nowAirLines(currentStation);
+      updateMediaSession(currentStation, { title, sub });
+    }
+    return;
+  }
+
+  // Quitter le mode wide : restaurer le panneau single.
+  const wideWrap = document.getElementById('tuner-nowair-wide');
+  if (wideWrap) wideWrap.hidden = true;
+  TUNER_NOWAIR.classList.remove('tuner-nowair--legacy-slot');
+  const instEl = document.getElementById('tuner-now-inst');
+  if (instEl) {
+    instEl.hidden = true;
+    instEl.textContent = '';
+  }
+
   const previewing = isNowAirPanelPreviewMode();
   let title;
   let sub;
@@ -6597,11 +6812,15 @@ function renderTunerNowAir() {
     if (!isDialCompactLayout()) {
       /* nom déjà posé par selectStation ; re-sync si besoin */
     }
-    setTunerNameText(
-      isDialCompactLayout()
-        ? compactDialTitleLine(currentStation)
-        : tunerDesktopTitleLine(currentStation),
-    );
+    if (isWideTunerLayout()) {
+      paintWideDial(currentStation);
+    } else {
+      setTunerNameText(
+        isDialCompactLayout()
+          ? compactDialTitleLine(currentStation)
+          : tunerDesktopTitleLine(currentStation),
+      );
+    }
     syncAirPanelRotate(currentStation);
   } else if (previewing) {
     startNowAirPreview();
@@ -7603,6 +7822,9 @@ function selectStation(id, { autoplay = false, openExternal = false, fromSync = 
     const firstLine = dialPhaseLinesForRadio(radio)[0] || tunerSubMeta;
     TUNER_SUB?.parentElement?.classList.toggle('is-empty', !firstLine);
     resetDialRotateSlots(firstLine);
+  } else if (isWideTunerLayout()) {
+    // Wide E : institution complète + poste + slogan complet (pas d’acronyme).
+    paintWideDial(radio);
   } else {
     // Bureau (+ embed large) : L1 = poste FM · acronyme ; L2 = slogan
     setTunerNameText(tunerDesktopTitleLine(radio));
@@ -9163,6 +9385,10 @@ function bindFiltersPanel() {
         scheduleSportsRotate();
         window.requestAnimationFrame(() => refreshSportsChipScroll());
       }
+    } catch { /* ignore */ }
+    // Synthé wide : dual antenne + dial institution/slogan
+    try {
+      renderTunerNowAir();
     } catch { /* ignore */ }
   });
 }
