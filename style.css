@@ -148,11 +148,28 @@ body {
   flex-wrap: nowrap;
   overflow: hidden;
 }
-/* Dernier cran de fit : CTA « SPORTS » seule (parité météo → 1 carte). */
+/* Dernier cran de fit : CTA « SPORTS » seule. */
 .masthead-sports-strip[data-count="1"] .sports-chip--cta {
   flex: 1 1 auto;
   min-width: 0;
   max-width: 100%;
+}
+/* 1 score + CTA (768 / 900) : la CTA ne mange pas toute la rangée — le score
+   garde assez de largeur pour le titre complet (FG A anti-marquee). */
+.masthead-sports-strip[data-count="2"] .sports-chip--match {
+  flex: 1 1 48%;
+  min-width: min(12rem, 42%);
+  max-width: 58%;
+}
+.masthead-sports-strip[data-count="2"] .sports-chip--cta {
+  flex: 1 1 40%;
+  min-width: 0;
+  max-width: 52%;
+}
+/* 2 scores + CTA : CTA un peu plus étroite pour laisser lire les matchs. */
+.masthead-sports-strip[data-count="3"] .sports-chip--cta {
+  flex: 1 1 28%;
+  max-width: 38%;
 }
 .masthead-sports-strip .sports-chip {
   flex: 1 1 0;
@@ -814,15 +831,20 @@ body {
    la place et la rangée (date + 6 icônes) débordait de ~33 px sur iPhone /
    Pixel. Icônes et typo compactées ; l'ellipse est un filet de sécurité pour
    les dates les plus longues sur les écrans les plus étroits. */
-@media (max-width: 599.98px) {
+/* Tablette + mobile : météo dockée sous le tuner (JS ≤1023.98) — mât = date + actions. */
+@media (max-width: 1023.98px) {
   .masthead-top {
     grid-template-areas: 'date actions';
     grid-template-columns: minmax(0, 1fr) max-content;
     column-gap: 6px;
-    /* Récupère quelques px du padding page pour la date. */
-    margin-inline: -6px;
   }
   .masthead-weather:not(.masthead-weather--docked) { display: none !important; }
+}
+@media (max-width: 599.98px) {
+  .masthead-top {
+    /* Récupère quelques px du padding page pour la date (téléphone). */
+    margin-inline: -6px;
+  }
   .masthead-date {
     position: relative;
     transform: translateY(-3px);

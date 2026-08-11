@@ -66,6 +66,14 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
   expect(narrow).toBeLessThanOrEqual(Math.max(mid, midNarrow));
   expect(narrow).toBeGreaterThanOrEqual(1);
 
+  // Tablette 768 / 900 : au moins 1 score à gauche de la CTA.
+  const tab768 = await countAt(768);
+  expect(tab768).toBeGreaterThanOrEqual(2);
+  await expect(strip.locator('.sports-chip').last()).toHaveClass(/sports-chip--cta/);
+  await expect(strip.locator('.sports-chip:not(.sports-chip--cta)').first()).toBeVisible();
+  const tab900 = await countAt(900);
+  expect(tab900).toBeGreaterThanOrEqual(2);
+
   // Téléphone / très étroit : il ne reste que l’ancre « SPORTS ».
   const phone = await countAt(360);
   expect(phone).toBe(1);
@@ -125,9 +133,12 @@ test('mât : la date longue se compacte au lieu de passer sous les icônes', asy
       }, { timeout: 5000 })
       .toBeLessThanOrEqual(0);
 
-    // Compactée, pas rognée : l'ellipse reste un filet, elle ne doit pas servir.
-    const clipped = await dateEl.evaluate((el) => el.scrollWidth > el.clientWidth);
-    expect(clipped, `${width}px : date tronquée par l'ellipse au lieu d'être compactée`).toBe(false);
+    // Compactée, pas rognée : attendre la cascade (resize + photo loaded + rAF).
+    await expect
+      .poll(async () => dateEl.evaluate((el) => el.scrollWidth > el.clientWidth + 0.5), {
+        timeout: 4000,
+      })
+      .toBe(false);
   }
 
   expect(pageErrors).toEqual([]);

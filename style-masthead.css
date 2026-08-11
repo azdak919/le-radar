@@ -967,6 +967,11 @@ a { color: inherit; }
      plancher disparaît avec lui et la date se redéploie. */
   .masthead-weather { display: inline-flex; grid-area: weather; width: 100%; justify-self: stretch; min-width: 104px; }
   .masthead-actions { grid-area: actions; justify-self: end; }
+  /* Météo absente du mât (dockée) : pas de colonne weather vide. */
+  .masthead-top:not(:has(#masthead-weather)) {
+    grid-template-areas: 'date actions';
+    grid-template-columns: minmax(0, 1fr) max-content;
+  }
 }
 @media (max-width: 359.98px) { .masthead-weather:not(.masthead-weather--docked) { display: none !important; } }
 .masthead-weather__city.is-compact .masthead-weather__name-full { display: none; }
@@ -989,11 +994,9 @@ a { color: inherit; }
   justify-content: flex-start;
 }
 /*
- * ≤599.98 px : le bandeau est déplacé hors de .masthead (#masthead-weather-dock).
- * Les styles « photo mât » (`.masthead:has(#bg-photo-layer.loaded) …`) ne
- * matchent plus → les cartes retombaient sur un lavis accent neutre, sans
- * teinte soleil/pluie/orage. On rejoue le verre ardoise + --weather-tone
- * (parité bureau photo et puces sports).
+ * ≤1023.98 px : météo hors .masthead (#masthead-weather-dock) — tablette 768/900
+ * comme mobile 390/430. Les styles « photo mât » ne matchent plus → rejouer
+ * le verre ardoise + --weather-tone (parité bureau photo et puces sports).
  */
 .masthead-weather--docked .masthead-weather__city {
   color: rgba(236, 238, 242, 0.92);
