@@ -883,6 +883,9 @@ html[data-wide-preview="e"] .news-hero-spacer {
   html[data-wide-preview="e"] .masthead-weather__board[data-weather-count="6"] {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
+  html[data-wide-preview="e"] .masthead-weather__board[data-weather-count="7"] {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
   html[data-wide-preview="e"] .masthead-weather__city.is-active {
     display: flex !important;
     min-width: 0 !important;
@@ -913,7 +916,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
     transform: none !important;
   }
 
-  /* Sports : parts égales stables — rotation ne change pas les largeurs */
+  /* Sports : parts égales stables — CTA centrée (JS dataset.cta-layout=center) */
   html[data-wide-preview="e"] .masthead-sports-strip {
     max-width: var(--maxw);
     gap: 6px;
@@ -926,8 +929,10 @@ html[data-wide-preview="e"] .news-hero-spacer {
     max-width: none !important;
     width: 0 !important; /* base flex égale — contenu ne pousse pas le voisin */
   }
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta {
-    flex: 1.15 1 0 !important;
+  /* CTA un cran plus lisible au centre, sans dénaturer les scores */
+  html[data-wide-preview="e"] .masthead-sports-strip[data-cta-layout="center"] .sports-chip--cta {
+    flex: 1.2 1 0 !important;
+    order: 0;
   }
   html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner,
   html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__cta-text,
