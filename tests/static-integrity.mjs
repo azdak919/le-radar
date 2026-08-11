@@ -915,7 +915,19 @@ assert(
 );
 assert(
   /const SPORTS_CTA_FRESH_RESULT_MS\s*=\s*48 \* 3600 \* 1000/.test(appJs),
-  'app.js : un résultat passe devant le calendrier pendant 48 h',
+  'app.js : filet fraîcheur CTA 48 h (first-glance + le-radar-cta-sports-window)',
+);
+// CTA pool = journée lead civile + filet 48 h — pas la file multi-jours max 36.
+assert(
+  appJs.includes('function sportsCtaLeadDayKey')
+    && appJs.includes('function sportsSlideDayKey')
+    && /const SPORTS_CTA_MAX_POOL\s*=\s*16/.test(appJs)
+    && appJs.includes('le-radar-cta-sports-window'),
+  'app.js : CTA sports = leadCivilDay + maxPool 16 (focus-group window F)',
+);
+assert(
+  !appJs.includes('upcomingLater'),
+  'app.js : plus de filet multi-jours upcomingLater dans le pool CTA',
 );
 
 // Fraîcheur des articles : jour civil québécois, pas une fenêtre de minutes.
