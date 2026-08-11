@@ -2547,15 +2547,18 @@ function sportsStripAvailWidth() {
  */
 function sportsBoardCountBase() {
   const avail = sportsStripAvailWidth();
-  const gap = 6;
+  const wide = isWideNoMarqueeMode();
+  // Lab wide : densités + plafonds plus hauts (4–5 scores + CTA). Prod inchangé.
+  const gap = wide ? 4 : 6;
   // Un cran plus souple : tablette 768 doit garder ≥1 score + CTA (pas CTA seule).
   // FG A : overflow texte → −1 puce, mais le plafond largeur ne doit pas
-  // refuser 2 chips dès qu’on a ~320 px utiles.
-  const minScore = 128;
-  const minCta = 152;
+  // refuse 2 chips dès qu’on a ~320 px utiles.
+  const minScore = wide ? 102 : 128;
+  const minCta = wide ? 132 : 152;
+  const maxN = wide ? (avail >= 1500 ? 6 : 5) : 4;
 
   let n = 1;
-  for (let tryN = 4; tryN >= 2; tryN -= 1) {
+  for (let tryN = maxN; tryN >= 2; tryN -= 1) {
     const scores = tryN - 1;
     const need = scores * minScore + minCta + gap * (tryN - 1);
     if (avail >= need) {
@@ -2565,6 +2568,7 @@ function sportsBoardCountBase() {
   }
   return n;
 }
+
 
 /**
  * Nombre de chips cible : largeur × fit post-paint (overflow texte = −1).
