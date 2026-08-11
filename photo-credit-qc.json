@@ -1,15 +1,15 @@
 {
-  "updated": "2026-08-10T23:44:40.417Z",
+  "updated": "2026-08-11T02:33:55.070Z",
   "total": 185,
-  "withImage": 167,
-  "withCredit": 167,
-  "cited": 129,
+  "withImage": 168,
+  "withCredit": 168,
+  "cited": 131,
   "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 16,
-  "updatedCount": 5,
-  "citedNew": 3,
+  "checked": 25,
+  "updatedCount": 14,
+  "citedNew": 12,
   "fallbackNew": 13,
   "samples": [
     {
@@ -34,6 +34,13 @@
       "method": "body-line"
     },
     {
+      "title": "Meet Your Prof: Ivan Topisirovic",
+      "source": "The Tribune",
+      "credit": "Photo : Eliot Loose",
+      "cited": true,
+      "method": "figcaption-attribution"
+    },
+    {
       "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
       "source": "Quartier Libre",
       "credit": "Crédit photo : Quartier Libre",
@@ -41,11 +48,53 @@
       "method": null
     },
     {
+      "title": "L’épidémie de la nonchalance",
+      "source": "Le Délit",
+      "credit": "Photo : Elie Nguyen",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "La performance de l’homosexualité : un privilège ?",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
       "title": "Des initiatives qui rassemblent",
       "source": "Le Délit",
       "credit": "Crédit photo : Le Délit",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "source": "Le Délit",
+      "credit": "Photo : Toscane Ralaimongo",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Inside Mile End Kicks",
+      "source": "The Link",
+      "credit": "Photo: Courtesy of Joe Fuda",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "The apprenticeship of public voice",
+      "source": "The Link",
+      "credit": "Illustration: Halle Keays",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "source": "La Pige",
+      "credit": "Photo : Léa Morin-Letort",
+      "cited": true,
+      "method": "figcaption-paren-kind"
     }
   ]
 }
