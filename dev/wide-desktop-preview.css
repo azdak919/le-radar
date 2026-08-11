@@ -21,11 +21,45 @@ html[data-wide-preview="e"] {
   --wide-gap: 28px;
 }
 
-@media (min-width: 1680px) {
+/*
+ * E : --maxw suit vraiment la largeur dispo (plus de « boîte 1760 » au milieu
+ * d’un 3840). Les cartes gardent le look prod ; on ajoute des slots stables.
+ */
+html[data-wide-preview="e"] {
+  --maxw: min(1520px, calc(100vw - 40px));
+  --wide-rail: 260px;
+  --wide-gap: 24px;
+}
+@media (min-width: 1600px) {
   html[data-wide-preview="e"] {
+    --maxw: min(1560px, calc(100vw - 40px));
+  }
+}
+@media (min-width: 1920px) {
+  html[data-wide-preview="e"] {
+    --maxw: min(1860px, calc(100vw - 48px));
+    --wide-rail: 280px;
+    --wide-gap: 28px;
+  }
+}
+@media (min-width: 2560px) {
+  html[data-wide-preview="e"] {
+    --maxw: min(2460px, calc(100vw - 48px));
     --wide-rail: 300px;
     --wide-gap: 32px;
-    --maxw: min(1840px, calc(100vw - 32px));
+  }
+}
+@media (min-width: 3440px) {
+  html[data-wide-preview="e"] {
+    --maxw: min(3320px, calc(100vw - 56px));
+    --wide-rail: 310px;
+  }
+}
+@media (min-width: 3840px) {
+  html[data-wide-preview="e"] {
+    --maxw: calc(100vw - 64px);
+    --wide-rail: 320px;
+    --wide-gap: 36px;
   }
 }
 
@@ -230,9 +264,8 @@ html[data-wide-preview="e"] {
   html[data-wide-preview="d"] {
     --maxw: 1680px;
   }
-  html[data-wide-preview="e"] {
-    --maxw: min(1760px, calc(100vw - 32px));
-  }
+  /* --maxw E défini dans tokens progressifs ci-dessus */
+  
 
   html[data-wide-preview="b"] .masthead-inner,
   html[data-wide-preview="c"] .masthead-inner,
@@ -241,7 +274,10 @@ html[data-wide-preview="e"] {
   html[data-wide-preview="b"] .masthead-sports-strip,
   html[data-wide-preview="c"] .masthead-sports-strip,
   html[data-wide-preview="d"] .masthead-sports-strip,
-  html[data-wide-preview="e"] .masthead-sports-strip,
+  html[data-wide-preview="e"] .masthead-sports-strip {
+    max-width: var(--maxw);
+  }
+
   /* Menu sections : centré comme en mobile (pas collé à gauche du shell large). */
   html[data-wide-preview="b"] .site-sections,
   html[data-wide-preview="c"] .site-sections,
@@ -712,145 +748,93 @@ html[data-wide-preview="e"] {
 }
 
 
+
 /* ═══════════════════════════════════════════════════
-   Wide / super-wide — texte COMPLET (pas clip / compact)
-   Conteneurs proportionnels au contenu ; fit = −1 carte
+   Wide E — météo & sports : slots STABLES (pas de jiggle)
+   Look prod, plus de cartes quand la largeur le permet.
+   Contenu qui change (rotation) ne reflow pas les voisins.
    ═══════════════════════════════════════════════════ */
 @media (min-width: 1280px) {
-  /* Météo : flex proportionnel, noms complets */
-  html[data-wide-preview="b"] .masthead-weather__board,
-  html[data-wide-preview="c"] .masthead-weather__board,
-  html[data-wide-preview="d"] .masthead-weather__board,
-  html[data-wide-preview="e"] .masthead-weather__board {
-    display: flex !important;
-    flex-wrap: nowrap;
-    align-items: stretch;
-    gap: 5px;
-    width: 100%;
+  /* Météo : grille à parts égales selon data-weather-count — largeur fixe par slot */
+  html[data-wide-preview="e"] .masthead-weather {
     min-width: 0;
-    /* laisser le scrollWidth refléter le besoin réel des tuiles */
+    flex: 1 1 auto;
+  }
+  html[data-wide-preview="e"] .masthead-weather__board {
+    display: grid !important;
+    width: 100%;
+    gap: 4px;
+    /* prod height */
+    height: 29px;
     overflow: hidden;
   }
-
-  html[data-wide-preview="b"] .masthead-weather__city.is-active,
-  html[data-wide-preview="c"] .masthead-weather__city.is-active,
-  html[data-wide-preview="d"] .masthead-weather__city.is-active,
-  html[data-wide-preview="e"] .masthead-weather__city.is-active {
-    display: inline-flex !important;
-    flex: 1 1 auto;
-    /* largeur min = contenu (nom complet + °) ; le fit JS descend si trop */
-    min-width: max-content;
-    max-width: none;
-    width: auto;
-    overflow: visible;
+  html[data-wide-preview="e"] .masthead-weather__board[data-weather-count="3"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-
-  html[data-wide-preview="b"] .masthead-weather__name,
-  html[data-wide-preview="c"] .masthead-weather__name,
-  html[data-wide-preview="d"] .masthead-weather__name,
-  html[data-wide-preview="e"] .masthead-weather__name,
-  html[data-wide-preview="b"] .masthead-weather__name-text,
-  html[data-wide-preview="c"] .masthead-weather__name-text,
-  html[data-wide-preview="d"] .masthead-weather__name-text,
-  html[data-wide-preview="e"] .masthead-weather__name-text {
+  html[data-wide-preview="e"] .masthead-weather__board[data-weather-count="4"] {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  html[data-wide-preview="e"] .masthead-weather__board[data-weather-count="5"] {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  html[data-wide-preview="e"] .masthead-weather__board[data-weather-count="6"] {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  html[data-wide-preview="e"] .masthead-weather__city.is-active {
+    display: flex !important;
+    min-width: 0 !important;
     max-width: none !important;
-    overflow: visible !important;
-    text-overflow: unset !important;
+    width: auto !important;
+    flex: unset !important;
+    overflow: hidden;
+  }
+  html[data-wide-preview="e"] .masthead-weather__name,
+  html[data-wide-preview="e"] .masthead-weather__name-text {
+    max-width: 100% !important;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
   }
-
-  html[data-wide-preview="b"] .masthead-weather__city .masthead-weather__name-full,
-  html[data-wide-preview="c"] .masthead-weather__city .masthead-weather__name-full,
-  html[data-wide-preview="d"] .masthead-weather__city .masthead-weather__name-full,
+  /* Noms complets (pas compact) — ellipsis seulement si le slot est trop étroit */
   html[data-wide-preview="e"] .masthead-weather__city .masthead-weather__name-full,
-  html[data-wide-preview="b"] .masthead-weather__city.is-compact .masthead-weather__name-full,
-  html[data-wide-preview="c"] .masthead-weather__city.is-compact .masthead-weather__name-full,
-  html[data-wide-preview="d"] .masthead-weather__city.is-compact .masthead-weather__name-full,
   html[data-wide-preview="e"] .masthead-weather__city.is-compact .masthead-weather__name-full {
     display: inline !important;
   }
-
-  html[data-wide-preview="b"] .masthead-weather__city .masthead-weather__name-compact,
-  html[data-wide-preview="c"] .masthead-weather__city .masthead-weather__name-compact,
-  html[data-wide-preview="d"] .masthead-weather__city .masthead-weather__name-compact,
   html[data-wide-preview="e"] .masthead-weather__city .masthead-weather__name-compact,
-  html[data-wide-preview="b"] .masthead-weather__city.is-compact .masthead-weather__name-compact,
-  html[data-wide-preview="c"] .masthead-weather__city.is-compact .masthead-weather__name-compact,
-  html[data-wide-preview="d"] .masthead-weather__city.is-compact .masthead-weather__name-compact,
   html[data-wide-preview="e"] .masthead-weather__city.is-compact .masthead-weather__name-compact {
     display: none !important;
   }
-
-  /* Sports : puces s’élargissent avec le texte ; overflow → fit JS (−1 carte) */
-  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--match,
-  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--match,
-  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--match,
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--match {
-    flex: 1 1 auto;
-    min-width: min(12rem, 100%);
+  html[data-wide-preview="e"] .masthead-weather__city.is-overflowing .masthead-weather__name-text {
+    animation: none !important;
+    transform: none !important;
   }
 
-  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--match .sports-chip__line-inner,
-  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--match .sports-chip__line-inner,
-  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--match .sports-chip__line-inner,
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--match .sports-chip__line-inner,
-  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--match .sports-chip__sub-text,
-  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--match .sports-chip__sub-text,
-  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--match .sports-chip__sub-text,
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--match .sports-chip__sub-text {
-    max-width: none;
-    /* 2 lignes déjà prévues pour match : pas d’ellipsis forcé */
-    text-overflow: clip;
+  /* Sports : parts égales stables — rotation ne change pas les largeurs */
+  html[data-wide-preview="e"] .masthead-sports-strip {
+    max-width: var(--maxw);
+    gap: 6px;
   }
-
-  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-text,
-  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-text,
-  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-text,
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-text,
-  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-sub-text,
-  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-sub-text,
-  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-sub-text,
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-sub-text {
-    max-width: none;
-  }
-
-  /* Radio (dans le 1180 gelé) : zone antenne plus large, wrap 2 lignes max si besoin */
-  html[data-wide-preview="b"] .tuner-nowair-title,
-  html[data-wide-preview="c"] .tuner-nowair-title,
-  html[data-wide-preview="d"] .tuner-nowair-title,
-  html[data-wide-preview="e"] .tuner-nowair-title,
-  html[data-wide-preview="b"] .tuner-nowair-sub,
-  html[data-wide-preview="c"] .tuner-nowair-sub,
-  html[data-wide-preview="d"] .tuner-nowair-sub,
-  html[data-wide-preview="e"] .tuner-nowair-sub,
-  html[data-wide-preview="b"] .tuner-now-sub,
-  html[data-wide-preview="c"] .tuner-now-sub,
-  html[data-wide-preview="d"] .tuner-now-sub,
-  html[data-wide-preview="e"] .tuner-now-sub {
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--match,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
     max-width: none !important;
-    white-space: normal;
-    overflow: visible;
-    text-overflow: unset;
-    line-height: 1.25;
+    width: 0 !important; /* base flex égale — contenu ne pousse pas le voisin */
   }
-
-  html[data-wide-preview="b"] .tuner-nowair-body,
-  html[data-wide-preview="c"] .tuner-nowair-body,
-  html[data-wide-preview="d"] .tuner-nowair-body,
-  html[data-wide-preview="e"] .tuner-nowair-body {
-    min-width: 0;
-    flex: 1 1 auto;
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta {
+    flex: 1.15 1 0 !important;
   }
-
-  html[data-wide-preview="b"] .is-marquee > .tuner-now-sub-text,
-  html[data-wide-preview="c"] .is-marquee > .tuner-now-sub-text,
-  html[data-wide-preview="d"] .is-marquee > .tuner-now-sub-text,
-  html[data-wide-preview="e"] .is-marquee > .tuner-now-sub-text {
-    white-space: normal;
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__cta-text,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub-text,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-text {
     animation: none !important;
     transform: none !important;
   }
 }
+
 
 /* ═══════════════════════════════════════════════════
    Wide / super-wide — AUCUN marquee texte

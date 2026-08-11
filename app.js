@@ -1759,11 +1759,12 @@ function paintWideNowAirPair(radio) {
 function weatherBoardCount() {
   const width = weatherBoardAvailWidth();
   let count = 1;
-  // Lab wide : plus de cartes si le ruban est large ; le fit post-paint
-  // descend si les noms complets ne tiennent pas (pas de compact/marquee).
+  // Lab wide E : plus de slots quand le ruban grossit (largeur réelle masthead).
+  // Slots CSS à parts égales → rotation sans reflow des voisins.
   if (isWideNoMarqueeMode()) {
-    if (width >= 1100) count = 5;
-    else if (width >= 820) count = 4;
+    if (width >= 2200) count = 6;
+    else if (width >= 1400) count = 5;
+    else if (width >= 900) count = 4;
     else if (width >= 400) count = 3;
     else if (width >= 240) count = 2;
   } else {
@@ -1963,25 +1964,12 @@ function refreshWeatherNameScroll() {
   // Wide / super-wide : noms complets, conteneurs proportionnels (CSS flex
   // max-content). Si le ruban déborde encore → −1 carte, jamais compact/marquee.
   if (isWideNoMarqueeMode() && MASTHEAD_WEATHER) {
-    const actives = [...MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city.is-active')];
-    actives.forEach((el) => {
+    // Slots égaux CSS : pas de compact, pas de marquee, pas de −1 carte
+    // (sinon le nombre saute et tout le bandeau bouge). Ellipsis si besoin.
+    MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city.is-active').forEach((el) => {
       el.classList.remove('is-overflowing', 'is-compact');
       el.style.removeProperty('--weather-scroll');
-      const name = el.querySelector('.masthead-weather__name-text');
-      if (name) name.style.maxWidth = 'none';
     });
-    const board = MASTHEAD_WEATHER.querySelector('.masthead-weather__board');
-    if (
-      board
-      && actives.length > 1
-      && mastheadWeatherFitCount === null
-      && board.scrollWidth > board.clientWidth + 2
-    ) {
-      mastheadWeatherFitCount = actives.length - 1;
-      mastheadWeatherLastBoardCount = 0;
-      mastheadWeatherSlots = [];
-      showMastheadWeatherBoard();
-    }
     return;
   }
 
@@ -2749,16 +2737,18 @@ function sportsStripAvailWidth() {
 function sportsBoardCountBase() {
   const avail = sportsStripAvailWidth();
   const wide = isWideNoMarqueeMode();
-  // Wide : plus de cartes **seulement** si chaque puce a de la place pour
-  // le texte complet (pas densifier / pas marquee). Plancher largeur réaliste.
   const gap = 6;
-  // Un cran plus souple : tablette 768 doit garder ≥1 score + CTA (pas CTA seule).
-  // FG A : overflow texte → −1 puce, mais le plafond largeur ne doit pas
-  // refuse 2 chips dès qu’on a ~320 px utiles.
-  const minScore = wide ? 175 : 128;
-  const minCta = wide ? 220 : 152;
-  // 5 = 4 scores+CTA ; 6 seulement sur très grand bandeau (≈QHD plein)
-  const maxN = wide ? (avail >= 2000 ? 6 : avail >= 1400 ? 5 : 4) : 4;
+  // Wide : slots flex égaux — plus de puces quand le bandeau est large.
+  // Overflow texte post-paint → −1 (fit), sans marquee ni densify look.
+  const minScore = wide ? 150 : 128;
+  const minCta = wide ? 180 : 152;
+  let maxN = 4;
+  if (wide) {
+    if (avail >= 2800) maxN = 7;      // ~6 scores + CTA
+    else if (avail >= 2200) maxN = 6; // 5 + CTA
+    else if (avail >= 1600) maxN = 5; // 4 + CTA
+    else maxN = 4;
+  }
 
   let n = 1;
   for (let tryN = maxN; tryN >= 2; tryN -= 1) {
