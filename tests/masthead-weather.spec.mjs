@@ -57,13 +57,22 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   expect(activeBoxes[0]).toBeGreaterThanOrEqual(120);
   const initialPrimary = await activePrimary.evaluate((el) => ({ id: el.dataset.weatherCity, href: el.href }));
   expect(initialPrimary.href).toBe(`https://www.meteomedia.com/fr/ville/ca/quebec/${initialPrimary.id}/actuelle`);
-  await expect(ribbon.locator('[data-weather-city="vaudreuil-soulanges"]')).toHaveAttribute(
+  await expect(ribbon.locator('[data-weather-city="vaudreuil-dorion"]')).toHaveAttribute(
     'href',
     'https://www.meteomedia.com/fr/ville/ca/quebec/vaudreuil-dorion/actuelle',
   );
   await expect(ribbon.locator("[data-weather-city=\"odanak\"]")).toHaveAttribute(
     "href",
     "https://www.meteomedia.com/fr/ville/ca/quebec/odanak-12/actuelle",
+  );
+  // Manawan (affichage) → lien MM « manouane » (QC) — pas le slug « manawan » (SK).
+  await expect(ribbon.locator('[data-weather-city="manawan"]')).toHaveAttribute(
+    'href',
+    'https://www.meteomedia.com/fr/ville/ca/quebec/manouane/actuelle',
+  );
+  await expect(ribbon.locator('[data-weather-city="kahnawake"]')).toHaveAttribute(
+    'href',
+    'https://www.meteomedia.com/fr/ville/ca/quebec/kahnawake-14/actuelle',
   );
   await page.evaluate(() => {
     window.RadarTranslate = { ...(window.RadarTranslate || {}), getMode: () => 'en' };
@@ -78,7 +87,8 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
 
   const beforeRotation = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities.map((city) => city.dataset.weatherCity));
   const widthBeforeRotation = (await ribbon.boundingBox()).width;
-  await page.waitForTimeout(5300);
+  // Dwell météo ≥ WEATHER_ROTATE_BASE_MS (7 s) ; avec marquee encore plus long.
+  await page.waitForTimeout(8500);
   const afterRotation = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities.map((city) => city.dataset.weatherCity));
   const widthAfterRotation = (await ribbon.boundingBox()).width;
   // La rotation change une carte; un recalcul de largeur tardif peut aussi

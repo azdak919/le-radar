@@ -758,8 +758,9 @@ a { color: inherit; }
   color: inherit;
 }
 .masthead-weather__name-compact { display: none; }
+/* Lecture 1.6s → 1 aller-retour (2 × alternate) → repos ; dwell JS ≥ cycle. */
 .masthead-weather__city.is-overflowing .masthead-weather__name-text {
-  animation: weather-name-scroll 6.2s ease-in-out infinite alternate;
+  animation: weather-name-scroll 6.2s ease-in-out 1.6s 2 alternate both;
 }
 .masthead-weather__temp {
   flex: 0 0 auto;
