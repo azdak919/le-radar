@@ -23,19 +23,23 @@
    * null = page pleine fenêtre hôte.
    */
   const FORMATS = {
-    full: { id: 'full', label: 'Plein', w: null, hint: 'Fenêtre réelle du navigateur' },
-    phone: { id: 'phone', label: '390', w: 390, hint: 'Téléphone ~iPhone' },
-    phablet: { id: 'phablet', label: '430', w: 430, hint: 'Grand téléphone' },
-    tablet: { id: 'tablet', label: '768', w: 768, hint: 'Tablette portrait' },
-    mid: { id: 'mid', label: '900', w: 900, hint: 'Demi-écran / mid' },
-    desktop: { id: 'desktop', label: '1280', w: 1280, hint: 'Bureau compact (réf. LE-RADAR actuelle)' },
-    wide1440: { id: 'wide1440', label: '1440', w: 1440, hint: 'Laptop courant / fenêtre large' },
-    wide1600: { id: 'wide1600', label: '1600', w: 1600, hint: 'Grand bureau / laptop 16:10' },
-    wide1920: { id: 'wide1920', label: '1920', w: 1920, hint: 'Full HD — moniteur le plus vendu' },
-    qhd: { id: 'qhd', label: '2560', w: 2560, hint: 'QHD 1440p — moniteurs 27″ courants' },
-    ultrawide: { id: 'ultrawide', label: '3440', w: 3440, hint: 'Ultrawide 34″ (3440×1440) — gaming / bureau' },
-    uhd: { id: 'uhd', label: '3840', w: 3840, hint: '4K UHD — moniteurs 27–32″ récents' },
+    full: { id: 'full', label: 'Plein', w: null, hint: 'Fenêtre réelle du navigateur', group: 'base' },
+    phone: { id: 'phone', label: '390', w: 390, hint: 'Téléphone ~iPhone', group: 'base' },
+    phablet: { id: 'phablet', label: '430', w: 430, hint: 'Grand téléphone', group: 'base' },
+    tablet: { id: 'tablet', label: '768', w: 768, hint: 'Tablette portrait', group: 'base' },
+    mid: { id: 'mid', label: '900', w: 900, hint: 'Demi-écran / mid', group: 'base' },
+    desktop: { id: 'desktop', label: '1280', w: 1280, hint: 'Bureau compact (réf. LE-RADAR actuelle)', group: 'base' },
+    wide1440: { id: 'wide1440', label: '1440', w: 1440, hint: 'Laptop courant / fenêtre large', group: 'large' },
+    wide1600: { id: 'wide1600', label: '1600', w: 1600, hint: 'Grand bureau / laptop 16:10', group: 'large' },
+    wide1920: { id: 'wide1920', label: '1920', w: 1920, hint: 'Full HD — moniteur le plus vendu', group: 'large' },
+    qhd: { id: 'qhd', label: '2560', w: 2560, hint: 'QHD 1440p — moniteurs 27″ courants (scale si besoin)', group: 'large' },
+    ultrawide: { id: 'ultrawide', label: '3440', w: 3440, hint: 'Ultrawide 34″ 3440×1440 (scale si besoin)', group: 'large' },
+    uhd: { id: 'uhd', label: '3840', w: 3840, hint: '4K UHD — moniteurs 27–32″ (scale si besoin)', group: 'large' },
   };
+
+  /** Ordre d’affichage barre lab (base + grands moniteurs marché). */
+  const FORMAT_ORDER_BASE = ['full', 'phone', 'phablet', 'tablet', 'mid', 'desktop'];
+  const FORMAT_ORDER_LARGE = ['wide1440', 'wide1600', 'wide1920', 'qhd', 'ultrawide', 'uhd'];
 
   /** Largeur → clé (parse ?lab=2560). */
   const WIDTH_TO_FORMAT = {
@@ -357,18 +361,17 @@
     bar.className = 'midwidth-preview-bar local-lab-bar';
     bar.setAttribute('role', 'region');
     bar.setAttribute('aria-label', 'Lab local — formats et grand écran');
-    // bottom assez haut pour le dock GNOME (~60–70 px) + 2 rangées
+    // 3 rangées + dock GNOME : remonter la barre
     bar.style.cssText = [
       'position:fixed',
       'z-index:10000',
       'left:50%',
-      // Dock bas + marge : la barre entière reste cliquable
-      'bottom:max(72px, calc(env(safe-area-inset-bottom) + 64px))',
+      'bottom:max(80px, calc(env(safe-area-inset-bottom) + 72px))',
       'transform:translateX(-50%)',
       'display:flex',
       'flex-direction:column',
       'align-items:stretch',
-      'gap:6px',
+      'gap:5px',
       'padding:8px 10px',
       'border-radius:14px',
       'border:1px solid rgba(255,255,255,0.14)',
@@ -377,18 +380,37 @@
       'box-shadow:0 10px 40px -12px rgba(0,0,0,0.55)',
       'font:600 12px/1.2 system-ui,sans-serif',
       'color:#e8eaed',
-      'max-width:min(98vw,920px)',
+      'max-width:min(98vw,960px)',
       'pointer-events:auto',
     ].join(';');
 
     const wideNow = currentWide();
+    const tagStyle = 'opacity:0.55;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;margin-right:2px;flex-shrink:0';
 
-    // ── Rangée 1 : Wide (au-dessus, pour ne pas passer sous le dock) ──
+    function appendFormatButtons(row, keys) {
+      keys.forEach((key) => {
+        const meta = FORMATS[key];
+        if (!meta) return;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = meta.label;
+        btn.title = meta.hint;
+        btn.setAttribute('data-format-id', key);
+        btn.style.cssText = formatBtnStyle(key === format);
+        btn.addEventListener('click', () => {
+          if (key === currentFormat()) return;
+          navigateFormat(key);
+        });
+        row.appendChild(btn);
+      });
+    }
+
+    // ── Rangée 1 : Wide layout ──
     const wideRow = rowEl();
     wideRow.setAttribute('aria-label', 'Options grand écran');
     const tagW = document.createElement('span');
     tagW.textContent = 'Wide';
-    tagW.style.cssText = 'opacity:0.55;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;margin-right:2px;flex-shrink:0';
+    tagW.style.cssText = tagStyle;
     wideRow.appendChild(tagW);
 
     Object.keys(WIDE_OPTIONS).forEach((key) => {
@@ -409,39 +431,37 @@
 
     const hint = document.createElement('span');
     hint.setAttribute('data-wide-hint', '1');
-    hint.style.cssText = 'opacity:0.48;font-size:10px;font-weight:500;margin-left:2px;max-width:36ch';
+    hint.style.cssText = 'opacity:0.48;font-size:10px;font-weight:500;margin-left:2px;max-width:40ch';
     hint.textContent = WIDE_OPTIONS[wideNow]?.hint || '';
     wideRow.appendChild(hint);
     bar.appendChild(wideRow);
 
-    // ── Rangée 2 : Format ──
-    const fmtRow = rowEl();
-    fmtRow.setAttribute('aria-label', 'Formats d’écran');
-    const tagF = document.createElement('span');
-    tagF.textContent = 'Format';
-    tagF.style.cssText = 'opacity:0.55;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;margin-right:2px;flex-shrink:0';
-    fmtRow.appendChild(tagF);
+    // ── Rangée 2 : formats de base (plein → 1280) ──
+    const fmtBase = rowEl();
+    fmtBase.setAttribute('aria-label', 'Formats téléphone à bureau');
+    const tagB = document.createElement('span');
+    tagB.textContent = 'Base';
+    tagB.style.cssText = tagStyle;
+    fmtBase.appendChild(tagB);
+    appendFormatButtons(fmtBase, FORMAT_ORDER_BASE);
+    bar.appendChild(fmtBase);
 
-    Object.keys(FORMATS).forEach((key) => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.textContent = FORMATS[key].label;
-      btn.title = FORMATS[key].hint;
-      btn.style.cssText = formatBtnStyle(key === format);
-      btn.addEventListener('click', () => {
-        if (key === format) return;
-        navigateFormat(key);
-      });
-      fmtRow.appendChild(btn);
-    });
+    // ── Rangée 3 : grands moniteurs marché (+ scale auto si > écran hôte) ──
+    const fmtLarge = rowEl();
+    fmtLarge.setAttribute('aria-label', 'Formats grands moniteurs');
+    const tagL = document.createElement('span');
+    tagL.textContent = 'Grand';
+    tagL.style.cssText = tagStyle;
+    fmtLarge.appendChild(tagL);
+    appendFormatButtons(fmtLarge, FORMAT_ORDER_LARGE);
 
     const w = document.createElement('span');
     w.id = 'local-lab-format-w';
-    w.style.cssText = 'opacity:0.5;font-size:10px;margin-left:4px;font-variant-numeric:tabular-nums;max-width:28ch';
+    w.style.cssText = 'opacity:0.55;font-size:10px;margin-left:4px;font-variant-numeric:tabular-nums;max-width:32ch';
     paintFormatWidthLabel();
     window.addEventListener('resize', paintFormatWidthLabel, { passive: true });
-    fmtRow.appendChild(w);
-    bar.appendChild(fmtRow);
+    fmtLarge.appendChild(w);
+    bar.appendChild(fmtLarge);
 
     document.body.appendChild(bar);
     paintWideBadge(wideNow);
