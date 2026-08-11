@@ -1705,6 +1705,37 @@ function readWeatherCache() {
   return null;
 }
 
+/** Lab local (python http.server / vite) — pas de météo en prod sans API. */
+function isLocalWeatherLabHost() {
+  try {
+    const h = String(location.hostname || '');
+    return h === 'localhost' || h === '127.0.0.1' || h === '[::1]';
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Repli lab : temps plausibles QC pour juger layout / parité sports sans
+ * dépendre du Worker (CORS non déployé, offline, timeout). Jamais en prod.
+ */
+function weatherLabFixtureEntries() {
+  const hour = new Date().getHours();
+  const isDay = hour >= 6 && hour < 21 ? 1 : 0;
+  return WEATHER_CITIES.map((city, i) => {
+    // Légère variation nord/sud + index pour que la rotation change de ton.
+    const base = 16 + ((i * 3) % 11);
+    const latNudge = Number.isFinite(city.lat) ? (48 - city.lat) * 0.35 : 0;
+    return {
+      current: {
+        temperature_2m: Math.round((base - latNudge) * 10) / 10,
+        weather_code: [0, 1, 2, 3, 61, 0, 1, 80][i % 8],
+        is_day: isDay,
+      },
+    };
+  });
+}
+
 async function initMastheadWeather() {
   // Sous le seuil du masthead, la météo se déplace sous le syntoniseur
   // (setMastheadWeatherDocked) plutôt que d'être masquée : la charger
@@ -1730,12 +1761,20 @@ async function initMastheadWeather() {
       cache: 'no-store',
     });
     clearTimeout(timer);
+    if (!response.ok) throw new Error(`weather ${response.status}`);
     const data = await response.json();
     const entries = Array.isArray(data) ? data : [data];
-    if (entries.length !== WEATHER_CITIES.length) return;
+    if (entries.length !== WEATHER_CITIES.length) throw new Error('weather length');
     try { localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({ at: Date.now(), entries })); } catch { /* quota */ }
     renderMastheadWeather(entries);
-  } catch { /* module discret : absent si la météo est indisponible */ }
+  } catch {
+    // Lab local : afficher un bandeau même si le Worker refuse localhost
+    // (CORS) ou est offline — nécessaire pour juger météo ∥ sports.
+    if (!cached && isLocalWeatherLabHost()) {
+      renderMastheadWeather(weatherLabFixtureEntries());
+    }
+    /* prod : module discret — absent si la météo est indisponible */
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
