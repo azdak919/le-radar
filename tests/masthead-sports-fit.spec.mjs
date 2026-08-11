@@ -196,7 +196,7 @@ test('CTA sports : sous-ligne longue défile au lieu d’une ellipse figée', as
   const anim = await subText.evaluate((el) => getComputedStyle(el).animationName);
   expect(anim, 'sous-ligne doit animer sports-chip-scroll-sub').toMatch(/sports-chip-scroll-sub/);
 
-  // Le transform doit bouger (hold initial ~32 % de 8,5 s ≈ 2,7 s — on attend assez).
+  // Hold initial ~32 % de 5,5 s ≈ 1,8 s ; on attend 3,2 s pour être hors hold.
   const left0 = await subText.evaluate((el) => el.getBoundingClientRect().left);
   await page.waitForTimeout(3200);
   const left1 = await subText.evaluate((el) => el.getBoundingClientRect().left);
