@@ -600,15 +600,24 @@
   border-color: rgba(155, 215, 255, 0.72);
   background: rgba(15, 61, 92, 0.54);
 }
+/*
+ * Accueil courant sur photo : pourpre de marque STABLE.
+ * Ne pas utiliser var(--accent) ici — il s’inverse (clair #cf7ec1 en dark,
+ * sombre #6c2163 en light) alors que la rangée d’icônes reste en pastilles
+ * sombres fixes. Résultat : home « pastille jour » en mode nuit et l’inverse.
+ * Même logique que RSS (orange fixe) / café (ambre) sur le mât photo.
+ */
 .masthead:has(#bg-photo-layer.loaded) .masthead-home.is-active,
 .masthead:has(#bg-photo-layer.loaded) .masthead-home[aria-current="page"] {
   color: #fff;
-  background: color-mix(in srgb, var(--accent) 38%, rgba(0, 0, 0, 0.2));
-  border-color: color-mix(in srgb, var(--accent) 45%, rgba(255, 255, 255, 0.25));
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, transparent 55%),
+    color-mix(in srgb, #6c2163 58%, rgba(9, 14, 21, 0.5));
+  border-color: color-mix(in srgb, #cf7ec1 48%, rgba(255, 255, 255, 0.28));
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.2),
-    0 0 0 1px color-mix(in srgb, var(--accent) 25%, transparent),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    0 1px 2px rgba(0, 0, 0, 0.28),
+    0 0 0 1px color-mix(in srgb, #6c2163 32%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 /* Survols sur photo : rester dans le registre glass (pas d’accent plat). */
