@@ -263,9 +263,10 @@ test('CTA sports : titre long défile, jamais d’ellipsis …', async ({ page }
   const computedOverflow = await titleEl.evaluate((el) => getComputedStyle(el).textOverflow);
   expect(computedOverflow).toBe('clip');
 
-  // Le transform doit bouger (hold initial ~18 % de 5,5 s ≈ 1 s).
+  // Delay CSS 1.6 s + hold 18 % de 5,5 s ≈ 1 s → mouvement après ~2,6 s.
+  // (Un wait 2,2 s tombait encore dans le hold : flocon ~0,7 px.)
   const left0 = await titleEl.evaluate((el) => el.getBoundingClientRect().left);
-  await page.waitForTimeout(2200);
+  await page.waitForTimeout(3400);
   const left1 = await titleEl.evaluate((el) => el.getBoundingClientRect().left);
   expect(left1, 'le titre doit glisser (marquee L→R)').toBeLessThan(left0 - 1);
 
