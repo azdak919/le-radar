@@ -617,6 +617,7 @@ async function init() {
   bindFiltersPanel();
   bindNewsSearch();
   initPageScrollTop();
+  initHomeNavRefresh();
 
   try {
     const brandData = await fetch(appAsset('brand-colors.json')).then((r) => r.json());
@@ -8289,6 +8290,50 @@ function initPageScrollTop() {
   });
   window.addEventListener('scroll', sync, { passive: true });
   sync();
+}
+
+/**
+ * Liens Accueil (`data-home-nav`) : si on est déjà sur la page cible, scroll
+ * en haut + refresh soft du fil (`loadNews` silent) — jamais de reload plein
+ * écran, pour ne pas couper la radio en lecture. Sinon, navigation normale.
+ */
+function initHomeNavRefresh() {
+  if (IS_TUNER_EMBED) return;
+
+  const sameDocumentPath = (a, b) => {
+    const norm = (p) => {
+      let s = String(p || '/');
+      if (s.endsWith('/index.html')) s = s.slice(0, -10) || '/';
+      if (s.length > 1 && s.endsWith('/')) s = s.slice(0, -1);
+      return s || '/';
+    };
+    return norm(a) === norm(b);
+  };
+
+  document.addEventListener('click', (e) => {
+    const a = e.target?.closest?.('a[data-home-nav]');
+    if (!a || e.defaultPrevented) return;
+    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+    let target;
+    try {
+      target = new URL(a.href, location.href);
+    } catch {
+      return;
+    }
+    if (target.origin !== location.origin) return;
+    if (!sameDocumentPath(target.pathname, location.pathname)) return;
+
+    // Déjà sur l'accueil : pas de navigation → audio intact.
+    e.preventDefault();
+    try {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    } catch {
+      window.scrollTo(0, 0);
+    }
+    // Refresh soft : reprend news.json sans squelettes clignotants.
+    loadNews({ silent: true }).catch(() => { /* fil affiché reste valable */ });
+  });
 }
 
 function setNewsSearchOpen(open) {
