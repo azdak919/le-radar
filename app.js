@@ -1110,6 +1110,30 @@ function mastheadLocale() {
   return tag;
 }
 
+/**
+ * True si la puce date est lisible : pas d’ellipse sur #today-date, heure
+ * entière, puce à gauche des icônes. Le test scrollWidth seul rate le cas
+ * mobile 430 : date longue « tient », l’heure est clipée par overflow:hidden.
+ */
+function mastheadDateChipFits() {
+  if (!TODAY_DATE) return true;
+  if (TODAY_DATE.scrollWidth > TODAY_DATE.clientWidth + 0.5) return false;
+  const host = TODAY_DATE.closest('.masthead-date');
+  if (!host) return true;
+  const hostBox = host.getBoundingClientRect();
+  if (hostBox.width < 1) return true;
+  if (MASTHEAD_ACTIONS) {
+    const actionsBox = MASTHEAD_ACTIONS.getBoundingClientRect();
+    if (actionsBox.width > 0 && hostBox.right > actionsBox.left + 1) return false;
+  }
+  if (TODAY_TIME) {
+    const timeBox = TODAY_TIME.getBoundingClientRect();
+    if (timeBox.width > 1 && timeBox.right > hostBox.right + 1) return false;
+    if (TODAY_TIME.scrollWidth > TODAY_TIME.clientWidth + 0.5) return false;
+  }
+  return true;
+}
+
 function renderTodayDate() {
   if (!TODAY_DATE && !TODAY_TIME) return;
   const now = new Date();
@@ -1132,8 +1156,9 @@ function renderTodayDate() {
   if (TODAY_DATE) {
     for (const options of MASTHEAD_DATE_FORMATS) {
       TODAY_DATE.textContent = now.toLocaleDateString(locale, options);
-      // Date+heure 1 ligne : raccourcir tant que #today-date déborde (pas d’ellipse).
-      if (TODAY_DATE.scrollWidth <= TODAY_DATE.clientWidth + 0.5) break;
+      // Forcer reflow avant mesure (sinon clientWidth encore au format précédent).
+      void TODAY_DATE.offsetWidth;
+      if (mastheadDateChipFits()) break;
     }
   }
   // Si le libellé date change (format / jour), largeur météo peut bouger.

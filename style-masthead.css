@@ -334,8 +334,13 @@
     max-width: 100%;
   }
 }
-/* Stack lisible (date puis heure) sous ~400 px — 390 lab / iPhone. */
-@media (max-width: 399.98px) {
+/*
+ * Stack date puis heure ≤449 — 390 + 430 lab. En 1 ligne la date longue
+ * « tient » et l’heure est clipée (overflow:hidden → « · 14 »). Empiler
+ * libère la largeur pour l’année complète ; la cascade JS raccourcit si
+ * besoin (MARDI… trop long pour ~130 px).
+ */
+@media (max-width: 449.98px) {
   .masthead:has(#bg-photo-layer.loaded) .masthead-date {
     height: auto;
     min-height: 29px;
@@ -349,6 +354,8 @@
   .masthead:has(#bg-photo-layer.loaded) .masthead-date #today-date {
     flex: 0 1 auto;
     max-width: 100%;
+    /* Pas d’ellipse figée : la cascade MASTHEAD_DATE_FORMATS raccourcit. */
+    text-overflow: clip;
   }
   .masthead:has(#bg-photo-layer.loaded) .masthead-date .masthead-time {
     margin-left: 0;
