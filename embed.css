@@ -359,11 +359,12 @@ html[data-embed="tuner"] .tuner-dial:hover .tuner-now {
 }
 
 html[data-embed="tuner"] .tuner-now-name {
-  /* Parité barre bureau LE-RADAR (.tuner-now-name → Source Serif 4). */
-  font-family: var(--serif);
+  /* focus-group le-radar-tuner-sports-type-align (B) : stack UI sports (Inter). */
+  font-family: var(--sans);
   font-size: 13px;
-  line-height: 1.15;
-  font-weight: 600;
+  line-height: 1.35;
+  font-weight: 700;
+  letter-spacing: 0.01em;
   min-width: 0;
   max-width: 100%;
   overflow: hidden;
@@ -390,8 +391,11 @@ html[data-embed="tuner"] .tuner-now::after {
 }
 
 html[data-embed="tuner"] .tuner-now-sub {
+  font-family: var(--sans);
   font-size: 10.5px;
-  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
   color: var(--embed-muted);
   min-width: 0;
   max-width: 100%;
@@ -778,7 +782,7 @@ html[data-embed="tuner"] .tuner-nowair.is-swapping {
 
 html[data-embed="tuner"] .tuner-nowair-label {
   flex-shrink: 0;
-  /* Optical align with .tuner-nowair-title (13px / line-height 1.15) first line */
+  /* Optical align with .tuner-nowair-title first line */
   margin-top: 2px;
   font-family: var(--sans);
   font-size: 10px; /* même échelle que EN ONDES */
@@ -789,7 +793,7 @@ html[data-embed="tuner"] .tuner-nowair-label {
   color: var(--tuner-onair-idle);
   white-space: nowrap;
   writing-mode: horizontal-tb;
-  line-height: 1.15;
+  line-height: 1.35;
 }
 
 html[data-embed="tuner"] .tuner-nowair-body {
@@ -804,11 +808,12 @@ html[data-embed="tuner"] .tuner-nowair-body {
 
 html[data-embed="tuner"] .tuner-nowair-title {
   margin: 0;
-  /* Titre d’émission = serif éditorial (LE-RADAR .tuner-nowair-title). */
-  font-family: var(--serif);
+  /* le-radar-tuner-sports-type-align (B) : Inter / rythme sports, pas serif. */
+  font-family: var(--sans);
   font-size: 13px;
-  font-weight: 600;
-  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
   color: var(--embed-radio);
   white-space: nowrap;
   overflow: hidden;
@@ -825,8 +830,9 @@ html[data-embed="tuner"] .tuner-nowair-sub {
   margin: 0;
   font-family: var(--sans);
   font-size: 10.5px;
-  font-weight: 500;
-  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
   color: var(--embed-muted);
   white-space: nowrap;
   overflow: hidden;
@@ -1087,11 +1093,10 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
   }
 }
 
-/* Titres d’émission / poste : serif ; libellés UI : Inter — comme le-radar.ca */
+/* Info live dial + nowair : Inter (focus-group le-radar-tuner-sports-type-align B).
+   Plus de serif sur titres poste/émission — parité site + puces sports. */
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-now-name,
-html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair-title {
-  font-family: var(--serif);
-}
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair-title,
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-onair,
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair-label,
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair-sub,
