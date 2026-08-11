@@ -1017,8 +1017,10 @@ body {
   hyphens: none;
 }
 /*
- * Bureau : 2ᵉ ligne volontaire — « réunis au même endroit » / « all in one place »
- * seul (évite la coupure au milieu de « QUÉBEC, RÉUNIS… »).
+ * Bureau : exactement 2 lignes —
+ *   1) … du Québec,
+ *   2) réunis au même endroit
+ * Le lead ne doit PAS se re-couper (sinon « QUÉBEC, » seul au milieu).
  */
 @media (min-width: 721px) {
   .wordmark-full {
@@ -1026,16 +1028,19 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 0.12em;
+    max-width: min(44rem, 100%);
     overflow-wrap: normal;
     word-break: normal;
   }
-  .wordmark-full__lead,
-  .wordmark-full__tag {
+  .wordmark-full__lead {
     display: block;
-    max-width: 100%;
+    white-space: nowrap;
+    max-width: none;
   }
   .wordmark-full__tag {
+    display: block;
     letter-spacing: 0.14em;
+    white-space: nowrap;
   }
 }
 @media (max-width: 480px) {
