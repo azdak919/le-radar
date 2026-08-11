@@ -4,10 +4,9 @@
  * Visible uniquement sur localhost / 127.0.0.1 (ou ?lab= / ?wide=).
  * Ne s’injecte pas dans l’iframe lab (`?labFrame=1`) ni en prod le-radar.ca.
  *
- * Formats : largeur iframe — 390 / 430 / 768 / 900 / 1280 / 1600 / 1920 / plein.
- * Wide : ?wide=a|b|c|d|e (layouts CSS via data-wide-preview ; bascule sans reload).
- *
- * La rangée Wide est AU-DESSUS de Format pour ne pas passer sous le dock GNOME.
+ * Formats : largeurs iframe (media queries réelles). Si > écran hôte, scale
+ * proportionnel pour simuler QHD / 4K / UW sans moniteur physique.
+ * Wide : ?wide=a|b|c|d|e — rangée au-dessus de Format (hors dock GNOME).
  */
 (function () {
   'use strict';
@@ -18,16 +17,39 @@
   /** Ancien param focus-group — purgé des URL pour ne plus polluer. */
   const LEGACY_MID_PARAM = 'midwidth';
 
-  /** Formats d’écran (largeur iframe en px). null = page pleine fenêtre. */
+  /**
+   * Formats d’écran (largeur CSS / layout, pas device-pixel-ratio).
+   * Grandes tailles = marché grand public / moniteurs courants, pas niche 5K/8K.
+   * null = page pleine fenêtre hôte.
+   */
   const FORMATS = {
     full: { id: 'full', label: 'Plein', w: null, hint: 'Fenêtre réelle du navigateur' },
     phone: { id: 'phone', label: '390', w: 390, hint: 'Téléphone ~iPhone' },
     phablet: { id: 'phablet', label: '430', w: 430, hint: 'Grand téléphone' },
     tablet: { id: 'tablet', label: '768', w: 768, hint: 'Tablette portrait' },
     mid: { id: 'mid', label: '900', w: 900, hint: 'Demi-écran / mid' },
-    desktop: { id: 'desktop', label: '1280', w: 1280, hint: 'Bureau compact (réf. actuelle)' },
-    wide1600: { id: 'wide1600', label: '1600', w: 1600, hint: 'Grand bureau' },
-    wide1920: { id: 'wide1920', label: '1920', w: 1920, hint: 'Full HD' },
+    desktop: { id: 'desktop', label: '1280', w: 1280, hint: 'Bureau compact (réf. LE-RADAR actuelle)' },
+    wide1440: { id: 'wide1440', label: '1440', w: 1440, hint: 'Laptop courant / fenêtre large' },
+    wide1600: { id: 'wide1600', label: '1600', w: 1600, hint: 'Grand bureau / laptop 16:10' },
+    wide1920: { id: 'wide1920', label: '1920', w: 1920, hint: 'Full HD — moniteur le plus vendu' },
+    qhd: { id: 'qhd', label: '2560', w: 2560, hint: 'QHD 1440p — moniteurs 27″ courants' },
+    ultrawide: { id: 'ultrawide', label: '3440', w: 3440, hint: 'Ultrawide 34″ (3440×1440) — gaming / bureau' },
+    uhd: { id: 'uhd', label: '3840', w: 3840, hint: '4K UHD — moniteurs 27–32″ récents' },
+  };
+
+  /** Largeur → clé (parse ?lab=2560). */
+  const WIDTH_TO_FORMAT = {
+    390: 'phone',
+    430: 'phablet',
+    768: 'tablet',
+    900: 'mid',
+    1280: 'desktop',
+    1440: 'wide1440',
+    1600: 'wide1600',
+    1920: 'wide1920',
+    2560: 'qhd',
+    3440: 'ultrawide',
+    3840: 'uhd',
   };
 
   const WIDE_OPTIONS = {
@@ -70,17 +92,18 @@
       if (!raw || raw === '1' || raw === 'full') return 'full';
       if (FORMATS[raw]) return raw;
       const n = parseInt(raw, 10);
-      if (n === 390) return 'phone';
-      if (n === 430) return 'phablet';
-      if (n === 768) return 'tablet';
-      if (n === 900) return 'mid';
-      if (n === 1280) return 'desktop';
-      if (n === 1600) return 'wide1600';
-      if (n === 1920) return 'wide1920';
+      if (WIDTH_TO_FORMAT[n]) return WIDTH_TO_FORMAT[n];
       return 'full';
     } catch {
       return 'full';
     }
+  }
+
+  /** Scale pour faire tenir une largeur simulée dans la fenêtre hôte. */
+  function shellScaleFor(targetW) {
+    const hostW = Math.max(320, window.innerWidth || 1920);
+    // Marge minime ; on veut maximiser la surface utile.
+    return Math.min(1, hostW / targetW);
   }
 
   function currentWide() {
@@ -236,6 +259,7 @@
       if (shell) shell.remove();
       document.documentElement.classList.remove('local-lab-framed');
       document.body?.classList.remove('local-lab-framed');
+      window.removeEventListener('resize', onHostResizeForShell);
       return;
     }
 
@@ -254,9 +278,67 @@
       document.body.appendChild(shell);
     }
 
-    shell.dataset.width = String(fmt.w);
-    shell.style.width = `${fmt.w}px`;
-    frame.src = frameSrc();
+    layoutShell(shell, frame, fmt.w);
+    // Ne recharger l’iframe que si la src utile a changé (évite flash au resize).
+    const nextSrc = frameSrc();
+    if (frame.dataset.labSrc !== nextSrc) {
+      frame.dataset.labSrc = nextSrc;
+      frame.src = nextSrc;
+    }
+    window.removeEventListener('resize', onHostResizeForShell);
+    window.addEventListener('resize', onHostResizeForShell, { passive: true });
+  }
+
+  function layoutShell(shell, frame, targetW) {
+    const scale = shellScaleFor(targetW);
+    const hostH = Math.max(400, window.innerHeight || 900);
+    // Largeur logique = targetW → media queries dans l’iframe voient la vraie largeur.
+    // Scale CSS pour que ça tienne sur un 1080p physique.
+    shell.dataset.width = String(targetW);
+    shell.dataset.scale = scale.toFixed(3);
+    shell.style.width = `${targetW}px`;
+    shell.style.maxWidth = 'none';
+    shell.style.height = `${Math.round(hostH / scale)}px`;
+    shell.style.top = '0';
+    shell.style.bottom = 'auto';
+    shell.style.left = '50%';
+    shell.style.transform = `translateX(-50%) scale(${scale})`;
+    shell.style.transformOrigin = 'top center';
+    if (frame) {
+      frame.style.width = '100%';
+      frame.style.height = '100%';
+    }
+    paintFormatWidthLabel();
+  }
+
+  function onHostResizeForShell() {
+    const shell = document.getElementById('local-lab-shell');
+    const frame = document.getElementById('local-lab-frame');
+    const fmt = FORMATS[currentFormat()];
+    if (!shell || !fmt?.w) return;
+    layoutShell(shell, frame, fmt.w);
+  }
+
+  function paintFormatWidthLabel() {
+    const w = document.getElementById('local-lab-format-w');
+    if (!w) return;
+    const key = currentFormat();
+    const fw = FORMATS[key]?.w;
+    if (!fw) {
+      w.textContent = `${window.innerWidth}px`;
+      w.title = 'Largeur fenêtre réelle';
+      return;
+    }
+    const scale = shellScaleFor(fw);
+    const pct = Math.round(scale * 100);
+    const tag = FORMATS[key]?.label || fw;
+    if (scale < 0.999) {
+      w.textContent = `${fw}px · ×${pct}%`;
+      w.title = `Simulation ${fw}px (media queries) — affichée à ${pct}% pour tenir dans ta fenêtre`;
+    } else {
+      w.textContent = `${fw}px · 1:1`;
+      w.title = FORMATS[key]?.hint || `${fw}px`;
+    }
   }
 
   function rowEl() {
@@ -295,7 +377,7 @@
       'box-shadow:0 10px 40px -12px rgba(0,0,0,0.55)',
       'font:600 12px/1.2 system-ui,sans-serif',
       'color:#e8eaed',
-      'max-width:min(98vw,760px)',
+      'max-width:min(98vw,920px)',
       'pointer-events:auto',
     ].join(';');
 
@@ -355,13 +437,9 @@
 
     const w = document.createElement('span');
     w.id = 'local-lab-format-w';
-    w.style.cssText = 'opacity:0.5;font-size:10px;margin-left:4px;font-variant-numeric:tabular-nums';
-    const paintW = () => {
-      const fw = FORMATS[currentFormat()]?.w;
-      w.textContent = fw ? `${fw}px · lab` : `${window.innerWidth}px`;
-    };
-    paintW();
-    window.addEventListener('resize', paintW, { passive: true });
+    w.style.cssText = 'opacity:0.5;font-size:10px;margin-left:4px;font-variant-numeric:tabular-nums;max-width:28ch';
+    paintFormatWidthLabel();
+    window.addEventListener('resize', paintFormatWidthLabel, { passive: true });
     fmtRow.appendChild(w);
     bar.appendChild(fmtRow);
 
