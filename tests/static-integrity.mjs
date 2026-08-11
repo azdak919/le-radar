@@ -916,6 +916,18 @@ assert(
     && appJs.includes('sportsCtaPaused'),
   'app.js : rotation CTA (~12 s), au pointeur fin seulement, en pause au survol',
 );
+// Régression 2026-08-11 : SPORTS_CTA_ROTATE_MEDIA était déclaré *après* le
+// matchMedia(…) top-level → TDZ avalée par try/catch → mq null → CTA figée.
+{
+  const rotMediaIdx = appJs.indexOf("const SPORTS_CTA_ROTATE_MEDIA");
+  const mqInitIdx = appJs.indexOf('matchMedia(SPORTS_CTA_ROTATE_MEDIA)');
+  assert(
+    rotMediaIdx >= 0
+      && mqInitIdx >= 0
+      && rotMediaIdx < mqInitIdx,
+    'app.js : SPORTS_CTA_ROTATE_MEDIA déclaré avant matchMedia (pas de TDZ → CTA figée)',
+  );
+}
 // Le marqueur temporel et la fraîcheur sont rendus dans la carte : title seul
 // est invisible au doigt (garde-fous marqueur-non-tronque et fraicheur-visible).
 assert(

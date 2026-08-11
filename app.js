@@ -1839,6 +1839,14 @@ let sportsNextSlot = 0;
 let sportsSlotTimers = [];
 /** Rotation de la CTA suspendue (survol ou focus) — garde-fou `pause-survol-focus`. */
 let sportsCtaPaused = false;
+/**
+ * La rotation n’existe que là où un mécanisme de pause existe (garde-fou
+ * `rotation-pointeur-fin`). Sur tactile il n’y a ni survol ni focus : WCAG 2.2.2
+ * ne serait pas satisfait, donc l’accroche s’y fige au chargement.
+ * ⚠️ Doit être déclaré **avant** l’init de `sportsCtaRotateMq` (sinon TDZ →
+ * matchMedia avalé par try/catch → mq null → CTA jamais en rotation).
+ */
+const SPORTS_CTA_ROTATE_MEDIA = '(hover: hover) and (pointer: fine)';
 /** Surfaces où un mécanisme de pause existe réellement (souris, pas doigt). */
 let sportsCtaRotateMq = null;
 try {
@@ -1913,12 +1921,6 @@ const SPORTS_CTA_ROLL_MS = 280;
  * toujours un cran plus posé). Survol = pause (garde-fou rotation-pointeur-fin).
  */
 const SPORTS_CTA_DWELL_MS = 12000;
-/**
- * La rotation n’existe que là où un mécanisme de pause existe (garde-fou
- * `rotation-pointeur-fin`). Sur tactile il n’y a ni survol ni focus : WCAG 2.2.2
- * ne serait pas satisfait, donc l’accroche s’y fige au chargement.
- */
-const SPORTS_CTA_ROTATE_MEDIA = '(hover: hover) and (pointer: fine)';
 /** Sortie douce d’une puce score avant replaceWith (synchro CSS is-leaving). */
 const SPORTS_CHIP_LEAVE_MS = 420;
 /** Popularité sports étudiants QC (aligné page /sports/). */
@@ -3413,6 +3415,12 @@ function fillSportsCtaLayer(layer, slide) {
  */
 function sportsCtaMayRotate() {
   if (sportsReducedMotion) return false;
+  // Lazy re-init : si l’init top-level a raté (TDZ, iframe, etc.), retenter.
+  if (!sportsCtaRotateMq && typeof window !== 'undefined' && window.matchMedia) {
+    try {
+      sportsCtaRotateMq = window.matchMedia(SPORTS_CTA_ROTATE_MEDIA);
+    } catch { /* ignore */ }
+  }
   if (!sportsCtaRotateMq?.matches) return false;
   return sportsCtaLabelPool().length > 1;
 }
