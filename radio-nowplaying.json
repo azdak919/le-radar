@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-08-11T11:41:41.235Z",
+  "updatedAt": "2026-08-11T12:56:33.954Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Mardi Champ Gauche",
-        "source": "schedule",
+        "source": "api-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Mardi Champ Gauche",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T11:41:25.216Z"
+      "checkedAt": "2026-08-11T12:56:22.040Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Câlin collectif",
-        "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/calins-collectifs"
-      },
-      "next": {
         "title": "Raconte ton quartier",
         "source": "schedule",
         "start": "08:00",
         "end": "09:00",
         "url": "https://cism893.ca/emissions/raconte-ton-quartier"
       },
+      "next": {
+        "title": "Second poteau",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://cism893.ca/emissions/second-poteau"
+      },
       "track": "",
-      "showTitle": "Câlin collectif",
+      "showTitle": "Raconte ton quartier",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T11:41:27.311Z"
+      "checkedAt": "2026-08-11T12:56:24.452Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Tuesday Morning After Pt1",
-        "source": "api-live",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
         "title": "Tuesday Morning After Pt2",
         "source": "api-live",
         "start": "08:00",
         "end": "09:00"
       },
+      "next": {
+        "title": "Basa Basa",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Tuesday Morning After Pt1",
+      "showTitle": "Tuesday Morning After Pt2",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T11:41:29.903Z"
+      "checkedAt": "2026-08-11T12:56:27.288Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,32 +108,32 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T11:41:31.514Z"
+      "checkedAt": "2026-08-11T12:56:30.460Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Folkswagen",
-        "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
         "title": "Palmarès CFAK",
         "source": "schedule-live",
         "start": "08:00",
         "end": "18:30"
       },
+      "next": {
+        "title": "L'Aut'Rock",
+        "source": "schedule-live",
+        "start": "18:30",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T11:41:32.340Z"
+      "checkedAt": "2026-08-11T12:56:31.179Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +146,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Ibeyi - Lucky",
+      "track": "Kelsey Lu - Reaper",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-11T11:41:40.883Z"
+      "checkedAt": "2026-08-11T12:56:33.603Z"
     }
   }
 }
