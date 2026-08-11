@@ -967,6 +967,25 @@ assert(
     && !/\.sports-chip--cta:not\(\.is-overflowing\)[^{]*\.sports-chip__cta-label\s*\{[^}]*white-space:\s*nowrap/.test(cssFlat),
   'CTA : sous-ligne marqueable ; pas d’ellipse nowrap sur toute la couche label',
 );
+// Règle dure le-radar : jamais text-overflow:ellipsis sur les textes qui
+// défilent (scores, titre CTA, sous-ligne). Overflow → marquee L→R, sinon clip.
+// (On ignore les commentaires CSS : un « Interdit : ellipsis » ne doit pas
+// faire rougir l’assert.)
+{
+  const stripCssComments = (block) => block
+    .replace(/\/\*[\s\S]*?\*\//g, ' ')
+    .replace(/\/\/[^\n]*/g, ' ');
+  const sportsTextBlocks = [
+    ...styleCss.matchAll(/\.sports-chip__line-inner\s*\{[^}]*\}/g),
+    ...styleCss.matchAll(/\.sports-chip__cta-text\s*\{[^}]*\}/g),
+    ...styleCss.matchAll(/\.sports-chip__cta-sub-text\s*\{[^}]*\}/g),
+  ].map((m) => stripCssComments(m[0]));
+  assert(
+    sportsTextBlocks.length >= 3
+      && sportsTextBlocks.every((block) => !/text-overflow\s*:\s*ellipsis/.test(block)),
+    'style : aucun text-overflow:ellipsis sur line-inner / cta-text / cta-sub-text',
+  );
+}
 // Puces scores : indépendantes + dwell lecture + marquee aller-retour complet.
 assert(
   appJs.includes('scheduleSportsSlot')

@@ -2282,8 +2282,9 @@ function sportsCtaPinned() {
  * Le bandeau est-il trop étroit pour les chips peints ?
  * Parité météo : on ne se fie pas seulement au bucket largeur — on mesure
  * après paint. La CTA « Au tableau » est l’ancre protégée (comme MTL/QC) :
- * si elle est écrasée, on retire une carte score. Les libellés CTA peuvent
- * ellipsis ; on ne compare pas leur largeur « naturelle » (trop agressif).
+ * si elle est écrasée, on retire une carte score. Les libellés CTA défilent
+ * (marquee, jamais d’ellipsis) : on ne compare pas leur largeur « naturelle »
+ * (trop agressif — ce n’est pas un motif pour retirer une carte score).
  */
 function sportsStripCramped() {
   const strip = MASTHEAD_SPORTS_STRIP;
@@ -2987,13 +2988,13 @@ function sportsCtaActiveLabel(chip) {
  * · Marqueur (PROCHAIN / Aujourd’hui…) : fixe, hors marquee
  *   (garde-fou `marqueur-non-tronque`).
  * · Titre (`.sports-chip__cta-text`) et sous-ligne (`.sports-chip__cta-sub-text`)
- *   défilent L→R s’ils débordent — jamais d’ellipse figée sur l’info.
+ *   défilent L→R s’ils débordent — **jamais** d’ellipsis « … » (clip + marquee).
  */
 function fillSportsCtaLayer(layer, slide) {
   layer.replaceChildren();
   // Ligne 1 : marqueur + accroche côte à côte. Le marqueur est un frère de la
   // fenêtre de défilement, jamais son contenu — il ne peut donc ni être rogné
-  // par l’ellipse ni partir avec le marquee.
+  // ni partir avec le marquee.
   const head = document.createElement('span');
   head.className = 'sports-chip__cta-head';
   const eyebrow = slide.ctaEyebrow || '';
@@ -3177,13 +3178,18 @@ function bindSportsCtaPause(chip) {
 
 /**
  * Mesure un couple viewport/inner : overflow en px (0 si tout tient).
- * Sans retirer les classes d’animation (évite de relancer le marquee).
+ * Toujours lever max-width le temps de la mesure (même si is-overflowing est
+ * déjà posé) : certains moteurs gardent un scrollWidth plafonné tant que la
+ * contrainte CSS est active, ce qui laissait l’ellipsis figée sur le titre.
+ * On ne touche pas aux classes d’animation (évite de relancer le marquee).
  */
-function sportsMeasureOverflow(viewport, inner, hadOverflow) {
+function sportsMeasureOverflow(viewport, inner, _hadOverflow) {
   if (!viewport || !inner) return 0;
-  if (!hadOverflow) inner.style.maxWidth = 'none';
+  const prevMax = inner.style.maxWidth;
+  inner.style.maxWidth = 'none';
+  // scrollWidth du texte à largeur naturelle vs fenêtre de clip.
   const overflow = Math.max(0, inner.scrollWidth - viewport.clientWidth);
-  if (!hadOverflow) inner.style.maxWidth = '';
+  inner.style.maxWidth = prevMax;
   return overflow;
 }
 
@@ -3722,6 +3728,16 @@ function renderSportsStrip() {
     // Un second frame : les largeurs flex sont stables avant de mesurer.
     window.requestAnimationFrame(() => {
       fitSportsStripAfterPaint();
+      // Polices webfont : une mesure trop tôt sous-estime la largeur → pas de
+      // marquee et texte clipé (ou, avant, ellipsis « … »). Remesurer une fois
+      // les polices prêtes pour garantir le défilement L→R du texte entier.
+      const fonts = document.fonts;
+      if (fonts?.ready && typeof fonts.ready.then === 'function') {
+        fonts.ready.then(() => {
+          if (!MASTHEAD_SPORTS_STRIP?.isConnected) return;
+          refreshSportsChipScroll();
+        }).catch(() => { /* ignore */ });
+      }
     });
   });
 }
