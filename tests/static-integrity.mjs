@@ -1008,23 +1008,28 @@ assert(
     'style : aucun text-overflow:ellipsis sur line-inner / sub-text / cta-text / cta-sub-text',
   );
 }
-// Puces scores 2 lignes : noms en clair + date ; overflow → marquee L→R (mêmes
-// keyframes / durée que la CTA), jamais d’ellipsis « … ».
+// Puces scores 2 lignes : noms en clair + date ; overflow → marquee L→R,
+// jamais d’ellipsis « … ». Match chips : marquee 8 s (plus lent que CTA 5,5 s).
 assert(
   appJs.includes('sports-chip--match')
     && appJs.includes('sports-chip__body')
     && appJs.includes('sports-chip__sub-text')
     && appJs.includes('sportsPlainTeamName')
+    && appJs.includes('sportsChipTeamShort')
+    && appJs.includes('sportsPlaceEventShort')
     && appJs.includes("g.home === false ? 'à' : 'reçoit'")
+    && /SPORTS_MATCH_SCROLL_ONE_WAY_MS\s*=\s*8000/.test(appJs)
+    && /SPORTS_RECENT_RESULT_MS/.test(appJs)
+    && appJs.includes('recentResults')
     && styleCss.includes('sports-chip--match')
     && styleCss.includes('sports-chip__body')
     && styleCss.includes('.sports-chip--match .sports-chip__sub')
+    && /sports-chip--match[^{]*\{[^}]*--sports-scroll-duration:\s*8s/.test(cssFlat)
     && /:not\(\.sports-chip--cta\)\.is-overflowing \.sports-chip__line-inner/.test(cssFlat)
     && /:not\(\.sports-chip--cta\)\.is-sub-overflowing \.sports-chip__sub-text/.test(cssFlat)
     && styleCss.includes('@keyframes sports-chip-scroll')
-    && styleCss.includes('@keyframes sports-chip-scroll-sub')
-    && styleCss.includes('--sports-scroll-duration: 5.5s'),
-  'puces scores : 2 lignes noms+date ; marquee L→R titre+sous-ligne (parité CTA, 0 ellipsis)',
+    && styleCss.includes('@keyframes sports-chip-scroll-sub'),
+  'puces scores : 2 lignes ; place/voile ; pool <4 j ; marquee 8s L→R ; 0 ellipsis',
 );
 // Puces scores : indépendantes + dwell lecture + marquee aller-retour complet.
 assert(
