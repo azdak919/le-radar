@@ -1116,6 +1116,21 @@ assert(
     && appJs.includes('le-radar-weather.azdak.workers.dev'),
   'app.js : météo lab local (fixture) + Worker weather-cache',
 );
+// Toponymes météo : ville centre Vaudreuil-Dorion ; Manawan ≠ slug MM manawan (SK).
+assert(
+  appJs.includes("id: 'vaudreuil-dorion'")
+    && appJs.includes("name: 'Vaudreuil-Dorion'")
+    && !appJs.includes("id: 'vaudreuil-soulanges'")
+    && appJs.includes("name: 'Manawan'")
+    && appJs.includes("manouane/actuelle")
+    && !/weatherUrl:[^,\n]*manawan\/actuelle/.test(appJs)
+    && appJs.includes("name: 'Kahnawà:ke'")
+    && appJs.includes('kahnawake-14/actuelle')
+    && appJs.includes("nation: 'Anishinabeg'")
+    && appJs.includes("nation: 'Huron-Wendat'")
+    && appJs.includes("nation: 'Wolastoqiyik Wahsipekuk'"),
+  'app.js : météo — Vaudreuil-Dorion + noms/liens nations (Manawan→manouane)',
+);
 // Worker weather : CORS localhost (parité nowplaying / bg-rotation).
 {
   const wxWorker = existsSync(join(root, 'workers/weather-cache/src/index.js'))
