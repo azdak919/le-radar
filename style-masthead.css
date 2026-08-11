@@ -206,36 +206,41 @@
 }
 
 /*
- * Mât sur photo — focus-group le-radar-masthead-photo-chrome C (soft glass).
- * Date / slogan / crédit : plaque locale semi-transparente (pas pill bouton).
- * Wordmark LE-RADAR hors plaque. Ombres légères en renfort.
- *
- * Date : **une ligne** « MARDI … 2026 · 13:43 ». max-width plafonné pour ne
- * pas étouffer la météo (la cascade MASTHEAD_DATE_FORMATS raccourcit si besoin).
+ * Mât sur photo — focus-group le-radar-masthead-photo-chrome C.
+ * Slogan / crédit : soft glass. Date : **même langage que les cartes météo**
+ * (hauteur 29px, radius 5px, lavis sombre, bordure claire) — une ligne
+ * « MARDI … · 13:43 ». max-width plafonné pour laisser l’air à la météo.
  */
 .masthead:has(#bg-photo-layer.loaded) .masthead-date {
   display: inline-flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  align-items: baseline;
-  gap: 0.4em;
-  /* Plafond largeur date : laisse la météo garder ≥2–3 cartes si possible */
+  align-items: center;
+  gap: 5px;
+  box-sizing: border-box;
+  height: 29px;
   max-width: min(34vw, 11.25rem);
-  padding: 0.28rem 0.55rem;
-  border-radius: 0.55rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(12, 14, 18, 0.48);
-  backdrop-filter: blur(8px) saturate(1.05);
-  -webkit-backdrop-filter: blur(8px) saturate(1.05);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.98);
+  padding: 0 7px;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  /* Même recette que .masthead-weather__city sur photo */
+  background:
+    linear-gradient(90deg, rgba(200, 180, 120, 0.14) 0%, transparent 55%),
+    rgba(22, 24, 30, 0.82);
+  backdrop-filter: blur(10px) saturate(1.1);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.35),
+    0 3px 12px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  color: rgba(236, 238, 242, 0.96);
   -webkit-text-stroke: 0;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  line-height: 1.25;
-  text-shadow:
-    0 0 1px rgba(0, 0, 0, 0.4),
-    0 1px 2px rgba(0, 0, 0, 0.45);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.03em;
+  line-height: 1.15;
+  text-shadow: none;
+  text-transform: uppercase;
 }
 .masthead:has(#bg-photo-layer.loaded) .masthead-date #today-date {
   display: block;
@@ -244,8 +249,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: inherit;
+  line-height: 1.15;
 }
-/* Heure sur la même ligne, séparée par · */
+/* Heure = même ligne, rôle « temp » (plus dense, tabular) */
 .masthead:has(#bg-photo-layer.loaded) .masthead-date .masthead-time {
   position: static !important;
   top: auto !important;
@@ -254,23 +261,29 @@
   display: inline;
   flex: 0 0 auto;
   margin: 0;
+  margin-left: 2px;
   padding: 0;
-  font-size: 0.88em;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  opacity: 0.9;
-  line-height: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  opacity: 1;
+  line-height: 1.15;
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  color: inherit;
+  text-transform: none;
 }
 .masthead:has(#bg-photo-layer.loaded) .masthead-date .masthead-time::before {
   content: "·";
-  margin-right: 0.35em;
+  margin-right: 0.3em;
+  font-weight: 650;
   opacity: 0.55;
-  font-weight: 500;
 }
 [data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-date {
-  background: rgba(8, 10, 14, 0.52);
-  border-color: rgba(255, 255, 255, 0.1);
+  background:
+    linear-gradient(90deg, rgba(200, 180, 120, 0.12) 0%, transparent 55%),
+    rgba(22, 24, 30, 0.86);
+  border-color: rgba(255, 255, 255, 0.14);
 }
 .masthead:has(#bg-photo-layer.loaded) .wordmark {
   position: relative;
@@ -412,7 +425,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .masthead:has(#bg-photo-layer.loaded) .masthead-date,
+  .masthead:has(#bg-photo-layer.loaded) .masthead-date {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(22, 24, 30, 0.92);
+  }
   .masthead:has(#bg-photo-layer.loaded) .wordmark-full,
   .masthead:has(#bg-photo-layer.loaded) .bg-photo-credit {
     backdrop-filter: none;
