@@ -89,7 +89,7 @@ const MARKERS = {
  * `RADAR:FOOTER` et le générateur y injecte exactement le même bloc. C'est ce
  * qui garantit qu'il n'existe plus qu'une seule définition du pied de page.
  *
- * `home` retire le lien « retour à l'accueil » sur l'accueil lui-même.
+ * `home` pose aria-current sur Accueil (le lien reste pour scroll + refresh).
  * `indent` doit correspondre à l'indentation du marqueur dans le fichier.
  */
 const FOOTER_PAGES = [
