@@ -20,6 +20,11 @@
 const SITE_NAME = 'LE-RADAR.ca';
 const TAGLINE_FR = 'Journaux, radios et sports étudiants du Québec, réunis au même endroit';
 const TAGLINE_EN = 'Québec student newspapers, campus radio and sports, all in one place';
+/** Coupure bureau : 2ᵉ ligne = « réunis… » / « all in one place » seul. */
+const TAGLINE_FR_LEAD = 'Journaux, radios et sports étudiants du Québec,';
+const TAGLINE_FR_TAG = 'réunis au même endroit';
+const TAGLINE_EN_LEAD = 'Québec student newspapers, campus radio and sports,';
+const TAGLINE_EN_TAG = 'all in one place';
 
 /** Marque publique et signature institutionnelle du pied de page.
  *  La signature reste en français sur le volet anglais : c'est un nom propre. */
@@ -238,6 +243,8 @@ const T = {
   fr: {
     lang: 'fr-CA',
     tagline: TAGLINE_FR,
+    taglineLead: TAGLINE_FR_LEAD,
+    taglineTag: TAGLINE_FR_TAG,
     home: 'Accueil',
     directory: 'Les médias étudiants',
     directoryTitle: 'Les médias étudiants du Québec — journaux et radios de campus',
@@ -392,6 +399,8 @@ const T = {
   en: {
     lang: 'en-CA',
     tagline: TAGLINE_EN,
+    taglineLead: TAGLINE_EN_LEAD,
+    taglineTag: TAGLINE_EN_TAG,
     home: 'Home',
     directory: 'Student media',
     directoryTitle: 'Québec student media — campus newspapers and radio stations',
@@ -1090,7 +1099,7 @@ ${(Array.isArray(extraScripts) ? extraScripts : []).map((src) => `    <script sr
         <div class="masthead-brand">
           <a href="${up}" class="wordmark">
             <span class="wordmark-mark"><img class="wordmark-logo" src="${up}assets/icon.svg" width="48" height="48" alt="" aria-hidden="true"><span class="wordmark-brand notranslate" translate="no">LE-RADAR.ca</span></span>
-            <span class="wordmark-full">${escapeHtml(t.tagline)}</span>
+            <span class="wordmark-full"><span class="wordmark-full__lead">${escapeHtml(t.taglineLead)}</span> <span class="wordmark-full__tag">${escapeHtml(t.taglineTag)}</span></span>
           </a>
         </div>
       </div>

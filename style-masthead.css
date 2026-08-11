@@ -311,7 +311,10 @@
 }
 /* Slogan : soft glass (métadonnée, pas CTA) — wordmark hors plaque */
 .masthead:has(#bg-photo-layer.loaded) .wordmark-full {
-  display: inline-block;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.12em;
   max-width: min(90vw, 22rem);
   margin-top: 0.35rem;
   padding: 0.35rem 0.65rem;
@@ -332,6 +335,13 @@
   -moz-osx-font-smoothing: grayscale;
   white-space: normal;
   text-align: center;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+.masthead:has(#bg-photo-layer.loaded) .wordmark-full__lead,
+.masthead:has(#bg-photo-layer.loaded) .wordmark-full__tag {
+  display: block;
+  max-width: 100%;
 }
 [data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full {
   background: rgba(8, 10, 14, 0.52);
