@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-11T22:12:36.535Z",
+  "updated": "2026-08-11T23:50:44.001Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 131,
-  "pending": 12,
+  "cited": 130,
+  "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 17,
-  "updatedCount": 6,
-  "citedNew": 4,
-  "fallbackNew": 13,
+  "checked": 19,
+  "updatedCount": 8,
+  "citedNew": 5,
+  "fallbackNew": 14,
   "samples": [
     {
       "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
@@ -53,6 +53,20 @@
       "credit": "Photo credit: The Link",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "source": "Quartier Libre",
+      "credit": "Photo : Maryse Boyce",
+      "cited": true,
+      "method": "figcaption-copyright"
     }
   ]
 }
