@@ -359,6 +359,10 @@ const NEWS_SEARCH_CLEAR  = document.getElementById('news-search-clear');
 const NEWS_SEARCH_HINT   = document.getElementById('news-search-hint');
 const TODAY_DATE     = document.getElementById('today-date');
 const TODAY_TIME     = document.getElementById('today-time');
+/** Dernier libellé date (sans heure) — pour ne re-fit météo que si le texte change.
+ *  DOIT être avant `init()` : renderTodayDate lit/écrit cette clé au bootstrap
+ *  (sinon TDZ → init failed → météo/sports morts). */
+let mastheadDateLabelKey = '';
 
 /**
  * Formats de date du mât, du plus complet au plus court.
@@ -1094,9 +1098,6 @@ function mastheadLocale() {
   return tag;
 }
 
-/** Dernier libellé date (sans heure) — pour ne re-fit météo que si le texte change. */
-let mastheadDateLabelKey = '';
-
 function renderTodayDate() {
   if (!TODAY_DATE && !TODAY_TIME) return;
   const now = new Date();
@@ -1126,16 +1127,18 @@ function renderTodayDate() {
   const dateKey = TODAY_DATE?.textContent || '';
   const dateChanged = dateKey !== mastheadDateLabelKey;
   mastheadDateLabelKey = dateKey;
-  if (dateChanged && typeof scheduleMastheadWeatherLayout === 'function') {
-    scheduleMastheadWeatherLayout();
-  }
-  if (typeof queueSportsWeatherParitySync === 'function') {
+  // Différé : `init()` appelle renderTodayDate() au milieu du fichier, avant
+  // les `let` météo/sports (mastheadWeatherResizeFrame, sportsWeatherParityRaf…).
+  // Un appel synchrone → TDZ → « init failed » et météo/sports morts. setTimeout(0)
+  // laisse finir le top-level, puis les fonctions (hoistées) touchent un état vivant.
+  window.setTimeout(() => {
+    if (dateChanged) scheduleMastheadWeatherLayout();
     queueSportsWeatherParitySync();
     if (dateChanged) {
       window.setTimeout(() => queueSportsWeatherParitySync(), 200);
       window.setTimeout(() => queueSportsWeatherParitySync(), 500);
     }
-  }
+  }, 0);
 }
 
 /** Heure et jour à Québec, même si la personne consulte le site ailleurs. */
