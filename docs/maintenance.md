@@ -110,7 +110,7 @@ porte jamais la barre radio.
 | `data/quebec-nations-backgrounds.json` | Banque **Premières Nations & Inuit** (max 50) — **mât + pomo** ; **11 nations QC** | `maintain-quebec-backgrounds.js --profile nations` |
 | `quebec-nations-backgrounds-data.js` | Export nations (`QUEBEC_NATIONS_BACKGROUNDS`, champs `nationId` / `nation`) | idem |
 | `scripts/quebec-nations-taxonomy.js` | Taxonomie des 11 nations + détection / couverture | bot nations |
-| `data/quebec-favorites-backgrounds.json` | **Favorites manuelles** (permanentes, hors purge bots) | signalement manuel / `pin-background.js` |
+| `data/quebec-favorites-backgrounds.json` | **Favorites manuelles** (permanentes = hors purge bots ; l’affichage reste filtré par saison) | signalement manuel / `pin-background.js` |
 | `quebec-favorites-backgrounds-data.js` | Export favorites (`QUEBEC_FAVORITES_BACKGROUNDS`) | idem |
 | `scripts/quebec-backgrounds-blacklist.js` | **Hard-ban durable** (URL/File/id) — anti-réintroduction | curation manuelle |
 | `scripts/sync-quebec-backgrounds.js` | Sync offline JSON → JS + purge ban (`npm run bank:sync`) | agent / CI locale |

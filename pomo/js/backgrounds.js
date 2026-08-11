@@ -572,17 +572,14 @@ function getRandomBgIndex(culture = null) {
       minAdjacent: 16,
     });
     if (r.items && r.items.length) {
+      // permanent = collection hors purge, pas affichage hors saison
       pool = r.items.map((it) => it._idx).filter((i) => i != null);
-      // Favorites permanent toujours dans le pool
-      for (let i = 0; i < BACKGROUNDS.length; i++) {
-        if (BACKGROUNDS[i] && BACKGROUNDS[i].permanent && !pool.includes(i) && !_failedBg.has(i)) {
-          pool.push(i);
-        }
-      }
       if (typeof console !== 'undefined' && console.info) {
+        const nPerm = pool.filter((i) => BACKGROUNDS[i] && BACKGROUNDS[i].permanent).length;
         console.info(
           `[pomo-bg] saison 4=${r.season4} · 6=${r.season6} · tier=${r.tier}` +
-            ` · ${pool.length}/${BACKGROUNDS.length}`
+            ` · ${pool.length}/${BACKGROUNDS.length}` +
+            (nPerm ? ` · perm in-season ${nPerm}` : '')
         );
       }
     }
