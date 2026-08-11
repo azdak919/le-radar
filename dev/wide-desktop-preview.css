@@ -603,98 +603,41 @@ html[data-wide-preview="e"] {
 }
 
 /* ═══════════════════════════════════════════════════
-   Wide / super-wide — bandeau sports densifié (+1/+2 cartes)
-   Moins de padding / gap ; CTA un cran plus compact à 4–5 puces.
+   Wide E — sports : look prod (pas densifié), 0 marquee
+   Plus de cartes seulement si le texte tient en entier (fit JS).
    ═══════════════════════════════════════════════════ */
 @media (min-width: 1280px) {
-  html[data-wide-preview="b"] .masthead-sports-strip,
-  html[data-wide-preview="c"] .masthead-sports-strip,
-  html[data-wide-preview="d"] .masthead-sports-strip,
   html[data-wide-preview="e"] .masthead-sports-strip {
-    gap: 4px;
-    padding-top: 6px;
-    padding-bottom: 6px;
+    max-width: var(--maxw);
+    gap: 6px;
   }
 
-  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip,
-  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip,
-  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip,
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip {
-    gap: 4px;
-    padding: 3px 7px 3px 5px;
-    font-size: 10.5px;
-    min-height: 30px;
+  /* Interdit tout défilement de texte (scores + CTA) */
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__cta-text,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub-text,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__cta-sub-text,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-text,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-sub-text {
+    animation: none !important;
+    transform: none !important;
+    max-width: 100% !important;
   }
 
-  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--match,
-  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--match,
-  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--match,
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--match {
-    min-height: 40px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-  }
-
-  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--match .sports-chip__sub,
-  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--match .sports-chip__sub,
-  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--match .sports-chip__sub,
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--match .sports-chip__sub {
-    font-size: 8.5px;
-  }
-
-  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-text,
-  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-text,
-  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-text,
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-text {
-    font-size: 10.5px;
-  }
-
-  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-sub,
-  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-sub,
-  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-sub,
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-sub {
-    font-size: 8.5px;
-  }
-
-  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag,
-  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag,
-  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag,
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag {
-    font-size: 9px;
-    padding: 2px 5px;
-  }
-
-  /* 3 scores + CTA (data-count=4) */
-  html[data-wide-preview="b"] .masthead-sports-strip[data-count="4"] .sports-chip--cta,
-  html[data-wide-preview="c"] .masthead-sports-strip[data-count="4"] .sports-chip--cta,
-  html[data-wide-preview="d"] .masthead-sports-strip[data-count="4"] .sports-chip--cta,
-  html[data-wide-preview="e"] .masthead-sports-strip[data-count="4"] .sports-chip--cta {
-    flex: 1 1 22%;
-    max-width: 30%;
-  }
-
-  /* 4 scores + CTA */
-  html[data-wide-preview="b"] .masthead-sports-strip[data-count="5"] .sports-chip--cta,
-  html[data-wide-preview="c"] .masthead-sports-strip[data-count="5"] .sports-chip--cta,
-  html[data-wide-preview="d"] .masthead-sports-strip[data-count="5"] .sports-chip--cta,
-  html[data-wide-preview="e"] .masthead-sports-strip[data-count="5"] .sports-chip--cta {
-    flex: 1 1 18%;
-    max-width: 26%;
-  }
-
-  /* 5 scores + CTA (super-wide) */
-  html[data-wide-preview="b"] .masthead-sports-strip[data-count="6"] .sports-chip--cta,
-  html[data-wide-preview="c"] .masthead-sports-strip[data-count="6"] .sports-chip--cta,
-  html[data-wide-preview="d"] .masthead-sports-strip[data-count="6"] .sports-chip--cta,
+  /* Partage équitable — la CTA ne s’écrase pas sous trop de scores */
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="4"] .sports-chip--cta,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="5"] .sports-chip--cta,
   html[data-wide-preview="e"] .masthead-sports-strip[data-count="6"] .sports-chip--cta {
-    flex: 1 1 15%;
-    max-width: 22%;
+    flex: 1.15 1 0;
+    min-width: 0;
+    max-width: none;
   }
-}
 
-@media (min-width: 1680px) {
-  html[data-wide-preview="e"] .masthead-sports-strip {
-    gap: 5px;
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="4"] > .sports-chip--match,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="5"] > .sports-chip--match,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="6"] > .sports-chip--match {
+    flex: 1 1 0;
+    min-width: 0;
   }
 }
 

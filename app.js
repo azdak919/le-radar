@@ -2730,14 +2730,16 @@ function sportsStripAvailWidth() {
 function sportsBoardCountBase() {
   const avail = sportsStripAvailWidth();
   const wide = isWideNoMarqueeMode();
-  // Lab wide : densités + plafonds plus hauts (4–5 scores + CTA). Prod inchangé.
-  const gap = wide ? 4 : 6;
+  // Wide : plus de cartes **seulement** si chaque puce a de la place pour
+  // le texte complet (pas densifier / pas marquee). Plancher largeur réaliste.
+  const gap = 6;
   // Un cran plus souple : tablette 768 doit garder ≥1 score + CTA (pas CTA seule).
   // FG A : overflow texte → −1 puce, mais le plafond largeur ne doit pas
   // refuse 2 chips dès qu’on a ~320 px utiles.
-  const minScore = wide ? 102 : 128;
-  const minCta = wide ? 132 : 152;
-  const maxN = wide ? (avail >= 1500 ? 6 : 5) : 4;
+  const minScore = wide ? 175 : 128;
+  const minCta = wide ? 220 : 152;
+  // 5 = 4 scores+CTA ; 6 seulement sur très grand bandeau (≈QHD plein)
+  const maxN = wide ? (avail >= 2000 ? 6 : avail >= 1400 ? 5 : 4) : 4;
 
   let n = 1;
   for (let tryN = maxN; tryN >= 2; tryN -= 1) {
@@ -2785,13 +2787,32 @@ function sportsMatchChipTextOverflows(chip) {
   return !!(subView && subInner && sportsMeasureOverflow(subView, subInner, false) > 1);
 }
 
+/** CTA : titre ou sous-ligne trop long pour la largeur peinte (wide = −1 carte). */
+function sportsCtaTextOverflows(chip) {
+  if (!chip?.classList?.contains('sports-chip--cta')) return false;
+  const layer = typeof sportsCtaActiveLabel === 'function'
+    ? sportsCtaActiveLabel(chip)
+    : chip;
+  const titleView = layer?.querySelector?.('.sports-chip__cta-line')
+    || chip.querySelector('.sports-chip__cta-line');
+  const titleInner = layer?.querySelector?.('.sports-chip__cta-text')
+    || chip.querySelector('.sports-chip__cta-text');
+  if (titleView && titleInner && sportsMeasureOverflow(titleView, titleInner, false) > 1) {
+    return true;
+  }
+  const subView = layer?.querySelector?.('.sports-chip__cta-sub')
+    || chip.querySelector('.sports-chip__cta-sub');
+  const subInner = layer?.querySelector?.('.sports-chip__cta-sub-text')
+    || chip.querySelector('.sports-chip__cta-sub-text');
+  return !!(subView && subInner && sportsMeasureOverflow(subView, subInner, false) > 1);
+}
+
 /**
  * Le bandeau est-il trop étroit / texte illisible pour les chips peints ?
- * - CTA écrasée (tag AU TABLEAU) → −1 score
+ * - CTA écrasée (tag) ou texte CTA overflow → −1 score
  * - Puce score trop étroite OU titre/sous-ligne overflow → −1 score
- * CTA : marquee encore toléré — on ne la compare pas en largeur « naturelle ».
- * Wide / super-wide : pas de marquee → overflow texte = clip, pas −1 carte ;
- *   on ne descend que si la puce est vraiment trop étroite.
+ * Wide : **jamais** marquee ni clip — on retire une carte tant que le texte
+ * ne tient pas en entier (design inchangé, juste moins de puces).
  */
 function sportsStripCramped() {
   const strip = MASTHEAD_SPORTS_STRIP;
@@ -2799,17 +2820,17 @@ function sportsStripCramped() {
   const chips = [...strip.querySelectorAll('.sports-chip')];
   if (chips.length <= 1) return false;
 
-  // Wide : planchers un peu plus bas (bandeau large) mais overflow texte
-  // → −1 carte (on n’ampute jamais le libellé : pas de clip/marquee).
   const wide = isWideNoMarqueeMode();
-  const minScore = wide ? 110 : 118;
-  const minCta = wide ? 136 : 148;
+  const minScore = wide ? 160 : 118;
+  const minCta = wide ? 200 : 148;
 
   const cta = strip.querySelector('.sports-chip--cta');
   if (!cta) return true;
   if (cta.clientWidth + 0.5 < minCta) return true;
   const tag = cta.querySelector('.sports-chip__cta-tag');
   if (tag && tag.scrollWidth > tag.clientWidth + 1) return true;
+  // Wide : le texte CTA qui déborde = trop de puces, pas un marquee.
+  if (wide && sportsCtaTextOverflows(cta)) return true;
 
   for (const chip of chips) {
     if (chip.classList.contains('sports-chip--cta')) continue;
@@ -2819,12 +2840,24 @@ function sportsStripCramped() {
   return false;
 }
 
+/** Wide : purge toute classe marquee sports (sécurité après paint / rotation). */
+function clearWideSportsMarqueeClasses() {
+  if (!isWideNoMarqueeMode() || !MASTHEAD_SPORTS_STRIP) return;
+  MASTHEAD_SPORTS_STRIP.querySelectorAll('.is-overflowing, .is-sub-overflowing').forEach((el) => {
+    el.classList.remove('is-overflowing', 'is-sub-overflowing');
+    el.style.removeProperty('--sports-scroll');
+    el.style.removeProperty('--sports-scroll-sub');
+  });
+}
+
 /**
  * Après paint : retirer une carte score si étroit ou texte overflow,
  * jusqu’à CTA seule. Max 3 passes (focus-group A) ; 5 en wide (plafond plus haut).
  */
 function fitSportsStripAfterPaint() {
   if (!MASTHEAD_SPORTS_STRIP || MASTHEAD_SPORTS_STRIP.hidden) return;
+  // Wide : d’abord couper tout marquee résiduel, puis fit par −1 carte.
+  clearWideSportsMarqueeClasses();
   const count = sportsVisible.length;
   if (count <= 1) return;
   if (!sportsStripCramped()) return;
@@ -4261,6 +4294,11 @@ function refreshSportsChipScroll(chipOrRoot = null) {
   if (!MASTHEAD_SPORTS_STRIP && !chipOrRoot) return;
   const root = chipOrRoot || MASTHEAD_SPORTS_STRIP;
   if (!root) return;
+  // Wide : aucun marquee sports (scores + CTA) — le fit retire des cartes.
+  if (isWideNoMarqueeMode()) {
+    clearWideSportsMarqueeClasses();
+    return;
+  }
   const chips = root.classList?.contains('sports-chip')
     ? [root]
     : Array.from(root.querySelectorAll?.('.sports-chip') || []);
