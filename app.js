@@ -279,6 +279,12 @@ const TUNER_SUB_ROTATE_MQ = window.matchMedia?.('(max-width: 1099.98px)');
 const TUNER_DIAL_PHONE_MQ = window.matchMedia?.('(max-width: 599.98px)');
 const TUNER_SUB_ROTATE_NARROW_MQ = window.matchMedia?.('(max-width: 479.98px)');
 const TUNER_SUB_ROTATE_VERY_NARROW_MQ = window.matchMedia?.('(max-width: 359.98px)');
+/**
+ * Formats mid preview 768 / 900 (tablette / demi-écran) : assez de place pour
+ * nom d’institution complet + horaire dans le carré — pas le téléphone (&lt;768)
+ * ni le bureau avec panneau (≥1100).
+ */
+const TUNER_DIAL_MID_MQ = window.matchMedia?.('(min-width: 768px) and (max-width: 1099.98px)');
 /** Embed : panneau latéral « À l'antenne » masqué (voir embed.css @media max-width 639.98px). */
 const TUNER_EMBED_NOWAIR_HIDDEN_MQ = window.matchMedia?.('(max-width: 639.98px)');
 const TUNER_VOLUME   = document.getElementById('tuner-volume');
@@ -5678,6 +5684,7 @@ window.RadarAir = {
     idleDialStoryLine,
     previewDialLine,
     compactDialTitleLine,
+    isTunerDialMidLayout,
     stationBandedName,
     airPhaseDwellMs,
     marqueeRoundTripMs,
@@ -5839,12 +5846,26 @@ function isDialCompactLayout() {
 }
 
 /**
- * Titre ligne 1 en layout compact : poste · acronyme (jamais le nom long d’univ.).
+ * Mid 768–900 (jusqu’à 1099.98) : combler le vide du carré avec institution
+ * complète + heures. Hors mid (téléphone) : acronyme, pas d’horaire collé.
+ * Embed : jamais (barre étroite).
+ */
+function isTunerDialMidLayout() {
+  if (IS_TUNER_EMBED) return false;
+  return !!TUNER_DIAL_MID_MQ?.matches && isDialCompactLayout();
+}
+
+/**
+ * Titre ligne 1 en layout compact :
+ *  - téléphone : poste · acronyme
+ *  - mid 768/900 : poste · nom complet d’institution (comble le vide)
  */
 function compactDialTitleLine(radio) {
   if (!radio) return tunerSubMeta || 'Radios étudiantes en direct';
   const name = stationDisplayName(radio) || radio.name || '';
-  const inst = tunerDialInstitutionLabel(radio);
+  const inst = isTunerDialMidLayout()
+    ? adaptRadarInstitutionLabel(tunerInstitutionLabel(radio.institution || ''))
+    : tunerDialInstitutionLabel(radio);
   if (!name) return inst || '';
   return inst ? `${name} · ${inst}` : name;
 }
@@ -5867,12 +5888,13 @@ function dialCompactMetaLineForRadio(radio) {
  * Phases L2 du dial compact **en écoute** (focus-group
  * `le-radar-tuner-dial-info-900` — mode **E**).
  *
- * Ordre : émission live (titre seul, préfixe « À l'antenne ») → piste → à venir
- * → horaire court optionnel. Pas de soupe multi-champs, pas de slogan en cycle
- * (le slogan reste la méta bureau / hors compact). L'identité poste est en L1.
+ * Ordre : émission live → piste → à venir → (horaire filet hors mid).
+ * Mid 768/900 : horaire collé à l’émission primaire pour combler le vide
+ * (`À l'antenne · Titre · 08:00 – 18:30`). Ailleurs : titre seul + filet horaire.
  */
 function dialPhasesForRadio(radio) {
   if (!radio) return [];
+  const mid = isTunerDialMidLayout();
   const raw = airRotationPhases(radio, { withSlogan: false });
   const liveShows = [];
   const tracks = [];
@@ -5894,9 +5916,9 @@ function dialPhasesForRadio(radio) {
     }
     if (phase.kind === 'live') {
       liveShows.push(phase);
-      // Filet horaire optionnel (court) — jamais collé au titre d'émission.
+      // Hors mid : horaire en filet séparé (pas collé au titre).
       const time = String(phase.sub || '').trim();
-      if (time && /^\d{1,2}:\d{2}/.test(time)) {
+      if (!mid && time && /^\d{1,2}:\d{2}/.test(time)) {
         timeFilet.push({ title: time, sub: '', kind: 'idle' });
       }
       continue;
@@ -5912,8 +5934,10 @@ function dialPhasesForRadio(radio) {
     const title = String(phase.title || '').trim();
     const isTrack = title.startsWith('♪');
     const isTimeOnly = phase.kind === 'idle' && /^\d{1,2}:\d{2}/.test(title);
-    // Primaire live : titre sans horaire (l'horaire est en filet séparé).
-    const sub = (phase.kind === 'live' && !isTrack) ? '' : String(phase.sub || '').trim();
+    // Mid : garder l’horaire sur la face primaire live pour remplir le carré.
+    const sub = (phase.kind === 'live' && !isTrack && !mid)
+      ? ''
+      : String(phase.sub || '').trim();
     const line = isTimeOnly
       ? title
       : formatNowAirSubLine(title, sub, false, phase.kind, { liveLabel: true });
@@ -5932,16 +5956,15 @@ function dialPhaseLinesForRadio(radio) {
 
 /**
  * L2 du carré dial **hors écoute** (mode **B** — panel élargi).
- * Une seule face antenne : préfixe + titre. Pas d'identité poste (c'est L1),
- * pas d'horaire collé, pas de soupe `previewDialLine` historique.
+ * Téléphone : préfixe + titre. Mid 768/900 : + horaire si dispo (comble le vide).
  */
 function idleDialStoryLine(radio) {
   if (!radio) return '';
   const phase = airRotationPhases(radio, { withSlogan: false })[0];
   if (!phase) return '';
-  // B : une face scannable — titre seul (+ préfixe live/upcoming). L'horaire
-  // et le campus ne rentrent pas dans L2 hors écoute.
-  return formatNowAirSubLine(phase.title, '', false, phase.kind, { liveLabel: true });
+  const mid = isTunerDialMidLayout();
+  const sub = mid ? String(phase.sub || '').trim() : '';
+  return formatNowAirSubLine(phase.title, sub, false, phase.kind, { liveLabel: true });
 }
 
 /**
@@ -6485,6 +6508,7 @@ function onTunerSubRotateLayoutChange() {
 function initTunerSubRotateListeners() {
   onMediaQueryChange(TUNER_SUB_ROTATE_MQ, onTunerSubRotateLayoutChange);
   onMediaQueryChange(TUNER_DIAL_PHONE_MQ, onTunerSubRotateLayoutChange);
+  onMediaQueryChange(TUNER_DIAL_MID_MQ, onTunerSubRotateLayoutChange);
   onMediaQueryChange(TUNER_SUB_ROTATE_NARROW_MQ, onTunerSubRotateLayoutChange);
   onMediaQueryChange(TUNER_SUB_ROTATE_VERY_NARROW_MQ, onTunerSubRotateLayoutChange);
   onMediaQueryChange(TUNER_EMBED_NOWAIR_HIDDEN_MQ, onTunerSubRotateLayoutChange);
