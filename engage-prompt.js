@@ -12,7 +12,7 @@
  *  - à partir de la 2ᵉ session (≥ 6 h d’écart) + un signal d’engagement
  *    (écoute radio, scroll fil, clic article, ou ~40 s sur la page)
  *  - un seul bandeau par chargement de page
- *  - snooze 7 j ; « Ne plus demander » permanent par type
+ *  - snooze 7 j ; « Non merci » = dismiss permanent par type (focus-group B)
  *  - rien si déjà installé (standalone / minimal-ui / iOS standalone)
  *  - pas de mini-barre Chrome immédiate (beforeinstallprompt preventDefault)
  *  - file d’attente douce : install d’abord, puis home/new-tab plus tard
@@ -325,12 +325,12 @@
           ? [
             'Tap the browser menu <strong>⋮</strong>.',
             'Choose <strong>Add to Home screen</strong> (Brave installs from there).',
-            'Confirm — offline shell + home-screen icon, no app store.',
+            'Confirm — the icon joins your other apps.',
           ]
           : [
             'Touchez le menu <strong>⋮</strong> du navigateur.',
             'Choisissez <strong>Ajouter à l’écran d’accueil</strong> (Brave installe depuis là).',
-            'Validez — une icône et un accès hors ligne, sans magasin d’apps.',
+            'Validez — l’icône rejoint vos autres apps.',
           ];
       }
       // Chrome / Edge / Opera Android (et défaut)
@@ -338,12 +338,12 @@
         ? [
           'Tap the browser menu <strong>⋮</strong> (or the install icon in the address bar).',
           'Choose <strong>Install app</strong> or <strong>Add to Home screen</strong>.',
-          'Confirm — offline shell + home-screen icon, no app store.',
+          'Confirm — the icon joins your other apps.',
         ]
         : [
           'Touchez le menu <strong>⋮</strong> (ou l’icône d’install dans la barre d’adresse).',
           'Choisissez <strong>Installer l’application</strong> ou <strong>Ajouter à l’écran d’accueil</strong>.',
-          'Validez — une icône et un accès hors ligne, sans magasin d’apps.',
+          'Validez — l’icône rejoint vos autres apps.',
         ];
     }
 
@@ -522,8 +522,8 @@
           ${showPrimary !== false
             ? `<button type="button" class="engage-prompt__btn engage-prompt__btn--primary" data-act="primary">${primaryLabel}</button>`
             : ''}
-          <button type="button" class="engage-prompt__btn" data-act="later">${lang === 'en' ? 'Not now' : 'Plus tard'}</button>
-          <button type="button" class="engage-prompt__btn engage-prompt__btn--quiet" data-act="never">${lang === 'en' ? 'Don’t ask again' : 'Ne plus demander'}</button>
+          <button type="button" class="engage-prompt__btn" data-act="later">${lang === 'en' ? 'Later' : 'Plus tard'}</button>
+          <button type="button" class="engage-prompt__btn engage-prompt__btn--quiet" data-act="never">${lang === 'en' ? 'No thanks' : 'Non merci'}</button>
         </div>
       </div>
     `;
@@ -580,35 +580,39 @@
     return 'LE-RADAR.ca';
   }
 
+  /**
+   * Corps install — focus-group `le-radar-engage-copy` (option B) :
+   * une ligne bénéfice campus (focus-group B : pas de jargon boutique ni offline gonflé).
+   */
   function installBodyCopy(lang, appId) {
     if (appId === 'pomo') {
       return lang === 'en'
-        ? 'Focus timer with quotes and Québec wallpapers — one tap away, no app store.'
-        : 'Minuteur focus, citations et fonds québécois — à un tap, sans magasin d’apps.';
+        ? 'Focus timer, quotes and Québec wallpapers — one tap away.'
+        : 'Minuteur focus, citations et fonds québécois — en un geste.';
     }
     if (appId === 'solitaire') {
       return lang === 'en'
-        ? 'Klondike solitaire with student radio — install for offline play and a home-screen icon.'
-        : 'Solitaire Klondike avec radio étudiante — installez pour jouer hors ligne et un raccourci.';
+        ? 'Klondike solitaire with student radio — one tap away.'
+        : 'Solitaire Klondike avec radio étudiante — en un geste.';
     }
     if (appId === 'sports') {
       return lang === 'en'
-        ? 'Québec college and university scores — install to check the board offline, no app store.'
-        : 'Scores collégiaux et universitaires du Québec — installez pour consulter le tableau hors ligne.';
+        ? 'Québec college and university scores — one tap away.'
+        : 'Scores collégiaux et universitaires du Québec — en un geste.';
     }
     return lang === 'en'
-      ? 'Student radio & news in one tap — no app store, works offline for the shell.'
-      : 'Radios étudiantes et fil d’actus en un tap — sans magasin d’apps, accès hors ligne inclus.';
+      ? 'Québec student radio and newspapers, one tap away.'
+      : 'Radios et journaux étudiants du Québec, en un geste.';
   }
 
-  /** Carte « Installer » branchée sur l'invite native du navigateur. */
-  function renderNativeInstallCard(lang, appId, appName) {
+  /** Carte install native — titre spatial + primary « Ajouter » (focus-group B). */
+  function renderNativeInstallCard(lang, appId) {
     renderCard({
       kind: 'install',
       icon: '📲',
-      title: lang === 'en' ? `Install ${appName}` : `Installer ${appName}`,
+      title: lang === 'en' ? 'Add to Home Screen' : 'Sur l’écran d’accueil',
       body: installBodyCopy(lang, appId),
-      primaryLabel: lang === 'en' ? 'Install' : 'Installer',
+      primaryLabel: lang === 'en' ? 'Add' : 'Ajouter',
       onPrimary: async () => {
         const ev = deferredInstall;
         deferredInstall = null;
@@ -625,11 +629,10 @@
   async function showInstallPrompt(plat) {
     const lang = uiLang();
     const appId = (typeof currentAppId === 'function') ? currentAppId() : 'radar';
-    const appName = currentAppLabel(lang);
     const canNative = !!deferredInstall && plat.canNativeInstall && !plat.ios;
 
     if (canNative) {
-      renderNativeInstallCard(lang, appId, appName);
+      renderNativeInstallCard(lang, appId);
       return;
     }
 
@@ -645,7 +648,7 @@
       const upgrade = () => {
         window.removeEventListener('beforeinstallprompt', upgrade);
         if (!cardEl || !deferredInstall || isStandalone()) return;
-        renderNativeInstallCard(uiLang(), appId, appName);
+        renderNativeInstallCard(uiLang(), appId);
       };
       window.addEventListener('beforeinstallprompt', upgrade);
       // La carte fermée, l'écouteur n'a plus de raison d'être.
@@ -656,19 +659,18 @@
 
     const steps = installSteps(plat);
     const isIosChromeLike = plat.iosNonSafari;
+    // Focus-group B : même titre spatial partout (iOS + guide desktop).
     renderCard({
       kind: 'install',
       icon: '📲',
-      title: lang === 'en'
-        ? (plat.ios ? 'Add to Home Screen' : `Install ${appName}`)
-        : (plat.ios ? 'Sur l’écran d’accueil' : `Installer ${appName}`),
+      title: lang === 'en' ? 'Add to Home Screen' : 'Sur l’écran d’accueil',
       body: lang === 'en'
         ? (isIosChromeLike
-          ? 'On this device, install is done from Safari:'
-          : 'Keep this app one tap away. On this device:')
+          ? 'On this device, add from Safari:'
+          : 'One tap away. On this device:')
         : (isIosChromeLike
-          ? 'Sur cet appareil, l’installation se fait depuis Safari :'
-          : 'Gardez cette app à un doigt. Sur cet appareil :'),
+          ? 'Sur cet appareil, ajoutez depuis Safari :'
+          : 'En un geste. Sur cet appareil :'),
       steps,
       primaryLabel: lang === 'en' ? 'Got it' : 'Compris',
       onPrimary: () => {
@@ -683,15 +685,20 @@
   function showHomePrompt(plat) {
     const lang = uiLang();
     const label = plat.browserLabel;
+    // Focus-group le-radar-engage-copy option B
     renderCard({
       kind: 'home',
       icon: '🏠',
       title: lang === 'en'
-        ? 'Open LE-RADAR.ca when you start?'
-        : 'Ouvrir LE-RADAR.ca au démarrage ?',
+        ? 'LE-RADAR on startup?'
+        : 'LE-RADAR au démarrage ?',
       body: lang === 'en'
-        ? `For your security, browsers do not let sites change this setting automatically. ${label ? `In ${label}:` : 'In your browser:'}`
-        : `Pour votre sécurité, les navigateurs ne laissent pas un site modifier ce réglage automatiquement. ${label ? `Sous ${label} :` : 'Dans votre navigateur :'}`,
+        ? (label
+          ? `Your browser controls this setting (not the site). In ${label}:`
+          : 'Your browser controls this setting (not the site). In your browser:')
+        : (label
+          ? `Votre navigateur gère ce réglage (pas le site). Sous ${label} :`
+          : 'Votre navigateur gère ce réglage (pas le site). Dans votre navigateur :'),
       steps: homeAndNewTabSteps(plat),
       primaryLabel: lang === 'en' ? 'Done' : 'C’est fait',
       onPrimary: () => {
