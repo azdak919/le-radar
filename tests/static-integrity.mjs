@@ -473,6 +473,17 @@ const indexHtml = readFileSync(join(root, 'index.html'), 'utf8');
 const engagePrompt = readFileSync(join(root, 'engage-prompt.js'), 'utf8');
 assert(!/coque hors-ligne/i.test(engagePrompt), 'invitation PWA : jargon « coque » interdit');
 assert(engagePrompt.includes('LE-RADAR au démarrage ?'), 'invitation accueil : titre orienté résultat requis (focus-group engage-copy B)');
+// Focus-group le-radar-engage-home-guide (C) : copier + 2 steps, pas de mur de flèches.
+assert(
+  engagePrompt.includes('Copier l’adresse')
+    && engagePrompt.includes('Copy address')
+    && engagePrompt.includes('copySiteUrl')
+    && engagePrompt.includes('le-radar-engage-home-guide')
+    && engagePrompt.includes('Réglage navigateur uniquement')
+    && !/Astuce : glissez cet onglet/i.test(engagePrompt)
+    && !/Tip: drag this tab/i.test(engagePrompt),
+  'invitation accueil : guide C (copier + 2 steps, sans tip glisser)',
+);
 assert(engagePrompt.includes('Sur l’écran d’accueil'), 'invitation install : titre spatial focus-group B');
 assert(
   engagePrompt.includes('Journaux, radios et sports étudiants du Québec — en un geste.'),
@@ -1019,8 +1030,9 @@ assert(
     && appJs.includes('sportsPlaceEventShort')
     && appJs.includes("g.home === false ? 'à' : 'reçoit'")
     && /SPORTS_MATCH_SCROLL_ONE_WAY_MS\s*=\s*8000/.test(appJs)
-    && /SPORTS_RECENT_RESULT_MS/.test(appJs)
+    && /SPORTS_RECENT_RESULT_MS\s*=\s*7 \* 24 \* 3600 \* 1000/.test(appJs)
     && appJs.includes('recentResults')
+    && appJs.includes('le-radar-sports-left-pool')
     && styleCss.includes('sports-chip--match')
     && styleCss.includes('sports-chip__body')
     && styleCss.includes('.sports-chip--match .sports-chip__sub')
@@ -1029,7 +1041,7 @@ assert(
     && /:not\(\.sports-chip--cta\)\.is-sub-overflowing \.sports-chip__sub-text/.test(cssFlat)
     && styleCss.includes('@keyframes sports-chip-scroll')
     && styleCss.includes('@keyframes sports-chip-scroll-sub'),
-  'puces scores : 2 lignes ; place/voile ; pool <4 j ; marquee 8s L→R ; 0 ellipsis',
+  'puces scores : 2 lignes ; place/voile ; pool <7 j (left-pool D) ; marquee 8s L→R ; 0 ellipsis',
 );
 // Puces scores : indépendantes + dwell lecture + marquee aller-retour complet.
 assert(
