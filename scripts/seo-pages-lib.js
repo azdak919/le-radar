@@ -729,6 +729,9 @@ function renderInstallMenu({ lang = 'fr', up = './', panelId = 'install-menu-pan
  * expérimental (dette D19) et n'a pas sa place dans la navigation principale.
  */
 const SECTIONS = [
+  // Accueil en tête : data-home-nav → app.js scroll + refresh soft du fil
+  // sans recharger la page (la radio continue si elle joue).
+  { id: 'home', key: 'home', path: { fr: '', en: '' }, attrs: ' data-home-nav' },
   { id: 'medias', key: 'footerDirectory', path: { fr: 'medias/', en: 'en/media/' } },
   // L'annuaire n'a pas de hub « journaux » dédié, mais il porte déjà l'ancre.
   { id: 'journaux', key: 'footerNewspapers', path: { fr: 'medias/#journaux', en: 'en/media/#journaux' } },
@@ -745,11 +748,14 @@ const SECTIONS = [
   { id: 'archives', key: 'archives', path: { fr: 'archives/', en: 'archives/' }, footerOnly: true },
 ];
 
-function sectionLinks({ lang, href, includeFooterOnly = false }) {
+function sectionLinks({ lang, href, includeFooterOnly = false, current = null }) {
   const t = T[lang];
   return SECTIONS
     .filter((s) => includeFooterOnly || !s.footerOnly)
-    .map((s) => `<a href="${href(s.path[lang] || s.path.fr)}"${s.attrs || ''}>${escapeHtml(t[s.key])}</a>`);
+    .map((s) => {
+      const cur = current === s.id ? ' aria-current="page"' : '';
+      return `<a href="${href(s.path[lang] || s.path.fr)}"${s.attrs || ''}${cur}>${escapeHtml(t[s.key])}</a>`;
+    });
 }
 
 /**
@@ -758,10 +764,10 @@ function sectionLinks({ lang, href, includeFooterOnly = false }) {
  * Volontairement limité à l'accueil : les pages d'entités portent déjà un fil
  * d'Ariane au même endroit, qui dit en plus la position dans l'arborescence.
  */
-function renderSectionNav({ lang = 'fr', up = './', indent = '    ' } = {}) {
+function renderSectionNav({ lang = 'fr', up = './', indent = '    ', current = 'home' } = {}) {
   const href = (rel) => (rel ? `${up}${rel}`.replace(/^\.\//, '') : up);
   const sep = '<span class="site-sections__sep" aria-hidden="true">·</span>';
-  const items = sectionLinks({ lang, href }).join(`\n${indent}  ${sep}\n${indent}  `);
+  const items = sectionLinks({ lang, href, current }).join(`\n${indent}  ${sep}\n${indent}  `);
   const label = lang === 'en' ? 'Site sections' : 'Sections du site';
   return `<nav class="site-sections" aria-label="${label}">
 ${indent}  ${items}
@@ -780,7 +786,7 @@ function renderMastheadActions({ lang = 'fr', up = './', current = null, indent 
   const sportsPath = lang === 'fr' ? 'sports/' : 'en/sports/';
 
   return `<div class="masthead-actions">
-${p}  <a href="${href('')}" class="masthead-icon masthead-home"${cur('home')} title="${escapeHtml(c.home)}" aria-label="${escapeHtml(c.homeAria)}">${ICON_SVG.home}</a>
+${p}  <a href="${href('')}" class="masthead-icon masthead-home" data-home-nav${cur('home')} title="${escapeHtml(c.home)}" aria-label="${escapeHtml(c.homeAria)}">${ICON_SVG.home}</a>
 ${p}  <a href="${href(feedsPath)}" class="masthead-icon masthead-rss"${cur('rss')} title="${escapeHtml(c.rss)}" aria-label="${escapeHtml(c.rssAria)}">${ICON_SVG.rss}</a>
 ${p}  <a href="${href('pomo/')}" class="masthead-icon masthead-pomo" title="${escapeHtml(c.pomo)}" aria-label="${escapeHtml(c.pomo)}"><img class="app-emoji" src="${up}assets/emoji/tomato.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
 ${p}  <a href="${href('solitaire/')}" class="masthead-icon masthead-solitaire" title="${escapeHtml(c.solitaire)}" aria-label="${escapeHtml(c.solitaire)}"><img class="app-emoji" src="${up}assets/emoji/playing-cards.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
@@ -811,7 +817,8 @@ ${p}</div>`;
  * dise le sitemap. Le volet anglais n'est jamais choisi automatiquement —
  * translate.js garde la main.
  *
- * `home` supprime le lien « retour à l'accueil » sur l'accueil lui-même.
+ * `home` pose `aria-current="page"` sur Accueil (le lien reste visible pour
+ * scroll + refresh soft via data-home-nav / app.js).
  * `updated` n'est passé que par les pages qui ont une fraîcheur propre.
  */
 function renderSiteFooter({
@@ -832,11 +839,14 @@ function renderSiteFooter({
   const c = CHROME_T[lang] || CHROME_T.fr;
 
   const links = [];
-  if (!home) links.push(`<a href="${href('')}">${escapeHtml(t.backHome)}</a>`);
-  // Même liste que le menu de sections de l'accueil (`SECTIONS`), archives
-  // comprises ici : les libellés courts du pied de page ne peuvent donc plus
-  // diverger de ceux du haut de page.
-  links.push(...sectionLinks({ lang, href, includeFooterOnly: true }));
+  // Accueil en tête (libellé court « Accueil » / « Home ») — même liste que
+  // le menu de sections. Plus de phrase longue « Retour à l'accueil… ».
+  links.push(...sectionLinks({
+    lang,
+    href,
+    includeFooterOnly: true,
+    current: home ? 'home' : null,
+  }));
   // `altPath` vaut '' sur /en/ : la version française est la racine du site.
   // Tester la valeur et non sa véracité, sinon le volet anglais perd sa bascule.
   if (altPath !== null && altPath !== undefined) {
