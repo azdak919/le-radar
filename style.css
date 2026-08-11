@@ -784,16 +784,27 @@ body {
 .masthead-actions {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 8px;
   flex-shrink: 0;
+  /* Jamais de réserve shuffle ici par défaut — le padding bureau est en ≥1024. */
+  padding-right: 0;
+  margin-right: 0;
 }
 /*
  * Bureau ≥1024 : le shuffle flotte dans le slot, calé sur la même gouttière
- * que le contenu. On réserve ~1 icône dans la rangée pour éviter le chevauchement.
- * ≤1023 : shuffle est dans .masthead-actions (pas de padding fantôme).
+ * que le contenu / crédit photo. On réserve ~1 icône dans la rangée.
+ * ≤1023 : shuffle est DANS .masthead-actions — padding 0 (sinon trou 36 px
+ * à droite des icônes, décalage vs crédits / météo / sports).
  */
 @media (min-width: 1024px) {
   .masthead-actions { padding-right: calc(28px + 8px); }
+}
+@media (max-width: 1023.98px) {
+  .masthead-actions {
+    padding-right: 0 !important;
+    margin-right: 0;
+  }
 }
 
 .masthead-icon {
@@ -843,8 +854,9 @@ body {
 }
 @media (max-width: 599.98px) {
   .masthead-top {
-    /* Récupère quelques px du padding page pour la date (téléphone). */
-    margin-inline: -6px;
+    /* Récupère quelques px à GAUCHE pour la date — pas à droite, sinon les
+       icônes dépassent la gouttière des crédits (pad) de 6 px. */
+    margin-inline: -6px 0;
   }
   .masthead-date {
     position: relative;
