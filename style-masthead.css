@@ -214,7 +214,7 @@
  * Mât sur photo — focus-group le-radar-masthead-photo-chrome C.
  * Slogan / crédit : soft glass. Date : **sœur des cartes météo**
  * (même hauteur 29px, radius 5px, verre, ombre, typo) — une ligne
- * « MARDI 11 AOÛT 2026 · 14:00 » entière (météo plafonnée à 3 cartes).
+ * « MARDI 11 AOÛT 2026 · 14 h 00 » entière (météo plafonnée à 3 cartes).
  * Chrome = copie de .masthead-weather__city (photo dark / light).
  */
 .masthead:has(#bg-photo-layer.loaded) .masthead-date {
@@ -273,10 +273,10 @@
   top: auto !important;
   left: auto !important;
   right: auto !important;
-  display: inline;
+  display: inline-flex;
+  align-items: center;
   flex: 0 0 auto;
   margin: 0;
-  margin-left: 2px;
   padding: 0;
   font-size: 11px;
   font-weight: 800;
@@ -288,10 +288,15 @@
   color: #ffffff;
   text-transform: none;
 }
+/* Point médian : marges égales + léger décalage optique (caps date vs chiffres). */
 .masthead:has(#bg-photo-layer.loaded) .masthead-date .masthead-time::before {
   content: "·";
-  margin-right: 0.3em;
-  font-weight: 650;
+  display: inline-block;
+  margin: 0 0.42em;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1;
+  transform: translateY(-0.04em);
   color: rgba(245, 246, 248, 0.55);
   opacity: 1;
 }
