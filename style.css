@@ -283,7 +283,9 @@ body {
   white-space: nowrap;
   max-width: 100%;
   overflow: hidden;
-  text-overflow: ellipsis;
+  /* Jamais d’ellipsis (…) sur le bandeau sports : le marquee L→R lit le
+   * texte entier. Au repos / avant mesure : clip net, pas trois points. */
+  text-overflow: clip;
   vertical-align: middle;
 }
 /* Défilement L→R du texte trop long (scores ET accroche CTA SPORTS).
@@ -300,7 +302,7 @@ body {
   max-width: none;
   overflow: visible;
   text-overflow: clip;
-  /* Remplace le pulse CTA : transform pour le marquee, pas d’ellipsis. */
+  /* Marquee L→R : le texte complet défile, jamais d’ellipsis figée. */
   animation: sports-chip-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
   will-change: transform;
 }
@@ -309,14 +311,17 @@ body {
   0%, 18% { transform: translateX(0); }
   82%, 100% { transform: translateX(calc(var(--sports-scroll, 0) * -1)); }
 }
-/* CTA au repos : ellipsis sur le texte seul — jamais sur toute la couche
- * (sinon head+sub se collapsaient en une ligne tronquée sans marquee). */
+/* CTA hors marquee : clip sur le texte seul — jamais d’ellipsis, jamais sur
+ * toute la couche (sinon head+sub se collapsaient sans marquee). */
 .masthead-sports-strip .sports-chip--cta:not(.is-overflowing) .sports-chip__line-inner {
   max-width: 100%;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: clip;
   white-space: nowrap;
 }
+/* Mouvement réduit : on fige le marquee, mais on n’introduit PAS d’ellipsis
+ * (trois points interdits sur ce bandeau). Le title/aria portent le texte
+ * complet ; le cadre clippe sans « … ». */
 @media (prefers-reduced-motion: reduce) {
   .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner,
   .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__cta-text,
@@ -324,7 +329,7 @@ body {
     animation: none;
     max-width: 100%;
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: clip;
   }
 }
 .masthead-sports-strip .sports-chip__code { font-weight: 800; letter-spacing: 0.03em; }
@@ -498,7 +503,8 @@ body {
   display: inline-block;
   max-width: 100%;
   overflow: hidden;
-  text-overflow: ellipsis;
+  /* Interdit : text-overflow: ellipsis. Overflow → is-overflowing + marquee. */
+  text-overflow: clip;
   white-space: nowrap;
   font-size: 11px;
   font-weight: 800;
@@ -507,7 +513,7 @@ body {
   vertical-align: middle;
 }
 /* Sous-ligne : compétition + fraîcheur. Fenêtre de défilement (comme le titre) :
- * date + compétition + MAJ restent lisibles via marquee, pas d’ellipse figée. */
+ * date + compétition + MAJ restent lisibles via marquee, jamais d’ellipse. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-sub {
   display: block;
   flex: 0 0 auto;
@@ -524,7 +530,7 @@ body {
   display: inline-block;
   max-width: 100%;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: clip;
   white-space: nowrap;
   vertical-align: middle;
 }

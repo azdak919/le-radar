@@ -208,3 +208,66 @@ test('CTA sports : sous-ligne longue défile au lieu d’une ellipse figée', as
 
   expect(pageErrors).toEqual([]);
 });
+
+/**
+ * CTA SPORTS : titre long (« Montmorency reçoit Bois-de-Boulogne ») → marquee,
+ * **jamais** les trois points d’ellipsis. Règle dure le-radar : tout ce qui
+ * déborde dans le bandeau sports défile L→R ; on n’accepte pas « … ».
+ */
+test('CTA sports : titre long défile, jamais d’ellipsis …', async ({ page }) => {
+  const pageErrors = [];
+  page.on('pageerror', (error) => pageErrors.push(error.message));
+
+  await page.setViewportSize({ width: 900, height: 800 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const strip = page.locator('#masthead-sports-strip');
+  await expect(strip).toBeVisible({ timeout: 8000 });
+  const cta = strip.locator('.sports-chip--cta');
+  await expect(cta).toBeVisible({ timeout: 8000 });
+
+  const longTitle = '⚽ Montmorency reçoit Bois-de-Boulogne';
+  const ready = await page.evaluate((title) => {
+    const chip = document.querySelector('.sports-chip--cta');
+    const layer = chip?.querySelector('.sports-chip__cta-label.is-front')
+      || chip?.querySelector('.sports-chip__cta-label');
+    const text = layer?.querySelector('.sports-chip__cta-text');
+    if (!chip || !text) return { ok: false, reason: 'no-cta-text' };
+    text.textContent = title;
+    if (typeof refreshSportsChipScroll !== 'function') {
+      return { ok: false, reason: 'no-refresh' };
+    }
+    refreshSportsChipScroll(chip);
+    const cs = getComputedStyle(text);
+    return {
+      ok: true,
+      isOverflowing: chip.classList.contains('is-overflowing'),
+      scroll: chip.style.getPropertyValue('--sports-scroll'),
+      textOverflow: cs.textOverflow,
+      animation: cs.animationName,
+      label: text.textContent,
+    };
+  }, longTitle);
+
+  expect(ready.ok, `préparation : ${ready.reason || 'ok'}`).toBe(true);
+  expect(ready.label).toBe(longTitle);
+  expect(ready.isOverflowing, 'titre long doit activer is-overflowing').toBe(true);
+  expect(parseFloat(ready.scroll), 'décalage marquee titre').toBeGreaterThan(2);
+  expect(ready.textOverflow, 'jamais text-overflow:ellipsis').toBe('clip');
+  expect(ready.animation, 'titre doit animer sports-chip-scroll').toMatch(/sports-chip-scroll/);
+
+  await expect(cta).toHaveClass(/is-overflowing/);
+  const titleEl = cta.locator('.sports-chip__cta-text');
+  // Le DOM conserve le libellé complet (pas de troncature JS « … »).
+  await expect(titleEl).toHaveText(longTitle);
+  const computedOverflow = await titleEl.evaluate((el) => getComputedStyle(el).textOverflow);
+  expect(computedOverflow).toBe('clip');
+
+  // Le transform doit bouger (hold initial ~18 % de 5,5 s ≈ 1 s).
+  const left0 = await titleEl.evaluate((el) => el.getBoundingClientRect().left);
+  await page.waitForTimeout(2200);
+  const left1 = await titleEl.evaluate((el) => el.getBoundingClientRect().left);
+  expect(left1, 'le titre doit glisser (marquee L→R)').toBeLessThan(left0 - 1);
+
+  expect(pageErrors).toEqual([]);
+});
