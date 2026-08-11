@@ -1,7 +1,9 @@
 /**
  * Lab local — options grand écran (pré-focus-group)
  * ─────────────────────────────────────────────────
- * ?wide=a|b|c|d|e → data-wide-preview sur <html>
+ * ?wide=e → data-wide-preview sur <html>
+ * ⛔ Actif seulement si viewport > 1280 (min-width: 1281px).
+ *    Format lab ≤1280 / fenêtre ≤1280 = prod inchangée.
  *
  * Verdict mainteneur en cours : **E** (rail sources) + refinements.
  * Super-wide = même E, densités + dès ~1680 px (media query).
@@ -12,7 +14,9 @@
 
 /* ═══════════════════════════════════════════════════
    Tokens communs wide / super-wide
+   ⛔ Jamais ≤1280 : E (et B–D) ne s’appliquent qu’au-delà de la ref. bureau 1280.
    ═══════════════════════════════════════════════════ */
+@media (min-width: 1281px) {
 html[data-wide-preview="b"],
 html[data-wide-preview="c"],
 html[data-wide-preview="d"],
@@ -29,6 +33,7 @@ html[data-wide-preview="e"] {
   --maxw: min(1520px, calc(100vw - 40px));
   --wide-rail: 260px;
   --wide-gap: 24px;
+}
 }
 @media (min-width: 1600px) {
   html[data-wide-preview="e"] {
@@ -64,7 +69,7 @@ html[data-wide-preview="e"] {
 }
 
 /* ── Radio : B–D 1180 ; E élargi EN LARGEUR seulement (épaisseur = prod) ── */
-@media (min-width: 1280px) {
+@media (min-width: 1281px) {
   html[data-wide-preview="b"] .tuner-inner,
   html[data-wide-preview="c"] .tuner-inner,
   html[data-wide-preview="d"] .tuner-inner {
@@ -302,7 +307,7 @@ html[data-wide-preview="e"] {
 
 
 /* ── Shell générique (accueil + pages SEO / hub) ─── */
-@media (min-width: 1280px) {
+@media (min-width: 1281px) {
   html[data-wide-preview="b"] {
     --maxw: 1480px;
   }
@@ -349,14 +354,14 @@ html[data-wide-preview="e"] {
 }
 
 /* ── B ───────────────────────────────────────────── */
-@media (min-width: 1280px) {
+@media (min-width: 1281px) {
   html[data-wide-preview="b"] .masthead-inner {
     max-width: 1480px;
   }
 }
 
 /* ── C ───────────────────────────────────────────── */
-@media (min-width: 1280px) {
+@media (min-width: 1281px) {
   html[data-wide-preview="c"] .filters {
     justify-content: flex-start;
   }
@@ -704,8 +709,10 @@ html[data-wide-preview="e"] {
  *  - vedettes en 2 colonnes
  *  - spacer pleine largeur pour l’équilibre magazine
  */
+@media (min-width: 1281px) {
 html[data-wide-preview="e"] .news-hero-spacer {
   grid-column: 1 / -1;
+}
 }
 
 /* ── E ≥1600 : 2 unes + vedettes 2 col ; En bref 1–2 col ── */
@@ -869,7 +876,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
    Wide E — sports : look prod (pas densifié), 0 marquee
    Plus de cartes seulement si le texte tient en entier (fit JS).
    ═══════════════════════════════════════════════════ */
-@media (min-width: 1280px) {
+@media (min-width: 1281px) {
   html[data-wide-preview="e"] .masthead-sports-strip {
     max-width: var(--maxw);
     gap: 6px;
@@ -909,7 +916,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
    Wide / super-wide — slogan wordmark sur UNE ligne
    (prod bureau = 2 lignes lead / tag ; large écran = une seule)
    ═══════════════════════════════════════════════════ */
-@media (min-width: 1280px) {
+@media (min-width: 1281px) {
   html[data-wide-preview="b"] .wordmark-full,
   html[data-wide-preview="c"] .wordmark-full,
   html[data-wide-preview="d"] .wordmark-full,
@@ -960,7 +967,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
    Look prod, plus de cartes quand la largeur le permet.
    Contenu qui change (rotation) ne reflow pas les voisins.
    ═══════════════════════════════════════════════════ */
-@media (min-width: 1280px) {
+@media (min-width: 1281px) {
   /* Météo : grille à parts égales selon data-weather-count — largeur fixe par slot */
   html[data-wide-preview="e"] .masthead-weather {
     min-width: 0;
@@ -1066,7 +1073,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
    Wide / super-wide — AUCUN marquee texte
    (radio, météo, sports CTA, filtres sources)
    ═══════════════════════════════════════════════════ */
-@media (min-width: 1280px) {
+@media (min-width: 1281px) {
   html[data-wide-preview="b"] .is-marquee > .tuner-now-sub-text,
   html[data-wide-preview="c"] .is-marquee > .tuner-now-sub-text,
   html[data-wide-preview="d"] .is-marquee > .tuner-now-sub-text,

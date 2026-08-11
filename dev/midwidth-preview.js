@@ -59,8 +59,30 @@
   /* Verdict mainteneur : E seulement (A–D retirés de la barre lab). */
   const WIDE_OPTIONS = {
     off: { id: 'off', label: 'Prod', hint: 'Prod actuelle (~1180) — témoin' },
-    e: { id: 'e', label: 'E', hint: 'Rail sources + en bref 2–3 col · super-wide ≥1680' },
+    e: { id: 'e', label: 'E', hint: 'Rail sources + en bref 2–3 col · actif seulement >1280' },
   };
+
+  /** E uniquement au-delà de la ref. bureau 1280 (format lab ou viewport). */
+  const WIDE_E_MIN_PX = 1281;
+
+  function formatWidthPx(fmtKey) {
+    const f = FORMATS[fmtKey || currentFormat()];
+    if (f && f.w != null) return f.w;
+    return window.innerWidth || 0;
+  }
+
+  /** true si la largeur de layout autorise wide E. */
+  function canApplyWideE(fmtKey) {
+    const fmt = fmtKey || currentFormat();
+    const f = FORMATS[fmt];
+    // Format lab chiffré (390…1280…) : largeur simulée, pas la fenêtre hôte
+    if (f && f.w != null) return f.w >= WIDE_E_MIN_PX;
+    try {
+      return window.matchMedia(`(min-width: ${WIDE_E_MIN_PX}px)`).matches;
+    } catch {
+      return (window.innerWidth || 0) >= WIDE_E_MIN_PX;
+    }
+  }
 
   function isLabFrame() {
     try {
@@ -152,14 +174,20 @@
 
   /** Wide : pas de reload (évite la « disparition » de la barre). */
   function applyWide(wideId, { pushUrl = true } = {}) {
-    const id = WIDE_OPTIONS[wideId] ? wideId : 'off';
+    let id = WIDE_OPTIONS[wideId] ? wideId : 'off';
+    // ≤1280 : E refusé — on peut garder ?wide=e dans l’URL pour y revenir
+    // après un format large, mais le dataset n’est jamais posé.
+    const allowed = canApplyWideE();
+    const effective = (id !== 'off' && allowed) ? id : 'off';
+
     try {
-      if (id === 'off') delete document.documentElement.dataset.widePreview;
-      else document.documentElement.dataset.widePreview = id;
+      if (effective === 'off') delete document.documentElement.dataset.widePreview;
+      else document.documentElement.dataset.widePreview = effective;
     } catch { /* ignore */ }
 
     if (pushUrl) {
       try {
+        // Préférence URL : on mémorise le choix demandé (e), pas l’effective off
         history.replaceState(null, '', buildUrl({ wide: id }));
       } catch { /* ignore */ }
     }
@@ -168,25 +196,46 @@
     const bar = document.getElementById('local-lab-format-bar');
     if (bar) {
       bar.querySelectorAll('[data-wide-id]').forEach((btn) => {
-        const active = btn.getAttribute('data-wide-id') === id;
-        btn.style.cssText = wideBtnStyle(active);
+        const wid = btn.getAttribute('data-wide-id');
+        const isE = wid === 'e';
+        const locked = isE && !allowed;
+        // Actif = choix URL si autorisé ; Prod actif si E bloqué
+        const active = allowed
+          ? wid === id
+          : wid === 'off';
+        btn.style.cssText = wideBtnStyle(active, locked);
+        btn.disabled = locked;
+        btn.setAttribute('aria-disabled', locked ? 'true' : 'false');
+        if (locked) {
+          btn.title = 'E disponible seulement en >1280 (formats 1440+ ou fenêtre large)';
+        } else {
+          btn.title = WIDE_OPTIONS[wid]?.hint || '';
+        }
       });
       const hint = bar.querySelector('[data-wide-hint]');
-      if (hint) hint.textContent = WIDE_OPTIONS[id]?.hint || '';
+      if (hint) {
+        if (!allowed && id === 'e') {
+          hint.textContent = 'E inactif ≤1280 — passe en 1440+ ou Plein large pour l’activer';
+        } else {
+          hint.textContent = WIDE_OPTIONS[id]?.hint || '';
+        }
+      }
     }
 
-    // Badge
-    paintWideBadge(id);
+    // Badge seulement si réellement appliqué
+    paintWideBadge(effective, id);
 
     // Filtres sources (app.js lit __radarWidePreview à chaque sync)
     try {
-      window.dispatchEvent(new CustomEvent('radar-wide-preview-change', { detail: { id } }));
+      window.dispatchEvent(new CustomEvent('radar-wide-preview-change', {
+        detail: { id: effective, requested: id, allowed },
+      }));
     } catch { /* ignore */ }
 
     // Re-sync filtres si app déjà chargé
     try {
       if (typeof window.__radarWidePreview?.onChange === 'function') {
-        window.__radarWidePreview.onChange(id);
+        window.__radarWidePreview.onChange(effective);
       }
     } catch { /* ignore */ }
 
@@ -197,10 +246,22 @@
     }
   }
 
-  function paintWideBadge(id) {
+  function paintWideBadge(effectiveId, requestedId) {
     if (isLabFrame()) return;
     let badge = document.getElementById('wide-desktop-badge');
-    if (!id || id === 'off') {
+    if (!effectiveId || effectiveId === 'off') {
+      // Préférence E mais viewport/format trop étroit
+      if (requestedId === 'e' && !canApplyWideE()) {
+        if (!badge) {
+          badge = document.createElement('div');
+          badge.id = 'wide-desktop-badge';
+          document.body.appendChild(badge);
+        }
+        badge.dataset.wide = 'e-inactive';
+        badge.textContent = 'Wide E · inactif ≤1280';
+        badge.title = 'Passe en format 1440+ ou élargis la fenêtre pour activer E';
+        return;
+      }
       badge?.remove();
       return;
     }
@@ -209,16 +270,17 @@
       badge.id = 'wide-desktop-badge';
       document.body.appendChild(badge);
     }
-    badge.dataset.wide = id;
-    const opt = WIDE_OPTIONS[id];
+    badge.dataset.wide = effectiveId;
+    const opt = WIDE_OPTIONS[effectiveId];
     badge.textContent = `Wide ${opt.label} · ${(opt.hint || '').split('—')[0].trim()}`;
     badge.title = opt.hint || '';
   }
 
   // Dataset le plus tôt possible (host + iframe)
+  // ⛔ ≤1280 : jamais de data-wide-preview
   try {
     const early = currentWide();
-    if (early && early !== 'off') {
+    if (early && early !== 'off' && canApplyWideE()) {
       document.documentElement.dataset.widePreview = early;
     } else {
       delete document.documentElement.dataset.widePreview;
@@ -248,7 +310,10 @@
     return 'appearance:none;cursor:pointer;border-radius:999px;padding:6px 10px;font:600 11px/1 system-ui,sans-serif;border:1px solid rgba(255,255,255,0.16);background:rgba(255,255,255,0.06);color:#e8eaed';
   }
 
-  function wideBtnStyle(active) {
+  function wideBtnStyle(active, locked) {
+    if (locked) {
+      return 'appearance:none;cursor:not-allowed;border-radius:999px;padding:6px 10px;font:600 11px/1 system-ui,sans-serif;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);color:rgba(232,234,237,0.35)';
+    }
     if (active) {
       return 'appearance:none;cursor:pointer;border-radius:999px;padding:6px 10px;font:600 11px/1 system-ui,sans-serif;border:1px solid #2f6fed;background:#2f6fed;color:#fff';
     }
@@ -414,17 +479,25 @@
     tagW.style.cssText = tagStyle;
     wideRow.appendChild(tagW);
 
+    const wideAllowed = canApplyWideE();
     Object.keys(WIDE_OPTIONS).forEach((key) => {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.textContent = WIDE_OPTIONS[key].label;
       btn.title = WIDE_OPTIONS[key].hint;
       btn.setAttribute('data-wide-id', key);
-      btn.style.cssText = wideBtnStyle(key === wideNow);
+      const locked = key === 'e' && !wideAllowed;
+      const active = wideAllowed ? key === wideNow : key === 'off';
+      btn.style.cssText = wideBtnStyle(active, locked);
+      btn.disabled = locked;
+      if (locked) {
+        btn.title = 'E disponible seulement en >1280 (formats 1440+ ou fenêtre large)';
+      }
       btn.addEventListener('click', (ev) => {
         ev.preventDefault();
         ev.stopPropagation();
-        if (key === currentWide()) return;
+        if (locked) return;
+        if (key === currentWide() && wideAllowed) return;
         applyWide(key);
       });
       wideRow.appendChild(btn);
@@ -465,7 +538,8 @@
     bar.appendChild(fmtLarge);
 
     document.body.appendChild(bar);
-    paintWideBadge(wideNow);
+    // Applique le gating ≤1280 (dataset + boutons + badge)
+    applyWide(wideNow, { pushUrl: false });
 
     if (format !== 'full') {
       ensureFrameShell(format);
@@ -478,6 +552,15 @@
     injectBar();
   }
 
+  // Plein écran : bascule E actif/inactif au franchissement de 1281 px
+  window.addEventListener('resize', () => {
+    if (currentFormat() !== 'full') return;
+    if (currentWide() !== 'e') return;
+    try {
+      applyWide('e', { pushUrl: false });
+    } catch { /* ignore */ }
+  }, { passive: true });
+
   // Hooks app.js
   window.__radarMidwidthPreview = {
     format: () => currentFormat(),
@@ -485,18 +568,18 @@
   };
 
   window.__radarWidePreview = {
-    id: () => currentWide(),
-    active: () => {
-      const id = currentWide();
-      return id !== 'off' && id !== 'a';
-    },
+    id: () => (canApplyWideE() && currentWide() !== 'off' ? currentWide() : 'off'),
+    active: () => canApplyWideE() && currentWide() === 'e',
+    allowed: () => canApplyWideE(),
     filtersCollapsedRows: () => {
+      if (!canApplyWideE()) return null;
       const id = currentWide();
       if (id === 'e') return 99;
       if (id === 'c' || id === 'd') return 2;
       return null;
     },
     filtersColumnCount: () => {
+      if (!canApplyWideE()) return null;
       const id = currentWide();
       if (id === 'e') return 1;
       if (id === 'b' || id === 'c' || id === 'd') {
