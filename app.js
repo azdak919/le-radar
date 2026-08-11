@@ -2916,9 +2916,28 @@ function sportsStripAvailWidth() {
 }
 
 /**
+ * Wide : nombre de cartes CTA (1–3) selon largeur + taille du pool.
+ * Plusieurs CTAs = matchs / accroches **distincts** (pas la même info).
+ */
+function sportsWideCtaCount(boardCount = 0) {
+  if (typeof isWideNoMarqueeMode !== 'function' || !isWideNoMarqueeMode()) return 1;
+  const avail = sportsStripAvailWidth();
+  const poolN = Math.max(
+    sportsCtaCandidateSlides()?.length || 0,
+    sportsCtaLabelPool()?.length || 0,
+  );
+  let want = 1;
+  if (avail >= 2000 && poolN >= 3) want = 3;
+  else if (avail >= 1300 && poolN >= 2) want = 2;
+  // Ne pas dépasser le board ni le pool (au moins 1)
+  const cap = boardCount > 0 ? boardCount : 9;
+  return Math.max(1, Math.min(want, poolN || 1, cap));
+}
+
+/**
  * Focus-group le-radar-sports-weather-fit A :
  * Plafond sports = largeur seule (max 3 scores + CTA). Météo indépendante.
- * 4 = 3 scores + CTA ; 3 = 2+CTA ; 2 = 1+CTA ; 1 = CTA seule.
+ * Wide : place pour 2–3 CTAs + scores autour.
  */
 function sportsBoardCountBase() {
   const avail = sportsStripAvailWidth();
@@ -2926,30 +2945,35 @@ function sportsBoardCountBase() {
   const gap = 6;
   // Wide : slots flex égaux — plus de puces quand le bandeau est large.
   // Overflow texte post-paint → −1 (fit), sans marquee ni densify look.
-  // CTA centrée : viser des totaux impairs (2+CTA+2, 3+CTA+3, 4+CTA+4).
-  const minScore = wide ? 128 : 128;
-  const minCta = wide ? 150 : 152;
+  const minScore = wide ? 120 : 128;
+  const minCta = wide ? 140 : 152;
   let maxN = 4;
   if (wide) {
-    // Strip sports ~ full --maxw : densifier dès wide (ex. 1860 → 7 = 3+CTA+3).
-    if (avail >= 2200) maxN = 9;
-    else if (avail >= 1600) maxN = 7;
-    else if (avail >= 1100) maxN = 5;
-    else maxN = 5; // au moins 2+CTA+2 dès wide
+    // Strip sports ~ full --maxw : densifier (ex. 3 CTA + scores).
+    if (avail >= 2200) maxN = 11;
+    else if (avail >= 1800) maxN = 9;
+    else if (avail >= 1400) maxN = 7;
+    else maxN = 5;
   }
+
+  // Estimer le nb de CTA pour le budget largeur
+  const roughCta = wide
+    ? (avail >= 2000 ? 3 : avail >= 1300 ? 2 : 1)
+    : 1;
 
   let n = 1;
   for (let tryN = maxN; tryN >= 2; tryN -= 1) {
-    const scores = tryN - 1;
-    const need = scores * minScore + minCta + gap * (tryN - 1);
+    const ctaN = wide ? Math.min(roughCta, tryN) : 1;
+    const scores = Math.max(0, tryN - ctaN);
+    const need = scores * minScore + ctaN * minCta + gap * (tryN - 1);
     if (avail >= need) {
       n = tryN;
       break;
     }
   }
-  // Wide : si pair (ex. 4 = 3 scores), monter à 5 si place, sinon descendre à 3
-  // pour une CTA vraiment au centre avec des côtés équilibrés.
-  if (wide && n >= 4 && n % 2 === 0) {
+  // Wide 1 CTA historique : totaux impairs pour équilibre L/R.
+  // Multi-CTA : pas d’obligation d’impair (cluster CTA au centre).
+  if (wide && roughCta <= 1 && n >= 4 && n % 2 === 0) {
     const up = n + 1;
     const scoresUp = up - 1;
     const needUp = scoresUp * minScore + minCta + gap * (up - 1);
@@ -4136,7 +4160,8 @@ function sportsCtaSlide(labelIndex = sportsCtaLabelIndex) {
     const idx = ((labelIndex % idle.length) + idle.length) % idle.length;
     return {
       mode: 'cta',
-      key: SPORTS_CTA_KEY,
+      // Clé unique par index — plusieurs CTAs idle sans collision DOM
+      key: `${SPORTS_CTA_KEY}:${idx}`,
       label: idle[idx],
       labelIndex: idx,
       tone: SPORTS_CTA_REST_TONE,
@@ -4155,7 +4180,7 @@ function sportsCtaSlide(labelIndex = sportsCtaLabelIndex) {
   const state = sportsCtaState({ ctaFrom: src });
   const draft = {
     mode: 'cta',
-    key: SPORTS_CTA_KEY,
+    key: `${SPORTS_CTA_KEY}:${idx}`,
     label: label || SPORTS_CTA_IDLE_LABELS[0],
     labelIndex: idx,
     team: { sport: 'board', name: 'Sports', code: 'RSEQ' },
@@ -4170,6 +4195,37 @@ function sportsCtaSlide(labelIndex = sportsCtaLabelIndex) {
   };
   draft.tone = sportsCtaTone(draft);
   return draft;
+}
+
+/**
+ * Pioche `n` slides CTA **sans la même info** (match / idle distincts).
+ * @param {number} n
+ * @returns {object[]}
+ */
+function pickDistinctSportsCtas(n) {
+  const want = Math.max(1, n | 0);
+  const out = [];
+  const used = new Set();
+  const candidates = sportsCtaCandidateSlides();
+  const poolLen = Math.max(1, candidates.length || SPORTS_CTA_IDLE_LABELS.length);
+
+  for (let i = 0; i < poolLen && out.length < want; i += 1) {
+    const slide = sportsCtaSlide(i);
+    if (sportsSlideIsUsed(slide, used)) continue;
+    // Idle sans ctaFrom : dédup par labelIndex / label
+    if (slide.ctaIdle) {
+      const idleKey = `idle:${slide.labelIndex}:${slide.label}`;
+      if (used.has(idleKey)) continue;
+      used.add(idleKey);
+    }
+    for (const k of sportsSlideOccupyKeys(slide)) used.add(k);
+    used.add(slide.key);
+    out.push(slide);
+  }
+  // Filet : au moins une CTA
+  if (!out.length) out.push(sportsCtaSlide(0));
+  sportsCtaLabelIndex = out[0]?.labelIndex ?? 0;
+  return out;
 }
 
 /** Tooltip + aria de la CTA SPORTS (sans reconstruire le DOM). */
@@ -4685,9 +4741,10 @@ function paintSportsChip(slide, animate = false) {
     a.href = sportsBoardHref(slide);
     markSportsBoardLink(a);
     // Pas d’animation « arrivée carte » : la rotation fait rouler le label seul.
-    a.dataset.sportsKey = SPORTS_CTA_KEY;
+    a.dataset.sportsKey = slide.key || SPORTS_CTA_KEY;
     a.dataset.sportsMode = 'cta';
     a.dataset.sportsSport = 'board';
+    if (slide.labelIndex != null) a.dataset.ctaLabelIndex = String(slide.labelIndex);
     const { title, aria } = sportsCtaA11y(slide);
     a.title = title;
     a.setAttribute('aria-label', aria);
@@ -4819,11 +4876,11 @@ function paintSportsChip(slide, animate = false) {
  */
 function nextSportsSlide(usedKeys, opts = {}) {
   const used = usedKeys instanceof Set ? usedKeys : new Set(usedKeys || []);
-  // Toujours exclure le match actuellement en CTA (et son miroir).
-  const ctaSlot = sportsVisible.find((s) => s?.mode === 'cta');
-  if (ctaSlot) {
-    for (const k of sportsSlideOccupyKeys(ctaSlot)) used.add(k);
-  }
+  // Exclure tous les matchs déjà en CTA (1–3 cartes wide).
+  sportsVisible.forEach((s) => {
+    if (s?.mode !== 'cta') return;
+    for (const k of sportsSlideOccupyKeys(s)) used.add(k);
+  });
   const lane = sportsLeftLaneState();
   const avoidSport = String(opts.avoidSport || '').toLowerCase();
   const usedSports = opts.usedSports instanceof Set
@@ -4905,21 +4962,25 @@ function nextSportsSlide(usedKeys, opts = {}) {
 }
 
 /**
- * Wide E : CTA au centre, scores à gauche et à droite (slots stables).
- * Prod : CTA à droite (historique).
+ * Wide E : cluster CTA au centre (1–3), scores à gauche et à droite.
+ * Prod : une CTA à droite (historique).
+ * @param {object[]} contentSlides
+ * @param {object|object[]} ctaOrList
  */
-function arrangeSportsVisible(contentSlides, cta) {
-  if (!cta) return contentSlides.slice();
-  if (!contentSlides.length) return [cta];
+function arrangeSportsVisible(contentSlides, ctaOrList) {
+  const ctas = (Array.isArray(ctaOrList) ? ctaOrList : [ctaOrList]).filter(Boolean);
+  if (!ctas.length) return contentSlides.slice();
+  if (!contentSlides.length) return ctas.slice();
   if (typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode()) {
     const leftN = Math.floor(contentSlides.length / 2);
     return [
       ...contentSlides.slice(0, leftN),
-      cta,
+      ...ctas,
       ...contentSlides.slice(leftN),
     ];
   }
-  return [...contentSlides, cta];
+  // Prod : une seule CTA en fin de bandeau
+  return [...contentSlides, ctas[0]];
 }
 
 function sportsCtaSlotIndex(visible = sportsVisible) {
@@ -4927,31 +4988,43 @@ function sportsCtaSlotIndex(visible = sportsVisible) {
   return i >= 0 ? i : Math.max(0, visible.length - 1);
 }
 
+/** Indices de toutes les CTAs visibles (wide multi). */
+function sportsCtaSlotIndices(visible = sportsVisible) {
+  const out = [];
+  visible.forEach((s, i) => {
+    if (s?.mode === 'cta') out.push(i);
+  });
+  return out;
+}
+
 /**
  * Première peinture.
- * ≥ 2 chips : scores + CTA (droite en prod ; **centrée en wide E**).
+ * ≥ 2 chips : scores + CTA(s) (droite en prod ; **centrée·s en wide E**).
+ * Wide : jusqu’à 3 CTAs distinctes.
  * 1 chip : CTA « Au tableau » seule (fin de la cascade de fit, parité météo).
- * Saison → résultats ; hors saison → prochains matchs (pas de puces info).
  */
 function pickInitialSportsVisible(count) {
-  // CTA : toujours démarrer au plus récent / plus proche (pool déjà trié),
-  // puis cycle 0→1→2… — plus de Math.random() qui donnait un air aléatoire.
+  // CTA : démarrer au plus récent / plus proche (pool trié), cycle 0→1→2…
   sportsCtaLabelIndex = 0;
   sportsLeftCursor = 0;
 
   // Dernier cran de largeur / fit : uniquement l’ancre « Au tableau ».
   if (count <= 1) return [sportsCtaSlide(0)];
 
-  // CTA d’abord (occupe le match lead), puis scores hors ce match / miroir.
-  const cta = sportsCtaSlide(0);
-  const contentCount = Math.max(0, count - 1);
+  const ctaN = sportsWideCtaCount(count);
+  const ctas = pickDistinctSportsCtas(ctaN);
+  const contentCount = Math.max(0, count - ctas.length);
   const picked = [];
-  const usedKeys = new Set(sportsSlideOccupyKeys(cta));
+  const usedKeys = new Set();
+  ctas.forEach((c) => {
+    for (const k of sportsSlideOccupyKeys(c)) usedKeys.add(k);
+    usedKeys.add(c.key);
+  });
   const usedSports = new Set();
 
-  // sportsVisible temporaire pour que nextSportsSlide voie la CTA.
+  // sportsVisible temporaire pour que nextSportsSlide voie les CTAs.
   const prevVisible = sportsVisible;
-  sportsVisible = [cta];
+  sportsVisible = ctas.slice();
   try {
     while (picked.length < contentCount) {
       const slide = nextSportsSlide(usedKeys, { usedSports, avoidSport: '' });
@@ -4965,7 +5038,7 @@ function pickInitialSportsVisible(count) {
     sportsVisible = prevVisible;
   }
 
-  return arrangeSportsVisible(picked, cta);
+  return arrangeSportsVisible(picked, ctas);
 }
 
 /** Remplit / recalcule les slots visibles (resize ou 1er paint). */
@@ -4979,17 +5052,19 @@ function renderSportsStrip() {
     return;
   }
   const board = sportsBoardCount();
-  // Toujours réserver la CTA (ancre). Scores = board - 1, min 0.
-  const count = Math.min(board, Math.max(1, sportsSlides.length + 1));
+  // Réserver 1–3 CTAs (wide) ; le reste = scores.
+  const count = Math.min(board, Math.max(1, sportsSlides.length + 3));
   const pinned = count >= 2;
-  const contentSlots = pinned ? Math.max(0, count - 1) : 0;
+  const ctaN = sportsWideCtaCount(count);
+  const contentSlots = pinned ? Math.max(0, count - ctaN) : 0;
 
   // Resize / fit : si le mode pin ou le nb de slots change, re-semer.
   const wideCentered = typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode();
-  const ctaIdxPrev = sportsCtaSlotIndex(sportsVisible);
+  const ctaIdxsPrev = sportsCtaSlotIndices(sportsVisible);
   const wasPinned = sportsVisible.length >= 2
-    && sportsVisible[ctaIdxPrev]?.mode === 'cta';
+    && ctaIdxsPrev.length >= 1;
   const wasCtaOnly = sportsVisible.length === 1 && sportsVisible[0]?.mode === 'cta';
+  const prevCtaN = ctaIdxsPrev.length || 0;
   const slideStillValid = (s) => {
     if (!s || s.mode === 'cta') return false;
     // Anciennes puces « info » : purger au prochain paint (plus dans la gauche).
@@ -5002,16 +5077,38 @@ function renderSportsStrip() {
     !canReuse
     || sportsVisible.length !== count
     || wasPinned !== pinned
+    || prevCtaN !== ctaN
     || (count === 1 && !wasCtaOnly)
   ) {
     sportsVisible = pickInitialSportsVisible(count);
   } else {
-    const ctaKeep = sportsCtaSlide(sportsCtaLabelIndex);
-    const used = new Set(sportsSlideOccupyKeys(ctaKeep));
+    // Garder les CTAs existantes si encore distinctes / valides, sinon re-piocher.
+    const prevCtas = sportsVisible.filter((s) => s?.mode === 'cta');
+    let ctasKeep = prevCtas.slice(0, ctaN);
+    if (ctasKeep.length < ctaN) {
+      ctasKeep = pickDistinctSportsCtas(ctaN);
+    } else {
+      // Revalider distinctness
+      const seen = new Set();
+      const ok = [];
+      for (const c of ctasKeep) {
+        if (sportsSlideIsUsed(c, seen)) continue;
+        for (const k of sportsSlideOccupyKeys(c)) seen.add(k);
+        seen.add(c.key);
+        ok.push(c);
+      }
+      if (ok.length < ctaN) ctasKeep = pickDistinctSportsCtas(ctaN);
+      else ctasKeep = ok;
+    }
+    const used = new Set();
+    ctasKeep.forEach((c) => {
+      for (const k of sportsSlideOccupyKeys(c)) used.add(k);
+      used.add(c.key);
+    });
     const nextVisible = [];
-    // Reprendre les scores existants (tous slots sauf CTA), ordre L→R.
+    // Reprendre les scores existants (tous slots sauf CTAs), ordre L→R.
     for (let i = 0; i < sportsVisible.length; i += 1) {
-      if (i === ctaIdxPrev) continue;
+      if (ctaIdxsPrev.includes(i)) continue;
       const prev = sportsVisible[i];
       if (
         prev
@@ -5030,9 +5127,9 @@ function renderSportsStrip() {
         .map((s) => String(s.team?.sport || '').toLowerCase())
         .filter(Boolean),
     );
-    // Compléter avec scores / prochains (hors match CTA).
+    // Compléter avec scores / prochains (hors matchs CTA).
     const prevVis = sportsVisible;
-    sportsVisible = [ctaKeep, ...nextVisible];
+    sportsVisible = [...ctasKeep, ...nextVisible];
     try {
       while (nextVisible.length < contentSlots) {
         const slide = nextSportsSlide(used, { usedSports });
@@ -5045,12 +5142,14 @@ function renderSportsStrip() {
     } finally {
       sportsVisible = prevVis;
     }
-    // Wide : CTA au centre ; prod : CTA à droite.
-    sportsVisible = arrangeSportsVisible(nextVisible, ctaKeep);
+    // Wide : CTAs au centre ; prod : CTA à droite.
+    sportsVisible = arrangeSportsVisible(nextVisible, ctasKeep);
   }
-  // Marqueur CSS pour le style « CTA centre »
+  // Marqueur CSS pour le style « CTA centre » + nombre de CTAs
   if (MASTHEAD_SPORTS_STRIP) {
+    const nCta = sportsCtaSlotIndices(sportsVisible).length;
     MASTHEAD_SPORTS_STRIP.dataset.ctaLayout = wideCentered && count >= 2 ? 'center' : 'end';
+    MASTHEAD_SPORTS_STRIP.dataset.ctaCount = String(nCta);
   }
 
   // Rotation L→R : toujours repartir du slot le plus à gauche après un re-paint.
@@ -5179,7 +5278,8 @@ function clearSportsSlotTimers() {
 
 /**
  * Rotation d’un seul slot — indépendante des voisines.
- * ≥ 2 chips : CTA fixe (droite en prod, **centre en wide E**) ; scores autour.
+ * ≥ 2 chips : CTA(s) fixe(s) (droite en prod, **centre en wide E**) ; scores autour.
+ * Wide multi-CTA : chaque CTA cycle sans reprendre le match d’une voisine.
  * 1 chip : CTA seule.
  */
 function rotateSportsSlot(slot) {
@@ -5187,7 +5287,8 @@ function rotateSportsSlot(slot) {
   const n = sportsVisible.length;
   if (slot < 0 || slot >= n) return;
   const pinned = n >= 2;
-  const ctaSlot = sportsCtaSlotIndex(sportsVisible);
+  const ctaSlots = sportsCtaSlotIndices(sportsVisible);
+  const isCtaSlot = ctaSlots.includes(slot);
   // Occupation = clés faces + dédup match (miroir CTA ↔ scores).
   const used = sportsVisibleOccupyKeys(slot);
   const usedSports = new Set(
@@ -5198,13 +5299,29 @@ function rotateSportsSlot(slot) {
   );
 
   let replacement = null;
-  if (!pinned || slot === ctaSlot) {
-    // CTA fixe (seule / droite / centre) : cycle séquentiel du pool.
-    const poolLen = Math.max(1, sportsCtaLabelPool().length);
-    sportsCtaLabelIndex = (sportsCtaLabelIndex + 1) % poolLen;
-    replacement = sportsCtaSlide(sportsCtaLabelIndex);
+  if (!pinned || isCtaSlot) {
+    // CTA : cycle pool en évitant les matchs déjà portés par d’autres CTAs.
+    const poolLen = Math.max(1, sportsCtaCandidateSlides().length || sportsCtaLabelPool().length);
+    const curIdx = Number(sportsVisible[slot]?.labelIndex) || 0;
+    let found = null;
+    for (let step = 1; step <= poolLen; step += 1) {
+      const idx = (curIdx + step) % poolLen;
+      const cand = sportsCtaSlide(idx);
+      if (sportsSlideIsUsed(cand, used)) continue;
+      // Idle : éviter le même label qu’une autre CTA
+      if (cand.ctaIdle) {
+        const otherLabels = sportsVisible
+          .filter((s, i) => i !== slot && s?.mode === 'cta')
+          .map((s) => s.label);
+        if (otherLabels.includes(cand.label)) continue;
+      }
+      found = cand;
+      break;
+    }
+    replacement = found || sportsCtaSlide((curIdx + 1) % poolLen);
+    sportsCtaLabelIndex = replacement.labelIndex ?? ((curIdx + 1) % poolLen);
   } else {
-    // Scores (gauche ou droite de la CTA) : résultats ou prochains.
+    // Scores (gauche ou droite des CTAs) : résultats ou prochains.
     const cur = sportsVisible[slot];
     const avoid = String(cur?.team?.sport || '').toLowerCase();
     replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid });
@@ -5228,7 +5345,7 @@ function rotateSportsSlot(slot) {
 
   sportsVisible[slot] = replacement;
 
-  // Après rotation CTA : si une puce gauche montre le même match, la remplacer.
+  // Après rotation CTA : si une puce score montre le même match, la remplacer.
   if (replacement.mode === 'cta' && replacement.ctaFrom) {
     const ctaKeys = sportsSlideOccupyKeys(replacement);
     for (let i = 0; i < n; i += 1) {
