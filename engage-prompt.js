@@ -601,8 +601,9 @@
   }
 
   /**
-   * Corps install — focus-group `le-radar-engage-copy` (option B) :
-   * une ligne bénéfice campus (focus-group B : pas de jargon boutique ni offline gonflé).
+   * Corps install — focus-group `le-radar-engage-copy` (option B + reconvene triade) :
+   * une ligne bénéfice campus ; triade marque journaux + radios + sports sur le hub.
+   * Pas de jargon boutique ni offline gonflé.
    */
   function installBodyCopy(lang, appId) {
     if (appId === 'pomo') {
@@ -620,8 +621,7 @@
         ? 'Québec college and university scores — one tap away.'
         : 'Scores collégiaux et universitaires du Québec — en un geste.';
     }
-    // Triade marque (identite-visuelle) : journaux + radios + sports — pas le
-    // slogan long « réunis au même endroit », mais le même périmètre.
+    // Hub radar — triade marque (verdict B reconvene 2026-08-11).
     return lang === 'en'
       ? 'Québec student newspapers, radio and sports — one tap away.'
       : 'Journaux, radios et sports étudiants du Québec — en un geste.';
@@ -681,18 +681,21 @@
 
     const steps = installSteps(plat);
     const isIosChromeLike = plat.iosNonSafari;
+    // Focus-group B + reconvene triade : même body bénéfice (journaux/radios/sports
+    // sur le hub) en natif et en guide manuel ; les steps portent le « comment ».
+    // iOS hors Safari : une phrase d’orientation en tête des steps suffit.
+    const benefit = installBodyCopy(lang, appId);
+    const body = isIosChromeLike
+      ? (lang === 'en'
+        ? `${benefit} On this device, add from Safari:`
+        : `${benefit} Sur cet appareil, ajoutez depuis Safari :`)
+      : benefit;
     // Focus-group B : même titre spatial partout (iOS + guide desktop).
     renderCard({
       kind: 'install',
       icon: '📲',
       title: lang === 'en' ? 'Add to Home Screen' : 'Sur l’écran d’accueil',
-      body: lang === 'en'
-        ? (isIosChromeLike
-          ? 'On this device, add from Safari:'
-          : 'One tap away. On this device:')
-        : (isIosChromeLike
-          ? 'Sur cet appareil, ajoutez depuis Safari :'
-          : 'En un geste. Sur cet appareil :'),
+      body,
       steps,
       primaryLabel: lang === 'en' ? 'Got it' : 'Compris',
       onPrimary: () => {
