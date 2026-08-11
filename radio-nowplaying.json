@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-08-11T01:23:49.847Z",
+  "updatedAt": "2026-08-11T03:18:25.256Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "La Voie des Droits",
-        "source": "schedule",
-        "start": "20:30",
-        "end": "21:30",
-        "url": "https://chyz.ca/emission/la-voie-des-droits/"
-      },
+      "current": null,
       "next": {
         "title": "Mardi Champ Gauche",
         "source": "schedule",
@@ -20,59 +14,59 @@
         "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
       },
       "track": "",
-      "showTitle": "La Voie des Droits",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T01:23:33.404Z"
+      "checkedAt": "2026-08-11T03:18:02.606Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Toute est dans toute (reprise)",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/tout-est-dans-toute"
-      },
-      "next": {
         "title": "Mix anglo",
         "source": "schedule",
         "start": "22:00",
         "end": "00:00",
         "url": "https://cism893.ca/emissions/mix-anglo"
       },
+      "next": {
+        "title": "Les sentinelles de l'art (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+      },
       "track": "",
-      "showTitle": "Toute est dans toute (reprise)",
+      "showTitle": "Mix anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T01:23:35.563Z"
+      "checkedAt": "2026-08-11T03:18:05.071Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Underground Sounds",
+        "title": "27th Hr.",
         "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
+        "start": "23:00",
+        "end": "00:00"
       },
       "next": {
-        "title": "Drastic Plastic",
+        "title": "Harmony Express",
         "source": "api-live",
-        "start": "22:00",
-        "end": "23:00"
+        "start": "00:00",
+        "end": "02:00"
       },
       "track": "",
-      "showTitle": "Underground Sounds",
+      "showTitle": "27th Hr.",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -80,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T01:23:38.358Z"
+      "checkedAt": "2026-08-11T03:18:09.599Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "LEKTOR DECODER",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/lektor-decoder"
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule",
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
-        "title": "Past Tense",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/past-tense"
+        "title": "CJLO Late Night",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "track": "",
-      "showTitle": "LEKTOR DECODER",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T01:23:40.285Z"
+      "checkedAt": "2026-08-11T03:18:11.732Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +127,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T01:23:41.127Z"
+      "checkedAt": "2026-08-11T03:18:12.349Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +140,7 @@
         "end": "07:00",
         "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "Le Belladone - L",
+      "track": "Taupe - New Window",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -158,7 +152,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-11T01:23:49.496Z"
+      "checkedAt": "2026-08-11T03:18:24.905Z"
     }
   }
 }
