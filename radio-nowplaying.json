@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-11T16:26:22.667Z",
+  "updatedAt": "2026-08-11T17:27:05.317Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T16:26:06.997Z"
+      "checkedAt": "2026-08-11T17:26:49.223Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T16:26:09.483Z"
+      "checkedAt": "2026-08-11T17:26:52.296Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T16:26:12.630Z"
+      "checkedAt": "2026-08-11T17:26:55.022Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "World Beat News",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/world-beat-news"
-      },
-      "next": {
         "title": "Shaking the Habitual",
         "source": "schedule-live",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/shaking-the-habitual"
       },
+      "next": {
+        "title": "Code Switch",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/code-switch"
+      },
       "track": "",
-      "showTitle": "World Beat News",
+      "showTitle": "Shaking the Habitual",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T16:26:15.275Z"
+      "checkedAt": "2026-08-11T17:26:57.205Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T16:26:16.066Z"
+      "checkedAt": "2026-08-11T17:26:57.944Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Taupe - Painting",
+      "track": "Gabriella Olivo - Todas mis amigas",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-11T16:26:22.316Z"
+      "checkedAt": "2026-08-11T17:27:04.966Z"
     }
   }
 }
