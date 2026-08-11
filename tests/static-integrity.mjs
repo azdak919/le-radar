@@ -901,9 +901,9 @@ assert(
 assert(
   appJs.includes('function sportsCtaMayRotate')
     && appJs.includes('SPORTS_CTA_ROTATE_MEDIA')
-    && /const SPORTS_CTA_DWELL_MS\s*=\s*24000/.test(appJs)
+    && /const SPORTS_CTA_DWELL_MS\s*=\s*12000/.test(appJs)
     && appJs.includes('sportsCtaPaused'),
-  'app.js : rotation CTA lente, au pointeur fin seulement, en pause au survol',
+  'app.js : rotation CTA (~12 s), au pointeur fin seulement, en pause au survol',
 );
 // Le marqueur temporel et la fraîcheur sont rendus dans la carte : title seul
 // est invisible au doigt (garde-fous marqueur-non-tronque et fraicheur-visible).
@@ -1013,7 +1013,8 @@ assert(
     && appJs.includes('sportsSlotDwellMs')
     && appJs.includes('sportsLabelReadingMs')
     && appJs.includes('sportsChipNeedsMarquee')
-    && /SPORTS_READ_MIN_MS\s*=\s*4800/.test(appJs)
+    && /SPORTS_READ_MIN_MS\s*=\s*9000/.test(appJs)
+    && /SPORTS_READ_MAX_MS\s*=\s*14000/.test(appJs)
     && /SPORTS_SCROLL_ONE_WAY_MS\s*=\s*5500/.test(appJs)
     && appJs.includes('SPORTS_SCROLL_ROUND_TRIP_MS')
     && appJs.includes('SPORTS_CHIP_LEAVE_MS'),
