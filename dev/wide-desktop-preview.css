@@ -328,13 +328,13 @@ html[data-wide-preview="e"] {
      *  rail | head     ← Le fil + traduction + compteur
      *  rail | list     ← magazine + suite
      *  rail | empty
-     *  foot (pleine largeur)
+     *  .    | foot     ← crédits alignés sur les articles (pas sous le rail)
      */
     grid-template-areas:
       "rail head"
       "rail list"
       "rail empty"
-      "foot foot";
+      ".    foot";
   }
 
   /* ── En-tête du fil : visible au-dessus des articles (pas perdu) ── */
@@ -499,17 +499,21 @@ html[data-wide-preview="e"] {
     min-width: 0;
   }
 
-  /* Footer + crédits : pleine largeur sous le rail (plus de clipping) */
+  /*
+   * Footer / crédits : colonne contenu seulement (aligné au début des articles).
+   * La colonne rail sources reste vide en bas.
+   */
   html[data-wide-preview="e"] .site-foot {
     grid-area: foot;
     width: 100%;
     max-width: none;
+    min-width: 0;
     box-sizing: border-box;
     margin-top: 36px;
     padding-top: 20px;
-    /* Légère respiration ; le texte n’est plus sous le rail */
     padding-left: 0;
     padding-right: 0;
+    justify-self: stretch;
   }
 
   html[data-wide-preview="e"] .site-foot__credit,
