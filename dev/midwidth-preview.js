@@ -1,21 +1,19 @@
 /**
- * Lab local LE-RADAR — formats d’écran seulement
- * ─────────────────────────────────────────────
- * Visible uniquement sur localhost / 127.0.0.1 (ou ?lab=1).
+ * Lab local LE-RADAR — formats d’écran + options grand écran
+ * ─────────────────────────────────────────────────────────
+ * Visible uniquement sur localhost / 127.0.0.1 (ou ?lab= / ?wide=).
  * Ne s’injecte pas dans l’iframe lab (`?labFrame=1`) ni en prod le-radar.ca.
  *
- * Formats : largeur d’iframe — 390 / 430 / 768 / 900 / 1280 / 1600 / 1920 / plein.
- * Options grand écran : voir wide-desktop-preview.js (?wide=a…e).
- * URL : ?lab=390
+ * Formats : largeur iframe — 390 / 430 / 768 / 900 / 1280 / 1600 / 1920 / plein.
+ * Wide : ?wide=a|b|c|d|e (layouts CSS via data-wide-preview ; bascule sans reload).
  *
- * Note : les variants « Fil mid » A/C/D (focus-group midwidth-fil) sont
- * retirés de la barre — le verdict C est le comportement prod ; plus besoin
- * de les comparer en lecture quotidienne.
+ * La rangée Wide est AU-DESSUS de Format pour ne pas passer sous le dock GNOME.
  */
 (function () {
   'use strict';
 
   const LAB_PARAM = 'lab';
+  const WIDE_PARAM = 'wide';
   const FRAME_PARAM = 'labFrame';
   /** Ancien param focus-group — purgé des URL pour ne plus polluer. */
   const LEGACY_MID_PARAM = 'midwidth';
@@ -30,6 +28,15 @@
     desktop: { id: 'desktop', label: '1280', w: 1280, hint: 'Bureau compact (réf. actuelle)' },
     wide1600: { id: 'wide1600', label: '1600', w: 1600, hint: 'Grand bureau' },
     wide1920: { id: 'wide1920', label: '1920', w: 1920, hint: 'Full HD' },
+  };
+
+  const WIDE_OPTIONS = {
+    off: { id: 'off', label: 'Off', hint: 'Prod actuelle (~1180, magazine 2 pistes)' },
+    a: { id: 'a', label: 'A', hint: 'Status quo — aucune règle wide (réf.)' },
+    b: { id: 'b', label: 'B', hint: 'Shell ~1480 — magazine inchangé' },
+    c: { id: 'c', label: 'C', hint: 'Shell ~1560 — sources 2 rangées, suite 3 col' },
+    d: { id: 'd', label: 'D', hint: 'Shell ~1680 — une 2col, en bref 2col, suite 4col' },
+    e: { id: 'e', label: 'E', hint: 'Shell ~1760 — sources rail gauche sticky' },
   };
 
   function isLabFrame() {
@@ -50,7 +57,8 @@
     if (isLabFrame()) return false;
     if (isLocalHost()) return true;
     try {
-      return new URL(location.href).searchParams.has(LAB_PARAM);
+      const u = new URL(location.href);
+      return u.searchParams.has(LAB_PARAM) || u.searchParams.has(WIDE_PARAM);
     } catch {
       return false;
     }
@@ -75,12 +83,29 @@
     }
   }
 
-  function buildUrl({ format }) {
+  function currentWide() {
+    try {
+      const raw = (new URL(location.href).searchParams.get(WIDE_PARAM) || 'off')
+        .toLowerCase()
+        .trim();
+      if (!raw || raw === '0' || raw === 'false') return 'off';
+      if (WIDE_OPTIONS[raw]) return raw;
+      return 'off';
+    } catch {
+      return 'off';
+    }
+  }
+
+  function buildUrl({ format, wide }) {
     const u = new URL(location.href);
     u.searchParams.delete(FRAME_PARAM);
     u.searchParams.delete(LEGACY_MID_PARAM);
-    if (!format || format === 'full') u.searchParams.delete(LAB_PARAM);
-    else u.searchParams.set(LAB_PARAM, String(FORMATS[format]?.w || format));
+    const fmt = format === undefined ? currentFormat() : format;
+    const wid = wide === undefined ? currentWide() : wide;
+    if (!fmt || fmt === 'full') u.searchParams.delete(LAB_PARAM);
+    else u.searchParams.set(LAB_PARAM, String(FORMATS[fmt]?.w || fmt));
+    if (!wid || wid === 'off') u.searchParams.delete(WIDE_PARAM);
+    else u.searchParams.set(WIDE_PARAM, wid);
     return u.pathname + u.search + u.hash;
   }
 
@@ -88,14 +113,89 @@
     const u = new URL(location.href);
     u.searchParams.set(FRAME_PARAM, '1');
     u.searchParams.delete(LEGACY_MID_PARAM);
-    // L’iframe a sa propre largeur : pas besoin de ?lab= dans le frame
+    // L’iframe a sa propre largeur : pas de ?lab= ; garder ?wide=
     u.searchParams.delete(LAB_PARAM);
     return u.pathname + u.search + u.hash;
   }
 
-  function navigateTo(opts) {
-    location.assign(buildUrl(opts));
+  function navigateFormat(fmtKey) {
+    location.assign(buildUrl({ format: fmtKey }));
   }
+
+  /** Wide : pas de reload (évite la « disparition » de la barre). */
+  function applyWide(wideId, { pushUrl = true } = {}) {
+    const id = WIDE_OPTIONS[wideId] ? wideId : 'off';
+    try {
+      if (id === 'off') delete document.documentElement.dataset.widePreview;
+      else document.documentElement.dataset.widePreview = id;
+    } catch { /* ignore */ }
+
+    if (pushUrl) {
+      try {
+        history.replaceState(null, '', buildUrl({ wide: id }));
+      } catch { /* ignore */ }
+    }
+
+    // Mettre à jour les boutons + hint
+    const bar = document.getElementById('local-lab-format-bar');
+    if (bar) {
+      bar.querySelectorAll('[data-wide-id]').forEach((btn) => {
+        const active = btn.getAttribute('data-wide-id') === id;
+        btn.style.cssText = wideBtnStyle(active);
+      });
+      const hint = bar.querySelector('[data-wide-hint]');
+      if (hint) hint.textContent = WIDE_OPTIONS[id]?.hint || '';
+    }
+
+    // Badge
+    paintWideBadge(id);
+
+    // Filtres sources (app.js lit __radarWidePreview à chaque sync)
+    try {
+      window.dispatchEvent(new CustomEvent('radar-wide-preview-change', { detail: { id } }));
+    } catch { /* ignore */ }
+
+    // Re-sync filtres si app déjà chargé
+    try {
+      if (typeof window.__radarWidePreview?.onChange === 'function') {
+        window.__radarWidePreview.onChange(id);
+      }
+    } catch { /* ignore */ }
+
+    // Si on est en mode iframe format, recharger le frame pour appliquer wide dedans
+    const frame = document.getElementById('local-lab-frame');
+    if (frame && currentFormat() !== 'full') {
+      frame.src = frameSrc();
+    }
+  }
+
+  function paintWideBadge(id) {
+    if (isLabFrame()) return;
+    let badge = document.getElementById('wide-desktop-badge');
+    if (!id || id === 'off') {
+      badge?.remove();
+      return;
+    }
+    if (!badge) {
+      badge = document.createElement('div');
+      badge.id = 'wide-desktop-badge';
+      document.body.appendChild(badge);
+    }
+    badge.dataset.wide = id;
+    const opt = WIDE_OPTIONS[id];
+    badge.textContent = `Wide ${opt.label} · ${(opt.hint || '').split('—')[0].trim()}`;
+    badge.title = opt.hint || '';
+  }
+
+  // Dataset le plus tôt possible (host + iframe)
+  try {
+    const early = currentWide();
+    if (early && early !== 'off') {
+      document.documentElement.dataset.widePreview = early;
+    } else {
+      delete document.documentElement.dataset.widePreview;
+    }
+  } catch { /* ignore */ }
 
   // Ne plus activer data-midwidth-preview (A/C) — prod = verdict C.
   try {
@@ -113,9 +213,16 @@
 
   const format = currentFormat();
 
-  function btnStyle(active) {
+  function formatBtnStyle(active) {
     if (active) {
       return 'appearance:none;cursor:pointer;border-radius:999px;padding:6px 10px;font:600 11px/1 system-ui,sans-serif;border:1px solid #6c2163;background:#6c2163;color:#fff';
+    }
+    return 'appearance:none;cursor:pointer;border-radius:999px;padding:6px 10px;font:600 11px/1 system-ui,sans-serif;border:1px solid rgba(255,255,255,0.16);background:rgba(255,255,255,0.06);color:#e8eaed';
+  }
+
+  function wideBtnStyle(active) {
+    if (active) {
+      return 'appearance:none;cursor:pointer;border-radius:999px;padding:6px 10px;font:600 11px/1 system-ui,sans-serif;border:1px solid #2f6fed;background:#2f6fed;color:#fff';
     }
     return 'appearance:none;cursor:pointer;border-radius:999px;padding:6px 10px;font:600 11px/1 system-ui,sans-serif;border:1px solid rgba(255,255,255,0.16);background:rgba(255,255,255,0.06);color:#e8eaed';
   }
@@ -152,26 +259,34 @@
     frame.src = frameSrc();
   }
 
+  function rowEl() {
+    const row = document.createElement('div');
+    row.className = 'local-lab-row';
+    row.style.cssText = 'display:flex;flex-wrap:wrap;align-items:center;gap:5px;width:100%';
+    return row;
+  }
+
   function injectBar() {
     if (!shouldShowBar()) return;
     if (document.getElementById('local-lab-format-bar')) return;
 
     const bar = document.createElement('div');
     bar.id = 'local-lab-format-bar';
-    // Ancien id gardé en alias pour CSS éventuel / signets CSS.
-    bar.className = 'midwidth-preview-bar';
+    bar.className = 'midwidth-preview-bar local-lab-bar';
     bar.setAttribute('role', 'region');
-    bar.setAttribute('aria-label', 'Lab local — formats d’écran');
+    bar.setAttribute('aria-label', 'Lab local — formats et grand écran');
+    // bottom assez haut pour le dock GNOME (~60–70 px) + 2 rangées
     bar.style.cssText = [
       'position:fixed',
       'z-index:10000',
       'left:50%',
-      'bottom:max(12px, env(safe-area-inset-bottom))',
+      // Dock bas + marge : la barre entière reste cliquable
+      'bottom:max(72px, calc(env(safe-area-inset-bottom) + 64px))',
       'transform:translateX(-50%)',
       'display:flex',
-      'flex-wrap:wrap',
-      'align-items:center',
-      'gap:5px',
+      'flex-direction:column',
+      'align-items:stretch',
+      'gap:6px',
       'padding:8px 10px',
       'border-radius:14px',
       'border:1px solid rgba(255,255,255,0.14)',
@@ -180,40 +295,78 @@
       'box-shadow:0 10px 40px -12px rgba(0,0,0,0.55)',
       'font:600 12px/1.2 system-ui,sans-serif',
       'color:#e8eaed',
-      'max-width:min(98vw,720px)',
+      'max-width:min(98vw,760px)',
       'pointer-events:auto',
     ].join(';');
 
+    const wideNow = currentWide();
+
+    // ── Rangée 1 : Wide (au-dessus, pour ne pas passer sous le dock) ──
+    const wideRow = rowEl();
+    wideRow.setAttribute('aria-label', 'Options grand écran');
+    const tagW = document.createElement('span');
+    tagW.textContent = 'Wide';
+    tagW.style.cssText = 'opacity:0.55;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;margin-right:2px;flex-shrink:0';
+    wideRow.appendChild(tagW);
+
+    Object.keys(WIDE_OPTIONS).forEach((key) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = WIDE_OPTIONS[key].label;
+      btn.title = WIDE_OPTIONS[key].hint;
+      btn.setAttribute('data-wide-id', key);
+      btn.style.cssText = wideBtnStyle(key === wideNow);
+      btn.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+        if (key === currentWide()) return;
+        applyWide(key);
+      });
+      wideRow.appendChild(btn);
+    });
+
+    const hint = document.createElement('span');
+    hint.setAttribute('data-wide-hint', '1');
+    hint.style.cssText = 'opacity:0.48;font-size:10px;font-weight:500;margin-left:2px;max-width:36ch';
+    hint.textContent = WIDE_OPTIONS[wideNow]?.hint || '';
+    wideRow.appendChild(hint);
+    bar.appendChild(wideRow);
+
+    // ── Rangée 2 : Format ──
+    const fmtRow = rowEl();
+    fmtRow.setAttribute('aria-label', 'Formats d’écran');
     const tagF = document.createElement('span');
     tagF.textContent = 'Format';
-    tagF.style.cssText = 'opacity:0.55;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;margin-right:2px';
-    bar.appendChild(tagF);
+    tagF.style.cssText = 'opacity:0.55;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;margin-right:2px;flex-shrink:0';
+    fmtRow.appendChild(tagF);
 
     Object.keys(FORMATS).forEach((key) => {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.textContent = FORMATS[key].label;
       btn.title = FORMATS[key].hint;
-      btn.style.cssText = btnStyle(key === format);
+      btn.style.cssText = formatBtnStyle(key === format);
       btn.addEventListener('click', () => {
         if (key === format) return;
-        navigateTo({ format: key });
+        navigateFormat(key);
       });
-      bar.appendChild(btn);
+      fmtRow.appendChild(btn);
     });
 
     const w = document.createElement('span');
     w.id = 'local-lab-format-w';
     w.style.cssText = 'opacity:0.5;font-size:10px;margin-left:4px;font-variant-numeric:tabular-nums';
     const paintW = () => {
-      const fw = FORMATS[format]?.w;
+      const fw = FORMATS[currentFormat()]?.w;
       w.textContent = fw ? `${fw}px · lab` : `${window.innerWidth}px`;
     };
     paintW();
     window.addEventListener('resize', paintW, { passive: true });
-    bar.appendChild(w);
+    fmtRow.appendChild(w);
+    bar.appendChild(fmtRow);
 
     document.body.appendChild(bar);
+    paintWideBadge(wideNow);
 
     if (format !== 'full') {
       ensureFrameShell(format);
@@ -226,9 +379,36 @@
     injectBar();
   }
 
-  // Hook minimal pour app.js (magazine mid prod dès 900 px).
+  // Hooks app.js
   window.__radarMidwidthPreview = {
     format: () => currentFormat(),
     magazineMinPx: () => 900,
+  };
+
+  window.__radarWidePreview = {
+    id: () => currentWide(),
+    active: () => {
+      const id = currentWide();
+      return id !== 'off' && id !== 'a';
+    },
+    filtersCollapsedRows: () => {
+      const id = currentWide();
+      if (id === 'e') return 99;
+      if (id === 'c' || id === 'd') return 2;
+      return null;
+    },
+    filtersColumnCount: () => {
+      const id = currentWide();
+      if (id === 'e') return 1;
+      if (id === 'b' || id === 'c' || id === 'd') {
+        try {
+          if (window.innerWidth >= 1500) return 6;
+          if (window.innerWidth >= 1280) return 5;
+        } catch { /* ignore */ }
+      }
+      return null;
+    },
+    set: (id) => applyWide(id),
+    options: () => ({ ...WIDE_OPTIONS }),
   };
 })();
