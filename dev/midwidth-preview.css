@@ -1,14 +1,51 @@
 /**
- * Prévisualisation locale — focus-group midwidth fil
+ * Lab local LE-RADAR — formats d’écran (iframe) + midwidth fil
  * (decisions/le-radar-midwidth-fil.json)
  *
- * Activer via ?midwidth=A | ?midwidth=C | barre flottante (localhost).
- *   A = densifier seul (dissidence dev), stack 1 col jusqu’à 1099
- *   C = hybride (verdict) : densifier 600–899 + magazine mid 900–1099
- *   D = status quo (pas d’attribut data-midwidth-preview)
+ * Barre flottante : localhost / 127.0.0.1 seulement (ou ?lab= / ?midwidth=).
+ *   Format 390/430/768/900/1280 → iframe (media queries réelles)
+ *   Fil mid A/C/D → variants focus-group
  *
- * Ne s’applique pas au magazine bureau ≥1100 (tracks inchangées).
+ * Activer : barre locale, ou ?lab=390&midwidth=C
  */
+
+/* ── Shell iframe format ─────────────────────────────────────────── */
+html.local-lab-framed,
+html.local-lab-framed body {
+  /* La page hôte n’affiche que le cadre + la barre lab */
+  overflow: hidden !important;
+  height: 100% !important;
+  background: #0c0e12 !important;
+}
+html.local-lab-framed body > *:not(#local-lab-shell):not(#midwidth-preview-bar) {
+  /* Cache le contenu hôte (doublon de l’iframe) sans le détruire */
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+#local-lab-shell {
+  position: fixed;
+  z-index: 9990;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 100vw;
+  height: 100%;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 0 80px rgba(0, 0, 0, 0.55);
+  background: #000;
+  overflow: hidden;
+}
+#local-lab-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: var(--bg, #111);
+}
+
+/* ── Midwidth fil (A / C) ────────────────────────────────────────── */
 
 /* ── Densité partagée (A : 600–1099 · C : 600–899) ─────────────────── */
 html[data-midwidth-preview="A"] .news-list .article--feature,
