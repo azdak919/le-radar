@@ -1547,14 +1547,37 @@ function weatherBoardAvailWidth() {
   return width;
 }
 
+/**
+ * Lab grand écran (wide / super-wide) : assez de place pour lire le texte
+ * sans marquee (radio, météo, sports CTA, filtres). Voir data-wide-preview.
+ */
+function isWideNoMarqueeMode() {
+  try {
+    const id = document.documentElement.dataset.widePreview;
+    if (!id || id === 'off' || id === 'a') return false;
+    return window.matchMedia('(min-width: 1280px)').matches;
+  } catch {
+    return false;
+  }
+}
+
 function weatherBoardCount() {
   const width = weatherBoardAvailWidth();
   let count = 1;
-  // Modèle : 1 ancre MTL/QC + secondaires. Bureau 1280 board ~650 px → 3 cartes
-  // (4 serraient les secondaires → marquee). 4 seulement si board vraiment large.
-  if (width >= 780) count = 4;
-  else if (width >= 400) count = 3;
-  else if (width >= 240) count = 2;
+  // Lab wide / super-wide : plus de cartes, sans marquee sur les toponymes
+  // (compact si trop long). Super-wide (~shell 1760+) → 5 cartes.
+  if (isWideNoMarqueeMode()) {
+    if (width >= 980) count = 5;
+    else if (width >= 720) count = 4;
+    else if (width >= 400) count = 3;
+    else if (width >= 240) count = 2;
+  } else {
+    // Modèle : 1 ancre MTL/QC + secondaires. Bureau 1280 board ~650 px → 3 cartes
+    // (4 serraient les secondaires → marquee). 4 seulement si board vraiment large.
+    if (width >= 780) count = 4;
+    else if (width >= 400) count = 3;
+    else if (width >= 240) count = 2;
+  }
   // Docké (768/900) : même plafond 3 pour lisibilité.
   if (mastheadWeatherDocked && count > 3) count = 3;
   return mastheadWeatherFitCount === null ? count : Math.min(count, mastheadWeatherFitCount);
@@ -1746,6 +1769,26 @@ function refreshWeatherNameScroll() {
     const viewport = el.querySelector('.masthead-weather__name');
     const name = el.querySelector('.masthead-weather__name-text');
     if (!viewport || !name) return;
+
+    // Wide / super-wide : jamais de marquee — compact si le nom déborde.
+    if (isWideNoMarqueeMode()) {
+      el.classList.remove('is-overflowing');
+      el.style.removeProperty('--weather-scroll');
+      const isPrimary = MASTHEAD_WEATHER_PRIMARY_IDS.has(el.dataset.weatherCity);
+      if (isPrimary) {
+        el.classList.remove('is-compact');
+        return;
+      }
+      const prevMax = name.style.maxWidth;
+      name.style.maxWidth = 'none';
+      el.classList.remove('is-compact');
+      const overflow = Math.max(0, name.scrollWidth - viewport.clientWidth);
+      name.style.maxWidth = prevMax;
+      if (overflow > 2) el.classList.add('is-compact');
+      else el.classList.remove('is-compact');
+      return;
+    }
+
     // Lever max-width le temps de la mesure (sinon max-width:100% → overflow 0
     // et le marquee ne part jamais — « SAINT-IGNACE-D » figé).
     const prevMax = name.style.maxWidth;
@@ -3994,6 +4037,12 @@ function sportsApplyScrollState(chip, {
   overflow,
 } = {}) {
   if (!chip || !flag || !prop) return;
+  // Wide / super-wide : pas de marquee sports (CTA inclus).
+  if (isWideNoMarqueeMode()) {
+    chip.classList.remove(flag);
+    chip.style.removeProperty(prop);
+    return;
+  }
   const had = chip.classList.contains(flag);
   const needs = overflow > 2;
   if (!needs) {
@@ -7330,6 +7379,15 @@ function measureMarquee(el) {
   const span = el.querySelector('.tuner-now-sub-text');
   if (!span) return;
 
+  // Wide / super-wide : texte fixe (clip), jamais de défilement radio / filtres.
+  if (isWideNoMarqueeMode()) {
+    el.classList.remove('is-marquee');
+    el.style.removeProperty('--marquee-shift');
+    el.style.removeProperty('--marquee-duration');
+    el.style.removeProperty('--marquee-delay');
+    return;
+  }
+
   const available = getMarqueeAvailableWidth(el);
   if (!available) return;
 
@@ -9058,10 +9116,35 @@ function bindFiltersPanel() {
     filtersResize.observe(NEWS_FILTERS);
   }
 
-  // Lab grand écran : bascule ?wide= sans reload → re-sync colonnes / rangées.
+  // Lab grand écran : bascule ?wide= sans reload → re-sync colonnes / rangées,
+  // coupe les marquees, recalcule météo (plus de cartes en wide).
   window.addEventListener('radar-wide-preview-change', () => {
     syncFiltersPanel();
+    // Purger classes marquee immédiatement (CSS + prochains mesures).
+    document.querySelectorAll('.is-marquee').forEach((el) => {
+      el.classList.remove('is-marquee');
+      el.style.removeProperty('--marquee-shift');
+      el.style.removeProperty('--marquee-duration');
+      el.style.removeProperty('--marquee-delay');
+    });
+    document.querySelectorAll('.is-overflowing, .is-sub-overflowing').forEach((el) => {
+      el.classList.remove('is-overflowing', 'is-sub-overflowing');
+      el.style.removeProperty('--weather-scroll');
+      el.style.removeProperty('--sports-scroll');
+      el.style.removeProperty('--sports-scroll-sub');
+    });
+    mastheadWeatherFitCount = null;
+    scheduleMastheadWeatherLayout();
     scheduleFilterMarqueeRefresh();
+    try {
+      sportsFitCount = null;
+      sportsFitDepth = 0;
+      if (MASTHEAD_SPORTS_STRIP && !MASTHEAD_SPORTS_STRIP.hidden) {
+        renderSportsStrip();
+        scheduleSportsRotate();
+        window.requestAnimationFrame(() => refreshSportsChipScroll());
+      }
+    } catch { /* ignore */ }
   });
 }
 
