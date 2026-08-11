@@ -159,7 +159,7 @@ html[data-wide-preview="e"] {
     /* Pas de clip horizontal : le rail ne doit pas rogner les pastilles */
     overflow-x: visible;
     display: grid;
-    grid-template-columns: var(--wide-rail) minmax(0, 1fr);
+    grid-template-columns: minmax(240px, var(--wide-rail)) minmax(0, 1fr);
     column-gap: var(--wide-gap);
     align-items: start;
     /* padding latéral un peu plus généreux pour éviter le clipping viewport */
@@ -182,7 +182,6 @@ html[data-wide-preview="e"] {
   /* ── En-tête du fil : visible au-dessus des articles (pas perdu) ── */
   html[data-wide-preview="e"] .wire-head {
     grid-area: head;
-    grid-column: unset;
     margin-top: 0;
     margin-bottom: 10px;
     min-width: 0;
@@ -197,14 +196,13 @@ html[data-wide-preview="e"] {
   /* ── Rail sources sticky ── */
   html[data-wide-preview="e"] .filters-panel {
     grid-area: rail;
-    grid-column: unset;
-    grid-row: unset;
     position: sticky;
     top: 12px;
     align-self: start;
     width: 100%;
     min-width: 0;
-    max-width: 100%;
+    max-width: var(--wide-rail);
+    justify-self: stretch;
     box-sizing: border-box;
     max-height: calc(100dvh - 96px);
     overflow-x: hidden;
@@ -280,8 +278,6 @@ html[data-wide-preview="e"] {
   /* ── Magazine (à la une + en bref) ── */
   html[data-wide-preview="e"] .news-list {
     grid-area: list;
-    grid-column: unset;
-    grid-row: unset;
     min-width: 0;
     width: 100%;
     /* Une un peu plus large ; En bref assez large pour 2 col de cartes */
@@ -337,7 +333,6 @@ html[data-wide-preview="e"] {
   /* Footer + crédits : pleine largeur sous le rail (plus de clipping) */
   html[data-wide-preview="e"] .site-foot {
     grid-area: foot;
-    grid-column: unset;
     width: 100%;
     max-width: none;
     box-sizing: border-box;
@@ -382,7 +377,7 @@ html[data-wide-preview="e"] {
   }
 
   html[data-wide-preview="e"] .wire {
-    grid-template-columns: var(--wide-rail) minmax(0, 1fr);
+    grid-template-columns: minmax(240px, var(--wide-rail)) minmax(0, 1fr);
   }
 }
 
