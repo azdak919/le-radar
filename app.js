@@ -1761,13 +1761,15 @@ function weatherBoardCount() {
   let count = 1;
   // Lab wide E : plus de slots quand le ruban grossit (largeur réelle masthead).
   // Slots CSS à parts égales → rotation sans reflow des voisins.
+  // Seuils bas : remplir le vide (user : « ajouter des cartes météos »).
   if (isWideNoMarqueeMode()) {
-    // Plus de slots stables dès que le ruban mât est large (wide / super-wide).
-    if (width >= 2000) count = 7;
-    else if (width >= 1500) count = 6;
-    else if (width >= 1100) count = 5;
-    else if (width >= 800) count = 4;
-    else if (width >= 400) count = 3;
+    // Board météo ~ part du mât (pas full viewport) : seuils bas pour densifier.
+    if (width >= 1800) count = 8;
+    else if (width >= 1200) count = 7;
+    else if (width >= 900) count = 6;
+    else if (width >= 700) count = 5;
+    else if (width >= 520) count = 4;
+    else if (width >= 360) count = 3;
     else if (width >= 240) count = 2;
   } else {
     // Modèle : 1 ancre MTL/QC + secondaires. Bureau 1280 board ~650 px → 3 cartes
@@ -2012,16 +2014,23 @@ function refreshWeatherNameScroll() {
 
 /** Dwell météo : lire → 1 aller-retour si overflow → repos → changer. */
 function weatherBoardDwellMs() {
+  // Wide : plus de cartes visibles → rotation plus lente (évite le « flip » frénétique).
+  const base = isWideNoMarqueeMode()
+    ? Math.max(WEATHER_ROTATE_BASE_MS, 14000)
+    : WEATHER_ROTATE_BASE_MS;
   if (sportsReducedMotion || PREFERS_REDUCED_MOTION?.matches) {
-    return WEATHER_ROTATE_BASE_MS;
+    return base;
   }
   const anyOverflow = !!MASTHEAD_WEATHER?.querySelector(
     '.masthead-weather__city.is-active.is-overflowing',
   );
-  if (!anyOverflow) return WEATHER_ROTATE_BASE_MS;
-  return WEATHER_SCROLL_READ_DELAY_MS
-    + WEATHER_SCROLL_ONE_WAY_MS * MARQUEE_ROUND_TRIPS
-    + WEATHER_SCROLL_POST_PAUSE_MS;
+  if (!anyOverflow) return base;
+  return Math.max(
+    base,
+    WEATHER_SCROLL_READ_DELAY_MS
+      + WEATHER_SCROLL_ONE_WAY_MS * MARQUEE_ROUND_TRIPS
+      + WEATHER_SCROLL_POST_PAUSE_MS,
+  );
 }
 
 function clearMastheadWeatherTimer() {
@@ -2742,15 +2751,16 @@ function sportsBoardCountBase() {
   const gap = 6;
   // Wide : slots flex égaux — plus de puces quand le bandeau est large.
   // Overflow texte post-paint → −1 (fit), sans marquee ni densify look.
-  const minScore = wide ? 145 : 128;
-  const minCta = wide ? 170 : 152;
+  // CTA centrée : viser des totaux impairs (2+CTA+2, 3+CTA+3, 4+CTA+4).
+  const minScore = wide ? 128 : 128;
+  const minCta = wide ? 150 : 152;
   let maxN = 4;
   if (wide) {
-    // CTA centrée + scores de chaque côté (ex. 3+CTA+3 = 7)
-    if (avail >= 2800) maxN = 9;
-    else if (avail >= 2200) maxN = 7;
-    else if (avail >= 1600) maxN = 5;
-    else maxN = 4;
+    // Strip sports ~ full --maxw : densifier dès wide (ex. 1860 → 7 = 3+CTA+3).
+    if (avail >= 2200) maxN = 9;
+    else if (avail >= 1600) maxN = 7;
+    else if (avail >= 1100) maxN = 5;
+    else maxN = 5; // au moins 2+CTA+2 dès wide
   }
 
   let n = 1;
@@ -2761,6 +2771,15 @@ function sportsBoardCountBase() {
       n = tryN;
       break;
     }
+  }
+  // Wide : si pair (ex. 4 = 3 scores), monter à 5 si place, sinon descendre à 3
+  // pour une CTA vraiment au centre avec des côtés équilibrés.
+  if (wide && n >= 4 && n % 2 === 0) {
+    const up = n + 1;
+    const scoresUp = up - 1;
+    const needUp = scoresUp * minScore + minCta + gap * (up - 1);
+    if (avail >= needUp && up <= maxN) n = up;
+    else n = Math.max(3, n - 1);
   }
   return n;
 }
@@ -2833,21 +2852,23 @@ function sportsStripCramped() {
   if (chips.length <= 1) return false;
 
   const wide = isWideNoMarqueeMode();
-  const minScore = wide ? 160 : 118;
-  const minCta = wide ? 200 : 148;
+  // Wide : −1 uniquement si largeur slot insuffisante. Texte long → ellipsis CSS
+  // (user veut plus de cartes de chaque côté de la CTA, pas un bandeau à 3 chips).
+  const minScore = wide ? 100 : 118;
+  const minCta = wide ? 120 : 148;
 
   const cta = strip.querySelector('.sports-chip--cta');
   if (!cta) return true;
   if (cta.clientWidth + 0.5 < minCta) return true;
-  const tag = cta.querySelector('.sports-chip__cta-tag');
-  if (tag && tag.scrollWidth > tag.clientWidth + 1) return true;
-  // Wide : le texte CTA qui déborde = trop de puces, pas un marquee.
-  if (wide && sportsCtaTextOverflows(cta)) return true;
+  if (!wide) {
+    const tag = cta.querySelector('.sports-chip__cta-tag');
+    if (tag && tag.scrollWidth > tag.clientWidth + 1) return true;
+  }
 
   for (const chip of chips) {
     if (chip.classList.contains('sports-chip--cta')) continue;
     if (chip.clientWidth + 0.5 < minScore) return true;
-    if (sportsMatchChipTextOverflows(chip)) return true;
+    if (!wide && sportsMatchChipTextOverflows(chip)) return true;
   }
   return false;
 }
@@ -2873,10 +2894,14 @@ function fitSportsStripAfterPaint() {
   const count = sportsVisible.length;
   if (count <= 1) return;
   if (!sportsStripCramped()) return;
-  const maxPasses = isWideNoMarqueeMode() ? 5 : 3;
+  const wide = isWideNoMarqueeMode();
+  const maxPasses = wide ? 5 : 3;
   if (sportsFitDepth >= maxPasses) return;
   sportsFitDepth += 1;
-  sportsFitCount = count - 1;
+  // Wide : sauter les totaux pairs (CTA déséquilibrée) → 7→5, 5→3.
+  let next = count - 1;
+  if (wide && next >= 4 && next % 2 === 0) next -= 1;
+  sportsFitCount = Math.max(1, next);
   try {
     renderSportsStrip();
   } finally {
@@ -4979,7 +5004,7 @@ function clearSportsSlotTimers() {
 
 /**
  * Rotation d’un seul slot — indépendante des voisines.
- * ≥ 2 chips : CTA à droite (accroche seule) ; scores à gauche.
+ * ≥ 2 chips : CTA fixe (droite en prod, **centre en wide E**) ; scores autour.
  * 1 chip : CTA seule.
  */
 function rotateSportsSlot(slot) {
@@ -4987,8 +5012,8 @@ function rotateSportsSlot(slot) {
   const n = sportsVisible.length;
   if (slot < 0 || slot >= n) return;
   const pinned = n >= 2;
-  const rightSlot = n - 1;
-  // Occupation = clés faces + dédup match (miroir CTA ↔ gauche).
+  const ctaSlot = sportsCtaSlotIndex(sportsVisible);
+  // Occupation = clés faces + dédup match (miroir CTA ↔ scores).
   const used = sportsVisibleOccupyKeys(slot);
   const usedSports = new Set(
     sportsVisible
@@ -4998,14 +5023,13 @@ function rotateSportsSlot(slot) {
   );
 
   let replacement = null;
-  if (!pinned || slot === rightSlot) {
-    // CTA fixe (seule ou à droite) : cycle séquentiel du pool (plus récent → suite).
+  if (!pinned || slot === ctaSlot) {
+    // CTA fixe (seule / droite / centre) : cycle séquentiel du pool.
     const poolLen = Math.max(1, sportsCtaLabelPool().length);
     sportsCtaLabelIndex = (sportsCtaLabelIndex + 1) % poolLen;
     replacement = sportsCtaSlide(sportsCtaLabelIndex);
-    // Si le nouveau match CTA était à gauche, purger ce slot gauche au prochain tick.
   } else {
-    // Voie de gauche : résultats (saison) ou prochains matchs (hors saison).
+    // Scores (gauche ou droite de la CTA) : résultats ou prochains.
     const cur = sportsVisible[slot];
     const avoid = String(cur?.team?.sport || '').toLowerCase();
     replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid });
@@ -6464,13 +6488,19 @@ function scheduleNowAirPreviewTick() {
     // défiler parce que le panneau porte l'antenne à part. L'écart n'est pas
     // une anomalie de cadence : c'est le prix de la lecture. Le raccourcir
     // change de poste avant la fin du défilement.
+    // Wide E : institution + dual antenne — lecture plus longue, pas de
+    // « flip » frénétique (min ~28 s entre postes ; base prod ~8 s).
+    let wait = delay;
+    if (typeof isWideTunerLayout === 'function' && isWideTunerLayout()) {
+      wait = Math.max(delay, 28000);
+    }
     nowAirPreviewTimer = setTimeout(() => {
       nowAirPreviewTimer = null;
       if (isTunerPresentationPaused() || currentStation || !isNowAirPanelPreviewMode()) return;
       pickNowAirPreviewRadio();
       renderTunerNowAir();
       scheduleNowAirPreviewTick();
-    }, delay);
+    }, wait);
   });
 }
 
