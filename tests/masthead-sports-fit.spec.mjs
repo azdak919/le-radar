@@ -157,6 +157,48 @@ test('mât : la date longue se compacte au lieu de passer sous les icônes', asy
 });
 
 /**
+ * Mobile 390/430 (lab) : date + heure entières — pas d’année « 202 » ni d’heure « 14 ».
+ * Stack ≤449 + cascade mastheadDateChipFits (chip + time, pas scrollWidth date seul).
+ */
+test('mât mobile 390/430 : date et heure non clipées', async ({ page }) => {
+  const pageErrors = [];
+  page.on('pageerror', (error) => pageErrors.push(error.message));
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  // Photo → chrome date+heure (stack / 1 ligne).
+  await page.evaluate(() => {
+    document.querySelector('#bg-photo-layer')?.classList.add('loaded');
+  });
+
+  for (const width of [390, 430]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.evaluate(() => {
+      if (typeof renderTodayDate === 'function') renderTodayDate();
+    });
+    await expect
+      .poll(async () => page.evaluate(() => {
+        const today = document.querySelector('#today-date');
+        const time = document.querySelector('.masthead-time');
+        const host = document.querySelector('.masthead-date');
+        const actions = document.querySelector('.masthead-actions');
+        if (!today || !time || !host || !actions) return null;
+        const hb = host.getBoundingClientRect();
+        const tb = time.getBoundingClientRect();
+        const ab = actions.getBoundingClientRect();
+        const dateOk = today.scrollWidth <= today.clientWidth + 0.5
+          && /20\d{2}|\d{1,2}[./]\d{1,2}/.test((today.textContent || '').trim());
+        const timeOk = /^\d{1,2}:\d{2}$/.test((time.textContent || '').trim())
+          && tb.right <= hb.right + 1.5;
+        const chipOk = hb.right <= ab.left + 1;
+        return dateOk && timeOk && chipOk;
+      }), { timeout: 5000 })
+      .toBe(true);
+  }
+
+  expect(pageErrors).toEqual([]);
+});
+
+/**
  * CTA SPORTS : texte trop long → marquee L→R (aller-retour), pas d’ellipse figée.
  *
  * Cas réel signalé : titre court (« Sherbrooke reçoit Granby ») + sous-ligne
