@@ -472,7 +472,14 @@ const engagePrompt = readFileSync(join(root, 'engage-prompt.js'), 'utf8');
 assert(!/coque hors-ligne/i.test(engagePrompt), 'invitation PWA : jargon « coque » interdit');
 assert(engagePrompt.includes('LE-RADAR au démarrage ?'), 'invitation accueil : titre orienté résultat requis (focus-group engage-copy B)');
 assert(engagePrompt.includes('Sur l’écran d’accueil'), 'invitation install : titre spatial focus-group B');
-assert(engagePrompt.includes('Radios et journaux étudiants du Québec, en un geste.'), 'invitation install : body campus une ligne');
+assert(
+  engagePrompt.includes('Journaux, radios et sports étudiants du Québec — en un geste.'),
+  'invitation install : body triade marque (journaux + radios + sports)',
+);
+assert(
+  /sports étudiants/i.test(engagePrompt) && /journaux/i.test(engagePrompt) && /radios/i.test(engagePrompt),
+  'invitation install radar : ne pas omettre un volet de la triade',
+);
 assert(!/accès hors ligne inclus/i.test(engagePrompt), 'invitation PWA : promesse offline gonflée interdite');
 assert(!/magasin d[’']apps/i.test(engagePrompt), 'invitation PWA : jargon magasin d’apps interdit');
 assert(engagePrompt.includes("event.key === 'Escape'"), 'invitation : fermeture Échap requise');
