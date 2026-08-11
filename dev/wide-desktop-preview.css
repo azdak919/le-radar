@@ -565,6 +565,147 @@ html[data-wide-preview="e"] {
   }
 }
 
+
+/* ═══════════════════════════════════════════════════
+   Wide / super-wide — texte COMPLET (pas clip / compact)
+   Conteneurs proportionnels au contenu ; fit = −1 carte
+   ═══════════════════════════════════════════════════ */
+@media (min-width: 1280px) {
+  /* Météo : flex proportionnel, noms complets */
+  html[data-wide-preview="b"] .masthead-weather__board,
+  html[data-wide-preview="c"] .masthead-weather__board,
+  html[data-wide-preview="d"] .masthead-weather__board,
+  html[data-wide-preview="e"] .masthead-weather__board {
+    display: flex !important;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 5px;
+    width: 100%;
+    min-width: 0;
+    /* laisser le scrollWidth refléter le besoin réel des tuiles */
+    overflow: hidden;
+  }
+
+  html[data-wide-preview="b"] .masthead-weather__city.is-active,
+  html[data-wide-preview="c"] .masthead-weather__city.is-active,
+  html[data-wide-preview="d"] .masthead-weather__city.is-active,
+  html[data-wide-preview="e"] .masthead-weather__city.is-active {
+    display: inline-flex !important;
+    flex: 1 1 auto;
+    /* largeur min = contenu (nom complet + °) ; le fit JS descend si trop */
+    min-width: max-content;
+    max-width: none;
+    width: auto;
+    overflow: visible;
+  }
+
+  html[data-wide-preview="b"] .masthead-weather__name,
+  html[data-wide-preview="c"] .masthead-weather__name,
+  html[data-wide-preview="d"] .masthead-weather__name,
+  html[data-wide-preview="e"] .masthead-weather__name,
+  html[data-wide-preview="b"] .masthead-weather__name-text,
+  html[data-wide-preview="c"] .masthead-weather__name-text,
+  html[data-wide-preview="d"] .masthead-weather__name-text,
+  html[data-wide-preview="e"] .masthead-weather__name-text {
+    max-width: none !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    white-space: nowrap;
+  }
+
+  html[data-wide-preview="b"] .masthead-weather__city .masthead-weather__name-full,
+  html[data-wide-preview="c"] .masthead-weather__city .masthead-weather__name-full,
+  html[data-wide-preview="d"] .masthead-weather__city .masthead-weather__name-full,
+  html[data-wide-preview="e"] .masthead-weather__city .masthead-weather__name-full,
+  html[data-wide-preview="b"] .masthead-weather__city.is-compact .masthead-weather__name-full,
+  html[data-wide-preview="c"] .masthead-weather__city.is-compact .masthead-weather__name-full,
+  html[data-wide-preview="d"] .masthead-weather__city.is-compact .masthead-weather__name-full,
+  html[data-wide-preview="e"] .masthead-weather__city.is-compact .masthead-weather__name-full {
+    display: inline !important;
+  }
+
+  html[data-wide-preview="b"] .masthead-weather__city .masthead-weather__name-compact,
+  html[data-wide-preview="c"] .masthead-weather__city .masthead-weather__name-compact,
+  html[data-wide-preview="d"] .masthead-weather__city .masthead-weather__name-compact,
+  html[data-wide-preview="e"] .masthead-weather__city .masthead-weather__name-compact,
+  html[data-wide-preview="b"] .masthead-weather__city.is-compact .masthead-weather__name-compact,
+  html[data-wide-preview="c"] .masthead-weather__city.is-compact .masthead-weather__name-compact,
+  html[data-wide-preview="d"] .masthead-weather__city.is-compact .masthead-weather__name-compact,
+  html[data-wide-preview="e"] .masthead-weather__city.is-compact .masthead-weather__name-compact {
+    display: none !important;
+  }
+
+  /* Sports : puces s’élargissent avec le texte ; overflow → fit JS (−1 carte) */
+  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--match,
+  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--match,
+  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--match,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--match {
+    flex: 1 1 auto;
+    min-width: min(12rem, 100%);
+  }
+
+  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--match .sports-chip__line-inner,
+  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--match .sports-chip__line-inner,
+  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--match .sports-chip__line-inner,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--match .sports-chip__line-inner,
+  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--match .sports-chip__sub-text,
+  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--match .sports-chip__sub-text,
+  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--match .sports-chip__sub-text,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--match .sports-chip__sub-text {
+    max-width: none;
+    /* 2 lignes déjà prévues pour match : pas d’ellipsis forcé */
+    text-overflow: clip;
+  }
+
+  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-text,
+  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-text,
+  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-text,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-text,
+  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-sub-text,
+  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-sub-text,
+  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-sub-text,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta .sports-chip__cta-sub-text {
+    max-width: none;
+  }
+
+  /* Radio (dans le 1180 gelé) : zone antenne plus large, wrap 2 lignes max si besoin */
+  html[data-wide-preview="b"] .tuner-nowair-title,
+  html[data-wide-preview="c"] .tuner-nowair-title,
+  html[data-wide-preview="d"] .tuner-nowair-title,
+  html[data-wide-preview="e"] .tuner-nowair-title,
+  html[data-wide-preview="b"] .tuner-nowair-sub,
+  html[data-wide-preview="c"] .tuner-nowair-sub,
+  html[data-wide-preview="d"] .tuner-nowair-sub,
+  html[data-wide-preview="e"] .tuner-nowair-sub,
+  html[data-wide-preview="b"] .tuner-now-sub,
+  html[data-wide-preview="c"] .tuner-now-sub,
+  html[data-wide-preview="d"] .tuner-now-sub,
+  html[data-wide-preview="e"] .tuner-now-sub {
+    max-width: none !important;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    line-height: 1.25;
+  }
+
+  html[data-wide-preview="b"] .tuner-nowair-body,
+  html[data-wide-preview="c"] .tuner-nowair-body,
+  html[data-wide-preview="d"] .tuner-nowair-body,
+  html[data-wide-preview="e"] .tuner-nowair-body {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  html[data-wide-preview="b"] .is-marquee > .tuner-now-sub-text,
+  html[data-wide-preview="c"] .is-marquee > .tuner-now-sub-text,
+  html[data-wide-preview="d"] .is-marquee > .tuner-now-sub-text,
+  html[data-wide-preview="e"] .is-marquee > .tuner-now-sub-text {
+    white-space: normal;
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
 /* ═══════════════════════════════════════════════════
    Wide / super-wide — AUCUN marquee texte
    (radio, météo, sports CTA, filtres sources)
