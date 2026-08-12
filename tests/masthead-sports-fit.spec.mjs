@@ -32,7 +32,7 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
   const wide = await countAt(1440);
   // En desktop large la voie de gauche doit être PLEINE : 3 puces SCORE + CTA.
   // Un `>= 2` laissait passer une voie à court de matière — hors saison, avec un
-  // seul résultat en banque, le bandeau tombait à 2 puces étirées à 50/50.
+  // seul résultat en banque, le bandeau tombait à 2 puces (score + CTA) trop larges.
   expect(wide).toBeGreaterThanOrEqual(3);
   expect(wide).toBeLessThanOrEqual(4);
   // Chaque slot non-CTA est bien rempli (pas de trou avalé par le flex).
@@ -67,29 +67,41 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
   expect(narrow).toBeGreaterThanOrEqual(1);
 
   // Tablette 768 / 900 : au moins 1 score à gauche de la CTA.
-  // data-count=2 → boîtes strictement 50/50 (pas flex 1.2 CTA).
-  const equalWhenTwo = async () => {
+  // data-count=2 → ratio fixe ~42/58 (score / CTA) pour compenser le chrome
+  // pastille SPORTS + PROCHAIN — pas 50/50 (air mort à gauche / marquee CTA)
+  // ni flex dynamique par slide (tailles stables).
+  const pairRatioWhenTwo = async () => {
     const n = Number(await strip.getAttribute('data-count') || 0);
     if (n !== 2) return;
     const widths = await strip.locator('.sports-chip').evaluateAll((chips) =>
       chips.map((c) => Math.round(c.getBoundingClientRect().width)),
     );
     expect(widths).toHaveLength(2);
-    expect(Math.abs(widths[0] - widths[1]), `50/50 attendu, got ${widths}`).toBeLessThanOrEqual(1);
+    const [scoreW, ctaW] = widths;
+    const total = scoreW + ctaW;
+    expect(total).toBeGreaterThan(200);
+    const scoreShare = scoreW / total;
+    // 0.72 / (0.72+1) ≈ 0.419 — tolérance de rendu sub-pixel + gap.
+    expect(
+      scoreShare,
+      `ratio score/CTA ~42/58 attendu, got ${scoreW}/${ctaW} (${(scoreShare * 100).toFixed(1)}%)`,
+    ).toBeGreaterThanOrEqual(0.38);
+    expect(scoreShare).toBeLessThanOrEqual(0.46);
+    expect(ctaW, `CTA doit être plus large que le score, got ${widths}`).toBeGreaterThan(scoreW);
     const flexes = await strip.locator('.sports-chip').evaluateAll((chips) =>
       chips.map((c) => getComputedStyle(c).flexGrow),
     );
-    expect(flexes[0]).toBe('1');
-    expect(flexes[1]).toBe('1');
+    expect(Number(flexes[0])).toBeCloseTo(0.72, 2);
+    expect(Number(flexes[1])).toBeCloseTo(1, 2);
   };
   const tab768 = await countAt(768);
   expect(tab768).toBeGreaterThanOrEqual(2);
   await expect(strip.locator('.sports-chip').last()).toHaveClass(/sports-chip--cta/);
   await expect(strip.locator('.sports-chip:not(.sports-chip--cta)').first()).toBeVisible();
-  await equalWhenTwo();
+  await pairRatioWhenTwo();
   const tab900 = await countAt(900);
   expect(tab900).toBeGreaterThanOrEqual(2);
-  await equalWhenTwo();
+  await pairRatioWhenTwo();
 
   // Téléphone / très étroit : il ne reste que l’ancre « SPORTS ».
   const phone = await countAt(360);
