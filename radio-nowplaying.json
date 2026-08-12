@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-11T23:36:40.876Z",
+  "updatedAt": "2026-08-12T01:40:42.628Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -29,52 +29,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T23:36:17.980Z"
+      "checkedAt": "2026-08-12T01:40:24.670Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Ailleurs: escales en musique",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/ailleurs-en-musique"
-      },
-      "next": {
         "title": "Les garçons pleurent aussi (reprise)",
         "source": "schedule",
         "start": "20:00",
         "end": "22:00",
         "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
       },
+      "next": {
+        "title": "Mix anglo",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
       "track": "",
-      "showTitle": "Ailleurs: escales en musique",
+      "showTitle": "Les garçons pleurent aussi (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T23:36:20.421Z"
+      "checkedAt": "2026-08-12T01:40:27.551Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Soul Perspectives",
+        "title": "Montreal Sound Ark",
         "source": "api-live",
-        "start": "19:00",
-        "end": "20:30"
+        "start": "21:00",
+        "end": "23:00"
       },
       "next": {
-        "title": "Marca-RO",
+        "title": "Easy Sonic Living/Zoe's Hour/Dreams And Tales/Internet Lunch Forever",
         "source": "api-live",
-        "start": "20:30",
-        "end": "21:00"
+        "start": "23:00",
+        "end": "00:00"
       },
       "track": "",
-      "showTitle": "Soul Perspectives",
+      "showTitle": "Montreal Sound Ark",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -82,79 +82,79 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T23:36:29.926Z"
+      "checkedAt": "2026-08-12T01:40:30.523Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Ashes to Ashes",
-        "source": "schedule-live",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/ashes-to-ashes"
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule",
+        "start": "21:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
-        "title": "Hittin' All The Bases",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/hittin-all-the-bases"
+        "title": "Turn Off The Lights",
+        "source": "schedule",
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/turn-off-the-lights"
       },
       "track": "",
-      "showTitle": "Ashes to Ashes",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T23:36:33.927Z"
+      "checkedAt": "2026-08-12T01:40:32.723Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "L'Aut'Rock",
-        "source": "schedule-live",
-        "start": "18:30",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Dichotomie 88.3",
         "source": "schedule-live",
         "start": "20:00",
         "end": "22:00"
       },
+      "next": {
+        "title": "Mix Franco",
+        "source": "schedule-live",
+        "start": "22:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "L'Aut'Rock",
+      "showTitle": "Dichotomie 88.3",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T23:36:34.556Z"
+      "checkedAt": "2026-08-12T01:40:33.325Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Les Amazones",
-        "source": "schedule",
-        "start": "19:30",
-        "end": "20:30",
-        "url": "https://www.choq.ca/emissions/les-amazones"
-      },
-      "next": {
         "title": "10 sur 10 : un podcast 100% rap",
         "source": "schedule",
         "start": "20:30",
         "end": "22:30",
         "url": "https://www.choq.ca/emissions/10-sur-10-un-podcast-100-rap"
       },
-      "track": "Wesley Joseph - July (ft. Jorja Smith)",
-      "showTitle": "Les Amazones",
+      "next": {
+        "title": "In Vélo Veritas",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://www.choq.ca/emissions/in-velo-veritas"
+      },
+      "track": "Koyo - Barely Here",
+      "showTitle": "10 sur 10 : un podcast 100% rap",
       "host": "",
       "source": "schedule",
       "sources": [
@@ -165,7 +165,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-11T23:36:40.525Z"
+      "checkedAt": "2026-08-12T01:40:42.278Z"
     }
   }
 }
