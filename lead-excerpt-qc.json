@@ -1,32 +1,14 @@
 {
-  "updated": "2026-08-12T15:00:49.976Z",
+  "updated": "2026-08-12T16:58:53.483Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 6,
+  "incomplete": 5,
   "withLeadExcerpt": 80,
-  "candidates": 6,
-  "enriched": 2,
+  "candidates": 5,
+  "enriched": 0,
   "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Les femmes MAGA au service du patriarcat",
-      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
-      "ok": true,
-      "score": 100,
-      "chars": 393,
-      "sample": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer ",
-      "changed": true
-    },
-    {
-      "title": "Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods",
-      "link": "https://thelinknewspaper.ca/article/16338",
-      "ok": true,
-      "score": 90,
-      "chars": 177,
-      "sample": "This history, and much more, is featured in the exhibition. Bellemare was able to gather never-befor",
-      "changed": true
-    },
     {
       "title": "Review: Sullivan Fortner Solo at Gesú Concert Hall",
       "link": "https://www.mcgilldaily.com/2026/07/review-sullivan-fortner-solo-at-gesu-concert-hall/",
@@ -61,6 +43,15 @@
       "score": 66,
       "chars": 400,
       "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
+      "changed": false
+    },
+    {
+      "title": "Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods",
+      "link": "https://thelinknewspaper.ca/article/16338",
+      "ok": true,
+      "score": 90,
+      "chars": 177,
+      "sample": "This history, and much more, is featured in the exhibition. Bellemare was able to gather never-befor",
       "changed": false
     }
   ]
