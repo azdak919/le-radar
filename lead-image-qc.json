@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-11T22:13:32.437Z",
+  "updated": "2026-08-12T02:51:08.617Z",
   "total": 185,
   "withPhoto": 168,
   "withStock": 23,
   "withCampusBank": 12,
   "fullyCovered": 185,
-  "leadReadyPhotos": 142,
+  "leadReadyPhotos": 141,
   "pageScraped": 22,
   "photosRecovered": 22,
   "imagesCleared": 10,
-  "stockSearches": 39,
-  "stockFound": 12,
+  "stockSearches": 37,
+  "stockFound": 10,
   "campusBankFound": 3,
   "mainPageLeadReady": true,
   "gaps": [
@@ -51,12 +51,6 @@
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg"
     },
     {
-      "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
-      "link": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Assembl%C3%A9e_nationale_du_Qu%C3%A9bec%2C_l%27H%C3%B4tel_du_Parlement%2C_fa%C3%A7ade_avec_ancien_entr%C3%A9_principal.jpg"
-    },
-    {
       "title": "CSU approves $36,000 in funding for student-led initiatives",
       "link": "https://thelinknewspaper.ca/article/16319",
       "reason": "no-stock-match",
@@ -78,13 +72,19 @@
       "title": "Spotlighting Powerful McGill Alumnae",
       "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
     },
     {
       "title": "National Golf tournament",
       "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
       "reason": "stock-too-small",
       "image": "https://upload.wikimedia.org/wikipedia/commons/5/58/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288688531487%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Gaiters wrap up hard-fought season with eyes on next year",
+      "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
     }
   ]
 }
