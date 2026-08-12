@@ -22,18 +22,37 @@ const CACHE_MAX_AGE = 900; // 15 min — aligné sur WEATHER_CACHE_MS (app.js / 
 const MET_NORWAY_USER_AGENT = 'le-radar.ca weather-cache/1.0 (https://le-radar.ca)';
 
 /**
+ * Lab local (python http.server / vite / playwright) : le **port change**
+ * souvent (8765, 8766, 5173, 3000…). On parse l’Origin plutôt qu’un regex
+ * figé — hostname loopback seulement, n’importe quel port.
+ */
+function isLabDevOrigin(origin) {
+  if (!origin) return false;
+  try {
+    const u = new URL(origin);
+    if (u.protocol !== 'http:' && u.protocol !== 'https:') return false;
+    // Port libre (8765, 5173…). Hostname only — URL API may keep [::1] brackets.
+    const h = String(u.hostname || '').toLowerCase().replace(/^\[|\]$/g, '');
+    return h === 'localhost' || h === '127.0.0.1' || h === '0.0.0.0' || h === '::1';
+  } catch {
+    return false;
+  }
+}
+
+/**
  * CORS — parité nowplaying-cache / bg-rotation :
- * prod le-radar.ca + pages GH + lab local (python http.server / vite).
- * Sans localhost, le bandeau météo reste `hidden` en preview locale
+ * prod le-radar.ca + pages GH + lab local (port variable).
+ * Sans lab, le bandeau météo reste `hidden` en preview locale
  * (fetch CORS bloqué → impossible de juger météo ∥ sports).
+ *
+ * Toujours renvoyer l’Origin **de la requête** (pas une valeur en cache) :
+ * un hit lab d’un autre port ne doit jamais empoisonner prod ni un autre port.
  */
 function corsHeaders(request) {
   const origin = request.headers.get('Origin');
   let allow = 'https://le-radar.ca';
   if (ALLOWED_ORIGINS.has(origin)) allow = origin;
-  else if (origin && /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin)) {
-    allow = origin;
-  }
+  else if (isLabDevOrigin(origin)) allow = origin;
   return {
     'Access-Control-Allow-Origin': allow,
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
@@ -135,10 +154,24 @@ export default {
       return json({ error: 'latitude/longitude invalides' }, request, 400);
     }
 
+    // Cache API key = path+query only (no Origin). CORS is re-applied on every
+    // response. Returning a cached Response as-is poisoned prod: a lab hit from
+    // http://127.0.0.1:PORT stored Access-Control-Allow-Origin for localhost,
+    // then browsers on https://le-radar.ca got that header → CORS block →
+    // #masthead-weather stayed .hidden for everyone until TTL expired.
     const cache = caches.default;
-    const cacheKey = new Request(url.toString(), { method: 'GET' });
+    const cacheKey = new Request(`https://weather-cache.internal/v1/forecast?${url.searchParams}`, {
+      method: 'GET',
+    });
     const cached = await cache.match(cacheKey);
-    if (cached) return cached;
+    if (cached) {
+      const headers = new Headers(cached.headers);
+      Object.entries(corsHeaders(request)).forEach(([k, v]) => headers.set(k, v));
+      headers.set('X-LR-Cache', 'HIT');
+      // Do not let a shared CDN re-cache an origin-specific CORS response.
+      headers.set('CDN-Cache-Control', 'no-store');
+      return new Response(cached.body, { status: cached.status, headers });
+    }
 
     const openMeteoUrl = `https://api.open-meteo.com/v1/forecast?${url.searchParams}`;
     let entries;
@@ -152,10 +185,23 @@ export default {
       }
     }
 
-    const response = json(entries, request, 200, {
+    // Store body without origin-bound CORS; apply CORS only on the way out.
+    const body = JSON.stringify(entries);
+    const storeHeaders = {
+      'Content-Type': 'application/json; charset=utf-8',
       'Cache-Control': `public, max-age=${CACHE_MAX_AGE}`,
+    };
+    const toStore = new Response(body, { status: 200, headers: storeHeaders });
+    ctx.waitUntil(cache.put(cacheKey, toStore.clone()));
+
+    return new Response(body, {
+      status: 200,
+      headers: {
+        ...storeHeaders,
+        ...corsHeaders(request),
+        'X-LR-Cache': 'MISS',
+        'CDN-Cache-Control': 'no-store',
+      },
     });
-    ctx.waitUntil(cache.put(cacheKey, response.clone()));
-    return response;
   },
 };
