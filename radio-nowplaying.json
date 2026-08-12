@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-12T20:09:21.784Z",
+  "updatedAt": "2026-08-12T21:13:40.348Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -29,52 +29,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T20:08:56.108Z"
+      "checkedAt": "2026-08-12T21:13:13.044Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le cours de math",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/le-cours-de-math"
-      },
-      "next": {
         "title": "Feu | Metal | Chaos",
         "source": "schedule",
         "start": "17:00",
         "end": "19:00",
         "url": "https://cism893.ca/emissions/feu-metal-chaos"
       },
+      "next": {
+        "title": "O'Keb (reprise)",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/okeb"
+      },
       "track": "",
-      "showTitle": "Le cours de math",
+      "showTitle": "Feu | Metal | Chaos",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T20:08:58.431Z"
+      "checkedAt": "2026-08-12T21:13:15.160Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "All Da Way Live",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "Off the Hour/Sounds of Resistance",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Hersay: Audio Smut/OWL/The Teachings/Metro Boulot Dodo",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "All Da Way Live",
+      "showTitle": "Off the Hour/Sounds of Resistance",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -82,34 +82,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T20:09:01.276Z"
+      "checkedAt": "2026-08-12T21:13:17.695Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Borderline",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/borderline"
-      },
-      "next": {
         "title": "Advice By The Fireplace",
         "source": "schedule-live",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/advice-by-the-fireplace"
       },
+      "next": {
+        "title": "The New Consonance",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/the-new-consonance"
+      },
       "track": "",
-      "showTitle": "Borderline",
+      "showTitle": "Advice By The Fireplace",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T20:09:15.331Z"
+      "checkedAt": "2026-08-12T21:13:31.584Z"
     },
     "cfak": {
       "id": "cfak",
@@ -134,21 +134,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T20:09:15.845Z"
+      "checkedAt": "2026-08-12T21:13:32.350Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Podcast Nomade: L'art de se rencontrer",
         "source": "schedule",
         "start": "17:00",
         "end": "18:00",
         "url": "https://www.choq.ca/emissions/podcast-nomade-lart-de-se-rencontrer"
       },
-      "track": "Mellonella - Saturday",
-      "showTitle": "",
+      "next": {
+        "title": "Le CHOC des Générations",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://www.choq.ca/emissions/le-choc-des-generations"
+      },
+      "track": "Alice Bro - Et pis ca r",
+      "showTitle": "Podcast Nomade: L'art de se rencontrer",
       "host": "",
       "source": "schedule",
       "sources": [
@@ -159,7 +165,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-12T20:09:21.434Z"
+      "checkedAt": "2026-08-12T21:13:39.999Z"
     }
   }
 }
