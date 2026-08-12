@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-12T16:57:15.497Z",
+  "updatedAt": "2026-08-12T17:57:00.098Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T16:56:38.186Z"
+      "checkedAt": "2026-08-12T17:56:32.702Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T16:56:50.881Z"
+      "checkedAt": "2026-08-12T17:56:34.769Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T16:56:54.934Z"
+      "checkedAt": "2026-08-12T17:56:37.112Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "North-South Hockey",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/north-south-hockey"
-      },
-      "next": {
         "title": "Beatnik Boy: Mixtape",
         "source": "schedule-live",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/beatnik-boy-mixtape"
       },
+      "next": {
+        "title": "Something for the Mood",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/something-for-the-mood"
+      },
       "track": "",
-      "showTitle": "North-South Hockey",
+      "showTitle": "Beatnik Boy: Mixtape",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T16:57:09.482Z"
+      "checkedAt": "2026-08-12T17:56:51.199Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T16:57:10.214Z"
+      "checkedAt": "2026-08-12T17:56:52.062Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Roc Marciano - Yves St. Moron",
+      "track": "Lennie Rayen - I Know What I Want",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-12T16:57:15.147Z"
+      "checkedAt": "2026-08-12T17:56:59.747Z"
     }
   }
 }
