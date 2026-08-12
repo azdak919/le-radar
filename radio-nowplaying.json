@@ -1,80 +1,72 @@
 {
-  "updatedAt": "2026-08-12T01:40:42.628Z",
+  "updatedAt": "2026-08-12T04:04:21.666Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Capitales de Québec",
-        "source": "api-live",
-        "start": "18:50",
-        "end": "23:00",
-        "url": "https://chyz.ca/emission/capitales-de-quebec/",
-        "special": true
-      },
+      "current": null,
       "next": {
         "title": "Mercredi Bonbon",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mercredi-bonbon/"
       },
       "track": "",
-      "showTitle": "Capitales de Québec",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-08-12T01:40:24.670Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Les garçons pleurent aussi (reprise)",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
-      },
-      "next": {
-        "title": "Mix anglo",
-        "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "track": "",
-      "showTitle": "Les garçons pleurent aussi (reprise)",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T01:40:27.551Z"
+      "checkedAt": "2026-08-12T04:04:08.258Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Club classique (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/club-classique"
+      },
+      "next": {
+        "title": "Mix Franco",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
+      "track": "",
+      "showTitle": "Club classique (reprise)",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-08-12T04:04:10.203Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Montreal Sound Ark",
+        "title": "Space Plane",
         "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
+        "start": "00:00",
+        "end": "02:00"
       },
       "next": {
-        "title": "Easy Sonic Living/Zoe's Hour/Dreams And Tales/Internet Lunch Forever",
+        "title": "WarpCor / Out of the Void",
         "source": "api-live",
-        "start": "23:00",
-        "end": "00:00"
+        "start": "02:00",
+        "end": "04:00"
       },
       "track": "",
-      "showTitle": "Montreal Sound Ark",
+      "showTitle": "Space Plane",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -82,70 +74,64 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T01:40:30.523Z"
+      "checkedAt": "2026-08-12T04:04:12.828Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "CJLO Late Night",
         "source": "schedule",
-        "start": "21:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
-        "title": "Turn Off The Lights",
+        "title": "Morning Electro-shock",
         "source": "schedule",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/turn-off-the-lights"
+        "start": "06:00",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/morning-electro-shock"
       },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T01:40:32.723Z"
+      "checkedAt": "2026-08-12T04:04:14.806Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Dichotomie 88.3",
+        "title": "Les nuits CFAK",
         "source": "schedule-live",
-        "start": "20:00",
-        "end": "22:00"
+        "start": "00:00",
+        "end": "07:00"
       },
       "next": {
-        "title": "Mix Franco",
+        "title": "Folkswagen",
         "source": "schedule-live",
-        "start": "22:00",
-        "end": "00:00"
+        "start": "07:00",
+        "end": "08:00"
       },
       "track": "",
-      "showTitle": "Dichotomie 88.3",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T01:40:33.325Z"
+      "checkedAt": "2026-08-12T04:04:15.527Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "10 sur 10 : un podcast 100% rap",
-        "source": "schedule",
-        "start": "20:30",
-        "end": "22:30",
-        "url": "https://www.choq.ca/emissions/10-sur-10-un-podcast-100-rap"
-      },
+      "current": null,
       "next": {
         "title": "In Vélo Veritas",
         "source": "schedule",
@@ -153,8 +139,8 @@
         "end": "12:00",
         "url": "https://www.choq.ca/emissions/in-velo-veritas"
       },
-      "track": "Koyo - Barely Here",
-      "showTitle": "10 sur 10 : un podcast 100% rap",
+      "track": "Clément - this is how",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
@@ -165,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-12T01:40:42.278Z"
+      "checkedAt": "2026-08-12T04:04:21.315Z"
     }
   }
 }
