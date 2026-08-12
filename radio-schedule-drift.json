@@ -1,13 +1,14 @@
 {
-  "checkedAt": "2026-08-11T23:54:14.392Z",
+  "checkedAt": "2026-08-12T23:55:21.656Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 3,
+    "stable": 2,
     "drift": [
       "chyz",
       "ckut",
+      "cjlo",
       "choq"
     ],
     "overhaul": [],
@@ -73,11 +74,19 @@
       "id": "cjlo",
       "published": 370,
       "fresh": 370,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "added": [
+        "dim 14:00–15:00 CJLO's Alternative Mega Mix",
+        "dim 15:00–16:00 Fukubukuro",
+        "lun 00:00–00:30 Cinema Smackdown"
+      ],
+      "removed": [
+        "dim 14:00–15:00 Cinema Smackdown",
+        "dim 15:00–16:00 CJLO's Alternative Mega Mix",
+        "lun 00:00–00:30 Fukubukuro"
+      ],
+      "changed": 6,
+      "ratio": 0.016,
+      "status": "drift"
     },
     {
       "id": "cfak",
@@ -92,14 +101,16 @@
     {
       "id": "choq",
       "published": 22,
-      "fresh": 20,
-      "added": [],
+      "fresh": 21,
+      "added": [
+        "mar 11:00–12:00 Le Monde Dans Mes Oreilles"
+      ],
       "removed": [
         "dim 14:00–16:00 Pôle hip-hop",
         "lun 12:00–13:00 Balado Populi"
       ],
-      "changed": 2,
-      "ratio": 0.091,
+      "changed": 3,
+      "ratio": 0.136,
       "status": "drift"
     }
   ]
