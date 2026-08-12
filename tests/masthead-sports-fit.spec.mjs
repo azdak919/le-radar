@@ -164,16 +164,16 @@ test('mât : la date longue se compacte au lieu de passer sous les icônes', asy
       }, { timeout: 8000 })
       .toBeLessThanOrEqual(0);
 
-    // Compactée, pas rognée : attendre la cascade (resize + fonts + rAF).
+    // Compactée, pas rognée : la cascade doit coller scrollWidth ≈ clientWidth.
+    // Tolérance 2 px (webfonts CI) ; clientWidth < 4 = layout pas prêt → grand delta.
     await expect
       .poll(async () => dateEl.evaluate((el) => {
-        // clientWidth ~0 = layout pas prêt, pas un overflow texte réel.
-        if (el.clientWidth < 4) return true;
-        return el.scrollWidth > el.clientWidth + 0.5;
+        if (el.clientWidth < 4) return 999;
+        return el.scrollWidth - el.clientWidth;
       }), {
         timeout: 8000,
       })
-      .toBe(false);
+      .toBeLessThanOrEqual(2);
   }
 
   expect(pageErrors).toEqual([]);

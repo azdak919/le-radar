@@ -386,6 +386,8 @@ const MASTHEAD_DATE_FORMATS = [
   // Repli mobile étroit (date+heure 1 ligne + icônes) : encore plus court.
   { month: 'short', day: 'numeric', year: '2-digit' },
   { month: 'numeric', day: 'numeric', year: '2-digit' },
+  // Dernier filet ≤360 EN (Tuesday… trop large même en short) : mois/jour seuls.
+  { month: 'numeric', day: 'numeric' },
 ];
 
 const MASTHEAD_WEATHER = document.getElementById('masthead-weather');
@@ -1129,7 +1131,9 @@ function mastheadLocale() {
  */
 function mastheadDateChipFits() {
   if (!TODAY_DATE) return true;
-  if (TODAY_DATE.scrollWidth > TODAY_DATE.clientWidth + 0.5) return false;
+  // Texte plus large que la boîte visible → format trop long (ellipse / clip).
+  // Tolérance 1 px : sub-pixel webfonts CI Linux.
+  if (TODAY_DATE.scrollWidth > TODAY_DATE.clientWidth + 1) return false;
   const host = TODAY_DATE.closest('.masthead-date');
   if (!host) return true;
   const hostBox = host.getBoundingClientRect();
@@ -1141,7 +1145,7 @@ function mastheadDateChipFits() {
   if (TODAY_TIME) {
     const timeBox = TODAY_TIME.getBoundingClientRect();
     if (timeBox.width > 1 && timeBox.right > hostBox.right + 1) return false;
-    if (TODAY_TIME.scrollWidth > TODAY_TIME.clientWidth + 0.5) return false;
+    if (TODAY_TIME.scrollWidth > TODAY_TIME.clientWidth + 1) return false;
   }
   return true;
 }
