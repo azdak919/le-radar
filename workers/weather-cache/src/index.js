@@ -22,18 +22,36 @@ const CACHE_MAX_AGE = 900; // 15 min — aligné sur WEATHER_CACHE_MS (app.js / 
 const MET_NORWAY_USER_AGENT = 'le-radar.ca weather-cache/1.0 (https://le-radar.ca)';
 
 /**
+ * Lab local (python http.server / vite / playwright) : le **port change**
+ * souvent (8765, 8766, 5173, 3000…). On parse l’Origin plutôt qu’un regex
+ * figé — hostname loopback seulement, n’importe quel port.
+ */
+function isLabDevOrigin(origin) {
+  if (!origin) return false;
+  try {
+    const u = new URL(origin);
+    if (u.protocol !== 'http:' && u.protocol !== 'https:') return false;
+    const h = String(u.hostname || '').toLowerCase();
+    return h === 'localhost' || h === '127.0.0.1' || h === '0.0.0.0' || h === '::1';
+  } catch {
+    return false;
+  }
+}
+
+/**
  * CORS — parité nowplaying-cache / bg-rotation :
- * prod le-radar.ca + pages GH + lab local (python http.server / vite).
- * Sans localhost, le bandeau météo reste `hidden` en preview locale
+ * prod le-radar.ca + pages GH + lab local (port variable).
+ * Sans lab, le bandeau météo reste `hidden` en preview locale
  * (fetch CORS bloqué → impossible de juger météo ∥ sports).
+ *
+ * Toujours renvoyer l’Origin **de la requête** (pas une valeur en cache) :
+ * un hit lab d’un autre port ne doit jamais empoisonner prod ni un autre port.
  */
 function corsHeaders(request) {
   const origin = request.headers.get('Origin');
   let allow = 'https://le-radar.ca';
   if (ALLOWED_ORIGINS.has(origin)) allow = origin;
-  else if (origin && /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin)) {
-    allow = origin;
-  }
+  else if (isLabDevOrigin(origin)) allow = origin;
   return {
     'Access-Control-Allow-Origin': allow,
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
