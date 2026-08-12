@@ -1416,13 +1416,18 @@ html[data-script-dir="rtl"] .wordmark-full {
   line-height: 1;
   pointer-events: none;
 }
+/*
+ * Focus-group le-radar-tuner-sports-type-align override C :
+ * titres serif (réconfort / différence radio) ; secondaires rythme sports.
+ * Hauteur barre inchangée.
+ */
 .tuner-now-name {
   display: block;
   min-width: 0;
   font-family: var(--serif);
   font-weight: 600;
   font-size: 14px;
-  line-height: 1.15;
+  line-height: 1.2;
   color: var(--radio-bright);
   white-space: nowrap;
   overflow: hidden;
@@ -1430,6 +1435,22 @@ html[data-script-dir="rtl"] .wordmark-full {
   transition: opacity 0.7s cubic-bezier(0.33, 1, 0.68, 1);
 }
 .tuner-now-name.is-crossfading {
+  opacity: 0;
+}
+/*
+ * Tant que app.js n’a pas posé L1/L2 (B idle / station), masquer le placeholder
+ * HTML « Syntoniser un poste » pour éviter un flash d’une frame après load.
+ * La boîte .tuner-now garde sa hauteur (min-height).
+ */
+.tuner:not(.is-dial-ready) .tuner-now-name,
+.tuner:not(.is-dial-ready) .tuner-now-sub-rotate {
+  opacity: 0;
+}
+.tuner.is-dial-ready .tuner-now-name,
+.tuner.is-dial-ready .tuner-now-sub-rotate {
+  opacity: 1;
+}
+.tuner.is-dial-ready .tuner-now-name.is-crossfading {
   opacity: 0;
 }
 .tuner-now-sub-rotate {
@@ -1447,7 +1468,11 @@ html[data-script-dir="rtl"] .wordmark-full {
 .tuner-now-sub {
   display: block;
   min-width: 0;
+  font-family: var(--sans);
   font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
   color: rgba(255,255,255,0.5);
   white-space: nowrap;
   overflow: hidden;
@@ -2253,10 +2278,12 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
 .tuner-nowair-label {
   flex-shrink: 0;
   margin-top: 2px;
+  font-family: var(--sans);
   font-size: 9px;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  line-height: 1.35;
   color: var(--tuner-onair-idle, rgba(255, 255, 255, 0.42));
   white-space: nowrap;
 }
@@ -2281,6 +2308,7 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   .tuner-nowair.is-swapping { opacity: 1; }
 }
 
+/* Override C : titre émission serif ; sub = rythme sports (Inter dense) */
 .tuner-nowair-title {
   margin: 0;
   font-family: var(--serif);
@@ -2300,9 +2328,11 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
 
 .tuner-nowair-sub {
   margin: 0;
+  font-family: var(--sans);
   font-size: 10px;
-  font-weight: 500;
-  line-height: 1.25;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
   color: rgba(255, 255, 255, 0.48);
   white-space: nowrap;
   overflow: hidden;

@@ -359,10 +359,10 @@ html[data-embed="tuner"] .tuner-dial:hover .tuner-now {
 }
 
 html[data-embed="tuner"] .tuner-now-name {
-  /* Parité barre bureau LE-RADAR (.tuner-now-name → Source Serif 4). */
+  /* focus-group le-radar-tuner-sports-type-align override C : titre serif. */
   font-family: var(--serif);
   font-size: 13px;
-  line-height: 1.15;
+  line-height: 1.2;
   font-weight: 600;
   min-width: 0;
   max-width: 100%;
@@ -372,13 +372,29 @@ html[data-embed="tuner"] .tuner-now-name {
   color: var(--embed-radio);
 }
 
+/* Même garde anti-flash que style.css (placeholder HTML masqué jusqu’à app.js). */
+html[data-embed="tuner"] .tuner:not(.is-dial-ready) .tuner-now-name,
+html[data-embed="tuner"] .tuner:not(.is-dial-ready) .tuner-now-sub-rotate {
+  opacity: 0;
+}
+html[data-embed="tuner"] .tuner.is-dial-ready .tuner-now-name,
+html[data-embed="tuner"] .tuner.is-dial-ready .tuner-now-sub-rotate {
+  opacity: 1;
+}
+html[data-embed="tuner"] .tuner.is-dial-ready .tuner-now-name.is-crossfading {
+  opacity: 0;
+}
+
 html[data-embed="tuner"] .tuner-now::after {
   color: var(--embed-muted);
 }
 
 html[data-embed="tuner"] .tuner-now-sub {
+  font-family: var(--sans);
   font-size: 10.5px;
-  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
   color: var(--embed-muted);
   min-width: 0;
   max-width: 100%;
@@ -765,7 +781,7 @@ html[data-embed="tuner"] .tuner-nowair.is-swapping {
 
 html[data-embed="tuner"] .tuner-nowair-label {
   flex-shrink: 0;
-  /* Optical align with .tuner-nowair-title (13px / line-height 1.15) first line */
+  /* Optical align with .tuner-nowair-title first line */
   margin-top: 2px;
   font-family: var(--sans);
   font-size: 10px; /* même échelle que EN ONDES */
@@ -776,7 +792,7 @@ html[data-embed="tuner"] .tuner-nowair-label {
   color: var(--tuner-onair-idle);
   white-space: nowrap;
   writing-mode: horizontal-tb;
-  line-height: 1.15;
+  line-height: 1.35;
 }
 
 html[data-embed="tuner"] .tuner-nowair-body {
@@ -791,7 +807,7 @@ html[data-embed="tuner"] .tuner-nowair-body {
 
 html[data-embed="tuner"] .tuner-nowair-title {
   margin: 0;
-  /* Titre d’émission = serif éditorial (LE-RADAR .tuner-nowair-title). */
+  /* override C : titre émission serif (confort radio). */
   font-family: var(--serif);
   font-size: 13px;
   font-weight: 600;
@@ -812,8 +828,9 @@ html[data-embed="tuner"] .tuner-nowair-sub {
   margin: 0;
   font-family: var(--sans);
   font-size: 10.5px;
-  font-weight: 500;
-  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
   color: var(--embed-muted);
   white-space: nowrap;
   overflow: hidden;
@@ -1074,7 +1091,7 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
   }
 }
 
-/* Titres d’émission / poste : serif ; libellés UI : Inter — comme le-radar.ca */
+/* Override C : titres poste/émission serif ; libellés UI Inter (rythme sports). */
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-now-name,
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair-title {
   font-family: var(--serif);
