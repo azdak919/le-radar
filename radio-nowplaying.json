@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-12T05:54:22.388Z",
+  "updatedAt": "2026-08-12T07:19:53.037Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T05:54:03.910Z"
+      "checkedAt": "2026-08-12T07:19:41.212Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Club classique (reprise)",
+        "title": "Fréquence 440",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/club-classique"
+        "start": "03:00",
+        "end": "04:00",
+        "url": "https://cism893.ca/emissions/frequence-440"
       },
       "next": {
-        "title": "Mix Franco",
+        "title": "Hors cadre",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "04:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/hors-cadre"
       },
       "track": "",
-      "showTitle": "Club classique (reprise)",
+      "showTitle": "Fréquence 440",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T05:54:06.304Z"
+      "checkedAt": "2026-08-12T07:19:43.718Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Space Plane",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "WarpCor / Out of the Void",
         "source": "api-live",
         "start": "02:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "Full Circle",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Space Plane",
+      "showTitle": "WarpCor / Out of the Void",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T05:54:09.201Z"
+      "checkedAt": "2026-08-12T07:19:46.861Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T05:54:11.221Z"
+      "checkedAt": "2026-08-12T07:19:48.724Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T05:54:12.028Z"
+      "checkedAt": "2026-08-12T07:19:49.213Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:00",
         "url": "https://www.choq.ca/emissions/in-velo-veritas"
       },
-      "track": "VERDUN - Rise of the Atomic Ghouls",
+      "track": "NINTH REALM - Cohorts of the Abyss",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -151,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-12T05:54:22.038Z"
+      "checkedAt": "2026-08-12T07:19:52.686Z"
     }
   }
 }
