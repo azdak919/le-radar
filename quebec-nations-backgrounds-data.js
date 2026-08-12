@@ -118,7 +118,7 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/6/68/Mercier_Bridge%2C_Lasalle_side.JPG",
-    credit: "Blanchardb- Me • MyEars • MyMouth -timed",
+    credit: "Blanchardb",
     link: "https://commons.wikimedia.org/wiki/File:Mercier%20Bridge%2C%20Lasalle%20side.JPG",
     license: "CC BY 3.0",
     title: "Mercier Bridge, Lasalle side",
@@ -132,7 +132,7 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b3/Observatoire_wahsipekuk.jpg",
-    credit: "IrksomeBuccaneer2635",
+    credit: "Irksome Buccaneer",
     link: "https://commons.wikimedia.org/wiki/File:Observatoire%20wahsipekuk.jpg",
     license: "CC BY-SA 4.0",
     title: "Observatoire wahsipekuk",
@@ -159,7 +159,7 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Paysage_%C3%A0_Manawan.jpg",
-    credit: "DannysFlamand",
+    credit: "Dannys Flamand",
     link: "https://commons.wikimedia.org/wiki/File:Paysage%20%C3%A0%20Manawan.jpg",
     license: "CC BY-SA 4.0",
     title: "Paysage à Manawan",
@@ -172,7 +172,7 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/5/5b/Pingualuit_aerial_2007.jpg",
-    credit: "NASA. Courtesy of Denis Sarrazin.",
+    credit: "NASA. Courtesy of Denis Sarrazin",
     link: "https://commons.wikimedia.org/wiki/File:Pingualuit%20aerial%202007.jpg",
     license: "Public domain",
     title: "Pingualuit aerial 2007",
@@ -251,7 +251,7 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Pingualuit_aerial_2007_%28cropped%29.jpg",
-    credit: "NASA. Courtesy of Denis Sarrazin.",
+    credit: "NASA. Courtesy of Denis Sarrazin",
     link: "https://commons.wikimedia.org/wiki/File:Pingualuit_aerial_2007_(cropped).jpg",
     license: "Public domain",
     title: "Cratère Pingualuit, Nunavik",
