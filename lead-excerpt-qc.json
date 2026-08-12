@@ -1,21 +1,30 @@
 {
-  "updated": "2026-08-12T20:48:51.903Z",
+  "updated": "2026-08-12T23:02:53.675Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 6,
-  "withLeadExcerpt": 80,
-  "candidates": 6,
-  "enriched": 1,
+  "incomplete": 7,
+  "withLeadExcerpt": 81,
+  "candidates": 7,
+  "enriched": 2,
   "failed": 0,
   "ok": true,
   "samples": [
     {
-      "title": "Place aux demi-finales de l’Omnium Banque Nationale",
-      "link": "https://lecollectif.ca/sports-et-bien-etre/place-aux-demi-finales-de-lomnium-banque-nationale/",
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
       "ok": true,
-      "score": 100,
-      "chars": 296,
-      "sample": "Depuis le 1 er août, l’Omnium Banque Nationale (OBN) présenté par Rogers bat son plein au parc Jarry",
+      "score": 66,
+      "chars": 400,
+      "sample": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « p",
+      "changed": true
+    },
+    {
+      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "link": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
+      "ok": true,
+      "score": 81,
+      "chars": 400,
+      "sample": "Cependant, l’épidémie du sida a modifié le rapport entre les deux groupes. Au cours de cette crise, ",
       "changed": true
     },
     {
