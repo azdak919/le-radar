@@ -1172,18 +1172,69 @@ assert(
     && appJs.includes("nation: 'Wolastoqiyik Wahsipekuk'"),
   'app.js : météo — Vaudreuil-Dorion + noms/liens nations (Manawan→manouane)',
 );
-// Worker weather : CORS localhost (parité nowplaying / bg-rotation).
+// Worker weather — contrats prod + lab (évite panne publique).
+//
+// Historique 2026-08-12 : `if (cached) return cached` renvoyait le CORS d’un
+// hit lab (127.0.0.1:PORT) à tout le monde → navigateurs sur le-radar.ca
+// bloqués, #masthead-weather resté .hidden. Garde-fous :
+//  1) CORS réappliqué par requête (corsHeaders(request) après cache.match)
+//  2) jamais `return cached` nu
+//  3) prod le-radar.ca dans ALLOWED_ORIGINS
+//  4) lab loopback (port variable) via isLabDevOrigin / 127.0.0.1
+//  5) CDN-Cache-Control: no-store (pas de cache edge origin-bound)
 {
   const wxWorker = existsSync(join(root, 'workers/weather-cache/src/index.js'))
     ? readFileSync(join(root, 'workers/weather-cache/src/index.js'), 'utf8')
     : '';
+  assert(wxWorker.length > 200, 'workers/weather-cache/src/index.js manquant');
   assert(
-    wxWorker.includes('localhost|127\\.0\\.0\\.1')
-      || /localhost.*127\\.0\\.0\\.1/.test(wxWorker)
-      || wxWorker.includes('127\\.0\\.0\\.1'),
-    'workers/weather-cache : CORS autorise localhost / 127.0.0.1 pour le lab',
+    wxWorker.includes("'https://le-radar.ca'")
+      && wxWorker.includes("'https://www.le-radar.ca'"),
+    'workers/weather-cache : origines prod le-radar.ca (+ www) autorisées',
+  );
+  assert(
+    wxWorker.includes('function corsHeaders')
+      && wxWorker.includes('Access-Control-Allow-Origin'),
+    'workers/weather-cache : CORS explicite',
+  );
+  assert(
+    wxWorker.includes('isLabDevOrigin')
+      || wxWorker.includes('localhost|127\\.0\\.0\\.1')
+      || wxWorker.includes("h === '127.0.0.1'"),
+    'workers/weather-cache : lab local (localhost / 127.0.0.1, port libre)',
+  );
+  // Régression critique : ne jamais renvoyer la Response cache telle quelle.
+  assert(
+    !/\bif\s*\(\s*cached\s*\)\s*return\s+cached\s*;/.test(wxWorker),
+    'workers/weather-cache : interdit « return cached » nu (poison CORS prod)',
+  );
+  assert(
+    wxWorker.includes('cache.match')
+      && /corsHeaders\s*\(\s*request\s*\)/.test(wxWorker)
+      && wxWorker.includes('headers.set'),
+    'workers/weather-cache : réapplique corsHeaders(request) après cache HIT',
+  );
+  assert(
+    /CDN-Cache-Control['"]?\s*:\s*['"]no-store['"]/.test(wxWorker)
+      || wxWorker.includes("'CDN-Cache-Control', 'no-store'")
+      || wxWorker.includes('"CDN-Cache-Control", "no-store"')
+      || wxWorker.includes("headers.set('CDN-Cache-Control', 'no-store')")
+      || wxWorker.includes('CDN-Cache-Control') && wxWorker.includes('no-store'),
+    'workers/weather-cache : CDN-Cache-Control no-store (pas de cache edge CORS-bound)',
   );
 }
+// CSP prod : connect-src doit inclure le worker météo (sinon fetch bloqué).
+assert(
+  indexHtml.includes('le-radar-weather.azdak.workers.dev')
+    || /connect-src[^"]*le-radar-weather/.test(indexHtml),
+  'index.html CSP : connect-src autorise le-radar-weather worker',
+);
+// Fixture lab : uniquement si host local — jamais en prod publique.
+assert(
+  appJs.includes('isLocalWeatherLabHost()')
+    && /if\s*\(\s*!cached\s*&&\s*isLocalWeatherLabHost\s*\(\s*\)\s*\)/.test(appJs),
+  'app.js : fixture météo lab seulement si isLocalWeatherLabHost (pas en prod)',
+);
 assert(
   styleCss.includes('--sports-scroll-duration: 5.5s')
     || styleCss.includes('--sports-scroll-duration:5.5s'),
