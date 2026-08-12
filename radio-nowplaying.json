@@ -1,27 +1,27 @@
 {
-  "updatedAt": "2026-08-11T20:39:48.192Z",
+  "updatedAt": "2026-08-11T23:36:40.876Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, j’arrive!",
+        "title": "Capitales de Québec",
         "source": "api-live",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/",
+        "start": "18:50",
+        "end": "23:00",
+        "url": "https://chyz.ca/emission/capitales-de-quebec/",
         "special": true
       },
       "next": {
-        "title": "Les Arshitechs du Son",
+        "title": "Mercredi Bonbon",
         "source": "schedule-live",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/mercredi-bonbon/"
       },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
+      "showTitle": "Capitales de Québec",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -29,52 +29,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T20:39:34.111Z"
+      "checkedAt": "2026-08-11T23:36:17.980Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "London café",
+        "title": "Ailleurs: escales en musique",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://cism893.ca/emissions/london-cafe"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/ailleurs-en-musique"
       },
       "next": {
-        "title": "Les Pénibles",
+        "title": "Les garçons pleurent aussi (reprise)",
         "source": "schedule",
-        "start": "17:30",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/les-penibles"
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
       },
       "track": "",
-      "showTitle": "London café",
+      "showTitle": "Ailleurs: escales en musique",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T20:39:36.011Z"
+      "checkedAt": "2026-08-11T23:36:20.421Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Montreal Sessions",
+        "title": "Soul Perspectives",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "19:00",
+        "end": "20:30"
       },
       "next": {
-        "title": "Off The Hour: Local Journalism Stories",
+        "title": "Marca-RO",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "20:30",
+        "end": "21:00"
       },
       "track": "",
-      "showTitle": "Montreal Sessions",
+      "showTitle": "Soul Perspectives",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -82,83 +82,90 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T20:39:38.415Z"
+      "checkedAt": "2026-08-11T23:36:29.926Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Fluid Mosaic",
+        "title": "Ashes to Ashes",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/ashes-to-ashes"
       },
       "next": {
-        "title": "Cherry Vamp and the Sonic Coffin",
+        "title": "Hittin' All The Bases",
         "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/hittin-all-the-bases"
       },
       "track": "",
-      "showTitle": "The Fluid Mosaic",
+      "showTitle": "Ashes to Ashes",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T20:39:40.443Z"
+      "checkedAt": "2026-08-11T23:36:33.927Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "18:30"
-      },
-      "next": {
         "title": "L'Aut'Rock",
         "source": "schedule-live",
         "start": "18:30",
         "end": "20:00"
       },
+      "next": {
+        "title": "Dichotomie 88.3",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "L'Aut'Rock",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T20:39:41.383Z"
+      "checkedAt": "2026-08-11T23:36:34.556Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
-        "title": "Le Studio",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00",
-        "slug": "live"
+      "current": {
+        "title": "Les Amazones",
+        "source": "schedule",
+        "start": "19:30",
+        "end": "20:30",
+        "url": "https://www.choq.ca/emissions/les-amazones"
       },
-      "track": "Lido Pimienta - No Me Quiero Ir",
-      "showTitle": "",
+      "next": {
+        "title": "10 sur 10 : un podcast 100% rap",
+        "source": "schedule",
+        "start": "20:30",
+        "end": "22:30",
+        "url": "https://www.choq.ca/emissions/10-sur-10-un-podcast-100-rap"
+      },
+      "track": "Wesley Joseph - July (ft. Jorja Smith)",
+      "showTitle": "Les Amazones",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-11T20:39:47.841Z"
+      "checkedAt": "2026-08-11T23:36:40.525Z"
     }
   }
 }

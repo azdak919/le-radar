@@ -159,21 +159,69 @@ function safeHttpsUrl(url) {
   }
 }
 
-/** Commons « machine-readable author… » → nom court (voir scripts/commons-credit-lib.js). */
+/**
+ * Commons → nom court (miroir scripts/commons-credit-lib.js + mât sanitizeBgCredit).
+ * talk/Uploads, from Place, camelCase, alias Jeangagnon / Danielhbordeleau.
+ */
 function _sanitizeCommonsCredit(raw) {
   if (raw == null) return '';
-  let s = String(raw).replace(/\s+/g, ' ').trim();
+  let s = String(raw)
+    .replace(/\u00a0/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
   if (!s) return '';
   let m = s.match(
     /no machine-readable author provided\.?\s*(.+?)\s+assumed\s*\(\s*based on copyright claims\s*\)\.?/i
   );
-  if (m) return m[1].replace(/^[\s,;:.-]+|[\s,;:.-]+$/g, '').trim().slice(0, 80);
+  if (m) return _finalizePomoCreditName(m[1]);
   m = s.match(
     /aucun auteur lisible par machine n['’]est fourni[.,]?\s*(.+?)\s+l['’]a\s+suppos[ée]/i
   );
-  if (m) return m[1].replace(/^[\s,;:.-]+|[\s,;:.-]+$/g, '').trim().slice(0, 80);
+  if (m) return _finalizePomoCreditName(m[1]);
   if (/^no machine-readable author provided\.?$/i.test(s)) return 'Wikimedia Commons';
   if (/^aucun auteur lisible par machine/i.test(s)) return 'Wikimedia Commons';
+  if (/you may select the license of your choice/i.test(s)) return 'Wikimedia Commons';
+
+  m = s.match(/derivative\s+work:\s*(.+)$/i);
+  if (m) {
+    s = m[1].trim();
+  } else {
+    m = s.match(/^[^\s:]+\.(?:jpe?g|png|gif|webp)\s*:\s*(.+)$/i);
+    if (m) s = m[1].trim();
+  }
+
+  s = s.replace(
+    /\s*\(\s*(?:talk|discussion|uploads|t[eé]l[eé]versements|contribs?|contributions)\s*\)/gi,
+    ''
+  );
+  s = s.replace(/\/[a-z0-9][a-z0-9.-]*\.[a-z]{2,}(?:\/\S*)?$/i, '');
+  s = s.replace(
+    /\s+from\s+(?:North\s+)?[\p{L}][\p{L}\d'’.\-]*(?:\s+[\p{L}][\p{L}\d'’.\-]*)*(?:,\s*[\p{L}][\p{L}\d'’.\-]*(?:\s+[\p{L}][\p{L}\d'’.\-]*)*)?\s*$/u,
+    ''
+  );
+  if (/[•]/.test(s) || /MyEars|MyMouth/i.test(s)) {
+    const head = s.split(/[-–—]/)[0].trim();
+    if (head.length >= 2) s = head;
+  }
+  return _finalizePomoCreditName(s);
+}
+
+function _finalizePomoCreditName(name) {
+  let s = String(name || '')
+    .replace(/^[\s,;:.-]+|[\s,;:.-]+$/g, '')
+    .replace(/\s*([—–])\s*/g, ' $1 ')
+    .replace(/\s*,\s*/g, ', ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 80);
+  if (!s) return '';
+  if (!/\s/.test(s) && s.length >= 8 && s.length <= 48 && /[a-z][A-Z]/.test(s)) {
+    s = s.replace(/([a-z])([A-Z])/g, '$1 $2');
+    s = s.replace(/(\p{L})\d{2,}$/u, '$1');
+  }
+  const aliasKey = s.toLowerCase().replace(/\s+/g, '');
+  if (aliasKey === 'jeangagnon') return 'Jean Gagnon';
+  if (aliasKey === 'danielhbordeleau') return 'Daniel H. Bordeleau';
   if (s.length > 72) {
     const head = s.split(/\s*[—–|]\s*|\s*\(/)[0].trim();
     if (head.length >= 2 && head.length <= 60) return head;
