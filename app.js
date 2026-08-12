@@ -629,6 +629,18 @@ async function init() {
       renderTodayDate();
     });
   }, { passive: true });
+  // Polices web : la cascade date mesure avec la fonte système d’abord, puis
+  // la webfont élargit le glyphe → scrollWidth > clientWidth (CI Linux surtout).
+  // Rejouer après fonts.ready (parité bandeau météo).
+  try {
+    const fonts = document.fonts;
+    if (fonts?.ready && typeof fonts.ready.then === 'function') {
+      fonts.ready.then(() => {
+        if (!TODAY_DATE?.isConnected) return;
+        renderTodayDate();
+      }).catch(() => { /* ignore */ });
+    }
+  } catch { /* document.fonts absent */ }
   // Les constantes météo sont déclarées plus bas dans ce script : microtask
   // = après l'évaluation complète du fichier, sans retarder le reste du site.
   queueMicrotask(() => {
