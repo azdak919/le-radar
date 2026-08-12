@@ -392,6 +392,8 @@ const MASTHEAD_DATE_FORMATS = [
   // Repli mobile étroit (date+heure 1 ligne + icônes) : encore plus court.
   { month: 'short', day: 'numeric', year: '2-digit' },
   { month: 'numeric', day: 'numeric', year: '2-digit' },
+  // Dernier filet ≤360 EN (Tuesday… trop large même en short) : mois/jour seuls.
+  { month: 'numeric', day: 'numeric' },
 ];
 
 const MASTHEAD_WEATHER = document.getElementById('masthead-weather');
@@ -605,8 +607,8 @@ async function init() {
   renderTodayDate();
   syncSeoScheduleNow();
   initSeoScheduleHashScroll();
-  // Photo mât : quand `.loaded` arrive, date+heure passent en 1 ligne (CSS).
-  // Rejouer la cascade — sinon le format long choisi hors photo reste et ellipse.
+  // Date déjà visible sans attendre la photo. Rejouer la cascade au .loaded
+  // (chrome 1-ligne / largeur) — sinon un format long hors photo peut ellipser.
   const bgPhotoLayer = document.getElementById('bg-photo-layer');
   if (bgPhotoLayer && typeof MutationObserver !== 'undefined') {
     const photoDateMo = new MutationObserver(() => {
@@ -635,6 +637,18 @@ async function init() {
       renderTodayDate();
     });
   }, { passive: true });
+  // Polices web : la cascade date mesure avec la fonte système d’abord, puis
+  // la webfont élargit le glyphe → scrollWidth > clientWidth (CI Linux surtout).
+  // Rejouer après fonts.ready (parité bandeau météo).
+  try {
+    const fonts = document.fonts;
+    if (fonts?.ready && typeof fonts.ready.then === 'function') {
+      fonts.ready.then(() => {
+        if (!TODAY_DATE?.isConnected) return;
+        renderTodayDate();
+      }).catch(() => { /* ignore */ });
+    }
+  } catch { /* document.fonts absent */ }
   // Les constantes météo sont déclarées plus bas dans ce script : microtask
   // = après l'évaluation complète du fichier, sans retarder le reste du site.
   queueMicrotask(() => {
@@ -1134,7 +1148,9 @@ function mastheadLocale() {
  */
 function mastheadDateChipFits() {
   if (!TODAY_DATE) return true;
-  if (TODAY_DATE.scrollWidth > TODAY_DATE.clientWidth + 0.5) return false;
+  // Texte plus large que la boîte visible → format trop long (ellipse / clip).
+  // Tolérance 1 px : sub-pixel webfonts CI Linux.
+  if (TODAY_DATE.scrollWidth > TODAY_DATE.clientWidth + 1) return false;
   const host = TODAY_DATE.closest('.masthead-date');
   if (!host) return true;
   const hostBox = host.getBoundingClientRect();
@@ -1146,7 +1162,7 @@ function mastheadDateChipFits() {
   if (TODAY_TIME) {
     const timeBox = TODAY_TIME.getBoundingClientRect();
     if (timeBox.width > 1 && timeBox.right > hostBox.right + 1) return false;
-    if (TODAY_TIME.scrollWidth > TODAY_TIME.clientWidth + 0.5) return false;
+    if (TODAY_TIME.scrollWidth > TODAY_TIME.clientWidth + 1) return false;
   }
   return true;
 }
