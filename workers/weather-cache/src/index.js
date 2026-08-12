@@ -31,7 +31,8 @@ function isLabDevOrigin(origin) {
   try {
     const u = new URL(origin);
     if (u.protocol !== 'http:' && u.protocol !== 'https:') return false;
-    const h = String(u.hostname || '').toLowerCase();
+    // Port libre (8765, 5173…). Hostname only — URL API may keep [::1] brackets.
+    const h = String(u.hostname || '').toLowerCase().replace(/^\[|\]$/g, '');
     return h === 'localhost' || h === '127.0.0.1' || h === '0.0.0.0' || h === '::1';
   } catch {
     return false;
