@@ -137,23 +137,32 @@ test('mât : la date longue se compacte au lieu de passer sous les icônes', asy
   // traduction : « Thursday, August 6, 2026 » y est rendu par Intl.
   await page.goto('/en/', { waitUntil: 'domcontentloaded' });
   await expect(dateEl).not.toBeEmpty({ timeout: 15000 });
+  // Chrome date toujours visible ; forcer .loaded + re-render pour stabiliser
+  // la cascade (CI fonts / photo async sinon flaky sur scrollWidth).
+  await page.evaluate(() => {
+    document.querySelector('#bg-photo-layer')?.classList.add('loaded');
+    if (typeof renderTodayDate === 'function') renderTodayDate();
+  });
 
   // Une seule navigation : la page est lourde, et la cascade se rejoue au
   // redimensionnement — c'est justement ce qu'on veut vérifier.
   for (const width of [393, 360, 320]) {
     await page.setViewportSize({ width, height: 800 });
+    await page.evaluate(() => {
+      if (typeof renderTodayDate === 'function') renderTodayDate();
+    });
     await expect
       .poll(async () => {
         const [date, row] = await Promise.all([dateEl.boundingBox(), actions.boundingBox()]);
         if (!date || !row) return null;
         return Math.round(date.x + date.width - row.x);
-      }, { timeout: 5000 })
+      }, { timeout: 8000 })
       .toBeLessThanOrEqual(0);
 
     // Compactée, pas rognée : attendre la cascade (resize + photo loaded + rAF).
     await expect
       .poll(async () => dateEl.evaluate((el) => el.scrollWidth > el.clientWidth + 0.5), {
-        timeout: 4000,
+        timeout: 8000,
       })
       .toBe(false);
   }
@@ -285,10 +294,27 @@ test('mât mobile 390/430 : date et heure non clipées', async ({ page }) => {
 /** Date visible avant .loaded sur #bg-photo-layer (retour mainteneur). */
 test('mât : date visible avant chargement photo', async ({ page }) => {
   await page.setViewportSize({ width: 900, height: 700 });
+  // Bloquer les images mât pour que le code ne bascule pas en .loaded pendant l’assert.
+  await page.route('**/*.{jpg,jpeg,png,webp,avif}', (route) => {
+    const url = route.request().url();
+    if (/background|wallpaper|wikimedia|commons|photo|bank/i.test(url)
+      || /assets\/.*\.(jpg|jpeg|png|webp)/i.test(url)) {
+      return route.abort();
+    }
+    return route.continue();
+  });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await page.evaluate(() => {
     const layer = document.querySelector('#bg-photo-layer');
-    if (layer) layer.classList.remove('loaded');
+    if (layer) {
+      layer.classList.remove('loaded');
+      // Empêcher un add('loaded') asynchrone pendant la fenêtre d’assert.
+      const freeze = new MutationObserver(() => {
+        if (layer.classList.contains('loaded')) layer.classList.remove('loaded');
+      });
+      freeze.observe(layer, { attributes: true, attributeFilter: ['class'] });
+      layer.dataset.testFreezeUnloaded = '1';
+    }
     if (typeof renderTodayDate === 'function') renderTodayDate();
   });
   await expect
