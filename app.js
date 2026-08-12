@@ -279,6 +279,12 @@ const TUNER_SUB_ROTATE_MQ = window.matchMedia?.('(max-width: 1099.98px)');
 const TUNER_DIAL_PHONE_MQ = window.matchMedia?.('(max-width: 599.98px)');
 const TUNER_SUB_ROTATE_NARROW_MQ = window.matchMedia?.('(max-width: 479.98px)');
 const TUNER_SUB_ROTATE_VERY_NARROW_MQ = window.matchMedia?.('(max-width: 359.98px)');
+/**
+ * Formats mid preview 768 / 900 (tablette / demi-écran) : assez de place pour
+ * nom d’institution complet + horaire dans le carré — pas le téléphone (&lt;768)
+ * ni le bureau avec panneau (≥1100).
+ */
+const TUNER_DIAL_MID_MQ = window.matchMedia?.('(min-width: 768px) and (max-width: 1099.98px)');
 /** Embed : panneau latéral « À l'antenne » masqué (voir embed.css @media max-width 639.98px). */
 const TUNER_EMBED_NOWAIR_HIDDEN_MQ = window.matchMedia?.('(max-width: 639.98px)');
 const TUNER_VOLUME   = document.getElementById('tuner-volume');
@@ -696,6 +702,17 @@ async function init() {
   tunerSubMeta = TUNER_SUB?.textContent?.trim() || 'Radios étudiantes en direct';
   initTunerSubRotateListeners();
   initMarqueeResizeListeners();
+  // Pré-semer l’aperçu compact (B) avant le 1er render — évite une frame
+  // « Syntoniser un poste » après le chargement de radios.json.
+  if (!currentStation && isNowAirPanelPreviewMode()) {
+    pickNowAirPreviewRadio();
+    if (nowAirPreviewRadio && (isDialCompactLayout() || isMobileIdleDialPreview())) {
+      setTunerNameText(compactDialTitleLine(nowAirPreviewRadio));
+      const story = idleDialStoryLine(nowAirPreviewRadio);
+      if (story && TUNER_SUB) applyMarquee(TUNER_SUB, story);
+      markTunerDialReady();
+    }
+  }
   // Antenne tout de suite (grilles + nowplaying déjà là) pour stabiliser le
   // layout du synthé — pas d'attente des APIs live, qui ne font qu'affiner.
   renderTunerNowAir();
@@ -5627,14 +5644,10 @@ function formatNowAirSubLine(title, sub, empty, kind = 'idle', { liveLabel = fal
   const core = s && !redundant ? `${t} · ${s}` : (t || s);
   if (!core) return '';
   if (kind === 'upcoming') return `À venir · ${core}`;
-  // « À l'antenne » n'est posé que pour le poste syntonisé, sous 1100 px, là
-  // où le panneau latéral est masqué : sans lui, rien ne distingue l'émission
-  // en cours de la suivante une fois la ligne « À venir » passée.
-  //
-  // Au repos, la ligne nomme déjà la station et le carrousel enchaîne les
-  // postes : ce préfixe n'y apporterait rien, allongerait le texte, donc le
-  // défilement, donc l'attente avant le poste suivant. L'absence de « À venir »
-  // y suffit à dire « en ondes ». Le ♪ d'une piste se suffit aussi à lui-même.
+  // « À l'antenne » sous 1100 px (panneau latéral masqué) : distingue l'émission
+  // en cours de « À venir ». Aussi en aperçu idle mode B : L1 porte le poste,
+  // L2 doit porter le statut (focus-group le-radar-tuner-dial-info-900).
+  // Le ♪ d'une piste se suffit à lui-même.
   if (liveLabel && kind === 'live' && !t.startsWith('♪')) return `À l'antenne · ${core}`;
   return core;
 }
@@ -5667,7 +5680,11 @@ window.RadarAir = {
     isRedundantAirLine,
     airRotationPhases,
     dialPhaseLinesForRadio,
+    dialPhasesForRadio,
+    idleDialStoryLine,
     previewDialLine,
+    compactDialTitleLine,
+    isTunerDialMidLayout,
     stationBandedName,
     airPhaseDwellMs,
     marqueeRoundTripMs,
@@ -5829,12 +5846,26 @@ function isDialCompactLayout() {
 }
 
 /**
- * Titre ligne 1 en layout compact : poste · acronyme (jamais le nom long d’univ.).
+ * Mid 768–900 (jusqu’à 1099.98) : combler le vide du carré avec institution
+ * complète + heures. Hors mid (téléphone) : acronyme, pas d’horaire collé.
+ * Embed : jamais (barre étroite).
+ */
+function isTunerDialMidLayout() {
+  if (IS_TUNER_EMBED) return false;
+  return !!TUNER_DIAL_MID_MQ?.matches && isDialCompactLayout();
+}
+
+/**
+ * Titre ligne 1 en layout compact :
+ *  - téléphone : poste · acronyme
+ *  - mid 768/900 : poste · nom complet d’institution (comble le vide)
  */
 function compactDialTitleLine(radio) {
   if (!radio) return tunerSubMeta || 'Radios étudiantes en direct';
   const name = stationDisplayName(radio) || radio.name || '';
-  const inst = tunerDialInstitutionLabel(radio);
+  const inst = isTunerDialMidLayout()
+    ? adaptRadarInstitutionLabel(tunerInstitutionLabel(radio.institution || ''))
+    : tunerDialInstitutionLabel(radio);
   if (!name) return inst || '';
   return inst ? `${name} · ${inst}` : name;
 }
@@ -5854,22 +5885,66 @@ function dialCompactMetaLineForRadio(radio) {
 }
 
 /**
- * Les lignes qui défilent en bas du dial compact, dans l'ordre :
- * émission en cours → à venir → piste → slogan.
+ * Phases L2 du dial compact **en écoute** (focus-group
+ * `le-radar-tuner-dial-info-900` — mode **E**).
  *
- * Le slogan n'est qu'une phase parmi d'autres et ferme le cycle ; il
- * n'apparaît plus une fois sur deux comme du temps de l'alternance binaire.
+ * Ordre : émission live → piste → à venir → (horaire filet hors mid).
+ * Mid 768/900 : horaire collé à l’émission primaire pour combler le vide
+ * (`À l'antenne · Titre · 08:00 – 18:30`). Ailleurs : titre seul + filet horaire.
  */
 function dialPhasesForRadio(radio) {
   if (!radio) return [];
+  const mid = isTunerDialMidLayout();
+  const raw = airRotationPhases(radio, { withSlogan: false });
+  const liveShows = [];
+  const tracks = [];
+  const upcomings = [];
+  /** @type {{ title: string, sub: string, kind: string }[]} */
+  const timeFilet = [];
+
+  for (const phase of raw) {
+    const title = String(phase.title || '').trim();
+    if (!title) continue;
+    const isTrack = title.startsWith('♪');
+    if (phase.kind === 'upcoming') {
+      upcomings.push(phase);
+      continue;
+    }
+    if (isTrack) {
+      tracks.push(phase);
+      continue;
+    }
+    if (phase.kind === 'live') {
+      liveShows.push(phase);
+      // Hors mid : horaire en filet séparé (pas collé au titre).
+      const time = String(phase.sub || '').trim();
+      if (!mid && time && /^\d{1,2}:\d{2}/.test(time)) {
+        timeFilet.push({ title: time, sub: '', kind: 'idle' });
+      }
+      continue;
+    }
+    // Repli idle (slogan seul si aucune grille) : une face utile.
+    liveShows.push(phase);
+  }
+
+  const ordered = [...liveShows, ...tracks, ...upcomings, ...timeFilet];
   const seen = new Set();
   const out = [];
-  for (const phase of airRotationPhases(radio, { withSlogan: true })) {
-    const line = formatNowAirSubLine(phase.title, phase.sub, false, phase.kind, { liveLabel: true });
+  for (const phase of ordered) {
+    const title = String(phase.title || '').trim();
+    const isTrack = title.startsWith('♪');
+    const isTimeOnly = phase.kind === 'idle' && /^\d{1,2}:\d{2}/.test(title);
+    // Mid : garder l’horaire sur la face primaire live pour remplir le carré.
+    const sub = (phase.kind === 'live' && !isTrack && !mid)
+      ? ''
+      : String(phase.sub || '').trim();
+    const line = isTimeOnly
+      ? title
+      : formatNowAirSubLine(title, sub, false, phase.kind, { liveLabel: true });
     const key = normLoose(line);
     if (!line || seen.has(key)) continue;
     seen.add(key);
-    out.push({ ...phase, line });
+    out.push({ ...phase, sub, line });
   }
   return out;
 }
@@ -5880,34 +5955,24 @@ function dialPhaseLinesForRadio(radio) {
 }
 
 /**
- * Ligne d'aperçu du dial au repos (« Syntoniser un poste », téléphone).
- *
- * Ordre : **poste + bande → à l'antenne / à venir → émission → horaire →
- * établissement**. On commence par identifier la station, puisque le
- * carrousel en change ; le libellé vient ensuite dire si l'émission passe
- * maintenant ou plus tard ; l'établissement ferme la ligne, en acronyme, sa
- * forme longue doublerait presque le temps de défilement sur téléphone.
- *
- * Le panneau bureau n'utilise pas cette composition : il porte son libellé à
- * part et affiche titre et sous-titre sur deux lignes.
+ * L2 du carré dial **hors écoute** (mode **B** — panel élargi).
+ * Téléphone : préfixe + titre. Mid 768/900 : + horaire si dispo (comble le vide).
  */
-function previewDialLine(radio) {
+function idleDialStoryLine(radio) {
   if (!radio) return '';
   const phase = airRotationPhases(radio, { withSlogan: false })[0];
-  if (!phase) return stationBandedName(radio);
+  if (!phase) return '';
+  const mid = isTunerDialMidLayout();
+  const sub = mid ? String(phase.sub || '').trim() : '';
+  return formatNowAirSubLine(phase.title, sub, false, phase.kind, { liveLabel: true });
+}
 
-  const isTrack = String(phase.title || '').startsWith('♪');
-  const label = phase.kind === 'upcoming'
-    ? 'À venir'
-    : (phase.kind === 'live' && !isTrack ? "À l'antenne" : '');
-
-  return [
-    stationBandedName(radio),
-    label,
-    phase.title,
-    phase.sub,
-    shortInstitution(radio.institution, radio.type),
-  ].map((part) => String(part || '').trim()).filter(Boolean).join(' · ');
+/**
+ * @deprecated Nom historique — désormais l'histoire L2 idle (B), sans poste.
+ * Conservé pour `RadarAir._pure` / tests ; préférer `idleDialStoryLine`.
+ */
+function previewDialLine(radio) {
+  return idleDialStoryLine(radio);
 }
 
 function formatPreviewNowAir(radio, { omitStation = false } = {}) {
@@ -6038,19 +6103,28 @@ function isNowAirPanelPreviewMode() {
   return !currentStation && !PREFERS_REDUCED_MOTION?.matches && radios.length > 0;
 }
 
-/** Mobile sans poste : le sous-titre du dial affiche uniquement l'aperçu à l'antenne. */
+/**
+ * Compact sans poste : composition B dans le carré dial
+ * (L1 identité carrousel, L2 une face). Site &lt;1100 + embed étroit
+ * (panneau « À l'antenne » masqué). Embed large : panneau latéral, pas ici.
+ */
 function isMobileIdleDialPreview() {
-  // Embed : l’aperçu va dans le module « À l'antenne » (colonne droite), pas dans le dial.
-  if (IS_TUNER_EMBED) return false;
-  return isNowAirPanelPreviewMode() && !!TUNER_SUB_ROTATE_MQ?.matches;
+  if (!isNowAirPanelPreviewMode()) return false;
+  if (IS_TUNER_EMBED) return isEmbedNowAirInDial();
+  return !!TUNER_SUB_ROTATE_MQ?.matches;
 }
 
 /** Bureau sans poste : faire défiler les radios disponibles dans le sous-titre du dial. */
 function isDesktopIdleDialCarousel() {
   return !currentStation
     && !PREFERS_REDUCED_MOTION?.matches
-    && (IS_TUNER_EMBED || !TUNER_SUB_ROTATE_MQ?.matches)
+    && (IS_TUNER_EMBED ? !isEmbedNowAirInDial() : !TUNER_SUB_ROTATE_MQ?.matches)
     && radios.length > 0;
+}
+
+/** Première composition L1/L2 posée — évite le flash HTML « Syntoniser un poste ». */
+function markTunerDialReady() {
+  TUNER?.classList.add('is-dial-ready');
 }
 
 function applyDialTextCrossfade(el, text, crossfade = false) {
@@ -6068,14 +6142,23 @@ function applyDialTextCrossfade(el, text, crossfade = false) {
 
 /** Bureau sans poste : titre fixe + postes qui défilent en bas ; « À l'antenne » reste à part. */
 function syncDesktopDialPreview(_airTitle, crossfade = false) {
+  // Mode B (site compact / embed étroit) : L1 géré dans syncTunerSubRotate.
+  // Ne jamais écrire « Syntoniser un poste » ici — c’était le flash d’une frame.
+  if (isMobileIdleDialPreview()) return;
+
   if (!isDesktopIdleDialCarousel()) {
-    if (!currentStation) setTunerNameText('Syntoniser un poste');
+    // Vrai vide seulement (pas de carrousel d’aperçu).
+    if (!currentStation && !isNowAirPanelPreviewMode()) {
+      setTunerNameText('Syntoniser un poste');
+      markTunerDialReady();
+    }
     return;
   }
 
   if (!nowAirPreviewRadio) {
     setTunerNameText('Syntoniser un poste');
     if (tunerSubMeta) applyMarquee(TUNER_SUB, tunerSubMeta);
+    markTunerDialReady();
     return;
   }
 
@@ -6084,12 +6167,14 @@ function syncDesktopDialPreview(_airTitle, crossfade = false) {
   const subText = TUNER_SUB?.querySelector('.tuner-now-sub-text')?.textContent;
   if (!crossfade && stationLine === lastDialCarouselText && subText === stationLine) {
     setTunerNameText('Syntoniser un poste');
+    markTunerDialReady();
     return;
   }
   lastDialCarouselText = stationLine;
 
   setTunerNameText('Syntoniser un poste');
   applyDialTextCrossfade(TUNER_SUB, stationLine, crossfade);
+  markTunerDialReady();
 }
 
 function scheduleNowAirPreviewTick() {
@@ -6316,20 +6401,28 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false, kind = 'idle')
     TUNER_SUB_AIR.classList.remove('is-active');
     TUNER_SUB.setAttribute('aria-hidden', 'false');
     TUNER_SUB_AIR.setAttribute('aria-hidden', 'true');
-    // Composition dédiée : poste + bande, libellé, émission, horaire,
-    // établissement. Le panneau latéral étant masqué, cette ligne est le seul
-    // endroit qui dise de quelle station il s'agit.
-    tunerSubAirText = previewDialLine(nowAirPreviewRadio)
-      || formatNowAirSubLine(title, sub, empty, kind);
+    // Mode B (panel élargi) : L1 = identité poste du carrousel ; L2 = une seule
+    // face antenne (pas de soupe poste·label·émission·horaire·campus).
+    const preview = nowAirPreviewRadio;
+    if (preview) {
+      setTunerNameText(compactDialTitleLine(preview), crossfade);
+      tunerSubAirText = idleDialStoryLine(preview)
+        || formatNowAirSubLine(title, '', empty, kind, { liveLabel: true })
+        || 'Radios étudiantes en direct';
+    } else {
+      setTunerNameText('Syntoniser un poste', crossfade);
+      tunerSubAirText = 'Radios étudiantes en direct';
+    }
+    TUNER_SUB?.parentElement?.classList.toggle('is-empty', !tunerSubAirText);
     applyDialTextCrossfade(TUNER_SUB, tunerSubAirText, crossfade);
+    markTunerDialReady();
     return;
   }
 
   /*
-   * Compact mobile / embed étroit + poste sélectionné :
-   *  ligne 1 = poste · acronyme (ULaval, UdeM…)
-   *  ligne 2 = alternance slogan (langue principale) ↔ à l'antenne / à venir
-   *            (+ marquee si overflow)
+   * Compact + poste sélectionné — mode E (écoute) :
+   *  L1 = poste · acronyme
+   *  L2 = face primaire (émission) puis filet piste → à venir → horaire
    */
   if (currentStation && isDialCompactLayout()) {
     setTunerNameText(compactDialTitleLine(currentStation), crossfade);
@@ -6348,6 +6441,7 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false, kind = 'idle')
       if (crossfade) applyDialTextCrossfade(TUNER_SUB, line, true);
       else applyMarquee(TUNER_SUB, line);
       scheduleMarqueeRefresh();
+      markTunerDialReady();
       return;
     }
 
@@ -6368,6 +6462,7 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false, kind = 'idle')
       applyMarquee(activeEl, lines[airPhaseIndex]);
     }
     scheduleMarqueeRefresh();
+    markTunerDialReady();
     return;
   }
 
@@ -6413,6 +6508,7 @@ function onTunerSubRotateLayoutChange() {
 function initTunerSubRotateListeners() {
   onMediaQueryChange(TUNER_SUB_ROTATE_MQ, onTunerSubRotateLayoutChange);
   onMediaQueryChange(TUNER_DIAL_PHONE_MQ, onTunerSubRotateLayoutChange);
+  onMediaQueryChange(TUNER_DIAL_MID_MQ, onTunerSubRotateLayoutChange);
   onMediaQueryChange(TUNER_SUB_ROTATE_NARROW_MQ, onTunerSubRotateLayoutChange);
   onMediaQueryChange(TUNER_SUB_ROTATE_VERY_NARROW_MQ, onTunerSubRotateLayoutChange);
   onMediaQueryChange(TUNER_EMBED_NOWAIR_HIDDEN_MQ, onTunerSubRotateLayoutChange);
@@ -6535,13 +6631,19 @@ function renderTunerNowAir() {
         : tunerDesktopTitleLine(currentStation),
     );
     syncAirPanelRotate(currentStation);
+    markTunerDialReady();
   } else if (previewing) {
+    // Garantir un poste d’aperçu avant le 1er paint B (sinon L1 reste le placeholder HTML).
+    if (!nowAirPreviewRadio) pickNowAirPreviewRadio();
     startNowAirPreview();
     syncAirPanelRotate(nowAirPreviewRadio);
+    // syncTunerSubRotate (mode B) a déjà posé L1/L2 + is-dial-ready.
+    if (!isMobileIdleDialPreview()) markTunerDialReady();
   } else {
     stopNowAirPreview();
     stopAirPanelRotate();
     setTunerNameText('Syntoniser un poste');
+    markTunerDialReady();
   }
 }
 
