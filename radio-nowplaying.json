@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-12T14:55:34.463Z",
+  "updatedAt": "2026-08-12T15:56:50.788Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,87 +21,81 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T14:54:56.090Z"
+      "checkedAt": "2026-08-12T15:56:23.453Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "next": {
         "title": "Genre de bleu (reprise)",
         "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "https://cism893.ca/emissions/genre-de-bleu"
       },
+      "next": {
+        "title": "La carte cadeau",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/la-carte-cadeau"
+      },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "Genre de bleu (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T14:54:58.562Z"
+      "checkedAt": "2026-08-12T15:56:25.353Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
-      "current": {
-        "title": "The Sleepy King/Terminal 5",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
+      "current": null,
       "next": {
-        "title": "Free City Radio",
+        "title": "If You Got Ears",
         "source": "api-live",
-        "start": "11:00",
-        "end": "11:30"
+        "start": "12:00",
+        "end": "14:00"
       },
-      "track": "",
-      "showTitle": "The Sleepy King/Terminal 5",
+      "track": "ffiles",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T14:55:01.637Z"
+      "checkedAt": "2026-08-12T15:56:27.608Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
-      },
-      "next": {
         "title": "Unheard Of",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "11:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/unheard-of"
       },
+      "next": {
+        "title": "North-South Hockey",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/north-south-hockey"
+      },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "Unheard Of",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T14:55:27.413Z"
+      "checkedAt": "2026-08-12T15:56:42.456Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,21 +120,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T14:55:28.097Z"
+      "checkedAt": "2026-08-12T15:56:43.221Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "In Vélo Veritas",
         "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "https://www.choq.ca/emissions/in-velo-veritas"
       },
-      "track": "Tiffany Day - TELL ME WHAT I DID",
-      "showTitle": "",
+      "next": {
+        "title": "Palmarès CHOQ.ca",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
+      },
+      "track": "MUNA - So What",
+      "showTitle": "In Vélo Veritas",
       "host": "",
       "source": "schedule",
       "sources": [
@@ -151,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-12T14:55:34.112Z"
+      "checkedAt": "2026-08-12T15:56:50.438Z"
     }
   }
 }
