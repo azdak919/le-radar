@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-13T19:00:23.991Z",
+  "updatedAt": "2026-08-13T19:58:46.122Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T18:59:53.550Z"
+      "checkedAt": "2026-08-13T19:58:20.969Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
-      },
-      "next": {
         "title": "La boussole culturelle",
         "source": "schedule",
         "start": "15:00",
         "end": "16:00",
         "url": "https://cism893.ca/emissions/la-boussole-culturelle"
       },
+      "next": {
+        "title": "Rythmologie",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "18:00",
+        "url": "https://cism893.ca/emissions/rythmologie"
+      },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "La boussole culturelle",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T18:59:55.859Z"
+      "checkedAt": "2026-08-13T19:58:22.944Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "Positive Vibes",
         "source": "api-live",
         "start": "15:00",
         "end": "17:00"
       },
+      "next": {
+        "title": "Off The Hour: La Voix des Immigrants",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
+      "showTitle": "Positive Vibes",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,35 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T18:59:58.540Z"
+      "checkedAt": "2026-08-13T19:58:25.388Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "Secondhand Sounds",
         "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/secondhand-sounds"
       },
       "next": {
         "title": "Hooked On Sonics",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "16:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/hooked-on-sonics"
       },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "Secondhand Sounds",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T19:00:13.001Z"
+      "checkedAt": "2026-08-13T19:58:39.237Z"
     },
     "cfak": {
       "id": "cfak",
@@ -127,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T19:00:14.024Z"
+      "checkedAt": "2026-08-13T19:58:40.145Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +145,7 @@
         "end": "18:00",
         "slug": "le-12-mtlsup"
       },
-      "track": "blimp - Awayward",
+      "track": "Softcult - Hurt Me",
       "showTitle": "Palmarès CHOQ.ca",
       "host": "",
       "source": "api-live",
@@ -157,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-13T19:00:23.641Z"
+      "checkedAt": "2026-08-13T19:58:45.772Z"
     }
   }
 }
