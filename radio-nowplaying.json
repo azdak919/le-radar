@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-08-13T13:02:56.013Z",
+  "updatedAt": "2026-08-13T14:36:37.509Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Jeudi Révolte",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/jeudi-revolte/"
-      },
+      "current": null,
       "next": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Jeudi Révolte",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T13:02:25.780Z"
+      "checkedAt": "2026-08-13T14:36:09.350Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T13:02:27.675Z"
+      "checkedAt": "2026-08-13T14:36:11.583Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T13:02:30.068Z"
+      "checkedAt": "2026-08-13T14:36:14.471Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Everything Everywhere",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/everything-everywhere"
-      },
-      "next": {
         "title": "Democracy Now",
         "source": "schedule-live",
         "start": "10:00",
         "end": "11:00",
         "url": "http://www.cjlo.com/shows/democracy-now"
       },
+      "next": {
+        "title": "Weirdo Rippers",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/weirdo-rippers"
+      },
       "track": "",
-      "showTitle": "Everything Everywhere",
+      "showTitle": "Democracy Now",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T13:02:44.290Z"
+      "checkedAt": "2026-08-13T14:36:29.069Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T13:02:45.049Z"
+      "checkedAt": "2026-08-13T14:36:29.689Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Kee",
+      "track": "Jason Stillman - Suicide Squeeze",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-13T13:02:55.662Z"
+      "checkedAt": "2026-08-13T14:36:37.159Z"
     }
   }
 }
