@@ -1,34 +1,35 @@
 {
-  "updatedAt": "2026-08-13T20:49:57.246Z",
+  "updatedAt": "2026-08-13T21:41:32.211Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
-      },
-      "next": {
         "title": "Les Arshitechs du Son",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "17:30",
         "end": "19:00",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "Vendredi Nostalgie",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/vendredi-nostalgie/"
+      },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T20:49:30.570Z"
+      "checkedAt": "2026-08-13T21:41:04.727Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +56,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T20:49:32.719Z"
+      "checkedAt": "2026-08-13T21:41:07.163Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Positive Vibes",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "Off The Hour: La Voix des Immigrants",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Upstage",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Positive Vibes",
+      "showTitle": "Off The Hour: La Voix des Immigrants",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,7 +82,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T20:49:35.530Z"
+      "checkedAt": "2026-08-13T21:41:10.435Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +109,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T20:49:49.934Z"
+      "checkedAt": "2026-08-13T21:41:24.827Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,31 +134,38 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T20:49:50.640Z"
+      "checkedAt": "2026-08-13T21:41:25.507Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "La 3ème demie",
         "source": "api-live",
         "start": "17:15",
         "end": "18:00",
         "slug": "le-12-mtlsup"
       },
-      "track": "Mother Mother - Touch Up",
-      "showTitle": "",
+      "next": {
+        "title": "Les Apatrides Anonymes",
+        "source": "schedule",
+        "start": "18:30",
+        "end": "19:40",
+        "url": "https://www.choq.ca/emissions/apatrides-anonymes"
+      },
+      "track": "ID - Velours-Velours",
+      "showTitle": "La 3ème demie",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-13T20:49:56.895Z"
+      "checkedAt": "2026-08-13T21:41:31.861Z"
     }
   }
 }
