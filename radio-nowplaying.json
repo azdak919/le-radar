@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-13T21:41:32.211Z",
+  "updatedAt": "2026-08-13T22:38:00.144Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -29,87 +29,86 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T21:41:04.727Z"
+      "checkedAt": "2026-08-13T22:37:32.784Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rythmologie",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "https://cism893.ca/emissions/rythmologie"
-      },
-      "next": {
         "title": "Entropie",
         "source": "schedule",
         "start": "18:00",
         "end": "19:00",
         "url": "https://cism893.ca/emissions/entropie"
       },
+      "next": {
+        "title": "La rumba",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/la-rumba"
+      },
       "track": "",
-      "showTitle": "Rythmologie",
+      "showTitle": "Entropie",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T21:41:07.163Z"
+      "checkedAt": "2026-08-13T22:37:34.818Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Off The Hour: La Voix des Immigrants",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Upstage",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Grey Matters",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "Off The Hour: La Voix des Immigrants",
+      "showTitle": "Upstage",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T21:41:10.435Z"
+      "checkedAt": "2026-08-13T22:37:37.547Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Hooked On Sonics",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/hooked-on-sonics"
-      },
-      "next": {
         "title": "Electric Messiah",
         "source": "schedule-live",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/electric-messiah"
       },
+      "next": {
+        "title": "I Think You Might Like This",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/i-think-you-might-like-this"
+      },
       "track": "",
-      "showTitle": "Hooked On Sonics",
+      "showTitle": "Electric Messiah",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T21:41:24.827Z"
+      "checkedAt": "2026-08-13T22:37:51.862Z"
     },
     "cfak": {
       "id": "cfak",
@@ -134,29 +133,29 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T21:41:25.507Z"
+      "checkedAt": "2026-08-13T22:37:52.906Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "La 3ème demie",
-        "source": "api-live",
-        "start": "17:15",
-        "end": "18:00",
-        "slug": "le-12-mtlsup"
-      },
-      "next": {
         "title": "Les Apatrides Anonymes",
         "source": "schedule",
         "start": "18:30",
         "end": "19:40",
         "url": "https://www.choq.ca/emissions/apatrides-anonymes"
       },
-      "track": "ID - Velours-Velours",
-      "showTitle": "La 3ème demie",
+      "next": {
+        "title": "La nouvelle école des surdoués",
+        "source": "api-live",
+        "start": "20:00",
+        "end": "21:00",
+        "slug": "la-nouvelle-ecole-des-surdoues"
+      },
+      "track": "GAYANCE - hellooooo???? feat. Magi Merlin & funkywhat",
+      "showTitle": "Les Apatrides Anonymes",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
         "api-live",
         "schedule"
@@ -165,7 +164,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-13T21:41:31.861Z"
+      "checkedAt": "2026-08-13T22:37:59.793Z"
     }
   }
 }
