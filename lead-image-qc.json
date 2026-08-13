@@ -1,17 +1,17 @@
 {
-  "updated": "2026-08-13T18:36:46.094Z",
+  "updated": "2026-08-13T22:12:31.114Z",
   "total": 185,
   "withPhoto": 168,
   "withStock": 22,
   "withCampusBank": 12,
   "fullyCovered": 185,
-  "leadReadyPhotos": 140,
-  "pageScraped": 22,
-  "photosRecovered": 22,
+  "leadReadyPhotos": 141,
+  "pageScraped": 21,
+  "photosRecovered": 21,
   "imagesCleared": 10,
-  "stockSearches": 37,
-  "stockFound": 10,
-  "campusBankFound": 3,
+  "stockSearches": 36,
+  "stockFound": 9,
+  "campusBankFound": 2,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -69,12 +69,6 @@
       "image": "https://live.staticflickr.com/4031/4400844746_a47c17ef6d_b.jpg"
     },
     {
-      "title": "Spotlighting Powerful McGill Alumnae",
-      "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
-    },
-    {
       "title": "National Golf tournament",
       "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
       "reason": "stock-too-small",
@@ -85,6 +79,12 @@
       "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
+    },
+    {
+      "title": "Second-Class Citizens",
+      "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/7056/6831154200_b7057b4237_b.jpg"
     }
   ]
 }
