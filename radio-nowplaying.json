@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-13T06:56:23.599Z",
+  "updatedAt": "2026-08-13T07:55:26.564Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T06:55:59.552Z"
+      "checkedAt": "2026-08-13T07:55:01.787Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Franco",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
-      },
-      "next": {
         "title": "Par mots et par vaux (reprise)",
         "source": "schedule",
         "start": "03:00",
         "end": "04:00",
         "url": "https://cism893.ca/emissions/par-mots-et-par-vaux"
       },
+      "next": {
+        "title": "Best of des sessions live",
+        "source": "schedule",
+        "start": "04:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/session-live-a-cism"
+      },
       "track": "",
-      "showTitle": "Mix Franco",
+      "showTitle": "Par mots et par vaux (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T06:56:01.740Z"
+      "checkedAt": "2026-08-13T07:55:04.178Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T06:56:04.749Z"
+      "checkedAt": "2026-08-13T07:55:07.738Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T06:56:19.460Z"
+      "checkedAt": "2026-08-13T07:55:22.429Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T06:56:20.072Z"
+      "checkedAt": "2026-08-13T07:55:22.897Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Saidan - Razorblade Temptation",
+      "track": "Converge - Nothing is Over",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-13T06:56:23.248Z"
+      "checkedAt": "2026-08-13T07:55:26.214Z"
     }
   }
 }
