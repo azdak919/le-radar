@@ -1,17 +1,45 @@
 {
-  "updated": "2026-08-12T23:49:52.117Z",
+  "updated": "2026-08-13T02:55:46.111Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 131,
+  "cited": 130,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
   "checked": 22,
   "updatedCount": 11,
-  "citedNew": 10,
-  "fallbackNew": 12,
+  "citedNew": 9,
+  "fallbackNew": 13,
   "samples": [
+    {
+      "title": "Nouveaux sondages diffusés par Pallas",
+      "source": "Le Collectif",
+      "credit": "Photo : Page Facebook de Paul St-Pierre Plamondon",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Flagrant délit d’initié de Donald Trump",
+      "source": "Le Collectif",
+      "credit": "Photo : Mike Campbell/NurPhoto via Getty Images",
+      "cited": true,
+      "method": "json-ld"
+    },
+    {
+      "title": "Être proche aidant : un rôle essentiel au quotidien",
+      "source": "Le Collectif",
+      "credit": "Photo : Action bénévole",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "La maltraitance envers les ainés : une réalité à ne pas ignorer",
+      "source": "Le Collectif",
+      "credit": "Photo : Ville de Québec",
+      "cited": true,
+      "method": "body-tail"
+    },
     {
       "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
       "source": "Quartier Libre",
@@ -34,16 +62,16 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Ce que nous devons aux femmes",
-      "source": "Le Délit",
-      "credit": "Photo : Alexandre Gontier",
-      "cited": true,
-      "method": "media-credit-near"
-    },
-    {
-      "title": "Les femmes MAGA au service du patriarcat",
+      "title": "Pourquoi le L est en premier dans LGBTQ+",
       "source": "Le Délit",
       "credit": "Photo : Stu Doré",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Sois belle et tais-toi",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -57,37 +85,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Illustration: Halle Keays",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "source": "La Pige",
-      "credit": "Photo : Léa Morin-Letort",
-      "cited": true,
-      "method": "figcaption-paren-kind"
-    },
-    {
-      "title": "Derrière les étiquettes électroniques, la tarification dynamique ?",
-      "source": "L'Exemplaire",
-      "credit": "Photo : Thomas Harton",
-      "cited": true,
-      "method": "json-ld"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
-      "source": "Quartier Libre",
-      "credit": "Photo : Maryse Boyce",
-      "cited": true,
-      "method": "figcaption-copyright"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }
