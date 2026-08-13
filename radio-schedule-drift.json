@@ -1,15 +1,12 @@
 {
-  "checkedAt": "2026-08-12T23:55:21.656Z",
+  "checkedAt": "2026-08-13T23:53:50.648Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 2,
+    "stable": 5,
     "drift": [
-      "chyz",
-      "ckut",
-      "cjlo",
-      "choq"
+      "cism"
     ],
     "overhaul": [],
     "unreachable": []
@@ -17,29 +14,8 @@
   "stations": [
     {
       "id": "chyz",
-      "published": 25,
+      "published": 28,
       "fresh": 28,
-      "added": [
-        "mar 16:00–17:30 Chéri.e, j’arrive!",
-        "mar 18:50–23:00 Capitales de Québec",
-        "mer 16:00–17:30 Chéri.e, j’arrive!",
-        "mer 18:50–23:00 Capitales de Québec",
-        "jeu 16:00–17:30 Chéri.e, j’arrive!",
-        "jeu 18:50–23:00 Capitales de Québec"
-      ],
-      "removed": [
-        "lun 20:30–21:30 La Voie des Droits",
-        "ven 17:30–18:30 Les Arshitechs du Son",
-        "sam 12:00–12:30 Un Monde de Couleurs et de Son"
-      ],
-      "changed": 9,
-      "ratio": 0.36,
-      "status": "drift"
-    },
-    {
-      "id": "cism",
-      "published": 110,
-      "fresh": 110,
       "added": [],
       "removed": [],
       "changed": 0,
@@ -47,46 +23,38 @@
       "status": "stable"
     },
     {
+      "id": "cism",
+      "published": 110,
+      "fresh": 110,
+      "added": [
+        "jeu 07:00–08:00 Cap sur Mosaïque 2026"
+      ],
+      "removed": [
+        "jeu 07:00–08:00 Ici, la criminologie"
+      ],
+      "changed": 2,
+      "ratio": 0.018,
+      "status": "drift"
+    },
+    {
       "id": "ckut",
       "published": 101,
       "fresh": 101,
-      "added": [
-        "mar 18:00–19:00 Prison Radio",
-        "mer 22:00–23:00 Rhizomatic Hour 1",
-        "mer 23:00–00:00 Rhizomatic Hour 2",
-        "jeu 17:00–18:00 Off The Hour: La Voix des Immigrants",
-        "jeu 23:00–01:00 L'aire du Diable",
-        "ven 19:00–22:00 LLA/Macondo"
-      ],
-      "removed": [
-        "mar 18:00–19:00 Rez Rock Radio",
-        "mer 22:00–00:00 Lo Signal / Meanwhile/ Rhizomatic",
-        "jeu 17:00–18:00 Off the Hour: Trib Talks",
-        "jeu 23:00–01:00 You Need A Heart To Live 2",
-        "ven 19:00–20:00 Listening to Latin America: Blanca-Victoria",
-        "ven 20:00–22:00 Macondo"
-      ],
-      "changed": 12,
-      "ratio": 0.119,
-      "status": "drift"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "cjlo",
       "published": 370,
       "fresh": 370,
-      "added": [
-        "dim 14:00–15:00 CJLO's Alternative Mega Mix",
-        "dim 15:00–16:00 Fukubukuro",
-        "lun 00:00–00:30 Cinema Smackdown"
-      ],
-      "removed": [
-        "dim 14:00–15:00 Cinema Smackdown",
-        "dim 15:00–16:00 CJLO's Alternative Mega Mix",
-        "lun 00:00–00:30 Fukubukuro"
-      ],
-      "changed": 6,
-      "ratio": 0.016,
-      "status": "drift"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "cfak",
@@ -100,18 +68,13 @@
     },
     {
       "id": "choq",
-      "published": 22,
+      "published": 21,
       "fresh": 21,
-      "added": [
-        "mar 11:00–12:00 Le Monde Dans Mes Oreilles"
-      ],
-      "removed": [
-        "dim 14:00–16:00 Pôle hip-hop",
-        "lun 12:00–13:00 Balado Populi"
-      ],
-      "changed": 3,
-      "ratio": 0.136,
-      "status": "drift"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     }
   ]
 }
