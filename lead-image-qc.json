@@ -1,15 +1,15 @@
 {
-  "updated": "2026-08-12T23:49:30.248Z",
+  "updated": "2026-08-13T02:56:06.800Z",
   "total": 185,
   "withPhoto": 168,
-  "withStock": 23,
+  "withStock": 22,
   "withCampusBank": 11,
   "fullyCovered": 185,
-  "leadReadyPhotos": 149,
+  "leadReadyPhotos": 141,
   "pageScraped": 22,
   "photosRecovered": 22,
   "imagesCleared": 10,
-  "stockSearches": 33,
+  "stockSearches": 35,
   "stockFound": 8,
   "campusBankFound": 1,
   "mainPageLeadReady": true,
@@ -19,6 +19,18 @@
       "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/917/28627096297_a3e0756d47_b.jpg"
+    },
+    {
+      "title": "Nouveaux sondages diffusés par Pallas",
+      "link": "https://lecollectif.ca/a-la-une/nouveaux-sondages-diffuses-par-pallas/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Nouveaux-sondages-Pallas-divulgues_Page-FB-de-Paul-St-Pierre-Plamondon.jpg"
+    },
+    {
+      "title": "Flagrant délit d’initié de Donald Trump",
+      "link": "https://lecollectif.ca/a-la-une/flagrant-delit-dinitie-de-donald-trump/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Flagrant-delit-dinitie-de-Donald-Trump_Getty-Images.jpg"
     },
     {
       "title": "L’inusité s’invite dans la politique",
@@ -57,6 +69,12 @@
       "image": "https://live.staticflickr.com/4031/4400844746_a47c17ef6d_b.jpg"
     },
     {
+      "title": "National Golf tournament",
+      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288689651802%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
       "title": "Gaiters wrap up hard-fought season with eyes on next year",
       "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
       "reason": "no-stock-match",
@@ -67,24 +85,6 @@
       "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/7056/6831154200_b7057b4237_b.jpg"
-    },
-    {
-      "title": "The Gentrification of Online Fandom Spaces",
-      "link": "https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
-    },
-    {
-      "title": "Le pays avant tout – esquisse",
-      "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
-    },
-    {
-      "title": "Oui au budget, oui au programme FIL et non à la grève",
-      "link": "https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6c/C%C3%A9gep_du_Vieux_Montr%C3%A9al%2C_Nov_03_2022.jpg"
     }
   ]
 }
