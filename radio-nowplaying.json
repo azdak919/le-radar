@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-13T17:56:12.202Z",
+  "updatedAt": "2026-08-13T19:00:23.991Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T17:55:43.638Z"
+      "checkedAt": "2026-08-13T18:59:53.550Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La grande ludothèque",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
-      },
-      "next": {
         "title": "Le palmarès",
         "source": "schedule",
         "start": "14:00",
         "end": "15:00",
         "url": "https://cism893.ca/emissions/palmares-de-cism"
       },
+      "next": {
+        "title": "La boussole culturelle",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/la-boussole-culturelle"
+      },
       "track": "",
-      "showTitle": "La grande ludothèque",
+      "showTitle": "Le palmarès",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T17:55:46.071Z"
+      "checkedAt": "2026-08-13T18:59:55.859Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Venus Radio",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
         "source": "api-live",
         "start": "14:00",
         "end": "15:00"
       },
+      "next": {
+        "title": "Positive Vibes",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "17:00"
+      },
       "track": "",
-      "showTitle": "Venus Radio",
+      "showTitle": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,35 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T17:55:49.037Z"
+      "checkedAt": "2026-08-13T18:59:58.540Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Give Me Shelter",
-        "source": "schedule-live",
-        "start": "13:30",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/give-me-shelter"
-      },
-      "next": {
         "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
         "start": "14:00",
         "end": "15:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
+      "next": {
+        "title": "Hooked On Sonics",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/hooked-on-sonics"
+      },
       "track": "",
-      "showTitle": "Give Me Shelter",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T17:56:03.687Z"
+      "checkedAt": "2026-08-13T19:00:13.001Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,21 +127,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T17:56:04.453Z"
+      "checkedAt": "2026-08-13T19:00:14.024Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Palmarès CHOQ.ca",
         "source": "api-live",
         "start": "15:00",
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "BAIE - Jour apres jour",
-      "showTitle": "",
+      "next": {
+        "title": "La 3ème demie",
+        "source": "api-live",
+        "start": "17:15",
+        "end": "18:00",
+        "slug": "le-12-mtlsup"
+      },
+      "track": "blimp - Awayward",
+      "showTitle": "Palmarès CHOQ.ca",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -150,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-13T17:56:11.852Z"
+      "checkedAt": "2026-08-13T19:00:23.641Z"
     }
   }
 }
