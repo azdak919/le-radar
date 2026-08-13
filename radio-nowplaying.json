@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-12T23:09:37.314Z",
+  "updatedAt": "2026-08-13T00:06:55.401Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -29,52 +29,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T23:09:10.217Z"
+      "checkedAt": "2026-08-13T00:06:26.073Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "O'Keb (reprise)",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/okeb"
-      },
-      "next": {
         "title": "Jeunesse cosmique",
         "source": "schedule",
         "start": "20:00",
         "end": "22:00",
         "url": "https://cism893.ca/emissions/jeunesse-cosmique"
       },
+      "next": {
+        "title": "Mix anglo",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
       "track": "",
-      "showTitle": "O'Keb (reprise)",
+      "showTitle": "Jeunesse cosmique",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T23:09:12.608Z"
+      "checkedAt": "2026-08-13T00:06:28.356Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Harbinger Showcase",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Jazz Euphorium",
         "source": "api-live",
         "start": "20:00",
         "end": "22:00"
       },
+      "next": {
+        "title": "Rhizomatic Hour 1",
+        "source": "api-live",
+        "start": "22:00",
+        "end": "23:00"
+      },
       "track": "",
-      "showTitle": "Harbinger Showcase",
+      "showTitle": "Jazz Euphorium",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -82,7 +82,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T23:09:15.778Z"
+      "checkedAt": "2026-08-13T00:06:33.605Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -110,7 +110,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T23:09:29.667Z"
+      "checkedAt": "2026-08-13T00:06:47.569Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,18 +135,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-12T23:09:30.163Z"
+      "checkedAt": "2026-08-13T00:06:48.185Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Le CHOC des Générations",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://www.choq.ca/emissions/le-choc-des-generations"
-      },
+      "current": null,
       "next": {
         "title": "Opération beurre de cinoche",
         "source": "api-live",
@@ -154,19 +148,18 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Nana Quinn - Dans mes reves (je ne suis plus moi)",
-      "showTitle": "Le CHOC des Générations",
+      "track": "Arielle Soucy - J",
+      "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-12T23:09:36.964Z"
+      "checkedAt": "2026-08-13T00:06:55.050Z"
     }
   }
 }
