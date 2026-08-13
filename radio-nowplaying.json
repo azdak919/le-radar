@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-13T07:55:26.564Z",
+  "updatedAt": "2026-08-13T08:19:39.716Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T07:55:01.787Z"
+      "checkedAt": "2026-08-13T08:19:17.515Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Par mots et par vaux (reprise)",
-        "source": "schedule",
-        "start": "03:00",
-        "end": "04:00",
-        "url": "https://cism893.ca/emissions/par-mots-et-par-vaux"
-      },
-      "next": {
         "title": "Best of des sessions live",
         "source": "schedule",
         "start": "04:00",
         "end": "05:00",
         "url": "https://cism893.ca/emissions/session-live-a-cism"
       },
+      "next": {
+        "title": "Le Séismix",
+        "source": "schedule",
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
+      },
       "track": "",
-      "showTitle": "Par mots et par vaux (reprise)",
+      "showTitle": "Best of des sessions live",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T07:55:04.178Z"
+      "checkedAt": "2026-08-13T08:19:19.579Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Freeform Air",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "William Shatner's Whiskey Tears",
         "source": "api-live",
         "start": "04:00",
         "end": "06:00"
       },
-      "track": "",
-      "showTitle": "Freeform Air",
+      "next": {
+        "title": "Total €clipse of The ☾harts",
+        "source": "api-live",
+        "start": "06:00",
+        "end": "07:00"
+      },
+      "track": "William Shatner",
+      "showTitle": "William Shatner's Whiskey Tears",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T07:55:07.738Z"
+      "checkedAt": "2026-08-13T08:19:22.350Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T07:55:22.429Z"
+      "checkedAt": "2026-08-13T08:19:36.183Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T07:55:22.897Z"
+      "checkedAt": "2026-08-13T08:19:36.921Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Converge - Nothing is Over",
+      "track": "Éléonore Dessureault - Demence",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-13T07:55:26.214Z"
+      "checkedAt": "2026-08-13T08:19:39.365Z"
     }
   }
 }
