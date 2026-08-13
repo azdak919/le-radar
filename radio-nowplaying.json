@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-13T16:55:33.765Z",
+  "updatedAt": "2026-08-13T17:56:12.202Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T16:55:03.312Z"
+      "checkedAt": "2026-08-13T17:55:43.638Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T16:55:05.620Z"
+      "checkedAt": "2026-08-13T17:55:46.071Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T16:55:08.770Z"
+      "checkedAt": "2026-08-13T17:55:49.037Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Power Hour",
+        "title": "Give Me Shelter",
         "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/the-power-hour"
+        "start": "13:30",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/give-me-shelter"
       },
       "next": {
-        "title": "What's Happening in NDG",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/whats-happening-in-ndg"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "track": "",
-      "showTitle": "The Power Hour",
+      "showTitle": "Give Me Shelter",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T16:55:23.606Z"
+      "checkedAt": "2026-08-13T17:56:03.687Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-13T16:55:24.560Z"
+      "checkedAt": "2026-08-13T17:56:04.453Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Mantisse - Le nom d",
+      "track": "BAIE - Jour apres jour",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-13T16:55:33.414Z"
+      "checkedAt": "2026-08-13T17:56:11.852Z"
     }
   }
 }
