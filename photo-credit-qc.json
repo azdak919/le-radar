@@ -1,37 +1,23 @@
 {
-  "updated": "2026-08-14T17:03:03.967Z",
+  "updated": "2026-08-14T18:31:32.653Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 130,
-  "pending": 12,
+  "cited": 129,
+  "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 21,
-  "updatedCount": 10,
+  "checked": 22,
+  "updatedCount": 11,
   "citedNew": 9,
-  "fallbackNew": 12,
+  "fallbackNew": 13,
   "samples": [
     {
-      "title": "Sois belle et tais-toi",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "title": "Ben Shelton et Iga Swiatek au sommet",
+      "source": "Le Collectif",
+      "credit": "Photo : Facebook Omnium Banque Nationale",
       "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Qui sont les agents qui patrouillent notre campus ?",
-      "source": "Le Délit",
-      "credit": "Photo : Stu Doré/Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "source": "La Pige",
-      "credit": "Photo : Léa Morin-Letort",
-      "cited": true,
-      "method": "figcaption-paren-kind"
+      "method": "body-line"
     },
     {
       "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
@@ -55,18 +41,18 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
+      "title": "Des initiatives qui rassemblent",
+      "source": "Le Délit",
+      "credit": "Crédit photo : Le Délit",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
-      "source": "Quartier Libre",
-      "credit": "Photo : Maryse Boyce",
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "source": "Le Délit",
+      "credit": "Photo : Toscane Ralaimongo",
       "cited": true,
-      "method": "figcaption-copyright"
+      "method": "media-credit-featured"
     },
     {
       "title": "Inside Mile End Kicks",
@@ -81,6 +67,27 @@
       "credit": "Illustration: Halle Keays",
       "cited": true,
       "method": "figcaption-trailing"
+    },
+    {
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "source": "La Pige",
+      "credit": "Photo : Léa Morin-Letort",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "source": "Quartier Libre",
+      "credit": "Photo : Maryse Boyce",
+      "cited": true,
+      "method": "figcaption-copyright"
     }
   ]
 }
