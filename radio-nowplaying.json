@@ -1,27 +1,34 @@
 {
-  "updatedAt": "2026-08-14T16:22:54.859Z",
+  "updatedAt": "2026-08-14T17:27:59.058Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Détour",
-        "source": "schedule",
+        "source": "api-live",
         "start": "13:00",
         "end": "14:00",
         "url": "https://chyz.ca/emission/detour/"
       },
+      "next": {
+        "title": "Capitales de Québec",
+        "source": "schedule-live",
+        "start": "18:50",
+        "end": "23:00",
+        "url": "https://chyz.ca/emission/capitales-de-quebec/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Détour",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T16:22:22.624Z"
+      "checkedAt": "2026-08-14T17:27:31.969Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T16:22:25.041Z"
+      "checkedAt": "2026-08-14T17:27:33.816Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T16:22:27.736Z"
+      "checkedAt": "2026-08-14T17:27:36.014Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Charts & Crafts",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/charts-and-crafts"
-      },
-      "next": {
         "title": "the castle",
         "source": "schedule-live",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/the-castle"
       },
+      "next": {
+        "title": "Spiral Bound",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/spiral-bound"
+      },
       "track": "",
-      "showTitle": "Charts & Crafts",
+      "showTitle": "the castle",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T16:22:42.551Z"
+      "checkedAt": "2026-08-14T17:27:50.169Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,18 +133,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T16:22:43.428Z"
+      "checkedAt": "2026-08-14T17:27:50.723Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Opération beurre de cinoche",
-        "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "slug": "box-sophisme"
-      },
+      "current": null,
       "next": {
         "title": "Histoire de passer le temps",
         "source": "api-live",
@@ -145,8 +146,8 @@
         "end": "17:00",
         "slug": "histoire-de-passer-le-temps"
       },
-      "track": "James Blake - Overgrown",
-      "showTitle": "Opération beurre de cinoche",
+      "track": "KALIKA - OFF",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -156,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-14T16:22:54.509Z"
+      "checkedAt": "2026-08-14T17:27:58.707Z"
     }
   }
 }
