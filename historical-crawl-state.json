@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-08-13T08:04:12.883Z",
+  "updated": "2026-08-14T08:03:00.978Z",
   "sources": {
     "la-pige": {
       "strategy": "wordpress-rest",
@@ -161,13 +161,13 @@
     },
     "the-tribune": {
       "strategy": "wordpress-rest",
-      "nextPage": 33,
+      "nextPage": 37,
       "totalPages": 40,
-      "lastAttemptAt": "2026-08-13T08:04:10.824Z",
-      "lastSuccessAt": "2026-08-13T08:04:10.824Z",
+      "lastAttemptAt": "2026-08-14T08:02:58.852Z",
+      "lastSuccessAt": "2026-08-14T08:02:58.852Z",
       "retryAt": null,
       "error": null,
-      "windowStart": "2023-08-13T14:04:02.227Z",
+      "windowStart": "2023-08-14T14:02:50.968Z",
       "windowYears": 3
     },
     "zone-campus": {
