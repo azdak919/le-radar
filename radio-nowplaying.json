@@ -1,79 +1,87 @@
 {
-  "updatedAt": "2026-08-14T22:49:02.589Z",
+  "updatedAt": "2026-08-14T23:18:43.170Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Capitales de Québec",
-        "source": "schedule",
+        "source": "api-live",
         "start": "18:50",
         "end": "23:00",
         "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
+      "next": {
+        "title": "Palmarès CHYZ",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "10:30",
+        "url": "https://chyz.ca/emission/palmares-chyz/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Capitales de Québec",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T22:48:35.155Z"
+      "checkedAt": "2026-08-14T23:18:21.530Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Ok Doomer",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/ok-doomer"
-      },
-      "next": {
         "title": "Mix électro",
         "source": "schedule",
         "start": "19:00",
         "end": "20:00",
         "url": "https://cism893.ca/emissions/mix-electro"
       },
+      "next": {
+        "title": "Rave de nuit",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "https://cism893.ca/emissions/rave-de-nuit"
+      },
       "track": "",
-      "showTitle": "Ok Doomer",
+      "showTitle": "Mix électro",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T22:48:37.343Z"
+      "checkedAt": "2026-08-14T23:18:23.220Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Café",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "LLA/Macondo",
         "source": "api-live",
         "start": "19:00",
         "end": "22:00"
       },
+      "next": {
+        "title": "Weekend Groove",
+        "source": "api-live",
+        "start": "22:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Café",
+      "showTitle": "LLA/Macondo",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T22:48:40.128Z"
+      "checkedAt": "2026-08-14T23:18:26.026Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -100,32 +108,32 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T22:48:54.510Z"
+      "checkedAt": "2026-08-14T23:18:39.530Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "La récréation",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Enfin vendredi",
         "source": "schedule-live",
         "start": "19:00",
         "end": "21:00"
       },
+      "next": {
+        "title": "Mangue, Goyave et Reggae",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "La récréation",
+      "showTitle": "Enfin vendredi",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T22:48:55.420Z"
+      "checkedAt": "2026-08-14T23:18:40.174Z"
     },
     "choq": {
       "id": "choq",
@@ -138,7 +146,7 @@
         "end": "00:00",
         "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
       },
-      "track": "WIDOWSPEAK - If You Change",
+      "track": "DJ Cinéma Quartier Latin - No Escape Plan",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -150,7 +158,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-14T22:49:02.238Z"
+      "checkedAt": "2026-08-14T23:18:42.820Z"
     }
   }
 }
