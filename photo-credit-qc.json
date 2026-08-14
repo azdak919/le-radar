@@ -1,24 +1,17 @@
 {
-  "updated": "2026-08-14T18:31:32.653Z",
+  "updated": "2026-08-14T20:05:27.174Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
   "cited": 129,
-  "pending": 13,
+  "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 22,
-  "updatedCount": 11,
-  "citedNew": 9,
+  "checked": 18,
+  "updatedCount": 7,
+  "citedNew": 5,
   "fallbackNew": 13,
   "samples": [
-    {
-      "title": "Ben Shelton et Iga Swiatek au sommet",
-      "source": "Le Collectif",
-      "credit": "Photo : Facebook Omnium Banque Nationale",
-      "cited": true,
-      "method": "body-line"
-    },
     {
       "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
       "source": "Quartier Libre",
@@ -41,16 +34,16 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Des initiatives qui rassemblent",
+      "title": "Sois belle et tais-toi",
       "source": "Le Délit",
-      "credit": "Crédit photo : Le Délit",
-      "cited": false,
-      "method": null
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
-      "title": "Élections de l’exécutif de l’AÉUM",
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
       "source": "Le Délit",
-      "credit": "Photo : Toscane Ralaimongo",
+      "credit": "Photo : Stu Doré/Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -64,30 +57,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Illustration: Halle Keays",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "source": "La Pige",
-      "credit": "Photo : Léa Morin-Letort",
-      "cited": true,
-      "method": "figcaption-paren-kind"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
-      "source": "Quartier Libre",
-      "credit": "Photo : Maryse Boyce",
-      "cited": true,
-      "method": "figcaption-copyright"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }
