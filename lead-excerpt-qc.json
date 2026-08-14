@@ -1,21 +1,30 @@
 {
-  "updated": "2026-08-14T14:54:59.540Z",
+  "updated": "2026-08-14T16:56:59.717Z",
   "total": 185,
   "pool": 58,
   "incomplete": 7,
-  "withLeadExcerpt": 79,
+  "withLeadExcerpt": 80,
   "candidates": 7,
-  "enriched": 1,
-  "failed": 3,
+  "enriched": 4,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
-      "title": "Élections de l’exécutif de l’AÉUM",
-      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
+      "title": "Sois belle et tais-toi",
+      "link": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
       "ok": true,
-      "score": 66,
-      "chars": 400,
-      "sample": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « p",
+      "score": 96,
+      "chars": 295,
+      "sample": "C’est la sécheresse totale dans le cerveau de bien des gens. Le vôtre, peut-être. Mais ne craignez r",
+      "changed": true
+    },
+    {
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "link": "https://www.delitfrancais.com/2026/03/18/qui-sont-les-agents-qui-patrouillent-notre-campus/",
+      "ok": true,
+      "score": 100,
+      "chars": 396,
+      "sample": "« L’Université McGill est à la recherche de patrouilleurs dynamiques et engagés pour assurer la sécu",
       "changed": true
     },
     {
@@ -28,6 +37,15 @@
       "changed": false
     },
     {
+      "title": "A conversation with Ehab Lotayef: A lifelong voyage to the conscience of humanity",
+      "link": "https://www.thetribune.ca/news/a-conversation-with-ehab-lotayef-a-lifelong-voyage-to-the-conscience-of-humanity-28072026/?utm_source=rss&utm_medium=rss&utm_campaign=a-conversation-with-ehab-lotayef-a-lifelong-voyage-to-the-conscience-of-humanity-28072026",
+      "ok": true,
+      "score": 70,
+      "chars": 400,
+      "sample": "On May 14, 429 activists carrying more than 11,000 kilograms of humanitarian aid set sail to Gaza fr",
+      "changed": true
+    },
+    {
       "title": "The Cruel Optimism of Summer",
       "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
       "ok": true,
@@ -35,6 +53,15 @@
       "chars": 400,
       "sample": "“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt t",
       "changed": false
+    },
+    {
+      "title": "Ask the Trib: How do I survive summer in my hometown?",
+      "link": "https://www.thetribune.ca/student-life/ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026/?utm_source=rss&utm_medium=rss&utm_campaign=ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026",
+      "ok": true,
+      "score": 66,
+      "chars": 400,
+      "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
+      "changed": true
     },
     {
       "title": "Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods",

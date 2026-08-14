@@ -1,8 +1,8 @@
 {
-  "updated": "2026-08-14T14:54:17.608Z",
+  "updated": "2026-08-14T16:56:23.583Z",
   "total": 185,
   "withAuthor": 185,
-  "mismatches": 5,
+  "mismatches": 6,
   "ok": true,
   "samples": [
     {
@@ -30,11 +30,19 @@
       "reason": "no-author-source"
     },
     {
-      "title": "Élections de l’exécutif de l’AÉUM",
-      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
+      "title": "Sois belle et tais-toi",
+      "link": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
       "source": "Le Délit",
       "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Timotée Allouch-Chantepie, Héloïse Durning, Aurélien Quéméner et Eugénie St-Pierre",
+      "canonicalAuthor": "Rose Langlois",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "link": "https://www.delitfrancais.com/2026/03/18/qui-sont-les-agents-qui-patrouillent-notre-campus/",
+      "source": "Le Délit",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Héloïse Durning",
       "reason": "page-byline"
     },
     {
@@ -46,5 +54,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 5
+  "fixed": 6
 }
