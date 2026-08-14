@@ -1,30 +1,36 @@
 {
-  "updated": "2026-08-13T23:48:43.626Z",
+  "updated": "2026-08-14T03:32:06.731Z",
   "total": 185,
   "withPhoto": 168,
-  "withStock": 29,
-  "withCampusBank": 13,
+  "withStock": 22,
+  "withCampusBank": 11,
   "fullyCovered": 185,
-  "leadReadyPhotos": 120,
-  "pageScraped": 19,
-  "photosRecovered": 19,
-  "imagesCleared": 9,
-  "stockSearches": 61,
-  "stockFound": 16,
+  "leadReadyPhotos": 141,
+  "pageScraped": 21,
+  "photosRecovered": 21,
+  "imagesCleared": 10,
+  "stockSearches": 41,
+  "stockFound": 12,
   "campusBankFound": 4,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "CSU fails to reach quorum at first special council meeting of new mandate",
+      "link": "https://thelinknewspaper.ca/article/16335",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
+    },
+    {
+      "title": "The Cruel Optimism of Summer",
+      "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/917/28627096297_a3e0756d47_b.jpg"
+    },
     {
       "title": "CSU terminates council’s chief election officer",
       "link": "https://thelinknewspaper.ca/article/16334",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
-    },
-    {
-      "title": "Le rap à l’honneur au Spectacle de la rentrée",
-      "link": "https://lecollectif.ca/campus/le-rap-a-lhonneur-au-spectacle-de-la-rentree/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/CAMPUS_SpectacleDeLaRentree2026_SourceFacebookFEUS.jpg"
     },
     {
       "title": "Nouveaux sondages diffusés par Pallas",
@@ -37,24 +43,6 @@
       "link": "https://lecollectif.ca/a-la-une/flagrant-delit-dinitie-de-donald-trump/",
       "reason": "no-stock-match",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Flagrant-delit-dinitie-de-Donald-Trump_Getty-Images.jpg"
-    },
-    {
-      "title": "Être proche aidant : un rôle essentiel au quotidien",
-      "link": "https://lecollectif.ca/a-la-une/etre-proche-aidant-un-role-essentiel-au-quotidien/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_ProchesAidants_SourceActionBenevole.jpg"
-    },
-    {
-      "title": "La maltraitance envers les ainés : une réalité à ne pas ignorer",
-      "link": "https://lecollectif.ca/a-la-une/la-maltraitance-envers-les-aines-une-realite-a-ne-pas-ignorer/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_MaltraitanceDesPersonnesAinees_SourceVilleDeQuebec.jpg"
-    },
-    {
-      "title": "Place aux demi-finales de l’Omnium Banque Nationale",
-      "link": "https://lecollectif.ca/sports-et-bien-etre/place-aux-demi-finales-de-lomnium-banque-nationale/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/773450440_1369271198110295_9030388497656615990_n.jpeg"
     },
     {
       "title": "L’inusité s’invite dans la politique",
@@ -75,16 +63,28 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Raid-marocain-enEspagne_Getty-Images.jpg"
     },
     {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "link": "https://lapige.atmjonquiere.com/2026/06/22/se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille/?utm_source=rss&utm_medium=rss&utm_campaign=se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille",
+      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
+      "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
       "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/06/Joanne-Normandin_retraite-benevole-scaled.jpg"
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg"
     },
     {
-      "title": "Un investissement pour les jeunes « bienvenu » au Centre Mamik",
-      "link": "https://lapige.atmjonquiere.com/2026/05/21/un-investissement-pour-les-jeunes-bienvenu-au-centre-mamik/?utm_source=rss&utm_medium=rss&utm_campaign=un-investissement-pour-les-jeunes-bienvenu-au-centre-mamik",
+      "title": "CSU approves affinity group policy, club rules update and councillor pay increase at special meeting",
+      "link": "https://thelinknewspaper.ca/article/16326",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/7089/7290404684_2750bb385f_b.jpg"
+    },
+    {
+      "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
+      "link": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Assembl%C3%A9e_nationale_du_Qu%C3%A9bec%2C_l%27H%C3%B4tel_du_Parlement%2C_fa%C3%A7ade_avec_ancien_entr%C3%A9_principal.jpg"
+    },
+    {
+      "title": "CSU approves $36,000 in funding for student-led initiatives",
+      "link": "https://thelinknewspaper.ca/article/16319",
       "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/05/image-mamik.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG"
     }
   ]
 }
