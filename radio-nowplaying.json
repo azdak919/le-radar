@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-14T19:29:00.652Z",
+  "updatedAt": "2026-08-14T20:04:52.923Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T19:28:31.744Z"
+      "checkedAt": "2026-08-14T20:04:24.656Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Salsa & Bembê",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/salsa-et-bembe"
-      },
-      "next": {
         "title": "Turbo tannant",
         "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "https://cism893.ca/emissions/turbo-tannant"
       },
+      "next": {
+        "title": "Ok Doomer",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/ok-doomer"
+      },
       "track": "",
-      "showTitle": "Salsa & Bembê",
+      "showTitle": "Turbo tannant",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T19:28:34.145Z"
+      "checkedAt": "2026-08-14T20:04:26.776Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T19:28:37.412Z"
+      "checkedAt": "2026-08-14T20:04:31.132Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Dead Beats",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/dead-beats"
-      },
-      "next": {
         "title": "Tapeworms",
         "source": "schedule-live",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/tapeworms"
       },
+      "next": {
+        "title": "The Groove Master's Hour",
+        "source": "schedule-live",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
+      },
       "track": "",
-      "showTitle": "Dead Beats",
+      "showTitle": "Tapeworms",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T19:28:52.557Z"
+      "checkedAt": "2026-08-14T20:04:45.678Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,21 +126,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T19:28:53.496Z"
+      "checkedAt": "2026-08-14T20:04:46.530Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Histoire de passer le temps",
         "source": "api-live",
         "start": "16:00",
         "end": "17:00",
         "slug": "histoire-de-passer-le-temps"
       },
-      "track": "Noé Lira - compas",
-      "showTitle": "",
+      "next": {
+        "title": "Mutations",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00",
+        "slug": "mutations"
+      },
+      "track": "Allison Russell - Chaos Theory",
+      "showTitle": "Histoire de passer le temps",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -150,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-14T19:29:00.302Z"
+      "checkedAt": "2026-08-14T20:04:52.573Z"
     }
   }
 }
