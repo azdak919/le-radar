@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-14T04:05:57.110Z",
+  "updatedAt": "2026-08-14T05:54:27.586Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T04:05:30.830Z"
+      "checkedAt": "2026-08-14T05:54:05.922Z"
     },
     "cism": {
       "id": "cism",
@@ -48,32 +48,33 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T04:05:32.771Z"
+      "checkedAt": "2026-08-14T05:54:07.684Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "L'aire du Diable",
-        "source": "api-live",
-        "start": "23:00",
-        "end": "01:00"
-      },
-      "next": {
         "title": "Listen! You Smell Something?",
         "source": "api-live",
         "start": "01:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "G-Flex Survivor's Corner",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "L'aire du Diable",
+      "showTitle": "Listen! You Smell Something?",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T04:05:35.593Z"
+      "checkedAt": "2026-08-14T05:54:09.924Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -100,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T04:05:49.582Z"
+      "checkedAt": "2026-08-14T05:54:24.164Z"
     },
     "cfak": {
       "id": "cfak",
@@ -125,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T04:05:50.348Z"
+      "checkedAt": "2026-08-14T05:54:24.905Z"
     },
     "choq": {
       "id": "choq",
@@ -138,7 +139,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Kaatayra - Caminhos de Agua",
+      "track": "Guhn Twei - Phase terminale",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-14T04:05:56.759Z"
+      "checkedAt": "2026-08-14T05:54:27.235Z"
     }
   }
 }
