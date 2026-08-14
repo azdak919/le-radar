@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-14T08:43:46.918Z",
+  "updatedAt": "2026-08-14T09:57:45.955Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T08:43:24.705Z"
+      "checkedAt": "2026-08-14T09:57:16.517Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La carte cadeau (reprise)",
-        "source": "schedule",
-        "start": "03:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/la-carte-cadeau"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "05:00",
         "end": "07:00",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "Toute est dans toute",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/tout-est-dans-toute"
+      },
       "track": "",
-      "showTitle": "La carte cadeau (reprise)",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T08:43:26.565Z"
+      "checkedAt": "2026-08-14T09:57:18.888Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T08:43:28.989Z"
+      "checkedAt": "2026-08-14T09:57:21.775Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T08:43:43.310Z"
+      "checkedAt": "2026-08-14T09:57:36.050Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T08:43:43.844Z"
+      "checkedAt": "2026-08-14T09:57:37.029Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Orquesta Akokán - No Me Voy (feat. Carolina Oliveros)",
+      "track": "The Lemon Twigs - I Just Can",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-14T08:43:46.568Z"
+      "checkedAt": "2026-08-14T09:57:45.605Z"
     }
   }
 }
