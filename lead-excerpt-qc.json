@@ -1,14 +1,23 @@
 {
-  "updated": "2026-08-14T13:44:45.345Z",
+  "updated": "2026-08-14T14:54:59.540Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 6,
+  "incomplete": 7,
   "withLeadExcerpt": 79,
-  "candidates": 6,
-  "enriched": 0,
-  "failed": 2,
+  "candidates": 7,
+  "enriched": 1,
+  "failed": 3,
   "ok": true,
   "samples": [
+    {
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
+      "ok": true,
+      "score": 66,
+      "chars": 400,
+      "sample": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « p",
+      "changed": true
+    },
     {
       "title": "Review: Sullivan Fortner Solo at Gesú Concert Hall",
       "link": "https://www.mcgilldaily.com/2026/07/review-sullivan-fortner-solo-at-gesu-concert-hall/",
@@ -16,15 +25,6 @@
       "score": 74,
       "chars": 399,
       "sample": "Seated at a Kawai grand piano, he began with a crowd favourite, “Don’t You Worry ’Bout a Thing” by S",
-      "changed": false
-    },
-    {
-      "title": "A conversation with Ehab Lotayef: A lifelong voyage to the conscience of humanity",
-      "link": "https://www.thetribune.ca/news/a-conversation-with-ehab-lotayef-a-lifelong-voyage-to-the-conscience-of-humanity-28072026/?utm_source=rss&utm_medium=rss&utm_campaign=a-conversation-with-ehab-lotayef-a-lifelong-voyage-to-the-conscience-of-humanity-28072026",
-      "ok": true,
-      "score": 70,
-      "chars": 400,
-      "sample": "On May 14, 429 activists carrying more than 11,000 kilograms of humanitarian aid set sail to Gaza fr",
       "changed": false
     },
     {
