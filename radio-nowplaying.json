@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-14T21:49:46.816Z",
+  "updatedAt": "2026-08-14T22:19:07.418Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T21:49:20.846Z"
+      "checkedAt": "2026-08-14T22:18:45.393Z"
     },
     "cism": {
       "id": "cism",
@@ -48,85 +48,84 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T21:49:22.627Z"
+      "checkedAt": "2026-08-14T22:18:47.393Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Café",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "LLA/Macondo",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
+      "showTitle": "Café",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T21:49:25.411Z"
+      "checkedAt": "2026-08-14T22:18:49.867Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Groove Master's Hour",
-        "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
-      },
-      "next": {
         "title": "The Go-Go Radio Magic Show",
         "source": "schedule-live",
         "start": "18:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
       },
+      "next": {
+        "title": "El Encuentro Latino",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/el-encuentro-latino"
+      },
       "track": "",
-      "showTitle": "The Groove Master's Hour",
+      "showTitle": "The Go-Go Radio Magic Show",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T21:49:39.479Z"
+      "checkedAt": "2026-08-14T22:19:03.713Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Nouveautés Franco",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "La récréation",
         "source": "schedule-live",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Enfin vendredi",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "21:00"
+      },
       "track": "",
-      "showTitle": "Nouveautés Franco",
+      "showTitle": "La récréation",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-14T21:49:40.275Z"
+      "checkedAt": "2026-08-14T22:19:04.544Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +138,7 @@
         "end": "00:00",
         "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
       },
-      "track": "Emma Beko - Beyond the finality",
+      "track": "Thierry Larose - Conversation dans le noir",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -151,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-14T21:49:46.465Z"
+      "checkedAt": "2026-08-14T22:19:07.067Z"
     }
   }
 }
