@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-14T06:48:54.821Z",
+  "updated": "2026-08-14T08:43:30.350Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
@@ -7,9 +7,9 @@
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 20,
-  "updatedCount": 9,
-  "citedNew": 8,
+  "checked": 21,
+  "updatedCount": 10,
+  "citedNew": 9,
   "fallbackNew": 12,
   "samples": [
     {
@@ -34,9 +34,16 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Sois belle et tais-toi",
+      "title": "Ce que nous devons aux femmes",
       "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "credit": "Photo : Alexandre Gontier",
+      "cited": true,
+      "method": "media-credit-near"
+    },
+    {
+      "title": "Les femmes MAGA au service du patriarcat",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
     },
