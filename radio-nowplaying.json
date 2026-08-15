@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-08-15T14:18:42.010Z",
+  "updatedAt": "2026-08-15T14:47:45.381Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Palmarès CHYZ",
-        "source": "api-live",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
-      },
+      "current": null,
       "next": {
         "title": "Le Ré-Show : Deuxième Service",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
       },
       "track": "",
-      "showTitle": "Palmarès CHYZ",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T14:18:20.510Z"
+      "checkedAt": "2026-08-15T14:47:22.322Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T14:18:22.410Z"
+      "checkedAt": "2026-08-15T14:47:24.642Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Making Contact/Anything Goes",
-        "source": "api-live",
-        "start": "10:00",
-        "end": "10:30"
-      },
-      "next": {
         "title": "Samedi Midi",
         "source": "api-live",
         "start": "10:30",
         "end": "14:00"
       },
+      "next": {
+        "title": "Funky Revolutions",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "16:00"
+      },
       "track": "",
-      "showTitle": "Making Contact/Anything Goes",
+      "showTitle": "Samedi Midi",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T14:18:24.458Z"
+      "checkedAt": "2026-08-15T14:47:27.605Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T14:18:38.437Z"
+      "checkedAt": "2026-08-15T14:47:41.812Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T14:18:39.250Z"
+      "checkedAt": "2026-08-15T14:47:42.330Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Oktoplut - Chanson d",
+      "track": "Dominique Fils-Aimé - Freedom Become",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -152,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-15T14:18:41.659Z"
+      "checkedAt": "2026-08-15T14:47:45.030Z"
     }
   }
 }
