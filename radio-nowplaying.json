@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-15T03:36:15.211Z",
+  "updatedAt": "2026-08-15T04:26:47.278Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,125 +21,119 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T03:35:48.143Z"
+      "checkedAt": "2026-08-15T04:26:21.189Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix anglo",
-        "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "next": {
         "title": "Rythmologie (reprise)",
         "source": "schedule",
         "start": "00:00",
         "end": "02:00",
         "url": "https://cism893.ca/emissions/rythmologie"
       },
+      "next": {
+        "title": "Mix Franco",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix anglo",
+      "showTitle": "Rythmologie (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T03:35:50.130Z"
+      "checkedAt": "2026-08-15T04:26:23.532Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Weekend Groove",
-        "source": "api-live",
-        "start": "22:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "WEFUNK",
         "source": "api-live",
         "start": "00:00",
         "end": "02:00"
       },
+      "next": {
+        "title": "Soca Sessions",
+        "source": "api-live",
+        "start": "02:00",
+        "end": "04:00"
+      },
       "track": "",
-      "showTitle": "Weekend Groove",
+      "showTitle": "WEFUNK",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T03:35:54.007Z"
+      "checkedAt": "2026-08-15T04:26:26.397Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Waxing Gibbous",
-        "source": "schedule-live",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/the-waxing-gibbous"
-      },
-      "next": {
         "title": "Jazz Boulevard",
         "source": "schedule-live",
         "start": "00:00",
         "end": "02:00",
         "url": "http://www.cjlo.com/shows/jazz-boulevard"
       },
+      "next": {
+        "title": "World-Up'",
+        "source": "schedule-live",
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/world-up"
+      },
       "track": "",
-      "showTitle": "The Waxing Gibbous",
+      "showTitle": "Jazz Boulevard",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T03:36:08.363Z"
+      "checkedAt": "2026-08-15T04:26:40.499Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Mix Anglo",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule-live",
         "start": "00:00",
         "end": "07:00"
       },
+      "next": null,
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T03:36:09.062Z"
+      "checkedAt": "2026-08-15T04:26:41.261Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Mutations",
+        "title": "D'amour et de sexe",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00",
-        "slug": "mutations"
+        "start": "22:00",
+        "end": "00:00",
+        "slug": "damour-et-de-sexe"
       },
-      "track": "Alewya - City of Symbols",
+      "track": "Converge - Doom in Bloom",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +144,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-15T03:36:14.861Z"
+      "checkedAt": "2026-08-15T04:26:46.927Z"
     }
   }
 }
