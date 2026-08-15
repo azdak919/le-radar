@@ -1,27 +1,34 @@
 {
-  "updatedAt": "2026-08-15T14:47:45.381Z",
+  "updatedAt": "2026-08-15T15:17:26.856Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Le Ré-Show : Deuxième Service",
-        "source": "schedule",
+        "source": "api-live",
         "start": "11:00",
         "end": "12:00",
         "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
       },
+      "next": {
+        "title": "Radio Futura",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "16:00",
+        "url": "https://chyz.ca/emission/radio-futura/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Le Ré-Show : Deuxième Service",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T14:47:22.322Z"
+      "checkedAt": "2026-08-15T15:17:03.485Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T14:47:24.642Z"
+      "checkedAt": "2026-08-15T15:17:05.831Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T14:47:27.605Z"
+      "checkedAt": "2026-08-15T15:17:08.647Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +108,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T14:47:41.812Z"
+      "checkedAt": "2026-08-15T15:17:22.866Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T14:47:42.330Z"
+      "checkedAt": "2026-08-15T15:17:23.728Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +141,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Dominique Fils-Aimé - Freedom Become",
+      "track": "Étienne Coppée - Les Champs-Elysees",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +152,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-15T14:47:45.030Z"
+      "checkedAt": "2026-08-15T15:17:26.506Z"
     }
   }
 }
