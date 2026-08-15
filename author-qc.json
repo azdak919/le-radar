@@ -1,8 +1,8 @@
 {
-  "updated": "2026-08-15T20:25:13.800Z",
+  "updated": "2026-08-15T22:38:12.878Z",
   "total": 185,
   "withAuthor": 185,
-  "mismatches": 5,
+  "mismatches": 6,
   "ok": true,
   "samples": [
     {
@@ -30,11 +30,19 @@
       "reason": "no-author-source"
     },
     {
-      "title": "Sois belle et tais-toi",
-      "link": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
+      "title": "Les femmes MAGA au service du patriarcat",
+      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
       "source": "Le Délit",
       "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Rose Langlois",
+      "canonicalAuthor": "Anonyme",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Des initiatives qui rassemblent",
+      "link": "https://www.delitfrancais.com/2026/03/18/des-initiatives-qui-rassemblent/",
+      "source": "Le Délit",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Héloïse Durning et Elie Nguyen",
       "reason": "page-byline"
     },
     {
@@ -46,5 +54,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 5
+  "fixed": 6
 }
