@@ -1,24 +1,17 @@
 {
-  "updated": "2026-08-15T11:28:16.118Z",
+  "updated": "2026-08-15T13:06:51.566Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 130,
+  "cited": 129,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 21,
-  "updatedCount": 10,
-  "citedNew": 9,
-  "fallbackNew": 12,
+  "checked": 17,
+  "updatedCount": 5,
+  "citedNew": 4,
+  "fallbackNew": 13,
   "samples": [
-    {
-      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
     {
       "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
@@ -34,16 +27,9 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Ce que nous devons aux femmes",
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
       "source": "Le Délit",
-      "credit": "Photo : Alexandre Gontier",
-      "cited": true,
-      "method": "media-credit-near"
-    },
-    {
-      "title": "Les femmes MAGA au service du patriarcat",
-      "source": "Le Délit",
-      "credit": "Photo : Stu Doré",
+      "credit": "Photo : Stu Doré/Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -57,30 +43,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Illustration: Halle Keays",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "source": "La Pige",
-      "credit": "Photo : Léa Morin-Letort",
-      "cited": true,
-      "method": "figcaption-paren-kind"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
-      "source": "Quartier Libre",
-      "credit": "Photo : Maryse Boyce",
-      "cited": true,
-      "method": "figcaption-copyright"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }
