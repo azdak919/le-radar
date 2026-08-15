@@ -1,8 +1,8 @@
 {
-  "updated": "2026-08-15T14:25:29.960Z",
+  "updated": "2026-08-15T16:27:47.789Z",
   "total": 185,
   "withAuthor": 185,
-  "mismatches": 5,
+  "mismatches": 6,
   "ok": true,
   "samples": [
     {
@@ -30,11 +30,19 @@
       "reason": "no-author-source"
     },
     {
-      "title": "Les femmes MAGA au service du patriarcat",
-      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
+      "title": "Sois belle et tais-toi",
+      "link": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
       "source": "Le Délit",
       "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Anonyme",
+      "canonicalAuthor": "Rose Langlois",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "link": "https://www.delitfrancais.com/2026/03/18/qui-sont-les-agents-qui-patrouillent-notre-campus/",
+      "source": "Le Délit",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Héloïse Durning",
       "reason": "page-byline"
     },
     {
@@ -46,5 +54,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 5
+  "fixed": 6
 }
