@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-08-15T19:44:31.903Z",
+  "updatedAt": "2026-08-15T20:19:22.093Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Radio Futura",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "16:00",
-        "url": "https://chyz.ca/emission/radio-futura/"
-      },
+      "current": null,
       "next": {
         "title": "Capitales de Québec",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "18:50",
         "end": "23:00",
         "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
       "track": "",
-      "showTitle": "Radio Futura",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-08-15T19:44:05.431Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Faites entrer un DJ",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/faites-entrer-un-dj"
-      },
-      "next": {
-        "title": "Contenu explicite",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/contenu-explicite"
-      },
-      "track": "",
-      "showTitle": "Faites entrer un DJ",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T19:44:07.808Z"
+      "checkedAt": "2026-08-15T20:18:56.612Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Contenu explicite",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/contenu-explicite"
+      },
+      "next": {
+        "title": "Le radar",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "17:30",
+        "url": "https://cism893.ca/emissions/le-radar-2"
+      },
+      "track": "",
+      "showTitle": "Contenu explicite",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-08-15T20:18:58.813Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Funky Revolutions",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "16:00"
-      },
-      "next": {
         "title": "West Indian Rhythms",
         "source": "api-live",
         "start": "16:00",
         "end": "19:00"
       },
-      "track": "",
-      "showTitle": "Funky Revolutions",
+      "next": {
+        "title": "Masters At Work",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "21:00"
+      },
+      "track": "Betty Baker Beehive Cathedral (Joseph Decosimo, Luke Richardson, Cleek Schrey) - Joseph Decosimo (128k)",
+      "showTitle": "West Indian Rhythms",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T19:44:10.636Z"
+      "checkedAt": "2026-08-15T20:19:02.311Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Caribbean Callaloo",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/caribbean-callaloo"
-      },
-      "next": {
         "title": "Mi Dun Talk",
         "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/mi-dun-talk"
       },
+      "next": {
+        "title": "Mo' Ritmo Radio",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/mo-ritmo-radio"
+      },
       "track": "",
-      "showTitle": "Caribbean Callaloo",
+      "showTitle": "Mi Dun Talk",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T19:44:24.699Z"
+      "checkedAt": "2026-08-15T20:19:16.475Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T19:44:25.485Z"
+      "checkedAt": "2026-08-15T20:19:17.144Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Primal Scream - Velocity Girl",
+      "track": "Oothèque - FM",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -152,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-15T19:44:31.552Z"
+      "checkedAt": "2026-08-15T20:19:21.742Z"
     }
   }
 }
