@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-15T04:26:47.278Z",
+  "updatedAt": "2026-08-15T04:57:28.085Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T04:26:21.189Z"
+      "checkedAt": "2026-08-15T04:57:06.279Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T04:26:23.532Z"
+      "checkedAt": "2026-08-15T04:57:08.403Z"
     },
     "ckut": {
       "id": "ckut",
@@ -73,21 +73,21 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T04:26:26.397Z"
+      "checkedAt": "2026-08-15T04:57:10.992Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Jazz Boulevard",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "00:00",
         "end": "02:00",
         "url": "http://www.cjlo.com/shows/jazz-boulevard"
       },
       "next": {
         "title": "World-Up'",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/world-up"
@@ -95,12 +95,12 @@
       "track": "",
       "showTitle": "Jazz Boulevard",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T04:26:40.499Z"
+      "checkedAt": "2026-08-15T04:57:24.863Z"
     },
     "cfak": {
       "id": "cfak",
@@ -120,7 +120,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T04:26:41.261Z"
+      "checkedAt": "2026-08-15T04:57:25.649Z"
     },
     "choq": {
       "id": "choq",
@@ -133,7 +133,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Converge - Doom in Bloom",
+      "track": "CANICHE - Roadie",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -144,7 +144,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-15T04:26:46.927Z"
+      "checkedAt": "2026-08-15T04:57:27.734Z"
     }
   }
 }
