@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-15T21:18:04.583Z",
+  "updatedAt": "2026-08-15T21:45:22.779Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T21:17:40.982Z"
+      "checkedAt": "2026-08-15T21:44:53.158Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le radar",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "17:30",
-        "url": "https://cism893.ca/emissions/le-radar-2"
-      },
-      "next": {
         "title": "Disconomique",
         "source": "schedule",
         "start": "17:30",
         "end": "19:00",
         "url": "https://cism893.ca/emissions/disconomique"
       },
+      "next": {
+        "title": "Solénoïde",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/solenoide"
+      },
       "track": "",
-      "showTitle": "Le radar",
+      "showTitle": "Disconomique",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T21:17:43.389Z"
+      "checkedAt": "2026-08-15T21:44:55.554Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T21:17:46.224Z"
+      "checkedAt": "2026-08-15T21:44:58.439Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T21:18:00.238Z"
+      "checkedAt": "2026-08-15T21:45:12.656Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T21:18:00.965Z"
+      "checkedAt": "2026-08-15T21:45:13.314Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Low - Disarray",
+      "track": "chiara savasta - Bike Rides",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-15T21:18:04.232Z"
+      "checkedAt": "2026-08-15T21:45:22.429Z"
     }
   }
 }
