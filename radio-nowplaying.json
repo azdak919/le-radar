@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-15T10:48:05.658Z",
+  "updatedAt": "2026-08-15T11:17:34.438Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T10:47:44.224Z"
+      "checkedAt": "2026-08-15T11:17:14.308Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T10:47:46.103Z"
+      "checkedAt": "2026-08-15T11:17:15.927Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T10:47:48.537Z"
+      "checkedAt": "2026-08-15T11:17:18.047Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,27 +101,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T10:48:02.291Z"
+      "checkedAt": "2026-08-15T11:17:31.702Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
+      "current": null,
+      "next": {
         "title": "Les nuits CFAK",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "00:00",
-        "end": "07:00"
+        "end": "21:00"
       },
-      "next": null,
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T10:48:03.132Z"
+      "checkedAt": "2026-08-15T11:17:32.431Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Lazuli - CALIENTE",
+      "track": "Kamilou - Paranormal",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-15T10:48:05.308Z"
+      "checkedAt": "2026-08-15T11:17:34.088Z"
     }
   }
 }
