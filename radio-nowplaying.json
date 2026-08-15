@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-15T07:53:58.026Z",
+  "updatedAt": "2026-08-15T08:23:56.803Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T07:53:36.063Z"
+      "checkedAt": "2026-08-15T08:23:34.813Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T07:53:37.907Z"
+      "checkedAt": "2026-08-15T08:23:36.623Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Soca Sessions",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "The Mash Time Show",
         "source": "api-live",
         "start": "04:00",
         "end": "06:00"
       },
+      "next": {
+        "title": "Quebec Acadie",
+        "source": "api-live",
+        "start": "06:00",
+        "end": "10:00"
+      },
       "track": "",
-      "showTitle": "Soca Sessions",
+      "showTitle": "The Mash Time Show",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T07:53:40.400Z"
+      "checkedAt": "2026-08-15T08:23:39.191Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T07:53:54.399Z"
+      "checkedAt": "2026-08-15T08:23:52.793Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T07:53:55.216Z"
+      "checkedAt": "2026-08-15T08:23:53.639Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "GOREWORM - Orbweaver",
+      "track": "Nectar Palace - Malcommode",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-15T07:53:57.675Z"
+      "checkedAt": "2026-08-15T08:23:56.452Z"
     }
   }
 }
