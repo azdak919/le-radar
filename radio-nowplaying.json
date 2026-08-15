@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-08-15T02:32:03.070Z",
+  "updatedAt": "2026-08-15T03:36:15.211Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Capitales de Québec",
-        "source": "api-live",
-        "start": "18:50",
-        "end": "23:00",
-        "url": "https://chyz.ca/emission/capitales-de-quebec/"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHYZ",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "10:00",
         "end": "10:30",
         "url": "https://chyz.ca/emission/palmares-chyz/"
       },
       "track": "",
-      "showTitle": "Capitales de Québec",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T02:31:34.190Z"
+      "checkedAt": "2026-08-15T03:35:48.143Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T02:31:36.623Z"
+      "checkedAt": "2026-08-15T03:35:50.130Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T02:31:39.570Z"
+      "checkedAt": "2026-08-15T03:35:54.007Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Come Up",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/the-come-up"
-      },
-      "next": {
         "title": "The Waxing Gibbous",
         "source": "schedule-live",
         "start": "23:00",
         "end": "00:00",
         "url": "http://www.cjlo.com/shows/the-waxing-gibbous"
       },
+      "next": {
+        "title": "Jazz Boulevard",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "http://www.cjlo.com/shows/jazz-boulevard"
+      },
       "track": "",
-      "showTitle": "The Come Up",
+      "showTitle": "The Waxing Gibbous",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T02:31:54.302Z"
+      "checkedAt": "2026-08-15T03:36:08.363Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T02:31:55.094Z"
+      "checkedAt": "2026-08-15T03:36:09.062Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +139,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Mélodie-Jade - t",
+      "track": "Alewya - City of Symbols",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-15T02:32:02.719Z"
+      "checkedAt": "2026-08-15T03:36:14.861Z"
     }
   }
 }
