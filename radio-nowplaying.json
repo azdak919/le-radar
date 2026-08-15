@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-15T05:51:05.730Z",
+  "updatedAt": "2026-08-15T06:33:16.111Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,69 +21,70 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T05:50:41.047Z"
+      "checkedAt": "2026-08-15T06:32:53.479Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rythmologie (reprise)",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/rythmologie"
-      },
-      "next": {
         "title": "Mix Franco",
         "source": "schedule",
         "start": "02:00",
         "end": "05:00",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "Voix tropicale",
+        "source": "schedule",
+        "start": "05:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/voix-tropicale"
+      },
       "track": "",
-      "showTitle": "Rythmologie (reprise)",
+      "showTitle": "Mix Franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T05:50:43.181Z"
+      "checkedAt": "2026-08-15T06:32:55.701Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "WEFUNK",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "Soca Sessions",
         "source": "api-live",
         "start": "02:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "The Mash Time Show",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "06:00"
+      },
       "track": "",
-      "showTitle": "WEFUNK",
+      "showTitle": "Soca Sessions",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T05:50:47.771Z"
+      "checkedAt": "2026-08-15T06:32:58.536Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Jazz Boulevard",
+        "title": "CJLO Late Night",
         "source": "schedule",
         "start": "00:00",
-        "end": "02:00",
-        "url": "http://www.cjlo.com/shows/jazz-boulevard"
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "World-Up'",
@@ -93,14 +94,14 @@
         "url": "http://www.cjlo.com/shows/world-up"
       },
       "track": "",
-      "showTitle": "Jazz Boulevard",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T05:51:02.021Z"
+      "checkedAt": "2026-08-15T06:33:12.490Z"
     },
     "cfak": {
       "id": "cfak",
@@ -120,7 +121,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T05:51:02.795Z"
+      "checkedAt": "2026-08-15T06:33:13.334Z"
     },
     "choq": {
       "id": "choq",
@@ -133,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "VERDUN - La Lame et la Chair",
+      "track": "ZØRZA - Stormspell",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -144,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-15T05:51:05.380Z"
+      "checkedAt": "2026-08-15T06:33:15.761Z"
     }
   }
 }
