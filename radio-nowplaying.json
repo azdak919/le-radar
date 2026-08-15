@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-08-15T15:44:38.429Z",
+  "updatedAt": "2026-08-15T16:20:33.933Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Le Ré-Show : Deuxième Service",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
-      },
+      "current": null,
       "next": {
         "title": "Radio Futura",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "13:00",
         "end": "16:00",
         "url": "https://chyz.ca/emission/radio-futura/"
       },
       "track": "",
-      "showTitle": "Le Ré-Show : Deuxième Service",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T15:44:11.604Z"
+      "checkedAt": "2026-08-15T16:20:08.101Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T15:44:13.613Z"
+      "checkedAt": "2026-08-15T16:20:10.393Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T15:44:15.902Z"
+      "checkedAt": "2026-08-15T16:20:13.066Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Gospel Unlimited",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/gospel-unlimited"
-      },
-      "next": {
         "title": "Anatomy of Caribbean Music",
         "source": "schedule",
         "start": "12:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
       },
+      "next": {
+        "title": "Caribbean Callaloo",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/caribbean-callaloo"
+      },
       "track": "",
-      "showTitle": "Gospel Unlimited",
+      "showTitle": "Anatomy of Caribbean Music",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T15:44:29.747Z"
+      "checkedAt": "2026-08-15T16:20:27.134Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T15:44:30.573Z"
+      "checkedAt": "2026-08-15T16:20:28.030Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Nana Quinn - Et je respire",
+      "track": "POPULATION II - Magouilleux",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -152,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-15T15:44:38.078Z"
+      "checkedAt": "2026-08-15T16:20:33.583Z"
     }
   }
 }
