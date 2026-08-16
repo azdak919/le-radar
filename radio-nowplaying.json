@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-15T23:44:24.325Z",
+  "updatedAt": "2026-08-16T01:06:20.916Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T23:43:59.310Z"
+      "checkedAt": "2026-08-16T01:05:53.788Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Solénoïde",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/solenoide"
-      },
-      "next": {
         "title": "Les criquets crinqués (reprise)",
         "source": "schedule",
         "start": "20:00",
         "end": "22:00",
         "url": "https://cism893.ca/emissions/les-criquets-crinques"
       },
+      "next": {
+        "title": "Mix anglo",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
       "track": "",
-      "showTitle": "Solénoïde",
+      "showTitle": "Les criquets crinqués (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T23:44:01.150Z"
+      "checkedAt": "2026-08-16T01:05:55.984Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Masters At Work",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "21:00"
-      },
-      "next": {
         "title": "Howls From Hell/Too Loud For The Crowd",
         "source": "api-live",
         "start": "21:00",
         "end": "23:00"
       },
+      "next": {
+        "title": "SKEwInGTheWaBeS$$",
+        "source": "api-live",
+        "start": "23:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Masters At Work",
+      "showTitle": "Howls From Hell/Too Loud For The Crowd",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T23:44:03.865Z"
+      "checkedAt": "2026-08-16T01:05:58.970Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Screamers",
+        "title": "The Spacious Astrology Playlist",
         "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/screamers"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/the-spacious-astrology-playlist"
       },
       "next": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "The Go Go Radio Magic Show",
         "source": "schedule",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "21:30",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
       },
       "track": "",
-      "showTitle": "Screamers",
+      "showTitle": "The Spacious Astrology Playlist",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T23:44:17.831Z"
+      "checkedAt": "2026-08-16T01:06:13.177Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-15T23:44:18.578Z"
+      "checkedAt": "2026-08-16T01:06:13.714Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +141,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "aja monet - skinfolk",
+      "track": "Dolphin Hyperspace - Green Chimneys feat. Gerald Clayton",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -152,7 +152,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-15T23:44:23.975Z"
+      "checkedAt": "2026-08-16T01:06:20.566Z"
     }
   }
 }
