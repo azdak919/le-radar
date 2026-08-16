@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-08-16T02:40:45.078Z",
+  "updatedAt": "2026-08-16T03:45:12.754Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Capitales de Québec",
-        "source": "api-live",
-        "start": "18:50",
-        "end": "23:00",
-        "url": "https://chyz.ca/emission/capitales-de-quebec/"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHYZ",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "10:00",
         "end": "10:30",
         "url": "https://chyz.ca/emission/palmares-chyz/"
       },
       "track": "",
-      "showTitle": "Capitales de Québec",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T02:40:17.868Z"
+      "checkedAt": "2026-08-16T03:44:45.251Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T02:40:19.784Z"
+      "checkedAt": "2026-08-16T03:44:47.556Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Howls From Hell/Too Loud For The Crowd",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
-      },
-      "next": {
         "title": "SKEwInGTheWaBeS$$",
         "source": "api-live",
         "start": "23:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "stereOphobic",
+        "source": "api-live",
+        "start": "00:00",
+        "end": "02:00"
+      },
       "track": "",
-      "showTitle": "Howls From Hell/Too Loud For The Crowd",
+      "showTitle": "SKEwInGTheWaBeS$$",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T02:40:22.199Z"
+      "checkedAt": "2026-08-16T03:44:50.444Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T02:40:35.849Z"
+      "checkedAt": "2026-08-16T03:45:04.526Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T02:40:36.580Z"
+      "checkedAt": "2026-08-16T03:45:05.106Z"
     },
     "choq": {
       "id": "choq",
@@ -147,7 +140,7 @@
         "end": "18:00",
         "slug": "faire-avec"
       },
-      "track": "Taxi Girls - Dark Time",
+      "track": "Taupe - Open Season",
       "showTitle": "D'amour et de sexe",
       "host": "",
       "source": "api-live",
@@ -158,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-16T02:40:44.728Z"
+      "checkedAt": "2026-08-16T03:45:12.403Z"
     }
   }
 }
