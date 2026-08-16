@@ -1,15 +1,15 @@
 {
-  "updated": "2026-08-16T20:32:21.563Z",
+  "updated": "2026-08-16T22:42:57.126Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
   "cited": 129,
-  "pending": 12,
+  "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 18,
-  "updatedCount": 7,
-  "citedNew": 5,
+  "checked": 21,
+  "updatedCount": 10,
+  "citedNew": 8,
   "fallbackNew": 13,
   "samples": [
     {
@@ -34,18 +34,18 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Sois belle et tais-toi",
+      "title": "Les femmes MAGA au service du patriarcat",
       "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "title": "Des initiatives qui rassemblent",
       "source": "Le Délit",
-      "credit": "Photo : Stu Doré/Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
+      "credit": "Crédit photo : Le Délit",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Inside Mile End Kicks",
@@ -57,9 +57,30 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Halle Keays",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "source": "La Pige",
+      "credit": "Photo : Léa Morin-Letort",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "source": "Quartier Libre",
+      "credit": "Photo : Maryse Boyce",
+      "cited": true,
+      "method": "figcaption-copyright"
     }
   ]
 }
