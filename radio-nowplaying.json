@@ -1,54 +1,61 @@
 {
-  "updatedAt": "2026-08-16T20:47:24.181Z",
+  "updatedAt": "2026-08-16T21:17:03.394Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Capitales de Québec",
-        "source": "schedule",
+        "source": "api-live",
         "start": "16:50",
         "end": "20:30",
         "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
+      "next": {
+        "title": "Lundi Indie",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Capitales de Québec",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T20:46:58.025Z"
+      "checkedAt": "2026-08-16T21:16:38.972Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Vibrance",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/vibrance"
-      },
-      "next": {
         "title": "L'Avenue des concerts",
         "source": "schedule",
         "start": "17:00",
         "end": "18:00",
         "url": "https://cism893.ca/emissions/lavenue-des-concerts"
       },
+      "next": {
+        "title": "Symbiose",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/symbiose"
+      },
       "track": "",
-      "showTitle": "Vibrance",
+      "showTitle": "L'Avenue des concerts",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T20:46:59.911Z"
+      "checkedAt": "2026-08-16T21:16:40.911Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T20:47:02.420Z"
+      "checkedAt": "2026-08-16T21:16:43.666Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +108,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T20:47:17.183Z"
+      "checkedAt": "2026-08-16T21:16:57.456Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,21 +133,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T20:47:17.726Z"
+      "checkedAt": "2026-08-16T21:16:58.148Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Mutations",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Ariane Roy - Ta main",
-      "showTitle": "",
+      "next": {
+        "title": "Les rois de l'arène",
+        "source": "api-live",
+        "start": "05:00",
+        "end": "07:00",
+        "slug": "les-rois-de-larene"
+      },
+      "track": "Les Breastfeeders - Funny Funiculaire",
+      "showTitle": "Mutations",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -150,7 +163,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-16T20:47:23.830Z"
+      "checkedAt": "2026-08-16T21:17:03.043Z"
     }
   }
 }
