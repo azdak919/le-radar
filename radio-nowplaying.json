@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-16T10:19:40.785Z",
+  "updatedAt": "2026-08-16T10:48:32.943Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,37 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T10:19:13.235Z"
+      "checkedAt": "2026-08-16T10:48:10.626Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Franco",
-        "source": "api-live",
-        "start": "02:00",
-        "url": "https://stream03.ustream.ca/cism128.mp3",
-        "slug": "mix-franco"
+        "title": "Les mignardises littéraires",
+        "source": "schedule",
+        "start": "06:30",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/les-mignardises-litteraires"
       },
       "next": {
-        "title": "Les mignardises littéraires",
-        "source": "api-live",
-        "start": "06:30",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/366042.mp3",
-        "slug": "les-mignardises-litteraires"
+        "title": "Genre de bleu",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/genre-de-bleu"
       },
       "track": "",
-      "showTitle": "Mix Franco",
+      "showTitle": "Les mignardises littéraires",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "schedule"
       ],
-      "clientPoll": {
-        "type": "cism-v1",
-        "url": "https://admin.cism893.ca/api/v1/live"
-      },
-      "checkedAt": "2026-08-16T10:19:15.604Z"
+      "clientPoll": null,
+      "checkedAt": "2026-08-16T10:48:12.780Z"
     },
     "ckut": {
       "id": "ckut",
@@ -77,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T10:19:18.559Z"
+      "checkedAt": "2026-08-16T10:48:15.506Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -104,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T10:19:32.587Z"
+      "checkedAt": "2026-08-16T10:48:29.471Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T10:19:33.518Z"
+      "checkedAt": "2026-08-16T10:48:30.225Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +139,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "The Obsessives - You",
+      "track": "Mike Shabb - MUFFINZ",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -153,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-16T10:19:40.434Z"
+      "checkedAt": "2026-08-16T10:48:32.593Z"
     }
   }
 }
