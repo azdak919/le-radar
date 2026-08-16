@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-16T21:43:48.727Z",
+  "updatedAt": "2026-08-16T22:17:55.313Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T21:43:20.813Z"
+      "checkedAt": "2026-08-16T22:17:29.627Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "L'Avenue des concerts",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "https://cism893.ca/emissions/lavenue-des-concerts"
-      },
-      "next": {
         "title": "Symbiose",
         "source": "schedule",
         "start": "18:00",
         "end": "20:00",
         "url": "https://cism893.ca/emissions/symbiose"
       },
+      "next": {
+        "title": "London café (reprise)",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "21:30",
+        "url": "https://cism893.ca/emissions/london-cafe"
+      },
       "track": "",
-      "showTitle": "L'Avenue des concerts",
+      "showTitle": "Symbiose",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T21:43:23.153Z"
+      "checkedAt": "2026-08-16T22:17:32.034Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Bhum Bhum Time",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Desi Beats",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Bluegrass Rambling",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "Bhum Bhum Time",
+      "showTitle": "Desi Beats",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T21:43:26.026Z"
+      "checkedAt": "2026-08-16T22:17:36.451Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Grade A Explosives",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/grade-a-explosives"
-      },
-      "next": {
         "title": "Bills Country and Western Favourites",
         "source": "schedule-live",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
       },
+      "next": {
+        "title": "No Boundaries",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/no-boundaries"
+      },
       "track": "",
-      "showTitle": "Grade A Explosives",
+      "showTitle": "Bills Country and Western Favourites",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T21:43:40.523Z"
+      "checkedAt": "2026-08-16T22:17:50.756Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,18 +133,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T21:43:41.408Z"
+      "checkedAt": "2026-08-16T22:17:51.707Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Mutations",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00",
-        "slug": "mutations"
-      },
+      "current": null,
       "next": {
         "title": "Les rois de l'arène",
         "source": "api-live",
@@ -152,8 +146,8 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Perfume Genius - On The Floor",
-      "showTitle": "Mutations",
+      "track": "BB NOYAA - SITUATION CHEAP",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -163,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-16T21:43:48.376Z"
+      "checkedAt": "2026-08-16T22:17:54.963Z"
     }
   }
 }
