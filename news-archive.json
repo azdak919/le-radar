@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-08-16T07:00:15.578Z",
+  "updated": "2026-08-16T07:18:27.334Z",
   "records": [
     {
       "id": "history-029bb266fe419f8506538a8e",
@@ -26,16 +26,16 @@
       "ingestedAt": "2026-08-15T19:35:01.811Z",
       "importedAt": null,
       "lastSeenAt": "2026-08-16T07:00:15.578Z",
-      "lastVerifiedAt": null,
+      "lastVerifiedAt": "2026-08-16T07:17:58.718Z",
       "link": {
-        "status": "unknown",
-        "checkedAt": null,
-        "statusCode": null,
-        "resolvedUrl": null
+        "status": "redirected",
+        "statusCode": 200,
+        "resolvedUrl": "https://thelinknewspaper.ca/article/inceldom-extremism-and-mainstream-misogyny",
+        "checkedAt": "2026-08-16T07:17:58.718Z"
       },
       "indexing": {
-        "status": "pending",
-        "reason": "requires_verified_original_link"
+        "status": "eligible",
+        "reason": "verified_original_link"
       }
     },
     {
@@ -206,16 +206,16 @@
       "ingestedAt": "2026-08-13T02:48:32.947Z",
       "importedAt": null,
       "lastSeenAt": "2026-08-16T05:44:17.503Z",
-      "lastVerifiedAt": null,
+      "lastVerifiedAt": "2026-08-16T07:17:59.849Z",
       "link": {
-        "status": "unknown",
-        "checkedAt": null,
-        "statusCode": null,
-        "resolvedUrl": null
+        "status": "redirected",
+        "statusCode": 200,
+        "resolvedUrl": "https://lecollectif.ca/a-la-une/etre-proche-aidant-un-role-essentiel-au-quotidien/",
+        "checkedAt": "2026-08-16T07:17:59.849Z"
       },
       "indexing": {
-        "status": "pending",
-        "reason": "requires_verified_original_link"
+        "status": "eligible",
+        "reason": "verified_original_link"
       }
     },
     {
@@ -242,16 +242,16 @@
       "ingestedAt": "2026-08-13T02:48:32.947Z",
       "importedAt": null,
       "lastSeenAt": "2026-08-16T05:44:17.503Z",
-      "lastVerifiedAt": null,
+      "lastVerifiedAt": "2026-08-16T07:18:26.984Z",
       "link": {
-        "status": "unknown",
-        "checkedAt": null,
-        "statusCode": null,
-        "resolvedUrl": null
+        "status": "redirected",
+        "statusCode": 200,
+        "resolvedUrl": "https://lecollectif.ca/a-la-une/la-maltraitance-envers-les-aines-une-realite-a-ne-pas-ignorer/",
+        "checkedAt": "2026-08-16T07:18:26.984Z"
       },
       "indexing": {
-        "status": "pending",
-        "reason": "requires_verified_original_link"
+        "status": "eligible",
+        "reason": "verified_original_link"
       }
     },
     {
@@ -5246,16 +5246,16 @@
       "ingestedAt": "2026-07-29T12:07:46.264Z",
       "importedAt": null,
       "lastSeenAt": "2026-07-29T12:07:46.264Z",
-      "lastVerifiedAt": null,
+      "lastVerifiedAt": "2026-08-16T07:18:12.277Z",
       "link": {
-        "status": "unknown",
-        "checkedAt": null,
+        "status": "unreachable",
         "statusCode": null,
-        "resolvedUrl": null
+        "resolvedUrl": null,
+        "checkedAt": "2026-08-16T07:18:12.277Z"
       },
       "indexing": {
-        "status": "pending",
-        "reason": "requires_verified_original_link"
+        "status": "excluded",
+        "reason": "original_link_unreachable"
       }
     },
     {
@@ -9674,16 +9674,16 @@
       "ingestedAt": "2026-08-01T08:56:07.722Z",
       "importedAt": null,
       "lastSeenAt": "2026-08-01T08:56:07.722Z",
-      "lastVerifiedAt": null,
+      "lastVerifiedAt": "2026-08-16T07:18:13.914Z",
       "link": {
-        "status": "unknown",
-        "checkedAt": null,
-        "statusCode": null,
-        "resolvedUrl": null
+        "status": "redirected",
+        "statusCode": 200,
+        "resolvedUrl": "https://quartierlibre.ca/journalisme-ludem-aux-prix-lizette-gervais/",
+        "checkedAt": "2026-08-16T07:18:13.914Z"
       },
       "indexing": {
-        "status": "pending",
-        "reason": "requires_verified_original_link"
+        "status": "eligible",
+        "reason": "verified_original_link"
       }
     },
     {
@@ -10430,16 +10430,16 @@
       "ingestedAt": "2026-07-31T09:32:05.316Z",
       "importedAt": null,
       "lastSeenAt": "2026-07-31T09:32:05.316Z",
-      "lastVerifiedAt": null,
+      "lastVerifiedAt": "2026-08-16T07:18:16.407Z",
       "link": {
-        "status": "unknown",
-        "checkedAt": null,
-        "statusCode": null,
-        "resolvedUrl": null
+        "status": "redirected",
+        "statusCode": 200,
+        "resolvedUrl": "https://montrealcampus.ca/2026/04/22/de-la-mode-y2k-a-epuree/",
+        "checkedAt": "2026-08-16T07:18:16.407Z"
       },
       "indexing": {
-        "status": "pending",
-        "reason": "requires_verified_original_link"
+        "status": "eligible",
+        "reason": "verified_original_link"
       }
     },
     {
@@ -13166,16 +13166,16 @@
       "ingestedAt": "2026-07-29T12:11:25.577Z",
       "importedAt": null,
       "lastSeenAt": "2026-08-03T10:26:59.365Z",
-      "lastVerifiedAt": null,
+      "lastVerifiedAt": "2026-08-16T07:18:18.690Z",
       "link": {
-        "status": "unknown",
-        "checkedAt": null,
-        "statusCode": null,
-        "resolvedUrl": null
+        "status": "redirected",
+        "statusCode": 200,
+        "resolvedUrl": "https://www.exemplaire.com.ulaval.ca/actualites/intelligence-artificielle-et-violence-sociale-peut-on-vraiment-prevenir-limpensable/",
+        "checkedAt": "2026-08-16T07:18:18.690Z"
       },
       "indexing": {
-        "status": "pending",
-        "reason": "requires_verified_original_link"
+        "status": "eligible",
+        "reason": "verified_original_link"
       }
     },
     {
@@ -13814,16 +13814,16 @@
       "ingestedAt": "2026-08-02T03:54:06.386Z",
       "importedAt": null,
       "lastSeenAt": "2026-08-10T20:45:01.349Z",
-      "lastVerifiedAt": null,
+      "lastVerifiedAt": "2026-08-16T07:18:20.217Z",
       "link": {
-        "status": "unknown",
-        "checkedAt": null,
-        "statusCode": null,
-        "resolvedUrl": null
+        "status": "redirected",
+        "statusCode": 200,
+        "resolvedUrl": "https://www.thetribune.ca/a-e/culture/the-forgotten-history-of-the-montreal-coffeehouse-07042026/",
+        "checkedAt": "2026-08-16T07:18:20.217Z"
       },
       "indexing": {
-        "status": "pending",
-        "reason": "requires_verified_original_link"
+        "status": "eligible",
+        "reason": "verified_original_link"
       }
     },
     {
@@ -20474,16 +20474,16 @@
       "ingestedAt": "2026-07-30T09:17:46.389Z",
       "importedAt": null,
       "lastSeenAt": "2026-07-30T09:17:46.389Z",
-      "lastVerifiedAt": null,
+      "lastVerifiedAt": "2026-08-16T07:18:22.178Z",
       "link": {
-        "status": "unknown",
-        "checkedAt": null,
-        "statusCode": null,
-        "resolvedUrl": null
+        "status": "redirected",
+        "statusCode": 200,
+        "resolvedUrl": "https://www.delitfrancais.com/2026/03/18/lart-misandre-existe-t-il-vraiment/",
+        "checkedAt": "2026-08-16T07:18:22.178Z"
       },
       "indexing": {
-        "status": "pending",
-        "reason": "requires_verified_original_link"
+        "status": "eligible",
+        "reason": "verified_original_link"
       }
     },
     {
@@ -22382,16 +22382,16 @@
       "ingestedAt": "2026-08-02T08:58:45.749Z",
       "importedAt": null,
       "lastSeenAt": "2026-08-02T08:58:45.749Z",
-      "lastVerifiedAt": null,
+      "lastVerifiedAt": "2026-08-16T07:18:23.963Z",
       "link": {
-        "status": "unknown",
-        "checkedAt": null,
-        "statusCode": null,
-        "resolvedUrl": null
+        "status": "redirected",
+        "statusCode": 200,
+        "resolvedUrl": "https://www.mcgilldaily.com/2026/03/phil-elverum-on-the-power-of-imperfection/",
+        "checkedAt": "2026-08-16T07:18:23.963Z"
       },
       "indexing": {
-        "status": "pending",
-        "reason": "requires_verified_original_link"
+        "status": "eligible",
+        "reason": "verified_original_link"
       }
     },
     {
@@ -90278,16 +90278,16 @@
       "ingestedAt": "2026-07-29T12:12:57.233Z",
       "importedAt": null,
       "lastSeenAt": "2026-07-29T12:15:20.284Z",
-      "lastVerifiedAt": null,
+      "lastVerifiedAt": "2026-08-16T07:18:24.838Z",
       "link": {
-        "status": "unknown",
-        "checkedAt": null,
-        "statusCode": null,
-        "resolvedUrl": null
+        "status": "redirected",
+        "statusCode": 200,
+        "resolvedUrl": "https://exilecvm.wordpress.com/2025/05/22/lanxiete-de-performance-le-mal-du-siecle/",
+        "checkedAt": "2026-08-16T07:18:24.838Z"
       },
       "indexing": {
-        "status": "pending",
-        "reason": "requires_verified_original_link"
+        "status": "eligible",
+        "reason": "verified_original_link"
       }
     },
     {
@@ -110546,16 +110546,16 @@
       "ingestedAt": "2026-07-29T12:31:44.162Z",
       "importedAt": null,
       "lastSeenAt": "2026-08-16T07:00:15.578Z",
-      "lastVerifiedAt": null,
+      "lastVerifiedAt": "2026-08-16T07:18:25.747Z",
       "link": {
-        "status": "unknown",
-        "checkedAt": null,
-        "statusCode": null,
-        "resolvedUrl": null
+        "status": "available",
+        "statusCode": 200,
+        "resolvedUrl": "https://www.polyscope.qc.ca/blog/post/0VXuuVGmVAi6BBp9Rkbi",
+        "checkedAt": "2026-08-16T07:18:25.747Z"
       },
       "indexing": {
-        "status": "pending",
-        "reason": "requires_verified_original_link"
+        "status": "eligible",
+        "reason": "verified_original_link"
       }
     },
     {
