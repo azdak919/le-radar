@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-16T03:45:12.754Z",
+  "updatedAt": "2026-08-16T04:32:40.010Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T03:44:45.251Z"
+      "checkedAt": "2026-08-16T04:32:17.145Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix anglo",
-        "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "next": {
         "title": "Basses fréquences (reprise)",
         "source": "schedule",
         "start": "00:00",
         "end": "02:00",
         "url": "https://cism893.ca/emissions/basses-frequences"
       },
+      "next": {
+        "title": "Mix Franco",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "06:30",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix anglo",
+      "showTitle": "Basses fréquences (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T03:44:47.556Z"
+      "checkedAt": "2026-08-16T04:32:18.941Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "SKEwInGTheWaBeS$$",
-        "source": "api-live",
-        "start": "23:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "stereOphobic",
         "source": "api-live",
         "start": "00:00",
         "end": "02:00"
       },
+      "next": {
+        "title": "Utopia's Paradise",
+        "source": "api-live",
+        "start": "02:00",
+        "end": "06:00"
+      },
       "track": "",
-      "showTitle": "SKEwInGTheWaBeS$$",
+      "showTitle": "stereOphobic",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,74 +74,73 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T03:44:50.444Z"
+      "checkedAt": "2026-08-16T04:32:21.130Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Brave New Jams",
-        "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/brave-new-jams"
-      },
-      "next": {
         "title": "Floydian Slip",
         "source": "schedule",
         "start": "00:00",
         "end": "01:00",
         "url": "http://www.cjlo.com/shows/floydian-slip"
       },
+      "next": {
+        "title": "CJLO Late Night",
+        "source": "schedule",
+        "start": "01:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+      },
       "track": "",
-      "showTitle": "Brave New Jams",
+      "showTitle": "Floydian Slip",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T03:45:04.526Z"
+      "checkedAt": "2026-08-16T04:32:34.894Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les nuits CFAK",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "21:00"
       },
+      "next": {
+        "title": "Solénoïde",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les nuits CFAK",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T03:45:05.106Z"
+      "checkedAt": "2026-08-16T04:32:35.688Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "D'amour et de sexe",
-        "source": "api-live",
-        "start": "22:00",
-        "end": "00:00",
-        "slug": "damour-et-de-sexe"
-      },
+      "current": null,
       "next": {
-        "title": "Faire avec",
+        "title": "Mutations",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00",
-        "slug": "faire-avec"
+        "slug": "mutations"
       },
-      "track": "Taupe - Open Season",
-      "showTitle": "D'amour et de sexe",
+      "track": "Spell - Oubliette",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -151,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-16T03:45:12.403Z"
+      "checkedAt": "2026-08-16T04:32:39.659Z"
     }
   }
 }
