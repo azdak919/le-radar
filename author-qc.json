@@ -1,8 +1,8 @@
 {
-  "updated": "2026-08-16T04:00:44.660Z",
+  "updated": "2026-08-16T05:44:35.658Z",
   "total": 185,
   "withAuthor": 185,
-  "mismatches": 6,
+  "mismatches": 5,
   "ok": true,
   "samples": [
     {
@@ -30,19 +30,11 @@
       "reason": "no-author-source"
     },
     {
-      "title": "Les femmes MAGA au service du patriarcat",
-      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
       "source": "Le Délit",
       "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Anonyme",
-      "reason": "page-byline"
-    },
-    {
-      "title": "Des initiatives qui rassemblent",
-      "link": "https://www.delitfrancais.com/2026/03/18/des-initiatives-qui-rassemblent/",
-      "source": "Le Délit",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Héloïse Durning et Elie Nguyen",
+      "canonicalAuthor": "Timotée Allouch-Chantepie, Héloïse Durning, Aurélien Quéméner et Eugénie St-Pierre",
       "reason": "page-byline"
     },
     {
@@ -54,5 +46,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 6
+  "fixed": 5
 }
