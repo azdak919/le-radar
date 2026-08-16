@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-16T18:55:50.264Z",
+  "updatedAt": "2026-08-16T19:19:38.896Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T18:55:22.300Z"
+      "checkedAt": "2026-08-16T19:19:15.424Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T18:55:24.811Z"
+      "checkedAt": "2026-08-16T19:19:17.460Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T18:55:28.503Z"
+      "checkedAt": "2026-08-16T19:19:20.428Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "next": {
         "title": "Fukubukuro",
         "source": "schedule-live",
         "start": "15:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/fukubukuro"
       },
+      "next": {
+        "title": "Grade A Explosives",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/grade-a-explosives"
+      },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "Fukubukuro",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T18:55:42.642Z"
+      "checkedAt": "2026-08-16T19:19:34.545Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T18:55:43.475Z"
+      "checkedAt": "2026-08-16T19:19:35.297Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Les Lunatiques - Sudation",
+      "track": "PJ Harvey - 50 Ft Queenie",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-16T18:55:49.914Z"
+      "checkedAt": "2026-08-16T19:19:38.545Z"
     }
   }
 }
