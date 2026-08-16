@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-16T04:32:40.010Z",
+  "updatedAt": "2026-08-16T05:24:30.956Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T04:32:17.145Z"
+      "checkedAt": "2026-08-16T05:24:07.243Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T04:32:18.941Z"
+      "checkedAt": "2026-08-16T05:24:09.538Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T04:32:21.130Z"
+      "checkedAt": "2026-08-16T05:24:12.483Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Floydian Slip",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "01:00",
-        "url": "http://www.cjlo.com/shows/floydian-slip"
-      },
-      "next": {
         "title": "CJLO Late Night",
         "source": "schedule",
         "start": "01:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
+      "next": {
+        "title": "Sun Ra, Sun Rise",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
+      },
       "track": "",
-      "showTitle": "Floydian Slip",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T04:32:34.894Z"
+      "checkedAt": "2026-08-16T05:24:26.480Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T04:32:35.688Z"
+      "checkedAt": "2026-08-16T05:24:27.065Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Spell - Oubliette",
+      "track": "Upchuck - Kept Inside",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-16T04:32:39.659Z"
+      "checkedAt": "2026-08-16T05:24:30.605Z"
     }
   }
 }
