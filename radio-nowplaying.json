@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-16T18:23:34.000Z",
+  "updatedAt": "2026-08-16T18:55:50.264Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T18:23:05.628Z"
+      "checkedAt": "2026-08-16T18:55:22.300Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T18:23:08.171Z"
+      "checkedAt": "2026-08-16T18:55:24.811Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,21 +81,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T18:23:11.240Z"
+      "checkedAt": "2026-08-16T18:55:28.503Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "14:00",
         "end": "15:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
         "title": "Fukubukuro",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "15:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/fukubukuro"
@@ -103,12 +103,12 @@
       "track": "",
       "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T18:23:25.492Z"
+      "checkedAt": "2026-08-16T18:55:42.642Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T18:23:26.392Z"
+      "checkedAt": "2026-08-16T18:55:43.475Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Hauterive - Les poemes en secret",
+      "track": "Les Lunatiques - Sudation",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-16T18:23:33.649Z"
+      "checkedAt": "2026-08-16T18:55:49.914Z"
     }
   }
 }
