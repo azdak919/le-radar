@@ -1,61 +1,54 @@
 {
-  "updatedAt": "2026-08-16T15:45:44.324Z",
+  "updatedAt": "2026-08-16T16:20:32.801Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Le Ré-Show : Deuxième Service",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
-      },
+      "current": null,
       "next": {
         "title": "Radio Futura",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "13:00",
         "end": "16:00",
         "url": "https://chyz.ca/emission/radio-futura/"
       },
       "track": "",
-      "showTitle": "Le Ré-Show : Deuxième Service",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-08-16T15:45:17.062Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Yallah lâcher prise",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/yallah-lacher-prise-avec-rhabibiii"
-      },
-      "next": {
-        "title": "Basses fréquences",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/basses-frequences"
-      },
-      "track": "",
-      "showTitle": "Yallah lâcher prise",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T15:45:19.031Z"
+      "checkedAt": "2026-08-16T16:20:07.728Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Basses fréquences",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/basses-frequences"
+      },
+      "next": {
+        "title": "Le char de marge",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/le-char-de-marge"
+      },
+      "track": "",
+      "showTitle": "Basses fréquences",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-08-16T16:20:09.803Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T15:45:21.571Z"
+      "checkedAt": "2026-08-16T16:20:12.895Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Rigged Sessions",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/rigged-sessions"
-      },
-      "next": {
         "title": "Brave Little Emo Girl",
         "source": "schedule",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/brave-little-emo-girl"
       },
+      "next": {
+        "title": "Northern Stagelights",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/northern-stagelights"
+      },
       "track": "",
-      "showTitle": "Rigged Sessions",
+      "showTitle": "Brave Little Emo Girl",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T15:45:35.227Z"
+      "checkedAt": "2026-08-16T16:20:26.821Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T15:45:35.767Z"
+      "checkedAt": "2026-08-16T16:20:27.602Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +139,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Edward Skeletrix - Mercay",
+      "track": "Shinichi Atobe - Syndrom",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-16T15:45:43.973Z"
+      "checkedAt": "2026-08-16T16:20:32.449Z"
     }
   }
 }
