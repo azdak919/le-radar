@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-16T09:52:11.212Z",
+  "updatedAt": "2026-08-16T10:19:40.785Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,86 +21,90 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T09:51:41.367Z"
+      "checkedAt": "2026-08-16T10:19:13.235Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
         "title": "Mix Franco",
-        "source": "schedule",
+        "source": "api-live",
         "start": "02:00",
-        "end": "06:30",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "url": "https://stream03.ustream.ca/cism128.mp3",
+        "slug": "mix-franco"
       },
       "next": {
         "title": "Les mignardises littéraires",
-        "source": "schedule",
+        "source": "api-live",
         "start": "06:30",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/les-mignardises-litteraires"
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/366042.mp3",
+        "slug": "les-mignardises-litteraires"
       },
       "track": "",
       "showTitle": "Mix Franco",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-08-16T09:51:43.707Z"
-    },
-    "ckut": {
-      "id": "ckut",
-      "name": "CKUT 90,3",
-      "current": {
-        "title": "Utopia's Paradise",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "06:00"
-      },
-      "next": {
-        "title": "Mind, Soul, & Spirit",
-        "source": "api-live",
-        "start": "06:00",
-        "end": "09:00"
-      },
-      "track": "Utopia",
-      "showTitle": "Utopia's Paradise",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
+      "clientPoll": {
+        "type": "cism-v1",
+        "url": "https://admin.cism893.ca/api/v1/live"
+      },
+      "checkedAt": "2026-08-16T10:19:15.604Z"
+    },
+    "ckut": {
+      "id": "ckut",
+      "name": "CKUT 90,3",
+      "current": {
+        "title": "Mind, Soul, & Spirit",
+        "source": "api-live",
+        "start": "06:00",
+        "end": "09:00"
+      },
+      "next": {
+        "title": "Latin Time",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "10:30"
+      },
+      "track": "",
+      "showTitle": "Mind, Soul, & Spirit",
+      "host": "",
+      "source": "api-live",
+      "sources": [
+        "api-live",
+        "stream"
+      ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T09:51:46.587Z"
+      "checkedAt": "2026-08-16T10:19:18.559Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule",
-        "start": "01:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Sun Ra, Sun Rise",
         "source": "schedule",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
       },
+      "next": {
+        "title": "The Gigi Brown Experience",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/the-gigi-brown-experience"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Sun Ra, Sun Rise",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T09:52:00.693Z"
+      "checkedAt": "2026-08-16T10:19:32.587Z"
     },
     "cfak": {
       "id": "cfak",
@@ -125,7 +129,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T09:52:01.554Z"
+      "checkedAt": "2026-08-16T10:19:33.518Z"
     },
     "choq": {
       "id": "choq",
@@ -138,7 +142,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Éléonore Dessureault - Reveiller l",
+      "track": "The Obsessives - You",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +153,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-16T09:52:10.862Z"
+      "checkedAt": "2026-08-16T10:19:40.434Z"
     }
   }
 }
