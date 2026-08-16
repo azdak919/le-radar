@@ -1,54 +1,61 @@
 {
-  "updatedAt": "2026-08-16T13:54:28.364Z",
+  "updatedAt": "2026-08-16T14:19:42.713Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Palmarès CHYZ",
-        "source": "schedule",
+        "source": "api-live",
         "start": "10:00",
         "end": "10:30",
         "url": "https://chyz.ca/emission/palmares-chyz/"
       },
+      "next": {
+        "title": "Le Ré-Show : Deuxième Service",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Palmarès CHYZ",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T13:54:01.218Z"
+      "checkedAt": "2026-08-16T14:19:19.449Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le 120e parallèle",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/le-120e-parallele"
-      },
-      "next": {
         "title": "Ya Raï",
         "source": "schedule",
         "start": "10:00",
         "end": "11:00",
         "url": "https://cism893.ca/emissions/ya-rai"
       },
+      "next": {
+        "title": "Yallah lâcher prise",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/yallah-lacher-prise-avec-rhabibiii"
+      },
       "track": "",
-      "showTitle": "Le 120e parallèle",
+      "showTitle": "Ya Raï",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T13:54:03.563Z"
+      "checkedAt": "2026-08-16T14:19:21.703Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T13:54:07.094Z"
+      "checkedAt": "2026-08-16T14:19:24.637Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "REVC",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/revc"
-      },
-      "next": {
         "title": "Rigged Sessions",
         "source": "schedule",
         "start": "10:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/rigged-sessions"
       },
+      "next": {
+        "title": "Brave Little Emo Girl",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/brave-little-emo-girl"
+      },
       "track": "",
-      "showTitle": "REVC",
+      "showTitle": "Rigged Sessions",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T13:54:21.231Z"
+      "checkedAt": "2026-08-16T14:19:38.646Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-16T13:54:22.054Z"
+      "checkedAt": "2026-08-16T14:19:39.422Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +146,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Q052 - Restricted Radio",
+      "track": "Avalon Emerson & the Charm - Earth Alive",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-16T13:54:28.013Z"
+      "checkedAt": "2026-08-16T14:19:42.362Z"
     }
   }
 }
