@@ -1,15 +1,15 @@
 {
-  "updated": "2026-08-16T22:42:57.126Z",
+  "updated": "2026-08-16T23:29:10.977Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
   "cited": 129,
-  "pending": 13,
+  "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 21,
-  "updatedCount": 10,
-  "citedNew": 8,
+  "checked": 18,
+  "updatedCount": 7,
+  "citedNew": 5,
   "fallbackNew": 13,
   "samples": [
     {
@@ -34,18 +34,18 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Les femmes MAGA au service du patriarcat",
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
       "source": "Le Délit",
-      "credit": "Photo : Stu Doré",
+      "credit": "Photo : Stu Doré/Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Des initiatives qui rassemblent",
+      "title": "Ce que nous devons aux femmes",
       "source": "Le Délit",
-      "credit": "Crédit photo : Le Délit",
-      "cited": false,
-      "method": null
+      "credit": "Photo : Alexandre Gontier",
+      "cited": true,
+      "method": "media-credit-near"
     },
     {
       "title": "Inside Mile End Kicks",
@@ -57,30 +57,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Illustration: Halle Keays",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "source": "La Pige",
-      "credit": "Photo : Léa Morin-Letort",
-      "cited": true,
-      "method": "figcaption-paren-kind"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
-      "source": "Quartier Libre",
-      "credit": "Photo : Maryse Boyce",
-      "cited": true,
-      "method": "figcaption-copyright"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }
