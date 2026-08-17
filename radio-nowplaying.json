@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-08-17T11:31:03.275Z",
+  "updatedAt": "2026-08-17T12:37:35.521Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Lundi Indie",
-        "source": "schedule",
+        "source": "api-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Lundi Indie",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T11:30:35.459Z"
+      "checkedAt": "2026-08-17T12:37:03.204Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le terrain sportif",
-        "source": "schedule",
-        "start": "06:30",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/le-terrain-sportif"
-      },
-      "next": {
         "title": "Ya Raï (reprise)",
         "source": "schedule",
         "start": "08:00",
         "end": "09:00",
         "url": "https://cism893.ca/emissions/ya-rai"
       },
+      "next": {
+        "title": "La collation",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
+      },
       "track": "",
-      "showTitle": "Le terrain sportif",
+      "showTitle": "Ya Raï (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T11:30:37.717Z"
+      "checkedAt": "2026-08-17T12:37:05.574Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Unmuted with Svetlana and Miss Trish",
-        "source": "api-live",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
         "title": "Le Lendemain de la veille",
         "source": "api-live",
         "start": "08:00",
         "end": "09:00"
       },
+      "next": {
+        "title": "Latin Music Mondays",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Unmuted with Svetlana and Miss Trish",
+      "showTitle": "Le Lendemain de la veille",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T11:30:40.572Z"
+      "checkedAt": "2026-08-17T12:37:08.396Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,32 +108,32 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T11:30:54.798Z"
+      "checkedAt": "2026-08-17T12:37:22.930Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Folkswagen",
-        "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
         "title": "Palmarès CFAK",
         "source": "schedule-live",
         "start": "08:00",
         "end": "09:00"
       },
+      "next": {
+        "title": "Solénoïde",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T11:30:55.543Z"
+      "checkedAt": "2026-08-17T12:37:23.467Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +146,7 @@
         "end": "18:00",
         "slug": "faire-avec"
       },
-      "track": "Célia Kameni; Claire days - Best Cards",
+      "track": "Iceage — 1835",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-17T11:31:02.925Z"
+      "checkedAt": "2026-08-17T12:37:35.171Z"
     }
   }
 }
