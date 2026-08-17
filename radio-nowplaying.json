@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-17T14:54:12.470Z",
+  "updatedAt": "2026-08-17T15:22:17.655Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T14:53:48.513Z"
+      "checkedAt": "2026-08-17T15:21:51.071Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "next": {
         "title": "O'Keb",
         "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "https://cism893.ca/emissions/okeb"
       },
+      "next": {
+        "title": "L'Alter Ego",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/lalter-ego"
+      },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "O'Keb",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T14:53:50.826Z"
+      "checkedAt": "2026-08-17T15:21:53.377Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Latin Music Mondays",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "All Things Campus",
         "source": "api-live",
         "start": "11:00",
         "end": "12:00"
       },
+      "next": {
+        "title": "World Skip The Beat",
+        "source": "api-live",
+        "start": "12:00",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "Latin Music Mondays",
+      "showTitle": "All Things Campus",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T14:53:53.910Z"
+      "checkedAt": "2026-08-17T15:21:56.232Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
-      },
-      "next": {
         "title": "2 Days and a Night",
         "source": "schedule-live",
         "start": "11:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/2-days-and-a-night"
       },
+      "next": {
+        "title": "Twang City",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/twang-city"
+      },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "2 Days and a Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T14:54:08.278Z"
+      "checkedAt": "2026-08-17T15:22:10.284Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T14:54:08.927Z"
+      "checkedAt": "2026-08-17T15:22:10.858Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "18:00",
         "slug": "faire-avec"
       },
-      "track": "Saints Martyrs - Kyrie eleison",
+      "track": "MUNA - Eastside Girls",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-17T14:54:12.120Z"
+      "checkedAt": "2026-08-17T15:22:17.305Z"
     }
   }
 }
