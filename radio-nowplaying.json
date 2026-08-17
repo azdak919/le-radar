@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-17T02:40:27.631Z",
+  "updatedAt": "2026-08-17T03:47:11.824Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T02:39:55.934Z"
+      "checkedAt": "2026-08-17T03:46:44.667Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T02:39:57.924Z"
+      "checkedAt": "2026-08-17T03:46:46.900Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Cha Cha In Blue",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
-      },
-      "next": {
         "title": "Ill Groove Garden",
         "source": "api-live",
         "start": "23:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Sound Of Soul",
+        "source": "api-live",
+        "start": "00:00",
+        "end": "01:00"
+      },
       "track": "",
-      "showTitle": "Cha Cha In Blue",
+      "showTitle": "Ill Groove Garden",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T02:40:00.592Z"
+      "checkedAt": "2026-08-17T03:46:49.745Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "On The Right Track",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/on-the-right-track"
-      },
-      "next": {
         "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
         "start": "23:00",
         "end": "00:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
+      "next": {
+        "title": "Cinema Smackdown",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "00:30",
+        "url": "http://www.cjlo.com/shows/cinema-smackdown"
+      },
       "track": "",
-      "showTitle": "On The Right Track",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T02:40:15.115Z"
+      "checkedAt": "2026-08-17T03:47:04.279Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T02:40:15.867Z"
+      "checkedAt": "2026-08-17T03:47:05.070Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Mantisse - Le nom d",
+      "track": "Slayyyter - BRITTANY MURPHY.",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-17T02:40:27.280Z"
+      "checkedAt": "2026-08-17T03:47:11.473Z"
     }
   }
 }
