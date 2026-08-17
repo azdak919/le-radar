@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-17T15:49:40.333Z",
+  "updatedAt": "2026-08-17T16:23:17.048Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T15:49:07.928Z"
+      "checkedAt": "2026-08-17T16:22:49.416Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "O'Keb",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/okeb"
-      },
-      "next": {
         "title": "L'Alter Ego",
         "source": "schedule",
         "start": "12:00",
         "end": "14:00",
         "url": "https://cism893.ca/emissions/lalter-ego"
       },
+      "next": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
       "track": "",
-      "showTitle": "O'Keb",
+      "showTitle": "L'Alter Ego",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T15:49:09.939Z"
+      "checkedAt": "2026-08-17T16:22:51.277Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "All Things Campus",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "World Skip The Beat",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "Radio Is Dead",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
       "track": "",
-      "showTitle": "All Things Campus",
+      "showTitle": "World Skip The Beat",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T15:49:13.238Z"
+      "checkedAt": "2026-08-17T16:22:55.795Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "2 Days and a Night",
-        "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/2-days-and-a-night"
-      },
-      "next": {
         "title": "Twang City",
         "source": "schedule-live",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/twang-city"
       },
+      "next": {
+        "title": "The Tommy John Show",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/the-tommy-john-show"
+      },
       "track": "",
-      "showTitle": "2 Days and a Night",
+      "showTitle": "Twang City",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T15:49:27.927Z"
+      "checkedAt": "2026-08-17T16:23:09.536Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T15:49:28.701Z"
+      "checkedAt": "2026-08-17T16:23:10.418Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "18:00",
         "slug": "faire-avec"
       },
-      "track": "Shaina Hayes - Timid",
+      "track": "Emmanuelle Querry - Entre nous",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-17T15:49:39.982Z"
+      "checkedAt": "2026-08-17T16:23:16.698Z"
     }
   }
 }
