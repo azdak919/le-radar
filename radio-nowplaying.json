@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-17T04:38:32.672Z",
+  "updatedAt": "2026-08-17T05:32:53.223Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T04:38:07.138Z"
+      "checkedAt": "2026-08-17T05:32:26.635Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T04:38:09.479Z"
+      "checkedAt": "2026-08-17T05:32:28.842Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Sound Of Soul",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "01:00"
-      },
-      "next": {
         "title": "Roots, Rock, Reggae",
         "source": "api-live",
         "start": "01:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "Adventures In Music",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Sound Of Soul",
+      "showTitle": "Roots, Rock, Reggae",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T04:38:12.491Z"
+      "checkedAt": "2026-08-17T05:32:32.045Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T04:38:26.396Z"
+      "checkedAt": "2026-08-17T05:32:46.378Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T04:38:27.300Z"
+      "checkedAt": "2026-08-17T05:32:47.222Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "18:00",
         "slug": "faire-avec"
       },
-      "track": "Mourir - Nous, le venin",
+      "track": "Miserere Luminis - Les fleurs de l’exil",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-17T04:38:32.321Z"
+      "checkedAt": "2026-08-17T05:32:52.872Z"
     }
   }
 }
