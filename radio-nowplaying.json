@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-17T03:47:11.824Z",
+  "updatedAt": "2026-08-17T04:38:32.672Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T03:46:44.667Z"
+      "checkedAt": "2026-08-17T04:38:07.138Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "21:30",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "next": {
         "title": "L'Alter Ego (reprise)",
         "source": "schedule",
         "start": "00:00",
         "end": "02:00",
         "url": "https://cism893.ca/emissions/lalter-ego"
       },
+      "next": {
+        "title": "Mix Franco",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "L'Alter Ego (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T03:46:46.900Z"
+      "checkedAt": "2026-08-17T04:38:09.479Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Ill Groove Garden",
-        "source": "api-live",
-        "start": "23:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Sound Of Soul",
         "source": "api-live",
         "start": "00:00",
         "end": "01:00"
       },
+      "next": {
+        "title": "Roots, Rock, Reggae",
+        "source": "api-live",
+        "start": "01:00",
+        "end": "04:00"
+      },
       "track": "",
-      "showTitle": "Ill Groove Garden",
+      "showTitle": "Sound Of Soul",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,72 +74,72 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T03:46:49.745Z"
+      "checkedAt": "2026-08-17T04:38:12.491Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "next": {
-        "title": "Cinema Smackdown",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
         "start": "00:00",
-        "end": "00:30",
-        "url": "http://www.cjlo.com/shows/cinema-smackdown"
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+      },
+      "next": {
+        "title": "Experiments",
+        "source": "schedule-live",
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/experiments"
       },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T03:47:04.279Z"
+      "checkedAt": "2026-08-17T04:38:26.396Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Solénoïde",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule-live",
         "start": "00:01",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Solénoïde",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T03:47:05.070Z"
+      "checkedAt": "2026-08-17T04:38:27.300Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Les rois de l'arène",
+        "title": "Faire avec",
         "source": "api-live",
-        "start": "05:00",
-        "end": "07:00",
-        "slug": "les-rois-de-larene"
+        "start": "17:00",
+        "end": "18:00",
+        "slug": "faire-avec"
       },
-      "track": "Slayyyter - BRITTANY MURPHY.",
+      "track": "Mourir - Nous, le venin",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-17T03:47:11.473Z"
+      "checkedAt": "2026-08-17T04:38:32.321Z"
     }
   }
 }
