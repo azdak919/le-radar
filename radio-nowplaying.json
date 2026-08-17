@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-17T21:50:29.559Z",
+  "updatedAt": "2026-08-17T22:20:50.702Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T21:50:01.194Z"
+      "checkedAt": "2026-08-17T22:20:26.594Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T21:50:03.736Z"
+      "checkedAt": "2026-08-17T22:20:28.574Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "En Profondeur",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Queercorps",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Lesbo-sons",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "En Profondeur",
+      "showTitle": "Queercorps",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,70 +81,64 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T21:50:06.728Z"
+      "checkedAt": "2026-08-17T22:20:32.838Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Pressure Drop",
-        "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/the-pressure-drop"
-      },
-      "next": {
         "title": "Voice of the Voiceless",
         "source": "schedule-live",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/voice-of-the-voiceless"
       },
+      "next": {
+        "title": "Queer Chaos",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/queer-chaos"
+      },
       "track": "",
-      "showTitle": "The Pressure Drop",
+      "showTitle": "Voice of the Voiceless",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T21:50:21.345Z"
+      "checkedAt": "2026-08-17T22:20:46.629Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Solénoïde",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Ma radio Académia",
         "source": "schedule-live",
         "start": "18:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Le terrain sportif",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "00:01"
+      },
       "track": "",
-      "showTitle": "Solénoïde",
+      "showTitle": "Ma radio Académia",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T21:50:22.470Z"
+      "checkedAt": "2026-08-17T22:20:47.376Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Faire avec",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00",
-        "slug": "faire-avec"
-      },
+      "current": null,
       "next": {
         "title": "Les rois de l'arène",
         "source": "schedule",
@@ -152,10 +146,10 @@
         "end": "07:00",
         "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "Kelela - goin down",
-      "showTitle": "Faire avec",
+      "track": "Naami - Chacun pour soi",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
         "api-live",
         "schedule"
@@ -164,7 +158,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-17T21:50:29.208Z"
+      "checkedAt": "2026-08-17T22:20:50.350Z"
     }
   }
 }
