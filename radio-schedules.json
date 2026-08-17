@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-13T10:13:42.669Z",
+  "updatedAt": "2026-08-17T09:29:27.212Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,8 +8,8 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-08-13T10:13:42.669Z",
-      "verifiedWeekOf": "2026-08-10",
+      "checkedAt": "2026-08-17T09:29:27.212Z",
+      "verifiedWeekOf": "2026-08-17",
       "grid": [
         {
           "day": 0,
@@ -215,8 +215,8 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-08-13T10:13:42.669Z",
-      "verifiedWeekOf": "2026-08-10",
+      "checkedAt": "2026-08-17T09:29:27.212Z",
+      "verifiedWeekOf": "2026-08-17",
       "grid": [
         {
           "day": 0,
@@ -703,13 +703,6 @@
         },
         {
           "day": 4,
-          "start": "07:00",
-          "end": "08:00",
-          "title": "Ici, la criminologie",
-          "url": "https://cism893.ca/emissions/ici-la-criminologie"
-        },
-        {
-          "day": 4,
           "start": "08:00",
           "end": "09:00",
           "title": "Jimmy et Neutron",
@@ -996,8 +989,8 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-08-13T10:13:42.669Z",
-      "verifiedWeekOf": "2026-08-10",
+      "checkedAt": "2026-08-17T09:29:27.212Z",
+      "verifiedWeekOf": "2026-08-17",
       "grid": [
         {
           "day": 0,
@@ -1159,7 +1152,7 @@
           "day": 1,
           "start": "19:00",
           "end": "20:00",
-          "title": "Dykes on Mykes"
+          "title": "Lesbo-sons"
         },
         {
           "day": 1,
@@ -1255,7 +1248,7 @@
           "day": 2,
           "start": "18:00",
           "end": "19:00",
-          "title": "Prison Radio"
+          "title": "Rez Rock Radio"
         },
         {
           "day": 2,
@@ -1362,14 +1355,8 @@
         {
           "day": 3,
           "start": "22:00",
-          "end": "23:00",
-          "title": "Rhizomatic Hour 1"
-        },
-        {
-          "day": 3,
-          "start": "23:00",
           "end": "00:00",
-          "title": "Rhizomatic Hour 2"
+          "title": "Lo Signal / Meanwhile/ Rhizomatic"
         },
         {
           "day": 4,
@@ -1435,7 +1422,7 @@
           "day": 4,
           "start": "17:00",
           "end": "18:00",
-          "title": "Off The Hour: La Voix des Immigrants"
+          "title": "Off the Hour: Labour Radio"
         },
         {
           "day": 4,
@@ -1465,7 +1452,7 @@
           "day": 4,
           "start": "23:00",
           "end": "01:00",
-          "title": "L'aire du Diable"
+          "title": "You Need A Heart To Live 2"
         },
         {
           "day": 5,
@@ -1530,8 +1517,14 @@
         {
           "day": 5,
           "start": "19:00",
+          "end": "20:00",
+          "title": "Listening to Latin America: Blanca-Victoria"
+        },
+        {
+          "day": 5,
+          "start": "20:00",
           "end": "22:00",
-          "title": "LLA/Macondo"
+          "title": "Macondo"
         },
         {
           "day": 5,
@@ -1613,8 +1606,8 @@
       "sources": [
         "cjlo:http://www.cjlo.com/schedule"
       ],
-      "checkedAt": "2026-08-13T10:13:42.669Z",
-      "verifiedWeekOf": "2026-08-10",
+      "checkedAt": "2026-08-17T09:29:27.212Z",
+      "verifiedWeekOf": "2026-08-17",
       "grid": [
         {
           "day": 0,
@@ -4214,8 +4207,8 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-08-13T10:13:42.669Z",
-      "verifiedWeekOf": "2026-08-10",
+      "checkedAt": "2026-08-17T09:29:27.212Z",
+      "verifiedWeekOf": "2026-08-17",
       "grid": [
         {
           "day": 0,
@@ -4435,8 +4428,8 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-08-13T10:13:42.669Z",
-      "verifiedWeekOf": "2026-08-10",
+      "checkedAt": "2026-08-17T09:29:27.212Z",
+      "verifiedWeekOf": "2026-08-17",
       "grid": [
         {
           "day": 0,
