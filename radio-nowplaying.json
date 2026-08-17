@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-17T08:39:06.266Z",
+  "updatedAt": "2026-08-17T09:37:43.381Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T08:38:43.060Z"
+      "checkedAt": "2026-08-17T09:37:10.252Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le char de marge (reprise)",
-        "source": "schedule",
-        "start": "03:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/le-char-de-marge"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "05:00",
         "end": "06:30",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "Le terrain sportif",
+        "source": "schedule",
+        "start": "06:30",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/le-terrain-sportif"
+      },
       "track": "",
-      "showTitle": "Le char de marge (reprise)",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T08:38:44.776Z"
+      "checkedAt": "2026-08-17T09:37:12.525Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T08:38:48.368Z"
+      "checkedAt": "2026-08-17T09:37:15.522Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T08:39:02.106Z"
+      "checkedAt": "2026-08-17T09:37:29.723Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T08:39:02.937Z"
+      "checkedAt": "2026-08-17T09:37:30.575Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "18:00",
         "slug": "faire-avec"
       },
-      "track": "Fcukers - I Like It Like That",
+      "track": "underscores - Innuendo (I Get U)",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-17T08:39:05.915Z"
+      "checkedAt": "2026-08-17T09:37:43.030Z"
     }
   }
 }
