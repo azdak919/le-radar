@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-17T16:55:54.315Z",
+  "updatedAt": "2026-08-17T17:24:39.844Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T16:55:26.618Z"
+      "checkedAt": "2026-08-17T17:24:12.157Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T16:55:29.137Z"
+      "checkedAt": "2026-08-17T17:24:14.428Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T16:55:32.057Z"
+      "checkedAt": "2026-08-17T17:24:17.386Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Twang City",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/twang-city"
-      },
-      "next": {
         "title": "The Tommy John Show",
         "source": "schedule-live",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/the-tommy-john-show"
       },
+      "next": {
+        "title": "Eldest Daughter",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/eldest-daughter"
+      },
       "track": "",
-      "showTitle": "Twang City",
+      "showTitle": "The Tommy John Show",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T16:55:46.612Z"
+      "checkedAt": "2026-08-17T17:24:31.615Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T16:55:47.567Z"
+      "checkedAt": "2026-08-17T17:24:32.575Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "18:00",
         "slug": "faire-avec"
       },
-      "track": "Coco GB - Skin",
+      "track": "Birds of Prrrey - Lost in the Sound",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-17T16:55:53.964Z"
+      "checkedAt": "2026-08-17T17:24:39.493Z"
     }
   }
 }
