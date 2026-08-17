@@ -1,12 +1,12 @@
 {
-  "checkedAt": "2026-08-16T23:31:18.851Z",
+  "checkedAt": "2026-08-17T23:33:43.845Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
     "stable": 5,
     "drift": [
-      "cism"
+      "chyz"
     ],
     "overhaul": [],
     "unreachable": []
@@ -15,26 +15,31 @@
     {
       "id": "chyz",
       "published": 28,
-      "fresh": 28,
+      "fresh": 29,
+      "added": [
+        "lun 16:00–17:00 Chéri.e, Jme Mobilise!",
+        "lun 20:30–21:30 La Voie des Droits",
+        "ven 21:00–22:00 Crooch Control",
+        "sam 12:00–12:30 Un Monde de Couleurs et de Son"
+      ],
+      "removed": [
+        "dim 16:50–20:30 Capitales de Québec",
+        "ven 18:50–23:00 Capitales de Québec",
+        "sam 18:50–23:00 Capitales de Québec"
+      ],
+      "changed": 7,
+      "ratio": 0.25,
+      "status": "drift"
+    },
+    {
+      "id": "cism",
+      "published": 109,
+      "fresh": 109,
       "added": [],
       "removed": [],
       "changed": 0,
       "ratio": 0,
       "status": "stable"
-    },
-    {
-      "id": "cism",
-      "published": 110,
-      "fresh": 110,
-      "added": [
-        "jeu 07:00–08:00 Cap sur Mosaïque 2026"
-      ],
-      "removed": [
-        "jeu 07:00–08:00 Ici, la criminologie"
-      ],
-      "changed": 2,
-      "ratio": 0.018,
-      "status": "drift"
     },
     {
       "id": "ckut",
