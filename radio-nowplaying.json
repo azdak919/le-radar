@@ -1,80 +1,72 @@
 {
-  "updatedAt": "2026-08-17T20:53:28.448Z",
+  "updatedAt": "2026-08-17T21:22:42.892Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Chéri.e, Jme Mobilise!",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://chyz.ca/emission/cheri-e-jmorganise/",
-        "special": true
-      },
+      "current": null,
       "next": {
         "title": "Les Arshitechs du Son",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "17:30",
         "end": "18:30",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
       "track": "",
-      "showTitle": "Chéri.e, Jme Mobilise!",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-08-17T20:53:03.310Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Les garçons pleurent aussi",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
-      },
-      "next": {
-        "title": "Les criquets crinqués",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/les-criquets-crinques"
-      },
-      "track": "",
-      "showTitle": "Les garçons pleurent aussi",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T20:53:05.285Z"
+      "checkedAt": "2026-08-17T21:22:21.218Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Les criquets crinqués",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/les-criquets-crinques"
+      },
+      "next": {
+        "title": "Les vinyles versatiles",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/les-vinyles-versatiles"
+      },
+      "track": "",
+      "showTitle": "Les criquets crinqués",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-08-17T21:22:23.121Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Whose Vibe Is It Anyway",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "En Profondeur",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Queercorps",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Whose Vibe Is It Anyway",
+      "showTitle": "En Profondeur",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -82,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T20:53:07.847Z"
+      "checkedAt": "2026-08-17T21:22:25.818Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Dreamscapes",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/dreamscapes"
-      },
-      "next": {
         "title": "The Pressure Drop",
         "source": "schedule-live",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/the-pressure-drop"
       },
+      "next": {
+        "title": "Voice of the Voiceless",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/voice-of-the-voiceless"
+      },
       "track": "",
-      "showTitle": "Dreamscapes",
+      "showTitle": "The Pressure Drop",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T20:53:21.912Z"
+      "checkedAt": "2026-08-17T21:22:39.405Z"
     },
     "cfak": {
       "id": "cfak",
@@ -134,31 +126,38 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T20:53:22.690Z"
+      "checkedAt": "2026-08-17T21:22:40.185Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Faire avec",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00",
         "slug": "faire-avec"
       },
-      "track": "waterbaby - Srs Ice",
-      "showTitle": "",
+      "next": {
+        "title": "Les rois de l'arène",
+        "source": "schedule",
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://www.choq.ca/emissions/les-rois-de-larene"
+      },
+      "track": "Natilma - Independent Woman",
+      "showTitle": "Faire avec",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-17T20:53:28.098Z"
+      "checkedAt": "2026-08-17T21:22:42.541Z"
     }
   }
 }
