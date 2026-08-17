@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-17T07:24:30.290Z",
+  "updated": "2026-08-17T09:06:49.334Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 130,
-  "pending": 12,
+  "cited": 129,
+  "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 20,
-  "updatedCount": 9,
+  "checked": 21,
+  "updatedCount": 10,
   "citedNew": 8,
-  "fallbackNew": 12,
+  "fallbackNew": 13,
   "samples": [
     {
       "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
@@ -34,9 +34,16 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "title": "Des initiatives qui rassemblent",
       "source": "Le Délit",
-      "credit": "Photo : Stu Doré/Félix Fournier",
+      "credit": "Crédit photo : Le Délit",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "source": "Le Délit",
+      "credit": "Photo : Toscane Ralaimongo",
       "cited": true,
       "method": "media-credit-featured"
     },
