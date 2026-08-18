@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-18T03:41:17.309Z",
+  "updatedAt": "2026-08-18T04:32:28.722Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T03:40:48.690Z"
+      "checkedAt": "2026-08-18T04:32:03.507Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix anglo",
-        "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "next": {
         "title": "Les sentinelles de l'art (reprise)",
         "source": "schedule",
         "start": "00:00",
         "end": "02:00",
         "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
       },
+      "next": {
+        "title": "Mix Franco",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix anglo",
+      "showTitle": "Les sentinelles de l'art (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T03:40:50.750Z"
+      "checkedAt": "2026-08-18T04:32:05.424Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "27th Hr.",
-        "source": "api-live",
-        "start": "23:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Harmony Express",
         "source": "api-live",
         "start": "00:00",
         "end": "02:00"
       },
+      "next": {
+        "title": "Pirate et Libres",
+        "source": "api-live",
+        "start": "02:00",
+        "end": "03:00"
+      },
       "track": "",
-      "showTitle": "27th Hr.",
+      "showTitle": "Harmony Express",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,60 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T03:40:55.394Z"
+      "checkedAt": "2026-08-18T04:32:08.895Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "next": {
         "title": "CJLO Late Night",
         "source": "schedule-live",
         "start": "00:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
+      "next": {
+        "title": "Hip's Time to Wake Hop",
+        "source": "schedule-live",
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
+      },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T03:41:09.400Z"
+      "checkedAt": "2026-08-18T04:32:22.954Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Le terrain sportif",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "00:01"
-      },
-      "next": {
         "title": "Les nuits CFAK",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Le terrain sportif",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T03:41:10.181Z"
+      "checkedAt": "2026-08-18T04:32:23.708Z"
     },
     "choq": {
       "id": "choq",
@@ -135,24 +134,23 @@
       "current": null,
       "next": {
         "title": "Les rois de l'arène",
-        "source": "schedule",
+        "source": "api-live",
         "start": "05:00",
         "end": "07:00",
-        "url": "https://www.choq.ca/emissions/les-rois-de-larene"
+        "slug": "les-rois-de-larene"
       },
-      "track": "Downtown Boys - Albuterol",
+      "track": "Yellow Eyes - The Thought of Death",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-18T03:41:16.958Z"
+      "checkedAt": "2026-08-18T04:32:28.372Z"
     }
   }
 }
