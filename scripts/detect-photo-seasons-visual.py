@@ -25,9 +25,15 @@ from io import BytesIO
 
 try:
     from PIL import Image
-except ImportError:
+except ImportError:  # pragma: no cover
+    Image = None  # type: ignore[misc, assignment]
+
+
+def _require_pillow() -> None:
+    if Image is not None:
+        return
     print("Pillow requis", file=sys.stderr)
-    sys.exit(2)
+    raise SystemExit(2)
 
 UA = "LeRadar-season-detect/1.0 (https://le-radar.ca; wallpaper season bot)"
 THUMB_W = 480
@@ -185,6 +191,9 @@ def analyze(im: Image.Image) -> dict:
 
 def _selftest() -> int:
     """Contrôles hors-réseau : pierre grise ≠ hiver, neige et feuillage OK."""
+    if Image is None:
+        print("skip detect-photo-seasons-visual selftest (Pillow absent)")
+        return 0
     grey = Image.new("RGB", (320, 200), (152, 154, 158))
     snow = Image.new("RGB", (320, 200), (70, 120, 190))
     for y in range(80, 200):
@@ -213,6 +222,7 @@ def _selftest() -> int:
 def main() -> int:
     if "--selftest" in sys.argv:
         return _selftest()
+    _require_pillow()
     for line in sys.stdin:
         line = line.strip()
         if not line:
