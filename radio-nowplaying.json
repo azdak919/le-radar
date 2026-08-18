@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-18T14:30:34.066Z",
+  "updatedAt": "2026-08-18T15:04:24.476Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T14:29:53.890Z"
+      "checkedAt": "2026-08-18T15:03:54.926Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "next": {
         "title": "Roche aux platines",
         "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "https://cism893.ca/emissions/roche-aux-platines"
       },
+      "next": {
+        "title": "Les sentinelles de l'art",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+      },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "Roche aux platines",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T14:29:55.992Z"
+      "checkedAt": "2026-08-18T15:03:57.320Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Basa Basa",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "Ecolibrium/Environment in Canada",
         "source": "api-live",
         "start": "11:00",
         "end": "12:00"
       },
-      "track": "Airtime - offline",
-      "showTitle": "Basa Basa",
+      "next": {
+        "title": "Universal Break",
+        "source": "api-live",
+        "start": "12:00",
+        "end": "14:00"
+      },
+      "track": "",
+      "showTitle": "Ecolibrium/Environment in Canada",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T14:29:58.575Z"
+      "checkedAt": "2026-08-18T15:04:01.030Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
-      },
-      "next": {
         "title": "Mirror Journal",
         "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/mirror-journal"
       },
+      "next": {
+        "title": "World Beat News",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/world-beat-news"
+      },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "Mirror Journal",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T14:30:12.598Z"
+      "checkedAt": "2026-08-18T15:04:15.094Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T14:30:13.756Z"
+      "checkedAt": "2026-08-18T15:04:16.309Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "LØLØ - american zombie",
+      "track": "Dua Saleh - Flood (feat. Bon Iver)",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-18T14:30:33.715Z"
+      "checkedAt": "2026-08-18T15:04:24.124Z"
     }
   }
 }
