@@ -1,15 +1,72 @@
 {
-  "updated": "2026-08-18T02:23:49.691Z",
+  "updated": "2026-08-18T04:06:42.918Z",
   "total": 185,
-  "withImage": 167,
-  "withCredit": 167,
-  "cited": 129,
+  "withImage": 168,
+  "withCredit": 168,
+  "cited": 130,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 12,
-  "updatedCount": 0,
-  "citedNew": 0,
-  "fallbackNew": 12,
-  "samples": []
+  "checked": 19,
+  "updatedCount": 8,
+  "citedNew": 6,
+  "fallbackNew": 13,
+  "samples": [
+    {
+      "title": "Why must I-max out my credit card to go see ‘The Odyssey’?",
+      "source": "The Tribune",
+      "credit": "Photo : Gwendolyn Heffernan",
+      "cited": true,
+      "method": "figcaption-attribution"
+    },
+    {
+      "title": "La performance de l’homosexualité : un privilège ?",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "L’épidémie de la nonchalance",
+      "source": "Le Délit",
+      "credit": "Photo : Elie Nguyen",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Ce que nous devons aux femmes",
+      "source": "Le Délit",
+      "credit": "Photo : Alexandre Gontier",
+      "cited": true,
+      "method": "media-credit-near"
+    },
+    {
+      "title": "Les femmes MAGA au service du patriarcat",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Inside Mile End Kicks",
+      "source": "The Link",
+      "credit": "Photo: Courtesy of Joe Fuda",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "The apprenticeship of public voice",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    }
+  ]
 }
