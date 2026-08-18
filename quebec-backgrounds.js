@@ -350,8 +350,41 @@
     return 2560;
   }
 
+  function _isWikimediaUrl(url) {
+    return /upload\.wikimedia\.org|commons\.wikimedia\.org/i.test(String(url || ""));
+  }
+
   function _optimizedUrl(bg) {
-    return _wikimediaThumb(bg.url, _responsiveWidth());
+    const url = bg && bg.url;
+    if (!url || !_isWikimediaUrl(url)) return url;
+    return _wikimediaThumb(url, _responsiveWidth());
+  }
+
+  /** ?bg=id|fragment d’URL|titre|crédit — pour revoir une favorite en local. */
+  function _queryPinnedPhoto(pool) {
+    try {
+      const q = new URLSearchParams(location.search).get("bg");
+      if (!q || !pool) return null;
+      const needle = q.trim().toLowerCase();
+      if (!needle) return null;
+      return (
+        pool.find((p) => p && p.id && String(p.id).toLowerCase() === needle) ||
+        pool.find((p) => p && p.url && String(p.url).toLowerCase().includes(needle)) ||
+        pool.find((p) => p && p.title && String(p.title).toLowerCase().includes(needle)) ||
+        pool.find((p) => p && p.credit && String(p.credit).toLowerCase().includes(needle)) ||
+        null
+      );
+    } catch {
+      return null;
+    }
+  }
+
+  /** Favorite permanente : garder résolution/cadrage, pas les heuristiques canvas. */
+  function _skipCanvasReject(bg, verdict) {
+    if (!bg || !bg.permanent || !verdict) return false;
+    return !["low_resolution", "portrait_or_narrow", "load_error"].includes(
+      verdict.reason
+    );
   }
 
   /**
@@ -2317,7 +2350,7 @@
     } catch (_) {}
     img.onload = () => {
       const verdict = scoreMastheadPhoto(img, bg);
-      if (!verdict.ok) {
+      if (!verdict.ok && !_skipCanvasReject(bg, verdict)) {
         _rejectAndRetry(bg, pool, verdict);
         return;
       }
@@ -2394,7 +2427,8 @@
           (_rotator ? " · rotator CSPRNG" : " · fallback")
       );
     }
-    const chosen = pickBackground(all);
+    const pinned = _queryPinnedPhoto(all);
+    const chosen = pinned || pickBackground(all);
     if (chosen) _applyBackground(chosen, all);
   }
 

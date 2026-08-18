@@ -220,6 +220,10 @@ const PLACE_HINTS = [
     'Montréal',
   ],
   [
+    /assembl[ée]e nationale|h[ôo]tel du parlement/i,
+    'Assemblée nationale',
+  ],
+  [
     /qu[ée]bec city|quebec city|old quebec|vieux-qu[ée]bec|skyline de qu[ée]bec|panorama de qu[ée]bec|cityscapes of quebec|skylines of quebec|ch[âa]teau frontenac|gare fluviale de qu[ée]bec|frontenac/i,
     'Québec',
   ],

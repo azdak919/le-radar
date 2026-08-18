@@ -5,6 +5,7 @@
  * Usage :
  *   node scripts/pin-background.js --url "https://upload.wikimedia.org/..." \
  *     --title "..." --credit "..." --license "CC BY-SA 4.0" \
+ *     (license optionnelle — crédit suffit ; retrait via courriel footer) \
  *     --link "https://commons.wikimedia.org/wiki/File:..." \
  *     [--focalY 0.66] [--surfaces masthead,pomo] [--note "..."]
  *
