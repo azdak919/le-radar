@@ -23,7 +23,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
-- L’image de partage (`og-cover.png`) disait encore « journaux et radios » sans les sports : l’aperçu de lien (Messages, Telegram, etc.) restait sur l’ancienne accroche alors que le site porte la triade. Cache `?v=2` pour forcer le rechargement chez les robots.
+- L’image de partage (`og-cover.png`) disait encore « journaux et radios » sans les sports : l’aperçu de lien (Messages, Telegram, etc.) restait sur l’ancienne accroche alors que le site porte la triade. Sous-ligne : « résultats » (plutôt que l’emprunt « scores »). Cache `?v=2` pour forcer le rechargement chez les robots.
 
 - Le site annonçait « À venir · Capitales de Québec · 18:50 » alors que CHYZ diffusait ce match depuis 16:50 : la station réécrit sa page le jour du match (heure décalée, émission régulière évincée) tandis que la grille colligée, elle, a jusqu’à deux semaines. Une émission en ondes qui fait autorité écarte désormais tout « à venir » qu’elle recouvre — rien ne peut commencer avant la fin de ce qui joue —, côté bot comme côté site entre deux passes.
 - Ligne du bas du syntoniseur sur mobile : l’alternance slogan ↔ antenne et la bascule des phases CHOQ tournaient sur deux horloges concurrentes (14–18 s contre 8 s fixes), ce qui faisait changer le texte en cours de lecture. Une seule horloge pilote maintenant les deux.
