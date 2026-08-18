@@ -42,6 +42,7 @@ Compartiments **non fusionnables** : mât ≠ pomo ≠ uni ≠ nations (sauf nat
 | **favorites** | `data/quebec-favorites-backgrounds.json` | `quebec-favorites-backgrounds-data.js` | mât (+ pomo si `surfaces`) |
 
 Runtime mât : `quebec-backgrounds.js` (filtres client). Runtime pomo : `pomo/js/backgrounds.js`.
+Mât : **mélange équitable** paysages / campus / PNI (1/3 chacun parmi les banques encore en saison). Les favorites voyagent avec les paysages (trop peu pour une 4ᵉ part). Pomo inchangé.
 
 ### Pipeline
 
@@ -51,7 +52,7 @@ maintain     →  revalidate + Commons  →  JSON + JS (1×/session univ. plein 
 blacklist    →  scripts/quebec-backgrounds-blacklist.js  (ne revient jamais)
 ```
 
-- **Purge** = retirer une mauvaise entrée + blacklister. **Pas de re-seed hasardeux** (mieux un trou).
+- **Purge** = retirer une mauvaise entrée + blacklister. **Pas de re-seed hasardeux** (mieux un trou). Licence inconnue / ARR / NC : **ne plus drop** — crédit + retrait sur demande.
 - **Hard-ban** : URL / File Commons / id en priorité ; raison snake_case loggable.
 - Règles paysage mât/pomo (pas universities/nations) : religieux ; **town hall / hôtel de ville / mairie** ; scènes bad (nuit, underbridge, clôture, aéroport/hangar/industriel…, **panneaux / enseignes / welcome signs**).
 - **Panneau toponyme** (titre = seul le lieu, image = enseigne) : hard-ban **fichier Commons exact** — ne pas bannir le lieu entier (ex. `Gesgapegiag.jpg` ban, `Gesgapegiag4` tipi OK).
@@ -69,6 +70,10 @@ blacklist    →  scripts/quebec-backgrounds-blacklist.js  (ne revient jamais)
     `seasonSource: manual` n’est **jamais** écrasé.
   - **Client** : filtre saison en cours (fallback adjacent) — ne remplace pas le bot.
   - Neige arctique en juillet = hors saison — ne pas forcer le pool complet.
+  - **Pierre grise ≠ hiver.** Un tag visuel (béton, calcaire, rocher) n’est
+    pas une preuve. On ne retire une photo d’une saison que si on est *sûr*
+    qu’elle n’y est pas (neige / mot-clé / date / manuel). Garder la photo
+    pour les saisons où elle va ; l’hiver réel reste l’hiver.
   - `seasonSource: sessionId-fallback` = **jamais analysée** (saison de la session
     de moisson). Traitée comme saison inconnue et **non exportée** vers les
     `*-data.js` : sans ce garde-fou une scène enneigée entrait dans le tier strict
@@ -136,7 +141,8 @@ Alias historiques : `maintain:backgrounds` = masthead ; `…:pomo` etc. inchang�
 | **Retour dans l'app** | < 5 min rien · ≥ 5 min fil rechargé sur place · ≥ 1 h rechargement dur — **jamais pendant une écoute** (`returnRefreshAction`, `app.js`) |
 | **Thèmes** | dark/light + overlays texte lisibles sur photo mât (cartes météo) |
 | **Banques** | Ne jamais coller `QUEBEC_POMO_*` dans le mât, ni l’inverse |
-| **Favorites** | `permanent: true` — immunisées purge maintain (sauf licence illégale). **Ne force pas l’affichage hors saison** : une favorite d’hiver reste en collection mais n’entre dans le pool mât/pomo qu’en hiver (filtre `RadarSeason`). |
+| **Favorites** | `permanent: true` — immunisées purge maintain (sauf non-image). Licence CC **non exigée** : crédit « Nom — lieu » (jamais la saison). © droit si copyright ; copyleft inversé si CC BY-SA. URL locale `/assets/masthead/…` OK. `?bg=` force une photo. **Ne force pas l’affichage hors saison**. |
+| **Shuffle mât** | Clic = exclusion dure des 15 dernières + tout le sac (pas une fenêtre de 12). Le worker CF ne choisit pas la photo. |
 
 ---
 

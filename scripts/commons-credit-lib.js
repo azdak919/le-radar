@@ -220,6 +220,10 @@ const PLACE_HINTS = [
     'Montréal',
   ],
   [
+    /assembl[ée]e nationale|h[ôo]tel du parlement/i,
+    'Assemblée nationale',
+  ],
+  [
     /qu[ée]bec city|quebec city|old quebec|vieux-qu[ée]bec|skyline de qu[ée]bec|panorama de qu[ée]bec|cityscapes of quebec|skylines of quebec|ch[âa]teau frontenac|gare fluviale de qu[ée]bec|frontenac/i,
     'Québec',
   ],
@@ -328,10 +332,25 @@ function scrubBankCredits(bank) {
   return n;
 }
 
+/** CC BY-SA / GFDL = copyleft. Licence vide ou ARR = copyright, pas de marque copyleft. */
+function isCopyleftLicense(license = '') {
+  return /cc[\s-]?by[\s-]?sa|share[\s-]?alike|gfdl|copyleft/i.test(String(license || ''));
+}
+
+/** Marque © (non inversée) : copyright explicite ou favorite sans licence. */
+function isCopyrightMarkLicense(license = '') {
+  if (isCopyleftLicense(license)) return false;
+  const l = String(license || '').trim();
+  if (!l) return true;
+  return /all rights reserved|tous droits|copyright|\barr\b/i.test(l);
+}
+
 module.exports = {
   sanitizeCommonsCredit,
   scrubBankCredits,
   placeFromPhotoMeta,
   formatMastheadCredit,
+  isCopyleftLicense,
+  isCopyrightMarkLicense,
   CREDIT_DISPLAY_ALIASES,
 };

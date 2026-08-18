@@ -31,6 +31,7 @@
 
   /**
    * Pool mât = paysages mât + campus + nations (Inuit / PN) + favorites.
+   * Tirage : une chance égale par banque (paysages / campus / PNI), pas au volume.
    * N’inclut jamais QUEBEC_POMO_BACKGROUNDS.
    * Chaque entrée reçoit `.bank` pour la diversité multi-banques.
    * Favorites : surfaces masthead (défaut) ou liste explicite.
@@ -91,9 +92,10 @@
     typeof BgRotation !== "undefined" && BgRotation.createRotator
       ? BgRotation.createRotator({
           surface: "masthead",
-          storageKey: "lr_bg_rot_masthead_v1",
+          storageKey: "lr_bg_rot_masthead_v2",
           maxRecent: 36,
           moodFn: _mastheadMood,
+          equalBanks: true,
         })
       : null;
   /** Ratio largeur/hauteur minimal (paysage). Sous ce seuil → rejet dur. */
@@ -267,7 +269,8 @@
    *
    * minStrict élevé : avec peu de photos taguées « ete » en juillet, le tier
    * strict seul (~5 images) épuisait le mât après rejets QC → fond noir mobile.
-   * Les non-taguées passent en adjacent.
+   * Les non-taguées (et la pierre grise sans preuve de neige) restent
+   * éligibles ; on n’éjecte que l’opposé certain.
    *
    * `permanent: true` = collection hors purge bots, **pas** affichage hors saison.
    * Une favorite d’hiver reste épinglée mais n’entre dans le pool qu’en hiver
@@ -309,6 +312,8 @@
       const picked = _rotator.pick(pool, {
         failedIds: _failedIds,
         excludeId,
+        hardExcludeRecent: opts && opts.hardExcludeRecent,
+        fullWindow: opts && opts.fullWindow,
       });
       // Si le pool saisonnier est épuisé (tous failed) → essayer le pool complet
       if (!picked && !useFull && full.length > pool.length) {
@@ -350,8 +355,41 @@
     return 2560;
   }
 
+  function _isWikimediaUrl(url) {
+    return /upload\.wikimedia\.org|commons\.wikimedia\.org/i.test(String(url || ""));
+  }
+
   function _optimizedUrl(bg) {
-    return _wikimediaThumb(bg.url, _responsiveWidth());
+    const url = bg && bg.url;
+    if (!url || !_isWikimediaUrl(url)) return url;
+    return _wikimediaThumb(url, _responsiveWidth());
+  }
+
+  /** ?bg=id|fragment d’URL|titre|crédit — pour revoir une favorite en local. */
+  function _queryPinnedPhoto(pool) {
+    try {
+      const q = new URLSearchParams(location.search).get("bg");
+      if (!q || !pool) return null;
+      const needle = q.trim().toLowerCase();
+      if (!needle) return null;
+      return (
+        pool.find((p) => p && p.id && String(p.id).toLowerCase() === needle) ||
+        pool.find((p) => p && p.url && String(p.url).toLowerCase().includes(needle)) ||
+        pool.find((p) => p && p.title && String(p.title).toLowerCase().includes(needle)) ||
+        pool.find((p) => p && p.credit && String(p.credit).toLowerCase().includes(needle)) ||
+        null
+      );
+    } catch {
+      return null;
+    }
+  }
+
+  /** Favorite permanente : garder résolution/cadrage, pas les heuristiques canvas. */
+  function _skipCanvasReject(bg, verdict) {
+    if (!bg || !bg.permanent || !verdict) return false;
+    return !["low_resolution", "portrait_or_narrow", "load_error"].includes(
+      verdict.reason
+    );
   }
 
   /**
@@ -425,6 +463,13 @@
     }
     const hay = [bg.title, bg.url, bg.link].filter(Boolean).join(" ");
     return CAMPUS_SUBJECT_RE.test(hay);
+  }
+
+  function isNationsBackground(bg) {
+    if (!bg) return false;
+    if (bg.bank === "nations" || bg.culture === "quebec-nations") return true;
+    if (bg.nationId || bg.nation) return true;
+    return false;
   }
 
   /**
@@ -1780,6 +1825,7 @@
         return { ok: false, reason: "excessive_dark", metrics };
       }
       if (
+        !isNationsBackground(bg) &&
         sat < WINTER_GREY.sat &&
         greyFrac > WINTER_GREY.grey &&
         coldFrac > WINTER_GREY.cold
@@ -1825,7 +1871,14 @@
         return { ok: false, reason: "indoor_warm_object", metrics };
       }
       // Toundra / rocaille grise (ultramafic) : sat basse, gris dominant, peu de chaleur
-      if (sat < 0.18 && greyFrac > 0.5 && warmFrac < 0.18) {
+      // Campus : pierre / béton gris = le sujet, pas une toundra.
+      if (
+        !isCampusBackground(bg) &&
+        !isNationsBackground(bg) &&
+        sat < 0.18 &&
+        greyFrac > 0.5 &&
+        warmFrac < 0.18
+      ) {
         return { ok: false, reason: "barren_desaturated", metrics };
       }
       // Nuit urbaine (lumières) ≠ lever de soleil : pas de bande de ciel chaude lumineuse
@@ -1849,9 +1902,12 @@
         return { ok: false, reason: "busy_wordmark_zone", metrics };
       }
       // Façade / toits texturés désaturés (beige, béton, brique pâle) :
-      // structure dense + peu de couleur → LE RADAR illisible.
-      // Réf. : UdeM Roger-Gaudry crop mât (edge ~0.04, sat ~0.18, meanL ~0.37).
+      // structure dense + peu de couleur → LE RADAR illisible sur un *paysage*.
+      // Réf. : UdeM Roger-Gaudry — mais c’est le sujet de la banque campus :
+      // ne pas éjecter QUEBEC_UNIVERSITY_BACKGROUNDS pour ça.
       if (
+        !isCampusBackground(bg) &&
+        !isNationsBackground(bg) &&
         !goldenSilhouette &&
         edgeMean >= BUSY_LOW_CHROMA.edge &&
         sat <= BUSY_LOW_CHROMA.satMax &&
@@ -1890,6 +1946,7 @@
       }
       // Batture / vase : grève dominante, quasi pas de ciel
       if (
+        !isNationsBackground(bg) &&
         sandFrac > 0.48 &&
         skyFrac < 0.08 &&
         warmSkyFrac < 0.08 &&
@@ -2056,6 +2113,7 @@
         "Montréal",
       ],
       [/sherbrooke/i, "Sherbrooke"],
+      [/assembl[ée]e nationale|h[ôo]tel du parlement/i, "Assemblée nationale"],
       [
         /qu[ée]bec city|quebec city|old quebec|vieux-qu[ée]bec|skyline de qu[ée]bec|panorama de qu[ée]bec|cityscapes of quebec|skylines of quebec|ch[âa]teau frontenac|gare fluviale de qu[ée]bec|frontenac/i,
         "Québec",
@@ -2078,6 +2136,21 @@
       return `${name} — ${place}`;
     }
     return name || place || "";
+  }
+
+  /** Copyleft (CC BY-SA / GFDL). */
+  function isCopyleftLicense(license) {
+    return /cc[\s-]?by[\s-]?sa|share[\s-]?alike|gfdl|copyleft/i.test(
+      String(license || "")
+    );
+  }
+
+  /** © droit : copyright explicite ou favorite sans licence (Groleau). */
+  function isCopyrightMarkLicense(license) {
+    if (isCopyleftLicense(license)) return false;
+    const l = String(license || "").trim();
+    if (!l) return true;
+    return /all rights reserved|tous droits|copyright|\barr\b/i.test(l);
   }
 
   function _renderCredit(bg) {
@@ -2117,13 +2190,18 @@
     short.setAttribute("translate", "no");
     short.classList.add("notranslate");
     const shortLabel = credit || title || "Photo";
-    if (shortLabel) {
+    if (shortLabel && isCopyleftLicense(license)) {
       const copyleft = document.createElement("span");
       copyleft.className = "bg-photo-credit__copyleft";
       copyleft.textContent = "©";
       copyleft.setAttribute("aria-label", "Copyleft");
       short.appendChild(copyleft);
-      /* Espacement : gap CSS sur .bg-photo-credit__short (pas de nbsp en plus). */
+    } else if (shortLabel && isCopyrightMarkLicense(license)) {
+      const mark = document.createElement("span");
+      mark.className = "bg-photo-credit__copyright";
+      mark.textContent = "©";
+      mark.setAttribute("aria-label", "Copyright");
+      short.appendChild(mark);
     }
     if (link) {
       const a = document.createElement("a");
@@ -2158,9 +2236,12 @@
     // Différer le retry : enchaîner 10× Image() synchrone fige le main thread mobile.
     const attempt = () => {
       const next =
-        pickBackground(pool, bg && bg.url) ||
+        pickBackground(pool, bg && bg.url, {
+          fullWindow: true,
+          hardExcludeRecent: 8,
+        }) ||
         (_failedIds.size >= 6
-          ? pickBackground(pool, bg && bg.url, { fullPool: true })
+          ? pickBackground(pool, bg && bg.url, { fullPool: true, fullWindow: true })
           : null);
       if (next && next.url !== (bg && bg.url)) {
         _applyBackground(next, pool);
@@ -2317,7 +2398,7 @@
     } catch (_) {}
     img.onload = () => {
       const verdict = scoreMastheadPhoto(img, bg);
-      if (!verdict.ok) {
+      if (!verdict.ok && !_skipCanvasReject(bg, verdict)) {
         _rejectAndRetry(bg, pool, verdict);
         return;
       }
@@ -2391,17 +2472,20 @@
           : 0;
       console.info(
         `[bg] pool mât : ${all.length} (paysages ${nL} + campus ${nU} + nations ${nN} + favorites ${nF})` +
-          (_rotator ? " · rotator CSPRNG" : " · fallback")
+          (_rotator ? " · rotator CSPRNG · mix équitable 1/3" : " · fallback")
       );
     }
-    const chosen = pickBackground(all);
+    const pinned = _queryPinnedPhoto(all);
+    const chosen = pinned || pickBackground(all);
     if (chosen) _applyBackground(chosen, all);
   }
 
   function shuffleMastheadBackground() {
     const pool = _mastheadPool();
     const current = document.getElementById("bg-photo-layer")?.dataset.bgUrl || "";
-    const next = pickBackground(pool, current) || pickBackground(pool);
+    const shuffleOpts = { hardExcludeRecent: 15, fullWindow: true };
+    const next =
+      pickBackground(pool, current, shuffleOpts) || pickBackground(pool, current);
     if (next) _applyBackground(next, pool);
   }
 
