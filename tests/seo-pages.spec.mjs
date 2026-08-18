@@ -316,8 +316,10 @@ test('depuis l’accueil, on atteint le hub des horaires puis une grille complè
   await expect(page).toHaveURL(/\/horaires\/$/);
   await expect(page.locator('h1')).toHaveText('Les horaires des radios étudiantes du Québec');
 
-  // Une carte par station, avec le volume réel de sa grille.
-  await expect(page.locator('.seo-card')).not.toHaveCount(0);
+  await expect(page.locator('.seo-radio-card')).toHaveCount(6);
+  await expect(page.locator('.seo-schedule-meta')).toContainText('Semaine du');
+  await expect(page.locator('.seo-schedule-meta')).toContainText('MAJ le');
+  await expect(page.locator('[data-schedule-air]').first()).toBeVisible();
   await page.getByRole('link', { name: /CKUT/ }).first().click();
   await expect(page).toHaveURL(/\/radios\/ckut\/#horaire$/);
 
