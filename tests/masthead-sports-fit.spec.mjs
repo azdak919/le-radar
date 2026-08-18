@@ -9,7 +9,7 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
   const pageErrors = [];
   page.on('pageerror', (error) => pageErrors.push(error.message));
 
-  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
   const strip = page.locator('#masthead-sports-strip');
@@ -29,16 +29,15 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
     return strip.locator('.sports-chip').count();
   };
 
-  const wide = await countAt(1440);
-  // En desktop large la voie de gauche doit être PLEINE : 3 puces SCORE + CTA.
-  // Un `>= 2` laissait passer une voie à court de matière — hors saison, avec un
-  // seul résultat en banque, le bandeau tombait à 2 puces (score + CTA) trop larges.
-  expect(wide).toBeGreaterThanOrEqual(3);
-  expect(wide).toBeLessThanOrEqual(4);
-  // Chaque slot non-CTA est bien rempli (pas de trou avalé par le flex).
-  expect(await strip.locator('.sports-chip:not(.sports-chip--cta)').count()).toBe(wide - 1);
-  // CTA toujours présente et en dernier quand ≥ 2 chips.
+  const compact = await countAt(1280);
+  expect(compact).toBeGreaterThanOrEqual(3);
+  expect(compact).toBeLessThanOrEqual(4);
   await expect(strip.locator('.sports-chip').last()).toHaveClass(/sports-chip--cta/);
+  const wide = await countAt(1440);
+  expect(wide).toBeGreaterThanOrEqual(compact);
+  expect(wide).toBeLessThanOrEqual(9);
+  expect(await strip.locator('.sports-chip--cta').count()).toBe(1);
+  expect(await strip.locator('.sports-chip:not(.sports-chip--cta)').count()).toBe(wide - 1);
   await expect(strip).toHaveAttribute('data-cta-pinned', '1');
 
   const mid = await countAt(900);

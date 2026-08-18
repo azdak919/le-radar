@@ -42,6 +42,16 @@ const CONTACT_URL = `mailto:${CONTACT_MAIL}`;
  * CSS critique du synthé (copie de index.html) — FOUC sur pages SEO sans ce bloc.
  * Sans lui, la colonne « À l'antenne » peut rester figée / mal calée avant style.css.
  */
+const WIDE_LAYOUT_ASSET_V = 'wide-auto-e86';
+
+function renderWideLayoutAssets(up) {
+  return `    <link rel="stylesheet" href="${up}dev/midwidth-preview.css?v=${WIDE_LAYOUT_ASSET_V}" />
+    <link rel="stylesheet" href="${up}dev/wide-desktop-preview.css?v=${WIDE_LAYOUT_ASSET_V}" />
+    <script src="${up}dev/midwidth-preview.js?v=${WIDE_LAYOUT_ASSET_V}"></script>
+    <script src="${up}dev/wide-desktop-preview.js?v=${WIDE_LAYOUT_ASSET_V}"></script>
+`;
+}
+
 function renderTunerCriticalCss() {
   return `    <!--
       CSS critique du synthé bureau : réserve « À l'antenne » + volume compact
@@ -1072,10 +1082,11 @@ ${alternate ? `    <link rel="alternate" hreflang="fr-CA" href="${escapeHtml(lan
 ${appHeadHtml}    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="${up}seo-page-theme.js"></script>
     <link rel="stylesheet" href="${up}style-masthead.css" />
     <link rel="stylesheet" href="${up}style.css" />
     <link rel="stylesheet" href="${up}seo-pages.css" />
-${renderTunerCriticalCss()}    <script src="${up}seo-page-theme.js"></script>
+${renderWideLayoutAssets(up)}${renderTunerCriticalCss()}
     <script src="${up}nav-shell.js" defer></script>
     <script src="${up}cast.js" defer></script>
     <script src="${up}mobile-playback.js" defer></script>

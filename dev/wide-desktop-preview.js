@@ -30,31 +30,23 @@
 
   function currentWide() {
     try {
-      if (document.documentElement.dataset.widePreview) {
-        return document.documentElement.dataset.widePreview;
-      }
-      const raw = (new URL(location.href).searchParams.get(WIDE_PARAM) || 'off')
+      const raw = (new URL(location.href).searchParams.get(WIDE_PARAM) || '')
         .toLowerCase()
         .trim();
-      if (!raw || raw === '0' || raw === 'false' || raw === 'off' || raw === 'prod') return 'off';
-      // A–D historiques → E
-      if (raw === 'e' || raw === 'a' || raw === 'b' || raw === 'c' || raw === 'd' || raw === '1' || raw === 'true') {
-        return 'e';
-      }
-      return 'off';
+      if (raw === '0' || raw === 'false' || raw === 'off' || raw === 'prod') return 'off';
+      if (raw === 'b' || raw === 'c' || raw === 'd') return raw;
+      return 'e';
     } catch {
-      return 'off';
+      return 'e';
     }
   }
 
-  // Dataset immédiat (double avec midwidth — idempotent)
-  // ⛔ ≤1280 : ne pas poser data-wide-preview (prod pure, même avec ?wide=e).
+  // Dataset immédiat (double avec midwidth / seo-page-theme — idempotent)
+  // ⛔ ≤1280 : ne pas poser data-wide-preview (layouts compact / mid / 1280).
   try {
     const id = currentWide();
     if (id && id !== 'off' && isWideEViewport()) {
       document.documentElement.dataset.widePreview = id;
-    } else if (!isWideEViewport()) {
-      delete document.documentElement.dataset.widePreview;
     } else {
       delete document.documentElement.dataset.widePreview;
     }
