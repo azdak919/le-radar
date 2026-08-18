@@ -568,15 +568,30 @@ const TUNER_SUB_ROTATE_VERY_NARROW_MS = 18000;
 const AIR_PANEL_ROTATE_MS = 8000;
 /**
  * Marquee site-wide (dial, à l’antenne, sports, météo, embed) :
- * 1) délai de lecture au repos  2) **un** aller-retour (`alternate` × 2)
- * 3) pause au repos  4) seulement alors changer le texte.
- * Jamais `infinite` : un 2ᵉ cycle pendant l’attente de rotation est illisible.
+ * 1) délai de lecture au repos  2) repos → aller → repos → retour, **en boucle**
+ * 3) le texte ne change qu'à un temps de repos, jamais en pleine course.
+ *
+ * Le dial et les pastilles sources portent des lignes qui ne tournent pas (nom
+ * du poste, établissement) : un cycle unique les laissait tronquées pour le
+ * reste de la visite. Les repos sont donc **dans** les keyframes et
+ * l'animation boucle (`infinite`), plutôt qu'un `alternate × 2` qui se fige.
  */
 /** Pause initiale avant le 1er pixel de scroll (CSS animation-delay). */
 const MARQUEE_READ_DELAY_MS = 1600;
-/** Aller + retour : l'animation marquee est `alternate` (2 itérations, pas infinite). */
+/** Aller + retour : le cycle CSS traverse deux fois `--marquee-duration`. */
 const MARQUEE_ROUND_TRIPS = 2;
-/** Pause de lecture après le retour, avant de changer de texte. */
+/** Repos à chaque bout, en fraction d'un aller (keyframes 0→10 % et 50→60 %). */
+const MARQUEE_END_REST_RATIO = 0.25;
+/**
+ * Cycle complet ÷ durée d'un aller = 2,5 — synchro `--marquee-cycle-ratio`
+ * (style.css) et les keyframes `tunerMarquee` : 2 allers + 2 repos de 0,25.
+ */
+const MARQUEE_CYCLE_RATIO = MARQUEE_ROUND_TRIPS + MARQUEE_END_REST_RATIO * 2;
+/**
+ * Repos au bout d'un défilement **sports** (cycle unique, la carte tourne
+ * ensuite). Le dial, lui, boucle : son repos est proportionnel à l'aller
+ * (`MARQUEE_END_REST_RATIO`), donc il ne dépend pas de cette valeur.
+ */
 const MARQUEE_REST_MS = 2000;
 /** L'émission en ondes reste plus longtemps que les autres phases. */
 const AIR_LIVE_DWELL_FACTOR = 2;
@@ -3521,23 +3536,12 @@ let sportsNextSlot = 0;
 let sportsSlotTimers = [];
 let sportsWaveTimer = 0;
 let sportsWaveSlot = 0;
-/** Rotation de la CTA suspendue (survol ou focus) — garde-fou `pause-survol-focus`. */
-let sportsCtaPaused = false;
 /**
- * La rotation n’existe que là où un mécanisme de pause existe (garde-fou
- * `rotation-pointeur-fin`). Sur tactile il n’y a ni survol ni focus : WCAG 2.2.2
- * ne serait pas satisfait, donc l’accroche s’y fige au chargement.
- * ⚠️ Doit être déclaré **avant** l’init de `sportsCtaRotateMq` (sinon TDZ →
- * matchMedia avalé par try/catch → mq null → CTA jamais en rotation).
+ * Rotation de la CTA suspendue — garde-fou `pause-survol-focus`.
+ * Souris : survol ou focus. Doigt : appui maintenu sur la carte (les mêmes
+ * `pointerenter` / `pointerleave` encadrent un contact tactile).
  */
-const SPORTS_CTA_ROTATE_MEDIA = '(hover: hover) and (pointer: fine)';
-/** Surfaces où un mécanisme de pause existe réellement (souris, pas doigt). */
-let sportsCtaRotateMq = null;
-try {
-  sportsCtaRotateMq = window.matchMedia
-    ? window.matchMedia(SPORTS_CTA_ROTATE_MEDIA)
-    : null;
-} catch { /* ignore */ }
+let sportsCtaPaused = false;
 /**
  * Plafond mesuré après paint (parité météo `mastheadWeatherFitCount`).
  * null = pas encore contraint ; sinon min(base largeur, fit).
@@ -5496,23 +5500,19 @@ function fillSportsCtaLayer(layer, slide) {
 
 /**
  * La carte CTA a-t-elle le droit de tourner ? — focus-group
- * `le-radar-cta-sports-rhythm` D, garde-fou `rotation-pointeur-fin`.
+ * `le-radar-cta-sports-rhythm` D, garde-fou `pause-survol-focus`.
  *
  * WCAG 2.2.2 réclame un mécanisme de pause pour tout contenu qui se met à jour
- * seul au-delà de 5 s. Le survol et le focus en sont un — sur une souris. Sur
- * tactile il n’y en a aucun, donc l’accroche s’y fige au chargement : elle
- * change d’une visite à l’autre (le tirage initial est aléatoire), pas sous les
- * yeux du lecteur.
+ * seul au-delà de 5 s. La rotation était donc réservée au pointeur fin, seul
+ * endroit où le survol en tenait lieu — et l’accroche restait figée pour tout
+ * le monde sur téléphone, y compris quand la carte avait fini de défiler.
+ *
+ * `bindSportsCtaPause` couvre maintenant les deux surfaces : survol et focus à
+ * la souris, appui maintenu au doigt (`pointerenter` / `pointerleave` encadrent
+ * aussi un contact tactile). Le mécanisme existe partout, la rotation aussi.
  */
 function sportsCtaMayRotate() {
   if (sportsReducedMotion) return false;
-  // Lazy re-init : si l’init top-level a raté (TDZ, iframe, etc.), retenter.
-  if (!sportsCtaRotateMq && typeof window !== 'undefined' && window.matchMedia) {
-    try {
-      sportsCtaRotateMq = window.matchMedia(SPORTS_CTA_ROTATE_MEDIA);
-    } catch { /* ignore */ }
-  }
-  if (!sportsCtaRotateMq?.matches) return false;
   return sportsCtaLabelPool().length > 1;
 }
 
@@ -5626,21 +5626,26 @@ function applySportsCtaState(chip, slide) {
 }
 
 /**
- * Pause de la rotation au survol et au focus — garde-fou `pause-survol-focus`
- * (WCAG 2.2.2). N’est posée que sur les surfaces où la rotation existe : sur
- * tactile, l’accroche est figée et il n’y a rien à mettre en pause.
+ * Pause de la rotation — garde-fou `pause-survol-focus` (WCAG 2.2.2).
+ *
+ * Souris : survol et focus. Doigt : `pointerenter` part au premier contact et
+ * `pointerleave` au relâchement, donc garder le doigt sur la carte suspend la
+ * rotation exactement comme un survol. `pointercancel` (le geste devient un
+ * défilement de page) relâche aussi, sinon la CTA resterait bloquée.
  */
 function bindSportsCtaPause(chip) {
   if (!chip || chip._ctaPauseBound) return;
   chip._ctaPauseBound = true;
   const hold = () => { sportsCtaPaused = true; };
   const release = () => {
+    if (!sportsCtaPaused) return;
     sportsCtaPaused = false;
     // Relire le ruban, puis une nouvelle vague complète (scores + CTA).
     scheduleSportsWave({ fromSlot: 0, firstWait: true });
   };
   chip.addEventListener('pointerenter', hold, { passive: true });
   chip.addEventListener('pointerleave', release, { passive: true });
+  chip.addEventListener('pointercancel', release, { passive: true });
   chip.addEventListener('focusin', hold);
   chip.addEventListener('focusout', release);
 }
@@ -7861,21 +7866,19 @@ function stopNowAirPreview() {
 }
 
 /**
- * Temps qu'il faut à un texte qui défile pour : lire → partir → revenir → reposer.
+ * Temps qu'il faut à un texte qui défile pour : lire → partir → reposer →
+ * revenir → reposer, c'est-à-dire **un cycle CSS entier**.
  *
- * L'animation est `alternate` × 2 (pas infinite) + `animation-delay` lecture.
- * Un cycle complet = delay + 2 × `--marquee-duration` + pause repos.
- *
- * Règle générale du site : **on ne change jamais un texte avant la fin de son
- * aller-retour**, et on ne relance pas un 2ᵉ cycle pendant l’attente.
+ * L'animation boucle (`infinite`), donc le seul instant où le texte est au
+ * repos *et* recalé au début est un multiple du cycle, après le délai de
+ * lecture initial. C'est là — et nulle part ailleurs — qu'on a le droit de le
+ * remplacer : **on ne change jamais un texte en pleine course.**
  */
 function marqueeRoundTripMs(el) {
   if (!el?.classList.contains('is-marquee')) return 0;
   const sec = parseFloat(el.style.getPropertyValue('--marquee-duration'));
   if (!Number.isFinite(sec) || sec <= 0) return 0;
-  return Math.ceil(sec * 1000 * MARQUEE_ROUND_TRIPS)
-    + MARQUEE_READ_DELAY_MS
-    + MARQUEE_REST_MS;
+  return Math.ceil(sec * 1000 * MARQUEE_CYCLE_RATIO) + MARQUEE_READ_DELAY_MS;
 }
 
 /**

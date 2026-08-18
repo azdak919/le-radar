@@ -1241,23 +1241,20 @@ assert(
 );
 assert(
   appJs.includes('function sportsCtaMayRotate')
-    && appJs.includes('SPORTS_CTA_ROTATE_MEDIA')
     && /const SPORTS_CTA_DWELL_MS\s*=\s*12000/.test(appJs)
     && appJs.includes('sportsCtaPaused'),
-  'app.js : rotation CTA (~12 s), au pointeur fin seulement, en pause au survol',
+  'app.js : rotation CTA (~12 s), en pause tant que la carte est tenue',
 );
-// Régression 2026-08-11 : SPORTS_CTA_ROTATE_MEDIA était déclaré *après* le
-// matchMedia(…) top-level → TDZ avalée par try/catch → mq null → CTA figée.
-{
-  const rotMediaIdx = appJs.indexOf("const SPORTS_CTA_ROTATE_MEDIA");
-  const mqInitIdx = appJs.indexOf('matchMedia(SPORTS_CTA_ROTATE_MEDIA)');
-  assert(
-    rotMediaIdx >= 0
-      && mqInitIdx >= 0
-      && rotMediaIdx < mqInitIdx,
-    'app.js : SPORTS_CTA_ROTATE_MEDIA déclaré avant matchMedia (pas de TDZ → CTA figée)',
-  );
-}
+// 2026-08-18 : la rotation était réservée à `(hover: hover) and (pointer: fine)`,
+// donc l'accroche restait figée sur téléphone une fois son défilement fini. Le
+// mécanisme de pause WCAG 2.2.2 est désormais l'appui maintenu — il existe au
+// doigt comme à la souris, la garde media n'a plus de raison d'être.
+assert(
+  !appJs.includes('SPORTS_CTA_ROTATE_MEDIA')
+    && !appJs.includes('sportsCtaRotateMq')
+    && /bindSportsCtaPause[\s\S]{0,900}?addEventListener\('pointercancel', release/.test(appJs),
+  'app.js : CTA sports tourne aussi au doigt, pause à l\'appui (pointercancel relâche)',
+);
 // Le marqueur temporel et la fraîcheur sont rendus dans la carte : title seul
 // est invisible au doigt (garde-fous marqueur-non-tronque et fraicheur-visible).
 assert(
@@ -1445,15 +1442,34 @@ assert(
     && !/Hors wide : une carte à la fois/.test(appJs),
   'app.js : cascade météo/sports tous écrans + marquee 1 cycle',
 );
-// Marquee site : 2 alternate both + delay — jamais infinite sur surfaces qui tournent.
+// Puces sports : 1 cycle par carte — la carte tourne ensuite, le texte suivant
+// repart de zéro. Rien à boucler ici, contrairement au dial.
 assert(
   !/sports-chip-scroll[^;]*infinite/.test(cssFlat)
     && !/sports-chip-scroll-sub[^;]*infinite/.test(cssFlat)
     && /sports-chip-scroll[^;]*\s2\s+alternate\s+both/.test(cssFlat)
     && /--sports-scroll-delay:\s*1\.6s/.test(cssFlat)
-    && /tunerMarquee[^;]*\s2\s+alternate\s+both/.test(cssFlat)
     && /MARQUEE_ROUND_TRIPS\s*=\s*2/.test(appJs),
-  'CSS/JS : marquees sports + dial = 1 cycle (2 alternate), delay 1.6s, pas infinite',
+  'CSS/JS : marquee sports = 1 cycle (2 alternate) par carte, delay 1.6s',
+);
+// Dial + pastilles sources : ces lignes-là ne tournent jamais (nom de poste,
+// établissement). Un `alternate × 2` les laissait tronquées pour le reste de la
+// visite → cycle bouclé, repos dans les keyframes, ratio partagé CSS/JS.
+assert(
+  /tunerMarquee[^;]*infinite\s+both/.test(cssFlat)
+    && /--marquee-cycle-ratio:\s*2\.5/.test(cssFlat)
+    && /calc\(var\(--marquee-duration[^)]*\)\s*\*\s*var\(--marquee-cycle-ratio/.test(cssFlat)
+    && /@keyframes tunerMarquee\s*\{\s*0%,\s*10%/.test(cssFlat)
+    && /MARQUEE_END_REST_RATIO\s*=\s*0\.25/.test(appJs)
+    && /MARQUEE_CYCLE_RATIO\s*=\s*MARQUEE_ROUND_TRIPS \+ MARQUEE_END_REST_RATIO \* 2/.test(appJs)
+    && /marqueeRoundTripMs[\s\S]{0,400}?MARQUEE_CYCLE_RATIO/.test(appJs),
+  'CSS/JS : marquee dial/filtres boucle (repos dans les keyframes), ratio 2.5 partagé',
+);
+// Le texte ne change qu'au repos : `marqueeRoundTripMs` doit couvrir le cycle
+// entier, pas seulement les deux allers.
+assert(
+  /\.is-marquee:hover > \.tuner-now-sub-text, \.is-marquee:active > \.tuner-now-sub-text \{ animation-play-state: paused/.test(cssFlat),
+  'style : marquee en pause au survol et à l\'appui (mécanisme WCAG 2.2.2)',
 );
 // Magazine mid : CSS 2 col dès 768 (iPad portrait). Le JS d'équilibre /
 // graine En bref / extraits mid doit partager ce seuil — à 900 px les
