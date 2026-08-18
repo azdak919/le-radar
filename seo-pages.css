@@ -683,7 +683,9 @@
 .seo-wire + .site-foot {
   max-width: var(--maxw);
   margin: 0 auto;
-  padding: 0 var(--pad) 48px;
+  /* Garder le même air que `.site-foot` : `padding: 0 …` collait le filet
+     à « Conçu avec… » (colonne droite en wide E). */
+  padding: 28px var(--pad) 48px;
   position: relative;
   border-top: 0;
 }

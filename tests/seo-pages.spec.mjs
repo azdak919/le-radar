@@ -382,7 +382,7 @@ test('wide E : faits packés et footer en colonnes, pas étalés', async ({ page
 });
 
 test('wide E : footer en 2 colonnes, liens en ligne, crédits à droite', async ({ page }) => {
-  for (const path of ['/?wide=e', '/sports/?wide=e', '/medias/?wide=e', '/kit-media/?wide=e']) {
+  for (const path of ['/?wide=e', '/sports/?wide=e', '/medias/?wide=e', '/kit-media/?wide=e', '/horaires/?wide=e']) {
     await page.setViewportSize({ width: 1920, height: 1080 });
     await page.goto(path, { waitUntil: 'domcontentloaded' });
     const foot = page.locator('.site-foot').first();
