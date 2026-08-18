@@ -373,10 +373,10 @@ html[data-wide-preview="e"] {
     opacity: 0.45 !important;
   }
 
-  /* Les deux slots restent toujours au plan : jamais masquer « À l'antenne ». */
+  /* Rien en ondes : masquer « À l'antenne », garder seulement « À venir ». */
   html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot--live[hidden],
   html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot--live.is-wide-absent {
-    display: flex !important;
+    display: none !important;
   }
 }
 

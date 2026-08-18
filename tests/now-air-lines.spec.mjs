@@ -665,6 +665,31 @@ test('wide CHOQ : la piste scindée ne déborde pas sur À venir', async ({ page
   expect(geo.liveRight, 'le titre live ne recouvre pas À venir').toBeLessThan(geo.nextLeft - 4);
 });
 
+test('wide : sans émission, masquer À l’antenne (pas « Rien à l’antenne »)', async ({ page }) => {
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await page.goto('/?wide=e', { waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => window.RadarAir?._pure && document.getElementById('tuner-nowair-wide'));
+
+  const report = await page.evaluate(() => {
+    const copy = window.RadarAir._pure.wideNowAirLiveCopy({ id: 'x' });
+    const liveSlot = document.querySelector('.tuner-wide-slot--live');
+    const wrap = document.getElementById('tuner-nowair-wide');
+    liveSlot.hidden = !!copy.hideLive;
+    liveSlot.classList.toggle('is-wide-absent', !!copy.hideLive);
+    wrap.classList.toggle('is-live-absent', !!copy.hideLive);
+    const cs = getComputedStyle(liveSlot);
+    return {
+      hideLive: copy.hideLive,
+      liveTitle: copy.liveTitle,
+      display: cs.display,
+    };
+  });
+
+  expect(report.hideLive).toBe(true);
+  expect(report.liveTitle).toBe('');
+  expect(report.display, 'le slot live doit disparaître').toBe('none');
+});
+
 test('wide : deux slots, deux lignes, jamais de titre écrasé', async ({ page }) => {
   await page.setViewportSize({ width: 1600, height: 900 });
   await page.goto('/?wide=e', { waitUntil: 'domcontentloaded' });
@@ -700,18 +725,19 @@ test('wide : deux slots, deux lignes, jamais de titre écrasé', async ({ page }
       liveWrap: lt.whiteSpace,
       nextWrap: nt.whiteSpace,
       liveClamp: lt.webkitLineClamp,
-      hideLive: window.RadarAir._pure.wideNowAirLiveCopy({ id: 'x' }).hideLive,
+      empty: window.RadarAir._pure.wideNowAirLiveCopy({ id: 'x' }),
     };
   });
 
-  expect(geo.liveHidden, 'À l’antenne toujours visible').toBe(false);
+  expect(geo.liveHidden, 'slot live forcé visible pour la géométrie').toBe(false);
   expect(geo.liveWrap).toBe('nowrap');
   expect(geo.nextWrap).toBe('nowrap');
   expect(geo.liveH, 'titre live = 1 ligne').toBeLessThan(22);
   expect(geo.nextH, 'titre à venir = 1 ligne').toBeLessThan(22);
   expect(geo.liveW, 'slot live pas écrasé').toBeGreaterThan(120);
   expect(geo.nextW, 'slot à venir pas écrasé').toBeGreaterThan(120);
-  expect(geo.hideLive).toBe(false);
+  expect(geo.empty.hideLive, 'sans émission : masquer À l’antenne').toBe(true);
+  expect(geo.empty.liveTitle, 'pas de « Rien à l’antenne »').toBe('');
 
   const full = await page.evaluate(() => {
     const nextT = document.querySelector('[data-wide-next-title]');
