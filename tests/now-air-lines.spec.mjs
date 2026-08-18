@@ -638,3 +638,34 @@ test('wide : deux slots, deux lignes, jamais de titre écrasé', async ({ page }
   expect(full.overflow, 'pas d’ellipse sur le titre wide').not.toBe('ellipsis');
   expect(full.sw, 'titre à venir entier').toBeLessThanOrEqual(full.cw + 1);
 });
+
+test('wide E : le carré du synthétiseur n’est pas vide (accueil + kit média)', async ({ page }) => {
+  for (const path of ['/', '/kit-media/', '/medias/']) {
+    await page.setViewportSize({ width: 1920, height: 1080 });
+    await page.goto(path, { waitUntil: 'domcontentloaded' });
+    const tuner = page.locator('#tuner');
+    await expect(tuner, `${path}: #tuner`).toBeVisible({ timeout: 15_000 });
+    await expect(tuner, `${path}: is-dial-ready`).toHaveClass(/is-dial-ready/, { timeout: 15_000 });
+    const name = page.locator('#tuner-now-name');
+    await expect(name, `${path}: L1 dans le DOM`).toBeVisible();
+    const snapshot = await name.evaluate((el) => ({
+      text: (el.textContent || '').trim(),
+      opacity: Number(getComputedStyle(el).opacity),
+    }));
+    expect(snapshot.text.length, `${path}: L1 vide`).toBeGreaterThan(0);
+    expect(snapshot.opacity, `${path}: L1 opacity 0`).toBeGreaterThan(0.5);
+  }
+});
+
+test('compact : le carré du synthétiseur reste lisible', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const tuner = page.locator('#tuner');
+  await expect(tuner).toHaveClass(/is-dial-ready/, { timeout: 15_000 });
+  const snapshot = await page.locator('#tuner-now-name').evaluate((el) => ({
+    text: (el.textContent || '').trim(),
+    opacity: Number(getComputedStyle(el).opacity),
+  }));
+  expect(snapshot.text.length).toBeGreaterThan(0);
+  expect(snapshot.opacity).toBeGreaterThan(0.5);
+});
