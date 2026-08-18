@@ -43,7 +43,7 @@ concurrency:
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     permissions:
       contents: read
 
@@ -59,11 +59,26 @@ jobs:
       - name: Install test dependencies
         run: npm ci
 
-      - name: Install Chromium
-        run: npx playwright install --with-deps chromium
+      # Syntaxe / données / PWA : pas besoin de navigateur. Échoue vite
+      # si le hang est uniquement Playwright/Chromium.
+      - name: Static and data checks
+        run: npm run check
 
-      - name: Run syntax, data, PWA and browser checks
-        run: npm test
+      # ubuntu-latest a déjà les libs système. `--with-deps` (apt-get)
+      # peut rester bloqué 10+ min ; le binaire Playwright suffit.
+      - name: Cache Playwright Chromium
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install Chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium
+
+      - name: Browser checks
+        run: npm run test:browser
 
       - name: Upload browser traces on failure
         if: failure()

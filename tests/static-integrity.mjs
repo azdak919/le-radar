@@ -274,22 +274,39 @@ assert(
   ) === 'Miguel Andrade',
   'sanitize Commons credit → nom court'
 );
-assert(sc('Sam311 ( talk ) ( Uploads )') === 'Sam311', 'strip ( talk ) ( Uploads )');
 assert(
-  sc('Andrea Schaffer from Sydney, Australia') === 'Andrea Schaffer',
-  'strip from Place'
+  commonsCredit.sanitizeCommonsCredit('Andrea Schaffer from Sydney, Australia') === 'Andrea Schaffer',
+  'sanitize : retirer l’origine de l’auteur (from Sydney…)',
 );
+assert(
+  commonsCredit.formatMastheadCredit({
+    credit: 'Andrea Schaffer from Sydney, Australia',
+    title: 'Cap Bon-Ami, Forillon National Park (7612987688)',
+  }).label === 'Andrea Schaffer — Forillon',
+  'crédit mât : nom + lieu de la photo',
+);
+assert(
+  commonsCredit.sanitizeCommonsCredit(
+    'MontrealNasa.jpg : NASA derivative work: MTLskyline',
+  ) === 'NASA',
+  'sanitize : fichier Commons + derivative work → NASA',
+);
+assert(
+  commonsCredit.sanitizeCommonsCredit('NASA / Denis Sarrazin') ===
+    'NASA / Denis Sarrazin',
+  'sanitize : ne pas écraser NASA / photographe',
+);
+assert(
+  commonsCredit.formatMastheadCredit({
+    credit: 'Ed7789',
+    title: 'Île-Perrot train station (exo)',
+  }).label === 'Ed7789 — Île-Perrot',
+  'crédit mât : Île-Perrot (sans \\b ASCII)',
+);
+assert(sc('Sam311 ( talk ) ( Uploads )') === 'Sam311', 'strip ( talk ) ( Uploads )');
 assert(sc('DannysFlamand') === 'Dannys Flamand', 'camelCase collé');
 assert(sc('Jeangagnon') === 'Jean Gagnon', 'alias Jeangagnon');
 assert(sc('Danielhbordeleau') === 'Daniel H. Bordeleau', 'alias Danielhbordeleau');
-assert(
-  sc('Nichole Ouellette/ouellette001.com') === 'Nichole Ouellette',
-  'strip /site.tld'
-);
-assert(
-  sc('MontrealNasa.jpg : NASA derivative work: MTLskyline ( talk )') === 'MTLskyline',
-  'derivative work + talk'
-);
 assert(
   sc('You may select the license of your choice.') === 'Wikimedia Commons',
   'placeholder licence → Commons'
@@ -297,6 +314,66 @@ assert(
 assert(
   sc('Blanchardb- Me • MyEars • MyMouth -timed') === 'Blanchardb',
   'signature spam → tête'
+);
+for (const rel of [
+  'data/quebec-backgrounds.json',
+  'data/quebec-favorites-backgrounds.json',
+  'data/quebec-university-backgrounds.json',
+  'data/quebec-pomo-backgrounds.json',
+  'data/quebec-nations-backgrounds.json',
+]) {
+  const bank = JSON.parse(readFileSync(join(root, rel), 'utf8'));
+  for (const photo of bank.photos || []) {
+    assert(
+      !/\bfrom\s+[A-Z]/i.test(photo.credit || ''),
+      `${rel}: origine auteur interdite dans le crédit (${photo.title})`,
+    );
+    const formatted = commonsCredit.formatMastheadCredit(photo);
+    assert(
+      !/\bfrom\s+[A-Z]/i.test(formatted.label),
+      `${rel}: label crédit contient encore from… (${photo.title})`,
+    );
+    if (photo.place) {
+      assert(
+        !/panorama|skyline|landscape|cropped|f[ée]erie|kayaking|sunrise over/i.test(photo.place),
+        `${rel}: place ressemble à un titre (${photo.title} → ${photo.place})`,
+      );
+    }
+  }
+}
+assert(
+  commonsCredit.sanitizeCommonsCredit('Nichole Ouellette/ouellette001.com') ===
+    'Nichole Ouellette',
+  'sanitize : domaine collé au nom',
+);
+assert(
+  commonsCredit.sanitizeCommonsCredit('Livernois, Jules-Ernest, 1851-1933') ===
+    'Jules-Ernest Livernois',
+  'sanitize : Last, First, années',
+);
+assert(
+  commonsCredit.formatMastheadCredit({
+    credit: 'Wilfredor',
+    title: 'Cityscapes of Quebec City (skyline 2)',
+    description: 'Quebec city skyline',
+  }).label === 'Wilfredor — Québec',
+  'crédit mât : Quebec City → Québec',
+);
+assert(
+  commonsCredit.formatMastheadCredit({
+    credit: 'Quentin Schulz',
+    title: 'Sunrise Over Montréal (250731329)',
+  }).label === 'Quentin Schulz — Montréal',
+  'crédit mât : Sunrise Over Montréal → Montréal',
+);
+assert(
+  commonsCredit.formatMastheadCredit({
+    credit: 'Gaetan Lebret',
+    title: 'Kayaking with Whales',
+    description: 'There is so much whales around the archipelago during summer',
+    place: 'Kayaking with Whales',
+  }).label === 'Gaetan Lebret',
+  'crédit mât : ne pas prendre un titre descriptif pour un lieu',
 );
 for (const rel of [
   'quebec-backgrounds-data.js',
@@ -378,6 +455,13 @@ assert(laPigePage.includes('Voir les articles les plus récents'), 'journal : CT
 assert(laPigePage.includes('Voir les archives'), 'journal : CTA archives requis');
 assert(laPigePage.includes('seo-source-actions'), 'journal : rangée d’actions récents + archives requise');
 assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lien Archives partagé requis');
+{
+  const kit = readFileSync(join(root, 'kit-media/index.html'), 'utf8');
+  assert(kit.includes('Kit média'), 'kit-media : titre Kit média requis');
+  assert(kit.includes('assets/icon.svg'), 'kit-media : pictogramme téléchargeable requis');
+  assert(kit.includes('wordmark-on-dark.svg'), 'kit-media : mot-symbole sombre requis');
+  assert(kit.includes('wordmark-on-light.svg'), 'kit-media : mot-symbole clair requis');
+}
 const traitPage = readFileSync(join(root, 'journaux/le-trait-dunion/index.html'), 'utf8');
 assert(traitPage.includes('>Derniers articles<'), 'journal sans fil frais : même H2 que les autres fiches');
 assert(traitPage.includes('fenêtre de fraîcheur'), 'journal sans fil frais : message de fraîcheur (sessions) requis');
@@ -404,10 +488,21 @@ assert(seoPagesCss.includes('var(--status-upcoming-soft)'), 'horaire : ambre « 
 assert(seoPagesCss.includes('.seo-slot--playing'), 'horaire : état de lecture réelle requis');
 assert(seoPagesCss.includes('animation: seo-live-pulse'), 'horaire : pulsation live requise');
 assert(seoPagesCss.includes('animation: seo-upcoming-pulse'), 'horaire : pulsation du prochain créneau requise');
+assert(seoPagesCss.includes('.seo-slot--pulse'), 'horaire : un seul créneau pulse à la fois');
 assert(seoPagesCss.includes('prefers-reduced-motion'), 'horaire : réduction des animations requise');
 const appJs = readFileSync(join(root, 'app.js'), 'utf8');
 assert(appJs.includes('syncSeoSchedulePlayback()'), 'horaire : synchronisation avec la lecture réelle requise');
 assert(appJs.includes("slot.classList.toggle('seo-slot--playing'"), 'horaire : classe de lecture réelle requise');
+assert(appJs.includes('seo-slot--pulse'), 'horaire : classe pulse unique requise');
+assert(appJs.includes('#horaire-avenir'), 'horaire : ancre à venir requise');
+assert(appJs.includes('function ensureMastheadBoards'), 'mât : météo + sports posés hors accueil');
+assert(
+  readFileSync(join(root, 'scripts/seo-pages-lib.js'), 'utf8').includes('renderMastheadBoards'),
+  'SEO : gabarit météo + sports partagé requis',
+);
+assert(readFileSync(join(root, 'feeds.html'), 'utf8').includes('id="masthead-weather"'), 'feeds : bandeau météo requis');
+assert(readFileSync(join(root, 'feeds.html'), 'utf8').includes('id="masthead-sports-strip"'), 'feeds : bandeau sports requis');
+assert(readFileSync(join(root, 'sports/index.html'), 'utf8').includes('id="masthead-weather"'), 'sports : bandeau météo requis');
 const scheduleSeed = readFileSync(join(root, 'radio-schedules.seed.json'), 'utf8');
 assert(scheduleSeed.includes('"type": "cjlo"'), 'horaire CJLO : source conservée malgré une panne temporaire');
 const offlineHtml = readFileSync(join(root, 'offline.html'), 'utf8');
@@ -926,13 +1021,62 @@ assert(
   /const SPORTS_CTA_TAG_LIVE\s*=\s*['"]En cours['"]/.test(appJs),
   'app.js : le direct est le seul cas qui remplace « Sports » (override mainteneur)',
 );
-// Le point live était créé sans condition et pulsait toute l'année, y compris
-// pour un match à quinze jours. Il ne doit plus exister hors direct.
+// Voyant CTA : CSS persistant (pas un span JS, pas lié à la radio).
 assert(
-  /if \(live\) \{ const dot = document\.createElement\('span'\); dot\.className = 'sports-chip__cta-live';/
-    .test(appFlat),
-  'app.js : le point live n\'est rendu que pendant un match en cours',
+  !/dot\.className = 'sports-chip__cta-live'/.test(appJs),
+  'app.js : plus de point live JS — le voyant est le ::before CSS',
 );
+assert(
+  !/chev\.className = 'sports-chip__cta-chev'/.test(appJs)
+    && !/chev\.textContent = '→'/.test(appJs),
+  'app.js : plus de flèche → sur la CTA sports (place au texte)',
+);
+assert(
+  !/data-radar-playing="1"[^{]*sports-chip__cta-tag::before/.test(cssFlat)
+    && !/tuner\.is-playing\s*~[^{]*sports-chip__cta-tag::before/.test(cssFlat)
+    && /\.sports-chip__cta-tag::before/.test(cssFlat)
+    && /onairPulse/.test(styleCss),
+  'style : voyant rouge CTA persistant (pas lié à la radio)',
+);
+{
+  const wideCss = readFileSync(join(root, 'dev/wide-desktop-preview.css'), 'utf8');
+  assert(
+    appJs.includes('function liveCopyFromPhases')
+      && appJs.includes('function composedAirPhases')
+      && /tuner-wide-slot__title[\s\S]*?white-space:\s*nowrap/.test(wideCss)
+      && /tuner-wide-slot__title[\s\S]*?text-overflow:\s*clip/.test(wideCss)
+      && /hideLive:\s*false/.test(appJs)
+      && /min-width:\s*8rem/.test(wideCss)
+      && !/tuner-wide-slot--next[\s\S]{0,80}max-width:\s*20rem/.test(wideCss),
+    'antenne : 2 lignes, titre entier en wide (pas d’ellipse, pas de wrap)',
+  );
+}
+assert(
+  styleCss.includes('.news-list:not([data-ready]) > .article')
+    && appJs.includes("NEWS_LIST.dataset.ready = '1'")
+    && indexHtml.includes('.news-list:not([data-ready]) > .article'),
+  'fil : prerendu SEO masqué jusqu’au magazine (squelette + noscript)',
+);
+assert(
+  appJs.includes('function markUiReady')
+    && styleCss.includes('.masthead-weather:not([data-ready])')
+    && styleCss.includes('.filters-panel:not([data-ready])')
+    && styleCss.includes('.masthead-sports-strip[hidden]:not(.is-empty)'),
+  'chrome : météo / sports / sources réservés puis révélés (anti-CLS)',
+);
+assert(
+  /--ui-reveal-ms:\s*280ms/.test(styleCss)
+    && /transition:\s*opacity var\(--ui-reveal-ms\)/.test(styleCss),
+  'chrome : fondu d’apparition court (pas de délai réseau)',
+);
+{
+  const photoCss = readFileSync(join(root, 'style-masthead.css'), 'utf8');
+  assert(
+    photoCss.includes('.masthead-home:hover:not(.is-active):not([aria-current="page"])')
+      && photoCss.includes('.masthead-home[aria-current="page"]:hover'),
+    'mât : hover n’efface pas la pastille Accueil courante',
+  );
+}
 assert(
   appJs.includes('function sportsGameIsLive')
     && appJs.includes('function sportsCtaState')
@@ -1027,23 +1171,21 @@ assert(
 );
 
 assert(
-  appJs.includes('rollSportsCtaLabel')
-    && appJs.includes('sports-chip__cta-stack')
-    && appJs.includes('is-rolling-out')
-    && appJs.includes('is-rolling-in')
-    && /const SPORTS_CTA_ROLL_MS\s*=\s*280/.test(appJs)
+  appJs.includes('sports-chip__cta-stack')
     && appJs.includes('sportsDedupeMatchSlides')
     && appJs.includes('sportsMatchDedupeKey')
-    && appJs.includes('sportsSoftSportDiversity'),
-  'app.js : CTA = dédup matchs + roulement vertical 2 couches (pas de trou)',
+    && appJs.includes('sportsSoftSportDiversity')
+    && !/CTA : carte stable — roulement/.test(appJs)
+    && /if \(animate && !sportsReducedMotion\) a\.classList\.add\('is-arriving'\)/.test(appJs),
+  'app.js : CTA = dédup matchs + même leave/arrive carte entière que les scores',
 );
 assert(
   styleCss.includes('sports-chip__cta-stack')
-    && styleCss.includes('is-rolling-out')
-    && styleCss.includes('is-rolling-in')
-    && styleCss.includes('@keyframes sports-cta-roll-in')
-    && styleCss.includes('@keyframes sports-cta-roll-out'),
-  'style : stack CTA 2 couches + keyframes du roulement vertical',
+    && styleCss.includes('@keyframes sports-chip-leave')
+    && styleCss.includes('@keyframes sports-chip-arrive')
+    && /\.sports-chip--cta\.is-leaving/.test(cssFlat)
+    && /\.sports-chip--cta\.is-arriving/.test(cssFlat),
+  'style : CTA rejoue sports-chip-leave / sports-chip-arrive (carte entière)',
 );
 // Roulement et marquee vivent sur deux nœuds : translateY sur la couche,
 // translateX sur le texte. Sur le même nœud, ils se marchaient dessus.
@@ -1154,6 +1296,12 @@ assert(
     && appJs.includes('SPORTS_SCROLL_READ_DELAY_MS')
     && appJs.includes('MARQUEE_READ_DELAY_MS')
     && appJs.includes('function weatherBoardDwellMs')
+    && appJs.includes('function scheduleWeatherCascade')
+    && appJs.includes('function poolHasUncoveredSource')
+    && appJs.includes('function pickBriefSidebar')
+    && appJs.includes('function sportsBoardHoldMs')
+    && /WEATHER_CASCADE_STEP_MS\s*=\s*440/.test(appJs)
+    && /SPORTS_CASCADE_STEP_MS\s*=\s*520/.test(appJs)
     && appJs.includes('SPORTS_CHIP_LEAVE_MS'),
   'app.js : rotation sports/météo + marquee 1 cycle (delay + aller-retour + repos)',
 );

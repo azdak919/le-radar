@@ -130,6 +130,9 @@
             <span id="today-date"></span>
             <time id="today-time" class="masthead-time" aria-label="Current time"></time>
           </span>
+          <div id="masthead-weather" class="masthead-weather hidden" aria-label="Québec weather" aria-live="polite">
+            <span class="masthead-weather__board" aria-label="Current conditions"></span>
+          </div>
           <div class="masthead-actions">
             <a href="../../../" class="masthead-icon masthead-home" data-home-nav title="Home" aria-label="Home — LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg></a>
             <a href="../../../feeds.html" class="masthead-icon masthead-rss" title="RSS feed" aria-label="Subscribe to the LE-RADAR.ca RSS feed"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83C19.56 12.06 12.94 5.44 4 4.44z"/><path d="M4 10.11v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.46-4.42-9.9-9.9-9.9z"/></svg></a>
@@ -268,6 +271,12 @@
     <!-- Lecteur natif : requis pour la lecture en arrière-plan (écran verrouillé). -->
     <audio id="radar-player" class="sr-only" preload="none" playsinline webkit-playsinline x-webkit-airplay="allow" aria-hidden="true"></audio>
 
+    <!-- Repli mobile : quand le masthead n'a plus de place, app.js déplace
+         #masthead-weather ici (même carte que sur bureau). -->
+    <div id="masthead-weather-dock" class="masthead-weather-dock"></div>
+
+    <!-- Scoreboard RSEQ / unis QC : sous la radio (mobile + bureau). -->
+    <div id="masthead-sports-strip" class="masthead-sports-strip" hidden aria-label="Québec student sports scores" aria-live="polite"></div>
 
     <main class="wire seo-wire">
       <nav class="seo-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><a href="../../../en/media/">Student media</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><a href="../../../en/schedules/">Campus radio schedules</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><span aria-current="page">CJLO 1690 AM</span></nav>
@@ -550,9 +559,9 @@
             <li data-schedule-start="16:00" data-schedule-end="17:00"><time class="seo-slot__time">16:00<span class="seo-slot__dash" aria-hidden="true">–</span>17:00</time><span class="seo-slot__title"><a href="http://www.cjlo.com/shows/dreamscapes" target="_blank" rel="noopener noreferrer">Dreamscapes</a></span></li>
             <li data-schedule-start="17:00" data-schedule-end="18:00"><time class="seo-slot__time">17:00<span class="seo-slot__dash" aria-hidden="true">–</span>18:00</time><span class="seo-slot__title"><a href="http://www.cjlo.com/shows/the-pressure-drop" target="_blank" rel="noopener noreferrer">The Pressure Drop</a></span></li>
             <li data-schedule-start="18:00" data-schedule-end="19:00"><time class="seo-slot__time">18:00<span class="seo-slot__dash" aria-hidden="true">–</span>19:00</time><span class="seo-slot__title"><a href="http://www.cjlo.com/shows/voice-of-the-voiceless" target="_blank" rel="noopener noreferrer">Voice of the Voiceless</a></span></li>
-            <li class="seo-slot--live" data-schedule-start="19:00" data-schedule-end="20:00" aria-label="On air : Queer Chaos"><time class="seo-slot__time">19:00<span class="seo-slot__dash" aria-hidden="true">–</span>20:00</time><span class="seo-slot__title"><a href="http://www.cjlo.com/shows/queer-chaos" target="_blank" rel="noopener noreferrer">Queer Chaos</a></span></li>
+            <li data-schedule-start="19:00" data-schedule-end="20:00"><time class="seo-slot__time">19:00<span class="seo-slot__dash" aria-hidden="true">–</span>20:00</time><span class="seo-slot__title"><a href="http://www.cjlo.com/shows/queer-chaos" target="_blank" rel="noopener noreferrer">Queer Chaos</a></span></li>
             <li data-schedule-start="20:00" data-schedule-end="21:00"><time class="seo-slot__time">20:00<span class="seo-slot__dash" aria-hidden="true">–</span>21:00</time><span class="seo-slot__title"><a href="http://www.cjlo.com/shows/in-the-garage" target="_blank" rel="noopener noreferrer">In The Garage</a></span></li>
-            <li data-schedule-start="21:00" data-schedule-end="22:00"><time class="seo-slot__time">21:00<span class="seo-slot__dash" aria-hidden="true">–</span>22:00</time><span class="seo-slot__title"><a href="http://www.cjlo.com/shows/lektor-decoder" target="_blank" rel="noopener noreferrer">LEKTOR DECODER</a></span></li>
+            <li class="seo-slot--live" data-schedule-start="21:00" data-schedule-end="22:00" aria-label="On air : LEKTOR DECODER"><time class="seo-slot__time">21:00<span class="seo-slot__dash" aria-hidden="true">–</span>22:00</time><span class="seo-slot__title"><a href="http://www.cjlo.com/shows/lektor-decoder" target="_blank" rel="noopener noreferrer">LEKTOR DECODER</a></span></li>
             <li data-schedule-start="22:00" data-schedule-end="23:00"><time class="seo-slot__time">22:00<span class="seo-slot__dash" aria-hidden="true">–</span>23:00</time><span class="seo-slot__title"><a href="http://www.cjlo.com/shows/past-tense" target="_blank" rel="noopener noreferrer">Past Tense</a></span></li>
             <li data-schedule-start="23:00" data-schedule-end="00:00"><time class="seo-slot__time">23:00<span class="seo-slot__dash" aria-hidden="true">–</span>00:00</time><span class="seo-slot__title"><a href="http://www.cjlo.com/shows/cjlos-alternative-mega-mix" target="_blank" rel="noopener noreferrer">CJLO's Alternative Mega Mix</a></span></li>
           </ul>
@@ -716,6 +725,8 @@
         <a href="../../../en/sports/" data-sports-reset target="_blank" rel="noopener noreferrer">Sports</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../../archives/">Archives</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../../en/media-kit/">Media kit</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../../radios/cjlo/" hreflang="fr-CA">Français</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>

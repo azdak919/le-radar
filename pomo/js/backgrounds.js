@@ -159,69 +159,33 @@ function safeHttpsUrl(url) {
   }
 }
 
-/**
- * Commons → nom court (miroir scripts/commons-credit-lib.js + mât sanitizeBgCredit).
- * talk/Uploads, from Place, camelCase, alias Jeangagnon / Danielhbordeleau.
- */
+/** Commons « machine-readable author… » → nom court (voir scripts/commons-credit-lib.js). */
 function _sanitizeCommonsCredit(raw) {
   if (raw == null) return '';
-  let s = String(raw)
-    .replace(/\u00a0/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+  let s = String(raw).replace(/\s+/g, ' ').trim();
   if (!s) return '';
   let m = s.match(
     /no machine-readable author provided\.?\s*(.+?)\s+assumed\s*\(\s*based on copyright claims\s*\)\.?/i
   );
-  if (m) return _finalizePomoCreditName(m[1]);
+  if (m) return m[1].replace(/^[\s,;:.-]+|[\s,;:.-]+$/g, '').trim().slice(0, 80);
   m = s.match(
     /aucun auteur lisible par machine n['’]est fourni[.,]?\s*(.+?)\s+l['’]a\s+suppos[ée]/i
   );
-  if (m) return _finalizePomoCreditName(m[1]);
+  if (m) return m[1].replace(/^[\s,;:.-]+|[\s,;:.-]+$/g, '').trim().slice(0, 80);
   if (/^no machine-readable author provided\.?$/i.test(s)) return 'Wikimedia Commons';
   if (/^aucun auteur lisible par machine/i.test(s)) return 'Wikimedia Commons';
-  if (/you may select the license of your choice/i.test(s)) return 'Wikimedia Commons';
-
-  m = s.match(/derivative\s+work:\s*(.+)$/i);
-  if (m) {
-    s = m[1].trim();
-  } else {
-    m = s.match(/^[^\s:]+\.(?:jpe?g|png|gif|webp)\s*:\s*(.+)$/i);
-    if (m) s = m[1].trim();
+  s = s.replace(/\s+from\s+[A-ZÀ-Ÿ][\wÀ-ÿ.'’\-]*(?:,?\s+[A-ZÀ-Ÿ][\wÀ-ÿ.'’\-]*){0,5}\s*$/u, '').trim();
+  s = s.replace(/^[\w.\-]+\.(?:jpe?g|png|gif|webp)\s*:\s*/i, '');
+  s = s.replace(/\s*derivative work:\s*\S+/ig, '').trim();
+  s = s.replace(/\/[a-z0-9._-]+\.[a-z]{2,}(?:\/\S*)?$/i, '').trim();
+  if (/ville de montr[ée]al/i.test(s)) s = 'Ville de Montréal';
+  s = s.replace(/\s*[-–—]\s*Me\s*[•·].*$/i, '').trim();
+  if (/^nasa\b/i.test(s)) {
+    const courtesy = s.match(/courtesy of\s+(.+?)\.?$/i);
+    if (courtesy) s = `NASA / ${courtesy[1].replace(/\.$/, '').trim()}`;
+    else if (/^nasa\.?\s*$/i.test(s)) s = 'NASA';
   }
-
-  s = s.replace(
-    /\s*\(\s*(?:talk|discussion|uploads|t[eé]l[eé]versements|contribs?|contributions)\s*\)/gi,
-    ''
-  );
-  s = s.replace(/\/[a-z0-9][a-z0-9.-]*\.[a-z]{2,}(?:\/\S*)?$/i, '');
-  s = s.replace(
-    /\s+from\s+(?:North\s+)?[\p{L}][\p{L}\d'’.\-]*(?:\s+[\p{L}][\p{L}\d'’.\-]*)*(?:,\s*[\p{L}][\p{L}\d'’.\-]*(?:\s+[\p{L}][\p{L}\d'’.\-]*)*)?\s*$/u,
-    ''
-  );
-  if (/[•]/.test(s) || /MyEars|MyMouth/i.test(s)) {
-    const head = s.split(/[-–—]/)[0].trim();
-    if (head.length >= 2) s = head;
-  }
-  return _finalizePomoCreditName(s);
-}
-
-function _finalizePomoCreditName(name) {
-  let s = String(name || '')
-    .replace(/^[\s,;:.-]+|[\s,;:.-]+$/g, '')
-    .replace(/\s*([—–])\s*/g, ' $1 ')
-    .replace(/\s*,\s*/g, ', ')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .slice(0, 80);
-  if (!s) return '';
-  if (!/\s/.test(s) && s.length >= 8 && s.length <= 48 && /[a-z][A-Z]/.test(s)) {
-    s = s.replace(/([a-z])([A-Z])/g, '$1 $2');
-    s = s.replace(/(\p{L})\d{2,}$/u, '$1');
-  }
-  const aliasKey = s.toLowerCase().replace(/\s+/g, '');
-  if (aliasKey === 'jeangagnon') return 'Jean Gagnon';
-  if (aliasKey === 'danielhbordeleau') return 'Daniel H. Bordeleau';
+  if (/^jeangagnon$/i.test(s)) return 'Jean Gagnon';
   if (s.length > 72) {
     const head = s.split(/\s*[—–|]\s*|\s*\(/)[0].trim();
     if (head.length >= 2 && head.length <= 60) return head;
@@ -450,7 +414,12 @@ function _applyBackground(url, creditText, linkUrl, source, title = '', bgMeta =
     credit.textContent = '';
     const safeLink = safeHttpsUrl(linkUrl);
     // Commons boilerplate → nom court (aligné mât / commons-credit-lib)
-    const creditLabel = _sanitizeCommonsCredit(creditText);
+    const place = bgMeta && bgMeta.place ? String(bgMeta.place).trim() : '';
+    let creditLabel = _sanitizeCommonsCredit(creditText);
+    if (creditLabel && place && creditLabel.toLowerCase().indexOf(place.toLowerCase()) < 0
+        && place.length <= 36 && !/panorama|skyline|landscape|cropped/i.test(place)) {
+      creditLabel = `${creditLabel} — ${place}`;
+    }
     if (source === 'Unsplash' || source === 'Pexels') {
       const titlePart = title ? `«${title}» · ` : '';
       credit.appendChild(document.createTextNode(`Photo: ${titlePart}`));
