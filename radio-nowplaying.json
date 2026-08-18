@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-18T20:49:21.557Z",
+  "updatedAt": "2026-08-18T21:21:17.505Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T20:48:50.056Z"
+      "checkedAt": "2026-08-18T21:20:53.274Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T20:48:52.395Z"
+      "checkedAt": "2026-08-18T21:20:55.646Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Montreal Sessions",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "Off The Hour: Local Journalism Stories",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Rez Rock Radio",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Montreal Sessions",
+      "showTitle": "Off The Hour: Local Journalism Stories",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T20:48:56.770Z"
+      "checkedAt": "2026-08-18T21:20:58.800Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Fluid Mosaic",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
-      },
-      "next": {
         "title": "Cherry Vamp and the Sonic Coffin",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
       },
+      "next": {
+        "title": "Bikini Brrroadcast",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
+      },
       "track": "",
-      "showTitle": "The Fluid Mosaic",
+      "showTitle": "Cherry Vamp and the Sonic Coffin",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T20:49:11.263Z"
+      "checkedAt": "2026-08-18T21:21:12.897Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T20:49:12.502Z"
+      "checkedAt": "2026-08-18T21:21:14.073Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "end": "19:00",
         "slug": "live"
       },
-      "track": "Éléonore Dessureault - Demence",
+      "track": "blesse - Style",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-18T20:49:21.208Z"
+      "checkedAt": "2026-08-18T21:21:17.155Z"
     }
   }
 }
