@@ -234,15 +234,19 @@
  * (même hauteur 29px, radius 5px, verre, ombre, typo) — une ligne
  * « MARDI 11 AOÛT 2026 · 14 h 00 » entière (météo plafonnée à 3 cartes).
  * Chrome = copie de .masthead-weather__city (photo dark / light).
+ *
+ * Date+heure **toujours visibles** dès qu’il y a #bg-photo-layer (pas
+ * d’attente .loaded) — masquage pré-photo retiré (retour mainteneur).
  */
-.masthead:has(#bg-photo-layer.loaded) .masthead-date {
+.masthead:has(#bg-photo-layer) .masthead-date {
   opacity: 1;
   transition: opacity 280ms ease-out;
   display: inline-flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
-  gap: 5px;
+  /* Espacement date · heure porté par width du · (pas gap + margin). */
+  gap: 0;
   box-sizing: border-box;
   height: 29px;
   /* Hug le texte (pas stretch 1fr → plaque vide). max-width:100 % = jamais
@@ -275,7 +279,7 @@
   text-transform: uppercase;
   overflow: hidden;
 }
-.masthead:has(#bg-photo-layer.loaded) .masthead-date #today-date {
+.masthead:has(#bg-photo-layer) .masthead-date #today-date {
   display: block;
   /* Ne pas flex-grow : sinon le chip s’étire au max-width pour rien. */
   flex: 0 1 auto;
@@ -286,9 +290,11 @@
   /* Rôle « name » météo */
   color: rgba(245, 246, 248, 0.96);
   line-height: 1.15;
+  /* letter-spacing parent : blanc après dernier glyphe → · trop collé à la date */
+  margin-inline-end: -0.03em;
 }
 /* Heure = même ligne, rôle « temp » météo (blanc dense, tabular) */
-.masthead:has(#bg-photo-layer.loaded) .masthead-date .masthead-time {
+.masthead:has(#bg-photo-layer) .masthead-date .masthead-time {
   position: static !important;
   top: auto !important;
   left: auto !important;
@@ -308,20 +314,28 @@
   color: #ffffff;
   text-transform: none;
 }
-/* Point médian : marges égales + léger décalage optique (caps date vs chiffres). */
-.masthead:has(#bg-photo-layer.loaded) .masthead-date .masthead-time::before {
+/* Point médian : boîte symétrique (gap parent = 0).
+ * Avant : gap 5px + margin 0.42em → espace gauche >> droite (· mal centré). */
+.masthead:has(#bg-photo-layer) .masthead-date .masthead-time::before {
   content: "·";
-  display: inline-block;
-  margin: 0 0.42em;
-  font-weight: 600;
-  font-size: 0.95em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 1.1em;
+  margin: 0;
+  padding: 0;
+  font-weight: 500;
+  font-size: 1em;
   line-height: 1;
-  transform: translateY(-0.04em);
+  /* Caps uppercase + chiffres tabular : léger remontée optique */
+  transform: translateY(-0.07em);
   color: rgba(245, 246, 248, 0.55);
   opacity: 1;
+  flex-shrink: 0;
 }
 /* Clair : même verre ardoise que les cartes météo en light */
-[data-theme="light"] .masthead:has(#bg-photo-layer.loaded) .masthead-date {
+[data-theme="light"] .masthead:has(#bg-photo-layer) .masthead-date {
   background:
     linear-gradient(90deg, rgba(200, 180, 120, 0.16) 0%, transparent 55%),
     rgba(54, 59, 68, 0.68);
@@ -334,7 +348,7 @@
   -webkit-backdrop-filter: blur(10px) saturate(1.06);
 }
 /* Dark explicite : même base que weather city photo (pas plus opaque) */
-[data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-date {
+[data-theme="dark"] .masthead:has(#bg-photo-layer) .masthead-date {
   background:
     linear-gradient(90deg, rgba(200, 180, 120, 0.22) 0%, transparent 55%),
     rgba(22, 24, 30, 0.82);
@@ -345,7 +359,7 @@
  * cellule — évite plaque vide ET chevauchement des actions.
  */
 @media (max-width: 1023.98px) {
-  .masthead:has(#bg-photo-layer.loaded) .masthead-date {
+  .masthead:has(#bg-photo-layer) .masthead-date {
     justify-self: start !important;
     width: max-content;
     max-width: 100%;
@@ -355,7 +369,7 @@
  * Mobile photo ≤600 : alignement vs icônes (pas de translateY).
  */
 @media (max-width: 599.98px) {
-  .masthead:has(#bg-photo-layer.loaded) .masthead-date {
+  .masthead:has(#bg-photo-layer) .masthead-date {
     transform: none;
     align-self: center;
     max-width: 100%;
@@ -368,7 +382,7 @@
  * besoin (MARDI… trop long pour ~130 px).
  */
 @media (max-width: 449.98px) {
-  .masthead:has(#bg-photo-layer.loaded) .masthead-date {
+  .masthead:has(#bg-photo-layer) .masthead-date {
     height: auto;
     min-height: 29px;
     max-width: 100%;
@@ -378,19 +392,19 @@
     gap: 1px;
     padding: 4px 8px;
   }
-  .masthead:has(#bg-photo-layer.loaded) .masthead-date #today-date {
+  .masthead:has(#bg-photo-layer) .masthead-date #today-date {
     flex: 0 1 auto;
     max-width: 100%;
     /* Pas d’ellipse figée : la cascade MASTHEAD_DATE_FORMATS raccourcit. */
     text-overflow: clip;
   }
-  .masthead:has(#bg-photo-layer.loaded) .masthead-date .masthead-time {
+  .masthead:has(#bg-photo-layer) .masthead-date .masthead-time {
     margin-left: 0;
     font-size: 10px;
     line-height: 1.2;
     font-weight: 800;
   }
-  .masthead:has(#bg-photo-layer.loaded) .masthead-date .masthead-time::before {
+  .masthead:has(#bg-photo-layer) .masthead-date .masthead-time::before {
     content: none;
   }
 }
@@ -568,7 +582,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .masthead:has(#bg-photo-layer.loaded) .masthead-date {
+  .masthead:has(#bg-photo-layer) .masthead-date {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     background: rgba(22, 24, 30, 0.92);
@@ -1052,7 +1066,7 @@ a { color: inherit; }
      jamais — exactement le piège déjà documenté pour le volet mobile. */
   .masthead-date { grid-area: date; justify-self: stretch; min-width: 0; }
   /* Photo : chip date = max-content (voir .masthead:has(...).masthead-date). */
-  .masthead:has(#bg-photo-layer.loaded) .masthead-date {
+  .masthead:has(#bg-photo-layer) .masthead-date {
     justify-self: start;
     min-width: 0;
   }

@@ -140,7 +140,7 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b3/Observatoire_wahsipekuk.jpg",
-    credit: "Irksome Buccaneer2635",
+    credit: "Irksome Buccaneer",
     link: "https://commons.wikimedia.org/wiki/File:Observatoire%20wahsipekuk.jpg",
     license: "CC BY-SA 4.0",
     title: "Observatoire wahsipekuk",

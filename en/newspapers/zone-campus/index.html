@@ -104,12 +104,7 @@
     <script src="../../../app.js" defer></script>
     <script src="../../../engage-prompt.js" defer></script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"Zone Campus","parentOrganization":{"@type":"CollegeOrUniversity","name":"Université du Québec à Trois-Rivières"},"inLanguage":"fr","subjectOf":{"@type":"ItemList","numberOfItems":10,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://zonecampus.ca/le-zone-campus-ferme-ses-portes-pour-la-saison-estivale/","name":"Le Zone Campus ferme ses portes pour la saison estivale!"},{"@type":"ListItem","position":2,"url":"https://zonecampus.ca/le-beat-critique-est-ce-que-lalgorithme-controle-vraiment-nos-gouts-musicaux/","name":"Le beat critique : Est-ce que l’algorithme contrôle vraiment nos goûts musicaux ?"},{"@type":"ListItem","position":3,"url":"https://zonecampus.ca/beach-party-a-luqtr-une-fin-de-session-sous-les-palmiers/","name":"Beach party à l’UQTR : une fin de session sous les palmiers"},{"@type":"ListItem","position":4,"url":"https://zonecampus.ca/carnet-dune-globe-trotteuse-nepal-au-coeur-des-cimes-de-lhimalaya/","name":"Carnet d’une globe-trotteuse : Népal – Au cœur des cimes de l’Himalaya"},{"@type":"ListItem","position":5,"url":"https://zonecampus.ca/capharnaum-les-finissants-en-arts-de-luqtr-a-la-rencontre-du-public/","name":"CAPHARNAÜM : les finissants en arts de l’UQTR à la rencontre du public"},{"@type":"ListItem","position":6,"url":"https://zonecampus.ca/le-beat-critique-la-fuite-en-avant-le-grand-retour-d-orelsan/","name":"Le beat critique : « La fuite en avant » le grand retour d’Orelsan ?"},{"@type":"ListItem","position":7,"url":"https://zonecampus.ca/faciliter-lacces-aux-etudes-postsecondaires-luqtr-recoit-un-don-de-540-000-pour-les-jeunes-autistes/","name":"Faciliter l’accès aux études postsecondaires : l’UQTR reçoit un don de 540 000 $ pour les jeunes autistes"},{"@type":"ListItem","position":8,"url":"https://zonecampus.ca/leconomie-du-pays-ce-qui-attend-le-quebec-si-washington-revoit-sa-copie-dans-la-negociation-de-laceum/","name":"L’économie du pays : Ce qui attend le Québec si Washington revoit sa copie dans la négociation de l’ACEUM"},{"@type":"ListItem","position":9,"url":"https://zonecampus.ca/paturn-place-a-la-danse-sur-le-campus-de-luqtr/","name":"Pa Turn : place à la danse sur le campus de l’UQTR"},{"@type":"ListItem","position":10,"url":"https://zonecampus.ca/dansencore-devoile-la-programmation-de-sa-32eme-edition/","name":"DANSEncore dévoile la programmation de sa 32ème édition"}]}}</script>
-      <!-- Lab local wide (localhost) — hors solitaire/pomo -->
-    <link rel="stylesheet" href="../../../dev/midwidth-preview.css" />
-    <link rel="stylesheet" href="../../../dev/wide-desktop-preview.css" />
-    <script src="../../../dev/midwidth-preview.js"></script>
-    <script src="../../../dev/wide-desktop-preview.js"></script>
-</head>
+  </head>
   <body>
     <header class="masthead">
       <!-- Fond photo (banque du Québec) — même bloc que l'accueil : la couche,
@@ -135,6 +130,9 @@
             <span id="today-date"></span>
             <time id="today-time" class="masthead-time" aria-label="Current time"></time>
           </span>
+          <div id="masthead-weather" class="masthead-weather hidden" aria-label="Québec weather" aria-live="polite">
+            <span class="masthead-weather__board" aria-label="Current conditions"></span>
+          </div>
           <div class="masthead-actions">
             <a href="../../../" class="masthead-icon masthead-home" data-home-nav title="Home" aria-label="Home — LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg></a>
             <a href="../../../feeds.html" class="masthead-icon masthead-rss" title="RSS feed" aria-label="Subscribe to the LE-RADAR.ca RSS feed"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83C19.56 12.06 12.94 5.44 4 4.44z"/><path d="M4 10.11v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.46-4.42-9.9-9.9-9.9z"/></svg></a>
@@ -273,6 +271,12 @@
     <!-- Lecteur natif : requis pour la lecture en arrière-plan (écran verrouillé). -->
     <audio id="radar-player" class="sr-only" preload="none" playsinline webkit-playsinline x-webkit-airplay="allow" aria-hidden="true"></audio>
 
+    <!-- Repli mobile : quand le masthead n'a plus de place, app.js déplace
+         #masthead-weather ici (même carte que sur bureau). -->
+    <div id="masthead-weather-dock" class="masthead-weather-dock"></div>
+
+    <!-- Scoreboard RSEQ / unis QC : sous la radio (mobile + bureau). -->
+    <div id="masthead-sports-strip" class="masthead-sports-strip" hidden aria-label="Québec student sports scores" aria-live="polite"></div>
 
     <main class="wire seo-wire">
       <nav class="seo-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><a href="../../../en/media/">Student media</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><span aria-current="page">Zone Campus</span></nav>
@@ -286,7 +290,7 @@
       </dl>
       <section class="seo-section">
         <h2>Latest articles</h2>
-        <p class="seo-headlines__status">Latest article: May 8, 2026 at 10:20 a.m. · Checked August 11, 2026 at 04:47 p.m.</p>
+        <p class="seo-headlines__status">Latest article: May 8, 2026 at 10:20 a.m. · Checked August 17, 2026 at 07:24 p.m.</p>
       <ul class="seo-headlines">
           <li class="seo-headline"><a class="seo-headline__title" href="https://zonecampus.ca/le-zone-campus-ferme-ses-portes-pour-la-saison-estivale/" target="_blank" rel="noopener noreferrer">Le Zone Campus ferme ses portes pour la saison estivale!</a><p class="seo-headline__meta"><time datetime="2026-05-08T14:20:26.000Z">2026-05-08 · 10:20 a.m.</time><span class="seo-headline__by">By Anaïs Gendron</span></p><p class="seo-headline__brief">Chers lecteurs et lectrices, nous tenons à vous annoncer la fermeture du journal Zone Campus pour la saison estivale 2026. En effet, du 8 mai au 8 septembre, nos activités seront suspendues pour laisser un repos bien mérité à notre équipe et ainsi s’assurer de revenir en force … <a class="seo-headline__more" href="https://zonecampus.ca/le-zone-campus-ferme-ses-portes-pour-la-saison-estivale/" target="_blank" rel="noopener noreferrer">Read more →</a></p></li>
           <li class="seo-headline"><a class="seo-headline__title" href="https://zonecampus.ca/le-beat-critique-est-ce-que-lalgorithme-controle-vraiment-nos-gouts-musicaux/" target="_blank" rel="noopener noreferrer">Le beat critique : Est-ce que l’algorithme contrôle vraiment nos goûts musicaux ?</a><p class="seo-headline__meta"><time datetime="2026-05-04T13:12:21.000Z">2026-05-04 · 09:12 a.m.</time><span class="seo-headline__by">By Chiara Guillon</span></p><p class="seo-headline__brief">On écoute de la musique tous les jours, souvent sans vraiment se demander la raison pour laquelle on tombe sur tel ou tel son. Entre les playlists, TikTok et les recommandations automatiques, une question se pose : est-ce que nos goûts musicaux sont encore vraiment les nôtres, … <a class="seo-headline__more" href="https://zonecampus.ca/le-beat-critique-est-ce-que-lalgorithme-controle-vraiment-nos-gouts-musicaux/" target="_blank" rel="noopener noreferrer">Read more →</a></p></li>
@@ -324,6 +328,8 @@
         <a href="../../../en/sports/" data-sports-reset target="_blank" rel="noopener noreferrer">Sports</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../../archives/">Archives</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../../en/media-kit/">Media kit</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../../journaux/zone-campus/" hreflang="fr-CA">Français</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>

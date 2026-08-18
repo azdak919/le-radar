@@ -100,13 +100,8 @@
     <script src="../../institution-acronyms-data.js" defer></script>
     <script src="../../app.js" defer></script>
     <script src="../../engage-prompt.js" defer></script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Archives — Montréal Campus | LE-RADAR.ca","url":"https://le-radar.ca/archives/montreal-campus/","description":"Archives de Montréal Campus, journal étudiant de UQAM (Français). Articles avec date, auteur et lien vers la publication originale.","isPartOf":{"@type":"WebSite","name":"LE-RADAR.ca","url":"https://le-radar.ca/"},"provider":{"@type":"Organization","name":"LE-RADAR.ca"},"mainEntity":{"@type":"ItemList","numberOfItems":5,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://montrealcampus.ca/2026/05/08/iulian-ciobanu-decouvrir-un-autre-monde-grace-au-boccia","item":{"@type":"CreativeWork","name":"Photoreportage : Iulian Ciobanu : découvrir « un autre monde » grâce au boccia","url":"https://montrealcampus.ca/2026/05/08/iulian-ciobanu-decouvrir-un-autre-monde-grace-au-boccia","author":{"@type":"Person","name":"Allyson Caron-Pelletier"},"datePublished":"2026-05-09T03:14:30.000Z","publisher":{"@type":"Organization","name":"Montréal Campus"},"inLanguage":"fr","about":{"@type":"CollegeOrUniversity","name":"UQAM"}}},{"@type":"ListItem","position":2,"url":"https://montrealcampus.ca/2026/05/04/incursion-chez-un-bastion-montrealais-du-vintage","item":{"@type":"CreativeWork","name":"Marché aux puces : Incursion chez un bastion montréalais du vintage","url":"https://montrealcampus.ca/2026/05/04/incursion-chez-un-bastion-montrealais-du-vintage","author":{"@type":"Person","name":"Julianne Mondoloni"},"datePublished":"2026-05-05T02:55:43.000Z","publisher":{"@type":"Organization","name":"Montréal Campus"},"inLanguage":"fr","about":{"@type":"CollegeOrUniversity","name":"UQAM"}}},{"@type":"ListItem","position":3,"url":"https://montrealcampus.ca/2026/05/04/cellulaire-messages-vocaux-textos-reseaux-sociaux","item":{"@type":"CreativeWork","name":"Textos ou vocaux, un débat de la génération Z","url":"https://montrealcampus.ca/2026/05/04/cellulaire-messages-vocaux-textos-reseaux-sociaux","author":{"@type":"Person","name":"Magalie Lagacé"},"datePublished":"2026-05-05T02:32:46.000Z","publisher":{"@type":"Organization","name":"Montréal Campus"},"inLanguage":"fr","about":{"@type":"CollegeOrUniversity","name":"UQAM"}}},{"@type":"ListItem","position":4,"url":"https://montrealcampus.ca/2026/05/02/tricot-club-uqam-artisanat","item":{"@type":"CreativeWork","name":"Tisser des liens une maille à la fois","url":"https://montrealcampus.ca/2026/05/02/tricot-club-uqam-artisanat","author":{"@type":"Person","name":"Juliette Benoît"},"datePublished":"2026-05-02T17:53:13.000Z","publisher":{"@type":"Organization","name":"Montréal Campus"},"inLanguage":"fr","about":{"@type":"CollegeOrUniversity","name":"UQAM"}}},{"@type":"ListItem","position":5,"url":"https://montrealcampus.ca/2026/05/01/gym-parents-bebes-sport-cobaye","item":{"@type":"CreativeWork","name":"Cobaye : S’entraîner avec un bébé, tout un sport!","url":"https://montrealcampus.ca/2026/05/01/gym-parents-bebes-sport-cobaye","author":{"@type":"Person","name":"Jade Trudelle"},"datePublished":"2026-05-01T22:08:52.000Z","publisher":{"@type":"Organization","name":"Montréal Campus"},"inLanguage":"fr","about":{"@type":"CollegeOrUniversity","name":"UQAM"}}}]}}</script>
-      <!-- Lab local wide (localhost) — hors solitaire/pomo -->
-    <link rel="stylesheet" href="../../dev/midwidth-preview.css" />
-    <link rel="stylesheet" href="../../dev/wide-desktop-preview.css" />
-    <script src="../../dev/midwidth-preview.js"></script>
-    <script src="../../dev/wide-desktop-preview.js"></script>
-</head>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Archives — Montréal Campus | LE-RADAR.ca","url":"https://le-radar.ca/archives/montreal-campus/","description":"Archives de Montréal Campus, journal étudiant de UQAM (Français). Articles avec date, auteur et lien vers la publication originale.","isPartOf":{"@type":"WebSite","name":"LE-RADAR.ca","url":"https://le-radar.ca/"},"provider":{"@type":"Organization","name":"LE-RADAR.ca"},"mainEntity":{"@type":"ItemList","numberOfItems":1,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://montrealcampus.ca/2026/05/08/iulian-ciobanu-decouvrir-un-autre-monde-grace-au-boccia","item":{"@type":"CreativeWork","name":"Photoreportage : Iulian Ciobanu : découvrir « un autre monde » grâce au boccia","url":"https://montrealcampus.ca/2026/05/08/iulian-ciobanu-decouvrir-un-autre-monde-grace-au-boccia","author":{"@type":"Person","name":"Allyson Caron-Pelletier"},"datePublished":"2026-05-09T03:14:30.000Z","publisher":{"@type":"Organization","name":"Montréal Campus"},"inLanguage":"fr","about":{"@type":"CollegeOrUniversity","name":"UQAM"}}}]}}</script>
+  </head>
   <body>
     <header class="masthead">
       <!-- Fond photo (banque du Québec) — même bloc que l'accueil : la couche,
@@ -132,6 +127,9 @@
             <span id="today-date"></span>
             <time id="today-time" class="masthead-time" aria-label="Heure actuelle"></time>
           </span>
+          <div id="masthead-weather" class="masthead-weather hidden" aria-label="Météo du Québec" aria-live="polite">
+            <span class="masthead-weather__board" aria-label="Conditions actuelles"></span>
+          </div>
           <div class="masthead-actions">
             <a href="../../" class="masthead-icon masthead-home" data-home-nav title="Accueil" aria-label="Accueil — LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg></a>
             <a href="../../feeds.html" class="masthead-icon masthead-rss" title="Flux RSS" aria-label="S’abonner au flux RSS de LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83C19.56 12.06 12.94 5.44 4 4.44z"/><path d="M4 10.11v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.46-4.42-9.9-9.9-9.9z"/></svg></a>
@@ -270,6 +268,12 @@
     <!-- Lecteur natif : requis pour la lecture en arrière-plan (écran verrouillé). -->
     <audio id="radar-player" class="sr-only" preload="none" playsinline webkit-playsinline x-webkit-airplay="allow" aria-hidden="true"></audio>
 
+    <!-- Repli mobile : quand le masthead n'a plus de place, app.js déplace
+         #masthead-weather ici (même carte que sur bureau). -->
+    <div id="masthead-weather-dock" class="masthead-weather-dock"></div>
+
+    <!-- Scoreboard RSEQ / unis QC : sous la radio (mobile + bureau). -->
+    <div id="masthead-sports-strip" class="masthead-sports-strip" hidden aria-label="Résultats sportifs étudiants du Québec" aria-live="polite"></div>
 
     <main class="wire seo-wire">
       <nav class="seo-crumbs" aria-label="Fil d’Ariane"><a href="../../">Accueil</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><a href="../">Archives</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><span aria-current="page">Montréal Campus</span></nav>
@@ -286,30 +290,6 @@
         <p class="seo-archive-record__meta">Par Allyson Caron-Pelletier · 8 mai 2026 à 23 h 14</p>
         <p>D’origine moldave, Iulian Ciobanu arrive au Canada en 2010 sans même connaître le boccia. Cinq ans plus tard, il quitte son emploi pour devenir joueur BC4 breveté avec l’équipe nationale. « Je n’avais jamais fait de sport de ma vie, mais j’ai toujours été curieux et capable de</p>
         <p class="seo-archive-record__origin"><a href="https://montrealcampus.ca/2026/05/08/iulian-ciobanu-decouvrir-un-autre-monde-grace-au-boccia" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p>
-      </article>
-      <article class="seo-archive-record">
-        <h2><a href="https://montrealcampus.ca/2026/05/04/incursion-chez-un-bastion-montrealais-du-vintage" target="_blank" rel="noopener noreferrer">Marché aux puces : Incursion chez un bastion montréalais du vintage</a></h2>
-        <p class="seo-archive-record__meta">Par Julianne Mondoloni · 4 mai 2026 à 22 h 55</p>
-        <p>Une odeur de vieux livres, des allées étroites, des kiosques débordant d’objets oubliés, le Marché aux puces Saint-Michel n’a pas changé. Alors que les friperies vintage et les reventes en ligne gagnent en popularité, ce précurseur tient bon. Il continue de séduire par ses</p>
-        <p class="seo-archive-record__origin"><a href="https://montrealcampus.ca/2026/05/04/incursion-chez-un-bastion-montrealais-du-vintage" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p>
-      </article>
-      <article class="seo-archive-record">
-        <h2><a href="https://montrealcampus.ca/2026/05/04/cellulaire-messages-vocaux-textos-reseaux-sociaux" target="_blank" rel="noopener noreferrer">Textos ou vocaux, un débat de la génération Z</a></h2>
-        <p class="seo-archive-record__meta">Par Magalie Lagacé · 4 mai 2026 à 22 h 32</p>
-        <p>Entre le texto et l’appel téléphonique, il y a le message vocal. S’il est bien ancré chez les plus jeunes, comment se fait-il que certains adorent cette méthode de communication et que d’autres la boudent complètement? Le Montréal Campus a rencontré une experte et des</p>
-        <p class="seo-archive-record__origin"><a href="https://montrealcampus.ca/2026/05/04/cellulaire-messages-vocaux-textos-reseaux-sociaux" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p>
-      </article>
-      <article class="seo-archive-record">
-        <h2><a href="https://montrealcampus.ca/2026/05/02/tricot-club-uqam-artisanat" target="_blank" rel="noopener noreferrer">Tisser des liens une maille à la fois</a></h2>
-        <p class="seo-archive-record__meta">Par Juliette Benoît · 2 mai 2026 à 13 h 53</p>
-        <p>Le club de tricot de la Faculté des sciences de l’UQAM se réunit chaque semaine autour d’activités créatives pour contrer le stress engendré par des études en sciences. Le Montréal Campus a participé à une de leurs activités d’initiation au tricot. « Oui, l’excuse c’est de faire</p>
-        <p class="seo-archive-record__origin"><a href="https://montrealcampus.ca/2026/05/02/tricot-club-uqam-artisanat" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p>
-      </article>
-      <article class="seo-archive-record">
-        <h2><a href="https://montrealcampus.ca/2026/05/01/gym-parents-bebes-sport-cobaye" target="_blank" rel="noopener noreferrer">Cobaye : S’entraîner avec un bébé, tout un sport!</a></h2>
-        <p class="seo-archive-record__meta">Par Jade Trudelle · 1 mai 2026 à 18 h 08</p>
-        <p>La chaîne de gyms montréalaise Le Vestiaire propose des cours de groupe aux futurs ou très jeunes parents. Poids adaptés, temps alloué à l’allaitement et ambiance décontractée : le fonctionnement des cours « Moms and Dads » est pensé spécialement pour les parents accompagnés de</p>
-        <p class="seo-archive-record__origin"><a href="https://montrealcampus.ca/2026/05/01/gym-parents-bebes-sport-cobaye" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p>
       </article></section>
     </main>
     <footer class="site-foot">
@@ -330,6 +310,8 @@
         <a href="../../sports/" data-sports-reset target="_blank" rel="noopener noreferrer">Sports</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../archives/">Archives</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../kit-media/">Kit média</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../archives/montreal-campus/" hreflang="en-CA">English</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>

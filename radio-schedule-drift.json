@@ -1,14 +1,12 @@
 {
-  "checkedAt": "2026-08-10T23:47:40.159Z",
+  "checkedAt": "2026-08-17T23:33:43.845Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 3,
+    "stable": 5,
     "drift": [
-      "chyz",
-      "ckut",
-      "choq"
+      "chyz"
     ],
     "overhaul": [],
     "unreachable": []
@@ -16,26 +14,27 @@
   "stations": [
     {
       "id": "chyz",
-      "published": 25,
-      "fresh": 25,
+      "published": 28,
+      "fresh": 29,
       "added": [
-        "mar 18:50–23:00 Capitales de Québec",
-        "mer 18:50–23:00 Capitales de Québec",
-        "jeu 18:50–23:00 Capitales de Québec"
-      ],
-      "removed": [
+        "lun 16:00–17:00 Chéri.e, Jme Mobilise!",
         "lun 20:30–21:30 La Voie des Droits",
-        "ven 17:30–18:30 Les Arshitechs du Son",
+        "ven 21:00–22:00 Crooch Control",
         "sam 12:00–12:30 Un Monde de Couleurs et de Son"
       ],
-      "changed": 6,
-      "ratio": 0.24,
+      "removed": [
+        "dim 16:50–20:30 Capitales de Québec",
+        "ven 18:50–23:00 Capitales de Québec",
+        "sam 18:50–23:00 Capitales de Québec"
+      ],
+      "changed": 7,
+      "ratio": 0.25,
       "status": "drift"
     },
     {
       "id": "cism",
-      "published": 110,
-      "fresh": 110,
+      "published": 109,
+      "fresh": 109,
       "added": [],
       "removed": [],
       "changed": 0,
@@ -46,25 +45,11 @@
       "id": "ckut",
       "published": 101,
       "fresh": 101,
-      "added": [
-        "mar 18:00–19:00 Prison Radio",
-        "mer 22:00–23:00 Rhizomatic Hour 1",
-        "mer 23:00–00:00 Rhizomatic Hour 2",
-        "jeu 17:00–18:00 Off The Hour: La Voix des Immigrants",
-        "jeu 23:00–01:00 L'aire du Diable",
-        "ven 19:00–22:00 LLA/Macondo"
-      ],
-      "removed": [
-        "mar 18:00–19:00 Rez Rock Radio",
-        "mer 22:00–00:00 Lo Signal / Meanwhile/ Rhizomatic",
-        "jeu 17:00–18:00 Off the Hour: Trib Talks",
-        "jeu 23:00–01:00 You Need A Heart To Live 2",
-        "ven 19:00–20:00 Listening to Latin America: Blanca-Victoria",
-        "ven 20:00–22:00 Macondo"
-      ],
-      "changed": 12,
-      "ratio": 0.119,
-      "status": "drift"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "cjlo",
@@ -88,15 +73,13 @@
     },
     {
       "id": "choq",
-      "published": 22,
+      "published": 21,
       "fresh": 21,
       "added": [],
-      "removed": [
-        "dim 14:00–16:00 Pôle hip-hop"
-      ],
-      "changed": 1,
-      "ratio": 0.045,
-      "status": "drift"
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     }
   ]
 }

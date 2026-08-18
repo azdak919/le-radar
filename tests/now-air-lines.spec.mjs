@@ -270,9 +270,11 @@ test('l’émission à venir annonce toujours son heure', async ({ page }) => {
   }
 });
 
-test('le slogan ferme le cycle sur mobile et n’apparaît jamais sur bureau', async ({ page }) => {
+test('en écoute (E) le slogan n’entre pas dans le filet L2 du dial compact', async ({ page }) => {
   await pure(page);
 
+  // focus-group le-radar-tuner-dial-info-900 : filet = piste → à venir → horaire,
+  // pas de slogan en cycle (reste méta bureau / hors L2 compact).
   const perStation = await page.evaluate(async () => {
     const P = window.RadarAir._pure;
     const radios = await fetch('./radios.json').then((r) => r.json());
@@ -286,13 +288,11 @@ test('le slogan ferme le cycle sur mobile et n’apparaît jamais sur bureau', a
 
   for (const st of perStation) {
     if (!st.slogan) continue;
-    const inMobile = st.mobile.filter((l) => l === st.slogan);
-    // Exactement une fois, et en dernier : c'est ce qui le fait passer d'une
-    // fois sur deux à une fois par cycle complet.
-    expect(inMobile.length, `${st.id} : slogan répété — ${JSON.stringify(st.mobile)}`).toBe(1);
-    expect(st.mobile[st.mobile.length - 1], `${st.id} : le slogan doit fermer le cycle`)
-      .toBe(st.slogan);
-    // Sur bureau il occupe déjà la ligne 2 du syntoniseur.
+    expect(
+      st.mobile,
+      `${st.id} : slogan indésirable dans le filet dial — ${JSON.stringify(st.mobile)}`,
+    ).not.toContain(st.slogan);
+    // Sur bureau le slogan n’est pas une phase antenne non plus (withSlogan false).
     expect(st.desktop, `${st.id} : slogan en double sur bureau`).not.toContain(st.slogan);
   }
 });
@@ -344,9 +344,14 @@ test('une ligne d’antenne qui ne dit que le slogan ne déclenche pas d’alter
   expect(verdicts.sansMeta, 'pas de slogan → alternance utile').toBe(false);
 });
 
-test('la ligne d’aperçu suit l’ordre poste → libellé → émission → heure → établissement', async ({ page }) => {
+test('hors écoute (B) : L1 identité poste, L2 une seule face antenne (pas de soupe)', async ({ page }) => {
+  // Téléphone : acronyme + L2 sans horaire (mid 768/900 a sa propre règle).
+  await page.setViewportSize({ width: 390, height: 844 });
   await pure(page);
 
+  // focus-group le-radar-tuner-dial-info-900 — B idle :
+  //  L1 = poste · acronyme (compactDialTitleLine)
+  //  L2 = préfixe + titre seul (idleDialStoryLine) — jamais poste+horaire+campus collés
   const lines = await page.evaluate(async () => {
     const P = window.RadarAir._pure;
     const radios = await fetch('./radios.json').then((r) => r.json());
@@ -354,7 +359,8 @@ test('la ligne d’aperçu suit l’ordre poste → libellé → émission → h
       id: r.id,
       name: r.name,
       inst: r.institution,
-      line: P.previewDialLine(r),
+      l1: P.compactDialTitleLine(r),
+      l2: P.idleDialStoryLine(r),
       banded: P.stationBandedName(r),
     }));
   });
@@ -362,36 +368,142 @@ test('la ligne d’aperçu suit l’ordre poste → libellé → émission → h
   const ACRONYMS = /^(ULaval|UdeM|UdeS|UQAM|McGill|Concordia)$/;
 
   for (const st of lines) {
-    const parts = st.line.split('·').map((s) => s.trim());
-
-    // 1. Le poste ouvre la ligne, avec sa bande de diffusion.
-    expect(
-      st.line.startsWith(st.banded),
-      `${st.id} : la ligne doit commencer par « ${st.banded} » — ${st.line}`,
-    ).toBe(true);
-    expect(parts[0], `${st.id} : le nom du poste ouvre la ligne`).toContain(st.name);
-    expect(st.banded, `${st.id} : bande de diffusion (FM, AM ou Web) requise`)
-      .toMatch(/(?:\b|\d)(?:FM|AM)\b|·\s*Web$/);
-    // « CHOQ.ca · Web » occupe deux segments ; « CJLO 1690AM » un seul.
-    const bandOffset = st.banded.includes('·') ? 1 : 0;
-
-    // 2. Le libellé vient juste après le poste.
-    expect(
-      parts[1 + bandOffset],
-      `${st.id} : libellé attendu en 2ᵉ position — ${st.line}`,
-    ).toMatch(/^(À l['’]antenne|À venir)$/);
-
-    // 3. L'établissement ferme la ligne, en acronyme (jamais la forme longue).
-    const last = parts[parts.length - 1];
-    expect(last, `${st.id} : acronyme d’établissement attendu en fin de ligne — ${st.line}`)
-      .toMatch(ACRONYMS);
-    expect(st.line, `${st.id} : forme longue d’établissement interdite sur mobile`)
-      .not.toContain(st.inst);
-
-    // Régression : « CJLO 1690AM · 1690 AM » — la bande était doublée parce
-    // que `\bAM\b` ne mord pas dans « 1690AM ».
+    // L1 : identité
+    expect(st.l1, `${st.id} : L1 doit nommer le poste`).toContain(st.name);
+    expect(st.banded, `${st.id} : bande FM/AM/Web`).toMatch(/(?:\b|\d)(?:FM|AM)\b|·\s*Web$/);
     expect(st.banded, `${st.id} : bande dupliquée — ${st.banded}`)
       .not.toMatch(/(FM|AM).*·.*(FM|AM)/i);
+    expect(st.l1, `${st.id} : pas de forme longue d’établissement en L1`).not.toContain(st.inst);
+    const l1Tail = st.l1.split('·').map((s) => s.trim()).pop();
+    if (l1Tail && l1Tail !== st.l1.trim()) {
+      expect(l1Tail, `${st.id} : acronyme en L1 — ${st.l1}`).toMatch(ACRONYMS);
+    }
+
+    // L2 : une face, pas de soupe
+    if (!st.l2) continue;
+    expect(st.l2, `${st.id} : L2 ne redis pas le poste — ${st.l2}`).not.toContain(st.banded);
+    expect(st.l2, `${st.id} : L2 sans forme longue d’établissement`).not.toContain(st.inst);
+    // Au plus un séparateur · (préfixe · titre) — pas 4–5 champs
+    const middots = (st.l2.match(/·/g) || []).length;
+    expect(middots, `${st.id} : L2 trop de middots — ${st.l2}`).toBeLessThanOrEqual(1);
+    // Si ce n'est pas une piste, un libellé de statut ouvre souvent la ligne
+    if (!st.l2.startsWith('♪')) {
+      const head = st.l2.split('·')[0].trim();
+      // Soit préfixe statut, soit titre seul (repli idle)
+      expect(head.length, `${st.id} : L2 vide`).toBeGreaterThan(0);
+    }
+  }
+});
+
+test('en écoute (E) : ordre primaire émission → piste → à venir (filet, pas soupe)', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await pure(page);
+
+  const perStation = await page.evaluate(async () => {
+    const P = window.RadarAir._pure;
+    const radios = await fetch('./radios.json').then((r) => r.json());
+    return radios.map((r) => {
+      const phases = P.dialPhasesForRadio(r);
+      const kinds = phases.map((p) => {
+        const t = String(p.title || '');
+        if (t.startsWith('♪')) return 'track';
+        if (p.kind === 'upcoming') return 'upcoming';
+        if (p.kind === 'live') return 'live';
+        if (/^\d{1,2}:\d{2}/.test(t)) return 'time';
+        return p.kind || 'other';
+      });
+      return { id: r.id, kinds, lines: phases.map((p) => p.line) };
+    });
+  });
+
+  for (const st of perStation) {
+    const liveIdx = st.kinds.indexOf('live');
+    const trackIdx = st.kinds.indexOf('track');
+    const upIdx = st.kinds.indexOf('upcoming');
+    if (liveIdx >= 0 && trackIdx >= 0) {
+      expect(liveIdx, `${st.id} : émission avant piste — ${JSON.stringify(st.kinds)}`)
+        .toBeLessThan(trackIdx);
+    }
+    if (liveIdx >= 0 && upIdx >= 0) {
+      expect(liveIdx, `${st.id} : émission avant à venir — ${JSON.stringify(st.kinds)}`)
+        .toBeLessThan(upIdx);
+    }
+    // Primaire live (téléphone) : pas d’horaire collé dans la même ligne que le titre
+    if (liveIdx >= 0) {
+      const liveLine = st.lines[liveIdx];
+      expect(
+        liveLine,
+        `${st.id} : horaire collé à l’émission — ${liveLine}`,
+      ).not.toMatch(/À l['’]antenne · .+ · \d{1,2}:\d{2}/);
+    }
+  }
+});
+
+test('mid 768/900 : institution complète + heures pour combler le vide', async ({ page }) => {
+  // Formats midwidth-preview 768 et 900 uniquement (pas 390, pas ≥1100).
+  for (const width of [768, 900]) {
+    await page.setViewportSize({ width, height: 900 });
+    await pure(page);
+
+    const report = await page.evaluate(async () => {
+      const P = window.RadarAir._pure;
+      const mid = P.isTunerDialMidLayout();
+      const radios = await fetch('./radios.json').then((r) => r.json());
+      return {
+        mid,
+        rows: radios.map((r) => {
+          const phases = P.airRotationPhases(r, { withSlogan: false });
+          const live = phases.find((p) => p.kind === 'live' && !String(p.title || '').startsWith('♪'));
+          const time = live ? String(live.sub || '').trim() : '';
+          const hasTime = /^\d{1,2}:\d{2}/.test(time);
+          const l1 = P.compactDialTitleLine(r);
+          const l2 = P.idleDialStoryLine(r);
+          const liveLine = P.dialPhaseLinesForRadio(r).find((line) =>
+            /À l['’]antenne/.test(line));
+          return {
+            id: r.id,
+            inst: r.institution,
+            l1,
+            l2,
+            liveLine: liveLine || '',
+            hasTime,
+            time,
+          };
+        }),
+      };
+    });
+
+    expect(report.mid, `isTunerDialMidLayout @ ${width}`).toBe(true);
+
+    for (const st of report.rows) {
+      if (st.inst) {
+        // L1 porte le nom complet (ou une forme longue), pas seulement l’acronyme court.
+        const acrOnly = /^(ULaval|UdeM|UdeS|UQAM|McGill|Concordia)$/;
+        const tail = st.l1.split('·').map((s) => s.trim()).pop();
+        expect(
+          tail && !acrOnly.test(tail),
+          `${st.id} @ ${width} : institution complète attendue en L1 — ${st.l1}`,
+        ).toBeTruthy();
+        // Le nom source (souvent déjà long) doit apparaître ou une forme élargie.
+        const instNorm = String(st.inst).toLowerCase();
+        const l1Norm = st.l1.toLowerCase();
+        const looksFull = l1Norm.includes(instNorm)
+          || /université|university|cégep|college|collège|polytechnique/.test(l1Norm);
+        expect(looksFull, `${st.id} @ ${width} : L1 pas assez long — ${st.l1}`).toBe(true);
+      }
+      if (st.hasTime) {
+        expect(
+          st.l2,
+          `${st.id} @ ${width} : horaire manquant en L2 idle — ${st.l2}`,
+        ).toMatch(/\d{1,2}:\d{2}/);
+        if (st.liveLine) {
+          expect(
+            st.liveLine,
+            `${st.id} @ ${width} : horaire manquant en face live — ${st.liveLine}`,
+          ).toMatch(/\d{1,2}:\d{2}/);
+        }
+      }
+    }
   }
 });
 

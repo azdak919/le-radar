@@ -104,12 +104,7 @@
     <script src="../../app.js" defer></script>
     <script src="../../engage-prompt.js" defer></script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"L'Exemplaire","url":"https://www.exemplaire.com.ulaval.ca/","parentOrganization":{"@type":"CollegeOrUniversity","name":"Université Laval"},"inLanguage":"fr","subjectOf":{"@type":"ItemList","numberOfItems":10,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://www.exemplaire.com.ulaval.ca/a-la-une/sans-fins-au-coeur-des-troubles-du-comportement-alimentaire/","name":"Sans fin(s): au cœur des troubles du comportement alimentaire"},{"@type":"ListItem","position":2,"url":"https://www.exemplaire.com.ulaval.ca/a-la-une/lalcool-est-il-vraiment-le-nouveau-tabac/","name":"L’alcool est-il vraiment le nouveau tabac ?"},{"@type":"ListItem","position":3,"url":"https://www.exemplaire.com.ulaval.ca/a-la-une/derriere-les-etiquettes-electroniques-la-tarification-dynamique/","name":"Derrière les étiquettes électroniques, la tarification dynamique ?"},{"@type":"ListItem","position":4,"url":"https://www.exemplaire.com.ulaval.ca/a-la-une/rachat-des-armes-a-feu-le-quebec-est-il-lexception-canadienne/","name":"Rachat des armes à feu : le Québec est-il l’exception canadienne ?"},{"@type":"ListItem","position":5,"url":"https://www.exemplaire.com.ulaval.ca/a-la-une/les-jeunes-et-les-medias-dactualite-une-confiance-de-plus-en-plus-erodee/","name":"Les jeunes et les médias d’actualité : une confiance de plus en plus érodée"},{"@type":"ListItem","position":6,"url":"https://www.exemplaire.com.ulaval.ca/a-la-une/achat-de-seconde-main-une-mode-dans-la-mode/","name":"Achat de seconde main : une mode dans la mode ?"},{"@type":"ListItem","position":7,"url":"https://www.exemplaire.com.ulaval.ca/a-la-une/le-npd-soigne-t-il-sa-gauche-ou-se-radicalise-t-il/","name":"Le NPD : soigne-t-il sa gauche ou se radicalise-t-il ?"},{"@type":"ListItem","position":8,"url":"https://www.exemplaire.com.ulaval.ca/a-la-une/skibidi-tentafruit-ou-quand-lia-accentue-les-stereotypes/","name":"Skibidi Tentafruit ou quand l’IA accentue les stéréotypes"},{"@type":"ListItem","position":9,"url":"https://www.exemplaire.com.ulaval.ca/a-la-une/sports-dendurance-quand-est-ce-le-temps-de-arreter/","name":"Sports d’endurance : quand est-ce le temps de s’arrêter ?"},{"@type":"ListItem","position":10,"url":"https://www.exemplaire.com.ulaval.ca/a-la-une/quand-la-politique-passe-a-table/","name":"Quand la politique passe à table"}]}}</script>
-      <!-- Lab local wide (localhost) — hors solitaire/pomo -->
-    <link rel="stylesheet" href="../../dev/midwidth-preview.css" />
-    <link rel="stylesheet" href="../../dev/wide-desktop-preview.css" />
-    <script src="../../dev/midwidth-preview.js"></script>
-    <script src="../../dev/wide-desktop-preview.js"></script>
-</head>
+  </head>
   <body>
     <header class="masthead">
       <!-- Fond photo (banque du Québec) — même bloc que l'accueil : la couche,
@@ -135,6 +130,9 @@
             <span id="today-date"></span>
             <time id="today-time" class="masthead-time" aria-label="Heure actuelle"></time>
           </span>
+          <div id="masthead-weather" class="masthead-weather hidden" aria-label="Météo du Québec" aria-live="polite">
+            <span class="masthead-weather__board" aria-label="Conditions actuelles"></span>
+          </div>
           <div class="masthead-actions">
             <a href="../../" class="masthead-icon masthead-home" data-home-nav title="Accueil" aria-label="Accueil — LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg></a>
             <a href="../../feeds.html" class="masthead-icon masthead-rss" title="Flux RSS" aria-label="S’abonner au flux RSS de LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83C19.56 12.06 12.94 5.44 4 4.44z"/><path d="M4 10.11v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.46-4.42-9.9-9.9-9.9z"/></svg></a>
@@ -273,6 +271,12 @@
     <!-- Lecteur natif : requis pour la lecture en arrière-plan (écran verrouillé). -->
     <audio id="radar-player" class="sr-only" preload="none" playsinline webkit-playsinline x-webkit-airplay="allow" aria-hidden="true"></audio>
 
+    <!-- Repli mobile : quand le masthead n'a plus de place, app.js déplace
+         #masthead-weather ici (même carte que sur bureau). -->
+    <div id="masthead-weather-dock" class="masthead-weather-dock"></div>
+
+    <!-- Scoreboard RSEQ / unis QC : sous la radio (mobile + bureau). -->
+    <div id="masthead-sports-strip" class="masthead-sports-strip" hidden aria-label="Résultats sportifs étudiants du Québec" aria-live="polite"></div>
 
     <main class="wire seo-wire">
       <nav class="seo-crumbs" aria-label="Fil d’Ariane"><a href="../../">Accueil</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><a href="../../medias/">Les médias étudiants</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><span aria-current="page">L'Exemplaire</span></nav>
@@ -287,7 +291,7 @@
       </dl>
       <section class="seo-section">
         <h2>Derniers articles</h2>
-        <p class="seo-headlines__status">Dernier article : 15 mai 2026 à 12 h 31 · Vérifiée le 11 août 2026 à 16 h 47</p>
+        <p class="seo-headlines__status">Dernier article : 15 mai 2026 à 12 h 31 · Vérifiée le 17 août 2026 à 19 h 24</p>
       <ul class="seo-headlines">
           <li class="seo-headline"><a class="seo-headline__title" href="https://www.exemplaire.com.ulaval.ca/a-la-une/sans-fins-au-coeur-des-troubles-du-comportement-alimentaire/" target="_blank" rel="noopener noreferrer">Sans fin(s): au cœur des troubles du comportement alimentaire</a><p class="seo-headline__meta"><time datetime="2026-05-15T16:31:24.000Z">2026-05-15 · 12 h 31</time><span class="seo-headline__by">Par Nathan Brisbois et Elora Veyron-Churlet</span></p><p class="seo-headline__brief">À travers un balado intime et sans jugement, ces deux journalistes brisent le silence sur l’anorexie mentale et ouvrent la discussion sur les troubles du comportement alimentaire. Au fil de témoignages sensibles et éclairants. <a class="seo-headline__more" href="https://www.exemplaire.com.ulaval.ca/a-la-une/sans-fins-au-coeur-des-troubles-du-comportement-alimentaire/" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
           <li class="seo-headline"><a class="seo-headline__title" href="https://www.exemplaire.com.ulaval.ca/a-la-une/lalcool-est-il-vraiment-le-nouveau-tabac/" target="_blank" rel="noopener noreferrer">L’alcool est-il vraiment le nouveau tabac ?</a><p class="seo-headline__meta"><time datetime="2026-05-12T18:48:27.000Z">2026-05-12 · 14 h 48</time><span class="seo-headline__by">Par Stella Davies</span></p><p class="seo-headline__brief">Il fut un temps où le tabac était partout, jusque dans les hôpitaux et les écoles. Aujourd’hui, son image a complètement changé. L’alcool, lui aussi, semble perdre du terrain chez les jeunes de 15 à 24 ans. Sa consommation baisse. Ne pas boire devient de plus en plus normal. Mais ce changement soulève une autre question : n’y a-t-il pas autre chose qui remplace l’alcool aujourd’hui dans la vie sociale des jeunes ? … <a class="seo-headline__more" href="https://www.exemplaire.com.ulaval.ca/a-la-une/lalcool-est-il-vraiment-le-nouveau-tabac/" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
@@ -325,6 +329,8 @@
         <a href="../../sports/" data-sports-reset target="_blank" rel="noopener noreferrer">Sports</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../archives/">Archives</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../kit-media/">Kit média</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../en/newspapers/lexemplaire/" hreflang="en-CA">English</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>

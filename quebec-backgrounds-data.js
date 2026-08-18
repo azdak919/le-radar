@@ -70,7 +70,7 @@ const QUEBEC_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/1c/Deer_in_Gatineau.JPG",
-    credit: "",
+    credit: "Wikimedia Commons",
     link: "https://commons.wikimedia.org/wiki/File:Deer%20in%20Gatineau.JPG",
     license: "CC BY-SA 3.0",
     title: "Deer in Gatineau",
@@ -147,7 +147,7 @@ const QUEBEC_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/d/dd/Une_plage_du_Bic.jpg",
-    credit: "Danielhbordeleau",
+    credit: "Daniel H. Bordeleau",
     link: "https://commons.wikimedia.org/wiki/File:Une%20plage%20du%20Bic.jpg",
     license: "CC BY-SA 4.0",
     title: "Une plage du Bic",
@@ -318,7 +318,7 @@ const QUEBEC_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/d/dd/Montreal_NASA_cropped.jpg",
-    credit: "NASA",
+    credit: "MTLskyline",
     link: "https://commons.wikimedia.org/wiki/File:Montreal%20NASA%20cropped.jpg",
     license: "Public domain",
     title: "Montreal NASA cropped",
@@ -721,7 +721,7 @@ const QUEBEC_BACKGROUNDS = [
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Les_collines_escarp%C3%A9es_du_parc_du_Saguenay.jpg",
-    credit: "Danielhbordeleau",
+    credit: "Daniel H. Bordeleau",
     link: "https://commons.wikimedia.org/wiki/File:Les_collines_escarp%C3%A9es_du_parc_du_Saguenay.jpg",
     license: "CC BY-SA 4.0",
     title: "Collines escarpées du parc du Saguenay",

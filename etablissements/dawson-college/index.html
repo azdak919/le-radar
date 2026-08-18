@@ -104,12 +104,7 @@
     <script src="../../app.js" defer></script>
     <script src="../../engage-prompt.js" defer></script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollegeOrUniversity","name":"Collège Dawson","url":"https://www.dawsoncollege.qc.ca/","address":{"@type":"PostalAddress","addressRegion":"QC","addressCountry":"CA","addressLocality":"Montréal"},"subOrganization":[{"@type":"NewsMediaOrganization","name":"The Plant","url":"https://theplantnews.com/"}]}</script>
-      <!-- Lab local wide (localhost) — hors solitaire/pomo -->
-    <link rel="stylesheet" href="../../dev/midwidth-preview.css" />
-    <link rel="stylesheet" href="../../dev/wide-desktop-preview.css" />
-    <script src="../../dev/midwidth-preview.js"></script>
-    <script src="../../dev/wide-desktop-preview.js"></script>
-</head>
+  </head>
   <body>
     <header class="masthead">
       <!-- Fond photo (banque du Québec) — même bloc que l'accueil : la couche,
@@ -135,6 +130,9 @@
             <span id="today-date"></span>
             <time id="today-time" class="masthead-time" aria-label="Heure actuelle"></time>
           </span>
+          <div id="masthead-weather" class="masthead-weather hidden" aria-label="Météo du Québec" aria-live="polite">
+            <span class="masthead-weather__board" aria-label="Conditions actuelles"></span>
+          </div>
           <div class="masthead-actions">
             <a href="../../" class="masthead-icon masthead-home" data-home-nav title="Accueil" aria-label="Accueil — LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg></a>
             <a href="../../feeds.html" class="masthead-icon masthead-rss" title="Flux RSS" aria-label="S’abonner au flux RSS de LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83C19.56 12.06 12.94 5.44 4 4.44z"/><path d="M4 10.11v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.46-4.42-9.9-9.9-9.9z"/></svg></a>
@@ -273,6 +271,12 @@
     <!-- Lecteur natif : requis pour la lecture en arrière-plan (écran verrouillé). -->
     <audio id="radar-player" class="sr-only" preload="none" playsinline webkit-playsinline x-webkit-airplay="allow" aria-hidden="true"></audio>
 
+    <!-- Repli mobile : quand le masthead n'a plus de place, app.js déplace
+         #masthead-weather ici (même carte que sur bureau). -->
+    <div id="masthead-weather-dock" class="masthead-weather-dock"></div>
+
+    <!-- Scoreboard RSEQ / unis QC : sous la radio (mobile + bureau). -->
+    <div id="masthead-sports-strip" class="masthead-sports-strip" hidden aria-label="Résultats sportifs étudiants du Québec" aria-live="polite"></div>
 
     <main class="wire seo-wire">
       <nav class="seo-crumbs" aria-label="Fil d’Ariane"><a href="../../">Accueil</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><a href="../../medias/">Les médias étudiants</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><span aria-current="page">Collège Dawson</span></nav>
@@ -314,6 +318,8 @@
         <a href="../../sports/" data-sports-reset target="_blank" rel="noopener noreferrer">Sports</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../archives/">Archives</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../kit-media/">Kit média</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../en/institutions/dawson-college/" hreflang="en-CA">English</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>

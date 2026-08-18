@@ -1,27 +1,27 @@
 {
-  "updatedAt": "2026-08-11T20:39:48.192Z",
+  "updatedAt": "2026-08-18T01:02:03.525Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, j’arrive!",
+        "title": "La Voie des Droits",
         "source": "api-live",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/",
+        "start": "20:30",
+        "end": "21:30",
+        "url": "https://chyz.ca/emission/la-voie-des-droits/",
         "special": true
       },
       "next": {
-        "title": "Les Arshitechs du Son",
+        "title": "Mardi Champ Gauche",
         "source": "schedule-live",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
       },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
+      "showTitle": "La Voie des Droits",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -29,52 +29,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T20:39:34.111Z"
+      "checkedAt": "2026-08-18T01:01:35.177Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "London café",
+        "title": "Toute est dans toute (reprise)",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://cism893.ca/emissions/london-cafe"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/tout-est-dans-toute"
       },
       "next": {
-        "title": "Les Pénibles",
+        "title": "Mix anglo",
         "source": "schedule",
-        "start": "17:30",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/les-penibles"
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
       },
       "track": "",
-      "showTitle": "London café",
+      "showTitle": "Toute est dans toute (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T20:39:36.011Z"
+      "checkedAt": "2026-08-18T01:01:37.657Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Montreal Sessions",
+        "title": "Underground Sounds",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "20:00",
+        "end": "22:00"
       },
       "next": {
-        "title": "Off The Hour: Local Journalism Stories",
+        "title": "Drastic Plastic",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "22:00",
+        "end": "23:00"
       },
       "track": "",
-      "showTitle": "Montreal Sessions",
+      "showTitle": "Underground Sounds",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -82,83 +82,85 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T20:39:38.415Z"
+      "checkedAt": "2026-08-18T01:01:40.421Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Fluid Mosaic",
+        "title": "LEKTOR DECODER",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/lektor-decoder"
       },
       "next": {
-        "title": "Cherry Vamp and the Sonic Coffin",
+        "title": "Past Tense",
         "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
+        "start": "22:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/past-tense"
       },
       "track": "",
-      "showTitle": "The Fluid Mosaic",
+      "showTitle": "LEKTOR DECODER",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T20:39:40.443Z"
+      "checkedAt": "2026-08-18T01:01:55.142Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
+        "title": "Le terrain sportif",
         "source": "schedule-live",
-        "start": "08:00",
-        "end": "18:30"
+        "start": "20:00",
+        "end": "00:01"
       },
       "next": {
-        "title": "L'Aut'Rock",
-        "source": "schedule-live",
-        "start": "18:30",
-        "end": "20:00"
+        "title": "Les nuits CFAK",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "07:00"
       },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "Le terrain sportif",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-11T20:39:41.383Z"
+      "checkedAt": "2026-08-18T01:01:55.789Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Le Studio",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00",
-        "slug": "live"
+        "title": "Les rois de l'arène",
+        "source": "schedule",
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "Lido Pimienta - No Me Quiero Ir",
+      "track": "Nia Archives - Train Of Thought",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-11T20:39:47.841Z"
+      "checkedAt": "2026-08-18T01:02:03.176Z"
     }
   }
 }

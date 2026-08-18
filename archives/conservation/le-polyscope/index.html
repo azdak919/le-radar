@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="fr-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="Archives de Le Polyscope, journal étudiant de Polytechnique Montréal (Français). Articles avec date, auteur et lien vers la publication originale." />
+    <meta name="robots" content="noindex,follow" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self' https: blob:; connect-src 'self' blob: https://le-radar-weather.azdak.workers.dev https://le-radar-nowplaying.azdak.workers.dev https://le-radar-bg-rotation.azdak.workers.dev https://cloud.umami.is https://gateway.umami.is https://translate.googleapis.com https://api.mymemory.translated.net; frame-src 'self' https://chyz.ca https://cism893.ca https://ckut.ca https://www.cjlo.com https://www.cfak.ca https://www.choq.ca; object-src 'none'; base-uri 'self'; form-action 'none'" />
+    <title>Archives — Le Polyscope | LE-RADAR.ca</title>
+    <link rel="canonical" href="https://le-radar.ca/archives/conservation/le-polyscope/" />
+
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="LE-RADAR.ca" />
+    <meta property="og:locale" content="fr_CA" />
+    <meta property="og:url" content="https://le-radar.ca/archives/conservation/le-polyscope/" />
+    <meta property="og:title" content="Archives — Le Polyscope | LE-RADAR.ca" />
+    <meta property="og:description" content="Archives de Le Polyscope, journal étudiant de Polytechnique Montréal (Français). Articles avec date, auteur et lien vers la publication originale." />
+    <meta property="og:image" content="https://le-radar.ca/assets/og-cover.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://le-radar.ca/assets/og-cover.png" />
+
+    <link rel="icon" href="../../../assets/icon-32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="../../../assets/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="../../../assets/icon-192.png" />
+    <link rel="manifest" href="../../../manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../style-masthead.css" />
+    <link rel="stylesheet" href="../../../style.css" />
+    <link rel="stylesheet" href="../../../seo-pages.css" />
+    <!--
+      CSS critique du synthé bureau : réserve « À l'antenne » + volume compact
+      dès le premier paint (avant le CSS mis en cache / le JS async).
+    -->
+    <style>
+      @media (min-width: 1100px) {
+        .tuner-inner {
+          display: grid !important;
+          grid-template-columns: minmax(0, 1.15fr) minmax(300px, 370px) !important;
+          gap: 0 !important;
+          align-items: center !important;
+          max-width: 1180px;
+        }
+        .tuner-controls { grid-column: 1; min-width: 0; }
+        .tuner-actions { margin-left: 0 !important; flex-shrink: 0; }
+        .tuner-nowair {
+          grid-column: 2;
+          display: flex !important;
+          flex-direction: row !important;
+          align-items: flex-start !important;
+          gap: 10px;
+          width: 100% !important;
+          min-width: 0;
+          padding-left: 20px;
+          border-left: none !important;
+          opacity: 1 !important;
+          pointer-events: auto !important;
+          box-sizing: border-box;
+        }
+        .tuner-nowair-body {
+          flex: 1 1 auto !important;
+          min-width: 0 !important;
+          opacity: 1 !important;
+        }
+        .tuner-vol {
+          flex: 0 0 auto !important;
+          max-width: 168px !important;
+          min-width: 0 !important;
+        }
+        .tuner-vol-slot {
+          display: flex !important;
+          align-items: center;
+          max-width: 120px !important;
+        }
+        .tuner-vol-track {
+          width: 112px !important;
+          max-width: 112px !important;
+          min-width: 96px !important;
+          flex: 0 0 112px !important;
+        }
+      }
+    </style>
+    <script src="../../../seo-page-theme.js"></script>
+    <script src="../../../nav-shell.js" defer></script>
+    <script src="../../../cast.js" defer></script>
+    <script src="../../../mobile-playback.js" defer></script>
+    <script src="../../../player-sync.js" defer></script>
+    <!-- season-lib.js avant la banque : sans lui le filtre saisonnier rend le
+         pool tel quel, et une photo d'hiver peut sortir en août. -->
+    <script src="../../../scripts/season-lib.js" defer></script>
+    <script src="../../../bg-rotation-lib.js" defer></script>
+    <script src="../../../quebec-backgrounds-data.js" defer></script>
+    <script src="../../../quebec-university-backgrounds-data.js" defer></script>
+    <script src="../../../quebec-nations-backgrounds-data.js" defer></script>
+    <script src="../../../quebec-favorites-backgrounds-data.js" defer></script>
+    <script src="../../../quebec-backgrounds.js" defer></script>
+    <script src="../../../institution-acronyms-data.js" defer></script>
+    <script src="../../../app.js" defer></script>
+    <script src="../../../engage-prompt.js" defer></script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Archives — Le Polyscope | LE-RADAR.ca","url":"https://le-radar.ca/archives/conservation/le-polyscope/","description":"Archives de Le Polyscope, journal étudiant de Polytechnique Montréal (Français). Articles avec date, auteur et lien vers la publication originale.","isPartOf":{"@type":"WebSite","name":"LE-RADAR.ca","url":"https://le-radar.ca/"},"provider":{"@type":"Organization","name":"LE-RADAR.ca"},"mainEntity":{"@type":"ItemList","numberOfItems":2,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://www.polyscope.qc.ca/blog/post/0VXuuVGmVAi6BBp9Rkbi","item":{"@type":"CreativeWork","name":"Quand l'amour fait perdre la tête","url":"https://www.polyscope.qc.ca/blog/post/0VXuuVGmVAi6BBp9Rkbi","author":{"@type":"Person","name":"Frédéric Gosselin"},"datePublished":"2025-02-24T20:46:19.258Z","publisher":{"@type":"Organization","name":"Le Polyscope"},"inLanguage":"fr","about":{"@type":"CollegeOrUniversity","name":"Polytechnique Montréal"}}},{"@type":"ListItem","position":2,"url":"https://www.polyscope.qc.ca/blog/post/N6ObrabltnEDXyofdir3","item":{"@type":"CreativeWork","name":"Jus d'orange, ou Le rendez-vous raté de la Saint-Valentin","url":"https://www.polyscope.qc.ca/blog/post/N6ObrabltnEDXyofdir3","author":{"@type":"Person","name":"Stefanie Milczarek"},"datePublished":"2025-02-14T05:20:00.000Z","publisher":{"@type":"Organization","name":"Le Polyscope"},"inLanguage":"fr","about":{"@type":"CollegeOrUniversity","name":"Polytechnique Montréal"}}}]}}</script>
+  </head>
+  <body>
+    <header class="masthead">
+      <!-- Fond photo (banque du Québec) — même bloc que l'accueil : la couche,
+           le voile, le crédit et le bouton de rotation. Sans lui, ces pages
+           affichaient un mât nu alors que leur CSP whiteliste déjà le worker
+           de rotation : la chrome était prévue pour l'avoir, elle ne l'avait
+           jamais reçue. -->
+      <div id="bg-photo-layer" aria-hidden="true"></div>
+      <div class="bg-photo-scrim" aria-hidden="true"></div>
+      <div class="bg-photo-credit" id="bg-photo-credit"></div>
+      <div id="masthead-shuffle-slot" class="masthead-shuffle-slot">
+        <button id="masthead-bg-shuffle" class="masthead-icon masthead-bg-shuffle" type="button" aria-label="Changer la photo du mât" title="Changer la photo du mât">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 3 4 4-4 4"/><path d="M20 7H9a5 5 0 0 0-5 5v1"/><path d="m8 21-4-4 4-4"/><path d="M4 17h11a5 5 0 0 0 5-5v-1"/></svg>
+        </button>
+      </div>
+      <div class="masthead-inner">
+        <div class="masthead-top">
+          <!-- Date et heure hors du moteur de traduction : ce sont des données,
+               formatées par Intl dans la langue active (voir mastheadLocale dans
+               app.js). Traduites mot à mot, elles revenaient en « THURSDAY
+               AUGUST 6, 20 » — mauvaise casse et longueur non mesurée. -->
+          <span class="masthead-date notranslate" translate="no">
+            <span id="today-date"></span>
+            <time id="today-time" class="masthead-time" aria-label="Heure actuelle"></time>
+          </span>
+          <div id="masthead-weather" class="masthead-weather hidden" aria-label="Météo du Québec" aria-live="polite">
+            <span class="masthead-weather__board" aria-label="Conditions actuelles"></span>
+          </div>
+          <div class="masthead-actions">
+            <a href="../../../" class="masthead-icon masthead-home" data-home-nav title="Accueil" aria-label="Accueil — LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg></a>
+            <a href="../../../feeds.html" class="masthead-icon masthead-rss" title="Flux RSS" aria-label="S’abonner au flux RSS de LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83C19.56 12.06 12.94 5.44 4 4.44z"/><path d="M4 10.11v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.46-4.42-9.9-9.9-9.9z"/></svg></a>
+            <a href="../../../pomo/" class="masthead-icon masthead-pomo" title="Pomodoro — minuteur focus" aria-label="Pomodoro — minuteur focus"><img class="app-emoji" src="../../../assets/emoji/tomato.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
+            <a href="../../../solitaire/" class="masthead-icon masthead-solitaire" title="Solitaire" aria-label="Solitaire"><img class="app-emoji" src="../../../assets/emoji/playing-cards.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
+            <a href="../../../sports/" class="masthead-icon masthead-sports" title="Sports — scores collégiaux et universitaires" aria-label="Sports — scores collégiaux et universitaires"><img class="app-emoji" src="../../../assets/emoji/trophy.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
+            <a href="https://www.buymeacoffee.com/azdak" class="masthead-icon masthead-coffee" title="Offrir un café" aria-label="Offrir un café — Buy me a coffee" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path fill="none" d="M18 8h1a4 4 0 0 1 0 8h-1"/><path fill="none" d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line fill="none" x1="6" y1="1" x2="6" y2="4"/><line fill="none" x1="10" y1="1" x2="10" y2="4"/><line fill="none" x1="14" y1="1" x2="14" y2="4"/></svg></a>
+            <div class="install-menu" data-install-menu>
+        <button type="button" class="masthead-icon install-menu__toggle" data-install-toggle aria-haspopup="menu" aria-expanded="false" aria-controls="install-menu-panel" title="Installer une app" aria-label="Installer une app — LE-RADAR, Pomodoro, Solitaire, Sports Étudiants"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></button>
+        <div id="install-menu-panel" class="install-menu__panel" data-install-panel role="menu" aria-labelledby="install-menu-panel-title" hidden>
+          <div class="install-menu__title" id="install-menu-panel-title">Installer une app</div>
+          <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="radar">
+            <img class="app-emoji" src="../../../assets/emoji/satellite.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+            <span>LE-RADAR.ca</span>
+          </button>
+          <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="pomo">
+            <img class="app-emoji" src="../../../assets/emoji/tomato.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+            <span>Pomodoro</span>
+          </button>
+          <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="solitaire">
+            <img class="app-emoji" src="../../../assets/emoji/playing-cards.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+            <span>Solitaire</span>
+          </button>
+          <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="sports">
+            <img class="app-emoji" src="../../../assets/emoji/trophy.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+            <span>Sports Étudiants</span>
+          </button>
+        </div>
+      </div>
+            <button id="theme-toggle" class="masthead-icon theme-toggle" type="button" aria-label="Changer de thème" title="Mode clair / sombre"><svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><svg class="ico-moon hidden" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+          </div>
+        </div>
+        <div class="masthead-brand">
+          <a href="../../../" class="wordmark">
+            <span class="wordmark-mark"><img class="wordmark-logo" src="../../../assets/icon.svg" width="48" height="48" alt="" aria-hidden="true"><span class="wordmark-brand notranslate" translate="no">LE-RADAR.ca</span></span>
+            <span class="wordmark-full"><span class="wordmark-full__lead">Journaux, radios et sports étudiants du Québec,</span> <span class="wordmark-full__tag">réunis au même endroit</span></span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <div id="tuner" class="tuner">
+      <div class="tuner-inner">
+        <div class="tuner-controls">
+          <div class="tuner-label">
+            <span id="tuner-onair" class="tuner-onair">EN ONDES</span>
+          </div>
+
+          <button id="tuner-prev" class="tuner-step" title="Poste précédent" aria-label="Poste précédent">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+          </button>
+
+          <div class="tuner-dial">
+            <label for="tuner-select" class="sr-only">Choisir un poste</label>
+            <select id="tuner-select" class="tuner-select" aria-label="Choisir un poste"></select>
+            <div class="tuner-now">
+              <span id="tuner-now-name" class="tuner-now-name">Syntoniser un poste</span>
+              <div class="tuner-now-sub-rotate" aria-live="polite">
+                <span id="tuner-now-sub" class="tuner-now-sub is-active">Radios étudiantes en direct</span>
+                <span id="tuner-now-sub-air" class="tuner-now-sub tuner-now-sub--air" aria-hidden="true"></span>
+              </div>
+            </div>
+          </div>
+
+          <button id="tuner-next" class="tuner-step" title="Poste suivant" aria-label="Poste suivant">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+          </button>
+
+          <div class="tuner-actions">
+            <button id="tuner-play" class="tuner-play" title="Écouter" aria-label="Écouter">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="ico-play"><path d="M8 5v14l11-7z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" class="ico-pause hidden" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" class="ico-external hidden" aria-hidden="true"><path d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+            </button>
+
+            <button id="tuner-cast" class="tuner-cast tuner-cast--bar hidden" type="button" aria-label="Diffuser sur un appareil" title="Diffuser sur un appareil" aria-pressed="false" hidden>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M1 18v3h3c0-1.66-1.34-3-3-3zm0-4v2c2.76 0 5 2.24 5 5h2c0-3.87-3.13-7-7-7zm0-4v2c4.97 0 9 3.03 9 9h2c0-6.08-4.93-11-11-11zm20-7H3c-1.1 0-2 .9-2 2v3h2V5h18v14h-7v2h7c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+            </button>
+
+            <button id="tuner-cast-mob" class="tuner-cast tuner-cast--mobile hidden" type="button" aria-label="Diffuser sur un appareil" title="Diffuser sur un appareil" aria-pressed="false" hidden>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M1 18v3h3c0-1.66-1.34-3-3-3zm0-4v2c2.76 0 5 2.24 5 5h2c0-3.87-3.13-7-7-7zm0-4v2c4.97 0 9 3.03 9 9h2c0-6.08-4.93-11-11-11zm20-7H3c-1.1 0-2 .9-2 2v3h2V5h18v14h-7v2h7c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+            </button>
+
+            <div class="tuner-eq" id="tuner-eq" aria-hidden="true">
+              <span></span><span></span><span></span><span></span>
+            </div>
+
+            <div id="tuner-vol" class="tuner-vol">
+              <button id="tuner-vol-toggle" class="tuner-vol-btn" type="button" aria-label="Réglages du volume" aria-pressed="false" aria-expanded="false" aria-controls="tuner-vol-slot" title="Réglages du volume">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="ico-vol" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" class="ico-vol-mute hidden" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm7.59-3.41L9.17 7H3v6h4l5 5v-6.17l2.59 2.59 1.41-1.42L3.83 3 2.41 4.41 7 9v6h4l5 5v-6.17l1.59 1.59 1.41-1.41L12 12.83V4l-1.41 1.59z"/><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v1.99c3.01.89 5.25 3.71 5.25 7.02z"/></svg>
+              </button>
+              <div id="tuner-vol-slot" class="tuner-vol-slot">
+                <div class="tuner-vol-popover">
+                  <button id="tuner-vol-mute" class="tuner-vol-mute-btn" type="button" aria-label="Couper le son" aria-pressed="false" title="Couper le son">
+                    <svg viewBox="0 0 24 24" fill="currentColor" class="ico-vol-mute" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm7.59-3.41L9.17 7H3v6h4l5 5v-6.17l2.59 2.59 1.41-1.42L3.83 3 2.41 4.41 7 9v6h4l5 5v-6.17l1.59 1.59 1.41-1.41L12 12.83V4l-1.41 1.59z"/><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v1.99c3.01.89 5.25 3.71 5.25 7.02z"/></svg>
+                  </button>
+                  <div class="tuner-vol-track">
+                    <div class="tuner-vol-slider">
+                      <div class="tuner-vol-rail" aria-hidden="true">
+                        <div class="tuner-vol-zone tuner-vol-zone--boost"></div>
+                        <div class="tuner-vol-fill tuner-vol-fill--base"></div>
+                        <div class="tuner-vol-fill tuner-vol-fill--boost"></div>
+                      </div>
+                      <span class="tuner-vol-tick tuner-vol-tick--100" aria-hidden="true"></span>
+                      <div class="tuner-vol-thumb" aria-hidden="true"></div>
+                      <input id="tuner-volume" type="range" min="0" max="2" step="0.02" value="1" class="tuner-volume" aria-label="Volume — 0 % à gauche, 100 % au centre, 200 % à droite" aria-valuetext="100 %" />
+                    </div>
+                    <div class="tuner-vol-labels">
+                      <span class="tuner-vol-label--min" aria-hidden="true">0 %</span>
+                      <span class="tuner-vol-label--mid" aria-hidden="true">100 %</span>
+                      <span class="tuner-vol-label--max" aria-hidden="true">200 %</span>
+                    </div>
+                  </div>
+                  <button id="tuner-cast-pop" class="tuner-cast tuner-cast--popover hidden" type="button" aria-label="Diffuser sur un appareil" title="Diffuser sur un appareil" aria-pressed="false" hidden>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M1 18v3h3c0-1.66-1.34-3-3-3zm0-4v2c2.76 0 5 2.24 5 5h2c0-3.87-3.13-7-7-7zm0-4v2c4.97 0 9 3.03 9 9h2c0-6.08-4.93-11-11-11zm20-7H3c-1.1 0-2 .9-2 2v3h2V5h18v14h-7v2h7c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visible dès le premier paint (pas de .hidden) : évite le volume géant
+             pendant le chargement JS. app.js met à jour le contenu ensuite. -->
+        <aside id="tuner-nowair" class="tuner-nowair" aria-live="polite" aria-label="À l'antenne" role="link" tabindex="0" title="Ouvrir l'horaire de la station dans un nouvel onglet">
+          <span class="tuner-nowair-label">À l'antenne</span>
+          <div class="tuner-nowair-body">
+            <p id="tuner-nowair-title" class="tuner-nowair-title">Syntoniser un poste</p>
+            <p id="tuner-nowair-sub" class="tuner-nowair-sub">Les radios étudiantes jouent en direct, 24/7</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Lecteur natif : requis pour la lecture en arrière-plan (écran verrouillé). -->
+    <audio id="radar-player" class="sr-only" preload="none" playsinline webkit-playsinline x-webkit-airplay="allow" aria-hidden="true"></audio>
+
+    <!-- Repli mobile : quand le masthead n'a plus de place, app.js déplace
+         #masthead-weather ici (même carte que sur bureau). -->
+    <div id="masthead-weather-dock" class="masthead-weather-dock"></div>
+
+    <!-- Scoreboard RSEQ / unis QC : sous la radio (mobile + bureau). -->
+    <div id="masthead-sports-strip" class="masthead-sports-strip" hidden aria-label="Résultats sportifs étudiants du Québec" aria-live="polite"></div>
+
+    <main class="wire seo-wire">
+      <nav class="seo-crumbs" aria-label="Fil d’Ariane"><a href="../../../">Accueil</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><a href="../../">Archives</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><span aria-current="page">Le Polyscope</span></nav>
+      <h1 class="seo-title">Archives — Le Polyscope</h1>
+      <p class="seo-lead">Le Polyscope est le journal étudiant de Polytechnique Montréal. Archives d’articles référencés sur LE-RADAR.ca, avec date, auteur lorsqu’il est indiqué et lien vers chaque publication originale.</p>
+      <dl class="seo-facts">
+          <div class="seo-fact"><dt>Établissement</dt><dd><a href="../../../etablissements/polytechnique-montreal/">Polytechnique Montréal</a></dd></div>
+          <div class="seo-fact"><dt>Région</dt><dd>Montréal</dd></div>
+          <div class="seo-fact"><dt>Langue</dt><dd>Français</dd></div>
+          <div class="seo-fact"><dt>Site officiel</dt><dd><a href="https://www.polyscope.qc.ca/" target="_blank" rel="noopener noreferrer">https://www.polyscope.qc.ca/</a></dd></div>
+      </dl>
+<section class="seo-archive-year"><h2>2025</h2>      <article class="seo-archive-record">
+        <h2><a href="https://www.polyscope.qc.ca/blog/post/0VXuuVGmVAi6BBp9Rkbi" target="_blank" rel="noopener noreferrer">Quand l'amour fait perdre la tête</a></h2>
+        <p class="seo-archive-record__meta">Par Frédéric Gosselin · 24 février 2025 à 15 h 46</p>
+        <p>Depuis combien de temps célèbre-t-on l’amour? Depuis un bout déjà. Dans toutes les cultures connues du monde, on fête l’amour, l’amitié, la fertilité. Véritable climax de la saison de l’amour, la Saint-Valentin nous rappelle chaque année de célébrer ceux qu’on chérit. En a-t-il</p>
+        <p class="seo-archive-record__origin"><a href="https://www.polyscope.qc.ca/blog/post/0VXuuVGmVAi6BBp9Rkbi" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p>
+      </article>
+      <article class="seo-archive-record">
+        <h2><a href="https://www.polyscope.qc.ca/blog/post/N6ObrabltnEDXyofdir3" target="_blank" rel="noopener noreferrer">Jus d'orange, ou Le rendez-vous raté de la Saint-Valentin</a></h2>
+        <p class="seo-archive-record__meta">Par Stefanie Milczarek · 14 février 2025 à 00 h 20</p>
+        <p>La Genèse ne fait aucun commentaire sur le ventre d’Ève. Rien n’indique si les créatures sculptées à partir d’os ont des vergetures. Ni si Ève ressent de la jalousie envers sa parenté, la véritable progéniture d’Éden, émergeant sans tache de la poussière. Rien ne dit qu’Ève</p>
+        <p class="seo-archive-record__origin"><a href="https://www.polyscope.qc.ca/blog/post/N6ObrabltnEDXyofdir3" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p>
+      </article></section>
+    </main>
+    <footer class="site-foot">
+      <div class="site-foot__brand">
+        <p class="site-foot__wordmark notranslate" translate="no"><img class="site-foot__logo" src="../../../assets/icon.svg" width="24" height="24" alt="" aria-hidden="true">LE-RADAR.ca</p>
+        <p class="site-foot__signature" lang="fr">Le Réseau Académique de Découverte et d’Agrégation de Ressources</p>
+      </div>
+      <p>LE-RADAR.ca est un projet indépendant et non officiel. Il n’est affilié à aucun des médias ni des établissements recensés. Les contenus appartiennent à leurs publications d’origine.</p>
+      <nav class="site-foot__links" aria-label="Liens de pied de page">
+        <a href="../../../" data-home-nav>Accueil</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../../medias/">Médias</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../../medias/#journaux">Journaux</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../../horaires/">Radios</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../../sports/" data-sports-reset target="_blank" rel="noopener noreferrer">Sports</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../../archives/">Archives</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../../kit-media/">Kit média</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../../archives/conservation/le-polyscope/" hreflang="en-CA">English</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <button type="button" class="site-foot__link-btn" data-install-app="radar">Installer LE-RADAR.ca</button>
+      </nav>
+      <p>Ce projet est distribué sous <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" rel="noopener noreferrer license">licence publique générale GNU, version 2</a>.</p>
+      <div class="site-foot__credit">
+        <p class="site-foot__author">
+          Conçu avec <a href="../../../easter-egg.html" class="site-foot__heart" aria-label="Ouvrir l’easter egg">♡</a>
+          par <a href="https://www.buymeacoffee.com/azdak" class="site-foot__author-link" target="_blank" rel="noopener noreferrer" title="Offrir un café — Buy me a coffee">Azdak</a>
+          en 2026
+        </p>
+        <p class="site-foot__contact"><a href="mailto:azdak-qc@proton.me" data-contact-channel="email" aria-label="Nous joindre par courriel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>Nous joindre</a></p>
+        <p class="site-foot__legal">Code libre utilisé conformément aux licences applicables; contenus et médias crédités à leurs auteurs respectifs.</p>
+        <p class="site-foot__bot"><span class="site-foot__bot-ico" aria-hidden="true">🤖</span> Agrégateur automatisé de contenus.</p>
+      </div>
+    </footer>
+  </body>
+</html>

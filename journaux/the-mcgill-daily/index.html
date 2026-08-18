@@ -104,12 +104,7 @@
     <script src="../../app.js" defer></script>
     <script src="../../engage-prompt.js" defer></script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"The McGill Daily","parentOrganization":{"@type":"CollegeOrUniversity","name":"Université McGill"},"inLanguage":"en","subjectOf":{"@type":"ItemList","numberOfItems":12,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://www.mcgilldaily.com/2026/07/review-sullivan-fortner-solo-at-gesu-concert-hall/","name":"Review: Sullivan Fortner Solo at Gesú Concert Hall"},{"@type":"ListItem","position":2,"url":"https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/","name":"The Cruel Optimism of Summer"},{"@type":"ListItem","position":3,"url":"https://www.mcgilldaily.com/2026/06/the-mcgill-community-takes-on-the-montreal-international-jazz-festival/","name":"The McGill Community takes on the Montreal International Jazz Festival"},{"@type":"ListItem","position":4,"url":"https://www.mcgilldaily.com/2026/04/the-seagull-an-automorphic-play-about-art-and-humanity/","name":"The Seagull: An Automorphic Play About Art and Humanity"},{"@type":"ListItem","position":5,"url":"https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/","name":"Spotlighting Powerful McGill Alumnae"},{"@type":"ListItem","position":6,"url":"https://www.mcgilldaily.com/2026/03/reporting-in-a-warzone/","name":"Reporting in a Warzone"},{"@type":"ListItem","position":7,"url":"https://www.mcgilldaily.com/2026/03/iran-is-not-dealt-a-fair-hand-when-it-comes-to-democracy/","name":"Iran is Not Dealt a Fair Hand When it Comes to Democracy"},{"@type":"ListItem","position":8,"url":"https://www.mcgilldaily.com/2026/03/rewriting-the-code-mcgill-students-break-barriers-in-computer-science/","name":"Rewriting the Code: McGill Students Break Barriers in Computer Science"},{"@type":"ListItem","position":9,"url":"https://www.mcgilldaily.com/2026/03/the-emotional-whiplash-of-infinite-scroll/","name":"The Emotional Whiplash of Infinite Scroll"},{"@type":"ListItem","position":10,"url":"https://www.mcgilldaily.com/2026/03/second-class-citizens/","name":"Second-Class Citizens"},{"@type":"ListItem","position":11,"url":"https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/","name":"The Gentrification of Online Fandom Spaces"},{"@type":"ListItem","position":12,"url":"https://www.mcgilldaily.com/2026/03/review-hamnet-the-retelling-of-a-lost-figure/","name":"Review: Hamnet, The Retelling of a Lost Figure"}]}}</script>
-      <!-- Lab local wide (localhost) — hors solitaire/pomo -->
-    <link rel="stylesheet" href="../../dev/midwidth-preview.css" />
-    <link rel="stylesheet" href="../../dev/wide-desktop-preview.css" />
-    <script src="../../dev/midwidth-preview.js"></script>
-    <script src="../../dev/wide-desktop-preview.js"></script>
-</head>
+  </head>
   <body>
     <header class="masthead">
       <!-- Fond photo (banque du Québec) — même bloc que l'accueil : la couche,
@@ -135,6 +130,9 @@
             <span id="today-date"></span>
             <time id="today-time" class="masthead-time" aria-label="Heure actuelle"></time>
           </span>
+          <div id="masthead-weather" class="masthead-weather hidden" aria-label="Météo du Québec" aria-live="polite">
+            <span class="masthead-weather__board" aria-label="Conditions actuelles"></span>
+          </div>
           <div class="masthead-actions">
             <a href="../../" class="masthead-icon masthead-home" data-home-nav title="Accueil" aria-label="Accueil — LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg></a>
             <a href="../../feeds.html" class="masthead-icon masthead-rss" title="Flux RSS" aria-label="S’abonner au flux RSS de LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83C19.56 12.06 12.94 5.44 4 4.44z"/><path d="M4 10.11v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.46-4.42-9.9-9.9-9.9z"/></svg></a>
@@ -273,6 +271,12 @@
     <!-- Lecteur natif : requis pour la lecture en arrière-plan (écran verrouillé). -->
     <audio id="radar-player" class="sr-only" preload="none" playsinline webkit-playsinline x-webkit-airplay="allow" aria-hidden="true"></audio>
 
+    <!-- Repli mobile : quand le masthead n'a plus de place, app.js déplace
+         #masthead-weather ici (même carte que sur bureau). -->
+    <div id="masthead-weather-dock" class="masthead-weather-dock"></div>
+
+    <!-- Scoreboard RSEQ / unis QC : sous la radio (mobile + bureau). -->
+    <div id="masthead-sports-strip" class="masthead-sports-strip" hidden aria-label="Résultats sportifs étudiants du Québec" aria-live="polite"></div>
 
     <main class="wire seo-wire">
       <nav class="seo-crumbs" aria-label="Fil d’Ariane"><a href="../../">Accueil</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><a href="../../medias/">Les médias étudiants</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><span aria-current="page">The McGill Daily</span></nav>
@@ -286,7 +290,7 @@
       </dl>
       <section class="seo-section">
         <h2>Derniers articles</h2>
-        <p class="seo-headlines__status">Dernier article : 31 juillet 2026 à 08 h 00</p>
+        <p class="seo-headlines__status">Dernier article : 31 juillet 2026 à 08 h 00 · Vérifiée le 17 août 2026 à 19 h 24</p>
       <ul class="seo-headlines">
           <li class="seo-headline"><a class="seo-headline__title" href="https://www.mcgilldaily.com/2026/07/review-sullivan-fortner-solo-at-gesu-concert-hall/" target="_blank" rel="noopener noreferrer">Review: Sullivan Fortner Solo at Gesú Concert Hall</a><p class="seo-headline__meta"><time datetime="2026-07-31T12:00:00.000Z">2026-07-31 · 08 h 00</time><span class="seo-headline__by">Par Shai Geballe</span></p><p class="seo-headline__brief">Seated at a Kawai grand piano, he began with a crowd favourite, “Don’t You Worry ’Bout a Thing” by Stevie Wonder — an interpretation long-time Fortner fans knew from his 2023 album Solo Game . “Don’t You Worry ’Bout A Thing” began with a sparse and fleeting arrangement of the famous verse. Throughout the tune, different sporadic ideas, bubbling up from the … <a class="seo-headline__more" href="https://www.mcgilldaily.com/2026/07/review-sullivan-fortner-solo-at-gesu-concert-hall/" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
           <li class="seo-headline"><a class="seo-headline__title" href="https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/" target="_blank" rel="noopener noreferrer">The Cruel Optimism of Summer</a><p class="seo-headline__meta"><time datetime="2026-07-06T12:00:00.000Z">2026-07-06 · 08 h 00</time><span class="seo-headline__by">Par Erandy Rogel</span></p><p class="seo-headline__brief">“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt to forgo my jacket, and, if I’m feeling bold, no sweater either. It’s the first truly warm evening in Montreal, and as the city defrosts, everyone is spilling onto sidewalks and terrasses. Women are wearing tiny dresses, and men have started to write poetry. … <a class="seo-headline__more" href="https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
@@ -326,6 +330,8 @@
         <a href="../../sports/" data-sports-reset target="_blank" rel="noopener noreferrer">Sports</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../archives/">Archives</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../kit-media/">Kit média</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../en/newspapers/the-mcgill-daily/" hreflang="en-CA">English</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
