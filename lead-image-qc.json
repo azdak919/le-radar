@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-18T13:13:56.487Z",
+  "updated": "2026-08-18T14:42:15.298Z",
   "total": 185,
   "withPhoto": 168,
   "withStock": 21,
-  "withCampusBank": 12,
+  "withCampusBank": 11,
   "fullyCovered": 185,
-  "leadReadyPhotos": 144,
-  "pageScraped": 22,
-  "photosRecovered": 22,
+  "leadReadyPhotos": 143,
+  "pageScraped": 21,
+  "photosRecovered": 21,
   "imagesCleared": 10,
-  "stockSearches": 32,
-  "stockFound": 7,
+  "stockSearches": 33,
+  "stockFound": 8,
   "campusBankFound": 2,
   "mainPageLeadReady": true,
   "gaps": [
@@ -63,10 +63,16 @@
       "image": "https://live.staticflickr.com/4031/4400844746_a47c17ef6d_b.jpg"
     },
     {
+      "title": "Gaiters wrap up hard-fought season with eyes on next year",
+      "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/61/Bishop%27s_University_shield_stone.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
       "title": "Second-Class Citizens",
       "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Avenue_McGill_College_07.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/7056/6831154200_b7057b4237_b.jpg"
     },
     {
       "title": "The Gentrification of Online Fandom Spaces",
@@ -79,12 +85,6 @@
       "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
-    },
-    {
-      "title": "Oui au budget, oui au programme FIL et non à la grève",
-      "link": "https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6c/C%C3%A9gep_du_Vieux_Montr%C3%A9al%2C_Nov_03_2022.jpg"
     }
   ]
 }
