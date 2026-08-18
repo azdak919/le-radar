@@ -20,6 +20,9 @@ import { expect, test } from '@playwright/test';
 async function pure(page) {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => window.RadarAir?._pure);
+  // Les phases antenne lisent radio-nowplaying / grilles déjà hydratées.
+  // Sans ça, un worker chargé retombe sur le slogan (ex. CHYZ « Université Laval »).
+  await page.waitForFunction(() => document.getElementById('tuner')?.classList.contains('is-dial-ready'));
   return page;
 }
 
@@ -577,6 +580,116 @@ test('À l’antenne : émission d’abord, piste seulement s’il n’y a pas d
   expect(copy.trackOnly.liveSub).toBe('');
 });
 
+test('CHOQ : piste longue scindée au tiret cadratin, les autres postes inchangés', async ({ page }) => {
+  await pure(page);
+
+  const report = await page.evaluate(() => {
+    const { splitChoqSongLines, applyChoqLiveSongLines } = window.RadarAir._pure;
+    const long = 'Earth Mother Fucker / Pound Land — Earth Mother Fucker - Happy Shopper';
+    const phasesTrack = [
+      { kind: 'live', title: `♪ ${long}`, sub: '' },
+      { kind: 'upcoming', title: "Les rois de l'arène", sub: '05:00 – 07:00' },
+    ];
+    const phasesShow = [
+      { kind: 'live', title: 'Intervenir ensemble', sub: '11:00 – 12:00' },
+      { kind: 'live', title: `♪ ${long}`, sub: '' },
+    ];
+    return {
+      split: splitChoqSongLines(long),
+      note: splitChoqSongLines('♪ Downtown Boys — Albuterol'),
+      hyphenOnly: splitChoqSongLines('Downtown Boys - Albuterol'),
+      choqTrack: applyChoqLiveSongLines({ id: 'choq' }, long, '', phasesTrack),
+      choqShow: applyChoqLiveSongLines({ id: 'choq' }, 'Intervenir ensemble', `♪ ${long}`, phasesShow),
+      cism: applyChoqLiveSongLines({ id: 'cism' }, long, '', phasesTrack),
+    };
+  });
+
+  expect(report.split.title).toBe('Earth Mother Fucker / Pound Land');
+  expect(report.split.sub).toBe('Earth Mother Fucker - Happy Shopper');
+  expect(report.note).toEqual({ title: 'Downtown Boys', sub: 'Albuterol' });
+  expect(report.hyphenOnly, 'sans cadratin on ne invente pas de coupe').toEqual({
+    title: 'Downtown Boys - Albuterol',
+    sub: '',
+  });
+  expect(report.choqTrack.songSplit).toBe(true);
+  expect(report.choqTrack.liveTitle).toBe('Earth Mother Fucker / Pound Land');
+  expect(report.choqTrack.liveSub).toBe('Earth Mother Fucker - Happy Shopper');
+  expect(report.choqShow.songSplit, 'émission en cours : on ne touche pas à la piste').toBe(false);
+  expect(report.choqShow.liveTitle).toBe('Intervenir ensemble');
+  expect(report.cism.songSplit, 'les autres postes gardent la ligne unique').toBe(false);
+  expect(report.cism.liveTitle).toBe('Earth Mother Fucker / Pound Land — Earth Mother Fucker - Happy Shopper');
+});
+
+test('wide CHOQ : la piste scindée ne déborde pas sur À venir', async ({ page }) => {
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await page.goto('/?wide=e', { waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => window.RadarAir?._pure && document.getElementById('tuner-nowair-wide'));
+
+  const geo = await page.evaluate(() => {
+    const { applyChoqLiveSongLines } = window.RadarAir._pure;
+    const long = 'Earth Mother Fucker / Pound Land — Earth Mother Fucker - Happy Shopper';
+    const copy = applyChoqLiveSongLines({ id: 'choq' }, long, '', [
+      { kind: 'live', title: `♪ ${long}`, sub: '' },
+      { kind: 'upcoming', title: "Les rois de l'arène", sub: '05:00 – 07:00' },
+    ]);
+    const liveT = document.querySelector('[data-wide-live-title]');
+    const liveS = document.querySelector('[data-wide-live-sub]');
+    const nextT = document.querySelector('[data-wide-next-title]');
+    const liveSlot = document.querySelector('.tuner-wide-slot--live');
+    const nextSlot = document.querySelector('.tuner-wide-slot--next');
+    liveT.textContent = copy.liveTitle;
+    liveS.textContent = copy.liveSub;
+    liveS.hidden = !copy.liveSub;
+    nextT.textContent = "Les rois de l'arène";
+    liveSlot.classList.add('tuner-wide-slot--song-split');
+    liveSlot.hidden = false;
+    liveSlot.classList.remove('is-wide-absent');
+    const lr = liveT.getBoundingClientRect();
+    const nr = nextSlot.getBoundingClientRect();
+    return {
+      title: liveT.textContent,
+      sub: liveS.textContent,
+      titleHasEm: liveT.textContent.includes('—'),
+      liveRight: lr.right,
+      nextLeft: nr.left,
+      titleH: lr.height,
+      subH: liveS.getBoundingClientRect().height,
+    };
+  });
+
+  expect(geo.title).toBe('Earth Mother Fucker / Pound Land');
+  expect(geo.sub).toBe('Earth Mother Fucker - Happy Shopper');
+  expect(geo.titleHasEm, 'plus de cadratin dans le titre').toBe(false);
+  expect(geo.titleH, 'titre = 1 ligne').toBeLessThan(22);
+  expect(geo.subH, 'sous-ligne = 1 ligne').toBeGreaterThan(8);
+  expect(geo.liveRight, 'le titre live ne recouvre pas À venir').toBeLessThan(geo.nextLeft - 4);
+});
+
+test('wide : sans émission, masquer À l’antenne (pas « Rien à l’antenne »)', async ({ page }) => {
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await page.goto('/?wide=e', { waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => window.RadarAir?._pure && document.getElementById('tuner-nowair-wide'));
+
+  const report = await page.evaluate(() => {
+    const copy = window.RadarAir._pure.wideNowAirLiveCopy({ id: 'x' });
+    const liveSlot = document.querySelector('.tuner-wide-slot--live');
+    const wrap = document.getElementById('tuner-nowair-wide');
+    liveSlot.hidden = !!copy.hideLive;
+    liveSlot.classList.toggle('is-wide-absent', !!copy.hideLive);
+    wrap.classList.toggle('is-live-absent', !!copy.hideLive);
+    const cs = getComputedStyle(liveSlot);
+    return {
+      hideLive: copy.hideLive,
+      liveTitle: copy.liveTitle,
+      display: cs.display,
+    };
+  });
+
+  expect(report.hideLive).toBe(true);
+  expect(report.liveTitle).toBe('');
+  expect(report.display, 'le slot live doit disparaître').toBe('none');
+});
+
 test('wide : deux slots, deux lignes, jamais de titre écrasé', async ({ page }) => {
   await page.setViewportSize({ width: 1600, height: 900 });
   await page.goto('/?wide=e', { waitUntil: 'domcontentloaded' });
@@ -612,18 +725,19 @@ test('wide : deux slots, deux lignes, jamais de titre écrasé', async ({ page }
       liveWrap: lt.whiteSpace,
       nextWrap: nt.whiteSpace,
       liveClamp: lt.webkitLineClamp,
-      hideLive: window.RadarAir._pure.wideNowAirLiveCopy({ id: 'x' }).hideLive,
+      empty: window.RadarAir._pure.wideNowAirLiveCopy({ id: 'x' }),
     };
   });
 
-  expect(geo.liveHidden, 'À l’antenne toujours visible').toBe(false);
+  expect(geo.liveHidden, 'slot live forcé visible pour la géométrie').toBe(false);
   expect(geo.liveWrap).toBe('nowrap');
   expect(geo.nextWrap).toBe('nowrap');
   expect(geo.liveH, 'titre live = 1 ligne').toBeLessThan(22);
   expect(geo.nextH, 'titre à venir = 1 ligne').toBeLessThan(22);
   expect(geo.liveW, 'slot live pas écrasé').toBeGreaterThan(120);
   expect(geo.nextW, 'slot à venir pas écrasé').toBeGreaterThan(120);
-  expect(geo.hideLive).toBe(false);
+  expect(geo.empty.hideLive, 'sans émission : masquer À l’antenne').toBe(true);
+  expect(geo.empty.liveTitle, 'pas de « Rien à l’antenne »').toBe('');
 
   const full = await page.evaluate(() => {
     const nextT = document.querySelector('[data-wide-next-title]');
