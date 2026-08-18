@@ -562,13 +562,13 @@ test('wide E ≥3440 : 3 CTA sports distinctes', async ({ page }) => {
   expect(weatherN, 'météo suit encore les scores (+ bonus 3440)').toBeGreaterThanOrEqual(2 + matchN);
 });
 
-test('wide E : sports + CTA changent en cascade puis se figent', async ({ page }) => {
-  await page.setViewportSize({ width: 1920, height: 1080 });
-  await page.goto('/?wide=e', { waitUntil: 'domcontentloaded' });
+async function assertSportsCascadeAt(page, { width, height = 900, wide = false, minChips = 2 }) {
+  await page.setViewportSize({ width, height });
+  await page.goto(wide ? '/?wide=e' : '/', { waitUntil: 'domcontentloaded' });
   const strip = page.locator('#masthead-sports-strip');
   await expect(strip).toBeVisible({ timeout: 8000 });
   await expect.poll(async () => strip.locator('.sports-chip').count(), { timeout: 8000 })
-    .toBeGreaterThan(2);
+    .toBeGreaterThanOrEqual(minChips);
 
   const snapshot = () => strip.locator('.sports-chip').evaluateAll((chips) => chips.map((el) => ({
     cta: el.classList.contains('sports-chip--cta'),
@@ -581,14 +581,34 @@ test('wide E : sports + CTA changent en cascade puis se figent', async ({ page }
     scheduleSportsWave({ fromSlot: 0, firstWait: false });
     return true;
   });
-  expect(armed, 'scheduleSportsWave disponible').toBe(true);
+  expect(armed, `scheduleSportsWave armée à ${width}`).toBe(true);
 
-  await page.waitForTimeout(Math.min(2600, 560 * Math.max(3, start.length)));
+  await page.waitForTimeout(Math.min(2800, 560 * Math.max(2, start.length)));
   const now = await snapshot();
   expect(now.length).toBe(start.length);
   const flipped = now.filter((row, i) => row.text !== start[i]?.text).length;
-  expect(flipped, 'plusieurs cartes sports changent pendant la vague').toBeGreaterThan(1);
-  expect(now.some((row) => row.cta), 'la vague inclut encore les cartes CTA').toBe(true);
+  if (start.length >= 3) {
+    expect(flipped, `plusieurs cartes sports changent à ${width}`).toBeGreaterThan(1);
+  } else {
+    expect(flipped, `au moins une carte sports change à ${width}`).toBeGreaterThan(0);
+  }
+  expect(now.some((row) => row.cta), 'la vague conserve au moins une CTA').toBe(true);
+}
+
+test('wide E : sports + CTA changent en cascade puis se figent', async ({ page }) => {
+  await assertSportsCascadeAt(page, { width: 1920, height: 1080, wide: true, minChips: 3 });
+});
+
+test('bureau 1280 : sports cascade puis pause', async ({ page }) => {
+  await assertSportsCascadeAt(page, { width: 1280, minChips: 2 });
+});
+
+test('tablette 768 : sports cascade puis pause', async ({ page }) => {
+  await assertSportsCascadeAt(page, { width: 768, minChips: 1 });
+});
+
+test('téléphone 390 : sports cascade puis pause', async ({ page }) => {
+  await assertSportsCascadeAt(page, { width: 390, minChips: 1 });
 });
 
 test('CTA sports : renouvellement carte entière comme les scores', async ({ page }) => {

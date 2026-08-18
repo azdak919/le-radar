@@ -242,6 +242,33 @@ test('wide E : météo secondaire tourne de gauche à droite, MTL/QC fixes', asy
   }
 });
 
+async function weatherActiveIds(ribbon) {
+  return ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => (
+    cities
+      .map((el) => ({ id: el.dataset.weatherCity, x: el.getBoundingClientRect().x }))
+      .sort((a, b) => a.x - b.x)
+      .map((row) => row.id)
+  ));
+}
+
+function expectWeatherCascadeFlips(start, now, { dualPrimary = false } = {}) {
+  expect(now).toHaveLength(start.length);
+  if (dualPrimary) {
+    expect(now[0]).toBe('montreal');
+    expect(now[1]).toBe('quebec');
+    const flipped = now.slice(2).filter((id, i) => id !== start[2 + i]).length;
+    expect(flipped, 'plusieurs secondaires changent pendant la vague').toBeGreaterThan(1);
+    return;
+  }
+  expect(['montreal', 'quebec']).toContain(now[0]);
+  const flipped = now.filter((id, i) => id !== start[i]).length;
+  if (start.length >= 3) {
+    expect(flipped, 'plusieurs cartes changent pendant la vague').toBeGreaterThan(1);
+  } else {
+    expect(flipped, 'au moins une carte change pendant la vague').toBeGreaterThan(0);
+  }
+}
+
 test('wide E : météo secondaire cascade puis pause', async ({ page }) => {
   await page.route('https://le-radar-weather.azdak.workers.dev/v1/forecast**', (route) => {
     route.fulfill({
@@ -257,12 +284,7 @@ test('wide E : météo secondaire cascade puis pause', async ({ page }) => {
   await expect.poll(async () => ribbon.locator('.masthead-weather__city.is-active').count(), { timeout: 10_000 })
     .toBeGreaterThan(3);
 
-  const start = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => (
-    cities
-      .map((el) => ({ id: el.dataset.weatherCity, x: el.getBoundingClientRect().x }))
-      .sort((a, b) => a.x - b.x)
-      .map((row) => row.id)
-  ));
+  const start = await weatherActiveIds(ribbon);
   expect(start[0]).toBe('montreal');
   expect(start[1]).toBe('quebec');
 
@@ -275,17 +297,57 @@ test('wide E : météo secondaire cascade puis pause', async ({ page }) => {
 
   const secondary = start.length - 2;
   await page.waitForTimeout(Math.min(2800, 480 * Math.max(2, secondary)));
-  const now = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => (
-    cities
-      .map((el) => ({ id: el.dataset.weatherCity, x: el.getBoundingClientRect().x }))
-      .sort((a, b) => a.x - b.x)
-      .map((row) => row.id)
-  ));
-  expect(now[0]).toBe('montreal');
-  expect(now[1]).toBe('quebec');
-  expect(now).toHaveLength(start.length);
-  const flipped = now.slice(2).filter((id, i) => id !== start[2 + i]).length;
-  expect(flipped, 'plusieurs secondaires changent pendant la vague, pas une seule').toBeGreaterThan(1);
+  expectWeatherCascadeFlips(start, await weatherActiveIds(ribbon), { dualPrimary: true });
+});
+
+async function assertWeatherCascadeAt(page, { width, height = 900, docked = false }) {
+  await page.route('https://le-radar-weather.azdak.workers.dev/v1/forecast**', (route) => {
+    route.fulfill({
+      contentType: 'application/json',
+      headers: { 'access-control-allow-origin': '*' },
+      body: JSON.stringify(weather),
+    });
+  });
+  await page.setViewportSize({ width, height });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const ribbon = page.locator('#masthead-weather');
+  await expect.poll(async () => ribbon.locator('.masthead-weather__city.is-active').count(), { timeout: 10_000 })
+    .toBeGreaterThan(1);
+  if (docked) await expect(ribbon).toHaveClass(/masthead-weather--docked/);
+  else await expect(ribbon).not.toHaveClass(/masthead-weather--docked/);
+
+  const start = await weatherActiveIds(ribbon);
+  expect(['montreal', 'quebec']).toContain(start[0]);
+  const primaryCount = start.filter((id) => id === 'montreal' || id === 'quebec').length;
+  expect(primaryCount, 'une seule ancre MTL/QC hors wide').toBe(1);
+
+  const armed = await page.evaluate(() => {
+    if (typeof scheduleWeatherCascade !== 'function') return false;
+    if (typeof weatherCascadeSlots === 'function') {
+      const slots = weatherCascadeSlots();
+      if (!slots.length) return false;
+    }
+    scheduleWeatherCascade({ firstHold: false });
+    return true;
+  });
+  expect(armed, `scheduleWeatherCascade armée à ${width}`).toBe(true);
+
+  await page.waitForTimeout(Math.min(2800, 500 * Math.max(2, start.length)));
+  const now = await weatherActiveIds(ribbon);
+  expectWeatherCascadeFlips(start, now, { dualPrimary: false });
+  if (docked) await expect(ribbon).toHaveClass(/masthead-weather--docked/);
+}
+
+test('bureau 1280 : météo cascade (ancre + secondaires)', async ({ page }) => {
+  await assertWeatherCascadeAt(page, { width: 1280, docked: false });
+});
+
+test('tablette 768 : météo cascade dockée', async ({ page }) => {
+  await assertWeatherCascadeAt(page, { width: 768, docked: true });
+});
+
+test('téléphone 390 : météo cascade dockée', async ({ page }) => {
+  await assertWeatherCascadeAt(page, { width: 390, docked: true });
 });
 
 test('wide E : ≥2560 ajoute une carte météo et resserre les slots', async ({ page }) => {
