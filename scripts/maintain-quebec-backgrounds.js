@@ -50,6 +50,7 @@ const {
 } = require('./session-freshness-lib');
 const nationsTaxonomy = require('./quebec-nations-taxonomy');
 const { matchHardBanned } = require('./quebec-backgrounds-blacklist');
+const { createPhotoWebSources } = require('./photo-web-sources');
 const { sanitizeCommonsCredit } = require('./commons-credit-lib');
 const {
   looksReligiousSubject,
@@ -65,8 +66,12 @@ const {
   enrichPhotoSeasons,
   getCurrentSeason4,
   resolveItemSeason4,
+  resolveItemSeason6,
+  seasonTagTrusted,
   SEASON4,
+  SEASON6,
   season4ToSeason6,
+  season6ToSeason4,
 } = require('./season-lib');
 
 const ROOT = path.join(__dirname, '..');
@@ -102,6 +107,15 @@ const SEASON_MIN_BY_PROFILE = {
   pomo: { printemps: 18, ete: 24, automne: 18, hiver: 18 },
   universities: { printemps: 8, ete: 12, automne: 8, hiver: 8 },
   nations: { printemps: 4, ete: 6, automne: 4, hiver: 6 },
+};
+/** Planchers PNI — 6 saisons Nunavik (éducatif). */
+const SEASON6_MIN_NATIONS = {
+  ukiuq: 6,
+  upingaksaaq: 4,
+  upingaaq: 4,
+  aujaq: 6,
+  ukiaqsaaq: 4,
+  ukiaq: 4,
 };
 /** Banque favorites manuelle — URLs jamais purgées par ce bot. */
 const FAVORITES_JSON = path.join(ROOT, 'data', 'quebec-favorites-backgrounds.json');
@@ -291,6 +305,10 @@ function universityDiscoveryQueries(sessionId) {
       'McGill University campus spring exterior',
       'Université Laval campus printemps exterior',
       'campus universitaire Québec printemps exterior',
+      'incategory:"McGill University" printemps OR spring OR May',
+      'incategory:"Université Laval" printemps OR mai',
+      'intitle:Pavillon Laval -neige -hiver -winter',
+      'intitle:"Pavillon Adrien-Pouliot"',
     ],
   };
   const season4 = getCurrentSeason4();
@@ -377,14 +395,14 @@ const LEGACY_JS = JS_PATH;
 // ── Filtres texte (règles stables — RELIGIOUS / TOWN_HALL via religious-facade-lib) ──
 
 const PEOPLE_RE =
-  /(?:\bportrait\b|\bpeople\b|\bperson\b|\bpersons\b|\bman\b|\bwoman\b|\bmen\b|\bwomen\b|\bchild\b|\bchildren\b|\bfamily\b|\bfamille\b|\bhomme\b|\bfemme\b|\benfant\b|\bdancer\b|\bdancers\b|\bpow[\s-]?wow\b|\bcrowd\b|\bfoule\b|\bselfie\b|\binscription on reverse\b|\bchef\b|\bchief\b|\bleder\b|\bleader\b|\bmaire\b|\bmayor\b|\bface\b|\bvisage\b|\bgroup\b|\bgroupe\b|\bmeeting\b|\br[eé]union\b|\bmanifestation\b|\bauditeurs?\b|\bprotest\b|\bgr[eè]ve\b|\bdemo(?:nstration)?\b)/i;
+  /(?:\bportrait\b|\bpeople\b|\bperson\b|\bpersons\b|\bman\b|\bwoman\b|\bmen\b|\bwomen\b|\bchild\b|\bchildren\b|\bfamily\b|\bfamille\b|\bhomme\b|\bfemme\b|\benfant\b|\bcrowd\b|\bfoule\b|\bselfie\b|\binscription on reverse\b|\bchef\b|\bchief\b|\bleder\b|\bleader\b|\bmaire\b|\bmayor\b|\bface\b|\bvisage\b|\bgroup\b|\bgroupe\b|\bmeeting\b|\br[eé]union\b|\bmanifestation\b|\bauditeurs?\b|\bprotest\b|\bgr[eè]ve\b|\bdemo(?:nstration)?\b)/i;
 
 /** Fichiers non-image (Commons renvoie parfois audio/PDF). */
 const NON_IMAGE_RE = /\.(?:wav|mp3|ogg|flac|webm|mp4|pdf|svg|djvu|stl|obj)(?:\?|$)/i;
 
 // Hiver/neige/toundra : PAS de rejet dur (rotation saisonnière). Aligné bank-hard-audit-lib.
 const BAD_SCENE_RE =
-  /(?:\bnight\b|\bnuit\b|\bdark\b|\bmacro\b|\bclose[\s-]?up\b|\bgros[\s-]?plan\b|\binterior\b|\bintérieur\b|\binterieur\b|\bindoor\b|\bmuseo\b|\bmuseum\b|\bmusée\b|\bmusee\b|\boeuvre\b|\bœuvre\b|\bpainting\b|\bgravure\b|\bengraving\b|\bmicroform\b|\bletrero\b|\bsignage\b|\bboulangerie\b|\btruck\b|\bcami[oó]n\b|\bcrépuscule\b|\bcrepuscule\b|\bdawn or dusk\b|\btwilight\b|\bafter[\s-]?dark\b|\bvers\s+1[789]\d{2}\b|\b1[789]\d{2}\b|\bA\d{4,}\b|\.pp\b|\bciels? invers|\bcoulombe\b|\bcanot\b|\bcanoe\b|\bkayak\b|\bpaddle\b|\bpagaie\b|\bexhibit\b|\bexhibition\b|\bgallery\b|\bgalerie\b|\bartifact\b|\bart[eé]fact\b|\bdisplay\b|\bmashteuiatsh[\s_-]?0*\d{2,}\b|\bultramafic\b|\bwasteland\b|\brocky plain\b|\bquarry\b|\bcarri[eè]re\b|\bmudflat\b|\bbatture\b|\bmar[eé]e basse\b|\blow[\s-]?tide\b|\bunderside\b|\bunderneath\b|\bunderpass\b|\bunder[\s-]?the[\s-]?bridge\b|\bbridge[\s-]?underside\b|\bdessous de pont\b|\bsous le pont\b|\bsous[\s-]pont\b|\bsoffit\b|\bconcrete beams?\b|\bchain[\s-]?link\b|\bbarbed[\s-]?wire\b|\bbarbel[eé]\b|\bcl[oô]ture grillag|\bprison\b|\bp[eé]nitenc|\bjail\b|\bd[eé]tention\b|\bairport\b|\ba[eé]roport\b|\bairfield\b|\bhangar\b|\bwarehouse\b|\bentrep[oô]t\b|\bindustrial\b|\bzone industrielle\b|\bfactory\b|\brailway[\s_-]?track\b|\bparking[\s_-]?lot\b|\bstationnement\b|\b[eé]puration\b|\bsewage\b|\bwaste[\s-]?water\b|\bwater[\s-]?treatment\b|\btreatment[\s-]?plant\b|\bstop[\s-]?sign\b|\bstopsign\b|\bpanneau\s+d['’]?arr[eê]t\b|\bdiagram\b|\blocation\s+diagram\b|\bmap\s+of\b|\bwelcome[\s_-]?signs?|\bentrance[\s_-]?signs?|\broad[\s_-]?signs?|\broadside[\s_-]?signs?|\bcity[\s_-]?limit[\s_-]?signs?|\bmunicipal[\s_-]?signs?|\bcommunity[\s_-]?signs?|\bbillboard|\benseigne|\bpanneau|StopSign|WelcomeSign|\bplace[\s_-]?name[\s_-]?signs?|\bname[\s_-]?signs?|\bwelcome[\s_-]?board\b|\bentry[\s_-]?signs?|\bboundary[\s_-]?signs?|[_-]signs?\.(?:jpe?g|png|webp)\b)/i;
+  /(?:\bnight\b|\bnuit\b|\bdark\b|\bmacro\b|\bclose[\s-]?up\b|\bgros[\s-]?plan\b|\binterior\b|\bintérieur\b|\binterieur\b|\bindoor\b|\bmuseo\b|\bmuseum\b|\bmusée\b|\bmusee\b|\boeuvre\b|\bœuvre\b|\bpainting\b|\bgravure\b|\bengraving\b|\bmicroform\b|\bletrero\b|\bsignage\b|\bboulangerie\b|\btruck\b|\bcami[oó]n\b|\bcrépuscule\b|\bcrepuscule\b|\bdawn or dusk\b|\btwilight\b|\bafter[\s-]?dark\b|\bvers\s+1[789]\d{2}\b|\b1[789]\d{2}\b|\bA\d{4,}\b|\.pp\b|\bciels? invers|\bcoulombe\b|\bcanot\b|\bcanoe\b|\bkayak\b|\bpaddle\b|\bpagaie\b|\bexhibit\b|\bexhibition\b|\bgallery\b|\bgalerie\b|\bartifact\b|\bart[eé]fact\b|\bdisplay\b|\bjourn[ée]e contributive\b|\bcontribution day\b|\bwikiphys\b|\b1870s\b|\bkilburn brothers\b|\bmashteuiatsh[\s_-]?0*\d{2,}\b|\bultramafic\b|\bwasteland\b|\brocky plain\b|\bquarry\b|\bcarri[eè]re\b|\bmudflat\b|\bbatture\b|\bmar[eé]e basse\b|\blow[\s-]?tide\b|\bunderside\b|\bunderneath\b|\bunderpass\b|\bunder[\s-]?the[\s-]?bridge\b|\bbridge[\s-]?underside\b|\bdessous de pont\b|\bsous le pont\b|\bsous[\s-]pont\b|\bsoffit\b|\bconcrete beams?\b|\bchain[\s-]?link\b|\bbarbed[\s-]?wire\b|\bbarbel[eé]\b|\bcl[oô]ture grillag|\bprison\b|\bp[eé]nitenc|\bjail\b|\bd[eé]tention\b|\bairport\b|\ba[eé]roport\b|\bairfield\b|\bhangar\b|\bwarehouse\b|\bentrep[oô]t\b|\bindustrial\b|\bzone industrielle\b|\bfactory\b|\brailway[\s_-]?track\b|\bparking[\s_-]?lot\b|\bstationnement\b|\b[eé]puration\b|\bsewage\b|\bwaste[\s-]?water\b|\bwater[\s-]?treatment\b|\btreatment[\s-]?plant\b|\bstop[\s-]?sign\b|\bstopsign\b|\bpanneau\s+d['’]?arr[eê]t\b|\bdiagram\b|\blocation\s+diagram\b|\bmap\s+of\b|\bwelcome[\s_-]?signs?|\bentrance[\s_-]?signs?|\broad[\s_-]?signs?|\broadside[\s_-]?signs?|\bcity[\s_-]?limit[\s_-]?signs?|\bmunicipal[\s_-]?signs?|\bcommunity[\s_-]?signs?|\bbillboard|\benseigne|\bpanneau|StopSign|WelcomeSign|\bplace[\s_-]?name[\s_-]?signs?|\bname[\s_-]?signs?|\bwelcome[\s_-]?board\b|\bentry[\s_-]?signs?|\bboundary[\s_-]?signs?|[_-]signs?\.(?:jpe?g|png|webp)\b)/i;
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
@@ -538,13 +556,9 @@ function looksNonImage(entry) {
   return false;
 }
 
-function isAllowedLicense(license = '') {
-  const l = license.toLowerCase();
-  if (!l) return true;
-  if (/public domain|cc0|cc-zero|pd-/.test(l)) return true;
-  if (/cc by|cc-by|creative commons/.test(l)) return true;
-  if (/gfdl/.test(l)) return true;
-  if (/all rights reserved|copyright|fair use|noncommercial|nc-/.test(l)) return false;
+function isAllowedLicense(_license = '') {
+  // Crédit à l’écran ; retrait sur demande (courriel du pied de page).
+  // Ne plus rejeter ARR / NC / inconnue — ça écartait surtout nations / favorites.
   return true;
 }
 
@@ -767,7 +781,6 @@ async function searchOpenverseMulti(query, limit = 10, opts = {}) {
   const params = new URLSearchParams({
     q: query,
     page_size: String(Math.min(limit, 20)),
-    license_type: 'commercial,modification',
     aspect_ratio: 'wide',
     size: 'large',
   });
@@ -842,8 +855,7 @@ async function searchOpenverse(query, limit = 8) {
   const params = new URLSearchParams({
     q: query,
     page_size: String(Math.min(limit, 20)),
-    license_type: 'commercial,modification',
-    // wallpaper paysage
+    // wallpaper paysage — plus de filtre licence Openverse (NC admis ; crédit + retrait)
     aspect_ratio: 'wide',
     size: 'large',
   });
@@ -930,14 +942,31 @@ function countSeasons4(photos, profileId = 'masthead') {
 }
 
 function seasonFloorsForProfile(profileId) {
+  if (profileId === 'nations') return { ...SEASON6_MIN_NATIONS };
   return SEASON_MIN_BY_PROFILE[profileId] || SEASON_MIN_BY_PROFILE.masthead;
+}
+
+function countSeasonsForProfile(photos, profileId = 'masthead') {
+  if (profileId === 'nations') {
+    const counts = { untagged: 0 };
+    for (const id of SEASON6) counts[id] = 0;
+    for (const p of photos || []) {
+      enrichPhotoSeasons(p, profileId);
+      const s = resolveItemSeason6(p);
+      if (s && counts[s] != null) counts[s] += 1;
+      else counts.untagged += 1;
+    }
+    return counts;
+  }
+  return countSeasons4(photos, profileId);
 }
 
 /** Saisons sous le plancher (inventaire permanent incomplet). */
 function seasonGaps(photos, profileId) {
   const floors = seasonFloorsForProfile(profileId);
-  const counts = countSeasons4(photos, profileId);
-  return SEASON4.filter((s) => (counts[s] || 0) < (floors[s] || 0)).map((s) => ({
+  const counts = countSeasonsForProfile(photos, profileId);
+  const keys = profileId === 'nations' ? SEASON6 : SEASON4;
+  return keys.filter((s) => (counts[s] || 0) < (floors[s] || 0)).map((s) => ({
     season: s,
     have: counts[s] || 0,
     need: floors[s] || 0,
@@ -1006,6 +1035,36 @@ function seasonGapQueries(season) {
       'Charlevoix hiver paysage',
       'Gaspésie hiver paysage',
       'Québec city winter skyline day',
+    ],
+    ukiuq: [
+      'Nunavik winter landscape snow December January',
+      'Kuujjuaq winter landscape -people',
+      'Pingualuit winter snow -people',
+    ],
+    upingaksaaq: [
+      'Nunavik March melt ice landscape',
+      'Nunavik late winter thaw -people',
+      'Kuujjuarapik March landscape -people',
+    ],
+    upingaaq: [
+      'Nunavik spring May landscape -snow -people',
+      'Kangirsuk spring landscape -people',
+      'Nunavik June tundra -people',
+    ],
+    aujaq: [
+      'Nunavik July tundra green landscape -people',
+      'Pingualuit summer landscape -people',
+      'Salluit summer landscape -people',
+    ],
+    ukiaqsaaq: [
+      'Nunavik August landscape tundra -people',
+      'Nunavik September landscape -people',
+      'Kangiqsujuaq late summer -people',
+    ],
+    ukiaq: [
+      'Nunavik October landscape autumn -people',
+      'Nunavik November tundra -people',
+      'Kuujjuaq autumn landscape -people',
     ],
   };
   return table[season] || [];
@@ -1133,6 +1192,11 @@ function writeJsExport(photos) {
         if (p.nationId) lines.push(`    nationId: "${esc(p.nationId)}"`);
         if (p.nation) lines.push(`    nation: "${esc(p.nation)}"`);
       }
+      // Même contrat que sync-quebec-backgrounds.js : seulement les tags fiables.
+      if (seasonTagTrusted(p)) {
+        if (p.season) lines.push(`    season: "${esc(p.season)}"`);
+        if (p.season6) lines.push(`    season6: "${esc(p.season6)}"`);
+      }
       return `  {\n${lines.join(',\n')},\n  }`;
     })
     .join(',\n');
@@ -1153,6 +1217,12 @@ async function main() {
   console.log(
     `Mode: ${doUpdate ? 'UPDATE' : 'dry-run'}${forceSession ? ' --force' : ''} · profil ${PROFILE.id}\n`
   );
+
+  const extraSources = createPhotoWebSources({
+    fetchJson,
+    mapCommonsPage,
+    fetchCommonsFile,
+  });
 
   const sessionId = getCurrentUniversitySessionId();
   const sessionKey = sessionStartKey();
@@ -1193,8 +1263,8 @@ async function main() {
       const dg = dimensionGate(entry);
       if (!tg.ok || !dg.ok) {
         const reason = tg.reason || dg.reason;
-        // Favorites / permanent : ne jamais drop au ménage (sauf licence illégale)
-        if (isPermanentPhoto(entry) && reason !== 'license' && reason !== 'not_image') {
+        // Favorites / permanent : ne jamais drop au ménage (sauf non-image)
+        if (isPermanentPhoto(entry) && reason !== 'not_image') {
           console.log(`  · keep permanent ${entry.title || entry.id} (skip ${reason})`);
           if (PROFILE.id === 'nations') entry = nationsTaxonomy.tagPhotoNation(entry);
           kept.push(entry);
@@ -1361,14 +1431,26 @@ async function main() {
     enrichPhotoSeasons(entry, PROFILE.id);
     // Cible saison : rejeter si autre saison détectée ; sinon assigner (requête dédiée).
     if (opts.forSeason) {
-      const got = resolveItemSeason4(entry);
-      if (got && got !== opts.forSeason) return false;
-      if (!got) {
-        entry.season = opts.forSeason;
-        entry.seasonSource = 'balance-query';
-        entry.seasonConfidence = 0.55;
-        if (PROFILE.id === 'nations') {
-          entry.season6 = season4ToSeason6(opts.forSeason);
+      const want6 = SEASON6.includes(opts.forSeason);
+      if (want6) {
+        const got = resolveItemSeason6(entry);
+        if (got && got !== opts.forSeason) return false;
+        if (!got) {
+          entry.season6 = opts.forSeason;
+          entry.season = season6ToSeason4(opts.forSeason) || entry.season;
+          entry.seasonSource = 'balance-query';
+          entry.seasonConfidence = 0.55;
+        }
+      } else {
+        const got = resolveItemSeason4(entry);
+        if (got && got !== opts.forSeason) return false;
+        if (!got) {
+          entry.season = opts.forSeason;
+          entry.seasonSource = 'balance-query';
+          entry.seasonConfidence = 0.55;
+          if (PROFILE.id === 'nations') {
+            entry.season6 = season4ToSeason6(opts.forSeason);
+          }
         }
       }
     }
@@ -1511,6 +1593,12 @@ async function main() {
           'Forillon National Park',
         ],
         hiver: ['Winter in Quebec', 'Snow in Quebec'],
+        ukiuq: ['Winter in Nunavik', 'Snow in Nunavik'],
+        upingaksaaq: ['Nunavik'],
+        upingaaq: ['Nunavik'],
+        aujaq: ['Nunavik'],
+        ukiaqsaaq: ['Nunavik'],
+        ukiaq: ['Autumn in Quebec', 'Nunavik'],
       };
 
       /**
@@ -1519,13 +1607,17 @@ async function main() {
        */
       function nationsSeasonJobs(season) {
         const seasonWord =
-          season === 'printemps'
-            ? 'spring OR printemps OR May OR avril'
-            : season === 'automne'
-              ? 'autumn OR fall OR automne OR foliage OR érable OR maple'
-              : season === 'ete'
-                ? 'summer OR été OR green landscape'
-                : 'winter OR hiver OR snow OR neige';
+          season === 'upingaksaaq'
+            ? 'February OR March OR melt OR dégel OR breakup OR thaw'
+            : season === 'upingaaq' || season === 'printemps'
+              ? 'spring OR printemps OR May OR avril'
+              : season === 'ukiaqsaaq'
+                ? 'August OR September OR "late summer" OR "fin d\'été"'
+              : season === 'ukiaq' || season === 'automne'
+                ? 'autumn OR fall OR automne OR foliage OR érable OR maple'
+                : season === 'aujaq' || season === 'ete'
+                  ? 'summer OR été OR green landscape OR July OR June'
+                  : 'winter OR hiver OR snow OR neige OR December OR January';
         const jobs = [];
         for (const def of nationsTaxonomy.QUEBEC_NATIONS) {
           const place = (def.communities && def.communities[0]) || def.label;
@@ -1572,6 +1664,35 @@ async function main() {
             { nationId: 'inuit', q: 'Nunavik winter landscape snow -people -portrait' },
             { nationId: 'atikamekw', q: 'Manawan winter landscape -people' },
           ],
+          ukiuq: [
+            { nationId: 'inuit', q: 'Nunavik winter December January snow landscape -people' },
+            { nationId: 'inuit', q: 'Kuujjuaq winter landscape snow -people -portrait' },
+          ],
+          upingaksaaq: [
+            { nationId: 'inuit', q: 'Nunavik March melt ice breakup landscape -people' },
+            { nationId: 'inuit', q: 'Nunavik late winter thaw landscape -people' },
+            { nationId: 'atikamekw', q: 'Mauricie March snow melt landscape -people' },
+          ],
+          upingaaq: [
+            { nationId: 'inuit', q: 'Nunavik spring May landscape -people -snow' },
+            { nationId: 'atikamekw', q: 'Mauricie spring landscape river -people' },
+            { nationId: 'algonquin', q: 'Gatineau Park spring landscape -people' },
+          ],
+          aujaq: [
+            { nationId: 'inuit', q: 'Nunavik July tundra green landscape -people' },
+            { nationId: 'cree', q: 'Mistissini landscape summer -people' },
+            { nationId: 'atikamekw', q: 'Manawan Quebec landscape summer -people' },
+          ],
+          ukiaqsaaq: [
+            { nationId: 'inuit', q: 'Nunavik August September tundra landscape -people' },
+            { nationId: 'inuit', q: 'Pingualuit August landscape -people' },
+            { nationId: 'migmaq', q: 'Gaspésie late summer landscape -people' },
+          ],
+          ukiaq: [
+            { nationId: 'atikamekw', q: 'Mauricie autumn foliage -people' },
+            { nationId: 'innu', q: 'Saguenay autumn landscape -people' },
+            { nationId: 'algonquin', q: 'Gatineau Park autumn foliage -people' },
+          ],
         };
         for (const row of territory[season] || []) {
           jobs.push({ nationId: row.nationId, queries: [row.q] });
@@ -1581,7 +1702,7 @@ async function main() {
 
       async function ingestHits(hits, season, forceNationId) {
         for (const hit of hits) {
-          const c = countSeasons4(photos, PROFILE.id);
+          const c = countSeasonsForProfile(photos, PROFILE.id);
           if ((c[season] || 0) >= (seasonFloorsForProfile(PROFILE.id)[season] || 0)) {
             return true; // filled
           }
@@ -1594,7 +1715,7 @@ async function main() {
         const need = g.need;
         // A) Catégories Commons
         for (const cat of seasonCats[g.season] || []) {
-          if ((countSeasons4(photos, PROFILE.id)[g.season] || 0) >= need) break;
+          if ((countSeasonsForProfile(photos, PROFILE.id)[g.season] || 0) >= need) break;
           await sleep(500);
           const hits = await searchCommonsCategory(cat, 14);
           const filled = await ingestHits(hits, g.season, null);
@@ -1603,7 +1724,7 @@ async function main() {
 
         // B) Fulltext Commons (générique)
         for (const q of seasonGapQueries(g.season)) {
-          if ((countSeasons4(photos, PROFILE.id)[g.season] || 0) >= need) break;
+          if ((countSeasonsForProfile(photos, PROFILE.id)[g.season] || 0) >= need) break;
           await sleep(500);
           const hits = await searchCommons(q, 12);
           await ingestHits(hits, g.season, null);
@@ -1621,7 +1742,7 @@ async function main() {
                 : 'Quebec winter snow landscape day',
         ];
         for (const q of ovQueries) {
-          if ((countSeasons4(photos, PROFILE.id)[g.season] || 0) >= need) break;
+          if ((countSeasonsForProfile(photos, PROFILE.id)[g.season] || 0) >= need) break;
           await sleep(600);
           let hits = await searchOpenverseMulti(q, 12);
           await ingestHits(hits, g.season, null);
@@ -1636,9 +1757,9 @@ async function main() {
         // D) Nations : territoire × nation (sources élargies + forceNationId)
         if (PROFILE.id === 'nations') {
           for (const job of nationsSeasonJobs(g.season)) {
-            if ((countSeasons4(photos, PROFILE.id)[g.season] || 0) >= need) break;
+            if ((countSeasonsForProfile(photos, PROFILE.id)[g.season] || 0) >= need) break;
             for (const q of job.queries) {
-              if ((countSeasons4(photos, PROFILE.id)[g.season] || 0) >= need) break;
+              if ((countSeasonsForProfile(photos, PROFILE.id)[g.season] || 0) >= need) break;
               await sleep(550);
               let hits = await searchCommons(q, 10);
               await ingestHits(hits, g.season, job.nationId);
@@ -1649,6 +1770,45 @@ async function main() {
               hits = await searchOpenverseMulti(q, 8, { source: 'flickr' });
               await ingestHits(hits, g.season, job.nationId);
             }
+          }
+        }
+
+        // E) Géoloc Commons + Wikidata P18 + catégories campus
+        //    (le plein-texte « spring/June » part en Europe / églises).
+        if (PROFILE.id === 'universities') {
+          console.log('  · sources extra : géoloc campus + Wikidata P18 + catégories');
+          const p18 = await extraSources.searchWikidataCampusP18();
+          await ingestHits(p18, g.season, null);
+          for (const cat of extraSources.CAMPUS_CATEGORIES) {
+            if ((countSeasonsForProfile(photos, PROFILE.id)[g.season] || 0) >= need) break;
+            await sleep(400);
+            const hits = await searchCommonsCategory(cat, 16);
+            await ingestHits(hits, g.season, null);
+          }
+          for (const geo of extraSources.CAMPUS_GEO) {
+            if ((countSeasonsForProfile(photos, PROFILE.id)[g.season] || 0) >= need) break;
+            await sleep(450);
+            const hits = await extraSources.searchCommonsGeo(
+              geo.lat,
+              geo.lon,
+              geo.radius,
+              18
+            );
+            await ingestHits(hits, g.season, null);
+          }
+        }
+        if (PROFILE.id === 'nations') {
+          console.log('  · sources extra : géoloc communautés PNI');
+          for (const geo of extraSources.NATION_GEO) {
+            if ((countSeasonsForProfile(photos, PROFILE.id)[g.season] || 0) >= need) break;
+            await sleep(450);
+            const hits = await extraSources.searchCommonsGeo(
+              geo.lat,
+              geo.lon,
+              geo.radius,
+              16
+            );
+            await ingestHits(hits, g.season, geo.nationId);
           }
         }
       }
@@ -1685,7 +1845,7 @@ async function main() {
   // Snapshot inventaire multi-saisons (permanent en JSON — « cache serveur »)
   bank.seasonInventory = {
     floors: seasonFloorsForProfile(PROFILE.id),
-    counts: countSeasons4(photos, PROFILE.id),
+    counts: countSeasonsForProfile(photos, PROFILE.id),
     gaps: seasonGaps(photos, PROFILE.id).map((g) => g.season),
     updated: new Date().toISOString(),
   };

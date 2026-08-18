@@ -34,7 +34,7 @@ const MIN_ASPECT = 1.25;
 const MIN_ASPECT_NATIONS = 1.15;
 
 const PEOPLE_RE =
-  /(?:\bportrait\b|\bpeople\b|\bperson\b|\bpersons\b|\bman\b|\bwoman\b|\bmen\b|\bwomen\b|\bchild\b|\bchildren\b|\bfamily\b|\bfamille\b|\bhomme\b|\bfemme\b|\benfant\b|\bdancer\b|\bdancers\b|\bpow[\s-]?wow\b|\bcrowd\b|\bfoule\b|\bselfie\b|\binscription on reverse\b|\bchef\b|\bchief\b|\bleder\b|\bleader\b|\bmaire\b|\bmayor\b|\bface\b|\bvisage\b|\bgroup\b|\bgroupe\b|\bmeeting\b|\br[eé]union\b)/i;
+  /(?:\bportrait\b|\bpeople\b|\bperson\b|\bpersons\b|\bman\b|\bwoman\b|\bmen\b|\bwomen\b|\bchild\b|\bchildren\b|\bfamily\b|\bfamille\b|\bhomme\b|\bfemme\b|\benfant\b|\bcrowd\b|\bfoule\b|\bselfie\b|\binscription on reverse\b|\bchef\b|\bchief\b|\bleder\b|\bleader\b|\bmaire\b|\bmayor\b|\bface\b|\bvisage\b|\bgroup\b|\bgroupe\b|\bmeeting\b|\br[eé]union\b)/i;
 
 const NON_IMAGE_RE =
   /\.(?:wav|mp3|ogg|flac|webm|mp4|pdf|svg|djvu|stl|obj)(?:\?|$)/i;
@@ -128,7 +128,12 @@ function auditPhotoHard(photo, profile = {}) {
   }
 
   if (!photo.url || typeof photo.url !== 'string') reasons.push('missing_url');
-  else if (!/^https:\/\//i.test(photo.url)) reasons.push('url_not_https');
+  else if (
+    !/^https:\/\//i.test(photo.url) &&
+    !/^\/assets\/masthead\/[^?\s]+\.(?:jpe?g|png|webp)$/i.test(photo.url)
+  ) {
+    reasons.push('url_not_https');
+  }
 
   return { ok: reasons.length === 0, reasons };
 }
