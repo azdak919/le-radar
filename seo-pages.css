@@ -327,6 +327,106 @@
   color: var(--muted);
 }
 
+/* Hub /horaires/ : 6 postes en 3×2, émission en cours / à venir — pas un
+   annuaire de « N créneaux » dont la date ISO casse au milieu. */
+.seo-radio-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.seo-radio-card a {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: border-color 140ms ease, transform 140ms ease;
+}
+.seo-radio-card a:hover { border-color: var(--accent); transform: translateY(-1px); }
+.seo-radio-card__name {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.seo-radio-card__place {
+  display: block;
+  margin-top: 3px;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.seo-radio-card__now {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: auto;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border-left: 3px solid transparent;
+}
+.seo-radio-card__kicker {
+  font-family: var(--sans);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.seo-radio-card__show {
+  font-family: var(--serif);
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+}
+.seo-radio-card__when {
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.seo-radio-card[data-air-state="live"] .seo-radio-card__now {
+  border-left-color: var(--status-live);
+  background: color-mix(in srgb, var(--status-live) 12%, transparent);
+}
+.seo-radio-card[data-air-state="live"] .seo-radio-card__kicker,
+.seo-radio-card[data-air-state="live"] .seo-radio-card__show {
+  color: var(--status-live);
+}
+.seo-radio-card[data-air-state="upcoming"] .seo-radio-card__now {
+  border-left-color: var(--status-upcoming-mid);
+  background: color-mix(in srgb, var(--status-upcoming-soft) 18%, transparent);
+}
+.seo-radio-card[data-air-state="upcoming"] .seo-radio-card__kicker,
+.seo-radio-card[data-air-state="upcoming"] .seo-radio-card__show {
+  color: var(--status-upcoming);
+}
+[data-theme="dark"] .seo-radio-card[data-air-state="live"] .seo-radio-card__now {
+  border-left-color: var(--status-live-soft);
+  background: color-mix(in srgb, var(--status-live-soft) 14%, transparent);
+}
+[data-theme="dark"] .seo-radio-card[data-air-state="live"] .seo-radio-card__kicker,
+[data-theme="dark"] .seo-radio-card[data-air-state="live"] .seo-radio-card__show {
+  color: var(--status-live-soft);
+}
+[data-theme="dark"] .seo-radio-card[data-air-state="upcoming"] .seo-radio-card__now {
+  border-left-color: var(--status-upcoming-soft);
+  background: color-mix(in srgb, var(--status-upcoming-soft) 14%, transparent);
+}
+[data-theme="dark"] .seo-radio-card[data-air-state="upcoming"] .seo-radio-card__kicker,
+[data-theme="dark"] .seo-radio-card[data-air-state="upcoming"] .seo-radio-card__show {
+  color: var(--status-upcoming-soft);
+}
+
 /* ── Manchettes ─────────────────────────────────────────────────────────── */
 
 .seo-headlines { list-style: none; margin: 0; padding: 0; }
@@ -597,9 +697,13 @@
   pointer-events: none;
 }
 
+@media (max-width: 900px) {
+  .seo-radio-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 @media (max-width: 520px) {
   .seo-facts { grid-template-columns: 1fr; }
   .seo-cards { grid-template-columns: 1fr; }
+  .seo-radio-cards { grid-template-columns: 1fr; }
 }
 
 /* ── Page /sports/ — tableau RSEQ (parité LE-KIOSQUE « Au tableau ») ─── */

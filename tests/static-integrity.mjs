@@ -582,7 +582,12 @@ assert(feedsHtml.includes('class="wordmark-logo"'), 'feeds.html : logo de marque
 assert(!feedsHtml.includes('wordmark-emoji'), 'feeds.html : ancien titre à emojis interdit');
 assert(feedsHtml.includes('id="today-time"'), 'feeds.html : heure du mât requise');
 const schedulesHub = readFileSync(join(root, 'horaires/index.html'), 'utf8');
-assert(schedulesHub.includes('Grilles colligées automatiquement'), 'hub horaires : note au pluriel requise');
+assert(schedulesHub.includes('Les grilles viennent des sites des stations'), 'hub horaires : note au pluriel requise');
+assert(schedulesHub.includes('class="seo-radio-cards"'), 'hub horaires : cartes radio dédiées requises');
+assert(schedulesHub.includes('data-schedule-air'), 'hub horaires : émission en cours ou à venir requise');
+assert(schedulesHub.includes('MAJ le'), 'hub horaires : date de mise à jour requise');
+assert(!schedulesHub.includes('colligé le'), 'hub horaires : date ISO colligée interdite');
+assert(!schedulesHub.includes('créneaux'), 'hub horaires : décompte de créneaux interdit');
 
 const embedScript = readFileSync(join(root, 'embed.js'), 'utf8');
 assert(embedScript.includes("type: 'radar-embed'"), 'contrat postMessage radar-embed requis');
