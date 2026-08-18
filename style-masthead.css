@@ -211,24 +211,6 @@
 }
 
 /*
- * Accueil avec #bg-photo-layer : ne pas montrer la date « plate » avant la
- * photo (évite le flash ancien style → puce glass). Invisible jusqu’à .loaded ;
- * les pages sans couche photo (feeds, SEO) ne matchent pas et gardent la date.
- */
-.masthead:has(#bg-photo-layer):not(:has(#bg-photo-layer.loaded)) .masthead-date {
-  opacity: 0;
-  pointer-events: none;
-  /* Même gabarit que la puce verre : la météo ne doit pas gagner de largeur
-     pendant que la date est invisible, puis se faire compresser au loaded. */
-  display: inline-flex;
-  align-items: center;
-  height: 29px;
-  padding: 0 8px;
-  box-sizing: border-box;
-  width: max-content;
-}
-
-/*
  * Mât sur photo — focus-group le-radar-masthead-photo-chrome C.
  * Slogan / crédit : soft glass. Date : **sœur des cartes météo**
  * (même hauteur 29px, radius 5px, verre, ombre, typo) — une ligne
