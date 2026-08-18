@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-18T02:35:20.945Z",
+  "updatedAt": "2026-08-18T03:41:17.309Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T02:34:53.693Z"
+      "checkedAt": "2026-08-18T03:40:48.690Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T02:34:55.743Z"
+      "checkedAt": "2026-08-18T03:40:50.750Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Drastic Plastic",
-        "source": "api-live",
-        "start": "22:00",
-        "end": "23:00"
-      },
-      "next": {
         "title": "27th Hr.",
         "source": "api-live",
         "start": "23:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Harmony Express",
+        "source": "api-live",
+        "start": "00:00",
+        "end": "02:00"
+      },
       "track": "",
-      "showTitle": "Drastic Plastic",
+      "showTitle": "27th Hr.",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T02:34:58.629Z"
+      "checkedAt": "2026-08-18T03:40:55.394Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Past Tense",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/past-tense"
-      },
-      "next": {
         "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
         "start": "23:00",
         "end": "00:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
+      "next": {
+        "title": "CJLO Late Night",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+      },
       "track": "",
-      "showTitle": "Past Tense",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T02:35:12.840Z"
+      "checkedAt": "2026-08-18T03:41:09.400Z"
     },
     "cfak": {
       "id": "cfak",
@@ -127,7 +127,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T02:35:13.726Z"
+      "checkedAt": "2026-08-18T03:41:10.181Z"
     },
     "choq": {
       "id": "choq",
@@ -140,7 +140,7 @@
         "end": "07:00",
         "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "Genesis Owusu - 4LIFE",
+      "track": "Downtown Boys - Albuterol",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -152,7 +152,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-18T02:35:20.595Z"
+      "checkedAt": "2026-08-18T03:41:16.958Z"
     }
   }
 }
