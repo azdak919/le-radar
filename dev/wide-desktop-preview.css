@@ -957,8 +957,10 @@ html[data-wide-preview="e"] {
 /*
  * À la une en 2 col (wide) :
  *  - 1 une à 1600 (comme prod)
- *  - 2 unes côte à côte dès ≥1920
- *  - vedettes 2 col dès 1920, 3 col à 3840
+ *  - 2 unes côte à côte dès ≥1920 ; En bref 1 col jusqu’à 3439
+ *  - Dès 3440 : En bref 2 col, piste plus large (unes moins étirées)
+ *  - 2560 / 3840 : même esprit, plus doux (En bref un peu plus large)
+ *  - 3 unes + vedettes 3 col à 3840
  *  - spacer pleine largeur pour l’équilibre magazine
  */
 @media (min-width: 1281px) {
@@ -987,25 +989,28 @@ html[data-wide-preview="e"] .news-hero-spacer {
   }
 }
 
-/* ── E ≥1920 : 2 unes + vedettes 2 col + En bref 2 col ── */
+/* ── E ≥1920 : 2 unes + vedettes 2 col ; En bref reste 1 col ── */
 @media (min-width: 1920px) {
   html[data-wide-preview="e"] .news-list:has(> .news-hero) {
-    grid-template-columns: minmax(420px, 1.2fr) minmax(300px, 0.95fr);
+    /* 2 unes lisibles ; En bref 1 col un cran plus large qu’au premier essai. */
+    grid-template-columns: minmax(540px, 1.58fr) minmax(300px, 0.72fr);
   }
 
   html[data-wide-preview="e"] .news-hero {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: 20px;
+    column-gap: 24px;
     row-gap: 0;
     align-content: start;
     height: auto;
-    padding-right: 24px;
+    padding-right: 28px;
+    min-width: 0;
   }
 
   html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead {
     grid-column: auto;
     min-width: 0;
+    overflow: hidden;
   }
   /* Un seul « À la une » visible ; l’espace reste pour aligner les titres */
   html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead ~ .article--lead .article-eyebrow {
@@ -1017,28 +1022,33 @@ html[data-wide-preview="e"] .news-hero-spacer {
 
   html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead.has-image .article-media {
     max-height: none;
+    max-width: 100%;
+    overflow: hidden;
   }
   html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead.has-image .article-media img {
     aspect-ratio: 3 / 2;
     max-height: none;
+    width: 100%;
+    max-width: 100%;
   }
   html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead .article-title {
-    font-size: clamp(1.25rem, 1.1vw + 0.55rem, 1.65rem);
+    font-size: clamp(1.28rem, 1.15vw + 0.55rem, 1.72rem);
   }
   html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead .article-brief {
-    -webkit-line-clamp: 4;
-    line-clamp: 4;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
   }
 
   html[data-wide-preview="e"] .news-hero .article--feature {
     grid-column: auto;
     min-width: 0;
     padding-right: 0;
+    overflow: hidden;
   }
 
   html[data-wide-preview="e"] .brief-rail {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: 16px;
+    grid-template-columns: minmax(0, 1fr);
+    column-gap: 0;
   }
 
   html[data-wide-preview="e"] .news-tail-body {
@@ -1047,19 +1057,20 @@ html[data-wide-preview="e"] .news-hero-spacer {
   }
 }
 
-/* ── E ≥2560 : une 2 col + En bref 2 col (plus d’air par carte) ── */
+/* ── E ≥2560 : unes un peu moins étirées ; En bref 1 col plus large ── */
 @media (min-width: 2560px) {
   html[data-wide-preview="e"] .news-list:has(> .news-hero) {
-    grid-template-columns: minmax(480px, 1.15fr) minmax(400px, 1fr);
+    grid-template-columns: minmax(680px, 1.55fr) minmax(340px, 0.78fr);
   }
 
   html[data-wide-preview="e"] .news-hero {
-    column-gap: 24px;
+    column-gap: 28px;
+    padding-right: 32px;
   }
 
   html[data-wide-preview="e"] .brief-rail {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: 18px;
+    grid-template-columns: minmax(0, 1fr);
+    column-gap: 0;
   }
 
   html[data-wide-preview="e"] .news-tail-body {
@@ -1072,22 +1083,33 @@ html[data-wide-preview="e"] .news-hero-spacer {
   }
 }
 
-/* ── E ≥3440 : En bref 3 col ── */
+/* ── E ≥3440 : 2 unes moins étirées ; En bref 2 col plus large ── */
 @media (min-width: 3440px) {
-  html[data-wide-preview="e"] .brief-rail {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: 16px;
-  }
-}
-
-/* ── E ≥3840 : 3 unes + 6 vedettes (3 col) ; En bref reste 2 col ── */
-@media (min-width: 3840px) {
   html[data-wide-preview="e"] .news-list:has(> .news-hero) {
-    grid-template-columns: minmax(720px, 1.45fr) minmax(340px, 0.8fr);
+    grid-template-columns: minmax(720px, 1.3fr) minmax(480px, 1fr);
   }
 
   html[data-wide-preview="e"] .news-hero {
-    column-gap: 24px;
+    column-gap: 28px;
+    padding-right: 32px;
+  }
+
+  html[data-wide-preview="e"] .brief-rail {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 22px;
+  }
+}
+
+/* ── E ≥3840 : 3 unes + 6 vedettes (3 col) ; En bref 2 col ── */
+@media (min-width: 3840px) {
+  html[data-wide-preview="e"] .news-list:has(> .news-hero) {
+    /* 3 unes sans affamer En bref (même esprit que 3440). */
+    grid-template-columns: minmax(960px, 1.45fr) minmax(420px, 0.9fr);
+  }
+
+  html[data-wide-preview="e"] .news-hero {
+    column-gap: 28px;
+    padding-right: 36px;
   }
 
   html[data-wide-preview="e"] .news-hero[data-leads="3"] {
@@ -1096,23 +1118,29 @@ html[data-wide-preview="e"] .news-hero-spacer {
   html[data-wide-preview="e"] .news-hero[data-leads="3"] .article--lead {
     grid-column: auto;
     min-width: 0;
+    overflow: hidden;
   }
   html[data-wide-preview="e"] .news-hero[data-leads="3"] .article--feature {
     grid-column: auto;
     min-width: 0;
+    overflow: hidden;
   }
   html[data-wide-preview="e"] .news-hero[data-leads="3"] .article--lead ~ .article--lead .article-eyebrow {
     visibility: hidden;
   }
   html[data-wide-preview="e"] .news-hero[data-leads="3"] .article--lead.has-image .article-media {
     max-height: none;
+    max-width: 100%;
+    overflow: hidden;
   }
   html[data-wide-preview="e"] .news-hero[data-leads="3"] .article--lead.has-image .article-media img {
     aspect-ratio: 3 / 2;
     max-height: none;
+    width: 100%;
+    max-width: 100%;
   }
   html[data-wide-preview="e"] .news-hero[data-leads="3"] .article--lead .article-title {
-    font-size: clamp(1.15rem, 0.85vw + 0.5rem, 1.5rem);
+    font-size: clamp(1.2rem, 0.7vw + 0.55rem, 1.58rem);
   }
   html[data-wide-preview="e"] .news-hero[data-leads="3"] .article--lead .article-brief {
     -webkit-line-clamp: 4;
@@ -1125,7 +1153,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
 
   html[data-wide-preview="e"] .brief-rail {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: 18px;
+    column-gap: 20px;
   }
 
   html[data-wide-preview="e"] .news-tail-body {
