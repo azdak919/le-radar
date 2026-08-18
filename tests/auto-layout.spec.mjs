@@ -53,9 +53,17 @@ async function measureMagazine(page) {
     const briefBox = brief.getBoundingClientRect();
     const l0 = leads[0]?.getBoundingClientRect();
     const l1 = leads[1]?.getBoundingClientRect();
+    const rowCount = (sel) => {
+      const els = [...(hero?.querySelectorAll(sel) || [])];
+      if (!els.length) return 0;
+      const first = els[0].getBoundingClientRect().top;
+      return els.filter((el) => Math.abs(el.getBoundingClientRect().top - first) < 8).length;
+    };
     return {
       leadCount: leads.length,
       dataLeads: hero?.dataset.leads || '',
+      leadCols: rowCount('.article--lead'),
+      featCols: rowCount('.article--feature'),
       briefCols,
       heroW: Math.round(heroBox.width),
       briefW: Math.round(briefBox.width),
@@ -92,17 +100,19 @@ test('2560 : même rapport 1920, En bref 1 col, unes plus larges', async ({ page
   expect(layout.leadW, `2560 : chaque une trop étroite (${layout.leadW} px)`).toBeGreaterThanOrEqual(640);
 });
 
-test('3440 : En bref 2 col, chaque carte ≈ 1920, unes toujours plus larges', async ({ page }) => {
+test('3440 : 2 unes moins étirées, En bref 2 col plus large', async ({ page }) => {
   await openAt(page, '/', 3440, 1440);
   const layout = await measureMagazine(page);
   expect(layout.dataLeads).toBe('2');
-
+  expect(layout.leadCols, 'À la une reste 2 colonnes à 3440').toBe(2);
+  expect(layout.featCols, 'Vedettes restent 2 colonnes à 3440').toBe(2);
   expect(layout.briefCols, 'En bref passe à 2 colonnes à 3440').toBe(2);
   expect(layout.leadsSideBySide).toBe(true);
   expect(layout.overlap).toBeLessThanOrEqual(0);
-  expect(layout.heroW).toBeGreaterThan(layout.briefW * 1.55);
-  expect(layout.leadW, `3440 : chaque une trop étroite (${layout.leadW} px)`).toBeGreaterThanOrEqual(720);
-  expect(layout.briefColW, `3440 : carte En bref trop étroite (${layout.briefColW} px)`).toBeGreaterThanOrEqual(300);
+  expect(layout.heroW).toBeGreaterThan(layout.briefW);
+  expect(layout.leadW, `3440 : chaque une trop étroite (${layout.leadW} px)`).toBeGreaterThanOrEqual(640);
+  expect(layout.leadW, `3440 : chaque une trop large (${layout.leadW} px)`).toBeLessThan(920);
+  expect(layout.briefColW, `3440 : carte En bref trop étroite (${layout.briefColW} px)`).toBeGreaterThanOrEqual(480);
 });
 
 test('?wide=off force l’ancien 1180 ; / tout seul active E à 1920', async ({ page }) => {

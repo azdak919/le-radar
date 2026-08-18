@@ -4,7 +4,7 @@
 Les densités 1440 / 1600 / 1920 / 2560 / 3440 / 3840 suivent le viewport.
 Téléphone, mid et bureau compact (≤1280) restent les layouts existants.
 
-Lab local seulement : barre Format + témoin `1180` (`?wide=off`).
+Lab local seulement : barre Format (Base + Grand). E s’applique tout seul.
 
 ## Lancer (lab)
 
@@ -19,8 +19,8 @@ Sur **localhost**, la barre flottante en bas propose :
 
 | Rangée | Rôle |
 |--------|------|
-| **Wide** | Off / A / B / C / D / **E** (au-dessus, hors dock) |
-| **Format** | 390 / 430 / 768 / 900 / 1280 / 1600 / 1920 / Plein |
+| **Base** | Plein / 390 / 430 / 768 / 900 / 1280 |
+| **Grand** | 1440 / 1600 / 1920 / 2560 / 3440 / 3840 |
 
 ## Options
 

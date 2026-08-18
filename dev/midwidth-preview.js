@@ -436,46 +436,7 @@
       });
     }
 
-    // ── Rangée 1 : Wide layout ──
-    const wideRow = rowEl();
-    wideRow.setAttribute('aria-label', 'Options grand écran');
-    const tagW = document.createElement('span');
-    tagW.textContent = 'Wide';
-    tagW.style.cssText = tagStyle;
-    wideRow.appendChild(tagW);
-
-    const wideAllowed = canApplyWideE();
-    Object.keys(WIDE_OPTIONS).forEach((key) => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.textContent = WIDE_OPTIONS[key].label;
-      btn.title = WIDE_OPTIONS[key].hint;
-      btn.setAttribute('data-wide-id', key);
-      const locked = key === 'e' && !wideAllowed;
-      const active = wideAllowed ? key === wideNow : key === 'off';
-      btn.style.cssText = wideBtnStyle(active, locked);
-      btn.disabled = locked;
-      if (locked) {
-        btn.title = 'E disponible seulement en >1280 (formats 1440+ ou fenêtre large)';
-      }
-      btn.addEventListener('click', (ev) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-        if (locked) return;
-        if (key === currentWide() && wideAllowed) return;
-        applyWide(key);
-      });
-      wideRow.appendChild(btn);
-    });
-
-    const hint = document.createElement('span');
-    hint.setAttribute('data-wide-hint', '1');
-    hint.style.cssText = 'opacity:0.48;font-size:10px;font-weight:500;margin-left:2px;max-width:40ch';
-    hint.textContent = WIDE_OPTIONS[wideNow]?.hint || '';
-    wideRow.appendChild(hint);
-    bar.appendChild(wideRow);
-
-    // ── Rangée 2 : formats de base (plein → 1280) ──
+    // ── Rangée 1 : formats de base (plein → 1280) ──
     const fmtBase = rowEl();
     fmtBase.setAttribute('aria-label', 'Formats téléphone à bureau');
     const tagB = document.createElement('span');
@@ -485,7 +446,7 @@
     appendFormatButtons(fmtBase, FORMAT_ORDER_BASE);
     bar.appendChild(fmtBase);
 
-    // ── Rangée 3 : grands moniteurs marché (+ scale auto si > écran hôte) ──
+    // ── Rangée 2 : grands moniteurs marché (+ scale auto si > écran hôte) ──
     const fmtLarge = rowEl();
     fmtLarge.setAttribute('aria-label', 'Formats grands moniteurs');
     const tagL = document.createElement('span');
