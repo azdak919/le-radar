@@ -1,4 +1,4 @@
-const CACHE_NAME = "radar-shell-v690";
+const CACHE_NAME = "radar-shell-v691";
 const CACHE_PREFIX = "radar-";
 /** Cache permanent : page maintenance / hors-ligne (ne se purge pas au bump shell). */
 const OFFLINE_CACHE = "radar-offline-v22";
@@ -31,6 +31,11 @@ const APP_SHELL = [
   "./feeds-page.js",
   "./style.css",
   "./style-masthead.css",
+  "./seo-page-theme.js",
+  "./dev/wide-desktop-preview.css",
+  "./dev/wide-desktop-preview.js",
+  "./dev/midwidth-preview.css",
+  "./dev/midwidth-preview.js",
   "./embed.css",
   "./embed.js",
   "./tuner-embed.html",

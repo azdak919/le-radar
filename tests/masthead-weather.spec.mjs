@@ -25,7 +25,7 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
     body: JSON.stringify(weather),
   }));
 
-  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const ribbon = page.locator('#masthead-weather');
   await expect(ribbon).toBeVisible();

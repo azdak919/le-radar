@@ -526,6 +526,24 @@ assert(feedsHtml.includes('src="native-tuner.js"'), 'feeds.html : lecteur natif 
 assert(feedsHtml.includes('src="nav-shell.js"'), 'feeds.html : navigation persistante requise');
 assert(readFileSync(join(root, 'index.html'), 'utf8').includes('src="seo-page-theme.js"'), 'index.html : amorçage de thème avant paint requis');
 assert(feedsHtml.includes('src="seo-page-theme.js"'), 'feeds.html : amorçage de thème avant paint requis');
+{
+  const themeJs = readFileSync(join(root, 'seo-page-theme.js'), 'utf8');
+  const midJs = readFileSync(join(root, 'dev/midwidth-preview.js'), 'utf8');
+  const wideJs = readFileSync(join(root, 'dev/wide-desktop-preview.js'), 'utf8');
+  assert(
+    themeJs.includes('function applyWideLayoutFromViewport')
+      && themeJs.includes("get('wide')")
+      && /return 'e'/.test(midJs)
+      && /return 'e'/.test(wideJs)
+      && /if \(id === 'off' \|\| id === 'a'\) return false/.test(appJs),
+    'layout : E auto dès 1281 px sans ?wide= (prod / main)',
+  );
+  assert(
+    !midJs.includes("searchParams.get(WIDE_PARAM) || 'off'")
+      && !wideJs.includes("searchParams.get(WIDE_PARAM) || 'off'"),
+    'layout : le défaut URL n’est plus off (sinon prod reste à 1180)',
+  );
+}
 assert(feedsHtml.includes('class="wordmark-logo"'), 'feeds.html : logo de marque courant requis');
 assert(!feedsHtml.includes('wordmark-emoji'), 'feeds.html : ancien titre à emojis interdit');
 assert(feedsHtml.includes('id="today-time"'), 'feeds.html : heure du mât requise');

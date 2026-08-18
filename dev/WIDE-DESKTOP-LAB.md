@@ -1,16 +1,18 @@
-# Lab local — grand écran (pré-focus-group)
+# Layouts viewport — grand écran
 
-Branche d’expérimentation : `exp/wide-desktop-lab`.
+**Prod / main :** E s’active tout seul dès **1281 px**. Aucun `?wide=e`.
+Les densités 1440 / 1600 / 1920 / 2560 / 3440 / 3840 suivent le viewport.
+Téléphone, mid et bureau compact (≤1280) restent les layouts existants.
 
-Compare les options **A–E** pour les viewports **≥ ~1280–1920** **avant** un panel focus-group.
-**Pas pour la prod** tant que le gate humain n’a pas levé le verdict.
+Lab local seulement : barre Format + témoin `1180` (`?wide=off`).
 
-## Lancer
+## Lancer (lab)
 
 ```bash
 cd VisualCode/le-radar
 python3 -m http.server 8766 --bind 127.0.0.1
-# → http://127.0.0.1:8766/?wide=e
+# → http://127.0.0.1:8766/          (Auto = E dès 1281)
+# → http://127.0.0.1:8766/?wide=off (ancien shell ~1180)
 ```
 
 Sur **localhost**, la barre flottante en bas propose :
