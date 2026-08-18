@@ -188,7 +188,7 @@ jobs:
           CI: true
         continue-on-error: true
 
-      # Gate locale avant push main : évite un Quality Gate rouge (mail) si
+      # Gate locale avant push main : évite un Vérification rouge (mail) si
       # generate-seo / données ont cassé l’intégrité statique.
       - name: Pre-push integrity (bot gate)
         if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.check.outputs.changed == 'true'
