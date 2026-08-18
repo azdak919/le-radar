@@ -1627,6 +1627,8 @@ let mastheadWeatherNationSlot = 1;
 let mastheadWeatherQueueIndex = 0;
 let mastheadWeatherLastBoardCount = 0;
 let mastheadWeatherFitCount = null;
+let weatherOverlapFitDepth = 0;
+let weatherAvailTrim = 0;
 let mastheadWeatherTooNarrow = false;
 let mastheadWeatherResizeFrame = 0;
 let mastheadWeatherDocked = false;
@@ -1726,10 +1728,31 @@ function buildMastheadWeatherBoard() {
   board.append(fragment);
 }
 
-/** Largeur utile du ruban météo (cellule 1fr, pas le board shrink-wrap). */
+/** Largeur utile du ruban météo (place restante, pas le contenu qui déborde). */
 function weatherBoardAvailWidth() {
-  // La case grille `.masthead-weather` est en 1fr : c’est elle qui donne
-  // la place réelle. Le board peut être plus étroit s’il est packé.
+  const slack = 20;
+  if (!mastheadWeatherDocked) {
+    const top = document.querySelector('.masthead-top');
+    const date = document.querySelector('.masthead-date');
+    const actions = document.querySelector('.masthead-actions');
+    const cell = MASTHEAD_WEATHER?.clientWidth || 0;
+    let leftover = 0;
+    if (top && date && actions) {
+      const cs = getComputedStyle(top);
+      const gap = parseFloat(cs.columnGap || cs.gap) || 8;
+      leftover = top.clientWidth
+        - date.getBoundingClientRect().width
+        - actions.getBoundingClientRect().width
+        - gap * 2
+        - slack;
+    }
+    // Case 1fr déjà contrainte = vérité. Si elle a gonflé (contenu), le
+    // reliquat date/icônes est plus sûr. On prend le plus étroit.
+    const trim = Math.max(0, weatherAvailTrim);
+    if (cell >= 40 && leftover >= 40) return Math.max(40, Math.min(cell, leftover) - trim);
+    if (leftover >= 40) return Math.max(40, leftover - trim);
+    if (cell >= 40) return Math.max(40, cell - slack - trim);
+  }
   let width = MASTHEAD_WEATHER?.clientWidth || 0;
   if (width < 40) {
     width = MASTHEAD_WEATHER?.querySelector('.masthead-weather__board')?.clientWidth || 0;
@@ -1740,7 +1763,105 @@ function weatherBoardAvailWidth() {
   if (width < 40 && mastheadWeatherDocked) {
     width = document.documentElement.clientWidth || 0;
   }
-  return width;
+  return width > slack ? width - slack : width;
+}
+
+function weatherActiveCount() {
+  return MASTHEAD_WEATHER?.querySelectorAll('.masthead-weather__city.is-active').length || 0;
+}
+
+/** True si une carte météo (ou la date) passe sous les icônes du mât. */
+function weatherRibbonOverlapsChrome() {
+  if (!MASTHEAD_WEATHER || mastheadWeatherDocked) return false;
+  const actions = document.querySelector('.masthead-actions');
+  if (!actions) return false;
+  const limit = actions.getBoundingClientRect().left;
+  const date = document.querySelector('.masthead-date');
+  if (date && date.getBoundingClientRect().right > limit + 0.5) return true;
+  return [...MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city.is-active')]
+    .some((el) => el.getBoundingClientRect().right > limit + 0.5);
+}
+
+/** Docké (≤1023) : les cartes ne doivent pas sortir du dock. */
+function weatherRibbonOverflowsDock() {
+  if (!MASTHEAD_WEATHER || !mastheadWeatherDocked) return false;
+  const host = MASTHEAD_WEATHER_DOCK || MASTHEAD_WEATHER;
+  const box = host.getBoundingClientRect();
+  if (box.width < 8) return false;
+  return [...MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city.is-active')]
+    .some((el) => {
+      const card = el.getBoundingClientRect();
+      return card.right > box.right + 1 || card.left < box.left - 1;
+    });
+}
+
+function weatherRibbonNeedsDrop() {
+  return weatherRibbonOverlapsChrome() || weatherRibbonOverflowsDock();
+}
+
+function weatherRibbonOverflowPx() {
+  if (!MASTHEAD_WEATHER || mastheadWeatherDocked) return 0;
+  const actions = document.querySelector('.masthead-actions');
+  if (!actions) return 0;
+  const limit = actions.getBoundingClientRect().left;
+  let overflow = 0;
+  const date = document.querySelector('.masthead-date');
+  if (date) overflow = Math.max(overflow, date.getBoundingClientRect().right - limit);
+  for (const el of MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city.is-active')) {
+    overflow = Math.max(overflow, el.getBoundingClientRect().right - limit);
+  }
+  return overflow;
+}
+
+/** Rétrécit les slots plutôt que de tout remplir un reliquat surestimé. */
+function shrinkWeatherSlotsToClearChrome() {
+  const overflow = weatherRibbonOverflowPx();
+  if (overflow <= 1) return false;
+  weatherAvailTrim = Math.max(weatherAvailTrim, Math.ceil(overflow) + 8);
+  const actives = [...(MASTHEAD_WEATHER?.querySelectorAll('.masthead-weather__city.is-active') || [])];
+  if (!actives.length) return false;
+  const each = Math.max(1, Math.ceil((overflow + 6) / actives.length));
+  let changed = false;
+  actives.forEach((el) => {
+    const cur = Math.floor(el.getBoundingClientRect().width);
+    const next = Math.max(72, cur - each);
+    if (next >= cur) return;
+    el.style.setProperty('flex', `0 0 ${next}px`, 'important');
+    el.style.setProperty('width', `${next}px`, 'important');
+    el.style.setProperty('min-width', `${next}px`, 'important');
+    el.style.setProperty('max-width', `${next}px`, 'important');
+    changed = true;
+  });
+  return changed;
+}
+
+function clearWeatherSlotInlineStyles() {
+  const board = MASTHEAD_WEATHER?.querySelector('.masthead-weather__board');
+  board?.style.removeProperty('--weather-secondary-w');
+  board?.style.removeProperty('--weather-primary-w');
+  board?.style.removeProperty('--weather-slot-w');
+  MASTHEAD_WEATHER?.querySelectorAll('.masthead-weather__city').forEach((el) => {
+    el.style.removeProperty('flex');
+    el.style.removeProperty('width');
+    el.style.removeProperty('min-width');
+    el.style.removeProperty('max-width');
+  });
+}
+
+function dropWeatherCardForFit() {
+  const painted = weatherActiveCount();
+  const floor = mastheadWeatherDocked ? 1 : (weatherWideDualPrimary() ? 2 : 1);
+  if (painted <= floor || weatherOverlapFitDepth > 10) return false;
+  weatherOverlapFitDepth += 1;
+  mastheadWeatherFitCount = painted - 1;
+  mastheadWeatherLastBoardCount = 0;
+  mastheadWeatherSlots = [];
+  try {
+    showMastheadWeatherBoard();
+  } finally {
+    weatherOverlapFitDepth = Math.max(0, weatherOverlapFitDepth - 1);
+  }
+  return true;
 }
 
 /**
@@ -1787,7 +1908,7 @@ function isWideQhdPlus() {
 function weatherSportsParityBonus() {
   try {
     if (!isWideNoMarqueeMode()) return 0;
-    const w = window.innerWidth || 0;
+    const w = document.documentElement.clientWidth || window.innerWidth || 0;
     if (w >= 3440) return 2;
     if (w >= 2560) return 1;
     return 0;
@@ -2340,13 +2461,12 @@ function weatherBoardCount() {
   if (weatherWideDualPrimary()) {
     // Plancher 2 = MTL + QC toujours visibles ; au-delà = secondaires rotatives.
     if (isWideDesktopComfort()) {
+      // 170 px / carte : plancher réaliste (nom + icône + °). Le fit post-paint
+      // recoupe encore si Rouyn-Noranda / sidebar ne rentrent pas.
+      const byWidth = Math.max(2, Math.min(12, Math.floor(width / 170)));
       const parity = weatherSportsParityCount();
-      if (parity > 0) {
-        count = parity;
-      } else {
-        const base = Math.max(4, Math.min(12, Math.floor(width / 155)));
-        count = Math.min(12, base + weatherSportsParityBonus());
-      }
+      if (parity > 0) count = Math.min(parity, byWidth);
+      else count = Math.min(12, Math.max(4, byWidth) + weatherSportsParityBonus());
     } else if (width >= 1800) count = 8;
     else if (width >= 1200) count = 7;
     else if (width >= 900) count = 6;
@@ -2364,12 +2484,10 @@ function weatherBoardCount() {
   // Docké (768/900) : même plafond 3 pour lisibilité.
   if (mastheadWeatherDocked && count > 3) count = 3;
   // Wide dual : ne jamais descendre sous MTL+QC (fit inclus).
+  // La parité sports est un *cible*, jamais un plancher : un panneau latéral
+  // (Firefox, Chrome, Edge, Arc…) doit pouvoir retirer des cartes.
   if (weatherWideDualPrimary()) {
     const floor = 2;
-    // ≥1440 : le nombre d’extras suit les scores sports — ne pas recouper ici.
-    if (isWideDesktopComfort() && weatherSportsParityCount() > 0) {
-      return Math.max(floor, count);
-    }
     if (mastheadWeatherFitCount === null) return Math.max(floor, count);
     return Math.max(floor, Math.min(count, mastheadWeatherFitCount));
   }
@@ -2568,7 +2686,14 @@ function showMastheadWeatherBoard() {
     city?.setAttribute('aria-hidden', 'false');
   });
   // Sports indépendants (FG weather-fit A) — pas de resync parité ici.
-  refreshWeatherNameScroll();
+  if (refreshWeatherNameScroll()) return;
+  if (weatherRibbonOverflowPx() > 1) {
+    shrinkWeatherSlotsToClearChrome();
+    if (weatherRibbonNeedsDrop() && dropWeatherCardForFit()) return;
+  } else if (weatherRibbonNeedsDrop() && dropWeatherCardForFit()) return;
+  window.requestAnimationFrame(() => {
+    if (weatherRibbonOverflowPx() > 1) shrinkWeatherSlotsToClearChrome();
+  });
   const primary = MASTHEAD_WEATHER.querySelector('.masthead-weather__city.is-active[data-weather-city="montreal"], .masthead-weather__city.is-active[data-weather-city="quebec"]');
   const primaryViewport = primary?.querySelector('.masthead-weather__name');
   const primaryText = primary?.querySelector('.masthead-weather__name-text');
@@ -2741,7 +2866,7 @@ function fitWideWeatherSecondarySlots() {
   };
   const dropTo = (nTotal) => {
     weatherComfortFitDepth += 1;
-    mastheadWeatherFitCount = Math.max(3, nTotal);
+    mastheadWeatherFitCount = Math.max(weatherWideDualPrimary() ? 2 : 1, nTotal);
     mastheadWeatherLastBoardCount = 0;
     try {
       showMastheadWeatherBoard();
@@ -2782,6 +2907,9 @@ function fitWideWeatherSecondarySlots() {
   secondaries.forEach((el) => applyW(el, slotW));
   applyW(mtl, pW);
   applyW(qc, pW);
+  const painted = actives.reduce((sum, el) => sum + el.getBoundingClientRect().width, 0)
+    + gap * Math.max(0, actives.length - 1);
+  if (painted > avail + 1 && actives.length > 2) return dropTo(actives.length - 1);
   return false;
 }
 
@@ -2823,15 +2951,16 @@ function measureWeatherNameOverflows() {
 
 function refreshWeatherNameScroll() {
   if (isWideDesktopComfort() && MASTHEAD_WEATHER) {
-    if (fitWideWeatherSecondarySlots()) return;
+    if (fitWideWeatherSecondarySlots()) return true;
     window.requestAnimationFrame(() => measureWeatherNameOverflows());
-    return;
+    return false;
   }
   if (isWideNoMarqueeMode() && !isWideDesktopComfort() && MASTHEAD_WEATHER) {
     window.requestAnimationFrame(() => measureWeatherNameOverflows());
-    return;
+    return false;
   }
   measureWeatherNameOverflows();
+  return false;
 }
 
 /** Dwell météo : lire → 1 aller-retour si overflow → repos → changer. */
@@ -3049,15 +3178,55 @@ function rotateOneMastheadWeatherCard(forcedSlot) {
 function scheduleMastheadWeatherLayout() {
   window.cancelAnimationFrame(mastheadWeatherResizeFrame);
   mastheadWeatherResizeFrame = window.requestAnimationFrame(() => {
-    mastheadWeatherFitCount = null;
+    const nowW = document.documentElement.clientWidth || 0;
+    const prevW = scheduleMastheadWeatherLayout._w;
+    scheduleMastheadWeatherLayout._w = nowW;
+    // Premier passage : ne pas traiter 0→viewport comme un « élargissement »
+    // (fonts.ready re-montrait trop de cartes). Panneau qui s’ouvre = rétrécit
+    // (garder le plafond). Fermeture = élargit (re-autoriser des cartes).
+    if (prevW != null && nowW > prevW + 8) {
+      mastheadWeatherFitCount = null;
+      weatherAvailTrim = 0;
+    }
     mastheadWeatherTooNarrow = false;
+    weatherOverlapFitDepth = 0;
     MASTHEAD_WEATHER?.classList.remove('is-too-narrow');
-    MASTHEAD_WEATHER?.querySelector('.masthead-weather__board')
-      ?.style.removeProperty('--weather-secondary-w');
+    clearWeatherSlotInlineStyles();
     // showMastheadWeatherBoard réévalue lui-même le dockage (masthead vs
     // sous le syntoniseur) selon la largeur actuelle.
     mastheadWeatherResizeFrame = window.requestAnimationFrame(showMastheadWeatherBoard);
   });
+}
+
+function bindMastheadWeatherLayoutWatchers() {
+  if (bindMastheadWeatherLayoutWatchers._bound) return;
+  bindMastheadWeatherLayoutWatchers._bound = true;
+  window.addEventListener('resize', scheduleMastheadWeatherLayout, { passive: true });
+  try {
+    window.visualViewport?.addEventListener('resize', scheduleMastheadWeatherLayout, { passive: true });
+  } catch { /* ignore */ }
+  [
+    MASTHEAD_WEATHER_PHONE_MQ,
+    window.matchMedia('(min-width: 1281px)'),
+    window.matchMedia('(min-width: 1440px)'),
+    window.matchMedia('(min-width: 1920px)'),
+    window.matchMedia('(min-width: 2560px)'),
+    window.matchMedia('(min-width: 3440px)'),
+  ].forEach((mq) => onMediaQueryChange(mq, scheduleMastheadWeatherLayout));
+  if (typeof ResizeObserver === 'undefined') return;
+  const watch = (el) => {
+    if (!el) return;
+    let lastW = el.clientWidth;
+    const ro = new ResizeObserver(() => {
+      const w = el.clientWidth;
+      if (Math.abs(w - lastW) < 2) return;
+      lastW = w;
+      scheduleMastheadWeatherLayout();
+    });
+    ro.observe(el);
+  };
+  watch(document.querySelector('.masthead-top'));
+  watch(MASTHEAD_WEATHER_DOCK);
 }
 
 function startMastheadWeatherBoard() {
@@ -3074,7 +3243,7 @@ function startMastheadWeatherBoard() {
   }
   // Chaîne setTimeout (pas interval fixe) : le dwell suit le marquee réel.
   if (!mastheadWeatherTimer) scheduleMastheadWeatherRotate();
-  window.addEventListener('resize', scheduleMastheadWeatherLayout, { passive: true });
+  bindMastheadWeatherLayoutWatchers();
 }
 
 function renderMastheadWeather(entries) {
@@ -3734,7 +3903,7 @@ function sportsPickTeamSlide(team, now = Date.now()) {
 function sportsStripAvailWidth() {
   const strip = MASTHEAD_SPORTS_STRIP;
   if (strip) {
-    const w = strip.getBoundingClientRect().width;
+    const w = strip.clientWidth || strip.getBoundingClientRect().width;
     if (w > 0) {
       const cs = getComputedStyle(strip);
       const padL = parseFloat(cs.paddingLeft) || 0;
@@ -3761,11 +3930,16 @@ function syncWeatherCountToSports() {
   if (!isWideDesktopComfort() || !MASTHEAD_WEATHER) return;
   const want = weatherSportsParityCount();
   if (want < 3) return;
-  if (mastheadWeatherLastBoardCount === want) {
+  const byWidth = Math.max(2, Math.min(12, Math.floor(weatherBoardAvailWidth() / 170)));
+  const target = Math.min(want, byWidth);
+  const ceiling = mastheadWeatherFitCount == null
+    ? target
+    : Math.min(target, mastheadWeatherFitCount);
+  if (mastheadWeatherLastBoardCount === ceiling) {
     fitWideWeatherSecondarySlots();
     return;
   }
-  mastheadWeatherFitCount = want;
+  mastheadWeatherFitCount = ceiling;
   mastheadWeatherLastBoardCount = 0;
   showMastheadWeatherBoard();
 }
@@ -6564,6 +6738,9 @@ async function initMastheadSports() {
         }, 40);
       };
       window.addEventListener('resize', () => onSportsLayout('resize'), { passive: true });
+      try {
+        window.visualViewport?.addEventListener('resize', () => onSportsLayout('vv'), { passive: true });
+      } catch { /* ignore */ }
       if (typeof ResizeObserver !== 'undefined' && MASTHEAD_SPORTS_STRIP) {
         initMastheadSports._ro = new ResizeObserver(() => onSportsLayout('ro'));
         initMastheadSports._ro.observe(MASTHEAD_SPORTS_STRIP);
