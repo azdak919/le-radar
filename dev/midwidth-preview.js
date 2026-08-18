@@ -529,7 +529,7 @@
   // Hooks app.js
   window.__radarMidwidthPreview = {
     format: () => currentFormat(),
-    magazineMinPx: () => 900,
+    magazineMinPx: () => 768,
   };
 
   window.__radarWidePreview = {

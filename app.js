@@ -11689,9 +11689,11 @@ function updateNewsLayout() {
  *       absentes, 3) 2ᵉ titre seulement quand toutes les sources du reste
  *       sont représentées (une ∪ En bref). Suite = tout le reste (rien d’omis).
  *
- *  B) ÉQUILIBRE (≥1100px) — *seulement* la colonne En bref :
+ *  B) ÉQUILIBRE (magazine 2 col, dès 768 px) — *seulement* En bref :
  *     1) TRIM si trop haute (→ suite)
  *     2) FILL si trop basse (même ordre de priorité, depuis la réserve)
+ *     iPad portrait 768–834 : même rail CSS que mid ; sans cet équilibre
+ *     la graine bureau (≈10 brèves) laisse un vide sous les vedettes.
  */
 const HERO_FEATURE_MIN = 4; /* 4 vedettes + 1 une = 5 (prod) */
 const HERO_FEATURE_MAX = 4;
@@ -11851,7 +11853,7 @@ const LEAD_BRIEF_MIN_CHARS_MID = 110;
 const BRIEF_COMPACT_MIN_CHARS_MID = 120;
 const FEATURE_BRIEF_MIN_CHARS_MID = 100;
 
-/** Bureau magazine ≥1100 (hors mid 900–1099). */
+/** Bureau magazine ≥1100 (hors mid 768–1099). */
 function isDesktopMagazineLayout() {
   if (isMidwidthMagazineLayout()) return false;
   try {
@@ -12186,28 +12188,35 @@ function partitionNewsFeed(items, referenceDate = new Date()) {
 }
 
 /**
- * Magazine 2 col dès 900 px (focus-group midwidth-fil C — hybride, livré).
- * · 900–1099 : magazine mid (rail étroit)
+ * Magazine 2 col dès 768 px (CSS mid + iPad portrait).
+ * · 768–1099 : magazine mid (rail étroit) — iPad mini/Air/Pro 11 portrait
  * · ≥1100 : magazine bureau
+ * Le CSS a baissé le seuil de 900 → 768 pour les iPad portrait ; le JS
+ * d’équilibre / graine / extraits mid doit suivre, sinon En bref sème
+ * trop de cartes (graine bureau) et laisse un vide sous les vedettes.
  * Recherche = liste plate — pas d’équilibre colonnes.
- * (Lab local : plus d’overrides A/C — barre = formats d’écran seulement.)
  */
+const MAGAZINE_MID_MIN_PX = 768;
+const MAGAZINE_MID_MAX_PX = 1099.98;
+
 function canBalanceMagazineColumns() {
   if (!NEWS_LIST) return false;
   if (NEWS_LIST.dataset.mode === 'search') return false;
   const minPx = (typeof window.__radarMidwidthPreview?.magazineMinPx === 'function')
     ? window.__radarMidwidthPreview.magazineMinPx()
-    : 900;
+    : MAGAZINE_MID_MIN_PX;
   return window.matchMedia(`(min-width: ${minPx}px)`).matches;
 }
 
 /**
- * Magazine mid 900–1099 (prod).
+ * Magazine mid 768–1099 (prod) — même plage que le CSS 2 col étroit.
  * Rail étroit → cartes En bref plus hautes ; budgets d’extrait MID.
  */
 function isMidwidthMagazinePreview() {
   try {
-    return window.matchMedia('(min-width: 900px) and (max-width: 1099.98px)').matches;
+    return window.matchMedia(
+      `(min-width: ${MAGAZINE_MID_MIN_PX}px) and (max-width: ${MAGAZINE_MID_MAX_PX}px)`,
+    ).matches;
   } catch {
     return false;
   }
