@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-18T23:19:10.129Z",
+  "updatedAt": "2026-08-18T23:46:32.441Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T23:18:43.157Z"
+      "checkedAt": "2026-08-18T23:46:04.881Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T23:18:45.310Z"
+      "checkedAt": "2026-08-18T23:46:07.108Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T23:18:48.199Z"
+      "checkedAt": "2026-08-18T23:46:09.961Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +108,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T23:19:02.390Z"
+      "checkedAt": "2026-08-18T23:46:24.202Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,21 +133,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T23:19:03.476Z"
+      "checkedAt": "2026-08-18T23:46:25.413Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les Amazones",
         "source": "api-live",
         "start": "19:30",
         "end": "20:30",
         "slug": "les-amazones"
       },
-      "track": "Makthaverskan - Black Waters",
-      "showTitle": "",
+      "next": {
+        "title": "10 sur 10 : un podcast 100% rap",
+        "source": "api-live",
+        "start": "20:30",
+        "end": "22:30",
+        "slug": "10-sur-10-un-podcast-100-rap"
+      },
+      "track": "Elisabeth Simpson - Theme Amazone",
+      "showTitle": "Les Amazones",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -157,7 +163,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-18T23:19:09.778Z"
+      "checkedAt": "2026-08-18T23:46:32.091Z"
     }
   }
 }
