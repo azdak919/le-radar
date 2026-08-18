@@ -58,12 +58,12 @@ npm run maintenance:release-check
 # Après avoir confirmé la redirection publique :
 npm run maintenance:bots:pause -- --confirm
 
-# Après Quality Gate, Pages et retour public vérifiés :
+# Après Vérification, Pages et retour public vérifiés :
 npm run maintenance:bots:resume -- --confirm
 ```
 
 `maintenance:status` contrôle l’URL publique et l’état des neuf workflows qui
-écrivent dans `main`. Il affiche aussi **Quality Gate** et **Pages**, qui ne
+écrivent dans `main`. Il affiche aussi **Vérification** et **Pages**, qui ne
 doivent jamais être désactivés. Les commandes de pause/reprise exigent
 `--confirm` afin qu’un copier-coller ne coupe pas les bots accidentellement.
 
@@ -76,7 +76,7 @@ doivent jamais être désactivés. Les commandes de pause/reprise exigent
 3. Travailler localement; avant le commit, exécuter
    `npm run maintenance:release-check -- --maintenance`, les tests ciblés et
    ouvrir les liens locaux convenus.
-4. Rebaser, publier un seul commit, puis attendre Quality Gate et Pages.
+4. Rebaser, publier un seul commit, puis attendre Vérification et Pages.
 5. Désactiver le basculement WHC, vérifier l’accueil public, puis exécuter
    `npm run maintenance:bots:resume -- --confirm`.
 
@@ -149,9 +149,9 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 
 - `maintain.yml` — pipeline complet + `bot-status.json` + issue si besoin
 - `update-news.yml` — articles frais (8 passes/jour + **filet horaire :20** si la dernière mise à jour a > 75 min). Timeouts durs par source (90 s) et par étape ; concurrency `cancel-in-progress` pour ne pas empiler un job coincé 40 min.
-- `update-sports.yml` — scores RSEQ/Spordle/voile : **matin · midi · fin de cours · 20 h · 22 h 30 · minuit+** (UTC mappé sur Amérique/Toronto ±1 h EST/EDT) + **week-end après-midi**. Abort si chute >50 % d’équipes ou majorité de ligues en panne ; sinon préserve le snapshot précédent par ligue. Push avec retry comme les autres bots. `sports.json` est en `paths-ignore` du Quality Gate (pas de Chromium à chaque refresh).
+- `update-sports.yml` — scores RSEQ/Spordle/voile : **matin · midi · fin de cours · 20 h · 22 h 30 · minuit+** (UTC mappé sur Amérique/Toronto ±1 h EST/EDT) + **week-end après-midi**. Abort si chute >50 % d’équipes ou majorité de ligues en panne ; sinon préserve le snapshot précédent par ligue. Push avec retry comme les autres bots. `sports.json` est en `paths-ignore` du Vérification (pas de Chromium à chaque refresh).
 - `update-streams.yml` — validation des flux (quotidien)
-- **Bots SEO/HTML** (news, streams, institutions, schedules, discover, maintain, archives) : étape **`bot-prepush-check.sh`** (`npm run check`) **avant** le commit pour éviter un mail Quality Gate après coup.
+- **Bots SEO/HTML** (news, streams, institutions, schedules, discover, maintain, archives) : étape **`bot-prepush-check.sh`** (`npm run check`) **avant** le commit pour éviter un mail Vérification après coup.
 - Playwright CI : **2 retries** + specs mât (météo/sports) en projet serial.
 - `update-radio-nowplaying.yml` — titre en ondes via API station / ICY (aux 30 min)
 - `update-radio-schedules.yml` — horaires colligés « à l'antenne » (aux 2 semaines)
@@ -298,7 +298,7 @@ Après `npm install` et `npx playwright install chromium`, exécuter :
 npm test
 ```
 
-Le workflow `quality.yml` applique la même suite aux changements de code. Les
+Le workflow `verification.yml` applique la même suite aux changements de code. Les
 commits limités à des timestamps de fraîcheur sont regroupés : un heartbeat est
 conservé au plus toutes les six heures, sans retarder un changement réel de
 contenu ou de contrôle qualité.

@@ -192,7 +192,7 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 
 **D9 — avancée du 2026-07-26 (attentes réécrites, dette non soldée).**
 
-`Quality Gate` échouait sur chaque push. Deux attentes ont été réécrites vers l’état observable,
+`Vérification` échouait sur chaque push. Deux attentes ont été réécrites vers l’état observable,
 conformément à la consigne de la dette — **aucun délai n’a été rallongé** :
 
 - `player-continuity.spec.mjs` : `tuner.locator('html').evaluate(...)` puis
@@ -477,7 +477,7 @@ Pour promouvoir : ajouter une ligne D# en §3 avec effort + pourquoi, après OK 
 | D2 | 2026-07-30 | Tranche CSS mât → `style-masthead.css` @import ; SW APP_SHELL mis à jour |
 | D8 | 2026-07-30 | Silhouette d’arche (ciel→structure + convexité) en renfort du trou Percé ; override Mercier conservé |
 | D18 | 2026-07-30 | `tests/shared-chrome.spec.mjs` clair/sombre + static-integrity footer structure |
-| D1 | 2026-07-30 | Audit lourd absents du Quality Gate (push/PR) ; bank:check offline dans npm test ; maintain hebdo |
+| D1 | 2026-07-30 | Audit lourd absents du Vérification (push/PR) ; bank:check offline dans npm test ; maintain hebdo |
 | D10 | 2026-07-30 | SoT institutions.json via institution-labels-lib + institution-acronyms-data.js ; feed/SEO/app unifiés ; QC_COLLEGE_PLACE_PARTS via sync-college-places |
 | — | 2026-07-29 | Catalogue SEO historique expérimental : `news-archive.json` distinct du fil frais, échantillon public borné et liens originaux vérifiés, `sitemap-archives.xml`, robots explicite et workflow hebdomadaire à faible volume; aucune republication intégrale |
 | — | 2026-07-29 | Rétro-crawl historique contrôlé : `retro-crawl-historical.js` lit seulement des listes publiques paginées, exclut explicitement les corps WordPress et les médias, reprend dans `historical-crawl-state.json`; 0–12 mois indexables après vérification, 12 mois–3 ans dans les archives de conservation et au-delà dans les archives de référence, toutes deux en `noindex,follow` |

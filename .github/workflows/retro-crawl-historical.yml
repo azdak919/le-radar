@@ -26,7 +26,7 @@ jobs:
         id: crawl
         run: node scripts/retro-crawl-historical.js --update
         # Un média qui ferme son API est un état à consigner, jamais un motif
-        # de courriel Quality Gate ni un blocage de l’agrégation quotidienne.
+        # de courriel Vérification ni un blocage de l’agrégation quotidienne.
         continue-on-error: true
         env:
           FIREBASE_POLYSCOPE_API_KEY: ${{ secrets.FIREBASE_POLYSCOPE_API_KEY }}
