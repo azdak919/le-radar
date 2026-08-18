@@ -25,9 +25,15 @@ from io import BytesIO
 
 try:
     from PIL import Image
-except ImportError:
+except ImportError:  # pragma: no cover
+    Image = None  # type: ignore[misc, assignment]
+
+
+def _require_pillow() -> None:
+    if Image is not None:
+        return
     print("Pillow requis", file=sys.stderr)
-    sys.exit(2)
+    raise SystemExit(2)
 
 UA = "LeRadar-season-detect/1.0 (https://le-radar.ca; wallpaper season bot)"
 THUMB_W = 480
@@ -57,26 +63,40 @@ def analyze(im: Image.Image) -> dict:
     # Downsample further for speed
     im = im.copy()
     im.thumbnail((320, 200))
+    w, h = im.size
     px = list(im.getdata())
     n = max(1, len(px))
 
-    cold_white = 0
+    snow_white = 0
+    snow_lower = 0
+    masonry = 0
     warm_leaf = 0
     green_leaf = 0
     dark = 0
     mean_l = 0.0
+    lower_n = 0
 
-    for r, g, b in px:
+    for i, (r, g, b) in enumerate(px):
+        y = i // w
+        in_lower = y > h * 0.35
+        if in_lower:
+            lower_n += 1
         # luminance approx
         l = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255.0
         mean_l += l
         if l < 0.12:
             dark += 1
-        # snow-ish: bright, low sat, cool or neutral
         mx, mn = max(r, g, b), min(r, g, b)
         sat = 0.0 if mx == 0 else (mx - mn) / mx
-        if l > 0.72 and sat < 0.22 and b + 12 >= r:
-            cold_white += 1
+        # Neige : presque blanc, très peu saturé, légèrement froid.
+        # La pierre / le béton (l ~ 0.4–0.8) ne doit PAS compter.
+        is_snow = l > 0.86 and sat < 0.09 and b + 4 >= r
+        if is_snow:
+            snow_white += 1
+            if in_lower:
+                snow_lower += 1
+        if 0.28 <= l <= 0.80 and sat < 0.16:
+            masonry += 1
         # autumn leaf: orange/red
         if r > 90 and r > g * 1.15 and r > b * 1.25 and l > 0.2 and l < 0.85:
             warm_leaf += 1
@@ -85,13 +105,26 @@ def analyze(im: Image.Image) -> dict:
             green_leaf += 1
 
     mean_l /= n
-    cold_f = cold_white / n
+    snow_f = snow_white / n
+    snow_lo = snow_lower / max(1, lower_n)
+    masonry_f = masonry / n
     warm_f = warm_leaf / n
     green_f = green_leaf / n
     dark_f = dark / n
+    # Alias historique pour les métriques / callers
+    cold_f = snow_f
+
+    winter_score = 0.0
+    # Pierre grise dominante + peu de vrai blanc → pas l'hiver.
+    if masonry_f > 0.22 and snow_f < 0.16:
+        winter_score = 0.0
+    elif snow_lo >= 0.14 and snow_f >= 0.10:
+        winter_score = snow_f * 2.6 + snow_lo * 0.8
+    else:
+        winter_score = 0.0
 
     scores = {
-        "hiver": cold_f * 2.2 + (0.15 if mean_l > 0.55 and cold_f > 0.12 else 0),
+        "hiver": winter_score,
         "automne": warm_f * 2.5,
         "ete": green_f * 2.2 + (0.1 if green_f > 0.12 and mean_l > 0.35 else 0),
         "printemps": green_f * 1.4 + (0.12 if 0.08 < green_f < 0.22 and mean_l > 0.4 else 0),
@@ -105,6 +138,8 @@ def analyze(im: Image.Image) -> dict:
             "metrics": {
                 "mean_l": round(mean_l, 3),
                 "cold_f": round(cold_f, 3),
+                "snow_f": round(snow_f, 3),
+                "masonry_f": round(masonry_f, 3),
                 "warm_f": round(warm_f, 3),
                 "green_f": round(green_f, 3),
                 "dark_f": round(dark_f, 3),
@@ -123,6 +158,8 @@ def analyze(im: Image.Image) -> dict:
             "metrics": {
                 "mean_l": round(mean_l, 3),
                 "cold_f": round(cold_f, 3),
+                "snow_f": round(snow_f, 3),
+                "masonry_f": round(masonry_f, 3),
                 "warm_f": round(warm_f, 3),
                 "green_f": round(green_f, 3),
                 "scores": {k: round(v, 3) for k, v in scores.items()},
@@ -143,6 +180,8 @@ def analyze(im: Image.Image) -> dict:
         "metrics": {
             "mean_l": round(mean_l, 3),
             "cold_f": round(cold_f, 3),
+            "snow_f": round(snow_f, 3),
+            "masonry_f": round(masonry_f, 3),
             "warm_f": round(warm_f, 3),
             "green_f": round(green_f, 3),
             "scores": {k: round(v, 3) for k, v in scores.items()},
@@ -150,7 +189,40 @@ def analyze(im: Image.Image) -> dict:
     }
 
 
+def _selftest() -> int:
+    """Contrôles hors-réseau : pierre grise ≠ hiver, neige et feuillage OK."""
+    if Image is None:
+        print("skip detect-photo-seasons-visual selftest (Pillow absent)")
+        return 0
+    grey = Image.new("RGB", (320, 200), (152, 154, 158))
+    snow = Image.new("RGB", (320, 200), (70, 120, 190))
+    for y in range(80, 200):
+        for x in range(320):
+            snow.putpixel((x, y), (244, 246, 248))
+    green = Image.new("RGB", (320, 200), (42, 138, 58))
+    g = analyze(grey)
+    s = analyze(snow)
+    e = analyze(green)
+    ok = True
+    if g.get("season") == "hiver":
+        print("FAIL grey stone tagged hiver", g, file=sys.stderr)
+        ok = False
+    if s.get("season") != "hiver":
+        print("FAIL snow not tagged hiver", s, file=sys.stderr)
+        ok = False
+    if e.get("season") != "ete":
+        print("FAIL green not tagged ete", e, file=sys.stderr)
+        ok = False
+    if not ok:
+        return 1
+    print("ok detect-photo-seasons-visual selftest")
+    return 0
+
+
 def main() -> int:
+    if "--selftest" in sys.argv:
+        return _selftest()
+    _require_pillow()
     for line in sys.stdin:
         line = line.strip()
         if not line:

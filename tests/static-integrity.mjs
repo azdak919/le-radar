@@ -376,6 +376,34 @@ assert(
   }).label === 'Gaetan Lebret',
   'crédit mât : ne pas prendre un titre descriptif pour un lieu',
 );
+assert(
+  commonsCredit.formatMastheadCredit({
+    credit: 'Stéphane Groleau',
+    title: 'Hôtel du Parlement — Assemblée nationale du Québec',
+    season: 'ete',
+  }).label === 'Stéphane Groleau — Assemblée nationale',
+  'crédit mât : Assemblée nationale, sans saison',
+);
+assert(
+  commonsCredit.isCopyleftLicense('CC BY-SA 4.0') === true,
+  'copyleft : CC BY-SA',
+);
+assert(
+  commonsCredit.isCopyleftLicense('') === false,
+  'copyleft : licence vide = copyright, pas de marque',
+);
+assert(
+  commonsCredit.isCopyleftLicense('CC BY 4.0') === false,
+  'copyleft : CC BY n’est pas copyleft',
+);
+assert(
+  commonsCredit.isCopyrightMarkLicense('') === true,
+  'copyright : license vide → marque ©',
+);
+assert(
+  commonsCredit.isCopyrightMarkLicense('CC BY-SA 4.0') === false,
+  'copyright : pas de © droit sur du copyleft',
+);
 for (const rel of [
   'quebec-backgrounds-data.js',
   'quebec-nations-backgrounds-data.js',

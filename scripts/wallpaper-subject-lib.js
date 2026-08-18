@@ -40,7 +40,7 @@ const TAXON_CATEGORY_RE =
  * des personnes au premier plan même quand aucune n'est nommée.
  */
 const PEOPLE_SCENE_RE =
-  /(?:\bpeople\b|\bpersons?\b|\bman\b|\bwoman\b|\bmen\b|\bwomen\b|\bchild(?:ren)?\b|\bfamily\b|\bfamille\b|\bhommes?\b|\bfemmes?\b|\benfants?\b|\bcrowd\b|\bfoule\b|\bdancers?\b|\bpow[\s-]?wow\b|\bselfie\b|\bportrait\b|\bkiosks?\b|\bkiosques?\b|\bbooths?\b|\bvendors?\b|\bcomptoirs?\b)/i;
+  /(?:\bpeople\b|\bpersons?\b|\bman\b|\bwoman\b|\bmen\b|\bwomen\b|\bchild(?:ren)?\b|\bfamily\b|\bfamille\b|\bhommes?\b|\bfemmes?\b|\benfants?\b|\bcrowd\b|\bfoule\b|\bselfie\b|\bportrait\b|\bkiosks?\b|\bkiosques?\b|\bbooths?\b|\bvendors?\b|\bcomptoirs?\b)/i;
 
 /** Bâti vernaculaire : ni paysage, ni patrimoine, ni campus. */
 const VERNACULAR_BUILDING_RE =
