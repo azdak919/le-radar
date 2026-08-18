@@ -148,7 +148,7 @@ node scripts/retro-crawl-historical.js --update --source="La Pige" --pages-per-s
 
 L’avancement versionné de chaque source est dans
 `historical-crawl-state.json`. Une source indisponible est reportée avec une
-date de reprise; elle n’échoue pas le Quality Gate. `--restart` réinitialise
+date de reprise; elle n’échoue pas le Vérification. `--restart` réinitialise
 l’avancement d’une source (ou de toutes si aucun `--source` n’est précisé) : à
 réserver à une revue humaine, puisqu’il relit les listes déjà parcourues.
 Pour un domaine personnalisé hébergé par WordPress.com, le registre de source
@@ -167,7 +167,7 @@ fois, en répartissant la passe entre les publications. Un 404/410 devient
 `missing`, une panne devient `unreachable`; les deux sont exclus de l’échantillon
 public. Le workflow hebdomadaire `verify-historical-links.yml` est borné et
 tolérant aux incidents réseau pour ne pas transformer une source indisponible en
-bruit de Quality Gate.
+bruit de Vérification.
 
 Quand un flux expose un compte technique à la place de la signature éditoriale,
 une passe distincte peut vérifier uniquement la byline visible, sans sauvegarder
