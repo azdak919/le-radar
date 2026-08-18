@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Gate locale des bots qui touchent le site (HTML / SEO / app) avant push main.
-# Objectif : échouer dans le job bot plutôt qu’envoyer un mail Quality Gate
+# Objectif : échouer dans le job bot plutôt qu’envoyer un mail Vérification
 # après un commit cassé.
 #
 # Usage (workflow) :

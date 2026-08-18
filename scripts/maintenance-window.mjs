@@ -149,7 +149,7 @@ async function releaseCheck(maintenanceExpected) {
   console.log('  npm run check');
   console.log('  # ouvrir les URLs locales touchées et les vérifier');
   console.log('  git push origin main');
-  console.log('\nAprès le push : Quality Gate + Pages verts, puis `npm run maintenance:status`.');
+  console.log('\nAprès le push : Vérification + Pages verts, puis `npm run maintenance:status`.');
   await status(maintenanceExpected ? 'maintenance' : undefined);
   if (dirty) process.exitCode = 2;
 }

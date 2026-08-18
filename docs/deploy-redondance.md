@@ -130,7 +130,7 @@ intégration Git décrochée, à reconnecter dans le tableau de bord concerné.
 ## 7. Limites connues
 
 - **Aucun filet de test.** Les miroirs publient sur poussée dans `main`, sans
-  attendre le Quality Gate. C'est le comportement actuel de GitHub Pages : la
+  attendre le Vérification. C'est le comportement actuel de GitHub Pages : la
   redondance n'ajoute pas de risque, mais ne corrige pas non plus ce trou.
 - **Le contenu reste dépendant de GitHub Actions.** Les bots (fil, radio,
   sports, archives) tournent en Actions et écrivent dans `main`. Pendant une
