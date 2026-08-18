@@ -655,6 +655,7 @@ async function init() {
   window.setInterval(() => {
     renderTodayDate();
     syncSeoScheduleNow();
+    syncSeoScheduleHub();
   }, 30_000);
   // Changement de langue : la date se reformate elle-même (elle est hors du
   // moteur de traduction, voir `mastheadLocale`). La cascade d'ajustement se
@@ -744,6 +745,7 @@ async function init() {
   radioSchedules = schedulesData.status === 'fulfilled' && schedulesData.value?.stations
     ? schedulesData.value
     : { stations: {}, timezone: 'America/Toronto' };
+  syncSeoScheduleHub();
   buildTunerOptions();
   // Volume/mute avant toute selectStation : celle-ci peut écrire la session
   // partagée (stationId) et ne doit pas republier le gain par défaut 100 %
@@ -1413,6 +1415,78 @@ function scrollSeoScheduleToNow({ smooth = true } = {}) {
     try { target.scrollIntoView(true); } catch { /* ignore */ }
   }
   return true;
+}
+
+function pickHubAirFromGrid(grid, now) {
+  const slots = [];
+  for (const slot of grid || []) {
+    if (!slot || !slot.title) continue;
+    const start = seoScheduleMinute(slot.start);
+    const end = seoScheduleMinute(slot.end);
+    if (start == null) continue;
+    slots.push({
+      title: slot.title,
+      day: slot.day,
+      start,
+      end,
+      startLabel: slot.start,
+      endLabel: slot.end || '',
+    });
+  }
+  const active = slots.filter((slot) => {
+    if (slot.end == null) return slot.day === now.day && now.minute >= slot.start;
+    if (slot.end > slot.start) return slot.day === now.day && now.minute >= slot.start && now.minute < slot.end;
+    return (slot.day === now.day && now.minute >= slot.start)
+      || (slot.day === (now.day + 6) % 7 && now.minute < slot.end);
+  }).sort((a, b) => b.start - a.start)[0];
+  if (active) return { live: true, slot: active };
+  let upcoming = null;
+  let distance = Infinity;
+  for (const slot of slots) {
+    let delta = ((slot.day - now.day + 7) % 7) * 1440 + slot.start - now.minute;
+    if (delta <= 0) delta += 7 * 1440;
+    if (delta < distance) { distance = delta; upcoming = slot; }
+  }
+  return upcoming ? { live: false, slot: upcoming } : null;
+}
+
+function formatHubAirWhen(slot, nowDay, en) {
+  const range = slot.endLabel
+    ? `${slot.startLabel}\u2013${slot.endLabel}`
+    : slot.startLabel;
+  if (slot.day === nowDay) return range;
+  const days = en
+    ? ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    : ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+  const dayName = days[slot.day] || '';
+  return dayName ? `${dayName} ${range}` : range;
+}
+
+/** Hub /horaires/ : actualiser « à l'antenne / à venir » après chargement des grilles. */
+function syncSeoScheduleHub() {
+  const cards = document.querySelectorAll('.seo-radio-card[data-schedule-station]');
+  if (!cards.length) return;
+  const now = seoScheduleMoment();
+  if (!now) return;
+  const stations = radioSchedules?.stations;
+  if (!stations) return;
+  const en = document.documentElement.lang.startsWith('en');
+  for (const card of cards) {
+    const picked = pickHubAirFromGrid(stations[card.dataset.scheduleStation]?.grid, now);
+    const air = card.querySelector('[data-schedule-air]');
+    if (!picked || !air) continue;
+    const state = picked.live ? 'live' : 'upcoming';
+    card.dataset.airState = state;
+    air.dataset.airState = state;
+    const kicker = air.querySelector('.seo-radio-card__kicker');
+    const show = air.querySelector('.seo-radio-card__show');
+    const when = air.querySelector('.seo-radio-card__when');
+    if (kicker) kicker.textContent = picked.live
+      ? (en ? 'On air' : 'À l’antenne')
+      : (en ? 'Up next' : 'À venir');
+    if (show) show.textContent = picked.slot.title;
+    if (when) when.textContent = formatHubAirWhen(picked.slot, now.day, en);
+  }
 }
 
 function initSeoScheduleHashScroll() {
