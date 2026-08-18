@@ -1315,13 +1315,16 @@ assert(
     && appJs.includes('MARQUEE_READ_DELAY_MS')
     && appJs.includes('function weatherBoardDwellMs')
     && appJs.includes('function scheduleWeatherCascade')
+    && appJs.includes('function weatherCascadeSlots')
     && appJs.includes('function poolHasUncoveredSource')
     && appJs.includes('function pickBriefSidebar')
     && appJs.includes('function sportsBoardHoldMs')
     && /WEATHER_CASCADE_STEP_MS\s*=\s*440/.test(appJs)
     && /SPORTS_CASCADE_STEP_MS\s*=\s*520/.test(appJs)
-    && appJs.includes('SPORTS_CHIP_LEAVE_MS'),
-  'app.js : rotation sports/météo + marquee 1 cycle (delay + aller-retour + repos)',
+    && appJs.includes('SPORTS_CHIP_LEAVE_MS')
+    && /if \(!weatherCascadeSlots\(\)\.length\) return/.test(appJs)
+    && !/Hors wide : une carte à la fois/.test(appJs),
+  'app.js : cascade météo/sports tous écrans + marquee 1 cycle',
 );
 // Marquee site : 2 alternate both + delay — jamais infinite sur surfaces qui tournent.
 assert(

@@ -2500,9 +2500,11 @@ const WEATHER_SCROLL_POST_PAUSE_MS = 700;
 const WEATHER_ARRIVE_MS = 460;
 const WEATHER_LEAVE_MS = 280;
 /**
- * Wide : vague L→R de toutes les secondaires, puis pause lecture, puis
- * une nouvelle vague. Pas un flip isolé toutes les 9 s (bandeau « vide »).
+ * Vague L→R des cartes qui tournent, puis pause lecture, puis une
+ * nouvelle vague. Pas un flip isolé (bandeau « vide »).
  * Step ≈ leave + début d’arrive — assez lent pour suivre la cascade.
+ * Tous les écrans : mêmes timings ; seuls les slots rotatifs changent
+ * (wide = secondaires ; ailleurs = ancre MTL/QC + secondaires).
  */
 const WEATHER_CASCADE_STEP_MS = 440;
 const WEATHER_BOARD_HOLD_MS = 10000;
@@ -2746,29 +2748,44 @@ function clearMastheadWeatherTimer() {
   mastheadWeatherTimer = null;
 }
 
-/** Slots secondaires wide (0–1 = MTL/QC fixes). */
+/**
+ * Slots qui tournent dans la vague.
+ * Wide dual : 0–1 = MTL/QC persistants ; 2+ = secondaires.
+ * Ailleurs : toutes les cartes (slot 0 = ancre MTL ↔ QC).
+ */
 function weatherCascadeSlots() {
   const n = mastheadWeatherSlots.length;
-  if (!(weatherWideDualPrimary() && n > 2)) return [];
+  if (n < 1) return [];
+  if (weatherWideDualPrimary()) {
+    if (n <= 2) return [];
+    const slots = [];
+    for (let i = 2; i < n; i += 1) slots.push(i);
+    return slots;
+  }
   const slots = [];
-  for (let i = 2; i < n; i += 1) slots.push(i);
+  for (let i = 0; i < n; i += 1) slots.push(i);
   return slots;
 }
 
 /** Pause lecture après une vague : assez pour balayer toute la rangée. */
 function weatherBoardHoldMs() {
   const n = Math.max(1, weatherCascadeSlots().length);
-  return Math.min(14000, Math.max(WEATHER_BOARD_HOLD_MS, 1200 * n));
+  let hold = Math.min(14000, Math.max(WEATHER_BOARD_HOLD_MS, 1200 * n));
+  // Hors wide : un nom qui défile doit finir son cycle pendant le hold.
+  if (!isWideNoMarqueeMode()) {
+    hold = Math.max(hold, weatherBoardDwellMs());
+  }
+  return hold;
 }
 
 /**
- * Wide : changer toutes les secondaires en cascade (L→R), puis laisser
- * le temps de les regarder, puis recommencer. Prod (non-wide) inchangée.
+ * Cascade L→R des cartes rotatives, puis pause, puis une nouvelle vague.
+ * Particularités conservées dans rotateOneMastheadWeatherCard (ancres
+ * duales, MTL↔QC, index compact campus/nation).
  */
 function scheduleWeatherCascade({ firstHold = true } = {}) {
   clearMastheadWeatherTimer();
   if (!MASTHEAD_WEATHER || MASTHEAD_WEATHER.classList.contains('hidden')) return;
-  if (!isWideNoMarqueeMode() || !weatherWideDualPrimary()) return;
   const slots = weatherCascadeSlots();
   if (!slots.length) return;
 
@@ -2806,17 +2823,9 @@ function scheduleWeatherCascade({ firstHold = true } = {}) {
 function scheduleMastheadWeatherRotate() {
   clearMastheadWeatherTimer();
   if (!MASTHEAD_WEATHER || MASTHEAD_WEATHER.classList.contains('hidden')) return;
-  const n = mastheadWeatherSlots.length;
-  const dual = weatherWideDualPrimary() && n >= 2;
-  if (isWideNoMarqueeMode() && dual) {
-    scheduleWeatherCascade({ firstHold: true });
-    return;
-  }
-  mastheadWeatherTimer = window.setTimeout(() => {
-    mastheadWeatherTimer = null;
-    rotateOneMastheadWeatherCard();
-    scheduleMastheadWeatherRotate();
-  }, weatherBoardDwellMs());
+  // Tous les écrans : vague + pause. Rien à faire si seules les ancres tiennent.
+  if (!weatherCascadeSlots().length) return;
+  scheduleWeatherCascade({ firstHold: true });
 }
 
 function rotateOneMastheadWeatherCard(forcedSlot) {
@@ -3276,7 +3285,8 @@ const SPORTS_SCROLL_POST_PAUSE_MS = MARQUEE_REST_MS;
 /** Décalage initial entre slots pour éviter un flip simultané au 1er paint. */
 const SPORTS_SLOT_STAGGER_MS = 1100;
 /**
- * Wide : vague de toutes les puces (scores + texte CTA), puis pause lecture.
+ * Vague de toutes les puces (scores + texte CTA), puis pause lecture.
+ * Tous les écrans : même principe ; CTA inchangée si tactile / motion réduite.
  * Step assez lent pour suivre la cascade ; hold assez long pour relire le ruban.
  */
 const SPORTS_CASCADE_STEP_MS = 520;
@@ -6314,14 +6324,20 @@ function sportsBoardHoldMs() {
   sportsVisible.forEach((slide, i) => {
     if (slide?.mode === 'cta') hold = Math.max(hold, sportsSlotDwellMs(i));
   });
+  // Hors wide : un libellé qui défile doit finir son cycle pendant le hold.
+  if (!isWideNoMarqueeMode()) {
+    sportsVisible.forEach((_, i) => {
+      hold = Math.max(hold, sportsSlotDwellMs(i));
+    });
+    hold = Math.min(16000, hold);
+  }
   return hold;
 }
 
 /**
- * Vague L→R.
- * Wide : cascade de toutes les cartes (y compris le texte CTA), puis pause
- * assez longue pour les regarder, puis une nouvelle vague.
- * Hors wide : une carte à la fois, dwell lecture entre chaque.
+ * Vague L→R de toutes les cartes (y compris le texte CTA), puis pause,
+ * puis une nouvelle vague. Tous les écrans.
+ * CTA sautée si tactile, motion réduite, survol ou focus (WCAG 2.2.2).
  */
 function scheduleSportsWave({ fromSlot = 0, firstWait = true } = {}) {
   clearSportsSlotTimers();
@@ -6336,68 +6352,42 @@ function scheduleSportsWave({ fromSlot = 0, firstWait = true } = {}) {
   if (!canSpin) return;
   sportsWaveSlot = ((fromSlot % n) + n) % n;
 
-  if (isWideNoMarqueeMode()) {
-    const stepMs = sportsReducedMotion ? 80 : SPORTS_CASCADE_STEP_MS;
-    const step = (index) => {
-      const liveN = sportsVisible.length;
-      if (liveN < 1) return;
-      if (index >= liveN) {
-        sportsWaveTimer = window.setTimeout(() => {
-          sportsWaveTimer = 0;
-          scheduleSportsWave({ fromSlot: 0, firstWait: false });
-        }, sportsBoardHoldMs());
-        return;
-      }
-      const slot = index;
-      const slide = sportsVisible[slot];
-      if (slide?.mode === 'cta' && (!sportsCtaMayRotate() || sportsCtaPaused)) {
-        sportsWaveTimer = window.setTimeout(() => step(index + 1), stepMs);
-        return;
-      }
-      rotateSportsSlot(slot);
-      const chip = MASTHEAD_SPORTS_STRIP?.querySelectorAll('.sports-chip')?.[slot];
-      if (chip) {
-        window.requestAnimationFrame(() => refreshSportsChipScroll(chip));
-      }
-      sportsWaveTimer = window.setTimeout(() => step(index + 1), stepMs);
-    };
-    if (firstWait) {
+  const stepMs = sportsReducedMotion ? 80 : SPORTS_CASCADE_STEP_MS;
+  const step = (index) => {
+    const liveN = sportsVisible.length;
+    if (liveN < 1) return;
+    if (index >= liveN) {
       sportsWaveTimer = window.setTimeout(() => {
         sportsWaveTimer = 0;
-        step(sportsWaveSlot);
+        scheduleSportsWave({ fromSlot: 0, firstWait: false });
       }, sportsBoardHoldMs());
       return;
     }
-    step(sportsWaveSlot);
-    return;
-  }
-
-  const run = () => {
-    sportsWaveTimer = 0;
-    const slot = sportsWaveSlot % Math.max(1, sportsVisible.length);
+    const slot = index;
     const slide = sportsVisible[slot];
     if (slide?.mode === 'cta' && (!sportsCtaMayRotate() || sportsCtaPaused)) {
-      sportsWaveSlot = (slot + 1) % sportsVisible.length;
-      const skipWait = sportsSlotDwellMs(sportsWaveSlot);
-      sportsWaveTimer = window.setTimeout(run, Math.max(400, skipWait));
+      sportsWaveTimer = window.setTimeout(() => step(index + 1), stepMs);
       return;
     }
-    const settleMs = rotateSportsSlot(slot) || 80;
-    sportsWaveSlot = (slot + 1) % sportsVisible.length;
-    window.setTimeout(() => {
-      const chip = MASTHEAD_SPORTS_STRIP?.querySelectorAll('.sports-chip')?.[slot];
-      if (chip) refreshSportsChipScroll(chip);
-      const wait = sportsSlotDwellMs(slot);
-      sportsWaveTimer = window.setTimeout(run, Math.max(settleMs, 80) + wait);
-    }, settleMs);
+    rotateSportsSlot(slot);
+    const chip = MASTHEAD_SPORTS_STRIP?.querySelectorAll('.sports-chip')?.[slot];
+    if (chip) {
+      window.requestAnimationFrame(() => refreshSportsChipScroll(chip));
+    }
+    sportsWaveTimer = window.setTimeout(() => step(index + 1), stepMs);
   };
-
-  const initial = firstWait ? sportsSlotDwellMs(sportsWaveSlot) : 80;
-  sportsWaveTimer = window.setTimeout(run, Math.max(400, initial));
+  if (firstWait) {
+    sportsWaveTimer = window.setTimeout(() => {
+      sportsWaveTimer = 0;
+      step(sportsWaveSlot);
+    }, sportsBoardHoldMs());
+    return;
+  }
+  step(sportsWaveSlot);
 }
 
 function scheduleSportsRotate() {
-  // Vague unique L→R (CTA : dwell complet avant la carte suivante).
+  // Vague unique L→R, tous les écrans (CTA sautée si elle ne peut pas tourner).
   scheduleSportsWave({ fromSlot: 0, firstWait: true });
 }
 
