@@ -1,9 +1,9 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v703",
+    "cache": "radar-shell-v705",
     "assets": {
       "app.js": "4b3c71542a7e8732",
-      "bg-rotation-lib.js": "4ff24249767435c6",
+      "bg-rotation-lib.js": "6c2a80436c0d33fe",
       "cast.js": "9ac30d507e71388d",
       "dev/midwidth-preview.css": "2bf07c9f5920ef77",
       "dev/midwidth-preview.js": "68c49f2bd9d1fe99",
@@ -16,12 +16,12 @@
       "mobile-playback.js": "955026530d5993b0",
       "nav-shell.js": "97c086a5c1ef5bca",
       "player-sync.js": "36e84f1afaff7fcb",
-      "quebec-backgrounds-data.js": "3de1a4ab2ec335f5",
-      "quebec-backgrounds.js": "f2cc1e767fbe46d2",
+      "quebec-backgrounds-data.js": "a4a299de60e8b857",
+      "quebec-backgrounds.js": "50b604b83a370cce",
       "quebec-favorites-backgrounds-data.js": "4df80c5ed3cfad89",
-      "quebec-nations-backgrounds-data.js": "3e41b28ccb2651f6",
-      "quebec-university-backgrounds-data.js": "8669bd5a54a67b13",
-      "scripts/season-lib.js": "f3330cfcec5029c3",
+      "quebec-nations-backgrounds-data.js": "27d3afff6438512c",
+      "quebec-university-backgrounds-data.js": "d60251644dfdf645",
+      "scripts/season-lib.js": "2a60ad571959d127",
       "scripts/session-freshness-lib.js": "8864fadc8cd34ed1",
       "scripts/sports-freshness-lib.js": "fcb409c0970bf1ff",
       "seo-page-theme.js": "2d94c49f68b66c51",
@@ -33,14 +33,14 @@
     }
   },
   "pomo/sw.js": {
-    "cache": "pomo-shell-v105",
+    "cache": "pomo-shell-v107",
     "assets": {
-      "bg-rotation-lib.js": "4ff24249767435c6",
+      "bg-rotation-lib.js": "6c2a80436c0d33fe",
       "fullscreen-wallpaper-qc.js": "2efff73a86189579",
       "install-chrome.css": "83661273439635f0",
       "pomo/js/app.js": "a8138a1bc0e114d6",
       "pomo/js/backgrounds-data.js": "5d86e3c2604a8bf7",
-      "pomo/js/backgrounds.js": "985fbae01b26db69",
+      "pomo/js/backgrounds.js": "48f74cbff551524e",
       "pomo/js/layout-boot.js": "f99ed7e90cdc3cbb",
       "pomo/js/layout.js": "427d70c84a1ac245",
       "pomo/js/panels.js": "a63605d3ae8779c3",
@@ -57,9 +57,9 @@
       "pomo/styles/base.css": "022159b7f0b253ca",
       "pomo/styles/layout.css": "6022df23e477bc37",
       "quebec-favorites-backgrounds-data.js": "4df80c5ed3cfad89",
-      "quebec-nations-backgrounds-data.js": "3e41b28ccb2651f6",
-      "quebec-pomo-backgrounds-data.js": "a6eeb9aab405e7b3",
-      "scripts/season-lib.js": "f3330cfcec5029c3",
+      "quebec-nations-backgrounds-data.js": "27d3afff6438512c",
+      "quebec-pomo-backgrounds-data.js": "681935bc22285eef",
+      "scripts/season-lib.js": "2a60ad571959d127",
       "translate-menu.css": "a5a4eb37479afb60",
       "translate-menu.js": "07802220efb342c2"
     }

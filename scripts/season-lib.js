@@ -78,6 +78,8 @@
   function haystack(item) {
     if (!item) return '';
     if (typeof item === 'string') return item;
+    // Ne pas relire item.season / season6 : un tag « hiver » (souvent visuel,
+    // pierre grise) revaliderait alors le texte (kw_hiver) en boucle.
     return [
       item.title,
       item.description,
@@ -85,8 +87,6 @@
       item.url,
       item.link,
       item.credit,
-      item.season,
-      item.season6,
     ]
       .filter(Boolean)
       .join(' ');
@@ -112,8 +112,8 @@
         && !/\b(ete|summer|aujaq|green|vert|berry|juillet|aout|june|july|august)\b/i.test(t)
       )
     ) {
-      // « ice hotel » etc. already winter; « ice out » rare
-      if (!/\b(iceout|debacle|break[\s-]?up)\b/i.test(t)) return 'hiver';
+      // « ice hotel » = hiver ; dégel / débâcle / ice breakup = printemps
+      if (!/\b(iceout|debacles?|break[\s-]?ups?|degel|thaws?)\b/i.test(t)) return 'hiver';
     }
     // Automne
     if (
@@ -217,6 +217,15 @@
     if (item.seasonSource === 'sessionId-fallback') return false;
     const c = item.seasonConfidence;
     if (typeof c === 'number' && c < SEASON_MIN_CONFIDENCE) return false;
+    // Pierre / béton / rocher : un « hiver » visuel (ou un tag bot sans
+    // preuve dans le titre) n’est pas de la neige. Revue humaine = fiable.
+    // Le miroir JS n’exporte ni seasonSource ni catégories : un tag déjà
+    // passé à la sync doit rester fiable côté client (sinon Montmorency
+    // « Snow in Quebec » redevient inconnue et s’affiche en août).
+    if (item.season === 'hiver' && item.seasonSource && item.seasonSource !== 'manual') {
+      if (item.seasonSource === 'visual') return false;
+      if (inferSeason4(item) !== 'hiver') return false;
+    }
     return true;
   }
 
@@ -289,12 +298,14 @@
       return annotated.filter(predicate).map((a) => a.it);
     }
 
-    // Strict : saison courante uniquement (pas d’unknown ici).
-    // Unknown → soft seulement : sinon une neige non taguée entre en « adjacent »
-    // et s’affiche en juillet (ex. « Notcimik e pipok » Missatikamekw).
+    // Strict : saison courante, plus les inconnues.
+    // On ne retire une photo que si on est *sûr* qu’elle n’est pas de saison
+    // (neige / mots-clés / date / manuel). Pierre grise sans neige = inconnue
+    // → reste affichable. Une vraie neige a presque toujours un mot-clé
+    // (neige, pipok, winter…) donc inferSeason4 la classe encore hiver.
     const strict = pickTier((a) => {
-      if (a.nations) return a.s6 === season6;
-      return a.s4 === season4;
+      if (a.nations) return !a.s6 || a.s6 === season6;
+      return !a.s4 || a.s4 === season4;
     });
 
     const adjacent = pickTier((a) => {
@@ -307,7 +318,8 @@
       return !!a.s4 && adj4.has(a.s4);
     });
 
-    // Évite l’opposé (neige en juillet) tant qu’il reste autre chose
+    // Évite l’opposé *certain* (neige en juillet) tant qu’il reste autre chose.
+    // Un tag non fiable ne compte pas comme opposé.
     const soft = pickTier((a) => {
       if (a.nations) {
         // pour 6 saisons, « opposé » ≈ +3 dans le cycle
@@ -387,6 +399,18 @@
     return map[s4] || null;
   }
 
+  function season6ToSeason4(s6) {
+    const map = {
+      ukiuq: 'hiver',
+      upingaksaaq: 'printemps',
+      upingaaq: 'printemps',
+      aujaq: 'ete',
+      ukiaqsaaq: 'ete',
+      ukiaq: 'automne',
+    };
+    return map[s6] || null;
+  }
+
   /**
    * Détection textuelle détaillée (bot detect-photo-seasons).
    * @returns {{
@@ -422,16 +446,19 @@
     }
 
     // Mots-clés (signaux forts)
-    if (
+    if (/\b(iceout|debacles?|break[\s-]?ups?|degel|thaws?)\b/i.test(t)) {
+      season = 'printemps';
+      confidence = 0.86;
+      source = 'text';
+      reasons.push('kw_degel');
+    } else if (
       /\b(hiver|winter|neige|snow|snowy|glace|ice\b|frozen|givr|blizzard|ski\b|raquette)/i.test(t)
       || /\b(decembre|janvier|fevrier|december|january|february)\b/i.test(t)
     ) {
-      if (!/\b(iceout|debacle|break[\s-]?up)\b/i.test(t)) {
-        season = 'hiver';
-        confidence = 0.9;
-        source = 'text';
-        reasons.push('kw_hiver');
-      }
+      season = 'hiver';
+      confidence = 0.9;
+      source = 'text';
+      reasons.push('kw_hiver');
     } else if (
       /\b(automne|autumn|fall\b|foliage|erables?|maple.*(red|orange|fall)|feuilles? (rouges?|d.automne)|indian summer)/i.test(t)
       || /\b(septembre|octobre|novembre|september|october|november)\b/i.test(t)
@@ -522,6 +549,11 @@
    */
   function mergeDetections(item, visual) {
     const text = detectFromText(item);
+    // L’heuristique couleur prend la pierre / le béton / le rocher pour de la
+    // neige. Un hiver visuel ne compte que s’il confirme un signal texte.
+    if (visual && visual.season === 'hiver' && text.season !== 'hiver') {
+      visual = null;
+    }
     if (!visual || !visual.season) return text;
 
     const vConf = Number(visual.confidence) || 0.55;
@@ -577,6 +609,7 @@
     adjacentSeason4,
     adjacentSeason6,
     season4ToSeason6,
+    season6ToSeason4,
     detectFromText,
     mergeDetections,
   };
