@@ -722,14 +722,11 @@
   background: rgba(15, 61, 92, 0.54);
 }
 /*
- * Accueil courant sur photo : pourpre de marque STABLE.
- * Ne pas utiliser var(--accent) ici — il s’inverse (clair #cf7ec1 en dark,
- * sombre #6c2163 en light) alors que la rangée d’icônes reste en pastilles
- * sombres fixes. Résultat : home « pastille jour » en mode nuit et l’inverse.
- * Même logique que RSS (orange fixe) / café (ambre) sur le mât photo.
+ * Accueil sur photo : même verre sombre que RSS / pomo au repos.
+ * Le pourpre de marque n’apparaît qu’au pressé (:active), pas en
+ * « page courante » permanente.
  */
-.masthead:has(#bg-photo-layer.loaded) .masthead-home.is-active,
-.masthead:has(#bg-photo-layer.loaded) .masthead-home[aria-current="page"] {
+.masthead:has(#bg-photo-layer.loaded) .masthead-home:active {
   color: #fff;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, transparent 55%),
@@ -751,11 +748,11 @@
   border-color: rgba(255, 224, 138, 0.55);
 }
 
-/* Survols sur photo : glass seulement si la pastille n’est PAS la page courante.
-   Sinon le hover écrasait le pourpre (accueil « clair » = sélectionné). */
+/* Survols sur photo : verre clair. Accueil n’a plus de pastille mauve
+   persistante — le hover est le même que RSS / solitaire. */
 @media (hover: hover) and (pointer: fine) {
   .masthead:has(#bg-photo-layer.loaded) .theme-toggle:hover,
-  .masthead:has(#bg-photo-layer.loaded) .masthead-home:hover:not(.is-active):not([aria-current="page"]),
+  .masthead:has(#bg-photo-layer.loaded) .masthead-home:hover,
   .masthead:has(#bg-photo-layer.loaded) .masthead-rss:hover:not([aria-current="page"]),
   .masthead:has(#bg-photo-layer.loaded) .masthead-solitaire:hover,
   .masthead:has(#bg-photo-layer.loaded) .masthead-coffee:hover,
@@ -766,14 +763,6 @@
     box-shadow:
       0 2px 10px rgba(0, 0, 0, 0.2),
       inset 0 1px 0 rgba(255, 255, 255, 0.22);
-  }
-  .masthead:has(#bg-photo-layer.loaded) .masthead-home.is-active:hover,
-  .masthead:has(#bg-photo-layer.loaded) .masthead-home[aria-current="page"]:hover {
-    color: #fff;
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, transparent 55%),
-      color-mix(in srgb, #6c2163 70%, rgba(9, 14, 21, 0.4));
-    border-color: color-mix(in srgb, #cf7ec1 62%, rgba(255, 255, 255, 0.32));
   }
   .masthead:has(#bg-photo-layer.loaded) .masthead-pomo:hover {
     color: #fff;
