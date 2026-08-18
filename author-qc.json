@@ -1,8 +1,8 @@
 {
-  "updated": "2026-08-18T16:34:36.344Z",
+  "updated": "2026-08-18T17:56:25.025Z",
   "total": 185,
   "withAuthor": 185,
-  "mismatches": 6,
+  "mismatches": 5,
   "ok": true,
   "samples": [
     {
@@ -30,19 +30,11 @@
       "reason": "no-author-source"
     },
     {
-      "title": "Ce que nous devons aux femmes",
-      "link": "https://www.delitfrancais.com/2026/03/18/ce-que-nous-devons-aux-femmes/",
+      "title": "Des initiatives qui rassemblent",
+      "link": "https://www.delitfrancais.com/2026/03/18/des-initiatives-qui-rassemblent/",
       "source": "Le Délit",
       "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Eugénie St-Pierre",
-      "reason": "page-byline"
-    },
-    {
-      "title": "Les femmes MAGA au service du patriarcat",
-      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
-      "source": "Le Délit",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Anonyme",
+      "canonicalAuthor": "Héloïse Durning et Elie Nguyen",
       "reason": "page-byline"
     },
     {
@@ -54,5 +46,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 6
+  "fixed": 5
 }
