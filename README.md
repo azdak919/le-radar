@@ -76,7 +76,7 @@ npm test
 La suite vérifie la syntaxe JavaScript, les données générées, les liens et
 assets PWA, l'isolation des service workers, les iframes du syntoniseur ainsi
 que les quatre pages principales en formats bureau et mobile. Le workflow
-`Quality Gate` exécute les mêmes contrôles sur les changements de code.
+`Vérification` exécute les mêmes contrôles sur les changements de code.
 
 ---
 
@@ -123,7 +123,7 @@ Pour publier le site principal, pousse les changements validés sur `main` :
 GitHub Pages déploie directement cette branche sur
 <https://le-radar.ca/> (domaine personnalisé, via le fichier `CNAME`). Avant une
 publication, exécute `npm test`;
-le workflow **Quality Gate** rejoue ces vérifications sur les modifications de
+le workflow **Vérification** rejoue ces vérifications sur les modifications de
 code. Les Workers Cloudflare se déploient séparément depuis leurs dossiers et
 selon leurs README respectifs.
 
