@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-18T18:33:41.603Z",
+  "updatedAt": "2026-08-18T19:25:25.601Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T18:33:14.197Z"
+      "checkedAt": "2026-08-18T19:25:02.700Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
-      },
-      "next": {
         "title": "À la bonne heure",
         "source": "schedule",
         "start": "15:00",
         "end": "16:00",
         "url": "https://cism893.ca/emissions/a-la-bonne-heure"
       },
+      "next": {
+        "title": "London café",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://cism893.ca/emissions/london-cafe"
+      },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "À la bonne heure",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T18:33:16.540Z"
+      "checkedAt": "2026-08-18T19:25:04.806Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Voice of Korea",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "Montreal Sessions",
         "source": "api-live",
         "start": "15:00",
         "end": "17:00"
       },
+      "next": {
+        "title": "Off The Hour: Local Journalism Stories",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Voice of Korea",
+      "showTitle": "Montreal Sessions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T18:33:19.412Z"
+      "checkedAt": "2026-08-18T19:25:07.030Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Code Switch",
-        "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/code-switch"
-      },
-      "next": {
         "title": "Sonic Lit: A SpokenWeb Radio Show",
         "source": "schedule-live",
         "start": "15:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/sonic-lit-a-spokenweb-radio-show"
       },
+      "next": {
+        "title": "The Fluid Mosaic",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
+      },
       "track": "",
-      "showTitle": "Code Switch",
+      "showTitle": "Sonic Lit: A SpokenWeb Radio Show",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T18:33:33.570Z"
+      "checkedAt": "2026-08-18T19:25:22.254Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,21 +126,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T18:33:34.722Z"
+      "checkedAt": "2026-08-18T19:25:23.235Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Palmarès CHOQ.ca",
         "source": "api-live",
         "start": "15:00",
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Après l",
-      "showTitle": "",
+      "next": {
+        "title": "Le Studio",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00",
+        "slug": "live"
+      },
+      "track": "Mantisse - Saint-Zotique",
+      "showTitle": "Palmarès CHOQ.ca",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -150,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-18T18:33:41.253Z"
+      "checkedAt": "2026-08-18T19:25:25.250Z"
     }
   }
 }
