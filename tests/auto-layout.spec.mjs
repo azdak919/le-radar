@@ -40,6 +40,39 @@ test('1920 Philips : E auto sans query, shell plus large que 1180', async ({ pag
   expect(inner, 'mât encore calé à ~1180').toBeGreaterThan(1400);
 });
 
+test('1920 Philips : 2 unes, En bref 1 col, une plus large que le rail', async ({ page }) => {
+  await openAt(page, '/', 1920, 1080);
+  await expect(page.locator('.news-list[data-ready]')).toBeVisible({ timeout: 12_000 });
+  await expect(page.locator('.news-hero')).toHaveAttribute('data-leads', '2');
+
+  const layout = await page.evaluate(() => {
+    const hero = document.querySelector('.news-hero');
+    const brief = document.querySelector('.brief-rail');
+    const lead0 = hero?.querySelector('.article--lead');
+    const lead1 = hero?.querySelectorAll('.article--lead')[1];
+    const briefCols = getComputedStyle(brief).gridTemplateColumns.split(' ').filter(Boolean);
+    const heroBox = hero.getBoundingClientRect();
+    const briefBox = brief.getBoundingClientRect();
+    const l0 = lead0.getBoundingClientRect();
+    const l1 = lead1.getBoundingClientRect();
+    return {
+      briefCols: briefCols.length,
+      heroW: Math.round(heroBox.width),
+      briefW: Math.round(briefBox.width),
+      leadW: Math.round(l0.width),
+      leadsSideBySide: Math.abs(l0.top - l1.top) < 8 && l1.left > l0.right - 2,
+      overlap: Math.round(l0.right - l1.left),
+    };
+  });
+
+  expect(layout.briefCols, 'En bref doit rester 1 colonne à 1920').toBe(1);
+  expect(layout.leadsSideBySide, 'les 2 unes doivent être côte à côte').toBe(true);
+  expect(layout.overlap, `unes qui se chevauchent (${layout.overlap} px)`).toBeLessThanOrEqual(0);
+  expect(layout.heroW, `une trop étroite (${layout.heroW} vs bref ${layout.briefW})`)
+    .toBeGreaterThan(layout.briefW * 1.55);
+  expect(layout.leadW, `chaque une trop étroite (${layout.leadW} px)`).toBeGreaterThanOrEqual(480);
+});
+
 test('?wide=off force l’ancien 1180 ; / tout seul active E à 1920', async ({ page }) => {
   await openAt(page, '/?wide=off', 1920, 1080);
   expect(await wideAttr(page)).toBe('');

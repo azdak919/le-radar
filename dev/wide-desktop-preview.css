@@ -957,8 +957,9 @@ html[data-wide-preview="e"] {
 /*
  * À la une en 2 col (wide) :
  *  - 1 une à 1600 (comme prod)
- *  - 2 unes côte à côte dès ≥1920
+ *  - 2 unes côte à côte dès ≥1920, En bref reste 1 col (Philips 1920)
  *  - vedettes 2 col dès 1920, 3 col à 3840
+ *  - En bref 2 col seulement dès 2560
  *  - spacer pleine largeur pour l’équilibre magazine
  */
 @media (min-width: 1281px) {
@@ -987,25 +988,28 @@ html[data-wide-preview="e"] .news-hero-spacer {
   }
 }
 
-/* ── E ≥1920 : 2 unes + vedettes 2 col + En bref 2 col ── */
+/* ── E ≥1920 : 2 unes + vedettes 2 col ; En bref reste 1 col ── */
 @media (min-width: 1920px) {
   html[data-wide-preview="e"] .news-list:has(> .news-hero) {
-    grid-template-columns: minmax(420px, 1.2fr) minmax(300px, 0.95fr);
+    /* Plus d’air aux 2 unes / vedettes ; En bref garde une piste lisible. */
+    grid-template-columns: minmax(560px, 1.7fr) minmax(280px, 0.62fr);
   }
 
   html[data-wide-preview="e"] .news-hero {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: 20px;
+    column-gap: 24px;
     row-gap: 0;
     align-content: start;
     height: auto;
-    padding-right: 24px;
+    padding-right: 28px;
+    min-width: 0;
   }
 
   html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead {
     grid-column: auto;
     min-width: 0;
+    overflow: hidden;
   }
   /* Un seul « À la une » visible ; l’espace reste pour aligner les titres */
   html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead ~ .article--lead .article-eyebrow {
@@ -1017,28 +1021,33 @@ html[data-wide-preview="e"] .news-hero-spacer {
 
   html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead.has-image .article-media {
     max-height: none;
+    max-width: 100%;
+    overflow: hidden;
   }
   html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead.has-image .article-media img {
     aspect-ratio: 3 / 2;
     max-height: none;
+    width: 100%;
+    max-width: 100%;
   }
   html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead .article-title {
-    font-size: clamp(1.25rem, 1.1vw + 0.55rem, 1.65rem);
+    font-size: clamp(1.28rem, 1.15vw + 0.55rem, 1.72rem);
   }
   html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead .article-brief {
-    -webkit-line-clamp: 4;
-    line-clamp: 4;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
   }
 
   html[data-wide-preview="e"] .news-hero .article--feature {
     grid-column: auto;
     min-width: 0;
     padding-right: 0;
+    overflow: hidden;
   }
 
   html[data-wide-preview="e"] .brief-rail {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: 16px;
+    grid-template-columns: minmax(0, 1fr);
+    column-gap: 0;
   }
 
   html[data-wide-preview="e"] .news-tail-body {
