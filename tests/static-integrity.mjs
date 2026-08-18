@@ -396,6 +396,14 @@ assert(
   commonsCredit.isCopyleftLicense('CC BY 4.0') === false,
   'copyleft : CC BY n’est pas copyleft',
 );
+assert(
+  commonsCredit.isCopyrightMarkLicense('') === true,
+  'copyright : license vide → marque ©',
+);
+assert(
+  commonsCredit.isCopyrightMarkLicense('CC BY-SA 4.0') === false,
+  'copyright : pas de © droit sur du copyleft',
+);
 for (const rel of [
   'quebec-backgrounds-data.js',
   'quebec-nations-backgrounds-data.js',
