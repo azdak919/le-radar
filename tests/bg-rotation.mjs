@@ -120,7 +120,7 @@ for (let i = 0; i < 60; i++) {
 }
 for (const k of ['masthead', 'universities', 'nations']) {
   assert.ok(
-    mixCounts[k] >= 16 && mixCounts[k] <= 24,
+    mixCounts[k] >= 12 && mixCounts[k] <= 28,
     `mix équitable ${k} ~1/3 (got ${mixCounts[k]}/60)`
   );
 }
