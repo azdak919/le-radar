@@ -2089,6 +2089,7 @@
         "Montréal",
       ],
       [/sherbrooke/i, "Sherbrooke"],
+      [/assembl[ée]e nationale|h[ôo]tel du parlement/i, "Assemblée nationale"],
       [
         /qu[ée]bec city|quebec city|old quebec|vieux-qu[ée]bec|skyline de qu[ée]bec|panorama de qu[ée]bec|cityscapes of quebec|skylines of quebec|ch[âa]teau frontenac|gare fluviale de qu[ée]bec|frontenac/i,
         "Québec",
@@ -2111,6 +2112,13 @@
       return `${name} — ${place}`;
     }
     return name || place || "";
+  }
+
+  /** Copyleft (CC BY-SA / GFDL) seulement — pas de marque sur un copyright. */
+  function isCopyleftLicense(license) {
+    return /cc[\s-]?by[\s-]?sa|share[\s-]?alike|gfdl|copyleft/i.test(
+      String(license || "")
+    );
   }
 
   function _renderCredit(bg) {
@@ -2150,7 +2158,7 @@
     short.setAttribute("translate", "no");
     short.classList.add("notranslate");
     const shortLabel = credit || title || "Photo";
-    if (shortLabel) {
+    if (shortLabel && isCopyleftLicense(license)) {
       const copyleft = document.createElement("span");
       copyleft.className = "bg-photo-credit__copyleft";
       copyleft.textContent = "©";
