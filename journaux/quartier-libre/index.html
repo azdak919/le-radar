@@ -104,12 +104,7 @@
     <script src="../../app.js" defer></script>
     <script src="../../engage-prompt.js" defer></script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"Quartier Libre","url":"https://quartierlibre.ca/","parentOrganization":{"@type":"CollegeOrUniversity","name":"Université de Montréal"},"inLanguage":"fr","subjectOf":{"@type":"ItemList","numberOfItems":10,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://quartierlibre.ca/presences-invisibles-ecrire-la-ville/","name":"Présences invisibles : écrire la ville sans permission"},{"@type":"ListItem","position":2,"url":"https://quartierlibre.ca/calamine-rapper-autrement/","name":"CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »"},{"@type":"ListItem","position":3,"url":"https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/","name":"Forum RÉA : une alliance pour l’éducation en milieu défavorisé"},{"@type":"ListItem","position":4,"url":"https://quartierlibre.ca/projet-loi-etudiant-proche-aidante/","name":"Un projet de loi rendrait obligatoire le statut d’étudiant·e proche aidant·e"},{"@type":"ListItem","position":5,"url":"https://quartierlibre.ca/ete-recettes-musicales-quebecoises/","name":"Recettes musicales québécoises pour l’été"},{"@type":"ListItem","position":6,"url":"https://quartierlibre.ca/faecum-la-democratie-universitaire-critiquee/","name":"FAÉCUM : la démocratie universitaire critiquée"},{"@type":"ListItem","position":7,"url":"https://quartierlibre.ca/montreal-mystere-festival-bilingue/","name":"Montréal Mystère : le polar à l’honneur dans un festival bilingue"},{"@type":"ListItem","position":8,"url":"https://quartierlibre.ca/coupe-du-monde-2026/","name":"Coupe du monde 2026 : l’empreinte de l’expansion"},{"@type":"ListItem","position":9,"url":"https://quartierlibre.ca/soutien-technique-a-ludem/","name":"Soutien technique à l’UdeM : entre attentes et frustrations"},{"@type":"ListItem","position":10,"url":"https://quartierlibre.ca/festival-jamais-lu-2026/","name":"Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »"}]}}</script>
-      <!-- Lab local wide (localhost) — hors solitaire/pomo -->
-    <link rel="stylesheet" href="../../dev/midwidth-preview.css" />
-    <link rel="stylesheet" href="../../dev/wide-desktop-preview.css" />
-    <script src="../../dev/midwidth-preview.js"></script>
-    <script src="../../dev/wide-desktop-preview.js"></script>
-</head>
+  </head>
   <body>
     <header class="masthead">
       <!-- Fond photo (banque du Québec) — même bloc que l'accueil : la couche,
@@ -135,6 +130,9 @@
             <span id="today-date"></span>
             <time id="today-time" class="masthead-time" aria-label="Heure actuelle"></time>
           </span>
+          <div id="masthead-weather" class="masthead-weather hidden" aria-label="Météo du Québec" aria-live="polite">
+            <span class="masthead-weather__board" aria-label="Conditions actuelles"></span>
+          </div>
           <div class="masthead-actions">
             <a href="../../" class="masthead-icon masthead-home" data-home-nav title="Accueil" aria-label="Accueil — LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg></a>
             <a href="../../feeds.html" class="masthead-icon masthead-rss" title="Flux RSS" aria-label="S’abonner au flux RSS de LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83C19.56 12.06 12.94 5.44 4 4.44z"/><path d="M4 10.11v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.46-4.42-9.9-9.9-9.9z"/></svg></a>
@@ -273,6 +271,12 @@
     <!-- Lecteur natif : requis pour la lecture en arrière-plan (écran verrouillé). -->
     <audio id="radar-player" class="sr-only" preload="none" playsinline webkit-playsinline x-webkit-airplay="allow" aria-hidden="true"></audio>
 
+    <!-- Repli mobile : quand le masthead n'a plus de place, app.js déplace
+         #masthead-weather ici (même carte que sur bureau). -->
+    <div id="masthead-weather-dock" class="masthead-weather-dock"></div>
+
+    <!-- Scoreboard RSEQ / unis QC : sous la radio (mobile + bureau). -->
+    <div id="masthead-sports-strip" class="masthead-sports-strip" hidden aria-label="Résultats sportifs étudiants du Québec" aria-live="polite"></div>
 
     <main class="wire seo-wire">
       <nav class="seo-crumbs" aria-label="Fil d’Ariane"><a href="../../">Accueil</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><a href="../../medias/">Les médias étudiants</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><span aria-current="page">Quartier Libre</span></nav>
@@ -287,7 +291,7 @@
       </dl>
       <section class="seo-section">
         <h2>Derniers articles</h2>
-        <p class="seo-headlines__status">Dernier article : 15 mai 2026 à 12 h 00 · Vérifiée le 11 août 2026 à 16 h 47</p>
+        <p class="seo-headlines__status">Dernier article : 15 mai 2026 à 12 h 00 · Vérifiée le 17 août 2026 à 19 h 24</p>
       <ul class="seo-headlines">
           <li class="seo-headline"><a class="seo-headline__title" href="https://quartierlibre.ca/presences-invisibles-ecrire-la-ville/" target="_blank" rel="noopener noreferrer">Présences invisibles : écrire la ville sans permission</a><p class="seo-headline__meta"><time datetime="2026-05-15T16:00:00.000Z">2026-05-15 · 12 h 00</time><span class="seo-headline__by">Par Emilie Rizkallah</span></p><p class="seo-headline__brief">À Montréal, les murs parlent, sans jamais révéler celles et ceux qui les écrivent. Sous les couches de peinture et les signatures superposées, une présence discrète s’impose : celle d’une génération, souvent étudiante, qui investit l’espace urbain en marge des cadres établis. <a class="seo-headline__more" href="https://quartierlibre.ca/presences-invisibles-ecrire-la-ville/" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
           <li class="seo-headline"><a class="seo-headline__title" href="https://quartierlibre.ca/calamine-rapper-autrement/" target="_blank" rel="noopener noreferrer">CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »</a><p class="seo-headline__meta"><time datetime="2026-05-14T21:00:00.000Z">2026-05-14 · 17 h 00</time><span class="seo-headline__by">Par Samuel Roy</span></p><p class="seo-headline__brief">Le concept même de Rétrograde , c’est cette sensation d’un recul sociétal, le fait qu’on est en train de retourner en arrière, politiquement parlant. Même après des avancées dans le féminisme, on est quand même en train de reculer avec la montée du masculinisme. En nommant l’album Rétrograde , ça me permettait donc de relier à la fois le queer dating et le recul général de la société. … <a class="seo-headline__more" href="https://quartierlibre.ca/calamine-rapper-autrement/" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
@@ -325,6 +329,8 @@
         <a href="../../sports/" data-sports-reset target="_blank" rel="noopener noreferrer">Sports</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../archives/">Archives</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../kit-media/">Kit média</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../en/newspapers/quartier-libre/" hreflang="en-CA">English</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>

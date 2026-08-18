@@ -104,12 +104,7 @@
     <script src="../../app.js" defer></script>
     <script src="../../engage-prompt.js" defer></script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"The Plant","url":"https://theplantnews.com/","parentOrganization":{"@type":"CollegeOrUniversity","name":"Collège Dawson"},"inLanguage":"en","subjectOf":{"@type":"ItemList","numberOfItems":10,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/","name":"Letters from the Editors May 2026"},{"@type":"ListItem","position":2,"url":"https://theplantnews.com/2026/05/11/cuba-dawson/","name":"Cuba @ Dawson"},{"@type":"ListItem","position":3,"url":"https://theplantnews.com/2026/05/11/whats-next-for-books-at-dawson/","name":"What’s Next for Books at Dawson?"},{"@type":"ListItem","position":4,"url":"https://theplantnews.com/2026/05/11/no-way-home-female-migrant-workers-caught-in-iraqs-crossfire/","name":"No Way Home: Female Migrant Workers Caught in Iraq’s Crossfire"},{"@type":"ListItem","position":5,"url":"https://theplantnews.com/2026/05/11/its-festival-summer/","name":"It’s Festival Summer!"},{"@type":"ListItem","position":6,"url":"https://theplantnews.com/2026/05/11/re-play-the-games-from-your-childhood/","name":"Re-Play the Games from your Childhood"},{"@type":"ListItem","position":7,"url":"https://theplantnews.com/2026/05/11/gothic-cinema-rises-from-the-grave/","name":"Gothic Cinema Rises from the Grave"},{"@type":"ListItem","position":8,"url":"https://theplantnews.com/2026/05/11/elephant-what-invisibly-shapes-a-room/","name":"Elephant: What Invisibly Shapes a Room"},{"@type":"ListItem","position":9,"url":"https://theplantnews.com/2026/05/11/leave-the-children-out-of-this/","name":"Leave the Children Out of This"},{"@type":"ListItem","position":10,"url":"https://theplantnews.com/2026/05/11/on-manon-from-katseye-how-k-pop-takes-its-roots-from-black-culture/","name":"On Manon from KATSEYE: How K-Pop Takes Its Roots from Black Culture"}]}}</script>
-      <!-- Lab local wide (localhost) — hors solitaire/pomo -->
-    <link rel="stylesheet" href="../../dev/midwidth-preview.css" />
-    <link rel="stylesheet" href="../../dev/wide-desktop-preview.css" />
-    <script src="../../dev/midwidth-preview.js"></script>
-    <script src="../../dev/wide-desktop-preview.js"></script>
-</head>
+  </head>
   <body>
     <header class="masthead">
       <!-- Fond photo (banque du Québec) — même bloc que l'accueil : la couche,
@@ -135,6 +130,9 @@
             <span id="today-date"></span>
             <time id="today-time" class="masthead-time" aria-label="Heure actuelle"></time>
           </span>
+          <div id="masthead-weather" class="masthead-weather hidden" aria-label="Météo du Québec" aria-live="polite">
+            <span class="masthead-weather__board" aria-label="Conditions actuelles"></span>
+          </div>
           <div class="masthead-actions">
             <a href="../../" class="masthead-icon masthead-home" data-home-nav title="Accueil" aria-label="Accueil — LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg></a>
             <a href="../../feeds.html" class="masthead-icon masthead-rss" title="Flux RSS" aria-label="S’abonner au flux RSS de LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83C19.56 12.06 12.94 5.44 4 4.44z"/><path d="M4 10.11v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.46-4.42-9.9-9.9-9.9z"/></svg></a>
@@ -273,6 +271,12 @@
     <!-- Lecteur natif : requis pour la lecture en arrière-plan (écran verrouillé). -->
     <audio id="radar-player" class="sr-only" preload="none" playsinline webkit-playsinline x-webkit-airplay="allow" aria-hidden="true"></audio>
 
+    <!-- Repli mobile : quand le masthead n'a plus de place, app.js déplace
+         #masthead-weather ici (même carte que sur bureau). -->
+    <div id="masthead-weather-dock" class="masthead-weather-dock"></div>
+
+    <!-- Scoreboard RSEQ / unis QC : sous la radio (mobile + bureau). -->
+    <div id="masthead-sports-strip" class="masthead-sports-strip" hidden aria-label="Résultats sportifs étudiants du Québec" aria-live="polite"></div>
 
     <main class="wire seo-wire">
       <nav class="seo-crumbs" aria-label="Fil d’Ariane"><a href="../../">Accueil</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><a href="../../medias/">Les médias étudiants</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><span aria-current="page">The Plant</span></nav>
@@ -287,7 +291,7 @@
       </dl>
       <section class="seo-section">
         <h2>Derniers articles</h2>
-        <p class="seo-headlines__status">Dernier article : 11 mai 2026 à 16 h 44 · Vérifiée le 11 août 2026 à 16 h 47</p>
+        <p class="seo-headlines__status">Dernier article : 11 mai 2026 à 16 h 44 · Vérifiée le 17 août 2026 à 19 h 25</p>
       <ul class="seo-headlines">
           <li class="seo-headline"><a class="seo-headline__title" href="https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/" target="_blank" rel="noopener noreferrer">Letters from the Editors May 2026</a><p class="seo-headline__meta"><time datetime="2026-05-11T20:44:08.000Z">2026-05-11 · 16 h 44</time><span class="seo-headline__by">Par The editorial team</span></p><p class="seo-headline__brief">Dear readers, Class of 2026 We did it! As May’s doting weather and perfumed flowers lull us into the promise of summer, I try to turn my tears to crystals that will decorate my legacy at The Plant. I knew I’d cry when I’d have to greet “Goodbye.” In my heart, I will forever hold 35 crystals for each member of the team that became my anchor. When hard nights … <a class="seo-headline__more" href="https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
           <li class="seo-headline"><a class="seo-headline__title" href="https://theplantnews.com/2026/05/11/cuba-dawson/" target="_blank" rel="noopener noreferrer">Cuba @ Dawson</a><p class="seo-headline__meta"><time datetime="2026-05-11T20:44:05.000Z">2026-05-11 · 16 h 44</time><span class="seo-headline__by">Par Atika Ume Fazal</span></p><p class="seo-headline__brief">The Social Change and Solidarity students visiting La Camorra Community Project in Puerto Esperanza.Via Maria Alejandra Acosta Ardila By Atika Ume Fazal News Editor Since January, the almost 11 million citizens of Cuba have received one singular shipment of oil, according to Al … <a class="seo-headline__more" href="https://theplantnews.com/2026/05/11/cuba-dawson/" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
@@ -325,6 +329,8 @@
         <a href="../../sports/" data-sports-reset target="_blank" rel="noopener noreferrer">Sports</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../archives/">Archives</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../kit-media/">Kit média</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../en/newspapers/the-plant/" hreflang="en-CA">English</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>

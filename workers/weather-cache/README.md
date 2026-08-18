@@ -60,11 +60,30 @@ curl -fsS "https://le-radar-weather.azdak.workers.dev/v1/forecast?latitude=45.5,
 La réponse doit être un tableau de deux objets `{"current":{...}}` avec des
 températures plausibles.
 
-CORS lab :
+CORS lab **et** prod (les deux doivent coller à l’`Origin` de la requête — le
+cache partagé ne doit **pas** renvoyer le CORS d’un autre hôte **ni d’un autre
+port** lab) :
 
 ```bash
+# Port lab variable (8765, 8766, 5173…) — chacun doit coller
 curl -sSI -H "Origin: http://127.0.0.1:8765" \
   "https://le-radar-weather.azdak.workers.dev/v1/forecast?latitude=45.5&longitude=-73.6&current=temperature_2m" \
   | grep -i access-control-allow-origin
 # → Access-Control-Allow-Origin: http://127.0.0.1:8765
+
+curl -sSI -H "Origin: http://localhost:5173" \
+  "https://le-radar-weather.azdak.workers.dev/v1/forecast?latitude=45.5&longitude=-73.6&current=temperature_2m" \
+  | grep -i access-control-allow-origin
+# → Access-Control-Allow-Origin: http://localhost:5173
+
+curl -sSI -H "Origin: https://le-radar.ca" \
+  "https://le-radar-weather.azdak.workers.dev/v1/forecast?latitude=45.5&longitude=-73.6&current=temperature_2m" \
+  | grep -i access-control-allow-origin
+# → Access-Control-Allow-Origin: https://le-radar.ca
 ```
+
+> **Piège (corr. 2026-08-12)** : stocker la `Response` Cache API *avec* ses
+> en-têtes CORS, puis la renvoyer telle quelle, empoisonne la prod : un hit lab
+> (`127.0.0.1:PORT`) fait bloquer le navigateur sur `le-radar.ca` (ou un autre
+> port lab). Toujours réappliquer CORS à la sortie (parité `nowplaying-cache`).
+> Lab accepté : `localhost` / `127.0.0.1` / `::1` / `0.0.0.0`, **tout port**.

@@ -61,11 +61,6 @@
       "faces": 0,
       "faceRatio": 0,
       "faceDetectedAt": "2026-08-06T20:50:47.778Z",
-      "seasonReasons": [
-        "kw_automne",
-        "visual_agrees"
-      ],
-      "seasonDetectedAt": "2026-07-30T22:35:15.806Z",
       "place": "Montréal"
     },
     {
@@ -120,136 +115,9 @@
       "faceRatio": 0,
       "faceDetectedAt": "2026-08-06T20:50:47.778Z",
       "place": "Université Laval"
-    },
-    {
-      "id": "bcd00890c0ac",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/8/84/Chemin_Desjardins_et_mont_Orford_a_l%60horzion_-_panoramio.jpg",
-      "link": "https://commons.wikimedia.org/wiki/File:Chemin%20Desjardins%20et%20mont%20Orford%20a%20l%60horzion%20-%20panoramio.jpg",
-      "title": "Chemin Desjardins et mont Orford a l`horzion - panoramio",
-      "credit": "Mario Hains",
-      "license": "CC BY-SA 3.0",
-      "width": 2000,
-      "height": 1106,
-      "aspect": 1.808,
-      "mime": "image/jpeg",
-      "surfaces": [
-        "masthead",
-        "pomo"
-      ],
-      "permanent": true,
-      "pinnedAt": "2026-08-17T22:44:13.232Z",
-      "note": "Validé manuellement — chemin rural Orford, champs et colza (Mario Hains)",
-      "season": "ete",
-      "seasonConfidence": 0.9,
-      "seasonSource": "text+visual",
-      "seasonReasons": [
-        "date_filename:07",
-        "date_only",
-        "visual_agrees"
-      ],
-      "seasonDetectedAt": "2026-07-30T22:35:15.802Z",
-      "place": "Orford"
-    },
-    {
-      "id": "9400e0419f7f",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/d/d7/Cap_Bon-Ami%2C_Forillon_National_Park_%287612987688%29.jpg",
-      "link": "https://commons.wikimedia.org/wiki/File:Cap%20Bon-Ami%2C%20Forillon%20National%20Park%20(7612987688).jpg",
-      "title": "Cap Bon-Ami, Forillon National Park (7612987688)",
-      "credit": "Andrea Schaffer",
-      "license": "CC BY 2.0",
-      "width": 4272,
-      "height": 2848,
-      "aspect": 1.5,
-      "mime": "image/jpeg",
-      "surfaces": [
-        "masthead",
-        "pomo"
-      ],
-      "permanent": true,
-      "pinnedAt": "2026-08-17T22:44:13.287Z",
-      "note": "Validé manuellement — plage brumeuse Forillon / Cap Bon-Ami (Andrea Schaffer)",
-      "season": "ete",
-      "seasonConfidence": 0.93,
-      "seasonSource": "text",
-      "seasonReasons": [
-        "date_filename:07",
-        "kw_ete",
-        "date_agrees",
-        "visual_disagrees_kept_text"
-      ],
-      "seasonDetectedAt": "2026-07-30T22:35:15.802Z",
-      "place": "Forillon"
-    },
-    {
-      "id": "10ea175cdfbb",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/3/37/Quebec-00151_-_Lock_number_3_of_the_Soulanges_Canal._%2851445151067%29.jpg",
-      "link": "https://commons.wikimedia.org/wiki/File:Quebec-00151%20-%20Lock%20number%203%20of%20the%20Soulanges%20Canal.%20(51445151067).jpg",
-      "title": "Quebec-00151 - Lock number 3 of the Soulanges Canal. (51445151067)",
-      "credit": "Dennis G. Jarvis",
-      "license": "CC BY-SA 2.0",
-      "width": 6069,
-      "height": 4105,
-      "aspect": 1.478,
-      "mime": "image/jpeg",
-      "surfaces": [
-        "masthead",
-        "pomo"
-      ],
-      "permanent": true,
-      "pinnedAt": "2026-08-17T22:44:13.338Z",
-      "note": "Validé manuellement — écluse 3, canal de Soulanges (Dennis G. Jarvis)",
-      "season": "ete",
-      "seasonConfidence": 0.95,
-      "seasonSource": "text+visual",
-      "seasonReasons": [
-        "kw_ete",
-        "visual_agrees"
-      ],
-      "seasonDetectedAt": "2026-07-30T22:35:15.804Z",
-      "place": "Canal de Soulanges"
-    },
-    {
-      "id": "3b11b749b9b5",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/5/58/Rivi%C3%A8re_P%C3%A9ribonka_Montagne_%C3%89t%C3%A9_IMG_1175.jpg",
-      "link": "https://commons.wikimedia.org/wiki/File:Rivi%C3%A8re%20P%C3%A9ribonka%20Montagne%20%C3%89t%C3%A9%20IMG%201175.jpg",
-      "title": "Rivière Péribonka Montagne Été IMG 1175",
-      "credit": "Ève Tremblay",
-      "license": "CC BY-SA 4.0",
-      "width": 3264,
-      "height": 2448,
-      "aspect": 1.333,
-      "mime": "image/jpeg",
-      "surfaces": [
-        "masthead",
-        "pomo"
-      ],
-      "permanent": true,
-      "pinnedAt": "2026-08-18T00:12:18.309Z",
-      "note": "Validé manuellement — rivière Péribonka / montagne (Ève Tremblay)",
-      "place": "Péribonka"
-    },
-    {
-      "id": "71eea9bd6671",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Une_plage_du_Bic.jpg",
-      "link": "https://commons.wikimedia.org/wiki/File:Une%20plage%20du%20Bic.jpg",
-      "title": "Une plage du Bic",
-      "credit": "Danielhbordeleau",
-      "license": "CC BY-SA 4.0",
-      "width": 4292,
-      "height": 3317,
-      "aspect": 1.294,
-      "mime": "image/jpeg",
-      "surfaces": [
-        "masthead",
-        "pomo"
-      ],
-      "permanent": true,
-      "pinnedAt": "2026-08-18T00:12:18.369Z",
-      "note": "Validé manuellement — parc national du Bic (Danielhbordeleau)",
-      "place": "Le Bic"
     }
   ],
-  "updated": "2026-08-18T00:12:18.732Z",
+  "updated": "2026-08-18T01:15:23.365Z",
   "lastSeasonDetect": "2026-07-30T22:38:30.629Z",
   "lastFaceDetect": "2026-08-06T20:50:47.778Z"
 }

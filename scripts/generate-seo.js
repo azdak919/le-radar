@@ -556,8 +556,21 @@ function main() {
   if (doUpdate) {
     // Purge d'abord : un journal retiré du registre ne doit pas laisser une
     // page orpheline indexée derrière lui.
+    // `en/` est généré, mais `en/media-kit/` est écrit à la main (miroir EN
+    // de kit-media/) — le garder hors de la purge.
+    const handmadeUnderGenerated = ['en/media-kit/index.html'];
+    const stashedHandmade = [];
+    for (const rel of handmadeUnderGenerated) {
+      const p = path.join(ROOT, rel);
+      if (fs.existsSync(p)) stashedHandmade.push({ rel, content: fs.readFileSync(p, 'utf8') });
+    }
     for (const dir of GENERATED_DIRS) {
       fs.rmSync(path.join(ROOT, dir), { recursive: true, force: true });
+    }
+    for (const { rel, content } of stashedHandmade) {
+      const out = path.join(ROOT, rel);
+      fs.mkdirSync(path.dirname(out), { recursive: true });
+      fs.writeFileSync(out, content, 'utf8');
     }
     for (const page of entityPages) {
       const out = path.join(ROOT, page.path, 'index.html');

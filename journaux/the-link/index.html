@@ -103,13 +103,8 @@
     <script src="../../institution-acronyms-data.js" defer></script>
     <script src="../../app.js" defer></script>
     <script src="../../engage-prompt.js" defer></script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"The Link","parentOrganization":{"@type":"CollegeOrUniversity","name":"Université Concordia"},"inLanguage":"en","subjectOf":{"@type":"ItemList","numberOfItems":12,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://thelinknewspaper.ca/article/16338","name":"Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods"},{"@type":"ListItem","position":2,"url":"https://thelinknewspaper.ca/article/16335","name":"CSU fails to reach quorum at first special council meeting of new mandate"},{"@type":"ListItem","position":3,"url":"https://thelinknewspaper.ca/article/16334","name":"CSU terminates council’s chief election officer"},{"@type":"ListItem","position":4,"url":"https://thelinknewspaper.ca/article/16333","name":"Road to the 2026 FIFA World Cup"},{"@type":"ListItem","position":5,"url":"https://thelinknewspaper.ca/article/16330","name":"Artemis II takes over Place-des-Arts"},{"@type":"ListItem","position":6,"url":"https://thelinknewspaper.ca/article/16329","name":"CSU rejects motion for Israel and Jewish solidarity fund ad hoc committee"},{"@type":"ListItem","position":7,"url":"https://thelinknewspaper.ca/article/16328","name":"Hundreds gather in Montreal in recognition of Red Dress Day"},{"@type":"ListItem","position":8,"url":"https://thelinknewspaper.ca/article/16326","name":"CSU approves affinity group policy, club rules update and councillor pay increase at special meeting"},{"@type":"ListItem","position":9,"url":"https://thelinknewspaper.ca/article/16325","name":"Liberal convention returns to Montreal after 10 years"},{"@type":"ListItem","position":10,"url":"https://thelinknewspaper.ca/article/16324","name":"Dragon Jam: When music gives back"},{"@type":"ListItem","position":11,"url":"https://thelinknewspaper.ca/article/16323","name":"Jaywalking encouraged"},{"@type":"ListItem","position":12,"url":"https://thelinknewspaper.ca/article/16322","name":"Iranian Concordia students say requests for university support went unanswered"}]}}</script>
-      <!-- Lab local wide (localhost) — hors solitaire/pomo -->
-    <link rel="stylesheet" href="../../dev/midwidth-preview.css" />
-    <link rel="stylesheet" href="../../dev/wide-desktop-preview.css" />
-    <script src="../../dev/midwidth-preview.js"></script>
-    <script src="../../dev/wide-desktop-preview.js"></script>
-</head>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"The Link","parentOrganization":{"@type":"CollegeOrUniversity","name":"Université Concordia"},"inLanguage":"en","subjectOf":{"@type":"ItemList","numberOfItems":12,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://thelinknewspaper.ca/article/16339","name":"Inceldom, extremism, and mainstream misogyny"},{"@type":"ListItem","position":2,"url":"https://thelinknewspaper.ca/article/16338","name":"Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods"},{"@type":"ListItem","position":3,"url":"https://thelinknewspaper.ca/article/16335","name":"CSU fails to reach quorum at first special council meeting of new mandate"},{"@type":"ListItem","position":4,"url":"https://thelinknewspaper.ca/article/16334","name":"CSU terminates council’s chief election officer"},{"@type":"ListItem","position":5,"url":"https://thelinknewspaper.ca/article/16333","name":"Road to the 2026 FIFA World Cup"},{"@type":"ListItem","position":6,"url":"https://thelinknewspaper.ca/article/16330","name":"Artemis II takes over Place-des-Arts"},{"@type":"ListItem","position":7,"url":"https://thelinknewspaper.ca/article/16329","name":"CSU rejects motion for Israel and Jewish solidarity fund ad hoc committee"},{"@type":"ListItem","position":8,"url":"https://thelinknewspaper.ca/article/16328","name":"Hundreds gather in Montreal in recognition of Red Dress Day"},{"@type":"ListItem","position":9,"url":"https://thelinknewspaper.ca/article/16326","name":"CSU approves affinity group policy, club rules update and councillor pay increase at special meeting"},{"@type":"ListItem","position":10,"url":"https://thelinknewspaper.ca/article/16325","name":"Liberal convention returns to Montreal after 10 years"},{"@type":"ListItem","position":11,"url":"https://thelinknewspaper.ca/article/16324","name":"Dragon Jam: When music gives back"},{"@type":"ListItem","position":12,"url":"https://thelinknewspaper.ca/article/16323","name":"Jaywalking encouraged"}]}}</script>
+  </head>
   <body>
     <header class="masthead">
       <!-- Fond photo (banque du Québec) — même bloc que l'accueil : la couche,
@@ -135,6 +130,9 @@
             <span id="today-date"></span>
             <time id="today-time" class="masthead-time" aria-label="Heure actuelle"></time>
           </span>
+          <div id="masthead-weather" class="masthead-weather hidden" aria-label="Météo du Québec" aria-live="polite">
+            <span class="masthead-weather__board" aria-label="Conditions actuelles"></span>
+          </div>
           <div class="masthead-actions">
             <a href="../../" class="masthead-icon masthead-home" data-home-nav title="Accueil" aria-label="Accueil — LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg></a>
             <a href="../../feeds.html" class="masthead-icon masthead-rss" title="Flux RSS" aria-label="S’abonner au flux RSS de LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83C19.56 12.06 12.94 5.44 4 4.44z"/><path d="M4 10.11v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.46-4.42-9.9-9.9-9.9z"/></svg></a>
@@ -273,6 +271,12 @@
     <!-- Lecteur natif : requis pour la lecture en arrière-plan (écran verrouillé). -->
     <audio id="radar-player" class="sr-only" preload="none" playsinline webkit-playsinline x-webkit-airplay="allow" aria-hidden="true"></audio>
 
+    <!-- Repli mobile : quand le masthead n'a plus de place, app.js déplace
+         #masthead-weather ici (même carte que sur bureau). -->
+    <div id="masthead-weather-dock" class="masthead-weather-dock"></div>
+
+    <!-- Scoreboard RSEQ / unis QC : sous la radio (mobile + bureau). -->
+    <div id="masthead-sports-strip" class="masthead-sports-strip" hidden aria-label="Résultats sportifs étudiants du Québec" aria-live="polite"></div>
 
     <main class="wire seo-wire">
       <nav class="seo-crumbs" aria-label="Fil d’Ariane"><a href="../../">Accueil</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><a href="../../medias/">Les médias étudiants</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><span aria-current="page">The Link</span></nav>
@@ -286,8 +290,9 @@
       </dl>
       <section class="seo-section">
         <h2>Derniers articles</h2>
-        <p class="seo-headlines__status">Dernier article : 3 août 2026 à 14 h 47</p>
+        <p class="seo-headlines__status">Dernier article : 15 août 2026 à 15 h 00</p>
       <ul class="seo-headlines">
+          <li class="seo-headline"><a class="seo-headline__title" href="https://thelinknewspaper.ca/article/16339" target="_blank" rel="noopener noreferrer">Inceldom, extremism, and mainstream misogyny</a><p class="seo-headline__meta"><time datetime="2026-08-15T19:00:00.000Z">2026-08-15 · 15 h 00</time><span class="seo-headline__by">Par Yoan Safar</span></p><p class="seo-headline__brief">At first, the algorithm doesn’t know what the boy wants, but at some point he and his friends start liking videos promoting self-improvement, going to the gym and how to get girls. He starts to echo views from creators such as Andrew Tate . <a class="seo-headline__more" href="https://thelinknewspaper.ca/article/16339" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
           <li class="seo-headline"><a class="seo-headline__title" href="https://thelinknewspaper.ca/article/16338" target="_blank" rel="noopener noreferrer">Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods</a><p class="seo-headline__meta"><time datetime="2026-08-03T18:47:00.000Z">2026-08-03 · 14 h 47</time><span class="seo-headline__by">Par Ryan Pyke</span></p><p class="seo-headline__brief">This history, and much more, is featured in the exhibition. Bellemare was able to gather never-before-printed photographs of protests and posters to add to the AGQ’s collection. <a class="seo-headline__more" href="https://thelinknewspaper.ca/article/16338" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
           <li class="seo-headline"><a class="seo-headline__title" href="https://thelinknewspaper.ca/article/16335" target="_blank" rel="noopener noreferrer">CSU fails to reach quorum at first special council meeting of new mandate</a><p class="seo-headline__meta"><time datetime="2026-07-08T14:41:00.000Z">2026-07-08 · 10 h 41</time><span class="seo-headline__by">Par Samuel Kayll</span></p><p class="seo-headline__brief">The agenda contained a request to excuse the CSU’s finance coordinator from the duty of submitting the Annual Operating Budget (AOB) to the council in June. It also included an amendment to a motion passed on May 13 regarding the closure of Mackay Street, the authorization to use the Office for Student Life and Engagement endowment fund and an amendment to the union’s bylaws regarding dates of regular council meetings. … <a class="seo-headline__more" href="https://thelinknewspaper.ca/article/16335" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
           <li class="seo-headline"><a class="seo-headline__title" href="https://thelinknewspaper.ca/article/16334" target="_blank" rel="noopener noreferrer">CSU terminates council’s chief election officer</a><p class="seo-headline__meta"><time datetime="2026-06-28T23:23:00.000Z">2026-06-28 · 19 h 23</time><span class="seo-headline__by">Par Sean Richard</span></p><p class="seo-headline__brief">Elbakaye added that she has been attempting to contact Ellis for over three months, but he has not responded. She also explained that she is working on a training guide for the next CEO alongside the council's administrative coordinator. <a class="seo-headline__more" href="https://thelinknewspaper.ca/article/16334" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
@@ -299,7 +304,6 @@
           <li class="seo-headline"><a class="seo-headline__title" href="https://thelinknewspaper.ca/article/16325" target="_blank" rel="noopener noreferrer">Liberal convention returns to Montreal after 10 years</a><p class="seo-headline__meta"><time datetime="2026-04-14T03:37:00.000Z">2026-04-13 · 23 h 37</time><span class="seo-headline__by">Par Racha Rais</span></p><p class="seo-headline__brief">The first day saw the regroupment of a number of commissions, namely the Indigenous Peoples' Commission, the National Women’s Liberal Commission, the Senior Liberals' Commission and the Young Liberals of Canada (YLC) commission. <a class="seo-headline__more" href="https://thelinknewspaper.ca/article/16325" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
           <li class="seo-headline"><a class="seo-headline__title" href="https://thelinknewspaper.ca/article/16324" target="_blank" rel="noopener noreferrer">Dragon Jam: When music gives back</a><p class="seo-headline__meta"><time datetime="2026-04-14T03:00:00.000Z">2026-04-13 · 23 h 00</time><span class="seo-headline__by">Par Kristina Stamkopoulos</span></p><p class="seo-headline__brief">The Chinatown studio brings together artists of all levels in a space designed for connection Located in Chinatown, Dragon Jam serves as a rehearsal space and venue for intimate performances. Courtesy Dragon Jam … <a class="seo-headline__more" href="https://thelinknewspaper.ca/article/16324" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
           <li class="seo-headline"><a class="seo-headline__title" href="https://thelinknewspaper.ca/article/16323" target="_blank" rel="noopener noreferrer">Jaywalking encouraged</a><p class="seo-headline__meta"><time datetime="2026-04-14T03:00:00.000Z">2026-04-13 · 23 h 00</time><span class="seo-headline__by">Par Sydney Nethersole</span></p><p class="seo-headline__brief">The two-venue festival invites people to move between spaces LaVendertown is set to perform at Sala Rossa during the music festival Jaywalk. Courtesy Sayplus. <a class="seo-headline__more" href="https://thelinknewspaper.ca/article/16323" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
-          <li class="seo-headline"><a class="seo-headline__title" href="https://thelinknewspaper.ca/article/16322" target="_blank" rel="noopener noreferrer">Iranian Concordia students say requests for university support went unanswered</a><p class="seo-headline__meta"><time datetime="2026-04-14T02:36:00.000Z">2026-04-13 · 22 h 36</time><span class="seo-headline__by">Par Rojiar Ghezelbash</span></p><p class="seo-headline__brief">The university issued a general message without naming the conflict and no email was sent to students Iranian students at Concordia University are expressing concern over a lack of recognition and support resources from the university regarding the conflict in Iran. Photo … <a class="seo-headline__more" href="https://thelinknewspaper.ca/article/16322" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
       </ul>
         <div class="seo-source-actions">
           <p class="seo-cta seo-cta--source"><a href="../../?source=The%20Link#news-list" data-news-source="The Link">Voir les articles les plus récents</a></p>
@@ -327,6 +331,8 @@
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../archives/">Archives</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../kit-media/">Kit média</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../en/newspapers/the-link/" hreflang="en-CA">English</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <button type="button" class="site-foot__link-btn" data-install-app="radar">Installer LE-RADAR.ca</button>
@@ -342,7 +348,7 @@
         <p class="site-foot__legal">Code libre utilisé conformément aux licences applicables; contenus et médias crédités à leurs auteurs respectifs.</p>
         <p class="site-foot__bot"><span class="site-foot__bot-ico" aria-hidden="true">🤖</span> Agrégateur automatisé de contenus.</p>
       </div>
-      <p class="seo-foot-meta">Mise à jour 2026-08-03</p>
+      <p class="seo-foot-meta">Mise à jour 2026-08-15</p>
     </footer>
   </body>
 </html>

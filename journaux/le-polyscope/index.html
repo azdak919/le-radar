@@ -104,12 +104,7 @@
     <script src="../../app.js" defer></script>
     <script src="../../engage-prompt.js" defer></script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"Le Polyscope","url":"https://www.polyscope.qc.ca/","parentOrganization":{"@type":"CollegeOrUniversity","name":"Polytechnique Montréal"},"inLanguage":"fr","subjectOf":{"@type":"ItemList","numberOfItems":12,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://www.polyscope.qc.ca/blog/post/2DJ12PrwK7u4Dq9D8fKu","name":"L'informatique quantique: Un terrain de jeu multidisciplinaire pour les ingénieur·e·s"},{"@type":"ListItem","position":2,"url":"https://www.polyscope.qc.ca/blog/post/L30XNFOBtLJVjpcgWrxo","name":"L’espérance d’un vendredi 13 février"},{"@type":"ListItem","position":3,"url":"https://www.polyscope.qc.ca/blog/post/xmXh4vV262nJ0NKMoEfE","name":"Feu vert pour le projet d’agrandissement du campus"},{"@type":"ListItem","position":4,"url":"https://www.polyscope.qc.ca/blog/post/lZU7aZPFn4T8eG8oO1hX","name":"La politique, c'est un sport extrême » : François Legault quitte le pouvoir"},{"@type":"ListItem","position":5,"url":"https://www.polyscope.qc.ca/blog/post/q5CBgkqpxlbL68S4J8YM","name":"14 bourses pour 14 avenirs volés"},{"@type":"ListItem","position":6,"url":"https://www.polyscope.qc.ca/blog/post/bpyPu7N2Pbm8nsfLwAEP","name":"Quand les arbres saignent : Ode À l’automne"},{"@type":"ListItem","position":7,"url":"https://www.polyscope.qc.ca/blog/post/t40zRmo7IRzZSS59CReY","name":"Guide sur la durabilité numérique: conseils et outils pratiques"},{"@type":"ListItem","position":8,"url":"https://www.polyscope.qc.ca/blog/post/u5Hy8Rq9hwdfzclCUhEz","name":"Polytechnique dans le rouge"},{"@type":"ListItem","position":9,"url":"https://www.polyscope.qc.ca/blog/post/PixQyrODB93J9OdXjCfE","name":"L’IA, le Rossignol et l’Empereur"},{"@type":"ListItem","position":10,"url":"https://www.polyscope.qc.ca/blog/post/HsJJnK7Dlj4QFpBVB3I1","name":"Sortir du cadre : un atout pour les ingénieur·e·s de demain"},{"@type":"ListItem","position":11,"url":"https://www.polyscope.qc.ca/blog/post/MbL13AQ4Dy770QnlUAP7","name":"Et si l'IA avait des émotions?"},{"@type":"ListItem","position":12,"url":"https://www.polyscope.qc.ca/blog/post/tH20iQiPhQLHhB8hN8mk","name":"Résultats mitigés, réaction sans pitié"}]}}</script>
-      <!-- Lab local wide (localhost) — hors solitaire/pomo -->
-    <link rel="stylesheet" href="../../dev/midwidth-preview.css" />
-    <link rel="stylesheet" href="../../dev/wide-desktop-preview.css" />
-    <script src="../../dev/midwidth-preview.js"></script>
-    <script src="../../dev/wide-desktop-preview.js"></script>
-</head>
+  </head>
   <body>
     <header class="masthead">
       <!-- Fond photo (banque du Québec) — même bloc que l'accueil : la couche,
@@ -135,6 +130,9 @@
             <span id="today-date"></span>
             <time id="today-time" class="masthead-time" aria-label="Heure actuelle"></time>
           </span>
+          <div id="masthead-weather" class="masthead-weather hidden" aria-label="Météo du Québec" aria-live="polite">
+            <span class="masthead-weather__board" aria-label="Conditions actuelles"></span>
+          </div>
           <div class="masthead-actions">
             <a href="../../" class="masthead-icon masthead-home" data-home-nav title="Accueil" aria-label="Accueil — LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg></a>
             <a href="../../feeds.html" class="masthead-icon masthead-rss" title="Flux RSS" aria-label="S’abonner au flux RSS de LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83C19.56 12.06 12.94 5.44 4 4.44z"/><path d="M4 10.11v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.46-4.42-9.9-9.9-9.9z"/></svg></a>
@@ -273,6 +271,12 @@
     <!-- Lecteur natif : requis pour la lecture en arrière-plan (écran verrouillé). -->
     <audio id="radar-player" class="sr-only" preload="none" playsinline webkit-playsinline x-webkit-airplay="allow" aria-hidden="true"></audio>
 
+    <!-- Repli mobile : quand le masthead n'a plus de place, app.js déplace
+         #masthead-weather ici (même carte que sur bureau). -->
+    <div id="masthead-weather-dock" class="masthead-weather-dock"></div>
+
+    <!-- Scoreboard RSEQ / unis QC : sous la radio (mobile + bureau). -->
+    <div id="masthead-sports-strip" class="masthead-sports-strip" hidden aria-label="Résultats sportifs étudiants du Québec" aria-live="polite"></div>
 
     <main class="wire seo-wire">
       <nav class="seo-crumbs" aria-label="Fil d’Ariane"><a href="../../">Accueil</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><a href="../../medias/">Les médias étudiants</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><span aria-current="page">Le Polyscope</span></nav>
@@ -287,7 +291,7 @@
       </dl>
       <section class="seo-section">
         <h2>Derniers articles</h2>
-        <p class="seo-headlines__status">Dernier article : 25 février 2026 à 09 h 38 · Vérifiée le 11 août 2026 à 16 h 47</p>
+        <p class="seo-headlines__status">Dernier article : 25 février 2026 à 09 h 38 · Vérifiée le 17 août 2026 à 19 h 25</p>
       <ul class="seo-headlines">
           <li class="seo-headline"><a class="seo-headline__title" href="https://www.polyscope.qc.ca/blog/post/2DJ12PrwK7u4Dq9D8fKu" target="_blank" rel="noopener noreferrer">L'informatique quantique: Un terrain de jeu multidisciplinaire pour les ingénieur·e·s</a><p class="seo-headline__meta"><time datetime="2026-02-25T14:38:32.764Z">2026-02-25 · 09 h 38</time><span class="seo-headline__by">Par Stefanie Lee Milczarek</span></p><p class="seo-headline__brief">Dans les couloirs de Polytechnique Montréal, le futur ne s’encode plus seulement en binaire. L'Association Étudiante des Cycles Supérieurs de Polytechnique (AECSP) a récemment orchestré un panel d'expert·e·s pour démystifier un domaine aussi fascinant qu'intimidant: … <a class="seo-headline__more" href="https://www.polyscope.qc.ca/blog/post/2DJ12PrwK7u4Dq9D8fKu" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
           <li class="seo-headline"><a class="seo-headline__title" href="https://www.polyscope.qc.ca/blog/post/L30XNFOBtLJVjpcgWrxo" target="_blank" rel="noopener noreferrer">L’espérance d’un vendredi 13 février</a><p class="seo-headline__meta"><time datetime="2026-02-14T01:38:16.700Z">2026-02-13 · 20 h 38</time><span class="seo-headline__by">Par Victoria-Mae Carrière</span></p><p class="seo-headline__brief">Vous aussi, vous attendez cette autre moitié ? Moi, ça doit déjà faire deux heures. Elle et moi, on voulait se voir ici, la veille de la Saint-Valentin, le vendredi 13 février. Elle dit que la vertu des rendez-vous réside dans ce geste précieux, cette valse qu’est d’habiller son … <a class="seo-headline__more" href="https://www.polyscope.qc.ca/blog/post/L30XNFOBtLJVjpcgWrxo" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
@@ -327,6 +331,8 @@
         <a href="../../sports/" data-sports-reset target="_blank" rel="noopener noreferrer">Sports</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../archives/">Archives</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../kit-media/">Kit média</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../en/newspapers/le-polyscope/" hreflang="en-CA">English</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>

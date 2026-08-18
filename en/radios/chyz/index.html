@@ -104,12 +104,7 @@
     <script src="../../../app.js" defer></script>
     <script src="../../../engage-prompt.js" defer></script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"RadioStation","name":"CHYZ 94,3 FM","description":"La radio des étudiantes et étudiants de l'Université Laval depuis 1997. Musique d'ici et d'ailleurs, sports universitaires et vie de campus.","url":"https://chyz.ca/","broadcastFrequency":"94,3 FM","areaServed":{"@type":"City","name":"Québec"},"parentOrganization":{"@type":"CollegeOrUniversity","name":"Université Laval"},"inLanguage":"en-CA"}</script>
-      <!-- Lab local wide (localhost) — hors solitaire/pomo -->
-    <link rel="stylesheet" href="../../../dev/midwidth-preview.css" />
-    <link rel="stylesheet" href="../../../dev/wide-desktop-preview.css" />
-    <script src="../../../dev/midwidth-preview.js"></script>
-    <script src="../../../dev/wide-desktop-preview.js"></script>
-</head>
+  </head>
   <body>
     <header class="masthead">
       <!-- Fond photo (banque du Québec) — même bloc que l'accueil : la couche,
@@ -135,6 +130,9 @@
             <span id="today-date"></span>
             <time id="today-time" class="masthead-time" aria-label="Current time"></time>
           </span>
+          <div id="masthead-weather" class="masthead-weather hidden" aria-label="Québec weather" aria-live="polite">
+            <span class="masthead-weather__board" aria-label="Current conditions"></span>
+          </div>
           <div class="masthead-actions">
             <a href="../../../" class="masthead-icon masthead-home" data-home-nav title="Home" aria-label="Home — LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg></a>
             <a href="../../../feeds.html" class="masthead-icon masthead-rss" title="RSS feed" aria-label="Subscribe to the LE-RADAR.ca RSS feed"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83C19.56 12.06 12.94 5.44 4 4.44z"/><path d="M4 10.11v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.46-4.42-9.9-9.9-9.9z"/></svg></a>
@@ -273,6 +271,12 @@
     <!-- Lecteur natif : requis pour la lecture en arrière-plan (écran verrouillé). -->
     <audio id="radar-player" class="sr-only" preload="none" playsinline webkit-playsinline x-webkit-airplay="allow" aria-hidden="true"></audio>
 
+    <!-- Repli mobile : quand le masthead n'a plus de place, app.js déplace
+         #masthead-weather ici (même carte que sur bureau). -->
+    <div id="masthead-weather-dock" class="masthead-weather-dock"></div>
+
+    <!-- Scoreboard RSEQ / unis QC : sous la radio (mobile + bureau). -->
+    <div id="masthead-sports-strip" class="masthead-sports-strip" hidden aria-label="Québec student sports scores" aria-live="polite"></div>
 
     <main class="wire seo-wire">
       <nav class="seo-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><a href="../../../en/media/">Student media</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><a href="../../../en/schedules/">Campus radio schedules</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><span aria-current="page">CHYZ 94,3 FM</span></nav>
@@ -289,37 +293,42 @@
       <p class="seo-cta"><a href="../../../en/schedules/">Choose another station</a></p>
       <section class="seo-section" id="horaire" data-schedule-station="chyz">
         <h2>On air this week</h2>
-      <p class="seo-schedule-meta"><span>Week of August 3, 2026</span><span aria-hidden="true">·</span><span>Last successful collection August 6, 2026</span></p>
+      <p class="seo-schedule-meta"><span>Week of August 17, 2026</span><span aria-hidden="true">·</span><span>Last successful collection August 17, 2026</span></p>
       <div class="seo-schedule-scroll">
       <div class="seo-schedule">
-        <div class="seo-day" data-schedule-day="1">
+        <div class="seo-day seo-day--today" data-schedule-day="1" data-current-day="true">
           <h3>Monday</h3>
           <ul>
             <li data-schedule-start="08:00" data-schedule-end="10:00"><time class="seo-slot__time">08:00<span class="seo-slot__dash" aria-hidden="true">–</span>10:00</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/lundie-indie-playlist-du-matin/" target="_blank" rel="noopener noreferrer">Lundi Indie</a></span></li>
             <li data-schedule-start="17:30" data-schedule-end="18:30"><time class="seo-slot__time">17:30<span class="seo-slot__dash" aria-hidden="true">–</span>18:30</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/les-arshitechs-du-son/" target="_blank" rel="noopener noreferrer">Les Arshitechs du Son</a></span></li>
             <li data-schedule-start="18:30" data-schedule-end="19:30"><time class="seo-slot__time">18:30<span class="seo-slot__dash" aria-hidden="true">–</span>19:30</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/la-lanterne/" target="_blank" rel="noopener noreferrer">La Lanterne</a></span></li>
-            <li data-schedule-start="20:30" data-schedule-end="21:30"><time class="seo-slot__time">20:30<span class="seo-slot__dash" aria-hidden="true">–</span>21:30</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/la-voie-des-droits/" target="_blank" rel="noopener noreferrer">La Voie des Droits</a></span></li>
           </ul>
         </div>
-        <div class="seo-day seo-day--today" data-schedule-day="2" data-current-day="true">
+        <div class="seo-day" data-schedule-day="2">
           <h3>Tuesday</h3>
           <ul>
-            <li data-schedule-start="08:00" data-schedule-end="10:00"><time class="seo-slot__time">08:00<span class="seo-slot__dash" aria-hidden="true">–</span>10:00</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/" target="_blank" rel="noopener noreferrer">Mardi Champ Gauche</a></span></li>
-            <li class="seo-slot--upcoming" data-schedule-start="17:30" data-schedule-end="18:30" aria-label="Up next : Les Arshitechs du Son"><time class="seo-slot__time">17:30<span class="seo-slot__dash" aria-hidden="true">–</span>18:30</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/les-arshitechs-du-son/" target="_blank" rel="noopener noreferrer">Les Arshitechs du Son</a></span></li>
+            <li class="seo-slot--upcoming" data-schedule-start="08:00" data-schedule-end="10:00" aria-label="Up next : Mardi Champ Gauche"><time class="seo-slot__time">08:00<span class="seo-slot__dash" aria-hidden="true">–</span>10:00</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/" target="_blank" rel="noopener noreferrer">Mardi Champ Gauche</a></span></li>
+            <li data-schedule-start="16:00" data-schedule-end="17:30"><time class="seo-slot__time">16:00<span class="seo-slot__dash" aria-hidden="true">–</span>17:30</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/cheri-e-jarrive/" target="_blank" rel="noopener noreferrer">Chéri.e, j’arrive!</a></span></li>
+            <li data-schedule-start="17:30" data-schedule-end="18:30"><time class="seo-slot__time">17:30<span class="seo-slot__dash" aria-hidden="true">–</span>18:30</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/les-arshitechs-du-son/" target="_blank" rel="noopener noreferrer">Les Arshitechs du Son</a></span></li>
+            <li data-schedule-start="18:50" data-schedule-end="23:00"><time class="seo-slot__time">18:50<span class="seo-slot__dash" aria-hidden="true">–</span>23:00</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/capitales-de-quebec/" target="_blank" rel="noopener noreferrer">Capitales de Québec</a></span></li>
           </ul>
         </div>
         <div class="seo-day" data-schedule-day="3">
           <h3>Wednesday</h3>
           <ul>
             <li data-schedule-start="08:00" data-schedule-end="10:00"><time class="seo-slot__time">08:00<span class="seo-slot__dash" aria-hidden="true">–</span>10:00</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/mercredi-bonbon/" target="_blank" rel="noopener noreferrer">Mercredi Bonbon</a></span></li>
+            <li data-schedule-start="16:00" data-schedule-end="17:30"><time class="seo-slot__time">16:00<span class="seo-slot__dash" aria-hidden="true">–</span>17:30</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/cheri-e-jarrive/" target="_blank" rel="noopener noreferrer">Chéri.e, j’arrive!</a></span></li>
             <li data-schedule-start="17:30" data-schedule-end="18:30"><time class="seo-slot__time">17:30<span class="seo-slot__dash" aria-hidden="true">–</span>18:30</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/les-arshitechs-du-son/" target="_blank" rel="noopener noreferrer">Les Arshitechs du Son</a></span></li>
+            <li data-schedule-start="18:50" data-schedule-end="23:00"><time class="seo-slot__time">18:50<span class="seo-slot__dash" aria-hidden="true">–</span>23:00</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/capitales-de-quebec/" target="_blank" rel="noopener noreferrer">Capitales de Québec</a></span></li>
           </ul>
         </div>
         <div class="seo-day" data-schedule-day="4">
           <h3>Thursday</h3>
           <ul>
             <li data-schedule-start="08:00" data-schedule-end="10:00"><time class="seo-slot__time">08:00<span class="seo-slot__dash" aria-hidden="true">–</span>10:00</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/jeudi-revolte/" target="_blank" rel="noopener noreferrer">Jeudi Révolte</a></span></li>
+            <li data-schedule-start="16:00" data-schedule-end="17:30"><time class="seo-slot__time">16:00<span class="seo-slot__dash" aria-hidden="true">–</span>17:30</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/cheri-e-jarrive/" target="_blank" rel="noopener noreferrer">Chéri.e, j’arrive!</a></span></li>
             <li data-schedule-start="17:30" data-schedule-end="19:00"><time class="seo-slot__time">17:30<span class="seo-slot__dash" aria-hidden="true">–</span>19:00</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/les-arshitechs-du-son/" target="_blank" rel="noopener noreferrer">Les Arshitechs du Son</a></span></li>
+            <li data-schedule-start="18:50" data-schedule-end="23:00"><time class="seo-slot__time">18:50<span class="seo-slot__dash" aria-hidden="true">–</span>23:00</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/capitales-de-quebec/" target="_blank" rel="noopener noreferrer">Capitales de Québec</a></span></li>
           </ul>
         </div>
         <div class="seo-day" data-schedule-day="5">
@@ -329,7 +338,6 @@
             <li data-schedule-start="10:00" data-schedule-end="10:30"><time class="seo-slot__time">10:00<span class="seo-slot__dash" aria-hidden="true">–</span>10:30</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/palmares-chyz/" target="_blank" rel="noopener noreferrer">Palmarès CHYZ</a></span></li>
             <li data-schedule-start="11:00" data-schedule-end="12:00"><time class="seo-slot__time">11:00<span class="seo-slot__dash" aria-hidden="true">–</span>12:00</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/punk-o-rama/" target="_blank" rel="noopener noreferrer">Punk-o-rama</a></span></li>
             <li data-schedule-start="13:00" data-schedule-end="14:00"><time class="seo-slot__time">13:00<span class="seo-slot__dash" aria-hidden="true">–</span>14:00</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/detour/" target="_blank" rel="noopener noreferrer">Détour</a></span></li>
-            <li data-schedule-start="17:30" data-schedule-end="18:30"><time class="seo-slot__time">17:30<span class="seo-slot__dash" aria-hidden="true">–</span>18:30</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/les-arshitechs-du-son/" target="_blank" rel="noopener noreferrer">Les Arshitechs du Son</a></span></li>
             <li data-schedule-start="18:50" data-schedule-end="23:00"><time class="seo-slot__time">18:50<span class="seo-slot__dash" aria-hidden="true">–</span>23:00</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/capitales-de-quebec/" target="_blank" rel="noopener noreferrer">Capitales de Québec</a></span></li>
           </ul>
         </div>
@@ -338,7 +346,6 @@
           <ul>
             <li data-schedule-start="10:00" data-schedule-end="10:30"><time class="seo-slot__time">10:00<span class="seo-slot__dash" aria-hidden="true">–</span>10:30</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/palmares-chyz/" target="_blank" rel="noopener noreferrer">Palmarès CHYZ</a></span></li>
             <li data-schedule-start="11:00" data-schedule-end="12:00"><time class="seo-slot__time">11:00<span class="seo-slot__dash" aria-hidden="true">–</span>12:00</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/le-re-show-deuxieme-service/" target="_blank" rel="noopener noreferrer">Le Ré-Show : Deuxième Service</a></span></li>
-            <li data-schedule-start="12:00" data-schedule-end="12:30"><time class="seo-slot__time">12:00<span class="seo-slot__dash" aria-hidden="true">–</span>12:30</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/un-monde-de-couleurs-et-de-son/" target="_blank" rel="noopener noreferrer">Un Monde de Couleurs et de Son</a></span></li>
             <li data-schedule-start="13:00" data-schedule-end="16:00"><time class="seo-slot__time">13:00<span class="seo-slot__dash" aria-hidden="true">–</span>16:00</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/radio-futura/" target="_blank" rel="noopener noreferrer">Radio Futura</a></span></li>
             <li data-schedule-start="18:50" data-schedule-end="23:00"><time class="seo-slot__time">18:50<span class="seo-slot__dash" aria-hidden="true">–</span>23:00</time><span class="seo-slot__title"><a href="https://chyz.ca/emission/capitales-de-quebec/" target="_blank" rel="noopener noreferrer">Capitales de Québec</a></span></li>
           </ul>
@@ -377,6 +384,8 @@
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../../archives/">Archives</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../../en/media-kit/">Media kit</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
         <a href="../../../radios/chyz/" hreflang="fr-CA">Français</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
         <button type="button" class="site-foot__link-btn" data-install-app="radar">Install LE-RADAR.ca</button>
@@ -392,7 +401,7 @@
         <p class="site-foot__legal">Open-source code used in accordance with the applicable licences; content and media credited to their respective authors.</p>
         <p class="site-foot__bot"><span class="site-foot__bot-ico" aria-hidden="true">🤖</span> Automated content aggregator.</p>
       </div>
-      <p class="seo-foot-meta">Updated 2026-08-06</p>
+      <p class="seo-foot-meta">Updated 2026-08-17</p>
     </footer>
   </body>
 </html>

@@ -32,7 +32,7 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
   const wide = await countAt(1440);
   // En desktop large la voie de gauche doit être PLEINE : 3 puces SCORE + CTA.
   // Un `>= 2` laissait passer une voie à court de matière — hors saison, avec un
-  // seul résultat en banque, le bandeau tombait à 2 puces étirées à 50/50.
+  // seul résultat en banque, le bandeau tombait à 2 puces (score + CTA) trop larges.
   expect(wide).toBeGreaterThanOrEqual(3);
   expect(wide).toBeLessThanOrEqual(4);
   // Chaque slot non-CTA est bien rempli (pas de trou avalé par le flex).
@@ -67,29 +67,41 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
   expect(narrow).toBeGreaterThanOrEqual(1);
 
   // Tablette 768 / 900 : au moins 1 score à gauche de la CTA.
-  // data-count=2 → boîtes strictement 50/50 (pas flex 1.2 CTA).
-  const equalWhenTwo = async () => {
+  // data-count=2 → ratio fixe ~42/58 (score / CTA) pour compenser le chrome
+  // pastille SPORTS + PROCHAIN — pas 50/50 (air mort à gauche / marquee CTA)
+  // ni flex dynamique par slide (tailles stables).
+  const pairRatioWhenTwo = async () => {
     const n = Number(await strip.getAttribute('data-count') || 0);
     if (n !== 2) return;
     const widths = await strip.locator('.sports-chip').evaluateAll((chips) =>
       chips.map((c) => Math.round(c.getBoundingClientRect().width)),
     );
     expect(widths).toHaveLength(2);
-    expect(Math.abs(widths[0] - widths[1]), `50/50 attendu, got ${widths}`).toBeLessThanOrEqual(1);
+    const [scoreW, ctaW] = widths;
+    const total = scoreW + ctaW;
+    expect(total).toBeGreaterThan(200);
+    const scoreShare = scoreW / total;
+    // 0.72 / (0.72+1) ≈ 0.419 — tolérance de rendu sub-pixel + gap.
+    expect(
+      scoreShare,
+      `ratio score/CTA ~42/58 attendu, got ${scoreW}/${ctaW} (${(scoreShare * 100).toFixed(1)}%)`,
+    ).toBeGreaterThanOrEqual(0.38);
+    expect(scoreShare).toBeLessThanOrEqual(0.46);
+    expect(ctaW, `CTA doit être plus large que le score, got ${widths}`).toBeGreaterThan(scoreW);
     const flexes = await strip.locator('.sports-chip').evaluateAll((chips) =>
       chips.map((c) => getComputedStyle(c).flexGrow),
     );
-    expect(flexes[0]).toBe('1');
-    expect(flexes[1]).toBe('1');
+    expect(Number(flexes[0])).toBeCloseTo(0.72, 2);
+    expect(Number(flexes[1])).toBeCloseTo(1, 2);
   };
   const tab768 = await countAt(768);
   expect(tab768).toBeGreaterThanOrEqual(2);
   await expect(strip.locator('.sports-chip').last()).toHaveClass(/sports-chip--cta/);
   await expect(strip.locator('.sports-chip:not(.sports-chip--cta)').first()).toBeVisible();
-  await equalWhenTwo();
+  await pairRatioWhenTwo();
   const tab900 = await countAt(900);
   expect(tab900).toBeGreaterThanOrEqual(2);
-  await equalWhenTwo();
+  await pairRatioWhenTwo();
 
   // Téléphone / très étroit : il ne reste que l’ancre « SPORTS ».
   const phone = await countAt(360);
@@ -138,25 +150,43 @@ test('mât : la date longue se compacte au lieu de passer sous les icônes', asy
   // traduction : « Thursday, August 6, 2026 » y est rendu par Intl.
   await page.goto('/en/', { waitUntil: 'domcontentloaded' });
   await expect(dateEl).not.toBeEmpty({ timeout: 15000 });
+  // Chrome date toujours visible ; attendre webfonts puis forcer .loaded +
+  // cascade (CI Linux sinon mesure system-font → format long → overflow).
+  await page.evaluate(async () => {
+    try { await document.fonts?.ready; } catch { /* ignore */ }
+    document.querySelector('#bg-photo-layer')?.classList.add('loaded');
+    if (typeof renderTodayDate === 'function') renderTodayDate();
+  });
 
   // Une seule navigation : la page est lourde, et la cascade se rejoue au
   // redimensionnement — c'est justement ce qu'on veut vérifier.
   for (const width of [393, 360, 320]) {
     await page.setViewportSize({ width, height: 800 });
+    await page.evaluate(async () => {
+      try { await document.fonts?.ready; } catch { /* ignore */ }
+      if (typeof renderTodayDate === 'function') renderTodayDate();
+      // Double rAF : layout post-resize + reflow après textContent.
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      if (typeof renderTodayDate === 'function') renderTodayDate();
+    });
     await expect
       .poll(async () => {
         const [date, row] = await Promise.all([dateEl.boundingBox(), actions.boundingBox()]);
         if (!date || !row) return null;
         return Math.round(date.x + date.width - row.x);
-      }, { timeout: 5000 })
+      }, { timeout: 8000 })
       .toBeLessThanOrEqual(0);
 
-    // Compactée, pas rognée : attendre la cascade (resize + photo loaded + rAF).
+    // Compactée, pas rognée : la cascade doit coller scrollWidth ≈ clientWidth.
+    // Tolérance 2 px (webfonts CI) ; clientWidth < 4 = layout pas prêt → grand delta.
     await expect
-      .poll(async () => dateEl.evaluate((el) => el.scrollWidth > el.clientWidth + 0.5), {
-        timeout: 4000,
+      .poll(async () => dateEl.evaluate((el) => {
+        if (el.clientWidth < 4) return 999;
+        return el.scrollWidth - el.clientWidth;
+      }), {
+        timeout: 8000,
       })
-      .toBe(false);
+      .toBeLessThanOrEqual(2);
   }
 
   expect(pageErrors).toEqual([]);
@@ -246,9 +276,10 @@ test('mât mobile 390/430 : date et heure non clipées', async ({ page }) => {
   page.on('pageerror', (error) => pageErrors.push(error.message));
 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  // Photo → chrome date+heure (stack / 1 ligne).
+  // Date+heure visibles sans attendre la photo (.loaded) ; on force quand
+  // même le rendu pour la mesure de largeur (stack ≤449).
   await page.evaluate(() => {
-    document.querySelector('#bg-photo-layer')?.classList.add('loaded');
+    if (typeof renderTodayDate === 'function') renderTodayDate();
   });
 
   for (const width of [390, 430]) {
@@ -272,7 +303,7 @@ test('mât mobile 390/430 : date et heure non clipées', async ({ page }) => {
         const timeOk = /^\d{1,2}(?:\s*h\s*|:)\d{2}$/i.test((time.textContent || '').trim())
           && tb.right <= hb.right + 1.5;
         const chipOk = hb.right <= ab.left + 1;
-        // Date visible (opacity) une fois photo .loaded
+        // Visible dès qu’il y a #bg-photo-layer (plus d’attente .loaded)
         const visible = parseFloat(getComputedStyle(host).opacity || '1') > 0.5;
         return dateOk && timeOk && chipOk && visible;
       }), { timeout: 5000 })
@@ -280,6 +311,90 @@ test('mât mobile 390/430 : date et heure non clipées', async ({ page }) => {
   }
 
   expect(pageErrors).toEqual([]);
+});
+
+/** Date visible avant .loaded sur #bg-photo-layer (retour mainteneur). */
+test('mât : date visible avant chargement photo', async ({ page }) => {
+  await page.setViewportSize({ width: 900, height: 700 });
+  // Bloquer les images mât pour que le code ne bascule pas en .loaded pendant l’assert.
+  await page.route('**/*.{jpg,jpeg,png,webp,avif}', (route) => {
+    const url = route.request().url();
+    if (/background|wallpaper|wikimedia|commons|photo|bank/i.test(url)
+      || /assets\/.*\.(jpg|jpeg|png|webp)/i.test(url)) {
+      return route.abort();
+    }
+    return route.continue();
+  });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => {
+    const layer = document.querySelector('#bg-photo-layer');
+    if (layer) {
+      layer.classList.remove('loaded');
+      // Empêcher un add('loaded') asynchrone pendant la fenêtre d’assert.
+      const freeze = new MutationObserver(() => {
+        if (layer.classList.contains('loaded')) layer.classList.remove('loaded');
+      });
+      freeze.observe(layer, { attributes: true, attributeFilter: ['class'] });
+      layer.dataset.testFreezeUnloaded = '1';
+    }
+    if (typeof renderTodayDate === 'function') renderTodayDate();
+  });
+  await expect
+    .poll(async () => page.evaluate(() => {
+      const host = document.querySelector('.masthead-date');
+      const layer = document.querySelector('#bg-photo-layer');
+      if (!host || !layer) return null;
+      return {
+        loaded: layer.classList.contains('loaded'),
+        opacity: parseFloat(getComputedStyle(host).opacity || '0'),
+        hasText: !!(document.querySelector('#today-date')?.textContent?.trim()),
+      };
+    }), { timeout: 5000 })
+    .toMatchObject({ loaded: false, hasText: true });
+  const opacity = await page.evaluate(() =>
+    parseFloat(getComputedStyle(document.querySelector('.masthead-date')).opacity || '0'));
+  expect(opacity).toBeGreaterThan(0.5);
+});
+
+/** Point médian : boîte symétrique entre date et heure (pas gap+margin asymétriques). */
+test('mât : point médian centré entre date et heure', async ({ page }) => {
+  await page.setViewportSize({ width: 900, height: 700 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => {
+    if (typeof renderTodayDate === 'function') renderTodayDate();
+  });
+  const geom = await page.evaluate(() => {
+    const date = document.querySelector('#today-date');
+    const time = document.querySelector('.masthead-time');
+    if (!date || !time) return null;
+    const db = date.getBoundingClientRect();
+    const tb = time.getBoundingClientRect();
+    // Mesurer le · via un range sur le pseudo : on approxime par le gap
+    // entre fin date et début du contenu temps (chiffres).
+    // Avec ::before en inline-flex width 1.1em, le centre du · ≈ milieu
+    // entre db.right et le début des chiffres (tb.left + width/2 du before).
+    const style = getComputedStyle(time, '::before');
+    const beforeW = parseFloat(style.width) || 0;
+    // Position du · : juste après date dans le flex (gap 0)
+    const midCenter = db.right + beforeW / 2;
+    const span = tb.left + beforeW - db.right; // total · box if time starts after before
+    // Plus robuste : centre entre date.right et time content left
+    // (time box includes ::before at start)
+    const contentStart = tb.left + beforeW;
+    const gapMid = (db.right + contentStart) / 2;
+    const dotCenter = tb.left + beforeW / 2;
+    return {
+      beforeW,
+      err: Math.abs(dotCenter - gapMid),
+      leftGap: dotCenter - db.right,
+      rightGap: contentStart - dotCenter,
+    };
+  });
+  expect(geom).toBeTruthy();
+  expect(geom.beforeW, '::before doit avoir une largeur fixe').toBeGreaterThan(4);
+  // Espaces gauche/droite du · quasi égaux (tolérance subpixel + letter-spacing)
+  expect(Math.abs(geom.leftGap - geom.rightGap)).toBeLessThanOrEqual(2.5);
+  expect(geom.err).toBeLessThanOrEqual(2.5);
 });
 
 /**

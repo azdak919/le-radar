@@ -1979,8 +1979,7 @@
       "",
     ).trim();
     s = s
-      .replace(/\(\s*talk\s*\)/ig, "")
-      .replace(/\(\s*uploads?\s*\)/ig, "")
+      .replace(/\s*\(\s*(?:talk|discussion|uploads|t[eé]l[eé]versements)\s*\)/gi, "")
       .replace(/^you may select the license of your choice\.?$/i, "")
       .replace(/\s+/g, " ")
       .trim();

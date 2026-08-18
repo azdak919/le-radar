@@ -1,24 +1,42 @@
 {
-  "updated": "2026-08-11T20:53:40.176Z",
+  "updated": "2026-08-17T23:30:37.622Z",
   "total": 185,
   "withPhoto": 168,
-  "withStock": 23,
-  "withCampusBank": 13,
+  "withStock": 21,
+  "withCampusBank": 12,
   "fullyCovered": 185,
   "leadReadyPhotos": 146,
-  "pageScraped": 22,
-  "photosRecovered": 22,
+  "pageScraped": 21,
+  "photosRecovered": 21,
   "imagesCleared": 10,
-  "stockSearches": 35,
-  "stockFound": 8,
-  "campusBankFound": 3,
+  "stockSearches": 38,
+  "stockFound": 11,
+  "campusBankFound": 5,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "The Cruel Optimism of Summer",
+      "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
+    },
     {
       "title": "CSU terminates council’s chief election officer",
       "link": "https://thelinknewspaper.ca/article/16334",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
+    },
+    {
+      "title": "Nouveaux sondages diffusés par Pallas",
+      "link": "https://lecollectif.ca/a-la-une/nouveaux-sondages-diffuses-par-pallas/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Nouveaux-sondages-Pallas-divulgues_Page-FB-de-Paul-St-Pierre-Plamondon.jpg"
+    },
+    {
+      "title": "Flagrant délit d’initié de Donald Trump",
+      "link": "https://lecollectif.ca/a-la-une/flagrant-delit-dinitie-de-donald-trump/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Flagrant-delit-dinitie-de-Donald-Trump_Getty-Images.jpg"
     },
     {
       "title": "L’inusité s’invite dans la politique",
@@ -33,12 +51,6 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Un-autre-detroit-commercial-en-peril_Getty-Images.jpg"
     },
     {
-      "title": "Raid marocain en Espagne",
-      "link": "https://lecollectif.ca/a-la-une/raid-marocain-en-espagne/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Raid-marocain-enEspagne_Getty-Images.jpg"
-    },
-    {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
       "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
       "reason": "no-stock-match",
@@ -47,8 +59,8 @@
     {
       "title": "CSU approves $36,000 in funding for student-led initiatives",
       "link": "https://thelinknewspaper.ca/article/16319",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
     },
     {
       "title": "Mars enters Aries",
@@ -60,31 +72,19 @@
       "title": "Spotlighting Powerful McGill Alumnae",
       "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
     },
     {
       "title": "National Golf tournament",
       "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
       "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f7/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288688533477%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288689651802%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Gaiters wrap up hard-fought season with eyes on next year",
       "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
-    },
-    {
-      "title": "The Gentrification of Online Fandom Spaces",
-      "link": "https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Avenue_McGill_College_07.JPG"
-    },
-    {
-      "title": "Le pays avant tout – esquisse",
-      "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
     }
   ]
 }
