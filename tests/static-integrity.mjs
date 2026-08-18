@@ -616,8 +616,15 @@ const ogScript = readFileSync(join(root, 'scripts/generate-og-image.py'), 'utf8'
 assert(
   /journaux,\s*radios et sports/i.test(ogScript)
     && /sports/.test(ogScript)
+    && /résultats sportifs/.test(ogScript)
     && !/Les journaux et les radios étudiantes du Québec/.test(ogScript),
   'og-cover : le générateur doit porter la triade (journaux + radios + sports)',
+);
+assert(
+  /SourceSerif4Display/.test(ogScript)
+    && /LE-RADAR\.ca/.test(ogScript)
+    && !/draw\.text\([^)]*\.ca[^)]*PURPLE/.test(ogScript),
+  'og-cover : mot-symbole = Source Serif 4 Display, .ca de la même couleur que LE-RADAR',
 );
 
 const robots = readFileSync(join(root, 'robots.txt'), 'utf8');
