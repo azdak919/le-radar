@@ -136,7 +136,7 @@ Alias historiques : `maintain:backgrounds` = masthead ; `…:pomo` etc. inchang�
 | **Retour dans l'app** | < 5 min rien · ≥ 5 min fil rechargé sur place · ≥ 1 h rechargement dur — **jamais pendant une écoute** (`returnRefreshAction`, `app.js`) |
 | **Thèmes** | dark/light + overlays texte lisibles sur photo mât (cartes météo) |
 | **Banques** | Ne jamais coller `QUEBEC_POMO_*` dans le mât, ni l’inverse |
-| **Favorites** | `permanent: true` — immunisées purge maintain (sauf non-image). Licence CC **non exigée** : crédit « Nom — lieu » ; retrait sur demande via le courriel du pied de page. URL locale `/assets/masthead/…` OK. `?bg=` force une photo. **Ne force pas l’affichage hors saison** : une favorite d’hiver reste en collection mais n’entre dans le pool mât/pomo qu’en hiver (filtre `RadarSeason`). |
+| **Favorites** | `permanent: true` — immunisées purge maintain (sauf non-image). Licence CC **non exigée** : crédit « Nom — lieu » (jamais la saison). Marque copyleft seulement si licence copyleft (CC BY-SA / GFDL) — pas sur un copyright. Retrait via le courriel du pied de page. URL locale `/assets/masthead/…` OK. `?bg=` force une photo. **Ne force pas l’affichage hors saison**. |
 
 ---
 

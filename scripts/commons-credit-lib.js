@@ -332,10 +332,16 @@ function scrubBankCredits(bank) {
   return n;
 }
 
+/** CC BY-SA / GFDL = copyleft. Licence vide ou ARR = copyright, pas de marque copyleft. */
+function isCopyleftLicense(license = '') {
+  return /cc[\s-]?by[\s-]?sa|share[\s-]?alike|gfdl|copyleft/i.test(String(license || ''));
+}
+
 module.exports = {
   sanitizeCommonsCredit,
   scrubBankCredits,
   placeFromPhotoMeta,
   formatMastheadCredit,
+  isCopyleftLicense,
   CREDIT_DISPLAY_ALIASES,
 };
