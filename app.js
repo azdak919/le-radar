@@ -2134,11 +2134,12 @@ function wideNowAirLiveCopy(radio) {
     radio, raw.liveTitle, raw.liveSub, phases,
   );
   const upcoming = phases.find((p) => p.kind === 'upcoming') || null;
+  const hasLive = !!liveTitle;
   return {
-    liveTitle: liveTitle || (radio ? 'Rien à l\'antenne' : ''),
-    liveSub,
-    songSplit: !!songSplit,
-    hideLive: false,
+    liveTitle: hasLive ? liveTitle : '',
+    liveSub: hasLive ? liveSub : '',
+    songSplit: !!songSplit && hasLive,
+    hideLive: !hasLive,
     nextTitle: upcoming?.title || (radio ? 'Rien de programmé' : '—'),
     nextSub: upcoming?.sub || '',
     hasUpcoming: !!upcoming,
@@ -2179,20 +2180,21 @@ function paintWideNowAirPair(radio) {
 
   const applyRadio = () => {
     const copy = wideNowAirLiveCopy(radio);
+    const hideLive = !!copy.hideLive;
 
     if (liveSlot) {
-      liveSlot.hidden = false;
-      liveSlot.classList.remove('is-wide-absent');
+      liveSlot.hidden = hideLive;
+      liveSlot.classList.toggle('is-wide-absent', hideLive);
     }
-    wrap.classList.remove('is-live-absent');
+    wrap.classList.toggle('is-live-absent', hideLive);
 
-    if (liveTitle) liveTitle.textContent = copy.liveTitle || 'Rien à l\'antenne';
+    if (liveTitle) liveTitle.textContent = hideLive ? '' : (copy.liveTitle || '');
     if (liveSub) {
-      liveSub.textContent = copy.liveSub || '';
-      liveSub.hidden = !copy.liveSub;
+      liveSub.textContent = hideLive ? '' : (copy.liveSub || '');
+      liveSub.hidden = hideLive || !copy.liveSub;
     }
-    liveSlot?.classList.toggle('is-empty-slot', copy.liveTitle === 'Rien à l\'antenne');
-    liveSlot?.classList.toggle('tuner-wide-slot--song-split', !!copy.songSplit);
+    liveSlot?.classList.toggle('is-empty-slot', hideLive);
+    liveSlot?.classList.toggle('tuner-wide-slot--song-split', !!copy.songSplit && !hideLive);
 
     if (nextTitle) nextTitle.textContent = copy.nextTitle;
     if (nextSub) {
@@ -2205,13 +2207,16 @@ function paintWideNowAirPair(radio) {
   // Texte cible (pour détecter un vrai changement)
   let nextLiveT = 'Choisissez un poste';
   let nextNextT = '—';
+  let nextHideLive = false;
   if (radio) {
     const copy = wideNowAirLiveCopy(radio);
-    nextLiveT = copy.liveTitle || 'Rien à l\'antenne';
+    nextHideLive = !!copy.hideLive;
+    nextLiveT = nextHideLive ? '' : (copy.liveTitle || '');
     nextNextT = copy.nextTitle;
   }
   const changing = (liveTitle?.textContent || '') !== nextLiveT
-    || (nextTitle?.textContent || '') !== nextNextT;
+    || (nextTitle?.textContent || '') !== nextNextT
+    || (!!liveSlot?.hidden) !== nextHideLive;
 
   const paint = () => {
     if (!radio) applyEmpty();

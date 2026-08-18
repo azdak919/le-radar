@@ -1113,7 +1113,7 @@ assert(
       && appJs.includes('function composedAirPhases')
       && /tuner-wide-slot__title[\s\S]*?white-space:\s*nowrap/.test(wideCss)
       && /tuner-wide-slot__title[\s\S]*?text-overflow:\s*clip/.test(wideCss)
-      && /hideLive:\s*false/.test(appJs)
+      && /hideLive:\s*!hasLive/.test(appJs)
       && /min-width:\s*8rem/.test(wideCss)
       && !/tuner-wide-slot--next[\s\S]{0,80}max-width:\s*20rem/.test(wideCss),
     'antenne : 2 lignes, titre entier en wide (pas d’ellipse, pas de wrap)',
