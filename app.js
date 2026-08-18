@@ -11890,10 +11890,8 @@ function estimateHeroSeedHeight(heroCount) {
 function briefWideColumnCount() {
   if (typeof isWideNoMarqueeMode !== 'function' || !isWideNoMarqueeMode()) return 1;
   try {
-    const w = window.innerWidth || 0;
-    if (w >= 3840) return 2;
-    if (w >= 3440) return 3;
-    if (w >= 1920) return 2;
+    /* 2 col seulement quand la piste ≈ 2× la largeur En bref de 1920. */
+    if ((window.innerWidth || 0) >= 3440) return 2;
   } catch { /* ignore */ }
   return 1;
 }
@@ -12571,9 +12569,8 @@ function briefSidebarMaxSlots() {
   if (typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode()) {
     try {
       const w = window.innerWidth || 0;
-      if (w >= 3840) return 32;
-      if (w >= 3440) return 40;
-      if (w >= 1920) return 32;
+      if (w >= 3440) return 32; // 2 col En bref
+      if (w >= 1920) return 26; // 1 col, une 2-col
       return 26; // 1440–1600 1 col
     } catch { /* ignore */ }
     return 26;
@@ -12722,7 +12719,7 @@ function balanceMagazineColumns() {
   })();
   const briefCols = wideE ? briefWideColumnCount() : 1;
   const tightBrief = wideE && briefCols === 1;
-  // Multi-col : 20 px, pas ~1 carte. Une rangée de trop (1920/2560/3440)
+  // Multi-col : 20 px, pas ~1 carte. Une rangée de trop (3440/3840)
   // dépassait le hero ; à 3840 il fallait au contraire finir la rangée.
   const wideOvershootTol = tightBrief ? 8 : (wideE ? Math.max(tol, 20) : tol);
 
