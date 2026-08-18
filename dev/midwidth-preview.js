@@ -1,12 +1,14 @@
 /**
  * Lab local LE-RADAR — formats d’écran + options grand écran
  * ─────────────────────────────────────────────────────────
- * Visible uniquement sur localhost / 127.0.0.1 (ou ?lab= / ?wide=).
+ * Visible uniquement sur localhost / 127.0.0.1.
  * Ne s’injecte pas dans l’iframe lab (`?labFrame=1`) ni en prod le-radar.ca.
+ *
+ * Prod / main : E s’active tout seul dès 1281 px (aucun ?wide=).
+ * `?wide=off` = témoin de l’ancien shell ~1180 (lab seulement).
  *
  * Formats : largeurs iframe (media queries réelles). Si > écran hôte, scale
  * proportionnel pour simuler QHD / 4K / UW sans moniteur physique.
- * Wide : ?wide=a|b|c|d|e — rangée au-dessus de Format (hors dock GNOME).
  */
 (function () {
   'use strict';
@@ -58,8 +60,8 @@
 
   /* Verdict mainteneur : E seulement (A–D retirés de la barre lab). */
   const WIDE_OPTIONS = {
-    off: { id: 'off', label: 'Prod', hint: 'Prod actuelle (~1180) — témoin' },
-    e: { id: 'e', label: 'E', hint: 'Rail + En bref + dual antenne · actif dès 1440' },
+    off: { id: 'off', label: '1180', hint: 'Ancien shell ~1180 — témoin lab' },
+    e: { id: 'e', label: 'Auto', hint: 'Défaut prod : E dès 1281, densités 1440/1920/2560…' },
   };
 
   /** E uniquement au-delà de la ref. bureau 1280 (format lab ou viewport). */
@@ -100,13 +102,7 @@
 
   function shouldShowBar() {
     if (isLabFrame()) return false;
-    if (isLocalHost()) return true;
-    try {
-      const u = new URL(location.href);
-      return u.searchParams.has(LAB_PARAM) || u.searchParams.has(WIDE_PARAM);
-    } catch {
-      return false;
-    }
+    return isLocalHost();
   }
 
   function currentFormat() {
@@ -131,18 +127,14 @@
 
   function currentWide() {
     try {
-      const raw = (new URL(location.href).searchParams.get(WIDE_PARAM) || 'off')
+      const raw = (new URL(location.href).searchParams.get(WIDE_PARAM) || '')
         .toLowerCase()
         .trim();
-      if (!raw || raw === '0' || raw === 'false' || raw === 'off' || raw === 'prod') return 'off';
-      // A–D historiques → basculer sur E (décision mainteneur)
-      if (raw === 'e' || raw === 'a' || raw === 'b' || raw === 'c' || raw === 'd' || raw === '1' || raw === 'true') {
-        return 'e';
-      }
-      if (WIDE_OPTIONS[raw]) return raw;
-      return 'off';
+      if (raw === '0' || raw === 'false' || raw === 'off' || raw === 'prod') return 'off';
+      if (raw === 'b' || raw === 'c' || raw === 'd') return raw;
+      return 'e';
     } catch {
-      return 'off';
+      return 'e';
     }
   }
 
@@ -154,7 +146,7 @@
     const wid = wide === undefined ? currentWide() : wide;
     if (!fmt || fmt === 'full') u.searchParams.delete(LAB_PARAM);
     else u.searchParams.set(LAB_PARAM, String(FORMATS[fmt]?.w || fmt));
-    if (!wid || wid === 'off') u.searchParams.delete(WIDE_PARAM);
+    if (!wid || wid === 'e') u.searchParams.delete(WIDE_PARAM);
     else u.searchParams.set(WIDE_PARAM, wid);
     return u.pathname + u.search + u.hash;
   }

@@ -1670,19 +1670,18 @@ function weatherBoardAvailWidth() {
 }
 
 /**
- * Lab grand écran (wide / super-wide) :
+ * Grand écran (wide / super-wide) — défaut prod dès 1281 px :
  * - pas de marquee
  * - pas de clip / nom compact : les conteneurs s’ajustent ; si ça ne rentre
  *   pas, on retire une carte (fit), on n’ampute pas le texte.
- * ⛔ Actif **uniquement si viewport > 1280** (min-width: 1281px).
- *    ≤1280 (ref. bureau lab « 1280 », mobile, mid) = prod inchangée,
- *    même si `?wide=e` / data-wide-preview est posé.
+ * ⛔ Inactif ≤1280 (téléphone, mid, bureau compact 1280).
+ *    `?wide=off` / data-wide-preview=off = témoin lab de l’ancien shell.
  * Voir data-wide-preview.
  */
 function isWideNoMarqueeMode() {
   try {
     const id = document.documentElement.dataset.widePreview;
-    if (!id || id === 'off' || id === 'a') return false;
+    if (id === 'off' || id === 'a') return false;
     return window.matchMedia('(min-width: 1281px)').matches;
   } catch {
     return false;

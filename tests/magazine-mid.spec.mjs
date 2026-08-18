@@ -57,13 +57,13 @@ test('magazine mid : le téléphone garde l’empilement une colonne', async ({ 
   await expect(list).toHaveCSS('display', 'block');
 });
 
-for (const { width, height, label, wide } of [
-  { width: 1440, height: 900, label: 'bureau', wide: false },
-  { width: 1920, height: 1080, label: 'wide E', wide: true },
+for (const { width, height, label } of [
+  { width: 1440, height: 900, label: 'bureau auto E' },
+  { width: 1920, height: 1080, label: 'wide auto E' },
 ]) {
   test(`magazine ${label} : fraîcheur + sources avant un 2ᵉ d’institution`, async ({ page }) => {
     await page.setViewportSize({ width, height });
-    await page.goto(wide ? '/?wide=e' : '/', { waitUntil: 'domcontentloaded' });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('.news-hero .article').first()).toBeVisible({ timeout: 12_000 });
     await expect(page.locator('.brief-rail .article--compact').first()).toBeVisible();
     await page.waitForTimeout(400);
