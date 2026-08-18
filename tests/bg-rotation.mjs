@@ -76,4 +76,53 @@ assert.deepEqual(
   'toutes les banques présentes participent au cycle proportionnel'
 );
 
+// Mât : parts égales par banque, pas au volume (90 paysages vs 10 campus vs 10 PNI).
+store.clear();
+const { mixBankOf } = require('../bg-rotation-lib.js');
+assert.equal(mixBankOf({ bank: 'favorites' }), 'masthead', 'favorites dans la part paysages');
+assert.equal(mixBankOf({ bank: 'nations' }), 'nations');
+
+const uneven = [
+  ...Array.from({ length: 40 }, (_, i) => ({ url: `https://ex/m${i}.jpg`, bank: 'masthead' })),
+  ...Array.from({ length: 8 }, (_, i) => ({ url: `https://ex/u${i}.jpg`, bank: 'universities' })),
+  ...Array.from({ length: 8 }, (_, i) => ({ url: `https://ex/n${i}.jpg`, bank: 'nations' })),
+  ...Array.from({ length: 4 }, (_, i) => ({ url: `https://ex/f${i}.jpg`, bank: 'favorites' })),
+];
+const fair = createRotator({
+  surface: 'test-equal',
+  storageKey: 'test_bg_equal_banks',
+  maxRecent: 80,
+  equalBanks: true,
+});
+{
+  const a = fair.pick(uneven);
+  const b = fair.pick(uneven);
+  assert.notEqual(
+    mixBankOf(a),
+    mixBankOf(b),
+    'deux picks sans record() ne reprennent pas la même banque'
+  );
+  fair.record(a);
+  fair.record(b);
+}
+const mixCounts = { masthead: 0, universities: 0, nations: 0 };
+const mixSeq = [];
+for (let i = 0; i < 60; i++) {
+  const photo = fair.pick(uneven, { fullWindow: true, hardExcludeRecent: 8 });
+  assert(photo, 'mix équitable : une photo');
+  const mix = mixBankOf(photo);
+  mixCounts[mix] = (mixCounts[mix] || 0) + 1;
+  if (mixSeq.length) {
+    assert.notEqual(mix, mixSeq[mixSeq.length - 1], 'pas deux fois la même banque de suite');
+  }
+  mixSeq.push(mix);
+  fair.record(photo);
+}
+for (const k of ['masthead', 'universities', 'nations']) {
+  assert.ok(
+    mixCounts[k] >= 16 && mixCounts[k] <= 24,
+    `mix équitable ${k} ~1/3 (got ${mixCounts[k]}/60)`
+  );
+}
+
 console.log('All bg-rotation checks passed.');

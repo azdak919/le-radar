@@ -5,6 +5,7 @@
  *   - identité stable par URL (pas d’index fragile quand les banques bougent)
  *   - sac de session (shuffle bag) + fenêtre anti-répétition longue
  *   - diversité banque / mood / photographe
+ *   - mât : parts égales paysages / campus / PNI (pas au volume)
  *   - entropie optionnelle Cloudflare Worker (edge crypto + colo)
  *
  * API globale : window.BgRotation
@@ -77,6 +78,17 @@
     return 'other';
   }
 
+  /**
+   * Banque de mélange équitable (mât).
+   * Favorites → même part que les paysages (5 photos ne doivent pas
+   * occuper 1/4 des clics).
+   */
+  function mixBankOf(item) {
+    const b = bankOf(item);
+    if (b === 'favorites') return 'masthead';
+    return b;
+  }
+
   function photographerKey(item) {
     if (!item) return '';
     try {
@@ -141,6 +153,8 @@
    * @param {number} [opts.maxRecent=40]
    * @param {string} [opts.entropyUrl]
    * @param {function} [opts.moodFn]  (item) => string
+   * @param {boolean} [opts.equalBanks=false]  une chance égale par banque
+   *   présente (mât : paysages / campus / PNI), pas au nombre de photos
    */
   function createRotator(opts) {
     const surface = opts.surface || 'default';
@@ -148,6 +162,7 @@
     const maxRecent = opts.maxRecent || 40;
     const moodFn = typeof opts.moodFn === 'function' ? opts.moodFn : () => 'other';
     const entropyUrl = opts.entropyUrl;
+    const equalBanks = !!opts.equalBanks;
 
     // Le sac survit aux rechargements : un visiteur qui revient sur l'accueil
     // continue le cycle déjà commencé au lieu de retomber dans une nouvelle
@@ -155,6 +170,13 @@
     // dans `pick` (saison, purge de banque ou photo en échec).
     let bag = loadJson(`${storageKey}_bag`, []);
     if (!Array.isArray(bag)) bag = [];
+    let bagsByMix = loadJson(`${storageKey}_bagsByMix`, {});
+    if (!bagsByMix || typeof bagsByMix !== 'object' || Array.isArray(bagsByMix)) {
+      bagsByMix = {};
+    }
+    // Mix choisi au pick, avant le paint/QC : évite deux PNI de suite
+    // si le clic arrive avant record() ou si le canvas refuse la 1ʳᵉ carte.
+    let lastPickedMix = null;
     let recentIds = loadJson(`${storageKey}_recent`, []);
     if (!Array.isArray(recentIds)) recentIds = [];
     let recentBanks = loadJson(`${storageKey}_banks`, []);
@@ -186,6 +208,7 @@
       saveJson(`${storageKey}_banks`, recentBanks.slice(-12));
       saveJson(`${storageKey}_moods`, recentMoods.slice(-8));
       saveJson(`${storageKey}_bag`, bag);
+      saveJson(`${storageKey}_bagsByMix`, bagsByMix);
     }
 
     function record(item) {
@@ -204,6 +227,11 @@
       if (recentMoods.length > 8) recentMoods = recentMoods.slice(-8);
 
       bag = bag.filter((x) => x !== id);
+      for (const k of Object.keys(bagsByMix)) {
+        if (Array.isArray(bagsByMix[k])) {
+          bagsByMix[k] = bagsByMix[k].filter((x) => x !== id);
+        }
+      }
       persist();
     }
 
@@ -218,6 +246,37 @@
       // groupe. Le score conserve tout de même l'anti-répétition au moment du
       // choix dans le sac.
       bag = shuffleInPlace(Array.from(new Set(ids)));
+    }
+
+    function refillMixBag(mixKey, items, failedIds) {
+      const failed = failedIds || new Set();
+      const ids = items
+        .map((it) => photoId(it))
+        .filter((id) => id && !failed.has(id));
+      bagsByMix[mixKey] = shuffleInPlace(Array.from(new Set(ids)));
+      return bagsByMix[mixKey];
+    }
+
+    function lastMixBank() {
+      if (lastPickedMix) return lastPickedMix;
+      if (!recentBanks.length) return null;
+      return mixBankOf({ bank: recentBanks[recentBanks.length - 1] });
+    }
+
+    function pickMixBank(eligible) {
+      const present = [];
+      const seen = new Set();
+      for (const it of eligible) {
+        const k = mixBankOf(it);
+        if (!k || seen.has(k)) continue;
+        seen.add(k);
+        present.push(k);
+      }
+      if (present.length <= 1) return present[0] || 'other';
+      const last = lastMixBank();
+      const notLast = last ? present.filter((k) => k !== last) : present;
+      const pool = notLast.length ? notLast : present;
+      return pool[randInt(pool.length)];
     }
 
     function scoreItem(item, byId) {
@@ -303,35 +362,56 @@
       if (eligible.length < 3) eligible = filterEligible(false, false);
       if (!eligible.length) eligible = list.slice();
 
-      // Sac : ids encore dans le pool éligible
-      const eligibleIds = new Set(eligible.map(photoId));
-      bag = bag.filter((id) => eligibleIds.has(id));
-      // Ne jamais jeter les deux dernières cartes du sac : le seuil « < 3 »
-      // recréait un sac avant la fin du cycle et était la source des retours
-      // prématurés vers un petit groupe de photos.
-      if (!bag.length) {
-        refillBag(eligible, failed);
-        bag = bag.filter((id) => id !== excludeId && !recentHard.has(id));
-        if (!bag.length) refillBag(eligible, failed);
+      let activeBag = bag;
+      let chosenMix = null;
+      if (equalBanks) {
+        chosenMix = pickMixBank(eligible);
+        const bankSlice = eligible.filter((it) => mixBankOf(it) === chosenMix);
+        if (bankSlice.length) eligible = bankSlice;
+        const mixEligibleIds = new Set(eligible.map(photoId));
+        let mixBag = Array.isArray(bagsByMix[chosenMix]) ? bagsByMix[chosenMix] : [];
+        mixBag = mixBag.filter((id) => mixEligibleIds.has(id));
+        if (!mixBag.length) {
+          mixBag = refillMixBag(chosenMix, eligible, failed);
+          mixBag = mixBag.filter((id) => id !== excludeId && !recentHard.has(id));
+          if (!mixBag.length) mixBag = refillMixBag(chosenMix, eligible, failed);
+        }
+        bagsByMix[chosenMix] = mixBag;
+        activeBag = mixBag;
+      } else {
+        // Sac : ids encore dans le pool éligible
+        const eligibleIds = new Set(eligible.map(photoId));
+        bag = bag.filter((id) => eligibleIds.has(id));
+        // Ne jamais jeter les deux dernières cartes du sac : le seuil « < 3 »
+        // recréait un sac avant la fin du cycle et était la source des retours
+        // prématurés vers un petit groupe de photos.
+        if (!bag.length) {
+          refillBag(eligible, failed);
+          bag = bag.filter((id) => id !== excludeId && !recentHard.has(id));
+          if (!bag.length) refillBag(eligible, failed);
+        }
+        activeBag = bag;
       }
 
       // Clic « suivante » : tout le sac, pas seulement 12 cartes en tête.
       const windowSize = fullWindow
-        ? Math.max(1, bag.length)
-        : Math.min(12, Math.max(1, bag.length));
-      let windowIds = bag.slice(0, windowSize);
-      // Garantir que chaque banque présente a au moins 1 candidat dans la fenêtre
-      const banksInPool = new Set(eligible.map(bankOf));
-      if (banksInPool.size > 1 && windowIds.length >= 4) {
-        const windowBanks = new Set(
-          windowIds.map((id) => bankOf(byId.get(id))).filter(Boolean)
-        );
-        for (const b of banksInPool) {
-          if (windowBanks.has(b)) continue;
-          const alt = eligible.find((it) => bankOf(it) === b);
-          if (alt) {
-            windowIds.push(photoId(alt));
-            windowBanks.add(b);
+        ? Math.max(1, activeBag.length)
+        : Math.min(12, Math.max(1, activeBag.length));
+      let windowIds = activeBag.slice(0, windowSize);
+      if (!equalBanks) {
+        // Garantir que chaque banque présente a au moins 1 candidat dans la fenêtre
+        const banksInPool = new Set(eligible.map(bankOf));
+        if (banksInPool.size > 1 && windowIds.length >= 4) {
+          const windowBanks = new Set(
+            windowIds.map((id) => bankOf(byId.get(id))).filter(Boolean)
+          );
+          for (const b of banksInPool) {
+            if (windowBanks.has(b)) continue;
+            const alt = eligible.find((it) => bankOf(it) === b);
+            if (alt) {
+              windowIds.push(photoId(alt));
+              windowBanks.add(b);
+            }
           }
         }
       }
@@ -349,7 +429,13 @@
       }
 
       const chosen = byId.get(bestId) || eligible[randInt(eligible.length)];
-      bag = bag.filter((id) => id !== photoId(chosen));
+      const chosenId = photoId(chosen);
+      lastPickedMix = chosenMix || (chosen ? mixBankOf(chosen) : lastPickedMix);
+      bag = bag.filter((id) => id !== chosenId);
+      if (chosenMix) {
+        const mixBag = Array.isArray(bagsByMix[chosenMix]) ? bagsByMix[chosenMix] : [];
+        bagsByMix[chosenMix] = mixBag.filter((id) => id !== chosenId);
+      }
       // `pick` retire déjà l'item du sac; persister ici est indispensable si
       // l'image finit de charger après une navigation ou un rechargement.
       persist();
@@ -371,6 +457,7 @@
     return {
       photoId,
       bankOf,
+      mixBankOf,
       pick,
       record,
       ensureEntropy,
@@ -385,6 +472,7 @@
     shuffleInPlace,
     photoId,
     bankOf,
+    mixBankOf,
     photographerKey,
     createRotator,
     fetchRemoteEntropy,
