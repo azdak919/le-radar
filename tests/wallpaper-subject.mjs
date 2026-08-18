@@ -81,6 +81,14 @@ assert(
   }),
   'personnes : « face », « groupe » en français descriptif restent admis'
 );
+assert(
+  !looksPeopleScene({
+    title: 'Pow-wow à Mashteuiatsh',
+    description: 'Rassemblement estival, danseurs autour du cercle',
+    categories: 'Mashteuiatsh|Pekuakamiulnuatsh',
+  }),
+  'personnes : pow-wow / danse culturelle autochtone admis (visages au pixel)'
+);
 
 // ── Bâti vernaculaire ────────────────────────────────────────
 const colomb = {
@@ -156,6 +164,33 @@ assert(
   'saison : revue humaine fiable'
 );
 assert(seasonTagTrusted({ season: 'ete' }), 'saison : sans métadonnée, on garde l’étiquette');
+assert(
+  !seasonTagTrusted({
+    season: 'hiver',
+    seasonSource: 'visual',
+    seasonConfidence: 0.8,
+    title: 'Pavillon Roger-Gaudry',
+  }),
+  'saison : hiver visuel seul (pierre grise) non fiable'
+);
+assert(
+  !seasonTagTrusted({
+    season: 'hiver',
+    seasonSource: 'text+visual',
+    seasonConfidence: 0.99,
+    title: 'Henry F. Hall Building, Concordia University',
+  }),
+  'saison : hiver sans mot neige/hiver dans le texte — pas fiable'
+);
+assert(
+  seasonTagTrusted({
+    season: 'hiver',
+    seasonSource: 'text+visual',
+    seasonConfidence: 0.99,
+    title: 'Campus de Laval sous la neige',
+  }),
+  'saison : hiver avec preuve textuelle (neige) fiable'
+);
 
 if (failed) {
   console.error(`\n${failed} test(s) en échec — wallpaper-subject`);

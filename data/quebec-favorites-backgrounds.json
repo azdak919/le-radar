@@ -1,7 +1,7 @@
 {
   "version": 1,
   "profile": "favorites",
-  "description": "Photos favorites validées manuellement. Jamais purgées ni écrasées par maintain-quebec-backgrounds. Ajouter via signalement manuel (agent) ou scripts/pin-background.js.",
+  "description": "Photos favorites validées manuellement. Jamais purgées ni écrasées par maintain-quebec-backgrounds. Ajouter via signalement manuel (agent) ou scripts/pin-background.js. Licence CC non exigée : crédit affiché ; retrait sur demande via le courriel du pied de page.",
   "photos": [
     {
       "id": "0c1dcc96b3dc",
@@ -115,9 +115,35 @@
       "faceRatio": 0,
       "faceDetectedAt": "2026-08-06T20:50:47.778Z",
       "place": "Université Laval"
+    },
+    {
+      "id": "c39fc9fc7823",
+      "url": "/assets/masthead/assemblee-nationale-stephane-groleau.jpg",
+      "link": "https://www.stephanegroleau.com/",
+      "title": "Hôtel du Parlement — Assemblée nationale du Québec",
+      "credit": "Stéphane Groleau",
+      "license": "",
+      "width": 2000,
+      "height": 1332,
+      "aspect": 1.501,
+      "mime": "image/jpeg",
+      "focalY": 0.42,
+      "permanent": true,
+      "surfaces": [
+        "masthead",
+        "pomo"
+      ],
+      "pinnedAt": "2026-08-18T05:22:00.000Z",
+      "note": "Favorite locale — vue aérienne été, jardins du pavillon d’accueil. Crédit + retrait sur demande (courriel footer).",
+      "season": "ete",
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "faces": 0,
+      "faceRatio": 0,
+      "place": "Assemblée nationale"
     }
   ],
-  "updated": "2026-08-18T01:15:23.365Z",
+  "updated": "2026-08-18T05:23:35.241Z",
   "lastSeasonDetect": "2026-07-30T22:38:30.629Z",
   "lastFaceDetect": "2026-08-06T20:50:47.778Z"
 }

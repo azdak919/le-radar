@@ -53,6 +53,15 @@ const profileFilter = (() => {
   return null;
 })();
 
+const DETECTOR_SOURCES = new Set([
+  'visual',
+  'text',
+  'text+visual',
+  'date',
+  'topo',
+  'sessionId-fallback',
+]);
+
 const minConfidence = (() => {
   const eq = args.find((a) => a.startsWith('--min-confidence='));
   if (eq) return Math.max(0, Math.min(1, parseFloat(eq.split('=')[1])));
@@ -133,6 +142,25 @@ function applyDetection(photo, bank, visualRow) {
 
   const det = mergeDetections(photo, visual);
   if (!det.season || det.confidence < minConfidence) {
+    if (
+      force &&
+      photo.seasonSource !== 'manual' &&
+      DETECTOR_SOURCES.has(photo.seasonSource)
+    ) {
+      const before = {
+        season: photo.season || null,
+        season6: photo.season6 || null,
+        seasonSource: photo.seasonSource || null,
+        seasonConfidence: photo.seasonConfidence ?? null,
+      };
+      delete photo.season;
+      if (bank.nations || isNationsItem(photo)) delete photo.season6;
+      delete photo.seasonSource;
+      delete photo.seasonConfidence;
+      delete photo.seasonReasons;
+      photo.seasonDetectedAt = new Date().toISOString();
+      return { changed: true, det, before, reason: 'cleared_uncertain' };
+    }
     return { changed: false, det, reason: 'low_confidence' };
   }
 
@@ -222,6 +250,11 @@ function main() {
       const visualRow = visualMap.get(vid) || null;
       const { changed, det, reason } = applyDetection(photo, bank, visualRow);
 
+      if (reason === 'cleared_uncertain') {
+        bankRep.changed += 1;
+        report.totals.changed += 1;
+        continue;
+      }
       if (reason === 'low_confidence' || !det.season) {
         bankRep.low += 1;
         report.totals.low += 1;
