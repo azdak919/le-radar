@@ -63,22 +63,17 @@ def main() -> None:
     f_tld = font(SERIF_BOLD, 104)
     draw.text((brand_x + brand_w, logo_y + 4), ".ca", font=f_tld, fill=PURPLE)
 
-    # Accroche.
-    f_tag = font(SANS_BOLD, 34)
-    draw.text(
-        (logo_x, logo_y + logo_size + 46),
-        "Les journaux et les radios étudiantes du Québec",
-        font=f_tag,
-        fill=WHITE,
-    )
-
-    f_sub = font(SANS, 27)
-    draw.text(
-        (logo_x, logo_y + logo_size + 96),
-        "Cégeps et universités · fil étudiant et écoute en direct",
-        font=f_sub,
-        fill=MUTED,
-    )
+    # Accroche — slogan officiel (docs/identite-visuelle.md) : la triade
+    # journaux + radios + sports doit rester visible dans l'aperçu de lien.
+    f_tag = font(SANS_BOLD, 32)
+    tag = "Journaux, radios et sports étudiants du Québec"
+    f_sub = font(SANS, 26)
+    sub = "Cégeps et universités · fil étudiant, écoute en direct et scores"
+    max_text_w = W - logo_x - 48
+    if text_width(draw, tag, f_tag) > max_text_w or text_width(draw, sub, f_sub) > max_text_w:
+        raise SystemExit("og-cover: accroche trop large — raccourcir le copy ou la fonte")
+    draw.text((logo_x, logo_y + logo_size + 46), tag, font=f_tag, fill=WHITE)
+    draw.text((logo_x, logo_y + logo_size + 94), sub, font=f_sub, fill=MUTED)
 
     img.convert("RGB").save(OUT, "PNG", optimize=True)
     print(f"✅ {OUT.relative_to(ROOT)} ({W}×{H})")

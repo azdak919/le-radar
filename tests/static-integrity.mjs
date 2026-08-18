@@ -612,6 +612,13 @@ assert(appScript.includes("get('station')"), 'station demandée par l’embed re
 for (const rel of ['robots.txt', 'sitemap.xml', 'llms.txt', 'assets/og-cover.png']) {
   assert(existsSync(join(root, rel)), `${rel} requis pour le référencement`);
 }
+const ogScript = readFileSync(join(root, 'scripts/generate-og-image.py'), 'utf8');
+assert(
+  /journaux,\s*radios et sports/i.test(ogScript)
+    && /sports/.test(ogScript)
+    && !/Les journaux et les radios étudiantes du Québec/.test(ogScript),
+  'og-cover : le générateur doit porter la triade (journaux + radios + sports)',
+);
 
 const robots = readFileSync(join(root, 'robots.txt'), 'utf8');
 assert(/^Sitemap:\s*https:\/\/le-radar\.ca\/sitemap\.xml$/m.test(robots), 'robots.txt : directive Sitemap requise');
@@ -620,6 +627,11 @@ for (const bot of ['GPTBot', 'ClaudeBot', 'PerplexityBot']) {
 }
 
 const indexHtml = readFileSync(join(root, 'index.html'), 'utf8');
+assert(
+  /og-cover\.png\?v=2/.test(indexHtml)
+    && /og-cover\.png\?v=2/.test(readFileSync(join(root, 'scripts/seo-pages-lib.js'), 'utf8')),
+  'og:image : ?v=2 requis pour casser le cache des aperçus de lien',
+);
 const engagePrompt = readFileSync(join(root, 'engage-prompt.js'), 'utf8');
 assert(!/coque hors-ligne/i.test(engagePrompt), 'invitation PWA : jargon « coque » interdit');
 assert(engagePrompt.includes('LE-RADAR au démarrage ?'), 'invitation accueil : titre orienté résultat requis (focus-group engage-copy B)');
