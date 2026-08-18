@@ -1425,6 +1425,9 @@ assert(
     && appJs.includes('function sportsStripCramped')
     && appJs.includes('scheduleMastheadWeatherLayout')
     && appJs.includes('function weatherRibbonOverlapsChrome')
+    && appJs.includes('function weatherRibbonNeedsDrop')
+    && appJs.includes('function weatherRibbonOverflowsDock')
+    && appJs.includes('function shrinkWeatherSlotsToClearChrome')
     && appJs.includes('function bindMastheadWeatherLayoutWatchers')
     && appJs.includes('function clearWeatherSlotInlineStyles')
     && appJs.includes('le-radar-sports-weather-fit'),
