@@ -959,7 +959,7 @@ html[data-wide-preview="e"] {
  *  - 1 une à 1600 (comme prod)
  *  - 2 unes côte à côte dès ≥1920 ; piste une ~1.7 / En bref ~0.62
  *  - En bref 1 col tant que la piste n’offre pas ~2× la largeur 1920
- *  - En bref 2 col dès 3440 (chaque carte ≈ 1920) ; pas de 3 col
+ *  - En bref 2 col dès 3440, piste un peu plus large (unes moins étirées)
  *  - 3 unes + vedettes 3 col à 3840
  *  - spacer pleine largeur pour l’équilibre magazine
  */
@@ -1083,20 +1083,20 @@ html[data-wide-preview="e"] .news-hero-spacer {
   }
 }
 
-/* ── E ≥3440 : En bref 2 col (chaque carte ≈ largeur 1920) ── */
+/* ── E ≥3440 : 2 unes moins étirées ; En bref 2 col plus large ── */
 @media (min-width: 3440px) {
   html[data-wide-preview="e"] .news-list:has(> .news-hero) {
-    grid-template-columns: minmax(800px, 1.7fr) minmax(320px, 0.62fr);
+    grid-template-columns: minmax(720px, 1.3fr) minmax(480px, 1fr);
   }
 
   html[data-wide-preview="e"] .news-hero {
-    column-gap: 32px;
-    padding-right: 36px;
+    column-gap: 28px;
+    padding-right: 32px;
   }
 
   html[data-wide-preview="e"] .brief-rail {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: 20px;
+    column-gap: 22px;
   }
 }
 
