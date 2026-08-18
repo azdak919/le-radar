@@ -524,6 +524,23 @@ assert(offlineHtml.includes('LANGUAGE_MANUAL_PAUSE_MS = 10 * 60 * 1000'), 'offli
 assert(offlineHtml.includes('site-foot--maintenance'), 'offline.html : variante de footer compact requise');
 assert(offlineHtml.includes('<summary>À propos de LE-RADAR.ca</summary>'), 'offline.html : détails du footer maintenance requis');
 assert(appJs.includes('initTunerPresentationLifecycle()'), 'app.js : cycle de vie du synthétiseur requis');
+{
+  // Voie wide E : paintWideDial écrit L1/L2 puis return — si is-dial-ready
+  // n'est jamais posé, le CSS laisse le carré du synthétiseur vide partout.
+  const wideStart = appJs.indexOf('// Wide E : dual');
+  assert(wideStart > 0, 'app.js : commentaire voie wide E requis');
+  const wideReturn = appJs.indexOf('\n    return;', wideStart);
+  assert(wideReturn > wideStart, 'app.js : return voie wide E requis');
+  const wideSlice = appJs.slice(wideStart, wideReturn);
+  assert(
+    wideSlice.includes('paintWideDial(radio)') && wideSlice.includes('markTunerDialReady()'),
+    'app.js : voie wide E doit révéler le carré (is-dial-ready)',
+  );
+  assert(
+    /function paintWideDial\([\s\S]*?markTunerDialReady\(\);[\s\S]*?return true;/.test(appJs),
+    'app.js : paintWideDial doit poser is-dial-ready après L1/L2',
+  );
+}
 assert(appJs.includes("refreshNowPlayingCache({ render: false })"), 'app.js : actualisation avant reprise du synthétiseur requise');
 assert(appJs.includes('syncSeoScheduleNow()'), 'app.js : repère quotidien des grilles SEO requis');
 const maintenanceDoc = readFileSync(join(root, 'docs/maintenance.md'), 'utf8');

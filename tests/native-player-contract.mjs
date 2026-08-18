@@ -83,6 +83,7 @@ for (const file of pages) {
     || r.startsWith('medias/')
     || r.startsWith('sports/')
     || r.startsWith('archives/')
+    || r.startsWith('kit-media/')
     || r.startsWith('en/');
 
   if (!looksPublic) {
