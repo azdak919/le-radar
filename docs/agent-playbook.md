@@ -69,6 +69,10 @@ blacklist    →  scripts/quebec-backgrounds-blacklist.js  (ne revient jamais)
     `seasonSource: manual` n’est **jamais** écrasé.
   - **Client** : filtre saison en cours (fallback adjacent) — ne remplace pas le bot.
   - Neige arctique en juillet = hors saison — ne pas forcer le pool complet.
+  - **Pierre grise ≠ hiver.** Un tag visuel (béton, calcaire, rocher) n’est
+    pas une preuve. On ne retire une photo d’une saison que si on est *sûr*
+    qu’elle n’y est pas (neige / mot-clé / date / manuel). Garder la photo
+    pour les saisons où elle va ; l’hiver réel reste l’hiver.
   - `seasonSource: sessionId-fallback` = **jamais analysée** (saison de la session
     de moisson). Traitée comme saison inconnue et **non exportée** vers les
     `*-data.js` : sans ce garde-fou une scène enneigée entrait dans le tier strict
@@ -136,7 +140,8 @@ Alias historiques : `maintain:backgrounds` = masthead ; `…:pomo` etc. inchang�
 | **Retour dans l'app** | < 5 min rien · ≥ 5 min fil rechargé sur place · ≥ 1 h rechargement dur — **jamais pendant une écoute** (`returnRefreshAction`, `app.js`) |
 | **Thèmes** | dark/light + overlays texte lisibles sur photo mât (cartes météo) |
 | **Banques** | Ne jamais coller `QUEBEC_POMO_*` dans le mât, ni l’inverse |
-| **Favorites** | `permanent: true` — immunisées purge maintain (sauf non-image). Licence CC **non exigée** : crédit « Nom — lieu » (jamais la saison). Marque copyleft seulement si licence copyleft (CC BY-SA / GFDL) — pas sur un copyright. Retrait via le courriel du pied de page. URL locale `/assets/masthead/…` OK. `?bg=` force une photo. **Ne force pas l’affichage hors saison**. |
+| **Favorites** | `permanent: true` — immunisées purge maintain (sauf non-image). Licence CC **non exigée** : crédit « Nom — lieu » (jamais la saison). © droit si copyright ; copyleft inversé si CC BY-SA. URL locale `/assets/masthead/…` OK. `?bg=` force une photo. **Ne force pas l’affichage hors saison**. |
+| **Shuffle mât** | Clic = exclusion dure des 15 dernières + tout le sac (pas une fenêtre de 12). Le worker CF ne choisit pas la photo. |
 
 ---
 

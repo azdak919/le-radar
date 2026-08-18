@@ -49,6 +49,27 @@ for (let i = 0; i < 9; i++) {
 }
 
 assert.equal(seen.size, photos.length, 'le cycle couvre tout le catalogue');
+
+// Clic « suivante » : exclusion dure des N dernières, tout le sac.
+store.clear();
+const clicker = createRotator({
+  surface: 'test-shuffle',
+  storageKey: 'test_bg_shuffle_hard',
+  maxRecent: 20,
+});
+const clickSeen = [];
+for (let i = 0; i < 10; i++) {
+  const photo = clicker.pick(photos, { hardExcludeRecent: 8, fullWindow: true });
+  assert(photo, 'shuffle : une photo');
+  const last8 = clickSeen.slice(-8);
+  assert(
+    !last8.includes(photo.url),
+    `shuffle : pas de retour dans les 8 dernières (${photo.url})`
+  );
+  clickSeen.push(photo.url);
+  clicker.record(photo);
+}
+assert.equal(new Set(clickSeen).size, 10, 'shuffle : 10 photos distinctes');
 assert.deepEqual(
   new Set([...seen].map((url) => photos.find((photo) => photo.url === url).bank)),
   new Set(['masthead', 'universities', 'nations']),

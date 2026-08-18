@@ -267,7 +267,8 @@
    *
    * minStrict élevé : avec peu de photos taguées « ete » en juillet, le tier
    * strict seul (~5 images) épuisait le mât après rejets QC → fond noir mobile.
-   * Les non-taguées passent en adjacent.
+   * Les non-taguées (et la pierre grise sans preuve de neige) restent
+   * éligibles ; on n’éjecte que l’opposé certain.
    *
    * `permanent: true` = collection hors purge bots, **pas** affichage hors saison.
    * Une favorite d’hiver reste épinglée mais n’entre dans le pool qu’en hiver
@@ -309,6 +310,8 @@
       const picked = _rotator.pick(pool, {
         failedIds: _failedIds,
         excludeId,
+        hardExcludeRecent: opts && opts.hardExcludeRecent,
+        fullWindow: opts && opts.fullWindow,
       });
       // Si le pool saisonnier est épuisé (tous failed) → essayer le pool complet
       if (!picked && !useFull && full.length > pool.length) {
@@ -1858,7 +1861,13 @@
         return { ok: false, reason: "indoor_warm_object", metrics };
       }
       // Toundra / rocaille grise (ultramafic) : sat basse, gris dominant, peu de chaleur
-      if (sat < 0.18 && greyFrac > 0.5 && warmFrac < 0.18) {
+      // Campus : pierre / béton gris = le sujet, pas une toundra.
+      if (
+        !isCampusBackground(bg) &&
+        sat < 0.18 &&
+        greyFrac > 0.5 &&
+        warmFrac < 0.18
+      ) {
         return { ok: false, reason: "barren_desaturated", metrics };
       }
       // Nuit urbaine (lumières) ≠ lever de soleil : pas de bande de ciel chaude lumineuse
@@ -1882,9 +1891,11 @@
         return { ok: false, reason: "busy_wordmark_zone", metrics };
       }
       // Façade / toits texturés désaturés (beige, béton, brique pâle) :
-      // structure dense + peu de couleur → LE RADAR illisible.
-      // Réf. : UdeM Roger-Gaudry crop mât (edge ~0.04, sat ~0.18, meanL ~0.37).
+      // structure dense + peu de couleur → LE RADAR illisible sur un *paysage*.
+      // Réf. : UdeM Roger-Gaudry — mais c’est le sujet de la banque campus :
+      // ne pas éjecter QUEBEC_UNIVERSITY_BACKGROUNDS pour ça.
       if (
+        !isCampusBackground(bg) &&
         !goldenSilhouette &&
         edgeMean >= BUSY_LOW_CHROMA.edge &&
         sat <= BUSY_LOW_CHROMA.satMax &&
@@ -2212,9 +2223,12 @@
     // Différer le retry : enchaîner 10× Image() synchrone fige le main thread mobile.
     const attempt = () => {
       const next =
-        pickBackground(pool, bg && bg.url) ||
+        pickBackground(pool, bg && bg.url, {
+          fullWindow: true,
+          hardExcludeRecent: 8,
+        }) ||
         (_failedIds.size >= 6
-          ? pickBackground(pool, bg && bg.url, { fullPool: true })
+          ? pickBackground(pool, bg && bg.url, { fullPool: true, fullWindow: true })
           : null);
       if (next && next.url !== (bg && bg.url)) {
         _applyBackground(next, pool);
@@ -2456,7 +2470,9 @@
   function shuffleMastheadBackground() {
     const pool = _mastheadPool();
     const current = document.getElementById("bg-photo-layer")?.dataset.bgUrl || "";
-    const next = pickBackground(pool, current) || pickBackground(pool);
+    const shuffleOpts = { hardExcludeRecent: 15, fullWindow: true };
+    const next =
+      pickBackground(pool, current, shuffleOpts) || pickBackground(pool, current);
     if (next) _applyBackground(next, pool);
   }
 

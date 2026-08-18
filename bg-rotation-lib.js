@@ -275,6 +275,10 @@
 
       const failed = (pickOpts && pickOpts.failedIds) || new Set();
       const excludeId = pickOpts && pickOpts.excludeId;
+      const hardN = Math.max(0, Number(pickOpts && pickOpts.hardExcludeRecent) || 0);
+      const fullWindow = !!(pickOpts && pickOpts.fullWindow);
+      const recentHard = new Set(hardN ? recentIds.slice(-hardN) : []);
+      if (excludeId) recentHard.add(excludeId);
 
       const byId = new Map();
       for (const it of list) {
@@ -282,13 +286,21 @@
         if (id) byId.set(id, it);
       }
 
-      let eligible = list.filter((it) => {
-        const id = photoId(it);
-        return id && !failed.has(id) && id !== excludeId;
-      });
-      if (!eligible.length) {
-        eligible = list.filter((it) => photoId(it) !== excludeId);
+      function filterEligible(useHard, useFailed) {
+        return list.filter((it) => {
+          const id = photoId(it);
+          if (!id) return false;
+          if (id === excludeId) return false;
+          if (useFailed && failed.has(id)) return false;
+          if (useHard && recentHard.has(id)) return false;
+          return true;
+        });
       }
+
+      let eligible = filterEligible(true, true);
+      // Ne pas s’effondrer sur 2–3 photos : relâcher l’historique, puis le QC.
+      if (eligible.length < 4) eligible = filterEligible(false, true);
+      if (eligible.length < 3) eligible = filterEligible(false, false);
       if (!eligible.length) eligible = list.slice();
 
       // Sac : ids encore dans le pool éligible
@@ -299,12 +311,14 @@
       // prématurés vers un petit groupe de photos.
       if (!bag.length) {
         refillBag(eligible, failed);
-        bag = bag.filter((id) => id !== excludeId);
+        bag = bag.filter((id) => id !== excludeId && !recentHard.has(id));
         if (!bag.length) refillBag(eligible, failed);
       }
 
-      // Fenêtre en tête du sac + scoring de diversité
-      const windowSize = Math.min(12, Math.max(1, bag.length));
+      // Clic « suivante » : tout le sac, pas seulement 12 cartes en tête.
+      const windowSize = fullWindow
+        ? Math.max(1, bag.length)
+        : Math.min(12, Math.max(1, bag.length));
       let windowIds = bag.slice(0, windowSize);
       // Garantir que chaque banque présente a au moins 1 candidat dans la fenêtre
       const banksInPool = new Set(eligible.map(bankOf));

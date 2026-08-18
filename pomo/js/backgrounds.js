@@ -583,6 +583,7 @@ function getRandomBgIndex(culture = null) {
   if (typeof RadarSeason !== 'undefined' && RadarSeason.filterPoolByCurrentSeason) {
     const items = pool.map((i) => ({ ...BACKGROUNDS[i], _idx: i }));
     // minStrict élevé : sinon en été le pool se réduit à ~5 photos taguées
+    // (les inconnues / pierre grise restent éligibles ; opposé certain exclu)
     // et le plein écran peut rester vide après rejets.
     const r = RadarSeason.filterPoolByCurrentSeason(items, {
       minStrict: 12,
