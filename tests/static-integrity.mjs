@@ -680,6 +680,12 @@ assert(
 );
 assert(engagePrompt.includes('Sur l’écran d’accueil'), 'invitation install : titre spatial focus-group B');
 assert(
+  engagePrompt.includes('notAPhoneViewport')
+    && engagePrompt.includes('Installer l’application')
+    && /notAPhoneViewport && !ios && !android/.test(engagePrompt),
+  'invitation install : tactile grand écran ≠ téléphone (PWA bureau Edge)',
+);
+assert(
   engagePrompt.includes('Journaux, radios et sports étudiants du Québec — en un geste.'),
   'invitation install : body triade marque (journaux + radios + sports)',
 );

@@ -137,20 +137,33 @@
     } catch { /* ignore */ }
   }
 
-  function detectPlatform() {
-    const ua = navigator.userAgent || '';
-    const iPadOs = navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1;
+  /**
+   * Classification pure (tests + detectPlatform).
+   *
+   * Un tactile seul (`pointer: coarse`) ne fait pas un téléphone : le Flex 5
+   * 2-en-1 + Philips 1920 + Edge se faisait classer `mobile_other` et proposait
+   * « écran d’accueil » au lieu d’installer la PWA bureau.
+   * ≥1024 px et pas iOS/Android = bureau, même avec écran tactile.
+   */
+  function classifyPlatform(input = {}) {
+    const ua = String(input.ua || '');
+    const iPadOs = input.platform === 'MacIntel' && Number(input.maxTouchPoints) > 1;
     const ios = /iPhone|iPad|iPod/i.test(ua) || iPadOs;
     const android = /Android/i.test(ua);
-    const coarse = (() => {
-      try { return window.matchMedia('(pointer: coarse)').matches; } catch { return false; }
-    })();
-    const narrow = (() => {
-      try { return window.matchMedia('(max-width: 820px)').matches; } catch { return false; }
-    })();
+    const coarse = !!input.coarse;
+    const narrow = !!input.narrow;
+    const desktopWide = !!input.desktopWide;
+    const notAPhoneViewport = input.notAPhoneViewport != null
+      ? !!input.notAPhoneViewport
+      : desktopWide;
+    const ontouchstart = !!input.ontouchstart;
     const mobileUa = /Android|iPhone|iPad|iPod|Mobile|webOS|BlackBerry|IEMobile|Opera Mini/i.test(ua);
-    const mobileLike = ios || android || coarse || mobileUa
-      || (narrow && ('ontouchstart' in window));
+
+    let mobileLike = ios || android || coarse || mobileUa
+      || (narrow && ontouchstart);
+    if (notAPhoneViewport && !ios && !android) {
+      mobileLike = false;
+    }
 
     let browser = 'other';
     if (/SamsungBrowser/i.test(ua)) browser = 'samsung';
@@ -158,7 +171,7 @@
     else if (/OPR\/|Opera/i.test(ua)) browser = 'opera';
     else if (/Firefox\//.test(ua) || /FxiOS\//.test(ua)) browser = 'firefox';
     else if (/CriOS\//.test(ua)) browser = 'chrome_ios';
-    else if (braveDetected && /Chrome\//.test(ua)) browser = 'brave';
+    else if (input.brave && /Chrome\//.test(ua)) browser = 'brave';
     else if (/Chrome\//.test(ua) && !/Edg\//.test(ua) && !/OPR\//.test(ua)) browser = 'chrome';
     else if (/Safari\//.test(ua) && !/Chrome\//.test(ua) && !/CriOS\//.test(ua)) browser = 'safari';
 
@@ -167,13 +180,9 @@
     else if (android) family = 'android';
     else if (mobileLike) family = 'mobile_other';
 
-    const standalone = isStandalone();
-    // iOS hors Safari : pas de beforeinstallprompt, pas d’install fiable.
+    const standalone = !!input.standalone;
     const iosNonSafari = family === 'ios' && browser !== 'safari';
-    const canNativeInstall = !ios && !iosNonSafari; // event géré à part
-    const desktopWide = (() => {
-      try { return window.matchMedia('(min-width: 900px)').matches; } catch { return !mobileLike; }
-    })();
+    const canNativeInstall = !ios && !iosNonSafari;
 
     return {
       family,
@@ -197,6 +206,36 @@
         other: '',
       })[browser] || '',
     };
+  }
+
+  function detectPlatform() {
+    const ua = navigator.userAgent || '';
+    const coarse = (() => {
+      try { return window.matchMedia('(pointer: coarse)').matches; } catch { return false; }
+    })();
+    const narrow = (() => {
+      try { return window.matchMedia('(max-width: 820px)').matches; } catch { return false; }
+    })();
+    const desktopWide = (() => {
+      try { return window.matchMedia('(min-width: 900px)').matches; } catch { return true; }
+    })();
+    const notAPhoneViewport = (() => {
+      try { return window.matchMedia('(min-width: 1024px)').matches; } catch { return desktopWide; }
+    })();
+    let standalone = false;
+    try { standalone = isStandalone(); } catch { /* ignore */ }
+    return classifyPlatform({
+      ua,
+      platform: navigator.platform,
+      maxTouchPoints: navigator.maxTouchPoints,
+      coarse,
+      narrow,
+      desktopWide,
+      notAPhoneViewport,
+      ontouchstart: 'ontouchstart' in window,
+      brave: braveDetected,
+      standalone,
+    });
   }
 
   function isStandalone() {
@@ -627,14 +666,23 @@
       : 'Journaux, radios et sports étudiants du Québec — en un geste.';
   }
 
-  /** Carte install native — titre spatial + primary « Ajouter » (focus-group B). */
-  function renderNativeInstallCard(lang, appId) {
+  /**
+   * Carte install native.
+   * Mobile : titre spatial « Sur l’écran d’accueil » (focus-group B).
+   * Bureau : PWA fenêtre (Edge/Chrome) — pas « écran d’accueil » téléphone.
+   */
+  function renderNativeInstallCard(lang, appId, plat) {
+    const desktop = !!(plat && plat.desktop);
     renderCard({
       kind: 'install',
-      icon: '📲',
-      title: lang === 'en' ? 'Add to Home Screen' : 'Sur l’écran d’accueil',
+      icon: desktop ? '⬇' : '📲',
+      title: desktop
+        ? (lang === 'en' ? 'Install this app' : 'Installer l’application')
+        : (lang === 'en' ? 'Add to Home Screen' : 'Sur l’écran d’accueil'),
       body: installBodyCopy(lang, appId),
-      primaryLabel: lang === 'en' ? 'Add' : 'Ajouter',
+      primaryLabel: desktop
+        ? (lang === 'en' ? 'Install' : 'Installer')
+        : (lang === 'en' ? 'Add' : 'Ajouter'),
       onPrimary: async () => {
         const ev = deferredInstall;
         deferredInstall = null;
@@ -654,7 +702,7 @@
     const canNative = !!deferredInstall && plat.canNativeInstall && !plat.ios;
 
     if (canNative) {
-      renderNativeInstallCard(lang, appId);
+      renderNativeInstallCard(lang, appId, plat);
       return;
     }
 
@@ -670,7 +718,7 @@
       const upgrade = () => {
         window.removeEventListener('beforeinstallprompt', upgrade);
         if (!cardEl || !deferredInstall || isStandalone()) return;
-        renderNativeInstallCard(uiLang(), appId);
+        renderNativeInstallCard(uiLang(), appId, detectPlatform());
       };
       window.addEventListener('beforeinstallprompt', upgrade);
       // La carte fermée, l'écouteur n'a plus de raison d'être.
@@ -1302,6 +1350,7 @@
       currentApp: currentAppId,
       isStandalone,
       platform: detectPlatform,
+      classify: classifyPlatform,
     };
     window.__radarEngageDebug = () => ({
       platform: detectPlatform(),
