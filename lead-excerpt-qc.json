@@ -1,14 +1,32 @@
 {
-  "updated": "2026-08-18T17:56:42.569Z",
+  "updated": "2026-08-18T19:42:02.897Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 6,
-  "withLeadExcerpt": 81,
-  "candidates": 6,
-  "enriched": 0,
-  "failed": 1,
+  "incomplete": 7,
+  "withLeadExcerpt": 82,
+  "candidates": 7,
+  "enriched": 2,
+  "failed": 0,
   "ok": true,
   "samples": [
+    {
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
+      "ok": true,
+      "score": 66,
+      "chars": 400,
+      "sample": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « p",
+      "changed": true
+    },
+    {
+      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "link": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
+      "ok": true,
+      "score": 81,
+      "chars": 400,
+      "sample": "Cependant, l’épidémie du sida a modifié le rapport entre les deux groupes. Au cours de cette crise, ",
+      "changed": true
+    },
     {
       "title": "Review: Sullivan Fortner Solo at Gesú Concert Hall",
       "link": "https://www.mcgilldaily.com/2026/07/review-sullivan-fortner-solo-at-gesu-concert-hall/",
