@@ -418,7 +418,16 @@ const chyzSource = radiosRegistry.find((radio) => radio.id === 'chyz');
 assert(chyzSource?.slogan && chyzSource?._sloganSource && chyzSource?._sloganEvidence, 'radio CHYZ : provenance du slogan requise');
 assert(chyzPage.includes(`<h1 class="seo-title">CHYZ 94,3 FM — ${chyzSource.slogan}</h1>`), 'radio CHYZ : nom, fréquence et slogan sourcé requis en titre');
 assert(chyzPage.includes('href="../../horaires/">Choisir une autre radio</a>'), 'radio CHYZ : retour aux autres horaires requis');
-assert(chyzPage.includes('Dernière collecte réussie le'), 'radio CHYZ : date de collecte requise');
+assert(chyzPage.includes('MAJ le'), 'radio CHYZ : date de mise à jour requise');
+assert(!chyzPage.includes('Dernière collecte réussie'), 'radio CHYZ : libellé collecte interne interdit');
+{
+  const { quebecWeekStartDate } = require('../scripts/seo-pages-lib.js');
+  const week = quebecWeekStartDate();
+  const weekLabel = new Intl.DateTimeFormat('fr-CA', {
+    timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric',
+  }).format(week);
+  assert(chyzPage.includes(`Semaine du ${weekLabel}`), `radio CHYZ : semaine courante requise (${weekLabel})`);
+}
 assert(chyzPage.includes('id="tuner" class="tuner"'), 'radio CHYZ : lecteur natif requis');
 assert(!chyzPage.includes('id="radar-embed"'), 'radio CHYZ : iframe tuner interdit');
 assert(chyzPage.includes('id="theme-toggle"'), 'radio CHYZ : bascule clair/sombre requise');

@@ -300,7 +300,7 @@ const T = {
     scheduleNote: 'Grille colligée automatiquement à partir du site de la station ; elle peut varier.',
     schedulesNote: 'Grilles colligées automatiquement à partir des sites des stations ; elles peuvent varier.',
     scheduleWeek: 'Semaine du',
-    scheduleUpdated: 'Dernière collecte réussie le',
+    scheduleUpdated: 'MAJ le',
     overnight: 'de nuit',
     noSlots: 'Aucune émission annoncée.',
     schedules: 'Les horaires des radios étudiantes',
@@ -374,7 +374,7 @@ const T = {
     sportsOpenGame: 'Ouvrir la source officielle',
     slotsCount: 'créneaux',
     slotsCountOne: 'créneau',
-    collectedOn: 'colligé le',
+    collectedOn: 'MAJ le',
     mediaOf: 'Les médias étudiants {of}',
     mediaOfDesc: 'Les journaux étudiants et la radio de campus {of} : qui ils sont, où les lire et les écouter.',
     radioOf: 'la radio étudiante {of}',
@@ -456,7 +456,7 @@ const T = {
     scheduleNote: 'Schedule collected automatically from the station’s website; it may change.',
     schedulesNote: 'Schedules collected automatically from each station’s website; they may change.',
     scheduleWeek: 'Week of',
-    scheduleUpdated: 'Last successful collection',
+    scheduleUpdated: 'Updated',
     overnight: 'overnight',
     noSlots: 'No scheduled shows.',
     schedules: 'Campus radio schedules',
@@ -530,7 +530,7 @@ const T = {
     sportsOpenGame: 'Open official source',
     slotsCount: 'slots',
     slotsCountOne: 'slot',
-    collectedOn: 'collected',
+    collectedOn: 'updated',
     mediaOf: 'Student media at {name}',
     mediaOfDesc: 'The student newspapers and campus radio of {name}: who they are, where to read and listen to them.',
     radioOf: 'the campus radio station of {name}',
@@ -1277,9 +1277,29 @@ function slotMinutes(value) {
  * `début – fin` est affichée parce qu'elle est déjà dans la donnée, et qu'une
  * heure de début seule ne dit pas si l'émission dure 30 minutes ou 6 heures.
  */
-function scheduleContext(checkedAt, verifiedWeekOf, t) {
+/**
+ * Lundi 12:00 UTC de la semaine calendrier Québec (lun–dim).
+ * Affiché comme « Semaine du … », indépendamment du tampon de collecte.
+ */
+function quebecWeekStartDate(now = new Date()) {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Toronto', year: 'numeric', month: '2-digit', day: '2-digit',
+  }).formatToParts(now);
+  const get = (type) => Number(parts.find((p) => p.type === type)?.value);
+  const year = get('year');
+  const month = get('month');
+  const day = get('day');
+  if (![year, month, day].every(Number.isFinite)) return null;
+  const local = new Date(Date.UTC(year, month - 1, day, 12));
+  local.setUTCDate(local.getUTCDate() - ((local.getUTCDay() + 6) % 7));
+  return local;
+}
+
+function scheduleContext(checkedAt, _verifiedWeekOf, t) {
   const checked = checkedAt ? new Date(checkedAt) : null;
-  const week = verifiedWeekOf ? new Date(`${verifiedWeekOf}T12:00:00Z`) : null;
+  // Semaine courante à Québec, pas la semaine du tampon. La date MAJ dit
+  // si la grille a été relue aujourd'hui ou conservée d'une passe plus vieille.
+  const week = quebecWeekStartDate();
   const format = (date, timeZone = 'UTC') => new Intl.DateTimeFormat(t.lang, {
     timeZone, day: 'numeric', month: 'long', year: 'numeric',
   }).format(date);
@@ -1460,6 +1480,7 @@ module.exports = {
   slotMinutes,
   scheduleTable,
   scheduleContext,
+  quebecWeekStartDate,
   scheduleTodayDay,
   scheduleCurrentMinute,
   scheduleSlotStates,
