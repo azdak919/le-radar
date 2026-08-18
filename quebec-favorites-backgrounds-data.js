@@ -62,5 +62,19 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "hiver",
     permanent: true,
     surfaces: ["masthead", "pomo"],
+  },
+  {
+    url: "/assets/masthead/assemblee-nationale-stephane-groleau.jpg",
+    credit: "Stéphane Groleau",
+    link: "https://www.stephanegroleau.com/",
+    license: "",
+    title: "Hôtel du Parlement — Assemblée nationale du Québec",
+    focalY: 0.42,
+    width: 2000,
+    height: 1332,
+    place: "Assemblée nationale",
+    season: "ete",
+    permanent: true,
+    surfaces: ["masthead", "pomo"],
   }
 ];

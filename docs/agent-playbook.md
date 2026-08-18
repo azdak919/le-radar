@@ -51,7 +51,7 @@ maintain     →  revalidate + Commons  →  JSON + JS (1×/session univ. plein 
 blacklist    →  scripts/quebec-backgrounds-blacklist.js  (ne revient jamais)
 ```
 
-- **Purge** = retirer une mauvaise entrée + blacklister. **Pas de re-seed hasardeux** (mieux un trou).
+- **Purge** = retirer une mauvaise entrée + blacklister. **Pas de re-seed hasardeux** (mieux un trou). Licence inconnue / ARR / NC : **ne plus drop** — crédit + retrait sur demande.
 - **Hard-ban** : URL / File Commons / id en priorité ; raison snake_case loggable.
 - Règles paysage mât/pomo (pas universities/nations) : religieux ; **town hall / hôtel de ville / mairie** ; scènes bad (nuit, underbridge, clôture, aéroport/hangar/industriel…, **panneaux / enseignes / welcome signs**).
 - **Panneau toponyme** (titre = seul le lieu, image = enseigne) : hard-ban **fichier Commons exact** — ne pas bannir le lieu entier (ex. `Gesgapegiag.jpg` ban, `Gesgapegiag4` tipi OK).
@@ -136,7 +136,7 @@ Alias historiques : `maintain:backgrounds` = masthead ; `…:pomo` etc. inchang�
 | **Retour dans l'app** | < 5 min rien · ≥ 5 min fil rechargé sur place · ≥ 1 h rechargement dur — **jamais pendant une écoute** (`returnRefreshAction`, `app.js`) |
 | **Thèmes** | dark/light + overlays texte lisibles sur photo mât (cartes météo) |
 | **Banques** | Ne jamais coller `QUEBEC_POMO_*` dans le mât, ni l’inverse |
-| **Favorites** | `permanent: true` — immunisées purge maintain (sauf licence illégale). **Ne force pas l’affichage hors saison** : une favorite d’hiver reste en collection mais n’entre dans le pool mât/pomo qu’en hiver (filtre `RadarSeason`). |
+| **Favorites** | `permanent: true` — immunisées purge maintain (sauf non-image). Licence CC **non exigée** : crédit « Nom — lieu » ; retrait sur demande via le courriel du pied de page. URL locale `/assets/masthead/…` OK. `?bg=` force une photo. **Ne force pas l’affichage hors saison** : une favorite d’hiver reste en collection mais n’entre dans le pool mât/pomo qu’en hiver (filtre `RadarSeason`). |
 
 ---
 

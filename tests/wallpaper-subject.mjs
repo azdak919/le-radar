@@ -81,6 +81,14 @@ assert(
   }),
   'personnes : « face », « groupe » en français descriptif restent admis'
 );
+assert(
+  !looksPeopleScene({
+    title: 'Pow-wow à Mashteuiatsh',
+    description: 'Rassemblement estival, danseurs autour du cercle',
+    categories: 'Mashteuiatsh|Pekuakamiulnuatsh',
+  }),
+  'personnes : pow-wow / danse culturelle autochtone admis (visages au pixel)'
+);
 
 // ── Bâti vernaculaire ────────────────────────────────────────
 const colomb = {

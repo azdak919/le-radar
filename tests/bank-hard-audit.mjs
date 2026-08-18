@@ -137,6 +137,22 @@ const winterOk = auditPhotoHard(
 );
 assert.equal(winterOk.ok, true, 'hiver/neige n’est pas HARD (saisonnier)');
 
+const hosted = auditPhotoHard(
+  {
+    title: 'Hôtel du Parlement',
+    url: '/assets/masthead/assemblee-nationale-stephane-groleau.jpg',
+    credit: 'Stéphane Groleau',
+    width: 2000,
+    height: 1332,
+  },
+  { id: 'favorites' },
+);
+assert.equal(
+  hosted.ok,
+  true,
+  `favorite locale /assets/masthead/ admise (${hosted.reasons.join(', ')})`
+);
+
 const tiny = auditPhotoHard(
   { title: 'x', url: 'https://example.com/t.jpg', width: 800, height: 400 },
   { id: 'masthead', landscape: true },

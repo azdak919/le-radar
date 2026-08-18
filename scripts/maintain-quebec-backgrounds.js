@@ -377,7 +377,7 @@ const LEGACY_JS = JS_PATH;
 // ── Filtres texte (règles stables — RELIGIOUS / TOWN_HALL via religious-facade-lib) ──
 
 const PEOPLE_RE =
-  /(?:\bportrait\b|\bpeople\b|\bperson\b|\bpersons\b|\bman\b|\bwoman\b|\bmen\b|\bwomen\b|\bchild\b|\bchildren\b|\bfamily\b|\bfamille\b|\bhomme\b|\bfemme\b|\benfant\b|\bdancer\b|\bdancers\b|\bpow[\s-]?wow\b|\bcrowd\b|\bfoule\b|\bselfie\b|\binscription on reverse\b|\bchef\b|\bchief\b|\bleder\b|\bleader\b|\bmaire\b|\bmayor\b|\bface\b|\bvisage\b|\bgroup\b|\bgroupe\b|\bmeeting\b|\br[eé]union\b|\bmanifestation\b|\bauditeurs?\b|\bprotest\b|\bgr[eè]ve\b|\bdemo(?:nstration)?\b)/i;
+  /(?:\bportrait\b|\bpeople\b|\bperson\b|\bpersons\b|\bman\b|\bwoman\b|\bmen\b|\bwomen\b|\bchild\b|\bchildren\b|\bfamily\b|\bfamille\b|\bhomme\b|\bfemme\b|\benfant\b|\bcrowd\b|\bfoule\b|\bselfie\b|\binscription on reverse\b|\bchef\b|\bchief\b|\bleder\b|\bleader\b|\bmaire\b|\bmayor\b|\bface\b|\bvisage\b|\bgroup\b|\bgroupe\b|\bmeeting\b|\br[eé]union\b|\bmanifestation\b|\bauditeurs?\b|\bprotest\b|\bgr[eè]ve\b|\bdemo(?:nstration)?\b)/i;
 
 /** Fichiers non-image (Commons renvoie parfois audio/PDF). */
 const NON_IMAGE_RE = /\.(?:wav|mp3|ogg|flac|webm|mp4|pdf|svg|djvu|stl|obj)(?:\?|$)/i;
@@ -538,13 +538,9 @@ function looksNonImage(entry) {
   return false;
 }
 
-function isAllowedLicense(license = '') {
-  const l = license.toLowerCase();
-  if (!l) return true;
-  if (/public domain|cc0|cc-zero|pd-/.test(l)) return true;
-  if (/cc by|cc-by|creative commons/.test(l)) return true;
-  if (/gfdl/.test(l)) return true;
-  if (/all rights reserved|copyright|fair use|noncommercial|nc-/.test(l)) return false;
+function isAllowedLicense(_license = '') {
+  // Crédit à l’écran ; retrait sur demande (courriel du pied de page).
+  // Ne plus rejeter ARR / NC / inconnue — ça écartait surtout nations / favorites.
   return true;
 }
 
@@ -767,7 +763,6 @@ async function searchOpenverseMulti(query, limit = 10, opts = {}) {
   const params = new URLSearchParams({
     q: query,
     page_size: String(Math.min(limit, 20)),
-    license_type: 'commercial,modification',
     aspect_ratio: 'wide',
     size: 'large',
   });
@@ -842,8 +837,7 @@ async function searchOpenverse(query, limit = 8) {
   const params = new URLSearchParams({
     q: query,
     page_size: String(Math.min(limit, 20)),
-    license_type: 'commercial,modification',
-    // wallpaper paysage
+    // wallpaper paysage — plus de filtre licence Openverse (NC admis ; crédit + retrait)
     aspect_ratio: 'wide',
     size: 'large',
   });
@@ -1193,8 +1187,8 @@ async function main() {
       const dg = dimensionGate(entry);
       if (!tg.ok || !dg.ok) {
         const reason = tg.reason || dg.reason;
-        // Favorites / permanent : ne jamais drop au ménage (sauf licence illégale)
-        if (isPermanentPhoto(entry) && reason !== 'license' && reason !== 'not_image') {
+        // Favorites / permanent : ne jamais drop au ménage (sauf non-image)
+        if (isPermanentPhoto(entry) && reason !== 'not_image') {
           console.log(`  · keep permanent ${entry.title || entry.id} (skip ${reason})`);
           if (PROFILE.id === 'nations') entry = nationsTaxonomy.tagPhotoNation(entry);
           kept.push(entry);
