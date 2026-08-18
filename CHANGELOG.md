@@ -23,6 +23,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- iPad portrait (768–834 px) : le magazine deux colonnes s’affichait sans équilibrer **En bref**. La graine bureau (~10 brèves) dépassait les vedettes et laissait un vide sous la colonne de gauche. L’équilibre (trim + extraits mid) suit maintenant le même seuil 768 px que le CSS.
+
 - Le site annonçait « À venir · Capitales de Québec · 18:50 » alors que CHYZ diffusait ce match depuis 16:50 : la station réécrit sa page le jour du match (heure décalée, émission régulière évincée) tandis que la grille colligée, elle, a jusqu’à deux semaines. Une émission en ondes qui fait autorité écarte désormais tout « à venir » qu’elle recouvre — rien ne peut commencer avant la fin de ce qui joue —, côté bot comme côté site entre deux passes.
 - Ligne du bas du syntoniseur sur mobile : l’alternance slogan ↔ antenne et la bascule des phases CHOQ tournaient sur deux horloges concurrentes (14–18 s contre 8 s fixes), ce qui faisait changer le texte en cours de lecture. Une seule horloge pilote maintenant les deux.
 - Le titre de l’émission n’est plus répété entre les deux phases CHOQ ni entre le titre et le sous-titre d’une même ligne.

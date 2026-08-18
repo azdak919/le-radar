@@ -1336,6 +1336,18 @@ assert(
     && /MARQUEE_ROUND_TRIPS\s*=\s*2/.test(appJs),
   'CSS/JS : marquees sports + dial = 1 cycle (2 alternate), delay 1.6s, pas infinite',
 );
+// Magazine mid : CSS 2 col dès 768 (iPad portrait). Le JS d'équilibre /
+// graine En bref / extraits mid doit partager ce seuil — à 900 px les
+// iPad 768/820/834 semaient ~10 brèves bureau sans trim (vide sous vedettes).
+assert(
+  /MAGAZINE_MID_MIN_PX\s*=\s*768/.test(appJs)
+    && /MAGAZINE_MID_MAX_PX\s*=\s*1099\.98/.test(appJs)
+    && appJs.includes('function canBalanceMagazineColumns')
+    && appJs.includes('function isMidwidthMagazinePreview')
+    && /@media \(min-width: 768px\) and \(max-width: 1099\.98px\)/.test(styleCss)
+    && !/matchMedia\('\(min-width: 900px\) and \(max-width: 1099\.98px\)'\)/.test(appJs),
+  'magazine mid : CSS + JS partagent le seuil 768 (iPad portrait, pas 900)',
+);
 // Focus-group le-radar-sports-weather-fit A : météo ⊥ sports ; fit largeur + overflow.
 assert(
   !appJs.includes('function sportsWeatherCardCount')
