@@ -1424,6 +1424,9 @@ assert(
     && appJs.includes('function fitSportsStripAfterPaint')
     && appJs.includes('function sportsStripCramped')
     && appJs.includes('scheduleMastheadWeatherLayout')
+    && appJs.includes('function weatherRibbonOverlapsChrome')
+    && appJs.includes('function bindMastheadWeatherLayoutWatchers')
+    && appJs.includes('function clearWeatherSlotInlineStyles')
     && appJs.includes('le-radar-sports-weather-fit'),
   'app.js : FG A — sports indépendants météo ; fit overflow −1 puce ; date re-fit météo',
 );

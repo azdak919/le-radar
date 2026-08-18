@@ -915,6 +915,9 @@ a { color: inherit; }
   margin: 0;
   color: var(--ink-soft);
   white-space: nowrap;
+  /* clip (pas hidden) : coupe un débordement horizontal sans forcer
+     overflow-y:auto — les anims leave/arrive translateY restent visibles. */
+  overflow-x: clip;
 }
 .masthead-weather.is-too-narrow:not(.masthead-weather--docked) { display: none !important; }
 .masthead-weather__board {
@@ -1062,7 +1065,7 @@ a { color: inherit; }
      (fiches, annuaire) la case est vide et n'impose rien, donc la date y garde
      toute sa longueur. Quand le ruban se retire lui-même (.is-too-narrow), le
      plancher disparaît avec lui et la date se redéploie. */
-  .masthead-weather { display: inline-flex; grid-area: weather; width: 100%; justify-self: stretch; min-width: 104px; }
+  .masthead-weather { display: inline-flex; grid-area: weather; width: 100%; justify-self: stretch; min-width: 104px; max-width: 100%; overflow-x: clip; }
   .masthead-actions { grid-area: actions; justify-self: end; }
   /* Météo absente du mât (dockée) : pas de colonne weather vide. */
   .masthead-top:not(:has(#masthead-weather)) {
