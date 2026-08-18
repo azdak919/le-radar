@@ -26,7 +26,7 @@ jobs:
         run: node scripts/verify-historical-links.js --update --limit=20
         # Les pannes individuelles deviennent des statuts dans le registre;
         # cette garde évite qu’un incident inattendu ne génère un courriel de
-        # Quality Gate pour un chantier expérimental.
+        # Vérification pour un chantier expérimental.
         continue-on-error: true
       - name: Regenerate the public sample
         if: steps.links.outcome == 'success'
