@@ -268,6 +268,12 @@ assert.equal(chyzOverlap?.title, 'Spécial', 'le créneau CHYZ commencé le plus
   const monday17 = grid.filter((s) => s.day === 1 && s.start === '17:00');
   assert.equal(monday17.length, 1, 'CHOQ quinzaine : un seul lundi 17 h');
   assert.equal(monday17[0].title, 'Faire avec', 'CHOQ quinzaine : la semaine en cours prime');
+  const thisWeek = await fetchChoqGrid({ days: 7 }, { fetchImpl });
+  assert.equal(
+    thisWeek.some((s) => s.title === 'Bitume'),
+    false,
+    'CHOQ : la semaine courante ne doit pas afficher l’émission de la semaine suivante',
+  );
 }
 
 // ── Banques fonds QC : JSON source de vérité ↔ JS miroir + hard-ban ──

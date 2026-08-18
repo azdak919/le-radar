@@ -962,14 +962,16 @@ function parseCjloGrid(htmlText) {
  * Les plages sont des occurrences datées (pas une grille type « chaque jeudi ») :
  * on les projette sur day 0–6 + HH:MM America/Toronto pour resolveCurrentSlot.
  *
- * On part du lundi de la semaine QC courante. Un même créneau (jour + début)
- * n’accepte qu’une émission : Bitume / Faire avec (quinzaine) ne doivent pas
- * apparaître toutes les deux le lundi 17 h.
+ * On part du lundi de la semaine QC courante et on s'arrête au dimanche :
+ * la page dit « cette semaine », donc on n'y projette pas les épisodes de
+ * la semaine suivante (Le Monde Dans Mes Oreilles le mardi d'après, etc.).
+ * Un même créneau (jour + début) n'accepte qu'une émission : Bitume / Faire
+ * avec (quinzaine) ne doivent pas apparaître toutes les deux le lundi 17 h.
  */
 async function fetchChoqGrid(src = {}, deps = {}) {
   const endpoint = src.url || 'https://www.choq.ca/api/graphql';
   const tz = src.timeZone || DEFAULT_TZ;
-  const daysAhead = Math.min(21, Math.max(7, Number(src.days) || 14));
+  const daysAhead = Math.min(21, Math.max(7, Number(src.days) || 7));
   const fetchImpl = deps.fetchImpl || globalThis.fetch;
   if (typeof fetchImpl !== 'function') throw new Error('fetch indisponible');
 
@@ -1045,7 +1047,7 @@ async function fetchChoqGrid(src = {}, deps = {}) {
 
   for (let i = 0; i < daysAhead; i++) {
     const day = addDaysYmd(weekStart, i);
-    const next = addDaysYmd(today, i + 1);
+    const next = addDaysYmd(day, 1);
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), 15000);
     let entries = [];

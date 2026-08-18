@@ -47,6 +47,10 @@ test('une fiche de radio expose ses faits et renvoie vers les autres horaires', 
   const schedulesLink = page.getByRole('link', { name: 'Choisir une autre radio' });
   await expect(schedulesLink).toBeVisible();
   await expect(schedulesLink).toHaveAttribute('href', '../../horaires/');
+  const scheduleMeta = page.locator('.seo-schedule-meta');
+  await expect(scheduleMeta).toContainText('Semaine du');
+  await expect(scheduleMeta).toContainText('MAJ le');
+  await expect(scheduleMeta).not.toContainText('collecte réussie');
 
   // Le lien vers l'établissement doit résoudre, pas juste exister.
   await page.getByRole('link', { name: 'Université Laval' }).first().click();
