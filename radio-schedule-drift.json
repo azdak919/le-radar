@@ -1,45 +1,44 @@
 {
-  "checkedAt": "2026-08-17T23:33:43.845Z",
+  "checkedAt": "2026-08-18T23:32:54.434Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 5,
+    "stable": 4,
     "drift": [
-      "chyz"
+      "cism"
     ],
     "overhaul": [],
-    "unreachable": []
+    "unreachable": [
+      "cjlo"
+    ]
   },
   "stations": [
     {
       "id": "chyz",
-      "published": 28,
+      "published": 29,
       "fresh": 29,
-      "added": [
-        "lun 16:00–17:00 Chéri.e, Jme Mobilise!",
-        "lun 20:30–21:30 La Voie des Droits",
-        "ven 21:00–22:00 Crooch Control",
-        "sam 12:00–12:30 Un Monde de Couleurs et de Son"
-      ],
-      "removed": [
-        "dim 16:50–20:30 Capitales de Québec",
-        "ven 18:50–23:00 Capitales de Québec",
-        "sam 18:50–23:00 Capitales de Québec"
-      ],
-      "changed": 7,
-      "ratio": 0.25,
-      "status": "drift"
-    },
-    {
-      "id": "cism",
-      "published": 109,
-      "fresh": 109,
       "added": [],
       "removed": [],
       "changed": 0,
       "ratio": 0,
       "status": "stable"
+    },
+    {
+      "id": "cism",
+      "published": 109,
+      "fresh": 109,
+      "added": [
+        "mar 09:00–11:00 La collation",
+        "jeu 07:00–08:00 Retour sur Ilesoniq 2026"
+      ],
+      "removed": [
+        "mar 09:00–10:00 Second poteau",
+        "mar 10:00–11:00 La collation"
+      ],
+      "changed": 4,
+      "ratio": 0.037,
+      "status": "drift"
     },
     {
       "id": "ckut",
@@ -54,12 +53,12 @@
     {
       "id": "cjlo",
       "published": 370,
-      "fresh": 370,
+      "fresh": 0,
       "added": [],
       "removed": [],
       "changed": 0,
       "ratio": 0,
-      "status": "stable"
+      "status": "unreachable"
     },
     {
       "id": "cfak",
@@ -73,8 +72,8 @@
     },
     {
       "id": "choq",
-      "published": 21,
-      "fresh": 21,
+      "published": 18,
+      "fresh": 18,
       "added": [],
       "removed": [],
       "changed": 0,
