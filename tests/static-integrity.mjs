@@ -639,11 +639,15 @@ for (const rel of ['robots.txt', 'sitemap.xml', 'llms.txt', 'assets/og-cover.png
 }
 const ogScript = readFileSync(join(root, 'scripts/generate-og-image.py'), 'utf8');
 assert(
-  /journaux,\s*radios et sports/i.test(ogScript)
+  /Les journaux, radios et sports étudiants du Québec/.test(ogScript)
+    && /Cégeps et universités/.test(ogScript)
     && /sports/.test(ogScript)
-    && /résultats sportifs/.test(ogScript)
     && !/Les journaux et les radios étudiantes du Québec/.test(ogScript),
-  'og-cover : le générateur doit porter la triade (journaux + radios + sports)',
+  'og-cover : slogan au rythme ancien + triade + cégeps et universités',
+);
+assert(
+  /\(W - lockup_w\)/.test(ogScript) && /\(W - tag_w\)/.test(ogScript),
+  'og-cover : lockup et accroches centrés',
 );
 assert(
   /SourceSerif4Display/.test(ogScript)
@@ -660,9 +664,9 @@ for (const bot of ['GPTBot', 'ClaudeBot', 'PerplexityBot']) {
 
 const indexHtml = readFileSync(join(root, 'index.html'), 'utf8');
 assert(
-  /og-cover\.png\?v=2/.test(indexHtml)
-    && /og-cover\.png\?v=2/.test(readFileSync(join(root, 'scripts/seo-pages-lib.js'), 'utf8')),
-  'og:image : ?v=2 requis pour casser le cache des aperçus de lien',
+  /og-cover\.png\?v=3/.test(indexHtml)
+    && /og-cover\.png\?v=3/.test(readFileSync(join(root, 'scripts/seo-pages-lib.js'), 'utf8')),
+  'og:image : ?v=3 requis pour casser le cache des aperçus de lien',
 );
 const engagePrompt = readFileSync(join(root, 'engage-prompt.js'), 'utf8');
 assert(!/coque hors-ligne/i.test(engagePrompt), 'invitation PWA : jargon « coque » interdit');
