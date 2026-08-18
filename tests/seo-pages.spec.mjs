@@ -47,6 +47,10 @@ test('une fiche de radio expose ses faits et renvoie vers les autres horaires', 
   const schedulesLink = page.getByRole('link', { name: 'Choisir une autre radio' });
   await expect(schedulesLink).toBeVisible();
   await expect(schedulesLink).toHaveAttribute('href', '../../horaires/');
+  const scheduleMeta = page.locator('.seo-schedule-meta');
+  await expect(scheduleMeta).toContainText('Semaine du');
+  await expect(scheduleMeta).toContainText('MAJ le');
+  await expect(scheduleMeta).not.toContainText('collecte réussie');
 
   // Le lien vers l'établissement doit résoudre, pas juste exister.
   await page.getByRole('link', { name: 'Université Laval' }).first().click();
@@ -312,8 +316,10 @@ test('depuis l’accueil, on atteint le hub des horaires puis une grille complè
   await expect(page).toHaveURL(/\/horaires\/$/);
   await expect(page.locator('h1')).toHaveText('Les horaires des radios étudiantes du Québec');
 
-  // Une carte par station, avec le volume réel de sa grille.
-  await expect(page.locator('.seo-card')).not.toHaveCount(0);
+  await expect(page.locator('.seo-radio-card')).toHaveCount(6);
+  await expect(page.locator('.seo-schedule-meta')).toContainText('Semaine du');
+  await expect(page.locator('.seo-schedule-meta')).toContainText('MAJ le');
+  await expect(page.locator('[data-schedule-air]').first()).toBeVisible();
   await page.getByRole('link', { name: /CKUT/ }).first().click();
   await expect(page).toHaveURL(/\/radios\/ckut\/#horaire$/);
 
@@ -376,7 +382,7 @@ test('wide E : faits packés et footer en colonnes, pas étalés', async ({ page
 });
 
 test('wide E : footer en 2 colonnes, liens en ligne, crédits à droite', async ({ page }) => {
-  for (const path of ['/?wide=e', '/sports/?wide=e', '/medias/?wide=e', '/kit-media/?wide=e']) {
+  for (const path of ['/?wide=e', '/sports/?wide=e', '/medias/?wide=e', '/kit-media/?wide=e', '/horaires/?wide=e']) {
     await page.setViewportSize({ width: 1920, height: 1080 });
     await page.goto(path, { waitUntil: 'domcontentloaded' });
     const foot = page.locator('.site-foot').first();

@@ -978,7 +978,7 @@ body {
 }
 @media (hover: hover) and (pointer: fine) {
   .theme-toggle:hover,
-  .masthead-home:hover:not(.is-active):not([aria-current="page"]),
+  .masthead-home:hover,
   .masthead-rss:hover:not([aria-current="page"]),
   .masthead-solitaire:hover,
   .masthead-sports:hover:not([aria-current="page"]),
@@ -1000,15 +1000,19 @@ body {
 .masthead-coffee:active {
   transform: scale(0.9);
 }
+/* Accueil : même pastille que RSS / pomo au repos. Mauve seulement au pressé
+   — plus de fond persistant via aria-current / .is-active. */
+.masthead-home:active {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--rule));
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+}
 /* Pomodoro : seul bouton rouge du header (tomate, hors thème accent). */
 .masthead-pomo {
   border-color: var(--rule);
 }
-/* Page courante : l'indicateur valait pour l'accueil seul, alors que
-   feeds.html posait déjà `aria-current` sur sa pastille RSS sans rien voir.
-   Depuis que la rangée est partagée, la règle vaut pour toute pastille. */
-.masthead-home.is-active,
-.masthead-icon[aria-current="page"] {
+/* Page courante (RSS, sports…) — pas Accueil : même verre que les voisins. */
+.masthead-icon[aria-current="page"]:not(.masthead-home) {
   border-color: color-mix(in srgb, var(--accent) 55%, var(--rule));
   color: var(--accent);
   background: color-mix(in srgb, var(--accent) 8%, transparent);
@@ -4136,7 +4140,7 @@ html[data-translate-busy="1"] .translate-toggle {
 /* ─────────────── FOOTER ─────────────── */
 .site-foot {
   margin-top: 44px;
-  padding-top: 22px;
+  padding-top: 28px;
   border-top: 1px solid var(--rule);
   font-size: 13px;
   line-height: 1.6;
