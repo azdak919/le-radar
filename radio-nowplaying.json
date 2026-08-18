@@ -1,72 +1,80 @@
 {
-  "updatedAt": "2026-08-17T23:46:45.287Z",
+  "updatedAt": "2026-08-18T01:02:03.525Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "La Voie des Droits",
+        "source": "api-live",
+        "start": "20:30",
+        "end": "21:30",
+        "url": "https://chyz.ca/emission/la-voie-des-droits/",
+        "special": true
+      },
       "next": {
         "title": "Mardi Champ Gauche",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "La Voie des Droits",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T23:46:17.968Z"
+      "checkedAt": "2026-08-18T01:01:35.177Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les vinyles versatiles",
+        "title": "Toute est dans toute (reprise)",
         "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/les-vinyles-versatiles"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/tout-est-dans-toute"
       },
       "next": {
-        "title": "Rock à la casbah",
+        "title": "Mix anglo",
         "source": "schedule",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "https://cism893.ca/emissions/rock-a-la-casbah"
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
       },
       "track": "",
-      "showTitle": "Les vinyles versatiles",
+      "showTitle": "Toute est dans toute (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T23:46:20.253Z"
+      "checkedAt": "2026-08-18T01:01:37.657Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Lesbo-sons",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Underground Sounds",
         "source": "api-live",
         "start": "20:00",
         "end": "22:00"
       },
+      "next": {
+        "title": "Drastic Plastic",
+        "source": "api-live",
+        "start": "22:00",
+        "end": "23:00"
+      },
       "track": "",
-      "showTitle": "Lesbo-sons",
+      "showTitle": "Underground Sounds",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +82,60 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T23:46:23.335Z"
+      "checkedAt": "2026-08-18T01:01:40.421Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Queer Chaos",
+        "title": "LEKTOR DECODER",
         "source": "schedule-live",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/queer-chaos"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/lektor-decoder"
       },
       "next": {
-        "title": "In The Garage",
+        "title": "Past Tense",
         "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/in-the-garage"
+        "start": "22:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/past-tense"
       },
       "track": "",
-      "showTitle": "Queer Chaos",
+      "showTitle": "LEKTOR DECODER",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T23:46:37.898Z"
+      "checkedAt": "2026-08-18T01:01:55.142Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Ma radio Académia",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Le terrain sportif",
         "source": "schedule-live",
         "start": "20:00",
         "end": "00:01"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Ma radio Académia",
+      "showTitle": "Le terrain sportif",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-17T23:46:38.459Z"
+      "checkedAt": "2026-08-18T01:01:55.789Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +148,7 @@
         "end": "07:00",
         "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "Oktoplut - Perdre dans l",
+      "track": "Nia Archives - Train Of Thought",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -151,7 +160,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-17T23:46:44.937Z"
+      "checkedAt": "2026-08-18T01:02:03.176Z"
     }
   }
 }
