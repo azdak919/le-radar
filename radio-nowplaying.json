@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-18T17:23:28.307Z",
+  "updatedAt": "2026-08-18T17:54:12.604Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T17:23:03.956Z"
+      "checkedAt": "2026-08-18T17:53:33.509Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T17:23:06.292Z"
+      "checkedAt": "2026-08-18T17:53:35.820Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T17:23:09.099Z"
+      "checkedAt": "2026-08-18T17:53:38.712Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Shaking the Habitual",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/shaking-the-habitual"
       },
       "next": {
         "title": "Code Switch",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "14:00",
         "end": "15:00",
         "url": "http://www.cjlo.com/shows/code-switch"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "Shaking the Habitual",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T17:23:23.201Z"
+      "checkedAt": "2026-08-18T17:54:04.249Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T17:23:24.955Z"
+      "checkedAt": "2026-08-18T17:54:05.456Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "By Storm - Double Trio 2",
+      "track": "L'Rain — soulless cycle",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-18T17:23:27.956Z"
+      "checkedAt": "2026-08-18T17:54:12.252Z"
     }
   }
 }
