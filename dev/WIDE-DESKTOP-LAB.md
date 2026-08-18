@@ -39,8 +39,8 @@ Sur **localhost**, la barre flottante en bas propose :
 | Shell | ~1760 | ~1840 |
 | Sources | Rail gauche sticky, pastilles pleine largeur, **Le Radar** en tête | idem, rail un peu plus large |
 | En-tête fil | **Le fil étudiant** + traduction + compteur / MAJ au-dessus du magazine | idem |
-| À la une | Magazine (inchangé dans l’esprit) | 2 unes dès 1920 |
-| En bref | **1 colonne** jusqu’à 1919 ; **1 col à 1920** (plus d’air aux unes) | **2 col dès 2560**, **3 dès 3440** |
+| À la une | Magazine (inchangé dans l’esprit) | 2 unes dès 1920 ; 3 à 3840 |
+| En bref | **1 colonne** jusqu’à 3439 (même rapport une/bref qu’à 1920) | **2 col dès 3440** |
 | Suite du fil | **3 colonnes** | **4 colonnes** |
 | Footer / crédits | Pleine largeur sous le rail (plus de clipping) | idem |
 | Radio | Gelée 1180 | Gelée 1180 |
