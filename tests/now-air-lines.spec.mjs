@@ -440,3 +440,89 @@ test('les métadonnées techniques ne sont jamais affichées comme une piste', a
   expect(results.accepted).toBe('The Magic Roundabout');
   expect(results.decoded, 'entité HTML non décodée à l’affichage').not.toContain('&#');
 });
+
+test('À l’antenne : émission d’abord, piste seulement s’il n’y a pas d’émission', async ({ page }) => {
+  await pure(page);
+
+  const copy = await page.evaluate(() => {
+    const { liveCopyFromPhases, composedAirPhases } = window.RadarAir._pure;
+    const both = liveCopyFromPhases([
+      { kind: 'live', title: '10 sur 10 : un podcast 100% rap', sub: '20:30 – 22:30' },
+      { kind: 'upcoming', title: 'Les rois de l’arène', sub: 'Demain · 05:00 – 07:00' },
+      { kind: 'live', title: '♪ Lido Pimienta - No Me Quiero Ir', sub: '' },
+    ]);
+    const trackOnly = liveCopyFromPhases([
+      { kind: 'upcoming', title: 'Faire avec', sub: '17:00 – 18:00' },
+      { kind: 'live', title: '♪ Lido Pimienta - No Me Quiero Ir', sub: '' },
+    ]);
+    const composed = composedAirPhases(null);
+    return { both, trackOnly, composedEmpty: composed };
+  });
+
+  expect(copy.both.liveTitle).toBe('10 sur 10 : un podcast 100% rap');
+  expect(copy.both.liveSub).toMatch(/Lido Pimienta/);
+  expect(copy.trackOnly.liveTitle).toBe('Lido Pimienta - No Me Quiero Ir');
+  expect(copy.trackOnly.liveSub).toBe('');
+});
+
+test('wide : deux slots, deux lignes, jamais de titre écrasé', async ({ page }) => {
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await page.goto('/?wide=e', { waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => window.RadarAir?._pure && document.getElementById('tuner-nowair-wide'));
+
+  const geo = await page.evaluate(() => {
+    const liveT = document.querySelector('[data-wide-live-title]');
+    const nextT = document.querySelector('[data-wide-next-title]');
+    const liveSlot = document.querySelector('.tuner-wide-slot--live');
+    const nextSlot = document.querySelector('.tuner-wide-slot--next');
+    if (liveT) liveT.textContent = 'Toute est dans toute (reprise) et encore plus long pour tester';
+    if (nextT) nextT.textContent = 'Toute est dans toute (reprise)';
+    const liveSub = document.querySelector('[data-wide-live-sub]');
+    const nextSub = document.querySelector('[data-wide-next-sub]');
+    if (liveSub) {
+      liveSub.textContent = '20:00 – 21:00';
+      liveSub.hidden = false;
+    }
+    if (nextSub) {
+      nextSub.textContent = '21:00 – 22:00';
+      nextSub.hidden = false;
+    }
+    liveSlot.hidden = false;
+    liveSlot.classList.remove('is-wide-absent');
+    const lt = getComputedStyle(liveT);
+    const nt = getComputedStyle(nextT);
+    return {
+      liveH: liveT.getBoundingClientRect().height,
+      nextH: nextT.getBoundingClientRect().height,
+      liveW: liveSlot.getBoundingClientRect().width,
+      nextW: nextSlot.getBoundingClientRect().width,
+      liveHidden: liveSlot.hidden || liveSlot.classList.contains('is-wide-absent'),
+      liveWrap: lt.whiteSpace,
+      nextWrap: nt.whiteSpace,
+      liveClamp: lt.webkitLineClamp,
+      hideLive: window.RadarAir._pure.wideNowAirLiveCopy({ id: 'x' }).hideLive,
+    };
+  });
+
+  expect(geo.liveHidden, 'À l’antenne toujours visible').toBe(false);
+  expect(geo.liveWrap).toBe('nowrap');
+  expect(geo.nextWrap).toBe('nowrap');
+  expect(geo.liveH, 'titre live = 1 ligne').toBeLessThan(22);
+  expect(geo.nextH, 'titre à venir = 1 ligne').toBeLessThan(22);
+  expect(geo.liveW, 'slot live pas écrasé').toBeGreaterThan(120);
+  expect(geo.nextW, 'slot à venir pas écrasé').toBeGreaterThan(120);
+  expect(geo.hideLive).toBe(false);
+
+  const full = await page.evaluate(() => {
+    const nextT = document.querySelector('[data-wide-next-title]');
+    nextT.textContent = 'Toute est dans toute (reprise)';
+    return {
+      text: nextT.textContent,
+      sw: nextT.scrollWidth,
+      cw: nextT.clientWidth,
+      overflow: getComputedStyle(nextT).textOverflow,
+    };
+  });
+  expect(full.overflow, 'pas d’ellipse sur le titre wide').not.toBe('ellipsis');
+  expect(full.sw, 'titre à venir entier').toBeLessThanOrEqual(full.cw + 1);
+});

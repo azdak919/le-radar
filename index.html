@@ -46,10 +46,10 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="translate-menu.css" />
     <!-- Lab local : formats d’écran seulement (localhost / ?lab=390) -->
-    <link rel="stylesheet" href="dev/midwidth-preview.css?v=wide-lab-e24" />
-    <link rel="stylesheet" href="dev/wide-desktop-preview.css?v=wide-lab-e24" />
-    <script src="dev/midwidth-preview.js?v=wide-lab-e24"></script>
-    <script src="dev/wide-desktop-preview.js?v=wide-lab-e24"></script>
+    <link rel="stylesheet" href="dev/midwidth-preview.css?v=wide-lab-e85" />
+    <link rel="stylesheet" href="dev/wide-desktop-preview.css?v=wide-lab-e85" />
+    <script src="dev/midwidth-preview.js?v=wide-lab-e85"></script>
+    <script src="dev/wide-desktop-preview.js?v=wide-lab-e85"></script>
     <!--
       CSS critique du synthé bureau : réserve « À l'antenne » + volume compact
       dès le premier paint (avant le CSS mis en cache / le JS async).
@@ -534,6 +534,22 @@
         </a>
       <!-- RADAR:SEO:FEED:END -->
       </div>
+      <noscript>
+        <style>
+          .news-list:not([data-ready]) > .article {
+            position: static !important;
+            width: auto !important;
+            height: auto !important;
+            margin: 0 !important;
+            clip: auto !important;
+            overflow: visible !important;
+            white-space: inherit !important;
+          }
+          .news-list:not([data-ready])::before,
+          .news-list:not([data-ready])::after { content: none !important; display: none !important; }
+          .news-list:not([data-ready]) { min-height: 0 !important; display: block !important; }
+        </style>
+      </noscript>
 
       <div id="news-empty" class="news-empty hidden">
         <p>Aucun article pour le moment.</p>
@@ -558,6 +574,8 @@
           <a href="sports/" data-sports-reset target="_blank" rel="noopener noreferrer">Sports</a>
           <span class="site-foot__sep" aria-hidden="true">·</span>
           <a href="archives/">Archives</a>
+          <span class="site-foot__sep" aria-hidden="true">·</span>
+          <a href="kit-media/">Kit média</a>
           <span class="site-foot__sep" aria-hidden="true">·</span>
           <a href="en/" hreflang="en-CA">English</a>
           <span class="site-foot__sep" aria-hidden="true">·</span>

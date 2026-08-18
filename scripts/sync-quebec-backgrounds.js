@@ -20,7 +20,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const { matchHardBanned } = require('./quebec-backgrounds-blacklist');
-const { scrubBankCredits, sanitizeCommonsCredit } = require('./commons-credit-lib');
+const { scrubBankCredits, sanitizeCommonsCredit, placeFromPhotoMeta } = require('./commons-credit-lib');
 const { seasonTagTrusted } = require('./season-lib');
 
 const ROOT = path.join(__dirname, '..');
@@ -130,6 +130,8 @@ function photoToJsObject(p, bank) {
   if (typeof p.position === 'string' && p.position.trim()) {
     lines.push(`    position: "${esc(p.position.trim())}"`);
   }
+  const place = p.place || placeFromPhotoMeta(p.title || '', p.description || '');
+  if (place) lines.push(`    place: "${esc(place)}"`);
   if (bank.id === 'universities') {
     lines.push('    campus: true');
   }

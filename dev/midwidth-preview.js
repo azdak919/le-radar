@@ -59,7 +59,7 @@
   /* Verdict mainteneur : E seulement (A–D retirés de la barre lab). */
   const WIDE_OPTIONS = {
     off: { id: 'off', label: 'Prod', hint: 'Prod actuelle (~1180) — témoin' },
-    e: { id: 'e', label: 'E', hint: 'Rail sources + en bref 2–3 col · actif seulement >1280' },
+    e: { id: 'e', label: 'E', hint: 'Rail + En bref + dual antenne · actif dès 1440' },
   };
 
   /** E uniquement au-delà de la ref. bureau 1280 (format lab ou viewport). */
@@ -222,8 +222,7 @@
       }
     }
 
-    // Badge seulement si réellement appliqué
-    paintWideBadge(effective, id);
+    removeWideBadge();
 
     // Filtres sources (app.js lit __radarWidePreview à chaque sync)
     try {
@@ -246,34 +245,8 @@
     }
   }
 
-  function paintWideBadge(effectiveId, requestedId) {
-    if (isLabFrame()) return;
-    let badge = document.getElementById('wide-desktop-badge');
-    if (!effectiveId || effectiveId === 'off') {
-      // Préférence E mais viewport/format trop étroit
-      if (requestedId === 'e' && !canApplyWideE()) {
-        if (!badge) {
-          badge = document.createElement('div');
-          badge.id = 'wide-desktop-badge';
-          document.body.appendChild(badge);
-        }
-        badge.dataset.wide = 'e-inactive';
-        badge.textContent = 'Wide E · inactif ≤1280';
-        badge.title = 'Passe en format 1440+ ou élargis la fenêtre pour activer E';
-        return;
-      }
-      badge?.remove();
-      return;
-    }
-    if (!badge) {
-      badge = document.createElement('div');
-      badge.id = 'wide-desktop-badge';
-      document.body.appendChild(badge);
-    }
-    badge.dataset.wide = effectiveId;
-    const opt = WIDE_OPTIONS[effectiveId];
-    badge.textContent = `Wide ${opt.label} · ${(opt.hint || '').split('—')[0].trim()}`;
-    badge.title = opt.hint || '';
+  function removeWideBadge() {
+    document.getElementById('wide-desktop-badge')?.remove();
   }
 
   // Dataset le plus tôt possible (host + iframe)

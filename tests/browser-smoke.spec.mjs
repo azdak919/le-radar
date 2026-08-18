@@ -140,7 +140,25 @@ test('SEO : lecteur natif et bascule de thème', async ({ page }) => {
   await expect(page.locator('html')).not.toHaveAttribute('data-theme', before || '');
   await expect(page.locator('#tuner-select')).toContainText('CHYZ');
   await expect(page.locator('.seo-day[data-current-day="true"]')).toHaveCount(1);
-  await expect(page.locator('.seo-slot--live, .seo-slot--upcoming')).toHaveCount(1);
+  await expect.poll(() => page.locator('.seo-slot--pulse').count()).toBe(1);
+});
+
+test('SEO : clic à l’antenne / à venir pulse le bon créneau', async ({ page }) => {
+  await page.goto('/radios/chyz/#horaire', { waitUntil: 'domcontentloaded' });
+  await expect.poll(() => page.locator('.seo-slot--pulse').count()).toBe(1);
+  const liveOnHoraire = await page.locator('.seo-slot--live').count();
+  if (liveOnHoraire) {
+    await expect(page.locator('.seo-slot--live.seo-slot--pulse')).toHaveCount(1);
+    await expect(page.locator('.seo-slot--upcoming.seo-slot--pulse')).toHaveCount(0);
+  }
+
+  await page.goto('/radios/chyz/#horaire-avenir', { waitUntil: 'domcontentloaded' });
+  await expect.poll(() => page.locator('.seo-slot--pulse').count()).toBe(1);
+  const upcomingOnAvenir = await page.locator('.seo-slot--upcoming').count();
+  if (upcomingOnAvenir) {
+    await expect(page.locator('.seo-slot--upcoming.seo-slot--pulse')).toHaveCount(1);
+    await expect(page.locator('.seo-slot--live.seo-slot--pulse')).toHaveCount(0);
+  }
 });
 
 test('RSS : lecteur natif, sans iframe', async ({ page }) => {

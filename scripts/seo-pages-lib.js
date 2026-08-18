@@ -380,6 +380,7 @@ const T = {
     footerNewspapers: 'Journaux',
     footerSchedules: 'Radios',
     archives: 'Archives',
+    kitMedia: 'Kit média',
     licenseIntro: 'Ce projet est distribué sous',
     licenseName: 'licence publique générale GNU, version 2',
     sourceCode: 'Code source (GitHub)',
@@ -535,6 +536,7 @@ const T = {
     footerNewspapers: 'Newspapers',
     footerSchedules: 'Radio',
     archives: 'Archives',
+    kitMedia: 'Media kit',
     licenseIntro: 'This project is distributed under the',
     licenseName: 'GNU General Public License, version 2',
     sourceCode: 'Source code (GitHub)',
@@ -760,6 +762,7 @@ const SECTIONS = [
     attrs: ' data-sports-reset target="_blank" rel="noopener noreferrer"',
   },
   { id: 'archives', key: 'archives', path: { fr: 'archives/', en: 'archives/' }, footerOnly: true },
+  { id: 'kit', key: 'kitMedia', path: { fr: 'kit-media/', en: 'en/media-kit/' }, footerOnly: true },
 ];
 
 function sectionLinks({ lang, href, includeFooterOnly = false, includeNavOnly = false, current = null } = {}) {
@@ -792,6 +795,27 @@ function renderSectionNav({ lang = 'fr', up = './', indent = '    ', current = '
   return `<nav class="site-sections" aria-label="${label}">
 ${indent}  ${items}
 ${indent}</nav>`;
+}
+
+function renderMastheadWeather({ lang = 'fr' } = {}) {
+  const label = lang === 'en' ? 'Québec weather' : 'Météo du Québec';
+  const board = lang === 'en' ? 'Current conditions' : 'Conditions actuelles';
+  return `<div id="masthead-weather" class="masthead-weather hidden" aria-label="${escapeHtml(label)}" aria-live="polite">
+            <span class="masthead-weather__board" aria-label="${escapeHtml(board)}"></span>
+          </div>`;
+}
+
+function renderMastheadBoards({ lang = 'fr' } = {}) {
+  const sports = lang === 'en'
+    ? 'Québec student sports scores'
+    : 'Résultats sportifs étudiants du Québec';
+  return `    <!-- Repli mobile : quand le masthead n'a plus de place, app.js déplace
+         #masthead-weather ici (même carte que sur bureau). -->
+    <div id="masthead-weather-dock" class="masthead-weather-dock"></div>
+
+    <!-- Scoreboard RSEQ / unis QC : sous la radio (mobile + bureau). -->
+    <div id="masthead-sports-strip" class="masthead-sports-strip" hidden aria-label="${escapeHtml(sports)}" aria-live="polite"></div>
+`;
 }
 
 function renderMastheadActions({ lang = 'fr', up = './', current = null, indent = '          ' } = {}) {
@@ -1094,6 +1118,7 @@ ${(Array.isArray(extraScripts) ? extraScripts : []).map((src) => `    <script sr
             <span id="today-date"></span>
             <time id="today-time" class="masthead-time" aria-label="${lang === 'en' ? 'Current time' : 'Heure actuelle'}"></time>
           </span>
+          ${renderMastheadWeather({ lang })}
           ${renderMastheadActions({ lang, up, current: chromeCurrent, indent: '          ' })}
         </div>
         <div class="masthead-brand">
@@ -1106,7 +1131,7 @@ ${(Array.isArray(extraScripts) ? extraScripts : []).map((src) => `    <script sr
     </header>
 
 ${renderNativeTuner()}
-
+${renderMastheadBoards({ lang })}
     <main class="wire seo-wire${wireClass ? ` ${escapeHtml(wireClass)}` : ''}">
       ${crumbHtml}
 ${eyebrow ? `      <p class="seo-eyebrow">${escapeHtml(eyebrow)}</p>\n` : ''}      ${h1Html}
@@ -1410,6 +1435,8 @@ module.exports = {
   renderPage,
   renderSiteFooter,
   renderMastheadActions,
+  renderMastheadWeather,
+  renderMastheadBoards,
   renderSectionNav,
   SECTIONS,
   renderInstallMenu,

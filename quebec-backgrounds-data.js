@@ -22,6 +22,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Parque Nacional de Forillon 4",
     width: 4288,
     height: 2848,
+    place: "Forillon",
     season: "automne",
   },
   {
@@ -32,6 +33,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Parque Nacional de Forillon 12",
     width: 3330,
     height: 2430,
+    place: "Forillon",
     season: "automne",
   },
   {
@@ -42,6 +44,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Parque Nacional de Forillon 11",
     width: 4132,
     height: 2764,
+    place: "Forillon",
     season: "automne",
   },
   {
@@ -62,66 +65,73 @@ const QUEBEC_BACKGROUNDS = [
     title: "Chemin Desjardins et mont Orford a l`horzion - panoramio",
     width: 2000,
     height: 1106,
+    place: "Orford",
     season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/1c/Deer_in_Gatineau.JPG",
-    credit: "You may select the license of your choice.",
+    credit: "",
     link: "https://commons.wikimedia.org/wiki/File:Deer%20in%20Gatineau.JPG",
     license: "CC BY-SA 3.0",
     title: "Deer in Gatineau",
     width: 3072,
     height: 2304,
+    place: "Gatineau",
     season: "automne",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/d/d7/Cap_Bon-Ami%2C_Forillon_National_Park_%287612987688%29.jpg",
-    credit: "Andrea Schaffer from Sydney, Australia",
+    credit: "Andrea Schaffer",
     link: "https://commons.wikimedia.org/wiki/File:Cap%20Bon-Ami%2C%20Forillon%20National%20Park%20(7612987688).jpg",
     license: "CC BY 2.0",
     title: "Cap Bon-Ami, Forillon National Park (7612987688)",
     width: 4272,
     height: 2848,
+    place: "Forillon",
     season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/2e/Cap_Bon-Ami%2C_Forillon_National_Park_%287612992284%29.jpg",
-    credit: "Andrea Schaffer from Sydney, Australia",
+    credit: "Andrea Schaffer",
     link: "https://commons.wikimedia.org/wiki/File:Cap%20Bon-Ami%2C%20Forillon%20National%20Park%20(7612992284).jpg",
     license: "CC BY 2.0",
     title: "Cap Bon-Ami, Forillon National Park (7612992284)",
     width: 4272,
     height: 2848,
+    place: "Forillon",
     season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Cap_Bon-Ami%2C_Forillon_National_Park_%287613000550%29.jpg",
-    credit: "Andrea Schaffer from Sydney, Australia",
+    credit: "Andrea Schaffer",
     link: "https://commons.wikimedia.org/wiki/File:Cap%20Bon-Ami%2C%20Forillon%20National%20Park%20(7613000550).jpg",
     license: "CC BY 2.0",
     title: "Cap Bon-Ami, Forillon National Park (7613000550)",
     width: 4272,
     height: 2848,
+    place: "Forillon",
     season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/8/80/Cap_Bon-Ami%2C_Forillon_National_Park_%287613006968%29.jpg",
-    credit: "Andrea Schaffer from Sydney, Australia",
+    credit: "Andrea Schaffer",
     link: "https://commons.wikimedia.org/wiki/File:Cap%20Bon-Ami%2C%20Forillon%20National%20Park%20(7613006968).jpg",
     license: "CC BY 2.0",
     title: "Cap Bon-Ami, Forillon National Park (7613006968)",
     width: 3641,
     height: 2427,
+    place: "Forillon",
     season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/e/e1/Cap_Bon-Ami%2C_Forillon_National_Park_%287613010484%29.jpg",
-    credit: "Andrea Schaffer from Sydney, Australia",
+    credit: "Andrea Schaffer",
     link: "https://commons.wikimedia.org/wiki/File:Cap%20Bon-Ami%2C%20Forillon%20National%20Park%20(7613010484).jpg",
     license: "CC BY 2.0",
     title: "Cap Bon-Ami, Forillon National Park (7613010484)",
     width: 4272,
     height: 2848,
+    place: "Forillon",
     season: "ete",
   },
   {
@@ -132,6 +142,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Riviere saint Francois a l`aube - panoramio",
     width: 4165,
     height: 2568,
+    place: "Rivière Saint-François",
     season: "ete",
   },
   {
@@ -142,6 +153,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Une plage du Bic",
     width: 4292,
     height: 3317,
+    place: "Le Bic",
     season: "ete",
   },
   {
@@ -152,6 +164,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Paysage de Brompton Printemps 2014 - panoramio",
     width: 4469,
     height: 2327,
+    place: "Brompton",
     season: "printemps",
   },
   {
@@ -162,6 +175,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Paysage printannier Saint-Luc-de-Matane",
     width: 4160,
     height: 3120,
+    place: "Matane",
     season: "printemps",
   },
   {
@@ -172,6 +186,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Rivière Batiscan, Notre-Dame de Montauban 006",
     width: 4032,
     height: 3024,
+    place: "Batiscan",
     season: "hiver",
   },
   {
@@ -192,6 +207,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Fleuve-Saint-Laurent-2021",
     width: 4000,
     height: 3000,
+    place: "Montréal",
     season: "printemps",
   },
   {
@@ -222,6 +238,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Bois du Révérend Ponton automne 2010 - panoramio",
     width: 3264,
     height: 2124,
+    place: "Bois du Révérend Ponton",
     season: "automne",
   },
   {
@@ -242,6 +259,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Automne a Newport - panoramio",
     width: 2000,
     height: 1223,
+    place: "Newport",
     season: "automne",
   },
   {
@@ -262,6 +280,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Forêt Lac-Beauport Automne 2023",
     width: 5464,
     height: 3640,
+    place: "Lac-Beauport",
     season: "automne",
   },
   {
@@ -272,6 +291,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Sherbrooke, Quebec - centre-ville en automne - 3",
     width: 4608,
     height: 3072,
+    place: "Sherbrooke",
     season: "automne",
   },
   {
@@ -282,6 +302,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Sherbrooke, Quebec - centre-ville en automne - 2",
     width: 4608,
     height: 3072,
+    place: "Sherbrooke",
     season: "automne",
   },
   {
@@ -292,16 +313,18 @@ const QUEBEC_BACKGROUNDS = [
     title: "Sherbrooke, Quebec - centre-ville en automne - 1",
     width: 4608,
     height: 3072,
+    place: "Sherbrooke",
     season: "automne",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/d/dd/Montreal_NASA_cropped.jpg",
-    credit: "MontrealNasa.jpg : NASA derivative work: MTLskyline ( talk )",
+    credit: "NASA",
     link: "https://commons.wikimedia.org/wiki/File:Montreal%20NASA%20cropped.jpg",
     license: "Public domain",
     title: "Montreal NASA cropped",
     width: 1964,
     height: 1378,
+    place: "Montréal",
     season: "hiver",
   },
   {
@@ -312,6 +335,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Quebec-00151 - Lock number 3 of the Soulanges Canal. (51445151067)",
     width: 6069,
     height: 4105,
+    place: "Canal de Soulanges",
     season: "ete",
   },
   {
@@ -322,6 +346,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Riviere delisle coteau du lac",
     width: 4032,
     height: 3024,
+    place: "Coteau-du-Lac",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/2d/Pointe-Calumet_%28Qu%C3%A9bec%29-Vue_du_lac_en_hiver_sur_la_Mont%C3%A9e_de_la_Baie-2023-04-02.jpg",
@@ -331,6 +356,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Pointe-Calumet (Québec)-Vue du lac en hiver sur la Montée de la Baie-2023-04-02",
     width: 12000,
     height: 7592,
+    place: "Pointe-Calumet",
     season: "hiver",
   },
   {
@@ -341,6 +367,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "2016-08 Saguenay river 03",
     width: 5905,
     height: 3937,
+    place: "Saguenay",
     season: "ete",
   },
   {
@@ -351,6 +378,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "2016-08 Saguenay river 05",
     width: 6000,
     height: 4000,
+    place: "Saguenay",
     season: "hiver",
   },
   {
@@ -361,6 +389,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "2016-12 Saguenay river frozen",
     width: 5233,
     height: 2944,
+    place: "Saguenay",
     season: "hiver",
   },
   {
@@ -371,6 +400,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Traversier fjord du Saguenay",
     width: 4048,
     height: 3036,
+    place: "Saguenay",
     season: "automne",
   },
   {
@@ -381,6 +411,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "L'Anse-Saint-Jean View of Saguenay Fiord from the port",
     width: 3540,
     height: 2598,
+    place: "L'Anse-Saint-Jean",
     season: "ete",
   },
   {
@@ -391,6 +422,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Le paysage vu du quai de Carleton-sur-Mer - panoramio",
     width: 3648,
     height: 2736,
+    place: "Carleton-sur-Mer",
     season: "ete",
   },
   {
@@ -401,6 +433,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Rocher Percé vu à partir de l'île Bonaventure",
     width: 4272,
     height: 2848,
+    place: "Percé",
     season: "ete",
   },
   {
@@ -411,6 +444,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Rocher Percé vu du littoral",
     width: 2048,
     height: 1371,
+    place: "Percé",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/8/89/Le_rocher_Perc%C3%A9_vu_de_la_mer.jpg",
@@ -420,6 +454,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Le rocher Percé vu de la mer",
     width: 2048,
     height: 1371,
+    place: "Percé",
     season: "hiver",
   },
   {
@@ -430,16 +465,18 @@ const QUEBEC_BACKGROUNDS = [
     title: "Rocher Percé, Quebec",
     width: 4900,
     height: 3220,
+    place: "Percé",
     season: "automne",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/6/6f/Perce_20020916_11.jpg",
-    credit: "Nichole Ouellette/ouellette001.com",
+    credit: "Nichole Ouellette",
     link: "https://commons.wikimedia.org/wiki/File:Perce%2020020916%2011.jpg",
     license: "CC BY 4.0",
     title: "Perce 20020916 11",
     width: 3570,
     height: 2394,
+    place: "Percé",
     season: "automne",
   },
   {
@@ -450,6 +487,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Montmorency waterfall, Québec, Québec",
     width: 13524,
     height: 7022,
+    place: "Chute Montmorency",
     season: "automne",
   },
   {
@@ -460,6 +498,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Chute Montmorency panorama",
     width: 8500,
     height: 3915,
+    place: "Chute Montmorency",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/ff/Parc_de_la_Chute-Montmorency_001.jpg",
@@ -469,6 +508,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Parc de la Chute-Montmorency 001",
     width: 15189,
     height: 8701,
+    place: "Chute Montmorency",
     season: "hiver",
   },
   {
@@ -479,6 +519,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Parc de la Chute-Montmorency 004",
     width: 8065,
     height: 5219,
+    place: "Chute Montmorency",
     season: "hiver",
   },
   {
@@ -489,15 +530,17 @@ const QUEBEC_BACKGROUNDS = [
     title: "Chute-Montmorency, Quebec city, Canada",
     width: 15189,
     height: 8701,
+    place: "Chute Montmorency",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/8/8b/Montagnais_Indians_at_Pointe_Bleue.jpg",
-    credit: "Livernois, Jules-Ernest, 1851-1933",
+    credit: "Jules-Ernest Livernois",
     link: "https://commons.wikimedia.org/wiki/File:Montagnais%20Indians%20at%20Pointe%20Bleue.jpg",
     license: "Public domain",
     title: "Montagnais Indians at Pointe Bleue",
     width: 2295,
     height: 1424,
+    place: "Mashteuiatsh",
     season: "automne",
   },
   {
@@ -508,6 +551,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Nunavik North Shore",
     width: 4031,
     height: 2820,
+    place: "Nunavik",
     season: "hiver",
   },
   {
@@ -518,6 +562,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Nunavik landscape - panoramio",
     width: 3648,
     height: 2048,
+    place: "Nunavik",
     season: "printemps",
   },
   {
@@ -528,6 +573,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Lac Félix Landscape - panoramio",
     width: 3648,
     height: 2048,
+    place: "Lac Félix",
     season: "printemps",
   },
   {
@@ -538,6 +584,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Rock Valley, Kangirsuk, Nunavik, Quebec",
     width: 3264,
     height: 2448,
+    place: "Nunavik",
     season: "hiver",
   },
   {
@@ -548,6 +595,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Kangirsuk",
     width: 4032,
     height: 2268,
+    place: "Nunavik",
     season: "hiver",
   },
   {
@@ -558,16 +606,18 @@ const QUEBEC_BACKGROUNDS = [
     title: "Pingualuit Crater LK",
     width: 2048,
     height: 1536,
+    place: "Nunavik",
     season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/5/5b/Pingualuit_aerial_2007.jpg",
-    credit: "NASA. Courtesy of Denis Sarrazin.",
+    credit: "NASA / Denis Sarrazin",
     link: "https://commons.wikimedia.org/wiki/File:Pingualuit%20aerial%202007.jpg",
     license: "Public domain",
     title: "Pingualuit aerial 2007",
     width: 6000,
     height: 4000,
+    place: "Nunavik",
     season: "automne",
   },
   {
@@ -578,6 +628,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Pingualuit Crater - panoramio",
     width: 3648,
     height: 2736,
+    place: "Nunavik",
     season: "hiver",
   },
   {
@@ -588,6 +639,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Rivière Péribonka Montagne Été IMG 1175",
     width: 3264,
     height: 2448,
+    place: "Péribonka",
     season: "ete",
   },
   {
@@ -598,6 +650,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Chutes Waber — Parc national de la Mauricie, Québec",
     width: 5913,
     height: 2996,
+    place: "Mauricie",
     season: "ete",
   },
   {
@@ -608,6 +661,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Lac Wapizagonke — Parc national de la Mauricie",
     width: 5616,
     height: 3744,
+    place: "Mauricie",
     season: "ete",
   },
   {
@@ -618,6 +672,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Rivière Sainte-Anne — Parc national de la Gaspésie",
     width: 3264,
     height: 2448,
+    place: "Gaspésie",
     season: "ete",
   },
   {
@@ -628,6 +683,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Vue du mont Olivine vers l’est — Gaspésie",
     width: 3648,
     height: 2736,
+    place: "Gaspésie",
     season: "ete",
   },
   {
@@ -638,6 +694,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Lac aux Américains vu du mont Xalibu — Gaspésie",
     width: 4032,
     height: 3024,
+    place: "Gaspésie",
     season: "ete",
   },
   {
@@ -648,6 +705,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Paysage rural à Saint-Claude",
     width: 3984,
     height: 2656,
+    place: "Saint-Claude",
     season: "automne",
   },
   {
@@ -658,6 +716,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Paysage du Bas-Saint-Laurent",
     width: 2080,
     height: 1544,
+    place: "Bas-Saint-Laurent",
     season: "ete",
   },
   {
@@ -668,16 +727,18 @@ const QUEBEC_BACKGROUNDS = [
     title: "Collines escarpées du parc du Saguenay",
     width: 4592,
     height: 3448,
+    place: "Saguenay",
     season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/3/3c/Paysage_hivernal%2C_Mont_Tremblant%2C_Laurentides_Qu%C3%A9bec.jpg",
-    credit: "Lambert, Pierre ; Parent, Claude",
+    credit: "Pierre Lambert, Claude Parent",
     link: "https://commons.wikimedia.org/wiki/File:Paysage%20hivernal%2C%20Mont%20Tremblant%2C%20Laurentides%20Qu%C3%A9bec.jpg",
     license: "CC BY-SA 3.0",
     title: "Paysage hivernal, Mont Tremblant, Laurentides Québec",
     width: 1920,
     height: 1080,
+    place: "Mont-Tremblant",
     season: "hiver",
   },
   {
@@ -688,6 +749,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Adstock (Québec), paysage rural et minier 02",
     width: 4288,
     height: 3216,
+    place: "Adstock",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/23/Adstock_%28Qu%C3%A9bec%29%2C_paysage_rural_et_minier_01.jpg",
@@ -697,6 +759,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Adstock (Québec), paysage rural et minier 01",
     width: 4288,
     height: 3216,
+    place: "Adstock",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Montreal_Skyline_winter_panorama_Jan_2006.jpg",
@@ -706,6 +769,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Montreal Skyline winter panorama Jan 2006",
     width: 7065,
     height: 3689,
+    place: "Montréal",
     season: "hiver",
   },
   {
@@ -716,6 +780,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Montreal Panorama II",
     width: 6847,
     height: 2298,
+    place: "Montréal",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/16/Montreal_Skyline_from_Mont_Royal.jpg",
@@ -725,6 +790,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Montreal Skyline from Mont Royal",
     width: 25603,
     height: 4755,
+    place: "Montréal",
     season: "ete",
   },
   {
@@ -735,6 +801,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Montreal Skyline from Mont Royal 50mm",
     width: 29780,
     height: 5790,
+    place: "Montréal",
     season: "ete",
   },
   {
@@ -745,6 +812,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Montreal Skyline from Mont Royal raw",
     width: 29684,
     height: 7620,
+    place: "Montréal",
     season: "hiver",
   },
   {
@@ -755,6 +823,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Montreal Skyline from Mont Royal raw",
     width: 29684,
     height: 7620,
+    place: "Montréal",
     season: "ete",
   },
   {
@@ -765,6 +834,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Québec City skyline (Quintin Soloviev)",
     width: 5302,
     height: 2982,
+    place: "Québec",
     season: "hiver",
   },
   {
@@ -775,6 +845,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Skylines of Quebec City (skyline)",
     width: 17456,
     height: 5660,
+    place: "Québec",
     season: "automne",
   },
   {
@@ -785,6 +856,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Cityscapes of Quebec City (skyline 2)",
     width: 8980,
     height: 5394,
+    place: "Québec",
     season: "automne",
   },
   {
@@ -795,6 +867,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Skylines of Quebec City (skyline 5)",
     width: 10836,
     height: 6376,
+    place: "Québec",
     season: "automne",
   },
   {
@@ -805,6 +878,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Autumnal Retreat in Old Quebec- A Canvas of Fading Reds and Vibrant Oranges",
     width: 8009,
     height: 5339,
+    place: "Québec",
     season: "automne",
   },
   {
@@ -815,6 +889,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Gare fluviale de Québec, Quebec city, Canada",
     width: 14296,
     height: 5323,
+    place: "Québec",
     season: "hiver",
   },
   {
@@ -825,6 +900,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Hudson (Québec)-Belvédère sur lac des Deux Montagnes-Vue vers l'est-2022-09-22",
     width: 12000,
     height: 6805,
+    place: "Lac des Deux-Montagnes",
     season: "ete",
   },
   {
@@ -835,6 +911,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Lac des Deux Montagnes - Sainte-Marthe-sur-le-Lac",
     width: 5464,
     height: 3640,
+    place: "Lac des Deux-Montagnes",
     season: "hiver",
   },
   {
@@ -845,6 +922,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Hudson (Québec)-Pont sur le sentier Sandy Beach-2022-09-22",
     width: 12000,
     height: 9000,
+    place: "Lac des Deux-Montagnes",
     season: "ete",
   },
   {
@@ -855,6 +933,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Île-Perrot train station (exo)",
     width: 4032,
     height: 3024,
+    place: "Île-Perrot",
     season: "hiver",
   },
   {
@@ -865,6 +944,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Centre-ville de Montréal",
     width: 8906,
     height: 2448,
+    place: "Montréal",
     season: "automne",
   },
   {
@@ -875,16 +955,18 @@ const QUEBEC_BACKGROUNDS = [
     title: "Rivière Saguenay",
     width: 6000,
     height: 4000,
+    place: "Saguenay",
     season: "ete",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Before-sunrise-perse-rock.jpg",
-    credit: "Sam311 ( talk ) ( Uploads )",
+    credit: "Sam311",
     link: "https://commons.wikimedia.org/wiki/File:Before-sunrise-perse-rock.jpg",
     license: "CC BY 3.0",
     title: "Rocher Percé, Gaspésie",
     width: 2000,
     height: 1333,
+    place: "Percé",
     season: "ete",
   },
   {
@@ -895,6 +977,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Château Frontenac, Québec",
     width: 5184,
     height: 3456,
+    place: "Québec",
     season: "automne",
   },
   {
@@ -905,6 +988,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Fleuve Saint-Laurent, Coteau-du-Lac (Soulanges)",
     width: 3598,
     height: 1583,
+    place: "Coteau-du-Lac",
     season: "hiver",
   },
   {
@@ -915,16 +999,18 @@ const QUEBEC_BACKGROUNDS = [
     title: "Canal de Soulanges, Coteau-du-Lac",
     width: 3942,
     height: 1732,
+    place: "Canal de Soulanges",
     season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Pingualuit_aerial_2007_%28cropped%29.jpg",
-    credit: "NASA. Courtesy of Denis Sarrazin.",
+    credit: "NASA / Denis Sarrazin",
     link: "https://commons.wikimedia.org/wiki/File:Pingualuit_aerial_2007_(cropped).jpg",
     license: "Public domain",
     title: "Cratère Pingualuit, Nunavik",
     width: 5442,
     height: 3063,
+    place: "Nunavik",
     season: "hiver",
   },
   {
@@ -935,6 +1021,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Pessamit, nation Innue",
     width: 11750,
     height: 7833,
+    place: "Pessamit",
     season: "ete",
   },
   {
@@ -945,6 +1032,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Hudson, Lac des Deux-Montagnes",
     width: 12000,
     height: 7453,
+    place: "Lac des Deux-Montagnes",
     season: "automne",
   },
   {
@@ -955,16 +1043,18 @@ const QUEBEC_BACKGROUNDS = [
     title: "Hudson, Vaudreuil-Soulanges",
     width: 12000,
     height: 9000,
+    place: "Lac des Deux-Montagnes",
     season: "automne",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Lac_des_Deux-Montagnes_%28Pierrefonds%29_%288514398500%29.jpg",
-    credit: "Parcours riverain - Ville de Montréal from Canada",
+    credit: "Ville de Montréal",
     link: "https://commons.wikimedia.org/wiki/File:Lac_des_Deux-Montagnes_(Pierrefonds)_(8514398500).jpg",
     license: "CC BY 2.0",
     title: "Lac des Deux-Montagnes, Pierrefonds",
     width: 2896,
     height: 1944,
+    place: "Lac des Deux-Montagnes",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Deux-Montagnes-Belv%C3%A9d%C3%A8re_municipal_en_bordure_du_Lac_des_Deux-Montagnes-2022-05-19.jpg",
@@ -974,36 +1064,40 @@ const QUEBEC_BACKGROUNDS = [
     title: "Belvédère, Lac des Deux-Montagnes",
     width: 12000,
     height: 6206,
+    place: "Lac des Deux-Montagnes",
     season: "printemps",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/fe/Lac_des_Deux_Montagnes_07.JPG",
-    credit: "Jeangagnon",
+    credit: "Jean Gagnon",
     link: "https://commons.wikimedia.org/wiki/File:Lac_des_Deux_Montagnes_07.JPG",
     license: "CC BY-SA 3.0",
     title: "Lac des Deux-Montagnes",
     focalY: 0.22,
     width: 3870,
     height: 2177,
+    place: "Lac des Deux-Montagnes",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/3/3d/Montreal_panorama.jpg",
-    credit: "Jazmin Million from North Amarica",
+    credit: "Jazmin Million",
     link: "https://commons.wikimedia.org/wiki/File:Montreal_panorama.jpg",
     license: "CC BY-SA 2.0",
     title: "Panorama de Montréal",
     width: 10000,
     height: 2240,
+    place: "Montréal",
     season: "hiver",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/15/Montreal_skyline_2011.jpg",
-    credit: "abdallahh from Montréal, Canada",
+    credit: "abdallahh",
     link: "https://commons.wikimedia.org/wiki/File:Montreal_skyline_2011.jpg",
     license: "CC BY 2.0",
     title: "Skyline de Montréal, 2011",
     width: 4288,
     height: 2848,
+    place: "Montréal",
     season: "automne",
   },
   {
@@ -1014,6 +1108,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Skyline de Montréal",
     width: 4144,
     height: 2676,
+    place: "Montréal",
     season: "hiver",
   },
   {
@@ -1025,6 +1120,7 @@ const QUEBEC_BACKGROUNDS = [
     focalY: 0.35,
     width: 21461,
     height: 2939,
+    place: "Québec",
     season: "hiver",
   },
   {
@@ -1036,6 +1132,7 @@ const QUEBEC_BACKGROUNDS = [
     focalY: 0.4,
     width: 3888,
     height: 1326,
+    place: "Québec",
     season: "hiver",
   },
   {
@@ -1047,6 +1144,7 @@ const QUEBEC_BACKGROUNDS = [
     focalY: 0.4,
     width: 9778,
     height: 4797,
+    place: "Québec",
     season: "hiver",
   },
   {
@@ -1057,6 +1155,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Sunrise Over Montréal (250731329)",
     width: 2048,
     height: 1152,
+    place: "Montréal",
     season: "automne",
   },
   {
@@ -1068,6 +1167,7 @@ const QUEBEC_BACKGROUNDS = [
     focalY: 0.66,
     width: 3747,
     height: 2508,
+    place: "Percé",
     season: "ete",
   },
   {
@@ -1078,6 +1178,7 @@ const QUEBEC_BACKGROUNDS = [
     title: "Rivière Saint-François 2025",
     width: 5374,
     height: 3580,
+    place: "Rivière Saint-François",
     season: "hiver",
   }
 ];

@@ -203,6 +203,106 @@ test('une vue source remplit En bref sans dépasser la colonne une et vedettes',
   expect(bounds.hero - bounds.brief).toBeLessThanOrEqual(MAX_RESIDUAL_GAP);
 });
 
+test('wide E : Le Radar défile avec les sources ; En bref comble le vide', async ({ page }) => {
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  await page.goto('/?wide=e', { waitUntil: 'domcontentloaded' });
+
+  const allBtn = page.locator('.filter-btn--all').first();
+  await expect(allBtn).toBeVisible({ timeout: 10_000 });
+  const pos = await allBtn.evaluate((el) => getComputedStyle(el).position);
+  expect(pos).not.toBe('sticky');
+
+  const toggle = page.locator('.filters-toggle');
+  if (await toggle.isVisible()) {
+    await toggle.click();
+    await expect(page.locator('#news-filters-panel')).toHaveClass(/is-expanded/);
+    const list = page.locator('#news-filters, .filters').first();
+    const before = await allBtn.evaluate((el) => el.getBoundingClientRect().top);
+    await list.evaluate((el) => { el.scrollTop = 80; });
+    const after = await allBtn.evaluate((el) => el.getBoundingClientRect().top);
+    expect(after).toBeLessThan(before - 20);
+  }
+
+  await page.goto('/?wide=e&source=Le%20Polyscope', { waitUntil: 'domcontentloaded' });
+  await expect.poll(async () => page.locator('.brief-rail .article--compact').count(), { timeout: 12_000 })
+    .toBeGreaterThan(0);
+  await page.waitForTimeout(400);
+  const gap = await page.evaluate(() => {
+    const last = (sel) => {
+      const cards = [...document.querySelectorAll(sel)];
+      return cards.at(-1)?.getBoundingClientRect().bottom ?? 0;
+    };
+    return last('.news-hero > .article') - last('.brief-rail > .article');
+  });
+  expect(gap, `vide sous En bref trop grand (${Math.round(gap)} px)`).toBeLessThan(220);
+});
+
+test('wide E : En bref ne dépasse pas la une (1920) et complète la rangée (3840)', async ({ page }) => {
+  const measure = async (width) => {
+    await page.setViewportSize({ width, height: 1080 });
+    await page.goto('/?wide=e', { waitUntil: 'domcontentloaded' });
+    await expect.poll(async () => page.locator('.brief-rail .article--compact').count(), { timeout: 12_000 })
+      .toBeGreaterThan(0);
+    await page.waitForTimeout(500);
+    return page.evaluate(() => {
+      const last = (sel) => {
+        const cards = [...document.querySelectorAll(sel)];
+        return cards.at(-1)?.getBoundingClientRect().bottom ?? 0;
+      };
+      const cols = getComputedStyle(document.querySelector('.brief-rail'))
+        .gridTemplateColumns.split(' ').filter(Boolean).length;
+      const n = document.querySelectorAll('.brief-rail .article--compact').length;
+      return {
+        overshoot: last('.brief-rail > .article') - last('.news-hero > .article'),
+        gap: last('.news-hero > .article') - last('.brief-rail > .article'),
+        cols,
+        n,
+      };
+    });
+  };
+
+  const at1920 = await measure(1920);
+  expect(at1920.overshoot, `1920 : En bref trop bas (${Math.round(at1920.overshoot)} px)`).toBeLessThanOrEqual(28);
+  if (at1920.cols >= 2) {
+    expect(at1920.n % at1920.cols, '1920 : rangée En bref incomplète et trop haute').toBe(0);
+  }
+
+  const at3840 = await measure(3840);
+  expect(at3840.overshoot, `3840 : En bref trop bas (${Math.round(at3840.overshoot)} px)`).toBeLessThanOrEqual(28);
+  if (at3840.cols >= 2 && at3840.gap > 28) {
+    expect(at3840.n % at3840.cols, '3840 : il manque des cartes pour finir la rangée').toBe(0);
+  }
+});
+
+test('wide E 3840 : 3 unes, 6 vedettes en 3 col, En bref 2 col', async ({ page }) => {
+  await page.setViewportSize({ width: 3840, height: 1600 });
+  await page.goto('/?wide=e', { waitUntil: 'domcontentloaded' });
+  await expect.poll(async () => page.locator('.news-hero .article--lead').count(), { timeout: 12_000 })
+    .toBe(3);
+  await expect(page.locator('.news-hero')).toHaveAttribute('data-leads', '3');
+  await expect.poll(async () => page.locator('.news-hero .article--feature').count(), { timeout: 8_000 })
+    .toBe(6);
+  const { briefCols, featCols, leadCols } = await page.locator('.news-hero').evaluate((hero) => {
+    const tops = (sel) => {
+      const els = [...hero.querySelectorAll(sel)];
+      if (!els.length) return 0;
+      const first = els[0].getBoundingClientRect().top;
+      return els.filter((el) => Math.abs(el.getBoundingClientRect().top - first) < 8).length;
+    };
+    const brief = document.querySelector('.brief-rail');
+    return {
+      leadCols: tops('.article--lead'),
+      featCols: tops('.article--feature'),
+      briefCols: brief
+        ? getComputedStyle(brief).gridTemplateColumns.split(' ').filter(Boolean).length
+        : 0,
+    };
+  });
+  expect(leadCols, 'À la une doit rester 3 colonnes à 3840').toBe(3);
+  expect(featCols, 'Vedettes doivent passer à 3 colonnes à 3840').toBe(3);
+  expect(briefCols, 'En bref doit rester 2 colonnes à 3840').toBe(2);
+});
+
 test('depuis l’accueil, on atteint le hub des horaires puis une grille complète', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
@@ -248,4 +348,104 @@ test('les fiches restent lisibles sans JavaScript', async ({ browser }) => {
   const external = await page.locator('.seo-headline a').count();
   expect(external).toBeGreaterThan(0);
   await ctx.close();
+});
+
+test('wide E : faits packés et footer en colonnes, pas étalés', async ({ page }) => {
+  await page.setViewportSize({ width: 2560, height: 1440 });
+  await page.goto('/radios/ckut/?wide=e', { waitUntil: 'domcontentloaded' });
+
+  const facts = page.locator('.seo-facts');
+  await expect(facts).toBeVisible();
+  const factsBox = await facts.boundingBox();
+  const wireBox = await page.locator('.seo-wire').boundingBox();
+  expect(factsBox, 'bandeau faits').toBeTruthy();
+  expect(wireBox, 'colonne seo').toBeTruthy();
+  expect(factsBox.width).toBeLessThan(wireBox.width * 0.72);
+
+  const factWidths = await page.locator('.seo-fact').evaluateAll((els) =>
+    els.map((el) => Math.round(el.getBoundingClientRect().width)),
+  );
+  expect(Math.max(...factWidths)).toBeLessThan(320);
+
+  const foot = page.locator('.site-foot');
+  await expect(foot).toBeVisible();
+  const display = await foot.evaluate((el) => getComputedStyle(el).display);
+  expect(display).toBe('grid');
+  const cols = await foot.evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(' ').filter(Boolean).length);
+  expect(cols).toBeGreaterThanOrEqual(2);
+});
+
+test('wide E : footer en 2 colonnes, liens en ligne, crédits à droite', async ({ page }) => {
+  for (const path of ['/?wide=e', '/sports/?wide=e', '/medias/?wide=e', '/kit-media/?wide=e']) {
+    await page.setViewportSize({ width: 1920, height: 1080 });
+    await page.goto(path, { waitUntil: 'domcontentloaded' });
+    const foot = page.locator('.site-foot').first();
+    await expect(foot).toBeVisible();
+    const layout = await foot.evaluate((el) => {
+      const cs = getComputedStyle(el);
+      const brand = el.querySelector('.site-foot__brand');
+      const links = el.querySelector('.site-foot__links');
+      const credit = el.querySelector('.site-foot__credit');
+      const br = brand?.getBoundingClientRect();
+      const lr = links?.getBoundingClientRect();
+      const cr = credit?.getBoundingClientRect();
+      const dir = links ? getComputedStyle(links).flexDirection : '';
+      return {
+        display: cs.display,
+        cols: cs.gridTemplateColumns.split(' ').filter(Boolean).length,
+        brandX: br ? Math.round(br.x) : null,
+        linksX: lr ? Math.round(lr.x) : null,
+        creditX: cr ? Math.round(cr.x) : null,
+        flexDir: dir,
+      };
+    });
+    expect(layout.display, `${path} : grille`).toBe('grid');
+    expect(layout.cols, `${path} : 2 pistes`).toBe(2);
+    expect(layout.flexDir, `${path} : liens en ligne`).toBe('row');
+    expect(layout.creditX, `${path} : crédits à droite`).toBeGreaterThan(layout.brandX + 80);
+    expect(Math.abs(layout.linksX - layout.brandX), `${path} : liens sous la marque`).toBeLessThan(40);
+  }
+});
+
+test('wide E : horaires et sports gardent des cartes assez larges', async ({ page }) => {
+  const minDay = async (width, minW, maxCols) => {
+    await page.setViewportSize({ width, height: 1080 });
+    await page.goto(`/radios/chyz/?wide=e`, { waitUntil: 'domcontentloaded' });
+    const days = page.locator('.seo-schedule .seo-day');
+    await expect(days.first()).toBeVisible();
+    const boxes = await days.evaluateAll((els) => els.map((el) => ({
+      w: Math.round(el.getBoundingClientRect().width),
+      x: Math.round(el.getBoundingClientRect().x),
+    })));
+    const firstRow = [];
+    let lastX = -1;
+    for (const b of boxes) {
+      if (lastX >= 0 && b.x < lastX) break;
+      firstRow.push(b);
+      lastX = b.x;
+    }
+    expect(firstRow.length, `${width}px : trop de jours par rangée`).toBeLessThanOrEqual(maxCols);
+    expect(Math.min(...firstRow.map((b) => b.w)), `${width}px : jour trop étroit`).toBeGreaterThanOrEqual(minW);
+  };
+
+  await minDay(1920, 320, 5);
+  await minDay(2560, 320, 7);
+
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  await page.goto('/sports/?wide=e', { waitUntil: 'domcontentloaded' });
+  const panels = page.locator('.sports-board .sports-panel:not([hidden])');
+  await expect(panels.first()).toBeVisible({ timeout: 10_000 });
+  const widths = await panels.evaluateAll((els) => {
+    const row = [];
+    let lastX = -1;
+    for (const el of els) {
+      const r = el.getBoundingClientRect();
+      if (r.width < 8) continue;
+      if (lastX >= 0 && r.x < lastX) break;
+      row.push(Math.round(r.width));
+      lastX = r.x;
+    }
+    return row;
+  });
+  expect(Math.min(...widths), `sports 1920 trop étroit: ${widths}`).toBeGreaterThanOrEqual(340);
 });
