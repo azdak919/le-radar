@@ -48,6 +48,55 @@ for (const { width, height, label } of MID_WIDTHS) {
   });
 }
 
+/**
+ * iPad portrait : le CSS 2 col commence à 768 px. Sans équilibre JS au
+ * même seuil, la graine bureau (~10 brèves) dépasse les vedettes et
+ * laisse un vide blanc sous la colonne de gauche (signalé sur iPad).
+ */
+for (const { width, height, label } of [
+  { width: 768, height: 1024, label: 'iPad mini portrait' },
+  { width: 820, height: 1180, label: 'iPad Air 11 portrait' },
+  { width: 834, height: 1194, label: 'iPad Pro 11 portrait' },
+  { width: 1180, height: 820, label: 'iPad Air 11 paysage' },
+]) {
+  test(`magazine ${label} : En bref ne crée pas de vide sous les vedettes`, async ({ page }) => {
+    await page.setViewportSize({ width, height });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('.news-list[data-ready]')).toBeVisible({ timeout: 12_000 });
+    await expect(page.locator('.news-hero .article').first()).toBeVisible();
+    await expect(page.locator('.brief-rail .article--compact').first()).toBeVisible();
+
+    await expect.poll(async () => page.evaluate(() => {
+      const hero = document.querySelector('.news-hero');
+      const brief = document.querySelector('.brief-rail');
+      const contentH = (col) => {
+        let max = 0;
+        for (const child of col?.children || []) {
+          if (
+            child.classList.contains('news-hero-spacer')
+            || child.classList.contains('brief-rail-spacer')
+          ) continue;
+          max = Math.max(max, child.offsetTop + child.offsetHeight);
+        }
+        return max;
+      };
+      const heroC = contentH(hero);
+      const briefC = contentH(brief);
+      const spacerH = hero?.querySelector('.news-hero-spacer')?.offsetHeight || 0;
+      const briefN = brief?.querySelectorAll('.article--compact').length || 0;
+      return {
+        briefN,
+        overshoot: briefC - heroC,
+        spacerH,
+        aligned: briefN >= 1
+          && briefN <= 10
+          && (briefC - heroC) <= 80
+          && spacerH <= 140,
+      };
+    }), { timeout: 8_000 }).toMatchObject({ aligned: true });
+  });
+}
+
 test('magazine mid : le téléphone garde l’empilement une colonne', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
