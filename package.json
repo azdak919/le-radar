@@ -14,7 +14,7 @@
     "seo:update": "node scripts/generate-seo.js --update",
     "audit:banks:hard": "node scripts/audit-banks-hard.js",
     "test:browser": "playwright test",
-    "test:browser:ci": "playwright test tests/browser-smoke.spec.mjs tests/masthead-weather.spec.mjs tests/shared-chrome.spec.mjs tests/masthead-css-load.spec.mjs tests/now-air-lines.spec.mjs tests/engage-platform.spec.mjs tests/sources-rail-fill.spec.mjs",
+    "test:browser:ci": "playwright test tests/browser-smoke.spec.mjs tests/masthead-weather.spec.mjs tests/shared-chrome.spec.mjs tests/masthead-css-load.spec.mjs tests/now-air-lines.spec.mjs tests/engage-platform.spec.mjs tests/sources-rail-fill.spec.mjs tests/masthead-home-press.spec.mjs",
     "test": "npm run check && npm run test:browser",
     "bank:sync": "node scripts/sync-quebec-backgrounds.js",
     "bank:check": "node scripts/sync-quebec-backgrounds.js --check && node scripts/audit-banks-hard.js",
