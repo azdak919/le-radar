@@ -8,6 +8,8 @@
     "test:unit": "node solitaire/scripts/test-solitaire-rules.mjs && node tests/data-integrity.mjs && node tests/radio-nowplaying.mjs && node tests/schedule-drift.mjs && node tests/news-representations.mjs && node tests/author-lib.mjs && node tests/historical-catalog.mjs && node tests/historical-retro-crawl.mjs && node tests/archive-priority.mjs && node tests/maintenance-window.mjs && node tests/static-integrity.mjs && node tests/native-player-contract.mjs && node tests/college-places.mjs && node tests/institution-labels-lib.mjs && node tests/photo-visual-qc.mjs && node tests/wallpaper-subject.mjs && node tests/lead-photo-fit.mjs && node tests/bg-rotation.mjs && node tests/season-permanent.mjs && node tests/bank-hard-audit.mjs && node tests/news-image-mirror.mjs && node tests/focal-arch.mjs && node tests/sw-shell-freshness.mjs && node scripts/audit-sports-sectors.js",
     "check": "npm run check:syntax && npm run test:unit",
     "sw:bump": "node scripts/sw-shell-lock.mjs --write",
+    "media-kit:generate": "node scripts/generate-media-kit-assets.mjs",
+    "media-kit:check": "node scripts/generate-media-kit-assets.mjs --check",
     "seo": "node scripts/generate-seo.js",
     "seo:update": "node scripts/generate-seo.js --update",
     "audit:banks:hard": "node scripts/audit-banks-hard.js",
