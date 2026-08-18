@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-18T21:47:35.178Z",
+  "updatedAt": "2026-08-18T22:19:45.536Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T21:47:06.877Z"
+      "checkedAt": "2026-08-18T22:19:16.779Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T21:47:09.092Z"
+      "checkedAt": "2026-08-18T22:19:18.977Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Off The Hour: Local Journalism Stories",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Rez Rock Radio",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Soul Perspectives",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "20:30"
+      },
       "track": "",
-      "showTitle": "Off The Hour: Local Journalism Stories",
+      "showTitle": "Rez Rock Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T21:47:11.652Z"
+      "checkedAt": "2026-08-18T22:19:22.157Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Cherry Vamp and the Sonic Coffin",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
-      },
-      "next": {
         "title": "Bikini Brrroadcast",
         "source": "schedule",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
       },
+      "next": {
+        "title": "Ashes to Ashes",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/ashes-to-ashes"
+      },
       "track": "",
-      "showTitle": "Cherry Vamp and the Sonic Coffin",
+      "showTitle": "Bikini Brrroadcast",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T21:47:25.630Z"
+      "checkedAt": "2026-08-18T22:19:36.717Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,21 +133,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T21:47:26.685Z"
+      "checkedAt": "2026-08-18T22:19:37.846Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Le Studio",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00",
         "slug": "live"
       },
-      "track": "Boards of Canada - The Process",
-      "showTitle": "",
+      "next": {
+        "title": "Les Amazones",
+        "source": "api-live",
+        "start": "19:30",
+        "end": "20:30",
+        "slug": "les-amazones"
+      },
+      "track": "Modlee - Likewise",
+      "showTitle": "Le Studio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -157,7 +163,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-18T21:47:34.828Z"
+      "checkedAt": "2026-08-18T22:19:45.185Z"
     }
   }
 }
