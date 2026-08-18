@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-18T10:00:10.428Z",
+  "updatedAt": "2026-08-18T10:37:34.983Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T09:59:37.762Z"
+      "checkedAt": "2026-08-18T10:36:59.508Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T09:59:40.144Z"
+      "checkedAt": "2026-08-18T10:37:01.518Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T09:59:43.177Z"
+      "checkedAt": "2026-08-18T10:37:04.119Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Hip's Time to Wake Hop",
         "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
       },
+      "next": {
+        "title": "At The Movies",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/at-the-movies"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Hip's Time to Wake Hop",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T09:59:57.851Z"
+      "checkedAt": "2026-08-18T10:37:18.061Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T09:59:58.946Z"
+      "checkedAt": "2026-08-18T10:37:19.212Z"
     },
     "choq": {
       "id": "choq",
@@ -145,7 +145,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Jules - Tout va bien",
+      "track": "BB NOYAA - VITESSE",
       "showTitle": "Les rois de l'arène",
       "host": "",
       "source": "api-live",
@@ -156,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-18T10:00:10.078Z"
+      "checkedAt": "2026-08-18T10:37:34.633Z"
     }
   }
 }
