@@ -1,31 +1,17 @@
 {
-  "updated": "2026-08-18T18:02:41.231Z",
+  "updated": "2026-08-18T19:48:43.860Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
   "cited": 130,
-  "pending": 13,
+  "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 21,
-  "updatedCount": 10,
-  "citedNew": 8,
+  "checked": 18,
+  "updatedCount": 7,
+  "citedNew": 5,
   "fallbackNew": 13,
   "samples": [
-    {
-      "title": "Des initiatives qui rassemblent",
-      "source": "Le Délit",
-      "credit": "Crédit photo : Le Délit",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "source": "La Pige",
-      "credit": "Photo : Léa Morin-Letort",
-      "cited": true,
-      "method": "figcaption-paren-kind"
-    },
     {
       "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
@@ -41,7 +27,14 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Les femmes MAGA au service du patriarcat",
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "source": "Le Délit",
+      "credit": "Photo : Toscane Ralaimongo",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Pourquoi le L est en premier dans LGBTQ+",
       "source": "Le Délit",
       "credit": "Photo : Stu Doré",
       "cited": true,
@@ -55,20 +48,6 @@
       "method": null
     },
     {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
-      "source": "Quartier Libre",
-      "credit": "Photo : Maryse Boyce",
-      "cited": true,
-      "method": "figcaption-copyright"
-    },
-    {
       "title": "Inside Mile End Kicks",
       "source": "The Link",
       "credit": "Photo: Courtesy of Joe Fuda",
@@ -78,9 +57,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Illustration: Halle Keays",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }
