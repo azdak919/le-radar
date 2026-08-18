@@ -77,7 +77,14 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium
 
-      - name: Browser checks
+      # PR / push main : filet UI critique (mât, chrome, smoke, antenne).
+      # Suite complète : workflow_dispatch seulement (trop longue pour chaque push).
+      - name: Browser checks (critical)
+        if: github.event_name != 'workflow_dispatch'
+        run: npm run test:browser:ci
+
+      - name: Browser checks (full suite)
+        if: github.event_name == 'workflow_dispatch'
         run: npm run test:browser
 
       - name: Upload browser traces on failure
