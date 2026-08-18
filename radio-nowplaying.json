@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-18T20:20:05.302Z",
+  "updatedAt": "2026-08-18T20:49:21.557Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T20:19:41.534Z"
+      "checkedAt": "2026-08-18T20:48:50.056Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T20:19:43.699Z"
+      "checkedAt": "2026-08-18T20:48:52.395Z"
     },
     "ckut": {
       "id": "ckut",
@@ -72,7 +72,7 @@
         "start": "17:00",
         "end": "18:00"
       },
-      "track": "Airtime - offline",
+      "track": "",
       "showTitle": "Montreal Sessions",
       "host": "",
       "source": "api-live",
@@ -81,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T20:19:47.440Z"
+      "checkedAt": "2026-08-18T20:48:56.770Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +108,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T20:20:01.817Z"
+      "checkedAt": "2026-08-18T20:49:11.263Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T20:20:02.914Z"
+      "checkedAt": "2026-08-18T20:49:12.502Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "end": "19:00",
         "slug": "live"
       },
-      "track": "feeble little horse - Guts",
+      "track": "Éléonore Dessureault - Demence",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-18T20:20:04.952Z"
+      "checkedAt": "2026-08-18T20:49:21.208Z"
     }
   }
 }
