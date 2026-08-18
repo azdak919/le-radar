@@ -1,6 +1,6 @@
 {
-  "updated": "2026-08-18T22:42:45.038Z",
-  "updatedSlot": null,
+  "updated": "2026-08-18T23:24:35.463Z",
+  "updatedSlot": "2026-08-18T23:00:00.000Z",
   "count": 185,
   "freshnessSessions": 3,
   "sources": {
@@ -10,7 +10,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:00:00.000Z",
-      "lastFetchOk": "2026-08-18T22:41:54.893Z"
+      "lastFetchOk": "2026-08-18T23:23:46.608Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-08-18T22:41:55.957Z"
+      "lastFetchOk": "2026-08-18T23:23:47.831Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-03-25T11:00:00.000Z",
-      "lastFetchOk": "2026-08-18T22:42:01.129Z"
+      "lastFetchOk": "2026-08-18T23:23:52.947Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-07-31T12:00:00.000Z",
-      "lastFetchOk": "2026-08-18T22:42:02.259Z"
+      "lastFetchOk": "2026-08-18T23:23:53.958Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,7 +42,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-08-15T19:00:00.000Z",
-      "lastFetchOk": "2026-08-18T22:42:03.516Z"
+      "lastFetchOk": "2026-08-18T23:23:54.694Z"
     },
     "Zone Campus": {
       "fetchOk": true,
@@ -50,7 +50,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-08-18T22:42:05.014Z"
+      "lastFetchOk": "2026-08-18T23:23:56.131Z"
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,7 +58,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-08-18T22:42:08.266Z"
+      "lastFetchOk": "2026-08-18T23:23:58.227Z"
     },
     "Le Collectif": {
       "fetchOk": true,
@@ -66,7 +66,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-08-17T17:39:49.000Z",
-      "lastFetchOk": "2026-08-18T22:42:09.186Z"
+      "lastFetchOk": "2026-08-18T23:23:59.045Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -74,7 +74,7 @@
       "articleCount": 10,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-08-18T22:42:09.413Z"
+      "lastFetchOk": "2026-08-18T23:23:59.289Z"
     },
     "La Pige": {
       "fetchOk": false,
@@ -90,7 +90,7 @@
       "articleCount": 20,
       "freshArticleCount": 13,
       "lastArticle": "2026-02-25T14:38:32.764Z",
-      "lastFetchOk": "2026-08-18T22:42:24.535Z"
+      "lastFetchOk": "2026-08-18T23:24:14.585Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-08-18T02:00:41.000Z",
-      "lastFetchOk": "2026-08-18T22:42:24.927Z"
+      "lastFetchOk": "2026-08-18T23:24:14.891Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-08-18T22:42:25.195Z"
+      "lastFetchOk": "2026-08-18T23:24:15.129Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-08-18T22:42:25.360Z"
+      "lastFetchOk": "2026-08-18T23:24:15.321Z"
     }
   },
   "items": [
@@ -165,7 +165,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/5c4a6076fc504c5e.jpg",
-      "imageLocalKey": "5c4a6076fc504c5e"
+      "imageLocalKey": "5c4a6076fc504c5e",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -190,7 +191,8 @@
       "leadImageReady": true,
       "leadExcerpt": "At first, the algorithm doesn’t know what the boy wants, but at some point he and his friends start liking videos promoting self-improvement, going to the gym and how to get girls. He starts to echo views from creators such as Andrew Tate .",
       "imageLocal": "assets/news-images/5eeb0c5658b0071d.jpg",
-      "imageLocalKey": "5eeb0c5658b0071d"
+      "imageLocalKey": "5eeb0c5658b0071d",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -214,7 +216,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Malgré sa défaite, Nakashima était tout sourire. C’était la première fois de sa carrière qu’il atteignait la finale d’un Masters 1000. En cette période de tensions entre le Canada et les États-Unis, l’Américain a réussi à faire rire la foule montréalaise, mais aussi à lui faire scander des « Olé! Olé! » en déclarant : « Je vais être honnête, j’aime vraiment, vraiment Montréal, plus que Toronto.",
       "imageLocal": "assets/news-images/346e3a4737b5579e.jpg",
-      "imageLocalKey": "346e3a4737b5579e"
+      "imageLocalKey": "346e3a4737b5579e",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -237,7 +240,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Le traditionnel « Spectacle de la rentr é e » , pr é sent é par la FEUS et le REMDUS, se tiendra le mercredi 2 septembre prochain dans le stationnement PJ-3, situ é derri è re le Centre sportif du Campus principal. Pour l ’ occasion, l ’é dition 2026 r é unira trois figures du rap canadien et qu é b é cois.",
       "imageLocal": "assets/news-images/6238e9fbc05c33cd.jpg",
-      "imageLocalKey": "6238e9fbc05c33cd"
+      "imageLocalKey": "6238e9fbc05c33cd",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -335,7 +339,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Un enjeu qui peut passer sous silence est la maltraitance des personnes âgées dans leur milieu familial ou dans les établissements de santé qu’elles fréquentent. Ces personnes sont souvent vulnérables et certaines, atteintes de maladies à un stade avancé, ne peuvent pas facilement dénoncer les situations qu’elles vivent.",
       "imageLocal": "assets/news-images/d7c7c970a2b69d4d.jpg",
-      "imageLocalKey": "d7c7c970a2b69d4d"
+      "imageLocalKey": "d7c7c970a2b69d4d",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -358,7 +363,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Depuis le 1 er août, l’Omnium Banque Nationale (OBN) présenté par Rogers bat son plein au parc Jarry, l’un des plus vastes de Montréal. Le tournoi, qui a connu son lot de remous cette année – entre abandons, pluie et manifestation – touche à sa fin. Les demi-finales auront lieu ce soir, 12 août.",
       "imageLocal": "assets/news-images/0944aa11c8f595da.jpg",
-      "imageLocalKey": "0944aa11c8f595da"
+      "imageLocalKey": "0944aa11c8f595da",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -461,7 +467,8 @@
       "leadImageReady": true,
       "leadExcerpt": "This history, and much more, is featured in the exhibition. Bellemare was able to gather never-before-printed photographs of protests and posters to add to the AGQ’s collection.",
       "imageLocal": "assets/news-images/c8553405976692a5.jpg",
-      "imageLocalKey": "c8553405976692a5"
+      "imageLocalKey": "c8553405976692a5",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Tribune",
@@ -766,8 +773,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/13463c587fd35910.jpg",
       "imageLocalKey": "13463c587fd35910",
-      "_retainedFromCache": true,
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -818,7 +825,8 @@
       "leadImageReady": true,
       "leadExcerpt": "The Canadian men's national soccer team hosted the Republic of Ireland at Saputo Stadium for a friendly match on June 5, drawing a sold-out crowd of 19,619 fans for the team's final home match ahead of the 2026 FIFA World Cup.",
       "imageLocal": "assets/news-images/8478f151ef83b033.jpg",
-      "imageLocalKey": "8478f151ef83b033"
+      "imageLocalKey": "8478f151ef83b033",
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Pige",
@@ -891,7 +899,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Thousands of people filled the seats of Salle Wilfrid-Pelletier at Place-des-Arts for a panel featuring the astronauts of the Artemis II mission on Friday, May 15. Hosted by the Chamber of Commerce of Metropolitan Montreal (CCMM), the discussion marked the final stop on the group’s Canada tour , which featured a meeting with Prime Minister Mark Carney.",
       "imageLocal": "assets/news-images/1a2d452dc3e32ed7.jpg",
-      "imageLocalKey": "1a2d452dc3e32ed7"
+      "imageLocalKey": "1a2d452dc3e32ed7",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -1172,7 +1181,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/dad04c2783594e3b.jpg",
-      "imageLocalKey": "dad04c2783594e3b"
+      "imageLocalKey": "dad04c2783594e3b",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -1214,16 +1224,16 @@
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-2-768x1024.jpeg",
       "authorCheckedAt": "2026-08-18T09:59:44.219Z",
       "_pageAuthor": "Ulysse Taillard-Hodez",
-      "leadExcerpt": "Mme Fournier Dubé a insisté sur le fait que les enseignant·e·s sont les véritables « agents de changement ». Son rôle n’est pas d’imposer un cadre scientifique rigide, mais de vulgariser la recherche pour l’adapter aux besoins du terrain.",
-      "imageLocal": "assets/news-images/f5291c863e27cad4.jpg",
-      "imageLocalKey": "f5291c863e27cad4",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "image-2.jpeg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadExcerpt": "Mme Fournier Dubé a insisté sur le fait que les enseignant·e·s sont les véritables « agents de changement ». Son rôle n’est pas d’imposer un cadre scientifique rigide, mais de vulgariser la recherche pour l’adapter aux besoins du terrain.",
+      "imageLocal": "assets/news-images/f5291c863e27cad4.jpg",
+      "imageLocalKey": "f5291c863e27cad4",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -1249,7 +1259,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Depuis mars 2024, l’Université de Montréal (UdeM) dispose d’une politique de soutien aux parents aux études. Le projet de loi 394 ( PL394 ) de Québec solidaire lui imposerait, en cas d’adoption, d’en créer une destinée également aux proches aidant·e·s.",
       "imageLocal": "assets/news-images/326f163ec9b22193.jpg",
-      "imageLocalKey": "326f163ec9b22193"
+      "imageLocalKey": "326f163ec9b22193",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Tribune",
@@ -1352,7 +1363,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Entre absence de quorum, élections houleuses et accusations de « campagnes de salissage », la Fédération des associations du campus de l’Université de Montréal (FAÉCUM) traverse une zone de turbulences. Du fonctionnement des associations étudiantes aux congrès mouvementés, récit d’une démocratie en difficulté.",
       "imageLocal": "assets/news-images/853b4bfa332e1d27.jpg",
-      "imageLocalKey": "853b4bfa332e1d27"
+      "imageLocalKey": "853b4bfa332e1d27",
+      "imageLocalVia": "origin"
     },
     {
       "source": "L'Exemplaire",
@@ -1517,7 +1529,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Des fruits qui parlent, nouent des relations et suivent les codes de la téléréalité : c’est le concept derrière ces vidéos d’un nouveau genre. Entre humour, viralité et controverse, ces contenus explosent sur les réseaux sociaux. Mais, derrière ces visuels enfantins générés par intelligence artificielle, se dessinent des discours moins légers qui dépassent le simple divertissement.",
       "imageLocal": "assets/news-images/44f01b932a4f2373.webp",
-      "imageLocalKey": "44f01b932a4f2373"
+      "imageLocalKey": "44f01b932a4f2373",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -1542,7 +1555,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Les 29 et 30 mai prochains, les adeptes d’ouvrages de suspense, à mystère et d’enquêtes auront rendez-vous au Centre culturel Georges-Vanier pour la troisième édition du festival du livre policier Montréal Mystère , un événement encore jeune, mais déjà bien installé dans le paysage littéraire montréalais.",
       "imageLocal": "assets/news-images/af9cfcd7ed0dcfed.jpg",
-      "imageLocalKey": "af9cfcd7ed0dcfed"
+      "imageLocalKey": "af9cfcd7ed0dcfed",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Plant",
@@ -1762,7 +1776,8 @@
       "sourceImageCreditImageKey": "image-4.jpeg",
       "sourceImageCreditRev": 10,
       "imageLocal": "assets/news-images/a7f72017b9324103.webp",
-      "imageLocalKey": "a7f72017b9324103"
+      "imageLocalKey": "a7f72017b9324103",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Plant",
@@ -1811,7 +1826,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/a1bccfb42718bcc1.jpg",
-      "imageLocalKey": "a1bccfb42718bcc1"
+      "imageLocalKey": "a1bccfb42718bcc1",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -1836,7 +1852,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Lors d’une assemblée universitaire tenue le 16 mars dernier, le professeur agrégé à l’École de psychoéducation de la Faculté des arts et des sciences de l’UdeM Jean-Sébastien Fallu a soulevé des préoccupations concernant le soutien informatique à l’Université. Il a partagé plusieurs difficultés que lui et ses collègues ont vécues, notamment liées aux délais, aux procédures et à la complexité de certains outils numériques.",
       "imageLocal": "assets/news-images/95c3f9eaff3962da.jpg",
-      "imageLocalKey": "95c3f9eaff3962da"
+      "imageLocalKey": "95c3f9eaff3962da",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -1861,7 +1878,8 @@
       "leadImageReady": true,
       "leadExcerpt": "The vigil on May 5 this year included speeches, performances and a march through downtown Montreal. Around 300 people attended the events, in contrast to the thousands who gathered in other Canadian cities. Among the speakers was Wet’suwet’en chef, activist and filmmaker Marlene Hale, who noted that similar demonstrations in Vancouver consistently draw significantly larger crowds.",
       "imageLocal": "assets/news-images/0b9ec00c9ff8bc35.jpg",
-      "imageLocalKey": "0b9ec00c9ff8bc35"
+      "imageLocalKey": "0b9ec00c9ff8bc35",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Montréal Campus",
@@ -1907,7 +1925,8 @@
       "sourceImageCreditImageKey": "image-1.jpeg",
       "sourceImageCreditRev": 10,
       "imageLocal": "assets/news-images/cc8b5e2ca6c623dc.jpg",
-      "imageLocalKey": "cc8b5e2ca6c623dc"
+      "imageLocalKey": "cc8b5e2ca6c623dc",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -1929,7 +1948,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/2159b352022a804e.jpg",
-      "imageLocalKey": "2159b352022a804e"
+      "imageLocalKey": "2159b352022a804e",
+      "imageLocalVia": "origin"
     },
     {
       "source": "L'Exemplaire",
@@ -2149,7 +2169,8 @@
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/2f88543ca8a04f2b.jpg",
-      "imageLocalKey": "2f88543ca8a04f2b"
+      "imageLocalKey": "2f88543ca8a04f2b",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Montréal Campus",
@@ -2291,7 +2312,8 @@
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/f49c9cf5fb2ef34f.jpg",
-      "imageLocalKey": "f49c9cf5fb2ef34f"
+      "imageLocalKey": "f49c9cf5fb2ef34f",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -2314,7 +2336,8 @@
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/96bf2e57f78195d2.jpg",
-      "imageLocalKey": "96bf2e57f78195d2"
+      "imageLocalKey": "96bf2e57f78195d2",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Tribune",
@@ -2435,7 +2458,8 @@
       "sourceImageCreditImageKey": "dany_portrait_vignette_zc-copie-1068x641-3-2.jpg",
       "leadImageReady": true,
       "imageLocal": "assets/news-images/bca23ddde074c874.jpg",
-      "imageLocalKey": "bca23ddde074c874"
+      "imageLocalKey": "bca23ddde074c874",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -2457,7 +2481,8 @@
       "sourceImageCreditImageKey": "604823445_853711280773514_928679255052921821_n.jpg",
       "leadImageReady": true,
       "imageLocal": "assets/news-images/1ea90acd9d61e587.jpg",
-      "imageLocalKey": "1ea90acd9d61e587"
+      "imageLocalKey": "1ea90acd9d61e587",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -2479,7 +2504,8 @@
       "sourceImageCreditImageKey": "672687004_1331193022389249_583407324812045529_n.jpg",
       "leadImageReady": true,
       "imageLocal": "assets/news-images/85147fbddce0425c.jpg",
-      "imageLocalKey": "85147fbddce0425c"
+      "imageLocalKey": "85147fbddce0425c",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Exil",
@@ -2547,7 +2573,8 @@
       "leadImageReady": true,
       "leadExcerpt": "The first day saw the regroupment of a number of commissions, namely the Indigenous Peoples' Commission, the National Women’s Liberal Commission, the Senior Liberals' Commission and the Young Liberals of Canada (YLC) commission.",
       "imageLocal": "assets/news-images/7eff684db1c9736f.jpg",
-      "imageLocalKey": "7eff684db1c9736f"
+      "imageLocalKey": "7eff684db1c9736f",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -2596,7 +2623,8 @@
       "sourceImageCreditRev": 4,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/cc3a943dc3805fee.jpg",
-      "imageLocalKey": "cc3a943dc3805fee"
+      "imageLocalKey": "cc3a943dc3805fee",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -2620,7 +2648,8 @@
       "sourceImageCreditRev": 4,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/7a6153b27f25bced.jpg",
-      "imageLocalKey": "7a6153b27f25bced"
+      "imageLocalKey": "7a6153b27f25bced",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Tribune",
@@ -2728,15 +2757,16 @@
       "excerpt": "Chandler Levack on Montreal’s music scene, early-2010s nostalgia and the charm of being awkward Chandler Levack on the set of her latest film Mile End Kicks. Courtesy Joe Fuda",
       "image": "https://thelinknewspaper.ca/images/articles/_resized/Screenshot_2026-04-11_17.01.52.png",
       "authorCheckedAt": "2026-08-18T08:55:20.134Z",
-      "imageLocal": "assets/news-images/56c3154b93336503.png",
-      "imageLocalKey": "56c3154b93336503",
       "sourceImageCredit": "Photo: Courtesy of Joe Fuda",
       "sourceImageCreator": "Joe Fuda",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16318",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "screenshot_2026-04-11_17.01.52.png",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "imageLocal": "assets/news-images/56c3154b93336503.png",
+      "imageLocalKey": "56c3154b93336503",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -2760,7 +2790,8 @@
       "sourceImageCreditRev": 4,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/9078ded119444ef9.jpg",
-      "imageLocalKey": "9078ded119444ef9"
+      "imageLocalKey": "9078ded119444ef9",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -2784,7 +2815,8 @@
       "sourceImageCreditRev": 4,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/1eba3e0e26e185a9.jpg",
-      "imageLocalKey": "1eba3e0e26e185a9"
+      "imageLocalKey": "1eba3e0e26e185a9",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -2799,15 +2831,15 @@
       "excerpt": "Why student newspapers remain one of the last places people learn to speak publicly Public discourse does not survive automatically. It depends on people’s willingness to question institutions and place their ideas into shared space. Graphic Halle Keays",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/12_OPS_690_518.png",
       "authorCheckedAt": "2026-08-18T08:55:26.043Z",
-      "imageLocal": "assets/news-images/d031f6fbd81a93ca.png",
-      "imageLocalKey": "d031f6fbd81a93ca",
       "sourceImageCredit": "Photo credit: The Link",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16315",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "12_ops_690_518.png",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "imageLocal": "assets/news-images/d031f6fbd81a93ca.png",
+      "imageLocalKey": "d031f6fbd81a93ca",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -3547,14 +3579,14 @@
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Creation-sans-titre-2-768x1024.png",
       "featured": true,
       "_pageAuthor": "Elie Nguyen",
-      "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance.",
       "sourceImageCredit": "Photo : Elie Nguyen",
       "sourceImageCreator": "Elie Nguyen",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "creation-sans-titre-2.png",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance."
     },
     {
       "source": "Le Délit",
@@ -3675,16 +3707,17 @@
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/coinqueer-1.jpeg",
       "featured": true,
       "_pageAuthor": "Joséphine Miton",
-      "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie.",
-      "imageLocal": "assets/news-images/4d808d99f444a191.jpg",
-      "imageLocalKey": "4d808d99f444a191",
       "sourceImageCredit": "Photo : Félix Fournier",
       "sourceImageCreator": "Félix Fournier",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "coinqueer-1.jpeg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie.",
+      "imageLocal": "assets/news-images/4d808d99f444a191.jpg",
+      "imageLocalKey": "4d808d99f444a191",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The McGill Daily",
@@ -4049,30 +4082,6 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "Les femmes MAGA au service du patriarcat",
-      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
-      "author": "Anonyme",
-      "date": "2026-03-18T07:00:00.000Z",
-      "excerpt": "Kristi Noem et Erika Kirk comme figures de proue du néo-fascisme américain.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/MAGA_marius.png",
-      "featured": true,
-      "authorCheckedAt": "2026-08-18T20:27:11.414Z",
-      "_pageAuthor": "Anonyme",
-      "leadExcerpt": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer en instrumentalisant certaines femmes pour reproduire les structures qui les subordonnent. C’est à travers ce mécanisme d’opacité que sa présence se resserre sur la société, et que ses contradictions se dissimulent sous le couvert de liberté individuelle, de traditions ou de choix personnels.",
-      "sourceImageCredit": "Photo : Stu Doré",
-      "sourceImageCreator": "Stu Doré",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "maga_marius.png",
-      "sourceImageCreditRev": 10
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
       "title": "Des initiatives qui rassemblent",
       "link": "https://www.delitfrancais.com/2026/03/18/des-initiatives-qui-rassemblent/",
       "author": "Héloïse Durning et Elie Nguyen",
@@ -4080,16 +4089,40 @@
       "excerpt": "À McGill, des projets pour célébrer et soutenir les femmes.",
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/annonces.png",
       "featured": true,
-      "_pageAuthor": "Héloïse Durning et Elie Nguyen",
       "authorCheckedAt": "2026-08-18T22:42:57.156Z",
-      "imageLocal": "assets/news-images/1f8b3b95383f201a.png",
-      "imageLocalKey": "1f8b3b95383f201a",
+      "_pageAuthor": "Héloïse Durning et Elie Nguyen",
       "sourceImageCredit": "Crédit photo : Le Délit",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/des-initiatives-qui-rassemblent/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "annonces.png",
+      "sourceImageCreditRev": 10,
+      "imageLocal": "assets/news-images/1f8b3b95383f201a.png",
+      "imageLocalKey": "1f8b3b95383f201a",
+      "imageLocalVia": "origin"
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
+      "author": "Timotée Allouch-Chantepie, Héloïse Durning, Aurélien Quéméner et Eugénie St-Pierre",
+      "date": "2026-03-18T07:00:00.000Z",
+      "excerpt": "Présentation des candidats à l’exécutif de l’AÉUM.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2025/11/P1160269-scaled.jpeg",
+      "featured": true,
+      "_pageAuthor": "Timotée Allouch-Chantepie, Héloïse Durning, Aurélien Quéméner et Eugénie St-Pierre",
+      "authorCheckedAt": "2026-08-18T23:24:45.169Z",
+      "leadExcerpt": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « plus politique ». L’étudiante de deuxième année en études sur le genre explique qu’elle ne se sentait pas représentée par les élus de l’AÉUM et que c’est ce qui a motivé sa décision de se présenter. « On [les candidats du S.T.A.N.D.] est là depuis deux, trois, quatre ans et on voit comment l’AÉUM n’e",
+      "sourceImageCredit": "Photo : Toscane Ralaimongo",
+      "sourceImageCreator": "Toscane Ralaimongo",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "p1160269.jpeg",
       "sourceImageCreditRev": 10
     },
     {
