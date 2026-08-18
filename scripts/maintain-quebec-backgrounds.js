@@ -67,6 +67,7 @@ const {
   getCurrentSeason4,
   resolveItemSeason4,
   resolveItemSeason6,
+  seasonTagTrusted,
   SEASON4,
   SEASON6,
   season4ToSeason6,
@@ -1190,6 +1191,11 @@ function writeJsExport(photos) {
       if (PROFILE.id === 'nations') {
         if (p.nationId) lines.push(`    nationId: "${esc(p.nationId)}"`);
         if (p.nation) lines.push(`    nation: "${esc(p.nation)}"`);
+      }
+      // Même contrat que sync-quebec-backgrounds.js : seulement les tags fiables.
+      if (seasonTagTrusted(p)) {
+        if (p.season) lines.push(`    season: "${esc(p.season)}"`);
+        if (p.season6) lines.push(`    season6: "${esc(p.season6)}"`);
       }
       return `  {\n${lines.join(',\n')},\n  }`;
     })
