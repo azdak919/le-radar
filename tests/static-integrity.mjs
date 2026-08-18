@@ -3,6 +3,7 @@
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { createRequire } from 'node:module';
+import { spawnSync } from 'node:child_process';
 import { dirname, join, relative, resolve } from 'node:path';
 
 const require = createRequire(import.meta.url);
@@ -461,6 +462,13 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(kit.includes('assets/icon.svg'), 'kit-media : pictogramme téléchargeable requis');
   assert(kit.includes('wordmark-on-dark.svg'), 'kit-media : mot-symbole sombre requis');
   assert(kit.includes('wordmark-on-light.svg'), 'kit-media : mot-symbole clair requis');
+  for (const asset of ['wordmark-on-dark.svg', 'wordmark-on-light.svg', 'banner-web.svg', 'banner-square.svg', 'affiche-11x17.svg']) {
+    const svg = readFileSync(join(root, 'assets/kit', asset), 'utf8');
+    assert(svg.includes('data:image/svg+xml;base64,'), `kit-media : ${asset} doit être autonome après téléchargement`);
+    assert(!svg.includes('href="../icon.svg"'), `kit-media : ${asset} ne doit pas dépendre d'un chemin local`);
+  }
+  const mediaKitCheck = spawnSync(process.execPath, [join(root, 'scripts/generate-media-kit-assets.mjs'), '--check'], { encoding: 'utf8' });
+  assert.equal(mediaKitCheck.status, 0, mediaKitCheck.stderr || 'kit-media : fichiers générés désynchronisés');
 }
 const traitPage = readFileSync(join(root, 'journaux/le-trait-dunion/index.html'), 'utf8');
 assert(traitPage.includes('>Derniers articles<'), 'journal sans fil frais : même H2 que les autres fiches');
