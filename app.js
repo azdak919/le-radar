@@ -11054,9 +11054,12 @@ function syncFiltersPanel() {
 
   FILTERS_PANEL.classList.remove('is-compact');
   FILTERS_COMPACT?.setAttribute('hidden', '');
-  FILTERS_PANEL.classList.toggle('has-overflow', overflow);
+  /* Un rail déjà ouvert reste « en débordement » pour garder Réduire,
+     même si un scroll agrandit l’espace et que tout tiendrait. */
+  const keepWideOpen = !!(filtersExpanded && document.getElementById('wide-rail-stack'));
+  FILTERS_PANEL.classList.toggle('has-overflow', overflow || keepWideOpen);
 
-  if (overflow) {
+  if (overflow || keepWideOpen) {
     FILTERS_TOGGLE?.removeAttribute('hidden');
     FILTERS_PANEL.classList.toggle('is-expanded', filtersExpanded);
     const label = FILTERS_TOGGLE?.querySelector('.filters-toggle__label');
@@ -11065,8 +11068,7 @@ function syncFiltersPanel() {
     }
     FILTERS_TOGGLE?.setAttribute('aria-expanded', filtersExpanded ? 'true' : 'false');
   } else {
-    /* Tout tient : pas de bouton. On ne touche pas à filtersExpanded —
-       sinon un scroll (rail plus haut) referme le choix de l’utilisateur. */
+    /* Tout tient et l’utilisateur n’a pas ouvert : pas de bouton. */
     FILTERS_PANEL.classList.remove('is-expanded');
     FILTERS_TOGGLE?.setAttribute('hidden', '');
   }

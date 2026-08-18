@@ -553,10 +553,12 @@ html[data-wide-preview="e"] {
     padding: 0 2px 8px 0;
   }
 
-  /* Ouvert : occupe l’espace restant sous le rail, sans forcer 100dvh
-     (sinon en haut de page le stack explose et la page remonte). */
+  /* Ouvert : hauteur = espace restant sous le rail (pas 100dvh : ça
+     explose en haut de page et remonte le document). `height` et pas
+     seulement `max-height` : sinon le flex ne s’étire pas et « Réduire »
+     flotte au-dessus d’un trou jusqu’au bas de la fenêtre. */
   html[data-wide-preview="e"] .wide-rail-stack:has(.filters-panel.is-expanded) {
-    height: auto;
+    height: calc(100dvh - var(--wide-stack-from-top, var(--wide-sticky-top, 76px)) - var(--wide-rail-bottom, 16px));
     max-height: calc(100dvh - var(--wide-stack-from-top, var(--wide-sticky-top, 76px)) - var(--wide-rail-bottom, 16px));
     overflow-y: hidden;
     padding-bottom: 8px;
@@ -673,11 +675,13 @@ html[data-wide-preview="e"] {
     overflow: hidden !important;
   }
 
-  /* Ouvert : hauteur bornée + scroll interne (page magazine reste en place). */
+  /* Ouvert : le flex remplit le stack (Réduire collé au bas). max-height
+     JS --filters-rail-avail est un plafond trop court dès que le rail
+     devient sticky — la liste laissait un vide sous le bouton. */
   html[data-wide-preview="e"] .wide-rail-stack .filters-panel.is-expanded .filters {
     flex: 1 1 auto;
     min-height: 0 !important;
-    max-height: var(--filters-rail-avail, calc(100dvh - 220px)) !important;
+    max-height: none !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
     overscroll-behavior: contain;
