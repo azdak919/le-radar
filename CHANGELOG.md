@@ -23,6 +23,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Grand écran (shell E, ≥ 1281 px) : le carré du synthétiseur restait un rectangle vide — le texte (institution, poste, slogan) était bien écrit, mais le CSS le masquait tant que `is-dial-ready` n’était pas posé. La voie wide retournait avant cet appel. Visible sur l’accueil, le kit média et les autres pages.
 - L’image de partage (`og-cover.png`) disait encore « journaux et radios » sans les sports : l’aperçu de lien (Messages, Telegram, etc.) restait sur l’ancienne accroche alors que le site porte la triade. Mot-symbole aligné sur le mât (Source Serif 4 Display, « LE-RADAR.ca » d’une seule couleur). Sous-ligne : « résultats sportifs ». Cache `?v=2` pour forcer le rechargement chez les robots.
 - iPad portrait (768–834 px) : le magazine deux colonnes s’affichait sans équilibrer **En bref**. La graine bureau (~10 brèves) dépassait les vedettes et laissait un vide sous la colonne de gauche. L’équilibre (trim + extraits mid) suit maintenant le même seuil 768 px que le CSS.
 

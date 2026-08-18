@@ -1872,6 +1872,8 @@ function paintWideDial(radio) {
     setTunerNameText('Radios étudiantes');
     setTunerSubText('Choisissez un poste pour écouter');
     requestAnimationFrame(() => fitWideDialWidth({ force: wideDialFixedPx === 0 }));
+    // Sans ça le CSS `.tuner:not(.is-dial-ready)` laisse L1/L2 à opacity: 0.
+    markTunerDialReady();
     return true;
   }
   const inst = tunerFullInstitutionLabel(radio);
@@ -1884,6 +1886,7 @@ function paintWideDial(radio) {
   requestAnimationFrame(() => {
     fitWideDialWidth({ force: wideDialFixedPx === 0 });
   });
+  markTunerDialReady();
   return true;
 }
 
@@ -7697,14 +7700,7 @@ function syncDesktopDialPreview(_airTitle, crossfade = false) {
       lastDialCarouselText = stationDisplayName(radio) || radio.name || '';
       return;
     }
-    ensureWideDialInstEl();
-    const instEl = document.getElementById('tuner-now-inst');
-    if (instEl) {
-      instEl.hidden = true;
-      instEl.textContent = '';
-    }
-    setTunerNameText('Radios étudiantes');
-    setTunerSubText('Choisissez un poste pour écouter');
+    paintWideDial(null);
     return;
   }
   // Mode B (site compact / embed étroit) : L1 géré dans syncTunerSubRotate.
@@ -8070,6 +8066,10 @@ function renderTunerNowAir() {
     }
     paintWideNowAirPair(radio);
     paintWideDial(radio);
+    // La voie wide return avant les markTunerDialReady() du chemin compact :
+    // sans cet appel le carré reste opacity: 0 (rectangle vide) sur tout
+    // écran ≥ 1281 px — accueil, kit média, fiches.
+    markTunerDialReady();
     syncWideStickyTop();
     if (previewing) {
       startNowAirPreview();
