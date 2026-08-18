@@ -203,6 +203,35 @@ for (const [id, floor] of Object.entries(COVERAGE_FLOOR)) {
   );
 }
 
+{
+  // Empêche un merge Labo local (ou un bot sauté) de republier une grille
+  // d'il y a deux semaines sous « cette semaine ». Semaine tamponnée = celle
+  // en cours à Québec, ou la précédente si on est avant la passe du lundi.
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Toronto', year: 'numeric', month: '2-digit', day: '2-digit',
+  }).formatToParts(new Date());
+  const get = (type) => Number(parts.find((p) => p.type === type)?.value);
+  const local = new Date(Date.UTC(get('year'), get('month') - 1, get('day'), 12));
+  local.setUTCDate(local.getUTCDate() - ((local.getUTCDay() + 6) % 7));
+  const thisMonday = local.toISOString().slice(0, 10);
+  const prev = new Date(local);
+  prev.setUTCDate(prev.getUTCDate() - 7);
+  const lastMonday = prev.toISOString().slice(0, 10);
+  const maxAgeMs = 14 * 24 * 60 * 60 * 1000;
+  for (const [id, station] of Object.entries(schedules)) {
+    const week = station.verifiedWeekOf;
+    assert(
+      week === thisMonday || week === lastMonday,
+      `radio-schedules.json ${id} : semaine ${week} hors ${lastMonday}–${thisMonday} — collecte manquée ou merge Labo local ?`,
+    );
+    const checked = new Date(station.checkedAt).getTime();
+    assert(
+      Number.isFinite(checked) && Date.now() - checked < maxAgeMs,
+      `radio-schedules.json ${id} : checkedAt trop vieux (${station.checkedAt})`,
+    );
+  }
+}
+
 const chyzOverlap = resolveCurrentSlot([
   { day: 4, start: '17:30', end: '19:00', title: 'Régulier' },
   { day: 4, start: '18:50', end: '23:00', title: 'Spécial' },
@@ -268,6 +297,12 @@ assert.equal(chyzOverlap?.title, 'Spécial', 'le créneau CHYZ commencé le plus
   const monday17 = grid.filter((s) => s.day === 1 && s.start === '17:00');
   assert.equal(monday17.length, 1, 'CHOQ quinzaine : un seul lundi 17 h');
   assert.equal(monday17[0].title, 'Faire avec', 'CHOQ quinzaine : la semaine en cours prime');
+  const thisWeek = await fetchChoqGrid({ days: 7 }, { fetchImpl });
+  assert.equal(
+    thisWeek.some((s) => s.title === 'Bitume'),
+    false,
+    'CHOQ : la semaine courante ne doit pas afficher l’émission de la semaine suivante',
+  );
 }
 
 // ── Banques fonds QC : JSON source de vérité ↔ JS miroir + hard-ban ──

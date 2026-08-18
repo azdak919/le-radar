@@ -65,12 +65,12 @@
       "grid": []
     },
     "choq": {
-      "_note": "Émissions : GraphQL /api/graphql (épisodes du jour). Piste : /api/live + Triton SP_R4799664 (re-poll navigateur). Ne pas traiter title/artist de /api/live comme émission.",
+      "_note": "Émissions : GraphQL /api/graphql (épisodes datés de la semaine QC courante seulement — la page dit « cette semaine »). Piste : /api/live + Triton SP_R4799664 (re-poll navigateur). Ne pas traiter title/artist de /api/live comme émission.",
       "sources": [
         {
           "type": "choq",
           "url": "https://www.choq.ca/api/graphql",
-          "days": 14
+          "days": 7
         }
       ],
       "grid": []

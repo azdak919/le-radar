@@ -55,3 +55,32 @@ for (const route of ROUTES) {
     expect(Number(opacity)).toBeGreaterThan(0.9);
   });
 }
+
+const FOOTER_AIR_ROUTES = [
+  '/',
+  '/horaires/',
+  '/radios/chyz/',
+  '/medias/',
+  '/sports/',
+  '/feeds.html',
+  '/kit-media/',
+  '/journaux/la-pige/',
+];
+
+for (const path of FOOTER_AIR_ROUTES) {
+  test(`footer : filet pas collé au texte — ${path}`, async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto(path, { waitUntil: 'domcontentloaded' });
+    const foot = page.locator('.site-foot').first();
+    await expect(foot).toBeVisible();
+    const air = await foot.evaluate((el) => {
+      const author = el.querySelector('.site-foot__author, .site-foot__wordmark');
+      if (!author) return { pad: 0, gap: 0 };
+      const pad = parseFloat(getComputedStyle(el).paddingTop);
+      const gap = author.getBoundingClientRect().top - el.getBoundingClientRect().top;
+      return { pad, gap };
+    });
+    expect(air.pad, `${path} : padding-top`).toBeGreaterThanOrEqual(24);
+    expect(air.gap, `${path} : air sous le filet`).toBeGreaterThanOrEqual(24);
+  });
+}

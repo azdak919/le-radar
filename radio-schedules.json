@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-06T11:28:24.100Z",
+  "updatedAt": "2026-08-18T04:59:46.618Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,8 +8,8 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-08-06T11:28:24.100Z",
-      "verifiedWeekOf": "2026-08-03",
+      "checkedAt": "2026-08-18T04:59:46.618Z",
+      "verifiedWeekOf": "2026-08-17",
       "grid": [
         {
           "day": 0,
@@ -33,18 +33,18 @@
           "url": "https://chyz.ca/emission/radio-futura/"
         },
         {
-          "day": 0,
-          "start": "16:50",
-          "end": "20:30",
-          "title": "Capitales de Québec",
-          "url": "https://chyz.ca/emission/capitales-de-quebec/"
-        },
-        {
           "day": 1,
           "start": "08:00",
           "end": "10:00",
           "title": "Lundi Indie",
           "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
+        },
+        {
+          "day": 1,
+          "start": "16:00",
+          "end": "17:00",
+          "title": "Chéri.e, Jme Mobilise!",
+          "url": "https://chyz.ca/emission/cheri-e-jmorganise/"
         },
         {
           "day": 1,
@@ -76,10 +76,24 @@
         },
         {
           "day": 2,
+          "start": "16:00",
+          "end": "17:30",
+          "title": "Chéri.e, j’arrive!",
+          "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+        },
+        {
+          "day": 2,
           "start": "17:30",
           "end": "18:30",
           "title": "Les Arshitechs du Son",
           "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+        },
+        {
+          "day": 2,
+          "start": "18:50",
+          "end": "23:00",
+          "title": "Capitales de Québec",
+          "url": "https://chyz.ca/emission/capitales-de-quebec/"
         },
         {
           "day": 3,
@@ -90,10 +104,24 @@
         },
         {
           "day": 3,
+          "start": "16:00",
+          "end": "17:30",
+          "title": "Chéri.e, j’arrive!",
+          "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+        },
+        {
+          "day": 3,
           "start": "17:30",
           "end": "18:30",
           "title": "Les Arshitechs du Son",
           "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+        },
+        {
+          "day": 3,
+          "start": "18:50",
+          "end": "23:00",
+          "title": "Capitales de Québec",
+          "url": "https://chyz.ca/emission/capitales-de-quebec/"
         },
         {
           "day": 4,
@@ -104,10 +132,24 @@
         },
         {
           "day": 4,
+          "start": "16:00",
+          "end": "17:30",
+          "title": "Chéri.e, j’arrive!",
+          "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+        },
+        {
+          "day": 4,
           "start": "17:30",
           "end": "19:00",
           "title": "Les Arshitechs du Son",
           "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+        },
+        {
+          "day": 4,
+          "start": "18:50",
+          "end": "23:00",
+          "title": "Capitales de Québec",
+          "url": "https://chyz.ca/emission/capitales-de-quebec/"
         },
         {
           "day": 5,
@@ -139,17 +181,10 @@
         },
         {
           "day": 5,
-          "start": "17:30",
-          "end": "18:30",
-          "title": "Les Arshitechs du Son",
-          "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-        },
-        {
-          "day": 5,
-          "start": "18:50",
-          "end": "23:00",
-          "title": "Capitales de Québec",
-          "url": "https://chyz.ca/emission/capitales-de-quebec/"
+          "start": "21:00",
+          "end": "22:00",
+          "title": "Crooch Control",
+          "url": "https://chyz.ca/emission/crooch-control/"
         },
         {
           "day": 6,
@@ -178,13 +213,6 @@
           "end": "16:00",
           "title": "Radio Futura",
           "url": "https://chyz.ca/emission/radio-futura/"
-        },
-        {
-          "day": 6,
-          "start": "18:50",
-          "end": "23:00",
-          "title": "Capitales de Québec",
-          "url": "https://chyz.ca/emission/capitales-de-quebec/"
         }
       ]
     },
@@ -194,8 +222,8 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-08-06T11:28:24.100Z",
-      "verifiedWeekOf": "2026-08-03",
+      "checkedAt": "2026-08-18T04:59:46.618Z",
+      "verifiedWeekOf": "2026-08-17",
       "grid": [
         {
           "day": 0,
@@ -682,13 +710,6 @@
         },
         {
           "day": 4,
-          "start": "07:00",
-          "end": "08:00",
-          "title": "Ici, la criminologie",
-          "url": "https://cism893.ca/emissions/ici-la-criminologie"
-        },
-        {
-          "day": 4,
           "start": "08:00",
           "end": "09:00",
           "title": "Jimmy et Neutron",
@@ -975,8 +996,8 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-08-06T11:28:24.100Z",
-      "verifiedWeekOf": "2026-08-03",
+      "checkedAt": "2026-08-18T04:59:46.618Z",
+      "verifiedWeekOf": "2026-08-17",
       "grid": [
         {
           "day": 0,
@@ -1138,7 +1159,7 @@
           "day": 1,
           "start": "19:00",
           "end": "20:00",
-          "title": "Dykes on Mykes"
+          "title": "Lesbo-sons"
         },
         {
           "day": 1,
@@ -1408,7 +1429,7 @@
           "day": 4,
           "start": "17:00",
           "end": "18:00",
-          "title": "Off the Hour: Trib Talks"
+          "title": "Off the Hour: Labour Radio"
         },
         {
           "day": 4,
@@ -1592,8 +1613,8 @@
       "sources": [
         "cjlo:http://www.cjlo.com/schedule"
       ],
-      "checkedAt": "2026-08-06T11:28:24.100Z",
-      "verifiedWeekOf": "2026-08-03",
+      "checkedAt": "2026-08-18T04:59:46.618Z",
+      "verifiedWeekOf": "2026-08-17",
       "grid": [
         {
           "day": 0,
@@ -1662,15 +1683,15 @@
           "day": 0,
           "start": "14:00",
           "end": "15:00",
-          "title": "Cinema Smackdown",
-          "url": "http://www.cjlo.com/shows/cinema-smackdown"
+          "title": "CJLO's Alternative Mega Mix",
+          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
         },
         {
           "day": 0,
           "start": "15:00",
           "end": "16:00",
-          "title": "CJLO's Alternative Mega Mix",
-          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+          "title": "Fukubukuro",
+          "url": "http://www.cjlo.com/shows/fukubukuro"
         },
         {
           "day": 0,
@@ -1727,6 +1748,13 @@
           "end": "00:00",
           "title": "CJLO's Alternative Mega Mix",
           "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        },
+        {
+          "day": 1,
+          "start": "00:00",
+          "end": "00:30",
+          "title": "Cinema Smackdown",
+          "url": "http://www.cjlo.com/shows/cinema-smackdown"
         },
         {
           "day": 1,
@@ -2532,13 +2560,6 @@
           "end": "00:30",
           "title": "Exposé",
           "url": "http://www.cjlo.com/shows/expose"
-        },
-        {
-          "day": 1,
-          "start": "00:00",
-          "end": "00:30",
-          "title": "Fukubukuro",
-          "url": "http://www.cjlo.com/shows/fukubukuro"
         },
         {
           "day": 1,
@@ -4193,8 +4214,8 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-08-06T11:28:24.100Z",
-      "verifiedWeekOf": "2026-08-03",
+      "checkedAt": "2026-08-18T04:59:46.618Z",
+      "verifiedWeekOf": "2026-08-17",
       "grid": [
         {
           "day": 0,
@@ -4414,29 +4435,15 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-08-06T11:28:24.100Z",
-      "verifiedWeekOf": "2026-08-03",
+      "checkedAt": "2026-08-18T04:59:46.618Z",
+      "verifiedWeekOf": "2026-08-17",
       "grid": [
-        {
-          "day": 0,
-          "start": "14:00",
-          "end": "16:00",
-          "title": "Pôle hip-hop",
-          "url": "https://www.choq.ca/emissions/pole-hip-hop"
-        },
         {
           "day": 0,
           "start": "17:00",
           "end": "18:00",
           "title": "Mutations",
           "url": "https://www.choq.ca/emissions/mutations"
-        },
-        {
-          "day": 1,
-          "start": "12:00",
-          "end": "13:00",
-          "title": "Balado Populi",
-          "url": "https://www.choq.ca/emissions/balado-populi"
         },
         {
           "day": 1,
@@ -4528,13 +4535,6 @@
           "end": "19:40",
           "title": "Les Apatrides Anonymes",
           "url": "https://www.choq.ca/emissions/apatrides-anonymes"
-        },
-        {
-          "day": 4,
-          "start": "20:00",
-          "end": "21:00",
-          "title": "La nouvelle école des surdoués",
-          "url": "https://www.choq.ca/emissions/la-nouvelle-ecole-des-surdoues"
         },
         {
           "day": 4,
