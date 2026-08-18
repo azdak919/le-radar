@@ -1178,9 +1178,12 @@ assert(
 {
   const photoCss = readFileSync(join(root, 'style-masthead.css'), 'utf8');
   assert(
-    photoCss.includes('.masthead-home:hover:not(.is-active):not([aria-current="page"])')
-      && photoCss.includes('.masthead-home[aria-current="page"]:hover'),
-    'mât : hover n’efface pas la pastille Accueil courante',
+    /\[aria-current="page"\]:not\(\.masthead-home\)/.test(styleCss)
+      && !/\.masthead-home\.is-active\s*,/.test(styleCss)
+      && !photoCss.includes('.masthead-home[aria-current="page"]')
+      && /masthead-home:active/.test(styleCss)
+      && /masthead-home:active/.test(photoCss),
+    'mât : Accueil sans fond mauve au repos ; mauve seulement au pressé',
   );
 }
 assert(
