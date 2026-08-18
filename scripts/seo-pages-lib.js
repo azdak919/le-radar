@@ -1072,9 +1072,9 @@ ${alternate ? `    <link rel="alternate" hreflang="fr-CA" href="${escapeHtml(lan
     <meta property="og:url" content="${escapeHtml(canonical)}" />
     <meta property="og:title" content="${escapeHtml(title)}" />
     <meta property="og:description" content="${escapeHtml(description)}" />
-    <meta property="og:image" content="${siteBase}/assets/og-cover.png" />
+    <meta property="og:image" content="${siteBase}/assets/og-cover.png?v=2" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="${siteBase}/assets/og-cover.png" />
+    <meta name="twitter:image" content="${siteBase}/assets/og-cover.png?v=2" />
 
     <link rel="icon" href="${up}assets/icon-32.png" type="image/png" sizes="32x32" />
     <link rel="icon" href="${up}assets/icon.svg" type="image/svg+xml" />
