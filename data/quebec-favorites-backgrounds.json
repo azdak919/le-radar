@@ -34,7 +34,8 @@
       "seasonDetectedAt": "2026-07-30T22:38:30.629Z",
       "faces": 0,
       "faceRatio": 0,
-      "faceDetectedAt": "2026-08-06T20:50:47.778Z"
+      "faceDetectedAt": "2026-08-06T20:50:47.778Z",
+      "place": "Percé"
     },
     {
       "id": "5b2e21ebe06e",
@@ -59,7 +60,8 @@
       "note": "Validé manuellement — skyline lever de soleil Montréal (Quentin Schulz)",
       "faces": 0,
       "faceRatio": 0,
-      "faceDetectedAt": "2026-08-06T20:50:47.778Z"
+      "faceDetectedAt": "2026-08-06T20:50:47.778Z",
+      "place": "Montréal"
     },
     {
       "id": "7128480286c6",
@@ -84,7 +86,8 @@
       "seasonConfidence": 1,
       "faces": 0,
       "faceRatio": 0,
-      "faceDetectedAt": "2026-08-06T20:50:47.778Z"
+      "faceDetectedAt": "2026-08-06T20:50:47.778Z",
+      "place": "Lac des Deux-Montagnes"
     },
     {
       "id": "0fcc6ce8753e",
@@ -110,10 +113,11 @@
       "seasonConfidence": 1,
       "faces": 0,
       "faceRatio": 0,
-      "faceDetectedAt": "2026-08-06T20:50:47.778Z"
+      "faceDetectedAt": "2026-08-06T20:50:47.778Z",
+      "place": "Université Laval"
     }
   ],
-  "updated": "2026-08-11T20:50:08.113Z",
+  "updated": "2026-08-18T01:15:23.365Z",
   "lastSeasonDetect": "2026-07-30T22:38:30.629Z",
   "lastFaceDetect": "2026-08-06T20:50:47.778Z"
 }

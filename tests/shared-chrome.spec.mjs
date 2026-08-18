@@ -29,6 +29,13 @@ for (const route of ROUTES) {
       await expect(page.locator('#theme-toggle, .theme-toggle').first()).toBeVisible();
       // Pas d’iframe lecteur hors exceptions
       await expect(page.locator('#radar-embed')).toHaveCount(0);
+      await expect.poll(() => page.locator('#masthead-weather').count()).toBe(1);
+      await expect.poll(() => page.locator('#masthead-sports-strip').count()).toBe(1);
+      await expect(page.locator('#masthead-weather .masthead-weather__city.is-active').first())
+        .toBeVisible({ timeout: 12_000 });
+      await expect(page.locator('#masthead-sports-strip')).not.toHaveAttribute('hidden', '');
+      await expect(page.locator('#masthead-sports-strip .sports-chip').first())
+        .toBeVisible({ timeout: 12_000 });
     } else {
       await expect(page.locator('.site-foot--maintenance')).toBeVisible();
     }

@@ -451,6 +451,8 @@
 .seo-day li.seo-slot--live {
   border-left-color: var(--status-live);
   background: color-mix(in srgb, var(--status-live) 12%, transparent);
+}
+.seo-day li.seo-slot--live.seo-slot--pulse {
   animation: seo-live-pulse 2.8s ease-in-out infinite alternate;
 }
 .seo-day li.seo-slot--live .seo-slot__title,
@@ -462,6 +464,8 @@
 .seo-day li.seo-slot--live.seo-slot--playing {
   border-left-color: var(--status-live);
   background: color-mix(in srgb, var(--status-live) 16%, transparent);
+}
+.seo-day li.seo-slot--live.seo-slot--playing.seo-slot--pulse {
   animation-name: seo-playing-pulse;
 }
 .seo-day li.seo-slot--live.seo-slot--playing .seo-slot__title,
@@ -471,6 +475,8 @@
 .seo-day li.seo-slot--upcoming {
   border-left-color: var(--status-upcoming-mid);
   background: color-mix(in srgb, var(--status-upcoming-soft) 18%, transparent);
+}
+.seo-day li.seo-slot--upcoming.seo-slot--pulse {
   animation: seo-upcoming-pulse 2.8s ease-in-out infinite alternate;
 }
 .seo-day li.seo-slot--upcoming .seo-slot__title,
@@ -546,7 +552,8 @@
 @media (prefers-reduced-motion: reduce) {
   .seo-day--today h3,
   .seo-day li.seo-slot--live,
-  .seo-day li.seo-slot--upcoming { animation: none; opacity: 1; }
+  .seo-day li.seo-slot--upcoming,
+  .seo-day li.seo-slot--pulse { animation: none; opacity: 1; }
 }
 @media (max-width: 420px) {
   .seo-day { padding: 14px; }

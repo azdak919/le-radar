@@ -21,6 +21,25 @@
     if (anchor?.parentNode) anchor.parentNode.insertBefore(tuner, anchor.nextSibling);
     else document.body.prepend(tuner);
 
+    const weather = doc.getElementById('masthead-weather');
+    const top = document.querySelector('.masthead-top');
+    if (weather && top && !document.getElementById('masthead-weather')) {
+      const date = top.querySelector('.masthead-date');
+      const actions = top.querySelector('.masthead-actions');
+      if (date?.nextSibling) top.insertBefore(weather, date.nextSibling);
+      else if (actions) top.insertBefore(weather, actions);
+      else top.appendChild(weather);
+    }
+    const dock = doc.getElementById('masthead-weather-dock');
+    const strip = doc.getElementById('masthead-sports-strip');
+    if (dock && !document.getElementById('masthead-weather-dock')) {
+      tuner.after(dock);
+    }
+    const dockNow = document.getElementById('masthead-weather-dock');
+    if (strip && !document.getElementById('masthead-sports-strip')) {
+      (dockNow || tuner).after(strip);
+    }
+
     for (const asset of [
       'cast.js',
       'mobile-playback.js',

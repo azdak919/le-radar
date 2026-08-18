@@ -15,25 +15,42 @@ html.local-lab-framed body {
   height: 100% !important;
   background: #0c0e12 !important;
 }
-html.local-lab-framed body > *:not(#local-lab-shell):not(#local-lab-format-bar):not(#midwidth-preview-bar) {
-  /* Cache le contenu hôte (doublon de l’iframe) sans le détruire */
+/*
+ * Cache le contenu hôte (doublon de l’iframe) sans le détruire.
+ * La barre lab reste toujours visible / cliquable.
+ */
+html.local-lab-framed body > *:not(#local-lab-shell):not(#local-lab-format-bar):not(#midwidth-preview-bar):not(#wide-desktop-bar) {
   visibility: hidden !important;
   pointer-events: none !important;
 }
+
+/* Sécurité : barre lab toujours interactive au-dessus du shell */
+html.local-lab-framed #local-lab-format-bar,
+html.local-lab-framed #midwidth-preview-bar {
+  visibility: visible !important;
+  pointer-events: auto !important;
+  z-index: 10000 !important;
+}
+/*
+ * Shell iframe : largeur logique = format (2560, 3840…) pour les media queries.
+ * transform: scale(…) (posé en JS) fait tenir la preview dans l’écran hôte.
+ */
 #local-lab-shell {
   position: fixed;
   z-index: 9990;
   top: 0;
-  bottom: 0;
   left: 50%;
+  /* transform final = translateX(-50%) scale(s) via JS */
   transform: translateX(-50%);
-  max-width: 100vw;
+  transform-origin: top center;
+  max-width: none;
   height: 100%;
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.1),
     0 0 80px rgba(0, 0, 0, 0.55);
   background: #000;
   overflow: hidden;
+  will-change: transform;
 }
 #local-lab-frame {
   display: block;

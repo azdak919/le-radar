@@ -313,18 +313,38 @@ const TUNER_NOWAIR_TITLE = document.getElementById('tuner-nowair-title');
 const TUNER_NOWAIR_SUB = document.getElementById('tuner-nowair-sub');
 const ORIGINAL_ENGLISH_SCHEDULES = new Set(['cjlo', 'ckut']);
 
-function nowAirSchedulePath(radio) {
+function nowAirSchedulePath(radio, { focus = 'live' } = {}) {
   if (!radio?.id) return null;
   const prefix = ORIGINAL_ENGLISH_SCHEDULES.has(radio.id) ? 'en/' : '';
-  // Chemin absolu : le même contrôle est aussi rendu dans tuner-embed.html.
-  // Ancre #horaire : la fiche s'ouvre directement sur la grille de la semaine,
-  // sans obliger à faire défiler les faits de la station.
-  return `/${prefix}radios/${encodeURIComponent(radio.id)}/#horaire`;
+  const hash = focus === 'upcoming' ? '#horaire-avenir' : '#horaire';
+  return `/${prefix}radios/${encodeURIComponent(radio.id)}/${hash}`;
 }
 
-function openNowAirSchedule() {
+function nowAirScheduleFocusFromEvent(event) {
+  const t = event?.target?.closest?.('.tuner-wide-slot--next, .tuner-wide-slot--live, #tuner-nowair');
+  if (t?.classList.contains('tuner-wide-slot--next')) return 'upcoming';
+  if (t?.classList.contains('tuner-wide-slot--live')) return 'live';
+  if (TUNER_NOWAIR?.classList.contains('is-upcoming')) return 'upcoming';
+  return 'live';
+}
+
+function pulseNowAirSlotFromEvent(event) {
+  const wrap = document.getElementById('tuner-nowair-wide');
+  const slot = event?.target?.closest?.('.tuner-wide-slot');
+  wrap?.querySelectorAll('.tuner-wide-slot.is-pressed').forEach((el) => {
+    el.classList.remove('is-pressed');
+  });
+  if (!slot || (wrap && !wrap.contains(slot))) return;
+  // Relancer l’anim même si on re-clique le même slot.
+  void slot.offsetWidth;
+  slot.classList.add('is-pressed');
+  window.setTimeout(() => slot.classList.remove('is-pressed'), 480);
+}
+
+function openNowAirSchedule(event) {
+  pulseNowAirSlotFromEvent(event);
   const radio = currentStation || (isNowAirPanelPreviewMode() ? nowAirPreviewRadio : null);
-  const path = nowAirSchedulePath(radio);
+  const path = nowAirSchedulePath(radio, { focus: nowAirScheduleFocusFromEvent(event) });
   if (!path) return;
 
   // Toujours résoudre sur l’origine de CE document (le-radar.ca), même quand
@@ -340,7 +360,7 @@ TUNER_NOWAIR?.addEventListener('click', openNowAirSchedule);
 TUNER_NOWAIR?.addEventListener('keydown', (event) => {
   if (event.key === 'Enter' || event.key === ' ') {
     event.preventDefault();
-    openNowAirSchedule();
+    openNowAirSchedule(event);
   }
 });
 const ICO_PLAY       = TUNER_PLAY.querySelector('.ico-play');
@@ -349,6 +369,12 @@ const ICO_EXTERNAL   = TUNER_PLAY.querySelector('.ico-external');
 
 const NEWS_LIST      = document.getElementById('news-list');
 const FILTERS_PANEL  = document.getElementById('news-filters-panel');
+
+/** Premier paint stable d’une zone (anti-CLS) : révéler seulement alors. */
+function markUiReady(el) {
+  if (!el || el.dataset.ready === '1') return;
+  el.dataset.ready = '1';
+}
 const NEWS_FILTERS   = document.getElementById('news-filters');
 const FILTERS_TOGGLE = document.getElementById('filters-toggle');
 const FILTERS_COMPACT = document.getElementById('filters-compact');
@@ -396,9 +422,9 @@ const MASTHEAD_DATE_FORMATS = [
   { month: 'numeric', day: 'numeric' },
 ];
 
-const MASTHEAD_WEATHER = document.getElementById('masthead-weather');
-const MASTHEAD_WEATHER_DOCK = document.getElementById('masthead-weather-dock');
-const MASTHEAD_SPORTS_STRIP = document.getElementById('masthead-sports-strip');
+let MASTHEAD_WEATHER = document.getElementById('masthead-weather');
+let MASTHEAD_WEATHER_DOCK = document.getElementById('masthead-weather-dock');
+let MASTHEAD_SPORTS_STRIP = document.getElementById('masthead-sports-strip');
 const MASTHEAD_ACTIONS = document.querySelector('.masthead-actions');
 const MASTHEAD_BG_SHUFFLE = document.getElementById('masthead-bg-shuffle');
 const MASTHEAD_BG_SHUFFLE_HOME = document.getElementById('masthead-shuffle-slot');
@@ -426,6 +452,8 @@ let newsSearchQuery = '';
 let newsSearchOpen = false;
 let newsSearchDebounce = null;
 let currentStation = null; // radio object selected in tuner
+/** Choix explicite (menu / prev-next / play). Le restore session ne le pose pas. */
+let userPickedStation = false;
 /** Another same-origin tab/page owns the real audio (Phase 1 multi-page sync). */
 let syncRemotePlaying = false;
 /**
@@ -533,6 +561,8 @@ let tunerPresentationResumeGeneration = 0;
 // station / émission lisible plus longtemps avant de passer à la suivante.
 // La page Radar conserve son rythme plus vif.
 const TUNER_SUB_ROTATE_MS = IS_TUNER_EMBED ? 14000 : 8000;
+/** Carrousel postes au repos : délai fixe (évite le flip à toute allure). */
+const NOW_AIR_PREVIEW_DWELL_MS = 8000;
 const TUNER_SUB_ROTATE_NARROW_MS = 14000;
 const TUNER_SUB_ROTATE_VERY_NARROW_MS = 18000;
 const AIR_PANEL_ROTATE_MS = 8000;
@@ -612,7 +642,12 @@ async function init() {
   const bgPhotoLayer = document.getElementById('bg-photo-layer');
   if (bgPhotoLayer && typeof MutationObserver !== 'undefined') {
     const photoDateMo = new MutationObserver(() => {
-      if (bgPhotoLayer.classList.contains('loaded')) renderTodayDate();
+      if (bgPhotoLayer.classList.contains('loaded')) {
+        renderTodayDate();
+        // La puce date gagne padding/bordure au loaded : refit météo même
+        // si le texte de date n’a pas changé (sinon dernière ville clipée).
+        window.setTimeout(() => scheduleMastheadWeatherLayout(), 0);
+      }
     });
     photoDateMo.observe(bgPhotoLayer, { attributes: true, attributeFilter: ['class'] });
   }
@@ -652,9 +687,20 @@ async function init() {
   // Les constantes météo sont déclarées plus bas dans ce script : microtask
   // = après l'évaluation complète du fichier, sans retarder le reste du site.
   queueMicrotask(() => {
+    ensureMastheadBoards();
     void initMastheadWeather();
     void initMastheadSports();
   });
+  window.setTimeout(() => {
+    if (MASTHEAD_WEATHER?.querySelector('.masthead-weather__city.is-active')) {
+      markUiReady(MASTHEAD_WEATHER);
+    }
+    if (MASTHEAD_SPORTS_STRIP && !MASTHEAD_SPORTS_STRIP.classList.contains('is-empty')
+        && MASTHEAD_SPORTS_STRIP.querySelector('.sports-chip')) {
+      markUiReady(MASTHEAD_SPORTS_STRIP);
+    }
+    markUiReady(FILTERS_PANEL);
+  }, 4500);
   setupAudio();
   bindTuner();
   bindExternalListen();
@@ -691,6 +737,7 @@ async function init() {
   radios = radiosData.status === 'fulfilled'
     ? sortRadios(radiosData.value).filter((r) => getPlayableStream(r))
     : [];
+  wideDialFixedPx = 0;
   radioNowPlaying = nowPlayingData.status === 'fulfilled'
     ? decodeNowPlayingPayload(nowPlayingData.value)
     : { stations: {} };
@@ -1154,7 +1201,8 @@ function mastheadDateChipFits() {
   const host = TODAY_DATE.closest('.masthead-date');
   if (!host) return true;
   const hostBox = host.getBoundingClientRect();
-  if (hostBox.width < 1) return true;
+  // Invisible / pas encore posé : ne pas valider un format long.
+  if (hostBox.width < 1) return false;
   if (MASTHEAD_ACTIONS) {
     const actionsBox = MASTHEAD_ACTIONS.getBoundingClientRect();
     if (actionsBox.width > 0 && hostBox.right > actionsBox.left + 1) return false;
@@ -1199,6 +1247,8 @@ function renderTodayDate() {
     }
   }
   if (TODAY_DATE) {
+    const dateHostPre = TODAY_DATE.closest('.masthead-date');
+    if (dateHostPre) dateHostPre.style.minWidth = '';
     for (const options of MASTHEAD_DATE_FORMATS) {
       TODAY_DATE.textContent = now.toLocaleDateString(locale, options);
       // Forcer reflow avant mesure (sinon clientWidth encore au format précédent).
@@ -1217,6 +1267,13 @@ function renderTodayDate() {
   // le top-level pour éviter un TDZ.
   if (dateChanged) {
     window.setTimeout(() => scheduleMastheadWeatherLayout(), 0);
+  }
+  const dateHost = TODAY_DATE?.closest?.('.masthead-date');
+  const photoLayer = document.getElementById('bg-photo-layer');
+  const photoReady = !photoLayer || photoLayer.classList.contains('loaded');
+  if (dateHost && photoReady && mastheadDateChipFits()) {
+    const dw = Math.ceil(dateHost.getBoundingClientRect().width);
+    if (dw > 40) dateHost.style.minWidth = `${dw}px`;
   }
 }
 
@@ -1248,10 +1305,29 @@ function seoScheduleMinute(value = '') {
 }
 
 /**
+ * Clic / ancre : un seul créneau pulse.
+ * `#horaire` → à l'antenne ; `#horaire-avenir` → à venir ; sinon live s'il
+ * y a une émission, à venir s'il y a un trou.
+ */
+function seoSchedulePulsePref() {
+  const hash = String(location.hash || '').toLowerCase();
+  if (hash === '#horaire-avenir') return 'upcoming';
+  if (hash === '#horaire') return 'live';
+  return 'auto';
+}
+
+function pickSeoSchedulePulse(active, upcoming, pref) {
+  if (pref === 'upcoming') return upcoming || active || null;
+  if (pref === 'live') return active || upcoming || null;
+  return active || upcoming || null;
+}
+
+/**
  * Les pages SEO sont statiques pour rester lisibles sans JavaScript, mais
  * leur repère temporel ne doit pas rester bloqué au jour de génération.
- * Cette amélioration progressive actualise le jour et un seul créneau — en
- * ondes, ou à venir si la grille contient un trou — selon l'heure de Québec.
+ * Cette amélioration progressive actualise le jour et les teintes live /
+ * à venir. Un seul créneau pulse : celui du clic (ancre) ou, sans ancre,
+ * l'émission en ondes, sinon la prochaine.
  */
 function syncSeoScheduleNow() {
   const days = [...document.querySelectorAll('.seo-day[data-schedule-day]')];
@@ -1266,7 +1342,7 @@ function syncSeoScheduleNow() {
     if (isToday) dayEl.dataset.currentDay = 'true';
     else delete dayEl.dataset.currentDay;
     for (const el of dayEl.querySelectorAll('li[data-schedule-start]')) {
-      el.classList.remove('seo-slot--live', 'seo-slot--upcoming', 'seo-slot--playing');
+      el.classList.remove('seo-slot--live', 'seo-slot--upcoming', 'seo-slot--playing', 'seo-slot--pulse');
       el.removeAttribute('aria-label');
       const start = seoScheduleMinute(el.dataset.scheduleStart);
       const end = seoScheduleMinute(el.dataset.scheduleEnd);
@@ -1280,24 +1356,30 @@ function syncSeoScheduleNow() {
       || (slot.day === (now.day + 6) % 7 && now.minute < slot.end);
   }).sort((a, b) => b.start - a.start)[0];
 
-  let selected = active;
-  let state = active ? 'live' : 'upcoming';
-  if (!selected) {
-    let distance = Infinity;
-    for (const slot of slots) {
-      let delta = ((slot.day - now.day + 7) % 7) * 1440 + slot.start - now.minute;
-      if (delta < 0) delta += 7 * 1440;
-      if (delta < distance) { distance = delta; selected = slot; }
-    }
+  let upcoming = null;
+  let distance = Infinity;
+  for (const slot of slots) {
+    if (slot.el === active?.el) continue;
+    let delta = ((slot.day - now.day + 7) % 7) * 1440 + slot.start - now.minute;
+    if (delta <= 0) delta += 7 * 1440;
+    if (delta < distance) { distance = delta; upcoming = slot; }
   }
-  if (!selected) {
+
+  const en = document.documentElement.lang.startsWith('en');
+  if (active) {
+    active.el.classList.add('seo-slot--live');
+    active.el.setAttribute('aria-label', `${en ? 'On air' : 'À l’antenne'}: ${active.el.textContent.trim()}`);
+  }
+  if (upcoming) {
+    upcoming.el.classList.add('seo-slot--upcoming');
+    upcoming.el.setAttribute('aria-label', `${en ? 'Up next' : 'À venir'}: ${upcoming.el.textContent.trim()}`);
+  }
+  const pulse = pickSeoSchedulePulse(active, upcoming, seoSchedulePulsePref());
+  pulse?.el.classList.add('seo-slot--pulse');
+  if (!active && !upcoming) {
     syncSeoSchedulePlayback();
     return;
   }
-  selected.el.classList.add(state === 'live' ? 'seo-slot--live' : 'seo-slot--upcoming');
-  const en = document.documentElement.lang.startsWith('en');
-  const label = state === 'live' ? (en ? 'On air' : 'À l’antenne') : (en ? 'Up next' : 'À venir');
-  selected.el.setAttribute('aria-label', `${label}: ${selected.el.textContent.trim()}`);
   syncSeoSchedulePlayback();
 }
 
@@ -1308,11 +1390,15 @@ function syncSeoScheduleNow() {
  */
 function scrollSeoScheduleToNow({ smooth = true } = {}) {
   const hash = String(location.hash || '').toLowerCase();
-  if (hash && hash !== '#horaire') return false;
+  const wantUpcoming = hash === '#horaire-avenir';
+  if (hash && hash !== '#horaire' && !wantUpcoming) return false;
   const hasSchedule = document.querySelector('.seo-day[data-schedule-day], #horaire[data-schedule-station]');
   if (!hasSchedule) return false;
-  // D’abord le créneau actif, sinon la carte du jour.
-  const target = document.querySelector('.seo-slot--live, .seo-slot--upcoming')
+  const target = document.querySelector('.seo-slot--pulse')
+    || (wantUpcoming
+      ? document.querySelector('.seo-slot--upcoming')
+      : document.querySelector('.seo-slot--live'))
+    || document.querySelector('.seo-slot--upcoming, .seo-slot--live')
     || document.querySelector('.seo-day--today')
     || document.getElementById('horaire');
   if (!target) return false;
@@ -1337,13 +1423,13 @@ function initSeoScheduleHashScroll() {
       requestAnimationFrame(() => scrollSeoScheduleToNow({ smooth: true }));
     });
   };
-  if (String(location.hash || '').toLowerCase() === '#horaire') {
+  if (/^#horaire(-avenir)?$/.test(String(location.hash || '').toLowerCase())) {
     // Après paint initial (fonts / images mât peuvent décaler le offset).
     if (document.readyState === 'complete') setTimeout(run, 50);
     else window.addEventListener('load', () => setTimeout(run, 50), { once: true });
   }
   window.addEventListener('hashchange', () => {
-    if (String(location.hash || '').toLowerCase() === '#horaire') run();
+    if (/^#horaire(-avenir)?$/.test(String(location.hash || '').toLowerCase())) run();
   });
 }
 
@@ -1464,6 +1550,7 @@ const MASTHEAD_WEATHER_REGIONAL_RANK = new Map(
 let mastheadWeatherPrimaryIndex = 0;
 let mastheadWeatherCompactSecondaryIndex = 0;
 let mastheadWeatherNationSlot = 1;
+let mastheadWeatherQueueIndex = 0;
 let mastheadWeatherLastBoardCount = 0;
 let mastheadWeatherFitCount = null;
 let mastheadWeatherTooNarrow = false;
@@ -1471,8 +1558,8 @@ let mastheadWeatherResizeFrame = 0;
 let mastheadWeatherDocked = false;
 // Emplacement d'origine (masthead) : mémorisé pour pouvoir ramener le
 // bandeau à sa place quand la largeur redevient suffisante.
-const mastheadWeatherHomeParent = MASTHEAD_WEATHER?.parentNode || null;
-const mastheadWeatherHomeNextSibling = MASTHEAD_WEATHER?.nextSibling || null;
+let mastheadWeatherHomeParent = MASTHEAD_WEATHER?.parentNode || null;
+let mastheadWeatherHomeNextSibling = MASTHEAD_WEATHER?.nextSibling || null;
 // Tablette + mobile (≤1023) : météo sous le syntoniseur — libère le mât pour
 // date + icônes (lab 768 / 900). Bureau ≥1024 : météo dans le mât.
 const MASTHEAD_WEATHER_PHONE_MQ = window.matchMedia('(max-width: 1023.98px)');
@@ -1508,6 +1595,8 @@ function setMastheadWeatherDocked(docked) {
   mastheadWeatherLastBoardCount = 0;
   MASTHEAD_WEATHER.classList.remove('is-too-narrow');
   syncMastheadShuffleButton();
+  // La colonne date change de largeur (3 → 2 pistes) : rejouer la cascade.
+  renderTodayDate();
 }
 
 function weatherLocationSlug(city) {
@@ -1563,16 +1652,16 @@ function buildMastheadWeatherBoard() {
   board.append(fragment);
 }
 
-/** Largeur utile du ruban météo (board, sinon conteneur / dock). */
+/** Largeur utile du ruban météo (cellule 1fr, pas le board shrink-wrap). */
 function weatherBoardAvailWidth() {
-  const board = MASTHEAD_WEATHER?.querySelector('.masthead-weather__board');
-  let width = board?.clientWidth || 0;
-  // Docké (430/768/900) : au 1er paint le board peut encore être à 0 px
-  // → count=1 figé (une seule carte « Québec » flottante). Repli conteneur.
+  // La case grille `.masthead-weather` est en 1fr : c’est elle qui donne
+  // la place réelle. Le board peut être plus étroit s’il est packé.
+  let width = MASTHEAD_WEATHER?.clientWidth || 0;
   if (width < 40) {
-    width = MASTHEAD_WEATHER?.clientWidth
-      || MASTHEAD_WEATHER_DOCK?.clientWidth
-      || 0;
+    width = MASTHEAD_WEATHER?.querySelector('.masthead-weather__board')?.clientWidth || 0;
+  }
+  if (width < 40) {
+    width = MASTHEAD_WEATHER_DOCK?.clientWidth || 0;
   }
   if (width < 40 && mastheadWeatherDocked) {
     width = document.documentElement.clientWidth || 0;
@@ -1580,16 +1669,586 @@ function weatherBoardAvailWidth() {
   return width;
 }
 
+/**
+ * Lab grand écran (wide / super-wide) :
+ * - pas de marquee
+ * - pas de clip / nom compact : les conteneurs s’ajustent ; si ça ne rentre
+ *   pas, on retire une carte (fit), on n’ampute pas le texte.
+ * ⛔ Actif **uniquement si viewport > 1280** (min-width: 1281px).
+ *    ≤1280 (ref. bureau lab « 1280 », mobile, mid) = prod inchangée,
+ *    même si `?wide=e` / data-wide-preview est posé.
+ * Voir data-wide-preview.
+ */
+function isWideNoMarqueeMode() {
+  try {
+    const id = document.documentElement.dataset.widePreview;
+    if (!id || id === 'off' || id === 'a') return false;
+    return window.matchMedia('(min-width: 1281px)').matches;
+  } catch {
+    return false;
+  }
+}
+
+/** Wide E + bureau confortable (≥1440) : noms complets, −1 carte plutôt que troncature. */
+function isWideDesktopComfort() {
+  try {
+    return isWideNoMarqueeMode() && window.matchMedia('(min-width: 1440px)').matches;
+  } catch {
+    return false;
+  }
+}
+
+/** QHD et plus (2560 / 3440 / 4K) : une carte météo de plus que la règle 1440–1920. */
+function isWideQhdPlus() {
+  try {
+    return isWideNoMarqueeMode() && window.matchMedia('(min-width: 2560px)').matches;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Parité scores : 2 ancres (MTL+QC) + 1 carte par puce sports.
+ * ≥2560 : +1 ; ≥3440 : +2 (3 CTA sports, plus d’air météo).
+ */
+function weatherSportsParityBonus() {
+  try {
+    if (!isWideNoMarqueeMode()) return 0;
+    const w = window.innerWidth || 0;
+    if (w >= 3440) return 2;
+    if (w >= 2560) return 1;
+    return 0;
+  } catch {
+    return 0;
+  }
+}
+
+function weatherSportsParityCount() {
+  const extras = sportsMatchChipCount();
+  if (extras < 1) return 0;
+  return 2 + extras + weatherSportsParityBonus();
+}
+
+/** Alias sémantique : layout synthé grand écran (E). */
+function isWideTunerLayout() {
+  return isWideNoMarqueeMode();
+}
+
+/** Bureau : titre « À l'antenne » sur deux lignes, pas de marquee. */
+function isNowAirTwoLineMode() {
+  try {
+    return window.matchMedia('(min-width: 1100px)').matches;
+  } catch {
+    return false;
+  }
+}
+
+
+/** Offset sticky du rail sources = hauteur réelle du synthé (+ petit entrefer). */
+function syncWideStickyTop() {
+  try {
+    if (!isWideTunerLayout()) {
+      document.documentElement.style.removeProperty('--wide-sticky-top');
+      return;
+    }
+    const tuner = document.getElementById('tuner');
+    const h = tuner ? Math.ceil(tuner.getBoundingClientRect().height) : 0;
+    // 8 px d’air entre le bas du synthé et « Le Radar »
+    const top = Math.max(64, h + 8);
+    document.documentElement.style.setProperty('--wide-sticky-top', `${top}px`);
+  } catch { /* ignore */ }
+}
+
+
+/** Institution en toutes lettres pour le dial wide (pas d’acronyme forcé). */
+function tunerFullInstitutionLabel(radio) {
+  if (!radio) return '';
+  const full = String(radio.institution || '').trim();
+  if (full) return full;
+  return tunerDialInstitutionLabel(radio) || '';
+}
+
+/** Ligne institution au-dessus du nom de poste (créée une fois). */
+function ensureWideDialInstEl() {
+  const box = document.querySelector('.tuner-now');
+  if (!box) return null;
+  let el = document.getElementById('tuner-now-inst');
+  if (!el) {
+    el = document.createElement('span');
+    el.id = 'tuner-now-inst';
+    el.className = 'tuner-now-inst';
+    el.hidden = true;
+    const name = document.getElementById('tuner-now-name');
+    if (name) box.insertBefore(el, name);
+    else box.prepend(el);
+  }
+  return el;
+}
+
+/** Largeur fixe du carré dial (max de tous les postes). Ne change pas à chaque flip. */
+let wideDialFixedPx = 0;
+
+function measureWideDialNeedPx() {
+  const name = document.getElementById('tuner-now-name');
+  const sub = document.getElementById('tuner-now-sub');
+  const padX = 11 + 22 + 6;
+  const nameCs = name ? getComputedStyle(name) : null;
+  const subNode = sub?.querySelector?.('.tuner-now-sub-text') || sub;
+  const subCs = subNode ? getComputedStyle(subNode) : null;
+  if (!measureWideDialNeedPx._ctx) {
+    measureWideDialNeedPx._ctx = document.createElement('canvas').getContext('2d');
+  }
+  const ctx = measureWideDialNeedPx._ctx;
+  const lineW = (text, cs) => {
+    if (!text || !cs) return 0;
+    ctx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+    const ls = parseFloat(cs.letterSpacing) || 0;
+    const t = String(text);
+    return Math.ceil(ctx.measureText(t).width + ls * Math.max(0, t.length - 1) + 4);
+  };
+  let maxLine = 160;
+  const list = Array.isArray(radios) ? radios : [];
+  for (const radio of list) {
+    const inst = tunerFullInstitutionLabel(radio) || '';
+    const station = stationDisplayName(radio) || String(radio.name || '').trim() || '';
+    const slogan = radioSlogan(radio) || String(radio.frequency || '').trim() || '';
+    const line2 = [station, slogan].filter(Boolean).join(' · ');
+    maxLine = Math.max(
+      maxLine,
+      lineW(inst || station, nameCs),
+      lineW(line2, subCs),
+    );
+  }
+  return Math.ceil(maxLine + padX);
+}
+
+/**
+ * Pose une fois la largeur du carré = plus longue L1/L2 de tous les postes.
+ * Recalcule seulement si `force` (resize / 1er paint).
+ */
+function fitWideDialWidth({ force = false } = {}) {
+  if (!isWideTunerLayout()) {
+    wideDialFixedPx = 0;
+    return;
+  }
+  const dial = document.querySelector('.tuner-dial');
+  const now = document.querySelector('.tuner-now');
+  if (!dial || !now) return;
+
+  if (!force && wideDialFixedPx > 0) {
+    dial.style.minWidth = `${wideDialFixedPx}px`;
+    dial.style.width = `${wideDialFixedPx}px`;
+    now.style.width = '100%';
+    return;
+  }
+
+  const need = measureWideDialNeedPx();
+  const w = Math.max(280, need + 24);
+  wideDialFixedPx = w;
+  dial.style.minWidth = `${w}px`;
+  dial.style.width = `${w}px`;
+  now.style.width = '100%';
+}
+
+/**
+ * Dial wide : **2 lignes seulement** (même épaisseur barre que prod).
+ * L1 = institution au complet
+ * L2 = poste + slogan complet (espace horizontal, pas de 3e ligne)
+ * Plus de « Syntoniser un poste » tant qu’un poste existe.
+ * @returns {boolean} true si le rendu wide a été appliqué
+ */
+function paintWideDial(radio) {
+  const instEl = ensureWideDialInstEl();
+  // Jamais de 3e ligne dans le carré (épaissit la barre).
+  if (instEl) {
+    instEl.hidden = true;
+    instEl.textContent = '';
+  }
+  if (!isWideTunerLayout()) {
+    const dial = document.querySelector('.tuner-dial');
+    if (dial) dial.style.minWidth = '';
+    return false;
+  }
+  if (!radio) {
+    setTunerNameText('Radios étudiantes');
+    setTunerSubText('Choisissez un poste pour écouter');
+    requestAnimationFrame(() => fitWideDialWidth({ force: wideDialFixedPx === 0 }));
+    return true;
+  }
+  const inst = tunerFullInstitutionLabel(radio);
+  const station = stationDisplayName(radio) || String(radio.name || '').trim() || '';
+  const slogan = radioSlogan(radio) || String(radio.frequency || '').trim() || '';
+  // L1 institution ; L2 « CHOQ.ca · slogan… » — largeur mesurée après paint.
+  setTunerNameText(inst || station || 'Radios étudiantes');
+  const line2 = [station, slogan].filter(Boolean).join(' · ');
+  setTunerSubText(line2 || slogan || station);
+  requestAnimationFrame(() => {
+    fitWideDialWidth({ force: wideDialFixedPx === 0 });
+  });
+  return true;
+}
+
+/**
+ * Wide : EQ (4 barres) sous le wordmark — axe du trio play · EQ · mute.
+ * Gauche = dial + play ; droite = volume + antenne.
+ */
+function unwrapWideTunerBalance() {
+  const controls = document.querySelector('.tuner-controls');
+  if (!controls) return;
+  const left = controls.querySelector('.tuner-wide-left');
+  const right = controls.querySelector('.tuner-wide-right');
+  const actions = document.querySelector('.tuner-actions');
+  const play = document.getElementById('tuner-play');
+  const eq = document.getElementById('tuner-eq');
+  const cast = document.getElementById('tuner-cast');
+  const castMob = document.getElementById('tuner-cast-mob');
+  if (left) {
+    while (left.firstChild) controls.insertBefore(left.firstChild, left);
+    left.remove();
+  }
+  if (actions) {
+    const restore = [play, cast, castMob, eq].filter(Boolean);
+    restore.forEach((el) => {
+      if (el.parentElement !== actions) actions.insertBefore(el, actions.firstChild);
+    });
+    // Reposer l’ordre DOM d’origine : play → cast → cast-mob → eq → vol
+    if (play) actions.insertBefore(play, actions.firstChild);
+    if (cast && play) actions.insertBefore(cast, play.nextSibling);
+    if (castMob && (cast || play)) {
+      actions.insertBefore(castMob, (cast || play).nextSibling);
+    }
+    if (eq) {
+      const vol = document.getElementById('tuner-vol');
+      actions.insertBefore(eq, vol || null);
+    }
+  }
+  if (right) {
+    const nowair = document.getElementById('tuner-nowair-wide');
+    const inner = controls.parentElement;
+    if (nowair && inner) inner.insertBefore(nowair, controls.nextSibling);
+    while (right.firstChild) controls.appendChild(right.firstChild);
+    right.remove();
+  }
+}
+
+function ensureWideTunerBalance() {
+  const controls = document.querySelector('.tuner-controls');
+  const inner = document.querySelector('.tuner-inner');
+  const actions = document.querySelector('.tuner-actions');
+  const eq = document.getElementById('tuner-eq');
+  if (!controls || !inner || !actions || !eq) return;
+  if (!isWideTunerLayout()) {
+    unwrapWideTunerBalance();
+    return;
+  }
+  let left = controls.querySelector('.tuner-wide-left');
+  if (!left) {
+    left = document.createElement('div');
+    left.className = 'tuner-wide-left';
+    while (controls.firstElementChild && controls.firstElementChild !== actions) {
+      left.appendChild(controls.firstElementChild);
+    }
+    controls.insertBefore(left, actions);
+  }
+  // Play + Cast restent à gauche de l’EQ (l’EQ est l’axe, pas le play).
+  if (eq.parentElement === actions) {
+    while (actions.firstElementChild && actions.firstElementChild !== eq) {
+      left.appendChild(actions.firstElementChild);
+    }
+    controls.insertBefore(eq, actions);
+  } else if (eq.parentElement !== controls) {
+    controls.insertBefore(eq, actions);
+  }
+  let right = controls.querySelector('.tuner-wide-right');
+  if (!right) {
+    right = document.createElement('div');
+    right.className = 'tuner-wide-right';
+    controls.appendChild(right);
+    right.appendChild(actions);
+  }
+  const nowair = document.getElementById('tuner-nowair-wide');
+  if (nowair && nowair.parentElement !== right) right.appendChild(nowair);
+}
+
+/**
+ * Paire « À l'antenne » | « À venir » (wide E).
+ * Classes `tuner-wide-slot` (pas `.tuner-nowair`) : le CSS critique index.html
+ * force display/grid-column sur tout `.tuner-nowair` et doublait le panneau.
+ */
+function ensureWideNowAirPair() {
+  const host = TUNER_NOWAIR?.parentElement;
+  if (!host || !TUNER_NOWAIR) return null;
+
+  // Nettoyer d’anciens doublons (bug précédent)
+  const extras = host.querySelectorAll('#tuner-nowair-wide');
+  if (extras.length > 1) {
+    extras.forEach((el, i) => { if (i > 0) el.remove(); });
+  }
+
+  let wrap = document.getElementById('tuner-nowair-wide');
+  if (!isWideTunerLayout()) {
+    if (wrap) wrap.hidden = true;
+    unwrapWideTunerBalance();
+    TUNER_NOWAIR.classList.remove('tuner-nowair--legacy-slot');
+    TUNER_NOWAIR.hidden = false;
+    TUNER_NOWAIR.removeAttribute('aria-hidden');
+    return null;
+  }
+
+  if (!wrap) {
+    wrap = document.createElement('div');
+    wrap.id = 'tuner-nowair-wide';
+    wrap.className = 'tuner-nowair-wide';
+    wrap.setAttribute('aria-label', 'Antenne et à venir');
+    wrap.innerHTML = [
+      '<div class="tuner-wide-slot tuner-wide-slot--live" aria-live="polite">',
+      '  <span class="tuner-wide-slot__label">À l\'antenne</span>',
+      '  <div class="tuner-wide-slot__body">',
+      '    <p class="tuner-wide-slot__title" data-wide-live-title></p>',
+      '    <p class="tuner-wide-slot__sub" data-wide-live-sub></p>',
+      '  </div>',
+      '</div>',
+      '<div class="tuner-wide-slot tuner-wide-slot--next" aria-live="polite">',
+      '  <span class="tuner-wide-slot__label">À venir</span>',
+      '  <div class="tuner-wide-slot__body">',
+      '    <p class="tuner-wide-slot__title" data-wide-next-title></p>',
+      '    <p class="tuner-wide-slot__sub" data-wide-next-sub></p>',
+      '  </div>',
+      '</div>',
+    ].join('');
+    host.insertBefore(wrap, TUNER_NOWAIR.nextSibling);
+    wrap.addEventListener('click', openNowAirSchedule);
+    wrap.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      const slot = event.target?.closest?.('.tuner-wide-slot');
+      if (!slot) return;
+      event.preventDefault();
+      openNowAirSchedule(event);
+    });
+    wrap.querySelectorAll('.tuner-wide-slot').forEach((slot) => {
+      slot.setAttribute('role', 'link');
+      slot.setAttribute('tabindex', '0');
+    });
+  }
+
+  wrap.hidden = false;
+  ensureWideTunerBalance();
+  // Masquer le panneau single (legacy) — classes + attributs (CSS critique).
+  TUNER_NOWAIR.classList.add('tuner-nowair--legacy-slot');
+  TUNER_NOWAIR.hidden = true;
+  TUNER_NOWAIR.setAttribute('aria-hidden', 'true');
+  return wrap;
+}
+
+/**
+ * Remplit live + upcoming à partir des phases d’un poste.
+ * Largeur des slots = contenu (CSS flex packé). Si le texte change : fade out
+ * → swap → fade in pour que le resserrement/élargissement se fasse hors vue.
+ * @returns {boolean} true si la paire wide a été peinte
+ */
+/**
+ * Émission en cours si elle existe, piste en sous-ligne.
+ * Sans émission (CHOQ hors grille, etc.) : la piste seule suffit.
+ * @param {{ title?: string, sub?: string, kind?: string }[]} phases
+ */
+function liveCopyFromPhases(phases = []) {
+  const list = Array.isArray(phases) ? phases : [];
+  const show = list.find((p) => p.kind === 'live' && !String(p.title).startsWith('♪')) || null;
+  const track = list.find((p) => p.kind === 'live' && String(p.title).startsWith('♪')) || null;
+  if (show && track) {
+    return { liveTitle: show.title, liveSub: track.title };
+  }
+  if (show) {
+    return { liveTitle: show.title, liveSub: show.sub || '' };
+  }
+  if (track) {
+    return { liveTitle: String(track.title).replace(/^♪\s*/, ''), liveSub: '' };
+  }
+  return { liveTitle: '', liveSub: '' };
+}
+
+/**
+ * Phases affichables : une seule phase live (émission + piste), puis à venir.
+ * On ne remplace plus l’émission par le titre de piste en rotation.
+ */
+function composedAirPhases(radio, { withSlogan = false } = {}) {
+  const raw = airRotationPhases(radio, { withSlogan });
+  const { liveTitle, liveSub } = liveCopyFromPhases(raw);
+  const out = [];
+  if (liveTitle) out.push({ title: liveTitle, sub: liveSub, kind: 'live' });
+  const upcoming = raw.find((p) => p.kind === 'upcoming');
+  if (upcoming) out.push(upcoming);
+  for (const p of raw) {
+    if (p.kind === 'idle') out.push(p);
+  }
+  return out.length ? out : raw;
+}
+
+/**
+ * Lignes du slot « À l'antenne » (wide) : émission si elle existe,
+ * piste en sous-ligne ; sinon la piste seule (ex. CHOQ hors grille).
+ */
+function wideNowAirLiveCopy(radio) {
+  const phases = radio ? airRotationPhases(radio, { withSlogan: false }) : [];
+  const { liveTitle, liveSub } = liveCopyFromPhases(phases);
+  const upcoming = phases.find((p) => p.kind === 'upcoming') || null;
+  return {
+    liveTitle: liveTitle || (radio ? 'Rien à l\'antenne' : ''),
+    liveSub,
+    hideLive: false,
+    nextTitle: upcoming?.title || (radio ? 'Rien de programmé' : '—'),
+    nextSub: upcoming?.sub || '',
+    hasUpcoming: !!upcoming,
+  };
+}
+
+function paintWideNowAirPair(radio) {
+  const wrap = ensureWideNowAirPair();
+  if (!wrap || !isWideTunerLayout()) return false;
+
+  const liveTitle = wrap.querySelector('[data-wide-live-title]');
+  const liveSub = wrap.querySelector('[data-wide-live-sub]');
+  const nextTitle = wrap.querySelector('[data-wide-next-title]');
+  const nextSub = wrap.querySelector('[data-wide-next-sub]');
+  const liveSlot = wrap.querySelector('.tuner-wide-slot--live');
+  const nextSlot = wrap.querySelector('.tuner-wide-slot--next');
+
+  const applyEmpty = () => {
+    if (liveSlot) {
+      liveSlot.hidden = false;
+      liveSlot.classList.remove('is-wide-absent');
+    }
+    wrap.classList.remove('is-live-absent');
+    if (liveTitle) liveTitle.textContent = 'Choisissez un poste';
+    if (liveSub) {
+      liveSub.textContent = 'Les radios étudiantes jouent en direct, 24/7';
+      liveSub.hidden = false;
+    }
+    if (nextTitle) nextTitle.textContent = '—';
+    if (nextSub) {
+      nextSub.textContent = '';
+      nextSub.hidden = true;
+    }
+    liveSlot?.classList.add('is-empty-slot');
+    nextSlot?.classList.add('is-empty-slot');
+  };
+
+  const applyRadio = () => {
+    const copy = wideNowAirLiveCopy(radio);
+
+    if (liveSlot) {
+      liveSlot.hidden = false;
+      liveSlot.classList.remove('is-wide-absent');
+    }
+    wrap.classList.remove('is-live-absent');
+
+    if (liveTitle) liveTitle.textContent = copy.liveTitle || 'Rien à l\'antenne';
+    if (liveSub) {
+      liveSub.textContent = copy.liveSub || '';
+      liveSub.hidden = !copy.liveSub;
+    }
+    liveSlot?.classList.toggle('is-empty-slot', copy.liveTitle === 'Rien à l\'antenne');
+
+    if (nextTitle) nextTitle.textContent = copy.nextTitle;
+    if (nextSub) {
+      nextSub.textContent = copy.nextSub || '';
+      nextSub.hidden = !copy.nextSub;
+    }
+    nextSlot?.classList.toggle('is-empty-slot', !copy.hasUpcoming);
+  };
+
+  // Texte cible (pour détecter un vrai changement)
+  let nextLiveT = 'Choisissez un poste';
+  let nextNextT = '—';
+  if (radio) {
+    const copy = wideNowAirLiveCopy(radio);
+    nextLiveT = copy.liveTitle || 'Rien à l\'antenne';
+    nextNextT = copy.nextTitle;
+  }
+  const changing = (liveTitle?.textContent || '') !== nextLiveT
+    || (nextTitle?.textContent || '') !== nextNextT;
+
+  const paint = () => {
+    if (!radio) applyEmpty();
+    else applyRadio();
+  };
+
+  // Fade out → swap (largeur se recalcule hors vue) → fade in
+  if (
+    changing
+    && wrap.isConnected
+    && !PREFERS_REDUCED_MOTION?.matches
+    && (liveTitle?.textContent || nextTitle?.textContent)
+  ) {
+    liveSlot?.classList.add('is-wide-fading');
+    nextSlot?.classList.add('is-wide-fading');
+    window.setTimeout(() => {
+      paint();
+      liveSlot?.classList.remove('is-wide-fading');
+      nextSlot?.classList.remove('is-wide-fading');
+    }, 150);
+  } else {
+    paint();
+  }
+
+  markUiReady(wrap);
+  return true;
+}
+
+/**
+ * Wide / super-wide : MTL et QC sont deux ancres **indépendantes et persistantes**
+ * (pas d’alternance sur un seul slot). Les autres cartes tournent à côté.
+ */
+function weatherWideDualPrimary() {
+  return typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode();
+}
+
+function weatherPrimaryCityById(id) {
+  return WEATHER_CITIES.find((city) => city.id === id) || null;
+}
+
 function weatherBoardCount() {
   const width = weatherBoardAvailWidth();
   let count = 1;
-  // Modèle : 1 ancre MTL/QC + secondaires. Bureau 1280 board ~650 px → 3 cartes
-  // (4 serraient les secondaires → marquee). 4 seulement si board vraiment large.
-  if (width >= 780) count = 4;
-  else if (width >= 400) count = 3;
-  else if (width >= 240) count = 2;
+  // Lab wide E : plus de slots quand le ruban grossit (largeur réelle masthead).
+  // ≥1440 : noms complets, largeur secondaire = plus long toponyme → moins de cartes.
+  // <1440 : slots CSS à parts égales (ellipsis si besoin).
+  if (weatherWideDualPrimary()) {
+    // Plancher 2 = MTL + QC toujours visibles ; au-delà = secondaires rotatives.
+    if (isWideDesktopComfort()) {
+      const parity = weatherSportsParityCount();
+      if (parity > 0) {
+        count = parity;
+      } else {
+        const base = Math.max(4, Math.min(12, Math.floor(width / 155)));
+        count = Math.min(12, base + weatherSportsParityBonus());
+      }
+    } else if (width >= 1800) count = 8;
+    else if (width >= 1200) count = 7;
+    else if (width >= 900) count = 6;
+    else if (width >= 700) count = 5;
+    else if (width >= 520) count = 4;
+    else if (width >= 360) count = 3;
+    else count = 2;
+  } else {
+    // Modèle : 1 ancre MTL/QC + secondaires. Bureau 1280 board ~650 px → 3 cartes
+    // (4 serraient les secondaires → marquee). 4 seulement si board vraiment large.
+    if (width >= 780) count = 4;
+    else if (width >= 400) count = 3;
+    else if (width >= 240) count = 2;
+  }
   // Docké (768/900) : même plafond 3 pour lisibilité.
   if (mastheadWeatherDocked && count > 3) count = 3;
+  // Wide dual : ne jamais descendre sous MTL+QC (fit inclus).
+  if (weatherWideDualPrimary()) {
+    const floor = 2;
+    // ≥1440 : le nombre d’extras suit les scores sports — ne pas recouper ici.
+    if (isWideDesktopComfort() && weatherSportsParityCount() > 0) {
+      return Math.max(floor, count);
+    }
+    if (mastheadWeatherFitCount === null) return Math.max(floor, count);
+    return Math.max(floor, Math.min(count, mastheadWeatherFitCount));
+  }
   return mastheadWeatherFitCount === null ? count : Math.min(count, mastheadWeatherFitCount);
 }
 
@@ -1619,6 +2278,39 @@ function nextWeatherCity(group, usedIds) {
   return city;
 }
 
+/** File secondaire wide : pôles, autres campus, nations — ordre stable. */
+function weatherWideSecondaryPool() {
+  const campuses = WEATHER_CITIES.filter((city) => (
+    !city.nation && !MASTHEAD_WEATHER_PRIMARY_IDS.has(city.id)
+  ));
+  const nations = WEATHER_CITIES.filter((city) => city.nation);
+  const priority = campuses
+    .filter((city) => MASTHEAD_WEATHER_REGIONAL_RANK.has(city.id))
+    .sort((a, b) => MASTHEAD_WEATHER_REGIONAL_RANK.get(a.id) - MASTHEAD_WEATHER_REGIONAL_RANK.get(b.id));
+  const rest = campuses.filter((city) => !MASTHEAD_WEATHER_REGIONAL_RANK.has(city.id));
+  return [...priority, ...rest, ...nations];
+}
+
+function nextWideSecondaryCity(usedIds) {
+  const pool = weatherWideSecondaryPool();
+  if (!pool.length) return null;
+  const n = pool.length;
+  const start = ((mastheadWeatherQueueIndex % n) + n) % n;
+  for (let i = 0; i < n; i += 1) {
+    const city = pool[(start + i) % n];
+    if (usedIds.has(city.id)) continue;
+    mastheadWeatherQueueIndex = (start + i + 1) % n;
+    return city;
+  }
+  return null;
+}
+
+function advanceWideWeatherSlot(slot, n) {
+  if (n <= 2) return 2;
+  const next = slot + 1;
+  return next >= n ? 2 : next;
+}
+
 function shuffleWeatherCities(cities) {
   const shuffled = [...cities];
   for (let index = shuffled.length - 1; index > 0; index -= 1) {
@@ -1629,6 +2321,13 @@ function shuffleWeatherCities(cities) {
 }
 
 function weatherSecondaryGroup(slot, count) {
+  // Wide dual : slots 0–1 = MTL/QC fixes ; nation parmi les secondaires (2+).
+  if (weatherWideDualPrimary() && count > 2) {
+    const nationSlot = mastheadWeatherNationSlot < 2
+      ? 2
+      : mastheadWeatherNationSlot;
+    return slot === nationSlot ? 'nation' : 'campus';
+  }
   if (count > 2) return slot === mastheadWeatherNationSlot ? 'nation' : 'campus';
   if (slot !== 1) return 'campus';
   return mastheadWeatherCompactSecondaryIndex % 3 === 2 ? 'nation' : 'campus';
@@ -1662,28 +2361,76 @@ function showMastheadWeatherBoard() {
   const cities = [...MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city')];
   if (!cities.length) return;
   const count = Math.min(weatherBoardCount(), cities.length);
+  const dualPrimary = weatherWideDualPrimary() && count >= 2;
   if (count !== mastheadWeatherLastBoardCount) {
-    mastheadWeatherNationSlot = count > 2 ? 1 + Math.floor(Math.random() * (count - 1)) : 1;
-    // Largeur change : garder l’ancre MTL/QC, regénérer les secondaires.
-    mastheadWeatherSlots = mastheadWeatherSlots.slice(0, 1);
+    // Nation slot parmi les secondaires uniquement en dual (pas sur MTL/QC).
+    if (dualPrimary && count > 2) {
+      mastheadWeatherNationSlot = 2 + Math.floor(Math.random() * (count - 2));
+    } else {
+      mastheadWeatherNationSlot = count > 2 ? 1 + Math.floor(Math.random() * (count - 1)) : 1;
+    }
+    // Largeur change : garder les ancres, regénérer les secondaires, vague à gauche.
+    mastheadWeatherSlots = mastheadWeatherSlots.slice(0, dualPrimary ? 2 : 1);
     mastheadWeatherLastBoardCount = count;
+    if (dualPrimary) {
+      mastheadWeatherNextSlot = 2;
+      mastheadWeatherQueueIndex = 0;
+    }
   }
   MASTHEAD_WEATHER.querySelector('.masthead-weather__board')?.setAttribute('data-weather-count', String(count));
-  mastheadWeatherSlots = mastheadWeatherSlots.slice(0, count);
-  // Slot 0 = carte spéciale ancre : exclusivement Montréal ↔ Québec (rotation).
-  const anchor = WEATHER_CITIES.find(
-    (city) => city.id === MASTHEAD_WEATHER_PRIMARY_SEQUENCE[mastheadWeatherPrimaryIndex],
+  if (dualPrimary) {
+    MASTHEAD_WEATHER.querySelector('.masthead-weather__board')?.setAttribute('data-weather-dual-primary', '1');
+  } else {
+    MASTHEAD_WEATHER.querySelector('.masthead-weather__board')?.removeAttribute('data-weather-dual-primary');
+  }
+  if (dualPrimary) {
+    // Deux ancres persistantes en tête : Montréal + Québec (jamais rotées).
+    const mtl = weatherPrimaryCityById('montreal');
+    const qc = weatherPrimaryCityById('quebec');
+    const secondaries = mastheadWeatherSlots
+      .filter((c) => c && !MASTHEAD_WEATHER_PRIMARY_IDS.has(c.id));
+    mastheadWeatherSlots = [mtl, qc].filter(Boolean).concat(secondaries).slice(0, count);
+  } else {
+    // Prod : slot 0 = ancre unique MTL ↔ QC (rotation).
+    mastheadWeatherSlots = mastheadWeatherSlots.slice(0, count);
+    const anchor = WEATHER_CITIES.find(
+      (city) => city.id === MASTHEAD_WEATHER_PRIMARY_SEQUENCE[mastheadWeatherPrimaryIndex],
+    );
+    if (anchor && mastheadWeatherSlots[0]?.id !== anchor.id) mastheadWeatherSlots[0] = anchor;
+  }
+
+  const usedIds = new Set(
+    mastheadWeatherSlots.filter(Boolean).map((city) => city.id),
   );
-  if (anchor && mastheadWeatherSlots[0]?.id !== anchor.id) mastheadWeatherSlots[0] = anchor;
-  const usedIds = new Set(mastheadWeatherSlots.map((city) => city.id));
+  // Dual : primaires toujours réservées
+  if (dualPrimary) {
+    usedIds.add('montreal');
+    usedIds.add('quebec');
+  }
   while (mastheadWeatherSlots.length < count) {
     const slot = mastheadWeatherSlots.length;
-    const city = slot === 0
-      ? anchor
-      : nextWeatherCity(weatherSecondaryGroup(slot, count), usedIds);
+    let city = null;
+    if (dualPrimary) {
+      if (slot === 0) city = weatherPrimaryCityById('montreal');
+      else if (slot === 1) city = weatherPrimaryCityById('quebec');
+      else city = nextWideSecondaryCity(usedIds);
+    } else {
+      city = slot === 0
+        ? WEATHER_CITIES.find(
+          (c) => c.id === MASTHEAD_WEATHER_PRIMARY_SEQUENCE[mastheadWeatherPrimaryIndex],
+        )
+        : nextWeatherCity(weatherSecondaryGroup(slot, count), usedIds);
+    }
     if (!city) break;
     usedIds.add(city.id);
     mastheadWeatherSlots.push(city);
+  }
+  // Filet dual : forcer MTL/QC même si le while a mal rempli
+  if (dualPrimary) {
+    const mtl = weatherPrimaryCityById('montreal');
+    const qc = weatherPrimaryCityById('quebec');
+    if (mtl) mastheadWeatherSlots[0] = mtl;
+    if (qc) mastheadWeatherSlots[1] = qc;
   }
   cities.forEach((city) => {
     city.classList.remove('is-active', 'is-leaving', 'is-arriving');
@@ -1711,11 +2458,17 @@ function showMastheadWeatherBoard() {
   primary.classList.remove('is-compact');
   let primaryOverflows = primaryOverflowing();
   if (primaryOverflows && count > 1) {
-    mastheadWeatherFitCount = count - 1;
-    mastheadWeatherLastBoardCount = 0;
-    mastheadWeatherSlots = [];
-    showMastheadWeatherBoard();
-    return;
+    // Hors wide : ne pas descendre sous 3 cartes si la colonne a de la place
+    // (le shrink-wrap du board faisait faussement déborder MONTRÉAL).
+    const avail = weatherBoardAvailWidth();
+    const floor = (!weatherWideDualPrimary() && avail >= 400) ? 3 : 1;
+    if (count > floor) {
+      mastheadWeatherFitCount = count - 1;
+      mastheadWeatherLastBoardCount = 0;
+      mastheadWeatherSlots = [];
+      showMastheadWeatherBoard();
+      return;
+    }
   }
   if (primaryOverflows) {
     primary.classList.add('is-compact');
@@ -1747,6 +2500,13 @@ const WEATHER_SCROLL_POST_PAUSE_MS = 700;
 /** Synchro style-masthead.css `weather-tile-arrive` / `weather-tile-leave`. */
 const WEATHER_ARRIVE_MS = 460;
 const WEATHER_LEAVE_MS = 280;
+/**
+ * Wide : vague L→R de toutes les secondaires, puis pause lecture, puis
+ * une nouvelle vague. Pas un flip isolé toutes les 9 s (bandeau « vide »).
+ * Step ≈ leave + début d’arrive — assez lent pour suivre la cascade.
+ */
+const WEATHER_CASCADE_STEP_MS = 440;
+const WEATHER_BOARD_HOLD_MS = 10000;
 
 function weatherMotionOk() {
   return !(sportsReducedMotion || PREFERS_REDUCED_MOTION?.matches);
@@ -1774,21 +2534,148 @@ function playWeatherCityArrive(el) {
   window.setTimeout(clear, WEATHER_ARRIVE_MS + 80);
 }
 
-function refreshWeatherNameScroll() {
+let weatherComfortFitDepth = 0;
+
+/** Largeur-cible d’un slot secondaire : tient « Saint-Félicien » + icône + °. */
+const WEATHER_SLOT_FIT_NAME = 'Saint-Félicien';
+
+function weatherMeasureStringPx(el, text) {
+  const node = el?.querySelector('.masthead-weather__name-full') || el;
+  if (!node) return Math.ceil(String(text).length * 7.5);
+  const cs = getComputedStyle(node);
+  if (!weatherMeasureStringPx._ctx) {
+    weatherMeasureStringPx._ctx = document.createElement('canvas').getContext('2d');
+  }
+  const ctx = weatherMeasureStringPx._ctx;
+  ctx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+  const ls = parseFloat(cs.letterSpacing) || 0;
+  const t = String(text || '');
+  return Math.ceil(ctx.measureText(t).width + ls * Math.max(0, t.length - 1) + 2);
+}
+
+function weatherCityNaturalWidth(el) {
+  if (!el) return 0;
+  const prevWidth = el.style.width;
+  const prevMin = el.style.minWidth;
+  const prevMax = el.style.maxWidth;
+  const prevFlex = el.style.flex;
+  el.style.width = 'max-content';
+  el.style.minWidth = 'max-content';
+  el.style.maxWidth = 'none';
+  el.style.flex = '0 0 auto';
+  const w = Math.ceil(el.getBoundingClientRect().width);
+  el.style.width = prevWidth;
+  el.style.minWidth = prevMin;
+  el.style.maxWidth = prevMax;
+  el.style.flex = prevFlex;
+  return w;
+}
+
+/**
+ * ≥1440 : largeur fixe par carte (tient un nom type « Saint-Félicien »).
+ * Les noms plus longs défilent. −1 carte si le ruban déborde.
+ * @returns {boolean} true si un re-render a été lancé
+ */
+function fitWideWeatherSecondarySlots() {
+  if (!isWideDesktopComfort() || !MASTHEAD_WEATHER) return false;
+  if (weatherComfortFitDepth > 10) return false;
+  const board = MASTHEAD_WEATHER.querySelector('.masthead-weather__board');
+  if (!board) return false;
+  const actives = [...board.querySelectorAll('.masthead-weather__city.is-active')];
+  const secondaries = actives.filter((el) => {
+    const id = el.getAttribute('data-weather-city');
+    return id && !MASTHEAD_WEATHER_PRIMARY_IDS.has(id);
+  });
+  if (!secondaries.length) {
+    board.style.removeProperty('--weather-secondary-w');
+    return false;
+  }
+  const mtl = actives.find((el) => el.getAttribute('data-weather-city') === 'montreal');
+  const qc = actives.find((el) => el.getAttribute('data-weather-city') === 'quebec');
+  const mtlW = weatherCityNaturalWidth(mtl) || 128;
+  const qcW = weatherCityNaturalWidth(qc) || 112;
+  const primaryW = Math.max(mtlW, qcW);
+  const gap = 4;
+  const avail = weatherBoardAvailWidth();
+  if (avail < 40) return false;
+  const MIN_SEC = isWideQhdPlus() ? 152 : 168;
+  const minPrimary = Math.max(
+    118,
+    (mtl || qc)
+      ? 52 + weatherMeasureStringPx(mtl || qc, 'MONTRÉAL')
+      : 118,
+  );
+  const uniformAll = window.matchMedia('(min-width: 1920px)').matches;
+  const applyW = (el, w) => {
+    if (!el) return;
+    el.style.setProperty('flex', `0 0 ${w}px`, 'important');
+    el.style.setProperty('width', `${w}px`, 'important');
+    el.style.setProperty('min-width', `${w}px`, 'important');
+    el.style.setProperty('max-width', `${w}px`, 'important');
+  };
+  const dropTo = (nTotal) => {
+    weatherComfortFitDepth += 1;
+    mastheadWeatherFitCount = Math.max(3, nTotal);
+    mastheadWeatherLastBoardCount = 0;
+    try {
+      showMastheadWeatherBoard();
+    } finally {
+      weatherComfortFitDepth = Math.max(0, weatherComfortFitDepth - 1);
+    }
+    return true;
+  };
+
+  if (uniformAll) {
+    let n = actives.length;
+    while (n > 3 && n * MIN_SEC + gap * (n - 1) > avail + 1) n -= 1;
+    if (n < actives.length) return dropTo(n);
+    const slotW = Math.max(MIN_SEC, Math.floor((avail - gap * Math.max(0, n - 1)) / n));
+    board.style.setProperty('--weather-slot-w', `${slotW}px`);
+    board.style.setProperty('--weather-secondary-w', `${slotW}px`);
+    board.style.setProperty('--weather-primary-w', `${slotW}px`);
+    actives.forEach((el) => applyW(el, slotW));
+    return false;
+  }
+
+  let nSec = secondaries.length;
+  let pW = primaryW;
+  const gapsFor = (n) => gap * (n + 1);
+  while (nSec > 1 && pW * 2 + nSec * MIN_SEC + gapsFor(nSec) > avail + 1) {
+    const shrink = Math.floor((avail - nSec * MIN_SEC - gapsFor(nSec)) / 2);
+    if (shrink >= minPrimary && shrink < pW) {
+      pW = shrink;
+      break;
+    }
+    nSec -= 1;
+  }
+  if (nSec < secondaries.length) return dropTo(2 + nSec);
+  const room = avail - pW * 2 - gap * Math.max(0, actives.length - 1);
+  const slotW = Math.max(MIN_SEC, Math.floor(room / Math.max(1, nSec)));
+  board.style.setProperty('--weather-secondary-w', `${slotW}px`);
+  board.style.setProperty('--weather-primary-w', `${pW}px`);
+  secondaries.forEach((el) => applyW(el, slotW));
+  applyW(mtl, pW);
+  applyW(qc, pW);
+  return false;
+}
+
+function measureWeatherNameOverflows() {
   MASTHEAD_WEATHER?.querySelectorAll('.masthead-weather__city.is-active').forEach((el) => {
     const viewport = el.querySelector('.masthead-weather__name');
     const name = el.querySelector('.masthead-weather__name-text');
+    const full = el.querySelector('.masthead-weather__name-full');
     if (!viewport || !name) return;
-    // Lever max-width le temps de la mesure (sinon max-width:100% → overflow 0
-    // et le marquee ne part jamais — « SAINT-IGNACE-D » figé).
+
     const prevMax = name.style.maxWidth;
+    const prevOv = name.style.overflow;
     name.style.maxWidth = 'none';
-    const overflow = Math.max(0, name.scrollWidth - viewport.clientWidth);
+    name.style.overflow = 'visible';
+    const textW = Math.max(name.scrollWidth || 0, full?.scrollWidth || 0);
+    const viewW = viewport.clientWidth || 0;
     name.style.maxWidth = prevMax;
-    const isPrimary = MASTHEAD_WEATHER_PRIMARY_IDS.has(el.dataset.weatherCity);
-    // Montréal et Québec ne défilent jamais : la grille réduit plutôt le nombre
-    // de cartes quand l'espace devient insuffisant.
-    const needs = !isPrimary && overflow > 2;
+    name.style.overflow = prevOv;
+    const overflow = viewW > 0 ? Math.max(0, textW - viewW) : 0;
+    const needs = overflow > 2;
     const had = el.classList.contains('is-overflowing');
     const prev = (el.style.getPropertyValue('--weather-scroll') || '').trim();
     const next = `${overflow}px`;
@@ -1800,27 +2687,57 @@ function refreshWeatherNameScroll() {
       return;
     }
     el.style.setProperty('--weather-scroll', next);
-    // Relancer le cycle si nouveau overflow, nouvelle carte, ou 1ʳᵉ pose.
-    if (!had || prev !== next) {
-      el.classList.remove('is-overflowing');
-      void name.offsetWidth;
-      el.classList.add('is-overflowing');
-    }
+    const prevN = parseFloat(prev) || 0;
+    if (had && Math.abs(prevN - overflow) < 6) return;
+    el.classList.remove('is-overflowing');
+    void name.offsetWidth;
+    el.classList.add('is-overflowing');
   });
+}
+
+function refreshWeatherNameScroll() {
+  if (isWideDesktopComfort() && MASTHEAD_WEATHER) {
+    if (fitWideWeatherSecondarySlots()) return;
+    window.requestAnimationFrame(() => measureWeatherNameOverflows());
+    return;
+  }
+  if (isWideNoMarqueeMode() && !isWideDesktopComfort() && MASTHEAD_WEATHER) {
+    window.requestAnimationFrame(() => measureWeatherNameOverflows());
+    return;
+  }
+  measureWeatherNameOverflows();
 }
 
 /** Dwell météo : lire → 1 aller-retour si overflow → repos → changer. */
 function weatherBoardDwellMs() {
-  if (sportsReducedMotion || PREFERS_REDUCED_MOTION?.matches) {
-    return WEATHER_ROTATE_BASE_MS;
-  }
+  const base = isWideNoMarqueeMode()
+    ? Math.max(WEATHER_ROTATE_BASE_MS, 9000)
+    : WEATHER_ROTATE_BASE_MS;
+  if (sportsReducedMotion || PREFERS_REDUCED_MOTION?.matches) return base;
   const anyOverflow = !!MASTHEAD_WEATHER?.querySelector(
     '.masthead-weather__city.is-active.is-overflowing',
   );
-  if (!anyOverflow) return WEATHER_ROTATE_BASE_MS;
-  return WEATHER_SCROLL_READ_DELAY_MS
-    + WEATHER_SCROLL_ONE_WAY_MS * MARQUEE_ROUND_TRIPS
-    + WEATHER_SCROLL_POST_PAUSE_MS;
+  if (!anyOverflow) return base;
+  return Math.max(
+    base,
+    WEATHER_SCROLL_READ_DELAY_MS
+      + WEATHER_SCROLL_ONE_WAY_MS * 2
+      + WEATHER_SCROLL_POST_PAUSE_MS,
+  );
+}
+
+function weatherCardDwellMs(el) {
+  const base = isWideNoMarqueeMode() ? 9000 : WEATHER_ROTATE_BASE_MS;
+  if (!el || sportsReducedMotion || PREFERS_REDUCED_MOTION?.matches) return base;
+  if (!el.classList.contains('is-overflowing')) return base;
+  // 1 aller + retour à l’origine + courte pause, puis on change la carte.
+  return Math.max(
+    base,
+    WEATHER_SCROLL_READ_DELAY_MS
+      + WEATHER_SCROLL_ONE_WAY_MS * 2
+      + WEATHER_SCROLL_POST_PAUSE_MS
+      + 160,
+  );
 }
 
 function clearMastheadWeatherTimer() {
@@ -1830,9 +2747,72 @@ function clearMastheadWeatherTimer() {
   mastheadWeatherTimer = null;
 }
 
+/** Slots secondaires wide (0–1 = MTL/QC fixes). */
+function weatherCascadeSlots() {
+  const n = mastheadWeatherSlots.length;
+  if (!(weatherWideDualPrimary() && n > 2)) return [];
+  const slots = [];
+  for (let i = 2; i < n; i += 1) slots.push(i);
+  return slots;
+}
+
+/** Pause lecture après une vague : assez pour balayer toute la rangée. */
+function weatherBoardHoldMs() {
+  const n = Math.max(1, weatherCascadeSlots().length);
+  return Math.min(14000, Math.max(WEATHER_BOARD_HOLD_MS, 1200 * n));
+}
+
+/**
+ * Wide : changer toutes les secondaires en cascade (L→R), puis laisser
+ * le temps de les regarder, puis recommencer. Prod (non-wide) inchangée.
+ */
+function scheduleWeatherCascade({ firstHold = true } = {}) {
+  clearMastheadWeatherTimer();
+  if (!MASTHEAD_WEATHER || MASTHEAD_WEATHER.classList.contains('hidden')) return;
+  if (!isWideNoMarqueeMode() || !weatherWideDualPrimary()) return;
+  const slots = weatherCascadeSlots();
+  if (!slots.length) return;
+
+  const stepMs = (sportsReducedMotion || PREFERS_REDUCED_MOTION?.matches)
+    ? 80
+    : WEATHER_CASCADE_STEP_MS;
+
+  const step = (index) => {
+    const live = weatherCascadeSlots();
+    if (!live.length) return;
+    if (index >= live.length) {
+      mastheadWeatherTimer = window.setTimeout(() => {
+        mastheadWeatherTimer = null;
+        scheduleWeatherCascade({ firstHold: false });
+      }, weatherBoardHoldMs());
+      return;
+    }
+    rotateOneMastheadWeatherCard(live[index]);
+    mastheadWeatherTimer = window.setTimeout(() => {
+      mastheadWeatherTimer = null;
+      step(index + 1);
+    }, stepMs);
+  };
+
+  if (firstHold) {
+    mastheadWeatherTimer = window.setTimeout(() => {
+      mastheadWeatherTimer = null;
+      step(0);
+    }, weatherBoardHoldMs());
+    return;
+  }
+  step(0);
+}
+
 function scheduleMastheadWeatherRotate() {
   clearMastheadWeatherTimer();
   if (!MASTHEAD_WEATHER || MASTHEAD_WEATHER.classList.contains('hidden')) return;
+  const n = mastheadWeatherSlots.length;
+  const dual = weatherWideDualPrimary() && n >= 2;
+  if (isWideNoMarqueeMode() && dual) {
+    scheduleWeatherCascade({ firstHold: true });
+    return;
+  }
   mastheadWeatherTimer = window.setTimeout(() => {
     mastheadWeatherTimer = null;
     rotateOneMastheadWeatherCard();
@@ -1840,40 +2820,59 @@ function scheduleMastheadWeatherRotate() {
   }, weatherBoardDwellMs());
 }
 
-function rotateOneMastheadWeatherCard() {
+function rotateOneMastheadWeatherCard(forcedSlot) {
   if (!mastheadWeatherSlots.length || !MASTHEAD_WEATHER) return;
-  const slot = mastheadWeatherNextSlot % mastheadWeatherSlots.length;
+  const n = mastheadWeatherSlots.length;
+  const dualPrimary = weatherWideDualPrimary() && n >= 2;
+  // Wide dual : ne jamais tourner les slots 0–1 (MTL + QC persistants).
+  if (dualPrimary && n <= 2) return;
+  let slot = Number.isInteger(forcedSlot) ? forcedSlot : (mastheadWeatherNextSlot % n);
+  if (dualPrimary) {
+    if (slot < 2) slot = 2;
+    if (slot >= n) slot = 2;
+  }
   const previous = mastheadWeatherSlots[slot];
   const usedIds = new Set(
     mastheadWeatherSlots.filter((_, index) => index !== slot).map((city) => city.id),
   );
+  // Primaires toujours « utilisées » pour ne pas les réinjecter en secondaire
+  if (dualPrimary) {
+    usedIds.add('montreal');
+    usedIds.add('quebec');
+  }
   let replacement;
-  if (slot === 0) {
-    // Carte spéciale : alterne exclusivement Montréal ↔ Québec.
+  if (!dualPrimary && slot === 0) {
+    // Prod : carte spéciale alterne exclusivement Montréal ↔ Québec.
     mastheadWeatherPrimaryIndex = (mastheadWeatherPrimaryIndex + 1)
       % MASTHEAD_WEATHER_PRIMARY_SEQUENCE.length;
     replacement = WEATHER_CITIES.find(
       (city) => city.id === MASTHEAD_WEATHER_PRIMARY_SEQUENCE[mastheadWeatherPrimaryIndex],
     );
   } else {
-    if (slot === 1 && mastheadWeatherSlots.length <= 2) {
+    if (!dualPrimary && slot === 1 && n <= 2) {
       mastheadWeatherCompactSecondaryIndex = (mastheadWeatherCompactSecondaryIndex + 1) % 3;
     }
-    replacement = nextWeatherCity(
-      weatherSecondaryGroup(slot, mastheadWeatherSlots.length),
-      usedIds,
-    );
+    replacement = dualPrimary
+      ? nextWideSecondaryCity(usedIds)
+      : nextWeatherCity(
+        weatherSecondaryGroup(slot, n),
+        usedIds,
+      );
   }
   if (!replacement) return;
   // Même ville (deck vide / un seul candidat) : avancer le curseur sans anim fantôme.
   if (previous?.id === replacement.id) {
-    mastheadWeatherNextSlot = (slot + 1) % mastheadWeatherSlots.length;
+    mastheadWeatherNextSlot = dualPrimary ? advanceWideWeatherSlot(slot, n) : (slot + 1) % n;
+    if (dualPrimary && mastheadWeatherNextSlot < 2) mastheadWeatherNextSlot = 2;
     return;
   }
 
   const applyBoardWithArrive = () => {
     mastheadWeatherSlots[slot] = replacement;
-    mastheadWeatherNextSlot = (slot + 1) % mastheadWeatherSlots.length;
+    mastheadWeatherNextSlot = dualPrimary
+      ? advanceWideWeatherSlot(slot, mastheadWeatherSlots.length)
+      : (slot + 1) % mastheadWeatherSlots.length;
+    if (dualPrimary && mastheadWeatherNextSlot < 2) mastheadWeatherNextSlot = 2;
     showMastheadWeatherBoard();
     const arriving = MASTHEAD_WEATHER.querySelector(
       `.masthead-weather__city.is-active[data-weather-city="${replacement.id}"]`,
@@ -1920,6 +2919,8 @@ function scheduleMastheadWeatherLayout() {
     mastheadWeatherFitCount = null;
     mastheadWeatherTooNarrow = false;
     MASTHEAD_WEATHER?.classList.remove('is-too-narrow');
+    MASTHEAD_WEATHER?.querySelector('.masthead-weather__board')
+      ?.style.removeProperty('--weather-secondary-w');
     // showMastheadWeatherBoard réévalue lui-même le dockage (masthead vs
     // sous le syntoniseur) selon la largeur actuelle.
     mastheadWeatherResizeFrame = window.requestAnimationFrame(showMastheadWeatherBoard);
@@ -1957,6 +2958,11 @@ function renderMastheadWeather(entries) {
   MASTHEAD_WEATHER.classList.remove('hidden');
   syncMastheadShuffleButton();
   startMastheadWeatherBoard();
+  window.requestAnimationFrame(() => {
+    if (MASTHEAD_WEATHER?.querySelector('.masthead-weather__city.is-active')) {
+      markUiReady(MASTHEAD_WEATHER);
+    }
+  });
 }
 
 window.addEventListener('radar:translate-mode', refreshMastheadWeatherLinks);
@@ -2006,6 +3012,69 @@ function weatherLabFixtureEntries() {
       },
     };
   });
+}
+
+/**
+ * Accueil seulement dans le HTML historique : les fiches SEO / hub n'avaient
+ * pas les coquilles. On les pose dès qu'un mât existe (pas pomo / solitaire /
+ * maintenance) pour que météo et scores soient les mêmes partout.
+ */
+function ensureMastheadBoards() {
+  const top = document.querySelector('.masthead-top');
+  if (!top) return;
+
+  const en = document.documentElement.lang.startsWith('en');
+  if (!MASTHEAD_WEATHER) {
+    const weather = document.createElement('div');
+    weather.id = 'masthead-weather';
+    weather.className = 'masthead-weather hidden';
+    weather.setAttribute('aria-label', en ? 'Québec weather' : 'Météo du Québec');
+    weather.setAttribute('aria-live', 'polite');
+    weather.innerHTML = `<span class="masthead-weather__board" aria-label="${en ? 'Current conditions' : 'Conditions actuelles'}"></span>`;
+    const date = top.querySelector('.masthead-date');
+    const actions = top.querySelector('.masthead-actions');
+    if (date?.nextSibling) top.insertBefore(weather, date.nextSibling);
+    else if (actions) top.insertBefore(weather, actions);
+    else top.appendChild(weather);
+    MASTHEAD_WEATHER = weather;
+  }
+
+  if (!MASTHEAD_WEATHER_DOCK) {
+    const dock = document.createElement('div');
+    dock.id = 'masthead-weather-dock';
+    dock.className = 'masthead-weather-dock';
+    MASTHEAD_WEATHER_DOCK = dock;
+  }
+
+  if (!MASTHEAD_SPORTS_STRIP) {
+    const strip = document.createElement('div');
+    strip.id = 'masthead-sports-strip';
+    strip.className = 'masthead-sports-strip';
+    strip.hidden = true;
+    strip.setAttribute('aria-label', en
+      ? 'Québec student sports scores'
+      : 'Résultats sportifs étudiants du Québec');
+    strip.setAttribute('aria-live', 'polite');
+    MASTHEAD_SPORTS_STRIP = strip;
+  }
+
+  const main = document.querySelector('main');
+  const tuner = document.getElementById('tuner');
+  const mountParent = main?.parentNode || tuner?.parentNode || document.body;
+  const beforeMain = main || null;
+  if (!MASTHEAD_WEATHER_DOCK.parentNode) {
+    mountParent.insertBefore(MASTHEAD_WEATHER_DOCK, beforeMain);
+  }
+  if (!MASTHEAD_SPORTS_STRIP.parentNode) {
+    if (MASTHEAD_WEATHER_DOCK.nextSibling) {
+      mountParent.insertBefore(MASTHEAD_SPORTS_STRIP, MASTHEAD_WEATHER_DOCK.nextSibling);
+    } else {
+      mountParent.insertBefore(MASTHEAD_SPORTS_STRIP, beforeMain);
+    }
+  }
+
+  mastheadWeatherHomeParent = MASTHEAD_WEATHER.parentNode;
+  mastheadWeatherHomeNextSibling = MASTHEAD_WEATHER.nextSibling;
 }
 
 async function initMastheadWeather() {
@@ -2148,6 +3217,8 @@ let sportsVisible = [];
 let sportsNextSlot = 0;
 /** Un timeout par slot : chaque puce tourne à son rythme (marquee inclus). */
 let sportsSlotTimers = [];
+let sportsWaveTimer = 0;
+let sportsWaveSlot = 0;
 /** Rotation de la CTA suspendue (survol ou focus) — garde-fou `pause-survol-focus`. */
 let sportsCtaPaused = false;
 /**
@@ -2205,6 +3276,12 @@ const SPORTS_SCROLL_READ_DELAY_MS = MARQUEE_READ_DELAY_MS;
 const SPORTS_SCROLL_POST_PAUSE_MS = MARQUEE_REST_MS;
 /** Décalage initial entre slots pour éviter un flip simultané au 1er paint. */
 const SPORTS_SLOT_STAGGER_MS = 1100;
+/**
+ * Wide : vague de toutes les puces (scores + texte CTA), puis pause lecture.
+ * Step assez lent pour suivre la cascade ; hold assez long pour relire le ruban.
+ */
+const SPORTS_CASCADE_STEP_MS = 520;
+const SPORTS_BOARD_HOLD_MS = 11000;
 /** Entrée d’une puce score (CSS sports-chip-arrive) — plus long = moins brutal. */
 const SPORTS_ARRIVE_MS = 640;
 /**
@@ -2213,9 +3290,10 @@ const SPORTS_ARRIVE_MS = 640;
  * Trois verdicts focus-group se superposent ici :
  * · `le-radar-sports-first-glance` — lead = résultat aujourd’hui/hier (civil QC)
  *   sinon prochain du jour lead ; alerte réservée au direct.
- * · `le-radar-cta-sports-motion` — le changement d’accroche est un **roulement
- *   vertical** d’une seule phase, jamais un fondu croisé : deux textes de
- *   longueurs différentes superposés à mi-opacité sont illisibles.
+ * · `le-radar-cta-sports-motion` — override humain 2026-08-17 : le
+ *   renouvellement de l’accroche rejoue la **même** sortie/entrée que les
+ *   puces scores (`is-leaving` / `is-arriving` sur la carte entière), plus
+ *   un roulement interne du texte seul.
  * · `le-radar-cta-sports-badge` — le mot de la pastille reste « Sports » au
  *   repos ; seul le direct le remplace (override mainteneur 2026-08-09).
  */
@@ -2521,40 +3599,143 @@ function sportsPickTeamSlide(team, now = Date.now()) {
 /** Largeur utile du bandeau sports (contenu, hors padding). */
 function sportsStripAvailWidth() {
   const strip = MASTHEAD_SPORTS_STRIP;
-  if (strip && strip.clientWidth > 0) {
-    const cs = window.getComputedStyle(strip);
-    const padL = parseFloat(cs.paddingLeft) || 0;
-    const padR = parseFloat(cs.paddingRight) || 0;
-    return Math.max(0, strip.clientWidth - padL - padR);
+  if (strip) {
+    const w = strip.getBoundingClientRect().width;
+    if (w > 0) {
+      const cs = getComputedStyle(strip);
+      const padL = parseFloat(cs.paddingLeft) || 0;
+      const padR = parseFloat(cs.paddingRight) || 0;
+      // 8 px de filet : évite que la dernière carte dépasse le cadre.
+      return Math.max(0, w - padL - padR - 8);
+    }
   }
   return document.documentElement.clientWidth || 360;
+}
+
+/** Nombre de cartes sports hors CTA (scores). */
+function sportsMatchChipCount() {
+  const fromState = (typeof sportsVisible !== 'undefined' && Array.isArray(sportsVisible))
+    ? sportsVisible.filter((slide) => slide && slide.mode !== 'cta').length
+    : 0;
+  if (fromState > 0) return fromState;
+  const strip = MASTHEAD_SPORTS_STRIP;
+  if (!strip || strip.hidden) return 0;
+  return strip.querySelectorAll('.sports-chip--match').length;
+}
+
+function syncWeatherCountToSports() {
+  if (!isWideDesktopComfort() || !MASTHEAD_WEATHER) return;
+  const want = weatherSportsParityCount();
+  if (want < 3) return;
+  if (mastheadWeatherLastBoardCount === want) {
+    fitWideWeatherSecondarySlots();
+    return;
+  }
+  mastheadWeatherFitCount = want;
+  mastheadWeatherLastBoardCount = 0;
+  showMastheadWeatherBoard();
+}
+
+/**
+ * Wide : nombre de cartes CTA (1–3) selon largeur + taille du pool.
+ * Plusieurs CTAs = matchs / accroches **distincts** (pas la même info).
+ */
+function isWideDualSportsCta() {
+  try {
+    return isWideDesktopComfort() && window.matchMedia('(min-width: 1921px)').matches;
+  } catch {
+    return false;
+  }
+}
+
+function isWideTripleSportsCta() {
+  try {
+    return isWideDesktopComfort() && window.matchMedia('(min-width: 3440px)').matches;
+  } catch {
+    return false;
+  }
+}
+
+function sportsWideCtaCount(boardCount = 0) {
+  if (typeof isWideNoMarqueeMode !== 'function' || !isWideNoMarqueeMode()) return 1;
+  const poolN = Math.max(
+    sportsCtaCandidateSlides()?.length || 0,
+    sportsCtaLabelPool()?.length || 0,
+  );
+  // ≥3440 : 3 CTA. >1920 : 2. ≤1920 : 1, gabarit 1280.
+  if (isWideDesktopComfort()) {
+    let want = 1;
+    if (isWideTripleSportsCta() && poolN >= 3) want = 3;
+    else if (isWideDualSportsCta() && poolN >= 2) want = 2;
+    const cap = boardCount > 0 ? boardCount : 11;
+    return Math.max(1, Math.min(want, poolN || 1, cap));
+  }
+  const avail = sportsStripAvailWidth();
+  let want = 1;
+  if (avail >= 2000 && poolN >= 3) want = 3;
+  else if (avail >= 1300 && poolN >= 2) want = 2;
+  // Ne pas dépasser le board ni le pool (au moins 1)
+  const cap = boardCount > 0 ? boardCount : 9;
+  return Math.max(1, Math.min(want, poolN || 1, cap));
 }
 
 /**
  * Focus-group le-radar-sports-weather-fit A :
  * Plafond sports = largeur seule (max 3 scores + CTA). Météo indépendante.
- * 4 = 3 scores + CTA ; 3 = 2+CTA ; 2 = 1+CTA ; 1 = CTA seule.
+ * Wide : place pour 2–3 CTAs + scores autour.
  */
 function sportsBoardCountBase() {
   const avail = sportsStripAvailWidth();
+  const wide = isWideNoMarqueeMode();
+  const comfort = isWideDesktopComfort();
   const gap = 6;
-  // Un cran plus souple : tablette 768 doit garder ≥1 score + CTA (pas CTA seule).
-  // FG A : overflow texte → −1 puce, mais le plafond largeur ne doit pas
-  // refuser 2 chips dès qu’on a ~320 px utiles.
-  const minScore = 128;
-  const minCta = 152;
+  // ≥1440 : CTA gabarit 900/1280 ; scores plus larges (pas de troncature).
+  // Wide étroit : slots flex égaux, plus de puces.
+  const minScore = comfort ? 200 : (wide ? 120 : 128);
+  const minCta = comfort ? 424 : (wide ? 140 : 152);
+  let maxN = 4;
+  if (comfort) {
+    // Remplir le bandeau : 3 CTA dès 3440, 2 dès 1920.
+    if (avail >= 3000) maxN = 13;
+    else if (avail >= 2200) maxN = 11;
+    else if (avail >= 1700) maxN = 9;
+    else maxN = 7;
+  } else if (wide) {
+    if (avail >= 2200) maxN = 11;
+    else if (avail >= 1800) maxN = 9;
+    else if (avail >= 1400) maxN = 7;
+    else maxN = 5;
+  }
+
+  // Estimer le nb de CTA pour le budget largeur
+  const roughCta = comfort
+    ? (isWideTripleSportsCta() ? 3 : (isWideDualSportsCta() ? 2 : 1))
+    : (wide
+      ? (avail >= 2000 ? 3 : avail >= 1300 ? 2 : 1)
+      : 1);
 
   let n = 1;
-  for (let tryN = 4; tryN >= 2; tryN -= 1) {
-    const scores = tryN - 1;
-    const need = scores * minScore + minCta + gap * (tryN - 1);
+  for (let tryN = maxN; tryN >= 2; tryN -= 1) {
+    const ctaN = wide ? Math.min(roughCta, tryN) : 1;
+    const scores = Math.max(0, tryN - ctaN);
+    const need = scores * minScore + ctaN * minCta + gap * (tryN - 1);
     if (avail >= need) {
       n = tryN;
       break;
     }
   }
+  // Wide 1 CTA historique : totaux impairs pour équilibre L/R.
+  // Multi-CTA : pas d’obligation d’impair (cluster CTA au centre).
+  if (wide && roughCta <= 1 && n >= 4 && n % 2 === 0) {
+    const up = n + 1;
+    const scoresUp = up - 1;
+    const needUp = scoresUp * minScore + minCta + gap * (up - 1);
+    if (avail >= needUp && up <= maxN) n = up;
+    else n = Math.max(3, n - 1);
+  }
   return n;
 }
+
 
 /**
  * Nombre de chips cible : largeur × fit post-paint (overflow texte = −1).
@@ -2589,11 +3770,32 @@ function sportsMatchChipTextOverflows(chip) {
   return !!(subView && subInner && sportsMeasureOverflow(subView, subInner, false) > 1);
 }
 
+/** CTA : titre ou sous-ligne trop long pour la largeur peinte (wide = −1 carte). */
+function sportsCtaTextOverflows(chip) {
+  if (!chip?.classList?.contains('sports-chip--cta')) return false;
+  const layer = typeof sportsCtaActiveLabel === 'function'
+    ? sportsCtaActiveLabel(chip)
+    : chip;
+  const titleView = layer?.querySelector?.('.sports-chip__cta-line')
+    || chip.querySelector('.sports-chip__cta-line');
+  const titleInner = layer?.querySelector?.('.sports-chip__cta-text')
+    || chip.querySelector('.sports-chip__cta-text');
+  if (titleView && titleInner && sportsMeasureOverflow(titleView, titleInner, false) > 1) {
+    return true;
+  }
+  const subView = layer?.querySelector?.('.sports-chip__cta-sub')
+    || chip.querySelector('.sports-chip__cta-sub');
+  const subInner = layer?.querySelector?.('.sports-chip__cta-sub-text')
+    || chip.querySelector('.sports-chip__cta-sub-text');
+  return !!(subView && subInner && sportsMeasureOverflow(subView, subInner, false) > 1);
+}
+
 /**
  * Le bandeau est-il trop étroit / texte illisible pour les chips peints ?
- * - CTA écrasée (tag AU TABLEAU) → −1 score
+ * - CTA écrasée (tag) ou texte CTA overflow → −1 score
  * - Puce score trop étroite OU titre/sous-ligne overflow → −1 score
- * CTA : marquee encore toléré — on ne la compare pas en largeur « naturelle ».
+ * Wide : **jamais** marquee ni clip — on retire une carte tant que le texte
+ * ne tient pas en entier (design inchangé, juste moins de puces).
  */
 function sportsStripCramped() {
   const strip = MASTHEAD_SPORTS_STRIP;
@@ -2601,35 +3803,144 @@ function sportsStripCramped() {
   const chips = [...strip.querySelectorAll('.sports-chip')];
   if (chips.length <= 1) return false;
 
-  const minScore = 118;
-  const minCta = 148;
+  const wide = isWideNoMarqueeMode();
+  const comfort = isWideDesktopComfort();
+  const minScore = comfort ? 0 : (wide ? 100 : 118);
+  const minCta = comfort ? 400 : (wide ? 120 : 148);
 
   const cta = strip.querySelector('.sports-chip--cta');
   if (!cta) return true;
-  if (cta.clientWidth + 0.5 < minCta) return true;
-  const tag = cta.querySelector('.sports-chip__cta-tag');
-  if (tag && tag.scrollWidth > tag.clientWidth + 1) return true;
+  if (!comfort && cta.clientWidth + 0.5 < minCta) return true;
+  if (!wide) {
+    const tag = cta.querySelector('.sports-chip__cta-tag');
+    if (tag && tag.scrollWidth > tag.clientWidth + 1) return true;
+  }
+
+  if (comfort) {
+    // Ne pas utiliser strip.scrollWidth : le texte marquee de la CTA l’enfle.
+    for (const chip of chips) {
+      if (chip.classList.contains('sports-chip--cta')) continue;
+      if (sportsMatchChipTextOverflows(chip)) return true;
+    }
+    const gap = 6;
+    const used = chips.reduce((sum, el) => sum + el.getBoundingClientRect().width, 0)
+      + gap * Math.max(0, chips.length - 1);
+    return used > sportsStripAvailWidth() + 2;
+  }
 
   for (const chip of chips) {
     if (chip.classList.contains('sports-chip--cta')) continue;
     if (chip.clientWidth + 0.5 < minScore) return true;
-    if (sportsMatchChipTextOverflows(chip)) return true;
+    if (!wide && sportsMatchChipTextOverflows(chip)) return true;
   }
   return false;
 }
 
+/** Wide : purge toute classe marquee sports (sécurité après paint / rotation). */
+function clearWideSportsMarqueeClasses() {
+  if (!isWideNoMarqueeMode() || !MASTHEAD_SPORTS_STRIP) return;
+  // ≥1440 : marquee L→R autorisé si un peu de texte reste masqué.
+  if (isWideDesktopComfort()) return;
+  MASTHEAD_SPORTS_STRIP.querySelectorAll('.is-overflowing, .is-sub-overflowing').forEach((el) => {
+    el.classList.remove('is-overflowing', 'is-sub-overflowing');
+    el.style.removeProperty('--sports-scroll');
+    el.style.removeProperty('--sports-scroll-sub');
+  });
+}
+
+function sportsMatchNaturalWidth(chip) {
+  if (!chip) return 0;
+  const prev = {
+    width: chip.style.width,
+    minWidth: chip.style.minWidth,
+    maxWidth: chip.style.maxWidth,
+    flex: chip.style.flex,
+  };
+  chip.style.width = 'max-content';
+  chip.style.minWidth = 'max-content';
+  chip.style.maxWidth = 'none';
+  chip.style.flex = '0 0 auto';
+  const w = Math.ceil(chip.getBoundingClientRect().width);
+  chip.style.width = prev.width;
+  chip.style.minWidth = prev.minWidth;
+  chip.style.maxWidth = prev.maxWidth;
+  chip.style.flex = prev.flex;
+  return w;
+}
+
+/** ≥1440 : scores à la largeur du plus long nom ; le reliquat remplit les bouts. */
+function fitWideSportsMatchSlots({ fill = false } = {}) {
+  if (!isWideDesktopComfort() || !MASTHEAD_SPORTS_STRIP) return;
+  const strip = MASTHEAD_SPORTS_STRIP;
+  const matches = [...strip.querySelectorAll('.sports-chip--match')];
+  const ctas = [...strip.querySelectorAll('.sports-chip--cta')];
+  if (!matches.length) {
+    strip.style.removeProperty('--sports-match-w');
+    return;
+  }
+  let maxW = 0;
+  matches.forEach((chip) => {
+    chip.style.removeProperty('flex');
+    chip.style.removeProperty('width');
+    chip.style.removeProperty('min-width');
+    chip.style.removeProperty('max-width');
+    maxW = Math.max(maxW, sportsMatchNaturalWidth(chip));
+  });
+  if (maxW <= 0) return;
+  let slotW = maxW;
+  if (fill) {
+    const gap = 6;
+    const ctaW = ctas.reduce((sum, el) => sum + Math.ceil(el.getBoundingClientRect().width), 0);
+    const n = matches.length + ctas.length;
+    const room = sportsStripAvailWidth() - ctaW - gap * Math.max(0, n - 1);
+    if (room > 0) {
+      slotW = Math.max(maxW, Math.floor(room / matches.length));
+    }
+  }
+  strip.style.setProperty('--sports-match-w', `${slotW}px`);
+  matches.forEach((chip) => {
+    chip.style.setProperty('flex', `0 0 ${slotW}px`, 'important');
+    chip.style.setProperty('width', `${slotW}px`, 'important');
+    chip.style.setProperty('min-width', `${slotW}px`, 'important');
+    chip.style.setProperty('max-width', `${slotW}px`, 'important');
+  });
+}
+
 /**
  * Après paint : retirer une carte score si étroit ou texte overflow,
- * jusqu’à CTA seule. Max 3 passes (focus-group A).
+ * jusqu’à CTA seule. Max 3 passes (focus-group A) ; 5 en wide (plafond plus haut).
  */
 function fitSportsStripAfterPaint() {
   if (!MASTHEAD_SPORTS_STRIP || MASTHEAD_SPORTS_STRIP.hidden) return;
+  // Wide : d’abord couper tout marquee résiduel, puis fit par −1 carte.
+  clearWideSportsMarqueeClasses();
+  fitWideSportsMatchSlots({ fill: false });
   const count = sportsVisible.length;
-  if (count <= 1) return;
-  if (!sportsStripCramped()) return;
-  if (sportsFitDepth >= 3) return;
+  if (count <= 1) {
+    fitWideSportsMatchSlots({ fill: true });
+    refreshSportsChipScroll();
+    syncWeatherCountToSports();
+    return;
+  }
+  if (!sportsStripCramped()) {
+    fitWideSportsMatchSlots({ fill: true });
+    refreshSportsChipScroll();
+    syncWeatherCountToSports();
+    return;
+  }
+  const wide = isWideNoMarqueeMode();
+  const comfort = isWideDesktopComfort();
+  const maxPasses = wide ? 6 : 3;
+  if (sportsFitDepth >= maxPasses) {
+    fitWideSportsMatchSlots({ fill: true });
+    syncWeatherCountToSports();
+    return;
+  }
   sportsFitDepth += 1;
-  sportsFitCount = count - 1;
+  // Wide étroit : totaux impairs (CTA centrée). ≥1440 : juste −1 (garder le remplissage).
+  let next = count - 1;
+  if (!comfort && wide && next >= 4 && next % 2 === 0) next -= 1;
+  sportsFitCount = Math.max(1, next);
   try {
     renderSportsStrip();
   } finally {
@@ -3689,7 +5000,8 @@ function sportsCtaSlide(labelIndex = sportsCtaLabelIndex) {
     const idx = ((labelIndex % idle.length) + idle.length) % idle.length;
     return {
       mode: 'cta',
-      key: SPORTS_CTA_KEY,
+      // Clé unique par index — plusieurs CTAs idle sans collision DOM
+      key: `${SPORTS_CTA_KEY}:${idx}`,
       label: idle[idx],
       labelIndex: idx,
       tone: SPORTS_CTA_REST_TONE,
@@ -3708,7 +5020,7 @@ function sportsCtaSlide(labelIndex = sportsCtaLabelIndex) {
   const state = sportsCtaState({ ctaFrom: src });
   const draft = {
     mode: 'cta',
-    key: SPORTS_CTA_KEY,
+    key: `${SPORTS_CTA_KEY}:${idx}`,
     label: label || SPORTS_CTA_IDLE_LABELS[0],
     labelIndex: idx,
     team: { sport: 'board', name: 'Sports', code: 'RSEQ' },
@@ -3723,6 +5035,37 @@ function sportsCtaSlide(labelIndex = sportsCtaLabelIndex) {
   };
   draft.tone = sportsCtaTone(draft);
   return draft;
+}
+
+/**
+ * Pioche `n` slides CTA **sans la même info** (match / idle distincts).
+ * @param {number} n
+ * @returns {object[]}
+ */
+function pickDistinctSportsCtas(n) {
+  const want = Math.max(1, n | 0);
+  const out = [];
+  const used = new Set();
+  const candidates = sportsCtaCandidateSlides();
+  const poolLen = Math.max(1, candidates.length || SPORTS_CTA_IDLE_LABELS.length);
+
+  for (let i = 0; i < poolLen && out.length < want; i += 1) {
+    const slide = sportsCtaSlide(i);
+    if (sportsSlideIsUsed(slide, used)) continue;
+    // Idle sans ctaFrom : dédup par labelIndex / label
+    if (slide.ctaIdle) {
+      const idleKey = `idle:${slide.labelIndex}:${slide.label}`;
+      if (used.has(idleKey)) continue;
+      used.add(idleKey);
+    }
+    for (const k of sportsSlideOccupyKeys(slide)) used.add(k);
+    used.add(slide.key);
+    out.push(slide);
+  }
+  // Filet : au moins une CTA
+  if (!out.length) out.push(sportsCtaSlide(0));
+  sportsCtaLabelIndex = out[0]?.labelIndex ?? 0;
+  return out;
 }
 
 /** Tooltip + aria de la CTA SPORTS (sans reconstruire le DOM). */
@@ -3971,11 +5314,6 @@ function applySportsCtaState(chip, slide) {
   if (tag.dataset.ctaTag === wanted) return;
   tag.dataset.ctaTag = wanted;
   tag.replaceChildren();
-  if (live) {
-    const dot = document.createElement('span');
-    dot.className = 'sports-chip__cta-live';
-    tag.append(dot);
-  }
   tag.append(document.createTextNode(wanted));
 }
 
@@ -3990,9 +5328,8 @@ function bindSportsCtaPause(chip) {
   const hold = () => { sportsCtaPaused = true; };
   const release = () => {
     sportsCtaPaused = false;
-    // Reprendre l’horloge du slot CTA sans attendre un cycle complet.
-    const slot = sportsVisible.findIndex((s) => s?.mode === 'cta');
-    if (slot >= 0) scheduleSportsSlot(slot);
+    // Relire le ruban, puis une nouvelle vague complète (scores + CTA).
+    scheduleSportsWave({ fromSlot: 0, firstWait: true });
   };
   chip.addEventListener('pointerenter', hold, { passive: true });
   chip.addEventListener('pointerleave', release, { passive: true });
@@ -4027,6 +5364,12 @@ function sportsApplyScrollState(chip, {
   overflow,
 } = {}) {
   if (!chip || !flag || !prop) return;
+  // Wide étroit (1281–1439) : pas de marquee. ≥1440 : fallback si texte masqué.
+  if (isWideNoMarqueeMode() && !isWideDesktopComfort()) {
+    chip.classList.remove(flag);
+    chip.style.removeProperty(prop);
+    return;
+  }
   const had = chip.classList.contains(flag);
   const needs = overflow > 2;
   if (!needs) {
@@ -4053,6 +5396,11 @@ function refreshSportsChipScroll(chipOrRoot = null) {
   if (!MASTHEAD_SPORTS_STRIP && !chipOrRoot) return;
   const root = chipOrRoot || MASTHEAD_SPORTS_STRIP;
   if (!root) return;
+  // Wide étroit : aucun marquee. ≥1440 : mesurer et défiler si ça dépasse.
+  if (isWideNoMarqueeMode() && !isWideDesktopComfort()) {
+    clearWideSportsMarqueeClasses();
+    return;
+  }
   const chips = root.classList?.contains('sports-chip')
     ? [root]
     : Array.from(root.querySelectorAll?.('.sports-chip') || []);
@@ -4075,8 +5423,30 @@ function refreshSportsChipScroll(chipOrRoot = null) {
     }
 
     if (!isCta) {
-      // Focus-group A : puces scores = jamais marquee. Clear flags ; le fit
-      // post-paint (sportsStripCramped → −1 puce) gère l’overflow texte.
+      if (isWideDesktopComfort()) {
+        const titleView = chip.querySelector('.sports-chip__line');
+        const titleInner = chip.querySelector('.sports-chip__line-inner');
+        const subView = chip.querySelector('.sports-chip__sub');
+        const subInner = chip.querySelector('.sports-chip__sub-text');
+        const titleOverflow = (titleView && titleInner)
+          ? sportsMeasureOverflow(titleView, titleInner, chip.classList.contains('is-overflowing'))
+          : 0;
+        const subOverflow = (subView && subInner)
+          ? sportsMeasureOverflow(subView, subInner, chip.classList.contains('is-sub-overflowing'))
+          : 0;
+        sportsApplyScrollState(chip, {
+          flag: 'is-overflowing',
+          prop: '--sports-scroll',
+          overflow: titleOverflow,
+        });
+        sportsApplyScrollState(chip, {
+          flag: 'is-sub-overflowing',
+          prop: '--sports-scroll-sub',
+          overflow: subOverflow,
+        });
+        return;
+      }
+      // Prod : puces scores = jamais marquee. Le fit retire une carte.
       chip.classList.remove('is-overflowing', 'is-sub-overflowing');
       chip.style.removeProperty('--sports-scroll');
       chip.style.removeProperty('--sports-scroll-sub');
@@ -4220,16 +5590,17 @@ function paintSportsChip(slide, animate = false) {
     return a;
   }
 
-  /* ── CTA « SPORTS » — pastille fixe + accroche (crossfade, jamais is-arriving) ── */
+  /* ── CTA « SPORTS » — pastille + accroche ; même leave/arrive que les scores ── */
   if (slide.mode === 'cta') {
     const a = document.createElement('a');
     a.className = 'sports-chip sports-chip--cta';
     a.href = sportsBoardHref(slide);
     markSportsBoardLink(a);
-    // Pas d’animation « arrivée carte » : la rotation fait rouler le label seul.
-    a.dataset.sportsKey = SPORTS_CTA_KEY;
+    if (animate && !sportsReducedMotion) a.classList.add('is-arriving');
+    a.dataset.sportsKey = slide.key || SPORTS_CTA_KEY;
     a.dataset.sportsMode = 'cta';
     a.dataset.sportsSport = 'board';
+    if (slide.labelIndex != null) a.dataset.ctaLabelIndex = String(slide.labelIndex);
     const { title, aria } = sportsCtaA11y(slide);
     a.title = title;
     a.setAttribute('aria-label', aria);
@@ -4241,7 +5612,6 @@ function paintSportsChip(slide, animate = false) {
 
     const line = document.createElement('span');
     line.className = 'sports-chip__line';
-    // Deux couches empilées : le roulement en fait vivre deux le temps d’une phase.
     const stack = document.createElement('span');
     stack.className = 'sports-chip__cta-stack';
     const layer = document.createElement('span');
@@ -4251,14 +5621,12 @@ function paintSportsChip(slide, animate = false) {
     stack.append(layer);
     line.append(stack);
 
-    const chev = document.createElement('span');
-    chev.className = 'sports-chip__cta-chev';
-    chev.setAttribute('aria-hidden', 'true');
-    chev.textContent = '→';
-
-    a.append(tag, line, chev);
+    a.append(tag, line);
     applySportsCtaState(a, slide);
     bindSportsCtaPause(a);
+    if (animate && !sportsReducedMotion) {
+      window.setTimeout(() => a.classList.remove('is-arriving'), SPORTS_ARRIVE_MS);
+    }
     return a;
   }
 
@@ -4361,11 +5729,11 @@ function paintSportsChip(slide, animate = false) {
  */
 function nextSportsSlide(usedKeys, opts = {}) {
   const used = usedKeys instanceof Set ? usedKeys : new Set(usedKeys || []);
-  // Toujours exclure le match actuellement en CTA (et son miroir).
-  const ctaSlot = sportsVisible.find((s) => s?.mode === 'cta');
-  if (ctaSlot) {
-    for (const k of sportsSlideOccupyKeys(ctaSlot)) used.add(k);
-  }
+  // Exclure tous les matchs déjà en CTA (1–3 cartes wide).
+  sportsVisible.forEach((s) => {
+    if (s?.mode !== 'cta') return;
+    for (const k of sportsSlideOccupyKeys(s)) used.add(k);
+  });
   const lane = sportsLeftLaneState();
   const avoidSport = String(opts.avoidSport || '').toLowerCase();
   const usedSports = opts.usedSports instanceof Set
@@ -4447,30 +5815,69 @@ function nextSportsSlide(usedKeys, opts = {}) {
 }
 
 /**
+ * Wide E : cluster CTA au centre (1–3), scores à gauche et à droite.
+ * Prod : une CTA à droite (historique).
+ * @param {object[]} contentSlides
+ * @param {object|object[]} ctaOrList
+ */
+function arrangeSportsVisible(contentSlides, ctaOrList) {
+  const ctas = (Array.isArray(ctaOrList) ? ctaOrList : [ctaOrList]).filter(Boolean);
+  if (!ctas.length) return contentSlides.slice();
+  if (!contentSlides.length) return ctas.slice();
+  if (typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode()) {
+    const leftN = Math.floor(contentSlides.length / 2);
+    return [
+      ...contentSlides.slice(0, leftN),
+      ...ctas,
+      ...contentSlides.slice(leftN),
+    ];
+  }
+  // Prod : une seule CTA en fin de bandeau
+  return [...contentSlides, ctas[0]];
+}
+
+function sportsCtaSlotIndex(visible = sportsVisible) {
+  const i = visible.findIndex((s) => s?.mode === 'cta');
+  return i >= 0 ? i : Math.max(0, visible.length - 1);
+}
+
+/** Indices de toutes les CTAs visibles (wide multi). */
+function sportsCtaSlotIndices(visible = sportsVisible) {
+  const out = [];
+  visible.forEach((s, i) => {
+    if (s?.mode === 'cta') out.push(i);
+  });
+  return out;
+}
+
+/**
  * Première peinture.
- * ≥ 2 chips : scores/next (gauche) + CTA épinglée à droite.
+ * ≥ 2 chips : scores + CTA(s) (droite en prod ; **centrée·s en wide E**).
+ * Wide : jusqu’à 3 CTAs distinctes.
  * 1 chip : CTA « Au tableau » seule (fin de la cascade de fit, parité météo).
- * Saison → résultats ; hors saison → prochains matchs (pas de puces info).
  */
 function pickInitialSportsVisible(count) {
-  // CTA : toujours démarrer au plus récent / plus proche (pool déjà trié),
-  // puis cycle 0→1→2… — plus de Math.random() qui donnait un air aléatoire.
+  // CTA : démarrer au plus récent / plus proche (pool trié), cycle 0→1→2…
   sportsCtaLabelIndex = 0;
   sportsLeftCursor = 0;
 
   // Dernier cran de largeur / fit : uniquement l’ancre « Au tableau ».
   if (count <= 1) return [sportsCtaSlide(0)];
 
-  // CTA d’abord (occupe le match lead), puis gauche sans ce match ni son miroir.
-  const cta = sportsCtaSlide(0);
-  const contentCount = Math.max(0, count - 1);
+  const ctaN = sportsWideCtaCount(count);
+  const ctas = pickDistinctSportsCtas(ctaN);
+  const contentCount = Math.max(0, count - ctas.length);
   const picked = [];
-  const usedKeys = new Set(sportsSlideOccupyKeys(cta));
+  const usedKeys = new Set();
+  ctas.forEach((c) => {
+    for (const k of sportsSlideOccupyKeys(c)) usedKeys.add(k);
+    usedKeys.add(c.key);
+  });
   const usedSports = new Set();
 
-  // sportsVisible temporaire pour que nextSportsSlide voie la CTA.
+  // sportsVisible temporaire pour que nextSportsSlide voie les CTAs.
   const prevVisible = sportsVisible;
-  sportsVisible = [cta];
+  sportsVisible = ctas.slice();
   try {
     while (picked.length < contentCount) {
       const slide = nextSportsSlide(usedKeys, { usedSports, avoidSport: '' });
@@ -4484,8 +5891,7 @@ function pickInitialSportsVisible(count) {
     sportsVisible = prevVisible;
   }
 
-  picked.push(cta);
-  return picked;
+  return arrangeSportsVisible(picked, ctas);
 }
 
 /** Remplit / recalcule les slots visibles (resize ou 1er paint). */
@@ -4493,21 +5899,26 @@ function renderSportsStrip() {
   if (!MASTHEAD_SPORTS_STRIP || !sportsSlides.length) {
     if (MASTHEAD_SPORTS_STRIP) {
       MASTHEAD_SPORTS_STRIP.hidden = true;
+      MASTHEAD_SPORTS_STRIP.classList.add('is-empty');
       MASTHEAD_SPORTS_STRIP.replaceChildren();
     }
     sportsVisible = [];
     return;
   }
   const board = sportsBoardCount();
-  // Toujours réserver la CTA (ancre). Scores = board - 1, min 0.
-  const count = Math.min(board, Math.max(1, sportsSlides.length + 1));
+  // Réserver 1–3 CTAs (wide) ; le reste = scores.
+  const count = Math.min(board, Math.max(1, sportsSlides.length + 3));
   const pinned = count >= 2;
-  const contentSlots = pinned ? Math.max(0, count - 1) : 0;
+  const ctaN = sportsWideCtaCount(count);
+  const contentSlots = pinned ? Math.max(0, count - ctaN) : 0;
 
   // Resize / fit : si le mode pin ou le nb de slots change, re-semer.
+  const wideCentered = typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode();
+  const ctaIdxsPrev = sportsCtaSlotIndices(sportsVisible);
   const wasPinned = sportsVisible.length >= 2
-    && sportsVisible[sportsVisible.length - 1]?.mode === 'cta';
+    && ctaIdxsPrev.length >= 1;
   const wasCtaOnly = sportsVisible.length === 1 && sportsVisible[0]?.mode === 'cta';
+  const prevCtaN = ctaIdxsPrev.length || 0;
   const slideStillValid = (s) => {
     if (!s || s.mode === 'cta') return false;
     // Anciennes puces « info » : purger au prochain paint (plus dans la gauche).
@@ -4520,14 +5931,38 @@ function renderSportsStrip() {
     !canReuse
     || sportsVisible.length !== count
     || wasPinned !== pinned
+    || prevCtaN !== ctaN
     || (count === 1 && !wasCtaOnly)
   ) {
     sportsVisible = pickInitialSportsVisible(count);
   } else {
-    const ctaKeep = sportsCtaSlide(sportsCtaLabelIndex);
-    const used = new Set(sportsSlideOccupyKeys(ctaKeep));
+    // Garder les CTAs existantes si encore distinctes / valides, sinon re-piocher.
+    const prevCtas = sportsVisible.filter((s) => s?.mode === 'cta');
+    let ctasKeep = prevCtas.slice(0, ctaN);
+    if (ctasKeep.length < ctaN) {
+      ctasKeep = pickDistinctSportsCtas(ctaN);
+    } else {
+      // Revalider distinctness
+      const seen = new Set();
+      const ok = [];
+      for (const c of ctasKeep) {
+        if (sportsSlideIsUsed(c, seen)) continue;
+        for (const k of sportsSlideOccupyKeys(c)) seen.add(k);
+        seen.add(c.key);
+        ok.push(c);
+      }
+      if (ok.length < ctaN) ctasKeep = pickDistinctSportsCtas(ctaN);
+      else ctasKeep = ok;
+    }
+    const used = new Set();
+    ctasKeep.forEach((c) => {
+      for (const k of sportsSlideOccupyKeys(c)) used.add(k);
+      used.add(c.key);
+    });
     const nextVisible = [];
-    for (let i = 0; i < contentSlots; i += 1) {
+    // Reprendre les scores existants (tous slots sauf CTAs), ordre L→R.
+    for (let i = 0; i < sportsVisible.length; i += 1) {
+      if (ctaIdxsPrev.includes(i)) continue;
       const prev = sportsVisible[i];
       if (
         prev
@@ -4535,6 +5970,7 @@ function renderSportsStrip() {
         && prev.mode !== 'info'
         && !sportsSlideIsUsed(prev, used)
         && slideStillValid(prev)
+        && nextVisible.length < contentSlots
       ) {
         nextVisible.push(prev);
         for (const k of sportsSlideOccupyKeys(prev)) used.add(k);
@@ -4545,9 +5981,9 @@ function renderSportsStrip() {
         .map((s) => String(s.team?.sport || '').toLowerCase())
         .filter(Boolean),
     );
-    // Compléter avec scores / prochains (hors match CTA).
+    // Compléter avec scores / prochains (hors matchs CTA).
     const prevVis = sportsVisible;
-    sportsVisible = [ctaKeep, ...nextVisible];
+    sportsVisible = [...ctasKeep, ...nextVisible];
     try {
       while (nextVisible.length < contentSlots) {
         const slide = nextSportsSlide(used, { usedSports });
@@ -4560,9 +5996,14 @@ function renderSportsStrip() {
     } finally {
       sportsVisible = prevVis;
     }
-    // CTA toujours à droite (ou seule si contentSlots = 0).
-    nextVisible.push(ctaKeep);
-    sportsVisible = nextVisible;
+    // Wide : CTAs au centre ; prod : CTA à droite.
+    sportsVisible = arrangeSportsVisible(nextVisible, ctasKeep);
+  }
+  // Marqueur CSS pour le style « CTA centre » + nombre de CTAs
+  if (MASTHEAD_SPORTS_STRIP) {
+    const nCta = sportsCtaSlotIndices(sportsVisible).length;
+    MASTHEAD_SPORTS_STRIP.dataset.ctaLayout = wideCentered && count >= 2 ? 'center' : 'end';
+    MASTHEAD_SPORTS_STRIP.dataset.ctaCount = String(nCta);
   }
 
   // Rotation L→R : toujours repartir du slot le plus à gauche après un re-paint.
@@ -4571,6 +6012,7 @@ function renderSportsStrip() {
   sportsVisible.forEach((slide) => frag.append(paintSportsChip(slide, false)));
   MASTHEAD_SPORTS_STRIP.replaceChildren(frag);
   MASTHEAD_SPORTS_STRIP.hidden = false;
+  MASTHEAD_SPORTS_STRIP.classList.remove('is-empty');
   MASTHEAD_SPORTS_STRIP.dataset.count = String(sportsVisible.length);
   MASTHEAD_SPORTS_STRIP.dataset.ctaPinned = pinned ? '1' : '0';
   // Fit anti-marquee (A) + marquee CTA seulement, après layout stable.
@@ -4578,6 +6020,7 @@ function renderSportsStrip() {
     refreshSportsChipScroll();
     window.requestAnimationFrame(() => {
       fitSportsStripAfterPaint();
+      markUiReady(MASTHEAD_SPORTS_STRIP);
       // Polices webfont : re-fit une fois prêtes (mesure titre/sous-ligne juste).
       const fonts = document.fonts;
       if (fonts?.ready && typeof fonts.ready.then === 'function') {
@@ -4674,11 +6117,7 @@ function sportsSlotDwellMs(slot) {
 /** Délai après rotateSportsSlot avant de re-mesurer / re-planifier le dwell. */
 function sportsSlotSettleMs(slot, replacement) {
   if (sportsReducedMotion) return 80;
-  if (replacement?.mode === 'cta') {
-    // Roulement = une seule phase, et plus courte que l’ancien fondu.
-    return SPORTS_CTA_ROLL_MS + 80;
-  }
-  // Sortie is-leaving + entrée is-arriving + layout marquee.
+  // Scores, prochains et CTA : même sortie + entrée carte entière.
   return SPORTS_CHIP_LEAVE_MS + SPORTS_ARRIVE_MS + 100;
 }
 
@@ -4687,11 +6126,13 @@ function clearSportsSlotTimers() {
     if (sportsSlotTimers[i]) clearTimeout(sportsSlotTimers[i]);
   }
   sportsSlotTimers = [];
+  if (typeof clearSportsWave === 'function') clearSportsWave();
 }
 
 /**
  * Rotation d’un seul slot — indépendante des voisines.
- * ≥ 2 chips : CTA à droite (accroche seule) ; scores à gauche.
+ * ≥ 2 chips : CTA(s) fixe(s) (droite en prod, **centre en wide E**) ; scores autour.
+ * Wide multi-CTA : chaque CTA cycle sans reprendre le match d’une voisine.
  * 1 chip : CTA seule.
  */
 function rotateSportsSlot(slot) {
@@ -4699,8 +6140,9 @@ function rotateSportsSlot(slot) {
   const n = sportsVisible.length;
   if (slot < 0 || slot >= n) return;
   const pinned = n >= 2;
-  const rightSlot = n - 1;
-  // Occupation = clés faces + dédup match (miroir CTA ↔ gauche).
+  const ctaSlots = sportsCtaSlotIndices(sportsVisible);
+  const isCtaSlot = ctaSlots.includes(slot);
+  // Occupation = clés faces + dédup match (miroir CTA ↔ scores).
   const used = sportsVisibleOccupyKeys(slot);
   const usedSports = new Set(
     sportsVisible
@@ -4710,14 +6152,29 @@ function rotateSportsSlot(slot) {
   );
 
   let replacement = null;
-  if (!pinned || slot === rightSlot) {
-    // CTA fixe (seule ou à droite) : cycle séquentiel du pool (plus récent → suite).
-    const poolLen = Math.max(1, sportsCtaLabelPool().length);
-    sportsCtaLabelIndex = (sportsCtaLabelIndex + 1) % poolLen;
-    replacement = sportsCtaSlide(sportsCtaLabelIndex);
-    // Si le nouveau match CTA était à gauche, purger ce slot gauche au prochain tick.
+  if (!pinned || isCtaSlot) {
+    // CTA : cycle pool en évitant les matchs déjà portés par d’autres CTAs.
+    const poolLen = Math.max(1, sportsCtaCandidateSlides().length || sportsCtaLabelPool().length);
+    const curIdx = Number(sportsVisible[slot]?.labelIndex) || 0;
+    let found = null;
+    for (let step = 1; step <= poolLen; step += 1) {
+      const idx = (curIdx + step) % poolLen;
+      const cand = sportsCtaSlide(idx);
+      if (sportsSlideIsUsed(cand, used)) continue;
+      // Idle : éviter le même label qu’une autre CTA
+      if (cand.ctaIdle) {
+        const otherLabels = sportsVisible
+          .filter((s, i) => i !== slot && s?.mode === 'cta')
+          .map((s) => s.label);
+        if (otherLabels.includes(cand.label)) continue;
+      }
+      found = cand;
+      break;
+    }
+    replacement = found || sportsCtaSlide((curIdx + 1) % poolLen);
+    sportsCtaLabelIndex = replacement.labelIndex ?? ((curIdx + 1) % poolLen);
   } else {
-    // Voie de gauche : résultats (saison) ou prochains matchs (hors saison).
+    // Scores (gauche ou droite des CTAs) : résultats ou prochains.
     const cur = sportsVisible[slot];
     const avoid = String(cur?.team?.sport || '').toLowerCase();
     replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid });
@@ -4741,7 +6198,7 @@ function rotateSportsSlot(slot) {
 
   sportsVisible[slot] = replacement;
 
-  // Après rotation CTA : si une puce gauche montre le même match, la remplacer.
+  // Après rotation CTA : si une puce score montre le même match, la remplacer.
   if (replacement.mode === 'cta' && replacement.ctaFrom) {
     const ctaKeys = sportsSlideOccupyKeys(replacement);
     for (let i = 0; i < n; i += 1) {
@@ -4768,17 +6225,7 @@ function rotateSportsSlot(slot) {
   const chips = MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip');
   const oldChip = chips[slot];
 
-  // CTA : carte stable — roulement du texte d’info seulement (pas de gare / is-arriving).
-  if (
-    replacement.mode === 'cta'
-    && oldChip
-    && oldChip.classList.contains('sports-chip--cta')
-  ) {
-    rollSportsCtaLabel(oldChip, replacement);
-    return sportsSlotSettleMs(slot, replacement);
-  }
-
-  // Scores / prochains : sortie en fondu → entrée en fondu (évite le « clac » gare).
+  // Scores, prochains et CTA : sortie carte entière → entrée carte entière.
   const newChip = paintSportsChip(replacement, !sportsReducedMotion);
   if (!oldChip) {
     MASTHEAD_SPORTS_STRIP.append(newChip);
@@ -4854,21 +6301,105 @@ function scheduleSportsSlot(slot, { initialStagger = 0 } = {}) {
   }, delay);
 }
 
-function scheduleSportsRotate() {
+function clearSportsWave() {
+  if (sportsWaveTimer) {
+    clearTimeout(sportsWaveTimer);
+    sportsWaveTimer = 0;
+  }
+}
+
+/** Pause lecture après une vague sports (scores + accroches CTA). */
+function sportsBoardHoldMs() {
+  const n = Math.max(1, sportsVisible.length);
+  let hold = Math.min(16000, Math.max(SPORTS_BOARD_HOLD_MS, 1800 * n));
+  sportsVisible.forEach((slide, i) => {
+    if (slide?.mode === 'cta') hold = Math.max(hold, sportsSlotDwellMs(i));
+  });
+  return hold;
+}
+
+/**
+ * Vague L→R.
+ * Wide : cascade de toutes les cartes (y compris le texte CTA), puis pause
+ * assez longue pour les regarder, puis une nouvelle vague.
+ * Hors wide : une carte à la fois, dwell lecture entre chaque.
+ */
+function scheduleSportsWave({ fromSlot = 0, firstWait = true } = {}) {
   clearSportsSlotTimers();
+  clearSportsWave();
   const n = sportsVisible.length;
   if (n < 1) return;
   const lane = sportsLeftLaneState();
-  // Tourner s’il y a de la matière : pool de gauche, ou CTA autorisée à tourner.
   const canSpin = lane.pool.length > 1
     || lane.kind === 'offseason'
-    || sportsVisible.length > 1
+    || n > 1
     || sportsCtaMayRotate();
   if (!canSpin) return;
-  // Chaque slot a son horloge ; stagger initial pour ne pas tout basculer d’un coup.
-  for (let i = 0; i < n; i += 1) {
-    scheduleSportsSlot(i, { initialStagger: i * SPORTS_SLOT_STAGGER_MS });
+  sportsWaveSlot = ((fromSlot % n) + n) % n;
+
+  if (isWideNoMarqueeMode()) {
+    const stepMs = sportsReducedMotion ? 80 : SPORTS_CASCADE_STEP_MS;
+    const step = (index) => {
+      const liveN = sportsVisible.length;
+      if (liveN < 1) return;
+      if (index >= liveN) {
+        sportsWaveTimer = window.setTimeout(() => {
+          sportsWaveTimer = 0;
+          scheduleSportsWave({ fromSlot: 0, firstWait: false });
+        }, sportsBoardHoldMs());
+        return;
+      }
+      const slot = index;
+      const slide = sportsVisible[slot];
+      if (slide?.mode === 'cta' && (!sportsCtaMayRotate() || sportsCtaPaused)) {
+        sportsWaveTimer = window.setTimeout(() => step(index + 1), stepMs);
+        return;
+      }
+      rotateSportsSlot(slot);
+      const chip = MASTHEAD_SPORTS_STRIP?.querySelectorAll('.sports-chip')?.[slot];
+      if (chip) {
+        window.requestAnimationFrame(() => refreshSportsChipScroll(chip));
+      }
+      sportsWaveTimer = window.setTimeout(() => step(index + 1), stepMs);
+    };
+    if (firstWait) {
+      sportsWaveTimer = window.setTimeout(() => {
+        sportsWaveTimer = 0;
+        step(sportsWaveSlot);
+      }, sportsBoardHoldMs());
+      return;
+    }
+    step(sportsWaveSlot);
+    return;
   }
+
+  const run = () => {
+    sportsWaveTimer = 0;
+    const slot = sportsWaveSlot % Math.max(1, sportsVisible.length);
+    const slide = sportsVisible[slot];
+    if (slide?.mode === 'cta' && (!sportsCtaMayRotate() || sportsCtaPaused)) {
+      sportsWaveSlot = (slot + 1) % sportsVisible.length;
+      const skipWait = sportsSlotDwellMs(sportsWaveSlot);
+      sportsWaveTimer = window.setTimeout(run, Math.max(400, skipWait));
+      return;
+    }
+    const settleMs = rotateSportsSlot(slot) || 80;
+    sportsWaveSlot = (slot + 1) % sportsVisible.length;
+    window.setTimeout(() => {
+      const chip = MASTHEAD_SPORTS_STRIP?.querySelectorAll('.sports-chip')?.[slot];
+      if (chip) refreshSportsChipScroll(chip);
+      const wait = sportsSlotDwellMs(slot);
+      sportsWaveTimer = window.setTimeout(run, Math.max(settleMs, 80) + wait);
+    }, settleMs);
+  };
+
+  const initial = firstWait ? sportsSlotDwellMs(sportsWaveSlot) : 80;
+  sportsWaveTimer = window.setTimeout(run, Math.max(400, initial));
+}
+
+function scheduleSportsRotate() {
+  // Vague unique L→R (CTA : dwell complet avant la carte suivante).
+  scheduleSportsWave({ fromSlot: 0, firstWait: true });
 }
 
 async function initMastheadSports() {
@@ -4928,6 +6459,7 @@ async function initMastheadSports() {
     console.warn('Le Radar: sports indisponibles', err);
     if (MASTHEAD_SPORTS_STRIP) {
       MASTHEAD_SPORTS_STRIP.hidden = true;
+      MASTHEAD_SPORTS_STRIP.classList.add('is-empty');
       MASTHEAD_SPORTS_STRIP.replaceChildren();
     }
   }
@@ -5485,7 +7017,7 @@ function advanceAirPhase(phaseCount) {
  *    forçait un fondu du panneau toutes les 8 s sur un contenu identique.
  */
 function syncAirPanelRotate(radio) {
-  const phases = airRotationPhases(radio, { withSlogan: false });
+  const phases = composedAirPhases(radio, { withSlogan: false });
   if (isTunerPresentationPaused() || !currentStation || phases.length < 2 || isTunerSubRotateMode()) {
     stopAirPanelRotate();
     return;
@@ -5504,7 +7036,7 @@ function scheduleAirPanelRotateTick() {
   stopAirPanelRotate();
   if (isTunerPresentationPaused() || !currentStation || isTunerSubRotateMode()) return;
 
-  const phases = airRotationPhases(currentStation, { withSlogan: false });
+  const phases = composedAirPhases(currentStation, { withSlogan: false });
   if (phases.length < 2) return;
 
   const phase = phases[airPhaseIndex % phases.length];
@@ -5518,7 +7050,7 @@ function scheduleAirPanelRotateTick() {
     );
     airPanelRotateTimer = setTimeout(() => {
       airPanelRotateTimer = null;
-      const live = airRotationPhases(currentStation, { withSlogan: false });
+      const live = composedAirPhases(currentStation, { withSlogan: false });
       if (isTunerPresentationPaused() || !currentStation || live.length < 2 || isTunerSubRotateMode()) return;
       advanceAirPhase(live.length);
       // `renderTunerNowAir()` réarme le cycle via `syncAirPanelRotate()` :
@@ -5628,7 +7160,7 @@ function airRotationPhases(radio, { withSlogan = false } = {}) {
  * @returns {{ title: string, sub: string, kind: 'live'|'upcoming'|'idle' }}
  */
 function nowAirLines(radio) {
-  const phases = airRotationPhases(radio, { withSlogan: isTunerSubRotateMode() });
+  const phases = composedAirPhases(radio, { withSlogan: isTunerSubRotateMode() });
   if (!phases.length) {
     return { title: `Vous écoutez ${radio?.name || ''}`.trim(), sub: '', kind: 'idle' };
   }
@@ -5706,6 +7238,9 @@ window.RadarAir = {
     marqueeRoundTripMs,
     getTunerSubRotateDelayMs,
     trackForAirDisplay,
+    liveCopyFromPhases,
+    composedAirPhases,
+    wideNowAirLiveCopy,
     isGarbageChoqTrack,
     botCurrentShow,
     botNextShow,
@@ -6116,7 +7651,14 @@ function planTunerSubRotateDelay(activeEl, attempt, onReady, phase = null) {
 }
 
 function isNowAirPanelPreviewMode() {
-  return !currentStation && !PREFERS_REDUCED_MOTION?.matches && radios.length > 0;
+  // Au repos (rien en lecture) : les postes alternent au hasard.
+  // On verrouille si lecture, pause utilisateur, ou choix explicite d’un poste.
+  return !PREFERS_REDUCED_MOTION?.matches
+    && radios.length > 0
+    && !isPlaybackActive()
+    && !userPaused
+    && !userPickedStation
+    && !isBuffering;
 }
 
 /**
@@ -6158,6 +7700,24 @@ function applyDialTextCrossfade(el, text, crossfade = false) {
 
 /** Bureau sans poste : titre fixe + postes qui défilent en bas ; « À l'antenne » reste à part. */
 function syncDesktopDialPreview(_airTitle, crossfade = false) {
+  // Wide E : institution + poste + slogan complets (aperçu ou écoute).
+  if (isWideTunerLayout()) {
+    const radio = currentStation || nowAirPreviewRadio;
+    if (radio) {
+      paintWideDial(radio);
+      lastDialCarouselText = stationDisplayName(radio) || radio.name || '';
+      return;
+    }
+    ensureWideDialInstEl();
+    const instEl = document.getElementById('tuner-now-inst');
+    if (instEl) {
+      instEl.hidden = true;
+      instEl.textContent = '';
+    }
+    setTunerNameText('Radios étudiantes');
+    setTunerSubText('Choisissez un poste pour écouter');
+    return;
+  }
   // Mode B (site compact / embed étroit) : L1 géré dans syncTunerSubRotate.
   // Ne jamais écrire « Syntoniser un poste » ici — c’était le flash d’une frame.
   if (isMobileIdleDialPreview()) return;
@@ -6198,45 +7758,20 @@ function scheduleNowAirPreviewTick() {
     clearTimeout(nowAirPreviewTimer);
     nowAirPreviewTimer = null;
   }
-  if (isTunerPresentationPaused() || currentStation || !isNowAirPanelPreviewMode()) return;
+  if (isTunerPresentationPaused() || !isNowAirPanelPreviewMode()) return;
 
-  // Dans l'iframe, le sous-titre du dial est volontairement étroit et peut
-  // défiler longtemps. Ne pas faire dépendre l'aperçu des postes de cette
-  // durée : le panneau « À l'antenne » doit continuer à alterner comme la
-  // page Radar au repos.
-  if (IS_TUNER_EMBED) {
-    nowAirPreviewTimer = setTimeout(() => {
-      nowAirPreviewTimer = null;
-      if (isTunerPresentationPaused() || currentStation || !isNowAirPanelPreviewMode()) return;
-      pickNowAirPreviewRadio();
-      renderTunerNowAir();
-      scheduleNowAirPreviewTick();
-    }, TUNER_SUB_ROTATE_MS);
-    return;
-  }
-
-  planTunerSubRotateDelay(TUNER_SUB, 0, (delay) => {
-    if (isTunerPresentationPaused() || currentStation || !isNowAirPanelPreviewMode()) return;
-    // Ne PAS plafonner ce délai. Sur téléphone la ligne porte l'émission, la
-    // station, l'établissement et l'horaire d'un seul tenant — le panneau
-    // latéral étant masqué — donc elle défile, et `marqueeReadingTimeMs()`
-    // calcule le temps qu'il faut pour la lire jusqu'au bout. D'où ~38 s sur
-    // téléphone contre ~8 s sur bureau, où le même sous-titre tient sans
-    // défiler parce que le panneau porte l'antenne à part. L'écart n'est pas
-    // une anomalie de cadence : c'est le prix de la lecture. Le raccourcir
-    // change de poste avant la fin du défilement.
-    nowAirPreviewTimer = setTimeout(() => {
-      nowAirPreviewTimer = null;
-      if (isTunerPresentationPaused() || currentStation || !isNowAirPanelPreviewMode()) return;
-      pickNowAirPreviewRadio();
-      renderTunerNowAir();
-      scheduleNowAirPreviewTick();
-    }, delay);
-  });
+  const wait = IS_TUNER_EMBED ? TUNER_SUB_ROTATE_MS : NOW_AIR_PREVIEW_DWELL_MS;
+  nowAirPreviewTimer = setTimeout(() => {
+    nowAirPreviewTimer = null;
+    if (isTunerPresentationPaused() || !isNowAirPanelPreviewMode()) return;
+    pickNowAirPreviewRadio();
+    renderTunerNowAir();
+    scheduleNowAirPreviewTick();
+  }, wait);
 }
 
 function startNowAirPreview() {
-  if (isTunerPresentationPaused() || nowAirPreviewTimer || currentStation || !isNowAirPanelPreviewMode()) return;
+  if (isTunerPresentationPaused() || nowAirPreviewTimer || !isNowAirPanelPreviewMode()) return;
   if (!nowAirPreviewRadio) pickNowAirPreviewRadio();
   scheduleNowAirPreviewTick();
 }
@@ -6516,7 +8051,7 @@ function onTunerSubRotateLayoutChange() {
   renderTunerNowAir();
   scheduleMarqueeRefresh();
   restartTunerSubRotateTimer();
-  if (!currentStation && isNowAirPanelPreviewMode()) {
+  if (isNowAirPanelPreviewMode()) {
     scheduleNowAirPreviewTick();
   }
 }
@@ -6534,15 +8069,55 @@ function initTunerSubRotateListeners() {
 function renderTunerNowAir() {
   if (!TUNER_NOWAIR || isTunerPresentationPaused()) return;
 
+  // Wide E : dual « À l'antenne » + « À venir », dial institution/slogan complets.
+  if (isWideTunerLayout()) {
+    const previewing = isNowAirPanelPreviewMode();
+    if (previewing && !nowAirPreviewRadio) pickNowAirPreviewRadio();
+    const radio = previewing
+      ? (nowAirPreviewRadio || currentStation)
+      : currentStation;
+    if (previewing && radio && TUNER_SELECT && TUNER_SELECT.value !== radio.id) {
+      TUNER_SELECT.value = radio.id;
+    }
+    paintWideNowAirPair(radio);
+    paintWideDial(radio);
+    syncWideStickyTop();
+    if (previewing) {
+      startNowAirPreview();
+      if (radio) syncAirPanelRotate(radio);
+    } else if (currentStation) {
+      stopNowAirPreview();
+      syncAirPanelRotate(currentStation);
+    } else {
+      stopNowAirPreview();
+      stopAirPanelRotate();
+    }
+    if (currentStation && isPlaybackActive()) {
+      const { title, sub } = nowAirLines(currentStation);
+      updateMediaSession(currentStation, { title, sub });
+    }
+    return;
+  }
+
+  // Quitter le mode wide : restaurer le panneau single.
+  const wideWrap = document.getElementById('tuner-nowair-wide');
+  if (wideWrap) wideWrap.hidden = true;
+  TUNER_NOWAIR.classList.remove('tuner-nowair--legacy-slot');
+  TUNER_NOWAIR.hidden = false;
+  TUNER_NOWAIR.removeAttribute('aria-hidden');
+  const instEl = document.getElementById('tuner-now-inst');
+  if (instEl) {
+    instEl.hidden = true;
+    instEl.textContent = '';
+  }
+
   const previewing = isNowAirPanelPreviewMode();
   let title;
   let sub;
   /** @type {'live'|'upcoming'|'idle'} */
   let kind = 'idle';
 
-  if (currentStation) {
-    ({ title, sub, kind } = nowAirLines(currentStation));
-  } else if (previewing) {
+  if (previewing) {
     if (!nowAirPreviewRadio) pickNowAirPreviewRadio();
     if (nowAirPreviewRadio) {
       ({ title, sub, kind } = formatPreviewNowAir(nowAirPreviewRadio, {
@@ -6553,6 +8128,8 @@ function renderTunerNowAir() {
       sub = 'Les radios étudiantes jouent en direct, 24/7';
       kind = 'idle';
     }
+  } else if (currentStation) {
+    ({ title, sub, kind } = nowAirLines(currentStation));
   } else {
     title = 'Syntoniser un poste';
     sub = 'Les radios étudiantes jouent en direct, 24/7';
@@ -6563,9 +8140,9 @@ function renderTunerNowAir() {
   const previewId = previewing ? (nowAirPreviewRadio?.id ?? null) : null;
   if (empty) kind = 'idle';
 
-  const stationId = currentStation?.id
-    || (previewing ? nowAirPreviewRadio?.id : null)
-    || null;
+  const stationId = previewing
+    ? (nowAirPreviewRadio?.id ?? null)
+    : (currentStation?.id ?? null);
 
   // Rien n'a changé : on n'écrase pas le DOM.
   if (lastNowAir.title === title
@@ -6575,12 +8152,10 @@ function renderTunerNowAir() {
     && lastNowAir.kind === kind
     && lastNowAir.stationId === stationId
     && !nowAirCrossfadePending) {
-    if (currentStation) stopNowAirPreview();
-    else if (previewing) startNowAirPreview();
+    if (previewing) startNowAirPreview();
     else stopNowAirPreview();
-    // Timer CHOQ peut encore être démarré
-    if (currentStation) syncAirPanelRotate(currentStation);
-    else if (previewing) syncAirPanelRotate(nowAirPreviewRadio);
+    if (previewing) syncAirPanelRotate(nowAirPreviewRadio);
+    else if (currentStation) syncAirPanelRotate(currentStation);
     return;
   }
 
@@ -6632,7 +8207,7 @@ function renderTunerNowAir() {
     updateMediaSession(currentStation, empty ? {} : { title, sub });
   }
 
-  if (currentStation) {
+  if (currentStation && !previewing) {
     stopNowAirPreview();
     nowAirPreviewRadio = null;
     lastNowAirPreviewId = null;
@@ -6641,11 +8216,15 @@ function renderTunerNowAir() {
     if (!isDialCompactLayout()) {
       /* nom déjà posé par selectStation ; re-sync si besoin */
     }
-    setTunerNameText(
-      isDialCompactLayout()
-        ? compactDialTitleLine(currentStation)
-        : tunerDesktopTitleLine(currentStation),
-    );
+    if (isWideTunerLayout()) {
+      paintWideDial(currentStation);
+    } else {
+      setTunerNameText(
+        isDialCompactLayout()
+          ? compactDialTitleLine(currentStation)
+          : tunerDesktopTitleLine(currentStation),
+      );
+    }
     syncAirPanelRotate(currentStation);
     markTunerDialReady();
   } else if (previewing) {
@@ -7448,6 +9027,17 @@ function measureMarquee(el) {
   const span = el.querySelector('.tuner-now-sub-text');
   if (!span) return;
 
+  // Wide : texte fixe. Bureau ≥1100 : le titre d’antenne passe sur 2 lignes
+  // au lieu de défiler (phrases CHOQ / longues émissions).
+  const nowAirWrap = el === TUNER_NOWAIR_TITLE || el === TUNER_NOWAIR_SUB;
+  if (isWideNoMarqueeMode() || (nowAirWrap && isNowAirTwoLineMode())) {
+    el.classList.remove('is-marquee');
+    el.style.removeProperty('--marquee-shift');
+    el.style.removeProperty('--marquee-duration');
+    el.style.removeProperty('--marquee-delay');
+    return;
+  }
+
   const available = getMarqueeAvailableWidth(el);
   if (!available) return;
 
@@ -7617,6 +9207,7 @@ function selectStation(id, { autoplay = false, openExternal = false, fromSync = 
 
   const prevId = currentStation?.id || null;
   currentStation = radio;
+  if (!fromSync) userPickedStation = true;
   // Garder la liste déroulante alignée (hydratation multi-onglets, prev/next, deep-link).
   if (TUNER_SELECT && TUNER_SELECT.value !== radio.id) {
     TUNER_SELECT.value = radio.id;
@@ -7644,6 +9235,9 @@ function selectStation(id, { autoplay = false, openExternal = false, fromSync = 
     const firstLine = dialPhaseLinesForRadio(radio)[0] || tunerSubMeta;
     TUNER_SUB?.parentElement?.classList.toggle('is-empty', !firstLine);
     resetDialRotateSlots(firstLine);
+  } else if (isWideTunerLayout()) {
+    // Wide E : institution complète + poste + slogan complet (pas d’acronyme).
+    paintWideDial(radio);
   } else {
     // Bureau (+ embed large) : L1 = poste FM · acronyme ; L2 = slogan
     setTunerNameText(tunerDesktopTitleLine(radio));
@@ -7708,6 +9302,13 @@ function selectStation(id, { autoplay = false, openExternal = false, fromSync = 
 }
 
 function togglePlay() {
+  if (isNowAirPanelPreviewMode() && nowAirPreviewRadio) {
+    selectStation(nowAirPreviewRadio.id, {
+      autoplay: !isExternalListen(nowAirPreviewRadio),
+      openExternal: isExternalListen(nowAirPreviewRadio),
+    });
+    return;
+  }
   if (!currentStation) {
     const first = radios.find(r => getPlayableStream(r)) || radios[0];
     if (!first) return;
@@ -8647,7 +10248,10 @@ function restoreVolume() {
  */
 async function loadNews({ silent = false } = {}) {
   if (!NEWS_LIST) return;
-  if (!silent || !news.length) NEWS_LIST.innerHTML = newsSkeleton(6);
+  const firstPaint = NEWS_LIST.dataset.ready !== '1';
+  if ((!silent || !news.length) && !firstPaint) {
+    NEWS_LIST.innerHTML = newsSkeleton(6);
+  }
   try {
     const res = await fetch(appAsset('news.json'), { cache: 'no-cache' });
     const data = await res.json();
@@ -8991,6 +10595,10 @@ function sourceInfo(src) {
 }
 
 function filtersColumnCount() {
+  const wideCols = (typeof window.__radarWidePreview?.filtersColumnCount === 'function')
+    ? window.__radarWidePreview.filtersColumnCount()
+    : null;
+  if (typeof wideCols === 'number' && wideCols > 0) return wideCols;
   if (!NEWS_FILTERS) {
     return FILTERS_MOBILE.matches ? FILTERS_ROW_CAPACITY : FILTERS_DESKTOP_DEFAULT_COLS;
   }
@@ -9004,8 +10612,13 @@ function filtersColumnCount() {
   return FILTERS_DESKTOP_MAX_COLS;
 }
 
-/** Aligné sur style.css --filters-collapsed-rows (1 rangée partout). */
+/** Aligné sur style.css --filters-collapsed-rows (1 rangée partout).
+ *  Lab grand écran : __radarWidePreview peut forcer 2 rangées (C/D) ou rail (E). */
 function filtersCollapsedRows() {
+  const wideRows = (typeof window.__radarWidePreview?.filtersCollapsedRows === 'function')
+    ? window.__radarWidePreview.filtersCollapsedRows()
+    : null;
+  if (typeof wideRows === 'number' && wideRows > 0) return wideRows;
   return FILTERS_COMPACT_MQ.matches
     ? FILTERS_COLLAPSED_ROWS_COMPACT
     : FILTERS_COLLAPSED_ROWS_DESKTOP;
@@ -9019,8 +10632,72 @@ function syncFiltersColumns() {
   FILTERS_PANEL.style.setProperty('--filters-collapsed-rows', String(rows));
 }
 
+/**
+ * Rail wide E : calcule combien de pastilles tiennent sous le titre,
+ * pour afficher « Plus de sources » plutôt que de scroller tout le rail.
+ * @returns {boolean} true s’il y a débordement
+ */
+function syncWideRailFiltersFit() {
+  if (!FILTERS_PANEL || !NEWS_FILTERS) return false;
+  if (typeof isWideNoMarqueeMode !== 'function' || !isWideNoMarqueeMode()) return false;
+  const stack = document.getElementById('wide-rail-stack');
+  if (!stack) return false;
+  const sections = stack.querySelector('.site-sections');
+  const head = stack.querySelector('.wire-head');
+  const stackTop = stack.getBoundingClientRect().top;
+  const fab = document.getElementById('page-scroll-top');
+  const fabOn = !!(fab && !fab.hidden && fab.getClientRects().length);
+  /* Réserve seulement la flèche réellement visible — pas 72 px dès « Réduire ». */
+  const bottomSafe = fabOn ? 72 : 16;
+  stack.style.setProperty('--wide-rail-bottom', `${bottomSafe}px`);
+  stack.style.setProperty('--wide-stack-from-top', `${Math.max(0, Math.round(stackTop))}px`);
+  const visibleH = Math.max(160, (window.innerHeight || 800) - stackTop - bottomSafe);
+  const chrome = (sections?.offsetHeight || 0) + (head?.offsetHeight || 0) + 8;
+  const toggleH = 46;
+  const btn = NEWS_FILTERS.querySelector('.filter-btn');
+  const rowH = Math.max(42, Math.ceil((btn?.getBoundingClientRect().height || 44) + 6));
+  /* Nom de la source suivante, sans bande smeared trop haute. */
+  const instFade = Math.max(20, Math.round(rowH * 0.48));
+  const avail = Math.max(120, visibleH - chrome - toggleH - instFade);
+  let rows = Math.max(3, Math.floor(avail / rowH));
+  if (avail - rows * rowH >= rowH * 0.7) rows += 1;
+  const countBtns = NEWS_FILTERS.querySelectorAll('.filter-btn').length;
+  rows = Math.min(Math.max(3, rows), Math.max(3, countBtns));
+  /* Rangées pleines + peek à part : ne pas rogner la dernière puce visible. */
+  const collapsedH = Math.max(rowH, rows * rowH - 6);
+  FILTERS_PANEL.style.setProperty('--filters-cols', '1');
+  FILTERS_PANEL.style.setProperty('--filters-collapsed-rows', String(rows));
+  FILTERS_PANEL.style.setProperty('--filters-collapsed-h', `${collapsedH}px`);
+  FILTERS_PANEL.style.setProperty('--filters-peek', `${instFade}px`);
+  FILTERS_PANEL.style.setProperty('--filters-title-h', '0px');
+  FILTERS_PANEL.style.setProperty('--filters-rail-avail', `${Math.max(120, visibleH - chrome - toggleH)}px`);
+  syncWideFiltersToggleWidth();
+  return countBtns > rows;
+}
+
+/** Plus de sources / Réduire : même largeur et même axe que les pastilles. */
+function syncWideFiltersToggleWidth() {
+  if (!FILTERS_TOGGLE || !NEWS_FILTERS) return;
+  if (typeof isWideNoMarqueeMode !== 'function' || !isWideNoMarqueeMode()) {
+    FILTERS_TOGGLE.style.removeProperty('width');
+    FILTERS_TOGGLE.style.removeProperty('max-width');
+    return;
+  }
+  const pill = NEWS_FILTERS.querySelector('.filter-btn');
+  if (!pill) return;
+  const w = Math.round(pill.getBoundingClientRect().width);
+  if (w < 40) return;
+  FILTERS_TOGGLE.style.width = `${w}px`;
+  FILTERS_TOGGLE.style.maxWidth = `${w}px`;
+  FILTERS_TOGGLE.style.alignSelf = 'flex-start';
+}
+
 function filtersOverflow() {
   if (!NEWS_FILTERS) return false;
+  if (typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode()
+    && document.getElementById('wide-rail-stack')) {
+    return syncWideRailFiltersFit();
+  }
   const count = NEWS_FILTERS.querySelectorAll('.filter-btn').length;
   return count > filtersCollapsedRows() * filtersColumnCount();
 }
@@ -9098,12 +10775,16 @@ function syncFiltersPanel() {
     }
     FILTERS_TOGGLE?.setAttribute('aria-expanded', filtersExpanded ? 'true' : 'false');
   } else {
-    filtersExpanded = false;
+    /* Tout tient : pas de bouton. On ne touche pas à filtersExpanded —
+       sinon un scroll (rail plus haut) referme le choix de l’utilisateur. */
     FILTERS_PANEL.classList.remove('is-expanded');
     FILTERS_TOGGLE?.setAttribute('hidden', '');
   }
 
   scheduleFilterMarqueeRefresh();
+  if (typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode()) {
+    window.requestAnimationFrame(() => syncWideFiltersToggleWidth());
+  }
 }
 
 /** Après changement de langue : reposer les libellés sources / boutons. */
@@ -9138,24 +10819,71 @@ if (typeof window !== 'undefined') {
 }
 
 function bindFiltersPanel() {
-  FILTERS_TOGGLE?.addEventListener('click', () => {
-    if (newsSourceFilter !== 'all' && filtersExpanded) {
-      filtersExpanded = false;
-    } else {
-      filtersExpanded = !filtersExpanded;
-    }
+  let filtersUserCollapsed = false;
+  let filtersUserPinned = false;
+  FILTERS_TOGGLE?.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const y = window.scrollY || document.documentElement.scrollTop || 0;
+    filtersExpanded = !filtersExpanded;
+    /* Clic = intention : ne plus ouvrir/fermer tout seul au scroll. */
+    filtersUserPinned = filtersExpanded;
+    filtersUserCollapsed = !filtersExpanded;
     syncFiltersPanel();
+    if ((window.scrollY || document.documentElement.scrollTop || 0) !== y) {
+      window.scrollTo({ top: y, left: 0, behavior: 'auto' });
+    }
   });
+
+  // Molette sur le rail : défiler les sources sans bouger le magazine.
+  document.addEventListener('wheel', (event) => {
+    if (typeof isWideNoMarqueeMode !== 'function' || !isWideNoMarqueeMode()) return;
+    const stack = document.getElementById('wide-rail-stack');
+    if (!stack || !stack.contains(event.target)) return;
+    if (!FILTERS_PANEL?.classList.contains('has-overflow')) return;
+    const list = NEWS_FILTERS;
+    if (!list) return;
+    if (!filtersExpanded) {
+      filtersExpanded = true;
+      filtersUserPinned = (window.scrollY || 0) < 80;
+      filtersUserCollapsed = false;
+      syncFiltersPanel();
+    }
+    const max = list.scrollHeight - list.clientHeight;
+    if (max <= 1) return;
+    const atStart = list.scrollTop <= 0 && event.deltaY < 0;
+    const atEnd = list.scrollTop >= max - 1 && event.deltaY > 0;
+    if (atStart || atEnd) return;
+    event.preventDefault();
+    list.scrollTop = Math.min(max, Math.max(0, list.scrollTop + event.deltaY));
+  }, { passive: false, capture: true });
 
   FILTERS_COMPACT?.addEventListener('click', () => {
     filtersExpanded = true;
+    filtersUserCollapsed = false;
+    filtersUserPinned = (window.scrollY || 0) < 80;
     syncFiltersPanel();
   });
+
+  let filtersScrollTick = false;
+  window.addEventListener('scroll', () => {
+    if (filtersScrollTick) return;
+    filtersScrollTick = true;
+    window.requestAnimationFrame(() => {
+      filtersScrollTick = false;
+      if (typeof isWideNoMarqueeMode !== 'function' || !isWideNoMarqueeMode()) return;
+      if (!document.getElementById('wide-rail-stack')) return;
+      /* Recalcule seulement l’espace dispo (sticky vs haut de page).
+         Plus de sources / Réduire ne change que sur clic. */
+      syncWideRailFiltersFit();
+    });
+  }, { passive: true });
 
   const onFiltersLayoutChange = () => {
     syncFiltersPanel();
     scheduleFilterMarqueeRefresh();
   };
+  window.addEventListener('resize', onFiltersLayoutChange);
   onMediaQueryChange(FILTERS_MOBILE, onFiltersLayoutChange);
   onMediaQueryChange(FILTERS_COMPACT_MQ, onFiltersLayoutChange);
 
@@ -9166,6 +10894,51 @@ function bindFiltersPanel() {
     });
     filtersResize.observe(NEWS_FILTERS);
   }
+
+  // Lab grand écran : bascule ?wide= sans reload → re-sync colonnes / rangées,
+  // coupe les marquees, recalcule météo (plus de cartes en wide).
+  window.addEventListener('radar-wide-preview-change', () => {
+    syncFiltersPanel();
+    // Purger classes marquee immédiatement (CSS + prochains mesures).
+    document.querySelectorAll('.is-marquee').forEach((el) => {
+      el.classList.remove('is-marquee');
+      el.style.removeProperty('--marquee-shift');
+      el.style.removeProperty('--marquee-duration');
+      el.style.removeProperty('--marquee-delay');
+    });
+    document.querySelectorAll('.is-overflowing, .is-sub-overflowing').forEach((el) => {
+      el.classList.remove('is-overflowing', 'is-sub-overflowing');
+      el.style.removeProperty('--weather-scroll');
+      el.style.removeProperty('--sports-scroll');
+      el.style.removeProperty('--sports-scroll-sub');
+    });
+    mastheadWeatherFitCount = null;
+    scheduleMastheadWeatherLayout();
+    scheduleFilterMarqueeRefresh();
+    try {
+      sportsFitCount = null;
+      sportsFitDepth = 0;
+      if (MASTHEAD_SPORTS_STRIP && !MASTHEAD_SPORTS_STRIP.hidden) {
+        renderSportsStrip();
+        scheduleSportsRotate();
+        window.requestAnimationFrame(() => refreshSportsChipScroll());
+      }
+    } catch { /* ignore */ }
+    // Synthé wide : dual antenne + dial institution/slogan
+    try {
+      renderTunerNowAir();
+    } catch { /* ignore */ }
+    try {
+      syncWideStickyTop();
+      requestAnimationFrame(() => syncWideStickyTop());
+    } catch { /* ignore */ }
+  });
+  window.addEventListener('resize', () => {
+    if (isWideTunerLayout()) {
+      syncWideStickyTop();
+      fitWideDialWidth({ force: true });
+    }
+  }, { passive: true });
 }
 
 function selectNewsSource(source) {
@@ -9606,6 +11379,7 @@ function renderNewsFilters() {
   registerFilterMarqueeObservers();
   applyFilterInstMarquees();
   scheduleFilterMarqueeRefresh();
+  markUiReady(FILTERS_PANEL);
 }
 
 function renderNews() {
@@ -9667,6 +11441,7 @@ function renderNews() {
       });
       NEWS_LIST.appendChild(section);
     }
+    NEWS_LIST.dataset.ready = '1';
     return;
   }
 
@@ -9691,8 +11466,13 @@ function renderNews() {
     NEWS_LIST.removeAttribute('data-autumn-grace');
   }
 
+  // Wide E : 2 unes dès 1920, 3 à 3840 ; prod : 1 une + vedettes.
+  const wideDualLead = !isSourceView && isWideDualLeadViewport();
+  const leadCount = wideDualLead ? Math.min(wideHeroLeadCount(), heroItems.length) : 1;
+  if (wideDualLead) hero.dataset.leads = String(leadCount);
+  else hero.removeAttribute('data-leads');
   heroItems.forEach((item, i) => {
-    const role = i === 0 ? 'lead' : 'feature';
+    const role = i < leadCount ? 'lead' : 'feature';
     const article = safeCreateArticle(item, role);
     if (article) hero.appendChild(article);
   });
@@ -9738,6 +11518,7 @@ function renderNews() {
   updateNewsLayout();
   // Équilibre magazine : combler le vide sous vedettes et/ou sous En bref.
   scheduleMagazineColumnBalance();
+  NEWS_LIST.dataset.ready = '1';
 }
 
 /** Aperçu de la rangée suivante (titres lisibles), comme --filters-peek. */
@@ -9911,22 +11692,52 @@ function updateNewsLayout() {
 }
 
 /*
- * Partition magazine — anti « chaise musicale » :
+ * Partition magazine — fraîcheur d’abord, aucun article perdu :
  *
- *  A) SNAPSHOT figé :
- *     - Une + vedettes = toujours les 5 plus frais (1+4) — *jamais* touché au fill
- *     - En bref = graine ~ hauteur estimée du hero (1 / institution)
- *     - Suite = le reste
+ *  A) SNAPSHOT :
+ *     - Une + vedettes = les N plus frais (tranche contiguë)
+ *     - En bref = 1) une source / établissement, 2) sources sœurs encore
+ *       absentes, 3) 2ᵉ titre seulement quand toutes les sources du reste
+ *       sont représentées (une ∪ En bref). Suite = tout le reste (rien d’omis).
  *
  *  B) ÉQUILIBRE (≥1100px) — *seulement* la colonne En bref :
  *     1) TRIM si trop haute (→ suite)
- *     2) FILL si trop basse (depuis réserve, sans dépasser)
- *     Le spacer absorbe le reste (tolérance large). Pas de promote vedette,
- *     pas d’allers-retours entre colonnes.
+ *     2) FILL si trop basse (même ordre de priorité, depuis la réserve)
  */
-const HERO_FEATURE_MIN = 4; /* 4 vedettes + 1 une = 5 */
+const HERO_FEATURE_MIN = 4; /* 4 vedettes + 1 une = 5 (prod) */
 const HERO_FEATURE_MAX = 4;
-const HERO_SPOTLIGHT_MAX = 1 + HERO_FEATURE_MIN; /* 5 au total */
+const HERO_SPOTLIGHT_MAX = 1 + HERO_FEATURE_MIN; /* 5 au total prod */
+/* Wide E : 2 unes dès 1920 ; 3 unes + 6 vedettes (3 col) à 3840. */
+const HERO_WIDE_LEAD_COUNT = 2;
+const HERO_WIDE_FEATURE_MIN = 4;
+const HERO_UHD_LEAD_COUNT = 3;
+const HERO_UHD_FEATURE_MIN = 6;
+
+function isWideDualLeadViewport() {
+  try {
+    return typeof isWideNoMarqueeMode === 'function'
+      && isWideNoMarqueeMode()
+      && (window.innerWidth || 0) >= 1920;
+  } catch {
+    return false;
+  }
+}
+
+function wideHeroLeadCount() {
+  if (!isWideDualLeadViewport()) return 1;
+  return (window.innerWidth || 0) >= 3840 ? HERO_UHD_LEAD_COUNT : HERO_WIDE_LEAD_COUNT;
+}
+
+function wideHeroFeatureCount() {
+  if (!isWideDualLeadViewport()) return HERO_FEATURE_MIN;
+  return (window.innerWidth || 0) >= 3840 ? HERO_UHD_FEATURE_MIN : HERO_WIDE_FEATURE_MIN;
+}
+
+function wideHeroSpotlightMax() {
+  return isWideDualLeadViewport()
+    ? wideHeroLeadCount() + wideHeroFeatureCount()
+    : HERO_SPOTLIGHT_MAX;
+}
 const BRIEF_SIDEBAR_SEED_MIN = 4;
 const BRIEF_SIDEBAR_SEED_MAX = 12;
 const BRIEF_SIDEBAR_MAX = 18;
@@ -9948,7 +11759,28 @@ const SOURCE_HERO_SPOTLIGHT_MAX = 1 + SOURCE_FEATURE_MAX;
 
 function estimateHeroSeedHeight(heroCount) {
   if (heroCount <= 0) return 0;
-  return AVG_LEAD_CARD_H + Math.max(0, heroCount - 1) * AVG_FEATURE_CARD_H;
+  const wideDual = isWideDualLeadViewport() && heroCount >= 2;
+  if (wideDual) {
+    const leads = Math.min(wideHeroLeadCount(), heroCount);
+    const feats = Math.max(0, heroCount - leads);
+    const leadH = Math.round(AVG_LEAD_CARD_H * (leads >= 3 ? 1.02 : 1.15));
+    const featCols = (window.innerWidth || 0) >= 3840 ? 3 : 2;
+    const featRows = Math.ceil(feats / featCols);
+    return leadH + featRows * AVG_FEATURE_CARD_H;
+  }
+  return Math.round(AVG_LEAD_CARD_H * 1.2) + Math.max(0, heroCount - 1) * AVG_FEATURE_CARD_H;
+}
+
+/** Nombre de colonnes CSS En bref (wide E). */
+function briefWideColumnCount() {
+  if (typeof isWideNoMarqueeMode !== 'function' || !isWideNoMarqueeMode()) return 1;
+  try {
+    const w = window.innerWidth || 0;
+    if (w >= 3840) return 2;
+    if (w >= 3440) return 3;
+    if (w >= 1920) return 2;
+  } catch { /* ignore */ }
+  return 1;
 }
 
 /**
@@ -9960,19 +11792,33 @@ function estimateHeroSeedHeight(heroCount) {
 function briefSeedCountForHero(heroCount, opts = {}) {
   const sourceMode = !!opts.sourceMode;
   const mid = !sourceMode && isMidwidthMagazinePreview();
+  const wideE = typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode();
   // Mid : rail 240–280 px → chaque carte En bref est plus haute (titres wrap).
-  const cardH = mid ? Math.round(AVG_BRIEF_CARD_H * 1.35) : AVG_BRIEF_CARD_H;
+  // Wide multi-col : graine = lignes × colonnes (pas hauteur/cardH qui sous-estime).
+  let cardH = mid ? Math.round(AVG_BRIEF_CARD_H * 1.35) : AVG_BRIEF_CARD_H;
+  let cols = 1;
+  if (wideE) {
+    cols = briefWideColumnCount();
+    // Hauteur de ligne réelle compact (souvent 160–220 avec image) — graine large.
+    cardH = Math.max(140, AVG_BRIEF_CARD_H + 40);
+  }
   const target = Math.max(0, estimateHeroSeedHeight(heroCount) - AVG_BRIEF_TITLE_H);
   // Source : un peu au-dessus de l’estimé (images), sans graine trop haute
   // (sinon 1 carte de trop en En bref après paint).
-  const mult = sourceMode ? 1.45 : (mid ? 0.85 : 1);
-  const n = Math.round((target * mult) / cardH);
-  const min = sourceMode
+  const mult = sourceMode ? 1.45 : (mid ? 0.85 : (wideE ? 1.35 : 1));
+  let n = Math.round((target * mult) / cardH);
+  if (wideE && cols > 1) {
+    // Remplir des rangées complètes : rows × cols
+    const rows = Math.max(3, Math.ceil(n / cols));
+    n = rows * cols;
+  }
+  const min = sourceMode && !wideE
     ? Math.max(BRIEF_SIDEBAR_SEED_MIN, 5)
-    : (mid ? 3 : BRIEF_SIDEBAR_SEED_MIN);
-  const max = sourceMode
+    : (mid ? 3 : (wideE ? Math.max(BRIEF_SIDEBAR_SEED_MIN, cols * (cols > 1 ? 5 : 3)) : BRIEF_SIDEBAR_SEED_MIN));
+  const max = sourceMode && !wideE
     ? Math.min(BRIEF_SIDEBAR_MAX, BRIEF_SIDEBAR_SEED_MAX + 2)
-    : (mid ? Math.min(8, BRIEF_SIDEBAR_SEED_MAX) : BRIEF_SIDEBAR_SEED_MAX);
+    : (mid ? Math.min(8, BRIEF_SIDEBAR_SEED_MAX)
+      : (wideE ? briefSidebarMaxSlots() : BRIEF_SIDEBAR_SEED_MAX));
   return Math.min(max, Math.max(min, n));
 }
 
@@ -10173,57 +12019,122 @@ function pickHeroSpotlight(items, _referenceDate = new Date()) {
   if (!sorted.length) {
     return { items: [], contingencyBand: 0 };
   }
-  const n = Math.min(HERO_SPOTLIGHT_MAX, sorted.length);
-  // Tranche contiguë des n plus frais — pas de saut d'institution.
+  const wideDual = isWideDualLeadViewport();
+  const maxN = wideDual ? wideHeroSpotlightMax() : HERO_SPOTLIGHT_MAX;
+  const n = Math.min(maxN, sorted.length);
+  // Tranche contiguë des n plus frais. Wide dual : les 2 unes = les 2 plus frais
+  // (même institution OK — pas de glissement pour « diversifier »).
+  const picked = sorted.slice(0, n);
   return {
-    items: sorted.slice(0, n),
+    items: picked,
     contingencyBand: 0,
   };
 }
 
+/** Sources déjà montrées (une / vedettes / En bref). */
+function magazineRepresentedSources(heroItems = [], briefItems = []) {
+  const out = new Set();
+  for (const item of heroItems) {
+    const s = sourceKey(item);
+    if (s) out.add(s);
+  }
+  for (const item of briefItems) {
+    const s = sourceKey(item);
+    if (s) out.add(s);
+  }
+  return out;
+}
+
+/** Il reste dans `pool` un article d’une source encore absente de `usedSources`. */
+function poolHasUncoveredSource(pool, usedSources, skipKeys) {
+  for (const item of pool) {
+    if (skipKeys.has(articleKey(item))) continue;
+    const src = sourceKey(item);
+    if (src && !usedSources.has(src)) return true;
+  }
+  return false;
+}
+
 /**
- * En bref : 1 article le plus frais par *institution*, hors hero.
+ * En bref, dans l’ordre (toujours date desc à l’intérieur d’une passe) :
+ *  1) 1er titre d’un établissement pas encore à la une ni en En bref
+ *     (et d’une source pas déjà à la une) — représentativité campus
+ *  2) sources sœurs encore absentes (autre journal du même campus)
+ *  3) 2ᵉ titre d’une source / institution **seulement** s’il ne reste
+ *     aucune source non représentée dans le reste du fil
  *
- * Règle multi-sources : si une institution a déjà un article à la une ou
- * en vedette (featured), elle n’entre pas en En bref — la place est laissée
- * aux autres campus. L’ordre des picks reste la fraîcheur (date desc).
- *
- * Limité au haut du fil restant (pool cap) pour éviter de hisser un billet
- * de mai (seule pub d’une institution) au-dessus de juillet via un trim
- * En bref → tête de suite.
- * @param {number} [maxSlots] — graine estimée ou plafond fill
+ * Tout le reste va dans la suite : aucun article n’est omis.
+ * @param {number} [maxSlots]
  */
 function pickBriefSidebar(allItems, heroItems = [], _referenceDate = new Date(), maxSlots = null) {
   const heroKeys = new Set(heroItems.map(articleKey));
-  // Institutions déjà représentées en une / vedettes → absentes d’En bref
+  const heroSources = new Set(heroItems.map(sourceKey).filter(Boolean));
   const heroInsts = new Set(heroItems.map(institutionKey).filter(Boolean));
-  const sorted = sortByDateDesc(allItems);
-  const remaining = sorted.filter((item) => !heroKeys.has(articleKey(item)));
-  // Si non précisé : caler le nombre sur la hauteur estimée du hero.
+  const remaining = sortByDateDesc(allItems).filter((item) => !heroKeys.has(articleKey(item)));
   const limit = Math.max(
     1,
     maxSlots == null ? briefSeedCountForHero(heroItems.length) : maxSlots,
   );
-  // Candidats = haut du reste du fil seulement (pas tout l’historique frais).
-  // Cap un peu plus large : l’exclusion d’institutions hero réduit le pool utile.
-  const poolCap = Math.max(limit * 10, 48);
-  const pool = remaining.slice(0, poolCap);
 
   const picks = [];
-  const usedInsts = new Set();
+  const pickedKeys = new Set();
+  const briefSources = new Set();
+  const briefInsts = new Set();
 
-  for (const item of pool) {
-    if (picks.length >= limit) break;
-    const inst = institutionKey(item);
-    if (!inst) continue;
-    if (heroInsts.has(inst)) continue;
-    if (usedInsts.has(inst)) continue;
+  const usedSources = () => {
+    const s = new Set(heroSources);
+    for (const x of briefSources) s.add(x);
+    return s;
+  };
+
+  const take = (item) => {
     picks.push(item);
-    usedInsts.add(inst);
+    pickedKeys.add(articleKey(item));
+    const src = sourceKey(item);
+    const inst = institutionKey(item);
+    if (src) briefSources.add(src);
+    if (inst) briefInsts.add(inst);
+  };
+
+  // Passe 1 — un établissement, une source, fraîcheur.
+  for (const item of remaining) {
+    if (picks.length >= limit) break;
+    const src = sourceKey(item);
+    const inst = institutionKey(item);
+    if (!src) continue;
+    if (heroSources.has(src) || briefSources.has(src)) continue;
+    if (inst && (heroInsts.has(inst) || briefInsts.has(inst))) continue;
+    take(item);
   }
 
-  // Fraîcheur : re-trier les picks retenus (le parcours pool est déjà date desc,
-  // mais on garantit l’ordre d’affichage).
+  // Passe 2 — sources encore absentes (journal sœur), toujours fraîcheur.
+  if (picks.length < limit) {
+    for (const item of remaining) {
+      if (picks.length >= limit) break;
+      if (pickedKeys.has(articleKey(item))) continue;
+      const src = sourceKey(item);
+      if (!src || heroSources.has(src) || briefSources.has(src)) continue;
+      take(item);
+    }
+  }
+
+  // Passe 3 — 2ᵉ titre seulement si toutes les sources du reste sont là.
+  if (picks.length < limit && !poolHasUncoveredSource(remaining, usedSources(), pickedKeys)) {
+    const perSrc = new Map();
+    for (const item of [...heroItems, ...picks]) {
+      const src = sourceKey(item);
+      if (src) perSrc.set(src, (perSrc.get(src) || 0) + 1);
+    }
+    for (const item of remaining) {
+      if (picks.length >= limit) break;
+      if (pickedKeys.has(articleKey(item))) continue;
+      const src = sourceKey(item);
+      if ((perSrc.get(src) || 0) >= 2) continue;
+      take(item);
+      if (src) perSrc.set(src, (perSrc.get(src) || 0) + 1);
+    }
+  }
+
   return {
     items: sortByDateDesc(picks),
     contingencyBand: 0,
@@ -10239,8 +12150,10 @@ function pickBriefSidebar(allItems, heroItems = [], _referenceDate = new Date(),
  */
 function enforceHeroDateOrder(heroItems, allSorted) {
   if (!heroItems?.length || !allSorted?.length) return heroItems || [];
-  const n = Math.min(Math.max(heroItems.length, HERO_SPOTLIGHT_MAX), allSorted.length);
-  // Toujours les n plus frais du fil pour le bloc une+vedettes.
+  const wideDual = isWideDualLeadViewport();
+  const floor = wideDual ? wideHeroSpotlightMax() : HERO_SPOTLIGHT_MAX;
+  const n = Math.min(Math.max(heroItems.length, floor), allSorted.length);
+  // Filet : n plus frais, dans l’ordre. Dual une = les 2 dates les plus récentes.
   return allSorted.slice(0, n);
 }
 
@@ -10343,37 +12256,52 @@ function removeTailArticleForItem(item) {
 
 /**
  * Prochain En bref depuis la réserve (date desc) :
- *  1) nouvelle institution, **hors** institutions déjà en une / vedette
- *  2) filet anti-vide (allowExtra) : encore hors une/vedette, même si l’institution
- *     est déjà en En bref. En vue source, `allowHeroInstitution` autorise le
- *     média filtré à remplir sa propre colonne.
+ *  1) nouvelle institution + source pas encore à la une
+ *  2) source encore absente (journal sœur)
+ *  3) 2ᵉ titre (allowExtra) seulement s’il ne reste aucune source découverte
+ * Vue source : `allowHeroInstitution` autorise le média filtré à se répéter.
  */
 function takeNextBriefFromReserve({ allowExtra = false, allowHeroInstitution = false } = {}) {
   if (!magazineReserve.length) return null;
-
-  const notHeroInst = (item) => {
-    const inst = institutionKey(item);
-    return !inst || !magazineMeta.heroInsts.has(inst);
-  };
 
   const tryPick = (pred) => {
     const idx = magazineReserve.findIndex((item) => {
       const key = articleKey(item);
       if (magazineMeta.heroKeys.has(key) || magazineMeta.briefKeys.has(key)) return false;
-      if (!allowHeroInstitution && !notHeroInst(item)) return false;
       return pred(item);
     });
     if (idx < 0) return null;
     return magazineReserve.splice(idx, 1)[0];
   };
 
-  // 1) Nouvelle institution (pas encore en En bref, pas en une/vedette)
-  const freshInst = tryPick((item) => !magazineMeta.briefInsts.has(institutionKey(item)));
+  const srcUsed = (item) => {
+    const src = sourceKey(item);
+    return src && (magazineMeta.heroSources.has(src) || magazineMeta.briefSources.has(src));
+  };
+  const instUsed = (item) => {
+    const inst = institutionKey(item);
+    if (!inst) return false;
+    if (magazineMeta.briefInsts.has(inst)) return true;
+    if (!allowHeroInstitution && magazineMeta.heroInsts.has(inst)) return true;
+    return false;
+  };
+
+  const uncovered = poolHasUncoveredSource(
+    magazineReserve,
+    new Set([...magazineMeta.heroSources, ...magazineMeta.briefSources]),
+    new Set([...magazineMeta.heroKeys, ...magazineMeta.briefKeys]),
+  );
+
+  // 1) Nouveau campus (source pas déjà à la une)
+  const freshInst = tryPick((item) => !srcUsed(item) && !instUsed(item));
   if (freshInst) return freshInst;
 
-  // 2) Filet hauteur : d’autres articles du même média seulement lorsque la
-  // vue source l'a demandé; le fil général garde sa diversité institutionnelle.
-  if (allowExtra) {
+  // 2) Source sœur encore absente — avant tout 2ᵉ titre d’un campus déjà là
+  const sister = tryPick((item) => !srcUsed(item));
+  if (sister) return sister;
+
+  // 3) Extra seulement si toutes les sources du reste sont représentées
+  if (allowExtra && !uncovered) {
     return tryPick(() => true);
   }
   return null;
@@ -10435,18 +12363,25 @@ function rebuildHeroMetaFromDom(hero) {
 }
 
 /**
- * Filet fil général : aucune institution déjà en une/vedette dans En bref.
- * (Vue source : même média partout — on ne purge pas.)
+ * Filet : un 2ᵉ titre de la *même source* que la une n’occupe pas En bref
+ * tant qu’une source du reste n’a pas eu sa place. Les journaux sœurs
+ * (même campus, autre source) restent.
  */
 function purgeBriefCardsFromHeroInstitutions(brief) {
   if (!brief || NEWS_LIST?.dataset.mode === 'source') return 0;
+  const uncovered = poolHasUncoveredSource(
+    magazineReserve,
+    new Set([...magazineMeta.heroSources, ...magazineMeta.briefSources]),
+    new Set([...magazineMeta.heroKeys, ...magazineMeta.briefKeys]),
+  );
+  if (!uncovered) return 0;
   let removed = 0;
   const cards = [...brief.querySelectorAll('.article--compact')];
   for (const card of cards) {
     const item = resolveItemFromCard(card);
     if (!item) continue;
-    const inst = institutionKey(item);
-    if (!inst || !magazineMeta.heroInsts.has(inst)) continue;
+    const src = sourceKey(item);
+    if (!src || !magazineMeta.heroSources.has(src)) continue;
     if (demoteBriefCardToTail(brief, card)) removed += 1;
   }
   return removed;
@@ -10478,10 +12413,14 @@ function appendBeforeMagazineSpacer(column, el) {
 
 /**
  * Hauteur du *contenu* (hors spacer). Pas offsetHeight de la cellule stretchée.
+ * Utilise le bas réel du dernier enfant (max offsetTop+height) pour les grilles
+ * multi-colonnes d’En bref : sommer les hauteurs comptait 2–3× le visuel et
+ * forçait un trim excessif (vide en bas).
  */
 function magazineColumnContentHeight(col) {
   if (!col) return 0;
-  let h = 0;
+  let maxBottom = 0;
+  let sumFallback = 0;
   for (const child of col.children) {
     if (
       child.classList?.contains('news-hero-spacer')
@@ -10492,11 +12431,32 @@ function magazineColumnContentHeight(col) {
     const style = getComputedStyle(child);
     const mt = parseFloat(style.marginTop) || 0;
     const mb = parseFloat(style.marginBottom) || 0;
-    h += child.offsetHeight + mt + mb;
+    const h = child.offsetHeight + mt + mb;
+    sumFallback += h;
+    // offsetTop est relatif au padding edge de l’offsetParent (souvent la col).
+    const bottom = child.offsetTop + child.offsetHeight + mb;
+    if (bottom > maxBottom) maxBottom = bottom;
   }
   const cs = getComputedStyle(col);
-  h += (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0);
-  return h;
+  const padB = parseFloat(cs.paddingBottom) || 0;
+  // maxBottom déjà depuis le haut du contenu ; + pad bas si besoin
+  if (maxBottom > 0) return maxBottom + padB;
+  return sumFallback + (parseFloat(cs.paddingTop) || 0) + padB;
+}
+
+/** Plafond En bref : plus haut en wide E (2/média + multi-col) pour coller le bas. */
+function briefSidebarMaxSlots() {
+  if (typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode()) {
+    try {
+      const w = window.innerWidth || 0;
+      if (w >= 3840) return 32;
+      if (w >= 3440) return 40;
+      if (w >= 1920) return 32;
+      return 26; // 1440–1600 1 col
+    } catch { /* ignore */ }
+    return 26;
+  }
+  return BRIEF_SIDEBAR_MAX;
 }
 
 /** Retrouve un item news depuis une carte DOM (href / titre). */
@@ -10613,14 +12573,12 @@ function balanceMagazineColumns() {
   magazineBalanceQueued = false;
   const isSourceMode = NEWS_LIST.dataset.mode === 'source';
   const mid = !isSourceMode && isMidwidthMagazinePreview();
+  const wideE = typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode();
   // Tolérance : un petit spacer est acceptable dans le fil général. En vue
-  // d'un seul média, « En bref » ne doit en revanche jamais descendre sous
-  // la une et ses vedettes : cette page est une lecture verticale, où une
-  // colonne latérale plus longue crée un vide très visible sous les articles
-  // principaux. La prochaine carte reste donc dans « Suite du fil ».
-  // Midwidth : rail étroit → vide sous vedettes très visible : tolérance plus
-  // serrée et plancher En bref à 1 carte (plutôt que 2).
-  const tol = isSourceMode ? 0 : (mid ? 16 : COLUMN_HEIGHT_TOL);
+  // d'un seul média hors wide, « En bref » ne doit pas dépasser la une.
+  // Wide multi-col : même logique que le fil général (une rangée de plus
+  // vaut mieux qu’un vide sous les vedettes).
+  const tol = (isSourceMode && !wideE) ? 0 : (mid ? 16 : COLUMN_HEIGHT_TOL);
   const hardMin = isSourceMode ? 2 : (mid ? 1 : BRIEF_SIDEBAR_HARD_MIN);
   // Ne pas « améliorer » un équilibre déjà dans la tolérance produit (~1 carte
   // compacte). Les passes image tardives re-trimaient 6→4 cartes et laissaient
@@ -10629,8 +12587,59 @@ function balanceMagazineColumns() {
 
   // Toujours resync hero meta avant trim/fill (institutions une/vedettes).
   rebuildHeroMetaFromDom(hero);
-  // Filet immédiat : jamais d’institution hero en En bref (hors vue source).
+  // Filet : pas de 2ᵉ titre de la même source que la une tant qu’une
+  // source du reste n’a pas eu sa place.
   purgeBriefCardsFromHeroInstitutions(brief);
+
+  // Multi-col : une carte de trop (nouvelle rangée) vaut mieux qu’un grand vide.
+  // Overshoot toléré ≈ hauteur réelle d’une rangée (cartes compactes ~180–230).
+  const sampleBriefH = (() => {
+    const c = brief.querySelector('.article--compact');
+    const h = c?.getBoundingClientRect?.().height;
+    return Number.isFinite(h) && h > 40 ? h : AVG_BRIEF_CARD_H + 60;
+  })();
+  const briefCols = wideE ? briefWideColumnCount() : 1;
+  const tightBrief = wideE && briefCols === 1;
+  // Multi-col : 20 px, pas ~1 carte. Une rangée de trop (1920/2560/3440)
+  // dépassait le hero ; à 3840 il fallait au contraire finir la rangée.
+  const wideOvershootTol = tightBrief ? 8 : (wideE ? Math.max(tol, 20) : tol);
+
+  const trimBriefOrphanRow = () => {
+    if (briefCols < 2) return;
+    const cards = [...brief.querySelectorAll('.article--compact')];
+    if (cards.length < hardMin + 1) return;
+    if (cards.length % briefCols === 0) return;
+    const hH = magazineColumnContentHeight(hero);
+    const bH = magazineColumnContentHeight(brief);
+    // Rangée incomplète plus haute que le hero → retirer. Sinon on la complète.
+    if (bH <= hH + wideOvershootTol) return;
+    demoteBriefCardToTail(brief, cards[cards.length - 1]);
+  };
+
+  /** Rangée déjà payée en hauteur : remplir les trous (ex. 13/16 à 3840). */
+  const completeLastBriefRow = () => {
+    if (briefCols < 2) return;
+    let guard = 0;
+    while (guard < briefCols) {
+      guard += 1;
+      const cards = brief.querySelectorAll('.article--compact');
+      if (cards.length % briefCols === 0) return;
+      const hH = magazineColumnContentHeight(hero);
+      const bH = magazineColumnContentHeight(brief);
+      if (bH > hH + wideOvershootTol) return;
+      if (!magazineReserve.length || cards.length >= briefSidebarMaxSlots()) return;
+      const item = takeNextBriefFromReserve({
+        allowExtra: true,
+        allowHeroInstitution: isSourceMode,
+      });
+      if (!item) return;
+      const el = safeCreateArticle(item, 'compact');
+      if (!el) return;
+      appendBeforeMagazineSpacer(brief, el);
+      markPromotedToBrief(item);
+      removeTailArticleForItem(item);
+    }
+  };
 
   const trimBriefIfTaller = () => {
     let guard = 0;
@@ -10638,7 +12647,8 @@ function balanceMagazineColumns() {
       guard += 1;
       const hH = magazineColumnContentHeight(hero);
       const bH = magazineColumnContentHeight(brief);
-      if (bH <= hH + tol) break;
+      // Wide : tolérer un léger dépassement (évite re-trim qui recrée le vide).
+      if (bH <= hH + (wideE ? wideOvershootTol : tol)) break;
       // Vue source : si retirer une carte laisserait un trou > GOOD_GAP_MAX
       // alors que le dépassement actuel est plus petit, s’arrêter (granularité
       // d’une fiche). Impossible de satisfaire brief≤hero et gap≤96 autrement
@@ -10661,28 +12671,10 @@ function balanceMagazineColumns() {
     }
   };
 
-  try {
-    clearMagazineSpacers(hero);
-    clearMagazineSpacers(brief);
-
-    // Déjà bien collé : ne pas re-fill/re-trim destructif (passes image).
-    {
-      const hH = magazineColumnContentHeight(hero);
-      const bH = magazineColumnContentHeight(brief);
-      if (bH <= hH + tol && (hH - bH) <= GOOD_GAP_MAX && brief.querySelectorAll('.article--compact').length >= hardMin) {
-        ensureMagazineColumnSpacers(hero, brief);
-        return;
-      }
-    }
-
-    // --- 1) TRIM : En bref trop haute → retirer la dernière carte ---
-    trimBriefIfTaller();
-
-    // --- 2) FILL : En bref trop basse → ajouter (sans dépasser) ---
-    // Vue source : la réserve contient nécessairement le même média.
+  /** Fill En bref jusqu’à coller le bas du hero (multi-col wide inclus). */
+  const fillBriefToHero = (maxSteps, overshootMax) => {
     let fillGuard = 0;
-    const maxFill = isSourceMode ? 40 : 24;
-    while (fillGuard < maxFill) {
+    while (fillGuard < maxSteps) {
       fillGuard += 1;
       const hH = magazineColumnContentHeight(hero);
       const bH = magazineColumnContentHeight(brief);
@@ -10690,10 +12682,11 @@ function balanceMagazineColumns() {
       if (gap <= tol) break;
 
       const briefCount = brief.querySelectorAll('.article--compact').length;
-      if (briefCount >= BRIEF_SIDEBAR_MAX || !magazineReserve.length) break;
+      const briefCap = briefSidebarMaxSlots();
+      if (briefCount >= briefCap || !magazineReserve.length) break;
 
       const reserveOptions = {
-        allowExtra: isSourceMode,
+        allowExtra: isSourceMode || wideE,
         allowHeroInstitution: isSourceMode,
       };
       let item = takeNextBriefFromReserve(reserveOptions);
@@ -10708,12 +12701,9 @@ function balanceMagazineColumns() {
       const afterHero = magazineColumnContentHeight(hero);
       const overshoot = afterBrief - afterHero;
 
-      if (overshoot > tol) {
-        // Net gain : garder si le dépassement est plus petit que le trou
-        // comblé (y compris en vue source). Refuser tout overshoot laissait
-        // des vides de ~150 px sous la une dès que la prochaine carte compacte
-        // dépassait d’un pouce le gap restant (photos miroir plus hautes).
-        // Sinon → suite du fil (évite 1 carte de trop).
+      if (overshoot > overshootMax) {
+        // Nouvelle rangée plus haute que le hero : seulement si le vide
+        // restant était plus grand que le dépassement (net gain).
         if (gap > overshoot) {
           markPromotedToBrief(item);
           removeTailArticleForItem(item);
@@ -10725,11 +12715,36 @@ function balanceMagazineColumns() {
       markPromotedToBrief(item);
       removeTailArticleForItem(item);
     }
+  };
+
+  try {
+    clearMagazineSpacers(hero);
+    clearMagazineSpacers(brief);
+
+    // Déjà bien collé : ne pas re-fill/re-trim destructif (passes image).
+    // Wide : n’accepter « déjà bon » que si le trou est vraiment petit.
+    {
+      const hH = magazineColumnContentHeight(hero);
+      const bH = magazineColumnContentHeight(brief);
+      const goodMax = tightBrief ? 24 : (wideE ? Math.min(GOOD_GAP_MAX, 56) : GOOD_GAP_MAX);
+      if (bH <= hH + tol && (hH - bH) <= goodMax && brief.querySelectorAll('.article--compact').length >= hardMin) {
+        ensureMagazineColumnSpacers(hero, brief);
+        return;
+      }
+    }
+
+    // --- 1) TRIM : En bref trop haute → retirer la dernière carte ---
+    trimBriefIfTaller();
+
+    // --- 2) FILL : En bref trop basse → ajouter (sans trop dépasser) ---
+    const maxFill = isSourceMode ? 40 : (wideE ? 48 : 24);
+    fillBriefToHero(maxFill, wideE ? wideOvershootTol : tol);
 
     // --- 3) TRIM final (images / fill ont pu dépasser d’une carte) ---
     trimBriefIfTaller();
-    // Re-purge si un fill a glissé une institution hero (ne devrait plus arriver).
     if (purgeBriefCardsFromHeroInstitutions(brief)) trimBriefIfTaller();
+    trimBriefOrphanRow();
+    completeLastBriefRow();
 
     // --- 4) Midwidth : priorité = zéro grand vide sous les vedettes.
     // (Le spacer flex sous le hero est très visible en rail étroit.)
@@ -10757,9 +12772,8 @@ function balanceMagazineColumns() {
           const voidUnderBrief = hH - bH;
           if (voidUnderBrief <= GOOD_GAP_MAX) break;
           if (!magazineReserve.length) break;
-          if (brief.querySelectorAll('.article--compact').length >= BRIEF_SIDEBAR_MAX) break;
-          // Fil général : jamais d’institution déjà en une/vedette, même en fill mid.
-          // (allowHeroInstitution réservé à la vue source.)
+          if (brief.querySelectorAll('.article--compact').length >= briefSidebarMaxSlots()) break;
+          // Fil général : sources d’abord, 2ᵉ titre ensuite (fraîcheur).
           const item = takeNextBriefFromReserve({
             allowExtra: true,
             allowHeroInstitution: false,
@@ -10776,7 +12790,6 @@ function balanceMagazineColumns() {
           markPromotedToBrief(item);
           removeTailArticleForItem(item);
         }
-        // Filet : pas d’institution une/vedettes en En bref (mid fill).
         purgeBriefCardsFromHeroInstitutions(brief);
       };
       equalizeMid();
@@ -10790,7 +12803,31 @@ function balanceMagazineColumns() {
         ensureMagazineColumnSpacers(hero, brief);
       }
     } else {
+      // Wide E : 2e passe sur le *contenu* (pas le spacer flex) — multi-col
+      // laissait souvent 100–200 px de vide sous la dernière rangée.
+      if (wideE) {
+        clearMagazineSpacers(hero);
+        clearMagazineSpacers(brief);
+        const gap2 = magazineColumnContentHeight(hero) - magazineColumnContentHeight(brief);
+        if (tightBrief) {
+          trimBriefIfTaller();
+        } else if (gap2 > Math.max(32, Math.round(sampleBriefH * 0.55)) && magazineReserve.length) {
+          fillBriefToHero(36, wideOvershootTol);
+          trimBriefIfTaller();
+        }
+        trimBriefOrphanRow();
+        completeLastBriefRow();
+      }
       ensureMagazineColumnSpacers(hero, brief);
+      if (wideE && tightBrief) {
+        const hSp = hero.querySelector('.news-hero-spacer')?.offsetHeight || 0;
+        if (hSp > 24) {
+          clearMagazineSpacers(hero);
+          clearMagazineSpacers(brief);
+          trimBriefIfTaller();
+          ensureMagazineColumnSpacers(hero, brief);
+        }
+      }
     }
   } finally {
     window.setTimeout(() => {
