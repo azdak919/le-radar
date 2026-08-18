@@ -1,5 +1,7 @@
 import { defineConfig } from '@playwright/test';
 
+const port = Number(process.env.PW_PORT || 4173);
+
 export default defineConfig({
   testDir: './tests',
   testMatch: '**/*.spec.mjs',
@@ -15,7 +17,7 @@ export default defineConfig({
   workers: process.env.CI ? 2 : undefined,
   reporter: process.env.CI ? 'github' : 'list',
   use: {
-    baseURL: 'http://127.0.0.1:4173',
+    baseURL: `http://127.0.0.1:${port}`,
     browserName: 'chromium',
     serviceWorkers: 'block',
     trace: 'retain-on-failure',
@@ -71,8 +73,8 @@ export default defineConfig({
     // signature exacte de la dette D9. On rend donc le serveur concurrent
     // plutôt que d'allonger le moindre délai, ce que cette dette interdit.
     // ThreadingHTTPServer est dans la bibliothèque standard depuis Python 3.7.
-    command: "python3 -c \"from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler; ThreadingHTTPServer(('127.0.0.1', 4173), SimpleHTTPRequestHandler).serve_forever()\"",
-    url: 'http://127.0.0.1:4173',
+    command: `python3 -c "from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler; ThreadingHTTPServer(('127.0.0.1', ${port}), SimpleHTTPRequestHandler).serve_forever()"`,
+    url: `http://127.0.0.1:${port}`,
     reuseExistingServer: !process.env.CI,
     timeout: 20_000,
   },

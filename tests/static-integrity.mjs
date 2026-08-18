@@ -446,7 +446,16 @@ const chyzSource = radiosRegistry.find((radio) => radio.id === 'chyz');
 assert(chyzSource?.slogan && chyzSource?._sloganSource && chyzSource?._sloganEvidence, 'radio CHYZ : provenance du slogan requise');
 assert(chyzPage.includes(`<h1 class="seo-title">CHYZ 94,3 FM — ${chyzSource.slogan}</h1>`), 'radio CHYZ : nom, fréquence et slogan sourcé requis en titre');
 assert(chyzPage.includes('href="../../horaires/">Choisir une autre radio</a>'), 'radio CHYZ : retour aux autres horaires requis');
-assert(chyzPage.includes('Dernière collecte réussie le'), 'radio CHYZ : date de collecte requise');
+assert(chyzPage.includes('MAJ le'), 'radio CHYZ : date de mise à jour requise');
+assert(!chyzPage.includes('Dernière collecte réussie'), 'radio CHYZ : libellé collecte interne interdit');
+{
+  const { quebecWeekStartDate } = require('../scripts/seo-pages-lib.js');
+  const week = quebecWeekStartDate();
+  const weekLabel = new Intl.DateTimeFormat('fr-CA', {
+    timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric',
+  }).format(week);
+  assert(chyzPage.includes(`Semaine du ${weekLabel}`), `radio CHYZ : semaine courante requise (${weekLabel})`);
+}
 assert(chyzPage.includes('id="tuner" class="tuner"'), 'radio CHYZ : lecteur natif requis');
 assert(!chyzPage.includes('id="radar-embed"'), 'radio CHYZ : iframe tuner interdit');
 assert(chyzPage.includes('id="theme-toggle"'), 'radio CHYZ : bascule clair/sombre requise');
@@ -601,7 +610,12 @@ assert(feedsHtml.includes('class="wordmark-logo"'), 'feeds.html : logo de marque
 assert(!feedsHtml.includes('wordmark-emoji'), 'feeds.html : ancien titre à emojis interdit');
 assert(feedsHtml.includes('id="today-time"'), 'feeds.html : heure du mât requise');
 const schedulesHub = readFileSync(join(root, 'horaires/index.html'), 'utf8');
-assert(schedulesHub.includes('Grilles colligées automatiquement'), 'hub horaires : note au pluriel requise');
+assert(schedulesHub.includes('Les grilles viennent des sites des stations'), 'hub horaires : note au pluriel requise');
+assert(schedulesHub.includes('class="seo-radio-cards"'), 'hub horaires : cartes radio dédiées requises');
+assert(schedulesHub.includes('data-schedule-air'), 'hub horaires : émission en cours ou à venir requise');
+assert(schedulesHub.includes('MAJ le'), 'hub horaires : date de mise à jour requise');
+assert(!schedulesHub.includes('colligé le'), 'hub horaires : date ISO colligée interdite');
+assert(!schedulesHub.includes('créneaux'), 'hub horaires : décompte de créneaux interdit');
 
 const embedScript = readFileSync(join(root, 'embed.js'), 'utf8');
 assert(embedScript.includes("type: 'radar-embed'"), 'contrat postMessage radar-embed requis');
@@ -1150,6 +1164,26 @@ assert(
       && !/tuner-wide-slot--next[\s\S]{0,80}max-width:\s*20rem/.test(wideCss),
     'antenne : 2 lignes, titre entier en wide (pas d’ellipse, pas de wrap)',
   );
+  const expandedStack = (wideCss.match(
+    /\.wide-rail-stack:has\(\.filters-panel\.is-expanded\)\s*\{[^}]+\}/,
+  ) || [''])[0];
+  assert(
+    /height:\s*calc\(100dvh - var\(--wide-stack-from-top/.test(expandedStack)
+      && !/height:\s*auto/.test(expandedStack),
+    'wide E : rail ouvert en hauteur réelle (pas height:auto → trou sous Réduire)',
+  );
+  const expandedFilters = (wideCss.match(
+    /\.filters-panel\.is-expanded \.filters\s*\{[^}]+\}/,
+  ) || [''])[0];
+  assert(
+    /max-height:\s*none\s*!important/.test(expandedFilters),
+    'wide E : liste ouverte sans plafond --filters-rail-avail (flex jusqu’en bas)',
+  );
+  assert(
+    /const keepWideOpen = !!\(filtersExpanded && document\.getElementById\('wide-rail-stack'\)\)/.test(appJs)
+      && /has-overflow',\s*overflow \|\| keepWideOpen/.test(appJs),
+    'wide E : Réduire reste si le rail était ouvert (scroll ne referme pas)',
+  );
 }
 assert(
   styleCss.includes('.news-list:not([data-ready]) > .article')
@@ -1172,9 +1206,12 @@ assert(
 {
   const photoCss = readFileSync(join(root, 'style-masthead.css'), 'utf8');
   assert(
-    photoCss.includes('.masthead-home:hover:not(.is-active):not([aria-current="page"])')
-      && photoCss.includes('.masthead-home[aria-current="page"]:hover'),
-    'mât : hover n’efface pas la pastille Accueil courante',
+    /\[aria-current="page"\]:not\(\.masthead-home\)/.test(styleCss)
+      && !/\.masthead-home\.is-active\s*,/.test(styleCss)
+      && !photoCss.includes('.masthead-home[aria-current="page"]')
+      && /masthead-home:active/.test(styleCss)
+      && /masthead-home:active/.test(photoCss),
+    'mât : Accueil sans fond mauve au repos ; mauve seulement au pressé',
   );
 }
 assert(

@@ -17,8 +17,10 @@ const {
   T, escapeHtml, slugify, normKey, canonicalInstitution, localizedInstitutionName, isoDay,
   sportsUpdatedStamp,
   fill, frOf, frAt, plural, renderPage, factsList, headlineList, cardGrid, scheduleTable,
+  scheduleContext, scheduleTodayDay,
 } = require('./seo-pages-lib');
 const { pruneSportsTeam } = require('./sports-freshness-lib');
+const { resolveCurrentSlot, resolveNextSlot } = require('./radio-schedule-lib');
 
 const HEADLINES_PER_PAPER = 12;
 const STALE_SOURCE_NOTICE_MS = 14 * 24 * 60 * 60 * 1000;
@@ -781,6 +783,59 @@ function directoryPage(model, lang, ctx) {
  * Les données viennent de `radio-schedules.json`, seule source alimentée par
  * les bots — cette page en est une vue, pas une source.
  */
+function formatHubRange(slot) {
+  if (!slot?.start) return '';
+  return slot.end
+    ? `${slot.start}<span class="seo-slot__dash" aria-hidden="true">–</span>${slot.end}`
+    : escapeHtml(slot.start);
+}
+
+function formatHubWhen(slot, todayDay, t) {
+  const range = formatHubRange(slot);
+  if (!range || slot.day === todayDay) return range;
+  const raw = t.days[slot.day] || '';
+  const dayName = t.lang === 'fr-CA' ? raw.toLowerCase() : raw;
+  return dayName ? `${escapeHtml(dayName)} ${range}` : range;
+}
+
+/**
+ * Cartes du hub horaires : campus + émission en cours ou à venir.
+ * Le volume de créneaux et la date ISO n'aident pas à choisir une radio.
+ */
+function scheduleHubCards(entries, t, lang, up) {
+  const todayDay = scheduleTodayDay();
+  const items = entries.map(({ radio, station }) => {
+    const name = radio.fullName || radio.name;
+    const campus = radio.group
+      ? radio.group.short
+      : localizedInstitutionName(radio.institution, lang);
+    const freq = radio.frequency || '';
+    const showFreq = freq && !String(name).includes(freq);
+    const place = [showFreq ? freq : null, campus, radio.city].filter(Boolean).join(' · ');
+    const live = resolveCurrentSlot(station.grid);
+    const next = live ? null : resolveNextSlot(station.grid);
+    const air = live || next;
+    const liveState = live ? 'live' : (next ? 'upcoming' : '');
+    const kicker = live ? t.scheduleLive : (next ? t.scheduleUpcoming : '');
+    const href = `${up}${ROUTES.radio[lang](radio.slug)}#horaire`;
+    let airHtml = '';
+    if (air) {
+      airHtml = `<span class="seo-radio-card__now" data-schedule-air data-air-state="${liveState}">`
+        + `<span class="seo-radio-card__kicker">${escapeHtml(kicker)}</span>`
+        + `<span class="seo-radio-card__show">${escapeHtml(air.title)}</span>`
+        + `<span class="seo-radio-card__when">${formatHubWhen(air, todayDay, t)}</span>`
+        + '</span>';
+    }
+    return `        <li class="seo-radio-card"${radio.id ? ` data-schedule-station="${escapeHtml(radio.id)}"` : ''}${liveState ? ` data-air-state="${liveState}"` : ''}>\n`
+      + `          <a href="${escapeHtml(href)}">`
+      + `<span class="seo-radio-card__name">${escapeHtml(name)}</span>`
+      + (place ? `<span class="seo-radio-card__place">${escapeHtml(place)}</span>` : '')
+      + airHtml
+      + '</a>\n        </li>';
+  });
+  return `      <ul class="seo-radio-cards">\n${items.join('\n')}\n      </ul>\n`;
+}
+
 function schedulesHubPage(model, lang, ctx) {
   const t = T[lang];
   const path = ROUTES.schedules[lang];
@@ -802,20 +857,13 @@ function schedulesHubPage(model, lang, ctx) {
   if (!withGrid.length) {
     body += `      <p class="seo-empty">${escapeHtml(t.schedulesEmpty)}</p>\n`;
   } else {
-    body += cardGrid(withGrid.map(({ radio, station }) => {
-      const count = station.grid.length;
-      const slots = `${count} ${count > 1 ? t.slotsCount : t.slotsCountOne}`;
-      const collected = isoDay(station.checkedAt);
-      return {
-        name: radio.fullName || radio.name,
-        meta: [
-          radio.group ? radio.group.short : localizedInstitutionName(radio.institution, lang),
-          slots,
-          collected ? `${t.collectedOn} ${collected}` : '',
-        ].filter(Boolean).join(' · '),
-        href: `${up}${ROUTES.radio[lang](radio.slug)}#horaire`,
-      };
-    }));
+    const latestChecked = withGrid.reduce((max, { station }) => {
+      const stamp = station.checkedAt;
+      if (!stamp) return max;
+      return !max || stamp > max ? stamp : max;
+    }, null);
+    body += scheduleContext(latestChecked, null, t);
+    body += scheduleHubCards(withGrid, t, lang, up);
   }
 
   body += `      <p class="seo-note">${escapeHtml(t.schedulesNote)}</p>\n`;

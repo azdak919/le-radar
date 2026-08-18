@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-18T04:32:28.722Z",
+  "updatedAt": "2026-08-18T06:38:04.478Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T04:32:03.507Z"
+      "checkedAt": "2026-08-18T06:37:41.475Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les sentinelles de l'art (reprise)",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
-      },
-      "next": {
         "title": "Mix Franco",
         "source": "schedule",
         "start": "02:00",
         "end": "03:00",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "À l'horizon",
+        "source": "schedule",
+        "start": "03:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/a-lhorizon"
+      },
       "track": "",
-      "showTitle": "Les sentinelles de l'art (reprise)",
+      "showTitle": "Mix Franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T04:32:05.424Z"
+      "checkedAt": "2026-08-18T06:37:43.716Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Harmony Express",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "Pirate et Libres",
         "source": "api-live",
         "start": "02:00",
         "end": "03:00"
       },
+      "next": {
+        "title": "Attik / Show For Children",
+        "source": "api-live",
+        "start": "03:00",
+        "end": "05:00"
+      },
       "track": "",
-      "showTitle": "Harmony Express",
+      "showTitle": "Pirate et Libres",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T04:32:08.895Z"
+      "checkedAt": "2026-08-18T06:37:46.470Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T04:32:22.954Z"
+      "checkedAt": "2026-08-18T06:38:00.503Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T04:32:23.708Z"
+      "checkedAt": "2026-08-18T06:38:01.162Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Yellow Eyes - The Thought of Death",
+      "track": "Roselle - Fierte",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-18T04:32:28.372Z"
+      "checkedAt": "2026-08-18T06:38:04.127Z"
     }
   }
 }

@@ -4,7 +4,7 @@
 Les densités 1440 / 1600 / 1920 / 2560 / 3440 / 3840 suivent le viewport.
 Téléphone, mid et bureau compact (≤1280) restent les layouts existants.
 
-Lab local seulement : barre Format + témoin `1180` (`?wide=off`).
+Lab local seulement : barre Format (Base + Grand). E s’applique tout seul.
 
 ## Lancer (lab)
 
@@ -19,8 +19,8 @@ Sur **localhost**, la barre flottante en bas propose :
 
 | Rangée | Rôle |
 |--------|------|
-| **Wide** | Off / A / B / C / D / **E** (au-dessus, hors dock) |
-| **Format** | 390 / 430 / 768 / 900 / 1280 / 1600 / 1920 / Plein |
+| **Base** | Plein / 390 / 430 / 768 / 900 / 1280 |
+| **Grand** | 1440 / 1600 / 1920 / 2560 / 3440 / 3840 |
 
 ## Options
 
@@ -39,8 +39,8 @@ Sur **localhost**, la barre flottante en bas propose :
 | Shell | ~1760 | ~1840 |
 | Sources | Rail gauche sticky, pastilles pleine largeur, **Le Radar** en tête | idem, rail un peu plus large |
 | En-tête fil | **Le fil étudiant** + traduction + compteur / MAJ au-dessus du magazine | idem |
-| À la une | Magazine (inchangé dans l’esprit) | idem |
-| En bref | **2 colonnes** de cartes | **3 colonnes** |
+| À la une | Magazine (inchangé dans l’esprit) | 2 unes dès 1920 ; 3 à 3840 |
+| En bref | **1 colonne** jusqu’à 3439 (même rapport une/bref qu’à 1920) | **2 col dès 3440** |
 | Suite du fil | **3 colonnes** | **4 colonnes** |
 | Footer / crédits | Pleine largeur sous le rail (plus de clipping) | idem |
 | Radio | Gelée 1180 | Gelée 1180 |
