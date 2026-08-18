@@ -360,6 +360,15 @@ html[data-wide-preview="e"] {
     overflow: hidden;
   }
 
+  /* CHOQ hors grille : piste scindée — les deux moitiés restent entières
+     (la sous-ligne n'est plus ellipsée à la largeur du titre). */
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot--song-split .tuner-wide-slot__sub {
+    width: max-content;
+    max-width: none;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
   html[data-wide-preview="e"] #tuner-nowair-wide .is-empty-slot {
     opacity: 0.45 !important;
   }
