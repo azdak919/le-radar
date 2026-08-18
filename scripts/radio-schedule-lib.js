@@ -958,9 +958,13 @@ function parseCjloGrid(htmlText) {
 }
 
 /**
- * CHOQ — grille via GraphQL (épisodes planifiés, 14 jours).
+ * CHOQ — grille via GraphQL (épisodes planifiés).
  * Les plages sont des occurrences datées (pas une grille type « chaque jeudi ») :
  * on les projette sur day 0–6 + HH:MM America/Toronto pour resolveCurrentSlot.
+ *
+ * On part du lundi de la semaine QC courante. Un même créneau (jour + début)
+ * n’accepte qu’une émission : Bitume / Faire avec (quinzaine) ne doivent pas
+ * apparaître toutes les deux le lundi 17 h.
  */
 async function fetchChoqGrid(src = {}, deps = {}) {
   const endpoint = src.url || 'https://www.choq.ca/api/graphql';
@@ -1033,11 +1037,14 @@ async function fetchChoqGrid(src = {}, deps = {}) {
   };
 
   const today = ymdInTz(new Date());
+  const todayDow = dayIndexInTz(new Date().toISOString());
+  const daysFromMonday = todayDow === 0 ? 6 : Math.max(0, (todayDow ?? 1) - 1);
+  const weekStart = addDaysYmd(today, -daysFromMonday);
   const grid = [];
   const seen = new Set();
 
   for (let i = 0; i < daysAhead; i++) {
-    const day = addDaysYmd(today, i);
+    const day = addDaysYmd(weekStart, i);
     const next = addDaysYmd(today, i + 1);
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), 15000);
@@ -1077,7 +1084,8 @@ async function fetchChoqGrid(src = {}, deps = {}) {
       const end = hhmmInTz(e.timestamp_end);
       const dow = dayIndexInTz(e.timestamp_start);
       if (start == null || end == null || dow == null) continue;
-      const key = `${dow}|${start}|${end}|${title.toLowerCase()}`;
+      // Occupation du créneau, pas le titre : une quinzaine = un seul show / semaine.
+      const key = `${dow}|${start}`;
       if (seen.has(key)) continue;
       seen.add(key);
       const slot = { day: dow, start, end, title };
@@ -1185,6 +1193,7 @@ module.exports = {
   fetchCismGrid,
   parseCjloGrid,
   parseCjloTimeRange,
+  fetchChoqGrid,
   ADAPTERS,
   sourceLabel,
   runAdapter,

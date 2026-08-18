@@ -104,6 +104,7 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
   // acceptés : un vrai match en cours pendant la CI ne doit pas faire rougir le test.
   const tag = strip.locator('.sports-chip__cta-tag');
   await expect(tag).toContainText(/sports|en cours/i);
+  await expect(strip.locator('.sports-chip__cta-chev')).toHaveCount(0);
   const tagBox = await tag.boundingBox();
   expect(tagBox).toBeTruthy();
   expect(tagBox.width).toBeGreaterThan(30);
@@ -432,4 +433,106 @@ test('CTA sports : titre long défile, jamais d’ellipsis …', async ({ page }
   expect(left1, 'le titre doit glisser (marquee L→R)').toBeLessThan(left0 - 1);
 
   expect(pageErrors).toEqual([]);
+});
+
+test('wide E ≥3440 : 3 CTA sports distinctes', async ({ page }) => {
+  await page.setViewportSize({ width: 3440, height: 1200 });
+  await page.goto('/?wide=e', { waitUntil: 'domcontentloaded' });
+  const strip = page.locator('#masthead-sports-strip');
+  await expect(strip).toBeVisible({ timeout: 8000 });
+  await expect.poll(async () => strip.locator('.sports-chip--cta').count(), { timeout: 8000 })
+    .toBe(3);
+  await expect(strip).toHaveAttribute('data-cta-count', '3');
+  const weatherN = await page.locator('#masthead-weather .masthead-weather__city.is-active').count();
+  const matchN = await strip.locator('.sports-chip--match').count();
+  expect(weatherN, 'météo suit encore les scores (+ bonus 3440)').toBeGreaterThanOrEqual(2 + matchN);
+});
+
+test('wide E : sports + CTA changent en cascade puis se figent', async ({ page }) => {
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  await page.goto('/?wide=e', { waitUntil: 'domcontentloaded' });
+  const strip = page.locator('#masthead-sports-strip');
+  await expect(strip).toBeVisible({ timeout: 8000 });
+  await expect.poll(async () => strip.locator('.sports-chip').count(), { timeout: 8000 })
+    .toBeGreaterThan(2);
+
+  const snapshot = () => strip.locator('.sports-chip').evaluateAll((chips) => chips.map((el) => ({
+    cta: el.classList.contains('sports-chip--cta'),
+    text: (el.innerText || '').replace(/\s+/g, ' ').trim().slice(0, 80),
+  })));
+
+  const start = await snapshot();
+  const armed = await page.evaluate(() => {
+    if (typeof scheduleSportsWave !== 'function') return false;
+    scheduleSportsWave({ fromSlot: 0, firstWait: false });
+    return true;
+  });
+  expect(armed, 'scheduleSportsWave disponible').toBe(true);
+
+  await page.waitForTimeout(Math.min(2600, 560 * Math.max(3, start.length)));
+  const now = await snapshot();
+  expect(now.length).toBe(start.length);
+  const flipped = now.filter((row, i) => row.text !== start[i]?.text).length;
+  expect(flipped, 'plusieurs cartes sports changent pendant la vague').toBeGreaterThan(1);
+  expect(now.some((row) => row.cta), 'la vague inclut encore les cartes CTA').toBe(true);
+});
+
+test('CTA sports : renouvellement carte entière comme les scores', async ({ page }) => {
+  const pageErrors = [];
+  page.on('pageerror', (error) => pageErrors.push(error.message));
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const strip = page.locator('#masthead-sports-strip');
+  await expect(strip).toBeVisible({ timeout: 8000 });
+  const cta = strip.locator('.sports-chip--cta').first();
+  await expect(cta).toBeVisible({ timeout: 8000 });
+
+  const leaveName = await cta.evaluate((el) => {
+    el.classList.add('is-leaving');
+    const name = getComputedStyle(el).animationName;
+    el.classList.remove('is-leaving');
+    return name;
+  });
+  expect(leaveName, 'CSS leave sur la carte CTA').toMatch(/sports-chip-leave/);
+
+  const swap = await page.evaluate(() => {
+    if (typeof rotateSportsSlot !== 'function') return { ok: false };
+    const chips = document.querySelectorAll('#masthead-sports-strip .sports-chip');
+    let slot = -1;
+    chips.forEach((el, i) => {
+      if (slot < 0 && el.classList.contains('sports-chip--cta')) slot = i;
+    });
+    if (slot < 0) return { ok: false };
+    rotateSportsSlot(slot);
+    const old = document.querySelectorAll('#masthead-sports-strip .sports-chip')[slot];
+    return {
+      ok: true,
+      leaving: !!old?.classList.contains('is-leaving'),
+      rolling: !!old?.querySelector('.is-rolling-in, .is-rolling-out'),
+    };
+  });
+  expect(swap.ok, 'rotateSportsSlot joignable').toBe(true);
+  expect(swap.leaving, 'la CTA sort en is-leaving (carte entière)').toBe(true);
+  expect(swap.rolling, 'plus de roulement interne du texte CTA').toBe(false);
+
+  const lamp = await page.evaluate(() => {
+    const tag = document.querySelector('.sports-chip--cta .sports-chip__cta-tag');
+    if (!tag) return { ok: false };
+    const rest = getComputedStyle(tag, '::before');
+    document.documentElement.setAttribute('data-radar-playing', '1');
+    document.querySelector('.tuner')?.classList.add('is-playing');
+    const playing = getComputedStyle(tag, '::before');
+    return {
+      ok: true,
+      rest: String(rest.content || ''),
+      playing: String(playing.content || ''),
+      width: parseFloat(rest.width) || 0,
+      color: String(rest.backgroundColor || ''),
+    };
+  });
+  expect(lamp.ok, 'pastille CTA présente').toBe(true);
+  expect(lamp.rest, 'voyant persistant (content: "")').not.toBe('none');
+  expect(lamp.playing, 'voyant inchangé quand la radio joue').toBe(lamp.rest);
+  expect(lamp.width, 'voyant visible').toBeGreaterThan(4);
+  expect(pageErrors, pageErrors.join('\n')).toEqual([]);
 });

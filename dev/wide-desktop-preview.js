@@ -232,7 +232,7 @@
       filtersCollapsedRows: () => {
         if (!isWideEViewport()) return null;
         const id = currentWide();
-        if (id === 'e') return 99;
+        if (id === 'e') return null;
         if (id === 'c' || id === 'd') return 2;
         return null;
       },

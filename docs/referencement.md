@@ -187,10 +187,10 @@ voie de retour vers le fil principal.
 
 ### Pourquoi le prérendu ne casse rien
 
-`loadNews()` (`app.js`) fait `NEWS_LIST.innerHTML = newsSkeleton(6)` **avant**
-de charger `news.json`. Le bloc prérendu, placé dans `#news-list` entre les
-marqueurs `RADAR:SEO:FEED`, est donc écrasé par le code existant dès que le JS
-tourne. **Aucune modification d'`app.js` n'a été nécessaire.**
+Le bloc prérendu (marqueurs `RADAR:SEO:FEED`) reste dans le HTML pour les
+robots sans JS. Visuellement il est masqué dès le premier paint (squelette
+magazine) jusqu’à `#news-list[data-ready]`, posé par `renderNews()`. Un
+`<noscript>` lève le masque si JavaScript est absent.
 
 Vérifié au banc d'essai : géométrie identique au pixel (mêmes positions, mêmes
 dimensions, hauteur de document identique à 3867 px en bureau et 6929 px en

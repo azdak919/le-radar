@@ -35,6 +35,16 @@ html[data-wide-preview="e"] {
   --wide-gap: 24px;
 }
 }
+@media (min-width: 1440px) {
+  html[data-wide-preview="e"] {
+    --wide-rail: 280px;
+  }
+  /* Accueil · Journaux · Radios · Sports — hub Médias redondant */
+  html[data-wide-preview="e"] .site-sections a[href$="medias/"]:not([href*="#"]),
+  html[data-wide-preview="e"] .site-sections a[href$="medias/"]:not([href*="#"]) + .site-sections__sep {
+    display: none;
+  }
+}
 @media (min-width: 1600px) {
   html[data-wide-preview="e"] {
     --maxw: min(1560px, calc(100vw - 40px));
@@ -80,42 +90,70 @@ html[data-wide-preview="e"] {
    * E radio : largeur utile (dial + dual antenne), pas full shell.
    * Col. 1 plus large pour institution/slogan complets ; dual packé (pas 1fr|1fr).
    */
-  html[data-wide-preview="e"] .tuner-inner {
-    max-width: min(1600px, 100%) !important;
-    width: 100%;
+  /* Grille 1fr|EQ|1fr seulement après le wrap JS (.tuner-wide-left). */
+  html[data-wide-preview="e"] .tuner-inner:has(.tuner-wide-left) {
+    position: relative;
+    overflow: visible !important;
+    display: grid !important;
+    grid-template-columns: 1fr auto 1fr !important;
+    width: 100% !important;
+    max-width: var(--maxw, 1860px) !important;
     margin-left: auto;
     margin-right: auto;
-    grid-template-columns: minmax(520px, 1.35fr) minmax(260px, 0.85fr) !important;
-    column-gap: 14px !important;
+    column-gap: 0 !important;
     align-items: center !important;
     padding-top: 11px !important;
     padding-bottom: 11px !important;
   }
 
-  html[data-wide-preview="e"] .tuner-controls {
+  html[data-wide-preview="e"] .tuner-inner:has(.tuner-wide-left) .tuner-controls {
+    display: contents;
+  }
+
+  html[data-wide-preview="e"] .tuner-wide-left {
+    grid-column: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
     min-width: 0;
-    gap: 8px !important;
   }
 
-  /* Dial : prend l’espace restant des contrôles (pas width:0 prod qui clip) */
+  /* Axe = 4 barres EQ (entre play et mute), pas le play rouge. */
+  html[data-wide-preview="e"] .tuner-inner:has(.tuner-wide-left) .tuner-eq {
+    grid-column: 2;
+    justify-self: center;
+    align-self: center;
+    display: flex !important;
+    margin: 0 10px;
+  }
+
+  html[data-wide-preview="e"] .tuner-wide-right {
+    grid-column: 3;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px;
+    min-width: 0;
+  }
+
+  /* Dial : hug la plus longue ligne (institution / slogan), pas stretch */
   html[data-wide-preview="e"] .tuner-dial {
-    flex: 1 1 auto !important;
-    min-width: 280px !important;
-    width: auto !important;
-    max-width: none !important;
+    flex: 0 0 auto !important;
+    max-width: 100% !important;
   }
 
-  /* Carré dial : hauteur prod, largeur = contenu (JS minWidth) jusqu’au plafond */
+  /* Carré : largeur fixe (JS = plus long poste), ne saute pas au changement */
   html[data-wide-preview="e"] .tuner-now {
     min-height: 42px !important;
     max-height: 42px;
     padding: 3px 22px 3px 11px !important;
     gap: 0 !important;
-    justify-content: center;
+    justify-content: flex-start;
     box-sizing: border-box;
     width: 100%;
     min-width: 0;
-    overflow: hidden; /* radius ; le min-width JS évite le clip texte */
+    overflow: hidden;
   }
 
   /* 3e ligne interdite — l’institution va dans .tuner-now-name (JS) */
@@ -128,9 +166,9 @@ html[data-wide-preview="e"] {
     font-weight: 700;
     line-height: 1.2;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
+    overflow: visible;
+    text-overflow: clip;
+    max-width: none;
   }
 
   html[data-wide-preview="e"] .tuner-now-sub-rotate {
@@ -145,9 +183,9 @@ html[data-wide-preview="e"] {
     font-weight: 500;
     line-height: 1.2;
     white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    max-width: 100% !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    max-width: none !important;
     color: rgba(255, 255, 255, 0.78);
   }
 
@@ -155,8 +193,8 @@ html[data-wide-preview="e"] {
    * Masquer le panneau single #tuner-nowair (CSS critique force display:flex
    * !important sur .tuner-nowair — on gagne par id + plusieurs propriétés).
    */
-  html[data-wide-preview="e"] #tuner-nowair,
-  html[data-wide-preview="e"] #tuner-nowair.tuner-nowair--legacy-slot {
+  html[data-wide-preview="e"] .tuner:has(#tuner-nowair-wide) #tuner-nowair,
+  html[data-wide-preview="e"] .tuner:has(#tuner-nowair-wide) #tuner-nowair.tuner-nowair--legacy-slot {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
@@ -175,24 +213,31 @@ html[data-wide-preview="e"] {
   }
 
   /*
-   * Dual antenne : packé au contenu (pas 1fr|1fr qui étire le vide).
-   * Largeur s’ajuste au texte ; pendant fade le JS peut figer min-width.
+   * CONTRAT dual antenne :
+   *  - les deux slots toujours visibles, packés à gauche
+   *  - 2 lignes : titre (1, largeur = texte) + horaire (1)
+   *  - wide : pas d’ellipse — le slot s’élargit (il y a la place)
+   *  - le titre ne wrappe pas (sinon 3 lignes avec l’horaire)
    */
   html[data-wide-preview="e"] #tuner-nowair-wide {
     display: flex !important;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: flex-start;
-    align-items: center;
-    gap: 6px 12px;
-    grid-column: 2 !important;
-    grid-row: 1 !important;
-    width: 100%;
+    align-items: flex-start;
+    gap: 8px 22px;
+    position: static;
+    transform: none;
+    margin-left: 0;
+    grid-column: auto !important;
+    grid-row: auto !important;
+    flex: 0 1 auto;
+    width: max-content;
     min-width: 0;
-    max-height: 42px;
-    align-self: center;
-    padding-left: 4px;
+    max-width: 100%;
+    padding-left: 0;
     box-sizing: border-box;
+    overflow: visible;
   }
 
   html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot {
@@ -200,19 +245,42 @@ html[data-wide-preview="e"] {
     flex-direction: row !important;
     align-items: flex-start !important;
     gap: 6px !important;
-    flex: 0 1 auto;
-    width: auto;
-    min-width: 0;
-    max-width: min(340px, 52%);
-    max-height: 42px;
+    flex: 0 1 auto !important;
+    width: max-content !important;
+    min-width: 8rem;
+    max-width: none;
+    cursor: pointer;
     margin: 0;
     padding: 0;
     border: 0;
     opacity: 1 !important;
     grid-column: auto !important;
     grid-row: auto !important;
-    /* largeur suit le texte ; transition douce hors fade (évite saut sec) */
-    transition: opacity 220ms ease, min-width 280ms ease;
+    transition: opacity 220ms ease;
+  }
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot--live,
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot--next {
+    flex: 0 1 auto !important;
+    width: max-content !important;
+    max-width: none;
+  }
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot:focus-visible {
+    outline: 2px solid var(--accent, #c9a227);
+    outline-offset: 3px;
+  }
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot:active .tuner-wide-slot__label,
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot:active .tuner-wide-slot__title,
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot.is-pressed .tuner-wide-slot__label,
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot.is-pressed .tuner-wide-slot__title {
+    animation: tuner-wide-slot-pulse 0.48s ease;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot:active .tuner-wide-slot__label,
+    html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot:active .tuner-wide-slot__title,
+    html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot.is-pressed .tuner-wide-slot__label,
+    html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot.is-pressed .tuner-wide-slot__title {
+      animation: none;
+    }
   }
 
   html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot.is-wide-fading {
@@ -233,14 +301,14 @@ html[data-wide-preview="e"] {
   }
 
   html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot__body {
-    flex: 0 1 auto;
+    flex: 1 1 auto;
     min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 0;
-    justify-content: center;
+    justify-content: flex-start;
     width: max-content;
-    max-width: 100%;
+    max-width: none;
   }
 
   html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot--live .tuner-wide-slot__label,
@@ -254,56 +322,61 @@ html[data-wide-preview="e"] {
   }
 
   html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot__title {
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 1.2;
+    font-family: var(--serif);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.22;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
+    overflow: visible;
+    display: block;
+    max-width: none;
+    max-height: 1.22em;
     margin: 0;
     width: max-content;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+    text-overflow: clip;
   }
 
   html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot__sub {
     font-size: 10.5px;
     line-height: 1.2;
+    min-height: 1.26em;
+    height: 1.26em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
     margin: 0;
     opacity: 0.8;
-    width: max-content;
+    width: 100%;
+  }
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot__sub[hidden] {
+    display: block !important;
+    visibility: hidden;
+    min-height: 1.26em;
+    height: 1.26em;
+    overflow: hidden;
   }
 
   html[data-wide-preview="e"] #tuner-nowair-wide .is-empty-slot {
     opacity: 0.45 !important;
   }
-}
 
-@media (min-width: 1680px) {
-  html[data-wide-preview="e"] .tuner-inner {
-    max-width: min(1680px, 100%) !important;
-    grid-template-columns: minmax(560px, 1.4fr) minmax(280px, 0.9fr) !important;
-  }
-  html[data-wide-preview="e"] .tuner-dial {
-    min-width: 320px !important;
-  }
-  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot {
-    max-width: min(380px, 54%);
+  /* Les deux slots restent toujours au plan : jamais masquer « À l'antenne ». */
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot--live[hidden],
+  html[data-wide-preview="e"] #tuner-nowair-wide .tuner-wide-slot--live.is-wide-absent {
+    display: flex !important;
   }
 }
 
-@media (min-width: 1920px) {
-  html[data-wide-preview="e"] .tuner-inner {
-    max-width: min(1760px, 100%) !important;
-    grid-template-columns: minmax(600px, 1.45fr) minmax(300px, 0.9fr) !important;
-  }
-  html[data-wide-preview="e"] .tuner-dial {
-    min-width: 360px !important;
-  }
+@keyframes tuner-wide-slot-pulse {
+  0%, 100% { filter: brightness(1); }
+  40% { filter: brightness(1.45); }
 }
+
+
 
 
 /* ── Shell générique (accueil + pages SEO / hub) ─── */
@@ -420,7 +493,7 @@ html[data-wide-preview="e"] {
    E — Rail sources + contenu (wide ≥1400)
    ═══════════════════════════════════════════════════ */
 @media (min-width: 1400px) {
-  html[data-wide-preview="e"] .wire {
+  html[data-wide-preview="e"] .wire:has(#wide-rail-stack) {
     max-width: var(--maxw);
     width: 100%;
     box-sizing: border-box;
@@ -434,14 +507,12 @@ html[data-wide-preview="e"] {
     padding-left: max(var(--pad), 20px);
     padding-right: max(var(--pad), 20px);
     /*
-     * areas (Wide E) :
-     *  rail | list     ← stack (nav + fil + trad + sources) | magazine
-     *  rail | empty
-     *  .    | foot     ← crédits alignés sur les articles (pas sous le rail)
+     * Suite du fil vit *dans* .news-list (pas une 3e rangée wire) :
+     *  rail | list     ← stack | une + en bref + suite
+     *  .    | foot     ← crédits (pas sous le rail)
      */
     grid-template-areas:
       "rail list"
-      "rail empty"
       ".    foot";
   }
 
@@ -460,15 +531,26 @@ html[data-wide-preview="e"] {
     max-width: var(--wide-rail);
     justify-self: stretch;
     box-sizing: border-box;
-    max-height: calc(100dvh - var(--wide-sticky-top, 76px) - 88px);
+    /* Hauteur = espace sous le rail (haut de page ou sticky), pas 100dvh. */
+    overflow-anchor: none;
+    max-height: calc(100dvh - var(--wide-stack-from-top, var(--wide-sticky-top, 76px)) - var(--wide-rail-bottom, 16px));
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: visible;
     overscroll-behavior: contain;
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin: 0;
-    padding: 0 2px 10px 0;
+    padding: 0 2px 8px 0;
+  }
+
+  /* Ouvert : occupe l’espace restant sous le rail, sans forcer 100dvh
+     (sinon en haut de page le stack explose et la page remonte). */
+  html[data-wide-preview="e"] .wide-rail-stack:has(.filters-panel.is-expanded) {
+    height: auto;
+    max-height: calc(100dvh - var(--wide-stack-from-top, var(--wide-sticky-top, 76px)) - var(--wide-rail-bottom, 16px));
+    overflow-y: hidden;
+    padding-bottom: 8px;
   }
 
   /* Menu pages — dans le rail, compact, wrap si besoin */
@@ -493,7 +575,7 @@ html[data-wide-preview="e"] {
     white-space: nowrap;
   }
 
-  /* « Le fil étudiant » + traduction — colonne étroite, empilés */
+  /* « Le fil étudiant » + traduction sur une rangée (module à droite) */
   html[data-wide-preview="e"] .wide-rail-stack .wire-head {
     grid-area: unset;
     margin: 0;
@@ -510,19 +592,33 @@ html[data-wide-preview="e"] {
   }
   html[data-wide-preview="e"] .wide-rail-stack .wire-title-group {
     display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
     min-width: 0;
   }
   html[data-wide-preview="e"] .wide-rail-stack .wire-title {
     margin: 0;
-    font-size: clamp(1.05rem, 0.4vw + 0.95rem, 1.25rem);
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 1.05rem;
     line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   html[data-wide-preview="e"] .wide-rail-stack .translate-control {
-    align-self: flex-start;
-    max-width: 100%;
+    flex: 0 0 auto;
+    align-self: center;
+    max-width: none;
+  }
+  html[data-wide-preview="e"] .wide-rail-stack .translate-toggle {
+    padding: 4px 8px 5px 6px;
+    gap: 4px;
+    max-width: none;
+    font-size: 11px;
   }
   html[data-wide-preview="e"] .wide-rail-stack .wire-status {
     margin: 0;
@@ -531,8 +627,11 @@ html[data-wide-preview="e"] {
   }
 
   /* Sources — suite du stack (plus sticky seul : le parent l’est) */
-  html[data-wide-preview="e"] .wide-rail-stack .filters-panel,
-  html[data-wide-preview="e"] .filters-panel {
+  html[data-wide-preview="e"] .wide-rail-stack .filters-panel.is-expanded {
+    flex: 1 1 auto;
+  }
+
+  html[data-wide-preview="e"] .wide-rail-stack .filters-panel {
     grid-area: unset;
     position: static;
     top: auto;
@@ -545,28 +644,120 @@ html[data-wide-preview="e"] {
     overflow: visible;
     margin: 0;
     padding: 0;
-    flex: 1 1 auto;
-    /* Force 1 col + toutes les rangées (priorité sur inline app.js) */
+    flex: 0 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    /* 1 col ; peek = nom de la source suivante en verre dépoli (JS). */
     --filters-cols: 1 !important;
-    --filters-collapsed-rows: 99 !important;
-    --filters-collapsed-h: none;
-    --filters-peek: 0px;
+    position: relative;
+    overflow: hidden;
   }
 
-  html[data-wide-preview="e"] .filters-panel:not(.is-expanded):not(.is-compact) .filters,
-  html[data-wide-preview="e"] .filters-panel.is-expanded .filters,
-  html[data-wide-preview="e"] .filters-panel .filters {
-    max-height: none !important;
-    overflow: visible !important;
+  html[data-wide-preview="e"] .wide-rail-stack .filters-panel .filters {
+    min-height: 0;
   }
 
-  html[data-wide-preview="e"] .filters-panel.has-overflow::after,
-  html[data-wide-preview="e"] .filters-panel .filters-toggle,
-  html[data-wide-preview="e"] .filters-panel .filters-compact {
+  html[data-wide-preview="e"] .wide-rail-stack .filters-panel:not(.is-expanded):not(.is-compact) .filters {
+    flex: 0 1 auto;
+    max-height: calc(var(--filters-collapsed-h) + var(--filters-peek)) !important;
+    overflow: hidden !important;
+  }
+
+  /* Ouvert : hauteur bornée + scroll interne (page magazine reste en place). */
+  html[data-wide-preview="e"] .wide-rail-stack .filters-panel.is-expanded .filters {
+    flex: 1 1 auto;
+    min-height: 0 !important;
+    max-height: var(--filters-rail-avail, calc(100dvh - 220px)) !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    scrollbar-gutter: auto;
+    padding-right: 0;
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--ink-soft, #9aa) 55%, transparent)
+      color-mix(in srgb, var(--bg-soft, #1a1a1a) 80%, #000 20%);
+  }
+  /* Loupe / flèche : le plus à droite/gauche possible, entier dans le cadre. */
+  html[data-wide-preview="e"] .page-tools {
+    left: 0;
+    right: 0;
+    --tools-side-right: max(20px, env(safe-area-inset-right, 0px));
+    --tools-side-left: max(20px, env(safe-area-inset-left, 0px));
+  }
+
+  html[data-wide-preview="e"] .wide-rail-stack .filters-panel.is-expanded .filters::-webkit-scrollbar {
+    width: 10px;
+  }
+  html[data-wide-preview="e"] .wide-rail-stack .filters-panel.is-expanded .filters::-webkit-scrollbar-track {
+    background: color-mix(in srgb, var(--bg-soft, #1c1c1c) 70%, #000 30%);
+    border-radius: 999px;
+    margin: 4px 0;
+    border: 1px solid color-mix(in srgb, var(--rule, #333) 70%, transparent);
+  }
+  html[data-wide-preview="e"] .wide-rail-stack .filters-panel.is-expanded .filters::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--ink-soft, #aaa) 45%, transparent);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  html[data-wide-preview="e"] .wide-rail-stack .filters-panel.is-expanded .filters::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--ink-soft, #ccc) 70%, transparent);
+    background-clip: padding-box;
+  }
+  html[data-wide-preview="e"] .wide-rail-stack .filters-panel.is-expanded .filter-btn {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  html[data-wide-preview="e"] .wide-rail-stack .filters-panel.has-overflow:not(.is-expanded):not(.is-compact)::after {
+    /* Fondu page, pas un halo blanc/rose : le nom reste lisible. */
+    top: var(--filters-collapsed-h);
+    height: var(--filters-peek);
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      color-mix(in srgb, var(--bg) 25%, transparent) 55%,
+      color-mix(in srgb, var(--bg) 78%, transparent) 100%
+    );
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 45%, #000 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 45%, #000 100%);
+  }
+
+  html[data-wide-preview="e"] .wide-rail-stack .filters-panel .filters-toggle {
+    display: flex !important;
+    flex: 0 0 auto;
+    align-self: center;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 8px;
+    margin-bottom: 0;
+    margin-inline: 0;
+    position: relative;
+    z-index: 6;
+    isolation: isolate;
+    pointer-events: auto;
+    overflow-anchor: none;
+    background: var(--bg-soft);
+  }
+  html[data-wide-preview="e"] .wide-rail-stack .filters-panel.is-expanded .filters-toggle {
+    /* Même boîte que les pastilles (plus de retrait scrollbar). */
+    width: 100%;
+    max-width: 100%;
+    margin-inline: 0;
+  }
+  html[data-wide-preview="e"] .wide-rail-stack .filters-panel:not(.has-overflow) .filters-toggle {
+    display: none !important;
+  }
+  html[data-wide-preview="e"] .wide-rail-stack .filters-panel .filters-compact {
     display: none !important;
   }
 
-  html[data-wide-preview="e"] .filters {
+  html[data-wide-preview="e"] .wide-rail-stack .filters {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -579,7 +770,7 @@ html[data-wide-preview="e"] {
   }
 
   /* Pastilles pleine largeur du rail — plus de flex-basis multi-col */
-  html[data-wide-preview="e"] .filters .filter-btn {
+  html[data-wide-preview="e"] .wide-rail-stack .filters .filter-btn {
     flex: 0 0 auto !important;
     flex-grow: 0 !important;
     flex-shrink: 0 !important;
@@ -593,18 +784,18 @@ html[data-wide-preview="e"] {
     margin-right: 0 !important;
   }
 
-  /* « Le Radar — toutes les sources » toujours en tête, collé en haut du rail */
-  html[data-wide-preview="e"] .filters .filter-btn--all {
-    position: sticky;
-    top: 0;
-    z-index: 3;
+  /* « Le Radar » reste en tête de liste, mais défile avec les autres pastilles. */
+  html[data-wide-preview="e"] .wide-rail-stack .filters .filter-btn--all {
+    position: static;
+    top: auto;
+    z-index: auto;
     order: -1;
     background: var(--bg-soft, var(--bg));
-    box-shadow: 0 8px 12px -8px rgba(0, 0, 0, 0.45);
+    box-shadow: none;
   }
 
-  html[data-wide-preview="e"] .filters .filter-btn__name,
-  html[data-wide-preview="e"] .filters .filter-btn__inst {
+  html[data-wide-preview="e"] .wide-rail-stack .filters .filter-btn__name,
+  html[data-wide-preview="e"] .wide-rail-stack .filters .filter-btn__inst {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -612,12 +803,39 @@ html[data-wide-preview="e"] {
   }
 
   /* ── Magazine (à la une + en bref) ── */
-  html[data-wide-preview="e"] .news-list {
+  /* SEO prerendu = liste plate : ne pas appliquer la grille magazine. */
+  html[data-wide-preview="e"] .news-list:not(:has(> .news-hero)) {
+    display: block;
+    grid-template-columns: none;
+  }
+
+  html[data-wide-preview="e"] .news-list:has(> .news-hero) {
+    display: grid;
     grid-area: list;
     min-width: 0;
     width: 100%;
+    max-width: 100%;
+    justify-self: stretch;
+    align-content: start;
+    grid-auto-flow: row;
+    grid-auto-columns: minmax(0, 0px);
     /* Une un peu moins étirée ; En bref prend sa place */
-    grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+    grid-template-columns: minmax(280px, 1.15fr) minmax(220px, 0.85fr);
+    grid-template-rows: auto auto;
+  }
+  /* Un seul filet : celui du footer. Sinon bande vide sous « Plus d'articles ». */
+  html[data-wide-preview="e"] .news-list:has(.news-tail-toggle) {
+    border-bottom: none;
+  }
+  html[data-wide-preview="e"] .news-list > .news-hero {
+    grid-column: 1;
+    grid-row: 1;
+    min-width: 0;
+  }
+  html[data-wide-preview="e"] .news-list > .brief-rail {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
   }
 
   html[data-wide-preview="e"] .news-hero {
@@ -646,8 +864,17 @@ html[data-wide-preview="e"] {
 
   html[data-wide-preview="e"] .brief-rail .article--compact {
     min-width: 0;
-    padding-left: 0;
+    /* Gouttière pour le filet couleur (::before) — pas sur la vignette. */
+    padding-left: 10px;
     padding-right: 0;
+  }
+  html[data-wide-preview="e"] .brief-rail .article--compact::before {
+    left: 0;
+  }
+  /* Multi-col : le translate hover ferait chevaucher le filet sur la carte voisine. */
+  html[data-wide-preview="e"] .brief-rail .article:hover,
+  html[data-wide-preview="e"] .news-hero .article:hover {
+    transform: none;
   }
 
   /* Spacer d’équilibre (ne plus masquer — sinon vide bas + fill cassé) */
@@ -668,31 +895,46 @@ html[data-wide-preview="e"] {
     column-gap: 24px;
   }
 
-  html[data-wide-preview="e"] .news-empty {
-    grid-area: empty;
+  html[data-wide-preview="e"] .news-empty,
+  html[data-wide-preview="e"] .news-list > .news-tail {
+    grid-area: auto;
+    grid-column: 1 / -1;
+    grid-row: 2;
     min-width: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  html[data-wide-preview="e"] .news-tail-body > .article--standard:last-child {
+    border-bottom: none;
+  }
+
+  html[data-wide-preview="e"] .news-tail.has-overflow .news-tail-toggle {
+    margin-bottom: 0;
   }
 
   /*
-   * Footer / crédits : colonne contenu seulement (aligné au début des articles).
-   * La colonne rail sources reste vide en bas.
+   * Footer accueil seulement : colonne contenu (pas sous le rail).
+   * Ne pas appliquer aux fiches SEO — elles n’ont pas cette grille.
+   * Marge courte : le filet du footer suffit ; 36px + border-bottom
+   * de .news-list créait une rangée vide sous « Plus d'articles ».
    */
-  html[data-wide-preview="e"] .site-foot {
+  html[data-wide-preview="e"] .wire:has(#wide-rail-stack) .site-foot {
     grid-area: foot;
     width: 100%;
     max-width: none;
     min-width: 0;
     box-sizing: border-box;
-    margin-top: 36px;
-    padding-top: 20px;
+    margin-top: 8px;
+    padding-top: 16px;
     padding-left: 0;
     padding-right: 0;
     justify-self: stretch;
   }
 
-  html[data-wide-preview="e"] .site-foot__credit,
-  html[data-wide-preview="e"] .site-foot__links,
-  html[data-wide-preview="e"] .site-foot__brand {
+  html[data-wide-preview="e"] .wire:has(#wide-rail-stack) .site-foot__credit,
+  html[data-wide-preview="e"] .wire:has(#wide-rail-stack) .site-foot__links,
+  html[data-wide-preview="e"] .wire:has(#wide-rail-stack) .site-foot__brand {
     max-width: 100%;
   }
 
@@ -705,8 +947,9 @@ html[data-wide-preview="e"] {
 
 /*
  * À la une en 2 col (wide) :
- *  - 2 unes côte à côte (data-leads="2") dès ≥1600
- *  - vedettes en 2 colonnes
+ *  - 1 une à 1600 (comme prod)
+ *  - 2 unes côte à côte dès ≥1920
+ *  - vedettes 2 col dès 1920, 3 col à 3840
  *  - spacer pleine largeur pour l’équilibre magazine
  */
 @media (min-width: 1281px) {
@@ -715,35 +958,60 @@ html[data-wide-preview="e"] .news-hero-spacer {
 }
 }
 
-/* ── E ≥1600 : 2 unes + vedettes 2 col ; En bref 1–2 col ── */
+/* ── E ≥1600 : 1 une (pleine piste) + En bref 1 col ── */
 @media (min-width: 1600px) {
-  html[data-wide-preview="e"] .news-list {
-    grid-template-columns: minmax(0, 1.2fr) minmax(340px, 0.9fr);
+  html[data-wide-preview="e"] .news-list:has(> .news-hero) {
+    grid-template-columns: minmax(360px, 1.2fr) minmax(280px, 0.9fr);
+  }
+
+  html[data-wide-preview="e"] .news-hero {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    padding-right: 20px;
+  }
+
+  html[data-wide-preview="e"] .news-hero .article--lead,
+  html[data-wide-preview="e"] .news-hero .article--feature {
+    min-width: 0;
+    padding-right: 0;
+  }
+}
+
+/* ── E ≥1920 : 2 unes + vedettes 2 col + En bref 2 col ── */
+@media (min-width: 1920px) {
+  html[data-wide-preview="e"] .news-list:has(> .news-hero) {
+    grid-template-columns: minmax(420px, 1.2fr) minmax(300px, 0.95fr);
   }
 
   html[data-wide-preview="e"] .news-hero {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: 18px;
+    column-gap: 20px;
     row-gap: 0;
     align-content: start;
     height: auto;
-    padding-right: 20px;
+    padding-right: 24px;
   }
 
-  /* Deux unes côte à côte — plus de lead full-bleed */
   html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead {
     grid-column: auto;
     min-width: 0;
   }
-  /* Une seule une (fallback) : pleine largeur */
-  html[data-wide-preview="e"] .news-hero:not([data-leads="2"]) .article--lead {
+  /* Un seul « À la une » visible ; l’espace reste pour aligner les titres */
+  html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead ~ .article--lead .article-eyebrow {
+    visibility: hidden;
+  }
+  html[data-wide-preview="e"] .news-hero:not([data-leads="2"]):not([data-leads="3"]) .article--lead {
     grid-column: 1 / -1;
   }
 
-  /* Unes duales : image un cran plus compacte pour tenir en 2 col */
   html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead.has-image .article-media {
-    max-height: min(280px, 32vh);
+    max-height: none;
+  }
+  html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead.has-image .article-media img {
+    aspect-ratio: 3 / 2;
+    max-height: none;
   }
   html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead .article-title {
     font-size: clamp(1.25rem, 1.1vw + 0.55rem, 1.65rem);
@@ -754,24 +1022,9 @@ html[data-wide-preview="e"] .news-hero-spacer {
   }
 
   html[data-wide-preview="e"] .news-hero .article--feature {
+    grid-column: auto;
     min-width: 0;
     padding-right: 0;
-  }
-}
-
-/* ── E ≥1920 : En bref 2 col + unes duales confortables ── */
-@media (min-width: 1920px) {
-  html[data-wide-preview="e"] .news-list {
-    grid-template-columns: minmax(0, 1.2fr) minmax(380px, 0.95fr);
-  }
-
-  html[data-wide-preview="e"] .news-hero {
-    column-gap: 20px;
-    padding-right: 24px;
-  }
-
-  html[data-wide-preview="e"] .news-hero[data-leads="2"] .article--lead.has-image .article-media {
-    max-height: min(320px, 34vh);
   }
 
   html[data-wide-preview="e"] .brief-rail {
@@ -785,10 +1038,10 @@ html[data-wide-preview="e"] .news-hero-spacer {
   }
 }
 
-/* ── E ≥2560 : une 2 col + En bref 3 col ; pistes plus équilibrées ── */
+/* ── E ≥2560 : une 2 col + En bref 2 col (plus d’air par carte) ── */
 @media (min-width: 2560px) {
-  html[data-wide-preview="e"] .news-list {
-    grid-template-columns: minmax(0, 1.15fr) minmax(480px, 1fr);
+  html[data-wide-preview="e"] .news-list:has(> .news-hero) {
+    grid-template-columns: minmax(480px, 1.15fr) minmax(400px, 1fr);
   }
 
   html[data-wide-preview="e"] .news-hero {
@@ -796,8 +1049,8 @@ html[data-wide-preview="e"] .news-hero-spacer {
   }
 
   html[data-wide-preview="e"] .brief-rail {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: 16px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 18px;
   }
 
   html[data-wide-preview="e"] .news-tail-body {
@@ -805,34 +1058,69 @@ html[data-wide-preview="e"] .news-hero-spacer {
     column-gap: 22px;
   }
 
-  html[data-wide-preview="e"] .wire {
+  html[data-wide-preview="e"] .wire:has(#wide-rail-stack) {
     grid-template-columns: minmax(240px, var(--wide-rail)) minmax(0, 1fr);
   }
 }
 
-/* ── E ≥3840 : une 2 col (plus d’air) + En bref 4 col ── */
+/* ── E ≥3440 : En bref 3 col ── */
+@media (min-width: 3440px) {
+  html[data-wide-preview="e"] .brief-rail {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 16px;
+  }
+}
+
+/* ── E ≥3840 : 3 unes + 6 vedettes (3 col) ; En bref reste 2 col ── */
 @media (min-width: 3840px) {
-  html[data-wide-preview="e"] .news-list {
-    /* une reste lisible en 2 col ; En bref domine en largeur utile */
-    grid-template-columns: minmax(0, 1.1fr) minmax(640px, 1.15fr);
+  html[data-wide-preview="e"] .news-list:has(> .news-hero) {
+    grid-template-columns: minmax(720px, 1.45fr) minmax(340px, 0.8fr);
   }
 
   html[data-wide-preview="e"] .news-hero {
-    column-gap: 28px;
+    column-gap: 24px;
   }
 
-  /* Titres vedettes un cran plus confortables en double col large */
+  html[data-wide-preview="e"] .news-hero[data-leads="3"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  html[data-wide-preview="e"] .news-hero[data-leads="3"] .article--lead {
+    grid-column: auto;
+    min-width: 0;
+  }
+  html[data-wide-preview="e"] .news-hero[data-leads="3"] .article--feature {
+    grid-column: auto;
+    min-width: 0;
+  }
+  html[data-wide-preview="e"] .news-hero[data-leads="3"] .article--lead ~ .article--lead .article-eyebrow {
+    visibility: hidden;
+  }
+  html[data-wide-preview="e"] .news-hero[data-leads="3"] .article--lead.has-image .article-media {
+    max-height: none;
+  }
+  html[data-wide-preview="e"] .news-hero[data-leads="3"] .article--lead.has-image .article-media img {
+    aspect-ratio: 3 / 2;
+    max-height: none;
+  }
+  html[data-wide-preview="e"] .news-hero[data-leads="3"] .article--lead .article-title {
+    font-size: clamp(1.15rem, 0.85vw + 0.5rem, 1.5rem);
+  }
+  html[data-wide-preview="e"] .news-hero[data-leads="3"] .article--lead .article-brief {
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+  }
+
   html[data-wide-preview="e"] .news-hero .article--feature .article-title {
     font-size: clamp(1.15rem, 0.9vw + 0.55rem, 1.4rem);
   }
 
   html[data-wide-preview="e"] .brief-rail {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     column-gap: 18px;
   }
 
   html[data-wide-preview="e"] .news-tail-body {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     column-gap: 24px;
   }
 }
@@ -851,24 +1139,172 @@ html[data-wide-preview="e"] .news-hero-spacer {
     padding-right: max(var(--pad), 20px);
   }
 
-  html[data-wide-preview="e"] .seo-wire .site-foot,
-  html[data-wide-preview="e"] .feeds-wire .site-foot {
+  /* Listes d’entités : cartes bornées, pas 1fr géant */
+  html[data-wide-preview="e"] .seo-cards {
     max-width: 100%;
-  }
-
-  /* Grilles médias / listes fréquentes */
-  html[data-wide-preview="e"] .seo-grid,
-  html[data-wide-preview="e"] .medias-grid,
-  html[data-wide-preview="e"] .feeds-panel,
-  html[data-wide-preview="e"] .directory-grid {
-    max-width: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 18rem));
+    justify-content: start;
   }
 }
 
-@media (min-width: 1680px) {
-  html[data-wide-preview="e"] .seo-grid,
-  html[data-wide-preview="e"] .directory-grid {
-    /* densifier si la page définit déjà une grille */
+/* ═══════════════════════════════════════════════════
+   Fiches SEO / hub — faits packés + footer en 3 colonnes
+   ═══════════════════════════════════════════════════ */
+@media (min-width: 1281px) {
+  html[data-wide-preview="e"] .seo-facts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 10px 36px;
+    width: max-content;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  html[data-wide-preview="e"] .seo-fact {
+    flex: 0 1 auto;
+    min-width: 8.5rem;
+    max-width: 17.5rem;
+    padding-block: 4px;
+  }
+  html[data-wide-preview="e"] .seo-lead,
+  html[data-wide-preview="e"] .seo-headlines {
+    max-width: 72ch;
+  }
+
+  html[data-wide-preview="e"] .seo-wire + .site-foot,
+  html[data-wide-preview="e"] .feeds-wire + .site-foot,
+  html[data-wide-preview="e"] .feeds-wire .site-foot {
+    max-width: var(--maxw);
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: max(var(--pad), 20px);
+    padding-bottom: 48px;
+    box-sizing: border-box;
+  }
+}
+
+/*
+ * Toutes les pages : 2 colonnes (marque + liens | crédits).
+ * Les liens restent en ligne avec des · — pas une pile centrée.
+ */
+@media (min-width: 1440px) {
+  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance) {
+    display: grid;
+    grid-template-columns: minmax(22rem, 1.45fr) minmax(16rem, 0.85fr);
+    grid-template-areas:
+      "brand credit"
+      "note  credit"
+      "links credit"
+      "lic   credit"
+      "meta  meta";
+    column-gap: clamp(32px, 4vw, 80px);
+    row-gap: 8px;
+    align-items: start;
+    padding-bottom: max(56px, env(safe-area-inset-bottom, 0px));
+  }
+  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance) .site-foot__brand {
+    grid-area: brand;
+    margin-bottom: 0;
+  }
+  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance) > p:nth-of-type(1) {
+    grid-area: note;
+    margin-bottom: 0;
+    max-width: 46em;
+  }
+  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance) > p:nth-of-type(2) {
+    grid-area: lic;
+    margin-bottom: 0;
+    max-width: 46em;
+  }
+  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance) .site-foot__links {
+    grid-area: links;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 4px 8px;
+    margin-bottom: 0;
+    max-width: 46em;
+  }
+  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance) .site-foot__sep {
+    display: inline;
+  }
+  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance) .site-foot__credit {
+    grid-area: credit;
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance) .seo-foot-meta {
+    grid-area: meta;
+    margin-top: 10px;
+  }
+}
+
+/*
+ * Horaires : jamais 7 jours trop étroits.
+ * Une journée lisible ≈ 320–360 px (heure 92 + titre sans wrap forcé).
+ * 1440 → 4 · 1920 → 5 · 2560+ → 7 (la semaine tient).
+ */
+@media (min-width: 1281px) {
+  html[data-wide-preview="e"] .seo-schedule {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+  }
+}
+@media (min-width: 1440px) {
+  html[data-wide-preview="e"] .seo-schedule {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1920px) {
+  html[data-wide-preview="e"] .seo-schedule {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 18px;
+  }
+}
+@media (min-width: 2560px) {
+  html[data-wide-preview="e"] .seo-schedule {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 18px;
+  }
+}
+@media (min-width: 3440px) {
+  html[data-wide-preview="e"] .seo-schedule {
+    gap: 22px;
+  }
+}
+
+/*
+ * Sports : même plancher que les horaires — pas 6–7 cartes maigres à 1920.
+ * auto-fill + min 360–400 px selon la largeur.
+ */
+@media (min-width: 1281px) {
+  html[data-wide-preview="e"] .sports-board {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+  }
+}
+@media (min-width: 1440px) {
+  html[data-wide-preview="e"] .sports-board {
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  }
+}
+@media (min-width: 1920px) {
+  html[data-wide-preview="e"] .sports-board {
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 18px;
+  }
+}
+@media (min-width: 2560px) {
+  html[data-wide-preview="e"] .sports-board {
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  }
+}
+@media (min-width: 3440px) {
+  html[data-wide-preview="e"] .sports-board {
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 22px;
   }
 }
 
@@ -884,11 +1320,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
 
   /* Interdit tout défilement de texte (scores + CTA) */
   html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner,
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__cta-text,
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub-text,
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__cta-sub-text,
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-text,
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-sub-text {
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub-text {
     animation: none !important;
     transform: none !important;
     max-width: 100% !important;
@@ -912,53 +1344,8 @@ html[data-wide-preview="e"] .news-hero-spacer {
   }
 }
 
-/* ═══════════════════════════════════════════════════
-   Wide / super-wide — slogan wordmark sur UNE ligne
-   (prod bureau = 2 lignes lead / tag ; large écran = une seule)
-   ═══════════════════════════════════════════════════ */
-@media (min-width: 1281px) {
-  html[data-wide-preview="b"] .wordmark-full,
-  html[data-wide-preview="c"] .wordmark-full,
-  html[data-wide-preview="d"] .wordmark-full,
-  html[data-wide-preview="e"] .wordmark-full,
-  html[data-wide-preview="b"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full,
-  html[data-wide-preview="c"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full,
-  html[data-wide-preview="d"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full,
-  html[data-wide-preview="e"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full {
-    display: inline-flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: center;
-    gap: 0.35em;
-    max-width: none;
-    width: max-content;
-    white-space: nowrap;
-    overflow-wrap: normal;
-    word-break: normal;
-  }
-
-  html[data-wide-preview="b"] .wordmark-full__lead,
-  html[data-wide-preview="c"] .wordmark-full__lead,
-  html[data-wide-preview="d"] .wordmark-full__lead,
-  html[data-wide-preview="e"] .wordmark-full__lead,
-  html[data-wide-preview="b"] .wordmark-full__tag,
-  html[data-wide-preview="c"] .wordmark-full__tag,
-  html[data-wide-preview="d"] .wordmark-full__tag,
-  html[data-wide-preview="e"] .wordmark-full__tag,
-  html[data-wide-preview="b"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full__lead,
-  html[data-wide-preview="c"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full__lead,
-  html[data-wide-preview="d"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full__lead,
-  html[data-wide-preview="e"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full__lead,
-  html[data-wide-preview="b"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full__tag,
-  html[data-wide-preview="c"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full__tag,
-  html[data-wide-preview="d"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full__tag,
-  html[data-wide-preview="e"] .masthead:has(#bg-photo-layer.loaded) .wordmark-full__tag {
-    display: inline;
-    white-space: nowrap;
-    max-width: none;
-  }
-}
+/* Slogan 1 ligne ≥1280 : désormais dans style.css / style-masthead.css
+   (prod + lab, plus seulement data-wide-preview). */
 
 
 
@@ -1024,10 +1411,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
   html[data-wide-preview="e"] .masthead-weather__city.is-compact .masthead-weather__name-compact {
     display: none !important;
   }
-  html[data-wide-preview="e"] .masthead-weather__city.is-overflowing .masthead-weather__name-text {
-    animation: none !important;
-    transform: none !important;
-  }
+  /* Wide E : le défilement météo est géré dès 1440 (ci-dessous). */
 
   /* Sports : parts égales stables — CTA centrée (JS dataset.cta-layout=center) */
   html[data-wide-preview="e"] .masthead-sports-strip {
@@ -1092,8 +1476,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
 
   html[data-wide-preview="b"] .masthead-weather__city.is-overflowing .masthead-weather__name-text,
   html[data-wide-preview="c"] .masthead-weather__city.is-overflowing .masthead-weather__name-text,
-  html[data-wide-preview="d"] .masthead-weather__city.is-overflowing .masthead-weather__name-text,
-  html[data-wide-preview="e"] .masthead-weather__city.is-overflowing .masthead-weather__name-text {
+  html[data-wide-preview="d"] .masthead-weather__city.is-overflowing .masthead-weather__name-text {
     animation: none !important;
     transform: none !important;
     max-width: 100% !important;
@@ -1139,26 +1522,158 @@ html[data-wide-preview="e"] .news-hero-spacer {
   }
 }
 
-/* ── Badge lab ───────────────────────────────────── */
-#wide-desktop-badge {
-  position: fixed;
-  z-index: 9999;
-  top: max(10px, env(safe-area-inset-top));
-  right: max(10px, env(safe-area-inset-right));
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(18, 20, 24, 0.92);
-  color: #e8eaed;
-  font: 600 11px/1.2 system-ui, sans-serif;
-  letter-spacing: 0.02em;
-  pointer-events: none;
-  box-shadow: 0 8px 28px -10px rgba(0, 0, 0, 0.5);
+/* ═══════════════════════════════════════════════════
+   ≥1440 : noms complets (météo + sports). Pas d’ellipsis.
+   Secondaires météo = largeur du plus long nom (sauf MTL/QC).
+   CTA sports = gabarit 900/1280 ; scores égaux, −1 carte si trop long.
+   ═══════════════════════════════════════════════════ */
+@media (min-width: 1440px) {
+  html[data-wide-preview="e"] .masthead-weather__board {
+    display: flex !important;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: stretch;
+    width: auto;
+    max-width: 100%;
+    margin-inline: auto;
+    grid-template-columns: none !important;
+    overflow: hidden;
+  }
+  html[data-wide-preview="e"] .masthead-weather__city.is-active[data-weather-city="montreal"],
+  html[data-wide-preview="e"] .masthead-weather__city.is-active[data-weather-city="quebec"] {
+    flex: 0 0 var(--weather-primary-w, max-content) !important;
+    flex-shrink: 0 !important;
+    width: var(--weather-primary-w, max-content) !important;
+    min-width: var(--weather-primary-w, max-content) !important;
+    max-width: none !important;
+  }
+  html[data-wide-preview="e"] .masthead-weather__city.is-active {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  html[data-wide-preview="e"] .masthead-weather__city.is-active:not([data-weather-city="montreal"]):not([data-weather-city="quebec"]) {
+    flex: 0 0 var(--weather-secondary-w, 11.5rem) !important;
+    width: var(--weather-secondary-w, 11.5rem) !important;
+    min-width: var(--weather-secondary-w, 11.5rem) !important;
+    max-width: var(--weather-secondary-w, 11.5rem) !important;
+  }
+  /* Nom (gauche, peut défiler) + température toujours visible à droite. */
+  html[data-wide-preview="e"] .masthead-weather__name {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    max-width: none !important;
+  }
+  html[data-wide-preview="e"] .masthead-weather__name-text {
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: clip;
+  }
+  html[data-wide-preview="e"] .masthead-weather__city.is-overflowing .masthead-weather__name-text {
+    display: inline-block !important;
+    max-width: none !important;
+    overflow: visible !important;
+    animation: weather-name-scroll 5.5s ease-in-out 0.8s 2 alternate both !important;
+    transform: unset;
+  }
+  html[data-wide-preview="e"] .masthead-weather__temp {
+    flex: 0 0 auto !important;
+    margin-left: 6px !important;
+  }
 }
 
-#wide-desktop-badge[data-wide="off"],
-#wide-desktop-badge:not([data-wide]) {
-  display: none;
+@media (min-width: 1920px) {
+  html[data-wide-preview="e"] .masthead-weather__city.is-active,
+  html[data-wide-preview="e"] .masthead-weather__city.is-active[data-weather-city="montreal"],
+  html[data-wide-preview="e"] .masthead-weather__city.is-active[data-weather-city="quebec"] {
+    flex: 0 0 var(--weather-slot-w, var(--weather-secondary-w, 11.5rem)) !important;
+    width: var(--weather-slot-w, var(--weather-secondary-w, 11.5rem)) !important;
+    min-width: var(--weather-slot-w, var(--weather-secondary-w, 11.5rem)) !important;
+    max-width: var(--weather-slot-w, var(--weather-secondary-w, 11.5rem)) !important;
+  }
+}
+
+/* ≥2560 : +1 carte → slots un cran plus serrés, toujours uniformes. */
+@media (min-width: 2560px) {
+  html[data-wide-preview="e"] .masthead-weather__board {
+    gap: 5px;
+  }
+  html[data-wide-preview="e"] .masthead-weather__board[data-weather-count="6"],
+  html[data-wide-preview="e"] .masthead-weather__board[data-weather-count="7"],
+  html[data-wide-preview="e"] .masthead-weather__board[data-weather-count="8"] {
+    --weather-grid: repeat(auto-fit, minmax(152px, 1fr));
+  }
+  html[data-wide-preview="e"] .masthead-weather__city.is-active,
+  html[data-wide-preview="e"] .masthead-weather__city.is-active[data-weather-city="montreal"],
+  html[data-wide-preview="e"] .masthead-weather__city.is-active[data-weather-city="quebec"] {
+    flex: 0 0 var(--weather-slot-w, var(--weather-secondary-w, 10.5rem)) !important;
+    width: var(--weather-slot-w, var(--weather-secondary-w, 10.5rem)) !important;
+    min-width: var(--weather-slot-w, var(--weather-secondary-w, 10.5rem)) !important;
+    max-width: var(--weather-slot-w, var(--weather-secondary-w, 10.5rem)) !important;
+  }
+}
+
+@media (min-width: 1440px) {
+  /* CTA = gabarit mesuré à 1280 prod (3 chips, ~424×45). */
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-cta-layout="center"] .sports-chip--cta,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="1"] .sports-chip--cta,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="2"] > .sports-chip--cta,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="3"] .sports-chip--cta,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="4"] .sports-chip--cta,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="5"] .sports-chip--cta,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="6"] .sports-chip--cta,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="7"] .sports-chip--cta,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="8"] .sports-chip--cta,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="9"] .sports-chip--cta {
+    flex: 0 0 424px !important;
+    flex-grow: 0 !important;
+    flex-shrink: 0 !important;
+    width: 424px !important;
+    min-width: 424px !important;
+    max-width: 424px !important;
+    min-height: 45px;
+  }
+  html[data-wide-preview="e"] .masthead-sports-strip {
+    justify-content: center;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--match,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="2"] > .sports-chip--match,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="3"] > .sports-chip--match,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="4"] > .sports-chip--match,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="5"] > .sports-chip--match,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="6"] > .sports-chip--match,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="7"] > .sports-chip--match,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="8"] > .sports-chip--match,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="9"] > .sports-chip--match {
+    flex: 0 0 var(--sports-match-w, max-content) !important;
+    width: var(--sports-match-w, max-content) !important;
+    min-width: var(--sports-match-w, max-content) !important;
+    max-width: var(--sports-match-w, max-content) !important;
+  }
+
+  /* Fallback : un peu de texte masqué → défilement L→R (scores + CTA). */
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-text {
+    animation: sports-chip-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) 2 alternate both !important;
+    transform: unset;
+    max-width: none !important;
+    text-overflow: clip !important;
+  }
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub-text,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-sub-text {
+    animation: sports-chip-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) 2 alternate both !important;
+    transform: unset;
+    max-width: none !important;
+    text-overflow: clip !important;
+  }
 }
 
 #local-lab-format-bar.local-lab-bar,

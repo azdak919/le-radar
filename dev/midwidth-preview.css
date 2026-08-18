@@ -17,17 +17,16 @@ html.local-lab-framed body {
 }
 /*
  * Cache le contenu hôte (doublon de l’iframe) sans le détruire.
- * La barre lab + badge wide restent toujours visibles / cliquables.
+ * La barre lab reste toujours visible / cliquable.
  */
-html.local-lab-framed body > *:not(#local-lab-shell):not(#local-lab-format-bar):not(#midwidth-preview-bar):not(#wide-desktop-badge):not(#wide-desktop-bar) {
+html.local-lab-framed body > *:not(#local-lab-shell):not(#local-lab-format-bar):not(#midwidth-preview-bar):not(#wide-desktop-bar) {
   visibility: hidden !important;
   pointer-events: none !important;
 }
 
 /* Sécurité : barre lab toujours interactive au-dessus du shell */
 html.local-lab-framed #local-lab-format-bar,
-html.local-lab-framed #midwidth-preview-bar,
-html.local-lab-framed #wide-desktop-badge {
+html.local-lab-framed #midwidth-preview-bar {
   visibility: visible !important;
   pointer-events: auto !important;
   z-index: 10000 !important;

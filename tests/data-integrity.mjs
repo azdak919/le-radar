@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-const { resolveCurrentSlot, gridCoverage } = require('../scripts/radio-schedule-lib.js');
+const { resolveCurrentSlot, gridCoverage, fetchChoqGrid } = require('../scripts/radio-schedule-lib.js');
 
 const root = new URL('../', import.meta.url);
 const readJson = (name) => JSON.parse(readFileSync(new URL(name, root), 'utf8'));
@@ -208,6 +208,67 @@ const chyzOverlap = resolveCurrentSlot([
   { day: 4, start: '18:50', end: '23:00', title: 'Spécial' },
 ], new Date('2026-07-23T22:55:00Z'), 'America/Toronto');
 assert.equal(chyzOverlap?.title, 'Spécial', 'le créneau CHYZ commencé le plus récemment doit primer');
+
+{
+  const choqGrid = schedules.choq?.grid || [];
+  const occupancy = new Map();
+  for (const slot of choqGrid) {
+    const key = `${slot.day}|${slot.start}`;
+    assert.equal(
+      occupancy.has(key),
+      false,
+      `CHOQ : deux émissions au même créneau (${key} déjà ${occupancy.get(key)}, aussi ${slot.title})`,
+    );
+    occupancy.set(key, slot.title);
+  }
+}
+
+{
+  const ymdInTz = (date) => new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Toronto',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(date);
+  const addDays = (ymd, n) => {
+    const [y, m, d] = ymd.split('-').map(Number);
+    return new Date(Date.UTC(y, m - 1, d + n)).toISOString().slice(0, 10);
+  };
+  const today = ymdInTz(new Date());
+  const wd = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Toronto', weekday: 'short' }).format(new Date());
+  const todayDow = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }[wd];
+  const weekStart = addDays(today, todayDow === 0 ? -6 : 1 - todayDow);
+  const nextMonday = addDays(weekStart, 7);
+  const utc17 = (ymd) => `${ymd}T21:00:00+00:00`;
+  const utc18 = (ymd) => `${ymd}T22:00:00+00:00`;
+  const episodes = {
+    [weekStart]: [{
+      title: 'ep',
+      timestamp_start: utc17(weekStart),
+      timestamp_end: utc18(weekStart),
+      parent: { title: 'Faire avec', slug: 'faire-avec' },
+    }],
+    [nextMonday]: [{
+      title: 'ep',
+      timestamp_start: utc17(nextMonday),
+      timestamp_end: utc18(nextMonday),
+      parent: { title: 'Bitume', slug: 'bitume' },
+    }],
+  };
+  const fetchImpl = async (_url, opts = {}) => {
+    const body = JSON.parse(opts.body || '{}');
+    const range = body.variables?.date || [];
+    const day = String(range[1] || '').replace(/^>=\s*/, '');
+    return {
+      ok: true,
+      json: async () => ({ data: { entries: episodes[day] || [] } }),
+    };
+  };
+  const grid = await fetchChoqGrid({ days: 14 }, { fetchImpl });
+  const monday17 = grid.filter((s) => s.day === 1 && s.start === '17:00');
+  assert.equal(monday17.length, 1, 'CHOQ quinzaine : un seul lundi 17 h');
+  assert.equal(monday17[0].title, 'Faire avec', 'CHOQ quinzaine : la semaine en cours prime');
+}
 
 // ── Banques fonds QC : JSON source de vérité ↔ JS miroir + hard-ban ──
 const { matchHardBanned } = require('../scripts/quebec-backgrounds-blacklist');

@@ -1974,17 +1974,111 @@
     }
     if (/^no machine-readable author provided\.?$/i.test(s)) return "Wikimedia Commons";
     if (/^aucun auteur lisible par machine/i.test(s)) return "Wikimedia Commons";
+    s = s.replace(
+      /\s+from\s+[A-ZÀ-Ÿ][\wÀ-ÿ.'’\-]*(?:,?\s+[A-ZÀ-Ÿ][\wÀ-ÿ.'’\-]*){0,5}\s*$/u,
+      "",
+    ).trim();
+    s = s
+      .replace(/\(\s*talk\s*\)/ig, "")
+      .replace(/\(\s*uploads?\s*\)/ig, "")
+      .replace(/^you may select the license of your choice\.?$/i, "")
+      .replace(/\s+/g, " ")
+      .trim();
+    s = s.replace(/^[\w.\-]+\.(?:jpe?g|png|gif|webp)\s*:\s*/i, "");
+    s = s.replace(/\s*derivative work:\s*\S+/ig, "").trim();
+    s = s.replace(/\/[a-z0-9._-]+\.[a-z]{2,}(?:\/\S*)?$/i, "").trim();
+    if (/ville de montr[ée]al/i.test(s)) s = "Ville de Montréal";
+    s = s.replace(/\s*[-–—]\s*Me\s*[•·].*$/i, "").trim();
+    if (/^nasa\b/i.test(s)) {
+      const courtesy = s.match(/courtesy of\s+(.+?)\.?$/i);
+      if (courtesy) s = `NASA / ${courtesy[1].replace(/\.$/, "").trim()}`;
+      else if (/^nasa\.?\s*$/i.test(s)) s = "NASA";
+    }
+    if (s.includes(";")) {
+      s = s.split(/\s*;\s*/).map(_invertLastFirstCredit).join(", ");
+    } else {
+      s = _invertLastFirstCredit(s);
+    }
     // Pseudo collé type « Jeangagnon » déjà géré plus bas ; scinder camelCase léger
     // seulement si tout collé sans espace et long (ex. AndreaSchaffer → Andrea Schaffer).
     if (!/\s/.test(s) && s.length >= 8 && s.length <= 40 && /[a-z][A-Z]/.test(s)) {
       s = s.replace(/([a-z])([A-Z])/g, "$1 $2");
     }
+    if (/^jeangagnon$/i.test(s)) return "Jean Gagnon";
     if (s.length > 72) {
       const head = s.split(/\s*[—–|]\s*|\s*\(/)[0].trim();
       if (head.length >= 2 && head.length <= 60) return head;
       return `${s.slice(0, 60).trim()}…`;
     }
     return s;
+  }
+
+  function _invertLastFirstCredit(raw) {
+    const t = String(raw || "").trim();
+    const m = t.match(
+      /^([A-ZÀ-Ÿ][\wÀ-ÿ'’.\-]+),\s+([A-ZÀ-Ÿ][\wÀ-ÿ'’.\-]+(?:[\s-][A-ZÀ-Ÿ][\wÀ-ÿ'’.\-]+)*)(?:,\s*\d{4}(?:-\d{4})?)?$/u
+    );
+    if (!m) return t;
+    if (/^(cantons|ville|ressources|parcours|nasa)/i.test(m[1])) return t;
+    return `${m[2]} ${m[1]}`.replace(/\s+/g, " ").trim();
+  }
+
+  function placeFromBg(bg) {
+    const blob = `${bg?.title || ""} ${bg?.description || ""}`;
+    const hints = [
+      [/forillon|cap bon-ami/i, "Forillon"],
+      [/rocher perc[ée]|perc[ée] rock|(?:^|[,\-–—])\s*perc[ée]\b/i, "Percé"],
+      [/montmorency/i, "Chute Montmorency"],
+      [/canal de soulanges|soulanges canal/i, "Canal de Soulanges"],
+      [/deux[- ]montagnes/i, "Lac des Deux-Montagnes"],
+      [/saguenay|fjord/i, "Saguenay"],
+      [/gatineau/i, "Gatineau"],
+      [/orford/i, "Orford"],
+      [/wapizagonke|waber|parc national de la mauricie|la mauricie np|\bmauricie\b/i, "Mauricie"],
+      [/olivine|xalibu|parc national de la gaspésie|gasp[eé]sie/i, "Gaspésie"],
+      [/nunavik|pingualuit|kangirsuk/i, "Nunavik"],
+      [/manawan/i, "Manawan"],
+      [/universit[ée] laval/i, "Université Laval"],
+      [/mcgill/i, "McGill"],
+      [/concordia/i, "Concordia"],
+      [/uqam|judith-jasmin/i, "UQAM"],
+      [/\b(?:le\s+)?bic\b|parc du bic|plage du bic/i, "Le Bic"],
+      [/rivi[eè]re saint[- ]fran[cç]ois|riviere saint francois/i, "Rivière Saint-François"],
+      [/\bhudson\b/i, "Hudson"],
+      [/\bnewport\b/i, "Newport"],
+      [/pointe bleue|mashteuiatsh/i, "Mashteuiatsh"],
+      [/[iî]le[- ]perrot/i, "Île-Perrot"],
+      [/bas[- ]saint[- ]laurent/i, "Bas-Saint-Laurent"],
+      [/lasalle|mercier bridge|pont mercier/i, "Montréal"],
+      [/wahsipekuk/i, "Wahsipekuk"],
+      [/longueuil/i, "Longueuil"],
+      [
+        /verdun|mont royal|pierrefonds|skyline de montr|centre-ville de montr|panorama de montr|sunrise over montr|montr[ée]al|\bmontreal\b/i,
+        "Montréal",
+      ],
+      [/sherbrooke/i, "Sherbrooke"],
+      [
+        /qu[ée]bec city|quebec city|old quebec|vieux-qu[ée]bec|skyline de qu[ée]bec|panorama de qu[ée]bec|cityscapes of quebec|skylines of quebec|ch[âa]teau frontenac|gare fluviale de qu[ée]bec|frontenac/i,
+        "Québec",
+      ],
+    ];
+    for (const [re, label] of hints) {
+      if (re.test(blob)) return label;
+    }
+    const stored = bg && bg.place ? String(bg.place).trim() : "";
+    if (stored && stored.length <= 36 && !/panorama|skyline|landscape|cropped|f[ée]erie|[ée]rables|kayaking|d[ée]gel|sunrise over|nasa /i.test(stored)) {
+      return stored;
+    }
+    return "";
+  }
+
+  function formatBgCreditLabel(bg) {
+    const name = sanitizeBgCredit(bg?.credit || "");
+    const place = placeFromBg(bg);
+    if (name && place && name.toLowerCase().indexOf(place.toLowerCase()) < 0) {
+      return `${name} — ${place}`;
+    }
+    return name || place || "";
   }
 
   function _renderCredit(bg) {
@@ -1994,12 +2088,8 @@
     el.removeAttribute("hidden");
     const link = safeHttpsUrl(bg.link);
     const title = normalizeCreditSpacing(bg.title || "");
-    const rawCredit = sanitizeBgCredit(bg.credit || "");
-    // Commons emploie le pseudo « Jeangagnon » : le crédit éditorial affiche
-    // le vrai nom tout en gardant le lien de la photo comme source.
-    const credit = /^jeangagnon$/i.test(rawCredit)
-      ? "Jean Gagnon"
-      : normalizeCreditSpacing(rawCredit);
+    const rawCredit = formatBgCreditLabel(bg);
+    const credit = normalizeCreditSpacing(rawCredit);
     const license = normalizeCreditSpacing(bg.license || "");
 
     // Format court partout (ex-mobile) : © + auteur. Détail dans title=.

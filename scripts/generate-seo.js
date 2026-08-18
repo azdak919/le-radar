@@ -14,10 +14,10 @@
  * contre 68 000 caractères pour un navigateur.
  *
  * POURQUOI ÇA NE CASSE RIEN
- * app.js écrase intégralement le conteneur avant d'afficher quoi que ce soit
- * (`loadNews()` → `NEWS_LIST.innerHTML = newsSkeleton(6)`), donc le bloc
- * prérendu disparaît de lui-même dès que le script tourne. Aucune modification
- * d'app.js n'est nécessaire, et le rendu final est identique.
+ * Le prerendu est masqué visuellement (squelette magazine) jusqu’à
+ * `#news-list[data-ready]` posé par `renderNews()`. Les robots sans JS
+ * voient le HTML (et le `<noscript>` lève le masque). Dès que app.js tourne,
+ * le conteneur est remplacé par le magazine.
  *
  *   node scripts/generate-seo.js            # dry-run (n'écrit rien)
  *   node scripts/generate-seo.js --update   # écrit les fichiers
@@ -69,6 +69,8 @@ const PRERENDER_MAX = 20;
 const PAGES = [
   { loc: '/', changefreq: 'hourly', priority: '1.0', file: 'index.html' },
   { loc: '/feeds.html', changefreq: 'monthly', priority: '0.5', file: 'feeds.html' },
+  { loc: '/kit-media/', changefreq: 'monthly', priority: '0.4', file: 'kit-media/index.html' },
+  { loc: '/en/media-kit/', changefreq: 'monthly', priority: '0.3', file: 'en/media-kit/index.html' },
   { loc: '/pomo/', changefreq: 'monthly', priority: '0.3', file: 'pomo/index.html' },
   { loc: '/solitaire/', changefreq: 'monthly', priority: '0.3', file: 'solitaire/index.html' },
 ];
@@ -95,6 +97,8 @@ const MARKERS = {
 const FOOTER_PAGES = [
   { file: 'index.html', lang: 'fr', up: './', home: true, altPath: 'en/', indent: '      ' },
   { file: 'feeds.html', lang: 'fr', up: './', altPath: 'en/', indent: '      ' },
+  { file: 'kit-media/index.html', lang: 'fr', up: '../', altPath: 'en/media-kit/', indent: '      ' },
+  { file: 'en/media-kit/index.html', lang: 'en', up: '../../', altPath: 'kit-media/', indent: '      ' },
   { file: 'offline.html', lang: 'fr', up: './', altPath: 'en/', indent: '    ', variant: 'maintenance' },
 ];
 
