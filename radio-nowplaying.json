@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-18T06:38:04.478Z",
+  "updatedAt": "2026-08-18T07:06:56.662Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T06:37:41.475Z"
+      "checkedAt": "2026-08-18T07:06:31.054Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Franco",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
-      },
-      "next": {
         "title": "À l'horizon",
         "source": "schedule",
         "start": "03:00",
         "end": "05:00",
         "url": "https://cism893.ca/emissions/a-lhorizon"
       },
+      "next": {
+        "title": "Le Séismix",
+        "source": "schedule",
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
+      },
       "track": "",
-      "showTitle": "Mix Franco",
+      "showTitle": "À l'horizon",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T06:37:43.716Z"
+      "checkedAt": "2026-08-18T07:06:33.110Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Pirate et Libres",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "03:00"
-      },
-      "next": {
         "title": "Attik / Show For Children",
         "source": "api-live",
         "start": "03:00",
         "end": "05:00"
       },
+      "next": {
+        "title": "The Beat Power Hour",
+        "source": "api-live",
+        "start": "05:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Pirate et Libres",
+      "showTitle": "Attik / Show For Children",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T06:37:46.470Z"
+      "checkedAt": "2026-08-18T07:06:35.669Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T06:38:00.503Z"
+      "checkedAt": "2026-08-18T07:06:49.897Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T06:38:01.162Z"
+      "checkedAt": "2026-08-18T07:06:50.872Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Roselle - Fierte",
+      "track": "The Lemon Twigs - Fire and Gold",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-18T06:38:04.127Z"
+      "checkedAt": "2026-08-18T07:06:56.311Z"
     }
   }
 }
