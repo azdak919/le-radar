@@ -2070,12 +2070,49 @@ function liveCopyFromPhases(phases = []) {
 }
 
 /**
+ * CHOQ hors grille : la piste arrive en « Artiste — Titre » (tiret cadratin).
+ * On remplace ce trait par un vrai saut de ligne (titre + sous-ligne) pour
+ * que le slot « À l'antenne » n'empiète plus sur « À venir ».
+ */
+function splitChoqSongLines(track) {
+  const raw = String(track || '').replace(/^♪\s*/, '').trim();
+  if (!raw) return { title: '', sub: '' };
+  const parts = raw.split(/\s+[—–]\s+/).map((p) => p.trim()).filter(Boolean);
+  if (parts.length >= 2) {
+    return { title: parts[0], sub: parts.slice(1).join(' — ') };
+  }
+  return { title: raw, sub: '' };
+}
+
+function applyChoqLiveSongLines(radio, liveTitle, liveSub, phases = []) {
+  const title = String(liveTitle || '');
+  const sub = String(liveSub || '');
+  if (radio?.id !== 'choq') {
+    return { liveTitle: title, liveSub: sub, songSplit: false };
+  }
+  const list = Array.isArray(phases) ? phases : [];
+  const hasShow = list.some((p) => p.kind === 'live' && !String(p.title || '').startsWith('♪'));
+  const hasTrack = list.some((p) => p.kind === 'live' && String(p.title || '').startsWith('♪'));
+  if (!hasTrack || hasShow) {
+    return { liveTitle: title, liveSub: sub, songSplit: false };
+  }
+  const split = splitChoqSongLines(title);
+  if (!split.sub) {
+    return { liveTitle: split.title || title, liveSub: sub, songSplit: false };
+  }
+  return { liveTitle: split.title, liveSub: split.sub, songSplit: true };
+}
+
+/**
  * Phases affichables : une seule phase live (émission + piste), puis à venir.
  * On ne remplace plus l’émission par le titre de piste en rotation.
  */
 function composedAirPhases(radio, { withSlogan = false } = {}) {
   const raw = airRotationPhases(radio, { withSlogan });
-  const { liveTitle, liveSub } = liveCopyFromPhases(raw);
+  const copy = liveCopyFromPhases(raw);
+  const { liveTitle, liveSub } = applyChoqLiveSongLines(
+    radio, copy.liveTitle, copy.liveSub, raw,
+  );
   const out = [];
   if (liveTitle) out.push({ title: liveTitle, sub: liveSub, kind: 'live' });
   const upcoming = raw.find((p) => p.kind === 'upcoming');
@@ -2092,11 +2129,15 @@ function composedAirPhases(radio, { withSlogan = false } = {}) {
  */
 function wideNowAirLiveCopy(radio) {
   const phases = radio ? airRotationPhases(radio, { withSlogan: false }) : [];
-  const { liveTitle, liveSub } = liveCopyFromPhases(phases);
+  const raw = liveCopyFromPhases(phases);
+  const { liveTitle, liveSub, songSplit } = applyChoqLiveSongLines(
+    radio, raw.liveTitle, raw.liveSub, phases,
+  );
   const upcoming = phases.find((p) => p.kind === 'upcoming') || null;
   return {
     liveTitle: liveTitle || (radio ? 'Rien à l\'antenne' : ''),
     liveSub,
+    songSplit: !!songSplit,
     hideLive: false,
     nextTitle: upcoming?.title || (radio ? 'Rien de programmé' : '—'),
     nextSub: upcoming?.sub || '',
@@ -2132,6 +2173,7 @@ function paintWideNowAirPair(radio) {
       nextSub.hidden = true;
     }
     liveSlot?.classList.add('is-empty-slot');
+    liveSlot?.classList.remove('tuner-wide-slot--song-split');
     nextSlot?.classList.add('is-empty-slot');
   };
 
@@ -2150,6 +2192,7 @@ function paintWideNowAirPair(radio) {
       liveSub.hidden = !copy.liveSub;
     }
     liveSlot?.classList.toggle('is-empty-slot', copy.liveTitle === 'Rien à l\'antenne');
+    liveSlot?.classList.toggle('tuner-wide-slot--song-split', !!copy.songSplit);
 
     if (nextTitle) nextTitle.textContent = copy.nextTitle;
     if (nextSub) {
@@ -7231,6 +7274,8 @@ window.RadarAir = {
     getTunerSubRotateDelayMs,
     trackForAirDisplay,
     liveCopyFromPhases,
+    splitChoqSongLines,
+    applyChoqLiveSongLines,
     composedAirPhases,
     wideNowAirLiveCopy,
     isGarbageChoqTrack,
