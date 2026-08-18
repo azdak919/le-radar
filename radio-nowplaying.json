@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-08-18T11:51:11.549Z",
+  "updatedAt": "2026-08-18T12:39:21.499Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Mardi Champ Gauche",
-        "source": "schedule",
+        "source": "api-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
       },
+      "next": {
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Mardi Champ Gauche",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T11:50:38.056Z"
+      "checkedAt": "2026-08-18T12:38:48.605Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Câlin collectif",
-        "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/calins-collectifs"
-      },
-      "next": {
         "title": "Raconte ton quartier",
         "source": "schedule",
         "start": "08:00",
         "end": "09:00",
         "url": "https://cism893.ca/emissions/raconte-ton-quartier"
       },
+      "next": {
+        "title": "Second poteau",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://cism893.ca/emissions/second-poteau"
+      },
       "track": "",
-      "showTitle": "Câlin collectif",
+      "showTitle": "Raconte ton quartier",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T11:50:40.425Z"
+      "checkedAt": "2026-08-18T12:38:50.531Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Tuesday Morning After Pt1",
-        "source": "api-live",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
         "title": "Tuesday Morning After Pt2",
         "source": "api-live",
         "start": "08:00",
         "end": "09:00"
       },
+      "next": {
+        "title": "Basa Basa",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Tuesday Morning After Pt1",
+      "showTitle": "Tuesday Morning After Pt2",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T11:50:43.435Z"
+      "checkedAt": "2026-08-18T12:38:53.283Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,32 +108,32 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T11:50:57.846Z"
+      "checkedAt": "2026-08-18T12:39:06.837Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Folkswagen",
-        "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
         "title": "Palmarès CFAK",
         "source": "schedule-live",
         "start": "08:00",
         "end": "18:30"
       },
+      "next": {
+        "title": "L'Aut'Rock",
+        "source": "schedule-live",
+        "start": "18:30",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T11:50:58.990Z"
+      "checkedAt": "2026-08-18T12:39:07.899Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +146,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Slippers - LWH",
+      "track": "Fleur de Peau - Je vois tout",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-18T11:51:11.198Z"
+      "checkedAt": "2026-08-18T12:39:21.149Z"
     }
   }
 }
