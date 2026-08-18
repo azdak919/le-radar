@@ -53,6 +53,7 @@ jobs:
           git add news-archive.json sitemap-archives.xml llms.txt
           git add -A archives journaux en
           git commit -m "bot: verify historical article links (auto)" || exit 0
+          git pull --rebase --autostash origin main
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
