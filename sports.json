@@ -1,11 +1,11 @@
 {
-  "updated": "2026-08-18T11:46:43.952Z",
-  "fetchedAt": "2026-08-18T11:46:43.952Z",
+  "updated": "2026-08-18T16:47:03.269Z",
+  "fetchedAt": "2026-08-18T16:47:03.269Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-08-18T11:46:43.952Z"
+    "referenceDate": "2026-08-18T16:47:03.269Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 795,
@@ -13,6 +13,7 @@
   "leaguesWithTeams": 100,
   "leaguesOk": 109,
   "leaguesFailed": 0,
+  "teamsPreservedOnError": 17,
   "sportsCovered": [
     "athletisme",
     "badminton",
@@ -73,6 +74,18 @@
     "volleyball"
   ],
   "teamCount": 815,
+  "errors": [
+    {
+      "leagueId": "spordle-collegial",
+      "label": "Hockey collegial",
+      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
+    },
+    {
+      "leagueId": "spordle-universitaire",
+      "label": "Hockey universitaire",
+      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
+    }
+  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -27263,7 +27276,7 @@
       "nextGames": [
         {
           "date": "2026-09-13",
-          "time": "10:00",
+          "time": "16:00",
           "opponent": "Thetford",
           "opponentCode": "THE",
           "home": true,
@@ -27276,7 +27289,7 @@
         },
         {
           "date": "2026-09-13",
-          "time": "11:15",
+          "time": "17:15",
           "opponent": "Notre-Dame",
           "opponentCode": "NDF",
           "home": false,
@@ -27289,7 +27302,7 @@
         },
         {
           "date": "2026-09-13",
-          "time": "12:30",
+          "time": "18:30",
           "opponent": "La Pocatière",
           "opponentCode": "POC",
           "home": false,
@@ -27420,7 +27433,7 @@
       ],
       "nextGame": {
         "date": "2026-09-13",
-        "time": "10:00",
+        "time": "16:00",
         "opponent": "Thetford",
         "opponentCode": "THE",
         "home": true,
@@ -27462,7 +27475,7 @@
       "nextGames": [
         {
           "date": "2026-09-13",
-          "time": "10:00",
+          "time": "16:00",
           "opponent": "Notre-Dame",
           "opponentCode": "NDF",
           "home": false,
@@ -27475,7 +27488,7 @@
         },
         {
           "date": "2026-09-13",
-          "time": "11:15",
+          "time": "17:15",
           "opponent": "Thetford",
           "opponentCode": "THE",
           "home": true,
@@ -27488,7 +27501,7 @@
         },
         {
           "date": "2026-09-13",
-          "time": "12:30",
+          "time": "18:30",
           "opponent": "Jonquière",
           "opponentCode": "JON",
           "home": true,
@@ -27619,7 +27632,7 @@
       ],
       "nextGame": {
         "date": "2026-09-13",
-        "time": "10:00",
+        "time": "16:00",
         "opponent": "Notre-Dame",
         "opponentCode": "NDF",
         "home": false,
@@ -27860,7 +27873,7 @@
       "nextGames": [
         {
           "date": "2026-09-13",
-          "time": "10:00",
+          "time": "16:00",
           "opponent": "La Pocatière",
           "opponentCode": "POC",
           "home": true,
@@ -27873,7 +27886,7 @@
         },
         {
           "date": "2026-09-13",
-          "time": "11:15",
+          "time": "17:15",
           "opponent": "Jonquière",
           "opponentCode": "JON",
           "home": true,
@@ -27886,7 +27899,7 @@
         },
         {
           "date": "2026-09-13",
-          "time": "12:30",
+          "time": "18:30",
           "opponent": "Thetford",
           "opponentCode": "THE",
           "home": true,
@@ -28017,7 +28030,7 @@
       ],
       "nextGame": {
         "date": "2026-09-13",
-        "time": "10:00",
+        "time": "16:00",
         "opponent": "La Pocatière",
         "opponentCode": "POC",
         "home": true,
@@ -28059,7 +28072,7 @@
       "nextGames": [
         {
           "date": "2026-09-13",
-          "time": "10:00",
+          "time": "16:00",
           "opponent": "Jonquière",
           "opponentCode": "JON",
           "home": false,
@@ -28072,7 +28085,7 @@
         },
         {
           "date": "2026-09-13",
-          "time": "11:15",
+          "time": "17:15",
           "opponent": "La Pocatière",
           "opponentCode": "POC",
           "home": false,
@@ -28085,7 +28098,7 @@
         },
         {
           "date": "2026-09-13",
-          "time": "12:30",
+          "time": "18:30",
           "opponent": "Notre-Dame",
           "opponentCode": "NDF",
           "home": false,
@@ -28216,7 +28229,7 @@
       ],
       "nextGame": {
         "date": "2026-09-13",
-        "time": "10:00",
+        "time": "16:00",
         "opponent": "Jonquière",
         "opponentCode": "JON",
         "home": false,
@@ -54154,19 +54167,6 @@
       "lastGame": null,
       "nextGames": [
         {
-          "date": "2026-08-30",
-          "time": "13:00",
-          "opponent": "Saint-Hyacinthe",
-          "opponentCode": "STH",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D1",
-          "gameId": "4807e98f-d4b9-4e2e-a677-dab45fd49894",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4807e98f-d4b9-4e2e-a677-dab45fd49894",
-          "opponentFullName": "Cégep de Saint-Hyacinthe",
-          "opponentRegistryId": "saint-hyacinthe"
-        },
-        {
           "date": "2026-09-11",
           "time": "21:00",
           "opponent": "Vanier",
@@ -54290,20 +54290,34 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4a5cc164-9658-4b58-879f-60c45306e8fc",
           "opponentFullName": "Collège Ahuntsic",
           "opponentRegistryId": "ahuntsic"
+        },
+        {
+          "date": "2026-10-18",
+          "time": "17:00",
+          "opponent": "Saint-Hyacinthe",
+          "opponentCode": "STH",
+          "home": true,
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D1",
+          "gameId": "4807e98f-d4b9-4e2e-a677-dab45fd49894",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4807e98f-d4b9-4e2e-a677-dab45fd49894",
+          "opponentFullName": "Cégep de Saint-Hyacinthe",
+          "opponentRegistryId": "saint-hyacinthe"
         }
       ],
       "nextGame": {
-        "date": "2026-08-30",
-        "time": "13:00",
-        "opponent": "Saint-Hyacinthe",
-        "opponentCode": "STH",
-        "home": true,
+        "date": "2026-09-11",
+        "time": "21:00",
+        "opponent": "Vanier",
+        "opponentCode": "VAN",
+        "home": false,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D1",
-        "gameId": "4807e98f-d4b9-4e2e-a677-dab45fd49894",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4807e98f-d4b9-4e2e-a677-dab45fd49894",
-        "opponentFullName": "Cégep de Saint-Hyacinthe",
-        "opponentRegistryId": "saint-hyacinthe",
+        "gameId": "f702412a-1ee1-4bc4-bd33-e3e688b921f5",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f702412a-1ee1-4bc4-bd33-e3e688b921f5",
+        "opponentFullName": "Vanier College",
+        "opponentNickname": "Cheetahs",
+        "opponentRegistryId": "vanier",
         "opponentSector": "collegial"
       },
       "record": {
@@ -55072,19 +55086,6 @@
           "opponentRegistryId": "vanier"
         },
         {
-          "date": "2026-08-30",
-          "time": "13:00",
-          "opponent": "Bois-de-Boulogne",
-          "opponentCode": "BDB",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D1",
-          "gameId": "4807e98f-d4b9-4e2e-a677-dab45fd49894",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4807e98f-d4b9-4e2e-a677-dab45fd49894",
-          "opponentFullName": "Collège de Bois-de-Boulogne",
-          "opponentRegistryId": "bois-de-boulogne"
-        },
-        {
           "date": "2026-09-04",
           "time": "19:00",
           "opponent": "Champlain St-Lambert",
@@ -55194,6 +55195,19 @@
           "opponentFullName": "Cégep François-Xavier-Garneau",
           "opponentNickname": "Boomerang",
           "opponentRegistryId": "garneau"
+        },
+        {
+          "date": "2026-10-18",
+          "time": "17:00",
+          "opponent": "Bois-de-Boulogne",
+          "opponentCode": "BDB",
+          "home": false,
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D1",
+          "gameId": "4807e98f-d4b9-4e2e-a677-dab45fd49894",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4807e98f-d4b9-4e2e-a677-dab45fd49894",
+          "opponentFullName": "Collège de Bois-de-Boulogne",
+          "opponentRegistryId": "bois-de-boulogne"
         }
       ],
       "nextGame": {
@@ -90940,7 +90954,9 @@
       "source": "spordle-rseqhockey",
       "fullName": "Collège Lionel-Groulx",
       "registryId": "lionel-groulx",
-      "priority": 30
+      "priority": 30,
+      "staleSource": true,
+      "staleReason": "hockey-spordle-failed"
     },
     "hockey:collegial:1f15de41-1320-662c-9001-024cdcc06dcd": {
       "id": "hockey:collegial:1f15de41-1320-662c-9001-024cdcc06dcd",
@@ -91002,7 +91018,9 @@
       "source": "spordle-rseqhockey",
       "fullName": "Cégep de l'Outaouais",
       "registryId": "outaouais",
-      "priority": 33
+      "priority": 33,
+      "staleSource": true,
+      "staleReason": "hockey-spordle-failed"
     },
     "hockey:collegial:1f15de3a-f13c-6e30-9ff6-024cdcc06dcd": {
       "id": "hockey:collegial:1f15de3a-f13c-6e30-9ff6-024cdcc06dcd",
@@ -91053,7 +91071,9 @@
       "source": "spordle-rseqhockey",
       "fullName": "Cégep de Lévis",
       "registryId": "levis",
-      "priority": 50
+      "priority": 50,
+      "staleSource": true,
+      "staleReason": "hockey-spordle-failed"
     },
     "hockey:collegial:1f15de30-b8c6-6b1e-83bd-0602a60cf5a7": {
       "id": "hockey:collegial:1f15de30-b8c6-6b1e-83bd-0602a60cf5a7",
@@ -91104,7 +91124,9 @@
       "source": "spordle-rseqhockey",
       "fullName": "Cégep de Thetford",
       "registryId": "thetford",
-      "priority": 39
+      "priority": 39,
+      "staleSource": true,
+      "staleReason": "hockey-spordle-failed"
     },
     "hockey:collegial:1f15de35-5c4b-6dd0-8a20-06ea9bff85b5": {
       "id": "hockey:collegial:1f15de35-5c4b-6dd0-8a20-06ea9bff85b5",
@@ -91156,7 +91178,9 @@
       "fullName": "Cégep de Sainte-Foy",
       "nickname": "Géants",
       "registryId": "sainte-foy",
-      "priority": 37
+      "priority": 37,
+      "staleSource": true,
+      "staleReason": "hockey-spordle-failed"
     },
     "hockey:collegial:1f15de39-c3c5-67f0-adfa-024cdcc06dcd": {
       "id": "hockey:collegial:1f15de39-c3c5-67f0-adfa-024cdcc06dcd",
@@ -91209,7 +91233,9 @@
       "source": "spordle-rseqhockey",
       "fullName": "Collège Laflèche",
       "registryId": "lafleche",
-      "priority": 51
+      "priority": 51,
+      "staleSource": true,
+      "staleReason": "hockey-spordle-failed"
     },
     "hockey:collegial:1f15de39-c3bc-620e-9793-024cdcc06dcd": {
       "id": "hockey:collegial:1f15de39-c3bc-620e-9793-024cdcc06dcd",
@@ -91260,7 +91286,9 @@
       "source": "spordle-rseqhockey",
       "fullName": "Collège Laflèche",
       "registryId": "lafleche",
-      "priority": 51
+      "priority": 51,
+      "staleSource": true,
+      "staleReason": "hockey-spordle-failed"
     },
     "hockey:collegial:1f15de3f-76ad-698a-91ba-024cdcc06dcd": {
       "id": "hockey:collegial:1f15de3f-76ad-698a-91ba-024cdcc06dcd",
@@ -91322,7 +91350,9 @@
       "source": "spordle-rseqhockey",
       "fullName": "Cégep de Sorel-Tracy",
       "registryId": "sorel-tracy",
-      "priority": 52
+      "priority": 52,
+      "staleSource": true,
+      "staleReason": "hockey-spordle-failed"
     },
     "hockey:collegial:1f15de3b-af0e-6bac-a022-024cdcc06dcd": {
       "id": "hockey:collegial:1f15de3b-af0e-6bac-a022-024cdcc06dcd",
@@ -91373,7 +91403,9 @@
       "source": "spordle-rseqhockey",
       "fullName": "Cégep de Saint-Hyacinthe",
       "registryId": "saint-hyacinthe",
-      "priority": 34
+      "priority": 34,
+      "staleSource": true,
+      "staleReason": "hockey-spordle-failed"
     },
     "hockey:collegial:1f15de2f-025f-63ea-b66c-06ea9bff85b5": {
       "id": "hockey:collegial:1f15de2f-025f-63ea-b66c-06ea9bff85b5",
@@ -91427,7 +91459,9 @@
       "fullName": "Cégep de Saint-Laurent",
       "nickname": "Cavaliers",
       "registryId": "saint-laurent",
-      "priority": 53
+      "priority": 53,
+      "staleSource": true,
+      "staleReason": "hockey-spordle-failed"
     },
     "hockey:collegial:1f15de39-617a-68ca-9eb7-024cdcc06dcd": {
       "id": "hockey:collegial:1f15de39-617a-68ca-9eb7-024cdcc06dcd",
@@ -91481,7 +91515,9 @@
       "fullName": "Cégep André-Laurendeau",
       "nickname": "Cheetahs",
       "registryId": "andre-laurendeau",
-      "priority": 22
+      "priority": 22,
+      "staleSource": true,
+      "staleReason": "hockey-spordle-failed"
     },
     "hockey:collegial:1f15de2f-0251-6e34-9f09-06ea9bff85b5": {
       "id": "hockey:collegial:1f15de2f-0251-6e34-9f09-06ea9bff85b5",
@@ -91533,7 +91569,9 @@
       "fullName": "Cégep de Saint-Laurent",
       "nickname": "Cavaliers",
       "registryId": "saint-laurent",
-      "priority": 53
+      "priority": 53,
+      "staleSource": true,
+      "staleReason": "hockey-spordle-failed"
     },
     "hockey:universitaire:1f15dcb4-21f4-6f7e-8115-06a08a8b9e2f": {
       "id": "hockey:universitaire:1f15dcb4-21f4-6f7e-8115-06a08a8b9e2f",
@@ -91603,7 +91641,9 @@
       "fullName": "Université Concordia",
       "nickname": "Stingers",
       "registryId": "concordia",
-      "priority": 3
+      "priority": 3,
+      "staleSource": true,
+      "staleReason": "hockey-spordle-failed"
     },
     "hockey:universitaire:1f15dcbb-18bd-61de-9791-02bb122e4421": {
       "id": "hockey:universitaire:1f15dcbb-18bd-61de-9791-02bb122e4421",
@@ -91654,7 +91694,9 @@
       "source": "spordle-rseqhockey",
       "fullName": "École de technologie supérieure",
       "registryId": "ets",
-      "priority": 12
+      "priority": 12,
+      "staleSource": true,
+      "staleReason": "hockey-spordle-failed"
     },
     "hockey:universitaire:1f15dcb4-2ae9-6288-996a-02bb122e4421": {
       "id": "hockey:universitaire:1f15dcb4-2ae9-6288-996a-02bb122e4421",
@@ -91727,7 +91769,9 @@
       "source": "spordle-rseqhockey",
       "fullName": "Université du Québec à Chicoutimi",
       "registryId": "uqac",
-      "priority": 13
+      "priority": 13,
+      "staleSource": true,
+      "staleReason": "hockey-spordle-failed"
     },
     "hockey:universitaire:1f15dcc2-cd97-686e-8fe1-0293bf2c2559": {
       "id": "hockey:universitaire:1f15dcc2-cd97-686e-8fe1-0293bf2c2559",
@@ -91790,7 +91834,9 @@
       "fullName": "Université de Sherbrooke",
       "nickname": "Vert & Or",
       "registryId": "usherbrooke",
-      "priority": 6
+      "priority": 6,
+      "staleSource": true,
+      "staleReason": "hockey-spordle-failed"
     },
     "hockey:universitaire:1f15dcb2-9f24-60aa-9f89-02bb122e4421": {
       "id": "hockey:universitaire:1f15dcb2-9f24-60aa-9f89-02bb122e4421",
@@ -91838,7 +91884,9 @@
       "fullName": "Université de Montréal",
       "nickname": "Carabins",
       "registryId": "udem",
-      "priority": 4
+      "priority": 4,
+      "staleSource": true,
+      "staleReason": "hockey-spordle-failed"
     },
     "sailing:universitaire:mcgill": {
       "id": "sailing:universitaire:mcgill",
