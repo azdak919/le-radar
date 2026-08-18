@@ -132,14 +132,17 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.bg-photo-credit__copyleft {
+.bg-photo-credit__copyleft,
+.bg-photo-credit__copyright {
   display: inline-block;
   align-self: baseline;
   flex: 0 0 auto;
   font-size: 0.88em;
   line-height: 1;
-  transform: scaleX(-1);
   opacity: 0.78;
+}
+.bg-photo-credit__copyleft {
+  transform: scaleX(-1);
 }
 #bg-photo-layer.loaded ~ .bg-photo-credit { opacity: 1; }
 .bg-photo-credit {
@@ -555,7 +558,8 @@
 .masthead:has(#bg-photo-layer.loaded) .bg-photo-credit__short {
   gap: 0.28em;
 }
-.masthead:has(#bg-photo-layer.loaded) .bg-photo-credit__copyleft {
+.masthead:has(#bg-photo-layer.loaded) .bg-photo-credit__copyleft,
+.masthead:has(#bg-photo-layer.loaded) .bg-photo-credit__copyright {
   font-size: 0.88em;
   opacity: 0.78;
 }

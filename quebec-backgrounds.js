@@ -2114,11 +2114,19 @@
     return name || place || "";
   }
 
-  /** Copyleft (CC BY-SA / GFDL) seulement — pas de marque sur un copyright. */
+  /** Copyleft (CC BY-SA / GFDL). */
   function isCopyleftLicense(license) {
     return /cc[\s-]?by[\s-]?sa|share[\s-]?alike|gfdl|copyleft/i.test(
       String(license || "")
     );
+  }
+
+  /** © droit : copyright explicite ou favorite sans licence (Groleau). */
+  function isCopyrightMarkLicense(license) {
+    if (isCopyleftLicense(license)) return false;
+    const l = String(license || "").trim();
+    if (!l) return true;
+    return /all rights reserved|tous droits|copyright|\barr\b/i.test(l);
   }
 
   function _renderCredit(bg) {
@@ -2164,7 +2172,12 @@
       copyleft.textContent = "©";
       copyleft.setAttribute("aria-label", "Copyleft");
       short.appendChild(copyleft);
-      /* Espacement : gap CSS sur .bg-photo-credit__short (pas de nbsp en plus). */
+    } else if (shortLabel && isCopyrightMarkLicense(license)) {
+      const mark = document.createElement("span");
+      mark.className = "bg-photo-credit__copyright";
+      mark.textContent = "©";
+      mark.setAttribute("aria-label", "Copyright");
+      short.appendChild(mark);
     }
     if (link) {
       const a = document.createElement("a");

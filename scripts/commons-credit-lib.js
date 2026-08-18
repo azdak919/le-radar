@@ -337,11 +337,20 @@ function isCopyleftLicense(license = '') {
   return /cc[\s-]?by[\s-]?sa|share[\s-]?alike|gfdl|copyleft/i.test(String(license || ''));
 }
 
+/** Marque © (non inversée) : copyright explicite ou favorite sans licence. */
+function isCopyrightMarkLicense(license = '') {
+  if (isCopyleftLicense(license)) return false;
+  const l = String(license || '').trim();
+  if (!l) return true;
+  return /all rights reserved|tous droits|copyright|\barr\b/i.test(l);
+}
+
 module.exports = {
   sanitizeCommonsCredit,
   scrubBankCredits,
   placeFromPhotoMeta,
   formatMastheadCredit,
   isCopyleftLicense,
+  isCopyrightMarkLicense,
   CREDIT_DISPLAY_ALIASES,
 };
