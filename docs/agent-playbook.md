@@ -42,6 +42,7 @@ Compartiments **non fusionnables** : mât ≠ pomo ≠ uni ≠ nations (sauf nat
 | **favorites** | `data/quebec-favorites-backgrounds.json` | `quebec-favorites-backgrounds-data.js` | mât (+ pomo si `surfaces`) |
 
 Runtime mât : `quebec-backgrounds.js` (filtres client). Runtime pomo : `pomo/js/backgrounds.js`.
+Mât : **mélange équitable** paysages / campus / PNI (1/3 chacun parmi les banques encore en saison). Les favorites voyagent avec les paysages (trop peu pour une 4ᵉ part). Pomo inchangé.
 
 ### Pipeline
 

@@ -31,6 +31,7 @@
 
   /**
    * Pool mât = paysages mât + campus + nations (Inuit / PN) + favorites.
+   * Tirage : une chance égale par banque (paysages / campus / PNI), pas au volume.
    * N’inclut jamais QUEBEC_POMO_BACKGROUNDS.
    * Chaque entrée reçoit `.bank` pour la diversité multi-banques.
    * Favorites : surfaces masthead (défaut) ou liste explicite.
@@ -91,9 +92,10 @@
     typeof BgRotation !== "undefined" && BgRotation.createRotator
       ? BgRotation.createRotator({
           surface: "masthead",
-          storageKey: "lr_bg_rot_masthead_v1",
+          storageKey: "lr_bg_rot_masthead_v2",
           maxRecent: 36,
           moodFn: _mastheadMood,
+          equalBanks: true,
         })
       : null;
   /** Ratio largeur/hauteur minimal (paysage). Sous ce seuil → rejet dur. */
@@ -461,6 +463,13 @@
     }
     const hay = [bg.title, bg.url, bg.link].filter(Boolean).join(" ");
     return CAMPUS_SUBJECT_RE.test(hay);
+  }
+
+  function isNationsBackground(bg) {
+    if (!bg) return false;
+    if (bg.bank === "nations" || bg.culture === "quebec-nations") return true;
+    if (bg.nationId || bg.nation) return true;
+    return false;
   }
 
   /**
@@ -1816,6 +1825,7 @@
         return { ok: false, reason: "excessive_dark", metrics };
       }
       if (
+        !isNationsBackground(bg) &&
         sat < WINTER_GREY.sat &&
         greyFrac > WINTER_GREY.grey &&
         coldFrac > WINTER_GREY.cold
@@ -1864,6 +1874,7 @@
       // Campus : pierre / béton gris = le sujet, pas une toundra.
       if (
         !isCampusBackground(bg) &&
+        !isNationsBackground(bg) &&
         sat < 0.18 &&
         greyFrac > 0.5 &&
         warmFrac < 0.18
@@ -1896,6 +1907,7 @@
       // ne pas éjecter QUEBEC_UNIVERSITY_BACKGROUNDS pour ça.
       if (
         !isCampusBackground(bg) &&
+        !isNationsBackground(bg) &&
         !goldenSilhouette &&
         edgeMean >= BUSY_LOW_CHROMA.edge &&
         sat <= BUSY_LOW_CHROMA.satMax &&
@@ -1934,6 +1946,7 @@
       }
       // Batture / vase : grève dominante, quasi pas de ciel
       if (
+        !isNationsBackground(bg) &&
         sandFrac > 0.48 &&
         skyFrac < 0.08 &&
         warmSkyFrac < 0.08 &&
@@ -2459,7 +2472,7 @@
           : 0;
       console.info(
         `[bg] pool mât : ${all.length} (paysages ${nL} + campus ${nU} + nations ${nN} + favorites ${nF})` +
-          (_rotator ? " · rotator CSPRNG" : " · fallback")
+          (_rotator ? " · rotator CSPRNG · mix équitable 1/3" : " · fallback")
       );
     }
     const pinned = _queryPinnedPhoto(all);
