@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-18T10:37:34.983Z",
+  "updatedAt": "2026-08-18T11:22:32.987Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T10:36:59.508Z"
+      "checkedAt": "2026-08-18T11:22:07.867Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
-        "source": "schedule",
-        "start": "05:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
-      },
-      "next": {
         "title": "Câlin collectif",
         "source": "schedule",
         "start": "07:00",
         "end": "08:00",
         "url": "https://cism893.ca/emissions/calins-collectifs"
       },
+      "next": {
+        "title": "Raconte ton quartier",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/raconte-ton-quartier"
+      },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Câlin collectif",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T10:37:01.518Z"
+      "checkedAt": "2026-08-18T11:22:10.160Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Beat Power Hour",
-        "source": "api-live",
-        "start": "05:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Tuesday Morning After Pt1",
         "source": "api-live",
         "start": "07:00",
         "end": "08:00"
       },
+      "next": {
+        "title": "Tuesday Morning After Pt2",
+        "source": "api-live",
+        "start": "08:00",
+        "end": "09:00"
+      },
       "track": "",
-      "showTitle": "The Beat Power Hour",
+      "showTitle": "Tuesday Morning After Pt1",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T10:37:04.119Z"
+      "checkedAt": "2026-08-18T11:22:13.064Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,43 +101,37 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T10:37:18.061Z"
+      "checkedAt": "2026-08-18T11:22:27.027Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Folkswagen",
         "source": "schedule-live",
         "start": "07:00",
         "end": "08:00"
       },
+      "next": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "18:30"
+      },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Folkswagen",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T10:37:19.212Z"
+      "checkedAt": "2026-08-18T11:22:28.170Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Les rois de l'arène",
-        "source": "api-live",
-        "start": "05:00",
-        "end": "07:00",
-        "slug": "les-rois-de-larene"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHOQ.ca",
         "source": "api-live",
@@ -145,8 +139,8 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "BB NOYAA - VITESSE",
-      "showTitle": "Les rois de l'arène",
+      "track": "Clément - Icare",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -156,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-18T10:37:34.633Z"
+      "checkedAt": "2026-08-18T11:22:32.637Z"
     }
   }
 }
