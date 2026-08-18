@@ -68,7 +68,7 @@ def main() -> None:
     f_tag = font(SANS_BOLD, 32)
     tag = "Journaux, radios et sports étudiants du Québec"
     f_sub = font(SANS, 26)
-    sub = "Cégeps et universités · fil étudiant, écoute en direct et scores"
+    sub = "Cégeps et universités · fil étudiant, écoute en direct et résultats"
     max_text_w = W - logo_x - 48
     if text_width(draw, tag, f_tag) > max_text_w or text_width(draw, sub, f_sub) > max_text_w:
         raise SystemExit("og-cover: accroche trop large — raccourcir le copy ou la fonte")
