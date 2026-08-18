@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-08-18T22:19:45.536Z",
+  "updatedAt": "2026-08-18T22:50:10.314Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "api-live",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
+      "current": null,
       "next": {
         "title": "Capitales de Québec",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "18:50",
         "end": "23:00",
         "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T22:19:16.779Z"
+      "checkedAt": "2026-08-18T22:49:43.925Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T22:19:18.977Z"
+      "checkedAt": "2026-08-18T22:49:45.836Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T22:19:22.157Z"
+      "checkedAt": "2026-08-18T22:49:48.543Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,32 +101,32 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T22:19:36.717Z"
+      "checkedAt": "2026-08-18T22:50:02.325Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "18:30"
-      },
-      "next": {
         "title": "L'Aut'Rock",
         "source": "schedule-live",
         "start": "18:30",
         "end": "20:00"
       },
+      "next": {
+        "title": "Dichotomie 88.3",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "L'Aut'Rock",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-18T22:19:37.846Z"
+      "checkedAt": "2026-08-18T22:50:03.278Z"
     },
     "choq": {
       "id": "choq",
@@ -152,7 +145,7 @@
         "end": "20:30",
         "slug": "les-amazones"
       },
-      "track": "Modlee - Likewise",
+      "track": "Rachel Chinouriri - One song away from crying",
       "showTitle": "Le Studio",
       "host": "",
       "source": "api-live",
@@ -163,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-18T22:19:45.185Z"
+      "checkedAt": "2026-08-18T22:50:09.964Z"
     }
   }
 }
