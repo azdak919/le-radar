@@ -23,6 +23,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Panneau latéral du navigateur (Firefox, Chrome, Edge, Arc, Vivaldi…) : le shell large restait actif alors que la rangée du mât n’avait plus la place. Les cartes météo passaient sous les icônes ; les puces sports pouvaient sortir du bandeau. On retire maintenant des cartes selon la largeur réellement restante (y compris à l’ouverture du panneau) au lieu de forcer la parité scores.
 - Edge (et tout Chromium) sur un bureau tactile — ex. IdeaPad Flex 5 + Philips 1920 : `pointer: coarse` classait la session comme un téléphone. La carte proposait « Sur l’écran d’accueil » au lieu d’installer la PWA fenêtre. Un viewport ≥ 1024 px hors iOS/Android est du bureau ; le titre spatial mobile (focus-group B) reste pour les vrais téléphones.
 - Grand écran (shell E, ≥ 1281 px) : le carré du synthétiseur restait un rectangle vide — le texte (institution, poste, slogan) était bien écrit, mais le CSS le masquait tant que `is-dial-ready` n’était pas posé. La voie wide retournait avant cet appel. Visible sur l’accueil, le kit média et les autres pages.
 - La carte de partage (`og-cover.png`) était calée à gauche et la sous-ligne trop pâle : lockup centré, slogan au rythme de l’ancienne carte (« Les journaux, radios et sports étudiants du Québec ») et retour de « Cégeps et universités » sur une ligne lisible. Cache `?v=3`.
