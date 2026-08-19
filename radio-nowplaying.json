@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-19T22:50:52.452Z",
+  "updatedAt": "2026-08-19T23:20:03.939Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T22:50:24.941Z"
+      "checkedAt": "2026-08-19T23:19:37.094Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Feu | Metal | Chaos",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/feu-metal-chaos"
-      },
-      "next": {
         "title": "O'Keb (reprise)",
         "source": "schedule",
         "start": "19:00",
         "end": "20:00",
         "url": "https://cism893.ca/emissions/okeb"
       },
+      "next": {
+        "title": "Jeunesse cosmique",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/jeunesse-cosmique"
+      },
       "track": "",
-      "showTitle": "Feu | Metal | Chaos",
+      "showTitle": "O'Keb (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T22:50:27.214Z"
+      "checkedAt": "2026-08-19T23:19:39.389Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Hersay: Audio Smut/OWL/The Teachings/Metro Boulot Dodo",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Harbinger Showcase",
         "source": "api-live",
         "start": "19:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Jazz Euphorium",
+        "source": "api-live",
+        "start": "20:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "Hersay: Audio Smut/OWL/The Teachings/Metro Boulot Dodo",
+      "showTitle": "Harbinger Showcase",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,35 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T22:50:30.389Z"
+      "checkedAt": "2026-08-19T23:19:42.434Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The New Consonance",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/the-new-consonance"
-      },
-      "next": {
         "title": "BVST",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "19:00",
         "end": "21:00",
         "url": "http://www.cjlo.com/shows/bvst"
       },
+      "next": {
+        "title": "Rap Radar",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/rap-radar"
+      },
       "track": "",
-      "showTitle": "The New Consonance",
+      "showTitle": "BVST",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T22:50:44.532Z"
+      "checkedAt": "2026-08-19T23:19:56.743Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,21 +134,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T22:50:45.646Z"
+      "checkedAt": "2026-08-19T23:19:57.678Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Le CHOC des Générations",
         "source": "api-live",
         "start": "19:00",
         "end": "20:00",
         "slug": "le-choc-des-generations"
       },
-      "track": "Kamilou - Paranormal",
-      "showTitle": "",
+      "next": {
+        "title": "Opération beurre de cinoche",
+        "source": "api-live",
+        "start": "11:30",
+        "end": "12:30",
+        "slug": "box-sophisme"
+      },
+      "track": "SUUNCAAT - work",
+      "showTitle": "Le CHOC des Générations",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -157,7 +164,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-19T22:50:52.102Z"
+      "checkedAt": "2026-08-19T23:20:03.589Z"
     }
   }
 }
