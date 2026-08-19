@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-19T01:02:47.761Z",
+  "updatedAt": "2026-08-19T02:37:30.328Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,34 +28,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T01:02:20.321Z"
+      "checkedAt": "2026-08-19T02:37:05.090Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les garçons pleurent aussi (reprise)",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
-      },
-      "next": {
         "title": "Mix anglo",
         "source": "schedule",
         "start": "22:00",
         "end": "00:00",
         "url": "https://cism893.ca/emissions/mix-anglo"
       },
+      "next": {
+        "title": "Club classique (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/club-classique"
+      },
       "track": "",
-      "showTitle": "Les garçons pleurent aussi (reprise)",
+      "showTitle": "Mix anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T01:02:22.633Z"
+      "checkedAt": "2026-08-19T02:37:06.838Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T01:02:25.329Z"
+      "checkedAt": "2026-08-19T02:37:09.109Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,43 +108,37 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T01:02:39.441Z"
+      "checkedAt": "2026-08-19T02:37:22.670Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Dichotomie 88.3",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "22:00"
-      },
-      "next": {
         "title": "Mix Franco",
         "source": "schedule-live",
         "start": "22:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Dichotomie 88.3",
+      "showTitle": "Mix Franco",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T01:02:40.719Z"
+      "checkedAt": "2026-08-19T02:37:23.659Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "10 sur 10 : un podcast 100% rap",
-        "source": "api-live",
-        "start": "20:30",
-        "end": "22:30",
-        "slug": "10-sur-10-un-podcast-100-rap"
-      },
+      "current": null,
       "next": {
         "title": "In Vélo Veritas",
         "source": "schedule",
@@ -152,16 +146,19 @@
         "end": "12:00",
         "url": "https://www.choq.ca/emissions/in-velo-veritas"
       },
-      "track": "Static Dress — dull blade disguise",
-      "showTitle": "10 sur 10 : un podcast 100% rap",
+      "track": "LØLØ - the devil wears converse",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
         "api-live",
         "schedule"
       ],
-      "clientPoll": null,
-      "checkedAt": "2026-08-19T01:02:47.410Z"
+      "clientPoll": {
+        "type": "triton-np",
+        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
+      },
+      "checkedAt": "2026-08-19T02:37:29.978Z"
     }
   }
 }
