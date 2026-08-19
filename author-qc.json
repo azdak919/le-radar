@@ -1,10 +1,18 @@
 {
-  "updated": "2026-08-19T20:31:05.795Z",
+  "updated": "2026-08-19T22:42:32.310Z",
   "total": 185,
   "withAuthor": 185,
-  "mismatches": 4,
+  "mismatches": 5,
   "ok": true,
   "samples": [
+    {
+      "title": "Montreal city council to debate motion to cut ties with Israel on August 24",
+      "link": "https://thelinknewspaper.ca/article/16341",
+      "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Rahul Balasundaram",
+      "reason": "page-byline"
+    },
     {
       "title": "Letters from the Editors May 2026",
       "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
@@ -38,5 +46,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 4
+  "fixed": 5
 }

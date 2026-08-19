@@ -1,14 +1,23 @@
 {
-  "updated": "2026-08-19T20:31:21.342Z",
+  "updated": "2026-08-19T22:42:51.032Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 5,
-  "withLeadExcerpt": 79,
-  "candidates": 5,
-  "enriched": 0,
+  "incomplete": 6,
+  "withLeadExcerpt": 80,
+  "candidates": 6,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
+    {
+      "title": "Montreal city council to debate motion to cut ties with Israel on August 24",
+      "link": "https://thelinknewspaper.ca/article/16341",
+      "ok": true,
+      "score": 80,
+      "chars": 400,
+      "sample": "A motion calling on the city of Montreal to cut institutional ties with Israel will be heard on Aug.",
+      "changed": true
+    },
     {
       "title": "Review: Sullivan Fortner Solo at Gesú Concert Hall",
       "link": "https://www.mcgilldaily.com/2026/07/review-sullivan-fortner-solo-at-gesu-concert-hall/",

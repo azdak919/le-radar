@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-19T20:37:38.938Z",
+  "updated": "2026-08-19T22:48:43.131Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
@@ -7,24 +7,24 @@
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 21,
-  "updatedCount": 10,
-  "citedNew": 8,
+  "checked": 22,
+  "updatedCount": 11,
+  "citedNew": 9,
   "fallbackNew": 13,
   "samples": [
+    {
+      "title": "Montreal city council to debate motion to cut ties with Israel on August 24",
+      "source": "The Link",
+      "credit": "Photo: Samuel Kayll",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
     {
       "title": "De la résistance au courage",
       "source": "Le Collectif",
       "credit": "Crédit photo : Le Collectif",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "source": "La Pige",
-      "credit": "Photo : Léa Morin-Letort",
-      "cited": true,
-      "method": "figcaption-paren-kind"
     },
     {
       "title": "La performance de l’homosexualité : un privilège ?",
@@ -55,20 +55,6 @@
       "method": null
     },
     {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
-      "source": "Quartier Libre",
-      "credit": "Photo : Maryse Boyce",
-      "cited": true,
-      "method": "figcaption-copyright"
-    },
-    {
       "title": "Inside Mile End Kicks",
       "source": "The Link",
       "credit": "Photo: Courtesy of Joe Fuda",
@@ -81,6 +67,27 @@
       "credit": "Illustration: Halle Keays",
       "cited": true,
       "method": "figcaption-trailing"
+    },
+    {
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "source": "La Pige",
+      "credit": "Photo : Léa Morin-Letort",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "source": "Quartier Libre",
+      "credit": "Photo : Maryse Boyce",
+      "cited": true,
+      "method": "figcaption-copyright"
     }
   ]
 }
