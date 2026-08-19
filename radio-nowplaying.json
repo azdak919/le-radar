@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-19T21:50:40.216Z",
+  "updatedAt": "2026-08-19T22:21:32.541Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T21:50:10.099Z"
+      "checkedAt": "2026-08-19T22:21:10.817Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T21:50:12.812Z"
+      "checkedAt": "2026-08-19T22:21:12.791Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Off the Hour/Sounds of Resistance",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Hersay: Audio Smut/OWL/The Teachings/Metro Boulot Dodo",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Harbinger Showcase",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "Off the Hour/Sounds of Resistance",
+      "showTitle": "Hersay: Audio Smut/OWL/The Teachings/Metro Boulot Dodo",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T21:50:16.103Z"
+      "checkedAt": "2026-08-19T22:21:15.604Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Advice By The Fireplace",
-        "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/advice-by-the-fireplace"
-      },
-      "next": {
         "title": "The New Consonance",
         "source": "schedule-live",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/the-new-consonance"
       },
+      "next": {
+        "title": "BVST",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/bvst"
+      },
       "track": "",
-      "showTitle": "Advice By The Fireplace",
+      "showTitle": "The New Consonance",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T21:50:30.466Z"
+      "checkedAt": "2026-08-19T22:21:29.604Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,18 +133,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T21:50:31.846Z"
+      "checkedAt": "2026-08-19T22:21:30.257Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Podcast Nomade: L'art de se rencontrer",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00",
-        "slug": "podcast-nomade-lart-de-se-rencontrer"
-      },
+      "current": null,
       "next": {
         "title": "Le CHOC des Générations",
         "source": "api-live",
@@ -152,8 +146,8 @@
         "end": "20:00",
         "slug": "le-choc-des-generations"
       },
-      "track": "Downtown Boys - Public Works",
-      "showTitle": "Podcast Nomade: L'art de se rencontrer",
+      "track": "JJJu - Dehors, la revolution nous ressemble, A_",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -163,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-19T21:50:39.866Z"
+      "checkedAt": "2026-08-19T22:21:32.190Z"
     }
   }
 }
