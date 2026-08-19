@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-19T18:30:08.214Z",
+  "updatedAt": "2026-08-19T19:04:34.282Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T18:29:54.921Z"
+      "checkedAt": "2026-08-19T19:04:21.042Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
-      },
-      "next": {
         "title": "Parler pour jaser",
         "source": "schedule",
         "start": "15:00",
         "end": "16:00",
         "url": "https://cism893.ca/emissions/parler-pour-jaser"
       },
+      "next": {
+        "title": "Le cours de math",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/le-cours-de-math"
+      },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Parler pour jaser",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T18:29:56.908Z"
+      "checkedAt": "2026-08-19T19:04:22.942Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Radyo Kapwa",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "All Da Way Live",
         "source": "api-live",
         "start": "15:00",
         "end": "17:00"
       },
+      "next": {
+        "title": "Off the Hour/Sounds of Resistance",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Radyo Kapwa",
+      "showTitle": "All Da Way Live",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T18:29:59.124Z"
+      "checkedAt": "2026-08-19T19:04:25.209Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Something for the Mood",
-        "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/something-for-the-mood"
-      },
-      "next": {
         "title": "Patch Notes",
         "source": "schedule-live",
         "start": "15:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/patch-notes"
       },
+      "next": {
+        "title": "Borderline",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/borderline"
+      },
       "track": "",
-      "showTitle": "Something for the Mood",
+      "showTitle": "Patch Notes",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T18:30:00.748Z"
+      "checkedAt": "2026-08-19T19:04:27.844Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,21 +126,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T18:30:01.393Z"
+      "checkedAt": "2026-08-19T19:04:28.445Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Palmarès CHOQ.ca",
         "source": "api-live",
         "start": "15:00",
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Spoon - The Way We Get By",
-      "showTitle": "",
+      "next": {
+        "title": "Podcast Nomade: L'art de se rencontrer",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00",
+        "slug": "podcast-nomade-lart-de-se-rencontrer"
+      },
+      "track": "Générique Palmares",
+      "showTitle": "Palmarès CHOQ.ca",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -150,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-19T18:30:07.863Z"
+      "checkedAt": "2026-08-19T19:04:33.932Z"
     }
   }
 }
