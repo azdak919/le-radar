@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-19T17:50:23.003Z",
+  "updatedAt": "2026-08-19T18:30:08.214Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T17:50:01.465Z"
+      "checkedAt": "2026-08-19T18:29:54.921Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La carte cadeau",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/la-carte-cadeau"
-      },
-      "next": {
         "title": "Le palmarès",
         "source": "schedule",
         "start": "14:00",
         "end": "15:00",
         "url": "https://cism893.ca/emissions/palmares-de-cism"
       },
+      "next": {
+        "title": "Parler pour jaser",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/parler-pour-jaser"
+      },
       "track": "",
-      "showTitle": "La carte cadeau",
+      "showTitle": "Le palmarès",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T17:50:04.027Z"
+      "checkedAt": "2026-08-19T18:29:56.908Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "If You Got Ears",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Radyo Kapwa",
         "source": "api-live",
         "start": "14:00",
         "end": "15:00"
       },
+      "next": {
+        "title": "All Da Way Live",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "17:00"
+      },
       "track": "",
-      "showTitle": "If You Got Ears",
+      "showTitle": "Radyo Kapwa",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T17:50:06.997Z"
+      "checkedAt": "2026-08-19T18:29:59.124Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Beatnik Boy: Mixtape",
-        "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/beatnik-boy-mixtape"
-      },
-      "next": {
         "title": "Something for the Mood",
         "source": "schedule-live",
         "start": "14:00",
         "end": "15:00",
         "url": "http://www.cjlo.com/shows/something-for-the-mood"
       },
+      "next": {
+        "title": "Patch Notes",
+        "source": "schedule-live",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/patch-notes"
+      },
       "track": "",
-      "showTitle": "Beatnik Boy: Mixtape",
+      "showTitle": "Something for the Mood",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T17:50:09.449Z"
+      "checkedAt": "2026-08-19T18:30:00.748Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Le popcorn de l'infini",
         "source": "schedule-live",
         "start": "14:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "Le popcorn de l'infini",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T17:50:10.246Z"
+      "checkedAt": "2026-08-19T18:30:01.393Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Carla dal Forno - Under the Covers",
+      "track": "Spoon - The Way We Get By",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-19T17:50:22.653Z"
+      "checkedAt": "2026-08-19T18:30:07.863Z"
     }
   }
 }
