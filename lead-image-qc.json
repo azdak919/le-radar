@@ -1,15 +1,15 @@
 {
-  "updated": "2026-08-19T22:48:00.830Z",
+  "updated": "2026-08-19T23:32:27.973Z",
   "total": 185,
   "withPhoto": 168,
   "withStock": 21,
   "withCampusBank": 12,
   "fullyCovered": 185,
-  "leadReadyPhotos": 149,
-  "pageScraped": 23,
-  "photosRecovered": 23,
+  "leadReadyPhotos": 137,
+  "pageScraped": 22,
+  "photosRecovered": 22,
   "imagesCleared": 10,
-  "stockSearches": 33,
+  "stockSearches": 34,
   "stockFound": 10,
   "campusBankFound": 4,
   "mainPageLeadReady": true,
@@ -19,6 +19,12 @@
       "link": "https://thelinknewspaper.ca/article/16334",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
+    },
+    {
+      "title": "L’apparence physique a-t-elle une influence au travail?",
+      "link": "https://lecollectif.ca/a-la-une/lapparence-physique-a-t-elle-une-influence-au-travail/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_apparence-physique-au-travailSourceSileas.jpg"
     },
     {
       "title": "Rosalie Tremblay sélectionnée par Hockey Canada",
@@ -39,16 +45,34 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Flagrant-delit-dinitie-de-Donald-Trump_Getty-Images.jpg"
     },
     {
+      "title": "CSU approves affinity group policy, club rules update and councillor pay increase at special meeting",
+      "link": "https://thelinknewspaper.ca/article/16326",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/7089/7290404684_2750bb385f_b.jpg"
+    },
+    {
       "title": "Spotlighting Powerful McGill Alumnae",
       "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/5/56/Walking_west_on_Sherbrooke_Street_near_McGill_University%2C_May_1%2C_2023.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
+      "title": "National Golf tournament",
+      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/24/99099986_4195128a59_b.jpg"
+    },
+    {
       "title": "Gaiters wrap up hard-fought season with eyes on next year",
       "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/61/Bishop%27s_University_shield_stone.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Second-Class Citizens",
+      "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/7056/6831154200_b7057b4237_b.jpg"
     },
     {
       "title": "The Gentrification of Online Fandom Spaces",
@@ -61,30 +85,6 @@
       "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
-    },
-    {
-      "title": "Oui au budget, oui au programme FIL et non à la grève",
-      "link": "https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6c/C%C3%A9gep_du_Vieux_Montr%C3%A9al%2C_Nov_03_2022.jpg"
-    },
-    {
-      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
-      "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
-      "reason": "no-stock-match",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg"
-    },
-    {
-      "title": "Recettes musicales québécoises pour l’été",
-      "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
-      "reason": "no-stock-match",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
-    },
-    {
-      "title": "Gothic Cinema Rises from the Grave",
-      "link": "https://theplantnews.com/2026/05/11/gothic-cinema-rises-from-the-grave/",
-      "reason": "no-stock-match",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-4.png"
     }
   ]
 }
