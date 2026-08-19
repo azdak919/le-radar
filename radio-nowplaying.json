@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-19T05:56:24.942Z",
+  "updatedAt": "2026-08-19T06:40:19.683Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T05:56:01.336Z"
+      "checkedAt": "2026-08-19T06:39:55.778Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Club classique (reprise)",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/club-classique"
-      },
-      "next": {
         "title": "Mix Franco",
         "source": "schedule",
         "start": "02:00",
         "end": "03:00",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "Fréquence 440",
+        "source": "schedule",
+        "start": "03:00",
+        "end": "04:00",
+        "url": "https://cism893.ca/emissions/frequence-440"
+      },
       "track": "",
-      "showTitle": "Club classique (reprise)",
+      "showTitle": "Mix Franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T05:56:03.602Z"
+      "checkedAt": "2026-08-19T06:39:57.986Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Space Plane",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "WarpCor / Out of the Void",
         "source": "api-live",
         "start": "02:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "Full Circle",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Space Plane",
+      "showTitle": "WarpCor / Out of the Void",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T05:56:06.483Z"
+      "checkedAt": "2026-08-19T06:40:00.873Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T05:56:20.617Z"
+      "checkedAt": "2026-08-19T06:40:15.086Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T05:56:21.685Z"
+      "checkedAt": "2026-08-19T06:40:16.286Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:00",
         "slug": "in-velo-veritas"
       },
-      "track": "Truck Violence - Stomach as a tower and the globules descending",
+      "track": "Spell - Iron Teeth",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-19T05:56:24.590Z"
+      "checkedAt": "2026-08-19T06:40:19.332Z"
     }
   }
 }
