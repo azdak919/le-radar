@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-19T16:32:53.058Z",
+  "updatedAt": "2026-08-19T17:23:49.453Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T16:32:35.499Z"
+      "checkedAt": "2026-08-19T17:23:30.508Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T16:32:37.891Z"
+      "checkedAt": "2026-08-19T17:23:32.785Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T16:32:40.816Z"
+      "checkedAt": "2026-08-19T17:23:35.643Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "North-South Hockey",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/north-south-hockey"
-      },
-      "next": {
         "title": "Beatnik Boy: Mixtape",
         "source": "schedule-live",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/beatnik-boy-mixtape"
       },
+      "next": {
+        "title": "Something for the Mood",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/something-for-the-mood"
+      },
       "track": "",
-      "showTitle": "North-South Hockey",
+      "showTitle": "Beatnik Boy: Mixtape",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T16:32:43.296Z"
+      "checkedAt": "2026-08-19T17:23:38.196Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T16:32:44.137Z"
+      "checkedAt": "2026-08-19T17:23:38.961Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Chinese American Bear - No No Yeah Yeah",
+      "track": "caterina barbieri - Persistence, Buds",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-19T16:32:52.708Z"
+      "checkedAt": "2026-08-19T17:23:49.102Z"
     }
   }
 }
