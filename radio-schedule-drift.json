@@ -1,17 +1,16 @@
 {
-  "checkedAt": "2026-08-18T23:32:54.434Z",
+  "checkedAt": "2026-08-19T23:33:33.212Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
     "stable": 4,
     "drift": [
-      "cism"
+      "cism",
+      "cjlo"
     ],
     "overhaul": [],
-    "unreachable": [
-      "cjlo"
-    ]
+    "unreachable": []
   },
   "stations": [
     {
@@ -53,12 +52,17 @@
     {
       "id": "cjlo",
       "published": 370,
-      "fresh": 0,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "unreachable"
+      "fresh": 371,
+      "added": [
+        "lun 00:00–00:30 Queer Chaos",
+        "lun 19:00–20:00 Monday Mass with Father Kate"
+      ],
+      "removed": [
+        "lun 19:00–20:00 Queer Chaos"
+      ],
+      "changed": 3,
+      "ratio": 0.008,
+      "status": "drift"
     },
     {
       "id": "cfak",
