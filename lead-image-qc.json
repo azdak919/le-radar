@@ -1,13 +1,13 @@
 {
-  "updated": "2026-08-19T16:42:35.596Z",
+  "updated": "2026-08-19T18:00:36.982Z",
   "total": 185,
   "withPhoto": 168,
   "withStock": 21,
   "withCampusBank": 12,
   "fullyCovered": 185,
   "leadReadyPhotos": 143,
-  "pageScraped": 22,
-  "photosRecovered": 22,
+  "pageScraped": 21,
+  "photosRecovered": 21,
   "imagesCleared": 10,
   "stockSearches": 35,
   "stockFound": 10,
@@ -19,6 +19,12 @@
       "link": "https://thelinknewspaper.ca/article/16334",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
+    },
+    {
+      "title": "Rosalie Tremblay sélectionnée par Hockey Canada",
+      "link": "https://lecollectif.ca/a-la-une/rosalie-tremblay-selectionnee-par-hockey-canada/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SPORTS_Rosalie-Tremblay-hockey_Source-Elite-Prospect.jpeg"
     },
     {
       "title": "Nouveaux sondages diffusés par Pallas",
@@ -39,12 +45,6 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Linusite-sinvite-dans-la-politique_Getty-Images.jpg"
     },
     {
-      "title": "Un autre détroit commercial en péril",
-      "link": "https://lecollectif.ca/societe/politique-internationale/un-autre-detroit-commercial-en-peril/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Un-autre-detroit-commercial-en-peril_Getty-Images.jpg"
-    },
-    {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
       "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
       "reason": "no-stock-match",
@@ -55,12 +55,6 @@
       "link": "https://thelinknewspaper.ca/article/16326",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/7089/7290404684_2750bb385f_b.jpg"
-    },
-    {
-      "title": "From the rink to the links",
-      "link": "https://thebucampus.ca/2026/04/06/from-the-rink-to-the-links/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/4031/4400844746_a47c17ef6d_b.jpg"
     },
     {
       "title": "Spotlighting Powerful McGill Alumnae",
@@ -85,6 +79,12 @@
       "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/7056/6831154200_b7057b4237_b.jpg"
+    },
+    {
+      "title": "The Gentrification of Online Fandom Spaces",
+      "link": "https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Arts_Building%2C_McGill_University.jpg"
     }
   ]
 }
