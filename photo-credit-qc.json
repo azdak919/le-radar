@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-19T17:59:07.906Z",
+  "updated": "2026-08-19T19:48:10.605Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
@@ -7,24 +7,38 @@
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 19,
-  "updatedCount": 8,
-  "citedNew": 6,
-  "fallbackNew": 13,
+  "checked": 22,
+  "updatedCount": 11,
+  "citedNew": 8,
+  "fallbackNew": 14,
   "samples": [
+    {
+      "title": "De la résistance au courage",
+      "source": "Le Collectif",
+      "credit": "Crédit photo : Le Collectif",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "La dépendance aux jeux de hasard, lorsque le jeu n’a pas de fin",
+      "source": "Le Collectif",
+      "credit": "Photo : Université de Montréal",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "De l’écotourisme en randonnée pédestre: cinq parcours à découvrir",
+      "source": "Le Collectif",
+      "credit": "Photo : Rebecca Gagné",
+      "cited": true,
+      "method": "body-tail"
+    },
     {
       "title": "Rosalie Tremblay sélectionnée par Hockey Canada",
       "source": "Le Collectif",
       "credit": "Photo : Elite Prospect",
       "cited": true,
       "method": "body-tail"
-    },
-    {
-      "title": "L’épidémie de la nonchalance",
-      "source": "Le Délit",
-      "credit": "Photo : Elie Nguyen",
-      "cited": true,
-      "method": "media-credit-featured"
     },
     {
       "title": "La performance de l’homosexualité : un privilège ?",
@@ -34,16 +48,23 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Sois belle et tais-toi",
+      "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "credit": "Photo : Elie Nguyen",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "title": "Ce que nous devons aux femmes",
       "source": "Le Délit",
-      "credit": "Photo : Stu Doré/Félix Fournier",
+      "credit": "Photo : Alexandre Gontier",
+      "cited": true,
+      "method": "media-credit-near"
+    },
+    {
+      "title": "Les femmes MAGA au service du patriarcat",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
     },
