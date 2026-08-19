@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-08-19T22:21:32.541Z",
+  "updatedAt": "2026-08-19T22:50:52.452Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "api-live",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
-      "next": {
         "title": "Capitales de Québec",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "18:50",
         "end": "23:00",
         "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
+      "next": {
+        "title": "Jeudi Révolte",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/jeudi-revolte/"
+      },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
+      "showTitle": "Capitales de Québec",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T22:21:10.817Z"
+      "checkedAt": "2026-08-19T22:50:24.941Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T22:21:12.791Z"
+      "checkedAt": "2026-08-19T22:50:27.214Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T22:21:15.604Z"
+      "checkedAt": "2026-08-19T22:50:30.389Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +108,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T22:21:29.604Z"
+      "checkedAt": "2026-08-19T22:50:44.532Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T22:21:30.257Z"
+      "checkedAt": "2026-08-19T22:50:45.646Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "end": "20:00",
         "slug": "le-choc-des-generations"
       },
-      "track": "JJJu - Dehors, la revolution nous ressemble, A_",
+      "track": "Kamilou - Paranormal",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-19T22:21:32.190Z"
+      "checkedAt": "2026-08-19T22:50:52.102Z"
     }
   }
 }
