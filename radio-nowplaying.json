@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-19T06:40:19.683Z",
+  "updatedAt": "2026-08-19T07:08:48.638Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T06:39:55.778Z"
+      "checkedAt": "2026-08-19T07:08:21.691Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Franco",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
-      },
-      "next": {
         "title": "Fréquence 440",
         "source": "schedule",
         "start": "03:00",
         "end": "04:00",
         "url": "https://cism893.ca/emissions/frequence-440"
       },
+      "next": {
+        "title": "Hors cadre",
+        "source": "schedule",
+        "start": "04:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/hors-cadre"
+      },
       "track": "",
-      "showTitle": "Mix Franco",
+      "showTitle": "Fréquence 440",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T06:39:57.986Z"
+      "checkedAt": "2026-08-19T07:08:23.655Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T06:40:00.873Z"
+      "checkedAt": "2026-08-19T07:08:26.674Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T06:40:15.086Z"
+      "checkedAt": "2026-08-19T07:08:40.458Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T06:40:16.286Z"
+      "checkedAt": "2026-08-19T07:08:41.280Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:00",
         "slug": "in-velo-veritas"
       },
-      "track": "Spell - Iron Teeth",
+      "track": "Fires in the Distance - Lightless Days of a Songless Bird",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-19T06:40:19.332Z"
+      "checkedAt": "2026-08-19T07:08:48.288Z"
     }
   }
 }
