@@ -1,23 +1,23 @@
 {
-  "updated": "2026-08-19T22:48:43.131Z",
+  "updated": "2026-08-19T23:32:16.365Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 131,
+  "cited": 130,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 22,
-  "updatedCount": 11,
-  "citedNew": 9,
-  "fallbackNew": 13,
+  "checked": 20,
+  "updatedCount": 9,
+  "citedNew": 6,
+  "fallbackNew": 14,
   "samples": [
     {
-      "title": "Montreal city council to debate motion to cut ties with Israel on August 24",
-      "source": "The Link",
-      "credit": "Photo: Samuel Kayll",
+      "title": "L’apparence physique a-t-elle une influence au travail?",
+      "source": "Le Collectif",
+      "credit": "Photo : Siléas",
       "cited": true,
-      "method": "figcaption-trailing"
+      "method": "body-tail"
     },
     {
       "title": "De la résistance au courage",
@@ -27,13 +27,6 @@
       "method": null
     },
     {
-      "title": "La performance de l’homosexualité : un privilège ?",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
       "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
       "credit": "Photo : Elie Nguyen",
@@ -41,9 +34,23 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Les femmes MAGA au service du patriarcat",
+      "title": "La performance de l’homosexualité : un privilège ?",
       "source": "Le Délit",
-      "credit": "Photo : Stu Doré",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Sois belle et tais-toi",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré/Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -64,30 +71,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Illustration: Halle Keays",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "source": "La Pige",
-      "credit": "Photo : Léa Morin-Letort",
-      "cited": true,
-      "method": "figcaption-paren-kind"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
-      "source": "Quartier Libre",
-      "credit": "Photo : Maryse Boyce",
-      "cited": true,
-      "method": "figcaption-copyright"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }

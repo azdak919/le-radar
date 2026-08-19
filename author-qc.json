@@ -1,18 +1,10 @@
 {
-  "updated": "2026-08-19T22:42:32.310Z",
+  "updated": "2026-08-19T23:25:16.692Z",
   "total": 185,
   "withAuthor": 185,
-  "mismatches": 5,
+  "mismatches": 6,
   "ok": true,
   "samples": [
-    {
-      "title": "Montreal city council to debate motion to cut ties with Israel on August 24",
-      "link": "https://thelinknewspaper.ca/article/16341",
-      "source": "The Link",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "Rahul Balasundaram",
-      "reason": "page-byline"
-    },
     {
       "title": "Letters from the Editors May 2026",
       "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
@@ -38,6 +30,22 @@
       "reason": "no-author-source"
     },
     {
+      "title": "Sois belle et tais-toi",
+      "link": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
+      "source": "Le Délit",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Rose Langlois",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "link": "https://www.delitfrancais.com/2026/03/18/qui-sont-les-agents-qui-patrouillent-notre-campus/",
+      "source": "Le Délit",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Héloïse Durning",
+      "reason": "page-byline"
+    },
+    {
       "title": "Garda World au CVM (Éditorial)",
       "link": "https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/",
       "source": "Exil",
@@ -46,5 +54,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 5
+  "fixed": 6
 }
