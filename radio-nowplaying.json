@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-19T11:22:12.288Z",
+  "updatedAt": "2026-08-19T11:50:14.380Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T11:21:40.971Z"
+      "checkedAt": "2026-08-19T11:49:42.628Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T11:21:42.899Z"
+      "checkedAt": "2026-08-19T11:49:44.485Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T11:21:45.169Z"
+      "checkedAt": "2026-08-19T11:49:48.098Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Morning Electro-shock",
-        "source": "schedule",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/morning-electro-shock"
-      },
-      "next": {
         "title": "Words and Culture",
         "source": "schedule",
         "start": "07:30",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/words-and-culture"
       },
+      "next": {
+        "title": "Trawling the Megahertz",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/trawling-the-megahertz"
+      },
       "track": "",
-      "showTitle": "Morning Electro-shock",
+      "showTitle": "Words and Culture",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T11:21:58.957Z"
+      "checkedAt": "2026-08-19T11:50:01.618Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T11:21:59.587Z"
+      "checkedAt": "2026-08-19T11:50:02.273Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:00",
         "slug": "in-velo-veritas"
       },
-      "track": "CFCF - Bad Song feat. Cecile Believe",
+      "track": "Olivia Khoury - Saving Face",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-19T11:22:11.937Z"
+      "checkedAt": "2026-08-19T11:50:14.029Z"
     }
   }
 }
