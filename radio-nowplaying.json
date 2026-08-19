@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-08-19T13:41:45.955Z",
+  "updatedAt": "2026-08-19T14:30:18.746Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Mercredi Bonbon",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/mercredi-bonbon/"
-      },
+      "current": null,
       "next": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Mercredi Bonbon",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T13:41:07.921Z"
+      "checkedAt": "2026-08-19T14:29:49.068Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T13:41:10.278Z"
+      "checkedAt": "2026-08-19T14:29:51.440Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T13:41:15.416Z"
+      "checkedAt": "2026-08-19T14:29:54.278Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Are We There Yet?",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/are-we-there-yet"
-      },
-      "next": {
         "title": "Democracy Now",
         "source": "schedule-live",
         "start": "10:00",
         "end": "11:00",
         "url": "http://www.cjlo.com/shows/democracy-now"
       },
+      "next": {
+        "title": "Unheard Of",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/unheard-of"
+      },
       "track": "",
-      "showTitle": "Are We There Yet?",
+      "showTitle": "Democracy Now",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T13:41:30.682Z"
+      "checkedAt": "2026-08-19T14:30:08.781Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T13:41:31.723Z"
+      "checkedAt": "2026-08-19T14:30:09.678Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +139,7 @@
         "end": "12:00",
         "slug": "in-velo-veritas"
       },
-      "track": "Vague de films coréens en salle",
+      "track": "Kelsey Lu - Better Than That",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-19T13:41:45.604Z"
+      "checkedAt": "2026-08-19T14:30:18.395Z"
     }
   }
 }
